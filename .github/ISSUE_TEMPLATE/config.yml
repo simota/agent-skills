@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Discussions
+    url: https://github.com/YOUR_USERNAME/ai-agent-skills/discussions
+    about: 質問やアイデアの議論はDiscussionsで

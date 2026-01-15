@@ -1,0 +1,115 @@
+name: Bug Report
+description: バグや不具合の報告
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        バグ報告ありがとうございます。以下の情報を記載してください。
+
+  - type: dropdown
+    id: agent
+    attributes:
+      label: 対象エージェント
+      description: 問題が発生したエージェントを選択
+      options:
+        - Nexus
+        - Sherpa
+        - Scout
+        - Spark
+        - Compete
+        - Voice
+        - Researcher
+        - Radar
+        - Voyager
+        - Sentinel
+        - Probe
+        - Judge
+        - Rabbit
+        - Zen
+        - Mason
+        - Artisan
+        - Forge
+        - Bolt
+        - Tuner
+        - Vision
+        - Palette
+        - Muse
+        - Flow
+        - Echo
+        - Showcase
+        - Quill
+        - Canvas
+        - Atlas
+        - Horizon
+        - Gateway
+        - Schema
+        - Anvil
+        - Gear
+        - Scaffold
+        - Polyglot
+        - Growth
+        - Retain
+        - Pulse
+        - Experiment
+        - Triage
+        - Other / 全体
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: 使用プラットフォーム
+      description: 使用しているAIアシスタントを選択
+      options:
+        - Claude Code
+        - Codex CLI
+        - Gemini CLI
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 問題の説明
+      description: 何が起きたかを詳しく説明してください
+      placeholder: 例：Scoutでバグ調査を依頼したが、関係ないファイルばかり探索された
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 再現手順
+      description: 問題を再現するための手順
+      placeholder: |
+        1. `/Scout` を実行
+        2. 「XXXのバグを調査して」と依頼
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待される動作
+      description: 本来どう動作すべきか
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 実際の動作
+      description: 実際に何が起きたか
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 追加情報
+      description: エラーメッセージ、スクリーンショット、ログなど

@@ -1,0 +1,57 @@
+name: Feature Request
+description: 新機能やエージェントの提案
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        機能提案ありがとうございます！
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: 提案の種類
+      options:
+        - 新しいエージェントの追加
+        - 既存エージェントの機能強化
+        - エージェント間の連携改善
+        - ドキュメント改善
+        - その他
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 解決したい課題
+      description: どのような課題を解決したいですか？
+      placeholder: 例：現在、XXXの作業を行う専門エージェントがない
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 提案する解決策
+      description: どのような機能/エージェントがあれば解決できますか？
+      placeholder: |
+        例：
+        - 新エージェント「DataFlow」を追加
+        - データパイプラインの設計・実装を担当
+        - ETL処理、データ変換、スキーマ進化を専門とする
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 検討した代替案
+      description: 他に検討した解決策があれば記載
+      placeholder: 例：既存のSchemaエージェントで対応できるか検討したが、ETL処理は範囲外だった
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 追加情報
+      description: 参考資料、ユースケース、サンプルなど
