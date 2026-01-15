@@ -18,10 +18,10 @@
 
 ```bash
 # Claude Code の場合
-git clone https://github.com/YOUR_USERNAME/ai-agent-skills.git ~/.claude/skills
+git clone https://github.com/simota/agent-skills.git ~/.claude/skills
 
 # その他のプラットフォーム
-git clone https://github.com/YOUR_USERNAME/ai-agent-skills.git /path/to/your/skills
+git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 ```
 
 ### 使用方法
