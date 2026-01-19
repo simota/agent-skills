@@ -119,7 +119,7 @@ questions:
       - label: "Conduct additional verification"
         description: "Investigate impact scope in detail before reporting"
       - label: "Report with fix proposal"
-        description: "Request Mason to fix and report together"
+        description: "Request Builder to fix and report together"
     multiSelect: false
 ```
 
@@ -1216,13 +1216,13 @@ When Sentinel identifies potential vulnerabilities, Probe validates them.
 - CVSS: 9.8 (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H)
 
 **Recommended Action**: Immediate fix required
-**Suggested next**: Mason for remediation
+**Suggested next**: Builder for remediation
 ```
 
-### Probe → Mason Handoff
+### Probe → Builder Handoff
 
 ```markdown
-## Probe → Mason Fix Request
+## Probe → Builder Fix Request
 
 **Confirmed Vulnerability**: SQL Injection
 **CVSS**: 9.8 CRITICAL
@@ -1248,7 +1248,7 @@ Probe will re-validate with same payloads to confirm remediation.
 ## Probe → Radar Security Test Request
 
 **Validated Vulnerabilities**: [List]
-**Remediation Applied**: [By Mason]
+**Remediation Applied**: [By Builder]
 
 **Tests Needed**:
 1. Regression test for SQL injection fix
@@ -1341,7 +1341,7 @@ Only add entries when you discover:
 - Create detailed finding reports
 - Prioritize by severity
 - Provide remediation guidance
-- Hand off to Mason for fixes
+- Hand off to Builder for fixes
 
 ---
 
@@ -1366,7 +1366,7 @@ _STEP_COMPLETE:
   Agent: Probe
   Status: SUCCESS | PARTIAL | BLOCKED | FAILED
   Output: [Findings / Validated vulnerabilities / CVSS scores]
-  Next: Mason | Sentinel | Radar | VERIFY | DONE
+  Next: Builder | Sentinel | Radar | VERIFY | DONE
 ```
 
 ---
@@ -1404,7 +1404,7 @@ When user input contains `## NEXUS_ROUTING`, treat Nexus as hub.
   - Q: [Previous question] → A: [User's answer]
 - Open questions (blocking/non-blocking):
   - [Clarifications needed]
-- Suggested next agent: Mason | Sentinel | Radar
+- Suggested next agent: Builder | Sentinel | Radar
 - Next action: CONTINUE (Nexus automatically proceeds)
 ```
 

@@ -40,7 +40,7 @@ Your mission is to review code changes using `coderabbit review` and provide act
 - Run `coderabbit review --prompt-only` with appropriate flags before providing findings (Claude-optimized output)
 - Categorize findings by severity (CRITICAL, HIGH, MEDIUM, LOW, INFO)
 - Provide line-specific references for each finding
-- Suggest which agent should handle remediation (Mason, Sentinel, Zen, etc.)
+- Suggest which agent should handle remediation (Builder, Sentinel, Zen, etc.)
 - Check for AI-generated code hallucinations
 
 ### Ask first:
@@ -212,7 +212,7 @@ questions:
       - label: "Apply interactively"
         description: "Review and apply fixes one by one with coderabbit review --interactive"
       - label: "Report only, no fixes"
-        description: "Output report only, delegate fixes to Mason/Zen"
+        description: "Output report only, delegate fixes to Builder/Zen"
     multiSelect: false
 ```
 
@@ -224,7 +224,7 @@ questions:
     options:
       - label: "Try auto-fix (Recommended)"
         description: "Attempt to fix with coderabbit review --auto-fix"
-      - label: "Request Mason to fix"
+      - label: "Request Builder to fix"
         description: "Delegate manual fix to implementation agent"
       - label: "Proceed with documented risk"
         description: "Continue with risk documented"
@@ -239,8 +239,8 @@ questions:
     options:
       - label: "Apply auto-fix (Recommended)"
         description: "Apply CodeRabbit's suggested fix"
-      - label: "Rewrite with Mason"
-        description: "Have Mason reimplement the affected code"
+      - label: "Rewrite with Builder"
+        description: "Have Builder reimplement the affected code"
       - label: "Review manually"
         description: "Review details before deciding"
     multiSelect: false
@@ -252,7 +252,7 @@ questions:
   - question: "Which agent should fix the discovered issues?"
     header: "Remediation"
     options:
-      - label: "Request Mason for implementation fix (Recommended)"
+      - label: "Request Builder for implementation fix (Recommended)"
         description: "Delegate bug fixes and logic corrections to implementation agent"
       - label: "Request Zen for refactoring"
         description: "Delegate readability and code structure improvements"
@@ -297,7 +297,7 @@ questions:
   ```
 - **Suggested Fix**: [How to fix]
 - **Auto-Fix Available**: Yes / No
-- **Remediation Agent**: Mason / Sentinel / Zen
+- **Remediation Agent**: Builder / Sentinel / Zen
 
 ### AI Hallucination Warnings
 
@@ -317,7 +317,7 @@ questions:
 
 ### Next Steps
 - **Auto-Fix**: Run `coderabbit review --auto-fix` to apply fixes
-- **For Mason**: [Bugs to fix]
+- **For Builder**: [Bugs to fix]
 - **For Sentinel**: [Security issues to investigate]
 - **For Zen**: [Refactoring suggestions]
 - **For Radar**: [Tests to add]
@@ -327,12 +327,12 @@ questions:
 
 ## AGENT COLLABORATION
 
-### Mason Integration (Post-Review)
+### Builder Integration (Post-Review)
 
-After Rabbit finds issues, hand off to Mason for fixes:
+After Rabbit finds issues, hand off to Builder for fixes:
 
 ```markdown
-## Rabbit → Mason Fix Request
+## Rabbit → Builder Fix Request
 
 **Findings**: [List of issues from Rabbit report]
 **Priority**: CRITICAL findings first
@@ -431,7 +431,7 @@ coderabbit review --prompt-only <file>
 ### 5. FIX OR ROUTE - Apply Fixes or Hand Off
 
 - If user approves: Run `--auto-fix` or `--interactive`
-- If complex: Hand off to Mason/Sentinel/Zen
+- If complex: Hand off to Builder/Sentinel/Zen
 - If tests needed: Route to Radar
 
 ---
@@ -490,7 +490,7 @@ _STEP_COMPLETE:
   Agent: Rabbit
   Status: SUCCESS | PARTIAL | BLOCKED | FAILED
   Output: [Finding summary / Verdict / Files reviewed / Auto-fix applied]
-  Next: Mason | Sentinel | Zen | Radar | VERIFY | DONE
+  Next: Builder | Sentinel | Zen | Radar | VERIFY | DONE
 ```
 
 ---
@@ -529,7 +529,7 @@ When user input contains `## NEXUS_ROUTING`, treat Nexus as hub.
   - Q: [Previous question] → A: [User's answer]
 - Open questions (blocking/non-blocking):
   - [Clarifications needed]
-- Suggested next agent: Mason | Sentinel | Zen | Radar
+- Suggested next agent: Builder | Sentinel | Zen | Radar
 - Next action: CONTINUE (Nexus automatically proceeds)
 ```
 

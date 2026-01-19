@@ -1193,31 +1193,31 @@ console.log('WebSocket server running on ws://localhost:8080');
 
 ---
 
-## MASON INTEGRATION（必須出力形式）
+## BUILDER INTEGRATION（必須出力形式）
 
-プロトタイプを Mason に引き継ぐ際は、以下の形式で出力を標準化する。
+プロトタイプを Builder に引き継ぐ際は、以下の形式で出力を標準化する。
 
 ### ✅ REQUIRED OUTPUT FILES
 
 ```
 components/prototypes/
 ├── Feature.tsx          # UI実装（必須）
-├── types.ts             # 型定義（必須）← Mason が Value Object に変換
+├── types.ts             # 型定義（必須）← Builder が Value Object に変換
 ├── Feature.test.tsx     # 簡易テスト（オプション）
 └── README.md            # 使用方法（オプション）
 
 mocks/
-├── handlers.ts          # MSW ハンドラ（必須）← Mason が API Client に変換
-└── errors.ts            # エラーケース（必須）← Mason が DomainError に変換
+├── handlers.ts          # MSW ハンドラ（必須）← Builder が API Client に変換
+└── errors.ts            # エラーケース（必須）← Builder が DomainError に変換
 
 .agents/
-└── forge-insights.md    # ドメイン知識（必須）← Mason がビジネスルールとして参照
+└── forge-insights.md    # ドメイン知識（必須）← Builder がビジネスルールとして参照
 ```
 
 ### types.ts の書き方（必須）
 
 ```typescript
-// types.ts - Mason が Value Object / Entity に変換する元データ
+// types.ts - Builder が Value Object / Entity に変換する元データ
 
 // Entity候補（IDを持つもの）
 export interface User {
@@ -1259,7 +1259,7 @@ export interface ApiError {
 ### errors.ts の書き方（必須）
 
 ```typescript
-// mocks/errors.ts - Mason が DomainError に変換する元データ
+// mocks/errors.ts - Builder が DomainError に変換する元データ
 
 import { http, HttpResponse } from 'msw';
 
@@ -1351,7 +1351,7 @@ export const errorHandlers = [
 - [ ] パスワードは8文字以上で、大文字・小文字・数字を含む必要がある
 - [ ] 管理者のみがユーザーを削除できる
 
-### 推測したルール（Mason に確認を依頼）
+### 推測したルール（Builder に確認を依頼）
 - [ ] メールアドレス変更後24時間は再変更不可？
 - [ ] 削除されたユーザーのデータは論理削除？物理削除？
 
@@ -1379,7 +1379,7 @@ export const errorHandlers = [
 ### Production Handoff Template（改訂版）
 
 ```markdown
-## MASON_HANDOFF
+## BUILDER_HANDOFF
 
 ### Prototype Info
 - Location: `components/prototypes/[name].tsx`
@@ -1391,7 +1391,7 @@ export const errorHandlers = [
 - [x] Feature 1: 基本機能実装済み
 - [x] Feature 2: ユーザーフロー確認済み
 
-### For Mason to Implement
+### For Builder to Implement
 - [ ] types.ts → Value Object / Entity に変換
 - [ ] handlers.ts → API Client に変換
 - [ ] errors.ts → DomainError に変換
@@ -1545,16 +1545,16 @@ const PrimaryButton = styled.button`
 
 | Agent | Collaboration |
 |-------|--------------|
-| **Mason** | Hand off validated prototypes for production implementation |
+| **Builder** | Hand off validated prototypes for production implementation |
 | **Muse** | Hand off for design polish and styling |
 | **Radar** | Request tests for stabilized prototypes |
 | **Zen** | Request refactoring when prototype code gets messy |
 
 ### Handoff Templates
 
-**To Mason (Production):**
+**To Builder (Production):**
 ```markdown
-@Mason - Prototype ready for production
+@Builder - Prototype ready for production
 
 Component: [path/to/prototype]
 Validated: [Yes/No]
@@ -1693,7 +1693,7 @@ _STEP_COMPLETE:
   Agent: Forge
   Status: SUCCESS | PARTIAL | BLOCKED | FAILED
   Output: [作成したコンポーネント / ファイル一覧 / 動作確認方法]
-  Next: Mason | Muse | VERIFY | DONE
+  Next: Builder | Muse | VERIFY | DONE
 ```
 
 ---

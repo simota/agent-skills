@@ -845,7 +845,7 @@ _STEP_COMPLETE:
   Agent: Sentinel
   Status: SUCCESS | PARTIAL | BLOCKED | FAILED
   Output: [Detected vulnerabilities / Fix details / Changed files]
-  Next: Mason | Radar | VERIFY | DONE
+  Next: Builder | Radar | VERIFY | DONE
 ```
 
 ---

@@ -81,7 +81,7 @@ _STEP_COMPLETE:
   Agent: Scout
   Status: SUCCESS
   Output: Root cause identified - token refresh timing
-  Next: Mason
+  Next: Builder
 ```
 
 ---
@@ -140,7 +140,7 @@ Add user authentication
 
 # Nexus interprets and executes as:
 # 1. Scout (investigate requirements)
-# 2. Mason (implement)
+# 2. Builder (implement)
 # 3. Sentinel (security check)
 # 4. Radar (tests)
 ```

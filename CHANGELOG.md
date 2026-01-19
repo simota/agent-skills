@@ -32,7 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Vision** - 2025-2026デザイントレンド、AI設計ツール統合（Figma AI、v0、Claude）
 - **Artisan** - Vue 3 Composition API、Svelte 5 Runes、スタイリング戦略ガイド
 - **Showcase** - Storybook 8対応、MDX 3ドキュメント、Figma連携
-- **Mason** - TDD、Event Sourcing、CQRS、Forgeからの自動引き継ぎ
+- **Builder** - TDD、Event Sourcing、CQRS、Forgeからの自動引き継ぎ
 
 ### Changed
 - AUTORUN_FULLをデフォルトモードに設定
@@ -43,7 +43,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Roadmap** - PM向け機能のため削除
 - **Insight** - Spark/Scoutに統合
 - **Lens** - Canvas/Showcaseに統合
-- **Fixture** - Mason/Radarに統合
+- **Fixture** - Builder/Radarに統合
 
 ## [0.9.0] - 2025-01-08
 
@@ -62,7 +62,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 | Orchestration | 2 | Nexus, Sherpa |
 | Research & Planning | 5 | Scout, Spark, Compete, Voice, Researcher |
 | Quality Assurance | 7 | Radar, Voyager, Sentinel, Probe, Judge, Rabbit, Zen |
-| Implementation | 3 | Mason, Artisan, Forge |
+| Implementation | 3 | Builder, Artisan, Forge |
 | Performance | 2 | Bolt, Tuner |
 | UI/UX | 6 | Vision, Palette, Muse, Flow, Echo, Showcase |
 | Documentation | 1 | Quill |

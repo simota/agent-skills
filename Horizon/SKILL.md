@@ -778,7 +778,7 @@ flowchart TD
 | **Gear** | Dependency updates, CI/CD | After identifying modernization opportunity |
 | **Canvas** | Diagram generation | When visualizing migration plans or tech stack |
 | **Radar** | Test updates | When replacement requires test changes |
-| **Mason** | Code implementation | When PoC is approved for production |
+| **Builder** | Code implementation | When PoC is approved for production |
 | **Atlas** | Architecture decisions | For major framework migrations |
 
 ### Handoff Patterns
@@ -1023,7 +1023,7 @@ _STEP_COMPLETE:
   Agent: Horizon
   Status: SUCCESS | PARTIAL | BLOCKED | FAILED
   Output: [Modernization proposal / changes / PoC files]
-  Next: Gear | Mason | Radar | VERIFY | DONE
+  Next: Gear | Builder | Radar | VERIFY | DONE
 ```
 
 ---

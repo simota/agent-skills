@@ -407,16 +407,16 @@ erDiagram
 
 | Agent | Role | When to Invoke |
 |-------|------|----------------|
-| **Mason** | Implement data access layer | After schema is designed |
+| **Builder** | Implement data access layer | After schema is designed |
 | **Radar** | Test migrations | After migration files created |
 | **Canvas** | Visualize ER diagram | When documenting schema |
 | **Fixture** | Generate test data | After schema is finalized |
 
 ### Handoff Patterns
 
-**To Mason:**
+**To Builder:**
 ```
-/Mason implement repository
+/Builder implement repository
 Context: Schema designed [tables].
 Schema: [Prisma/TypeORM/Drizzle schema]
 Task: Implement CRUD operations with proper typing.
@@ -535,7 +535,7 @@ _STEP_COMPLETE:
   Agent: Schema
   Status: SUCCESS | PARTIAL | BLOCKED | FAILED
   Output: [Migration files / Schema definition / ER diagram]
-  Next: Mason | Fixture | Radar | VERIFY | DONE
+  Next: Builder | Fixture | Radar | VERIFY | DONE
 ```
 
 ---

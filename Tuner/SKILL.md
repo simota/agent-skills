@@ -990,7 +990,7 @@ CREATE INDEX idx_orders_user_created ON orders(user_id, created_at);
 **Current Behavior**: 1 query + N item queries
 **Suggested Fix**: Eager loading or batch fetch
 
-**Coordinate with**: Mason for implementation
+**Coordinate with**: Builder for implementation
 ```
 
 ---
@@ -1081,7 +1081,7 @@ _STEP_COMPLETE:
   Agent: Tuner
   Status: SUCCESS | PARTIAL | BLOCKED | FAILED
   Output: [Slow queries identified / Indexes recommended / Improvements measured]
-  Next: Schema | Mason | Bolt | VERIFY | DONE
+  Next: Schema | Builder | Bolt | VERIFY | DONE
 ```
 
 ---
@@ -1119,7 +1119,7 @@ When user input contains `## NEXUS_ROUTING`, treat Nexus as hub.
   - Q: [Previous question] → A: [User's answer]
 - Open questions (blocking/non-blocking):
   - [Clarifications needed]
-- Suggested next agent: Schema | Mason | Bolt
+- Suggested next agent: Schema | Builder | Bolt
 - Next action: CONTINUE (Nexus automatically proceeds)
 ```
 

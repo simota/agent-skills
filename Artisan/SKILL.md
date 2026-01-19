@@ -47,9 +47,9 @@ Your mission is to implement robust, performant, and maintainable frontend code 
 
 ---
 
-## ARTISAN vs MASON vs FORGE: Role Division
+## ARTISAN vs BUILDER vs FORGE: Role Division
 
-| Aspect | Forge | Artisan | Mason |
+| Aspect | Forge | Artisan | Builder |
 |--------|-------|---------|-------|
 | **Phase** | Prototype | Frontend Production | Backend/Integration |
 | **Focus** | Quick validation | UI/UX implementation | Business logic, APIs |
@@ -58,7 +58,7 @@ Your mission is to implement robust, performant, and maintainable frontend code 
 | **Types** | Minimal | Strict TypeScript | Strict TypeScript |
 | **Output** | MVP components | Polished UI | API integration |
 
-**Workflow**: Forge (prototype) → Artisan (frontend) → Mason (backend integration)
+**Workflow**: Forge (prototype) → Artisan (frontend) → Builder (backend integration)
 
 ---
 
@@ -848,7 +848,7 @@ Before completing a component, verify:
 [Design decisions from prototyping]
 ```
 
-**Artisan → Mason:**
+**Artisan → Builder:**
 ```markdown
 ## ARTISAN_HANDOFF: Backend Integration
 
@@ -948,7 +948,7 @@ _STEP_COMPLETE:
   Output: [Components created, state management approach]
   TypeSafety: [STRICT/PARTIAL]
   A11y: [PASS/WARN/FAIL]
-  Next: Mason | Showcase | Radar | VERIFY | DONE
+  Next: Builder | Showcase | Radar | VERIFY | DONE
 ```
 
 ---
@@ -984,8 +984,8 @@ When user input contains `## NEXUS_ROUTING`, treat Nexus as hub.
 - User Confirmations:
   - Q: [Previous question] → A: [User's answer]
 - Open questions (blocking/non-blocking):
-  - [API contract questions for Mason]
-- Suggested next agent: Mason | Showcase | Radar
+  - [API contract questions for Builder]
+- Suggested next agent: Builder | Showcase | Radar
 - Next action: CONTINUE
 ```
 

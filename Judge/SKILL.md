@@ -36,7 +36,7 @@ Your mission is to review code changes using `codex review` and provide actionab
 - Run `codex review` with appropriate flags before providing findings
 - Categorize findings by severity (CRITICAL, HIGH, MEDIUM, LOW, INFO)
 - Provide line-specific references for each finding
-- Suggest which agent should handle remediation (Mason, Sentinel, Zen, etc.)
+- Suggest which agent should handle remediation (Builder, Sentinel, Zen, etc.)
 - Focus on correctness, not style (style is Zen's domain)
 - Output findings in structured, actionable format
 - Check for alignment between code changes and PR title/commit message
@@ -221,7 +221,7 @@ questions:
       - label: "Block immediately (Recommended)"
         description: "Block the PR and request fixes"
       - label: "Fix and re-review"
-        description: "Request Mason to fix, then re-review with Judge"
+        description: "Request Builder to fix, then re-review with Judge"
       - label: "Proceed with documented risk"
         description: "Allow merge after documenting the risk"
     multiSelect: false
@@ -235,8 +235,8 @@ questions:
     options:
       - label: "Detailed audit with Sentinel (Recommended)"
         description: "Request detailed analysis from security specialist agent"
-      - label: "Immediate fix with Mason"
-        description: "Prioritize fix by requesting Mason"
+      - label: "Immediate fix with Builder"
+        description: "Prioritize fix by requesting Builder"
       - label: "Report to team"
         description: "Report to security team and discuss response strategy"
     multiSelect: false
@@ -263,7 +263,7 @@ questions:
   - question: "Which agent should fix the detected issues?"
     header: "Remediation"
     options:
-      - label: "Request implementation fix from Mason (Recommended)"
+      - label: "Request implementation fix from Builder (Recommended)"
         description: "Request bug fixes and logic fixes from implementation agent"
       - label: "Request refactoring from Zen"
         description: "Request readability and code structure improvements"
@@ -307,7 +307,7 @@ questions:
   // Problematic code
   ```
 - **Suggested Fix**: [How to fix]
-- **Remediation Agent**: Mason / Sentinel / Zen
+- **Remediation Agent**: Builder / Sentinel / Zen
 
 ### High Findings (Should Fix)
 
@@ -340,7 +340,7 @@ questions:
 2. [Priority 2 recommendation]
 
 ### Next Steps
-- **For Mason**: [Bugs to fix]
+- **For Builder**: [Bugs to fix]
 - **For Sentinel**: [Security issues to investigate]
 - **For Zen**: [Refactoring suggestions]
 - **For Radar**: [Tests to add]
@@ -364,12 +364,12 @@ When complex bugs are suspected, Scout investigates first:
 **Request**: Judge to verify fix addresses root cause
 ```
 
-### Mason Integration (Post-Review)
+### Builder Integration (Post-Review)
 
-After Judge finds issues, hand off to Mason for fixes:
+After Judge finds issues, hand off to Builder for fixes:
 
 ```markdown
-## Judge → Mason Fix Request
+## Judge → Builder Fix Request
 
 **Findings**: [List of issues from Judge report]
 **Priority**: CRITICAL findings first
@@ -466,7 +466,7 @@ codex review --commit <SHA> "Review commit changes"
 
 ### 5. ROUTE - Hand Off to Next Agent
 
-- CRITICAL/HIGH bugs → Mason
+- CRITICAL/HIGH bugs → Builder
 - Security issues → Sentinel
 - Quality improvements → Zen
 - Missing tests → Radar
@@ -527,7 +527,7 @@ _STEP_COMPLETE:
   Agent: Judge
   Status: SUCCESS | PARTIAL | BLOCKED | FAILED
   Output: [Finding summary / Verdict / Files reviewed]
-  Next: Mason | Sentinel | Zen | Radar | VERIFY | DONE
+  Next: Builder | Sentinel | Zen | Radar | VERIFY | DONE
 ```
 
 ---
@@ -564,7 +564,7 @@ When user input contains `## NEXUS_ROUTING`, treat Nexus as hub.
   - Q: [Previous question] → A: [User's answer]
 - Open questions (blocking/non-blocking):
   - [Clarifications needed]
-- Suggested next agent: Mason | Sentinel | Zen | Radar
+- Suggested next agent: Builder | Sentinel | Zen | Radar
 - Next action: CONTINUE (Nexus automatically proceeds)
 ```
 

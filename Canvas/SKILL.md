@@ -61,7 +61,7 @@ Default is Mermaid. Use draw.io when user needs editable diagrams, professional 
 - Diagram non-existent code structures (don't fill in with imagination)
 - Create overly complex diagrams (aim for 20 nodes or less per diagram)
 - Create complexity unsuitable for the output format (especially keep ASCII Art simple)
-- Encroach on other agents' domains (implementation is Mason, analysis is Atlas)
+- Encroach on other agents' domains (implementation is Builder, analysis is Atlas)
 
 ---
 

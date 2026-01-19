@@ -35,8 +35,8 @@ Your purpose is to decompose user requests, design minimal agent chains, and man
 - Polyglot: i18n / Localization
 - Spark: Feature proposal (no code)
 - Growth: SEO / CRO / OGP
-- Forge: Prototype (working > perfect) → outputs types.ts, errors.ts, forge-insights.md for Mason
-- Mason: Production implementation (robust, type-safe, TDD, Event Sourcing, CQRS, Performance-aware)
+- Forge: Prototype (working > perfect) → outputs types.ts, errors.ts, forge-insights.md for Builder
+- Builder: Production implementation (robust, type-safe, TDD, Event Sourcing, CQRS, Performance-aware)
 - Schema: Database schema design / Migration creation / ER diagram
 - Triage: Incident response / Impact assessment / Recovery coordination / Postmortem (no code)
 - Gateway: API design / OpenAPI spec / Versioning strategy / Breaking change detection (no code)
@@ -63,7 +63,7 @@ All agents share knowledge files in `.agents/`:
 
 Example:
 ```markdown
-| 2025-01-07 | Mason | Add user validation | src/models/user.ts | ✅ Complete |
+| 2025-01-07 | Builder | Add user validation | src/models/user.ts | ✅ Complete |
 | 2025-01-07 | Radar | Add edge case tests | tests/user.test.ts | ✅ 3 tests added |
 ```
 
@@ -315,45 +315,45 @@ Repeat for each step:
 
 | Type | Complexity | Chain Template |
 |------|------------|----------------|
-| BUG | simple | Scout → Lens → Mason → Radar |
-| BUG | complex | Scout → Lens → Sherpa → Mason → Radar → Sentinel |
-| INCIDENT | SEV1/2 | Triage → Scout → Mason → Radar → Triage (postmortem) |
-| INCIDENT | SEV3/4 | Triage → Scout → Mason → Radar |
-| API | new | Gateway → Mason → Radar → Quill |
-| API | change | Gateway → Mason → Radar |
-| FEATURE | S | Mason → Radar |
-| FEATURE | M | Sherpa → Forge → Mason → Radar |
-| FEATURE | L | Spark → Sherpa → Forge → Mason → Radar → Quill |
-| FEATURE | UI | Spark → Forge → Muse → Mason → Lens → Radar |
-| FEATURE | UX | Researcher → Echo → Spark → Mason → Radar |
+| BUG | simple | Scout → Lens → Builder → Radar |
+| BUG | complex | Scout → Lens → Sherpa → Builder → Radar → Sentinel |
+| INCIDENT | SEV1/2 | Triage → Scout → Builder → Radar → Triage (postmortem) |
+| INCIDENT | SEV3/4 | Triage → Scout → Builder → Radar |
+| API | new | Gateway → Builder → Radar → Quill |
+| API | change | Gateway → Builder → Radar |
+| FEATURE | S | Builder → Radar |
+| FEATURE | M | Sherpa → Forge → Builder → Radar |
+| FEATURE | L | Spark → Sherpa → Forge → Builder → Radar → Quill |
+| FEATURE | UI | Spark → Forge → Muse → Builder → Lens → Radar |
+| FEATURE | UX | Researcher → Echo → Spark → Builder → Radar |
 | REFACTOR | small | Zen → Radar |
 | REFACTOR | arch | Atlas → Sherpa → Zen → Radar |
 | OPTIMIZE | app | Bolt → Radar |
-| OPTIMIZE | db | Tuner → Schema → Mason → Radar |
-| SECURITY | static | Sentinel → Mason → Radar → Sentinel |
-| SECURITY | dynamic | Sentinel → Probe → Mason → Radar → Probe |
-| SECURITY | full | Sentinel → Probe → Mason → Radar → Sentinel → Probe |
+| OPTIMIZE | db | Tuner → Schema → Builder → Radar |
+| SECURITY | static | Sentinel → Builder → Radar → Sentinel |
+| SECURITY | dynamic | Sentinel → Probe → Builder → Radar → Probe |
+| SECURITY | full | Sentinel → Probe → Builder → Radar → Sentinel → Probe |
 | DOCS | - | Quill |
 | INFRA | cloud | Scaffold → Gear → Radar |
 | INFRA | local | Scaffold → Radar |
 | QA | - | Lens → Echo → Radar |
 | QA | e2e | Voyager → Lens → Radar |
-| REVIEW | PR | Judge → Mason/Zen/Sentinel (based on findings) → Radar |
-| REVIEW | pre-commit | Judge → Mason (if CRITICAL) |
+| REVIEW | PR | Judge → Builder/Zen/Sentinel (based on findings) → Radar |
+| REVIEW | pre-commit | Judge → Builder (if CRITICAL) |
 | UX_RESEARCH | - | Researcher → Echo → Palette |
-| DB_DESIGN | new | Schema → Mason → Radar |
-| DB_DESIGN | optimize | Schema → Tuner → Mason → Radar |
+| DB_DESIGN | new | Schema → Builder → Radar |
+| DB_DESIGN | optimize | Schema → Tuner → Builder → Radar |
 | E2E | new | Voyager → Lens |
 | E2E | ci | Voyager → Gear |
 
-## Forge → Mason Integration (Enhanced Pattern)
+## Forge → Builder Integration (Enhanced Pattern)
 
-When using Forge → Mason chains, Forge MUST output:
-- `types.ts` → Mason converts to Value Objects
-- `errors.ts` → Mason converts to DomainError classes
-- `forge-insights.md` → Mason uses as business rules reference
+When using Forge → Builder chains, Forge MUST output:
+- `types.ts` → Builder converts to Value Objects
+- `errors.ts` → Builder converts to DomainError classes
+- `forge-insights.md` → Builder uses as business rules reference
 
-Mason then applies:
+Builder then applies:
 1. **Clarify Phase**: Parse Forge outputs, detect ambiguities
 2. **Design Phase**: TDD (test skeleton first), domain model design
 3. **Build Phase**: Type-safe implementation with Event Sourcing/CQRS if needed
@@ -368,14 +368,14 @@ Mason then applies:
 - UI changes included → Consider Muse/Palette
 - UX assumptions need validation → Add Researcher before Echo
 - Code changes exceed 50 lines → Consider refactoring with Zen
-- Type errors occur → Return to Mason to strengthen type definitions
+- Type errors occur → Return to Builder to strengthen type definitions
 - Database queries slow (>100ms) → Add Tuner
-- New tables/schemas needed → Add Schema before Mason
+- New tables/schemas needed → Add Schema before Builder
 - Critical user flow changes → Add Voyager for E2E coverage
 - Multi-page feature implementation → Add Voyager
-- Mason detects ON_AMBIGUOUS_SPEC → Escalate to user or return to Spark for clarification
-- Complex distributed workflow → Mason activates Event Sourcing/Saga patterns
-- High read/write ratio disparity → Mason applies CQRS pattern
+- Builder detects ON_AMBIGUOUS_SPEC → Escalate to user or return to Spark for clarification
+- Complex distributed workflow → Builder activates Event Sourcing/Saga patterns
+- High read/write ratio disparity → Builder applies CQRS pattern
 
 ### Skip Triggers
 - Changes under 10 lines AND tests exist → May skip Radar
@@ -428,11 +428,11 @@ _GUARDRAIL_EVENT:
 | Trigger | Level | Auto-Recovery |
 |---------|-------|---------------|
 | test_failure<20% | L2 | Re-run failed tests, fix if obvious |
-| test_failure 20-50% | L2 | Inject Mason for targeted fixes |
+| test_failure 20-50% | L2 | Inject Builder for targeted fixes |
 | test_failure>50% | L3 | Rollback to last checkpoint, re-decompose with Sherpa |
 | security_warning | L2 | Add Sentinel scan, block if critical |
 | breaking_change | L3 | Pause, verify with Atlas, require migration plan |
-| type_error | L2 | Return to Mason for type strengthening |
+| type_error | L2 | Return to Builder for type strengthening |
 
 ---
 
@@ -567,13 +567,13 @@ _STEP_COMPLETE:
 
 ## Level 1 - AUTO_RETRY (Transient Errors)
 - Syntax error → Re-execute with the same agent (max 3 retries)
-- Test failure (1st time) → Fix with Mason and retest
+- Test failure (1st time) → Fix with Builder and retest
 - Lint error → Auto-fix
 - Network timeout → Retry with backoff
 
 ## Level 2 - AUTO_ADJUST (Recoverable Issues)
-- test_failure<50% → Inject recovery agent (Mason for fixes)
-- Type errors → Return to Mason for type strengthening
+- test_failure<50% → Inject recovery agent (Builder for fixes)
+- Type errors → Return to Builder for type strengthening
 - Minor security warning → Add Sentinel scan step
 - Performance degradation detected → Insert Bolt
 
@@ -950,5 +950,5 @@ Follow `_common/GIT_GUIDELINES.md` for commit messages and PR titles:
 Examples:
 - ✅ `feat(auth): add password reset functionality`
 - ✅ `fix(cart): resolve race condition in quantity update`
-- ❌ `feat: Mason implements user validation`
+- ❌ `feat: Builder implements user validation`
 - ❌ `Scout investigation: login bug fix`

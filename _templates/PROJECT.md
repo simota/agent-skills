@@ -118,8 +118,8 @@ Format: YYYY-MM-DD | Agent | Action | Files/Scope | Outcome
 |---------|----------------|----------------|
 | Activity Log | After every task | ALL |
 | Architecture Decisions | New tech choices | Atlas, Horizon |
-| Domain Glossary | New term definitions | Mason, Quill |
-| API & External Services | New integrations, rate limits | Mason, Gear |
+| Domain Glossary | New term definitions | Builder, Quill |
+| API & External Services | New integrations, rate limits | Builder, Gear |
 | Known Gotchas | Tricky issues discovered | Scout, Any |
 | Security Considerations | Security-related changes | Sentinel |
 | Performance Budgets | Metrics updates | Bolt, Growth |

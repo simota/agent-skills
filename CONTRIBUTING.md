@@ -79,7 +79,7 @@ All final outputs must be written in Japanese.
 
 | 項目 | 規約 |
 |------|------|
-| エージェント名 | PascalCase（例: Scout, Mason, Artisan） |
+| エージェント名 | PascalCase（例: Scout, Builder, Artisan） |
 | ファイル名 | `[AgentName]/SKILL.md` |
 | 出力言語 | 日本語 |
 | コード・コミット | 英語 |
@@ -92,7 +92,7 @@ type(scope): description
 
 Examples:
 - feat(agents): add new DataFlow agent
-- fix(Mason): resolve type inference issue
+- fix(Builder): resolve type inference issue
 - docs(README): update usage examples
 ```
 

@@ -72,9 +72,9 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 | エージェント | 説明 | 出力 |
 |------------|------|------|
-| **Mason** | 本番実装。TDD・Event Sourcing・CQRS・パフォーマンス最適化を備えた型安全な実装職人。仕様の曖昧性検出、Forgeからの自動引き継ぎ対応 | プロダクションコード |
+| **Builder** | 本番実装。TDD・Event Sourcing・CQRS・パフォーマンス最適化を備えた型安全な実装職人。仕様の曖昧性検出、Forgeからの自動引き継ぎ対応 | プロダクションコード |
 | **Artisan** | フロントエンド本番実装の職人。React/Vue/Svelte、Hooks設計、状態管理、Server Components、フォーム処理、データフェッチング | フロントエンドコード |
-| **Forge** | プロトタイプ作成。完璧より動くものを優先。Mason連携用にtypes.ts, errors.ts, forge-insights.mdを出力 | MVP/PoC |
+| **Forge** | プロトタイプ作成。完璧より動くものを優先。Builder連携用にtypes.ts, errors.ts, forge-insights.mdを出力 | MVP/PoC |
 
 ### パフォーマンス
 
@@ -215,20 +215,20 @@ questions:
 
 | タスク | 説明 | チェーン |
 |--------|------|----------|
-| BUG/simple | 単純なバグ修正 | Scout → Mason → Radar |
-| BUG/complex | 複雑なバグ（RCA必要） | Scout → Sherpa → Mason → Radar → Sentinel |
+| BUG/simple | 単純なバグ修正 | Scout → Builder → Radar |
+| BUG/complex | 複雑なバグ（RCA必要） | Scout → Sherpa → Builder → Radar → Sentinel |
 | BUG/frontend | フロントエンドのバグ | Scout → Artisan → Radar |
 
 #### 機能開発
 
 | タスク | 説明 | チェーン |
 |--------|------|----------|
-| FEATURE/S | 小規模機能 | Mason → Radar |
-| FEATURE/M | 中規模機能 | Sherpa → Forge → Mason → Radar |
-| FEATURE/L | 大規模機能 | Spark → Sherpa → Forge → Mason → Radar → Quill |
+| FEATURE/S | 小規模機能 | Builder → Radar |
+| FEATURE/M | 中規模機能 | Sherpa → Forge → Builder → Radar |
+| FEATURE/L | 大規模機能 | Spark → Sherpa → Forge → Builder → Radar → Quill |
 | FEATURE/frontend | フロントエンド機能 | Sherpa → Forge → Artisan → Radar |
-| FEATURE/fullstack | フルスタック機能 | Sherpa → Forge → Artisan → Mason → Radar |
-| FEATURE/api | API開発 | Gateway → Mason → Radar |
+| FEATURE/fullstack | フルスタック機能 | Sherpa → Forge → Artisan → Builder → Radar |
+| FEATURE/api | API開発 | Gateway → Builder → Radar |
 
 #### UI/UX
 
@@ -254,16 +254,16 @@ questions:
 | タスク | 説明 | チェーン |
 |--------|------|----------|
 | PERF/frontend | フロントエンド最適化 | Bolt → Artisan → Radar |
-| PERF/backend | バックエンド最適化 | Bolt → Mason → Radar |
-| PERF/db | データベース最適化 | Tuner → Schema → Mason → Radar |
+| PERF/backend | バックエンド最適化 | Bolt → Builder → Radar |
+| PERF/db | データベース最適化 | Tuner → Schema → Builder → Radar |
 
 #### セキュリティ
 
 | タスク | 説明 | チェーン |
 |--------|------|----------|
-| SECURITY/audit | 静的解析 | Sentinel → Mason → Radar |
-| SECURITY/pentest | 動的テスト | Probe → Mason → Radar → Probe |
-| SECURITY/full | 完全監査 | Sentinel → Probe → Mason → Radar → Sentinel |
+| SECURITY/audit | 静的解析 | Sentinel → Builder → Radar |
+| SECURITY/pentest | 動的テスト | Probe → Builder → Radar → Probe |
+| SECURITY/full | 完全監査 | Sentinel → Probe → Builder → Radar → Sentinel |
 
 #### テスト
 
@@ -277,9 +277,9 @@ questions:
 
 | タスク | 説明 | チェーン |
 |--------|------|----------|
-| REVIEW/pr | PRレビュー | Judge → Zen/Mason/Sentinel |
+| REVIEW/pr | PRレビュー | Judge → Zen/Builder/Sentinel |
 | REVIEW/security | セキュリティレビュー | Judge → Sentinel |
-| REVIEW/coderabbit | CodeRabbitレビュー | Rabbit → Zen/Mason |
+| REVIEW/coderabbit | CodeRabbitレビュー | Rabbit → Zen/Builder |
 
 #### ドキュメント
 
@@ -303,9 +303,9 @@ questions:
 |--------|------|----------|
 | i18n | 国際化対応 | Polyglot → Radar |
 | GROWTH/seo | SEO改善 | Growth → Artisan → Radar |
-| ANALYTICS | 分析基盤構築 | Pulse → Mason → Radar |
-| A/B | A/Bテスト設計 | Experiment → Mason → Radar |
-| INCIDENT | 障害対応 | Triage → Scout → Mason |
+| ANALYTICS | 分析基盤構築 | Pulse → Builder → Radar |
+| A/B | A/Bテスト設計 | Experiment → Builder → Radar |
+| INCIDENT | 障害対応 | Triage → Scout → Builder |
 
 ## 共有ナレッジ
 
@@ -369,7 +369,7 @@ skills/
 ├── Horizon/SKILL.md    # モダナイゼーション
 ├── Judge/SKILL.md      # コードレビュー（codex review）
 ├── Rabbit/SKILL.md     # コードレビュー（coderabbit review）
-├── Mason/SKILL.md      # 本番実装
+├── Builder/SKILL.md      # 本番実装
 ├── Muse/SKILL.md       # デザイン
 ├── Nexus/SKILL.md      # オーケストレーター
 ├── Palette/SKILL.md    # UX
@@ -410,7 +410,7 @@ skills/
 ログイン機能を実装したいのですが、どのような手順で進めればよいですか？
 ```
 
-**出力**: タスク分類（FEATURE/M）、推奨チェーン（Sherpa → Forge → Mason → Radar）、最初のステップのプロンプト
+**出力**: タスク分類（FEATURE/M）、推奨チェーン（Sherpa → Forge → Builder → Radar）、最初のステップのプロンプト
 
 ---
 
@@ -550,16 +550,16 @@ src/auth/login.ts をレビューしてください。AIで生成したコード
 
 #### 実装
 
-##### 本番実装（Mason）
+##### 本番実装（Builder）
 
 ```
-/Mason
+/Builder
 プロトタイプは動作しますが、本番環境に適した品質に仕上げてください。
 ```
 
 **出力**: 型安全化、エラーハンドリング、バリデーション追加されたプロダクションコード
 
-**Mason の強化機能**:
+**Builder の強化機能**:
 - **Clarify Phase**: 仕様の曖昧性を検出し、質問または複数案を提示
 - **Design Phase**: TDD（テストファーストで設計）
 - **Build Phase**: Event Sourcing / CQRS / Saga パターン対応
@@ -1056,7 +1056,7 @@ CTAボタンの色変更による効果を検証するA/Bテストを設計し�
 ## NEXUS_AUTORUN
 ```
 
-**実行チェーン**: Spark（仕様策定）→ Sherpa（タスク分解）→ Forge（プロトタイプ）→ Mason（本番実装）→ Radar（テスト）→ Quill（ドキュメント）
+**実行チェーン**: Spark（仕様策定）→ Sherpa（タスク分解）→ Forge（プロトタイプ）→ Builder（本番実装）→ Radar（テスト）→ Quill（ドキュメント）
 
 ---
 
@@ -1070,7 +1070,7 @@ CTAボタンの色変更による効果を検証するA/Bテストを設計し�
 ## NEXUS_AUTORUN
 ```
 
-**実行チェーン**: Scout（調査）→ Sherpa（タスク分解）→ Mason（修正）→ Radar（回帰テスト）→ Sentinel（セキュリティ確認）
+**実行チェーン**: Scout（調査）→ Sherpa（タスク分解）→ Builder（修正）→ Radar（回帰テスト）→ Sentinel（セキュリティ確認）
 
 ---
 
@@ -1094,7 +1094,7 @@ Clean Architectureに沿ってリファクタリングしたいです。
 星評価とコメントを入力できるようにしたいです。
 ```
 
-**実行チェーン**: Spark（仕様）→ Forge（UI プロトタイプ）→ Muse（デザイン調整）→ Mason（実装）→ Radar（テスト）
+**実行チェーン**: Spark（仕様）→ Forge（UI プロトタイプ）→ Muse（デザイン調整）→ Builder（実装）→ Radar（テスト）
 
 ---
 
@@ -1118,7 +1118,7 @@ Nexusが自動でチェーンを実行：
 
 ```
 ## Nexus Execution: 検索機能の追加
-- Chain: **Spark** → **Sherpa** → **Mason** → **Radar**
+- Chain: **Spark** → **Sherpa** → **Builder** → **Radar**
 - Mode: AUTORUN_FULL
 
 ### Executing Step 1/4: Spark
@@ -1152,7 +1152,7 @@ Nexusがチェーンを設計し、次のステップを提示：
 
 ```
 ## Nexus Plan: 検索機能の追加
-- Chain: **Spark** → **Sherpa** → **Mason** → **Radar**
+- Chain: **Spark** → **Sherpa** → **Builder** → **Radar**
 - Current step: 1/4
 
 ### Next Step: Spark
@@ -1180,7 +1180,7 @@ ECサイトのチェックアウトフローを実装したいです。
 
 ### 👉 NOW: カート内容の型定義を作成
 CartItem, CartSummary インターフェースを定義してください。
-*(Mason を呼び出しますか？)*
+*(Builder を呼び出しますか？)*
 
 ### 📋 Upcoming Path:
 - [ ] カートAPI エンドポイント作成

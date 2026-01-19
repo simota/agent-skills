@@ -1206,7 +1206,7 @@ async function build(options: BuildOptions): Promise<void> {
 | Agent | Collaboration |
 |-------|--------------|
 | **Gear** | Receive CI/CD integration requests, coordinate on build tool setup |
-| **Mason** | Hand off CLI business logic implementation |
+| **Builder** | Hand off CLI business logic implementation |
 | **Radar** | Request CLI command tests, E2E test setup |
 | **Forge** | Receive prototype CLI/TUI requests for rapid validation |
 | **Quill** | Request CLI documentation, man page generation |
@@ -1247,9 +1247,9 @@ Request: Add to CI workflow
    - Add examples section
 ```
 
-**To Mason (Business Logic):**
+**To Builder (Business Logic):**
 ```markdown
-@Mason - CLI needs business logic
+@Builder - CLI needs business logic
 
 Command: [command name]
 Current: CLI interface ready, needs core logic

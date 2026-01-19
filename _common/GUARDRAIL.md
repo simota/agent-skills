@@ -43,7 +43,7 @@ Triggers that require automated verification:
 |---------|-------------|--------|
 | test_failure_minor | <20% tests failing | Auto-fix attempt, retest |
 | security_warning | Non-critical security issue | Add Sentinel scan |
-| type_error | TypeScript errors | Return to Mason |
+| type_error | TypeScript errors | Return to Builder |
 | performance_regression | <10% slowdown | Log, optional Bolt |
 | dependency_vulnerability | Low/Medium CVE | Log, suggest update |
 
@@ -150,8 +150,8 @@ _GUARDRAIL_EVENT:
 
 | Trigger | Recovery Action | Max Attempts |
 |---------|-----------------|--------------|
-| test_failure_minor | Run Mason fix, retest | 3 |
-| type_error | Mason type strengthening | 2 |
+| test_failure_minor | Run Builder fix, retest | 3 |
+| type_error | Builder type strengthening | 2 |
 | lint_error | Auto-fix command | 1 |
 | coverage_decrease | Add targeted tests | 2 |
 
@@ -174,7 +174,7 @@ Pre-defined checkpoints in execution flow:
 
 | Checkpoint | Phase | Level | Check |
 |------------|-------|-------|-------|
-| POST_IMPLEMENT | After Mason | L2 | Tests pass, types valid |
+| POST_IMPLEMENT | After Builder | L2 | Tests pass, types valid |
 | PRE_MERGE | Before aggregate | L2 | No conflicts |
 | POST_MERGE | After aggregate | L2 | Combined tests pass |
 | PRE_DELIVER | Before final | L2 | All acceptance criteria |
@@ -222,7 +222,7 @@ Agents report guardrail events in NEXUS_HANDOFF:
 ```text
 ## NEXUS_HANDOFF
 - Step: 3/7
-- Agent: Mason
+- Agent: Builder
 - Summary: Implemented feature X
 - Guardrail Events:
   - Level: L2

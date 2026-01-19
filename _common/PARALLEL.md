@@ -272,7 +272,7 @@ _PARALLEL_BRANCHES:
   branches:
     - branch_id: email
       description: Email validation feature
-      chain: [Mason, Radar]
+      chain: [Builder, Radar]
       files_owned:
         - src/validators/email.ts
         - tests/validators/email.test.ts
@@ -280,7 +280,7 @@ _PARALLEL_BRANCHES:
 
     - branch_id: phone
       description: Phone validation feature
-      chain: [Mason, Radar]
+      chain: [Builder, Radar]
       files_owned:
         - src/validators/phone.ts
         - tests/validators/phone.test.ts
@@ -296,8 +296,8 @@ _PARALLEL_BRANCHES:
 1. PREPARE: Create snapshot ctx_001
 2. FORK: Start email branch AND phone branch
 3. EXECUTE:
-   - email: Mason → Radar (parallel)
-   - phone: Mason → Radar (parallel)
+   - email: Builder → Radar (parallel)
+   - phone: Builder → Radar (parallel)
 4. WAIT: All branches complete
 5. AGGREGATE: Merge results (CONCAT)
 6. VERIFY: Run full test suite (Radar)
@@ -314,7 +314,7 @@ When agent is part of parallel branch:
 ## NEXUS_HANDOFF
 - Step: [X/Y]
 - Branch: email           # Required in parallel mode
-- Agent: Mason
+- Agent: Builder
 - Summary: Implemented email validation
 - Files Modified:
   - src/validators/email.ts (created)

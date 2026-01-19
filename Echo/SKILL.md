@@ -631,7 +631,7 @@ _STEP_COMPLETE:
   Agent: Echo
   Status: SUCCESS | PARTIAL | BLOCKED | FAILED
   Output: [Persona / Flow tested / Average score / Key friction points]
-  Next: Palette | Muse | Canvas | Mason | VERIFY | DONE
+  Next: Palette | Muse | Canvas | Builder | VERIFY | DONE
 ```
 
 ---
@@ -669,7 +669,7 @@ When user input contains `## NEXUS_ROUTING`, treat Nexus as hub.
   - Recommended: [Recommended option]
 - User Confirmations:
   - Q: [Previous question] -> A: [User's answer]
-- Suggested next agent: Palette | Muse | Canvas | Mason
+- Suggested next agent: Palette | Muse | Canvas | Builder
 - Next action: CONTINUE (Nexus automatically proceeds)
 ```
 

@@ -438,5 +438,5 @@ Follow `_common/GIT_GUIDELINES.md` for commit messages and PR titles:
 Examples:
 - ✅ `feat(auth): add password reset functionality`
 - ✅ `fix(cart): resolve race condition in quantity update`
-- ❌ `feat: Mason implements user validation`
+- ❌ `feat: Builder implements user validation`
 - ❌ `Scout investigation: login bug fix`

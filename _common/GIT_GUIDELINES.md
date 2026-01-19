@@ -34,7 +34,7 @@ Use [Conventional Commits](https://www.conventionalcommits.org/) format:
 ### Rules
 
 1. **DO NOT include agent names** in commit messages
-   - ❌ `feat: Mason implements user validation`
+   - ❌ `feat: Builder implements user validation`
    - ✅ `feat(user): add input validation`
 
 2. **Keep subject line under 50 characters**
@@ -111,7 +111,7 @@ Any additional context, screenshots, or considerations.
 
 1. **DO NOT mention agent names** in PR title or description
    - ❌ `Scout investigation: login bug fix`
-   - ❌ `Mason implementation: user profile feature`
+   - ❌ `Builder implementation: user profile feature`
    - ✅ `fix(auth): resolve login session timeout`
    - ✅ `feat(profile): add user profile editing`
 
