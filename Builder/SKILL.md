@@ -1167,7 +1167,7 @@ function match<T, E, U>(
 
 // Usage
 const message = match(fetchUser(userId), {
-  ok: (user) => `Welcome, ${user.name}!`,
+  ok: (user) => `Welcome, ${user.name}`,
   err: (error) => {
     switch (error.code) {
       case 'NOT_FOUND': return 'User not found';
