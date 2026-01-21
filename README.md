@@ -1,14 +1,14 @@
 # AI Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Agents](https://img.shields.io/badge/Agents-40-blue.svg)]()
+[![Agents](https://img.shields.io/badge/Agents-41-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 🤖 専門AIエージェントチームによる協調開発を実現するスキルコレクション
 
 ## ✨ Features
 
-- **40種類の専門エージェント** - バグ調査、テスト、セキュリティ、UI/UX、インフラまで網羅
+- **41種類の専門エージェント** - バグ調査、テスト、セキュリティ、UI/UX、インフラまで網羅
 - **Nexusオーケストレーター** - タスクを分析し最適なエージェントチェーンを自動設計
 - **プラットフォーム非依存** - Claude Code、Codex CLI、Gemini CLI等で動作
 
@@ -35,7 +35,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 ## 📚 概要
 
-このリポジトリには、ソフトウェア開発の様々な側面を専門とする40種類のAIエージェントが含まれています。各エージェントは特定のドメインに特化しており、**Nexus**オーケストレーターによって統括・連携されます。
+このリポジトリには、ソフトウェア開発の様々な側面を専門とする41種類のAIエージェントが含まれています。各エージェントは特定のドメインに特化しており、**Nexus**オーケストレーターによって統括・連携されます。
 
 ## エージェント一覧
 
@@ -55,6 +55,14 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Compete** | 競合調査・差別化ポイント特定・ポジショニング。SWOT分析、機能マトリクス | 競合分析レポート |
 | **Voice** | ユーザーフィードバック収集・NPS調査設計・感情分析・インサイト抽出 | フィードバックレポート |
 | **Researcher** | ユーザーリサーチ設計・インタビューガイド作成・定性分析・ペルソナ/ジャーニーマップ作成 | リサーチレポート |
+
+### Git/PR管理
+
+| エージェント | 説明 | 出力 |
+|------------|------|------|
+| **Guardian** | Git/PRの番人。変更のSignal/Noise分析、コミット粒度最適化、ブランチ命名、PR戦略提案 | 分析レポート、PR準備 |
+
+**Guardian → Judge → Zen の連携**：Guardian（PR準備）→ Judge（レビュー）→ Zen（修正）
 
 ### 品質保証
 
@@ -281,6 +289,15 @@ questions:
 | REVIEW/security | セキュリティレビュー | Judge → Sentinel |
 | REVIEW/coderabbit | CodeRabbitレビュー | Rabbit → Zen/Builder |
 
+#### Git/PR
+
+| タスク | 説明 | チェーン |
+|--------|------|----------|
+| GIT/pr-prep | PR準備 | Guardian → Judge |
+| GIT/commit-split | コミット分割 | Guardian |
+| GIT/pr-full | 実装→PR→レビュー | Builder → Guardian → Judge → Zen |
+| GIT/release | リリースノート生成 | Guardian |
+
 #### ドキュメント
 
 | タスク | 説明 | チェーン |
@@ -365,6 +382,7 @@ skills/
 ├── Forge/SKILL.md      # プロトタイプ
 ├── Gateway/SKILL.md    # API設計
 ├── Gear/SKILL.md       # DevOps
+├── Guardian/SKILL.md   # Git/PR管理
 ├── Growth/SKILL.md     # SEO/CRO
 ├── Horizon/SKILL.md    # モダナイゼーション
 ├── Judge/SKILL.md      # コードレビュー（codex review）
@@ -399,7 +417,7 @@ skills/
 
 ### 単一エージェントの使用
 
-> カテゴリ別に全40エージェントの使用例を紹介します。
+> カテゴリ別に全41エージェントの使用例を紹介します。
 
 #### オーケストレーション
 
@@ -446,6 +464,48 @@ skills/
 ```
 
 **出力**: 既存データ/ロジックを活用した機能提案の仕様書（Markdown）
+
+---
+
+#### Git/PR管理
+
+##### PR準備（Guardian）
+
+```
+/Guardian
+このブランチの変更をPRにする前に、コミット構造とPR戦略を提案してください。
+```
+
+**出力**: 変更のSignal/Noise分析、コミット分割計画、ブランチ命名提案、PR説明文ドラフト
+
+---
+
+##### コミット分割（Guardian）
+
+```
+/Guardian
+47ファイルの変更があります。適切なコミット粒度に分割してください。
+```
+
+**出力**: 論理的な単位ごとのコミット分割計画、git addコマンド例
+
+---
+
+##### ブランチ命名（Guardian）
+
+```
+/Guardian
+「ユーザー認証にOAuth2を追加する」タスクのブランチ名を提案してください。
+```
+
+**出力**: 規約に準拠したブランチ名候補（feat/oauth2-integration等）
+
+---
+
+**Guardian vs Judge vs Zen の役割分担**:
+- **Guardian**: PR準備（変更分析、コミット構造、ブランチ命名）
+- **Judge**: PRレビュー（バグ検出、問題指摘）
+- **Zen**: コード修正（リファクタリング、品質改善）
 
 ---
 
