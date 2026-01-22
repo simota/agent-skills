@@ -429,6 +429,19 @@ Use this matrix to classify incidents consistently.
 - SEV2: Within 48 hours
 - SEV3/4: Within 1 week (if warranted)
 
+**External Incident Report (Professional Incident Report):**
+
+After SEV1/SEV2 resolution, consider generating an external-facing incident report.
+
+| Report Type | Audience | Timing |
+|-------------|----------|--------|
+| Detailed Report | Customers, Partners, Executives | After SEV1/SEV2 resolution (Recommended) |
+| Summary Report | When quick sharing is needed | On request |
+| None | Internal impact only | SEV3/SEV4 |
+
+→ Confirm via `ON_INCIDENT_REPORT_GENERATION` trigger
+→ Templates: `PROFESSIONAL_INCIDENT_REPORT_TEMPLATE` or `EXECUTIVE_SUMMARY_ONLY_TEMPLATE`
+
 **Knowledge Capture (Required for SEV1/SEV2):**
 After postmortem completion, add learnings to `.agents/PROJECT.md`:
 ```markdown
@@ -525,6 +538,187 @@ Also update `.agents/triage.md` if:
 - [Link to incident channel/thread]
 - [Link to monitoring dashboards]
 - [Link to related PRs/commits]
+```
+
+---
+
+## PROFESSIONAL INCIDENT REPORT
+
+Professional Incident Report (PIR) is a detailed report for external audiences including customers, partners, and executives.
+
+### Differences from Postmortem
+
+| Aspect | Postmortem | Incident Report (PIR) |
+|--------|------------|----------------------|
+| Purpose | Internal learning & improvement | **External reporting & trust recovery** |
+| Audience | Technical team | **Customers, Partners, Executives** |
+| Detail Level | Technical details | **Business perspective + appropriate technical explanation** |
+| Tone | Candid retrospective | **Professional, trust-focused** |
+| Visibility | Internal only | **Externally shareable** |
+
+### Generation Timing
+
+- **After SEV1/SEV2 resolution**: Generate detailed report by default (Recommended)
+- **SEV3/SEV4**: When impact scope is large or upon customer request
+- **On request**: When explicitly requested by user
+
+### PROFESSIONAL_INCIDENT_REPORT_TEMPLATE
+
+```markdown
+# Incident Report
+
+## Metadata
+| Field | Value |
+|-------|-------|
+| Report ID | PIR-YYYY-NNNN |
+| Incident ID | INC-YYYY-NNNN |
+| Created Date | YYYY-MM-DD |
+| Severity | SEV[1-4] |
+| Status | Resolved / Monitoring |
+
+---
+
+## 1. Executive Summary
+
+### Overview
+[1-2 sentences describing the incident]
+
+### Customer Impact
+- **Affected Services**: [Service name]
+- **Impact Duration**: YYYY-MM-DD HH:MM - HH:MM (Timezone)
+- **Impact Scope**: [User count/Region/Features]
+
+### Resolution
+- **Recovery Completed**: YYYY-MM-DD HH:MM (Timezone)
+- **Current Status**: Normal operation / Continued monitoring
+- **Prevention Measures**: [1-2 key measures]
+
+---
+
+## 2. Incident Details
+
+### Sequence of Events
+[Chronological explanation]
+
+### Impact Details
+
+#### Service Impact
+| Service/Feature | Impact Description | Severity |
+|-----------------|-------------------|----------|
+| [Service 1] | [Description] | High/Medium/Low |
+
+#### Data Impact
+- Data Loss: None / Yes ([Details])
+- Data Integrity: No impact / [Details]
+
+---
+
+## 3. Timeline
+
+| Time (Timezone) | Event |
+|-----------------|-------|
+| MM/DD HH:MM | Anomaly detected |
+| MM/DD HH:MM | Investigation started |
+| MM/DD HH:MM | Root cause identified |
+| MM/DD HH:MM | Remediation applied |
+| MM/DD HH:MM | Recovery confirmed |
+
+### Response Metrics
+- **Mean Time to Detect (MTTD)**: [X minutes]
+- **Mean Time to Recover (MTTR)**: [X minutes]
+
+---
+
+## 4. Root Cause and Remediation
+
+### Root Cause
+[Clear explanation avoiding overly technical jargon]
+
+### Actions Taken
+| Action | Description | Status |
+|--------|-------------|--------|
+| Emergency Response | [Description] | Complete |
+| Permanent Fix | [Description] | Complete / In Progress |
+
+---
+
+## 5. Prevention Measures
+
+### Technical Measures
+| Measure | Expected Effect | Timeline |
+|---------|-----------------|----------|
+| [Measure 1] | [Expected effect] | Complete / YYYY-MM-DD |
+
+### Process Improvements
+| Improvement | Description | Timeline |
+|-------------|-------------|----------|
+| [Improvement 1] | [Description] | Complete / YYYY-MM-DD |
+
+---
+
+## 6. Contact Information
+
+For questions or concerns, please contact us:
+
+- **Contact**: [Department/Contact info]
+- **Hours**: [Business hours]
+
+---
+
+## Appendix (Technical Details)
+
+<details>
+<summary>Technical Details (Click to expand)</summary>
+
+### Root Cause Technical Details
+[Detailed explanation for technical teams]
+
+### Change History
+| Date | Change | Author |
+|------|--------|--------|
+| [Date] | [Description] | [Name] |
+
+### Related Documents
+- Postmortem: [Link]
+- Incident Ticket: [Link]
+
+</details>
+```
+
+### EXECUTIVE_SUMMARY_ONLY_TEMPLATE
+
+Template for summary report (Executive Summary only):
+
+```markdown
+# Incident Report (Summary)
+
+## Metadata
+| Field | Value |
+|-------|-------|
+| Report ID | PIR-YYYY-NNNN |
+| Incident ID | INC-YYYY-NNNN |
+| Created Date | YYYY-MM-DD |
+
+## Executive Summary
+
+### Overview
+[1-2 sentences describing the incident]
+
+### Customer Impact
+- **Affected Services**: [Service name]
+- **Impact Duration**: YYYY-MM-DD HH:MM - HH:MM (Timezone)
+- **Impact Scope**: [User count/Region/Features]
+
+### Resolution
+- **Recovery Completed**: YYYY-MM-DD HH:MM (Timezone)
+- **Current Status**: Normal operation / Continued monitoring
+- **Prevention Measures**: [1-2 key measures]
+
+### Contact
+- **Contact**: [Department/Contact info]
+
+---
+For detailed report, please contact us.
 ```
 
 ---
@@ -737,6 +931,7 @@ See `_common/INTERACTION.md` for standard formats.
 | ON_BUILDER_HANDOFF | ON_DECISION | When requesting fix from Builder |
 | ON_POSTMORTEM_SCOPE | ON_COMPLETION | Determining postmortem depth |
 | ON_SECURITY_ESCALATION | ON_DETECTION | When security incident suspected |
+| ON_INCIDENT_REPORT_GENERATION | ON_COMPLETION | After incident resolution, generate external report |
 
 ### Question Templates
 
@@ -829,6 +1024,21 @@ questions:
         description: "Close after additional 24 hours of monitoring"
       - label: "Additional action needed"
         description: "Keep open due to incomplete actions"
+    multiSelect: false
+```
+
+**ON_INCIDENT_REPORT_GENERATION:**
+```yaml
+questions:
+  - question: "Generate an external incident report?"
+    header: "Report Generation"
+    options:
+      - label: "Generate detailed report (Recommended)"
+        description: "Create comprehensive incident report for customers and partners"
+      - label: "Generate summary report"
+        description: "Create Executive Summary only report"
+      - label: "Skip report generation"
+        description: "Complete with postmortem only"
     multiSelect: false
 ```
 
@@ -1287,6 +1497,10 @@ _STEP_COMPLETE:
     status: [Investigating / Mitigating / Resolved / Monitoring]
     mitigation_applied: [Yes/No - description if yes]
     root_cause_status: [Pending / Identified / Confirmed]
+    external_report:
+      generated: [Yes/No]
+      type: [detailed/summary/none]
+      report_id: PIR-YYYY-NNNN  # if generated
   Handoff:
     Format: TRIAGE_TO_SCOUT_HANDOFF | TRIAGE_TO_BUILDER_HANDOFF | etc.
     Content: [Full handoff content for next agent]
@@ -1294,6 +1508,7 @@ _STEP_COMPLETE:
     - [Incident report]
     - [Timeline]
     - [Postmortem if completed]
+    - [Professional Incident Report if generated]
   Risks:
     - [Ongoing risks]
     - [Potential recurrence factors]
