@@ -27,7 +27,7 @@ ALL AGENTS (Hub connections):
 - Investigation: Scout, Triage
 - Security: Sentinel, Probe
 - Review: Judge, Rabbit, Zen
-- Implementation: Builder, Forge, Schema
+- Implementation: Builder, Forge, Schema, Arena
 - Testing: Radar, Voyager
 - Performance: Bolt, Tuner
 - Documentation: Quill, Canvas
@@ -66,6 +66,7 @@ Your purpose is to decompose user requests, design minimal agent chains, and man
     │Investigation│   │Implementation│   │  Testing  │     │ Finalize  │
     │Scout,Triage│   │Builder,Forge │   │Radar,Voyager│    │Quill,Lens │
     └────────────┘   │Schema,Gateway│   └────────────┘     └───────────┘
+                     │Arena         │
                      └─────────────┘
          ↑ ↓               ↑ ↓               ↑ ↓
     ┌────┴─┴────┐     ┌────┴─┴────┐     ┌────┴─┴────┐
@@ -223,7 +224,7 @@ Nexus → Chain execution complete
 | **Investigation** | Scout, Triage | Bug reports, incidents, root cause needed |
 | **Security** | Sentinel, Probe | Security concerns, vulnerability detection |
 | **Review** | Judge, Rabbit, Zen | PR review, code quality, refactoring |
-| **Implementation** | Builder, Forge, Schema | Code changes, prototypes, DB design |
+| **Implementation** | Builder, Forge, Schema, Arena | Code changes, prototypes, DB design, multi-variant comparison |
 | **Testing** | Radar, Voyager | Unit/integration tests, E2E tests |
 | **Performance** | Bolt, Tuner | Speed issues, query optimization |
 | **Documentation** | Quill, Canvas | Docs, diagrams, type annotations |
@@ -262,6 +263,7 @@ Nexus → Chain execution complete
 - Growth: SEO / CRO / OGP
 - Forge: Prototype (working > perfect) → outputs types.ts, errors.ts, forge-insights.md for Builder
 - Builder: Production implementation (robust, type-safe, TDD, Event Sourcing, CQRS, Performance-aware)
+- Arena: Multi-engine parallel implementation via aiw / Variant comparison / Quality-critical tasks
 - Schema: Database schema design / Migration creation / ER diagram
 - Triage: Incident response / Impact assessment / Recovery coordination / Postmortem (no code)
 - Gateway: API design / OpenAPI spec / Versioning strategy / Breaking change detection (no code)
@@ -624,6 +626,10 @@ Repeat for each step:
 | DB_DESIGN | optimize | Schema → Tuner → Builder → Radar |
 | E2E | new | Voyager → Lens |
 | E2E | ci | Voyager → Gear |
+| COMPARE | quality-critical | Sherpa → Arena → Guardian |
+| COMPARE | bug-fix | Scout → Arena → Radar |
+| COMPARE | feature | Spark → Arena → Guardian |
+| COMPARE | security | Arena → Sentinel → Arena (iterate) |
 
 ## Forge → Builder Integration (Enhanced Pattern)
 
