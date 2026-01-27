@@ -1,14 +1,14 @@
 # AI Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Agents](https://img.shields.io/badge/Agents-41-blue.svg)]()
+[![Agents](https://img.shields.io/badge/Agents-40-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 🤖 専門AIエージェントチームによる協調開発を実現するスキルコレクション
 
 ## ✨ Features
 
-- **41種類の専門エージェント** - バグ調査、テスト、セキュリティ、UI/UX、インフラまで網羅
+- **40種類の専門エージェント** - バグ調査、テスト、セキュリティ、UI/UX、インフラまで網羅
 - **Nexusオーケストレーター** - タスクを分析し最適なエージェントチェーンを自動設計
 - **プラットフォーム非依存** - Claude Code、Codex CLI、Gemini CLI等で動作
 
@@ -35,7 +35,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 ## 📚 概要
 
-このリポジトリには、ソフトウェア開発の様々な側面を専門とする41種類のAIエージェントが含まれています。各エージェントは特定のドメインに特化しており、**Nexus**オーケストレーターによって統括・連携されます。
+このリポジトリには、ソフトウェア開発の様々な側面を専門とする40種類のAIエージェントが含まれています。各エージェントは特定のドメインに特化しており、**Nexus**オーケストレーターによって統括・連携されます。
 
 ## エージェント一覧
 
@@ -72,8 +72,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Voyager** | E2Eテスト専門。Playwright/Cypress設定、Page Object設計、視覚回帰、CI統合 | E2Eテストコード |
 | **Sentinel** | セキュリティ静的分析（SAST）・脆弱性パターン検出・入力検証追加 | セキュリティ修正 |
 | **Probe** | セキュリティ動的テスト（DAST）・OWASP ZAP/Nuclei連携・ペネトレーションテスト | 脆弱性レポート |
-| **Judge** | codex reviewによるコードレビュー・PRレビュー自動化・コミット前チェック | レビューレポート |
-| **Rabbit** | coderabbit reviewによるコードレビュー・ファイルレビュー・セキュリティフォーカス・自動修正・AI幻覚検出 | レビューレポート |
+| **Judge** | codex reviewによるコードレビュー・PRレビュー自動化・コミット前チェック・AI幻覚検出 | レビューレポート |
 | **Zen** | リファクタリング・コード品質改善（動作は変えない） | コード改善 |
 
 ### 実装
@@ -287,7 +286,6 @@ questions:
 |--------|------|----------|
 | REVIEW/pr | PRレビュー | Judge → Zen/Builder/Sentinel |
 | REVIEW/security | セキュリティレビュー | Judge → Sentinel |
-| REVIEW/coderabbit | CodeRabbitレビュー | Rabbit → Zen/Builder |
 
 #### Git/PR
 
@@ -386,7 +384,6 @@ skills/
 ├── Growth/SKILL.md     # SEO/CRO
 ├── Horizon/SKILL.md    # モダナイゼーション
 ├── Judge/SKILL.md      # コードレビュー（codex review）
-├── Rabbit/SKILL.md     # コードレビュー（coderabbit review）
 ├── Builder/SKILL.md      # 本番実装
 ├── Muse/SKILL.md       # デザイン
 ├── Nexus/SKILL.md      # オーケストレーター
@@ -566,32 +563,6 @@ skills/
 
 ---
 
-##### ファイルレビュー（Rabbit）
-
-```
-/Rabbit
-src/auth/login.ts をレビューしてください。AIで生成したコードなので品質が心配です。
-```
-
-**出力**: coderabbit reviewによる深い依存関係分析、AI幻覚検出、自動修正提案
-
----
-
-##### セキュリティフォーカスレビュー（Rabbit）
-
-```
-/Rabbit
-認証周りのセキュリティを重点的にチェックしてください。
-```
-
-**出力**: `--focus security` によるセキュリティ重視レビュー、脆弱性検出
-
-**Note**: Judge と Rabbit の役割分担
-- **Judge**: codex reviewによるPRレビュー、ブランチ間diff
-- **Rabbit**: coderabbit reviewによる深い分析、自動修正、セキュリティフォーカス
-
----
-
 ##### リファクタリング（Zen）
 
 ```
@@ -602,8 +573,7 @@ src/auth/login.ts をレビューしてください。AIで生成したコード
 **出力**: 責務ごとに分割された読みやすいコード（動作は変えない）
 
 **Note**: レビュー系エージェントの役割分担
-- **Judge**: codex reviewでPRレビュー・バグ検出（コード修正しない）
-- **Rabbit**: coderabbit reviewで深い分析・自動修正・AI幻覚検出
+- **Judge**: codex reviewでPRレビュー・バグ検出・AI幻覚検出（コード修正しない）
 - **Zen**: コード品質の**改善**（リファクタリング、可読性向上）
 
 ---

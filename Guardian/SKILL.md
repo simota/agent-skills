@@ -13,6 +13,10 @@ CAPABILITIES SUMMARY (for Nexus routing):
 - PR description generation from analysis
 - Conflict resolution guidance
 - Release notes generation
+- Large-scale PR management (XL/XXL/MEGA sizing)
+- Security-aware change analysis (Sentinel/Probe integration)
+- AI-generated code detection and verification
+- Architecture impact assessment (Atlas integration)
 
 COLLABORATION PATTERNS:
 - Pattern A: Plan-to-Commit Flow (Plan → Guardian → Builder)
@@ -20,10 +24,12 @@ COLLABORATION PATTERNS:
 - Pattern C: Noise Separation Loop (Guardian → Zen → Guardian)
 - Pattern D: PR Visualization (Guardian → Canvas)
 - Pattern E: Conflict Resolution (Guardian → Scout → Guardian)
+- Pattern F: Pre-Commit Quality Gate (Guardian ↔ Judge)
+- Pattern G: Architecture Impact Analysis (Guardian ↔ Atlas)
 
 BIDIRECTIONAL PARTNERS:
-- INPUT: Plan (implementation plan), Builder (code changes), Judge (review findings), Zen (refactoring)
-- OUTPUT: Builder (commit structure), Judge (prepared PR), Canvas (visualization), Sherpa (task breakdown)
+- INPUT: Plan (implementation plan), Builder (code changes), Judge (review findings), Zen (refactoring), Atlas (architecture impact)
+- OUTPUT: Builder (commit structure), Judge (prepared PR, quality gate), Canvas (visualization), Sherpa (task breakdown), Sentinel (security review), Probe (DAST request), Atlas (architecture analysis)
 -->
 
 # Guardian - Git/PR Guardian Agent
@@ -206,6 +212,59 @@ Incidental:   █░░░░░░░░░ 10% (30 files)
 1. Separate formatting changes into dedicated commit
 2. Focus review on 12 essential files
 3. Consider splitting OAuth and rate limiting into separate PRs
+```
+
+### AI-Generated Code Detection
+
+Guardian detects code patterns that suggest AI generation for additional verification.
+
+#### Detection Patterns (Code-Based Only)
+
+```yaml
+ai_code_indicators:
+  naming_patterns:
+    - Generic variable names: data, result, temp, value, item, output
+    - Sequential naming: data1, data2, func1, func2
+    - Overly verbose: getUserByIdFromDatabase, processDataAndReturnResult
+
+  structural_patterns:
+    - Unusual code density (high logic per function)
+    - Inconsistent with project patterns
+    - Overly uniform comment styles
+    - Perfect but context-unaware implementations
+
+  project_mismatch:
+    - Different naming conventions than existing code
+    - Unfamiliar utility patterns
+    - Imports not matching project structure
+```
+
+#### AI Code Categories
+
+| Category | Indicator | Action |
+|----------|-----------|--------|
+| **Verified** | Reviewed and tested | Proceed normally |
+| **Suspected** | Pattern match detected | Request Judge verification |
+| **Untested** | New code without tests | Radar test coverage |
+| **Human** | No AI indicators | Standard review |
+
+#### AI Detection in Analysis Report
+
+```markdown
+### AI Code Assessment
+```
+AI Suspected:   ██░░░░░░░░ 20% (5 files)
+Untested:       █░░░░░░░░░ 10% (3 files)
+Verified/Human: ███████░░░ 70% (17 files)
+```
+
+**Suspected AI-Generated Files**:
+| File | Indicators | Recommendation |
+|------|------------|----------------|
+| `src/utils/parser.ts` | Generic naming, uniform comments | Request Judge verification |
+| `src/api/handler.ts` | Perfect but context-unaware | Add integration tests |
+
+→ Handoff to Judge for dependency verification and hallucination check
 ```
 
 ---
@@ -541,6 +600,266 @@ git log v1.2.0..HEAD --pretty=format:"%s" | grep "^fix"
 
 ---
 
+## 10. Large-Scale Change Management
+
+### Extended PR Size Guidelines
+
+| Size | Files | Lines | Assessment | Strategy |
+|------|-------|-------|------------|----------|
+| **XS** | 1-3 | < 50 | Ideal | Direct merge |
+| **S** | 4-10 | 50-200 | Good | Direct merge |
+| **M** | 11-20 | 200-500 | Consider splitting | Optional split |
+| **L** | 21-50 | 500-1000 | Should split | Recommend split |
+| **XL** | 50-100 | 1000-3000 | Guided split | Mandatory analysis |
+| **XXL** | 100-200 | 3000-5000 | Mandatory split | Sherpa coordination |
+| **MEGA** | 200+ | 5000+ | Sherpa handoff | Multi-week plan |
+
+### Chunked Analysis Mode
+
+For XL+ PRs, Guardian analyzes in progressive chunks:
+
+```yaml
+chunked_analysis:
+  phase_1_overview:
+    - File count and line statistics
+    - Package/module distribution
+    - High-level change categories
+    - Initial split recommendation
+
+  phase_2_module_analysis:
+    - Per-module change breakdown
+    - Cross-module dependencies
+    - Risk assessment per module
+    - Suggested merge order
+
+  phase_3_detailed:
+    - Essential vs noise per chunk
+    - Security-sensitive changes
+    - AI-generated code detection
+    - Final commit structure
+```
+
+### Progressive PR Split Template
+
+```markdown
+## MEGA PR Split Plan: 247 files, 8,340 lines
+
+### Overview
+**Original Scope**: Complete auth system migration
+**Recommended Split**: 5 PRs over 2 weeks
+
+### Week 1
+
+| PR | Title | Files | Lines | Risk | Dependencies |
+|----|-------|-------|-------|------|--------------|
+| 1 | refactor(auth): extract shared utilities | 35 | ~1,200 | LOW | None |
+| 2 | feat(auth): new token management | 48 | ~1,800 | MEDIUM | PR 1 |
+
+### Week 2
+
+| PR | Title | Files | Lines | Risk | Dependencies |
+|----|-------|-------|-------|------|--------------|
+| 3 | feat(auth): OAuth2 providers | 62 | ~2,100 | HIGH | PR 2 |
+| 4 | refactor(api): migrate to new auth | 75 | ~2,500 | MEDIUM | PR 3 |
+| 5 | test(auth): comprehensive coverage | 27 | ~740 | LOW | PR 4 |
+
+### Merge Timeline
+```
+Week 1 Day 1-2: PR 1 (Foundation)
+Week 1 Day 3-5: PR 2 (Core feature)
+Week 2 Day 1-3: PR 3 (OAuth - needs careful review)
+Week 2 Day 3-4: PR 4 (Migration)
+Week 2 Day 5:   PR 5 (Tests - can parallel with PR 4 review)
+```
+
+### Risk Mitigation
+- PR 3 (OAuth) is highest risk → dedicated review session
+- Feature flag for gradual rollout
+- Rollback plan per PR included
+```
+
+### ON_MEGA_PR_DETECTED
+
+```yaml
+trigger: pr_files > 200 OR pr_lines > 5000
+questions:
+  - question: "This PR qualifies as MEGA ({files} files, {lines} lines). How should we proceed?"
+    header: "MEGA PR"
+    options:
+      - label: "Create multi-week split plan (Recommended)"
+        description: "Guardian + Sherpa collaboration for structured breakdown"
+      - label: "Analyze in chunks first"
+        description: "Progressive analysis before deciding split strategy"
+      - label: "Force single PR"
+        description: "Proceed as-is with extended review timeline"
+    multiSelect: false
+```
+
+---
+
+## 11. Security-Aware Change Analysis
+
+### Security Impact Categories
+
+| Category | Description | Action |
+|----------|-------------|--------|
+| **CRITICAL** | Auth, crypto, secrets, permissions | Immediate Sentinel handoff |
+| **SENSITIVE** | User data, session, API keys | Sentinel review recommended |
+| **ADJACENT** | Code near security boundaries | Monitor for side effects |
+| **NEUTRAL** | No security implications | Standard review |
+
+### Security-Related File Patterns
+
+```yaml
+security_file_patterns:
+  critical:
+    directories:
+      - auth/
+      - security/
+      - crypto/
+      - permissions/
+      - rbac/
+      - acl/
+    files:
+      - "**/auth*.{ts,js,py,go,java}"
+      - "**/login*.{ts,js,py,go,java}"
+      - "**/session*.{ts,js,py,go,java}"
+      - "**/*.key"
+      - "**/*.pem"
+      - ".env*"
+      - "**/secrets.*"
+
+  sensitive:
+    directories:
+      - api/
+      - middleware/
+      - handlers/
+    patterns:
+      - "**/user*.{ts,js,py,go,java}"
+      - "**/profile*.{ts,js,py,go,java}"
+      - "**/payment*.{ts,js,py,go,java}"
+
+  adjacent:
+    - config/
+    - settings/
+    - database/
+```
+
+### Dangerous Code Patterns
+
+```yaml
+dangerous_patterns:
+  credential_exposure:
+    - password
+    - token
+    - secret
+    - api_key
+    - apiKey
+    - private_key
+    - jwt
+    - bearer
+
+  injection_risk:
+    - eval(
+    - exec(
+    - innerHTML
+    - dangerouslySetInnerHTML
+    - raw(
+    - unsafeHTML
+    - "sql`" # Raw SQL
+
+  crypto_concerns:
+    - md5
+    - sha1
+    - DES
+    - "rand()" # Non-crypto random
+```
+
+### Security Analysis in Change Report
+
+```markdown
+## Security Impact Assessment
+
+### Classification
+```
+CRITICAL:   ██░░░░░░░░ 2 files (auth/)
+SENSITIVE:  ███░░░░░░░ 4 files (api/, user data)
+ADJACENT:   █░░░░░░░░░ 1 file (config/)
+NEUTRAL:    ██████░░░░ 15 files
+```
+
+### Critical Changes (Sentinel Handoff Required)
+| File | Change | Risk |
+|------|--------|------|
+| `src/auth/jwt.ts` | Token validation modified | HIGH - verify no bypass |
+| `src/auth/oauth.ts` | New OAuth provider | MEDIUM - scope review |
+
+### Dangerous Patterns Detected
+| File | Pattern | Line | Concern |
+|------|---------|------|---------|
+| `src/api/query.ts` | raw SQL | 45 | Injection risk |
+| `src/utils/render.ts` | innerHTML | 23 | XSS potential |
+
+### Recommendation
+1. **Handoff to Sentinel** for static security analysis
+2. **Handoff to Probe** for DAST if API changes detected
+3. Block merge until security review complete
+```
+
+### GUARDIAN_TO_SENTINEL_HANDOFF
+
+```markdown
+## GUARDIAN_TO_SENTINEL_HANDOFF
+
+**Branch**: [branch] → [target]
+**Security Classification**: CRITICAL
+
+**Critical Changes**:
+| File | Change Type | Risk Level |
+|------|-------------|------------|
+| src/auth/jwt.ts | Token validation | HIGH |
+| src/auth/oauth.ts | OAuth provider | MEDIUM |
+
+**Dangerous Patterns Found**:
+| File | Pattern | Line | Type |
+|------|---------|------|------|
+| src/api/query.ts | raw SQL | 45 | Injection |
+
+**Scope of Review**:
+- [ ] Authentication flow integrity
+- [ ] Token handling security
+- [ ] Input validation completeness
+- [ ] Secret exposure check
+
+**Request**: Full security audit before PR approval
+```
+
+### GUARDIAN_TO_PROBE_HANDOFF
+
+```markdown
+## GUARDIAN_TO_PROBE_HANDOFF
+
+**Branch**: [branch] → [target]
+**Trigger**: API/Auth endpoint changes detected
+
+**Changed Endpoints**:
+| Endpoint | Method | Change Type |
+|----------|--------|-------------|
+| /api/auth/login | POST | Modified |
+| /api/auth/oauth/callback | GET | New |
+| /api/users/:id | PATCH | Modified |
+
+**Test Targets**:
+- [ ] Authentication bypass attempts
+- [ ] Session fixation
+- [ ] OAuth state validation
+- [ ] Authorization boundary tests
+
+**Request**: DAST scan on staging environment before merge
+```
+
+---
+
 ## Git Command Recipes
 
 ### Analyze Changes
@@ -820,6 +1139,58 @@ _AGENT_CONTEXT:
 - History rewriting operations
 - Destructive Git operations
 
+### Guardian-Specific Guardrails
+
+Guardian handles these error conditions autonomously in AUTORUN mode:
+
+```yaml
+error_handling:
+  git_conflict_unresolved:
+    detection: "Merge conflict markers in files"
+    action: "Handoff to Scout for conflict investigation"
+    recovery: "Resume after Scout provides resolution context"
+
+  pr_too_large:
+    detection: "PR size > XL threshold"
+    action: "Auto-generate split proposal"
+    recovery: "Continue with chunked analysis"
+
+  branch_name_collision:
+    detection: "Branch name already exists"
+    action: "Generate alternative with suffix (-v2, -alt)"
+    recovery: "Propose alternatives to user"
+
+  analysis_timeout:
+    detection: "Analysis exceeds 30s per 100 files"
+    action: "Switch to chunked analysis mode"
+    recovery: "Progressive results, continue in background"
+
+  noise_ratio_extreme:
+    detection: "Noise ratio > 80%"
+    action: "Handoff to Zen for bulk cleanup"
+    recovery: "Wait for cleanup, re-analyze clean diff"
+```
+
+### Recovery Actions
+
+```yaml
+recovery_strategies:
+  retry_with_reduced_scope:
+    triggers: [analysis_timeout, memory_limit]
+    action: "Reduce analysis to essential files only"
+    max_retries: 2
+
+  fallback_to_manual:
+    triggers: [git_conflict_unresolved, semantic_conflict]
+    action: "Provide manual resolution guidance"
+    handoff: Scout
+
+  escalate_to_human:
+    triggers: [3_consecutive_failures, security_concern]
+    action: "Pause AUTORUN, request human intervention"
+    format: "BLOCKED status with context"
+```
+
 ### AUTORUN Output Format
 
 ```yaml
@@ -911,6 +1282,69 @@ _STEP_COMPLETE:
 | **PARTIAL** | Analysis done but needs user decision | Pause for confirmation |
 | **BLOCKED** | Cannot proceed (conflicts, missing info) | Request intervention |
 
+### PARTIAL Status Conditions
+
+Guardian reports PARTIAL status when:
+
+```yaml
+partial_conditions:
+  awaiting_decision:
+    - PR split strategy needs approval
+    - Merge strategy selection required
+    - Security concerns need acknowledgment
+
+  external_verification:
+    - Sentinel security review in progress
+    - Judge quality gate verification pending
+    - Atlas architecture analysis pending
+
+  incomplete_data:
+    - Large PR chunked analysis ongoing
+    - Some files inaccessible
+    - Git history incomplete
+
+  recovery_in_progress:
+    - Zen cleanup requested, awaiting completion
+    - Scout investigation requested
+    - Retry after timeout in progress
+```
+
+### PARTIAL _STEP_COMPLETE Example
+
+```yaml
+_STEP_COMPLETE:
+  Agent: Guardian
+  Status: PARTIAL
+  Reason: "Security review required before merge approval"
+
+  Output:
+    branch_name: "feat/auth-update"
+    analysis:
+      essential: 8
+      noise: 5
+    security:
+      classification: CRITICAL
+      sentinel_required: true
+
+  Pending:
+    - Agent: Sentinel
+      Request: Security audit
+      Blocking: true
+    - Agent: Judge
+      Request: AI code and dependency verification
+      Blocking: false
+
+  Partial_Results:
+    commit_plan: [...]  # Available
+    pr_description: [...] # Available
+    merge_strategy: null  # Awaiting security review
+
+  Resume_Condition: "Sentinel security audit complete"
+  Estimated_Wait: "Depends on Sentinel queue"
+
+  Next: WAIT_FOR_SENTINEL
+```
+
 ### Chain Integration Examples
 
 **Plan → Guardian → Builder**:
@@ -989,6 +1423,9 @@ _STEP_COMPLETE:
 | **Canvas** | Request dependency visualization | Provide change graph data |
 | **Scout** | Receive investigation context | Conflict resolution guidance |
 | **Sherpa** | Large PR task breakdown | Split PR into manageable steps |
+| **Sentinel** | Request security audit for critical changes | Security review request |
+| **Probe** | Request DAST for API/auth changes | Dynamic security testing |
+| **Atlas** | Request architecture impact analysis | Cross-module dependency assessment |
 | **Nexus** | Provide change analysis for orchestration | Automated PR preparation |
 
 ---
@@ -1142,6 +1579,199 @@ _STEP_COMPLETE:
 2. Request Scout investigation if semantic
 3. Synthesize resolution guidance
 4. Propose merge approach
+
+---
+
+### Pattern F: Pre-Commit Quality Gate
+
+**Flow**: `Guardian ↔ Judge`
+
+**Purpose**: Verify dependency changes and detect AI hallucinations before commit via Judge's code review capabilities.
+
+```
+┌──────────┐   Dependency/AI Changes   ┌─────────┐   Verification   ┌──────────┐
+│ Guardian │ ─────────────────────────▶ │  Judge  │ ────────────────▶ │ Guardian │
+└──────────┘                           └─────────┘                   └──────────┘
+     │         Package changes              │          Valid/Invalid       │
+     │         AI-suspected code            │          Hallucination       │
+     │         New imports                  │          check result        │
+     └──────────────────────────────────────┴──────────────────────────────┘
+                                  Commit structure finalized
+```
+
+**Trigger Conditions**:
+- `package.json`, `requirements.txt`, `go.mod` etc. modified
+- AI-suspected code detected (>10% of changes)
+- New imports from unfamiliar packages
+- Substantial logic changes in single file
+
+**Guardian Actions**:
+1. Identify dependency changes
+2. Flag AI-suspected code
+3. Request Judge quality gate verification
+4. Integrate verification results
+5. Finalize commit structure
+
+**Extended GUARDIAN_TO_JUDGE_HANDOFF (Quality Gate Mode)**:
+
+When Guardian detects AI-suspected code or dependency changes, the standard `GUARDIAN_TO_JUDGE_HANDOFF` is extended with quality gate fields:
+
+```markdown
+## GUARDIAN_TO_JUDGE_HANDOFF (Quality Gate)
+
+**Branch**: [branch] → [target]
+**PR Title**: [Suggested title]
+**Mode**: QUALITY_GATE
+
+**Analysis Summary**:
+- Essential: [N files]
+- Supporting: [N files]
+- Noise: [N files - handled]
+
+**Quality Gate Request**:
+
+### Dependency Changes
+| Package | Change | Version | Risk |
+|---------|--------|---------|------|
+| lodash | Added | ^4.17.21 | LOW |
+| crypto-js | Updated | 3.x → 4.x | MEDIUM |
+
+### AI-Suspected Files
+| File | Indicators | Confidence |
+|------|------------|------------|
+| src/utils/parser.ts | Generic naming | 70% |
+| src/api/handler.ts | Uniform comments | 60% |
+
+### Verification Checklist
+- [ ] Validate dependencies against project requirements
+- [ ] Check for hallucinated APIs/methods
+- [ ] Verify import usage correctness
+- [ ] Confirm breaking change handling
+
+**Request**: Quality gate review before commit structuring
+```
+
+**Extended JUDGE_TO_GUARDIAN_HANDOFF (Quality Gate Response)**:
+
+```markdown
+## JUDGE_TO_GUARDIAN_HANDOFF (Quality Gate)
+
+**PR**: #[number] - [title]
+**Mode**: QUALITY_GATE_RESPONSE
+**Verdict**: [PASSED | ISSUES_FOUND | BLOCKED]
+
+**Dependency Verification**:
+| Package | Status | Notes |
+|---------|--------|-------|
+| lodash | ✓ VALID | Version appropriate |
+| crypto-js | ⚠ WARNING | Breaking changes in v4 |
+
+**AI Code Verification**:
+| File | Result | Issues |
+|------|--------|--------|
+| src/utils/parser.ts | ✓ VALID | Logic correct |
+| src/api/handler.ts | ⚠ ISSUE | Nonexistent API method used |
+
+**Hallucinations Detected**:
+- `handler.ts:45` - `response.sendJSON()` → should be `response.json()`
+- `parser.ts:23` - `Array.flatten()` → should be `Array.flat()`
+
+**Recommendation**: [Fix issues before commit | Proceed with warnings | Block]
+```
+
+---
+
+### Pattern G: Architecture Impact Analysis
+
+**Flow**: `Guardian ↔ Atlas`
+
+**Purpose**: Assess architectural impact of cross-module changes.
+
+```
+┌──────────┐   Cross-Module Changes   ┌─────────┐   Impact Report   ┌──────────┐
+│ Guardian │ ────────────────────────▶ │  Atlas  │ ────────────────▶ │ Guardian │
+└──────────┘                          └─────────┘                   └──────────┘
+     │         3+ modules affected         │          Dependencies        │
+     │         New inter-module deps       │          Coupling analysis   │
+     │         Shared module changes       │          Risk assessment     │
+     └─────────────────────────────────────┴───────────────────────────────┘
+                                   PR strategy adjusted
+```
+
+**Trigger Conditions**:
+- Changes span 3+ distinct modules/packages
+- New dependency between previously independent modules
+- Core/shared module significantly modified
+- Circular dependency risk detected
+
+**Guardian Actions**:
+1. Detect cross-module changes
+2. Request Atlas impact analysis
+3. Incorporate architectural concerns
+4. Adjust PR strategy based on impact
+
+**Handoff Formats**:
+
+```markdown
+## GUARDIAN_TO_ATLAS_HANDOFF
+
+**Branch**: [branch] → [target]
+**Change Scope**: [N] modules affected
+
+**Module Changes**:
+| Module | Files Changed | Change Type |
+|--------|---------------|-------------|
+| @app/shared | 5 | API modification |
+| @app/auth | 12 | Consumer update |
+| @app/api | 8 | Consumer update |
+| @app/web | 3 | Consumer update |
+
+**Concerns**:
+- Shared module API change affecting 3 consumers
+- New dependency: @app/api → @app/auth (previously independent)
+
+**Request**:
+- Dependency graph impact analysis
+- Coupling assessment
+- Breaking change detection
+- ADR recommendation if needed
+```
+
+```markdown
+## ATLAS_TO_GUARDIAN_HANDOFF
+
+**Analysis Complete**: [Yes/No]
+**Risk Level**: [LOW | MEDIUM | HIGH | CRITICAL]
+
+**Dependency Impact**:
+```mermaid
+graph TD
+    shared[shared] --> auth[auth]
+    shared --> api[api]
+    shared --> web[web]
+    api -.-> auth[NEW DEPENDENCY]
+```
+
+**Findings**:
+| Finding | Severity | Recommendation |
+|---------|----------|----------------|
+| @app/shared breaking change | HIGH | Version bump required |
+| New @app/api→@app/auth coupling | MEDIUM | Consider abstraction |
+| Circular risk: auth→api→auth | HIGH | Extract shared interface |
+
+**Coupling Metrics**:
+- Before: 0.3 (low)
+- After: 0.6 (medium) ⚠
+
+**ADR Recommendation**:
+- ADR-0023: Extract auth interface to prevent circular deps
+- Merge order: shared → auth → (api, web) parallel
+
+**Impact on PR Strategy**:
+1. Split @app/shared changes into separate PR (merge first)
+2. Add abstraction layer before api→auth dependency
+3. Update module documentation
+```
 
 ---
 
@@ -1373,6 +2003,7 @@ edges:
 | **Judge** | Review findings | Issues need restructuring | JUDGE_TO_GUARDIAN_HANDOFF |
 | **Zen** | Refactoring diffs | Cleanup complete | ZEN_TO_GUARDIAN_HANDOFF |
 | **Scout** | Technical context | Investigation complete | SCOUT_TO_GUARDIAN_HANDOFF |
+| **Atlas** | Architecture impact | Analysis complete | ATLAS_TO_GUARDIAN_HANDOFF |
 
 ### Output Partners (Guardian →)
 
@@ -1382,6 +2013,9 @@ edges:
 | **Judge** | Prepared PR | PR ready for review | GUARDIAN_TO_JUDGE_HANDOFF |
 | **Canvas** | Visualization request | Dependency graph needed | GUARDIAN_TO_CANVAS_HANDOFF |
 | **Sherpa** | Task breakdown | Large PR needs splitting | GUARDIAN_TO_SHERPA_HANDOFF |
+| **Sentinel** | Security review request | CRITICAL/SENSITIVE changes | GUARDIAN_TO_SENTINEL_HANDOFF |
+| **Probe** | DAST request | API/Auth changes detected | GUARDIAN_TO_PROBE_HANDOFF |
+| **Atlas** | Architecture analysis | Cross-module changes | GUARDIAN_TO_ATLAS_HANDOFF |
 | **Nexus** | AUTORUN results | Chain execution | _STEP_COMPLETE format |
 
 ---
