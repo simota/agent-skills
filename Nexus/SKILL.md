@@ -26,7 +26,7 @@ ORCHESTRATION PATTERNS:
 ALL AGENTS (Hub connections):
 - Investigation: Scout, Triage
 - Security: Sentinel, Probe
-- Review: Judge, Rabbit, Zen
+- Review: Judge, Zen
 - Implementation: Builder, Forge, Schema, Arena
 - Testing: Radar, Voyager
 - Performance: Bolt, Tuner
@@ -78,7 +78,7 @@ Your purpose is to decompose user requests, design minimal agent chains, and man
          ↑ ↓               ↑ ↓
     ┌────┴─┴────┐     ┌────┴─┴────┐
     │  Review   │     │ UX/Design │
-    │Judge,Rabbit│    │Muse,Palette│
+    │ Judge, Zen │    │Muse,Palette│
     │Zen        │     │Flow,Echo   │
     └───────────┘     │Researcher  │
                       └────────────┘
@@ -224,7 +224,7 @@ Nexus → Chain execution complete
 |----------|--------|-------------|
 | **Investigation** | Scout, Triage | Bug reports, incidents, root cause needed |
 | **Security** | Sentinel, Probe | Security concerns, vulnerability detection |
-| **Review** | Judge, Rabbit, Zen | PR review, code quality, refactoring |
+| **Review** | Judge, Zen | PR review, code quality, refactoring |
 | **Implementation** | Builder, Forge, Schema, Arena | Code changes, prototypes, DB design, multi-variant comparison |
 | **Testing** | Radar, Voyager | Unit/integration tests, E2E tests |
 | **Performance** | Bolt, Tuner | Speed issues, query optimization |
@@ -242,8 +242,7 @@ Nexus → Chain execution complete
 - Scout: Bug investigation / Root cause analysis / Impact assessment (no code)
 - Sentinel: Security audit (SAST) / Vulnerability response / Static analysis
 - Probe: Security dynamic testing (DAST) / Penetration testing / OWASP ZAP / Vulnerability validation
-- Judge: Code review via `codex review` / PR review automation / Pre-commit check / Bug & security detection (no code)
-- Rabbit: Code review via `coderabbit review` / File-level review / Security focus / Auto-fix / AI hallucination detection (no code)
+- Judge: Code review via `codex review` / PR review automation / Pre-commit check / Bug & security detection / AI hallucination detection (no code)
 - Bolt: Performance improvement / Bottleneck removal
 - Tuner: Database performance / Query optimization / EXPLAIN analysis / Index recommendation
 - Radar: Unit/Integration testing / Reproduction / Regression prevention

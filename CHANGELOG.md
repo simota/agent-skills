@@ -18,8 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Tuner** - DBパフォーマンス最適化・EXPLAIN ANALYZE分析
 - **Researcher** - ユーザーリサーチ設計・インタビューガイド作成
 - **Voyager** - E2Eテスト専門（Playwright/Cypress）
-- **Judge** - codex reviewによるコードレビュー・PRレビュー自動化
-- **Rabbit** - coderabbit reviewによるコードレビュー・自動修正
+- **Judge** - codex reviewによるコードレビュー・PRレビュー自動化・AI幻覚検出
 - **Anvil** - Terminal UI構築・CLI開発支援
 
 #### Features
@@ -61,7 +60,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 |----------|-------|--------|
 | Orchestration | 2 | Nexus, Sherpa |
 | Research & Planning | 5 | Scout, Spark, Compete, Voice, Researcher |
-| Quality Assurance | 7 | Radar, Voyager, Sentinel, Probe, Judge, Rabbit, Zen |
+| Quality Assurance | 6 | Radar, Voyager, Sentinel, Probe, Judge, Zen |
 | Implementation | 3 | Builder, Artisan, Forge |
 | Performance | 2 | Bolt, Tuner |
 | UI/UX | 6 | Vision, Palette, Muse, Flow, Echo, Showcase |
