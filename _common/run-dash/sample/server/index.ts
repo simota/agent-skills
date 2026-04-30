@@ -84,7 +84,7 @@ app.get("/api/postmortem/:run", async (c) => {
 });
 
 const port = Number(process.env.PORT ?? 5757);
-console.log(`apex-dash sample server listening on http://127.0.0.1:${port}`);
+console.log(`run-dash sample server listening on http://127.0.0.1:${port}`);
 
 export default {
   port,

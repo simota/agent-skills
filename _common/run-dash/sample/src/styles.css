@@ -189,6 +189,53 @@ body {
   background: rgba(167, 139, 250, 0.25);
 }
 
+/* ── Step Rail (recipe mode) and Generic placeholder ─────────────── */
+
+.step-rail {
+  display: grid;
+  gap: 4px;
+  padding: 6px 16px;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--border);
+}
+
+.step-rail-empty {
+  padding: 14px 16px;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
+.rail-placeholder {
+  height: 44px;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Generic-mode timeline + empty states ───────────────────────── */
+
+.timeline-host {
+  height: 100%;
+  overflow: auto;
+  padding: 4px 8px;
+}
+
+.timeline-svg {
+  display: block;
+}
+
+.timeline-empty,
+.empty-canvas {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
 /* ── Phase Rail ───────────────────────────────────────────────────── */
 
 .phase-rail {
