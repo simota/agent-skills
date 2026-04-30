@@ -128,12 +128,14 @@ app.get("/api/postmortem/:run", async (c) => {
   }
 });
 
-const port = Number(process.env.PORT ?? 5757);
-console.log(`run-dash sample server listening on http://127.0.0.1:${port}`);
-console.log(`  events_dir: ${EVENTS_DIR}`);
+const port = Number(process.env.RUN_DASH_SERVER_PORT ?? process.env.PORT ?? 5757);
+const hostname = "127.0.0.1";
 
-export default {
+Bun.serve({
   port,
-  hostname: "127.0.0.1",
+  hostname,
   fetch: app.fetch,
-};
+});
+
+console.log(`run-dash sample server listening on http://${hostname}:${port}`);
+console.log(`  events_dir: ${EVENTS_DIR}`);
