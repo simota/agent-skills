@@ -1,4 +1,13 @@
-// Mirrors EVENTS.md (subset used by the MVP).
+// Mirrors EVENTS.md (core + extension subset used by the sample).
+
+export type RunKind =
+  | "apex"
+  | "feature"
+  | "bug"
+  | "refactor"
+  | "manual"
+  | "single-agent"
+  | (string & {});
 
 export type Phase =
   | "P0_Bootstrap"
@@ -26,6 +35,8 @@ export type EventKind =
   | "run_end"
   | "phase_enter"
   | "phase_exit"
+  | "step_enter"
+  | "step_exit"
   | "agent_start"
   | "agent_progress"
   | "agent_end"
@@ -35,8 +46,12 @@ export type EventKind =
   | "risk_gate"
   | "orbit_iter"
   | "engine_switch"
+  | "spec_gate"
+  | "rca_done"
+  | "fix_proposed"
   | "error"
-  | "note";
+  | "note"
+  | (string & {});
 
 export type Engine = "claude_code" | "codex_cli";
 
@@ -45,9 +60,13 @@ export interface ApexEvent {
   seq: number;
   run_id: string;
   kind: EventKind;
-  phase?: Phase;
+  run_kind?: RunKind;
+  recipe?: string;
+  phase?: Phase | string;
   agent?: string;
   engine?: Engine;
+  parent_agent?: string;
+  depth?: number;
   meta?: Record<string, unknown>;
 }
 
@@ -67,21 +86,33 @@ export interface PhaseState {
   endedAt?: string;
 }
 
+export interface StepState {
+  status: PhaseStatus;
+  startedAt?: string;
+  endedAt?: string;
+}
+
 export interface ActiveAgent {
   name: string;
-  phase?: Phase;
+  phase?: Phase | string;
+  parentAgent?: string;
+  depth?: number;
   startedAt: string;
   lastTool?: string;
   progress?: number;
+  engine?: Engine;
 }
 
 export interface CompletedAgent {
   name: string;
-  phase?: Phase;
+  phase?: Phase | string;
+  parentAgent?: string;
+  depth?: number;
   startedAt: string;
   endedAt: string;
   status: "done" | "blocked" | "need_info" | "error";
   durationMs?: number;
+  engine?: Engine;
 }
 
 export interface RiskGate {
@@ -102,13 +133,31 @@ export interface OrbitIter {
 
 export interface CheckpointEntry {
   label: string;
-  status: "waiting" | "approved" | "rejected" | "timeout_passed" | "timeout_aborted";
+  status:
+    | "waiting"
+    | "approved"
+    | "rejected"
+    | "timeout_passed"
+    | "timeout_aborted";
   deadline?: string;
   resolvedAt?: string;
 }
 
+export interface DynamicNode {
+  id: string;            // `${agent}#${seq}`
+  agent: string;
+  parentId?: string;     // resolved parent DynamicNode id
+  startedAt: string;
+  endedAt?: string;
+  status: AgentStatus;
+  engine?: Engine;
+  depth?: number;
+}
+
 export interface AppState {
   runId?: string;
+  runKind?: RunKind;
+  recipe?: string;
   goal?: string;
   mode?: string;
   scope?: string;
@@ -116,7 +165,9 @@ export interface AppState {
   endedAt?: string;
   finalStatus?: string;
   currentPhase?: Phase;
+  currentStep?: string;
   phases: Record<Phase, PhaseState>;
+  steps: Record<string, StepState>;
   activeAgents: ActiveAgent[];
   completedAgents: CompletedAgent[];
   riskGate?: RiskGate;
@@ -125,5 +176,7 @@ export interface AppState {
   engineHistory: { from: Engine; to: Engine; at: string }[];
   checkpoints: CheckpointEntry[];
   errors: { ts: string; severity: string; message: string }[];
-  events: ApexEvent[]; // last N for the stream panel
+  toolCounts: Record<string, number>;
+  dynamicNodes: DynamicNode[];
+  events: ApexEvent[];
 }

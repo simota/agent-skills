@@ -145,6 +145,12 @@ body {
   border-color: rgba(245, 158, 11, 0.4);
 }
 
+.badge.run-kind {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+}
+
 .badge.engine-claude_code {
   color: #93c5fd;
   border-color: rgba(59, 130, 246, 0.5);

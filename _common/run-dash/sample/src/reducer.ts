@@ -1,6 +1,7 @@
 import type {
   ApexEvent,
   AppState,
+  DynamicNode,
   Phase,
   PhaseState,
 } from "./types";
@@ -14,6 +15,7 @@ const EMPTY_PHASES = (): Record<Phase, PhaseState> => {
 
 export const initialState: AppState = {
   phases: EMPTY_PHASES(),
+  steps: {},
   activeAgents: [],
   completedAgents: [],
   orbit: { iters: [] },
@@ -21,6 +23,8 @@ export const initialState: AppState = {
   engineHistory: [],
   checkpoints: [],
   errors: [],
+  toolCounts: {},
+  dynamicNodes: [],
   events: [],
 };
 
@@ -30,12 +34,15 @@ export function reduce(state: AppState, ev: ApexEvent): AppState {
   const next: AppState = {
     ...state,
     phases: { ...state.phases },
+    steps: { ...state.steps },
     activeAgents: state.activeAgents.slice(),
     completedAgents: state.completedAgents.slice(),
     orbit: { iters: state.orbit.iters.slice() },
     engineHistory: state.engineHistory.slice(),
     checkpoints: state.checkpoints.slice(),
     errors: state.errors.slice(),
+    toolCounts: { ...state.toolCounts },
+    dynamicNodes: state.dynamicNodes.slice(),
     events: [...state.events, ev].slice(-EVENT_BUFFER),
   };
 
@@ -44,6 +51,8 @@ export function reduce(state: AppState, ev: ApexEvent): AppState {
   switch (ev.kind) {
     case "run_start": {
       next.runId = ev.run_id;
+      next.runKind = ev.run_kind ?? inferRunKind(ev.run_id);
+      next.recipe = ev.recipe ?? (meta.recipe as string | undefined);
       next.goal = String(meta.goal ?? "");
       next.mode = String(meta.mode ?? "");
       next.scope = String(meta.scope ?? "");
@@ -56,10 +65,10 @@ export function reduce(state: AppState, ev: ApexEvent): AppState {
       break;
     }
     case "phase_enter": {
-      if (ev.phase) {
-        next.currentPhase = ev.phase;
-        next.phases[ev.phase] = {
-          ...next.phases[ev.phase],
+      if (ev.phase && (PHASE_ORDER as string[]).includes(ev.phase)) {
+        next.currentPhase = ev.phase as Phase;
+        next.phases[ev.phase as Phase] = {
+          ...next.phases[ev.phase as Phase],
           status: "running",
           startedAt: ev.ts,
         };
@@ -67,12 +76,37 @@ export function reduce(state: AppState, ev: ApexEvent): AppState {
       break;
     }
     case "phase_exit": {
-      if (ev.phase) {
+      if (ev.phase && (PHASE_ORDER as string[]).includes(ev.phase)) {
         const gate = String(meta.exit_gate ?? "pass");
         const status =
           gate === "pass" ? "done" : gate === "fail" ? "failed" : "skipped";
-        next.phases[ev.phase] = {
-          ...next.phases[ev.phase],
+        next.phases[ev.phase as Phase] = {
+          ...next.phases[ev.phase as Phase],
+          status,
+          endedAt: ev.ts,
+        };
+      }
+      break;
+    }
+    case "step_enter": {
+      const step = String(meta.step ?? ev.phase ?? "");
+      if (step) {
+        next.currentStep = step;
+        next.steps[step] = {
+          status: "running",
+          startedAt: ev.ts,
+        };
+      }
+      break;
+    }
+    case "step_exit": {
+      const step = String(meta.step ?? ev.phase ?? "");
+      if (step) {
+        const gate = String(meta.exit_gate ?? "pass");
+        const status =
+          gate === "pass" ? "done" : gate === "fail" ? "failed" : "skipped";
+        next.steps[step] = {
+          ...next.steps[step],
           status,
           endedAt: ev.ts,
         };
@@ -81,13 +115,28 @@ export function reduce(state: AppState, ev: ApexEvent): AppState {
     }
     case "agent_start": {
       if (ev.agent) {
-        // remove any previous entry with same name (in case of restart)
         next.activeAgents = next.activeAgents.filter((a) => a.name !== ev.agent);
         next.activeAgents.push({
           name: ev.agent,
           phase: ev.phase,
+          parentAgent: ev.parent_agent,
+          depth: ev.depth,
           startedAt: ev.ts,
+          engine: ev.engine,
         });
+        // Append a dynamic-DAG node (always — generic mode reads this)
+        const id = `${ev.agent}#${ev.seq}`;
+        const parentId = resolveParentNodeId(next.dynamicNodes, ev);
+        const node: DynamicNode = {
+          id,
+          agent: ev.agent,
+          parentId,
+          startedAt: ev.ts,
+          status: "running",
+          engine: ev.engine,
+          depth: ev.depth,
+        };
+        next.dynamicNodes.push(node);
       }
       break;
     }
@@ -110,20 +159,40 @@ export function reduce(state: AppState, ev: ApexEvent): AppState {
           next.completedAgents.push({
             name: active.name,
             phase: active.phase,
+            parentAgent: active.parentAgent,
+            depth: active.depth,
             startedAt: active.startedAt,
             endedAt: ev.ts,
             status: (meta.status as never) ?? "done",
             durationMs: Number(meta.duration_ms ?? 0),
+            engine: active.engine,
           });
         } else {
           next.completedAgents.push({
             name: ev.agent,
             phase: ev.phase,
+            parentAgent: ev.parent_agent,
+            depth: ev.depth,
             startedAt: ev.ts,
             endedAt: ev.ts,
             status: (meta.status as never) ?? "done",
             durationMs: Number(meta.duration_ms ?? 0),
+            engine: ev.engine,
           });
+        }
+        // Update dynamic node by name (latest matching running)
+        const lastIdx = next.dynamicNodes
+          .map((n, i) => ({ n, i }))
+          .filter(({ n }) => n.agent === ev.agent && n.status === "running")
+          .map(({ i }) => i)
+          .pop();
+        if (lastIdx !== undefined) {
+          const status = (meta.status as never) === "error" ? "error" : "done";
+          next.dynamicNodes[lastIdx] = {
+            ...next.dynamicNodes[lastIdx],
+            endedAt: ev.ts,
+            status,
+          };
         }
       }
       break;
@@ -136,6 +205,8 @@ export function reduce(state: AppState, ev: ApexEvent): AppState {
             : a
         );
       }
+      const tool = String(meta.tool ?? "");
+      if (tool) next.toolCounts[tool] = (next.toolCounts[tool] ?? 0) + 1;
       break;
     }
     case "checkpoint_wait": {
@@ -196,7 +267,6 @@ export function reduce(state: AppState, ev: ApexEvent): AppState {
         severity: String(meta.severity ?? "error"),
         message: String(meta.message ?? ""),
       });
-      // keep last 50
       if (next.errors.length > 50) next.errors = next.errors.slice(-50);
       break;
     }
@@ -206,4 +276,23 @@ export function reduce(state: AppState, ev: ApexEvent): AppState {
   }
 
   return next;
+}
+
+function inferRunKind(runId: string): string {
+  const m = runId.match(/^([a-z-]+)-/);
+  return m ? m[1] : "manual";
+}
+
+function resolveParentNodeId(
+  nodes: DynamicNode[],
+  ev: ApexEvent
+): string | undefined {
+  if (!ev.parent_agent) return undefined;
+  // Find the most recent running node with matching agent name
+  for (let i = nodes.length - 1; i >= 0; i--) {
+    if (nodes[i].agent === ev.parent_agent && nodes[i].status === "running") {
+      return nodes[i].id;
+    }
+  }
+  return undefined;
 }

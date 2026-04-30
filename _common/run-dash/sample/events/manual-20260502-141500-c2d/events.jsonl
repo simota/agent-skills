@@ -1,0 +1,11 @@
+{"ts":"2026-05-02T14:15:00.000Z","seq":1,"run_id":"manual-20260502-141500-c2d","kind":"run_start","run_kind":"manual","meta":{"goal":"explore database module","labels":["adhoc","investigation"]}}
+{"ts":"2026-05-02T14:15:02.000Z","seq":2,"run_id":"manual-20260502-141500-c2d","kind":"agent_start","agent":"lens","parent_agent":"user","depth":1,"engine":"claude_code"}
+{"ts":"2026-05-02T14:15:30.000Z","seq":3,"run_id":"manual-20260502-141500-c2d","kind":"tool_use","agent":"lens","meta":{"tool":"Read","snippet":"db/schema.sql"}}
+{"ts":"2026-05-02T14:15:45.000Z","seq":4,"run_id":"manual-20260502-141500-c2d","kind":"tool_use","agent":"lens","meta":{"tool":"Grep","snippet":"FOREIGN KEY"}}
+{"ts":"2026-05-02T14:16:30.000Z","seq":5,"run_id":"manual-20260502-141500-c2d","kind":"agent_end","agent":"lens","meta":{"status":"done","duration_ms":88000,"output_ref":"investigation/lens/notes.md"}}
+{"ts":"2026-05-02T14:16:31.000Z","seq":6,"run_id":"manual-20260502-141500-c2d","kind":"agent_start","agent":"scout","parent_agent":"user","depth":1,"engine":"claude_code"}
+{"ts":"2026-05-02T14:16:50.000Z","seq":7,"run_id":"manual-20260502-141500-c2d","kind":"agent_start","agent":"fossil","parent_agent":"scout","depth":2,"engine":"claude_code"}
+{"ts":"2026-05-02T14:17:10.000Z","seq":8,"run_id":"manual-20260502-141500-c2d","kind":"tool_use","agent":"fossil","meta":{"tool":"Read","snippet":"src/legacy/billing.py"}}
+{"ts":"2026-05-02T14:17:55.000Z","seq":9,"run_id":"manual-20260502-141500-c2d","kind":"agent_end","agent":"fossil","meta":{"status":"done","duration_ms":65000}}
+{"ts":"2026-05-02T14:18:30.000Z","seq":10,"run_id":"manual-20260502-141500-c2d","kind":"agent_end","agent":"scout","meta":{"status":"done","duration_ms":119000}}
+{"ts":"2026-05-02T14:18:31.000Z","seq":11,"run_id":"manual-20260502-141500-c2d","kind":"run_end","meta":{"status":"completed","duration_ms":211000}}
