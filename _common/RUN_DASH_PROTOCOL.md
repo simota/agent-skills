@@ -16,19 +16,22 @@ How every skill, recipe, and hook coordinates with run-dash so that any agent ru
 │      PostToolUse:Agent → agent_end                            │
 │      PostToolUse:Bash|Read|… → tool_use                       │
 │      Stop → run_end                                           │
+│      ⚠ Codex CLI: NOT AVAILABLE (no equivalent hook surface)  │
 ├──────────────────────────────────────────────────────────────┤
 │ L2  Recipe orchestrators (Nexus apex / feature / bug / …)    │
 │      Override RUN_ID for the recipe                           │
 │      Emit phase / step / risk_gate / spec_gate / orbit_iter   │
 │      Restore parent RUN_ID on completion                      │
+│      Engine-agnostic: works in Claude Code AND Codex CLI      │
 ├──────────────────────────────────────────────────────────────┤
 │ L3  Specialist agents (plea / accord / atlas / builder / …)  │
 │      DO NOT emit directly                                     │
-│      L1 hooks already capture every Agent invocation          │
+│      L1 hooks already capture every Agent invocation (CC)     │
+│      Codex spawns: bracket with codex-wrap.sh (see §11)       │
 └──────────────────────────────────────────────────────────────┘
 ```
 
-The cardinal rule: **never instrument L3 individually**. Adding `run-emit` calls inside specialist skills creates duplicate `agent_start` events and tightens coupling for no observable benefit.
+The cardinal rule: **never instrument L3 individually**. Adding `run-emit` calls inside specialist skills creates duplicate `agent_start` events and tightens coupling for no observable benefit. The single legitimate exception is `codex-wrap.sh`, which brackets a Codex spawn from the parent recipe (not from inside the specialist).
 
 ## 2. Responsibility Matrix
 
@@ -173,12 +176,44 @@ cd ~/some-repo && claude
 
 Use the `latch` skill (`/latch verify`) to confirm hook env-var names map onto Claude Code's runtime.
 
-## 11. Related
+## 11. Codex CLI Integration (L2-only)
+
+Codex CLI does **not** expose Claude-Code-equivalent `PreToolUse` / `PostToolUse` hooks, so L1 auto-instrumentation does not apply when Codex is the active engine. Codex sessions and recipe phases that cross into Codex (e.g. apex Phase 6) operate in **L2-only mode**.
+
+| Layer | In Codex sessions? | Notes |
+|-------|--------------------|-------|
+| L1 hooks (auto `agent_start` / `tool_use`) | **No** | No equivalent Codex hook surface. Tool-level granularity is unavailable. |
+| L2 recipe orchestrator | **Yes** | Emit `run_start` / `run_end`, `phase_*` / `step_*`, gates, and `engine=codex_cli` exactly as in Claude Code. `run-emit.sh` is pure bash and runs anywhere. |
+| L3 specialists | **No** (unchanged) | Never instrument individually; the recipe (or `codex-wrap.sh`) handles it. |
+
+### 11.1 Wrapping Codex spawns
+
+Use `_common/scripts/codex-wrap.sh` to bracket a Codex invocation with `agent_start` / `agent_end` events tagged `engine=codex_cli`. The wrapper preserves stdout / stderr / exit code and is silent when `RUN_ID` is unset.
+
+```sh
+codex-wrap \
+  --agent=builder --phase=P6_Implementation --parent=orbit --depth=2 \
+  --meta task_id=$TASK \
+  -- codex exec --task-id "$TASK" -- bun run build
+```
+
+This is the recommended pattern for apex Phase 6 spawns inside `orbit`. The dashboard will render the boundary as a `claude_code → codex_cli` engine_switch and the wrapped agent as a normal node with status / duration.
+
+### 11.2 What is missing in Codex mode
+
+- Per-tool `tool_use` events (Bash / Read / Write / Edit) inside the Codex subprocess — Codex does not surface these to the parent shell. The Gantt row for a Codex agent appears solid (no internal tool ticks).
+- Agent depth beyond what the wrapper is told via `--depth`.
+
+If a richer trace is required, the Codex subagent can call `run-emit.sh` directly from inside its prompt-driven script (it is pure bash). This is the same exception path L3 reserves for multi-minute long-running specialists — use sparingly.
+
+## 12. Related
 
 - `_common/run-dash/INTEGRATION.md §9` — Global Usage runbook
+- `_common/run-dash/INTEGRATION.md §2.5` — Codex CLI side emissions
 - `_common/run-dash/EVENTS.md` — wire format
 - `_common/run-dash/TOPOLOGIES/*.md` — how recipe events map to UI
 - `_common/scripts/run-emit.sh` — emit helper
+- `_common/scripts/codex-wrap.sh` — Codex spawn wrapper
 - `nexus/references/apex-recipe.md §13` — apex recipe emit checklist
 - `nexus/references/feature-recipe.md` — feature recipe emit checklist
 - `nexus/references/bug-recipe.md` — bug recipe emit checklist

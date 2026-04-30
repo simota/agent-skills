@@ -478,6 +478,16 @@ bash $EMIT phase_exit phase=P5_Design exit_gate=pass
 # ── Engine boundary + Phase 6 ───────────────────────────
 bash $EMIT engine_switch from=claude_code to=codex_cli reason=phase6
 bash $EMIT phase_enter phase=P6_Implementation
+# Codex CLI runs L2-only — no auto agent_start/end from hooks.
+# Bracket each Codex spawn with codex-wrap.sh so the dashboard sees
+# agent_start engine=codex_cli + agent_end status/duration:
+#
+WRAP="$HOME/.claude/skills/_common/scripts/codex-wrap.sh"
+#   bash $WRAP --agent=builder --phase=P6_Implementation --parent=orbit \
+#     --meta task_id="$TASK" -- codex exec --task-id "$TASK" -- bun run build
+#   bash $WRAP --agent=judge   --phase=P6_Implementation --parent=orbit \
+#     -- codex exec -- pnpm run review
+#
 # orbit emits orbit_iter per iteration:
 #   bash $EMIT orbit_iter iter=1 convergence=0.62 cost_per_task=0.45 \
 #     budget_used=12 budget_max=50 circuit=green
@@ -505,9 +515,19 @@ On Risk Gate No-Go or any phase failure, emit `phase_exit … exit_gate=fail` fo
 
 ### 13.4 What is Already Free (via hooks)
 
-The following are emitted automatically by `~/.claude/hooks/run-dash-{pre,post}-tool.sh` and need **no recipe-side calls**:
+The following are emitted automatically by `~/.claude/hooks/run-dash-{pre,post}-tool.sh` for **Phase 0-5** (Claude Code engine) and need **no recipe-side calls**:
 
-- `agent_start` / `agent_end` for every Agent tool invocation (plea, researcher, accord, atlas, omen, ripple, echo, builder, …)
+- `agent_start` / `agent_end` for every Agent tool invocation (plea, researcher, accord, atlas, omen, ripple, echo, …)
 - `tool_use` for Bash / Read / Write / Edit / Grep / Glob within those agents
 
-Recipe code only owns phase / gate / engine semantics.
+Recipe code owns phase / gate / engine semantics.
+
+### 13.5 Phase 6 (Codex CLI) — L2-only mode
+
+Codex CLI does not expose Claude-Code-equivalent hooks, so once Phase 6 begins:
+
+- L1 hooks **stop firing** for spawned subagents (builder / artisan / judge / radar / voyager). Wrap each spawn with `_common/scripts/codex-wrap.sh` to restore `agent_start engine=codex_cli` / `agent_end` events.
+- Per-tool `tool_use` ticks inside the Codex subprocess are **not captured**. The Gantt row appears as a solid block with no internal ticks. This is by design — the Codex sandbox doesn't surface its tool calls to the parent shell.
+- All other recipe-level emits (`orbit_iter`, `phase_exit`, etc.) work identically.
+
+Spec: `_common/RUN_DASH_PROTOCOL.md §11`.

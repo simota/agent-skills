@@ -104,9 +104,24 @@ See `TOPOLOGIES/feature.md` for the full step list.
 
 See `TOPOLOGIES/bug.md`.
 
-### 2.5 Codex CLI Side Emissions
+### 2.5 Codex CLI Side Emissions (L2-only)
 
-Phase 6 (or any Codex run) crosses the engine boundary. Orbit's emit-script reuses `run-emit.sh` from the Codex working directory; it resolves `<repo>/.agents/run-dash/<run-id>/events.jsonl` correctly.
+Codex CLI does not expose `PreToolUse` / `PostToolUse` hooks, so the L1 auto-instrumentation path used by Claude Code is unavailable. Codex sessions and apex Phase 6 spawns operate in **L2-only mode**: only the recipe orchestrator emits events. Per-tool `tool_use` events are not captured inside the Codex subprocess.
+
+Two patterns:
+
+**(a) Wrap Codex spawns from the parent recipe** — recommended for apex Phase 6. Use `_common/scripts/codex-wrap.sh`, which emits `agent_start engine=codex_cli` before the spawn and `agent_end engine=codex_cli status=…` after, preserving stdout / stderr / exit code:
+
+```sh
+codex-wrap \
+  --agent=builder --phase=P6_Implementation --parent=orbit --depth=2 \
+  --meta task_id=$TASK \
+  -- codex exec --task-id "$TASK" -- bun run build
+```
+
+**(b) Direct emit from inside a Codex prompt-driven script** — only for multi-minute long-running Codex specialists where (a) doesn't fit. `run-emit.sh` is pure bash and resolves `RUN_DASH_DIR/<run-id>/events.jsonl` correctly when `RUN_ID` is exported into the Codex environment.
+
+Spec: `_common/RUN_DASH_PROTOCOL.md §11`.
 
 ## 3. Auto-spawn Flow (pre-flight)
 
