@@ -154,10 +154,19 @@ export interface DynamicNode {
   depth?: number;
 }
 
+export interface RunSummary {
+  id: string;
+  runKind?: string;
+  project?: string;
+  goal?: string;
+  startedAt?: string;
+}
+
 export interface AppState {
   runId?: string;
   runKind?: RunKind;
   recipe?: string;
+  project?: string;
   goal?: string;
   mode?: string;
   scope?: string;

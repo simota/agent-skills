@@ -1,0 +1,11 @@
+{"ts":"2026-04-30T07:16:28.000Z","seq":1,"run_id":"live-demo-20260430-071628","kind":"run_start","run_kind":"manual","meta":{"goal":"live demo via run-emit.sh"}}
+{"ts":"2026-04-30T07:16:29.000Z","seq":2,"run_id":"live-demo-20260430-071628","kind":"agent_start","agent":"lens","engine":"claude_code","parent_agent":"user","depth":1}
+{"ts":"2026-04-30T07:16:30.000Z","seq":3,"run_id":"live-demo-20260430-071628","kind":"tool_use","agent":"lens","meta":{"tool":"Read","snippet":"src/index.ts"}}
+{"ts":"2026-04-30T07:16:31.000Z","seq":4,"run_id":"live-demo-20260430-071628","kind":"tool_use","agent":"lens","meta":{"tool":"Grep","snippet":"export function"}}
+{"ts":"2026-04-30T07:16:32.000Z","seq":5,"run_id":"live-demo-20260430-071628","kind":"agent_end","agent":"lens","meta":{"status":"done","duration_ms":3000}}
+{"ts":"2026-04-30T07:16:33.000Z","seq":6,"run_id":"live-demo-20260430-071628","kind":"agent_start","agent":"scout","engine":"claude_code","parent_agent":"user","depth":1}
+{"ts":"2026-04-30T07:16:35.000Z","seq":7,"run_id":"live-demo-20260430-071628","kind":"agent_start","agent":"builder","engine":"claude_code","parent_agent":"scout","depth":2}
+{"ts":"2026-04-30T07:16:36.000Z","seq":8,"run_id":"live-demo-20260430-071628","kind":"tool_use","agent":"builder","meta":{"tool":"Edit","snippet":"src/api.ts"}}
+{"ts":"2026-04-30T07:16:37.000Z","seq":9,"run_id":"live-demo-20260430-071628","kind":"agent_end","agent":"builder","meta":{"status":"done","duration_ms":2000}}
+{"ts":"2026-04-30T07:16:38.000Z","seq":10,"run_id":"live-demo-20260430-071628","kind":"agent_end","agent":"scout","meta":{"status":"done","duration_ms":4000}}
+{"ts":"2026-04-30T07:16:39.000Z","seq":11,"run_id":"live-demo-20260430-071628","kind":"run_end","meta":{"status":"completed","duration_ms":12000}}

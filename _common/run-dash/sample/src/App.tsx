@@ -33,12 +33,16 @@ export default function App() {
   useEffect(() => {
     let cancel: (() => void) | null = null;
     (async () => {
-      const runs = await listRuns();
+      const { runs, eventsDir } = await listRuns();
+      useDash.getState().setAvailableRuns(runs);
+      useDash.getState().setEventsDir(eventsDir);
       if (runs.length === 0) {
-        setBootError("No runs found under events/. Add a JSONL file to start.");
+        setBootError(
+          `No runs found under ${eventsDir ?? "events/"}. Emit one with run-emit.sh to start.`
+        );
         return;
       }
-      cancel = startSSE(runs[0]);
+      cancel = startSSE(runs[0].id);
     })();
     return () => {
       if (cancel) cancel();

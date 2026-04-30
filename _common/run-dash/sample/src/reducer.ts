@@ -53,6 +53,7 @@ export function reduce(state: AppState, ev: ApexEvent): AppState {
       next.runId = ev.run_id;
       next.runKind = ev.run_kind ?? inferRunKind(ev.run_id);
       next.recipe = ev.recipe ?? (meta.recipe as string | undefined);
+      next.project = (meta.project as string | undefined) ?? undefined;
       next.goal = String(meta.goal ?? "");
       next.mode = String(meta.mode ?? "");
       next.scope = String(meta.scope ?? "");

@@ -478,6 +478,49 @@ When input contains `## NEXUS_ROUTING`, operate as the hub. Do not instruct dire
 - Next action: CONTINUE | VERIFY | DONE
 ```
 
+## Live Dashboard Integration
+
+Nexus emits run-dash events at recipe boundaries so the per-run progress is visible in the live dashboard (`_common/run-dash/`). Specialist agents do **not** emit on their own — Claude Code hooks already capture every Agent invocation.
+
+### Recipe Override Pattern
+
+When a Nexus recipe (apex / feature / bug / refactor / security) starts, override the session-level `RUN_ID`:
+
+```sh
+# At recipe entry
+PARENT_RUN_ID="${RUN_ID:-}"
+export RUN_ID="<run_kind>-$(date -u +%Y%m%d-%H%M%S)-$(uuidgen | head -c 7 | tr A-Z a-z)"
+PROJECT=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")
+~/.claude/skills/_common/scripts/run-emit.sh run_start \
+  run_kind=<kind> recipe=<kind> project="$PROJECT" goal="$GOAL"
+
+# … phase / step / gate emits during execution …
+
+# At recipe exit
+~/.claude/skills/_common/scripts/run-emit.sh run_end status=completed duration_ms=$DUR_MS
+[ -n "$PARENT_RUN_ID" ] && export RUN_ID="$PARENT_RUN_ID" || unset RUN_ID
+```
+
+### Recipe Emit Checklist
+
+| Recipe | Required emits |
+|--------|---------------|
+| `apex` | `phase_enter` / `phase_exit` per phase; `risk_gate` after Phase 5; `engine_switch` at Phase 5 → 6; `orbit_iter` (delegated to orbit) |
+| `feature` | `step_enter` / `step_exit` for Discover / Spec / Implement / Ship; `spec_gate` after accord |
+| `bug` | `step_enter` / `step_exit` for Reproduce / RCA / Fix / Verify; `rca_done` after scout (RCA); `fix_proposed` after builder |
+| `refactor` | `step_enter` / `step_exit` for Inventory / Plan / Apply / Verify |
+| `security` | `step_enter` / `step_exit` for Detect / Patch / Verify |
+| `bug-fix` (legacy) | `step_enter` / `step_exit` per step |
+
+Detailed emit spec lives in:
+- `references/apex-recipe.md §13 Live Dashboard Emit`
+- `references/feature-recipe.md`
+- `references/bug-recipe.md`
+
+### Universal Contract
+
+The full agent-side contract — including which events come from L1 hooks vs L2 recipes — lives in `_common/RUN_DASH_PROTOCOL.md`. Read it once before instrumenting any new recipe.
+
 ## Model Compatibility
 - **Scoring:** If weighted calculation is difficult, use simplified scoring in `context-scoring.md`.
 - **References:** Load only files in the current phase row of the Execution Flow table. Skip anti-pattern refs unless chain has 4+ agents.

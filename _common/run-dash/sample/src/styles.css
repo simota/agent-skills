@@ -113,6 +113,34 @@ body {
   color: var(--text-muted);
 }
 
+.run-picker {
+  background: var(--bg-row);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 4px 24px 4px 10px;
+  border-radius: 6px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-muted) 50%),
+    linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
+  background-position: calc(100% - 12px) 50%, calc(100% - 7px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  max-width: 260px;
+}
+
+.run-picker:hover {
+  border-color: var(--accent);
+}
+
+.run-picker:focus {
+  outline: 1px solid var(--accent);
+  outline-offset: 1px;
+}
+
 .dot {
   width: 8px;
   height: 8px;
@@ -149,6 +177,14 @@ body {
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: lowercase;
+}
+
+.badge.project {
+  background: rgba(167, 139, 250, 0.12);
+  border-color: rgba(167, 139, 250, 0.4);
+  color: #c4b5fd;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
 }
 
 .badge.engine-claude_code {

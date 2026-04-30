@@ -221,7 +221,101 @@ RUN_DASH_TOOLS=0 claude      # skip per-tool emits, keep agent_start/end
 - Out-of-order `run_start` → UI shows warning
 - Hooks-only flow produces a usable generic-mode timeline without manual emits
 
-## 9. Related
+## 9. Global Usage (single dashboard, all projects)
+
+For personal development, the simplest deployment is a **single, persistent dashboard** in the skills repo that observes runs from every project.
+
+### 9.1 Layout
+
+| What | Where |
+|------|-------|
+| Spec docs | `~/.claude/skills/_common/run-dash/` |
+| Emit helper | `~/.claude/skills/_common/scripts/run-emit.sh` |
+| Dashboard app | `~/.claude/skills/_common/run-dash/sample/` (the bundled sample is the canonical app) |
+| Events root | `~/.claude/run-dash/<run-id>/` (global) |
+
+No per-repo `.agents/run-dash-app/` is generated — one process serves everything.
+
+### 9.2 Start the dashboard once
+
+```sh
+cd ~/.claude/skills/_common/run-dash/sample
+RUN_DASH_EVENTS_DIR=~/.claude/run-dash bun run dev
+# open http://127.0.0.1:5173
+```
+
+`RUN_DASH_EVENTS_DIR` tells the server which directory to tail; the server boot log prints the resolved path.
+
+For permanent install, register the command with `launchctl` (macOS) or a `systemd --user` service.
+
+### 9.3 SessionStart hook (universal observability)
+
+Configure once via the `update-config` skill:
+
+```jsonc
+// ~/.claude/settings.json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "command": "[ -z \"$RUN_ID\" ] && export RUN_ID=manual-$(date -u +%Y%m%d-%H%M%S)-$(uuidgen | head -c 7); export RUN_DASH_DIR=$HOME/.claude/run-dash; PROJECT=$(basename \"$(git rev-parse --show-toplevel 2>/dev/null || pwd)\"); ~/.claude/skills/_common/scripts/run-emit.sh run_start run_kind=manual project=$PROJECT goal=\"session in $PROJECT\""
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Agent",
+        "command": "~/.claude/skills/_common/scripts/run-emit.sh agent_start agent=$AGENT_TYPE engine=claude_code parent_agent=$CALLER_AGENT depth=$AGENT_DEPTH"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Agent",
+        "command": "~/.claude/skills/_common/scripts/run-emit.sh agent_end agent=$AGENT_TYPE status=$AGENT_STATUS duration_ms=$AGENT_DURATION_MS"
+      },
+      {
+        "matcher": "Bash|Read|Write|Edit|Grep|Glob",
+        "command": "[ \"${RUN_DASH_TOOLS:-1}\" = \"1\" ] && ~/.claude/skills/_common/scripts/run-emit.sh tool_use agent=$CURRENT_AGENT tool=$TOOL_NAME duration_ms=$TOOL_DURATION_MS"
+      }
+    ],
+    "Stop": [
+      {
+        "command": "~/.claude/skills/_common/scripts/run-emit.sh run_end status=completed"
+      }
+    ]
+  }
+}
+```
+
+The hook auto-generates a `manual-…` run-id per session, tags it with the current `git` repo basename as `meta.project`, and routes everything to `~/.claude/run-dash/`.
+
+### 9.4 Recipe-scoped runs alongside session runs
+
+Recipes (apex / feature / bug) override `RUN_ID` for the duration of the recipe so they appear as separate entries in the picker:
+
+```sh
+# inside Nexus apex skill, before phase 0:
+PARENT_RUN_ID="$RUN_ID"
+export RUN_ID="apex-$(date -u +%Y%m%d-%H%M%S)-$(uuidgen | head -c 7)"
+PROJECT=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")
+run-emit.sh run_start run_kind=apex project=$PROJECT goal="$GOAL"
+# … phases …
+run-emit.sh run_end status=completed
+export RUN_ID="$PARENT_RUN_ID"   # restore session run if any
+```
+
+Both runs end up under `~/.claude/run-dash/`, distinguishable by `run_kind` and `project` in the Run picker.
+
+### 9.5 Picking between Global and per-repo
+
+| Use Global when | Use per-repo when |
+|-----------------|-------------------|
+| Personal development across multiple repos | Team observability shared via the repo |
+| Want one dashboard / one URL | Need project-boundary isolation |
+| Don't want each project polluted with `.agents/run-dash-app/` | Want `.agents/` to be the single-source-of-truth for the project |
+
+Both modes coexist: per-repo runs use `<repo>/.agents/run-dash/` (default of `run-emit.sh`), global runs use `~/.claude/run-dash/` (when `RUN_DASH_DIR` is exported).
+
+## 10. Related
 
 - `EVENTS.md` — schema written by emits
 - `UI.md §1` — mode selection by `run_kind`

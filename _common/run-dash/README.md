@@ -66,6 +66,15 @@ Pre-flight: does <repo>/.agents/run-dash-app/ exist?
 
 For long-lived sessions where the user wants every Agent tool call observed without changing skills, the **Claude Code hooks** path (`INTEGRATION.md §4`) auto-emits `agent_start` / `agent_end` / `tool_use` for any session — no per-skill instrumentation needed.
 
+## Two Deployment Modes
+
+| Mode | Dashboard | Events root | Best for |
+|------|-----------|-------------|----------|
+| **Global** | `~/.claude/skills/_common/run-dash/sample/` (1 process) | `~/.claude/run-dash/` | Personal dev — one dashboard for all projects |
+| **Per-repo** | `<repo>/.agents/run-dash-app/` (one per repo) | `<repo>/.agents/run-dash/` | Team dev — observability shared via the repo |
+
+Both modes coexist; per-recipe runs (`apex` / `feature` / `bug`) and per-session runs (`manual`) can mix in either mode. See `INTEGRATION.md §9 Global Usage` for the recommended global setup.
+
 ## Storage Path
 
 ```

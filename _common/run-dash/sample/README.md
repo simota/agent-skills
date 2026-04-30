@@ -21,6 +21,8 @@ This sample exists so that:
 
 ## Run
 
+### Bundled fixtures (default)
+
 ```sh
 cd _common/run-dash/sample
 bun install
@@ -32,6 +34,18 @@ Two processes start:
 
 - **server** on `127.0.0.1:5757` — tails `events/<run-id>/events.jsonl`
 - **client** on `127.0.0.1:5173` — Vite dev server, proxies `/api/*` to the server
+
+### Global mode (recommended for personal use)
+
+Tail `~/.claude/run-dash/` instead of the bundled fixtures so this single process observes every Claude Code session and recipe across all repositories:
+
+```sh
+mkdir -p ~/.claude/run-dash
+cd ~/.claude/skills/_common/run-dash/sample
+RUN_DASH_EVENTS_DIR=~/.claude/run-dash bun run dev
+```
+
+The server boot log prints the resolved `events_dir`. See `_common/run-dash/INTEGRATION.md §9 Global Usage` for SessionStart hook configuration that auto-tags every session with its `git` project.
 
 ## Demo data
 

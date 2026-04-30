@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDash } from "../store";
+import { listRuns, switchRun, useDash } from "../store";
 
 function formatElapsed(ms: number): string {
   const total = Math.floor(ms / 1000);
@@ -23,12 +23,15 @@ export function Header() {
   const runId = useDash((s) => s.runId);
   const runKind = useDash((s) => s.state.runKind);
   const recipe = useDash((s) => s.state.recipe);
+  const project = useDash((s) => s.state.project);
   const connected = useDash((s) => s.connected);
   const goal = useDash((s) => s.state.goal);
   const mode = useDash((s) => s.state.mode);
   const startedAt = useDash((s) => s.state.startedAt);
   const endedAt = useDash((s) => s.state.endedAt);
   const engine = useDash((s) => s.state.engine);
+  const availableRuns = useDash((s) => s.availableRuns);
+  const eventsDir = useDash((s) => s.eventsDir);
 
   const [, force] = useState(0);
   useEffect(() => {
@@ -36,6 +39,18 @@ export function Header() {
     const id = setInterval(() => force((n) => n + 1), 1000);
     return () => clearInterval(id);
   }, [endedAt]);
+
+  // Refresh run list every 5 s so newly-emitted runs appear in the picker
+  useEffect(() => {
+    const tick = async () => {
+      const { runs, eventsDir } = await listRuns();
+      useDash.getState().setAvailableRuns(runs);
+      useDash.getState().setEventsDir(eventsDir);
+    };
+    tick();
+    const id = setInterval(tick, 5000);
+    return () => clearInterval(id);
+  }, []);
 
   const elapsedMs = startedAt
     ? (endedAt ? new Date(endedAt).getTime() : Date.now()) -
@@ -47,7 +62,21 @@ export function Header() {
   return (
     <header className="header">
       <div className="header-left">
-        <span className="run-id">{runId ?? "—"}</span>
+        <select
+          className="run-picker"
+          value={runId ?? ""}
+          onChange={(e) => switchRun(e.target.value)}
+          title={eventsDir ? `events_dir: ${eventsDir}` : "Switch run"}
+        >
+          {availableRuns.length === 0 && <option value="">— no runs —</option>}
+          {availableRuns.map((r) => (
+            <option key={r.id} value={r.id}>
+              {r.project ? `[${r.project}] ` : ""}
+              {r.id}
+              {r.runKind ? ` · ${r.runKind}` : ""}
+            </option>
+          ))}
+        </select>
         <span
           className="dot"
           data-on={connected ? "1" : "0"}
@@ -60,6 +89,11 @@ export function Header() {
             title={recipe ? `recipe: ${recipe}` : `run_kind: ${runKind}`}
           >
             {runKind}
+          </span>
+        )}
+        {project && (
+          <span className="badge project" title={`project: ${project}`}>
+            {project}
           </span>
         )}
         <span className="goal">{goal ?? "(no goal)"}</span>

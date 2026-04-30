@@ -421,3 +421,93 @@ Nexus AUTORUN apex            # or: apex goal=auto
 | Autonomous bootstrap (Phase 0 added) | + 4-8 agents (project_scan + spark + rank + voice/pulse/compete/sage/magi as available) | +4-8 over base | + 10-20% over base |
 
 Apex is not free. Budget guardrails (orbit cost-per-task, Nexus chain confirmation for 5+ agent chains, L4 confirmation gates) are enforced. Autonomous mode adds Phase 0 (~10-15 minutes, 4-8 agents) and one boundary-confirm checkpoint, but downstream cost is identical to goal-supplied mode. For repeated similar requests, propose a Sigil-generated project skill to amortise the chain design cost.
+
+## 13. Live Dashboard Emit
+
+Apex emits run-dash events at every phase / gate / engine boundary. Spec: `_common/RUN_DASH_PROTOCOL.md` and `_common/run-dash/INTEGRATION.md §2.4`. Specialist agents (plea, accord, atlas, …) do not emit; the Claude Code hooks (`~/.claude/hooks/run-dash-*`) capture every Agent invocation automatically.
+
+### 13.1 Emit Points
+
+| When | Emit |
+|------|------|
+| Apex entry | `run_start run_kind=apex recipe=apex project=<git-basename> goal="<goal>" mode=<AUTORUN_FULL\|AUTORUN\|GUIDED\|INTERACTIVE> scope=<Lite\|Standard\|Full>` |
+| Phase 0 boundary confirm wait | `checkpoint_wait label=Phase0_boundary_confirm mode=AUTORUN_FULL_60s deadline=<iso>` |
+| Phase 0 confirm resolve | `checkpoint_resolved label=Phase0_boundary_confirm outcome=<approved\|rejected\|timeout_passed\|timeout_aborted>` |
+| Each phase enter | `phase_enter phase=<P0_Bootstrap\|P1_Discovery\|...\|Ship> [parallel_tracks=tech,ux]` |
+| Each phase exit | `phase_exit phase=<...> exit_gate=<pass\|fail\|skipped>` |
+| Risk Gate verdict | `risk_gate verdict=<Go\|Conditional-Go\|No-Go> omen=<pass\|conditional\|fail> ripple=<...> echo=<...>` |
+| Engine boundary cross | `engine_switch from=claude_code to=codex_cli reason=phase6` |
+| Orbit each iteration | `orbit_iter iter=<n> convergence=<0..1> cost_per_task=<float> budget_used=<float> budget_max=<float> circuit=<green\|yellow\|red>` |
+| Apex exit | `run_end status=<completed\|aborted\|error> duration_ms=<ms>` |
+
+### 13.2 Skeleton
+
+```sh
+# ── Recipe entry ────────────────────────────────────────
+PARENT_RUN_ID="${RUN_ID:-}"
+export RUN_ID="apex-$(date -u +%Y%m%d-%H%M%S)-$(uuidgen | head -c 7 | tr A-Z a-z)"
+START_S=$(date +%s)
+PROJECT=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")
+EMIT="$HOME/.claude/skills/_common/scripts/run-emit.sh"
+
+bash $EMIT run_start run_kind=apex recipe=apex project="$PROJECT" \
+  goal="$GOAL" mode="$MODE" scope="$SCOPE"
+
+# ── Phase 0 (autonomous mode only) ──────────────────────
+bash $EMIT phase_enter phase=P0_Bootstrap
+# ... project_scan, spark, rank, sage, magi (tie-break) ...
+bash $EMIT checkpoint_wait label=Phase0_boundary_confirm mode=AUTORUN_FULL_60s
+# ... wait for confirm ...
+bash $EMIT checkpoint_resolved label=Phase0_boundary_confirm outcome=timeout_passed
+bash $EMIT phase_exit phase=P0_Bootstrap exit_gate=pass
+
+# ── Phases 1-4 ──────────────────────────────────────────
+for P in P1_Discovery P2_Ideate P3_Verdict P4_Spec; do
+  bash $EMIT phase_enter phase=$P
+  # ... agents within phase (hooks emit agent_start/end) ...
+  bash $EMIT phase_exit phase=$P exit_gate=pass
+done
+
+# ── Phase 5 with parallel tracks + Risk Gate ────────────
+bash $EMIT phase_enter phase=P5_Design parallel_tracks=tech,ux
+# ... atlas / vision / etc. ...
+# After omen + ripple + echo:
+bash $EMIT risk_gate verdict=Go omen=pass ripple=pass echo=pass
+bash $EMIT phase_exit phase=P5_Design exit_gate=pass
+
+# ── Engine boundary + Phase 6 ───────────────────────────
+bash $EMIT engine_switch from=claude_code to=codex_cli reason=phase6
+bash $EMIT phase_enter phase=P6_Implementation
+# orbit emits orbit_iter per iteration:
+#   bash $EMIT orbit_iter iter=1 convergence=0.62 cost_per_task=0.45 \
+#     budget_used=12 budget_max=50 circuit=green
+bash $EMIT phase_exit phase=P6_Implementation exit_gate=pass
+
+# ── Ship ────────────────────────────────────────────────
+bash $EMIT phase_enter phase=Ship
+bash $EMIT phase_exit phase=Ship exit_gate=pass
+
+# ── Recipe exit ─────────────────────────────────────────
+DUR_MS=$(( ($(date +%s) - START_S) * 1000 ))
+bash $EMIT run_end status=completed duration_ms=$DUR_MS
+
+# Restore session-level run-id
+if [ -n "$PARENT_RUN_ID" ]; then
+  export RUN_ID="$PARENT_RUN_ID"
+else
+  unset RUN_ID
+fi
+```
+
+### 13.3 No-Go and Failure Paths
+
+On Risk Gate No-Go or any phase failure, emit `phase_exit … exit_gate=fail` for the originating phase, then re-emit `phase_enter` when re-entering. The dashboard renders the loop visually as a back-edge. Do not call `run_end status=error` until apex actually aborts.
+
+### 13.4 What is Already Free (via hooks)
+
+The following are emitted automatically by `~/.claude/hooks/run-dash-{pre,post}-tool.sh` and need **no recipe-side calls**:
+
+- `agent_start` / `agent_end` for every Agent tool invocation (plea, researcher, accord, atlas, omen, ripple, echo, builder, …)
+- `tool_use` for Bash / Read / Write / Edit / Grep / Glob within those agents
+
+Recipe code only owns phase / gate / engine semantics.

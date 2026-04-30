@@ -2,25 +2,70 @@ import { Hono } from "hono";
 import { streamSSE } from "hono/streaming";
 import { cors } from "hono/cors";
 import * as fs from "node:fs";
+import * as os from "node:os";
 import * as path from "node:path";
 import { watch as chokidarWatch } from "chokidar";
 import { generatePostmortem, writePostmortem } from "./postmortem";
 
 const ROOT = path.resolve(import.meta.dir, "..");
-const EVENTS_DIR = path.join(ROOT, "events");
+
+// Resolve events root: prefer RUN_DASH_EVENTS_DIR (global usage),
+// fall back to <sample>/events for the bundled fixtures.
+function expandHome(p: string): string {
+  if (p.startsWith("~")) return path.join(os.homedir(), p.slice(1));
+  return p;
+}
+
+const EVENTS_DIR = process.env.RUN_DASH_EVENTS_DIR
+  ? path.resolve(expandHome(process.env.RUN_DASH_EVENTS_DIR))
+  : path.join(ROOT, "events");
+
+const RUN_NAME_RE = /^[a-z][a-z0-9-]*-\d/;
+
+interface RunSummary {
+  id: string;
+  runKind?: string;
+  project?: string;
+  goal?: string;
+  startedAt?: string;
+}
+
+function readRunSummary(dir: string, id: string): RunSummary {
+  const file = path.join(dir, id, "events.jsonl");
+  const summary: RunSummary = { id };
+  if (!fs.existsSync(file)) return summary;
+  try {
+    const head = fs.readFileSync(file, "utf8").split("\n", 2)[0];
+    if (!head) return summary;
+    const ev = JSON.parse(head) as {
+      kind?: string;
+      ts?: string;
+      run_kind?: string;
+      meta?: { project?: string; goal?: string };
+    };
+    if (ev.kind === "run_start") {
+      summary.runKind = ev.run_kind;
+      summary.project = ev.meta?.project;
+      summary.goal = ev.meta?.goal;
+      summary.startedAt = ev.ts;
+    }
+  } catch {
+    // tolerate corrupt heads
+  }
+  return summary;
+}
 
 const app = new Hono();
 app.use("/api/*", cors({ origin: "*" }));
 
 app.get("/api/runs", (c) => {
-  if (!fs.existsSync(EVENTS_DIR)) return c.json({ runs: [] });
-  const runs = fs
+  if (!fs.existsSync(EVENTS_DIR)) return c.json({ runs: [], events_dir: EVENTS_DIR });
+  const runs: RunSummary[] = fs
     .readdirSync(EVENTS_DIR, { withFileTypes: true })
-    .filter((d) => d.isDirectory() && d.name.startsWith("apex-"))
-    .map((d) => d.name)
-    .sort()
-    .reverse();
-  return c.json({ runs });
+    .filter((d) => d.isDirectory() && RUN_NAME_RE.test(d.name))
+    .map((d) => readRunSummary(EVENTS_DIR, d.name))
+    .sort((a, b) => (a.id < b.id ? 1 : -1));
+  return c.json({ runs, events_dir: EVENTS_DIR });
 });
 
 app.get("/api/events/:run", (c) => {
@@ -85,6 +130,7 @@ app.get("/api/postmortem/:run", async (c) => {
 
 const port = Number(process.env.PORT ?? 5757);
 console.log(`run-dash sample server listening on http://127.0.0.1:${port}`);
+console.log(`  events_dir: ${EVENTS_DIR}`);
 
 export default {
   port,
