@@ -1,14 +1,14 @@
 # AI Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Agents](https://img.shields.io/badge/Agents-134-blue.svg)]()
+[![Agents](https://img.shields.io/badge/Agents-135-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-🤖 134種類の専門AIエージェントチームによる協調開発を実現するスキルコレクション
+🤖 135種類の専門AIエージェントチームによる協調開発を実現するスキルコレクション
 
 ## ✨ Features
 
-- **134種類の専門エージェント** - バグ調査、テスト、セキュリティ、UI/UX、AI/ML、可観測性、インフラまで網羅
+- **135種類の専門エージェント** - バグ調査、テスト、セキュリティ、UI/UX、AI/ML、可観測性、インフラまで網羅
 - **Nexusオーケストレーター** - タスクを分析し最適なエージェントチェーンを自動設計
 - **プラットフォーム非依存** - Claude Code、Codex CLI、Gemini CLI等で動作
 
@@ -35,7 +35,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 ## 📚 概要
 
-このリポジトリには、ソフトウェア開発の様々な側面を専門とする134種類のAIエージェントが含まれています。各エージェントは特定のドメインに特化しており、**Nexus**オーケストレーターによって統括・連携されます。
+このリポジトリには、ソフトウェア開発の様々な側面を専門とする135種類のAIエージェントが含まれています。各エージェントは特定のドメインに特化しており、**Nexus**オーケストレーターによって統括・連携されます。
 
 ## エージェント一覧
 
@@ -123,6 +123,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Siege** | _"Break it before users do. Fix it before they notice."_ - 高度テストスペシャリスト。負荷テスト（k6/Locust/Artillery）、契約テスト（Pact CDC）、カオスエンジニアリング、ミューテーションテスト、レジリエンスパターン検証 | テスト結果、レジリエンスレポート |
 | **Void** | _"The best code is the code that was never written."_ - YAGNI検証・スコープカット・機能プルーニング・複雑性削減提案。5つの存在検証問とCost-of-Keeping Scoreで不要な複雑性を特定 | 削減提案 |
 | **Vigil** | _"Detection is the first line of defense. Engineering is the last."_ - Detection Engineeringエージェント。Sigma/YARAルール設計、検出カバレッジマッピング、脅威ハンティング仮説設計、Detection-as-Code CI/CD統合 | 検出ルール、カバレッジマップ |
+| **Vista** | _"Tests you can't see, you don't trust. Tests you trust, you ship."_ - テスト知見の可視化スペシャリスト。junit.xml/lcov/allure/playwright/CTRF/OTelからカバレッジヒートマップ、トレーサビリティマトリクス、Test-Shape（Pyramid/Trophy/Honeycomb/Diamond/Cupcake/Hourglass/Ice-Cream-Cone）、フレーキーテストダッシュボード（Wilson下限）、ミューテーション重畳カバレッジ、AI起点テストリスクレンズ、リグレッションタイムライン（E-Divisive変化点）を生成。Markdown + HTML 二重出力 | カバレッジヒートマップ、Test-Shape、フレーキーダッシュボード |
 | **Mint** | _"Good tests deserve great data."_ - テストデータ＆フィクスチャ生成エージェント。ファクトリパターン設計、境界値データ生成、合成データ生成、シードデータ管理 | コード |
 | **Comply** | _"Trust is earned. Compliance is proven."_ - 規制コンプライアンス＆監査エージェント。SOC2/PCI-DSS/HIPAA/ISO 27001のコントロールマッピング、監査証跡設計、Policy as Code | レポート、チェックリスト |
 | **Breach** | _"Think like an attacker. Defend like an engineer."_ - レッドチームエンジニアリング。攻撃シナリオ設計、脅威モデリング、MITRE ATT&CK/OWASPフレームワーク、Purple Team演習、AI/LLMレッドチーミング | セキュリティ評価 |
@@ -799,7 +800,7 @@ skills/
 
 ### 単一エージェントの使用
 
-> カテゴリ別に全134エージェントの使用例を紹介します。
+> カテゴリ別に全135エージェントの使用例を紹介します。
 
 #### オーケストレーション
 
