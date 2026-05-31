@@ -139,18 +139,18 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ## Recipes
 
-Single source of truth for Recipe definitions. Use `Read First` column files at activation. Behavior notes encode each Recipe's scope discipline and verification rule.
+Single source of truth for Recipe definitions. Use `Read First` column files at activation. Behavior notes encode each Recipe's scope discipline and verification rule. The `Scope` column gives each Recipe's default **Scope tier** (see table above); PLAN may narrow it but never widen without Ask First.
 
-| Recipe | Subcommand | Default? | When to Use | Behavior | Read First |
-|--------|-----------|---------|-------------|----------|------------|
-| General Refactor | `refactor` | ✓ | General refactoring (composite improvements, code smell fixes) | 複合的なコードスメルを対象。SURVEY でホットスポット特定後、最優先 1 件に絞って適用。 | `references/refactoring-recipes.md` |
-| Naming Improvement | `naming` | | Variable and function name improvements only | 命名のみに限定。スコープ Focused 固定。public API 変更は Ask First。 | `references/refactoring-recipes.md` |
-| Extract Function | `extract` | | Split and extract long functions | 長いメソッドを 1 関数抽出。cognitive complexity 15 超を優先。テストパスを VERIFY で確認。 | `references/refactoring-recipes.md` |
-| Magic Constants | `constants` | | Replace magic numbers with named constants | マジックナンバーを検索し名前付き定数化。型注釈を付与する。 | `references/refactoring-recipes.md` |
-| Dead Code Removal | `dead` | | Unused code removal | ローカル/private から着手。export・動的利用は確認後に実施。Sweep との境界: ファイルレベルは Sweep。TypeScript/JS は `knip` 推奨 (ts-prune は 2025-09 アーカイブ済)。 | `references/dead-code-detection.md` |
-| Simplify Logic | `simplify` | | Compress redundant branches, ternaries, and unnecessary conversions into equivalent concise forms | 冗長な条件・三項演算チェーン・`if/else return true/false` 等を等価圧縮。behavior-preserving 変換パターンのみ採用。ユニットテスト通過を VERIFY 必須。 | `references/logic-simplification.md` |
-| Split Function | `split` | | Incrementally split overly long functions along responsibility boundaries (enhanced `extract`) | 50 行超または cognitive complexity 20 超の関数を責務単位で段階分割。extract より構造的 (境界設計 → 段階実行 → 検証)。テストカバレッジ維持を VERIFY 必須。 | `references/function-splitting.md` |
-| Guard Clauses | `guard` | | Convert nested `if` to early return / guard clauses | ネスト深度 3 以上の条件を早期 return / guard clause に変換。複雑度削減の測定可能な前後比較を添付。 | `references/guard-clauses.md` |
+| Recipe | Subcommand | Default? | Scope | When to Use | Behavior | Read First |
+|--------|-----------|---------|-------|-------------|----------|------------|
+| General Refactor | `refactor` | ✓ | Focused → Module | General refactoring (composite improvements, code smell fixes) | 複合的なコードスメルを対象。SURVEY でホットスポット特定後、最優先 1 件に絞って適用。 | `references/refactoring-recipes.md` |
+| Naming Improvement | `naming` | | Focused | Variable and function name improvements only | 命名のみに限定。スコープ Focused 固定。public API 変更は Ask First。 | `references/refactoring-recipes.md` |
+| Extract Function | `extract` | | Focused | Split and extract long functions | 長いメソッドを 1 関数抽出。cognitive complexity 15 超を優先。テストパスを VERIFY で確認。 | `references/refactoring-recipes.md` |
+| Magic Constants | `constants` | | Focused → Module | Replace magic numbers with named constants | マジックナンバーを検索し名前付き定数化。型注釈を付与する。 | `references/refactoring-recipes.md` |
+| Dead Code Removal | `dead` | | Focused → Module | Unused code removal | ローカル/private から着手。export・動的利用は確認後に実施。Sweep との境界: ファイルレベルは Sweep。TypeScript/JS は `knip` 推奨 (ts-prune は 2025-09 アーカイブ済)。 | `references/dead-code-detection.md` |
+| Simplify Logic | `simplify` | | Focused | Compress redundant branches, ternaries, and unnecessary conversions into equivalent concise forms | 冗長な条件・三項演算チェーン・`if/else return true/false` 等を等価圧縮。behavior-preserving 変換パターンのみ採用。ユニットテスト通過を VERIFY 必須。 | `references/logic-simplification.md` |
+| Split Function | `split` | | Focused | Incrementally split overly long functions along responsibility boundaries (enhanced `extract`) | 50 行超または cognitive complexity 20 超の関数を責務単位で段階分割。extract より構造的 (境界設計 → 段階実行 → 検証)。テストカバレッジ維持を VERIFY 必須。 | `references/function-splitting.md` |
+| Guard Clauses | `guard` | | Focused | Convert nested `if` to early return / guard clauses | ネスト深度 3 以上の条件を早期 return / guard clause に変換。複雑度削減の測定可能な前後比較を添付。 | `references/guard-clauses.md` |
 
 ### Signal Keywords → Recipe / Mode
 
