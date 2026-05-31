@@ -155,7 +155,7 @@ Parse the first token of user input:
 | TypeScript / JavaScript | Vitest 4.x / Jest 30 | v8 / istanbul | RTL, MSW, `vi.fn()` | `references/testing-patterns.md` |
 | Python | pytest 8.x | coverage.py / pytest-cov | pytest-mock, `unittest.mock` | `references/multi-language-testing.md` |
 | Go | `testing` / testify | `go test -cover` | gomock / mockery | `references/multi-language-testing.md` |
-| Rust | `cargo test` / cargo-nextest | tarpaulin / llvm-cov | mockall | `references/multi-language-testing.md` |
+| Rust | `cargo test` / cargo-nextest (+ proptest, insta, criterion; miri/loom for `unsafe`/concurrency) | llvm-cov (default) / tarpaulin | mockall | `references/multi-language-testing.md` |
 | Java | JUnit 5.12+ / JUnit 6 | JaCoCo | Mockito | `references/multi-language-testing.md` |
 
 ## Test Mix
