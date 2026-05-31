@@ -347,6 +347,36 @@ fn init_project(name: Option<String>, template: String, yes: bool) -> Result<()>
 }
 ```
 
+### Rust CLI Specifics (2026)
+
+**Error handling & exit codes** — use `anyhow` in the binary (type-erased, `?`-friendly, prints the context chain); keep typed errors (`thiserror`) only in library crates the CLI depends on. Map error categories to distinct exit codes instead of a blanket `1`, and let `main` return `Result` so the runtime prints the chain:
+
+```rust
+use std::process::ExitCode;
+
+fn main() -> ExitCode {
+    match run() {
+        Ok(()) => ExitCode::SUCCESS,
+        Err(e) => {
+            eprintln!("error: {e:#}");          // {:#} prints the full anyhow context chain
+            ExitCode::from(match e.downcast_ref::<CliError>() {
+                Some(CliError::Usage)  => 2,    // bad invocation (mirror clap's exit code)
+                Some(CliError::Config) => 78,   // EX_CONFIG (sysexits.h)
+                _ => 1,
+            })
+        }
+    }
+}
+```
+
+**Async CLIs** — default to `#[tokio::main(flavor = "current_thread")]` for a single-threaded CLI; only opt into the multi-thread runtime when the command does real parallel I/O. The current-thread flavor has lower startup cost and smaller binaries.
+
+**Config precedence** — use `figment` (layered: defaults → file → env → flags) or `confy` (zero-config TOML at the XDG path) instead of hand-rolling merge logic; both deserialize straight into a `serde` struct so validation lives in the type.
+
+**Color & TTY** — honor the `NO_COLOR` env var and `--no-color`, and auto-disable styling when stdout is not a TTY. `owo-colors` with `OwoColorize::if_supports_color` (via `supports-color`) gates styling automatically; `anstream`/`anstyle` (what clap uses) is the lower-level option.
+
+**Binary size** (release profile) — for distributed CLIs, set `lto = true`, `codegen-units = 1`, `panic = "abort"`, `strip = true`, and `opt-level = "z"` in `[profile.release]`; profile the result with `cargo-bloat` before committing to feature-gating.
+
 ### Template Engine Patterns
 
 | Language | Engine | Use Case |
