@@ -135,18 +135,19 @@ Single source of truth for Recipe definitions. Behavior depth lives in the Behav
 Parse the first token of user input:
 - If it matches a Recipe Subcommand in the Recipes table → activate that Recipe and load its "Read First" reference.
 - Otherwise → default Recipe (`edge` = Edge Cases).
-- Apply SCAN → LOCK → PING → VERIFY workflow regardless of Recipe.
+- Apply SCAN → LOCK → PING → VERIFY → DELIVER workflow regardless of Recipe.
 
 ## Workflow
 
-`SCAN → LOCK → PING → VERIFY`
+`SCAN → LOCK → PING → VERIFY → DELIVER`
 
 | Phase | Goal | Output | Read |
 |-------|------|--------|------|
-| `SCAN` | Find blind spots, flaky signals, or expensive suites | Candidate list with risk and evidence | `references/` |
-| `LOCK` | Choose the smallest high-value target | Explicit test scope and success condition | `references/` |
-| `PING` | Implement or refine tests | Focused tests using project-native patterns | `references/` |
-| `VERIFY` | Run targeted tests, then broader confirmation | Commands, results, and residual risk | `references/` |
+| `SCAN` | Find blind spots, flaky signals, or expensive suites | Candidate list with risk and evidence; quarantine any test flaking > 10% over 30 days out of the blocking gate (with a root-cause ticket) | `references/coverage-strategy.md`, `references/flaky-test-guide.md` |
+| `LOCK` | Choose the smallest high-value target | Explicit test scope and success condition, ranked by risk × blast-radius × uncovered-branch count | `references/testing-patterns.md` |
+| `PING` | Implement or refine tests | Focused tests using project-native patterns; for regression/bug-repro, confirm the test fails on unpatched code first (fail-first) | `references/multi-language-testing.md` |
+| `VERIFY` | Run targeted tests, then broader confirmation | Commands, results, coverage + mutation delta, zero tautological/assertion-free tests, residual risk | `references/mutation-testing.md` |
+| `DELIVER` | Route results to downstream | Handoff: Guardian (PR), Scout/Builder (fix loop), Sentinel (security regression), Voyager (browser-level escalation) | `references/testing-patterns.md` |
 
 ## Language Support
 

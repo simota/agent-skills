@@ -144,14 +144,15 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ## Workflow
 
-`PLAN → AUTOMATE → STABILIZE → SCALE`
+`PLAN → AUTOMATE → STABILIZE → SCALE → DELIVER`
 
 | Phase | Focus | Required checks |
 |-------|-------|-----------------|
-| PLAN | Choose framework, scope, and environment | Critical journeys, tags, test-data strategy, environment plan |
-| AUTOMATE | Implement reusable tests | Page Objects, fixtures/helpers, stable selectors, deterministic assertions |
-| STABILIZE | Remove flake and false confidence | Wait strategy, auth reuse, data isolation, retry evidence, console/a11y checks |
+| PLAN | Choose framework, scope, and environment; explore intent (Planner) | Critical journeys, risk tags (`@critical`/`@smoke`/`@regression`), test-data strategy, environment plan, visual-regression tier (pixel / perceptual / Visual AI) |
+| AUTOMATE | Implement reusable tests (Generator) | Page Objects (or Screenplay for complex narrative journeys), fixtures/helpers, stable selectors, deterministic assertions |
+| STABILIZE | Remove flake and false confidence (Healer) | Wait strategy, auth reuse, data isolation, retry evidence; axe-core + IGT — never sign off "a11y covered" from automation alone (57% ceiling); quarantine tests flaking > 10% over 30 days |
 | SCALE | Operationalize in CI/CD | Sharding, artifacts, reports, browser/device matrix, failure diagnostics |
+| DELIVER | Route results and escalate | Coverage/bug reports to downstream (Radar / Judge / Guardian); escalate synthetic-monitoring deployment to Beacon and CI infra changes to Gear |
 
 See `## Reference Map` below for per-phase reading guidance.
 
@@ -207,7 +208,7 @@ Voyager receives test escalations, feature specs, and acceptance criteria from u
 ## Subcommand Dispatch
 Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
-- Otherwise → default Recipe (`playwright` = Playwright Suite). Apply normal PLAN → IMPLEMENT → STABILIZE → INTEGRATE workflow.
+- Otherwise → default Recipe (`playwright` = Playwright Suite). Apply normal PLAN → AUTOMATE → STABILIZE → SCALE → DELIVER workflow.
 
 Behavior notes per Recipe:
 - `playwright`: full Playwright E2E test-suite generation. Apply POM pattern; follow the selector-accessibility-first principle for stable selectors.
