@@ -2,7 +2,7 @@
 
 Cross-CLI compatibility reference for Claude Code / Codex CLI / Antigravity CLI (`agy`). SKILL.md authors consult this file before assuming any specific CLI's API, configuration path, or spawn syntax.
 
-> **Date stamps**: As of 2026-05. Antigravity CLI (`agy`) launched 2026-05-19 (Google I/O 2026); Gemini CLI personal-tier service stops 2026-06-18. Re-verify against current docs before relying on any "未確認" item.
+> **Date stamps**: As of 2026-05. Antigravity CLI (`agy`) launched 2026-05-19 (Google I/O 2026, alongside Antigravity 2.0 GA — shared agent harness across desktop app + CLI + workflow SDK); Gemini CLI personal-tier service stops 2026-06-18. **Latest CLI release: v1.0.3** (per `google-antigravity/antigravity-cli` CHANGELOG.md). Re-verify against current docs before relying on any "未確認" item. Update in place via `agy update`.
 
 > **Engine selection policy (2026-05 update)**: The default baseline for multi-engine recipes is **Claude + Codex (dual-engine)**. agy is an **optional addon** used only when available at PREFLIGHT — never a hard prerequisite. Reason: agy v1.0.x exhibits frequent silent runtime failures (quota, OAuth, executor errors, subagent timeouts — see §9). For canonical policy + tag conventions, see `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy`.
 
@@ -115,7 +115,7 @@ Direct model names are CLI-specific. Authoring tip: write SKILL.md with role nam
 |------|-------------|-----------|-----|
 | Default mode | permissions evaluated `deny → ask → allow` (first match wins) | sandbox-on by default, `--full-auto` opt-in | **`request-review`** (collaborative — pause before terminal / file / external-service ops) |
 | Confirm-each | (interactive permission prompts) | (per-action approval) | `request-review` |
-| Sandboxed auto | `bypassPermissions` mode (within container/agent) | `--full-auto` | **`proceed-in-sandbox`** (isolated container, no prompts) |
+| Sandboxed auto | `bypassPermissions` mode (within container/agent) | `--full-auto` | **`proceed-in-sandbox`** (isolated container, no prompts — formally added in CLI v1.0.1 per CHANGELOG) |
 | Fully autonomous | (bypassPermissions, audit hooks recommended) | `--dangerously-bypass-approvals-and-sandbox` (do not use in prod) | **`always-proceed`** (host machine, no prompts — production-forbidden) |
 | Read-only | hooks/permission deny on write tools | (未確認) | **`strict`** (read-only; all non-read ops require approval) |
 | Policy semantics | Hooks can **tighten** (deny) but cannot **loosen** past `settings.json` deny rules. PreToolUse `permissionDecision: "deny"` survives even `bypassPermissions`. | (未確認 — settings precedence documented in `~/.codex/config.toml` reference) | Permission Lists are `action(target)` strings, Allow / Deny / Ask. Positive security model: forbidden unless expressly permitted. |
@@ -128,7 +128,7 @@ Direct model names are CLI-specific. Authoring tip: write SKILL.md with role nam
 
 | Aspect | Claude Code | Codex CLI | agy |
 |--------|-------------|-----------|-----|
-| Config location | inline in `settings.json` (`mcpServers`) | (未確認) | **`mcp_config.json`** (independent file) |
+| Config location | inline in `settings.json` (`mcpServers`) | (未確認) | **`mcp_config.json`** (independent file; v1.0.3 CHANGELOG references the path as `config/mcp_config.json` when fixing a TUI server-disable bug — verify the exact subdirectory against your install) |
 | Remote MCP URL field | `url` | (未確認) | **`serverUrl`** — silent failure if `url` is copied across from Claude Code config |
 | Transport | HTTP (OAuth 2.1 + PKCE required), stdio | (未確認) | HTTP (per spec inheritance from MCP standard) |
 | Tool description pinning | community-recommended SHA-256 hash + diff (no built-in) | (未確認) | community-recommended SHA-256 hash + diff (no built-in); audit via `chain` skill |
@@ -173,7 +173,7 @@ When a skill consumes an MCP server, declare the server name + required tool set
 | Config | `/config` | (未確認) | `/config`, `/settings` |
 | Permissions | (in settings.json) | (未確認) | `/permissions` |
 | Model switch | (per-Agent) | (per-session) | `/model` |
-| Usage / quota | `/cost` (legacy `/usage`) | (未確認) | `/usage`, `/quota` (**not live-updated — quit & reload required**, per forum report) |
+| Usage / quota | `/cost` (legacy `/usage`) | (未確認) | `/usage`, `/quota` (**not live-updated — quit & reload required**, per forum report); `/credits` (v1.0.3 — G1 credits panel: spend G1 credits when standard quota is exhausted, opt-in via `UseG1Credits` setting + live remaining-credit display in status bar; partially mitigates the `/usage` non-live quota-cliff problem in §9) |
 | Resume / rewind | `/resume` | (未確認) | `/resume`, `/rewind` |
 | MCP management | `/mcp` | (未確認) | `/mcp` |
 | Tasks / scheduling | TaskCreate/TaskUpdate (tools) | (未確認) | `/tasks`, `/schedule` |
