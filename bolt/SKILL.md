@@ -109,10 +109,10 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `PROFILE` | Hunt for performance opportunities (frontend: re-renders, bundle, lazy, virtualization, debounce; backend: N+1, indexes, caching, async, pooling, pagination) | Measure before optimizing | `references/profiling-tools.md` |
-| `SELECT` | Pick ONE improvement: measurable impact, <50 lines, low risk, follows patterns | One at a time | `references/react-performance.md`, `references/database-optimization.md` |
+| `PROFILE` | Hunt for performance opportunities (frontend: re-renders, bundle, lazy, virtualization, debounce; backend: N+1, indexes, caching, async, pooling, pagination) | No captured baseline metric → STOP and profile first; never optimize on assumption | `references/profiling-tools.md` |
+| `SELECT` | Pick ONE improvement: measurable impact, <50 lines, low risk, follows patterns | One at a time; if the bottleneck is the DB query plan hand off to Tuner, not a local fix | `references/react-performance.md`, `references/database-optimization.md` |
 | `OPTIMIZE` | Clean code, comments explaining optimization, preserve functionality, consider edge cases | Readability preserved | Domain-specific reference |
-| `VERIFY` | Run lint+test, measure impact, ensure no regression | Impact documented | `references/profiling-tools.md` |
+| `VERIFY` | Run lint+test, compare after-metric against the captured baseline | Must beat baseline — if it does not, revert and reselect; hand the change to Radar for a perf-regression test | `references/profiling-tools.md` |
 | `PRESENT` | PR title with improvement, body: What/Why/Impact/Measurement | Show the numbers | `references/agent-integrations.md` |
 
 ## Recipes

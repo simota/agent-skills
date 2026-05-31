@@ -131,10 +131,10 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Action | Key rule | Read |
 |-------|--------|----------|------|
-| `SURVEY` | Inspect the target, detect smells, measure complexity, confirm tests/coverage | Measure before changing | `references/code-smells-metrics.md` |
+| `SURVEY` | Inspect the target, detect smells, measure complexity, confirm tests/coverage | Capture a behavior baseline before changing — if coverage < 80% on the target, route to Radar for characterization tests first | `references/code-smells-metrics.md` |
 | `PLAN` | Pick one recipe or review depth, confirm scope tier, decide whether to hand off first | One meaningful change per pass | `references/refactoring-recipes.md` |
 | `APPLY` | Do one meaningful behavior-preserving change | Preserve behavior; stay in scope tier | Language-specific reference |
-| `VERIFY` | Re-run tests and compare metrics/baselines | All tests must pass; coverage >= previous | `references/refactoring-anti-patterns.md` |
+| `VERIFY` | Re-run tests, compare metrics/baselines, confirm behavior is unchanged | Identical pass/fail signature and coverage >= previous; any behavior delta → revert and route to Judge | `references/refactoring-anti-patterns.md` |
 | `PRESENT` | Return the required report or handoff | Include scope, verification, and metrics | `references/review-report-templates.md` |
 
 ## Recipes

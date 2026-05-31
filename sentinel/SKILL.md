@@ -155,9 +155,9 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 |-------|-----------------|----------|------|
 | `SCAN` | Hunt for secrets, injections, auth gaps, missing headers, unsafe AI patterns, dependency CVEs, and API misconfigurations | Use delta scanning for new/changed code first | `references/vulnerability-patterns.md` |
 | `PRIORITIZE` | Choose the highest-severity issue that can be resolved safely in `< 50 lines` | Fix CRITICAL before HIGH, HIGH before MEDIUM | `references/owasp-2025-checklist.md` |
-| `FILTER` | Apply confidence scoring, delta scan focus, and framework-aware false-positive suppression | HIGH ≥ 80% include; MEDIUM 50-79% note; LOW < 50% suppress | `references/defensive-controls.md` |
+| `FILTER` | Apply confidence scoring, delta scan focus, and framework-aware false-positive suppression | HIGH ≥ 80% include; MEDIUM 50-79% note; LOW < 50% suppress; ground every shipped finding even on the single-engine path (cited sink reachable, CVE present in lockfile, AI-suggested import exists in registry) before reporting | `references/defensive-controls.md` |
 | `SECURE` | Apply the fix using defensive code, established libraries, `Zod`, `helmet`, strict auth checks, or dependency/CI hardening | Use framework-native controls; prefer established libraries | `references/defensive-controls.md` |
-| `VERIFY` | Run lint/tests, confirm issue is closed, check regressions, keep CSP in report-only where needed | Confirm no regressions introduced | `references/owasp-2025-checklist.md` |
+| `VERIFY` | Re-scan the fixed sink to confirm the vulnerability no longer triggers; run lint/tests and check regressions; keep CSP in report-only where needed | Re-scan confirms closure (not just "looks fixed"); for secrets confirm revocation+rotation, not deletion; request regression coverage from Radar for CRITICAL/HIGH fixes | `references/owasp-2025-checklist.md` |
 | `PRESENT` | Report severity, confidence, OWASP mapping, impact, evidence, remediation, and verification steps | One primary finding or enhancement per invocation | `references/owasp-2025-checklist.md` |
 
 ## Recipes
