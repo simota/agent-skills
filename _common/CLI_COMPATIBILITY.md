@@ -105,6 +105,8 @@ Direct model names are CLI-specific. Authoring tip: write SKILL.md with role nam
 
 > agy explicitly lists Claude Sonnet 4.6 / Opus 4.6 (Thinking) and GPT-OSS 120B in `/model`. Source: Medium "Getting Started" + tutorial series (2026-05).
 
+> **Codex-as-orchestrator effort routing**: when Codex CLI drives the hub, apply Plan-and-Execute by **model choice** — planning / high-complexity steps → `gpt-5.1-codex-max`, execution steps → `gpt-5.1`. The exact Codex reasoning-effort config key name and its level names are **未確認**; do not invent an effort enum. Full Codex-hub authoring protocol: `_common/CODEX_ORCHESTRATION.md` (C3).
+
 ---
 
 ## 5. Permission Models

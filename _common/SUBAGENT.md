@@ -93,6 +93,22 @@ Agent(subagent_type="Explore", prompt="Research area C...")
 
 ---
 
+## Codex Orchestrator Parallelism
+
+This document assumes the **Claude Code** `Agent` tool. When the **Codex CLI** drives the hub, the parallelism primitives differ — apply `_common/CODEX_ORCHESTRATION.md` instead of the Agent mechanics above:
+
+| Concept | Claude Code (this doc) | Codex CLI hub |
+|---------|------------------------|---------------|
+| Spawn | `Agent(prompt, ...)` | `spawn_agent(prompt)` → `wait_agent(id)` |
+| Parallel | N `Agent(... run_in_background: true)` (non-blocking) | N `spawn_agent` in one turn → `wait_agent` on **all** (hard join; no background primitive — C2) |
+| Max fan-out | soft cap **3** (else Rally) | governed by `agents.max_depth` / budget (C1), not the soft 3 |
+| Continue / resume | new `Agent` per step | `send_input` / `resume_agent` / `close_agent` for 4+ step chains (C6) |
+| Prereq | `Agent` tool present | `[features] multi_agent = true` + `[agents] max_depth >= 2`; tool may be lazily hidden (C5) |
+
+The patterns below (RESEARCH_FAN_OUT, MULTI_ENGINE, etc.) and their merge strategies are engine-agnostic — only the spawn/join syntax changes.
+
+---
+
 ## Patterns
 
 ### RESEARCH_FAN_OUT
