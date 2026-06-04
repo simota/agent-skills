@@ -65,6 +65,12 @@ Use these as evidence when proposing local chain patterns of the same shape (e.g
 | Resume | native checkpoint-resume across interruptions | Checkpoint-resume for 4+ step chains (Safety Contract) |
 | Orchestration logic | Claude writes the orchestration script on the fly | Recipe + routing-matrix (pre-designed chains) |
 
+**Why isolation + adversarial review (the failure modes DW exists to fix).** A single agent working a complex task in one context window degrades in three specific ways — these are the canonical justification for spawning isolated subagents (Core Rule #3) and for the adversarial-verification stage, not just a performance optimization:
+1. **Agentic laziness** — the agent declares the task complete after partial progress (e.g. addressing 35 of 50 items in a security review). Mitigation: one isolated subagent per item with a narrow, checkable goal, so "done" is verified per-item, not self-asserted over the whole set.
+2. **Self-preferential bias** — when asked to verify or judge its own output, the agent favors its own prior findings. Mitigation: a *separate* agent (ideally a different model) performs verification — the generator-evaluator separation Judge also enforces against self-grade inflation.
+3. **Goal drift** — the original objective loses fidelity through successive summarization steps. Mitigation: each subagent receives the original goal directly in its own context rather than a summary-of-a-summary.
+[Source: claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code]
+
 **Activation (Claude Code).** Two paths:
 1. Ask directly: "Create a dynamic workflow".
 2. Enable the **`ultracode`** setting (effort menu) — sets effort to `xhigh` and lets Claude auto-decide when to deploy a workflow. Auto mode is recommended. `ultracode` ≈ AUTORUN_FULL + Opus 4.8 P6 (`xhigh` baseline).

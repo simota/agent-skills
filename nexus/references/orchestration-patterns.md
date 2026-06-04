@@ -14,6 +14,7 @@
 - Pattern F: Verification Gate
 - Pattern G: Rally Delegation
 - Pattern H: Evaluator Loop
+- Dynamic Workflows Pattern Vocabulary (official ↔ Nexus)
 - Hub Communication Protocol
 
 Detailed patterns for agent chain execution.
@@ -395,6 +396,23 @@ close_agent(radar_id)
 ```
 
 See `references/evaluator-loop-protocol.md` for the full end-to-end specification (loop pattern + Sprint Contract format + Rubric scoring criteria).
+
+---
+
+## Dynamic Workflows Pattern Vocabulary (official ↔ Nexus)
+
+Claude Code's Dynamic Workflows feature names six canonical orchestration shapes. When a request describes one of these, use the official name (per the shared-vocabulary rule in `managed-agents-mapping.md §3`) and reuse the matching Nexus pattern below — they are the same shapes under different labels. On Claude Code, a large fan-out of any of these may delegate execution to a native dynamic workflow (`managed-agents-mapping.md §5`); off Claude Code, implement with the Nexus pattern directly.
+
+| Dynamic Workflows pattern | What it does | Nexus equivalent |
+|---------------------------|--------------|------------------|
+| **Classify-and-act** | A router agent determines task type and directs to specialized handlers | Pattern C: Conditional Routing |
+| **Fan-out-and-synthesize** | Split into parallel subtasks with independent agents, then merge at a synchronization barrier | Pattern B: Parallel Branches (barrier = AGGREGATE) |
+| **Adversarial verification** | A separate agent verifies each output against a rubric | Pattern F: Verification Gate / Pattern H: Evaluator Loop |
+| **Generate-and-filter** | Generate many candidates, then filter by quality criteria | Pattern H variant (generate → rubric filter) |
+| **Tournament** | N agents compete on an identical task with pairwise judging | Pattern B fan-out + pairwise judge (see `essential`/`killer` convergence) |
+| **Loop-until-done** | Spawn iteratively until a stop condition (no new findings, error resolved) | Pattern D: Recovery Loop / loop-until-dry |
+
+These six combat the single-context failure modes (agentic laziness, self-preferential bias, goal drift) documented in `managed-agents-mapping.md §5`. [Source: claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code]
 
 ---
 
