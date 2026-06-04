@@ -244,6 +244,10 @@ Result: [Expected outcome]
 
 > Note: These are aspirational targets — rough benchmarks rather than precise thresholds. Anthropic is actively developing more robust measurement guidance and tooling.
 
+### Empirical Evidence for Skill Impact
+
+A production deployment quantifies how much externalizing procedural knowledge into skills matters: in Anthropic's internal self-service analytics agent, the same task scored **21% accuracy without skills and consistently above 95% with skills** — the largest single lever in the stack. The transferable lesson for skill design: the bottleneck is rarely the model's raw capability or its access to information, but whether procedural knowledge (table grain, scope, exclusions, gotchas, common patterns) is encoded as a retrievable, LLM-readable skill. Auto-generating that knowledge with an LLM *failed* — it encoded ambiguity instead of resolving it; human curation of the reference material remained essential. [Source: claude.com — *How Anthropic Enables Self-Service Data Analytics with Claude*]
+
 ---
 
 ## 5. Progressive Disclosure Design Principle

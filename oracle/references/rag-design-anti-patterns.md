@@ -91,6 +91,9 @@ Rules:
 | `RP-08` | no guardrails | unsafe retrieval/use | source whitelisting and output validation |
 | `RP-09` | context overload | entire docs in prompt | top `5-8` chunks only |
 | `RP-10` | no reranking | raw retrieval order used | add reranker |
+| `RP-11` | retrieval breadth as a proxy for accuracy | dumping a large raw corpus (e.g. grep over 1000+ prior queries/files) into context, expecting accuracy to rise | the bottleneck is concept→entity *mapping*, not access — curate canonical sources + a semantic/definition layer; raw breadth alone moves accuracy `<1%` |
+
+> **Mapping over access** [Source: claude.com — *How Anthropic Enables Self-Service Data Analytics with Claude*]: in a production analytics agent, giving the model raw access to 1000+ historical SQL files improved accuracy by `<1%` — the correct information was present but unmapped. Accuracy came from curated canonical datasets + a compiled semantic layer (definitions as the highest-trust source), not from widening retrieval. When an agent underperforms, suspect ambiguous concept-to-entity mapping before adding more documents to the index.
 
 ## Cascade Failure Model
 

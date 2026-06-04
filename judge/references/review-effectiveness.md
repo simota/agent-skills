@@ -166,3 +166,21 @@ elif (totalLOC > 400):
 ```
 
 **Source:** [PropelCode: Measuring Code Review Effectiveness](https://www.propelcode.ai/learn/measuring-code-review-effectiveness) · [Rishi Baldawa: Cognitive Load Cliff in Code Review](https://rishi.baldawa.com/posts/pr-throughput/cognitive-load-cliff/) · [Arxiv: Rethinking Code Review Workflows with LLM](https://arxiv.org/html/2505.16339v1) · [Springer: Code Review Anxiety](https://link.springer.com/article/10.1007/s10664-024-10550-9) · [Qodo: Code Quality Metrics 2026](https://www.qodo.ai/blog/code-quality-metrics-2026/)
+
+---
+
+## 6. Adversarial / Multi-Agent Review ROI
+
+When deciding whether to add an adversarial-reviewer sub-agent (a second agent prompted to aggressively challenge the first pass), budget against a measured baseline rather than assuming "more review is free":
+
+| Effect of adding an adversarial reviewer | Measured delta |
+|------------------------------------------|----------------|
+| Accuracy | **+6%** |
+| Token consumption | **+32%** |
+| Latency | **+72%** |
+
+Two corollaries from the same deployment:
+- **Don't downgrade the reviewer to save cost.** Swapping the adversarial reviewer to a cheaper model *lost the accuracy gain without recovering meaningful latency* — the review step is where reasoning quality pays off.
+- **Reserve adversarial review for high-stakes diffs.** At +72% latency it is not a default for every PR; gate it on risk (money / authz / state-machine / irreversible changes), consistent with the tiered approach Judge already applies.
+
+**Source:** [Anthropic: How Anthropic Enables Self-Service Data Analytics with Claude](https://claude.com/blog/how-anthropic-enables-self-service-data-analytics-with-claude)

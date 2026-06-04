@@ -150,6 +150,8 @@ Each adversarial agent (Layer A or B) must produce a non-trivial exploration rep
 
 **Gate**: Findings from either Layer either fixed in the same PR, or filed with explicit "won't fix" rationale that the Acceptance Gate (Phase 4) can adjudicate.
 
+> **Adversarial-pass cost calibration** [Source: claude.com — *How Anthropic Enables Self-Service Data Analytics with Claude*]: a production measurement of one adversarial-review sub-agent records **+6% accuracy at the cost of +32% tokens and +72% latency**. Two implications for this recipe: (1) the adversarial fan-out is the dominant latency contributor — keep it gated to Tier-S/A and high-risk surfaces (money / authz / state-machine), not every diff; (2) do **not** route the adversarial explorers to a cheaper engine to trim cost — the same study found a cheaper reviewer lost the accuracy gain without recovering latency, which is why G1 routes Tier-S adversaries to Claude for judgment rather than the cheapest available model.
+
 ### Phase 4 — Acceptance Gate (Layer A + Layer B joint verdict)
 
 #### Phase 4A — Code Acceptance Gate (inline nexus orchestration)
