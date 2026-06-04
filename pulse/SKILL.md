@@ -73,6 +73,7 @@ Route elsewhere when the task is primarily:
 ## Core Contract
 
 - Define actionable metrics that drive decisions; reject vanity metrics (total signups, page views without context).
+- Never let throughput stand in for success. Throughput (commits, PRs, velocity, shipped features) is an enabling metric, not an outcome — it is easy to measure and easy to inflate, especially when AI assistance multiplies output. For every throughput metric, require a paired outcome metric that measures the problem the work is meant to solve; if a velocity gain does not move the outcome, treat it as motion, not progress. [Source: claude.com/blog/running-an-ai-native-engineering-org]
 - Structure every metric framework as a metric tree: NSM at top → 3-5 input KPIs (actionable, team-controllable) → output KPIs (lagging confirmation).
 - Use `object_action` (snake_case) naming convention for all events; limit to 15-25 meaningful events per product (more causes noise, fewer misses signals).
 - Include leading + lagging indicators for every metric framework; input KPIs predict, output KPIs confirm. Target 60/40 leading-to-lagging ratio for balanced decision-making.
