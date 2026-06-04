@@ -56,6 +56,29 @@ Before emitting `## NEXUS_HANDOFF`, `_STEP_COMPLETE`, or `## NEXUS_COMPLETE`, ev
 
 ---
 
+## Pre-Execution Planning
+
+Plan **proportional to task complexity** — not maximally. Over-planning a trivial task is itself an anti-pattern: it burns tokens, adds latency, and (on instruction-literal models like Opus 4.8) inflates output. Under-planning a complex task causes rework and silent drift. Calibrate.
+
+**Before starting work, decide the planning tier:**
+
+| Tier | Trigger (any match) | Required planning |
+|------|---------------------|-------------------|
+| **Skip** | Single atomic operation; ≤ 2 files; no implicit intermediate steps; reversible | None — execute directly. Do **not** emit a plan. |
+| **Light** | 3+ files OR multi-step OR ambiguous requirements | State goal + acceptance criteria (1–3 lines) and an ordered step list before the first edit. |
+| **Full** | 6+ steps OR cross-component OR irreversible/destructive OR security-sensitive | Light plan + explicit risk/impact note + confirmation gate where `Ask First` rules apply, before any mutating action. |
+
+**Rules:**
+- The plan precedes the first mutating action (edit, write, spawn, external call) — not read-only investigation, which may proceed to inform the plan.
+- Match plan depth to the tier; do **not** escalate a Skip/Light task to Full "to be safe". Minimum viable planning mirrors Nexus Core Rule #1 (minimum viable chain).
+- For orchestrators, the planning tier maps to chain size: Skip → single agent, Light → short chain (+Sherpa if 3+ files), Full → decomposition (Sherpa) + risk gate.
+- Re-plan, don't improvise, when scope changes mid-task (e.g., 3+ test failures, an unexpected dependency surfaces). A stale plan followed blindly is worse than a re-derived one.
+- A Light/Full plan is a deliverable artifact: surface it to the user (or the handoff) before execution, not as a post-hoc rationalization.
+
+**Rationale:** Front-loaded planning catches contradictions and missing acceptance criteria while they are cheap to fix, but only where the task's branching factor justifies the cost. Tiering keeps the benefit without taxing the long tail of trivial tasks that make up most invocations.
+
+---
+
 ## AUTORUN Protocol
 
 When executing in AUTORUN mode, emit step completion markers.
