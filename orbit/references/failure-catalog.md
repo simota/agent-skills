@@ -178,13 +178,13 @@ ORBIT_FAILURE_REPORT:
 
 ## Circuit Breaker Integration
 
-When the same failure signature (class + sub_class + error message hash) occurs `3` times:
+When the same failure signature (class + sub_class + error message hash) occurs `CIRCUIT_THRESHOLD` times (default `3`):
 
 | State | Condition | Behavior |
 |-------|-----------|----------|
-| `CLOSED` | `< 3` consecutive same-signature failures | normal retry policy applies |
-| `HALF_OPEN` | exactly `3` consecutive same-signature failures | allow one probe execution; if it fails, transition to `OPEN` |
-| `OPEN` | `> 3` consecutive same-signature failures or probe failed | stop execution, emit `BLOCKED` status, require manual reset or cooldown |
+| `CLOSED` | `< CIRCUIT_THRESHOLD` consecutive same-signature failures | normal retry policy applies |
+| `HALF_OPEN` | exactly `CIRCUIT_THRESHOLD` consecutive same-signature failures | allow one probe execution; if it fails, transition to `OPEN` |
+| `OPEN` | `> CIRCUIT_THRESHOLD` consecutive same-signature failures or probe failed | stop execution, emit `BLOCKED` status, require manual reset or cooldown |
 
 Cooldown: `OPEN` state auto-transitions to `HALF_OPEN` after `CIRCUIT_COOLDOWN` seconds (default: `300`).
 

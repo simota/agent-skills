@@ -5,7 +5,7 @@ Purpose: load this when generating, auditing, or hardening a `nexus-autoloop` ru
 ## Contents
 
 1. Origin and core definition
-2. Eight design principles
+2. Nine design principles
 3. Two-mode pattern (plan / build)
 4. 9xx guardrail numbering
 5. AGENTS.md constraints
@@ -17,6 +17,7 @@ Purpose: load this when generating, auditing, or hardening a `nexus-autoloop` ru
 11. Huntley's anti-pattern warnings
 12. Adjacent best practices (non-default)
 13. Quick reference
+14. Multi-loop orchestration (Gas Town / Weaving Loom)
 
 ## 1. Origin and Core Definition
 
@@ -36,7 +37,7 @@ while :; do cat PROMPT.md | claude --dangerously-skip-permissions \
 
 Ralph Loop is **filesystem-as-memory** plus **fresh-context-per-iteration**. This is the structural opposite of conversation-resend loops (`/loop` style), which replay full chat history every call and scale token cost linearly with iteration count.
 
-## 2. Eight Design Principles
+## 2. Nine Design Principles
 
 | # | Principle | Operational rule |
 |---|-----------|------------------|
@@ -48,6 +49,7 @@ Ralph Loop is **filesystem-as-memory** plus **fresh-context-per-iteration**. Thi
 | `RP-6` | Plan is disposable | When the agent detects circular work or scope drift, regenerate the plan; never re-anchor to a stale plan. |
 | `RP-7` | Filesystem-as-memory | All state lives in tracked files (`fix_plan.md`, `progress.md`, git history). Context is fresh every iteration. |
 | `RP-8` | Green-field only | Ralph Loop is designed for new projects. Huntley explicitly disqualifies it for existing codebases. |
+| `RP-9` | One task per iteration | Each iteration claims exactly **one** task, implements it, commits, and stops; the next iteration starts fresh. Build/plan prompts must say "pick the single most important next task and stop after it; do not chain tasks." This sharpens §1's "single most important next task" into a hard stop-after-one constraint and is the core requirement for safe inter-loop parallelism (§14). [Source: https://www.chrismdp.com/your-agent-orchestrator-is-too-clever/] |
 
 ## 3. Two-Mode Pattern (plan / build)
 
@@ -85,6 +87,7 @@ Orbit-generated `PROMPT.md` must include at minimum:
 - `999_DO_NOT_EDIT_PROMPT_MD` (covers RP-1 immutability)
 - `998_DO_NOT_EDIT_GOAL_MD` (covers AP-16 Goal Drift)
 - `997_DO_NOT_EDIT_TESTS_OR_VERIFY` (covers AP-13 Reward Hacking)
+- `996_DO_NOT_EDIT_SETTINGS_JSON` (covers AP-20 Permission Hijack, a P0 security event)
 
 ## 5. AGENTS.md Constraints
 
@@ -168,9 +171,13 @@ Operational rule for Orbit:
 Detection heuristic (any one triggers brownfield):
 
 ```bash
+# Thresholds: >10 commits, >20 source files, >50 dependency-manifest entries → brownfield.
 [[ $(git rev-list --count HEAD 2>/dev/null || echo 0) -gt 10 ]] \
- || [[ $(find src -type f 2>/dev/null | wc -l) -gt 20 ]] \
- || [[ -f package-lock.json && $(jq '.packages | length' package-lock.json) -gt 50 ]]
+ || [[ $(git ls-files -- '*.ts' '*.js' '*.py' '*.go' '*.rs' '*.java' 2>/dev/null | wc -l) -gt 20 ]] \
+ || [[ -f package-lock.json && $(jq '.packages | length' package-lock.json) -gt 50 ]] \
+ || [[ -f poetry.lock && $(grep -c '^\[\[package\]\]' poetry.lock) -gt 50 ]] \
+ || [[ -f go.sum && $(wc -l < go.sum) -gt 50 ]] \
+ || [[ -f Cargo.lock && $(grep -c '^\[\[package\]\]' Cargo.lock) -gt 50 ]]
 ```
 
 If a user explicitly forces Ralph in a brownfield, log a warning, require `RALPH_BROWNFIELD_ACK=true`, and tighten guardrails: `WORKTREE_ISOLATION=true`, mandatory `997_DO_NOT_EDIT_TESTS_OR_VERIFY`, mandatory rollback rehearsal.
@@ -188,6 +195,7 @@ These are warnings Huntley himself documents. Orbit must surface them when gener
 | Stale plan fixation | Agent loops on outdated plan | RP-6 plan disposability + Orbit's CONVERGENCE_STALL detection |
 | AGENTS.md contamination | Progress notes leak into AGENTS.md | RP-4: 60-line cap, hash pin warning |
 | Existing codebase use | Ralph applied to brownfield | Section 10 detection + refusal |
+| Parallel loops on a shared PRD without a queue | each loop re-derives work from the same spec → duplicated, conflicting code and unmergeable branches (Parsons ran 4 parallel Claude instances on one PRD → unusable codebase) | Require a single git-tracked dependency-aware task queue loops atomically claim from (§14); never fan loops onto a PRD; serialize merges through one integrator (Gas Town Refinery); prefer a bash-loop + queue over a clever orchestrator [Source: https://www.chrismdp.com/your-agent-orchestrator-is-too-clever/, https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04] |
 
 ## 12. Adjacent Best Practices (non-default, opt-in)
 
@@ -201,6 +209,9 @@ These are documented practices from 2025-2026 sources that complement Ralph but 
 | `BP-6` | microVM / gVisor hardware sandbox | `SANDBOX_MODE=microvm` | [Northflank](https://northflank.com/blog/how-to-sandbox-ai-agents), [Microsoft Security](https://www.microsoft.com/en-us/security/blog/2026/05/07/prompts-become-shells-rce-vulnerabilities-ai-agent-frameworks/) |
 | `BP-8` | Screenshot multimodal verify | `MULTIMODAL_VERIFY=true` + Vision model configured | [DEV.to](https://dev.to/custodiaadmin/how-multi-agent-ai-systems-use-screenshots-as-shared-ground-truth-3poh) |
 | `BP-10` | Vertical-slice atomic task sizing (45-120 min) | `TASK_SIZING=vertical_slice` | [CodeSignal](https://codesignal.com/learn/courses/task-decomposition-execution-with-claude-code/lessons/atomic-task-design) |
+| `BP-11` | In-iteration server-side compaction | `ITER_COMPACTION=true` (e.g. `ITER_COMPACTION_THRESHOLD=150000`) | [Anthropic compaction](https://platform.claude.com/docs/en/build-with-claude/compaction) |
+
+**BP-11 note**: filesystem-as-memory (RP-7) protects **across** iterations (fresh context at each start) and `CONTEXT_OVERFLOW`/memory-pointer externalizes tool **outputs** > 1KB — neither protects a single long iteration that exhausts context **within** the iteration before reaching its commit/exit. Server-side compaction (Anthropic beta header `anthropic-beta: compact-2026-01-12`, default threshold 150K tokens, min 50K; supported on `claude-opus-4-8`) proactively summarizes the running conversation transcript and is the recommended strategy for task-oriented prompts with heavy follow-up tool use. It is complementary to, not a substitute for, RP-7 and memory-pointer. Gotcha: when tool schemas are passed, the model may call a tool during summarization — generated runners must set the compaction `instructions` string to forbid tool calls during the summary step. [Source: https://platform.claude.com/docs/en/build-with-claude/compaction]
 
 Orbit's three already-promoted defaults (BP-1 cache, BP-4 critic, BP-7 worktree) appear in `SKILL.md` and `patterns.md`, not here.
 
@@ -213,7 +224,7 @@ Orbit's three already-promoted defaults (BP-1 cache, BP-4 critic, BP-7 worktree)
 - [ ] `AGENTS.md` skeleton ≤ 60 lines (RP-4).
 - [ ] At least two independent terminators configured (Section 9).
 - [ ] `<promise>COMPLETE</promise>` sentinel or equivalent included.
-- [ ] `9xx` critical rules cover placeholders, assume-missing, prompt-immutability, tests-immutability, goal-immutability (Section 4).
+- [ ] `9xx` critical rules cover placeholders, assume-missing, prompt-immutability, tests-immutability, goal-immutability, settings-immutability (Section 4).
 - [ ] Build/test subagent count is exactly 1 (RP-5).
 - [ ] `WORKTREE_ISOLATION=true` and `TOKEN_BUDGET > 0` (default-on).
 - [ ] Plan disposability triggers wired to CONVERGENCE_STALL / OSCILLATION_LOOP (RP-6).
@@ -228,4 +239,37 @@ Orbit's three already-promoted defaults (BP-1 cache, BP-4 critic, BP-7 worktree)
 | `claude` invoked with prior `--resume` flag | RP-7 (filesystem-as-memory broken) |
 | Multiple `claude` build invocations in a single iteration | RP-5 (subagent rule) |
 | `fix_plan.md` top item unchanged for 3+ iters with no progress | RP-6 (plan should regenerate) |
-| Initial commit count > 10 or large dependency manifest | Section 10 (green-field check failed) |
+| Initial commit count > 10, > 20 source files, or > 50 dependency-manifest entries | Section 10 (green-field check failed) |
+
+## 14. Multi-Loop Orchestration (Gas Town / Weaving Loom)
+
+RP-5's no-parallelism rule is **intra-loop only** (one build/test subagent inside a single loop). **Inter-loop** parallelism — a fleet of isolated single-task Ralph loops — is a distinct 2026 direction, permitted *only* when coordinated by a shared dependency-aware queue, a single merge-serializer, and per-loop worktree isolation. Two named reference designs:
+
+- **Gas Town** (Steve Yegge): an orchestration layer (~Level 8 autonomy) running many worker loops against a shared queue. [Source: https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04]
+- **The Weaving Loom** (Geoffrey Huntley): "infrastructure for evolutionary software" (~Level 9 autonomy). [Source: https://ghuntley.com/loop/]
+
+Gas Town mechanisms mapped to Orbit primitives:
+
+| Gas Town role | Mechanism (per source) | Orbit primitive |
+|---------------|------------------------|------------------|
+| Beads queue | dependency-aware graph; one JSON issue per line in git; hash-based IDs to prevent collisions; workers atomically claim one task | single source of work; replaces direct PRD fan-out |
+| Mayor | the main agent you talk to (concierge / chief-of-staff) | human-facing entry point; not a per-task dispatcher |
+| Refinery | merges one branch at a time to main | single merge-serializer; `WORKTREE_ISOLATION=true` |
+| Witness | unsticks swarmed / stuck workers | maps to CONVERGENCE_STALL / OSCILLATION_LOOP detection |
+| Idle backoff | exponential backoff when no work | `RETRY_BACKOFF=exponential` |
+| Per-worker isolation | `git worktree` per loop | `WORKTREE_ISOLATION=true` |
+
+Generating or auditing a Ralph **fleet** (vs. a single runner) requires, in addition to §13:
+
+- a git-tracked dependency-aware task queue as the single source of work — never fan multiple loops directly onto one PRD;
+- exactly one task claimed and completed per iteration, then stop (RP-9);
+- a single merge-serializer to main, no parallel merges (Gas Town's Refinery);
+- per-loop `git worktree` isolation;
+- a health-watcher / stuck-detector (Gas Town's Witness ≈ Orbit's convergence / oscillation guards);
+- idle exponential backoff.
+
+Start simple: a bash loop + prompt file + queue beats a clever bespoke orchestrator; add complexity only when the queue proves insufficient. [Source: https://www.chrismdp.com/your-agent-orchestrator-is-too-clever/]
+
+Cross-reference `SKILL.md` §Multi-Loop Rules and `patterns.md` parallel-loop coordination for the generic `state.env` / `progress.md` isolation primitives, stated here in Ralph terms. Prior art: `mikeyobrien/ralph-orchestrator`, `snwfdhmp/awesome-ralph`.
+
+**Weaving Loom (Level 9)**: Huntley frames it as infrastructure for evolutionary software — treat as opt-in / advanced. Reuse per-loop worktree isolation and the §9 two-independent-terminators rule for each loop in the fleet. [Source: https://ghuntley.com/loop/]
