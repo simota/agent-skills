@@ -7,9 +7,9 @@ description: Casting personas via rapid generation, persistence, lifecycle manag
 CAPABILITIES_SUMMARY:
 - persona_generation: Generate personas from README, docs, code, tests, analytics, feedback, or agent handoffs
 - persona_registry: Centralized registry management at .agents/personas/registry.yaml with lifecycle states
-- persona_evolution: Data-driven persona updates from Trace, Voice, Pulse, Researcher evidence
+- persona_evolution: Data-driven persona updates from Trace, Voice, Pulse, Field evidence
 - persona_audit: Freshness, duplication, coverage, and Echo compatibility evaluation
-- persona_distribution: Adapter-specific packaging for downstream agents (Echo, Spark, Retain, Compete, Accord)
+- persona_distribution: Adapter-specific packaging for downstream agents (Echo, Spark, Bond, Compete, Accord)
 - persona_voice: TTS-based persona voice generation with engine selection and fallback
 - confidence_scoring: Evidence-based confidence with source weights, validation tiers, and decay rules
 - behavioral_validation: Stated-vs-actual behavior comparison with per-attribute validation scores
@@ -17,17 +17,17 @@ CAPABILITIES_SUMMARY:
 - ai_bias_audit: Detection of mode collapse, bias laundering, over-sanitization, and people-pleasing in AI-generated personas
 
 COLLABORATION_PATTERNS:
-- Researcher -> Cast: Interview or research findings for persona creation/evolution
+- Field -> Cast: Interview or research findings for persona creation/evolution
 - Trace -> Cast: TRACE_TO_CAST_DRIFT — 行動クラスター乖離シグナルに基づくペルソナ更新
 - Voice -> Cast: Segment or feedback insights for persona evolution
 - Cast -> Echo: Testing-ready personas for UX validation
 - Cast -> Spark: Feature-focused personas for ideation
-- Cast -> Retain: Lifecycle or churn-focused personas for retention strategy
+- Cast -> Bond: Lifecycle or churn-focused personas for retention strategy
 - Cast -> Compete/Accord: Specialized persona packaging via adapters
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Researcher (interviews, research), Trace (behavioral data / TRACE_TO_CAST_DRIFT drift signals), Voice (feedback insights)
-- OUTPUT: Echo (testing personas), Spark (feature personas), Retain (lifecycle personas), Compete (competitive personas), Accord (spec personas)
+- INPUT: Field (interviews, research), Trace (behavioral data / TRACE_TO_CAST_DRIFT drift signals), Voice (feedback insights)
+- OUTPUT: Echo (testing personas), Spark (feature personas), Bond (lifecycle personas), Compete (competitive personas), Accord (spec personas)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(M) Mobile(M) API(L)
 -->
@@ -42,15 +42,15 @@ Use Cast when the task requires any of the following:
 
 - Generate personas from README, docs, code, tests, analytics, feedback, or agent handoffs.
 - Merge new user evidence into existing personas.
-- Evolve personas from Trace, Voice, Pulse, or Researcher data.
+- Evolve personas from Trace, Voice, Pulse, or Field data.
 - Audit persona freshness, duplication, coverage, or Echo compatibility.
-- Adapt personas for Echo, Spark, Retain, Compete, or Accord.
+- Adapt personas for Echo, Spark, Bond, Compete, or Accord.
 - Generate persona voice output with TTS.
 - Create proto-personas from market data or assumptions as rapid initial hypotheses.
 - Run predictive evolution analysis using leading indicators (engagement shifts, cohort trends, behavioral drift `≥ 5%`). **[DEFERRED]** — requires established Trace data pipeline. Gradual unlock condition: `TRACE_TO_CAST_DRIFT` handoffs with n≥50 sessions and persona confidence drift ≥5% across 3+ consecutive deliveries confirm pipeline readiness. Use standard EVOLVE mode until this condition is met.
 
 Route elsewhere when the task is primarily:
-- user research design or interview planning: `Researcher`
+- user research design or interview planning: `Field`
 - UX walkthrough using existing personas: `Echo`
 - user feedback collection and analysis: `Voice`
 - feature ideation (not persona creation): `Spark`
@@ -156,7 +156,7 @@ Single source of truth for Recipe definitions. The Operating Mode column names t
 | Registry | `registry` | | AUDIT | Registry management — lifecycle check, audit, archive (freshness/duplication/coverage/Echo-compat) | `reference/registry-spec.md` |
 | Evolve | `evolve` | | EVOLVE | Data-driven evolution — drift updates from Trace/Voice/Pulse; confirm ≥5% trigger → version bump → evolution log | `reference/evolution-engine.md` |
 | Fuse | `fuse` | | FUSE | Merge upstream evidence into existing personas; produce diff-aware summary | `reference/evolution-engine.md` |
-| Distribute | `distribute` | | DISTRIBUTE | Per-target-agent adapter conversion (Echo/Spark/Retain/Compete/Accord) → delivery package | `reference/distribution-adapters.md` |
+| Distribute | `distribute` | | DISTRIBUTE | Per-target-agent adapter conversion (Echo/Spark/Bond/Compete/Accord) → delivery package | `reference/distribution-adapters.md` |
 | Speak | `speak` | | SPEAK | Persona voice output (transcript + optional audio) with engine selection and fallback | `reference/speak-engine.md` |
 | Retire | `retire` | | RETIRE | Persona retirement assessment + archive + downstream notification | `reference/persona-governance.md` |
 | Archetype Mapping | `archetype` | | CONJURE/AUDIT | Tag personas with Jung 12 brand archetypes + JTBD-aligned archetype (Functional/Emotional/Social); validate brand-archetype consistency | `reference/archetype-mapping.md` |
@@ -274,20 +274,20 @@ Cast receives persona requests and evidence from upstream agents, generates and 
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
-| Researcher → Cast | Research integration | Interview or research findings for persona creation/evolution |
+| Field → Cast | Research integration | Interview or research findings for persona creation/evolution |
 | Trace → Cast | `TRACE_TO_CAST_DRIFT` | 行動乖離シグナルによるペルソナ進化トリガー（≥15%乖離、n≥50セッション） |
 | Voice → Cast | Feedback integration | Segment or feedback insights for persona evolution |
 | Nexus → Cast | Task delegation | Persona task context from orchestration |
 | Cast → Echo | Persona delivery | Testing-ready personas for UX validation |
 | Cast → Spark | Feature personas | Feature-focused personas for ideation |
-| Cast → Retain | Lifecycle personas | Lifecycle or churn-focused personas for retention strategy |
+| Cast → Bond | Lifecycle personas | Lifecycle or churn-focused personas for retention strategy |
 | Cast → Compete | Competitive personas | Specialized persona packaging for competitive analysis |
 | Cast → Accord | Spec personas | Specialized persona packaging for specification alignment |
 
 Exact payload shapes → `reference/collaboration-formats.md`. Adapter-specific packaging → `reference/distribution-adapters.md`.
 
 **Overlap boundaries:**
-- **vs Researcher**: Researcher = research design and data collection; Cast = persona synthesis from research data.
+- **vs Field**: Field = research design and data collection; Cast = persona synthesis from research data.
 - **vs Echo**: Echo = UX testing with personas; Cast = persona creation and lifecycle management.
 - **vs Voice**: Voice = feedback collection; Cast = persona evolution from feedback data.
 - **vs Trace**: Trace = session replay analysis and behavior pattern extraction; Cast = persona evolution from behavioral data.
@@ -298,7 +298,7 @@ Cast qualifies for parallel execution when generating or distributing multiple p
 
 **CONJURE (3+ personas):** Pattern B (Feature Parallel) — 2-3 `general-purpose` subagents, each owning a distinct `.agents/personas/{service}/{persona}.md` file. Shared read: `reference/persona-model.md`, `registry.yaml`. Merge: Concat — combine persona files, then register all in a single registry update.
 
-**DISTRIBUTE (3+ targets):** Pattern B (Feature Parallel) — one subagent per downstream agent (Echo, Spark, Retain), each packaging adapter-specific output independently. Merge: Concat — independent delivery packets.
+**DISTRIBUTE (3+ targets):** Pattern B (Feature Parallel) — one subagent per downstream agent (Echo, Spark, Bond), each packaging adapter-specific output independently. Merge: Concat — independent delivery packets.
 
 Do not parallelize EVOLVE or FUSE — these require sequential confidence recalculation across the shared registry.
 
@@ -346,7 +346,7 @@ _STEP_COMPLETE:
       persona_count: "[number]"
       confidence_range: "[low-high]"
       registry_changes: "[created | updated | unchanged]"
-  Next: Echo | Spark | Retain | Compete | Accord | DONE
+  Next: Echo | Spark | Bond | Compete | Accord | DONE
   Reason: [Why this next step]
 ```
 

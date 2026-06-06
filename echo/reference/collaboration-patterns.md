@@ -7,7 +7,7 @@ Detailed collaboration patterns and handoff formats for Echo agent.
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    INPUT PROVIDERS                          │
-│  Researcher → ペルソナデータ                                │
+│  Field → ペルソナデータ                                │
 │  Voice → 実ユーザーフィードバック                           │
 │  Pulse → 定量メトリクス                                     │
 └─────────────────────┬───────────────────────────────────────┘
@@ -215,21 +215,21 @@ Echo（提案をペルソナ視点で検証）
 ...
 ```
 
-## Pattern G: Persona Generation (Echo ↔ Researcher)
+## Pattern G: Persona Generation (Echo ↔ Field)
 
-コード/ドキュメントからペルソナを生成し、Researcher の実データで検証:
+コード/ドキュメントからペルソナを生成し、Field の実データで検証:
 
 ```
 Echo（コード/ドキュメント分析 → ペルソナ生成）
   ↓
-Researcher（実ユーザーデータで検証）
+Field（実ユーザーデータで検証）
   ↓
 Echo（ペルソナ精度向上・更新）
 ```
 
-**Handoff Format (Echo → Researcher):**
+**Handoff Format (Echo → Field):**
 ```markdown
-## Echo → Researcher Persona Validation Request
+## Echo → Field Persona Validation Request
 
 **Generated Persona**: [ペルソナ名]
 **Source**: [分析したファイル]
@@ -242,12 +242,12 @@ Echo（ペルソナ精度向上・更新）
 - [ ] 実際の利用デバイス比率
 - [ ] ペインポイントの優先度
 
-→ `/Researcher validate persona assumptions`
+→ `/Field validate persona assumptions`
 ```
 
-**Handoff Format (Researcher → Echo):**
+**Handoff Format (Field → Echo):**
 ```markdown
-## Researcher → Echo Persona Update
+## Field → Echo Persona Update
 
 **Persona**: [ペルソナ名]
 **Validation Result**:
@@ -267,7 +267,7 @@ Echo（ペルソナ精度向上・更新）
 
 | Partner | Echo → Partner | Partner → Echo |
 |---------|----------------|----------------|
-| **Researcher** | ペルソナ検証結果、生成ペルソナの検証依頼 | 実データに基づくペルソナ定義、ペルソナ更新提案 |
+| **Field** | ペルソナ検証結果、生成ペルソナの検証依頼 | 実データに基づくペルソナ定義、ペルソナ更新提案 |
 | **Voice** | 予測との比較データ | 実ユーザー感情フィードバック |
 | **Palette** | フリクションポイント | 改善後の検証依頼 |
 | **Experiment** | A/Bテスト仮説 | 勝者バリアント検証依頼 |
@@ -311,12 +311,12 @@ Echo（ペルソナ精度向上・更新）
 - Note: [observation about this step]
 ```
 
-## Pattern H: Visual Review (Navigator → Echo → Canvas)
+## Pattern H: Visual Review (Vector → Echo → Canvas)
 
-Flow where Echo reviews Navigator screenshots from persona perspective and Canvas visualizes the results.
+Flow where Echo reviews Vector screenshots from persona perspective and Canvas visualizes the results.
 
 ```
-Navigator (Screenshot capture)
+Vector (Screenshot capture)
   ↓ NAVIGATOR_TO_ECHO_HANDOFF
 Echo (Visual Persona Review)
   - First Glance analysis
@@ -332,14 +332,14 @@ Stakeholder sharing
 ### Trigger
 
 ```
-/Echo visual review                    # Start visual review from Navigator handoff
+/Echo visual review                    # Start visual review from Vector handoff
 /Echo visual review [screenshot_path]  # Review specific screenshot
 /Echo visual review with [persona]     # Review with specific persona
 ```
 
 ### Workflow Steps
 
-1. **Navigator Screenshot Capture**
+1. **Vector Screenshot Capture**
    - Capture screenshots at key screen states
    - Record device context (viewport, browser, connection)
    - Document flow information (URL, journey, actions)
@@ -357,7 +357,7 @@ Stakeholder sharing
    - Friction Heatmap on screenshots
    - Before/After comparison (if applicable)
 
-### Handoff Format (Navigator → Echo)
+### Handoff Format (Vector → Echo)
 
 ```markdown
 ## NAVIGATOR_TO_ECHO_HANDOFF
@@ -368,8 +368,8 @@ Stakeholder sharing
 **Screenshots Captured**:
 | # | Path | Page State | Context |
 |---|------|------------|---------|
-| 1 | `.navigator/screenshots/[id]/01_landing.png` | Initial load | Homepage after navigation |
-| 2 | `.navigator/screenshots/[id]/02_form.png` | Form visible | After clicking signup |
+| 1 | `.vector/screenshots/[id]/01_landing.png` | Initial load | Homepage after navigation |
+| 2 | `.vector/screenshots/[id]/02_form.png` | Form visible | After clicking signup |
 
 **Device Context**:
 | Attribute | Value |
@@ -401,7 +401,7 @@ Stakeholder sharing
 
 ### Use Cases
 
-| Scenario | Navigator Action | Echo Focus | Canvas Output |
+| Scenario | Vector Action | Echo Focus | Canvas Output |
 |----------|------------------|------------|---------------|
 | **Mobile UX Audit** | Mobile viewport screenshots | Touch targets, thumb zones | Friction Heatmap |
 | **Signup Flow Review** | Step-by-step captures | Trust signals, form friction | Visual Journey Map |

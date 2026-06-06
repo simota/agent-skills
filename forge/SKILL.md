@@ -25,13 +25,13 @@ COLLABORATION_PATTERNS:
 - Lens -> Forge: Code-level insight informs prototype structure or mock strategy
 - Forge -> Builder: Prototype validated, needs production logic
 - Forge -> Artisan: Frontend prototype needs production-quality implementation
-- Forge -> Showcase: Preview story exists, needs full coverage
+- Forge -> Vitrine: Preview story exists, needs full coverage
 - Forge -> Muse: Functional prototype needs token-driven polish
 - Forge -> Sentinel: AI-generated prototype needs security review before handoff
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Spark (feature concepts), Vision (direction), Muse (token context), Quest (prototype specs), Lens (code insights)
-- OUTPUT: Builder (production logic), Artisan (production frontend), Showcase (story coverage), Muse (token polish), Sentinel (security review for AI-generated code)
+- OUTPUT: Builder (production logic), Artisan (production frontend), Vitrine (story coverage), Muse (token polish), Sentinel (security review for AI-generated code)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) Mobile(M) Game(M)
 -->
@@ -44,7 +44,7 @@ Use Forge when:
 - Fast UI, flow, API-mock, backend-PoC, or thin full-stack prototypes are needed.
 - Discovery is blocked and mocks can unblock it.
 - Spark / Vision input needs to become something clickable.
-- The result must become a runnable handoff for Builder, Artisan, Showcase, or Muse.
+- The result must become a runnable handoff for Builder, Artisan, Vitrine, or Muse.
 - A hypothesis needs validation within ≤ 4 hours before committing to production investment.
 - AI-assisted scaffolding (Cursor, v0, Bolt.new, Lovable, Google Stitch) output needs review, integration, and structured handoff.
 
@@ -172,7 +172,7 @@ Forge receives concepts and direction from upstream agents, builds rapid prototy
 | Quest → Forge | Prototype spec handoff | Game/product spec needs prototype validation |
 | Forge → Builder | `BUILDER_HANDOFF` | Prototype validated, needs production logic |
 | Forge → Artisan | `ARTISAN_HANDOFF` | Frontend prototype needs production-quality implementation |
-| Forge → Showcase | `FORGE_TO_SHOWCASE` | Preview story exists, needs full coverage |
+| Forge → Vitrine | `FORGE_TO_SHOWCASE` | Preview story exists, needs full coverage |
 | Forge → Muse | Style-polish handoff | Functional prototype needs token-driven polish |
 | Forge → Sentinel | Security review request | AI-generated prototype code needs vulnerability scan before handoff |
 
@@ -193,7 +193,7 @@ Forge receives concepts and direction from upstream agents, builds rapid prototy
 | `reference/backend-poc.md` | You need a minimal Express/Fastify CRUD server or a socket PoC. |
 | `reference/builder-integration.md` | You are preparing a Builder handoff or need the required output package. |
 | `reference/muse-integration.md` | You need a style-polish handoff to Muse. |
-| `reference/story-scaffolding.md` | You need preview stories, Showcase handoff, or story-generation rules. |
+| `reference/story-scaffolding.md` | You need preview stories, Vitrine handoff, or story-generation rules. |
 | `reference/prototyping-anti-patterns.md` | You need anti-patterns, time-box discipline, lifecycle rules, or the 80% rule. |
 | `reference/prototype-to-production.md` | You need Throwaway vs Evolutionary guidance, handoff pitfalls, or L0-L3 quality levels. |
 | `reference/rapid-iteration-methodology.md` | You need fast iteration tactics, demo structure, or pivot rules. |
@@ -238,7 +238,7 @@ _STEP_COMPLETE:
     - "[happy path is demoable]"
     - "[mock assumptions documented]"
     - "[prototype status declared]"
-  Next: Builder | Artisan | Showcase | Muse | DONE
+  Next: Builder | Artisan | Vitrine | Muse | DONE
   Reason: [Why this next step]
 ```
 

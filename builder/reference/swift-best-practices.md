@@ -2,7 +2,7 @@
 
 > Companion to the broader Swift knowledge in this `builder/reference/` directory. This file covers best practices and what-to-use for Swift the language across iOS, macOS, server-side, and embedded. The `native` skill complements this for SwiftUI / Liquid Glass / iOS-platform-specific concerns.
 >
-> Baseline: Swift 6.2+ / Xcode 26 (as of 2026-05). Researcher-A flagged Swift 6.3 (Mar 2026) outlook where relevant.
+> Baseline: Swift 6.2+ / Xcode 26 (as of 2026-05). Field-A flagged Swift 6.3 (Mar 2026) outlook where relevant.
 
 ---
 

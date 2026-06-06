@@ -29,11 +29,11 @@ COLLABORATION_PATTERNS:
 - Compete -> Lore: Validated recurring patterns become shared knowledge
 - Compete -> Oracle: LLM brand visibility analysis needs AI/ML expertise
 - Flux -> Compete: Market assumption reframing and differentiation axis discovery
-- Compete -> Researcher: COMPETE_TO_RESEARCHER — interview design suggestions based on win/loss analysis results
+- Compete -> Field: COMPETE_TO_RESEARCHER — interview design suggestions based on win/loss analysis results
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Voice (customer feedback), Pulse (product metrics), Nexus (task routing), Flux (market assumption reframing)
-- OUTPUT: Spark (feature ideas), Growth (positioning/SEO), Canvas (visual maps), Helm (strategic simulation), Lore (validated patterns), Oracle (LLM visibility), Researcher (win/loss interview design)
+- OUTPUT: Spark (feature ideas), Growth (positioning/SEO), Canvas (visual maps), Helm (strategic simulation), Lore (validated patterns), Oracle (LLM visibility), Field (win/loss interview design)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) API(M) Mobile(M) Dashboard(L)
 -->
@@ -250,7 +250,7 @@ Source citation format: `[N]` inline reference → `## Sources` section at the e
 ## Collaboration
 
 **Receives:** Voice (customer feedback for competitive context), Pulse (product/market metrics for benchmarking), Nexus (task context)
-**Sends:** Spark (competitive gaps as feature ideas), Growth (positioning/SEO gaps), Canvas (visual maps/matrices), Helm (strategic simulation input), Lore (validated competitive patterns), Oracle (LLM visibility analysis), Researcher (win/loss interview design), Nexus (results)
+**Sends:** Spark (competitive gaps as feature ideas), Growth (positioning/SEO gaps), Canvas (visual maps/matrices), Helm (strategic simulation input), Lore (validated competitive patterns), Oracle (LLM visibility analysis), Field (win/loss interview design), Nexus (results)
 
 **Overlap boundaries:**
 - **vs Helm**: Helm = business strategy simulation; Compete = competitive intelligence and analysis.
@@ -275,7 +275,7 @@ When analyzing `5+` competitors across multiple segments, spawn 2-3 Explore suba
 | `Compete -> Helm` | `COMPETE_TO_HELM` | Strategic simulation or scenario planning is required |
 | `Compete -> Lore` | `COMPETE_TO_LORE` | Validated recurring patterns should become shared knowledge |
 | `Compete -> Oracle` | `COMPETE_TO_ORACLE` | LLM brand visibility analysis requires AI/ML domain expertise |
-| `Compete -> Researcher` | `COMPETE_TO_RESEARCHER` | Interview design suggestions from win/loss analysis |
+| `Compete -> Field` | `COMPETE_TO_RESEARCHER` | Interview design suggestions from win/loss analysis |
 
 ## Reference Map
 
@@ -340,7 +340,7 @@ _STEP_COMPLETE:
       uncommon_competitors: [count of VERIFIED-DIVERGENT competitors surfaced in callout]
       rejected: [count + top categories — hallucination / defunct / category-mismatch / out-of-scope / alias-fold]
   Handoff: "[target agent or N/A]"
-  Next: Spark | Growth | Canvas | Helm | Lore | Researcher | DONE
+  Next: Spark | Growth | Canvas | Helm | Lore | Field | DONE
   Reason: [Why this next step]
 ```
 

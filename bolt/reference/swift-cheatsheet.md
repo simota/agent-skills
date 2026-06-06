@@ -172,7 +172,7 @@ Inspect the resulting assembly with `swiftc -emit-assembly -O foo.swift | grep m
 
 ## 6. ARC + autoreleasepool placement
 
-Swift's ARC inserts `retain`/`release` calls around reference-type values. For `Foundation` types in tight loops, autoreleased objects (`NSString`, `NSData`, `Date`, `DateFormatter`) accumulate in the **outer** autorelease pool until the run loop tick.
+Swift's ARC inserts `bond`/`release` calls around reference-type values. For `Foundation` types in tight loops, autoreleased objects (`NSString`, `NSData`, `Date`, `DateFormatter`) accumulate in the **outer** autorelease pool until the run loop tick.
 
 ### 6.1 The autoreleasepool fix
 

@@ -30,20 +30,20 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 
 ---
 
-### Cast vs Echo vs Researcher (Persona / User Research)
+### Cast vs Echo vs Field (Persona / User Research)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
 | "Create personas", "persona registry", "sync personas across agents" | **Cast** | Persona lifecycle management |
 | "Test this UI as a beginner", "walk through this flow" | **Echo** | Persona-based UI simulation |
-| "Design interview guide", "usability test plan", "journey mapping" | **Researcher** | Research methodology design |
+| "Design interview guide", "usability test plan", "journey mapping" | **Field** | Research methodology design |
 | "Update persona with new data" | **Cast** | Persona evolution |
 | "What would a mobile user think of this?" | **Echo** | Persona simulation |
 | "Analyze survey results" | **Voice** | Feedback data analysis (not persona) |
 
-**Rule of thumb**: Manage/store/evolve personas → Cast. Simulate personas on UI → Echo. Design research methodology → Researcher.
+**Rule of thumb**: Manage/store/evolve personas → Cast. Simulate personas on UI → Echo. Design research methodology → Field.
 
-**Chain pattern**: Cast (create) → Researcher (validate with methodology) → Echo (simulate on UI)
+**Chain pattern**: Cast (create) → Field (validate with methodology) → Echo (simulate on UI)
 
 ---
 
@@ -238,18 +238,18 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 
 ---
 
-### Voice vs Researcher (User Insights)
+### Voice vs Field (User Insights)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
 | "Analyze app store reviews", "NPS survey", "sentiment analysis" | **Voice** | Quantitative feedback analysis |
-| "Design interview questions", "usability test plan" | **Researcher** | Research methodology |
+| "Design interview questions", "usability test plan" | **Field** | Research methodology |
 | "What are users saying about X?" | **Voice** | Existing feedback collection |
-| "What do users NEED from X?" | **Researcher** | Deep user understanding |
+| "What do users NEED from X?" | **Field** | Deep user understanding |
 | "Create feedback collection system" | **Voice** | Feedback infrastructure |
-| "Create journey map" | **Researcher** | User experience mapping |
+| "Create journey map" | **Field** | User experience mapping |
 
-**Rule of thumb**: Collect/analyze existing feedback → Voice. Design new research → Researcher.
+**Rule of thumb**: Collect/analyze existing feedback → Voice. Design new research → Field.
 
 ---
 
@@ -384,16 +384,16 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 
 ---
 
-### Cloak vs Comply vs Crypt (Privacy / Compliance / Crypto)
+### Cloak vs Oath vs Crypt (Privacy / Compliance / Crypto)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
 | "Find PII exposure", "GDPR audit" | **Cloak** | Privacy-focused |
-| "SOC2 readiness", "HIPAA controls" | **Comply** | Framework compliance |
+| "SOC2 readiness", "HIPAA controls" | **Oath** | Framework compliance |
 | "Encryption design", "key management" | **Crypt** | Cryptographic architecture |
 | "Security audit" (broad) | **Sentinel** first | Start with static analysis |
 
-**Rule of thumb**: PII/consent/privacy → Cloak. Regulatory frameworks → Comply. Crypto algorithms/keys → Crypt.
+**Rule of thumb**: PII/consent/privacy → Cloak. Regulatory frameworks → Oath. Crypto algorithms/keys → Crypt.
 
 ---
 
@@ -527,7 +527,7 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 
 ---
 
-### Haul vs Navigator vs Spider vs Sketch (Image / Asset Acquisition)
+### Haul vs Vector vs Trawl vs Sketch (Image / Asset Acquisition)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
@@ -537,14 +537,14 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 | "perceptual hash で重複排除した画像セット" | **Haul** | Cross-source pHash dedup |
 | "reverse image search → canonical product URL" | **Haul** (reverse recipe) | Sample image → product canonical |
 | "license / provenance audit (no new fetch)" | **Haul** (audit recipe) | Audit-only mode |
-| "ログインが必要な保護サイトから画像取得" | **Navigator** → **Haul** | Auth handoff then download |
-| "1K+ URL/day, 100+ ドメインのフリート規模クロール設計" | **Spider** | Architecture only |
-| "汎用ブラウザ自動化、フォーム入力、スクショ取得" | **Navigator** | Generic browser tasks |
+| "ログインが必要な保護サイトから画像取得" | **Vector** → **Haul** | Auth handoff then download |
+| "1K+ URL/day, 100+ ドメインのフリート規模クロール設計" | **Trawl** | Architecture only |
+| "汎用ブラウザ自動化、フォーム入力、スクショ取得" | **Vector** | Generic browser tasks |
 | "テキストから画像を生成したい (text-to-image)" | **Sketch** | AI image generation |
 | "モックアップから HTML/CSS を再現したい" | **Pixel** | Mockup-to-code |
 | "アイコン / SVG イラスト" | **Ink** | Vector asset generation |
 
-**Rule of thumb**: 商品画像の取得 → Haul。汎用ブラウザ → Navigator。フリート規模アーキ → Spider。AI 生成 → Sketch。Haul は license_class 必須、unknown は配信不可。
+**Rule of thumb**: 商品画像の取得 → Haul。汎用ブラウザ → Vector。フリート規模アーキ → Trawl。AI 生成 → Sketch。Haul は license_class 必須、unknown は配信不可。
 
 ---
 
@@ -580,4 +580,4 @@ For S/M scope projects, skip agents that add overhead without proportional value
 | Pipe | Gear | Basic CI/CD only |
 | Compete | Skip entirely | Internal tools, no competitors |
 | Scribe | Skip entirely | S scope, no formal specs needed |
-| Researcher | Echo directly | No formal research methodology needed |
+| Field | Echo directly | No formal research methodology needed |

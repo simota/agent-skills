@@ -146,4 +146,4 @@ Avoid `fill="currentColor"` inside a `<symbol>` if the surrounding context toggl
 **From Muse:** token names, semantic meaning, light/dark/high-contrast values, contrast-ratio target per pairing. Prefer **DTCG 2025.10** JSON format (`*.tokens.json`) for cross-tool exchange.
 **To Artisan:** which CSS variables the component must set, default fallbacks, theme switching contract (class or `data-*`). Note Style Dictionary v5 + Tokens Studio output paths.
 **To Palette:** color-pairing list for WCAG 1.4.11 non-text-contrast audit (≥ 3:1 for meaningful icons).
-**To Showcase:** light + dark + high-contrast story variants per icon so visual regression catches theme drift.
+**To Vitrine:** light + dark + high-contrast story variants per icon so visual regression catches theme drift.

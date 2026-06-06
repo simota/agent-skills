@@ -28,7 +28,7 @@ Define the proposal target once. All three subagents share the same scope:
 - Target persona (ideally from Cast registry at `.agents/personas/registry.yaml`)
 - Outcome anchor (the behavioral metric the proposal should move)
 - Constraints (effort ceiling, regulated domain, dark-pattern bans)
-- Discovery evidence (Pulse metrics, Voice feedback, Compete gaps, Researcher findings — if present)
+- Discovery evidence (Pulse metrics, Voice feedback, Compete gaps, Field findings — if present)
 
 ### 2. PREFLIGHT — engine availability detection (Spark main context, never delegated)
 
@@ -187,7 +187,7 @@ Generate {N=3-5} feature proposals for the target below. You are one of three en
 - Product / feature surface: {scope}
 - Persona pool: {personas from Cast registry or "open"}
 - Outcome anchor: {behavioral metric to move}
-- Discovery evidence: {Pulse / Voice / Compete / Researcher findings if any}
+- Discovery evidence: {Pulse / Voice / Compete / Field findings if any}
 
 # Output format
 Return ONLY JSON matching this exact schema (no commentary outside the JSON):

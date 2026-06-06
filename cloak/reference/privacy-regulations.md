@@ -4,7 +4,7 @@
 
 The 2026 privacy landscape compresses three trends into a single operating reality:
 
-- **EU AI Act** — high-risk obligations (Annex III) bind on **2 Aug 2026**; the GDPR penalty regime applies *concurrently*. New penalty ceiling adds `€35M / 7%` of global turnover for prohibited practices, `€15M / 3%` for high-risk non-compliance. See `comply/reference/gdpr-eu-ai-act.md` for the full timeline.
+- **EU AI Act** — high-risk obligations (Annex III) bind on **2 Aug 2026**; the GDPR penalty regime applies *concurrently*. New penalty ceiling adds `€35M / 7%` of global turnover for prohibited practices, `€15M / 3%` for high-risk non-compliance. See `oath/reference/gdpr-eu-ai-act.md` for the full timeline.
 - **US state laws fragmenting** — `19+` US states have comprehensive privacy laws in effect by Jan 2026 (Indiana, Kentucky, Rhode Island added in Jan 2026; Texas Responsible AI Governance Act and Colorado AI Act follow). Treat "is this a CCPA-only project?" as obsolete framing; any consumer-facing US product needs a state-by-state applicability matrix.
 - **GDPR fines hit €7.1B cumulative** — the regulators are *enforcing*, not warning. Treat 72-hour breach notification and DPIA-before-launch as hard deadlines, not aspirational ones.
 

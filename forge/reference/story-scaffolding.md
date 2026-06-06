@@ -1,6 +1,6 @@
 # Story Scaffolding Reference
 
-> Purpose: define when Forge should generate preview stories and how to hand them off to Showcase or Artisan.
+> Purpose: define when Forge should generate preview stories and how to hand them off to Vitrine or Artisan.
 
 ## Contents
 
@@ -21,7 +21,7 @@
 | Complex multi-component page | Only for the main component |
 | API mock demonstration only | No |
 
-Forge generates a minimal preview story only. Full coverage belongs to Showcase.
+Forge generates a minimal preview story only. Full coverage belongs to Vitrine.
 
 ## Storybook Preview Template
 
@@ -36,7 +36,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Prototype preview. Full stories are pending from Showcase.',
+        component: 'Prototype preview. Full stories are pending from Vitrine.',
       },
     },
   },
@@ -139,9 +139,9 @@ Suggested command: `/Artisan productionize [component]`
 | Tag | Meaning | Owner |
 |---|---|---|
 | `prototype` | Forge-generated and not production-ready | Forge |
-| `autodocs` | Auto-generated documentation | Showcase |
-| `visual-test` | Include in visual regression | Showcase |
-| `component` | Production component story | Showcase |
+| `autodocs` | Auto-generated documentation | Vitrine |
+| `visual-test` | Include in visual regression | Vitrine |
+| `component` | Production component story | Vitrine |
 
 ## `ON_STORY_GENERATION` Trigger
 
@@ -157,6 +157,6 @@ questions:
       - label: "Yes - Both"
         description: "Generate both Storybook and React Cosmos"
       - label: "No - Skip"
-        description: "Showcase will create stories from scratch"
+        description: "Vitrine will create stories from scratch"
     multiSelect: false
 ```

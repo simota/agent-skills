@@ -28,7 +28,7 @@ CAST_TO_SAGA_HANDOFF:
 
 ### RESEARCHER_TO_SAGA_HANDOFF
 
-Researcher からリサーチ結果を受け取り、ナラティブに変換する。
+Field からリサーチ結果を受け取り、ナラティブに変換する。
 
 ```yaml
 RESEARCHER_TO_SAGA_HANDOFF:

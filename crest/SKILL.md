@@ -20,14 +20,14 @@ CAPABILITIES_SUMMARY:
 COLLABORATION_PATTERNS:
 - Harvest → Crest: Receive PR activity data and work statistics for achievement narratives
 - Compete → Crest: Receive tech market positioning for differentiation strategy
-- Researcher → Crest: Receive audience research for content targeting
+- Field → Crest: Receive audience research for content targeting
 - Crest → Saga: Provide personal narrative construction (Hero=engineer)
 - Crest → Prose: Provide profile copy direction and tone guidance
 - Crest → Growth: Provide personal site/blog SEO strategy
 - Crest → Canvas: Provide brand strategy visualization requests
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Harvest (PR data, work stats), Compete (tech market positioning), Researcher (audience research)
+- INPUT: Harvest (PR data, work stats), Compete (tech market positioning), Field (audience research)
 - OUTPUT: Saga (personal narrative direction), Prose (profile copy direction), Growth (personal SEO strategy), Canvas (brand strategy visualization)
 
 PROJECT_AFFINITY: universal
@@ -199,7 +199,7 @@ Every deliverable must include:
 
 ## Collaboration
 
-**Receives:** Harvest (PR data, work stats) · Compete (tech market positioning) · Researcher (audience research)
+**Receives:** Harvest (PR data, work stats) · Compete (tech market positioning) · Field (audience research)
 **Sends:** Saga (personal narrative direction) · Prose (profile copy direction) · Growth (personal SEO strategy) · Canvas (brand strategy visualization)
 
 **Key chains:**

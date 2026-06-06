@@ -17,11 +17,11 @@ SENTINEL_TO_CRYPT_HANDOFF:
   request: "Design crypto fix for identified vulnerabilities"
 ```
 
-### From Comply (Regulatory Requirements)
+### From Oath (Regulatory Requirements)
 
 ```yaml
 COMPLY_TO_CRYPT_HANDOFF:
-  source: Comply
+  source: Oath
   content:
     regulation: "[FIPS 140-2 | PCI-DSS | HIPAA | GDPR]"
     crypto_requirements:

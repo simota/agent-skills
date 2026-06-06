@@ -93,7 +93,7 @@ Use when:
 - The hypothesis is "does this report communicate the right insight?"
 - The audience is reviewing the artifact, not interacting with it
 
-Reference: see `showcase/` for design-system catalog patterns and `dashboard-prototyping.md` for charting-library-based dashboard prototypes (which are not single-file but offer richer interactivity).
+Reference: see `vitrine/` for design-system catalog patterns and `dashboard-prototyping.md` for charting-library-based dashboard prototypes (which are not single-file but offer richer interactivity).
 
 ---
 

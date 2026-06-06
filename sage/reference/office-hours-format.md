@@ -31,7 +31,7 @@ Total exchange budget: 6-10 typical, 12 hard ceiling.
 |-------|--------------|
 | Round-Robin CHECK-IN | Each simulated peer reports current state in 1-2 sentences |
 | Cross-Probe | Peers ask each other questions; mentor moderates |
-| Pattern Pool | Mentor surfaces shared patterns across founders |
+| Pattern Pool | Agora surfaces shared patterns across founders |
 | Targeted ADVISE | Per-founder direct advice |
 | Group ACTION | Each founder commits, peers witness |
 

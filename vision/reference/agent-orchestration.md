@@ -24,7 +24,7 @@ Contents:
 | Full redesign | `Vision -> Muse -> Palette -> Flow -> Forge -> Echo` |
 | UX issue resolution | `Vision -> Palette -> Flow` |
 | Trend application | `Vision -> Muse -> Palette -> Flow` |
-| New product design | `Researcher -> Vision -> Muse -> Forge -> Echo` |
+| New product design | `Field -> Vision -> Muse -> Forge -> Echo` |
 | Design system construction | `Vision -> Muse -> Palette -> Forge` |
 | Design review cycle | `Lens -> Vision -> [Muse/Palette/Flow] -> Lens -> Echo` |
 

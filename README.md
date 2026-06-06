@@ -55,8 +55,8 @@ This repository contains 145 specialized AI agents covering various aspects of s
 | **Darwin** | _"Ecosystems that cannot sense themselves cannot evolve themselves."_ - Ecosystem self-evolution orchestrator. Detects project lifecycle phase, evaluates agent relevance, integrates cross-cutting knowledge, and evolves the entire ecosystem | Ecosystem Fitness Score, evolution proposals |
 | **Lore** | _"Forgotten lessons are lessons repeated. Institutional memory is the compound interest of experience."_ - Memory curator for cross-ecosystem knowledge integration. Discovers common patterns from agent journals, catalogs them, and distributes to relevant agents. Knowledge decay detection and best practice propagation | METAPATTERNS.md, knowledge insights |
 | **Gauge** | _"What gets measured gets managed. What gets audited gets normalized."_ - SKILL.md normalization auditor and self-evolving compliance agent. Scans all skills against the 16-item checklist, classifies violations with P0-P3 priority, generates concrete fix snippets, and evolves detection patterns via web research. No code written | Compliance reports, fix plans, dashboards |
-| **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - Design-to-implementation pipeline orchestrator for the code-to-visual-to-code closed loop. Coordinates Vision → Muse/Frame → Forge → Artisan → Showcase → Canvas to deliver design extraction, prototypes, visual assets, slides, and production together while persisting a project design system across downstream agents | Design system package, integrated deliverables |
-| **Lure** | _"A landing page is one promise, one path, one decision. lure runs the studio that delivers all three."_ - Super-premium LP studio chain orchestrator. Composes Researcher → Cast → Pulse → Funnel → Vision → Saga → Compete → Muse → Flow → Artisan → Growth → Bolt → Judge → Launch into a recipe-selected, stage-gated pipeline (Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch) enforcing 6 craft axes — Design, Animation, Branding, Marketing, SEO, IA — each with explicit rubric and ship threshold | 6-axis-rubric-passed LP package, CVR-tuned production code, brand-coherent visuals, motion on tokens, schema-valid SEO, GEO citation-ready, analytics live |
+| **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - Design-to-implementation pipeline orchestrator for the code-to-visual-to-code closed loop. Coordinates Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas to deliver design extraction, prototypes, visual assets, slides, and production together while persisting a project design system across downstream agents | Design system package, integrated deliverables |
+| **Bazaar** | _"A landing page is one promise, one path, one decision. lure runs the studio that delivers all three."_ - Super-premium LP studio chain orchestrator. Composes Field → Cast → Pulse → Funnel → Vision → Saga → Compete → Muse → Flow → Artisan → Growth → Bolt → Judge → Launch into a recipe-selected, stage-gated pipeline (Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch) enforcing 6 craft axes — Design, Animation, Branding, Marketing, SEO, IA — each with explicit rubric and ship threshold | 6-axis-rubric-passed LP package, CVR-tuned production code, brand-coherent visuals, motion on tokens, schema-valid SEO, GEO citation-ready, analytics live |
 | **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 130+."_ - Skill ecosystem navigator and onboarding guide. Lists agents, recommends best fit for tasks, and helps newcomers discover the right specialist | Recommendations, agent maps |
 
 ### Investigation & Planning (Non-coding)
@@ -70,8 +70,8 @@ This repository contains 145 specialized AI agents covering various aspects of s
 | **Compete** | _"Know your enemy. Know the market. Know yourself."_ - Competitive research, differentiation, and positioning. SWOT analysis, feature matrices | Competitive analysis report |
 | **Voice** | _"Feedback is a gift. Analysis is unwrapping it."_ - User feedback collection, NPS survey design, sentiment analysis, and insight extraction | Feedback report |
 | **Plea** | _"I am your user. I feel every day what you overlook."_ - Synthetic user advocate. Role-plays as diverse end-user personas to generate authentic feature requests, surface unmet needs, and challenge team assumptions | Feature request report |
-| **Researcher** | _"Users don't lie. They just don't know what they want yet."_ - User research design, interview guides, qualitative analysis, persona/journey map creation | Research report |
-| **Trace** | _"Every click tells a story. I read between the actions."_ - Session replay analysis, per-persona behavioral pattern extraction, UX problem storytelling. Works with Researcher/Echo | Behavioral analysis report |
+| **Field** | _"Users don't lie. They just don't know what they want yet."_ - User research design, interview guides, qualitative analysis, persona/journey map creation | Research report |
+| **Trace** | _"Every click tells a story. I read between the actions."_ - Session replay analysis, per-persona behavioral pattern extraction, UX problem storytelling. Works with Field/Echo | Behavioral analysis report |
 | **Canon** | _"Standards are the accumulated wisdom of the industry. Apply them, don't reinvent them."_ - Investigates and analyzes using global/industry standards. Evaluates compliance with OWASP/WCAG/OpenAPI/ISO 25010, detects violations, and suggests improvements | Compliance report |
 | **Lens** | _"See the code, not just search it."_ - Codebase comprehension specialist. Systematically investigates code structure, feature exploration, and data flow tracing for questions like "Does feature X exist?", "How does flow Y work?", "What is this module's responsibility?" | Investigation report |
 | **Magi** | _"Three minds, one verdict. Consensus through diversity."_ - Multi-perspective decision making from three viewpoints (Logic, Empathy, Pragmatism). Architecture selection, tradeoff analysis, Go/No-Go decisions | Decision report |
@@ -91,11 +91,11 @@ This repository contains 145 specialized AI agents covering various aspects of s
 
 **Scout > Ripple > Builder chain**: Scout (bug investigation) > Ripple (fix impact analysis) > Builder (implementation)
 **Ripple > Guardian chain**: Ripple (impact analysis) > Guardian (PR strategy)
-**Researcher > Trace > Echo chain**: Researcher (persona definition) > Trace (real-data validation) > Echo (simulation confirmation)
+**Field > Trace > Echo chain**: Field (persona definition) > Trace (real-data validation) > Echo (simulation confirmation)
 **Sentinel > Canon > Builder chain**: Sentinel (vulnerability detection) > Canon (OWASP compliance evaluation) > Builder (fix implementation)
 **Gateway > Canon > Gateway chain**: Gateway (API design) > Canon (OpenAPI/RFC compliance check) > Gateway (corrections)
 **Echo > Canon > Palette chain**: Echo (UX issues) > Canon (WCAG compliance evaluation) > Palette (accessibility fixes)
-**Researcher > Cast > Echo chain**: Researcher (research data) > Cast (persona integration) > Echo (UI validation)
+**Field > Cast > Echo chain**: Field (research data) > Cast (persona integration) > Echo (UI validation)
 **Trace > Cast chain**: Trace (behavioral data) > Cast (persona evolution)
 
 ### Git/PR Management
@@ -120,7 +120,7 @@ This repository contains 145 specialized AI agents covering various aspects of s
 | **Sentinel** | _"Security is not a feature. It's a responsibility."_ - Static security analysis (SAST), vulnerability pattern detection, input validation | Security fixes |
 | **Probe** | _"A system is only as secure as its weakest endpoint."_ - Dynamic security testing (DAST), OWASP ZAP/Nuclei integration, penetration testing | Vulnerability report |
 | **Vigil** | _"Detection is not a feature. It is the immune system of your infrastructure."_ - Detection Engineering agent. Sigma/YARA rule design, detection coverage mapping (MITRE ATT&CK), threat hunting hypothesis design, Purple Team Blue side execution, Detection-as-Code CI/CD integration | Detection rules, coverage maps |
-| **Husk** | _"The worm leaves a husk. Find it before it sheds again."_ - Supply-chain malware infection scanner. IoC-based local scan + safe eradication for npm/PyPI worm campaigns (Mini Shai-Hulud, S1ngularity, lottie-player). Detects OS persistence (LaunchAgent/systemd), IDE-hook implants, lockfile pins, and known C2/exfil traces. Persistence-first ordering prevents `rm -rf ~/` retaliation; rotation runbook is gated on eradication-verified | Infection report, eradication runbook |
+| **Cull** | _"The worm leaves a husk. Find it before it sheds again."_ - Supply-chain malware infection scanner. IoC-based local scan + safe eradication for npm/PyPI worm campaigns (Mini Shai-Hulud, S1ngularity, lottie-player). Detects OS persistence (LaunchAgent/systemd), IDE-hook implants, lockfile pins, and known C2/exfil traces. Persistence-first ordering prevents `rm -rf ~/` retaliation; rotation runbook is gated on eradication-verified | Infection report, eradication runbook |
 | **Vista** | _"Tests you can't see, you don't trust. Tests you trust, you ship."_ - Test intelligence visualization specialist. Turns junit.xml/lcov/allure/playwright/CTRF/OTel test data into coverage heatmaps, traceability matrices, test-shape views (Pyramid/Trophy/Honeycomb/Diamond/Cupcake/Hourglass/Ice-Cream-Cone), flake dashboards (Wilson lower-bound), mutation-overlaid coverage maps, AI-origin test risk lenses, regression timelines (E-Divisive change-points). Markdown + HTML dual-format output | Coverage heatmaps, test-shape views, flake dashboards |
 | **Judge** | _"Good code needs no defense. Bad code has no excuse."_ - Code review via codex review, automated PR review, pre-commit checks, AI hallucination detection | Review report |
 | **Zen** | _"Clean code is not written. It's rewritten."_ - Refactoring and code quality improvement (behavior unchanged) | Code improvements |
@@ -131,7 +131,7 @@ This repository contains 145 specialized AI agents covering various aspects of s
 | **Siege** | _"Break it before users do. Fix it before they notice."_ - Advanced testing specialist. Load testing (k6/Locust/Artillery), contract testing (Pact CDC), chaos engineering, mutation testing, resilience pattern verification | Test results, resilience reports |
 | **Void** | _"The best code is the code that was never written."_ - YAGNI enforcement, scope cutting, complexity reduction proposals. Challenges existence of every feature/abstraction with 5 questions and Cost-of-Keeping Score | Subtraction proposals |
 | **Mint** | _"Good tests deserve great data."_ - Test data and fixture generation specialist. Factory patterns, boundary value generation, synthetic data, seed management | Test data, fixtures |
-| **Comply** | _"Trust is earned. Compliance is proven."_ - Regulatory compliance and audit agent. SOC2/PCI-DSS/HIPAA/ISO 27001 control mapping, audit trail design, Policy as Code | Reports, checklists |
+| **Oath** | _"Trust is earned. Compliance is proven."_ - Regulatory compliance and audit agent. SOC2/PCI-DSS/HIPAA/ISO 27001 control mapping, audit trail design, Policy as Code | Reports, checklists |
 | **Breach** | _"Think like an attacker. Defend like an engineer."_ - Red team engineering. Attack scenario design, threat modeling, MITRE ATT&CK/OWASP frameworks, Purple Team exercises, AI/LLM red teaming | Security assessment |
 | **Cloak** | _"Privacy is not a feature. It's a right."_ - Privacy engineering and data governance. PII detection, data flow mapping, consent management, GDPR/CCPA-compliant code implementation | Privacy assessment |
 
@@ -181,7 +181,7 @@ This repository contains 145 specialized AI agents covering various aspects of s
 | **Muse** | _"Tokens are the DNA of design. Mutate them with care."_ - Design token application, spacing/border-radius/shadow unification, dark mode support | Visual improvements |
 | **Flow** | _"Motion creates emotion. Animation breathes life."_ - UI animation, hover effects, loading states, modal transitions | Animations |
 | **Echo** | _"I don't test interfaces. I feel what users feel."_ - Persona validation. Embodies users to report confusion points in UI flows | UX report |
-| **Showcase** | _"Components without stories are components without context."_ - Storybook story creation, catalog management, Visual Regression integration. CSF 3.0 format | Storybook Stories |
+| **Vitrine** | _"Components without stories are components without context."_ - Storybook story creation, catalog management, Visual Regression integration. CSF 3.0 format | Storybook Stories |
 | **Prose** | _"Words are the smallest unit of design. Get them wrong, and nothing else matters."_ - User-facing text specialist. Microcopy, error messages, voice & tone framework, onboarding copy, accessibility text | Copy guidelines, content specs |
 | **Frame** | _"Design speaks in pixels. I translate it to code."_ - Figma MCP Server bridge agent. Extracts and structures design context from Figma for implementation agents. Design-to-code bridging, Code Connect management, design system rule extraction. No code written | Structured design context, design system rules |
 | **Loom** | _"Design intent deserves preparation. Every thread of context I weave makes creation more precise."_ - Figma Make optimization agent. Analyzes codebase to generate Guidelines.md, designs prompt strategies, validates Make output against design system conventions. No code written | Guidelines.md, prompt sequences, validation reports |
@@ -237,7 +237,7 @@ This repository contains 145 specialized AI agents covering various aspects of s
 | **Stratum** | _"Architecture without visualization is architecture without communication."_ - C4 model-based software architecture modeling, evaluation, and Structurizr DSL generation | Architecture diagrams, DSL |
 | **Crypt** | _"Trust no channel. Verify every key."_ - Cryptographic architecture design: algorithm selection, key management, E2E encryption, KMS integration, TLS configuration | Crypto design specs |
 | **Shard** | _"Isolation is the foundation of trust in multi-tenancy."_ - Multi-tenant architecture design. Tenant isolation strategies, RLS, routing, and scale design for SaaS | Architecture design |
-| **Spider** | _"Design the web that catches the web."_ - Crawl system architecture design. Distributed crawler design, URL frontier management, politeness policies, legal compliance | Architecture specs |
+| **Trawl** | _"Design the web that catches the web."_ - Crawl system architecture design. Distributed crawler design, URL frontier management, politeness policies, legal compliance | Architecture specs |
 | **Tempo** | _"Time is not a scalar — it's a minefield of conventions."_ - Scheduling and time-aware logic architect. Cron expression design, timezone/DST handling, retry/backoff policies, idempotency keys, backfill strategies, and business-calendar design (JP holidays, fiscal year, banking days) | Schedule specs, cron configs, retry policies |
 | **Grok** | _"Understand the shape before writing the parser."_ - Pattern, regex, parser, and DSL design specialist. Grammar authoring (EBNF/PEG), ReDoS-safe regex, parser-generator selection (ANTLR4/tree-sitter/Chevrotain), internal DSL architecture, AST transformation | Grammar specs, parser designs, DSL specs |
 
@@ -292,7 +292,7 @@ This repository contains 145 specialized AI agents covering various aspects of s
 | Agent | Description | Output |
 |-------|-------------|--------|
 | **Growth** | _"Traffic without conversion is just expensive vanity."_ - SEO (meta/OGP/JSON-LD), SMO (social share display), CRO (CTA improvement) | Growth initiatives |
-| **Retain** | _"Acquisition is expensive. Retention is profitable."_ - Retention strategies, re-engagement, churn prevention. Gamification, habit-forming design | Retention initiatives |
+| **Bond** | _"Acquisition is expensive. Retention is profitable."_ - Retention strategies, re-engagement, churn prevention. Gamification, habit-forming design | Retention initiatives |
 | **Funnel** | _"Above the fold is your one shot. Make every pixel convert."_ - LP (Landing Page) structure designer and conversion strategist. Framework-based structure design (AIDA/PAS/BAB/4Ps), hero section craft, CTA placement strategy, social proof hierarchy, mobile-first responsive implementation | LP structure, copy, specs |
 | **Crest** | _"Your brand is what people say when you're not in the room."_ - Engineer self-branding strategist. GitHub/LinkedIn/blog/conference/SNS positioning, profile optimization, content strategy | Branding strategy |
 
@@ -316,13 +316,13 @@ This repository contains 145 specialized AI agents covering various aspects of s
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Navigator** | _"The browser is a stage. Every click is a scene."_ - Browser automation via Playwright/Chrome DevTools. Data collection, form interaction, screenshots, network monitoring | Automation scripts |
+| **Vector** | _"The browser is a stage. Every click is a scene."_ - Browser automation via Playwright/Chrome DevTools. Data collection, form interaction, screenshots, network monitoring | Automation scripts |
 | **Haul** | _"The right image at the right resolution. Provenance you can stand behind."_ - Product image search and high-precision download specialist. Multi-source aggregation (e-commerce APIs, image search, brand sites), SKU/JAN/UPC matching, perceptual-hash dedup, license-aware curation | Image manifest, normalized assets |
 | **Director** | _"A demo that moves hearts moves products."_ - Feature demo video production using Playwright 1.59 `page.screencast`. 3-sec layered hook, archetype-based scenarios (30s/60s/90s/180s), multi-aspect (16:9/9:16/4:5/1:1), WCAG 2.2 + Audio Description, VMAF/PSNR/SSIM quality gate, transcript + VideoObject JSON-LD for AI citation | Demo videos + transcript + JSON-LD + /97 quality report |
 | **Reel** | _"The terminal is a stage. Every keystroke is a performance."_ - Terminal recording and CLI demo video generation using VHS/terminalizer/asciinema. Creates GIF/MP4/WebM from declarative .tape files | GIF/video (.gif/.mp4) |
 
 **Anvil > Reel > Quill chain**: Anvil (CLI development) > Reel (demo recording) > Quill (README GIF embedding)
-**Director + Reel > Showcase chain**: Director (web recording) + Reel (terminal recording) > Showcase (visual documentation)
+**Director + Reel > Vitrine chain**: Director (web recording) + Reel (terminal recording) > Vitrine (visual documentation)
 **Director vs Reel responsibilities**:
 - **Director**: Browser (Web UI) demo videos (Playwright, .webm output)
 - **Reel**: Terminal (CLI) demo recordings (VHS, GIF/MP4 output)
@@ -427,14 +427,14 @@ See `_common/INTERACTION.md` for details.
 
 | Task | Description | Chain |
 |------|-------------|-------|
-| UI/new | New UI implementation | Vision > Forge > Showcase > Muse > Artisan > Radar |
+| UI/new | New UI implementation | Vision > Forge > Vitrine > Muse > Artisan > Radar |
 | UI/redesign | UI redesign | Vision > Muse > Palette > Flow > Artisan > Radar |
-| UI/component | Component creation | Forge > Showcase > Muse > Artisan > Radar |
+| UI/component | Component creation | Forge > Vitrine > Muse > Artisan > Radar |
 | UI/animation | Animation addition | Flow > Artisan > Radar |
-| UX/research | UX research | Researcher > Echo > Palette |
+| UX/research | UX research | Field > Echo > Palette |
 | UX/improve | UX improvement | Echo > Palette > Artisan > Radar |
 | UX/session-analysis | Session analysis | Trace > Echo > Palette |
-| UX/persona-validation | Persona validation | Researcher > Trace > Echo |
+| UX/persona-validation | Persona validation | Field > Trace > Echo |
 | UI/figma-make | Figma Make Guidelines | Loom > Artisan |
 
 #### Refactoring
@@ -539,7 +539,7 @@ See `_common/INTERACTION.md` for details.
 | DOCS/design | Design document creation | Scribe |
 | DOCS/spec-to-build | Spec to implementation | Spark > Scribe > Sherpa > Builder |
 | DOCS/code | Code documentation | Quill |
-| DOCS/component | Component documentation | Showcase > Quill |
+| DOCS/component | Component documentation | Vitrine > Quill |
 | DOCS/architecture | Architecture diagrams | Canvas |
 | DOCS/convert | Format conversion | Morph |
 | DOCS/report | PR report | Harvest > Morph |
@@ -552,7 +552,7 @@ See `_common/INTERACTION.md` for details.
 |------|-------------|-------|
 | DEMO/cli | CLI demo GIF creation | Anvil > Reel > Quill |
 | DEMO/prototype | Prototype demo | Forge > Reel > Growth |
-| DEMO/web-terminal | Web + terminal combo demo | Director + Reel > Showcase |
+| DEMO/web-terminal | Web + terminal combo demo | Director + Reel > Vitrine |
 | DEMO/docs | Documentation demo | Scribe > Reel > Quill |
 | DEMO/ci-update | CI-integrated demo auto-update | Gear > Reel > Gear |
 | DEMO/showcase | Production CLI demo | Builder > Reel > Growth |
@@ -588,7 +588,7 @@ See `_common/INTERACTION.md` for details.
 | STRATEGY/compete | Competitive analysis to implementation | Compete > Spark > Builder > Radar |
 | STRATEGY/feedback | Feedback integration | Voice > Spark > Builder > Radar |
 | STRATEGY/metrics | Metrics infrastructure | Pulse > Builder > Radar |
-| STRATEGY/retention | Retention initiatives | Retain > Spark > Builder > Radar |
+| STRATEGY/retention | Retention initiatives | Bond > Spark > Builder > Radar |
 | STRATEGY/ab-test | A/B test design | Experiment > Builder > Radar |
 | STRATEGY/data | Data pipeline | Stream > Schema > Builder > Radar |
 
@@ -616,7 +616,7 @@ For large-scale tasks where parallel execution is beneficial, Nexus escalates to
 | SECURITY/full (parallel) | Static + dynamic parallel scan | Rally(Sentinel, Probe) > Builder > Radar |
 | TEST/coverage (parallel) | Unit + E2E parallel testing | Rally(Radar, Voyager) |
 | MODERNIZE/stack (parallel) | Multi-area modernization | Shift (detect+modernize) > Sherpa > Rally(Builder x N) > Radar |
-| DOCS/full (parallel) | Code docs + diagrams + stories | Rally(Quill, Canvas, Showcase) |
+| DOCS/full (parallel) | Code docs + diagrams + stories | Rally(Quill, Canvas, Vitrine) |
 
 > **Rally Escalation Criteria**: Rally is triggered when there are 2+ independent implementation steps, changes span 4+ files across 2+ domains, or Sherpa detects a `parallel_group`.
 
@@ -743,13 +743,13 @@ skills/
 ├── lens/SKILL.md       # Codebase comprehension & investigation
 ├── levy/SKILL.md       # Japan tax filing guidance
 ├── lore/SKILL.md       # Cross-ecosystem knowledge curator
-├── lure/SKILL.md       # Premium LP studio chain orchestrator
+├── bazaar/SKILL.md       # Premium LP studio chain orchestrator
 ├── magi/SKILL.md       # Multi-perspective decision making
 ├── matrix/SKILL.md     # Universal multi-dimensional analysis
 ├── mend/SKILL.md       # Known failure auto-repair
 ├── morph/SKILL.md      # Document format conversion
 ├── muse/SKILL.md       # Design
-├── navigator/SKILL.md  # Browser automation
+├── vector/SKILL.md  # Browser automation
 ├── nexus/SKILL.md      # Orchestrator
 ├── orbit/SKILL.md      # Nexus-autoloop completion specialist
 ├── oracle/SKILL.md     # AI/ML design & evaluation
@@ -763,9 +763,9 @@ skills/
 ├── radar/SKILL.md      # Testing
 ├── rally/SKILL.md      # Multi-session parallel orchestrator
 ├── relay/SKILL.md      # Messaging integration & real-time communication
-├── researcher/SKILL.md # User research
+├── field/SKILL.md # User research
 ├── ripple/SKILL.md     # Pre-change impact analysis
-├── retain/SKILL.md     # Retention
+├── bond/SKILL.md     # Retention
 ├── trail/SKILL.md     # Git history investigation
 ├── riff/SKILL.md       # Interactive brainstorming partner
 ├── sage/SKILL.md       # YC-style office hours advisory
@@ -778,7 +778,7 @@ skills/
 ├── sentinel/SKILL.md   # Static security analysis (SAST)
 ├── sherpa/SKILL.md     # Task decomposition
 ├── sigil/SKILL.md      # Dynamic project-specific skill generation
-├── showcase/SKILL.md   # Storybook story management
+├── vitrine/SKILL.md   # Storybook story management
 ├── sketch/SKILL.md     # AI image generation (Gemini API)
 ├── spark/SKILL.md      # Feature proposals
 ├── stream/SKILL.md     # Data pipelines
@@ -928,13 +928,13 @@ The checkout flow has a high abandonment rate. Please analyze actual session dat
 
 ```
 /Trace
-Validate the "Mobile-First Millennial" persona defined by Researcher against real data.
+Validate the "Mobile-First Millennial" persona defined by Field against real data.
 ```
 
-**Output**: Persona definition validity check, sub-segment discovery, handoff to Researcher
+**Output**: Persona definition validity check, sub-segment discovery, handoff to Field
 
-**Trace vs Echo vs Researcher responsibilities**:
-- **Researcher**: Creates personas (from interviews and research)
+**Trace vs Echo vs Field responsibilities**:
+- **Field**: Creates personas (from interviews and research)
 - **Trace**: Validates personas with real data (from session logs)
 - **Echo**: Embodies personas to validate UI (simulation)
 
@@ -945,7 +945,7 @@ Validate the "Mobile-First Millennial" persona defined by Researcher against rea
 ```
 /Cast
 Generate 5 user personas for our e-commerce platform from these analytics data and support tickets.
-Register them in the persona registry for use by Echo and Researcher.
+Register them in the persona registry for use by Echo and Field.
 ```
 
 **Output**: Persona cards (demographics, goals, frustrations, tech proficiency), registry entries in unified format, downstream agent sync configuration
@@ -1263,26 +1263,26 @@ Validate this UI's usability from an elderly user persona's perspective.
 
 ---
 
-##### Storybook Story Creation (Showcase)
+##### Storybook Story Creation (Vitrine)
 
 ```
-/Showcase
+/Vitrine
 Create Storybook stories for the newly created Button component.
 ```
 
 **Output**: CSF 3.0 Story file (all variants, interaction tests, autodocs)
 
-**Showcase capabilities**:
+**Vitrine capabilities**:
 - **CREATE**: New component story creation
 - **MAINTAIN**: Existing story updates, CSF3 migration
 - **AUDIT**: Story coverage and quality auditing
 
 ---
 
-##### Storybook Coverage Audit (Showcase)
+##### Storybook Coverage Audit (Vitrine)
 
 ```
-/Showcase
+/Vitrine
 Audit current Storybook coverage. Identify missing stories.
 ```
 
@@ -1728,10 +1728,10 @@ Improve the preview display when sharing on social media.
 
 ---
 
-##### Retention Initiatives (Retain)
+##### Retention Initiatives (Bond)
 
 ```
-/Retain
+/Bond
 User retention rates are declining. Suggest retention improvement strategies.
 ```
 
@@ -1800,10 +1800,10 @@ Analyze competitors A and B and identify differentiation points.
 
 ---
 
-##### User Research Design (Researcher)
+##### User Research Design (Field)
 
 ```
-/Researcher
+/Field
 Design user interviews to validate the new feature.
 ```
 

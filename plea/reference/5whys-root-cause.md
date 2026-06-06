@@ -8,9 +8,9 @@ Purpose: Drive past surface symptoms to the true unmet need by iteratively askin
 - **plea `request` (default)**: collects requests as stated. Use `5whys` when a request feels solution-flavored or shallow.
 - **plea `need`**: surveys multiple blind spots laterally. `5whys` drills vertically into one.
 - **plea `jtbd`**: structures the job around forces and stages. `5whys` is faster, lighter, and complementary — often used to clean up a request *before* JTBD modeling.
-- **Researcher (elsewhere)**: owns root-cause analysis grounded in real interview transcripts. Plea generates synthetic why-chains as hypothesis; Researcher validates.
+- **Field (elsewhere)**: owns root-cause analysis grounded in real interview transcripts. Plea generates synthetic why-chains as hypothesis; Field validates.
 - **Scout (elsewhere)**: applies 5 Whys to *bug* root causes. Plea applies it to *demand* root causes — symptom is "user said X," not "system did Y."
-- **Voice (elsewhere)**: real feedback. 5 Whys on real review text is Voice + Researcher; 5 Whys on hypothetical user voice is Plea.
+- **Voice (elsewhere)**: real feedback. 5 Whys on real review text is Voice + Field; 5 Whys on hypothetical user voice is Plea.
 
 ## Workflow
 
@@ -112,11 +112,11 @@ WHY_CHAIN:
 - **Crossing into life-domain and trying to fix it**: if the root is "I want to feel valued at my job," your product can't fix that — note it as out-of-scope and stop.
 - **Tautological loops**: "wants speed because needs speed" — fail the causal check.
 - **Skipping the lateral pass**: vertical-only chains miss 60-70% of root causes. Always branch at least once.
-- **Treating the root as proven**: the chain is a synthetic hypothesis. Tag `synthetic: true` and hand off to Researcher / Voice for confirmation.
+- **Treating the root as proven**: the chain is a synthetic hypothesis. Tag `synthetic: true` and hand off to Field / Voice for confirmation.
 
 ## Handoff
 
-- **To Researcher**: synthetic root-need as hypothesis for real-user follow-up interviews. Researcher tests whether real users articulate the same root.
+- **To Field**: synthetic root-need as hypothesis for real-user follow-up interviews. Field tests whether real users articulate the same root.
 - **To Voice**: cross-check root against existing review/support text — search for keywords from the root statement; convergence raises confidence.
 - **To Spark**: hand off the *restated root unmet need*, not the original surface request. Spark designs against the root, which usually surfaces more diverse solution candidates.
 - **To Accord**: root-need becomes a top-level requirement; surface symptoms become acceptance criteria sub-bullets.

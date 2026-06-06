@@ -5,11 +5,11 @@ Purpose: Preserve the exact handoff anchors and the minimum payload each collabo
 ## Contents
 
 1. Pattern overview
-2. Researcher pattern
+2. Field pattern
 3. Trace pattern
 4. Voice pattern
 5. Spark pattern
-6. Retain pattern
+6. Bond pattern
 7. Nexus integration
 8. General handoff rules
 
@@ -17,13 +17,13 @@ Purpose: Preserve the exact handoff anchors and the minimum payload each collabo
 
 | Pattern | Flow | Use when |
 |---|---|---|
-| `A` | Researcher -> Cast -> Echo | Research findings become testing personas |
+| `A` | Field -> Cast -> Echo | Research findings become testing personas |
 | `B` | Trace -> Cast | Behavioral data updates personas |
 | `C` | Voice -> Cast | Feedback data enriches personas |
 | `D` | Cast -> Spark | Personas inform feature ideation |
-| `E` | Cast -> Retain | Personas inform retention strategy |
+| `E` | Cast -> Bond | Personas inform retention strategy |
 
-## Pattern A: Researcher -> Cast -> Echo
+## Pattern A: Field -> Cast -> Echo
 
 ### Inbound anchor
 
@@ -89,7 +89,7 @@ Minimum fields:
 - `Cross-Persona Opportunities`
 - `Files`
 
-## Pattern E: Cast -> Retain
+## Pattern E: Cast -> Bond
 
 ### Outbound anchor
 
@@ -148,7 +148,7 @@ Cast handoffs currently live inside the Claude Code skill ecosystem (Markdown an
 | Protocol | Owner / Status | Persona-relevance |
 |---|---|---|
 | **Model Context Protocol (MCP)** | Anthropic, open standard (Nov 2024); official MCP Registry launched 2025-09-08 (preview); 6,400+ servers registered by Feb 2026; latest spec revision 2025-11-25 | Personas can be exposed as MCP **resources** so any MCP client (Claude, IDE, etc.) can attach them as context. Use stable `cast://persona/{service}/{id}` URIs when wrapping. |
-| **Agent2Agent (A2A)** | Announced 2025-04-09 at Google Cloud Next; donated to Linux Foundation 2025-06; v1.0 with Signed Agent Cards; 150+ partner orgs by 2026-04; JSON-RPC 2.0 over HTTPS; Agent Card discovery; OAuth 2.0 / OpenID Connect | When Cast delivers personas to non-Claude agents, package as A2A `Task` payloads. Echo / Spark / Retain adapters map cleanly onto A2A Message + Artifact structures. |
+| **Agent2Agent (A2A)** | Announced 2025-04-09 at Google Cloud Next; donated to Linux Foundation 2025-06; v1.0 with Signed Agent Cards; 150+ partner orgs by 2026-04; JSON-RPC 2.0 over HTTPS; Agent Card discovery; OAuth 2.0 / OpenID Connect | When Cast delivers personas to non-Claude agents, package as A2A `Task` payloads. Echo / Spark / Bond adapters map cleanly onto A2A Message + Artifact structures. |
 | **C2PA Content Credentials 2.2** | C2PA spec dated 2025-04-22 / 2025-05-01 | If persona files include AI-generated portraits or voice clips, attach C2PA assertions documenting AI-use and edit history. |
 
 Operational notes:

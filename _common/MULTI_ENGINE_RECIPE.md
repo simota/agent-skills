@@ -2,7 +2,7 @@
 
 Cross-skill protocol for the `multi` Recipe — spawning subagents in parallel across engines for tasks where multi-engine perspectives improve quality. Adapted from `judge/reference/tri-engine-review.md` for non-review skills.
 
-**Audience**: Skills implementing a `multi` Recipe (Spark, Plea, Omen, Magi, Compete, Sentinel, Riff, Flux, Researcher, Vision, Saga, Atlas, Echo, Scout, and future additions).
+**Audience**: Skills implementing a `multi` Recipe (Spark, Plea, Omen, Magi, Compete, Sentinel, Riff, Flux, Field, Vision, Saga, Atlas, Echo, Scout, and future additions).
 
 **Prerequisites**: `_common/SUBAGENT.md §MULTI_ENGINE` (base engine dispatch mechanics), `judge/reference/tri-engine-review.md` (canonical PREFLIGHT/FAN-OUT logic).
 
@@ -49,7 +49,7 @@ Each skill's `multi` Recipe falls into one of three patterns. Choose the one tha
 
 **Use when**: Output value comes from *breadth of ideas / perspectives*. Disagreement is informative; single-engine insights are often the breakthrough.
 
-**Examples**: Spark (proposals), Plea (synthetic demand), Omen (failure modes), Compete (competitive coverage), Riff (brainstorming), Flux (reframing), Researcher (research design), Vision (UX direction), Saga (narratives).
+**Examples**: Spark (proposals), Plea (synthetic demand), Omen (failure modes), Compete (competitive coverage), Riff (brainstorming), Flux (reframing), Field (research design), Vision (UX direction), Saga (narratives).
 
 **Scoring**:
 - `UNIVERSAL` (3/3) = broadly recognized; safe but possibly obvious

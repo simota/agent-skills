@@ -8,7 +8,7 @@ Purpose: Design an authorized phishing campaign that measures real organizationa
 - **Sentinel (elsewhere)**: static security analysis of code paths that handle inbound email or user submissions. No campaign design.
 - **Probe (elsewhere)**: DAST / penetration testing of the landing-page infrastructure itself. Not the social pretext.
 - **Vigil (elsewhere)**: authoring the Sigma / YARA / email-header detection rules that flag the campaign artifacts. Campaign feeds Vigil — Vigil does not run the campaign.
-- **Comply (elsewhere)**: regulatory mapping (GDPR breach-notification readiness, PCI phishing controls, SOC 2 awareness-training evidence).
+- **Oath (elsewhere)**: regulatory mapping (GDPR breach-notification readiness, PCI phishing controls, SOC 2 awareness-training evidence).
 - **Triage (elsewhere)**: post-incident response playbook when a real (not simulated) phish lands.
 
 If the question is "does our workforce click, report, or escalate?" → `phishing`. If it is "do our email-security controls catch this payload?" → hand the campaign artifacts to Vigil and Probe.
@@ -98,7 +98,7 @@ A campaign without a report button is a test of clicks, not of culture.
 ## Handoff / Next Steps
 
 - To **Vigil**: campaign artifacts (sending-domain patterns, landing-page fingerprints, header anomalies, timing indicators) for Sigma / detection-rule authoring.
-- To **Comply**: evidence package for SOC 2 CC2.2 / PCI 12.6.3 awareness-training controls and GDPR breach-simulation logs.
+- To **Oath**: evidence package for SOC 2 CC2.2 / PCI 12.6.3 awareness-training controls and GDPR breach-simulation logs.
 - To **Triage**: the exact campaign timeline, kill-switch status, and indicator list so real-phish reports during the window can be disambiguated from the test.
 - To **Sentinel**: if the campaign revealed an email-handling or link-preview code path that auto-renders untrusted content — hand off for static review.
 - To **Scribe**: final campaign report (scope, outcome, metrics, trend vs prior waves) with anonymized participant data.

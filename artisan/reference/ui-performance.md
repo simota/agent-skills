@@ -94,5 +94,5 @@ const Chart = dynamic(() => import('./Chart'), {
 
 - To `Bolt` when the perf issue is cross-cutting (multiple routes, backend involvement, SSR strategy, CWV program).
 - To `Radar` for perf regression tests (render count, bundle-size snapshot).
-- To `Showcase` for a story that demonstrates the fast path (virtualized list / lazy chart).
+- To `Vitrine` for a story that demonstrates the fast path (virtualized list / lazy chart).
 - To `Muse` only if the perf win depends on token/styling restructure; otherwise keep styling scope stable during the perf pass.

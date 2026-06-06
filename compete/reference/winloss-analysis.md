@@ -10,7 +10,7 @@ Purpose: Systematic post-decision interview program that surfaces the real reaso
 - **compete `positioning` (elsewhere)**: positioning maps — win/loss surfaces positioning gaps; positioning resolves them.
 - **compete `battle` (elsewhere)**: battle cards consume win/loss themes as their evidence layer. Do not author "why we win/lose" sections from opinion.
 - **voice (elsewhere)**: existing-customer feedback and NPS. Voice is post-purchase satisfaction; win/loss is purchase-decision rationale. Different population, different question set.
-- **researcher (elsewhere)**: discovery-phase user research and persona work. Researcher designs the methodology; Compete owns the win/loss program structure and competitive lens.
+- **researcher (elsewhere)**: discovery-phase user research and persona work. Field designs the methodology; Compete owns the win/loss program structure and competitive lens.
 - **plea (elsewhere)**: synthetic-user assumption challenge. Plea is hypothesis stress-testing without real interviews — never substitute for real win/loss.
 
 ## Workflow
@@ -135,7 +135,7 @@ Integration rule: findings that do not flow back into CRM and battle cards are r
 ## Handoff
 
 - **To Voice**: pull post-purchase satisfaction quotes from existing customers as supporting evidence for "why we win" themes.
-- **To Researcher**: hand off interview script design, persona validation, and qualitative coding methodology refinement.
+- **To Field**: hand off interview script design, persona validation, and qualitative coding methodology refinement.
 - **To Helm**: when win/loss reveals a structural shift (segment moving, category re-defining), escalate for strategic simulation.
 - **To Spark**: feature gaps that appear in `3+` loss interviews route as feature ideas with competitive and buyer evidence attached.
 - **To Growth**: positioning, brand-authority, or first-touch trust gaps route to Growth for messaging and SEO/GEO response.

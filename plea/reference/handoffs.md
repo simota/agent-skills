@@ -40,7 +40,7 @@ VOICE_TO_PLEA_HANDOFF:
     underrepresented in real feedback.
 ```
 
-### From Researcher (RESEARCHER_TO_PLEA_HANDOFF)
+### From Field (RESEARCHER_TO_PLEA_HANDOFF)
 
 ```yaml
 RESEARCHER_TO_PLEA_HANDOFF:

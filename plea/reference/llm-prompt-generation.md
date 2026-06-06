@@ -17,12 +17,12 @@ One verb per prompt, declared at the top of `# Your task`.
 
 | Verb | When to use | Suggested next agent |
 |------|-------------|----------------------|
-| `ANALYZE` | Understand scope, root cause, market fit | Researcher, Compete |
+| `ANALYZE` | Understand scope, root cause, market fit | Field, Compete |
 | `PROPOSE` | Generate feature options with hypothesis and KPIs | Spark |
 | `DESIGN` | Translate demand into UX flow or interaction model | Vision, Palette, Echo |
 | `DRAFT-SPEC` | PRD, user story, or staged spec package | Scribe, Accord |
 | `PROTOTYPE` | Working code, mock UI, or runnable demo | Forge, Builder |
-| `REFINE` | Iterate on existing demand — add detail, narrow scope, resolve contradictions | Plea (self), Researcher |
+| `REFINE` | Iterate on existing demand — add detail, narrow scope, resolve contradictions | Plea (self), Field |
 
 ### Default verb by receiving agent
 
@@ -33,7 +33,7 @@ One verb per prompt, declared at the top of `# Your task`.
 | Accord | `DRAFT-SPEC` | Accord builds L0-L3 spec packages |
 | Builder / Forge | `PROTOTYPE` | Builder ships code; Forge ships rapid prototypes |
 | Rank | `ANALYZE` | Rank quantifies priority — needs analysis input |
-| Researcher | `REFINE` or `ANALYZE` | Researcher validates synthetic hypotheses |
+| Field | `REFINE` or `ANALYZE` | Field validates synthetic hypotheses |
 | Voice | `REFINE` | Voice cross-checks synthetic demand against real feedback |
 | Compete | `ANALYZE` | Compete benchmarks against rivals |
 | Vision / Palette | `DESIGN` | Design agents need flow framing |
@@ -124,7 +124,7 @@ Choose the action that matches your role:
 - Scribe: convert user voices into PRD user stories with INVEST criteria.
 - Builder / Forge: select highest-urgency demand and prototype.
 - Rank: score demands by urgency × frequency × persona breadth.
-- Researcher: design a study to validate or refute these synthetic hypotheses.
+- Field: design a study to validate or refute these synthetic hypotheses.
 
 # Constraints
 - Treat synthetic demands as hypotheses (`synthetic: true`), not validated user voice.

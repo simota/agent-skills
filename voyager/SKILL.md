@@ -1,6 +1,6 @@
 ---
 name: voyager
-description: "Authoring E2E tests for web (Playwright/Cypress/WebdriverIO) and native mobile (Appium/Detox/Maestro/XCUITest/Espresso). Covers Page Object design, auth flows, parallel execution, visual regression, a11y, CI, and remote device-farm (BrowserStack/Sauce Labs/AWS/Firebase). Use when authoring E2E suites. Not for unit (Radar), load/chaos (Siege), ad-hoc browser (Navigator), or native impl (Native)."
+description: "Authoring E2E tests for web (Playwright/Cypress/WebdriverIO) and native mobile (Appium/Detox/Maestro/XCUITest/Espresso). Covers Page Object design, auth flows, parallel execution, visual regression, a11y, CI, and remote device-farm (BrowserStack/Sauce Labs/AWS/Firebase). Use when authoring E2E suites. Not for unit (Radar), load/chaos (Siege), ad-hoc browser (Vector), or native impl (Native)."
 ---
 
 <!--
@@ -47,7 +47,7 @@ COLLABORATION_PATTERNS:
 - Voyager -> Judge: Quality metrics
 - Voyager -> Builder: Bug reports
 - Voyager -> Native: App-side defect routing (test reproduces a real bug in the shipped app, not the harness)
-- Voyager -> Navigator: Browser task delegation
+- Voyager -> Vector: Browser task delegation
 - Voyager -> Bolt: Performance regression fixes
 - Voyager -> Siege: Load testing delegation
 - Oracle -> Voyager: AI-powered testing strategy guidance
@@ -55,7 +55,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Radar, Artisan, Builder, Attest, Director, Flow, Oracle, Pixel, Native
-- OUTPUT: Radar, Scout, Gear, Judge, Builder, Navigator, Bolt, Siege, Oracle, Native
+- OUTPUT: Radar, Scout, Gear, Judge, Builder, Vector, Bolt, Siege, Oracle, Native
 
 PROJECT_AFFINITY: Game(L) SaaS(H) E-commerce(H) Dashboard(H) Marketing(M)
 -->
@@ -81,7 +81,7 @@ Route elsewhere when the task is primarily:
 - Logic that belongs at unit or integration level — hand off to `Radar`.
 - Performance profiling or code-level optimization — hand off to `Bolt`.
 - Load, chaos, or resilience testing — hand off to `Siege`.
-- Ad-hoc browser task execution, not reusable test automation — hand off to `Navigator`.
+- Ad-hoc browser task execution, not reusable test automation — hand off to `Vector`.
 - Any task better handled by another agent per `_common/BOUNDARIES.md`.
 
 
@@ -179,7 +179,7 @@ Voyager receives test escalations, feature specs, and acceptance criteria from u
 | Voyager → Gear | `VOYAGER_TO_GEAR` | CI pipeline configuration request |
 | Voyager → Judge | `VOYAGER_TO_JUDGE` | Test quality metrics |
 | Voyager → Builder | `VOYAGER_TO_BUILDER` | Bug reports discovered during E2E runs |
-| Voyager → Navigator | `VOYAGER_TO_NAVIGATOR` | Browser task execution delegation |
+| Voyager → Vector | `VOYAGER_TO_NAVIGATOR` | Browser task execution delegation |
 | Voyager → Bolt | `VOYAGER_TO_BOLT` | Performance regression fix request |
 | Voyager → Siege | `VOYAGER_TO_SIEGE` | Load testing delegation |
 | Oracle → Voyager | `ORACLE_TO_VOYAGER` | AI-powered testing strategy and MCP agent guidance |
@@ -190,7 +190,7 @@ Voyager receives test escalations, feature specs, and acceptance criteria from u
 | Agent | Voyager owns | They own |
 |-------|-------------|----------|
 | Radar | E2E browser-level journey tests | Unit, integration, and edge case tests |
-| Navigator | Reusable E2E test automation | Ad-hoc browser task execution |
+| Vector | Reusable E2E test automation | Ad-hoc browser task execution |
 | Siege | E2E functional validation | Load, chaos, and resilience testing |
 | Director | E2E test scenarios for journeys | Demo video recording and production |
 | Attest | E2E test implementation | Specification-level acceptance criteria |
@@ -223,7 +223,7 @@ Behavior notes per Recipe:
 - `visual`: screenshot diff with baseline management and diff-report config.
 - `api`: User-journey E2E through API-only (no UI). Use `APIRequestContext` to chain HTTP → persisted state → downstream-API assertion in one flow. Always include ≥1 cross-endpoint state check (e.g. POST `/orders` → GET `/orders/:id` → GET `/inventory` must agree). Define mock-vs-real backend toggle at PLAN (env-driven); pin real backend for critical-path smoke. Follow up with Gateway/contract-test handoff when schema drift risk is high. Distinct from Radar `integration` (backend internals) and Probe `api` (security DAST).
 - `mobile`: E2E for a shipped app (not PoC). Detox for RN grey-box, Maestro for cross-platform smoke (lowest authoring cost), Appium for widest device matrix; route through a device farm once ≥3 device combos. Distinct from Forge `mobile` (PoC) and Native (production build). Real-device flake dominates — quarantine device-specific noise separately from logic flake.
-- `component`: Component tests in a **real browser** (real DOM/events/CSS) — distinct from Radar `unit` (Node/jsdom). Playwright CT for Playwright-native stacks, Cypress CT when project uses Cypress, Storybook Interactions (`play` + `@storybook/test`) when stories are the source of truth. If Showcase owns stories, execute against them rather than duplicating mount setup. Scope each test to one component — page-level belongs in `playwright`.
+- `component`: Component tests in a **real browser** (real DOM/events/CSS) — distinct from Radar `unit` (Node/jsdom). Playwright CT for Playwright-native stacks, Cypress CT when project uses Cypress, Storybook Interactions (`play` + `@storybook/test`) when stories are the source of truth. If Vitrine owns stories, execute against them rather than duplicating mount setup. Scope each test to one component — page-level belongs in `playwright`.
 
 ### Signal Keywords → Recipe
 
@@ -264,7 +264,7 @@ Operational thresholds that trigger a recipe choice or a cross-agent handoff (di
 - If CI pipeline ownership, secrets, or general infra becomes the main work, hand off to `Gear`; Voyager owns only E2E-specific test config.
 - If measured browser performance regressions need code fixes, hand off to `Bolt` after capturing metrics and evidence.
 - If load, chaos, or resilience testing is required, hand off to `Siege`.
-- If the request is interactive browser operation, not reusable E2E automation, hand off to `Navigator`.
+- If the request is interactive browser operation, not reusable E2E automation, hand off to `Vector`.
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
 
 ## Output Requirements

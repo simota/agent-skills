@@ -219,6 +219,6 @@ A site audit is complete when:
 - Aleyda Solis, *Crawling Mondays* (technical SEO methodology).
 - Bartosz Góralewicz, *Onely* — JS rendering and crawl auditing.
 - Botify, *The Crawl Budget Optimization Playbook* (2024).
-- Screaming Frog, *SEO Spider User Guide*.
+- Screaming Frog, *SEO Trawl User Guide*.
 - Tomek Rudzki, *Indexing Insight* — indexability deep-dive.
 - John Mueller (Google), *Search Off the Record* podcast — canonical / hreflang clarifications.

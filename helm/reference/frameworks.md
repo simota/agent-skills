@@ -58,7 +58,7 @@ Output requirements:
 
 **2026 priority signals (always evaluate):**
 - Political: US tariff escalation (tariffs increased >6x in 12 months), AI export controls, US-China tech bifurcation (BCG: https://www.bcg.com/publications/2025/geopolitical-forces-shaping-business-in-2026); geoeconomic confrontation is WEF #1 near-term global risk (WEF GRR 2026: https://www.weforum.org/publications/global-risks-report-2026/)
-- Environmental: IFRS S2 climate-risk disclosure effective 1 Jan 2024, adopted in 21+ jurisdictions — LONG-horizon strategies for listed/institutional clients must address transition-plan requirements (https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/)
+- Environmental: IFRS S2 climate-risk disclosure effective 1 Jan 2024, adopted in 21+ jurisdictions — LONG-horizon strategies for listed/institutional clients must address transition-plan requirements (https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-vector/ifrs-s2-climate-related-disclosures/)
 - Technological: AI capabilities as geopolitical asset; agentic AI shifting from task automation to multi-step workflow management (BCG AI Radar 2026)
 
 ### Porter 5 Forces

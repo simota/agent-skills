@@ -39,7 +39,7 @@ Single shared scope across all engines:
 - **Target audience** (dev team / stakeholders / end users / cross-team — from AUDIENCE_UNCLEAR resolution)
 - **Channel** (LP / pitch / case study / onboarding / social / investor memo — drives length and tone)
 - **Controlling Idea** if known (StoryBrand 2.0 promised transformation) — pass through to engines so they don't drift off-brand
-- **Materials** available (Voice quotes, Researcher journey maps, Compete differentiators, Trace session insights — if any)
+- **Materials** available (Voice quotes, Field journey maps, Compete differentiators, Trace session insights — if any)
 
 Do **not** pass framework choice (SB7 / Pixar / Hero's Journey / JTBD / Promised Land / BAB) to subagents. Let each engine select the archetype its training data finds most fitting. Framework rules are applied at SYNTHESIZE.
 
@@ -131,7 +131,7 @@ For each `CANDIDATE` narrative, the Saga main context must run the full **AP-1 t
 
 Also verify:
 - **Persona existence**: if `protagonist` cites a Cast registry persona, confirm the persona exists. If fabricated, downgrade or mark `REJECTED-PERSONA-FABRICATED`.
-- **Material grounding**: if the narrative references Voice quotes, Researcher findings, or Compete differentiators, verify the source. Hallucinated quotes → `REJECTED-FABRICATED-EVIDENCE`.
+- **Material grounding**: if the narrative references Voice quotes, Field findings, or Compete differentiators, verify the source. Hallucinated quotes → `REJECTED-FABRICATED-EVIDENCE`.
 
 Surviving narratives become `VERIFIED-DIVERGENT` and are eligible for the Portfolio.
 
@@ -193,7 +193,7 @@ Generate {N=2-3} narratives for the target customer and feature below. Each narr
 - Target audience: {dev team | stakeholders | end users | cross-team}
 - Channel: {LP | pitch | case study | onboarding | social | investor memo}
 - Controlling Idea (if known): {brand's promised transformation}
-- Available materials: {Voice quotes / Researcher findings / Compete differentiators / Trace insights — list, or "none"}
+- Available materials: {Voice quotes / Field findings / Compete differentiators / Trace insights — list, or "none"}
 
 # Output format
 Return ONLY JSON matching this exact schema (no commentary outside the JSON):

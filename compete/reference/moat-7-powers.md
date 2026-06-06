@@ -11,7 +11,7 @@ Purpose: Evaluate durable competitive advantage using Hamilton Helmer's 7 Powers
 - **compete `battle` (elsewhere)**: tactical sales ammunition. Battle cards may reference moats but cannot create them.
 - **compete `winloss` (elsewhere)**: behavioral evidence of differentiation. Win/loss tells you what wins deals today; moat tells you what will still win deals in 10 years.
 - **voice (elsewhere)**: customer feedback. Voice surfaces preference; moats explain why preference persists under competitive pressure.
-- **researcher (elsewhere)**: empirical user research. Researcher validates customer behavior; moat work analyzes industry structure.
+- **researcher (elsewhere)**: empirical user research. Field validates customer behavior; moat work analyzes industry structure.
 - **plea (elsewhere)**: synthetic-user assumption challenge. Plea stress-tests moat claims that lack market evidence.
 - **helm (elsewhere)**: strategic simulation. Helm consumes the moat assessment as input to multi-year scenario planning.
 
@@ -126,7 +126,7 @@ Anti-moat rule: a single anti-moat can neutralize a Power. Score the net moat as
 
 - **To Helm**: moat assessment is core input to strategic simulation, scenario planning, and multi-year capital allocation. Pass Powers held, gaps, and anti-moats with confidence levels.
 - **To Voice**: validate Branding-as-Power claims with willingness-to-pay studies and customer language about trust.
-- **To Researcher**: design empirical studies to validate Switching Costs (real switching attempts) or Network Economies (utility-vs-userbase curves).
+- **To Field**: design empirical studies to validate Switching Costs (real switching attempts) or Network Economies (utility-vs-userbase curves).
 - **To Spark**: when a Power could be acquired in Origination/Take-Off phase, route the Power-building feature concept as a strategic bet, not a roadmap item.
 - **To Growth**: Branding-as-Power requires deliberate brand investment; route the brand-building program to Growth.
 - **To battle (compete)**: tactical implications — which Powers to emphasize in objection handling, which Powers competitors hold against us.

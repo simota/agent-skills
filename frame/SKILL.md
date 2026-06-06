@@ -29,13 +29,13 @@ COLLABORATION_PATTERNS:
   Frame -> Schema: data model hints extracted from design patterns
   Frame -> Canvas: design structure for diagram generation
   Frame -> Vision: extracted design audit data for creative direction
-  Frame <-> Showcase: bidirectional Code Connect sync and visual regression baseline
-  Showcase -> Frame: stale mapping alerts and visual diff requests
+  Frame <-> Vitrine: bidirectional Code Connect sync and visual regression baseline
+  Vitrine -> Frame: stale mapping alerts and visual diff requests
   Vision -> Frame: design direction requiring Figma extraction
   Forge -> Frame: rendered UI for code-to-Figma canvas write via use_figma
   Muse -> Frame: token definitions requiring Figma variable verification
 
-BIDIRECTIONAL_PARTNERS: INPUT=User,Nexus,Vision,Showcase,Muse,Forge | OUTPUT=Muse,Forge,Artisan,Builder,Schema,Vision,Showcase,Canvas
+BIDIRECTIONAL_PARTNERS: INPUT=User,Nexus,Vision,Vitrine,Muse,Forge | OUTPUT=Muse,Forge,Artisan,Builder,Schema,Vision,Vitrine,Canvas
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) Mobile(H) Static(M) Library(M)
 -->
 
@@ -65,7 +65,7 @@ Route elsewhere when the task is primarily:
 - defining visual direction or UX strategy without Figma extraction: `Vision`
 - writing or maintaining a design system component library: `Artisan`
 - creating design tokens from scratch (not extracting from Figma): `Muse`
-- reviewing a live implementation against a design: `Showcase`
+- reviewing a live implementation against a design: `Vitrine`
 - building backend APIs informed by design data: `Builder`
 - converting design structures to diagrams without Figma extraction: `Canvas`
 - End-to-end design→implementation pipeline across multiple artifact types with design-system persistence: `Atelier`
@@ -287,13 +287,13 @@ _STEP_COMPLETE:
       file_version: "[version hash]"
       scope: "[page/frame/component path]"
       extraction_type: "[component | token | screenshot | code_connect | design_system | figjam | full]"
-      target_agent: "[Muse | Forge | Artisan | Builder | Schema | Canvas | Vision | Showcase]"
+      target_agent: "[Muse | Forge | Artisan | Builder | Schema | Canvas | Vision | Vitrine]"
       rate_budget: "[consumed/remaining]"
       code_connect_status: "[mapped | missing | stale]"
       w3c_dtcg_aligned: "[yes | no | partial]"
     completeness_check: "[passed | flagged: [gaps]]"
     stale_mappings: "[none | [component names]]"
-  Next: Muse | Forge | Artisan | Builder | Schema | Canvas | Vision | Showcase | DONE
+  Next: Muse | Forge | Artisan | Builder | Schema | Canvas | Vision | Vitrine | DONE
   Reason: [Why this next step]
 ```
 
@@ -303,8 +303,8 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 
 ## Collaboration
 
-**Receives:** Vision, Showcase, Muse, Forge, Nexus, User
-**Sends:** Muse, Forge, Artisan, Builder, Schema, Vision, Showcase, Canvas
+**Receives:** Vision, Vitrine, Muse, Forge, Nexus, User
+**Sends:** Muse, Forge, Artisan, Builder, Schema, Vision, Vitrine, Canvas
 
 ## Reference Map
 
@@ -312,7 +312,7 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 |-----------|----------------|
 | `reference/execution-templates.md` | You need phase-by-phase reports, validation checkpoints, delivery report format, or package templates. |
 | `reference/infrastructure-constraints.md` | You need connection setup, plan limits, budget strategy, error handling, or security rules. |
-| `reference/handoff-formats.md` | You need target-agent handoff schemas for Muse, Forge, Artisan, Builder, Schema, Vision, Showcase, or Canvas. |
+| `reference/handoff-formats.md` | You need target-agent handoff schemas for Muse, Forge, Artisan, Builder, Schema, Vision, Vitrine, or Canvas. |
 | `reference/code-connect-guide.md` | You are auditing, creating, syncing, or maintaining Code Connect mappings. |
 | `reference/prompt-strategy.md` | You need tool-specific prompt patterns or chaining strategies. |
 | `reference/figma-mcp-server-ga.md` | You need the GA tool inventory, Schema 2025 features, prop mapping types, or client-specific known issues. |

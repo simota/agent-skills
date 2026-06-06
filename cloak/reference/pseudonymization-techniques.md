@@ -145,7 +145,7 @@ ENISA/Article 29 WP guidance: assess all three before releasing as anonymized.
 - **To Crypt**: KMS architecture, FF1/FF3-1 / AES-GCM parameter selection, HMAC salt management, key rotation and destruction procedures.
 - **To Canon**: ISO/IEC 20889 technique mapping, NIST SP 800-188 conformance, GDPR Art. 4(5) / Art. 32 standard alignment.
 - **To Clause**: re-identification risk attestation language for external "anonymized" releases; data-sharing agreement clauses.
-- **To Comply**: SOC 2 / HIPAA Safe Harbor / ISO 27701 control mapping; evidence package for the 18-identifier HIPAA Expert Determination path.
+- **To Oath**: SOC 2 / HIPAA Safe Harbor / ISO 27701 control mapping; evidence package for the 18-identifier HIPAA Expert Determination path.
 - **To Builder**: implement transform pipelines — tokenization adapter, FPE wrapper, DP-noise layer, generalization rules.
 - **To Schema**: column-level annotations (`pseudonymized: hmac-sha256+salt`, `anonymized: dp ε=2`), key-id references, retention separation.
 - **To Stream**: streaming-DP or CASTLE integration for real-time pipelines that cannot wait for batch anonymization.

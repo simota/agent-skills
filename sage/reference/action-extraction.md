@@ -65,7 +65,7 @@ When an action is execution-heavy, suggest a follow-up agent:
 | Implementation work (code, infrastructure) | `Builder` |
 | Synthetic-user validation of a hypothesis | `Plea` |
 | Multi-step decomposition into ≤15-min units | `Sherpa` |
-| User research interview design | `Researcher` |
+| User research interview design | `Field` |
 | Architecture / migration decision | `Atlas` or `Magi` |
 | New feature spec from advice | `Spark` |
 

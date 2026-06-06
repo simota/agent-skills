@@ -7,7 +7,7 @@ Purpose: Test individual UI components — or small compositions — **inside a 
 - **Voyager `component`**: real browser, real DOM, real layout. Mounts one component or one small composition. No routing, no global app shell.
 - **Radar `unit`**: Node / jsdom, no real layout, no real `pointerdown`, no real focus. Much faster, much cheaper, but cannot verify hover, focus-visible, CSS-driven visibility, ResizeObserver, IntersectionObserver, or pointer capture.
 - **Voyager `playwright`**: full-page E2E — routing, auth, multi-page journeys. Component tests should not mount the full app.
-- **Showcase**: owns Storybook stories as the documentation and catalog surface. This recipe executes tests **against those stories** (via the `play` function or the Storybook test runner) rather than re-inventing the mount setup.
+- **Vitrine**: owns Storybook stories as the documentation and catalog surface. This recipe executes tests **against those stories** (via the `play` function or the Storybook test runner) rather than re-inventing the mount setup.
 - **Voyager `visual`**: screenshot diffing. Often combined with component tests, but the recipe is orthogonal — visual tests can run over stories too.
 
 If the test needs real layout or pointer semantics on a single component → `component`. If it needs a full user flow across screens → `playwright`. If jsdom is enough → Radar `unit`.
@@ -18,7 +18,7 @@ If the test needs real layout or pointer semantics on a single component → `co
 |-----------|-----------|-----------|
 | **Playwright Component Testing** | Team already runs Playwright E2E; want a unified runner; need cross-browser (Chromium + WebKit + Firefox) per component | Project is Cypress-first |
 | **Cypress Component Testing** | Project already uses Cypress; Vite/webpack dev server is configured; team prefers Cypress's time-travel debugger | No Cypress elsewhere — introducing it just for CT is overhead |
-| **Storybook Interactions** (`play` + `@storybook/test`) | Stories are the source of truth for UI; Showcase already maintains them; want tests colocated with documentation | No Storybook adoption |
+| **Storybook Interactions** (`play` + `@storybook/test`) | Stories are the source of truth for UI; Vitrine already maintains them; want tests colocated with documentation | No Storybook adoption |
 | **Vitest Browser Mode** | Already on Vitest; want the unit-test ergonomics with real-browser fidelity | Need cross-browser matrix (Chromium-only by default via Playwright provider) |
 
 Default: **If stories exist → run tests over stories** (Storybook test runner or Playwright + Storybook). Otherwise **Playwright Component Testing** for Playwright shops, **Cypress CT** for Cypress shops.
@@ -60,7 +60,7 @@ test('primary button reaches focus ring on Tab', async ({ mount, page }) => {
 });
 ```
 
-Testing the story — not a parallel mount — keeps Showcase as the single source of truth.
+Testing the story — not a parallel mount — keeps Vitrine as the single source of truth.
 
 ## What Component Testing Catches That Unit Testing Misses
 
@@ -72,12 +72,12 @@ Testing the story — not a parallel mount — keeps Showcase as the single sour
 
 If the behavior under test is none of the above → Radar `unit` is faster and cheaper. Do not push unit-testable logic into the browser.
 
-## Integration With Showcase
+## Integration With Vitrine
 
-- Showcase writes and maintains stories (CSF 3.0 / Factories).
+- Vitrine writes and maintains stories (CSF 3.0 / Factories).
 - Voyager `component` executes tests against those stories via the `play` function (`@storybook/test`) or a Playwright + Storybook runner.
 - Visual regression over stories → combine with `visual` recipe.
-- New behavior coverage requires coordinating: Showcase adds the story variant → Voyager tests assert the play function + interactions.
+- New behavior coverage requires coordinating: Vitrine adds the story variant → Voyager tests assert the play function + interactions.
 
 ## Anti-Patterns
 
@@ -99,7 +99,7 @@ If the behavior under test is none of the above → Radar `unit` is faster and c
 ## Handoff
 
 - To **Radar**: the behavior is jsdom-safe — move it down the pyramid.
-- To **Showcase**: a story does not yet exist for the variant under test; add it first.
+- To **Vitrine**: a story does not yet exist for the variant under test; add it first.
 - To **Voyager `playwright`**: the scenario needs multiple screens or real routing.
 - To **Voyager `visual`**: add screenshot coverage over the same stories.
 - To **Palette**: a real accessibility gap was found; route the finding for a11y remediation.

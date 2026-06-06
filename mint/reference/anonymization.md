@@ -2,7 +2,7 @@
 
 **Purpose:** Techniques for converting production data into safe test data — Faker-based replacement, format-preserving masks, k-anonymity, and the production-scrub pipeline.
 **Read when:** Anonymizing production data or ensuring fixtures contain no real PII.
-**Pair with:** `pii-masking-deidentification.md` for the formal de-id taxonomy (HMAC tokenization, FF3-1 FPE, k/l/t/ε guarantees, retention horizons, scope boundaries vs Cloak/Comply/Siege). This file is the hands-on Faker pipeline; the other is the privacy-engineering taxonomy.
+**Pair with:** `pii-masking-deidentification.md` for the formal de-id taxonomy (HMAC tokenization, FF3-1 FPE, k/l/t/ε guarantees, retention horizons, scope boundaries vs Cloak/Oath/Siege). This file is the hands-on Faker pipeline; the other is the privacy-engineering taxonomy.
 
 ---
 

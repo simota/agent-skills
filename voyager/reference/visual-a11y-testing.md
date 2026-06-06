@@ -293,7 +293,7 @@ test('responsive visual test', async ({ page }) => {
     buildScriptName: build-storybook
 ```
 
-> **Voyager + Showcase boundary**: Voyager owns E2E visual regression (full-page). Showcase + Chromatic owns component-level visual testing.
+> **Voyager + Vitrine boundary**: Voyager owns E2E visual regression (full-page). Vitrine + Chromatic owns component-level visual testing.
 
 ---
 

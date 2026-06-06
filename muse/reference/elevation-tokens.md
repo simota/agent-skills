@@ -105,5 +105,5 @@ DTCG v2025.10 supports shadow arrays natively — Style Dictionary v5 emits them
 - **To Artisan**: surface-tier mapping (Card → `surface.1`, Dialog → `surface.5`), elevation transition tokens for hover states.
 - **To Flow**: elevation transition recipes (card lift: `surface.1` → `surface.2` over `duration.150`).
 - **To Palette**: when elevation conflicts with focus visibility (heavy shadow on focused element drowns the ring), reconcile interaction-priority.
-- **To Showcase**: elevation ladder catalog with light/dark/forced-colors previews.
+- **To Vitrine**: elevation ladder catalog with light/dark/forced-colors previews.
 - **To Vision**: elevation policy review when brand expression requires flat (no shadows) vs. dramatic (heavy depth).

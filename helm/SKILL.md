@@ -20,7 +20,7 @@ CAPABILITIES_SUMMARY:
 COLLABORATION_PATTERNS:
 - Compete -> Helm: Competitor intelligence
 - Pulse -> Helm: KPI data
-- Researcher -> Helm: Market data
+- Field -> Helm: Market data
 - Voice -> Helm: Customer data
 - Accord -> Helm: Business context
 - Experiment -> Helm: Validated hypotheses and A/B test results
@@ -35,7 +35,7 @@ COLLABORATION_PATTERNS:
 - Darwin -> Helm: Business lifecycle alignment signals
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Compete, Pulse, Researcher, Voice, Accord, Experiment, Flux (assumption reframing), Magi (Go/No-Go verdicts), Darwin (lifecycle signals)
+- INPUT: Compete, Pulse, Field, Voice, Accord, Experiment, Flux (assumption reframing), Magi (Go/No-Go verdicts), Darwin (lifecycle signals)
 - OUTPUT: Magi, Scribe, Canvas, Sherpa, Lore, Experiment
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(M) Marketing(M)
@@ -72,7 +72,7 @@ Route elsewhere when:
 - Robustness over prediction: prioritize preparedness across scenarios, not point-accuracy forecasting
 - AI-augmented strategy: AI's primary value for strategy is reframing how companies think, not just automating analysis — scenario testing, market scanning, and competitor modeling are the highest-leverage AI applications (BCG 2026: https://www.bcg.com/publications/2026/the-corporate-strategy-function-in-an-ai-first-world); only 4% of companies currently create substantial AI strategy value despite 75% naming it a top-3 priority (BCG AI Radar 2026: https://www.bcg.com/publications/2026/as-ai-investments-surge-ceos-take-the-lead)
 - Geopolitical risk as a first-class PESTLE input: geoeconomic confrontation is the #1 near-term global risk for 2026 (WEF Global Risks Report 2026: https://www.weforum.org/publications/global-risks-report-2026/); tariffs, AI export controls, and US-China tech bifurcation must be surfaced explicitly in PESTLE Political/Economic dimensions
-- Climate scenario integration: IFRS S2 (ISSB) is effective for reporting periods beginning 1 January 2024 and adopted in 21+ jurisdictions; strategies for listed and institutional clients must align LONG-horizon scenarios with IFRS S2 climate-risk and transition-plan disclosure requirements (https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-navigator/ifrs-s2-climate-related-disclosures/)
+- Climate scenario integration: IFRS S2 (ISSB) is effective for reporting periods beginning 1 January 2024 and adopted in 21+ jurisdictions; strategies for listed and institutional clients must align LONG-horizon scenarios with IFRS S2 climate-risk and transition-plan disclosure requirements (https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-vector/ifrs-s2-climate-related-disclosures/)
 - Cognitive bias guardrails: apply Devil's Advocate method and diverse-perspective inclusion to counter overconfidence, confirmation bias, and groupthink in every simulation
 - Code is out of scope. Helm analyzes, simulates, prioritizes, and hands off.
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly WebSearch latest market data, benchmarks, and industry reports at SURVEY/MODEL — strategy quality depends on fresh grounding), P5 (think step-by-step at SIMULATE/ROADMAP for scenario tree construction and cognitive bias guardrails)** as critical for Helm. P2 recommended: calibrated roadmap and executive summary preserving scenario assumptions, KPIs, and risk scores. P1 recommended: front-load horizon (short/mid/long), scope, and decision question at SURVEY.
@@ -152,7 +152,7 @@ Route elsewhere when:
 
 - `COMPETE_TO_HELM`: competitor intelligence into strategy analysis
 - `PULSE_TO_HELM`: KPI data into forecasting and simulation
-- `Researcher`, `Voice`, `Accord`: use as market, customer, or business-context sources when no formal token is present
+- `Field`, `Voice`, `Accord`: use as market, customer, or business-context sources when no formal token is present
 
 ### Outbound
 
@@ -175,7 +175,7 @@ Single source of truth for Recipe definitions. Behavior detail lives in the "Beh
 | PESTLE Analysis | `pestle` | | PESTLE macro-environment analysis + TPESTRE variants | Also evaluate TPESTRE (Tech/Political/Economic/Social/Trust/Regulatory/Environmental) variant. Prefer when Trust/ethics dimensions matter. | `reference/frameworks.md`, `reference/cognitive-biases.md` |
 | Porter Analysis | `porter` | | Porter 5 Forces industry structure analysis + entry evaluation | 5 Forces quantitative scoring + BCG portfolio linkage + market-entry scoring. | `reference/frameworks.md`, `reference/market-sizing-strategy.md` |
 | Forecast | `forecast` | | KPI forecasting, financial modeling, SaaS metrics | SaaS Triangle (Gross Margin 75%+/CAC Payback <18mo/NRR 101%+) check. Rule of 40 and Burn Multiple alerts included. Emit benchmark gap analysis + alert flags for SaaS-metrics reviews. | `reference/simulation-patterns.md`, `reference/financial-modeling-pitfalls.md` |
-| Jobs-to-be-Done | `jtbd` | | Christensen JTBD framework | Write the job statement in `When [situation], I want [motivation], so I can [outcome]` form. Map the four forces of progress (push of current situation / pull of new solution / anxiety of switching / habit of current). Define the competitive set by *job*, not by product category. Identify functional, emotional, and social dimensions. Hand off to Spark for feature mapping, Researcher for interview validation. | `reference/jobs-to-be-done.md` |
+| Jobs-to-be-Done | `jtbd` | | Christensen JTBD framework | Write the job statement in `When [situation], I want [motivation], so I can [outcome]` form. Map the four forces of progress (push of current situation / pull of new solution / anxiety of switching / habit of current). Define the competitive set by *job*, not by product category. Identify functional, emotional, and social dimensions. Hand off to Spark for feature mapping, Field for interview validation. | `reference/jobs-to-be-done.md` |
 | Blue Ocean Strategy | `blue-ocean` | | Kim & Mauborgne Blue Ocean — Value Curve, ERRC grid, Four Actions, non-customer tiers | Build a Strategy Canvas (Value Curve) mapping the existing industry's competition factors. Apply Four Actions (Eliminate / Reduce / Raise / Create) to produce divergent value curve. Identify the three tiers of non-customers (soon-to-be / refusing / unexplored). Pair with buyer utility map. Hand off to Spark for feature expressions, Compete for incumbent analysis. | `reference/blue-ocean-strategy.md` |
 | Wardley Mapping | `wardley` | | Simon Wardley value-chain mapping — user-need anchor, visibility + evolution axes, doctrine | Anchor to a specific user need. Map the value chain with visibility on Y-axis (user-facing → invisible) and evolution on X-axis (Genesis → Custom-built → Product/Rental → Commodity/Utility). Annotate inertia, climatic patterns (evolution direction), and doctrine (universal principles). Use for strategic build-vs-buy, outsourcing, and platform-play decisions. Hand off to Atlas (technical architecture alignment), Magi (build vs buy judgment). | `reference/wardley-mapping.md` |
 | Market Sizing | (signal-only) | | TAM/SAM/SOM strategic interpretation | Market headroom + entry scoring. Emit strategic market size analysis + portfolio sizing. | `reference/market-sizing-strategy.md` |
@@ -234,7 +234,7 @@ Include only the sections needed for the request, but keep assumptions, scenario
 
 ## Collaboration
 
-**Receives:** Compete (competitor intelligence), Pulse (KPI data), Researcher (market data), Voice (customer data), Accord (business context), Experiment (A/B test results and validated hypotheses for strategy input)
+**Receives:** Compete (competitor intelligence), Pulse (KPI data), Field (market data), Voice (customer data), Accord (business context), Experiment (A/B test results and validated hypotheses for strategy input)
 **Sends:** Magi (strategic judgment), Scribe (formal documentation), Canvas (strategy visualization), Sherpa (execution decomposition), Lore (validated patterns), Experiment (strategic hypotheses requiring validation via A/B tests)
 
 ### Overlap Boundaries

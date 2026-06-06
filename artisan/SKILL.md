@@ -27,14 +27,14 @@ COLLABORATION_PATTERNS:
 - Palette -> Artisan: UX improvement recommendations
 - Lens -> Artisan: Code review feedback on components
 - Artisan -> Builder: API integration needs from frontend
-- Artisan -> Showcase: Component stories and demos
+- Artisan -> Vitrine: Component stories and demos
 - Artisan -> Radar: Test specifications for components
 - Artisan -> Flow: Animation specs for motion work
 - Artisan -> Quill: Component documentation
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Forge (prototypes), Vision (design direction), Muse (design tokens), Palette (UX improvements), Lens (code review feedback)
-- OUTPUT: Builder (API integration), Showcase (stories), Radar (tests), Flow (animations), Quill (docs)
+- OUTPUT: Builder (API integration), Vitrine (stories), Radar (tests), Flow (animations), Quill (docs)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) Mobile(H) Static(M)
 -->
@@ -134,7 +134,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | `DESIGN` | Choose component structure, state management, styling strategy; reference existing patterns | Match project conventions | `reference/state-management.md` |
 | `IMPLEMENT` | Build production components with TS strict, error handling, a11y; <50 lines per modification | One component at a time | `reference/component-quality.md` |
 | `VERIFY` | Component checklist (`reference/component-quality.md`); type safety, a11y, states | All states handled | `reference/performance-testing.md` |
-| `HANDOFF` | Route to Builder (API), Showcase (stories), Radar (tests) as appropriate | Clear handoff context | — |
+| `HANDOFF` | Route to Builder (API), Vitrine (stories), Radar (tests) as appropriate | Clear handoff context | — |
 
 ## Output Routing
 
@@ -208,7 +208,7 @@ Every deliverable must include:
 - Error boundary and loading/error/empty state handling.
 - Accessibility attributes (ARIA, keyboard navigation, focus management).
 - Component completion checklist results from `reference/component-quality.md`.
-- Recommended next agent for handoff (Builder, Showcase, Radar).
+- Recommended next agent for handoff (Builder, Vitrine, Radar).
 
 ## Collaboration
 
@@ -222,7 +222,7 @@ Artisan receives prototypes, design direction, and review feedback from upstream
 | Palette → Artisan | `PALETTE_TO_ARTISAN` | UX improvement recommendations |
 | Lens → Artisan | `LENS_TO_ARTISAN` | Code review feedback on components |
 | Artisan → Builder | `ARTISAN_TO_BUILDER` | API integration needs from frontend |
-| Artisan → Showcase | `ARTISAN_TO_SHOWCASE` | Component stories and demos |
+| Artisan → Vitrine | `ARTISAN_TO_SHOWCASE` | Component stories and demos |
 | Artisan → Radar | `ARTISAN_TO_RADAR` | Test specifications for components |
 | Artisan → Flow | `ARTISAN_TO_FLOW` | Animation specs for motion work |
 | Artisan → Quill | `ARTISAN_TO_QUILL` | Component documentation |
@@ -279,7 +279,7 @@ _STEP_COMPLETE:
   Validations:
     completeness: "[complete | partial | blocked]"
     quality_check: "[passed | flagged | skipped]"
-  Next: Builder | Showcase | Radar | Flow | Quill | DONE
+  Next: Builder | Vitrine | Radar | Flow | Quill | DONE
   Reason: [Why this next step]
 ```
 

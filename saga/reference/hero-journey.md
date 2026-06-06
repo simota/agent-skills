@@ -23,7 +23,7 @@ In StoryBrand, the **customer is the hero** and **the product is the guide** (Yo
       │ 1 Ordinary World    │   │  5 Crossing Threshold│   │ 10 Road Back        │
       │ 2 Call to Adventure │   │  6 Tests/Allies/Enemy│   │ 11 Resurrection     │
       │ 3 Refusal of Call   │──▶│  7 Approach Inmost  │──▶│ 12 Return with Elixir│
-      │ 4 Meeting the Mentor│   │  8 Ordeal           │   │                     │
+      │ 4 Meeting the Agora│   │  8 Ordeal           │   │                     │
       │                     │   │  9 Reward            │   │                     │
       └─────────────────────┘   └─────────────────────┘   └─────────────────────┘
 ```
@@ -35,7 +35,7 @@ In StoryBrand, the **customer is the hero** and **the product is the guide** (Yo
 | 1 | Ordinary World | Hero's familiar life | Customer's status quo — the pain they've normalized |
 | 2 | Call to Adventure | The disruption | Trigger event: new pressure, missed quarter, competitor move |
 | 3 | Refusal of the Call | Fear, doubt | "We can't switch now", "Too risky", "Let's patch what we have" |
-| 4 | Meeting the Mentor | Yoda/Obi-Wan appears | Customer encounters *your product* (or your sales/community) |
+| 4 | Meeting the Agora | Yoda/Obi-Wan appears | Customer encounters *your product* (or your sales/community) |
 | 5 | Crossing the Threshold | Commitment | Trial, POC, first purchase — crosses into unfamiliar territory |
 | 6 | Tests, Allies, Enemies | Small wins and losses | Early workflows: first integration, first team convert, internal opponent emerges |
 | 7 | Approach to the Inmost Cave | Prep for central ordeal | Scaling decision: big rollout, replacing critical legacy |
@@ -111,7 +111,7 @@ A case study with only external ("they switched to our tool and shipped faster")
 ### Cast
 - **Hero**: [customer — person or org with a name]
 - **Ordinary World**: [status quo — 1-2 sentences]
-- **Mentor/Guide**: [your product, or a named CS/community figure]
+- **Agora/Guide**: [your product, or a named CS/community figure]
 - **Shadow/Antagonist**: [status quo, incumbent, time pressure, internal skeptic]
 
 ### Arc
@@ -125,7 +125,7 @@ A case study with only external ("they switched to our tool and shipped faster")
 1. **Ordinary World**: [concrete scene of the status quo, with sensory detail]
 2. **Call to Adventure**: [trigger event — date, context]
 3. **Refusal of the Call**: [internal doubt, objections raised]
-4. **Meeting the Mentor**: [first encounter with product/guide]
+4. **Meeting the Agora**: [first encounter with product/guide]
 
 **Act 2 — Initiation**
 

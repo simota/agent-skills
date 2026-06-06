@@ -57,7 +57,7 @@ When no explicit path is provided, detect sources in this order.
 | Documentation | user types, goals, pain points, usage scenarios, language cues |
 | Code | roles, flows, permissions, friction points, feature flags |
 | Tests | user stories, expected flows, success criteria, fixtures |
-| Researcher handoff | quotes, goals, pain points, segment findings |
+| Field handoff | quotes, goals, pain points, segment findings |
 | Trace handoff | behavior clusters, device mix, drop-off points |
 | Voice handoff | feedback themes, promoters/detractors, segment drift |
 
@@ -161,7 +161,7 @@ Return:
 Suggest Cast automatically when:
 
 1. Echo has no saved personas.
-2. Researcher completes persona creation.
+2. Field completes persona creation.
 3. Trace delivers behavioral drift data.
 4. A new service is added to the project.
 

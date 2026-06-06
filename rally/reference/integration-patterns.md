@@ -53,7 +53,7 @@ Do not escalate to Rally for:
 | `SECURITY/full` | Specialist Team | Sentinel + Probe | `2` |
 | `TEST/coverage` | Specialist Team | Radar + Voyager | `2` |
 | `MODERNIZE/stack` | Feature Parallel | Builder x N | `2-4` |
-| `DOCS/full` | Code/Test/Docs Triple | Quill + Canvas + Showcase | `3` |
+| `DOCS/full` | Code/Test/Docs Triple | Quill + Canvas + Vitrine | `3` |
 | `INFRA/multi` | Feature Parallel | general-purpose x N | `2-3` |
 
 ## Handoff Templates

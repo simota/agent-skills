@@ -8,7 +8,7 @@ Purpose: Aha-moment discovery, Magic Number identification, time-to-value (TTV) 
 - **pulse `retention` (elsewhere)**: Retention curves and Power User analysis. Activation feeds retention; they are measured as a linked pair.
 - **pulse `funnel` (elsewhere)**: Generic conversion funnel. Activation is one specific conversion step inside that funnel.
 - **Onboarding copy (Prose `onboarding`)**: UX writing for the activation flow. Activation measurement owned by Pulse; activation copy owned by Prose.
-- **Retain (elsewhere)**: Post-activation habit formation and re-engagement. Activation is pre-Day-7; Retain is Day-7 onwards.
+- **Bond (elsewhere)**: Post-activation habit formation and re-engagement. Activation is pre-Day-7; Bond is Day-7 onwards.
 
 ## Workflow
 
@@ -37,7 +37,7 @@ CONTRACT  →  publish activation registry; alert on drift
 
 ## Aha-Moment vs Magic Number
 
-- **Aha-moment**: qualitative experience where the user perceives core value. Discovered via user research (Researcher), session replay (Trace), and first-session analytics.
+- **Aha-moment**: qualitative experience where the user perceives core value. Discovered via user research (Field), session replay (Trace), and first-session analytics.
 - **Magic Number**: quantitative threshold that operationalizes the aha-moment. A measurable threshold the product team can move.
 
 The Magic Number must be:
@@ -208,7 +208,7 @@ When `activation` completes, emit:
 - **Segment cuts** (channel, plan, device).
 - **Drift alerts** with thresholds and severity.
 - **Activation Registry entry** (template above).
-- **Handoff targets**: Prose for onboarding copy, Experiment for uplift testing, Retain for post-activation engagement, Researcher for qualitative validation.
+- **Handoff targets**: Prose for onboarding copy, Experiment for uplift testing, Bond for post-activation engagement, Field for qualitative validation.
 
 ## References
 

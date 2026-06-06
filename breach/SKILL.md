@@ -249,7 +249,7 @@ Parse the first token of user input. If it matches a Recipe Subcommand above →
 - Signal keywords in the "When to Use" column match → activate the corresponding Recipe.
 - `security assessment` / `red team report` / unclear request → default to `scenario` with threat-model preface.
 - Always start with SCOPE phase regardless of signal.
-- For static code scanning use Sentinel; for DAST/runtime exploitation use Probe; for Sigma/YARA authoring use Vigil; for AI architecture or eval frameworks use Oracle; for compliance mapping (GDPR/PCI/SLSA/SSDF/SOC 2/HIPAA) use Comply.
+- For static code scanning use Sentinel; for DAST/runtime exploitation use Probe; for Sigma/YARA authoring use Vigil; for AI architecture or eval frameworks use Oracle; for compliance mapping (GDPR/PCI/SLSA/SSDF/SOC 2/HIPAA) use Oath.
 
 ---
 

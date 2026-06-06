@@ -7,7 +7,7 @@ Purpose: Adapt personas for downstream agents without changing the underlying pe
 1. Adapter overview
 2. Echo adapter
 3. Spark adapter
-4. Retain adapter
+4. Bond adapter
 5. Compete adapter
 6. Accord adapter
 7. Generic fallback
@@ -20,7 +20,7 @@ Purpose: Adapt personas for downstream agents without changing the underlying pe
 |---|---|
 | Echo | testing flows, friction, confidence, recent changes |
 | Spark | unmet needs, opportunity signals, constraints |
-| Retain | lifecycle, churn risk, re-engagement |
+| Bond | lifecycle, churn risk, re-engagement |
 | Compete | expectations, switching behavior, loyalty anchors |
 | Accord | business context, alignment, decision confidence |
 | Generic | minimal neutral summary |
@@ -47,7 +47,7 @@ Required sections:
 - `### Constraints`
 - `### Key Behaviors (Design Constraints)`
 
-## Retain Adapter
+## Bond Adapter
 
 Required sections:
 
@@ -94,7 +94,7 @@ Required sections:
 |---|---|
 | Echo | Echo adapter |
 | Spark | Spark adapter |
-| Retain | Retain adapter |
+| Bond | Bond adapter |
 | Compete | Compete adapter |
 | Accord | Accord adapter |
 | Unknown | Generic fallback |

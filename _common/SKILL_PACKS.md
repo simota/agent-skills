@@ -55,7 +55,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 **Purpose:** browser-tier feature work — React/Vue/Svelte/Next.js, API design, perf, E2E.
 
-**Members:** `voyager`, `pixel`, `palette`, `frame`, `forge`, `artisan`, `atelier`, `flow`, `bolt`, `atlas`, `gateway`, `prose`, `funnel`, `lure`, `growth`, `ink`, `dot`, `navigator`, `canvas`, `muse`, `vision`, `showcase`, `polyglot`, `relay`
+**Members:** `voyager`, `pixel`, `palette`, `frame`, `forge`, `artisan`, `atelier`, `flow`, `bolt`, `atlas`, `gateway`, `prose`, `funnel`, `bazaar`, `growth`, `ink`, `dot`, `vector`, `canvas`, `muse`, `vision`, `vitrine`, `polyglot`, `relay`
 
 **Triggers:** `react`, `vue`, `svelte`, `next.js`, `frontend`, `web`, `landing page`, `e2e`, `playwright`, `cypress`, `webdriver`, `css`, `html`, `tailwind`, `api design`, `openapi`, `rest`, `graphql`, `i18n`, `l10n`, `internationalization`, `localization`, `intl api`, `translation key`, `bot framework`
 
@@ -75,7 +75,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 **Purpose:** static + dynamic security analysis, threat modeling, crypto, privacy, compliance, supply-chain.
 
-**Members:** `sentinel`, `probe`, `attest`, `crypt`, `cloak`, `vigil`, `breach`, `husk`, `chain`, `canon`, `comply`, `clause`
+**Members:** `sentinel`, `probe`, `attest`, `crypt`, `cloak`, `vigil`, `breach`, `cull`, `chain`, `canon`, `oath`, `clause`
 
 **Triggers:** `security`, `cve`, `owasp`, `sast`, `dast`, `pentest`, `threat model`, `red team`, `purple team`, `mitre`, `sigma`, `yara`, `cryptography`, `tls`, `kms`, `pii`, `gdpr`, `ccpa`, `soc2`, `pci-dss`, `hipaa`, `iso 27001`, `supply chain`, `npm worm`, `malware`
 
@@ -95,7 +95,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 **Purpose:** funnel/LP optimization, A/B testing, retention, KPI design, persona-driven UX validation.
 
-**Members:** `pulse`, `experiment`, `funnel`, `lure`, `ledger`, `compete`, `voice`, `echo`, `plea`, `cast`, `researcher`, `trace`, `retain`, `saga`, `spark`, `rank`, `helm`, `sage`, `growth`
+**Members:** `pulse`, `experiment`, `funnel`, `bazaar`, `ledger`, `compete`, `voice`, `echo`, `plea`, `cast`, `field`, `trace`, `bond`, `saga`, `spark`, `rank`, `helm`, `sage`, `growth`
 
 **Triggers:** `kpi`, `a/b test`, `experiment`, `funnel`, `landing page`, `cro`, `seo`, `geo`, `retention`, `churn`, `nps`, `cohort`, `session replay`, `persona`, `cognitive walkthrough`, `user feedback`, `cost optimization`, `finops`, `competitive analysis`, `prioritization`, `ice`, `rice`, `wsjf`, `moscow`
 
@@ -115,7 +115,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 **Purpose:** design system construction, visual asset generation, slide/video production, brand work.
 
-**Members:** `muse`, `vision`, `atelier`, `canvas`, `frame`, `showcase`, `palette`, `prose`, `flow`, `pixel`, `forge`, `artisan`, `ink`, `dot`, `sketch`, `saga`, `cue`, `director`, `stage`
+**Members:** `muse`, `vision`, `atelier`, `canvas`, `frame`, `vitrine`, `palette`, `prose`, `flow`, `pixel`, `forge`, `artisan`, `ink`, `dot`, `sketch`, `saga`, `cue`, `director`, `stage`
 
 **Triggers:** `design system`, `design tokens`, `figma`, `figjam`, `figma make`, `storybook`, `mermaid`, `draw.io`, `ascii diagram`, `svg`, `icon`, `pixel art`, `3d`, `meshy`, `tripo`, `slide`, `marp`, `reveal.js`, `slidev`, `keynote`, `presentation`, `notebooklm`, `video`, `screencast`, `cli demo`, `vhs`, `terminalizer`, `asciinema`, `audio`, `bgm`, `sfx`, `voice synthesis`, `aituber`, `vtuber`, `game design`, `gdd`
 
@@ -125,7 +125,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 **Purpose:** discovery-side work — user research, brainstorming, strategic decisions, career/learning/hiring content generation, prose authoring.
 
-**Members:** `researcher`, `plea`, `lens`, `cast`, `voice`, `echo`, `trace`, `compete`, `spark`, `riff`, `flux`, `omen`, `magi`, `rank`, `ascent`, `crest`, `mentor`, `guild`, `sage`, `helm`, `harvest`, `tome`, `scribe`, `accord`, `void`, `quill`, `zine`, `saga`
+**Members:** `field`, `plea`, `lens`, `cast`, `voice`, `echo`, `trace`, `compete`, `spark`, `riff`, `flux`, `omen`, `magi`, `rank`, `ascent`, `crest`, `agora`, `guild`, `sage`, `helm`, `harvest`, `tome`, `scribe`, `accord`, `void`, `quill`, `zine`, `saga`
 
 **Triggers:** `user research`, `interview`, `usability test`, `persona`, `journey map`, `jtbd`, `brainstorm`, `ideate`, `reframe`, `assumption challenge`, `pre-mortem`, `deliberation`, `prioritization`, `career`, `job change`, `side business`, `learning`, `curriculum`, `hiring`, `interview rubric`, `local government`, `civic`, `side project idea`, `office hours`, `advisory`, `strategy simulation`, `yagni`, `scope cut`, `documentation`, `jsdoc`, `tsdoc`, `tech blog`, `note`, `zenn`, `qiita`, `tax filing`, `tome`
 
@@ -135,7 +135,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 **Purpose:** end-to-end document package production via the `package` Recipe (12 domain presets — startup / career / learning / hiring / local-gov / etc.). Heavy union with `research`, `design`, and `core`.
 
-**Members:** `accord`, `scribe`, `tome`, `quill`, `rank`, `spark`, `magi`, `void`, `morph`, `canon`, `prose`, `saga`, `pulse`, `cast`, `researcher`, `plea`, `echo`, `voice`, `compete`, `attest`, `judge`, `clause`, `comply`, `cloak`, `vigil`, `ascent`, `mentor`, `guild`, `spider`, `stage`, `cue`, `showcase`, `pixel`, `artisan`, `frame`, `muse`, `palette`, `vision`
+**Members:** `accord`, `scribe`, `tome`, `quill`, `rank`, `spark`, `magi`, `void`, `morph`, `canon`, `prose`, `saga`, `pulse`, `cast`, `field`, `plea`, `echo`, `voice`, `compete`, `attest`, `judge`, `clause`, `oath`, `cloak`, `vigil`, `ascent`, `agora`, `guild`, `trawl`, `stage`, `cue`, `vitrine`, `pixel`, `artisan`, `frame`, `muse`, `palette`, `vision`
 
 **Triggers:** `business plan`, `venture`, `mvp dossier`, `pitch package`, `documentation package`, `package`, `startup dossier`, `domain preset`, `traceability matrix`, `feature_id`, `f-001`
 

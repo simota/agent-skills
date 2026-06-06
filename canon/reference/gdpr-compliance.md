@@ -26,7 +26,7 @@ ASSESS    →  Articles 5/6/7/13/17/25/30/32/33/35 as core; expand to 12-22 (rig
 VERIFY    →  gap report by Article; flag DPIA-required activities (Art. 35), 72h breach
              readiness (Art. 33), DPO threshold (Art. 37(1)(b)/(c))
 
-PRESENT   →  delegate: Cloak (PbD, DPIA, consent code), Comply (RoPA, DPA),
+PRESENT   →  delegate: Cloak (PbD, DPIA, consent code), Oath (RoPA, DPA),
              Clause (Privacy Policy text), Sentinel (PII scan), Builder (remediation)
 ```
 
@@ -111,7 +111,7 @@ DPO must report to highest management level, cannot be dismissed for performing 
 ## Handoff
 
 - **To Cloak**: privacy-by-design implementation (`Art. 25`), DPIA facilitation (`Art. 35`), consent management code (`Art. 7`), pseudonymization/anonymization design (`Art. 4(5)`), data-subject rights API (`Art. 15-22`), data-flow maps.
-- **To Comply**: RoPA maintenance (`Art. 30`), DPA registry (`Art. 28`), audit trail, Policy-as-Code (OPA rules for retention/access), supervisory-authority correspondence.
+- **To Oath**: RoPA maintenance (`Art. 30`), DPA registry (`Art. 28`), audit trail, Policy-as-Code (OPA rules for retention/access), supervisory-authority correspondence.
 - **To Clause**: Privacy Policy / Cookie Notice / DPA legal text review and clause-gap analysis. Always pair with qualified counsel for legal determinations.
 - **To Sentinel**: PII leakage scanning, hardcoded personal-data identifiers, insecure storage detection, secret/credential exposure (`Art. 32(1)(a)`).
 - **To Crypt**: encryption-at-rest/in-transit design, key management for `Art. 32(1)(a)` and breach-notification exemption qualification.

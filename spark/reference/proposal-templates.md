@@ -20,7 +20,7 @@ Use this structure for the default Spark deliverable:
 ## Input Sources
 - [ ] Scout
 - [ ] Echo
-- [ ] Researcher
+- [ ] Field
 - [ ] Voice
 - [ ] Compete
 - [ ] Pulse

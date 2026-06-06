@@ -149,7 +149,7 @@ flowchart TD
 | `-2` | Negative | Red |
 | `-3` | Critical friction | Dark red |
 
-## Visual Journey From Navigator
+## Visual Journey From Vector
 
 ## ECHO_TO_CANVAS_VISUAL_HANDOFF
 

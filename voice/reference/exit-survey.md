@@ -110,5 +110,5 @@ trackEvent('exit_survey_completed', {
 ## Handoff Rules
 
 - Repeated competitor-loss patterns -> `/Compete analyze [competitor] advantage`
-- Save-offer and churn-response execution -> `/Retain address churn: [primary reason]`
+- Save-offer and churn-response execution -> `/Bond address churn: [primary reason]`
 - Product gaps with strong evidence -> `Spark`

@@ -1,6 +1,6 @@
 # Persona Integration Patterns
 
-Detailed collaboration patterns with Researcher and Echo.
+Detailed collaboration patterns with Field and Echo.
 
 ---
 
@@ -11,7 +11,7 @@ Detailed collaboration patterns with Researcher and Echo.
 │                    PERSONA LIFECYCLE                      │
 │                                                          │
 │  ┌────────────┐    ┌────────────┐    ┌────────────┐     │
-│  │ Researcher │ →  │   Trace    │ →  │   Echo     │     │
+│  │ Field │ →  │   Trace    │ →  │   Echo     │     │
 │  │  Creates   │    │ Validates  │    │ Simulates  │     │
 │  └────────────┘    └────────────┘    └────────────┘     │
 │        ↑                  │                  │           │
@@ -22,15 +22,15 @@ Detailed collaboration patterns with Researcher and Echo.
 
 ---
 
-## Pattern A: Researcher → Trace (Segmentation)
+## Pattern A: Field → Trace (Segmentation)
 
-Use Researcher-defined personas to segment sessions for analysis.
+Use Field-defined personas to segment sessions for analysis.
 
 ### Input Format
 
 ```yaml
 PERSONA_DEFINITION:
-  source: Researcher
+  source: Field
   persona:
     name: "Cautious Comparison Shopper"
     id: "CCS-001"
@@ -87,7 +87,7 @@ SEGMENT_ANALYSIS:
 
 ---
 
-## Pattern B: Trace → Researcher (Validation)
+## Pattern B: Trace → Field (Validation)
 
 Validate and update persona definitions based on real data analysis.
 
@@ -112,7 +112,7 @@ PERSONA_VALIDATION_REPORT:
 # ...
 ```
 
-### Handoff to Researcher
+### Handoff to Field
 
 ```markdown
 ## RESEARCHER_HANDOFF (from Trace)
@@ -256,7 +256,7 @@ TRACE_VALIDATION:
 
 ### Default Segment Mappings
 
-| Researcher Persona | Trace Technical Filters | Behavioral Markers |
+| Field Persona | Trace Technical Filters | Behavioral Markers |
 |-------------------|-------------------------|-------------------|
 | Mobile-first Millennial | device=mobile, age=25-35 | fast_navigation, gesture_heavy |
 | Cautious Shopper | session_duration>10min | multiple_product_views, review_reader |

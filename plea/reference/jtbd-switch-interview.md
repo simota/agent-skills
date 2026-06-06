@@ -8,7 +8,7 @@ Purpose: Generate synthetic JTBD artifacts (Switch interview transcripts, four-f
 - **plea `request` (default)**: persona-led feature requests. Use when the question is "what do users want?" rather than "what progress are they hiring for?"
 - **plea `need`**: surfaces team blind spots via curse-of-knowledge patterns — broader than one job.
 - **plea `challenge` / `roleplay`**: assumption pushback / deep persona embodiment — not job-anchored.
-- **Researcher (elsewhere)**: owns *real-user* JTBD. Real Switch interviews, video coding, and forces ranking from live transcripts are Researcher's domain. Plea generates *synthetic* JTBD as a hypothesis seed — Researcher validates with humans.
+- **Field (elsewhere)**: owns *real-user* JTBD. Real Switch interviews, video coding, and forces ranking from live transcripts are Field's domain. Plea generates *synthetic* JTBD as a hypothesis seed — Field validates with humans.
 - **Spark (elsewhere)**: turns JTBD into feature spec. Plea stops at "the job and the forces"; Spark designs the solution.
 - **Voice (elsewhere)**: real feedback analysis. Voice tells you what users said; Plea simulates what users *would* say if interviewed under the Switch protocol.
 
@@ -33,7 +33,7 @@ MAP        →  produce Job Map across 8 stages (Define → Locate → Prepare �
 COMPETE    →  list competing jobs (alternatives the user could "hire" — including non-obvious ones)
            →  surface unexpected substitutes (doing nothing, asking a friend, a spreadsheet)
 
-DELIVER    →  hand off to Researcher for validation, Spark for solution, Accord for spec
+DELIVER    →  hand off to Field for validation, Spark for solution, Accord for spec
 ```
 
 ## The Four Forces
@@ -100,11 +100,11 @@ For each, score: cost, switching effort, social signal, expected progress. The o
 - **Single dominant persona**: one persona hires for many jobs; one job is hired by many personas. Generate at least 3 persona×job pairs.
 - **Conflating functional with emotional**: "save time" is functional; "feel competent in front of my team" is social. Splitting them surfaces hidden value.
 - **Skipping the competing-job step**: if you don't list "doing nothing," you'll over-estimate switch likelihood.
-- **Treating synthetic JTBD as evidence**: this is a hypothesis. Always tag outputs `synthetic: true` and route to Researcher for real-user confirmation.
+- **Treating synthetic JTBD as evidence**: this is a hypothesis. Always tag outputs `synthetic: true` and route to Field for real-user confirmation.
 
 ## Handoff
 
-- **To Researcher**: synthetic JTBD as hypothesis seed for real Switch interviews. Researcher recruits real switchers and validates the four-forces ranking. Required: state which forces are highest-uncertainty.
+- **To Field**: synthetic JTBD as hypothesis seed for real Switch interviews. Field recruits real switchers and validates the four-forces ranking. Required: state which forces are highest-uncertainty.
 - **To Spark**: validated job statement → solution exploration. Spark designs against the dominant unmet stage on the Job Map.
 - **To Accord**: job statement + acceptance criteria phrased as "user achieves [outcome] when [condition]" → spec-package input.
 - **To Cast**: PERSONA_FEEDBACK on which job-archetype combinations produced unexpected coverage gaps.

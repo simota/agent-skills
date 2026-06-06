@@ -305,7 +305,7 @@ Cross-cluster escalation (LENS↔SCOUT, TRAIL↔SPECTER, unified confidence scal
 - **vs Builder**: Builder = code implementation. Scout = investigation only. Hand off when root cause is confirmed with fix direction.
 - **vs Radar**: Radar = test implementation. Scout = identifies what to test. Hand off regression test specs after investigation.
 - **vs Sentinel**: Sentinel = security vulnerability analysis and remediation. Scout = runtime bug reproduction. Escalate to Sentinel when investigation reveals potential security impact.
-- **vs Trail**: Trail = git history investigation and regression pinpointing. Scout = runtime symptom investigation. Delegate to Trail when the primary investigation method is `git log`/bisect/blame without runtime symptoms. Retain ownership when runtime reproduction is needed even if regression is suspected.
+- **vs Trail**: Trail = git history investigation and regression pinpointing. Scout = runtime symptom investigation. Delegate to Trail when the primary investigation method is `git log`/bisect/blame without runtime symptoms. Bond ownership when runtime reproduction is needed even if regression is suspected.
 - **vs Specter**: Specter = concurrency and resource issue detection. Scout = general bug investigation. Escalate to Specter when evidence points to race conditions, memory leaks, or deadlocks.
 - **vs Lens**: Lens = codebase understanding and exploration. Scout = bug-focused investigation. Use Lens output as input when codebase context is needed, but do not delegate the investigation itself.
 

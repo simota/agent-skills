@@ -40,7 +40,7 @@
 | Keywords | Recipe / Skill |
 |----------|----------------|
 | `skill audit`, `MCP supply chain`, `plugin intake`, `.claude config audit`, `Unicode Tag injection`, `curl-pipe scan`, `third-party intake` | `SUPPLY_CHAIN_AUDIT` (Chain) |
-| `Shai-Hulud`, `npm worm`, `PyPI worm`, `lottie-player`, `S1ngularity`, `infected lockfile`, `C2 traffic`, `credential rotation order`, `infected` | `MALWARE_RESPONSE` (Husk → Triage → Crypt) |
+| `Shai-Hulud`, `npm worm`, `PyPI worm`, `lottie-player`, `S1ngularity`, `infected lockfile`, `C2 traffic`, `credential rotation order`, `infected` | `MALWARE_RESPONSE` (Cull → Triage → Crypt) |
 | `auto-tune`, `continuous tuning`, `GC tuning`, `threadpool`, `connection pool`, `worker count`, `cache size auto-adjust` | `AUTO_TUNING` (Dial) |
 | `tech debt visualization`, `debt mascot`, `debt character`, `gamified retro`, `quarterly debt review` | `DEBT_VISUALIZATION` (Hex → Sketch) |
 | `audio analysis`, `LUFS`, `True Peak`, `BPM detect`, `key detect`, `mastering QC`, `EBU R128`, `librosa`, `pyloudnorm` | `AUDIO_ANALYSIS` (Sonar) |
@@ -78,7 +78,7 @@
 | `media package`, `content operations kit`, `editorial calendar package`, `channel + monetization plan` | `package domain=media` |
 | `growth package`, `growth experiment plan`, `funnel + A/B plan package`, `growth hypotheses package` | `package domain=growth` (planning-only; execution → `kaizen`) |
 | `career package`, `job-change plan`, `career strategy package`, `portfolio + interview + negotiation kit` | `package domain=career` (owner skill `ascent`) |
-| `learning package`, `curriculum package`, `course design package`, `training program docs` | `package domain=learning` (owner skill `mentor`) |
+| `learning package`, `curriculum package`, `course design package`, `training program docs` | `package domain=learning` (owner skill `agora`) |
 | `hiring package`, `recruitment package`, `JD + interview + onboarding kit`, `org design docs` | `package domain=hiring` (owner skill `guild`) |
 
 ---

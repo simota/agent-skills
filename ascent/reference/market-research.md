@@ -1,6 +1,6 @@
 # Market Research (career-framed)
 
-Target-role, salary-band, market-trend, and company research — framed around THIS user's target role and region. This is a job-search sub-step Ascent owns the career framing for; it is NOT UX user research (Researcher) or product competitive analysis (Compete).
+Target-role, salary-band, market-trend, and company research — framed around THIS user's target role and region. This is a job-search sub-step Ascent owns the career framing for; it is NOT UX user research (Field) or product competitive analysis (Compete).
 
 ## Sourcing Rules
 

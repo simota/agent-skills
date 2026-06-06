@@ -5,13 +5,13 @@ Five persona agents form a lifecycle. This guide helps route to the right agent 
 ## Persona Lifecycle
 
 ```
-Researcher → Cast → Echo / Trace / Plea
+Field → Cast → Echo / Trace / Plea
  (research)   (generate/manage)   (consume/validate/advocate)
 ```
 
 | Agent | Role | Input | Output |
 |-------|------|-------|--------|
-| **Researcher** | Design and conduct user research | Research questions | Findings, persona data |
+| **Field** | Design and conduct user research | Research questions | Findings, persona data |
 | **Cast** | Generate, register, evolve, audit personas | Evidence from any source | Registered personas |
 | **Echo** | Persona-based cognitive walkthrough | Existing UI/flow + persona | Friction report, emotion scores |
 | **Trace** | Session replay behavioral analysis | Real session data + persona | Behavior patterns, validation data |

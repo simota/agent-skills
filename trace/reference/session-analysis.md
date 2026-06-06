@@ -60,7 +60,7 @@ SEGMENT_COMPARISON:
   dimensions:
     - device: [mobile, desktop, tablet]
     - user_type: [new, returning, power_user]
-    - persona: [Researcher-defined personas]
+    - persona: [Field-defined personas]
     - source: [organic, paid, direct, referral]
 
   metrics:

@@ -60,8 +60,8 @@ Use Venture when the request matches **at least 3** of:
 
 Route elsewhere when the task is:
 - A single PRD or spec → `accord` / `scribe` direct
-- A single landing page → `funnel` (or `lure` for premium LP)
-- Market/competitor research only → `researcher` / `compete` direct
+- A single landing page → `funnel` (or `bazaar` for premium LP)
+- Market/competitor research only → `field` / `compete` direct
 - Brand system only → `vision` / `muse` direct
 - Working feature implementation → `apex` or `feature` recipe
 - Must-have / killer feature *decision* → `essential` / `killer` recipe
@@ -76,7 +76,7 @@ Route elsewhere when the task is:
 | `lite` (lightweight prototype) | 00, 01(lite), 03, 04(lite), 05 | 6-8 | Fast concept validation, hackathon, idea triage |
 | `mvp` (default — MVP build + business prep) | 00-13, lean | 14-18 | The standard full package |
 | `raise` (fundraising) | 00-13, research/overview/marketing/KPI deepened | 16-20 | Fundraising-grade |
-| `full` (full commercialization) | 00-13, all tracks deep + void/comply/crypt | 24-28 | Production business build — **confirm before launch** |
+| `full` (full commercialization) | 00-13, all tracks deep + void/oath/crypt | 24-28 | Production business build — **confirm before launch** |
 
 **Mode overlays bias depth allocation.** Multiple may combine; they reweight tracks, never remove the core 14.
 
@@ -139,7 +139,7 @@ venture_contract:
 
 | Agent | Role | Required |
 |-------|------|----------|
-| `researcher` | Market background, trends, JTBD synthesis, interview/survey design; WebSearch-grounded with sources → `references.md` (or `research_todo.md` if ungrounded) | Yes |
+| `field` | Market background, trends, JTBD synthesis, interview/survey design; WebSearch-grounded with sources → `references.md` (or `research_todo.md` if ungrounded) | Yes |
 | `compete` | Direct + indirect competitor analysis, differentiation gap, positioning input | Yes (skip at `lite`) |
 | `plea` | Synthetic user demands / pain points / unmet needs across personas | Yes |
 | `cast` | Persona generation → `personas.md` | Conditional: depth ≥ mvp |
@@ -169,10 +169,10 @@ Each track receives the framing contract + canonical feature_id table. Tracks wr
 | Brand | 02 | `vision` (direction) → `muse` (`design_tokens.json`) ‖ `prose` (copy) ‖ `tone` (voice) | brand_strategy, naming_candidates (≥20), positioning, brand_voice, messaging_framework, visual_direction, design_tokens.json, copy_examples, brand_checklist |
 | UX/UI | 04 | `palette` (usability/states) ‖ `canvas` (Mermaid wireframes) ‖ `echo` (walkthrough) ‖ `prose` (empty/error/loading copy) | ux_flows, screen_specifications, wireframes_mermaid, component_inventory, state_design, onboarding_flow, accessibility_guidelines, responsive_design_policy |
 | LP | 05 | `funnel` (`index.html` + `styles.css` + lp_copy + conversion) ‖ `prose` (microcopy) | lp_copy, index.html, styles.css, faq, conversion_strategy, seo_metadata, analytics_plan |
-| Marketing | 06 | `funnel`/`lure` (GTM/channels) ‖ `pulse` (metrics) ‖ `experiment` (`growth_experiments.md`) | go_to_market_strategy, channel_strategy, pricing_strategy, content_marketing_plan, launch_plan, social_posts (30-day), email_sequences, pr_plan, sales_material_outline, growth_experiments |
+| Marketing | 06 | `funnel`/`bazaar` (GTM/channels) ‖ `pulse` (metrics) ‖ `experiment` (`growth_experiments.md`) | go_to_market_strategy, channel_strategy, pricing_strategy, content_marketing_plan, launch_plan, social_posts (30-day), email_sequences, pr_plan, sales_material_outline, growth_experiments |
 | Tech | 07 | `atlas` (architecture+Mermaid) → `schema` (`database_schema.sql`) ‖ `gateway` (`api_design_openapi.yaml`) ‖ `beacon` (monitoring) ‖ `gear` (CI/CD) ‖ `crypt`? (auth/crypto) | system_architecture, tech_stack, data_model, database_schema.sql, api_design_openapi.yaml, data_pipeline, auth_and_permissions, security_privacy, monitoring_observability, infrastructure_plan, ci_cd_plan, technical_risks |
 | AI Policy | 08 | `oracle` (AI usage, prompts, eval, guardrails, human review, logging) | ai_usage_policy, prompt_design, evaluation_policy, hallucination_risk_controls, human_review_workflow, model_selection, ai_logging_policy, ai_disclaimer_templates |
-| Legal/Risk | 09 | `clause` (ToS/Privacy/Cookie drafts) ‖ `cloak` (privacy/PII) ‖ `comply`? (compliance_checklist) ‖ `omen`+`ripple` (`risk_register.md`) | legal_considerations, data_rights_policy, privacy_policy_draft, terms_of_service_draft, cookie_policy_draft, risk_register, compliance_checklist |
+| Legal/Risk | 09 | `clause` (ToS/Privacy/Cookie drafts) ‖ `cloak` (privacy/PII) ‖ `oath`? (compliance_checklist) ‖ `omen`+`ripple` (`risk_register.md`) | legal_considerations, data_rights_policy, privacy_policy_draft, terms_of_service_draft, cookie_policy_draft, risk_register, compliance_checklist |
 | Testing | 10 | `matrix` qa-scenario (`test_cases.csv` TC-001…, mapped to feature_id) ‖ `radar`? (strategy) ‖ `mint` (`ai_evaluation_cases.csv`) | test_strategy, test_cases.csv, qa_checklist, ai_evaluation_cases.csv, performance_test_plan, security_test_plan, accessibility_test_plan, release_checklist |
 | PM | 11 | `sherpa` (`backlog.csv` BL-001…, mapped to feature_id) ‖ `rank` (priority) ‖ `scribe` (RACI/milestones) | backlog.csv, milestones, team_structure, budget_estimate, raci_matrix, decision_log, meeting_cadence, outsourcing_plan |
 | Mock Data | 12 | `mint` (fictional sample data only) | sample_users.json, sample_events.json, sample_content.csv, sample_notifications.json, sample_settings.json, sample_logs.json |
@@ -327,6 +327,6 @@ Nexus AUTORUN venture idea="<X>" depth=<...> mode=<...>
 | lite | 5 | 6-8 | Low |
 | mvp (default) | 14 | 14-18 | Medium |
 | raise | 14 (research/marketing/overview deep) | 16-20 | Medium-High |
-| full | 14 + void/comply/crypt | 24-28 | High — **confirm before launch** |
+| full | 14 + void/oath/crypt | 24-28 | High — **confirm before launch** |
 
 Venture is not free. Budget guardrails (Nexus chain confirmation for 5+ agent chains, full-depth confirmation, no-secrets package scrub) are enforced. For repeated ventures with a stable house style, propose a Sigil-generated project skill to amortize the chain design cost. When a native Dynamic Workflow substrate is available, delegate the Phase 3 parallel sweep to it and keep Nexus as the feature_id-contract + validation layer.

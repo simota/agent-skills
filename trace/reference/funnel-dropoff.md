@@ -80,7 +80,7 @@ Never report funnel numbers without at least one cohort split. Aggregated funnel
 | Referrer (organic / paid / direct / email) | Intent mismatch | Paid traffic converting <0.3x organic = bad landing fit |
 | Locale / language | I18n or payment-method gaps | Non-default-locale drop at payment step |
 | Cohort week | Recent regression vs historical baseline | Step drop worsening week-over-week |
-| Persona (via Researcher) | Persona-specific friction | One persona dropping 2x others at a specific step |
+| Persona (via Field) | Persona-specific friction | One persona dropping 2x others at a specific step |
 
 Require n>=30 per cohort slice. Smaller cells are directional, not conclusive.
 

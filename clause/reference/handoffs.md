@@ -7,13 +7,13 @@
 
 ## Inbound Handoffs
 
-### From Comply (COMPLY_TO_CLAUSE_HANDOFF)
+### From Oath (COMPLY_TO_CLAUSE_HANDOFF)
 
 Use when regulatory requirements must be reflected into legal documents.
 
 ```yaml
 COMPLY_TO_CLAUSE_HANDOFF:
-  source: Comply
+  source: Oath
   target: Clause
   context:
     regulatory_framework: "[SOC2 | PCI-DSS | HIPAA | ISO 27001 | ...]"

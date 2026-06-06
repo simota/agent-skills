@@ -88,7 +88,7 @@ When the change touches a classified data path, add compliance blast estimates:
 | Financial (PAN) | PCI-DSS | Card brand notification, forensic audit |
 | Financial (SOX scope) | SOX | 10-K/10-Q disclosure impact |
 
-Route compliance-impacting changes to Cloak and Comply for parallel review.
+Route compliance-impacting changes to Cloak and Oath for parallel review.
 
 ## Output Template
 
@@ -127,7 +127,7 @@ Route compliance-impacting changes to Cloak and Comply for parallel review.
 ### Compliance Overlay
 - **Regulations in scope**: [GDPR / CCPA / HIPAA / PCI-DSS / SOX / none]
 - **Notification obligations**: [if incident]
-- **Handoffs**: Cloak ([reason]), Comply ([reason])
+- **Handoffs**: Cloak ([reason]), Oath ([reason])
 
 ### Recommended Mitigations
 - [ ] Canary scope: [% traffic, tenant allowlist]
@@ -142,7 +142,7 @@ Route compliance-impacting changes to Cloak and Comply for parallel review.
 - [ ] Beacon (SLO guard / alert prepare)
 - [ ] Triage (on-call brief for SEV1/2)
 - [ ] Sentinel (security blast verify)
-- [ ] Cloak / Comply (compliance overlay)
+- [ ] Cloak / Oath (compliance overlay)
 - [ ] Launch (rollout gating)
 ```
 
@@ -164,7 +164,7 @@ When `blast-radius` completes, emit:
 - **Compliance overlay** (regulations, notification obligations, handoffs).
 - **Recommended mitigations** (canary, feature flag, kill-switch, pre-deploy alerts).
 - **Escalation triggers** (conditions that would bump tier during rollout).
-- **Handoff targets**: Beacon (SLO), Triage (SEV1/2 brief), Sentinel (security), Cloak/Comply (data class), Launch (rollout gating).
+- **Handoff targets**: Beacon (SLO), Triage (SEV1/2 brief), Sentinel (security), Cloak/Oath (data class), Launch (rollout gating).
 
 ## References
 

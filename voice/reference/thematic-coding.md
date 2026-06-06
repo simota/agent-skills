@@ -7,7 +7,7 @@ Purpose: Inductive coding of open-ended feedback (survey free-text, interview tr
 - **voice `thematic`**: 6-phase Braun & Clarke coding, codebook governance, saturation tracking, inter-coder agreement (Cohen's κ / Krippendorff's α), and thematic map output. Inductive (data-driven) by default; deductive (framework-driven) on request.
 - **voice `classify` (elsewhere)**: pre-defined category tagging for high-volume routing. Classify uses fixed buckets; thematic discovers them. Once thematic stabilizes a codebook, hand it off to `classify` for ongoing tagging.
 - **voice `sentiment` (elsewhere)**: polarity / emotion detection per response. Orthogonal to themes — a single theme can carry positive and negative sentiment.
-- **researcher (elsewhere)**: qualitative interview design and sampling. Researcher owns study design and recruitment; `thematic` owns the coding methodology applied to the resulting transcripts.
+- **researcher (elsewhere)**: qualitative interview design and sampling. Field owns study design and recruitment; `thematic` owns the coding methodology applied to the resulting transcripts.
 - **echo (elsewhere)**: persona-driven UX walkthrough. Thematic findings can validate or challenge persona assumptions; echo cannot substitute for grounded coding.
 - **insight (elsewhere)**: synthesis-to-recommendation. Thematic produces themes; `insight` turns themes into prioritized actions.
 
@@ -37,7 +37,7 @@ PHASE 6   →  Report — narrative weaving themes with verbatim quotes; cite pa
 
 | Mode | When to use | Risk | Compatible benchmark |
 |------|-------------|------|---------------------|
-| Inductive (bottom-up) | Discovery, no prior framework, exploratory feedback | Researcher bias drifts theme boundaries | Saturation curve |
+| Inductive (bottom-up) | Discovery, no prior framework, exploratory feedback | Field bias drifts theme boundaries | Saturation curve |
 | Deductive (top-down) | Hypothesis testing against an existing framework (JTBD, OKR, persona) | Forces data into pre-defined buckets, misses emergent themes | Framework coverage rate |
 | Hybrid | Most real studies | Documentation discipline required | Both above |
 
@@ -134,10 +134,10 @@ LLMs accelerate phase 2 (initial coding) but degrade phase 3-5 (theme constructi
 
 - **To `voice classify`**: stable codebook (≥2 saturation batches) → operationalize as classifier categories for ongoing tagging at scale.
 - **To `voice insight`**: theme-level findings with verbatim evidence → translation into prioritized actions and owner recommendations.
-- **To Researcher**: ambiguous themes or persona divergence → escalate for moderated interviews to disambiguate.
+- **To Field**: ambiguous themes or persona divergence → escalate for moderated interviews to disambiguate.
 - **To Spark**: themes describing unmet jobs or workarounds → feature proposals.
 - **To Echo**: themes pointing to persona-specific friction → cognitive walkthrough validation.
-- **To Retain**: themes correlating with churn cohort feedback → retention-program inputs.
+- **To Bond**: themes correlating with churn cohort feedback → retention-program inputs.
 - **To Helm**: cross-segment recurring themes → strategic narrative inputs.
 
 References: Braun & Clarke (2006), "Using thematic analysis in psychology"; Braun & Clarke (2019), "Reflexive thematic analysis"; Guest, Bunce & Johnson (2006) on saturation thresholds.

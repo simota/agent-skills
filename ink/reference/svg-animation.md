@@ -141,4 +141,4 @@ For SMIL (no media query), inline a `<script>` guard or author two asset variant
 
 **To Artisan:** animation class names, state-trigger contract (`data-state="loading"` → CSS applies), reduced-motion behavior expected, whether the icon is in a sprite or inline.
 **To Flow:** if the animation is part of a larger page transition, hand off total duration, easing, and the shape boundaries so Flow can orchestrate surrounding DOM.
-**To Showcase:** story variants for `default`, `animating`, and `prefers-reduced-motion: reduce` so the catalog captures all three states.
+**To Vitrine:** story variants for `default`, `animating`, and `prefers-reduced-motion: reduce` so the catalog captures all three states.

@@ -123,5 +123,5 @@ Use logical properties (`border-start-start-radius`) so RTL flips automatically.
 - **To Flow**: radius transition tokens for shape-morph animations (button → pill on hover, card → modal expansion).
 - **To Vision**: brand-mode selection review — radius is one of the loudest brand-personality levers; confirm direction.
 - **To Palette**: when full-pill on small touch targets reduces perceived hit area, reconcile interaction-priority.
-- **To Polyglot**: corner-set tokens use logical properties; verify RTL preview in Showcase.
-- **To Showcase**: radius scale ladder catalog with brand-mode toggle (sharp ↔ pill-first preview).
+- **To Polyglot**: corner-set tokens use logical properties; verify RTL preview in Vitrine.
+- **To Vitrine**: radius scale ladder catalog with brand-mode toggle (sharp ↔ pill-first preview).

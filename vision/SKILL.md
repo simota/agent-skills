@@ -15,7 +15,7 @@ CAPABILITIES_SUMMARY:
 - tri_engine_direction: `multi` Recipe — parallel design-direction generation across Codex + Antigravity + Claude subagents with concurrence-divergence scoring and aesthetic-spectrum coverage; Portfolio-only merge by default (3–5 complementary directions for user selection) with opt-in Compete merge (`multi --compete`); preserves single-engine breakthrough directions and prepares downstream handoff stubs for Muse/Palette/Flow/Forge/Frame/Prose
 
 COLLABORATION_PATTERNS:
-- Researcher -> Vision: User research insights and usability findings
+- Field -> Vision: User research insights and usability findings
 - Compete -> Vision: Competitive analysis and positioning data
 - Spark -> Vision: Feature proposals requiring design direction
 - Echo -> Vision: Persona-based UI flow validation findings
@@ -29,7 +29,7 @@ COLLABORATION_PATTERNS:
 - Vision -> Prose: Design direction for UX copy and microcopy
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Researcher, Compete, Spark, Echo
+- INPUT: Field, Compete, Spark, Echo
 - OUTPUT: Muse, Palette, Flow, Forge, Artisan, Loom, Frame, Prose
 
 PROJECT_AFFINITY: Game(H) SaaS(H) E-commerce(H) Dashboard(H) Marketing(H) Spatial(M)
@@ -231,7 +231,7 @@ Vision receives research and analysis from upstream agents. Vision sends design 
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
-| Researcher → Vision | `RESEARCHER_TO_VISION` | User research insights and usability findings |
+| Field → Vision | `RESEARCHER_TO_VISION` | User research insights and usability findings |
 | Compete → Vision | `COMPETE_TO_VISION` | Competitive analysis and positioning data |
 | Spark → Vision | `SPARK_TO_VISION` | Feature proposals requiring design direction |
 | Vision → Muse | `VISION_TO_MUSE` | Token direction and design system strategy |

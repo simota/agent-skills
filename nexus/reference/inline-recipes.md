@@ -41,4 +41,4 @@
 - **Phase 5 Conditional Implementation (only if Yes)**: Sherpa[claude decomposition] → if `ui_dimension != none`: Forge[codex prototype-validation] → Artisan[codex frontend-production] → Builder[codex backend/logic] → Radar[codex edge cases for differentiator] → judge[claude multi-engine review — killer features are high-stakes] → Guardian[claude] **with feature-flag recommendation** for controlled rollout (differentiation risk) → DELIVER working feature + tests + PR + flag config + rollout plan.
 - **If No**: DELIVER "decided-not-to-ship" strategic record.
 - **If Modify**: loop back to Phase 1 with modification (e.g., "reframe around X constraint" → Flux re-runs with updated directive).
-- **Add-ons**: +Riff for iterative deep-dive on Spark output in Phase 2, +Researcher for additional market trend grounding in Phase 1.
+- **Add-ons**: +Riff for iterative deep-dive on Spark output in Phase 2, +Field for additional market trend grounding in Phase 1.

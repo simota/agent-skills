@@ -33,7 +33,7 @@ COLLABORATION_PATTERNS:
 - Pattern I: Echo → Canon — WCAG 3.0 Silver/Gold: cognitive walkthrough output → standards compliance evidence
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Researcher (persona data), Voice (real feedback), Pulse (quantitative metrics), Cast (synthetic personas)
+- INPUT: Field (persona data), Voice (real feedback), Pulse (quantitative metrics), Cast (synthetic personas)
 - OUTPUT: Palette (interaction fixes), Experiment (A/B hypotheses), Growth (CRO), Canvas (visualization), Spark (feature ideas), Scout (bug investigation), Muse (design tokens), Cast (persona evolution data), Canon (WCAG 3.0 Silver/Gold evidence)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) Mobile(H) CLI(M)
@@ -165,7 +165,7 @@ Behavior notes per Recipe:
 - `confusion`: Focus on confusion points and cognitive load indices (SUS/SEQ). Deep-dive the WALK phase.
 - `emotion`: Per-touchpoint emotion scoring (-3 to +3) and journey pattern analysis. Apply the Peak-End rule.
 - `persona`: Run multiple personas in parallel. Output a Universal/Segment/Edge Case/Non-Issue classification matrix.
-- `heuristic`: Structured Nielsen-10 (or domain-extended) expert review. 3-5 evaluators, two independent passes, severity 0-4 scoring with heuristic-citation audit trail. For empirical confirmation use `aloud` or Researcher.
+- `heuristic`: Structured Nielsen-10 (or domain-extended) expert review. 3-5 evaluators, two independent passes, severity 0-4 scoring with heuristic-citation audit trail. For empirical confirmation use `aloud` or Field.
 - `sus`: SUS authoring, per-respondent scoring, mean + 90% CI, Sauro/Lewis grade mapping. Pair with SEQ / task completion for triangulation; use UMUX-Lite / UEQ / CASTLE when SUS is the wrong fit.
 - `aloud`: Concurrent (default) or retrospective think-aloud moderation. Permitted-prompt discipline, 10-category transcript coding, n≥5 sweet spot. Findings are timestamped, quote-backed, and severity-tagged.
 - `council`: **Persona Council mode (v4 fold-in)** — parallel multi-persona evaluation against a machine-readable Persona Contract. Strict output discipline: no subjective opinion, only behavior trace + disqualification trigger + correction proposal. Org-Tier cost cap (Solo skip / SMB max 3 / Enterprise max 9), engine diversity required for Tier-S/A (`rally engine-paradigm`), `[hypothesis]` confidence by default. Full schema + always/never → `reference/council-mode.md`.
@@ -203,7 +203,7 @@ Every deliverable must include:
 
 ## Collaboration
 
-**Receives:** Researcher (persona data), Voice (real feedback), Pulse (quantitative metrics), Experiment (context), Cast (synthetic personas)
+**Receives:** Field (persona data), Voice (real feedback), Pulse (quantitative metrics), Experiment (context), Cast (synthetic personas)
 **Sends:** Palette (interaction fixes), Experiment (A/B hypotheses), Growth (CRO insights), Canon (WCAG 3.0 Silver/Gold walkthrough evidence), Canvas (visualization data), Spark (feature ideas), Scout (bug investigation), Muse (design tokens), Cast (persona evolution data + PERSONA_FEEDBACK for confidence adjustment)
 
 **Overlap boundaries:**

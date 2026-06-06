@@ -136,7 +136,7 @@ Based on the Managed Agents virtualization pattern (Anthropic), session state (t
 
 ## DESIGN_INTENT_HANDOFF Format
 
-**Purpose**: Specialized handoff schema for design-to-implementation pipelines (inspired by Claude Design by Anthropic Labs, 2026-04-17). Use this when atelier/Vision/Frame/Muse hand off to implementation agents (Forge/Artisan/Pixel/Showcase) or to Claude Code.
+**Purpose**: Specialized handoff schema for design-to-implementation pipelines (inspired by Claude Design by Anthropic Labs, 2026-04-17). Use this when atelier/Vision/Frame/Muse hand off to implementation agents (Forge/Artisan/Pixel/Vitrine) or to Claude Code.
 
 **When to use**:
 - atelier orchestrating design → code loops
@@ -223,7 +223,7 @@ DESIGN_INTENT_HANDOFF:
     - "Pastel colors"
     - "Illustrations or hero images"
     - '"Delightful" / "magical" / "powerful" in copy'
-  Next: Artisan (implement) → Showcase (catalog)
+  Next: Artisan (implement) → Vitrine (catalog)
 ```
 
 ### Rules

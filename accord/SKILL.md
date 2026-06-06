@@ -14,7 +14,7 @@ CAPABILITIES_SUMMARY:
 - calibration: UNIFY post-task workflow for scope heuristics and pattern extraction
 
 COLLABORATION_PATTERNS:
-- Researcher -> Accord: User research, insights, journeys shape L0/L1
+- Field -> Accord: User research, insights, journeys shape L0/L1
 - Cast -> Accord: Personas shape target users and scenarios
 - Voice -> Accord: Stakeholder/user feedback adjusts priorities or scope
 - Accord -> Sherpa: Package decomposed into atomic steps
@@ -29,7 +29,7 @@ COLLABORATION_PATTERNS:
 - Void -> Accord: Specification scope cutting proposals
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Researcher (user research), Cast (personas), Voice (stakeholder feedback), Flux (assumption challenge), Magi (trade-off verdicts), Void (scope cutting)
+- INPUT: Field (user research), Cast (personas), Voice (stakeholder feedback), Flux (assumption challenge), Magi (trade-off verdicts), Void (scope cutting)
 - OUTPUT: Sherpa (decomposition), Builder (implementation), Radar (test cases), Voyager (E2E scenarios), Canvas (diagrams), Scribe (formal docs), Lore (patterns)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) API(M) Library(M)
@@ -280,7 +280,7 @@ Unified Specification Package: [Feature Name]
 
 ## Collaboration
 
-**Receives:** Researcher (user research, insights, journeys), Cast (personas), Voice (stakeholder/user feedback)
+**Receives:** Field (user research, insights, journeys), Cast (personas), Voice (stakeholder/user feedback)
 **Sends:** Sherpa (decomposition), Builder (L2-Dev implementation), Radar (L3 test cases), Voyager (E2E scenarios), Canvas (diagram/flow rendering), Scribe (formal documentation), Lore (reusable patterns)
 
 **Overlap boundaries:**
@@ -291,7 +291,7 @@ Unified Specification Package: [Feature Name]
 
 | Direction | Token | Use when |
 |---|---|---|
-| `Researcher -> Accord` | `RESEARCHER_TO_ACCORD` | User research, insights, journeys, or evidence must shape `L0/L1` |
+| `Field -> Accord` | `RESEARCHER_TO_ACCORD` | User research, insights, journeys, or evidence must shape `L0/L1` |
 | `Cast -> Accord` | `CAST_TO_ACCORD` | Personas must shape target users and scenarios |
 | `Voice -> Accord` | `VOICE_TO_ACCORD` | Stakeholder or user feedback must adjust priorities or scope |
 | `Accord -> Sherpa` | `ACCORD_TO_SHERPA` | The package must be decomposed into atomic steps |

@@ -7,7 +7,7 @@ Purpose: Design append-only audit-log tables that record who did what, when, and
 - **schema `audit-log`**: Append-only audit table design (this document).
 - **schema `event-sourcing` (elsewhere)**: Event store as system-of-record (different intent).
 - **Cloak (elsewhere)**: PII handling rules; audit logs that contain PII inherit Cloak constraints.
-- **Comply (elsewhere)**: Regulatory mapping (SOC2 CC7.2 / HIPAA §164.312(b) / PCI-DSS 10).
+- **Oath (elsewhere)**: Regulatory mapping (SOC2 CC7.2 / HIPAA §164.312(b) / PCI-DSS 10).
 - **Beacon (elsewhere)**: Operational logs (different from audit logs).
 - **Vigil (elsewhere)**: Detection rules over audit logs.
 
@@ -232,7 +232,7 @@ VERIFY        →  inject synthetic audit events; verify capture
               →  retention policy applies
               →  attempt UPDATE/DELETE → must fail
 
-HANDOFF       →  Comply: regulatory mapping
+HANDOFF       →  Oath: regulatory mapping
               →  Cloak: PII rules
               →  Beacon: operational log separation
               →  Vigil: detection rules over audit
@@ -285,7 +285,7 @@ HANDOFF       →  Comply: regulatory mapping
 - [ ] UPDATE/DELETE attempts fail
 
 ### Handoffs
-- Comply: SOC2/HIPAA/PCI mapping
+- Oath: SOC2/HIPAA/PCI mapping
 - Cloak: PII rules
 - Beacon: log separation
 - Vigil: detection rules
@@ -321,7 +321,7 @@ When `audit-log` completes, emit:
 - **PII handling** + GDPR erasure pathway.
 - **Index + partitioning** strategy.
 - **Verification plan**.
-- **Handoffs**: Comply, Cloak, Beacon, Vigil, Stream, Builder.
+- **Handoffs**: Oath, Cloak, Beacon, Vigil, Stream, Builder.
 
 ## References
 

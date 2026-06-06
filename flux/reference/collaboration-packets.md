@@ -217,11 +217,11 @@ User/Magi → Flux → Magi
 ### Pattern B: Innovation Pipeline
 
 ```
-Researcher → Flux → Spark
+Field → Flux → Spark
 ```
 
 **Flow:**
-1. Researcher provides research findings and user insights.
+1. Field provides research findings and user insights.
 2. Flux reframes the findings through COMBINE phase (Bisociation, SCAMPER).
 3. Spark receives cross-domain idea seeds and develops feature proposals.
 

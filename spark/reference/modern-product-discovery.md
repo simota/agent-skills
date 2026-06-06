@@ -103,7 +103,7 @@ Quantitative inputs:
 - error-rate and support-ticket trends
 
 Qualitative inputs:
-- research synthesis from `Researcher`
+- research synthesis from `Field`
 - feedback clusters from `Voice`
 - competitor gaps from `Compete`
 

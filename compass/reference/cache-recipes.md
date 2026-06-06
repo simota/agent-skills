@@ -78,7 +78,7 @@ Probe these in order. Stop early if a manifest fully describes the stack.
 | `prisma/schema.prisma` | DB schema → `schema`, `tuner` | exists |
 | `migrations/` / `db/migrate/` | migrations → `schema`, `shift` | exists |
 | `__tests__/` / `tests/` / `spec/` / `test/` | tests → `radar`, `mint` | exists |
-| `*.stories.*` / `.storybook/` | Storybook → `showcase` | exists |
+| `*.stories.*` / `.storybook/` | Storybook → `vitrine` | exists |
 | `playwright.config.*` / `cypress.config.*` | E2E → `voyager` | exists |
 | `.eslintrc*` / `eslint.config.*` | lint config → noted but no skill push | exists |
 | `tsconfig.json` | TypeScript present | exists |

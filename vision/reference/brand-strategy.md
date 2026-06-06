@@ -18,7 +18,7 @@ Before drafting any direction, gather:
 | Existing type system | Brand book | ✓ if exists |
 | Competitor visual references | Compete agent output | recommended |
 | Current UI screenshots (3+ pages) | Live product | ✓ for redesign |
-| Customer personas | Researcher / Cast | recommended |
+| Customer personas | Field / Cast | recommended |
 
 If 3+ inputs are missing, request them before proceeding. Do not invent brand identity.
 
@@ -199,7 +199,7 @@ Brand inputs gathered:
   □ Type system
   □ Competitor refs (Compete output)
   □ Current UI screenshots (3+)
-  □ Personas (Researcher / Cast)
+  □ Personas (Field / Cast)
 
 Voice keywords:
   1. ____  → UI manifestation: ____

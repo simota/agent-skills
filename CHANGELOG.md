@@ -40,7 +40,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Zen** - 防御的過剰検出パターンを追加
 - **Grove/Sweep** - メンテナンスモード、インラインしきい値、クロススキルハンドオフパイプラインを追加
 - **Void** - コード以外の全ドメイン（機能・プロセス・ドキュメント・設計・仕様・依存・設定）への引き算フレームワーク汎化
-- **Voyager, Navigator, Sketch** - 各SKILL.mdを包括的に改善（グレードA相当）
+- **Voyager, Vector, Sketch** - 各SKILL.mdを包括的に改善（グレードA相当）
 - **Levy** - Interaction Triggers追加（6トリガー+YAMLテンプレート）、Principles番号付きリスト化、Quick Decision判定テーブル2種追加（申告要否・事業所得vs雑所得）
 
 ### Changed
@@ -55,11 +55,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 #### New Agents
 - **Artisan** - フロントエンド本番実装の職人（React/Vue/Svelte、Hooks、状態管理）
-- **Showcase** - Storybookストーリー作成・カタログ管理・Visual Regression連携
+- **Vitrine** - Storybookストーリー作成・カタログ管理・Visual Regression連携
 - **Vision** - クリエイティブディレクション・Design System構築
 - **Probe** - セキュリティ動的テスト（DAST）・ペネトレーションテスト
 - **Tuner** - DBパフォーマンス最適化・EXPLAIN ANALYZE分析
-- **Researcher** - ユーザーリサーチ設計・インタビューガイド作成
+- **Field** - ユーザーリサーチ設計・インタビューガイド作成
 - **Voyager** - E2Eテスト専門（Playwright/Cypress）
 - **Judge** - codex reviewによるコードレビュー・PRレビュー自動化・AI幻覚検出
 - **Anvil** - Terminal UI構築・CLI開発支援
@@ -73,7 +73,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Enhanced
 - **Vision** - 2025-2026デザイントレンド、AI設計ツール統合（Figma AI、v0、Claude）
 - **Artisan** - Vue 3 Composition API、Svelte 5 Runes、スタイリング戦略ガイド
-- **Showcase** - Storybook 8対応、MDX 3ドキュメント、Figma連携
+- **Vitrine** - Storybook 8対応、MDX 3ドキュメント、Figma連携
 - **Builder** - TDD、Event Sourcing、CQRS、Forgeからの自動引き継ぎ
 
 ### Changed
@@ -102,7 +102,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 | Category | Count | Agents |
 |----------|-------|--------|
 | Orchestration | 8 | Nexus, Sherpa, Architect, Rally, Titan, Sigil, Orbit, Darwin |
-| Research & Planning | 10 | Scout, Ripple, Spark, Compete, Voice, Researcher, Trace, Canon, Lens, Cast |
+| Research & Planning | 10 | Scout, Ripple, Spark, Compete, Voice, Field, Trace, Canon, Lens, Cast |
 | Decision & Strategy | 4 | Magi, Helm, Levy, Accord |
 | Git/PR Management | 4 | Guardian, Harvest, Launch, Trail |
 | Quality Assurance | 12 | Radar, Voyager, Sentinel, Probe, Judge, Zen, Sweep, Warden, Specter, Siege, Void, Attest |
@@ -110,7 +110,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 | AI/ML | 1 | Oracle |
 | Performance | 2 | Bolt, Tuner |
 | Observability/SRE | 2 | Beacon, Mend |
-| UI/UX | 8 | Vision, Palette, Muse, Flow, Echo, Showcase, Prose, Frame |
+| UI/UX | 8 | Vision, Palette, Muse, Flow, Echo, Vitrine, Prose, Frame |
 | Documentation | 4 | Scribe, Quill, Morph, Prism |
 | Visualization | 2 | Canvas, Sketch |
 | Architecture | 4 | Atlas, Horizon, Gateway, Grove |
@@ -118,9 +118,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 | Data | 2 | Schema, Stream |
 | DevOps | 6 | Anvil, Gear, Scaffold, Hearth, Latch, Pipe |
 | i18n | 1 | Polyglot |
-| Growth | 2 | Growth, Retain |
+| Growth | 2 | Growth, Bond |
 | Analytics | 3 | Pulse, Experiment, Matrix |
 | Operations | 1 | Triage |
-| Browser Automation | 3 | Navigator, Director, Reel |
+| Browser Automation | 3 | Vector, Director, Reel |
 | AITuber/Streaming | 1 | Aether |
 | **Total** | **85** | |

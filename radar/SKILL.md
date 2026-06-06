@@ -23,7 +23,7 @@ COLLABORATION_PATTERNS:
 - Guardian -> Radar: Coverage gaps requiring targeted tests
 - Zen -> Radar: Refactored code needing pre/post safety coverage
 - Flow -> Radar: Timing-sensitive UI changes needing stability coverage
-- Showcase -> Radar: Component coverage gaps needing test follow-up
+- Vitrine -> Radar: Component coverage gaps needing test follow-up
 - Oracle -> Radar: AI-assisted test generation strategy and evaluation patterns
 - Sentinel -> Radar: Security-critical code paths requiring 100% coverage
 - Radar -> Builder: Test infrastructure needs
@@ -32,13 +32,13 @@ COLLABORATION_PATTERNS:
 - Radar -> Guardian: Coverage reports
 - Radar -> Gear: CI selection, caching, sharding bottlenecks
 - Radar -> Zen: Test code readability refactoring
-- Radar -> Showcase: Component stories alignment after coverage
+- Radar -> Vitrine: Component stories alignment after coverage
 - Radar -> Oracle: AI/LLM evaluation and testing strategy delegation
 - Matrix -> Radar: Test case combinatorial coverage optimization
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Scout, Builder, Judge, Guardian, Zen, Flow, Showcase, Oracle, Sentinel, Matrix (combinatorial coverage)
-- OUTPUT: Builder, Judge, Voyager, Guardian, Gear, Zen, Showcase, Oracle
+- INPUT: Scout, Builder, Judge, Guardian, Zen, Flow, Vitrine, Oracle, Sentinel, Matrix (combinatorial coverage)
+- OUTPUT: Builder, Judge, Voyager, Guardian, Gear, Zen, Vitrine, Oracle
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(H) Marketing(L)
 -->
@@ -239,7 +239,7 @@ Radar receives bug reports, implementation changes, review findings, coverage ga
 | Guardian → Radar | `GUARDIAN_TO_RADAR_HANDOFF` | Coverage gaps require targeted tests |
 | Zen → Radar | `ZEN_TO_RADAR_HANDOFF` | Refactored code needs pre/post safety coverage |
 | Flow → Radar | `FLOW_TO_RADAR_HANDOFF` | Timing-sensitive UI changes need stability coverage |
-| Showcase → Radar | `SHOWCASE_TO_RADAR_HANDOFF` | Component coverage gaps need test follow-up |
+| Vitrine → Radar | `SHOWCASE_TO_RADAR_HANDOFF` | Component coverage gaps need test follow-up |
 | Oracle → Radar | `ORACLE_TO_RADAR_HANDOFF` | AI-assisted test generation strategy and evaluation patterns |
 | Sentinel → Radar | `SENTINEL_TO_RADAR_HANDOFF` | Security-critical code paths requiring thorough coverage |
 | Radar → Voyager | `RADAR_TO_VOYAGER_HANDOFF` | Browser-level flow should be validated end to end |
@@ -247,7 +247,7 @@ Radar receives bug reports, implementation changes, review findings, coverage ga
 | Radar → Builder | `RADAR_TO_BUILDER_HANDOFF` | Test infrastructure or fixture needs implementation support |
 | Radar → Judge | `RADAR_TO_JUDGE_HANDOFF` | Tests need adversarial review or quality scoring |
 | Radar → Zen | `RADAR_TO_ZEN_HANDOFF` | Test code needs readability refactoring after behavior is secured |
-| Radar → Showcase | `RADAR_TO_SHOWCASE_HANDOFF` | Component behavior is covered and stories should be aligned |
+| Radar → Vitrine | `RADAR_TO_SHOWCASE_HANDOFF` | Component behavior is covered and stories should be aligned |
 | Radar → Guardian | `RADAR_TO_GUARDIAN_HANDOFF` | Coverage reports for governance tracking |
 | Radar → Oracle | `RADAR_TO_ORACLE_HANDOFF` | AI/LLM-specific testing and evaluation strategy delegation |
 

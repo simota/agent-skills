@@ -11,7 +11,7 @@ Purpose: load this when Frame must audit, suggest, map, sync, or maintain Code C
 - [Phase 3: MAP](#phase-3-map)
 - [Phase 4: SYNC](#phase-4-sync)
 - [Phase 5: MAINTAIN](#phase-5-maintain)
-- [Collaboration with Showcase](#collaboration-with-showcase)
+- [Collaboration with Vitrine](#collaboration-with-showcase)
 - [Best Practices](#best-practices)
 
 ## What is Code Connect?
@@ -224,23 +224,23 @@ Code Connect mappings can become stale when:
 
 ---
 
-## Collaboration with Showcase
+## Collaboration with Vitrine
 
-Frame manages the **Figma side** of Code Connect. Showcase manages the **code side** (Storybook stories, visual regression).
+Frame manages the **Figma side** of Code Connect. Vitrine manages the **code side** (Storybook stories, visual regression).
 
 ```
-Frame ────── Code Connect ────── Showcase
+Frame ────── Code Connect ────── Vitrine
 (Figma)     (bidirectional)       (Code)
 
 Frame: Component → code path mapping
-Showcase: Code path → Storybook story
+Vitrine: Code path → Storybook story
 Together: Full traceability from design to documentation
 ```
 
 ### Handoff Protocol
 
-**Frame → Showcase**: New mappings created, send component list with code paths for story creation.
-**Showcase → Frame**: Code paths changed during refactoring, request mapping update.
+**Frame → Vitrine**: New mappings created, send component list with code paths for story creation.
+**Vitrine → Frame**: Code paths changed during refactoring, request mapping update.
 
 ---
 

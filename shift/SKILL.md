@@ -19,7 +19,7 @@ CAPABILITIES_SUMMARY:
 - deprecated_library_detection: Identify outdated, unmaintained, or deprecated dependencies via static analysis, npm audit, and health scoring; emit replacement report (absorbed from horizon)
 - native_api_replacement: Suggest modern native alternatives (Temporal, structuredClone, fetch, Intl, URLSearchParams, Iterator helpers, Set methods, Object.groupBy, sendBeacon, WebSocket, glob, URLPattern, native TS stripping, --env-file, node:test, node:sqlite) over heavy libraries with bundle-impact analysis (absorbed from horizon)
 - technology_radar: Evaluate emerging technologies against maturity matrix (≥6 months post-stable, ≥1K stars, active maintenance) and project applicability before recommending adoption (absorbed from horizon)
-- supply_chain_risk_evaluation: Assess dependency supply-chain risks — npm provenance verification, OIDC Trusted Publishing posture, pnpm trustPolicy, package release cooldown, transitive vulnerability exposure (absorbed from horizon; deep supply-chain forensics handed off to husk/chain)
+- supply_chain_risk_evaluation: Assess dependency supply-chain risks — npm provenance verification, OIDC Trusted Publishing posture, pnpm trustPolicy, package release cooldown, transitive vulnerability exposure (absorbed from horizon; deep supply-chain forensics handed off to cull/chain)
 
 COLLABORATION_PATTERNS:
 - Gear -> Shift: Patch/minor escalates to major-version migration or EOL replacement (absorbed from horizon Pattern D)
@@ -74,7 +74,7 @@ Route elsewhere when the task is primarily:
 - schema design (not migration): `Schema`
 - performance optimization (not migration): `Bolt`
 - general refactoring (not version migration): `Zen`
-- deep supply-chain compromise forensics (worm/IoC investigation): `Husk` / `Chain`
+- deep supply-chain compromise forensics (worm/IoC investigation): `Cull` / `Chain`
 
 ## Boundaries
 
@@ -194,7 +194,7 @@ Behavior notes per Recipe:
 - `deprecate`: Feature / API sunset orchestration — deprecation period, usage telemetry, Sunset HTTP header (RFC 8594), client migration docs, staged removal playbook with reversible rollback flag. Boundaries: Void decides *whether* to cut; `deprecate` runs *how* to cut safely. Launch owns release/version strategy and CHANGELOG; `deprecate` feeds it the notice content and removal-release target. Use when the surface being removed has external or cross-team callers.
 - `detect` (absorbed from horizon): Identify deprecated / outdated / unmaintained libraries via `npm audit`, maintenance signals (last-publish, contributors, GH issues), health scoring, and EOL runtime check. Emit replacement report — proposed alternatives, bundle-impact estimate, migration path (which Recipe handles execution: `modernize` / `framework` / `lang` / `deprecate`). Boundary: `detect` discovers; downstream Recipes execute. Gear escalates here when patch/minor reveals major-version-behind or EOL deps.
 - `modernize` (absorbed from horizon): Swap library with modern native API (Temporal > moment/date-fns, structuredClone > lodash.cloneDeep, fetch > axios/node-fetch, Intl > i18n libs, URLSearchParams > URI.js, Iterator helpers > lodash chains, Set methods > lodash set ops, Object.groupBy > lodash.groupBy, native WebSocket > ws, native glob() > glob pkg, `--env-file` > dotenv, native TS stripping > ts-node, URLPattern > path-to-regexp, node:test > jest/mocha for simple suites, node:sqlite > better-sqlite3). Quantify bundle-size delta (≤ 170KB initial JS compressed budget), caniuse coverage ≥ 95% for target browsers, and P99 latency ≤ baseline + 20%. Require ≥ 6 months post-stable-release before recommending adoption. Produce isolated PoC, not core rewrite — keep self-contained and easy to discard. Hand off Node 24+, Python 3.13, Java 25+ deep version diffs to `lang`.
-- `radar` (absorbed from horizon): Evaluate emerging technologies against maturity matrix before any recommendation — require ≥ 6 months post-stable-release, ≥ 1K GitHub stars or equivalent ecosystem signal, active maintenance (commits within last 90 days), and team learning-curve realism. Produce technology radar (adopt / trial / assess / hold rings) with browser/runtime compatibility matrix and supply-chain provenance check (npm provenance attestations, `npm audit signatures`, pnpm `trustPolicy: no-downgrade`, OIDC Trusted Publishing posture, release cooldown ≥ 72h for new versions / ≥ 60d for new packages per CIS Supply Chain Security Benchmark). Output is advisory — Magi makes the organizational decision; deep supply-chain forensics (worm campaigns, IoC matching) belong to husk/chain.
+- `radar` (absorbed from horizon): Evaluate emerging technologies against maturity matrix before any recommendation — require ≥ 6 months post-stable-release, ≥ 1K GitHub stars or equivalent ecosystem signal, active maintenance (commits within last 90 days), and team learning-curve realism. Produce technology radar (adopt / trial / assess / hold rings) with browser/runtime compatibility matrix and supply-chain provenance check (npm provenance attestations, `npm audit signatures`, pnpm `trustPolicy: no-downgrade`, OIDC Trusted Publishing posture, release cooldown ≥ 72h for new versions / ≥ 60d for new packages per CIS Supply Chain Security Benchmark). Output is advisory — Magi makes the organizational decision; deep supply-chain forensics (worm campaigns, IoC matching) belong to cull/chain.
 
 ## Output Routing
 
@@ -257,7 +257,7 @@ Spawn when: migration touches ≥3 independent subsystems (e.g., API + DB + fron
 - **vs Builder**: Builder = implement business logic; Shift = design migration transforms that Builder executes.
 - **vs Gear**: Gear = safe patch/minor updates within the same major version; Shift = major-version migration, EOL replacement, native modernization, and tech radar. Gear escalates to Shift `detect` Recipe when patch/minor reveals deeper modernization need.
 - **vs Sentinel**: Sentinel = security-focused vulnerability fixes (specific CVEs, hardcoded secrets); Shift = technology modernization and supply-chain risk evaluation at the dependency level. Shift's `radar` Recipe checks provenance and trust posture; Sentinel handles SAST findings.
-- **vs Husk / Chain**: Husk = active supply-chain malware/worm IoC scan (eradication); Chain = skill/plugin/MCP supply-chain manifest audit. Shift's `radar` does preventive provenance posture (trustPolicy, OIDC); deep forensics escalates to Husk; third-party skill intake escalates to Chain.
+- **vs Cull / Chain**: Cull = active supply-chain malware/worm IoC scan (eradication); Chain = skill/plugin/MCP supply-chain manifest audit. Shift's `radar` does preventive provenance posture (trustPolicy, OIDC); deep forensics escalates to Cull; third-party skill intake escalates to Chain.
 - **vs Magi**: Magi = multi-stakeholder tech decision arbitration. Shift's `radar` provides the technical evidence; Magi makes the organizational decision.
 
 ## Reference Map

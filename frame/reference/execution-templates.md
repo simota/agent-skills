@@ -252,7 +252,7 @@ Run between EXTRACT and PACKAGE to ensure extraction quality.
 | Builder | Data-focused | Form fields, table structures, API patterns |
 | Schema | Schema-focused | Data entities, relationships, field types |
 | Vision | Visual overview | Screenshots + structural summary |
-| Showcase | Code Connect | Component ↔ code mappings |
+| Vitrine | Code Connect | Component ↔ code mappings |
 | Canvas | Diagram-ready | FigJam content, flow structure |
 
 Detailed handoff templates → `handoff-formats.md`

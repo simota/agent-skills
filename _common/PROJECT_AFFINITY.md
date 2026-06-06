@@ -80,7 +80,7 @@ These agents provide value regardless of project type. Nexus should always consi
 | Muse | H | H | H | — | — | — | H | M | — |
 | Vision | H | H | H | — | — | — | H | M | — |
 | Echo | H | H | H | M | — | — | H | — | — |
-| Showcase | H | H | H | — | H | — | M | — | — |
+| Vitrine | H | H | H | — | H | — | M | — | — |
 | Frame | H | H | H | — | M | — | H | M | — |
 | Loom | H | H | H | — | M | — | H | M | — |
 | Ink | H | H | H | — | H | — | H | M | — |
@@ -93,11 +93,11 @@ These agents provide value regardless of project type. Nexus should always consi
 | Agent | SaaS | E-com | Dash | CLI | Lib | API | Mobile | Static | Data |
 |-------|------|-------|------|-----|-----|-----|--------|--------|------|
 | Growth | H | H | M | — | — | — | M | H | — |
-| Retain | H | H | M | — | — | — | H | — | — |
+| Bond | H | H | M | — | — | — | H | — | — |
 | Voice | H | H | M | — | — | — | H | — | — |
 | Pulse | H | H | M | — | — | — | H | — | M |
 | Experiment | H | H | M | — | — | — | M | — | — |
-| Researcher | H | H | M | — | — | — | H | — | — |
+| Field | H | H | M | — | — | — | H | — | — |
 | Spark | H | H | M | — | — | — | M | — | — |
 | Compete | H | H | — | — | — | — | M | — | — |
 | Trace | H | H | M | — | — | — | H | — | — |
@@ -120,7 +120,7 @@ These agents provide value regardless of project type. Nexus should always consi
 | Bolt | H | H | H | — | — | H | M | — | M |
 | Shard | H | — | M | — | — | H | — | — | — |
 | Seek | H | H | M | — | — | H | — | — | H |
-| Spider | — | M | — | — | — | M | — | — | H |
+| Trawl | — | M | — | — | — | M | — | — | H |
 | Relay | H | M | — | — | — | H | H | — | — |
 
 ### Testing / Quality Agents
@@ -144,7 +144,7 @@ These agents provide value regardless of project type. Nexus should always consi
 | Breach | H | H | M | — | — | H | M | — | — |
 | Vigil | H | M | M | — | — | H | — | — | — |
 | Cloak | H | H | M | — | — | H | M | — | H |
-| Comply | H | H | M | — | — | H | — | — | H |
+| Oath | H | H | M | — | — | H | — | — | H |
 | Crypt | H | H | M | — | M | H | M | — | — |
 
 ### Documentation / Content Agents
@@ -200,7 +200,7 @@ These agents provide value regardless of project type. Nexus should always consi
 | Agent | SaaS | E-com | Dash | CLI | Lib | API | Mobile | Static | Data |
 |-------|------|-------|------|-----|-----|-----|--------|--------|------|
 | Polyglot | H | H | M | — | — | — | H | M | — |
-| Navigator | H | H | H | — | — | — | — | M | — |
+| Vector | H | H | H | — | — | — | — | M | — |
 | Triage | H | H | M | — | — | H | — | — | — |
 | Arena | H | M | — | M | M | H | — | — | — |
 | Oracle | H | M | M | — | M | H | — | — | H |
@@ -270,7 +270,7 @@ Consider (M for CLI):
 Skip (— for CLI):
   - Artisan (frontend)
   - Growth (SEO/CRO)
-  - Retain (engagement)
+  - Bond (engagement)
 ```
 
 ---

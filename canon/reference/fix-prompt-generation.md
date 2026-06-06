@@ -1,7 +1,7 @@
 # Canon LLM Fix Prompt Generation
 
 **Purpose:** Canon-specific action verbs, suppression cases, template fields, and worked example for the `## LLM Fix Prompt` block paired with every confirmed standards violation that has actionable, in-scope remediation.
-**Read when:** Canon has assessed a requirement as `Partial` or `Non-compliant` and is handing the remediation off to Builder (or Polyglot / Sentinel / Comply for domain-owned cases) rather than emitting an audit-only gap report.
+**Read when:** Canon has assessed a requirement as `Partial` or `Non-compliant` and is handing the remediation off to Builder (or Polyglot / Sentinel / Oath for domain-owned cases) rather than emitting an audit-only gap report.
 
 > Universal authoring rules and prompt structure: `_common/LLM_PROMPT_GENERATION.md`.
 > This file documents only Canon-specific verbs, suppression cases, template fields, and an example.
@@ -30,7 +30,7 @@ Canon's primary artifact is the compliance report (standard + version + section 
 | Standard's interpretation ambiguous; need spec authority or domain expert before code changes | Emit `INVESTIGATE-FURTHER` prompt → Domain expert OR Canon re-entry |
 | Finding is OWASP/CWE source-level security work | **Suppress** — Sentinel owns the remediation prompt |
 | Finding is i18n/CLDR/BCP-47 work | **Suppress** — Polyglot owns the remediation prompt |
-| Finding is GDPR/HIPAA/SOC2 compliance work | **Suppress** — Comply (or Sentinel for security-overlap) owns the remediation prompt |
+| Finding is GDPR/HIPAA/SOC2 compliance work | **Suppress** — Oath (or Sentinel for security-overlap) owns the remediation prompt |
 | Engagement is gap-analysis only (audit report without remediation scope) | **Withhold** — note "Fix prompt withheld per scope: gap-analysis only." |
 
 The `CANON_TO_BUILDER` (or `_TO_PALETTE`, `_TO_GATEWAY`, `_TO_ZEN`) handoff carries a `fix_prompt` field; populate it whenever Canon does NOT suppress or withhold per the table above.
@@ -80,7 +80,7 @@ Universal cases live in `_common/LLM_PROMPT_GENERATION.md`. Canon adds:
 |------|--------|----------------|
 | Canon hands off to Sentinel for security-specific (OWASP/CWE) violations requiring source-level fix | Sentinel owns security remediation prompts (multi-engine consensus, AUTH-FIX cross-link to Probe, etc.) | "Fix prompt suppressed — Sentinel owns security remediation prompt." |
 | Canon hands off to Polyglot for i18n-specific (CLDR, BCP-47) violations | Polyglot owns i18n remediation prompts (locale-aware formatting, RTL, plural rules) | "Fix prompt suppressed — Polyglot owns i18n remediation prompt." |
-| Canon hands off to Sentinel/Comply for compliance-mandated changes (GDPR/HIPAA) | Comply owns regulatory remediation prompts; Sentinel for security-overlap | "Fix prompt suppressed — [Comply/Sentinel] owns compliance remediation prompt." |
+| Canon hands off to Sentinel/Oath for compliance-mandated changes (GDPR/HIPAA) | Oath owns regulatory remediation prompts; Sentinel for security-overlap | "Fix prompt suppressed — [Oath/Sentinel] owns compliance remediation prompt." |
 | Audit-only mode (gap report without remediation scope) | The engagement explicitly excludes remediation guidance | "Fix prompt withheld per scope: gap-analysis only." |
 | Finding rated `Info` (observation only) | Not actionable | "Fix prompt withheld — finding is informational." |
 | Standard version itself is unconfirmed (e.g., user did not pin OWASP edition) | Acting on an unpinned standard risks applying wrong criteria | "Fix prompt withheld — pin standard version before remediation." |

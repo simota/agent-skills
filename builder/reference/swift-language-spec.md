@@ -2,7 +2,7 @@
 
 > Companion to the broader Swift knowledge in this `builder/reference/` directory. This file covers the language specification, type system mechanics, concurrency model, ownership, macros, and the stable feature timeline in depth. The `native` skill complements this for SwiftUI / Liquid Glass / iOS-platform-specific concerns.
 >
-> Baseline: Swift 6.2+ / Xcode 26 (as of 2026-05). Researcher-A flagged Swift 6.3 (Mar 2026) outlook where relevant.
+> Baseline: Swift 6.2+ / Xcode 26 (as of 2026-05). Field-A flagged Swift 6.3 (Mar 2026) outlook where relevant.
 
 ---
 
@@ -64,7 +64,7 @@ Swift's ownership story is layered on top of ARC. Three families of features:
 
 ### 2.1 Parameter ownership modifiers (SE-0377, Swift 5.9)
 
-- `borrowing` — function accesses the value without taking ownership; no retain/release pair for class instances. Roughly C++ const&. Borrowed parameters cannot be consumed inside the body.
+- `borrowing` — function accesses the value without taking ownership; no bond/release pair for class instances. Roughly C++ const&. Borrowed parameters cannot be consumed inside the body.
 - `consuming` — caller transfers ownership; function may consume (deinit / move) the value. Compiler will diagnose continued use of the consumed binding at the call site (for `~Copyable` types).
 - Both are mutually exclusive with `inout`. Both make the parameter binding non-implicitly-copyable inside the function body — explicit `copy x` is required to materialize a copy.
 

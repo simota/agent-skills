@@ -31,7 +31,7 @@ Where `summit` triangulates strategic code decisions, podium triangulates **pros
 
 **Key design decisions:**
 - **Doc and Slide are produced in parallel from the same outline** — Phase 2 narrative locks the story arc, Phase 3 forks into Content / Visual / Layout tracks, and the slide deck cross-references the document.
-- **Audience analysis is mandatory at Phase 1** (Researcher) — content without grounded audience model regresses to ChatGPT-residue prose. Echo is reserved for Phase 4 cognitive walkthrough on the finished artifact, not pre-task persona modeling.
+- **Audience analysis is mandatory at Phase 1** (Field) — content without grounded audience model regresses to ChatGPT-residue prose. Echo is reserved for Phase 4 cognitive walkthrough on the finished artifact, not pre-task persona modeling.
 - **6×6 rule and WPM budget are enforced at Phase 4** for slides (Stage agent contract).
 - **Improvement loop is capped at 2 iterations** (vs summit's 3) — content polish converges faster than code polish; loops are arbitrated by magi.
 - **User confirmation is recommended but not mandatory** — podium does not modify production code, so the cost ceiling is much lower than summit/apex. AUTORUN_FULL is acceptable when the user has already confirmed the goal.
@@ -174,10 +174,10 @@ Where `summit` triangulates strategic code decisions, podium triangulates **pros
 
 | | Claude (hub — narrative, judgment, audience) | Codex (sandbox — code samples, rendering, compilation) | Antigravity / agy (long-context, multimodal, AI imagery) |
 |---|---|---|---|
-| **Research** | Lens (codebase mapping for technical docs), Harvest (PR-derived material) | Quill (extract from JSDoc / existing API docs) | Researcher (audience persona + Search-grounded external sources), Tome (1M-context git-diff → learning material), Frame (multimodal extract from existing decks/screenshots) |
+| **Research** | Lens (codebase mapping for technical docs), Harvest (PR-derived material) | Quill (extract from JSDoc / existing API docs) | Field (audience persona + Search-grounded external sources), Tome (1M-context git-diff → learning material), Frame (multimodal extract from existing decks/screenshots) |
 | **Narrative** | Accord (L0-L1 staged elaboration), Zine (story arc for articles), Scribe (spec structure), Stage (slide narrative arc), Cue (storyboard for presentation-heavy work), Magi (depth vs breadth arbitration), Void (scope cut) | — | — |
-| **Production: Content** | Scribe (PRD/SRS/HLD/LLD body), Zine (article body + hook), Prose (microcopy, headings, CTAs), Saga (product narrative) | Quill (code samples with proper JSDoc/TSDoc), Showcase (component usage examples) | Tome (long-ctx learning-doc body), Scribe[long-ctx] (large spec bodies > 200K tokens) |
-| **Production: Visual** | Vision (visual direction), Muse (brand tokens application) | Canvas (Mermaid / draw.io diagram code), Showcase (Storybook-style examples), Dot (pixel art via code) | Sketch (Gemini-native hero / cover / illustration imagery), Ink (SVG icon system), Frame (multimodal context extraction from existing visual references) |
+| **Production: Content** | Scribe (PRD/SRS/HLD/LLD body), Zine (article body + hook), Prose (microcopy, headings, CTAs), Saga (product narrative) | Quill (code samples with proper JSDoc/TSDoc), Vitrine (component usage examples) | Tome (long-ctx learning-doc body), Scribe[long-ctx] (large spec bodies > 200K tokens) |
+| **Production: Visual** | Vision (visual direction), Muse (brand tokens application) | Canvas (Mermaid / draw.io diagram code), Vitrine (Storybook-style examples), Dot (pixel art via code) | Sketch (Gemini-native hero / cover / illustration imagery), Ink (SVG icon system), Frame (multimodal context extraction from existing visual references) |
 | **Production: Layout** | Prism (NotebookLM steering prompt design) | Stage (Marp / reveal.js / Slidev compilation), Morph (intermediate MD ↔ DOCX/PPTX/PDF/HTML conversion) | `figma:figma-use-slides` (Figma Slides — when target is Figma) |
 | **Verification** | Echo (persona walkthrough on finished artifact), Vision (design direction review), Magi (verdict arbitration), Nexus[claim-grounding scan] (token-level cross-reference between artifact claims and research_brief.source_facts — kept inside Nexus rather than spawned, see Phase 4) | Voyager (slide render-and-screenshot check), Radar?[testable assertions in technical docs] | Canon (style / brand / WCAG-AA / ISO 25010 compliance), Palette (visual a11y from screenshots), Attest (only when the artifact is itself a spec being verified against a separate normative document — otherwise claim-grounding stays in Nexus) |
 | **Improvement** | Prose (microcopy polish), Zine (prose tightening), Scribe (spec body refinement), Vision (design direction refinement), Magi (improvement-selection arbitration) | Canvas (diagram fixes), Stage (slide layout adjustment), Morph (re-render), Quill (code sample cleanup) | Sketch (re-generate imagery if rejected), Tome (re-extract from updated diff) |
@@ -261,7 +261,7 @@ parallel:
   - branch: audience_grounding
     engine: agy | claude          # agy preferred for fresh Search grounding
     agents: [researcher]
-    mission: build the audience persona — who they are, what they already know, what they care about, what makes them tune out. Researcher (not Echo) owns this because the work is grounded fact-gathering about a target population, not UI walkthrough simulation. Echo is reserved for Phase 4 cognitive walkthrough on the finished artifact.
+    mission: build the audience persona — who they are, what they already know, what they care about, what makes them tune out. Field (not Echo) owns this because the work is grounded fact-gathering about a target population, not UI walkthrough simulation. Echo is reserved for Phase 4 cognitive walkthrough on the finished artifact.
     output: audience_brief.json
 
   - branch: source_aggregation
@@ -282,7 +282,7 @@ parallel:
   - branch: external_grounding         # conditional: external-facing content
     engine: agy | claude
     agents: [researcher]
-    mission: web/external grounding via Search; market positioning if announcement (this is a second Researcher invocation focused on external positioning, separate from the audience_grounding branch)
+    mission: web/external grounding via Search; market positioning if announcement (this is a second Field invocation focused on external positioning, separate from the audience_grounding branch)
     output: external_brief.json
 ```
 
@@ -856,11 +856,11 @@ phase_chain:
 
 | Dimension | Single skill (Zine/Stage/Scribe) | `atelier` | `podium` | `summit` |
 |-----------|----------------------------------|-----------|----------|----------|
-| **Purpose** | Narrow content task | UI design pipeline (Vision→Muse→Forge→Artisan→Showcase→Canvas) | Doc + Slide content artifact (cross-format) | Strategic code decision |
+| **Purpose** | Narrow content task | UI design pipeline (Vision→Muse→Forge→Artisan→Vitrine→Canvas) | Doc + Slide content artifact (cross-format) | Strategic code decision |
 | **Output** | Single artifact (article OR deck OR spec) | Implemented UI + design system | Doc + Slide + assets package | Working code + verification trail |
 | **Engines** | 1 (Claude usually) | Mixed (atelier picks per step) | 2-3 (Claude + Codex, agy optional) | 2-3 (Claude + Codex, agy optional) |
 | **Teams** | 1 | Sub-orchestration (design-domain) | 5 (Research / Narrative / Production / Verification / Improvement) | 5 (Analysis / Design / Execution / Verification / Improvement) |
-| **Verification** | Self-only | Showcase + Canvas audit | Multi-branch cross-engine quorum on content | Multi-engine quorum on code |
+| **Verification** | Self-only | Vitrine + Canvas audit | Multi-branch cross-engine quorum on content | Multi-engine quorum on code |
 | **Loop** | None | None (single-pass pipeline) | Max 2 loops (magi-arbitrated) | Max 3 loops (magi-arbitrated) |
 | **Agents** | 1 | 5-10 | 16-53 | 32-119 |
 | **Wall time** | 3-15 min | 20-60 min | 35-130 min | 49-193 min |

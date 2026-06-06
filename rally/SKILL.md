@@ -52,7 +52,7 @@ Use Rally when:
 
 Route elsewhere when:
 - Only one task or all writable work hits the same files → Nexus or single specialist
-- Work is investigation-only with no implementation output → Lens, Scout, or Researcher
+- Work is investigation-only with no implementation output → Lens, Scout, or Field
 - Under 10 changed lines total → direct specialist (Builder, Artisan, etc.)
 - Sequential dependency chain with no parallelizable segments → Sherpa — multi-agent variants degrade sequential reasoning performance by `39-70%` (Google Research, 180-configuration scaling study)
 - Single-agent baseline already exceeds `~45%` task completion → coordination overhead yields diminishing or negative returns at this threshold

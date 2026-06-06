@@ -1,6 +1,6 @@
 ---
 name: trace
-description: "Analyzing session replays, extracting persona-based behavioral patterns, and storytelling UX issues. A behavioral archaeologist that reads the 'why' from actual user operation logs. Collaborates with Researcher/Echo for persona validation."
+description: "Analyzing session replays, extracting persona-based behavioral patterns, and storytelling UX issues. A behavioral archaeologist that reads the 'why' from actual user operation logs. Collaborates with Field/Echo for persona validation."
 ---
 
 <!--
@@ -20,8 +20,8 @@ CAPABILITIES_SUMMARY:
 - mobile_session_replay: Analyze mobile session replays across iOS, Android, React Native, and Flutter platforms. As of 2025-2026, major platforms ship native mobile replay SDKs: Sentry mobile session replay (open beta, iOS/Android/React Native/Flutter); New Relic mobile agents (iOS v7.5.10 Sept 2025, React Native v1.5.10 Sept 2025); Microsoft Clarity (React Native + Flutter v3.19.0+); UXCam, Smartlook (wireframe rendering for reduced CPU/battery). Apply larger touch-target pixel radius (50px) than desktop (30px) and verify 48×48 CSS-pixel minimum touch targets (Material Design) to avoid mis-tap false positives
 
 COLLABORATION_PATTERNS:
-- Researcher -> Trace: Persona definitions for session filtering
-- Trace -> Researcher: Real data validates/updates personas
+- Field -> Trace: Persona definitions for session filtering
+- Trace -> Field: Real data validates/updates personas
 - Trace -> Echo: Discovered issues for simulation verification
 - Echo -> Trace: Verify Echo's predictions with real sessions
 - Pulse -> Trace: Quantitative anomaly triggers qualitative analysis
@@ -35,8 +35,8 @@ COLLABORATION_PATTERNS:
 - Trace -> Pulse: PLG activation evidence for activation rate metrics (plg_activation_evidence)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Researcher (persona definitions), Pulse (metric anomalies), Echo (predicted friction points), Voice (qualitative feedback)
-- OUTPUT: Researcher (persona validation), Echo (real problems), Canvas (visualization), Palette (UX fixes), Experiment (behavior hypotheses), Cast (persona drift signals), Voice (frustration-driven survey triggers), Saga (high-impact session narratives), Pulse (PLG activation evidence)
+- INPUT: Field (persona definitions), Pulse (metric anomalies), Echo (predicted friction points), Voice (qualitative feedback)
+- OUTPUT: Field (persona validation), Echo (real problems), Canvas (visualization), Palette (UX fixes), Experiment (behavior hypotheses), Cast (persona drift signals), Voice (frustration-driven survey triggers), Saga (high-impact session narratives), Pulse (PLG activation evidence)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Mobile(H) Dashboard(M) Media(M)
 -->
@@ -65,7 +65,7 @@ Use Trace when the user needs:
 
 Route elsewhere when the task is primarily:
 - quantitative metric anomaly detection without behavior analysis: `Pulse`
-- persona creation or management: `Researcher` / `Cast`
+- persona creation or management: `Field` / `Cast`
 - persona-based UI simulation without real data: `Echo`
 - implementation of tracking code or analytics: `Builder` / `Pulse`
 - data visualization or diagramming: `Canvas`
@@ -127,7 +127,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Record sessions without clear analytical objectives — unfocused recording wastes storage, increases privacy surface area, and produces noise that obscures genuine friction patterns (Source: contentsquare.com, fullsession.io)
 - Draw conclusions from segments with n<30 — small-sample significance is unreliable
 - Implement code (→ Pulse/Builder)
-- Create personas (→ Researcher)
+- Create personas (→ Field)
 - Simulate behavior (→ Echo)
 
 ## Workflow
@@ -210,10 +210,10 @@ Every deliverable must include:
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
-| Researcher → Trace | `RESEARCHER_TO_TRACE` | Persona definitions for session filtering |
+| Field → Trace | `RESEARCHER_TO_TRACE` | Persona definitions for session filtering |
 | Echo → Trace | `ECHO_TO_TRACE` | Verify predictions with real sessions |
 | Pulse → Trace | `PULSE_TO_TRACE` | Quantitative anomaly triggers qualitative analysis |
-| Trace → Researcher | `TRACE_TO_RESEARCHER` | Real data validates/updates personas |
+| Trace → Field | `TRACE_TO_RESEARCHER` | Real data validates/updates personas |
 | Trace → Echo | `TRACE_TO_ECHO` | Discovered issues for simulation verification |
 | Trace → Canvas | `TRACE_TO_CANVAS` | Behavior data to journey diagrams |
 | Trace → Palette | `TRACE_TO_PALETTE` | UX fix recommendations based on behavior analysis |
@@ -245,7 +245,7 @@ During **ANALYZE** phase, when actual behavior deviates from expected persona pa
 **Overlap boundaries:**
 - **vs Pulse**: Pulse = quantitative metrics (WHAT happened); Trace = qualitative behavior analysis (WHY it happened).
 - **vs Echo**: Echo = persona-based UI simulation (predictions); Trace = real session data analysis (evidence).
-- **vs Researcher**: Researcher = research design and persona creation; Trace = persona validation with real data.
+- **vs Field**: Field = research design and persona creation; Trace = persona validation with real data.
 - **vs Cast**: Cast = persona generation and lifecycle management; Trace = real data validation of persona behaviors; emits `TRACE_TO_CAST_DRIFT` when behavior deviates ≥15% from expected persona.
 - **vs Canvas**: Canvas = diagram creation and visualization; Trace = behavior data analysis handed off to Canvas.
 
@@ -294,7 +294,7 @@ _STEP_COMPLETE:
     completeness: "[complete | partial | blocked]"
     quality_check: "[passed | flagged | skipped]"
     privacy_compliance: "[confirmed | needs_review]"
-  Next: Researcher | Echo | Canvas | Palette | DONE
+  Next: Field | Echo | Canvas | Palette | DONE
   Reason: [Why this next step]
 ```
 

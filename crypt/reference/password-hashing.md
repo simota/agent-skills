@@ -92,4 +92,4 @@ Deliver:
 - Rehash-on-login trigger condition.
 - Anti-pattern checklist result for existing code (if reviewing).
 
-Sentinel `authn` then validates the implementation matches this design; Comply confirms the parameters meet the applicable standard (NIST SP 800-63B AAL levels, PCI-DSS 4.0 §8.3.6).
+Sentinel `authn` then validates the implementation matches this design; Oath confirms the parameters meet the applicable standard (NIST SP 800-63B AAL levels, PCI-DSS 4.0 §8.3.6).

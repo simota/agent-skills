@@ -57,15 +57,15 @@ For disambiguation of commonly confused agent pairs, see `nexus/reference/agent-
 | **Breach** | Red team engineering & threat modeling | STRIDE/PASTA/MITRE ATT&CK, attack simulation | Never |
 | **Vigil** | Detection engineering | Sigma/YARA rules, threat hunting, MITRE coverage | Never |
 | **Cloak** | Privacy engineering | PII detection, GDPR/CCPA, consent, DPIA | Yes (privacy patterns) |
-| **Comply** | Regulatory compliance audit | SOC2/PCI-DSS/HIPAA/ISO 27001, policy-as-code | Yes (OPA policies) |
+| **Oath** | Regulatory compliance audit | SOC2/PCI-DSS/HIPAA/ISO 27001, policy-as-code | Yes (OPA policies) |
 | **Crypt** | Cryptographic architecture | Algorithm selection, key management, E2EE, post-quantum | Never |
 | **Clause** | Legal document review | ToS, privacy policy, tokushoho, clause gap detection | Never |
 
 **Key distinctions:**
 - Static code scan → Sentinel. Running app test → Probe. Concurrency → Specter
 - Attack simulation → Breach. Detection rules → Vigil. Purple team → Breach → Vigil
-- PII/privacy → Cloak. Regulatory frameworks → Comply. Crypto design → Crypt
-- Legal document review → Clause. Privacy implementation → Cloak. Regulatory audit → Comply
+- PII/privacy → Cloak. Regulatory frameworks → Oath. Crypto design → Crypt
+- Legal document review → Clause. Privacy implementation → Cloak. Regulatory audit → Oath
 
 **Credential Isolation Principle** (Source: Anthropic Managed Agents):
 Tokens and secrets must never be reachable from the execution environment where agent-generated code runs. Two patterns:
@@ -147,11 +147,11 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Grove** | Repository structure design | Directory layout, conventions | Never |
 | **Nest** | LLM-optimized folder structure | Context efficiency, cache topology, progressive disclosure | Never |
 | **Shift** | Migration, upgrade & modernization orchestration | Codemod generation, framework/DB/API migration, deprecated library detection, native API replacement, technology radar (absorbed from horizon) | Yes |
-| **Spider** | Crawl system architecture design | URL frontier, distributed crawl, politeness policy, compliance | Never |
+| **Trawl** | Crawl system architecture design | URL frontier, distributed crawl, politeness policy, compliance | Never |
 
 **Key distinctions:**
 - General repo structure → Grove. LLM-optimized folder structure → Nest. Grove designs for developers; Nest optimizes for LLM navigation
-- Crawl system architecture → Spider. Single-session scraping execution → Navigator
+- Crawl system architecture → Trawl. Single-session scraping execution → Vector
 - Crawl output pipeline → Stream. Crawl infrastructure provisioning → Scaffold
 
 ## UX & Design
@@ -164,7 +164,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Flow** | Animation & motion | CSS/JS transitions, micro-interactions | Yes |
 | **Echo** | Persona-based UI testing | Walk through as user type | Never |
 | **Prose** | UX writing | Microcopy, error messages, voice & tone | Yes (text) |
-| **Showcase** | Storybook catalog management | Component documentation, visual regression | Yes |
+| **Vitrine** | Storybook catalog management | Component documentation, visual regression | Yes |
 | **Trace** | Session replay analysis | Behavioral patterns from logs | Never |
 | **Director** | Demo video production | Playwright-based recordings | Yes |
 | **Reel** | Terminal recording | CLI demo GIF/video | Yes |
@@ -175,10 +175,10 @@ Tokens and secrets must never be reachable from the execution environment where 
 
 **Key distinctions:**
 - Design direction → Vision. Tokens → Muse. Usability → Palette. Animation → Flow
-- Write text → Prose. Test as persona → Echo. Research → Researcher
+- Write text → Prose. Test as persona → Echo. Research → Field
 - Figma data extraction → Frame. Token definition → Muse. Frame extracts, Muse defines
 - Figma Make optimization → Loom. Figma extraction → Frame. Token management → Muse
-- Code Connect mapping → Frame + Showcase. Frame manages Figma side, Showcase manages code side
+- Code Connect mapping → Frame + Vitrine. Frame manages Figma side, Vitrine manages code side
 - SVG icons/illustrations → Ink. Pixel art → Dot. AI images → Sketch
 - Landing page design/conversion → Funnel. SEO/CRO tactics → Growth
 
@@ -186,13 +186,13 @@ Tokens and secrets must never be reachable from the execution environment where 
 
 | Agent | Primary Role | Focus | Writes Code |
 |-------|-------------|-------|-------------|
-| **Researcher** | Research methodology design | Interviews, usability tests, journey maps | Never |
+| **Field** | Research methodology design | Interviews, usability tests, journey maps | Never |
 | **Cast** | Persona lifecycle management | Create, store, evolve, sync personas | Never |
 | **Echo** | Persona-based UI simulation | Walk through UI as specific persona | Never |
 | **Voice** | Feedback collection & analysis | NPS, reviews, sentiment analysis | Yes (integrations) |
 
 **Key distinctions:**
-- Manage personas → Cast. Simulate on UI → Echo. Design research → Researcher. Analyze feedback → Voice
+- Manage personas → Cast. Simulate on UI → Echo. Design research → Field. Analyze feedback → Voice
 
 ## Strategy & Business
 
@@ -201,7 +201,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Spark** | Feature ideation & proposal | New feature specs from existing data | Never |
 | **Growth** | SEO/SMO/CRO optimization | Search ranking, conversion, sharing | Yes |
 | **Compete** | Competitive intelligence | SWOT, positioning, feature matrix | Never |
-| **Retain** | Retention & engagement | Churn prevention, gamification | Never |
+| **Bond** | Retention & engagement | Churn prevention, gamification | Never |
 | **Experiment** | A/B testing & hypothesis validation | Feature flags, statistical significance | Yes |
 | **Pulse** | KPI & metrics infrastructure | Tracking events, dashboards | Yes |
 | **Stream** | Data pipeline design | ETL/ELT, Kafka, Airflow, dbt | Yes |
@@ -265,7 +265,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 |-------|-------------|-------|-------------|
 | **Oracle** | AI/ML design & evaluation | Prompts, RAG, LLM patterns, MLOps | Never |
 | **Aether** | AITuber system orchestration | Live streaming pipeline, TTS, avatar | Yes |
-| **Navigator** | Browser automation | Playwright task execution | Yes |
+| **Vector** | Browser automation | Playwright task execution | Yes |
 | **Orbit** | Autonomous loop execution | Loop contracts, script generation | Yes |
 | **Canon** | Standards compliance | OWASP, WCAG, OpenAPI, ISO 25010 | Never |
 | **Matrix** | Combinatorial analysis | Multi-dimensional coverage optimization | Never |

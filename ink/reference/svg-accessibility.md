@@ -150,4 +150,4 @@ Minimum before handoff: **NVDA + Firefox** and **VoiceOver + Safari**. Confirm t
 **To Prose:** the set of label strings per icon, in all supported locales.
 **To Artisan:** which ARIA attributes belong on the SVG vs on the wrapping component, keyboard activation contract for interactive SVG, WCAG 2.2 target-size (SC 2.5.8 ≥ 24×24 CSS px) and focus-appearance (SC 2.4.11) compliance.
 **To Palette:** a11y audit checklist — announced names, focus order, keyboard operability, contrast for meaningful icons (≥ 3:1 WCAG 1.4.11), target-size (WCAG 2.5.8).
-**To Showcase:** accessibility story per icon (decorative vs informative variants) plus axe-core snapshot for visual regression.
+**To Vitrine:** accessibility story per icon (decorative vs informative variants) plus axe-core snapshot for visual regression.

@@ -22,7 +22,7 @@ CAPABILITIES_SUMMARY:
 - perceptual_quality_metrics: VMAF / PSNR / SSIM verification via ffmpeg-quality-metrics with numeric reshoot thresholds
 
 COLLABORATION_PATTERNS:
-- Pattern A: Forge → Director → Showcase: prototype behavior into demo plus Storybook asset
+- Pattern A: Forge → Director → Vitrine: prototype behavior into demo plus Storybook asset
 - Pattern B: Builder → Director → Quill: record feature flow for docs and release materials
 - Pattern C: Voyager → Director: convert E2E test flow into stakeholder demo
 - Pattern D: Vision → Director → Palette: record design review or UX comparison
@@ -32,7 +32,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Forge (prototype ready), Voyager (E2E → demo), Vision (design review), Echo (persona behavior), Builder (feature flow)
-- OUTPUT: Showcase (demo → Storybook), Quill (demo for docs, transcript embed), Growth (marketing variants, VideoObject JSON-LD), Echo (demo for UX validation), Palette (UX comparison)
+- OUTPUT: Vitrine (demo → Storybook), Quill (demo for docs, transcript embed), Growth (marketing variants, VideoObject JSON-LD), Echo (demo for UX validation), Palette (UX comparison)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Mobile(M) Dashboard(M)
 -->
@@ -57,10 +57,10 @@ Use Director when the user needs:
 
 Route elsewhere when the task is primarily:
 - E2E test coverage or cross-browser validation: `Voyager`
-- one-off browser automation or data export: `Navigator`
+- one-off browser automation or data export: `Vector`
 - visual/UX design review without video output: `Vision`
 - documentation writing without video recording: `Quill`
-- Storybook component showcase without full-flow demo: `Showcase`
+- Storybook component showcase without full-flow demo: `Vitrine`
 - marketing copy or campaign assets without video: `Growth`
 - video script and narration planning without recording: `Cue`
 
@@ -202,7 +202,7 @@ Routing rules:
 - If the request involves overlays, annotations, advanced patterns, or Vision-Model streaming, read `reference/implementation-patterns.md`.
 - If the request involves AI citation, transcript schema, or GEO, read `reference/geo-packaging.md`.
 - If the request involves numeric quality verdict or reshoot decision, read `reference/quality-metrics.md`.
-- If a handoff is inbound from Forge/Voyager/Vision/Echo or outbound to Showcase/Quill/Growth, read `reference/handoff-formats.md`.
+- If a handoff is inbound from Forge/Voyager/Vision/Echo or outbound to Vitrine/Quill/Growth, read `reference/handoff-formats.md`.
 - Always read `reference/checklist.md` in the Deliver phase.
 
 ## Critical Constraints
@@ -253,18 +253,18 @@ Decision-level thresholds. Implementation detail and rationale live in reference
 - **Transcript**: `.vtt` + plaintext, segmented by chapter
 - **VideoObject JSON-LD**: schema.org markup with `hasPart` chapter clips, `transcript`, and `thumbnailUrl` for AI citation / GEO
 - **Quality report**: `/97` scorecard + VMAF/PSNR/SSIM metrics + LUFS verdict + WCAG verdict
-- Required delivery notes: audience, archetype + duration, hook plan, recorded flow, recording settings (aspect, codec, slowMo), output paths, quality report, accessibility status, and recommended next handoff (`Showcase | Quill | Growth | VERIFY | DONE`)
+- Required delivery notes: audience, archetype + duration, hook plan, recorded flow, recording settings (aspect, codec, slowMo), output paths, quality report, accessibility status, and recommended next handoff (`Vitrine | Quill | Growth | VERIFY | DONE`)
 
 ## Collaboration
 
 **Receives:** Forge (prototype ready), Voyager (E2E test → demo), Vision (design review), Echo (persona behavior), Builder (feature flow)
-**Sends:** Showcase (demo → Storybook), Quill (demo + transcript for docs), Growth (marketing assets, multi-aspect set, VideoObject JSON-LD), Echo (demo for UX validation), Palette (UX comparison)
+**Sends:** Vitrine (demo → Storybook), Quill (demo + transcript for docs), Growth (marketing assets, multi-aspect set, VideoObject JSON-LD), Echo (demo for UX validation), Palette (UX comparison)
 
 Point-to-point handoff templates (outside Nexus Hub Mode): see `reference/handoff-formats.md`.
 
 **Overlap boundaries:**
 - **vs Voyager**: Voyager = E2E test coverage and cross-browser validation; Director = presentable demo recordings with storytelling.
-- **vs Navigator**: Navigator = one-off browser task completion; Director = repeatable, narrative-driven recordings.
+- **vs Vector**: Vector = one-off browser task completion; Director = repeatable, narrative-driven recordings.
 - **vs Reel**: Reel = terminal/CLI demo recordings; Director = browser-based UI demo recordings via Playwright.
 - **vs Cue**: Cue = video script, storyboard, and narration design; Director = recorded browser execution of those scripts.
 - **vs AI video generators (Sora 2 / Veo 3.1 / Runway Gen-4.5)**: AI generators = hero / concept / non-existent-UI footage; Director = reproducible recording of **real product UI**. Complementary — route to AI generators for openers, B-roll, or futures; Director for the workflow itself.
@@ -280,7 +280,7 @@ Point-to-point handoff templates (outside Nexus Hub Mode): see `reference/handof
 | `reference/implementation-patterns.md` | You need Playwright scene patterns, `page.screencast` API recipes, `onFrame` Vision streaming, auth setup, overlays, B-roll, before/after comparisons, AI narration, persona-aware demos, ARIA validation, or complete demo examples. |
 | `reference/quality-metrics.md` | You are running the `quality` recipe and need VMAF/PSNR/SSIM thresholds, `ffmpeg-quality-metrics` invocation, LUFS verification, reshoot decision logic, or CI integration. |
 | `reference/geo-packaging.md` | You are running the `geo` recipe and need transcript packaging, VideoObject JSON-LD schema, chapter cue mapping, AI citation rules, or YouTube/web embed metadata. |
-| `reference/handoff-formats.md` | You need point-to-point handoff templates for Forge/Voyager/Vision/Echo → Director or Director → Showcase/Quill/Growth outside Nexus Hub Mode. |
+| `reference/handoff-formats.md` | You need point-to-point handoff templates for Forge/Voyager/Vision/Echo → Director or Director → Vitrine/Quill/Growth outside Nexus Hub Mode. |
 | `reference/checklist.md` | You need pre-recording, post-recording, pre-delivery, quick-check, or `/97` quality-score gates. |
 | `reference/voiceover-design.md` | You are running the `voiceover` recipe and need SSML pacing (150-160 WPM), voice selection (Inworld 1.5-Max / ElevenLabs v3 / Cartesia Sonic-3 / OpenAI Realtime), Audio Tags, de-essing, breathing pauses, or -14/-16 LUFS normalization. |
 | `reference/captions-design.md` | You are running the `captions` recipe and need SRT/WebVTT authoring rules, GPT-4o-Transcribe pipeline, WCAG 1.2.2 + 1.2.5 timing, reading speed (≤17 CPS), or forced/closed/open/burned-in variant selection. |
@@ -333,7 +333,7 @@ _STEP_COMPLETE:
       wcag: "1.2.2 ✓ / 1.2.4 N/A / 1.2.5 ✓"
       verdict: "ship | ship-with-fixes | reshoot"
   Artifacts: [scenario, master video, aspect variants, captions, transcript, JSON-LD, thumbnail set, checklist, quality report, or NONE]
-  Next: Showcase | Quill | Growth | VERIFY | DONE
+  Next: Vitrine | Quill | Growth | VERIFY | DONE
   Reason: [blocking issue or packaging justification]
 ```
 

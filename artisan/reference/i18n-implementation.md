@@ -87,4 +87,4 @@ rtf.format(-3, 'day'); // "3 days ago" / "il y a 3 jours" / "منذ 3 أيام"
 - To `Polyglot` when the component pattern needs to scale to a full extraction pipeline, catalog architecture, or translator workflow.
 - To `Prose` for source-string copy review before handoff to translators (voice/tone consistency in the base locale).
 - To `Radar` for snapshot tests across locales and RTL rendering.
-- To `Showcase` for per-locale stories that lock the rendering contract.
+- To `Vitrine` for per-locale stories that lock the rendering contract.

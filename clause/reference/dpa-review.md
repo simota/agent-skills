@@ -93,7 +93,7 @@ Schrems II (CJEU C-311/18) requires Transfer Impact Assessment for any non-adequ
 ## Handoff
 
 - **To Cloak**: implementation work — sub-processor list page, DSAR forwarding workflow, breach detection pipeline, encryption-key custody design. Send sub-processor names, audit-evidence requirements, and breach SLA targets.
-- **To Comply**: regulatory mapping — DPA ↔ SOC2 CC9.1 (vendor mgmt), ISO 27001 A.5.19-A.5.22 (supplier relationships), HIPAA BAA equivalence. Send DPA control list and request gap analysis vs target framework.
+- **To Oath**: regulatory mapping — DPA ↔ SOC2 CC9.1 (vendor mgmt), ISO 27001 A.5.19-A.5.22 (supplier relationships), HIPAA BAA equivalence. Send DPA control list and request gap analysis vs target framework.
 - **To Canon**: code-level GDPR audit. Send DPA-promised controls (encryption-at-rest, pseudonymization, deletion within X days) and request verification that the codebase implements them.
 - **To Builder**: contract-driven implementation tasks (sub-processor objection form, automated deletion job at contract end, breach-notification webhook). Spec the SLAs and acceptance criteria.
 - **To Prose**: plain-language version of customer-facing DPA summary or sub-processor change notice. Send key clauses that need translation from contract language to user comprehension.

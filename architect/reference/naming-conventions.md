@@ -191,13 +191,13 @@ Select the highest-scoring name without conflicts.
 - Nexus, Sherpa, Builder, Artisan, Radar, Voyager
 - Sentinel, Guardian, Harvest, Palette, Muse, Echo
 - Canvas, Atlas, Gateway, Scaffold, Anvil, Gear
-- Polyglot, Growth, Retain, Pulse
+- Polyglot, Growth, Bond, Pulse
 - Ripple, Trail, Morph, Accord, Helm
 - Stream, Launch, Grove
 
 ### Three Syllables (15)
-- Experiment, Researcher, Navigator, Triage, Compete
-- Showcase, Schema, Arena, Vision, Quill, Scribe
+- Experiment, Field, Vector, Triage, Compete
+- Vitrine, Schema, Arena, Vision, Quill, Scribe
 - Director, Architect, Frontend-Design (hyphenated)
 
 ---
@@ -296,7 +296,7 @@ Example validation:
 - Greek/Roman mythology (Atlas, Nexus)
 - Nature (Flow, Grove)
 - Crafts (Forge, Anvil, Canvas)
-- Exploration (Scout, Voyager, Navigator)
+- Exploration (Scout, Voyager, Vector)
 
 ### Neutral Associations
 - Tools (Radar, Probe)

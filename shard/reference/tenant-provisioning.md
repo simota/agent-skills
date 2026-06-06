@@ -10,7 +10,7 @@ Purpose: Tenant onboarding, lifecycle management, and deprovisioning. Treats pro
 - **schema (elsewhere)**: DB schema and migration DDL. Provisioning runs schema migrations as a step but does not author them.
 - **scaffold (elsewhere)**: cloud IaC for shared infra (VPC, clusters). Provisioning generates *per-tenant* IaC (DB, schema, KMS key) on top.
 - **tempo (elsewhere)**: scheduled retention sweeps and grace-period timers. Provisioning specifies the retention contract; Tempo schedules its enforcement.
-- **comply / cloak (elsewhere)**: GDPR/CCPA legal contract for data retention. Provisioning implements the technical erasure; Comply/Cloak owns the policy.
+- **comply / cloak (elsewhere)**: GDPR/CCPA legal contract for data retention. Provisioning implements the technical erasure; Oath/Cloak owns the policy.
 
 ## Workflow
 
@@ -154,5 +154,5 @@ per-tenant state: terraform-state/tenants/<tenant_id>.tfstate
 - **To Tempo**: scheduled jobs for grace-period expiry, retention sweeps, archived-to-erased transitions.
 - **To Beacon**: provisioning SLO (success rate, P95 latency, time-to-active), per-tenant activation funnel.
 - **To Ledger**: tenant unit-cost line items, plan-tier mapping, metering start/stop events.
-- **To Comply / Cloak**: retention contract, erasure proof artifact format, GDPR Article 17 compliance evidence.
+- **To Oath / Cloak**: retention contract, erasure proof artifact format, GDPR Article 17 compliance evidence.
 - **To Builder**: provisioning service implementation, idempotency store, state-machine code, webhook handlers.

@@ -102,7 +102,7 @@ Typical axes:
 | accessibility | none, screen_reader, keyboard_only, high_contrast | medium |
 | connection | fast, slow, offline | low |
 
-Suggested next agent: `Cast`, `Echo`, or `Researcher`.
+Suggested next agent: `Cast`, `Echo`, or `Field`.
 
 ## Risk
 

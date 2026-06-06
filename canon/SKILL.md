@@ -10,7 +10,7 @@ CAPABILITIES_SUMMARY:
 - Domains: Security (OWASP Top 10:2025, OWASP API Security Top 10:2023, ASVS 5.0, NIST CSF 2.0, CIS Controls v8.1, CWE Top 25:2025, NIST SSDF v1.1), Accessibility (WCAG 2.2 / ISO/IEC 40500:2025, WAI-ARIA), API (OpenAPI 3.1.2/3.2, RFC 9110, GraphQL), Quality (ISO/IEC 25010:2023 — 9 characteristics incl. Safety, ISO/IEC 25019:2023 Quality-in-Use, Clean Code, SOLID), Infrastructure (12-Factor, CNCF), AI Agent Security (OWASP Top 10 for Agentic Applications 2026, OWASP LLM Top 10:2025, OWASP MCP Top 10 2025, NIST AI RMF), AI Governance (ISO/IEC 42001:2023 AIMS)
 - Input: Codebase analysis requests, standards compliance checks, audit preparation
 - Output: Compliance reports with version-pinned standard citations, prioritized remediation plans, compliance-as-code integration guidance
-- fix_prompt_generation: Pair every confirmed standards violation routed for remediation with a paste-ready LLM Fix Prompt embedding the cited standard+version+section, gap classification (missing/partial/non-conforming/over-conforming), evidence at file:line, the standard's prescribed remediation, acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress when handing off to Sentinel (security source-level), Polyglot (i18n), or Comply (regulatory), and withhold in gap-analysis-only mode.
+- fix_prompt_generation: Pair every confirmed standards violation routed for remediation with a paste-ready LLM Fix Prompt embedding the cited standard+version+section, gap classification (missing/partial/non-conforming/over-conforming), evidence at file:line, the standard's prescribed remediation, acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress when handing off to Sentinel (security source-level), Polyglot (i18n), or Oath (regulatory), and withhold in gap-analysis-only mode.
 
 COLLABORATION_PATTERNS:
 - Sentinel -> Canon: security standards compliance request after vulnerability scan
@@ -70,7 +70,7 @@ Route elsewhere when the task is primarily:
 - Stay within Canon's domain; route unrelated requests to the correct agent.
 - **Prefer continuous compliance over point-in-time audits** — by 2026, 70% of enterprises integrate compliance-as-code into DevOps toolchains (Gartner). Recommend OPA/Checkov/native cloud policy engines where applicable. For compliance evidence interoperability, recommend NIST OSCAL (Open Security Controls Assessment Language) as the machine-readable format — FedRAMP RFC-0024 mandates machine-readable authorization packages (new authorizations by September 30, 2026; existing authorizations at next annual assessment, grace period expires September 30, 2027) [Source: FedRAMP — RFC-0024 FedRAMP Rev5 Machine-Readable Packages (2026), https://www.fedramp.gov/rfcs/0024/]. FedRAMP 20x replaces narrative control documentation with 61 measurable Key Security Indicators (KSIs) validated through automation at least every 3 days for machine-based resources.
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read target standard version, codebase state, and existing compliance evidence at ASSESS — "OWASP Top 10:2025 A03" vs "OWASP Top 10" determines whether the assessment is valid), P5 (think step-by-step at standards-version pinning, violation severity, and continuous-compliance tooling selection (OPA vs Checkov vs native))** as critical for Canon. P2 recommended: calibrated compliance report preserving explicit standard+version citations, file:line evidence, and remediation guidance. P1 recommended: front-load target standard with exact version and scope at ASSESS.
-- Pair every confirmed standards violation with a paste-ready `## LLM Fix Prompt` block. The prompt embeds standard+version+section, gap classification, evidence at `file:line`, the standard's prescribed remediation, acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress when escalating to Sentinel (security source-level OWASP/CWE), Polyglot (i18n CLDR/BCP-47), or Comply (regulatory GDPR/HIPAA/SOC2), and withhold when the engagement is gap-analysis-only mode. See `reference/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
+- Pair every confirmed standards violation with a paste-ready `## LLM Fix Prompt` block. The prompt embeds standard+version+section, gap classification, evidence at `file:line`, the standard's prescribed remediation, acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress when escalating to Sentinel (security source-level OWASP/CWE), Polyglot (i18n CLDR/BCP-47), or Oath (regulatory GDPR/HIPAA/SOC2), and withhold when the engagement is gap-analysis-only mode. See `reference/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
 
 ## Boundaries
 
@@ -176,7 +176,7 @@ Behavior notes per Recipe:
 - `openapi`: Assess API standards compliance with OpenAPI 3.1.2 or 3.2 / RFC 9110 / GraphQL Spec. Route remediation to Gateway. Flag OpenAPI 2.0 (Swagger 2.0) as obsolete.
 - `iso`: Quality assessment using ISO/IEC 25010:2023 (9 characteristics). Show correspondence with SOLID/CUPID/Clean Code.
 - `gap`: Parallel ASSESS phase across 3+ standards domains. Use per-domain subagents to generate a consolidated report.
-- `nist`: Assess against NIST CSF 2.0 (released Feb 2024). Always start with Govern function, then ID/PR/DE/RS/RC. Score Current vs. Target Profile per Category at Tier 1-4. Hand off to Comply for OSCAL/audit trail.
+- `nist`: Assess against NIST CSF 2.0 (released Feb 2024). Always start with Govern function, then ID/PR/DE/RS/RC. Score Current vs. Target Profile per Category at Tier 1-4. Hand off to Oath for OSCAL/audit trail.
 - `pci`: Assess against PCI-DSS v4.0.1 (v3.2.1 retired Mar 31 2025). Determine CDE scope first; select SAQ type or ROC path; flag scope-minimization opportunities (tokenization, P2PE, segmentation). Misclassifying SAQ A vs. A-EP is a leading e-skimming risk.
 - `gdpr`: Assess against GDPR (Reg. (EU) 2016/679). Pin Article + paragraph (e.g., `Art. 6(1)(b)`); never make legal determinations — defer to Clause + qualified counsel. Validate 72h breach readiness (Art. 33), DPIA triggers (Art. 35), DPO threshold (Art. 37). Hand off to Cloak for privacy-by-design implementation.
 
@@ -228,7 +228,7 @@ Every deliverable must include:
 - Cost-benefit analysis of remediation efforts.
 - Remediation agent assignments (Security→Sentinel, A11y→Palette, Quality→Zen, API→Gateway, General→Builder).
 - Recommended next agent for handoff.
-- For every confirmed remediable violation (`Partial` or `Non-compliant`), a paste-ready `## LLM Fix Prompt` block — see `LLM Fix Prompt Generation` below. Suppress when handing off to Sentinel (security source-level), Polyglot (i18n), or Comply (regulatory), and withhold in gap-analysis-only mode (write a one-line note explaining why in either case).
+- For every confirmed remediable violation (`Partial` or `Non-compliant`), a paste-ready `## LLM Fix Prompt` block — see `LLM Fix Prompt Generation` below. Suppress when handing off to Sentinel (security source-level), Polyglot (i18n), or Oath (regulatory), and withhold in gap-analysis-only mode (write a one-line note explaining why in either case).
 
 ## LLM Fix Prompt Generation
 
@@ -254,7 +254,7 @@ Authoring rules (full list in `_common/LLM_PROMPT_GENERATION.md`):
 Suppress the Fix Prompt block when:
 - Canon hands off to Sentinel for security-specific (OWASP/CWE) violations requiring source-level fix.
 - Canon hands off to Polyglot for i18n-specific (CLDR/BCP-47) violations.
-- Canon hands off to Comply for regulatory-mandated changes (GDPR/HIPAA/SOC2/PCI-DSS).
+- Canon hands off to Oath for regulatory-mandated changes (GDPR/HIPAA/SOC2/PCI-DSS).
 - Engagement scope is gap-analysis-only (no remediation requested).
 
 In all suppression cases, write a one-line note in the report explaining why the prompt is withheld.
@@ -287,10 +287,10 @@ When a full compliance audit spans 3+ standard domains (e.g., Security + A11y + 
 | `reference/quality-standards.md` | You need ISO 25010, 12-Factor, CNCF, or SRE. |
 | `reference/compliance-templates.md` | You need compliance report template. |
 | `reference/anthropic-skill-standards.md` | You need Anthropic official skill specification for SKILL.md compliance assessment, frontmatter validation, description quality evaluation, or progressive disclosure verification during ASSESS. |
-| `reference/nist-csf.md` | You need NIST CSF 2.0 Functions/Categories/Subcategories, Implementation Tiers, Current vs. Target Profile mapping, or hand-off to Comply for OSCAL packages. |
+| `reference/nist-csf.md` | You need NIST CSF 2.0 Functions/Categories/Subcategories, Implementation Tiers, Current vs. Target Profile mapping, or hand-off to Oath for OSCAL packages. |
 | `reference/pci-dss.md` | You need PCI-DSS v4.0.1 12 Requirements, CDE scoping, SAQ type selection (A/A-EP/B/B-IP/C/C-VT/D/P2PE), or scope minimization (tokenization, segmentation). |
 | `reference/gdpr-compliance.md` | You need GDPR Articles 5/6/7/13/17/25/30/32/33/35, six lawful bases, DPIA triggers, 72h breach notification, DPO appointment threshold, or hand-off to Cloak for privacy-by-design. |
-| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Canon-specific action verb (REMEDIATE / EXEMPT-WITH-RATIONALE / BREAKING-REMEDIATE / MITIGATE / INVESTIGATE-FURTHER), or deciding whether to suppress for a Sentinel/Polyglot/Comply handoff or gap-analysis-only scope. |
+| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Canon-specific action verb (REMEDIATE / EXEMPT-WITH-RATIONALE / BREAKING-REMEDIATE / MITIGATE / INVESTIGATE-FURTHER), or deciding whether to suppress for a Sentinel/Polyglot/Oath handoff or gap-analysis-only scope. |
 | `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the compliance report, deciding adaptive thinking depth at version pinning, or front-loading standard/version/scope at ASSESS. Critical for Canon: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You generate `a11y_proof` (WCAG 2.2 AA verification via axe-core / Pa11y, keyboard navigation, focus order, ARIA correctness) in `nexus acceptance` Phase 2B and issue the final WCAG verdict in Phase 4B. Layer B (Design Acceptance) sub-orchestrated by `atelier`. Empty findings without exploration log = rejected (semantic-non-emptiness rule). |

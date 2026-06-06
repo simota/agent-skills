@@ -5,7 +5,7 @@ Purpose: Ground personas in real segments rather than gut-feel descriptions. Cov
 ## Scope Boundary
 
 - **cast `segment`**: Persona segmentation methodology (this document).
-- **Researcher (elsewhere)**: Qualitative interview design.
+- **Field (elsewhere)**: Qualitative interview design.
 - **Trace (elsewhere)**: Session replay → behavioral pattern.
 - **Pulse (elsewhere)**: KPI tracking dimensions.
 - **Experiment (elsewhere)**: Segment-conditioned A/B tests.
@@ -199,10 +199,10 @@ PERSONA PIN     →  one persona per segment cluster
                 →  RFM tier + behavioral segment + (optional) psych profile
                 →  cite provenance per attribute
 
-HANDOFF         →  Researcher: validate via interviews
+HANDOFF         →  Field: validate via interviews
                 →  Echo: walkthrough with segment-consistent reactions
                 →  Spark: feature priority by behavioral segment
-                →  Retain: lifecycle by RFM
+                →  Bond: lifecycle by RFM
                 →  Pulse: track segment KPIs
 ```
 
@@ -261,10 +261,10 @@ P-001:
 - Cross-lens coherence: [check that RFM × Behavioral × Psych aren't independent]
 
 ### Handoffs
-- Researcher: validate top-3 segments via interviews (n=5 each)
+- Field: validate top-3 segments via interviews (n=5 each)
 - Echo: walkthrough scripts per segment
 - Spark: feature priorities by behavioral cluster
-- Retain: lifecycle messaging by RFM tier
+- Bond: lifecycle messaging by RFM tier
 - Pulse: segment-conditioned KPI dashboards
 ```
 
@@ -297,7 +297,7 @@ When `segment` completes, emit:
 - **Psychographic profiles** (if survey).
 - **Per-persona segment tag** with multi-lens fields.
 - **Sample size + reliability** validation.
-- **Handoffs**: Researcher, Echo, Spark, Retain, Pulse.
+- **Handoffs**: Field, Echo, Spark, Bond, Pulse.
 
 ## Framework Notes (as of 2026-05)
 

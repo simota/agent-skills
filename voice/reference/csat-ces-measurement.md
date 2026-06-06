@@ -8,7 +8,7 @@ Purpose: Design, deploy, and interpret Customer Satisfaction (CSAT) and Customer
 - **voice `nps` (default, elsewhere)**: relationship loyalty / advocacy. NPS is a leading indicator of growth; CSAT is a touchpoint health measure; CES is a friction measure. Use all three; do not substitute.
 - **voice `kano` (elsewhere)**: feature-level classification. Kano explains *why* CSAT is what it is at the feature level; CSAT measures *whether* the experience landed.
 - **voice `thematic` (elsewhere)**: open-ended verbatim coding. CSAT/CES asks score-then-why — `thematic` codes the why field.
-- **researcher (elsewhere)**: study design rigor for evaluative research. Voice CSAT/CES is operational and continuous; Researcher owns one-off evaluative studies.
+- **researcher (elsewhere)**: study design rigor for evaluative research. Voice CSAT/CES is operational and continuous; Field owns one-off evaluative studies.
 - **echo (elsewhere)**: persona walkthrough — predicts CSAT/CES drops; CSAT/CES confirms.
 - **pulse (elsewhere)**: dashboards and KPI governance — Pulse owns the CSAT/CES dashboard once Voice has defined the instrument.
 
@@ -155,7 +155,7 @@ Do not run relationship-level CSAT — it conflates touchpoints and dilutes sign
 - **To `voice thematic`**: verbatim "why" responses → 6-phase coding for theme extraction.
 - **To `voice nps`**: CSAT/CES results into the relationship NPS context for triangulation reporting.
 - **To Pulse**: stable instrument → dashboard governance and KPI tracking.
-- **To Retain**: bottom-box (CSAT 1-2 / CES 1-3) cohorts → 24h recovery follow-up and churn-risk flag.
+- **To Bond**: bottom-box (CSAT 1-2 / CES 1-3) cohorts → 24h recovery follow-up and churn-risk flag.
 - **To Spark**: persistent low-CSAT touchpoints → feature redesign briefs.
 - **To Echo**: low-CES tasks → cognitive walkthrough to identify the specific friction step.
 - **To Beacon**: CSAT/CES drops correlated with SLO breaches → joint reliability + experience root-cause.

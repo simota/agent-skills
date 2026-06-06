@@ -79,7 +79,7 @@ REVERSE_FEEDBACK:
 | Sentinel → Builder | Security vulnerability in implementation | high |
 | Voyager → Artisan | E2E failure due to component defects | high |
 | Flow → Muse | Motion token doesn't match animation needs | medium |
-| Showcase → Muse | Hardcoded values discovered in component stories | medium |
+| Vitrine → Muse | Hardcoded values discovered in component stories | medium |
 | Warden → Vision | V.A.I.R.E. quality standard violation in design | high |
 | Canon → Gateway | API spec violates OpenAPI/REST standards | medium |
 

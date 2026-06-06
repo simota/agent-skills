@@ -121,6 +121,6 @@ If criteria 1-3 hold but expert distribution remains bimodal, **declare stable d
 - **To Magi VOTE**: distribution (median, IQR, dissent rationales, Kendall's W) becomes structured evidence; perspectives evaluate against the distribution, not against individual expert votes.
 - **To Omen**: if Delphi was used to estimate failure probabilities, output feeds Omen's RPN/AP scoring directly.
 - **To Flux**: stable bimodality on a question often signals frame disagreement; route to Flux for reframing before further rounds.
-- **To Researcher**: when expert panel disagrees on user-facing facts, escalate to empirical user research rather than running additional Delphi rounds.
+- **To Field**: when expert panel disagrees on user-facing facts, escalate to empirical user research rather than running additional Delphi rounds.
 - **To human**: bimodal distributions, low Kendall's W (<0.4), or >30% dropout require human judgment on whether to act on partial signal or commission deeper investigation.
 - **To audit trail**: panel composition, round-by-round distributions, dropout log, anonymization protocol, and stop-criterion outcomes preserved; Delphi runs are reusable as priors for future similar questions.

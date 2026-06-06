@@ -24,7 +24,7 @@ COLLABORATION_PATTERNS:
 - Atlas -> Port: Web architecture/dependency analysis
 - Lens -> Port: Web codebase comprehension report
 - Fossil -> Port: Legacy web business-rule extraction
-- Researcher -> Port: Mobile user research and persona
+- Field -> Port: Mobile user research and persona
 - Vision -> Port: Mobile design direction
 - Frame -> Port: Figma mobile design handoff
 - Port -> Native: Native implementation specification per screen/feature
@@ -39,7 +39,7 @@ COLLABORATION_PATTERNS:
 - Port -> Launch: Phased rollout and store-submission plan
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User (porting request), Atlas (architecture), Lens (codebase), Fossil (business rules), Researcher (user research), Vision (design direction), Frame (Figma handoff)
+- INPUT: User (porting request), Atlas (architecture), Lens (codebase), Fossil (business rules), Field (user research), Vision (design direction), Frame (Figma handoff)
 - OUTPUT: Native (implementation), Scaffold (project skeleton), Gateway (mobile API), Schema (local DB), Builder (shared logic), Polyglot (i18n), Cloak (privacy compliance), Crypt (token/Passkey), Voyager (E2E tests), Launch (rollout)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(M) Marketing(L) Game(L) Mobile-first(H)
@@ -113,7 +113,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Existing native apps already exist (parallel runs) → confirm port vs rewrite vs co-existence.
 - Backend monolith with tightly coupled view-rendering → confirm whether `Gateway` redesign is in scope.
 - Target offline tier unclear for an online-only web app → T1+ is non-trivial new work.
-- Regulated product (HIPAA, PCI-DSS, GDPR DSR) → confirm `Comply` / `Cloak` / `Crypt` chain before sign-off.
+- Regulated product (HIPAA, PCI-DSS, GDPR DSR) → confirm `Oath` / `Cloak` / `Crypt` chain before sign-off.
 - Non-trivial i18n (RTL, IME-heavy locales) → confirm `Polyglot` enters the chain.
 - KMP / Compose Multiplatform considered for shared logic → confirm hybrid (native UI + shared logic) vs pure-native.
 
@@ -166,7 +166,7 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`blueprint` = Full Blueprint). Apply normal SURVEY → MAP → BLUEPRINT → ROADMAP → HANDOFF workflow.
 
-Per-Recipe scope: `blueprint` = full pipeline (single Markdown blueprint). `survey` = SURVEY only (feasibility report; use when deciding **whether** to port). `parity` = parity matrix only (scope-cut input). `map` = per-screen architecture translation. `roadmap` = Strangler-Fig 5-phase plan with policy gates. `risk` = technical risk sweep (pre-flight or critique pass). `regulatory` = compliance-only sweep (Privacy Manifest / Data Safety / DMA / EAA / AI disclosure / Children / Fintech-Crypto; complements `Cloak` / `Comply`). `xplat` = Pure-Native vs KMP vs CMP vs RN vs Flutter recommendation; run **before** committing to pure-native.
+Per-Recipe scope: `blueprint` = full pipeline (single Markdown blueprint). `survey` = SURVEY only (feasibility report; use when deciding **whether** to port). `parity` = parity matrix only (scope-cut input). `map` = per-screen architecture translation. `roadmap` = Strangler-Fig 5-phase plan with policy gates. `risk` = technical risk sweep (pre-flight or critique pass). `regulatory` = compliance-only sweep (Privacy Manifest / Data Safety / DMA / EAA / AI disclosure / Children / Fintech-Crypto; complements `Cloak` / `Oath`). `xplat` = Pure-Native vs KMP vs CMP vs RN vs Flutter recommendation; run **before** committing to pure-native.
 
 ## Output Routing
 

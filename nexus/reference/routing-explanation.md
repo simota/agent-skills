@@ -228,7 +228,7 @@ Select a number or provide more specific instructions.
 | "iOS Swift / Android Kotlin で実装したい" | clear | Native (pure-native impl) |
 | "React Native / Flutter で実装したい" | clear | out of scope; Forge for prototype |
 | "商品画像を SKU で集めたい" | clear | Haul (product image acquisition) |
-| "ログイン必要なサイトから商品画像" | clear | Navigator → Haul (auth handoff) |
+| "ログイン必要なサイトから商品画像" | clear | Vector → Haul (auth handoff) |
 | "office hours 受けたい / 何にフォーカスすべきか" | clear | Sage (founder advisory) |
 | "創業者として stuck している" | clear | Sage triage recipe |
 | "ピッチ資料をレビューしてほしい" | clear | Sage pitch recipe |

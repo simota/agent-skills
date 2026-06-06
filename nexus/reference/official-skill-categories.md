@@ -55,7 +55,7 @@ Nexus が CLASSIFY フェーズでタスク分類精度を向上させるため�
 - API連携の最適化要求
 
 **推奨チェーンパターン**:
-- Frame / Relay / Navigator → サービス固有のフロー
+- Frame / Relay / Vector → サービス固有のフロー
 - Hone（設定最適化）
 
 **Key Techniques** (公式):

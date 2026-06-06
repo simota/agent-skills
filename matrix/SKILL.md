@@ -166,7 +166,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | `test`       | `Voyager` or `Radar`                      | Browser, device, auth, locale, or data-state testing plans                     |
 | `load`       | `Siege`                                   | Concurrency, duration, endpoint, or load-shape planning                        |
 | `deploy`     | `Scaffold` or `Gear`                      | Environment, region, traffic split, rollout, or compatibility rollout planning |
-| `ux`         | `Echo`, `Cast`, or `Researcher`           | Persona, scenario, device, locale, or accessibility coverage planning          |
+| `ux`         | `Echo`, `Cast`, or `Field`           | Persona, scenario, device, locale, or accessibility coverage planning          |
 | `risk`       | `Triage`, `Sentinel`, `Probe`, or `Scout` | Threat, surface, auth, sensitivity, or impact planning                         |
 | `experiment` | `Experiment` or `Pulse`                   | Variant, segment, duration, exposure, or KPI planning                          |
 | `compat`     | `Shift` (`detect`/`radar`) or `Builder`   | Runtime, dependency, OS, architecture, or feature compatibility planning       |

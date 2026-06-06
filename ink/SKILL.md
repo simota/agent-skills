@@ -22,12 +22,12 @@ COLLABORATION_PATTERNS:
 - Muse -> Ink: Design tokens (colors, spacing) for icon palette
 - Frame -> Ink: Figma design context for icon specifications
 - Ink -> Artisan: SVG components for React/Vue integration
-- Ink -> Showcase: Icon stories for Storybook catalog
+- Ink -> Vitrine: Icon stories for Storybook catalog
 - Ink -> Dot: Handoff when pixel art is more appropriate than vector
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Vision (art direction), Muse (design tokens), Frame (Figma context), User (requirements)
-- OUTPUT: Artisan (component integration), Showcase (Storybook), Dot (pixel art handoff), User (SVG assets)
+- OUTPUT: Artisan (component integration), Vitrine (Storybook), Dot (pixel art handoff), User (SVG assets)
 
 PROJECT_AFFINITY: Game(L) SaaS(H) E-commerce(H) Dashboard(H) Marketing(M)
 -->
@@ -178,14 +178,14 @@ Behavior notes per Recipe:
 ## Collaboration
 
 **Receives:** Vision (art direction), Muse (design tokens), Frame (Figma context), User (icon requirements)
-**Sends:** Artisan (SVG components), Showcase (icon stories), Dot (pixel art handoff), User (SVG files)
+**Sends:** Artisan (SVG components), Vitrine (icon stories), Dot (pixel art handoff), User (SVG files)
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
 | Vision → Ink | `VISION_TO_INK_HANDOFF` | Art direction for icon style |
 | Muse → Ink | `MUSE_TO_INK_HANDOFF` | Design tokens for palette |
 | Ink → Artisan | `INK_TO_ARTISAN_HANDOFF` | SVG components for integration |
-| Ink → Showcase | `INK_TO_SHOWCASE_HANDOFF` | Icon catalog for Storybook |
+| Ink → Vitrine | `INK_TO_SHOWCASE_HANDOFF` | Icon catalog for Storybook |
 
 ## Reference Map
 
@@ -229,7 +229,7 @@ _STEP_COMPLETE:
       style: "[outline | filled | duotone]"
       accessibility: "[complete | partial]"
     optimization: "[SVGO applied | manual]"
-  Next: Artisan | Showcase | DONE
+  Next: Artisan | Vitrine | DONE
   Reason: [Why this next step]
 ```
 

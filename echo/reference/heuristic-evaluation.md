@@ -93,6 +93,6 @@ Cite the set used in the report header. Mixing sets without attribution masks do
 
 - **To Palette**: severity `≥3` issues with heuristic citation, affected element, and recommended fix category (feedback, affordance, content, error state).
 - **To Canon `wcag`**: heuristic 4 (consistency) and 9 (error recovery) violations that overlap WCAG criteria — cross-validate against WCAG 2.2.
-- **To Researcher**: severity `≥3` issues with ambiguous cause — escalate to 5-user moderated study for empirical validation.
+- **To Field**: severity `≥3` issues with ambiguous cause — escalate to 5-user moderated study for empirical validation.
 - **To Judge**: catastrophic (severity 4) issues as ship-blockers with heuristic-cited evidence.
 - **To Echo `walkthrough`**: reconcile heuristic findings against persona walkthrough. If walkthrough surfaced the same issue, confidence is higher.

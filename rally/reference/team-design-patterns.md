@@ -15,7 +15,7 @@
 |---------|-----------|----------|---------------|-----------------|
 | Pattern A: Frontend/Backend Split | `2-3` | UI and API or data layers separate cleanly | `frontend-impl`, `backend-impl`, optional `test-writer` | Types or interfaces first, then frontend and backend in parallel, then tests |
 | Pattern B: Feature Parallel | `2-4` | Multiple features or bug fixes are independent | `feature-a`, `feature-b`, `feature-c` | No `blockedBy` unless a shared writable component appears |
-| Pattern C: Pipeline | `2-3` | Research, implementation, and verification must happen in stages | `researcher`, `implementer`, `tester` | `Phase 2` blocked by `Phase 1`; `Phase 3` blocked by `Phase 2` |
+| Pattern C: Pipeline | `2-3` | Research, implementation, and verification must happen in stages | `field`, `implementer`, `tester` | `Phase 2` blocked by `Phase 1`; `Phase 3` blocked by `Phase 2` |
 | Pattern D: Specialist Team | `2-4` | Different domains need different expertise | `db-specialist`, `api-specialist`, `security-specialist` | Use explicit ownership boundaries per specialty |
 | Pattern E: Code/Test/Docs Triple | `3` | Code, tests, and docs should progress together | `coder`, `tester`, `documenter` | Docs can start early; tests start after interfaces or implementation are stable |
 

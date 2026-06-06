@@ -11,7 +11,7 @@ Purpose: load this when Frame must package extracted design context for a specif
 - [Frame -> Builder (API/Data Context)](#frame---builder-apidata-context)
 - [Frame -> Schema (Data Model)](#frame---schema-data-model)
 - [Frame -> Vision (Visual Context)](#frame---vision-visual-context)
-- [Frame -> Showcase (Code Connect)](#frame---showcase-code-connect)
+- [Frame -> Vitrine (Code Connect)](#frame---showcase-code-connect)
 - [Frame -> Canvas (Diagram)](#frame---canvas-diagram)
 
 ## Common Header (All Handoffs)
@@ -287,7 +287,7 @@ Focus: Screenshots + structural summary for creative direction
 
 ---
 
-## Frame → Showcase (Code Connect)
+## Frame → Vitrine (Code Connect)
 
 Focus: Component ↔ code mapping data
 
@@ -307,7 +307,7 @@ Focus: Component ↔ code mapping data
 |----------------|-------|------------|---------|
 | [component] | [figma prop] | [code prop] | [direct/transform/default] |
 
-### Showcase Guidance
+### Vitrine Guidance
 - Storybook stories needed: [components without stories]
 - Visual regression: [components with design changes]
 - Code Connect sync: [mappings to update]

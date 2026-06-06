@@ -18,7 +18,7 @@ CAPABILITIES_SUMMARY:
 
 COLLABORATION_PATTERNS:
 - User -> Clause: Legal document review request
-- Comply -> Clause: Reflect regulatory requirements into legal documents
+- Oath -> Clause: Reflect regulatory requirements into legal documents
 - Cloak -> Clause: Align privacy implementation with policy documents (incl. 5.1.2(i) consent-UI wording, Privacy Manifest disclosures)
 - Native -> Clause: Mobile app store disclosure wording requests (DSA Trader / DMA / 5.1.2(i) consent screen / Tokushoho for in-app purchase)
 - Clause -> Builder: Consent-flow and similar implementation instructions
@@ -26,7 +26,7 @@ COLLABORATION_PATTERNS:
 - Clause -> Prose: Plain-language rewrite of user-facing legal text
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User (review requests), Comply (regulatory requirements), Cloak (privacy requirements), Native (mobile disclosure wording requests), Scribe (legal requirements extracted from specs)
+- INPUT: User (review requests), Oath (regulatory requirements), Cloak (privacy requirements), Native (mobile disclosure wording requests), Scribe (legal requirements extracted from specs)
 - OUTPUT: Builder (implementation instructions), Native (approved in-app disclosure wording), Prose (text rewrites), Scribe (legal spec documentation)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Mobile-App(H) Marketing(M) Game(L)
@@ -54,7 +54,7 @@ Use Clause when:
 
 Route elsewhere when:
 - Legal advice or a legal judgment is needed → consult a lawyer
-- Technical regulatory-compliance audit → `Comply`
+- Technical regulatory-compliance audit → `Oath`
 - Privacy implementation (PII detection, consent code) → `Cloak`
 - Code-standards compliance check → `Canon`
 - Contract negotiation or drafting → consult a lawyer
@@ -278,10 +278,10 @@ Single source of truth for Recipe definitions. Behavior depth is encoded in the 
 | Privacy Policy | `privacy` | | Privacy Policy GDPR/APPI alignment check (including statute-specific deep-dives when the request names GDPR or APPI directly). | `reference/legal-checklists.md` |
 | Tokushoho | `tokushoho` | | Tokushoho (Specified Commercial Transactions Act) required-field check (Japan e-commerce / paid services). | `reference/legal-checklists.md` |
 | Gap Analysis | `gap` | | Multi-document consistency check, missing-clause detection, cross-document review (pre-launch comprehensive sweep). | `reference/patterns.md` |
-| DPA Review | `dpa` | | Data Processing Agreement review. Identify role pairing (controller/processor/sub-processor) and transfer geography first. Walk Art. 28(3) mandatory clauses, SCC module selection, Schrems II Transfer Impact Assessment, audit-rights scope. Hand implementation gaps (sub-processor list page, breach SLA pipeline, encryption-key custody) to Cloak; framework mapping (SOC2 vendor management, ISO 27001 supplier relationships, HIPAA BAA equivalence) to Comply; codebase verification of DPA-promised controls to Canon. | `reference/dpa-review.md` |
+| DPA Review | `dpa` | | Data Processing Agreement review. Identify role pairing (controller/processor/sub-processor) and transfer geography first. Walk Art. 28(3) mandatory clauses, SCC module selection, Schrems II Transfer Impact Assessment, audit-rights scope. Hand implementation gaps (sub-processor list page, breach SLA pipeline, encryption-key custody) to Cloak; framework mapping (SOC2 vendor management, ISO 27001 supplier relationships, HIPAA BAA equivalence) to Oath; codebase verification of DPA-promised controls to Canon. | `reference/dpa-review.md` |
 | EULA Review | `eula` | | End User License Agreement review. Identify license type (perpetual / subscription / SaaS / embedded SDK / OSS / dual) and governing-law jurisdiction first. Walk grant scope, restrictions (including AI-training clauses), IP ownership, warranty/indemnity, OSS notices. Apply jurisdiction-specific enforceability tests (US unconscionability, EU UCTD/Software Directive Art. 6 interoperability carve-out, Japan Consumer Contract Act). Hand telemetry implementation to Cloak; OSS-license codebase audit to Canon; license-key/audit-log endpoints to Builder. | `reference/eula-review.md` |
 | Cookie Consent | `cookie` | | Cookie banner and cookie policy review (ePrivacy, GDPR consent, IAB TCF v2.2, categorization). Identify target jurisdictions (EU/UK/CH/CA/CO/JP/etc.) and CMP/TCF participation first. Walk banner UX (equal Reject-All prominence, no pre-ticked, no cookie wall, withdraw path), per-cookie categorization (strictly necessary / functional / analytics / marketing), policy-vs-scanner diff. Verify per-jurisdiction logic (EU opt-in, US-state opt-out + GPC honoring, JP APPI personally-referable-info rule). Hand CMP integration and conditional script loading to Cloak; runtime verification to Canon `gdpr`; banner copy plain-language pass to Prose. | `reference/cookie-consent.md` |
-| App Store Disclosures | `appstore` | | Mobile app store disclosure review covering DSA Trader / DMA Anti-Steering / 5.1.2(i) third-party-AI consent / Sign in with Apple / Google Play AI labeling / EAA accessibility statement. Identify target stores (iOS / Android), jurisdictions (EU triggers DSA + DMA + EAA), feature scope (third-party AI usage / external purchase / IAP / generative content). Walk: (1) DSA Trader Status alignment between App Store Connect / Play Console and ToS operator; (2) DMA external-purchase wording and CTF disclosure for EU iOS; (3) 5.1.2(i) third-party-AI consent screen — must be provider-named (e.g., "OpenAI"), describe shared data, offer explicit accept/decline; on-device inference (Foundation Models / Gemini Nano) exempt; (4) Sign in with Apple language when third-party SSO present (Guideline 4.8); (5) Google Play AI-Generated Content visible-label policy alignment and in-app reporting/flag mechanism; (6) EAA accessibility statement wording. Hand consent-UI implementation to Native via Cloak; flow-level legal text plain-language pass to Prose; codebase verification to Comply / Canon. Cite specific deadlines (2025-11-13 5.1.2(i), 2025-02-17 DSA enforcement, 2026-01-01 CTF unification, 2025-06-28 EAA). | `reference/legal-checklists.md` |
+| App Store Disclosures | `appstore` | | Mobile app store disclosure review covering DSA Trader / DMA Anti-Steering / 5.1.2(i) third-party-AI consent / Sign in with Apple / Google Play AI labeling / EAA accessibility statement. Identify target stores (iOS / Android), jurisdictions (EU triggers DSA + DMA + EAA), feature scope (third-party AI usage / external purchase / IAP / generative content). Walk: (1) DSA Trader Status alignment between App Store Connect / Play Console and ToS operator; (2) DMA external-purchase wording and CTF disclosure for EU iOS; (3) 5.1.2(i) third-party-AI consent screen — must be provider-named (e.g., "OpenAI"), describe shared data, offer explicit accept/decline; on-device inference (Foundation Models / Gemini Nano) exempt; (4) Sign in with Apple language when third-party SSO present (Guideline 4.8); (5) Google Play AI-Generated Content visible-label policy alignment and in-app reporting/flag mechanism; (6) EAA accessibility statement wording. Hand consent-UI implementation to Native via Cloak; flow-level legal text plain-language pass to Prose; codebase verification to Oath / Canon. Cite specific deadlines (2025-11-13 5.1.2(i), 2025-02-17 DSA enforcement, 2026-01-01 CTF unification, 2025-06-28 EAA). | `reference/legal-checklists.md` |
 
 ### Signal Keywords → Recipe
 
@@ -324,7 +324,7 @@ Every deliverable must include:
 
 **Receives:**
 - User: legal-document review requests
-- Comply: reflect regulatory requirements into legal documents
+- Oath: reflect regulatory requirements into legal documents
 - Cloak: consistency check with privacy-implementation requirements
 - Scribe: extract legal requirements from specifications
 
@@ -337,7 +337,7 @@ Every deliverable must include:
 
 | Pattern | Name | Flow | Purpose |
 |---------|------|------|---------|
-| **A** | Compliance-to-Legal | Comply → Clause | Reflect regulatory requirements into legal documents |
+| **A** | Compliance-to-Legal | Oath → Clause | Reflect regulatory requirements into legal documents |
 | **B** | Legal-to-Implementation | Clause → Builder | Implement review outcomes into consent flows, etc. |
 | **C** | Privacy-Policy-Sync | Cloak ↔ Clause | Align privacy implementation with policy text |
 | **D** | Legal-Readability | Clause → Prose | Plain-language rewrites of legal text |

@@ -162,6 +162,6 @@ Retros die when they become blame sessions. Blameless rules:
 - If retro surfaces a sunset decision for a still-running feature → hand to `kill` with evidence link.
 - If retro surfaces an anti-pattern worth adding to the corpus → update `reference/feature-ideation-anti-patterns.md` directly.
 - If retro is blocked by missing telemetry → hand to `Pulse` to instrument; park retro at T+30 extension.
-- If retro needs real user interviews to resolve "why did adoption plateau?" → hand to `Researcher` or `Voice`.
+- If retro needs real user interviews to resolve "why did adoption plateau?" → hand to `Field` or `Voice`.
 
 Record the retro in `.agents/spark.md` with: feature name, retro window, top-three learnings, feedback targets updated. Incomplete feedback targets block retro closure.

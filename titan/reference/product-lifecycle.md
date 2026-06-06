@@ -96,9 +96,9 @@ Acceptance: Docs updated, PR ready, CHANGELOG written, CI configured
 XL scope includes all L phases plus GROW and EVOLVE, and expands each phase with additional agents. **Apply Agent Justification Gate from SKILL.md before deploying any additional agent.**
 
 ### DISCOVER (XL additions)
-Add: Researcher (personas), Compete (SWOT), Voice (feedback), Scout (issues), Triage (incidents)
+Add: Field (personas), Compete (SWOT), Voice (feedback), Scout (issues), Triage (incidents)
 ```
-Chain: Nexus → Accord → Researcher → Compete → Voice → Lens
+Chain: Nexus → Accord → Field → Compete → Voice → Lens
 ```
 
 ### DEFINE (XL additions)
@@ -126,20 +126,20 @@ Chain: Rally{Sentinel+Probe+Specter} → Judge → Zen → Rally{Bolt+Tuner} →
 ```
 
 ### VALIDATE (XL additions)
-Add: Trace (session analysis), Experiment (A/B), Navigator (browser)
+Add: Trace (session analysis), Experiment (A/B), Vector (browser)
 ```
-Chain: Rally{Voyager+Radar} → Echo → Trace → Experiment → Navigator → Warden
+Chain: Rally{Voyager+Radar} → Echo → Trace → Experiment → Vector → Warden
 ```
 
 ### LAUNCH (XL additions)
-Add: Canvas (diagrams), Morph (conversion), Rally{Showcase+Director+Reel} (demos)
+Add: Canvas (diagrams), Morph (conversion), Rally{Vitrine+Director+Reel} (demos)
 ```
-Chain: Quill → Canvas → Guardian → Launch → Rally{Showcase+Director+Reel} → Gear
+Chain: Quill → Canvas → Guardian → Launch → Rally{Vitrine+Director+Reel} → Gear
 ```
 
 ### GROW (XL only)
 ```
-Chain: Growth → Retain → Pulse → Stream → Experiment
+Chain: Growth → Bond → Pulse → Stream → Experiment
 Purpose: SEO/CRO, retention, i18n, analytics, growth experiments
 ```
 
@@ -178,12 +178,12 @@ On `NEXUS_COMPLETE`: SUCCESS → next Epic · PARTIAL → L1 retry · BLOCKED �
 
 | Phase | Often Skipped | Reason |
 |-------|--------------|--------|
-| DISCOVER | Researcher, Compete, Voice | L scope knows its users |
+| DISCOVER | Field, Compete, Voice | L scope knows its users |
 | DEFINE | Pulse, Canon | KPIs and standards optional at L |
 | ARCHITECT | Scaffold, Canvas | Infra and diagrams are XL concerns |
 | HARDEN | Specter | Concurrency is XL |
 | VALIDATE | Trace, Experiment | Session analysis/A/B are XL |
-| LAUNCH | Morph, Showcase, Director, Reel | Multiple demo formats are XL |
+| LAUNCH | Morph, Vitrine, Director, Reel | Multiple demo formats are XL |
 
 Full agent × phase deployment map → `reference/agent-deployment-matrix.md`
 Phase exit checklists → `reference/exit-criteria-validation.md`

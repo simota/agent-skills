@@ -5,7 +5,7 @@ Purpose: Standards-citation-driven assessment against PCI-DSS v4.0 (effective Ma
 ## Scope Boundary
 
 - **canon `pci`**: standards-citation-driven assessment. Pin version "PCI-DSS v4.0.1", cite Requirement.Sub-requirement (e.g., `Req 3.5.1`, `Req 8.3.6`), evidence at `file:line`, scope-minimization analysis (tokenization, network segmentation).
-- **comply (elsewhere)**: audit-trail, ROC/SAQ submission preparation, Policy-as-Code mapping (OPA), continuous-control monitoring. Canon scopes; Comply executes audit workflow and QSA coordination.
+- **comply (elsewhere)**: audit-trail, ROC/SAQ submission preparation, Policy-as-Code mapping (OPA), continuous-control monitoring. Canon scopes; Oath executes audit workflow and QSA coordination.
 - **cloak (elsewhere)**: privacy-by-design for cardholder PAN/CVV handling — masking, tokenization choice (FPE vs. vault), secure deletion. Overlaps with `Req 3` (Protect Stored Account Data).
 - **sentinel (elsewhere)**: static scanning for hardcoded PAN, weak crypto (`Req 3.5`, `Req 6.2.4`), secret leakage.
 - **probe (elsewhere)**: DAST and ASV scanning for `Req 11.3` (external/internal vulnerability scans, pentests).
@@ -27,7 +27,7 @@ VERIFY    →  AOC-ready summary, scope-reduction recommendations, Customized Ap
           →  flag future-dated requirements (effective dates within 12 months)
 
 PRESENT   →  delegate: Cloak (tokenization/masking), Sentinel (PAN scan, weak crypto),
-             Probe (Req 11 scans), Comply (ROC/SAQ submission), Crypt (key management)
+             Probe (Req 11 scans), Oath (ROC/SAQ submission), Crypt (key management)
 ```
 
 ## 12 Requirements (PCI-DSS v4.0.1)
@@ -99,5 +99,5 @@ ROC (Report on Compliance) by QSA is required for: Level 1 merchants (>6M Visa/M
 - **To Sentinel**: hardcoded PAN scanning, weak crypto detection (`Req 3.5`, `Req 6.2.4`), secret leakage.
 - **To Probe**: ASV external scans (`Req 11.3.2`), internal vuln scans (`Req 11.3.1`), pentest (`Req 11.4`).
 - **To Crypt**: key-management design (`Req 3.6`, `Req 3.7`), TLS configuration (`Req 4.2`), HSM selection.
-- **To Comply**: ROC/SAQ submission, Policy-as-Code, AOC artifact storage, QSA coordination, TPSP register (`Req 12.8`).
+- **To Oath**: ROC/SAQ submission, Policy-as-Code, AOC artifact storage, QSA coordination, TPSP register (`Req 12.8`).
 - **To Builder**: technical remediation with Requirement-citation acceptance criteria.

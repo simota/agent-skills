@@ -43,7 +43,7 @@ COLLABORATION_PATTERNS:
 - Polyglot -> Native: Translated `.xcstrings` (iOS) / `strings.xml` + `plurals.xml` + `LocaleConfig` (Android), per-locale resource bundles, ICU plural rules mapped to CLDR categories
 - Launch -> Native: Store-compliance feedback, phased-release halt triggers, server-driven flag activation signals
 - Native -> Radar: Mobile-specific test specifications (XCUITest, Espresso, Maestro)
-- Native -> Showcase: Component catalog entries
+- Native -> Vitrine: Component catalog entries
 - Native -> Gear: Mobile CI/CD pipeline configuration
 - Native -> Launch: Store submission artifacts and staged-rollout coordination
 - Native -> Guardian: PR with platform adaptation summary
@@ -54,7 +54,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Port (porting blueprint), Forge (prototypes), Vision (design direction), Muse (design tokens), Builder (API/business logic), Frame (Figma extraction), Palette (UX improvements), Polyglot (translated resources), Launch (store-compliance feedback)
-- OUTPUT: Radar (tests), Showcase (component catalog), Gear (CI/CD), Launch (release), Guardian (PR prep), Voyager (E2E), Cloak (privacy), Crypt (auth/crypto), Polyglot (untranslated strings, xliff export)
+- OUTPUT: Radar (tests), Vitrine (component catalog), Gear (CI/CD), Launch (release), Guardian (PR prep), Voyager (E2E), Cloak (privacy), Crypt (auth/crypto), Polyglot (untranslated strings, xliff export)
 
 PROJECT_AFFINITY: Mobile(H) SaaS(H) E-commerce(H) Game(M) Dashboard(M)
 -->
@@ -252,7 +252,7 @@ Every Native deliverable must include:
 
 **Receives:** Port (blueprint after Port `blueprint`) · Forge (validated prototype) · Vision (design direction, Liquid Glass / M3 Expressive) · Muse (design tokens) · Builder (API contracts) · Frame (Figma extraction) · Palette (UX/a11y fixes) · Polyglot (translated `.xcstrings` / `strings.xml` + `LocaleConfig` after Polyglot `mobile`) · Launch (compliance feedback, halt triggers, flag activation — `LAUNCH_TO_NATIVE_HANDOFF`).
 
-**Sends:** Radar (test specs — XCUITest / Espresso / Maestro) · Voyager (mobile E2E handoff) · Showcase (component catalog) · Gear (CI/CD — Fastlane / GitHub Actions / Xcode Cloud / Gradle) · Launch (submission artifacts + compliance + rollout — `NATIVE_TO_LAUNCH_HANDOFF`) · Guardian (PR with platform adaptation) · Cloak (Privacy Manifest / Data Safety review) · Crypt (Passkey / Keychain attestation) · Polyglot (untranslated strings + exported xliff before store submission).
+**Sends:** Radar (test specs — XCUITest / Espresso / Maestro) · Voyager (mobile E2E handoff) · Vitrine (component catalog) · Gear (CI/CD — Fastlane / GitHub Actions / Xcode Cloud / Gradle) · Launch (submission artifacts + compliance + rollout — `NATIVE_TO_LAUNCH_HANDOFF`) · Guardian (PR with platform adaptation) · Cloak (Privacy Manifest / Data Safety review) · Crypt (Passkey / Keychain attestation) · Polyglot (untranslated strings + exported xliff before store submission).
 
 **Collaboration Patterns:**
 - **A** Port→Native: Port `blueprint` → Native `swiftui` + `compose` (Web→native porting to production)

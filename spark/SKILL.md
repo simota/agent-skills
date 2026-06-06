@@ -19,7 +19,7 @@ COLLABORATION_PATTERNS:
 - Pulse -> Spark: Usage metrics for opportunity analysis
 - Voice -> Spark: User feedback for feature needs
 - Compete -> Spark: Competitive gaps for feature opportunities
-- Retain -> Spark: Engagement needs for retention features
+- Bond -> Spark: Engagement needs for retention features
 - Cast -> Spark: Feature-focused personas for targeted proposals
 - Lens -> Spark: Codebase insight for reuse opportunities
 - Spark -> Scribe: Formal specification writing
@@ -34,7 +34,7 @@ COLLABORATION_PATTERNS:
 - Magi -> Spark: Feature priority arbitration
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Pulse (usage metrics), Voice (user feedback), Compete (competitive gaps), Retain (engagement needs), Cast (feature-focused personas), Lens (codebase insight), Flux (idea reframing), Void (YAGNI pre-check), Magi (priority arbitration)
+- INPUT: Pulse (usage metrics), Voice (user feedback), Compete (competitive gaps), Bond (engagement needs), Cast (feature-focused personas), Lens (codebase insight), Flux (idea reframing), Void (YAGNI pre-check), Magi (priority arbitration)
 - OUTPUT: Scribe (formal specs), Builder (implementation specs), Artisan (UI specs), Accord (integrated packages), Quest (game design), Forge (prototypes), Magi (strategic decisions)
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(M) Marketing(H)
@@ -56,7 +56,7 @@ Use Spark when the user needs:
 
 Route elsewhere when the task is primarily:
 - technical investigation or feasibility discovery before proposing: `Scout`
-- user research design or synthesis: `Researcher`
+- user research design or synthesis: `Field`
 - feedback aggregation or sentiment clustering: `Voice`
 - metrics analysis or funnel diagnosis: `Pulse`
 - competitive analysis: `Compete`
@@ -230,7 +230,7 @@ Spark receives product signals and insights from upstream agents, generates feat
 | Pulse → Spark | Metrics handoff | Usage metrics and funnel data for opportunity analysis |
 | Voice → Spark | Feedback handoff | User feedback and NPS signals for feature needs |
 | Compete → Spark | Gap handoff | Competitive gaps for feature opportunities |
-| Retain → Spark | Engagement handoff | Engagement and churn data for retention features |
+| Bond → Spark | Engagement handoff | Engagement and churn data for retention features |
 | Cast → Spark | Persona handoff | Feature-focused personas for targeted proposals |
 | Spark → Scribe | Spec handoff | Validated proposal needs formal specification |
 | Spark → Builder | Implementation handoff | Proposal ready for implementation |
@@ -243,7 +243,7 @@ Spark receives product signals and insights from upstream agents, generates feat
 | Lens → Spark | Codebase insight | Existing data/logic capabilities for reuse opportunities |
 
 **Overlap boundaries:**
-- **vs Researcher**: Researcher = user research design and synthesis; Spark = feature proposal from research insights.
+- **vs Field**: Field = user research design and synthesis; Spark = feature proposal from research insights.
 - **vs Voice**: Voice = feedback collection and sentiment analysis; Spark = feature ideation from feedback data.
 - **vs Compete**: Compete = competitive analysis and positioning; Spark = converting competitive gaps into feature specs.
 - **vs Scribe**: Scribe = formal specification writing; Spark = initial feature proposal and concept validation.

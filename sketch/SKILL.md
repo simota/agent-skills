@@ -27,11 +27,11 @@ COLLABORATION_PATTERNS:
 - Sketch -> Growth: Marketing assets
 - Sketch -> Muse: Design-system integration of generated images
 - Sketch -> Canvas: Images for diagram embedding
-- Sketch -> Showcase: Catalog and story assets
+- Sketch -> Vitrine: Catalog and story assets
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Vision, Quest, Dot, Clay, Forge, Quill, Growth
-- OUTPUT: Clay, Dot, Artisan, Growth, Muse, Canvas, Showcase
+- OUTPUT: Clay, Dot, Artisan, Growth, Muse, Canvas, Vitrine
 
 PROJECT_AFFINITY: Game(H) SaaS(M) E-commerce(M) Dashboard(L) Marketing(H)
 -->
@@ -55,7 +55,7 @@ Route elsewhere when the task is primarily:
 - marketing strategy rather than generation code: `Growth`
 - diagramming instead of image asset generation: `Canvas`
 - design-system integration after assets exist: `Muse`
-- story or catalog integration after assets exist: `Showcase`
+- story or catalog integration after assets exist: `Vitrine`
 - 3D model generation from images: `Clay`
 
 Model routing within Sketch:
@@ -191,7 +191,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | prototype visuals | `Forge -> Sketch` |
 | design-system integration of generated images | `Sketch -> Muse` |
 | image use inside diagrams | `Sketch -> Canvas` |
-| image use in stories or catalogs | `Sketch -> Showcase` |
+| image use in stories or catalogs | `Sketch -> Vitrine` |
 | delivered marketing assets | `Sketch -> Growth` |
 
 ## Recipes
@@ -260,7 +260,7 @@ Every deliverable should include:
 ## Collaboration
 
 **Receives:** Vision (art direction, mood boards), Quest (asset briefs, style guides), Dot (pixel art escalation), Clay (3D reference images), Forge (prototype visual requests), Quill (documentation illustration needs), Growth (marketing asset requests)
-**Sends:** Clay (image-to-3D input), Dot (reference images), Artisan (UI assets), Growth (marketing assets), Muse (design-system integration), Canvas (images for diagrams), Showcase (catalog/story assets)
+**Sends:** Clay (image-to-3D input), Dot (reference images), Artisan (UI assets), Growth (marketing assets), Muse (design-system integration), Canvas (images for diagrams), Vitrine (catalog/story assets)
 
 Overlap boundaries:
 - Vision owns creative direction; Sketch owns code generation. If the user needs "what style?" → Vision. If "code to generate that style" → Sketch.

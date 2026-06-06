@@ -8,7 +8,7 @@ Purpose: Design push, email, in-app, and SMS notification copy with channel-spec
 - **prose `microcopy` (elsewhere)**: Static UI copy. Notifications are transactional/triggered.
 - **prose `errors` (elsewhere)**: Failure messages inside the UI. Notifications can be error-adjacent (e.g., "payment failed") but use the notification format.
 - **relay (elsewhere)**: Messaging integration and delivery infrastructure. Prose owns copy; relay owns transport.
-- **Retain (elsewhere)**: Re-engagement campaign *strategy*. Prose writes the copy; Retain decides who/when/what.
+- **Bond (elsewhere)**: Re-engagement campaign *strategy*. Prose writes the copy; Bond decides who/when/what.
 
 ## Channel Length Budgets
 
@@ -202,8 +202,8 @@ Missing deeplink = tap drops user in home screen = low CTR.
 - relay (delivery infrastructure)
 - Polyglot (i18n)
 - Pulse (open / CTR measurement)
-- Retain (campaign strategy)
-- Cloak / Comply (regulated channels)
+- Bond (campaign strategy)
+- Cloak / Oath (regulated channels)
 ```
 
 ## Anti-Patterns
@@ -231,7 +231,7 @@ When `notification` completes, emit:
 - **Tone alignment** with voice framework.
 - **Telemetry plan** (Pulse events).
 - **Compliance checklist** (opt-in / opt-out / quiet hours / regional law).
-- **Handoffs**: relay, Polyglot, Pulse, Retain, Cloak/Comply.
+- **Handoffs**: relay, Polyglot, Pulse, Bond, Cloak/Oath.
 
 ## References
 

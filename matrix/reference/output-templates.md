@@ -80,7 +80,7 @@ Use when rollout order matters.
 
 ## UX Matrix
 
-Use when handing off to Echo, Cast, or Researcher.
+Use when handing off to Echo, Cast, or Field.
 
 ```markdown
 ## UX Matrix: [name]

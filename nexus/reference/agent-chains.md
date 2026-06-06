@@ -29,7 +29,7 @@ Complete chain templates and dynamic adjustment rules.
 | FEATURE | M | Sherpa → Forge → Builder → Radar |
 | FEATURE | L | Spark → Sherpa → Forge → Builder → Radar → Quill |
 | FEATURE | UI | Spark → Forge → Muse → Builder → Lens → Radar |
-| FEATURE | UX | Researcher → Echo → Spark → Builder → Radar |
+| FEATURE | UX | Field → Echo → Spark → Builder → Radar |
 | REFACTOR | small | Zen → Radar |
 | REFACTOR | arch | Atlas → Sherpa → Zen → Radar |
 | OPTIMIZE | app | Bolt → Radar |
@@ -48,7 +48,7 @@ Complete chain templates and dynamic adjustment rules.
 | QA | e2e | Voyager → Lens → Radar |
 | REVIEW | PR | Judge → Builder/Zen/Sentinel (based on findings) → Radar |
 | REVIEW | pre-commit | Judge → Builder (if CRITICAL) |
-| UX_RESEARCH | - | Researcher → Echo → Palette |
+| UX_RESEARCH | - | Field → Echo → Palette |
 | DB_DESIGN | new | Schema → Builder → Radar |
 | DB_DESIGN | optimize | Schema → Tuner → Builder → Radar |
 | E2E | new | Voyager → Lens |
@@ -57,10 +57,10 @@ Complete chain templates and dynamic adjustment rules.
 | COMPARE | bug-fix | Scout → Arena → Radar |
 | COMPARE | feature | Spark → Arena → Guardian |
 | COMPARE | security | Arena → Sentinel → Arena (iterate) |
-| BROWSER | data-collection | Navigator → Builder |
-| BROWSER | bug-reproduction | Scout → Navigator → Triage |
-| BROWSER | evidence | Navigator → Lens → Canvas |
-| BROWSER | performance | Navigator → Bolt |
+| BROWSER | data-collection | Vector → Builder |
+| BROWSER | bug-reproduction | Scout → Vector → Triage |
+| BROWSER | evidence | Vector → Lens → Canvas |
+| BROWSER | performance | Vector → Bolt |
 | DECISION | architecture | Magi → Builder/Zen (based on verdict) |
 | DECISION | strategy | Accord → Magi → Spark |
 | DECISION | intent | Forge/Builder |
@@ -75,7 +75,7 @@ Complete chain templates and dynamic adjustment rules.
 | UX_DESIGN | flow | Flow → Artisan → Radar |
 | UX_DESIGN | creative | Vision → Muse → Forge → Artisan → Radar |
 | UX_DESIGN | audit | Warden → Palette → Artisan → Radar |
-| UX_DESIGN | storybook | Showcase → Quill |
+| UX_DESIGN | storybook | Vitrine → Quill |
 | UX_DESIGN | demo | Director → Voyager |
 | UX_DESIGN | session | Trace → Echo → Palette |
 | FEATURE | frontend | Forge → Artisan → Radar |
@@ -89,16 +89,16 @@ Complete chain templates and dynamic adjustment rules.
 | STRATEGY | compete | Compete → Spark → Builder → Radar |
 | STRATEGY | feedback | Voice → Spark → Builder → Radar |
 | STRATEGY | metrics | Pulse → Builder → Radar |
-| STRATEGY | retention | Retain → Spark → Builder → Radar |
+| STRATEGY | retention | Bond → Spark → Builder → Radar |
 | STRATEGY | ab-test | Experiment → Builder → Radar |
 | STRATEGY | data-pipeline | Stream → Schema → Builder → Radar |
 | MARKETING | quick | Compete → Growth → Funnel |
 | MARKETING | standard | Cast → Compete → Pulse → Saga → Growth → Funnel → Experiment |
-| MARKETING | full | Sherpa → Researcher → Cast → Compete → Pulse → Saga → Growth → Funnel → Experiment → Scribe |
+| MARKETING | full | Sherpa → Field → Cast → Compete → Pulse → Saga → Growth → Funnel → Experiment → Scribe |
 | MARKETING | positioning | Compete → Cast → Magi → Saga → Echo → Scribe |
 | MARKETING | gtm | Compete → Cast → Pulse → Saga → Growth → Funnel → Experiment → Launch → Harvest |
 | MARKETING | acquisition | Pulse → Compete → Growth → Funnel → Experiment |
-| MARKETING | retention | Pulse → Trace → Retain → Voice → Spark → Experiment |
+| MARKETING | retention | Pulse → Trace → Bond → Voice → Spark → Experiment |
 | MARKETING | content | Saga → Prose → Growth → Artisan → Radar → Pulse |
 | MARKETING | brand | Vision → Compete → Cast → Saga → Prose → Muse → Growth |
 | MARKETING | personal-brand | Crest → Compete → Prose → Growth |
@@ -106,7 +106,7 @@ Complete chain templates and dynamic adjustment rules.
 | MARKETING | seo-geo | Growth → Prose → Artisan → Radar → Pulse |
 | MARKETING | analytics | Pulse → Trace → Canvas → Scribe |
 | MARKETING | voc | Voice → Echo → Spark → Experiment |
-| MARKETING | persona-driven | Researcher → Cast → Echo → Compete → Saga → Growth |
+| MARKETING | persona-driven | Field → Cast → Echo → Compete → Saga → Growth |
 | MARKETING | reframe | Flux → Compete → Cast → Magi → Saga → Scribe |
 | MARKETING | matrix | Matrix → Compete → Magi → Spark → Scribe |
 | MARKETING | first-principles | Flux → Cast → Compete → Pulse → Matrix → Scribe |
@@ -126,13 +126,13 @@ Complete chain templates and dynamic adjustment rules.
 | REQUIREMENTS | standard | Accord → Scribe → Sherpa |
 | REQUIREMENTS | complex | Accord → Magi → Scribe → Sherpa → Canvas |
 | DESIGN_SYSTEM | tokens | Vision → Muse → Artisan → Radar |
-| DESIGN_SYSTEM | catalog | Vision → Muse → Showcase → Quill |
-| DESIGN_SYSTEM | full | Vision → Muse → Showcase → Artisan → Quill → Radar |
+| DESIGN_SYSTEM | catalog | Vision → Muse → Vitrine → Quill |
+| DESIGN_SYSTEM | full | Vision → Muse → Vitrine → Artisan → Quill → Radar |
 | CONTENT | microcopy | Prose → Echo → Artisan |
 | CONTENT | onboarding | Prose → Echo → Artisan → Radar |
 | CONTENT | i18n | Prose → Polyglot → Artisan → Radar |
-| UX_RESEARCH | persona-driven | Cast → Researcher → Echo → Palette |
-| UX_RESEARCH | session-replay | Trace → Researcher → Echo → Palette |
+| UX_RESEARCH | persona-driven | Cast → Field → Echo → Palette |
+| UX_RESEARCH | session-replay | Trace → Field → Echo → Palette |
 | DEV_EXPERIENCE | dotfiles | Hearth → Gear |
 | DEV_EXPERIENCE | full-env | Hearth → Gear → Latch → Anvil |
 | DEV_EXPERIENCE | audit | Hearth → Sentinel → Gear |
@@ -140,14 +140,14 @@ Complete chain templates and dynamic adjustment rules.
 | LOAD_TEST | standard | Siege → Bolt → Builder → Radar |
 | LOAD_TEST | chaos | Siege → Bolt → Triage → Builder → Beacon |
 | DEMO | cli-demo | Reel → Quill |
-| DEMO | ui-demo | Director → Voyager → Showcase |
-| DEMO | full | Director → Reel → Showcase → Quill |
+| DEMO | ui-demo | Director → Voyager → Vitrine |
+| DEMO | full | Director → Reel → Vitrine → Quill |
 | SPRINT_RETRO | quick | Harvest |
 | SPRINT_RETRO | standard | Harvest → Canvas |
 | SPRINT_RETRO | full | Harvest → Canvas → Quill |
 | KNOWLEDGE | quick | Scribe → Prism |
 | KNOWLEDGE | full | Scribe → Quill → Prism → Morph |
-| KNOWLEDGE | research | Researcher → Scribe → Prism |
+| KNOWLEDGE | research | Field → Scribe → Prism |
 | AITUBER | prototype | Cast → Aether → Builder |
 | AITUBER | full | Cast → Aether → Builder → Artisan → Scaffold |
 | AITUBER | production | Cast → Aether → Builder → Artisan → Scaffold → Beacon → Radar |
@@ -172,12 +172,12 @@ Complete chain templates and dynamic adjustment rules.
 | DESIGN | figma-make | Vision → Loom → Frame → Artisan → Radar |
 | DESIGN | figma-handoff | Frame → Forge → Builder → Radar |
 | DESIGN | token-sync | Frame → Muse → Loom → Artisan |
-| DESIGN_SYSTEM | figma-driven | Frame → Vision → Muse → Showcase → Quill |
-| DESIGN_SYSTEM_DOCS | quick | Muse → Showcase → Quill |
-| DESIGN_SYSTEM_DOCS | standard | Muse → Showcase + Canvas → Quill |
-| DESIGN_SYSTEM_DOCS | full | Vision → Muse → Showcase + Canvas → Artisan → Quill |
+| DESIGN_SYSTEM | figma-driven | Frame → Vision → Muse → Vitrine → Quill |
+| DESIGN_SYSTEM_DOCS | quick | Muse → Vitrine → Quill |
+| DESIGN_SYSTEM_DOCS | standard | Muse → Vitrine + Canvas → Quill |
+| DESIGN_SYSTEM_DOCS | full | Vision → Muse → Vitrine + Canvas → Artisan → Quill |
 | DECISION | deadlock | Magi → Flux → Magi → Builder |
-| FEATURE | innovation | Researcher → Flux → Spark → Builder → Radar |
+| FEATURE | innovation | Field → Flux → Spark → Builder → Radar |
 | STRATEGY | reframe | Accord → Flux → Helm → Scribe |
 | REFACTOR | rethink | Atlas → Flux → Atlas → Sherpa → Zen → Radar |
 | ARCHITECTURE | c4-model | Lens → Stratum → Canvas → Scribe |
@@ -238,7 +238,7 @@ Complete chain templates and dynamic adjustment rules.
 | COMPARE | thorough | Matrix → Sherpa → Arena → Radar → Guardian |
 | FEATURE | explore | Spark → Matrix → Magi → Builder → Radar |
 | FEATURE | L-matrix | Spark → Matrix → Sherpa → Forge → Builder → Radar → Quill |
-| FEATURE | UX-matrix | Researcher → Echo → Matrix → Spark → Builder → Radar |
+| FEATURE | UX-matrix | Field → Echo → Matrix → Spark → Builder → Radar |
 | FEATURE | lateral | Spark → Flux → Matrix → Sherpa → Builder → Radar |
 | DECISION | multi-axis | Matrix → Magi → Flux → Scribe |
 | DECISION | explore | Flux → Matrix → Magi → Builder |
@@ -267,7 +267,7 @@ Complete chain templates and dynamic adjustment rules.
 | INCIDENT | prevention | Flux → Matrix → Sentinel → Beacon → Scribe |
 | UX_DESIGN | first-principles | Flux → Vision → Muse → Forge → Artisan → Radar |
 | UX_DESIGN | variant-matrix | Matrix → Vision → Muse → Artisan → Radar |
-| UX_RESEARCH | matrix | Matrix → Researcher → Echo → Palette |
+| UX_RESEARCH | matrix | Matrix → Field → Echo → Palette |
 | YAGNI | first-principles | Flux → Void → Magi → Sweep → Zen → Radar |
 | CONTENT | reframe | Flux → Prose → Echo → Artisan → Radar |
 | CONTENT | variant | Matrix → Prose → Echo → Artisan → Radar |
@@ -290,26 +290,26 @@ Complete chain templates and dynamic adjustment rules.
 | GAME | design-matrix | Quest → Matrix → Forge → Builder → Radar |
 | GAME | first-principles | Flux → Quest → Saga → Matrix → Scribe |
 | GHA_WORKFLOW | matrix | Matrix → Pipe → Gear → Radar |
-| DESIGN_SYSTEM | matrix | Matrix → Vision → Muse → Showcase → Artisan → Radar |
+| DESIGN_SYSTEM | matrix | Matrix → Vision → Muse → Vitrine → Artisan → Radar |
 | DESIGN | landing-page | Vision → Prose → Sherpa → Muse → Forge → Artisan → Warden → Radar |
 | DESIGN | app-ui-restrained | Vision → Sherpa → Muse → Artisan → Flow → Warden → Radar |
 | DESIGN | moodboard-first | Forge → Vision → Sherpa → Muse → Artisan → Radar |
 | UX_DESIGN | content-first | Prose → Vision → Sherpa → Muse → Forge → Artisan → Warden |
 | UX_DESIGN | motion-intentional | Vision → Flow → Artisan → Warden → Radar |
-| DESIGN_SYSTEM | composition | Vision → Sherpa → Muse → Artisan → Flow → Warden → Showcase → Quill |
+| DESIGN_SYSTEM | composition | Vision → Sherpa → Muse → Artisan → Flow → Warden → Vitrine → Quill |
 | STRATEGY | compete-reframe | Flux → Compete → Matrix → Spark → Scribe |
 | STRATEGY | ab-matrix | Matrix → Experiment → Builder → Radar |
 | SPEC_VERIFY | matrix | Matrix → Attest → Scribe → Radar |
-| KNOWLEDGE | first-principles | Flux → Researcher → Scribe → Prism |
+| KNOWLEDGE | first-principles | Flux → Field → Scribe → Prism |
 | PORTING | survey-only | Lens → Atlas → Port[survey] |
 | PORTING | parity | Port[parity] |
 | PORTING | blueprint | Lens → Atlas → Port[blueprint] |
-| PORTING | full | Lens → Atlas → Researcher → Port[blueprint] → Native → Voyager → Launch |
+| PORTING | full | Lens → Atlas → Field → Port[blueprint] → Native → Voyager → Launch |
 | PORTING | regulatory | Port[regulatory] → Cloak → Crypt → Scribe |
 | PORTING | xplat-decision | Port[xplat] → Magi |
 | MOBILE_NATIVE | ios | Native[swiftui] → Radar |
 | MOBILE_NATIVE | android | Native[compose] → Radar |
-| MOBILE_NATIVE | both | Native[swiftui] + Native[compose] → Radar → Showcase |
+| MOBILE_NATIVE | both | Native[swiftui] + Native[compose] → Radar → Vitrine |
 | MOBILE_NATIVE | offline | Native[offline] → Schema → Radar |
 | MOBILE_NATIVE | passkey | Native[passkey] → Crypt → Radar |
 | MOBILE_NATIVE | privacy | Native[privacy] → Cloak → Radar |
@@ -321,11 +321,11 @@ Complete chain templates and dynamic adjustment rules.
 | ASSET_IMAGE | reverse | Haul[reverse] → Cloak |
 | ASSET_IMAGE | brand | Haul[brand] → Cloak |
 | ASSET_IMAGE | audit | Haul[audit] |
-| ASSET_IMAGE | for-storybook | Haul[catalog] → Cloak → Showcase |
+| ASSET_IMAGE | for-storybook | Haul[catalog] → Cloak → Vitrine |
 | ASSET_IMAGE | for-lp | Haul[catalog] → Cloak → Funnel |
 | ASSET_IMAGE | for-mockup | Haul[catalog] → Cloak → Pixel |
 | ASSET_IMAGE | for-atelier | Haul[catalog] → Cloak → Atelier |
-| ASSET_IMAGE | protected-source | Navigator → Haul → Cloak |
+| ASSET_IMAGE | protected-source | Vector → Haul → Cloak |
 | ADVISORY | 1on1 | Sage[1on1] |
 | ADVISORY | group | Sage[group] |
 | ADVISORY | triage | Sage[triage] |
@@ -335,7 +335,7 @@ Complete chain templates and dynamic adjustment rules.
 | ADVISORY | advise-then-validate | Sage → Plea |
 | ADVISORY | strategy-handoff | Helm → Sage → Sherpa |
 | ADVISORY | feature-reality-check | Spark → Sage |
-| ADVISORY | research-to-action | Researcher → Sage → Sherpa → Builder |
+| ADVISORY | research-to-action | Field → Sage → Sherpa → Builder |
 
 ---
 
@@ -362,7 +362,7 @@ Builder then applies:
 - Security-related code changes → Add Sentinel
 - Security needs runtime validation → Add Probe after Sentinel
 - UI changes included → Consider Muse/Palette
-- UX assumptions need validation → Add Researcher before Echo
+- UX assumptions need validation → Add Field before Echo
 - Code changes exceed 50 lines → Consider refactoring with Zen
 - Type errors occur → Return to Builder to strengthen type definitions
 - Database queries slow (>100ms) → Add Tuner
@@ -412,7 +412,7 @@ Builder then applies:
 - Voice of Customer / NPS / review-mining → Use MARKETING/voc
 - AI search visibility / LLM citation optimization (GEO) → Use MARKETING/seo-geo
 - Marketing analytics / attribution / funnel instrumentation → Use MARKETING/analytics
-- Persona unclear or target segment ambiguous → Use MARKETING/persona-driven (Researcher-first to derive persona from qualitative data)
+- Persona unclear or target segment ambiguous → Use MARKETING/persona-driven (Field-first to derive persona from qualitative data)
 - Marketing strategy stuck or contrarian reframing needed → Use MARKETING/reframe
 - Marketing requires multi-dimensional analysis (3+ segments × channels × campaigns) → Use MARKETING/matrix
 - Customer acquisition cost rising / paid channels saturated → Use MARKETING/acquisition (KPI-first; Pulse defines target CAC/LTV before channel tuning)
@@ -498,7 +498,7 @@ When Rally is activated for parallel execution, standard chains transform into p
 
 | Base Chain | Rally Parallel Chain | Team Pattern |
 |------------|---------------------|--------------|
-| DOCS/full | Rally(Quill, Canvas, Showcase) | Specialist Team |
+| DOCS/full | Rally(Quill, Canvas, Vitrine) | Specialist Team |
 
 ### MODERNIZE Parallel Chains
 
@@ -510,7 +510,7 @@ When Rally is activated for parallel execution, standard chains transform into p
 
 | Base Chain | Rally Parallel Chain | Team Pattern |
 |------------|---------------------|--------------|
-| MOBILE_NATIVE/both | Rally(Native[swiftui], Native[compose]) → Radar → Showcase | Platform Split (iOS / Android) |
+| MOBILE_NATIVE/both | Rally(Native[swiftui], Native[compose]) → Radar → Vitrine | Platform Split (iOS / Android) |
 | MOBILE_NATIVE/full | Port[blueprint] → Rally(Native[swiftui], Native[compose]) → Radar → Voyager → Cloak → Launch | Platform Split |
 
 See `rally/reference/integration-patterns.md` for detailed team composition and handoff formats.

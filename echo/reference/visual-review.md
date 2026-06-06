@@ -1,6 +1,6 @@
 # Echo Visual Review Reference
 
-Detailed guide for performing visual review of screenshots from Navigator with persona perspective.
+Detailed guide for performing visual review of screenshots from Vector with persona perspective.
 
 ---
 
@@ -29,7 +29,7 @@ Detailed guide for performing visual review of screenshots from Navigator with p
 
 ### Step 1: RECEIVE - Handoff Reception
 
-Receive the following from Navigator:
+Receive the following from Vector:
 
 ```markdown
 ## NAVIGATOR_TO_ECHO_HANDOFF

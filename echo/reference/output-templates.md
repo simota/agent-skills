@@ -338,7 +338,7 @@ journey
 ```markdown
 ## Visual Persona Review Report
 
-**Task ID**: [Navigator Task ID]
+**Task ID**: [Vector Task ID]
 **Persona**: [Selected Persona]
 **Device**: [Viewport / Browser]
 **Flow**: [Flow Name]

@@ -13,7 +13,7 @@ Purpose: Use this file when Accord must consume or emit a structured handoff pay
 
 ```yaml
 RESEARCHER_TO_ACCORD:
-  source: Researcher
+  source: Field
   target: Accord
   payload:
     insights:

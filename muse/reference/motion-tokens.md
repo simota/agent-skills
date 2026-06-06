@@ -111,6 +111,6 @@ Resolver document (`.resolver.json`) can swap full token sets when `prefers-redu
 
 - **To Flow**: motion-token spec with semantic mapping (`modal-enter` → `duration.300` + `easing.decelerate`), reduced-motion variants, and component-level guidance.
 - **To Artisan**: token references for `transition`/`animation` properties in component CSS or styled-components.
-- **To Showcase**: motion token catalog page with live examples and reduced-motion preview toggle.
+- **To Vitrine**: motion token catalog page with live examples and reduced-motion preview toggle.
 - **To Palette**: when motion choices affect perceived responsiveness (>300ms feels laggy for primary CTAs), bring back to Palette for usability call.
 - **To Polyglot**: directional motion tokens for RTL — slide-in-from-start vs slide-in-from-left.

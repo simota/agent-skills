@@ -4,7 +4,7 @@ Purpose: Use this file when you need OWASP ZAP defaults for baseline web scannin
 
 > **Currency note (2026-05)**:
 > - **ZAP 2.16.0** (released 2025-01-10, `zaproxy.org/blog/2025-01-10-zap-2-16-0/`) is the current GA. It is the **first full release under the "ZAP by Checkmarx" brand** (Checkmarx hired Simon Bennetts, Rick Mitchell, and Ricardo Pereira in 2024-09 and now funds development). Baseline Java requirement is now **JDK 17+**.
-> - **Client Spider** was promoted to **Beta** with full Automation Framework support and an updated `spiderClient` job. The traditional spider also received a refactor.
+> - **Client Trawl** was promoted to **Beta** with full Automation Framework support and an updated `spiderClient` job. The traditional spider also received a refactor.
 > - ZAP remains Apache 2.0; the PTK add-on continues to combine DAST + IAST + SAST + SCA in one authenticated browser session (Chrome / Edge / Firefox) with client-side alert coverage.
 > - Burp Suite Professional (PortSwigger) shipped **Burp AI** (announced 2025-03-31) with AI-driven login-sequence recording, automated issue validation via AI-generated PoCs, and AI insights inside Repeater. Every Pro user receives 10,000 AI credits. When evaluating tooling, treat Burp AI as the closest paid equivalent for authenticated scans / API DAST.
 
@@ -21,7 +21,7 @@ Purpose: Use this file when you need OWASP ZAP defaults for baseline web scannin
 
 | Track | Use when | Default rule |
 | --- | --- | --- |
-| Baseline scan | General web app or first-pass DAST | Spider + passive + targeted active scan |
+| Baseline scan | General web app or first-pass DAST | Trawl + passive + targeted active scan |
 | API scan | OpenAPI/REST scope exists | Import schema and focus on API rules |
 | Auth test | Session, login, logout, fixation, or privilege context matters | Use authenticated context and session checks |
 
@@ -45,8 +45,8 @@ zap-cli --zap-url http://127.0.0.1 --zap-port 8080 report -o zap-report.html -f 
 
 | Setting | Default |
 | --- | --- |
-| Spider `maxDuration` | `5` minutes |
-| Spider `maxDepth` | `5` |
+| Trawl `maxDuration` | `5` minutes |
+| Trawl `maxDepth` | `5` |
 | Passive scan wait | `10` minutes |
 | Active rule max duration | `5` minutes |
 | Total scan duration | `30` minutes |

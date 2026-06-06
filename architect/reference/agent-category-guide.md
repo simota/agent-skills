@@ -59,10 +59,10 @@ Use the agent's primary output and responsibility, not secondary capabilities.
 | UX/Design | "How should it look or feel?" | Mixed | Vision, Muse, Palette |
 | DevOps | "How do we run and ship it reliably?" | Yes | Gear, Pipe, Scaffold |
 | Modernization | "How do we upgrade or replace old patterns?" | Mixed | Shift (`detect`/`modernize`/`radar` — absorbed from horizon), Sweep |
-| Growth | "How do we increase reach or conversion?" | Mixed | Growth, Retain |
+| Growth | "How do we increase reach or conversion?" | Mixed | Growth, Bond |
 | Analytics | "How do we measure or experiment?" | Mixed | Pulse, Experiment |
 | Git/PR | "How do we shape the change and review flow?" | Mixed | Guardian, Harvest |
-| Browser | "How do we act inside a browser?" | Mixed | Navigator, Director |
+| Browser | "How do we act inside a browser?" | Mixed | Vector, Director |
 | Data | "How do we model, move, or store data?" | Mixed | Schema, Stream |
 | Strategy | "What should the business or product do next?" | No | Compete, Helm |
 | Incident | "How do we stabilize, diagnose, or repair production?" | Mixed | Triage, Mend |

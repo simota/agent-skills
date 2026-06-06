@@ -10,7 +10,7 @@ CAPABILITIES_SUMMARY:
 - multi_granularity_operation: Drive downstream agents via four operation layers — prompt, structured comment, direct edit instruction, parametric slider (value-range hints)
 - design_intent_handoff: Standardize design intent propagation through the `DESIGN_INTENT_HANDOFF` schema from Vision -> Muse/Frame -> Forge -> Artisan
 - multi_artifact_range: Cover design, prototype, slide deck, 1-pager, marketing captures, and implementation artifacts within a single workflow
-- pipeline_routing: Select the minimum viable delegate set (Frame, Muse, Loom, Forge, Pixel, Ink/Sketch/Dot/Clay, Stage, Canvas, Morph, Artisan, Showcase) scoped to the request shape
+- pipeline_routing: Select the minimum viable delegate set (Frame, Muse, Loom, Forge, Pixel, Ink/Sketch/Dot/Clay, Stage, Canvas, Morph, Artisan, Vitrine) scoped to the request shape
 - onboarding_caching: Avoid redundant extraction by reading the persisted design system and re-running onboarding only on tokens drift, file hash change, or explicit refresh
 - handoff_bundle_assembly: Assemble consumer-specific handoff bundles (tokens, components, intent, constraints, success criteria) per downstream agent
 - parametric_slider_authoring: Express design-intent hints as value ranges (e.g., radius 4-12, density compact|comfortable, motion subtle|expressive) so downstream agents can parametrize rather than hardcode
@@ -28,14 +28,14 @@ COLLABORATION_PATTERNS:
 - atelier -> Canvas: diagram authoring
 - atelier -> Morph: multi-format export (MD/Word/Excel/PDF/HTML)
 - atelier -> Artisan: production frontend implementation
-- atelier -> Showcase: Storybook catalog and visual regression
+- atelier -> Vitrine: Storybook catalog and visual regression
 - atelier -> Nexus: escalation when the request exceeds design-pipeline scope
 - Judge -> atelier: quality feedback on pipeline output
 - Warden -> atelier: pre-check result (PASS / CONDITIONAL / FAIL) prior to major delegation
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Vision (direction), User (request), Judge (quality feedback), Warden (pre-check)
-- OUTPUT: Frame, Muse, Loom, Forge, Pixel, Ink, Sketch, Dot, Clay, Stage, Canvas, Morph, Artisan, Showcase, Nexus
+- OUTPUT: Frame, Muse, Loom, Forge, Pixel, Ink, Sketch, Dot, Clay, Stage, Canvas, Morph, Artisan, Vitrine, Nexus
 
 PROJECT_AFFINITY: SaaS(H) Marketing(H) Dashboard(H) E-commerce(H) Mobile(M) Game(M)
 -->
@@ -73,7 +73,7 @@ Route elsewhere when the task is primarily:
 - Require upstream direction from Vision (`direction.md` or handoff) or an explicit aesthetic brief from the user. atelier does not originate aesthetic decisions.
 - Emit `DESIGN_INTENT_HANDOFF` to every downstream agent: tokens reference, component priorities, intent parameters (sliders), constraints, success criteria, source provenance.
 - Keep the fan-out minimum viable. Each added delegate multiplies coordination cost; include a delegate only when the request shape demands its artifact type.
-- Preserve the closed loop: code extraction (Frame / repo scan) → visual generation (Forge / Pixel / Ink / Stage) → code materialization (Artisan / Showcase). Every run must be able to return to code.
+- Preserve the closed loop: code extraction (Frame / repo scan) → visual generation (Forge / Pixel / Ink / Stage) → code materialization (Artisan / Vitrine). Every run must be able to return to code.
 - Quantify success criteria per artifact before delegation: token-drift = 0, pixel fidelity ≥ 95% for Pixel work, load time ≤ 3s for landing implementations. A11y baseline per Core Rule #7.
 - Match scope to pipeline shape: single-artifact requests collapse to one delegate; multi-artifact requests expand to parallel handoffs with file-ownership isolation.
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P1 (front-loaded acceptance criteria in every handoff), P4 (parallel subagent triggers for 2-3 independent artifact tracks), P7 (delegation framing across the Frame/Muse/Forge/Artisan chain)** as critical for atelier. Parallel fan-out to independent delegates (e.g., Stage + Ink + Forge) is the default for multi-artifact bundles, not an escalation path.
@@ -89,7 +89,7 @@ Route elsewhere when the task is primarily:
 6. **Cap fan-out at 5 concurrent delegates per run.** Beyond 5, orchestrator context accumulation causes silent handoff failures. Split into sequenced batches or escalate to Nexus.
 7. **Validate WCAG 2.2 AA before DELIVER.** Any visual artifact that ships to users must pass AA contrast checks (4.5:1 text, 3:1 UI). Flag failures; never silently degrade.
 8. **Preserve token discipline.** Downstream agents must reference tokens from the persisted system. atelier rejects handoffs that reintroduce hardcoded values unless explicitly scoped as a prototype throwaway.
-9. **Close the loop.** Every pipeline run ends with either code (Artisan / Showcase output), a reusable spec (Loom / Canvas), or a distributable artifact (Morph / Stage). No intermediate-only runs.
+9. **Close the loop.** Every pipeline run ends with either code (Artisan / Vitrine output), a reusable spec (Loom / Canvas), or a distributable artifact (Morph / Stage). No intermediate-only runs.
 10. **Route out when the request leaves the design axis.** If the request needs backend logic, infrastructure, security audit, or non-design multi-domain work, escalate to Nexus with a `DESIGN_INTENT_HANDOFF` attached for the design slice.
 11. **Request Warden pre-check before major delegation.** Applies to new-product builds, multi-page redesigns, or brand-touching work. Skip Warden only for scoped token tweaks and prototype-only slices.
 12. **Log every run into `.agents/atelier.md` and `.agents/PROJECT.md`.** The design-system cache is useless without a record of why it was updated.
@@ -178,7 +178,7 @@ atelier drives downstream agents through four deliberately chosen operation laye
 Layer selection rules:
 - Prompt is the default only for creative divergence.
 - Structured comments go to agents that edit files in place (Artisan, Muse, Forge) and need semantic framing.
-- Direct edit instructions go to deterministic agents with a single correct answer (Muse token update, Showcase story scaffold).
+- Direct edit instructions go to deterministic agents with a single correct answer (Muse token update, Vitrine story scaffold).
 - Parametric sliders go downstream when Vision provided a range rather than a point (e.g., restraint band rather than exact radius).
 
 ## Delegate Matrix
@@ -190,10 +190,10 @@ Route artifacts by shape. Include a delegate only when its output is part of the
 | Design-system extraction (Figma) | `Frame` | `Muse` (normalize), `Canvas` (diagram) | Rate-budget aware; Code Connect if mapping requested |
 | Design-system extraction (codebase) | `Muse` | `Frame` (verify in Figma) | DTCG 2025.10 alignment |
 | Design-system guideline package | `Loom` | `Muse`, `Frame` | Figma Make input |
-| Rapid prototype | `Forge` | `Muse` (tokens), `Showcase` (stories) | Time-box ≤ 4h |
+| Rapid prototype | `Forge` | `Muse` (tokens), `Vitrine` (stories) | Time-box ≤ 4h |
 | Mockup-faithful reproduction | `Pixel` | `Muse`, `Artisan` | Fidelity ≥ 95% |
-| Production frontend | `Artisan` | `Muse`, `Showcase` | Token-driven only |
-| Storybook catalog | `Showcase` | `Muse`, `Frame` | CSF 3.0 / Factories |
+| Production frontend | `Artisan` | `Muse`, `Vitrine` | Token-driven only |
+| Storybook catalog | `Vitrine` | `Muse`, `Frame` | CSF 3.0 / Factories |
 | Vector icon / illustration | `Ink` | `Muse` (token align) | SVG symbol sprite |
 | AI raster image | `Sketch` | — | Gemini API backend |
 | Pixel art | `Dot` | — | SVG / Canvas / Phaser |
@@ -201,13 +201,13 @@ Route artifacts by shape. Include a delegate only when its output is part of the
 | Slide deck | `Stage` | `Ink`, `Muse` | Marp / reveal.js / Slidev |
 | Diagram | `Canvas` | — | Mermaid / draw.io |
 | Multi-format export | `Morph` | — | MD/Word/Excel/PDF/HTML |
-| Landing page (composite) | `Funnel` | `Muse`, `Artisan`, `Showcase` | When dedicated landing agent fits better than Artisan |
+| Landing page (composite) | `Funnel` | `Muse`, `Artisan`, `Vitrine` | When dedicated landing agent fits better than Artisan |
 
 **Default bundles by trigger:**
-- "LP design to implementation" → `Frame` (if Figma) / `Muse` (tokens) → `Forge` (prototype) → `Artisan` (production) → `Showcase` (catalog)
-- "codebase tokens → new screen prototype" → `Muse` (extract) → `Forge` (prototype) → `Showcase` (story)
+- "LP design to implementation" → `Frame` (if Figma) / `Muse` (tokens) → `Forge` (prototype) → `Artisan` (production) → `Vitrine` (catalog)
+- "codebase tokens → new screen prototype" → `Muse` (extract) → `Forge` (prototype) → `Vitrine` (story)
 - "pitch deck + marketing assets + 1-pager" → parallel: `Stage` (deck) + `Ink` (assets) + `Morph` (1-pager export), anchored by `Muse` token reference
-- "Figma → implementation code" → `Frame` (extract) → `Muse` (align tokens) → `Artisan` (implement) → `Showcase` (stories)
+- "Figma → implementation code" → `Frame` (extract) → `Muse` (align tokens) → `Artisan` (implement) → `Vitrine` (stories)
 
 ## `DESIGN_INTENT_HANDOFF` Schema Usage
 
@@ -219,7 +219,7 @@ atelier uses `DESIGN_INTENT_HANDOFF` as defined canonically in `_common/HANDOFF.
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Full Pipeline | `pipeline` | ✓ | Full design→code loop (Vision → Muse → Forge → Artisan → Showcase → Canvas) | `_common/HANDOFF.md`, `_common/design-system-registry.md` |
+| Full Pipeline | `pipeline` | ✓ | Full design→code loop (Vision → Muse → Forge → Artisan → Vitrine → Canvas) | `_common/HANDOFF.md`, `_common/design-system-registry.md` |
 | Design Extract | `extract` | | Design extraction only (Frame → Muse token normalization) | `_common/design-system-registry.md` |
 | Persist Design System | `persist` | | Persist design system (.agents/design-system/{project}.json) | `_common/design-system-registry.md`, `_common/parametric-output.md` |
 | Asset Generation | `assets` | | Asset generation (parallel rollout of slides, visuals, prototypes) | `_common/HANDOFF.md` |
@@ -240,10 +240,10 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `landing page`, `LP`, `one page site` | LP pipeline (Frame/Muse → Forge → Artisan → Showcase) | Production LP code + stories + tokens | — |
+| `landing page`, `LP`, `one page site` | LP pipeline (Frame/Muse → Forge → Artisan → Vitrine) | Production LP code + stories + tokens | — |
 | `extract tokens`, `codebase design system` | ONBOARDING + Muse normalization | Persisted design system + token report | — |
 | `pitch deck + assets + 1-pager` | Parallel Stage/Ink/Morph bundle | Deck + assets + 1-pager export | — |
-| `Figma to code`, `design to implementation` | Frame → Muse → Artisan → Showcase | Production code + catalog | — |
+| `Figma to code`, `design to implementation` | Frame → Muse → Artisan → Vitrine | Production code + catalog | — |
 | `prototype from design` | Forge-anchored chain | Runnable prototype + story | — |
 | `refresh design system`, `tokens changed` | Re-run ONBOARDING with `--refresh-design-system` | Updated cache + drift report | — |
 | unclear scope | INTAKE clarification (one focused question) | Scoped pipeline plan | — |
@@ -272,7 +272,7 @@ atelier receives direction from Vision and briefs from the user. atelier sends e
 | atelier → Canvas | `DESIGN_INTENT_HANDOFF` | Diagram |
 | atelier → Morph | `DESIGN_INTENT_HANDOFF` | Multi-format export |
 | atelier → Artisan | `DESIGN_INTENT_HANDOFF` | Production implementation |
-| atelier → Showcase | `DESIGN_INTENT_HANDOFF` | Storybook catalog |
+| atelier → Vitrine | `DESIGN_INTENT_HANDOFF` | Storybook catalog |
 | atelier → Nexus | `NEXUS_ROUTING` | Escalation for out-of-scope multi-domain work |
 | Judge → atelier | `QUALITY_FEEDBACK` | Pipeline output quality review |
 | Warden → atelier | pre-check result | Gate on major delegation |
@@ -311,7 +311,7 @@ Every atelier deliverable must include:
 | `_common/design-system-registry.md` | You need the registry contract for `.agents/design-system/{project}.json` persistence |
 | `_common/parametric-output.md` | You need the parametric-slider output convention downstream agents parse |
 | `_common/GIT_GUIDELINES.md` | You are authoring commits or PRs touching atelier pipeline artifacts |
-| `_common/UX_TRENDS_2026.md` | You need cross-domain 2025-2026 evidence to orchestrate Vision / Muse / Frame / Forge / Artisan / Showcase / Echo handoffs. Covers tokens (DTCG, OKLCH/P3), motion (`linear()`, View Transitions), IA (agentic UX, NN/g), and frontend (RSC, Tailwind v4, INP) in one file. Read all three sections. |
+| `_common/UX_TRENDS_2026.md` | You need cross-domain 2025-2026 evidence to orchestrate Vision / Muse / Frame / Forge / Artisan / Vitrine / Echo handoffs. Covers tokens (DTCG, OKLCH/P3), motion (`linear()`, View Transitions), IA (agentic UX, NN/g), and frontend (RSC, Tailwind v4, INP) in one file. Read all three sections. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing delegate prompts, deciding per-delegate model effort, or front-loading acceptance criteria |
 | `_common/PROOF_CARRYING.md` | You are the Layer B sub-orchestrator in `nexus acceptance` Phase 2B / 3B / 4B (when `ui_dimension != none`). Coordinate muse / frame / palette / canon / showcase / prose / echo / vision / matrix / weave / flow to produce the 9 Design-side evidence fields and the joint Design Acceptance verdict. G7 Unmeasurable-Quality Audit gate for Tier-S UI requires human designer sign-off even on Compiler PASS. |
 
@@ -338,7 +338,7 @@ _STEP_COMPLETE:
     deliverable: <primary artifact bundle>
     artifact_types: [prototype, production, deck, asset, export, story, diagram]
     Registry_Ref: .agents/design-system/<slug>.json
-    delegates_used: [Frame, Muse, Forge, Artisan, Showcase]
+    delegates_used: [Frame, Muse, Forge, Artisan, Vitrine]
     parameters:
       Vision_Ref: <Vision direction or user-brief>
       operation_layers: [prompt, structured-comment, direct-edit, parametric-slider]

@@ -7,7 +7,7 @@ Purpose: Produce many image variants in one run with consistent seed, style, and
 - **sketch `batch`**: batch Python script, seed stability plan, parallel API calls with rate limits, output naming, perceptual-hash dedup, `metadata.json` per asset.
 - **sketch `style` (sibling)**: defines the style anchor (reference image / token set) consumed by `batch`. Call `style` first if the style is not yet locked.
 - **Quest (elsewhere)**: asset brief, count, resolution, and naming spec — `batch` does not invent the list.
-- **Showcase (elsewhere)**: catalog the produced set after `batch` completes.
+- **Vitrine (elsewhere)**: catalog the produced set after `batch` completes.
 
 If the brief is "one hero image, try three variants" → default `generate`. If it is "120 card faces, consistent frame and lighting" → `batch`.
 
@@ -115,7 +115,7 @@ Flag — do not auto-delete. Duplicates get `*.dup.json` sidecar; the operator d
 
 ## Handoff
 
-- **To Showcase**: output directory + `_index.json` (brief, model, seed_base, pHash list). Showcase builds the catalog.
+- **To Vitrine**: output directory + `_index.json` (brief, model, seed_base, pHash list). Vitrine builds the catalog.
 - **To Muse**: dominant-color extraction input if the batch feeds the design system.
 - **To Growth**: promo-ready subset filtered by aspect ratio + safe margins.
 - **To Oracle**: only if a content-policy edge case tripped — forward the failing prompt and block reason, never the raw output.

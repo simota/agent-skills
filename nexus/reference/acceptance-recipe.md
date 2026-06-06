@@ -98,10 +98,10 @@ Read `_common/PROOF_CARRYING.md` v2 Tier table. Classify the change by inspectin
 - `weave` — state machine spec emission for interactive components (XState / DSL)
 - `flow` — motion token verification (animation duration / easing token compliance)
 - `canon` — `a11y_proof` generator (axe-core + Pa11y rule integration, WCAG 2.2 AA mapping)
-- `showcase` — `vrt_proof` generator with Matrix Sampling Policy applied (`matrix` skill produces pairwise / orthogonal-array story set)
+- `vitrine` — `vrt_proof` generator with Matrix Sampling Policy applied (`matrix` skill produces pairwise / orthogonal-array story set)
 - `prose` — `copy_proof` generator (voice/tone rules, banned-word list, length constraints, locale-appropriate copy)
 
-**Matrix Sampling Policy** (applies to `showcase` + `voyager` VRT runs, per PROOF_CARRYING.md PD-2):
+**Matrix Sampling Policy** (applies to `vitrine` + `voyager` VRT runs, per PROOF_CARRYING.md PD-2):
 - Tier-S: full pairwise + critical-path full-coverage; full N-way only for payment/auth/PII paths
 - Tier-A: pairwise (2-way) on all DS components; 3-way for Tier-A critical user journey
 - Tier-B: critical-path only (top 10 user journeys)
@@ -128,7 +128,7 @@ Read `_common/PROOF_CARRYING.md` v2 Tier table. Classify the change by inspectin
 
 #### Phase 3B — Design-Axis Adversaries (atelier sub-orchestration, when `ui_dimension != none`)
 
-**Agents** (parallel UI-user personas via `voyager` + `navigator`, orchestrated by `atelier` + `echo`):
+**Agents** (parallel UI-user personas via `voyager` + `vector`, orchestrated by `atelier` + `echo`):
 - `echo` — persona walkthrough specialist; defines the AI-user persona set per UX-task-proof:
   - Standard new user (typical happy path)
   - Returning user (resumes prior state)
@@ -139,7 +139,7 @@ Read `_common/PROOF_CARRYING.md` v2 Tier table. Classify the change by inspectin
   - Payment-failure user (decline → retry / alternative path)
   - Locale-edge user (RTL, long-translation overflow, IME composition)
   - Adversarial user (URL tampering, replayed tokens, malformed input)
-- `voyager` + `navigator` — Playwright / CUA execution of persona scripts
+- `voyager` + `vector` — Playwright / CUA execution of persona scripts
 - `matrix qa-scenario` — converts persona walkthroughs to executable test scenarios
 
 **Engine routing for Tier-S Layer B**: Adversarial UI users → Claude (persona judgment + UX edge enumeration); deterministic UI checks (token / contract violations) → Codex.
@@ -403,7 +403,7 @@ Phase 6 (Random Sampling Audit, async post-merge, non-blocking):
 - `sentinel/SKILL.md` — SAST + attack-surface (Layer A oracle + Layer A adversary)
 - `vigil/SKILL.md` — security attacker persona (Layer A adversary)
 - `voyager/SKILL.md` — Playwright/CUA E2E (shared Layer A + Layer B)
-- `navigator/SKILL.md` — browser automation for UI persona walkthroughs
+- `vector/SKILL.md` — browser automation for UI persona walkthroughs
 - `siege/SKILL.md` (concurrency recipe) — concurrency / race condition edge cases
 - `siege/SKILL.md` — load + chaos (Tier-S only)
 - `beacon/SKILL.md` — runtime oracle registration
@@ -418,7 +418,7 @@ Phase 6 (Random Sampling Audit, async post-merge, non-blocking):
 - `weave/SKILL.md` — state machine spec (XState DSL for interactive components)
 - `flow/SKILL.md` — motion token verification (animation duration / easing)
 - `canon/SKILL.md` — `a11y_proof` (WCAG 2.2 AA, axe-core/Pa11y integration)
-- `showcase/SKILL.md` — `vrt_proof` with Matrix Sampling
+- `vitrine/SKILL.md` — `vrt_proof` with Matrix Sampling
 - `prose/SKILL.md` — `copy_proof` (voice / tone / banned words / length / locale)
 - `echo/SKILL.md` — UX persona definition for `ux_task_proof`
 - `vision/SKILL.md` — brand_proof advisory (LLM-as-judge, non-blocking)

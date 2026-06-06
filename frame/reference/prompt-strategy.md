@@ -257,7 +257,7 @@ File: [URL]
 
 ### Tips
 - High information density — one call can reveal design system structure
-- Useful as input for Muse (token system) and Showcase (documentation)
+- Useful as input for Muse (token system) and Vitrine (documentation)
 - Results should be validated against actual file content
 
 ---

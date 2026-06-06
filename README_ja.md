@@ -55,8 +55,8 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Orbit** | _"Give me a goal. I'll give you a runner that finishes."_ - Nexus-autoloop完走スペシャリスト。自律ループの完走スクリプト生成・運用契約設計・監査を担当。ゴールを渡せば完走できるランナー一式を生成 | ランナースクリプト、契約 |
 | **Darwin** | _"Ecosystems that cannot sense themselves cannot evolve themselves."_ - エコシステム自己進化オーケストレーター。プロジェクトライフサイクルを検出し、エージェントの関連性を評価し、横断的知識を統合してエコシステム全体を進化させる | エコシステムフィットネススコア、進化提案 |
 | **Lore** | _"Forgotten lessons are lessons repeated. Institutional memory is the compound interest of experience."_ - エコシステム横断の知識統合・パターン抽出・伝播を担うメモリキュレーター。エージェントjournalから共通パターンを発見し、カタログ化して関連エージェントへ配信。知識の腐敗検出・ベストプラクティス伝播により制度的記憶を維持 | METAPATTERNS.md、知識インサイト |
-| **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - デザインから実装までを閉ループで繋ぐパイプラインオーケストレーター。Vision → Muse/Frame → Forge → Artisan → Showcase → Canvas を統括し、デザイン抽出・プロトタイプ・ビジュアルアセット・スライド・本番実装をプロジェクトデザインシステムを永続化しながら一気通貫で提供 | デザインシステムパッケージ、統合成果物 |
-| **Lure** | _"A landing page is one promise, one path, one decision. lure runs the studio that delivers all three."_ - 超高品質LP制作スタジオチェーン・オーケストレーター。Researcher → Cast → Pulse → Funnel → Vision → Saga → Compete → Muse → Flow → Artisan → Growth → Bolt → Judge → Launch を、LP種別レシピと9段階の品質ゲート（Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch）で束ね、6つのクラフト軸（デザイン／アニメーション／ブランディング／マーケティング／SEO／IA）すべてにルーブリックと納品閾値を課したLPを納品 | 6軸ルーブリック通過済みLPパッケージ、CVR最適化された本番コード、ブランド整合性のあるビジュアル、トークン化されたモーション、スキーマ妥当性のあるSEO、AI検索引用対応GEO、計測稼働 |
+| **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - デザインから実装までを閉ループで繋ぐパイプラインオーケストレーター。Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas を統括し、デザイン抽出・プロトタイプ・ビジュアルアセット・スライド・本番実装をプロジェクトデザインシステムを永続化しながら一気通貫で提供 | デザインシステムパッケージ、統合成果物 |
+| **Bazaar** | _"A landing page is one promise, one path, one decision. lure runs the studio that delivers all three."_ - 超高品質LP制作スタジオチェーン・オーケストレーター。Field → Cast → Pulse → Funnel → Vision → Saga → Compete → Muse → Flow → Artisan → Growth → Bolt → Judge → Launch を、LP種別レシピと9段階の品質ゲート（Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch）で束ね、6つのクラフト軸（デザイン／アニメーション／ブランディング／マーケティング／SEO／IA）すべてにルーブリックと納品閾値を課したLPを納品 | 6軸ルーブリック通過済みLPパッケージ、CVR最適化された本番コード、ブランド整合性のあるビジュアル、トークン化されたモーション、スキーマ妥当性のあるSEO、AI検索引用対応GEO、計測稼働 |
 | **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 130+."_ - スキルエコシステムのナビゲーター・オンボーディングガイド。エージェントを一覧化し、タスクに最適な担当を推薦し、初心者が適切なスペシャリストを発見できるよう支援 | レコメンド、エージェントマップ |
 
 ### 調査・企画（コードを書かない）
@@ -70,8 +70,8 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Compete** | _"Know your enemy. Know the market. Know yourself."_ - 競合調査・差別化ポイント特定・ポジショニング。SWOT分析、機能マトリクス | 競合分析レポート |
 | **Voice** | _"Feedback is a gift. Analysis is unwrapping it."_ - ユーザーフィードバック収集・NPS調査設計・感情分析・インサイト抽出 | フィードバックレポート |
 | **Plea** | _"I am your user. I feel every day what you overlook."_ - 合成ユーザー代弁者。多様なエンドユーザーペルソナになりきり、本物のような機能要望を生成し、未充足ニーズを発掘し、チームの思い込みに挑戦する | 機能要望レポート |
-| **Researcher** | _"Users don't lie. They just don't know what they want yet."_ - ユーザーリサーチ設計・インタビューガイド作成・定性分析・ペルソナ/ジャーニーマップ作成 | リサーチレポート |
-| **Trace** | _"Every click tells a story. I read between the actions."_ - セッションリプレイ分析・ペルソナ別行動パターン抽出・UX問題の物語化。Researcher/Echoと連携 | 行動分析レポート |
+| **Field** | _"Users don't lie. They just don't know what they want yet."_ - ユーザーリサーチ設計・インタビューガイド作成・定性分析・ペルソナ/ジャーニーマップ作成 | リサーチレポート |
+| **Trace** | _"Every click tells a story. I read between the actions."_ - セッションリプレイ分析・ペルソナ別行動パターン抽出・UX問題の物語化。Field/Echoと連携 | 行動分析レポート |
 | **Canon** | _"Standards are the accumulated wisdom of the industry. Apply them, don't reinvent them."_ - 世界標準・業界標準で物事を解決する調査・分析エージェント。OWASP/WCAG/OpenAPI/ISO 25010等の標準への準拠度評価、標準違反検出、改善提案 | 準拠度レポート |
 | **Lens** | _"See the code, not just search it."_ - コードベース理解・調査スペシャリスト。「〇〇機能はあるか」「〇〇のフローはどうか」「このモジュールの責務は何か」をコード構造把握・機能探索・データフロー追跡で体系的に調査 | 調査レポート |
 | **Magi** | _"Three minds, one verdict. Consensus through diversity."_ - 3視点（論理・共感・実利）による多角的意思決定。アーキテクチャ選定、トレードオフ判断、Go/No-Go判定 | 意思決定レポート |
@@ -90,11 +90,11 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 **Scout → Ripple → Builder の連携**：Scout（バグ調査）→ Ripple（修正の影響分析）→ Builder（実装）
 **Ripple → Guardian の連携**：Ripple（影響分析）→ Guardian（PR戦略）
-**Researcher → Trace → Echo の連携**：Researcher（ペルソナ定義）→ Trace（実データ検証）→ Echo（シミュレーション確認）
+**Field → Trace → Echo の連携**：Field（ペルソナ定義）→ Trace（実データ検証）→ Echo（シミュレーション確認）
 **Sentinel → Canon → Builder の連携**：Sentinel（脆弱性検出）→ Canon（OWASP準拠評価）→ Builder（修正実装）
 **Gateway → Canon → Gateway の連携**：Gateway（API設計）→ Canon（OpenAPI/RFC準拠確認）→ Gateway（修正）
 **Echo → Canon → Palette の連携**：Echo（UX問題）→ Canon（WCAG準拠評価）→ Palette（アクセシビリティ修正）
-**Researcher → Cast → Echo の連携**：Researcher（調査データ）→ Cast（ペルソナ統合）→ Echo（UI検証）
+**Field → Cast → Echo の連携**：Field（調査データ）→ Cast（ペルソナ統合）→ Echo（UI検証）
 **Trace → Cast の連携**：Trace（行動データ）→ Cast（ペルソナ進化）
 
 ### Git/PR管理
@@ -126,10 +126,10 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Siege** | _"Break it before users do. Fix it before they notice."_ - 高度テストスペシャリスト。負荷テスト（k6/Locust/Artillery）、契約テスト（Pact CDC）、カオスエンジニアリング、ミューテーションテスト、レジリエンスパターン検証 | テスト結果、レジリエンスレポート |
 | **Void** | _"The best code is the code that was never written."_ - YAGNI検証・スコープカット・機能プルーニング・複雑性削減提案。5つの存在検証問とCost-of-Keeping Scoreで不要な複雑性を特定 | 削減提案 |
 | **Vigil** | _"Detection is the first line of defense. Engineering is the last."_ - Detection Engineeringエージェント。Sigma/YARAルール設計、検出カバレッジマッピング、脅威ハンティング仮説設計、Detection-as-Code CI/CD統合 | 検出ルール、カバレッジマップ |
-| **Husk** | _"The worm leaves a husk. Find it before it sheds again."_ - サプライチェーンマルウェア感染スキャナ。npm/PyPI ワーム型攻撃（Mini Shai-Hulud、S1ngularity、lottie-player）を IoC ベースでローカル環境スキャン。OS 永続化（LaunchAgent/systemd）、IDE フック実装、lockfile pin、既知 C2/exfil トレースを検出。`rm -rf ~/` リテリエーションを発動させないよう永続化先停止、ローテーションは除染検証後に gate | 感染レポート、除染ランブック |
+| **Cull** | _"The worm leaves a husk. Find it before it sheds again."_ - サプライチェーンマルウェア感染スキャナ。npm/PyPI ワーム型攻撃（Mini Shai-Hulud、S1ngularity、lottie-player）を IoC ベースでローカル環境スキャン。OS 永続化（LaunchAgent/systemd）、IDE フック実装、lockfile pin、既知 C2/exfil トレースを検出。`rm -rf ~/` リテリエーションを発動させないよう永続化先停止、ローテーションは除染検証後に gate | 感染レポート、除染ランブック |
 | **Vista** | _"Tests you can't see, you don't trust. Tests you trust, you ship."_ - テスト知見の可視化スペシャリスト。junit.xml/lcov/allure/playwright/CTRF/OTelからカバレッジヒートマップ、トレーサビリティマトリクス、Test-Shape（Pyramid/Trophy/Honeycomb/Diamond/Cupcake/Hourglass/Ice-Cream-Cone）、フレーキーテストダッシュボード（Wilson下限）、ミューテーション重畳カバレッジ、AI起点テストリスクレンズ、リグレッションタイムライン（E-Divisive変化点）を生成。Markdown + HTML 二重出力 | カバレッジヒートマップ、Test-Shape、フレーキーダッシュボード |
 | **Mint** | _"Good tests deserve great data."_ - テストデータ＆フィクスチャ生成エージェント。ファクトリパターン設計、境界値データ生成、合成データ生成、シードデータ管理 | コード |
-| **Comply** | _"Trust is earned. Compliance is proven."_ - 規制コンプライアンス＆監査エージェント。SOC2/PCI-DSS/HIPAA/ISO 27001のコントロールマッピング、監査証跡設計、Policy as Code | レポート、チェックリスト |
+| **Oath** | _"Trust is earned. Compliance is proven."_ - 規制コンプライアンス＆監査エージェント。SOC2/PCI-DSS/HIPAA/ISO 27001のコントロールマッピング、監査証跡設計、Policy as Code | レポート、チェックリスト |
 | **Breach** | _"Think like an attacker. Defend like an engineer."_ - レッドチームエンジニアリング。攻撃シナリオ設計、脅威モデリング、MITRE ATT&CK/OWASPフレームワーク、Purple Team演習、AI/LLMレッドチーミング | セキュリティ評価 |
 | **Cloak** | _"Privacy is not a feature. It's a right."_ - プライバシーエンジニアリング・データガバナンス。PII検出、データフローマッピング、同意管理、GDPR/CCPA準拠コード実装 | プライバシー評価 |
 
@@ -179,7 +179,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Muse** | _"Tokens are the DNA of design. Mutate them with care."_ - デザイントークン適用・余白/角丸/シャドウ統一・ダークモード対応 | 視覚的改善 |
 | **Flow** | _"Motion creates emotion. Animation breathes life."_ - UIアニメーション・ホバー効果・ローディング状態・モーダル遷移 | アニメーション |
 | **Echo** | _"I don't test interfaces. I feel what users feel."_ - ペルソナ検証。ユーザーになりきりUIフローの混乱ポイントを報告 | UXレポート |
-| **Showcase** | _"Components without stories are components without context."_ - Storybookストーリー作成・カタログ管理・Visual Regression連携。CSF 3.0形式 | Storybook Stories |
+| **Vitrine** | _"Components without stories are components without context."_ - Storybookストーリー作成・カタログ管理・Visual Regression連携。CSF 3.0形式 | Storybook Stories |
 | **Prose** | _"Words are the smallest unit of design. Get them wrong, and nothing else matters."_ - ユーザー向けテキストの専門エージェント。マイクロコピー、エラーメッセージ、ボイス＆トーンフレームワーク、オンボーディングコピー、アクセシビリティテキスト | コピーガイドライン、コンテンツ仕様 |
 | **Frame** | _"Design speaks in pixels. I translate it to code."_ - Figma MCP Serverを活用してデザインコンテキストを抽出・構造化し、実装エージェントに渡すブリッジエージェント。デザインからコードへの橋渡し、Code Connect管理、デザインシステムルール抽出。コードは書かない | 構造化デザインコンテキスト、デザインシステムルール |
 | **Loom** | _"Design intent deserves preparation. Every thread of context I weave makes creation more precise."_ - Figma Make最適化エージェント。コードベースを分析してGuidelines.mdを生成し、プロンプト戦略を設計し、Make出力をデザインシステム規約と照合検証。コードは書かない | Guidelines.md、プロンプトシーケンス、検証レポート |
@@ -242,7 +242,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Stratum** | _"Architecture without visualization is architecture without communication."_ - C4モデルに基づくソフトウェアアーキテクチャモデリング・評価・Structurizr DSL生成 | アーキテクチャ図、DSL |
 | **Crypt** | _"Trust no channel. Verify every key."_ - 暗号アーキテクチャ設計。アルゴリズム選定、鍵管理、E2E暗号化、KMS統合、TLS設定 | 暗号設計仕様 |
 | **Shard** | _"Isolation is the foundation of trust in multi-tenancy."_ - マルチテナントアーキテクチャ設計。テナント分離戦略、RLS、ルーティング、SaaS向けスケール設計 | アーキテクチャ設計 |
-| **Spider** | _"Design the web that catches the web."_ - クロールシステムアーキテクチャ設計。分散クローラー設計、URLフロンティア管理、ポライトネスポリシー、法的準拠設計 | アーキテクチャ仕様 |
+| **Trawl** | _"Design the web that catches the web."_ - クロールシステムアーキテクチャ設計。分散クローラー設計、URLフロンティア管理、ポライトネスポリシー、法的準拠設計 | アーキテクチャ仕様 |
 | **Tempo** | _"Time is not a scalar — it's a minefield of conventions."_ - スケジューリング・時間ロジックアーキテクト。cron表現設計、タイムゾーン/DST処理、retry/backoffポリシー、idempotencyキー、backfill戦略、営業カレンダー設計（日本の祝日、会計年度、銀行営業日） | スケジュール仕様、cron設定、retryポリシー |
 | **Grok** | _"Understand the shape before writing the parser."_ - パターン・regex・parser・DSL設計スペシャリスト。文法オーサリング（EBNF/PEG）、ReDoS-safe regex、parser-generator選定（ANTLR4/tree-sitter/Chevrotain）、内部DSLアーキテクチャ、AST変換 | 文法仕様、parser設計、DSL仕様 |
 
@@ -297,7 +297,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | エージェント | 説明 | 出力 |
 |------------|------|------|
 | **Growth** | _"Traffic without conversion is just expensive vanity."_ - SEO（meta/OGP/JSON-LD）・SMO（SNSシェア表示）・CRO（CTA改善） | 成長施策 |
-| **Retain** | _"Acquisition is expensive. Retention is profitable."_ - リテンション施策・再エンゲージメント・チャーン予防。ゲーミフィケーション、習慣形成デザイン | リテンション施策 |
+| **Bond** | _"Acquisition is expensive. Retention is profitable."_ - リテンション施策・再エンゲージメント・チャーン予防。ゲーミフィケーション、習慣形成デザイン | リテンション施策 |
 | **Funnel** | _"Above the fold is your one shot. Make every pixel convert."_ - LP（ランディングページ）構造設計・コンバージョン戦略スペシャリスト。フレームワーク（AIDA/PAS/BAB/4Ps）に基づく構造設計、ヒーローセクション、CTA配置戦略、Social Proof階層、モバイルファーストのレスポンシブ実装 | LP構造、コピー、仕様 |
 | **Crest** | _"Your brand is what people say when you're not in the room."_ - エンジニアセルフブランディング戦略家。GitHub/LinkedIn/ブログ/カンファレンス/SNSのポジショニング・プロフィール最適化・コンテンツ戦略 | ブランディング戦略 |
 
@@ -321,13 +321,13 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 | エージェント | 説明 | 出力 |
 |------------|------|------|
-| **Navigator** | _"The browser is a stage. Every click is a scene."_ - Playwright/Chrome DevToolsによるブラウザ操作自動化。データ収集、フォーム操作、スクリーンショット取得、ネットワーク監視 | 自動化スクリプト |
+| **Vector** | _"The browser is a stage. Every click is a scene."_ - Playwright/Chrome DevToolsによるブラウザ操作自動化。データ収集、フォーム操作、スクリーンショット取得、ネットワーク監視 | 自動化スクリプト |
 | **Haul** | _"The right image at the right resolution. Provenance you can stand behind."_ - 商品画像探索・高精度ダウンロードスペシャリスト。ECサイトAPI/画像検索/ブランドサイトのマルチソース集約、SKU/JAN/UPCマッチング、知覚ハッシュによる重複排除、ライセンスを意識したキュレーション | 画像マニフェスト・正規化された素材 |
 | **Director** | _"A demo that moves hearts moves products."_ - Playwright E2Eテストを活用した機能デモ動画の自動撮影。シナリオ設計、撮影設定、実装パターン、品質チェックリストを提供 | デモ動画(.webm) |
 | **Reel** | _"The terminal is a stage. Every keystroke is a performance."_ - VHS/terminalizer/asciinemaを使用したターミナル録画・CLIデモ動画生成。宣言的な.tapeファイルでGIF/MP4/WebMを作成 | GIF/動画(.gif/.mp4) |
 
 **Anvil → Reel → Quill の連携**：Anvil（CLI開発）→ Reel（デモ録画）→ Quill（README GIF埋め込み）
-**Director + Reel → Showcase の連携**：Director（Web録画）+ Reel（ターミナル録画）→ Showcase（ビジュアルドキュメント）
+**Director + Reel → Vitrine の連携**：Director（Web録画）+ Reel（ターミナル録画）→ Vitrine（ビジュアルドキュメント）
 **Director vs Reel の役割分担**:
 - **Director**: ブラウザ（Web UI）のデモ動画（Playwright、.webm出力）
 - **Reel**: ターミナル（CLI）のデモ録画（VHS、GIF/MP4出力）
@@ -432,14 +432,14 @@ questions:
 
 | タスク | 説明 | チェーン |
 |--------|------|----------|
-| UI/new | 新規UI実装 | Vision → Forge → Showcase → Muse → Artisan → Radar |
+| UI/new | 新規UI実装 | Vision → Forge → Vitrine → Muse → Artisan → Radar |
 | UI/redesign | UIリデザイン | Vision → Muse → Palette → Flow → Artisan → Radar |
-| UI/component | コンポーネント作成 | Forge → Showcase → Muse → Artisan → Radar |
+| UI/component | コンポーネント作成 | Forge → Vitrine → Muse → Artisan → Radar |
 | UI/animation | アニメーション追加 | Flow → Artisan → Radar |
-| UX/research | UXリサーチ | Researcher → Echo → Palette |
+| UX/research | UXリサーチ | Field → Echo → Palette |
 | UX/improve | UX改善 | Echo → Palette → Artisan → Radar |
 | UX/session-analysis | セッション分析 | Trace → Echo → Palette |
-| UX/persona-validation | ペルソナ検証 | Researcher → Trace → Echo |
+| UX/persona-validation | ペルソナ検証 | Field → Trace → Echo |
 | UI/figma-make | Figma Make Guidelines | Loom → Artisan |
 
 #### リファクタリング
@@ -542,7 +542,7 @@ questions:
 | DOCS/design | 設計書作成 | Scribe |
 | DOCS/spec-to-build | 仕様から実装 | Spark → Scribe → Sherpa → Builder |
 | DOCS/code | コードドキュメント | Quill |
-| DOCS/component | コンポーネント文書化 | Showcase → Quill |
+| DOCS/component | コンポーネント文書化 | Vitrine → Quill |
 | DOCS/architecture | アーキテクチャ図 | Canvas |
 | DOCS/convert | フォーマット変換 | Morph |
 | DOCS/report | PR報告書 | Harvest → Morph |
@@ -555,7 +555,7 @@ questions:
 |--------|------|----------|
 | DEMO/cli | CLIデモGIF作成 | Anvil → Reel → Quill |
 | DEMO/prototype | プロトタイプデモ | Forge → Reel → Growth |
-| DEMO/web-terminal | Web＋ターミナル複合デモ | Director + Reel → Showcase |
+| DEMO/web-terminal | Web＋ターミナル複合デモ | Director + Reel → Vitrine |
 | DEMO/docs | ドキュメント用デモ | Scribe → Reel → Quill |
 | DEMO/ci-update | CI連携デモ自動更新 | Gear → Reel → Gear |
 | DEMO/showcase | プロダクションCLIデモ | Builder → Reel → Growth |
@@ -591,7 +591,7 @@ questions:
 | STRATEGY/compete | 競合分析→実装 | Compete → Spark → Builder → Radar |
 | STRATEGY/feedback | フィードバック反映 | Voice → Spark → Builder → Radar |
 | STRATEGY/metrics | メトリクス基盤 | Pulse → Builder → Radar |
-| STRATEGY/retention | リテンション施策 | Retain → Spark → Builder → Radar |
+| STRATEGY/retention | リテンション施策 | Bond → Spark → Builder → Radar |
 | STRATEGY/ab-test | A/Bテスト設計 | Experiment → Builder → Radar |
 | STRATEGY/data | データパイプライン | Stream → Schema → Builder → Radar |
 
@@ -609,7 +609,7 @@ questions:
 | SECURITY/full (並列) | 静的＋動的並行スキャン | Rally(Sentinel, Probe) → Builder → Radar |
 | TEST/coverage (並列) | Unit＋E2E並行テスト | Rally(Radar, Voyager) |
 | MODERNIZE/stack (並列) | マルチエリア刷新 | Shift (detect+modernize) → Sherpa → Rally(Builder×N) → Radar |
-| DOCS/full (並列) | コード文書＋図＋ストーリー | Rally(Quill, Canvas, Showcase) |
+| DOCS/full (並列) | コード文書＋図＋ストーリー | Rally(Quill, Canvas, Vitrine) |
 
 > **Rallyエスカレーション基準**: 2つ以上の独立した実装ステップ、4ファイル以上で2ドメイン以上にまたがる場合、またはSherpaが`parallel_group`を検出した場合にRallyが起動されます。
 
@@ -736,13 +736,13 @@ skills/
 ├── lens/SKILL.md       # コードベース理解・調査
 ├── levy/SKILL.md       # 確定申告ガイド
 ├── lore/SKILL.md       # エコシステム横断知識キュレーター
-├── lure/SKILL.md       # 最高品質LP制作スタジオチェーン・オーケストレーター
+├── bazaar/SKILL.md       # 最高品質LP制作スタジオチェーン・オーケストレーター
 ├── magi/SKILL.md       # 多角的意思決定
 ├── matrix/SKILL.md     # ユニバーサル多次元分析
 ├── mend/SKILL.md       # 既知障害パターン自動修復
 ├── morph/SKILL.md      # ドキュメントフォーマット変換
 ├── muse/SKILL.md       # デザイン
-├── navigator/SKILL.md  # ブラウザ自動化
+├── vector/SKILL.md  # ブラウザ自動化
 ├── nexus/SKILL.md      # オーケストレーター
 ├── oracle/SKILL.md     # AI/ML設計・評価
 ├── orbit/SKILL.md      # Nexus-autoloop完走スペシャリスト
@@ -756,9 +756,9 @@ skills/
 ├── radar/SKILL.md      # テスト
 ├── rally/SKILL.md      # マルチセッション並列オーケストレーター
 ├── relay/SKILL.md      # メッセージング統合・リアルタイム通信
-├── researcher/SKILL.md # ユーザーリサーチ
+├── field/SKILL.md # ユーザーリサーチ
 ├── ripple/SKILL.md     # 変更前影響分析
-├── retain/SKILL.md     # リテンション
+├── bond/SKILL.md     # リテンション
 ├── trail/SKILL.md     # Git履歴調査
 ├── riff/SKILL.md       # インタラクティブ・ブレインストーミング
 ├── sage/SKILL.md       # YC オフィスアワー流アドバイザリー
@@ -770,7 +770,7 @@ skills/
 ├── sentinel/SKILL.md   # セキュリティ静的分析（SAST）
 ├── sherpa/SKILL.md     # タスク分解
 ├── sigil/SKILL.md      # 動的プロジェクト固有スキル生成
-├── showcase/SKILL.md   # Storybookストーリー管理
+├── vitrine/SKILL.md   # Storybookストーリー管理
 ├── sketch/SKILL.md     # AI画像生成（Gemini API）
 ├── spark/SKILL.md      # 機能提案
 ├── siege/SKILL.md      # 高度テスト（負荷/契約/カオス/ミューテーション/並行性）
@@ -924,10 +924,10 @@ Nexus autoloopでステージング環境のデプロイと検証を行う完走
 Researcherが定義した「モバイルファースト・ミレニアル」ペルソナを実データで検証してください。
 ```
 
-**出力**: ペルソナ定義の妥当性検証、サブセグメント発見、Researcher へのハンドオフ
+**出力**: ペルソナ定義の妥当性検証、サブセグメント発見、Field へのハンドオフ
 
-**Trace vs Echo vs Researcher の役割分担**:
-- **Researcher**: ペルソナを作成する（インタビュー・調査から）
+**Trace vs Echo vs Field の役割分担**:
+- **Field**: ペルソナを作成する（インタビュー・調査から）
 - **Trace**: ペルソナを実データで検証する（セッションログから）
 - **Echo**: ペルソナになりきってUIを検証する（シミュレーション）
 
@@ -1254,26 +1254,26 @@ TypeScript strict、適切なエラーハンドリング、アクセシビリテ
 
 ---
 
-##### Storybookストーリー作成（Showcase）
+##### Storybookストーリー作成（Vitrine）
 
 ```
-/Showcase
+/Vitrine
 新しく作成したButtonコンポーネントのStorybookストーリーを作成してください。
 ```
 
 **出力**: CSF 3.0形式のStoryファイル（全バリアント、インタラクションテスト、autodocs）
 
-**Showcase の主な機能**:
+**Vitrine の主な機能**:
 - **CREATE**: 新規コンポーネントのストーリー作成
 - **MAINTAIN**: 既存ストーリーの更新・CSF3移行
 - **AUDIT**: ストーリーカバレッジと品質の監査
 
 ---
 
-##### Storybookカバレッジ監査（Showcase）
+##### Storybookカバレッジ監査（Vitrine）
 
 ```
-/Showcase
+/Vitrine
 現在のStorybookカバレッジを監査してください。不足しているストーリーを特定してください。
 ```
 
@@ -1733,10 +1733,10 @@ SNSでシェアした際のプレビュー表示を改善してください。
 
 ---
 
-##### リテンション施策（Retain）
+##### リテンション施策（Bond）
 
 ```
-/Retain
+/Bond
 ユーザーの継続利用率が低下しています。リテンション改善施策を提案してください。
 ```
 
@@ -1805,10 +1805,10 @@ CTAボタンの色変更による効果を検証するA/Bテストを設計し�
 
 ---
 
-##### ユーザーリサーチ設計（Researcher）
+##### ユーザーリサーチ設計（Field）
 
 ```
-/Researcher
+/Field
 新機能の検証のためにユーザーインタビューを設計してください。
 ```
 

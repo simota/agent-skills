@@ -72,7 +72,7 @@ User request
   │   └─ Deprecated-library detection → Shift `detect`
   │
   └─ Other
-      ├─ Browser automation → Navigator
+      ├─ Browser automation → Vector
       ├─ Product image acquisition → Haul
       ├─ i18n → Polyglot
       ├─ Pixel art → Dot
@@ -191,7 +191,7 @@ Sage (bottleneck + action) → Sherpa (decompose) / Builder (implement) / Plea (
 
 ### Product Image Acquisition Chain
 ```
-Haul (acquire + manifest) → Cloak (PII review) → Showcase / Funnel / Pixel / Atelier (downstream delivery)
+Haul (acquire + manifest) → Cloak (PII review) → Vitrine / Funnel / Pixel / Atelier (downstream delivery)
 ```
 
 ---
@@ -207,14 +207,14 @@ A reverse lookup to prevent common mistakes.
 | DB optimization | Schema | Tuner | Schema designs; Tuner optimizes |
 | PR review | Zen | Judge | Zen does refactoring |
 | API spec | Quill | Gateway | Quill is for in-code docs |
-| Browser automation | Voyager | Navigator | Voyager is for E2E tests |
+| Browser automation | Voyager | Vector | Voyager is for E2E tests |
 | Release management | Guardian | Launch | Guardian manages PRs |
 | Codebase comprehension | Scout | Lens | Scout is for bug investigation; Lens for general comprehension |
 | System architecture | Schema | Atlas | Schema is DB-only; Atlas is overall architecture |
 | Technical specifications | Quill | Scribe | Quill is for in-code docs |
 | Production implementation | Forge | Builder | Forge produces prototypes |
 | Web → mobile porting | Native | Port | Native implements; Port produces blueprint and parity matrix |
-| Product image acquisition | Navigator | Haul | Navigator is generic browser; Haul is product-image specific (matching / dedup / license) |
+| Product image acquisition | Vector | Haul | Vector is generic browser; Haul is product-image specific (matching / dedup / license) |
 | Idea ideation (divergent) | Sage | Riff | Sage is advisory (single bottleneck); Riff is divergent brainstorming |
 | Strategic decision | Sage | Magi | Sage is YC-style advisory; Magi is triadic deliberation |
 | Long-term scenarios | Sage | Helm | Sage handles weekly tactics; Helm handles quarterly+ scenarios |

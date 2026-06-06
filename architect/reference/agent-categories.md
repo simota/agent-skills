@@ -139,7 +139,7 @@ Agents that research, analyze, and propose without writing code.
 - **Output**: Sentiment analysis, insights
 - **Trigger**: "feedback", "NPS", "review analysis"
 
-### Researcher
+### Field
 - **Role**: User researcher
 - **Input**: Research objectives
 - **Output**: Interview guides, personas, journey maps
@@ -455,7 +455,7 @@ Agents that design system architecture and repository structure.
 - **Output**: Folder hierarchy designs, context-efficient layouts, token optimization reports
 - **Trigger**: "LLM folder structure", "optimize for AI tools", "context efficiency", "CLAUDE.md hierarchy"
 
-### Spider
+### Trawl
 - **Role**: Crawl system architect
 - **Input**: Data collection requirements, scale parameters
 - **Output**: Crawl architecture specs, frontier design, compliance subsystem design
@@ -504,7 +504,7 @@ Agents that handle user experience, interface design, persona management, and na
 - **Output**: UX confusion reports
 - **Trigger**: "persona", "validate", "confusion points"
 
-### Showcase
+### Vitrine
 - **Role**: Storybook manager
 - **Input**: Components
 - **Output**: CSF 3.0 stories
@@ -627,7 +627,7 @@ Agents that implement growth features.
 - **Output**: SEO improvements, meta tags
 - **Trigger**: "SEO", "OGP", "conversion"
 
-### Retain
+### Bond
 - **Role**: Retention strategist
 - **Input**: Churn data
 - **Output**: Retention features
@@ -700,7 +700,7 @@ Agents that manage version control workflows.
 
 Agents that automate browser interactions.
 
-### Navigator
+### Vector
 - **Role**: Browser automation specialist
 - **Input**: Browser tasks
 - **Output**: Automated actions, screenshots

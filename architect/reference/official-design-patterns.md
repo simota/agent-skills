@@ -388,7 +388,7 @@ while (!done) {
 ```
 
 **When to use**: Exploratory tasks, multi-stage problem solving, or tasks requiring environment interaction.
-**Skill design implication**: Scout (bug investigation) and Navigator (browser automation) are existing implementations. Always design loop termination conditions and guardrails (max iterations, timeouts, safety constraints).
+**Skill design implication**: Scout (bug investigation) and Vector (browser automation) are existing implementations. Always design loop termination conditions and guardrails (max iterations, timeouts, safety constraints).
 
 ### Existing ↔ Agentic Pattern Mapping
 
@@ -399,7 +399,7 @@ while (!done) {
 | C: Parallelization | — (new) | No existing pattern | Arena (Voting), Rally (Sectioning) |
 | D: Orchestrator-Worker | P2: Multi-MCP Coordination | P2 is D specialized for MCP | Nexus, Titan |
 | E: Evaluator-Optimizer | P3: Iterative Refinement | P3 is a self-contained version of E | Judge↔Builder loop |
-| F: Autonomous Agent | P5: Domain-Specific Intelligence | P5 adds domain knowledge to F | Scout, Navigator |
+| F: Autonomous Agent | P5: Domain-Specific Intelligence | P5 adds domain knowledge to F | Scout, Vector |
 
 ---
 

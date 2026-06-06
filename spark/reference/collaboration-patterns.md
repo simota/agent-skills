@@ -16,7 +16,7 @@ Related: for the proposal document structure these handoffs produce or consume, 
 | Pattern | Flow | Use when |
 | --- | --- | --- |
 | A | `Echo -> Spark -> Echo` | latent needs need a proposal and persona validation |
-| B | `Researcher -> Spark` | research findings should become a feature proposal |
+| B | `Field -> Spark` | research findings should become a feature proposal |
 | C | `Voice -> Spark` | aggregated feedback should become a proposal |
 | D | `Compete -> Spark` | competitive gaps or differentiation drive ideation |
 | E | `Spark -> Experiment -> Spark` | a hypothesis needs structured validation |
@@ -274,7 +274,7 @@ Packets:
 | Partner | Input type | Trigger | Handoff |
 | --- | --- | --- | --- |
 | `Echo` | latent needs, confusion points | persona walkthrough complete | `ECHO_TO_SPARK_HANDOFF` |
-| `Researcher` | personas, insights, journey maps | research synthesis complete | `RESEARCHER_TO_SPARK_HANDOFF` |
+| `Field` | personas, insights, journey maps | research synthesis complete | `RESEARCHER_TO_SPARK_HANDOFF` |
 | `Voice` | feedback clusters, NPS | feedback analysis complete | `VOICE_TO_SPARK_HANDOFF` |
 | `Compete` | gaps and positioning | competitive analysis complete | `COMPETE_TO_SPARK_HANDOFF` |
 | `Pulse` | funnel data, KPI trends | metrics review complete | `PULSE_TO_SPARK_HANDOFF` |

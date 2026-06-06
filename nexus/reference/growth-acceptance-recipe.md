@@ -42,8 +42,8 @@ Do **not** invoke when:
 **Agents** (sequential):
 
 1. **Nexus[classify]** — internal: detect `org_tier`, `step_adoption_level`, `change_category` (content / campaign / brand-touch), `regulatory_jurisdiction`, `tier` (S/A/B/C), `ui_dimension` (none / partial / full)
-2. **`insight` (proposed skill) or `researcher`** — query Insight Ledger for relevant evidence; if no evidence available for the proposed segment, REJECT (block design)
-3. **`researcher`** — if Step 2+ and evidence is stale or missing, queue fresh research
+2. **`insight` (proposed skill) or `field`** — query Insight Ledger for relevant evidence; if no evidence available for the proposed segment, REJECT (block design)
+3. **`field`** — if Step 2+ and evidence is stale or missing, queue fresh research
 4. **`accord` + `spark`** — draft Growth-Brand Contract (Tier 0 / 1 / 2 per scope)
 5. **`magi` (optional)** — high-stakes content: arbitrate Strategic-level Constitution alignment
 
@@ -52,7 +52,7 @@ Do **not** invoke when:
 - Contract Tier 1+ requires `insight_refs` field with valid Ledger IDs
 - AI cannot write to Insight Ledger (read-only); proposed-edit queue must clear before design begins
 
-**Engine routing**: Researcher / Voice / Trace on Codex for data extraction; Insight Lead synthesis on Claude (judgment); Plea on Claude for customer empathy.
+**Engine routing**: Field / Voice / Trace on Codex for data extraction; Insight Lead synthesis on Claude (judgment); Plea on Claude for customer empathy.
 
 **Output**: Approved Contract + Insight Ledger citation set + Constitution Operational-layer rule citations.
 
@@ -85,9 +85,9 @@ Do **not** invoke when:
 1. **`pulse` + `experiment`** — Market Proof: declare `incrementality_proof` measurement method per Decision Tree (Conversion Lift / GeoLift / MMM / Synth); compute statistical power
 2. **`ledger` (FinOps)** — CAC / LTV thresholds; budget allocation
 3. **`compete`** — cannibalization estimation
-4. **`funnel` + `lure`** — channel-fit rationale and LP coherence
+4. **`funnel` + `bazaar`** — channel-fit rationale and LP coherence
 5. **`vision` + `prose`** — Brand Compiler **B.tone advisory** layer (LLM-as-judge, non-blocking)
-6. **`clause` + `comply` + `cloak` + `vigil`** — G14 Regulatory Envelope Pre-Flight: verify `regulatory_jurisdiction` toggles, brand-safety placement exclusions
+6. **`clause` + `oath` + `cloak` + `vigil`** — G14 Regulatory Envelope Pre-Flight: verify `regulatory_jurisdiction` toggles, brand-safety placement exclusions
 
 **Gate (G14 mandatory)**:
 - Regulatory jurisdiction declared; per-jurisdiction toggle (auto-scale / auto-generate / holdout test) verified
@@ -264,7 +264,7 @@ Phase 4 (Cross-Cutting Audits, background):
 - `nexus/reference/summit-recipe.md` — strategic decisions; can author Layer C content for growth-acceptance gating
 
 **Layer C skill references** (see also each skill's Reference Map):
-- **Research axis**: `researcher` (core), `voice` (sentiment), `trace` (replay), `plea` (synthetic demand), `tome` (knowledge), `insight` (proposed Insight Ledger skill, Architect responsibility)
-- **Brand axis**: `vision` (Compiler orchestration + direction), `crest` (brand strategy), `prose` (voice/tone), `clause` (legal), `comply` (regulatory), `muse` (token discipline carry-over)
-- **Market axis**: `pulse` (KPI), `experiment` (A/B + Incrementality), `funnel` (LP), `lure` (LP studio), `compete` (cannibalization + Distinctiveness), `ledger` (FinOps), `harvest` (PR data), `cloak` (privacy), `vigil` (brand safety)
+- **Research axis**: `field` (core), `voice` (sentiment), `trace` (replay), `plea` (synthetic demand), `tome` (knowledge), `insight` (proposed Insight Ledger skill, Architect responsibility)
+- **Brand axis**: `vision` (Compiler orchestration + direction), `crest` (brand strategy), `prose` (voice/tone), `clause` (legal), `oath` (regulatory), `muse` (token discipline carry-over)
+- **Market axis**: `pulse` (KPI), `experiment` (A/B + Incrementality), `funnel` (LP), `bazaar` (LP studio), `compete` (cannibalization + Distinctiveness), `ledger` (FinOps), `harvest` (PR data), `cloak` (privacy), `vigil` (brand safety)
 - **Auto-action**: `mend` (auto-halt + remediation), `beacon` (Brand Lift monitoring)

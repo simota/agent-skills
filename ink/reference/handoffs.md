@@ -65,12 +65,12 @@ INK_TO_ARTISAN_HANDOFF:
   request: "Integrate SVG icons as framework components"
 ```
 
-### To Showcase (Storybook Catalog)
+### To Vitrine (Storybook Catalog)
 
 ```yaml
 INK_TO_SHOWCASE_HANDOFF:
   source: Ink
-  destination: Showcase
+  destination: Vitrine
   content:
     icon_set:
       name: "[icon set name]"

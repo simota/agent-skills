@@ -9,7 +9,7 @@ Purpose: Connect a single business outcome to the experiments that move it, via 
 - **plea `need`**: lateral blind-spot scan. OST is hierarchical and outcome-anchored.
 - **plea `jtbd`**: a JTBD analysis is upstream of OST — the job statement often becomes the outcome or first-level opportunity. JTBD is forces-and-stages; OST is hierarchy-and-experiments.
 - **plea `5whys`**: cleans up a single request into a root need. OST organizes *many* needs against *one* outcome.
-- **Researcher (elsewhere)**: real-user OST evidence. Researcher runs ongoing interviews and populates real opportunities from transcripts. Plea generates a synthetic seed tree to compare against.
+- **Field (elsewhere)**: real-user OST evidence. Field runs ongoing interviews and populates real opportunities from transcripts. Plea generates a synthetic seed tree to compare against.
 - **Spark (elsewhere)**: takes a chosen solution branch and produces a feature spec. Plea stops at the experiment level — Spark elaborates the solution into shippable scope.
 - **Experiment (elsewhere)**: designs and runs the actual test. Plea drafts experiment hypotheses; Experiment owns sample size, instrumentation, and analysis.
 - **Voice (elsewhere)**: real review/support sentiment that should populate opportunity nodes. Plea generates synthetic opportunities to triangulate with Voice.
@@ -39,7 +39,7 @@ PRUNE      →  rank opportunities by impact × evidence × strategic fit
 CADENCE    →  schedule the tree as a living artifact — weekly review, weekly experiment
            →  treat opportunities as discovered (not invented); add as research arrives.
 
-DELIVER    →  hand tree to Researcher for population validation,
+DELIVER    →  hand tree to Field for population validation,
            →  to Spark for solution elaboration,
            →  to Experiment for test execution.
 ```
@@ -124,7 +124,7 @@ Bad experiments are large, late, and lack a kill rule. Good experiments are smal
 ## Weekly Cadence (Continuous Discovery Habits)
 
 Torres' habits are weekly, not quarterly:
-- **Weekly interviews**: at least 1 customer interview per week (Researcher).
+- **Weekly interviews**: at least 1 customer interview per week (Field).
 - **Weekly tree update**: add new opportunities, deprecate stale ones, mark experiments closed.
 - **Weekly experiment**: at least one experiment running.
 - **Weekly opportunity selection**: pick the next opportunity to invest in based on evidence and impact.
@@ -144,7 +144,7 @@ The tree is a living artifact. A static OST is a roadmap by another name and def
 
 ## Handoff
 
-- **To Researcher**: synthetic tree as scaffolding. Researcher runs weekly interviews and replaces synthetic opportunity nodes with real-user-evidenced ones. Tag swap status in tree.
+- **To Field**: synthetic tree as scaffolding. Field runs weekly interviews and replaces synthetic opportunity nodes with real-user-evidenced ones. Tag swap status in tree.
 - **To Spark**: chosen solution branch → feature spec. Plea hands the solution + winning experiment results; Spark elaborates scope.
 - **To Experiment**: experiment hypothesis + riskiest assumption + decision rule → test execution. Experiment owns instrumentation and analysis.
 - **To Rank**: opportunities + impact × evidence × strategic-fit scores → prioritization output.

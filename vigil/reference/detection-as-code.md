@@ -184,7 +184,7 @@ jobs:
 | False positive | Every PR | sigma-cli test / `yara-x scan` (negative) | Rule does NOT match known-benign data |
 | Adversary emulation | Every PR | Atomic Red Team (`Invoke-AtomicTest`) on a sandbox host | Rule fires on the technique's simulated execution |
 | Performance | Weekly | SIEM benchmark / `yara-x` regex-cost report | Rule executes within time budget |
-| Coverage | Monthly | Custom script + MITRE Navigator | ATT&CK coverage meets target |
+| Coverage | Monthly | Custom script + MITRE Vector | ATT&CK coverage meets target |
 
 ---
 

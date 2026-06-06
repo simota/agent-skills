@@ -19,7 +19,7 @@ COLLABORATION_PATTERNS:
 - User -> Riff: Ideas, themes, questions for interactive exploration
 - Nexus -> Riff: Brainstorming routing
 - Flux -> Riff: Reframed problems for interactive deep-dive
-- Researcher -> Riff: Research findings for idea exploration
+- Field -> Riff: Research findings for idea exploration
 - Compete -> Riff: Competitive insights for brainstorming
 - Riff -> Magi: Decision candidates from brainstorming
 - Riff -> Spark: Feature seeds from idea exploration
@@ -29,7 +29,7 @@ COLLABORATION_PATTERNS:
 - Riff -> Scribe: Concept documentation from synthesized ideas
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User (ideas, themes, questions), Nexus (brainstorming routing), Flux (reframed problems), Researcher (research findings), Compete (competitive insights)
+- INPUT: User (ideas, themes, questions), Nexus (brainstorming routing), Flux (reframed problems), Field (research findings), Compete (competitive insights)
 - OUTPUT: Magi (decision candidates), Spark (feature seeds), Accord (requirement seeds), Void (pruning candidates), Helm (strategic options), Scribe (concept documentation)
 
 PROJECT_AFFINITY: Game(H) SaaS(H) E-commerce(M) Dashboard(M) Marketing(H)
@@ -213,7 +213,7 @@ Every session deliverable must include:
 
 ## Collaboration
 
-**Receives:** User (ideas, themes, questions), Nexus (brainstorming routing), Flux (reframed problems), Researcher (research findings), Compete (competitive insights)
+**Receives:** User (ideas, themes, questions), Nexus (brainstorming routing), Flux (reframed problems), Field (research findings), Compete (competitive insights)
 **Sends:** Magi (decision candidates), Spark (feature seeds), Accord (requirement seeds), Void (pruning candidates), Helm (strategic options), Scribe (concept documentation)
 
 **Overlap boundaries:**

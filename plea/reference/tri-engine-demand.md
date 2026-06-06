@@ -27,7 +27,7 @@ Define the demand-generation target once. All three subagents share the same sco
 - Product / feature surface
 - Generation mode (EXPLORE / DEEP / CHALLENGE / COMPETE / EDGE) per `reference/mode-playbooks.md`
 - Existing roadmap or assumptions to challenge (if any)
-- Discovery evidence (Voice findings, Trace observations, Researcher data — if present, for calibration)
+- Discovery evidence (Voice findings, Trace observations, Field data — if present, for calibration)
 
 ### 2. CAST — persona selection (shared across engines)
 
@@ -126,8 +126,8 @@ For every `CANDIDATE-DEMAND / DIVERGENT-VOICE` cluster, the Plea main context mu
 1. **Persona-voice authenticity check** — does the `user_voice_verbatim` actually sound like the named persona? Or does it slip into developer/PM language? If inauthentic, mark `REJECTED-VOICE-MISMATCH`.
 2. **Acceptance-criteria specificity check** — are the criteria in user perspective (not implementation perspective)? Vague criteria ("works well") fail; specific behaviors pass.
 3. **Curse-of-knowledge check** — does this demand challenge a likely team assumption? If yes, flag for `Questions for the Team` section.
-4. **Real-data calibration** — if Voice / Trace / Researcher data is available in the project (e.g., `.agents/voice.md`), cross-check whether the synthetic demand aligns with real signals. Apply the confidence tags from `reference/calibration.md`:
-   - `[validated]` — synthetic demand matches real Voice/Trace/Researcher evidence
+4. **Real-data calibration** — if Voice / Trace / Field data is available in the project (e.g., `.agents/voice.md`), cross-check whether the synthetic demand aligns with real signals. Apply the confidence tags from `reference/calibration.md`:
+   - `[validated]` — synthetic demand matches real Voice/Trace/Field evidence
    - `[supported]` — partial evidence (one source agrees, others silent)
    - `[hypothesis]` — no real-data conflict, no real-data support
    - `[synthetic-only]` — no real-data sources available

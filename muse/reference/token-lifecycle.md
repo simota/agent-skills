@@ -145,7 +145,7 @@ TOKEN_MIGRATION:
 | Vision | Validate direction for major token changes |
 | Palette | Re-check accessibility and UX clarity |
 | Ripple | Impact analysis before stable deprecation or rename |
-| Showcase | Storybook and documentation updates |
+| Vitrine | Storybook and documentation updates |
 | Judge | Review token migration consistency |
 | Flow | Motion token changes |
 

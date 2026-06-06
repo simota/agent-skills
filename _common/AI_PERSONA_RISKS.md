@@ -1,6 +1,6 @@
 # AI and LLM Persona Generation Risks
 
-Purpose: Define AI-specific bias, ethics, validation, confidence guardrails, and cross-agent governance rules for persona generation. Referenced by **Cast** (generation), **Echo** (UI walkthrough), **Plea** (synthetic demand), and **Researcher** (validation).
+Purpose: Define AI-specific bias, ethics, validation, confidence guardrails, and cross-agent governance rules for persona generation. Referenced by **Cast** (generation), **Echo** (UI walkthrough), **Plea** (synthetic demand), and **Field** (validation).
 
 ## Contents
 
@@ -87,7 +87,7 @@ Cross-agent confidence and lifecycle rules for AI-generated personas.
 | Rule | Definition | Applies To |
 |------|-----------|------------|
 | **Confidence cap** | AI-only generation capped at confidence ≤ 0.50 | Cast (generation), Echo (usage), Plea (usage) |
-| **Promotion condition** | `proto → active` requires at least 1 human research validation stream | Cast (registry), Researcher (validation) |
+| **Promotion condition** | `proto → active` requires at least 1 human research validation stream | Cast (registry), Field (validation) |
 | **Expiry** | Synthetic personas without human validation require forced review at 60 days | Cast (decay rules) |
 
 ## Bias Audit Failure Modes
@@ -107,7 +107,7 @@ All synthetic personas must be checked for these 4 failure modes before distribu
 |---------|-------------|------------|
 | All synthetic-derived findings | `[synthetic-hypothesis]` | Echo (reports), Plea (demand reports) |
 | Downstream bias risk | Include bias caveat in DISTRIBUTE packet | Cast (distribution) |
-| WEIRD population warning | Flag when target is non-Western, non-English | Cast, Echo, Researcher |
+| WEIRD population warning | Flag when target is non-Western, non-English | Cast, Echo, Field |
 
 ## Usage Constraints
 
@@ -126,5 +126,5 @@ Synthetic persona findings flow back to Cast to improve confidence over time:
 Echo walkthrough result      → Cast FUSE   (confidence adjustment)
 Plea demand calibration      → Cast FUSE   (coverage gap signal)
 Trace behavioral validation  → Cast EVOLVE (existing path)
-Researcher interview result  → Cast promotion (proto → active)
+Field interview result  → Cast promotion (proto → active)
 ```

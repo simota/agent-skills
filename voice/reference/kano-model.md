@@ -7,7 +7,7 @@ Purpose: Classify product features by the asymmetric relationship between functi
 - **voice `kano`**: Kano-style paired functional + dysfunctional surveys, classification matrix, Better/Worse coefficient computation, and feature prioritization recommendation. Operationalizes Kano on existing or proposed features.
 - **voice `nps` (default)**: relationship loyalty score, not feature-level classification. NPS tells you "would they recommend"; Kano tells you "which features earn that recommendation."
 - **voice `csat` / `ces` (elsewhere)**: touchpoint satisfaction or task effort. Kano operates at the feature level, CSAT/CES at the experience level.
-- **researcher (elsewhere)**: exploratory feature discovery and JTBD interviews. Researcher generates the candidate feature list; Voice `kano` classifies it.
+- **researcher (elsewhere)**: exploratory feature discovery and JTBD interviews. Field generates the candidate feature list; Voice `kano` classifies it.
 - **spark (elsewhere)**: feature ideation and product framing. Kano feeds Spark a prioritized backlog; Spark turns "delighters" into shipping specs.
 - **echo (elsewhere)**: persona-level cognitive walkthrough. Kano segments persona may diverge — must-haves for power users may be delighters for novices.
 
@@ -124,7 +124,7 @@ Below n=30 per segment, only the modal category is meaningful — coefficients f
 - **To Spark**: Must-Have gaps → blocking shipping specs; Delighter candidates → differentiation feature briefs.
 - **To Pulse**: Performance features → KPI dashboards tracking the linear satisfaction relationship over time.
 - **To Helm**: Delighter category map → strategic differentiation positioning.
-- **To Researcher**: Questionable (Q) responses ≥10% → flag as ambiguous wording or unfamiliar feature; escalate for qualitative follow-up interviews.
+- **To Field**: Questionable (Q) responses ≥10% → flag as ambiguous wording or unfamiliar feature; escalate for qualitative follow-up interviews.
 - **To Echo**: Kano category divergence across personas → persona-specific walkthrough to confirm the cognitive gap.
 - **To Compete**: Performance + High Worse features → competitor benchmark to size the parity gap.
-- **To Retain**: Reverse (R) features in shipped product → candidates for removal or opt-out, especially in churn-correlated segments.
+- **To Bond**: Reverse (R) features in shipped product → candidates for removal or opt-out, especially in churn-correlated segments.

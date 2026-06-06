@@ -157,8 +157,8 @@ Use for chains where Nexus auto-renders visuals downstream.
 | Schema | `matrix` | `minimalist-iso` | Entity-relationship overview |
 | Voyager | `dashboard` | `data-viz-bold` | E2E run summary |
 | Vista | `dashboard` | `data-viz-bold` | Test-quality snapshot |
-| Researcher | `card-grid` | `editorial-magazine` | Persona / insight cards |
-| Comply | `card-grid` | `warning-alert` | Control-status scorecard |
+| Field | `card-grid` | `editorial-magazine` | Persona / insight cards |
+| Oath | `card-grid` | `warning-alert` | Control-status scorecard |
 | Triage | `timeline` | `warning-alert` | Incident timeline |
 | Experiment | `hero-stat` | `data-viz-bold` | Uplift / verdict summary |
 | Echo | `card-grid` | `editorial-magazine` | Friction / emotion summary |

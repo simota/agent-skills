@@ -7,7 +7,7 @@ Purpose: Apply Clayton Christensen's Jobs-to-be-Done framework to reframe a mark
 - **helm `jtbd`**: Christensen JTBD — strategic framing (this document).
 - **helm `porter` (elsewhere)**: Industry structure. JTBD and Porter are complementary; Porter frames incumbents; JTBD reframes the market by customer intent.
 - **Spark (elsewhere)**: Feature-level proposals. JTBD feeds into Spark by identifying under-served job dimensions.
-- **Researcher (elsewhere)**: Primary research. JTBD framework; Researcher conducts interviews.
+- **Field (elsewhere)**: Primary research. JTBD framework; Field conducts interviews.
 - **Voice (elsewhere)**: Customer feedback analysis. JTBD can be informed by NPS verbatims but is more structural.
 - **Spark vs. JTBD**: Spark proposes features; JTBD reframes the strategic question about what the product should even be.
 
@@ -102,7 +102,7 @@ DESIGN      →  strategy: meet unmet dimensions; reduce anxiety + habit
 
 ## Interview Guide Sketch
 
-When conducting JTBD interviews (hand to Researcher for full design):
+When conducting JTBD interviews (hand to Field for full design):
 
 1. "Take me back to the moment you first realized you needed [product]."
 2. "What were you doing when that happened?"
@@ -158,7 +158,7 @@ Always ask about the *moment* — the specific situation. Abstract "why" questio
 
 ### Handoffs
 - Spark: feature implications from unmet dimensions
-- Researcher: validate job statement via customer interviews
+- Field: validate job statement via customer interviews
 - Compete: benchmark how incumbents handle forces
 - Voice: mine existing NPS verbatims for job-statement support
 - Magi: Go/No-Go on strategic pivot
@@ -187,7 +187,7 @@ When `jtbd` completes, emit:
 - **Competitive set by job** including "nothing".
 - **Unmet dimensions** prioritized.
 - **Strategic recommendations** by force.
-- **Handoffs**: Spark, Researcher, Compete, Voice, Magi, Saga.
+- **Handoffs**: Spark, Field, Compete, Voice, Magi, Saga.
 
 ## References
 

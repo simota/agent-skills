@@ -1,6 +1,6 @@
 ---
 name: ascent
-description: "Planning career strategy for job change/side-business/independence. Owns self-analysis, market & salary research, positioning, skill-gap plans, job search (target lists, tracker, outreach), interview prep, and salary negotiation. Advisory only — no code. Use when planning career moves. Not for engineer SNS branding (Crest), UX research (Researcher), product competitive (Compete), or JP tax filing (Levy)."
+description: "Planning career strategy for job change/side-business/independence. Owns self-analysis, market & salary research, positioning, skill-gap plans, job search (target lists, tracker, outreach), interview prep, and salary negotiation. Advisory only — no code. Use when planning career moves. Not for engineer SNS branding (Crest), UX research (Field), product competitive (Compete), or JP tax filing (Levy)."
 ---
 
 <!--
@@ -17,7 +17,7 @@ CAPABILITIES_SUMMARY:
 - execution: Weekly action plan, progress tracker, reflection log, habit design
 
 COLLABORATION_PATTERNS:
-- Researcher -> Ascent: Audience/persona insight feeding positioning
+- Field -> Ascent: Audience/persona insight feeding positioning
 - Compete -> Ascent: Positioning frameworks reused for self-in-market differentiation
 - Ascent -> Crest: Hands off engineer-specific channel branding (GitHub/blog/SNS)
 - Ascent -> Levy: Hands off independence tax/filing mechanics
@@ -26,7 +26,7 @@ COLLABORATION_PATTERNS:
 - Ascent -> Canvas: Career roadmap / decision-tree visualization
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Researcher (audience insight), Compete (positioning frameworks), User (career goals, constraints)
+- INPUT: Field (audience insight), Compete (positioning frameworks), User (career goals, constraints)
 - OUTPUT: Crest (engineer channel branding), Levy (independence tax), Scribe (doc polish), Prose (copy tone), Canvas (visualization)
 
 PROJECT_AFFINITY: universal
@@ -57,7 +57,7 @@ Use Ascent when the user needs:
 
 Route elsewhere when the task is primarily:
 - engineer SNS/GitHub/blog/conference channel branding: `Crest`
-- UX user research (interview guides, personas, journey maps): `Researcher`
+- UX user research (interview guides, personas, journey maps): `Field`
 - product/company competitive analysis (battle cards, feature matrices): `Compete`
 - Japanese income-tax filing for freelancers/independents: `Levy`
 - formal spec-grade document authoring (PRD/SRS): `Scribe`
@@ -177,11 +177,11 @@ Every deliverable must include:
 
 ## Collaboration
 
-Ascent receives audience insight from Researcher and positioning frameworks from Compete, and the career goal and constraints from the user. Ascent sends channel-branding handoffs to Crest, tax mechanics to Levy, doc polish to Scribe/Prose, and visualization to Canvas.
+Ascent receives audience insight from Field and positioning frameworks from Compete, and the career goal and constraints from the user. Ascent sends channel-branding handoffs to Crest, tax mechanics to Levy, doc polish to Scribe/Prose, and visualization to Canvas.
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
-| Researcher → Ascent | `RESEARCHER_TO_ASCENT` | Audience/persona insight for positioning |
+| Field → Ascent | `RESEARCHER_TO_ASCENT` | Audience/persona insight for positioning |
 | Compete → Ascent | `COMPETE_TO_ASCENT` | Positioning frameworks for self-in-market differentiation |
 | Ascent → Crest | `ASCENT_TO_CREST` | Engineer-specific GitHub/blog/SNS channel branding |
 | Ascent → Levy | `ASCENT_TO_LEVY` | Independence tax/filing mechanics (JP) |
@@ -194,7 +194,7 @@ Ascent receives audience insight from Researcher and positioning frameworks from
 | Agent | Ascent owns | They own |
 |-------|-------------|----------|
 | Crest | General career strategy & job search for any profession; positioning the person in the labor market | Engineer self-branding via GitHub/LinkedIn/blog/conference/SNS channel content & algorithms |
-| Researcher | Career-framed market & salary research as a job-search sub-step | UX user research — interview guides, usability tests, personas, journey maps |
+| Field | Career-framed market & salary research as a job-search sub-step | UX user research — interview guides, usability tests, personas, journey maps |
 | Compete | Differentiation of the individual candidate against a target role | Product/company competitive analysis — battle cards, feature matrices, win/loss |
 | Levy | Income/risk framing of the independence route decision | Japanese income-tax filing mechanics, deductions, and calculation |
 | Scribe | Career-asset drafts (resume, cover letter, portfolio outline) | Spec-grade formal documents (PRD/SRS/HLD) and template authoring |

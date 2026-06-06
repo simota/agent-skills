@@ -164,7 +164,7 @@ The confirmation message includes: goal title, rationale, top 2 rejected alterna
 | Agent | Role | Required |
 |-------|------|----------|
 | `plea` | Synthetic user demands across 3+ personas, paired with LLM prompts | Yes |
-| `researcher` | BEST-framework validation or real research synthesis | Yes |
+| `field` | BEST-framework validation or real research synthesis | Yes |
 | `echo` | Friction analysis on current flow (Emotion VAD + dark pattern audit) | Existing-product improvement only |
 
 **Exit gate:** Top-3 demands carry both persona rationale (plea) and evidence anchor (researcher). If product exists, echo confirms current friction baseline.
@@ -238,7 +238,7 @@ Plea ↔ Echo loop closure: if echo's actual walkthrough reaction diverges fatal
 
 Driven by Orbit. Orbit consumes accord L3 ACs + omen Mitigations + echo friction signals to author the loop contract, generates the nexus-autoloop script set, and audits convergence.
 
-**Runner Engine: Codex CLI (fixed for Apex).** Apex pins Orbit's execution layer to **Codex CLI subagents** rather than Claude Code's Agent tool. All in-loop specialists (Builder / Artisan / Showcase / Judge / Radar / Voyager) are spawned via `spawn_agent` and awaited via `wait_agent`. Phase 0-5 still run on Claude Code (Nexus orchestration); only the implementation loop crosses the engine boundary.
+**Runner Engine: Codex CLI (fixed for Apex).** Apex pins Orbit's execution layer to **Codex CLI subagents** rather than Claude Code's Agent tool. All in-loop specialists (Builder / Artisan / Vitrine / Judge / Radar / Voyager) are spawned via `spawn_agent` and awaited via `wait_agent`. Phase 0-5 still run on Claude Code (Nexus orchestration); only the implementation loop crosses the engine boundary.
 
 Why Codex CLI is fixed for Phase 6:
 - **Iteration cost**: implementation loops typically run 4-8 iterations × 4-7 specialists = 16-56 spawns. Codex CLI subagents are tuned for high-volume autonomous coding cycles.
@@ -251,7 +251,7 @@ Why Codex CLI is fixed for Phase 6:
 | `orbit` | Loop contract design + convergence detection + cost-per-task tracking + circuit breaker | Yes | Spawned by Nexus on Claude Code, then writes Codex spawn scripts |
 | `builder` | Business logic / backend implementation | Yes | Codex `spawn_agent` |
 | `artisan` | Production frontend (promotes forge prototype) | Conditional: UI surface | Codex `spawn_agent` |
-| `showcase` | Storybook stories | Conditional: components added | Codex `spawn_agent` |
+| `vitrine` | Storybook stories | Conditional: components added | Codex `spawn_agent` |
 | `judge` | Per-iteration code review | Yes | Codex `spawn_agent` |
 | `radar` | Unit / integration tests | Yes | Codex `spawn_agent` |
 | `voyager` | E2E persona-driven tests (reuses echo personas) | Conditional: UI flows | Codex `spawn_agent` |

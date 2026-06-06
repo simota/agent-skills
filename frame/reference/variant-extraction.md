@@ -152,7 +152,7 @@ Output:
 
 Handoff:
   □ Artisan (production component impl)
-  □ Showcase (Storybook stories per variant)
+  □ Vitrine (Storybook stories per variant)
 ```
 
 ---

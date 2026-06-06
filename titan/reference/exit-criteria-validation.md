@@ -35,7 +35,7 @@ Each phase uses a tailored validation chain optimized for its artifact types. Th
 
 | Phase | Validation Chain | Rationale |
 |-------|-----------------|-----------|
-| DISCOVER | Lens → Researcher → Compete → Warden | Validate research quality, persona completeness, competitive coverage |
+| DISCOVER | Lens → Field → Compete → Warden | Validate research quality, persona completeness, competitive coverage |
 | DEFINE | Lens → Canon → Magi → Warden | Validate specs against standards, decision quality |
 | ARCHITECT | Lens → Atlas → Schema → Warden | Validate architecture integrity, dependency analysis, schema quality |
 | BUILD | Lens → Radar → Warden | Validate code artifacts, test coverage, build health (default chain) |

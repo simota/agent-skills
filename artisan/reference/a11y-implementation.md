@@ -100,4 +100,4 @@ VERIFY   →  keyboard-only walkthrough
 - To `Palette` if flow-level confusion or cognitive-load issues surface during testing.
 - To `Canon` if the component-level fixes reveal a recurring repo-wide pattern that needs audit.
 - To `Radar` for axe-core / keyboard / screen reader regression tests on the hardened component.
-- To `Showcase` for a11y-annotated stories that lock the behavior.
+- To `Vitrine` for a11y-annotated stories that lock the behavior.

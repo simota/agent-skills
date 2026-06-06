@@ -6,11 +6,11 @@
 
 - **Mint `replay`**: captured-traffic-to-fixture pipeline — capture adapters, PII scrub, time shift, id remap, storage & retention policy.
 - **Cloak (elsewhere)**: live-system PII governance, DPIA, lawful-basis for capture.
-- **Comply (elsewhere)**: regulatory approval for production-capture programs (GDPR Art. 32, HIPAA safe-harbor).
+- **Oath (elsewhere)**: regulatory approval for production-capture programs (GDPR Art. 32, HIPAA safe-harbor).
 - **Siege (elsewhere)**: replay-as-load-test (amplify / shuffle / time-warp for stress); `replay` produces the cleaned source set, Siege abuses it.
 - **Voyager (elsewhere)**: E2E replay execution against staging.
 
-If the question is "can I share this traffic capture with CI?" → `replay`. If it is "are we allowed to capture it in the first place?" → Cloak + Comply.
+If the question is "can I share this traffic capture with CI?" → `replay`. If it is "are we allowed to capture it in the first place?" → Cloak + Oath.
 
 ## Capture Sources
 
@@ -113,7 +113,7 @@ If the replay surfaces a bug, the repro is the manifest id + replay config, not 
 |------|-----|--------|
 | Scrub staging (pre-validation) | 72h hard | scrub service only |
 | Active bundle (post-validation) | 30d default, 90d max | consumer agents with ticket |
-| Golden regression set (long-lived) | 1y, quarterly re-scrub | requires Comply approval + re-validation |
+| Golden regression set (long-lived) | 1y, quarterly re-scrub | requires Oath approval + re-validation |
 | Expired | deleted, tombstone kept 1y | audit access only |
 
 Every bundle carries its own expiry. Consumers check `expires_at` before load and hard-fail past it — no exceptions.
@@ -136,4 +136,4 @@ Every bundle carries its own expiry. Consumers check `expires_at` before load an
 **To Siege:** scrubbed bundle + amplification spec (shuffle / time-warp / rate multiplier). Siege stresses, Mint cleans.
 **To Builder:** minimal repro bundle when the replay surfaces an integration bug — smallest subset that reproduces, not the full capture.
 **To `pii`:** escalation when capture contains field shapes the default scrub rules did not cover; `pii` upgrades the ruleset, replay re-runs.
-**To Cloak / Comply:** periodic audit evidence — scrub ruleset version, bundle inventory, expiry compliance — for DPIA and audit trail.
+**To Cloak / Oath:** periodic audit evidence — scrub ruleset version, bundle inventory, expiry compliance — for DPIA and audit trail.

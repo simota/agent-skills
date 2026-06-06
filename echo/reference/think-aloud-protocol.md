@@ -7,7 +7,7 @@ Purpose: Moderate a think-aloud usability session where participants verbalize t
 - **echo `aloud`**: moderator script, prompt discipline, transcript coding, and finding extraction for think-aloud sessions (concurrent + retrospective variants).
 - **echo `walkthrough` (default)**: persona-based cognitive walkthrough — simulated, not observed. Use when you have no users available.
 - **echo `heuristic` (elsewhere)**: expert-review prediction. Pair heuristic findings with think-aloud evidence to promote "predicted" to "confirmed."
-- **researcher `usability` (elsewhere)**: study logistics, recruitment, and statistical design. Researcher owns study design; `aloud` owns in-session moderation technique.
+- **researcher `usability` (elsewhere)**: study logistics, recruitment, and statistical design. Field owns study design; `aloud` owns in-session moderation technique.
 - **voice (elsewhere)**: captured feedback text analysis at scale — think-aloud is small-n deep, voice is large-n shallow.
 
 ## Workflow
@@ -127,6 +127,6 @@ Over-recruiting is expensive and produces noise. Run 5, analyze, add 3 if issues
 - **To Palette**: top 3-5 friction findings with timestamped quote, task, participant count, and recommended fix category.
 - **To Echo `heuristic`**: cross-reference think-aloud findings against heuristic predictions — confirmed overlaps are highest-confidence fixes.
 - **To Echo `sus`**: pair qualitative findings with the session's SUS score for quant+qual triangulation.
-- **To Researcher**: if think-aloud reveals unexpected user segments or jobs-to-be-done, escalate to structured interview study.
+- **To Field**: if think-aloud reveals unexpected user segments or jobs-to-be-done, escalate to structured interview study.
 - **To Voice**: friction hotspots found in think-aloud → deploy targeted "what would make this easier?" micro-surveys at the exact friction point.
 - **To Prose**: terminology-mismatch findings (e.g., users calling "workspace" a "project") → copy audit.

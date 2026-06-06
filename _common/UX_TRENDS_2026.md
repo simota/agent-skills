@@ -13,7 +13,7 @@
 | `frame` | §1 Design (DTCG format) + Code Connect ref | Figma-side spec is now stable; consume it correctly |
 | `forge` | §3 Frontend (RSC, streaming, Suspense) | Prototype stacks have shifted; templates must match |
 | `atelier` | All three sections | Cross-domain orchestration |
-| `showcase` | §3 Frontend (component patterns) + §1 Design (tokens) | Catalog conventions and token integration |
+| `vitrine` | §3 Frontend (component patterns) + §1 Design (tokens) | Catalog conventions and token integration |
 | `flow` | §1 Design (motion, linear() timing, reduced-motion) | New motion primitives + a11y requirements |
 | `palette` | §2 IA (navigation, cognitive load) + §1 Design (a11y) | UX quality and inclusion |
 | `prose` | §2 IA (agentic UX, llms.txt) | Voice/tone in the AI era |

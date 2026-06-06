@@ -7,10 +7,10 @@
 
 - **Mint `pii`**: test-dataset masking algorithms (tokenization / FPE / k-anon / l-div / t-close / DP). Optimized for reproducible test utility with privacy floor.
 - **Cloak (elsewhere)**: production-system privacy engineering — data flow mapping, consent, DPIA, live PII detection in running systems.
-- **Comply (elsewhere)**: regulatory framework mapping (GDPR / HIPAA / PCI-DSS controls, audit trails, Policy as Code).
+- **Oath (elsewhere)**: regulatory framework mapping (GDPR / HIPAA / PCI-DSS controls, audit trails, Policy as Code).
 - **Siege (elsewhere)**: volume generation for load tests; does not mask, consumes masked output.
 
-If the hypothesis is "is this test dataset safe to check in or share with a vendor?" → `pii`. If it's "is our production pipeline GDPR-lawful?" → Cloak + Comply.
+If the hypothesis is "is this test dataset safe to check in or share with a vendor?" → `pii`. If it's "is our production pipeline GDPR-lawful?" → Cloak + Oath.
 
 ## Technique Selection
 
@@ -86,7 +86,7 @@ def laplace_mechanism(true_answer: float, sensitivity: float, epsilon: float) ->
     return true_answer + np.random.laplace(0, sensitivity / epsilon)
 ```
 
-Typical budgets: ε = 1 (strong), ε = 5 (weak but sometimes unavoidable), ε = 10 (explain to Comply). Track cumulative ε across a dataset's lifetime — each query spends from the budget.
+Typical budgets: ε = 1 (strong), ε = 5 (weak but sometimes unavoidable), ε = 10 (explain to Oath). Track cumulative ε across a dataset's lifetime — each query spends from the budget.
 
 ## Retention-Limited Test Datasets
 
@@ -115,4 +115,4 @@ Mask datasets carry a `generated_at` + `expires_at` header; consumers must check
 **To Radar:** masked fixture set + utility-floor notes (which columns are generalized / suppressed) so assertions don't rely on exact values that no longer exist.
 **To Siege:** masked dataset + volume multiplier recipe; Siege inflates, Mint masks.
 **To Cloak:** feedback on columns that could not be safely masked while preserving test utility — often a signal that the production schema leaks PII into non-PII columns.
-**To Comply:** dataset-level evidence package (technique per column, k / l / t / ε values, retention policy) for audit trail.
+**To Oath:** dataset-level evidence package (technique per column, k / l / t / ε values, retention policy) for audit trail.

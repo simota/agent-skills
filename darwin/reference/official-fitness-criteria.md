@@ -124,7 +124,7 @@ Adjusted_EFS = EFS × (0.8 + 0.2 × (OSC / 100))
 |------------------|-----------------|----------|
 | **Document & Asset Creation** | Scribe, Quill, Morph, Dot, Sketch, Clay | 文書・アセット生成 |
 | **Workflow Automation** | Nexus, Titan, Sherpa, Sigil, Pipe, Launch | ワークフロー自動化 |
-| **MCP Enhancement** | Frame, Relay, Navigator, Hone | MCP統合強化 |
+| **MCP Enhancement** | Frame, Relay, Vector, Hone | MCP統合強化 |
 
 ### カバレッジギャップ検出
 

@@ -7,7 +7,7 @@ Reshape raw Q&A material — interview transcripts, podcast episodes, AMA thread
 ## Scope Boundary
 
 - IN scope: transcript triage, question re-writing, answer trimming, voice preservation, narrative re-sequencing, pull-quote extraction, reader-facing intro and outro.
-- OUT of scope: live interviewing technique (delegate to `researcher`), podcast production (different domain), video editing (delegate to `director`), short blurb / quote-card design (delegate to `prose` or `ink`).
+- OUT of scope: live interviewing technique (delegate to `field`), podcast production (different domain), video editing (delegate to `director`), short blurb / quote-card design (delegate to `prose` or `ink`).
 
 ## Core Concepts
 

@@ -11,7 +11,7 @@ For hub-mediated flows, use `NEXUS_HANDOFF` / `_STEP_COMPLETE` in `SKILL.md`. Us
 - [Voyager → Director (E2E-to-Demo)](#voyager--director-e2e-to-demo)
 - [Vision → Director (Design-Review Demo)](#vision--director-design-review-demo)
 - [Echo → Director (Persona-Aware Demo)](#echo--director-persona-aware-demo)
-- [Director → Showcase (Demo-to-Storybook)](#director--showcase-demo-to-storybook)
+- [Director → Vitrine (Demo-to-Storybook)](#director--showcase-demo-to-storybook)
 - [Director → Quill (Demo-to-Documentation)](#director--quill-demo-to-documentation)
 - [Director → Growth (Demo-to-Marketing)](#director--growth-demo-to-marketing)
 
@@ -165,7 +165,7 @@ Focus: persona-behavior profile for audience-tuned recording.
 
 ---
 
-## Director → Showcase (Demo-to-Storybook)
+## Director → Vitrine (Demo-to-Storybook)
 
 Focus: deliver demo as a Storybook story or visual catalog entry.
 
@@ -192,7 +192,7 @@ Focus: deliver demo as a Storybook story or visual catalog entry.
 - **Test file**: [spec file]
 - **Test data**: [fixture path]
 
-### Showcase Guidance
+### Vitrine Guidance
 - Embed as: [autoplay loop / manual-play / docs block]
 - Caption / subtitle track: [path or N/A]
 - Related stories: [list]

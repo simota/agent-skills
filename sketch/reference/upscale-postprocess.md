@@ -143,4 +143,4 @@ Rules:
 - **To Artisan**: final assets + export table (which format for which surface) + dimensions / DPI note.
 - **To Muse**: if the asset becomes a registered token, hand over the 1x and 2x exports plus color profile.
 - **To Growth**: print-spec variant (300 DPI CMYK TIFF) only if marketing needs offset print; otherwise WebP hero.
-- **To Showcase**: post-processed catalog entry with `upscaler`, `mask`, and `inpaint_prompt` recorded in sidecar metadata.
+- **To Vitrine**: post-processed catalog entry with `upscaler`, `mask`, and `inpaint_prompt` recorded in sidecar metadata.

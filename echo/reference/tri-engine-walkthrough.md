@@ -158,7 +158,7 @@ For every `CANDIDATE` cluster, the Echo main context must:
 2. **Persona-voice authenticity check** — does the `description` and `confusion_moments` sound like the named persona? Or does it slip into developer/PM language? If inauthentic, mark `REJECTED-VOICE-MISMATCH`.
 3. **Severity sanity check** — does the cited severity match the friction class? Cosmetic items scored 4 (blocker) or a11y blockers scored 1 (cosmetic) are calibration errors — adjust or mark `NEEDS-INFO`.
 4. **Already-mitigated check** — is the cited friction already addressed by copy / UI / a11y affordances the engine missed? If yes, `REJECTED-ALREADY-MITIGATED`.
-5. **Real-data calibration** — if Voice / Trace / Researcher / session-replay data exists in the project (e.g., `.agents/voice.md`, `.agents/trace.md`), cross-check. Apply confidence tag:
+5. **Real-data calibration** — if Voice / Trace / Field / session-replay data exists in the project (e.g., `.agents/voice.md`, `.agents/trace.md`), cross-check. Apply confidence tag:
    - `[validated]` — synthetic friction matches real user signal
    - `[supported]` — partial evidence (one source agrees)
    - `[hypothesis]` — no real-data conflict, no real-data support

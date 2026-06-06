@@ -6,7 +6,7 @@ Purpose: Administer, score, and interpret the System Usability Scale — John Br
 
 - **echo `sus`**: survey authoring, scoring, and benchmark comparison with percentile ranks, adjective grades, and letter grades. Also covers SUS variants (UMUX-Lite, SUPR-Q, UEQ) when SUS is the wrong fit.
 - **echo `heuristic` (elsewhere)**: expert review of potential issues — SUS measures user-reported perception, heuristic measures evaluator-predicted violations. Use both; they rarely agree exactly.
-- **researcher `usability` (elsewhere)**: moderated usability test design — SUS is typically administered at the end. Researcher owns study design; `sus` owns score interpretation.
+- **researcher `usability` (elsewhere)**: moderated usability test design — SUS is typically administered at the end. Field owns study design; `sus` owns score interpretation.
 - **voice `nps` (elsewhere)**: NPS measures loyalty, SUS measures usability. Correlated but not interchangeable; report both when you want a full picture.
 - **palette (elsewhere)**: remediation — SUS is diagnostic, not prescriptive. Low scores route to Palette.
 
@@ -125,7 +125,7 @@ SUS ≥80 + completion <78% + low SEQ on one task = strong signal to investigate
 ## Handoff
 
 - **To Palette**: if mean SUS <68 with n≥30, emit top 3 SEQ-weak tasks as the remediation backlog.
-- **To Researcher**: if SUS is ambiguous (68-74 band) or contradicts behavioral data, escalate for a 5-user moderated study.
+- **To Field**: if SUS is ambiguous (68-74 band) or contradicts behavioral data, escalate for a 5-user moderated study.
 - **To Judge**: SUS <51 with n≥30 as a ship-blocker with percentile evidence.
 - **To Echo `heuristic`**: cross-reference low SUS against heuristic violations — overlap signals the highest-confidence fixes.
 - **To Voice**: low SUS with active NPS panel → deploy targeted "what went wrong" micro-survey to detractor cohort.

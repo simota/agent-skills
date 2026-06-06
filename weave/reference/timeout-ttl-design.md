@@ -116,7 +116,7 @@ Transition stuck records to `needs_review` or `auto_recovery`.
 | Cron sweep | Batch cleanup | tempo-scheduled job |
 | Partitioning | Log retention | Drop partition > N days |
 
-**Always archive before delete** if the data has any auditing / legal-hold requirement (consult Cloak / Comply).
+**Always archive before delete** if the data has any auditing / legal-hold requirement (consult Cloak / Oath).
 
 ## Grace Period Design
 
@@ -133,7 +133,7 @@ Normal → at_risk (first failure) → grace (soft warnings) → suspended (hard
 | suspended | 7-30 days | Limited access | Cannot use premium features |
 | cancelled | terminal | Yes | Archive, notify |
 
-Hand off to Prose for grace-period copy, Retain for win-back strategy.
+Hand off to Prose for grace-period copy, Bond for win-back strategy.
 
 ## Deadline vs Duration
 
@@ -196,13 +196,13 @@ Caveat: clock skew between services must be bounded (NTP sync). Otherwise, add s
 ### TTL / Cleanup
 - **Mechanism**: [cron / event-driven / TTL index]
 - **Archive policy**: [before delete: yes/no, where]
-- **Compliance check**: [PII retention rules — defer to Cloak/Comply]
+- **Compliance check**: [PII retention rules — defer to Cloak/Oath]
 
 ### Handoffs
 - tempo (sweep schedule, expiry events)
 - Beacon (stuck-state alerts)
 - Scout (investigation of stuck records)
-- Cloak / Comply (retention rules)
+- Cloak / Oath (retention rules)
 - Prose (grace-period copy)
 ```
 
@@ -229,7 +229,7 @@ When `timeout` completes, emit:
 - **Deadline propagation contract** (header/context key, safety margin).
 - **Stuck-state sweep plan** (schedule, query, alert, escape).
 - **TTL/cleanup policy** (mechanism, archive, retention).
-- **Handoffs**: tempo, Beacon, Scout, Cloak/Comply, Prose.
+- **Handoffs**: tempo, Beacon, Scout, Cloak/Oath, Prose.
 
 ## References
 

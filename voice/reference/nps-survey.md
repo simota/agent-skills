@@ -79,7 +79,7 @@ trackEvent('nps_submitted', {
 - Break down NPS by plan, segment, tenure, and touchpoint.
 - Extract promoter strengths, passive upgrade opportunities, and detractor pain points.
 - Flag statistically weak samples before recommending broad product changes.
-- Route recurrent feature requests to `Spark`, churn-risk themes to `Retain`, and metric instrumentation gaps to `Pulse`.
+- Route recurrent feature requests to `Spark`, churn-risk themes to `Bond`, and metric instrumentation gaps to `Pulse`.
 
 ## 2026 Calibration
 

@@ -110,7 +110,7 @@ FLUX_TO_RIFF_HANDOFF:
 
 ---
 
-## Researcher → Riff (Research-to-Brainstorm Handoff)
+## Field → Riff (Research-to-Brainstorm Handoff)
 
 調査結果を受け取って、そこからアイデアを展開する。
 

@@ -29,13 +29,13 @@ If the artifact is an `.ipa` / `.apk` / `.aab` being shipped, → `mobile`. If i
 
 ## Agent Boundary
 
-| Responsibility | Voyager | Navigator | Artisan |
+| Responsibility | Voyager | Vector | Artisan |
 |----------------|---------|-----------|---------|
 | **Mobile E2E tests** | ✅ Primary | | |
 | **Mobile browser tasks** | | ✅ Primary | |
 | **Mobile UI components** | | | ✅ Primary |
 
-**Rule of thumb**: Voyager owns mobile E2E test design and execution. Navigator handles one-off mobile browser tasks. Artisan implements responsive mobile components.
+**Rule of thumb**: Voyager owns mobile E2E test design and execution. Vector handles one-off mobile browser tasks. Artisan implements responsive mobile components.
 
 ---
 

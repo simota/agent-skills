@@ -70,7 +70,7 @@ Trace: user-request-abc123
 
 | Attribute | Description |
 |-----------|-------------|
-| `gen_ai.agent.name` | Agent identifier (e.g., `researcher`, `builder`) |
+| `gen_ai.agent.name` | Agent identifier (e.g., `field`, `builder`) |
 | `gen_ai.tool.name` | Tool name when invoking external tools |
 | `gen_ai.tool.call.id` | Tool call identifier for correlation |
 | `thread.id` | Session or conversation thread identifier |

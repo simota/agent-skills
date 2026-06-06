@@ -24,7 +24,7 @@ Decomposes, coordinates, and parallelizes tasks.
 | **Titan** | Product delivery | Ship code fastest, prefer build over plan | No |
 | **Rally** | Parallel orchestrator | Multi-session parallel execution | No |
 | **Aether** | AITuber orchestrator | Building AI VTuber systems | No |
-| **Atelier** | Design → implementation pipeline | Integrates Vision → Muse/Frame → Forge → Artisan → Showcase → Canvas | No |
+| **Atelier** | Design → implementation pipeline | Integrates Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas | No |
 
 ## Investigation (9)
 
@@ -78,7 +78,7 @@ Security analysis and testing.
 | **Probe** | Dynamic security testing | OWASP ZAP / Burp Suite, penetration testing | Mixed |
 | **Crypt** | Cryptographic architecture | Algorithm selection, key management, E2EE, TLS configuration | Mixed |
 | **Chain** | Skill/plugin/MCP supply-chain audit | sha256 manifests, Unicode Tag injection scan, credential-exfiltration detection, MCP tool-description rug-pull prevention | Mixed |
-| **Husk** | Supply-chain malware infection scanner | IoC-based local scan for npm/PyPI worm campaigns; eradication and credential rotation runbooks | Mixed |
+| **Cull** | Supply-chain malware infection scanner | IoC-based local scan for npm/PyPI worm campaigns; eradication and credential rotation runbooks | Mixed |
 
 ## Review (7)
 
@@ -143,8 +143,8 @@ UI/UX design and improvement.
 | **Echo** | Persona cognitive walkthrough | Usability evaluation, confusion-point discovery | No |
 | **Flow** | Animation implementation | CSS / JS animation, transitions | Yes |
 | **Muse** | Design tokens | Token architecture, dark mode | Mixed |
-| **Showcase** | Storybook | Story authoring, Visual Regression | Mixed |
-| **Researcher** | User research | Interview design, persona creation | No |
+| **Vitrine** | Storybook | Story authoring, Visual Regression | Mixed |
+| **Field** | User research | Interview design, persona creation | No |
 | **Trace** | Session-replay analysis | Behavioral pattern extraction, UX issue discovery | No |
 | **Cast** | Persona casting | Persona generation, management, sync | No |
 | **Funnel** | Landing-page construction | LP design and optimization | Mixed |
@@ -161,7 +161,7 @@ Infrastructure, CI/CD, and operations.
 | **Pipe** | GitHub Actions | Workflow design, security hardening | Yes |
 | **Beacon** | Observability and reliability | SLO / SLI design, alert strategy | Mixed |
 | **Launch** | Release management | Versioning, CHANGELOG, rollback | Mixed |
-| **Comply** | Compliance | SOC2 / PCI-DSS / HIPAA conformance checks | Mixed |
+| **Oath** | Compliance | SOC2 / PCI-DSS / HIPAA conformance checks | Mixed |
 | **Ledger** | FinOps | Cloud cost optimization, RI / SP recommendations | No |
 
 ## Modernization (3)
@@ -180,7 +180,7 @@ Growth tactics and branding.
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Growth** | SEO / CRO / GEO | Meta / OGP / JSON-LD, CTA optimization | Mixed |
-| **Retain** | Retention | Re-engagement, churn prevention | Mixed |
+| **Bond** | Retention | Re-engagement, churn prevention | Mixed |
 | **Crest** | Engineer branding | GitHub / LinkedIn / blog / conference positioning | No |
 
 ## Analytics (3)
@@ -208,8 +208,8 @@ Browser automation and asset acquisition.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Navigator** | Browser automation | Task completion via Playwright / DevTools | Yes |
-| **Spider** | Crawl architecture | Distributed crawler, politeness design | No |
+| **Vector** | Browser automation | Task completion via Playwright / DevTools | Yes |
+| **Trawl** | Crawl architecture | Distributed crawler, politeness design | No |
 | **Haul** | Product image acquisition | SKU / JAN / UPC matching, multi-source aggregation, perceptual-hash dedup, license verification | Yes |
 
 ## Data (2)
@@ -319,4 +319,4 @@ Specialized skills that don't fit the categories above.
 | **Tempo** | Schedule design | cron, timezone / DST, retry / backoff, business calendars | Mixed |
 | **Dawn** | Daily idea proposal | One personal-project idea per invocation as an 8-section brief for morning / daily / weekend hacks | No |
 | **Hex** | Technical-debt visualization | Debt detection, severity scoring, gamified anthropomorphization (T1 Veil → T5 Calamity) + exorcism roadmap | Mixed |
-| **Lure** | Premium LP studio orchestrator | Full 9-stage LP pipeline (Discover→Audience→Strategy→Structure→Design→Build→Optimize→Verify→Launch) across existing agents | Mixed |
+| **Bazaar** | Premium LP studio orchestrator | Full 9-stage LP pipeline (Discover→Audience→Strategy→Structure→Design→Build→Optimize→Verify→Launch) across existing agents | Mixed |

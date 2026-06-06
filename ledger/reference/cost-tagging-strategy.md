@@ -32,7 +32,7 @@ ROLL OUT   →  apply default_tags to IaC; backfill existing resources; soft-fai
            →  publish allocation report; reconcile against finance cost center master
 
 HANDOFF    →  Scaffold: IaC default_tags + tag-policy modules; Beacon: untagged-resource alert;
-           →  Atlas: org tag-coverage map; Comply: tag-evidence trail
+           →  Atlas: org tag-coverage map; Oath: tag-evidence trail
 ```
 
 ## Mandatory Tag Set (Recommended Baseline)
@@ -44,7 +44,7 @@ HANDOFF    →  Scaffold: IaC default_tags + tag-policy modules; Beacon: untagge
 | `Service` | Logical service | `checkout-api`, `recs-engine` | Service catalog (Backstage) |
 | `CostCenter` | Finance allocation | `cc-1042`, `cc-2310` | Finance master |
 | `ManagedBy` | Provisioning tool | `terraform`, `manual`, `console` | IaC repo |
-| `DataClassification` | Sensitivity (optional but recommended) | `public`, `internal`, `confidential`, `restricted` | Cloak / Comply |
+| `DataClassification` | Sensitivity (optional but recommended) | `public`, `internal`, `confidential`, `restricted` | Cloak / Oath |
 | `Project` | Time-boxed initiative (optional) | `proj-q2-migration` | PM tool |
 
 Rule: every mandatory tag must have an enforced allowed-value list. Free-text tags fragment into 200+ variants and break allocation reports.
@@ -110,6 +110,6 @@ Shared-cost split rules:
 - **To Scaffold**: `default_tags` block (Terraform AWS), Pulumi resource transforms, CloudFormation template `Tags`, Azure Policy `append` ARM. Includes allowed-value enum and case convention.
 - **To Beacon**: untagged-resource SLO (coverage >= 95%, alert at < 90% for 7 days); cost-anomaly rule keyed off `Team=unallocated` spike.
 - **To Atlas**: org tag-coverage map — by account, by service, by team — surfaced as a periodic architecture-health signal.
-- **To Comply**: tag-evidence trail for SOC2 / ISO 27001 cost-allocation control; data-classification tag audit linkage.
+- **To Oath**: tag-evidence trail for SOC2 / ISO 27001 cost-allocation control; data-classification tag audit linkage.
 - **To Ledger `estimate` / `rightsizing` / `anomaly`**: certified tag taxonomy + coverage report. Downstream recipes refuse to produce per-team output below 80% coverage.
 - **To Cloak**: confirm `DataClassification` tag values align with Cloak's classification framework before publication.

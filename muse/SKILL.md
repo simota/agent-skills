@@ -26,12 +26,12 @@ COLLABORATION_PATTERNS:
 - Muse -> Artisan: Token-aware components
 - Muse -> Loom: Token definitions for guidelines
 - Muse -> Flow: Animation tokens
-- Muse -> Showcase: Token documentation
+- Muse -> Vitrine: Token documentation
 - Muse -> Polyglot: RTL-aware spacing tokens
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Vision, Frame, Palette, Pixel
-- OUTPUT: Artisan, Loom, Flow, Showcase, Polyglot
+- OUTPUT: Artisan, Loom, Flow, Vitrine, Polyglot
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(H) Marketing(M)
 -->
@@ -51,7 +51,7 @@ Use Muse when the task requires any of the following:
 - Validate or convert tokens to W3C DTCG spec v2025.10 format (`$value`, `$type`, `$description`).
 - Configure Style Dictionary v5, Tokens Studio, or Terrazzo token pipelines.
 - Define accessibility-focused tokens (touch targets, focus rings, reduced motion).
-- Process reverse feedback from Palette, Flow, Showcase, or Judge about accessibility, motion, hardcoded values, or inconsistency.
+- Process reverse feedback from Palette, Flow, Vitrine, or Judge about accessibility, motion, hardcoded values, or inconsistency.
 
 Route elsewhere when the task is primarily:
 - Full component implementation → **Artisan**
@@ -86,7 +86,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Verify light and dark mode.
 - Audit changed files for hardcoded values and off-grid spacing.
 - Follow the lifecycle in `reference/token-lifecycle.md`.
-- Process reverse feedback from Palette, Flow, Showcase, and Judge.
+- Process reverse feedback from Palette, Flow, Vitrine, and Judge.
 
 ### Ask First
 
@@ -149,7 +149,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | `lifecycle`, `deprecate`, `adopt`, `stable` | Token lifecycle management | Lifecycle state changes + migration guide | `reference/token-lifecycle.md` |
 | `font`, `typeface`, `display font` | Typography selection | Font recommendation + pairing guide | `reference/typography-selection-guide.md` |
 | `accessibility`, `touch target`, `focus ring`, `WCAG`, `a11y` | Accessibility token workflow | Accessibility token spec + contrast report | `reference/dark-mode.md` |
-| reverse feedback from Palette/Flow/Showcase/Judge | Feedback processing workflow | Token adjustment + impact summary | relevant `reference/` file |
+| reverse feedback from Palette/Flow/Vitrine/Judge | Feedback processing workflow | Token adjustment + impact summary | relevant `reference/` file |
 | unclear request | Clarify scope and route | Scoped analysis | `reference/token-system.md` |
 
 Routing rules:
@@ -213,7 +213,7 @@ Muse receives design direction and token extraction from upstream agents. Muse s
 | Muse → Artisan | `MUSE_TO_ARTISAN` | Token-aware component specifications |
 | Muse → Loom | `MUSE_TO_LOOM` | Token definitions for Figma Make guidelines |
 | Muse → Flow | `MUSE_TO_FLOW` | Animation and timing token definitions |
-| Muse → Showcase | `MUSE_TO_SHOWCASE` | Token documentation updates for Storybook |
+| Muse → Vitrine | `MUSE_TO_SHOWCASE` | Token documentation updates for Storybook |
 | Muse → Palette | `MUSE_TO_PALETTE` | Color, contrast, and dark-mode semantic changes |
 | Muse → Canvas | `MUSE_TO_CANVAS` | Token hierarchy visualization requests |
 | Muse → Judge | `MUSE_TO_JUDGE` | Token migration changes for code review |

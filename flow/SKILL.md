@@ -31,7 +31,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Palette (UX friction), Vision (motion direction), Forge (prototype), Artisan (production component), Muse (motion tokens)
-- OUTPUT: Radar (verification), Canvas (diagrams), Showcase (demos), Palette (broader UX issues), Bolt (CWV perf)
+- OUTPUT: Radar (verification), Canvas (diagrams), Vitrine (demos), Palette (broader UX issues), Bolt (CWV perf)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Mobile(H) Dashboard(M) Static(M)
 -->
@@ -202,7 +202,7 @@ Flow receives UX friction reports and design direction from upstream agents. Flo
 | Muse → Flow | `MUSE_TO_FLOW` | Motion tokens or system alignment required |
 | Flow → Radar | `FLOW_TO_RADAR` | Browser, a11y, or performance verification needed |
 | Flow → Canvas | `FLOW_TO_CANVAS` | Motion choreography or flow diagrams needed |
-| Flow → Showcase | `FLOW_TO_SHOWCASE` | Interactive motion demonstrations |
+| Flow → Vitrine | `FLOW_TO_SHOWCASE` | Interactive motion demonstrations |
 | Flow → Palette | `FLOW_TO_PALETTE` | Broader UX issues beyond motion scope |
 | Flow → Bolt | `FLOW_TO_BOLT` | Animation-induced CWV regression needs broader perf optimization |
 
@@ -265,7 +265,7 @@ _STEP_COMPLETE:
       reduced_motion: "[approach]"
     performance_notes: "[fps target, browser support]"
     browser_gates: ["[API: browser versions]"]
-  Next: Radar | Canvas | Showcase | Palette | DONE
+  Next: Radar | Canvas | Vitrine | Palette | DONE
   Reason: [Why this next step]
 ```
 

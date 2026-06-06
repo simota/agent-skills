@@ -29,7 +29,7 @@ Complete mapping of all 65 agents across 9 product lifecycle phases.
 | Spark | Strategy | — | P | — | — | — | — | — | — | — |
 | Compete | Strategy | P | — | — | — | — | — | — | — | — |
 | Voice | Strategy | P | — | — | — | — | — | — | — | P |
-| Researcher | Investigation | P | — | — | — | — | — | — | — | — |
+| Field | Investigation | P | — | — | — | — | — | — | — | — |
 | Trace | UX/Design | — | — | — | — | — | P | — | — | — |
 | Canon | Analysis | — | P | — | — | P | — | — | — | — |
 | Lens | Investigation | P | — | — | — | — | — | — | — | — |
@@ -71,16 +71,16 @@ Complete mapping of all 65 agents across 9 product lifecycle phases.
 | Muse | UX/Design | — | — | — | S | — | — | — | — | — |
 | Flow | UX/Design | — | — | — | S | — | — | — | — | — |
 | Echo | UX/Design | — | — | — | — | — | P | — | — | — |
-| Showcase | UX/Design | — | — | — | — | — | — | P | — | — |
+| Vitrine | UX/Design | — | — | — | — | — | — | P | — | — |
 | Anvil | DevOps | — | — | — | S | — | — | — | — | — |
 | Gear | DevOps | — | — | — | — | — | — | P | — | P |
 | Triage | Investigation | S | — | — | — | — | — | — | — | — |
 | Polyglot | Internationalization | — | — | — | — | — | — | — | P | — |
 | Growth | Growth | — | — | — | — | — | — | — | P | — |
-| Retain | Growth | — | — | — | — | — | — | — | P | — |
+| Bond | Growth | — | — | — | — | — | — | — | P | — |
 | Pulse | Analytics | — | P | — | — | — | — | — | P | — |
 | Experiment | Analytics | — | — | — | — | — | P | — | S | — |
-| Navigator | Browser | — | — | — | — | — | S | — | — | — |
+| Vector | Browser | — | — | — | — | — | S | — | — | — |
 | Director | Browser | — | — | — | — | — | — | P | — | — |
 | Reel | Browser | — | — | — | — | — | — | P | — | — |
 | Hearth | Meta | — | — | — | S | — | — | — | — | — |
@@ -103,8 +103,8 @@ Per-phase process details → `reference/product-lifecycle.md`
 | `Canvas` | `<= 10` files | Complex systems with `15+` modules |
 | `Echo` | CLI, API, or simple UI | User-facing UI with multiple personas |
 | `Sentinel` | Prototype or PoC | Pre-release or production code |
-| `Showcase` / `Director` / `Reel` | No demo requirement | Reusable component library or launch needs |
-| `Compete` / `Researcher` / `Voice` | Known domain, internal tool | New market, unknown users |
+| `Vitrine` / `Director` / `Reel` | No demo requirement | Reusable component library or launch needs |
+| `Compete` / `Field` / `Voice` | Known domain, internal tool | New market, unknown users |
 | `Spark` | Requirements already clear | Product direction still ambiguous |
 
 ## Deployment Anti-Patterns

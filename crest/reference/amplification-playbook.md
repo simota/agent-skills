@@ -72,7 +72,7 @@ Conference Talk (30-60 min)
 | Quarter Action | Purpose |
 |---------------|---------|
 | Update LinkedIn profile | Reflect recent achievements |
-| Refresh GitHub README + pins | Showcase current niche |
+| Refresh GitHub README + pins | Vitrine current niche |
 | Review BHS scores | Identify gaps and adjust |
 | Submit 1-2 CFP proposals | Build speaking portfolio |
 | Publish or update Zenn Book chapter | Systematic knowledge output |

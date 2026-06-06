@@ -98,4 +98,4 @@ Innovation research (Gentner; cross-industry studies of financial-services later
 - **To Riff**: when one analogy looks promising but the mapping is incomplete — iterate.
 - **To Omen**: breakdown points as failure-mode candidates for pre-mortem.
 - **To `inversion`**: when the analogy suggests a path, run inversion on that path to surface failure modes.
-- **To Researcher**: high-novelty far analogies needing empirical validation before commitment.
+- **To Field**: high-novelty far analogies needing empirical validation before commitment.

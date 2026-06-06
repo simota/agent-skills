@@ -361,7 +361,7 @@ Run this before any TestFlight External / Play Closed Testing build.
 ## Handoffs
 - Cloak: privacy data flow + DPIA
 - Crypt: token / Passkey storage architecture
-- Comply: regulatory mapping (SOC2 / PCI-DSS / HIPAA)
+- Oath: regulatory mapping (SOC2 / PCI-DSS / HIPAA)
 - Launch: submission timeline & rollback
 ```
 

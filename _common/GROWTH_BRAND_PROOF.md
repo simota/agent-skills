@@ -8,9 +8,9 @@ Companion protocol to `_common/PROOF_CARRYING.md` (Tier A Foundation + Tier B Pr
 - `_common/HANDOFF.md` (handoff schema)
 
 **Audience**: Skills participating in pre-design / ship-time / post-launch lifecycle gates.
-- **Research axis (R)**: `researcher`, `voice`, `trace`, `plea`, `tome`
-- **Brand axis (B)**: `vision`, `crest`, `prose`, `clause`, `comply`, `muse` (token discipline carry-over from Tier B)
-- **Market axis (M)**: `pulse`, `experiment`, `funnel`, `lure`, `compete`, `ledger` (FinOps), `harvest`, `cloak`, `vigil` (brand safety)
+- **Research axis (R)**: `field`, `voice`, `trace`, `plea`, `tome`
+- **Brand axis (B)**: `vision`, `crest`, `prose`, `clause`, `oath`, `muse` (token discipline carry-over from Tier B)
+- **Market axis (M)**: `pulse`, `experiment`, `funnel`, `bazaar`, `compete`, `ledger` (FinOps), `harvest`, `cloak`, `vigil` (brand safety)
 - **Orchestration**: `nexus[growth-acceptance]`
 
 **Inspired by**: AAOS (v1) → Code+Design Proof (v2) → Growth+Brand Acceptance OS (v3 source). All three round verdicts (Magi GO-WITH-CONDITIONS at confidence 65 / 67.8 / 54.7 respectively) inform this document.
@@ -69,7 +69,7 @@ Three structural reasons:
 
 **Cross-cutting**: **G11 mandatory** — AI is read-only on the Insight Ledger; only Research Lead can merge proposed edits; confidence is deterministic-computed, never hand-set.
 
-**Skills**: `researcher`, `voice`, `trace`, `plea`, `tome`, + new skill `insight` (proposed, Architect responsibility).
+**Skills**: `field`, `voice`, `trace`, `plea`, `tome`, + new skill `insight` (proposed, Architect responsibility).
 
 **Blocking?**: Yes — content without Insight Ledger citation is rejected at pre-design Phase.
 
@@ -83,7 +83,7 @@ Three structural reasons:
 
 **Cross-cutting**: **G13 mandatory** — every Contract names a Stop_Accountable (1 person); 24h no-response → auto-halt. **G14 mandatory** for regulated industries — auto-scale OFF by default.
 
-**Skills**: `pulse`, `experiment`, `funnel`, `lure`, `compete`, `ledger` (FinOps), `accord`, `spark`, `scribe`.
+**Skills**: `pulse`, `experiment`, `funnel`, `bazaar`, `compete`, `ledger` (FinOps), `accord`, `spark`, `scribe`.
 
 **Blocking?**: Yes — campaigns without Contract are non-shippable; Incrementality Gate auto-halts losers.
 
@@ -97,7 +97,7 @@ Three structural reasons:
 
 **Cross-cutting**: **G15 mandatory** — Brand Constitution split into Core (10y) / Strategic (3-5y) / Operational (12-18mo). **G12 (Diversity Floor) mandatory** — Compiler rejects "minimum viable safe copy" (homogenization counter-pressure).
 
-**Skills**: `vision` (Compiler orchestration), `crest` (brand strategy), `prose` (voice), `muse` (design tokens crossover from Tier B), `clause` (legal), `comply` (regulatory).
+**Skills**: `vision` (Compiler orchestration), `crest` (brand strategy), `prose` (voice), `muse` (design tokens crossover from Tier B), `clause` (legal), `oath` (regulatory).
 
 **Blocking?**: B.hard (taboo / legal) + B.pattern (tokens / Code Connect) are blocking. B.tone (LLM-as-judge advisory) is non-blocking + weekly sampling audit.
 
@@ -111,15 +111,15 @@ When any AI-generated content cites customer insight, market trend, or user beha
 
 | Field | What | Owner Skill |
 |-------|------|-------------|
-| `source_proof` | Which data source(s) generated the claim | `researcher` / `trace` / `voice` |
-| `sample_proof` | Who was surveyed; N; segmentation; recruitment method | `researcher` |
-| `bias_proof` | Known sampling biases + selection effects explicitly stated | `researcher` / `plea` |
+| `source_proof` | Which data source(s) generated the claim | `field` / `trace` / `voice` |
+| `sample_proof` | Who was surveyed; N; segmentation; recruitment method | `field` |
+| `bias_proof` | Known sampling biases + selection effects explicitly stated | `field` / `plea` |
 | `contradiction_proof` | Counter-evidence considered and either reconciled or noted | `magi` / `flux` |
-| `triangulation_proof` | At least 2 independent sources support the claim | `researcher` + at least 1 other |
+| `triangulation_proof` | At least 2 independent sources support the claim | `field` + at least 1 other |
 | `recency_proof` | Source data age; expiration trigger | `tome` |
 | `decision_proof` | Which specific decision this claim supports (not unanchored) | `accord` |
 | `confidence_score` | Deterministic-computed (N × variance × age decay × counter-evidence weight); never hand-set per G11 | `insight` (proposed skill) |
-| `reproducibility_proof` | Methodology document enabling independent replay | `tome` / `researcher` |
+| `reproducibility_proof` | Methodology document enabling independent replay | `tome` / `field` |
 
 **Semantic-non-emptiness** (G3 carry-over from Tier A): empty fields without a documented exclusion reason are rejected, not "no findings".
 
@@ -136,7 +136,7 @@ When any brand-touching content (LP / ad / UI copy / email / SNS / sales / press
 | `distinctiveness_proof` | Embedding distance from competitor recent creatives + own past 90d > G12 threshold | `compete` | B.hard (G12 blocking) |
 | `asset_proof` | Distinctive assets (logo, color, type, shape) used per Constitution | `muse` / `vision` | B.pattern (blocking) |
 | `memory_proof` | Cognitive associations match intended Category Entry Points | `vision` / `crest` | B.tone (advisory) |
-| `trust_proof` | No exaggeration / no false claims / no banned coercive language (per `clause` + `comply`) | `clause` / `comply` | B.hard (blocking) |
+| `trust_proof` | No exaggeration / no false claims / no banned coercive language (per `clause` + `oath`) | `clause` / `oath` | B.hard (blocking) |
 | `consistency_proof` | Does not contradict prior brand statements (G15 lifecycle check) | `vision` / `tome` | B.tone (advisory) |
 | `brand_lift_proof` | Post-launch awareness / recall / favorability / intent unchanged-or-improved | `pulse` / `experiment` | Post-launch measurement (G13 auto-halt if degraded) |
 
@@ -271,7 +271,7 @@ expiration:
 
 Friction Ledger inherits G11 unchanged:
 - **Write authority limited to 3 skills**: `trace` (session replay extraction), `voice` (sentiment-source pointers), `echo` (persona walkthrough observations)
-- **AI cannot directly mutate** Friction Ledger entries; the 3 writer skills queue proposed entries, only their respective human leads (UX Researcher / Product Researcher / CX Lead) merge
+- **AI cannot directly mutate** Friction Ledger entries; the 3 writer skills queue proposed entries, only their respective human leads (UX Field / Product Field / CX Lead) merge
 - **Promotion to Insight Ledger requires Research Lead human merge** (Insight Ledger G11 enforcement)
 - **Deterministic-computed fields**: `duration_seconds`, `metric_delta`, `valid_until` are auto-derived (never hand-set per G11 confidence rule)
 
@@ -365,7 +365,7 @@ Rule-based, deterministic, blocking. No LLM judgment.
 | Rule Type | Example | Tooling |
 |-----------|---------|---------|
 | Taboo words | "革命的" / 過剰使用、競合商標誤用 | Banned-word list (per `prose`) |
-| Legal compliance | 薬機法 / 景表法 / 金商法 / 公職選挙法 / GDPR / DMA violations | `clause` + `comply` validators |
+| Legal compliance | 薬機法 / 景表法 / 金商法 / 公職選挙法 / GDPR / DMA violations | `clause` + `oath` validators |
 | Distinctive asset misuse | Competitor logo / unauthorized celebrity / wrong brand color | `muse` + `vision` AST check |
 | Diversity Floor (G12) | Cosine sim > 0.85 to past 90d own creatives OR top-10 competitor recent creatives | Embedding model + threshold |
 

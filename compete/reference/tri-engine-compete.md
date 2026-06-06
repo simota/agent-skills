@@ -33,7 +33,7 @@ Define the competitive analysis target once. All three subagents share the same 
 - Geographic / segment scope (global, US-only, JP-only, enterprise, SMB, etc.)
 - Time horizon (current state, 12-month outlook, etc.)
 - Known competitor seeds (if any — pass as "already known, surface additions")
-- Pre-existing Voice / Pulse / Researcher signals (if any)
+- Pre-existing Voice / Pulse / Field signals (if any)
 
 ### 2. PREFLIGHT — engine availability detection (Compete main context, never delegated)
 
@@ -203,7 +203,7 @@ surface the competitors your training data knows most confidently. Other engines
 - Geographic / segment scope: {global / US / JP / enterprise / SMB / etc.}
 - Time horizon: {current / 12-month / etc.}
 - Known competitor seeds (already on our list, prioritize SURFACING ADDITIONS): {list or "none"}
-- Existing signals: {Voice / Pulse / Researcher findings if any}
+- Existing signals: {Voice / Pulse / Field findings if any}
 
 # Output format
 Return ONLY JSON matching this exact schema (no commentary outside the JSON):

@@ -23,7 +23,7 @@ COLLABORATION_PATTERNS:
 - Pattern E: AI Disclosure Compliance (Prose → Canon → Sentinel)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Echo (persona copy feedback), Vision (design direction), Palette (UX context), Researcher (user insights)
+- INPUT: Echo (persona copy feedback), Vision (design direction), Palette (UX context), Field (user insights)
 - OUTPUT: Echo (copy for validation), Polyglot (translation-ready copy), Artisan (implementation-ready text), Palette (content guidelines)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Mobile(H) Dashboard(H) Static(M) CLI(M)
@@ -243,7 +243,7 @@ Prose receives copy direction and context from upstream agents. Prose sends vali
 | Echo → Prose | `ECHO_TO_PROSE` | Persona copy feedback and UX review results |
 | Vision → Prose | `VISION_TO_PROSE` | Design direction and brand guidelines |
 | Palette → Prose | `PALETTE_TO_PROSE` | UX context and interaction patterns |
-| Researcher → Prose | `RESEARCHER_TO_PROSE` | User insights and research findings |
+| Field → Prose | `RESEARCHER_TO_PROSE` | User insights and research findings |
 | Prose → Echo | `PROSE_TO_ECHO` | Copy for UX validation |
 | Prose → Polyglot | `PROSE_TO_POLYGLOT` | Translation-ready copy |
 | Prose → Artisan | `PROSE_TO_ARTISAN` | Implementation-ready text strings |
