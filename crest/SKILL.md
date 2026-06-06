@@ -118,14 +118,14 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| GitHub Profile | `github` | ✓ | GitHub Profile README optimization, pinned repo design | `references/channel-templates.md` |
-| LinkedIn Profile | `linkedin` | | LinkedIn profile optimization, Topic DNA alignment | `references/channel-templates.md` |
-| Blog Strategy | `blog` | | Blog, Qiita, Zenn content strategy and article planning | `references/amplification-playbook.md` |
-| Conference CFP | `conference` | | Conference CFP authoring, talk theme design | `references/channel-templates.md` |
-| SNS Strategy | `sns` | | X, Bluesky, LinkedIn SNS publishing strategy, zero-click design | `references/amplification-playbook.md` |
-| Topic DNA | `topic-dna` | | Topic DNA / niche positioning — define what the engineer is known for; tech × domain × perspective triangulation | `references/topic-dna.md` |
-| Portfolio | `portfolio` | | Personal portfolio site / homepage architecture — projects, case studies, contact, hire-readiness | `references/portfolio-architecture.md` |
-| Bio | `bio` | | Multi-platform bio writing — GitHub one-line, LinkedIn About ≤275 chars, X 160-char, conference 50-word, long 200-word variants | `references/multi-platform-bio.md` |
+| GitHub Profile | `github` | ✓ | GitHub Profile README optimization, pinned repo design | `reference/channel-templates.md` |
+| LinkedIn Profile | `linkedin` | | LinkedIn profile optimization, Topic DNA alignment | `reference/channel-templates.md` |
+| Blog Strategy | `blog` | | Blog, Qiita, Zenn content strategy and article planning | `reference/amplification-playbook.md` |
+| Conference CFP | `conference` | | Conference CFP authoring, talk theme design | `reference/channel-templates.md` |
+| SNS Strategy | `sns` | | X, Bluesky, LinkedIn SNS publishing strategy, zero-click design | `reference/amplification-playbook.md` |
+| Topic DNA | `topic-dna` | | Topic DNA / niche positioning — define what the engineer is known for; tech × domain × perspective triangulation | `reference/topic-dna.md` |
+| Portfolio | `portfolio` | | Personal portfolio site / homepage architecture — projects, case studies, contact, hire-readiness | `reference/portfolio-architecture.md` |
+| Bio | `bio` | | Multi-platform bio writing — GitHub one-line, LinkedIn About ≤275 chars, X 160-char, conference 50-word, long 200-word variants | `reference/multi-platform-bio.md` |
 
 ## Subcommand Dispatch
 
@@ -142,14 +142,14 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Read next |
 |--------|----------|-----------|
-| `ブランド診断`, `brand audit` | **AUDIT** — Multi-channel scoring → Brand Health Report | `references/metrics-guide.md` |
-| `ニッチ決定`, `positioning` | **POSITION** — Tech×Domain×Perspective analysis → Positioning Statement | `references/positioning-frameworks.md` |
-| `GitHub README`, `LinkedIn`, `profile` | **PROFILE** — Channel-specific optimization → Channel-optimized content (LinkedIn: align 360Brew Topic DNA + 80% content pillar rule, 100% profile completion, mobile-first About ≤275 chars, pin top 3 skills; GitHub: pin 4–6 strongest repos) | `references/channel-templates.md` |
-| `実績まとめ`, `自己紹介`, `achievement` | **NARRATIVE** — Contribution data → Achievement narrative | `references/channel-templates.md` |
-| `ブランド戦略`, `brand strategy` | **STRATEGY** — Annual roadmap → Branding roadmap | `references/amplification-playbook.md` |
-| `ブログネタ`, `登壇テーマ`, `content ideas` | **CONTENT** — Content planning → Content plan + repurpose map (LinkedIn: zero-click strategy — deliver value in-feed via document/carousel posts and short-form video <60 s; no outbound URLs in post body; optimize for depth, saves, and late engagement; maintain 80%+ within Topic DNA pillars) | `references/amplification-playbook.md` |
-| `build in public`, `発信戦略` | **VISIBILITY** — Build-in-public → Visibility plan with community hub | `references/amplification-playbook.md` |
-| `AI時代`, `AI branding` | **AI-ERA** — AI-era positioning → Authenticity-first AI strategy | `references/ai-era-strategy.md` |
+| `ブランド診断`, `brand audit` | **AUDIT** — Multi-channel scoring → Brand Health Report | `reference/metrics-guide.md` |
+| `ニッチ決定`, `positioning` | **POSITION** — Tech×Domain×Perspective analysis → Positioning Statement | `reference/positioning-frameworks.md` |
+| `GitHub README`, `LinkedIn`, `profile` | **PROFILE** — Channel-specific optimization → Channel-optimized content (LinkedIn: align 360Brew Topic DNA + 80% content pillar rule, 100% profile completion, mobile-first About ≤275 chars, pin top 3 skills; GitHub: pin 4–6 strongest repos) | `reference/channel-templates.md` |
+| `実績まとめ`, `自己紹介`, `achievement` | **NARRATIVE** — Contribution data → Achievement narrative | `reference/channel-templates.md` |
+| `ブランド戦略`, `brand strategy` | **STRATEGY** — Annual roadmap → Branding roadmap | `reference/amplification-playbook.md` |
+| `ブログネタ`, `登壇テーマ`, `content ideas` | **CONTENT** — Content planning → Content plan + repurpose map (LinkedIn: zero-click strategy — deliver value in-feed via document/carousel posts and short-form video <60 s; no outbound URLs in post body; optimize for depth, saves, and late engagement; maintain 80%+ within Topic DNA pillars) | `reference/amplification-playbook.md` |
+| `build in public`, `発信戦略` | **VISIBILITY** — Build-in-public → Visibility plan with community hub | `reference/amplification-playbook.md` |
+| `AI時代`, `AI branding` | **AI-ERA** — AI-era positioning → Authenticity-first AI strategy | `reference/ai-era-strategy.md` |
 
 ## Workflow
 
@@ -221,12 +221,12 @@ Every deliverable must include:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/positioning-frameworks.md` | You need micro-niche identification, Tech×Domain×Perspective analysis, or positioning statements |
-| `references/channel-templates.md` | You need templates for GitHub, LinkedIn, Qiita, Zenn, note, blog, CFP, YouTube, X, or newsletter |
-| `references/metrics-guide.md` | You need channel KPIs, Brand Health Score calculation, or algorithm insights |
-| `references/amplification-playbook.md` | You need content repurpose flows, cross-posting strategy, or monetization models |
-| `references/anti-patterns.md` | You need detailed anti-pattern detection rules and platform-specific pitfalls |
-| `references/ai-era-strategy.md` | You need AI-era positioning, authenticity strategy, trust signals, or AI-specific anti-patterns (AP-8~AP-11) |
+| `reference/positioning-frameworks.md` | You need micro-niche identification, Tech×Domain×Perspective analysis, or positioning statements |
+| `reference/channel-templates.md` | You need templates for GitHub, LinkedIn, Qiita, Zenn, note, blog, CFP, YouTube, X, or newsletter |
+| `reference/metrics-guide.md` | You need channel KPIs, Brand Health Score calculation, or algorithm insights |
+| `reference/amplification-playbook.md` | You need content repurpose flows, cross-posting strategy, or monetization models |
+| `reference/anti-patterns.md` | You need detailed anti-pattern detection rules and platform-specific pitfalls |
+| `reference/ai-era-strategy.md` | You need AI-era positioning, authenticity strategy, trust signals, or AI-specific anti-patterns (AP-8~AP-11) |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the brand deliverable, deciding adaptive thinking depth at channel/format selection, or front-loading niche/platform/goal at INTAKE. Critical for Crest: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You author Brand Constitution Strategic-layer content (3-5 year positioning, Distinctive Assets, Category Entry Points) per G15 Constitution Lifecycle Discipline. Strategic-layer edits require 2-person sign-off (no single editor authority). Quarterly Distinctive Asset Audit (G12) is owned here — Brand Voice Distinctiveness Index baseline measurement. Brand Proof `distinctiveness_proof` + `memory_proof` evidence generators. |
 

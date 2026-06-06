@@ -183,11 +183,11 @@ questions:
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `FRAME` | Confirm platform, series position, tone, length envelope, target reader. Read source (draft/notes/git-log) and prior series episodes. | Decide shape before writing a single paragraph. | `references/article-patterns.md`, `references/platform-optimization.md`, `references/series-management.md` |
-| `DRAFT` | Write hook first (100-300 chars), then section-by-section following chosen pattern. Don't polish yet — complete the arc. | Hook must survive feed-skim. Think step-by-step at hook design — this determines whether the article is read. | `references/hook-design.md`, `references/article-patterns.md` |
-| `STRUCTURE` | Arrange H2/H3 hierarchy, paragraph rhythm, reader-breath points. Verify each H2 earns its place and readers can half-read and still get value. | Every section must serve the through-line; cut or demote orphans. | `references/article-patterns.md` |
-| `POLISH` | Restore author voice, cut throat-clearing phrases, tighten sentences. Remove ChatGPT-residue ("本記事では", "最近〜が話題", "本記事を通じて〜"). | Polish, don't sanitize. Keep the author's personality. | `references/hook-design.md` (anti-patterns section) |
-| `PUBLISH` | Add platform-specific metadata (tags, emoji, cover image, topics), compose CTA, update series index if applicable, prepare Growth handoff if SEO packaging requested. | Metadata mismatch = platform algorithm penalty. | `references/platform-optimization.md`, `references/series-management.md`, `references/handoffs.md` |
+| `FRAME` | Confirm platform, series position, tone, length envelope, target reader. Read source (draft/notes/git-log) and prior series episodes. | Decide shape before writing a single paragraph. | `reference/article-patterns.md`, `reference/platform-optimization.md`, `reference/series-management.md` |
+| `DRAFT` | Write hook first (100-300 chars), then section-by-section following chosen pattern. Don't polish yet — complete the arc. | Hook must survive feed-skim. Think step-by-step at hook design — this determines whether the article is read. | `reference/hook-design.md`, `reference/article-patterns.md` |
+| `STRUCTURE` | Arrange H2/H3 hierarchy, paragraph rhythm, reader-breath points. Verify each H2 earns its place and readers can half-read and still get value. | Every section must serve the through-line; cut or demote orphans. | `reference/article-patterns.md` |
+| `POLISH` | Restore author voice, cut throat-clearing phrases, tighten sentences. Remove ChatGPT-residue ("本記事では", "最近〜が話題", "本記事を通じて〜"). | Polish, don't sanitize. Keep the author's personality. | `reference/hook-design.md` (anti-patterns section) |
+| `PUBLISH` | Add platform-specific metadata (tags, emoji, cover image, topics), compose CTA, update series index if applicable, prepare Growth handoff if SEO packaging requested. | Metadata mismatch = platform algorithm penalty. | `reference/platform-optimization.md`, `reference/series-management.md`, `reference/handoffs.md` |
 
 ## Recipes
 
@@ -195,14 +195,14 @@ Single source of truth for Recipe definitions. Primary-output shape and behavior
 
 | Recipe | Subcommand | Default? | When to Use | Output / Behavior | Read First |
 |--------|-----------|---------|-------------|-------------------|------------|
-| note Article | `note` | ✓ | note long-form Japanese articles, magazine series episode authoring | JP long-form + 目次 + タグ 3-5 (1 primary) + マガジン link | `references/platform-optimization.md` |
-| Zenn Article | `zenn` | | Zenn articles for engineers, topic and emoji configuration | emoji + topics max 5 + GitHub-linkable, Tech/Idea type | `references/platform-optimization.md` |
-| Qiita Article | `qiita` | | Qiita tech tips, tag strategy, LGTM optimization | Tags + "TL;DR" opening + code-heavy | `references/platform-optimization.md` |
-| dev.to Article | `devto` | | dev.to articles for a global English audience, cover image and tag configuration | Cover image 1000×420 + liquid tags + canonical_url | `references/platform-optimization.md` |
-| Series Design | `series` | | Series design, index articles, cross-links, and episode management | Article + updated index + prev/next cross-links | `references/series-management.md` |
-| Headline | `headline` | | Title and headline patterns — CTR-tested formulas, number/curiosity/promise/contrarian variants, platform-specific length tuning | Generate 5–10 title variants across formulas (number / curiosity gap / promise / contrarian / how-to / question), score against platform-specific length and tone, recommend top 3 with rationale | `references/headline-patterns.md` |
-| Repurpose | `repurpose` | | Cross-platform content repurposing — canonical → note/Zenn/Qiita/dev.to/X-thread/LinkedIn variants, atomic asset extraction | One canonical draft → platform-adapted variants (note / Zenn / Qiita / dev.to / X thread / LinkedIn) plus atomic assets (quote cards, threads, snippets) without lossy translation | `references/content-repurposing.md`, `references/handoffs.md` |
-| Interview | `interview` | | Interview-format article authoring — Q&A reshape from raw transcripts, podcast-to-article adaptation, lightning-talk to long-form | Reshape raw Q&A (transcripts, podcasts, AMAs, lightning talks) into polished Q&A article — preserve voice, remove filler, re-sequence for narrative arc | `references/interview-format.md` |
+| note Article | `note` | ✓ | note long-form Japanese articles, magazine series episode authoring | JP long-form + 目次 + タグ 3-5 (1 primary) + マガジン link | `reference/platform-optimization.md` |
+| Zenn Article | `zenn` | | Zenn articles for engineers, topic and emoji configuration | emoji + topics max 5 + GitHub-linkable, Tech/Idea type | `reference/platform-optimization.md` |
+| Qiita Article | `qiita` | | Qiita tech tips, tag strategy, LGTM optimization | Tags + "TL;DR" opening + code-heavy | `reference/platform-optimization.md` |
+| dev.to Article | `devto` | | dev.to articles for a global English audience, cover image and tag configuration | Cover image 1000×420 + liquid tags + canonical_url | `reference/platform-optimization.md` |
+| Series Design | `series` | | Series design, index articles, cross-links, and episode management | Article + updated index + prev/next cross-links | `reference/series-management.md` |
+| Headline | `headline` | | Title and headline patterns — CTR-tested formulas, number/curiosity/promise/contrarian variants, platform-specific length tuning | Generate 5–10 title variants across formulas (number / curiosity gap / promise / contrarian / how-to / question), score against platform-specific length and tone, recommend top 3 with rationale | `reference/headline-patterns.md` |
+| Repurpose | `repurpose` | | Cross-platform content repurposing — canonical → note/Zenn/Qiita/dev.to/X-thread/LinkedIn variants, atomic asset extraction | One canonical draft → platform-adapted variants (note / Zenn / Qiita / dev.to / X thread / LinkedIn) plus atomic assets (quote cards, threads, snippets) without lossy translation | `reference/content-repurposing.md`, `reference/handoffs.md` |
+| Interview | `interview` | | Interview-format article authoring — Q&A reshape from raw transcripts, podcast-to-article adaptation, lightning-talk to long-form | Reshape raw Q&A (transcripts, podcasts, AMAs, lightning talks) into polished Q&A article — preserve voice, remove filler, re-sequence for narrative arc | `reference/interview-format.md` |
 
 ### Signal Keywords → Recipe
 
@@ -229,7 +229,7 @@ Parse the first token of user input:
 
 ## Article Structure
 
-Read `references/article-patterns.md` for full templates. Core patterns:
+Read `reference/article-patterns.md` for full templates. Core patterns:
 
 | Pattern | When to use | Skeleton |
 |---------|-------------|----------|
@@ -244,7 +244,7 @@ Anti-structure: dumping everything the author knows in encyclopedia order. Every
 
 ## Hook Design
 
-Read `references/hook-design.md` for full patterns. Key approaches for the opening 100-300 characters:
+Read `reference/hook-design.md` for full patterns. Key approaches for the opening 100-300 characters:
 
 | Hook type | Example opener | When it works |
 |-----------|---------------|---------------|
@@ -258,7 +258,7 @@ Anti-patterns to cut on sight: `本記事では`, `今回は〜について書�
 
 ## Platform Optimization
 
-Read `references/platform-optimization.md` for deep per-platform specifics. Quick reference:
+Read `reference/platform-optimization.md` for deep per-platform specifics. Quick reference:
 
 | Platform | Audience | Length | Key metadata | Discoverability |
 |----------|----------|--------|--------------|-----------------|
@@ -273,7 +273,7 @@ Default Output Language: Japanese for note/Qiita, English for dev.to, Japanese w
 
 ## Series Management
 
-Read `references/series-management.md` for full protocol. Core elements:
+Read `reference/series-management.md` for full protocol. Core elements:
 
 - **Index article** (e.g., `#00 Overview`) serves as anchor readers return to — must list all episodes with one-sentence teasers and update on every new episode.
 - **Cross-links** at top and bottom of each episode: 前回 → / → 次回, plus "see episode #3 for background".
@@ -344,7 +344,7 @@ Every article deliverable must include:
 
 ### Handoff Patterns
 
-Read `references/handoffs.md` for complete handoff templates.
+Read `reference/handoffs.md` for complete handoff templates.
 
 **From Tome:**
 ```
@@ -370,14 +370,14 @@ Stage owns slide pacing (WPM-calibrated), visual design, reveal.js/Marp output.
 
 | Reference | Read this when |
 |-----------|---------------|
-| `references/article-patterns.md` | Choosing article structure; need skeleton for Problem-Tension-Insight-Solution-CTA / Tutorial / Listicle / Retrospective / Deep-dive / Announcement |
-| `references/hook-design.md` | Writing the opening 100-300 characters; need hook patterns (contradiction / number / scene / question / stake) and anti-patterns to cut |
-| `references/headline-patterns.md` | Generating title/headline variants; need CTR-tested formulas (number / curiosity / promise / contrarian / how-to / question), platform-specific length budgets, A/B candidate ranking |
-| `references/platform-optimization.md` | Tuning output for note / Zenn / Qiita / dev.to; need per-platform length, metadata, tags, discoverability rules |
-| `references/series-management.md` | Managing multi-episode series; need index article design, cross-link strategy, cadence, naming, anthology planning |
-| `references/content-repurposing.md` | Cross-platform repurposing; need canonical → note/Zenn/Qiita/dev.to/X-thread/LinkedIn variants, atomic asset extraction, hub-and-spoke + canonical_url strategy |
-| `references/interview-format.md` | Reshaping Q&A material — interview transcripts, podcast episodes, AMA threads, lightning talks — into Q&A articles with voice preservation and narrative re-sequencing |
-| `references/handoffs.md` | Packaging deliverables for Growth / Prose / Stage / Canvas / Saga / Morph; need handoff templates per downstream agent |
+| `reference/article-patterns.md` | Choosing article structure; need skeleton for Problem-Tension-Insight-Solution-CTA / Tutorial / Listicle / Retrospective / Deep-dive / Announcement |
+| `reference/hook-design.md` | Writing the opening 100-300 characters; need hook patterns (contradiction / number / scene / question / stake) and anti-patterns to cut |
+| `reference/headline-patterns.md` | Generating title/headline variants; need CTR-tested formulas (number / curiosity / promise / contrarian / how-to / question), platform-specific length budgets, A/B candidate ranking |
+| `reference/platform-optimization.md` | Tuning output for note / Zenn / Qiita / dev.to; need per-platform length, metadata, tags, discoverability rules |
+| `reference/series-management.md` | Managing multi-episode series; need index article design, cross-link strategy, cadence, naming, anthology planning |
+| `reference/content-repurposing.md` | Cross-platform repurposing; need canonical → note/Zenn/Qiita/dev.to/X-thread/LinkedIn variants, atomic asset extraction, hub-and-spoke + canonical_url strategy |
+| `reference/interview-format.md` | Reshaping Q&A material — interview transcripts, podcast episodes, AMA threads, lightning talks — into Q&A articles with voice preservation and narrative re-sequencing |
+| `reference/handoffs.md` | Packaging deliverables for Growth / Prose / Stage / Canvas / Saga / Morph; need handoff templates per downstream agent |
 | `_common/OPUS_48_AUTHORING.md` | Deciding whether to read widely at FRAME, how deeply to think at STRUCTURE and hook design. Critical for Zine: P3, P5 |
 
 ## Operational

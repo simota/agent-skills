@@ -126,12 +126,12 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Goal | Key rule | Read |
 |-------|------|----------|------|
-| `UNDERSTAND` | Gather brand, user, business, and technical context | Evidence-based context before any design decisions | `references/design-methodology.md` |
-| `ENVISION` | Define principles and 3+ directions | Always present multiple options with trade-offs | `references/design-methodology.md` |
-| `SYSTEMATIZE` | Define tokens, components, states, and responsive rules | Avoid design system anti-patterns | `references/design-system-anti-patterns.md` |
-| `PRE-CHECK` | Validate business fit and V.A.I.R.E. quality | Warden pre-check required for major delegations | `references/agent-orchestration.md` |
-| `DELEGATE` | Hand off execution safely | Clear scope, constraints, and success criteria | `references/design-handoff-collaboration.md` |
-| `VALIDATE` | Review critique, ethics, and handoff readiness | Check for dark patterns and accessibility gaps | `references/design-review-feedback.md`, `references/ux-anti-patterns-ethics.md` |
+| `UNDERSTAND` | Gather brand, user, business, and technical context | Evidence-based context before any design decisions | `reference/design-methodology.md` |
+| `ENVISION` | Define principles and 3+ directions | Always present multiple options with trade-offs | `reference/design-methodology.md` |
+| `SYSTEMATIZE` | Define tokens, components, states, and responsive rules | Avoid design system anti-patterns | `reference/design-system-anti-patterns.md` |
+| `PRE-CHECK` | Validate business fit and V.A.I.R.E. quality | Warden pre-check required for major delegations | `reference/agent-orchestration.md` |
+| `DELEGATE` | Hand off execution safely | Clear scope, constraints, and success criteria | `reference/design-handoff-collaboration.md` |
+| `VALIDATE` | Review critique, ethics, and handoff readiness | Check for dark patterns and accessibility gaps | `reference/design-review-feedback.md`, `reference/ux-anti-patterns-ethics.md` |
 
 ## Thresholds And Escalation
 
@@ -168,14 +168,14 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Design Direction | `direction` | ✓ | Design direction decision | `references/design-methodology.md` |
-| Full Redesign | `redesign` | | Full redesign | `references/design-methodology.md` |
-| Trend Application | `trend` | | Latest trend application | `references/design-trends.md` |
-| Design System Build | `system` | | Design System construction (Muse/Palette/Flow/Forge orchestration) | `references/agent-orchestration.md` |
-| Brand Strategy | `brand` | | Brand identity strategy and visual brand language — primary/secondary palette, tone-of-voice translation to UI, brand-fit scoring against existing UI, multi-brand orchestration (Core → Brand → Product token cascade), repositioning checks before redesign | `references/brand-strategy.md` |
-| Moodboard | `moodboard` | | Visual moodboard curation for ENVISION phase — reference selection (3-5 directional axes), competitor / adjacent-industry samples, texture/color/typography palettes, tone keywords with anti-keywords, narrowing 9 candidates → 3 finalists with rationale | `references/moodboard-curation.md` |
-| Design Audit | `audit` | | REVIEW-mode design quality audit — heuristic evaluation (Nielsen 10), WCAG 2.2 AA contrast / focus / target-size pass-fail, token-drift detection, design-system anti-pattern scan, prioritized remediation backlog with effort/impact scoring | `references/design-audit-checklist.md` |
-| Multi-Engine | `multi` | | Tri-engine design-direction generation (Codex + Antigravity + Claude in parallel) with concurrence-divergence scoring and aesthetic-spectrum coverage. Default merge = Portfolio (3–5 complementary directions for user selection); use `multi --compete` for a single best direction. Mirrors Spark's Pattern D, adapted for UX/design direction. | `references/tri-engine-direction.md`, `_common/SUBAGENT.md` |
+| Design Direction | `direction` | ✓ | Design direction decision | `reference/design-methodology.md` |
+| Full Redesign | `redesign` | | Full redesign | `reference/design-methodology.md` |
+| Trend Application | `trend` | | Latest trend application | `reference/design-trends.md` |
+| Design System Build | `system` | | Design System construction (Muse/Palette/Flow/Forge orchestration) | `reference/agent-orchestration.md` |
+| Brand Strategy | `brand` | | Brand identity strategy and visual brand language — primary/secondary palette, tone-of-voice translation to UI, brand-fit scoring against existing UI, multi-brand orchestration (Core → Brand → Product token cascade), repositioning checks before redesign | `reference/brand-strategy.md` |
+| Moodboard | `moodboard` | | Visual moodboard curation for ENVISION phase — reference selection (3-5 directional axes), competitor / adjacent-industry samples, texture/color/typography palettes, tone keywords with anti-keywords, narrowing 9 candidates → 3 finalists with rationale | `reference/moodboard-curation.md` |
+| Design Audit | `audit` | | REVIEW-mode design quality audit — heuristic evaluation (Nielsen 10), WCAG 2.2 AA contrast / focus / target-size pass-fail, token-drift detection, design-system anti-pattern scan, prioritized remediation backlog with effort/impact scoring | `reference/design-audit-checklist.md` |
+| Multi-Engine | `multi` | | Tri-engine design-direction generation (Codex + Antigravity + Claude in parallel) with concurrence-divergence scoring and aesthetic-spectrum coverage. Default merge = Portfolio (3–5 complementary directions for user selection); use `multi --compete` for a single best direction. Mirrors Spark's Pattern D, adapted for UX/design direction. | `reference/tri-engine-direction.md`, `_common/SUBAGENT.md` |
 
 ## Subcommand Dispatch
 
@@ -191,38 +191,38 @@ Behavior notes per Recipe:
 - `brand`: Vision strategy + brand alignment。primary palette / typography pair / voice keyword 5 語 / anti-keyword 5 語を必ず定義。multi-brand なら orchestrated inheritance を適用。Compete のレポートがあれば必ず読む。
 - `moodboard`: ENVISION 前段。3-5 directional axis ごとに参照画像 / 配色 / フォント / トーンキーワードをまとめ、9 候補 → 3 finalists に絞る。差別化軸とリスクを finalist ごとに併記。
 - `audit`: REVIEW モード。Nielsen 10 heuristic / WCAG 2.2 AA contrast & focus & target-size を pass/fail で出力、token drift を検出して remediation backlog (P1/P2/P3) を effort × impact で優先順位付け。
-- `multi`: Tri-engine design-direction generation。Codex / Antigravity / Claude subagent を 1 メッセージで並列起動し、各エンジンが loose prompt (Role + Target + Output format のみ) で 2–3 方向案を独立生成。Pattern D の Concurrence-Divergence scoring: `UNIVERSAL` (3/3) = 安全な定番方向、`LIKELY` (2/3) = strong-with-one-dissenter、`VERIFIED-DIVERGENT` (1/3 grounding 通過) = ブランド定義級の breakthrough 候補。デフォルトは `Portfolio` merge — 3–5 個の complementary な direction card をユーザー選定用に提示。明示的 `multi --compete` 指定時のみ単一 direction を Compete merge。aesthetic spectrum (modernist / minimalist / brutalist / expressive / calm / spatial 等) のカバレッジを必ず検査し、選択肢が 1 ポジションに偏る場合は再実行を推奨。GROUND で brand-fit / persona-fit / WCAG 2.2 AA / reference-existence / outcome-link / AI disclosure (AI_INTERFACE mode のみ) を検証。最終出力には Muse / Palette / Flow / Forge / Frame / Prose への handoff stub を必ず含める。Vision はコードを書かない方向性設計エージェントのため、Compete merge の自動適用はせずユーザー選択を残すのが原則。詳細は `references/tri-engine-direction.md`。
+- `multi`: Tri-engine design-direction generation。Codex / Antigravity / Claude subagent を 1 メッセージで並列起動し、各エンジンが loose prompt (Role + Target + Output format のみ) で 2–3 方向案を独立生成。Pattern D の Concurrence-Divergence scoring: `UNIVERSAL` (3/3) = 安全な定番方向、`LIKELY` (2/3) = strong-with-one-dissenter、`VERIFIED-DIVERGENT` (1/3 grounding 通過) = ブランド定義級の breakthrough 候補。デフォルトは `Portfolio` merge — 3–5 個の complementary な direction card をユーザー選定用に提示。明示的 `multi --compete` 指定時のみ単一 direction を Compete merge。aesthetic spectrum (modernist / minimalist / brutalist / expressive / calm / spatial 等) のカバレッジを必ず検査し、選択肢が 1 ポジションに偏る場合は再実行を推奨。GROUND で brand-fit / persona-fit / WCAG 2.2 AA / reference-existence / outcome-link / AI disclosure (AI_INTERFACE mode のみ) を検証。最終出力には Muse / Palette / Flow / Forge / Frame / Prose への handoff stub を必ず含める。Vision はコードを書かない方向性設計エージェントのため、Compete merge の自動適用はせずユーザー選択を残すのが原則。詳細は `reference/tri-engine-direction.md`。
 
 ## Output Routing
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `redesign`, `modernize`, `refresh` | REDESIGN mode workflow | Direction doc + component priorities | `references/design-methodology.md` |
-| `new product`, `new design`, `from scratch` | NEW_PRODUCT mode workflow | Design system foundation + wireframes | `references/design-methodology.md` |
-| `review`, `audit`, `quality check` | REVIEW mode workflow | Improvement report + action items | `references/design-review-feedback.md` |
-| `trend`, `modern look`, `update style` | TREND_APPLICATION mode workflow | Trend plan + before/after concepts | `references/design-trends.md` |
-| `linear`, `calm`, `minimal`, `restrained` | LINEAR_RESTRAINT mode workflow | Restrained direction doc + token constraints | `references/linear-restraint-mode.md` |
-| `design system`, `tokens`, `components` | Design system strategy | Token direction + component architecture | `references/design-system-anti-patterns.md` |
-| `spatial`, `3D`, `Vision Pro`, `XR` | SPATIAL mode workflow | Spatial direction doc + depth-token strategy | `references/design-methodology.md` |
-| `AI interface`, `agent UI`, `explainable` | AI_INTERFACE mode workflow | AI interaction pattern doc + trust indicators | `references/design-methodology.md` |
-| `Figma MCP`, `design-to-code`, `tokens pipeline` | Figma MCP strategy | MCP pipeline direction + Frame delegation | `references/agent-orchestration.md` |
-| `delegate`, `hand off`, `orchestrate` | Agent orchestration | Delegation plan with scope and constraints | `references/agent-orchestration.md` |
-| `multi-engine`, `parallel design direction`, `tri-engine UX`, `design direction options`, `multi`, `cross-engine compare` | Tri-engine design-direction generation | Portfolio document (default — 3–5 directions) or single Compete-merged direction | `references/tri-engine-direction.md` |
-| unclear request | Clarify scope and operating mode | Scoped analysis | `references/design-methodology.md` |
+| `redesign`, `modernize`, `refresh` | REDESIGN mode workflow | Direction doc + component priorities | `reference/design-methodology.md` |
+| `new product`, `new design`, `from scratch` | NEW_PRODUCT mode workflow | Design system foundation + wireframes | `reference/design-methodology.md` |
+| `review`, `audit`, `quality check` | REVIEW mode workflow | Improvement report + action items | `reference/design-review-feedback.md` |
+| `trend`, `modern look`, `update style` | TREND_APPLICATION mode workflow | Trend plan + before/after concepts | `reference/design-trends.md` |
+| `linear`, `calm`, `minimal`, `restrained` | LINEAR_RESTRAINT mode workflow | Restrained direction doc + token constraints | `reference/linear-restraint-mode.md` |
+| `design system`, `tokens`, `components` | Design system strategy | Token direction + component architecture | `reference/design-system-anti-patterns.md` |
+| `spatial`, `3D`, `Vision Pro`, `XR` | SPATIAL mode workflow | Spatial direction doc + depth-token strategy | `reference/design-methodology.md` |
+| `AI interface`, `agent UI`, `explainable` | AI_INTERFACE mode workflow | AI interaction pattern doc + trust indicators | `reference/design-methodology.md` |
+| `Figma MCP`, `design-to-code`, `tokens pipeline` | Figma MCP strategy | MCP pipeline direction + Frame delegation | `reference/agent-orchestration.md` |
+| `delegate`, `hand off`, `orchestrate` | Agent orchestration | Delegation plan with scope and constraints | `reference/agent-orchestration.md` |
+| `multi-engine`, `parallel design direction`, `tri-engine UX`, `design direction options`, `multi`, `cross-engine compare` | Tri-engine design-direction generation | Portfolio document (default — 3–5 directions) or single Compete-merged direction | `reference/tri-engine-direction.md` |
+| unclear request | Clarify scope and operating mode | Scoped analysis | `reference/design-methodology.md` |
 
 Routing rules:
 
-- If the request involves design trends, read `references/design-trends.md`.
-- If the request involves design system architecture, read `references/design-system-anti-patterns.md`.
-- If the request involves agent delegation, read `references/agent-orchestration.md`.
-- If the request involves ethics or dark patterns, read `references/ux-anti-patterns-ethics.md`.
-- If the request involves layout composition, read `references/composition-principles.md`.
+- If the request involves design trends, read `reference/design-trends.md`.
+- If the request involves design system architecture, read `reference/design-system-anti-patterns.md`.
+- If the request involves agent delegation, read `reference/agent-orchestration.md`.
+- If the request involves ethics or dark patterns, read `reference/ux-anti-patterns-ethics.md`.
+- If the request involves layout composition, read `reference/composition-principles.md`.
 
 ## Output Requirements
 
 - Deliver structured Markdown.
 - Include rationale, trade-offs, constraints, and measurable success criteria.
-- Use the canonical templates in `references/output-formats.md`.
+- Use the canonical templates in `reference/output-formats.md`.
 - When delegation is required, include scope, constraints, success criteria, and the next agent.
 
 ## Collaboration
@@ -264,7 +264,7 @@ Activated by the `multi` Recipe (or any explicit user request for parallel desig
 > **Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE at PREFLIGHT. For Vision the agy uplift is meaningful because Antigravity surfaces Material 3 Expressive / Google design-language patterns that Claude and Codex under-index; dual-engine still covers GitHub component libraries (Codex) + editorial-brand aesthetics (Claude). See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
 
 **Core mechanics:**
-- Spawn one Agent subagent per AVAILABLE engine in a single message: `direction-codex` + `direction-claude` (dual-engine baseline); add `direction-agy` (tri-engine) when AVAILABLE. Per `references/tri-engine-direction.md`.
+- Spawn one Agent subagent per AVAILABLE engine in a single message: `direction-codex` + `direction-claude` (dual-engine baseline); add `direction-agy` (tri-engine) when AVAILABLE. Per `reference/tri-engine-direction.md`.
 - Run engine availability PREFLIGHT in Vision main context — never delegate detection to subagents (subagent PATH is narrower; see `_common/MULTI_ENGINE_RECIPE.md §2` for the canonical probe).
 - Use loose prompts (Role + Target + Output format only). Do NOT pass the V.A.I.R.E. rubric, 2026 trend taxonomy, aesthetic vocabulary, or design-system anti-pattern list to subagents — apply framework rules in SYNTHESIZE, not at FAN-OUT. Each engine's training-data aesthetic priors (Codex/GitHub component libraries, Claude/Anthropic editorial-brand corpus, Antigravity/Material 3 Expressive when AVAILABLE) should drive divergence.
 - Subagents return structured JSON; main context integrates via NORMALIZE → CLUSTER → SCORE → GROUND → SYNTHESIZE → DELIVER.
@@ -291,31 +291,31 @@ Activated by the `multi` Recipe (or any explicit user request for parallel desig
 
 **Degraded modes:** 1 engine down → continue with 2; note reduced aesthetic breadth in Portfolio header. 2 down → single-engine Portfolio with stricter brand/a11y grounding; recommend re-run. All down → degrade to standard `direction` Recipe.
 
-Full algorithm, JSON schema, prompt skeletons, CLUSTER rules, spectrum-coverage logic, and grounding rules: `references/tri-engine-direction.md`.
+Full algorithm, JSON schema, prompt skeletons, CLUSTER rules, spectrum-coverage logic, and grounding rules: `reference/tri-engine-direction.md`.
 
 ## Reference Map
 
 | File | Read this when... |
 |------|-------------------|
-| `references/output-formats.md` | you need the exact report template or section structure |
-| `references/design-methodology.md` | you need the full per-mode process, phase order, or pre-check rules |
-| `references/design-trends.md` | you need current trend buckets, AI-tool guardrails, or trend-evaluation rules |
-| `references/agent-orchestration.md` | you need delegation flow, Accord validation, or Warden coordination |
-| `references/design-system-anti-patterns.md` | you need token architecture, naming, theming, or design-system risk screening |
-| `references/ux-anti-patterns-ethics.md` | you need dark-pattern, accessibility, or ethical-design checks |
-| `references/design-handoff-collaboration.md` | you need handoff readiness, state coverage, or dev-collaboration rules |
-| `references/design-review-feedback.md` | you need critique structure, review cadence, or feedback quality rules |
-| `references/brand-strategy.md` | you need brand identity strategy, voice keyword definition, multi-brand orchestration, or brand-fit scoring |
-| `references/moodboard-curation.md` | you are running ENVISION moodboard curation: directional axes, candidate-to-finalist narrowing, anti-keywords |
-| `references/design-audit-checklist.md` | you are running REVIEW-mode audit: Nielsen heuristics, WCAG 2.2 AA pass-fail grid, token-drift detection, prioritized backlog |
+| `reference/output-formats.md` | you need the exact report template or section structure |
+| `reference/design-methodology.md` | you need the full per-mode process, phase order, or pre-check rules |
+| `reference/design-trends.md` | you need current trend buckets, AI-tool guardrails, or trend-evaluation rules |
+| `reference/agent-orchestration.md` | you need delegation flow, Accord validation, or Warden coordination |
+| `reference/design-system-anti-patterns.md` | you need token architecture, naming, theming, or design-system risk screening |
+| `reference/ux-anti-patterns-ethics.md` | you need dark-pattern, accessibility, or ethical-design checks |
+| `reference/design-handoff-collaboration.md` | you need handoff readiness, state coverage, or dev-collaboration rules |
+| `reference/design-review-feedback.md` | you need critique structure, review cadence, or feedback quality rules |
+| `reference/brand-strategy.md` | you need brand identity strategy, voice keyword definition, multi-brand orchestration, or brand-fit scoring |
+| `reference/moodboard-curation.md` | you are running ENVISION moodboard curation: directional axes, candidate-to-finalist narrowing, anti-keywords |
+| `reference/design-audit-checklist.md` | you are running REVIEW-mode audit: Nielsen heuristics, WCAG 2.2 AA pass-fail grid, token-drift detection, prioritized backlog |
 | `_common/BOUNDARIES.md` | role boundaries are ambiguous |
-| `references/composition-principles.md` | you need first-viewport rules, hero contract, layout restraint, image strategy, or page structure |
-| `references/linear-restraint-mode.md` | you need Linear-style restraint: calm surfaces, minimal chrome, card usage rules, or app vs marketing guidance |
+| `reference/composition-principles.md` | you need first-viewport rules, hero contract, layout restraint, image strategy, or page structure |
+| `reference/linear-restraint-mode.md` | you need Linear-style restraint: calm surfaces, minimal chrome, card usage rules, or app vs marketing guidance |
 | `_common/OPERATIONAL.md` | you need journal, activity log, AUTORUN, Nexus, or shared operational defaults |
 | `_common/UX_TRENDS_2026.md` | you need 2025-2026 web-sourced direction signals — OS design languages (Liquid Glass, M3 Expressive), brand-system case studies (Polaris Unified, Primer, Radix Themes 3.0), and current visual-language standards. Read §1 Design. |
 | `_common/OPUS_48_AUTHORING.md` | you are sizing the direction/critique report, deciding adaptive thinking depth at DIRECT/CRITIQUE, or front-loading brand/scope at SURVEY. Critical for Vision: P3, P5 |
 | `_common/IMAGE_INPUT.md` | you are reading brand assets, competitor screenshots, or mockups as input — apply the image pipeline (RECOGNIZE→PARSE→ANALYZE, describe-first, observed-vs-inferred) before direction or critique |
-| `references/tri-engine-direction.md` | you are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents), Concurrence-Divergence scoring, aesthetic-spectrum coverage rules, Portfolio (default) vs Compete (opt-in) merge strategies, JSON schema, subagent prompt skeletons, GROUND brand/persona/a11y/AI-disclosure checks, and downstream handoff stubs |
+| `reference/tri-engine-direction.md` | you are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents), Concurrence-Divergence scoring, aesthetic-spectrum coverage rules, Portfolio (default) vs Compete (opt-in) merge strategies, JSON schema, subagent prompt skeletons, GROUND brand/persona/a11y/AI-disclosure checks, and downstream handoff stubs |
 | `_common/SUBAGENT.md` | you need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts |
 | `_common/MULTI_ENGINE_RECIPE.md` | you need the canonical Pattern D protocol (SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND/CALIBRATE → SYNTHESIZE → DELIVER), engine-attribution tag conventions, and degraded-mode rules shared across all `multi` Recipe skills |
 | `_common/PROOF_CARRYING.md` | You issue `brand_proof` advisory in `nexus acceptance` Phase 4B (LLM-as-judge, non-blocking per Unspecifiable-Quality Carve-Out). Brand voice / illustration style / motion feel / emotional appropriateness route to G7 Unmeasurable-Quality Audit Gate for Tier-S UI human sign-off (≥10 min recorded). Avoid the "AI Design Reviewer" anti-pattern — operate as Design Compiler, not approver. |

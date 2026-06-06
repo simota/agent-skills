@@ -1,6 +1,6 @@
 # skill-citations — citation-application loop
 
-22 個のスキルに対し、`skill-update` ループの IMPROVE pass で挙がった Source citation MID 提案を実際に SKILL.md / references/*.md に適用する小ループ。
+22 個のスキルに対し、`skill-update` ループの IMPROVE pass で挙がった Source citation MID 提案を実際に SKILL.md / reference/*.md に適用する小ループ。
 
 ## 仕組み
 

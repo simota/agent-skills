@@ -115,13 +115,13 @@ Route elsewhere when the task is primarily:
 
 | Phase | Action | Read |
 |-------|--------|------|
-| Review | Confirm scope, release type, blockers, and Go/No-Go criteria. | `references/` |
-| Evaluate | Check dependencies, validation status, release windows, and SLO baselines. | `references/` |
-| Label | Choose versioning scheme and release metadata (tag, branch, pre-release suffix). | `references/` |
-| Execute | Prepare deployment and rollback instructions for downstream agents (`Gear`, `Guardian`). | `references/` |
-| Announce | Generate CHANGELOG and release notes from PR/commit history (`Harvest`). | `references/` |
-| Stabilize | Define monitoring dashboards, rollback triggers, and hotfix path (`Beacon`, `Triage`). | `references/` |
-| Retrospect | Capture lessons learned within 48 hours of significant release failures. | `references/` |
+| Review | Confirm scope, release type, blockers, and Go/No-Go criteria. | `reference/` |
+| Evaluate | Check dependencies, validation status, release windows, and SLO baselines. | `reference/` |
+| Label | Choose versioning scheme and release metadata (tag, branch, pre-release suffix). | `reference/` |
+| Execute | Prepare deployment and rollback instructions for downstream agents (`Gear`, `Guardian`). | `reference/` |
+| Announce | Generate CHANGELOG and release notes from PR/commit history (`Harvest`). | `reference/` |
+| Stabilize | Define monitoring dashboards, rollback triggers, and hotfix path (`Beacon`, `Triage`). | `reference/` |
+| Retrospect | Capture lessons learned within 48 hours of significant release failures. | `reference/` |
 
 ## Critical Decision Rules
 
@@ -160,14 +160,14 @@ Route elsewhere when the task is primarily:
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Release Plan | `plan` | ✓ | Release planning and strategy | `references/strategies.md` |
-| Changelog | `changelog` | | CHANGELOG generation and updates | `references/patterns.md` |
-| Release Notes | `notes` | | User-facing release notes | `references/patterns.md` |
-| Rollback Plan | `rollback` | | Rollback planning and runbook | `references/rollback-anti-patterns.md` |
-| Feature Flag | `flag` | | Feature flag management and staged rollout design | `references/feature-flag-pitfalls.md` |
-| Hotfix Release | `hotfix` | | Emergency patch release (shortened CI / hotfix branch / 2h SLA / rollback bundled / backport to main) | `references/hotfix-workflow.md` |
-| Canary Rollout | `canary` | | Staged traffic rollout (1%->10%->50%->100%) with automatic guardrails and abort conditions | `references/canary-rollout.md` |
-| Mobile Release | `mobile` | | iOS / Android store release: TestFlight phased release (1%/10%/50%/100% over 7d), Play staged rollout (5%/20%/50%/100%), store-compliance gate, server-driven flag rollback path | `references/mobile-release.md` |
+| Release Plan | `plan` | ✓ | Release planning and strategy | `reference/strategies.md` |
+| Changelog | `changelog` | | CHANGELOG generation and updates | `reference/patterns.md` |
+| Release Notes | `notes` | | User-facing release notes | `reference/patterns.md` |
+| Rollback Plan | `rollback` | | Rollback planning and runbook | `reference/rollback-anti-patterns.md` |
+| Feature Flag | `flag` | | Feature flag management and staged rollout design | `reference/feature-flag-pitfalls.md` |
+| Hotfix Release | `hotfix` | | Emergency patch release (shortened CI / hotfix branch / 2h SLA / rollback bundled / backport to main) | `reference/hotfix-workflow.md` |
+| Canary Rollout | `canary` | | Staged traffic rollout (1%->10%->50%->100%) with automatic guardrails and abort conditions | `reference/canary-rollout.md` |
+| Mobile Release | `mobile` | | iOS / Android store release: TestFlight phased release (1%/10%/50%/100% over 7d), Play staged rollout (5%/20%/50%/100%), store-compliance gate, server-driven flag rollback path | `reference/mobile-release.md` |
 
 ## Subcommand Dispatch
 Parse the first token of user input.
@@ -188,14 +188,14 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| default request | Standard Launch workflow | analysis / recommendation | `references/` |
+| default request | Standard Launch workflow | analysis / recommendation | `reference/` |
 | complex multi-agent task | Nexus-routed execution | structured handoff | `_common/BOUNDARIES.md` |
-| unclear request | Clarify scope and route | scoped analysis | `references/` |
+| unclear request | Clarify scope and route | scoped analysis | `reference/` |
 
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 
 ## Output Requirements
 
@@ -329,14 +329,14 @@ Mobile-specific Go/No-Go items beyond the standard scored checklist:
 
 | File | Read this when |
 |------|----------------|
-| `references/strategies.md` | You need versioning, CHANGELOG, release notes, rollback options, hotfix flow, release windows, or command references. |
-| `references/patterns.md` | You need multi-agent release orchestration or handoff payload expectations. |
-| `references/examples.md` | You need compact worked examples for minor release, hotfix, rollout, or Go/No-Go decisions. |
-| `references/release-anti-patterns.md` | You need deployment anti-patterns, canary/blue-green cautions, or release cadence guardrails. |
-| `references/feature-flag-pitfalls.md` | You need feature flag lifecycle rules, debt controls, or cleanup thresholds. |
-| `references/versioning-pitfalls.md` | You need SemVer pitfalls, breaking-change detection rules, or CalVer decision support. |
-| `references/rollback-anti-patterns.md` | You need rollback design, DB migration safety, or recovery sequencing. |
-| `references/hotfix-workflow.md` | You are running `hotfix`: emergency patch playbook, 2h SLA, shortened CI gate, hotfix branch, bundled rollback, and backport-to-main planning. |
-| `references/canary-rollout.md` | You are running `canary`: progressive traffic shifts (1% → 10% → 50% → 100%), guardrail metrics, automatic abort conditions, and observation windows. |
-| `references/mobile-release.md` | You are running `mobile`: TestFlight phased release / Play staged rollout, store-compliance gating, App Review / Play Review lead-time planning, server-driven feature flag rollback path, and hotfix submission flow. |
+| `reference/strategies.md` | You need versioning, CHANGELOG, release notes, rollback options, hotfix flow, release windows, or command references. |
+| `reference/patterns.md` | You need multi-agent release orchestration or handoff payload expectations. |
+| `reference/examples.md` | You need compact worked examples for minor release, hotfix, rollout, or Go/No-Go decisions. |
+| `reference/release-anti-patterns.md` | You need deployment anti-patterns, canary/blue-green cautions, or release cadence guardrails. |
+| `reference/feature-flag-pitfalls.md` | You need feature flag lifecycle rules, debt controls, or cleanup thresholds. |
+| `reference/versioning-pitfalls.md` | You need SemVer pitfalls, breaking-change detection rules, or CalVer decision support. |
+| `reference/rollback-anti-patterns.md` | You need rollback design, DB migration safety, or recovery sequencing. |
+| `reference/hotfix-workflow.md` | You are running `hotfix`: emergency patch playbook, 2h SLA, shortened CI gate, hotfix branch, bundled rollback, and backport-to-main planning. |
+| `reference/canary-rollout.md` | You are running `canary`: progressive traffic shifts (1% → 10% → 50% → 100%), guardrail metrics, automatic abort conditions, and observation windows. |
+| `reference/mobile-release.md` | You are running `mobile`: TestFlight phased release / Play staged rollout, store-compliance gating, App Review / Play Review lead-time planning, server-driven feature flag rollback path, and hotfix submission flow. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the release plan, deciding adaptive thinking depth at rollout staging, or front-loading release type/scope/risk at PLAN. Critical for Launch: P3, P5. |

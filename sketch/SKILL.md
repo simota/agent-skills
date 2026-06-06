@@ -175,11 +175,11 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Required action | Read |
 | --- | --- | --- |
-| `INTAKE` | Identify use case, output format, ratio, style, count, budget, and policy constraints | `references/` |
-| `TRANSLATE` | Convert requirements into a four-layer English prompt (Subject + Style + Composition + Technical); select thinking level | `references/prompt-patterns.md` |
-| `CONFIGURE` | Choose model (Flash/Pro/Imagen 4), aspect ratio, output paths, batch size, seed, and Batch API eligibility | `references/api-integration.md` |
-| `CODE` | Generate Python code with SDK setup, safe request handling, error recovery (429/silent/policy), file writes, and metadata | `references/api-integration.md` |
-| `VERIFY` | Check syntax, API-key safety, policy handling, cost estimate, SynthID disclosure, and execution instructions | `references/examples.md` |
+| `INTAKE` | Identify use case, output format, ratio, style, count, budget, and policy constraints | `reference/` |
+| `TRANSLATE` | Convert requirements into a four-layer English prompt (Subject + Style + Composition + Technical); select thinking level | `reference/prompt-patterns.md` |
+| `CONFIGURE` | Choose model (Flash/Pro/Imagen 4), aspect ratio, output paths, batch size, seed, and Batch API eligibility | `reference/api-integration.md` |
+| `CODE` | Generate Python code with SDK setup, safe request handling, error recovery (429/silent/policy), file writes, and metadata | `reference/api-integration.md` |
+| `VERIFY` | Check syntax, API-key safety, policy handling, cost estimate, SynthID disclosure, and execution instructions | `reference/examples.md` |
 
 ## Routing
 
@@ -198,15 +198,15 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Generate | `generate` | ✓ | Text-to-image generation | `references/prompt-patterns.md`, `references/api-integration.md` |
-| Edit | `edit` | | Editing existing images | `references/api-integration.md` |
-| Prompt Optimization | `prompt` | | Prompt optimization | `references/prompt-patterns.md` |
-| Batch | `batch` | | Generate many variants with consistent seed and style (cards, hero sets, character sheets) | `references/batch-generation.md`, `references/api-integration.md` |
-| Style | `style` | | Match an existing brand or reference style, or anchor cross-asset cohesion | `references/style-transfer.md`, `references/prompt-patterns.md` |
-| Upscale | `upscale` | | Post-process: upscale, masked inpaint, or outpaint a base render | `references/upscale-postprocess.md` |
-| Cinematic | `cinematic` | | Photographic / cinematographic prompt construction — camera, lens, lighting, depth of field, film stock, composition rules | `references/cinematic-prompting.md` |
-| Provenance | `provenance` | | C2PA + SynthID + EXIF AI-disclosure metadata, watermarking, takedown response, and platform compliance | `references/provenance-disclosure.md` |
-| Policy | `policy` | | Content-policy + brand-safety guardrails, NSFW filter, deepfake / likeness rules, regulatory compliance | `references/content-policy-guardrails.md` |
+| Generate | `generate` | ✓ | Text-to-image generation | `reference/prompt-patterns.md`, `reference/api-integration.md` |
+| Edit | `edit` | | Editing existing images | `reference/api-integration.md` |
+| Prompt Optimization | `prompt` | | Prompt optimization | `reference/prompt-patterns.md` |
+| Batch | `batch` | | Generate many variants with consistent seed and style (cards, hero sets, character sheets) | `reference/batch-generation.md`, `reference/api-integration.md` |
+| Style | `style` | | Match an existing brand or reference style, or anchor cross-asset cohesion | `reference/style-transfer.md`, `reference/prompt-patterns.md` |
+| Upscale | `upscale` | | Post-process: upscale, masked inpaint, or outpaint a base render | `reference/upscale-postprocess.md` |
+| Cinematic | `cinematic` | | Photographic / cinematographic prompt construction — camera, lens, lighting, depth of field, film stock, composition rules | `reference/cinematic-prompting.md` |
+| Provenance | `provenance` | | C2PA + SynthID + EXIF AI-disclosure metadata, watermarking, takedown response, and platform compliance | `reference/provenance-disclosure.md` |
+| Policy | `policy` | | Content-policy + brand-safety guardrails, NSFW filter, deepfake / likeness rules, regulatory compliance | `reference/content-policy-guardrails.md` |
 
 ## Subcommand Dispatch
 
@@ -218,9 +218,9 @@ Behavior notes per Recipe:
 - `generate`: Generate text-to-image Python code in SINGLE_SHOT or BATCH mode. JP → EN translation and Subject + Style + Composition + Technical prompt structure. Cost estimate and SynthID disclosure required.
 - `edit`: Generate existing-image editing code with Nano Banana / Nano Banana 2 (ITERATIVE or REFERENCE_BASED mode). Leverage Thought Signatures. inlineData is required.
 - `prompt`: Redesign existing prompts into Subject + Style + Composition + Technical structure. Target 50-200 words with 3-5 strong keywords.
-- `batch`: Read `references/batch-generation.md` first. Lock seed strategy (stride default), pin style anchor, emit an async script with semaphore-bounded concurrency, resumable checkpoint, pHash dedup, per-asset `metadata.json`. Recommend Batch API when N ≥ 50.
-- `style`: Read `references/style-transfer.md` first. Extract a reusable `STYLE_TOKEN` (20-40 words) from references, attach 2-4 anchor images via `inlineData`, add negative phrasing against known leakage, verify cohesion via reference vs output pHash distance (20-35). Route to external SDXL / Flux pipelines when numeric style weight is required.
-- `upscale`: Read `references/upscale-postprocess.md` first. Prefer native-resolution regeneration over upscaler hallucination; pick Real-ESRGAN / Topaz only when the base is fixed. Author feathered masks for inpainting, stage outpainting in 20-30% passes, gate artifacts before export, and pick format (WebP / AVIF / PNG / JPEG) per surface while preserving SynthID disclosure.
+- `batch`: Read `reference/batch-generation.md` first. Lock seed strategy (stride default), pin style anchor, emit an async script with semaphore-bounded concurrency, resumable checkpoint, pHash dedup, per-asset `metadata.json`. Recommend Batch API when N ≥ 50.
+- `style`: Read `reference/style-transfer.md` first. Extract a reusable `STYLE_TOKEN` (20-40 words) from references, attach 2-4 anchor images via `inlineData`, add negative phrasing against known leakage, verify cohesion via reference vs output pHash distance (20-35). Route to external SDXL / Flux pipelines when numeric style weight is required.
+- `upscale`: Read `reference/upscale-postprocess.md` first. Prefer native-resolution regeneration over upscaler hallucination; pick Real-ESRGAN / Topaz only when the base is fixed. Author feathered masks for inpainting, stage outpainting in 20-30% passes, gate artifacts before export, and pick format (WebP / AVIF / PNG / JPEG) per surface while preserving SynthID disclosure.
 - `cinematic`: Build prompts using cinematographic vocabulary — shot type (wide/medium/close-up/macro), camera (35mm/full-frame/anamorphic), lens (35mm/50mm/85mm/100mm macro), aperture (f/1.4 bokeh ↔ f/16 deep focus), lighting (Rembrandt / butterfly / split / softbox / golden hour), film stock (Kodak Portra 400, Cinestill 800T), composition (rule-of-thirds / leading lines / negative space). Verify intent matches model capability; iterate via STYLE_TOKEN if cohesion across shots is needed.
 - `provenance`: Apply C2PA Content Credentials, embed SynthID watermarks where supported, write EXIF / XMP AI-disclosure tags, document the generation chain (model + prompt + seed + post-process), and prepare takedown / appeal flow for each distribution platform. Critical for commercial / journalism / regulated use.
 - `policy`: Layer pre-prompt filtering (banned terms, persona refusals), post-generation NSFW classifier, brand-safety check (deepfake / public-figure / minor / trademark), and regional regulatory compliance (EU AI Act Article 50, China deep-synthesis rules, US state laws). Reject early; document every refusal.
@@ -229,19 +229,19 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| single image generation | SINGLE_SHOT mode | Python script + prompt | `references/prompt-patterns.md` |
-| iterative refinement / editing | ITERATIVE mode | edit script with reference handling | `references/api-integration.md` |
-| batch asset generation (≥3 images) | BATCH mode | batch script + directory management + cost estimate | `references/api-integration.md` |
-| style transfer / reference-based edit | REFERENCE_BASED mode | reference-aware script (up to 14 images) | `references/prompt-patterns.md` |
-| text-heavy or complex scene | SINGLE_SHOT + thinking_level: high | script with extended thinking config | `references/prompt-patterns.md` |
-| model selection / cost comparison | Cost analysis | model comparison table + recommendation | `references/api-integration.md` |
+| single image generation | SINGLE_SHOT mode | Python script + prompt | `reference/prompt-patterns.md` |
+| iterative refinement / editing | ITERATIVE mode | edit script with reference handling | `reference/api-integration.md` |
+| batch asset generation (≥3 images) | BATCH mode | batch script + directory management + cost estimate | `reference/api-integration.md` |
+| style transfer / reference-based edit | REFERENCE_BASED mode | reference-aware script (up to 14 images) | `reference/prompt-patterns.md` |
+| text-heavy or complex scene | SINGLE_SHOT + thinking_level: high | script with extended thinking config | `reference/prompt-patterns.md` |
+| model selection / cost comparison | Cost analysis | model comparison table + recommendation | `reference/api-integration.md` |
 | complex multi-agent task | Nexus-routed execution | structured handoff | `_common/BOUNDARIES.md` |
-| unclear request | Clarify scope and route | scoped analysis | `references/` |
+| unclear request | Clarify scope and route | scoped analysis | `reference/` |
 
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 - For batch sizes ≥50, recommend Batch API for 50% cost reduction.
 
 ## Output Requirements
@@ -271,15 +271,15 @@ Overlap boundaries:
 
 | File | Read this when... |
 | --- | --- |
-| `references/prompt-patterns.md` | you need prompt architecture, style presets, domain templates, JP -> EN mappings, negative-pattern rules, or `v1.50+` prompt-control guidance |
-| `references/api-integration.md` | you need SDK compatibility, auth setup, request patterns, response handling, rate or cost guidance, error recovery, or SynthID documentation |
-| `references/examples.md` | you need mode-specific examples, collaboration handoffs, or reusable script packaging patterns |
-| `references/batch-generation.md` | you are generating ≥5 consistent variants and need seed strategy, rate-limit-aware concurrency, resumable checkpointing, or pHash dedup |
-| `references/style-transfer.md` | you are matching an existing brand/reference style, extracting reusable STYLE_TOKENs, or deciding between Gemini and SDXL/Flux for style control |
-| `references/upscale-postprocess.md` | you are upscaling for print/retina, authoring inpaint masks, outpainting canvas extensions, or picking final export format |
-| `references/cinematic-prompting.md` | you are constructing photographic/cinematographic prompts (camera, lens, lighting, film stock, composition rules) for the `cinematic` recipe |
-| `references/provenance-disclosure.md` | you need C2PA Content Credentials, SynthID watermarking, EXIF/XMP AI-disclosure tagging, takedown flow, or platform compliance for the `provenance` recipe |
-| `references/content-policy-guardrails.md` | you need pre-prompt filtering, NSFW/deepfake/brand-safety guardrails, regional regulatory compliance (EU AI Act, China deep-synthesis, US state laws) for the `policy` recipe |
+| `reference/prompt-patterns.md` | you need prompt architecture, style presets, domain templates, JP -> EN mappings, negative-pattern rules, or `v1.50+` prompt-control guidance |
+| `reference/api-integration.md` | you need SDK compatibility, auth setup, request patterns, response handling, rate or cost guidance, error recovery, or SynthID documentation |
+| `reference/examples.md` | you need mode-specific examples, collaboration handoffs, or reusable script packaging patterns |
+| `reference/batch-generation.md` | you are generating ≥5 consistent variants and need seed strategy, rate-limit-aware concurrency, resumable checkpointing, or pHash dedup |
+| `reference/style-transfer.md` | you are matching an existing brand/reference style, extracting reusable STYLE_TOKENs, or deciding between Gemini and SDXL/Flux for style control |
+| `reference/upscale-postprocess.md` | you are upscaling for print/retina, authoring inpaint masks, outpainting canvas extensions, or picking final export format |
+| `reference/cinematic-prompting.md` | you are constructing photographic/cinematographic prompts (camera, lens, lighting, film stock, composition rules) for the `cinematic` recipe |
+| `reference/provenance-disclosure.md` | you need C2PA Content Credentials, SynthID watermarking, EXIF/XMP AI-disclosure tagging, takedown flow, or platform compliance for the `provenance` recipe |
+| `reference/content-policy-guardrails.md` | you need pre-prompt filtering, NSFW/deepfake/brand-safety guardrails, regional regulatory compliance (EU AI Act, China deep-synthesis, US state laws) for the `policy` recipe |
 | `_common/OPUS_48_AUTHORING.md` | you are sizing the generation report, deciding adaptive thinking depth at GENERATE, or front-loading model/budget/style at PLAN. Critical for Sketch: P3, P5 |
 
 ## Operational

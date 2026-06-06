@@ -140,11 +140,11 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Single Session | `1on1` | ✓ | One founder, one session | `references/office-hours-format.md`, `references/probing-questions.md` |
-| Group Session | `group` | | Simulate multi-founder group office hours | `references/office-hours-format.md` |
-| Emergency Triage | `triage` | | Fast unblock when founder is stuck (≤5 exchanges) | `references/probing-questions.md` |
-| Retrospective | `retro` | | Postmortem on a recent decision or outcome | `references/founder-anti-patterns.md` |
-| Pitch Critique | `pitch` | | Critique elevator / Demo Day / investor Q&A pitch material | `references/pitch-critique.md` |
+| Single Session | `1on1` | ✓ | One founder, one session | `reference/office-hours-format.md`, `reference/probing-questions.md` |
+| Group Session | `group` | | Simulate multi-founder group office hours | `reference/office-hours-format.md` |
+| Emergency Triage | `triage` | | Fast unblock when founder is stuck (≤5 exchanges) | `reference/probing-questions.md` |
+| Retrospective | `retro` | | Postmortem on a recent decision or outcome | `reference/founder-anti-patterns.md` |
+| Pitch Critique | `pitch` | | Critique elevator / Demo Day / investor Q&A pitch material | `reference/pitch-critique.md` |
 
 ## Subcommand Dispatch
 
@@ -187,12 +187,12 @@ Every session must produce:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `I'm stuck`, `what should I focus on`, `office hours` | 1on1 flow | Session output (bottleneck + actions) | `references/probing-questions.md` |
-| `we're stuck right now`, `urgent`, `need to unblock` | triage flow | Compressed action | `references/probing-questions.md` |
-| `multiple perspectives`, `peer feedback`, `cohort` | group flow | Multi-voice session output | `references/office-hours-format.md` |
-| `we just shipped X`, `the launch was Y`, `we hired Z` | retro flow | Lesson + change | `references/founder-anti-patterns.md` |
-| `am I doing the right thing`, `am I focused on the right thing` | 1on1 flow | Reality check + action | `references/pattern-library.md` |
-| `review my pitch`, `Demo Day deck`, `elevator pitch`, `investor Q&A` | pitch flow | Pitch critique with line-level revisions | `references/pitch-critique.md` |
+| `I'm stuck`, `what should I focus on`, `office hours` | 1on1 flow | Session output (bottleneck + actions) | `reference/probing-questions.md` |
+| `we're stuck right now`, `urgent`, `need to unblock` | triage flow | Compressed action | `reference/probing-questions.md` |
+| `multiple perspectives`, `peer feedback`, `cohort` | group flow | Multi-voice session output | `reference/office-hours-format.md` |
+| `we just shipped X`, `the launch was Y`, `we hired Z` | retro flow | Lesson + change | `reference/founder-anti-patterns.md` |
+| `am I doing the right thing`, `am I focused on the right thing` | 1on1 flow | Reality check + action | `reference/pattern-library.md` |
+| `review my pitch`, `Demo Day deck`, `elevator pitch`, `investor Q&A` | pitch flow | Pitch critique with line-level revisions | `reference/pitch-critique.md` |
 
 Routing rules:
 - If unclear, default to `1on1`.
@@ -258,12 +258,12 @@ Read only the files required for the current decision.
 
 | File | Read This When |
 |------|----------------|
-| `references/office-hours-format.md` | You are setting up a session, choosing 1:1 vs group, or deciding session length |
-| `references/probing-questions.md` | You are in the PROBE phase and need diagnostic / Socratic question banks |
-| `references/pattern-library.md` | You are in DIAGNOSE / ADVISE and need pattern citations |
-| `references/founder-anti-patterns.md` | You suspect anti-patterns; need detection signals and counter-moves |
-| `references/action-extraction.md` | You are in ACTION phase and need to convert advice into SMART commitments |
-| `references/pitch-critique.md` | You are running the `pitch` Recipe and need the STRUCTURE → CLARITY → TENSION → RESONANCE → REVISE flow, granularity templates, and pitch anti-patterns |
+| `reference/office-hours-format.md` | You are setting up a session, choosing 1:1 vs group, or deciding session length |
+| `reference/probing-questions.md` | You are in the PROBE phase and need diagnostic / Socratic question banks |
+| `reference/pattern-library.md` | You are in DIAGNOSE / ADVISE and need pattern citations |
+| `reference/founder-anti-patterns.md` | You suspect anti-patterns; need detection signals and counter-moves |
+| `reference/action-extraction.md` | You are in ACTION phase and need to convert advice into SMART commitments |
+| `reference/pitch-critique.md` | You are running the `pitch` Recipe and need the STRUCTURE → CLARITY → TENSION → RESONANCE → REVISE flow, granularity templates, and pitch anti-patterns |
 
 ## Operational
 

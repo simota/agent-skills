@@ -129,10 +129,10 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase      | Goal                                                              | Required output                          | Read next       |
 | ---------- | ----------------------------------------------------------------- | ---------------------------------------- | --------------- |
-| `PARSE`    | Extract domain, axes, values, constraints, priorities, and budget | Validated matrix model                   | `references/`   |
-| `EXPAND`   | Compute the raw space size                                        | Total combination count                  | `references/`   |
-| `OPTIMIZE` | Choose the smallest defensible set                                | Method, optimized count, reduction rate  | `references/`   |
-| `PLAN`     | Prepare the execution handoff                                     | Prioritized execution set and next agent | `references/`   |
+| `PARSE`    | Extract domain, axes, values, constraints, priorities, and budget | Validated matrix model                   | `reference/`   |
+| `EXPAND`   | Compute the raw space size                                        | Total combination count                  | `reference/`   |
+| `OPTIMIZE` | Choose the smallest defensible set                                | Method, optimized count, reduction rate  | `reference/`   |
+| `PLAN`     | Prepare the execution handoff                                     | Prioritized execution set and next agent | `reference/`   |
 
 ## Delivery Loop
 
@@ -179,14 +179,14 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Combination Control | `combine` | ✓ | Combination explosion control, minimum coverage set selection | `references/combination-methods.md` |
-| Min Coverage Set | `cover` | | Minimum coverage set selection (pairwise/n-wise) | `references/optimization-algorithms.md` |
-| Execution Plan | `plan` | | Prioritized execution plan generation | `references/output-templates.md` |
-| Prioritize | `prioritize` | | Prioritization by risk, frequency, and business impact | `references/prioritization-pitfalls.md` |
-| Pairwise / All-Pairs | `pairwise` | | IPOG algorithm, Orthogonal-Array-based test selection, 2-way 100% coverage with minimum size | `references/pairwise-ipog.md` |
-| Equivalence Class + BVA | `equiv-class` | | Myers equivalence partitioning + boundary value analysis (ON/OFF/IN/OUT points) for input-domain reduction | `references/equiv-class-bva.md` |
-| Risk-Weighted Coverage | `risk-cover` | | RPN (Severity × Occurrence × Detection) weighted coverage, FMEA-linked prioritization, risk-based test selection | `references/risk-weighted-coverage.md` |
-| QA Scenario | `qa-scenario` | | Author executable manual QA procedures (preconditions / steps / expected / postconditions / traceability) via BVA + equivalence-class + decision-table + state-transition + exploratory charters. Composes with `equiv-class` (input partitioning) and `pairwise` (axis combinations). Output: scenario table + traceability matrix to AC/PRD IDs. (absorbed from drill) | `references/equiv-class-bva.md` |
+| Combination Control | `combine` | ✓ | Combination explosion control, minimum coverage set selection | `reference/combination-methods.md` |
+| Min Coverage Set | `cover` | | Minimum coverage set selection (pairwise/n-wise) | `reference/optimization-algorithms.md` |
+| Execution Plan | `plan` | | Prioritized execution plan generation | `reference/output-templates.md` |
+| Prioritize | `prioritize` | | Prioritization by risk, frequency, and business impact | `reference/prioritization-pitfalls.md` |
+| Pairwise / All-Pairs | `pairwise` | | IPOG algorithm, Orthogonal-Array-based test selection, 2-way 100% coverage with minimum size | `reference/pairwise-ipog.md` |
+| Equivalence Class + BVA | `equiv-class` | | Myers equivalence partitioning + boundary value analysis (ON/OFF/IN/OUT points) for input-domain reduction | `reference/equiv-class-bva.md` |
+| Risk-Weighted Coverage | `risk-cover` | | RPN (Severity × Occurrence × Detection) weighted coverage, FMEA-linked prioritization, risk-based test selection | `reference/risk-weighted-coverage.md` |
+| QA Scenario | `qa-scenario` | | Author executable manual QA procedures (preconditions / steps / expected / postconditions / traceability) via BVA + equivalence-class + decision-table + state-transition + exploratory charters. Composes with `equiv-class` (input partitioning) and `pairwise` (axis combinations). Output: scenario table + traceability matrix to AC/PRD IDs. (absorbed from drill) | `reference/equiv-class-bva.md` |
 
 ## Subcommand Dispatch
 
@@ -208,19 +208,19 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| Multi-axis combination request (≥ 3 axes) | Standard Matrix workflow | Optimized coverage set + execution plan | `references/combination-methods.md` |
-| Safety-critical / regulated domain | High-Strength mode (3-way+) | Coverage set with strength justification | `references/fault-interaction-statistics.md` |
-| Budget-constrained request | Budgeted mode | Best-effort set + coverage gap report | `references/optimization-algorithms.md` |
-| Existing test results with gaps | Remap mode | Tuple density report + (p,t)-completeness score + coverage difference (CSWP 19) + follow-up cases | `references/coverage-measurement.md` |
-| AI/ML dataset with potential training skew | Frequency coverage analysis | Data frequency coverage report + skew detection + rebalancing recommendations | `references/domain-patterns.md` |
+| Multi-axis combination request (≥ 3 axes) | Standard Matrix workflow | Optimized coverage set + execution plan | `reference/combination-methods.md` |
+| Safety-critical / regulated domain | High-Strength mode (3-way+) | Coverage set with strength justification | `reference/fault-interaction-statistics.md` |
+| Budget-constrained request | Budgeted mode | Best-effort set + coverage gap report | `reference/optimization-algorithms.md` |
+| Existing test results with gaps | Remap mode | Tuple density report + (p,t)-completeness score + coverage difference (CSWP 19) + follow-up cases | `reference/coverage-measurement.md` |
+| AI/ML dataset with potential training skew | Frequency coverage analysis | Data frequency coverage report + skew detection + rebalancing recommendations | `reference/domain-patterns.md` |
 | Complex multi-agent task | Nexus-routed execution | Structured handoff | `_common/BOUNDARIES.md` |
-| Event-driven / sequence-dependent request | Route to sequence-aware specialist | Routing recommendation with sequence context | `references/combinatorial-anti-patterns.md` (CT-11) |
-| Unclear domain or axes | Clarify scope and route | Scoped clarification questions | `references/domain-patterns.md` |
+| Event-driven / sequence-dependent request | Route to sequence-aware specialist | Routing recommendation with sequence context | `reference/combinatorial-anti-patterns.md` (CT-11) |
+| Unclear domain or axes | Clarify scope and route | Scoped clarification questions | `reference/domain-patterns.md` |
 
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 
 ## Output Requirements
 
@@ -253,19 +253,19 @@ When results are already available (Remap mode), also include:
 
 ## Reference Map
 
-- Read [quickstart.md](~/.claude/skills/matrix/references/quickstart.md) when you need a fast starter template for test, deploy, or risk planning.
-- Read [input-schema.md](~/.claude/skills/matrix/references/input-schema.md) when the input arrives as natural language, YAML, JSON, or a table.
-- Read [combination-methods.md](~/.claude/skills/matrix/references/combination-methods.md) when you need the method definitions, formulas, or default reduction guidance.
-- Read [optimization-algorithms.md](~/.claude/skills/matrix/references/optimization-algorithms.md) when you must choose between pairwise, OA, higher-strength, or budgeted optimization.
-- Read [domain-patterns.md](~/.claude/skills/matrix/references/domain-patterns.md) when you need domain-specific axes, constraints, scoring, or downstream routing.
-- Read [output-templates.md](~/.claude/skills/matrix/references/output-templates.md) when you need the canonical plan or coverage-report shapes.
-- Read [combinatorial-anti-patterns.md](~/.claude/skills/matrix/references/combinatorial-anti-patterns.md) when parameter modeling or constraints look suspicious.
-- Read [fault-interaction-statistics.md](~/.claude/skills/matrix/references/fault-interaction-statistics.md) when choosing `2-way` vs `3-way+` or mixed strength.
-- Read [prioritization-pitfalls.md](~/.claude/skills/matrix/references/prioritization-pitfalls.md) when the ranking looks biased or everything is becoming critical.
-- Read [coverage-measurement.md](~/.claude/skills/matrix/references/coverage-measurement.md) when mapping execution results back into coverage gaps.
-- Read [pairwise-ipog.md](~/.claude/skills/matrix/references/pairwise-ipog.md) when you need the IPOG/IPOG-F algorithm walk-through, OATS selection rubric, or pairwise vs n-wise trade-offs.
-- Read [equiv-class-bva.md](~/.claude/skills/matrix/references/equiv-class-bva.md) when axes are input ranges (integers, strings, continuous values) and you need equivalence partitioning + BVA + one-defect-per-negative-case discipline.
-- Read [risk-weighted-coverage.md](~/.claude/skills/matrix/references/risk-weighted-coverage.md) when prioritizing combinations by RPN / Action Priority or integrating with FMEA output from omen.
+- Read [quickstart.md](~/.claude/skills/matrix/reference/quickstart.md) when you need a fast starter template for test, deploy, or risk planning.
+- Read [input-schema.md](~/.claude/skills/matrix/reference/input-schema.md) when the input arrives as natural language, YAML, JSON, or a table.
+- Read [combination-methods.md](~/.claude/skills/matrix/reference/combination-methods.md) when you need the method definitions, formulas, or default reduction guidance.
+- Read [optimization-algorithms.md](~/.claude/skills/matrix/reference/optimization-algorithms.md) when you must choose between pairwise, OA, higher-strength, or budgeted optimization.
+- Read [domain-patterns.md](~/.claude/skills/matrix/reference/domain-patterns.md) when you need domain-specific axes, constraints, scoring, or downstream routing.
+- Read [output-templates.md](~/.claude/skills/matrix/reference/output-templates.md) when you need the canonical plan or coverage-report shapes.
+- Read [combinatorial-anti-patterns.md](~/.claude/skills/matrix/reference/combinatorial-anti-patterns.md) when parameter modeling or constraints look suspicious.
+- Read [fault-interaction-statistics.md](~/.claude/skills/matrix/reference/fault-interaction-statistics.md) when choosing `2-way` vs `3-way+` or mixed strength.
+- Read [prioritization-pitfalls.md](~/.claude/skills/matrix/reference/prioritization-pitfalls.md) when the ranking looks biased or everything is becoming critical.
+- Read [coverage-measurement.md](~/.claude/skills/matrix/reference/coverage-measurement.md) when mapping execution results back into coverage gaps.
+- Read [pairwise-ipog.md](~/.claude/skills/matrix/reference/pairwise-ipog.md) when you need the IPOG/IPOG-F algorithm walk-through, OATS selection rubric, or pairwise vs n-wise trade-offs.
+- Read [equiv-class-bva.md](~/.claude/skills/matrix/reference/equiv-class-bva.md) when axes are input ranges (integers, strings, continuous values) and you need equivalence partitioning + BVA + one-defect-per-negative-case discipline.
+- Read [risk-weighted-coverage.md](~/.claude/skills/matrix/reference/risk-weighted-coverage.md) when prioritizing combinations by RPN / Action Priority or integrating with FMEA output from omen.
 - Read [\_common/OPUS_48_AUTHORING.md](~/.claude/skills/_common/OPUS_48_AUTHORING.md) when you are sizing the combinatorial plan, deciding adaptive thinking depth at t-way strength, or front-loading domain/axes/target at SCAN. Critical for Matrix: P3, P5.
 - Read [\_common/PROOF_CARRYING.md](~/.claude/skills/_common/PROOF_CARRYING.md) when generating pairwise / orthogonal-array story sets for `vrt_proof` in `nexus acceptance` Phase 2B per PD-2 Matrix Sampling Policy. Default to 2-way coverage; full N-way reserved for Tier-S critical paths. Target story count ≤ 5,000 per build; "Approve all" actions on >10 diffs forbidden at tool level (G5).
 

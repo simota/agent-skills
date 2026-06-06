@@ -100,7 +100,7 @@ Steps <= 4 AND sequential?     → L1: Direct Spawn (foreground / spawn_agent)
 | Evaluator (Judge, Voyager, Warden in eval mode) | sonnet | reset | Evaluators need only contract + output |
 | Generator (revision iteration) | sonnet | continuous | Benefits from feedback accumulation |
 
-**Context Strategy**: `reset` = file-based handoff (fresh context per agent), `continuous` = in-context handoff (accumulated context), `hybrid` = Nexus continuous + spawned agents reset. See `nexus/references/context-strategy.md` for details.
+**Context Strategy**: `reset` = file-based handoff (fresh context per agent), `continuous` = in-context handoff (accumulated context), `hybrid` = Nexus continuous + spawned agents reset. See `nexus/reference/context-strategy.md` for details.
 
 ### Advanced Spawn Options
 

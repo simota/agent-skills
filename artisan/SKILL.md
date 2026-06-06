@@ -130,59 +130,59 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `ANALYZE` | Read Forge prototype or requirements; identify framework, state needs, a11y requirements | Understand before building | `references/react-patterns.md` |
-| `DESIGN` | Choose component structure, state management, styling strategy; reference existing patterns | Match project conventions | `references/state-management.md` |
-| `IMPLEMENT` | Build production components with TS strict, error handling, a11y; <50 lines per modification | One component at a time | `references/component-quality.md` |
-| `VERIFY` | Component checklist (`references/component-quality.md`); type safety, a11y, states | All states handled | `references/performance-testing.md` |
+| `ANALYZE` | Read Forge prototype or requirements; identify framework, state needs, a11y requirements | Understand before building | `reference/react-patterns.md` |
+| `DESIGN` | Choose component structure, state management, styling strategy; reference existing patterns | Match project conventions | `reference/state-management.md` |
+| `IMPLEMENT` | Build production components with TS strict, error handling, a11y; <50 lines per modification | One component at a time | `reference/component-quality.md` |
+| `VERIFY` | Component checklist (`reference/component-quality.md`); type safety, a11y, states | All states handled | `reference/performance-testing.md` |
 | `HANDOFF` | Route to Builder (API), Showcase (stories), Radar (tests) as appropriate | Clear handoff context | — |
 
 ## Output Routing
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `react`, `component`, `hooks`, `rsc` | React production implementation | React component | `references/react-patterns.md` |
-| `vue`, `composition api`, `composable` | Vue 3 production implementation | Vue component | `references/vue-svelte-patterns.md` |
-| `svelte`, `runes`, `$state` | Svelte 5 production implementation | Svelte component | `references/vue-svelte-patterns.md` |
-| `state`, `zustand`, `pinia`, `context` | State management setup | State architecture | `references/state-management.md` |
-| `form`, `validation`, `zod`, `valibot`, `tanstack form` | Form handling implementation | Form component | `references/component-quality.md` |
-| `accessibility`, `aria`, `a11y` | Accessibility-focused implementation | Accessible component | `references/component-quality.md` |
-| `prototype to production`, `forge output` | Prototype conversion | Production component | `references/react-patterns.md` |
-| `landing page`, `marketing page`, `AI-generated page` | Composition-aware page implementation | Page with layout restraint | `references/ai-frontend-patterns.md` |
-| unclear frontend request | React production implementation | React component | `references/react-patterns.md` |
+| `react`, `component`, `hooks`, `rsc` | React production implementation | React component | `reference/react-patterns.md` |
+| `vue`, `composition api`, `composable` | Vue 3 production implementation | Vue component | `reference/vue-svelte-patterns.md` |
+| `svelte`, `runes`, `$state` | Svelte 5 production implementation | Svelte component | `reference/vue-svelte-patterns.md` |
+| `state`, `zustand`, `pinia`, `context` | State management setup | State architecture | `reference/state-management.md` |
+| `form`, `validation`, `zod`, `valibot`, `tanstack form` | Form handling implementation | Form component | `reference/component-quality.md` |
+| `accessibility`, `aria`, `a11y` | Accessibility-focused implementation | Accessible component | `reference/component-quality.md` |
+| `prototype to production`, `forge output` | Prototype conversion | Production component | `reference/react-patterns.md` |
+| `landing page`, `marketing page`, `AI-generated page` | Composition-aware page implementation | Page with layout restraint | `reference/ai-frontend-patterns.md` |
+| unclear frontend request | React production implementation | React component | `reference/react-patterns.md` |
 
 ## Framework Coverage
 
 | Framework | Patterns | State | Reference |
 |-----------|---------|-------|-----------|
-| **React** | Compound components, hooks, error boundaries, React 19.2 hooks (Activity, ViewTransition, useEffectEvent), RSC, Server Actions | Zustand, Context | `references/react-patterns.md` |
-| **Vue 3.5.x (stable); 3.6 in beta** | Composition API, Reactive Props Destructure, composables, Lazy Hydration, Vapor Mode (3.6 beta — compile-to-DOM, `<script setup>` only, opt-in per-component, not production-stable) | Pinia | `references/vue-svelte-patterns.md` |
-| **Svelte 5** | Runes, Snippets | Stores | `references/vue-svelte-patterns.md` |
+| **React** | Compound components, hooks, error boundaries, React 19.2 hooks (Activity, ViewTransition, useEffectEvent), RSC, Server Actions | Zustand, Context | `reference/react-patterns.md` |
+| **Vue 3.5.x (stable); 3.6 in beta** | Composition API, Reactive Props Destructure, composables, Lazy Hydration, Vapor Mode (3.6 beta — compile-to-DOM, `<script setup>` only, opt-in per-component, not production-stable) | Pinia | `reference/vue-svelte-patterns.md` |
+| **Svelte 5** | Runes, Snippets | Stores | `reference/vue-svelte-patterns.md` |
 
 ### Cross-Framework Patterns
 
 | Pattern | Reference |
 |---------|-----------|
-| Accessibility (ARIA, keyboard, focus, WCAG 2.2) | `references/component-quality.md` |
-| Error states and recovery | `references/component-quality.md` |
-| Loading states and skeletons | `references/component-quality.md` |
-| Form validation | `references/component-quality.md` |
-| Styling (Tailwind v4, CSS Modules) | `references/component-quality.md` |
-| Component completion checklist | `references/component-quality.md` |
-| State management decision guide | `references/state-management.md` |
-| Performance & testing strategies | `references/performance-testing.md` |
+| Accessibility (ARIA, keyboard, focus, WCAG 2.2) | `reference/component-quality.md` |
+| Error states and recovery | `reference/component-quality.md` |
+| Loading states and skeletons | `reference/component-quality.md` |
+| Form validation | `reference/component-quality.md` |
+| Styling (Tailwind v4, CSS Modules) | `reference/component-quality.md` |
+| Component completion checklist | `reference/component-quality.md` |
+| State management decision guide | `reference/state-management.md` |
+| Performance & testing strategies | `reference/performance-testing.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Component Build | `component` | ✓ | UI component implementation (props/events/slots) | `references/react-patterns.md` |
-| State Management | `state` | | State management design (Context, Zustand, Redux, Pinia, etc.) | `references/state-management.md` |
-| Form Handling | `form` | | Form implementation (validation, submission, errors) | `references/component-quality.md` |
-| Data Fetching | `fetch` | | Data fetching layer (SWR, TanStack Query, Server Actions) | `references/state-management.md` |
-| Server Components | `rsc` | | React Server Components / Nuxt server routes | `references/react-patterns.md` |
-| Accessibility Hardening | `a11y` | | WCAG 2.2 AA hardening for an existing component/page (ARIA, keyboard, focus, SR) | `references/a11y-implementation.md` |
-| Internationalization | `i18n` | | Component-level i18n wiring (t(), ICU, Intl, RTL) in a production frontend file | `references/i18n-implementation.md` |
-| UI Performance | `perf` | | Frontend-component tuning (memoization, virtualization, dynamic import, bundle audit) | `references/ui-performance.md` |
+| Component Build | `component` | ✓ | UI component implementation (props/events/slots) | `reference/react-patterns.md` |
+| State Management | `state` | | State management design (Context, Zustand, Redux, Pinia, etc.) | `reference/state-management.md` |
+| Form Handling | `form` | | Form implementation (validation, submission, errors) | `reference/component-quality.md` |
+| Data Fetching | `fetch` | | Data fetching layer (SWR, TanStack Query, Server Actions) | `reference/state-management.md` |
+| Server Components | `rsc` | | React Server Components / Nuxt server routes | `reference/react-patterns.md` |
+| Accessibility Hardening | `a11y` | | WCAG 2.2 AA hardening for an existing component/page (ARIA, keyboard, focus, SR) | `reference/a11y-implementation.md` |
+| Internationalization | `i18n` | | Component-level i18n wiring (t(), ICU, Intl, RTL) in a production frontend file | `reference/i18n-implementation.md` |
+| UI Performance | `perf` | | Frontend-component tuning (memoization, virtualization, dynamic import, bundle audit) | `reference/ui-performance.md` |
 
 ## Subcommand Dispatch
 
@@ -207,7 +207,7 @@ Every deliverable must include:
 - Production-quality TypeScript component code.
 - Error boundary and loading/error/empty state handling.
 - Accessibility attributes (ARIA, keyboard navigation, focus management).
-- Component completion checklist results from `references/component-quality.md`.
+- Component completion checklist results from `reference/component-quality.md`.
 - Recommended next agent for handoff (Builder, Showcase, Radar).
 
 ## Collaboration
@@ -240,15 +240,15 @@ Artisan receives prototypes, design direction, and review feedback from upstream
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/react-patterns.md` | You need React 19 hooks, React Compiler v1.0, RSC composition, Suspense streaming, Server Actions, cache/revalidation, Next.js 16.2 features, form handling (RHF / TanStack Form v1 / Zod v4), hooks/RSC anti-patterns. |
-| `references/state-management.md` | You need state classification (Remote/URL/Local/Shared), TanStack Query v5, Zustand, nuqs v2, RSC hydration patterns. |
-| `references/component-quality.md` | You need a11y (ARIA, keyboard, focus, WCAG 2.2 new criteria), error/loading states, form validation, Tailwind v4 styling, component checklist. |
-| `references/performance-testing.md` | You need Core Web Vitals (INP), optimization, Vitest v2 Browser Mode, Storybook 8.5+, RSC testing strategies, Playwright E2E. |
-| `references/vue-svelte-patterns.md` | You need Vue 3.5 (Reactive Props Destructure, useTemplateRef, Lazy Hydration), Svelte 5 Runes ($bindable, $state.raw, Snippets), Pinia. |
-| `references/ai-frontend-patterns.md` | You need composition-aware templates, layout anti-patterns, Tailwind token alignment, or AI-generated page review checklist. |
-| `references/a11y-implementation.md` | You are running the `a11y` recipe — tactical WCAG 2.2 AA hardening at the component/page level (ARIA, keyboard, focus, target size, reduced motion). |
-| `references/i18n-implementation.md` | You are running the `i18n` recipe — component-level i18n wiring (t() extraction, ICU MessageFormat, Intl API, RTL-safe logical properties). |
-| `references/ui-performance.md` | You are running the `perf` recipe — frontend-component tuning (memoization gating, virtualization, dynamic import, bundle audit, INP/LCP measurement). |
+| `reference/react-patterns.md` | You need React 19 hooks, React Compiler v1.0, RSC composition, Suspense streaming, Server Actions, cache/revalidation, Next.js 16.2 features, form handling (RHF / TanStack Form v1 / Zod v4), hooks/RSC anti-patterns. |
+| `reference/state-management.md` | You need state classification (Remote/URL/Local/Shared), TanStack Query v5, Zustand, nuqs v2, RSC hydration patterns. |
+| `reference/component-quality.md` | You need a11y (ARIA, keyboard, focus, WCAG 2.2 new criteria), error/loading states, form validation, Tailwind v4 styling, component checklist. |
+| `reference/performance-testing.md` | You need Core Web Vitals (INP), optimization, Vitest v2 Browser Mode, Storybook 8.5+, RSC testing strategies, Playwright E2E. |
+| `reference/vue-svelte-patterns.md` | You need Vue 3.5 (Reactive Props Destructure, useTemplateRef, Lazy Hydration), Svelte 5 Runes ($bindable, $state.raw, Snippets), Pinia. |
+| `reference/ai-frontend-patterns.md` | You need composition-aware templates, layout anti-patterns, Tailwind token alignment, or AI-generated page review checklist. |
+| `reference/a11y-implementation.md` | You are running the `a11y` recipe — tactical WCAG 2.2 AA hardening at the component/page level (ARIA, keyboard, focus, target size, reduced motion). |
+| `reference/i18n-implementation.md` | You are running the `i18n` recipe — component-level i18n wiring (t() extraction, ICU MessageFormat, Intl API, RTL-safe logical properties). |
+| `reference/ui-performance.md` | You are running the `perf` recipe — frontend-component tuning (memoization gating, virtualization, dynamic import, bundle audit, INP/LCP measurement). |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the implementation report, deciding effort-level for component scope, or front-loading framework/route constraints. Critical for Artisan: P3, P6. |
 
 ## Operational

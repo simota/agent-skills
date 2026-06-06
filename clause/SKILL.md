@@ -133,10 +133,10 @@ questions:
 | Phase | Required action | Key rule | Read |
 |-------|----------------|----------|------|
 | `SCOPE` | Identify jurisdiction, document type, and target service | If jurisdiction is unknown, invoke Ask first | - |
-| `SCAN` | Walk the checklist clause by clause | Traverse every item in the relevant checklist | `references/legal-checklists.md` |
-| `ASSESS` | Perform risk evaluation and statutory-alignment analysis | Assign a risk level to every clause | `references/legal-checklists.md` |
-| `REPORT` | Produce a structured report of findings | Follow the report output format | `references/examples.md` |
-| `SUGGEST` | Propose concrete improvements and additional clauses | Include specific proposed language | `references/patterns.md` |
+| `SCAN` | Walk the checklist clause by clause | Traverse every item in the relevant checklist | `reference/legal-checklists.md` |
+| `ASSESS` | Perform risk evaluation and statutory-alignment analysis | Assign a risk level to every clause | `reference/legal-checklists.md` |
+| `REPORT` | Produce a structured report of findings | Follow the report output format | `reference/examples.md` |
+| `SUGGEST` | Propose concrete improvements and additional clauses | Include specific proposed language | `reference/patterns.md` |
 
 ---
 
@@ -144,7 +144,7 @@ questions:
 
 ### Terms of Service
 
-Required check items: see `references/legal-checklists.md`.
+Required check items: see `reference/legal-checklists.md`.
 
 Key check areas:
 - Service definition and conditions of use
@@ -258,7 +258,7 @@ Key requirements: CCPA / CPRA opt-out rights, COPPA (children), state-specific p
 
 CCPA 2026 amendment (approved September 2025, effective January 2026): pre-use notice requirement when ADMT is used (mechanism, data used, and impact must be explained), mandatory privacy risk assessments (triggered by sale/sharing of personal information, sensitive-information processing, or use of ADMT for significant decisions), and mandatory cybersecurity audits for businesses above a size threshold.
 
-Details: see `references/legal-checklists.md`.
+Details: see `reference/legal-checklists.md`.
 
 ---
 
@@ -274,14 +274,14 @@ Single source of truth for Recipe definitions. Behavior depth is encoded in the 
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| ToS Review | `tos` | ✓ | Terms of Service clause coverage check and risk flagging. Default when intent is unclear. | `references/legal-checklists.md` |
-| Privacy Policy | `privacy` | | Privacy Policy GDPR/APPI alignment check (including statute-specific deep-dives when the request names GDPR or APPI directly). | `references/legal-checklists.md` |
-| Tokushoho | `tokushoho` | | Tokushoho (Specified Commercial Transactions Act) required-field check (Japan e-commerce / paid services). | `references/legal-checklists.md` |
-| Gap Analysis | `gap` | | Multi-document consistency check, missing-clause detection, cross-document review (pre-launch comprehensive sweep). | `references/patterns.md` |
-| DPA Review | `dpa` | | Data Processing Agreement review. Identify role pairing (controller/processor/sub-processor) and transfer geography first. Walk Art. 28(3) mandatory clauses, SCC module selection, Schrems II Transfer Impact Assessment, audit-rights scope. Hand implementation gaps (sub-processor list page, breach SLA pipeline, encryption-key custody) to Cloak; framework mapping (SOC2 vendor management, ISO 27001 supplier relationships, HIPAA BAA equivalence) to Comply; codebase verification of DPA-promised controls to Canon. | `references/dpa-review.md` |
-| EULA Review | `eula` | | End User License Agreement review. Identify license type (perpetual / subscription / SaaS / embedded SDK / OSS / dual) and governing-law jurisdiction first. Walk grant scope, restrictions (including AI-training clauses), IP ownership, warranty/indemnity, OSS notices. Apply jurisdiction-specific enforceability tests (US unconscionability, EU UCTD/Software Directive Art. 6 interoperability carve-out, Japan Consumer Contract Act). Hand telemetry implementation to Cloak; OSS-license codebase audit to Canon; license-key/audit-log endpoints to Builder. | `references/eula-review.md` |
-| Cookie Consent | `cookie` | | Cookie banner and cookie policy review (ePrivacy, GDPR consent, IAB TCF v2.2, categorization). Identify target jurisdictions (EU/UK/CH/CA/CO/JP/etc.) and CMP/TCF participation first. Walk banner UX (equal Reject-All prominence, no pre-ticked, no cookie wall, withdraw path), per-cookie categorization (strictly necessary / functional / analytics / marketing), policy-vs-scanner diff. Verify per-jurisdiction logic (EU opt-in, US-state opt-out + GPC honoring, JP APPI personally-referable-info rule). Hand CMP integration and conditional script loading to Cloak; runtime verification to Canon `gdpr`; banner copy plain-language pass to Prose. | `references/cookie-consent.md` |
-| App Store Disclosures | `appstore` | | Mobile app store disclosure review covering DSA Trader / DMA Anti-Steering / 5.1.2(i) third-party-AI consent / Sign in with Apple / Google Play AI labeling / EAA accessibility statement. Identify target stores (iOS / Android), jurisdictions (EU triggers DSA + DMA + EAA), feature scope (third-party AI usage / external purchase / IAP / generative content). Walk: (1) DSA Trader Status alignment between App Store Connect / Play Console and ToS operator; (2) DMA external-purchase wording and CTF disclosure for EU iOS; (3) 5.1.2(i) third-party-AI consent screen — must be provider-named (e.g., "OpenAI"), describe shared data, offer explicit accept/decline; on-device inference (Foundation Models / Gemini Nano) exempt; (4) Sign in with Apple language when third-party SSO present (Guideline 4.8); (5) Google Play AI-Generated Content visible-label policy alignment and in-app reporting/flag mechanism; (6) EAA accessibility statement wording. Hand consent-UI implementation to Native via Cloak; flow-level legal text plain-language pass to Prose; codebase verification to Comply / Canon. Cite specific deadlines (2025-11-13 5.1.2(i), 2025-02-17 DSA enforcement, 2026-01-01 CTF unification, 2025-06-28 EAA). | `references/legal-checklists.md` |
+| ToS Review | `tos` | ✓ | Terms of Service clause coverage check and risk flagging. Default when intent is unclear. | `reference/legal-checklists.md` |
+| Privacy Policy | `privacy` | | Privacy Policy GDPR/APPI alignment check (including statute-specific deep-dives when the request names GDPR or APPI directly). | `reference/legal-checklists.md` |
+| Tokushoho | `tokushoho` | | Tokushoho (Specified Commercial Transactions Act) required-field check (Japan e-commerce / paid services). | `reference/legal-checklists.md` |
+| Gap Analysis | `gap` | | Multi-document consistency check, missing-clause detection, cross-document review (pre-launch comprehensive sweep). | `reference/patterns.md` |
+| DPA Review | `dpa` | | Data Processing Agreement review. Identify role pairing (controller/processor/sub-processor) and transfer geography first. Walk Art. 28(3) mandatory clauses, SCC module selection, Schrems II Transfer Impact Assessment, audit-rights scope. Hand implementation gaps (sub-processor list page, breach SLA pipeline, encryption-key custody) to Cloak; framework mapping (SOC2 vendor management, ISO 27001 supplier relationships, HIPAA BAA equivalence) to Comply; codebase verification of DPA-promised controls to Canon. | `reference/dpa-review.md` |
+| EULA Review | `eula` | | End User License Agreement review. Identify license type (perpetual / subscription / SaaS / embedded SDK / OSS / dual) and governing-law jurisdiction first. Walk grant scope, restrictions (including AI-training clauses), IP ownership, warranty/indemnity, OSS notices. Apply jurisdiction-specific enforceability tests (US unconscionability, EU UCTD/Software Directive Art. 6 interoperability carve-out, Japan Consumer Contract Act). Hand telemetry implementation to Cloak; OSS-license codebase audit to Canon; license-key/audit-log endpoints to Builder. | `reference/eula-review.md` |
+| Cookie Consent | `cookie` | | Cookie banner and cookie policy review (ePrivacy, GDPR consent, IAB TCF v2.2, categorization). Identify target jurisdictions (EU/UK/CH/CA/CO/JP/etc.) and CMP/TCF participation first. Walk banner UX (equal Reject-All prominence, no pre-ticked, no cookie wall, withdraw path), per-cookie categorization (strictly necessary / functional / analytics / marketing), policy-vs-scanner diff. Verify per-jurisdiction logic (EU opt-in, US-state opt-out + GPC honoring, JP APPI personally-referable-info rule). Hand CMP integration and conditional script loading to Cloak; runtime verification to Canon `gdpr`; banner copy plain-language pass to Prose. | `reference/cookie-consent.md` |
+| App Store Disclosures | `appstore` | | Mobile app store disclosure review covering DSA Trader / DMA Anti-Steering / 5.1.2(i) third-party-AI consent / Sign in with Apple / Google Play AI labeling / EAA accessibility statement. Identify target stores (iOS / Android), jurisdictions (EU triggers DSA + DMA + EAA), feature scope (third-party AI usage / external purchase / IAP / generative content). Walk: (1) DSA Trader Status alignment between App Store Connect / Play Console and ToS operator; (2) DMA external-purchase wording and CTF disclosure for EU iOS; (3) 5.1.2(i) third-party-AI consent screen — must be provider-named (e.g., "OpenAI"), describe shared data, offer explicit accept/decline; on-device inference (Foundation Models / Gemini Nano) exempt; (4) Sign in with Apple language when third-party SSO present (Guideline 4.8); (5) Google Play AI-Generated Content visible-label policy alignment and in-app reporting/flag mechanism; (6) EAA accessibility statement wording. Hand consent-UI implementation to Native via Cloak; flow-level legal text plain-language pass to Prose; codebase verification to Comply / Canon. Cite specific deadlines (2025-11-13 5.1.2(i), 2025-02-17 DSA enforcement, 2026-01-01 CTF unification, 2025-06-28 EAA). | `reference/legal-checklists.md` |
 
 ### Signal Keywords → Recipe
 
@@ -342,7 +342,7 @@ Every deliverable must include:
 | **C** | Privacy-Policy-Sync | Cloak ↔ Clause | Align privacy implementation with policy text |
 | **D** | Legal-Readability | Clause → Prose | Plain-language rewrites of legal text |
 
-Handoff details: `references/handoffs.md`
+Handoff details: `reference/handoffs.md`
 
 ---
 
@@ -350,13 +350,13 @@ Handoff details: `references/handoffs.md`
 
 | File | Read When |
 |------|-----------|
-| `references/legal-checklists.md` | You need the clause checklist during SCAN / ASSESS |
-| `references/patterns.md` | You are selecting a review pattern |
-| `references/examples.md` | You need output-format references |
-| `references/handoffs.md` | You are coordinating with another agent |
-| `references/dpa-review.md` | Subcommand `dpa` — DPA / GDPR Art. 28 / SCC / Schrems II TIA / sub-processor chain |
-| `references/eula-review.md` | Subcommand `eula` — software license type matrix, IP/warranty/indemnity, US/EU/JP enforceability differences |
-| `references/cookie-consent.md` | Subcommand `cookie` — banner UX, IAB TCF v2.2, cookie categorization, EU/UK/CA/JP jurisdiction logic |
+| `reference/legal-checklists.md` | You need the clause checklist during SCAN / ASSESS |
+| `reference/patterns.md` | You are selecting a review pattern |
+| `reference/examples.md` | You need output-format references |
+| `reference/handoffs.md` | You are coordinating with another agent |
+| `reference/dpa-review.md` | Subcommand `dpa` — DPA / GDPR Art. 28 / SCC / Schrems II TIA / sub-processor chain |
+| `reference/eula-review.md` | Subcommand `eula` — software license type matrix, IP/warranty/indemnity, US/EU/JP enforceability differences |
+| `reference/cookie-consent.md` | Subcommand `cookie` — banner UX, IAB TCF v2.2, cookie categorization, EU/UK/CA/JP jurisdiction logic |
 | `_common/OPUS_48_AUTHORING.md` | Sizing the review report, deciding adaptive thinking depth at clause evaluation, or front-loading jurisdiction/document type/priority at INTAKE. Critical for Clause: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You generate Brand Proof `trust_proof` (no exaggeration / no false claims / no banned coercive language) in `nexus growth-acceptance` Phase 1 (Brand Compiler B.hard layer — blocking). Cross-cutting G14 Regulatory Envelope Pre-Flight: declare `regulatory_jurisdiction` for every Contract; 薬機法 / 景表法 / 金商法 / 公職選挙法 / GDPR / DMA / DSA / CCPA per-jurisdiction toggle verification. Phase 2 ship-time legal-compliance gate. |
 

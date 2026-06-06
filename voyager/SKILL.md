@@ -25,7 +25,7 @@ CAPABILITIES_SUMMARY:
 - agentic_video_receipts: Generate visual proof of automated work using page.screencast API (1.59+)
 - cli_trace_analysis: Programmatic trace parsing via npx playwright trace for CI and agentic workflows
 - api_e2e_validation: User-journey E2E via API-only interface (Playwright APIRequestContext) with HTTP → state → downstream-API chained assertions, contract-test follow-up, and mock-vs-real backend toggle
-- mobile_e2e_harness: Shipped-app native mobile E2E via Detox / Maestro / Appium 3.x / XCUITest / Espresso+Compose; accessibility-id locators; two-axis flake taxonomy (logic vs device). Version detail in references/2026-best-practices.md
+- mobile_e2e_harness: Shipped-app native mobile E2E via Detox / Maestro / Appium 3.x / XCUITest / Espresso+Compose; accessibility-id locators; two-axis flake taxonomy (logic vs device). Version detail in reference/2026-best-practices.md
 - remote_device_orchestration: Cloud device-farm matrix execution — BrowserStack App Automate, Sauce Labs Real Device Cloud, AWS Device Farm, Firebase Test Lab, LambdaTest HyperExecute; tiered routing (local sim/emu → PR smoke → release-gate real device); parallel session caps; remote WebDriver/Appium endpoints
 - component_browser_testing: Real-browser component tests via Playwright Component Testing, Cypress Component Testing, and Storybook Interactions — real DOM, real events, isolated from full-page mounts
 - native_visual_ai: Native-app visual regression and self-healing via App Percy, Applitools Eyes, testRigor Vision AI, Mabl — applied to mobile screenshots and component snapshots
@@ -66,14 +66,14 @@ Browser-based E2E specialist for critical user journeys, cross-browser validatio
 ## Trigger Guidance
 
 - Use Voyager for browser-level journey verification, auth/session coverage, visual regression, accessibility checks, cloud-browser runs, or CI-integrated E2E automation.
-- **Native mobile E2E**: Use Voyager when the artifact is a shipping `.ipa` / `.apk` / `.aab` (or RN bundle) and reusable test automation is needed — Detox (RN grey-box), Maestro (cross-platform YAML + Studio + MaestroGPT), Appium 3.x (widest matrix), XCUITest (iOS deep), or Espresso + Compose UI Test (Android). Read `references/mobile-testing.md` first; version detail in `references/2026-best-practices.md`.
-- **Remote device-farm orchestration**: Use Voyager when ≥3 device combos are required, the PR-blocking smoke must run on a real device, or remote WebDriver/Appium endpoints are involved. Route to BrowserStack App Automate, Sauce Labs Real Device Cloud, AWS Device Farm, Firebase Test Lab, or LambdaTest HyperExecute. Tier: local sim/emu → 1 farm for PR smoke → real-device lab for release gate. Read `references/cloud-testing.md`.
+- **Native mobile E2E**: Use Voyager when the artifact is a shipping `.ipa` / `.apk` / `.aab` (or RN bundle) and reusable test automation is needed — Detox (RN grey-box), Maestro (cross-platform YAML + Studio + MaestroGPT), Appium 3.x (widest matrix), XCUITest (iOS deep), or Espresso + Compose UI Test (Android). Read `reference/mobile-testing.md` first; version detail in `reference/2026-best-practices.md`.
+- **Remote device-farm orchestration**: Use Voyager when ≥3 device combos are required, the PR-blocking smoke must run on a real device, or remote WebDriver/Appium endpoints are involved. Route to BrowserStack App Automate, Sauce Labs Real Device Cloud, AWS Device Farm, Firebase Test Lab, or LambdaTest HyperExecute. Tier: local sim/emu → 1 farm for PR smoke → real-device lab for release gate. Read `reference/cloud-testing.md`.
 - **Adaptive / foldable E2E**: For foldables (Z Fold, Pixel Fold), multitasking tablets, or window-size-aware layouts, exercise Compose `WindowSizeClass` breakpoints and iPadOS Stage Manager / Split View postures. Add at least one fold/unfold transition to the release-gate tier.
-- **Privacy-aware E2E**: For Apple Privacy Manifest enforcement (required-reason APIs, tracking-domain declarations), verify that test scaffolding carries its own `PrivacyInfo.xcprivacy` and does not break the host app's manifest aggregation. Enforcement timeline in `references/2026-best-practices.md`.
+- **Privacy-aware E2E**: For Apple Privacy Manifest enforcement (required-reason APIs, tracking-domain declarations), verify that test scaffolding carries its own `PrivacyInfo.xcprivacy` and does not break the host app's manifest aggregation. Enforcement timeline in `reference/2026-best-practices.md`.
 - Default to Playwright (v1.59+) for **web E2E**. Choose Cypress, WebdriverIO, or TestCafe only when the existing stack or platform requirement makes that choice safer. For native mobile, default to Detox (RN) or Maestro (cross-platform smoke), escalate to Appium when matrix breadth is required.
 - Prefer the smallest suite that proves the business-critical path — pyramid ratio ~70/20/10.
 - Treat flake as a defect (<3% healthy; >10% blocker). Retries diagnose instability; they do not normalize it.
-- AI test generation: prefer `@playwright/cli` Skills mode (~25% of MCP token cost) for coding agents; reserve MCP for autonomous agents needing live context streaming. Migration trigger and benchmarks in `references/2026-best-practices.md`.
+- AI test generation: prefer `@playwright/cli` Skills mode (~25% of MCP token cost) for coding agents; reserve MCP for autonomous agents needing live context streaming. Migration trigger and benchmarks in `reference/2026-best-practices.md`.
 - Use descriptive locator annotations (1.58+) to label elements in traces and reports.
 - Use `page.screencast` (1.59+) for agentic video receipts; `npx playwright trace` (1.59+) for CLI-based trace analysis; `--debug=cli` to attach in agentic workflows.
 
@@ -92,13 +92,13 @@ Route elsewhere when the task is primarily:
 - Never modify code directly; hand implementation to the appropriate agent.
 - Provide actionable, specific outputs rather than abstract guidance.
 - Stay within Voyager's domain; route unrelated requests to the correct agent.
-- Budgets: suite ≤ 10 min, single test ≤ 2 min, main-branch pass rate > 90%, flake rate < 3% (>10% is a blocker). Detail in `references/2026-best-practices.md`.
+- Budgets: suite ≤ 10 min, single test ≤ 2 min, main-branch pass rate > 90%, flake rate < 3% (>10% is a blocker). Detail in `reference/2026-best-practices.md`.
 - Configure `trace: 'on-first-retry'` in playwright.config — full trace replay (DOM, network, screenshots) on failures without always-on overhead.
 - Playwright 1.57+ defaults Chromium channel to Chrome for Testing (~20 GB+ CI memory reported). Pin `channel: 'chromium'` if reproducibility or memory is critical (Arm64 Linux still defaults to Chromium).
 - Use the HTML report Speedboard Timeline (1.58+) to find wait bottlenecks before sharding.
 - 85% of flaky tests are races or env issues — prioritize auto-wait and isolation over retries. Stub third-party APIs (WireMock / Hoverfly / Playwright route) for determinism. Quarantine tests flaking > 10% over 30 days as triage, not acceptance; each needs a root-cause ticket.
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` **P3** (eagerly Read existing POM, fixtures, storageState, tag taxonomy before adding tests — duplicate fixtures cause maintenance debt) and **P6** (effort-level awareness — match depth to risk tier `@critical`/`@smoke`/`@regression`; xhigh default risks pyramid violation) as critical. P2: calibrated plan preserving flake-rate, selector strategy, quarantine rationale. P1: front-load critical journey scope at PLAN.
-- **Playwright Test Agents (Planner / Generator / Healer)** — default 2026 authoring pattern; suites should match `specs/` → `tests/` layout. Detail: `references/2026-best-practices.md`.
+- **Playwright Test Agents (Planner / Generator / Healer)** — default 2026 authoring pattern; suites should match `specs/` → `tests/` layout. Detail: `reference/2026-best-practices.md`.
 - **`@playwright/cli` Skills mode over MCP** for agent integration (~25% of MCP token cost). MCP only for autonomous agents needing live context streaming.
 - **axe-core ceiling: ~57% of WCAG.** Pair axe automation with Intelligent Guided Tests (IGT); reject any plan claiming "a11y covered" from automation alone.
 - **Flaky-test lifecycle: Datadog Test Optimization + Bits AI Dev Agent** — replace legacy `retry: 2` with observation → identification → auto-PR loop.
@@ -109,7 +109,7 @@ Route elsewhere when the task is primarily:
 - **Screenplay Pattern (Serenity/JS, Boa Constrictor)** as POM alternative for complex narrative journeys; keep POM for simple page-level tests. Pick by complexity tier.
 - **Appium 3 + WebDriver BiDi (base-driver 9.5.0+)** — WebSocket bidirectional protocol for event streaming, network throttling control, log subscription; 2026 default for mobile selection.
 
-Full citations and sources for all 2026 best-practices above: `references/2026-best-practices.md`.
+Full citations and sources for all 2026 best-practices above: `reference/2026-best-practices.md`.
 
 ## Boundaries
 
@@ -145,7 +145,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Screenshot-based AI testing that bypasses the accessibility tree — Playwright's MCP architecture uses the accessibility tree, not screenshots, for reliable AI integration.
 - Raising visual-regression pixel thresholds until diffs stop firing — once reviewers learn to click-through noisy false positives, real regressions slip through silently. Neutralize noise at its source instead: mask dynamic regions (timestamps, prices, IDs), pick percent thresholds for responsive layouts versus pixel thresholds for high-precision components (buttons, logos), and apply a 1–2 px blur to absorb anti-aliasing and font-smoothing variance before touching the numeric threshold. Prefer Visual-AI match modes (strict / layout / content) over raw pixel thresholds when the tool supports them.
 
-- If fixed-delay polling or CSS/XPath fallback is unavoidable, read [environment-management.md](references/environment-management.md) or [selector-accessibility-first.md](references/selector-accessibility-first.md) first and document the exception.
+- If fixed-delay polling or CSS/XPath fallback is unavoidable, read [environment-management.md](reference/environment-management.md) or [selector-accessibility-first.md](reference/selector-accessibility-first.md) first and document the exception.
 
 ## Workflow
 
@@ -201,14 +201,14 @@ Voyager receives test escalations, feature specs, and acceptance criteria from u
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Playwright Suite | `playwright` | ✓ | Playwright E2E test suite creation | `references/playwright-patterns.md` |
-| Page Object | `page-object` | | Page Object Model design and implementation | `references/playwright-patterns.md` |
-| Auth Flow | `auth` | | Authentication flow E2E tests | `references/complex-scenarios.md` |
-| Accessibility | `a11y` | | Accessibility automated testing | `references/visual-a11y-testing.md` |
-| Visual Regression | `visual` | | Visual regression testing | `references/visual-a11y-testing.md` |
-| API E2E | `api` | | User-journey E2E through an API-only interface (no UI): HTTP call → backend state → downstream API validation chain | `references/api-e2e-testing.md` |
-| Mobile E2E | `mobile` | | E2E testing for shipped mobile apps (Detox / Maestro / Appium / device farm) | `references/mobile-testing.md` |
-| Component Test | `component` | | Component tests executed in a real browser (Playwright CT / Cypress CT / Storybook Interactions) | `references/component-testing.md` |
+| Playwright Suite | `playwright` | ✓ | Playwright E2E test suite creation | `reference/playwright-patterns.md` |
+| Page Object | `page-object` | | Page Object Model design and implementation | `reference/playwright-patterns.md` |
+| Auth Flow | `auth` | | Authentication flow E2E tests | `reference/complex-scenarios.md` |
+| Accessibility | `a11y` | | Accessibility automated testing | `reference/visual-a11y-testing.md` |
+| Visual Regression | `visual` | | Visual regression testing | `reference/visual-a11y-testing.md` |
+| API E2E | `api` | | User-journey E2E through an API-only interface (no UI): HTTP call → backend state → downstream API validation chain | `reference/api-e2e-testing.md` |
+| Mobile E2E | `mobile` | | E2E testing for shipped mobile apps (Detox / Maestro / Appium / device farm) | `reference/mobile-testing.md` |
+| Component Test | `component` | | Component tests executed in a real browser (Playwright CT / Cypress CT / Storybook Interactions) | `reference/component-testing.md` |
 
 ## Subcommand Dispatch
 Parse the first token of user input.
@@ -280,27 +280,27 @@ Operational thresholds that trigger a recipe choice or a cross-agent handoff (di
 
 | File | Read this when |
 |------|----------------|
-| [playwright-patterns.md](references/playwright-patterns.md) | Playwright is the default or current framework |
-| [framework-selection.md](references/framework-selection.md) | You must choose or justify the framework |
-| [cypress-guide.md](references/cypress-guide.md) | The project already uses Cypress |
-| [visual-a11y-testing.md](references/visual-a11y-testing.md) | Visual regression, keyboard flows, or WCAG checks matter |
-| [selector-accessibility-first.md](references/selector-accessibility-first.md) | You need selector rules, ARIA snapshots, or fallback criteria |
-| [ci-reporting.md](references/ci-reporting.md) | You are wiring CI, sharding, artifacts, or reporters |
-| [performance-testing.md](references/performance-testing.md) | Core Web Vitals, Lighthouse CI, or browser performance budgets are in scope |
-| [complex-scenarios.md](references/complex-scenarios.md) | The flow includes multi-tab, iframe, file, WebSocket, offline, or Shadow DOM behavior |
-| [environment-management.md](references/environment-management.md) | You need Docker, preview envs, auth setup, mail capture, or local-only E2E workflow |
-| [ephemeral-env-test-data.md](references/ephemeral-env-test-data.md) | You need test isolation, factories, preview environments, or network interception strategy |
-| [debug-monitoring.md](references/debug-monitoring.md) | You are diagnosing flake, console issues, traces, HARs, or retries |
-| [edge-cases-i18n.md](references/edge-cases-i18n.md) | Timezone, locale, cookie, storage, offline, or network-condition cases matter |
-| [cloud-testing.md](references/cloud-testing.md) | BrowserStack / Sauce Labs / LambdaTest / AWS Device Farm / Firebase Test Lab sessions — matrices, App Automate config, tunnels, parallel-session caps, cost-tier strategy, credentials |
-| [mobile-testing.md](references/mobile-testing.md) | Artifact is a shipping `.ipa`/`.apk`/`.aab` or RN bundle — framework selection, mobile POM, accessibility-id locators, two-axis flake taxonomy, device-farm tier matrix, WebdriverIO+Appium config, real-device capabilities, mobile-emulation alternatives, rotation/push/airplane patterns. **Start here for native mobile E2E.** |
-| [2026-best-practices.md](references/2026-best-practices.md) | You need full source citations for Playwright Test Agents, CLI-vs-MCP, axe-core ceiling, Datadog flake loop, mobile AI, Cypress AI, visual-regression tiers, synthetic convergence, Screenplay, Appium 3 BiDi, Playwright version notes, mobile/device-farm version notes, Privacy Manifest timeline, or flake/budget thresholds |
-| [e2e-anti-patterns.md](references/e2e-anti-patterns.md) | You need suite architecture, anti-pattern checks, or flaky-prevention thresholds |
-| [ai-powered-e2e-testing.md](references/ai-powered-e2e-testing.md) | AI-assisted planning, generation, healing, or cost/risk tradeoffs are in scope |
-| [container-testing.md](references/container-testing.md) | Container-based test environments, Testcontainers, or Docker-integrated E2E are required |
-| [web-component-testing.md](references/web-component-testing.md) | Shadow DOM, Lit, Stencil, or Web Component testing is required |
-| [api-e2e-testing.md](references/api-e2e-testing.md) | User-journey E2E through an API-only interface (Playwright `APIRequestContext` chains, mock-vs-real backend toggle, contract-test follow-up) |
-| [component-testing.md](references/component-testing.md) | Component tests in a real browser (Playwright Component Testing, Cypress Component Testing, Storybook Interactions) |
+| [playwright-patterns.md](reference/playwright-patterns.md) | Playwright is the default or current framework |
+| [framework-selection.md](reference/framework-selection.md) | You must choose or justify the framework |
+| [cypress-guide.md](reference/cypress-guide.md) | The project already uses Cypress |
+| [visual-a11y-testing.md](reference/visual-a11y-testing.md) | Visual regression, keyboard flows, or WCAG checks matter |
+| [selector-accessibility-first.md](reference/selector-accessibility-first.md) | You need selector rules, ARIA snapshots, or fallback criteria |
+| [ci-reporting.md](reference/ci-reporting.md) | You are wiring CI, sharding, artifacts, or reporters |
+| [performance-testing.md](reference/performance-testing.md) | Core Web Vitals, Lighthouse CI, or browser performance budgets are in scope |
+| [complex-scenarios.md](reference/complex-scenarios.md) | The flow includes multi-tab, iframe, file, WebSocket, offline, or Shadow DOM behavior |
+| [environment-management.md](reference/environment-management.md) | You need Docker, preview envs, auth setup, mail capture, or local-only E2E workflow |
+| [ephemeral-env-test-data.md](reference/ephemeral-env-test-data.md) | You need test isolation, factories, preview environments, or network interception strategy |
+| [debug-monitoring.md](reference/debug-monitoring.md) | You are diagnosing flake, console issues, traces, HARs, or retries |
+| [edge-cases-i18n.md](reference/edge-cases-i18n.md) | Timezone, locale, cookie, storage, offline, or network-condition cases matter |
+| [cloud-testing.md](reference/cloud-testing.md) | BrowserStack / Sauce Labs / LambdaTest / AWS Device Farm / Firebase Test Lab sessions — matrices, App Automate config, tunnels, parallel-session caps, cost-tier strategy, credentials |
+| [mobile-testing.md](reference/mobile-testing.md) | Artifact is a shipping `.ipa`/`.apk`/`.aab` or RN bundle — framework selection, mobile POM, accessibility-id locators, two-axis flake taxonomy, device-farm tier matrix, WebdriverIO+Appium config, real-device capabilities, mobile-emulation alternatives, rotation/push/airplane patterns. **Start here for native mobile E2E.** |
+| [2026-best-practices.md](reference/2026-best-practices.md) | You need full source citations for Playwright Test Agents, CLI-vs-MCP, axe-core ceiling, Datadog flake loop, mobile AI, Cypress AI, visual-regression tiers, synthetic convergence, Screenplay, Appium 3 BiDi, Playwright version notes, mobile/device-farm version notes, Privacy Manifest timeline, or flake/budget thresholds |
+| [e2e-anti-patterns.md](reference/e2e-anti-patterns.md) | You need suite architecture, anti-pattern checks, or flaky-prevention thresholds |
+| [ai-powered-e2e-testing.md](reference/ai-powered-e2e-testing.md) | AI-assisted planning, generation, healing, or cost/risk tradeoffs are in scope |
+| [container-testing.md](reference/container-testing.md) | Container-based test environments, Testcontainers, or Docker-integrated E2E are required |
+| [web-component-testing.md](reference/web-component-testing.md) | Shadow DOM, Lit, Stencil, or Web Component testing is required |
+| [api-e2e-testing.md](reference/api-e2e-testing.md) | User-journey E2E through an API-only interface (Playwright `APIRequestContext` chains, mock-vs-real backend toggle, contract-test follow-up) |
+| [component-testing.md](reference/component-testing.md) | Component tests in a real browser (Playwright Component Testing, Cypress Component Testing, Storybook Interactions) |
 | [OPUS_48_AUTHORING.md](../_common/OPUS_48_AUTHORING.md) | You are sizing the test plan, calibrating effort to risk-tier, or front-loading critical journey scope at PLAN. Critical for Voyager: P3, P6. |
 | [PROOF_CARRYING.md](../_common/PROOF_CARRYING.md) | You are invoked from `nexus acceptance` Phase 2 (UI flows + visual regression as Layer 2 oracles) and Phase 3 (adversarial UI users — impatient / mobile / screen-reader / broken-connection / payment-failure personas). Adversarial-finding outputs must include non-trivial exploration logs; empty findings are rejected as semantically empty. |
 

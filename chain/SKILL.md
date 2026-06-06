@@ -8,7 +8,7 @@ CAPABILITIES_SUMMARY:
 - skill_intake_audit: Run the third-party skill intake checklist (`_common/SECURITY.md`) against an unaudited skill directory
 - manifest_generation: Produce and verify `.chain-manifest.json` (sha256 of every shipped file + declared capabilities + network allowlist)
 - unicode_tag_scan: Detect U+E0000–U+E007F hidden instructions, bidi-override codepoints, and zero-width chars in instruction positions
-- bundled_artifact_review: Audit `references/scripts/*.sh`, `references/*.py`, binaries, and any auxiliary file referenced by SKILL.md
+- bundled_artifact_review: Audit `reference/scripts/*.sh`, `reference/*.py`, binaries, and any auxiliary file referenced by SKILL.md
 - mcp_pinning: Hash-pin MCP server tool descriptions on first use and re-verify on session start to defeat rug-pull updates
 - drift_detection: Compare current skill state against `.chain-manifest.json`; flag sha256 mismatches and capability scope changes
 - intake_gate: Block plugin marketplace installs and third-party skill PRs until the intake checklist passes
@@ -102,7 +102,7 @@ Skill supply-chain trust boundary → `_common/SECURITY.md`
 - Approve a skill whose frontmatter contains keys outside `name` and `description`. The official spec is the contract.
 - Approve a skill containing Unicode Tag codepoints, even in comments. They have no legitimate use in SKILL.md.
 - Auto-update a `.chain-manifest.json` when a `sha256` mismatch is detected. Mismatch means investigation, not blind re-pin.
-- Run an unaudited skill in the host context to "see what happens". Use the sandboxed first-use protocol in `references/intake-checklist.md`.
+- Run an unaudited skill in the host context to "see what happens". Use the sandboxed first-use protocol in `reference/intake-checklist.md`.
 - Treat MCP servers as trusted by default. Every tool description must be pinned, regardless of publisher.
 - Modify the audited skill's files. Audit produces reports; remediation belongs to the maintainer.
 - Bypass the checklist when the requester is the repo owner. Owners are subject to the same trust boundary as third parties.
@@ -113,10 +113,10 @@ Skill supply-chain trust boundary → `_common/SECURITY.md`
 
 | Phase | Focus | Required checks | Read |
 |-------|-------|-----------------|------|
-| `INTAKE` | Receive audit request, identify scope (single skill / plugin / MCP server / full repo) | Confirm the artifact source, the trust-boundary classification, and which checklist applies | `_common/SECURITY.md`, `references/intake-checklist.md` |
-| `SCAN` | Run static checks: Unicode Tag, bidi, zero-width, curl-pipe, credential reads, outbound HTTP | Every file in the skill dir is scanned; no file is exempt | `references/unicode-tag-scan.md`, `references/bundled-artifact-review.md` |
+| `INTAKE` | Receive audit request, identify scope (single skill / plugin / MCP server / full repo) | Confirm the artifact source, the trust-boundary classification, and which checklist applies | `_common/SECURITY.md`, `reference/intake-checklist.md` |
+| `SCAN` | Run static checks: Unicode Tag, bidi, zero-width, curl-pipe, credential reads, outbound HTTP | Every file in the skill dir is scanned; no file is exempt | `reference/unicode-tag-scan.md`, `reference/bundled-artifact-review.md` |
 | `DIFF` | Compare current state against `.chain-manifest.json` if one exists; diff frontmatter against official spec | Mismatch is reported, never silently re-pinned | `_common/SECURITY.md` |
-| `DECIDE` | Aggregate findings; output `APPROVED` / `REJECTED` / `QUARANTINED` with rationale per checklist item | Binary per item; partial pass is `REJECTED` until remediation | `references/intake-checklist.md` |
+| `DECIDE` | Aggregate findings; output `APPROVED` / `REJECTED` / `QUARANTINED` with rationale per checklist item | Binary per item; partial pass is `REJECTED` until remediation | `reference/intake-checklist.md` |
 | `MANIFEST` | On approval, generate or update `.chain-manifest.json`; on rejection, produce remediation diff | Manifest must capture every shipped file, declared capabilities, and network allowlist | `_common/SECURITY.md` |
 | `HANDOFF` | Return report to requester; escalate to `triage` if compromised, `sentinel` if CVE found in bundled dep, `lore` if pattern recurs | One handoff at a time; never stack escalations | `_common/BOUNDARIES.md` |
 
@@ -124,11 +124,11 @@ Skill supply-chain trust boundary → `_common/SECURITY.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Skill Intake Audit | `intake` | ✓ | New third-party skill or plugin requires intake gate | `references/intake-checklist.md` |
+| Skill Intake Audit | `intake` | ✓ | New third-party skill or plugin requires intake gate | `reference/intake-checklist.md` |
 | Drift Detection | `audit` | | Verify pinned `sha256` against current files; detect silent updates | `_common/SECURITY.md` |
 | MCP Server Pinning | `mcp` | | First install or session-start re-verification of MCP tool descriptions | `_common/SECURITY.md` |
-| Unicode Scan | `scan` | | Standalone scan for Unicode Tag, bidi, or zero-width injection | `references/unicode-tag-scan.md` |
-| Recovery / Quarantine | `recover` | | Confirmed-compromised skill must be quarantined and remediation diff produced | `references/intake-checklist.md` |
+| Unicode Scan | `scan` | | Standalone scan for Unicode Tag, bidi, or zero-width injection | `reference/unicode-tag-scan.md` |
+| Recovery / Quarantine | `recover` | | Confirmed-compromised skill must be quarantined and remediation diff produced | `reference/intake-checklist.md` |
 
 ## Subcommand Dispatch
 
@@ -183,12 +183,12 @@ Severity rules:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `intake`, `new skill`, `third-party skill`, `plugin install` | Full intake audit | Approval / rejection report + manifest | `references/intake-checklist.md` |
+| `intake`, `new skill`, `third-party skill`, `plugin install` | Full intake audit | Approval / rejection report + manifest | `reference/intake-checklist.md` |
 | `drift`, `hash mismatch`, `silent update` | Drift detection | Diff report + recommended action | `_common/SECURITY.md` |
 | `MCP`, `tool poisoning`, `rug pull` | MCP pinning recipe | Tool description hash table + verification status | `_common/SECURITY.md` |
-| `unicode`, `tag`, `invisible char`, `bidi`, `RTL injection` | Standalone Unicode scan | Codepoint report per file | `references/unicode-tag-scan.md` |
-| `compromised`, `malicious`, `quarantine` | Recovery / quarantine | Remediation diff + Triage handoff | `references/intake-checklist.md` |
-| unclear | Default to `intake` | Full audit report | `references/intake-checklist.md` |
+| `unicode`, `tag`, `invisible char`, `bidi`, `RTL injection` | Standalone Unicode scan | Codepoint report per file | `reference/unicode-tag-scan.md` |
+| `compromised`, `malicious`, `quarantine` | Recovery / quarantine | Remediation diff + Triage handoff | `reference/intake-checklist.md` |
+| unclear | Default to `intake` | Full audit report | `reference/intake-checklist.md` |
 
 ## Output Requirements
 
@@ -231,9 +231,9 @@ Chain receives audit requests from User, Sentinel, Gauge, Latch, and Gear. Chain
 
 | File | Read this when... |
 |------|-------------------|
-| `references/intake-checklist.md` | You are running a new-skill intake audit and need the full per-item procedure |
-| `references/unicode-tag-scan.md` | You need the codepoint ranges, allowlist policy, and scan command for Unicode Tag / bidi / zero-width |
-| `references/bundled-artifact-review.md` | You are auditing bundled scripts, binaries, or external resources referenced by SKILL.md |
+| `reference/intake-checklist.md` | You are running a new-skill intake audit and need the full per-item procedure |
+| `reference/unicode-tag-scan.md` | You need the codepoint ranges, allowlist policy, and scan command for Unicode Tag / bidi / zero-width |
+| `reference/bundled-artifact-review.md` | You are auditing bundled scripts, binaries, or external resources referenced by SKILL.md |
 | [`_common/SECURITY.md`](../_common/SECURITY.md) | You need the trust boundary spec, manifest format, or escalation matrix |
 | [`_common/BOUNDARIES.md`](../_common/BOUNDARIES.md) | Role boundaries with Sentinel / Gauge / Latch / Gear are ambiguous |
 | [`_common/OPERATIONAL.md`](../_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |

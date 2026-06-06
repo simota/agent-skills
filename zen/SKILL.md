@@ -131,11 +131,11 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Action | Key rule | Read |
 |-------|--------|----------|------|
-| `SURVEY` | Inspect the target, detect smells, measure complexity, confirm tests/coverage | Capture a behavior baseline before changing — if coverage < 80% on the target, route to Radar for characterization tests first | `references/code-smells-metrics.md` |
-| `PLAN` | Pick one recipe or review depth, confirm scope tier, decide whether to hand off first | One meaningful change per pass | `references/refactoring-recipes.md` |
+| `SURVEY` | Inspect the target, detect smells, measure complexity, confirm tests/coverage | Capture a behavior baseline before changing — if coverage < 80% on the target, route to Radar for characterization tests first | `reference/code-smells-metrics.md` |
+| `PLAN` | Pick one recipe or review depth, confirm scope tier, decide whether to hand off first | One meaningful change per pass | `reference/refactoring-recipes.md` |
 | `APPLY` | Do one meaningful behavior-preserving change | Preserve behavior; stay in scope tier | Language-specific reference |
-| `VERIFY` | Re-run tests, compare metrics/baselines, confirm behavior is unchanged | Identical pass/fail signature and coverage >= previous; any behavior delta → revert and route to Judge | `references/refactoring-anti-patterns.md` |
-| `PRESENT` | Return the required report or handoff | Include scope, verification, and metrics | `references/review-report-templates.md` |
+| `VERIFY` | Re-run tests, compare metrics/baselines, confirm behavior is unchanged | Identical pass/fail signature and coverage >= previous; any behavior delta → revert and route to Judge | `reference/refactoring-anti-patterns.md` |
+| `PRESENT` | Return the required report or handoff | Include scope, verification, and metrics | `reference/review-report-templates.md` |
 
 ## Recipes
 
@@ -143,14 +143,14 @@ Single source of truth for Recipe definitions. Use `Read First` column files at 
 
 | Recipe | Subcommand | Default? | Scope | When to Use | Behavior | Read First |
 |--------|-----------|---------|-------|-------------|----------|------------|
-| General Refactor | `refactor` | ✓ | Focused → Module | General refactoring (composite improvements, code smell fixes) | 複合的なコードスメルを対象。SURVEY でホットスポット特定後、最優先 1 件に絞って適用。 | `references/refactoring-recipes.md` |
-| Naming Improvement | `naming` | | Focused | Variable and function name improvements only | 命名のみに限定。スコープ Focused 固定。public API 変更は Ask First。 | `references/refactoring-recipes.md` |
-| Extract Function | `extract` | | Focused | Split and extract long functions | 長いメソッドを 1 関数抽出。cognitive complexity 15 超を優先。テストパスを VERIFY で確認。 | `references/refactoring-recipes.md` |
-| Magic Constants | `constants` | | Focused → Module | Replace magic numbers with named constants | マジックナンバーを検索し名前付き定数化。型注釈を付与する。 | `references/refactoring-recipes.md` |
-| Dead Code Removal | `dead` | | Focused → Module | Unused code removal | ローカル/private から着手。export・動的利用は確認後に実施。Sweep との境界: ファイルレベルは Sweep。TypeScript/JS は `knip` 推奨 (ts-prune は 2025-09 アーカイブ済)。 | `references/dead-code-detection.md` |
-| Simplify Logic | `simplify` | | Focused | Compress redundant branches, ternaries, and unnecessary conversions into equivalent concise forms | 冗長な条件・三項演算チェーン・`if/else return true/false` 等を等価圧縮。behavior-preserving 変換パターンのみ採用。ユニットテスト通過を VERIFY 必須。 | `references/logic-simplification.md` |
-| Split Function | `split` | | Focused | Incrementally split overly long functions along responsibility boundaries (enhanced `extract`) | 50 行超または cognitive complexity 20 超の関数を責務単位で段階分割。extract より構造的 (境界設計 → 段階実行 → 検証)。テストカバレッジ維持を VERIFY 必須。 | `references/function-splitting.md` |
-| Guard Clauses | `guard` | | Focused | Convert nested `if` to early return / guard clauses | ネスト深度 3 以上の条件を早期 return / guard clause に変換。複雑度削減の測定可能な前後比較を添付。 | `references/guard-clauses.md` |
+| General Refactor | `refactor` | ✓ | Focused → Module | General refactoring (composite improvements, code smell fixes) | 複合的なコードスメルを対象。SURVEY でホットスポット特定後、最優先 1 件に絞って適用。 | `reference/refactoring-recipes.md` |
+| Naming Improvement | `naming` | | Focused | Variable and function name improvements only | 命名のみに限定。スコープ Focused 固定。public API 変更は Ask First。 | `reference/refactoring-recipes.md` |
+| Extract Function | `extract` | | Focused | Split and extract long functions | 長いメソッドを 1 関数抽出。cognitive complexity 15 超を優先。テストパスを VERIFY で確認。 | `reference/refactoring-recipes.md` |
+| Magic Constants | `constants` | | Focused → Module | Replace magic numbers with named constants | マジックナンバーを検索し名前付き定数化。型注釈を付与する。 | `reference/refactoring-recipes.md` |
+| Dead Code Removal | `dead` | | Focused → Module | Unused code removal | ローカル/private から着手。export・動的利用は確認後に実施。Sweep との境界: ファイルレベルは Sweep。TypeScript/JS は `knip` 推奨 (ts-prune は 2025-09 アーカイブ済)。 | `reference/dead-code-detection.md` |
+| Simplify Logic | `simplify` | | Focused | Compress redundant branches, ternaries, and unnecessary conversions into equivalent concise forms | 冗長な条件・三項演算チェーン・`if/else return true/false` 等を等価圧縮。behavior-preserving 変換パターンのみ採用。ユニットテスト通過を VERIFY 必須。 | `reference/logic-simplification.md` |
+| Split Function | `split` | | Focused | Incrementally split overly long functions along responsibility boundaries (enhanced `extract`) | 50 行超または cognitive complexity 20 超の関数を責務単位で段階分割。extract より構造的 (境界設計 → 段階実行 → 検証)。テストカバレッジ維持を VERIFY 必須。 | `reference/function-splitting.md` |
+| Guard Clauses | `guard` | | Focused | Convert nested `if` to early return / guard clauses | ネスト深度 3 以上の条件を早期 return / guard clause に変換。複雑度削減の測定可能な前後比較を添付。 | `reference/guard-clauses.md` |
 
 ### Signal Keywords → Recipe / Mode
 
@@ -163,12 +163,12 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `magic number`, `constant`, `hardcoded` | `constants` |
 | `dead code`, `unused`, `unreachable` | `dead` |
 | `simplify`, `redundant branch`, `ternary chain` | `simplify` |
-| `guard`, `early return`, `nested if`, `defensive`, `fallback` | `guard` (logic) / defensive cleanup (`references/defensive-excess.md`) |
-| `complexity`, `nesting`, `cognitive` | Review mode + appropriate refactor recipe (`references/cognitive-complexity-research.md`) |
-| `review`, `PR`, `readability`, `audit` | Review mode (`references/review-report-templates.md`) |
-| `consistency`, `standardize`, `migration` | Consistency audit (`references/consistency-audit.md`) |
-| `test structure`, `test readability` | Test refactoring (`references/test-refactoring.md`) |
-| unclear refactoring request | Default `refactor` recipe (`references/code-smells-metrics.md`) |
+| `guard`, `early return`, `nested if`, `defensive`, `fallback` | `guard` (logic) / defensive cleanup (`reference/defensive-excess.md`) |
+| `complexity`, `nesting`, `cognitive` | Review mode + appropriate refactor recipe (`reference/cognitive-complexity-research.md`) |
+| `review`, `PR`, `readability`, `audit` | Review mode (`reference/review-report-templates.md`) |
+| `consistency`, `standardize`, `migration` | Consistency audit (`reference/consistency-audit.md`) |
+| `test structure`, `test readability` | Test refactoring (`reference/test-refactoring.md`) |
+| unclear refactoring request | Default `refactor` recipe (`reference/code-smells-metrics.md`) |
 
 ## Subcommand Dispatch
 
@@ -215,7 +215,7 @@ Every deliverable must include:
 
 ## Collaboration
 
-Zen receives code quality signals from upstream agents, performs refactoring or review, and routes clean code and quality reports to downstream agents. Read `references/agent-integrations.md` when the task includes collaboration, AUTORUN, or Nexus routing.
+Zen receives code quality signals from upstream agents, performs refactoring or review, and routes clean code and quality reports to downstream agents. Read `reference/agent-integrations.md` when the task includes collaboration, AUTORUN, or Nexus routing.
 
 | Direction | Handoff token | Purpose |
 |-----------|---------------|---------|
@@ -258,23 +258,23 @@ Read `_common/SUBAGENT.md` section `MULTI_ENGINE` when this mode is requested.
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/code-smells-metrics.md` | You need Zen refactor mechanics per smell, complexity thresholds, or measurement commands. Pairs with `_common/CODE_SMELL_CATALOG.md` (shared smell taxonomy / definitions / severity hints). |
-| `references/refactoring-recipes.md` | You need a specific refactoring recipe. |
-| `references/dead-code-detection.md` | You plan to remove code. |
-| `references/defensive-excess.md` | You suspect fallback-heavy code is hiding bugs or noise. |
-| `references/consistency-audit.md` | You need cross-file standardization or migration planning. Pairs with `_common/CONSISTENCY_FRAMEWORK.md` (shared taxonomy / severity rubric). |
-| `references/test-refactoring.md` | The target is test structure or you need the Zen vs Radar boundary. |
-| `references/review-report-templates.md` | You need exact output anchors or report shapes. |
-| `references/agent-integrations.md` | You need Radar, Canvas, Judge, Guardian, AUTORUN, or Nexus collaboration rules. |
-| `references/typescript-react-patterns.md` | The target is TypeScript, JavaScript, or React. |
-| `references/language-patterns.md` | The target is Python, Go, Rust, Java, or concurrency-heavy code. |
-| `references/refactoring-anti-patterns.md` | You need pre-flight checks or anti-pattern avoidance. |
-| `references/ai-assisted-refactoring.md` | You are using Multi-Engine or AI-assisted refactoring. |
-| `references/cognitive-complexity-research.md` | Complexity is the main issue and you need cognitive-metric guidance. |
-| `references/tech-debt-prioritization.md` | You need hotspot prioritization or safe migration guidance. |
-| `references/logic-simplification.md` | Behavior-preserving compression of redundant conditionals, ternary chains, and `if/else return true/false` shapes. |
-| `references/function-splitting.md` | Incremental responsibility-seam splitting for functions exceeding 50 lines or cognitive complexity > 20, with rollback checkpoints. |
-| `references/guard-clauses.md` | Convert nested conditionals (depth >=3) to early returns / guard clauses with measurable before/after complexity reduction. |
+| `reference/code-smells-metrics.md` | You need Zen refactor mechanics per smell, complexity thresholds, or measurement commands. Pairs with `_common/CODE_SMELL_CATALOG.md` (shared smell taxonomy / definitions / severity hints). |
+| `reference/refactoring-recipes.md` | You need a specific refactoring recipe. |
+| `reference/dead-code-detection.md` | You plan to remove code. |
+| `reference/defensive-excess.md` | You suspect fallback-heavy code is hiding bugs or noise. |
+| `reference/consistency-audit.md` | You need cross-file standardization or migration planning. Pairs with `_common/CONSISTENCY_FRAMEWORK.md` (shared taxonomy / severity rubric). |
+| `reference/test-refactoring.md` | The target is test structure or you need the Zen vs Radar boundary. |
+| `reference/review-report-templates.md` | You need exact output anchors or report shapes. |
+| `reference/agent-integrations.md` | You need Radar, Canvas, Judge, Guardian, AUTORUN, or Nexus collaboration rules. |
+| `reference/typescript-react-patterns.md` | The target is TypeScript, JavaScript, or React. |
+| `reference/language-patterns.md` | The target is Python, Go, Rust, Java, or concurrency-heavy code. |
+| `reference/refactoring-anti-patterns.md` | You need pre-flight checks or anti-pattern avoidance. |
+| `reference/ai-assisted-refactoring.md` | You are using Multi-Engine or AI-assisted refactoring. |
+| `reference/cognitive-complexity-research.md` | Complexity is the main issue and you need cognitive-metric guidance. |
+| `reference/tech-debt-prioritization.md` | You need hotspot prioritization or safe migration guidance. |
+| `reference/logic-simplification.md` | Behavior-preserving compression of redundant conditionals, ternary chains, and `if/else return true/false` shapes. |
+| `reference/function-splitting.md` | Incremental responsibility-seam splitting for functions exceeding 50 lines or cognitive complexity > 20, with rollback checkpoints. |
+| `reference/guard-clauses.md` | Convert nested conditionals (depth >=3) to early returns / guard clauses with measurable before/after complexity reduction. |
 | `_common/BOUNDARIES.md` | You need agent-role disambiguation. |
 | `_common/OPERATIONAL.md` | You need journal, activity log, AUTORUN, or Nexus protocol details. |
 | `_common/SUBAGENT.md` | You need Multi-Engine dispatch or merge rules. |

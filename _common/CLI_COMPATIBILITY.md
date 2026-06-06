@@ -254,7 +254,7 @@ Continuing the spawn now …
 
 **Confirming the allowlist is in place**: skills MAY check `~/.claude/settings.json` (`permissions.allow`) for an entry matching `Bash(agy -p*` before emitting; if present, the notification can be downgraded to a single-line reminder (`✓ agy allowlist confirmed in user settings; proceeding`).
 
-**Cross-references**: skills must point here rather than re-stating the protocol. References in `nexus/SKILL.md`, `_common/SUBAGENT.md`, `_common/MULTI_ENGINE_RECIPE.md`, `judge/references/antigravity-review-usage.md`, `orbit/references/executor-engines.md`, `rally` (engine-paradigm recipe — Codex/agy bridging).
+**Cross-references**: skills must point here rather than re-stating the protocol. References in `nexus/SKILL.md`, `_common/SUBAGENT.md`, `_common/MULTI_ENGINE_RECIPE.md`, `judge/reference/antigravity-review-usage.md`, `orbit/reference/executor-engines.md`, `rally` (engine-paradigm recipe — Codex/agy bridging).
 
 ---
 

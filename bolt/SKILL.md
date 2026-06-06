@@ -109,24 +109,24 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `PROFILE` | Hunt for performance opportunities (frontend: re-renders, bundle, lazy, virtualization, debounce; backend: N+1, indexes, caching, async, pooling, pagination) | No captured baseline metric → STOP and profile first; never optimize on assumption | `references/profiling-tools.md` |
-| `SELECT` | Pick ONE improvement: measurable impact, <50 lines, low risk, follows patterns | One at a time; if the bottleneck is the DB query plan hand off to Tuner, not a local fix | `references/react-performance.md`, `references/database-optimization.md` |
+| `PROFILE` | Hunt for performance opportunities (frontend: re-renders, bundle, lazy, virtualization, debounce; backend: N+1, indexes, caching, async, pooling, pagination) | No captured baseline metric → STOP and profile first; never optimize on assumption | `reference/profiling-tools.md` |
+| `SELECT` | Pick ONE improvement: measurable impact, <50 lines, low risk, follows patterns | One at a time; if the bottleneck is the DB query plan hand off to Tuner, not a local fix | `reference/react-performance.md`, `reference/database-optimization.md` |
 | `OPTIMIZE` | Clean code, comments explaining optimization, preserve functionality, consider edge cases | Readability preserved | Domain-specific reference |
-| `VERIFY` | Run lint+test, compare after-metric against the captured baseline | Must beat baseline — if it does not, revert and reselect; hand the change to Radar for a perf-regression test | `references/profiling-tools.md` |
-| `PRESENT` | PR title with improvement, body: What/Why/Impact/Measurement | Show the numbers | `references/agent-integrations.md` |
+| `VERIFY` | Run lint+test, compare after-metric against the captured baseline | Must beat baseline — if it does not, revert and reselect; hand the change to Radar for a perf-regression test | `reference/profiling-tools.md` |
+| `PRESENT` | PR title with improvement, body: What/Why/Impact/Measurement | Show the numbers | `reference/agent-integrations.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Frontend Perf | `frontend` | ✓ | Frontend optimization (re-render reduction, memoization, lazy loading) | `references/react-performance.md` |
-| Backend Perf | `backend` | | Backend optimization (N+1, caching, async) | `references/database-optimization.md` |
-| Render Reduction | `render` | | React/Vue re-render reduction only | `references/react-performance.md` |
-| Async Refactor | `async` | | Convert sync to async (waterfall elimination) | `references/optimization-anti-patterns.md` |
-| Cache Strategy | `cache` | | Caching strategy design (memo, Redis, CDN) | `references/caching-patterns.md` |
-| Bundle Audit | `bundle` | | App-wide JS/TS bundle-size reduction (tree-shake, split, dynamic import, analyzer, library swaps) | `references/bundle-optimization.md` |
-| Network Delivery | `network` | | Client/server delivery tuning (HTTP/2-3, Early Hints, resource hints, SW cache, CDN cache-control, Brotli) | `references/network-optimization.md` |
-| Memory Footprint | `memory` | | App-process memory reduction (heap snapshot diffing, leak detection, WeakMap/WeakRef, baseline trending) | `references/memory-optimization.md` |
+| Frontend Perf | `frontend` | ✓ | Frontend optimization (re-render reduction, memoization, lazy loading) | `reference/react-performance.md` |
+| Backend Perf | `backend` | | Backend optimization (N+1, caching, async) | `reference/database-optimization.md` |
+| Render Reduction | `render` | | React/Vue re-render reduction only | `reference/react-performance.md` |
+| Async Refactor | `async` | | Convert sync to async (waterfall elimination) | `reference/optimization-anti-patterns.md` |
+| Cache Strategy | `cache` | | Caching strategy design (memo, Redis, CDN) | `reference/caching-patterns.md` |
+| Bundle Audit | `bundle` | | App-wide JS/TS bundle-size reduction (tree-shake, split, dynamic import, analyzer, library swaps) | `reference/bundle-optimization.md` |
+| Network Delivery | `network` | | Client/server delivery tuning (HTTP/2-3, Early Hints, resource hints, SW cache, CDN cache-control, Brotli) | `reference/network-optimization.md` |
+| Memory Footprint | `memory` | | App-process memory reduction (heap snapshot diffing, leak detection, WeakMap/WeakRef, baseline trending) | `reference/memory-optimization.md` |
 
 ## Subcommand Dispatch
 
@@ -148,16 +148,16 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `re-render`, `memo`, `useMemo`, `useCallback`, `context` | React render optimization | Optimized component code | `references/react-performance.md` |
-| `bundle`, `code splitting`, `lazy`, `tree shaking` | Bundle optimization | Split/optimized bundle | `references/bundle-optimization.md` |
-| `waterfall`, `sequential await`, `Promise.all`, `parallel fetch` | Async waterfall elimination | Parallelized async code | `references/optimization-anti-patterns.md` |
-| `N+1`, `eager loading`, `DataLoader`, `query` | Database query optimization | Optimized queries | `references/database-optimization.md` |
-| `cache`, `redis`, `LRU`, `Cache-Control` | Caching strategy | Cache implementation | `references/caching-patterns.md` |
-| `LCP`, `INP`, `CLS`, `Core Web Vitals` | Core Web Vitals optimization | CWV improvement | `references/core-web-vitals.md` |
-| `prerender`, `prefetch`, `speculation rules`, `navigation speed` | Speculative loading | Speculation rules config | `references/core-web-vitals.md` |
-| `index`, `EXPLAIN`, `slow query` | Index optimization | Index recommendations | `references/database-optimization.md` |
-| `profile`, `benchmark`, `measure` | Profiling and measurement | Performance report | `references/profiling-tools.md` |
-| unclear performance request | Full-stack profiling | Performance assessment | `references/profiling-tools.md` |
+| `re-render`, `memo`, `useMemo`, `useCallback`, `context` | React render optimization | Optimized component code | `reference/react-performance.md` |
+| `bundle`, `code splitting`, `lazy`, `tree shaking` | Bundle optimization | Split/optimized bundle | `reference/bundle-optimization.md` |
+| `waterfall`, `sequential await`, `Promise.all`, `parallel fetch` | Async waterfall elimination | Parallelized async code | `reference/optimization-anti-patterns.md` |
+| `N+1`, `eager loading`, `DataLoader`, `query` | Database query optimization | Optimized queries | `reference/database-optimization.md` |
+| `cache`, `redis`, `LRU`, `Cache-Control` | Caching strategy | Cache implementation | `reference/caching-patterns.md` |
+| `LCP`, `INP`, `CLS`, `Core Web Vitals` | Core Web Vitals optimization | CWV improvement | `reference/core-web-vitals.md` |
+| `prerender`, `prefetch`, `speculation rules`, `navigation speed` | Speculative loading | Speculation rules config | `reference/core-web-vitals.md` |
+| `index`, `EXPLAIN`, `slow query` | Index optimization | Index recommendations | `reference/database-optimization.md` |
+| `profile`, `benchmark`, `measure` | Profiling and measurement | Performance report | `reference/profiling-tools.md` |
+| unclear performance request | Full-stack profiling | Performance assessment | `reference/profiling-tools.md` |
 
 ## Performance Domains
 
@@ -168,7 +168,7 @@ Behavior notes per Recipe:
 | **Network** | Compression · CDN · HTTP/3 · Edge computing · HTTP caching · Payload reduction |
 | **Infrastructure** | Resource utilization · Scaling bottlenecks |
 
-**React patterns** (memo/useMemo/useCallback/context splitting/lazy/virtualization/debounce) → `references/react-performance.md`
+**React patterns** (memo/useMemo/useCallback/context splitting/lazy/virtualization/debounce) → `reference/react-performance.md`
 **React Compiler note**: See Core Contract for full React Compiler v1.0 guidance. Key rule: auto-memoization at build time; manual memo only for expensive computations, non-React consumers, or non-Compiler projects.
 
 ## Database Query Optimization
@@ -183,20 +183,20 @@ Behavior notes per Recipe:
 **N+1 fix**: Prisma(`include`) · TypeORM(`relations`/QueryBuilder) · Drizzle(`with`) · GraphQL DataLoader (breadth-first 3.0: O(1) concurrency, up to 5x faster)
 **N+1 detection**: OpenTelemetry tracing (20+ identical resolver spans = N+1), automated alerts via span count thresholds
 **Index types**: B-tree(default) · Partial(filtered subsets) · Covering(INCLUDE) · GIN(JSONB) · Expression(LOWER)
-Full details → `references/database-optimization.md`
+Full details → `reference/database-optimization.md`
 
 ## Caching Strategy
 
 **Types**: In-memory LRU (single instance, low complexity) · Redis (distributed, medium) · HTTP Cache-Control (client/CDN, low)
 **Patterns**: Cache-aside (read-heavy) · Write-through (consistency critical) · Write-behind (write-heavy, async)
 **Mandatory**: Always set TTL on cache keys. Use lock/lease or stale-while-revalidate for high-traffic keys to prevent cache stampede (thundering herd on expiry).
-Full details → `references/caching-patterns.md`
+Full details → `reference/caching-patterns.md`
 
 ## Bundle Optimization
 
 **Splitting**: Route-based(`lazy(→import('./pages/X'))`) · Component-based · Library-based(`await import('jspdf')`) · Feature-based
 **Library replacements**: moment(290kB)→date-fns(13kB) · lodash(72kB)→lodash-es/native · axios(14kB)→fetch · uuid(9kB)→crypto.randomUUID()
-Full details → `references/bundle-optimization.md`
+Full details → `reference/bundle-optimization.md`
 
 ## Core Web Vitals
 
@@ -208,13 +208,13 @@ Full details → `references/bundle-optimization.md`
 
 **LCP image optimization**: Images are the most common LCP element. For the LCP image: (1) `fetchpriority="high"` + `loading="eager"` (never lazy-load above-fold), (2) serve AVIF via `<picture>` fallback chain (40–60% smaller than JPEG, ~95% browser support; beware higher decode cost on low-end mobile — WebP may yield better LCP there), (3) explicit `width`/`height` to prevent CLS, (4) `<link rel="preload">` for CSS background images.
 **LCP navigation optimization (Speculation Rules API)**: For multi-page sites, the Speculation Rules API (~79% browser support) preloads likely-next pages in the background. Prerendering nearly eliminates LCP on navigated pages (Ray-Ban case study: 43% LCP improvement, 2× conversion rate). Use `<script type="speculationrules">` with `"prerender"` for high-confidence navigation targets and `"prefetch"` for medium-confidence. Limit prerender to 2–3 URLs to control bandwidth. Does not apply to SPAs with client-side routing.
-LCP/INP/CLS issue-fix details & web-vitals monitoring code → `references/core-web-vitals.md`
+LCP/INP/CLS issue-fix details & web-vitals monitoring code → `reference/core-web-vitals.md`
 
 ## Profiling Tools
 
 **Frontend**: React DevTools Profiler · Chrome DevTools Performance · Lighthouse · web-vitals · why-did-you-render
 **Backend**: Node.js --inspect · clinic.js · 0x (flame graphs) · autocannon (load testing)
-Tool details, code examples & commands → `references/profiling-tools.md`
+Tool details, code examples & commands → `reference/profiling-tools.md`
 
 ## Output Requirements
 
@@ -253,19 +253,19 @@ Bolt receives performance tasks from upstream agents, identifies and implements 
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/react-performance.md` | You need React patterns: memo, useMemo, useCallback, context splitting, lazy, virtualization. |
-| `references/database-optimization.md` | You need EXPLAIN ANALYZE, index design, N+1 solutions, or query rewriting. |
-| `references/caching-patterns.md` | You need in-memory LRU, Redis, or HTTP cache implementations. |
-| `references/bundle-optimization.md` | You need code splitting, tree shaking, library replacement, or Next.js config. |
-| `references/agent-integrations.md` | You need Radar/Canvas handoff templates, benchmark examples, or Mermaid diagrams. |
-| `references/core-web-vitals.md` | You need LCP/INP/CLS issue-fix details or web-vitals monitoring code. |
-| `references/profiling-tools.md` | You need frontend/backend profiling tools, React Profiler, or Node.js commands. |
-| `references/optimization-anti-patterns.md` | You need optimization anti-patterns (PO-01–10), correct optimization order, 3-layer measurement model, or decision flowchart. |
-| `references/backend-anti-patterns.md` | You need Node.js anti-patterns (BP-01–08), event loop blocking detection, memory leak patterns, or async anti-patterns. |
-| `references/frontend-anti-patterns.md` | You need React anti-patterns (FP-01–10), React Compiler impact analysis, render optimization priority, or image/third-party management. |
-| `references/performance-regression-prevention.md` | You need performance budget design, CI/CD 3-layer approach, regression detection methodology, or production monitoring strategy. |
-| `references/memory-optimization.md` | You need app-process memory footprint reduction: heap snapshot diffing, detached DOM detection, closure/listener leak detection, WeakMap/WeakRef usage, or rising-baseline trending (`memory` recipe). |
-| `references/network-optimization.md` | You need client/server delivery-layer tuning: HTTP/2-3 adoption, Early Hints (103), resource hints, Service Worker caching strategies, CDN cache-control, or Brotli (`network` recipe). |
+| `reference/react-performance.md` | You need React patterns: memo, useMemo, useCallback, context splitting, lazy, virtualization. |
+| `reference/database-optimization.md` | You need EXPLAIN ANALYZE, index design, N+1 solutions, or query rewriting. |
+| `reference/caching-patterns.md` | You need in-memory LRU, Redis, or HTTP cache implementations. |
+| `reference/bundle-optimization.md` | You need code splitting, tree shaking, library replacement, or Next.js config. |
+| `reference/agent-integrations.md` | You need Radar/Canvas handoff templates, benchmark examples, or Mermaid diagrams. |
+| `reference/core-web-vitals.md` | You need LCP/INP/CLS issue-fix details or web-vitals monitoring code. |
+| `reference/profiling-tools.md` | You need frontend/backend profiling tools, React Profiler, or Node.js commands. |
+| `reference/optimization-anti-patterns.md` | You need optimization anti-patterns (PO-01–10), correct optimization order, 3-layer measurement model, or decision flowchart. |
+| `reference/backend-anti-patterns.md` | You need Node.js anti-patterns (BP-01–08), event loop blocking detection, memory leak patterns, or async anti-patterns. |
+| `reference/frontend-anti-patterns.md` | You need React anti-patterns (FP-01–10), React Compiler impact analysis, render optimization priority, or image/third-party management. |
+| `reference/performance-regression-prevention.md` | You need performance budget design, CI/CD 3-layer approach, regression detection methodology, or production monitoring strategy. |
+| `reference/memory-optimization.md` | You need app-process memory footprint reduction: heap snapshot diffing, detached DOM detection, closure/listener leak detection, WeakMap/WeakRef usage, or rising-baseline trending (`memory` recipe). |
+| `reference/network-optimization.md` | You need client/server delivery-layer tuning: HTTP/2-3 adoption, Early Hints (103), resource hints, Service Worker caching strategies, CDN cache-control, or Brotli (`network` recipe). |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the PROFILE/VERIFY report, holding effort to one targeted optimization, or front-loading baseline_metric at PROFILE. Critical for Bolt: P3, P6. |
 
 ## Operational

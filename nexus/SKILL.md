@@ -55,26 +55,26 @@ Coordinate specialist agents, design the minimum viable chain, and execute safel
 - Adapt routing from execution evidence with safety constraints; track OE (orchestration efficiency) per chain type.
 - Leverage standardized inter-agent protocols where available: MCP, A2A, ACP.
 - Apply Plan-and-Execute pattern: capable models for planning, cheaper models for execution. Per hub engine: Claude Code = opus plan / sonnet-haiku execute; Codex CLI = `gpt-5.5` plan / `gpt-5.4`-family execute (`CODEX_ORCHESTRATION.md` C3).
-- Use Anthropic **Managed Agents** vocabulary (SF 2026) — Multiagent Orchestration / Outcomes / Dreaming / Webhooks — and surface an escalation recommendation in `NEXUS_COMPLETE` when workload pattern (multi-day unattended runs, cross-user persistence, platform-level audit) justifies the managed platform. Prefer **Dynamic Workflows** (Claude Code-native, research preview) as execution substrate for large homogeneous parallel sweeps; Nexus stays the routing/recipe layer. Detail: `references/managed-agents-mapping.md` §5.
+- Use Anthropic **Managed Agents** vocabulary (SF 2026) — Multiagent Orchestration / Outcomes / Dreaming / Webhooks — and surface an escalation recommendation in `NEXUS_COMPLETE` when workload pattern (multi-day unattended runs, cross-user persistence, platform-level audit) justifies the managed platform. Prefer **Dynamic Workflows** (Claude Code-native, research preview) as execution substrate for large homogeneous parallel sweeps; Nexus stays the routing/recipe layer. Detail: `reference/managed-agents-mapping.md` §5.
 - Output language follows the CLI global config (`settings.json` `language`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`); identifiers and technical terms remain in English.
 
 ## Core Rules
 
 1. **Use the minimum viable chain.** Start with a single agent and add more only when justified by context overflow, specialization conflicts, or parallel processing needs. Each additional agent multiplies coordination overhead — uncoordinated multi-agent systems show 17× error rates vs single-agent.
 2. **Keep hub-spoke routing.** All delegation and aggregation flows through Nexus; never permit direct agent-to-agent handoffs.
-3. **Spawn real agents for every chain step.** Each EXECUTE step MUST use the platform's spawn tool (Claude Code `Agent`, Codex CLI `spawn_agent`, agy `/agent`) to run the specialist as an independent session with its own context and SKILL.md. Internal execution acceptable ONLY when: (a) no specialist expertise needed (single trivial edit), (b) user explicitly requests it, or (c) spawn tool is verified unavailable per `references/execution-layers.md` prereqs. Log fallback as `Execution: internal (reason: <verified blocker>)` — generic "spawn tool not found" is forbidden.
+3. **Spawn real agents for every chain step.** Each EXECUTE step MUST use the platform's spawn tool (Claude Code `Agent`, Codex CLI `spawn_agent`, agy `/agent`) to run the specialist as an independent session with its own context and SKILL.md. Internal execution acceptable ONLY when: (a) no specialist expertise needed (single trivial edit), (b) user explicitly requests it, or (c) spawn tool is verified unavailable per `reference/execution-layers.md` prereqs. Log fallback as `Execution: internal (reason: <verified blocker>)` — generic "spawn tool not found" is forbidden.
 4. **Preserve behavior before style.** Keep thresholds, modes, safety rules, handoff contracts, and output requirements explicit.
 5. **Prefer action in AUTORUN modes.** Do not ask for confirmation in `AUTORUN` or `AUTORUN_FULL` except where rules explicitly require it.
 6. **Protect context.** Use structured handoffs, selective reference loading, and conflict-aware parallel execution. Pass only necessary state deltas between steps.
 7. **Learn only from evidence.** Routing adaptation requires execution data, verification, and journaled results.
 8. **Prevent circular handoffs.** Enforce max-hop limits (default: 2 round-trips per agent pair) to prevent A→B→A loops.
 9. **Hierarchical decomposition for scale.** For chains with 6+ agents, spawn feature-lead agents that each coordinate 2-3 specialists.
-10. **Author for the active orchestrator engine.** Detect which CLI drives the hub (see **Execution Model → Orchestrator Detection**) and apply the matching authoring protocol per `references/hub-authoring.md` (Claude Code → OPUS_48_AUTHORING P4/P6/P7/P9; Codex CLI → CODEX_ORCHESTRATION C1/C2/C3/C6/C7; agy → C-principles by analogy under `_common/CLI_COMPATIBILITY.md §3, §9`).
+10. **Author for the active orchestrator engine.** Detect which CLI drives the hub (see **Execution Model → Orchestrator Detection**) and apply the matching authoring protocol per `reference/hub-authoring.md` (Claude Code → OPUS_48_AUTHORING P4/P6/P7/P9; Codex CLI → CODEX_ORCHESTRATION C1/C2/C3/C6/C7; agy → C-principles by analogy under `_common/CLI_COMPATIBILITY.md §3, §9`).
 
 ## Boundaries
 
 Agent boundaries → `_common/BOUNDARIES.md`
-Agent disambiguation → `references/agent-disambiguation.md`
+Agent disambiguation → `reference/agent-disambiguation.md`
 
 ### Always
 
@@ -121,7 +121,7 @@ Agent disambiguation → `references/agent-disambiguation.md`
 | `## NEXUS_HANDOFF` | `Continue` | Integrate agent results and continue the chain |
 
 **Mode triggers:**
-- `/Nexus` with no arguments → proactive mode. Read `references/proactive-mode.md`.
+- `/Nexus` with no arguments → proactive mode. Read `reference/proactive-mode.md`.
 - `## NEXUS_ROUTING` → hub mode. Return via `## NEXUS_HANDOFF`; no direct agent-to-agent calls.
 - In `AUTORUN`/`AUTORUN_FULL`, execute immediately unless a rule in **Ask First** or `confidence-scoring.md` (Part 2: Autonomous Decision) requires confirmation.
 
@@ -131,36 +131,36 @@ Agent disambiguation → `references/agent-disambiguation.md`
 
 ## Recipes
 
-> **Recipes = task shape; `## Modes` = execution control. Orthogonal.** Full phase contracts live in each Recipe's `Read` reference; complex Chain Templates (`See references/recipes-detail.md`) live there; simple Recipes inline their chain.
+> **Recipes = task shape; `## Modes` = execution control. Orthogonal.** Full phase contracts live in each Recipe's `Read` reference; complex Chain Templates (`See reference/recipes-detail.md`) live there; simple Recipes inline their chain.
 
 | Recipe | Subcommand | When to Use | Chain Template | Read |
 |--------|-----------|-------------|----------------|------|
-| Auto Classify | `classify` (default) | No Recipe specified — auto-classification | `CLASSIFY → CHAIN_SELECT` (legacy flow) | `references/routing-matrix.md` |
-| Bug Fix | `bug` | Bug reports and fix requests | `Scout → Sherpa → Builder → Radar (+Sentinel)` | `references/routing-matrix.md` |
-| Feature | `feature` | New web/backend/generic feature. **iOS/Android native → `MOBILE_NATIVE` (Native) instead.** | `Sherpa → Forge → Builder → Radar (+Muse)` | `references/routing-matrix.md` |
-| Security | `security` | Security response | `Sentinel → Builder → Radar (+Probe)` | `references/routing-matrix.md` |
-| Refactor | `refactor` | Internal-only refactor, no external behavior change | `Zen → Radar (+Atlas)` | `references/routing-matrix.md` |
-| Optimize | `optimize` | Performance-only improvement | `Bolt/Tuner → Radar (+Schema)` | `references/routing-matrix.md` |
-| Kaizen | `kaizen` | Existing-feature continuous improvement (perf / UX / code-quality / feature-extension). 4-8 agents | See `references/recipes-detail.md` | `references/recipes-detail.md`, `references/inline-recipes.md` |
-| Proactive | `proactive` | `/Nexus` with no arguments — project state scan | `Scan project → recommend` | `references/proactive-mode.md` |
-| Apex | `apex` | Full-cycle auto-implementation: discovery → spec → parallel design → risk gate → loop → ship. 8-25 agents. **Confirm before launch.** | See `references/recipes-detail.md` | `references/recipes-detail.md`, `references/apex-recipe.md`, `references/apex-walkthrough.md` |
-| Goal Setup | `goal` | `/goal` autonomous long-running execution setup. 1-3 agents, no code execution | `Hone → Latch → Scribe? → DELIVER` | `references/goal-recipe.md` |
-| Essential | `essential` | Must-have feature **verdict + conditional implementation** — converges on THE ONE feature. Subtraction-oriented | See `references/recipes-detail.md` | `references/recipes-detail.md`, `references/inline-recipes.md` |
-| Killer | `killer` | Killer feature **verdict + conditional flagged implementation** via cross-engine triangulation. Dual-engine baseline (Claude + Codex); agy optional | See `references/recipes-detail.md` | `references/recipes-detail.md`, `references/inline-recipes.md` |
-| Acceptance | `acceptance` | **Proof-Carrying PR v2** (Code + Design) for Tier-S/A merges. 14-30 agents Tier-S; G1-G10. 3-15× cost. **Confirm Tier-S.** | See `references/recipes-detail.md` | `references/recipes-detail.md`, `_common/PROOF_CARRYING.md`, `references/acceptance-recipe.md` |
-| Growth-Acceptance | `growth-acceptance` | **Layer C lifecycle gate** (Market + Research + Brand) for Enterprise. Insight Ledger + +14/+30/+90d loop. G11-G15. 1.1-8× on acceptance. **Confirm Step 3+.** | See `references/recipes-detail.md` | `references/recipes-detail.md`, `_common/GROWTH_BRAND_PROOF.md`, `references/growth-acceptance-recipe.md` |
-| Summit | `summit` | Multi-engine **five-team** quality-maximization. Dual-engine default. 28-119 agents, 5-25× cost. **Always confirm.** | See `references/recipes-detail.md` | `references/recipes-detail.md`, `references/summit-recipe.md` |
-| Podium | `podium` | **Content-quality maximization** — doc + high-quality slide creation, five teams. 16-53 agents, 3-8× cost. Output_format variants. **Confirm release-critical.** | See `references/recipes-detail.md` | `references/recipes-detail.md`, `references/podium-recipe.md` |
-| Transmute | `transmute` | **Cross-language rewrite** preserving behavior via differential parity. 8-20 agents. **Confirm before big-bang.** | See `references/recipes-detail.md` | `references/recipes-detail.md`, `references/transmute-recipe.md` |
-| Venture | `venture` | **Business documentation package** from one idea — ~11 parallel doc tracks + traceability barrier. Depth 6-28 agents. **Confirm full.** | See `references/recipes-detail.md` | `references/recipes-detail.md`, `references/venture-recipe.md`, `references/package-recipe.md` |
-| Package | `package` | **Generalized document-package generator** — 12-domain preset registry. Depth 5-28 agents. **Confirm full.** | See `references/recipes-detail.md` | `references/recipes-detail.md`, `references/package-recipe.md` |
-| Pack | `pack` | **Skill ecosystem control** (meta) — switch active Claude Code skill profile per workstream. Forms: `list` / `current` / `<name>` / `reset`. **Confirms diff before writing `settings.json`.** | Inline edit (no spawn) | `references/pack-subcommand.md`, `_common/SKILL_PACKS.md` |
+| Auto Classify | `classify` (default) | No Recipe specified — auto-classification | `CLASSIFY → CHAIN_SELECT` (legacy flow) | `reference/routing-matrix.md` |
+| Bug Fix | `bug` | Bug reports and fix requests | `Scout → Sherpa → Builder → Radar (+Sentinel)` | `reference/routing-matrix.md` |
+| Feature | `feature` | New web/backend/generic feature. **iOS/Android native → `MOBILE_NATIVE` (Native) instead.** | `Sherpa → Forge → Builder → Radar (+Muse)` | `reference/routing-matrix.md` |
+| Security | `security` | Security response | `Sentinel → Builder → Radar (+Probe)` | `reference/routing-matrix.md` |
+| Refactor | `refactor` | Internal-only refactor, no external behavior change | `Zen → Radar (+Atlas)` | `reference/routing-matrix.md` |
+| Optimize | `optimize` | Performance-only improvement | `Bolt/Tuner → Radar (+Schema)` | `reference/routing-matrix.md` |
+| Kaizen | `kaizen` | Existing-feature continuous improvement (perf / UX / code-quality / feature-extension). 4-8 agents | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/inline-recipes.md` |
+| Proactive | `proactive` | `/Nexus` with no arguments — project state scan | `Scan project → recommend` | `reference/proactive-mode.md` |
+| Apex | `apex` | Full-cycle auto-implementation: discovery → spec → parallel design → risk gate → loop → ship. 8-25 agents. **Confirm before launch.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/apex-recipe.md`, `reference/apex-walkthrough.md` |
+| Goal Setup | `goal` | `/goal` autonomous long-running execution setup. 1-3 agents, no code execution | `Hone → Latch → Scribe? → DELIVER` | `reference/goal-recipe.md` |
+| Essential | `essential` | Must-have feature **verdict + conditional implementation** — converges on THE ONE feature. Subtraction-oriented | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/inline-recipes.md` |
+| Killer | `killer` | Killer feature **verdict + conditional flagged implementation** via cross-engine triangulation. Dual-engine baseline (Claude + Codex); agy optional | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/inline-recipes.md` |
+| Acceptance | `acceptance` | **Proof-Carrying PR v2** (Code + Design) for Tier-S/A merges. 14-30 agents Tier-S; G1-G10. 3-15× cost. **Confirm Tier-S.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `_common/PROOF_CARRYING.md`, `reference/acceptance-recipe.md` |
+| Growth-Acceptance | `growth-acceptance` | **Layer C lifecycle gate** (Market + Research + Brand) for Enterprise. Insight Ledger + +14/+30/+90d loop. G11-G15. 1.1-8× on acceptance. **Confirm Step 3+.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `_common/GROWTH_BRAND_PROOF.md`, `reference/growth-acceptance-recipe.md` |
+| Summit | `summit` | Multi-engine **five-team** quality-maximization. Dual-engine default. 28-119 agents, 5-25× cost. **Always confirm.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/summit-recipe.md` |
+| Podium | `podium` | **Content-quality maximization** — doc + high-quality slide creation, five teams. 16-53 agents, 3-8× cost. Output_format variants. **Confirm release-critical.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/podium-recipe.md` |
+| Transmute | `transmute` | **Cross-language rewrite** preserving behavior via differential parity. 8-20 agents. **Confirm before big-bang.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/transmute-recipe.md` |
+| Venture | `venture` | **Business documentation package** from one idea — ~11 parallel doc tracks + traceability barrier. Depth 6-28 agents. **Confirm full.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/venture-recipe.md`, `reference/package-recipe.md` |
+| Package | `package` | **Generalized document-package generator** — 12-domain preset registry. Depth 5-28 agents. **Confirm full.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/package-recipe.md` |
+| Pack | `pack` | **Skill ecosystem control** (meta) — switch active Claude Code skill profile per workstream. Forms: `list` / `current` / `<name>` / `reset`. **Confirms diff before writing `settings.json`.** | Inline edit (no spawn) | `reference/pack-subcommand.md`, `_common/SKILL_PACKS.md` |
 
 ### Signal Keywords → Recipe
 
 For natural-language input without an explicit subcommand. **Subcommand match always wins.** Keywords are **English canonical anchors**, not a literal allowlist — Nexus translates input (any language/paraphrase) to English intent first, then matches semantically. Output language still follows config.
 
-**Full canonical table** (Core / Specialist / Mobile / Package / Fallback) → `references/signal-keywords.md`. Most-used Core anchors inlined below:
+**Full canonical table** (Core / Specialist / Mobile / Package / Fallback) → `reference/signal-keywords.md`. Most-used Core anchors inlined below:
 
 | Keywords | Recipe |
 |----------|--------|
@@ -185,18 +185,18 @@ For natural-language input without an explicit subcommand. **Subcommand match al
 | `package`, `document package`, `generate a full package` | `package` (auto-detect preset) |
 | `pack`, `skill pack`, `skill profile`, `enable skills`, `switch profile` | `pack` |
 | `/Nexus` (no arguments) | `proactive` |
-| unclear or multi-domain request | `classify` → `references/intent-clarification.md` |
+| unclear or multi-domain request | `classify` → `reference/intent-clarification.md` |
 
-Specialist anchors (Chain / Husk-Triage-Crypt / Sonar / Clause-Scribe / Rank-Magi / Omen-Ripple / Drill / Sketch), mobile/cross-platform anchors (`MOBILE_NATIVE`, `IOS_UI_TEST`, `PORTING`), and package/domain-preset anchors (research / ai-adoption / legal / saas / media / growth / career / learning / hiring / local-gov) — see `references/signal-keywords.md`.
+Specialist anchors (Chain / Husk-Triage-Crypt / Sonar / Clause-Scribe / Rank-Magi / Omen-Ripple / Drill / Sketch), mobile/cross-platform anchors (`MOBILE_NATIVE`, `IOS_UI_TEST`, `PORTING`), and package/domain-preset anchors (research / ai-adoption / legal / saas / media / growth / career / learning / hiring / local-gov) — see `reference/signal-keywords.md`.
 
 ## Subcommand Dispatch
 
 Parse the first token of user input:
 - Matches a Recipe Subcommand → skip CLASSIFY, pass Chain Template directly to CHAIN_SELECT. Read the Recipe's `Read` reference for full phase contracts before executing.
-- `/Nexus` with no arguments → `proactive` Recipe (`references/proactive-mode.md`).
+- `/Nexus` with no arguments → `proactive` Recipe (`reference/proactive-mode.md`).
 - Otherwise → `classify` (default) = legacy CLASSIFY → CHAIN_SELECT.
 
-Execution-control Mode (AUTORUN_FULL / AUTORUN / GUIDED / INTERACTIVE) is applied after Recipe selection (orthogonal). Inline Recipes (`kaizen`, `essential`, `killer`) have no top-level reference — full phase contracts in `references/inline-recipes.md`.
+Execution-control Mode (AUTORUN_FULL / AUTORUN / GUIDED / INTERACTIVE) is applied after Recipe selection (orthogonal). Inline Recipes (`kaizen`, `essential`, `killer`) have no top-level reference — full phase contracts in `reference/inline-recipes.md`.
 
 ## Workflow
 
@@ -204,13 +204,13 @@ Execution-control Mode (AUTORUN_FULL / AUTORUN / GUIDED / INTERACTIVE) is applie
 
 | Phase | Purpose | Read When |
 |------|---------|-----------|
-| `CLASSIFY` | Detect task type, complexity, context confidence, official category, guardrail needs | `references/confidence-scoring.md`, `references/intent-clarification.md`, `references/official-skill-categories.md` |
-| `CHAIN` | Select minimum viable chain; plan parallel branches; Plan-and-Execute pattern (capable model plans, cheaper models execute — up to 90% cost reduction) | `references/routing-matrix.md`, `references/agent-chains.md`, `references/agent-disambiguation.md`, `references/task-routing-anti-patterns.md` |
-| `EXECUTE` | Spawn agents (L1/L2/L3) with checkpoints; pass only state deltas | `references/execution-phases.md`, `references/guardrails.md`, `references/error-handling.md`, `references/orchestration-patterns.md` |
-| `AGGREGATE` | Merge branch outputs; validate schema/required fields per step | `references/conflict-resolution.md`, `references/handoff-validation.md`, `references/agent-communication-anti-patterns.md` |
-| `VERIFY` | Validate acceptance criteria; tests, build, security checks mandatory | `references/guardrails.md`, `references/output-formats.md`, `references/quality-iteration.md` |
-| `DELIVER` | Produce final user-facing response | `references/output-formats.md` |
-| `LEARN` | Adapt routing from evidence after completion | `references/routing-learning.md` |
+| `CLASSIFY` | Detect task type, complexity, context confidence, official category, guardrail needs | `reference/confidence-scoring.md`, `reference/intent-clarification.md`, `reference/official-skill-categories.md` |
+| `CHAIN` | Select minimum viable chain; plan parallel branches; Plan-and-Execute pattern (capable model plans, cheaper models execute — up to 90% cost reduction) | `reference/routing-matrix.md`, `reference/agent-chains.md`, `reference/agent-disambiguation.md`, `reference/task-routing-anti-patterns.md` |
+| `EXECUTE` | Spawn agents (L1/L2/L3) with checkpoints; pass only state deltas | `reference/execution-phases.md`, `reference/guardrails.md`, `reference/error-handling.md`, `reference/orchestration-patterns.md` |
+| `AGGREGATE` | Merge branch outputs; validate schema/required fields per step | `reference/conflict-resolution.md`, `reference/handoff-validation.md`, `reference/agent-communication-anti-patterns.md` |
+| `VERIFY` | Validate acceptance criteria; tests, build, security checks mandatory | `reference/guardrails.md`, `reference/output-formats.md`, `reference/quality-iteration.md` |
+| `DELIVER` | Produce final user-facing response | `reference/output-formats.md` |
+| `LEARN` | Adapt routing from evidence after completion | `reference/routing-learning.md` |
 
 ## Execution Model
 
@@ -246,7 +246,7 @@ Is spawn tool available? (Agent / spawn_agent / /agent)
 
 ### Execution Layers
 
-Full per-CLI prereqs, runtime notes, silent-failure mitigations, and the verified headless template → `references/execution-layers.md`. Cross-CLI mapping → `_common/CLI_COMPATIBILITY.md`. Summary:
+Full per-CLI prereqs, runtime notes, silent-failure mitigations, and the verified headless template → `reference/execution-layers.md`. Cross-CLI mapping → `_common/CLI_COMPATIBILITY.md`. Summary:
 
 | CLI | L1 | L2 | L3 | Key prereq |
 |-----|----|----|----|-----------|
@@ -254,11 +254,11 @@ Full per-CLI prereqs, runtime notes, silent-failure mitigations, and the verifie
 | **Codex CLI** | `spawn_agent` → `wait_agent` | N × `spawn_agent` → `wait_agent` × N | `spawn_agent("You are Rally...")` | `multi_agent = true` + `[agents] max_depth >= 2` |
 | **agy** | `/agent <name>` (TUI) or `agy -p --dangerously-skip-permissions` (headless) | Multiple `/agent` (async, `/tasks`) | Plugin team pack | TUI main session or OS-level isolation; artifact file capture (NOT stdout) |
 
-Key rules (Codex lazy-hidden tools, agy headless `@<path>` + sentinel + `--print-timeout`, agy Pre-flight, permission model) → `references/hub-authoring.md` § Execution-Layer Key Rules.
+Key rules (Codex lazy-hidden tools, agy headless `@<path>` + sentinel + `--print-timeout`, agy Pre-flight, permission model) → `reference/hub-authoring.md` § Execution-Layer Key Rules.
 
 ### Model Selection
 
-Model names are hub-engine-specific; role → tier mapping is stable. Full table (Claude Code sonnet/opus/haiku ↔ Codex CLI gpt-5.4/gpt-5.5/gpt-5.4-mini per tier) and `model_reasoning_effort` tuning → `references/hub-authoring.md` § Model Selection. Cross-CLI cross-reference → `_common/CLI_COMPATIBILITY.md §4`.
+Model names are hub-engine-specific; role → tier mapping is stable. Full table (Claude Code sonnet/opus/haiku ↔ Codex CLI gpt-5.4/gpt-5.5/gpt-5.4-mini per tier) and `model_reasoning_effort` tuning → `reference/hub-authoring.md` § Model Selection. Cross-CLI cross-reference → `_common/CLI_COMPATIBILITY.md §4`.
 
 ### Agent Spawn Template
 
@@ -291,7 +291,7 @@ Agent(
 )
 ```
 
-Opus 4.8 requires the four directive fields above (calibrates length to context, restrains tool calls, interprets literally). Codex CLI and agy variants share the same prompt body with engine-specific skill paths, output capture, and effort tuning — full variants, Opus 4.8 note, and parallel-spawn rules → `references/hub-authoring.md` § Spawn Template Variants. Detailed execution flows → `references/execution-phases.md`, `references/orchestration-patterns.md`.
+Opus 4.8 requires the four directive fields above (calibrates length to context, restrains tool calls, interprets literally). Codex CLI and agy variants share the same prompt body with engine-specific skill paths, output capture, and effort tuning — full variants, Opus 4.8 note, and parallel-spawn rules → `reference/hub-authoring.md` § Spawn Template Variants. Detailed execution flows → `reference/execution-phases.md`, `reference/orchestration-patterns.md`.
 
 ## Safety Contract
 
@@ -320,7 +320,7 @@ Opus 4.8 requires the four directive fields above (calibrates length to context,
 
 ## Routing Quick Start
 
-Canonical matrix: `references/routing-matrix.md`. Recipe-driven chains (Apex / Summit / Acceptance / Growth-Acceptance / Essential / Killer / Kaizen) are in the Recipes table. The legacy `classify` flow for standard task types covers `BUG`, `FEATURE`, `SECURITY`, `REFACTOR`, `OPTIMIZE`, `DESIGN_SYSTEM_DOCS`, `DESIGN_WORKFLOW`, `MOBILE_NATIVE`, `IOS_UI_TEST`, `PORTING` — full chain table, Sherpa skip conditions, chain adjustment rules, clarification rules, and anti-pattern reference list in `references/routing-quick-start.md`.
+Canonical matrix: `reference/routing-matrix.md`. Recipe-driven chains (Apex / Summit / Acceptance / Growth-Acceptance / Essential / Killer / Kaizen) are in the Recipes table. The legacy `classify` flow for standard task types covers `BUG`, `FEATURE`, `SECURITY`, `REFACTOR`, `OPTIMIZE`, `DESIGN_SYSTEM_DOCS`, `DESIGN_WORKFLOW`, `MOBILE_NATIVE`, `IOS_UI_TEST`, `PORTING` — full chain table, Sherpa skip conditions, chain adjustment rules, clarification rules, and anti-pattern reference list in `reference/routing-quick-start.md`.
 
 Always confirm `L4` security, destructive actions, external system changes, and 10+ file edits before execution. If context is unclear, inspect git state and `.agents/PROJECT.md`; if confidence remains low, ask one focused question.
 
@@ -336,7 +336,7 @@ Every deliverable must include:
 - Recommended follow-up actions if applicable
 
 **Required contracts:**
-- `DELIVER` returns `NEXUS_COMPLETE` semantics. Canonical formats: `references/output-formats.md`.
+- `DELIVER` returns `NEXUS_COMPLETE` semantics. Canonical formats: `reference/output-formats.md`.
 - `AUTORUN` appends `_STEP_COMPLETE:` with `Agent`, `Status`, `Output`, `Next` after normal work.
 - Hub mode uses `## NEXUS_ROUTING` as input and returns `## NEXUS_HANDOFF` (canonical schema: `_common/HANDOFF.md`).
 - Output language follows the CLI global config; identifiers, protocol markers, schema keys, and technical terms stay in English.
@@ -360,42 +360,42 @@ Read only the files that match the current decision point.
 
 | File | Read When |
 |------|-----------|
-| `references/routing-matrix.md` | Canonical task-type → chain mapping beyond the quick-start |
-| `references/routing-quick-start.md` | Full legacy task-type chain table, Sherpa skip / chain adjustment / clarification rules |
-| `references/agent-chains.md` | Full chain templates or add/skip rules |
-| `references/agent-disambiguation.md` | Two or more agents plausibly fit the same request |
-| `references/confidence-scoring.md` | Confidence scoring + autonomous decision thresholds |
-| `references/intent-clarification.md` | Ambiguous request needs interpretation before routing |
-| `references/proactive-mode.md` | `/Nexus` no-task → next-action recommendations |
-| `references/execution-phases.md` | Phase-by-phase AUTORUN flow |
-| `references/guardrails.md` | Task-specific checkpoints or guardrail state rules |
-| `references/error-handling.md` | Failure needs retry, rollback, recovery injection, escalation, abort |
-| `references/routing-explanation.md` | Explaining why a chain was chosen |
-| `references/conflict-resolution.md` | Parallel branches touch overlapping files |
+| `reference/routing-matrix.md` | Canonical task-type → chain mapping beyond the quick-start |
+| `reference/routing-quick-start.md` | Full legacy task-type chain table, Sherpa skip / chain adjustment / clarification rules |
+| `reference/agent-chains.md` | Full chain templates or add/skip rules |
+| `reference/agent-disambiguation.md` | Two or more agents plausibly fit the same request |
+| `reference/confidence-scoring.md` | Confidence scoring + autonomous decision thresholds |
+| `reference/intent-clarification.md` | Ambiguous request needs interpretation before routing |
+| `reference/proactive-mode.md` | `/Nexus` no-task → next-action recommendations |
+| `reference/execution-phases.md` | Phase-by-phase AUTORUN flow |
+| `reference/guardrails.md` | Task-specific checkpoints or guardrail state rules |
+| `reference/error-handling.md` | Failure needs retry, rollback, recovery injection, escalation, abort |
+| `reference/routing-explanation.md` | Explaining why a chain was chosen |
+| `reference/conflict-resolution.md` | Parallel branches touch overlapping files |
 | `_common/PARALLEL.md` | Parallel branch definitions, file ownership, merge, rollback |
-| `references/handoff-validation.md` | Handoff missing structure, confidence, integrity |
-| `references/output-formats.md` | Canonical final output or handoff templates |
-| `references/orchestration-patterns.md` | Concrete execution patterns (sequential, parallel, evaluator-loop, verification-gated) |
-| `references/evaluator-loop-protocol.md` | Generator-Evaluator separation: Sprint Contract + Rubric + orchestration pattern |
-| `references/context-strategy.md` | Decide how context flows between agents |
-| `references/routing-learning.md` | Adapting routing from execution evidence |
-| `references/quality-iteration.md` | Output needs post-delivery PDCA improvement |
-| `references/{orchestration,task-routing,production-reliability,agent-communication}-anti-patterns.md` | Anti-pattern catalogs — orchestration / routing / reliability / handoff (load when chain ≥ 4 agents) |
-| `references/execution-layers.md` | Per-CLI prereqs, runtime notes, agy headless mitigations + template |
-| `references/hub-authoring.md` | Per-engine authoring (Claude/Codex/agy), spawn-template variants, model selection table, execution-layer key rules |
-| `references/recipes-detail.md` | Extended Recipe descriptions + full chain templates (kaizen, apex, essential, killer, acceptance, growth-acceptance, summit, podium, transmute, venture, package) |
-| `references/inline-recipes.md` | Full phase contracts for `kaizen` / `essential` / `killer` |
-| `references/signal-keywords.md` | Canonical full Signal Keywords → Recipe table (Core / Specialist / Mobile / Package / Fallback) |
-| `references/official-skill-categories.md` | Official use case categories + 5 canonical patterns |
-| `references/managed-agents-mapping.md` | Managed Agents / Outcomes / Dreaming / Webhooks mapping + Dynamic Workflows |
-| `references/apex-recipe.md` | `/nexus apex` — phase contracts, sub-orchestration topology, Risk Gate |
-| `references/apex-walkthrough.md` | Human-facing apex — Mermaid flowcharts, storyboards, failure paths |
-| `references/{goal,acceptance,growth-acceptance,summit,transmute,venture,package,podium}-recipe.md` | Per-Recipe specs — phase contracts, chain templates, cost profiles |
+| `reference/handoff-validation.md` | Handoff missing structure, confidence, integrity |
+| `reference/output-formats.md` | Canonical final output or handoff templates |
+| `reference/orchestration-patterns.md` | Concrete execution patterns (sequential, parallel, evaluator-loop, verification-gated) |
+| `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation: Sprint Contract + Rubric + orchestration pattern |
+| `reference/context-strategy.md` | Decide how context flows between agents |
+| `reference/routing-learning.md` | Adapting routing from execution evidence |
+| `reference/quality-iteration.md` | Output needs post-delivery PDCA improvement |
+| `reference/{orchestration,task-routing,production-reliability,agent-communication}-anti-patterns.md` | Anti-pattern catalogs — orchestration / routing / reliability / handoff (load when chain ≥ 4 agents) |
+| `reference/execution-layers.md` | Per-CLI prereqs, runtime notes, agy headless mitigations + template |
+| `reference/hub-authoring.md` | Per-engine authoring (Claude/Codex/agy), spawn-template variants, model selection table, execution-layer key rules |
+| `reference/recipes-detail.md` | Extended Recipe descriptions + full chain templates (kaizen, apex, essential, killer, acceptance, growth-acceptance, summit, podium, transmute, venture, package) |
+| `reference/inline-recipes.md` | Full phase contracts for `kaizen` / `essential` / `killer` |
+| `reference/signal-keywords.md` | Canonical full Signal Keywords → Recipe table (Core / Specialist / Mobile / Package / Fallback) |
+| `reference/official-skill-categories.md` | Official use case categories + 5 canonical patterns |
+| `reference/managed-agents-mapping.md` | Managed Agents / Outcomes / Dreaming / Webhooks mapping + Dynamic Workflows |
+| `reference/apex-recipe.md` | `/nexus apex` — phase contracts, sub-orchestration topology, Risk Gate |
+| `reference/apex-walkthrough.md` | Human-facing apex — Mermaid flowcharts, storyboards, failure paths |
+| `reference/{goal,acceptance,growth-acceptance,summit,transmute,venture,package,podium}-recipe.md` | Per-Recipe specs — phase contracts, chain templates, cost profiles |
 | `_common/PROOF_CARRYING.md` | `/nexus acceptance` Tier policy + G1-G10. **Mandatory before `acceptance`.** |
 | `_common/GROWTH_BRAND_PROOF.md` | `/nexus growth-acceptance` Layer C + Insight Ledger + Brand Compiler + G11-G15 |
-| `references/feature-impact-simulate.md` | Feature impact prediction (Persona+Journey+Product v4) |
-| `references/apex-recipe.md`, `references/apex-walkthrough.md` | `/nexus apex` phase contracts + Mermaid walkthroughs |
-| `references/pack-subcommand.md` | `/nexus pack` — skill profile switch, settings.json edit, backup, diff, confirm |
+| `reference/feature-impact-simulate.md` | Feature impact prediction (Persona+Journey+Product v4) |
+| `reference/apex-recipe.md`, `reference/apex-walkthrough.md` | `/nexus apex` phase contracts + Mermaid walkthroughs |
+| `reference/pack-subcommand.md` | `/nexus pack` — skill profile switch, settings.json edit, backup, diff, confirm |
 | `_common/SKILL_PACKS.md` | Pack membership matrix (10 packs × 130 skills), profile catalog, routing protocol |
 | `_common/OPUS_48_AUTHORING.md` | **Claude Code hub** — P4 / P6 / P7 spawn prompts, output envelopes, effort |
 | `_common/CODEX_ORCHESTRATION.md` | **Codex CLI hub** — C1 spawn-depth, C2 sync fan-out, C3 effort-by-model, C6 checkpoint-resume |

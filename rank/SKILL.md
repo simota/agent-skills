@@ -165,14 +165,14 @@ Every deliverable must include:
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| ICE Score | `ice` | ✓ | ICE scoring (Impact × Confidence × Ease) | `references/scoring-frameworks.md` |
-| RICE Score | `rice` | | RICE scoring (Reach × Impact × Confidence / Effort) | `references/scoring-frameworks.md` |
-| WSJF | `wsjf` | | WSJF (Weighted Shortest Job First) | `references/scoring-frameworks.md` |
-| MoSCoW | `moscow` | | MoSCoW method (Must/Should/Could/Won't) | `references/scoring-frameworks.md` |
-| Kano Model | `kano` | | Kano model (customer satisfaction classification) | `references/scoring-frameworks.md` |
-| Cost of Delay (CD3) | `cod` | | Deep CoD economic decomposition and CD3 sequencing (revenue/deadline-bound work) | `references/cost-of-delay.md` |
-| Value vs Effort | `value-effort` | | 2x2 quadrant workshop (Quick Win/Major/Fill-In/Thankless) for visual consensus | `references/value-effort-matrix.md` |
-| Priority Poker | `pokerplan` | | Anonymous Fibonacci voting (Wideband Delphi) to mitigate group bias | `references/priority-poker.md` |
+| ICE Score | `ice` | ✓ | ICE scoring (Impact × Confidence × Ease) | `reference/scoring-frameworks.md` |
+| RICE Score | `rice` | | RICE scoring (Reach × Impact × Confidence / Effort) | `reference/scoring-frameworks.md` |
+| WSJF | `wsjf` | | WSJF (Weighted Shortest Job First) | `reference/scoring-frameworks.md` |
+| MoSCoW | `moscow` | | MoSCoW method (Must/Should/Could/Won't) | `reference/scoring-frameworks.md` |
+| Kano Model | `kano` | | Kano model (customer satisfaction classification) | `reference/scoring-frameworks.md` |
+| Cost of Delay (CD3) | `cod` | | Deep CoD economic decomposition and CD3 sequencing (revenue/deadline-bound work) | `reference/cost-of-delay.md` |
+| Value vs Effort | `value-effort` | | 2x2 quadrant workshop (Quick Win/Major/Fill-In/Thankless) for visual consensus | `reference/value-effort-matrix.md` |
+| Priority Poker | `pokerplan` | | Anonymous Fibonacci voting (Wideband Delphi) to mitigate group bias | `reference/priority-poker.md` |
 
 ## Subcommand Dispatch
 
@@ -194,12 +194,12 @@ Behavior notes per Recipe:
 
 | File | Content |
 |------|---------|
-| `references/scoring-frameworks.md` | Detailed procedures for ICE/RICE/WSJF/MoSCoW/CoD/Kano |
-| `references/calibration-techniques.md` | Pairwise comparison, bias correction, sensitivity analysis |
-| `references/output-templates.md` | Ranking report, score matrix, comparison table templates |
-| `references/cost-of-delay.md` | CD3 = CoD / Duration, four-component CoD, CoD curve patterns, CD3-vs-WSJF distinction (`cod` recipe) |
-| `references/value-effort-matrix.md` | 2x2 quadrant definitions, axis-scoring rubrics, workshop facilitation, upgrade paths to RICE/WSJF (`value-effort` recipe) |
-| `references/priority-poker.md` | Wideband Delphi mechanics, Fibonacci scale, calibration anchors, dispersion-rule thresholds, online tool options (`pokerplan` recipe) |
+| `reference/scoring-frameworks.md` | Detailed procedures for ICE/RICE/WSJF/MoSCoW/CoD/Kano |
+| `reference/calibration-techniques.md` | Pairwise comparison, bias correction, sensitivity analysis |
+| `reference/output-templates.md` | Ranking report, score matrix, comparison table templates |
+| `reference/cost-of-delay.md` | CD3 = CoD / Duration, four-component CoD, CoD curve patterns, CD3-vs-WSJF distinction (`cod` recipe) |
+| `reference/value-effort-matrix.md` | 2x2 quadrant definitions, axis-scoring rubrics, workshop facilitation, upgrade paths to RICE/WSJF (`value-effort` recipe) |
+| `reference/priority-poker.md` | Wideband Delphi mechanics, Fibonacci scale, calibration anchors, dispersion-rule thresholds, online tool options (`pokerplan` recipe) |
 | `_common/OPUS_48_AUTHORING.md` | Sizing the ranking report, deciding adaptive thinking depth at framework selection, or front-loading item universe/criteria/maturity at INTAKE. Critical for Rank: P3, P5. |
 
 ## Operational

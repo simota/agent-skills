@@ -70,7 +70,7 @@ Route elsewhere when the task is primarily:
 - Deliver incrementally — issue chains that produce working, testable artifacts at each phase rather than batching all work into a single monolithic chain.
 - Enforce backlog discipline — new requirements discovered mid-chain are captured for the next iteration, never injected into the running chain.
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P1 (front-loaded SUCCESS_CRITERIA), P6 (effort-level per phase), P7 (delegation framing across long lifecycles)** as critical for Titan. Long-running product lifecycles must front-load acceptance criteria into `TITAN_STATE` and select per-phase model effort (`xhigh` baseline, `max` only for genuinely hard architecture decisions, `haiku` for documentation phases).
-- When the work spans a product's lifecycle (new product, new business line, founder-driven scope), frame Titan phases against the **Idea → MVP → Launch → Scale** founder stages from Anthropic's *Founder's Playbook*. Use `references/founder-lifecycle-mapping.md` for the phase ↔ stage mapping; that reference also includes Titan-authored extensions (stage-specific failure-mode interpretations and operational exit-criteria defaults) clearly marked as extensions of — not citations from — the Playbook. Surface the current `founder_stage_entered` and `next_stage_gate` in `TITAN_COMPLETE` when a chain crosses a stage boundary. [Source: claude.com — *The Founder's Playbook* (2026)]
+- When the work spans a product's lifecycle (new product, new business line, founder-driven scope), frame Titan phases against the **Idea → MVP → Launch → Scale** founder stages from Anthropic's *Founder's Playbook*. Use `reference/founder-lifecycle-mapping.md` for the phase ↔ stage mapping; that reference also includes Titan-authored extensions (stage-specific failure-mode interpretations and operational exit-criteria defaults) clearly marked as extensions of — not citations from — the Playbook. Surface the current `founder_stage_entered` and `next_stage_gate` in `TITAN_COMPLETE` when a chain crosses a stage boundary. [Source: claude.com — *The Founder's Playbook* (2026)]
 
 ## Boundaries
 
@@ -115,7 +115,7 @@ Keep explicit skip rules:
 - `Rally` is for independent work only, never for two sequential tasks that one chain can handle. When justified, parallel execution reduces wall-clock latency by up to 60% versus sequential chains at the same total token cost. Parallel dispatch requires **all three** of: 3+ unrelated tasks or domains, no shared state between tasks, clear file boundaries with no overlap (per Claude Code sub-agent guidance). Fail any condition → sequential.
 - `DISCOVER -> DEFINE -> ARCHITECT` chains are invalid for `S/M` unless scope was misclassified
 
-Read `references/agent-deployment-matrix.md` when selecting or skipping phase agents, checking shortcuts, or validating deployment anti-patterns.
+Read `reference/agent-deployment-matrix.md` when selecting or skipping phase agents, checking shortcuts, or validating deployment anti-patterns.
 
 ## Workflow
 
@@ -183,7 +183,7 @@ Phase transition rules:
 - Exit `60-79%` → reduce scope and proceed
 - Exit `< 60%` → Anti-Stall activation
 
-Read `references/product-lifecycle.md` when detecting `L/XL` scope, issuing phase chains, or checking scope-specific shortcuts. Read `references/exit-criteria-validation.md` when validating phase exits or applying simplified `S/M` validation rules.
+Read `reference/product-lifecycle.md` when detecting `L/XL` scope, issuing phase chains, or checking scope-specific shortcuts. Read `reference/exit-criteria-validation.md` when validating phase exits or applying simplified `S/M` validation rules.
 
 ## Forward Progress
 
@@ -206,7 +206,7 @@ Rules:
 - Never report "waiting" while other Epics, next-phase prep, tech debt, docs, or tests can move
 - Scope stabilization before recovery — freeze scope before attempting recovery actions (unstabilized scope is the #1 cause of failed recovery per industry data)
 
-Read `references/anti-stall-engine.md` when routing a stall through the recovery cascade or checking budgets. Read `references/momentum-system.md` when scoring progress, validating velocity, or deciding whether Rally is justified.
+Read `reference/anti-stall-engine.md` when routing a stall through the recovery cascade or checking budgets. Read `reference/momentum-system.md` when scoring progress, validating velocity, or deciding whether Rally is justified.
 
 ## Decisions & State
 
@@ -225,16 +225,16 @@ Risk formula:
 - Update on milestones, decisions, Anti-Stall events, Rally boundaries, scope changes, and session boundaries
 - Never delete `TITAN_STATE`
 
-Read `references/decision-matrix.md` when classifying a decision, calculating risk, or issuing `MAGI_REQUEST`. Read `references/output-formats.md` when writing `TITAN_COMPLETE`, `TITAN_PHASE_COMPLETE`, `TITAN_STATE`, or `EVOLVE_TO_DISCOVER_HANDOFF`. Read `references/nexus-integration.md` when parsing `## NEXUS_COMPLETE_[STATUS]`, `recovery_attempted`, or updating `TITAN_STATE` after chain completion.
+Read `reference/decision-matrix.md` when classifying a decision, calculating risk, or issuing `MAGI_REQUEST`. Read `reference/output-formats.md` when writing `TITAN_COMPLETE`, `TITAN_PHASE_COMPLETE`, `TITAN_STATE`, or `EVOLVE_TO_DISCOVER_HANDOFF`. Read `reference/nexus-integration.md` when parsing `## NEXUS_COMPLETE_[STATUS]`, `recovery_attempted`, or updating `TITAN_STATE` after chain completion.
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Deliver Minimum Chain | `deliver` | ✓ | Immediate build with minimum chain (auto scope detection → chain issuance) | `references/agent-deployment-matrix.md` |
-| Small Scope | `small` | | S scope (1-5 files, immediate build, skip planning) | `references/agent-deployment-matrix.md` |
-| Medium Scope | `medium` | | M scope (6-15 files, skip planning, build first) | `references/agent-deployment-matrix.md`, `references/product-lifecycle.md` |
-| Epic Scope | `epic` | | Epic scope (L/XL, chain composition, Nexus integration) | `references/product-lifecycle.md`, `references/anti-stall-engine.md` |
+| Deliver Minimum Chain | `deliver` | ✓ | Immediate build with minimum chain (auto scope detection → chain issuance) | `reference/agent-deployment-matrix.md` |
+| Small Scope | `small` | | S scope (1-5 files, immediate build, skip planning) | `reference/agent-deployment-matrix.md` |
+| Medium Scope | `medium` | | M scope (6-15 files, skip planning, build first) | `reference/agent-deployment-matrix.md`, `reference/product-lifecycle.md` |
+| Epic Scope | `epic` | | Epic scope (L/XL, chain composition, Nexus integration) | `reference/product-lifecycle.md`, `reference/anti-stall-engine.md` |
 
 ## Subcommand Dispatch
 
@@ -252,20 +252,20 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `S/M` scope, small build | Direct chain issuance | `## NEXUS_AUTORUN_FULL` (Builder → Radar) | `references/agent-deployment-matrix.md` |
-| `L/XL` scope, large build | Phased delivery execution | Phase chain + `TITAN_STATE` | `references/product-lifecycle.md` |
-| stall, zero progress, blocked | Anti-Stall recovery cascade | Recovery action or L5 question | `references/anti-stall-engine.md` |
-| decision, risk, Magi | Risk-based decision routing | `MAGI_REQUEST` or logged decision | `references/decision-matrix.md` |
-| `NEXUS_COMPLETE_[STATUS]` | Result validation and routing | Next Epic or Anti-Stall | `references/nexus-integration.md` |
-| unclear scope or intent | Scope detection + chain selection | Scoped `TITAN_STATE` | `references/product-lifecycle.md` |
+| `S/M` scope, small build | Direct chain issuance | `## NEXUS_AUTORUN_FULL` (Builder → Radar) | `reference/agent-deployment-matrix.md` |
+| `L/XL` scope, large build | Phased delivery execution | Phase chain + `TITAN_STATE` | `reference/product-lifecycle.md` |
+| stall, zero progress, blocked | Anti-Stall recovery cascade | Recovery action or L5 question | `reference/anti-stall-engine.md` |
+| decision, risk, Magi | Risk-based decision routing | `MAGI_REQUEST` or logged decision | `reference/decision-matrix.md` |
+| `NEXUS_COMPLETE_[STATUS]` | Result validation and routing | Next Epic or Anti-Stall | `reference/nexus-integration.md` |
+| unclear scope or intent | Scope detection + chain selection | Scoped `TITAN_STATE` | `reference/product-lifecycle.md` |
 
 Routing rules:
 
-- If scope is `S/M`, read `references/agent-deployment-matrix.md` before issuing chain.
-- If scope is `L/XL`, read `references/product-lifecycle.md` for phase selection.
-- If Anti-Stall is triggered, read `references/anti-stall-engine.md`.
+- If scope is `S/M`, read `reference/agent-deployment-matrix.md` before issuing chain.
+- If scope is `L/XL`, read `reference/product-lifecycle.md` for phase selection.
+- If Anti-Stall is triggered, read `reference/anti-stall-engine.md`.
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 
 ## Output Requirements
 
@@ -292,15 +292,15 @@ Titan operates above the hub. It issues chains to Nexus and does not bypass the 
 
 | File | Read this when ... |
 |------|--------------------|
-| `references/product-lifecycle.md` | you are detecting `L/XL` scope, selecting lifecycle phases, or issuing phase-specific chains |
-| `references/agent-deployment-matrix.md` | you are deciding which agents to deploy or skip, checking shortcuts, or validating deployment anti-patterns |
-| `references/anti-stall-engine.md` | you need the full `L1-L5` recovery cascade, budgets, or guardrail mapping |
-| `references/decision-matrix.md` | you are scoring risk, consulting Magi, logging decisions, or checking risk budget states |
-| `references/momentum-system.md` | you are scoring forward progress, validating velocity, or deciding whether Rally is justified |
-| `references/output-formats.md` | you are writing `TITAN_COMPLETE`, `TITAN_PHASE_COMPLETE`, `TITAN_STATE`, `_STEP_COMPLETE:`, or `EVOLVE_TO_DISCOVER_HANDOFF` |
-| `references/nexus-integration.md` | you are validating `NEXUS_COMPLETE` results, using `recovery_attempted`, or routing status into Anti-Stall |
-| `references/exit-criteria-validation.md` | you are validating phase exits, applying pass thresholds, or using scope-specific validation overrides |
-| `references/founder-lifecycle-mapping.md` | the work spans a product's lifecycle (new product / new business line / founder-driven scope) and you need the **Idea → MVP → Launch → Scale** ↔ DISCOVER/DEFINE/ARCHITECT/BUILD/HARDEN/VALIDATE/LAUNCH/GROW/EVOLVE mapping plus Titan-authored extensions (failure-mode interpretations, operational exit-criteria defaults) and `founder_stage_entered` vocabulary for `TITAN_COMPLETE`. |
+| `reference/product-lifecycle.md` | you are detecting `L/XL` scope, selecting lifecycle phases, or issuing phase-specific chains |
+| `reference/agent-deployment-matrix.md` | you are deciding which agents to deploy or skip, checking shortcuts, or validating deployment anti-patterns |
+| `reference/anti-stall-engine.md` | you need the full `L1-L5` recovery cascade, budgets, or guardrail mapping |
+| `reference/decision-matrix.md` | you are scoring risk, consulting Magi, logging decisions, or checking risk budget states |
+| `reference/momentum-system.md` | you are scoring forward progress, validating velocity, or deciding whether Rally is justified |
+| `reference/output-formats.md` | you are writing `TITAN_COMPLETE`, `TITAN_PHASE_COMPLETE`, `TITAN_STATE`, `_STEP_COMPLETE:`, or `EVOLVE_TO_DISCOVER_HANDOFF` |
+| `reference/nexus-integration.md` | you are validating `NEXUS_COMPLETE` results, using `recovery_attempted`, or routing status into Anti-Stall |
+| `reference/exit-criteria-validation.md` | you are validating phase exits, applying pass thresholds, or using scope-specific validation overrides |
+| `reference/founder-lifecycle-mapping.md` | the work spans a product's lifecycle (new product / new business line / founder-driven scope) and you need the **Idea → MVP → Launch → Scale** ↔ DISCOVER/DEFINE/ARCHITECT/BUILD/HARDEN/VALIDATE/LAUNCH/GROW/EVOLVE mapping plus Titan-authored extensions (failure-mode interpretations, operational exit-criteria defaults) and `founder_stage_entered` vocabulary for `TITAN_COMPLETE`. |
 | `_common/OPUS_48_AUTHORING.md` | you are designing per-phase chain prompts, selecting model effort across the lifecycle, or front-loading SUCCESS_CRITERIA. Critical principles for Titan: P1, P6, P7. |
 
 ## Operational

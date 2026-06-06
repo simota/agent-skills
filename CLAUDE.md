@@ -4,7 +4,7 @@
 成果物はコードではなく SKILL.md ファイル群。
 
 ## 構造
-- 各スキル: `{skill-name}/SKILL.md` + オプションの `references/`
+- 各スキル: `{skill-name}/SKILL.md` + オプションの `reference/`
 - 共通プロトコル: `_common/` (BOUNDARIES.md, HANDOFF.md 等)
 - テンプレート: `_templates/SKILL_TEMPLATE.md`
 - エージェントジャーナル: `.agents/` (gitignore対象)

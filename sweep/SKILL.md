@@ -103,12 +103,12 @@ Rules: tool output is evidence, not authority. Cross-check with grep, framework 
 
 | Step | Required Action | Gate | Read |
 |------|-----------------|------|------|
-| `SCAN` | Exclude protected paths, run primary tooling, collect candidates | Skip excluded paths immediately | `references/` |
-| `ANALYZE` | Verify references, dynamic loading, config/docs/test usage, git history, and file context | Evidence must be explicit (≥2 signals) | `references/` |
-| `CATEGORIZE` | Assign category, risk, and confidence score | Drop `<30` from deletion flow | `references/` |
-| `PROPOSE` | Produce cleanup report with evidence and recommended action | Show confidence and risk per item | `references/` |
-| `EXECUTE` | After confirmation, create backup branch, delete in small reversible batches (≤10 files per batch) | Batch only at confidence ≥90 | `references/` |
-| `VERIFY` | Run the same build/tests, confirm no regressions, update docs/baseline | Tests must pass at ≥ baseline rate | `references/` |
+| `SCAN` | Exclude protected paths, run primary tooling, collect candidates | Skip excluded paths immediately | `reference/` |
+| `ANALYZE` | Verify references, dynamic loading, config/docs/test usage, git history, and file context | Evidence must be explicit (≥2 signals) | `reference/` |
+| `CATEGORIZE` | Assign category, risk, and confidence score | Drop `<30` from deletion flow | `reference/` |
+| `PROPOSE` | Produce cleanup report with evidence and recommended action | Show confidence and risk per item | `reference/` |
+| `EXECUTE` | After confirmation, create backup branch, delete in small reversible batches (≤10 files per batch) | Batch only at confidence ≥90 | `reference/` |
+| `VERIFY` | Run the same build/tests, confirm no regressions, update docs/baseline | Tests must pass at ≥ baseline rate | `reference/` |
 
 ## Confidence Gates
 ### Score Weights
@@ -152,13 +152,13 @@ Single source of truth for Recipe definitions. Detection-tool detail (per-Recipe
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Dead Code | `dead` | ✓ | Dead code detection (unused functions/classes/variables) via knip (TS/JS) / vulture+deadcode (Python) / staticcheck (Go). Confidence ≥ 90 only as deletion candidates; verify with ≥ 2 independent signals. | `references/cleanup-targets.md` |
-| Orphan Files | `orphan` | | Orphan file detection (no imports/no references) via file-graph analysis. Treat `pages/` / `app/` / route files as high-risk false positives. | `references/cleanup-targets.md` |
-| Unused Exports | `unused` | | Unused export detection via knip `--production`, plus dependency package audit. Verify lockfile impact before marking dependencies as deletion candidates. | `references/dependency-cleanup.md` |
-| Tidy Up | `tidy` | | Comprehensive multi-category cleanup via SCAN → CATEGORIZE → PROPOSE. Create backup branch first; delete in batches of ≤ 10 files. | `references/cleanup-protocol.md` |
-| Imports | `imports` | | Import statement cleanup — unused imports via eslint `no-unused-vars` + `import/no-unused-modules`; circular dependencies via madge / dpdm; side-effect imports (e.g., `import 'side-effect-css'`) are protected; barrel files (`index.ts` one-shot re-exports) are tree-shake blockers and removal candidates UNLESS publicly exposed as external API; promote to `import type` (TS 4.5+) via `verbatimModuleSyntax`. | `references/imports-cleanup.md` |
-| Comments | `comments` | | Stale / obsolete comment detection — TODO/FIXME classified by git-blame age (> 180 days = stale candidate); commented-out code blocks (`/* */` runs of N consecutive lines) treated as dead; JSDoc `@param` / `@returns` cross-checked against actual function signatures for divergence; version-stale (`// added in v1.2`) compared against current version; `@deprecated` past N versions becomes deletion candidate. Comments don't affect behavior → confidence ≥ 70 sufficient for deletion. | `references/stale-comments.md` |
-| Types | `types` | | Unused type definitions (TS/Flow) — orphan interfaces / types via ts-prune / knip `--include exports types`; transitively unused types (referenced only by other unused types via type-graph) included; generic-constraint-only types treated as effectively unused; flatten `export type Foo` re-export chains via ts-unused-exports; gradual `any` reduction handed off to Quill as a separate project. | `references/unused-types.md` |
+| Dead Code | `dead` | ✓ | Dead code detection (unused functions/classes/variables) via knip (TS/JS) / vulture+deadcode (Python) / staticcheck (Go). Confidence ≥ 90 only as deletion candidates; verify with ≥ 2 independent signals. | `reference/cleanup-targets.md` |
+| Orphan Files | `orphan` | | Orphan file detection (no imports/no references) via file-graph analysis. Treat `pages/` / `app/` / route files as high-risk false positives. | `reference/cleanup-targets.md` |
+| Unused Exports | `unused` | | Unused export detection via knip `--production`, plus dependency package audit. Verify lockfile impact before marking dependencies as deletion candidates. | `reference/dependency-cleanup.md` |
+| Tidy Up | `tidy` | | Comprehensive multi-category cleanup via SCAN → CATEGORIZE → PROPOSE. Create backup branch first; delete in batches of ≤ 10 files. | `reference/cleanup-protocol.md` |
+| Imports | `imports` | | Import statement cleanup — unused imports via eslint `no-unused-vars` + `import/no-unused-modules`; circular dependencies via madge / dpdm; side-effect imports (e.g., `import 'side-effect-css'`) are protected; barrel files (`index.ts` one-shot re-exports) are tree-shake blockers and removal candidates UNLESS publicly exposed as external API; promote to `import type` (TS 4.5+) via `verbatimModuleSyntax`. | `reference/imports-cleanup.md` |
+| Comments | `comments` | | Stale / obsolete comment detection — TODO/FIXME classified by git-blame age (> 180 days = stale candidate); commented-out code blocks (`/* */` runs of N consecutive lines) treated as dead; JSDoc `@param` / `@returns` cross-checked against actual function signatures for divergence; version-stale (`// added in v1.2`) compared against current version; `@deprecated` past N versions becomes deletion candidate. Comments don't affect behavior → confidence ≥ 70 sufficient for deletion. | `reference/stale-comments.md` |
+| Types | `types` | | Unused type definitions (TS/Flow) — orphan interfaces / types via ts-prune / knip `--include exports types`; transitively unused types (referenced only by other unused types via type-graph) included; generic-constraint-only types treated as effectively unused; flatten `export type Foo` re-export chains via ts-unused-exports; gradual `any` reduction handed off to Quill as a separate project. | `reference/unused-types.md` |
 
 ### Signal Keywords → Recipe
 
@@ -168,13 +168,13 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 |----------|------------------|
 | `dead code`, `unused function`, `unused class`, `unused variable` | `dead` |
 | `orphan`, `orphan file`, `no imports`, `no references`, `post-refactor residue` | `orphan` (targeted scan on changed areas after refactors) |
-| `unused export`, `unused dependency`, `dependency audit`, `lockfile` | `unused` (see also `references/dependency-cleanup.md`) |
+| `unused export`, `unused dependency`, `dependency audit`, `lockfile` | `unused` (see also `reference/dependency-cleanup.md`) |
 | `tidy`, `comprehensive cleanup`, `multi-category` | `tidy` |
 | `import`, `circular dependency`, `barrel file`, `type-only import` | `imports` |
 | `TODO`, `FIXME`, `stale comment`, `commented-out code`, `divergent JSDoc`, `version-stale` | `comments` |
 | `unused type`, `orphan interface`, `generic constraint pollution`, `any accumulation` | `types` |
-| `monorepo`, `large-scale cleanup`, `enterprise cleanup` | `tidy` with phased cleanup and area ownership (see `references/large-scale-cleanup.md`) |
-| `maintenance`, `scheduled scan`, `baseline comparison`, `trend report` | See `Maintenance Mode` table + `references/maintenance-workflow.md` |
+| `monorepo`, `large-scale cleanup`, `enterprise cleanup` | `tidy` with phased cleanup and area ownership (see `reference/large-scale-cleanup.md`) |
+| `maintenance`, `scheduled scan`, `baseline comparison`, `trend report` | See `Maintenance Mode` table + `reference/maintenance-workflow.md` |
 | complex multi-agent task | Route to Nexus per `_common/BOUNDARIES.md` |
 | unclear request | Clarify scope and route per `_common/BOUNDARIES.md` |
 
@@ -226,22 +226,22 @@ When scanning a polyglot monorepo, spawn language-specific scanner subagents in 
 ## Reference Map
 | File | Read this when... |
 |------|-------------------|
-| `references/cleanup-protocol.md` | you need the canonical deletion checklist, scoring rules, rollback prep, report format, or Grove handoff handling |
-| `references/cleanup-targets.md` | you need candidate categories, indicators, or verification cues |
-| `references/detection-strategies.md` | you need thresholds by age, size, reference count, or git activity |
-| `references/exclusion-patterns.md` | you need scan exclusions, never-delete files, or `.sweepignore` guidance |
-| `references/false-positives.md` | you suspect dynamic loading, framework convention files, or string-based references |
-| `references/language-patterns.md` | you need language-specific tooling and fallback rules |
-| `references/maintenance-workflow.md` | you are running incremental/full scans, baseline updates, or Grove handoff processing |
-| `references/sample-commands.md` | you need quick commands for dependency, file, or project-tool analysis |
-| `references/troubleshooting.md` | a cleanup broke the build or scan performance/tooling is failing |
-| `references/dead-code-impact-prevention.md` | you need business framing, prevention policies, or cleanup health metrics |
-| `references/large-scale-cleanup.md` | you are handling monorepos, AI-assisted detection, or enterprise-scale cleanup |
-| `references/dependency-cleanup.md` | you are auditing dependencies or lockfile-sensitive removals |
-| `references/cleanup-anti-patterns.md` | you need safety guardrails against risky cleanup behavior |
-| `references/imports-cleanup.md` | you need import-statement cleanup patterns: unused imports, circular dependencies, duplicate imports, side-effect import survival, barrel-file overhead, type-only import promotion |
-| `references/stale-comments.md` | you need stale-comment detection: aged TODO/FIXME, commented-out code blocks, divergent JSDoc, version-stale annotations, dead doc references |
-| `references/unused-types.md` | you need unused TypeScript type detection: orphan interfaces, transitively unused types, generic constraint pollution, deprecated type re-exports, `any` accumulation handoff |
+| `reference/cleanup-protocol.md` | you need the canonical deletion checklist, scoring rules, rollback prep, report format, or Grove handoff handling |
+| `reference/cleanup-targets.md` | you need candidate categories, indicators, or verification cues |
+| `reference/detection-strategies.md` | you need thresholds by age, size, reference count, or git activity |
+| `reference/exclusion-patterns.md` | you need scan exclusions, never-delete files, or `.sweepignore` guidance |
+| `reference/false-positives.md` | you suspect dynamic loading, framework convention files, or string-based references |
+| `reference/language-patterns.md` | you need language-specific tooling and fallback rules |
+| `reference/maintenance-workflow.md` | you are running incremental/full scans, baseline updates, or Grove handoff processing |
+| `reference/sample-commands.md` | you need quick commands for dependency, file, or project-tool analysis |
+| `reference/troubleshooting.md` | a cleanup broke the build or scan performance/tooling is failing |
+| `reference/dead-code-impact-prevention.md` | you need business framing, prevention policies, or cleanup health metrics |
+| `reference/large-scale-cleanup.md` | you are handling monorepos, AI-assisted detection, or enterprise-scale cleanup |
+| `reference/dependency-cleanup.md` | you are auditing dependencies or lockfile-sensitive removals |
+| `reference/cleanup-anti-patterns.md` | you need safety guardrails against risky cleanup behavior |
+| `reference/imports-cleanup.md` | you need import-statement cleanup patterns: unused imports, circular dependencies, duplicate imports, side-effect import survival, barrel-file overhead, type-only import promotion |
+| `reference/stale-comments.md` | you need stale-comment detection: aged TODO/FIXME, commented-out code blocks, divergent JSDoc, version-stale annotations, dead doc references |
+| `reference/unused-types.md` | you need unused TypeScript type detection: orphan interfaces, transitively unused types, generic constraint pollution, deprecated type re-exports, `any` accumulation handoff |
 | `_common/OPUS_48_AUTHORING.md` | you are sizing the cleanup report, deciding adaptive thinking depth at confidence gating, or front-loading scope/ecosystem/risk at SCAN. Critical for Sweep: P3, P5. |
 
 ## Operational

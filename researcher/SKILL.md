@@ -81,10 +81,10 @@ Route elsewhere when the task is primarily:
 - Protect participant privacy, consent, and dignity at every stage.
 - State evidence strength, confidence, and limitations explicitly. Report quantitative benchmarks with 90% confidence intervals.
 - Inclusive by default — recruit diverse participants across physical, cognitive, situational dimensions from the start. Biased samples produce biased products.
-- Synthetic users supplement, never substitute. Apply BEST framework (Behavioural/Ethical/Social/Technological) and the 80/20 split (synthetic for hypotheses/screening, humans for emotional depth, edge cases, cultural nuance). Detail → `references/ai-assisted-research.md`.
+- Synthetic users supplement, never substitute. Apply BEST framework (Behavioural/Ethical/Social/Technological) and the 80/20 split (synthetic for hypotheses/screening, humans for emotional depth, edge cases, cultural nuance). Detail → `reference/ai-assisted-research.md`.
 - AI moderation suitability: structured problem spaces with known topic boundaries only. Reserve human moderation for exploratory work needing real-time pivoting.
-- JTBD: use Switch Interview (Moesta/Christensen) — four forces (Push/Pull/Anxiety/Habit), Job Map (Define→Locate→Prepare→Confirm→Execute→Monitor→Modify→Conclude), separate functional/emotional/social jobs. For competitive job landscape coordinate with Compete. Detail → `references/analysis-and-synthesis.md`.
-- Quantitative surveys: calibrate sample size to effect size and CI (95% published, 90% internal), pick scale by purpose (Likert/semantic differential/MaxDiff), validate reliability (Cronbach's α ≥ 0.70) and construct validity. Escalate factor analysis / conjoint / SEM to a dedicated survey skill if demand recurs. Detail → `references/survey-quantitative-design.md`.
+- JTBD: use Switch Interview (Moesta/Christensen) — four forces (Push/Pull/Anxiety/Habit), Job Map (Define→Locate→Prepare→Confirm→Execute→Monitor→Modify→Conclude), separate functional/emotional/social jobs. For competitive job landscape coordinate with Compete. Detail → `reference/analysis-and-synthesis.md`.
+- Quantitative surveys: calibrate sample size to effect size and CI (95% published, 90% internal), pick scale by purpose (Likert/semantic differential/MaxDiff), validate reliability (Cronbach's α ≥ 0.70) and construct validity. Escalate factor analysis / conjoint / SEM to a dedicated survey skill if demand recurs. Detail → `reference/survey-quantitative-design.md`.
 - Research only. Do not write implementation code.
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read prior studies, journey maps, JTBD artifacts, and participant segments at PLAN — research design depends on grounding in existing evidence), P5 (think step-by-step at method selection: AI-moderated vs human, synthetic vs real, JTBD Switch vs qualitative coding, sample-size calibration)** as critical for Researcher. P2 recommended: calibrated research report preserving evidence strength, confidence intervals, and separation of observation from interpretation. P1 recommended: front-load research question, scope, and participant profile at INTAKE.
 
@@ -122,7 +122,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Ignore contradictory evidence.
 - Treat synthetic user output as equivalent to real-user research. See `_common/AI_PERSONA_RISKS.md`.
 - Deploy AI-moderated interviews without human review (AI agreement 80-85% vs expert coders — the 15-20% gap needs researcher judgment).
-- Democratize research without guardrails (researcher review of study design, templates, tool permissions, privacy protocols, researcher office hours). Source data and benchmarks → `references/research-ops-democratization.md`.
+- Democratize research without guardrails (researcher review of study design, templates, tool permissions, privacy protocols, researcher office hours). Source data and benchmarks → `reference/research-ops-democratization.md`.
 - Use homogeneous participant pools — exclusion embeds bias into products.
 - Write production implementation code.
 
@@ -132,12 +132,12 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `DEFINE` | Clarify research questions, constraints, and decision to influence | Research questions first | `references/interview-guide.md` |
-| `DESIGN` | Choose methods, create guides, build screeners, define consent | Methods serve the question | `references/participant-screening.md` |
-| `ANALYZE` | Code data, identify patterns, check bias, compare signals | Separate observation from interpretation | `references/analysis-and-synthesis.md` |
-| `SYNTHESIZE` | Create insights, personas, journey maps, recommendations; if underrepresented segments found → consider delegating to Plea | Evidence strength required | `references/analysis-and-synthesis.md` |
-| `HANDOFF` | Package findings for downstream agents | Include confidence and limitations | `references/continuous-discovery-mixed-methods.md` |
-| `DISTILL` | Track adoption, calibrate methods, share validated patterns | Improve the research system | `references/research-calibration.md` |
+| `DEFINE` | Clarify research questions, constraints, and decision to influence | Research questions first | `reference/interview-guide.md` |
+| `DESIGN` | Choose methods, create guides, build screeners, define consent | Methods serve the question | `reference/participant-screening.md` |
+| `ANALYZE` | Code data, identify patterns, check bias, compare signals | Separate observation from interpretation | `reference/analysis-and-synthesis.md` |
+| `SYNTHESIZE` | Create insights, personas, journey maps, recommendations; if underrepresented segments found → consider delegating to Plea | Evidence strength required | `reference/analysis-and-synthesis.md` |
+| `HANDOFF` | Package findings for downstream agents | Include confidence and limitations | `reference/continuous-discovery-mixed-methods.md` |
+| `DISTILL` | Track adoption, calibrate methods, share validated patterns | Improve the research system | `reference/research-calibration.md` |
 
 ## Critical Thresholds
 
@@ -180,15 +180,15 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Interview Design | `interview` | ✓ | Interview guide and protocol design | `references/interview-guide.md`, `references/participant-screening.md` |
-| Usability Test | `usability` | | Usability test planning and task design | `references/analysis-and-synthesis.md`, `references/participant-screening.md` |
-| Analysis | `analysis` | | Qualitative analysis, affinity mapping, and insight synthesis | `references/analysis-and-synthesis.md`, `references/bias-checklist.md` |
-| Persona | `persona` | | Persona creation and journey map generation | `references/analysis-and-synthesis.md` |
-| Journey | `journey` | | Journey mapping and JTBD analysis | `references/analysis-and-synthesis.md`, `references/continuous-discovery-mixed-methods.md` |
-| Survey | `survey` | | Quantitative survey design (Likert / MaxDiff / Conjoint), sample-size math, order-bias control | `references/survey-quantitative-design.md`, `references/participant-screening.md` |
-| Diary | `diary` | | Diary / longitudinal behavioral study design with ESM scheduling and fatigue management | `references/diary-longitudinal-study.md`, `references/participant-screening.md` |
-| Cards | `cards` | | Information architecture validation via card sort, tree test, and first-click testing | `references/cards-ia-validation.md`, `references/participant-screening.md` |
-| Multi-Engine | `multi` | | Multi-engine research-design generation with methodology-coverage matrix scoring. Combined Plan (triangulated) or Portfolio (independent programs) merge. Surfaces single-engine breakthroughs alongside universal concurrence. | `references/tri-engine-research.md`, `_common/SUBAGENT.md`, `_common/MULTI_ENGINE_RECIPE.md` |
+| Interview Design | `interview` | ✓ | Interview guide and protocol design | `reference/interview-guide.md`, `reference/participant-screening.md` |
+| Usability Test | `usability` | | Usability test planning and task design | `reference/analysis-and-synthesis.md`, `reference/participant-screening.md` |
+| Analysis | `analysis` | | Qualitative analysis, affinity mapping, and insight synthesis | `reference/analysis-and-synthesis.md`, `reference/bias-checklist.md` |
+| Persona | `persona` | | Persona creation and journey map generation | `reference/analysis-and-synthesis.md` |
+| Journey | `journey` | | Journey mapping and JTBD analysis | `reference/analysis-and-synthesis.md`, `reference/continuous-discovery-mixed-methods.md` |
+| Survey | `survey` | | Quantitative survey design (Likert / MaxDiff / Conjoint), sample-size math, order-bias control | `reference/survey-quantitative-design.md`, `reference/participant-screening.md` |
+| Diary | `diary` | | Diary / longitudinal behavioral study design with ESM scheduling and fatigue management | `reference/diary-longitudinal-study.md`, `reference/participant-screening.md` |
+| Cards | `cards` | | Information architecture validation via card sort, tree test, and first-click testing | `reference/cards-ia-validation.md`, `reference/participant-screening.md` |
+| Multi-Engine | `multi` | | Multi-engine research-design generation with methodology-coverage matrix scoring. Combined Plan (triangulated) or Portfolio (independent programs) merge. Surfaces single-engine breakthroughs alongside universal concurrence. | `reference/tri-engine-research.md`, `_common/SUBAGENT.md`, `_common/MULTI_ENGINE_RECIPE.md` |
 
 ## Subcommand Dispatch
 
@@ -205,33 +205,33 @@ Behavior notes per Recipe:
 - `survey`: Quantitative survey design — item authoring, scale selection, sample-size calculation, order-bias control, Cronbach's α validation. For usability cognitive walkthrough use Echo; for production KPI tracking events use Pulse; for operational NPS/CSAT feedback pipelines use Voice.
 - `diary`: Longitudinal behavioral study — study length, ESM prompt frequency, self-report bias mitigation, fatigue management, media capture. For passive in-product telemetry use Pulse; for single-session cognitive walkthrough use Echo; for retrospective feedback mining use Voice.
 - `cards`: IA validation — open / closed / hybrid card sort, tree testing, first-click testing, dendrogram and similarity-matrix analysis. For UI comprehension walkthrough use Echo; for post-launch navigation analytics use Pulse; for post-launch findability complaints use Voice.
-- `multi`: Multi-engine research-design generation (see `Multi-Engine Mode` section + `references/tri-engine-research.md` for the full SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND → SYNTHESIZE → PRESENT flow). Critical difference from Judge: divergent methodologies are NOT auto-low-value — triangulation is the discipline's quality lever.
+- `multi`: Multi-engine research-design generation (see `Multi-Engine Mode` section + `reference/tri-engine-research.md` for the full SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND → SYNTHESIZE → PRESENT flow). Critical difference from Judge: divergent methodologies are NOT auto-low-value — triangulation is the discipline's quality lever.
 
 ## Output Routing
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `interview`, `guide`, `protocol`, `questions` | Interview design | Interview guide + session checklist | `references/interview-guide.md` |
-| `usability`, `test plan`, `task scenarios`, `UEQ` | Usability study design | Test plan + task list | `references/analysis-and-synthesis.md` |
-| `screener`, `recruit`, `participants` | Participant screening | Screener + qualification criteria | `references/participant-screening.md` |
-| `analyze`, `thematic`, `affinity`, `insights` | Qualitative analysis | Insight cards + thematic report | `references/analysis-and-synthesis.md` |
-| `persona`, `journey map`, `user profile` | Synthesis artifacts | Persona or journey map | `references/analysis-and-synthesis.md` |
-| `continuous`, `discovery cadence`, `mixed methods` | Research program design | Research cadence plan | `references/continuous-discovery-mixed-methods.md` |
-| `bias`, `ethics`, `consent` | Bias and ethics review | Bias checklist + consent template | `references/bias-checklist.md` |
-| `calibration`, `impact`, `ROI` | Research impact measurement | Calibration report | `references/research-calibration.md` |
-| `workplace UX`, `B2B usability`, `CASTLE`, `enterprise metrics` | Workplace usability evaluation | CASTLE assessment + metric plan | `references/analysis-and-synthesis.md` |
-| `synthetic`, `AI participants`, `BEST`, `AI moderated`, `automated interviews` | AI-assisted research governance | BEST assessment / probing logic + human review | `references/ai-assisted-research.md` |
-| `democratize`, `self-service`, `research ops` | Research democratization | Governance framework + templates | `references/research-ops-democratization.md` |
-| `inclusive`, `diversity`, `accessibility research` | Inclusive research design | Inclusive recruitment plan + bias mitigation | `references/bias-checklist.md` |
-| `multi-engine`, `triangulation design`, `multi` | Multi-engine research-design generation | Combined Plan (default) or Portfolio | `references/tri-engine-research.md` |
-| unclear research request | Study scoping | Research plan proposal | `references/interview-guide.md` |
+| `interview`, `guide`, `protocol`, `questions` | Interview design | Interview guide + session checklist | `reference/interview-guide.md` |
+| `usability`, `test plan`, `task scenarios`, `UEQ` | Usability study design | Test plan + task list | `reference/analysis-and-synthesis.md` |
+| `screener`, `recruit`, `participants` | Participant screening | Screener + qualification criteria | `reference/participant-screening.md` |
+| `analyze`, `thematic`, `affinity`, `insights` | Qualitative analysis | Insight cards + thematic report | `reference/analysis-and-synthesis.md` |
+| `persona`, `journey map`, `user profile` | Synthesis artifacts | Persona or journey map | `reference/analysis-and-synthesis.md` |
+| `continuous`, `discovery cadence`, `mixed methods` | Research program design | Research cadence plan | `reference/continuous-discovery-mixed-methods.md` |
+| `bias`, `ethics`, `consent` | Bias and ethics review | Bias checklist + consent template | `reference/bias-checklist.md` |
+| `calibration`, `impact`, `ROI` | Research impact measurement | Calibration report | `reference/research-calibration.md` |
+| `workplace UX`, `B2B usability`, `CASTLE`, `enterprise metrics` | Workplace usability evaluation | CASTLE assessment + metric plan | `reference/analysis-and-synthesis.md` |
+| `synthetic`, `AI participants`, `BEST`, `AI moderated`, `automated interviews` | AI-assisted research governance | BEST assessment / probing logic + human review | `reference/ai-assisted-research.md` |
+| `democratize`, `self-service`, `research ops` | Research democratization | Governance framework + templates | `reference/research-ops-democratization.md` |
+| `inclusive`, `diversity`, `accessibility research` | Inclusive research design | Inclusive recruitment plan + bias mitigation | `reference/bias-checklist.md` |
+| `multi-engine`, `triangulation design`, `multi` | Multi-engine research-design generation | Combined Plan (default) or Portfolio | `reference/tri-engine-research.md` |
+| unclear research request | Study scoping | Research plan proposal | `reference/interview-guide.md` |
 
 Routing rules:
 
 - If the request involves feedback collection rather than study design, route to `Voice`.
 - If the request needs persona lifecycle management, route to `Cast`.
 - If the request is UI validation with existing personas, route to `Echo`.
-- Always check `references/bias-checklist.md` during the ANALYZE phase.
+- Always check `reference/bias-checklist.md` during the ANALYZE phase.
 
 ## Output Requirements
 
@@ -280,7 +280,7 @@ Activated by the `multi` Recipe or explicit requests for parallel research desig
 
 **Base Engine Policy (2026-05)**: Default = Claude + Codex (dual-engine, 2 spawns). agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE at PREFLIGHT. dual-engine is NOT degraded — it covers quant (Codex) + qual/ethics (Claude). agy adds mixed-methods at-scale (HEART, longitudinal panels, ResearchOps).
 
-**Researcher-specific contracts** (full algorithm, JSON schema, coverage matrix, GROUND checklist, subagent prompts → `references/tri-engine-research.md`):
+**Researcher-specific contracts** (full algorithm, JSON schema, coverage matrix, GROUND checklist, subagent prompts → `reference/tri-engine-research.md`):
 
 - Spawn subagents `research-codex`, `research-agy`, `research-claude` in a single message. Run PREFLIGHT in main context only (subagent PATH is narrower).
 - Loose prompts only (Role + Target + Output format). Do NOT pass methodology templates, sample-size formulas, SUS/UEQ rubrics, screener archetypes, or JTBD scaffolds — framework rules apply at SYNTHESIZE, not FAN-OUT.
@@ -296,19 +296,19 @@ Activated by the `multi` Recipe or explicit requests for parallel research desig
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/interview-guide.md` | You need interview guides, question hierarchies, or session checklists. |
-| `references/participant-screening.md` | You need screeners, consent forms, qualification logic, or sample-size guidance. |
-| `references/bias-checklist.md` | You need bias checks or report-language validation. |
-| `references/analysis-and-synthesis.md` | You need thematic analysis, insight cards, personas, journey maps, usability test plans, or report templates. |
-| `references/research-calibration.md` | You need DISTILL, adoption tracking, calibration rules, or EVOLUTION_SIGNAL. |
-| `references/ai-assisted-research.md` | AI is part of the research workflow or synthetic users are being considered. |
-| `references/research-ops-democratization.md` | The task is ResearchOps, repository design, democratization, or self-service research governance. |
-| `references/research-anti-patterns-impact.md` | You need anti-pattern prevention, ROI framing, or stakeholder alignment. |
-| `references/continuous-discovery-mixed-methods.md` | You need continuous discovery cadence, mixed-methods design, triangulation, or always-on research. |
-| `references/survey-quantitative-design.md` | You need quantitative survey design, scale selection, sample-size math, order-bias control, or reliability checks. |
-| `references/diary-longitudinal-study.md` | You need diary / longitudinal study design, ESM scheduling, fatigue management, or media-capture guidance. |
-| `references/cards-ia-validation.md` | You need card sort, tree testing, first-click testing, or IA validation analysis. |
-| `references/tri-engine-research.md` | You are running the `multi` Recipe — tri-engine research-design fan-out (Codex + Antigravity + Claude subagents), methodology-coverage matrix (qual/quant × generative/evaluative), CLUSTER identity rules that keep different methodologies in separate clusters, ethics/IRB/feasibility GROUND checklist, Combined-Plan vs Portfolio merge strategies, JSON schema, and subagent prompt skeleton. |
+| `reference/interview-guide.md` | You need interview guides, question hierarchies, or session checklists. |
+| `reference/participant-screening.md` | You need screeners, consent forms, qualification logic, or sample-size guidance. |
+| `reference/bias-checklist.md` | You need bias checks or report-language validation. |
+| `reference/analysis-and-synthesis.md` | You need thematic analysis, insight cards, personas, journey maps, usability test plans, or report templates. |
+| `reference/research-calibration.md` | You need DISTILL, adoption tracking, calibration rules, or EVOLUTION_SIGNAL. |
+| `reference/ai-assisted-research.md` | AI is part of the research workflow or synthetic users are being considered. |
+| `reference/research-ops-democratization.md` | The task is ResearchOps, repository design, democratization, or self-service research governance. |
+| `reference/research-anti-patterns-impact.md` | You need anti-pattern prevention, ROI framing, or stakeholder alignment. |
+| `reference/continuous-discovery-mixed-methods.md` | You need continuous discovery cadence, mixed-methods design, triangulation, or always-on research. |
+| `reference/survey-quantitative-design.md` | You need quantitative survey design, scale selection, sample-size math, order-bias control, or reliability checks. |
+| `reference/diary-longitudinal-study.md` | You need diary / longitudinal study design, ESM scheduling, fatigue management, or media-capture guidance. |
+| `reference/cards-ia-validation.md` | You need card sort, tree testing, first-click testing, or IA validation analysis. |
+| `reference/tri-engine-research.md` | You are running the `multi` Recipe — tri-engine research-design fan-out (Codex + Antigravity + Claude subagents), methodology-coverage matrix (qual/quant × generative/evaluative), CLUSTER identity rules that keep different methodologies in separate clusters, ethics/IRB/feasibility GROUND checklist, Combined-Plan vs Portfolio merge strategies, JSON schema, and subagent prompt skeleton. |
 | `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
 | `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill `multi` Recipe protocol — Pattern D (Divergence-primary) scoring rules, canonical PREFLIGHT probe, degraded modes, engine-attribution tag convention, and the Implementation Checklist that this skill's `multi` Recipe follows. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the research report, deciding adaptive thinking depth at method selection, or front-loading research question/scope/participants at INTAKE. Critical for Researcher: P3, P5. |

@@ -20,10 +20,10 @@ DELETE_BASENAMES = [
 
 # Titan-specific files to delete
 TITAN_DELETE = [
-    "titan/references/guardrail-integration.md",
-    "titan/references/phase-context-scoring.md",
-    "titan/references/magi-protocol.md",
-    "titan/references/rally-coordination.md",
+    "titan/reference/guardrail-integration.md",
+    "titan/reference/phase-context-scoring.md",
+    "titan/reference/magi-protocol.md",
+    "titan/reference/rally-coordination.md",
 ]
 
 def delete_files():
@@ -32,7 +32,7 @@ def delete_files():
 
     # Delete by basename pattern
     for basename in DELETE_BASENAMES:
-        pattern = os.path.join(BASE, "*/references", basename)
+        pattern = os.path.join(BASE, "*/reference", basename)
         for f in glob.glob(pattern):
             os.remove(f)
             deleted.append(f)
@@ -55,24 +55,24 @@ def update_skill_references(skill_path, deleted_basenames):
 
     # Remove table rows that reference deleted files
     for basename in deleted_basenames:
-        # Match table rows like: | `references/interaction-triggers.md` | ... |
-        pattern = rf'\|[^\n]*`references/{re.escape(basename)}`[^\n]*\|\n'
+        # Match table rows like: | `reference/interaction-triggers.md` | ... |
+        pattern = rf'\|[^\n]*`reference/{re.escape(basename)}`[^\n]*\|\n'
         content = re.sub(pattern, '', content)
 
-        # Also match without backticks: | references/interaction-triggers.md | ... |
-        pattern2 = rf'\|[^\n]*references/{re.escape(basename)}[^\n]*\|\n'
+        # Also match without backticks: | reference/interaction-triggers.md | ... |
+        pattern2 = rf'\|[^\n]*reference/{re.escape(basename)}[^\n]*\|\n'
         content = re.sub(pattern2, '', content)
 
-        # Match lines like: → Handoff templates: `references/handoffs.md`
-        pattern3 = rf'→[^\n]*`references/{re.escape(basename)}`[^\n]*\n'
+        # Match lines like: → Handoff templates: `reference/handoffs.md`
+        pattern3 = rf'→[^\n]*`reference/{re.escape(basename)}`[^\n]*\n'
         content = re.sub(pattern3, '', content)
 
-        # Match lines like: Handoff templates → `references/handoff-formats.md`
-        pattern4 = rf'[^\n]*→\s*`references/{re.escape(basename)}`[^\n]*\n'
+        # Match lines like: Handoff templates → `reference/handoff-formats.md`
+        pattern4 = rf'[^\n]*→\s*`reference/{re.escape(basename)}`[^\n]*\n'
         content = re.sub(pattern4, '', content)
 
         # Match standalone reference lines
-        pattern5 = rf'^[^\n|]*`references/{re.escape(basename)}`[^\n]*$\n'
+        pattern5 = rf'^[^\n|]*`reference/{re.escape(basename)}`[^\n]*$\n'
         content = re.sub(pattern5, '', content, flags=re.MULTILINE)
 
     # Clean up double blank lines

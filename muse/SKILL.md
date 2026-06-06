@@ -85,7 +85,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Replace hardcoded values with semantic tokens.
 - Verify light and dark mode.
 - Audit changed files for hardcoded values and off-grid spacing.
-- Follow the lifecycle in `references/token-lifecycle.md`.
+- Follow the lifecycle in `reference/token-lifecycle.md`.
 - Process reverse feedback from Palette, Flow, Showcase, and Judge.
 
 ### Ask First
@@ -114,18 +114,18 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Focus | Required checks | Read |
 |-------|-------|-----------------|------|
-| `SCAN` | Find inconsistencies, hardcoded values, off-grid spacing, dark mode gaps, stale docs, and reverse feedback | Audit changed files and active token sets | `references/token-system.md`, `references/token-anti-patterns.md` |
-| `POLISH` | Pick the highest-impact improvement that reinforces the system | Prefer visible, isolated, reusable fixes | `references/token-system.md` |
-| `REFINE` | Apply tokens, flatten architecture issues, and clean naming or lifecycle drift | Avoid ad hoc overrides | `references/token-lifecycle.md`, `references/css-token-architecture-anti-patterns.md` |
-| `VERIFY` | Confirm responsive behavior, dark mode, accessibility, and token coverage | Run palette-style contrast checks when colors changed | `references/dark-mode.md` |
-| `PRESENT` | Summarize before/after impact and document token decisions | Include lifecycle status and migration notes when relevant | `references/token-lifecycle.md` |
+| `SCAN` | Find inconsistencies, hardcoded values, off-grid spacing, dark mode gaps, stale docs, and reverse feedback | Audit changed files and active token sets | `reference/token-system.md`, `reference/token-anti-patterns.md` |
+| `POLISH` | Pick the highest-impact improvement that reinforces the system | Prefer visible, isolated, reusable fixes | `reference/token-system.md` |
+| `REFINE` | Apply tokens, flatten architecture issues, and clean naming or lifecycle drift | Avoid ad hoc overrides | `reference/token-lifecycle.md`, `reference/css-token-architecture-anti-patterns.md` |
+| `VERIFY` | Confirm responsive behavior, dark mode, accessibility, and token coverage | Run palette-style contrast checks when colors changed | `reference/dark-mode.md` |
+| `PRESENT` | Summarize before/after impact and document token decisions | Include lifecycle status and migration notes when relevant | `reference/token-lifecycle.md` |
 
 ## Critical Thresholds
 
 | Area               | Rule                                                                                                                                                                                      |
 | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Typography scale   | Default to Major Third (`1.25`).                                                                                                                                                          |
-| Font selection      | Display font must be intentionally chosen. **Inter, Roboto, Arial are banned as primary display fonts** — they signal generic AI template. System fonts acceptable for body text only. See `references/typography-selection-guide.md`. |
+| Font selection      | Display font must be intentionally chosen. **Inter, Roboto, Arial are banned as primary display fonts** — they signal generic AI template. System fonts acceptable for body text only. See `reference/typography-selection-guide.md`. |
 | Spacing system     | Use an `8px` grid. `4px` is allowed only for tight pairings such as icon-to-text spacing.                                                                                                 |
 | Health targets     | Token coverage `95%+`. Dark mode support `100%`. Component token usage `100%`. Documentation should be `< 1 sprint` stale.                                                                |
 | Lifecycle gates    | `ADOPT -> STABLE` after usage in `3+ components`. `DEPRECATE` stays active for `2 sprints` with a migration guide.                                                                        |
@@ -141,37 +141,37 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `token`, `define`, `color`, `spacing`, `typography` | Token definition workflow | Token specification + file changes | `references/token-system.md` |
-| `dark mode`, `theme`, `light mode`, `contrast` | Dark mode token strategy | Theme token definitions + verification report | `references/dark-mode.md` |
-| `migrate`, `replace hardcoded`, `audit`, `coverage` | Token migration workflow | Replacement mapping + changed files | `references/token-anti-patterns.md` |
-| `design system`, `foundation`, `architecture` | Design system construction | Token architecture document | `references/design-system-construction.md` |
-| `figma`, `sync`, `Style Dictionary`, `Tokens Studio`, `DTCG`, `variables` | Figma sync workflow | Sync configuration + DTCG-format token output | `references/figma-sync.md` |
-| `lifecycle`, `deprecate`, `adopt`, `stable` | Token lifecycle management | Lifecycle state changes + migration guide | `references/token-lifecycle.md` |
-| `font`, `typeface`, `display font` | Typography selection | Font recommendation + pairing guide | `references/typography-selection-guide.md` |
-| `accessibility`, `touch target`, `focus ring`, `WCAG`, `a11y` | Accessibility token workflow | Accessibility token spec + contrast report | `references/dark-mode.md` |
-| reverse feedback from Palette/Flow/Showcase/Judge | Feedback processing workflow | Token adjustment + impact summary | relevant `references/` file |
-| unclear request | Clarify scope and route | Scoped analysis | `references/token-system.md` |
+| `token`, `define`, `color`, `spacing`, `typography` | Token definition workflow | Token specification + file changes | `reference/token-system.md` |
+| `dark mode`, `theme`, `light mode`, `contrast` | Dark mode token strategy | Theme token definitions + verification report | `reference/dark-mode.md` |
+| `migrate`, `replace hardcoded`, `audit`, `coverage` | Token migration workflow | Replacement mapping + changed files | `reference/token-anti-patterns.md` |
+| `design system`, `foundation`, `architecture` | Design system construction | Token architecture document | `reference/design-system-construction.md` |
+| `figma`, `sync`, `Style Dictionary`, `Tokens Studio`, `DTCG`, `variables` | Figma sync workflow | Sync configuration + DTCG-format token output | `reference/figma-sync.md` |
+| `lifecycle`, `deprecate`, `adopt`, `stable` | Token lifecycle management | Lifecycle state changes + migration guide | `reference/token-lifecycle.md` |
+| `font`, `typeface`, `display font` | Typography selection | Font recommendation + pairing guide | `reference/typography-selection-guide.md` |
+| `accessibility`, `touch target`, `focus ring`, `WCAG`, `a11y` | Accessibility token workflow | Accessibility token spec + contrast report | `reference/dark-mode.md` |
+| reverse feedback from Palette/Flow/Showcase/Judge | Feedback processing workflow | Token adjustment + impact summary | relevant `reference/` file |
+| unclear request | Clarify scope and route | Scoped analysis | `reference/token-system.md` |
 
 Routing rules:
 
-- If the request involves token definition or categories, read `references/token-system.md`.
-- If the request involves dark mode or theming, read `references/dark-mode.md`.
-- If the request involves Figma sync or Style Dictionary, read `references/figma-sync.md`.
-- If the request involves token lifecycle changes, read `references/token-lifecycle.md`.
+- If the request involves token definition or categories, read `reference/token-system.md`.
+- If the request involves dark mode or theming, read `reference/dark-mode.md`.
+- If the request involves Figma sync or Style Dictionary, read `reference/figma-sync.md`.
+- If the request involves token lifecycle changes, read `reference/token-lifecycle.md`.
 - If anti-pattern detection is needed, read the relevant anti-pattern reference file.
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Token System | `tokens` | ✓ | Design token definition and structural design | `references/token-system.md` |
-| Apply Tokens | `apply` | | Token application to existing UI | `references/token-lifecycle.md` |
-| Theme Design | `theme` | | Light/Dark theme design | `references/dark-mode.md` |
-| Typography | `typography` | | Typography selection and scale design | `references/typography-selection-guide.md` |
-| Spacing & Layout | `spacing` | | Spacing and grid system design | `references/design-system-construction.md` |
-| Motion Tokens | `motion` | | Duration, easing, spring tokens with reduced-motion fallback | `references/motion-tokens.md` |
-| Elevation Tokens | `elevation` | | Elevation/shadow tokens with dark-mode inversion and semantic surface tiers | `references/elevation-tokens.md` |
-| Radius Tokens | `radius` | | Border-radius scale, corner-set tokens, and brand-personality spectrum | `references/radius-tokens.md` |
+| Token System | `tokens` | ✓ | Design token definition and structural design | `reference/token-system.md` |
+| Apply Tokens | `apply` | | Token application to existing UI | `reference/token-lifecycle.md` |
+| Theme Design | `theme` | | Light/Dark theme design | `reference/dark-mode.md` |
+| Typography | `typography` | | Typography selection and scale design | `reference/typography-selection-guide.md` |
+| Spacing & Layout | `spacing` | | Spacing and grid system design | `reference/design-system-construction.md` |
+| Motion Tokens | `motion` | | Duration, easing, spring tokens with reduced-motion fallback | `reference/motion-tokens.md` |
+| Elevation Tokens | `elevation` | | Elevation/shadow tokens with dark-mode inversion and semantic surface tiers | `reference/elevation-tokens.md` |
+| Radius Tokens | `radius` | | Border-radius scale, corner-set tokens, and brand-personality spectrum | `reference/radius-tokens.md` |
 
 Behavior notes:
 - **tokens** (default): SURVEY → DEFINE → VALIDATE → PRESENT; load `token-system.md` + `css-token-architecture-anti-patterns.md`.
@@ -234,19 +234,19 @@ Muse receives design direction and token extraction from upstream agents. Muse s
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/token-system.md` | You need token categories, naming, scales, audits, or framework token wiring. |
-| `references/token-lifecycle.md` | You need to propose, adopt, deprecate, or remove tokens. |
-| `references/dark-mode.md` | You need to implement, verify, or debug dark mode behavior. |
-| `references/design-system-construction.md` | You need to build or restructure a design system foundation. |
-| `references/figma-sync.md` | You need to sync Figma variables, Token Studio, or Style Dictionary with code. |
-| `references/token-anti-patterns.md` | Token naming, hierarchy, reuse, or versioning quality is unclear. |
-| `references/design-system-governance-anti-patterns.md` | Adoption, ownership, or documentation drift becomes the problem. |
-| `references/color-dark-mode-anti-patterns.md` | Dark mode, glare, contrast, or color semantics break down. |
-| `references/css-token-architecture-anti-patterns.md` | CSS token structure, scoping, or theming architecture is unstable. |
-| `references/typography-selection-guide.md` | You need to select typefaces, define font pairings, or audit typography choices. |
-| `references/motion-tokens.md` | You need to define duration, easing, or spring tokens, or design `prefers-reduced-motion` fallback strategy. |
-| `references/elevation-tokens.md` | You need to define elevation tiers, layered shadow recipes, semantic surface tokens, or dark-mode shadow inversion. |
-| `references/radius-tokens.md` | You need to define radius scale, corner-set tokens, component-radius mapping, or brand-personality spectrum. |
+| `reference/token-system.md` | You need token categories, naming, scales, audits, or framework token wiring. |
+| `reference/token-lifecycle.md` | You need to propose, adopt, deprecate, or remove tokens. |
+| `reference/dark-mode.md` | You need to implement, verify, or debug dark mode behavior. |
+| `reference/design-system-construction.md` | You need to build or restructure a design system foundation. |
+| `reference/figma-sync.md` | You need to sync Figma variables, Token Studio, or Style Dictionary with code. |
+| `reference/token-anti-patterns.md` | Token naming, hierarchy, reuse, or versioning quality is unclear. |
+| `reference/design-system-governance-anti-patterns.md` | Adoption, ownership, or documentation drift becomes the problem. |
+| `reference/color-dark-mode-anti-patterns.md` | Dark mode, glare, contrast, or color semantics break down. |
+| `reference/css-token-architecture-anti-patterns.md` | CSS token structure, scoping, or theming architecture is unstable. |
+| `reference/typography-selection-guide.md` | You need to select typefaces, define font pairings, or audit typography choices. |
+| `reference/motion-tokens.md` | You need to define duration, easing, or spring tokens, or design `prefers-reduced-motion` fallback strategy. |
+| `reference/elevation-tokens.md` | You need to define elevation tiers, layered shadow recipes, semantic surface tokens, or dark-mode shadow inversion. |
+| `reference/radius-tokens.md` | You need to define radius scale, corner-set tokens, component-radius mapping, or brand-personality spectrum. |
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 token foundation standards — DTCG first stable spec (2025-10-28), OKLCH + Display P3 pipelines, dark-mode-as-first-class-context, token-sprawl anti-patterns. Read §1 Design. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the token spec, deciding adaptive thinking depth at STRUCTURE, or front-loading token category/scope at AUDIT. Critical for Muse: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You generate `token_proof` (color / spacing / radii / shadows / typography token allow-list compliance) in `nexus acceptance` Phase 2B. Emit ESLint custom rule + token allow-list extraction. Token-not-in-allow-list = G9 Layer 1 (AST) FAIL. Required prerequisite for Design Proof adoption: organization runs design tokens via Style Dictionary or Tokens Studio. |

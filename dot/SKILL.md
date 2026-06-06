@@ -122,18 +122,18 @@ Single source of truth for Recipe definitions. The Notes column captures the uni
 
 | Recipe | Subcommand | Default? | When to Use | Primary output | Notes | Read First |
 |--------|-----------|---------|-------------|----------------|-------|------------|
-| SVG Output | `svg` | ✓ | SVG pixel art generation; icons, simple sprites, web assets | `.svg` | SVG `<rect>` grid; supports up to ~500 pixel elements; `image-rendering: pixelated` required | `references/code-patterns.md`, `references/pixel-craft.md` |
-| Canvas Output | `canvas` | | Canvas drawing; previews, interactive, 32x32+ sprites, multi-frame scenes | `.html` preview/export | HTML Canvas; use off-screen canvas to maintain 60fps | `references/code-patterns.md` |
-| Phaser 3 | `phaser` | | Phaser 3 sprites; game sprites, Realm handoff | `.js` | `generateTexture()` with `pixelArt: true`; intended for Realm | `references/code-patterns.md`, `references/engine-integration.md` |
-| Pillow (Python) | `pillow` | | Batch PNG/GIF export, spritesheets, AI-assisted pipelines | `.py` → PNG/GIF | Python + Pillow with spritesheet metadata JSON | `references/code-patterns.md`, `references/sprite-animation.md` |
-| CSS Pixel Art | `css` | | CSS pixel art; decorative, very small assets | `.css` | CSS `box-shadow` or CSS Grid | `references/code-patterns.md` |
-| Animation Cycle | `animation` | | Sprite animation cycles (idle / walk / run / attack / hit / death) with frame timing | frames + JSON timing | Canonical cycles — idle (8-12fr @ 6fps), walk (4-6fr @ 8fps), run (4-6fr @ 12fps), attack (4-8fr @ 12-15fps), hit (2-3fr), death (4-8fr non-looping). Apply squash-and-stretch and anticipation ticks. | `references/animation-cycles.md` |
-| Limited Palette | `palette` | | Limited-palette pixel art (NES / Game Boy / PICO-8 / CGA / Pico-Pix) with color-cycling | base format + palette JSON | NES (54 colors, 4 per sprite), Game Boy (4 greys), PICO-8 (16), CGA (4 modes), Famicompo (16 from 64). Validate via Lospec. | `references/limited-palettes.md` |
-| Tilesheet Design | `tilesheet` | | Tile-based sheet design for Tiled / LDtk / Phaser tilemap (autotiles, terrain, atlas pack) | target-specific asset code | Base tile (typically 16×16 / 32×32), autotile masks (47 / Wang / Blob), terrain transitions; emits `.tsx` / `.ldtk` / Phaser config | `references/tilesheet-design.md` |
-| Antigravity Delegation | `agy` | | Single-SVG generation delegated to Antigravity CLI | sanitized `.svg` | Sanitize output to raw SVG with `-agy` suffix. Safe sizes: 8x8 / 16x16; 32x32 best-effort; 64x64+ switch to Dot direct. | `references/antigravity-delegation.md` |
-| AI Spritesheet | `ai-sheet` | | AI-assisted spritesheet via GPT Image 2 (`gpt-image-2`) Edit API / Stable Diffusion (SDXL + Pixel-Art-XL LoRA, Retro Diffusion) / PixelLab (skeleton animation, directional views, inpainting, scene animation, environment) | `.py` → PNG | Python pipeline with canvas prep, prompt engineering, normalization, post-process | `references/gpt-image-edit.md`, `references/sprite-animation.md` |
-| Accessible Palette | `a11y` | | Colorblind-friendly palette variants (deuteranopia/protanopia/tritanopia) and shape-based differentiation | base format + palette JSON | Base route + colorblind variants; supplement color with shape/pattern | `references/pixel-craft.md` |
-| HD-2D | `hd2d` | | Pixel sprite designed for 3D environment compositing | `.svg` / `.html` | SVG or Canvas with alpha channel, no background | `references/code-patterns.md`, `references/engine-integration.md` |
+| SVG Output | `svg` | ✓ | SVG pixel art generation; icons, simple sprites, web assets | `.svg` | SVG `<rect>` grid; supports up to ~500 pixel elements; `image-rendering: pixelated` required | `reference/code-patterns.md`, `reference/pixel-craft.md` |
+| Canvas Output | `canvas` | | Canvas drawing; previews, interactive, 32x32+ sprites, multi-frame scenes | `.html` preview/export | HTML Canvas; use off-screen canvas to maintain 60fps | `reference/code-patterns.md` |
+| Phaser 3 | `phaser` | | Phaser 3 sprites; game sprites, Realm handoff | `.js` | `generateTexture()` with `pixelArt: true`; intended for Realm | `reference/code-patterns.md`, `reference/engine-integration.md` |
+| Pillow (Python) | `pillow` | | Batch PNG/GIF export, spritesheets, AI-assisted pipelines | `.py` → PNG/GIF | Python + Pillow with spritesheet metadata JSON | `reference/code-patterns.md`, `reference/sprite-animation.md` |
+| CSS Pixel Art | `css` | | CSS pixel art; decorative, very small assets | `.css` | CSS `box-shadow` or CSS Grid | `reference/code-patterns.md` |
+| Animation Cycle | `animation` | | Sprite animation cycles (idle / walk / run / attack / hit / death) with frame timing | frames + JSON timing | Canonical cycles — idle (8-12fr @ 6fps), walk (4-6fr @ 8fps), run (4-6fr @ 12fps), attack (4-8fr @ 12-15fps), hit (2-3fr), death (4-8fr non-looping). Apply squash-and-stretch and anticipation ticks. | `reference/animation-cycles.md` |
+| Limited Palette | `palette` | | Limited-palette pixel art (NES / Game Boy / PICO-8 / CGA / Pico-Pix) with color-cycling | base format + palette JSON | NES (54 colors, 4 per sprite), Game Boy (4 greys), PICO-8 (16), CGA (4 modes), Famicompo (16 from 64). Validate via Lospec. | `reference/limited-palettes.md` |
+| Tilesheet Design | `tilesheet` | | Tile-based sheet design for Tiled / LDtk / Phaser tilemap (autotiles, terrain, atlas pack) | target-specific asset code | Base tile (typically 16×16 / 32×32), autotile masks (47 / Wang / Blob), terrain transitions; emits `.tsx` / `.ldtk` / Phaser config | `reference/tilesheet-design.md` |
+| Antigravity Delegation | `agy` | | Single-SVG generation delegated to Antigravity CLI | sanitized `.svg` | Sanitize output to raw SVG with `-agy` suffix. Safe sizes: 8x8 / 16x16; 32x32 best-effort; 64x64+ switch to Dot direct. | `reference/antigravity-delegation.md` |
+| AI Spritesheet | `ai-sheet` | | AI-assisted spritesheet via GPT Image 2 (`gpt-image-2`) Edit API / Stable Diffusion (SDXL + Pixel-Art-XL LoRA, Retro Diffusion) / PixelLab (skeleton animation, directional views, inpainting, scene animation, environment) | `.py` → PNG | Python pipeline with canvas prep, prompt engineering, normalization, post-process | `reference/gpt-image-edit.md`, `reference/sprite-animation.md` |
+| Accessible Palette | `a11y` | | Colorblind-friendly palette variants (deuteranopia/protanopia/tritanopia) and shape-based differentiation | base format + palette JSON | Base route + colorblind variants; supplement color with shape/pattern | `reference/pixel-craft.md` |
+| HD-2D | `hd2d` | | Pixel sprite designed for 3D environment compositing | `.svg` / `.html` | SVG or Canvas with alpha channel, no background | `reference/code-patterns.md`, `reference/engine-integration.md` |
 
 ### Signal Keywords → Recipe
 
@@ -162,9 +162,9 @@ Parse the first token of user input:
 
 Cross-cutting routing rules (apply on top of Recipe selection):
 
-- If the request includes animation, multi-frame layout, or spritesheet metadata, read `references/sprite-animation.md`.
-- If the request includes an engine or browser target, read `references/engine-integration.md`.
-- If the request includes autotiling, terrain blending, or tilemap metadata, read `references/tileset-design.md`.
+- If the request includes animation, multi-frame layout, or spritesheet metadata, read `reference/sprite-animation.md`.
+- If the request includes an engine or browser target, read `reference/engine-integration.md`.
+- If the request includes autotiling, terrain blending, or tilemap metadata, read `reference/tileset-design.md`.
 
 ## Planning Defaults
 
@@ -198,7 +198,7 @@ Rules:
 - If the user specifies a size, use it.
 - If size is unspecified, default to `16x16`.
 - Character height should be a multiple of tile height for alignment (e.g., 48-96px character on 32px tiles).
-- Keep display scaling integer-only; use `references/engine-integration.md` for scale guidance.
+- Keep display scaling integer-only; use `reference/engine-integration.md` for scale guidance.
 
 ### Antigravity CLI Delegation Boundaries
 
@@ -224,11 +224,11 @@ Limits (apply only when delegating to agy):
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `PLAN` | identify asset type, target tech, grid size, animation scope, and integration target | choose the output route before writing code | `references/code-patterns.md`, `references/engine-integration.md` |
-| `PALETTE` | choose color tier and hex values | palette first; minimum 4 functional roles | `references/pixel-craft.md` |
-| `PIXEL` | place outline, base, highlight, shadow, and optional dithering | integer grid only; no anti-aliasing | `references/pixel-craft.md` |
-| `PACK` | generate the selected code format | multi-frame assets require metadata JSON | `references/code-patterns.md`, `references/sprite-animation.md`, `references/tileset-design.md` |
-| `PREVIEW` | verify scaling, compatibility, and integration notes | keep rendering nearest-neighbor or pixelated everywhere | `references/engine-integration.md` |
+| `PLAN` | identify asset type, target tech, grid size, animation scope, and integration target | choose the output route before writing code | `reference/code-patterns.md`, `reference/engine-integration.md` |
+| `PALETTE` | choose color tier and hex values | palette first; minimum 4 functional roles | `reference/pixel-craft.md` |
+| `PIXEL` | place outline, base, highlight, shadow, and optional dithering | integer grid only; no anti-aliasing | `reference/pixel-craft.md` |
+| `PACK` | generate the selected code format | multi-frame assets require metadata JSON | `reference/code-patterns.md`, `reference/sprite-animation.md`, `reference/tileset-design.md` |
+| `PREVIEW` | verify scaling, compatibility, and integration notes | keep rendering nearest-neighbor or pixelated everywhere | `reference/engine-integration.md` |
 
 ## Output Requirements
 
@@ -247,16 +247,16 @@ Limits (apply only when delegating to agy):
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/code-patterns.md` | You need templates or implementation details for SVG, Canvas, Phaser 3, Pillow, or CSS output. |
-| `references/pixel-craft.md` | You need palette design, shading, cluster rules, outlines, readability checks, or anti-pattern guidance. |
-| `references/sprite-animation.md` | You need spritesheet layout, frame counts, FPS guidance, metadata JSON, or animation-state planning. |
-| `references/animation-cycles.md` | You are running the `animation` recipe and need canonical cycle frame counts/FPS (idle / walk / run / attack / hit / death), squash-and-stretch, or anticipation-tick patterns. |
-| `references/limited-palettes.md` | You are running the `palette` recipe and need NES / Game Boy / PICO-8 / CGA / Famicompo palette catalogs, Lospec validation, or color-cycling guidance. |
-| `references/tileset-design.md` | You need tile sizes, autotiling rules, terrain transitions, seamless tiling, or tilemap metadata. |
-| `references/tilesheet-design.md` | You are running the `tilesheet` recipe and need tile-sheet packing for Tiled / LDtk / Phaser tilemap (autotile masks 47/Wang/Blob, atlas pack, `.tsx` / `.ldtk` / Phaser config emission). |
-| `references/engine-integration.md` | You need browser, Phaser, Godot, Unity, PixiJS, or RPG Maker integration and pixel-perfect rendering setup. |
-| `references/antigravity-delegation.md` | You need delegation criteria, the prompt template, sanitize commands, or Antigravity-specific limits. |
-| `references/gpt-image-edit.md` | You need GPT Image 2 (`gpt-image-2`) Edit API parameters, mask usage, transparency settings, input fidelity, prompt engineering for edits, or pixel art spritesheet techniques. |
+| `reference/code-patterns.md` | You need templates or implementation details for SVG, Canvas, Phaser 3, Pillow, or CSS output. |
+| `reference/pixel-craft.md` | You need palette design, shading, cluster rules, outlines, readability checks, or anti-pattern guidance. |
+| `reference/sprite-animation.md` | You need spritesheet layout, frame counts, FPS guidance, metadata JSON, or animation-state planning. |
+| `reference/animation-cycles.md` | You are running the `animation` recipe and need canonical cycle frame counts/FPS (idle / walk / run / attack / hit / death), squash-and-stretch, or anticipation-tick patterns. |
+| `reference/limited-palettes.md` | You are running the `palette` recipe and need NES / Game Boy / PICO-8 / CGA / Famicompo palette catalogs, Lospec validation, or color-cycling guidance. |
+| `reference/tileset-design.md` | You need tile sizes, autotiling rules, terrain transitions, seamless tiling, or tilemap metadata. |
+| `reference/tilesheet-design.md` | You are running the `tilesheet` recipe and need tile-sheet packing for Tiled / LDtk / Phaser tilemap (autotile masks 47/Wang/Blob, atlas pack, `.tsx` / `.ldtk` / Phaser config emission). |
+| `reference/engine-integration.md` | You need browser, Phaser, Godot, Unity, PixiJS, or RPG Maker integration and pixel-perfect rendering setup. |
+| `reference/antigravity-delegation.md` | You need delegation criteria, the prompt template, sanitize commands, or Antigravity-specific limits. |
+| `reference/gpt-image-edit.md` | You need GPT Image 2 (`gpt-image-2`) Edit API parameters, mask usage, transparency settings, input fidelity, prompt engineering for edits, or pixel art spritesheet techniques. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the asset report, deciding adaptive thinking depth at COMPOSE, or front-loading output route/grid/palette at PREP. Critical for Dot: P3, P5. |
 
 ## Operational

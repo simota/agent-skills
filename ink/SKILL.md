@@ -102,16 +102,16 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Single Icon | `icon` | ✓ | Single icon generation | `references/patterns.md` |
-| Illustration | `illustration` | | SVG illustration | `references/patterns.md`, `references/examples.md` |
-| Icon System | `system` | | Icon system design | `references/patterns.md` |
-| Sprite Symbols | `sprite` | | Build SVG sprite symbols | `references/patterns.md` |
-| Animated SVG | `animate` | | CSS animation (primary) and SMIL for portable standalone SVG | `references/svg-animation.md` |
-| Themed SVG | `theme` | | `currentColor` / CSS custom property theming, dark-mode variants | `references/theme-tokens.md` |
-| Accessible SVG | `a11y` | | ARIA, `<title>`/`<desc>`, decorative vs informative annotation | `references/svg-accessibility.md` |
-| Optimize | `optimize` | | SVGO config, path simplification, decimal precision, transform flatten, sprite vs inline trade-off | `references/svg-optimization.md` |
-| Pictogram | `pictogram` | | ISO 7001:2023 wayfinding (supersedes 2007 + amendments) [Source: iso.org/standard/77442.html], AIGA symbols, safety / accessibility pictograms with cross-cultural recognition | `references/pictogram-design.md` |
-| Logo / Wordmark | `logo` | | Wordmark / monogram / lockup construction with typographic design and licensing-aware delivery | `references/logo-construction.md` |
+| Single Icon | `icon` | ✓ | Single icon generation | `reference/patterns.md` |
+| Illustration | `illustration` | | SVG illustration | `reference/patterns.md`, `reference/examples.md` |
+| Icon System | `system` | | Icon system design | `reference/patterns.md` |
+| Sprite Symbols | `sprite` | | Build SVG sprite symbols | `reference/patterns.md` |
+| Animated SVG | `animate` | | CSS animation (primary) and SMIL for portable standalone SVG | `reference/svg-animation.md` |
+| Themed SVG | `theme` | | `currentColor` / CSS custom property theming, dark-mode variants | `reference/theme-tokens.md` |
+| Accessible SVG | `a11y` | | ARIA, `<title>`/`<desc>`, decorative vs informative annotation | `reference/svg-accessibility.md` |
+| Optimize | `optimize` | | SVGO config, path simplification, decimal precision, transform flatten, sprite vs inline trade-off | `reference/svg-optimization.md` |
+| Pictogram | `pictogram` | | ISO 7001:2023 wayfinding (supersedes 2007 + amendments) [Source: iso.org/standard/77442.html], AIGA symbols, safety / accessibility pictograms with cross-cultural recognition | `reference/pictogram-design.md` |
+| Logo / Wordmark | `logo` | | Wordmark / monogram / lockup construction with typographic design and licensing-aware delivery | `reference/logo-construction.md` |
 
 ## Subcommand Dispatch
 
@@ -135,14 +135,14 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `icon`, single icon | Standalone SVG | `.svg` | `references/patterns.md` |
-| `icon set`, `library`, system | Icon system with grid spec | `.svg` + design spec | `references/patterns.md` |
-| `illustration`, `hero`, `spot` | SVG illustration | `.svg` | `references/patterns.md` |
-| `sprite`, `symbol`, bundle | SVG sprite sheet | `.svg` symbol defs | `references/patterns.md` |
-| `animated`, `micro-interaction` | Animated SVG (CSS/SMIL) | `.svg` with animation | `references/patterns.md` |
-| `audit`, `consistency` | Icon audit report | Report + fix suggestions | `references/patterns.md` |
-| `react`, `vue`, component | SVG as component code | `.tsx` / `.vue` | `references/patterns.md` |
-| unclear request | Single SVG icon (24x24 grid) | `.svg` | `references/patterns.md` |
+| `icon`, single icon | Standalone SVG | `.svg` | `reference/patterns.md` |
+| `icon set`, `library`, system | Icon system with grid spec | `.svg` + design spec | `reference/patterns.md` |
+| `illustration`, `hero`, `spot` | SVG illustration | `.svg` | `reference/patterns.md` |
+| `sprite`, `symbol`, bundle | SVG sprite sheet | `.svg` symbol defs | `reference/patterns.md` |
+| `animated`, `micro-interaction` | Animated SVG (CSS/SMIL) | `.svg` with animation | `reference/patterns.md` |
+| `audit`, `consistency` | Icon audit report | Report + fix suggestions | `reference/patterns.md` |
+| `react`, `vue`, component | SVG as component code | `.tsx` / `.vue` | `reference/patterns.md` |
+| unclear request | Single SVG icon (24x24 grid) | `.svg` | `reference/patterns.md` |
 
 ## Workflow
 
@@ -151,10 +151,10 @@ Behavior notes per Recipe:
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
 | `SPEC` | Define purpose, style, and target platform | Establish visual direction before drawing | — |
-| `GRID` | Set grid size, stroke width, corner radius, padding | Grid first; all icons inherit these constraints | `references/patterns.md` |
-| `DRAW` | Create SVG paths with consistent visual weight | Use geometric primitives where possible; hand-tune curves | `references/patterns.md` |
-| `OPTIMIZE` | Run SVGO rules, normalize viewBox, remove metadata | Every SVG must be production-optimized | `references/patterns.md` |
-| `INTEGRATE` | Generate component wrappers, sprite sheets, or inline code | Match the target platform and framework | `references/patterns.md` |
+| `GRID` | Set grid size, stroke width, corner radius, padding | Grid first; all icons inherit these constraints | `reference/patterns.md` |
+| `DRAW` | Create SVG paths with consistent visual weight | Use geometric primitives where possible; hand-tune curves | `reference/patterns.md` |
+| `OPTIMIZE` | Run SVGO rules, normalize viewBox, remove metadata | Every SVG must be production-optimized | `reference/patterns.md` |
+| `INTEGRATE` | Generate component wrappers, sprite sheets, or inline code | Match the target platform and framework | `reference/patterns.md` |
 
 ## Icon Grid Standards
 
@@ -191,15 +191,15 @@ Behavior notes per Recipe:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/patterns.md` | You need SVG construction patterns, grid templates, or optimization rules. |
-| `references/examples.md` | You need complete icon or illustration examples. |
-| `references/handoffs.md` | You need handoff templates for collaboration with other agents. |
-| `references/svg-animation.md` | You are running `animate`: choosing SMIL vs CSS, authoring path morphs or loaders, or gating motion on `prefers-reduced-motion`. |
-| `references/theme-tokens.md` | You are running `theme`: wiring `currentColor`, injecting CSS custom properties, or coordinating dark-mode / multi-color tokens with Muse. |
-| `references/svg-accessibility.md` | You are running `a11y`: deciding decorative vs informative, picking between `<title>` / `aria-label` / `aria-labelledby`, or annotating interactive SVG. |
-| `references/svg-optimization.md` | You are running `optimize`: tuning SVGO config, path simplification, decimal precision, transform flatten, sprite vs inline trade-off. |
-| `references/pictogram-design.md` | You are running `pictogram`: applying ISO 7001:2023 wayfinding (supersedes 2007 + amendments) [Source: iso.org/standard/77442.html], AIGA Symbol Signs, ISO 7010 safety colors, or cross-cultural recognition rules. |
-| `references/logo-construction.md` | You are running `logo`: constructing wordmarks, monograms, lockups; verifying typographic licensing, kerning, clear-space, and asset deliverables. |
+| `reference/patterns.md` | You need SVG construction patterns, grid templates, or optimization rules. |
+| `reference/examples.md` | You need complete icon or illustration examples. |
+| `reference/handoffs.md` | You need handoff templates for collaboration with other agents. |
+| `reference/svg-animation.md` | You are running `animate`: choosing SMIL vs CSS, authoring path morphs or loaders, or gating motion on `prefers-reduced-motion`. |
+| `reference/theme-tokens.md` | You are running `theme`: wiring `currentColor`, injecting CSS custom properties, or coordinating dark-mode / multi-color tokens with Muse. |
+| `reference/svg-accessibility.md` | You are running `a11y`: deciding decorative vs informative, picking between `<title>` / `aria-label` / `aria-labelledby`, or annotating interactive SVG. |
+| `reference/svg-optimization.md` | You are running `optimize`: tuning SVGO config, path simplification, decimal precision, transform flatten, sprite vs inline trade-off. |
+| `reference/pictogram-design.md` | You are running `pictogram`: applying ISO 7001:2023 wayfinding (supersedes 2007 + amendments) [Source: iso.org/standard/77442.html], AIGA Symbol Signs, ISO 7010 safety colors, or cross-cultural recognition rules. |
+| `reference/logo-construction.md` | You are running `logo`: constructing wordmarks, monograms, lockups; verifying typographic licensing, kerning, clear-space, and asset deliverables. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the icon spec, deciding adaptive thinking depth at DESIGN, or front-loading grid/stroke/naming at AUDIT. Critical for Ink: P3, P5. |
 
 ## Operational

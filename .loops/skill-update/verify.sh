@@ -48,8 +48,8 @@ check_common_refs() {
 }
 
 check_reference_map() {
-  # Extract `references/foo.md` references for each skill, but exclude:
-  #   - cross-skill refs    (e.g. `rally/references/foo.md` — owned by rally, not us)
+  # Extract `reference/foo.md` references for each skill, but exclude:
+  #   - cross-skill refs    (e.g. `rally/reference/foo.md` — owned by rally, not us)
   #   - optional markers    (line contains "(if present)")
   #   - activity-log rows   (lines starting with `| YYYY-MM-DD ` — these cite PROJECT.md examples)
   local skill skill_md ref_path missing=0 total=0
@@ -75,7 +75,7 @@ check_reference_map() {
             len   = RLENGTH
             prev  = (start > 1) ? substr(s, start - 1, 1) : " "
             # Ignore matches preceded by alnum / underscore / dash / slash
-            # (which means another path segment owns the references/ — a cross-skill ref).
+            # (which means another path segment owns the reference/ — a cross-skill ref).
             if (prev !~ /[A-Za-z0-9_-]/ && prev != "/") {
               print substr(s, start, len)
             }
@@ -86,12 +86,12 @@ check_reference_map() {
     )
   done < <(list_skills)
   printf 'AC2 reference map: %d checked, %d missing\n' "${total}" "${missing}"
-  (( missing == 0 )) || fail "AC2: ${missing} dead references/ refs"
+  (( missing == 0 )) || fail "AC2: ${missing} dead reference/ refs"
   ok "AC2 reference map valid"
 }
 
 check_bidir_refs() {
-  # For each references/X.md, check whether SKILL.md mentions it (one-way is OK
+  # For each reference/X.md, check whether SKILL.md mentions it (one-way is OK
   # but unreferenced reference files are flagged as soft warnings).
   local skill ref_dir orphans=0
   while IFS= read -r skill; do
@@ -99,8 +99,8 @@ check_bidir_refs() {
     [[ -d "${ref_dir}" ]] || continue
     while IFS= read -r ref; do
       local base; base="$(basename "${ref}")"
-      if ! grep -qE "references/${base}" "${SKILLS_ROOT}/${skill}/SKILL.md"; then
-        printf '  ORPHAN: %s/references/%s\n' "${skill}" "${base}" >&2
+      if ! grep -qE "reference/${base}" "${SKILLS_ROOT}/${skill}/SKILL.md"; then
+        printf '  ORPHAN: %s/reference/%s\n' "${skill}" "${base}" >&2
         orphans=$((orphans + 1))
       fi
     done < <(find "${ref_dir}" -maxdepth 1 -name '*.md' -type f)

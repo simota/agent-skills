@@ -2,7 +2,7 @@
 
 ## Objective
 
-Apply the 22 source-citation MID proposals surfaced by the `skill-update` loop's IMPROVE pass. For each affected skill, add a verifiable `[Source: ...]` citation to the relevant SKILL.md or references/*.md, with the source URL recovered via WebFetch and validated against `_common/WEB_FETCH_SAFETY.md` injection checks.
+Apply the 22 source-citation MID proposals surfaced by the `skill-update` loop's IMPROVE pass. For each affected skill, add a verifiable `[Source: ...]` citation to the relevant SKILL.md or reference/*.md, with the source URL recovered via WebFetch and validated against `_common/WEB_FETCH_SAFETY.md` injection checks.
 
 ## Why
 
@@ -12,7 +12,7 @@ Source-attribution improves trust, freshness signals, and reviewer auditability.
 
 - Input file: `citations-todo.md` (22 skills with their proposed citations)
 - Per iteration: 4 skills (smaller batch — citation work needs careful URL verification)
-- **Read-write mode** restricted to the per-iteration batch's SKILL.md / references/*.md
+- **Read-write mode** restricted to the per-iteration batch's SKILL.md / reference/*.md
 - WebFetch / WebSearch encouraged (max 2 calls per skill) to recover canonical URLs
 - WEB_FETCH_SAFETY injection check **mandatory** for every fetched URL
 
@@ -29,7 +29,7 @@ Source-attribution improves trust, freshness signals, and reviewer auditability.
 
 - Editing skills outside the 22-skill list
 - Editing `_common/`, `_templates/`, `.agents/`, `.loops/`
-- Creating new files in `references/`
+- Creating new files in `reference/`
 - Applying any non-citation MID/LOW proposals
 
 ## Rollback

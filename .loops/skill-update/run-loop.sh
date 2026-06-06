@@ -319,17 +319,17 @@ build_prompt() {
   local skills allowed_paths
   skills=$(awk '{printf "  - %s\n", $0}' "${batch_file}")
   allowed_paths=$(awk -v root="${SKILLS_ROOT}" '
-    {printf "  - %s/%s/SKILL.md\n  - %s/%s/references/*.md\n", root, $0, root, $0}
+    {printf "  - %s/%s/SKILL.md\n  - %s/%s/reference/*.md\n", root, $0, root, $0}
   ' "${batch_file}")
 
   cat <<PROMPT
 あなたは Claude Code のヘッドレス **architect IMPROVE** エージェントです。
-~/.claude/skills/architect/SKILL.md と references/enhancement-framework.md と references/review-loop.md を初回に Read し、その指示に従って動作してください。
+~/.claude/skills/architect/SKILL.md と reference/enhancement-framework.md と reference/review-loop.md を初回に Read し、その指示に従って動作してください。
 
 # Mission
 本イテレーションの対象スキル群に対し、**architect の IMPROVE recipe**
 \`UNDERSTAND -> ANALYZE -> SCORE -> RESEARCH -> PRIORITIZE -> APPLY -> VALIDATE\`
-を 1 スキルずつ順に適用します。HIGH 重大度の改善は **その場で SKILL.md / references/ を編集して適用** します。MID / LOW は improvements.md に提案として記録するだけです。
+を 1 スキルずつ順に適用します。HIGH 重大度の改善は **その場で SKILL.md / reference/ を編集して適用** します。MID / LOW は improvements.md に提案として記録するだけです。
 
 # Target skills (iteration ${iteration})
 ${skills}
@@ -342,17 +342,17 @@ ${SKILLS_ROOT}
 各スキルについて以下を順に行ってください。
 
 ## 1. UNDERSTAND
-- \`<skill>/SKILL.md\` と \`<skill>/references/*.md\` を Read
+- \`<skill>/SKILL.md\` と \`<skill>/reference/*.md\` を Read
 - 役割・カテゴリ・直近の collaboration 表を把握
 
 ## 2. ANALYZE
 - AC1 (\`_common/\` dead link)
-- AC2 (Reference Map → references/ dead link)
+- AC2 (Reference Map → reference/ dead link)
 - AC4 (双方向参照非対称 / 孤立 references)
 - CAPABILITIES_SUMMARY と本文機能の齟齬
 - 古い参照(廃止済み API、deprecated パターン、2026 年に置換された規格名など)
 
-## 3. SCORE — Health Score (architect/references/enhancement-framework.md)
+## 3. SCORE — Health Score (architect/reference/enhancement-framework.md)
 \`HEALTH_SCORE = Structure(30) + Content(25) + Integration(20) + Activity(15) + Freshness(10)\`
 を 100 点満点で計算し、grade(A=90+ / B=75-89 / C=60-74 / D=<60)を出力。
 
@@ -392,14 +392,14 @@ ${allowed_paths}
 - 本バッチ外の他スキルディレクトリ
 
 ファイル操作ルール:
-- 既存の SKILL.md / references/*.md は Edit / MultiEdit で修正してよい
-- references/ への **新規ファイル作成と既存ファイル削除は禁止**
+- 既存の SKILL.md / reference/*.md は Edit / MultiEdit で修正してよい
+- reference/ への **新規ファイル作成と既存ファイル削除は禁止**
 - 大幅なリライト(SKILL.md の 30% 以上変更 / 章構造の大規模再編)は **deferred** に格下げして適用しない
 - 不確実な修正は HIGH (deferred) として記録するだけにする
 
 ## 7. VALIDATE
-編集後、対象スキルの SKILL.md と references/ について:
-- Reference Map に列挙された references/ がすべて実在する
+編集後、対象スキルの SKILL.md と reference/ について:
+- Reference Map に列挙された reference/ がすべて実在する
 - \`_common/\` 参照のリンク先が実在する
 - 本文と CAPABILITIES_SUMMARY が整合している
 - バッチ外のファイルを誤って編集していない
@@ -518,7 +518,7 @@ regression_check() {
 }
 
 rollback_batch_edits() {
-  # Restore SKILL.md and references/ for every skill in the batch from HEAD.
+  # Restore SKILL.md and reference/ for every skill in the batch from HEAD.
   local batch_file="$1"
   local skill
   while IFS= read -r skill; do

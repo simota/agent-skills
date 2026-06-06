@@ -121,12 +121,12 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Purpose | Keep inline | Read when needed |
 | --- | --- | --- | --- |
-| `MAP` | decompose the Epic | goal, constraints, current hierarchy | `references/task-breakdown.md`, `references/task-decomposition-anti-patterns.md` |
-| `GUIDE` | present the current step and route to agent | one step, size, risk, owner, commit point | `references/context-switching-anti-patterns.md` |
-| `LOCATE` | detect drift or scope expansion | current-step focus, Parking Lot decision | `references/anti-drift.md`, `references/scope-creep-execution-anti-patterns.md` |
-| `ASSESS` | read risk and project weather | condition, blockers, pace adjustments | `references/risk-and-weather.md`, `references/emergency-protocols.md` |
-| `PACK` | checkpoint progress and next commit | done check, save point, next 2-3 steps | `references/progress-tracking.md` |
-| `CALIBRATE` | improve future estimates | estimate vs actual loop | `references/execution-learning.md`, `references/estimation-planning-anti-patterns.md` |
+| `MAP` | decompose the Epic | goal, constraints, current hierarchy | `reference/task-breakdown.md`, `reference/task-decomposition-anti-patterns.md` |
+| `GUIDE` | present the current step and route to agent | one step, size, risk, owner, commit point | `reference/context-switching-anti-patterns.md` |
+| `LOCATE` | detect drift or scope expansion | current-step focus, Parking Lot decision | `reference/anti-drift.md`, `reference/scope-creep-execution-anti-patterns.md` |
+| `ASSESS` | read risk and project weather | condition, blockers, pace adjustments | `reference/risk-and-weather.md`, `reference/emergency-protocols.md` |
+| `PACK` | checkpoint progress and next commit | done check, save point, next 2-3 steps | `reference/progress-tracking.md` |
+| `CALIBRATE` | improve future estimates | estimate vs actual loop | `reference/execution-learning.md`, `reference/estimation-planning-anti-patterns.md` |
 
 ## Critical Constraints
 
@@ -220,13 +220,13 @@ Use this map during `GUIDE` to assign the right agent for each step type.
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Epic Decompose | `epic` | ✓ | Decompose complex tasks into 15-minute Atomic Steps | `references/task-breakdown.md`, `references/task-decomposition-anti-patterns.md` |
-| Story Plan | `story` | | Single-feature planning and story-level decomposition | `references/task-breakdown.md` |
-| Sprint Replan | `replan` | | Replanning after drift or scope change | `references/anti-drift.md`, `references/estimation-planning-anti-patterns.md` |
-| Parking Lot Review | `review` | | Inventory and prioritize accumulated side-track items | `references/anti-drift.md`, `references/scope-creep-execution-anti-patterns.md` |
-| Atomic Step Decomposition | `atomic` | | INVEST-checked ≤15-minute step breakdown with testable exit criteria, reversibility classification, and commit-point contract | `references/atomic-step-decomposition.md` |
-| Walking Skeleton First | `walking-skeleton` | | Alistair Cockburn Walking Skeleton — thinnest end-to-end slice that exercises architecture before broadening | `references/walking-skeleton.md` |
-| Vertical Slice Planning | `vertical-slice` | | End-to-end vertical feature slice decomposition (UI → API → DB) versus horizontal-layer decomposition trade-off | `references/vertical-slice.md` |
+| Epic Decompose | `epic` | ✓ | Decompose complex tasks into 15-minute Atomic Steps | `reference/task-breakdown.md`, `reference/task-decomposition-anti-patterns.md` |
+| Story Plan | `story` | | Single-feature planning and story-level decomposition | `reference/task-breakdown.md` |
+| Sprint Replan | `replan` | | Replanning after drift or scope change | `reference/anti-drift.md`, `reference/estimation-planning-anti-patterns.md` |
+| Parking Lot Review | `review` | | Inventory and prioritize accumulated side-track items | `reference/anti-drift.md`, `reference/scope-creep-execution-anti-patterns.md` |
+| Atomic Step Decomposition | `atomic` | | INVEST-checked ≤15-minute step breakdown with testable exit criteria, reversibility classification, and commit-point contract | `reference/atomic-step-decomposition.md` |
+| Walking Skeleton First | `walking-skeleton` | | Alistair Cockburn Walking Skeleton — thinnest end-to-end slice that exercises architecture before broadening | `reference/walking-skeleton.md` |
+| Vertical Slice Planning | `vertical-slice` | | End-to-end vertical feature slice decomposition (UI → API → DB) versus horizontal-layer decomposition trade-off | `reference/vertical-slice.md` |
 
 ### Signal Keywords → Recipe / Phase
 
@@ -241,11 +241,11 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `atomic step`, `INVEST`, `commit point contract` | `atomic` Recipe |
 | `walking skeleton`, `thinnest slice`, `end-to-end placeholder` | `walking-skeleton` Recipe |
 | `vertical slice`, `feature slice`, `UI to DB slice` | `vertical-slice` Recipe |
-| `next step`, `guide me`, `what now` | GUIDE phase (single-step guidance) — Read `references/context-switching-anti-patterns.md` |
-| `drifting`, `off track`, `scope creep` | LOCATE phase — Read `references/anti-drift.md` |
-| `risk`, `weather`, `blocker` | ASSESS phase — Read `references/risk-and-weather.md` |
-| `checkpoint`, `progress`, `commit` | PACK phase — Read `references/progress-tracking.md` |
-| `estimate`, `calibrate`, `velocity` | CALIBRATE phase — Read `references/execution-learning.md` |
+| `next step`, `guide me`, `what now` | GUIDE phase (single-step guidance) — Read `reference/context-switching-anti-patterns.md` |
+| `drifting`, `off track`, `scope creep` | LOCATE phase — Read `reference/anti-drift.md` |
+| `risk`, `weather`, `blocker` | ASSESS phase — Read `reference/risk-and-weather.md` |
+| `checkpoint`, `progress`, `commit` | PACK phase — Read `reference/progress-tracking.md` |
+| `estimate`, `calibrate`, `velocity` | CALIBRATE phase — Read `reference/execution-learning.md` |
 | unclear request | Clarify scope, then default `epic` Recipe |
 
 ## Subcommand Dispatch
@@ -254,7 +254,7 @@ Parse the first token of user input:
 - If it matches a Recipe Subcommand in the Recipes table → activate that Recipe; load only the "Read First" column files at the initial step. Apply MAP → GUIDE → LOCATE → ASSESS → PACK → CALIBRATE as the default phase contract; Recipe-specific behavior lives in the "Read First" references.
 - Otherwise → default Recipe (`epic` = Epic Decompose) with the full workflow.
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 
 ## Output Requirements
 
@@ -310,19 +310,19 @@ Use this shape:
 
 | File | Read this when... |
 | --- | --- |
-| `references/task-breakdown.md` | you need the hierarchy, T-shirt sizing, complexity multipliers, or estimation formula |
-| `references/task-decomposition-anti-patterns.md` | you need decomposition quality gates, TD-01..07, or vertical-slice guidance |
-| `references/anti-drift.md` | you need drift keywords, refocus prompts, or Parking Lot rules |
-| `references/progress-tracking.md` | you need dashboards, stalled detection, dependency graphs, retrospectives, or pacing modes |
-| `references/risk-and-weather.md` | you need risk categories, weather thresholds, fatigue signals, or rest-stop guidance |
-| `references/emergency-protocols.md` | you need Yellow/Red/Evacuation rules, recovery checkpoints, or Base Camp multi-Epic management |
-| `references/execution-learning.md` | you need calibration logic, multiplier updates, velocity prediction, or `EVOLUTION_SIGNAL` format |
-| `references/estimation-planning-anti-patterns.md` | you need EP/PP anti-patterns, capacity planning, or calibration guardrails |
-| `references/context-switching-anti-patterns.md` | you need WIP limits, context-switch cost, pacing modes, or flow protection rules |
-| `references/scope-creep-execution-anti-patterns.md` | you need SC anti-patterns, interruption classification, or scope-defense rules |
-| `references/atomic-step-decomposition.md` | you need INVEST checklist, ≤15-minute step contract, reversibility classification, or commit-point contract |
-| `references/walking-skeleton.md` | you need Cockburn Walking Skeleton template, layer-coverage checklist, or thinnest-slice definition |
-| `references/vertical-slice.md` | you need vertical vs horizontal decomposition trade-off, slice-quality checklist, or slice sizing rubric |
+| `reference/task-breakdown.md` | you need the hierarchy, T-shirt sizing, complexity multipliers, or estimation formula |
+| `reference/task-decomposition-anti-patterns.md` | you need decomposition quality gates, TD-01..07, or vertical-slice guidance |
+| `reference/anti-drift.md` | you need drift keywords, refocus prompts, or Parking Lot rules |
+| `reference/progress-tracking.md` | you need dashboards, stalled detection, dependency graphs, retrospectives, or pacing modes |
+| `reference/risk-and-weather.md` | you need risk categories, weather thresholds, fatigue signals, or rest-stop guidance |
+| `reference/emergency-protocols.md` | you need Yellow/Red/Evacuation rules, recovery checkpoints, or Base Camp multi-Epic management |
+| `reference/execution-learning.md` | you need calibration logic, multiplier updates, velocity prediction, or `EVOLUTION_SIGNAL` format |
+| `reference/estimation-planning-anti-patterns.md` | you need EP/PP anti-patterns, capacity planning, or calibration guardrails |
+| `reference/context-switching-anti-patterns.md` | you need WIP limits, context-switch cost, pacing modes, or flow protection rules |
+| `reference/scope-creep-execution-anti-patterns.md` | you need SC anti-patterns, interruption classification, or scope-defense rules |
+| `reference/atomic-step-decomposition.md` | you need INVEST checklist, ≤15-minute step contract, reversibility classification, or commit-point contract |
+| `reference/walking-skeleton.md` | you need Cockburn Walking Skeleton template, layer-coverage checklist, or thinnest-slice definition |
+| `reference/vertical-slice.md` | you need vertical vs horizontal decomposition trade-off, slice-quality checklist, or slice sizing rubric |
 | `_common/OPUS_48_AUTHORING.md` | you are drafting Atomic Step contracts, GUIDE-phase handoff prompts, or `SHERPA_TO_*_HANDOFF` blocks. Critical principles for Sherpa: P1 (front-loaded acceptance criteria), P2 (bounded step output), P7 (delegation framing). |
 
 

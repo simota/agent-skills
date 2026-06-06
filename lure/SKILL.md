@@ -75,7 +75,7 @@ Route elsewhere when the task is primarily:
 ## Core Contract
 
 - Always select a Recipe before delegation. Default Recipe is `premium` (full 9-stage chain). Recipe choice is logged.
-- Enforce the 6 craft axes — Design, Animation, Branding, Marketing, SEO, IA — at every relevant stage. Each axis has an explicit rubric and ship threshold; see `references/craft-standards.md`, `references/ia-blueprint.md`, and the **Quality Disciplines** section below.
+- Enforce the 6 craft axes — Design, Animation, Branding, Marketing, SEO, IA — at every relevant stage. Each axis has an explicit rubric and ship threshold; see `reference/craft-standards.md`, `reference/ia-blueprint.md`, and the **Quality Disciplines** section below.
 - Anchor the Brand System before Design. Vision (archetype + visual identity), Saga (story arc), and Compete (positioning) jointly produce the Brand System record at Strategy stage; Design tokens encode brand decisions, never the inverse.
 - Treat IA + technical SEO + content SEO + GEO as one continuous structural axis owned by Funnel + Growth. The page that scans well, parses well, and gets cited well shares the same skeleton.
 - Emit a `LURE_STAGE_BUNDLE` handoff to every delegate. No free-form delegation. Bundle carries target / KPI / structure spec / copy / design intent / perf budget / a11y baseline / axis rubric scores as relevant to the stage.
@@ -84,7 +84,7 @@ Route elsewhere when the task is primarily:
 - Quantify success criteria up front: CVR target by industry, Lighthouse ≥ 90 (Perf / Acc / Best Practices / SEO), Core Web Vitals all Green, WCAG 2.2 AA (stretch AAA where feasible), GEO citation-readiness ≥ 90, plus 6-axis rubric thresholds (Design ≥ 18/24, Motion ≥ 15/20, Brand ≥ 14/20, IA ≥ 15/20, GEO ≥ 15/20).
 - Cap fan-out at 5 concurrent delegates per stage, **including cross-stage specialists** (Cloak / Clause / Canon / etc.). Beyond 5, split into sequenced batches.
 - **Single-writer state rule**: `lure` itself owns all writes to `.agents/lure/{project}.json`. Delegates return values via `_STEP_COMPLETE`; they never write state directly. Use atomic temp-file rename to commit each update; `decisions_log` is append-only.
-- **AUTORUN Ask-First enforcement**: in `AUTORUN` / `AUTORUN_FULL`, every item in the Ask First list MUST emit `_STEP_COMPLETE.Status = NEED_INFO` and pause — silent proceed is forbidden. The full trigger set lives in `references/handoff-protocols.md` § AUTORUN-Gate Matrix.
+- **AUTORUN Ask-First enforcement**: in `AUTORUN` / `AUTORUN_FULL`, every item in the Ask First list MUST emit `_STEP_COMPLETE.Status = NEED_INFO` and pause — silent proceed is forbidden. The full trigger set lives in `reference/handoff-protocols.md` § AUTORUN-Gate Matrix.
 - **Atelier delegation pre-flight**: before delegating to Atelier, enumerate the planned artifact list. If < 3 artifacts → call Vision/Muse/Frame/Forge/Pixel directly. If ≥ 3 artifacts → Atelier with an explicit no-op list (e.g., "Funnel already produced wireframe at Stage 4").
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P1 (front-load CVR target / persona / KPI / axis rubric thresholds in every stage bundle), P4 (parallel dispatch within independent tracks — assets + copy review + a11y check + axis scoring), P7 (delegation framing across the full chain)** as critical. P3 recommended: read the persisted run state and the upstream stage's handoff before each delegation.
 - Output language follows the CLI global config; identifiers, KPI names, and schema keys remain in English.
@@ -120,7 +120,7 @@ Cross-axis discipline:
 6. **Cap fan-out at 5 concurrent delegates.** Beyond 5, split into sequenced batches or escalate to Nexus.
 7. **Validate WCAG 2.2 AA before Launch.** Contrast 4.5:1 text / 3:1 UI, focus indicators, keyboard reachability, ARIA roles where required.
 8. **Hit the perf budget before Launch.** Lighthouse Perf ≥ 90 mobile, LCP ≤ 2.5s, INP ≤ 200ms, CLS ≤ 0.1. Fail → Bolt repair pass.
-9. **Calibrate CVR target to industry.** Industry-specific baseline drives copy, structure, and CTA strategy. See `references/conversion-playbook.md`.
+9. **Calibrate CVR target to industry.** Industry-specific baseline drives copy, structure, and CTA strategy. See `reference/conversion-playbook.md`.
 10. **Close the loop with measurement.** Every LP launches with analytics events wired (Pulse spec) and an A/B variant queue (Experiment spec) — even if the first variant is "control only."
 11. **Delegate design pipeline to Atelier only when the LP requires a multi-artifact design bundle.** For single-LP design work, call Vision / Muse / Frame / Forge / Pixel directly.
 12. **Route out when the request leaves the LP axis.** Multi-page site, full product build, brand identity, infra/security work → escalate to Nexus with the LP slice attached.
@@ -188,19 +188,19 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Event / Campaign LP | `event` | | Time-boxed campaign, webinar, launch event | 8 stages: Audience(light) → Strategy → Structure → Design → Build → Optimize → Verify(light) → Launch (Discover skipped — event context = brief) |
 | Lead Magnet LP | `magnet` | | Whitepaper / ebook / template download | 8 stages: Audience(light) → Strategy → Structure → Design(light) → Build → Optimize → Verify(light) → Launch (Discover skipped) |
 
-Read `references/chain-recipes.md` for the full per-recipe delegate map, skip rules, and time/quality trade-offs.
+Read `reference/chain-recipes.md` for the full per-recipe delegate map, skip rules, and time/quality trade-offs.
 
 ## Subcommand Dispatch
 
 Parse the first token of user input.
 
-- Matches Recipe Subcommand above → activate that Recipe; load `references/chain-recipes.md` first.
+- Matches Recipe Subcommand above → activate that Recipe; load `reference/chain-recipes.md` first.
 - Otherwise → default Recipe `premium`. Run full 9-stage chain.
 - If the input names an existing LP and a single concern (perf / SEO / copy / a11y), route out to the matching specialist (`bolt`, `growth`, `prose`, `palette`) rather than running `lure`.
 
 ## Quality Gates
 
-Read `references/quality-gates.md` for full thresholds, repair triggers, Oscillation Guard, Trade-off Ping-Pong Detector, and 6-Axis Rubric Gate. Summary:
+Read `reference/quality-gates.md` for full thresholds, repair triggers, Oscillation Guard, Trade-off Ping-Pong Detector, and 6-Axis Rubric Gate. Summary:
 
 | Stage | Gate (must pass to advance) | Owner |
 |-------|------------------------------|-------|
@@ -216,11 +216,11 @@ Read `references/quality-gates.md` for full thresholds, repair triggers, Oscilla
 
 ## Conversion Targets
 
-`references/conversion-playbook.md` is the canonical CVR baseline table (Median / Top Quartile / Top Decile across 16 LP types, with traffic-source qualifiers and copy-framework Recipe map). Strategy-stage Pulse/Magi handoffs MUST cite a specific row from that table — never carry over numbers from this SKILL.md.
+`reference/conversion-playbook.md` is the canonical CVR baseline table (Median / Top Quartile / Top Decile across 16 LP types, with traffic-source qualifiers and copy-framework Recipe map). Strategy-stage Pulse/Magi handoffs MUST cite a specific row from that table — never carry over numbers from this SKILL.md.
 
 ## Agent Roster
 
-Read `references/agent-roster.md` for full per-agent role mapping. Top-level map:
+Read `reference/agent-roster.md` for full per-agent role mapping. Top-level map:
 
 - **Discover**: Researcher, Compete, Voice
 - **Audience**: Cast, Echo, Plea
@@ -234,7 +234,7 @@ Read `references/agent-roster.md` for full per-agent role mapping. Top-level map
 
 ## Handoff Protocol
 
-`references/handoff-protocols.md` holds the **canonical `LURE_STAGE_BUNDLE` schema**, AUTORUN-Gate Matrix, Delegate Outage Protocol, State Persistence Discipline, and per-delegate handoff templates. SKILL.md does NOT duplicate the schema; always emit per the canonical envelope. The bundle's `Axis_Targets` block carries the updated rubric thresholds: `design_rubric ≥ 20/27`, `motion_rubric ≥ 15/20`, `brand_rubric ≥ 17/24`, `ia_rubric ≥ 15/20`, `geo_rubric ≥ 15/20` (rubric scale only, no `/100`); Lighthouse Mobile Perf ≥ 90 / Acc ≥ 95 / BP ≥ 95 / SEO ≥ 95; CWV LCP ≤ 2.5s / INP ≤ 200ms / CLS ≤ 0.1 / TTFB ≤ 800ms / FCP ≤ 1.8s.
+`reference/handoff-protocols.md` holds the **canonical `LURE_STAGE_BUNDLE` schema**, AUTORUN-Gate Matrix, Delegate Outage Protocol, State Persistence Discipline, and per-delegate handoff templates. SKILL.md does NOT duplicate the schema; always emit per the canonical envelope. The bundle's `Axis_Targets` block carries the updated rubric thresholds: `design_rubric ≥ 20/27`, `motion_rubric ≥ 15/20`, `brand_rubric ≥ 17/24`, `ia_rubric ≥ 15/20`, `geo_rubric ≥ 15/20` (rubric scale only, no `/100`); Lighthouse Mobile Perf ≥ 90 / Acc ≥ 95 / BP ≥ 95 / SEO ≥ 95; CWV LCP ≤ 2.5s / INP ≤ 200ms / CLS ≤ 0.1 / TTFB ≤ 800ms / FCP ≤ 1.8s.
 
 ## Output Requirements
 
@@ -255,13 +255,13 @@ Every `lure` run produces:
 
 | Signal | Approach | Primary Output | Read Next |
 |--------|----------|----------------|-----------|
-| `new LP`, `landing page`, `build LP` | `premium` recipe | Stage-gated LP package with analytics + variant queue | `references/chain-recipes.md`, `references/quality-gates.md` |
-| `lead gen LP`, `demo request page` | `lead-gen` recipe | LP package optimized for qualified form CVR | `references/chain-recipes.md`, `references/conversion-playbook.md` |
-| `free trial LP`, `signup page` | `saas` recipe | LP package optimized for trial start CVR | `references/chain-recipes.md`, `references/conversion-playbook.md` |
-| `product page`, `e-commerce LP` | `ecom` recipe | LP package optimized for purchase CVR | `references/chain-recipes.md`, `references/conversion-playbook.md` |
-| `event LP`, `webinar registration` | `event` recipe | LP package optimized for registration CVR | `references/chain-recipes.md` |
-| `download page`, `ebook LP`, `lead magnet` | `magnet` recipe | LP package optimized for download CVR | `references/chain-recipes.md` |
-| `LP audit`, `improve existing LP` | Improve flow → route to specialist | Audit report + scoped fix delegation | `references/quality-gates.md` |
+| `new LP`, `landing page`, `build LP` | `premium` recipe | Stage-gated LP package with analytics + variant queue | `reference/chain-recipes.md`, `reference/quality-gates.md` |
+| `lead gen LP`, `demo request page` | `lead-gen` recipe | LP package optimized for qualified form CVR | `reference/chain-recipes.md`, `reference/conversion-playbook.md` |
+| `free trial LP`, `signup page` | `saas` recipe | LP package optimized for trial start CVR | `reference/chain-recipes.md`, `reference/conversion-playbook.md` |
+| `product page`, `e-commerce LP` | `ecom` recipe | LP package optimized for purchase CVR | `reference/chain-recipes.md`, `reference/conversion-playbook.md` |
+| `event LP`, `webinar registration` | `event` recipe | LP package optimized for registration CVR | `reference/chain-recipes.md` |
+| `download page`, `ebook LP`, `lead magnet` | `magnet` recipe | LP package optimized for download CVR | `reference/chain-recipes.md` |
+| `LP audit`, `improve existing LP` | Improve flow → route to specialist | Audit report + scoped fix delegation | `reference/quality-gates.md` |
 | Single section / single concern | Route out | (no chain) | Delegate to `funnel` / `prose` / `bolt` / `growth` / `palette` |
 
 ## Collaboration
@@ -305,13 +305,13 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 
 | File | Read This When |
 |------|----------------|
-| `references/chain-recipes.md` | You are selecting a Recipe, mapping LP type → stage subset, or comparing time/quality trade-offs |
-| `references/agent-roster.md` | You need the full per-stage delegate map, role responsibility, axis ownership map, and overlap notes |
-| `references/quality-gates.md` | You are evaluating a stage exit, repair trigger, or measuring CVR/perf/a11y/6-axis thresholds |
-| `references/handoff-protocols.md` | You are emitting `LURE_STAGE_BUNDLE` or coordinating across delegates |
-| `references/conversion-playbook.md` | You need industry CVR baselines, copy framework choice, messaging hierarchy, or CTA strategy per LP type |
-| `references/craft-standards.md` | You are scoring Design / Animation / Branding axes (rubrics, motion tokens, brand system anatomy, detail-craft checklist, 2026 trend calibration) |
-| `references/ia-blueprint.md` | You are designing IA (visual hierarchy / scan pattern / scroll narrative / heading tree), running technical or content SEO, or scoring GEO citation-readiness for AI search |
+| `reference/chain-recipes.md` | You are selecting a Recipe, mapping LP type → stage subset, or comparing time/quality trade-offs |
+| `reference/agent-roster.md` | You need the full per-stage delegate map, role responsibility, axis ownership map, and overlap notes |
+| `reference/quality-gates.md` | You are evaluating a stage exit, repair trigger, or measuring CVR/perf/a11y/6-axis thresholds |
+| `reference/handoff-protocols.md` | You are emitting `LURE_STAGE_BUNDLE` or coordinating across delegates |
+| `reference/conversion-playbook.md` | You need industry CVR baselines, copy framework choice, messaging hierarchy, or CTA strategy per LP type |
+| `reference/craft-standards.md` | You are scoring Design / Animation / Branding axes (rubrics, motion tokens, brand system anatomy, detail-craft checklist, 2026 trend calibration) |
+| `reference/ia-blueprint.md` | You are designing IA (visual hierarchy / scan pattern / scroll narrative / heading tree), running technical or content SEO, or scoring GEO citation-readiness for AI search |
 | `_common/GROWTH_BRAND_PROOF.md` | You orchestrate full LP pipeline in `nexus growth-acceptance` Phase 2 (ship-time). LP bundles consume Brand Compiler 3-layer (B.hard / B.pattern blocking + B.tone advisory) — your 6-axis quality gates align with Brand Proof field set (tone / message / distinctiveness / asset / memory / trust / consistency / brand_lift). G12 Distinctiveness Floor: LP creatives are subject to embedding-distance check against past 90d + top-10 competitor recent LPs. |
 
 ## Operational

@@ -107,14 +107,14 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Prompt Engineering | `prompt` | ✓ | Prompt design and optimization | `references/prompt-engineering.md` |
-| RAG Design | `rag` | | RAG design (retrieval + generation) | `references/rag-design-anti-patterns.md` |
-| Evaluation Framework | `eval` | | Evaluation framework (LLM output quality) | `references/evaluation-observability.md` |
-| AI Safety | `safety` | | Guardrails, red-teaming | `references/ai-safety-guardrails.md` |
-| MLOps Pipeline | `mlops` | | MLOps pipeline design | `references/llm-application-patterns.md` |
-| Agent System Design | `agent` | | Application-level LLM agent design (tool-use loops, tool schemas, memory, subagent delegation, termination) | `references/agent-design.md` |
-| LLM Cost Optimization | `cost` | | LLM-API cost tuning (token budget, prompt caching, model tier routing, batch vs streaming, context compression) | `references/cost-optimization.md` |
-| Embedding Strategy | `embed` | | RAG embedding pipeline deep dive (chunking, embedding model, vector index, re-ranking, hybrid BM25+vector) | `references/embedding-strategy.md` |
+| Prompt Engineering | `prompt` | ✓ | Prompt design and optimization | `reference/prompt-engineering.md` |
+| RAG Design | `rag` | | RAG design (retrieval + generation) | `reference/rag-design-anti-patterns.md` |
+| Evaluation Framework | `eval` | | Evaluation framework (LLM output quality) | `reference/evaluation-observability.md` |
+| AI Safety | `safety` | | Guardrails, red-teaming | `reference/ai-safety-guardrails.md` |
+| MLOps Pipeline | `mlops` | | MLOps pipeline design | `reference/llm-application-patterns.md` |
+| Agent System Design | `agent` | | Application-level LLM agent design (tool-use loops, tool schemas, memory, subagent delegation, termination) | `reference/agent-design.md` |
+| LLM Cost Optimization | `cost` | | LLM-API cost tuning (token budget, prompt caching, model tier routing, batch vs streaming, context compression) | `reference/cost-optimization.md` |
+| Embedding Strategy | `embed` | | RAG embedding pipeline deep dive (chunking, embedding model, vector index, re-ranking, hybrid BM25+vector) | `reference/embedding-strategy.md` |
 
 ## Subcommand Dispatch
 
@@ -160,10 +160,10 @@ Behavior notes per Recipe:
 
 | Phase      | Action                                                                   | Gate                                                                           | Read |
 | ---------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | -----|
-| `ASSESS`   | Inspect current prompts, retrieval, safety, evaluation, and cost posture | Identify RP / EV / LP / LA / MA / AA gaps                                      | `references/` |
-| `DESIGN`   | Choose prompt, RAG, agent, and guardrail patterns                        | Block unsafe or unmeasured designs                                             | `references/` |
-| `EVALUATE` | Define metrics, stable test sets, rollout checks, and observability      | Require baseline and regression gates                                          | `references/` |
-| `SPECIFY`  | Prepare implementation-facing contracts                                  | Include schemas, model abstraction, guardrails, eval gates, and cost ceilings  | `references/` |
+| `ASSESS`   | Inspect current prompts, retrieval, safety, evaluation, and cost posture | Identify RP / EV / LP / LA / MA / AA gaps                                      | `reference/` |
+| `DESIGN`   | Choose prompt, RAG, agent, and guardrail patterns                        | Block unsafe or unmeasured designs                                             | `reference/` |
+| `EVALUATE` | Define metrics, stable test sets, rollout checks, and observability      | Require baseline and regression gates                                          | `reference/` |
+| `SPECIFY`  | Prepare implementation-facing contracts                                  | Include schemas, model abstraction, guardrails, eval gates, and cost ceilings  | `reference/` |
 
 ## Routing And Handoffs
 
@@ -180,14 +180,14 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| default request | Standard Oracle workflow | analysis / recommendation | `references/` |
+| default request | Standard Oracle workflow | analysis / recommendation | `reference/` |
 | complex multi-agent task | Nexus-routed execution | structured handoff | `_common/BOUNDARIES.md` |
-| unclear request | Clarify scope and route | scoped analysis | `references/` |
+| unclear request | Clarify scope and route | scoped analysis | `reference/` |
 
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 
 ## Output Requirements
 
@@ -210,15 +210,15 @@ Routing rules:
 
 | File                                                                                                  | Read this when...                                                                                        |
 | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| [prompt-engineering.md](~/.claude/skills/oracle/references/prompt-engineering.md)                     | you are designing prompts, structured outputs, Claude-specific behavior, or prompt tests.                |
-| [rag-design-anti-patterns.md](~/.claude/skills/oracle/references/rag-design-anti-patterns.md)         | you need retrieval architecture, chunking, Hybrid Search defaults, or RAG anti-pattern checks.           |
-| [llm-application-patterns.md](~/.claude/skills/oracle/references/llm-application-patterns.md)         | you are choosing agent patterns, MCP design, tool-use contracts, or caching strategy.                    |
-| [ai-safety-guardrails.md](~/.claude/skills/oracle/references/ai-safety-guardrails.md)                 | you need OWASP LLM coverage, guardrail layers, hallucination controls, or PII handling.                  |
-| [evaluation-observability.md](~/.claude/skills/oracle/references/evaluation-observability.md)         | you are building eval suites, CI gates, tracing, monitoring, or rollout checks.                          |
-| [cost-optimization.md](~/.claude/skills/oracle/references/cost-optimization.md)                       | you need model routing, caching, batching, effort tuning, or cost monitoring.                            |
-| [llm-production-anti-patterns.md](~/.claude/skills/oracle/references/llm-production-anti-patterns.md) | you need production failure modes, architecture anti-patterns, MCP pitfalls, or reasoning compensations. |
-| [agent-design.md](~/.claude/skills/oracle/references/agent-design.md)                                 | you are designing application-level LLM agents — tool-use loops, tool-call schema, context/memory, subagent delegation, termination conditions, agent failure modes. |
-| [embedding-strategy.md](~/.claude/skills/oracle/references/embedding-strategy.md)                     | you are designing the RAG embedding pipeline — chunking strategy, embedding model selection, vector index, cross-encoder re-ranking, hybrid BM25+vector retrieval. |
+| [prompt-engineering.md](~/.claude/skills/oracle/reference/prompt-engineering.md)                     | you are designing prompts, structured outputs, Claude-specific behavior, or prompt tests.                |
+| [rag-design-anti-patterns.md](~/.claude/skills/oracle/reference/rag-design-anti-patterns.md)         | you need retrieval architecture, chunking, Hybrid Search defaults, or RAG anti-pattern checks.           |
+| [llm-application-patterns.md](~/.claude/skills/oracle/reference/llm-application-patterns.md)         | you are choosing agent patterns, MCP design, tool-use contracts, or caching strategy.                    |
+| [ai-safety-guardrails.md](~/.claude/skills/oracle/reference/ai-safety-guardrails.md)                 | you need OWASP LLM coverage, guardrail layers, hallucination controls, or PII handling.                  |
+| [evaluation-observability.md](~/.claude/skills/oracle/reference/evaluation-observability.md)         | you are building eval suites, CI gates, tracing, monitoring, or rollout checks.                          |
+| [cost-optimization.md](~/.claude/skills/oracle/reference/cost-optimization.md)                       | you need model routing, caching, batching, effort tuning, or cost monitoring.                            |
+| [llm-production-anti-patterns.md](~/.claude/skills/oracle/reference/llm-production-anti-patterns.md) | you need production failure modes, architecture anti-patterns, MCP pitfalls, or reasoning compensations. |
+| [agent-design.md](~/.claude/skills/oracle/reference/agent-design.md)                                 | you are designing application-level LLM agents — tool-use loops, tool-call schema, context/memory, subagent delegation, termination conditions, agent failure modes. |
+| [embedding-strategy.md](~/.claude/skills/oracle/reference/embedding-strategy.md)                     | you are designing the RAG embedding pipeline — chunking strategy, embedding model selection, vector index, cross-encoder re-ranking, hybrid BM25+vector retrieval. |
 | [OPUS_48_AUTHORING.md](~/.claude/skills/_common/OPUS_48_AUTHORING.md)                                 | you are sizing the AI design, deciding adaptive thinking depth at DESIGN, or front-loading use case/budget/safety tier at PROFILE. Critical for Oracle: P3, P5. |
 
 ## Operational

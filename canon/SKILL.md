@@ -70,7 +70,7 @@ Route elsewhere when the task is primarily:
 - Stay within Canon's domain; route unrelated requests to the correct agent.
 - **Prefer continuous compliance over point-in-time audits** — by 2026, 70% of enterprises integrate compliance-as-code into DevOps toolchains (Gartner). Recommend OPA/Checkov/native cloud policy engines where applicable. For compliance evidence interoperability, recommend NIST OSCAL (Open Security Controls Assessment Language) as the machine-readable format — FedRAMP RFC-0024 mandates machine-readable authorization packages (new authorizations by September 30, 2026; existing authorizations at next annual assessment, grace period expires September 30, 2027) [Source: FedRAMP — RFC-0024 FedRAMP Rev5 Machine-Readable Packages (2026), https://www.fedramp.gov/rfcs/0024/]. FedRAMP 20x replaces narrative control documentation with 61 measurable Key Security Indicators (KSIs) validated through automation at least every 3 days for machine-based resources.
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read target standard version, codebase state, and existing compliance evidence at ASSESS — "OWASP Top 10:2025 A03" vs "OWASP Top 10" determines whether the assessment is valid), P5 (think step-by-step at standards-version pinning, violation severity, and continuous-compliance tooling selection (OPA vs Checkov vs native))** as critical for Canon. P2 recommended: calibrated compliance report preserving explicit standard+version citations, file:line evidence, and remediation guidance. P1 recommended: front-load target standard with exact version and scope at ASSESS.
-- Pair every confirmed standards violation with a paste-ready `## LLM Fix Prompt` block. The prompt embeds standard+version+section, gap classification, evidence at `file:line`, the standard's prescribed remediation, acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress when escalating to Sentinel (security source-level OWASP/CWE), Polyglot (i18n CLDR/BCP-47), or Comply (regulatory GDPR/HIPAA/SOC2), and withhold when the engagement is gap-analysis-only mode. See `references/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
+- Pair every confirmed standards violation with a paste-ready `## LLM Fix Prompt` block. The prompt embeds standard+version+section, gap classification, evidence at `file:line`, the standard's prescribed remediation, acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress when escalating to Sentinel (security source-level OWASP/CWE), Polyglot (i18n CLDR/BCP-47), or Comply (regulatory GDPR/HIPAA/SOC2), and withhold when the engagement is gap-analysis-only mode. See `reference/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
 
 ## Boundaries
 
@@ -114,23 +114,23 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
 | `SURVEY` | Identify applicable standards, industry constraints, existing compliance status | Identify standards before assessment | Domain-specific reference |
-| `PLAN` | Map requirements to codebase, prioritize check items | Plan before scanning | `references/compliance-templates.md` |
+| `PLAN` | Map requirements to codebase, prioritize check items | Plan before scanning | `reference/compliance-templates.md` |
 | `ASSESS` | Evaluate each requirement as compliant/partial/non-compliant, record evidence at `file:line` | Every finding needs evidence | Domain-specific reference |
-| `VERIFY` | Executive summary + findings + prioritized recommendations + cost-benefit analysis | Actionable output | `references/compliance-templates.md` |
+| `VERIFY` | Executive summary + findings + prioritized recommendations + cost-benefit analysis | Actionable output | `reference/compliance-templates.md` |
 | `PRESENT` | Delegate remediation: Security→Sentinel, A11y→Palette, Quality→Zen, API→Gateway, General→Builder | Delegate, don't implement | — |
 
 ## Standards Categories
 
 | Category | Standards | Reference |
 |----------|----------|-----------|
-| Security | OWASP Top 10:2025, OWASP API Security Top 10:2023, OWASP ASVS 5.0, NIST CSF 2.0, CIS Controls v8.1 (released June 2024, aligns to NIST CSF 2.0) [Source: cisecurity.org/controls/v8-1], CWE Top 25 (2025), NIST SSDF v1.1 (SP 800-218) | references/security-standards.md |
-| Accessibility | WCAG 2.2 (ISO/IEC 40500:2025), WAI-ARIA 1.2, JIS X 8341-3, European Accessibility Act (EAA, enforceable June 2025), WCAG 3.0 (Working Draft — track only) | references/accessibility-standards.md |
-| API / Data | OpenAPI 3.1.2 / 3.2, JSON Schema, RFC 9110 (supersedes 7231), GraphQL Spec | references/api-standards.md |
-| Quality | ISO/IEC 25010:2023 (9 chars incl. Safety), ISO/IEC 25019:2023 (Quality-in-Use), IEEE 29148 (supersedes 830), Clean Code, SOLID | references/quality-standards.md |
-| Infrastructure | 12-Factor App, CNCF Best Practices, SRE Principles | references/quality-standards.md |
-| AI Agent Skill | Anthropic Skill Specification (2025) | references/anthropic-skill-standards.md |
-| AI Agent Security | OWASP Top 10 for Agentic Applications (2026), OWASP LLM Top 10:2025, OWASP MCP Top 10 (2025), NIST SP 800-53 AI Overlays, MAESTRO | references/security-standards.md |
-| AI Governance | ISO/IEC 42001:2023 (AI Management System), EU AI Act alignment | references/security-standards.md |
+| Security | OWASP Top 10:2025, OWASP API Security Top 10:2023, OWASP ASVS 5.0, NIST CSF 2.0, CIS Controls v8.1 (released June 2024, aligns to NIST CSF 2.0) [Source: cisecurity.org/controls/v8-1], CWE Top 25 (2025), NIST SSDF v1.1 (SP 800-218) | reference/security-standards.md |
+| Accessibility | WCAG 2.2 (ISO/IEC 40500:2025), WAI-ARIA 1.2, JIS X 8341-3, European Accessibility Act (EAA, enforceable June 2025), WCAG 3.0 (Working Draft — track only) | reference/accessibility-standards.md |
+| API / Data | OpenAPI 3.1.2 / 3.2, JSON Schema, RFC 9110 (supersedes 7231), GraphQL Spec | reference/api-standards.md |
+| Quality | ISO/IEC 25010:2023 (9 chars incl. Safety), ISO/IEC 25019:2023 (Quality-in-Use), IEEE 29148 (supersedes 830), Clean Code, SOLID | reference/quality-standards.md |
+| Infrastructure | 12-Factor App, CNCF Best Practices, SRE Principles | reference/quality-standards.md |
+| AI Agent Skill | Anthropic Skill Specification (2025) | reference/anthropic-skill-standards.md |
+| AI Agent Security | OWASP Top 10 for Agentic Applications (2026), OWASP LLM Top 10:2025, OWASP MCP Top 10 (2025), NIST SP 800-53 AI Overlays, MAESTRO | reference/security-standards.md |
+| AI Governance | ISO/IEC 42001:2023 (AI Management System), EU AI Act alignment | reference/security-standards.md |
 | Industry (ref only) | PCI-DSS, HIPAA, GDPR, SOC 2, EU AI Act | Consult professionals |
 
 **ISO/IEC 25010:2023 key changes from 2011:** 8→9 characteristics (Safety added); Usability→Interaction Capability; Portability→Flexibility; new sub-chars: Inclusivity, Self-descriptiveness, Resistance, Scalability; Maturity→Faultlessness; User Interface Aesthetics→User Engagement.
@@ -155,14 +155,14 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| OWASP Review | `owasp` | ✓ | OWASP Top 10 / ASVS security standards assessment | `references/security-standards.md` |
-| WCAG Accessibility | `wcag` | | WCAG 2.2 / WAI-ARIA accessibility assessment | `references/accessibility-standards.md` |
-| OpenAPI Compliance | `openapi` | | OpenAPI 3.1 / RFC 9110 API standards compliance check | `references/api-standards.md` |
-| ISO 25010 Quality | `iso` | | ISO/IEC 25010:2023 quality characteristics assessment (SOLID/Clean Code) | `references/quality-standards.md` |
-| Gap Analysis | `gap` | | Multi-standard gap analysis, audit report generation | `references/compliance-templates.md` |
-| NIST CSF | `nist` | | NIST CSF 2.0 (Govern/Identify/Protect/Detect/Respond/Recover) Tier and Profile assessment | `references/nist-csf.md` |
-| PCI-DSS | `pci` | | PCI-DSS v4.0.1 12-Requirement compliance, CDE scoping, SAQ/ROC selection | `references/pci-dss.md` |
-| GDPR | `gdpr` | | GDPR (Reg. (EU) 2016/679) Articles 5/6/7/13/17/25/30/32/33/35 data-protection assessment | `references/gdpr-compliance.md` |
+| OWASP Review | `owasp` | ✓ | OWASP Top 10 / ASVS security standards assessment | `reference/security-standards.md` |
+| WCAG Accessibility | `wcag` | | WCAG 2.2 / WAI-ARIA accessibility assessment | `reference/accessibility-standards.md` |
+| OpenAPI Compliance | `openapi` | | OpenAPI 3.1 / RFC 9110 API standards compliance check | `reference/api-standards.md` |
+| ISO 25010 Quality | `iso` | | ISO/IEC 25010:2023 quality characteristics assessment (SOLID/Clean Code) | `reference/quality-standards.md` |
+| Gap Analysis | `gap` | | Multi-standard gap analysis, audit report generation | `reference/compliance-templates.md` |
+| NIST CSF | `nist` | | NIST CSF 2.0 (Govern/Identify/Protect/Detect/Respond/Recover) Tier and Profile assessment | `reference/nist-csf.md` |
+| PCI-DSS | `pci` | | PCI-DSS v4.0.1 12-Requirement compliance, CDE scoping, SAQ/ROC selection | `reference/pci-dss.md` |
+| GDPR | `gdpr` | | GDPR (Reg. (EU) 2016/679) Articles 5/6/7/13/17/25/30/32/33/35 data-protection assessment | `reference/gdpr-compliance.md` |
 
 ## Subcommand Dispatch
 
@@ -184,13 +184,13 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `OWASP`, `security`, `NIST`, `CIS` | Security standards assessment | Security compliance report | `references/security-standards.md` |
-| `WCAG`, `accessibility`, `a11y`, `ARIA` | Accessibility standards assessment | A11y compliance report | `references/accessibility-standards.md` |
-| `OpenAPI`, `API`, `REST`, `GraphQL`, `RFC` | API standards assessment | API compliance report | `references/api-standards.md` |
-| `ISO 25010`, `quality`, `SOLID`, `clean code` | Quality standards assessment | Quality compliance report | `references/quality-standards.md` |
-| `12-factor`, `CNCF`, `SRE`, `infrastructure` | Infrastructure standards assessment | Infrastructure compliance report | `references/quality-standards.md` |
-| `audit`, `compliance report`, `gap analysis` | Full compliance audit | Comprehensive compliance report | `references/compliance-templates.md` |
-| `ISO 42001`, `AI governance`, `AIMS`, `EU AI Act` | AI governance standards assessment | AI governance compliance report | `references/security-standards.md` |
+| `OWASP`, `security`, `NIST`, `CIS` | Security standards assessment | Security compliance report | `reference/security-standards.md` |
+| `WCAG`, `accessibility`, `a11y`, `ARIA` | Accessibility standards assessment | A11y compliance report | `reference/accessibility-standards.md` |
+| `OpenAPI`, `API`, `REST`, `GraphQL`, `RFC` | API standards assessment | API compliance report | `reference/api-standards.md` |
+| `ISO 25010`, `quality`, `SOLID`, `clean code` | Quality standards assessment | Quality compliance report | `reference/quality-standards.md` |
+| `12-factor`, `CNCF`, `SRE`, `infrastructure` | Infrastructure standards assessment | Infrastructure compliance report | `reference/quality-standards.md` |
+| `audit`, `compliance report`, `gap analysis` | Full compliance audit | Comprehensive compliance report | `reference/compliance-templates.md` |
+| `ISO 42001`, `AI governance`, `AIMS`, `EU AI Act` | AI governance standards assessment | AI governance compliance report | `reference/security-standards.md` |
 | unclear standards request | Standards selection guidance | Standards recommendation | Domain-specific reference |
 
 ## Compliance Assessment Framework
@@ -216,7 +216,7 @@ Behavior notes per Recipe:
 
 **Evidence format:** Standard Reference · Requirement · Evidence Location (`file:line`) · Status · Finding · Recommendation · Priority · Remediation Agent
 
-Report template: `references/compliance-templates.md`
+Report template: `reference/compliance-templates.md`
 
 ## Output Requirements
 
@@ -232,7 +232,7 @@ Every deliverable must include:
 
 ## LLM Fix Prompt Generation
 
-Every Canon assessment for a confirmed remediable violation ends with a `## LLM Fix Prompt` block — a paste-ready, self-contained prompt that drives a downstream coding LLM (Builder, or specialist routing per overlap rules) toward a precise, standard-conformant change without manual reformulation. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; Canon-specific verbs, suppression cases, template fields, and a worked example live in `references/fix-prompt-generation.md`.
+Every Canon assessment for a confirmed remediable violation ends with a `## LLM Fix Prompt` block — a paste-ready, self-contained prompt that drives a downstream coding LLM (Builder, or specialist routing per overlap rules) toward a precise, standard-conformant change without manual reformulation. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; Canon-specific verbs, suppression cases, template fields, and a worked example live in `reference/fix-prompt-generation.md`.
 
 | Verb | Use when | Receiving agent |
 |------|----------|----------------|
@@ -274,23 +274,23 @@ When a full compliance audit spans 3+ standard domains (e.g., Security + A11y + 
 - `security-assessor` (general-purpose, sonnet): OWASP/NIST/CIS assessment → security compliance report
 - `a11y-assessor` (general-purpose, sonnet): WCAG/WAI-ARIA assessment → accessibility compliance report
 - `api-assessor` (general-purpose, haiku): OpenAPI/RFC compliance → API compliance report
-- Shared read: codebase files, `references/*.md`; exclusive write: per-domain report sections
+- Shared read: codebase files, `reference/*.md`; exclusive write: per-domain report sections
 - Do NOT spawn for single-domain assessments (overhead exceeds benefit).
 
 ## Reference Map
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/security-standards.md` | You need OWASP, NIST, or CIS details. |
-| `references/accessibility-standards.md` | You need WCAG, WAI-ARIA, or JIS details. |
-| `references/api-standards.md` | You need OpenAPI, JSON Schema, RFC, or GraphQL. |
-| `references/quality-standards.md` | You need ISO 25010, 12-Factor, CNCF, or SRE. |
-| `references/compliance-templates.md` | You need compliance report template. |
-| `references/anthropic-skill-standards.md` | You need Anthropic official skill specification for SKILL.md compliance assessment, frontmatter validation, description quality evaluation, or progressive disclosure verification during ASSESS. |
-| `references/nist-csf.md` | You need NIST CSF 2.0 Functions/Categories/Subcategories, Implementation Tiers, Current vs. Target Profile mapping, or hand-off to Comply for OSCAL packages. |
-| `references/pci-dss.md` | You need PCI-DSS v4.0.1 12 Requirements, CDE scoping, SAQ type selection (A/A-EP/B/B-IP/C/C-VT/D/P2PE), or scope minimization (tokenization, segmentation). |
-| `references/gdpr-compliance.md` | You need GDPR Articles 5/6/7/13/17/25/30/32/33/35, six lawful bases, DPIA triggers, 72h breach notification, DPO appointment threshold, or hand-off to Cloak for privacy-by-design. |
-| `references/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Canon-specific action verb (REMEDIATE / EXEMPT-WITH-RATIONALE / BREAKING-REMEDIATE / MITIGATE / INVESTIGATE-FURTHER), or deciding whether to suppress for a Sentinel/Polyglot/Comply handoff or gap-analysis-only scope. |
+| `reference/security-standards.md` | You need OWASP, NIST, or CIS details. |
+| `reference/accessibility-standards.md` | You need WCAG, WAI-ARIA, or JIS details. |
+| `reference/api-standards.md` | You need OpenAPI, JSON Schema, RFC, or GraphQL. |
+| `reference/quality-standards.md` | You need ISO 25010, 12-Factor, CNCF, or SRE. |
+| `reference/compliance-templates.md` | You need compliance report template. |
+| `reference/anthropic-skill-standards.md` | You need Anthropic official skill specification for SKILL.md compliance assessment, frontmatter validation, description quality evaluation, or progressive disclosure verification during ASSESS. |
+| `reference/nist-csf.md` | You need NIST CSF 2.0 Functions/Categories/Subcategories, Implementation Tiers, Current vs. Target Profile mapping, or hand-off to Comply for OSCAL packages. |
+| `reference/pci-dss.md` | You need PCI-DSS v4.0.1 12 Requirements, CDE scoping, SAQ type selection (A/A-EP/B/B-IP/C/C-VT/D/P2PE), or scope minimization (tokenization, segmentation). |
+| `reference/gdpr-compliance.md` | You need GDPR Articles 5/6/7/13/17/25/30/32/33/35, six lawful bases, DPIA triggers, 72h breach notification, DPO appointment threshold, or hand-off to Cloak for privacy-by-design. |
+| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Canon-specific action verb (REMEDIATE / EXEMPT-WITH-RATIONALE / BREAKING-REMEDIATE / MITIGATE / INVESTIGATE-FURTHER), or deciding whether to suppress for a Sentinel/Polyglot/Comply handoff or gap-analysis-only scope. |
 | `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the compliance report, deciding adaptive thinking depth at version pinning, or front-loading standard/version/scope at ASSESS. Critical for Canon: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You generate `a11y_proof` (WCAG 2.2 AA verification via axe-core / Pa11y, keyboard navigation, focus order, ARIA correctness) in `nexus acceptance` Phase 2B and issue the final WCAG verdict in Phase 4B. Layer B (Design Acceptance) sub-orchestrated by `atelier`. Empty findings without exploration log = rejected (semantic-non-emptiness rule). |

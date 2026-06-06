@@ -175,7 +175,7 @@ Score each row, take the majority. Declare the result and confidence (`HIGH` if 
 5. LEARN: What to learn — general principles, reusable patterns, cautions
 ```
 
-Detailed analysis patterns (6 types) → `references/patterns.md`
+Detailed analysis patterns (6 types) → `reference/patterns.md`
 
 ### Section Priority Order (COMPOSE)
 
@@ -186,7 +186,7 @@ Meta → Overview → Glossary → Background (Why) → Details (What & How) →
 - `intermediate`: Define project-specific terms only, focus on design decisions
 - `advanced`: Minimal definitions, focus on trade-offs and architecture impact
 
-Output format templates → `references/output-templates.md`
+Output format templates → `reference/output-templates.md`
 
 ---
 
@@ -196,18 +196,18 @@ Single source of truth for Recipe definitions. Behavior depth (framework, depth 
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Learning Doc | `learn` | ✓ | Standard `learning_doc` generation. Document change background, rationale, and alternatives using the 5W1H+WhyNot framework. Applies normal `SCOPE → EXTRACT → ANALYZE → COMPOSE → REVIEW` workflow. | `references/output-templates.md` |
-| Diff to Teaching | `diff` | | Turn diffs/commits/PRs directly into teaching materials. Emphasize the EXTRACT phase; at least one before/after comparison pair is mandatory. | `references/patterns.md` |
-| Onboarding Material | `onboard` | | Material for new members at `beginner` depth. Define all first-occurrence terms exhaustively so a new member can read the document independently. | `references/output-templates.md` |
-| Design Decision Record | `record` | | `decision_record` generation. Select one of three formats by decision weight — Y-statement (single-sentence ~90-second lightweight ADR for reversible decisions) / Nygard (classic short form: Context/Decision/Consequences) / MADR 4.0.0 (Sept 2024 release; mandates a `Confirmation` section for verification means, plus `Decision Maker(s)` metadata). One decision per record, strictly. [Source: adr.github.io; github.com/adr/madr/releases] | `references/output-templates.md` |
-| Worked Example | `worked` | | Step-by-step problem → reasoning → solution document grounded in Sweller's cognitive load theory. Annotate expert thought process, common errors, and "why it works." For learning sequences, design faded-guidance progression. | `references/worked-example.md` |
-| Coding Kata | `kata` | | Deliberate-practice exercise in the Dave Thomas kata tradition. Design constraints (time/language/paradigm) and difficulty tiers (Bronze/Silver/Gold); attach comparison-target solutions and reflection prompts. | `references/coding-kata.md` |
-| Quickstart Guide | `quickstart` | | ≤15-minute first-success path. Strictly narrow prerequisites; place "you should see..." anchors at success-verification points. Troubleshooting in decision-tree form. | `references/quickstart-guide.md` |
-| Glossary | (signal) | | Terminology extraction and definition table for changes in scope. Triggered by `glossary` / `terms` signal keywords. | `references/output-templates.md` |
-| Tutorial | (signal) | | Diataxis-aligned tutorial: learning-oriented, end-to-end guided walkthrough with a concrete success encounter; keep the path linear. Triggered by `tutorial` / `learning path` / `guided`. | `references/output-templates.md` |
-| How-to | (signal) | | Diataxis-aligned how-to: problem-oriented; addresses a competent user getting a specific job done. Triggered by `how-to` / `recipe` / `solve`. | `references/output-templates.md` |
-| Learning Series | (signal) | | `learning_series` — serialized episodes across multiple PRs/commits. Triggered by `batch` / `sprint` / `series`. Each episode independently readable. | `references/output-templates.md` |
-| Incremental Doc | (signal) | | `incremental_doc` — delta-only document comparing against previous output. Triggered by `update` / `delta` / `incremental`, or when a previous learning doc exists for the same component. | `references/output-templates.md` |
+| Learning Doc | `learn` | ✓ | Standard `learning_doc` generation. Document change background, rationale, and alternatives using the 5W1H+WhyNot framework. Applies normal `SCOPE → EXTRACT → ANALYZE → COMPOSE → REVIEW` workflow. | `reference/output-templates.md` |
+| Diff to Teaching | `diff` | | Turn diffs/commits/PRs directly into teaching materials. Emphasize the EXTRACT phase; at least one before/after comparison pair is mandatory. | `reference/patterns.md` |
+| Onboarding Material | `onboard` | | Material for new members at `beginner` depth. Define all first-occurrence terms exhaustively so a new member can read the document independently. | `reference/output-templates.md` |
+| Design Decision Record | `record` | | `decision_record` generation. Select one of three formats by decision weight — Y-statement (single-sentence ~90-second lightweight ADR for reversible decisions) / Nygard (classic short form: Context/Decision/Consequences) / MADR 4.0.0 (Sept 2024 release; mandates a `Confirmation` section for verification means, plus `Decision Maker(s)` metadata). One decision per record, strictly. [Source: adr.github.io; github.com/adr/madr/releases] | `reference/output-templates.md` |
+| Worked Example | `worked` | | Step-by-step problem → reasoning → solution document grounded in Sweller's cognitive load theory. Annotate expert thought process, common errors, and "why it works." For learning sequences, design faded-guidance progression. | `reference/worked-example.md` |
+| Coding Kata | `kata` | | Deliberate-practice exercise in the Dave Thomas kata tradition. Design constraints (time/language/paradigm) and difficulty tiers (Bronze/Silver/Gold); attach comparison-target solutions and reflection prompts. | `reference/coding-kata.md` |
+| Quickstart Guide | `quickstart` | | ≤15-minute first-success path. Strictly narrow prerequisites; place "you should see..." anchors at success-verification points. Troubleshooting in decision-tree form. | `reference/quickstart-guide.md` |
+| Glossary | (signal) | | Terminology extraction and definition table for changes in scope. Triggered by `glossary` / `terms` signal keywords. | `reference/output-templates.md` |
+| Tutorial | (signal) | | Diataxis-aligned tutorial: learning-oriented, end-to-end guided walkthrough with a concrete success encounter; keep the path linear. Triggered by `tutorial` / `learning path` / `guided`. | `reference/output-templates.md` |
+| How-to | (signal) | | Diataxis-aligned how-to: problem-oriented; addresses a competent user getting a specific job done. Triggered by `how-to` / `recipe` / `solve`. | `reference/output-templates.md` |
+| Learning Series | (signal) | | `learning_series` — serialized episodes across multiple PRs/commits. Triggered by `batch` / `sprint` / `series`. Each episode independently readable. | `reference/output-templates.md` |
+| Incremental Doc | (signal) | | `incremental_doc` — delta-only document comparing against previous output. Triggered by `update` / `delta` / `incremental`, or when a previous learning doc exists for the same component. | `reference/output-templates.md` |
 
 ### Signal Keywords → Recipe
 
@@ -318,7 +318,7 @@ Each episode must be independently readable while linking to the series context.
 | **Visual Learning** | Tome → Canvas | Generate concept relationship diagrams from knowledge graph |
 | **Demo Narration** | Tome → Director | Generate demo video narration scripts from change analysis |
 
-All handoff templates → `references/handoffs.md`
+All handoff templates → `reference/handoffs.md`
 
 ---
 
@@ -326,13 +326,13 @@ All handoff templates → `references/handoffs.md`
 
 | File | Read When |
 |------|-----------|
-| `references/output-templates.md` | You need detailed templates for output formats |
-| `references/patterns.md` | You need analysis frameworks for specific change types (refactoring, bug fix, feature, etc.) |
-| `references/examples.md` | You need concrete sample outputs for reference |
-| `references/handoffs.md` | You need handoff templates for inter-agent collaboration |
-| `references/worked-example.md` | You are running the `worked` recipe — Sweller cognitive load theory, expert-reasoning annotation, faded-guidance progression |
-| `references/coding-kata.md` | You are running the `kata` recipe — constraint design, difficulty tiers (Bronze/Silver/Gold), pair vs solo facilitation, common katas |
-| `references/quickstart-guide.md` | You are running the `quickstart` recipe — 15-minute time budget, prerequisite filtering, success anchors, troubleshooting decision tree |
+| `reference/output-templates.md` | You need detailed templates for output formats |
+| `reference/patterns.md` | You need analysis frameworks for specific change types (refactoring, bug fix, feature, etc.) |
+| `reference/examples.md` | You need concrete sample outputs for reference |
+| `reference/handoffs.md` | You need handoff templates for inter-agent collaboration |
+| `reference/worked-example.md` | You are running the `worked` recipe — Sweller cognitive load theory, expert-reasoning annotation, faded-guidance progression |
+| `reference/coding-kata.md` | You are running the `kata` recipe — constraint design, difficulty tiers (Bronze/Silver/Gold), pair vs solo facilitation, common katas |
+| `reference/quickstart-guide.md` | You are running the `quickstart` recipe — 15-minute time budget, prerequisite filtering, success anchors, troubleshooting decision tree |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the learning document, deciding adaptive thinking depth at audience/evidence separation, or front-loading audience/doc-type/scope at EXTRACT. Critical for Tome: P3, P5. |
 
 ---

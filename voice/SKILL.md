@@ -69,9 +69,9 @@ Route elsewhere when the task is primarily:
 
 | Phase | Required action | Key rule | Read |
 | ----- | --------------- | -------- | ---- |
-| COLLECT | Choose channel, design survey, define audience and consent | Privacy and consent first | `references/nps-survey.md` |
-| ANALYZE | Normalize signals, find patterns, segment and score | Patterns over anecdotes | `references/multi-channel-synthesis.md` |
-| AMPLIFY | Turn feedback into prioritized recommendations with owners | Actionable, not descriptive | `references/feedback-widget-analysis.md` |
+| COLLECT | Choose channel, design survey, define audience and consent | Privacy and consent first | `reference/nps-survey.md` |
+| ANALYZE | Normalize signals, find patterns, segment and score | Patterns over anecdotes | `reference/multi-channel-synthesis.md` |
+| AMPLIFY | Turn feedback into prioritized recommendations with owners | Actionable, not descriptive | `reference/feedback-widget-analysis.md` |
 
 ## Core Contract
 
@@ -134,14 +134,14 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| NPS Survey | `nps` | ✓ | NPS survey design, score analysis, follow-up | `references/nps-survey.md` |
-| Review Analysis | `review` | | Multi-channel analysis of reviews, tickets, and comments | `references/multi-channel-synthesis.md` |
-| Sentiment Analysis | `sentiment` | | Sentiment analysis, multi-emotion detection (joy/anger/frustration/surprise) | `references/multi-channel-synthesis.md` |
-| Classification | `classify` | | Feedback classification, theme extraction, owner recommendation | `references/feedback-widget-analysis.md` |
-| Insight Extraction | `insight` | | Insight extraction report, strategic recommendations | `references/multi-channel-synthesis.md` |
-| Kano Model | `kano` | | Kano model classification (must-have / performance / delighter) via paired functional+dysfunctional surveys and feature prioritization | `references/kano-model.md` |
-| Thematic Analysis | `thematic` | | Braun & Clarke 6-phase inductive thematic coding of open-ended feedback, theme saturation tracking, coder-agreement measurement | `references/thematic-coding.md` |
-| CSAT / CES | `csat` | | CSAT / CES survey authoring, benchmark mapping, and combined-with-NPS satisfaction vs effort vs loyalty triangulation | `references/csat-ces-measurement.md` |
+| NPS Survey | `nps` | ✓ | NPS survey design, score analysis, follow-up | `reference/nps-survey.md` |
+| Review Analysis | `review` | | Multi-channel analysis of reviews, tickets, and comments | `reference/multi-channel-synthesis.md` |
+| Sentiment Analysis | `sentiment` | | Sentiment analysis, multi-emotion detection (joy/anger/frustration/surprise) | `reference/multi-channel-synthesis.md` |
+| Classification | `classify` | | Feedback classification, theme extraction, owner recommendation | `reference/feedback-widget-analysis.md` |
+| Insight Extraction | `insight` | | Insight extraction report, strategic recommendations | `reference/multi-channel-synthesis.md` |
+| Kano Model | `kano` | | Kano model classification (must-have / performance / delighter) via paired functional+dysfunctional surveys and feature prioritization | `reference/kano-model.md` |
+| Thematic Analysis | `thematic` | | Braun & Clarke 6-phase inductive thematic coding of open-ended feedback, theme saturation tracking, coder-agreement measurement | `reference/thematic-coding.md` |
+| CSAT / CES | `csat` | | CSAT / CES survey authoring, benchmark mapping, and combined-with-NPS satisfaction vs effort vs loyalty triangulation | `reference/csat-ces-measurement.md` |
 
 ## Subcommand Dispatch
 
@@ -163,23 +163,23 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 | ------ | -------- | -------------- | --------- |
-| `NPS`, `loyalty`, `advocacy`, `promoter` | NPS analysis | NPS survey + report | `references/nps-survey.md` |
-| `CSAT`, `satisfaction`, `touchpoint` | CSAT analysis | CSAT report | `references/csat-ces-surveys.md` |
-| `CES`, `effort`, `task difficulty` | CES analysis | CES report | `references/csat-ces-surveys.md` |
-| `churn`, `cancellation`, `exit`, `downgrade` | Exit survey analysis | Churn report | `references/exit-survey.md` |
-| `review`, `sentiment`, `feedback`, `complaint` | Multi-channel synthesis | Feedback report | `references/multi-channel-synthesis.md` |
-| `widget`, `in-app feedback`, `response template` | Widget analysis | Widget report | `references/feedback-widget-analysis.md` |
-| `response rate`, `survey optimization`, `bias` | Survey design optimization | Survey design report | `references/nps-survey.md` |
-| `emotion`, `frustration`, `anger`, `joy` | Multi-emotion analysis | Emotion analysis report | `references/multi-channel-synthesis.md` |
-| `PLG`, `activation`, `in-product`, `micro-survey` | PLG micro-survey design | PLG feedback report | `references/nps-survey.md` |
-| unclear feedback request | Full analysis | Comprehensive report | `references/multi-channel-synthesis.md` |
+| `NPS`, `loyalty`, `advocacy`, `promoter` | NPS analysis | NPS survey + report | `reference/nps-survey.md` |
+| `CSAT`, `satisfaction`, `touchpoint` | CSAT analysis | CSAT report | `reference/csat-ces-surveys.md` |
+| `CES`, `effort`, `task difficulty` | CES analysis | CES report | `reference/csat-ces-surveys.md` |
+| `churn`, `cancellation`, `exit`, `downgrade` | Exit survey analysis | Churn report | `reference/exit-survey.md` |
+| `review`, `sentiment`, `feedback`, `complaint` | Multi-channel synthesis | Feedback report | `reference/multi-channel-synthesis.md` |
+| `widget`, `in-app feedback`, `response template` | Widget analysis | Widget report | `reference/feedback-widget-analysis.md` |
+| `response rate`, `survey optimization`, `bias` | Survey design optimization | Survey design report | `reference/nps-survey.md` |
+| `emotion`, `frustration`, `anger`, `joy` | Multi-emotion analysis | Emotion analysis report | `reference/multi-channel-synthesis.md` |
+| `PLG`, `activation`, `in-product`, `micro-survey` | PLG micro-survey design | PLG feedback report | `reference/nps-survey.md` |
+| unclear feedback request | Full analysis | Comprehensive report | `reference/multi-channel-synthesis.md` |
 
 Routing rules:
 
-- If the request mentions NPS, loyalty, or advocacy, read `references/nps-survey.md`.
-- If the request mentions satisfaction or touchpoints, read `references/csat-ces-surveys.md`.
-- If the request mentions churn, cancellation, or exit, read `references/exit-survey.md`.
-- If the request spans multiple channels, read `references/multi-channel-synthesis.md`.
+- If the request mentions NPS, loyalty, or advocacy, read `reference/nps-survey.md`.
+- If the request mentions satisfaction or touchpoints, read `reference/csat-ces-surveys.md`.
+- If the request mentions churn, cancellation, or exit, read `reference/exit-survey.md`.
+- If the request spans multiple channels, read `reference/multi-channel-synthesis.md`.
 - If the request matches another agent's primary role, route per `_common/BOUNDARIES.md`.
 - Need dashboards or metric governance → `Pulse`
 - Churn intervention or win-back execution → `Retain`
@@ -229,14 +229,14 @@ Overlap boundaries:
 
 | File | Read this when... |
 | ---- | ----------------- |
-| `references/nps-survey.md` | the task is NPS design, scoring, follow-up logic, or benchmark interpretation |
-| `references/csat-ces-surveys.md` | the task is CSAT or CES design, touchpoint selection, or effort analysis |
-| `references/exit-survey.md` | the task is churn-reason capture, save-offer design, or cancellation analysis |
-| `references/multi-channel-synthesis.md` | feedback must be unified across surveys, tickets, reviews, sales notes, or social channels |
-| `references/feedback-widget-analysis.md` | the task is in-app feedback widgets, sentiment tagging, or response templates |
-| `references/kano-model.md` | the task is Kano-style feature classification (must-have / performance / delighter), paired functional+dysfunctional surveys, or Better/Worse coefficient prioritization |
-| `references/thematic-coding.md` | the task is Braun & Clarke 6-phase inductive coding of open-ended feedback, codebook governance, theme saturation, or inter-coder agreement |
-| `references/csat-ces-measurement.md` | the task is CSAT / CES instrument design, benchmark mapping, touchpoint selection, or combined CSAT × CES × NPS triangulation |
+| `reference/nps-survey.md` | the task is NPS design, scoring, follow-up logic, or benchmark interpretation |
+| `reference/csat-ces-surveys.md` | the task is CSAT or CES design, touchpoint selection, or effort analysis |
+| `reference/exit-survey.md` | the task is churn-reason capture, save-offer design, or cancellation analysis |
+| `reference/multi-channel-synthesis.md` | feedback must be unified across surveys, tickets, reviews, sales notes, or social channels |
+| `reference/feedback-widget-analysis.md` | the task is in-app feedback widgets, sentiment tagging, or response templates |
+| `reference/kano-model.md` | the task is Kano-style feature classification (must-have / performance / delighter), paired functional+dysfunctional surveys, or Better/Worse coefficient prioritization |
+| `reference/thematic-coding.md` | the task is Braun & Clarke 6-phase inductive coding of open-ended feedback, codebook governance, theme saturation, or inter-coder agreement |
+| `reference/csat-ces-measurement.md` | the task is CSAT / CES instrument design, benchmark mapping, touchpoint selection, or combined CSAT × CES × NPS triangulation |
 | `_common/OPUS_48_AUTHORING.md` | the task is sizing the survey deliverable, deciding adaptive thinking depth at method selection, or front-loading audience/segment/touchpoint at INTAKE. Critical for Voice: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You contribute `source_proof` (sentiment-source pointers) and feed multi-channel synthesis into the Insight Ledger queue in `nexus growth-acceptance` Phase 0. G11 mandatory: AI cannot directly write to Ledger; submit proposed insights to Research Lead merge queue. Used by Phase 3 post-launch as `brand_lift_proof` qualitative early signal. |
 

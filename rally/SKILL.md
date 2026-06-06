@@ -142,14 +142,14 @@ Run `ASSESS -> DESIGN -> SPAWN -> ASSIGN -> MONITOR -> SYNTHESIZE -> CLEANUP`. R
 
 | Phase | Required actions  Read |
 |-------|------------------------|
-| `ASSESS` | Confirm Rally is appropriate, identify independent units, and reject false parallelism  `references/` |
-| `DESIGN` | Choose a team pattern, teammate roles, models, modes, and `ownership_map`  `references/` |
-| `SPAWN` | `TeamCreate`, then spawn teammates with complete context  `references/` |
-| `ASSIGN` | `TaskCreate`, assign owners, and wire dependencies through `addBlockedBy`  `references/` |
-| `MONITOR` | Poll `TaskList`, respond to `idle`, resolve blockers, and handle failures  `references/` |
-| `SYNTHESIZE` | Collect `files_changed`, detect ownership conflicts, run verification, and trigger `ON_RESULT_CONFLICT` when needed  `references/` |
-| `CLEANUP` | Confirm completion, send `shutdown_request`, wait for approval, then `TeamDelete` and report  `references/` |
-| `HARMONIZE` | `COLLECT -> EVALUATE -> EXTRACT -> ADAPT -> SAFEGUARD -> RECORD`  `references/` |
+| `ASSESS` | Confirm Rally is appropriate, identify independent units, and reject false parallelism  `reference/` |
+| `DESIGN` | Choose a team pattern, teammate roles, models, modes, and `ownership_map`  `reference/` |
+| `SPAWN` | `TeamCreate`, then spawn teammates with complete context  `reference/` |
+| `ASSIGN` | `TaskCreate`, assign owners, and wire dependencies through `addBlockedBy`  `reference/` |
+| `MONITOR` | Poll `TaskList`, respond to `idle`, resolve blockers, and handle failures  `reference/` |
+| `SYNTHESIZE` | Collect `files_changed`, detect ownership conflicts, run verification, and trigger `ON_RESULT_CONFLICT` when needed  `reference/` |
+| `CLEANUP` | Confirm completion, send `shutdown_request`, wait for approval, then `TeamDelete` and report  `reference/` |
+| `HARMONIZE` | `COLLECT -> EVALUATE -> EXTRACT -> ADAPT -> SAFEGUARD -> RECORD`  `reference/` |
 
 ## Teammate Modes
 
@@ -161,7 +161,7 @@ Run `ASSESS -> DESIGN -> SPAWN -> ASSIGN -> MONITOR -> SYNTHESIZE -> CLEANUP`. R
 
 ## Parallel Learning
 
-Use `references/parallel-learning.md` for full logic. Keep these rules explicit:
+Use `reference/parallel-learning.md` for full logic. Keep these rules explicit:
 
 | Trigger | Condition | Scope |
 |---------|-----------|-------|
@@ -202,11 +202,11 @@ Use `references/parallel-learning.md` for full logic. Keep these rules explicit:
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Parallel Execution | `parallel` | ✓ | Parallel execution of independent tasks | `references/team-design-patterns.md` |
-| Team Design | `teams` | | Team composition and role design | `references/team-design-patterns.md` |
-| Codex Subagents | `codex-subagents` | | Codex CLI subagent parallelization | `references/orchestration-patterns.md` |
-| Coordination | `coordinate` | | Monitoring and coordinating in-flight teams | `references/lifecycle-management.md` |
-| Engine Paradigm | `engine-paradigm` | | Cross-engine COMPETE (multi-variant comparison, judge selects best) and COLLABORATE (decompose by engine strength: Codex / agy / Claude) paradigms. Solo / Team / Quick modes. Use when task quality benefits from divergent multi-engine attempts or when engine strengths differ across subtasks. (absorbed from arena) | `references/orchestration-patterns.md` |
+| Parallel Execution | `parallel` | ✓ | Parallel execution of independent tasks | `reference/team-design-patterns.md` |
+| Team Design | `teams` | | Team composition and role design | `reference/team-design-patterns.md` |
+| Codex Subagents | `codex-subagents` | | Codex CLI subagent parallelization | `reference/orchestration-patterns.md` |
+| Coordination | `coordinate` | | Monitoring and coordinating in-flight teams | `reference/lifecycle-management.md` |
+| Engine Paradigm | `engine-paradigm` | | Cross-engine COMPETE (multi-variant comparison, judge selects best) and COLLABORATE (decompose by engine strength: Codex / agy / Claude) paradigms. Solo / Team / Quick modes. Use when task quality benefits from divergent multi-engine attempts or when engine strengths differ across subtasks. (absorbed from arena) | `reference/orchestration-patterns.md` |
 
 ## Subcommand Dispatch
 
@@ -221,18 +221,18 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| 2+ independent implementation units identified | Full Rally lifecycle (ASSESS→CLEANUP) | team execution report with ownership map | `references/team-design-patterns.md` |
-| Sherpa `parallel_group` handoff | SHERPA_TO_RALLY_HANDOFF processing | parallel execution with dependency wiring | `references/integration-patterns.md` |
-| Nexus chain with parallel segments | Nexus-routed execution | structured RALLY_TO_NEXUS_HANDOFF | `references/integration-patterns.md` |
-| Ownership conflict detected during SYNTHESIZE | ON_RESULT_CONFLICT resolution | conflict report with resolution strategy | `references/file-ownership-protocol.md` |
-| Teammate failure or timeout | Resilience protocol (retry/replace/degrade) | degraded result with failure analysis | `references/resilience-cost-optimization.md` |
-| All teammates converging on same blocker | Convergence protocol: diversify targets or introduce oracle | redistributed task assignments with diversified targets | `references/anti-patterns-failure-modes.md` |
+| 2+ independent implementation units identified | Full Rally lifecycle (ASSESS→CLEANUP) | team execution report with ownership map | `reference/team-design-patterns.md` |
+| Sherpa `parallel_group` handoff | SHERPA_TO_RALLY_HANDOFF processing | parallel execution with dependency wiring | `reference/integration-patterns.md` |
+| Nexus chain with parallel segments | Nexus-routed execution | structured RALLY_TO_NEXUS_HANDOFF | `reference/integration-patterns.md` |
+| Ownership conflict detected during SYNTHESIZE | ON_RESULT_CONFLICT resolution | conflict report with resolution strategy | `reference/file-ownership-protocol.md` |
+| Teammate failure or timeout | Resilience protocol (retry/replace/degrade) | degraded result with failure analysis | `reference/resilience-cost-optimization.md` |
+| All teammates converging on same blocker | Convergence protocol: diversify targets or introduce oracle | redistributed task assignments with diversified targets | `reference/anti-patterns-failure-modes.md` |
 | Single task or sequential-only work | Route to Nexus or specialist | routing recommendation | `_common/BOUNDARIES.md` |
 
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 - When estimated parallel speedup is < 1.5× over serial, prefer sequential execution.
 - If coordination overhead exceeds 40% of total execution time, reduce team size or simplify task decomposition — research shows coordination tax accounts for `36.9%` of multi-agent system failures, making this the single largest failure category.
 - When merging teammate outputs, merge sequentially (one at a time, rebasing each onto the updated base) — not simultaneously — to give each merge full context of prior changes.
@@ -242,7 +242,7 @@ Routing rules:
 - Standard result: team composition, ownership map, task distribution, completed vs total tasks, changed files, verification results, remaining risks, and recommended next step.
 - Verification must report build, tests, and lint or type-check status when applicable.
 - Report ownership violations, retries, replacements, skipped work, and unresolved blockers explicitly.
-- Detailed handoff formats live in `references/integration-patterns.md`.
+- Detailed handoff formats live in `reference/integration-patterns.md`.
 
 ## Codex CLI Subagent Orchestration
 
@@ -290,17 +290,17 @@ close_agent(worker_b)
 
 | File | Read this when |
 |------|----------------|
-| `references/team-design-patterns.md` | selecting team pattern, team size, `subagent_type`, or model |
-| `references/file-ownership-protocol.md` | declaring `ownership_map`, validating overlap, or resolving ownership conflicts |
-| `references/lifecycle-management.md` | running the 7-phase lifecycle, handling teammate failures, or performing shutdown and deletion |
-| `references/communication-patterns.md` | sending DM or broadcast messages, enforcing report templates, or handling `plan_approval_response` |
-| `references/integration-patterns.md` | working inside Nexus or Sherpa chains, preserving handoff formats, or deciding whether Nexus internal parallelism is enough |
-| `references/agent-teams-api-reference.md` | checking exact tool parameters, API constraints, team-size limits, or display-mode notes |
-| `references/parallel-learning.md` | running HARMONIZE, calculating `TES`, adapting defaults, or executing rollback |
-| `references/orchestration-patterns.md` | deciding whether the task should be concurrent, sequential, specialist, or not Rally at all |
-| `references/anti-patterns-failure-modes.md` | checking over-parallelization risk, nested-team hazards, prompt/context failures, or Maker-Checker limits |
-| `references/resilience-cost-optimization.md` | setting retry or fallback behavior, degraded-mode handling, budget limits, or recovery strategy |
-| `references/framework-landscape.md` | comparing Rally to other frameworks or explaining why Rally is the right execution layer |
+| `reference/team-design-patterns.md` | selecting team pattern, team size, `subagent_type`, or model |
+| `reference/file-ownership-protocol.md` | declaring `ownership_map`, validating overlap, or resolving ownership conflicts |
+| `reference/lifecycle-management.md` | running the 7-phase lifecycle, handling teammate failures, or performing shutdown and deletion |
+| `reference/communication-patterns.md` | sending DM or broadcast messages, enforcing report templates, or handling `plan_approval_response` |
+| `reference/integration-patterns.md` | working inside Nexus or Sherpa chains, preserving handoff formats, or deciding whether Nexus internal parallelism is enough |
+| `reference/agent-teams-api-reference.md` | checking exact tool parameters, API constraints, team-size limits, or display-mode notes |
+| `reference/parallel-learning.md` | running HARMONIZE, calculating `TES`, adapting defaults, or executing rollback |
+| `reference/orchestration-patterns.md` | deciding whether the task should be concurrent, sequential, specialist, or not Rally at all |
+| `reference/anti-patterns-failure-modes.md` | checking over-parallelization risk, nested-team hazards, prompt/context failures, or Maker-Checker limits |
+| `reference/resilience-cost-optimization.md` | setting retry or fallback behavior, degraded-mode handling, budget limits, or recovery strategy |
+| `reference/framework-landscape.md` | comparing Rally to other frameworks or explaining why Rally is the right execution layer |
 | `_common/OPUS_48_AUTHORING.md` | sizing the parallel plan, deciding adaptive thinking depth at fan-out/budget, or front-loading team size/independence/budget at PLAN. Critical for Rally: P3, P5. |
 
 ## Operational

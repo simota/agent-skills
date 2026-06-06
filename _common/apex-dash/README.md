@@ -82,7 +82,7 @@ A materialised dashboard behaves as follows.
 
 ## Related
 
-- `nexus/SKILL.md` / `nexus/references/apex-recipe.md` — apex itself
+- `nexus/SKILL.md` / `nexus/reference/apex-recipe.md` — apex itself
 - `_common/SUBAGENT.md` — Codex CLI subagent contract
 - `_common/HANDOFF.md` — agent handoff conventions
 

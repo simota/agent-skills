@@ -143,23 +143,23 @@ Execution loop: `SURVEY -> PLAN -> VERIFY -> PRESENT`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `CONNECT` | verify MCP, identity, and budget | `whoami` first | `references/infrastructure-constraints.md`, `references/figma-mcp-server-ga.md` |
-| `SURVEY` | scope pages, frames, components, and downstream consumers | structure the extraction before calling expensive tools | `references/execution-templates.md` |
-| `EXTRACT` | call the minimum tool chain needed | `get_design_context` before screenshot-heavy flows | `references/prompt-strategy.md`, `references/figma-mcp-server-ga.md` |
-| `PACKAGE` | convert raw data into consumer-specific handoffs | select the handoff template before formatting | `references/handoff-formats.md` |
-| `DELIVER` | report status, rate usage, gaps, and next-safe action | incomplete data must be flagged explicitly | `references/execution-templates.md`, `references/design-to-code-anti-patterns.md` |
+| `CONNECT` | verify MCP, identity, and budget | `whoami` first | `reference/infrastructure-constraints.md`, `reference/figma-mcp-server-ga.md` |
+| `SURVEY` | scope pages, frames, components, and downstream consumers | structure the extraction before calling expensive tools | `reference/execution-templates.md` |
+| `EXTRACT` | call the minimum tool chain needed | `get_design_context` before screenshot-heavy flows | `reference/prompt-strategy.md`, `reference/figma-mcp-server-ga.md` |
+| `PACKAGE` | convert raw data into consumer-specific handoffs | select the handoff template before formatting | `reference/handoff-formats.md` |
+| `DELIVER` | report status, rate usage, gaps, and next-safe action | incomplete data must be flagged explicitly | `reference/execution-templates.md`, `reference/design-to-code-anti-patterns.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Extract Context | `extract` | ✓ | Extract design context from Figma | `references/execution-templates.md`, `references/prompt-strategy.md` |
-| Code Connect | `code-connect` | | Code Connect template management | `references/code-connect-guide.md` |
-| DS Rules | `rules` | | Design system rule extraction | `references/prompt-strategy.md`, `references/figma-mcp-server-ga.md` |
-| Figma Inspect | `inspect` | | Programmatic inspection of a Figma file | `references/infrastructure-constraints.md`, `references/figma-mcp-server-ga.md` |
-| Variants | `variants` | | Component variant extraction — Component Set discovery, prop/state matrix flattening, naming convention (kebab-case property=value), boolean vs enum prop typing, default-variant identification, missing-state detection | `references/variant-extraction.md` |
-| Tokens | `tokens` | | Token mapping — Figma Variables → W3C DTCG (2025.10) format, primitive/semantic/component layer mapping, mode/theme support (light/dark/brand), alias chain resolution, Display P3/Oklch color preservation | `references/token-mapping.md` |
-| Breakpoint | `breakpoint` | | Responsive breakpoint extraction — multi-frame variant analysis, layout-grid extraction (column count + gutter + margin), constraint inheritance from parent frame, container-query candidate identification | `references/breakpoint-extraction.md` |
+| Extract Context | `extract` | ✓ | Extract design context from Figma | `reference/execution-templates.md`, `reference/prompt-strategy.md` |
+| Code Connect | `code-connect` | | Code Connect template management | `reference/code-connect-guide.md` |
+| DS Rules | `rules` | | Design system rule extraction | `reference/prompt-strategy.md`, `reference/figma-mcp-server-ga.md` |
+| Figma Inspect | `inspect` | | Programmatic inspection of a Figma file | `reference/infrastructure-constraints.md`, `reference/figma-mcp-server-ga.md` |
+| Variants | `variants` | | Component variant extraction — Component Set discovery, prop/state matrix flattening, naming convention (kebab-case property=value), boolean vs enum prop typing, default-variant identification, missing-state detection | `reference/variant-extraction.md` |
+| Tokens | `tokens` | | Token mapping — Figma Variables → W3C DTCG (2025.10) format, primitive/semantic/component layer mapping, mode/theme support (light/dark/brand), alias chain resolution, Display P3/Oklch color preservation | `reference/token-mapping.md` |
+| Breakpoint | `breakpoint` | | Responsive breakpoint extraction — multi-frame variant analysis, layout-grid extraction (column count + gutter + margin), constraint inheritance from parent frame, container-query candidate identification | `reference/breakpoint-extraction.md` |
 
 ## Subcommand Dispatch
 
@@ -172,32 +172,32 @@ Behavior notes per Recipe:
 - `code-connect`: Audit existing Code Connect mappings and fix or add any missing or stale mappings.
 - `rules`: Extract design system conventions from a Figma file and generate token rules and naming convention documentation.
 - `inspect`: Investigate the pages, frames, and component sets of a Figma file at the metadata level and build an extraction plan.
-- `variants`: Read `references/variant-extraction.md` first. `search_design_system` で Component Set を発見、`get_design_context` で variant property + value matrix を取得。boolean prop (`disabled` / `loading`) と enum prop (`size: sm | md | lg`) を区別、default variant を特定、prop combination の missing state (size × variant × state) を検出。命名は kebab-case `property=value` 形式 (Figma 慣習)、TS 出力は PascalCase prop interface に変換。
-- `tokens`: Read `references/token-mapping.md` first. `search_design_system --includeVariables` → `get_variable_defs` で全 Variable Collection を取得。primitive (`--neutral-500`)、semantic (`--color-bg`)、component (`--button-bg`) の3層に分類、mode (Light/Dark) と theme (Brand A/B) の dimension を W3C DTCG `$value` の `{mode}` 構文で出力。alias chain (`{semantic.color.brand}` → `{primitive.indigo.500}`) は完全展開した resolved value も併記。Display P3 / Oklch は CSS `color()` / `oklch()` で出力。
-- `breakpoint`: Read `references/breakpoint-extraction.md` first. mobile/tablet/desktop の各 frame を比較して responsive 派生を抽出。Figma Layout Grid (column count + gutter + margin) を CSS Grid に変換、`Constraints` プロパティ (Left/Right/Center/Scale) から flex 動作を推定、parent frame size の差分から breakpoint 値を逆算 (320/768/1024/1440 が標準)。container-query 候補は同一コンポーネントが複数 width で出現するもの。各派生値は LOW 信頼度で designer 確認推奨。
+- `variants`: Read `reference/variant-extraction.md` first. `search_design_system` で Component Set を発見、`get_design_context` で variant property + value matrix を取得。boolean prop (`disabled` / `loading`) と enum prop (`size: sm | md | lg`) を区別、default variant を特定、prop combination の missing state (size × variant × state) を検出。命名は kebab-case `property=value` 形式 (Figma 慣習)、TS 出力は PascalCase prop interface に変換。
+- `tokens`: Read `reference/token-mapping.md` first. `search_design_system --includeVariables` → `get_variable_defs` で全 Variable Collection を取得。primitive (`--neutral-500`)、semantic (`--color-bg`)、component (`--button-bg`) の3層に分類、mode (Light/Dark) と theme (Brand A/B) の dimension を W3C DTCG `$value` の `{mode}` 構文で出力。alias chain (`{semantic.color.brand}` → `{primitive.indigo.500}`) は完全展開した resolved value も併記。Display P3 / Oklch は CSS `color()` / `oklch()` で出力。
+- `breakpoint`: Read `reference/breakpoint-extraction.md` first. mobile/tablet/desktop の各 frame を比較して responsive 派生を抽出。Figma Layout Grid (column count + gutter + margin) を CSS Grid に変換、`Constraints` プロパティ (Left/Right/Center/Scale) から flex 動作を推定、parent frame size の差分から breakpoint 値を逆算 (320/768/1024/1440 が標準)。container-query 候補は同一コンポーネントが複数 width で出現するもの。各派生値は LOW 信頼度で designer 確認推奨。
 
 ## Output Routing
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `component`, `frame`, `extract design` | Component/frame extraction | Design context handoff | `references/prompt-strategy.md`, `references/execution-templates.md` |
-| `token`, `variable`, `color`, `spacing` | Variable/token extraction | Token map | `references/handoff-formats.md`, `references/design-to-code-anti-patterns.md` |
-| `screenshot`, `visual reference` | Screenshot capture | Visual reference package | `references/execution-templates.md` |
-| `code connect`, `mapping`, `sync` | Code Connect audit/update | Code Connect report | `references/code-connect-guide.md` |
-| `design system`, `rules`, `conventions` | Design system rule extraction | Design system rules doc | `references/prompt-strategy.md`, `references/figma-mcp-server-ga.md` |
-| `figjam`, `diagram`, `whiteboard` | FigJam extraction or diagram packaging | FigJam/diagram package | `references/handoff-formats.md` |
-| `generate design`, `create design` | Figma design generation | Generated design confirmation | `references/figma-mcp-server-ga.md` |
-| `write to Figma`, `push to canvas`, `code to Figma` | Canvas write via `use_figma` | Write confirmation with layer references | `references/figma-mcp-server-ga.md` |
-| `new file`, `create Figma file`, `new FigJam` | New file creation via `create_new_file` | File URL and metadata | `references/figma-mcp-server-ga.md` |
-| `handoff`, `implement`, `build this` | Full handoff package for implementation | Consumer-specific handoff | `references/handoff-formats.md` |
-| unclear Figma-related request | Component/frame extraction | Design context handoff | `references/execution-templates.md` |
+| `component`, `frame`, `extract design` | Component/frame extraction | Design context handoff | `reference/prompt-strategy.md`, `reference/execution-templates.md` |
+| `token`, `variable`, `color`, `spacing` | Variable/token extraction | Token map | `reference/handoff-formats.md`, `reference/design-to-code-anti-patterns.md` |
+| `screenshot`, `visual reference` | Screenshot capture | Visual reference package | `reference/execution-templates.md` |
+| `code connect`, `mapping`, `sync` | Code Connect audit/update | Code Connect report | `reference/code-connect-guide.md` |
+| `design system`, `rules`, `conventions` | Design system rule extraction | Design system rules doc | `reference/prompt-strategy.md`, `reference/figma-mcp-server-ga.md` |
+| `figjam`, `diagram`, `whiteboard` | FigJam extraction or diagram packaging | FigJam/diagram package | `reference/handoff-formats.md` |
+| `generate design`, `create design` | Figma design generation | Generated design confirmation | `reference/figma-mcp-server-ga.md` |
+| `write to Figma`, `push to canvas`, `code to Figma` | Canvas write via `use_figma` | Write confirmation with layer references | `reference/figma-mcp-server-ga.md` |
+| `new file`, `create Figma file`, `new FigJam` | New file creation via `create_new_file` | File URL and metadata | `reference/figma-mcp-server-ga.md` |
+| `handoff`, `implement`, `build this` | Full handoff package for implementation | Consumer-specific handoff | `reference/handoff-formats.md` |
+| unclear Figma-related request | Component/frame extraction | Design context handoff | `reference/execution-templates.md` |
 
 Routing rules:
 
-- If the request mentions tokens or variables, read `references/handoff-formats.md` and `references/design-to-code-anti-patterns.md`.
-- If the request involves Code Connect, read `references/code-connect-guide.md`.
-- If the request targets a specific downstream agent, select the matching handoff format from `references/handoff-formats.md`.
-- Always read `references/infrastructure-constraints.md` to verify rate budget before extraction.
+- If the request mentions tokens or variables, read `reference/handoff-formats.md` and `reference/design-to-code-anti-patterns.md`.
+- If the request involves Code Connect, read `reference/code-connect-guide.md`.
+- If the request targets a specific downstream agent, select the matching handoff format from `reference/handoff-formats.md`.
+- Always read `reference/infrastructure-constraints.md` to verify rate budget before extraction.
 
 ## Output Requirements
 
@@ -220,14 +220,14 @@ Every deliverable must include:
 
 | Task | Primary tools | Rules | Read |
 |------|---------------|-------|------|
-| Component or frame extraction | `whoami` -> `get_metadata` -> `search_design_system` -> `get_design_context` -> `get_screenshot` | discover library components first; screenshots supplement structure, not replace it | `references/prompt-strategy.md`, `references/execution-templates.md` |
-| Variable or token extraction | `whoami` -> `search_design_system` (includeVariables) -> `get_variable_defs` | discover library variables first; map raw values to variables where available | `references/handoff-formats.md`, `references/design-to-code-anti-patterns.md` |
-| Code Connect audit/update | `get_code_connect_map` -> `get_code_connect_suggestions` -> `add_code_connect_map` -> `send_code_connect_mappings` | audit before map; confirm bulk syncs; recommend CLI with co-located files for deep integration, UI for quick language-agnostic linking | `references/code-connect-guide.md` |
-| Design system rules | `create_design_system_rules` | validate results against file evidence | `references/prompt-strategy.md`, `references/figma-mcp-server-ga.md` |
-| FigJam extraction or diagram packaging | `get_figjam`, `generate_diagram` | preserve relationships, sections, and connectors | `references/handoff-formats.md` |
-| Design generation | `generate_figma_design` | ask first; generation is rate-exempt but still explicit-change work | `references/figma-mcp-server-ga.md` |
-| Canvas write (code-to-Figma) | `use_figma` | ask first; work incrementally in small steps; return all node IDs; reads design system first, builds with existing components and variables; rate-exempt | `references/figma-mcp-server-ga.md` |
-| New file creation | `create_new_file` | creates blank Figma Design or FigJam file; rate-exempt | `references/figma-mcp-server-ga.md` |
+| Component or frame extraction | `whoami` -> `get_metadata` -> `search_design_system` -> `get_design_context` -> `get_screenshot` | discover library components first; screenshots supplement structure, not replace it | `reference/prompt-strategy.md`, `reference/execution-templates.md` |
+| Variable or token extraction | `whoami` -> `search_design_system` (includeVariables) -> `get_variable_defs` | discover library variables first; map raw values to variables where available | `reference/handoff-formats.md`, `reference/design-to-code-anti-patterns.md` |
+| Code Connect audit/update | `get_code_connect_map` -> `get_code_connect_suggestions` -> `add_code_connect_map` -> `send_code_connect_mappings` | audit before map; confirm bulk syncs; recommend CLI with co-located files for deep integration, UI for quick language-agnostic linking | `reference/code-connect-guide.md` |
+| Design system rules | `create_design_system_rules` | validate results against file evidence | `reference/prompt-strategy.md`, `reference/figma-mcp-server-ga.md` |
+| FigJam extraction or diagram packaging | `get_figjam`, `generate_diagram` | preserve relationships, sections, and connectors | `reference/handoff-formats.md` |
+| Design generation | `generate_figma_design` | ask first; generation is rate-exempt but still explicit-change work | `reference/figma-mcp-server-ga.md` |
+| Canvas write (code-to-Figma) | `use_figma` | ask first; work incrementally in small steps; return all node IDs; reads design system first, builds with existing components and variables; rate-exempt | `reference/figma-mcp-server-ga.md` |
+| New file creation | `create_new_file` | creates blank Figma Design or FigJam file; rate-exempt | `reference/figma-mcp-server-ga.md` |
 
 ## Critical Limits and Exceptions
 
@@ -310,16 +310,16 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/execution-templates.md` | You need phase-by-phase reports, validation checkpoints, delivery report format, or package templates. |
-| `references/infrastructure-constraints.md` | You need connection setup, plan limits, budget strategy, error handling, or security rules. |
-| `references/handoff-formats.md` | You need target-agent handoff schemas for Muse, Forge, Artisan, Builder, Schema, Vision, Showcase, or Canvas. |
-| `references/code-connect-guide.md` | You are auditing, creating, syncing, or maintaining Code Connect mappings. |
-| `references/prompt-strategy.md` | You need tool-specific prompt patterns or chaining strategies. |
-| `references/figma-mcp-server-ga.md` | You need the GA tool inventory, Schema 2025 features, prop mapping types, or client-specific known issues. |
-| `references/design-to-code-anti-patterns.md` | You need quality guardrails, gap framing, anti-pattern detection, or W3C token export guidance. |
-| `references/variant-extraction.md` | You are running the `variants` recipe — Component Set discovery, prop/state matrix flattening, default-variant identification, missing-state detection. |
-| `references/token-mapping.md` | You are running the `tokens` recipe — Figma Variables → W3C DTCG (2025.10) format, primitive/semantic/component layer mapping, mode/theme support, alias chain resolution. |
-| `references/breakpoint-extraction.md` | You are running the `breakpoint` recipe — multi-frame variant analysis, layout-grid extraction, constraint inheritance, container-query candidate identification. |
+| `reference/execution-templates.md` | You need phase-by-phase reports, validation checkpoints, delivery report format, or package templates. |
+| `reference/infrastructure-constraints.md` | You need connection setup, plan limits, budget strategy, error handling, or security rules. |
+| `reference/handoff-formats.md` | You need target-agent handoff schemas for Muse, Forge, Artisan, Builder, Schema, Vision, Showcase, or Canvas. |
+| `reference/code-connect-guide.md` | You are auditing, creating, syncing, or maintaining Code Connect mappings. |
+| `reference/prompt-strategy.md` | You need tool-specific prompt patterns or chaining strategies. |
+| `reference/figma-mcp-server-ga.md` | You need the GA tool inventory, Schema 2025 features, prop mapping types, or client-specific known issues. |
+| `reference/design-to-code-anti-patterns.md` | You need quality guardrails, gap framing, anti-pattern detection, or W3C token export guidance. |
+| `reference/variant-extraction.md` | You are running the `variants` recipe — Component Set discovery, prop/state matrix flattening, default-variant identification, missing-state detection. |
+| `reference/token-mapping.md` | You are running the `tokens` recipe — Figma Variables → W3C DTCG (2025.10) format, primitive/semantic/component layer mapping, mode/theme support, alias chain resolution. |
+| `reference/breakpoint-extraction.md` | You are running the `breakpoint` recipe — multi-frame variant analysis, layout-grid extraction, constraint inheritance, container-query candidate identification. |
 | `_common/UX_TRENDS_2026.md` | You need cross-vendor token / design-system context — DTCG 2025.10 stable spec, OKLCH/P3 colour pipelines, Schema 2025 / Code Connect lineage, Polaris Unified case. Read §1 Design. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the handoff packet, deciding adaptive thinking depth at SCOPE, or front-loading target consumer/file scope at SCAN. Critical for Frame: P3, P5. |
 | `_common/IMAGE_INPUT.md` | You are reading a Figma screenshot (`get_screenshot`) or any raw image as input — apply the RECOGNIZE→PARSE accuracy techniques (describe-first, region enumeration, observed-vs-inferred) before relaying a structured reading downstream. |

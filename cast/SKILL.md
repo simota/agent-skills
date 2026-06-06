@@ -58,7 +58,7 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Keep every persona Echo-compatible. The canonical schema is in [references/persona-model.md](references/persona-model.md).
+- Keep every persona Echo-compatible. The canonical schema is in [reference/persona-model.md](reference/persona-model.md).
 - Register every persona in `.agents/personas/registry.yaml`.
 - Ground every attribute in source evidence. Mark unsupported attributes as `[inferred]`.
 - Assign confidence explicitly. Confidence is earned from evidence, not prose.
@@ -138,11 +138,11 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `INPUT_ANALYSIS` | Identify source type, quality, and coverage | Ground in evidence | `references/generation-workflows.md` |
-| `DATA_EXTRACTION` | Extract persona-relevant data points with confidence weights | Source attribution required | `references/persona-validation.md` |
-| `SYNTHESIS` | Build persona following canonical schema | Echo-compatible format | `references/persona-model.md` |
-| `VALIDATION` | Verify confidence, completeness, and consistency | No unsupported claims | `references/persona-validation.md` |
-| `REGISTRATION` | Register in registry, set lifecycle state | Registry is source of truth | `references/registry-spec.md` |
+| `INPUT_ANALYSIS` | Identify source type, quality, and coverage | Ground in evidence | `reference/generation-workflows.md` |
+| `DATA_EXTRACTION` | Extract persona-relevant data points with confidence weights | Source attribution required | `reference/persona-validation.md` |
+| `SYNTHESIS` | Build persona following canonical schema | Echo-compatible format | `reference/persona-model.md` |
+| `VALIDATION` | Verify confidence, completeness, and consistency | No unsupported claims | `reference/persona-validation.md` |
+| `REGISTRATION` | Register in registry, set lifecycle state | Registry is source of truth | `reference/registry-spec.md` |
 
 ## Recipes
 
@@ -152,18 +152,18 @@ Single source of truth for Recipe definitions. The Operating Mode column names t
 
 | Recipe | Subcommand | Default? | Operating Mode | When to Use | Read First |
 |--------|-----------|---------|----------------|-------------|------------|
-| Generate Persona | `generate` | ✓ | CONJURE | Persona generation — create new personas from sources | `references/generation-workflows.md` |
-| Registry | `registry` | | AUDIT | Registry management — lifecycle check, audit, archive (freshness/duplication/coverage/Echo-compat) | `references/registry-spec.md` |
-| Evolve | `evolve` | | EVOLVE | Data-driven evolution — drift updates from Trace/Voice/Pulse; confirm ≥5% trigger → version bump → evolution log | `references/evolution-engine.md` |
-| Fuse | `fuse` | | FUSE | Merge upstream evidence into existing personas; produce diff-aware summary | `references/evolution-engine.md` |
-| Distribute | `distribute` | | DISTRIBUTE | Per-target-agent adapter conversion (Echo/Spark/Retain/Compete/Accord) → delivery package | `references/distribution-adapters.md` |
-| Speak | `speak` | | SPEAK | Persona voice output (transcript + optional audio) with engine selection and fallback | `references/speak-engine.md` |
-| Retire | `retire` | | RETIRE | Persona retirement assessment + archive + downstream notification | `references/persona-governance.md` |
-| Archetype Mapping | `archetype` | | CONJURE/AUDIT | Tag personas with Jung 12 brand archetypes + JTBD-aligned archetype (Functional/Emotional/Social); validate brand-archetype consistency | `references/archetype-mapping.md` |
-| Segmentation | `segment` | | CONJURE/AUDIT | RFM tier (transactional), k-means/hierarchical (behavioral), Schwartz/OCEAN (psychographic). Persona must trace to a segment with sample size ≥30 | `references/segmentation-methods.md` |
-| Bias Audit | `bias-audit` | | AUDIT | Representation matrix (gender × age × ability × ethnicity × locale), intersectionality coverage, Inclusive Persona Checklist. Flag stereotyping; require evidence citation per attribute | `references/persona-bias-audit.md` |
-| Proto-Persona | `generate` (proto tier) | | CONJURE | Hypothesis / assumption-based persona files capped at 0.50 confidence | `references/generation-workflows.md` |
-| Predictive Evolution | `evolve` (predictive) **[DEFERRED — requires Trace pipeline]** | | EVOLVE | Leading-indicator drift prediction → predicted drift report + recommended changes | `references/evolution-engine.md` |
+| Generate Persona | `generate` | ✓ | CONJURE | Persona generation — create new personas from sources | `reference/generation-workflows.md` |
+| Registry | `registry` | | AUDIT | Registry management — lifecycle check, audit, archive (freshness/duplication/coverage/Echo-compat) | `reference/registry-spec.md` |
+| Evolve | `evolve` | | EVOLVE | Data-driven evolution — drift updates from Trace/Voice/Pulse; confirm ≥5% trigger → version bump → evolution log | `reference/evolution-engine.md` |
+| Fuse | `fuse` | | FUSE | Merge upstream evidence into existing personas; produce diff-aware summary | `reference/evolution-engine.md` |
+| Distribute | `distribute` | | DISTRIBUTE | Per-target-agent adapter conversion (Echo/Spark/Retain/Compete/Accord) → delivery package | `reference/distribution-adapters.md` |
+| Speak | `speak` | | SPEAK | Persona voice output (transcript + optional audio) with engine selection and fallback | `reference/speak-engine.md` |
+| Retire | `retire` | | RETIRE | Persona retirement assessment + archive + downstream notification | `reference/persona-governance.md` |
+| Archetype Mapping | `archetype` | | CONJURE/AUDIT | Tag personas with Jung 12 brand archetypes + JTBD-aligned archetype (Functional/Emotional/Social); validate brand-archetype consistency | `reference/archetype-mapping.md` |
+| Segmentation | `segment` | | CONJURE/AUDIT | RFM tier (transactional), k-means/hierarchical (behavioral), Schwartz/OCEAN (psychographic). Persona must trace to a segment with sample size ≥30 | `reference/segmentation-methods.md` |
+| Bias Audit | `bias-audit` | | AUDIT | Representation matrix (gender × age × ability × ethnicity × locale), intersectionality coverage, Inclusive Persona Checklist. Flag stereotyping; require evidence citation per attribute | `reference/persona-bias-audit.md` |
+| Proto-Persona | `generate` (proto tier) | | CONJURE | Hypothesis / assumption-based persona files capped at 0.50 confidence | `reference/generation-workflows.md` |
+| Predictive Evolution | `evolve` (predictive) **[DEFERRED — requires Trace pipeline]** | | EVOLVE | Leading-indicator drift prediction → predicted drift report + recommended changes | `reference/evolution-engine.md` |
 
 ### Signal Keywords → Recipe / Mode
 
@@ -284,7 +284,7 @@ Cast receives persona requests and evidence from upstream agents, generates and 
 | Cast → Compete | Competitive personas | Specialized persona packaging for competitive analysis |
 | Cast → Accord | Spec personas | Specialized persona packaging for specification alignment |
 
-Exact payload shapes → `references/collaboration-formats.md`. Adapter-specific packaging → `references/distribution-adapters.md`.
+Exact payload shapes → `reference/collaboration-formats.md`. Adapter-specific packaging → `reference/distribution-adapters.md`.
 
 **Overlap boundaries:**
 - **vs Researcher**: Researcher = research design and data collection; Cast = persona synthesis from research data.
@@ -296,7 +296,7 @@ Exact payload shapes → `references/collaboration-formats.md`. Adapter-specific
 
 Cast qualifies for parallel execution when generating or distributing multiple personas simultaneously.
 
-**CONJURE (3+ personas):** Pattern B (Feature Parallel) — 2-3 `general-purpose` subagents, each owning a distinct `.agents/personas/{service}/{persona}.md` file. Shared read: `references/persona-model.md`, `registry.yaml`. Merge: Concat — combine persona files, then register all in a single registry update.
+**CONJURE (3+ personas):** Pattern B (Feature Parallel) — 2-3 `general-purpose` subagents, each owning a distinct `.agents/personas/{service}/{persona}.md` file. Shared read: `reference/persona-model.md`, `registry.yaml`. Merge: Concat — combine persona files, then register all in a single registry update.
 
 **DISTRIBUTE (3+ targets):** Pattern B (Feature Parallel) — one subagent per downstream agent (Echo, Spark, Retain), each packaging adapter-specific output independently. Merge: Concat — independent delivery packets.
 
@@ -306,18 +306,18 @@ Do not parallelize EVOLVE or FUSE — these require sequential confidence recalc
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/persona-model.md` | You need the canonical persona schema, detail levels, confidence fields, or SPEAK frontmatter. |
-| `references/generation-workflows.md` | You are running `CONJURE`, auto-detecting inputs, or validating generated personas. |
-| `references/evolution-engine.md` | You are applying drift updates, confidence decay, or identity-change rules. |
-| `references/registry-spec.md` | You are writing or validating registry state and lifecycle transitions. |
-| `references/collaboration-formats.md` | You need to preserve exact handoff anchors and minimum payload fields. |
-| `references/distribution-adapters.md` | You are packaging personas for downstream agents. |
-| `references/speak-engine.md` | You are using `SPEAK`, selecting engines, or handling TTS fallback. |
-| `references/persona-validation.md` | You are evaluating evidence quality, triangulation, clustering, validation status, or auditing persona quality (includes anti-patterns). |
-| `references/persona-governance.md` | You are deciding update cadence, retirement, or organizational rollout. |
-| `references/archetype-mapping.md` | Subcommand `archetype` — you are tagging personas with Jung 12 brand archetypes or JTBD-aligned archetypes. |
-| `references/segmentation-methods.md` | Subcommand `segment` — you are computing RFM tiers, behavioral clustering, or psychographic factors for evidence-grounded personas. |
-| `references/persona-bias-audit.md` | Subcommand `bias-audit` — you are running representation-matrix, intersectionality coverage, or inclusive-persona checks. |
+| `reference/persona-model.md` | You need the canonical persona schema, detail levels, confidence fields, or SPEAK frontmatter. |
+| `reference/generation-workflows.md` | You are running `CONJURE`, auto-detecting inputs, or validating generated personas. |
+| `reference/evolution-engine.md` | You are applying drift updates, confidence decay, or identity-change rules. |
+| `reference/registry-spec.md` | You are writing or validating registry state and lifecycle transitions. |
+| `reference/collaboration-formats.md` | You need to preserve exact handoff anchors and minimum payload fields. |
+| `reference/distribution-adapters.md` | You are packaging personas for downstream agents. |
+| `reference/speak-engine.md` | You are using `SPEAK`, selecting engines, or handling TTS fallback. |
+| `reference/persona-validation.md` | You are evaluating evidence quality, triangulation, clustering, validation status, or auditing persona quality (includes anti-patterns). |
+| `reference/persona-governance.md` | You are deciding update cadence, retirement, or organizational rollout. |
+| `reference/archetype-mapping.md` | Subcommand `archetype` — you are tagging personas with Jung 12 brand archetypes or JTBD-aligned archetypes. |
+| `reference/segmentation-methods.md` | Subcommand `segment` — you are computing RFM tiers, behavioral clustering, or psychographic factors for evidence-grounded personas. |
+| `reference/persona-bias-audit.md` | Subcommand `bias-audit` — you are running representation-matrix, intersectionality coverage, or inclusive-persona checks. |
 | `_common/AI_PERSONA_RISKS.md` | AI generation, human review, or bias/ethics risk is involved. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the persona packet, deciding adaptive thinking depth at SYNTH, or front-loading mode/scope at the first phase. Critical for Cast: P3, P5. |
 

@@ -181,7 +181,7 @@ userFactory.build({ transientParams: { admin: true } });
 userFactory.build({ transientParams: { deleted: true } });
 ```
 
-Full catalog with multi-language examples -> `references/factory-patterns.md`
+Full catalog with multi-language examples -> `reference/factory-patterns.md`
 
 ---
 
@@ -197,7 +197,7 @@ Full catalog with multi-language examples -> `references/factory-patterns.md`
 | Enum | first value, last value, invalid value |
 | Boolean | `true`, `false`, truthy/falsy coercions |
 
-Domain-specific boundaries (E-commerce, Auth, Financial) -> `references/boundary-values.md`
+Domain-specific boundaries (E-commerce, Auth, Financial) -> `reference/boundary-values.md`
 
 ---
 
@@ -217,7 +217,7 @@ Domain-specific boundaries (E-commerce, Auth, Financial) -> `references/boundary
 | Realistic | 1K-10K | E2E, demo environments |
 | Load test | 100K-1M | Performance testing |
 
-Full strategies and code examples -> `references/seed-management.md`
+Full strategies and code examples -> `reference/seed-management.md`
 
 ---
 
@@ -238,7 +238,7 @@ Full strategies and code examples -> `references/seed-management.md`
 | Medium | IP address, user agent, geolocation | Generalize or hash |
 | Low | Preferences, settings, roles | Keep as-is |
 
-Full techniques and pipeline -> `references/anonymization.md`
+Full techniques and pipeline -> `reference/anonymization.md`
 
 ---
 
@@ -248,13 +248,13 @@ Single source of truth for Recipe definitions. Behavior depth lives in the **Beh
 
 | Recipe | Subcommand | Default? | When to Use | Behavior | Read First |
 |--------|-----------|---------|-------------|----------|------------|
-| Factory Design | `factory` | ✓ | Factory pattern design and type-safe test data construction | Design factories per entity with traits, sequences, and FK-resolving associations. Deterministic seed required. | `references/factory-patterns.md` |
-| Boundary Values | `boundary` | | Boundary value and edge-case data set generation | Build a BVA matrix per constrained field (empty / min / max / off-by-one / Unicode / null) plus equivalence partitions. | `references/boundary-values.md` |
-| Synthetic Data | `synthetic` | | Large-scale synthetic data generation and load-test datasets | Bulk generation (10K-1M records) with progress tracking and deterministic seed; hand volume datasets to Siege. | `references/seed-management.md` |
-| Seed Management | `seed` | | Idempotent seed script design and snapshot management | Idempotent upsert / truncate-reload scripts with versioned snapshot and FK build order. | `references/seed-management.md` |
-| PII Masking | `pii` | | Test-data masking / de-identification (tokenization, FPE, k-anon / l-div / t-close, DP) | Test-data masking / de-id algorithms (tokenization / FPE / k-anon / l-diversity / t-closeness / DP). For production-system privacy engineering use Cloak; for regulatory GDPR / HIPAA framework mapping use Comply; for load-test dataset amplification use Siege. | `references/pii-masking-deidentification.md` |
-| LLM Fixtures | `llm` | | LLM-generated fixtures with schema validation, bias audit, deterministic caching, cost cap | LLM as fixture generator behind schema validation, bias audit, and deterministic cache. For production LLM feature / prompt / RAG design use Oracle; for throwaway prototype mock data use Forge; for adversarial LLM inputs use Siege. | `references/llm-generated-fixtures.md` |
-| Replay Scrub | `replay` | | Production-log replay set: capture -> PII scrub -> time shift -> id remap -> retention | Capture -> scrub -> time-shift -> id-remap -> retention-bounded replay bundle. For live-system privacy governance use Cloak; for regulatory capture approval use Comply; for replay-as-stress (amplify / time-warp) use Siege; for replay execution against staging use Voyager. | `references/replay-production-scrub.md` |
+| Factory Design | `factory` | ✓ | Factory pattern design and type-safe test data construction | Design factories per entity with traits, sequences, and FK-resolving associations. Deterministic seed required. | `reference/factory-patterns.md` |
+| Boundary Values | `boundary` | | Boundary value and edge-case data set generation | Build a BVA matrix per constrained field (empty / min / max / off-by-one / Unicode / null) plus equivalence partitions. | `reference/boundary-values.md` |
+| Synthetic Data | `synthetic` | | Large-scale synthetic data generation and load-test datasets | Bulk generation (10K-1M records) with progress tracking and deterministic seed; hand volume datasets to Siege. | `reference/seed-management.md` |
+| Seed Management | `seed` | | Idempotent seed script design and snapshot management | Idempotent upsert / truncate-reload scripts with versioned snapshot and FK build order. | `reference/seed-management.md` |
+| PII Masking | `pii` | | Test-data masking / de-identification (tokenization, FPE, k-anon / l-div / t-close, DP) | Test-data masking / de-id algorithms (tokenization / FPE / k-anon / l-diversity / t-closeness / DP). For production-system privacy engineering use Cloak; for regulatory GDPR / HIPAA framework mapping use Comply; for load-test dataset amplification use Siege. | `reference/pii-masking-deidentification.md` |
+| LLM Fixtures | `llm` | | LLM-generated fixtures with schema validation, bias audit, deterministic caching, cost cap | LLM as fixture generator behind schema validation, bias audit, and deterministic cache. For production LLM feature / prompt / RAG design use Oracle; for throwaway prototype mock data use Forge; for adversarial LLM inputs use Siege. | `reference/llm-generated-fixtures.md` |
+| Replay Scrub | `replay` | | Production-log replay set: capture -> PII scrub -> time shift -> id remap -> retention | Capture -> scrub -> time-shift -> id-remap -> retention-bounded replay bundle. For live-system privacy governance use Cloak; for regulatory capture approval use Comply; for replay-as-stress (amplify / time-warp) use Siege; for replay execution against staging use Voyager. | `reference/replay-production-scrub.md` |
 
 ### Signal Keywords → Recipe
 
@@ -305,7 +305,7 @@ Every Mint deliverable must include:
 | **C** | Load Data Prep | Siege -> Mint -> Siege | Volume dataset generation for load testing |
 | **D** | Privacy Pipeline | Cloak -> Mint -> Builder | Anonymized production data for integration tests |
 
-Handoff templates (inbound/outbound YAML formats) -> `references/handoffs.md`
+Handoff templates (inbound/outbound YAML formats) -> `reference/handoffs.md`
 
 ---
 
@@ -313,16 +313,16 @@ Handoff templates (inbound/outbound YAML formats) -> `references/handoffs.md`
 
 | File | Content |
 |------|---------|
-| `references/factory-patterns.md` | Multi-language factory pattern catalog (TS, Python, Go, Ruby, Rust, Java) |
-| `references/boundary-values.md` | Systematic BVA matrix, combinatorial edge cases, domain-specific boundaries |
-| `references/seed-management.md` | Idempotent seed strategies, versioning, volume generation code |
-| `references/anonymization.md` | PII masking techniques, production data pipeline, legal considerations |
-| `references/handoffs.md` | Standard inbound/outbound handoff YAML templates for all partners |
-| `references/multi-language.md` | Language-specific factory and Faker patterns (Python, Go, Rust, Java) |
-| `references/property-based-generators.md` | Generator design patterns for property-based and fuzz testing |
-| `references/pii-masking-deidentification.md` | `pii` recipe — tokenization, format-preserving encryption, k-anonymity / l-diversity / t-closeness, differential privacy for test-data masking |
-| `references/llm-generated-fixtures.md` | `llm` recipe — LLM as fixture generator behind schema validation, bias audit, deterministic caching, cost cap |
-| `references/replay-production-scrub.md` | `replay` recipe — production-log capture → PII scrub → time-shift → id-remap → retention-bounded replay bundle |
+| `reference/factory-patterns.md` | Multi-language factory pattern catalog (TS, Python, Go, Ruby, Rust, Java) |
+| `reference/boundary-values.md` | Systematic BVA matrix, combinatorial edge cases, domain-specific boundaries |
+| `reference/seed-management.md` | Idempotent seed strategies, versioning, volume generation code |
+| `reference/anonymization.md` | PII masking techniques, production data pipeline, legal considerations |
+| `reference/handoffs.md` | Standard inbound/outbound handoff YAML templates for all partners |
+| `reference/multi-language.md` | Language-specific factory and Faker patterns (Python, Go, Rust, Java) |
+| `reference/property-based-generators.md` | Generator design patterns for property-based and fuzz testing |
+| `reference/pii-masking-deidentification.md` | `pii` recipe — tokenization, format-preserving encryption, k-anonymity / l-diversity / t-closeness, differential privacy for test-data masking |
+| `reference/llm-generated-fixtures.md` | `llm` recipe — LLM as fixture generator behind schema validation, bias audit, deterministic caching, cost cap |
+| `reference/replay-production-scrub.md` | `replay` recipe — production-log capture → PII scrub → time-shift → id-remap → retention-bounded replay bundle |
 | `_common/OPUS_48_AUTHORING.md` | Sizing factory spec, deciding adaptive thinking depth at boundary/FK design, or front-loading schema/volume/PII at FRAME. Critical for Mint: P3, P5. |
 
 ---

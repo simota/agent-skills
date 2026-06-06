@@ -127,11 +127,11 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `HARVEST` | Scan `.agents/*.md`, Triage postmortems, and Mend remediation logs | Read full source entries before clustering | `references/knowledge-synthesis.md` |
-| `SYNTHESIZE` | Cluster, deduplicate, correlate, and classify insights | Similarity >= 80% clusters; 50-79% variant; < 50% new candidate | `references/knowledge-synthesis.md` |
-| `CATALOG` | Register or update `METAPATTERNS.md` with confidence, scope, freshness, consumers | Promotion requires new context, no contradiction, evidence within 90 days | `references/pattern-taxonomy.md`, `references/official-pattern-taxonomy.md` |
-| `PROPAGATE` | Send compact insights to relevant consumers | PATTERN confidence (3+) for standard; EMERGING (2) for FAILURE/ANTI | `references/propagation-protocol.md`, `references/official-pattern-taxonomy.md` |
-| `AUDIT` | Check freshness, contradictions, orphan patterns, knowledge gaps | Flag STALE patterns (> 180 days without evidence) | `references/decay-detection.md` |
+| `HARVEST` | Scan `.agents/*.md`, Triage postmortems, and Mend remediation logs | Read full source entries before clustering | `reference/knowledge-synthesis.md` |
+| `SYNTHESIZE` | Cluster, deduplicate, correlate, and classify insights | Similarity >= 80% clusters; 50-79% variant; < 50% new candidate | `reference/knowledge-synthesis.md` |
+| `CATALOG` | Register or update `METAPATTERNS.md` with confidence, scope, freshness, consumers | Promotion requires new context, no contradiction, evidence within 90 days | `reference/pattern-taxonomy.md`, `reference/official-pattern-taxonomy.md` |
+| `PROPAGATE` | Send compact insights to relevant consumers | PATTERN confidence (3+) for standard; EMERGING (2) for FAILURE/ANTI | `reference/propagation-protocol.md`, `reference/official-pattern-taxonomy.md` |
+| `AUDIT` | Check freshness, contradictions, orphan patterns, knowledge gaps | Flag STALE patterns (> 180 days without evidence) | `reference/decay-detection.md` |
 
 Core synthesis rules:
 - Similarity `>= 80%` → cluster with an existing pattern
@@ -153,10 +153,10 @@ Postmortem mining rules:
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Curate Patterns | `curate` | ✓ | Knowledge extraction and pattern registration into METAPATTERNS.md | `references/knowledge-synthesis.md`, `references/pattern-taxonomy.md` |
-| Decay Detection | `decay` | | Knowledge decay and obsolescence detection (freshness score evaluation) | `references/decay-detection.md` |
-| Propagate | `propagate` | | Best practice propagation (LORE_INSIGHT/LORE_ALERT delivery) | `references/propagation-protocol.md` |
-| Extract from Journals | `extract` | | Pattern extraction from agent journals | `references/knowledge-synthesis.md` |
+| Curate Patterns | `curate` | ✓ | Knowledge extraction and pattern registration into METAPATTERNS.md | `reference/knowledge-synthesis.md`, `reference/pattern-taxonomy.md` |
+| Decay Detection | `decay` | | Knowledge decay and obsolescence detection (freshness score evaluation) | `reference/decay-detection.md` |
+| Propagate | `propagate` | | Best practice propagation (LORE_INSIGHT/LORE_ALERT delivery) | `reference/propagation-protocol.md` |
+| Extract from Journals | `extract` | | Pattern extraction from agent journals | `reference/knowledge-synthesis.md` |
 
 ## Subcommand Dispatch
 
@@ -174,14 +174,14 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `harvest`, `scan journals`, `extract patterns` | Knowledge harvest from agent journals | Harvest report | `references/knowledge-synthesis.md` |
-| `synthesize`, `cluster`, `deduplicate` | Pattern synthesis and classification | Synthesis report | `references/knowledge-synthesis.md` |
-| `catalog`, `register pattern`, `update METAPATTERNS` | Pattern catalog management | Updated METAPATTERNS.md | `references/pattern-taxonomy.md` |
-| `propagate`, `distribute`, `notify agents` | Insight propagation to consumers | LORE_INSIGHT deliveries | `references/propagation-protocol.md` |
-| `audit`, `freshness check`, `decay detection` | Knowledge health audit | Audit report | `references/decay-detection.md` |
-| `contradiction`, `conflicting patterns` | Contradiction resolution | Resolution report | `references/knowledge-synthesis.md` |
-| `postmortem`, `incident learning` | Postmortem mining for patterns | Pattern candidates | `references/knowledge-synthesis.md` |
-| unclear knowledge request | Knowledge harvest (default) | Harvest report | `references/knowledge-synthesis.md` |
+| `harvest`, `scan journals`, `extract patterns` | Knowledge harvest from agent journals | Harvest report | `reference/knowledge-synthesis.md` |
+| `synthesize`, `cluster`, `deduplicate` | Pattern synthesis and classification | Synthesis report | `reference/knowledge-synthesis.md` |
+| `catalog`, `register pattern`, `update METAPATTERNS` | Pattern catalog management | Updated METAPATTERNS.md | `reference/pattern-taxonomy.md` |
+| `propagate`, `distribute`, `notify agents` | Insight propagation to consumers | LORE_INSIGHT deliveries | `reference/propagation-protocol.md` |
+| `audit`, `freshness check`, `decay detection` | Knowledge health audit | Audit report | `reference/decay-detection.md` |
+| `contradiction`, `conflicting patterns` | Contradiction resolution | Resolution report | `reference/knowledge-synthesis.md` |
+| `postmortem`, `incident learning` | Postmortem mining for patterns | Pattern candidates | `reference/knowledge-synthesis.md` |
+| unclear knowledge request | Knowledge harvest (default) | Harvest report | `reference/knowledge-synthesis.md` |
 
 Routing rules:
 
@@ -273,11 +273,11 @@ When HARVEST scope includes 3+ independent source categories (e.g., agent journa
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/knowledge-synthesis.md` | You are harvesting journals, clustering insights, resolving contradictions, scoring confidence, or producing the synthesis report. |
-| `references/pattern-taxonomy.md` | You are assigning domain/type/confidence/scope, building `METAPATTERNS.md`, or checking lifecycle and naming rules. |
-| `references/propagation-protocol.md` | You are choosing consumers, urgency, `LORE_INSIGHT` or `LORE_ALERT`, or compressing context for propagation. |
-| `references/decay-detection.md` | You are evaluating freshness, applying TTL multipliers, revalidating stale patterns, or managing archive state. |
-| `references/official-pattern-taxonomy.md` | You are mapping ecosystem patterns to official Anthropic patterns, evaluating quality signals against official metrics, or propagating official-aligned insights during CATALOG or PROPAGATE. |
+| `reference/knowledge-synthesis.md` | You are harvesting journals, clustering insights, resolving contradictions, scoring confidence, or producing the synthesis report. |
+| `reference/pattern-taxonomy.md` | You are assigning domain/type/confidence/scope, building `METAPATTERNS.md`, or checking lifecycle and naming rules. |
+| `reference/propagation-protocol.md` | You are choosing consumers, urgency, `LORE_INSIGHT` or `LORE_ALERT`, or compressing context for propagation. |
+| `reference/decay-detection.md` | You are evaluating freshness, applying TTL multipliers, revalidating stale patterns, or managing archive state. |
+| `reference/official-pattern-taxonomy.md` | You are mapping ecosystem patterns to official Anthropic patterns, evaluating quality signals against official metrics, or propagating official-aligned insights during CATALOG or PROPAGATE. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the knowledge report, deciding adaptive thinking depth at freshness/unlearning, or front-loading domain/cutoff/audience at HARVEST. Critical for Lore: P3, P5. |
 
 ---

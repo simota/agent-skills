@@ -85,7 +85,7 @@ Route elsewhere when the task is primarily:
 - Never output a single framework mechanically — compose dynamically based on Cynefin classification. Use Snowden's five domains: Clear, Complicated, Complex, Chaotic, Disorder. When the domain is Disorder (unclear which domain applies), apply the **aporetic turn** — create enough structure to categorize the problem into Complex or an ordered domain before selecting frameworks.
 - Quality gate: every reframing must pass the ASN test — **A**ctionability (suggests concrete next step), **S**pecificity (applies to THIS problem, not any problem), **N**ovelty (not a synonym of the original framing).
 - As an AI agent, vertical reasoning reinforces existing thought structures rather than breaking them (de Bono's core insight). Serendipity Injection is not optional decoration — it is the primary mechanism to escape pattern-reinforcing loops.
-- When TRIZ is applied, identify the specific contradiction before selecting inventive principles. Choose matrix version by domain: classical Altshuller (39 params), Matrix 2003 (48 params, validated on 150K+ modern patents), or Matrix 2022. LLM-assisted tools (AutoTRIZ, AICON, TRIZ Contradiction Solver) automate detection and principle retrieval while preventing hallucination via deterministic matrix lookup. Details: `references/thinking-frameworks.md`.
+- When TRIZ is applied, identify the specific contradiction before selecting inventive principles. Choose matrix version by domain: classical Altshuller (39 params), Matrix 2003 (48 params, validated on 150K+ modern patents), or Matrix 2022. LLM-assisted tools (AutoTRIZ, AICON, TRIZ Contradiction Solver) automate detection and principle retrieval while preventing hallucination via deterministic matrix lookup. Details: `reference/thinking-frameworks.md`.
 - Author for Opus 4.8 defaults per `_common/OPUS_48_AUTHORING.md`. Critical for Flux: **P3** (eagerly Read problem framing, prior attempts, and stuck-point evidence at ENTER) and **P5** (think step-by-step at Serendipity Injection, TRIZ contradiction identification, and ASN-test gating). Recommended: P1 (front-load stuck-point + reframe axis), P2 (calibrated verdicts).
 
 ## Boundaries
@@ -117,7 +117,7 @@ Interaction rules → `_common/INTERACTION.md`
 - Claim a single "correct" reframing exists.
 - Pad assumptions to hit quantity targets. 7 genuine > 20 trivial.
 - Ignore the bias blind spot — always audit own output for the biases flagged in the Blind Spot Report. Cognitive sophistication does not attenuate it (West & Stanovich, JPSP 2012).
-- Produce synonym-substitutions ("reduce costs" → "minimize expenses" is not a reframe). Historical failure cases catalogued in `references/bias-catalog.md` and Avoids section below.
+- Produce synonym-substitutions ("reduce costs" → "minimize expenses" is not a reframe). Historical failure cases catalogued in `reference/bias-catalog.md` and Avoids section below.
 
 ---
 
@@ -149,11 +149,11 @@ Interaction rules → `_common/INTERACTION.md`
 
 | Phase | Purpose | Key Action | Read |
 |-------|---------|------------|------|
-| `CLASSIFY` | Map the problem domain | Cynefin classification → auto-select framework set. If Disorder (domain unclear), apply the aporetic turn: create enough structure to move into a classifiable domain | `references/domain-classifier.md` |
-| `CHALLENGE` | Surface and reverse assumptions | List 10-20 assumptions → reverse → First Principles decomposition | `references/thinking-frameworks.md` |
-| `COMBINE` | Cross-pollinate distant domains | Bisociation + SCAMPER + TRIZ with Serendipity Injection | `references/combination-engine.md` |
-| `SHIFT` | Rotate the observation frame | Lateral Thinking + Reframing + Oblique Strategies | `references/thinking-frameworks.md` |
-| `CRYSTALLIZE` | Converge into actionable output | Reframed problems + Insight Matrix + Blind Spot Report + Action hypotheses | `references/output-formats.md` |
+| `CLASSIFY` | Map the problem domain | Cynefin classification → auto-select framework set. If Disorder (domain unclear), apply the aporetic turn: create enough structure to move into a classifiable domain | `reference/domain-classifier.md` |
+| `CHALLENGE` | Surface and reverse assumptions | List 10-20 assumptions → reverse → First Principles decomposition | `reference/thinking-frameworks.md` |
+| `COMBINE` | Cross-pollinate distant domains | Bisociation + SCAMPER + TRIZ with Serendipity Injection | `reference/combination-engine.md` |
+| `SHIFT` | Rotate the observation frame | Lateral Thinking + Reframing + Oblique Strategies | `reference/thinking-frameworks.md` |
+| `CRYSTALLIZE` | Converge into actionable output | Reframed problems + Insight Matrix + Blind Spot Report + Action hypotheses | `reference/output-formats.md` |
 
 ### Work Modes
 
@@ -176,7 +176,7 @@ Dedicated mode for detecting cognitive biases in decision-making, independent of
 
 **Output:** Bias Audit Report — detected biases with evidence, confidence level, debiasing recommendations, and alternative decision framings.
 
-→ Full taxonomy, detection signals, and debiasing techniques: `references/bias-catalog.md`
+→ Full taxonomy, detection signals, and debiasing techniques: `reference/bias-catalog.md`
 
 ---
 
@@ -186,7 +186,7 @@ Dedicated mode for detecting cognitive biases in decision-making, independent of
 2. **Iterative Deepening Pipeline**: Each phase's output feeds the next, progressively transforming thought.
 3. **Serendipity Injection**: Oblique Strategies-style random prompts introduced in COMBINE/SHIFT to break fixation.
 
-> **Detail**: See `references/combination-engine.md` for the compatibility matrix and injection mechanics.
+> **Detail**: See `reference/combination-engine.md` for the compatibility matrix and injection mechanics.
 
 ---
 
@@ -198,14 +198,14 @@ Single source of truth for Recipe definitions. Behavior details for each Recipe 
 
 | Recipe | Subcommand | Default? | Mode | When to Use | Notes | Read First |
 |--------|-----------|---------|------|-------------|-------|------------|
-| Reframe | `reframe` | ✓ | DEEP | Reframing of assumptions (full pipeline) | All 5 phases. Cynefin classification → assumption surfacing → Serendipity Injection → CRYSTALLIZE. | `references/thinking-frameworks.md` |
-| Perspective Shift | `shift` | | RAPID | Perspective shift / unblocking | CLASSIFY → SHIFT → CRYSTALLIZE. Specializes in perspective rotation and Oblique Strategies. | `references/thinking-frameworks.md` |
-| Cross-Domain | `cross` | | LENS | Cross-domain knowledge fusion | CLASSIFY → COMBINE → CRYSTALLIZE. Specializes in cross-domain Bisociation and SCAMPER. | `references/combination-engine.md` |
-| Challenge Assumption | `challenge` | | LENS | Challenge preconceptions | CLASSIFY → CHALLENGE → CRYSTALLIZE. Specializes in First Principles and Assumption Reversal. | `references/thinking-frameworks.md` |
-| SCAMPER | `scamper` | | LENS | 7-lens artifact transformation (S/C/A/M/P/E/R) | CLASSIFY → SCAMPER probe → CRYSTALLIZE. Apply 7 lenses (Eberle 1971) with prompt banks; ≥3 ideas per lens, ASN-test filter, deliver 7-lens × N matrix. Pair with `challenge` or `shift` upstream — SCAMPER alone produces incremental ideas. | `references/scamper-technique.md` |
-| Analogy | `analogy` | | LENS | Structural mapping from source domain (Gentner; biomimicry; cross-industry) | CLASSIFY → ANALOGY map → CRYSTALLIZE. Gentner structural mapping — align relations not objects; budget near vs far analogies; mark breakdown points; rate transferability. Generate ≥5 candidates and kill 4. | `references/analogical-thinking.md` |
-| Inversion | `inversion` | | LENS | Munger inversion — invert goal, enumerate failure-guarantees, derive avoid-list | CLASSIFY → INVERT → ENUMERATE → AVOID → CRYSTALLIZE. Munger goal-flip and Taleb via negativa. Enumerate ≥10 failure-guarantees across 6 categories (technical/social/economic/cognitive/temporal/structural), derive avoid-list with owners. Hand failure-paths to Omen for RPN/AP scoring. | `references/inversion-method.md` |
-| Multi-Engine | `multi` | | DEEP (multi) | Tri-engine reframe generation (Codex + Antigravity + Claude in parallel) with Pattern D Divergence-primary scoring. Use when stuck thinking is suspected to share the same training-data prior across one or two engines. | Spawn engine subagents in one message with loose prompts (no framework names / no Cynefin / no ASN passed in). Two-axis scoring: Concurrence × Novelty. `VERIFIED-DIVERGENT × HIGH` top-billed ahead of UNIVERSAL. Portfolio merge default; CLUSTER preserves same-assumption different-inversion as separate clusters under shared `assumption_root`. Full flow + scoring + GROUND categories: see `references/multi-engine-mode.md` and Multi-Engine Mode section. | `references/multi-engine-mode.md`, `references/tri-engine-reframe.md`, `_common/MULTI_ENGINE_RECIPE.md` |
+| Reframe | `reframe` | ✓ | DEEP | Reframing of assumptions (full pipeline) | All 5 phases. Cynefin classification → assumption surfacing → Serendipity Injection → CRYSTALLIZE. | `reference/thinking-frameworks.md` |
+| Perspective Shift | `shift` | | RAPID | Perspective shift / unblocking | CLASSIFY → SHIFT → CRYSTALLIZE. Specializes in perspective rotation and Oblique Strategies. | `reference/thinking-frameworks.md` |
+| Cross-Domain | `cross` | | LENS | Cross-domain knowledge fusion | CLASSIFY → COMBINE → CRYSTALLIZE. Specializes in cross-domain Bisociation and SCAMPER. | `reference/combination-engine.md` |
+| Challenge Assumption | `challenge` | | LENS | Challenge preconceptions | CLASSIFY → CHALLENGE → CRYSTALLIZE. Specializes in First Principles and Assumption Reversal. | `reference/thinking-frameworks.md` |
+| SCAMPER | `scamper` | | LENS | 7-lens artifact transformation (S/C/A/M/P/E/R) | CLASSIFY → SCAMPER probe → CRYSTALLIZE. Apply 7 lenses (Eberle 1971) with prompt banks; ≥3 ideas per lens, ASN-test filter, deliver 7-lens × N matrix. Pair with `challenge` or `shift` upstream — SCAMPER alone produces incremental ideas. | `reference/scamper-technique.md` |
+| Analogy | `analogy` | | LENS | Structural mapping from source domain (Gentner; biomimicry; cross-industry) | CLASSIFY → ANALOGY map → CRYSTALLIZE. Gentner structural mapping — align relations not objects; budget near vs far analogies; mark breakdown points; rate transferability. Generate ≥5 candidates and kill 4. | `reference/analogical-thinking.md` |
+| Inversion | `inversion` | | LENS | Munger inversion — invert goal, enumerate failure-guarantees, derive avoid-list | CLASSIFY → INVERT → ENUMERATE → AVOID → CRYSTALLIZE. Munger goal-flip and Taleb via negativa. Enumerate ≥10 failure-guarantees across 6 categories (technical/social/economic/cognitive/temporal/structural), derive avoid-list with owners. Hand failure-paths to Omen for RPN/AP scoring. | `reference/inversion-method.md` |
+| Multi-Engine | `multi` | | DEEP (multi) | Tri-engine reframe generation (Codex + Antigravity + Claude in parallel) with Pattern D Divergence-primary scoring. Use when stuck thinking is suspected to share the same training-data prior across one or two engines. | Spawn engine subagents in one message with loose prompts (no framework names / no Cynefin / no ASN passed in). Two-axis scoring: Concurrence × Novelty. `VERIFIED-DIVERGENT × HIGH` top-billed ahead of UNIVERSAL. Portfolio merge default; CLUSTER preserves same-assumption different-inversion as separate clusters under shared `assumption_root`. Full flow + scoring + GROUND categories: see `reference/multi-engine-mode.md` and Multi-Engine Mode section. | `reference/multi-engine-mode.md`, `reference/tri-engine-reframe.md`, `_common/MULTI_ENGINE_RECIPE.md` |
 
 ## Subcommand Dispatch
 
@@ -245,7 +245,7 @@ Every deliverable must include:
 - **Blind Spot Report** (detected biases and cognitive traps).
 - **Recommended Next Steps** with agent routing.
 
-> **Detail**: See `references/output-formats.md` for full templates. See `references/anti-patterns.md` for quality guards.
+> **Detail**: See `reference/output-formats.md` for full templates. See `reference/anti-patterns.md` for quality guards.
 
 ---
 
@@ -262,7 +262,7 @@ Activated by the `multi` Recipe. Pattern D (Divergence-primary) per `_common/MUL
 - **Engine-attribution tag** (mandatory): `[codex+agy+claude]` / `[codex+agy]` / `[codex-verified]`; for DIVERGENT add `[divergent: <prior-type>]`.
 - **Degraded**: 2 engines → continue; 1 → stricter grounding + flag reduced divergence-value; 0 → fall back to `reframe` Recipe.
 
-> **Detail**: See `references/multi-engine-mode.md` for full rationale, mechanics, and degraded-mode rules. See `references/tri-engine-reframe.md` for algorithm, JSON schema, and prompt skeletons.
+> **Detail**: See `reference/multi-engine-mode.md` for full rationale, mechanics, and degraded-mode rules. See `reference/tri-engine-reframe.md` for algorithm, JSON schema, and prompt skeletons.
 
 ---
 
@@ -279,24 +279,24 @@ Activated by the `multi` Recipe. Pattern D (Divergence-primary) per `_common/MUL
 - **vs Oracle**: Oracle = AI/ML design evaluation and prompt engineering. Flux = domain-agnostic thinking transformation. When reframing involves AI system design assumptions, collaborate with Oracle for AI-specific domain validation.
 - **vs Ripple**: Ripple = assess impact of a specific change. Flux = question whether the change itself is addressing the right problem.
 
-> **Detail**: See `references/collaboration-packets.md` for handoff formats.
+> **Detail**: See `reference/collaboration-packets.md` for handoff formats.
 
 ## Reference Map
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/thinking-frameworks.md` | You need framework definitions, procedures, and application examples. |
-| `references/domain-classifier.md` | You need Cynefin classification criteria and framework selection rules. |
-| `references/combination-engine.md` | You need framework compatibility matrix, combination rules, or Serendipity Injection mechanics. |
-| `references/output-formats.md` | You need output templates (Assumption Map, Insight Matrix, Blind Spot Report). |
-| `references/anti-patterns.md` | You need to guard against superficial reframing, framework abuse, or false insights. |
-| `references/collaboration-packets.md` | You need handoff formats for partner agents. |
-| `references/bias-catalog.md` | You need the full bias taxonomy, detection signals, and debiasing techniques for AUDIT mode. |
-| `references/scamper-technique.md` | You are running `scamper` — need 7-lens prompt banks, lens-selection heuristics, anti-patterns, and handoff for SCAMPER probing. |
-| `references/analogical-thinking.md` | You are running `analogy` — need Gentner structural mapping, near/far distance budget, biomimicry catalog, cross-industry patterns, breakdown-point testing. |
-| `references/inversion-method.md` | You are running `inversion` — need Munger goal-flip prompts, Taleb via negativa, 6-category failure-mode scaffold, avoid-list derivation, and Omen handoff. |
-| `references/multi-engine-mode.md` | You need the full Multi-Engine Mode rationale, base engine policy, two-axis scoring rules, GROUND rejection categories, and degraded-mode behavior (SKILL.md keeps only a summary). |
-| `references/tri-engine-reframe.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents), Pattern D Divergence-primary scoring on Concurrence × Novelty axes, Portfolio-only merge strategy, assumption_root clustering rule, JSON schema, subagent prompt skeletons, and degraded-mode behavior. |
+| `reference/thinking-frameworks.md` | You need framework definitions, procedures, and application examples. |
+| `reference/domain-classifier.md` | You need Cynefin classification criteria and framework selection rules. |
+| `reference/combination-engine.md` | You need framework compatibility matrix, combination rules, or Serendipity Injection mechanics. |
+| `reference/output-formats.md` | You need output templates (Assumption Map, Insight Matrix, Blind Spot Report). |
+| `reference/anti-patterns.md` | You need to guard against superficial reframing, framework abuse, or false insights. |
+| `reference/collaboration-packets.md` | You need handoff formats for partner agents. |
+| `reference/bias-catalog.md` | You need the full bias taxonomy, detection signals, and debiasing techniques for AUDIT mode. |
+| `reference/scamper-technique.md` | You are running `scamper` — need 7-lens prompt banks, lens-selection heuristics, anti-patterns, and handoff for SCAMPER probing. |
+| `reference/analogical-thinking.md` | You are running `analogy` — need Gentner structural mapping, near/far distance budget, biomimicry catalog, cross-industry patterns, breakdown-point testing. |
+| `reference/inversion-method.md` | You are running `inversion` — need Munger goal-flip prompts, Taleb via negativa, 6-category failure-mode scaffold, avoid-list derivation, and Omen handoff. |
+| `reference/multi-engine-mode.md` | You need the full Multi-Engine Mode rationale, base engine policy, two-axis scoring rules, GROUND rejection categories, and degraded-mode behavior (SKILL.md keeps only a summary). |
+| `reference/tri-engine-reframe.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents), Pattern D Divergence-primary scoring on Concurrence × Novelty axes, Portfolio-only merge strategy, assumption_root clustering rule, JSON schema, subagent prompt skeletons, and degraded-mode behavior. |
 | `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
 | `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill `multi` Recipe protocol — Pattern D / C / H selection, canonical SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND → SYNTHESIZE → DELIVER flow, engine-attribution conventions, degraded-mode matrix. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the reframing output, deciding adaptive thinking depth at contradiction/ASN gating, or front-loading problem/stuck-point/axis at ENTER. Critical for Flux: P3, P5. |
@@ -308,10 +308,10 @@ Activated by the `multi` Recipe. Pattern D (Divergence-primary) per `_common/MUL
 | Phase | Actions |
 |-------|---------|
 | **RECEIVE** | Read the problem statement. Check `.agents/flux.md` for similar past patterns. Load constraints. |
-| **CLASSIFY** | Apply Cynefin classification. Select framework set from `references/domain-classifier.md`. |
+| **CLASSIFY** | Apply Cynefin classification. Select framework set from `reference/domain-classifier.md`. |
 | **EXECUTE** | Run the selected work mode pipeline (DEEP/RAPID/LENS). Apply Serendipity Injection. |
-| **QUALITY** | Run anti-pattern Detection Checklist (`references/anti-patterns.md`). Verify reframings pass Action/Specificity/Novelty tests. |
-| **DELIVER** | Format output per `references/output-formats.md`. Include all required artifacts. Route to next agent or user. |
+| **QUALITY** | Run anti-pattern Detection Checklist (`reference/anti-patterns.md`). Verify reframings pass Action/Specificity/Novelty tests. |
+| **DELIVER** | Format output per `reference/output-formats.md`. Include all required artifacts. Route to next agent or user. |
 
 ---
 

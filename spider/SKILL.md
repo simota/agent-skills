@@ -90,9 +90,9 @@ Route elsewhere when the task is primarily:
 |-------|----------------|----------|------|
 | `DISCOVER` | Collect scale parameters: URL/day, domain count, depth, re-crawl interval, freshness SLO | No design before parameters are established | — |
 | `CLASSIFY` | Determine scale tier (Nano→Web-scale) using Scale Classification table | Nano tier → route to Navigator immediately | — |
-| `DESIGN` | Design frontier, scheduler, topology, and extraction pipeline for the classified tier | Match architecture complexity to tier — never overengineer | `references/distributed-architecture.md`, `references/frontier-design.md` |
-| `COMPLY` | Design compliance subsystem: robots.txt parser, opt-out registry, Crawl-Delay enforcement, PII check | Compliance is structural, not a post-hoc filter | `references/compliance-architecture.md` |
-| `DELIVER` | Produce architecture spec, determine handoff targets, prepare handoff packets | Every deliverable must include scale tier, cost estimate, compliance basis | `references/handoffs.md` |
+| `DESIGN` | Design frontier, scheduler, topology, and extraction pipeline for the classified tier | Match architecture complexity to tier — never overengineer | `reference/distributed-architecture.md`, `reference/frontier-design.md` |
+| `COMPLY` | Design compliance subsystem: robots.txt parser, opt-out registry, Crawl-Delay enforcement, PII check | Compliance is structural, not a post-hoc filter | `reference/compliance-architecture.md` |
+| `DELIVER` | Produce architecture spec, determine handoff targets, prepare handoff packets | Every deliverable must include scale tier, cost estimate, compliance basis | `reference/handoffs.md` |
 
 ---
 
@@ -143,7 +143,7 @@ Classify the crawl scope before selecting an architecture pattern.
 
 **Decision rule:** Nano tier → hand off to Navigator with a targeted spec. Small tier and above → Spider designs.
 
-Full architecture patterns → `references/distributed-architecture.md`
+Full architecture patterns → `reference/distributed-architecture.md`
 
 ## Frontier Design
 
@@ -160,7 +160,7 @@ URL frontier is the core data structure of any crawler. Select by scale and requ
 
 **URL canonicalization:** RFC 3986 normalization → lowercase scheme/host → strip default port → sort query params → drop fragment → resolve relative paths.
 
-Full frontier patterns → `references/frontier-design.md`
+Full frontier patterns → `reference/frontier-design.md`
 
 ## Politeness & Scheduler
 
@@ -178,7 +178,7 @@ Every crawl architecture must include a politeness subsystem as a first-class co
 | Crawl budget | Per-domain daily URL cap, adjustable by content value scoring | 10K URLs/domain/day |
 | Fleet concurrency cap | Global per-target cap across all worker IPs; prevents DDoS-equivalent traffic even under rotation | ≤10 concurrent req/target |
 
-Full compliance details → `references/compliance-architecture.md`
+Full compliance details → `reference/compliance-architecture.md`
 
 ## Extraction Pipeline
 
@@ -192,7 +192,7 @@ Design the per-document processing pipeline from fetch to structured output.
 | Canonical resolution | URL normalization | Redirect chain following (max 5 hops, loop detection), canonical link tag |
 | Output format | Storage format | WARC (archival), JSON-Lines (streaming), Parquet (analytics) |
 
-Full extraction patterns → `references/extraction-pipeline.md`
+Full extraction patterns → `reference/extraction-pipeline.md`
 
 ## Infrastructure Topology
 
@@ -205,7 +205,7 @@ Full extraction patterns → `references/extraction-pipeline.md`
 
 **Key infrastructure decisions:** worker fault tolerance (heartbeat + requeue), checkpoint design (WAL for frontier state), domain-to-worker assignment (consistent hashing ring), network egress estimation.
 
-Full topology patterns → `references/distributed-architecture.md`
+Full topology patterns → `reference/distributed-architecture.md`
 
 ## Anti-Detection Architecture
 
@@ -221,7 +221,7 @@ Design detection avoidance at the infrastructure level. **Ethical framing requir
 
 **When NOT to recommend anti-detection:** Public data with permissive robots.txt, Sitemap-only crawls, API-based collection.
 
-Full anti-detection patterns → `references/anti-detection-architecture.md`
+Full anti-detection patterns → `reference/anti-detection-architecture.md`
 
 ## Recipes
 
@@ -229,13 +229,13 @@ Single source of truth for Recipe definitions. Behavior depth lives in the **Beh
 
 | Recipe | Subcommand | Default? | When to Use | Behavior | Output / Handoff | Read First |
 |--------|-----------|---------|-------------|----------|------------------|------------|
-| Distributed Topology | `topology` | ✓ | End-to-end distributed crawler topology design (Coordinator/Worker/Frontier) | Scale-tier classification → Coordinator/Worker split → fault tolerance → checkpoint design. | System spec + ADR → Builder, Scaffold | `references/distributed-architecture.md` |
-| URL Frontier | `frontier` | | URL frontier design (deduplication, priority queue, re-crawl scheduling) | Bloom/Cuckoo/Redis/RocksDB selection → priority-queue design → URL normalization → persistence design. | Frontier spec → Builder | `references/frontier-design.md` |
-| Politeness Control | `politeness` | | Politeness (rate limit) control, Crawl-Delay, adaptive backoff | Token-bucket design → robots.txt cache → 429/5xx adaptive backoff → fleet-wide concurrent-connection caps. | Politeness policy doc → Builder | `references/compliance-architecture.md` |
-| Compliance | `compliance` | | robots.txt / legal compliance, AI Act conformance, jurisdictional risk | Verify all opt-out signals (robots.txt/ai.txt/TDM/meta/HTTP headers) → per-jurisdiction risk table → GDPR DPIA necessity. | Compliance subsystem spec → Comply, Cloak | `references/compliance-architecture.md` |
-| Extraction Pipeline | `extraction` | | HTML/JS rendering choice, parser strategy (DOM / XPath / CSS / LLM), structured extraction, near-dup (SimHash/MinHash) | Render layer (static / Playwright / Splash) → parser (lxml / Beautiful Soup / Scrapy selector / LLM) → structured-data (JSON-LD / microdata / OpenGraph) → near-dup detection (SimHash / MinHash + LSH) → output schema (WARC / JSONL / Parquet). | Pipeline spec → Stream | `references/extraction-pipeline-deep.md` |
-| Deduplication Strategy | `dedup` | | URL canonicalization, Bloom/Cuckoo/HyperLogLog, content-hash dedup, near-dup clustering | URL canonicalization rules → exact-URL dedup (Bloom/Cuckoo) → content-hash dedup (SHA-256 + Merkle) → near-duplicate clustering (SimHash / MinHash / SSDEEP) → cross-session persistence. | Dedup spec → Builder | `references/dedup-strategies.md` |
-| Crawl Monitoring | `monitoring` | | Crawl observability — fetch-rate, frontier depth, fetch-error taxonomy, cost-per-URL, graceful shutdown/resume | RED signals per worker, frontier depth/breadth, fetch-error taxonomy (DNS/TLS/HTTP), cost-per-URL dashboard, graceful shutdown + resume checkpoint protocol, hand off SLOs to Beacon. | SLO/SLI definitions → Beacon | `references/crawl-monitoring.md` |
+| Distributed Topology | `topology` | ✓ | End-to-end distributed crawler topology design (Coordinator/Worker/Frontier) | Scale-tier classification → Coordinator/Worker split → fault tolerance → checkpoint design. | System spec + ADR → Builder, Scaffold | `reference/distributed-architecture.md` |
+| URL Frontier | `frontier` | | URL frontier design (deduplication, priority queue, re-crawl scheduling) | Bloom/Cuckoo/Redis/RocksDB selection → priority-queue design → URL normalization → persistence design. | Frontier spec → Builder | `reference/frontier-design.md` |
+| Politeness Control | `politeness` | | Politeness (rate limit) control, Crawl-Delay, adaptive backoff | Token-bucket design → robots.txt cache → 429/5xx adaptive backoff → fleet-wide concurrent-connection caps. | Politeness policy doc → Builder | `reference/compliance-architecture.md` |
+| Compliance | `compliance` | | robots.txt / legal compliance, AI Act conformance, jurisdictional risk | Verify all opt-out signals (robots.txt/ai.txt/TDM/meta/HTTP headers) → per-jurisdiction risk table → GDPR DPIA necessity. | Compliance subsystem spec → Comply, Cloak | `reference/compliance-architecture.md` |
+| Extraction Pipeline | `extraction` | | HTML/JS rendering choice, parser strategy (DOM / XPath / CSS / LLM), structured extraction, near-dup (SimHash/MinHash) | Render layer (static / Playwright / Splash) → parser (lxml / Beautiful Soup / Scrapy selector / LLM) → structured-data (JSON-LD / microdata / OpenGraph) → near-dup detection (SimHash / MinHash + LSH) → output schema (WARC / JSONL / Parquet). | Pipeline spec → Stream | `reference/extraction-pipeline-deep.md` |
+| Deduplication Strategy | `dedup` | | URL canonicalization, Bloom/Cuckoo/HyperLogLog, content-hash dedup, near-dup clustering | URL canonicalization rules → exact-URL dedup (Bloom/Cuckoo) → content-hash dedup (SHA-256 + Merkle) → near-duplicate clustering (SimHash / MinHash / SSDEEP) → cross-session persistence. | Dedup spec → Builder | `reference/dedup-strategies.md` |
+| Crawl Monitoring | `monitoring` | | Crawl observability — fetch-rate, frontier depth, fetch-error taxonomy, cost-per-URL, graceful shutdown/resume | RED signals per worker, frontier depth/breadth, fetch-error taxonomy (DNS/TLS/HTTP), cost-per-URL dashboard, graceful shutdown + resume checkpoint protocol, hand off SLOs to Beacon. | SLO/SLI definitions → Beacon | `reference/crawl-monitoring.md` |
 
 ### Signal Keywords → Recipe
 
@@ -250,8 +250,8 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `extraction`, `parsing strategy`, `JS rendering` | `extraction` |
 | `content dedup`, `near-duplicate`, `SimHash`, `MinHash`, `URL canonicalization` | `dedup` |
 | `crawl monitoring`, `observability`, `SLO`, `cost-per-URL` | `monitoring` |
-| `scrape infrastructure`, `anti-detection`, `IP rotation` | `topology` (+ `references/anti-detection-architecture.md`) |
-| `link graph`, `seed priority`, `PageRank` | `topology` (+ `references/link-graph.md`) |
+| `scrape infrastructure`, `anti-detection`, `IP rotation` | `topology` (+ `reference/anti-detection-architecture.md`) |
+| `link graph`, `seed priority`, `PageRank` | `topology` (+ `reference/link-graph.md`) |
 | `small-scale`, `single site`, Nano tier | route to Navigator (no recipe) |
 | unclear crawl request | scale classification first, then `topology` (default) |
 
@@ -319,23 +319,23 @@ Every architecture deliverable must include:
 - **Spider vs Builder:** Spider produces architecture specs; Builder implements them. Spider never writes execution code.
 - **Spider vs Comply:** Spider embeds compliance as structural architecture; Comply audits regulatory stance and provides jurisdiction guidance.
 
-**Teams aptitude (Large+ tier only):** Within the DESIGN phase, frontier design, politeness/scheduler design, topology design, extraction pipeline, anti-detection, and observability are independent sub-specs with disjoint file ownership (`references/frontier-design.md`, `references/compliance-architecture.md`, `references/distributed-architecture.md`, `references/extraction-pipeline.md`, `references/anti-detection-architecture.md`, `references/observability.md`). For Large (1M-50M URL/day) and Web-scale tiers, spawn a Pattern D specialist team (2-5 subagents) with per-reference file ownership — each subagent produces one reference deliverable in parallel, then Spider integrates into the DELIVER handoff packet. Not applicable to Small/Medium tiers (sequential single-agent design is faster given overhead).
+**Teams aptitude (Large+ tier only):** Within the DESIGN phase, frontier design, politeness/scheduler design, topology design, extraction pipeline, anti-detection, and observability are independent sub-specs with disjoint file ownership (`reference/frontier-design.md`, `reference/compliance-architecture.md`, `reference/distributed-architecture.md`, `reference/extraction-pipeline.md`, `reference/anti-detection-architecture.md`, `reference/observability.md`). For Large (1M-50M URL/day) and Web-scale tiers, spawn a Pattern D specialist team (2-5 subagents) with per-reference file ownership — each subagent produces one reference deliverable in parallel, then Spider integrates into the DELIVER handoff packet. Not applicable to Small/Medium tiers (sequential single-agent design is faster given overhead).
 
 ## References
 
 | File | Content |
 |------|---------|
-| `references/distributed-architecture.md` | Multi-node crawler topology patterns, coordinator/worker design, fault tolerance, checkpoint |
-| `references/frontier-design.md` | URL frontier data structures, priority queues, canonicalization, re-crawl scheduling |
-| `references/compliance-architecture.md` | robots.txt parser service, EU AI Act signals, jurisdiction risk table, Crawl-Delay |
-| `references/extraction-pipeline.md` | HTML parsing selection, content dedup algorithms, output format comparison |
-| `references/anti-detection-architecture.md` | IP rotation, TLS fingerprint, timing models, ethical use framework |
-| `references/link-graph.md` | Link graph data structures, PageRank seed prioritization, scope bounding |
-| `references/observability.md` | Prometheus metrics, alert thresholds, cost-per-URL modeling, dashboards |
-| `references/handoffs.md` | Cross-agent handoff packet templates for each downstream partner |
-| `references/extraction-pipeline-deep.md` | Render-layer choice (static / Playwright / Splash), parser strategy (lxml / BeautifulSoup / Scrapy selector / LLM), structured-data extraction (JSON-LD / microdata / OpenGraph), near-dup (SimHash / MinHash + LSH) — used by `extraction` recipe |
-| `references/dedup-strategies.md` | URL canonicalization, exact-URL dedup (Bloom/Cuckoo/HyperLogLog), content-hash dedup, near-duplicate clustering (SimHash / MinHash / SSDEEP), cross-session persistence — used by `dedup` recipe |
-| `references/crawl-monitoring.md` | RED signals per worker, frontier depth/breadth metrics, fetch-error taxonomy (DNS/TLS/HTTP), cost-per-URL dashboard, graceful shutdown/resume protocol — used by `monitoring` recipe |
+| `reference/distributed-architecture.md` | Multi-node crawler topology patterns, coordinator/worker design, fault tolerance, checkpoint |
+| `reference/frontier-design.md` | URL frontier data structures, priority queues, canonicalization, re-crawl scheduling |
+| `reference/compliance-architecture.md` | robots.txt parser service, EU AI Act signals, jurisdiction risk table, Crawl-Delay |
+| `reference/extraction-pipeline.md` | HTML parsing selection, content dedup algorithms, output format comparison |
+| `reference/anti-detection-architecture.md` | IP rotation, TLS fingerprint, timing models, ethical use framework |
+| `reference/link-graph.md` | Link graph data structures, PageRank seed prioritization, scope bounding |
+| `reference/observability.md` | Prometheus metrics, alert thresholds, cost-per-URL modeling, dashboards |
+| `reference/handoffs.md` | Cross-agent handoff packet templates for each downstream partner |
+| `reference/extraction-pipeline-deep.md` | Render-layer choice (static / Playwright / Splash), parser strategy (lxml / BeautifulSoup / Scrapy selector / LLM), structured-data extraction (JSON-LD / microdata / OpenGraph), near-dup (SimHash / MinHash + LSH) — used by `extraction` recipe |
+| `reference/dedup-strategies.md` | URL canonicalization, exact-URL dedup (Bloom/Cuckoo/HyperLogLog), content-hash dedup, near-duplicate clustering (SimHash / MinHash / SSDEEP), cross-session persistence — used by `dedup` recipe |
+| `reference/crawl-monitoring.md` | RED signals per worker, frontier depth/breadth metrics, fetch-error taxonomy (DNS/TLS/HTTP), cost-per-URL dashboard, graceful shutdown/resume protocol — used by `monitoring` recipe |
 | `_common/OPUS_48_AUTHORING.md` | Sizing the architecture spec, deciding adaptive thinking depth at scale/politeness, or front-loading scale/legal/domain at DISCOVER. Critical for Spider: P3, P5. |
 
 ## Favorite Tactics
@@ -358,7 +358,7 @@ Every architecture deliverable must include:
 | Phase | Actions |
 |-------|---------|
 | **1. Scale Assessment** | Collect URL/day, domain count, depth, re-crawl interval. Classify tier using Scale Classification table. If Nano → route to Navigator. |
-| **2. Architecture Design** | Select frontier strategy, scheduler design, infrastructure topology based on tier. Reference appropriate `references/*.md` files. |
+| **2. Architecture Design** | Select frontier strategy, scheduler design, infrastructure topology based on tier. Reference appropriate `reference/*.md` files. |
 | **3. Compliance Verification** | Design robots.txt parser service, Crawl-Delay enforcement, opt-out signal registry. Check PII exposure → consult Cloak if needed. |
 | **4. Handoff Preparation** | Prepare handoff packets for downstream agents (Stream, Builder, Scaffold). Include scale tier, cost estimate, compliance basis. |
 

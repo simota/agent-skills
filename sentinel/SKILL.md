@@ -19,7 +19,7 @@ CAPABILITIES_SUMMARY:
 - ai_security_audit: LLM integration static review — prompt injection, indirect injection via RAG, PII leakage, unsafe tool-use boundary (OWASP LLM Top 10 2025: LLM01/02/06/07)
 - fix_prompt_generation: Paste-ready LLM Fix Prompt with OWASP/CWE classification, vulnerable code, defensive controls, acceptance criteria, ruled-out alternatives. Suppressed when fix shipped inline.
 - executable_threat_model_handoff: STRIDE/LINDDUN threat-model as machine-readable YAML (asset/classification/allowed_access/forbidden/required_controls) consumable by radar/voyager/attest oracle generators.
-- mobile_security_audit: OWASP MASVS v2.1.0 + MAS Checklist 2025 static review across 8 categories; MASWE mapping with MASWE-0005 priority (hardcoded credentials — scan binaries+config beyond source); MobSF v4.4.2 SAST/DAST in CI for APK/IPA. See `references/mobile-security.md`.
+- mobile_security_audit: OWASP MASVS v2.1.0 + MAS Checklist 2025 static review across 8 categories; MASWE mapping with MASWE-0005 priority (hardcoded credentials — scan binaries+config beyond source); MobSF v4.4.2 SAST/DAST in CI for APK/IPA. See `reference/mobile-security.md`.
 
 COLLABORATION_PATTERNS:
 - Guardian -> Sentinel: Security-classified changes
@@ -60,7 +60,7 @@ Use Sentinel when the user needs:
 - supply-chain hardening (lockfile integrity, SBOM with SPDX/CycloneDX + VEX, slopsquatting detection — 19.7% LLM package hallucination rate per Snyk; supply-chain attacks 2× in 2025)
 - MCP configuration secret scanning (24,008 unique secrets found in MCP configs — GitGuardian 2026)
 - OWASP Top 10:2025 audit (incl. new A03 Supply Chain, A10 Exceptional Conditions)
-- OWASP MASVS v2.1.0 + MAS Checklist 2025 mobile audit, MASWE mapping, mobile binary secret scan, MobSF v4.4.2 CI integration → see `references/mobile-security.md`
+- OWASP MASVS v2.1.0 + MAS Checklist 2025 mobile audit, MASWE mapping, mobile binary secret scan, MobSF v4.4.2 CI integration → see `reference/mobile-security.md`
 
 Route elsewhere when the task is primarily:
 - runtime exploit / behavior verification: `Probe` (Frida 17+ / MobSF dynamic / Drozer for mobile)
@@ -80,15 +80,15 @@ Route elsewhere when the task is primarily:
 - Use established security libraries and framework-native controls.
 - Fix CRITICAL before HIGH, HIGH before MEDIUM, MEDIUM before LOW.
 - Do not bundle unrelated security changes into one invocation.
-- Apply OWASP Top 10:2025 (not 2021). Key shifts: A02 Security Misconfig #2; A07 XSS extracted from Injection; new A03 Supply Chain Failures + A10 Exceptional Conditions; A04 Crypto Failures dropped to #4; A05 Injection dropped to #5. 589 CWEs covered (vs 400 in 2021). See `references/owasp-2025-checklist.md`.
-- For AI-generated code, apply heightened scrutiny — CWE-80 (XSS) 86% / CWE-117 (Log Injection) 88% / Java 72% overall failure rate (Veracode Spring 2026); pass rates flat at 45-55% across model generations. Prioritize CWE-80/117/918/798/22. AI generates components correctly but frequently fails to wire auth middleware into downstream handlers — check integration points. See `references/ai-code-security.md`.
+- Apply OWASP Top 10:2025 (not 2021). Key shifts: A02 Security Misconfig #2; A07 XSS extracted from Injection; new A03 Supply Chain Failures + A10 Exceptional Conditions; A04 Crypto Failures dropped to #4; A05 Injection dropped to #5. 589 CWEs covered (vs 400 in 2021). See `reference/owasp-2025-checklist.md`.
+- For AI-generated code, apply heightened scrutiny — CWE-80 (XSS) 86% / CWE-117 (Log Injection) 88% / Java 72% overall failure rate (Veracode Spring 2026); pass rates flat at 45-55% across model generations. Prioritize CWE-80/117/918/798/22. AI generates components correctly but frequently fails to wire auth middleware into downstream handlers — check integration points. See `reference/ai-code-security.md`.
 - Run multi-scanner when feasible: 78% of confirmed vulnerabilities caught by only one tool (Veracode 2026).
-- Secret detection: regex + entropy + context-aware validation, at pre-commit AND CI/CD. Scan MCP configs (`.cursor/mcp.json`, `claude_desktop_config.json`, MCP-server `.env`) and Docker images/Dockerfiles (18% contain secrets per Sourcegraph 2026). For mobile binaries see `references/mobile-security.md`.
+- Secret detection: regex + entropy + context-aware validation, at pre-commit AND CI/CD. Scan MCP configs (`.cursor/mcp.json`, `claude_desktop_config.json`, MCP-server `.env`) and Docker images/Dockerfiles (18% contain secrets per Sourcegraph 2026). For mobile binaries see `reference/mobile-security.md`.
 - Verify secret remediation: 64% of valid 2022 secrets remain unrevoked in 2026 (GitGuardian 2026). Confirm revocation — not just file deletion — since secrets persist in git history.
 - Author for Opus 4.8 defaults. `_common/OPUS_48_AUTHORING.md` **P2 (calibrated report length — never drop severity/confidence/OWASP/file:line/evidence/remediation), P5 (step-by-step at PRIORITIZE+FILTER — ordering errors → missed CRITICALs or alert fatigue)** critical for Sentinel; P1 recommended (front-load scope at SCAN).
-- When handing off remediation (fix > 50 lines, breaking change, auth touch, hardcoded secret, review-only mode), emit a paste-ready `## LLM Fix Prompt` block. Suppress when shipping inline or escalating to Probe. See `references/fix-prompt-generation.md` and `_common/LLM_PROMPT_GENERATION.md`.
+- When handing off remediation (fix > 50 lines, breaking change, auth touch, hardcoded secret, review-only mode), emit a paste-ready `## LLM Fix Prompt` block. Suppress when shipping inline or escalating to Probe. See `reference/fix-prompt-generation.md` and `_common/LLM_PROMPT_GENERATION.md`.
 - **Executable Threat Model handoff**: For new feature surfaces (auth/payment/PII paths), emit threat model as machine-readable YAML with `asset`, `classification`, `allowed_access`, `forbidden`, `required_controls`. Downstream: `radar` derives property tests from `forbidden`; `voyager` derives E2E from `allowed_access`; `attest` derives conformance from `required_controls`. Suppress for single-issue triage.
-- **Slopsquat detection on every AI-authored `import` / `require` / `use` line.** Hallucination rate 5-21% (Snyk 19.7% across 576k samples); `huggingface-cli` impostor hit 30k downloads in 3 months. Query the registry (PyPI / npm / crates.io / RubyGems / Go module proxy) for existence, publish date, download count. Flag `CRITICAL`: <50 total downloads, <30 days since publish, or Levenshtein-2 from a well-known package without confirmation. Coordinate with `chain`. See `references/supply-chain-security.md`.
+- **Slopsquat detection on every AI-authored `import` / `require` / `use` line.** Hallucination rate 5-21% (Snyk 19.7% across 576k samples); `huggingface-cli` impostor hit 30k downloads in 3 months. Query the registry (PyPI / npm / crates.io / RubyGems / Go module proxy) for existence, publish date, download count. Flag `CRITICAL`: <50 total downloads, <30 days since publish, or Levenshtein-2 from a well-known package without confirmation. Coordinate with `chain`. See `reference/supply-chain-security.md`.
 
 ## Boundaries
 
@@ -149,12 +149,12 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `SCAN` | Hunt for secrets, injections, auth gaps, missing headers, unsafe AI patterns, dependency CVEs, and API misconfigurations | Use delta scanning for new/changed code first | `references/vulnerability-patterns.md` |
-| `PRIORITIZE` | Choose the highest-severity issue that can be resolved safely in `< 50 lines` | Fix CRITICAL before HIGH, HIGH before MEDIUM | `references/owasp-2025-checklist.md` |
-| `FILTER` | Apply confidence scoring, delta scan focus, and framework-aware false-positive suppression | HIGH ≥ 80% include; MEDIUM 50-79% note; LOW < 50% suppress; ground every shipped finding even on the single-engine path (cited sink reachable, CVE present in lockfile, AI-suggested import exists in registry) before reporting | `references/defensive-controls.md` |
-| `SECURE` | Apply the fix using defensive code, established libraries, `Zod`, `helmet`, strict auth checks, or dependency/CI hardening | Use framework-native controls; prefer established libraries | `references/defensive-controls.md` |
-| `VERIFY` | Re-scan the fixed sink to confirm the vulnerability no longer triggers; run lint/tests and check regressions; keep CSP in report-only where needed | Re-scan confirms closure (not just "looks fixed"); for secrets confirm revocation+rotation, not deletion; request regression coverage from Radar for CRITICAL/HIGH fixes | `references/owasp-2025-checklist.md` |
-| `PRESENT` | Report severity, confidence, OWASP mapping, impact, evidence, remediation, and verification steps | One primary finding or enhancement per invocation | `references/owasp-2025-checklist.md` |
+| `SCAN` | Hunt for secrets, injections, auth gaps, missing headers, unsafe AI patterns, dependency CVEs, and API misconfigurations | Use delta scanning for new/changed code first | `reference/vulnerability-patterns.md` |
+| `PRIORITIZE` | Choose the highest-severity issue that can be resolved safely in `< 50 lines` | Fix CRITICAL before HIGH, HIGH before MEDIUM | `reference/owasp-2025-checklist.md` |
+| `FILTER` | Apply confidence scoring, delta scan focus, and framework-aware false-positive suppression | HIGH ≥ 80% include; MEDIUM 50-79% note; LOW < 50% suppress; ground every shipped finding even on the single-engine path (cited sink reachable, CVE present in lockfile, AI-suggested import exists in registry) before reporting | `reference/defensive-controls.md` |
+| `SECURE` | Apply the fix using defensive code, established libraries, `Zod`, `helmet`, strict auth checks, or dependency/CI hardening | Use framework-native controls; prefer established libraries | `reference/defensive-controls.md` |
+| `VERIFY` | Re-scan the fixed sink to confirm the vulnerability no longer triggers; run lint/tests and check regressions; keep CSP in report-only where needed | Re-scan confirms closure (not just "looks fixed"); for secrets confirm revocation+rotation, not deletion; request regression coverage from Radar for CRITICAL/HIGH fixes | `reference/owasp-2025-checklist.md` |
+| `PRESENT` | Report severity, confidence, OWASP mapping, impact, evidence, remediation, and verification steps | One primary finding or enhancement per invocation | `reference/owasp-2025-checklist.md` |
 
 ## Recipes
 
@@ -162,16 +162,16 @@ Single source of truth for Recipe definitions. Behavior notes (scope boundaries,
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Full Security Scan | `scan` | ✓ | Full static security scan covering every OWASP Top 10:2025 category. Prefer delta scans for new/changed code with periodic full scans. Multi-engine recommended for high-assurance. | `references/vulnerability-patterns.md`, `references/owasp-2025-checklist.md` |
-| Secrets Audit | `secrets` | | Hardcoded credential and API key detection via regex + entropy-based hybrid. Cover git history as well — secrets persist after file deletion. Not considered complete until revocation is confirmed. | `references/vulnerability-patterns.md`, `references/defensive-controls.md` |
-| Injection Check | `injection` | | SQL / XSS / command / NoSQL / prompt injection focus. Apply heightened scrutiny to AI-generated code (CWE-80/117 worsening per Veracode Spring 2026). | `references/vulnerability-patterns.md`, `references/owasp-2025-checklist.md` |
-| Dependency CVE | `deps` | | Dependency vulnerability scan and supply-chain risk via SCA tooling + lockfile integrity + namespace-squatting checks. Manage SBOM in the operational workflow (SPDX/CycloneDX + VEX). | `references/supply-chain-security.md` |
-| Headers Audit | `headers` | | Security header audit (CSP / CORS / HSTS / Permissions-Policy). Start in report-only and enforce incrementally. | `references/defensive-controls.md` |
-| Authentication Audit | `authn` | | Static audit of authentication surfaces — session lifecycle, JWT handling, OAuth/OIDC, MFA, password storage. OWASP A07:2025, CWE-287/384/521/798. **Scope**: algorithm/key design → `Crypt`; runtime exploitability → `Probe`. | `references/authn-audit.md`, `references/api-security.md` |
-| Authorization Audit | `authz` | | Static audit of access control — RBAC/ABAC, IDOR, BOLA/BFLA, horizontal+vertical privilege checks, tenant-scope leaks. OWASP A01:2025, CWE-285/639/863. Heightened scrutiny for AI-generated integration code (auth middleware wiring is the #1 AI failure mode). **Scope**: Sentinel finds static gaps; `Probe` confirms exploitability. | `references/authz-audit.md`, `references/api-security.md` |
-| AI Security Audit | `aisec` | | Static review of LLM integration — prompt-template injection, output escaping, indirect injection via RAG content, PII scrubbing, tool-use boundary, model-output gating, rate/cost limits. OWASP LLM Top 10 2025 (LLM01/02/06/07). **Scope**: adversarial jailbreak validation → `Breach`. | `references/ai-security.md`, `references/ai-code-security.md` |
-| Mobile Security | `mobile` | | OWASP MASVS v2.1.0 + MAS Checklist static audit across 8 categories (STORAGE/CRYPTO/AUTH/NETWORK/PLATFORM/CODE/RESILIENCE/PRIVACY); MASWE mapping with MASWE-0005 priority; MobSF v4.4.2 SAST/DAST in CI on APK/IPA. **Scope**: exploit → `Probe`; algorithm/keys → `Crypt`; privacy → `Cloak`; fix implementation → `Native`. | `references/mobile-security.md` |
-| Multi-Engine | `multi` | | Tri-engine parallel SAST — Codex + Antigravity + Claude Code subagents in one Agent-tool message; Pattern C concurrence (CONFIRMED 3/3 / LIKELY 2/3 / CANDIDATE 1/3-must-ground). PREFLIGHT in main context. Use for AI-authored code, single-engine ambiguity, or auth/payments/PII surfaces. | `references/tri-engine-scan.md`, `references/multi-engine-mode.md`, `_common/MULTI_ENGINE_RECIPE.md` |
+| Full Security Scan | `scan` | ✓ | Full static security scan covering every OWASP Top 10:2025 category. Prefer delta scans for new/changed code with periodic full scans. Multi-engine recommended for high-assurance. | `reference/vulnerability-patterns.md`, `reference/owasp-2025-checklist.md` |
+| Secrets Audit | `secrets` | | Hardcoded credential and API key detection via regex + entropy-based hybrid. Cover git history as well — secrets persist after file deletion. Not considered complete until revocation is confirmed. | `reference/vulnerability-patterns.md`, `reference/defensive-controls.md` |
+| Injection Check | `injection` | | SQL / XSS / command / NoSQL / prompt injection focus. Apply heightened scrutiny to AI-generated code (CWE-80/117 worsening per Veracode Spring 2026). | `reference/vulnerability-patterns.md`, `reference/owasp-2025-checklist.md` |
+| Dependency CVE | `deps` | | Dependency vulnerability scan and supply-chain risk via SCA tooling + lockfile integrity + namespace-squatting checks. Manage SBOM in the operational workflow (SPDX/CycloneDX + VEX). | `reference/supply-chain-security.md` |
+| Headers Audit | `headers` | | Security header audit (CSP / CORS / HSTS / Permissions-Policy). Start in report-only and enforce incrementally. | `reference/defensive-controls.md` |
+| Authentication Audit | `authn` | | Static audit of authentication surfaces — session lifecycle, JWT handling, OAuth/OIDC, MFA, password storage. OWASP A07:2025, CWE-287/384/521/798. **Scope**: algorithm/key design → `Crypt`; runtime exploitability → `Probe`. | `reference/authn-audit.md`, `reference/api-security.md` |
+| Authorization Audit | `authz` | | Static audit of access control — RBAC/ABAC, IDOR, BOLA/BFLA, horizontal+vertical privilege checks, tenant-scope leaks. OWASP A01:2025, CWE-285/639/863. Heightened scrutiny for AI-generated integration code (auth middleware wiring is the #1 AI failure mode). **Scope**: Sentinel finds static gaps; `Probe` confirms exploitability. | `reference/authz-audit.md`, `reference/api-security.md` |
+| AI Security Audit | `aisec` | | Static review of LLM integration — prompt-template injection, output escaping, indirect injection via RAG content, PII scrubbing, tool-use boundary, model-output gating, rate/cost limits. OWASP LLM Top 10 2025 (LLM01/02/06/07). **Scope**: adversarial jailbreak validation → `Breach`. | `reference/ai-security.md`, `reference/ai-code-security.md` |
+| Mobile Security | `mobile` | | OWASP MASVS v2.1.0 + MAS Checklist static audit across 8 categories (STORAGE/CRYPTO/AUTH/NETWORK/PLATFORM/CODE/RESILIENCE/PRIVACY); MASWE mapping with MASWE-0005 priority; MobSF v4.4.2 SAST/DAST in CI on APK/IPA. **Scope**: exploit → `Probe`; algorithm/keys → `Crypt`; privacy → `Cloak`; fix implementation → `Native`. | `reference/mobile-security.md` |
+| Multi-Engine | `multi` | | Tri-engine parallel SAST — Codex + Antigravity + Claude Code subagents in one Agent-tool message; Pattern C concurrence (CONFIRMED 3/3 / LIKELY 2/3 / CANDIDATE 1/3-must-ground). PREFLIGHT in main context. Use for AI-authored code, single-engine ambiguity, or auth/payments/PII surfaces. | `reference/tri-engine-scan.md`, `reference/multi-engine-mode.md`, `_common/MULTI_ENGINE_RECIPE.md` |
 
 ### Signal Keywords → Recipe
 
@@ -188,7 +188,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `OWASP`, `audit`, `checklist` | `scan` (full OWASP Top 10 audit) |
 | `MASVS`, `MASTG`, `MASWE`, `mobile security`, `iOS security`, `Android security`, `MobSF`, `Info.plist`, `gradle.properties`, `local.properties`, `xcconfig`, `BuildConfig` | `mobile` |
 | `multi-engine`, `tri-engine security`, `tri-engine scan`, `parallel SAST`, `cross-engine vulnerability scan`, `high-assurance scan` | `multi` |
-| `SARIF`, `machine-readable` | any Recipe with `--sarif` output mode (see `references/defensive-controls.md`) |
+| `SARIF`, `machine-readable` | any Recipe with `--sarif` output mode (see `reference/defensive-controls.md`) |
 | unclear request | clarify scope and route per `_common/BOUNDARIES.md` |
 
 ## Subcommand Dispatch
@@ -212,7 +212,7 @@ Parse the first token of user input:
 
 ## LLM Fix Prompt Generation
 
-When Sentinel hands off remediation rather than shipping the fix inline, the report ends with a `## LLM Fix Prompt` block — a paste-ready, self-contained prompt that drives Builder (or the human operator, for `REVOKE-AND-ROTATE`) toward a precise, security-correct change. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; Sentinel-specific verbs, suppression cases, template fields, and worked examples live in `references/fix-prompt-generation.md`.
+When Sentinel hands off remediation rather than shipping the fix inline, the report ends with a `## LLM Fix Prompt` block — a paste-ready, self-contained prompt that drives Builder (or the human operator, for `REVOKE-AND-ROTATE`) toward a precise, security-correct change. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; Sentinel-specific verbs, suppression cases, template fields, and worked examples live in `reference/fix-prompt-generation.md`.
 
 | Verb | Use when | Receiving agent / operator |
 |------|----------|---------------------------|
@@ -272,22 +272,22 @@ Sentinel receives security-flagged artifacts from upstream agents, performs stat
 
 | File | Read this when... |
 |------|-------------------|
-| `references/vulnerability-patterns.md` | You are in `SCAN` and need detection heuristics, regex patterns, or good/bad secure coding examples |
-| `references/defensive-controls.md` | You need implementation patterns for headers, validation, secret handling, rate limiting, confidence scoring, delta scanning, SARIF output, or FP suppression |
-| `references/owasp-2025-checklist.md` | You need OWASP 2025 mapping, audit checklists, severity matrix, or report templates |
-| `references/supply-chain-security.md` | The work involves CVEs, SBOM, SCA tools, lockfiles, CI/CD hardening, package provenance, or slopsquatting |
-| `references/ai-code-security.md` | The code is AI-generated, AI-assisted, uses LLM/MCP tooling, or the SAST landscape needs consulting |
-| `references/ai-security.md` | You are running the `aisec` recipe and need OWASP LLM Top 10 2025 mapping (LLM01/02/06/07), prompt-injection surface analysis, indirect-injection via RAG content, or tool-use boundary patterns. |
-| `references/authn-audit.md` | You are running the `authn` recipe and need session/JWT/OAuth-OIDC/MFA/password-storage audit checks (OWASP A07:2025, CWE-287/384/521/798). |
-| `references/authz-audit.md` | You are running the `authz` recipe and need RBAC/ABAC, IDOR, BOLA/BFLA, or horizontal/vertical privilege-escalation audit checks (OWASP A01:2025, CWE-285/639/863). |
-| `references/api-security.md` | The target is an HTTP API, GraphQL endpoint, OAuth flow, or SSRF/BOLA/BFLA risk |
-| `references/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Sentinel-specific verb (SECURE-FIX / HARDEN / MITIGATE / BREAKING-FIX / AUTH-FIX / REVOKE-AND-ROTATE / INVESTIGATE-FURTHER), or deciding whether to ship inline vs hand off. |
+| `reference/vulnerability-patterns.md` | You are in `SCAN` and need detection heuristics, regex patterns, or good/bad secure coding examples |
+| `reference/defensive-controls.md` | You need implementation patterns for headers, validation, secret handling, rate limiting, confidence scoring, delta scanning, SARIF output, or FP suppression |
+| `reference/owasp-2025-checklist.md` | You need OWASP 2025 mapping, audit checklists, severity matrix, or report templates |
+| `reference/supply-chain-security.md` | The work involves CVEs, SBOM, SCA tools, lockfiles, CI/CD hardening, package provenance, or slopsquatting |
+| `reference/ai-code-security.md` | The code is AI-generated, AI-assisted, uses LLM/MCP tooling, or the SAST landscape needs consulting |
+| `reference/ai-security.md` | You are running the `aisec` recipe and need OWASP LLM Top 10 2025 mapping (LLM01/02/06/07), prompt-injection surface analysis, indirect-injection via RAG content, or tool-use boundary patterns. |
+| `reference/authn-audit.md` | You are running the `authn` recipe and need session/JWT/OAuth-OIDC/MFA/password-storage audit checks (OWASP A07:2025, CWE-287/384/521/798). |
+| `reference/authz-audit.md` | You are running the `authz` recipe and need RBAC/ABAC, IDOR, BOLA/BFLA, or horizontal/vertical privilege-escalation audit checks (OWASP A01:2025, CWE-285/639/863). |
+| `reference/api-security.md` | The target is an HTTP API, GraphQL endpoint, OAuth flow, or SSRF/BOLA/BFLA risk |
+| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Sentinel-specific verb (SECURE-FIX / HARDEN / MITIGATE / BREAKING-FIX / AUTH-FIX / REVOKE-AND-ROTATE / INVESTIGATE-FURTHER), or deciding whether to ship inline vs hand off. |
 | `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Plea. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the security report, deciding adaptive thinking depth at PRIORITIZE/FILTER, or front-loading scope at SCAN. Critical for Sentinel: P2, P5. |
-| `references/mobile-security.md` | You are running the `mobile` Recipe — MASVS v2.1.0 + MAS Checklist 8 categories, MASWE-0005 priority, MobSF integration, mobile binary secret-scan targets. |
-| `references/multi-engine-mode.md` | You are activating the `multi` Recipe and need the full operational detail — triggers, loose-prompt rule, training-data divergence, Plausible Hallucination check, concurrence + arbitration rubric, degraded modes. |
-| `references/tri-engine-scan.md` | You are running the `multi` Recipe — Sentinel-specific JSON schema, CLUSTER identity rules, SCORE rubric, Sentinel-strict GROUND, ARBITRATE overrides, FILTER rule, subagent prompt skeleton. |
-| `references/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Sentinel-specific Output/Validations/Next schema with `tri_engine` sub-block. |
+| `reference/mobile-security.md` | You are running the `mobile` Recipe — MASVS v2.1.0 + MAS Checklist 8 categories, MASWE-0005 priority, MobSF integration, mobile binary secret-scan targets. |
+| `reference/multi-engine-mode.md` | You are activating the `multi` Recipe and need the full operational detail — triggers, loose-prompt rule, training-data divergence, Plausible Hallucination check, concurrence + arbitration rubric, degraded modes. |
+| `reference/tri-engine-scan.md` | You are running the `multi` Recipe — Sentinel-specific JSON schema, CLUSTER identity rules, SCORE rubric, Sentinel-strict GROUND, ARBITRATE overrides, FILTER rule, subagent prompt skeleton. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Sentinel-specific Output/Validations/Next schema with `tri_engine` sub-block. |
 | `_common/SUBAGENT.md` | You need base engine dispatch mechanics for parallel Agent-tool calls — invocation pattern, JSON-output mandate, engine-failure fallback. |
 | `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill canonical flow, Pattern C/D/H rubric, PREFLIGHT engine probe, engine-attribution conventions, degraded-mode matrix. |
 | `_common/PROOF_CARRYING.md` | You are invoked from `nexus acceptance` Phase 2 (security regression oracles) and Phase 3 (attack surface enumeration). Defines G1 cross-engine diversity. |
@@ -298,9 +298,9 @@ Pattern type: **C — Concurrence-primary**. Different LLM engines carry non-ove
 
 Default baseline = **Claude + Codex** (dual-engine, 2 spawns). agy adds a third axis (tri-engine) when AVAILABLE at PREFLIGHT. Flow: `SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND → ARBITRATE → FILTER → REPORT`.
 
-Full operational detail — triggers, loose-prompt rule, training-data divergence map, Plausible Hallucination check, concurrence + arbitration rubric (tri vs dual), severity overrides, degraded modes — lives in `references/multi-engine-mode.md`.
+Full operational detail — triggers, loose-prompt rule, training-data divergence map, Plausible Hallucination check, concurrence + arbitration rubric (tri vs dual), severity overrides, degraded modes — lives in `reference/multi-engine-mode.md`.
 
-Required reading before fan-out: `references/multi-engine-mode.md` → `references/tri-engine-scan.md` (Sentinel JSON schema, CLUSTER rules, SCORE/GROUND/SYNTHESIZE, subagent skeleton) → `_common/MULTI_ENGINE_RECIPE.md` (cross-skill canonical flow) → `_common/SUBAGENT.md` §MULTI_ENGINE (dispatch mechanics).
+Required reading before fan-out: `reference/multi-engine-mode.md` → `reference/tri-engine-scan.md` (Sentinel JSON schema, CLUSTER rules, SCORE/GROUND/SYNTHESIZE, subagent skeleton) → `_common/MULTI_ENGINE_RECIPE.md` (cross-skill canonical flow) → `_common/SUBAGENT.md` §MULTI_ENGINE (dispatch mechanics).
 
 ## Operational
 
@@ -311,7 +311,7 @@ Required reading before fan-out: `references/multi-engine-mode.md` → `referenc
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Sentinel-specific `_STEP_COMPLETE.Output` schema lives in `references/autorun-schema.md`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Sentinel-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

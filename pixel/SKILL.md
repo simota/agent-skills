@@ -71,13 +71,13 @@ Route elsewhere when the task is primarily:
 - Stay within Pixel's domain; route unrelated requests to the correct agent.
 - Generate semantic HTML5 that passes W3C validation; prefer CSS Grid for page layout, Flexbox for inline/nav, `gap` over margin hacks.
 - Use `rem` units for scalable spacing; snap to 4px/8px grid. Zero magic numbers — all values via CSS custom properties.
-- Prefer `@container` over `@media` for reusable components (Container queries are Baseline Widely Available since 2025-08); use `container-type: inline-size`, assign `container-name` when nesting, and keep `@media` for page-level layout. Full feature matrix: `references/modern-css-baseline.md`.
+- Prefer `@container` over `@media` for reusable components (Container queries are Baseline Widely Available since 2025-08); use `container-type: inline-size`, assign `container-name` when nesting, and keep `@media` for page-level layout. Full feature matrix: `reference/modern-css-baseline.md`.
 - Structure-first reproduction order: semantic HTML → CSS variables & layout → asset polish & micro-details.
 - Target fidelity ≥90% overall; flag sections below 80%. AI design-to-code tools typically ship at 75-80% before manual refinement — ≥90% requires iteration.
 - Require high-resolution source images (≥2x); warn when input is lossy-compressed or sub-720p (fidelity ceiling drops to ~70-80%).
-- VERIFY phase essentials: use `animations: 'disabled'` in `toHaveScreenshot()`; `mask: [locator]` for dynamic content, `stylePath` for unmaskable elements; `maxDiffPixelRatio: 0.01-0.02` + `threshold: 0.2`; prefer element-level screenshots for component checks; run visual regression exclusively in Chromium with OS-normalized Docker in CI (cross-browser snapshots never match due to font/sub-pixel/scrollbar differences). Full workflow: `references/visual-verification.md`.
+- VERIFY phase essentials: use `animations: 'disabled'` in `toHaveScreenshot()`; `mask: [locator]` for dynamic content, `stylePath` for unmaskable elements; `maxDiffPixelRatio: 0.01-0.02` + `threshold: 0.2`; prefer element-level screenshots for component checks; run visual regression exclusively in Chromium with OS-normalized Docker in CI (cross-browser snapshots never match due to font/sub-pixel/scrollbar differences). Full workflow: `reference/visual-verification.md`.
 - Author for Opus 4.8 defaults. Critical principles: **P3** (eagerly Read source mockup, tokens, section structure at ANALYZE — fidelity ceiling depends on grounding) and **P5** (think step-by-step at VERIFY — refinement decisions drive iteration cost). Recommended: P2 calibrated reports, P1 front-loaded fidelity tier/scope.
-- When a gap analysis report is requested, follow `references/gap-analysis-report.md` (8 dimensions × 5 severity × 9 root causes, Markdown + JSON). REFINE loop uses the lightweight `visual-verification.md` diff; the detailed report is additive.
+- When a gap analysis report is requested, follow `reference/gap-analysis-report.md` (8 dimensions × 5 severity × 9 root causes, Markdown + JSON). REFINE loop uses the lightweight `visual-verification.md` diff; the detailed report is additive.
 
 ## Boundaries
 
@@ -157,7 +157,7 @@ questions:
 
 ## Modern CSS Baseline Status
 
-Full feature matrix (Subgrid, Container Queries, `:has()`, `color-mix()`, `light-dark()`, Anchor Positioning, `@scope`, View Transitions, Scroll-Driven Animations, Grid Lanes) with Baseline status and fallback decisions: `references/modern-css-baseline.md`.
+Full feature matrix (Subgrid, Container Queries, `:has()`, `color-mix()`, `light-dark()`, Anchor Positioning, `@scope`, View Transitions, Scroll-Driven Animations, Grid Lanes) with Baseline status and fallback decisions: `reference/modern-css-baseline.md`.
 
 Critical 2025-2026 updates:
 - CSS Masonry renamed to **CSS Grid Lanes** (`display: grid-lanes`) — avoid `masonry` as a value.
@@ -181,23 +181,23 @@ Critical 2025-2026 updates:
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `SCAN` | Read mockup image; identify sections, layout patterns, visual hierarchy | Understand the whole before parts | `references/lp-section-patterns.md` |
-| `EXTRACT` | Build Design Spec Sheet: element-by-element extraction of 7 properties (font-size, font-weight, color, line-height, margin, padding, background) | Every value gets a confidence level; all values become CSS variables | `references/precision-spec.md`, `references/design-extraction.md` |
-| `COMPOSE` | Generate CSS variables from Spec Sheet → HTML/CSS code with zero magic numbers | No hardcoded values; all values reference CSS custom properties | `references/lp-section-patterns.md` |
-| `VERIFY` | Playwright screenshot with `animations: 'disabled'` + `mask` / `stylePath` for dynamic content + per-property verification against Spec Sheet; prefer element-level screenshots for component comparison | Check every property individually; use `maxDiffPixelRatio: 0.01-0.02` + `threshold: 0.2` (color tolerance); ensure consistent capture environment | `references/visual-verification.md`, `references/precision-spec.md` |
-| `REFINE` | Fix CSS variable values only (not inline styles) → re-verify (max 3 iterations) | Modify `:root` variables; one change fixes all references | `references/precision-spec.md` |
+| `SCAN` | Read mockup image; identify sections, layout patterns, visual hierarchy | Understand the whole before parts | `reference/lp-section-patterns.md` |
+| `EXTRACT` | Build Design Spec Sheet: element-by-element extraction of 7 properties (font-size, font-weight, color, line-height, margin, padding, background) | Every value gets a confidence level; all values become CSS variables | `reference/precision-spec.md`, `reference/design-extraction.md` |
+| `COMPOSE` | Generate CSS variables from Spec Sheet → HTML/CSS code with zero magic numbers | No hardcoded values; all values reference CSS custom properties | `reference/lp-section-patterns.md` |
+| `VERIFY` | Playwright screenshot with `animations: 'disabled'` + `mask` / `stylePath` for dynamic content + per-property verification against Spec Sheet; prefer element-level screenshots for component comparison | Check every property individually; use `maxDiffPixelRatio: 0.01-0.02` + `threshold: 0.2` (color tolerance); ensure consistent capture environment | `reference/visual-verification.md`, `reference/precision-spec.md` |
+| `REFINE` | Fix CSS variable values only (not inline styles) → re-verify (max 3 iterations) | Modify `:root` variables; one change fixes all references | `reference/precision-spec.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Faithful Reproduction | `reproduce` | ✓ | Faithful HTML/CSS generation from a mockup | `references/design-extraction.md`, `references/precision-spec.md` |
-| Visual Verify | `verify` | | Execute visual verification | `references/visual-verification.md` |
-| Gap Report | `gap` | | Gap analysis report generation | `references/gap-analysis-report.md` |
-| Design Audit | `audit` | | Fidelity audit | `references/gap-analysis-report.md`, `references/visual-verification.md` |
-| Responsive | `responsive` | | Derive responsive breakpoints from a single-viewport mockup — fluid typography (clamp), container queries vs media queries, mobile-first reflow, Tailwind-aligned breakpoints (640/768/1024/1280/1536), aspect-ratio handling | `references/responsive-design.md` |
-| Dark Mode | `dark` | | Derive a dark-mode variant from a light-mode mockup — semantic token mapping, contrast preservation (WCAG AA/AAA), elevation/depth via brightness (not solid black), `prefers-color-scheme`, system-mode toggle pattern | `references/dark-mode-derivation.md` |
-| Animation | `animation` | | Extract micro-interactions from mockup signals (motion blur, ghost frames, multiple keyframes) — hover/focus/active states, transition tokens, easing curves, reduced-motion fallback, performance budget (transform/opacity only) | `references/animation-extraction.md` |
+| Faithful Reproduction | `reproduce` | ✓ | Faithful HTML/CSS generation from a mockup | `reference/design-extraction.md`, `reference/precision-spec.md` |
+| Visual Verify | `verify` | | Execute visual verification | `reference/visual-verification.md` |
+| Gap Report | `gap` | | Gap analysis report generation | `reference/gap-analysis-report.md` |
+| Design Audit | `audit` | | Fidelity audit | `reference/gap-analysis-report.md`, `reference/visual-verification.md` |
+| Responsive | `responsive` | | Derive responsive breakpoints from a single-viewport mockup — fluid typography (clamp), container queries vs media queries, mobile-first reflow, Tailwind-aligned breakpoints (640/768/1024/1280/1536), aspect-ratio handling | `reference/responsive-design.md` |
+| Dark Mode | `dark` | | Derive a dark-mode variant from a light-mode mockup — semantic token mapping, contrast preservation (WCAG AA/AAA), elevation/depth via brightness (not solid black), `prefers-color-scheme`, system-mode toggle pattern | `reference/dark-mode-derivation.md` |
+| Animation | `animation` | | Extract micro-interactions from mockup signals (motion blur, ghost frames, multiple keyframes) — hover/focus/active states, transition tokens, easing curves, reduced-motion fallback, performance budget (transform/opacity only) | `reference/animation-extraction.md` |
 
 ## Subcommand Dispatch
 
@@ -205,7 +205,7 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`reproduce` = Faithful Reproduction). Apply normal SCAN → EXTRACT → COMPOSE → VERIFY → REFINE workflow.
 
-Behavior notes per Recipe (concise — full expansion in `references/recipe-dispatch.md`):
+Behavior notes per Recipe (concise — full expansion in `reference/recipe-dispatch.md`):
 - `reproduce`: Default full flow. Extract values with confidence levels, generate HTML/CSS, verify, iterate.
 - `verify`: VERIFY-only. Compare existing implementation against mockup; emit comparison report.
 - `gap`: Produce 8-dim × 5-severity × 9-RC report (Markdown + JSON) per `gap-analysis-report.md`.
@@ -218,20 +218,20 @@ Behavior notes per Recipe (concise — full expansion in `references/recipe-disp
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `mockup`, `screenshot`, `image to code` | Full mockup reproduction | HTML/CSS code + comparison report | `references/design-extraction.md` |
-| `landing page`, `LP`, `marketing page` | LP-aware section reproduction | Sectioned HTML/CSS | `references/lp-section-patterns.md` |
-| `verify`, `compare`, `check fidelity` | Visual verification only | Comparison report + diff list | `references/visual-verification.md` |
-| `responsive`, `mobile`, `breakpoint`, `container query` | Responsive conversion | Multi-breakpoint CSS (media queries + container queries) | `references/responsive-design.md` |
-| `section`, `hero`, `pricing`, `faq` | Single section reproduction | Section HTML/CSS | `references/lp-section-patterns.md` |
-| `handoff`, `production` | Code + handoff package | Artisan-ready handoff | `references/handoffs.md` |
-| `gap analysis`, `fidelity audit`, `detailed report`, `design review` | Full gap analysis report | 8-dim × 5-severity × 9-RC report in Markdown+JSON with visual artifacts | `references/gap-analysis-report.md` |
-| unclear image-related request | Full mockup reproduction | HTML/CSS code + comparison report | `references/design-extraction.md` |
+| `mockup`, `screenshot`, `image to code` | Full mockup reproduction | HTML/CSS code + comparison report | `reference/design-extraction.md` |
+| `landing page`, `LP`, `marketing page` | LP-aware section reproduction | Sectioned HTML/CSS | `reference/lp-section-patterns.md` |
+| `verify`, `compare`, `check fidelity` | Visual verification only | Comparison report + diff list | `reference/visual-verification.md` |
+| `responsive`, `mobile`, `breakpoint`, `container query` | Responsive conversion | Multi-breakpoint CSS (media queries + container queries) | `reference/responsive-design.md` |
+| `section`, `hero`, `pricing`, `faq` | Single section reproduction | Section HTML/CSS | `reference/lp-section-patterns.md` |
+| `handoff`, `production` | Code + handoff package | Artisan-ready handoff | `reference/handoffs.md` |
+| `gap analysis`, `fidelity audit`, `detailed report`, `design review` | Full gap analysis report | 8-dim × 5-severity × 9-RC report in Markdown+JSON with visual artifacts | `reference/gap-analysis-report.md` |
+| unclear image-related request | Full mockup reproduction | HTML/CSS code + comparison report | `reference/design-extraction.md` |
 
 ## Design Value Extraction
 
 ### The Precision Spec System
 
-Read `references/precision-spec.md` for the complete system. Core concept:
+Read `reference/precision-spec.md` for the complete system. Core concept:
 
 1. **Design Spec Sheet**: YAML catalog of every extracted value (colors, typography, spacing, borders, shadows, layout)
 2. **7 Properties per element**: font-size, font-weight, color, line-height, margin, padding, background
@@ -249,8 +249,8 @@ Read `references/precision-spec.md` for the complete system. Core concept:
 
 ### Extraction Strategy
 
-Read `references/design-extraction.md` for Claude Vision prompt strategies.
-Read `references/precision-spec.md` for the structured extraction protocol and precision prompts.
+Read `reference/design-extraction.md` for Claude Vision prompt strategies.
+Read `reference/precision-spec.md` for the structured extraction protocol and precision prompts.
 
 Key principles:
 1. **Colors**: Extract ALL distinct colors — heading, body, muted text colors are often different HEX values.
@@ -260,7 +260,7 @@ Key principles:
 
 ## LP Section Patterns
 
-Read `references/lp-section-patterns.md` for complete templates.
+Read `reference/lp-section-patterns.md` for complete templates.
 
 ### Section Identification Heuristics
 
@@ -292,7 +292,7 @@ When a detailed gap analysis is requested, additionally include:
 - **Gap Analysis JSON**: Structured schema mirroring the Markdown; consumable by Canon (WCAG mapping), Muse (token regression), Voyager (baseline), Judge (review).
 - **Raw / Adjusted / Post-Fix Fidelity**: Three scores — Raw, Confidence-Adjusted (discounted by LOW-confidence extraction values), and Expected Post-Fix (BLOCKING-only and BLOCKING+CRITICAL scenarios).
 - **Visual Artifacts**: Side-by-side triptych (mockup / screenshot / diff), severity-colored heatmap, per-section thumbnails.
-- Full specification: `references/gap-analysis-report.md`.
+- Full specification: `reference/gap-analysis-report.md`.
 
 ## Collaboration
 
@@ -313,24 +313,24 @@ When a detailed gap analysis is requested, additionally include:
 
 ### Handoff Patterns
 
-Templates: `references/handoffs.md`. Key flows — **From Frame:** merge Figma data with mockup analysis (prefer image for visual fidelity, Frame for exact values). **To Artisan:** deliver HTML/CSS + extraction report + comparison results for production conversion.
+Templates: `reference/handoffs.md`. Key flows — **From Frame:** merge Figma data with mockup analysis (prefer image for visual fidelity, Frame for exact values). **To Artisan:** deliver HTML/CSS + extraction report + comparison results for production conversion.
 
 ## Reference Map
 
 | Reference | Read this when |
 |-----------|---------------|
-| `references/precision-spec.md` | EXTRACT phase: structured extraction protocol + CSS variable system |
-| `references/design-extraction.md` | Claude Vision prompts for value extraction from mockups |
-| `references/lp-section-patterns.md` | LP reproduction: section heuristics + templates |
-| `references/visual-verification.md` | VERIFY phase: Playwright screenshot comparison workflow |
-| `references/gap-analysis-report.md` | Detailed gap report (8-dim × 5-severity × 9-RC, Raw/Adjusted/Post-Fix scoring, MD+JSON, visual artifacts) |
-| `references/modern-css-baseline.md` | Modern CSS Baseline status matrix (Subgrid, `@container`, `:has`, Anchor, `@scope`, View Transitions, Grid Lanes) — fallback decisions |
-| `references/recipe-dispatch.md` | Per-recipe behavior notes (responsive, dark, animation, etc.) |
-| `references/responsive-design.md` | Responsive derivation: Tailwind breakpoints, fluid typography, container vs media query |
-| `references/dark-mode-derivation.md` | Dark mode derivation: semantic tokens, contrast preservation, system toggle |
-| `references/animation-extraction.md` | Micro-interactions: state matrix, motion tokens, reduced-motion, performance budget |
-| `references/handoffs.md` | Packaging deliverables for downstream agents |
-| `references/examples.md` | Reference reproduction examples |
+| `reference/precision-spec.md` | EXTRACT phase: structured extraction protocol + CSS variable system |
+| `reference/design-extraction.md` | Claude Vision prompts for value extraction from mockups |
+| `reference/lp-section-patterns.md` | LP reproduction: section heuristics + templates |
+| `reference/visual-verification.md` | VERIFY phase: Playwright screenshot comparison workflow |
+| `reference/gap-analysis-report.md` | Detailed gap report (8-dim × 5-severity × 9-RC, Raw/Adjusted/Post-Fix scoring, MD+JSON, visual artifacts) |
+| `reference/modern-css-baseline.md` | Modern CSS Baseline status matrix (Subgrid, `@container`, `:has`, Anchor, `@scope`, View Transitions, Grid Lanes) — fallback decisions |
+| `reference/recipe-dispatch.md` | Per-recipe behavior notes (responsive, dark, animation, etc.) |
+| `reference/responsive-design.md` | Responsive derivation: Tailwind breakpoints, fluid typography, container vs media query |
+| `reference/dark-mode-derivation.md` | Dark mode derivation: semantic tokens, contrast preservation, system toggle |
+| `reference/animation-extraction.md` | Micro-interactions: state matrix, motion tokens, reduced-motion, performance budget |
+| `reference/handoffs.md` | Packaging deliverables for downstream agents |
+| `reference/examples.md` | Reference reproduction examples |
 | `_common/OPUS_48_AUTHORING.md` | Reproduction report sizing + adaptive depth (critical: P3, P5) |
 | `_common/IMAGE_INPUT.md` | Mockup/screenshot input pipeline (pre-crop, describe-first, observed-vs-inferred) before EXTRACT |
 

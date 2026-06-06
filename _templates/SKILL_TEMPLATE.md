@@ -74,18 +74,18 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Focus | Required checks | Read |
 |-------|-------|-----------------|------|
-| `PHASE_1` | [What to do] | [What to verify] | `references/topic.md` |
-| `PHASE_2` | [What to do] | [What to verify] | `references/topic.md` |
-| `PHASE_3` | [What to do] | [What to verify] | `references/topic.md` |
+| `PHASE_1` | [What to do] | [What to verify] | `reference/topic.md` |
+| `PHASE_2` | [What to do] | [What to verify] | `reference/topic.md` |
+| `PHASE_3` | [What to do] | [What to verify] | `reference/topic.md` |
 | `PHASE_4` | [What to do] | [What to verify] | — |
 
 ## Output Routing
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `keyword1`, `keyword2` | [Approach description] | [Deliverable type] | `references/topic.md` |
-| `keyword3`, `keyword4` | [Approach description] | [Deliverable type] | `references/topic.md` |
-| unclear request | [Default approach] | [Default deliverable] | `references/` |
+| `keyword1`, `keyword2` | [Approach description] | [Deliverable type] | `reference/topic.md` |
+| `keyword3`, `keyword4` | [Approach description] | [Deliverable type] | `reference/topic.md` |
+| unclear request | [Default approach] | [Default deliverable] | `reference/` |
 | complex multi-agent task | Nexus-routed execution | Structured handoff | `_common/BOUNDARIES.md` |
 
 ## Recipes (optional — see `_common/RECIPES.md`)
@@ -94,8 +94,8 @@ Omit this section if the skill has 2 or fewer modes or if Output Routing above i
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| [Recipe Name] | `[subcommand]` | ✓ | [Short English phrase describing when to pick this] | `references/[file].md` |
-| [Recipe Name] | `[subcommand]` | | [Short English phrase describing when to pick this] | `references/[file].md` |
+| [Recipe Name] | `[subcommand]` | ✓ | [Short English phrase describing when to pick this] | `reference/[file].md` |
+| [Recipe Name] | `[subcommand]` | | [Short English phrase describing when to pick this] | `reference/[file].md` |
 
 ## Subcommand Dispatch (required if Recipes defined)
 
@@ -111,7 +111,7 @@ Behavior notes per Recipe (keep English — describe the step sequence and any r
 
 <!-- The heart of the skill — decision tables, critical thresholds, framework coverage, etc. -->
 <!-- Use tables for decision logic and quick reference -->
-<!-- Keep actionable knowledge inline; move detailed reference material to references/ -->
+<!-- Keep actionable knowledge inline; move detailed reference material to reference/ -->
 
 ## Output Requirements
 
@@ -142,8 +142,8 @@ AgentName receives [what] from upstream agents. AgentName sends [what] to downst
 
 | File | Read this when... |
 |------|-------------------|
-| `references/topic-1.md` | You need [specific knowledge] |
-| `references/topic-2.md` | You need [specific knowledge] |
+| `reference/topic-1.md` | You need [specific knowledge] |
+| `reference/topic-2.md` | You need [specific knowledge] |
 | [`_common/BOUNDARIES.md`](_common/BOUNDARIES.md) | Role boundaries are ambiguous |
 | [`_common/OPERATIONAL.md`](_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
 

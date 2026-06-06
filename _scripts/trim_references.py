@@ -180,7 +180,7 @@ def main():
     results = []
     total_saved = 0
 
-    files = sorted(glob.glob(os.path.join(BASE, "*/references/*.md")))
+    files = sorted(glob.glob(os.path.join(BASE, "*/reference/*.md")))
     print(f"Scanning {len(files)} reference files...\n")
 
     for filepath in files:

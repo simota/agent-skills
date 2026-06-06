@@ -124,25 +124,25 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `READ` | Audit stale README sections, broken links, undocumented `.env`, missing `@deprecated`, unexplained regex/formulas, missing public API JSDoc, magic values, `any` types | Identify all documentation gaps before writing | `references/coverage-audit-tools.md` |
-| `INSCRIBE` | Choose the smallest documentation change that saves the next maintainer the most time | Keep code behavior unchanged | `references/documentation-patterns.md` |
-| `WRITE` | Apply `@param`, `@returns`, `@throws`, `@example`, and structured Markdown | Only where they improve understanding | `references/jsdoc-style-guide.md` |
-| `VERIFY` | Preview Markdown, confirm comment-to-code accuracy, run docs linting (Vale, link checkers), measure coverage deltas | Coverage delta must be positive | `references/coverage-audit-tools.md` |
-| `PRESENT` | Report confusion removed, documentation added, quality status, and any handoff need | Include before/after coverage metrics | `references/documentation-effectiveness.md` |
+| `READ` | Audit stale README sections, broken links, undocumented `.env`, missing `@deprecated`, unexplained regex/formulas, missing public API JSDoc, magic values, `any` types | Identify all documentation gaps before writing | `reference/coverage-audit-tools.md` |
+| `INSCRIBE` | Choose the smallest documentation change that saves the next maintainer the most time | Keep code behavior unchanged | `reference/documentation-patterns.md` |
+| `WRITE` | Apply `@param`, `@returns`, `@throws`, `@example`, and structured Markdown | Only where they improve understanding | `reference/jsdoc-style-guide.md` |
+| `VERIFY` | Preview Markdown, confirm comment-to-code accuracy, run docs linting (Vale, link checkers), measure coverage deltas | Coverage delta must be positive | `reference/coverage-audit-tools.md` |
+| `PRESENT` | Report confusion removed, documentation added, quality status, and any handoff need | Include before/after coverage metrics | `reference/documentation-effectiveness.md` |
 
-Post-task CHRONICLE: `RECORD → EVALUATE → CALIBRATE → PROPAGATE`. Read `references/documentation-effectiveness.md` after documentation work or when asked to track rot, coverage trends, or reusable patterns.
+Post-task CHRONICLE: `RECORD → EVALUATE → CALIBRATE → PROPAGATE`. Read `reference/documentation-effectiveness.md` after documentation work or when asked to track rot, coverage trends, or reusable patterns.
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Docstrings | `docstring` | ✓ | Add JSDoc/TSDoc (per function/class) | `references/jsdoc-style-guide.md` |
-| README Update | `readme` | | README updates and structure | `references/readme-templates.md` |
-| Type Definitions | `types` | | Replace any types with concrete types | `references/type-improvement-strategies.md` |
-| High-Value Comments | `comments` | | Add intent comments to complex logic | `references/documentation-patterns.md` |
-| ADR Authoring | `adr` | | Record an architectural decision (Nygard / MADR) with context, alternatives, consequences, and supersession lifecycle | `references/adr-authoring.md` |
-| Migration Guide | `migrate` | | Author version-jump upgrade guides with breaking-change notation, codemod steps, rollback, and verification | `references/migrate-guide-authoring.md` |
-| Tutorial / How-To | `tutorial` | | Write Diátaxis-aligned tutorials and how-to guides with prerequisites, executable snippets, and validation checkpoints | `references/tutorial-guide-authoring.md` |
+| Docstrings | `docstring` | ✓ | Add JSDoc/TSDoc (per function/class) | `reference/jsdoc-style-guide.md` |
+| README Update | `readme` | | README updates and structure | `reference/readme-templates.md` |
+| Type Definitions | `types` | | Replace any types with concrete types | `reference/type-improvement-strategies.md` |
+| High-Value Comments | `comments` | | Add intent comments to complex logic | `reference/documentation-patterns.md` |
+| ADR Authoring | `adr` | | Record an architectural decision (Nygard / MADR) with context, alternatives, consequences, and supersession lifecycle | `reference/adr-authoring.md` |
+| Migration Guide | `migrate` | | Author version-jump upgrade guides with breaking-change notation, codemod steps, rollback, and verification | `reference/migrate-guide-authoring.md` |
+| Tutorial / How-To | `tutorial` | | Write Diátaxis-aligned tutorials and how-to guides with prerequisites, executable snippets, and validation checkpoints | `reference/tutorial-guide-authoring.md` |
 
 ## Subcommand Dispatch
 
@@ -163,21 +163,21 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `JSDoc`, `TSDoc`, `document function`, `add docs` | JSDoc/TSDoc documentation | Annotated source files | `references/jsdoc-style-guide.md` |
-| `README`, `readme`, `project docs` | README management | Updated README.md | `references/readme-templates.md` |
-| `any type`, `type improvement`, `type safety` | Type definition improvement | Typed interfaces + type guards | `references/type-improvement-strategies.md` |
-| `coverage`, `audit`, `documentation health` | Documentation coverage audit | Coverage report + recommendations | `references/coverage-audit-tools.md` |
-| `OpenAPI`, `Swagger`, `TypeDoc`, `API docs`, `@expand`, `@inline`, `API Extractor` | API documentation | API doc annotations | `references/api-doc-generation.md` |
-| `magic number`, `regex`, `comment`, `business rule` | Complex code commenting | Contextual comments | `references/documentation-patterns.md` |
-| `changelog`, `deprecation`, `version` | Changelog maintenance | CHANGELOG.md update | `references/doc-templates.md` |
-| `documentation quality`, `doc review` | Quality assessment | Quality checklist report | `references/documentation-patterns.md` |
-| unclear documentation request | JSDoc/TSDoc documentation (default) | Annotated source files | `references/jsdoc-style-guide.md` |
+| `JSDoc`, `TSDoc`, `document function`, `add docs` | JSDoc/TSDoc documentation | Annotated source files | `reference/jsdoc-style-guide.md` |
+| `README`, `readme`, `project docs` | README management | Updated README.md | `reference/readme-templates.md` |
+| `any type`, `type improvement`, `type safety` | Type definition improvement | Typed interfaces + type guards | `reference/type-improvement-strategies.md` |
+| `coverage`, `audit`, `documentation health` | Documentation coverage audit | Coverage report + recommendations | `reference/coverage-audit-tools.md` |
+| `OpenAPI`, `Swagger`, `TypeDoc`, `API docs`, `@expand`, `@inline`, `API Extractor` | API documentation | API doc annotations | `reference/api-doc-generation.md` |
+| `magic number`, `regex`, `comment`, `business rule` | Complex code commenting | Contextual comments | `reference/documentation-patterns.md` |
+| `changelog`, `deprecation`, `version` | Changelog maintenance | CHANGELOG.md update | `reference/doc-templates.md` |
+| `documentation quality`, `doc review` | Quality assessment | Quality checklist report | `reference/documentation-patterns.md` |
+| unclear documentation request | JSDoc/TSDoc documentation (default) | Annotated source files | `reference/jsdoc-style-guide.md` |
 
 Routing rules:
 
-- If the request mentions `any` types, read `references/type-improvement-strategies.md`.
-- If the request involves README, read `references/readme-templates.md`.
-- If the request involves API, read `references/api-doc-generation.md`.
+- If the request mentions `any` types, read `reference/type-improvement-strategies.md`.
+- If the request involves README, read `reference/readme-templates.md`.
+- If the request involves API, read `reference/api-doc-generation.md`.
 - Always measure coverage delta after documentation work.
 
 ## Output Requirements
@@ -226,17 +226,17 @@ When documenting 3+ independent modules simultaneously, spawn parallel subagents
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/jsdoc-style-guide.md` | You are writing or fixing JSDoc/TSDoc tags, examples, interface docs, or formatting conventions. |
-| `references/documentation-patterns.md` | You need annotation decisions, comment-quality rules, README ordering, or rot-prevention guidance. |
-| `references/type-improvement-strategies.md` | You are replacing `any`, introducing type guards, or auditing type coverage. |
-| `references/coverage-audit-tools.md` | You must measure documentation coverage, type coverage, link health, example coverage, or produce a health report. |
-| `references/readme-templates.md` | You are creating or repairing README structure for a library, application, or CLI project. |
-| `references/api-doc-generation.md` | You are documenting TypeDoc, OpenAPI / swagger-jsdoc, or GraphQL surfaces. |
-| `references/doc-templates.md` | You need CHANGELOG, CONTRIBUTING, OpenAPI, or ADR template material. |
-| `references/documentation-effectiveness.md` | You are running CHRONICLE, tracking rot, calibrating patterns, or preparing Lore feedback. |
-| `references/adr-authoring.md` | You are running the `adr` Recipe — Nygard / MADR ADR authoring with context, alternatives, consequences, and supersession lifecycle. |
-| `references/migrate-guide-authoring.md` | You are running the `migrate` Recipe — version-jump guides with breaking-change notation, codemod steps, rollback, and verification. |
-| `references/tutorial-guide-authoring.md` | You are running the `tutorial` Recipe — Diátaxis-aligned tutorials and how-to guides with prerequisites, executable snippets, and validation checkpoints. |
+| `reference/jsdoc-style-guide.md` | You are writing or fixing JSDoc/TSDoc tags, examples, interface docs, or formatting conventions. |
+| `reference/documentation-patterns.md` | You need annotation decisions, comment-quality rules, README ordering, or rot-prevention guidance. |
+| `reference/type-improvement-strategies.md` | You are replacing `any`, introducing type guards, or auditing type coverage. |
+| `reference/coverage-audit-tools.md` | You must measure documentation coverage, type coverage, link health, example coverage, or produce a health report. |
+| `reference/readme-templates.md` | You are creating or repairing README structure for a library, application, or CLI project. |
+| `reference/api-doc-generation.md` | You are documenting TypeDoc, OpenAPI / swagger-jsdoc, or GraphQL surfaces. |
+| `reference/doc-templates.md` | You need CHANGELOG, CONTRIBUTING, OpenAPI, or ADR template material. |
+| `reference/documentation-effectiveness.md` | You are running CHRONICLE, tracking rot, calibrating patterns, or preparing Lore feedback. |
+| `reference/adr-authoring.md` | You are running the `adr` Recipe — Nygard / MADR ADR authoring with context, alternatives, consequences, and supersession lifecycle. |
+| `reference/migrate-guide-authoring.md` | You are running the `migrate` Recipe — version-jump guides with breaking-change notation, codemod steps, rollback, and verification. |
+| `reference/tutorial-guide-authoring.md` | You are running the `tutorial` Recipe — Diátaxis-aligned tutorials and how-to guides with prerequisites, executable snippets, and validation checkpoints. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the doc update, deciding adaptive thinking depth at tag/TypeDoc selection, or front-loading module/doc-type/audience at SCAN. Critical for Quill: P3, P5. |
 
 ---

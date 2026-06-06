@@ -125,24 +125,24 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `TUNE` | Listen: assess build health, deps, env, CI/CD, Docker, observability | Diagnose before fixing | `references/troubleshooting.md` |
-| `TIGHTEN` | Choose best maintenance opportunity | One fix per session | `references/dependency-management.md` |
+| `TUNE` | Listen: assess build health, deps, env, CI/CD, Docker, observability | Diagnose before fixing | `reference/troubleshooting.md` |
+| `TIGHTEN` | Choose best maintenance opportunity | One fix per session | `reference/dependency-management.md` |
 | `GREASE` | Implement: update/edit config, regenerate lockfile, run build | Keep changes <50 lines | Domain-specific reference |
-| `VERIFY` | Test: app starts? CI passes? Linter happy? | Build must pass | `references/troubleshooting.md` |
-| `PRESENT` | Log: create PR with type, risk level, verification status | Document what changed and why | `references/nexus-integration.md` |
+| `VERIFY` | Test: app starts? CI passes? Linter happy? | Build must pass | `reference/troubleshooting.md` |
+| `PRESENT` | Log: create PR with type, risk level, verification status | Document what changed and why | `reference/nexus-integration.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Dependency Management | `deps` | ✓ | Dependency management and upgrades | `references/dependency-management.md` |
-| CI/CD Config | `ci` | | CI/CD pipeline configuration | `references/github-actions.md` |
-| Docker Setup | `docker` | | Dockerfile / docker-compose | `references/docker-patterns.md` |
-| Logging Setup | `logs` | | Logging configuration (structured logs, etc.) | `references/observability.md` |
-| Health Checks | `health` | | Health check design | `references/observability.md` |
-| Alert Configuration | `alert` | | Alertmanager rules, PagerDuty / Opsgenie routing, severity taxonomy, alert-fatigue mitigation | `references/alert-configuration.md` |
-| Secrets Management | `secret` | | Vault / AWS Secrets Manager / Doppler, .env separation, rotation, leak prevention, Kubernetes sealed/external-secrets | `references/secrets-management.md` |
-| Kubernetes Config | `k8s` | | Deployment / Service / Ingress, Helm, Kustomize, HPA/VPA, PDB, NetworkPolicy, requests/limits tuning | `references/kubernetes-config.md` |
+| Dependency Management | `deps` | ✓ | Dependency management and upgrades | `reference/dependency-management.md` |
+| CI/CD Config | `ci` | | CI/CD pipeline configuration | `reference/github-actions.md` |
+| Docker Setup | `docker` | | Dockerfile / docker-compose | `reference/docker-patterns.md` |
+| Logging Setup | `logs` | | Logging configuration (structured logs, etc.) | `reference/observability.md` |
+| Health Checks | `health` | | Health check design | `reference/observability.md` |
+| Alert Configuration | `alert` | | Alertmanager rules, PagerDuty / Opsgenie routing, severity taxonomy, alert-fatigue mitigation | `reference/alert-configuration.md` |
+| Secrets Management | `secret` | | Vault / AWS Secrets Manager / Doppler, .env separation, rotation, leak prevention, Kubernetes sealed/external-secrets | `reference/secrets-management.md` |
+| Kubernetes Config | `k8s` | | Deployment / Service / Ingress, Helm, Kustomize, HPA/VPA, PDB, NetworkPolicy, requests/limits tuning | `reference/kubernetes-config.md` |
 
 ## Subcommand Dispatch
 
@@ -164,15 +164,15 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `dependency`, `npm`, `pnpm`, `yarn`, `audit`, `update` | Dependency management | Updated lockfile + audit report | `references/dependency-management.md` |
-| `CI`, `GitHub Actions`, `workflow`, `pipeline` | CI/CD optimization | Workflow file + verification | `references/github-actions.md` |
-| `Docker`, `container`, `BuildKit`, `compose` | Container configuration | Dockerfile/compose + scan results | `references/docker-patterns.md` |
-| `ESLint`, `Prettier`, `Husky`, `lint`, `format` | Linter config | Config files + hook setup | `references/troubleshooting.md` |
-| `env`, `secrets`, `OIDC`, `environment` | Environment management | Template + secrets config | `references/github-actions.md` |
-| `logging`, `metrics`, `health check`, `observability`, `OpenTelemetry` | Observability setup | OTel Collector config (batch processor, memory limiter, tail sampling) + semantic conventions (including GenAI/AI agent conventions) + declarative YAML config + log-trace correlation | `references/observability.md` |
-| `monorepo`, `workspace`, `Turborepo` | Monorepo maintenance | Workspace config + pipeline | `references/monorepo-guide.md` |
-| `build error`, `cache`, `troubleshoot` | Build troubleshooting | Fix + root cause analysis | `references/troubleshooting.md` |
-| `supply chain`, `postinstall`, `provenance`, `cooldown` | Supply chain defense | pnpm allowBuilds + Dependabot cooldown config + provenance verification | `references/dependency-management.md` |
+| `dependency`, `npm`, `pnpm`, `yarn`, `audit`, `update` | Dependency management | Updated lockfile + audit report | `reference/dependency-management.md` |
+| `CI`, `GitHub Actions`, `workflow`, `pipeline` | CI/CD optimization | Workflow file + verification | `reference/github-actions.md` |
+| `Docker`, `container`, `BuildKit`, `compose` | Container configuration | Dockerfile/compose + scan results | `reference/docker-patterns.md` |
+| `ESLint`, `Prettier`, `Husky`, `lint`, `format` | Linter config | Config files + hook setup | `reference/troubleshooting.md` |
+| `env`, `secrets`, `OIDC`, `environment` | Environment management | Template + secrets config | `reference/github-actions.md` |
+| `logging`, `metrics`, `health check`, `observability`, `OpenTelemetry` | Observability setup | OTel Collector config (batch processor, memory limiter, tail sampling) + semantic conventions (including GenAI/AI agent conventions) + declarative YAML config + log-trace correlation | `reference/observability.md` |
+| `monorepo`, `workspace`, `Turborepo` | Monorepo maintenance | Workspace config + pipeline | `reference/monorepo-guide.md` |
+| `build error`, `cache`, `troubleshoot` | Build troubleshooting | Fix + root cause analysis | `reference/troubleshooting.md` |
+| `supply chain`, `postinstall`, `provenance`, `cooldown` | Supply chain defense | pnpm allowBuilds + Dependabot cooldown config + provenance verification | `reference/dependency-management.md` |
 
 ## Output Requirements
 
@@ -202,16 +202,16 @@ Every deliverable must include:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/dependency-management.md` | You need npm/pnpm/yarn/bun, lockfiles, audit, updates, Renovate, or multi-language. |
-| `references/github-actions.md` | You need GitHub Actions workflows, Composite/Reusable Workflows, OIDC, caching, or secrets. |
-| `references/docker-patterns.md` | You need Dockerfile multi-stage builds, BuildKit, docker-compose, or security scanning. |
-| `references/observability.md` | You need Pino/Winston logging, Prometheus metrics, Sentry, OpenTelemetry, or health checks. |
-| `references/monorepo-guide.md` | You need pnpm workspaces, Turborepo pipeline optimization, or Changesets. |
-| `references/troubleshooting.md` | You need common build errors, cache debugging, Docker layer analysis, or linter config. |
-| `references/nexus-integration.md` | You need AUTORUN support, Nexus Hub Mode, or handoff formats. |
-| `references/alert-configuration.md` | You are running the `alert` recipe — Alertmanager routing tree, PagerDuty/Opsgenie receiver config, severity taxonomy (P1-P4), fatigue mitigation, alert-as-code. |
-| `references/secrets-management.md` | You are running the `secret` recipe — Vault/AWS Secrets Manager/Doppler architecture, .env separation, rotation/lease TTL, CI leak prevention, K8s sealed/external-secrets. |
-| `references/kubernetes-config.md` | You are running the `k8s` recipe — Deployment/Service/Ingress, Helm/Kustomize, HPA/VPA, PDB, NetworkPolicy, requests/limits tuning, probe design. |
+| `reference/dependency-management.md` | You need npm/pnpm/yarn/bun, lockfiles, audit, updates, Renovate, or multi-language. |
+| `reference/github-actions.md` | You need GitHub Actions workflows, Composite/Reusable Workflows, OIDC, caching, or secrets. |
+| `reference/docker-patterns.md` | You need Dockerfile multi-stage builds, BuildKit, docker-compose, or security scanning. |
+| `reference/observability.md` | You need Pino/Winston logging, Prometheus metrics, Sentry, OpenTelemetry, or health checks. |
+| `reference/monorepo-guide.md` | You need pnpm workspaces, Turborepo pipeline optimization, or Changesets. |
+| `reference/troubleshooting.md` | You need common build errors, cache debugging, Docker layer analysis, or linter config. |
+| `reference/nexus-integration.md` | You need AUTORUN support, Nexus Hub Mode, or handoff formats. |
+| `reference/alert-configuration.md` | You are running the `alert` recipe — Alertmanager routing tree, PagerDuty/Opsgenie receiver config, severity taxonomy (P1-P4), fatigue mitigation, alert-as-code. |
+| `reference/secrets-management.md` | You are running the `secret` recipe — Vault/AWS Secrets Manager/Doppler architecture, .env separation, rotation/lease TTL, CI leak prevention, K8s sealed/external-secrets. |
+| `reference/kubernetes-config.md` | You are running the `k8s` recipe — Deployment/Service/Ingress, Helm/Kustomize, HPA/VPA, PDB, NetworkPolicy, requests/limits tuning, probe design. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the Gear deliverable, deciding adaptive thinking depth at supply-chain hardening, or front-loading ecosystem/runtime/scope at DIAGNOSE. Critical for Gear: P3, P5. |
 
 ## Operational

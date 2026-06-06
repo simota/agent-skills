@@ -117,23 +117,23 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `BLUEPRINT` | Design the command contract: signature, flags, help, exit codes, human/JSON output, CI/CD expectations | Lock the interface before building | `references/cli-design-patterns.md` |
-| `CAST` | Build the CLI skeleton: parser, subcommands, completion hooks, config loading, doctor checks | Keep scope to one command surface | `references/cli-design-patterns.md`, `references/tui-components.md` |
-| `TEMPER` | Polish terminal UX: prompts, progress indicators, colors, `--no-color`, `--yes`, non-TTY fallback | TTY-awareness is non-negotiable | `references/tui-components.md` |
-| `HARDEN` | Validate failure paths: input errors, exit codes, `CTRL+C`, platform quirks, non-interactive environments | Test every non-happy path | `references/cross-platform.md`, `references/cli-design-anti-patterns.md` |
-| `PRESENT` | Deliver the interface, usage examples, integration notes, and the next operational handoff | Mandatory before expanding scope | `references/cli-design-patterns.md` |
+| `BLUEPRINT` | Design the command contract: signature, flags, help, exit codes, human/JSON output, CI/CD expectations | Lock the interface before building | `reference/cli-design-patterns.md` |
+| `CAST` | Build the CLI skeleton: parser, subcommands, completion hooks, config loading, doctor checks | Keep scope to one command surface | `reference/cli-design-patterns.md`, `reference/tui-components.md` |
+| `TEMPER` | Polish terminal UX: prompts, progress indicators, colors, `--no-color`, `--yes`, non-TTY fallback | TTY-awareness is non-negotiable | `reference/tui-components.md` |
+| `HARDEN` | Validate failure paths: input errors, exit codes, `CTRL+C`, platform quirks, non-interactive environments | Test every non-happy path | `reference/cross-platform.md`, `reference/cli-design-anti-patterns.md` |
+| `PRESENT` | Deliver the interface, usage examples, integration notes, and the next operational handoff | Mandatory before expanding scope | `reference/cli-design-patterns.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| CLI Build | `cli` | ✓ | CLI design/implementation (command design, flags, help, exit codes) | `references/cli-design-patterns.md` |
-| TUI Build | `tui` | | TUI (Terminal UI) design (spinners, tables, interactive prompts) | `references/tui-components.md` |
-| Tool Wrap | `wrap` | | Wrapping existing CLI tools (linter/formatter/test-runner integration) | `references/tool-integration.md` |
-| Dev Tool Integration | `devtool` | | linter/test-runner/build-tool integration, doctor command | `references/tool-integration.md`, `references/cross-platform.md` |
-| Shell Completion | `completion` | | Bash/Zsh/Fish/PowerShell completion generation, cobra/clap/argparse/oclif integration, static vs dynamic completion, install-path conventions | `references/completion-shell-scripts.md` |
-| Config File Design | `config` | | CLI config-file design, precedence chain (flag > env > file > default), YAML/TOML/JSON/INI trade-offs, XDG Base Directory, schema validation, secrets hygiene | `references/config-file-design.md` |
-| Packaging & Distribution | `pkg` | | Homebrew formula, deb/rpm via nfpm, npm/PyPI/cargo/go install, cross-compile (goreleaser/cross/napi-rs), signing/attestation, update-checker, install script | `references/pkg-distribution.md` |
+| CLI Build | `cli` | ✓ | CLI design/implementation (command design, flags, help, exit codes) | `reference/cli-design-patterns.md` |
+| TUI Build | `tui` | | TUI (Terminal UI) design (spinners, tables, interactive prompts) | `reference/tui-components.md` |
+| Tool Wrap | `wrap` | | Wrapping existing CLI tools (linter/formatter/test-runner integration) | `reference/tool-integration.md` |
+| Dev Tool Integration | `devtool` | | linter/test-runner/build-tool integration, doctor command | `reference/tool-integration.md`, `reference/cross-platform.md` |
+| Shell Completion | `completion` | | Bash/Zsh/Fish/PowerShell completion generation, cobra/clap/argparse/oclif integration, static vs dynamic completion, install-path conventions | `reference/completion-shell-scripts.md` |
+| Config File Design | `config` | | CLI config-file design, precedence chain (flag > env > file > default), YAML/TOML/JSON/INI trade-offs, XDG Base Directory, schema validation, secrets hygiene | `reference/config-file-design.md` |
+| Packaging & Distribution | `pkg` | | Homebrew formula, deb/rpm via nfpm, npm/PyPI/cargo/go install, cross-compile (goreleaser/cross/napi-rs), signing/attestation, update-checker, install script | `reference/pkg-distribution.md` |
 
 ## Subcommand Dispatch
 
@@ -154,26 +154,26 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `cli`, `command`, `subcommand`, `flags`, `args` | CLI command design | Command skeleton + help text | `references/cli-design-patterns.md` |
-| `tui`, `interactive`, `prompt`, `menu`, `selection` | TUI component build | Interactive terminal UI | `references/tui-components.md` |
-| `spinner`, `progress`, `table`, `color` | Terminal UX polish | Styled output components | `references/tui-components.md` |
-| `linter`, `formatter`, `test runner`, `build tool` | Tool integration wiring | Config + runner setup | `references/tool-integration.md` |
-| `doctor`, `healthcheck`, `environment check` | Doctor command pattern | Diagnostic command | `references/tool-integration.md` |
-| `completion`, `bash completion`, `zsh completion` | Shell completion generation | Completion scripts | `references/cli-design-patterns.md` |
-| `scaffold`, `init`, `project init`, `template` | Project scaffolding | Interactive init flow | `references/cli-design-patterns.md` |
-| `cross-platform`, `xdg`, `config path`, `signal` | Platform compatibility | Cross-platform handling | `references/cross-platform.md` |
-| `ci`, `non-tty`, `json output`, `exit code` | CI/CD-ready CLI behavior | Machine-readable output | `references/cross-platform.md` |
-| `package`, `binary`, `distribute`, `release` | Distribution packaging | Build + packaging config | `references/distribution-packaging-anti-patterns.md` |
-| `agent`, `no-prompt`, `mcp`, `automation`, `ai consumer` | Agent-compatible CLI design | Agent-ready CLI contract | `references/cli-design-patterns.md` |
-| `review`, `audit`, `anti-pattern` | CLI/TUI anti-pattern audit | Audit report | `references/cli-design-anti-patterns.md` |
-| unclear CLI/TUI request | CLI command design | Command skeleton + help text | `references/cli-design-patterns.md` |
+| `cli`, `command`, `subcommand`, `flags`, `args` | CLI command design | Command skeleton + help text | `reference/cli-design-patterns.md` |
+| `tui`, `interactive`, `prompt`, `menu`, `selection` | TUI component build | Interactive terminal UI | `reference/tui-components.md` |
+| `spinner`, `progress`, `table`, `color` | Terminal UX polish | Styled output components | `reference/tui-components.md` |
+| `linter`, `formatter`, `test runner`, `build tool` | Tool integration wiring | Config + runner setup | `reference/tool-integration.md` |
+| `doctor`, `healthcheck`, `environment check` | Doctor command pattern | Diagnostic command | `reference/tool-integration.md` |
+| `completion`, `bash completion`, `zsh completion` | Shell completion generation | Completion scripts | `reference/cli-design-patterns.md` |
+| `scaffold`, `init`, `project init`, `template` | Project scaffolding | Interactive init flow | `reference/cli-design-patterns.md` |
+| `cross-platform`, `xdg`, `config path`, `signal` | Platform compatibility | Cross-platform handling | `reference/cross-platform.md` |
+| `ci`, `non-tty`, `json output`, `exit code` | CI/CD-ready CLI behavior | Machine-readable output | `reference/cross-platform.md` |
+| `package`, `binary`, `distribute`, `release` | Distribution packaging | Build + packaging config | `reference/distribution-packaging-anti-patterns.md` |
+| `agent`, `no-prompt`, `mcp`, `automation`, `ai consumer` | Agent-compatible CLI design | Agent-ready CLI contract | `reference/cli-design-patterns.md` |
+| `review`, `audit`, `anti-pattern` | CLI/TUI anti-pattern audit | Audit report | `reference/cli-design-anti-patterns.md` |
+| unclear CLI/TUI request | CLI command design | Command skeleton + help text | `reference/cli-design-patterns.md` |
 
 Routing rules:
 
-- If the request involves command structure, flags, or help text, read `references/cli-design-patterns.md`.
-- If the request involves interactive prompts, menus, or progress displays, read `references/tui-components.md`.
-- If the request involves linters, formatters, test runners, or build tools, read `references/tool-integration.md`.
-- If the request involves platform compatibility, config paths, or CI behavior, read `references/cross-platform.md`.
+- If the request involves command structure, flags, or help text, read `reference/cli-design-patterns.md`.
+- If the request involves interactive prompts, menus, or progress displays, read `reference/tui-components.md`.
+- If the request involves linters, formatters, test runners, or build tools, read `reference/tool-integration.md`.
+- If the request involves platform compatibility, config paths, or CI behavior, read `reference/cross-platform.md`.
 - Always check relevant anti-pattern references during the HARDEN phase.
 
 ## Output Requirements
@@ -217,17 +217,17 @@ Anvil receives CLI/TUI requests from upstream agents, builds terminal interfaces
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/cli-design-patterns.md` | You need command structure, flag conventions, help text design, output formatting, exit codes, shell completion, or init/scaffold flows. |
-| `references/tool-integration.md` | You need to wire linters, formatters, test runners, build tools, doctor commands, or modern toolchains (Bun, Deno, mise, oxlint). |
-| `references/tui-components.md` | You need spinners, progress bars, tables, selection menus, interactive prompts, or full-screen terminal UI patterns. |
-| `references/cross-platform.md` | You need XDG path handling, config precedence, platform/shell detection, signal handling, or CI/non-TTY behavior. |
-| `references/cli-design-anti-patterns.md` | You need to audit flags, arguments, errors, output, help text, or interactive behavior for CLI UX regressions. |
-| `references/tui-ux-anti-patterns.md` | You need to review color usage, keyboard navigation, layout, progress displays, or accessibility in terminal UIs. |
-| `references/tool-integration-anti-patterns.md` | You need to audit toolchain setup, test/build commands, doctor flows, or config management for common pitfalls. |
-| `references/distribution-packaging-anti-patterns.md` | You need to review binary packaging, distribution channels, release signing, or cross-platform build strategy. |
-| `references/completion-shell-scripts.md` | You chose `completion` recipe. Bash/Zsh/Fish/PowerShell completion generation (cobra/clap/argparse/click/oclif), static vs dynamic callbacks, XDG install paths, and CI completion-test harness. |
-| `references/config-file-design.md` | You chose `config` recipe. Config-file precedence chain (flag > env > project > user > system > default), TOML/YAML/JSON/INI trade-offs, XDG discovery, schema validation, and secrets-in-config anti-patterns. |
-| `references/pkg-distribution.md` | You chose `pkg` recipe. Channel selection (Homebrew / nfpm / npm / PyPI / cargo / `go install` / Scoop / OCI), cross-compile matrix, signing/attestation, install-script safety, and opt-in update-checker. |
+| `reference/cli-design-patterns.md` | You need command structure, flag conventions, help text design, output formatting, exit codes, shell completion, or init/scaffold flows. |
+| `reference/tool-integration.md` | You need to wire linters, formatters, test runners, build tools, doctor commands, or modern toolchains (Bun, Deno, mise, oxlint). |
+| `reference/tui-components.md` | You need spinners, progress bars, tables, selection menus, interactive prompts, or full-screen terminal UI patterns. |
+| `reference/cross-platform.md` | You need XDG path handling, config precedence, platform/shell detection, signal handling, or CI/non-TTY behavior. |
+| `reference/cli-design-anti-patterns.md` | You need to audit flags, arguments, errors, output, help text, or interactive behavior for CLI UX regressions. |
+| `reference/tui-ux-anti-patterns.md` | You need to review color usage, keyboard navigation, layout, progress displays, or accessibility in terminal UIs. |
+| `reference/tool-integration-anti-patterns.md` | You need to audit toolchain setup, test/build commands, doctor flows, or config management for common pitfalls. |
+| `reference/distribution-packaging-anti-patterns.md` | You need to review binary packaging, distribution channels, release signing, or cross-platform build strategy. |
+| `reference/completion-shell-scripts.md` | You chose `completion` recipe. Bash/Zsh/Fish/PowerShell completion generation (cobra/clap/argparse/click/oclif), static vs dynamic callbacks, XDG install paths, and CI completion-test harness. |
+| `reference/config-file-design.md` | You chose `config` recipe. Config-file precedence chain (flag > env > project > user > system > default), TOML/YAML/JSON/INI trade-offs, XDG discovery, schema validation, and secrets-in-config anti-patterns. |
+| `reference/pkg-distribution.md` | You chose `pkg` recipe. Channel selection (Homebrew / nfpm / npm / PyPI / cargo / `go install` / Scoop / OCI), cross-compile matrix, signing/attestation, install-script safety, and opt-in update-checker. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the CLI/TUI report, calibrating effort to scaffold/feature/refactor scope, or front-loading language/contract at BLUEPRINT. Critical for Anvil: P3, P6. |
 
 ## Operational

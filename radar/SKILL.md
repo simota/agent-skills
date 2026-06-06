@@ -121,14 +121,14 @@ Single source of truth for Recipe definitions. Behavior depth lives in the Behav
 
 | Recipe | Subcommand | Default? | When to Use | Behavior | Read First |
 |--------|-----------|---------|-------------|----------|------------|
-| Edge Cases | `edge` | ✓ | Add missing tests for boundary values and error paths | Prioritize boundary values, null, empty, timeout, and error branches. Confirm regressions fail-first. | `references/testing-patterns.md` |
-| Flaky Repair | `flaky` | | Root-cause diagnosis and stabilization of flaky tests | Identify the root cause (async timing / shared state / order dependency) before fixing. No automatic retries. | `references/flaky-test-guide.md` |
-| Coverage Fill | `coverage` | | Coverage gap filling and priority gap identification | Target 80%+ diff coverage and select priority gaps by risk assessment. | `references/coverage-strategy.md` |
-| Regression Suite | `regression` | | Add regression tests from Scout handoffs | Only after a Scout or Builder handoff. Add bug-reproducing tests fail-first, then confirm green after the fix. | `references/testing-patterns.md`, `references/advanced-techniques.md` |
-| CI Optimize | `ci` | | Test selection and CI speed improvements | Reduce suite runtime with TIA or skip conditions. Delegate CI infrastructure changes to Gear. | `references/test-selection-strategy.md` |
-| Unit Test Design | `unit` | | Design unit test architecture from scratch (AAA, test doubles, boundary isolation) across Jest/Vitest, pytest, Go testing, cargo-test | Design unit test architecture from scratch or restructure an existing suite. Enforce AAA (Arrange-Act-Assert), pick the right test double (fake > stub > mock > spy in that preference order), isolate at the unit boundary, and keep tests deterministic (no clock, network, or filesystem without injection). Multi-language: Vitest 4.x / Jest 30 for TS/JS, pytest 8.x for Python, Go `testing`, `cargo test` / cargo-nextest for Rust, JUnit 5.12+ / JUnit 6 for Java. Use `coverage` instead when the goal is filling gaps in an existing suite, not redesigning it. | `references/unit-testing.md` |
-| Integration Test Design | `integration` | | Design backend-integration test architecture with Testcontainers, WireMock/MSW, DB fixture strategy | Design backend-service integration tests (component-to-component: service ↔ DB / cache / queue / downstream HTTP). Prefer Testcontainers for ephemeral Postgres/MySQL/Redis/Kafka, WireMock or MSW for HTTP stubbing at the boundary, and pick a DB fixture strategy (transaction rollback fastest, truncate if triggers matter, per-test DB only when schema migrations are under test). Playwright API mode is acceptable for backend HTTP assertions. Route to `Voyager` for browser-level E2E and full user journeys — this recipe does NOT cover user-to-system flows. Use `edge` instead when extending an existing integration suite with edge cases. | `references/integration-testing.md` |
-| Mutation Testing | `mutation` | | Run Stryker/PIT/mutmut/cargo-mutants, analyze survivors, triage equivalent mutants, enforce CI mutation-score threshold | Run a mutation testing tool against an existing suite to measure test-suite effectiveness. StrykerJS 7.0+ for JS/TS (supports Vitest, Jest, Node Tap; `npx stryker run`), PIT for Java/Kotlin, mutmut (or cosmic-ray) for Python, cargo-mutants for Rust. Analyze survived mutants as weak assertions, triage equivalent mutants (functionally identical — accept the survivor), and wire a mutation-score threshold into CI (critical modules ≥85%, project-wide ≥60% per Siege baselines). Scope: author-side code-quality mutation (strengthening unit-test assertions day-to-day). Route to `Siege` for program-level mutation strategy, tiered CI (PR/nightly/release) design, operator selection at scale, and mutation as a non-functional resilience verification — Siege owns the broader mutation testing program and Radar `mutation` complements it at the individual-developer layer. | `references/mutation-testing.md` |
+| Edge Cases | `edge` | ✓ | Add missing tests for boundary values and error paths | Prioritize boundary values, null, empty, timeout, and error branches. Confirm regressions fail-first. | `reference/testing-patterns.md` |
+| Flaky Repair | `flaky` | | Root-cause diagnosis and stabilization of flaky tests | Identify the root cause (async timing / shared state / order dependency) before fixing. No automatic retries. | `reference/flaky-test-guide.md` |
+| Coverage Fill | `coverage` | | Coverage gap filling and priority gap identification | Target 80%+ diff coverage and select priority gaps by risk assessment. | `reference/coverage-strategy.md` |
+| Regression Suite | `regression` | | Add regression tests from Scout handoffs | Only after a Scout or Builder handoff. Add bug-reproducing tests fail-first, then confirm green after the fix. | `reference/testing-patterns.md`, `reference/advanced-techniques.md` |
+| CI Optimize | `ci` | | Test selection and CI speed improvements | Reduce suite runtime with TIA or skip conditions. Delegate CI infrastructure changes to Gear. | `reference/test-selection-strategy.md` |
+| Unit Test Design | `unit` | | Design unit test architecture from scratch (AAA, test doubles, boundary isolation) across Jest/Vitest, pytest, Go testing, cargo-test | Design unit test architecture from scratch or restructure an existing suite. Enforce AAA (Arrange-Act-Assert), pick the right test double (fake > stub > mock > spy in that preference order), isolate at the unit boundary, and keep tests deterministic (no clock, network, or filesystem without injection). Multi-language: Vitest 4.x / Jest 30 for TS/JS, pytest 8.x for Python, Go `testing`, `cargo test` / cargo-nextest for Rust, JUnit 5.12+ / JUnit 6 for Java. Use `coverage` instead when the goal is filling gaps in an existing suite, not redesigning it. | `reference/unit-testing.md` |
+| Integration Test Design | `integration` | | Design backend-integration test architecture with Testcontainers, WireMock/MSW, DB fixture strategy | Design backend-service integration tests (component-to-component: service ↔ DB / cache / queue / downstream HTTP). Prefer Testcontainers for ephemeral Postgres/MySQL/Redis/Kafka, WireMock or MSW for HTTP stubbing at the boundary, and pick a DB fixture strategy (transaction rollback fastest, truncate if triggers matter, per-test DB only when schema migrations are under test). Playwright API mode is acceptable for backend HTTP assertions. Route to `Voyager` for browser-level E2E and full user journeys — this recipe does NOT cover user-to-system flows. Use `edge` instead when extending an existing integration suite with edge cases. | `reference/integration-testing.md` |
+| Mutation Testing | `mutation` | | Run Stryker/PIT/mutmut/cargo-mutants, analyze survivors, triage equivalent mutants, enforce CI mutation-score threshold | Run a mutation testing tool against an existing suite to measure test-suite effectiveness. StrykerJS 7.0+ for JS/TS (supports Vitest, Jest, Node Tap; `npx stryker run`), PIT for Java/Kotlin, mutmut (or cosmic-ray) for Python, cargo-mutants for Rust. Analyze survived mutants as weak assertions, triage equivalent mutants (functionally identical — accept the survivor), and wire a mutation-score threshold into CI (critical modules ≥85%, project-wide ≥60% per Siege baselines). Scope: author-side code-quality mutation (strengthening unit-test assertions day-to-day). Route to `Siege` for program-level mutation strategy, tiered CI (PR/nightly/release) design, operator selection at scale, and mutation as a non-functional resilience verification — Siege owns the broader mutation testing program and Radar `mutation` complements it at the individual-developer layer. | `reference/mutation-testing.md` |
 
 ## Subcommand Dispatch
 
@@ -143,21 +143,21 @@ Parse the first token of user input:
 
 | Phase | Goal | Output | Read |
 |-------|------|--------|------|
-| `SCAN` | Find blind spots, flaky signals, or expensive suites | Candidate list with risk and evidence; quarantine any test flaking > 10% over 30 days out of the blocking gate (with a root-cause ticket) | `references/coverage-strategy.md`, `references/flaky-test-guide.md` |
-| `LOCK` | Choose the smallest high-value target | Explicit test scope and success condition, ranked by risk × blast-radius × uncovered-branch count | `references/testing-patterns.md` |
-| `PING` | Implement or refine tests | Focused tests using project-native patterns; for regression/bug-repro, confirm the test fails on unpatched code first (fail-first) | `references/multi-language-testing.md` |
-| `VERIFY` | Run targeted tests, then broader confirmation | Commands, results, coverage + mutation delta, zero tautological/assertion-free tests, residual risk | `references/mutation-testing.md` |
-| `DELIVER` | Route results to downstream | Handoff: Guardian (PR), Scout/Builder (fix loop), Sentinel (security regression), Voyager (browser-level escalation) | `references/testing-patterns.md` |
+| `SCAN` | Find blind spots, flaky signals, or expensive suites | Candidate list with risk and evidence; quarantine any test flaking > 10% over 30 days out of the blocking gate (with a root-cause ticket) | `reference/coverage-strategy.md`, `reference/flaky-test-guide.md` |
+| `LOCK` | Choose the smallest high-value target | Explicit test scope and success condition, ranked by risk × blast-radius × uncovered-branch count | `reference/testing-patterns.md` |
+| `PING` | Implement or refine tests | Focused tests using project-native patterns; for regression/bug-repro, confirm the test fails on unpatched code first (fail-first) | `reference/multi-language-testing.md` |
+| `VERIFY` | Run targeted tests, then broader confirmation | Commands, results, coverage + mutation delta, zero tautological/assertion-free tests, residual risk | `reference/mutation-testing.md` |
+| `DELIVER` | Route results to downstream | Handoff: Guardian (PR), Scout/Builder (fix loop), Sentinel (security regression), Voyager (browser-level escalation) | `reference/testing-patterns.md` |
 
 ## Language Support
 
 | Language | Primary Framework | Coverage Tool | Mock / Stub Defaults | Read This |
 |----------|-------------------|---------------|----------------------|-----------|
-| TypeScript / JavaScript | Vitest 4.x / Jest 30 | v8 / istanbul | RTL, MSW, `vi.fn()` | `references/testing-patterns.md` |
-| Python | pytest 8.x | coverage.py / pytest-cov | pytest-mock, `unittest.mock` | `references/multi-language-testing.md` |
-| Go | `testing` / testify | `go test -cover` | gomock / mockery | `references/multi-language-testing.md` |
-| Rust | `cargo test` / cargo-nextest (+ proptest, insta, criterion; miri/loom for `unsafe`/concurrency) | llvm-cov (default) / tarpaulin | mockall | `references/multi-language-testing.md` |
-| Java | JUnit 5.12+ / JUnit 6 | JaCoCo | Mockito | `references/multi-language-testing.md` |
+| TypeScript / JavaScript | Vitest 4.x / Jest 30 | v8 / istanbul | RTL, MSW, `vi.fn()` | `reference/testing-patterns.md` |
+| Python | pytest 8.x | coverage.py / pytest-cov | pytest-mock, `unittest.mock` | `reference/multi-language-testing.md` |
+| Go | `testing` / testify | `go test -cover` | gomock / mockery | `reference/multi-language-testing.md` |
+| Rust | `cargo test` / cargo-nextest (+ proptest, insta, criterion; miri/loom for `unsafe`/concurrency) | llvm-cov (default) / tarpaulin | mockall | `reference/multi-language-testing.md` |
+| Java | JUnit 5.12+ / JUnit 6 | JaCoCo | Mockito | `reference/multi-language-testing.md` |
 
 ## Test Mix
 
@@ -177,7 +177,7 @@ Additional layers:
 
 ## Critical Constraints
 
-- Default diff coverage floor: `80%+`; then apply code-type targets from `references/coverage-strategy.md`.
+- Default diff coverage floor: `80%+`; then apply code-type targets from `reference/coverage-strategy.md`.
 - Critical module coverage (payments, auth, data integrity): `90%+`; security-related code: target `100%` (Source: LaunchDarkly, BotGauge QA Metrics 2025).
 - Mutation score guidance: `90%+` excellent, `75-89%` good, `60-74%` acceptable, `< 60%` poor. Pair property-based tests with mutation testing to boost scores — hypothesis + mutmut improved async code scores from 70% → 92% (Source: johal.in 2026).
 - Flaky-rate guidance: healthy `< 1%`, investigation trigger `> 2%` over rolling window, warning `1-5%`, critical `> 5%` (Source: TestDino Benchmark 2026). In large industrial projects, 11–27% of tests exhibit flaky behavior, accounting for 5–16% of build failures (Source: Ranorex 2026, Harness 2026). Team-level prevalence is growing: 26% of teams experienced test flakiness in 2025, up from 10% in 2022 (Source: Bitrise Mobile Insights 2025).
@@ -192,16 +192,16 @@ Additional layers:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `edge case`, `regression test`, `add tests` | Default mode | New test files and coverage delta | `references/testing-patterns.md` |
-| `flaky`, `intermittent`, `nondeterministic` | FLAKY mode | Root cause analysis and stabilized tests | `references/flaky-test-guide.md` |
-| `coverage`, `blind spots`, `audit` | AUDIT mode | Coverage gap report and prioritized plan | `references/coverage-strategy.md` |
-| `test selection`, `CI speed`, `slow tests` | SELECT mode | Selection strategy and skip conditions | `references/test-selection-strategy.md` |
-| `contract test`, `multi-service` | Default + contract focus | Contract tests and boundary validation | `references/contract-multiservice-testing.md` |
-| `async`, `race condition`, `timeout` | Default + async focus | Async test patterns and stability fixes | `references/async-testing-patterns.md` |
-| `mutation test`, `weak assertions`, `test strength` | Default + mutation focus | Mutation score analysis and assertion hardening | `references/advanced-techniques.md` |
-| `quarantine`, `flaky pipeline`, `CI blocked` | FLAKY mode + quarantine | Quarantine strategy and stabilization plan | `references/flaky-test-guide.md` |
+| `edge case`, `regression test`, `add tests` | Default mode | New test files and coverage delta | `reference/testing-patterns.md` |
+| `flaky`, `intermittent`, `nondeterministic` | FLAKY mode | Root cause analysis and stabilized tests | `reference/flaky-test-guide.md` |
+| `coverage`, `blind spots`, `audit` | AUDIT mode | Coverage gap report and prioritized plan | `reference/coverage-strategy.md` |
+| `test selection`, `CI speed`, `slow tests` | SELECT mode | Selection strategy and skip conditions | `reference/test-selection-strategy.md` |
+| `contract test`, `multi-service` | Default + contract focus | Contract tests and boundary validation | `reference/contract-multiservice-testing.md` |
+| `async`, `race condition`, `timeout` | Default + async focus | Async test patterns and stability fixes | `reference/async-testing-patterns.md` |
+| `mutation test`, `weak assertions`, `test strength` | Default + mutation focus | Mutation score analysis and assertion hardening | `reference/advanced-techniques.md` |
+| `quarantine`, `flaky pipeline`, `CI blocked` | FLAKY mode + quarantine | Quarantine strategy and stabilization plan | `reference/flaky-test-guide.md` |
 | complex multi-agent task | Nexus-routed execution | Structured handoff | `_common/BOUNDARIES.md` |
-| unclear request | Clarify scope and route | Scoped analysis | `references/` |
+| unclear request | Clarify scope and route | Scoped analysis | `reference/` |
 
 Routing rules:
 
@@ -209,7 +209,7 @@ Routing rules:
 - If the request mentions coverage gaps or audit, start with AUDIT mode.
 - If the request mentions CI speed or test selection, start with SELECT mode.
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 
 ## Output Requirements
 
@@ -267,22 +267,22 @@ Radar receives bug reports, implementation changes, review findings, coverage ga
 
 | File | Read This When |
 |------|----------------|
-| `references/testing-patterns.md` | Writing or tightening TS/JS tests |
-| `references/unit-testing.md` | Designing unit test architecture from scratch (AAA, test doubles, boundary isolation) across Jest/Vitest/pytest/Go/Rust |
-| `references/integration-testing.md` | Designing backend integration tests (Testcontainers, WireMock/MSW, DB fixture strategy) — not E2E/browser |
-| `references/mutation-testing.md` | Running Stryker/PIT/mutmut/cargo-mutants for test-suite effectiveness and CI threshold wiring |
-| `references/multi-language-testing.md` | Working in Python, Go, Rust, or Java |
-| `references/advanced-techniques.md` | Using property-based, contract, mutation, snapshot, or Testcontainers patterns |
-| `references/flaky-test-guide.md` | Investigating flaky tests or CI-only failures |
-| `references/test-selection-strategy.md` | Optimizing CI test execution and prioritization |
-| `references/coverage-strategy.md` | Setting coverage targets, ratchets, and diff rules |
-| `references/contract-multiservice-testing.md` | Testing API contracts and multi-service integrations |
-| `references/async-testing-patterns.md` | Testing async flows, streams, races, and timeout-heavy code |
-| `references/framework-deep-patterns.md` | Using advanced framework-specific features |
-| `references/testing-anti-patterns.md` | Auditing test quality and common test smells |
-| `references/ai-assisted-testing.md` | Using AI to accelerate testing without lowering quality |
-| `references/shift-left-right-testing.md` | Connecting Radar to observability, QAOps, or production feedback loops |
-| `references/modern-testing-dx.md` | Optimizing test DX, feedback loops, and team maturity |
+| `reference/testing-patterns.md` | Writing or tightening TS/JS tests |
+| `reference/unit-testing.md` | Designing unit test architecture from scratch (AAA, test doubles, boundary isolation) across Jest/Vitest/pytest/Go/Rust |
+| `reference/integration-testing.md` | Designing backend integration tests (Testcontainers, WireMock/MSW, DB fixture strategy) — not E2E/browser |
+| `reference/mutation-testing.md` | Running Stryker/PIT/mutmut/cargo-mutants for test-suite effectiveness and CI threshold wiring |
+| `reference/multi-language-testing.md` | Working in Python, Go, Rust, or Java |
+| `reference/advanced-techniques.md` | Using property-based, contract, mutation, snapshot, or Testcontainers patterns |
+| `reference/flaky-test-guide.md` | Investigating flaky tests or CI-only failures |
+| `reference/test-selection-strategy.md` | Optimizing CI test execution and prioritization |
+| `reference/coverage-strategy.md` | Setting coverage targets, ratchets, and diff rules |
+| `reference/contract-multiservice-testing.md` | Testing API contracts and multi-service integrations |
+| `reference/async-testing-patterns.md` | Testing async flows, streams, races, and timeout-heavy code |
+| `reference/framework-deep-patterns.md` | Using advanced framework-specific features |
+| `reference/testing-anti-patterns.md` | Auditing test quality and common test smells |
+| `reference/ai-assisted-testing.md` | Using AI to accelerate testing without lowering quality |
+| `reference/shift-left-right-testing.md` | Connecting Radar to observability, QAOps, or production feedback loops |
+| `reference/modern-testing-dx.md` | Optimizing test DX, feedback loops, and team maturity |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the test/coverage report, deciding adaptive thinking depth at LOCK, or front-loading scope at SCAN. Critical for Radar: P2, P5. |
 | `_common/PROOF_CARRYING.md` | You generate oracles (property + regression + edge-case) in `nexus acceptance` Phase 2. Generated oracles must be deterministic (seed = spec-graph hash) and pass 3× shadow-run on `main` before becoming Gate-blocking. Empty findings without exploration log are rejected as semantically empty. |
 

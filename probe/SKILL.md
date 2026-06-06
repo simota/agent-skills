@@ -72,7 +72,7 @@ Route elsewhere when the task is primarily:
 - Reference OWASP Top 10 2025 (8th edition, 589 CWEs): Broken Access Control (#1), Security Misconfiguration (#2), Software Supply Chain Failures (#3, expanded from Vulnerable Components), Injection (#5), Mishandling of Exceptional Conditions (#10, new).
 - Use CVSS v4.0 when tooling supports it — Scope metric removed, Threat replaces Temporal, Supplemental metrics (Automatable, Safety) aid non-technical stakeholder communication. NVD officially supports v4.0 scoring. Fall back to CVSS v3.1 when v4.0 is unavailable. Caution: v4.0 vectors are incompatible with v3.x parsers — mixing versions produces incorrect scores.
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P2 (calibrated DAST report length — preserve CVSS/exploitability/repro steps/evidence per confirmed finding; truncated security reports are unactionable), P5 (think step-by-step at VALIDATE — Confirmed vs Unconfirmed labeling and false-positive triage errors propagate to wrong remediation SLA and waste responder capacity)** as critical for Probe. P1 recommended: front-load scope (targets, environment, exclusions, authorization) at PLAN before SCAN.
-- Pair every confirmed runtime exploit with a paste-ready `## LLM Fix Prompt` block addressed to Builder (or Builder + Gear/Guardian/Sentinel/Beacon/Launch depending on verb). The prompt embeds the attack chain, tool evidence, affected endpoints, runtime observation, defensive controls, acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress the prompt when Sentinel owns the source-level remediation prompt (Probe's role was runtime confirmation only), when escalating to Breach for adversarial validation, or when the engagement was reconnaissance / scope-mapping only. See `references/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
+- Pair every confirmed runtime exploit with a paste-ready `## LLM Fix Prompt` block addressed to Builder (or Builder + Gear/Guardian/Sentinel/Beacon/Launch depending on verb). The prompt embeds the attack chain, tool evidence, affected endpoints, runtime observation, defensive controls, acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress the prompt when Sentinel owns the source-level remediation prompt (Probe's role was runtime confirmation only), when escalating to Breach for adversarial validation, or when the engagement was reconnaissance / scope-mapping only. See `reference/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
 
 ## Boundaries
 
@@ -116,10 +116,10 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Goal | Required outputs | Read |
 | --- | --- | --- | --- |
-| `PLAN` | Define scope, threat model, and test set | Target list, exclusions, scenarios, tools | `references/` |
-| `SCAN` | Run safe automated and manual tests | ZAP/Nuclei configs, requests, raw findings | `references/` |
-| `VALIDATE` | Confirm exploitability and remove noise | Confirmed findings, false positives, CVSS | `references/` |
-| `REPORT` | Prioritize, explain, and hand off | Security report, remediation SLAs, next agent | `references/` |
+| `PLAN` | Define scope, threat model, and test set | Target list, exclusions, scenarios, tools | `reference/` |
+| `SCAN` | Run safe automated and manual tests | ZAP/Nuclei configs, requests, raw findings | `reference/` |
+| `VALIDATE` | Confirm exploitability and remove noise | Confirmed findings, false positives, CVSS | `reference/` |
+| `REPORT` | Prioritize, explain, and hand off | Security report, remediation SLAs, next agent | `reference/` |
 
 ## Critical Thresholds
 
@@ -173,13 +173,13 @@ Per OWASP Top 10 2025 and API Security Top 10:
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| OWASP ZAP | `zap` | ✓ | OWASP ZAP scanning | `references/zap-scanning-guide.md` |
-| Burp Suite | `burp` | | Burp Suite usage | `references/vulnerability-testing-patterns.md` |
-| Nuclei | `nuclei` | | Nuclei template scanning | `references/nuclei-templates.md` |
-| Pentest Plan | `pentest` | | Pentest planning | `references/pentest-methodology-pitfalls.md` |
-| API DAST | `api` | | REST/GraphQL/WebSocket dynamic testing — OWASP API Top 10 2023, BOLA/BFLA, mass assignment, GraphQL abuse | `references/api-dast.md` |
-| Mobile DAST | `mobile` | | iOS/Android built-app dynamic testing — MobSF, Frida, pinning bypass, storage dump, MASVS/MASTG | `references/mobile-dast.md` |
-| Attack-Surface Recon | `recon` | | Passive external reconnaissance — subdomains, CT, DNS, tech fingerprint, secret search, shodan (no exploitation) | `references/recon.md` |
+| OWASP ZAP | `zap` | ✓ | OWASP ZAP scanning | `reference/zap-scanning-guide.md` |
+| Burp Suite | `burp` | | Burp Suite usage | `reference/vulnerability-testing-patterns.md` |
+| Nuclei | `nuclei` | | Nuclei template scanning | `reference/nuclei-templates.md` |
+| Pentest Plan | `pentest` | | Pentest planning | `reference/pentest-methodology-pitfalls.md` |
+| API DAST | `api` | | REST/GraphQL/WebSocket dynamic testing — OWASP API Top 10 2023, BOLA/BFLA, mass assignment, GraphQL abuse | `reference/api-dast.md` |
+| Mobile DAST | `mobile` | | iOS/Android built-app dynamic testing — MobSF, Frida, pinning bypass, storage dump, MASVS/MASTG | `reference/mobile-dast.md` |
+| Attack-Surface Recon | `recon` | | Passive external reconnaissance — subdomains, CT, DNS, tech fingerprint, secret search, shodan (no exploitation) | `reference/recon.md` |
 
 ## Subcommand Dispatch
 
@@ -200,18 +200,18 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| Static finding needs runtime proof | Exploitability validation | Confirmed/unconfirmed status with evidence | `references/vulnerability-testing-patterns.md` |
-| API/GraphQL/OAuth security testing | Targeted API DAST | BOLA/BFLA/auth findings with CVSS | `references/owasp-api-top10-2023.md` |
-| CI/CD security gate design | Pipeline scan strategy | Scan cadence plan with time budgets | `references/security-pipeline-pitfalls.md` |
-| Full penetration test request | Complete PLAN→REPORT workflow | Security assessment report | `references/pentest-methodology-pitfalls.md` |
-| ZAP/Nuclei scan configuration | Tool-specific setup | Scan configs, CLI commands, templates | `references/zap-scanning-guide.md` |
-| Critical vulnerability (CVSS ≥ 9.0) | Immediate validation + escalation | Confirmed finding → Triage handoff | `references/security-report-template.md` |
+| Static finding needs runtime proof | Exploitability validation | Confirmed/unconfirmed status with evidence | `reference/vulnerability-testing-patterns.md` |
+| API/GraphQL/OAuth security testing | Targeted API DAST | BOLA/BFLA/auth findings with CVSS | `reference/owasp-api-top10-2023.md` |
+| CI/CD security gate design | Pipeline scan strategy | Scan cadence plan with time budgets | `reference/security-pipeline-pitfalls.md` |
+| Full penetration test request | Complete PLAN→REPORT workflow | Security assessment report | `reference/pentest-methodology-pitfalls.md` |
+| ZAP/Nuclei scan configuration | Tool-specific setup | Scan configs, CLI commands, templates | `reference/zap-scanning-guide.md` |
+| Critical vulnerability (CVSS ≥ 9.0) | Immediate validation + escalation | Confirmed finding → Triage handoff | `reference/security-report-template.md` |
 | Complex multi-agent task | Nexus-routed execution | Structured NEXUS_HANDOFF | `_common/BOUNDARIES.md` |
 
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 - For API scope, always check BOLA/BFLA first — they represent ~40% of API attacks.
 
 ## Output Requirements
@@ -228,11 +228,11 @@ Every final deliverable must include:
 - Recommended next agent when follow-up is needed
 - For every confirmed runtime exploit, a `## LLM Fix Prompt` block — see `LLM Fix Prompt Generation` below. Suppress the prompt only for: reconnaissance / scope-mapping engagements, escalation to Breach for adversarial validation, or findings where Sentinel owns the source-level remediation prompt. In every suppression case, include a one-line note explaining why.
 
-Use `references/security-report-template.md` as the canonical report skeleton.
+Use `reference/security-report-template.md` as the canonical report skeleton.
 
 ## LLM Fix Prompt Generation
 
-When Probe confirms a runtime exploit, the report ends with a `## LLM Fix Prompt` block — a paste-ready, self-contained prompt that drives Builder (and parallel agents) toward a precise, security-correct change. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; Probe-specific verbs, suppression cases, template fields, and worked examples live in `references/fix-prompt-generation.md`.
+When Probe confirms a runtime exploit, the report ends with a `## LLM Fix Prompt` block — a paste-ready, self-contained prompt that drives Builder (and parallel agents) toward a precise, security-correct change. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; Probe-specific verbs, suppression cases, template fields, and worked examples live in `reference/fix-prompt-generation.md`.
 
 | Verb | Use when | Receiving agent |
 |------|----------|----------------|
@@ -317,20 +317,20 @@ Follow `_common/GIT_GUIDELINES.md`. Use Conventional Commits such as `feat(secur
 
 | File | Read this when... |
 | --- | --- |
-| `references/zap-scanning-guide.md` | You need ZAP baseline/API/auth scan defaults, CLI commands, or daemon/API usage |
-| `references/vulnerability-testing-patterns.md` | You are testing REST, GraphQL, OAuth, SQLi, XSS, or session-aware attack paths |
-| `references/nuclei-templates.md` | You need template-based scanning, custom Nuclei checks, or CI severity gates |
-| `references/sarif-integration.md` | You need SARIF output, ZAP-to-SARIF conversion, or GitHub Security upload flow |
-| `references/security-report-template.md` | You are preparing the final report or need the finding schema |
-| `references/dast-anti-patterns.md` | You need false-positive control, proof-based scanning rules, or DAST triage stages |
-| `references/pentest-methodology-pitfalls.md` | You are designing a penetration workflow or checking methodology gaps |
-| `references/owasp-api-top10-2023.md` | API scope exists and you need API1-API10 priorities and test strategy |
-| `references/security-pipeline-pitfalls.md` | You are designing CI/CD security gates, scan stages, or pipeline KPIs |
-| `references/api-dast.md` | You are running the `api` Recipe — REST/GraphQL/WebSocket DAST, BOLA/BFLA dual-identity testing, schemathesis+restler fuzzing, GraphQL introspection/depth/batching abuse |
-| `references/mobile-dast.md` | You are running the `mobile` Recipe — iOS/Android built-app dynamic testing, MobSF orchestration, Frida instrumentation, authorized SSL pinning bypass, OWASP MASVS/MASTG mapping |
-| `references/recon.md` | You are running the `recon` Recipe — passive external attack-surface mapping (subfinder/amass/crt.sh, dnsx/httpx, public-repo secret hunting, shodan/fofa/censys), no exploitation |
-| `references/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Probe-specific verb (EXPLOIT-FIX / HARDEN-RUNTIME / MITIGATE / BREAKING-FIX / AUTH-FIX / INVESTIGATE-FURTHER), or deciding whether to suppress the prompt (Sentinel ownership / Breach escalation / reconnaissance only). |
-| `references/llm-agent-security-2026.md` | The target embeds an LLM endpoint, RAG retriever, agentic / tool-calling workflow, or MCP server. OWASP Top 10 for LLM 2025 v2.0 (LLM01-LLM10), OWASP Top 10 for Agentic Applications (ASI01 Agent Goal Hijacking, indirect prompt injection), MCP-specific checks, Garak / PyRIT / Promptfoo / DeepTeam tooling, stochasticity proof standards. |
+| `reference/zap-scanning-guide.md` | You need ZAP baseline/API/auth scan defaults, CLI commands, or daemon/API usage |
+| `reference/vulnerability-testing-patterns.md` | You are testing REST, GraphQL, OAuth, SQLi, XSS, or session-aware attack paths |
+| `reference/nuclei-templates.md` | You need template-based scanning, custom Nuclei checks, or CI severity gates |
+| `reference/sarif-integration.md` | You need SARIF output, ZAP-to-SARIF conversion, or GitHub Security upload flow |
+| `reference/security-report-template.md` | You are preparing the final report or need the finding schema |
+| `reference/dast-anti-patterns.md` | You need false-positive control, proof-based scanning rules, or DAST triage stages |
+| `reference/pentest-methodology-pitfalls.md` | You are designing a penetration workflow or checking methodology gaps |
+| `reference/owasp-api-top10-2023.md` | API scope exists and you need API1-API10 priorities and test strategy |
+| `reference/security-pipeline-pitfalls.md` | You are designing CI/CD security gates, scan stages, or pipeline KPIs |
+| `reference/api-dast.md` | You are running the `api` Recipe — REST/GraphQL/WebSocket DAST, BOLA/BFLA dual-identity testing, schemathesis+restler fuzzing, GraphQL introspection/depth/batching abuse |
+| `reference/mobile-dast.md` | You are running the `mobile` Recipe — iOS/Android built-app dynamic testing, MobSF orchestration, Frida instrumentation, authorized SSL pinning bypass, OWASP MASVS/MASTG mapping |
+| `reference/recon.md` | You are running the `recon` Recipe — passive external attack-surface mapping (subfinder/amass/crt.sh, dnsx/httpx, public-repo secret hunting, shodan/fofa/censys), no exploitation |
+| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Probe-specific verb (EXPLOIT-FIX / HARDEN-RUNTIME / MITIGATE / BREAKING-FIX / AUTH-FIX / INVESTIGATE-FURTHER), or deciding whether to suppress the prompt (Sentinel ownership / Breach escalation / reconnaissance only). |
+| `reference/llm-agent-security-2026.md` | The target embeds an LLM endpoint, RAG retriever, agentic / tool-calling workflow, or MCP server. OWASP Top 10 for LLM 2025 v2.0 (LLM01-LLM10), OWASP Top 10 for Agentic Applications (ASI01 Agent Goal Hijacking, indirect prompt injection), MCP-specific checks, Garak / PyRIT / Promptfoo / DeepTeam tooling, stochasticity proof standards. |
 | `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Sentinel/Scout/Trail/Plea. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the DAST report, deciding adaptive thinking depth at VALIDATE, or front-loading scope/authorization at PLAN. Critical for Probe: P2, P5. |
 

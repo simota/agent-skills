@@ -8,7 +8,7 @@ Cross-tool agent instructions for this repository. Read by **Antigravity CLI (`a
 
 ## Repository Purpose
 
-`claude-skills` is a **prompt engineering repository** of 136+ specialist skill agents. The deliverables are **`SKILL.md` files** (not application code). Each skill lives at `<skill-name>/SKILL.md` with optional `references/`.
+`claude-skills` is a **prompt engineering repository** of 136+ specialist skill agents. The deliverables are **`SKILL.md` files** (not application code). Each skill lives at `<skill-name>/SKILL.md` with optional `reference/`.
 
 ---
 
@@ -25,7 +25,7 @@ Cross-tool agent instructions for this repository. Read by **Antigravity CLI (`a
 | Path | Purpose |
 |------|---------|
 | `<skill-name>/SKILL.md` | Each specialist agent's main definition (frontmatter: `name` + `description` only) |
-| `<skill-name>/references/` | Optional supporting docs the skill loads on demand |
+| `<skill-name>/reference/` | Optional supporting docs the skill loads on demand |
 | `_common/` | Shared protocols affecting all skills — **modify with care** |
 | `_common/CLI_COMPATIBILITY.md` | Cross-CLI compatibility matrix (Claude Code / Codex CLI / agy) |
 | `_common/BOUNDARIES.md` | Centralized agent-role boundaries |
@@ -42,7 +42,7 @@ Cross-tool agent instructions for this repository. Read by **Antigravity CLI (`a
 1. **Frontmatter discipline**: Each `SKILL.md` MUST contain exactly `name` and `description` keys. Capability declarations belong in the Markdown body (Anthropic Agent Skills spec; `chain` skill rejects custom keys).
 2. **Description quality**: `description:` should include 3-5 trigger keywords and the primary use case in ≤2 sentences. Vague descriptions cause tool bloat (40-50K token overhead in multi-skill loadouts).
 3. **CAPABILITIES_SUMMARY comment block**: Preserve the existing `<!-- CAPABILITIES_SUMMARY: ... -->` HTML comment format when editing existing skills. New skills follow `_templates/SKILL_TEMPLATE.md`.
-4. **References**: Heavy content (checklists, schemas, anti-patterns) goes in `references/<topic>.md` and is loaded on demand. Keep `SKILL.md` ≤300 lines.
+4. **References**: Heavy content (checklists, schemas, anti-patterns) goes in `reference/<topic>.md` and is loaded on demand. Keep `SKILL.md` ≤300 lines.
 5. **Cross-CLI compatibility**: Skills meant to run on multiple CLIs MUST include a `## Compatibility` section and consult `_common/CLI_COMPATIBILITY.md` instead of hard-coding `Agent(...)` syntax.
 6. **Boundaries**: Link to `_common/BOUNDARIES.md` rather than maintaining per-skill role-boundary tables.
 

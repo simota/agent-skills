@@ -834,7 +834,7 @@ Design an agent specialized in input validation.
 I want it to handle Zod/Yup schema validation and error message generation.
 ```
 
-**Output**: SKILL.md (complete specification), references/*.md (3-7 domain-specific knowledge files), Nexus integration design
+**Output**: SKILL.md (complete specification), reference/*.md (3-7 domain-specific knowledge files), Nexus integration design
 
 ---
 

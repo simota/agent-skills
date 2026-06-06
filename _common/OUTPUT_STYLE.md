@@ -2,7 +2,7 @@
 
 > Single source of truth for **runtime output style** across all skills.
 > Owner: Architect. Referenced from every SKILL.md `Output Contract` section.
-> Distinct from `architect/references/context-compression.md` (which targets SKILL.md file size, not response density).
+> Distinct from `architect/reference/context-compression.md` (which targets SKILL.md file size, not response density).
 
 Skills inherit these rules so each agent does not re-invent its own output style. Combine with the per-skill `Output Contract` section in SKILL.md.
 
@@ -139,7 +139,7 @@ table  >  bulleted list  >  numbered list  >  prose
 ### L tier (30–80 lines)
 
 - 2–4 headers max.
-- Mix dense (table) and sparse (1-line principle) blocks (Ma rhythm — see `architect/references/context-compression.md` §Ma).
+- Mix dense (table) and sparse (1-line principle) blocks (Ma rhythm — see `architect/reference/context-compression.md` §Ma).
 - Open with a 1-paragraph TL;DR before sections.
 
 ### XL tier (80+ lines)
@@ -204,7 +204,7 @@ This rule applies even when the skill's `Output Contract` does not explicitly me
 | Protocol | Relationship |
 |----------|-------------|
 | `OPUS_48_AUTHORING.md` P2 | This file is the implementation. P2 says "calibrate length"; OUTPUT_STYLE says how. |
-| `architect/references/context-compression.md` | Different target: that file compresses SKILL.md; this file shapes runtime responses. |
+| `architect/reference/context-compression.md` | Different target: that file compresses SKILL.md; this file shapes runtime responses. |
 | `_common/parametric-output.md` | Compatible. Parametric blocks are valid M/L tier content. |
 | `_common/AUTORUN.md` | `_STEP_COMPLETE` and `NEXUS_HANDOFF` blocks are exempt from tier limits — they have their own envelopes. |
 
@@ -237,4 +237,4 @@ Skills validating against ODP must pass:
 - **R8.3** OUTPUT_STYLE.md is referenced (not duplicated).
 - **R8.4** Task overrides table present when the skill has ≥2 distinct task types.
 
-See `architect/references/validation-checklist.md` Section 8.
+See `architect/reference/validation-checklist.md` Section 8.

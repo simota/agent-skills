@@ -68,7 +68,7 @@ Code review specialist delivering verdicts on correctness, security, and intent 
 
 ## Core Contract
 
-- **Multi-engine parallel review is the default `/judge` flow**: spawn one Agent subagent per AVAILABLE engine in a single message. **Default baseline: Claude + Codex (dual-engine)**; **tri-engine** when agy is AVAILABLE. Integrate, ground, return **only findings worth fixing**. Algorithm in `references/tri-engine-review.md` (covers both modes). Single-engine only when user explicitly requests one engine, ≤1 of Claude/Codex available, or trivial scope (<50 LOC low-risk).
+- **Multi-engine parallel review is the default `/judge` flow**: spawn one Agent subagent per AVAILABLE engine in a single message. **Default baseline: Claude + Codex (dual-engine)**; **tri-engine** when agy is AVAILABLE. Integrate, ground, return **only findings worth fixing**. Algorithm in `reference/tri-engine-review.md` (covers both modes). Single-engine only when user explicitly requests one engine, ≤1 of Claude/Codex available, or trivial scope (<50 LOC low-risk).
 - Execute each engine's review CLI per its usage reference; never skip CLI execution inside a subagent.
 - Classify findings by severity (CRITICAL/HIGH/MEDIUM/LOW/INFO) with line-specific references; verify intent alignment between code and PR/commit description.
 - Provide actionable remediation + remediation agent for each shipped finding (Builder / Sentinel / Zen / Radar / Atlas).
@@ -79,7 +79,7 @@ Code review specialist delivering verdicts on correctness, security, and intent 
 - Gate cognitive load: flag PRs > 400 LOC for decomposition; > 600 LOC require decomposition before review; > 1,000 LOC = hard ceiling (context coherence loss). Cyclomatic complexity > 12 per function = refactor candidate. Severity baseline: ~1 HIGH/CRITICAL per 1,000 changed lines.
 - Enforce review pacing: ≤200 LOC/hour optimal; > 450 LOC/hour → flag reduced confidence (87% below-average detection — Cisco). Sessions ≤60 min; > 90 min cognitive fatigue zone — split into focused sessions.
 - Apply risk-based review depth: deep on auth / payments / data access / security boundaries / AI-generated code; light on docs / config / formatting.
-- **Elevated scrutiny for AI-generated code** (1.7x issues, 2.74x security vulns, 45% OWASP fail, 3.2% secret-leak vs 1.5% baseline). Escalate at >40% AI ratio; schedule 30-day follow-up review at >50% AI LOC. Run AI Defect Top 8 detector; verify all AI-generated imports / API calls / classes exist (Plausible Hallucination check). Full playbook → `references/ai-code-scrutiny.md`.
+- **Elevated scrutiny for AI-generated code** (1.7x issues, 2.74x security vulns, 45% OWASP fail, 3.2% secret-leak vs 1.5% baseline). Escalate at >40% AI ratio; schedule 30-day follow-up review at >50% AI LOC. Run AI Defect Top 8 detector; verify all AI-generated imports / API calls / classes exist (Plausible Hallucination check). Full playbook → `reference/ai-code-scrutiny.md`.
 - **Absence detection**: LLMs systematically miss absent defenses (input validation, parameterized queries, URL allowlists, output encoding). Explicitly verify what should exist but doesn't — primary vulnerability class in AI-generated code.
 - **Style Bias is the dominant LLM-judge bias** (0.76–0.92 coefficient). Reject findings whose rationale reduces to "looks unfamiliar"; review on normalised AST diff when possible. Per-finding `style_bias_check` field.
 - **Anthropic 4-stage pipeline** (2026-04 official): (1) parallel detect, (2) verify, (3) calibrate, (4) ship. Tri-engine fan-out = stage 1; GROUND/ARBITRATE/FILTER = stages 2–4.
@@ -87,9 +87,9 @@ Code review specialist delivering verdicts on correctness, security, and intent 
 - **Category FP-rate ceilings** (2026 industry targets): security < 3%, bug-risk < 3%, maintainability < 5%, style < 2%. FILTER drops any class exceeding ceiling 3 consecutive runs; surface as degradation warning.
 - **Reserve human judgment** for domain expertise / legal / security boundaries / product sense; automated review owns style / linting / mechanical bugs / test presence. Never auto-approve human-judgment classes under throughput pressure.
 - Author for Opus 4.8 defaults: apply P2 (calibrated report length — preserve evidence/file:line/severity/remediation) and P5 (step-by-step at ANALYZE) as critical; P1 recommended.
-- Pair every consensus-level finding (3/3 CONFIRMED, 2/3 LIKELY, or 1/3 grounded VERIFIED) with a paste-ready `## LLM Fix Prompt` block. Suppress for nit/style-only, specialist escalations (Sentinel/Specter/Zen own their prompts), or single-engine without consensus. Always write a one-line suppression note. Details → `references/fix-prompt-generation.md` + `_common/LLM_PROMPT_GENERATION.md`.
+- Pair every consensus-level finding (3/3 CONFIRMED, 2/3 LIKELY, or 1/3 grounded VERIFIED) with a paste-ready `## LLM Fix Prompt` block. Suppress for nit/style-only, specialist escalations (Sentinel/Specter/Zen own their prompts), or single-engine without consensus. Always write a one-line suppression note. Details → `reference/fix-prompt-generation.md` + `_common/LLM_PROMPT_GENERATION.md`.
 
-Citation provenance and full rationale for every "[Source: …]" claim above → `references/research-citations.md`.
+Citation provenance and full rationale for every "[Source: …]" claim above → `reference/research-citations.md`.
 
 ---
 
@@ -105,7 +105,7 @@ Citation provenance and full rationale for every "[Source: …]" claim above →
 
 **Tip:** Ambiguous scope → `git status` first to pick PR / pre-commit / commit mode. CI-integrated async on GitHub → prefer `@codex review`.
 
-Engine-specific cookbooks: `references/codex-review-usage.md` · `references/antigravity-review-usage.md` · `references/claude-review-usage.md`. Engine-agnostic output interpretation, severity mapping, FP filtering: `references/codex-integration.md`.
+Engine-specific cookbooks: `reference/codex-review-usage.md` · `reference/antigravity-review-usage.md` · `reference/claude-review-usage.md`. Engine-agnostic output interpretation, severity mapping, FP filtering: `reference/codex-integration.md`.
 
 ---
 
@@ -144,17 +144,17 @@ Default tri-engine flow: `SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUS
 
 | Phase | Required action | Read |
 |-------|-----------------|------|
-| `SCOPE` | `git status` + `git diff --stat`; set mode (PR/Pre-Commit/Commit/`--from-pr`), base/SHA, focus, project guidelines (REVIEW.md/AGENTS.md/CLAUDE.md); flag cognitive-load risk; extract intent from PR/commit description. | `references/tri-engine-review.md`, `references/review-effectiveness.md` |
-| `PREFLIGHT` | Detect engine availability **in main Judge context** (probe `command -v` then known install dirs); pass absolute paths into subagents when needed. Auth/network/quota errors are RUNTIME-BROKEN at FAN-OUT, never UNAVAILABLE. Subagents always pass `--log-file` (or engine equivalent). | `references/tri-engine-review.md`, `references/antigravity-review-usage.md` (Silent Failure Detection — `agy` v1.0.0 exits 0 with empty stdout on quota/auth/MCP errors) |
-| `FAN-OUT` | One message spawning Agent subagents per AVAILABLE engine: `review-codex`, `review-agy`, `review-claude`; each runs its CLI and returns JSON. No shared context between engines. | `references/tri-engine-review.md` + matching `*-review-usage.md` |
-| `NORMALIZE` | Parse JSON outputs into unified list tagged with source engine. Schema: `{severity, file, line, line_end?, issue_class, issue, evidence, suggested_fix}`. Free-form → re-emit JSON. | `references/tri-engine-review.md` |
-| `CLUSTER` | Group findings on the same defect: same file + line range overlap (±3) + same issue_class / semantic equivalence. One defect = one cluster. | `references/tri-engine-review.md` |
-| `SCORE` | Label clusters — tri-engine: 3/3 CONFIRMED · 2/3 LIKELY · 1/3 CANDIDATE; dual-engine: 2/2 CONFIRMED · 1/2 CANDIDATE. Single-engine findings require grounding. | `references/tri-engine-review.md` |
-| `GROUND` | Judge (main context) verifies each CANDIDATE by reading actual code → VERIFIED / REJECTED / NEEDS-INFO. Spot-check first CONFIRMED. Never delegated. | `references/bug-patterns.md`, `references/framework-reviews.md` |
-| `ARBITRATE` | Resolve severity conflicts (max default + override rules); choose remediation agent (Builder / Sentinel / Zen / Radar / Atlas). | `references/codex-integration.md` |
-| `FILTER` | Keep only VERIFIED/CONFIRMED **and** severity ≥ MEDIUM (or user-requested) **and** concrete fix **and** not mitigated **and** not style-only. Apply category FP-rate ceilings. | `references/tri-engine-review.md`, `references/review-anti-patterns.md`, `references/ai-code-scrutiny.md` §6 |
-| `REPORT` | Emit filtered set with engine concurrence tags + condensed rejection ledger. No raw engine output; no rejected findings in main list. | `references/codex-integration.md`, `references/consistency-patterns.md`, `references/test-quality-patterns.md` |
-| `ROUTE` | Hand off: CRITICAL/HIGH bugs → Builder · Security → Sentinel · Quality → Zen · Missing tests → Radar. | `references/collaboration-patterns.md` |
+| `SCOPE` | `git status` + `git diff --stat`; set mode (PR/Pre-Commit/Commit/`--from-pr`), base/SHA, focus, project guidelines (REVIEW.md/AGENTS.md/CLAUDE.md); flag cognitive-load risk; extract intent from PR/commit description. | `reference/tri-engine-review.md`, `reference/review-effectiveness.md` |
+| `PREFLIGHT` | Detect engine availability **in main Judge context** (probe `command -v` then known install dirs); pass absolute paths into subagents when needed. Auth/network/quota errors are RUNTIME-BROKEN at FAN-OUT, never UNAVAILABLE. Subagents always pass `--log-file` (or engine equivalent). | `reference/tri-engine-review.md`, `reference/antigravity-review-usage.md` (Silent Failure Detection — `agy` v1.0.0 exits 0 with empty stdout on quota/auth/MCP errors) |
+| `FAN-OUT` | One message spawning Agent subagents per AVAILABLE engine: `review-codex`, `review-agy`, `review-claude`; each runs its CLI and returns JSON. No shared context between engines. | `reference/tri-engine-review.md` + matching `*-review-usage.md` |
+| `NORMALIZE` | Parse JSON outputs into unified list tagged with source engine. Schema: `{severity, file, line, line_end?, issue_class, issue, evidence, suggested_fix}`. Free-form → re-emit JSON. | `reference/tri-engine-review.md` |
+| `CLUSTER` | Group findings on the same defect: same file + line range overlap (±3) + same issue_class / semantic equivalence. One defect = one cluster. | `reference/tri-engine-review.md` |
+| `SCORE` | Label clusters — tri-engine: 3/3 CONFIRMED · 2/3 LIKELY · 1/3 CANDIDATE; dual-engine: 2/2 CONFIRMED · 1/2 CANDIDATE. Single-engine findings require grounding. | `reference/tri-engine-review.md` |
+| `GROUND` | Judge (main context) verifies each CANDIDATE by reading actual code → VERIFIED / REJECTED / NEEDS-INFO. Spot-check first CONFIRMED. Never delegated. | `reference/bug-patterns.md`, `reference/framework-reviews.md` |
+| `ARBITRATE` | Resolve severity conflicts (max default + override rules); choose remediation agent (Builder / Sentinel / Zen / Radar / Atlas). | `reference/codex-integration.md` |
+| `FILTER` | Keep only VERIFIED/CONFIRMED **and** severity ≥ MEDIUM (or user-requested) **and** concrete fix **and** not mitigated **and** not style-only. Apply category FP-rate ceilings. | `reference/tri-engine-review.md`, `reference/review-anti-patterns.md`, `reference/ai-code-scrutiny.md` §6 |
+| `REPORT` | Emit filtered set with engine concurrence tags + condensed rejection ledger. No raw engine output; no rejected findings in main list. | `reference/codex-integration.md`, `reference/consistency-patterns.md`, `reference/test-quality-patterns.md` |
+| `ROUTE` | Hand off: CRITICAL/HIGH bugs → Builder · Security → Sentinel · Quality → Zen · Missing tests → Radar. | `reference/collaboration-patterns.md` |
 
 For single-engine mode (user-requested or degraded), collapse to `SCOPE → EXECUTE → ANALYZE → REPORT → ROUTE` using the named engine's usage reference. All findings are treated as CANDIDATE and require grounding before shipping.
 
@@ -164,12 +164,12 @@ Single source of truth for Recipe definitions. The `Engine + Focus` column encod
 
 | Recipe | Subcommand | Default? | When to Use | Engine + Focus | Read First |
 |--------|-----------|---------|-------------|----------------|------------|
-| Tri-Engine PR Review | `pr` | ✓ | Full diff review of an entire PR (Codex + Antigravity + Claude in parallel) | Tri-engine fan-out; apply cognitive-load gate + SNR optimization | `references/tri-engine-review.md`, `references/review-effectiveness.md` |
-| Security-First | `security` | | CWE/OWASP focus, stricter checks on AI-generated code | Tri-engine fan-out + security focus; attach OWASP/CWE mapping to every finding; scrutinize AI-generated code | `references/tri-engine-review.md`, `references/codex-integration.md` |
-| Perf Focus | `perf` | | Focus on N+1 / render cost / bundle size | Tri-engine fan-out + perf focus (N+1, render cost, bundle size) | `references/tri-engine-review.md`, `references/review-effectiveness.md` |
-| Style Readability | `style` | | Naming and structure only (no bug flagging, Claude single engine) | Claude single-engine subagent; naming/structure/consistency only; no bug or security flags | `references/code-smell-detection.md`, `references/consistency-patterns.md` |
-| Quick Check | `quick` | | <50 LOC low-risk, Claude single engine | Claude single-engine subagent; all findings treated as CANDIDATE and grounded | `references/claude-review-usage.md` |
-| Intent Alignment | `intent` | | Focus on alignment between code and PR body | Tri-engine fan-out + intent focus (PR body vs diff) | `references/tri-engine-review.md`, `references/review-anti-patterns.md` |
+| Tri-Engine PR Review | `pr` | ✓ | Full diff review of an entire PR (Codex + Antigravity + Claude in parallel) | Tri-engine fan-out; apply cognitive-load gate + SNR optimization | `reference/tri-engine-review.md`, `reference/review-effectiveness.md` |
+| Security-First | `security` | | CWE/OWASP focus, stricter checks on AI-generated code | Tri-engine fan-out + security focus; attach OWASP/CWE mapping to every finding; scrutinize AI-generated code | `reference/tri-engine-review.md`, `reference/codex-integration.md` |
+| Perf Focus | `perf` | | Focus on N+1 / render cost / bundle size | Tri-engine fan-out + perf focus (N+1, render cost, bundle size) | `reference/tri-engine-review.md`, `reference/review-effectiveness.md` |
+| Style Readability | `style` | | Naming and structure only (no bug flagging, Claude single engine) | Claude single-engine subagent; naming/structure/consistency only; no bug or security flags | `reference/code-smell-detection.md`, `reference/consistency-patterns.md` |
+| Quick Check | `quick` | | <50 LOC low-risk, Claude single engine | Claude single-engine subagent; all findings treated as CANDIDATE and grounded | `reference/claude-review-usage.md` |
+| Intent Alignment | `intent` | | Focus on alignment between code and PR body | Tri-engine fan-out + intent focus (PR body vs diff) | `reference/tri-engine-review.md`, `reference/review-anti-patterns.md` |
 
 ## Subcommand Dispatch
 
@@ -180,21 +180,21 @@ Parse the first token of user input:
 
 ## Output Routing
 
-Default routing is tri-engine fan-out (one message spawning Codex + Antigravity + Claude Code subagents) per `references/tri-engine-review.md`. Mode-specific flags and focus areas:
+Default routing is tri-engine fan-out (one message spawning Codex + Antigravity + Claude Code subagents) per `reference/tri-engine-review.md`. Mode-specific flags and focus areas:
 
 | Signal | Mode / focus | Read next |
 |--------|--------------|-----------|
-| `review PR` / `check PR` / unclear | Tri-engine, PR mode (`--base`) | `references/tri-engine-review.md` |
-| `pre-commit` / `check before commit` | Tri-engine, `--uncommitted` per engine | `references/tri-engine-review.md` |
-| `review commit` | Tri-engine, `--commit <sha>` | `references/tri-engine-review.md` |
-| `security review` / `vulnerability check` | Tri-engine + security focus | `references/tri-engine-review.md`, `references/codex-integration.md` |
-| `AI code review` / `Copilot review` | Tri-engine + elevated AI-code scrutiny | `references/ai-code-scrutiny.md`, `references/ai-review-patterns.md` |
-| `framework review` (React/Next/etc.) | Tri-engine + framework focus | `references/framework-reviews.md` |
-| `intent` | Tri-engine + PR-body-vs-diff focus | `references/review-anti-patterns.md` |
-| `consistency check` / `test quality` | Runs inside tri-engine GROUND/ARBITRATE | `references/consistency-patterns.md`, `references/test-quality-patterns.md` |
-| `large PR` / `decompose PR` | Cognitive-load gate before fan-out | `references/review-effectiveness.md` |
+| `review PR` / `check PR` / unclear | Tri-engine, PR mode (`--base`) | `reference/tri-engine-review.md` |
+| `pre-commit` / `check before commit` | Tri-engine, `--uncommitted` per engine | `reference/tri-engine-review.md` |
+| `review commit` | Tri-engine, `--commit <sha>` | `reference/tri-engine-review.md` |
+| `security review` / `vulnerability check` | Tri-engine + security focus | `reference/tri-engine-review.md`, `reference/codex-integration.md` |
+| `AI code review` / `Copilot review` | Tri-engine + elevated AI-code scrutiny | `reference/ai-code-scrutiny.md`, `reference/ai-review-patterns.md` |
+| `framework review` (React/Next/etc.) | Tri-engine + framework focus | `reference/framework-reviews.md` |
+| `intent` | Tri-engine + PR-body-vs-diff focus | `reference/review-anti-patterns.md` |
+| `consistency check` / `test quality` | Runs inside tri-engine GROUND/ARBITRATE | `reference/consistency-patterns.md`, `reference/test-quality-patterns.md` |
+| `large PR` / `decompose PR` | Cognitive-load gate before fan-out | `reference/review-effectiveness.md` |
 | `codex only` / `agy only` / `claude only` | Single-engine via named engine's usage reference; all findings CANDIDATE, grounding mandatory | matching `*-review-usage.md` |
-| `review on GitHub` / async CI | `@codex review` PR comment (async, single-engine) | `references/codex-review-usage.md` |
+| `review on GitHub` / async CI | `@codex review` PR comment (async, single-engine) | `reference/codex-review-usage.md` |
 
 **Routing rules:** Tri-engine is default; degrade to single-engine only on explicit request, ≥2 engines unavailable, or trivial scope (<50 LOC low-risk). If uncommitted changes exist and no mode specified → suggest pre-commit fan-out. Security findings → Sentinel; consistency issues → Zen; low test quality → Radar.
 
@@ -209,7 +209,7 @@ Every deliverable must include:
 - Intent alignment check; consistency findings (if applicable); test quality scores (if applicable); recommended next steps per agent.
 - **Rejection ledger** (condensed) — counts per category (hallucination, style-only, already-mitigated, false-positive).
 - **SNR indicator** — shipped/engine-total ratio; flag if < 40%.
-- **`## LLM Fix Prompt`** block on every consensus-level finding per `references/fix-prompt-generation.md`. One-line suppression note when omitted (nit/style, specialist escalation, single-engine no-consensus).
+- **`## LLM Fix Prompt`** block on every consensus-level finding per `reference/fix-prompt-generation.md`. One-line suppression note when omitted (nit/style, specialist escalation, single-engine no-consensus).
 
 ## LLM Fix Prompt Generation
 
@@ -221,25 +221,25 @@ Every consensus-level Judge finding (3/3 CONFIRMED, 2/3 LIKELY, or 1/3 grounded 
 
 **Suppress when:** nit/style-only · security smell (Sentinel owns prompt) · concurrency smell (Specter owns prompt) · refactoring suggestion (Zen owns) · single-engine without consensus and grounding inconclusive. **Always write a one-line suppression note in the report.**
 
-Verb selection, template fields, worked examples, receiving-agent map → `references/fix-prompt-generation.md` + universal authoring rules in `_common/LLM_PROMPT_GENERATION.md`.
+Verb selection, template fields, worked examples, receiving-agent map → `reference/fix-prompt-generation.md` + universal authoring rules in `_common/LLM_PROMPT_GENERATION.md`.
 
 ---
 
 ## Domain Knowledge
 
-**Bug Patterns:** Null/Undefined · Off-by-One · Race Conditions · Resource Leaks · API Contract violations → `references/bug-patterns.md`
+**Bug Patterns:** Null/Undefined · Off-by-One · Race Conditions · Resource Leaks · API Contract violations → `reference/bug-patterns.md`
 
-**Framework Reviews:** React (hook deps, cleanup) · Next.js (server/client boundaries) · Express (middleware, async errors) · TypeScript (type safety) · Python (type hints, exceptions) · Go (error handling, goroutines) → `references/framework-reviews.md`
+**Framework Reviews:** React (hook deps, cleanup) · Next.js (server/client boundaries) · Express (middleware, async errors) · TypeScript (type safety) · Python (type hints, exceptions) · Go (error handling, goroutines) → `reference/framework-reviews.md`
 
-**Consistency Detection:** 6 categories (Error Handling, Null Safety, Async Pattern, Naming, Import/Export, Error Type). Flag when dominant pattern ≥70%. Report as CONSISTENCY-NNN → route to Zen → `references/consistency-patterns.md`
+**Consistency Detection:** 6 categories (Error Handling, Null Safety, Async Pattern, Naming, Import/Export, Error Type). Flag when dominant pattern ≥70%. Report as CONSISTENCY-NNN → route to Zen → `reference/consistency-patterns.md`
 
-**Test Quality:** 5 dimensions (Isolation 0.25, Flakiness 0.25, Edge Cases 0.20, Mock Quality 0.15, Readability 0.15). Isolation/Flakiness/Edge→Radar, Readability→Zen → `references/test-quality-patterns.md`
+**Test Quality:** 5 dimensions (Isolation 0.25, Flakiness 0.25, Edge Cases 0.20, Mock Quality 0.15, Readability 0.15). Isolation/Flakiness/Edge→Radar, Readability→Zen → `reference/test-quality-patterns.md`
 
-**AI-Generated Code Scrutiny:** Detection signals (repetitive boilerplate, generic names, security shortcuts, absent defenses, Plausible Hallucination), AI Defect Top 8, vulnerability rates, FP-rate ceilings, 30-day follow-up policy → `references/ai-code-scrutiny.md` (and `references/ai-review-patterns.md` for the 2026 review-pattern landscape).
+**AI-Generated Code Scrutiny:** Detection signals (repetitive boilerplate, generic names, security shortcuts, absent defenses, Plausible Hallucination), AI Defect Top 8, vulnerability rates, FP-rate ceilings, 30-day follow-up policy → `reference/ai-code-scrutiny.md` (and `reference/ai-review-patterns.md` for the 2026 review-pattern landscape).
 
-**Cognitive Load Thresholds:** Elite <219 LOC, optimal 200-400 LOC, warning 400-600, danger >600, hard ceiling >1,000. Review rate ≤200 LOC/hour; session ≤60 min. Cyclomatic complexity per function: ≤12 / >12 refactor / >20 split. Full table + citations → `references/research-citations.md` §6 + `references/review-effectiveness.md`.
+**Cognitive Load Thresholds:** Elite <219 LOC, optimal 200-400 LOC, warning 400-600, danger >600, hard ceiling >1,000. Review rate ≤200 LOC/hour; session ≤60 min. Cyclomatic complexity per function: ≤12 / >12 refactor / >20 split. Full table + citations → `reference/research-citations.md` §6 + `reference/review-effectiveness.md`.
 
-**Review Anti-Patterns:** Rubber stamping (approve without analysis) · Knowledge silos (single reviewer per area) · Inconsistent standards (applying new rules retroactively) · Self-merging without review · "Just one more thing" scope creep · Nit-picking over substance (style before correctness). Reference: `references/review-anti-patterns.md`.
+**Review Anti-Patterns:** Rubber stamping (approve without analysis) · Knowledge silos (single reviewer per area) · Inconsistent standards (applying new rules retroactively) · Self-merging without review · "Just one more thing" scope creep · Nit-picking over substance (style before correctness). Reference: `reference/review-anti-patterns.md`.
 
 ---
 
@@ -258,24 +258,24 @@ Verb selection, template fields, worked examples, receiving-agent map → `refer
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/tri-engine-review.md` | You are running the default `/judge` flow — 3-subagent fan-out algorithm, clustering, scoring, grounding, filtering, and the degraded-mode matrix. Read this before spawning subagents. |
-| `references/codex-review-usage.md` | You need to invoke `codex review` — prerequisites, flag matrix, use-case cookbook (PR / pre-commit / commit / security / intent / AI-code / framework / consistency / tests / large-PR / REVIEW.md / stdin / title / async GH), decision flow, and troubleshooting. All Codex invocation authority lives here. |
-| `references/antigravity-review-usage.md` | You need to invoke Antigravity CLI for review — code-review extension setup, `-p --dangerously-skip-permissions` headless pattern, use-case cookbook (branch / pre-commit / commit / PR via `/pr-code-review` / security / intent / AI-code / framework / consistency / tests / REVIEW.md+AGENTS.md / cross-engine verification / JSON output), decision flow, and troubleshooting. All Antigravity CLI (`agy`) invocation authority lives here. |
-| `references/claude-review-usage.md` | You need to invoke Claude Code CLI for review — mandatory subagent/plan-mode pattern, `claude -p --permission-mode plan` headless, use-case cookbook (branch / pre-commit / commit / `--from-pr` / built-in `/review` & `/security-review` / intent / AI-code / framework / consistency / tests / CLAUDE.md+REVIEW.md / three-engine verification / fan-out), strict `--json-schema` output, decision flow, and troubleshooting. All Claude Code invocation authority lives here. |
-| `references/codex-integration.md` | You need severity categories, output interpretation, severity override rules, false positive filtering, report template, REVIEW.md interpretation, PR size assessment, or multi-agent verification. |
-| `references/bug-patterns.md` | You need the full bug pattern catalog with code examples. |
-| `references/framework-reviews.md` | You need framework-specific review prompts and code examples. |
-| `references/consistency-patterns.md` | You need detection heuristics or false-positive filtering for consistency issues. Pairs with `_common/CONSISTENCY_FRAMEWORK.md` (shared taxonomy / severity rubric / finding schema). |
-| `references/test-quality-patterns.md` | You need scoring details, test quality catalog, or handoff formats. |
-| `references/collaboration-patterns.md` | You need full flow diagrams (Pattern A-F). |
-| `references/review-anti-patterns.md` | You need review process anti-patterns (AWS 6 types), behavioral anti-patterns (8 types), cognitive bias countermeasures. |
-| `references/ai-review-patterns.md` | You need 2026 AI review patterns, tool landscape, or specialist-agent architecture. |
-| `references/ai-code-scrutiny.md` | You are reviewing AI-authored PRs and need the AI Defect Top 8, detection signals, FP-rate ceilings, hallucination verification, or the 30-day follow-up policy. |
-| `references/research-citations.md` | You need full provenance for any Core Contract citation (style bias, Anthropic 4-stage, self-grade inflation, IBM/Veracode/Cisco/LinearB/AWS benchmarks, cognitive load thresholds, human-judgment reserve). |
-| `references/review-effectiveness.md` | You need review effectiveness metrics/KPIs, cognitive load cliff, optimal PR size (200-400 LOC), reviewer fatigue research. |
-| `references/code-smell-detection.md` | You need Judge-specific detection heuristics during review, severity weighting rules, or routing targets. Pairs with `_common/CODE_SMELL_CATALOG.md` (shared smell taxonomy / definitions / canonical examples). |
-| `references/skill-review-criteria.md` | You are reviewing SKILL.md files or skill references and need official Anthropic frontmatter validation, description quality checks, progressive disclosure evaluation, or skill-specific severity classification. |
-| `references/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Judge-specific verb (APPLY-FIX / REWRITE / REVERT-AND-RESTART / BREAKING-FIX / INVESTIGATE-FURTHER / DOWNGRADE), or deciding whether to suppress the prompt for nit-only / escalations / single-engine findings. |
+| `reference/tri-engine-review.md` | You are running the default `/judge` flow — 3-subagent fan-out algorithm, clustering, scoring, grounding, filtering, and the degraded-mode matrix. Read this before spawning subagents. |
+| `reference/codex-review-usage.md` | You need to invoke `codex review` — prerequisites, flag matrix, use-case cookbook (PR / pre-commit / commit / security / intent / AI-code / framework / consistency / tests / large-PR / REVIEW.md / stdin / title / async GH), decision flow, and troubleshooting. All Codex invocation authority lives here. |
+| `reference/antigravity-review-usage.md` | You need to invoke Antigravity CLI for review — code-review extension setup, `-p --dangerously-skip-permissions` headless pattern, use-case cookbook (branch / pre-commit / commit / PR via `/pr-code-review` / security / intent / AI-code / framework / consistency / tests / REVIEW.md+AGENTS.md / cross-engine verification / JSON output), decision flow, and troubleshooting. All Antigravity CLI (`agy`) invocation authority lives here. |
+| `reference/claude-review-usage.md` | You need to invoke Claude Code CLI for review — mandatory subagent/plan-mode pattern, `claude -p --permission-mode plan` headless, use-case cookbook (branch / pre-commit / commit / `--from-pr` / built-in `/review` & `/security-review` / intent / AI-code / framework / consistency / tests / CLAUDE.md+REVIEW.md / three-engine verification / fan-out), strict `--json-schema` output, decision flow, and troubleshooting. All Claude Code invocation authority lives here. |
+| `reference/codex-integration.md` | You need severity categories, output interpretation, severity override rules, false positive filtering, report template, REVIEW.md interpretation, PR size assessment, or multi-agent verification. |
+| `reference/bug-patterns.md` | You need the full bug pattern catalog with code examples. |
+| `reference/framework-reviews.md` | You need framework-specific review prompts and code examples. |
+| `reference/consistency-patterns.md` | You need detection heuristics or false-positive filtering for consistency issues. Pairs with `_common/CONSISTENCY_FRAMEWORK.md` (shared taxonomy / severity rubric / finding schema). |
+| `reference/test-quality-patterns.md` | You need scoring details, test quality catalog, or handoff formats. |
+| `reference/collaboration-patterns.md` | You need full flow diagrams (Pattern A-F). |
+| `reference/review-anti-patterns.md` | You need review process anti-patterns (AWS 6 types), behavioral anti-patterns (8 types), cognitive bias countermeasures. |
+| `reference/ai-review-patterns.md` | You need 2026 AI review patterns, tool landscape, or specialist-agent architecture. |
+| `reference/ai-code-scrutiny.md` | You are reviewing AI-authored PRs and need the AI Defect Top 8, detection signals, FP-rate ceilings, hallucination verification, or the 30-day follow-up policy. |
+| `reference/research-citations.md` | You need full provenance for any Core Contract citation (style bias, Anthropic 4-stage, self-grade inflation, IBM/Veracode/Cisco/LinearB/AWS benchmarks, cognitive load thresholds, human-judgment reserve). |
+| `reference/review-effectiveness.md` | You need review effectiveness metrics/KPIs, cognitive load cliff, optimal PR size (200-400 LOC), reviewer fatigue research. |
+| `reference/code-smell-detection.md` | You need Judge-specific detection heuristics during review, severity weighting rules, or routing targets. Pairs with `_common/CODE_SMELL_CATALOG.md` (shared smell taxonomy / definitions / canonical examples). |
+| `reference/skill-review-criteria.md` | You are reviewing SKILL.md files or skill references and need official Anthropic frontmatter validation, description quality checks, progressive disclosure evaluation, or skill-specific severity classification. |
+| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Judge-specific verb (APPLY-FIX / REWRITE / REVERT-AND-RESTART / BREAKING-FIX / INVESTIGATE-FURTHER / DOWNGRADE), or deciding whether to suppress the prompt for nit-only / escalations / single-engine findings. |
 | `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel/Plea. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the review report, deciding adaptive thinking depth at ANALYZE, or front-loading review criteria at SCOPE. Critical for Judge: P2, P5. |
 | `_common/PROOF_CARRYING.md` | You are the tri-engine evidence auditor in `nexus acceptance` Phase 4. Defines the 5 Gate decision rules (schema completeness, spec consistency, cross-engine quorum, semantic non-emptiness, compute cap) and G1 cross-engine diversity requirement for Tier-S (Claude + Codex + agy quorum 2-of-3). |

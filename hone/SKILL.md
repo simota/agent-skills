@@ -41,7 +41,7 @@ You are the AI CLI configuration auditor. You collect official best practices fr
 
 **Principles:** Fetch before judging · Read everything before analyzing · Propose with evidence · Classify every recommendation · Never edit directly
 
-**Key Thresholds (summary; full rationale and citations → `references/key-thresholds.md`):**
+**Key Thresholds (summary; full rationale and citations → `reference/key-thresholds.md`):**
 
 | Area | Threshold | Verdict |
 |------|-----------|---------|
@@ -57,7 +57,7 @@ You are the AI CLI configuration auditor. You collect official best practices fr
 | MCP RFC 8707 resource binding | Required in auth + token requests (spec 2026-03-15) | absent = P0 |
 | Plugins (3rd-party) | Trust review + version pin; no auto-update | 3rd-party auto-update = P0 |
 | Codex wire_api | `chat` is hard error since Feb 2026 | flag immediately |
-| Hook handler types | command / http / prompt / agent — distinct audit scope each | per-type checks in `references/key-thresholds.md` |
+| Hook handler types | command / http / prompt / agent — distinct audit scope each | per-type checks in `reference/key-thresholds.md` |
 | Hook path portability | Prefix `$CLAUDE_PROJECT_DIR` in commands | absent = P2 |
 | `.claude/rules/` globs | Valid glob + specific pattern | `**/*` = P1 |
 | Instruction budget waste | Duplicate lint/formatter rules | flag as P2 |
@@ -103,9 +103,9 @@ Route elsewhere when the task is primarily:
 
 - Always fetch official documentation before auditing.
 - Read all config files under `~/.codex/`, `~/.gemini/`, and/or `~/.claude/` before analysis (based on target CLI).
-- Apply source tier classification (T1-T4) to all web-sourced claims per `references/web-sources.md`.
-- Use the audit checklist from `references/audit-checklist.md` for systematic evaluation.
-- Generate Before/After diff proposals using templates from `references/proposal-templates.md`.
+- Apply source tier classification (T1-T4) to all web-sourced claims per `reference/web-sources.md`.
+- Use the audit checklist from `reference/audit-checklist.md` for systematic evaluation.
+- Generate Before/After diff proposals using templates from `reference/proposal-templates.md`.
 - Assign priority (P0-P3) and safety (safe/ask-first/risky) to every proposal.
 - Never edit configuration files directly — produce recommendations only.
 - Never read `~/.codex/auth.json`, `~/.gemini/` auth tokens/OAuth sessions, `~/.claude/credentials.json`, `~/.claude/statsig/`, or session history files.
@@ -123,7 +123,7 @@ Route elsewhere when the task is primarily:
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read all relevant config files under `~/.codex/`, `~/.gemini/`, `~/.claude/` and fetch official docs before auditing — never recommend without current state grounding; respect credential-exclusion list), P5 (think step-by-step at source-tier T1-T4 classification, CLAUDE.md 300-line threshold, MCP PAT scope triage, hook exit-code verification, and settings-hierarchy conflict detection)** as critical for Hone. P2 recommended: calibrated Before/After proposal preserving priority P0-P3, safety tier, and T1-T4 source citation. P1 recommended: front-load target CLI, config scope, and decision context at AUDIT.
 - **Run the CLAUDE.md / AGENTS.md anti-bloat audit.** Apply Anthropic's official rule for every line: "would Claude actually do this wrong without it?". Lines failing that test belong in a hook, in a skill on-demand reference, or in progressive disclosure (split into a separate small file imported only when needed). P0 finding: file > 400 lines or hard-rule content (lint/formatter) duplicated as English; P1 finding: file > 200 lines or any rule expressible as a hook still living in CLAUDE.md. [Source: code.claude.com/docs/en/best-practices; alexop.dev — Stop Bloating Your CLAUDE.md]
 - **Detect AGENTS.md / CLAUDE.md coexistence drift** in multi-tool projects. AGENTS.md is the Agentic AI Foundation standard read by 29+ tools; CLAUDE.md is Claude-native. If both exist, audit for content divergence (same rule stated differently in each file) and recommend a single source of truth (typically a thin `CLAUDE.md` that imports `AGENTS.md`). [Source: agents.md; linuxfoundation.org — AAIF]
-- **Run the prompt cache hierarchy audit when auditing a multi-skill orchestration session, large CLAUDE.md / GEMINI.md instructions, or any setup that loads `_common/` shared protocols.** Apply `_common/PROMPT_CACHE_HIERARCHY.md`'s three-tier rule: T-static content (tool defs, skill bodies, `_common/` protocols) must sit above T-semi-static (recipe template) which must sit above T-dynamic (user input, ARGUMENTS, timestamps, tool results). Flag as **P0** any cache breakpoint placed on a `Date.now()` / ISO timestamp / random ID / per-request data line — this is the single most common cache-buster (90% savings lost on every request). Flag as **P1** `_common/` load order that varies per task (re-ordering invalidates the entire `_common/` prefix), inlined `_common/` excerpts that duplicate the cached bytes, and per-task MCP tool churn that mutates the `tools` layer. Flag as **P2** missing 1-hour-TTL cache breakpoints in long sessions and references/ excerpts re-appended below the active recipe block on follow-up turns. Report cache hit rate from session logs when available; flag sessions below 70% hit rate as P1. [Source: platform.claude.com/docs/en/build-with-claude/prompt-caching, `_common/PROMPT_CACHE_HIERARCHY.md`]
+- **Run the prompt cache hierarchy audit when auditing a multi-skill orchestration session, large CLAUDE.md / GEMINI.md instructions, or any setup that loads `_common/` shared protocols.** Apply `_common/PROMPT_CACHE_HIERARCHY.md`'s three-tier rule: T-static content (tool defs, skill bodies, `_common/` protocols) must sit above T-semi-static (recipe template) which must sit above T-dynamic (user input, ARGUMENTS, timestamps, tool results). Flag as **P0** any cache breakpoint placed on a `Date.now()` / ISO timestamp / random ID / per-request data line — this is the single most common cache-buster (90% savings lost on every request). Flag as **P1** `_common/` load order that varies per task (re-ordering invalidates the entire `_common/` prefix), inlined `_common/` excerpts that duplicate the cached bytes, and per-task MCP tool churn that mutates the `tools` layer. Flag as **P2** missing 1-hour-TTL cache breakpoints in long sessions and reference/ excerpts re-appended below the active recipe block on follow-up turns. Report cache hit rate from session logs when available; flag sessions below 70% hit rate as P1. [Source: platform.claude.com/docs/en/build-with-claude/prompt-caching, `_common/PROMPT_CACHE_HIERARCHY.md`]
 - **Schedule periodic config re-evaluation every 3-6 months and at every major model release.** Instructions written to work around a prior model's limitations frequently become inert or actively harmful on a newer model — e.g. a CLAUDE.md rule that instructed an earlier model to break every refactor into single-file changes (to stay on track) can prevent a newer model from making coordinated cross-file edits. Audits older than 6 months should automatically flag every CLAUDE.md / GEMINI.md / AGENTS.md instruction tied to a specific prior model behavior for re-validation. [Source: claude.com — *How Claude Code works in large codebases* (2026)]
 
 ## Boundaries
@@ -140,7 +140,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Output Before/After diff for every proposed change.
 - Assign priority (P0-P3) and safety classification to every proposal.
 - Cite source tier (T1-T4) for every recommendation.
-- Check config schema against `references/codex-config-schema.md`, `references/antigravity-config-schema.md`, and/or `references/claude-code-config-schema.md`.
+- Check config schema against `reference/codex-config-schema.md`, `reference/antigravity-config-schema.md`, and/or `reference/claude-code-config-schema.md`.
 
 ### Ask First
 
@@ -177,9 +177,9 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `FETCH` | WebSearch/WebFetch target CLI official docs, repo, release notes | Classify all sources by tier (T1-T4) | `references/web-sources.md` |
-| `AUDIT` | Read all target CLI config files, evaluate against checklist | Check every item — no sampling | `references/audit-checklist.md`, `references/codex-config-schema.md` and/or `references/antigravity-config-schema.md` and/or `references/claude-code-config-schema.md` |
-| `PROPOSE` | Generate Before/After diff proposals with priority and safety | Use proposal templates, order by priority | `references/proposal-templates.md` |
+| `FETCH` | WebSearch/WebFetch target CLI official docs, repo, release notes | Classify all sources by tier (T1-T4) | `reference/web-sources.md` |
+| `AUDIT` | Read all target CLI config files, evaluate against checklist | Check every item — no sampling | `reference/audit-checklist.md`, `reference/codex-config-schema.md` and/or `reference/antigravity-config-schema.md` and/or `reference/claude-code-config-schema.md` |
+| `PROPOSE` | Generate Before/After diff proposals with priority and safety | Use proposal templates, order by priority | `reference/proposal-templates.md` |
 
 ### Phase Details
 
@@ -226,11 +226,11 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Full Audit | `audit` | ✓ | Comprehensive audit of target CLI config (FETCH→AUDIT→PROPOSE) | `references/audit-checklist.md` |
-| Codex Audit | `codex` | | Codex CLI (~/.codex/) audit, wire_api deprecation detection | `references/codex-config-schema.md` |
-| Antigravity Audit | `agy` | | Antigravity CLI (~/.gemini/) audit, safety settings, extensions | `references/antigravity-config-schema.md` |
-| Claude Code Audit | `claude` | | Claude Code (~/.claude/) audit, permissions, MCP, hooks | `references/claude-code-config-schema.md` |
-| Config Diff | `diff` | | Before/After diff analysis of two config snapshots | `references/proposal-templates.md` |
+| Full Audit | `audit` | ✓ | Comprehensive audit of target CLI config (FETCH→AUDIT→PROPOSE) | `reference/audit-checklist.md` |
+| Codex Audit | `codex` | | Codex CLI (~/.codex/) audit, wire_api deprecation detection | `reference/codex-config-schema.md` |
+| Antigravity Audit | `agy` | | Antigravity CLI (~/.gemini/) audit, safety settings, extensions | `reference/antigravity-config-schema.md` |
+| Claude Code Audit | `claude` | | Claude Code (~/.claude/) audit, permissions, MCP, hooks | `reference/claude-code-config-schema.md` |
+| Config Diff | `diff` | | Before/After diff analysis of two config snapshots | `reference/proposal-templates.md` |
 
 ## Subcommand Dispatch
 
@@ -249,16 +249,16 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `audit`, `check`, `optimize`, `review config`, unclear request | Full audit (all CLIs) | Audit report with proposals | `references/audit-checklist.md` |
-| `trust`, `trust level`, `project trust` | Trust-focused | Trust level proposals | `references/audit-checklist.md` (T1-T5) |
-| `model`, `provider`, `reasoning`, `features`, `flags`, `wire_api`, `codex deprecation`, `responses API` | Codex-focused (incl. wire_api migration) | Codex config + W1 migration proposals | `references/codex-config-schema.md` |
-| `mcp`, `MCP security`, `PAT scope`, `tool poisoning`, `MCP transport`, `OAuth`, `token passthrough`, `version pinning`, `resource indicator`, `RFC 8707`, `token binding`, `DCR` | MCP server / transport / OAuth audit | Least-privilege + integrity + OAuth 2.1 + RFC 8707 + version pinning proposals | `references/claude-code-config-schema.md` (CCS1-CCS11) |
-| `agy`, `settings.json`, `Antigravity CLI`, `safety settings`, `safety`, `GEMINI.md`, `agy instructions`, `agy plugin` | Antigravity audit (config + safety + extensions + instructions) | Antigravity proposals | `references/antigravity-config-schema.md` |
-| `claude code`, `claude`, `.claude/`, `permissions`, `allow`, `deny`, `commands`, `slash commands` | Claude Code config + permissions + commands | Claude Code config proposals | `references/claude-code-config-schema.md` |
-| `CLAUDE.md`, `claude instructions`, `CLAUDE.md too long`, `instruction count`, `optimize instructions`, `rules`, `agents.md`, `instructions`, `.claude/rules`, `path-scoped`, `globs`, `instruction budget`, `linter duplication`, `context waste` | Instructions + density + path-scoped rules + budget | CLAUDE.md / rules / budget proposals | `references/claude-code-config-schema.md` (CCI1-CCI7) |
-| `hooks`, `claude hooks`, `hook handler`, `prompt hook`, `agent hook` | Claude Code hooks structural + handler audit | Hooks validity + handler proposals (design → Latch) | `references/claude-code-config-schema.md` (CCH1-CCH8) |
-| `settings hierarchy`, `override`, `conflict`, `managed settings`, `organization policy`, `MDM` | Settings hierarchy + managed policy | Override conflict + policy compliance proposals | `references/claude-code-config-schema.md` (CCG1-CCG3) |
-| `plugin`, `marketplace`, `skills install` | Plugin source / trust / auto-update audit | Plugin proposals | `references/claude-code-config-schema.md` (CCPL1-CCPL4) |
+| `audit`, `check`, `optimize`, `review config`, unclear request | Full audit (all CLIs) | Audit report with proposals | `reference/audit-checklist.md` |
+| `trust`, `trust level`, `project trust` | Trust-focused | Trust level proposals | `reference/audit-checklist.md` (T1-T5) |
+| `model`, `provider`, `reasoning`, `features`, `flags`, `wire_api`, `codex deprecation`, `responses API` | Codex-focused (incl. wire_api migration) | Codex config + W1 migration proposals | `reference/codex-config-schema.md` |
+| `mcp`, `MCP security`, `PAT scope`, `tool poisoning`, `MCP transport`, `OAuth`, `token passthrough`, `version pinning`, `resource indicator`, `RFC 8707`, `token binding`, `DCR` | MCP server / transport / OAuth audit | Least-privilege + integrity + OAuth 2.1 + RFC 8707 + version pinning proposals | `reference/claude-code-config-schema.md` (CCS1-CCS11) |
+| `agy`, `settings.json`, `Antigravity CLI`, `safety settings`, `safety`, `GEMINI.md`, `agy instructions`, `agy plugin` | Antigravity audit (config + safety + extensions + instructions) | Antigravity proposals | `reference/antigravity-config-schema.md` |
+| `claude code`, `claude`, `.claude/`, `permissions`, `allow`, `deny`, `commands`, `slash commands` | Claude Code config + permissions + commands | Claude Code config proposals | `reference/claude-code-config-schema.md` |
+| `CLAUDE.md`, `claude instructions`, `CLAUDE.md too long`, `instruction count`, `optimize instructions`, `rules`, `agents.md`, `instructions`, `.claude/rules`, `path-scoped`, `globs`, `instruction budget`, `linter duplication`, `context waste` | Instructions + density + path-scoped rules + budget | CLAUDE.md / rules / budget proposals | `reference/claude-code-config-schema.md` (CCI1-CCI7) |
+| `hooks`, `claude hooks`, `hook handler`, `prompt hook`, `agent hook` | Claude Code hooks structural + handler audit | Hooks validity + handler proposals (design → Latch) | `reference/claude-code-config-schema.md` (CCH1-CCH8) |
+| `settings hierarchy`, `override`, `conflict`, `managed settings`, `organization policy`, `MDM` | Settings hierarchy + managed policy | Override conflict + policy compliance proposals | `reference/claude-code-config-schema.md` (CCG1-CCG3) |
+| `plugin`, `marketplace`, `skills install` | Plugin source / trust / auto-update audit | Plugin proposals | `reference/claude-code-config-schema.md` (CCPL1-CCPL4) |
 | `prompt cache`, `cache hit rate`, `cache hierarchy`, `cache-order`, `cache breakpoint`, `_common load order`, `context layout` | Prompt cache hierarchy audit | T-static/dynamic layering + breakpoint + `_common/` load order proposals | `_common/PROMPT_CACHE_HIERARCHY.md` |
 
 ## Output Requirements
@@ -292,14 +292,14 @@ Every deliverable must include:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/codex-config-schema.md` | You need config.toml key definitions, defaults, and recommended values. |
-| `references/antigravity-config-schema.md` | You need settings.json key definitions, safety settings, and extension config. |
-| `references/claude-code-config-schema.md` | You need Claude Code settings.json, permissions, MCP, CLAUDE.md, commands, and hooks config. |
-| `references/audit-checklist.md` | You need the full audit checklist with PASS/WARN/FAIL criteria. |
-| `references/key-thresholds.md` | You need the full rationale, source citations, and detailed semantics for any Key Threshold listed in the SKILL.md summary table. Required when audit reports must include source attribution. |
-| `references/web-sources.md` | You need source tier classification, search queries, or freshness rules. |
-| `references/proposal-templates.md` | You need Before/After diff templates for proposals. |
-| `references/handoffs.md` | You need handoff templates for Hearth/Judge/Arena/Nexus collaboration. |
+| `reference/codex-config-schema.md` | You need config.toml key definitions, defaults, and recommended values. |
+| `reference/antigravity-config-schema.md` | You need settings.json key definitions, safety settings, and extension config. |
+| `reference/claude-code-config-schema.md` | You need Claude Code settings.json, permissions, MCP, CLAUDE.md, commands, and hooks config. |
+| `reference/audit-checklist.md` | You need the full audit checklist with PASS/WARN/FAIL criteria. |
+| `reference/key-thresholds.md` | You need the full rationale, source citations, and detailed semantics for any Key Threshold listed in the SKILL.md summary table. Required when audit reports must include source attribution. |
+| `reference/web-sources.md` | You need source tier classification, search queries, or freshness rules. |
+| `reference/proposal-templates.md` | You need Before/After diff templates for proposals. |
+| `reference/handoffs.md` | You need handoff templates for Hearth/Judge/Arena/Nexus collaboration. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the Before/After proposal, deciding adaptive thinking depth at source-tier/severity classification, or front-loading target CLI/scope/decision at AUDIT. Critical for Hone: P3, P5. |
 | `_common/PROMPT_CACHE_HIERARCHY.md` | You are auditing prompt cache hit rate, the session context layout (tools → system → messages), `_common/` load order stability, or breakpoint placement on T-static vs T-dynamic content. Required for the `cache-order` and `cache-hierarchy` audit triggers. |
 

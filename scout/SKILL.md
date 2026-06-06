@@ -94,7 +94,7 @@ Route elsewhere when the task is primarily:
 - Use the unified confidence scale from `_common/INVESTIGATION_ESCALATION.md`: HIGH (≥0.8, 3+ evidence), MEDIUM (0.5-0.79, 2 evidence), LOW (<0.5, ≤1 evidence).
 - Hand off fix direction to Builder and regression ideas to Radar; do not write code.
 - **Quantify recommended-fix impact scope across 5 axes before handoff** (callers / tests / types / configs / docs) with file paths per axis or `none`. When 3+ axes are non-trivially affected, recommend `ripple` as the next agent (not Builder). Mandatory whenever an LLM Fix Prompt is included.
-- Pair every confirmed root cause with a paste-ready `## LLM Fix Prompt` block embedding evidence, recommended fix, acceptance criteria, ruled-out hypotheses, and "what NOT to do". Suppression rules in `references/fix-prompt-generation.md`.
+- Pair every confirmed root cause with a paste-ready `## LLM Fix Prompt` block embedding evidence, recommended fix, acceptance criteria, ruled-out hypotheses, and "what NOT to do". Suppression rules in `reference/fix-prompt-generation.md`.
 - **Slopsquat / hallucinated-import check** on `ImportError / ModuleNotFoundError / unresolved import` symptoms involving recently-added dependencies — query registry existence and download history before code-path hypotheses (5-21% of AI-suggested package names do not exist; typo-squats are increasingly attacker-registered).
 - **Generator-Evaluator separation** when an AI agent authored the suspect change: investigate with a *different* model/role to avoid self-grade inflation; document engine attribution per evidence item.
 - **Comprehension Debt as RCA factor**: when root cause is "team did not understand what the AI generated", record `comprehension_debt: HIGH` and recommend `judge` review of the source change before the fix lands.
@@ -136,19 +136,19 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Goal | Required Action | Key Rule | Read |
 |-------|------|-----------------|----------|------|
-| `TRIAGE` | Infer intent from noisy reports | Identify report pattern, collect context, generate 3 hypotheses, choose first probe | Pattern-match symptoms to known bug families before deep-diving | `references/vague-report-handling.md` |
-| `RECEIVE` | Normalize the report | Capture exact symptoms, environment, timing, and available evidence | Separate observed facts from reporter interpretation | `references/output-format.md` |
-| `REPRODUCE` | Confirm the failure | Build a minimal, reliable repro or record reproduction conditions | Minimal repro first; environment repro if minimal fails | `references/reproduction-templates.md` |
-| `TRACE` | Narrow the search space | Reconstruct event timeline, follow execution flow, inspect logs and history, test hypotheses | One variable at a time; log hypothesis and result | `references/debug-strategies.md` |
-| `LOCATE` | Pinpoint the cause | Identify file, line, function, state transition, or external dependency | Confirm with at least 2 independent evidence points | `references/bug-patterns.md` |
-| `ASSESS` | Classify impact | Evaluate severity, affected users, workaround, and follow-up urgency | Use base severity table below; escalate if scope widens | `references/advanced-reproduction-triage.md` |
-| `REPORT` | Produce handoff artifact | Write investigation report and route fixes or tests | Use canonical output format; include confidence level | `references/output-format.md` |
+| `TRIAGE` | Infer intent from noisy reports | Identify report pattern, collect context, generate 3 hypotheses, choose first probe | Pattern-match symptoms to known bug families before deep-diving | `reference/vague-report-handling.md` |
+| `RECEIVE` | Normalize the report | Capture exact symptoms, environment, timing, and available evidence | Separate observed facts from reporter interpretation | `reference/output-format.md` |
+| `REPRODUCE` | Confirm the failure | Build a minimal, reliable repro or record reproduction conditions | Minimal repro first; environment repro if minimal fails | `reference/reproduction-templates.md` |
+| `TRACE` | Narrow the search space | Reconstruct event timeline, follow execution flow, inspect logs and history, test hypotheses | One variable at a time; log hypothesis and result | `reference/debug-strategies.md` |
+| `LOCATE` | Pinpoint the cause | Identify file, line, function, state transition, or external dependency | Confirm with at least 2 independent evidence points | `reference/bug-patterns.md` |
+| `ASSESS` | Classify impact | Evaluate severity, affected users, workaround, and follow-up urgency | Use base severity table below; escalate if scope widens | `reference/advanced-reproduction-triage.md` |
+| `REPORT` | Produce handoff artifact | Write investigation report and route fixes or tests | Use canonical output format; include confidence level | `reference/output-format.md` |
 
 TRIAGE guardrails:
 - Investigate first, ask last.
 - For reports from automated test suites (Radar, CI), assess flaky-test probability before deep investigation (~30% of CI failures are environmental). Check recent run history and known-flaky lists first.
 - Generate exactly `3` starting hypotheses: (1) most frequent similar cause in this codebase, (2) recent change or regression, (3) pattern-based cause inferred from the report.
-- Read [vague-report-handling.md](references/vague-report-handling.md) when the report is incomplete, indirect, urgent, screenshot-only, or missing reproduction detail.
+- Read [vague-report-handling.md](reference/vague-report-handling.md) when the report is incomplete, indirect, urgent, screenshot-only, or missing reproduction detail.
 
 Stall protocol:
 - If a hypothesis yields no supporting evidence after 3 investigative probes, switch to the next hypothesis.
@@ -174,7 +174,7 @@ RCA methodology selection:
 
 ### Extended Triage
 
-Use [advanced-reproduction-triage.md](references/advanced-reproduction-triage.md) when formal prioritization is needed.
+Use [advanced-reproduction-triage.md](reference/advanced-reproduction-triage.md) when formal prioritization is needed.
 
 | Item | Values |
 |------|--------|
@@ -196,18 +196,18 @@ Single source of truth for Recipe definitions. Full phase contracts live in the 
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Focused Hunt | `bug` | ✓ | Single-bug investigation with clear symptom; normal workflow, single evidence chain | `references/debug-strategies.md`, `references/bug-patterns.md` |
-| History-Led | `regression` | | Regression signal present (recent deploy, version bump); prioritize `git log` / diff / bisect; delegate to Trail if history alone is sufficient | `references/git-bisect.md`, `references/modern-rca-methodology.md` |
-| Observability-Led | `prod` | | Production traces/logs/metrics dominate the signal; prioritize traces, logs, metrics, profiling | `references/observability-debugging.md` |
-| Multi-Engine | `multi` | | Ambiguous RCA after 3 stalled hypotheses, or hypothesis-lock-in risk on high-stakes RCA — tri-engine parallel investigation with Pattern H scoring; ships Primary RCA + Alternative Hypotheses with verification ordering (dissent preserved, not dropped) | `references/multi-engine-mode.md`, `references/tri-engine-investigate.md` |
-| Cascading Failure | `cascade` | | Multi-service propagation from a single origin; causal graph separates root cause from symptomatic downstream failures | `references/observability-debugging.md`, `references/modern-rca-methodology.md` |
-| Performance Hunt | `perf` | | Profiler-led flamegraph → hot path → classify N+1 / algorithmic / I/O / lock / GC; delegate to Bolt | `references/perf-investigation.md` |
-| Memory Hunt | `memory` | | Heap-snapshot diff / retainer path / allocation timeline; delegate to Bolt (GC pressure) or Specter (concurrent leak) | `references/memory-investigation.md` |
-| Flake Hunt | `flake` | | Reproducibility rate (N trials / flip rate) → environment / timing / external classification; delegate to Specter or Radar | `references/flake-investigation.md` |
-| 5 Whys | `5whys` | | Iterative why-chain from symptom to systemic cause (Toyota TPS); stop at process/design issue, not a person | `references/5whys-rca.md` |
-| Fishbone / Ishikawa | `fishbone` | | Categorical RCA across 6M (Machine/Method/Material/Measurement/Mother-nature/Manpower) | `references/fishbone-6m.md` |
-| Timeline Reconstruction | `timeline` | | Second-by-second incident timeline interleaving user / system / alert / responder events; feeds Triage post-mortems | `references/timeline-reconstruction.md` |
-| Video Bug Report | `video` | | Screen-recording bug report; codex preflight → local frame extractor → `codex exec --image` with schema validation (confidence ≥ 0.7); on preflight failure, suppress LLM Fix Prompt | `references/video-bug-analysis.md` |
+| Focused Hunt | `bug` | ✓ | Single-bug investigation with clear symptom; normal workflow, single evidence chain | `reference/debug-strategies.md`, `reference/bug-patterns.md` |
+| History-Led | `regression` | | Regression signal present (recent deploy, version bump); prioritize `git log` / diff / bisect; delegate to Trail if history alone is sufficient | `reference/git-bisect.md`, `reference/modern-rca-methodology.md` |
+| Observability-Led | `prod` | | Production traces/logs/metrics dominate the signal; prioritize traces, logs, metrics, profiling | `reference/observability-debugging.md` |
+| Multi-Engine | `multi` | | Ambiguous RCA after 3 stalled hypotheses, or hypothesis-lock-in risk on high-stakes RCA — tri-engine parallel investigation with Pattern H scoring; ships Primary RCA + Alternative Hypotheses with verification ordering (dissent preserved, not dropped) | `reference/multi-engine-mode.md`, `reference/tri-engine-investigate.md` |
+| Cascading Failure | `cascade` | | Multi-service propagation from a single origin; causal graph separates root cause from symptomatic downstream failures | `reference/observability-debugging.md`, `reference/modern-rca-methodology.md` |
+| Performance Hunt | `perf` | | Profiler-led flamegraph → hot path → classify N+1 / algorithmic / I/O / lock / GC; delegate to Bolt | `reference/perf-investigation.md` |
+| Memory Hunt | `memory` | | Heap-snapshot diff / retainer path / allocation timeline; delegate to Bolt (GC pressure) or Specter (concurrent leak) | `reference/memory-investigation.md` |
+| Flake Hunt | `flake` | | Reproducibility rate (N trials / flip rate) → environment / timing / external classification; delegate to Specter or Radar | `reference/flake-investigation.md` |
+| 5 Whys | `5whys` | | Iterative why-chain from symptom to systemic cause (Toyota TPS); stop at process/design issue, not a person | `reference/5whys-rca.md` |
+| Fishbone / Ishikawa | `fishbone` | | Categorical RCA across 6M (Machine/Method/Material/Measurement/Mother-nature/Manpower) | `reference/fishbone-6m.md` |
+| Timeline Reconstruction | `timeline` | | Second-by-second incident timeline interleaving user / system / alert / responder events; feeds Triage post-mortems | `reference/timeline-reconstruction.md` |
+| Video Bug Report | `video` | | Screen-recording bug report; codex preflight → local frame extractor → `codex exec --image` with schema validation (confidence ≥ 0.7); on preflight failure, suppress LLM Fix Prompt | `reference/video-bug-analysis.md` |
 
 ### Signal Keywords → Recipe
 
@@ -227,7 +227,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `fishbone`, Ishikawa | `fishbone` |
 | `timeline`, incident timeline, post-mortem | `timeline` |
 | `video`, screen recording, video bug report, 動画報告 | `video` |
-| vague or incomplete report | `bug` + TRIAGE vague-report handling (see `references/vague-report-handling.md`) |
+| vague or incomplete report | `bug` + TRIAGE vague-report handling (see `reference/vague-report-handling.md`) |
 | complex multi-agent task via Nexus | Nexus-routed execution (see `_common/HANDOFF.md`) |
 
 ## Subcommand Dispatch
@@ -240,7 +240,7 @@ Parse the first token of user input:
 
 ## Output Requirements
 
-Use the canonical report in [output-format.md](references/output-format.md).
+Use the canonical report in [output-format.md](reference/output-format.md).
 
 Minimum report content:
 - `## Scout Investigation Report`
@@ -252,7 +252,7 @@ Minimum report content:
 - `Regression Prevention`: suggested tests for Radar
 
 Mandatory when root cause is confirmed:
-- `LLM Fix Prompt`: paste-ready instruction prompt for a downstream coding LLM. See `LLM Fix Prompt Generation` section below and `references/fix-prompt-generation.md` for verbs, schema, and suppression rules.
+- `LLM Fix Prompt`: paste-ready instruction prompt for a downstream coding LLM. See `LLM Fix Prompt Generation` section below and `reference/fix-prompt-generation.md` for verbs, schema, and suppression rules.
 
 Add when available:
 - confidence level
@@ -275,7 +275,7 @@ RecommendedFixImpactScope:
 
 ## LLM Fix Prompt Generation
 
-Every Scout report for a confirmed root cause ends with a paste-ready `## LLM Fix Prompt` block. Universal authoring rules: `_common/LLM_PROMPT_GENERATION.md`. Scout-specific authoring rules, full suppression cases, template fields, and worked examples: `references/fix-prompt-generation.md`.
+Every Scout report for a confirmed root cause ends with a paste-ready `## LLM Fix Prompt` block. Universal authoring rules: `_common/LLM_PROMPT_GENERATION.md`. Scout-specific authoring rules, full suppression cases, template fields, and worked examples: `reference/fix-prompt-generation.md`.
 
 | Verb | Use when | Receiving |
 |------|----------|-----------|
@@ -289,7 +289,7 @@ Suppress (and write a one-line note explaining why) when: escalating to Sentinel
 
 ## Handoff Formats
 
-Outbound handoffs: `SCOUT_TO_BUILDER`, `SCOUT_TO_RADAR`, `SCOUT_TO_TRIAGE`, `SCOUT_TO_SPECTER`, `SCOUT_TO_SENTINEL`, `SCOUT_TO_TRAIL`. Canonical YAML schemas: `references/handoff-formats.md`.
+Outbound handoffs: `SCOUT_TO_BUILDER`, `SCOUT_TO_RADAR`, `SCOUT_TO_TRIAGE`, `SCOUT_TO_SPECTER`, `SCOUT_TO_SENTINEL`, `SCOUT_TO_TRAIL`. Canonical YAML schemas: `reference/handoff-formats.md`.
 
 Cross-cluster escalation (LENS↔SCOUT, TRAIL↔SPECTER, unified confidence scale): `_common/INVESTIGATION_ESCALATION.md`. Universal handoff conventions: `_common/HANDOFF.md`.
 
@@ -313,32 +313,32 @@ Cross-cluster escalation (LENS↔SCOUT, TRAIL↔SPECTER, unified confidence scal
 
 | Reference | Read This When |
 |-----------|----------------|
-| `references/output-format.md` | You need the canonical investigation report shape, toolkit, or completion rules. |
-| `references/vague-report-handling.md` | The report is vague, indirect, urgent, screenshot-only, or missing reproduction detail. |
-| `references/debug-strategies.md` | You need a first move by error type, reproducibility, or environment. |
-| `references/bug-patterns.md` | The symptom resembles a common bug family such as null access, race, stale state, or leak. |
-| `references/reproduction-templates.md` | You need a reproducible bug report for UI, API, state, async, or general failures. |
-| `references/git-bisect.md` | The issue is likely a regression and you need commit-level isolation. |
-| `references/modern-rca-methodology.md` | You need evidence-driven RCA, contributing-factor analysis, or incident-review framing. |
-| `references/5whys-rca.md` | You are running the `5whys` recipe and need the iterative why-chain template, stop conditions, or worked examples. |
-| `references/fishbone-6m.md` | You are running the `fishbone` recipe and need the 6M (Machine/Method/Material/Measurement/Mother-nature/Manpower) decomposition guide. |
-| `references/timeline-reconstruction.md` | You are running the `timeline` recipe and need second-by-second incident timeline templates and detection/response gap analysis. |
-| `references/debugging-anti-patterns.md` | The investigation is drifting, biased, or changing too many variables at once. |
-| `references/observability-debugging.md` | Traces, logs, metrics, profiling, or production-safe debugging are central. |
-| `references/perf-investigation.md` | You are running the `perf` recipe and need profiler-led flamegraph analysis, hot-path isolation, or N+1 / algorithmic / I/O / lock / GC classification. |
-| `references/memory-investigation.md` | You are running the `memory` recipe and need heap-snapshot diff, retainer-path analysis, or OOM/GC pressure diagnosis. |
-| `references/flake-investigation.md` | You are running the `flake` recipe and need reproducibility-rate measurement, environment/timing/external classification, and Specter handoff criteria. |
-| `references/advanced-reproduction-triage.md` | You need time-travel debugging, flaky-test strategy, or formal severity/priority scoring with `RICE` or `ICE`. |
-| `references/frontend-debugging.md` | The bug involves browser rendering, React/Vue framework behavior, CSS layout, or frontend state management. |
-| `references/video-bug-analysis.md` | The report includes a screen recording (MP4/MOV/WebM) and the `video` Recipe is active, or `vague-report-handling.md` `P06` was inferred and the input is video. Defines the local frame extractor contract, Codex CLI invocation, JSON output schema, prompt template, confidence scoring, and failure / privacy rules. |
-| `references/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Scout-specific action verb, or deciding whether to suppress the prompt for a Sentinel/Specter handoff or investigation-only scope. |
+| `reference/output-format.md` | You need the canonical investigation report shape, toolkit, or completion rules. |
+| `reference/vague-report-handling.md` | The report is vague, indirect, urgent, screenshot-only, or missing reproduction detail. |
+| `reference/debug-strategies.md` | You need a first move by error type, reproducibility, or environment. |
+| `reference/bug-patterns.md` | The symptom resembles a common bug family such as null access, race, stale state, or leak. |
+| `reference/reproduction-templates.md` | You need a reproducible bug report for UI, API, state, async, or general failures. |
+| `reference/git-bisect.md` | The issue is likely a regression and you need commit-level isolation. |
+| `reference/modern-rca-methodology.md` | You need evidence-driven RCA, contributing-factor analysis, or incident-review framing. |
+| `reference/5whys-rca.md` | You are running the `5whys` recipe and need the iterative why-chain template, stop conditions, or worked examples. |
+| `reference/fishbone-6m.md` | You are running the `fishbone` recipe and need the 6M (Machine/Method/Material/Measurement/Mother-nature/Manpower) decomposition guide. |
+| `reference/timeline-reconstruction.md` | You are running the `timeline` recipe and need second-by-second incident timeline templates and detection/response gap analysis. |
+| `reference/debugging-anti-patterns.md` | The investigation is drifting, biased, or changing too many variables at once. |
+| `reference/observability-debugging.md` | Traces, logs, metrics, profiling, or production-safe debugging are central. |
+| `reference/perf-investigation.md` | You are running the `perf` recipe and need profiler-led flamegraph analysis, hot-path isolation, or N+1 / algorithmic / I/O / lock / GC classification. |
+| `reference/memory-investigation.md` | You are running the `memory` recipe and need heap-snapshot diff, retainer-path analysis, or OOM/GC pressure diagnosis. |
+| `reference/flake-investigation.md` | You are running the `flake` recipe and need reproducibility-rate measurement, environment/timing/external classification, and Specter handoff criteria. |
+| `reference/advanced-reproduction-triage.md` | You need time-travel debugging, flaky-test strategy, or formal severity/priority scoring with `RICE` or `ICE`. |
+| `reference/frontend-debugging.md` | The bug involves browser rendering, React/Vue framework behavior, CSS layout, or frontend state management. |
+| `reference/video-bug-analysis.md` | The report includes a screen recording (MP4/MOV/WebM) and the `video` Recipe is active, or `vague-report-handling.md` `P06` was inferred and the input is video. Defines the local frame extractor contract, Codex CLI invocation, JSON output schema, prompt template, confidence scoring, and failure / privacy rules. |
+| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Scout-specific action verb, or deciding whether to suppress the prompt for a Sentinel/Specter handoff or investigation-only scope. |
 | `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Trail/Sentinel/Plea. |
 | `_common/INVESTIGATION_ESCALATION.md` | Cross-cluster escalation, handoff formats (LENS_TO_SCOUT, SCOUT_TO_LENS), or unified confidence scale is needed. |
 | `_common/OPUS_48_AUTHORING.md` | You are calibrating tool-use eagerness during TRACE/LOCATE, deciding adaptive thinking depth at hypothesis selection, or sizing the investigation report. Critical for Scout: P3, P5. |
 | `_common/IMAGE_INPUT.md` | The report includes a screenshot or error-screen image — run the image pipeline (observed-vs-inferred, hypothesize-with-confidence, abstention) and the mandatory bug-report 5-section analysis before RCA; complements `vague-report-handling.md` screenshot-only handling. |
-| `references/multi-engine-mode.md` | You are running the `multi` Recipe and need the full core mechanics, CLUSTER/Confidence/Perspective rules, GROUND protocol, SYNTHESIZE merge, engine-attribution tag table, and degraded-mode rules. Companion to `tri-engine-investigate.md` (algorithm + JSON schema). |
-| `references/tri-engine-investigate.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents), JSON schema, subagent prompt skeleton, GROUND verdict examples, and worked synthesis examples. |
-| `references/handoff-formats.md` | You need the canonical YAML schemas for any `SCOUT_TO_*` handoff (Builder / Radar / Triage / Specter / Sentinel / Trail) or the AUTORUN `_STEP_COMPLETE` envelope (including the optional `tri_engine` block). |
+| `reference/multi-engine-mode.md` | You are running the `multi` Recipe and need the full core mechanics, CLUSTER/Confidence/Perspective rules, GROUND protocol, SYNTHESIZE merge, engine-attribution tag table, and degraded-mode rules. Companion to `tri-engine-investigate.md` (algorithm + JSON schema). |
+| `reference/tri-engine-investigate.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents), JSON schema, subagent prompt skeleton, GROUND verdict examples, and worked synthesis examples. |
+| `reference/handoff-formats.md` | You need the canonical YAML schemas for any `SCOUT_TO_*` handoff (Builder / Radar / Triage / Specter / Sentinel / Trail) or the AUTORUN `_STEP_COMPLETE` envelope (including the optional `tri_engine` block). |
 | `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose-prompt rule, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
 | `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill `multi` Recipe protocol — canonical SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND/CALIBRATE → SYNTHESIZE → DELIVER flow, Pattern D/C/H definitions, engine-attribution tag convention, degraded-mode table, and Implementation Checklist for adding `multi` to new skills. |
 
@@ -357,7 +357,7 @@ Activated by `multi` Recipe, by explicit user request (parallel investigation / 
 
 **Degraded modes**: 1 engine down → continue with 2 (cap at `LIKELY`); 2 down → single-engine, all hypotheses `CANDIDATE`, no Alternatives section; all 3 down → degrade to `bug` Recipe.
 
-Full mechanics (core flow, GROUND protocol, SYNTHESIZE merge, engine-attribution tags): `references/multi-engine-mode.md`. Algorithm + JSON schema + prompt skeleton: `references/tri-engine-investigate.md`. Cross-skill protocol: `_common/MULTI_ENGINE_RECIPE.md`.
+Full mechanics (core flow, GROUND protocol, SYNTHESIZE merge, engine-attribution tags): `reference/multi-engine-mode.md`. Algorithm + JSON schema + prompt skeleton: `reference/tri-engine-investigate.md`. Cross-skill protocol: `_common/MULTI_ENGINE_RECIPE.md`.
 
 ## Operational
 
@@ -369,7 +369,7 @@ Full mechanics (core flow, GROUND protocol, SYNTHESIZE merge, engine-attribution
 
 When Scout receives `_AGENT_CONTEXT`, parse `task_type`, `description`, and `Constraints`, execute the standard workflow, and return `_STEP_COMPLETE`.
 
-Canonical `_STEP_COMPLETE` schema (including the optional `tri_engine` block for `multi` Recipe runs): `references/handoff-formats.md`.
+Canonical `_STEP_COMPLETE` schema (including the optional `tri_engine` block for `multi` Recipe runs): `reference/handoff-formats.md`.
 
 ## Nexus Hub Mode
 

@@ -127,7 +127,7 @@ Cross-cutting checks:
 
 ## Heuristic Evaluation
 
-Score each heuristic `1-5` and use the canonical report format in [ux-evaluation.md](references/ux-evaluation.md).
+Score each heuristic `1-5` and use the canonical report format in [ux-evaluation.md](reference/ux-evaluation.md).
 
 | #   | Heuristic                   |
 | --- | --------------------------- |
@@ -174,12 +174,12 @@ Address issues in this order unless a stronger user or safety constraint overrid
 
 | Step | Action | Focus | Read |
 |------|--------|-------|------|
-| Observe | Inspect Micro, Meso, and Macro | Capture friction, states, recovery gaps, and confidence failures | `references/ux-evaluation.md` |
-| Score | Run heuristic evaluation | Quantify problems and rank urgency | `references/ux-evaluation.md` |
-| Select | Choose scope tier | Prefer the smallest change with clear UX value | `references/interaction-anti-patterns.md` |
-| Implement | Apply the UX improvement | Reuse system patterns and keep behavior explicit | `references/microinteraction-patterns.md` |
-| Verify | Test the experience | Confirm feedback, recovery, keyboard flow, mobile behavior, and lint/tests | `references/accessibility-patterns.md` |
-| Present | Report the change | Explain before/after impact, heuristics improved, and next validation path | `references/ux-evaluation.md` |
+| Observe | Inspect Micro, Meso, and Macro | Capture friction, states, recovery gaps, and confidence failures | `reference/ux-evaluation.md` |
+| Score | Run heuristic evaluation | Quantify problems and rank urgency | `reference/ux-evaluation.md` |
+| Select | Choose scope tier | Prefer the smallest change with clear UX value | `reference/interaction-anti-patterns.md` |
+| Implement | Apply the UX improvement | Reuse system patterns and keep behavior explicit | `reference/microinteraction-patterns.md` |
+| Verify | Test the experience | Confirm feedback, recovery, keyboard flow, mobile behavior, and lint/tests | `reference/accessibility-patterns.md` |
+| Present | Report the change | Explain before/after impact, heuristics improved, and next validation path | `reference/ux-evaluation.md` |
 
 ## Recipes
 
@@ -187,16 +187,16 @@ Single source of truth for Recipe definitions. Subcommand match wins over natura
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Usability Evaluation | `usability` | ✓ | Comprehensive UI/UX usability evaluation; SURVEY → EVALUATE → PRIORITIZE → PRESENT. Also load `interaction-anti-patterns.md` | `references/ux-evaluation.md` |
-| Cognitive Load | `cognitive` | | Cognitive load and information density analysis; output redesign proposals | `references/cognitive-load-anti-patterns.md` |
-| Feedback Design | `feedback` | | Feedback and microinteraction design; include animation timing notes | `references/microinteraction-patterns.md` |
-| Accessibility | `a11y` | | Accessibility and WCAG 2.2 compliance evaluation; classify by level (A/AA/AAA). Also load `accessibility-patterns.md` | `references/wcag22-inclusive-design.md` |
-| Keyboard Navigation | `keyboard` | | Tab order, focus management, shortcut systems, roving tabindex, focus trap. For WCAG 2.2 SC 2.1/2.4 conformance use `a11y`; for `useFocusTrap`/`useHotkeys` production hooks use Artisan; for focus animation timing use Flow | `references/keyboard-navigation-patterns.md` |
-| Mobile Touch | `mobile` | | Thumb zone, tap targets, gestures, haptics, safe area, keyboard avoidance. For WCAG 2.2 SC 2.5.7/2.5.8 audit use `a11y`; for RN/Flutter/SwiftUI production use Artisan (or Native for store review); for gesture choreography use Flow | `references/mobile-touch-patterns.md` |
-| Forms UX | `forms` | | Field order, validation timing, error voice, progressive disclosure, multi-step, autofill/password-manager cooperation. For exact error wording use Prose; for React Hook Form / Zod wiring use Artisan; for WCAG 2.2 SC 3.3.x / 1.3.5 use `a11y` | `references/forms-ux-patterns.md` |
-| Error States | `error` | | Error UX as a system — classify failures (validation/permission/server/network), message hierarchy, recovery paths, inline vs toast vs page, retry/undo, post-error empty-state handoff. For exact wording use Prose; for status-code → message mapping use Artisan | `references/error-states.md` |
-| Empty States | `empty` | | First-use, zero-results, post-clear, post-error variants — illustration vs not, primary action vs templates, onboarding-cue vs invitation copy. For illustration use Ink; for first-time onboarding journey use Vision | `references/empty-states.md` |
-| Loading States | `loading` | | Latency-band strategy (skeleton ≤1s, spinner 1–10s, determinate progress >10s, optimistic UI for retries), perceived-speed tactics, skeleton/spinner/shimmer choice. For data fetching use Artisan; for animation curves use Flow; for backend speed use Bolt | `references/loading-states.md` |
+| Usability Evaluation | `usability` | ✓ | Comprehensive UI/UX usability evaluation; SURVEY → EVALUATE → PRIORITIZE → PRESENT. Also load `interaction-anti-patterns.md` | `reference/ux-evaluation.md` |
+| Cognitive Load | `cognitive` | | Cognitive load and information density analysis; output redesign proposals | `reference/cognitive-load-anti-patterns.md` |
+| Feedback Design | `feedback` | | Feedback and microinteraction design; include animation timing notes | `reference/microinteraction-patterns.md` |
+| Accessibility | `a11y` | | Accessibility and WCAG 2.2 compliance evaluation; classify by level (A/AA/AAA). Also load `accessibility-patterns.md` | `reference/wcag22-inclusive-design.md` |
+| Keyboard Navigation | `keyboard` | | Tab order, focus management, shortcut systems, roving tabindex, focus trap. For WCAG 2.2 SC 2.1/2.4 conformance use `a11y`; for `useFocusTrap`/`useHotkeys` production hooks use Artisan; for focus animation timing use Flow | `reference/keyboard-navigation-patterns.md` |
+| Mobile Touch | `mobile` | | Thumb zone, tap targets, gestures, haptics, safe area, keyboard avoidance. For WCAG 2.2 SC 2.5.7/2.5.8 audit use `a11y`; for RN/Flutter/SwiftUI production use Artisan (or Native for store review); for gesture choreography use Flow | `reference/mobile-touch-patterns.md` |
+| Forms UX | `forms` | | Field order, validation timing, error voice, progressive disclosure, multi-step, autofill/password-manager cooperation. For exact error wording use Prose; for React Hook Form / Zod wiring use Artisan; for WCAG 2.2 SC 3.3.x / 1.3.5 use `a11y` | `reference/forms-ux-patterns.md` |
+| Error States | `error` | | Error UX as a system — classify failures (validation/permission/server/network), message hierarchy, recovery paths, inline vs toast vs page, retry/undo, post-error empty-state handoff. For exact wording use Prose; for status-code → message mapping use Artisan | `reference/error-states.md` |
+| Empty States | `empty` | | First-use, zero-results, post-clear, post-error variants — illustration vs not, primary action vs templates, onboarding-cue vs invitation copy. For illustration use Ink; for first-time onboarding journey use Vision | `reference/empty-states.md` |
+| Loading States | `loading` | | Latency-band strategy (skeleton ≤1s, spinner 1–10s, determinate progress >10s, optimistic UI for retries), perceived-speed tactics, skeleton/spinner/shimmer choice. For data fetching use Artisan; for animation curves use Flow; for backend speed use Bolt | `reference/loading-states.md` |
 
 ### Signal Keywords → Recipe
 
@@ -215,8 +215,8 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `cognitive load`, `information density`, `hierarchy` | `cognitive` |
 | `feedback`, `microinteraction`, `toast`, `optimistic UI` | `feedback` |
 | `microcopy`, `CTA`, `label` (wording) | Hand off to Prose; otherwise `usability` |
-| `dark mode`, `color scheme`, `contrast` | `a11y` (see `references/wcag22-inclusive-design.md`) |
-| `AI UI`, `chat interface`, `suggestions`, `agentic AI`, `agent UI`, `intent preview` | `usability` (see `references/ai-assist-patterns.md`) |
+| `dark mode`, `color scheme`, `contrast` | `a11y` (see `reference/wcag22-inclusive-design.md`) |
+| `AI UI`, `chat interface`, `suggestions`, `agentic AI`, `agent UI`, `intent preview` | `usability` (see `reference/ai-assist-patterns.md`) |
 | `SUS`, `usability score`, `benchmark`, `metrics` | `usability` |
 | unclear request | Clarify scope tier (Micro/Meso/Macro), then `usability` (default) |
 
@@ -242,7 +242,7 @@ Parse the first token of user input:
   - affected states covered
   - accessibility and mobile checks performed
   - validation path or requested handoff
-- Use the before/after structure from [ux-evaluation.md](references/ux-evaluation.md) when documenting a meaningful improvement.
+- Use the before/after structure from [ux-evaluation.md](reference/ux-evaluation.md) when documenting a meaningful improvement.
 
 ## Collaboration
 
@@ -279,24 +279,24 @@ Palette receives UX direction and testing results from upstream agents. Palette 
 
 | File | Read this when... |
 |------|-------------------|
-| `references/collaboration-patterns.md` | you need any Palette handoff token or partner workflow. |
-| `references/page-flow-patterns.md` | you are fixing empty, error, loading, offline, onboarding, navigation, search, filter, or dashboard UX. |
-| `references/ux-writing-patterns.md` | you are changing CTA labels, error messages, confirmations, success copy, or tone. |
-| `references/mobile-ux-patterns.md` | the issue involves touch, gestures, thumb reach, keyboard overlap, or mobile navigation. |
-| `references/accessibility-patterns.md` | you need WCAG 2.2 AA, keyboard, screen reader, contrast, or reduced-motion rules. |
-| `references/microinteraction-patterns.md` | you are implementing feedback states, toasts, optimistic UI, or destructive-action safeguards. |
-| `references/ux-evaluation.md` | you need the heuristic template, SUS ranges, UX metrics, or before/after report shape. |
-| `references/interaction-anti-patterns.md` | you need a fast audit for interaction mistakes and destructive-action failures. |
-| `references/cognitive-load-anti-patterns.md` | you need choice, hierarchy, progressive disclosure, or information-density guidance. |
-| `references/perceived-performance-patterns.md` | you are choosing between skeletons, spinners, progress bars, or optimistic UI. |
-| `references/wcag22-inclusive-design.md` | you need WCAG 2.2 deltas, inclusive design rules, or AV-pattern audits. |
-| `references/ai-assist-patterns.md` | You are designing or reviewing AI-powered interface elements. |
-| `references/keyboard-navigation-patterns.md` | You need tab-order rules, focus-ring requirements, shortcut-system design, roving tabindex, or focus-trap patterns. |
-| `references/mobile-touch-patterns.md` | You need thumb-zone layout, tap-target sizing, gesture affordances, haptic vocabulary, safe-area, or keyboard-avoidance guidance. |
-| `references/forms-ux-patterns.md` | You are deciding field order, validation timing, error-voice direction, progressive disclosure, multi-step flow, or autofill/password-manager cooperation. |
-| `references/error-states.md` | You are designing error UX as a system — failure classification (validation/permission/server/network), message hierarchy, recovery paths, inline vs toast vs page placement, retry/undo, post-error empty-state handoff. |
-| `references/empty-states.md` | You are designing empty states — first-use, zero-results, post-clear, post-error variants with onboarding cues, templates, and primary-action vs invitation-copy decisions. |
-| `references/loading-states.md` | You need latency-band strategy (skeleton ≤1s, spinner 1–10s, determinate progress >10s, optimistic UI for retries), perceived-speed tactics, and skeleton-vs-spinner-vs-shimmer choice. |
+| `reference/collaboration-patterns.md` | you need any Palette handoff token or partner workflow. |
+| `reference/page-flow-patterns.md` | you are fixing empty, error, loading, offline, onboarding, navigation, search, filter, or dashboard UX. |
+| `reference/ux-writing-patterns.md` | you are changing CTA labels, error messages, confirmations, success copy, or tone. |
+| `reference/mobile-ux-patterns.md` | the issue involves touch, gestures, thumb reach, keyboard overlap, or mobile navigation. |
+| `reference/accessibility-patterns.md` | you need WCAG 2.2 AA, keyboard, screen reader, contrast, or reduced-motion rules. |
+| `reference/microinteraction-patterns.md` | you are implementing feedback states, toasts, optimistic UI, or destructive-action safeguards. |
+| `reference/ux-evaluation.md` | you need the heuristic template, SUS ranges, UX metrics, or before/after report shape. |
+| `reference/interaction-anti-patterns.md` | you need a fast audit for interaction mistakes and destructive-action failures. |
+| `reference/cognitive-load-anti-patterns.md` | you need choice, hierarchy, progressive disclosure, or information-density guidance. |
+| `reference/perceived-performance-patterns.md` | you are choosing between skeletons, spinners, progress bars, or optimistic UI. |
+| `reference/wcag22-inclusive-design.md` | you need WCAG 2.2 deltas, inclusive design rules, or AV-pattern audits. |
+| `reference/ai-assist-patterns.md` | You are designing or reviewing AI-powered interface elements. |
+| `reference/keyboard-navigation-patterns.md` | You need tab-order rules, focus-ring requirements, shortcut-system design, roving tabindex, or focus-trap patterns. |
+| `reference/mobile-touch-patterns.md` | You need thumb-zone layout, tap-target sizing, gesture affordances, haptic vocabulary, safe-area, or keyboard-avoidance guidance. |
+| `reference/forms-ux-patterns.md` | You are deciding field order, validation timing, error-voice direction, progressive disclosure, multi-step flow, or autofill/password-manager cooperation. |
+| `reference/error-states.md` | You are designing error UX as a system — failure classification (validation/permission/server/network), message hierarchy, recovery paths, inline vs toast vs page placement, retry/undo, post-error empty-state handoff. |
+| `reference/empty-states.md` | You are designing empty states — first-use, zero-results, post-clear, post-error variants with onboarding cues, templates, and primary-action vs invitation-copy decisions. |
+| `reference/loading-states.md` | You need latency-band strategy (skeleton ≤1s, spinner 1–10s, determinate progress >10s, optimistic UI for retries), perceived-speed tactics, and skeleton-vs-spinner-vs-shimmer choice. |
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 usability and navigation evidence — NN/g navigation guidelines, hamburger / split-button anti-patterns, WCAG 2.2 AA baseline, agentic UX patterns. Read §2 IA and §1 Design a11y. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the review report, deciding adaptive thinking depth at REVIEW, or front-loading scope tier at SCAN. Critical for Palette: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You generate `state_proof` (every interactive component declares hover / focus / disabled / loading / error / empty states) + `responsive_proof` (mobile / tablet / desktop viewport assertions, 320 / 768 / 1280 minimum) in `nexus acceptance` Phase 2B. Coordinates with `weave` (state machine spec) for state coverage gating. |

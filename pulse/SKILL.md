@@ -127,23 +127,23 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `DEFINE` | Clarify success: define North Star Metric, KPIs, OKRs, and supporting/counter metrics | Every metric must answer "What decision will this inform?" | `references/metrics-frameworks.md` |
-| `TRACK` | Design typed event schemas, implement with analytics platform, validate consent | Use `object_action` snake_case naming; check consent before tracking | `references/event-schema.md`, `references/platform-integration.md` |
-| `ANALYZE` | Design funnels, cohorts, dashboards, anomaly detection, and data quality checks | Leading indicators predict; lagging indicators confirm | `references/funnel-cohort-analysis.md`, `references/dashboard-spec.md` |
-| `DELIVER` | Present metrics framework, implementation code, dashboard specs, and alert rules | Include privacy review and data quality plan | `references/privacy-consent.md`, `references/data-quality.md` |
+| `DEFINE` | Clarify success: define North Star Metric, KPIs, OKRs, and supporting/counter metrics | Every metric must answer "What decision will this inform?" | `reference/metrics-frameworks.md` |
+| `TRACK` | Design typed event schemas, implement with analytics platform, validate consent | Use `object_action` snake_case naming; check consent before tracking | `reference/event-schema.md`, `reference/platform-integration.md` |
+| `ANALYZE` | Design funnels, cohorts, dashboards, anomaly detection, and data quality checks | Leading indicators predict; lagging indicators confirm | `reference/funnel-cohort-analysis.md`, `reference/dashboard-spec.md` |
+| `DELIVER` | Present metrics framework, implementation code, dashboard specs, and alert rules | Include privacy review and data quality plan | `reference/privacy-consent.md`, `reference/data-quality.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| KPI Framework | `kpi` | ✓ | North Star Metric definition, KPI tree design, and OKR setup | `references/metrics-frameworks.md` |
-| Funnel Analysis | `funnel` | | Conversion funnel analysis and drop-off identification | `references/funnel-cohort-analysis.md` |
-| Cohort Analysis | `cohort` | | Retention cohort analysis and churn measurement | `references/funnel-cohort-analysis.md` |
-| Event Schema | `event` | | Event schema design and analytics implementation | `references/event-schema.md` |
-| Dashboard Spec | `dashboard` | | Dashboard spec design and chart definition | `references/dashboard-spec.md` |
-| North Star Deep-Dive | `northstar` | | NSM selection rubric, input-metric decomposition, counter/guardrail pairing, NSM stability contract | `references/north-star-deep-dive.md` |
-| Retention Curve Analysis | `retention` | | D1/D7/D30 curve shape classification (L/smile/flat), power-user band detection, Quick Ratio / DAU-over-MAU | `references/retention-curve-analysis.md` |
-| Activation Rate Design | `activation` | | Aha-moment discovery, Magic Number identification, time-to-value (TTV) measurement, activation milestone contract | `references/activation-design.md` |
+| KPI Framework | `kpi` | ✓ | North Star Metric definition, KPI tree design, and OKR setup | `reference/metrics-frameworks.md` |
+| Funnel Analysis | `funnel` | | Conversion funnel analysis and drop-off identification | `reference/funnel-cohort-analysis.md` |
+| Cohort Analysis | `cohort` | | Retention cohort analysis and churn measurement | `reference/funnel-cohort-analysis.md` |
+| Event Schema | `event` | | Event schema design and analytics implementation | `reference/event-schema.md` |
+| Dashboard Spec | `dashboard` | | Dashboard spec design and chart definition | `reference/dashboard-spec.md` |
+| North Star Deep-Dive | `northstar` | | NSM selection rubric, input-metric decomposition, counter/guardrail pairing, NSM stability contract | `reference/north-star-deep-dive.md` |
+| Retention Curve Analysis | `retention` | | D1/D7/D30 curve shape classification (L/smile/flat), power-user band detection, Quick Ratio / DAU-over-MAU | `reference/retention-curve-analysis.md` |
+| Activation Rate Design | `activation` | | Aha-moment discovery, Magic Number identification, time-to-value (TTV) measurement, activation milestone contract | `reference/activation-design.md` |
 
 ## Subcommand Dispatch
 
@@ -177,26 +177,26 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `north star`, `KPI`, `OKR`, `success metric` | North Star Metric definition | Metrics framework | `references/metrics-frameworks.md` |
-| `event`, `tracking`, `schema`, `event design` | Event schema design | Typed event interface | `references/event-schema.md` |
-| `funnel`, `conversion`, `drop-off` | Funnel analysis design | Funnel definition + GA4 impl | `references/funnel-cohort-analysis.md` |
-| `cohort`, `retention`, `churn` | Cohort analysis design | Cohort config + SQL queries | `references/funnel-cohort-analysis.md` |
-| `dashboard`, `chart`, `visualization spec` | Dashboard specification | Dashboard spec + chart configs | `references/dashboard-spec.md` |
-| `activation`, `aha moment`, `time to value` | Activation rate design | Activation milestones + measurement plan | `references/metrics-frameworks.md` |
-| `GA4`, `Amplitude`, `Mixpanel`, `PostHog`, `analytics setup` | Platform integration | Implementation code + React hook | `references/platform-integration.md` |
-| `consent`, `GDPR`, `privacy`, `PII` | Privacy and consent management | Consent flow + PII removal | `references/privacy-consent.md` |
-| `data quality`, `validation`, `freshness` | Data quality monitoring | Quality checks + alerts | `references/data-quality.md` |
-| `MRR`, `ARR`, `LTV`, `revenue` | Revenue analytics | SaaS metrics + movement analysis | `references/revenue-analytics.md` |
-| `anomaly`, `alert`, `threshold` | Anomaly detection and alerts | Alert rules + Z-score config | `references/alerts-anomaly-detection.md` |
-| `server-side`, `consent mode`, `ad blocker` | Server-side tracking + Consent Mode v2 | SST config + consent flow | `references/privacy-consent.md` |
-| `schema drift`, `event validation`, `data observability` | Data quality + schema drift detection | Validation rules + drift alerts | `references/data-quality.md` |
-| unclear metrics request | North Star Metric definition (default) | Metrics framework | `references/metrics-frameworks.md` |
+| `north star`, `KPI`, `OKR`, `success metric` | North Star Metric definition | Metrics framework | `reference/metrics-frameworks.md` |
+| `event`, `tracking`, `schema`, `event design` | Event schema design | Typed event interface | `reference/event-schema.md` |
+| `funnel`, `conversion`, `drop-off` | Funnel analysis design | Funnel definition + GA4 impl | `reference/funnel-cohort-analysis.md` |
+| `cohort`, `retention`, `churn` | Cohort analysis design | Cohort config + SQL queries | `reference/funnel-cohort-analysis.md` |
+| `dashboard`, `chart`, `visualization spec` | Dashboard specification | Dashboard spec + chart configs | `reference/dashboard-spec.md` |
+| `activation`, `aha moment`, `time to value` | Activation rate design | Activation milestones + measurement plan | `reference/metrics-frameworks.md` |
+| `GA4`, `Amplitude`, `Mixpanel`, `PostHog`, `analytics setup` | Platform integration | Implementation code + React hook | `reference/platform-integration.md` |
+| `consent`, `GDPR`, `privacy`, `PII` | Privacy and consent management | Consent flow + PII removal | `reference/privacy-consent.md` |
+| `data quality`, `validation`, `freshness` | Data quality monitoring | Quality checks + alerts | `reference/data-quality.md` |
+| `MRR`, `ARR`, `LTV`, `revenue` | Revenue analytics | SaaS metrics + movement analysis | `reference/revenue-analytics.md` |
+| `anomaly`, `alert`, `threshold` | Anomaly detection and alerts | Alert rules + Z-score config | `reference/alerts-anomaly-detection.md` |
+| `server-side`, `consent mode`, `ad blocker` | Server-side tracking + Consent Mode v2 | SST config + consent flow | `reference/privacy-consent.md` |
+| `schema drift`, `event validation`, `data observability` | Data quality + schema drift detection | Validation rules + drift alerts | `reference/data-quality.md` |
+| unclear metrics request | North Star Metric definition (default) | Metrics framework | `reference/metrics-frameworks.md` |
 
 Routing rules:
 
 - If the request involves tracking, always check consent and privacy.
-- If the request involves dashboards, read `references/dashboard-spec.md`.
-- If the request involves revenue, read `references/revenue-analytics.md`.
+- If the request involves dashboards, read `reference/dashboard-spec.md`.
+- If the request involves revenue, read `reference/revenue-analytics.md`.
 - If anomaly detected, route to Scout for investigation.
 - If schema drift or data freshness issue, coordinate with Beacon for observability.
 - For server-side tracking setup, always pair with Consent Mode v2 configuration.
@@ -246,19 +246,19 @@ Every deliverable must include:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/metrics-frameworks.md` | You need NSM definition template or product-type examples. |
-| `references/event-schema.md` | You need naming conventions, AnalyticsEvent interface, or event examples. |
-| `references/funnel-cohort-analysis.md` | You need funnel + cohort templates, GA4 implementation, or SQL queries. |
-| `references/dashboard-spec.md` | You need dashboard template or ChartSpec interface. |
-| `references/platform-integration.md` | You need GA4/Amplitude/Mixpanel implementation or React hook. |
-| `references/privacy-consent.md` | You need consent management or PII removal patterns. |
-| `references/alerts-anomaly-detection.md` | You need Z-score anomaly detection, alert rules, or Slack template. |
-| `references/data-quality.md` | You need schema validation, freshness monitoring, or quality SQL. |
-| `references/revenue-analytics.md` | You need SaaS metrics, MRR movement, or churn analysis. |
-| `references/north-star-deep-dive.md` | You are selecting or reframing a North Star Metric (NSM type classification, input-metric decomposition, counter/guardrail pairing, stability contract). |
-| `references/retention-curve-analysis.md` | You need D1/D7/D30 curve shape classification, Power User Curve overlay, Quick Ratio, DAU/MAU stickiness, or retention SQL. |
-| `references/activation-design.md` | You need Aha-moment / Magic Number discovery, activation funnel, TTV measurement, or activated-vs-not retention overlay. |
-| `references/code-standards.md` | You need good/bad Pulse code examples. |
+| `reference/metrics-frameworks.md` | You need NSM definition template or product-type examples. |
+| `reference/event-schema.md` | You need naming conventions, AnalyticsEvent interface, or event examples. |
+| `reference/funnel-cohort-analysis.md` | You need funnel + cohort templates, GA4 implementation, or SQL queries. |
+| `reference/dashboard-spec.md` | You need dashboard template or ChartSpec interface. |
+| `reference/platform-integration.md` | You need GA4/Amplitude/Mixpanel implementation or React hook. |
+| `reference/privacy-consent.md` | You need consent management or PII removal patterns. |
+| `reference/alerts-anomaly-detection.md` | You need Z-score anomaly detection, alert rules, or Slack template. |
+| `reference/data-quality.md` | You need schema validation, freshness monitoring, or quality SQL. |
+| `reference/revenue-analytics.md` | You need SaaS metrics, MRR movement, or churn analysis. |
+| `reference/north-star-deep-dive.md` | You are selecting or reframing a North Star Metric (NSM type classification, input-metric decomposition, counter/guardrail pairing, stability contract). |
+| `reference/retention-curve-analysis.md` | You need D1/D7/D30 curve shape classification, Power User Curve overlay, Quick Ratio, DAU/MAU stickiness, or retention SQL. |
+| `reference/activation-design.md` | You need Aha-moment / Magic Number discovery, activation funnel, TTV measurement, or activated-vs-not retention overlay. |
+| `reference/code-standards.md` | You need good/bad Pulse code examples. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the metric spec, deciding adaptive thinking depth at NSM/tree design, or front-loading product type and funnel stage at INTAKE. Critical for Pulse: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You contribute Market Proof setup (`funnel_proof`, KPI baselines) in `nexus growth-acceptance` Phase 2, and run the Measurement Loop in Phase 3 (+14d / +30d / +90d). Cross-cutting G6 (Goodhart-Resistant Coverage Metrics): coverage / NSM metrics never published alone — always pair with second-axis indicator (NPS / qualitative review hours / CAC). Step 1 (Measurement Loop) is the minimum Layer C adoption for SMB orgs. |
 

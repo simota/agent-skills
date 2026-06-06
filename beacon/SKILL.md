@@ -121,24 +121,24 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `MEASURE` | Define SLIs, set SLO targets, calculate error budgets, design burn rate alerts | SLOs drive everything | `references/slo-sli-design.md` |
-| `MODEL` | Analyze load patterns, model growth, design scaling strategy, predict resources | Data-driven capacity | `references/capacity-planning.md` |
-| `DESIGN` | Assess current state, design observability strategy, specify implementation | Correlate don't collect | `references/alerting-strategy.md`, `references/dashboard-design.md` |
-| `SPECIFY` | Create implementation specs, define interfaces, prepare handoff to Gear/Builder | Clear handoff context | `references/opentelemetry-best-practices.md` |
-| `VERIFY` | Validate alert quality, dashboard readability, SLO achievability | No false positives | `references/reliability-review.md` |
+| `MEASURE` | Define SLIs, set SLO targets, calculate error budgets, design burn rate alerts | SLOs drive everything | `reference/slo-sli-design.md` |
+| `MODEL` | Analyze load patterns, model growth, design scaling strategy, predict resources | Data-driven capacity | `reference/capacity-planning.md` |
+| `DESIGN` | Assess current state, design observability strategy, specify implementation | Correlate don't collect | `reference/alerting-strategy.md`, `reference/dashboard-design.md` |
+| `SPECIFY` | Create implementation specs, define interfaces, prepare handoff to Gear/Builder | Clear handoff context | `reference/opentelemetry-best-practices.md` |
+| `VERIFY` | Validate alert quality, dashboard readability, SLO achievability | No false positives | `reference/reliability-review.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| SLO Design | `slo` | ✓ | SLO/SLI design, error budget calculation | `references/slo-sli-design.md` |
-| Distributed Tracing | `tracing` | | Distributed tracing design (OpenTelemetry) | `references/opentelemetry-best-practices.md` |
-| Alert Strategy | `alerts` | | Alert strategy (SLO burn rate, fatigue management) | `references/alerting-strategy.md` |
-| Dashboard Spec | `dashboard` | | Dashboard design (RED/USE methods) | `references/dashboard-design.md` |
-| Capacity Planning | `capacity` | | Capacity planning, load modeling | `references/capacity-planning.md` |
-| Logging Design | `log` | | Structured JSON log schema, correlation IDs, sampling policy, PII scrub, OTel Logs signal | `references/logging-design.md` |
-| Golden Signals | `golden` | | Golden Signals / RED / USE signal selection before SLO target setting | `references/golden-signals.md` |
-| Toil Reduction | `toil` | | Toil audit, automation priority scoring, runbook → script → auto-remediation escalation | `references/toil-reduction.md` |
+| SLO Design | `slo` | ✓ | SLO/SLI design, error budget calculation | `reference/slo-sli-design.md` |
+| Distributed Tracing | `tracing` | | Distributed tracing design (OpenTelemetry) | `reference/opentelemetry-best-practices.md` |
+| Alert Strategy | `alerts` | | Alert strategy (SLO burn rate, fatigue management) | `reference/alerting-strategy.md` |
+| Dashboard Spec | `dashboard` | | Dashboard design (RED/USE methods) | `reference/dashboard-design.md` |
+| Capacity Planning | `capacity` | | Capacity planning, load modeling | `reference/capacity-planning.md` |
+| Logging Design | `log` | | Structured JSON log schema, correlation IDs, sampling policy, PII scrub, OTel Logs signal | `reference/logging-design.md` |
+| Golden Signals | `golden` | | Golden Signals / RED / USE signal selection before SLO target setting | `reference/golden-signals.md` |
+| Toil Reduction | `toil` | | Toil audit, automation priority scoring, runbook → script → auto-remediation escalation | `reference/toil-reduction.md` |
 
 ## Subcommand Dispatch
 
@@ -169,23 +169,23 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `SLO`, `SLI`, `error budget`, `burn rate` | SLO/SLI design | SLO document + error budget policy | `references/slo-sli-design.md` |
-| `tracing`, `opentelemetry`, `spans`, `sampling` | Distributed tracing design | OTel instrumentation spec | `references/opentelemetry-best-practices.md` |
-| `alerting`, `runbook`, `escalation`, `pager` | Alert strategy design | Alert hierarchy + runbooks | `references/alerting-strategy.md` |
-| `dashboard`, `grafana`, `RED`, `USE` | Dashboard design | Dashboard spec + layout | `references/dashboard-design.md` |
-| `capacity`, `scaling`, `load`, `autoscale` | Capacity planning | Capacity model + scaling strategy | `references/capacity-planning.md` |
-| `toil`, `automation`, `self-healing` | Toil automation | Toil inventory + automation plan | `references/toil-automation.md` |
-| `PRR`, `readiness`, `FMEA`, `game day` | Reliability review | Readiness checklist + FMEA | `references/reliability-review.md` |
-| `postmortem`, `incident learning` | Incident learning | Learning report + monitoring improvements | `references/incident-learning-postmortem.md` |
-| unclear observability request | SLO-first assessment | SLO document + observability roadmap | `references/slo-sli-design.md` |
+| `SLO`, `SLI`, `error budget`, `burn rate` | SLO/SLI design | SLO document + error budget policy | `reference/slo-sli-design.md` |
+| `tracing`, `opentelemetry`, `spans`, `sampling` | Distributed tracing design | OTel instrumentation spec | `reference/opentelemetry-best-practices.md` |
+| `alerting`, `runbook`, `escalation`, `pager` | Alert strategy design | Alert hierarchy + runbooks | `reference/alerting-strategy.md` |
+| `dashboard`, `grafana`, `RED`, `USE` | Dashboard design | Dashboard spec + layout | `reference/dashboard-design.md` |
+| `capacity`, `scaling`, `load`, `autoscale` | Capacity planning | Capacity model + scaling strategy | `reference/capacity-planning.md` |
+| `toil`, `automation`, `self-healing` | Toil automation | Toil inventory + automation plan | `reference/toil-automation.md` |
+| `PRR`, `readiness`, `FMEA`, `game day` | Reliability review | Readiness checklist + FMEA | `reference/reliability-review.md` |
+| `postmortem`, `incident learning` | Incident learning | Learning report + monitoring improvements | `reference/incident-learning-postmortem.md` |
+| unclear observability request | SLO-first assessment | SLO document + observability roadmap | `reference/slo-sli-design.md` |
 
 Routing rules:
 
 - If the request mentions a specific observability artifact (SLO, dashboard, alert), route to that mode directly.
 - If the request mentions "all" or "full review," run MEASURE→MODEL→DESIGN→SPECIFY in full.
 - If the request mentions implementation details, hand off to Gear or Builder.
-- If the request involves AI/LLM observability or agentic system tracing (`gen_ai.agent.*`), read `references/llm-observability.md`.
-- If the request involves platform engineering observability, read `references/platform-observability.md`.
+- If the request involves AI/LLM observability or agentic system tracing (`gen_ai.agent.*`), read `reference/llm-observability.md`.
+- If the request involves platform engineering observability, read `reference/platform-observability.md`.
 - Default to MEASURE (SLO-first) for any unclear observability request.
 
 ## Output Requirements
@@ -204,13 +204,13 @@ Every deliverable must include:
 
 | Area | Scope | Reference |
 |------|-------|-----------|
-| **SLO/SLI Design** | SLO/SLI definitions, error budgets, burn rates, anti-patterns, governance | `references/slo-sli-design.md` |
-| **OTel & Tracing** | Instrumentation, semantic conventions, collector, sampling, GenAI, cost | `references/opentelemetry-best-practices.md` |
-| **Alerting Strategy** | Alert hierarchy, runbooks, escalation, alert quality KPIs | `references/alerting-strategy.md` |
-| **Dashboard Design** | RED/USE methods, dashboard-as-code, sprawl prevention | `references/dashboard-design.md` |
-| **Capacity Planning** | Load modeling, autoscaling, prediction | `references/capacity-planning.md` |
-| **Toil Automation** | Toil identification, automation scoring | `references/toil-automation.md` |
-| **Reliability Review** | PRR checklists, FMEA, game days | `references/reliability-review.md` |
+| **SLO/SLI Design** | SLO/SLI definitions, error budgets, burn rates, anti-patterns, governance | `reference/slo-sli-design.md` |
+| **OTel & Tracing** | Instrumentation, semantic conventions, collector, sampling, GenAI, cost | `reference/opentelemetry-best-practices.md` |
+| **Alerting Strategy** | Alert hierarchy, runbooks, escalation, alert quality KPIs | `reference/alerting-strategy.md` |
+| **Dashboard Design** | RED/USE methods, dashboard-as-code, sprawl prevention | `reference/dashboard-design.md` |
+| **Capacity Planning** | Load modeling, autoscaling, prediction | `reference/capacity-planning.md` |
+| **Toil Automation** | Toil identification, automation scoring | `reference/toil-automation.md` |
+| **Reliability Review** | PRR checklists, FMEA, game days | `reference/reliability-review.md` |
 
 ## Priorities
 
@@ -258,19 +258,19 @@ When auditing observability for 4+ services, spawn 2–3 Explore subagents to sc
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/slo-sli-design.md` | You need SLO/SLI definitions, error budgets, burn rates, anti-patterns (SA-01-08), error budget policies, or SLO governance & maturity model. |
-| `references/opentelemetry-best-practices.md` | You need OTel instrumentation (OT-01-05), semantic conventions, collector pipeline, sampling, distributed tracing, telemetry correlation, cardinality management, cost optimization, or GenAI observability. |
-| `references/alerting-strategy.md` | You need alert hierarchy, runbooks, escalation, alert quality KPIs, or signal-to-noise ratio. |
-| `references/dashboard-design.md` | You need RED/USE methods, dashboard-as-code, or dashboard sprawl prevention. |
-| `references/capacity-planning.md` | You need load modeling, autoscaling, or prediction. |
-| `references/toil-automation.md` | You need toil identification or automation scoring. |
-| `references/reliability-review.md` | You need PRR checklists, FMEA, or game days. |
-| `references/incident-learning-postmortem.md` | You need blameless principles (BL-01-05), cognitive bias countermeasures, postmortem template, anti-patterns (PA-01-07), or learning metrics. |
-| `references/llm-observability.md` | You need AI/LLM tracing, GenAI semantic conventions, token cost tracking, or prompt quality metrics. |
-| `references/platform-observability.md` | You need IDP observability, Backstage SLO integration, Service Catalog, or Golden Path design. |
-| `references/golden-signals.md` | You are running the `golden` recipe — Google SRE Golden Signals (latency / traffic / errors / saturation), RED for request-driven, USE for resource-driven, and SLI candidate extraction before SLO target setting. |
-| `references/logging-design.md` | You are running the `log` recipe — structured JSON log schema, correlation IDs (trace_id / span_id / request_id), level policy, source-side sampling, PII scrub, and OpenTelemetry Logs signal integration. |
-| `references/toil-reduction.md` | You are running the `toil` recipe — Google SRE toil definition audit, automation priority scoring (frequency × time × growth × value), 50% toil budget enforcement, and runbook → script → auto-remediation escalation. |
+| `reference/slo-sli-design.md` | You need SLO/SLI definitions, error budgets, burn rates, anti-patterns (SA-01-08), error budget policies, or SLO governance & maturity model. |
+| `reference/opentelemetry-best-practices.md` | You need OTel instrumentation (OT-01-05), semantic conventions, collector pipeline, sampling, distributed tracing, telemetry correlation, cardinality management, cost optimization, or GenAI observability. |
+| `reference/alerting-strategy.md` | You need alert hierarchy, runbooks, escalation, alert quality KPIs, or signal-to-noise ratio. |
+| `reference/dashboard-design.md` | You need RED/USE methods, dashboard-as-code, or dashboard sprawl prevention. |
+| `reference/capacity-planning.md` | You need load modeling, autoscaling, or prediction. |
+| `reference/toil-automation.md` | You need toil identification or automation scoring. |
+| `reference/reliability-review.md` | You need PRR checklists, FMEA, or game days. |
+| `reference/incident-learning-postmortem.md` | You need blameless principles (BL-01-05), cognitive bias countermeasures, postmortem template, anti-patterns (PA-01-07), or learning metrics. |
+| `reference/llm-observability.md` | You need AI/LLM tracing, GenAI semantic conventions, token cost tracking, or prompt quality metrics. |
+| `reference/platform-observability.md` | You need IDP observability, Backstage SLO integration, Service Catalog, or Golden Path design. |
+| `reference/golden-signals.md` | You are running the `golden` recipe — Google SRE Golden Signals (latency / traffic / errors / saturation), RED for request-driven, USE for resource-driven, and SLI candidate extraction before SLO target setting. |
+| `reference/logging-design.md` | You are running the `log` recipe — structured JSON log schema, correlation IDs (trace_id / span_id / request_id), level policy, source-side sampling, PII scrub, and OpenTelemetry Logs signal integration. |
+| `reference/toil-reduction.md` | You are running the `toil` recipe — Google SRE toil definition audit, automation priority scoring (frequency × time × growth × value), 50% toil budget enforcement, and runbook → script → auto-remediation escalation. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the SLO/alert spec, deciding adaptive thinking depth at boundary/burn-rate selection, or front-loading service criticality and reliability target at SURVEY. Critical for Beacon: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You register `rollback_condition` as a live SLO oracle in `nexus acceptance` Phase 5 (Layer 5 — runtime self-verify). Runtime oracle is the last safety net before G3 repair-loop circuit breaker activates. Defines the canary-window shadow-mode requirement before runtime oracle promotion. |
 

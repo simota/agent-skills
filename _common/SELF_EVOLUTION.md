@@ -201,8 +201,8 @@ Direct modification of own SKILL.md and references. Currently implemented by Arc
 
 | Level | Scope | Example | Approval |
 |-------|-------|---------|----------|
-| **A: Autonomous** | references/ additions only | New insights, examples, templates | None |
-| **B: Autonomous + Verify** | references/ updates, minor SKILL.md updates | Content updates with equivalence verification | Self-verify |
+| **A: Autonomous** | reference/ additions only | New insights, examples, templates | None |
+| **B: Autonomous + Verify** | reference/ updates, minor SKILL.md updates | Content updates with equivalence verification | Self-verify |
 | **C: Human Approval** | Core SKILL.md sections | Boundaries, Principles, Framework changes | Human required |
 | **D: Forbidden** | Safety mechanisms | Own Safety Level, trigger conditions, guardrails | Never |
 
@@ -211,7 +211,7 @@ Direct modification of own SKILL.md and references. Currently implemented by Arc
 An agent may implement Tier 3 only when ALL conditions are met:
 
 1. **30+ data points** in journal with consistent patterns
-2. **Dedicated reference file** at `references/self-evolution.md` with full Safety Level definitions
+2. **Dedicated reference file** at `reference/self-evolution.md` with full Safety Level definitions
 3. **RP-01 through RP-05** implemented with agent-specific budgets
 4. **Level D** includes: own safety levels, `_common/*.md`, other agents' files
 5. **Explicit design** — Architect must include Tier 3 capability when creating the agent
@@ -272,4 +272,4 @@ No changes required. Existing loops already implement the standard phases under 
 
 ### For Tier 3 Implementation
 
-Follow Tier 3 Activation Requirements above. Reference Architect's `references/self-evolution.md` as the canonical implementation example.
+Follow Tier 3 Activation Requirements above. Reference Architect's `reference/self-evolution.md` as the canonical implementation example.

@@ -96,14 +96,14 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Marp | `marp` | ✓ | Marp Markdown slide generation | `references/patterns.md` |
-| Reveal | `reveal` | | reveal.js HTML slide generation | `references/patterns.md` |
-| Slidev | `slidev` | | Slidev Vue slide generation | `references/patterns.md` |
-| Conference | `conference` | | LT / conference talk optimization | `references/patterns.md`, `references/examples.md` |
-| Timing | `timing` | | WPM-based pacing and speaker notes | `references/patterns.md` |
-| Narrative | `narrative` | | Narrative arc design — Pixar formula, Hero's Journey for talks, Problem-Solution-Benefit, Minto Pyramid | `references/narrative-arc-design.md` |
-| Visual | `visual` | | Slide visual design — typography hierarchy, color/contrast (WCAG AA), image use, alignment grid | `references/slide-visual-design.md` |
-| Rehearsal | `rehearsal` | | Rehearsal and delivery — breathing, pacing, pause discipline, eye contact, Q&A handling | `references/rehearsal-delivery.md` |
+| Marp | `marp` | ✓ | Marp Markdown slide generation | `reference/patterns.md` |
+| Reveal | `reveal` | | reveal.js HTML slide generation | `reference/patterns.md` |
+| Slidev | `slidev` | | Slidev Vue slide generation | `reference/patterns.md` |
+| Conference | `conference` | | LT / conference talk optimization | `reference/patterns.md`, `reference/examples.md` |
+| Timing | `timing` | | WPM-based pacing and speaker notes | `reference/patterns.md` |
+| Narrative | `narrative` | | Narrative arc design — Pixar formula, Hero's Journey for talks, Problem-Solution-Benefit, Minto Pyramid | `reference/narrative-arc-design.md` |
+| Visual | `visual` | | Slide visual design — typography hierarchy, color/contrast (WCAG AA), image use, alignment grid | `reference/slide-visual-design.md` |
+| Rehearsal | `rehearsal` | | Rehearsal and delivery — breathing, pacing, pause discipline, eye contact, Q&A handling | `reference/rehearsal-delivery.md` |
 
 ## Subcommand Dispatch
 
@@ -123,15 +123,15 @@ Parse the first token of user input.
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `PPTX`, `corporate`, `.ppt` deliverable | Marp (native PPTX export with speaker notes; add `--pptx-editable` for text-editable output, requires LibreOffice) | `.md` with Marp directives | `references/patterns.md` |
-| `PDF`, `print`, handout | Marp (PDF export with outlines/notes); for accessible PDF/UA, export via PPTX then PowerPoint Save-As-PDF with Document Structure Tags | `.md` with Marp directives | `references/patterns.md` |
-| live code demo, `Monaco`, `Shiki`, animated code walkthrough | Slidev (Monaco editor + Shiki line animations) | `.md` with Slidev syntax | `references/patterns.md` |
-| `Vue`, developer talk, built-in recording/camera | Slidev (built-in camera/screen recording, https://sli.dev/features/recording) | `.md` with Slidev syntax | `references/patterns.md` |
-| `reveal`, heavy customization, plugin ecosystem, multiplexing | reveal.js HTML | `.html` | `references/patterns.md` |
-| `LT`, `lightning talk`, 5 min | Compact format (8-12 slides; ~700 words @ 140 WPM) | framework-appropriate | `references/patterns.md` |
-| `keynote`, long talk, 30+ min | Extended format (30-60 slides; 1 slide/min pacing) | framework-appropriate | `references/patterns.md` |
-| `code`, technical, programming | Code-focused layout | framework with syntax highlighting | `references/patterns.md` |
-| unclear framework | Marp (lowest barrier, widest export) | `.md` | `references/patterns.md` |
+| `PPTX`, `corporate`, `.ppt` deliverable | Marp (native PPTX export with speaker notes; add `--pptx-editable` for text-editable output, requires LibreOffice) | `.md` with Marp directives | `reference/patterns.md` |
+| `PDF`, `print`, handout | Marp (PDF export with outlines/notes); for accessible PDF/UA, export via PPTX then PowerPoint Save-As-PDF with Document Structure Tags | `.md` with Marp directives | `reference/patterns.md` |
+| live code demo, `Monaco`, `Shiki`, animated code walkthrough | Slidev (Monaco editor + Shiki line animations) | `.md` with Slidev syntax | `reference/patterns.md` |
+| `Vue`, developer talk, built-in recording/camera | Slidev (built-in camera/screen recording, https://sli.dev/features/recording) | `.md` with Slidev syntax | `reference/patterns.md` |
+| `reveal`, heavy customization, plugin ecosystem, multiplexing | reveal.js HTML | `.html` | `reference/patterns.md` |
+| `LT`, `lightning talk`, 5 min | Compact format (8-12 slides; ~700 words @ 140 WPM) | framework-appropriate | `reference/patterns.md` |
+| `keynote`, long talk, 30+ min | Extended format (30-60 slides; 1 slide/min pacing) | framework-appropriate | `reference/patterns.md` |
+| `code`, technical, programming | Code-focused layout | framework with syntax highlighting | `reference/patterns.md` |
+| unclear framework | Marp (lowest barrier, widest export) | `.md` | `reference/patterns.md` |
 
 ## Workflow
 
@@ -140,9 +140,9 @@ Parse the first token of user input.
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
 | `OUTLINE` | Extract key messages and audience profile | Identify the one thing the audience should remember | — |
-| `ARC` | Design narrative structure | Choose arc pattern (Problem-Solution, AIDA, Before-After, Hero's Journey) | `references/patterns.md` |
-| `DRAFT` | Write slide content with visual cues | 6x6 rule; one idea per slide | `references/patterns.md` |
-| `THEME` | Apply or create theme | Match audience and venue context | `references/patterns.md` |
+| `ARC` | Design narrative structure | Choose arc pattern (Problem-Solution, AIDA, Before-After, Hero's Journey) | `reference/patterns.md` |
+| `DRAFT` | Write slide content with visual cues | 6x6 rule; one idea per slide | `reference/patterns.md` |
+| `THEME` | Apply or create theme | Match audience and venue context | `reference/patterns.md` |
 | `NOTES` | Add speaker notes and timing | Every content slide gets notes; note word count ≤ (slide seconds × WPM ÷ 60) | — |
 | `REVIEW` | Check flow, pacing, and slide count | Verify arc coherence; total notes word count ≤ duration × 125 WPM | — |
 
@@ -191,12 +191,12 @@ Pace baseline: 120-160 WPM; use 140 WPM for technical conference talks, 125 WPM 
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/patterns.md` | You need slide framework syntax, theme templates, or layout patterns. |
-| `references/examples.md` | You need complete slide deck examples for different formats. |
-| `references/handoffs.md` | You need handoff templates for collaboration with other agents. |
-| `references/narrative-arc-design.md` | You are designing the deck story arc (Pixar formula, Hero's Journey for talks, Problem-Solution-Benefit, Minto Pyramid) — used by the `narrative` recipe. |
-| `references/slide-visual-design.md` | You are designing typography hierarchy, color/contrast (WCAG AA), image use, or alignment grid before applying a theme — used by the `visual` recipe. |
-| `references/rehearsal-delivery.md` | You are producing a rehearsal plan covering breathing, pacing, pause discipline, eye-contact routing, and Q&A handling — used by the `rehearsal` recipe. |
+| `reference/patterns.md` | You need slide framework syntax, theme templates, or layout patterns. |
+| `reference/examples.md` | You need complete slide deck examples for different formats. |
+| `reference/handoffs.md` | You need handoff templates for collaboration with other agents. |
+| `reference/narrative-arc-design.md` | You are designing the deck story arc (Pixar formula, Hero's Journey for talks, Problem-Solution-Benefit, Minto Pyramid) — used by the `narrative` recipe. |
+| `reference/slide-visual-design.md` | You are designing typography hierarchy, color/contrast (WCAG AA), image use, or alignment grid before applying a theme — used by the `visual` recipe. |
+| `reference/rehearsal-delivery.md` | You are producing a rehearsal plan covering breathing, pacing, pause discipline, eye-contact routing, and Q&A handling — used by the `rehearsal` recipe. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the slide deck, deciding adaptive thinking depth at framework/6x6, or front-loading talk-type/audience/duration at OUTLINE. Critical for Stage: P3, P5. |
 
 ## Operational

@@ -120,16 +120,16 @@ Route elsewhere when the task is primarily:
 
 | Phase | Goal | Required Actions | Read |
 |---|---|---|---|
-| `UNDERSTAND` | Confirm intent | Identify audience, source inputs, scope, non-goals, dependencies, and ambiguities. | `references/` |
-| `STRUCTURE` | Choose the right document shape | Select template, output path, section depth, IDs, and traceability method. | `references/` |
-| `DRAFT` | Produce the document | Write concise, testable requirements and explicit constraints. | `references/` |
-| `REVIEW` | Remove ambiguity | Run quality gates for structure, content, testability, and traceability. | `references/` |
-| `FINALIZE` | Publish a usable artifact | Update version and changelog, link related docs, and state next handoff. | `references/` |
-| `INSCRIBE` | Learn from document outcomes | Record downstream usage and recalibrate template guidance. | `references/` |
+| `UNDERSTAND` | Confirm intent | Identify audience, source inputs, scope, non-goals, dependencies, and ambiguities. | `reference/` |
+| `STRUCTURE` | Choose the right document shape | Select template, output path, section depth, IDs, and traceability method. | `reference/` |
+| `DRAFT` | Produce the document | Write concise, testable requirements and explicit constraints. | `reference/` |
+| `REVIEW` | Remove ambiguity | Run quality gates for structure, content, testability, and traceability. | `reference/` |
+| `FINALIZE` | Publish a usable artifact | Update version and changelog, link related docs, and state next handoff. | `reference/` |
+| `INSCRIBE` | Learn from document outcomes | Record downstream usage and recalibrate template guidance. | `reference/` |
 
 ### INSCRIBE Rules
 
-Keep these rules explicit. Full detail lives in [documentation-calibration.md](~/.claude/skills/scribe/references/documentation-calibration.md).
+Keep these rules explicit. Full detail lives in [documentation-calibration.md](~/.claude/skills/scribe/reference/documentation-calibration.md).
 
 | Metric               | Threshold         | Action                                         |
 | -------------------- | ----------------- | ---------------------------------------------- |
@@ -147,14 +147,14 @@ Keep these rules explicit. Full detail lives in [documentation-calibration.md](~
 
 | Type               | Use When                                          | Output Path                       | Read This                                                                         |
 | ------------------ | ------------------------------------------------- | --------------------------------- | --------------------------------------------------------------------------------- |
-| `PRD`              | Business scope, user needs, goals, non-goals      | `docs/prd/PRD-[name].md`          | [prd-template.md](~/.claude/skills/scribe/references/prd-template.md)             |
-| `SRS`              | Technical behavior, interfaces, constraints, NFRs | `docs/specs/SRS-[name].md`        | [srs-template.md](~/.claude/skills/scribe/references/srs-template.md)             |
-| `HLD`              | System architecture, components, deployment       | `docs/design/HLD-[name].md`       | [design-template.md](~/.claude/skills/scribe/references/design-template.md)       |
-| `LLD`              | Module design, data structures, sequences, config | `docs/design/LLD-[name].md`       | [design-template.md](~/.claude/skills/scribe/references/design-template.md)       |
-| `Impl Checklist`   | Work sequencing and implementation readiness      | `docs/checklists/IMPL-[name].md`  | [checklist-template.md](~/.claude/skills/scribe/references/checklist-template.md) |
-| `Review Checklist` | Review criteria and sign-off                      | `docs/checklists/REVIEW-[cat].md` | [checklist-template.md](~/.claude/skills/scribe/references/checklist-template.md) |
-| `Test Spec`        | Test scope, cases, data, and traceability         | `docs/test-specs/TEST-[name].md`  | [test-spec-template.md](~/.claude/skills/scribe/references/test-spec-template.md) |
-| `Agent Spec`       | AI agent execution context, boundaries, commands (≤ 150 lines) | `AGENTS.md` or `docs/specs/AGENT-[name].md` | [srs-template.md](~/.claude/skills/scribe/references/srs-template.md) |
+| `PRD`              | Business scope, user needs, goals, non-goals      | `docs/prd/PRD-[name].md`          | [prd-template.md](~/.claude/skills/scribe/reference/prd-template.md)             |
+| `SRS`              | Technical behavior, interfaces, constraints, NFRs | `docs/specs/SRS-[name].md`        | [srs-template.md](~/.claude/skills/scribe/reference/srs-template.md)             |
+| `HLD`              | System architecture, components, deployment       | `docs/design/HLD-[name].md`       | [design-template.md](~/.claude/skills/scribe/reference/design-template.md)       |
+| `LLD`              | Module design, data structures, sequences, config | `docs/design/LLD-[name].md`       | [design-template.md](~/.claude/skills/scribe/reference/design-template.md)       |
+| `Impl Checklist`   | Work sequencing and implementation readiness      | `docs/checklists/IMPL-[name].md`  | [checklist-template.md](~/.claude/skills/scribe/reference/checklist-template.md) |
+| `Review Checklist` | Review criteria and sign-off                      | `docs/checklists/REVIEW-[cat].md` | [checklist-template.md](~/.claude/skills/scribe/reference/checklist-template.md) |
+| `Test Spec`        | Test scope, cases, data, and traceability         | `docs/test-specs/TEST-[name].md`  | [test-spec-template.md](~/.claude/skills/scribe/reference/test-spec-template.md) |
+| `Agent Spec`       | AI agent execution context, boundaries, commands (≤ 150 lines) | `AGENTS.md` or `docs/specs/AGENT-[name].md` | [srs-template.md](~/.claude/skills/scribe/reference/srs-template.md) |
 
 ## Quality Gates
 
@@ -167,7 +167,7 @@ Reject or revise the document if any of these fail:
 - Target audience is not stated
 - Reviewer path or next handoff is missing
 
-Use this reference when the draft is weak: [anti-patterns.md](~/.claude/skills/scribe/references/anti-patterns.md)
+Use this reference when the draft is weak: [anti-patterns.md](~/.claude/skills/scribe/reference/anti-patterns.md)
 
 ## Routing And Handoffs
 
@@ -189,33 +189,33 @@ Use this reference when the draft is weak: [anti-patterns.md](~/.claude/skills/s
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| PRD / product requirements request | PRD workflow with business context | PRD document | `references/prd-template.md` |
-| SRS / technical spec request | SRS workflow with IEEE quality gates | SRS document | `references/srs-template.md` |
-| HLD / LLD / design doc request | Design document workflow | HLD or LLD document | `references/design-template.md` |
-| Checklist (impl / review / release) | Checklist workflow | Checklist document | `references/checklist-template.md` |
-| Test spec / acceptance criteria | Test specification workflow | Test spec document | `references/test-spec-template.md` |
-| Vague or ambiguous requirements detected | Quality gate: clarify before drafting | Clarification request | `references/anti-patterns.md` |
-| Compliance-sensitive domain (health, finance, PII) | Add GDPR/HIPAA/SOC 2 sections | Compliance-enriched spec | `references/` |
-| AI agent spec / AGENTS.md request | Agent-consumable spec following AGENTS.md convention: commands, testing, project structure, architecture, security, conventions | Agent spec document | `references/srs-template.md` |
+| PRD / product requirements request | PRD workflow with business context | PRD document | `reference/prd-template.md` |
+| SRS / technical spec request | SRS workflow with IEEE quality gates | SRS document | `reference/srs-template.md` |
+| HLD / LLD / design doc request | Design document workflow | HLD or LLD document | `reference/design-template.md` |
+| Checklist (impl / review / release) | Checklist workflow | Checklist document | `reference/checklist-template.md` |
+| Test spec / acceptance criteria | Test specification workflow | Test spec document | `reference/test-spec-template.md` |
+| Vague or ambiguous requirements detected | Quality gate: clarify before drafting | Clarification request | `reference/anti-patterns.md` |
+| Compliance-sensitive domain (health, finance, PII) | Add GDPR/HIPAA/SOC 2 sections | Compliance-enriched spec | `reference/` |
+| AI agent spec / AGENTS.md request | Agent-consumable spec following AGENTS.md convention: commands, testing, project structure, architecture, security, conventions | Agent spec document | `reference/srs-template.md` |
 | complex multi-agent task | Nexus-routed execution | structured handoff | `_common/BOUNDARIES.md` |
 
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| PRD | `prd` | ✓ | Product Requirements Document (business goals, user needs, scope) | `references/prd-template.md` |
-| SRS | `srs` | | Software Requirements Specification (technical requirements, interfaces, NFRs) | `references/srs-template.md` |
-| HLD | `hld` | | High-Level Design (system architecture, component design) | `references/design-template.md` |
-| LLD | `lld` | | Low-Level Design (module details, data structures, sequences) | `references/design-template.md` |
-| Test Spec | `testspec` | | Test specification (scope, cases, data, traceability) | `references/test-spec-template.md` |
-| ADR | `adr` | | Architecture Decision Record (Nygard/MADR format, ADR numbering, immutability, supersede chain) | `references/adr-writing.md` |
-| Runbook | `runbook` | | Operational runbook (symptom → triage → recover → verify, escalation, idempotency) | `references/runbook-writing.md` |
-| API Doc | `api-doc` | | Human-readable API reference from OpenAPI (code samples, error catalog, auth flow, versioning) | `references/api-documentation.md` |
+| PRD | `prd` | ✓ | Product Requirements Document (business goals, user needs, scope) | `reference/prd-template.md` |
+| SRS | `srs` | | Software Requirements Specification (technical requirements, interfaces, NFRs) | `reference/srs-template.md` |
+| HLD | `hld` | | High-Level Design (system architecture, component design) | `reference/design-template.md` |
+| LLD | `lld` | | Low-Level Design (module details, data structures, sequences) | `reference/design-template.md` |
+| Test Spec | `testspec` | | Test specification (scope, cases, data, traceability) | `reference/test-spec-template.md` |
+| ADR | `adr` | | Architecture Decision Record (Nygard/MADR format, ADR numbering, immutability, supersede chain) | `reference/adr-writing.md` |
+| Runbook | `runbook` | | Operational runbook (symptom → triage → recover → verify, escalation, idempotency) | `reference/runbook-writing.md` |
+| API Doc | `api-doc` | | Human-readable API reference from OpenAPI (code samples, error catalog, auth flow, versioning) | `reference/api-documentation.md` |
 
 ## Subcommand Dispatch
 
@@ -272,16 +272,16 @@ Response shape:
 
 | Reference                                                                                       | Read This When                                                               |
 | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [prd-template.md](~/.claude/skills/scribe/references/prd-template.md)                           | You need a PRD, a quick PRD, or PRD quality checks.                          |
-| [srs-template.md](~/.claude/skills/scribe/references/srs-template.md)                           | You need technical requirements, interfaces, or measurable NFRs.             |
-| [design-template.md](~/.claude/skills/scribe/references/design-template.md)                     | You need HLD, LLD, scaling strategy, config, or rollback sections.           |
-| [checklist-template.md](~/.claude/skills/scribe/references/checklist-template.md)               | You need implementation, review, or quick delivery checklists.               |
-| [test-spec-template.md](~/.claude/skills/scribe/references/test-spec-template.md)               | You need test plans, traceability, or Gherkin structure.                     |
-| [adr-writing.md](~/.claude/skills/scribe/references/adr-writing.md)                             | You are running the `adr` recipe and need Nygard/MADR format, ADR numbering, immutability, or supersede chain rules. |
-| [runbook-writing.md](~/.claude/skills/scribe/references/runbook-writing.md)                     | You are running the `runbook` recipe and need symptom→triage→recover→verify structure, idempotency notes, escalation paths, or rollback sections for Triage/Mend consumers. |
-| [api-documentation.md](~/.claude/skills/scribe/references/api-documentation.md)                 | You are running the `api-doc` recipe and need to transform OpenAPI specs into Redoc/Stoplight/Mintlify human-facing reference docs with code samples, error catalogs, and auth flows. |
-| [anti-patterns.md](~/.claude/skills/scribe/references/anti-patterns.md)                         | A draft is weak, vague, bloated, untestable, or has AI-generation artifacts. |
-| [documentation-calibration.md](~/.claude/skills/scribe/references/documentation-calibration.md) | You need INSCRIBE tracking, thresholds, or EVOLUTION_SIGNAL rules.           |
+| [prd-template.md](~/.claude/skills/scribe/reference/prd-template.md)                           | You need a PRD, a quick PRD, or PRD quality checks.                          |
+| [srs-template.md](~/.claude/skills/scribe/reference/srs-template.md)                           | You need technical requirements, interfaces, or measurable NFRs.             |
+| [design-template.md](~/.claude/skills/scribe/reference/design-template.md)                     | You need HLD, LLD, scaling strategy, config, or rollback sections.           |
+| [checklist-template.md](~/.claude/skills/scribe/reference/checklist-template.md)               | You need implementation, review, or quick delivery checklists.               |
+| [test-spec-template.md](~/.claude/skills/scribe/reference/test-spec-template.md)               | You need test plans, traceability, or Gherkin structure.                     |
+| [adr-writing.md](~/.claude/skills/scribe/reference/adr-writing.md)                             | You are running the `adr` recipe and need Nygard/MADR format, ADR numbering, immutability, or supersede chain rules. |
+| [runbook-writing.md](~/.claude/skills/scribe/reference/runbook-writing.md)                     | You are running the `runbook` recipe and need symptom→triage→recover→verify structure, idempotency notes, escalation paths, or rollback sections for Triage/Mend consumers. |
+| [api-documentation.md](~/.claude/skills/scribe/reference/api-documentation.md)                 | You are running the `api-doc` recipe and need to transform OpenAPI specs into Redoc/Stoplight/Mintlify human-facing reference docs with code samples, error catalogs, and auth flows. |
+| [anti-patterns.md](~/.claude/skills/scribe/reference/anti-patterns.md)                         | A draft is weak, vague, bloated, untestable, or has AI-generation artifacts. |
+| [documentation-calibration.md](~/.claude/skills/scribe/reference/documentation-calibration.md) | You need INSCRIBE tracking, thresholds, or EVOLUTION_SIGNAL rules.           |
 | [OPUS_48_AUTHORING.md](~/.claude/skills/_common/OPUS_48_AUTHORING.md)                           | You are sizing the spec, deciding adaptive thinking depth at PLAN, or front-loading doc type/audience/scope at SCAN. Critical for Scribe: P3, P5. |
 
 

@@ -103,22 +103,22 @@ Decision rules:
 
 | Phase | Required output | Key rule | Read |
 |-------|-----------------|----------|------|
-| `FRAME` | Sources, sinks, latency, volume, consistency, PII, and replay requirements | Analyze volume and velocity before choosing architecture | `references/pipeline-architecture.md` |
-| `LAYOUT` | Architecture choice, orchestration model, contracts, partitioning, and storage layers | Use explicit schema contracts and versioning | `references/streaming-kafka.md`, `references/dbt-modeling.md` |
-| `OPTIMIZE` | Idempotency, incrementality, cost, failure recovery, and observability plan | Prefer "effectively once" (at-least-once + idempotent sink) | `references/data-reliability.md` |
-| `WIRE` | Implementation packet, tests, lineage, handoffs, backfill, and rollback notes | Every history-rewriting design needs backfill + rollback steps | `references/patterns.md` |
+| `FRAME` | Sources, sinks, latency, volume, consistency, PII, and replay requirements | Analyze volume and velocity before choosing architecture | `reference/pipeline-architecture.md` |
+| `LAYOUT` | Architecture choice, orchestration model, contracts, partitioning, and storage layers | Use explicit schema contracts and versioning | `reference/streaming-kafka.md`, `reference/dbt-modeling.md` |
+| `OPTIMIZE` | Idempotency, incrementality, cost, failure recovery, and observability plan | Prefer "effectively once" (at-least-once + idempotent sink) | `reference/data-reliability.md` |
+| `WIRE` | Implementation packet, tests, lineage, handoffs, backfill, and rollback notes | Every history-rewriting design needs backfill + rollback steps | `reference/patterns.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| ETL Pipeline | `etl` | ✓ | ETL pipeline design (source → transform → load) | `references/pipeline-architecture.md` |
-| ELT Pipeline | `elt` | | ELT pipeline (warehouse-centric transformation) | `references/pipeline-architecture.md`, `references/dbt-modeling.md` |
-| Streaming | `stream` | | Kafka/Flink/Kinesis streaming design | `references/streaming-kafka.md` |
-| dbt Project | `dbt` | | dbt project design and model structure | `references/dbt-modeling.md` |
-| Change Data Capture | `cdc` | | Debezium / logical replication / binlog / SQL Server CDC → Kafka Connect sink with snapshot + incremental handoff | `references/change-data-capture.md` |
-| Reverse ETL | `reverse` | | DWH → operational SaaS (Salesforce / HubSpot / Zendesk) activation via Census / Hightouch / Workato | `references/reverse-etl.md` |
-| Data Quality | `quality` | | Great Expectations / Soda / Elementary checks (freshness / completeness / uniqueness / validity / distribution) with OpenLineage and contract-violation alerting | `references/data-quality.md` |
+| ETL Pipeline | `etl` | ✓ | ETL pipeline design (source → transform → load) | `reference/pipeline-architecture.md` |
+| ELT Pipeline | `elt` | | ELT pipeline (warehouse-centric transformation) | `reference/pipeline-architecture.md`, `reference/dbt-modeling.md` |
+| Streaming | `stream` | | Kafka/Flink/Kinesis streaming design | `reference/streaming-kafka.md` |
+| dbt Project | `dbt` | | dbt project design and model structure | `reference/dbt-modeling.md` |
+| Change Data Capture | `cdc` | | Debezium / logical replication / binlog / SQL Server CDC → Kafka Connect sink with snapshot + incremental handoff | `reference/change-data-capture.md` |
+| Reverse ETL | `reverse` | | DWH → operational SaaS (Salesforce / HubSpot / Zendesk) activation via Census / Hightouch / Workato | `reference/reverse-etl.md` |
+| Data Quality | `quality` | | Great Expectations / Soda / Elementary checks (freshness / completeness / uniqueness / validity / distribution) with OpenLineage and contract-violation alerting | `reference/data-quality.md` |
 
 ## Subcommand Dispatch
 
@@ -139,22 +139,22 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `ETL`, `ELT`, `pipeline`, `data pipeline` | Pipeline architecture design | Architecture doc | `references/pipeline-architecture.md` |
-| `Kafka`, `streaming`, `real-time`, `CDC`, `events` | Streaming/CDC design | Streaming design doc | `references/streaming-kafka.md` |
-| `dbt`, `warehouse`, `modeling`, `mart`, `staging` | dbt/warehouse modeling | dbt model spec | `references/dbt-modeling.md` |
-| `backfill`, `replay`, `quality`, `idempotency`, `reliability` | Data reliability design | Reliability plan | `references/data-reliability.md` |
-| `batch`, `scheduled`, `analytics`, `reporting` | Batch pipeline design | Batch architecture doc | `references/pipeline-architecture.md` |
-| `hybrid`, `lambda`, `kappa` | Hybrid architecture design | Hybrid design doc | `references/pipeline-architecture.md` |
-| `medallion`, `bronze`, `silver`, `gold`, `lakehouse`, `Iceberg` | Medallion/lakehouse layer design | Layer design doc | `references/pipeline-architecture.md` |
-| `SLA`, `freshness`, `monitoring`, `observability` | Pipeline SLA/observability design | SLA/monitoring plan | `references/data-reliability.md` |
-| `schema drift`, `data contract`, `schema evolution` | Schema contract and drift mitigation | Contract spec | `references/data-reliability.md` |
-| unclear data pipeline request | Pipeline architecture design | Architecture doc | `references/pipeline-architecture.md` |
+| `ETL`, `ELT`, `pipeline`, `data pipeline` | Pipeline architecture design | Architecture doc | `reference/pipeline-architecture.md` |
+| `Kafka`, `streaming`, `real-time`, `CDC`, `events` | Streaming/CDC design | Streaming design doc | `reference/streaming-kafka.md` |
+| `dbt`, `warehouse`, `modeling`, `mart`, `staging` | dbt/warehouse modeling | dbt model spec | `reference/dbt-modeling.md` |
+| `backfill`, `replay`, `quality`, `idempotency`, `reliability` | Data reliability design | Reliability plan | `reference/data-reliability.md` |
+| `batch`, `scheduled`, `analytics`, `reporting` | Batch pipeline design | Batch architecture doc | `reference/pipeline-architecture.md` |
+| `hybrid`, `lambda`, `kappa` | Hybrid architecture design | Hybrid design doc | `reference/pipeline-architecture.md` |
+| `medallion`, `bronze`, `silver`, `gold`, `lakehouse`, `Iceberg` | Medallion/lakehouse layer design | Layer design doc | `reference/pipeline-architecture.md` |
+| `SLA`, `freshness`, `monitoring`, `observability` | Pipeline SLA/observability design | SLA/monitoring plan | `reference/data-reliability.md` |
+| `schema drift`, `data contract`, `schema evolution` | Schema contract and drift mitigation | Contract spec | `reference/data-reliability.md` |
+| unclear data pipeline request | Pipeline architecture design | Architecture doc | `reference/pipeline-architecture.md` |
 
 Routing rules:
 
-- If the request mentions Kafka, CDC, or real-time, read `references/streaming-kafka.md`.
-- If the request mentions dbt, warehouse, or modeling, read `references/dbt-modeling.md`.
-- If the request mentions reliability, quality, or backfill, read `references/data-reliability.md`.
+- If the request mentions Kafka, CDC, or real-time, read `reference/streaming-kafka.md`.
+- If the request mentions dbt, warehouse, or modeling, read `reference/dbt-modeling.md`.
+- If the request mentions reliability, quality, or backfill, read `reference/data-reliability.md`.
 - Always check anti-pattern references for validation phase.
 - Author for Opus 4.8 defaults. Apply _common/OPUS_48_AUTHORING.md principles **P3 (eagerly Read existing schemas, contracts, throughput/latency targets, and DLQ/outbox patterns at SCAN — pipeline architecture decisions depend on full grounding), P5 (think step-by-step at DESIGN — batch vs streaming vs hybrid, ETL vs ELT, exactly-once vs at-least-once decisions drive data correctness and operational cost)** as critical for Stream. P2 recommended: calibrated pipeline spec preserving anti-pattern IDs, idempotency rationale, and backfill posture. P1 recommended: front-load volume/latency/source-sink at SCAN.
 
@@ -205,7 +205,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - **vs Builder**: Builder = implementation code; Stream = pipeline architecture and design.
 - **vs Beacon**: Beacon = SLO/SLI alerting and dashboard setup; Stream = pipeline SLA tier classification and freshness monitoring design.
 
-**Teams aptitude (Pattern D: Specialist parallel handoff):** After `LAYOUT` output is frozen (architecture + data contracts agreed) and `WIRE` begins, spawn downstream agents in parallel via Agent Teams when ≥3 are needed — Builder owns `src/pipelines/**`, Radar owns `tests/pipelines/**`, Canvas owns `docs/architecture/**`, Scaffold owns `infra/**`, Gear owns `.github/workflows/**`, Beacon owns `observability/**`. Do not spawn subagents while `LAYOUT` is still open (shared contract = iterative refinement). For single-downstream tasks, invoke directly. See `_common/SUBAGENT.md` Decision Flow and `rally/references/team-design-patterns.md` Pattern D.
+**Teams aptitude (Pattern D: Specialist parallel handoff):** After `LAYOUT` output is frozen (architecture + data contracts agreed) and `WIRE` begins, spawn downstream agents in parallel via Agent Teams when ≥3 are needed — Builder owns `src/pipelines/**`, Radar owns `tests/pipelines/**`, Canvas owns `docs/architecture/**`, Scaffold owns `infra/**`, Gear owns `.github/workflows/**`, Beacon owns `observability/**`. Do not spawn subagents while `LAYOUT` is still open (shared contract = iterative refinement). For single-downstream tasks, invoke directly. See `_common/SUBAGENT.md` Decision Flow and `rally/reference/team-design-patterns.md` Pattern D.
 
 ## Output Requirements
 
@@ -228,19 +228,19 @@ Deliver:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/pipeline-architecture.md` | You are choosing batch vs streaming vs hybrid, ETL vs ELT, or a core pipeline architecture. |
-| `references/streaming-kafka.md` | You need Kafka topic, consumer, schema, delivery, or outbox guidance. |
-| `references/dbt-modeling.md` | You need dbt layer structure, naming, materialization, or test conventions. |
-| `references/data-reliability.md` | You need quality gates, CDC, idempotency, backfill, or rollback patterns. |
-| `references/patterns.md` | You need partner-agent routing or common orchestration patterns. |
-| `references/examples.md` | You need compact scenario examples for real-time, dbt, batch, or CDC designs. |
-| `references/pipeline-design-anti-patterns.md` | You need pipeline architecture anti-pattern IDs `PD-01..07` and test/orchestration guardrails. |
-| `references/event-streaming-anti-patterns.md` | You need event-streaming anti-pattern IDs `ES-01..07`, Kafka ops guardrails, or outbox rules. |
-| `references/dbt-warehouse-anti-patterns.md` | You need warehouse anti-pattern IDs `DW-01..07`, layer rules, or semantic-layer thresholds. |
-| `references/data-observability-anti-patterns.md` | You need observability anti-pattern IDs `DO-01..07`, five-pillar thresholds, or data-contract guidance. |
-| `references/change-data-capture.md` | You are running the `cdc` recipe — Debezium connectors, Postgres logical replication (`pgoutput` / `wal2json`), MySQL binlog, SQL Server CDC, snapshot→incremental handoff, and Kafka Connect sink topology. |
-| `references/reverse-etl.md` | You are running the `reverse` recipe — Census / Hightouch / Workato pushing DWH models into Salesforce / HubSpot / Zendesk with field mapping, dedup, and sync scheduling. |
-| `references/data-quality.md` | You are running the `quality` recipe — Great Expectations / Soda / Elementary checks (freshness / completeness / uniqueness / validity / distribution), OpenLineage emission, and contract-violation alerting. |
+| `reference/pipeline-architecture.md` | You are choosing batch vs streaming vs hybrid, ETL vs ELT, or a core pipeline architecture. |
+| `reference/streaming-kafka.md` | You need Kafka topic, consumer, schema, delivery, or outbox guidance. |
+| `reference/dbt-modeling.md` | You need dbt layer structure, naming, materialization, or test conventions. |
+| `reference/data-reliability.md` | You need quality gates, CDC, idempotency, backfill, or rollback patterns. |
+| `reference/patterns.md` | You need partner-agent routing or common orchestration patterns. |
+| `reference/examples.md` | You need compact scenario examples for real-time, dbt, batch, or CDC designs. |
+| `reference/pipeline-design-anti-patterns.md` | You need pipeline architecture anti-pattern IDs `PD-01..07` and test/orchestration guardrails. |
+| `reference/event-streaming-anti-patterns.md` | You need event-streaming anti-pattern IDs `ES-01..07`, Kafka ops guardrails, or outbox rules. |
+| `reference/dbt-warehouse-anti-patterns.md` | You need warehouse anti-pattern IDs `DW-01..07`, layer rules, or semantic-layer thresholds. |
+| `reference/data-observability-anti-patterns.md` | You need observability anti-pattern IDs `DO-01..07`, five-pillar thresholds, or data-contract guidance. |
+| `reference/change-data-capture.md` | You are running the `cdc` recipe — Debezium connectors, Postgres logical replication (`pgoutput` / `wal2json`), MySQL binlog, SQL Server CDC, snapshot→incremental handoff, and Kafka Connect sink topology. |
+| `reference/reverse-etl.md` | You are running the `reverse` recipe — Census / Hightouch / Workato pushing DWH models into Salesforce / HubSpot / Zendesk with field mapping, dedup, and sync scheduling. |
+| `reference/data-quality.md` | You are running the `quality` recipe — Great Expectations / Soda / Elementary checks (freshness / completeness / uniqueness / validity / distribution), OpenLineage emission, and contract-violation alerting. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the pipeline spec, deciding adaptive thinking depth at DESIGN, or front-loading volume/latency/source-sink at SCAN. Critical for Stream: P3, P5. |
 
 ## AUTORUN Support

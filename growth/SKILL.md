@@ -138,22 +138,22 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `AUDIT` | Hunt opportunities: missing meta/headings/alt/canonicals, missing OG/Twitter cards, weak CTAs/form friction, missing stacked schema, poor INP/LCP/CLS, no GEO readiness | Data-driven opportunity selection | `references/seo-checklist.md` |
-| `HACK` | Choose daily lever: highest impact on traffic/conversion/AI citation, clear deliverable scope | One high-impact change per session | `references/cro-patterns.md` |
+| `AUDIT` | Hunt opportunities: missing meta/headings/alt/canonicals, missing OG/Twitter cards, weak CTAs/form friction, missing stacked schema, poor INP/LCP/CLS, no GEO readiness | Data-driven opportunity selection | `reference/seo-checklist.md` |
+| `HACK` | Choose daily lever: highest impact on traffic/conversion/AI citation, clear deliverable scope | One high-impact change per session | `reference/cro-patterns.md` |
 | `LAUNCH` | Implement: semantic crawler-friendly code, stacked JSON-LD, above-fold optimization, E-E-A-T signals | Mobile-first, no dark patterns | Domain-specific reference |
-| `VERIFY` | Check metrics: Lighthouse SEO ≥90/Best Practices ≥90, Google Rich Results Test, Social Preview Debugger, INP <200ms/LCP ≤2.5s/CLS <0.1 | Measure impact, not just delivery | `references/core-web-vitals.md` |
+| `VERIFY` | Check metrics: Lighthouse SEO ≥90/Best Practices ≥90, Google Rich Results Test, Social Preview Debugger, INP <200ms/LCP ≤2.5s/CLS <0.1 | Measure impact, not just delivery | `reference/core-web-vitals.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| SEO | `seo` | ✓ | Meta tags, JSON-LD, heading hierarchy, GEO optimization | `references/seo-checklist.md` |
-| Social Sharing | `smo` | | OGP / Twitter Card social-share setup | `references/ogp-twitter-card-guide.md` |
-| CRO | `cro` | | CTA optimization, form improvements, exit intent | `references/cro-patterns.md` |
-| GEO | `geo` | | AI Overview / AI Mode / ChatGPT / Perplexity / Claude citation optimization | `references/geo-optimization.md` + `references/json-ld-templates.md` |
-| Keyword | `keyword` | | Keyword research methodology — search intent classification, query clustering, SERP feature analysis, AI prompt mining | `references/keyword-research.md` |
-| Audit | `audit` | | Full-site SEO audit — crawlability, indexability, content gap, internal linking, log-file analysis | `references/seo-audit.md` |
-| Vitals | `vitals` | | Core Web Vitals deep optimization — LCP/INP/CLS root-cause and targeted fix patterns at p75 | `references/core-web-vitals-deep.md` |
+| SEO | `seo` | ✓ | Meta tags, JSON-LD, heading hierarchy, GEO optimization | `reference/seo-checklist.md` |
+| Social Sharing | `smo` | | OGP / Twitter Card social-share setup | `reference/ogp-twitter-card-guide.md` |
+| CRO | `cro` | | CTA optimization, form improvements, exit intent | `reference/cro-patterns.md` |
+| GEO | `geo` | | AI Overview / AI Mode / ChatGPT / Perplexity / Claude citation optimization | `reference/geo-optimization.md` + `reference/json-ld-templates.md` |
+| Keyword | `keyword` | | Keyword research methodology — search intent classification, query clustering, SERP feature analysis, AI prompt mining | `reference/keyword-research.md` |
+| Audit | `audit` | | Full-site SEO audit — crawlability, indexability, content gap, internal linking, log-file analysis | `reference/seo-audit.md` |
+| Vitals | `vitals` | | Core Web Vitals deep optimization — LCP/INP/CLS root-cause and targeted fix patterns at p75 | `reference/core-web-vitals-deep.md` |
 
 ## Subcommand Dispatch
 
@@ -181,24 +181,24 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `SEO`, `meta`, `title`, `description`, `canonical` | SEO meta implementation | Meta tags + verification | `references/seo-checklist.md` |
-| `heading`, `h1`, `h2`, `hierarchy` | Heading audit | Heading structure fix | `references/seo-detailed-checklist.md` |
-| `OG`, `Open Graph`, `Twitter Card`, `social` | Social sharing | OGP/Twitter Card meta | `references/ogp-twitter-card-guide.md` |
-| `JSON-LD`, `structured data`, `Schema.org` | Structured data | JSON-LD implementation | `references/json-ld-templates.md` |
-| `LCP`, `INP`, `CLS`, `Core Web Vitals`, `performance` | Core Web Vitals | Performance fix + measurement at p75 (INP <200ms, LCP ≤2.5s, CLS <0.1); VSI for session stability when available | `references/core-web-vitals.md` |
-| `AI Overviews`, `AI Mode`, `GEO`, `AI search`, `citation` | Generative Engine Optimization | Triple schema stack + E-E-A-T + inline citations + platform-specific optimization (ChatGPT/Perplexity/Gemini/Claude/Copilot) | `references/geo-optimization.md` |
-| `E-E-A-T`, `author`, `expertise`, `trust` | E-E-A-T signals | Author markup, credential schema, experience indicators | `references/seo-checklist.md` |
-| `CTA`, `conversion`, `signup`, `checkout` | CRO optimization | CTA/form improvement | `references/cro-patterns.md` |
-| `form`, `validation`, `field`, `submit` | Form optimization | Form UX improvement | `references/cro-patterns.md` |
-| `exit intent`, `bounce`, `retention` | Exit prevention | Retention pattern | `references/cro-patterns.md` |
+| `SEO`, `meta`, `title`, `description`, `canonical` | SEO meta implementation | Meta tags + verification | `reference/seo-checklist.md` |
+| `heading`, `h1`, `h2`, `hierarchy` | Heading audit | Heading structure fix | `reference/seo-detailed-checklist.md` |
+| `OG`, `Open Graph`, `Twitter Card`, `social` | Social sharing | OGP/Twitter Card meta | `reference/ogp-twitter-card-guide.md` |
+| `JSON-LD`, `structured data`, `Schema.org` | Structured data | JSON-LD implementation | `reference/json-ld-templates.md` |
+| `LCP`, `INP`, `CLS`, `Core Web Vitals`, `performance` | Core Web Vitals | Performance fix + measurement at p75 (INP <200ms, LCP ≤2.5s, CLS <0.1); VSI for session stability when available | `reference/core-web-vitals.md` |
+| `AI Overviews`, `AI Mode`, `GEO`, `AI search`, `citation` | Generative Engine Optimization | Triple schema stack + E-E-A-T + inline citations + platform-specific optimization (ChatGPT/Perplexity/Gemini/Claude/Copilot) | `reference/geo-optimization.md` |
+| `E-E-A-T`, `author`, `expertise`, `trust` | E-E-A-T signals | Author markup, credential schema, experience indicators | `reference/seo-checklist.md` |
+| `CTA`, `conversion`, `signup`, `checkout` | CRO optimization | CTA/form improvement | `reference/cro-patterns.md` |
+| `form`, `validation`, `field`, `submit` | Form optimization | Form UX improvement | `reference/cro-patterns.md` |
+| `exit intent`, `bounce`, `retention` | Exit prevention | Retention pattern | `reference/cro-patterns.md` |
 
 Routing rules:
 
-- If the signal is SEO-related, read `references/seo-checklist.md` first.
-- If the signal is Core Web Vitals or performance, read `references/core-web-vitals.md`.
-- If the signal is CRO, form, or exit-intent, read `references/cro-patterns.md`.
-- If the signal is OGP or social sharing, read `references/ogp-twitter-card-guide.md`.
-- If the signal is GEO or AI search, read `references/geo-optimization.md` first (four-signal framework + AI bot taxonomy + KPIs), then `references/json-ld-templates.md` (stacked schema) + `references/seo-checklist.md`.
+- If the signal is SEO-related, read `reference/seo-checklist.md` first.
+- If the signal is Core Web Vitals or performance, read `reference/core-web-vitals.md`.
+- If the signal is CRO, form, or exit-intent, read `reference/cro-patterns.md`.
+- If the signal is OGP or social sharing, read `reference/ogp-twitter-card-guide.md`.
+- If the signal is GEO or AI search, read `reference/geo-optimization.md` first (four-signal framework + AI bot taxonomy + KPIs), then `reference/json-ld-templates.md` (stacked schema) + `reference/seo-checklist.md`.
 - When tracking or analytics changes are involved, confirm GDPR/CCPA compliance before implementation.
 
 ## Output Requirements
@@ -242,18 +242,18 @@ Growth receives data and insights from upstream agents. Growth sends hypotheses,
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/seo-checklist.md` | You need SEO quick checklist (per-page + technical). |
-| `references/seo-detailed-checklist.md` | You need detailed SEO checklist (meta/heading/content/images/URLs/site-level). |
-| `references/ogp-social-templates.md` | You need OGP and social sharing quick reference. |
-| `references/ogp-twitter-card-guide.md` | You need full OGP/Twitter Card implementation (HTML/Next.js/React Helmet/specs). |
-| `references/json-ld-templates.md` | You need JSON-LD templates (Product/Article/FAQ/Breadcrumb/Org/Local/SoftwareApp). |
-| `references/core-web-vitals.md` | You need Core Web Vitals optimization (LCP/INP/CLS strategies + code). |
-| `references/core-web-vitals-deep.md` | You are running the `vitals` recipe — LCP/INP/CLS root-cause analysis at p75 (RUM not lab) with targeted fix patterns (priority hints, long-task breakup, layout reservation). |
-| `references/cro-patterns.md` | You need CRO patterns (CTA/forms/exit-intent/social proof) + 2026 benchmarks (Baymard cart abandonment, form-field cliffs, Statsig/OpenAI tooling note). |
-| `references/keyword-research.md` | You are running the `keyword` recipe — search intent classification, query clustering, SERP overlap, AI prompt mining. |
-| `references/seo-audit.md` | You are running the `audit` recipe — full-site crawlability, indexability, content gap, internal linking topology, log-file analysis. |
-| `references/geo-optimization.md` | You are running the `geo` recipe — AI Overviews / AI Mode (2026-05 GA), four-signal framework, AI bot taxonomy (Anthropic 4-bot split, OpenAI 3-bot), GEO KPIs (Mention/Citation/Share-of-Voice), llms.txt 2026 status. |
-| `references/code-standards.md` | You need good/bad code examples. |
+| `reference/seo-checklist.md` | You need SEO quick checklist (per-page + technical). |
+| `reference/seo-detailed-checklist.md` | You need detailed SEO checklist (meta/heading/content/images/URLs/site-level). |
+| `reference/ogp-social-templates.md` | You need OGP and social sharing quick reference. |
+| `reference/ogp-twitter-card-guide.md` | You need full OGP/Twitter Card implementation (HTML/Next.js/React Helmet/specs). |
+| `reference/json-ld-templates.md` | You need JSON-LD templates (Product/Article/FAQ/Breadcrumb/Org/Local/SoftwareApp). |
+| `reference/core-web-vitals.md` | You need Core Web Vitals optimization (LCP/INP/CLS strategies + code). |
+| `reference/core-web-vitals-deep.md` | You are running the `vitals` recipe — LCP/INP/CLS root-cause analysis at p75 (RUM not lab) with targeted fix patterns (priority hints, long-task breakup, layout reservation). |
+| `reference/cro-patterns.md` | You need CRO patterns (CTA/forms/exit-intent/social proof) + 2026 benchmarks (Baymard cart abandonment, form-field cliffs, Statsig/OpenAI tooling note). |
+| `reference/keyword-research.md` | You are running the `keyword` recipe — search intent classification, query clustering, SERP overlap, AI prompt mining. |
+| `reference/seo-audit.md` | You are running the `audit` recipe — full-site crawlability, indexability, content gap, internal linking topology, log-file analysis. |
+| `reference/geo-optimization.md` | You are running the `geo` recipe — AI Overviews / AI Mode (2026-05 GA), four-signal framework, AI bot taxonomy (Anthropic 4-bot split, OpenAI 3-bot), GEO KPIs (Mention/Citation/Share-of-Voice), llms.txt 2026 status. |
+| `reference/code-standards.md` | You need good/bad code examples. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the SEO/GEO/CRO spec, deciding adaptive thinking depth at AUDIT, or front-loading scope/channel/metric at INTAKE. Critical for Growth: P3, P5. |
 
 ## Operational

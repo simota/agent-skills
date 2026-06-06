@@ -125,12 +125,12 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Goal | Required result  Read |
 |---|---|---------|
-| `ALIGN` | Identify stakeholders, goals, and shared context | Team map and working scope  `references/` |
-| `STRUCTURE` | Choose scope and package shape | `Full`, `Standard`, or `Lite` structure  `references/` |
-| `ELABORATE` | Write `L0 -> L1 -> L2 -> L3` in order | Staged specification package  `references/` |
-| `BRIDGE` | Align terminology and links across teams | Cross-reference integrity and traceability  `references/` |
-| `VERIFY` | Validate readability, completeness, and BDD quality | Cross-team review-ready package  `references/` |
-| `DELIVER` | Hand off the package and next actions | Delivery-ready spec package  `references/` |
+| `ALIGN` | Identify stakeholders, goals, and shared context | Team map and working scope  `reference/` |
+| `STRUCTURE` | Choose scope and package shape | `Full`, `Standard`, or `Lite` structure  `reference/` |
+| `ELABORATE` | Write `L0 -> L1 -> L2 -> L3` in order | Staged specification package  `reference/` |
+| `BRIDGE` | Align terminology and links across teams | Cross-reference integrity and traceability  `reference/` |
+| `VERIFY` | Validate readability, completeness, and BDD quality | Cross-team review-ready package  `reference/` |
+| `DELIVER` | Hand off the package and next actions | Delivery-ready spec package  `reference/` |
 
 ## UNIFY Post-Task
 
@@ -164,31 +164,31 @@ Use it to log scope choice, section usage, alignment, revisions, adoption, and r
 
 | Signal | Approach | Primary output | Read next |
 |---|---|---|---|
-| `cross-team spec`, `shared requirements` | Full/Standard/Lite package authoring | Unified spec package | `references/unified-template.md` |
-| `BDD`, `acceptance criteria`, `given/when/then` | L3 scenario authoring | BDD acceptance criteria | `references/bdd-best-practices.md` |
-| `user stories`, `requirements`, `backlog` | L1 requirement extraction | User stories + REQ list | `references/user-story-smells.md` |
-| `traceability`, `cross-reference` | Bridge phase linking | Traceability matrix | `references/cross-reference-guide.md` |
-| `scope selection`, `lite/standard/full` | Scope analysis | Scope recommendation | `references/template-selection.md` |
-| `handoff`, `downstream delivery` | Package handoff | Handoff payload | `references/handoff-formats.md` |
-| unclear cross-team spec request | Standard package authoring | Unified spec package | `references/unified-template.md` |
+| `cross-team spec`, `shared requirements` | Full/Standard/Lite package authoring | Unified spec package | `reference/unified-template.md` |
+| `BDD`, `acceptance criteria`, `given/when/then` | L3 scenario authoring | BDD acceptance criteria | `reference/bdd-best-practices.md` |
+| `user stories`, `requirements`, `backlog` | L1 requirement extraction | User stories + REQ list | `reference/user-story-smells.md` |
+| `traceability`, `cross-reference` | Bridge phase linking | Traceability matrix | `reference/cross-reference-guide.md` |
+| `scope selection`, `lite/standard/full` | Scope analysis | Scope recommendation | `reference/template-selection.md` |
+| `handoff`, `downstream delivery` | Package handoff | Handoff payload | `reference/handoff-formats.md` |
+| unclear cross-team spec request | Standard package authoring | Unified spec package | `reference/unified-template.md` |
 
 Routing rules:
-- If the request mentions BDD or acceptance criteria, read `references/bdd-best-practices.md`.
-- If the request involves user stories or requirements, read `references/user-story-smells.md`.
-- If the request involves scope selection, read `references/template-selection.md`.
-- Always read `references/specification-anti-patterns.md` for validation phase.
+- If the request mentions BDD or acceptance criteria, read `reference/bdd-best-practices.md`.
+- If the request involves user stories or requirements, read `reference/user-story-smells.md`.
+- If the request involves scope selection, read `reference/template-selection.md`.
+- Always read `reference/specification-anti-patterns.md` for validation phase.
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Vision & Goals | `vision` | ✓ | Project overview, goals, scope definition | `references/unified-template.md` |
-| Requirements | `requirements` | | Detail functional/non-functional requirements | `references/user-story-smells.md` |
-| Detailed Spec | `detail` | | L2 detailed spec, flow, data model | `references/handoff-formats.md` |
-| Acceptance Criteria | `ac` | | AC authoring, BDD scenario generation | `references/bdd-best-practices.md` |
-| User Story Mapping | `story-map` | | Jeff Patton user story map — backbone + walking skeleton + release slices | `references/user-story-mapping.md` |
-| Stakeholder Map | `stakeholder` | | Influence × Interest grid, engagement strategy, role-based information flow | `references/stakeholder-map.md` |
-| RACI Matrix | `raci` | | Responsibility assignment (RACI / DACI / RAPID) across spec items and decisions | `references/raci-matrix.md` |
+| Vision & Goals | `vision` | ✓ | Project overview, goals, scope definition | `reference/unified-template.md` |
+| Requirements | `requirements` | | Detail functional/non-functional requirements | `reference/user-story-smells.md` |
+| Detailed Spec | `detail` | | L2 detailed spec, flow, data model | `reference/handoff-formats.md` |
+| Acceptance Criteria | `ac` | | AC authoring, BDD scenario generation | `reference/bdd-best-practices.md` |
+| User Story Mapping | `story-map` | | Jeff Patton user story map — backbone + walking skeleton + release slices | `reference/user-story-mapping.md` |
+| Stakeholder Map | `stakeholder` | | Influence × Interest grid, engagement strategy, role-based information flow | `reference/stakeholder-map.md` |
+| RACI Matrix | `raci` | | Responsibility assignment (RACI / DACI / RAPID) across spec items and decisions | `reference/raci-matrix.md` |
 
 Behavior notes:
 - **vision** (default): SURVEY → ALIGN → DRAFT → PRESENT; load `unified-template.md`; produce L0 Vision Block.
@@ -306,20 +306,20 @@ Unified Specification Package: [Feature Name]
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/template-selection.md` | Choosing `Full`, `Standard`, or `Lite` scope. |
-| `references/unified-template.md` | Writing the canonical `L0/L1/L2/L3/Meta` package. |
-| `references/cross-reference-guide.md` | Building links, traceability, or status handling. |
-| `references/interaction-triggers.md` | An ask-first trigger must be serialized as YAML. |
-| `references/handoff-formats.md` | Emitting or consuming handoff payloads. |
-| `references/business-tech-translation.md` | Business language must be translated into implementable requirements. |
-| `references/bdd-best-practices.md` | `L3` scenarios are weak, abstract, or hard to validate. |
-| `references/user-story-smells.md` | Stories, priorities, or backlog slices look weak. |
-| `references/traceability-pitfalls.md` | The traceability matrix is incomplete or noisy. |
-| `references/specification-anti-patterns.md` | The package shows scope, audience, or collaboration failures. |
-| `references/specification-calibration.md` | Running `UNIFY` or tuning scope heuristics. |
-| `references/user-story-mapping.md` | You chose `story-map` recipe. Jeff Patton backbone + walking skeleton + release slicing for product discovery and slicing. |
-| `references/stakeholder-map.md` | You chose `stakeholder` recipe. Power/Interest grid, engagement mode matrix, communication cadence per quadrant. |
-| `references/raci-matrix.md` | You chose `raci` recipe. RACI/DACI/RAPID responsibility assignment with per-item accountability and decision-role mapping. |
+| `reference/template-selection.md` | Choosing `Full`, `Standard`, or `Lite` scope. |
+| `reference/unified-template.md` | Writing the canonical `L0/L1/L2/L3/Meta` package. |
+| `reference/cross-reference-guide.md` | Building links, traceability, or status handling. |
+| `reference/interaction-triggers.md` | An ask-first trigger must be serialized as YAML. |
+| `reference/handoff-formats.md` | Emitting or consuming handoff payloads. |
+| `reference/business-tech-translation.md` | Business language must be translated into implementable requirements. |
+| `reference/bdd-best-practices.md` | `L3` scenarios are weak, abstract, or hard to validate. |
+| `reference/user-story-smells.md` | Stories, priorities, or backlog slices look weak. |
+| `reference/traceability-pitfalls.md` | The traceability matrix is incomplete or noisy. |
+| `reference/specification-anti-patterns.md` | The package shows scope, audience, or collaboration failures. |
+| `reference/specification-calibration.md` | Running `UNIFY` or tuning scope heuristics. |
+| `reference/user-story-mapping.md` | You chose `story-map` recipe. Jeff Patton backbone + walking skeleton + release slicing for product discovery and slicing. |
+| `reference/stakeholder-map.md` | You chose `stakeholder` recipe. Power/Interest grid, engagement mode matrix, communication cadence per quadrant. |
+| `reference/raci-matrix.md` | You chose `raci` recipe. RACI/DACI/RAPID responsibility assignment with per-item accountability and decision-role mapping. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the unified package, deciding adaptive thinking depth at PLAN, or front-loading audience/scope at INTAKE. Critical for Accord: P3, P5. |
 | `_common/PROOF_CARRYING.md` v3.1 | You are emitting accord L4 (Reversibility / Learning / Disqualification) per Persona+Journey+Product fold-in. Phase 1 recommended, Phase 2 mandatory. Persona Contract schema (situation/goal/fear/comprehension/success/disqualification) feeds via echo `council` mode. Proposal Intake Checklist applies before extending L4 schema further. |
 | `_common/GROWTH_BRAND_PROOF.md` | You emit accord package as input to `nexus growth-acceptance` Phase 0 (Pre-Design, Enterprise org-tier only). L4 disqualification feeds Phase 3 Measurement Loop fail conditions (G13 Stop Authority). |

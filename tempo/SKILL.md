@@ -107,7 +107,7 @@ Interaction triggers → `_common/INTERACTION.md`
 
 ### INTERACTION_TRIGGERS
 
-Trigger table + question schemas → `references/interaction-schemas.md`. Triggers: `DST_POLICY_CHOICE` / `CATCHUP_DEPTH` (BEFORE_START), `OVERLAP_POLICY` / `SEMANTICS_CHOICE` (ON_DECISION), `PLATFORM_FIT` (ON_RISK).
+Trigger table + question schemas → `reference/interaction-schemas.md`. Triggers: `DST_POLICY_CHOICE` / `CATCHUP_DEPTH` (BEFORE_START), `OVERLAP_POLICY` / `SEMANTICS_CHOICE` (ON_DECISION), `PLATFORM_FIT` (ON_RISK).
 
 ### Never
 
@@ -144,14 +144,14 @@ Single source of truth for Recipe definitions. Recipe selection drives Read Firs
 
 | Recipe | Subcommand | Default? | When to Use | Cross-links | Read First |
 |--------|-----------|---------|-------------|-------------|------------|
-| Cron Design | `cron` | ✓ | Cron expression design, timezone annotation, platform configuration. Output: cron expression + TZ + DST policy + platform config | — | `references/cron-patterns.md` |
-| Timezone Safety | `timezone` | | Timezone/DST safety audit, library migration. Output: audit report + fix list + library migration notes | — | `references/timezone-safety.md` |
-| Retry Policy | `retry` | | Retry/backoff policy design, DLQ configuration, rate-limiting (token/leaky/GCRA). Output: retry spec (attempts, duration, backoff formula, jitter, DLQ) | — | `references/retry-strategies.md` |
-| Backfill Plan | `backfill` | | Backfill/replay planning, watermark design. Output: replay runbook + idempotency key contract | — | `references/retry-strategies.md` |
-| Business Calendar | `calendar` | | Japanese holiday, bank business day, and fiscal year logic design. Output: calendar spec + library recommendation + data refresh policy | — | `references/business-calendar.md` |
-| Deadline Propagation | `deadline` | | Context deadline propagation across async boundaries (context.Context, AbortSignal, gRPC deadline), budget chain math, partial-progress return. Output: budget chain table + propagation mechanism + partial-progress policy + observability targets | HTTP/RPC wire timeout → Gateway; time-budget SLO → Beacon | `references/async-boundaries.md` § Deadline Propagation |
-| Time Window | `window` | | Tumbling/sliding/session window semantics, watermark design, late-arrival handling, window-join math. Output: window shape + watermark strategy + allowed-lateness policy + join semantics | Stream-pipeline implementation → Stream; watermark-lag observability → Beacon | `references/async-boundaries.md` § Time Window Semantics |
-| Idempotency Key | `idempotent` | | Idempotency-key design (formula, dedup window, storage TTL vs request TTL, in-flight guard, distributed propagation). Output: key formula + dedup window + storage mechanism + in-flight policy | Pipeline-level exactly-once → Stream; HTTP `Idempotency-Key` header → Gateway | `references/idempotent-keys.md` |
+| Cron Design | `cron` | ✓ | Cron expression design, timezone annotation, platform configuration. Output: cron expression + TZ + DST policy + platform config | — | `reference/cron-patterns.md` |
+| Timezone Safety | `timezone` | | Timezone/DST safety audit, library migration. Output: audit report + fix list + library migration notes | — | `reference/timezone-safety.md` |
+| Retry Policy | `retry` | | Retry/backoff policy design, DLQ configuration, rate-limiting (token/leaky/GCRA). Output: retry spec (attempts, duration, backoff formula, jitter, DLQ) | — | `reference/retry-strategies.md` |
+| Backfill Plan | `backfill` | | Backfill/replay planning, watermark design. Output: replay runbook + idempotency key contract | — | `reference/retry-strategies.md` |
+| Business Calendar | `calendar` | | Japanese holiday, bank business day, and fiscal year logic design. Output: calendar spec + library recommendation + data refresh policy | — | `reference/business-calendar.md` |
+| Deadline Propagation | `deadline` | | Context deadline propagation across async boundaries (context.Context, AbortSignal, gRPC deadline), budget chain math, partial-progress return. Output: budget chain table + propagation mechanism + partial-progress policy + observability targets | HTTP/RPC wire timeout → Gateway; time-budget SLO → Beacon | `reference/async-boundaries.md` § Deadline Propagation |
+| Time Window | `window` | | Tumbling/sliding/session window semantics, watermark design, late-arrival handling, window-join math. Output: window shape + watermark strategy + allowed-lateness policy + join semantics | Stream-pipeline implementation → Stream; watermark-lag observability → Beacon | `reference/async-boundaries.md` § Time Window Semantics |
+| Idempotency Key | `idempotent` | | Idempotency-key design (formula, dedup window, storage TTL vs request TTL, in-flight guard, distributed propagation). Output: key formula + dedup window + storage mechanism + in-flight policy | Pipeline-level exactly-once → Stream; HTTP `Idempotency-Key` header → Gateway | `reference/idempotent-keys.md` |
 
 ### Signal Keywords → Recipe
 
@@ -181,7 +181,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 
 ## Cron Patterns
 
-Read `references/cron-patterns.md` for the complete reference. Core concepts:
+Read `reference/cron-patterns.md` for the complete reference. Core concepts:
 
 ### 5-field Unix vs 6-field Quartz/Spring
 
@@ -203,7 +203,7 @@ Read `references/cron-patterns.md` for the complete reference. Core concepts:
 
 ## Timezone & DST
 
-Read `references/timezone-safety.md` for the full discipline.
+Read `reference/timezone-safety.md` for the full discipline.
 
 ### The UTC discipline
 
@@ -223,7 +223,7 @@ Read `references/timezone-safety.md` for the full discipline.
 | **Python `zoneinfo`** | Stdlib 3.9+, IANA-backed | Preferred over `pytz` |
 | **pytz** | Footguns (use `.localize()`, not constructor) | Replace with `zoneinfo` |
 
-Citations and migration notes → `references/timezone-safety.md`.
+Citations and migration notes → `reference/timezone-safety.md`.
 
 ### DST pitfalls
 
@@ -233,7 +233,7 @@ Citations and migration notes → `references/timezone-safety.md`.
 
 ## Business Calendar
 
-Read `references/business-calendar.md` for the full spec.
+Read `reference/business-calendar.md` for the full spec.
 
 ### Japan essentials
 
@@ -247,7 +247,7 @@ Read `references/business-calendar.md` for the full spec.
 
 ## Retry / Backoff / Dead Letter
 
-Read `references/retry-strategies.md` for complete formulas and platform mappings.
+Read `reference/retry-strategies.md` for complete formulas and platform mappings.
 
 ### Backoff formulas
 
@@ -278,7 +278,7 @@ For streaming/backfill: persist the latest successfully-processed timestamp (the
 
 ## Platform Implementation
 
-Brief matrix; details in `references/cron-patterns.md` and `references/retry-strategies.md`.
+Brief matrix; details in `reference/cron-patterns.md` and `reference/retry-strategies.md`.
 
 | Platform | Cron format | Timezone | Retry | DLQ | Idempotency |
 |----------|------------|----------|-------|-----|-------------|
@@ -308,7 +308,7 @@ Every Tempo deliverable must include:
 
 ## Collaboration
 
-Receives/Sends are enumerated in CAPABILITIES_SUMMARY (`BIDIRECTIONAL_PARTNERS`). Handoff packet templates → `references/handoffs.md`.
+Receives/Sends are enumerated in CAPABILITIES_SUMMARY (`BIDIRECTIONAL_PARTNERS`). Handoff packet templates → `reference/handoffs.md`.
 
 ### Collaboration Patterns
 
@@ -332,14 +332,14 @@ Receives/Sends are enumerated in CAPABILITIES_SUMMARY (`BIDIRECTIONAL_PARTNERS`)
 
 | Reference | Read this when |
 |-----------|---------------|
-| `references/cron-patterns.md` | Authoring or reviewing a cron expression; need 5-vs-6-field clarity, anti-patterns, or platform differences |
-| `references/timezone-safety.md` | Auditing TZ/DST handling; choosing between Temporal, Luxon, date-fns-tz; fixing `timestamp` vs `timestamptz` |
-| `references/business-calendar.md` | Implementing JP holidays, 振替休日, banking days, fiscal year, business hours |
-| `references/retry-strategies.md` | Designing retry/backoff, circuit breaker, DLQ, idempotency key, rate limiting |
-| `references/async-boundaries.md` | Async-boundary time contracts — deadline propagation (context/AbortSignal/gRPC, budget-chain math, partial-progress policy) AND time-window semantics (tumbling/sliding/session, watermark, allowed-lateness, window-join) |
-| `references/idempotent-keys.md` | Idempotency-key design, dedup window (request vs storage TTL), effectively-once semantics, Stripe/Square-style patterns |
-| `references/handoffs.md` | Packaging deliverables for Builder, Gear, Weave, Beacon, Voyager, Judge, or Pipe |
-| `references/interaction-schemas.md` | INTERACTION_TRIGGERS question schemas + AUTORUN `_STEP_COMPLETE.Output` schema |
+| `reference/cron-patterns.md` | Authoring or reviewing a cron expression; need 5-vs-6-field clarity, anti-patterns, or platform differences |
+| `reference/timezone-safety.md` | Auditing TZ/DST handling; choosing between Temporal, Luxon, date-fns-tz; fixing `timestamp` vs `timestamptz` |
+| `reference/business-calendar.md` | Implementing JP holidays, 振替休日, banking days, fiscal year, business hours |
+| `reference/retry-strategies.md` | Designing retry/backoff, circuit breaker, DLQ, idempotency key, rate limiting |
+| `reference/async-boundaries.md` | Async-boundary time contracts — deadline propagation (context/AbortSignal/gRPC, budget-chain math, partial-progress policy) AND time-window semantics (tumbling/sliding/session, watermark, allowed-lateness, window-join) |
+| `reference/idempotent-keys.md` | Idempotency-key design, dedup window (request vs storage TTL), effectively-once semantics, Stripe/Square-style patterns |
+| `reference/handoffs.md` | Packaging deliverables for Builder, Gear, Weave, Beacon, Voyager, Judge, or Pipe |
+| `reference/interaction-schemas.md` | INTERACTION_TRIGGERS question schemas + AUTORUN `_STEP_COMPLETE.Output` schema |
 | `_common/OPUS_48_AUTHORING.md` | Sizing the spec deliverable, deciding where to eagerly read at ANALYZE, or where to think step-by-step at VERIFY. Critical for Tempo: P3, P5 |
 | `_common/BOUNDARIES.md` | Disambiguating tempo vs Weave / Launch / Beacon / Gear / Builder at the routing boundary |
 
@@ -383,7 +383,7 @@ Operational guidelines → `_common/OPERATIONAL.md`
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol. On AUTORUN, run `ANALYZE → MODEL → SPECIFY → VERIFY → HARDEN` and emit `_STEP_COMPLETE`. Tempo-specific Constraints (`_AGENT_CONTEXT`) and the `_STEP_COMPLETE.Output` schema → `references/interaction-schemas.md`.
+See `_common/AUTORUN.md` for the protocol. On AUTORUN, run `ANALYZE → MODEL → SPECIFY → VERIFY → HARDEN` and emit `_STEP_COMPLETE`. Tempo-specific Constraints (`_AGENT_CONTEXT`) and the `_STEP_COMPLETE.Output` schema → `reference/interaction-schemas.md`.
 
 ---
 

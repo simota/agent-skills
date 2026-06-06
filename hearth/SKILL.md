@@ -184,14 +184,14 @@ Default profile: `Standard`, unless the user asks for lighter or heavier customi
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| zsh Config | `zsh` | ✓ | zsh configuration (plugins, startup time, XDG) | `references/shell-configs.md` |
-| tmux Config | `tmux` | | tmux + starship/powerlevel10k configuration | `references/tmux-starship.md` |
-| Neovim Config | `neovim` | | Neovim 0.12+ configuration (LSP, vim.pack, DAP) | `references/editor-configs.md` |
-| Ghostty Config | `ghostty` | | Ghostty 1.3+ configuration (theme, font, keybindings) | `references/terminal-configs.md` |
-| VS Code / Cursor Config | `vscode` | | VS Code or Cursor settings, keybindings, extensions, Settings Sync, devcontainer | `references/vscode-editor-config.md` |
-| Personal Git Config | `git` | | `~/.gitconfig`, global ignore/attributes, commit signing, delta/absorb, personal hooks | `references/git-personal-config.md` |
-| Shell Functions and Env | `shellfn` | | Functions/aliases layout, PATH hygiene, direnv/mise/asdf/nvm, XDG, lazy completions | `references/shellfn-functions-env.md` |
-| Dotfile Audit | `audit` | | Audit existing dotfile setup, detect anti-patterns | `references/shell-config-anti-patterns.md` |
+| zsh Config | `zsh` | ✓ | zsh configuration (plugins, startup time, XDG) | `reference/shell-configs.md` |
+| tmux Config | `tmux` | | tmux + starship/powerlevel10k configuration | `reference/tmux-starship.md` |
+| Neovim Config | `neovim` | | Neovim 0.12+ configuration (LSP, vim.pack, DAP) | `reference/editor-configs.md` |
+| Ghostty Config | `ghostty` | | Ghostty 1.3+ configuration (theme, font, keybindings) | `reference/terminal-configs.md` |
+| VS Code / Cursor Config | `vscode` | | VS Code or Cursor settings, keybindings, extensions, Settings Sync, devcontainer | `reference/vscode-editor-config.md` |
+| Personal Git Config | `git` | | `~/.gitconfig`, global ignore/attributes, commit signing, delta/absorb, personal hooks | `reference/git-personal-config.md` |
+| Shell Functions and Env | `shellfn` | | Functions/aliases layout, PATH hygiene, direnv/mise/asdf/nvm, XDG, lazy completions | `reference/shellfn-functions-env.md` |
+| Dotfile Audit | `audit` | | Audit existing dotfile setup, detect anti-patterns | `reference/shell-config-anti-patterns.md` |
 
 ## Subcommand Dispatch
 
@@ -213,23 +213,23 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `zsh`, `bash`, `fish`, `shell`, `aliases` | Shell configuration | Shell config files | `references/shell-configs.md` |
-| `ghostty`, `alacritty`, `kitty`, `wezterm`, `terminal` | Terminal configuration | Terminal config file | `references/terminal-configs.md` |
-| `neovim`, `vim`, `nvim`, `zed`, `editor` | Editor configuration | Editor config files | `references/editor-configs.md` |
-| `tmux`, `starship`, `powerlevel10k`, `prompt` | Multiplexer/prompt setup | tmux.conf or starship.toml | `references/tmux-starship.md` |
-| `dotfiles`, `stow`, `chezmoi`, `yadm` | Dotfile management | Manager config + symlinks | `references/dotfile-management.md` |
-| `startup`, `slow`, `performance`, `benchmark` | Startup optimization | Benchmark results + optimized config | `references/shell-config-anti-patterns.md` |
+| `zsh`, `bash`, `fish`, `shell`, `aliases` | Shell configuration | Shell config files | `reference/shell-configs.md` |
+| `ghostty`, `alacritty`, `kitty`, `wezterm`, `terminal` | Terminal configuration | Terminal config file | `reference/terminal-configs.md` |
+| `neovim`, `vim`, `nvim`, `zed`, `editor` | Editor configuration | Editor config files | `reference/editor-configs.md` |
+| `tmux`, `starship`, `powerlevel10k`, `prompt` | Multiplexer/prompt setup | tmux.conf or starship.toml | `reference/tmux-starship.md` |
+| `dotfiles`, `stow`, `chezmoi`, `yadm` | Dotfile management | Manager config + symlinks | `reference/dotfile-management.md` |
+| `startup`, `slow`, `performance`, `benchmark` | Startup optimization | Benchmark results + optimized config | `reference/shell-config-anti-patterns.md` |
 | `audit`, `anti-pattern`, `review config` | Config audit | Audit report with findings | Domain-specific anti-pattern reference |
-| `mise`, `asdf`, `homebrew`, `brew` | Package management | Brewfile or mise config | `references/dotfile-management.md` |
-| `secret`, `leak`, `gitleaks`, `security` | Secret scanning setup | Pre-commit hook config + scan results | `references/dotfile-security-anti-patterns.md` |
-| `bootstrap`, `new machine`, `onboarding` | Bootstrap automation | Idempotent setup script + verification | `references/dotfile-management.md` |
-| unclear environment request | Environment scan + recommendation | SCAN results + plan | `references/shell-configs.md` |
+| `mise`, `asdf`, `homebrew`, `brew` | Package management | Brewfile or mise config | `reference/dotfile-management.md` |
+| `secret`, `leak`, `gitleaks`, `security` | Secret scanning setup | Pre-commit hook config + scan results | `reference/dotfile-security-anti-patterns.md` |
+| `bootstrap`, `new machine`, `onboarding` | Bootstrap automation | Idempotent setup script + verification | `reference/dotfile-management.md` |
+| unclear environment request | Environment scan + recommendation | SCAN results + plan | `reference/shell-configs.md` |
 
 Routing rules:
 
-- If the request mentions shell or startup time, read `references/shell-configs.md`.
-- If the request mentions a specific terminal emulator, read `references/terminal-configs.md`.
-- If the request mentions editor or neovim, read `references/editor-configs.md`.
+- If the request mentions shell or startup time, read `reference/shell-configs.md`.
+- If the request mentions a specific terminal emulator, read `reference/terminal-configs.md`.
+- If the request mentions editor or neovim, read `reference/editor-configs.md`.
 - If the request mentions audit or anti-patterns, read the relevant anti-pattern reference.
 - Always run SCAN phase before making changes.
 
@@ -250,18 +250,18 @@ Every deliverable must include:
 
 | File | Read this when |
 |------|----------------|
-| `references/shell-configs.md` | You are configuring `zsh`, `fish`, or `bash`, or need module layouts, plugin-manager patterns, aliases, or `mise` integration. |
-| `references/terminal-configs.md` | You are configuring `ghostty`, `alacritty`, `kitty`, or `wezterm`, or need terminfo, True Color, Nerd Font, or split-pane guidance. |
-| `references/editor-configs.md` | You are configuring `neovim`, `vim`, or `Zed`, or need plugin layout, `lazy.nvim`, `vim.pack`, or Neovim 0.12+ guidance. |
-| `references/vscode-editor-config.md` | You are configuring VS Code or Cursor — settings, keybindings, extension curation, Settings Sync, Cursor AI rules, or devcontainer for personal use. |
-| `references/tmux-starship.md` | You are configuring `tmux`, `starship`, or `powerlevel10k`, or need tmux/editor integration details. |
-| `references/git-personal-config.md` | You are configuring `~/.gitconfig`, global ignore/attributes, commit signing (SSH/GPG/Sigstore), `delta`/`absorb`, or personal `core.hooksPath`. |
-| `references/shellfn-functions-env.md` | You are organizing shell functions, aliases, PATH hygiene, or wiring `direnv`/`mise`/`asdf`/`nvm`, XDG locations, and lazy completions. |
-| `references/dotfile-management.md` | You are selecting or applying `stow`, `chezmoi`, `yadm`, bare Git, `Brewfile`, or XDG migration patterns. |
-| `references/shell-config-anti-patterns.md` | You are auditing shell startup, plugin load, XDG layout, or shell performance regressions. |
-| `references/editor-terminal-anti-patterns.md` | You are auditing Neovim, terminal, tmux, completion, or LSP issues and need `NV-*` / `TM-*` guardrails. |
-| `references/dotfile-security-anti-patterns.md` | You are auditing secrets, repository layout, bootstrap safety, or multi-machine dotfile risk using `DF-*` / `RS-*` rules. |
-| `references/environment-workflow-anti-patterns.md` | You are auditing reproducibility, macOS defaults, tool-selection drift, or workflow integration using `EN-*` / `TS-*` rules. |
+| `reference/shell-configs.md` | You are configuring `zsh`, `fish`, or `bash`, or need module layouts, plugin-manager patterns, aliases, or `mise` integration. |
+| `reference/terminal-configs.md` | You are configuring `ghostty`, `alacritty`, `kitty`, or `wezterm`, or need terminfo, True Color, Nerd Font, or split-pane guidance. |
+| `reference/editor-configs.md` | You are configuring `neovim`, `vim`, or `Zed`, or need plugin layout, `lazy.nvim`, `vim.pack`, or Neovim 0.12+ guidance. |
+| `reference/vscode-editor-config.md` | You are configuring VS Code or Cursor — settings, keybindings, extension curation, Settings Sync, Cursor AI rules, or devcontainer for personal use. |
+| `reference/tmux-starship.md` | You are configuring `tmux`, `starship`, or `powerlevel10k`, or need tmux/editor integration details. |
+| `reference/git-personal-config.md` | You are configuring `~/.gitconfig`, global ignore/attributes, commit signing (SSH/GPG/Sigstore), `delta`/`absorb`, or personal `core.hooksPath`. |
+| `reference/shellfn-functions-env.md` | You are organizing shell functions, aliases, PATH hygiene, or wiring `direnv`/`mise`/`asdf`/`nvm`, XDG locations, and lazy completions. |
+| `reference/dotfile-management.md` | You are selecting or applying `stow`, `chezmoi`, `yadm`, bare Git, `Brewfile`, or XDG migration patterns. |
+| `reference/shell-config-anti-patterns.md` | You are auditing shell startup, plugin load, XDG layout, or shell performance regressions. |
+| `reference/editor-terminal-anti-patterns.md` | You are auditing Neovim, terminal, tmux, completion, or LSP issues and need `NV-*` / `TM-*` guardrails. |
+| `reference/dotfile-security-anti-patterns.md` | You are auditing secrets, repository layout, bootstrap safety, or multi-machine dotfile risk using `DF-*` / `RS-*` rules. |
+| `reference/environment-workflow-anti-patterns.md` | You are auditing reproducibility, macOS defaults, tool-selection drift, or workflow integration using `EN-*` / `TS-*` rules. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the config spec, deciding adaptive thinking depth at tool-idiomatic selection, or front-loading OS/shell/profile/scope at DETECT. Critical for Hearth: P3, P5. |
 
 ## Collaboration

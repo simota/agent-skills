@@ -151,7 +151,7 @@ COMPLY_QUESTION:
 | **HIPAA** | Protected health info | Administrative, Physical, Technical safeguards + Breach Notification; NPRM (2025-01-06) proposes eliminating required/addressable distinction, mandating encryption, 24h BA incident reporting — final rule expected but NOT yet published as of June 2026 [Source: federalregister.gov 2025-01-06] | No formal certification (OCR enforcement) |
 | **ISO 27001:2022** | Information security | 93 Annex A controls in 4 themes (Organizational, People, Physical, Technological); 11 new controls vs 2013; 2013 certificates invalid since Oct 31 2025 | Accredited certification body |
 
-Full framework details -> `references/regulatory-frameworks.md`
+Full framework details -> `reference/regulatory-frameworks.md`
 
 ## Control Assessment
 
@@ -177,25 +177,25 @@ Full framework details -> `references/regulatory-frameworks.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `SCOPE` | Identify applicable frameworks, define assessment boundaries (CDE, ePHI, trust boundaries) | Framework-first, never generic | `references/regulatory-frameworks.md` |
-| `MAP` | Map framework requirements to codebase components, infrastructure, and processes | Every requirement gets a control owner | `references/control-mapping.md` |
-| `ASSESS` | Evaluate each control: Implemented/Partial/Missing/N-A with evidence references | Evidence-based, cite file:line or config | `references/control-mapping.md` |
-| `EVIDENCE` | Document evidence collection approach for each control (logs, configs, screenshots, policies) | Auditor-ready evidence | `references/audit-trail-design.md` |
-| `REMEDIATE` | Provide implementation patterns for gaps: audit logging, access controls, encryption, monitoring | Actionable patterns, delegate to Builder | `references/policy-as-code.md` |
-| `REPORT` | Generate compliance matrix, gap summary, risk rating, remediation roadmap | Structured deliverable | `references/compliance-reporting.md` |
+| `SCOPE` | Identify applicable frameworks, define assessment boundaries (CDE, ePHI, trust boundaries) | Framework-first, never generic | `reference/regulatory-frameworks.md` |
+| `MAP` | Map framework requirements to codebase components, infrastructure, and processes | Every requirement gets a control owner | `reference/control-mapping.md` |
+| `ASSESS` | Evaluate each control: Implemented/Partial/Missing/N-A with evidence references | Evidence-based, cite file:line or config | `reference/control-mapping.md` |
+| `EVIDENCE` | Document evidence collection approach for each control (logs, configs, screenshots, policies) | Auditor-ready evidence | `reference/audit-trail-design.md` |
+| `REMEDIATE` | Provide implementation patterns for gaps: audit logging, access controls, encryption, monitoring | Actionable patterns, delegate to Builder | `reference/policy-as-code.md` |
+| `REPORT` | Generate compliance matrix, gap summary, risk rating, remediation roadmap | Structured deliverable | `reference/compliance-reporting.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| SOC2 Assessment | `soc2` | ✓ | SOC2 Type I/II preparation, Trust Service Criteria mapping | `references/regulatory-frameworks.md` |
-| PCI-DSS Assessment | `pci` | | PCI-DSS v4.0.1 requirement validation, CDE scope definition | `references/regulatory-frameworks.md` |
-| HIPAA Assessment | `hipaa` | | HIPAA technical/administrative/physical safeguard assessment | `references/regulatory-frameworks.md` |
-| ISO 27001 Assessment | `iso` | | ISO 27001:2022 Annex A control mapping, SoA generation | `references/regulatory-frameworks.md` |
-| Policy as Code | `policy` | | OPA/Rego, Kyverno policy implementation, CI/CD compliance gates | `references/policy-as-code.md` |
-| GDPR + EU AI Act | `gdpr` | | GDPR article-level mapping, DPIA, ROPA, SCC transfer, DSAR, EU AI Act risk tiering | `references/gdpr-eu-ai-act.md` |
-| Audit Readiness | `audit` | | Evidence collection, sampling, auditor interview prep, findings remediation, continuous audit | `references/audit-readiness.md` |
-| Vendor Risk Assessment | `vendor` | | Vendor inventory, tier policy, DPA/BAA, SIG/CAIQ, SOC 2 review, subprocessor chain | `references/vendor-risk-assessment.md` |
+| SOC2 Assessment | `soc2` | ✓ | SOC2 Type I/II preparation, Trust Service Criteria mapping | `reference/regulatory-frameworks.md` |
+| PCI-DSS Assessment | `pci` | | PCI-DSS v4.0.1 requirement validation, CDE scope definition | `reference/regulatory-frameworks.md` |
+| HIPAA Assessment | `hipaa` | | HIPAA technical/administrative/physical safeguard assessment | `reference/regulatory-frameworks.md` |
+| ISO 27001 Assessment | `iso` | | ISO 27001:2022 Annex A control mapping, SoA generation | `reference/regulatory-frameworks.md` |
+| Policy as Code | `policy` | | OPA/Rego, Kyverno policy implementation, CI/CD compliance gates | `reference/policy-as-code.md` |
+| GDPR + EU AI Act | `gdpr` | | GDPR article-level mapping, DPIA, ROPA, SCC transfer, DSAR, EU AI Act risk tiering | `reference/gdpr-eu-ai-act.md` |
+| Audit Readiness | `audit` | | Evidence collection, sampling, auditor interview prep, findings remediation, continuous audit | `reference/audit-readiness.md` |
+| Vendor Risk Assessment | `vendor` | | Vendor inventory, tier policy, DPA/BAA, SIG/CAIQ, SOC 2 review, subprocessor chain | `reference/vendor-risk-assessment.md` |
 
 ## Subcommand Dispatch
 
@@ -217,14 +217,14 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `SOC2`, `trust service`, `service organization` | SOC2 assessment | TSC control matrix + gap analysis | `references/regulatory-frameworks.md` |
-| `PCI-DSS`, `PCI`, `cardholder`, `payment card` | PCI-DSS v4.0.1 assessment | Requirement checklist + CDE scope | `references/regulatory-frameworks.md` |
-| `HIPAA`, `ePHI`, `health data`, `covered entity` | HIPAA assessment | Safeguard evaluation + BAA review | `references/regulatory-frameworks.md` |
-| `ISO 27001`, `ISMS`, `Annex A` | ISO 27001 assessment | SoA draft + control gap analysis | `references/regulatory-frameworks.md` |
-| `audit trail`, `audit log`, `tamper-evident` | Audit trail design | Logging architecture + integrity patterns | `references/audit-trail-design.md` |
-| `policy as code`, `OPA`, `Rego`, `compliance gate` | Policy-as-code implementation | OPA policies + CI/CD integration | `references/policy-as-code.md` |
-| `compliance audit`, `regulatory`, `readiness` | Multi-framework assessment | Cross-framework compliance matrix | `references/compliance-reporting.md` |
-| unclear compliance request | Framework identification | Applicable frameworks + scoping guidance | `references/regulatory-frameworks.md` |
+| `SOC2`, `trust service`, `service organization` | SOC2 assessment | TSC control matrix + gap analysis | `reference/regulatory-frameworks.md` |
+| `PCI-DSS`, `PCI`, `cardholder`, `payment card` | PCI-DSS v4.0.1 assessment | Requirement checklist + CDE scope | `reference/regulatory-frameworks.md` |
+| `HIPAA`, `ePHI`, `health data`, `covered entity` | HIPAA assessment | Safeguard evaluation + BAA review | `reference/regulatory-frameworks.md` |
+| `ISO 27001`, `ISMS`, `Annex A` | ISO 27001 assessment | SoA draft + control gap analysis | `reference/regulatory-frameworks.md` |
+| `audit trail`, `audit log`, `tamper-evident` | Audit trail design | Logging architecture + integrity patterns | `reference/audit-trail-design.md` |
+| `policy as code`, `OPA`, `Rego`, `compliance gate` | Policy-as-code implementation | OPA policies + CI/CD integration | `reference/policy-as-code.md` |
+| `compliance audit`, `regulatory`, `readiness` | Multi-framework assessment | Cross-framework compliance matrix | `reference/compliance-reporting.md` |
+| unclear compliance request | Framework identification | Applicable frameworks + scoping guidance | `reference/regulatory-frameworks.md` |
 
 ## Output Requirements
 
@@ -254,15 +254,15 @@ Every compliance deliverable must include:
 
 | File | Content |
 |------|---------|
-| `references/regulatory-frameworks.md` | SOC2 TSC details, PCI-DSS v4.0 requirements, HIPAA safeguards, ISO 27001:2022 Annex A controls |
-| `references/control-mapping.md` | Framework-to-code mapping patterns, control owner assignment, cross-framework control alignment |
-| `references/audit-trail-design.md` | Immutable log architecture, tamper-evident patterns, chain-of-custody, retention policies |
-| `references/policy-as-code.md` | OPA/Rego patterns, Conftest CI integration, compliance gates, automated evidence collection |
-| `references/compliance-reporting.md` | Report templates, compliance matrix format, gap analysis structure, remediation roadmaps |
-| `references/gdpr-eu-ai-act.md` | GDPR article-level mapping, DPIA triggers, ROPA template, cross-border transfer, DSAR workflow, EU AI Act risk tiering |
-| `references/audit-readiness.md` | Evidence tier model, evidence-room structure, chain-of-custody, AICPA sampling, auditor interview prep, continuous audit |
-| `references/vendor-risk-assessment.md` | Vendor inventory, tier classification, DPA/BAA/SCC contracts, SIG/CAIQ handling, SOC 2 report review, subprocessor chain |
-| `references/handoff-formats.md` | Inbound/outbound handoff YAML templates for all collaboration partners |
+| `reference/regulatory-frameworks.md` | SOC2 TSC details, PCI-DSS v4.0 requirements, HIPAA safeguards, ISO 27001:2022 Annex A controls |
+| `reference/control-mapping.md` | Framework-to-code mapping patterns, control owner assignment, cross-framework control alignment |
+| `reference/audit-trail-design.md` | Immutable log architecture, tamper-evident patterns, chain-of-custody, retention policies |
+| `reference/policy-as-code.md` | OPA/Rego patterns, Conftest CI integration, compliance gates, automated evidence collection |
+| `reference/compliance-reporting.md` | Report templates, compliance matrix format, gap analysis structure, remediation roadmaps |
+| `reference/gdpr-eu-ai-act.md` | GDPR article-level mapping, DPIA triggers, ROPA template, cross-border transfer, DSAR workflow, EU AI Act risk tiering |
+| `reference/audit-readiness.md` | Evidence tier model, evidence-room structure, chain-of-custody, AICPA sampling, auditor interview prep, continuous audit |
+| `reference/vendor-risk-assessment.md` | Vendor inventory, tier classification, DPA/BAA/SCC contracts, SIG/CAIQ handling, SOC 2 report review, subprocessor chain |
+| `reference/handoff-formats.md` | Inbound/outbound handoff YAML templates for all collaboration partners |
 | `_common/OPUS_48_AUTHORING.md` | Sizing the compliance report, deciding adaptive thinking depth at gap classification, or front-loading target framework/version/scope at INTAKE. Critical for Comply: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You own G14 Regulatory Envelope Pre-Flight Check across `nexus growth-acceptance` Phase 2 (ship-time). Quarterly G14 Regulatory Horizon Scan: Legal + DataEng publish expected upcoming changes (iOS ATT semantics, Cookie deprecation, EU AI Act, DMA / DSA, Pharmaceuticals and Medical Devices Act (薬機法) / Act against Unjustifiable Premiums and Misleading Representations (景品表示法) / Financial Instruments and Exchange Act (金商法)). Per-concept Assumption Document maintenance. Pre-built fallback measurement stacks (MMM / geo-experiments / synthetic control) for jurisdiction-restricted measurement scenarios. |
 
@@ -279,7 +279,7 @@ Standard protocols -> `_common/OPERATIONAL.md`
 
 Example:
 ```
-| 2026-04-06 | Comply | SOC2 gap analysis for payment service | references/compliance-matrix.md | 3 critical gaps identified, remediation plan created |
+| 2026-04-06 | Comply | SOC2 gap analysis for payment service | reference/compliance-matrix.md | 3 critical gaps identified, remediation plan created |
 ```
 
 **Git**: Follow `_common/GIT_GUIDELINES.md`. Examples:

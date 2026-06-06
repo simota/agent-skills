@@ -103,7 +103,7 @@ Route elsewhere when the task is primarily:
 - Flag dynamic dispatch boundaries (event emitters, middleware chains, DI containers, plugin systems) explicitly in reports. These create gaps between static analysis and runtime behavior that keyword/reference search cannot bridge. [Source: arxiv.org/html/2504.04553v3 — Human-AI Collaboration for Code Comprehension 2025]
 - When semantic code search tools are available (MCP servers, IDE integrations), use them for meaning-based queries ("where is authentication handled?") where keyword search requires guessing exact identifiers. Benchmarks show semantic search achieves 12.5% higher accuracy than grep alone (range 6.5–23.5%), with the hybrid approach (grep + semantic + LSP) performing best. Do not replace grep — combine approaches for each query type. [Source: cursor.com/blog/semsearch — Cursor semantic search benchmarks 2026; augmentcode.com — Augment Context Engine semantic indexing]
 - Assess comprehension debt risk in AI-heavy codebases: ~41% of new code is now AI-generated, and an Anthropic controlled trial (N=52 engineers) found AI-assisted developers scored significantly lower on post-task comprehension. Flag modules with high code churn, low review depth, and no authorship continuity as comprehension debt hotspots. [Source: addyosmani.com/blog/comprehension-debt — Mar 2026; Anthropic engineering study 2026]
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly use LSP/Grep/Read across cross-references — confabulated relationships are the #1 Lens failure mode), P5 (think step-by-step at SCOPE — investigation type selection determines whether SURVEY/TRACE/CONNECT can be skipped)** as critical for Lens. P2 recommended: keep reports within Quick Answer / Investigation Report templates in `references/output-formats.md`.
+- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly use LSP/Grep/Read across cross-references — confabulated relationships are the #1 Lens failure mode), P5 (think step-by-step at SCOPE — investigation type selection determines whether SURVEY/TRACE/CONNECT can be skipped)** as critical for Lens. P2 recommended: keep reports within Quick Answer / Investigation Report templates in `reference/output-formats.md`.
 - **Use a PageRank-style repo map** (Aider's reference design) for structure mapping in large codebases: build a symbol graph with tree-sitter, run PageRank with a `50x` multiplier on files referenced in the current task, and emit only the files that fit a configurable token budget (e.g. 1k / 4k / 8k / 16k tiers). Rebuild on every major sub-task rather than caching, since the chat-file weights change. This converts "read everything" into "read the most important things first" and is the de-facto context-engineering pattern for AI agents in repos > 100 files. [Source: aider.chat/docs/repomap.html]
 - **Emit `llms.txt`-formatted repo descriptions** when the deliverable is an agent-facing repo summary. The 2025-09 community standard places a root `llms.txt` (Markdown, single-page) with one-line descriptions per major content area; Cursor, Continue, Cline, and several MCP clients already consume it. SEO benefit is unproven and explicitly not a goal — the format is a clean handoff target for downstream agents. [Source: llmstxt.org]
 - **Replace Stack Graphs with current MCP-graph stacks.** GitHub Stack Graphs was archived 2025-09-09; live alternatives include Codebase-Memory (66 languages, exposes a knowledge graph over MCP) and GitNexus (pre-computed dependency / call-chain graph). Recommend these when a knowledge-graph layer is needed for cross-file data-flow tracing. [Source: github.com/github/stack-graphs (archived); arxiv.org/abs/2603.27277 — Codebase-Memory; paperclipped.de — GitNexus]
@@ -152,22 +152,22 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `SCOPE` | Decompose question: identify investigation type (Existence/Flow/Structure/Data/Convention), define search targets, set scope boundaries | Define investigation type before searching | `references/lens-framework.md` |
-| `SURVEY` | Structural overview: project structure scan, entry point identification, tech stack detection | Top-down before bottom-up | `references/search-strategies.md` |
-| `TRACE` | Follow the flow: execution flow trace, data flow trace, dependency trace | Follow the data to reveal architecture | `references/investigation-patterns.md` |
-| `CONNECT` | Build big picture: relate findings, map module relationships, identify conventions | Connect isolated findings into coherent understanding | `references/investigation-patterns.md` |
-| `REPORT` | Deliver understanding: structured report, file:line references, recommendations | Every claim needs evidence | `references/output-formats.md` |
+| `SCOPE` | Decompose question: identify investigation type (Existence/Flow/Structure/Data/Convention), define search targets, set scope boundaries | Define investigation type before searching | `reference/lens-framework.md` |
+| `SURVEY` | Structural overview: project structure scan, entry point identification, tech stack detection | Top-down before bottom-up | `reference/search-strategies.md` |
+| `TRACE` | Follow the flow: execution flow trace, data flow trace, dependency trace | Follow the data to reveal architecture | `reference/investigation-patterns.md` |
+| `CONNECT` | Build big picture: relate findings, map module relationships, identify conventions | Connect isolated findings into coherent understanding | `reference/investigation-patterns.md` |
+| `REPORT` | Deliver understanding: structured report, file:line references, recommendations | Every claim needs evidence | `reference/output-formats.md` |
 
 Phase skip: Existence check investigations may use `SCOPE → SURVEY → REPORT` when flow tracing is unnecessary.
 
-Full framework details: `references/lens-framework.md`
+Full framework details: `reference/lens-framework.md`
 
 ### Stall Protocol
 
 When investigation stalls (no new findings after 2 search iterations):
 
 1. Document what was searched and what was not found.
-2. Broaden search strategy (move to next search layer per `references/search-strategies.md`). If semantic code search is available, try meaning-based queries — they recover results that keyword search misses when exact identifiers are unknown.
+2. Broaden search strategy (move to next search layer per `reference/search-strategies.md`). If semantic code search is available, try meaning-based queries — they recover results that keyword search misses when exact identifiers are unknown.
 3. Try cross-referencing: find where key types/functions are used across the codebase, not just where they are defined. Cross-referencing reveals hidden dependencies that keyword search misses. [Source: intuitionlabs.ai]
 4. Apply multi-hop investigation: follow dependency chains across files (A imports B, B calls C, C writes to D) to build a dependency graph. Modern code investigation tools (Greptile, CodeScout) demonstrate that 2-3 hop traces uncover relationships invisible to single-file analysis. [Source: arxiv.org/html/2603.17829 — CodeScout]
 5. Re-decompose the question: if the original SCOPE decomposition was too vague, refine it using findings so far. CodeScout's "contextual problem statement enhancement" shows that converting underspecified questions into precise sub-questions through lightweight pre-exploration significantly improves downstream investigation success. [Source: arxiv.org/html/2603.05744 — CodeScout contextual enhancement]
@@ -177,16 +177,16 @@ When investigation stalls (no new findings after 2 search iterations):
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `does X exist`, `is there a`, `feature discovery` | Feature existence investigation | Quick Answer report | `references/investigation-patterns.md` |
-| `how does X work`, `trace the flow`, `execution flow` | Flow tracing investigation | Investigation Report | `references/investigation-patterns.md` |
-| `what is the structure`, `module responsibilities`, `architecture` | Structure mapping investigation | Structure Map | `references/investigation-patterns.md` |
-| `where does data come from`, `data flow`, `track data` | Data flow analysis | Data Flow Report | `references/investigation-patterns.md` |
-| `what patterns`, `conventions`, `idioms` | Convention discovery | Convention Report | `references/investigation-patterns.md` |
-| `onboarding`, `new to codebase`, `overview` | Onboarding report generation | Onboarding Report | `references/output-formats.md` |
-| `cognitive complexity`, `hard to understand`, `maintainability` | Complexity assessment | Complexity Report with hotspot ranking | `references/investigation-patterns.md` |
-| `monorepo`, `cross-repo`, `impact across services` | Cross-boundary investigation with dependency graph tracing | Impact Map | `references/search-strategies.md` |
-| `comprehension debt`, `AI-generated code understanding`, `who understands this code` | Comprehension debt assessment with hotspot identification | Comprehension Debt Report with risk-ranked modules | `references/investigation-patterns.md` |
-| unclear investigation request | Feature discovery (default) | Quick Answer report | `references/investigation-patterns.md` |
+| `does X exist`, `is there a`, `feature discovery` | Feature existence investigation | Quick Answer report | `reference/investigation-patterns.md` |
+| `how does X work`, `trace the flow`, `execution flow` | Flow tracing investigation | Investigation Report | `reference/investigation-patterns.md` |
+| `what is the structure`, `module responsibilities`, `architecture` | Structure mapping investigation | Structure Map | `reference/investigation-patterns.md` |
+| `where does data come from`, `data flow`, `track data` | Data flow analysis | Data Flow Report | `reference/investigation-patterns.md` |
+| `what patterns`, `conventions`, `idioms` | Convention discovery | Convention Report | `reference/investigation-patterns.md` |
+| `onboarding`, `new to codebase`, `overview` | Onboarding report generation | Onboarding Report | `reference/output-formats.md` |
+| `cognitive complexity`, `hard to understand`, `maintainability` | Complexity assessment | Complexity Report with hotspot ranking | `reference/investigation-patterns.md` |
+| `monorepo`, `cross-repo`, `impact across services` | Cross-boundary investigation with dependency graph tracing | Impact Map | `reference/search-strategies.md` |
+| `comprehension debt`, `AI-generated code understanding`, `who understands this code` | Comprehension debt assessment with hotspot identification | Comprehension Debt Report with risk-ranked modules | `reference/investigation-patterns.md` |
+| unclear investigation request | Feature discovery (default) | Quick Answer report | `reference/investigation-patterns.md` |
 
 Routing rules:
 
@@ -202,13 +202,13 @@ Routing rules:
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Structure Map | `map` | ✓ | Structure mapping (overview, module boundaries and responsibility analysis) | `references/investigation-patterns.md` |
-| Feature Discovery | `discover` | | Feature discovery ("does X exist?") | `references/investigation-patterns.md` |
-| Data Flow Trace | `trace` | | Data flow trace (origin → transformation → destination) | `references/investigation-patterns.md` |
-| Module Responsibility | `responsibility` | | Module responsibility analysis (cognitive complexity, comprehension debt evaluation) | `references/complexity-assessment.md` |
-| Dependency | `dependency` | | Deep dependency graph analysis — fan-in/fan-out per module, transitive closure, circular dependencies, dependency direction violations (UI → DB), package-boundary leakage detection | `references/dependency-graph.md` |
-| Hotspot | `hotspot` | | Change-frequency hotspot identification — git log churn × cognitive complexity heatmap, coupling between churn and bug reports, "hot+complex" risk ranking for refactor prioritization | `references/change-hotspot.md` |
-| Evolution | `evolution` | | Code evolution tracing via git history — file lifespan, author concentration (bus factor), abstraction churn, conceptual drift between commits, growth/decay trajectory of modules | `references/code-evolution.md` |
+| Structure Map | `map` | ✓ | Structure mapping (overview, module boundaries and responsibility analysis) | `reference/investigation-patterns.md` |
+| Feature Discovery | `discover` | | Feature discovery ("does X exist?") | `reference/investigation-patterns.md` |
+| Data Flow Trace | `trace` | | Data flow trace (origin → transformation → destination) | `reference/investigation-patterns.md` |
+| Module Responsibility | `responsibility` | | Module responsibility analysis (cognitive complexity, comprehension debt evaluation) | `reference/complexity-assessment.md` |
+| Dependency | `dependency` | | Deep dependency graph analysis — fan-in/fan-out per module, transitive closure, circular dependencies, dependency direction violations (UI → DB), package-boundary leakage detection | `reference/dependency-graph.md` |
+| Hotspot | `hotspot` | | Change-frequency hotspot identification — git log churn × cognitive complexity heatmap, coupling between churn and bug reports, "hot+complex" risk ranking for refactor prioritization | `reference/change-hotspot.md` |
+| Evolution | `evolution` | | Code evolution tracing via git history — file lifespan, author concentration (bus factor), abstraction churn, conceptual drift between commits, growth/decay trajectory of modules | `reference/code-evolution.md` |
 
 ## Subcommand Dispatch
 
@@ -221,9 +221,9 @@ Behavior notes per Recipe:
 - `discover`: Shortened SCOPE → SURVEY → REPORT workflow allowed. REPORT immediately after existence confirmation.
 - `trace`: Trace data from origin to destination. Explicitly flag dynamic-dispatch boundaries.
 - `responsibility`: Multi-signal cognitive complexity evaluation (SonarSource + nesting + naming). Identify comprehension debt hotspots.
-- `dependency`: Read `references/dependency-graph.md` first. Build the dependency graph with madge / dpdm (TS/JS) / pydeps (Python) / `go list -deps` (Go). Measure fan-in / fan-out per module (high fan-in = god-module candidate), measure transitive closure size, classify circular dependencies as HIGH / MED / LOW severity, flag direction violations (e.g. UI → DB direct import), and detect package-boundary leakage (external references into `internal/` packages). Output: dependency table + Mermaid graph + violation list.
-- `hotspot`: Read `references/change-hotspot.md` first. Collect file change frequency with `git log --since=N.months --name-only`, combine with SonarSource Cognitive Complexity to produce a `churn × complexity` heatmap. `hot+complex` (churn > median AND complexity > 15) is the top refactor candidate. Bug correlation: add the frequency of appearance in bug-fix commits via `git log --grep='fix\|bug'`. Output: ranked hotspot table + recommended refactor order.
-- `evolution`: Read `references/code-evolution.md` first. Per file, track lifespan (creation → last-change date), compute author concentration (bus factor: number of authors responsible for 80% of changes), measure abstraction churn (refactor-vs-feature ratio) via keyword extraction across commit messages and diffs, and detect conceptual drift (responsibility shift inferred from pre/post class/function changes). Long-stable files split into "stable" vs "dead code"; high-churn files split into "design unsettled" vs "feature growth".
+- `dependency`: Read `reference/dependency-graph.md` first. Build the dependency graph with madge / dpdm (TS/JS) / pydeps (Python) / `go list -deps` (Go). Measure fan-in / fan-out per module (high fan-in = god-module candidate), measure transitive closure size, classify circular dependencies as HIGH / MED / LOW severity, flag direction violations (e.g. UI → DB direct import), and detect package-boundary leakage (external references into `internal/` packages). Output: dependency table + Mermaid graph + violation list.
+- `hotspot`: Read `reference/change-hotspot.md` first. Collect file change frequency with `git log --since=N.months --name-only`, combine with SonarSource Cognitive Complexity to produce a `churn × complexity` heatmap. `hot+complex` (churn > median AND complexity > 15) is the top refactor candidate. Bug correlation: add the frequency of appearance in bug-fix commits via `git log --grep='fix\|bug'`. Output: ranked hotspot table + recommended refactor order.
+- `evolution`: Read `reference/code-evolution.md` first. Per file, track lifespan (creation → last-change date), compute author concentration (bus factor: number of authors responsible for 80% of changes), measure abstraction churn (refactor-vs-feature ratio) via keyword extraction across commit messages and diffs, and detect conceptual drift (responsibility shift inferred from pre/post class/function changes). Long-stable files split into "stable" vs "dead code"; high-churn files split into "design unsettled" vs "feature growth".
 
 ## Output Requirements
 
@@ -269,15 +269,15 @@ Every deliverable must include:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/lens-framework.md` | You need SCOPE/SURVEY/TRACE/CONNECT/REPORT phase details with YAML templates. |
-| `references/investigation-patterns.md` | You need the 5 investigation patterns: Feature Discovery, Flow Tracing, Structure Mapping, Data Flow, Convention Discovery. |
-| `references/search-strategies.md` | You need the 4-layer search architecture, keyword dictionaries, or framework-specific queries. |
-| `references/output-formats.md` | You need Quick Answer, Investigation Report, or Onboarding Report templates. |
-| `references/complexity-assessment.md` | Cognitive complexity evaluation workflow, threshold tables, or hotspot ranking is needed. |
-| `references/dependency-graph.md` | `dependency` subcommand: madge/dpdm/pydeps tooling, fan-in/fan-out analysis, transitive closure, circular dependency classification, package boundary leakage detection. |
-| `references/change-hotspot.md` | `hotspot` subcommand: git churn × cognitive complexity heatmap, bug-correlation, ranked refactor prioritization. |
-| `references/code-evolution.md` | `evolution` subcommand: file lifespan, author concentration (bus factor), abstraction churn, conceptual drift detection across commits. |
-| `references/investigation-budget.md` | Size-based budget allocation (Small/Medium/Large/XLarge), phase-specific token limits, and escalation triggers when investigation scope is unclear or large. |
+| `reference/lens-framework.md` | You need SCOPE/SURVEY/TRACE/CONNECT/REPORT phase details with YAML templates. |
+| `reference/investigation-patterns.md` | You need the 5 investigation patterns: Feature Discovery, Flow Tracing, Structure Mapping, Data Flow, Convention Discovery. |
+| `reference/search-strategies.md` | You need the 4-layer search architecture, keyword dictionaries, or framework-specific queries. |
+| `reference/output-formats.md` | You need Quick Answer, Investigation Report, or Onboarding Report templates. |
+| `reference/complexity-assessment.md` | Cognitive complexity evaluation workflow, threshold tables, or hotspot ranking is needed. |
+| `reference/dependency-graph.md` | `dependency` subcommand: madge/dpdm/pydeps tooling, fan-in/fan-out analysis, transitive closure, circular dependency classification, package boundary leakage detection. |
+| `reference/change-hotspot.md` | `hotspot` subcommand: git churn × cognitive complexity heatmap, bug-correlation, ranked refactor prioritization. |
+| `reference/code-evolution.md` | `evolution` subcommand: file lifespan, author concentration (bus factor), abstraction churn, conceptual drift detection across commits. |
+| `reference/investigation-budget.md` | Size-based budget allocation (Small/Medium/Large/XLarge), phase-specific token limits, and escalation triggers when investigation scope is unclear or large. |
 | `_common/INVESTIGATION_ESCALATION.md` | Cross-cluster escalation to Scout, unified confidence scale, or stall protocol is needed. |
 | `_common/OPUS_48_AUTHORING.md` | You are choosing tool-use eagerness during SURVEY/TRACE, deciding adaptive thinking depth at SCOPE, or sizing the report. Critical for Lens: P3, P5. |
 

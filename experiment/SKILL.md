@@ -147,24 +147,24 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `HYPOTHESIZE` | Define what to test: problem, hypothesis (PICOT), metric, success criteria | Falsifiable hypothesis required | `references/experiment-templates.md` |
-| `DESIGN` | Plan sample size, duration, variant design, randomization; evaluate CUPED applicability | Power analysis mandatory; consider variance reduction | `references/sample-size-calculator.md` |
-| `EXECUTE` | Set up feature flags, monitoring, exposure tracking; configure SRM alerting | No parameter changes mid-flight; SRM monitoring active | `references/feature-flag-patterns.md` |
-| `ANALYZE` | SRM check → statistical analysis → confidence intervals → recommendations | SRM before results; sequential testing for early stopping | `references/statistical-methods.md` |
+| `HYPOTHESIZE` | Define what to test: problem, hypothesis (PICOT), metric, success criteria | Falsifiable hypothesis required | `reference/experiment-templates.md` |
+| `DESIGN` | Plan sample size, duration, variant design, randomization; evaluate CUPED applicability | Power analysis mandatory; consider variance reduction | `reference/sample-size-calculator.md` |
+| `EXECUTE` | Set up feature flags, monitoring, exposure tracking; configure SRM alerting | No parameter changes mid-flight; SRM monitoring active | `reference/feature-flag-patterns.md` |
+| `ANALYZE` | SRM check → statistical analysis → confidence intervals → recommendations | SRM before results; sequential testing for early stopping | `reference/statistical-methods.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| A/B Test Design | `ab` | ✓ | A/B test design, hypothesis document authoring, sample size calculation | `references/experiment-templates.md` |
-| CUPED | `cuped` | | CUPED/CUPAC variance reduction, sensitivity improvement design | `references/statistical-methods.md` |
-| Switchback | `switchback` | | Marketplace/network-effect switchback experiments with rotation-window, carryover, and block-randomization design | `references/switchback-design.md` |
-| Analyze | `analyze` | | Experiment result analysis, statistical significance, confidence interval report | `references/statistical-methods.md` |
-| Guardrail | `guardrail` | | Per-experiment metric portfolio — primary/secondary/counter/guardrail with non-inferiority margins and stop/ship triggers | `references/guardrail-metrics.md` |
-| Feature Flag | `ff` | | Flag-driven experiment assignment, staged ramp (1/5/25/50/100%), kill-switch design, decommission handoff | `references/feature-flag-experiments.md` |
-| SRM Detection | `srm` | | Sample Ratio Mismatch diagnosis via chi-squared + segment root-cause decomposition | `references/srm-detection.md` |
-| Sequential Testing | `sequential` | | Anytime-valid sequential testing (mSPRT / confidence sequences / group sequential α-spending) | `references/sequential-testing.md` |
-| Bayesian A/B | `bayesian` | | Bayesian A/B with priors, posterior inference, credible intervals, ROPE, probability-to-beat | `references/bayesian-ab.md` |
+| A/B Test Design | `ab` | ✓ | A/B test design, hypothesis document authoring, sample size calculation | `reference/experiment-templates.md` |
+| CUPED | `cuped` | | CUPED/CUPAC variance reduction, sensitivity improvement design | `reference/statistical-methods.md` |
+| Switchback | `switchback` | | Marketplace/network-effect switchback experiments with rotation-window, carryover, and block-randomization design | `reference/switchback-design.md` |
+| Analyze | `analyze` | | Experiment result analysis, statistical significance, confidence interval report | `reference/statistical-methods.md` |
+| Guardrail | `guardrail` | | Per-experiment metric portfolio — primary/secondary/counter/guardrail with non-inferiority margins and stop/ship triggers | `reference/guardrail-metrics.md` |
+| Feature Flag | `ff` | | Flag-driven experiment assignment, staged ramp (1/5/25/50/100%), kill-switch design, decommission handoff | `reference/feature-flag-experiments.md` |
+| SRM Detection | `srm` | | Sample Ratio Mismatch diagnosis via chi-squared + segment root-cause decomposition | `reference/srm-detection.md` |
+| Sequential Testing | `sequential` | | Anytime-valid sequential testing (mSPRT / confidence sequences / group sequential α-spending) | `reference/sequential-testing.md` |
+| Bayesian A/B | `bayesian` | | Bayesian A/B with priors, posterior inference, credible intervals, ROPE, probability-to-beat | `reference/bayesian-ab.md` |
 
 ## Subcommand Dispatch
 
@@ -190,9 +190,9 @@ Behavior notes per Recipe:
 - `analyze`: Post-experiment statistical analysis — SRM check first, then effect sizes, CIs, and recommendations.
 - `guardrail`: Per-experiment metric portfolio — declare the 4-layer taxonomy (primary/secondary/counter/guardrail), pre-register non-inferiority margins, estimate power-for-margin per guardrail, apply Benjamini-Hochberg across 5–10 guardrails, and produce the stop/ship trigger matrix before launch. Distinct from Pulse: Pulse defines product-wide KPIs; `guardrail` defines the measurement contract for this specific test and its gaming modes. Cite Kohavi/Tang/Xu (*Trustworthy Online Controlled Experiments*) and the Netflix/Microsoft ExP/Airbnb/Booking portfolio patterns.
 - `ff`: Flag-driven assignment and ramp lifecycle. Separate the release flag (Launch owns) from the experiment flag (Experiment owns). Use the 1/5/25/50/100 % ramp with sequential-test α budget (mSPRT / confidence sequences) across stages; measure primary at ≥ 25 %, use 1 % / 5 % stages for crash/SRM/latency only. Pre-register kill-switch triggers and rehearse activation in staging. On conclusion, hand off to `Launch` via `EXPERIMENT_TO_LAUNCH` with flag key, final state, and decommission deadline. Platform landscape (2026-05): Statsig acq. by OpenAI (2025-09); Eppo acq. by Datadog (2025-05), rebranded Datadog Experiments GA (2026-04); GrowthBook 4.2 adds product analytics GA + Safe Rollouts (one-sided sequential testing on guardrails); Spotify Confidence SaaS GA (2025). (Sources: datadoghq.com/blog/datadog-acquires-eppo, blog.growthbook.io/release-4-2-product-analytics, confidence.spotify.com)
-- `srm`: Load `references/srm-detection.md`. Dedicated SRM diagnosis — chi-squared test, p < 0.001 threshold, segment-level decomposition (device / region / tenure / traffic source), bucket-mismatch and assignment-bug root causes. SRM invalidates the test; trust > ship.
-- `sequential`: Load `references/sequential-testing.md`. Anytime-valid sequential testing — mSPRT, confidence sequences, group sequential (Pocock / O'Brien-Fleming / Lan-DeMets α-spending). Controls Type I error under peeking; mSPRT preferred for continuous monitoring.
-- `bayesian`: Load `references/bayesian-ab.md`. Bayesian A/B — prior specification (Beta for proportions, Normal for means), posterior updating, credible intervals, probability-to-beat, ROPE (Region of Practical Equivalence), expected loss decision rule. Contrast with frequentist; Bayesian better for decision communication and continuous monitoring without p-hacking guilt.
+- `srm`: Load `reference/srm-detection.md`. Dedicated SRM diagnosis — chi-squared test, p < 0.001 threshold, segment-level decomposition (device / region / tenure / traffic source), bucket-mismatch and assignment-bug root causes. SRM invalidates the test; trust > ship.
+- `sequential`: Load `reference/sequential-testing.md`. Anytime-valid sequential testing — mSPRT, confidence sequences, group sequential (Pocock / O'Brien-Fleming / Lan-DeMets α-spending). Controls Type I error under peeking; mSPRT preferred for continuous monitoring.
+- `bayesian`: Load `reference/bayesian-ab.md`. Bayesian A/B — prior specification (Beta for proportions, Normal for means), posterior updating, credible intervals, probability-to-beat, ROPE (Region of Practical Equivalence), expected loss decision rule. Contrast with frequentist; Bayesian better for decision communication and continuous monitoring without p-hacking guilt.
 
 ---
 
@@ -200,28 +200,28 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `hypothesis`, `what to test` | Hypothesis document creation | Hypothesis doc | `references/experiment-templates.md` |
-| `A/B test`, `experiment design` | Full experiment design | Experiment plan | `references/sample-size-calculator.md` |
-| `sample size`, `power analysis` | Sample size calculation | Power analysis report | `references/sample-size-calculator.md` |
-| `feature flag`, `rollout`, `toggle` | Feature flag implementation | Flag setup guide | `references/feature-flag-patterns.md` |
-| `results`, `significance`, `analyze` | Statistical analysis | Experiment report | `references/statistical-methods.md` |
-| `sequential`, `early stopping` | Sequential testing design | Alpha spending plan | `references/statistical-methods.md` |
-| `multivariate`, `factorial` | Multivariate test design | Factorial design doc | `references/statistical-methods.md` |
-| `bandit`, `MAB`, `adaptive` | Adaptive experimentation design | MAB/Thompson Sampling plan | `references/adaptive-experimentation.md` |
-| `interleaving`, `ranking test` | Interleaving test design | Interleaving test plan | `references/interleaving-tests.md` |
-| `CUPED`, `variance reduction`, `sensitivity`, `winsorization`, `outlier capping` | CUPED/CUPAC/Winsorization variance reduction design | Variance reduction plan | `references/statistical-methods.md` |
-| `SRM`, `sample ratio`, `broken split` | SRM diagnosis and root cause analysis | SRM diagnosis report | `references/common-pitfalls.md` |
-| `switchback`, `marketplace test`, `network effect` | Switchback experiment design | Switchback test plan | `references/common-pitfalls.md` |
-| `cluster`, `interference`, `marketplace randomization` | Cluster randomization design | Cluster experiment plan | `references/common-pitfalls.md` |
-| `canary`, `observability`, `experiment diagnostics` | Observability-native experiment diagnostics | Canary test plan with guardrail integration | `references/feature-flag-patterns.md` |
+| `hypothesis`, `what to test` | Hypothesis document creation | Hypothesis doc | `reference/experiment-templates.md` |
+| `A/B test`, `experiment design` | Full experiment design | Experiment plan | `reference/sample-size-calculator.md` |
+| `sample size`, `power analysis` | Sample size calculation | Power analysis report | `reference/sample-size-calculator.md` |
+| `feature flag`, `rollout`, `toggle` | Feature flag implementation | Flag setup guide | `reference/feature-flag-patterns.md` |
+| `results`, `significance`, `analyze` | Statistical analysis | Experiment report | `reference/statistical-methods.md` |
+| `sequential`, `early stopping` | Sequential testing design | Alpha spending plan | `reference/statistical-methods.md` |
+| `multivariate`, `factorial` | Multivariate test design | Factorial design doc | `reference/statistical-methods.md` |
+| `bandit`, `MAB`, `adaptive` | Adaptive experimentation design | MAB/Thompson Sampling plan | `reference/adaptive-experimentation.md` |
+| `interleaving`, `ranking test` | Interleaving test design | Interleaving test plan | `reference/interleaving-tests.md` |
+| `CUPED`, `variance reduction`, `sensitivity`, `winsorization`, `outlier capping` | CUPED/CUPAC/Winsorization variance reduction design | Variance reduction plan | `reference/statistical-methods.md` |
+| `SRM`, `sample ratio`, `broken split` | SRM diagnosis and root cause analysis | SRM diagnosis report | `reference/common-pitfalls.md` |
+| `switchback`, `marketplace test`, `network effect` | Switchback experiment design | Switchback test plan | `reference/common-pitfalls.md` |
+| `cluster`, `interference`, `marketplace randomization` | Cluster randomization design | Cluster experiment plan | `reference/common-pitfalls.md` |
+| `canary`, `observability`, `experiment diagnostics` | Observability-native experiment diagnostics | Canary test plan with guardrail integration | `reference/feature-flag-patterns.md` |
 
 Routing rules:
 
 - If the request involves defining what to measure, check metric definitions with Pulse first.
-- If the request involves feature flag infrastructure, read `references/feature-flag-patterns.md`.
-- If the request involves statistical analysis of results, read `references/statistical-methods.md`.
-- If the request involves early stopping or continuous monitoring, use sequential testing from `references/statistical-methods.md`.
-- If the request involves ranking or recommendation systems, consider interleaving tests from `references/interleaving-tests.md`.
+- If the request involves feature flag infrastructure, read `reference/feature-flag-patterns.md`.
+- If the request involves statistical analysis of results, read `reference/statistical-methods.md`.
+- If the request involves early stopping or continuous monitoring, use sequential testing from `reference/statistical-methods.md`.
+- If the request involves ranking or recommendation systems, consider interleaving tests from `reference/interleaving-tests.md`.
 - If the request involves marketplace, ride-sharing, or two-sided platform testing, consider switchback design.
 - If pre-experiment data is available and sample size is constrained, recommend CUPED variance reduction.
 - Always pre-register primary metric and success criteria before experiment launch.
@@ -269,20 +269,20 @@ Experiment receives metric baselines and hypotheses from upstream agents, and de
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/feature-flag-patterns.md` | You need flag types, LaunchDarkly, custom implementation, React integration, or platform comparison. |
-| `references/statistical-methods.md` | You need test selection, Z-test, CUPED, Bayesian A/B, Thompson Sampling, or result interpretation. |
-| `references/sample-size-calculator.md` | You need power analysis, calculateSampleSize, or quick reference tables. |
-| `references/experiment-templates.md` | You need hypothesis document, experiment report, maturity model, or review process templates. |
-| `references/common-pitfalls.md` | You need peeking, multiple comparisons, SRM detection, network effects, switchback design, or selection bias guidance. |
-| `references/code-standards.md` | You need good/bad experiment code examples or key rules. |
-| `references/adaptive-experimentation.md` | You need MAB vs A/B selection, Thompson Sampling, auto-stop rules, or contextual bandits. |
-| `references/interleaving-tests.md` | You need high-sensitivity ranking tests, Team Draft Interleaving, or search/recommendation testing. |
-| `references/guardrail-metrics.md` | You need 4-layer metric taxonomy (primary/secondary/counter/guardrail), non-inferiority margin design, stop/ship trigger matrices, Type II handling on underpowered guardrails, or Netflix/Microsoft ExP/Airbnb/Booking portfolio patterns. |
-| `references/switchback-design.md` | You need switchback rotation window selection, block randomization, carryover washout, Bojinov HAC / block-bootstrap variance, or DoorDash/Uber/Lyft/Airbnb marketplace precedent. |
-| `references/feature-flag-experiments.md` | You need flag-driven experiment assignment, 1/5/25/50/100% staged ramp design, kill-switch triggers and rehearsal, flag-vs-experiment separation, or decommission handoff to Launch. |
-| `references/srm-detection.md` | You are running `srm` — need chi-squared test (p < 0.001 threshold), segment-level decomposition (device/region/tenure/traffic source), bucket-mismatch and assignment-bug root causes. |
-| `references/sequential-testing.md` | You are running `sequential` — need anytime-valid sequential testing (mSPRT, confidence sequences, group sequential α-spending: Pocock / O'Brien-Fleming / Lan-DeMets) for valid early stopping. |
-| `references/bayesian-ab.md` | You are running `bayesian` — need prior specification, posterior updating, credible intervals, ROPE, probability-to-beat, and expected-loss decision rule. |
+| `reference/feature-flag-patterns.md` | You need flag types, LaunchDarkly, custom implementation, React integration, or platform comparison. |
+| `reference/statistical-methods.md` | You need test selection, Z-test, CUPED, Bayesian A/B, Thompson Sampling, or result interpretation. |
+| `reference/sample-size-calculator.md` | You need power analysis, calculateSampleSize, or quick reference tables. |
+| `reference/experiment-templates.md` | You need hypothesis document, experiment report, maturity model, or review process templates. |
+| `reference/common-pitfalls.md` | You need peeking, multiple comparisons, SRM detection, network effects, switchback design, or selection bias guidance. |
+| `reference/code-standards.md` | You need good/bad experiment code examples or key rules. |
+| `reference/adaptive-experimentation.md` | You need MAB vs A/B selection, Thompson Sampling, auto-stop rules, or contextual bandits. |
+| `reference/interleaving-tests.md` | You need high-sensitivity ranking tests, Team Draft Interleaving, or search/recommendation testing. |
+| `reference/guardrail-metrics.md` | You need 4-layer metric taxonomy (primary/secondary/counter/guardrail), non-inferiority margin design, stop/ship trigger matrices, Type II handling on underpowered guardrails, or Netflix/Microsoft ExP/Airbnb/Booking portfolio patterns. |
+| `reference/switchback-design.md` | You need switchback rotation window selection, block randomization, carryover washout, Bojinov HAC / block-bootstrap variance, or DoorDash/Uber/Lyft/Airbnb marketplace precedent. |
+| `reference/feature-flag-experiments.md` | You need flag-driven experiment assignment, 1/5/25/50/100% staged ramp design, kill-switch triggers and rehearsal, flag-vs-experiment separation, or decommission handoff to Launch. |
+| `reference/srm-detection.md` | You are running `srm` — need chi-squared test (p < 0.001 threshold), segment-level decomposition (device/region/tenure/traffic source), bucket-mismatch and assignment-bug root causes. |
+| `reference/sequential-testing.md` | You are running `sequential` — need anytime-valid sequential testing (mSPRT, confidence sequences, group sequential α-spending: Pocock / O'Brien-Fleming / Lan-DeMets) for valid early stopping. |
+| `reference/bayesian-ab.md` | You are running `bayesian` — need prior specification, posterior updating, credible intervals, ROPE, probability-to-beat, and expected-loss decision rule. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the experiment report, deciding adaptive thinking depth at method selection, or front-loading randomization unit/MDE/OEC at INTAKE. Critical for Experiment: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You own the Incrementality Gate in `nexus growth-acceptance` Phase 2 (ship-time setup) + Phase 3 (post-launch +14d/+30d/+90d execution). Follow the Decision Tree: Conversion Lift / GeoLift / MMM / Synthetic Control / Holdout selection based on (Privacy regulation × budget × cross-device × time-sensitivity × industry). G14 mandatory: regulated industries (medical / financial / political / pharmaceutical) default to auto-scale OFF. G13 enforcement: Stop_Condition trigger → Stop_Accountable 24h auto-halt default deny. Step 3 (Market Proof + Incrementality Gate) requires Growth-analytics specialist. |
 

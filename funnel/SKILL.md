@@ -165,7 +165,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 └─────────────────────────────────────────────┘
 ```
 
-LP type-specific patterns → `references/patterns.md`
+LP type-specific patterns → `reference/patterns.md`
 
 ## Hero Section Design
 
@@ -296,11 +296,11 @@ Detailed performance optimization → delegate to Growth / Bolt. LP-specific pri
 | Phase | Purpose | Key Activities | Read |
 |-------|---------|----------------|------|
 | `BRIEF` | Requirements | CV goal, target, USP, competitor LP analysis | — |
-| `STRUCTURE` | Structure design | Framework selection, section map, wireframe | `references/patterns.md` |
+| `STRUCTURE` | Structure design | Framework selection, section map, wireframe | `reference/patterns.md` |
 | `COPY` | Copy creation | Headline, benefits, CTA, FAQ | — |
-| `BUILD` | Implementation | HTML/CSS/JS, responsive, image optimization | `references/examples.md` |
+| `BUILD` | Implementation | HTML/CSS/JS, responsive, image optimization | `reference/examples.md` |
 | `OPTIMIZE` | Optimization | Performance, accessibility, variant design | — |
-| `DELIVER` | Delivery | Handoff to Artisan/Growth, improvement proposals | `references/handoffs.md` |
+| `DELIVER` | Delivery | Handoff to Artisan/Growth, improvement proposals | `reference/handoffs.md` |
 
 ## Recipes
 
@@ -308,13 +308,13 @@ Single source of truth for Recipe definitions. Primary-output shape and behavior
 
 | Recipe | Subcommand | Default? | When to Use | Output / Behavior | Read First |
 |--------|-----------|---------|-------------|-------------------|------------|
-| Build LP | `build` | ✓ | Full LP design (starting from AIDA/PAS/BAB/4Ps framework selection) | Section map + copy direction + CTA placement (≥3) + responsive specs + CWV targets | `references/patterns.md` |
+| Build LP | `build` | ✓ | Full LP design (starting from AIDA/PAS/BAB/4Ps framework selection) | Section map + copy direction + CTA placement (≥3) + responsive specs + CWV targets | `reference/patterns.md` |
 | CTA Optimization | `cta` | | CTA placement, copy, micro-copy optimization | CTA placement plan + button copy variants + constraints (size, contrast, microcopy) | — |
-| Conversion Audit | `conversion` | | Conversion improvement and section audit for an existing LP | Audit findings + section-level improvement plan + prioritized fix list | `references/patterns.md` |
-| Responsive Design | `responsive` | | Mobile-first implementation, tap targets, viewport optimization | Responsive section spec + breakpoint plan + tap-target / viewport rules | `references/examples.md` |
-| Form Optimization | `form` | | LP form field minimization, progressive disclosure, autofill/password-manager cooperation, real-time validation, submit-button friction | LP form spec — field-count cost model, single vs multi-step disclosure, `autocomplete` / `inputmode` contract, password-manager cooperation, blur-time validation, submit-button copy and state machine. Delegate: Artisan (React/Vue impl), Prose (exact field-label / error wording), Growth (A/B on field count + cross-page analytics), Muse (input/label/error design tokens) | `references/form-lp-optimization.md` |
-| Copy Authoring | `copy` | | LP headline formulas (PAS/BAB/4U), hero body, value-prop clarity, microcopy shells, readability targets, LP tone and voice | LP copy — PAS/BAB/4U headline formulas, hero anatomy, value-prop clarity tests, benefit-vs-feature conversion, button/helper/tooltip/trust-line microcopy shells, readability targets, LP-context tone. Delegate: Prose (exact microcopy + voice/tone system), Growth (copy framework for ads/nurture), Muse (typographic tokens + `text-wrap: balance`), Vision (brand positioning + master narrative) | `references/copy-lp-authoring.md` |
-| Trust Signal Placement | `trust` | | Testimonial shape and quantity, logo bars, case studies, certification badges, review aggregation, scarcity/urgency vs dark patterns | Trust-signal placement map — testimonial shape/quantity/placement, logo bar treatment, metric-forward vs story-forward case studies, certifications/guarantees, review-aggregation integration, honest-urgency vs dark-pattern red lines. Delegate: Prose (testimonial wording polish), Growth (live review-aggregation APIs + rich-result schema + harvesting cadence), Muse (testimonial/logo/badge tokens), Clause (FTC claim substantiation + endorsement disclosure) | `references/trust-signal-placement.md` |
+| Conversion Audit | `conversion` | | Conversion improvement and section audit for an existing LP | Audit findings + section-level improvement plan + prioritized fix list | `reference/patterns.md` |
+| Responsive Design | `responsive` | | Mobile-first implementation, tap targets, viewport optimization | Responsive section spec + breakpoint plan + tap-target / viewport rules | `reference/examples.md` |
+| Form Optimization | `form` | | LP form field minimization, progressive disclosure, autofill/password-manager cooperation, real-time validation, submit-button friction | LP form spec — field-count cost model, single vs multi-step disclosure, `autocomplete` / `inputmode` contract, password-manager cooperation, blur-time validation, submit-button copy and state machine. Delegate: Artisan (React/Vue impl), Prose (exact field-label / error wording), Growth (A/B on field count + cross-page analytics), Muse (input/label/error design tokens) | `reference/form-lp-optimization.md` |
+| Copy Authoring | `copy` | | LP headline formulas (PAS/BAB/4U), hero body, value-prop clarity, microcopy shells, readability targets, LP tone and voice | LP copy — PAS/BAB/4U headline formulas, hero anatomy, value-prop clarity tests, benefit-vs-feature conversion, button/helper/tooltip/trust-line microcopy shells, readability targets, LP-context tone. Delegate: Prose (exact microcopy + voice/tone system), Growth (copy framework for ads/nurture), Muse (typographic tokens + `text-wrap: balance`), Vision (brand positioning + master narrative) | `reference/copy-lp-authoring.md` |
+| Trust Signal Placement | `trust` | | Testimonial shape and quantity, logo bars, case studies, certification badges, review aggregation, scarcity/urgency vs dark patterns | Trust-signal placement map — testimonial shape/quantity/placement, logo bar treatment, metric-forward vs story-forward case studies, certifications/guarantees, review-aggregation integration, honest-urgency vs dark-pattern red lines. Delegate: Prose (testimonial wording polish), Growth (live review-aggregation APIs + rich-result schema + harvesting cadence), Muse (testimonial/logo/badge tokens), Clause (FTC claim substantiation + endorsement disclosure) | `reference/trust-signal-placement.md` |
 
 ### Signal Keywords → Recipe
 
@@ -384,7 +384,7 @@ Every deliverable must include:
 
 **Sends:** Artisan (LP structure + copy + responsive specs) · Growth (SEO/CRO optimization requests) · Echo (persona validation) · Experiment (A/B variant specs) · Flow (animation specs) · Builder (backend integration)
 
-Handoff formats → `references/handoffs.md`
+Handoff formats → `reference/handoffs.md`
 
 **Overlap boundaries:**
 - **vs Artisan**: Funnel = LP structure design and conversion strategy; Artisan = production code implementation.
@@ -397,12 +397,12 @@ Handoff formats → `references/handoffs.md`
 
 | File | Read when |
 |------|-----------|
-| `references/patterns.md` | Selecting LP type pattern or section-level design |
-| `references/examples.md` | Need LP section structure reference during build phase |
-| `references/handoffs.md` | Sending to or receiving from another agent |
-| `references/form-lp-optimization.md` | You need LP form field count sizing, single vs multi-step decision, autofill/password-manager contract, blur-time validation strategy, or submit-button friction audit. |
-| `references/copy-lp-authoring.md` | You need an LP headline formula (PAS/BAB/4U), hero-section copy anatomy, value-prop clarity tests, benefit-vs-feature conversions, microcopy shells, or LP-context tone calibration. |
-| `references/trust-signal-placement.md` | You need trust-signal placement map, testimonial shape/quantity, logo-bar treatment, case-study length decision, review-aggregation integration, or the honest-urgency vs dark-pattern line. |
+| `reference/patterns.md` | Selecting LP type pattern or section-level design |
+| `reference/examples.md` | Need LP section structure reference during build phase |
+| `reference/handoffs.md` | Sending to or receiving from another agent |
+| `reference/form-lp-optimization.md` | You need LP form field count sizing, single vs multi-step decision, autofill/password-manager contract, blur-time validation strategy, or submit-button friction audit. |
+| `reference/copy-lp-authoring.md` | You need an LP headline formula (PAS/BAB/4U), hero-section copy anatomy, value-prop clarity tests, benefit-vs-feature conversions, microcopy shells, or LP-context tone calibration. |
+| `reference/trust-signal-placement.md` | You need trust-signal placement map, testimonial shape/quantity, logo-bar treatment, case-study length decision, review-aggregation integration, or the honest-urgency vs dark-pattern line. |
 | `_common/OPUS_48_AUTHORING.md` | Sizing the LP spec, deciding adaptive thinking depth at section/CTA design, or front-loading LP type/audience/goal at FRAME. Critical for Funnel: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You generate Market Proof `channel_proof` (channel-fit rationale) and `funnel_proof` (funnel stage targeting) in `nexus growth-acceptance` Phase 2 (ship-time). LP authoring is subject to Brand Compiler B.hard (taboo / legal / G12 Distinctiveness Floor) and B.pattern (token / Code Connect) layers from Layer B carry-over. LP copy is subject to `copy_proof` (Tier B Design) + `tone_proof` (Layer C Brand Proof). |
 

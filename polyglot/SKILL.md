@@ -122,23 +122,23 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `SCAN` | Hunt hardcoded strings in JSX/HTML, error messages, placeholders; detect non-localized dates/currencies/numbers; find duplicate or semantic-less keys | Identify all i18n gaps before extracting | `references/library-setup.md` |
-| `EXTRACT` | Create semantic nested keys, move text to JSON translation files, replace with `t()` calls, apply Intl API, fix concatenation with ICU interpolation | Never concatenate; always interpolate | `references/icu-message-format.md`, `references/intl-api-patterns.md` |
-| `VERIFY` | Check display and interpolation, validate key naming clarity, sort JSON alphabetically, add translator context comments | Test in context, not isolation | `references/rtl-support.md` |
-| `PRESENT` | Create PR with i18n scope and impact summary, document extracted count and namespaces | Include extraction count and namespace map | `references/library-setup.md` |
+| `SCAN` | Hunt hardcoded strings in JSX/HTML, error messages, placeholders; detect non-localized dates/currencies/numbers; find duplicate or semantic-less keys | Identify all i18n gaps before extracting | `reference/library-setup.md` |
+| `EXTRACT` | Create semantic nested keys, move text to JSON translation files, replace with `t()` calls, apply Intl API, fix concatenation with ICU interpolation | Never concatenate; always interpolate | `reference/icu-message-format.md`, `reference/intl-api-patterns.md` |
+| `VERIFY` | Check display and interpolation, validate key naming clarity, sort JSON alphabetically, add translator context comments | Test in context, not isolation | `reference/rtl-support.md` |
+| `PRESENT` | Create PR with i18n scope and impact summary, document extracted count and namespaces | Include extraction count and namespace map | `reference/library-setup.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| String Extraction | `extract` | ✓ | Extract hardcoded strings and replace with t() calls | `references/library-setup.md` |
-| Intl Formatting | `intl` | | Intl API integration for date, currency, and number formatting | `references/intl-api-patterns.md` |
-| Translation Keys | `keys` | | Translation key structure and namespace design | `references/icu-message-format.md` |
-| RTL Support | `rtl` | | RTL layout support and CSS logical properties implementation | `references/rtl-support.md` |
-| Pluralization | `pluralize` | | CLDR plural categories, ICU plural/selectordinal branches, per-locale category coverage, plural-branch testing | `references/pluralize-cldr-rules.md` |
-| Locale Negotiation | `locale` | | BCP 47 parsing, Accept-Language negotiation, fallback chain, user-override persistence, geolocation defaults | `references/locale-negotiation.md` |
-| Translation Workflow | `translate` | | TMS integration (Lokalise/Crowdin/Phrase/Smartling), translation memory, translator briefing, placeholder/HTML QA, release workflow | `references/translate-tms-workflow.md` |
-| Mobile i18n | `mobile` | | iOS String Catalogs (`.xcstrings`) and Android `strings.xml` / `plurals.xml` / `LocaleConfig` extraction, ICU plural mapping, xliff exchange with TMS, per-app language preferences | `references/library-setup.md` |
+| String Extraction | `extract` | ✓ | Extract hardcoded strings and replace with t() calls | `reference/library-setup.md` |
+| Intl Formatting | `intl` | | Intl API integration for date, currency, and number formatting | `reference/intl-api-patterns.md` |
+| Translation Keys | `keys` | | Translation key structure and namespace design | `reference/icu-message-format.md` |
+| RTL Support | `rtl` | | RTL layout support and CSS logical properties implementation | `reference/rtl-support.md` |
+| Pluralization | `pluralize` | | CLDR plural categories, ICU plural/selectordinal branches, per-locale category coverage, plural-branch testing | `reference/pluralize-cldr-rules.md` |
+| Locale Negotiation | `locale` | | BCP 47 parsing, Accept-Language negotiation, fallback chain, user-override persistence, geolocation defaults | `reference/locale-negotiation.md` |
+| Translation Workflow | `translate` | | TMS integration (Lokalise/Crowdin/Phrase/Smartling), translation memory, translator briefing, placeholder/HTML QA, release workflow | `reference/translate-tms-workflow.md` |
+| Mobile i18n | `mobile` | | iOS String Catalogs (`.xcstrings`) and Android `strings.xml` / `plurals.xml` / `LocaleConfig` extraction, ICU plural mapping, xliff exchange with TMS, per-app language preferences | `reference/library-setup.md` |
 
 Behavior notes:
 - **extract** (default): SCAN → EXTRACT → VERIFY → PRESENT; hardcoded strings become `t()` calls with semantic nested keys; load `library-setup.md`.
@@ -172,31 +172,31 @@ Parse the first token of user input and activate the matching Recipe. If the tok
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `extract strings`, `hardcoded text`, `t() wrapping` | String extraction and t() wrapping | Extracted translation files + modified components | `references/library-setup.md` |
-| `date format`, `currency`, `number format`, `Intl` | Intl API integration | Locale-aware formatting code | `references/intl-api-patterns.md` |
-| `plural`, `gender`, `ICU`, `message format` | ICU MessageFormat implementation | ICU-formatted translation entries | `references/icu-message-format.md` |
-| `translation keys`, `namespace`, `key structure` | Translation structure design | Key naming guide + file organization | `references/icu-message-format.md` |
-| `RTL`, `right-to-left`, `bidirectional` | RTL layout support | CSS logical properties + bidi fixes | `references/rtl-support.md` |
-| `i18n setup`, `i18next`, `react-intl`, `vue-i18n` | Library setup and configuration | Configuration files + setup guide | `references/library-setup.md` |
-| `glossary`, `terminology`, `translator context` | Glossary management | Glossary file + context comments | `references/icu-message-format.md` |
-| `i18n audit`, `check localization` | I18n audit of existing code | Audit report with gaps and recommendations | `references/library-setup.md` |
-| `pseudo-localization`, `pseudo-locale`, `i18n testing` | Pseudo-localization setup | Pseudo-locale config + CI integration | `references/library-setup.md` |
-| `translation coverage`, `missing keys`, `unused keys` | Coverage tracking and cleanup | Coverage report + dead key removal | `references/library-setup.md` |
-| `continuous localization`, `TMS`, `OTA` | Pipeline design | TMS integration config + OTA edge delivery setup | `references/library-setup.md` |
-| `edge localization`, `CDN locale`, `region routing` | Edge localization architecture | CDN locale detection config + edge-served locale bundles | `references/library-setup.md` |
-| `AI translation`, `machine translation`, `glossary` | AI-powered translation pipeline | Glossary-locked MT config + human review workflow | `references/library-setup.md` |
-| `scaling`, `500+ keys`, `merge conflicts` | Large-project i18n strategy | TMS integration + namespace splitting + unused key detection | `references/library-setup.md` |
-| `iOS`, `Swift`, `xcstrings`, `String Catalog`, `Localizable` | iOS native i18n | `.xcstrings` extraction + CLDR plurals + xliff exchange | `references/library-setup.md` |
-| `Android`, `Kotlin`, `Compose`, `strings.xml`, `plurals.xml`, `LocaleConfig` | Android native i18n | `strings.xml` / `plurals.xml` extraction + `LocaleConfig` per-app language | `references/library-setup.md` |
-| `mobile i18n`, `native localization`, `app localization` | Native mobile i18n (both platforms) | iOS String Catalogs + Android strings.xml in parallel | `references/library-setup.md` |
-| unclear i18n request | String extraction (default) | Extracted translation files | `references/library-setup.md` |
+| `extract strings`, `hardcoded text`, `t() wrapping` | String extraction and t() wrapping | Extracted translation files + modified components | `reference/library-setup.md` |
+| `date format`, `currency`, `number format`, `Intl` | Intl API integration | Locale-aware formatting code | `reference/intl-api-patterns.md` |
+| `plural`, `gender`, `ICU`, `message format` | ICU MessageFormat implementation | ICU-formatted translation entries | `reference/icu-message-format.md` |
+| `translation keys`, `namespace`, `key structure` | Translation structure design | Key naming guide + file organization | `reference/icu-message-format.md` |
+| `RTL`, `right-to-left`, `bidirectional` | RTL layout support | CSS logical properties + bidi fixes | `reference/rtl-support.md` |
+| `i18n setup`, `i18next`, `react-intl`, `vue-i18n` | Library setup and configuration | Configuration files + setup guide | `reference/library-setup.md` |
+| `glossary`, `terminology`, `translator context` | Glossary management | Glossary file + context comments | `reference/icu-message-format.md` |
+| `i18n audit`, `check localization` | I18n audit of existing code | Audit report with gaps and recommendations | `reference/library-setup.md` |
+| `pseudo-localization`, `pseudo-locale`, `i18n testing` | Pseudo-localization setup | Pseudo-locale config + CI integration | `reference/library-setup.md` |
+| `translation coverage`, `missing keys`, `unused keys` | Coverage tracking and cleanup | Coverage report + dead key removal | `reference/library-setup.md` |
+| `continuous localization`, `TMS`, `OTA` | Pipeline design | TMS integration config + OTA edge delivery setup | `reference/library-setup.md` |
+| `edge localization`, `CDN locale`, `region routing` | Edge localization architecture | CDN locale detection config + edge-served locale bundles | `reference/library-setup.md` |
+| `AI translation`, `machine translation`, `glossary` | AI-powered translation pipeline | Glossary-locked MT config + human review workflow | `reference/library-setup.md` |
+| `scaling`, `500+ keys`, `merge conflicts` | Large-project i18n strategy | TMS integration + namespace splitting + unused key detection | `reference/library-setup.md` |
+| `iOS`, `Swift`, `xcstrings`, `String Catalog`, `Localizable` | iOS native i18n | `.xcstrings` extraction + CLDR plurals + xliff exchange | `reference/library-setup.md` |
+| `Android`, `Kotlin`, `Compose`, `strings.xml`, `plurals.xml`, `LocaleConfig` | Android native i18n | `strings.xml` / `plurals.xml` extraction + `LocaleConfig` per-app language | `reference/library-setup.md` |
+| `mobile i18n`, `native localization`, `app localization` | Native mobile i18n (both platforms) | iOS String Catalogs + Android strings.xml in parallel | `reference/library-setup.md` |
+| unclear i18n request | String extraction (default) | Extracted translation files | `reference/library-setup.md` |
 
 Routing rules:
 
-- If the request mentions RTL, read `references/rtl-support.md`.
-- If the request involves plurals or gender, read `references/icu-message-format.md`.
-- If the request involves dates, numbers, or currencies, read `references/intl-api-patterns.md`.
-- Always validate key naming against `references/icu-message-format.md`.
+- If the request mentions RTL, read `reference/rtl-support.md`.
+- If the request involves plurals or gender, read `reference/icu-message-format.md`.
+- If the request involves dates, numbers, or currencies, read `reference/intl-api-patterns.md`.
+- Always validate key naming against `reference/icu-message-format.md`.
 
 ## Output Requirements
 
@@ -228,7 +228,7 @@ Every deliverable must include:
 | Android `strings.xml` + `plurals.xml` + `LocaleConfig` | Kotlin / Jetpack Compose | Resource-based localization with `stringResource()` / `pluralStringResource()`; `LocaleConfig` (`res/xml/locales_config.xml`) enables per-app language preferences in system Settings (Android 13+ / API 33+) |
 | `xliff` / `xlf` exchange | iOS / Android cross-TMS | Standard interchange via `xcodebuild -exportLocalizations` (iOS) and Android Studio Translations Editor export; route into Lokalise / Crowdin / Phrase / Smartling |
 
-> **Detail**: See `references/library-setup.md` for full installation and configuration guides.
+> **Detail**: See `reference/library-setup.md` for full installation and configuration guides.
 
 ### Intl API Patterns
 
@@ -243,7 +243,7 @@ Every deliverable must include:
 | `Intl.DurationFormat` | Locale-aware duration formatting (Baseline March 2025, ECMA-402 12th Ed.) |
 | `Intl.Segmenter` | Locale-sensitive text segmentation (word/sentence/grapheme) |
 
-> **Detail**: See `references/intl-api-patterns.md` for full code examples and performance tips.
+> **Detail**: See `reference/intl-api-patterns.md` for full code examples and performance tips.
 
 ### ICU Message Format
 
@@ -256,7 +256,7 @@ Every deliverable must include:
 
 > **MessageFormat 2.0 (MF2):** Finalized spec (approved March 2025, CLDR 46.1); LDML 48 (Oct 2025) refinements. Adds `.match`, `.local`, `.input` declarations and custom function registry. JS: `messageformat` 4.0; React: `mf2react`; i18next: `i18next-mf2` plugin. ICU4J/ICU4C have Tech Preview implementations. **Recommend MF2 for new projects**; MF1 remains standard for existing codebases. Note: TC39 `Intl.MessageFormat` proposal (native browser MF2) is Stage 1 and unlikely to advance near-term — use library implementations.
 
-> **Detail**: See `references/icu-message-format.md` for full patterns and key naming conventions.
+> **Detail**: See `reference/icu-message-format.md` for full patterns and key naming conventions.
 
 ### RTL Support
 
@@ -267,7 +267,7 @@ Every deliverable must include:
 | Icon flipping | Directional icons (arrows, chevrons) in RTL |
 | Bidi isolation | Mixed LTR/RTL content (phone numbers, emails in RTL) |
 
-> **Detail**: See `references/rtl-support.md` for CSS mappings, components, and testing checklist.
+> **Detail**: See `reference/rtl-support.md` for CSS mappings, components, and testing checklist.
 
 ## Collaboration
 
@@ -302,13 +302,13 @@ Polyglot receives features and UI components from upstream agents. Polyglot send
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/library-setup.md` | You need i18next, react-intl, vue-i18n, or Next.js App Router configuration guides. |
-| `references/intl-api-patterns.md` | You need Intl API code examples, performance tips, or caching patterns. |
-| `references/icu-message-format.md` | You need ICU MessageFormat patterns, key naming conventions, or namespace design. |
-| `references/rtl-support.md` | You need CSS logical property mappings, bidi components, or RTL testing checklist. |
-| `references/pluralize-cldr-rules.md` | You need CLDR plural categories per locale, ICU `plural` / `selectordinal` authoring, fallback strategy, or plural-branch test matrix. |
-| `references/locale-negotiation.md` | You need BCP 47 parsing, `Accept-Language` negotiation, fallback chain design, user-override persistence, or geolocation-default resolution. |
-| `references/translate-tms-workflow.md` | You need TMS integration (Lokalise/Crowdin/Phrase/Smartling), translation-memory reuse, translator briefing, QA gates, or release rollout strategy. |
+| `reference/library-setup.md` | You need i18next, react-intl, vue-i18n, or Next.js App Router configuration guides. |
+| `reference/intl-api-patterns.md` | You need Intl API code examples, performance tips, or caching patterns. |
+| `reference/icu-message-format.md` | You need ICU MessageFormat patterns, key naming conventions, or namespace design. |
+| `reference/rtl-support.md` | You need CSS logical property mappings, bidi components, or RTL testing checklist. |
+| `reference/pluralize-cldr-rules.md` | You need CLDR plural categories per locale, ICU `plural` / `selectordinal` authoring, fallback strategy, or plural-branch test matrix. |
+| `reference/locale-negotiation.md` | You need BCP 47 parsing, `Accept-Language` negotiation, fallback chain design, user-override persistence, or geolocation-default resolution. |
+| `reference/translate-tms-workflow.md` | You need TMS integration (Lokalise/Crowdin/Phrase/Smartling), translation-memory reuse, translator briefing, QA gates, or release rollout strategy. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the i18n deliverable, calibrating effort to component/feature/app scope, or front-loading locale/library at SCAN. Critical for Polyglot: P3, P6. |
 
 ## Operational

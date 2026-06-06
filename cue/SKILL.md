@@ -98,13 +98,13 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Script | `script` | ✓ | Full video script authoring | `references/patterns.md` |
-| Storyboard | `storyboard` | | Per-scene storyboard, visual design | `references/patterns.md`, `references/examples.md` |
-| Narration | `narration` | | Narration text with duration and pacing design | `references/patterns.md` |
-| Explainer | `explainer` | | Product explainer and comparison video scripts | `references/patterns.md`, `references/examples.md` |
-| Shorts | `shorts` | | Vertical short-form script for TikTok / Reels / YouTube Shorts | `references/shorts-format.md` |
-| Captions | `captions` | | SRT / VTT / ASS subtitle and SDH authoring with timing | `references/captions-authoring.md` |
-| Localize | `localize` | | Multi-language narration / voice-over adaptation with duration budgeting | `references/narration-localize.md` |
+| Script | `script` | ✓ | Full video script authoring | `reference/patterns.md` |
+| Storyboard | `storyboard` | | Per-scene storyboard, visual design | `reference/patterns.md`, `reference/examples.md` |
+| Narration | `narration` | | Narration text with duration and pacing design | `reference/patterns.md` |
+| Explainer | `explainer` | | Product explainer and comparison video scripts | `reference/patterns.md`, `reference/examples.md` |
+| Shorts | `shorts` | | Vertical short-form script for TikTok / Reels / YouTube Shorts | `reference/shorts-format.md` |
+| Captions | `captions` | | SRT / VTT / ASS subtitle and SDH authoring with timing | `reference/captions-authoring.md` |
+| Localize | `localize` | | Multi-language narration / voice-over adaptation with duration budgeting | `reference/narration-localize.md` |
 
 ## Subcommand Dispatch
 
@@ -123,14 +123,14 @@ Parse the first token of user input.
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `product demo`, `feature video` | Product demo script | Scene breakdown + narration | `references/patterns.md` |
-| `explainer`, `how it works` | Explainer video script | AIDA/Problem-Solution structure | `references/patterns.md` |
-| `tutorial`, `walkthrough` | Tutorial script | Step-by-step scene plan | `references/patterns.md` |
-| `onboarding`, `welcome` | Onboarding video script | Progressive disclosure flow | `references/patterns.md` |
-| `social`, `Twitter`, `short` | Short-form script (15-60s) | Hook-first compact structure | `references/patterns.md` |
-| `comparison`, `vs` | Comparison video script | Side-by-side scene layout | `references/patterns.md` |
-| `Synthesia`, `HeyGen`, `AI avatar` | AI avatar video script | Single-speaker narration, no camera cues. Max 5 min/scene (Synthesia). Synthesia: 240+ avatars, 160+ languages, voice cloning available [Source: Synthesia — AI Avatars feature page (2026), https://www.synthesia.io/features/avatars]. HeyGen: Dynamic Body Language (predictive motion — lean-in, shrug, hand gestures), custom avatar from 30s phone clip, URL-to-localized-video in 40+ languages. Use punctuation for pacing (commas=short pause, periods=long pause). Add gesture cues where supported (HeyGen: Nod, Head Yes/No, Eyebrows Up, dynamic body language) | `references/patterns.md` |
-| unclear request | Product demo (most common) | Scene breakdown + narration | `references/patterns.md` |
+| `product demo`, `feature video` | Product demo script | Scene breakdown + narration | `reference/patterns.md` |
+| `explainer`, `how it works` | Explainer video script | AIDA/Problem-Solution structure | `reference/patterns.md` |
+| `tutorial`, `walkthrough` | Tutorial script | Step-by-step scene plan | `reference/patterns.md` |
+| `onboarding`, `welcome` | Onboarding video script | Progressive disclosure flow | `reference/patterns.md` |
+| `social`, `Twitter`, `short` | Short-form script (15-60s) | Hook-first compact structure | `reference/patterns.md` |
+| `comparison`, `vs` | Comparison video script | Side-by-side scene layout | `reference/patterns.md` |
+| `Synthesia`, `HeyGen`, `AI avatar` | AI avatar video script | Single-speaker narration, no camera cues. Max 5 min/scene (Synthesia). Synthesia: 240+ avatars, 160+ languages, voice cloning available [Source: Synthesia — AI Avatars feature page (2026), https://www.synthesia.io/features/avatars]. HeyGen: Dynamic Body Language (predictive motion — lean-in, shrug, hand gestures), custom avatar from 30s phone clip, URL-to-localized-video in 40+ languages. Use punctuation for pacing (commas=short pause, periods=long pause). Add gesture cues where supported (HeyGen: Nod, Head Yes/No, Eyebrows Up, dynamic body language) | `reference/patterns.md` |
+| unclear request | Product demo (most common) | Scene breakdown + narration | `reference/patterns.md` |
 
 ## Workflow
 
@@ -139,8 +139,8 @@ Parse the first token of user input.
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
 | `BRIEF` | Define audience, goal, platform, duration | One clear message per video | — |
-| `STRUCTURE` | Choose narrative template and plan CTA | Match template to goal | `references/patterns.md` |
-| `SCENE` | Design scene-by-scene breakdown with visuals | Every scene needs visual direction + timing | `references/patterns.md` |
+| `STRUCTURE` | Choose narrative template and plan CTA | Match template to goal | `reference/patterns.md` |
+| `SCENE` | Design scene-by-scene breakdown with visuals | Every scene needs visual direction + timing | `reference/patterns.md` |
 | `NARRATE` | Write narration with tone and pacing | Speech pace by type: educational 120-130 wpm, standard 130-145 wpm, energetic 140-160 wpm. Platform pacing: TikTok/Reels 170-200 wpm, LinkedIn/corporate 130-150 wpm, long-form narration ~140 wpm | — |
 | `REVIEW` | Verify timing budget and flow coherence | Total durations must match target | — |
 
@@ -202,12 +202,12 @@ Parse the first token of user input.
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/patterns.md` | You need script structure templates, scene patterns, or platform-specific guidance. |
-| `references/examples.md` | You need complete video script examples. |
-| `references/handoffs.md` | You need handoff templates for collaboration with other agents. |
-| `references/shorts-format.md` | You are authoring 9:16 TikTok / Reels / Shorts scripts with hooks, pattern interrupts, burn-in captions, and loopable endings. |
-| `references/captions-authoring.md` | You are producing SRT / VTT / ASS / SDH caption files with timing, reading-speed limits, and burn-in vs soft-sub decisions. |
-| `references/narration-localize.md` | You are adapting narration to new locales with expansion budgets, cultural rewrites, lip-sync decisions, and voice-talent briefs. |
+| `reference/patterns.md` | You need script structure templates, scene patterns, or platform-specific guidance. |
+| `reference/examples.md` | You need complete video script examples. |
+| `reference/handoffs.md` | You need handoff templates for collaboration with other agents. |
+| `reference/shorts-format.md` | You are authoring 9:16 TikTok / Reels / Shorts scripts with hooks, pattern interrupts, burn-in captions, and loopable endings. |
+| `reference/captions-authoring.md` | You are producing SRT / VTT / ASS / SDH caption files with timing, reading-speed limits, and burn-in vs soft-sub decisions. |
+| `reference/narration-localize.md` | You are adapting narration to new locales with expansion budgets, cultural rewrites, lip-sync decisions, and voice-talent briefs. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the script, deciding adaptive thinking depth at story structure, or front-loading video type/audience/duration at FRAME. Critical for Cue: P3, P5. |
 
 ## Operational

@@ -130,10 +130,10 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Audit | `audit` | ✓ | Full ecosystem cleanup audit (default) | `references/retention-criteria.md`, `references/overlap-matrix.md` |
-| Merge Plan | `merge` | | Propose merge plan for a specific candidate pair or set | `references/merge-protocol.md` |
-| Sunset Plan | `sunset` | | Propose sunset plan for inactive/superseded skills | `references/sunset-protocol.md` |
-| Pack Impact | `pack-impact` | | Pre-removal SKILL_PACKS / profile impact analysis | `references/pack-impact.md` |
+| Audit | `audit` | ✓ | Full ecosystem cleanup audit (default) | `reference/retention-criteria.md`, `reference/overlap-matrix.md` |
+| Merge Plan | `merge` | | Propose merge plan for a specific candidate pair or set | `reference/merge-protocol.md` |
+| Sunset Plan | `sunset` | | Propose sunset plan for inactive/superseded skills | `reference/sunset-protocol.md` |
+| Pack Impact | `pack-impact` | | Pre-removal SKILL_PACKS / profile impact analysis | `reference/pack-impact.md` |
 
 ## Subcommand Dispatch
 
@@ -153,15 +153,15 @@ Behavior notes per Recipe:
 
 | Phase | Purpose | Read When |
 |-------|---------|-----------|
-| `SCAN` | Inventory all skills — CAPABILITIES_SUMMARY, COLLABORATION_PATTERNS, journals, PROJECT.md activity logs | `references/scan-protocol.md` |
-| `SCORE` | 5-axis retention scoring per skill (usage / overlap / uniqueness / coverage / maintenance cost) | `references/retention-criteria.md` |
-| `CLASSIFY` | Verdict per skill: KEEP / MERGE / SUNSET / DEPRECATE with confidence | `references/retention-criteria.md` § Classification Rules |
-| `PROPOSE` | Generate proposal with evidence + handoff target + reversibility note | `references/merge-protocol.md` or `references/sunset-protocol.md` |
+| `SCAN` | Inventory all skills — CAPABILITIES_SUMMARY, COLLABORATION_PATTERNS, journals, PROJECT.md activity logs | `reference/scan-protocol.md` |
+| `SCORE` | 5-axis retention scoring per skill (usage / overlap / uniqueness / coverage / maintenance cost) | `reference/retention-criteria.md` |
+| `CLASSIFY` | Verdict per skill: KEEP / MERGE / SUNSET / DEPRECATE with confidence | `reference/retention-criteria.md` § Classification Rules |
+| `PROPOSE` | Generate proposal with evidence + handoff target + reversibility note | `reference/merge-protocol.md` or `reference/sunset-protocol.md` |
 | `HANDOFF` | Route: Architect (merge) / User (sunset approval) / Nexus (routing update) | `_common/HANDOFF.md` |
 
 ## 5-Axis Retention Score
 
-Brief summary; full rubric → `references/retention-criteria.md`.
+Brief summary; full rubric → `reference/retention-criteria.md`.
 
 | Axis | Signal | Score Range |
 |------|--------|-------------|
@@ -196,12 +196,12 @@ Every deliverable must include:
 
 | File | Read When |
 |------|-----------|
-| `references/scan-protocol.md` | Running the inventory scan; sources to read and order |
-| `references/retention-criteria.md` | Scoring each skill on the 5 axes + classification thresholds |
-| `references/overlap-matrix.md` | Computing cross-skill responsibility overlap |
-| `references/merge-protocol.md` | Generating merge proposals; canonical-owner selection |
-| `references/sunset-protocol.md` | Generating sunset proposals; archive + re-activation |
-| `references/pack-impact.md` | Analyzing SKILL_PACKS.md and profile impact before removal |
+| `reference/scan-protocol.md` | Running the inventory scan; sources to read and order |
+| `reference/retention-criteria.md` | Scoring each skill on the 5 axes + classification thresholds |
+| `reference/overlap-matrix.md` | Computing cross-skill responsibility overlap |
+| `reference/merge-protocol.md` | Generating merge proposals; canonical-owner selection |
+| `reference/sunset-protocol.md` | Generating sunset proposals; archive + re-activation |
+| `reference/pack-impact.md` | Analyzing SKILL_PACKS.md and profile impact before removal |
 | `_common/SKILL_PACKS.md` | Pack membership reference (cross-check before sunset) |
 | `_common/BOUNDARIES.md` | Universal agent boundaries |
 | `_common/OPUS_48_AUTHORING.md` | Adaptive thinking at canonical-owner selection and sunset risk |

@@ -102,10 +102,10 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Goal | Actions | Read |
 |-------|------|---------|------|
-| 1. **MONITOR** | Track retention health | Review cohorts · inspect health scores · check trigger coverage · audit involuntary churn (dunning) | `references/` |
-| 2. **IDENTIFY** | Find risk and opportunity | Segment at-risk users · score churn risk · isolate drop-off windows · separate voluntary vs involuntary churn | `references/` |
-| 3. **INTERVENE** | Design the smallest useful tactic | Match signal to intervention · personalize by segment · define guardrails · ensure no dark patterns | `references/` |
-| 4. **MEASURE** | Verify the tactic works | Define KPI changes · estimate ROI · propose an experiment or rollout check · track NRR/GRR impact | `references/` |
+| 1. **MONITOR** | Track retention health | Review cohorts · inspect health scores · check trigger coverage · audit involuntary churn (dunning) | `reference/` |
+| 2. **IDENTIFY** | Find risk and opportunity | Segment at-risk users · score churn risk · isolate drop-off windows · separate voluntary vs involuntary churn | `reference/` |
+| 3. **INTERVENE** | Design the smallest useful tactic | Match signal to intervention · personalize by segment · define guardrails · ensure no dark patterns | `reference/` |
+| 4. **MEASURE** | Verify the tactic works | Define KPI changes · estimate ROI · propose an experiment or rollout check · track NRR/GRR impact | `reference/` |
 
 ## Critical Thresholds
 
@@ -148,14 +148,14 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Re-engagement | `reengagement` | ✓ | Re-engagement strategy and dormant user recovery | `references/engagement-triggers.md` |
-| Churn Prevention | `churn` | | Churn prevention and subscription save flows | `references/retention-analysis.md` |
-| Gamification | `gamification` | | Gamification design: points, badges, and streaks | `references/gamification.md` |
-| Habit Formation | `habit` | | Habit formation design, Hook Model, and streak design | `references/habit-formation.md` |
-| Loyalty Program | `loyalty` | | Loyalty program design and reward system construction | `references/gamification.md` |
-| Win-Back Campaign | `winback` | | Dormant / cancelled-user recovery campaign with recency-weighted offers, multi-touch cadence, and reactivation metric | `references/winback-campaign.md` |
-| Lifecycle Email Drip | `lifecycle-email` | | 30/60/90 onboarding + lifecycle email drip design: trigger-based, behavior-branched, deliverability and suppression rules | `references/lifecycle-email-drip.md` |
-| Power User Advocacy | `power-user` | | Power-user identification via L21+ MAU + NPS promoter overlap, advocacy ladder, community/referral program activation | `references/power-user-advocacy.md` |
+| Re-engagement | `reengagement` | ✓ | Re-engagement strategy and dormant user recovery | `reference/engagement-triggers.md` |
+| Churn Prevention | `churn` | | Churn prevention and subscription save flows | `reference/retention-analysis.md` |
+| Gamification | `gamification` | | Gamification design: points, badges, and streaks | `reference/gamification.md` |
+| Habit Formation | `habit` | | Habit formation design, Hook Model, and streak design | `reference/habit-formation.md` |
+| Loyalty Program | `loyalty` | | Loyalty program design and reward system construction | `reference/gamification.md` |
+| Win-Back Campaign | `winback` | | Dormant / cancelled-user recovery campaign with recency-weighted offers, multi-touch cadence, and reactivation metric | `reference/winback-campaign.md` |
+| Lifecycle Email Drip | `lifecycle-email` | | 30/60/90 onboarding + lifecycle email drip design: trigger-based, behavior-branched, deliverability and suppression rules | `reference/lifecycle-email-drip.md` |
+| Power User Advocacy | `power-user` | | Power-user identification via L21+ MAU + NPS promoter overlap, advocacy ladder, community/referral program activation | `reference/power-user-advocacy.md` |
 
 ## Subcommand Dispatch
 
@@ -177,19 +177,19 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| Cohort retention declining | Churn root-cause analysis | Segmented churn report with intervention plan | `references/retention-analysis.md` |
-| High involuntary churn (>1%) | Dunning & payment recovery audit | Dunning workflow recommendations | `references/subscription-retention.md` |
-| Onboarding drop-off detected | Activation funnel analysis | Milestone-gated onboarding redesign | `references/onboarding.md` |
-| Dormant user segment growing | Re-engagement campaign design | Trigger-based win-back flow | `references/engagement-triggers.md` |
-| Health score portfolio review | Account health triage | Tiered intervention matrix | `references/health-score.md` |
-| Save flow optimization request | Subscription save audit | Pause/downgrade/discount offer sequence | `references/subscription-retention.md` |
-| Gamification / habit loop request | Habit formation design | Hook model with safeguards | `references/habit-formation.md` |
+| Cohort retention declining | Churn root-cause analysis | Segmented churn report with intervention plan | `reference/retention-analysis.md` |
+| High involuntary churn (>1%) | Dunning & payment recovery audit | Dunning workflow recommendations | `reference/subscription-retention.md` |
+| Onboarding drop-off detected | Activation funnel analysis | Milestone-gated onboarding redesign | `reference/onboarding.md` |
+| Dormant user segment growing | Re-engagement campaign design | Trigger-based win-back flow | `reference/engagement-triggers.md` |
+| Health score portfolio review | Account health triage | Tiered intervention matrix | `reference/health-score.md` |
+| Save flow optimization request | Subscription save audit | Pause/downgrade/discount offer sequence | `reference/subscription-retention.md` |
+| Gamification / habit loop request | Habit formation design | Hook model with safeguards | `reference/habit-formation.md` |
 | Complex multi-agent task | Nexus-routed execution | Structured handoff | `_common/BOUNDARIES.md` |
 
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 - Separate voluntary vs involuntary churn before recommending tactics — address payment failures first.
 
 ## Output Requirements
@@ -204,12 +204,12 @@ Every deliverable must include:
 6. **Next step**: Experiment design (→ Experiment), implementation spec (→ Builder), or monitoring plan (→ Pulse)
 
 Use the template that matches the task focus:
-- Retention/cohort work → `references/retention-analysis.md`
-- Health scoring → `references/health-score.md`
-- Subscription save flow → `references/subscription-retention.md`
-- Onboarding/activation → `references/onboarding.md`
-- Habit loops → `references/habit-formation.md`
-- Gamification → `references/gamification.md`
+- Retention/cohort work → `reference/retention-analysis.md`
+- Health scoring → `reference/health-score.md`
+- Subscription save flow → `reference/subscription-retention.md`
+- Onboarding/activation → `reference/onboarding.md`
+- Habit loops → `reference/habit-formation.md`
+- Gamification → `reference/gamification.md`
 
 ## Collaboration
 
@@ -224,25 +224,25 @@ Use the template that matches the task focus:
 
 ## Reference Map
 
-- `references/retention-analysis.md`
+- `reference/retention-analysis.md`
   Read this when you need cohort analysis, churn scoring, drop-off diagnosis, or a retention report.
-- `references/health-score.md`
+- `reference/health-score.md`
   Read this when you need account health scoring, trend detection, or portfolio triage.
-- `references/engagement-triggers.md`
+- `reference/engagement-triggers.md`
   Read this when you need dormant-user triggers, cadence rules, or re-engagement copy structure.
-- `references/onboarding.md`
+- `reference/onboarding.md`
   Read this when the retention problem starts in activation, TTV, or early milestone completion.
-- `references/subscription-retention.md`
+- `reference/subscription-retention.md`
   Read this when the task is cancellation prevention, pause/downgrade design, or save-offer evaluation.
-- `references/habit-formation.md`
+- `reference/habit-formation.md`
   Read this when you need Hook Model design, streak logic, or habit-loop safeguards.
-- `references/gamification.md`
+- `reference/gamification.md`
   Read this when you need points, badges, levels, or loyalty mechanics tied to retention outcomes.
-- `references/winback-campaign.md`
+- `reference/winback-campaign.md`
   Read this when you need dormant/cancelled-user recovery with recency-weighted offers, multi-touch cadence, and reactivation metrics.
-- `references/lifecycle-email-drip.md`
+- `reference/lifecycle-email-drip.md`
   Read this when you need 30/60/90 onboarding + lifecycle drip design, deliverability contract, or suppression rules.
-- `references/power-user-advocacy.md`
+- `reference/power-user-advocacy.md`
   Read this when you need to identify the top 10-20% of users and build an advocacy ladder from power user to community leader.
 - `_common/OPUS_48_AUTHORING.md`
   Read this when you are sizing the retention plan, deciding adaptive thinking depth at intervention selection, or front-loading segment/lifecycle/metric at INTAKE. Critical for Retain: P3, P5.

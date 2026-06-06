@@ -134,14 +134,14 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| XCUITest Suite | `xcuitest` | ✓ | Author or extend an XCUITest target for an iOS app | `references/xcuitest-patterns.md`, `references/identifier-strategy.md` |
-| Identifier Audit | `identifier` | | Audit and design `accessibilityIdentifier` taxonomy across the app | `references/identifier-strategy.md` |
-| Screenshot Pipeline | `screenshot` | | Programmatic screenshot capture during XCUITest runs (regression evidence) | `references/screenshot-strategies.md` |
-| App Store Snapshot | `appstore` | | fastlane snapshot setup for App Store screenshots across device matrix and languages | `references/fastlane-snapshot.md`, `references/screenshot-strategies.md` |
-| Page Object | `page-object` | | Refactor XCUITest code into Screen Object pattern in Swift | `references/xcuitest-patterns.md` |
-| CI Integration | `ci` | | Wire xcodebuild test + xcresulttool into Xcode Cloud / GitHub Actions / Bitrise | `references/ci-integration.md` |
-| Device Farm | `farm` | | Route XCUITest `.xctestrun` to BrowserStack / Sauce Labs / AWS Device Farm | `references/ci-integration.md` |
-| Result Parsing | `xcresult` | | Parse `.xcresult` bundles for attachments, failure screenshots, JUnit conversion | `references/ci-integration.md` |
+| XCUITest Suite | `xcuitest` | ✓ | Author or extend an XCUITest target for an iOS app | `reference/xcuitest-patterns.md`, `reference/identifier-strategy.md` |
+| Identifier Audit | `identifier` | | Audit and design `accessibilityIdentifier` taxonomy across the app | `reference/identifier-strategy.md` |
+| Screenshot Pipeline | `screenshot` | | Programmatic screenshot capture during XCUITest runs (regression evidence) | `reference/screenshot-strategies.md` |
+| App Store Snapshot | `appstore` | | fastlane snapshot setup for App Store screenshots across device matrix and languages | `reference/fastlane-snapshot.md`, `reference/screenshot-strategies.md` |
+| Page Object | `page-object` | | Refactor XCUITest code into Screen Object pattern in Swift | `reference/xcuitest-patterns.md` |
+| CI Integration | `ci` | | Wire xcodebuild test + xcresulttool into Xcode Cloud / GitHub Actions / Bitrise | `reference/ci-integration.md` |
+| Device Farm | `farm` | | Route XCUITest `.xctestrun` to BrowserStack / Sauce Labs / AWS Device Farm | `reference/ci-integration.md` |
+| Result Parsing | `xcresult` | | Parse `.xcresult` bundles for attachments, failure screenshots, JUnit conversion | `reference/ci-integration.md` |
 
 ## Subcommand Dispatch
 
@@ -179,14 +179,14 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `iOS UI test`, `XCUITest`, `Swift UI test` | XCUITest authoring with identifier-first + Page Object | XCUITest target + Screen Objects + xcodebuild invocation | `references/xcuitest-patterns.md` |
-| `App Store screenshot`, `fastlane snapshot` | fastlane Snapfile + SnapshotHelper + screenshot scheme + status-bar override | App Store screenshot bundle + Snapfile + scheme config | `references/fastlane-snapshot.md` |
-| `accessibility identifier audit` | Identifier audit + taxonomy + gap list | Taxonomy doc + handoff to Native | `references/identifier-strategy.md` |
-| `xcodebuild test ci`, `xcresulttool parse` | CI integration with result-bundle archival | CI workflow + xcresulttool invocation + JUnit shim | `references/ci-integration.md` |
-| `real device ios test`, `device farm xcuitest` | `.xctestrun` package + farm upload | `xctestrun` build + farm-vendor config | `references/ci-integration.md` |
-| `flaky xcuitest`, `xcuitest race condition` | Stabilization pass — wait strategy + launch args + animation flag | Stabilization patch + flake taxonomy note | `references/xcuitest-patterns.md` |
-| `record then refactor xcuitest` | Refactor recorded code to Screen Object | Refactored Screen Object suite | `references/xcuitest-patterns.md` |
-| unclear iOS UI testing request | XCUITest authoring (default) | XCUITest target + Page Objects | `references/xcuitest-patterns.md` |
+| `iOS UI test`, `XCUITest`, `Swift UI test` | XCUITest authoring with identifier-first + Page Object | XCUITest target + Screen Objects + xcodebuild invocation | `reference/xcuitest-patterns.md` |
+| `App Store screenshot`, `fastlane snapshot` | fastlane Snapfile + SnapshotHelper + screenshot scheme + status-bar override | App Store screenshot bundle + Snapfile + scheme config | `reference/fastlane-snapshot.md` |
+| `accessibility identifier audit` | Identifier audit + taxonomy + gap list | Taxonomy doc + handoff to Native | `reference/identifier-strategy.md` |
+| `xcodebuild test ci`, `xcresulttool parse` | CI integration with result-bundle archival | CI workflow + xcresulttool invocation + JUnit shim | `reference/ci-integration.md` |
+| `real device ios test`, `device farm xcuitest` | `.xctestrun` package + farm upload | `xctestrun` build + farm-vendor config | `reference/ci-integration.md` |
+| `flaky xcuitest`, `xcuitest race condition` | Stabilization pass — wait strategy + launch args + animation flag | Stabilization patch + flake taxonomy note | `reference/xcuitest-patterns.md` |
+| `record then refactor xcuitest` | Refactor recorded code to Screen Object | Refactored Screen Object suite | `reference/xcuitest-patterns.md` |
+| unclear iOS UI testing request | XCUITest authoring (default) | XCUITest target + Page Objects | `reference/xcuitest-patterns.md` |
 
 ## Overlap Boundaries
 
@@ -234,11 +234,11 @@ Snap receives feature handoffs from Native, escalations from Radar, and screensh
 
 | File | Read this when |
 |------|----------------|
-| `references/xcuitest-patterns.md` | Authoring or refactoring XCUITest code — XCUIApplication / XCUIElement / XCUIElementQuery patterns, Screen Object structure, wait strategies, gesture APIs, launch arguments |
-| `references/identifier-strategy.md` | Designing or auditing `accessibilityIdentifier` taxonomy across SwiftUI and UIKit, Accessibility Inspector workflow, gap-list templates |
-| `references/screenshot-strategies.md` | Programmatic screenshot capture — XCTAttachment, `.lifetime` settings, per-failure vs checkpoint, screen vs element captures, swift-snapshot-testing distinction |
-| `references/fastlane-snapshot.md` | fastlane snapshot pipeline — Snapfile, SnapshotHelper.swift, screenshot scheme, language / device matrix, status-bar override, frameit |
-| `references/ci-integration.md` | xcodebuild test / test-without-building, `.xctestrun` packaging, xcresulttool parsing (Xcode 16+ schema + `--legacy`), Xcode Cloud / GitHub Actions / Bitrise, device-farm upload |
+| `reference/xcuitest-patterns.md` | Authoring or refactoring XCUITest code — XCUIApplication / XCUIElement / XCUIElementQuery patterns, Screen Object structure, wait strategies, gesture APIs, launch arguments |
+| `reference/identifier-strategy.md` | Designing or auditing `accessibilityIdentifier` taxonomy across SwiftUI and UIKit, Accessibility Inspector workflow, gap-list templates |
+| `reference/screenshot-strategies.md` | Programmatic screenshot capture — XCTAttachment, `.lifetime` settings, per-failure vs checkpoint, screen vs element captures, swift-snapshot-testing distinction |
+| `reference/fastlane-snapshot.md` | fastlane snapshot pipeline — Snapfile, SnapshotHelper.swift, screenshot scheme, language / device matrix, status-bar override, frameit |
+| `reference/ci-integration.md` | xcodebuild test / test-without-building, `.xctestrun` packaging, xcresulttool parsing (Xcode 16+ schema + `--legacy`), Xcode Cloud / GitHub Actions / Bitrise, device-farm upload |
 | `_common/OPUS_48_AUTHORING.md` | Sizing the test plan, calibrating effort to risk-tier, and front-loading critical iOS flow scope at SCOPE. Critical for Snap: P3, P6 |
 
 ## Operational

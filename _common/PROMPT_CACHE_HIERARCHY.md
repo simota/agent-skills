@@ -64,7 +64,7 @@ The order in which Nexus (and any orchestrator) assembles context must keep T-st
   2. _common/ protocols loaded     ← T-static
      (BOUNDARIES → HANDOFF → OPERATIONAL → OPUS_48_AUTHORING
       → CODEX_ORCHESTRATION → PROMPT_CACHE_HIERARCHY → ...)
-  3. references/ excerpts          ← T-static (loaded on demand, stable within session)
+  3. reference/ excerpts          ← T-static (loaded on demand, stable within session)
   4. Active recipe block           ← T-semi-static (cache breakpoint here)
 [messages]
   - User input                     ← T-dynamic
@@ -74,7 +74,7 @@ The order in which Nexus (and any orchestrator) assembles context must keep T-st
 
 **`_common/` load order** is stable across skills — list them alphabetically or by canonical priority and never inject per-task content between them. If a recipe needs additional `_common/` text, append it to the end of the `_common/` block, not interleaved.
 
-**`references/` lazy load** is encouraged (progressive disclosure), but once loaded the excerpt must stay above the active recipe block — moving it bottomward on the next turn forces a full miss.
+**`reference/` lazy load** is encouraged (progressive disclosure), but once loaded the excerpt must stay above the active recipe block — moving it bottomward on the next turn forces a full miss.
 
 ---
 
@@ -84,7 +84,7 @@ Every SKILL.md should:
 
 1. Place all volatile placeholders (`{TASK}`, `{ARGUMENTS}`, `{TIMESTAMP}`, `_AGENT_CONTEXT` filled fields) inside `messages`-equivalent sections — never in the static body.
 2. Reference `_common/` files by path, not by inlined excerpt — inlining duplicates the bytes and forces them into the per-skill cache window twice.
-3. Keep date-dependent claims in `references/` with explicit revision dates, so the live SKILL.md stays stable.
+3. Keep date-dependent claims in `reference/` with explicit revision dates, so the live SKILL.md stays stable.
 4. Avoid `currentDate` / `userEmail` echoes in the static body — those values come from the harness preamble (T-dynamic).
 
 ---
@@ -95,8 +95,8 @@ Every SKILL.md should:
 2. **Per-request data in `tools` or `system`** — request ID, user ID, ARGUMENTS interpolated into the system prompt invalidates everything beneath.
 3. **Reordering `_common/` loads per task** — the load order itself is part of the cached prefix; swap two files and the whole `_common/` block re-writes.
 4. **Inlining `_common/` text into SKILL.md** — duplicate bytes occupy two cache slots; updating one location desyncs both.
-5. **Loading references/ on demand but appending below the recipe block** — the next turn re-orders content, invalidating cache.
-6. **Recipe-specific date in the static recipe block** — move dates to `references/` with explicit revision metadata.
+5. **Loading reference/ on demand but appending below the recipe block** — the next turn re-orders content, invalidating cache.
+6. **Recipe-specific date in the static recipe block** — move dates to `reference/` with explicit revision metadata.
 7. **MCP tool list churn** — adding/removing MCP servers per task changes the `tools` layer; consolidate MCP enablement at session start.
 8. **Mixing T-static and T-dynamic in a single message** — split into a cached system addendum + a fresh user/tool message.
 9. **Cache write on a tiny prefix** — 5-minute TTL writes cost 1.25×; if the prefix is < ~1k tokens, the break-even (1-2 hits) may not be reached. Group small skills under one breakpoint.

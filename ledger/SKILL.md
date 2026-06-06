@@ -109,9 +109,9 @@ Route elsewhere when the task is primarily:
 
 | Phase | Focus | Key Activities | Reference |
 |-------|-------|----------------|-----------|
-| **Inform** | Visibility | Cost allocation, tagging audit, dashboard design, showback/chargeback | `references/cost-visibility.md` |
-| **Optimize** | Efficiency | Right-sizing, RI/SP, Spot, waste elimination, architecture cost review | `references/optimization-strategies.md` |
-| **Operate** | Governance | Budget alerts, anomaly detection, CI/CD cost gates, continuous review | `references/cost-governance.md` |
+| **Inform** | Visibility | Cost allocation, tagging audit, dashboard design, showback/chargeback | `reference/cost-visibility.md` |
+| **Optimize** | Efficiency | Right-sizing, RI/SP, Spot, waste elimination, architecture cost review | `reference/optimization-strategies.md` |
+| **Operate** | Governance | Budget alerts, anomaly detection, CI/CD cost gates, continuous review | `reference/cost-governance.md` |
 
 ## IaC Cost Estimation
 
@@ -126,7 +126,7 @@ Rules:
 - Always show cost delta (before/after) for IaC changes
 - Flag resources exceeding cost thresholds: NAT Gateway, HA databases in non-prod, GPU instances, cross-region data transfer
 - Include data transfer costs — they are the most commonly underestimated line item
-- Full methodology → `references/iac-cost-estimation.md`
+- Full methodology → `reference/iac-cost-estimation.md`
 
 ## Right-Sizing Decision Table
 
@@ -142,7 +142,7 @@ Rules:
 | GPU memory < 30% utilized | Switch to smaller GPU SKU or enable MIG/MPS sharing | High |
 | GPU training (interruption-tolerant) | Spot + checkpoint every 15-30 min (70-80% savings) | High |
 
-Details → `references/optimization-strategies.md`
+Details → `reference/optimization-strategies.md`
 
 ## Commitment Strategy (RI/SP)
 
@@ -157,7 +157,7 @@ Rules:
 - Require minimum 30 days usage data before any recommendation
 - Prefer Savings Plans over RIs for flexibility (unless specific RI discount > 5% better)
 - Start with 1-year No Upfront; escalate to 3-year only with executive approval
-- Details → `references/optimization-strategies.md`
+- Details → `reference/optimization-strategies.md`
 
 ## AI/GPU Cost Strategy
 
@@ -183,7 +183,7 @@ Rules:
 | New service appears | Untagged resource detection | Tag → allocate → evaluate |
 | Zombie resource | Zero traffic / zero utilization for 7d+ | Alert → confirm → schedule termination |
 
-Details → `references/cost-anomaly-detection.md`
+Details → `reference/cost-anomaly-detection.md`
 
 ## Workflow
 
@@ -203,15 +203,15 @@ Single source of truth for Recipe definitions. The Behavior column carries the d
 
 | Recipe | Subcommand | Default? | When to Use | Behavior | Read First |
 |--------|-----------|---------|-------------|----------|------------|
-| IaC Cost Estimate | `estimate` | ✓ | IaC cost estimation, pre/post-change cost diff | Full INFORM → ESTIMATE → OPTIMIZE → GOVERN → HANDOFF. IaC-driven cost diff with data-transfer itemization and confidence band. | `references/iac-cost-estimation.md` |
-| Right-Sizing | `rightsizing` | | Instance right-sizing, CPU/memory utilization analysis | Utilization-evidence-first; refuse on < 14 days of metrics. Output sizing table + IaC delta for Scaffold. | `references/optimization-strategies.md` |
-| Cost Anomaly | `anomaly` | | Cost anomaly detection rule design, spike response playbook | Detection rules + response playbook. Tiered severity (INFO/WARNING/CRITICAL) with suppression and aggregation defaults. | `references/cost-anomaly-detection.md` |
-| RI / SP / CUD | `ri-sp` | | Reserved Instances, Savings Plans, GCP CUD, Azure RI commitment strategy with break-even and ladder design | Commitment strategy across AWS RI (Standard/Convertible), AWS Savings Plans (Compute/EC2 Instance/SageMaker), GCP CUD, Azure Reserved VM. 30+ days of usage required; coverage tier per workload class; staggered expiration ladder; >$10K/mo or 3y term needs executive approval; document Marketplace / exchange rollback path. | `references/reserved-savings-plans.md` |
-| AI / GPU Cost | `gpu-cost` | | AI/ML and GPU workload cost — H100/H200/A100/L40S/T4 SKU economics, training vs inference split, spot strategy, quantization impact | Separate training vs inference; SKU-match (H100/H200/A100/L40S/T4); spot+checkpoint cadence (rule: cadence ≈ MTBI/4); quantization (INT8/INT4/FP8) cost-vs-quality; unit cost in $/1K tokens or $/1K requests, never $/GPU-hour; cap GPU commitments at 1 year and 20-40% baseline. | `references/ai-gpu-cost.md` |
-| Cost-Allocation Tagging | `tagging` | | Mandatory tag taxonomy, AWS/GCP/Azure enforcement (SCP/Org Policy/Azure Policy), showback / chargeback design | Cap mandatory tags at 5-7 with allowed-value enums; lowercase + dash convention across AWS/GCP/Azure; ladder enforcement (soft-warn → alert → deny → auto-remediate) gated on coverage thresholds; define shared-cost split rules; downstream recipes refuse per-team output below 80% coverage. | `references/cost-tagging-strategy.md` |
-| FinOps Framework | `finops-framework` | | FinOps Foundation Framework — Crawl/Walk/Run maturity across 22 capabilities, persona map, phase-appropriate tooling | Assess current Crawl/Walk/Run phase across FinOps Foundation's 22 capabilities (Understanding Usage & Cost, Quantifying Business Value, Optimizing, Managing FinOps Practice). Map to persona (Engineer / Finance / FinOps Practitioner / Procurement / Leadership). Recommend phase-appropriate next capabilities. | `references/finops-framework.md` |
-| Unit Economics | `unit-economics` | | Per-customer / per-transaction / per-feature cost attribution, COGS decomposition, margin + contribution analysis | Attribute cost per customer / tenant / transaction / feature. Build COGS decomposition (compute / storage / egress / third-party / support). Compute gross + contribution margin; separate fixed vs variable. Required for SaaS pricing decisions and enterprise-deal profitability. | `references/unit-economics.md` |
-| GreenOps / Sustainability | `greenops` | | Carbon-aware scheduling, embodied+operational CO2e accounting, SCI (ISO/IEC 21031), region-carbon choice, FinOps×GreenOps trade-off | Embodied + operational CO2e, SCI score (ISO/IEC 21031), region-carbon-intensity routing, carbon-aware scheduling, FinOps × GreenOps trade-off matrix (usually aligned, sometimes conflict). Hand off to scaffold for region choices, beacon for SCI dashboards. | `references/greenops-sustainability.md` |
+| IaC Cost Estimate | `estimate` | ✓ | IaC cost estimation, pre/post-change cost diff | Full INFORM → ESTIMATE → OPTIMIZE → GOVERN → HANDOFF. IaC-driven cost diff with data-transfer itemization and confidence band. | `reference/iac-cost-estimation.md` |
+| Right-Sizing | `rightsizing` | | Instance right-sizing, CPU/memory utilization analysis | Utilization-evidence-first; refuse on < 14 days of metrics. Output sizing table + IaC delta for Scaffold. | `reference/optimization-strategies.md` |
+| Cost Anomaly | `anomaly` | | Cost anomaly detection rule design, spike response playbook | Detection rules + response playbook. Tiered severity (INFO/WARNING/CRITICAL) with suppression and aggregation defaults. | `reference/cost-anomaly-detection.md` |
+| RI / SP / CUD | `ri-sp` | | Reserved Instances, Savings Plans, GCP CUD, Azure RI commitment strategy with break-even and ladder design | Commitment strategy across AWS RI (Standard/Convertible), AWS Savings Plans (Compute/EC2 Instance/SageMaker), GCP CUD, Azure Reserved VM. 30+ days of usage required; coverage tier per workload class; staggered expiration ladder; >$10K/mo or 3y term needs executive approval; document Marketplace / exchange rollback path. | `reference/reserved-savings-plans.md` |
+| AI / GPU Cost | `gpu-cost` | | AI/ML and GPU workload cost — H100/H200/A100/L40S/T4 SKU economics, training vs inference split, spot strategy, quantization impact | Separate training vs inference; SKU-match (H100/H200/A100/L40S/T4); spot+checkpoint cadence (rule: cadence ≈ MTBI/4); quantization (INT8/INT4/FP8) cost-vs-quality; unit cost in $/1K tokens or $/1K requests, never $/GPU-hour; cap GPU commitments at 1 year and 20-40% baseline. | `reference/ai-gpu-cost.md` |
+| Cost-Allocation Tagging | `tagging` | | Mandatory tag taxonomy, AWS/GCP/Azure enforcement (SCP/Org Policy/Azure Policy), showback / chargeback design | Cap mandatory tags at 5-7 with allowed-value enums; lowercase + dash convention across AWS/GCP/Azure; ladder enforcement (soft-warn → alert → deny → auto-remediate) gated on coverage thresholds; define shared-cost split rules; downstream recipes refuse per-team output below 80% coverage. | `reference/cost-tagging-strategy.md` |
+| FinOps Framework | `finops-framework` | | FinOps Foundation Framework — Crawl/Walk/Run maturity across 22 capabilities, persona map, phase-appropriate tooling | Assess current Crawl/Walk/Run phase across FinOps Foundation's 22 capabilities (Understanding Usage & Cost, Quantifying Business Value, Optimizing, Managing FinOps Practice). Map to persona (Engineer / Finance / FinOps Practitioner / Procurement / Leadership). Recommend phase-appropriate next capabilities. | `reference/finops-framework.md` |
+| Unit Economics | `unit-economics` | | Per-customer / per-transaction / per-feature cost attribution, COGS decomposition, margin + contribution analysis | Attribute cost per customer / tenant / transaction / feature. Build COGS decomposition (compute / storage / egress / third-party / support). Compute gross + contribution margin; separate fixed vs variable. Required for SaaS pricing decisions and enterprise-deal profitability. | `reference/unit-economics.md` |
+| GreenOps / Sustainability | `greenops` | | Carbon-aware scheduling, embodied+operational CO2e accounting, SCI (ISO/IEC 21031), region-carbon choice, FinOps×GreenOps trade-off | Embodied + operational CO2e, SCI score (ISO/IEC 21031), region-carbon-intensity routing, carbon-aware scheduling, FinOps × GreenOps trade-off matrix (usually aligned, sometimes conflict). Hand off to scaffold for region choices, beacon for SCI dashboards. | `reference/greenops-sustainability.md` |
 
 ## Subcommand Dispatch
 
@@ -223,15 +223,15 @@ Parse the first token of user input.
 
 | Signal | Approach | Primary Output | Read Next |
 |--------|----------|----------------|-----------|
-| `cloud cost`, `cost estimate`, `pricing` | IaC cost estimation | Cost diff report | `references/iac-cost-estimation.md` |
-| `right-sizing`, `instance type`, `over-provisioned` | Right-sizing analysis | Sizing recommendations | `references/optimization-strategies.md` |
-| `RI`, `reserved instance`, `savings plan`, `commitment` | Commitment strategy | RI/SP recommendation | `references/optimization-strategies.md` |
-| `budget`, `alert`, `threshold`, `overspend` | Budget governance | Alert configuration spec | `references/cost-governance.md` |
-| `cost anomaly`, `spike`, `unexpected cost` | Anomaly detection | Detection rules + response playbook | `references/cost-anomaly-detection.md` |
-| `tag`, `cost allocation`, `chargeback`, `showback` | Tag strategy | Tag taxonomy + enforcement rules | `references/cost-visibility.md` |
-| `FinOps`, `cost optimization`, `waste` | Full FinOps review | Inform→Optimize→Operate report | `references/cost-visibility.md` |
-| `spot`, `preemptible`, `interruption` | Spot strategy | Spot configuration + fallback design | `references/optimization-strategies.md` |
-| `cost dashboard`, `cost report` | Dashboard specification | Dashboard spec + drill-down design | `references/cost-visibility.md` |
+| `cloud cost`, `cost estimate`, `pricing` | IaC cost estimation | Cost diff report | `reference/iac-cost-estimation.md` |
+| `right-sizing`, `instance type`, `over-provisioned` | Right-sizing analysis | Sizing recommendations | `reference/optimization-strategies.md` |
+| `RI`, `reserved instance`, `savings plan`, `commitment` | Commitment strategy | RI/SP recommendation | `reference/optimization-strategies.md` |
+| `budget`, `alert`, `threshold`, `overspend` | Budget governance | Alert configuration spec | `reference/cost-governance.md` |
+| `cost anomaly`, `spike`, `unexpected cost` | Anomaly detection | Detection rules + response playbook | `reference/cost-anomaly-detection.md` |
+| `tag`, `cost allocation`, `chargeback`, `showback` | Tag strategy | Tag taxonomy + enforcement rules | `reference/cost-visibility.md` |
+| `FinOps`, `cost optimization`, `waste` | Full FinOps review | Inform→Optimize→Operate report | `reference/cost-visibility.md` |
+| `spot`, `preemptible`, `interruption` | Spot strategy | Spot configuration + fallback design | `reference/optimization-strategies.md` |
+| `cost dashboard`, `cost report` | Dashboard specification | Dashboard spec + drill-down design | `reference/cost-visibility.md` |
 
 ## Output Requirements
 
@@ -284,19 +284,19 @@ Spawn condition: task covers 3+ workflow phases with independent data sources. S
 
 | File | Content |
 |------|---------|
-| `references/iac-cost-estimation.md` | Infracost integration, pricing APIs, cost diff report methodology |
-| `references/optimization-strategies.md` | Right-sizing, RI/SP, Spot strategies, waste elimination details |
-| `references/cost-governance.md` | Budget alerts, anomaly detection operations, CI/CD cost gates, tag enforcement |
-| `references/cost-anomaly-detection.md` | Anomaly detection patterns, detection rules, response playbooks |
-| `references/cost-visibility.md` | Tag strategy, cost allocation, dashboard specs, showback/chargeback |
-| `references/cloud-pricing-models.md` | AWS/GCP/Azure pricing model comparison, pricing structure reference |
-| `references/reserved-savings-plans.md` | `ri-sp` subcommand: AWS RI / SP / GCP CUD / Azure RI vendor comparison, coverage targets per workload class, break-even thresholds, expiration ladder, anti-patterns |
-| `references/ai-gpu-cost.md` | `gpu-cost` subcommand: GPU SKU pricing (H100/H200/A100/L40S/T4), training vs inference profile, spot+checkpoint cadence rule, quantization cost-vs-quality, $/1K-token unitization |
-| `references/cost-tagging-strategy.md` | `tagging` subcommand: mandatory tag schema, AWS/GCP/Azure enforcement comparison, showback/chargeback model selection, untagged-resource SLA ladder |
-| `references/finops-framework.md` | `finops-framework` subcommand: FinOps Foundation Framework Crawl/Walk/Run maturity across 22 capabilities, persona map, phase-appropriate tooling |
-| `references/unit-economics.md` | `unit-economics` subcommand: per-customer/transaction/feature cost attribution, COGS decomposition, gross/contribution margin, fixed vs variable separation |
-| `references/greenops-sustainability.md` | `greenops` subcommand: carbon-aware scheduling, embodied+operational CO2e, SCI (ISO/IEC 21031), region-carbon choice, FinOps × GreenOps trade-off matrix |
-| `references/handoff-formats.md` | Inter-agent handoff YAML templates (inbound/outbound) |
+| `reference/iac-cost-estimation.md` | Infracost integration, pricing APIs, cost diff report methodology |
+| `reference/optimization-strategies.md` | Right-sizing, RI/SP, Spot strategies, waste elimination details |
+| `reference/cost-governance.md` | Budget alerts, anomaly detection operations, CI/CD cost gates, tag enforcement |
+| `reference/cost-anomaly-detection.md` | Anomaly detection patterns, detection rules, response playbooks |
+| `reference/cost-visibility.md` | Tag strategy, cost allocation, dashboard specs, showback/chargeback |
+| `reference/cloud-pricing-models.md` | AWS/GCP/Azure pricing model comparison, pricing structure reference |
+| `reference/reserved-savings-plans.md` | `ri-sp` subcommand: AWS RI / SP / GCP CUD / Azure RI vendor comparison, coverage targets per workload class, break-even thresholds, expiration ladder, anti-patterns |
+| `reference/ai-gpu-cost.md` | `gpu-cost` subcommand: GPU SKU pricing (H100/H200/A100/L40S/T4), training vs inference profile, spot+checkpoint cadence rule, quantization cost-vs-quality, $/1K-token unitization |
+| `reference/cost-tagging-strategy.md` | `tagging` subcommand: mandatory tag schema, AWS/GCP/Azure enforcement comparison, showback/chargeback model selection, untagged-resource SLA ladder |
+| `reference/finops-framework.md` | `finops-framework` subcommand: FinOps Foundation Framework Crawl/Walk/Run maturity across 22 capabilities, persona map, phase-appropriate tooling |
+| `reference/unit-economics.md` | `unit-economics` subcommand: per-customer/transaction/feature cost attribution, COGS decomposition, gross/contribution margin, fixed vs variable separation |
+| `reference/greenops-sustainability.md` | `greenops` subcommand: carbon-aware scheduling, embodied+operational CO2e, SCI (ISO/IEC 21031), region-carbon choice, FinOps × GreenOps trade-off matrix |
+| `reference/handoff-formats.md` | Inter-agent handoff YAML templates (inbound/outbound) |
 | `_common/OPUS_48_AUTHORING.md` | Sizing the cost report, deciding adaptive thinking depth at commitment strategy, or front-loading cloud scope/timeframe/decision at INTAKE. Critical for Ledger: P3, P5. |
 
 ## Operational

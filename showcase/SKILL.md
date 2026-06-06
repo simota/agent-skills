@@ -143,16 +143,16 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Story Creation | `story` | ✓ | Story creation | `references/storybook-patterns.md` |
-| Catalog Management | `catalog` | | Component catalog maintenance | `references/storybook-patterns.md` |
-| Visual Regression | `vrt` | | Visual Regression Test integration | `references/visual-regression.md` |
-| CSF 3.0 Migration | `csf3` | | Conversion to CSF 3.0 | `references/storybook-patterns.md` |
-| Storybook Interactions | `interaction` | | Play function authoring with `@storybook/test`, addon-vitest integration | `references/storybook-interactions.md` |
-| MDX Documentation | `mdx` | | Hand-authored MDX docs with Doc Blocks, Autodocs vs MDX trade-off | `references/mdx-docs.md` |
-| React Cosmos | `cosmos` | | React Cosmos fixture authoring, Storybook vs Cosmos decision | `references/react-cosmos.md` |
-| Accessibility Addon | `a11y` | | Storybook addon-a11y wiring (axe-core), per-story rules, CI failure thresholds, role-aware keyboard testing | `references/a11y-addon.md` |
-| Chromatic | `chromatic` | | Chromatic-specific visual review — Tokens of Trust, branch comparison, TurboSnap, baseline approval flow, monorepo project routing | `references/chromatic-platform.md` |
-| Coverage | `coverage` | | Story coverage tracking — which components have stories, addon-coverage / addon-test, gap reporting, CI gate | `references/story-coverage.md` |
+| Story Creation | `story` | ✓ | Story creation | `reference/storybook-patterns.md` |
+| Catalog Management | `catalog` | | Component catalog maintenance | `reference/storybook-patterns.md` |
+| Visual Regression | `vrt` | | Visual Regression Test integration | `reference/visual-regression.md` |
+| CSF 3.0 Migration | `csf3` | | Conversion to CSF 3.0 | `reference/storybook-patterns.md` |
+| Storybook Interactions | `interaction` | | Play function authoring with `@storybook/test`, addon-vitest integration | `reference/storybook-interactions.md` |
+| MDX Documentation | `mdx` | | Hand-authored MDX docs with Doc Blocks, Autodocs vs MDX trade-off | `reference/mdx-docs.md` |
+| React Cosmos | `cosmos` | | React Cosmos fixture authoring, Storybook vs Cosmos decision | `reference/react-cosmos.md` |
+| Accessibility Addon | `a11y` | | Storybook addon-a11y wiring (axe-core), per-story rules, CI failure thresholds, role-aware keyboard testing | `reference/a11y-addon.md` |
+| Chromatic | `chromatic` | | Chromatic-specific visual review — Tokens of Trust, branch comparison, TurboSnap, baseline approval flow, monorepo project routing | `reference/chromatic-platform.md` |
+| Coverage | `coverage` | | Story coverage tracking — which components have stories, addon-coverage / addon-test, gap reporting, CI gate | `reference/story-coverage.md` |
 
 ## Subcommand Dispatch
 
@@ -160,24 +160,24 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`story` = Story Creation). Apply normal SURVEY → PLAN → VERIFY → PRESENT workflow.
 
-See `references/storybook-patterns.md` for CSF 3.0 templates, Storybook 8.5+ features, and audit report format.
+See `reference/storybook-patterns.md` for CSF 3.0 templates, Storybook 8.5+ features, and audit report format.
 
 ## Tool Support
 
 Storybook 10.x (ESM-only, CSF Factories Preview for React, 29% lighter, Node 20.16+ required, un-minified dist, `.test` method, tag exclusion filtering, QR code sharing; latest stable: 10.3.3 with status-based filtering, git change detection via ChangeDetectionService, Volar LanguageService metadata extraction, addon-mcp for AI agent integration) · Storybook 9.x (CSF 3.0 + CSF factories experimental, addon-vitest, sb.mock, Test Codegen, Testing Widget, built-in visual testing + coverage reports) · Storybook 8.x (legacy, migration recommended) · React Cosmos 6+ (React, Fixtures) · Histoire (Vue/Svelte) · Ladle (React, CSF-like). Auto-detect: `.storybook/` → Storybook · `cosmos.config.json` → Cosmos · `histoire.config.ts` → Histoire · `.ladle/` → Ladle · `package.json` deps → Infer version (8.x vs 9.x vs 10+) · None → ON_TOOL_SELECTION.
-See `references/framework-alternatives.md` for full comparison and setup guides.
+See `reference/framework-alternatives.md` for full comparison and setup guides.
 
 ## React Cosmos 6+
 
 Lightweight fixture-based React component explorer. Multi-variant exports · `useFixtureInput` / `useFixtureSelect` / `useValue` controls · Global (`src/cosmos.decorator.tsx`) and scoped decorators · Lazy fixtures · Coexists with Storybook (`*.fixture.tsx` + `*.stories.tsx`). Note: Storybook's ecosystem advantage (30M+ weekly downloads, addon-vitest, Chromatic, Test Codegen) is decisive for most teams; recommend Cosmos primarily for lightweight React-only projects or teams already invested in the Cosmos workflow.
-See `references/react-cosmos-guide.md` for full guide including server fixtures, MSW integration, and migration patterns.
+See `reference/react-cosmos-guide.md` for full guide including server fixtures, MSW integration, and migration patterns.
 
 ## Visual Regression Testing
 
 Chromatic (paid, Storybook-native, AI TurboSnap) · Applitools Eyes (AI-based visual diff, mimics human perception — reduces false positives vs pixel-level comparison) · Playwright VRT (free, CI setup, de facto standard for interface testing) · Lost Pixel (OSS, GitHub Action) · Loki (free, local). Use `tags: ['visual-test']` / `tags: ['!visual-test']` for inclusion/exclusion. Storybook 9 includes built-in visual testing — evaluate before adding external tools.
 
 Tool selection guidance: Chromatic for Storybook-heavy teams needing zero-config CI · Applitools for cross-browser/cross-device at scale · Playwright VRT for free, CI-first teams · Lost Pixel for OSS projects with GitHub Actions.
-See `references/visual-regression.md` for setup, test runner config, and CI workflows.
+See `reference/visual-regression.md` for setup, test runner config, and CI workflows.
 
 
 ## Workflow
@@ -186,40 +186,40 @@ See `references/visual-regression.md` for setup, test runner config, and CI work
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `SURVEY` | Detect tool (Storybook/Cosmos/Histoire), inventory components, audit existing stories/fixtures | Understand before acting | `references/storybook-patterns.md`, `references/react-cosmos-guide.md` |
-| `PLAN` | Design story structure, choose coverage strategy, plan variants/states | Choose output route before working | `references/storybook-patterns.md`, `references/framework-alternatives.md` |
-| `VERIFY` | Validate visual regression baselines, a11y addon results, play function interactions | Check against requirements | `references/visual-regression.md` |
-| `PRESENT` | Deliver story files, coverage report, migration notes, and next actions | Include evidence and rationale | `references/storybook-patterns.md` |
+| `SURVEY` | Detect tool (Storybook/Cosmos/Histoire), inventory components, audit existing stories/fixtures | Understand before acting | `reference/storybook-patterns.md`, `reference/react-cosmos-guide.md` |
+| `PLAN` | Design story structure, choose coverage strategy, plan variants/states | Choose output route before working | `reference/storybook-patterns.md`, `reference/framework-alternatives.md` |
+| `VERIFY` | Validate visual regression baselines, a11y addon results, play function interactions | Check against requirements | `reference/visual-regression.md` |
+| `PRESENT` | Deliver story files, coverage report, migration notes, and next actions | Include evidence and rationale | `reference/storybook-patterns.md` |
 ## Output Routing
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `story`, `storybook`, `CSF`, `stories.tsx` | Story creation (CSF 3.0) | Story files + autodocs | `references/storybook-patterns.md` |
-| `fixture`, `cosmos`, `fixture.tsx` | Cosmos fixture creation | Fixture files + decorators | `references/react-cosmos-guide.md` |
-| `audit`, `coverage`, `missing stories` | Story coverage audit | Health report (reuse rate, a11y pass rate, design-code alignment) + action items | `references/storybook-patterns.md` |
-| `visual regression`, `VRT`, `chromatic`, `screenshot`, `applitools` | Visual regression setup | Test config + CI workflow | `references/visual-regression.md` |
-| `migrate`, `CSF 2`, `upgrade storybook`, `storybook 9`, `storybook 10`, `ESM migration` | CSF / Storybook version migration (8→9, 9→10 ESM-only) | Updated story files + addon-vitest config + ESM conversion + report | `references/storybook-patterns.md` |
-| `metrics`, `design system health`, `reuse rate` | Design system metrics | Metrics dashboard spec (reuse rate, a11y pass, alignment) | `references/storybook-patterns.md` |
-| `histoire`, `ladle`, `alternative` | Alternative tool setup | Tool config + story files | `references/framework-alternatives.md` |
-| `play function`, `interaction test` | Interaction testing | Play functions + test setup | `references/storybook-patterns.md` |
-| `portable stories`, `composeStories` | Story reuse in tests | Test files with composed stories | `references/storybook-patterns.md` |
-| `design token`, `token docs` | Token documentation | MDX docs + token config | `references/storybook-patterns.md` |
-| `test codegen`, `record test`, `no-code test` | Test Codegen setup | Test Codegen addon config + recorded play functions | `references/storybook-patterns.md` |
-| `sb.mock`, `automock`, `module mock` | Module mocking with sb.mock | Mock config + story files | `references/storybook-patterns.md` |
-| `story generation`, `generate stories from UI` | Story Generation from UI | Generated story files | `references/storybook-patterns.md` |
-| `CSF factories`, `type-safe stories` | CSF factories migration (9.1+) | Updated story files with factories API | `references/storybook-patterns.md` |
-| `.test method`, `inline test`, `story test` | CSF Factories `.test` attachment | Stories with `.test` + tag exclusion config | `references/storybook-patterns.md` |
-| `tag filter`, `hide stories`, `sidebar filter` | Tag exclusion filtering | Storybook config with tag-based inclusion/exclusion | `references/storybook-patterns.md` |
-| `mcp`, `addon-mcp`, `AI manifest`, `agent context` | MCP addon setup for AI agent integration | addon-mcp config + manifest optimization | `references/storybook-patterns.md` |
-| `RSC`, `server component`, `react server` | RSC story creation (experimental) | Story files with module mocking for async server components | `references/storybook-patterns.md` |
-| `git change`, `change detection`, `modified stories` | Git change detection filtering (10.3+) | Storybook config with status-value filtering | `references/storybook-patterns.md` |
-| unclear story request | Story creation (default) | Story files + autodocs | `references/storybook-patterns.md` |
+| `story`, `storybook`, `CSF`, `stories.tsx` | Story creation (CSF 3.0) | Story files + autodocs | `reference/storybook-patterns.md` |
+| `fixture`, `cosmos`, `fixture.tsx` | Cosmos fixture creation | Fixture files + decorators | `reference/react-cosmos-guide.md` |
+| `audit`, `coverage`, `missing stories` | Story coverage audit | Health report (reuse rate, a11y pass rate, design-code alignment) + action items | `reference/storybook-patterns.md` |
+| `visual regression`, `VRT`, `chromatic`, `screenshot`, `applitools` | Visual regression setup | Test config + CI workflow | `reference/visual-regression.md` |
+| `migrate`, `CSF 2`, `upgrade storybook`, `storybook 9`, `storybook 10`, `ESM migration` | CSF / Storybook version migration (8→9, 9→10 ESM-only) | Updated story files + addon-vitest config + ESM conversion + report | `reference/storybook-patterns.md` |
+| `metrics`, `design system health`, `reuse rate` | Design system metrics | Metrics dashboard spec (reuse rate, a11y pass, alignment) | `reference/storybook-patterns.md` |
+| `histoire`, `ladle`, `alternative` | Alternative tool setup | Tool config + story files | `reference/framework-alternatives.md` |
+| `play function`, `interaction test` | Interaction testing | Play functions + test setup | `reference/storybook-patterns.md` |
+| `portable stories`, `composeStories` | Story reuse in tests | Test files with composed stories | `reference/storybook-patterns.md` |
+| `design token`, `token docs` | Token documentation | MDX docs + token config | `reference/storybook-patterns.md` |
+| `test codegen`, `record test`, `no-code test` | Test Codegen setup | Test Codegen addon config + recorded play functions | `reference/storybook-patterns.md` |
+| `sb.mock`, `automock`, `module mock` | Module mocking with sb.mock | Mock config + story files | `reference/storybook-patterns.md` |
+| `story generation`, `generate stories from UI` | Story Generation from UI | Generated story files | `reference/storybook-patterns.md` |
+| `CSF factories`, `type-safe stories` | CSF factories migration (9.1+) | Updated story files with factories API | `reference/storybook-patterns.md` |
+| `.test method`, `inline test`, `story test` | CSF Factories `.test` attachment | Stories with `.test` + tag exclusion config | `reference/storybook-patterns.md` |
+| `tag filter`, `hide stories`, `sidebar filter` | Tag exclusion filtering | Storybook config with tag-based inclusion/exclusion | `reference/storybook-patterns.md` |
+| `mcp`, `addon-mcp`, `AI manifest`, `agent context` | MCP addon setup for AI agent integration | addon-mcp config + manifest optimization | `reference/storybook-patterns.md` |
+| `RSC`, `server component`, `react server` | RSC story creation (experimental) | Story files with module mocking for async server components | `reference/storybook-patterns.md` |
+| `git change`, `change detection`, `modified stories` | Git change detection filtering (10.3+) | Storybook config with status-value filtering | `reference/storybook-patterns.md` |
+| unclear story request | Story creation (default) | Story files + autodocs | `reference/storybook-patterns.md` |
 
 Routing rules:
 
-- If the request involves Cosmos, read `references/react-cosmos-guide.md`.
-- If the request involves visual testing, read `references/visual-regression.md`.
-- If the request involves tool selection, read `references/framework-alternatives.md`.
+- If the request involves Cosmos, read `reference/react-cosmos-guide.md`.
+- If the request involves visual testing, read `reference/visual-regression.md`.
+- If the request involves tool selection, read `reference/framework-alternatives.md`.
 - Always detect the project's existing tool before creating stories.
 
 
@@ -269,13 +269,13 @@ Showcase receives components and design context from upstream agents. Showcase s
 
 | File | Content |
 |------|---------|
-| `references/storybook-patterns.md` | CSF 3.0 templates, Storybook 8.5+, audit format, Forge enhancement |
-| `references/react-cosmos-guide.md` | Cosmos 6 guide, fixtures, decorators, MSW, migration |
-| `references/visual-regression.md` | Chromatic, Playwright, Lost Pixel setup and CI |
-| `references/framework-alternatives.md` | Histoire, Ladle, tool comparison |
-| `references/storybook-interactions.md` | Play function authoring, `@storybook/test` API, addon-vitest integration, Interactions panel debugging |
-| `references/mdx-docs.md` | MDX 3 + Storybook 10 Doc Blocks, Autodocs vs hand-authored MDX trade-off, multi-page docs structure |
-| `references/react-cosmos.md` | Cosmos 6+ fixtures, decorator chains, multi-instance props, Storybook vs Cosmos decision tree |
+| `reference/storybook-patterns.md` | CSF 3.0 templates, Storybook 8.5+, audit format, Forge enhancement |
+| `reference/react-cosmos-guide.md` | Cosmos 6 guide, fixtures, decorators, MSW, migration |
+| `reference/visual-regression.md` | Chromatic, Playwright, Lost Pixel setup and CI |
+| `reference/framework-alternatives.md` | Histoire, Ladle, tool comparison |
+| `reference/storybook-interactions.md` | Play function authoring, `@storybook/test` API, addon-vitest integration, Interactions panel debugging |
+| `reference/mdx-docs.md` | MDX 3 + Storybook 10 Doc Blocks, Autodocs vs hand-authored MDX trade-off, multi-page docs structure |
+| `reference/react-cosmos.md` | Cosmos 6+ fixtures, decorator chains, multi-instance props, Storybook vs Cosmos decision tree |
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 component catalogue context — token-layer linkage (§1), framework state (React 19.2 / Svelte 5 / Vue 3.6, §3), and case studies for Radix Themes 3.0 / Primer / Polaris Unified. Read §1 Design and §3 Frontend. |
 | `_common/OPUS_48_AUTHORING.md` | Sizing the story plan, deciding adaptive thinking depth at PLAN, or front-loading target component/coverage tier at SCAN. Critical for Showcase: P3, P5 |
 | `_common/PROOF_CARRYING.md` | You generate `vrt_proof` (visual regression diff within tolerance per Matrix Sampling Policy PD-2) in `nexus acceptance` Phase 2B. Use matrix-sampled stories (pairwise default for Tier-A, full pairwise + critical-path full-coverage for Tier-S). New story-set additions pass shadow-run for ≥3 weeks before becoming Gate-blocking. Pixel-match snapshot ≠ translation quality (PD-2 locale semantic note). |

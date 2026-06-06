@@ -110,22 +110,22 @@ Route elsewhere when the task is primarily:
 
 | Phase | Focus | Required output / Read |
 |------|------|-----------------------|
-| `ASSESS` | Provider, environment, workload, risk, cost drivers | Provider/environment assumptions, resource list, ask-first items / `references/` |
-| `DESIGN` | Tool choice, module boundaries, network/security topology | IaC layout, state strategy, tagging/security plan / `references/` |
-| `IMPLEMENT` | Focused modules and configs | Modules/resources, variables, outputs, env config, local stack if needed / `references/` |
-| `VERIFY` | Safety, compliance, cost, drift, startup | Validation commands, policy results, cost note, drift/state note, health checks / `references/` |
-| `HANDOFF` | Downstream execution or review | Gear/Sentinel/Canvas/Quill package as needed / `references/` |
+| `ASSESS` | Provider, environment, workload, risk, cost drivers | Provider/environment assumptions, resource list, ask-first items / `reference/` |
+| `DESIGN` | Tool choice, module boundaries, network/security topology | IaC layout, state strategy, tagging/security plan / `reference/` |
+| `IMPLEMENT` | Focused modules and configs | Modules/resources, variables, outputs, env config, local stack if needed / `reference/` |
+| `VERIFY` | Safety, compliance, cost, drift, startup | Validation commands, policy results, cost note, drift/state note, health checks / `reference/` |
+| `HANDOFF` | Downstream execution or review | Gear/Sentinel/Canvas/Quill package as needed / `reference/` |
 
 ## Mode Selection
 
 | Mode | Use when | Read first |
 |------|----------|-----------|
-| Terraform baseline | Standard IaC work | `references/terraform-modules.md` |
-| AWS specialist | AWS-only and advanced networking/compute/database/event patterns matter | `references/aws-specialist.md` |
-| GCP specialist | GCP-only and advanced networking/GKE/Cloud Run/database patterns matter | `references/gcp-specialist.md` |
-| Azure / Pulumi / mixed cloud | Azure, Pulumi, or cross-cloud design is required | `references/multicloud-patterns.md` |
-| Local development environment | Docker Compose, `.env`, local mocks, watch mode, profiles, or developer bootstrap is the main task | `references/docker-compose-templates.md` |
-| Compliance / risk review | Policy-as-code, state safety, or anti-pattern review dominates | `references/terraform-compliance.md` and relevant anti-pattern reference |
+| Terraform baseline | Standard IaC work | `reference/terraform-modules.md` |
+| AWS specialist | AWS-only and advanced networking/compute/database/event patterns matter | `reference/aws-specialist.md` |
+| GCP specialist | GCP-only and advanced networking/GKE/Cloud Run/database patterns matter | `reference/gcp-specialist.md` |
+| Azure / Pulumi / mixed cloud | Azure, Pulumi, or cross-cloud design is required | `reference/multicloud-patterns.md` |
+| Local development environment | Docker Compose, `.env`, local mocks, watch mode, profiles, or developer bootstrap is the main task | `reference/docker-compose-templates.md` |
+| Compliance / risk review | Policy-as-code, state safety, or anti-pattern review dominates | `reference/terraform-compliance.md` and relevant anti-pattern reference |
 | Nexus AUTORUN | Input explicitly invokes AUTORUN | Normal deliverable plus `_STEP_COMPLETE:` footer |
 | Nexus Hub | Input contains `## NEXUS_ROUTING` | Return only `## NEXUS_HANDOFF` packet |
 
@@ -133,14 +133,14 @@ Route elsewhere when the task is primarily:
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Terraform / OpenTofu | `terraform` | ✓ | Terraform/OpenTofu IaC (most common) | `references/terraform-modules.md` |
-| CloudFormation | `cloudformation` | | AWS CloudFormation | `references/aws-specialist.md` |
-| Pulumi | `pulumi` | | Pulumi IaC | `references/multicloud-patterns.md` |
-| Docker Compose | `compose` | | Local development environment | `references/docker-compose-templates.md` |
-| Env Vars | `env` | | Environment variable design (.env, etc.) | `references/security-and-cost.md` |
-| Kubernetes Manifests | `k8s` | | Raw Kubernetes manifest authoring (Deployment/Service/Ingress/ConfigMap/Secret, kustomize overlays) | `references/k8s-manifest-scaffolding.md` |
-| Helm Chart | `helm` | | Helm chart authoring (Chart.yaml, values schema, templates, subcharts, release lifecycle) | `references/helm-chart-authoring.md` |
-| AWS CDK | `cdk` | | AWS CDK (TypeScript/Python) construct + stack scaffolding with multi-env pattern | `references/cdk-scaffolding.md` |
+| Terraform / OpenTofu | `terraform` | ✓ | Terraform/OpenTofu IaC (most common) | `reference/terraform-modules.md` |
+| CloudFormation | `cloudformation` | | AWS CloudFormation | `reference/aws-specialist.md` |
+| Pulumi | `pulumi` | | Pulumi IaC | `reference/multicloud-patterns.md` |
+| Docker Compose | `compose` | | Local development environment | `reference/docker-compose-templates.md` |
+| Env Vars | `env` | | Environment variable design (.env, etc.) | `reference/security-and-cost.md` |
+| Kubernetes Manifests | `k8s` | | Raw Kubernetes manifest authoring (Deployment/Service/Ingress/ConfigMap/Secret, kustomize overlays) | `reference/k8s-manifest-scaffolding.md` |
+| Helm Chart | `helm` | | Helm chart authoring (Chart.yaml, values schema, templates, subcharts, release lifecycle) | `reference/helm-chart-authoring.md` |
+| AWS CDK | `cdk` | | AWS CDK (TypeScript/Python) construct + stack scaffolding with multi-env pattern | `reference/cdk-scaffolding.md` |
 
 ## Subcommand Dispatch
 
@@ -191,14 +191,14 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| default request | Standard Scaffold workflow | analysis / recommendation | `references/` |
+| default request | Standard Scaffold workflow | analysis / recommendation | `reference/` |
 | complex multi-agent task | Nexus-routed execution | structured handoff | `_common/BOUNDARIES.md` |
-| unclear request | Clarify scope and route | scoped analysis | `references/` |
+| unclear request | Clarify scope and route | scoped analysis | `reference/` |
 
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 
 ## Output Requirements
 
@@ -236,22 +236,22 @@ Add these when relevant:
 
 | File | Read this when... |
 |------|-------------------|
-| `references/terraform-modules.md` | You need Terraform module layout, backend patterns, or root/module conventions. |
-| `references/aws-specialist.md` | You are on AWS and need advanced networking, service selection, IAM, or AWS-specific cost guidance. |
-| `references/gcp-specialist.md` | You are on GCP and need Shared VPC, GKE, Cloud Run, Cloud SQL/AlloyDB/Spanner, or GCP-specific cost guidance. |
-| `references/multicloud-patterns.md` | You need Azure, Pulumi, or cross-cloud comparison and backend patterns. |
-| `references/docker-compose-templates.md` | You need local environment templates, health checks, or startup verification. |
-| `references/security-and-cost.md` | You need secrets, IAM, network guardrails, `.env.example`, or env validation patterns. |
-| `references/k8s-manifest-scaffolding.md` | You are authoring raw Kubernetes manifests — Deployment/Service/Ingress/ConfigMap/Secret shape, label conventions, namespace layout, kustomize overlays, and resource requests/limits defaults. |
-| `references/helm-chart-authoring.md` | You are packaging a workload as a Helm chart — Chart.yaml, values.yaml schema, template best practices, subchart strategy, release lifecycle, and rendered-manifest testing. |
-| `references/cdk-scaffolding.md` | You are scaffolding AWS CDK — construct selection, stack layout, multi-env (ephemeral / staging / prod) pattern, cross-stack references, and CDK Nag integration. |
-| `references/cost-estimation.md` | You need Infracost workflow, warning thresholds, budget/tagging patterns, or a cost report template. |
-| `references/terraform-operations.md` | You need state operations, drift detection, import, moved blocks, or backend migration steps. |
-| `references/terraform-compliance.md` | You need tfsec/Checkov/OPA/Sentinel/TFLint guidance or policy enforcement rules. |
-| `references/terraform-iac-anti-patterns.md` | You are reviewing Terraform module, state, versioning, or CI/CD anti-patterns. |
-| `references/docker-environment-anti-patterns.md` | You are reviewing Docker Compose, Dockerfile, secret handling, or local-dev anti-patterns. |
-| `references/cloud-infrastructure-anti-patterns.md` | You are reviewing networking, IAM, encryption, HA, or multi-account/cloud anti-patterns. |
-| `references/cost-finops-anti-patterns.md` | You are reviewing over-provisioning, commitment, tagging, or budget-management anti-patterns. |
+| `reference/terraform-modules.md` | You need Terraform module layout, backend patterns, or root/module conventions. |
+| `reference/aws-specialist.md` | You are on AWS and need advanced networking, service selection, IAM, or AWS-specific cost guidance. |
+| `reference/gcp-specialist.md` | You are on GCP and need Shared VPC, GKE, Cloud Run, Cloud SQL/AlloyDB/Spanner, or GCP-specific cost guidance. |
+| `reference/multicloud-patterns.md` | You need Azure, Pulumi, or cross-cloud comparison and backend patterns. |
+| `reference/docker-compose-templates.md` | You need local environment templates, health checks, or startup verification. |
+| `reference/security-and-cost.md` | You need secrets, IAM, network guardrails, `.env.example`, or env validation patterns. |
+| `reference/k8s-manifest-scaffolding.md` | You are authoring raw Kubernetes manifests — Deployment/Service/Ingress/ConfigMap/Secret shape, label conventions, namespace layout, kustomize overlays, and resource requests/limits defaults. |
+| `reference/helm-chart-authoring.md` | You are packaging a workload as a Helm chart — Chart.yaml, values.yaml schema, template best practices, subchart strategy, release lifecycle, and rendered-manifest testing. |
+| `reference/cdk-scaffolding.md` | You are scaffolding AWS CDK — construct selection, stack layout, multi-env (ephemeral / staging / prod) pattern, cross-stack references, and CDK Nag integration. |
+| `reference/cost-estimation.md` | You need Infracost workflow, warning thresholds, budget/tagging patterns, or a cost report template. |
+| `reference/terraform-operations.md` | You need state operations, drift detection, import, moved blocks, or backend migration steps. |
+| `reference/terraform-compliance.md` | You need tfsec/Checkov/OPA/Sentinel/TFLint guidance or policy enforcement rules. |
+| `reference/terraform-iac-anti-patterns.md` | You are reviewing Terraform module, state, versioning, or CI/CD anti-patterns. |
+| `reference/docker-environment-anti-patterns.md` | You are reviewing Docker Compose, Dockerfile, secret handling, or local-dev anti-patterns. |
+| `reference/cloud-infrastructure-anti-patterns.md` | You are reviewing networking, IAM, encryption, HA, or multi-account/cloud anti-patterns. |
+| `reference/cost-finops-anti-patterns.md` | You are reviewing over-provisioning, commitment, tagging, or budget-management anti-patterns. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the IaC report, calibrating effort to env/blast-radius scope, or front-loading provider/env at ASSESS. Critical for Scaffold: P3, P6. |
 
 ## AUTORUN Support

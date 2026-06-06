@@ -113,13 +113,13 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Weekly Report | `weekly` | ✓ | Weekly work report (PR aggregation and summary) | `references/report-templates.md` |
-| Monthly Report | `monthly` | | Monthly report (includes DORA metrics) | `references/report-templates.md` |
-| Release Notes | `release` | | Release notes generation (PR aggregation between tags) | `references/changelog-best-practices.md` |
-| Sprint Retro | `retro` | | Retrospective aggregation and narrative | `references/retrospective-voice.md` |
-| DORA Deep-Dive | `dora` | | DORA 5-key metric profile (3 throughput + 2 instability per DORA 2025) with 7-archetype team mapping and SPACE complement | `references/dora-metrics.md` |
-| OKR Linkage | `okr` | | PR-to-Objective mapping and KR narrative for quarterly review | `references/okr-linkage.md` |
-| PR Stats Deep-Dive | `prstats` | | Cycle time histogram, P50/P75/P90 latency, Lorenz curve, large-PR risk | `references/pr-stats-analysis.md` |
+| Weekly Report | `weekly` | ✓ | Weekly work report (PR aggregation and summary) | `reference/report-templates.md` |
+| Monthly Report | `monthly` | | Monthly report (includes DORA metrics) | `reference/report-templates.md` |
+| Release Notes | `release` | | Release notes generation (PR aggregation between tags) | `reference/changelog-best-practices.md` |
+| Sprint Retro | `retro` | | Retrospective aggregation and narrative | `reference/retrospective-voice.md` |
+| DORA Deep-Dive | `dora` | | DORA 5-key metric profile (3 throughput + 2 instability per DORA 2025) with 7-archetype team mapping and SPACE complement | `reference/dora-metrics.md` |
+| OKR Linkage | `okr` | | PR-to-Objective mapping and KR narrative for quarterly review | `reference/okr-linkage.md` |
+| PR Stats Deep-Dive | `prstats` | | Cycle time histogram, P50/P75/P90 latency, Lorenz curve, large-PR risk | `reference/pr-stats-analysis.md` |
 
 ## Subcommand Dispatch
 
@@ -156,11 +156,11 @@ Recipes (above) select **what to compute** (invocation pattern triggered by the 
 
 | Phase | Goal | Required actions  Read |
 |-------|------|------------------------|
-| `SURVEY` | Lock scope | Confirm repository, period, filters, audience, and report mode  `references/` |
-| `COLLECT` | Gather data | Use `gh` commands with `per_page=100` and `--paginate`, health checks, rate-limit monitoring, and cache policy appropriate to the request  `references/` |
-| `ANALYZE` | Turn raw PRs into signal | Aggregate categories, sizes, timelines, effort estimates, quality, and trends. Apply PR size benchmarks (200/400/1000 LOC thresholds)  `references/` |
-| `REPORT` | Build the artifact | Select the correct template, preserve caveats, pair quantity metrics with quality context, and keep filenames consistent  `references/` |
-| `VERIFY` | Ensure report trustworthiness | Check completeness, validate no productivity rankings leak through, note degradations, and attach next actions  `references/` |
+| `SURVEY` | Lock scope | Confirm repository, period, filters, audience, and report mode  `reference/` |
+| `COLLECT` | Gather data | Use `gh` commands with `per_page=100` and `--paginate`, health checks, rate-limit monitoring, and cache policy appropriate to the request  `reference/` |
+| `ANALYZE` | Turn raw PRs into signal | Aggregate categories, sizes, timelines, effort estimates, quality, and trends. Apply PR size benchmarks (200/400/1000 LOC thresholds)  `reference/` |
+| `REPORT` | Build the artifact | Select the correct template, preserve caveats, pair quantity metrics with quality context, and keep filenames consistent  `reference/` |
+| `VERIFY` | Ensure report trustworthiness | Check completeness, validate no productivity rankings leak through, note degradations, and attach next actions  `reference/` |
 
 ## Critical Decision Rules
 
@@ -202,14 +202,14 @@ Recipes (above) select **what to compute** (invocation pattern triggered by the 
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| default request | Standard Harvest workflow | analysis / recommendation | `references/` |
+| default request | Standard Harvest workflow | analysis / recommendation | `reference/` |
 | complex multi-agent task | Nexus-routed execution | structured handoff | `_common/BOUNDARIES.md` |
-| unclear request | Clarify scope and route | scoped analysis | `references/` |
+| unclear request | Clarify scope and route | scoped analysis | `reference/` |
 
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 
 ## Output Requirements
 
@@ -238,22 +238,22 @@ Routing rules:
 
 | Reference | Read this when... |
 |-----------|-------------------|
-| `references/gh-commands.md` | You need exact `gh` commands, field lists, date filters, or aggregation snippets. |
-| `references/report-templates.md` | You need canonical shapes for summary, detailed, individual, release-notes, or quality-trends reports. |
-| `references/client-report-templates.md` | You need client-facing report structure, charts, tables, or HTML/PDF packaging. |
-| `references/work-hours.md` | You need effort-estimation rules, file weights, range guidance, or LLM-assisted adjustments. |
-| `references/pdf-export-guide.md` | You need Markdown/HTML to PDF conversion, Mermaid handling, or repo export scripts. |
-| `references/error-handling.md` | You hit auth, rate-limit, network, API, or partial-data failures. |
-| `references/caching-strategy.md` | You need cache TTLs, invalidation, cleanup, or `cache_policy` behavior. |
-| `references/outbound-handoffs.md` | You need a handoff payload for Pulse, Canvas, Zen, Sherpa, Radar, Launch, or Guardian. |
-| `references/retrospective-voice.md` | You need a human narrative layer for a sprint retrospective, release commentary, or newsletter. |
-| `references/engineering-metrics-pitfalls.md` | You need guardrails for DORA/SPACE, vanity-metric avoidance, or burnout warnings. |
-| `references/changelog-best-practices.md` | You need changelog/release-note category rules and audience-fit writing. |
-| `references/estimation-anti-patterns.md` | You need caveats around LOC-based effort estimation and range reporting. |
-| `references/reporting-anti-patterns.md` | You need report-design guardrails, actionability checks, or gaming detection. |
-| `references/dora-metrics.md` | You need DORA 5-key metric percentile bands (DORA 2025), 3-throughput / 2-instability categorization, 7-archetype team profiling, measurement-window selection, gh/Insights integration, or SPACE complement for the `dora` recipe. |
-| `references/okr-linkage.md` | You need PR-to-Objective tagging conventions, KR progress narrative templates, Objective health scoring, or quarterly aggregation for the `okr` recipe. |
-| `references/pr-stats-analysis.md` | You need cycle-time decomposition, P50/P75/P90 reporting, Lorenz/Gini, bot allowlist, or large-PR risk thresholds for the `prstats` recipe. |
+| `reference/gh-commands.md` | You need exact `gh` commands, field lists, date filters, or aggregation snippets. |
+| `reference/report-templates.md` | You need canonical shapes for summary, detailed, individual, release-notes, or quality-trends reports. |
+| `reference/client-report-templates.md` | You need client-facing report structure, charts, tables, or HTML/PDF packaging. |
+| `reference/work-hours.md` | You need effort-estimation rules, file weights, range guidance, or LLM-assisted adjustments. |
+| `reference/pdf-export-guide.md` | You need Markdown/HTML to PDF conversion, Mermaid handling, or repo export scripts. |
+| `reference/error-handling.md` | You hit auth, rate-limit, network, API, or partial-data failures. |
+| `reference/caching-strategy.md` | You need cache TTLs, invalidation, cleanup, or `cache_policy` behavior. |
+| `reference/outbound-handoffs.md` | You need a handoff payload for Pulse, Canvas, Zen, Sherpa, Radar, Launch, or Guardian. |
+| `reference/retrospective-voice.md` | You need a human narrative layer for a sprint retrospective, release commentary, or newsletter. |
+| `reference/engineering-metrics-pitfalls.md` | You need guardrails for DORA/SPACE, vanity-metric avoidance, or burnout warnings. |
+| `reference/changelog-best-practices.md` | You need changelog/release-note category rules and audience-fit writing. |
+| `reference/estimation-anti-patterns.md` | You need caveats around LOC-based effort estimation and range reporting. |
+| `reference/reporting-anti-patterns.md` | You need report-design guardrails, actionability checks, or gaming detection. |
+| `reference/dora-metrics.md` | You need DORA 5-key metric percentile bands (DORA 2025), 3-throughput / 2-instability categorization, 7-archetype team profiling, measurement-window selection, gh/Insights integration, or SPACE complement for the `dora` recipe. |
+| `reference/okr-linkage.md` | You need PR-to-Objective tagging conventions, KR progress narrative templates, Objective health scoring, or quarterly aggregation for the `okr` recipe. |
+| `reference/pr-stats-analysis.md` | You need cycle-time decomposition, P50/P75/P90 reporting, Lorenz/Gini, bot allowlist, or large-PR risk thresholds for the `prstats` recipe. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the work report, deciding adaptive thinking depth at archetype/caveat handling, or front-loading window/scope/audience at COLLECT. Critical for Harvest: P3, P5. |
 
 ## Operational

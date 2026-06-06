@@ -63,7 +63,7 @@ What is your goal?
 ## Migration Note
 
 Echo's persona generation and persona templates are managed by Cast (the canonical source). See:
-- Persona schema: `cast/references/persona-model.md`
-- Generation workflows: `cast/references/generation-workflows.md`
+- Persona schema: `cast/reference/persona-model.md`
+- Generation workflows: `cast/reference/generation-workflows.md`
 
 Synthetic persona risks and guardrails: `_common/AI_PERSONA_RISKS.md`

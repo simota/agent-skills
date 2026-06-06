@@ -147,10 +147,10 @@ Is it used now?
 
 | Phase      | Goal                                | Required output                                       | Reference |
 | ---------- | ----------------------------------- | ----------------------------------------------------- | --------- |
-| `QUESTION` | Validate existence                  | 5-question evidence set                               | `references/evaluation-criteria.md` |
-| `WEIGH`    | Quantify keeping and removal cost   | `CoK`, removal risk, confidence                       | `references/cost-analysis.md` |
-| `SUBTRACT` | Choose the safest reduction pattern | pattern name, blast radius, phased approach           | `references/subtraction-patterns.md` |
-| `PROPOSE`  | Produce a routable recommendation   | `REMOVE`, `SIMPLIFY`, `DEFER`, or `KEEP-WITH-WARNING` | `references/proposal-templates.md` |
+| `QUESTION` | Validate existence                  | 5-question evidence set                               | `reference/evaluation-criteria.md` |
+| `WEIGH`    | Quantify keeping and removal cost   | `CoK`, removal risk, confidence                       | `reference/cost-analysis.md` |
+| `SUBTRACT` | Choose the safest reduction pattern | pattern name, blast radius, phased approach           | `reference/subtraction-patterns.md` |
+| `PROPOSE`  | Produce a routable recommendation   | `REMOVE`, `SIMPLIFY`, `DEFER`, or `KEEP-WITH-WARNING` | `reference/proposal-templates.md` |
 
 ### 5 Existence Questions
 
@@ -198,23 +198,23 @@ Is it used now?
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| default request | Standard Void workflow | analysis / recommendation | `references/` |
+| default request | Standard Void workflow | analysis / recommendation | `reference/` |
 | complex multi-agent task | Nexus-routed execution | structured handoff | `_common/BOUNDARIES.md` |
-| unclear request | Clarify scope and route | scoped analysis | `references/` |
+| unclear request | Clarify scope and route | scoped analysis | `reference/` |
 
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Prune | `prune` | ✓ | Pruning proposals for unnecessary elements (comprehensive) | `references/evaluation-criteria.md` |
-| Scope Cut | `cut` | | Scope cut proposals | `references/subtraction-patterns.md` |
-| Question Justification | `question` | | Question the justification | `references/evaluation-criteria.md` |
-| Simplify | `simplify` | | Complexity reduction | `references/complexity-metrics.md` |
+| Prune | `prune` | ✓ | Pruning proposals for unnecessary elements (comprehensive) | `reference/evaluation-criteria.md` |
+| Scope Cut | `cut` | | Scope cut proposals | `reference/subtraction-patterns.md` |
+| Question Justification | `question` | | Question the justification | `reference/evaluation-criteria.md` |
+| Simplify | `simplify` | | Complexity reduction | `reference/complexity-metrics.md` |
 
 ## Subcommand Dispatch
 
@@ -253,14 +253,14 @@ Rule: necessity -> `Void`; cleanliness -> `Zen`; unused artifacts -> `Sweep`.
 
 | File                                                                                                    | Read this when                                                                                |
 | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| [evaluation-criteria.md](~/.claude/skills/void/references/evaluation-criteria.md)                       | You need the exact 5-question investigation flow, blast-radius labels, or YAGNI decision path |
-| [cost-analysis.md](~/.claude/skills/void/references/cost-analysis.md)                                   | You need CoK scoring, removal-risk scoring, or the CoK x risk decision matrix                 |
-| [subtraction-patterns.md](~/.claude/skills/void/references/subtraction-patterns.md)                     | You need the right reduction pattern after scoring                                            |
-| [proposal-templates.md](~/.claude/skills/void/references/proposal-templates.md)                         | You need the final report shape or the severity x confidence matrix                           |
-| [over-engineering-anti-patterns.md](~/.claude/skills/void/references/over-engineering-anti-patterns.md) | You suspect premature abstraction, over-configurability, or pattern misuse                    |
-| [complexity-metrics.md](~/.claude/skills/void/references/complexity-metrics.md)                         | You need cognitive-complexity thresholds or technical-debt metrics                            |
-| [feature-creep-pitfalls.md](~/.claude/skills/void/references/feature-creep-pitfalls.md)                 | You are evaluating feature growth, zombie features, or scope creep                            |
-| [organizational-complexity.md](~/.claude/skills/void/references/organizational-complexity.md)           | You are pruning process, meetings, reporting, approvals, or document sprawl                   |
+| [evaluation-criteria.md](~/.claude/skills/void/reference/evaluation-criteria.md)                       | You need the exact 5-question investigation flow, blast-radius labels, or YAGNI decision path |
+| [cost-analysis.md](~/.claude/skills/void/reference/cost-analysis.md)                                   | You need CoK scoring, removal-risk scoring, or the CoK x risk decision matrix                 |
+| [subtraction-patterns.md](~/.claude/skills/void/reference/subtraction-patterns.md)                     | You need the right reduction pattern after scoring                                            |
+| [proposal-templates.md](~/.claude/skills/void/reference/proposal-templates.md)                         | You need the final report shape or the severity x confidence matrix                           |
+| [over-engineering-anti-patterns.md](~/.claude/skills/void/reference/over-engineering-anti-patterns.md) | You suspect premature abstraction, over-configurability, or pattern misuse                    |
+| [complexity-metrics.md](~/.claude/skills/void/reference/complexity-metrics.md)                         | You need cognitive-complexity thresholds or technical-debt metrics                            |
+| [feature-creep-pitfalls.md](~/.claude/skills/void/reference/feature-creep-pitfalls.md)                 | You are evaluating feature growth, zombie features, or scope creep                            |
+| [organizational-complexity.md](~/.claude/skills/void/reference/organizational-complexity.md)           | You are pruning process, meetings, reporting, approvals, or document sprawl                   |
 | [\_common/OPUS_48_AUTHORING.md](~/.claude/skills/_common/OPUS_48_AUTHORING.md)                          | You are sizing the subtraction proposal, deciding adaptive thinking depth at triage, or front-loading scope/complexity/mode at SCAN. Critical for Void: P3, P5. |
 
 ## Operational

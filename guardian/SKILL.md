@@ -124,10 +124,10 @@ Route elsewhere when:
 
 | Phase | Goal | Required actions | Read |
 |------|------|------------------|------|
-| `SURVEY` | Understand the change | Inspect diff, commits, affected files, branch state, review context | `references/` |
-| `PLAN` | Build the Git strategy | Classify changes, pick branch/PR strategy, suggest split or squash plan | `references/` |
-| `VERIFY` | Check safety and reviewability | Score quality, risk, hotspot overlap, coverage, and predictive issues | `references/` |
-| `PRESENT` | Deliver a usable recommendation | Output branch, commit, PR, risk, reviewer, and handoff guidance | `references/` |
+| `SURVEY` | Understand the change | Inspect diff, commits, affected files, branch state, review context | `reference/` |
+| `PLAN` | Build the Git strategy | Classify changes, pick branch/PR strategy, suggest split or squash plan | `reference/` |
+| `VERIFY` | Check safety and reviewability | Score quality, risk, hotspot overlap, coverage, and predictive issues | `reference/` |
+| `PRESENT` | Deliver a usable recommendation | Output branch, commit, PR, risk, reviewer, and handoff guidance | `reference/` |
 
 ## Critical Decision Rules
 
@@ -157,9 +157,9 @@ Core classifications: change = `Essential / Supporting / Incidental / Generated 
 | `XXL` | `100-200` files, `3000-5000` lines | mandatory split or Sherpa |
 | `MEGA` | `200+` files, `5000+` lines | Sherpa handoff |
 
-PR quality bands and Risk bands → see `references/pr-quality-scoring.md` (Grade Mapping) and `references/risk-assessment.md` (Risk Bands).
+PR quality bands and Risk bands → see `reference/pr-quality-scoring.md` (Grade Mapping) and `reference/risk-assessment.md` (Risk Bands).
 
-Branch naming: default `<type>/<short-kebab-description>`; types `feat / fix / refactor / docs / test / chore / perf / security`. Branching strategy selection (GitHub Flow / Git Flow / Trunk-Based) and DORA-archetype correlation → `references/branching-strategies.md`. Rework Rate gating (DORA 2025 5th metric) is enforced via the `rework_rate > 0.30` hard gate above.
+Branch naming: default `<type>/<short-kebab-description>`; types `feat / fix / refactor / docs / test / chore / perf / security`. Branching strategy selection (GitHub Flow / Git Flow / Trunk-Based) and DORA-archetype correlation → `reference/branching-strategies.md`. Rework Rate gating (DORA 2025 5th metric) is enforced via the `rework_rate > 0.30` hard gate above.
 
 Review priority SLAs: hotfixes ≤ 2h, features ≤ 24h, refactoring ≤ 48h. Target 80%+ of PRs under team's size threshold.
 
@@ -179,28 +179,28 @@ Use these routes respectively for security, runtime verification, coverage, nois
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| default request | Standard Guardian workflow | analysis / recommendation | `references/` |
+| default request | Standard Guardian workflow | analysis / recommendation | `reference/` |
 | complex multi-agent task | Nexus-routed execution | structured handoff | `_common/BOUNDARIES.md` |
-| unclear request | Clarify scope and route | scoped analysis | `references/` |
+| unclear request | Clarify scope and route | scoped analysis | `reference/` |
 
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| PR Preparation | `pr` | ✓ | PR preparation (title/body/review angles/risk assessment) | `references/pr-workflow-patterns.md` |
-| Commit Granularity | `commit` | | Commit granularity split proposal (atomic commit design) | `references/commit-analysis.md` |
-| Naming Review | `naming` | | Branch/commit naming check (Conventional Commits) | `references/commit-conventions.md` |
-| Merge Strategy | `strategy` | | Merge strategy (squash/rebase/merge) selection | `references/branching-strategies.md` |
-| Reshape History | `reshape` | | Create a new branch off the base, squash-import the development branch, then recommit at optimal granularity to reshape history | `references/history-reshape.md` |
-| Audit History | `audit` | | Read-only diagnosis of a branch's commit history (WIP/fixup residue, Conventional Commits violations, atomicity, size deviation) | `references/history-audit.md` |
-| Split into Stacked PRs | `split` | | Plan to decompose an M+ branch into stacked PRs (dependency order, file boundaries, estimated review time) | `references/pr-split-strategy.md` |
-| Branch Health | `health` | | Repo-wide branch inventory (stale, diverged, merged-but-undeleted, conflict risk) | `references/branch-health.md` |
-| Ship PR | `ship` | | End-to-end PR delivery: create PR, watch CI, verify gates, merge, cleanup. Consumes `pr` and `strategy` Recipe outputs. Merge step is always Ask First. | `references/pr-ship-flow.md` |
+| PR Preparation | `pr` | ✓ | PR preparation (title/body/review angles/risk assessment) | `reference/pr-workflow-patterns.md` |
+| Commit Granularity | `commit` | | Commit granularity split proposal (atomic commit design) | `reference/commit-analysis.md` |
+| Naming Review | `naming` | | Branch/commit naming check (Conventional Commits) | `reference/commit-conventions.md` |
+| Merge Strategy | `strategy` | | Merge strategy (squash/rebase/merge) selection | `reference/branching-strategies.md` |
+| Reshape History | `reshape` | | Create a new branch off the base, squash-import the development branch, then recommit at optimal granularity to reshape history | `reference/history-reshape.md` |
+| Audit History | `audit` | | Read-only diagnosis of a branch's commit history (WIP/fixup residue, Conventional Commits violations, atomicity, size deviation) | `reference/history-audit.md` |
+| Split into Stacked PRs | `split` | | Plan to decompose an M+ branch into stacked PRs (dependency order, file boundaries, estimated review time) | `reference/pr-split-strategy.md` |
+| Branch Health | `health` | | Repo-wide branch inventory (stale, diverged, merged-but-undeleted, conflict risk) | `reference/branch-health.md` |
+| Ship PR | `ship` | | End-to-end PR delivery: create PR, watch CI, verify gates, merge, cleanup. Consumes `pr` and `strategy` Recipe outputs. Merge step is always Ask First. | `reference/pr-ship-flow.md` |
 
 ## Subcommand Dispatch
 
@@ -225,11 +225,11 @@ Every deliverable MUST include:
 
 1. **Change Classification Table** — Each file categorized as Essential / Supporting / Incidental / Generated / Configuration with line counts
 2. **Size & Signal-to-Noise Ratio** — PR size band (XS–MEGA), total lines changed, noise ratio percentage
-3. **Quality Score** — Numerical score (0–100) with grade (A+–F), broken down by component weights per `references/pr-quality-scoring.md`
+3. **Quality Score** — Numerical score (0–100) with grade (A+–F), broken down by component weights per `reference/pr-quality-scoring.md`
 4. **Risk Assessment** — Risk band (Critical / High / Medium / Low) with contributing factors
 5. **Actionable Recommendation** — Concrete next step: merge, split, cleanup, or handoff with blocking status
 
-Additional sections as needed (use canonical headings from `references/output-templates.md`):
+Additional sections as needed (use canonical headings from `reference/output-templates.md`):
 - `## Guardian Change Analysis` — Full change breakdown
 - `## PR Quality Score: {score}/100 ({grade})` — Detailed quality scoring
 - `## Commit Message Analysis` — Message quality, atomicity, conventional commit compliance
@@ -251,28 +251,28 @@ Additional sections as needed (use canonical headings from `references/output-te
 
 | Reference | Read this when... |
 |-----------|-------------------|
-| `references/commit-conventions.md` | you need commit naming, atomicity, signing, or commitlint rules |
-| `references/commit-analysis.md` | you are scoring commit messages or rewriting a commit sequence |
-| `references/pr-workflow-patterns.md` | you are selecting PR size, stacked PR, draft PR, or description structure |
-| `references/pr-quality-scoring.md` | you need the exact PR quality component weights and grade mapping |
-| `references/branching-strategies.md` | you must choose GitHub Flow, Git Flow, or Trunk-Based workflow |
-| `references/branch-health.md` | you are evaluating stale, risky, or conflict-prone branches |
-| `references/history-audit.md` | you are running the `audit` recipe — read-only diagnosis of WIP/fixup residue, Conventional Commits violations, atomicity, and size deviation in a commit-history range |
-| `references/history-reshape.md` | you are running the `reshape` recipe — squash-import a development branch onto a fresh base and re-split into atomic commits with backup-branch protocol |
-| `references/pr-split-strategy.md` | you are running the `split` recipe — decompose an M+ branch into stacked PRs (10–15 min review each) with dependency order, file boundaries, and tool selection (Graphite/ghstack/git-town/jj) |
-| `references/pr-ship-flow.md` | you are running the `ship` recipe — end-to-end PR delivery (create, watch CI, verify gates, merge, cleanup) with hard gates and Ask First on every MERGE execution |
-| `references/code-review-guide.md` | you are assigning reviewers or checking review turnaround and CODEOWNERS fit |
-| `references/git-automation.md` | you need hooks, secret detection, auto-merge, or monorepo CI defaults |
-| `references/git-recipes.md` | you need concrete Git or `gh` command recipes |
-| `references/squash-optimization.md` | you are grouping, scoring, or synthesizing squash plans |
-| `references/risk-assessment.md` | you need risk-factor scoring, hotspot amplification, or rollout mitigation |
-| `references/security-analysis.md` | you need security classification, patterns, or Sentinel/Probe escalation |
-| `references/predictive-quality-gate.md` | you need Judge/Zen prediction rules and confidence handling |
-| `references/coverage-integration.md` | you need CI coverage correlation and Radar escalation rules |
-| `references/learning-loop.md` | you are calibrating Guardian from Judge, Zen, Harvest, or squash feedback |
-| `references/collaboration-routing.md` | you need detailed cross-agent flows, token usage, and auto-routing priority/trigger rules |
-| `references/output-templates.md` | you need canonical report headings and output skeletons |
-| `references/autorun-mode.md` | you are running Guardian in AUTORUN mode |
+| `reference/commit-conventions.md` | you need commit naming, atomicity, signing, or commitlint rules |
+| `reference/commit-analysis.md` | you are scoring commit messages or rewriting a commit sequence |
+| `reference/pr-workflow-patterns.md` | you are selecting PR size, stacked PR, draft PR, or description structure |
+| `reference/pr-quality-scoring.md` | you need the exact PR quality component weights and grade mapping |
+| `reference/branching-strategies.md` | you must choose GitHub Flow, Git Flow, or Trunk-Based workflow |
+| `reference/branch-health.md` | you are evaluating stale, risky, or conflict-prone branches |
+| `reference/history-audit.md` | you are running the `audit` recipe — read-only diagnosis of WIP/fixup residue, Conventional Commits violations, atomicity, and size deviation in a commit-history range |
+| `reference/history-reshape.md` | you are running the `reshape` recipe — squash-import a development branch onto a fresh base and re-split into atomic commits with backup-branch protocol |
+| `reference/pr-split-strategy.md` | you are running the `split` recipe — decompose an M+ branch into stacked PRs (10–15 min review each) with dependency order, file boundaries, and tool selection (Graphite/ghstack/git-town/jj) |
+| `reference/pr-ship-flow.md` | you are running the `ship` recipe — end-to-end PR delivery (create, watch CI, verify gates, merge, cleanup) with hard gates and Ask First on every MERGE execution |
+| `reference/code-review-guide.md` | you are assigning reviewers or checking review turnaround and CODEOWNERS fit |
+| `reference/git-automation.md` | you need hooks, secret detection, auto-merge, or monorepo CI defaults |
+| `reference/git-recipes.md` | you need concrete Git or `gh` command recipes |
+| `reference/squash-optimization.md` | you are grouping, scoring, or synthesizing squash plans |
+| `reference/risk-assessment.md` | you need risk-factor scoring, hotspot amplification, or rollout mitigation |
+| `reference/security-analysis.md` | you need security classification, patterns, or Sentinel/Probe escalation |
+| `reference/predictive-quality-gate.md` | you need Judge/Zen prediction rules and confidence handling |
+| `reference/coverage-integration.md` | you need CI coverage correlation and Radar escalation rules |
+| `reference/learning-loop.md` | you are calibrating Guardian from Judge, Zen, Harvest, or squash feedback |
+| `reference/collaboration-routing.md` | you need detailed cross-agent flows, token usage, and auto-routing priority/trigger rules |
+| `reference/output-templates.md` | you need canonical report headings and output skeletons |
+| `reference/autorun-mode.md` | you are running Guardian in AUTORUN mode |
 | `_common/OPUS_48_AUTHORING.md` | you are sizing the PR plan, deciding adaptive thinking depth at granularity/naming, or front-loading change type/target/urgency at CLASSIFY. Critical for Guardian: P3, P5. |
 | `_common/PROOF_CARRYING.md` | you prepare PRs with embedded evidence packages in `nexus acceptance` Phase 4. Lists the 12 required evidence fields, Hot-Fix Fast-Path rules (P0/P1 triage downgrades Tier-S→A, normal-Gate follow-up within 24h), and Success-PR random-review sampling (G2: 5% Tier-S / 2% Tier-A). |
 

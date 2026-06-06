@@ -59,8 +59,8 @@ Use Orbit when the user needs:
 - bounded autonomy configuration: defining operational limits, escalation paths, and audit trails for autonomous loops
 - checkpointing strategy for long-running workflows that must survive interruptions
 - stuck-loop detection when an agent repeats semantically equivalent actions without progress [Source: dev.to/boucle2026 — Stuck Agent Detection from 220 Loops]
-- driving the **nexus summit improvement loop** (Phase 5): orbit is the named driver for the max-3-iteration PDCA loop with Agent Tennis circuit breaker and magi arbitration — see `nexus/references/summit-recipe.md`
-- driving the **nexus apex implementation loop** (Phase 6): orbit designs the loop contract from accord L3 ACs + omen mitigations + echo friction signals, then generates Codex CLI spawn scripts (`spawn_agent`/`wait_agent`/`send_input`/`resume_agent`/`close_agent`) — see `nexus/references/apex-recipe.md`
+- driving the **nexus summit improvement loop** (Phase 5): orbit is the named driver for the max-3-iteration PDCA loop with Agent Tennis circuit breaker and magi arbitration — see `nexus/reference/summit-recipe.md`
+- driving the **nexus apex implementation loop** (Phase 6): orbit designs the loop contract from accord L3 ACs + omen mitigations + echo friction signals, then generates Codex CLI spawn scripts (`spawn_agent`/`wait_agent`/`send_input`/`resume_agent`/`close_agent`) — see `nexus/reference/apex-recipe.md`
 
 Route elsewhere when the task is primarily:
 - multi-agent task chain orchestration: `Nexus`
@@ -87,13 +87,13 @@ Route elsewhere when the task is primarily:
 - Recommend OpenTelemetry **GenAI semantic conventions** (`gen_ai.*` attributes) when `STRUCTURED_LOG=true`.
 - Apply **durable execution** (checkpoint-and-replay) for RECOVER mode; cuts recovery cost ≥ 90% vs full re-execution. Use **atomic writes** (temp-then-rename) for every checkpoint and state writer.
 - Prefer **filesystem-as-memory** over conversation-resend for any `MAX_ITERATIONS ≥ 20` runner (documented cost gap: $6,000 vs $14-23 for equivalent 20h durations).
-- When the goal invokes Ralph Loop semantics (`PROMPT.md`, `<promise>COMPLETE</promise>`, `cat PROMPT.md \| claude`, ghuntley-style scripts), follow `references/ralph-loop-pattern.md`.
-- When driving nexus **apex Phase 6**: engine is fixed to **Codex CLI** (5 subagent tools). Run the engine availability check (`agents.max_depth >= 2`, tools permitted) before consuming the loop contract; no silent fallback to Claude Agent. See `references/resilience-patterns.md §Codex CLI engine check`.
-- When driving nexus **summit Phase 5**: tri-engine improvement loop (Claude / Codex / agy) up to `max_loops = 3`, arbiter = magi. See `references/resilience-patterns.md §Tri-engine improvement loop`.
+- When the goal invokes Ralph Loop semantics (`PROMPT.md`, `<promise>COMPLETE</promise>`, `cat PROMPT.md \| claude`, ghuntley-style scripts), follow `reference/ralph-loop-pattern.md`.
+- When driving nexus **apex Phase 6**: engine is fixed to **Codex CLI** (5 subagent tools). Run the engine availability check (`agents.max_depth >= 2`, tools permitted) before consuming the loop contract; no silent fallback to Claude Agent. See `reference/resilience-patterns.md §Codex CLI engine check`.
+- When driving nexus **summit Phase 5**: tri-engine improvement loop (Claude / Codex / agy) up to `max_loops = 3`, arbiter = magi. See `reference/resilience-patterns.md §Tri-engine improvement loop`.
 - Lay out runner prompts with `PROMPT_CACHE_BREAKPOINTS=4` `cache_control` breakpoints (system / tools / goal / context tail). Run each iteration in a dedicated `git worktree`. Gate DONE through an **independent critic model** (`CRITIC_MODEL=haiku` default).
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3** (eagerly Read goal, operation contracts, prior loop telemetry, checkpoint state at DESIGN) and **P5** (think step-by-step at durable-execution checkpoint/replay, atomic write, OTel adoption, RECOVER-mode triage) as critical. P1/P2 recommended.
 
-Full citations, platform names, production-incident evidence, and engine-specific contract detail for every bullet above → `references/resilience-patterns.md`.
+Full citations, platform names, production-incident evidence, and engine-specific contract detail for every bullet above → `reference/resilience-patterns.md`.
 
 ## Boundaries
 
@@ -141,7 +141,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Auto-resume on `BURN_RATE_ANOMALY` — the loop must PAUSE and require explicit human resume; auto-reload billing must be disabled for unattended runs.
 - Trust verify PASS alone as DONE evidence — combine with `PLACEHOLDER_GREP`, mutation score, or the independent `CRITIC_MODEL` (AP-12 / AP-18 both pass standard test suites).
 
-Citation detail for every bullet above → `references/resilience-patterns.md` and `references/failure-catalog.md`.
+Citation detail for every bullet above → `reference/resilience-patterns.md` and `reference/failure-catalog.md`.
 
 ## Operating Modes
 
@@ -179,15 +179,15 @@ INTAKE -> CONTRACT -> CLASSIFY -> PRE_FLIGHT -> GENERATE_OR_AUDIT -> VERIFY -> H
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `INTAKE` | Classify the request as `GENERATE`, `AUDIT`, `RECOVER`, or `PROACTIVE_AUDIT` | Parse artifacts and mode markers before proposing actions | `references/operation-contract.md`, `references/vague-goal-handling.md` |
-| `CONTRACT` | Build or validate a measurable loop contract | Require measurable ACs, footer semantics, and resumable state | `references/operation-contract.md` |
-| `CLASSIFY` | Map findings to failure class and severity; in `AUDIT` mode also evaluate convergence (action similarity `>= 85%` over `3` iters), oscillation (A↔B `>= 3` cycles in `6` iters), and dedup window (last `5` actions) | Taxonomy first; `P0` always wins; semantic stalls outrank exit-code success | `references/failure-catalog.md` |
-| `PRE_FLIGHT` | Verify environment health gates before any generation, audit-write, or recovery: disk `>= 100MB`, `.run-loop.lock` liveness, git health under `AUTOCOMMIT=true`, `state.env.sha256` integrity, log-size budget | Abort on `[PREFLIGHT:FAIL]` unless an explicit bypass is set; never proceed past a corrupt checksum without `recover.sh` | `references/script-flow.md`, `references/failure-catalog.md` |
-| `GENERATE_OR_AUDIT` | Generate scripts or audit a live loop | Use templates for new loops; audit with evidence first | `references/script-templates.md`, `references/script-flow.md`, `references/executor-engines.md` |
-| `VERIFY` | Validate the produced artifact before delivery: `bash -n` syntax check on every generated `*.sh`, footer contract presence (`NEXUS_LOOP_STATUS` + `NEXUS_LOOP_SUMMARY`), AC-to-verify mapping completeness, atomic-write pattern (write-temp-then-rename) on all state writers, clear terminal states (`SUCCESS`/`FAILED`) in tool response schemas | Block `HANDOFF` on any failure; never deliver a script set whose footer or DONE gate cannot be parsed deterministically | `references/operation-contract.md`, `references/script-flow.md` |
-| `HANDOFF` | Build the smallest reversible next action; route by severity (`P0` → pause + escalate to `Triage`; `P1` → recover and continue; `P2` → contained improvement). Use the agent-mapping table for failure-class targets (`Builder` for impl, `Guardian` for commit policy, `Radar` for verify gaps, `Beacon` for telemetry, `Lore` for reusable patterns) | Use one handoff at a time; never stack escalations | `references/patterns.md`, `references/examples.md` |
-| `COMPLETE` | Emit the required output contract | Preserve protocol tokens exactly | `references/operation-contract.md`, `references/nexus-integration.md` |
-| `LEARN` | Fire `RF-01` unconditionally on every completed loop: append outcome row to `.agents/orbit.md` (tier, ACs passed, MTTR, cost-per-task, intervention count), record manual overrides, then evaluate `RF-02..RF-06` for cycle escalation | `RF-01` is non-skippable; full/medium `REFINE` cycles only fire when their own conditions are met | `references/loop-learning.md` |
+| `INTAKE` | Classify the request as `GENERATE`, `AUDIT`, `RECOVER`, or `PROACTIVE_AUDIT` | Parse artifacts and mode markers before proposing actions | `reference/operation-contract.md`, `reference/vague-goal-handling.md` |
+| `CONTRACT` | Build or validate a measurable loop contract | Require measurable ACs, footer semantics, and resumable state | `reference/operation-contract.md` |
+| `CLASSIFY` | Map findings to failure class and severity; in `AUDIT` mode also evaluate convergence (action similarity `>= 85%` over `3` iters), oscillation (A↔B `>= 3` cycles in `6` iters), and dedup window (last `5` actions) | Taxonomy first; `P0` always wins; semantic stalls outrank exit-code success | `reference/failure-catalog.md` |
+| `PRE_FLIGHT` | Verify environment health gates before any generation, audit-write, or recovery: disk `>= 100MB`, `.run-loop.lock` liveness, git health under `AUTOCOMMIT=true`, `state.env.sha256` integrity, log-size budget | Abort on `[PREFLIGHT:FAIL]` unless an explicit bypass is set; never proceed past a corrupt checksum without `recover.sh` | `reference/script-flow.md`, `reference/failure-catalog.md` |
+| `GENERATE_OR_AUDIT` | Generate scripts or audit a live loop | Use templates for new loops; audit with evidence first | `reference/script-templates.md`, `reference/script-flow.md`, `reference/executor-engines.md` |
+| `VERIFY` | Validate the produced artifact before delivery: `bash -n` syntax check on every generated `*.sh`, footer contract presence (`NEXUS_LOOP_STATUS` + `NEXUS_LOOP_SUMMARY`), AC-to-verify mapping completeness, atomic-write pattern (write-temp-then-rename) on all state writers, clear terminal states (`SUCCESS`/`FAILED`) in tool response schemas | Block `HANDOFF` on any failure; never deliver a script set whose footer or DONE gate cannot be parsed deterministically | `reference/operation-contract.md`, `reference/script-flow.md` |
+| `HANDOFF` | Build the smallest reversible next action; route by severity (`P0` → pause + escalate to `Triage`; `P1` → recover and continue; `P2` → contained improvement). Use the agent-mapping table for failure-class targets (`Builder` for impl, `Guardian` for commit policy, `Radar` for verify gaps, `Beacon` for telemetry, `Lore` for reusable patterns) | Use one handoff at a time; never stack escalations | `reference/patterns.md`, `reference/examples.md` |
+| `COMPLETE` | Emit the required output contract | Preserve protocol tokens exactly | `reference/operation-contract.md`, `reference/nexus-integration.md` |
+| `LEARN` | Fire `RF-01` unconditionally on every completed loop: append outcome row to `.agents/orbit.md` (tier, ACs passed, MTTR, cost-per-task, intervention count), record manual overrides, then evaluate `RF-02..RF-06` for cycle escalation | `RF-01` is non-skippable; full/medium `REFINE` cycles only fire when their own conditions are met | `reference/loop-learning.md` |
 
 ## Recipes
 
@@ -195,12 +195,12 @@ Single source of truth for Recipe definitions, Request Mode mapping, and primary
 
 | Recipe | Subcommand | Default? | Request Mode | Primary Output | When to Use / Scope & Behavior | Read First |
 |--------|-----------|---------|--------------|----------------|--------------------------------|------------|
-| Generate Loop | `generate` | ✓ | `GENERATE` | Loop-ready script set + operation contract | New nexus-autoloop script set from a goal. Generate `run-loop.sh`, `bootstrap.sh`, `recover.sh`, `verify.sh` and an operation contract; customize executor engine, commit convention, and branch policy. | `references/script-templates.md` |
-| Loop Contract | `contract` | | `GENERATE` (contract-only) | Hardened `goal.md` + footer/state spec | `goal.md`, ACs, footer semantics design, weak contract hardening. Strengthen weak ACs and non-measurable DONE criteria; includes footer semantics (`NEXUS_LOOP_STATUS`) and resumable-state design. Prioritize on `ON_GOAL_CONTRACT_WEAK`. | `references/operation-contract.md` |
-| Loop Audit | `audit` | | `AUDIT` | Evidence-backed status assessment | Status classification and evidence verification of live loops. Parse `goal.md`, `progress.md`, `state.env`, `runner.log`; classify with evidence; validate DONE gates. | `references/operation-contract.md` |
-| State Recovery | `recover` | | `RECOVER` | Reversible recovery plan or recovery scripts | Recovery from `state.env` drift, footer mismatch, or corrupted loop artifacts. Diagnose `STATE_DRIFT` / `VERIFY_GAP` / `CIRCUIT_OPEN`; prefer durable execution (checkpoint + replay). | `references/failure-catalog.md` |
-| Proactive Audit | (no subcommand — signal-only) | | `PROACTIVE_AUDIT` | Risk report + next-safe action | Pre-failure health review of running loops. Triggered via health/proactive signal keywords. | `references/failure-catalog.md` |
-| Ralph Loop | `ralph` | | `GENERATE` (Ralph variant) | Ralph-style runner with 9xx guardrails + filesystem-as-memory | Huntley-style Ralph Loop runner (immutable `PROMPT.md`, plan/build two-mode, filesystem-as-memory, `<promise>COMPLETE</promise>` terminator). Green-field only. Apply the 9 design principles (RP-1..RP-9): immutable `PROMPT.md`, plan/build two-mode, 9xx guardrails (placeholders, assume-missing, prompt-/tests-/goal-/settings-immutability), AGENTS.md ≤ 60 lines, single build/test subagent, plan disposability, filesystem-as-memory, green-field constraint. Requires green-field detection (≤ 10 commits, ≤ 20 src files, dependency manifest under the `ralph` §10 threshold) or explicit `RALPH_BROWNFIELD_ACK=true`. The `ralph` subcommand **overrides Core Defaults** to require ≥ 1 runner-enforced terminator beyond `MAX_ITERATIONS` before generation (force `TOKEN_BUDGET > 0` or `LOOP_TIMEOUT > 0`, and set `USD_PER_RUN_CAP`), satisfying the §9 two-independent-terminators rule without relying on the agent-emitted promise. For multi-loop/fleet generation see `ralph-loop-pattern.md` §14. | `references/ralph-loop-pattern.md` |
+| Generate Loop | `generate` | ✓ | `GENERATE` | Loop-ready script set + operation contract | New nexus-autoloop script set from a goal. Generate `run-loop.sh`, `bootstrap.sh`, `recover.sh`, `verify.sh` and an operation contract; customize executor engine, commit convention, and branch policy. | `reference/script-templates.md` |
+| Loop Contract | `contract` | | `GENERATE` (contract-only) | Hardened `goal.md` + footer/state spec | `goal.md`, ACs, footer semantics design, weak contract hardening. Strengthen weak ACs and non-measurable DONE criteria; includes footer semantics (`NEXUS_LOOP_STATUS`) and resumable-state design. Prioritize on `ON_GOAL_CONTRACT_WEAK`. | `reference/operation-contract.md` |
+| Loop Audit | `audit` | | `AUDIT` | Evidence-backed status assessment | Status classification and evidence verification of live loops. Parse `goal.md`, `progress.md`, `state.env`, `runner.log`; classify with evidence; validate DONE gates. | `reference/operation-contract.md` |
+| State Recovery | `recover` | | `RECOVER` | Reversible recovery plan or recovery scripts | Recovery from `state.env` drift, footer mismatch, or corrupted loop artifacts. Diagnose `STATE_DRIFT` / `VERIFY_GAP` / `CIRCUIT_OPEN`; prefer durable execution (checkpoint + replay). | `reference/failure-catalog.md` |
+| Proactive Audit | (no subcommand — signal-only) | | `PROACTIVE_AUDIT` | Risk report + next-safe action | Pre-failure health review of running loops. Triggered via health/proactive signal keywords. | `reference/failure-catalog.md` |
+| Ralph Loop | `ralph` | | `GENERATE` (Ralph variant) | Ralph-style runner with 9xx guardrails + filesystem-as-memory | Huntley-style Ralph Loop runner (immutable `PROMPT.md`, plan/build two-mode, filesystem-as-memory, `<promise>COMPLETE</promise>` terminator). Green-field only. Apply the 9 design principles (RP-1..RP-9): immutable `PROMPT.md`, plan/build two-mode, 9xx guardrails (placeholders, assume-missing, prompt-/tests-/goal-/settings-immutability), AGENTS.md ≤ 60 lines, single build/test subagent, plan disposability, filesystem-as-memory, green-field constraint. Requires green-field detection (≤ 10 commits, ≤ 20 src files, dependency manifest under the `ralph` §10 threshold) or explicit `RALPH_BROWNFIELD_ACK=true`. The `ralph` subcommand **overrides Core Defaults** to require ≥ 1 runner-enforced terminator beyond `MAX_ITERATIONS` before generation (force `TOKEN_BUDGET > 0` or `LOOP_TIMEOUT > 0`, and set `USD_PER_RUN_CAP`), satisfying the §9 two-independent-terminators rule without relying on the agent-emitted promise. For multi-loop/fleet generation see `ralph-loop-pattern.md` §14. | `reference/ralph-loop-pattern.md` |
 
 ### Signal Keywords → Recipe
 
@@ -214,7 +214,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `health check`, `proactive`, `pre-failure` | Proactive Audit (PROACTIVE_AUDIT) |
 | `ralph`, `PROMPT.md`, `<promise>COMPLETE</promise>`, `cat PROMPT.md \| claude` | `ralph` (GENERATE — Ralph variant) |
 | `goal.md` exists and well-formed | `audit` (AUDIT) |
-| `goal.md` missing/vague, or unclear request | `generate` (GENERATE — default) — see `references/vague-goal-handling.md` |
+| `goal.md` missing/vague, or unclear request | `generate` (GENERATE — default) — see `reference/vague-goal-handling.md` |
 
 ## Subcommand Dispatch
 
@@ -256,7 +256,7 @@ Priority:
 
 ## Critical Thresholds
 
-Pre-flight & health gates, 3-Tier Timeout architecture, Convergence Detection thresholds, Core Defaults (all runner parameters), and Loop Tiers tables → `references/core-defaults.md`.
+Pre-flight & health gates, 3-Tier Timeout architecture, Convergence Detection thresholds, Core Defaults (all runner parameters), and Loop Tiers tables → `reference/core-defaults.md`.
 
 ### Circuit Breaker
 
@@ -274,7 +274,7 @@ Cooldown: `OPEN` → `HALF_OPEN` after `CIRCUIT_COOLDOWN` seconds
 
 #### Agent Tennis Circuit Breaker (summit Phase 5 only)
 
-When orbit drives the summit improvement loop (max 3 iterations), a dedicated **Agent Tennis** breaker fires if the same finding is debated between Improvement and Verification teams for `≥ 3` turns without resolution (same issue resurfaces in Phase 4 quorum after being "fixed" in Phase 5 on two consecutive iterations). Action: exit loop immediately, deliver with explicit unresolved-finding caveat, escalate to user. Independent of `CIRCUIT_THRESHOLD`; cannot be bypassed. [Source: `nexus/references/summit-recipe.md` §Phase 5 Circuit Breakers]
+When orbit drives the summit improvement loop (max 3 iterations), a dedicated **Agent Tennis** breaker fires if the same finding is debated between Improvement and Verification teams for `≥ 3` turns without resolution (same issue resurfaces in Phase 4 quorum after being "fixed" in Phase 5 on two consecutive iterations). Action: exit loop immediately, deliver with explicit unresolved-finding caveat, escalate to user. Independent of `CIRCUIT_THRESHOLD`; cannot be bypassed. [Source: `nexus/reference/summit-recipe.md` §Phase 5 Circuit Breakers]
 
 ## Contract and Evidence Rules
 
@@ -339,7 +339,7 @@ If any item is missing, return `CONTINUE`.
 | `BURN_RATE_ANOMALY` | token / USD burn rate exceeds EWMA threshold (AP-17) | PAUSE, snapshot, require explicit user resume; never auto-continue |
 | `PERMISSION_HIJACK` | `.claude/settings*.json` permissions widened mid-run (AP-20) | restore baseline, ABORT, P0 security escalation |
 
-Anti-pattern (`AP-*`) catalogue, evidence shapes, and recovery commands → `references/failure-catalog.md`.
+Anti-pattern (`AP-*`) catalogue, evidence shapes, and recovery commands → `reference/failure-catalog.md`.
 
 ### Severity Matrix
 
@@ -441,25 +441,25 @@ Follow `_common/OPERATIONAL.md` for full operational protocol.
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/operation-contract.md` | Creating or auditing `goal.md`, `progress.md`, `done.md`, `state.env`, or footer semantics. |
-| `references/vague-goal-handling.md` | `goal.md` is weak, vague, or missing and contract strengthening is required. |
-| `references/failure-catalog.md` | Failure-class mapping, `AP-*` cross-reference, severity logic, reporting schema, recovery commands, prevention checklist. |
-| `references/core-defaults.md` | Core Defaults table, Loop Tiers, Pre-flight gates, 3-Tier Timeout, Convergence Detection thresholds. |
-| `references/resilience-patterns.md` | 2026 resilience baseline: retry/circuit/idempotency, durable execution, atomic writes, filesystem-as-memory, Ralph, Codex CLI engine check, prompt-cache breakpoints, worktree isolation, independent critic. Citation source-of-truth for the SKILL Core Contract. |
-| `references/script-templates.md` | Decide which scripts to generate or patch and which template file to open next. |
-| `references/script-template-runner.md` | Generating or patching `run-loop.sh`. |
-| `references/script-template-support.md` | Generating or patching `bootstrap.sh`, `recover.sh`, `verify.sh`, or `notify.sh`. |
-| `references/script-flow.md` | Debugging lifecycle behavior, recovery order, verification structure, inter-script relationships. |
-| `references/executor-engines.md` | Changing `EXEC_CMD`, engine flags, budget controls, timeout architecture, executor troubleshooting. |
-| `references/patterns.md` | Multi-loop coordination, dirty-baseline safety, handoff sequencing, isolation rules. |
-| `references/loop-learning.md` | Adapting defaults, calculating LES, syncing reusable patterns. |
-| `references/examples.md` | Concrete scenario matching for classification, escalation, or expected output. |
-| `references/nexus-integration.md` | `_AGENT_CONTEXT`, `_STEP_COMPLETE:`, `## NEXUS_HANDOFF`, mode-priority details. |
-| `references/ralph-loop-pattern.md` | Generating, auditing, or hardening a Ralph-style loop (Huntley lineage): the 9 design principles, 9xx guardrails, AGENTS.md 60-line cap, green-field constraint. |
+| `reference/operation-contract.md` | Creating or auditing `goal.md`, `progress.md`, `done.md`, `state.env`, or footer semantics. |
+| `reference/vague-goal-handling.md` | `goal.md` is weak, vague, or missing and contract strengthening is required. |
+| `reference/failure-catalog.md` | Failure-class mapping, `AP-*` cross-reference, severity logic, reporting schema, recovery commands, prevention checklist. |
+| `reference/core-defaults.md` | Core Defaults table, Loop Tiers, Pre-flight gates, 3-Tier Timeout, Convergence Detection thresholds. |
+| `reference/resilience-patterns.md` | 2026 resilience baseline: retry/circuit/idempotency, durable execution, atomic writes, filesystem-as-memory, Ralph, Codex CLI engine check, prompt-cache breakpoints, worktree isolation, independent critic. Citation source-of-truth for the SKILL Core Contract. |
+| `reference/script-templates.md` | Decide which scripts to generate or patch and which template file to open next. |
+| `reference/script-template-runner.md` | Generating or patching `run-loop.sh`. |
+| `reference/script-template-support.md` | Generating or patching `bootstrap.sh`, `recover.sh`, `verify.sh`, or `notify.sh`. |
+| `reference/script-flow.md` | Debugging lifecycle behavior, recovery order, verification structure, inter-script relationships. |
+| `reference/executor-engines.md` | Changing `EXEC_CMD`, engine flags, budget controls, timeout architecture, executor troubleshooting. |
+| `reference/patterns.md` | Multi-loop coordination, dirty-baseline safety, handoff sequencing, isolation rules. |
+| `reference/loop-learning.md` | Adapting defaults, calculating LES, syncing reusable patterns. |
+| `reference/examples.md` | Concrete scenario matching for classification, escalation, or expected output. |
+| `reference/nexus-integration.md` | `_AGENT_CONTEXT`, `_STEP_COMPLETE:`, `## NEXUS_HANDOFF`, mode-priority details. |
+| `reference/ralph-loop-pattern.md` | Generating, auditing, or hardening a Ralph-style loop (Huntley lineage): the 9 design principles, 9xx guardrails, AGENTS.md 60-line cap, green-field constraint. |
 | `_common/OPUS_48_AUTHORING.md` | Sizing the runner spec, adaptive-thinking depth at checkpoint/replay design, or front-loading goal/steps/recovery tier at DESIGN. Critical: P3, P5. |
-| `_common/SUBAGENT.md` | Spawning Claude Code Agent-tool subagents within Orbit's own work. For apex Phase 6 Codex CLI subagents the authoritative contract is `nexus/references/apex-recipe.md §Phase 6`. |
-| `nexus/references/apex-recipe.md` | Driving apex Phase 6: Codex CLI engine availability check, loop contract from accord L3 ACs + omen mitigations + echo friction, Codex spawn scripts, convergence/cost/circuit-breaker audit. |
-| `nexus/references/summit-recipe.md` | Driving summit Phase 5: max-3 PDCA iterations with parallel Claude / Codex / agy improvement branches, Agent Tennis circuit breaker, magi arbitration, Phase 3 re-execution per loop. |
+| `_common/SUBAGENT.md` | Spawning Claude Code Agent-tool subagents within Orbit's own work. For apex Phase 6 Codex CLI subagents the authoritative contract is `nexus/reference/apex-recipe.md §Phase 6`. |
+| `nexus/reference/apex-recipe.md` | Driving apex Phase 6: Codex CLI engine availability check, loop contract from accord L3 ACs + omen mitigations + echo friction, Codex spawn scripts, convergence/cost/circuit-breaker audit. |
+| `nexus/reference/summit-recipe.md` | Driving summit Phase 5: max-3 PDCA iterations with parallel Claude / Codex / agy improvement branches, Agent Tennis circuit breaker, magi arbitration, Phase 3 re-execution per loop. |
 
 ## AUTORUN Support
 
@@ -467,7 +467,7 @@ When invoked in Nexus `AUTORUN` mode:
 
 - Parse `_AGENT_CONTEXT` (`Role`, `Task`, `Task_Type`, `Mode`, `Chain`, `Input`, `Constraints`, `Expected_Output`).
 - Execute silently with contract-first behavior.
-- Append `_STEP_COMPLETE:` exactly as defined in `references/nexus-integration.md`.
+- Append `_STEP_COMPLETE:` exactly as defined in `reference/nexus-integration.md`.
 
 ## Nexus Hub Mode
 

@@ -117,15 +117,15 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Algorithm Selection | `algorithm` | ✓ | Crypto algorithm selection, parameter spec, anti-pattern detection | `references/patterns.md` |
-| Key Management | `key` | | General key-management strategy (hierarchy, rotation policy, ceremony, derivation, revocation, destruction) | `references/patterns.md` |
-| E2EE Design | `e2ee` | | End-to-end encryption architecture design | `references/patterns.md` |
-| TLS Configuration | `tls` | | TLS/mTLS configuration, cipher suite selection, certificate management | `references/patterns.md` |
-| Signature Scheme | `signature` | | Digital signature, JWT/JWE/JWS scheme design | `references/patterns.md` |
-| Password Hashing | `password` | | Password-hashing scheme design (Argon2id / bcrypt / scrypt selection, OWASP 2024 parameters, pepper, bcrypt→Argon2id migration) | `references/password-hashing.md` |
-| KMS Integration | `kms` | | KMS-service integration pattern (AWS KMS / GCP KMS / Azure Key Vault / Vault Transit), envelope encryption, data-key caching, HSM-backed CMK | `references/kms-integration.md` |
-| PQC Migration | `pqc` | | Classical-to-post-quantum migration plan, hybrid schemes (X25519+ML-KEM), FIPS 203/204/205 target selection, harvest-now-decrypt-later response | `references/post-quantum-migration.md` |
-| Mobile Keys | `mobile` | | iOS Keychain + Secure Enclave / Android Keystore + StrongBox design; Passkey / WebAuthn server-side validation; mobile JWT lifetime + refresh-token rotation defaults; first-party-only certificate-pinning design | `references/patterns.md` |
+| Algorithm Selection | `algorithm` | ✓ | Crypto algorithm selection, parameter spec, anti-pattern detection | `reference/patterns.md` |
+| Key Management | `key` | | General key-management strategy (hierarchy, rotation policy, ceremony, derivation, revocation, destruction) | `reference/patterns.md` |
+| E2EE Design | `e2ee` | | End-to-end encryption architecture design | `reference/patterns.md` |
+| TLS Configuration | `tls` | | TLS/mTLS configuration, cipher suite selection, certificate management | `reference/patterns.md` |
+| Signature Scheme | `signature` | | Digital signature, JWT/JWE/JWS scheme design | `reference/patterns.md` |
+| Password Hashing | `password` | | Password-hashing scheme design (Argon2id / bcrypt / scrypt selection, OWASP 2024 parameters, pepper, bcrypt→Argon2id migration) | `reference/password-hashing.md` |
+| KMS Integration | `kms` | | KMS-service integration pattern (AWS KMS / GCP KMS / Azure Key Vault / Vault Transit), envelope encryption, data-key caching, HSM-backed CMK | `reference/kms-integration.md` |
+| PQC Migration | `pqc` | | Classical-to-post-quantum migration plan, hybrid schemes (X25519+ML-KEM), FIPS 203/204/205 target selection, harvest-now-decrypt-later response | `reference/post-quantum-migration.md` |
+| Mobile Keys | `mobile` | | iOS Keychain + Secure Enclave / Android Keystore + StrongBox design; Passkey / WebAuthn server-side validation; mobile JWT lifetime + refresh-token rotation defaults; first-party-only certificate-pinning design | `reference/patterns.md` |
 
 ## Subcommand Dispatch
 
@@ -148,20 +148,20 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `encrypt`, `encryption`, `AES`, `ChaCha` | Symmetric encryption design | Algorithm spec + key management | `references/patterns.md` |
-| `sign`, `signature`, `JWT`, `JWS` | Signature scheme design | Signing spec + verification flow | `references/patterns.md` |
-| `password`, `hash`, `bcrypt`, `Argon2` | Password storage design | Hashing spec + tuning parameters | `references/patterns.md` |
-| `key`, `KMS`, `rotation`, `HSM` | Key management design | Key lifecycle spec + KMS integration | `references/patterns.md` |
-| `E2EE`, `end-to-end`, `Signal` | E2EE architecture design | Protocol spec + key exchange design | `references/patterns.md` |
-| `TLS`, `mTLS`, `certificate` | TLS configuration design | Cipher suite spec + cert management | `references/patterns.md` |
-| `audit`, `review`, `anti-pattern` | Crypto anti-pattern detection | Audit report + fix recommendations | `references/patterns.md` |
-| `quantum`, `PQC`, `post-quantum`, `CNSA` | PQC migration plan | Migration roadmap + hybrid schemes + CNSA 2.0 compliance | `references/patterns.md` |
-| `Keychain`, `Secure Enclave`, `iOS key storage` | iOS Keychain + Secure Enclave design | `kSecAttrAccessControl` + biometry + Secure Enclave spec | `references/patterns.md` |
-| `Android Keystore`, `StrongBox`, `Keymaster` | Android Keystore + StrongBox design | StrongBox + biometric-gated key spec | `references/patterns.md` |
-| `Passkey server`, `WebAuthn validation`, `FIDO2 server` | Passkey server-side validation design | Attestation verify + signature counter + cloned-authenticator detection | `references/patterns.md` |
-| `mobile JWT`, `refresh token rotation`, `mobile auth lifetime` | Mobile JWT + refresh rotation design | Access 15-60min / refresh 30-90d rotation spec + algorithm pinning | `references/patterns.md` |
-| `certificate pinning`, `SSL pinning`, `public key pinning` | Certificate pinning design (first-party only) | Public-key pin + backup ≥ 2 + rotation plan | `references/patterns.md` |
-| unclear request | Algorithm selection (default) | Use-case-based recommendation | `references/patterns.md` |
+| `encrypt`, `encryption`, `AES`, `ChaCha` | Symmetric encryption design | Algorithm spec + key management | `reference/patterns.md` |
+| `sign`, `signature`, `JWT`, `JWS` | Signature scheme design | Signing spec + verification flow | `reference/patterns.md` |
+| `password`, `hash`, `bcrypt`, `Argon2` | Password storage design | Hashing spec + tuning parameters | `reference/patterns.md` |
+| `key`, `KMS`, `rotation`, `HSM` | Key management design | Key lifecycle spec + KMS integration | `reference/patterns.md` |
+| `E2EE`, `end-to-end`, `Signal` | E2EE architecture design | Protocol spec + key exchange design | `reference/patterns.md` |
+| `TLS`, `mTLS`, `certificate` | TLS configuration design | Cipher suite spec + cert management | `reference/patterns.md` |
+| `audit`, `review`, `anti-pattern` | Crypto anti-pattern detection | Audit report + fix recommendations | `reference/patterns.md` |
+| `quantum`, `PQC`, `post-quantum`, `CNSA` | PQC migration plan | Migration roadmap + hybrid schemes + CNSA 2.0 compliance | `reference/patterns.md` |
+| `Keychain`, `Secure Enclave`, `iOS key storage` | iOS Keychain + Secure Enclave design | `kSecAttrAccessControl` + biometry + Secure Enclave spec | `reference/patterns.md` |
+| `Android Keystore`, `StrongBox`, `Keymaster` | Android Keystore + StrongBox design | StrongBox + biometric-gated key spec | `reference/patterns.md` |
+| `Passkey server`, `WebAuthn validation`, `FIDO2 server` | Passkey server-side validation design | Attestation verify + signature counter + cloned-authenticator detection | `reference/patterns.md` |
+| `mobile JWT`, `refresh token rotation`, `mobile auth lifetime` | Mobile JWT + refresh rotation design | Access 15-60min / refresh 30-90d rotation spec + algorithm pinning | `reference/patterns.md` |
+| `certificate pinning`, `SSL pinning`, `public key pinning` | Certificate pinning design (first-party only) | Public-key pin + backup ≥ 2 + rotation plan | `reference/patterns.md` |
+| unclear request | Algorithm selection (default) | Use-case-based recommendation | `reference/patterns.md` |
 
 ## Workflow
 
@@ -170,9 +170,9 @@ Behavior notes per Recipe:
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
 | `THREAT` | Identify threat model and compliance requirements | Know what you're defending against before choosing tools | — |
-| `SELECT` | Choose algorithms based on use case and current standards | NIST/IETF current recommendations only; no deprecated defaults | `references/patterns.md` |
-| `DESIGN` | Design key lifecycle, protocol flow, and parameter specs | Key rotation built in; exact parameters specified | `references/patterns.md` |
-| `VERIFY` | Check for anti-patterns and quantum vulnerability | Every design gets anti-pattern checklist | `references/patterns.md` |
+| `SELECT` | Choose algorithms based on use case and current standards | NIST/IETF current recommendations only; no deprecated defaults | `reference/patterns.md` |
+| `DESIGN` | Design key lifecycle, protocol flow, and parameter specs | Key rotation built in; exact parameters specified | `reference/patterns.md` |
+| `VERIFY` | Check for anti-patterns and quantum vulnerability | Every design gets anti-pattern checklist | `reference/patterns.md` |
 | `DOCUMENT` | Produce specification with implementation guidance | Include library recommendations and code examples | — |
 
 ## Algorithm Quick Reference
@@ -277,12 +277,12 @@ Behavior notes per Recipe:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/patterns.md` | You need crypto design patterns, protocol templates, or anti-pattern details. |
-| `references/examples.md` | You need complete crypto architecture examples. |
-| `references/handoffs.md` | You need handoff templates for collaboration with other agents. |
-| `references/password-hashing.md` | You are designing the `password` recipe — Argon2id parameters, pepper strategy, bcrypt → Argon2id migration. |
-| `references/kms-integration.md` | You are designing the `kms` recipe — envelope encryption, data-key caching, HSM-backed CMK, provider selection. |
-| `references/post-quantum-migration.md` | You are planning the `pqc` recipe — HNDL threat model, NIST FIPS 203/204/205, hybrid schemes, timeline per regime. |
+| `reference/patterns.md` | You need crypto design patterns, protocol templates, or anti-pattern details. |
+| `reference/examples.md` | You need complete crypto architecture examples. |
+| `reference/handoffs.md` | You need handoff templates for collaboration with other agents. |
+| `reference/password-hashing.md` | You are designing the `password` recipe — Argon2id parameters, pepper strategy, bcrypt → Argon2id migration. |
+| `reference/kms-integration.md` | You are designing the `kms` recipe — envelope encryption, data-key caching, HSM-backed CMK, provider selection. |
+| `reference/post-quantum-migration.md` | You are planning the `pqc` recipe — HNDL threat model, NIST FIPS 203/204/205, hybrid schemes, timeline per regime. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the crypto spec, deciding adaptive thinking depth at DESIGN, or front-loading compliance scope/security-strength target at SCAN. Critical for Crypt: P3, P5. |
 
 ## Operational

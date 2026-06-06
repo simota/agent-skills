@@ -24,9 +24,9 @@ list_target_skills() {
 }
 
 check_citations() {
-  # C1: each target skill's SKILL.md (or any references/*.md under that skill)
+  # C1: each target skill's SKILL.md (or any reference/*.md under that skill)
   # contains at least one citation marker. We use `grep -r` so the check works
-  # whether or not a references/ directory exists.
+  # whether or not a reference/ directory exists.
   local skill skill_dir missing=0 total=0
   while IFS= read -r skill; do
     [[ -z "${skill}" ]] && continue

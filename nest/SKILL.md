@@ -59,7 +59,7 @@ Route elsewhere when:
 
 - Structure for progressive disclosure. Every directory level should be navigable without loading children.
 - Place stable content first. Static files (configs, rules, schemas) precede dynamic files (logs, generated output) in directory ordering and CLAUDE.md references.
-- Name for grep, not for humans alone. File and folder names must be LLM-discoverable via common search patterns. For detailed naming conventions, see `references/naming-guide.md`.
+- Name for grep, not for humans alone. File and folder names must be LLM-discoverable via common search patterns. For detailed naming conventions, see `reference/naming-guide.md`.
 - Keep per-file token budgets explicit. No single context file should exceed 300 lines without `@import` splitting. For CLAUDE.md density management, hand off to Hone.
 - Design cache-friendly topology. Group files by change frequency so prompt cache prefixes remain stable across turns.
 - Exclude generated files, build artifacts, and third-party / vendored code via `.claudeignore` (Claude Code) and `.gitignore` patterns Claude Code respects. Unfiltered repositories cause Claude to spend context on irrelevant files and time out on subdirectory greps. Treat `.claudeignore` as a first-class structural artifact, not an afterthought — it sits next to root `CLAUDE.md` and is audited alongside it. [Source: claude.com — *How Claude Code works in large codebases* (2026)]
@@ -93,23 +93,23 @@ Route elsewhere when:
 
 | Phase | Purpose | Key Activities | Read |
 |-------|---------|----------------|------|
-| `AUDIT` | Measure current state | Tree analysis, token estimation, discovery test, cache topology scan | `references/audit-checklist.md` |
+| `AUDIT` | Measure current state | Tree analysis, token estimation, discovery test, cache topology scan | `reference/audit-checklist.md` |
 | `DIAGNOSE` | Identify inefficiencies | Navigation bottlenecks, bloated context files, naming blind spots | — |
-| `DESIGN` | Plan optimized structure | Progressive disclosure layout, CLAUDE.md hierarchy, naming scheme | `references/layout-patterns.md` |
+| `DESIGN` | Plan optimized structure | Progressive disclosure layout, CLAUDE.md hierarchy, naming scheme | `reference/layout-patterns.md` |
 | `APPLY` | Execute restructuring | `git mv` file moves, CLAUDE.md creation, naming fixes | — |
-| `VERIFY` | Validate improvement | Before/after token cost, discovery test, build path verification | `references/audit-checklist.md` |
+| `VERIFY` | Validate improvement | Before/after token cost, discovery test, build path verification | `reference/audit-checklist.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Structure Audit | `audit` | ✓ | LLM navigation efficiency audit of existing folder structure | `references/audit-checklist.md` |
-| Restructure | `restructure` | | Restructuring for LLM optimization (includes git mv execution) | `references/layout-patterns.md` |
-| Progressive Disclosure | `progressive` | | L1/L2/L3 progressive disclosure hierarchy design | `references/layout-patterns.md` |
-| Prompt Cache | `cache` | | Prompt cache topology optimization and static-file-first ordering | `references/audit-checklist.md` |
-| Naming | `naming` | | File and folder naming audit for LLM grep/glob discoverability — bias-correction for generic names (utils, helpers), domain-vs-type grouping, suffix conventions (.config, .test, .spec), case strategy (kebab/camel/Pascal), rename-impact analysis | `references/naming-guide.md` |
-| Sharding | `sharding` | | Large file sharding strategy — split CLAUDE.md / reference docs via @import, choose split axis (by domain / by phase / by frequency), preserve cache prefixes, design include manifest, validate cycle-free imports | `references/sharding-strategy.md` |
-| Monorepo | `monorepo` | | Monorepo workspace topology for LLM efficiency — package boundaries (apps/, packages/, libs/), per-workspace CLAUDE.md cascade, turborepo / nx / pnpm-workspace path optimization, shared rule deduplication | `references/monorepo-topology.md` |
+| Structure Audit | `audit` | ✓ | LLM navigation efficiency audit of existing folder structure | `reference/audit-checklist.md` |
+| Restructure | `restructure` | | Restructuring for LLM optimization (includes git mv execution) | `reference/layout-patterns.md` |
+| Progressive Disclosure | `progressive` | | L1/L2/L3 progressive disclosure hierarchy design | `reference/layout-patterns.md` |
+| Prompt Cache | `cache` | | Prompt cache topology optimization and static-file-first ordering | `reference/audit-checklist.md` |
+| Naming | `naming` | | File and folder naming audit for LLM grep/glob discoverability — bias-correction for generic names (utils, helpers), domain-vs-type grouping, suffix conventions (.config, .test, .spec), case strategy (kebab/camel/Pascal), rename-impact analysis | `reference/naming-guide.md` |
+| Sharding | `sharding` | | Large file sharding strategy — split CLAUDE.md / reference docs via @import, choose split axis (by domain / by phase / by frequency), preserve cache prefixes, design include manifest, validate cycle-free imports | `reference/sharding-strategy.md` |
+| Monorepo | `monorepo` | | Monorepo workspace topology for LLM efficiency — package boundaries (apps/, packages/, libs/), per-workspace CLAUDE.md cascade, turborepo / nx / pnpm-workspace path optimization, shared rule deduplication | `reference/monorepo-topology.md` |
 
 ## Subcommand Dispatch
 
@@ -130,11 +130,11 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary Output | Read next |
 |--------|----------|----------------|-----------|
-| `audit`, `evaluate folder structure` | AUDIT only | Structure report with scores and recommendations | `references/audit-checklist.md` |
-| `optimize`, `restructure for LLM` | Full workflow | Restructured directories + migration script | `references/layout-patterns.md` |
-| `CLAUDE.md hierarchy`, `rules placement` | CLAUDE.md focus | Hierarchical rules design with placement plan | `references/layout-patterns.md` |
-| `naming`, `discoverability` | Naming focus | Rename plan with glob/grep validation | `references/naming-guide.md` |
-| `new project`, `scaffold for LLM` | Greenfield design | Complete LLM-optimized directory template | `references/layout-patterns.md` |
+| `audit`, `evaluate folder structure` | AUDIT only | Structure report with scores and recommendations | `reference/audit-checklist.md` |
+| `optimize`, `restructure for LLM` | Full workflow | Restructured directories + migration script | `reference/layout-patterns.md` |
+| `CLAUDE.md hierarchy`, `rules placement` | CLAUDE.md focus | Hierarchical rules design with placement plan | `reference/layout-patterns.md` |
+| `naming`, `discoverability` | Naming focus | Rename plan with glob/grep validation | `reference/naming-guide.md` |
+| `new project`, `scaffold for LLM` | Greenfield design | Complete LLM-optimized directory template | `reference/layout-patterns.md` |
 
 ## Output Requirements
 
@@ -216,7 +216,7 @@ project/
 | Group by domain, not type | `user/{model,routes,tests}` vs `models/user` | Co-located context reduces navigation |
 | Suffix conventions | `.config.`, `.test.`, `.spec.` | Reliable glob filtering |
 
-For detailed naming rules, anti-patterns, and validation tests → `references/naming-guide.md`
+For detailed naming rules, anti-patterns, and validation tests → `reference/naming-guide.md`
 
 ## CLAUDE.md Hierarchy Design
 
@@ -275,11 +275,11 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/audit-checklist.md` | Running AUDIT or VERIFY phase, need scoring criteria and test patterns |
-| `references/layout-patterns.md` | Designing new structure, need standard LLM-optimized templates |
-| `references/naming-guide.md` | Evaluating or fixing file/folder naming for LLM discoverability |
-| `references/sharding-strategy.md` | Splitting large CLAUDE.md/reference docs via @import while preserving cache prefixes |
-| `references/monorepo-topology.md` | Designing per-workspace CLAUDE.md cascade for turborepo / nx / pnpm-workspace |
+| `reference/audit-checklist.md` | Running AUDIT or VERIFY phase, need scoring criteria and test patterns |
+| `reference/layout-patterns.md` | Designing new structure, need standard LLM-optimized templates |
+| `reference/naming-guide.md` | Evaluating or fixing file/folder naming for LLM discoverability |
+| `reference/sharding-strategy.md` | Splitting large CLAUDE.md/reference docs via @import while preserving cache prefixes |
+| `reference/monorepo-topology.md` | Designing per-workspace CLAUDE.md cascade for turborepo / nx / pnpm-workspace |
 | `_common/OPUS_48_AUTHORING.md` | Sizing the structure proposal, deciding adaptive thinking depth at DESIGN, or front-loading LLM target/token budget at AUDIT. Critical for Nest: P3, P5 |
 
 ## Operational

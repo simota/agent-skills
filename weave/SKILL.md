@@ -174,13 +174,13 @@ Single source of truth for Recipe definitions. Behavior depth lives in the "Beha
 
 | Recipe | Subcommand | Default? | When to Use | Behavior | Read First |
 |--------|-----------|---------|-------------|----------|------------|
-| State Design | `design` | ✓ | State transition design | General state-machine design. Transition table + reachability + deadlock check. | `references/state-machine-patterns.md` |
-| Saga Pattern | `saga` | | Saga pattern distributed transactions | Top-level Saga shape (orchestration vs choreography, participants, boundary). For per-step compensation depth, switch to `compensation`. | `references/saga-patterns.md` |
-| Approval Flow | `approval` | | Approval flow design | Approval flow with BPMN 2.0 boundary timer + escalation (never error events). Includes SLA, delegation, and audit trail. | `references/approval-flow-patterns.md` |
-| Invalid Transition Detection | `detect` | | Invalid transition detection | Scan existing transition tables / code for invalid or missing transitions. | `references/state-machine-patterns.md` |
-| Retry State Machine | `retry` | | Exponential backoff, jitter, max-attempt cap, DLQ terminal state, idempotency contract | Exponential backoff (base × 2^n), jitter (full/equal/decorrelated), max-attempt cap, DLQ as terminal state, retriable-vs-non-retriable classification, idempotency key. Pair with `tempo` for schedules, Beacon for retry-exhaustion alerts. | `references/retry-state-machine.md` |
-| Timeout / TTL / Deadline | `timeout` | | TTL state design, deadline propagation, grace-period transitions, stuck-state recovery | Per-state timeout from business SLA, deadline propagation (context.deadline), grace-period transitions, stuck-state escape, soft-timeout (warn) vs hard-timeout (abort). Hand off to `tempo` for cron integration. | `references/timeout-ttl-design.md` |
-| Compensation Transactions | `compensation` | | Saga compensation per forward step, idempotency keys, compensation-of-compensation, ordering | Per-forward-step compensation; each idempotent, LIFO-ordered by default, handles compensation-of-compensation. Emit compensation table with idempotency keys, ordering, and failure-of-compensation escalation (hand off to Triage). | `references/compensation-transactions.md` |
+| State Design | `design` | ✓ | State transition design | General state-machine design. Transition table + reachability + deadlock check. | `reference/state-machine-patterns.md` |
+| Saga Pattern | `saga` | | Saga pattern distributed transactions | Top-level Saga shape (orchestration vs choreography, participants, boundary). For per-step compensation depth, switch to `compensation`. | `reference/saga-patterns.md` |
+| Approval Flow | `approval` | | Approval flow design | Approval flow with BPMN 2.0 boundary timer + escalation (never error events). Includes SLA, delegation, and audit trail. | `reference/approval-flow-patterns.md` |
+| Invalid Transition Detection | `detect` | | Invalid transition detection | Scan existing transition tables / code for invalid or missing transitions. | `reference/state-machine-patterns.md` |
+| Retry State Machine | `retry` | | Exponential backoff, jitter, max-attempt cap, DLQ terminal state, idempotency contract | Exponential backoff (base × 2^n), jitter (full/equal/decorrelated), max-attempt cap, DLQ as terminal state, retriable-vs-non-retriable classification, idempotency key. Pair with `tempo` for schedules, Beacon for retry-exhaustion alerts. | `reference/retry-state-machine.md` |
+| Timeout / TTL / Deadline | `timeout` | | TTL state design, deadline propagation, grace-period transitions, stuck-state recovery | Per-state timeout from business SLA, deadline propagation (context.deadline), grace-period transitions, stuck-state escape, soft-timeout (warn) vs hard-timeout (abort). Hand off to `tempo` for cron integration. | `reference/timeout-ttl-design.md` |
+| Compensation Transactions | `compensation` | | Saga compensation per forward step, idempotency keys, compensation-of-compensation, ordering | Per-forward-step compensation; each idempotent, LIFO-ordered by default, handles compensation-of-compensation. Emit compensation table with idempotency keys, ordering, and failure-of-compensation escalation (hand off to Triage). | `reference/compensation-transactions.md` |
 
 ### Signal Keywords → Recipe
 
@@ -222,7 +222,7 @@ Every Weave deliverable must include:
 - For distributed workflows: a compensation table pairing each forward step with its compensating transaction and per-intent idempotency key
 - Engine recommendation with non-functional justification (durability tier, cost band, vendor-lock stance, language affinity) — no engine recommendation without explicit requirements
 - Known-risks section naming unresolved deadlocks, compensation-failure modes, and race-condition candidates for Specter follow-up
-- Downstream handoff envelope (see `references/handoffs.md`) matching the next consumer (Builder / Canvas / Radar / Scribe / Judge)
+- Downstream handoff envelope (see `reference/handoffs.md`) matching the next consumer (Builder / Canvas / Radar / Scribe / Judge)
 
 ---
 
@@ -256,7 +256,7 @@ STATE_MACHINE:
 | Completeness | Every state × event combination is defined |
 | Guard consistency | Guard conditions are mutually consistent and exhaustive |
 
-Details → `references/state-machine-patterns.md`
+Details → `reference/state-machine-patterns.md`
 
 ---
 
@@ -286,7 +286,7 @@ SAGA_STEP:
   idempotency_key: "[key expression]"
 ```
 
-Details → `references/saga-patterns.md`
+Details → `reference/saga-patterns.md`
 
 ---
 
@@ -314,13 +314,13 @@ APPROVAL_FLOW:
     parallel_approval: false
 ```
 
-Details → `references/approval-flow-patterns.md`
+Details → `reference/approval-flow-patterns.md`
 
 ---
 
 ## Workflow Engine Selection
 
-Full comparison matrix, decision tree, and cost models → `references/engine-selection.md`.
+Full comparison matrix, decision tree, and cost models → `reference/engine-selection.md`.
 
 Quick orientation:
 - **Durable, long-running, polyglot** → Temporal (general default); Restate or DBOS Transact when minimal infra / Postgres-backed is preferred.
@@ -406,16 +406,16 @@ WEAVE_TO_BUILDER_HANDOFF:
 
 | File | Content |
 |------|---------|
-| `references/state-machine-patterns.md` | FSM / Statechart / XState pattern catalog, verification algorithms, anti-patterns |
-| `references/saga-patterns.md` | Orchestration / Choreography templates, compensation design rules, error-handling strategies |
-| `references/approval-flow-patterns.md` | Approval-flow archetypes, delegation / recall / audit-trail templates |
-| `references/engine-selection.md` | Selection guide across Temporal / Step Functions / Inngest / XState; non-functional checklist |
-| `references/event-driven-workflows.md` | Event Sourcing / CQRS / Process Manager / Outbox / DLQ / idempotency patterns |
-| `references/examples.md` | Output examples for order flow, travel-booking Saga, expense approval, subscription, and more |
-| `references/handoffs.md` | All handoff templates (Inbound: User / Scribe / Atlas / Nexus; Outbound: Builder / Canvas / Radar / Scribe / Judge) |
-| `references/retry-state-machine.md` | Retry state-machine design — exponential backoff, jitter (full / equal / decorrelated), max-attempt cap, DLQ as terminal state, retriable-vs-non-retriable error classification, idempotency-key contract |
-| `references/timeout-ttl-design.md` | TTL / deadline / expiry state design — per-state timeout from business SLA, deadline propagation, grace-period transitions, soft-vs-hard timeout, stuck-state recovery |
-| `references/compensation-transactions.md` | Saga per-forward-step compensation — idempotency keys, LIFO ordering, compensation-of-compensation, failure-of-compensation escalation |
+| `reference/state-machine-patterns.md` | FSM / Statechart / XState pattern catalog, verification algorithms, anti-patterns |
+| `reference/saga-patterns.md` | Orchestration / Choreography templates, compensation design rules, error-handling strategies |
+| `reference/approval-flow-patterns.md` | Approval-flow archetypes, delegation / recall / audit-trail templates |
+| `reference/engine-selection.md` | Selection guide across Temporal / Step Functions / Inngest / XState; non-functional checklist |
+| `reference/event-driven-workflows.md` | Event Sourcing / CQRS / Process Manager / Outbox / DLQ / idempotency patterns |
+| `reference/examples.md` | Output examples for order flow, travel-booking Saga, expense approval, subscription, and more |
+| `reference/handoffs.md` | All handoff templates (Inbound: User / Scribe / Atlas / Nexus; Outbound: Builder / Canvas / Radar / Scribe / Judge) |
+| `reference/retry-state-machine.md` | Retry state-machine design — exponential backoff, jitter (full / equal / decorrelated), max-attempt cap, DLQ as terminal state, retriable-vs-non-retriable error classification, idempotency-key contract |
+| `reference/timeout-ttl-design.md` | TTL / deadline / expiry state design — per-state timeout from business SLA, deadline propagation, grace-period transitions, soft-vs-hard timeout, stuck-state recovery |
+| `reference/compensation-transactions.md` | Saga per-forward-step compensation — idempotency keys, LIFO ordering, compensation-of-compensation, failure-of-compensation escalation |
 | `_common/OPUS_48_AUTHORING.md` | Sizing the design document, deciding adaptive thinking depth at VALIDATE/engine selection, or front-loading use case/scale/engine requirements at CAPTURE. Critical for Weave: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You emit state machine specs (XState / DSL) for interactive UI components in `nexus acceptance` Phase 2B as layer 3 of the Design-Code Contract (default → hover → focus → active → disabled → loading → error transitions). Used by `palette` for `state_proof` coverage gating. Also used in Layer A backend state machines for `rally engine-paradigm` Dual-Implementation Oracle in-scope (state-machine domain). |
 

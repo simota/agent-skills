@@ -143,17 +143,17 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Demo | `demo` | ✓ | Feature demo video recording and production | `references/scenario-guidelines.md`, `references/playwright-config.md` |
-| Scenario | `scenario` | | Scenario design, storyboard, archetype + hook plan | `references/scenario-guidelines.md`, `references/storytelling-archetypes.md` |
-| Record | `record` | | Playwright recording configuration and execution | `references/playwright-config.md`, `references/implementation-patterns.md` |
-| Onboard | `onboard` | | Onboarding and tutorial recording | `references/scenario-guidelines.md`, `references/implementation-patterns.md` |
-| Aspects | `aspects` | | Multi-aspect output (16:9 / 9:16 / 4:5 / 1:1) from a single scenario with platform-tuned framing | `references/playwright-config.md`, `references/scenario-guidelines.md` |
-| Vision Stream | `vision` | | `onFrame` JPEG streaming to Vision Models for agentic "watch-the-screen" loops or live narration | `references/implementation-patterns.md`, `references/playwright-config.md` |
-| Quality | `quality` | | Perceptual quality verification (VMAF / PSNR / SSIM), LUFS check, accessibility audit, reshoot decision | `references/quality-metrics.md`, `references/checklist.md` |
-| GEO | `geo` | | AI-citation packaging — transcript + VideoObject JSON-LD + chapter timestamps for AI Overviews / ChatGPT | `references/geo-packaging.md` |
-| Voiceover | `voiceover` | | TTS narration design — SSML pacing, voice selection (Inworld 1.5-Max / ElevenLabs v3 / Cartesia Sonic-3), Audio Tags, LUFS normalization | `references/voiceover-design.md` |
-| Captions | `captions` | | Caption authoring — SRT / WebVTT, WCAG 1.2.2 + 1.2.5 (AD), GPT-4o-Transcribe pipeline, forced / closed / open / open-burned variants | `references/captions-design.md` |
-| Thumbnail | `thumbnail` | | Per-platform thumbnail design (YouTube 1280×720, LinkedIn 1200×627, X 1600×900, Product Hunt 1200×1200) + A/B variants | `references/thumbnail-design.md` |
+| Demo | `demo` | ✓ | Feature demo video recording and production | `reference/scenario-guidelines.md`, `reference/playwright-config.md` |
+| Scenario | `scenario` | | Scenario design, storyboard, archetype + hook plan | `reference/scenario-guidelines.md`, `reference/storytelling-archetypes.md` |
+| Record | `record` | | Playwright recording configuration and execution | `reference/playwright-config.md`, `reference/implementation-patterns.md` |
+| Onboard | `onboard` | | Onboarding and tutorial recording | `reference/scenario-guidelines.md`, `reference/implementation-patterns.md` |
+| Aspects | `aspects` | | Multi-aspect output (16:9 / 9:16 / 4:5 / 1:1) from a single scenario with platform-tuned framing | `reference/playwright-config.md`, `reference/scenario-guidelines.md` |
+| Vision Stream | `vision` | | `onFrame` JPEG streaming to Vision Models for agentic "watch-the-screen" loops or live narration | `reference/implementation-patterns.md`, `reference/playwright-config.md` |
+| Quality | `quality` | | Perceptual quality verification (VMAF / PSNR / SSIM), LUFS check, accessibility audit, reshoot decision | `reference/quality-metrics.md`, `reference/checklist.md` |
+| GEO | `geo` | | AI-citation packaging — transcript + VideoObject JSON-LD + chapter timestamps for AI Overviews / ChatGPT | `reference/geo-packaging.md` |
+| Voiceover | `voiceover` | | TTS narration design — SSML pacing, voice selection (Inworld 1.5-Max / ElevenLabs v3 / Cartesia Sonic-3), Audio Tags, LUFS normalization | `reference/voiceover-design.md` |
+| Captions | `captions` | | Caption authoring — SRT / WebVTT, WCAG 1.2.2 + 1.2.5 (AD), GPT-4o-Transcribe pipeline, forced / closed / open / open-burned variants | `reference/captions-design.md` |
+| Thumbnail | `thumbnail` | | Per-platform thumbnail design (YouTube 1280×720, LinkedIn 1200×627, X 1600×900, Product Hunt 1200×1200) + A/B variants | `reference/thumbnail-design.md` |
 
 ## Subcommand Dispatch
 
@@ -176,34 +176,34 @@ Parse the first token of user input.
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `product demo`, `feature walkthrough`, `onboarding clip` | Standard demo recording | Demo video (`.webm`) + transcript + VideoObject JSON-LD | `references/scenario-guidelines.md` |
-| `stakeholder presentation`, `investor demo` | Presentation-pace recording with overlays | Demo video + delivery notes | `references/scenario-guidelines.md`, `references/implementation-patterns.md` |
-| `mobile demo`, `tablet demo`, `multi-device` | Device-specific recording with viewport config | Device-variant video set | `references/playwright-config.md` |
-| `vertical demo`, `Reels`, `Shorts`, `TikTok`, `9:16` | Vertical-aspect recording (1080×1920, 21–34s ideal) | 9:16 vertical demo set | `references/playwright-config.md`, `references/scenario-guidelines.md` |
-| `LinkedIn demo`, `4:5`, `feed-friendly` | LinkedIn-default 4:5 (1080×1350) recording, 15–60s | 4:5 vertical demo | `references/playwright-config.md`, `references/scenario-guidelines.md` |
-| `multi-aspect`, `aspect variants`, `cross-platform set` | Multi-aspect orchestration (16:9 + 9:16 + 4:5 + 1:1) from a single scenario | Per-aspect demo variants | `references/playwright-config.md`, `references/scenario-guidelines.md` |
-| `before/after`, `design comparison`, `visual diff` | Side-by-side or sequential comparison recording | Comparison demo video | `references/implementation-patterns.md` |
-| `persona demo`, `user journey recording` | Persona-aware recording with Echo integration | Persona-tuned demo video | `references/implementation-patterns.md` |
-| `E2E to demo`, `test flow demo` | Convert existing test to presentation recording | Repackaged demo video | `references/playwright-config.md`, `references/scenario-guidelines.md` |
-| `trace to demo`, `trace viewer demo` | Convert Playwright Trace capture to polished recording | Narrative demo from trace | `references/playwright-config.md` |
-| `agentic receipt`, `visual proof`, `agent recording` | Record automated agent/CI work as visual evidence | Screencast receipt video | `references/playwright-config.md`, `references/implementation-patterns.md` |
-| `vision stream`, `live narration`, `onFrame`, `agent watches screen` | `onFrame` JPEG streaming to Vision Model for live agentic feedback | Vision-streamed demo + frame log | `references/implementation-patterns.md`, `references/playwright-config.md` |
-| `GIF`, `inline demo`, `README embed` | Short-form recording with format conversion | GIF or short MP4 | `references/playwright-config.md` |
-| `social media demo`, `platform-specific` | Platform-adapted recording (pacing, captions, aspect ratio) | Platform-variant video set | `references/scenario-guidelines.md` |
-| `quality check`, `demo review`, `VMAF`, `perceptual quality` | Post-recording validation with numeric metrics | Checklist `/97` + VMAF/PSNR/SSIM + reshoot verdict | `references/quality-metrics.md`, `references/checklist.md` |
-| `GEO`, `AI citation`, `VideoObject`, `transcript schema` | AI-citation packaging | Transcript (`.vtt` + text) + VideoObject JSON-LD + chapters | `references/geo-packaging.md` |
-| `accessibility`, `WCAG`, `audio description`, `AD track` | WCAG 2.2 audit + AD authoring | Caption + AD + AAA verdict | `references/captions-design.md`, `references/voiceover-design.md` |
-| unclear demo request | Standard demo recording | Demo video (`.webm`) + transcript + VideoObject JSON-LD | `references/scenario-guidelines.md` |
+| `product demo`, `feature walkthrough`, `onboarding clip` | Standard demo recording | Demo video (`.webm`) + transcript + VideoObject JSON-LD | `reference/scenario-guidelines.md` |
+| `stakeholder presentation`, `investor demo` | Presentation-pace recording with overlays | Demo video + delivery notes | `reference/scenario-guidelines.md`, `reference/implementation-patterns.md` |
+| `mobile demo`, `tablet demo`, `multi-device` | Device-specific recording with viewport config | Device-variant video set | `reference/playwright-config.md` |
+| `vertical demo`, `Reels`, `Shorts`, `TikTok`, `9:16` | Vertical-aspect recording (1080×1920, 21–34s ideal) | 9:16 vertical demo set | `reference/playwright-config.md`, `reference/scenario-guidelines.md` |
+| `LinkedIn demo`, `4:5`, `feed-friendly` | LinkedIn-default 4:5 (1080×1350) recording, 15–60s | 4:5 vertical demo | `reference/playwright-config.md`, `reference/scenario-guidelines.md` |
+| `multi-aspect`, `aspect variants`, `cross-platform set` | Multi-aspect orchestration (16:9 + 9:16 + 4:5 + 1:1) from a single scenario | Per-aspect demo variants | `reference/playwright-config.md`, `reference/scenario-guidelines.md` |
+| `before/after`, `design comparison`, `visual diff` | Side-by-side or sequential comparison recording | Comparison demo video | `reference/implementation-patterns.md` |
+| `persona demo`, `user journey recording` | Persona-aware recording with Echo integration | Persona-tuned demo video | `reference/implementation-patterns.md` |
+| `E2E to demo`, `test flow demo` | Convert existing test to presentation recording | Repackaged demo video | `reference/playwright-config.md`, `reference/scenario-guidelines.md` |
+| `trace to demo`, `trace viewer demo` | Convert Playwright Trace capture to polished recording | Narrative demo from trace | `reference/playwright-config.md` |
+| `agentic receipt`, `visual proof`, `agent recording` | Record automated agent/CI work as visual evidence | Screencast receipt video | `reference/playwright-config.md`, `reference/implementation-patterns.md` |
+| `vision stream`, `live narration`, `onFrame`, `agent watches screen` | `onFrame` JPEG streaming to Vision Model for live agentic feedback | Vision-streamed demo + frame log | `reference/implementation-patterns.md`, `reference/playwright-config.md` |
+| `GIF`, `inline demo`, `README embed` | Short-form recording with format conversion | GIF or short MP4 | `reference/playwright-config.md` |
+| `social media demo`, `platform-specific` | Platform-adapted recording (pacing, captions, aspect ratio) | Platform-variant video set | `reference/scenario-guidelines.md` |
+| `quality check`, `demo review`, `VMAF`, `perceptual quality` | Post-recording validation with numeric metrics | Checklist `/97` + VMAF/PSNR/SSIM + reshoot verdict | `reference/quality-metrics.md`, `reference/checklist.md` |
+| `GEO`, `AI citation`, `VideoObject`, `transcript schema` | AI-citation packaging | Transcript (`.vtt` + text) + VideoObject JSON-LD + chapters | `reference/geo-packaging.md` |
+| `accessibility`, `WCAG`, `audio description`, `AD track` | WCAG 2.2 audit + AD authoring | Caption + AD + AAA verdict | `reference/captions-design.md`, `reference/voiceover-design.md` |
+| unclear demo request | Standard demo recording | Demo video (`.webm`) + transcript + VideoObject JSON-LD | `reference/scenario-guidelines.md` |
 
 Routing rules:
 
-- If the request involves a specific device, viewport, or aspect ratio, read `references/playwright-config.md`.
-- If the request involves storytelling, pacing, hook design, or audience tuning, read `references/scenario-guidelines.md` (and `references/storytelling-archetypes.md` for durations).
-- If the request involves overlays, annotations, advanced patterns, or Vision-Model streaming, read `references/implementation-patterns.md`.
-- If the request involves AI citation, transcript schema, or GEO, read `references/geo-packaging.md`.
-- If the request involves numeric quality verdict or reshoot decision, read `references/quality-metrics.md`.
-- If a handoff is inbound from Forge/Voyager/Vision/Echo or outbound to Showcase/Quill/Growth, read `references/handoff-formats.md`.
-- Always read `references/checklist.md` in the Deliver phase.
+- If the request involves a specific device, viewport, or aspect ratio, read `reference/playwright-config.md`.
+- If the request involves storytelling, pacing, hook design, or audience tuning, read `reference/scenario-guidelines.md` (and `reference/storytelling-archetypes.md` for durations).
+- If the request involves overlays, annotations, advanced patterns, or Vision-Model streaming, read `reference/implementation-patterns.md`.
+- If the request involves AI citation, transcript schema, or GEO, read `reference/geo-packaging.md`.
+- If the request involves numeric quality verdict or reshoot decision, read `reference/quality-metrics.md`.
+- If a handoff is inbound from Forge/Voyager/Vision/Echo or outbound to Showcase/Quill/Growth, read `reference/handoff-formats.md`.
+- Always read `reference/checklist.md` in the Deliver phase.
 
 ## Critical Constraints
 
@@ -211,38 +211,38 @@ Decision-level thresholds. Implementation detail and rationale live in reference
 
 | Topic | Threshold / Rule | Reference |
 |-------|------------------|-----------|
-| Recording API | **Primary: `page.screencast`** (1.59 Stable) for precise start/stop, chapters, action overlays, and onFrame; `recordVideo` for failure receipts / full-session backup | `references/playwright-config.md` |
-| Resolution default | `1920×1080` baseline (was 720p); 720p for inline / GIF-only flows; always set `size` explicitly — both APIs scale to `800×800` if omitted | `references/playwright-config.md` |
-| HiDPI (default for external) | `deviceScaleFactor: 2` for Retina-class fonts/icons at 1080p file size; or `--force-device-scale-factor=2` Chrome flag (don't combine both). Native 4K = raise viewport+video.size to 3840×2160 | `references/playwright-config.md` (High-Fidelity Capture) |
-| Render flags | `--font-render-hinting=none`, `--disable-gpu-vsync`, `--disable-features=PaintHolding` stabilize fonts and motion | `references/playwright-config.md` (High-Fidelity Capture) |
-| `screencast.quality` | `90–95` for external demos; below `80` shows visible compression | `references/playwright-config.md` |
-| Aspect presets | `16:9` 1920×1080 (web/YouTube), `9:16` 1080×1920 (TikTok/Reels/Shorts), `4:5` 1080×1350 (LinkedIn 2026 default), `1:1` 1080×1080 (Product Hunt) | `references/playwright-config.md` |
-| `slowMo` anchors | `300` quick, `500` standard, `600-700` form-heavy, `800-1000` presentation | `references/playwright-config.md` |
-| Typing | `pressSequentially` for on-camera forms (`50-200ms` delay); reserve `fill()` for off-camera setup | `references/implementation-patterns.md` |
-| Wait strategy | Locator-based waits for state; `waitForTimeout` only for pacing | `references/scenario-guidelines.md` |
-| Action annotations | Prefer `screencast.showActions()` / `showChapter()` before custom `showOverlay()` | `references/implementation-patterns.md` |
-| Output formats | `WebM` (VP9) baseline; `MP4` (H.264) for broad playback; `AV1` for high-compression archival; `GIF` only for inline/README | `references/playwright-config.md` |
-| 3-sec hook | Open with layered (visual + text + optional audio) hook in 0–3s — TikTok/Reels drop ~70% otherwise | `references/scenario-guidelines.md`, `references/storytelling-archetypes.md` |
-| Duration | `<30s` social/hook, `30-60s` standard, `60-90s` LinkedIn/YouTube optimal, `90-120s` complex; **HARD CAP 120s — split or chapterize past this (engagement -40%)** | `references/scenario-guidelines.md`, `references/storytelling-archetypes.md` |
-| Archetypes | `30s` social hook, `60s` Product Hunt/LP/X, `90s` LinkedIn/Hero, `180s` walkthrough (chaptered); `3×45s` series for complex products | `references/storytelling-archetypes.md` |
-| Platform optimal length | TikTok `21–34s` (Explore-friendly), Reels `<90s`, Shorts `<90s`, YouTube long `60–180s`, LinkedIn `15–60s` B2B | `references/scenario-guidelines.md` |
-| Embed steps | `6-8` for email/social, `8-15` for website/docs | `references/scenario-guidelines.md` |
-| Captions | Open captions (burned-in) for muted-autoplay social; closed captions (`.vtt`) for accessibility / SEO; ≤17 CPS, ≤42 chars/line, ≤2 lines | `references/captions-design.md` |
-| Caption pipeline | GPT-4o-Transcribe (WER 4.1%) preferred; Whisper-large-v3 fallback; always human QC for product names / homophones | `references/captions-design.md` |
-| Multilingual default | EN + JA captions minimum for external demos; auto-translate via DeepL/GPT-4o with human review | `references/captions-design.md` |
-| Voiceover providers | Inworld Realtime TTS 1.5-Max (ELO 1,236 #1), ElevenLabs v3 (Audio Tags + 70+ languages), Cartesia Sonic-3 (90ms TTFA), OpenAI Realtime TTS | `references/voiceover-design.md` |
-| LUFS target | `-14 LUFS` (YouTube, LinkedIn), `-16 LUFS` (Web, Vimeo), TP `≤ -1 dBTP` | `references/voiceover-design.md` |
-| Perceptual quality | `VMAF ≥ 90` / `PSNR ≥ 40 dB` / `SSIM ≥ 0.95` at 1080p (via `ffmpeg-quality-metrics`); below → reshoot or re-encode | `references/quality-metrics.md` |
-| Accessibility | WCAG 2.2 1.2.2 (captions) Level A mandatory; 1.2.4 (live) AA; 1.2.5 (audio description) AA when visual-only content exists | `references/checklist.md` |
-| GEO / AI citation | Ship `.vtt` transcript + plaintext + `VideoObject` JSON-LD with chapters for every external demo (AI citation +325%, CTR +41%) | `references/geo-packaging.md` |
-| Quality gate | `/97` scorecard (was `/65`); `<50` = reshoot, `50–70` = ship-with-fixes, `>70` = ship | `references/checklist.md` |
-| Browser engine | Chrome for Testing since v1.57; pin `channel: 'chromium'` only if reproducibility / CI memory demands it | `references/playwright-config.md` |
-| Agentic receipts | Prefer `@playwright/cli` with filesystem access; use MCP for sandboxed / iterative sessions; use `onFrame` JPEG stream for Vision-in-the-loop | `references/playwright-config.md`, `references/implementation-patterns.md` |
-| Shared session | `browser.bind()` (v1.59 Stable) shares a browser between demo, CLI, and MCP clients via WebSocket — view dashboard with `playwright-cli show` | `references/playwright-config.md` |
-| Snapshot mode | v1.59 default `incremental snapshot` cuts long-session token cost vs full snapshot — beneficial for agent-driven recording | `references/playwright-config.md` |
-| Artifact hygiene | Clean `test-results/` after each session — `.webm` files are `2–5 MB/min` at 720p, `4–8 MB/min` at 1080p | `references/playwright-config.md` |
-| File naming | `[feature]_[action]_[aspect]_[date].webm` (e.g., `checkout_complete_9x16_20260515.webm`) — always rename after recording | `references/playwright-config.md` |
-| Demo vs AI-video | Director records **real product UI** with Playwright. For non-existent UI / hero films, route to AI video generators (Sora 2, Veo 3.1, Runway Gen-4.5) — these are complementary, not competitive | `references/scenario-guidelines.md` |
+| Recording API | **Primary: `page.screencast`** (1.59 Stable) for precise start/stop, chapters, action overlays, and onFrame; `recordVideo` for failure receipts / full-session backup | `reference/playwright-config.md` |
+| Resolution default | `1920×1080` baseline (was 720p); 720p for inline / GIF-only flows; always set `size` explicitly — both APIs scale to `800×800` if omitted | `reference/playwright-config.md` |
+| HiDPI (default for external) | `deviceScaleFactor: 2` for Retina-class fonts/icons at 1080p file size; or `--force-device-scale-factor=2` Chrome flag (don't combine both). Native 4K = raise viewport+video.size to 3840×2160 | `reference/playwright-config.md` (High-Fidelity Capture) |
+| Render flags | `--font-render-hinting=none`, `--disable-gpu-vsync`, `--disable-features=PaintHolding` stabilize fonts and motion | `reference/playwright-config.md` (High-Fidelity Capture) |
+| `screencast.quality` | `90–95` for external demos; below `80` shows visible compression | `reference/playwright-config.md` |
+| Aspect presets | `16:9` 1920×1080 (web/YouTube), `9:16` 1080×1920 (TikTok/Reels/Shorts), `4:5` 1080×1350 (LinkedIn 2026 default), `1:1` 1080×1080 (Product Hunt) | `reference/playwright-config.md` |
+| `slowMo` anchors | `300` quick, `500` standard, `600-700` form-heavy, `800-1000` presentation | `reference/playwright-config.md` |
+| Typing | `pressSequentially` for on-camera forms (`50-200ms` delay); reserve `fill()` for off-camera setup | `reference/implementation-patterns.md` |
+| Wait strategy | Locator-based waits for state; `waitForTimeout` only for pacing | `reference/scenario-guidelines.md` |
+| Action annotations | Prefer `screencast.showActions()` / `showChapter()` before custom `showOverlay()` | `reference/implementation-patterns.md` |
+| Output formats | `WebM` (VP9) baseline; `MP4` (H.264) for broad playback; `AV1` for high-compression archival; `GIF` only for inline/README | `reference/playwright-config.md` |
+| 3-sec hook | Open with layered (visual + text + optional audio) hook in 0–3s — TikTok/Reels drop ~70% otherwise | `reference/scenario-guidelines.md`, `reference/storytelling-archetypes.md` |
+| Duration | `<30s` social/hook, `30-60s` standard, `60-90s` LinkedIn/YouTube optimal, `90-120s` complex; **HARD CAP 120s — split or chapterize past this (engagement -40%)** | `reference/scenario-guidelines.md`, `reference/storytelling-archetypes.md` |
+| Archetypes | `30s` social hook, `60s` Product Hunt/LP/X, `90s` LinkedIn/Hero, `180s` walkthrough (chaptered); `3×45s` series for complex products | `reference/storytelling-archetypes.md` |
+| Platform optimal length | TikTok `21–34s` (Explore-friendly), Reels `<90s`, Shorts `<90s`, YouTube long `60–180s`, LinkedIn `15–60s` B2B | `reference/scenario-guidelines.md` |
+| Embed steps | `6-8` for email/social, `8-15` for website/docs | `reference/scenario-guidelines.md` |
+| Captions | Open captions (burned-in) for muted-autoplay social; closed captions (`.vtt`) for accessibility / SEO; ≤17 CPS, ≤42 chars/line, ≤2 lines | `reference/captions-design.md` |
+| Caption pipeline | GPT-4o-Transcribe (WER 4.1%) preferred; Whisper-large-v3 fallback; always human QC for product names / homophones | `reference/captions-design.md` |
+| Multilingual default | EN + JA captions minimum for external demos; auto-translate via DeepL/GPT-4o with human review | `reference/captions-design.md` |
+| Voiceover providers | Inworld Realtime TTS 1.5-Max (ELO 1,236 #1), ElevenLabs v3 (Audio Tags + 70+ languages), Cartesia Sonic-3 (90ms TTFA), OpenAI Realtime TTS | `reference/voiceover-design.md` |
+| LUFS target | `-14 LUFS` (YouTube, LinkedIn), `-16 LUFS` (Web, Vimeo), TP `≤ -1 dBTP` | `reference/voiceover-design.md` |
+| Perceptual quality | `VMAF ≥ 90` / `PSNR ≥ 40 dB` / `SSIM ≥ 0.95` at 1080p (via `ffmpeg-quality-metrics`); below → reshoot or re-encode | `reference/quality-metrics.md` |
+| Accessibility | WCAG 2.2 1.2.2 (captions) Level A mandatory; 1.2.4 (live) AA; 1.2.5 (audio description) AA when visual-only content exists | `reference/checklist.md` |
+| GEO / AI citation | Ship `.vtt` transcript + plaintext + `VideoObject` JSON-LD with chapters for every external demo (AI citation +325%, CTR +41%) | `reference/geo-packaging.md` |
+| Quality gate | `/97` scorecard (was `/65`); `<50` = reshoot, `50–70` = ship-with-fixes, `>70` = ship | `reference/checklist.md` |
+| Browser engine | Chrome for Testing since v1.57; pin `channel: 'chromium'` only if reproducibility / CI memory demands it | `reference/playwright-config.md` |
+| Agentic receipts | Prefer `@playwright/cli` with filesystem access; use MCP for sandboxed / iterative sessions; use `onFrame` JPEG stream for Vision-in-the-loop | `reference/playwright-config.md`, `reference/implementation-patterns.md` |
+| Shared session | `browser.bind()` (v1.59 Stable) shares a browser between demo, CLI, and MCP clients via WebSocket — view dashboard with `playwright-cli show` | `reference/playwright-config.md` |
+| Snapshot mode | v1.59 default `incremental snapshot` cuts long-session token cost vs full snapshot — beneficial for agent-driven recording | `reference/playwright-config.md` |
+| Artifact hygiene | Clean `test-results/` after each session — `.webm` files are `2–5 MB/min` at 720p, `4–8 MB/min` at 1080p | `reference/playwright-config.md` |
+| File naming | `[feature]_[action]_[aspect]_[date].webm` (e.g., `checkout_complete_9x16_20260515.webm`) — always rename after recording | `reference/playwright-config.md` |
+| Demo vs AI-video | Director records **real product UI** with Playwright. For non-existent UI / hero films, route to AI video generators (Sora 2, Veo 3.1, Runway Gen-4.5) — these are complementary, not competitive | `reference/scenario-guidelines.md` |
 
 ## Output Requirements
 
@@ -260,7 +260,7 @@ Decision-level thresholds. Implementation detail and rationale live in reference
 **Receives:** Forge (prototype ready), Voyager (E2E test → demo), Vision (design review), Echo (persona behavior), Builder (feature flow)
 **Sends:** Showcase (demo → Storybook), Quill (demo + transcript for docs), Growth (marketing assets, multi-aspect set, VideoObject JSON-LD), Echo (demo for UX validation), Palette (UX comparison)
 
-Point-to-point handoff templates (outside Nexus Hub Mode): see `references/handoff-formats.md`.
+Point-to-point handoff templates (outside Nexus Hub Mode): see `reference/handoff-formats.md`.
 
 **Overlap boundaries:**
 - **vs Voyager**: Voyager = E2E test coverage and cross-browser validation; Director = presentable demo recordings with storytelling.
@@ -274,17 +274,17 @@ Point-to-point handoff templates (outside Nexus Hub Mode): see `references/hando
 
 | File | Read this when |
 |------|----------------|
-| `references/playwright-config.md` | You need recording config, `page.screencast` setup, aspect/device settings, `slowMo`, format conversion, naming conventions, environment variables, CI, Chrome-for-Testing notes, MCP vs CLI decision, or troubleshooting. |
-| `references/scenario-guidelines.md` | You need story structure, pacing, 3-sec hook design, audience tuning, overlay timing, duration benchmarks, 2-min cliff handling, platform-adapted pacing, anti-patterns, or scenario review guidance. |
-| `references/storytelling-archetypes.md` | You are picking an archetype (30s social hook / 60s Product Hunt / 90s LinkedIn / 180s walkthrough / 3×45s series) and need duration budget, beat-by-beat blueprint, or hook templates. |
-| `references/implementation-patterns.md` | You need Playwright scene patterns, `page.screencast` API recipes, `onFrame` Vision streaming, auth setup, overlays, B-roll, before/after comparisons, AI narration, persona-aware demos, ARIA validation, or complete demo examples. |
-| `references/quality-metrics.md` | You are running the `quality` recipe and need VMAF/PSNR/SSIM thresholds, `ffmpeg-quality-metrics` invocation, LUFS verification, reshoot decision logic, or CI integration. |
-| `references/geo-packaging.md` | You are running the `geo` recipe and need transcript packaging, VideoObject JSON-LD schema, chapter cue mapping, AI citation rules, or YouTube/web embed metadata. |
-| `references/handoff-formats.md` | You need point-to-point handoff templates for Forge/Voyager/Vision/Echo → Director or Director → Showcase/Quill/Growth outside Nexus Hub Mode. |
-| `references/checklist.md` | You need pre-recording, post-recording, pre-delivery, quick-check, or `/97` quality-score gates. |
-| `references/voiceover-design.md` | You are running the `voiceover` recipe and need SSML pacing (150-160 WPM), voice selection (Inworld 1.5-Max / ElevenLabs v3 / Cartesia Sonic-3 / OpenAI Realtime), Audio Tags, de-essing, breathing pauses, or -14/-16 LUFS normalization. |
-| `references/captions-design.md` | You are running the `captions` recipe and need SRT/WebVTT authoring rules, GPT-4o-Transcribe pipeline, WCAG 1.2.2 + 1.2.5 timing, reading speed (≤17 CPS), or forced/closed/open/burned-in variant selection. |
-| `references/thumbnail-design.md` | You are running the `thumbnail` recipe and need per-platform variants (YouTube/LinkedIn/X/Product Hunt), A/B variant patterns (face-first vs product-first for B2B/dev tools), or contrast/typography rules. |
+| `reference/playwright-config.md` | You need recording config, `page.screencast` setup, aspect/device settings, `slowMo`, format conversion, naming conventions, environment variables, CI, Chrome-for-Testing notes, MCP vs CLI decision, or troubleshooting. |
+| `reference/scenario-guidelines.md` | You need story structure, pacing, 3-sec hook design, audience tuning, overlay timing, duration benchmarks, 2-min cliff handling, platform-adapted pacing, anti-patterns, or scenario review guidance. |
+| `reference/storytelling-archetypes.md` | You are picking an archetype (30s social hook / 60s Product Hunt / 90s LinkedIn / 180s walkthrough / 3×45s series) and need duration budget, beat-by-beat blueprint, or hook templates. |
+| `reference/implementation-patterns.md` | You need Playwright scene patterns, `page.screencast` API recipes, `onFrame` Vision streaming, auth setup, overlays, B-roll, before/after comparisons, AI narration, persona-aware demos, ARIA validation, or complete demo examples. |
+| `reference/quality-metrics.md` | You are running the `quality` recipe and need VMAF/PSNR/SSIM thresholds, `ffmpeg-quality-metrics` invocation, LUFS verification, reshoot decision logic, or CI integration. |
+| `reference/geo-packaging.md` | You are running the `geo` recipe and need transcript packaging, VideoObject JSON-LD schema, chapter cue mapping, AI citation rules, or YouTube/web embed metadata. |
+| `reference/handoff-formats.md` | You need point-to-point handoff templates for Forge/Voyager/Vision/Echo → Director or Director → Showcase/Quill/Growth outside Nexus Hub Mode. |
+| `reference/checklist.md` | You need pre-recording, post-recording, pre-delivery, quick-check, or `/97` quality-score gates. |
+| `reference/voiceover-design.md` | You are running the `voiceover` recipe and need SSML pacing (150-160 WPM), voice selection (Inworld 1.5-Max / ElevenLabs v3 / Cartesia Sonic-3 / OpenAI Realtime), Audio Tags, de-essing, breathing pauses, or -14/-16 LUFS normalization. |
+| `reference/captions-design.md` | You are running the `captions` recipe and need SRT/WebVTT authoring rules, GPT-4o-Transcribe pipeline, WCAG 1.2.2 + 1.2.5 timing, reading speed (≤17 CPS), or forced/closed/open/burned-in variant selection. |
+| `reference/thumbnail-design.md` | You are running the `thumbnail` recipe and need per-platform variants (YouTube/LinkedIn/X/Product Hunt), A/B variant patterns (face-first vs product-first for B2B/dev tools), or contrast/typography rules. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the demo package, deciding adaptive thinking depth at scenario/overlay design, or front-loading purpose/audience/duration at PLAN. Critical for Director: P3, P5. |
 
 ## Operational

@@ -168,8 +168,8 @@ Whether to ignore `.agents/apex-dash/` itself is a per-repo decision (commit it 
 
 Actual code changes are deferred to a separate task; pointers are recorded here.
 
-- Add **§13 Live Dashboard Integration** to `nexus/references/apex-recipe.md` and reference this document
-- Insert one-line `emit phase_enter ...` calls at the top of each phase description in `nexus/references/apex-walkthrough.md`
+- Add **§13 Live Dashboard Integration** to `nexus/reference/apex-recipe.md` and reference this document
+- Insert one-line `emit phase_enter ...` calls at the top of each phase description in `nexus/reference/apex-walkthrough.md`
 - Annotate the Output Routing table in `nexus/SKILL.md`: "When `/nexus apex` starts, run dashboard pre-flight"
 - No new skills or new references are required
 

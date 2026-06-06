@@ -117,10 +117,10 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `SURVEY` | Detect language, framework, layout, and drift | Project profile before proposals | `references/cultural-dna.md` |
-| `PLAN` | Choose target structure and migration level | Incremental migrations; one concern per PR | `references/migration-strategies.md` |
-| `VERIFY` | Check impact, health score, and migration safety | Score must not decrease after migration | `references/audit-commands.md` |
-| `PRESENT` | Deliver report and handoffs | Include health grade and next agent | `references/anti-patterns.md` |
+| `SURVEY` | Detect language, framework, layout, and drift | Project profile before proposals | `reference/cultural-dna.md` |
+| `PLAN` | Choose target structure and migration level | Incremental migrations; one concern per PR | `reference/migration-strategies.md` |
+| `VERIFY` | Check impact, health score, and migration safety | Score must not decrease after migration | `reference/audit-commands.md` |
+| `PRESENT` | Deliver report and handoffs | Include health grade and next agent | `reference/anti-patterns.md` |
 
 ## Recipes
 
@@ -128,13 +128,13 @@ Single source of truth for Recipe definitions. Full phase contracts live in each
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Structure Audit | `audit` | ✓ | Audit existing repo structure, detect anti-patterns (AP-001 to AP-016); emphasize SURVEY phase | `references/anti-patterns.md` |
-| New Structure Design | `design` | | Design a new directory structure following detected language/framework native conventions | `references/directory-templates.md` |
-| Docs Layout | `docs` | | Scribe-compatible docs/ layout (PRD, specs, ADR directories) | `references/docs-structure.md` |
-| Migration Plan | `migrate` | | Incremental L1-L5 migration plan; every step keeps CI green | `references/migration-strategies.md` |
-| Monorepo Structure | `monorepo` | | Workspace tool selection (Turborepo/Nx/pnpm/Bazel; avoid Lerna for new repos), apps/libs/packages split, CODEOWNERS, remote build cache, polyrepo→monorepo migration with `git subtree`/`filter-repo` for blame preservation | `references/monorepo-structure.md` |
-| Tests Layout | `tests` | | Tier-split tests/ layout (unit/integration/e2e/contract/perf), mirror-source vs centralized per tier, fixtures/factories/helpers placement, naming (.test/.spec) aligned with CI tier selectors | `references/tests-layout.md` |
-| Scripts Organization | `scripts` | | Language-pick rubric (shell ≤30 LOC / Node 30–200 / Python >200 / Go for binaries), category split (setup/dev/build/release/ci/maintenance), verb-noun naming, shebang/`+x` hygiene | `references/scripts-organization.md` |
+| Structure Audit | `audit` | ✓ | Audit existing repo structure, detect anti-patterns (AP-001 to AP-016); emphasize SURVEY phase | `reference/anti-patterns.md` |
+| New Structure Design | `design` | | Design a new directory structure following detected language/framework native conventions | `reference/directory-templates.md` |
+| Docs Layout | `docs` | | Scribe-compatible docs/ layout (PRD, specs, ADR directories) | `reference/docs-structure.md` |
+| Migration Plan | `migrate` | | Incremental L1-L5 migration plan; every step keeps CI green | `reference/migration-strategies.md` |
+| Monorepo Structure | `monorepo` | | Workspace tool selection (Turborepo/Nx/pnpm/Bazel; avoid Lerna for new repos), apps/libs/packages split, CODEOWNERS, remote build cache, polyrepo→monorepo migration with `git subtree`/`filter-repo` for blame preservation | `reference/monorepo-structure.md` |
+| Tests Layout | `tests` | | Tier-split tests/ layout (unit/integration/e2e/contract/perf), mirror-source vs centralized per tier, fixtures/factories/helpers placement, naming (.test/.spec) aligned with CI tier selectors | `reference/tests-layout.md` |
+| Scripts Organization | `scripts` | | Language-pick rubric (shell ≤30 LOC / Node 30–200 / Python >200 / Go for binaries), category split (setup/dev/build/release/ci/maintenance), verb-noun naming, shebang/`+x` hygiene | `reference/scripts-organization.md` |
 
 ### Signal Keywords → Recipe
 
@@ -147,7 +147,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `docs`, `documentation structure` | `docs` |
 | `migrate`, `restructure`, `reorganize` | `migrate` |
 | `monorepo`, `workspace`, `packages`, `monorepo tool`, `Nx`, `Turborepo`, `Bazel` | `monorepo` |
-| `convention`, `drift`, `DNA` | `audit` (with `references/cultural-dna.md`) |
+| `convention`, `drift`, `DNA` | `audit` (with `reference/cultural-dna.md`) |
 | `orphan`, `cleanup`, `unused files` | `audit` (handoff to Sweep) |
 | `gitops`, `deployment config`, `app vs config separation` | `design` (with GitOps separation) |
 | `governance`, `Well-Architected`, `naming convention` | `audit` (scaling governance) |
@@ -186,20 +186,20 @@ Every Grove deliverable should include:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/anti-patterns.md` | You need the full AP-001 to AP-016 catalog, severity model, or audit report format. |
-| `references/audit-commands.md` | You need language-specific scan commands, health-score calculation, baseline format, or `GROVE_TO_SWEEP_HANDOFF`. |
-| `references/directory-templates.md` | You are choosing a language-specific repository or monorepo layout. |
-| `references/docs-structure.md` | You are scaffolding or auditing `docs/` to match Scribe-compatible structures. |
-| `references/migration-strategies.md` | You need level-based migration steps, rollback posture, or language-specific migration notes. |
-| `references/monorepo-health.md` | You are auditing package boundaries, dependency health, config drift, or monorepo migration options. |
-| `references/cultural-dna.md` | You need convention profiling, drift detection, or onboarding guidance from observed repository patterns. |
-| `references/monorepo-strategy-anti-patterns.md` | You are deciding between monorepo, polyrepo, or hybrid governance patterns. |
-| `references/codebase-organization-anti-patterns.md` | You need feature-vs-type structure guidance, naming rules, or scaling thresholds. |
-| `references/documentation-architecture-anti-patterns.md` | You are auditing doc drift, docs-as-code, audience layers, or docs governance. |
-| `references/project-scaffolding-anti-patterns.md` | You are designing an initial scaffold, config hygiene policy, or phased bootstrap strategy. |
-| `references/monorepo-structure.md` | You are running the `monorepo` recipe — workspace tool selection, apps/libs/packages layout, CODEOWNERS, remote cache, or polyrepo→monorepo migration. |
-| `references/tests-layout.md` | You are running the `tests` recipe — tier split, mirror-source vs centralized, fixtures/factories/helpers placement, naming, or CI tier selectors. |
-| `references/scripts-organization.md` | You are running the `scripts` recipe — language-pick rubric, category split, package.json delegation, naming, or shebang/`+x` hygiene. |
+| `reference/anti-patterns.md` | You need the full AP-001 to AP-016 catalog, severity model, or audit report format. |
+| `reference/audit-commands.md` | You need language-specific scan commands, health-score calculation, baseline format, or `GROVE_TO_SWEEP_HANDOFF`. |
+| `reference/directory-templates.md` | You are choosing a language-specific repository or monorepo layout. |
+| `reference/docs-structure.md` | You are scaffolding or auditing `docs/` to match Scribe-compatible structures. |
+| `reference/migration-strategies.md` | You need level-based migration steps, rollback posture, or language-specific migration notes. |
+| `reference/monorepo-health.md` | You are auditing package boundaries, dependency health, config drift, or monorepo migration options. |
+| `reference/cultural-dna.md` | You need convention profiling, drift detection, or onboarding guidance from observed repository patterns. |
+| `reference/monorepo-strategy-anti-patterns.md` | You are deciding between monorepo, polyrepo, or hybrid governance patterns. |
+| `reference/codebase-organization-anti-patterns.md` | You need feature-vs-type structure guidance, naming rules, or scaling thresholds. |
+| `reference/documentation-architecture-anti-patterns.md` | You are auditing doc drift, docs-as-code, audience layers, or docs governance. |
+| `reference/project-scaffolding-anti-patterns.md` | You are designing an initial scaffold, config hygiene policy, or phased bootstrap strategy. |
+| `reference/monorepo-structure.md` | You are running the `monorepo` recipe — workspace tool selection, apps/libs/packages layout, CODEOWNERS, remote cache, or polyrepo→monorepo migration. |
+| `reference/tests-layout.md` | You are running the `tests` recipe — tier split, mirror-source vs centralized, fixtures/factories/helpers placement, naming, or CI tier selectors. |
+| `reference/scripts-organization.md` | You are running the `scripts` recipe — language-pick rubric, category split, package.json delegation, naming, or shebang/`+x` hygiene. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the structure audit, deciding adaptive thinking depth at DESIGN, or front-loading mono/polyrepo/language stack at AUDIT. Critical for Grove: P3, P5. |
 
 ## Operational

@@ -110,9 +110,9 @@ Route elsewhere when the task is primarily:
 
 | Phase | Focus | Required checks | Read |
 |-------|-------|-----------------|------|
-| `Model` | Entities, relationships, data types, constraints | Tables, PK/FK, normalization rationale, common-pattern choice | `references/normalization-guide.md` |
-| `Migrate` | Safe schema change plan | Ordered migration steps, rollback note, lock-risk notes | `references/migration-patterns.md` |
-| `Validate` | Query patterns, indexes, framework fit, growth | Index plan, risks, DB/framework notes, ER diagram when useful | `references/index-strategies.md` |
+| `Model` | Entities, relationships, data types, constraints | Tables, PK/FK, normalization rationale, common-pattern choice | `reference/normalization-guide.md` |
+| `Migrate` | Safe schema change plan | Ordered migration steps, rollback note, lock-risk notes | `reference/migration-patterns.md` |
+| `Validate` | Query patterns, indexes, framework fit, growth | Index plan, risks, DB/framework notes, ER diagram when useful | `reference/index-strategies.md` |
 
 ## Execution Modes
 
@@ -126,7 +126,7 @@ Route elsewhere when the task is primarily:
 
 ## Critical Decision Rules
 
-- Use `3NF` by default. Read [normalization-guide.md](references/normalization-guide.md) when deciding whether to denormalize.
+- Use `3NF` by default. Read [normalization-guide.md](reference/normalization-guide.md) when deciding whether to denormalize.
 - Use these default index mappings:
 
 | Query pattern | Default index | Notes |
@@ -165,43 +165,43 @@ Route elsewhere when the task is primarily:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| new table / relationship design | Model → Migrate → Validate | DDL, ER diagram, migration plan | `references/normalization-guide.md` |
-| migration for existing schema | Expand-contract safety analysis | ordered migration steps, rollback path, lock-risk notes | `references/migration-patterns.md` |
-| index design / slow query schema | Access-pattern-driven index selection | index plan with type rationale | `references/index-strategies.md` |
-| multi-tenant schema | Isolation strategy evaluation | RLS policies, partitioning plan, tenant_id design | `references/multi-tenant-patterns.md` |
-| vector / AI embedding schema | pgvector column + index design | vector column DDL, HNSW/IVF config, halfvec, hybrid prefilter guidance | `references/advanced-patterns.md` |
-| temporal / scheduling schema | Temporal constraint design | WITHOUT OVERLAPS PK/FK, period columns, bitemporal pattern | `references/advanced-patterns.md` |
-| anti-pattern review | Schema audit against known anti-patterns | findings with severity and fix recommendations | `references/schema-design-anti-patterns.md` |
+| new table / relationship design | Model → Migrate → Validate | DDL, ER diagram, migration plan | `reference/normalization-guide.md` |
+| migration for existing schema | Expand-contract safety analysis | ordered migration steps, rollback path, lock-risk notes | `reference/migration-patterns.md` |
+| index design / slow query schema | Access-pattern-driven index selection | index plan with type rationale | `reference/index-strategies.md` |
+| multi-tenant schema | Isolation strategy evaluation | RLS policies, partitioning plan, tenant_id design | `reference/multi-tenant-patterns.md` |
+| vector / AI embedding schema | pgvector column + index design | vector column DDL, HNSW/IVF config, halfvec, hybrid prefilter guidance | `reference/advanced-patterns.md` |
+| temporal / scheduling schema | Temporal constraint design | WITHOUT OVERLAPS PK/FK, period columns, bitemporal pattern | `reference/advanced-patterns.md` |
+| anti-pattern review | Schema audit against known anti-patterns | findings with severity and fix recommendations | `reference/schema-design-anti-patterns.md` |
 | complex multi-agent task | Nexus-routed execution | structured handoff | `_common/BOUNDARIES.md` |
-| unclear request | Clarify scope and route | scoped analysis | `references/` |
+| unclear request | Clarify scope and route | scoped analysis | `reference/` |
 
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- If the request involves normalization or denormalization decisions, read `references/normalization-guide.md`.
-- If the request involves index design or query optimization, read `references/index-strategies.md`.
-- If the request involves migration sequencing or zero-downtime changes, read `references/migration-patterns.md`.
-- If the request involves anti-pattern review, read `references/data-modeling-anti-patterns.md` or `references/schema-design-anti-patterns.md`.
-- If the request involves PostgreSQL 18 features (UUIDv7, virtual generated columns, temporal constraints, skip scan, async I/O, OAuth, DDL replication), read `references/postgresql18-features.md`. For PG 17-only clusters or SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, `SPLIT`/`MERGE PARTITION`), read `references/postgresql17-features.md`.
-- If the request involves multi-tenant architecture, read `references/multi-tenant-patterns.md`.
-- If the request involves event sourcing, CQRS, pgvector, or bitemporal design, read `references/advanced-patterns.md`.
-- Always read relevant `references/` files before producing output.
+- If the request involves normalization or denormalization decisions, read `reference/normalization-guide.md`.
+- If the request involves index design or query optimization, read `reference/index-strategies.md`.
+- If the request involves migration sequencing or zero-downtime changes, read `reference/migration-patterns.md`.
+- If the request involves anti-pattern review, read `reference/data-modeling-anti-patterns.md` or `reference/schema-design-anti-patterns.md`.
+- If the request involves PostgreSQL 18 features (UUIDv7, virtual generated columns, temporal constraints, skip scan, async I/O, OAuth, DDL replication), read `reference/postgresql18-features.md`. For PG 17-only clusters or SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, `SPLIT`/`MERGE PARTITION`), read `reference/postgresql17-features.md`.
+- If the request involves multi-tenant architecture, read `reference/multi-tenant-patterns.md`.
+- If the request involves event sourcing, CQRS, pgvector, or bitemporal design, read `reference/advanced-patterns.md`.
+- Always read relevant `reference/` files before producing output.
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Schema Design | `design` | ✓ | New table or entity design | `references/schema-examples.md` |
-| Migration Plan | `migration` | | Schema change and migration design | `references/migration-patterns.md` |
-| ER Diagram | `er` | | ER diagram generation and review | `references/schema-examples.md` |
-| Normalization | `normalize` | | Normalization vs denormalization decisions | `references/normalization-guide.md` |
-| Index Strategy | `index` | | Index design and optimization | `references/index-strategies.md` |
-| Migration Rollback | `rollback` | | Reverse-operation design for destructive migrations (reverse DDL / dual-write / backfill / alternatives to destructive changes) | `references/migration-rollback.md` |
-| Multi-Tenant Design | `tenant` | | Tenant isolation strategy (shared-DB / schema-per-tenant / DB-per-tenant / shard) with RLS and routing design | `references/multi-tenant-patterns.md` |
-| Partitioning | `partition` | | range / list / hash / time-based partition design (pruning / maintenance / migration) | `references/partition-strategies.md` |
-| Audit Log | `audit-log` | | Append-only audit-log schema — temporal tables, logical replication, before/after image, retention | `references/audit-log-schema.md` |
-| Event Sourcing | `event-sourcing` | | Event store schema — events / projections / snapshots / outbox, aggregate boundaries | `references/event-sourcing-schema.md` |
-| Soft Delete | `soft-delete` | | Logical deletion patterns (deleted_at / status / tombstone) with GDPR right-to-erasure interaction | `references/soft-delete-patterns.md` |
+| Schema Design | `design` | ✓ | New table or entity design | `reference/schema-examples.md` |
+| Migration Plan | `migration` | | Schema change and migration design | `reference/migration-patterns.md` |
+| ER Diagram | `er` | | ER diagram generation and review | `reference/schema-examples.md` |
+| Normalization | `normalize` | | Normalization vs denormalization decisions | `reference/normalization-guide.md` |
+| Index Strategy | `index` | | Index design and optimization | `reference/index-strategies.md` |
+| Migration Rollback | `rollback` | | Reverse-operation design for destructive migrations (reverse DDL / dual-write / backfill / alternatives to destructive changes) | `reference/migration-rollback.md` |
+| Multi-Tenant Design | `tenant` | | Tenant isolation strategy (shared-DB / schema-per-tenant / DB-per-tenant / shard) with RLS and routing design | `reference/multi-tenant-patterns.md` |
+| Partitioning | `partition` | | range / list / hash / time-based partition design (pruning / maintenance / migration) | `reference/partition-strategies.md` |
+| Audit Log | `audit-log` | | Append-only audit-log schema — temporal tables, logical replication, before/after image, retention | `reference/audit-log-schema.md` |
+| Event Sourcing | `event-sourcing` | | Event store schema — events / projections / snapshots / outbox, aggregate boundaries | `reference/event-sourcing-schema.md` |
+| Soft Delete | `soft-delete` | | Logical deletion patterns (deleted_at / status / tombstone) with GDPR right-to-erasure interaction | `reference/soft-delete-patterns.md` |
 
 Behavior notes:
 - **design** (default): SURVEY → MODEL → VALIDATE → PRESENT; load `schema-examples.md` + `schema-design-anti-patterns.md`.
@@ -276,23 +276,23 @@ Schema receives data requirements and architectural context from upstream agents
 
 | File | Read this when... |
 |------|-------------------|
-| `references/normalization-guide.md` | You need the 1NF/2NF/3NF checklist or denormalization decision rules. |
-| `references/index-strategies.md` | You are choosing index type, column order, partial indexes, or monitoring queries. |
-| `references/migration-patterns.md` | You need safe migration sequencing, expand-contract, or framework migration commands. |
-| `references/schema-examples.md` | You need concrete schema, migration, ORM, or ER diagram examples. |
-| `references/schema-design-anti-patterns.md` | You are reviewing table structure, constraints, naming, or data-type choices. |
-| `references/data-modeling-anti-patterns.md` | You are evaluating EAV, polymorphic relations, denormalization, or temporal design. |
-| `references/migration-deployment-anti-patterns.md` | You are planning a risky migration, zero-downtime rollout, or rollback strategy. |
-| `references/index-performance-anti-patterns.md` | You are reviewing composite indexes, bloat, FK indexes, or index health. |
-| `references/postgresql18-features.md` | You are on PostgreSQL 18 (GA 2025-09-25) and need UUIDv7, virtual generated columns (default), temporal `WITHOUT OVERLAPS` / `PERIOD`, `RETURNING OLD.*`/`NEW.*`, B-tree skip scan, async I/O, OAuth, or DDL replication. |
-| `references/postgresql17-features.md` | You are on PostgreSQL 17 and need SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, `JSON_QUERY`, `JSON_EXISTS`), `SPLIT`/`MERGE PARTITION`, logical-replication failover, or `pg_createsubscriber`. Legacy reference — see `postgresql18-features.md` for current release. |
-| `references/multi-tenant-patterns.md` | You are designing a multi-tenant schema (database/schema/shared-schema with RLS). |
-| `references/advanced-patterns.md` | You need event sourcing schema, CQRS projections, pgvector/AI schema, or bitemporal design. |
-| `references/migration-rollback.md` | You are designing reverse-operation DDL, dual-write windows, backfill scripts, or destructive-change alternatives (`rollback` recipe). |
-| `references/partition-strategies.md` | You are designing range/list/hash/time-based partitioning, pruning, maintenance, or staged migration from existing tables (`partition` recipe). |
-| `references/audit-log-schema.md` | You are designing append-only audit-log tables — actor/action/before-after image, retention, WORM, HMAC chain (`audit-log` recipe). |
-| `references/event-sourcing-schema.md` | You are designing event store, projections, snapshots, outbox pattern, or aggregate boundaries (`event-sourcing` recipe). |
-| `references/soft-delete-patterns.md` | You are designing logical deletion (deleted_at / status / tombstone), partial unique indexes, FK cascade, or GDPR right-to-erasure pathway (`soft-delete` recipe). |
+| `reference/normalization-guide.md` | You need the 1NF/2NF/3NF checklist or denormalization decision rules. |
+| `reference/index-strategies.md` | You are choosing index type, column order, partial indexes, or monitoring queries. |
+| `reference/migration-patterns.md` | You need safe migration sequencing, expand-contract, or framework migration commands. |
+| `reference/schema-examples.md` | You need concrete schema, migration, ORM, or ER diagram examples. |
+| `reference/schema-design-anti-patterns.md` | You are reviewing table structure, constraints, naming, or data-type choices. |
+| `reference/data-modeling-anti-patterns.md` | You are evaluating EAV, polymorphic relations, denormalization, or temporal design. |
+| `reference/migration-deployment-anti-patterns.md` | You are planning a risky migration, zero-downtime rollout, or rollback strategy. |
+| `reference/index-performance-anti-patterns.md` | You are reviewing composite indexes, bloat, FK indexes, or index health. |
+| `reference/postgresql18-features.md` | You are on PostgreSQL 18 (GA 2025-09-25) and need UUIDv7, virtual generated columns (default), temporal `WITHOUT OVERLAPS` / `PERIOD`, `RETURNING OLD.*`/`NEW.*`, B-tree skip scan, async I/O, OAuth, or DDL replication. |
+| `reference/postgresql17-features.md` | You are on PostgreSQL 17 and need SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, `JSON_QUERY`, `JSON_EXISTS`), `SPLIT`/`MERGE PARTITION`, logical-replication failover, or `pg_createsubscriber`. Legacy reference — see `postgresql18-features.md` for current release. |
+| `reference/multi-tenant-patterns.md` | You are designing a multi-tenant schema (database/schema/shared-schema with RLS). |
+| `reference/advanced-patterns.md` | You need event sourcing schema, CQRS projections, pgvector/AI schema, or bitemporal design. |
+| `reference/migration-rollback.md` | You are designing reverse-operation DDL, dual-write windows, backfill scripts, or destructive-change alternatives (`rollback` recipe). |
+| `reference/partition-strategies.md` | You are designing range/list/hash/time-based partitioning, pruning, maintenance, or staged migration from existing tables (`partition` recipe). |
+| `reference/audit-log-schema.md` | You are designing append-only audit-log tables — actor/action/before-after image, retention, WORM, HMAC chain (`audit-log` recipe). |
+| `reference/event-sourcing-schema.md` | You are designing event store, projections, snapshots, outbox pattern, or aggregate boundaries (`event-sourcing` recipe). |
+| `reference/soft-delete-patterns.md` | You are designing logical deletion (deleted_at / status / tombstone), partial unique indexes, FK cascade, or GDPR right-to-erasure pathway (`soft-delete` recipe). |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the schema/migration spec, deciding adaptive thinking depth at PLAN, or front-loading DB version/multi-tenant flag at AUDIT. Critical for Schema: P3, P5. |
 
 ## AUTORUN Support

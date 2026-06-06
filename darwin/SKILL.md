@@ -121,20 +121,20 @@ Agent role boundaries → `_common/BOUNDARIES.md` (Meta-Orchestration section)
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `SENSE` | Collect signals from git, files, activity logs, journals, existing scores. Detect agent sprawl (agent count growing without proportional task complexity increase) and coordination overhead symptoms (duplicate processing, handoff failures). | Confidence ≥0.60 for single phase; below → report as mixed | `references/signal-collection.md` |
-| `ASSESS` | Calculate EFS across 5 dimensions; evaluate RS per agent; calculate OSC. Distinguish trajectory metrics (reasoning path quality, tool selection, handoff execution) from outcome metrics (task completion, business goal achievement) — trajectory metrics enable debugging, outcome metrics validate value | Grade: S(95+) A(85+) B(70+) C(55+) D(40+) F(<40) | `references/assessment-models.md`, `references/official-fitness-criteria.md` |
-| `EVOLVE` | Execute actions on triggers (8 trigger types) | Propose, never force; small mutations over big rewrites | `references/evolution-actions.md` |
-| `VERIFY` | Confirm EFS does not decrease; RS changes correlate with usage | If EFS drops >5 points within 7 days → flag for review. Coordination quality plateaus at ~7 evolution iterations and degrades sharply at 10+ — cap remediation cycles accordingly. Feed below-threshold production traces back into the evaluation baseline — drift that escapes detection becomes the new normal | `references/verification-metrics.md` |
-| `PERSIST` | Write lifecycle phase, EFS, RS table, discoveries, evolution history to `.agents/ECOSYSTEM.md` | Always persist after every check | `references/subsystems.md` |
+| `SENSE` | Collect signals from git, files, activity logs, journals, existing scores. Detect agent sprawl (agent count growing without proportional task complexity increase) and coordination overhead symptoms (duplicate processing, handoff failures). | Confidence ≥0.60 for single phase; below → report as mixed | `reference/signal-collection.md` |
+| `ASSESS` | Calculate EFS across 5 dimensions; evaluate RS per agent; calculate OSC. Distinguish trajectory metrics (reasoning path quality, tool selection, handoff execution) from outcome metrics (task completion, business goal achievement) — trajectory metrics enable debugging, outcome metrics validate value | Grade: S(95+) A(85+) B(70+) C(55+) D(40+) F(<40) | `reference/assessment-models.md`, `reference/official-fitness-criteria.md` |
+| `EVOLVE` | Execute actions on triggers (8 trigger types) | Propose, never force; small mutations over big rewrites | `reference/evolution-actions.md` |
+| `VERIFY` | Confirm EFS does not decrease; RS changes correlate with usage | If EFS drops >5 points within 7 days → flag for review. Coordination quality plateaus at ~7 evolution iterations and degrades sharply at 10+ — cap remediation cycles accordingly. Feed below-threshold production traces back into the evaluation baseline — drift that escapes detection becomes the new normal | `reference/verification-metrics.md` |
+| `PERSIST` | Write lifecycle phase, EFS, RS table, discoveries, evolution history to `.agents/ECOSYSTEM.md` | Always persist after every check | `reference/subsystems.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Health Check | `health` | ✓ | Ecosystem health assessment | `references/assessment-models.md` |
-| Fitness Scoring | `fitness` | | Agent fitness scoring | `references/assessment-models.md`, `references/official-fitness-criteria.md` |
-| Evolution Proposal | `evolve` | | Evolution proposal | `references/evolution-actions.md` |
-| Sunset Proposal | `sunset` | | Sunset candidate skill proposal | `references/assessment-models.md` |
+| Health Check | `health` | ✓ | Ecosystem health assessment | `reference/assessment-models.md` |
+| Fitness Scoring | `fitness` | | Agent fitness scoring | `reference/assessment-models.md`, `reference/official-fitness-criteria.md` |
+| Evolution Proposal | `evolve` | | Evolution proposal | `reference/evolution-actions.md` |
+| Sunset Proposal | `sunset` | | Sunset candidate skill proposal | `reference/assessment-models.md` |
 
 ## Subcommand Dispatch
 
@@ -146,16 +146,16 @@ Parse the first token of user input.
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `health check`, `ecosystem health`, `fitness` | Full SENSE→ASSESS cycle | EFS dashboard | `references/assessment-models.md` |
-| `lifecycle`, `phase detection` | Lifecycle Detector | Phase report with confidence | `references/signal-collection.md` |
-| `relevance`, `agent relevance`, `staleness` | RS evaluation for all agents | RS table with status | `references/assessment-models.md` |
-| `journals`, `synthesis`, `patterns` | Journal Synthesizer | Cross-agent discoveries | `references/evolution-actions.md` |
-| `triggers`, `evolution triggers` | Trigger evaluation (no action) | Trigger status report | `references/evolution-actions.md` |
-| `sunset`, `unused agents` | Staleness Detector + RS | Sunset candidate list | `references/assessment-models.md` |
-| `sprawl`, `agent sprawl`, `coordination overhead` | Agent count vs complexity analysis | Sprawl risk report with mitigation recommendations | `references/assessment-models.md` |
-| `drift`, `lifecycle drift`, `dependency shift` | Drift cascade analysis across agent chains | Drift report with affected agents and remediation | `references/signal-collection.md` |
-| `bottleneck`, `bottleneck migration`, `constraint shift`, `throughput limiter` | Per-tier bottleneck analysis across the chain | Bottleneck migration report with tier-reinforcement recommendation | `references/assessment-models.md` |
-| `evolve`, `improve`, `propose` | Full SENSE→ASSESS→EVOLVE→VERIFY→PERSIST | DARWIN_REPORT | `references/evolution-actions.md` |
+| `health check`, `ecosystem health`, `fitness` | Full SENSE→ASSESS cycle | EFS dashboard | `reference/assessment-models.md` |
+| `lifecycle`, `phase detection` | Lifecycle Detector | Phase report with confidence | `reference/signal-collection.md` |
+| `relevance`, `agent relevance`, `staleness` | RS evaluation for all agents | RS table with status | `reference/assessment-models.md` |
+| `journals`, `synthesis`, `patterns` | Journal Synthesizer | Cross-agent discoveries | `reference/evolution-actions.md` |
+| `triggers`, `evolution triggers` | Trigger evaluation (no action) | Trigger status report | `reference/evolution-actions.md` |
+| `sunset`, `unused agents` | Staleness Detector + RS | Sunset candidate list | `reference/assessment-models.md` |
+| `sprawl`, `agent sprawl`, `coordination overhead` | Agent count vs complexity analysis | Sprawl risk report with mitigation recommendations | `reference/assessment-models.md` |
+| `drift`, `lifecycle drift`, `dependency shift` | Drift cascade analysis across agent chains | Drift report with affected agents and remediation | `reference/signal-collection.md` |
+| `bottleneck`, `bottleneck migration`, `constraint shift`, `throughput limiter` | Per-tier bottleneck analysis across the chain | Bottleneck migration report with tier-reinforcement recommendation | `reference/assessment-models.md` |
+| `evolve`, `improve`, `propose` | Full SENSE→ASSESS→EVOLVE→VERIFY→PERSIST | DARWIN_REPORT | `reference/evolution-actions.md` |
 
 ## Output Requirements
 
@@ -191,12 +191,12 @@ Ownership: all workers are read-only (`Explore` subagent_type); Darwin aggregate
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/signal-collection.md` | You need lifecycle detection signals (7 phases) or collection methods. |
-| `references/assessment-models.md` | You need RS formula, EFS formula, or lifecycle detection algorithm. |
-| `references/evolution-actions.md` | You need trigger definitions, Dynamic AFFINITY, or output formats. |
-| `references/verification-metrics.md` | You need evolution effect measurement or VERIFY criteria. |
-| `references/subsystems.md` | You need detail on the 7 internal subsystems. |
-| `references/official-fitness-criteria.md` | You need Official Spec Conformance (OSC) scoring, lifecycle-phase minimum thresholds, RS enhancement from official metrics, or use-case coverage analysis during ASSESS or EVOLVE. |
+| `reference/signal-collection.md` | You need lifecycle detection signals (7 phases) or collection methods. |
+| `reference/assessment-models.md` | You need RS formula, EFS formula, or lifecycle detection algorithm. |
+| `reference/evolution-actions.md` | You need trigger definitions, Dynamic AFFINITY, or output formats. |
+| `reference/verification-metrics.md` | You need evolution effect measurement or VERIFY criteria. |
+| `reference/subsystems.md` | You need detail on the 7 internal subsystems. |
+| `reference/official-fitness-criteria.md` | You need Official Spec Conformance (OSC) scoring, lifecycle-phase minimum thresholds, RS enhancement from official metrics, or use-case coverage analysis during ASSESS or EVOLVE. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the evolution proposal, deciding adaptive thinking depth at fitness/action ranking, or front-loading scope/phase/goal at ASSESS. Critical for Darwin: P3, P5. |
 
 ## Operational

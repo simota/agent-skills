@@ -119,7 +119,7 @@ Interaction triggers → `_common/INTERACTION.md`
 | AMBIGUITY_RESOLUTION | ON_AMBIGUITY | Grammar has shift/reduce or reduce/reduce conflicts |
 | ROUNDTRIP_FIDELITY | ON_DECISION | AST transform target is human-edited source, not generated output |
 
-Question schemas (Engine / Generator / DSL Kind / Ambiguity / Roundtrip) → `references/interaction-questions.md`.
+Question schemas (Engine / Generator / DSL Kind / Ambiguity / Roundtrip) → `reference/interaction-questions.md`.
 
 ### Never
 
@@ -147,11 +147,11 @@ Question schemas (Engine / Generator / DSL Kind / Ambiguity / Roundtrip) → `re
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `ANALYZE` | Read all sample inputs, existing parser code, and host-runtime constraints; classify input trust level and grammar class | Eager reads — grounding accuracy determines grammar correctness | `references/regex-safety.md`, `references/parser-generators.md` |
-| `GRAMMAR` | Author EBNF/ABNF/PEG/parser-generator DSL; resolve ambiguity; choose engine via decision matrix | Ambiguity is resolved at grammar time, never runtime | `references/parser-generators.md`, `references/dsl-design.md` |
-| `IMPLEMENT` | Specify tokenizer, parser, AST node types, error-recovery strategy; hand off to Builder | AST is tagged union + source position + (optional) trivia | `references/ast-transforms.md` |
-| `HARDEN` | Produce worst-case inputs, property-based tests, fuzz corpus; annotate ReDoS complexity | Every regex has a documented complexity class | `references/regex-safety.md` |
-| `DOCUMENT` | Package grammar + tests + error-recovery notes + evolution plan for downstream agents | Grammar is a contract; downstream must know how to extend it | `references/handoffs.md` |
+| `ANALYZE` | Read all sample inputs, existing parser code, and host-runtime constraints; classify input trust level and grammar class | Eager reads — grounding accuracy determines grammar correctness | `reference/regex-safety.md`, `reference/parser-generators.md` |
+| `GRAMMAR` | Author EBNF/ABNF/PEG/parser-generator DSL; resolve ambiguity; choose engine via decision matrix | Ambiguity is resolved at grammar time, never runtime | `reference/parser-generators.md`, `reference/dsl-design.md` |
+| `IMPLEMENT` | Specify tokenizer, parser, AST node types, error-recovery strategy; hand off to Builder | AST is tagged union + source position + (optional) trivia | `reference/ast-transforms.md` |
+| `HARDEN` | Produce worst-case inputs, property-based tests, fuzz corpus; annotate ReDoS complexity | Every regex has a documented complexity class | `reference/regex-safety.md` |
+| `DOCUMENT` | Package grammar + tests + error-recovery notes + evolution plan for downstream agents | Grammar is a contract; downstream must know how to extend it | `reference/handoffs.md` |
 
 ## Recipes
 
@@ -159,14 +159,14 @@ Single source of truth for Recipe definitions. The Behavior column captures the 
 
 | Recipe | Subcommand | Default? | When to Use | Behavior | Primary output | Read First |
 |--------|-----------|---------|-------------|----------|----------------|------------|
-| Regex Design | `regex` | ✓ | Regex design, ReDoS audit, and engine selection | Identify engine target → ReDoS analysis → document pump strings → verify Unicode posture | Regex + engine choice + complexity analysis | `references/regex-safety.md` |
-| Parser Design | `parser` | | Parser design, grammar class classification, generator selection | Grammar class classification → generator decision matrix → error recovery strategy → Builder handoff | Grammar spec + generator decision | `references/parser-generators.md` |
-| DSL Design | `dsl` | | Domain Specific Language design (internal/external DSL) | Decide internal vs external DSL → vocabulary design → versioning strategy → evolution plan | Internal/external DSL design + vocabulary | `references/dsl-design.md` |
-| AST Transform | `ast` | | AST transformation, codemod, visitor design | Node type design → visitor pattern selection → round-trip safety → codemod strategy | Node types + visitor plan + roundtrip strategy | `references/ast-transforms.md` |
-| ReDoS Audit | `redos` | | ReDoS safety audit of existing regex only | Extract pump strings from existing patterns → determine complexity class → propose fixes only | Pump strings + complexity class + fix proposals | `references/regex-safety.md` |
-| Lexer Design | `lexer` | | Standalone tokenizer design — separation rationale, off-side rule, context-sensitive tokens, trivia | Justify separate tokenization → choose hand-written vs generator (re2c, flex, ANTLR lexer, logos, tree-sitter external scanner) → specify modes / context-sensitive tokens / INDENT-DEDENT → set lookahead budget and trivia policy. **Vs `parser`**: parser covers the full syntactic layer; `lexer` extracts the sub-layer. Skip unless perf, IDE reuse, context-sensitive tokens, or indentation justify it. | Lexer modes + context rules | `references/lexer-design.md` |
-| Error Recovery Design | `error` | | Parser error-recovery + diagnostic-message design (panic, phrase-level, error productions, multi-span) | Choose recovery strategy (panic / phrase-level / error productions / tree-sitter error nodes / GLR), specify span tracking (byte + line/col + multi-span), draft expected-token and "did you mean" templates. **Vs Builder**: Builder writes the code; `error` produces the spec (sync tokens, catch productions, diagnostic shape). Cross-ref chumsky combinators, lalrpop `!`, ANTLR4 default strategy, Elm/rustc/Clang styles. | Recovery strategy + diagnostic template | `references/error-recovery.md` |
-| Incremental Parser Design | `incremental` | | Incremental reparse for IDE/LSP — edit-aware state, dirty-subtree tracking | Design reparse-on-edit: persistent tree / CST with stable node IDs, dirty-subtree tracking, reuse-on-unchanged-region, amortized O(log n) per keystroke, (de)serialization. Ref tree-sitter incremental GLR, Roslyn red-green trees, rust-analyzer Rowan/salsa, Langium LSP-first. **Vs `parser`**: one-shot vs continuous; cross-links with `parser` (incremental-compatible grammar) and `error` (local recovery). **Vs Builder**: spec vs LSP-server wiring. | Edit-aware reparse spec | `references/incremental-parsing.md` |
+| Regex Design | `regex` | ✓ | Regex design, ReDoS audit, and engine selection | Identify engine target → ReDoS analysis → document pump strings → verify Unicode posture | Regex + engine choice + complexity analysis | `reference/regex-safety.md` |
+| Parser Design | `parser` | | Parser design, grammar class classification, generator selection | Grammar class classification → generator decision matrix → error recovery strategy → Builder handoff | Grammar spec + generator decision | `reference/parser-generators.md` |
+| DSL Design | `dsl` | | Domain Specific Language design (internal/external DSL) | Decide internal vs external DSL → vocabulary design → versioning strategy → evolution plan | Internal/external DSL design + vocabulary | `reference/dsl-design.md` |
+| AST Transform | `ast` | | AST transformation, codemod, visitor design | Node type design → visitor pattern selection → round-trip safety → codemod strategy | Node types + visitor plan + roundtrip strategy | `reference/ast-transforms.md` |
+| ReDoS Audit | `redos` | | ReDoS safety audit of existing regex only | Extract pump strings from existing patterns → determine complexity class → propose fixes only | Pump strings + complexity class + fix proposals | `reference/regex-safety.md` |
+| Lexer Design | `lexer` | | Standalone tokenizer design — separation rationale, off-side rule, context-sensitive tokens, trivia | Justify separate tokenization → choose hand-written vs generator (re2c, flex, ANTLR lexer, logos, tree-sitter external scanner) → specify modes / context-sensitive tokens / INDENT-DEDENT → set lookahead budget and trivia policy. **Vs `parser`**: parser covers the full syntactic layer; `lexer` extracts the sub-layer. Skip unless perf, IDE reuse, context-sensitive tokens, or indentation justify it. | Lexer modes + context rules | `reference/lexer-design.md` |
+| Error Recovery Design | `error` | | Parser error-recovery + diagnostic-message design (panic, phrase-level, error productions, multi-span) | Choose recovery strategy (panic / phrase-level / error productions / tree-sitter error nodes / GLR), specify span tracking (byte + line/col + multi-span), draft expected-token and "did you mean" templates. **Vs Builder**: Builder writes the code; `error` produces the spec (sync tokens, catch productions, diagnostic shape). Cross-ref chumsky combinators, lalrpop `!`, ANTLR4 default strategy, Elm/rustc/Clang styles. | Recovery strategy + diagnostic template | `reference/error-recovery.md` |
+| Incremental Parser Design | `incremental` | | Incremental reparse for IDE/LSP — edit-aware state, dirty-subtree tracking | Design reparse-on-edit: persistent tree / CST with stable node IDs, dirty-subtree tracking, reuse-on-unchanged-region, amortized O(log n) per keystroke, (de)serialization. Ref tree-sitter incremental GLR, Roslyn red-green trees, rust-analyzer Rowan/salsa, Langium LSP-first. **Vs `parser`**: one-shot vs continuous; cross-links with `parser` (incremental-compatible grammar) and `error` (local recovery). **Vs Builder**: spec vs LSP-server wiring. | Edit-aware reparse spec | `reference/incremental-parsing.md` |
 
 ### Signal Keywords → Recipe
 
@@ -208,11 +208,11 @@ Three patterns to reject on sight:
 (a*)*        # quantifier on already-quantified group — exponential
 ```
 
-Read `references/regex-safety.md` for the full protocol including detection tools (redos-detector, safe-regex, rxxr2, regexploit), atomic groups `(?>...)`, possessive quantifiers `a++`, ES2024 `/v` flag, ES2025 `RegExp.escape()` and inline modifiers, Unicode 16.0 script properties, and the HTML/email anti-patterns.
+Read `reference/regex-safety.md` for the full protocol including detection tools (redos-detector, safe-regex, rxxr2, regexploit), atomic groups `(?>...)`, possessive quantifiers `a++`, ES2024 `/v` flag, ES2025 `RegExp.escape()` and inline modifiers, Unicode 16.0 script properties, and the HTML/email anti-patterns.
 
 ## Parser Generator Selection
 
-Decision matrix summary (full version in `references/parser-generators.md`):
+Decision matrix summary (full version in `reference/parser-generators.md`):
 
 | Tool | Grammar class | Target | Error messages | Incremental | When to pick |
 |------|---------------|--------|----------------|-------------|--------------|
@@ -230,7 +230,7 @@ Flowchart: "Is input untrusted?" → prefer linear-time regex + hardened parser.
 
 ## Internal DSL Design
 
-Six architectures (full catalogue in `references/dsl-design.md`):
+Six architectures (full catalogue in `reference/dsl-design.md`):
 
 1. **Fluent API (builder pattern)** — SQL query builders (Kysely, Drizzle), test DSLs (Jest `expect().toBe()`). Discoverable via IDE; method-chain types can get deep.
 2. **Template literal DSL** — `styled-components`, `gql` (graphql-tag), GROQ, Prisma — tagged-template parsing; host-language syntax highlighting support varies.
@@ -253,7 +253,7 @@ Visitor pattern implementations:
 - **tree-sitter query** — Scheme-like pattern matching (`(call_expression function: (identifier) @fn)`)
 - **JetBrains MPS** — projectional editing, structural transforms
 
-Anti-pattern: regex-based code modification when an AST is available. Regex codemods break on any syntactic variation (newlines, comments, whitespace, alternate member access). Read `references/ast-transforms.md` for roundtrip-safe transform patterns (recast, jscodeshift with full-fidelity nodes) and codemod catalogs.
+Anti-pattern: regex-based code modification when an AST is available. Regex codemods break on any syntactic variation (newlines, comments, whitespace, alternate member access). Read `reference/ast-transforms.md` for roundtrip-safe transform patterns (recast, jscodeshift with full-fidelity nodes) and codemod catalogs.
 
 ## Error Recovery & Diagnostics
 
@@ -299,21 +299,21 @@ BIDIRECTIONAL_PARTNERS in the CAPABILITIES_SUMMARY header lists inputs and outpu
 
 ### Handoff Patterns
 
-Templates in `references/handoffs.md`. From User: normalize sample text / informal spec / "mostly working" regex to grammar class + engine target + trust level before GRAMMAR. To Builder: grammar spec + tokenizer rules + AST node types + error-recovery strategy. To Sentinel: regex + complexity class + worst-case pumping string + engine target.
+Templates in `reference/handoffs.md`. From User: normalize sample text / informal spec / "mostly working" regex to grammar class + engine target + trust level before GRAMMAR. To Builder: grammar spec + tokenizer rules + AST node types + error-recovery strategy. To Sentinel: regex + complexity class + worst-case pumping string + engine target.
 
 ## Reference Map
 
 | Reference | Read this when |
 |-----------|---------------|
-| `references/regex-safety.md` | Regex authoring, ReDoS analysis, engine features, Unicode |
-| `references/parser-generators.md` | Generator selection, trade-offs, grammar class identification |
-| `references/dsl-design.md` | Internal/external DSL design; fluent API, template literal, YAML, etc. |
-| `references/ast-transforms.md` | AST node design, codemod, visitor, roundtrip-safe transforms |
-| `references/lexer-design.md` | Tokenizer separation, off-side rule, context-sensitive tokens, trivia |
-| `references/error-recovery.md` | Error-recovery + diagnostic-message design (panic / phrase-level / multi-span) |
-| `references/incremental-parsing.md` | Incremental reparse for IDE/LSP (tree-sitter, Roslyn, Rowan/salsa) |
-| `references/interaction-questions.md` | INTERACTION_TRIGGERS question schemas (engine / generator / DSL kind / ambiguity / roundtrip) |
-| `references/handoffs.md` | Packaging deliverables for Builder, Radar, Sentinel, Canon, Atlas, Judge, Shift |
+| `reference/regex-safety.md` | Regex authoring, ReDoS analysis, engine features, Unicode |
+| `reference/parser-generators.md` | Generator selection, trade-offs, grammar class identification |
+| `reference/dsl-design.md` | Internal/external DSL design; fluent API, template literal, YAML, etc. |
+| `reference/ast-transforms.md` | AST node design, codemod, visitor, roundtrip-safe transforms |
+| `reference/lexer-design.md` | Tokenizer separation, off-side rule, context-sensitive tokens, trivia |
+| `reference/error-recovery.md` | Error-recovery + diagnostic-message design (panic / phrase-level / multi-span) |
+| `reference/incremental-parsing.md` | Incremental reparse for IDE/LSP (tree-sitter, Roslyn, Rowan/salsa) |
+| `reference/interaction-questions.md` | INTERACTION_TRIGGERS question schemas (engine / generator / DSL kind / ambiguity / roundtrip) |
+| `reference/handoffs.md` | Packaging deliverables for Builder, Radar, Sentinel, Canon, Atlas, Judge, Shift |
 | `_common/OPUS_48_AUTHORING.md` | Grammar spec verbosity calibration; adaptive thinking. Critical: P3, P5 |
 
 ## Operational

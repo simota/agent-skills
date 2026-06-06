@@ -113,26 +113,26 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Focus | Required checks | Read |
 |-------|-------|-----------------|------|
-| `INTAKE` | Capture goal, current/target role, region, constraints, timeline | Goal stated? Irreversible-risk flagged? | `references/career-frameworks.md` |
-| `SELF-ANALYSIS` | Strengths, values, work-style, achievement inventory | Achievements grounded in real experience? | `references/self-analysis-kit.md` |
-| `MARKET` | Target roles, salary bands, market trends, company research | Salary claims sourced or marked assumption? | `references/market-research.md` |
-| `POSITION` | Personal brand, resume positioning, elevator pitch | One canonical positioning statement set? | `references/career-frameworks.md` |
-| `PLAN` | Skill-gap analysis → 90-day roadmap → weekly actions | Gaps prioritized; plan at weekly grain? | `references/learning-plan.md` |
-| `JOBSEARCH` | Target list, tracker, interview prep, outreach, negotiation | CSVs have headers; templates fill-in-ready? | `references/job-search-kit.md` |
+| `INTAKE` | Capture goal, current/target role, region, constraints, timeline | Goal stated? Irreversible-risk flagged? | `reference/career-frameworks.md` |
+| `SELF-ANALYSIS` | Strengths, values, work-style, achievement inventory | Achievements grounded in real experience? | `reference/self-analysis-kit.md` |
+| `MARKET` | Target roles, salary bands, market trends, company research | Salary claims sourced or marked assumption? | `reference/market-research.md` |
+| `POSITION` | Personal brand, resume positioning, elevator pitch | One canonical positioning statement set? | `reference/career-frameworks.md` |
+| `PLAN` | Skill-gap analysis → 90-day roadmap → weekly actions | Gaps prioritized; plan at weekly grain? | `reference/learning-plan.md` |
+| `JOBSEARCH` | Target list, tracker, interview prep, outreach, negotiation | CSVs have headers; templates fill-in-ready? | `reference/job-search-kit.md` |
 | `EXECUTE` | Weekly action plan, progress tracker, habit design, reflection | MVP vs future separated; consistency check passed | — |
 
 ## Output Routing
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `job change`, `independence`, `career direction`, `should I switch` | Route comparison | Direction comparison + recommended path | `references/career-frameworks.md` |
-| `self-analysis`, `strengths`, `achievement inventory` | Self-analysis | Strengths/values/achievement docs | `references/self-analysis-kit.md` |
-| `salary`, `salary research`, `market`, `target role` | Cited market scan | Salary-band + market-trend report | `references/market-research.md` |
-| `positioning`, `personal brand`, `pitch` | Positioning | Positioning statement + brand/pitch set | `references/career-frameworks.md` |
-| `skill gap`, `learning plan`, `90 days` | Gap → roadmap | Skill-gap analysis + 90-day weekly plan | `references/learning-plan.md` |
-| `job application`, `job search`, `interview`, `negotiation`, `outreach` | Job-search kit | Target list (CSV) + tracker + prep + templates | `references/job-search-kit.md` |
-| `resume`, `CV`, `portfolio`, `cover letter` | Asset drafting | Resume/cover-letter/portfolio drafts | `references/job-search-kit.md` |
-| full career package request | Run the entire arc | Multi-doc career strategy package | `references/career-frameworks.md` |
+| `job change`, `independence`, `career direction`, `should I switch` | Route comparison | Direction comparison + recommended path | `reference/career-frameworks.md` |
+| `self-analysis`, `strengths`, `achievement inventory` | Self-analysis | Strengths/values/achievement docs | `reference/self-analysis-kit.md` |
+| `salary`, `salary research`, `market`, `target role` | Cited market scan | Salary-band + market-trend report | `reference/market-research.md` |
+| `positioning`, `personal brand`, `pitch` | Positioning | Positioning statement + brand/pitch set | `reference/career-frameworks.md` |
+| `skill gap`, `learning plan`, `90 days` | Gap → roadmap | Skill-gap analysis + 90-day weekly plan | `reference/learning-plan.md` |
+| `job application`, `job search`, `interview`, `negotiation`, `outreach` | Job-search kit | Target list (CSV) + tracker + prep + templates | `reference/job-search-kit.md` |
+| `resume`, `CV`, `portfolio`, `cover letter` | Asset drafting | Resume/cover-letter/portfolio drafts | `reference/job-search-kit.md` |
+| full career package request | Run the entire arc | Multi-doc career strategy package | `reference/career-frameworks.md` |
 | complex multi-agent task | Nexus-routed execution | Structured handoff | `_common/BOUNDARIES.md` |
 
 Routing rules:
@@ -143,12 +143,12 @@ Routing rules:
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Career Direction | `direction` | ✓ | Compare stay/job-change/side-business/independence and recommend a route | `references/career-frameworks.md` |
-| Self-Analysis | `self` | | Strengths, values, work-style, achievement inventory | `references/self-analysis-kit.md` |
-| Market Research | `market` | | Target-role, salary-band, market-trend, company research (cited) | `references/market-research.md` |
-| Learning Plan | `learn` | | Skill-gap analysis + 90-day weekly roadmap | `references/learning-plan.md` |
-| Job Search | `jobsearch` | | Target list, application tracker, interview prep, outreach, negotiation | `references/job-search-kit.md` |
-| Full Package | `package` | | End-to-end career strategy document package across all phases | `references/career-frameworks.md` |
+| Career Direction | `direction` | ✓ | Compare stay/job-change/side-business/independence and recommend a route | `reference/career-frameworks.md` |
+| Self-Analysis | `self` | | Strengths, values, work-style, achievement inventory | `reference/self-analysis-kit.md` |
+| Market Research | `market` | | Target-role, salary-band, market-trend, company research (cited) | `reference/market-research.md` |
+| Learning Plan | `learn` | | Skill-gap analysis + 90-day weekly roadmap | `reference/learning-plan.md` |
+| Job Search | `jobsearch` | | Target list, application tracker, interview prep, outreach, negotiation | `reference/job-search-kit.md` |
+| Full Package | `package` | | End-to-end career strategy document package across all phases | `reference/career-frameworks.md` |
 
 ## Subcommand Dispatch
 
@@ -203,11 +203,11 @@ Ascent receives audience insight from Researcher and positioning frameworks from
 
 | File | Read this when... |
 |------|-------------------|
-| `references/career-frameworks.md` | You need route comparison, positioning, personal-brand, or elevator-pitch frameworks |
-| `references/self-analysis-kit.md` | You need strengths/values/work-style prompts or achievement-inventory structure |
-| `references/market-research.md` | You need career-framed target-role, salary-band, or market-trend research method and sourcing rules |
-| `references/learning-plan.md` | You need skill-gap mapping or a 90-day weekly learning roadmap template |
-| `references/job-search-kit.md` | You need target-list/tracker CSV schemas, interview prep, outreach/cover-letter templates, or negotiation rubrics |
+| `reference/career-frameworks.md` | You need route comparison, positioning, personal-brand, or elevator-pitch frameworks |
+| `reference/self-analysis-kit.md` | You need strengths/values/work-style prompts or achievement-inventory structure |
+| `reference/market-research.md` | You need career-framed target-role, salary-band, or market-trend research method and sourcing rules |
+| `reference/learning-plan.md` | You need skill-gap mapping or a 90-day weekly learning roadmap template |
+| `reference/job-search-kit.md` | You need target-list/tracker CSV schemas, interview prep, outreach/cover-letter templates, or negotiation rubrics |
 | [`_common/BOUNDARIES.md`](_common/BOUNDARIES.md) | Role boundaries are ambiguous |
 | [`_common/OPERATIONAL.md`](_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
 | [`_common/OPUS_48_AUTHORING.md`](_common/OPUS_48_AUTHORING.md) | You are sizing the deliverable, deciding adaptive thinking depth at route selection, or front-loading goal/role/region/timeline at INTAKE. Critical for Ascent: P3, P5. |

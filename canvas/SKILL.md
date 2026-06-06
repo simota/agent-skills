@@ -122,23 +122,23 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `UNDERSTAND` | Confirm source type, audience, and the one question the diagram must answer | Scope before drawing | `references/diagramming-principles.md` |
-| `ANALYZE` | Extract entities, relationships, flows, states, and constraints | Real names only | `references/reverse-engineering.md` |
-| `DRAW` | Apply the right template and format (Mermaid / draw.io / ASCII) | Syntax correctness | `references/diagram-templates.md` |
-| `REVIEW` | Check accuracy, readability, syntax, accessibility, and complexity | ≤20 nodes per diagram | `references/accessibility.md` |
+| `UNDERSTAND` | Confirm source type, audience, and the one question the diagram must answer | Scope before drawing | `reference/diagramming-principles.md` |
+| `ANALYZE` | Extract entities, relationships, flows, states, and constraints | Real names only | `reference/reverse-engineering.md` |
+| `DRAW` | Apply the right template and format (Mermaid / draw.io / ASCII) | Syntax correctness | `reference/diagram-templates.md` |
+| `REVIEW` | Check accuracy, readability, syntax, accessibility, and complexity | ≤20 nodes per diagram | `reference/accessibility.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Flow Chart | `flow` | ✓ | Flowchart generation (default Mermaid) | `references/diagram-templates.md` |
-| Sequence Diagram | `sequence` | | Sequence diagram | `references/diagram-templates.md` |
-| ER Diagram | `er` | | ER diagram (Schema integration) | `references/diagram-templates.md` |
-| Journey Map | `journey` | | User journey map (Echo integration) | `references/echo-integration.md` |
-| Class Diagram | `class` | | Class diagram | `references/diagram-templates.md` |
-| C4 Diagram | `c4` | | C4 model rendering (Context / Container / Component / Code) in Mermaid C4 syntax | `references/c4-diagrams.md` |
-| Architecture Diagram | `architecture` | | Informal system architecture sketch (layered / hexagonal / microservice / event-driven) with flowchart + subgraph | `references/architecture-diagrams.md` |
-| Gantt / Roadmap | `gantt` | | Gantt, roadmap, or timeline with milestones, dependencies, critical path | `references/gantt-diagrams.md` |
+| Flow Chart | `flow` | ✓ | Flowchart generation (default Mermaid) | `reference/diagram-templates.md` |
+| Sequence Diagram | `sequence` | | Sequence diagram | `reference/diagram-templates.md` |
+| ER Diagram | `er` | | ER diagram (Schema integration) | `reference/diagram-templates.md` |
+| Journey Map | `journey` | | User journey map (Echo integration) | `reference/echo-integration.md` |
+| Class Diagram | `class` | | Class diagram | `reference/diagram-templates.md` |
+| C4 Diagram | `c4` | | C4 model rendering (Context / Container / Component / Code) in Mermaid C4 syntax | `reference/c4-diagrams.md` |
+| Architecture Diagram | `architecture` | | Informal system architecture sketch (layered / hexagonal / microservice / event-driven) with flowchart + subgraph | `reference/architecture-diagrams.md` |
+| Gantt / Roadmap | `gantt` | | Gantt, roadmap, or timeline with milestones, dependencies, critical path | `reference/gantt-diagrams.md` |
 
 ## Subcommand Dispatch
 
@@ -160,30 +160,30 @@ Behavior notes per Recipe:
 
 | Mode | Use When | Primary Reference |
 |------|----------|-------------------|
-| Standard | Flow, sequence, class, ER, state, journey, gantt, mind map | `references/diagram-templates.md` |
-| Reverse | Code to diagram from app, API, schema, tests, or auth flow | `references/reverse-engineering.md` |
-| C4 | Architecture scope needs Context, Container, Component, or Code view | `references/c4-model.md` |
-| Diff | Before/after, schema change, or architecture delta must be visualized | `references/diff-visualization.md` |
-| Echo | Journey, friction, persona, team, or DX visualization from Echo data | `references/echo-integration.md` |
-| Library | Diagram must be saved, updated, reused, or regenerated | `references/diagram-library.md` |
+| Standard | Flow, sequence, class, ER, state, journey, gantt, mind map | `reference/diagram-templates.md` |
+| Reverse | Code to diagram from app, API, schema, tests, or auth flow | `reference/reverse-engineering.md` |
+| C4 | Architecture scope needs Context, Container, Component, or Code view | `reference/c4-model.md` |
+| Diff | Before/after, schema change, or architecture delta must be visualized | `reference/diff-visualization.md` |
+| Echo | Journey, friction, persona, team, or DX visualization from Echo data | `reference/echo-integration.md` |
+| Library | Diagram must be saved, updated, reused, or regenerated | `reference/diagram-library.md` |
 
 ## Output Routing
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `flowchart`, `sequence`, `class`, `ER`, `state`, `gantt` | Standard diagram | Mermaid diagram | `references/diagram-templates.md` |
-| `architecture`, `block`, `kanban`, `sankey`, `xy chart`, `radar`, `treemap`, `wardley map`, `packet`, `venn`, `ishikawa`, `treeview` | v11 diagram | Mermaid v11 diagram | `references/diagram-templates.md`, `references/mermaid-v11-advanced.md` |
-| `code to diagram`, `reverse`, `from code` | Reverse engineering | Mermaid from code | `references/reverse-engineering.md` |
-| `C4`, `context`, `container`, `component` | C4 model | C4 diagram | `references/c4-model.md` |
-| `diff`, `before/after`, `delta`, `migration` | Diff visualization | Before/after diagram | `references/diff-visualization.md` |
-| `journey`, `friction`, `persona`, `echo` | Echo integration | Echo visualization | `references/echo-integration.md` |
-| `draw.io`, `editable`, `presentation` | draw.io output | .drawio XML file | `references/drawio-specs.md` |
-| `ASCII`, `plain text`, `terminal` | ASCII art | Plain-text diagram | `references/ascii-templates.md` |
-| `hand-drawn`, `sketch`, `whiteboard`, `neo` | Rendering look | Mermaid with look config | `references/mermaid-v11-advanced.md` |
-| `save`, `library`, `reuse` | Diagram library | Stored diagram artifact | `references/diagram-library.md` |
-| `layers`, `scenarios`, `multi-perspective`, `abstraction levels` | D2 multi-board | D2 with layers/scenarios | `references/diagram-tools-comparison.md` |
-| `CI`, `validate`, `architecture-as-code` | Architecture-as-Code | .mmd/.d2 in docs/diagrams/ | `references/diagram-tools-comparison.md` |
-| unclear diagram request | Standard Mermaid | Mermaid diagram | `references/diagram-templates.md` |
+| `flowchart`, `sequence`, `class`, `ER`, `state`, `gantt` | Standard diagram | Mermaid diagram | `reference/diagram-templates.md` |
+| `architecture`, `block`, `kanban`, `sankey`, `xy chart`, `radar`, `treemap`, `wardley map`, `packet`, `venn`, `ishikawa`, `treeview` | v11 diagram | Mermaid v11 diagram | `reference/diagram-templates.md`, `reference/mermaid-v11-advanced.md` |
+| `code to diagram`, `reverse`, `from code` | Reverse engineering | Mermaid from code | `reference/reverse-engineering.md` |
+| `C4`, `context`, `container`, `component` | C4 model | C4 diagram | `reference/c4-model.md` |
+| `diff`, `before/after`, `delta`, `migration` | Diff visualization | Before/after diagram | `reference/diff-visualization.md` |
+| `journey`, `friction`, `persona`, `echo` | Echo integration | Echo visualization | `reference/echo-integration.md` |
+| `draw.io`, `editable`, `presentation` | draw.io output | .drawio XML file | `reference/drawio-specs.md` |
+| `ASCII`, `plain text`, `terminal` | ASCII art | Plain-text diagram | `reference/ascii-templates.md` |
+| `hand-drawn`, `sketch`, `whiteboard`, `neo` | Rendering look | Mermaid with look config | `reference/mermaid-v11-advanced.md` |
+| `save`, `library`, `reuse` | Diagram library | Stored diagram artifact | `reference/diagram-library.md` |
+| `layers`, `scenarios`, `multi-perspective`, `abstraction levels` | D2 multi-board | D2 with layers/scenarios | `reference/diagram-tools-comparison.md` |
+| `CI`, `validate`, `architecture-as-code` | Architecture-as-Code | .mmd/.d2 in docs/diagrams/ | `reference/diagram-tools-comparison.md` |
+| unclear diagram request | Standard Mermaid | Mermaid diagram | `reference/diagram-templates.md` |
 
 ## Critical Decision Rules
 
@@ -246,22 +246,22 @@ For Echo output, state the visualization type and the scoring or friction legend
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/diagram-templates.md` | You need a Mermaid starter template (17 diagram types including v11). |
-| `references/drawio-specs.md` | You need draw.io XML, shape, edge, or layout rules. |
-| `references/ascii-templates.md` | You need a plain-text or comment-safe diagram. |
-| `references/reverse-engineering.md` | You are deriving a diagram from code or schema. |
-| `references/c4-model.md` | You need a C4 Context/Container/Component/Code view. |
-| `references/c4-diagrams.md` | You are rendering Mermaid C4 diagrams (C4Context / C4Container / C4Component) for the `c4` recipe, deriving from a Stratum DSL or ad-hoc input. |
-| `references/architecture-diagrams.md` | You are sketching informal architecture diagrams (layered / hexagonal / microservice / event-driven) using Mermaid flowchart + subgraph for the `architecture` recipe. |
-| `references/gantt-diagrams.md` | You are rendering Mermaid gantt for timelines, release roadmaps, or quarterly roadmap views with milestones, dependencies, and critical-path markers (`gantt` recipe). |
-| `references/diff-visualization.md` | You need before/after, schema, or architecture diff views. |
-| `references/echo-integration.md` | You are visualizing Echo journey, persona, team, or friction data. |
-| `references/accessibility.md` | You need accessible colors, alt text, or ASCII fallback. |
-| `references/diagram-library.md` | You need to save, list, update, or regenerate diagrams. |
-| `references/mermaid-v11-advanced.md` | You need Mermaid v11 features, semantic shapes, or ELK guidance. |
-| `references/diagram-tools-comparison.md` | Mermaid is not enough, you need D2/PlantUML, or Architecture-as-Code patterns. |
-| `references/diagramming-principles.md` | You need abstraction, density, or review heuristics. |
-| `references/ai-reverse-engineering.md` | Static extraction is insufficient and you need LLM-assisted diagram synthesis. |
+| `reference/diagram-templates.md` | You need a Mermaid starter template (17 diagram types including v11). |
+| `reference/drawio-specs.md` | You need draw.io XML, shape, edge, or layout rules. |
+| `reference/ascii-templates.md` | You need a plain-text or comment-safe diagram. |
+| `reference/reverse-engineering.md` | You are deriving a diagram from code or schema. |
+| `reference/c4-model.md` | You need a C4 Context/Container/Component/Code view. |
+| `reference/c4-diagrams.md` | You are rendering Mermaid C4 diagrams (C4Context / C4Container / C4Component) for the `c4` recipe, deriving from a Stratum DSL or ad-hoc input. |
+| `reference/architecture-diagrams.md` | You are sketching informal architecture diagrams (layered / hexagonal / microservice / event-driven) using Mermaid flowchart + subgraph for the `architecture` recipe. |
+| `reference/gantt-diagrams.md` | You are rendering Mermaid gantt for timelines, release roadmaps, or quarterly roadmap views with milestones, dependencies, and critical-path markers (`gantt` recipe). |
+| `reference/diff-visualization.md` | You need before/after, schema, or architecture diff views. |
+| `reference/echo-integration.md` | You are visualizing Echo journey, persona, team, or friction data. |
+| `reference/accessibility.md` | You need accessible colors, alt text, or ASCII fallback. |
+| `reference/diagram-library.md` | You need to save, list, update, or regenerate diagrams. |
+| `reference/mermaid-v11-advanced.md` | You need Mermaid v11 features, semantic shapes, or ELK guidance. |
+| `reference/diagram-tools-comparison.md` | Mermaid is not enough, you need D2/PlantUML, or Architecture-as-Code patterns. |
+| `reference/diagramming-principles.md` | You need abstraction, density, or review heuristics. |
+| `reference/ai-reverse-engineering.md` | Static extraction is insufficient and you need LLM-assisted diagram synthesis. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the diagram output, deciding adaptive thinking depth at diagram-type/abstraction selection, or front-loading source/purpose/audience at SCAN. Critical for Canvas: P3, P5. |
 
 ## Operational

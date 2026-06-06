@@ -114,10 +114,10 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
 | `DEFINE` | Identify mode (LOAD/CONTRACT/CHAOS/MUTATE/RESILIENCE), success criteria, and environment scope | Explicit success criteria before execution | Mode-specific reference |
-| `PREPARE` | Choose tools, set up test infrastructure, prepare baselines | Prefer existing project test stack; minimal blast radius | `references/load-testing-guide.md`, `references/chaos-engineering-guide.md` |
+| `PREPARE` | Choose tools, set up test infrastructure, prepare baselines | Prefer existing project test stack; minimal blast radius | `reference/load-testing-guide.md`, `reference/chaos-engineering-guide.md` |
 | `EXECUTE` | Run tests with warmup, ramp, and observation phases | Kill switch ready for chaos; 3x repetition for load | Mode-specific reference |
-| `ANALYZE` | Collect metrics, classify findings, identify bottlenecks or gaps | Evidence-first; tie findings to thresholds | `references/mutation-testing-advanced.md`, `references/resilience-anti-patterns.md` |
-| `REPORT` | Deliver structured report with recommendations and handoff | Clean up resources; recommend owning agent | `references/load-testing-anti-patterns.md`, `references/chaos-observability.md` |
+| `ANALYZE` | Collect metrics, classify findings, identify bottlenecks or gaps | Evidence-first; tie findings to thresholds | `reference/mutation-testing-advanced.md`, `reference/resilience-anti-patterns.md` |
+| `REPORT` | Deliver structured report with recommendations and handoff | Clean up resources; recommend owning agent | `reference/load-testing-anti-patterns.md`, `reference/chaos-observability.md` |
 
 ## Operating Modes
 
@@ -157,14 +157,14 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Load Test | `load` | ✓ | Load/stress/spike/soak testing and SLO validation | `references/load-testing-guide.md` |
-| Contract Test | `contract` | | Contract testing (Pact/Specmatic), CDC verification | `references/contract-testing-patterns.md` |
-| Chaos Engineering | `chaos` | | Chaos engineering, fault injection, game days | `references/chaos-engineering-guide.md` |
-| Mutation Testing | `mutation` | | Mutation testing, test quality measurement, survivor analysis | `references/mutation-testing-guide.md` |
-| Fuzz Testing | `fuzz` | | Coverage-guided fuzzing (AFL++/libFuzzer/go-fuzz/cargo-fuzz/Jazzer), corpus management, sanitizer integration | `references/fuzz-testing-guide.md` |
-| Property Testing | `property` | | Property-based testing (fast-check/Hypothesis/jqwik/PropEr), generator design, stateful/model-based properties | `references/property-based-testing.md` |
-| Smoke Test | `smoke` | | Post-deploy smoke / sanity gates, synthetic checks, ≤3-min deploy-verification suite | `references/smoke-deployment-gates.md` |
-| Concurrency | `concurrency` | | Hunt race conditions, memory/resource leaks, deadlocks, ordering violations. Stack: TSan/MSan/Valgrind/Helgrind/loom/jcstress + property-based ordering checks. Composes with `chaos` (resource-exhaustion induction) and `property` (invariant checks). (absorbed from specter) | `references/property-based-testing.md` |
+| Load Test | `load` | ✓ | Load/stress/spike/soak testing and SLO validation | `reference/load-testing-guide.md` |
+| Contract Test | `contract` | | Contract testing (Pact/Specmatic), CDC verification | `reference/contract-testing-patterns.md` |
+| Chaos Engineering | `chaos` | | Chaos engineering, fault injection, game days | `reference/chaos-engineering-guide.md` |
+| Mutation Testing | `mutation` | | Mutation testing, test quality measurement, survivor analysis | `reference/mutation-testing-guide.md` |
+| Fuzz Testing | `fuzz` | | Coverage-guided fuzzing (AFL++/libFuzzer/go-fuzz/cargo-fuzz/Jazzer), corpus management, sanitizer integration | `reference/fuzz-testing-guide.md` |
+| Property Testing | `property` | | Property-based testing (fast-check/Hypothesis/jqwik/PropEr), generator design, stateful/model-based properties | `reference/property-based-testing.md` |
+| Smoke Test | `smoke` | | Post-deploy smoke / sanity gates, synthetic checks, ≤3-min deploy-verification suite | `reference/smoke-deployment-gates.md` |
+| Concurrency | `concurrency` | | Hunt race conditions, memory/resource leaks, deadlocks, ordering violations. Stack: TSan/MSan/Valgrind/Helgrind/loom/jcstress + property-based ordering checks. Composes with `chaos` (resource-exhaustion induction) and `property` (invariant checks). (absorbed from specter) | `reference/property-based-testing.md` |
 
 ## Subcommand Dispatch
 
@@ -186,13 +186,13 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `load`, `stress`, `spike`, `soak`, `throughput`, `latency` | LOAD mode | Load test report with p50/p95/p99/max | `references/load-testing-guide.md` |
-| `contract`, `CDC`, `provider`, `consumer`, `pact`, `bi-directional` | CONTRACT mode | Contract verification report | `references/contract-testing-patterns.md` |
-| `chaos`, `fault injection`, `game day`, `failure` | CHAOS mode | Chaos experiment report | `references/chaos-engineering-guide.md` |
-| `mutation`, `test quality`, `survivor` | MUTATE mode | Mutation score report | `references/mutation-testing-guide.md` |
-| `resilience`, `retry`, `circuit breaker`, `timeout`, `bulkhead` | RESILIENCE mode | Resilience verification report | `references/resilience-patterns.md` |
-| `SLO validation`, `error budget` | LOAD + SLO focus | SLO compliance report | `references/load-testing-guide.md` |
-| unclear non-functional testing request | LOAD mode (default) | Load test report | `references/load-testing-guide.md` |
+| `load`, `stress`, `spike`, `soak`, `throughput`, `latency` | LOAD mode | Load test report with p50/p95/p99/max | `reference/load-testing-guide.md` |
+| `contract`, `CDC`, `provider`, `consumer`, `pact`, `bi-directional` | CONTRACT mode | Contract verification report | `reference/contract-testing-patterns.md` |
+| `chaos`, `fault injection`, `game day`, `failure` | CHAOS mode | Chaos experiment report | `reference/chaos-engineering-guide.md` |
+| `mutation`, `test quality`, `survivor` | MUTATE mode | Mutation score report | `reference/mutation-testing-guide.md` |
+| `resilience`, `retry`, `circuit breaker`, `timeout`, `bulkhead` | RESILIENCE mode | Resilience verification report | `reference/resilience-patterns.md` |
+| `SLO validation`, `error budget` | LOAD + SLO focus | SLO compliance report | `reference/load-testing-guide.md` |
+| unclear non-functional testing request | LOAD mode (default) | Load test report | `reference/load-testing-guide.md` |
 
 Routing rules:
 
@@ -262,19 +262,19 @@ Use mode-specific reporting:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/load-testing-guide.md` | You need tool selection, k6/Locust/Artillery patterns, SLO validation, CI snippets, or report structure. |
-| `references/load-testing-anti-patterns.md` | You need load-test design guardrails, shift-left strategy, Azure performance anti-patterns, or performance budgets. |
-| `references/contract-testing-patterns.md` | You need Pact, AsyncAPI, contract CI, or breaking-change guidance. |
-| `references/chaos-engineering-guide.md` | You need steady-state templates, fault-injection scenarios, tools, or Game Day checklists. |
-| `references/chaos-observability.md` | You need observability integration, chaos CI maturity, Game Day practices, or chaos anti-patterns. |
-| `references/mutation-testing-guide.md` | You need tool setup, survivor analysis, CI wiring, or baseline mutation thresholds. |
-| `references/mutation-testing-advanced.md` | You need equivalent-mutant handling, tiered mutation strategy, or risk-based thresholds. |
-| `references/fuzz-testing-guide.md` | You need coverage-guided fuzzing setup (AFL++/libFuzzer/go-fuzz/cargo-fuzz/Jazzer), corpus/dictionary design, sanitizer selection, crash triage, or continuous-fuzz CI wiring. |
-| `references/property-based-testing.md` | You need property-based test design (fast-check/Hypothesis/jqwik/PropEr), generator composition, shrinking tuning, or stateful/model-based testing patterns. |
-| `references/smoke-deployment-gates.md` | You need post-deploy smoke suite design, the canary/smoke/regression hierarchy, synthetic-check topology, or ≤3-min deploy-gate time-budget discipline. |
-| `references/resilience-patterns.md` | You need retry, timeout, circuit-breaker, or bulkhead verification patterns. |
-| `references/resilience-anti-patterns.md` | You need resilience anti-patterns, error-budget rules, or SLO-based resilience testing. |
-| `references/test-strategy-2026.md` | You need the consolidated 2026 picture across the seven test layers (unit+PBT / mutation / metamorphic / integration+contract / trace-based / E2E+visual+a11y / load+chaos+replay), shape selection (pyramid / diamond / trophy), coverage-floor + mutation-ceiling thresholds, or the skill-to-layer mapping. Use this when designing a test strategy from scratch or evaluating a team's current test mix. |
+| `reference/load-testing-guide.md` | You need tool selection, k6/Locust/Artillery patterns, SLO validation, CI snippets, or report structure. |
+| `reference/load-testing-anti-patterns.md` | You need load-test design guardrails, shift-left strategy, Azure performance anti-patterns, or performance budgets. |
+| `reference/contract-testing-patterns.md` | You need Pact, AsyncAPI, contract CI, or breaking-change guidance. |
+| `reference/chaos-engineering-guide.md` | You need steady-state templates, fault-injection scenarios, tools, or Game Day checklists. |
+| `reference/chaos-observability.md` | You need observability integration, chaos CI maturity, Game Day practices, or chaos anti-patterns. |
+| `reference/mutation-testing-guide.md` | You need tool setup, survivor analysis, CI wiring, or baseline mutation thresholds. |
+| `reference/mutation-testing-advanced.md` | You need equivalent-mutant handling, tiered mutation strategy, or risk-based thresholds. |
+| `reference/fuzz-testing-guide.md` | You need coverage-guided fuzzing setup (AFL++/libFuzzer/go-fuzz/cargo-fuzz/Jazzer), corpus/dictionary design, sanitizer selection, crash triage, or continuous-fuzz CI wiring. |
+| `reference/property-based-testing.md` | You need property-based test design (fast-check/Hypothesis/jqwik/PropEr), generator composition, shrinking tuning, or stateful/model-based testing patterns. |
+| `reference/smoke-deployment-gates.md` | You need post-deploy smoke suite design, the canary/smoke/regression hierarchy, synthetic-check topology, or ≤3-min deploy-gate time-budget discipline. |
+| `reference/resilience-patterns.md` | You need retry, timeout, circuit-breaker, or bulkhead verification patterns. |
+| `reference/resilience-anti-patterns.md` | You need resilience anti-patterns, error-budget rules, or SLO-based resilience testing. |
+| `reference/test-strategy-2026.md` | You need the consolidated 2026 picture across the seven test layers (unit+PBT / mutation / metamorphic / integration+contract / trace-based / E2E+visual+a11y / load+chaos+replay), shape selection (pyramid / diamond / trophy), coverage-floor + mutation-ceiling thresholds, or the skill-to-layer mapping. Use this when designing a test strategy from scratch or evaluating a team's current test mix. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the test report, deciding adaptive thinking depth at tool/percentile selection, or front-loading test type/environment/criteria at PLAN. Critical for Siege: P3, P5. |
 
 

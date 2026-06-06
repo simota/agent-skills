@@ -59,11 +59,11 @@ Route elsewhere when the task is primarily:
 
 | Phase | Focus | Required checks | Read |
 |-------|-------|-----------------|------|
-| `ANALYZE` | Collect evidence and lock a baseline | Capture baseline `EXPLAIN (ANALYZE, BUFFERS)`, slow-query sample, and workload context **before any change** — no baseline, no optimization | `references/explain-analyze-guide.md` |
-| `DIAGNOSE` | Isolate the bottleneck | Root cause across scan/join/sort/index; flag version-specific wins (PG18 AIO / skip scan / uuidv7 / virtual generated columns) | `references/optimization-patterns.md` |
-| `OPTIMIZE` | Choose the safest improvement | Rewrite, index, config, cache, MV, or partition recommendation; quantify write-amplification and emit `CONCURRENTLY` DDL + rollback SQL for index/migration changes | `references/materialized-views-partitioning.md` |
-| `VALIDATE` | Prove the change, guard the rest | Side-by-side before/after `EXPLAIN ANALYZE` diff with row-estimate-ratio delta; confirm no plan regression on adjacent reads/writes — revert the recommendation if a secondary query regresses | `references/slow-query-benchmarks.md` |
-| `PRESENT` | Deliver and hand off | Report before/after P50/P95/P99 + buffer hits/reads; route Schema (migration ownership), Bolt (app caching), Beacon (before/after monitoring) | `references/fix-prompt-generation.md` |
+| `ANALYZE` | Collect evidence and lock a baseline | Capture baseline `EXPLAIN (ANALYZE, BUFFERS)`, slow-query sample, and workload context **before any change** — no baseline, no optimization | `reference/explain-analyze-guide.md` |
+| `DIAGNOSE` | Isolate the bottleneck | Root cause across scan/join/sort/index; flag version-specific wins (PG18 AIO / skip scan / uuidv7 / virtual generated columns) | `reference/optimization-patterns.md` |
+| `OPTIMIZE` | Choose the safest improvement | Rewrite, index, config, cache, MV, or partition recommendation; quantify write-amplification and emit `CONCURRENTLY` DDL + rollback SQL for index/migration changes | `reference/materialized-views-partitioning.md` |
+| `VALIDATE` | Prove the change, guard the rest | Side-by-side before/after `EXPLAIN ANALYZE` diff with row-estimate-ratio delta; confirm no plan regression on adjacent reads/writes — revert the recommendation if a secondary query regresses | `reference/slow-query-benchmarks.md` |
+| `PRESENT` | Deliver and hand off | Report before/after P50/P95/P99 + buffer hits/reads; route Schema (migration ownership), Bolt (app caching), Beacon (before/after monitoring) | `reference/fix-prompt-generation.md` |
 
 ## Core Contract
 
@@ -77,7 +77,7 @@ Route elsewhere when the task is primarily:
 - Prefer composite indexes over multiple single-column indexes when queries filter on 2+ columns together.
 - On PostgreSQL 18+, recommend `uuidv7()` over `gen_random_uuid()` for indexed primary keys — UUIDv7's time-ordering eliminates B-tree page splits and reduces buffer hits by ~30× compared to random UUIDv4.
 - Author for Opus 4.8 defaults. Apply [\_common/OPUS_48_AUTHORING.md](~/.claude/skills/_common/OPUS_48_AUTHORING.md) principles **P3 (eagerly Read `EXPLAIN (ANALYZE, BUFFERS)` output, schema, indexes, and statistics at ANALYZE — optimization recommendations without plan evidence are speculation; distinguish cache hits from disk I/O), P5 (think step-by-step at index read/write trade-offs, row-estimate-ratio diagnosis (>10× stale stats, >100× unreliable), and PostgreSQL version-specific tuning (17 vs 18+, UUIDv7, skip scan))** as critical for Tuner. P2 recommended: calibrated performance report preserving before/after P50/P95/P99, buffer hits/reads, and row-estimate ratios. P1 recommended: front-load DB engine+version, workload class, and latency target at ANALYZE.
-- Pair every actionable performance finding with a paste-ready `## LLM Fix Prompt` block in the report. The prompt embeds the slow query (verbatim), current EXPLAIN ANALYZE plan (highlighting the bottleneck node), predicted plan after fix, workload context (table size, selectivity, buffer hits/reads, row-estimate ratio, frequency, P99), recommended action (with `CREATE INDEX CONCURRENTLY` for production index DDL), acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress when handing off to Schema (migration ownership) or Bolt (app-level caching), and withhold in analysis-only mode or when the query is owned by a 3rd-party library. See `references/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
+- Pair every actionable performance finding with a paste-ready `## LLM Fix Prompt` block in the report. The prompt embeds the slow query (verbatim), current EXPLAIN ANALYZE plan (highlighting the bottleneck node), predicted plan after fix, workload context (table size, selectivity, buffer hits/reads, row-estimate ratio, frequency, P99), recommended action (with `CREATE INDEX CONCURRENTLY` for production index DDL), acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress when handing off to Schema (migration ownership) or Bolt (app-level caching), and withhold in analysis-only mode or when the query is owned by a 3rd-party library. See `reference/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
 
 ## Boundaries
 
@@ -184,13 +184,13 @@ Single source of truth for Recipe definitions. Subcommand match wins over natura
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Explain Analyze | `explain` | ✓ | EXPLAIN ANALYZE analysis — annotate plan nodes, identify bottleneck nodes, propose improvements | `references/explain-analyze-guide.md` |
-| Slow Query Hunt | `slow` | | Slow query detection and fix — extract high-cost queries from slow-query logs or pg_stat_statements and propose rewrite candidates | `references/slow-query-benchmarks.md` |
-| Index Recommendation | `index` | | Index recommendation — analyze access patterns and produce DDL for covering, partial, and composite indexes | `references/query-index-anti-patterns.md` |
-| Plan Optimization | `plan` | | Query plan improvement — tune planner statistics and configuration (work_mem, enable_seqscan, etc.) to steer the planner | `references/optimization-patterns.md` |
-| Cache Strategy | `cache` | | Query/DB cache layer tuning (Redis/Memcached, `shared_buffers`, cache-aside vs write-through, TTL/invalidation, stampede guards). Scope: app/query cache layer. Gateway owns HTTP/edge cache; Schema owns design-time denormalization/MVs; hand off repository integration to Builder | `references/cache-strategy.md` |
-| Connection Pool Tuning | `connection` | | Pool sizing, lifetime, prepared-statement cache, leak detection (PgBouncer/HikariCP/pgpool). Scope: DB-side pool. Gateway owns HTTP keep-alive; Bolt owns app-side thread/async pool; coordinate with Schema when `max_connections` must rise | `references/connection-pool-tuning.md` |
-| VACUUM & Autovacuum | `vacuum` | | Bloat, autovacuum thresholds, freeze horizon, `default_statistics_target`, pg_repack vs VACUUM FULL timing. Scope: runtime maintenance. Schema owns design-time `fillfactor`/partitioning; Beacon owns bloat monitoring/dashboards | `references/vacuum-autovacuum-tuning.md` |
+| Explain Analyze | `explain` | ✓ | EXPLAIN ANALYZE analysis — annotate plan nodes, identify bottleneck nodes, propose improvements | `reference/explain-analyze-guide.md` |
+| Slow Query Hunt | `slow` | | Slow query detection and fix — extract high-cost queries from slow-query logs or pg_stat_statements and propose rewrite candidates | `reference/slow-query-benchmarks.md` |
+| Index Recommendation | `index` | | Index recommendation — analyze access patterns and produce DDL for covering, partial, and composite indexes | `reference/query-index-anti-patterns.md` |
+| Plan Optimization | `plan` | | Query plan improvement — tune planner statistics and configuration (work_mem, enable_seqscan, etc.) to steer the planner | `reference/optimization-patterns.md` |
+| Cache Strategy | `cache` | | Query/DB cache layer tuning (Redis/Memcached, `shared_buffers`, cache-aside vs write-through, TTL/invalidation, stampede guards). Scope: app/query cache layer. Gateway owns HTTP/edge cache; Schema owns design-time denormalization/MVs; hand off repository integration to Builder | `reference/cache-strategy.md` |
+| Connection Pool Tuning | `connection` | | Pool sizing, lifetime, prepared-statement cache, leak detection (PgBouncer/HikariCP/pgpool). Scope: DB-side pool. Gateway owns HTTP keep-alive; Bolt owns app-side thread/async pool; coordinate with Schema when `max_connections` must rise | `reference/connection-pool-tuning.md` |
+| VACUUM & Autovacuum | `vacuum` | | Bloat, autovacuum thresholds, freeze horizon, `default_statistics_target`, pg_repack vs VACUUM FULL timing. Scope: runtime maintenance. Schema owns design-time `fillfactor`/partitioning; Beacon owns bloat monitoring/dashboards | `reference/vacuum-autovacuum-tuning.md` |
 
 ### Signal Keywords → Recipe
 
@@ -201,13 +201,13 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `explain`, `execution plan`, `query plan` | `explain` |
 | `slow query`, `latency`, `timeout`, `P99`, `latency SLA`, `percentile` | `slow` |
 | `index`, `covering index`, `partial index` | `index` |
-| `N+1`, `ORM`, `eager loading` | `slow` (see `references/orm-performance-pitfalls.md`) |
+| `N+1`, `ORM`, `eager loading` | `slow` (see `reference/orm-performance-pitfalls.md`) |
 | `connection pool`, `max_connections` | `connection` |
-| `materialized view`, `partition` | `plan` (see `references/materialized-views-partitioning.md`) |
-| `monitoring`, `pg_stat`, `observability` | `slow` (see `references/db-monitoring-observability.md`) |
-| `vector`, `pgvector`, `embedding` | `index` (see `references/vector-search-query-optimization.md`) |
-| `cloud db`, `Aurora`, `Neon` | `plan` (see `references/cloud-db-optimization-patterns.md`) |
-| `PostgreSQL 18`, `AIO`, `skip scan` | `plan` (see `references/postgresql-18-performance.md`) |
+| `materialized view`, `partition` | `plan` (see `reference/materialized-views-partitioning.md`) |
+| `monitoring`, `pg_stat`, `observability` | `slow` (see `reference/db-monitoring-observability.md`) |
+| `vector`, `pgvector`, `embedding` | `index` (see `reference/vector-search-query-optimization.md`) |
+| `cloud db`, `Aurora`, `Neon` | `plan` (see `reference/cloud-db-optimization-patterns.md`) |
+| `PostgreSQL 18`, `AIO`, `skip scan` | `plan` (see `reference/postgresql-18-performance.md`) |
 | unclear request | Clarify scope, then `explain` (default) |
 
 ## Subcommand Dispatch
@@ -223,14 +223,14 @@ Parse the first token of user input:
 - Deliver structured Markdown.
 - Include: evidence, diagnosis, recommendation, expected impact, risks, and validation plan.
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`).
-- Use the canonical report format in [performance-report-template.md](references/performance-report-template.md) when producing a full report.
+- Use the canonical report format in [performance-report-template.md](reference/performance-report-template.md) when producing a full report.
 
 Mandatory when an actionable finding is identified (suppress for analysis-only / Schema-owned migration / Bolt-owned caching / 3rd-party library queries):
 - For every actionable finding, a paste-ready `## LLM Fix Prompt` block — see `LLM Fix Prompt Generation` below. When suppressed, write a one-line note explaining why (analysis-only / Schema owns migration / Bolt owns caching / upstream library coordination).
 
 ## LLM Fix Prompt Generation
 
-Every Tuner performance report for an actionable finding ends with a `## LLM Fix Prompt` block — a paste-ready, self-contained prompt that drives the receiving agent (Builder for query rewrites, Schema for migration coordination on `ADD-INDEX`, Bolt for caching layer on `MITIGATE`) toward a precise, plan-evidence-backed change without manual reformulation. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; Tuner-specific verbs, suppression cases, template fields, and a worked example live in `references/fix-prompt-generation.md`.
+Every Tuner performance report for an actionable finding ends with a `## LLM Fix Prompt` block — a paste-ready, self-contained prompt that drives the receiving agent (Builder for query rewrites, Schema for migration coordination on `ADD-INDEX`, Bolt for caching layer on `MITIGATE`) toward a precise, plan-evidence-backed change without manual reformulation. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; Tuner-specific verbs, suppression cases, template fields, and a worked example live in `reference/fix-prompt-generation.md`.
 
 | Verb | Use when | Receiving agent |
 |------|----------|----------------|
@@ -265,25 +265,25 @@ In all suppression cases, write a one-line note in the report explaining why the
 
 | File | Read this when... |
 |------|-------------------|
-| [explain-analyze-guide.md](references/explain-analyze-guide.md) | You need DB-specific `EXPLAIN` commands, plan nodes, or red-flag thresholds |
-| [optimization-patterns.md](references/optimization-patterns.md) | You need rewrite patterns, missing-index checks, or unused-index checks |
-| [materialized-views-partitioning.md](references/materialized-views-partitioning.md) | You need MV or partitioning decision rules, DDL, or maintenance guidance |
-| [slow-query-benchmarks.md](references/slow-query-benchmarks.md) | You need slow-query logging or benchmark commands |
-| [n1-detection-cache-orm.md](references/n1-detection-cache-orm.md) | You need N+1 detection, cache decision rules, or ORM eager-loading patterns |
-| [db-specific-query-visualization.md](references/db-specific-query-visualization.md) | You need PostgreSQL/MySQL/SQLite tuning baselines or Canvas query-plan visualization |
-| [connection-pool-tuning.md](references/connection-pool-tuning.md) | You need connection-pool sizing or pooler selection (Quick-Start) or in-depth pool tuning — lifetime coordination, prepared-statement cache, leak detection, HikariCP/PgBouncer knobs (Deep Dive) |
-| [cache-strategy.md](references/cache-strategy.md) | You need query/DB cache strategy — Redis/Memcached, `shared_buffers`, TTL, invalidation, stampede guards |
-| [vacuum-autovacuum-tuning.md](references/vacuum-autovacuum-tuning.md) | You need VACUUM/autovacuum tuning, bloat detection, freeze horizon, or statistics-target guidance |
-| [performance-report-template.md](references/performance-report-template.md) | You need the exact output schema for a performance report |
-| [query-index-anti-patterns.md](references/query-index-anti-patterns.md) | You need `QA-01..06` or `IA-01..06` screening and production index safety rules |
-| [orm-performance-pitfalls.md](references/orm-performance-pitfalls.md) | You need ORM-specific risk screening, raw-SQL switch criteria, or 2025 ORM comparison |
-| [postgresql-17-performance.md](references/postgresql-17-performance.md) | You need PostgreSQL 17-specific optimizer changes or upgrade checks |
-| [postgresql-18-performance.md](references/postgresql-18-performance.md) | You need PostgreSQL 18 AIO, skip scan, or upgrade planning |
-| [postgresql-19-preview.md](references/postgresql-19-preview.md) | You need PG19 Beta evaluation, PG18 → PG19 migration posture, or release-timeline planning (not GA yet — forward planning only) |
-| [db-monitoring-observability.md](references/db-monitoring-observability.md) | You need monitoring pillars, alert thresholds, or dashboard guidance |
-| [vector-search-query-optimization.md](references/vector-search-query-optimization.md) | You need pgvector tuning, HNSW/IVFFlat parameters, or filtered vector search |
-| [cloud-db-optimization-patterns.md](references/cloud-db-optimization-patterns.md) | You need Aurora QPM, Neon cold-start tuning, or cloud DB selection guidance |
-| [fix-prompt-generation.md](references/fix-prompt-generation.md) | You are authoring the `## LLM Fix Prompt` block, choosing a Tuner-specific verb (OPTIMIZE-QUERY / ADD-INDEX / BREAKING-OPTIMIZE / MIGRATE-WORKLOAD / INVESTIGATE-FURTHER / MITIGATE), or deciding whether to suppress for Schema/Bolt handoff or analysis-only scope |
+| [explain-analyze-guide.md](reference/explain-analyze-guide.md) | You need DB-specific `EXPLAIN` commands, plan nodes, or red-flag thresholds |
+| [optimization-patterns.md](reference/optimization-patterns.md) | You need rewrite patterns, missing-index checks, or unused-index checks |
+| [materialized-views-partitioning.md](reference/materialized-views-partitioning.md) | You need MV or partitioning decision rules, DDL, or maintenance guidance |
+| [slow-query-benchmarks.md](reference/slow-query-benchmarks.md) | You need slow-query logging or benchmark commands |
+| [n1-detection-cache-orm.md](reference/n1-detection-cache-orm.md) | You need N+1 detection, cache decision rules, or ORM eager-loading patterns |
+| [db-specific-query-visualization.md](reference/db-specific-query-visualization.md) | You need PostgreSQL/MySQL/SQLite tuning baselines or Canvas query-plan visualization |
+| [connection-pool-tuning.md](reference/connection-pool-tuning.md) | You need connection-pool sizing or pooler selection (Quick-Start) or in-depth pool tuning — lifetime coordination, prepared-statement cache, leak detection, HikariCP/PgBouncer knobs (Deep Dive) |
+| [cache-strategy.md](reference/cache-strategy.md) | You need query/DB cache strategy — Redis/Memcached, `shared_buffers`, TTL, invalidation, stampede guards |
+| [vacuum-autovacuum-tuning.md](reference/vacuum-autovacuum-tuning.md) | You need VACUUM/autovacuum tuning, bloat detection, freeze horizon, or statistics-target guidance |
+| [performance-report-template.md](reference/performance-report-template.md) | You need the exact output schema for a performance report |
+| [query-index-anti-patterns.md](reference/query-index-anti-patterns.md) | You need `QA-01..06` or `IA-01..06` screening and production index safety rules |
+| [orm-performance-pitfalls.md](reference/orm-performance-pitfalls.md) | You need ORM-specific risk screening, raw-SQL switch criteria, or 2025 ORM comparison |
+| [postgresql-17-performance.md](reference/postgresql-17-performance.md) | You need PostgreSQL 17-specific optimizer changes or upgrade checks |
+| [postgresql-18-performance.md](reference/postgresql-18-performance.md) | You need PostgreSQL 18 AIO, skip scan, or upgrade planning |
+| [postgresql-19-preview.md](reference/postgresql-19-preview.md) | You need PG19 Beta evaluation, PG18 → PG19 migration posture, or release-timeline planning (not GA yet — forward planning only) |
+| [db-monitoring-observability.md](reference/db-monitoring-observability.md) | You need monitoring pillars, alert thresholds, or dashboard guidance |
+| [vector-search-query-optimization.md](reference/vector-search-query-optimization.md) | You need pgvector tuning, HNSW/IVFFlat parameters, or filtered vector search |
+| [cloud-db-optimization-patterns.md](reference/cloud-db-optimization-patterns.md) | You need Aurora QPM, Neon cold-start tuning, or cloud DB selection guidance |
+| [fix-prompt-generation.md](reference/fix-prompt-generation.md) | You are authoring the `## LLM Fix Prompt` block, choosing a Tuner-specific verb (OPTIMIZE-QUERY / ADD-INDEX / BREAKING-OPTIMIZE / MIGRATE-WORKLOAD / INVESTIGATE-FURTHER / MITIGATE), or deciding whether to suppress for Schema/Bolt handoff or analysis-only scope |
 | [\_common/LLM_PROMPT_GENERATION.md](~/.claude/skills/_common/LLM_PROMPT_GENERATION.md) | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel |
 | [\_common/BOUNDARIES.md](~/.claude/skills/_common/BOUNDARIES.md) | Role boundaries are ambiguous |
 | [\_common/OPERATIONAL.md](~/.claude/skills/_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |

@@ -100,7 +100,7 @@ Every `## NEXUS_HANDOFF` and `_STEP_COMPLETE` **MUST** be preceded by:
 
 **Orchestrator enforcement (Nexus/Rally):** A handoff returned without journaling evidence is treated as `PARTIAL`. The orchestrator reroutes the agent to complete the logging step before chain progression. After 2 consecutive journaling-gate failures from the same agent, escalate to the user.
 
-**Why this is a gate, not a suggestion:** Session durability (next section) depends on persistent state outside the orchestrator context. A handoff that skips journaling breaks crash recovery and routing learning — see also `_common/EVOLUTION.md` and `references/routing-learning.md` (Nexus).
+**Why this is a gate, not a suggestion:** Session durability (next section) depends on persistent state outside the orchestrator context. A handoff that skips journaling breaks crash recovery and routing learning — see also `_common/EVOLUTION.md` and `reference/routing-learning.md` (Nexus).
 
 ---
 

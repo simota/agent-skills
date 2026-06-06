@@ -99,13 +99,13 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Isolation Strategy | `isolation` | ✓ | Tenant isolation strategy design (DB / schema / row-level comparison) | `references/patterns.md` |
-| RLS Design | `rls` | | Row Level Security policy design and tenant context propagation | `references/patterns.md` |
-| Tenant Routing | `routing` | | Tenant routing design (subdomain / header / path) | `references/patterns.md` |
-| Scale Design | `scale` | | Noisy-neighbor protection, resource limits, and migration planning | `references/patterns.md` |
-| Tenant Migration | `migration` | | Cross-shard rebalancing, isolation-level upgrade, zero-downtime tenant moves | `references/tenant-migration.md` |
-| Tenant Provisioning | `provisioning` | | Tenant lifecycle, IaC-driven onboarding, idempotent re-provisioning, deprovisioning + retention | `references/tenant-provisioning.md` |
-| Tenant Quota | `quota` | | Per-tenant rate limits, fair-share scheduling, soft/hard quota, burst budgets, overage handoff | `references/tenant-quota-throttling.md` |
+| Isolation Strategy | `isolation` | ✓ | Tenant isolation strategy design (DB / schema / row-level comparison) | `reference/patterns.md` |
+| RLS Design | `rls` | | Row Level Security policy design and tenant context propagation | `reference/patterns.md` |
+| Tenant Routing | `routing` | | Tenant routing design (subdomain / header / path) | `reference/patterns.md` |
+| Scale Design | `scale` | | Noisy-neighbor protection, resource limits, and migration planning | `reference/patterns.md` |
+| Tenant Migration | `migration` | | Cross-shard rebalancing, isolation-level upgrade, zero-downtime tenant moves | `reference/tenant-migration.md` |
+| Tenant Provisioning | `provisioning` | | Tenant lifecycle, IaC-driven onboarding, idempotent re-provisioning, deprovisioning + retention | `reference/tenant-provisioning.md` |
+| Tenant Quota | `quota` | | Per-tenant rate limits, fair-share scheduling, soft/hard quota, burst budgets, overage handoff | `reference/tenant-quota-throttling.md` |
 
 ## Subcommand Dispatch
 
@@ -123,14 +123,14 @@ Parse the first token of user input.
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `multi-tenant`, `SaaS`, `tenant` | Full isolation strategy design | Architecture doc + RLS spec | `references/patterns.md` |
-| `RLS`, `row level security` | RLS policy design | Policy spec + migration SQL | `references/patterns.md` |
-| `routing`, `subdomain`, `tenant resolution` | Tenant routing design | Routing spec + middleware design | `references/patterns.md` |
-| `noisy neighbor`, `rate limit`, `fair` | Resource isolation design | Limit spec + monitoring plan | `references/patterns.md` |
-| `migration`, `single to multi` | Migration strategy | Migration plan + risk assessment | `references/patterns.md` |
-| `billing`, `metering`, `usage` | Billing integration design | Metering spec + event design | `references/patterns.md` |
-| `security`, `data leak`, `isolation check` | Data leakage assessment | Risk report + guardrail design | `references/patterns.md` |
-| unclear request | Full isolation strategy (default) | Architecture doc | `references/patterns.md` |
+| `multi-tenant`, `SaaS`, `tenant` | Full isolation strategy design | Architecture doc + RLS spec | `reference/patterns.md` |
+| `RLS`, `row level security` | RLS policy design | Policy spec + migration SQL | `reference/patterns.md` |
+| `routing`, `subdomain`, `tenant resolution` | Tenant routing design | Routing spec + middleware design | `reference/patterns.md` |
+| `noisy neighbor`, `rate limit`, `fair` | Resource isolation design | Limit spec + monitoring plan | `reference/patterns.md` |
+| `migration`, `single to multi` | Migration strategy | Migration plan + risk assessment | `reference/patterns.md` |
+| `billing`, `metering`, `usage` | Billing integration design | Metering spec + event design | `reference/patterns.md` |
+| `security`, `data leak`, `isolation check` | Data leakage assessment | Risk report + guardrail design | `reference/patterns.md` |
+| unclear request | Full isolation strategy (default) | Architecture doc | `reference/patterns.md` |
 
 ## Workflow
 
@@ -139,9 +139,9 @@ Parse the first token of user input.
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
 | `ASSESS` | Analyze scale, compliance, cost constraints, existing schema | Understand current state before designing future state | — |
-| `STRATEGY` | Evaluate isolation levels and recommend with tradeoffs | Compare all 3 levels; include cost and complexity analysis | `references/patterns.md` |
-| `DESIGN` | Design RLS, routing, context propagation, resource limits | RLS must fail closed; context must flow end-to-end | `references/patterns.md` |
-| `VERIFY` | Assess data leakage vectors and test strategies | Every design gets a leakage checklist | `references/patterns.md` |
+| `STRATEGY` | Evaluate isolation levels and recommend with tradeoffs | Compare all 3 levels; include cost and complexity analysis | `reference/patterns.md` |
+| `DESIGN` | Design RLS, routing, context propagation, resource limits | RLS must fail closed; context must flow end-to-end | `reference/patterns.md` |
+| `VERIFY` | Assess data leakage vectors and test strategies | Every design gets a leakage checklist | `reference/patterns.md` |
 | `DOCUMENT` | Produce architecture doc with migration path | Include diagrams, SQL examples, and monitoring plan | — |
 
 ## Isolation Strategy Matrix
@@ -214,12 +214,12 @@ Key design points:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/patterns.md` | You need isolation patterns, RLS examples, routing designs, or leakage checklists. |
-| `references/examples.md` | You need complete multi-tenant architecture examples. |
-| `references/handoffs.md` | You need handoff templates for collaboration with other agents. |
-| `references/tenant-migration.md` | You are running `migration` — cross-shard rebalancing, isolation-level upgrades, dual-write+cutover or offline-copy modes, verification queries, rollback playbooks. |
-| `references/tenant-provisioning.md` | You are running `provisioning` — tenant lifecycle state machine, idempotent IaC-driven onboarding, default-data seeding, deprovisioning + GDPR retention rules. |
-| `references/tenant-quota-throttling.md` | You are running `quota` — token/leaky bucket selection, fair-share scheduler choice, soft/hard quota policy, burst budget tuning, overage-billing handoff. |
+| `reference/patterns.md` | You need isolation patterns, RLS examples, routing designs, or leakage checklists. |
+| `reference/examples.md` | You need complete multi-tenant architecture examples. |
+| `reference/handoffs.md` | You need handoff templates for collaboration with other agents. |
+| `reference/tenant-migration.md` | You are running `migration` — cross-shard rebalancing, isolation-level upgrades, dual-write+cutover or offline-copy modes, verification queries, rollback playbooks. |
+| `reference/tenant-provisioning.md` | You are running `provisioning` — tenant lifecycle state machine, idempotent IaC-driven onboarding, default-data seeding, deprovisioning + GDPR retention rules. |
+| `reference/tenant-quota-throttling.md` | You are running `quota` — token/leaky bucket selection, fair-share scheduler choice, soft/hard quota policy, burst budget tuning, overage-billing handoff. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the tenancy spec, deciding adaptive thinking depth at DESIGN, or front-loading compliance scope/scale projection at SCAN. Critical for Shard: P3, P5. |
 
 ## Operational

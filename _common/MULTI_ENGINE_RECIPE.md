@@ -1,10 +1,10 @@
 # Multi-Engine Recipe Protocol
 
-Cross-skill protocol for the `multi` Recipe — spawning subagents in parallel across engines for tasks where multi-engine perspectives improve quality. Adapted from `judge/references/tri-engine-review.md` for non-review skills.
+Cross-skill protocol for the `multi` Recipe — spawning subagents in parallel across engines for tasks where multi-engine perspectives improve quality. Adapted from `judge/reference/tri-engine-review.md` for non-review skills.
 
 **Audience**: Skills implementing a `multi` Recipe (Spark, Plea, Omen, Magi, Compete, Sentinel, Riff, Flux, Researcher, Vision, Saga, Atlas, Echo, Scout, and future additions).
 
-**Prerequisites**: `_common/SUBAGENT.md §MULTI_ENGINE` (base engine dispatch mechanics), `judge/references/tri-engine-review.md` (canonical PREFLIGHT/FAN-OUT logic).
+**Prerequisites**: `_common/SUBAGENT.md §MULTI_ENGINE` (base engine dispatch mechanics), `judge/reference/tri-engine-review.md` (canonical PREFLIGHT/FAN-OUT logic).
 
 ---
 
@@ -97,7 +97,7 @@ Each skill's `multi` Recipe falls into one of three patterns. Choose the one tha
 
 ## Pattern H Deep Dive (shared by Scout / Atlas / Magi / Echo)
 
-The Pattern H scoring/grounding/tagging mechanics are identical across skills; only the JSON schema, cluster identity rules, and output document shape differ. Skills implementing Pattern H inherit this section verbatim and define only their deltas in `references/tri-engine-{verb}.md`.
+The Pattern H scoring/grounding/tagging mechanics are identical across skills; only the JSON schema, cluster identity rules, and output document shape differ. Skills implementing Pattern H inherit this section verbatim and define only their deltas in `reference/tri-engine-{verb}.md`.
 
 ### Confidence axis (per cluster) — initial treatment
 
@@ -181,7 +181,7 @@ Define the task target once. All three subagents share the same scope. Include s
 
 **Run in skill main context. Never delegate to subagents.** Subagent PATH is narrower than the user's interactive shell, leading to false-negative "unavailable" verdicts.
 
-Canonical probe (per `judge/references/tri-engine-review.md §2`):
+Canonical probe (per `judge/reference/tri-engine-review.md §2`):
 
 ```bash
 for cli in codex agy claude; do
@@ -220,7 +220,7 @@ Spawn **three Agent calls in a single message** for genuine parallel execution. 
 
 **Loose prompt rule** (per `_common/SUBAGENT.md` MULTI_ENGINE): pass only Role + Target + Output format. Do NOT pass skill-specific frameworks, taxonomies, or templates — those are applied at SYNTHESIZE. The point is to let each engine's training-data priors drive independent output.
 
-**JSON output schema** is mandatory for deterministic integration. Each skill defines its own schema in its `references/tri-engine-{verb}.md`, but always includes:
+**JSON output schema** is mandatory for deterministic integration. Each skill defines its own schema in its `reference/tri-engine-{verb}.md`, but always includes:
 
 ```json
 {
@@ -327,7 +327,7 @@ Apply the scoring rubric for your pattern type (D / C / H). See per-pattern tabl
 
 ### 9. DELIVER
 
-Output structure follows the skill's existing template, with multi-engine additions documented in that skill's `references/tri-engine-{verb}.md`.
+Output structure follows the skill's existing template, with multi-engine additions documented in that skill's `reference/tri-engine-{verb}.md`.
 
 ---
 
@@ -457,14 +457,14 @@ When adding `multi` Recipe to a new skill:
 - [ ] Add `multi` behavior note in Subcommand Dispatch
 - [ ] Add `Multi-Engine Mode` section to SKILL.md (use Spark or Plea as template)
 - [ ] Add `multi-engine` row to Output Routing
-- [ ] Create `references/tri-engine-{verb}.md` with skill-specific:
+- [ ] Create `reference/tri-engine-{verb}.md` with skill-specific:
   - JSON output schema
   - CLUSTER identity rules
   - SCORE rubric (per pattern type)
   - GROUND/CALIBRATE checks
   - SYNTHESIZE merge strategy
   - Subagent prompt skeleton
-- [ ] Add `references/tri-engine-{verb}.md` and `_common/SUBAGENT.md` to Reference Map
+- [ ] Add `reference/tri-engine-{verb}.md` and `_common/SUBAGENT.md` to Reference Map
 - [ ] Add `tri_engine:` block to `_STEP_COMPLETE.Output` schema
 - [ ] Verify CAPABILITIES_SUMMARY HTML comment block is intact (`<!--` opens, `-->` closes)
 
@@ -473,7 +473,7 @@ When adding `multi` Recipe to a new skill:
 ## Cross-References
 
 - `_common/SUBAGENT.md §MULTI_ENGINE` — base protocol (engine dispatch, loose prompts, fallback rules)
-- `judge/references/tri-engine-review.md` — canonical Pattern C implementation
-- `spark/references/tri-engine-proposal.md` — canonical Pattern D implementation (with Portfolio/Compete merge)
-- `plea/references/tri-engine-demand.md` — canonical Pattern D with calibration + cross-axis (persona × engine)
+- `judge/reference/tri-engine-review.md` — canonical Pattern C implementation
+- `spark/reference/tri-engine-proposal.md` — canonical Pattern D implementation (with Portfolio/Compete merge)
+- `plea/reference/tri-engine-demand.md` — canonical Pattern D with calibration + cross-axis (persona × engine)
 - `_common/OPUS_48_AUTHORING.md` — spawn prompt sizing, thinking-depth nudges, parallel-fan-out triggers

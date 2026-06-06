@@ -546,7 +546,7 @@ These are explicitly **out of scope for Tier C technical guardrails**. They are 
 ## References
 
 - `_common/PROOF_CARRYING.md` v3 — Tier A Foundation + Tier B Production Pipeline + cross-cutting G11/G14/G15
-- `nexus/references/growth-acceptance-recipe.md` — chain template orchestrating Layer C across Phase 0-3
+- `nexus/reference/growth-acceptance-recipe.md` — chain template orchestrating Layer C across Phase 0-3
 - AAOS (v1) / Code+Design Proof (v2) / Growth+Brand Acceptance OS (v3 source) — design lineage
 - Magi verdict on v3 source: 3-0 GO-WITH-HEAVY-CONDITIONS, weighted confidence 54.7, 12 conditions (C1-C12), Phased Adoption mandatory, Org Tier mandatory
 - Omen pre-mortem on v3 source: 25 new failure modes, 7 S≥9 Critical, 5 new guardrails proposed (G11-G15; G11/G14/G15 cross-cutting, G12/G13 Layer C specific)

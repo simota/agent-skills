@@ -130,11 +130,11 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `CLASSIFY` | Assess blast radius, reversibility, data sensitivity; compute risk score; assign safety tier | Every action needs a tier before execution | `references/safety-model.md` |
-| `MATCH` | Validate input, match diagnosis to remediation catalog, determine confidence and autonomy mode | Confidence >= 50% required; >= 90% for auto-remediate | `references/remediation-patterns.md` |
-| `EXECUTE` | Run remediation steps sequentially with checkpoints, rollback readiness, and step verification | T3 requires approval; T4 is always prohibited | `references/runbook-execution.md` |
-| `VERIFY` | Staged verification: Health Check → Smoke Test → SLO Check → Recovery Confirmed | Automatic rollback on crash loop, error spike, or latency surge | `references/verification-strategies.md` |
-| `REPORT` | Report remediation status, actions taken, verification results, remaining risks | Include incident timeline and rollback record | `references/learning-loop.md` |
+| `CLASSIFY` | Assess blast radius, reversibility, data sensitivity; compute risk score; assign safety tier | Every action needs a tier before execution | `reference/safety-model.md` |
+| `MATCH` | Validate input, match diagnosis to remediation catalog, determine confidence and autonomy mode | Confidence >= 50% required; >= 90% for auto-remediate | `reference/remediation-patterns.md` |
+| `EXECUTE` | Run remediation steps sequentially with checkpoints, rollback readiness, and step verification | T3 requires approval; T4 is always prohibited | `reference/runbook-execution.md` |
+| `VERIFY` | Staged verification: Health Check → Smoke Test → SLO Check → Recovery Confirmed | Automatic rollback on crash loop, error spike, or latency surge | `reference/verification-strategies.md` |
+| `REPORT` | Report remediation status, actions taken, verification results, remaining risks | Include incident timeline and rollback record | `reference/learning-loop.md` |
 
 ## Recipes
 
@@ -142,13 +142,13 @@ Single source of truth for Recipe definitions. The Behavior column carries safet
 
 | Recipe | Subcommand | Default? | When to Use | Behavior | Read First |
 |--------|-----------|---------|-------------|----------|------------|
-| Runbook Execute | `runbook` | ✓ | Runbook execution for known patterns | Execute step-by-step against diagnosed failures. Verify state at each checkpoint; prepare immediate rollback on failure. | `references/runbook-execution.md` |
-| Diagnose | `diagnose` | | Root cause diagnosis and pattern matching for unknown failures | Pattern-match from symptoms and alerts. When confidence >= 50%, present remediation steps from remediation-patterns. | `references/remediation-patterns.md` |
-| Rollback | `rollback` | | Rollback execution (T3 approval required) | Execute rollback after T3 approval. Crash loop, error spike, or latency surge triggers automatic rollback. | `references/remediation-patterns.md` |
-| Verify | `verify` | | Staged post-remediation verification (Health→Smoke→SLO) | 4-stage verification Health Check → Smoke Test → SLO Check → Recovery Confirmed. | `references/verification-strategies.md` |
-| Scale | `scale` | | Incident-time horizontal / vertical scaling, HPA/KEDA tuning, pre-warm for expected load, stateful scaling with drain/stickiness guards | Pick horizontal vs vertical from bottleneck evidence; tune HPA/KEDA thresholds; pre-warm for forecastable spikes; drain connections and preserve session stickiness before scaling stateful services. Safety tier: **T2 (advised)** for stateless (web/API/worker); **T3 (approval-gated)** for stateful (DB read replicas, primary scale-up, stateful queues, cache cluster resize) where resharding or drain is irreversible. Triage first → Mend `scale` (reactive capacity delta); hand Beacon preventive capacity planning; hand Builder code-level hotspots that scaling only masks. | `references/scale-remediation.md` |
-| Circuit | `circuit` | | Trip / tune circuit breakers and rate limits, queue-based load shedding, bulkhead isolation, graceful degradation | Trip open breaker for failing dependency; tighten/relax rate-limit thresholds; enable queue-based load shedding; enforce bulkhead isolation between tenants/call classes; activate graceful-degradation fallbacks (stale cache, degraded response). Safety tier: **T2 (advised)** to trip breaker or adjust rate-limit config; **T3 (approval-gated)** when shedding real user traffic or degrading customer-visible features. Triage first → Mend `circuit` (runtime intervention); Builder owns permanent code-level retry/timeout/fallback logic in a PR. | `references/circuit-remediation.md` |
-| Canary | `canary` | | Progressive rollout control (1/5/25/100%), promotion gates, auto-rollback triggers, cohort and flag coordination | Hold, promote, or rollback across 1%/5%/25%/100% stages; enforce health-metric gates (error rate, p95 latency, SLI burn); coordinate with feature flags for cohort targeting; run partial rollbacks (drain canary stage, keep prior). Safety tier: **T1 (read-only)** for status reads; **T2 (advised)** to hold/pause promotion; **T3 (approval-gated)** to promote or rollback. Triage first (is canary unhealthy or metric noisy) → Mend `canary` (operational gate decision); Builder owns any code fix the rollback surfaces. | `references/canary-remediation.md` |
+| Runbook Execute | `runbook` | ✓ | Runbook execution for known patterns | Execute step-by-step against diagnosed failures. Verify state at each checkpoint; prepare immediate rollback on failure. | `reference/runbook-execution.md` |
+| Diagnose | `diagnose` | | Root cause diagnosis and pattern matching for unknown failures | Pattern-match from symptoms and alerts. When confidence >= 50%, present remediation steps from remediation-patterns. | `reference/remediation-patterns.md` |
+| Rollback | `rollback` | | Rollback execution (T3 approval required) | Execute rollback after T3 approval. Crash loop, error spike, or latency surge triggers automatic rollback. | `reference/remediation-patterns.md` |
+| Verify | `verify` | | Staged post-remediation verification (Health→Smoke→SLO) | 4-stage verification Health Check → Smoke Test → SLO Check → Recovery Confirmed. | `reference/verification-strategies.md` |
+| Scale | `scale` | | Incident-time horizontal / vertical scaling, HPA/KEDA tuning, pre-warm for expected load, stateful scaling with drain/stickiness guards | Pick horizontal vs vertical from bottleneck evidence; tune HPA/KEDA thresholds; pre-warm for forecastable spikes; drain connections and preserve session stickiness before scaling stateful services. Safety tier: **T2 (advised)** for stateless (web/API/worker); **T3 (approval-gated)** for stateful (DB read replicas, primary scale-up, stateful queues, cache cluster resize) where resharding or drain is irreversible. Triage first → Mend `scale` (reactive capacity delta); hand Beacon preventive capacity planning; hand Builder code-level hotspots that scaling only masks. | `reference/scale-remediation.md` |
+| Circuit | `circuit` | | Trip / tune circuit breakers and rate limits, queue-based load shedding, bulkhead isolation, graceful degradation | Trip open breaker for failing dependency; tighten/relax rate-limit thresholds; enable queue-based load shedding; enforce bulkhead isolation between tenants/call classes; activate graceful-degradation fallbacks (stale cache, degraded response). Safety tier: **T2 (advised)** to trip breaker or adjust rate-limit config; **T3 (approval-gated)** when shedding real user traffic or degrading customer-visible features. Triage first → Mend `circuit` (runtime intervention); Builder owns permanent code-level retry/timeout/fallback logic in a PR. | `reference/circuit-remediation.md` |
+| Canary | `canary` | | Progressive rollout control (1/5/25/100%), promotion gates, auto-rollback triggers, cohort and flag coordination | Hold, promote, or rollback across 1%/5%/25%/100% stages; enforce health-metric gates (error rate, p95 latency, SLI burn); coordinate with feature flags for cohort targeting; run partial rollbacks (drain canary stage, keep prior). Safety tier: **T1 (read-only)** for status reads; **T2 (advised)** to hold/pause promotion; **T3 (approval-gated)** to promote or rollback. Triage first (is canary unhealthy or metric noisy) → Mend `canary` (operational gate decision); Builder owns any code fix the rollback surfaces. | `reference/canary-remediation.md` |
 
 ## Subcommand Dispatch
 
@@ -160,13 +160,13 @@ Parse the first token of user input.
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `known pattern`, `diagnosed issue`, `Triage handoff` | Standard remediation (Pattern A) | Remediation report | `references/remediation-patterns.md` |
-| `alert`, `SLO violation`, `Beacon handoff` | Alert-driven auto-fix (Pattern B) | Auto-fix report | `references/remediation-patterns.md` |
-| `no match`, `unknown pattern`, `escalate` | Escalation to Builder (Pattern C) | Escalation report | `references/remediation-patterns.md` |
-| `rollback`, `failed fix`, `revert` | Rollback recovery (Pattern D) | Rollback report | `references/verification-strategies.md` |
-| `postmortem`, `incident learning`, `catalog update` | Pattern learning (Pattern E) | Updated catalog | `references/learning-loop.md` |
-| `verify fix`, `check recovery`, `SLO check` | Staged verification | Verification report | `references/verification-strategies.md` |
-| unclear remediation request | Standard remediation | Remediation report | `references/remediation-patterns.md` |
+| `known pattern`, `diagnosed issue`, `Triage handoff` | Standard remediation (Pattern A) | Remediation report | `reference/remediation-patterns.md` |
+| `alert`, `SLO violation`, `Beacon handoff` | Alert-driven auto-fix (Pattern B) | Auto-fix report | `reference/remediation-patterns.md` |
+| `no match`, `unknown pattern`, `escalate` | Escalation to Builder (Pattern C) | Escalation report | `reference/remediation-patterns.md` |
+| `rollback`, `failed fix`, `revert` | Rollback recovery (Pattern D) | Rollback report | `reference/verification-strategies.md` |
+| `postmortem`, `incident learning`, `catalog update` | Pattern learning (Pattern E) | Updated catalog | `reference/learning-loop.md` |
+| `verify fix`, `check recovery`, `SLO check` | Staged verification | Verification report | `reference/verification-strategies.md` |
+| unclear remediation request | Standard remediation | Remediation report | `reference/remediation-patterns.md` |
 
 Routing rules:
 
@@ -215,15 +215,15 @@ Every deliverable must include:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/safety-model.md` | You need detailed tier examples, risk-score factor definitions, emergency override rules, or audit-trail fields. |
-| `references/remediation-patterns.md` | You are matching a diagnosis to the catalog, checking confidence decay, or selecting a known remediation. |
-| `references/runbook-execution.md` | You are executing or simulating a Triage runbook and need parsing, idempotency, retry, or dry-run details. |
-| `references/verification-strategies.md` | You are running staged verification, deciding rollback, or reporting recovery and error-budget impact. |
-| `references/learning-loop.md` | You are turning a postmortem into a new pattern, updating an existing one, or reviewing pattern-health metrics. |
-| `references/adversarial-defense.md` | You suspect telemetry manipulation, contradictory signals, novel input, or unsafe free-text matching. |
-| `references/scale-remediation.md` | You are running the `scale` recipe — incident-time horizontal/vertical scaling, HPA/KEDA tuning, pre-warm, or stateful scaling with drain/stickiness guards. |
-| `references/circuit-remediation.md` | You are running the `circuit` recipe — trip / tune circuit breakers, rate-limit thresholds, queue-based load shedding, bulkhead isolation, or graceful degradation. |
-| `references/canary-remediation.md` | You are running the `canary` recipe — progressive rollout control (1/5/25/100%), promotion gates, auto-rollback triggers, cohort and flag coordination. |
+| `reference/safety-model.md` | You need detailed tier examples, risk-score factor definitions, emergency override rules, or audit-trail fields. |
+| `reference/remediation-patterns.md` | You are matching a diagnosis to the catalog, checking confidence decay, or selecting a known remediation. |
+| `reference/runbook-execution.md` | You are executing or simulating a Triage runbook and need parsing, idempotency, retry, or dry-run details. |
+| `reference/verification-strategies.md` | You are running staged verification, deciding rollback, or reporting recovery and error-budget impact. |
+| `reference/learning-loop.md` | You are turning a postmortem into a new pattern, updating an existing one, or reviewing pattern-health metrics. |
+| `reference/adversarial-defense.md` | You suspect telemetry manipulation, contradictory signals, novel input, or unsafe free-text matching. |
+| `reference/scale-remediation.md` | You are running the `scale` recipe — incident-time horizontal/vertical scaling, HPA/KEDA tuning, pre-warm, or stateful scaling with drain/stickiness guards. |
+| `reference/circuit-remediation.md` | You are running the `circuit` recipe — trip / tune circuit breakers, rate-limit thresholds, queue-based load shedding, bulkhead isolation, or graceful degradation. |
+| `reference/canary-remediation.md` | You are running the `canary` recipe — progressive rollout control (1/5/25/100%), promotion gates, auto-rollback triggers, cohort and flag coordination. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the remediation plan, deciding adaptive thinking depth at tier/confidence classification, or front-loading severity/blast-radius/approval at CLASSIFY. Critical for Mend: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You register repair runbooks in `nexus acceptance` Phase 5 (Layer 5 — runtime self-verify with auto-rollback). Defines G3 repair-loop circuit breaker: same-signature cap = 3 attempts per 24h, escalation lockout = 7d, different-signature on same module = separate counter. Repair-loop telemetry (signature counts, escalation rate) is a first-class SLO — rising escalation = signal of spec-graph rot or correlated-failure leakage. |
 

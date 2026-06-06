@@ -143,7 +143,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | AI/LLM context | Prompts containing PII, RAG-retrieved documents, embedding vectors, model fine-tuning data | HIGH-CRITICAL |
 | Technical | User-agent, referrer, session tokens in URLs | LOW-MEDIUM |
 
-Full detection patterns → `references/pii-detection.md`
+Full detection patterns → `reference/pii-detection.md`
 
 ## Regulation Quick Reference
 
@@ -171,7 +171,7 @@ Full detection patterns → `references/pii-detection.md`
 
 **CCPA 2026 Regulations (effective January 1, 2026):** Risk assessments (selling/sharing PI, processing sensitive PI, ADMT for significant decisions, biometric processing) and cybersecurity audit obligations effective 2026-01-01. **ADMT phasing**: ADMT requirements for significant decisions (pre-use notice, opt-out rights, access to decision logic, human-review appeals) apply from 2027-01-01 — not 2026 [Source: cppa.ca.gov]. DELETE Request and Opt-out Platform (DROP) for centralized data broker deletion requests effective 2026-01-01. Enforcement: $2,663 per unintentional violation, $7,988 per intentional/minor-related violation; statutory damages $107–$799 per consumer per incident.
 
-Full regulation details → `references/privacy-regulations.md`
+Full regulation details → `reference/privacy-regulations.md`
 
 ## Workflow
 
@@ -179,26 +179,26 @@ Full regulation details → `references/privacy-regulations.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `DISCOVER` | Scan codebase for PII patterns: field names, API payloads, log statements, DB schemas | Find all PII touchpoints | `references/pii-detection.md` |
+| `DISCOVER` | Scan codebase for PII patterns: field names, API payloads, log statements, DB schemas | Find all PII touchpoints | `reference/pii-detection.md` |
 | `CLASSIFY` | Categorize found PII by sensitivity tier; tag with data subject category | Every field gets a tier | — |
-| `MAP` | Trace data flows: collection point → processors → storage → third parties → deletion | Complete lineage | `references/implementation-patterns.md` |
-| `ASSESS` | Evaluate against applicable regulation; score risks; identify gaps | Regulation-specific | `references/privacy-regulations.md` |
-| `REMEDIATE` | Provide code-level fixes: minimization, consent gates, encryption, redaction, retention | Actionable patterns | `references/implementation-patterns.md` |
+| `MAP` | Trace data flows: collection point → processors → storage → third parties → deletion | Complete lineage | `reference/implementation-patterns.md` |
+| `ASSESS` | Evaluate against applicable regulation; score risks; identify gaps | Regulation-specific | `reference/privacy-regulations.md` |
+| `REMEDIATE` | Provide code-level fixes: minimization, consent gates, encryption, redaction, retention | Actionable patterns | `reference/implementation-patterns.md` |
 | `VERIFY` | Privacy checklist validation; confirm no PII in logs/errors; test DSAR flows | All gaps addressed | — |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| PII Detection | `pii` | ✓ | PII detection and classification | `references/pii-detection.md` |
-| Data Flow Mapping | `flow` | | Data flow visualization | `references/pii-detection.md` |
-| Consent Management | `consent` | | Consent management pattern implementation | `references/implementation-patterns.md` |
-| DPIA | `dpia` | | DPIA facilitation | `references/privacy-regulations.md` |
-| GDPR/CCPA Code | `gdpr` | | Compliance-ready code implementation | `references/implementation-patterns.md` |
-| CCPA / CPRA | `ccpa` | | California consumer rights, GPC, SPI limit-use, service-provider contracts | `references/ccpa-cpra.md` |
-| APPI (Japan) | `appi` | | Japanese APPI implementation: three-tier data taxonomy, Art. 24/23, PPC reporting, special-care personal info | `references/appi-japan.md` |
-| Pseudonymization | `pseudonymize` | | k-anonymity / l-diversity / DP / tokenization / FPE technique selection | `references/pseudonymization-techniques.md` |
-| Mobile Privacy | `mobile` | | App Store Privacy Manifest (incl. third-party SDK) audit, Google Play Data Safety form review, 5.1.2(i) third-party AI consent UI specification, EAA / EN 301 549 mobile accessibility-as-privacy review | `references/privacy-regulations.md` |
+| PII Detection | `pii` | ✓ | PII detection and classification | `reference/pii-detection.md` |
+| Data Flow Mapping | `flow` | | Data flow visualization | `reference/pii-detection.md` |
+| Consent Management | `consent` | | Consent management pattern implementation | `reference/implementation-patterns.md` |
+| DPIA | `dpia` | | DPIA facilitation | `reference/privacy-regulations.md` |
+| GDPR/CCPA Code | `gdpr` | | Compliance-ready code implementation | `reference/implementation-patterns.md` |
+| CCPA / CPRA | `ccpa` | | California consumer rights, GPC, SPI limit-use, service-provider contracts | `reference/ccpa-cpra.md` |
+| APPI (Japan) | `appi` | | Japanese APPI implementation: three-tier data taxonomy, Art. 24/23, PPC reporting, special-care personal info | `reference/appi-japan.md` |
+| Pseudonymization | `pseudonymize` | | k-anonymity / l-diversity / DP / tokenization / FPE technique selection | `reference/pseudonymization-techniques.md` |
+| Mobile Privacy | `mobile` | | App Store Privacy Manifest (incl. third-party SDK) audit, Google Play Data Safety form review, 5.1.2(i) third-party AI consent UI specification, EAA / EN 301 549 mobile accessibility-as-privacy review | `reference/privacy-regulations.md` |
 
 ## Subcommand Dispatch
 
@@ -221,25 +221,25 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `pii`, `personal data`, `data leak` | PII detection scan | PII inventory + classification | `references/pii-detection.md` |
-| `gdpr`, `ccpa`, `privacy law`, `compliance` | Regulation compliance audit | Gap analysis + remediation plan | `references/privacy-regulations.md` |
-| `consent`, `opt-in`, `opt-out`, `cookie` | Consent management implementation | Consent flow patterns | `references/implementation-patterns.md` |
-| `data flow`, `data map`, `lineage` | Data flow mapping | Visual data flow + risk points | `references/pii-detection.md` |
-| `dsar`, `right to delete`, `data export` | DSAR automation | DSAR handler code | `references/implementation-patterns.md` |
-| `retention`, `data lifecycle` | Retention policy enforcement | TTL/cron patterns | `references/implementation-patterns.md` |
-| `logging`, `observability`, `audit` | Privacy-safe logging | PII redaction middleware | `references/implementation-patterns.md` |
-| `anonymize`, `pseudonymize`, `mask` | Data de-identification | Transform functions | `references/implementation-patterns.md` |
-| `dpia`, `impact assessment` | DPIA facilitation | Risk assessment document | `references/privacy-regulations.md` |
-| `llm`, `ai privacy`, `embedding`, `rag` | AI/LLM privacy risk assessment | PII sanitization plan + differential privacy guidance | `references/implementation-patterns.md` |
-| `admt`, `automated decision` | CCPA ADMT compliance | Pre-use notice + opt-out + appeal flow | `references/privacy-regulations.md` |
-| `eu ai act`, `fria`, `high-risk ai` | EU AI Act FRIA + GDPR DPIA dual assessment | FRIA report + DPIA + data governance plan | `references/privacy-regulations.md` |
-| `gpc`, `opt-out signal`, `universal opt-out` | GPC / universal opt-out signal compliance | Signal detection + visible acknowledgment + honor flow | `references/implementation-patterns.md` |
-| `hipaa`, `ephi`, `health data` | HIPAA Security Rule compliance | Encryption + MFA + audit controls | `references/privacy-regulations.md` |
-| `privacy manifest`, `PrivacyInfo.xcprivacy`, `Required Reasons API`, `ITMS-91056` | App Store Privacy Manifest audit (host + SDK) | Manifest review verdict + SDK replacement recommendations | `references/privacy-regulations.md` |
-| `data safety`, `play console privacy`, `ANDROID_ID` | Google Play Data Safety form audit | Form completeness + runtime-vs-declaration diff | `references/privacy-regulations.md` |
-| `5.1.2(i)`, `app store AI consent`, `third-party AI disclosure` | 5.1.2(i) AI consent UI design | Consent ledger spec + per-provider UI + on-device fallback | `references/privacy-regulations.md` |
-| `EAA`, `EN 301 549`, `mobile accessibility privacy` | EAA / WCAG 2.1 AA mobile conformance | Accessibility-as-privacy audit | `references/privacy-regulations.md` |
-| unclear privacy request | PII detection scan | PII inventory + next steps | `references/pii-detection.md` |
+| `pii`, `personal data`, `data leak` | PII detection scan | PII inventory + classification | `reference/pii-detection.md` |
+| `gdpr`, `ccpa`, `privacy law`, `compliance` | Regulation compliance audit | Gap analysis + remediation plan | `reference/privacy-regulations.md` |
+| `consent`, `opt-in`, `opt-out`, `cookie` | Consent management implementation | Consent flow patterns | `reference/implementation-patterns.md` |
+| `data flow`, `data map`, `lineage` | Data flow mapping | Visual data flow + risk points | `reference/pii-detection.md` |
+| `dsar`, `right to delete`, `data export` | DSAR automation | DSAR handler code | `reference/implementation-patterns.md` |
+| `retention`, `data lifecycle` | Retention policy enforcement | TTL/cron patterns | `reference/implementation-patterns.md` |
+| `logging`, `observability`, `audit` | Privacy-safe logging | PII redaction middleware | `reference/implementation-patterns.md` |
+| `anonymize`, `pseudonymize`, `mask` | Data de-identification | Transform functions | `reference/implementation-patterns.md` |
+| `dpia`, `impact assessment` | DPIA facilitation | Risk assessment document | `reference/privacy-regulations.md` |
+| `llm`, `ai privacy`, `embedding`, `rag` | AI/LLM privacy risk assessment | PII sanitization plan + differential privacy guidance | `reference/implementation-patterns.md` |
+| `admt`, `automated decision` | CCPA ADMT compliance | Pre-use notice + opt-out + appeal flow | `reference/privacy-regulations.md` |
+| `eu ai act`, `fria`, `high-risk ai` | EU AI Act FRIA + GDPR DPIA dual assessment | FRIA report + DPIA + data governance plan | `reference/privacy-regulations.md` |
+| `gpc`, `opt-out signal`, `universal opt-out` | GPC / universal opt-out signal compliance | Signal detection + visible acknowledgment + honor flow | `reference/implementation-patterns.md` |
+| `hipaa`, `ephi`, `health data` | HIPAA Security Rule compliance | Encryption + MFA + audit controls | `reference/privacy-regulations.md` |
+| `privacy manifest`, `PrivacyInfo.xcprivacy`, `Required Reasons API`, `ITMS-91056` | App Store Privacy Manifest audit (host + SDK) | Manifest review verdict + SDK replacement recommendations | `reference/privacy-regulations.md` |
+| `data safety`, `play console privacy`, `ANDROID_ID` | Google Play Data Safety form audit | Form completeness + runtime-vs-declaration diff | `reference/privacy-regulations.md` |
+| `5.1.2(i)`, `app store AI consent`, `third-party AI disclosure` | 5.1.2(i) AI consent UI design | Consent ledger spec + per-provider UI + on-device fallback | `reference/privacy-regulations.md` |
+| `EAA`, `EN 301 549`, `mobile accessibility privacy` | EAA / WCAG 2.1 AA mobile conformance | Accessibility-as-privacy audit | `reference/privacy-regulations.md` |
+| unclear privacy request | PII detection scan | PII inventory + next steps | `reference/pii-detection.md` |
 
 ## Collaboration
 
@@ -273,12 +273,12 @@ Cloak receives security findings, standard requirements, and codebase analysis f
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/pii-detection.md` | You need PII field name patterns, regex for identifiers, AST scanning strategies, data classification taxonomy, common PII hiding spots. |
-| `references/privacy-regulations.md` | You need GDPR/CCPA/APPI article references, lawful basis decision trees, DSAR timelines, cross-border transfer rules, breach notification procedures, DPIA criteria. |
-| `references/implementation-patterns.md` | You need consent management code, PII redaction middleware, DSAR handler patterns, retention enforcement (TTL/cron), pseudonymization functions, privacy-safe logging, encryption patterns. |
-| `references/ccpa-cpra.md` | You are working on California-targeted features and need consumer-rights endpoints, GPC parsing with visible confirmation, SPI limit-use mechanics, service-provider/contractor/third-party contract distinctions, or 2026 ADMT/risk-assessment readiness. |
-| `references/appi-japan.md` | You are processing data of subjects in Japan and need the personal information (個人情報) / pseudonymously processed information (仮名加工情報) / anonymously processed information (匿名加工情報) distinction, Article 24 cross-border transfer paths, Article 23 opt-out filing, special care-required personal information (要配慮個人情報) consent surface, or PPC notification thresholds. |
-| `references/pseudonymization-techniques.md` | You are choosing a de-identification technique — k-anonymity / l-diversity / t-closeness / differential privacy parameters, tokenization vs HMAC vs FPE primitives, key custody and destruction to distinguish pseudonymized from anonymized data under GDPR Art. 4(5). |
+| `reference/pii-detection.md` | You need PII field name patterns, regex for identifiers, AST scanning strategies, data classification taxonomy, common PII hiding spots. |
+| `reference/privacy-regulations.md` | You need GDPR/CCPA/APPI article references, lawful basis decision trees, DSAR timelines, cross-border transfer rules, breach notification procedures, DPIA criteria. |
+| `reference/implementation-patterns.md` | You need consent management code, PII redaction middleware, DSAR handler patterns, retention enforcement (TTL/cron), pseudonymization functions, privacy-safe logging, encryption patterns. |
+| `reference/ccpa-cpra.md` | You are working on California-targeted features and need consumer-rights endpoints, GPC parsing with visible confirmation, SPI limit-use mechanics, service-provider/contractor/third-party contract distinctions, or 2026 ADMT/risk-assessment readiness. |
+| `reference/appi-japan.md` | You are processing data of subjects in Japan and need the personal information (個人情報) / pseudonymously processed information (仮名加工情報) / anonymously processed information (匿名加工情報) distinction, Article 24 cross-border transfer paths, Article 23 opt-out filing, special care-required personal information (要配慮個人情報) consent surface, or PPC notification thresholds. |
+| `reference/pseudonymization-techniques.md` | You are choosing a de-identification technique — k-anonymity / l-diversity / t-closeness / differential privacy parameters, tokenization vs HMAC vs FPE primitives, key custody and destruction to distinguish pseudonymized from anonymized data under GDPR Art. 4(5). |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the privacy report, deciding adaptive thinking depth at classification/DPIA, or front-loading regulations/sensitivity/jurisdiction at SCAN. Critical for Cloak: P3, P5. |
 
 ## Output Requirements

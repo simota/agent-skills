@@ -2,7 +2,7 @@
 
 Centralized responsibility boundaries for the entire agent ecosystem. Individual SKILL.md files reference this document instead of maintaining their own Agent Boundaries tables.
 
-For disambiguation of commonly confused agent pairs, see `nexus/references/agent-disambiguation.md`.
+For disambiguation of commonly confused agent pairs, see `nexus/reference/agent-disambiguation.md`.
 
 ---
 

@@ -114,7 +114,7 @@ All synthetic personas must be checked for these 4 failure modes before distribu
 | Constraint | Rule |
 |-----------|------|
 | **Go/No-Go decisions** | Synthetic-only findings must NOT be used for go/no-go decisions |
-| **Demand forecasting** | Synthetic demands require real-data calibration (see `plea/references/calibration.md`) |
+| **Demand forecasting** | Synthetic demands require real-data calibration (see `plea/reference/calibration.md`) |
 | **Research split** | 80% synthetic (rapid iterations, screening) / 20% human (depth, edge cases, cultural nuance) |
 | **High-risk domains** | Regulated, novel markets, or culturally-sensitive contexts require human validation before any action |
 

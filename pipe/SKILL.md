@@ -154,13 +154,13 @@ Shared agent boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| New Workflow | `workflow` | ✓ | Create a new GHA workflow | `references/triggers-and-events.md` |
-| Reusable Workflow | `reusable` | | Reusable Workflow design | `references/reusable-and-composite.md` |
-| Security Hardening | `security` | | GHA security hardening | `references/security-hardening.md` |
-| PR Automation | `pr-automation` | | PR automation (label, assign, etc.) | `references/automation-recipes.md` |
-| Matrix Strategy | `matrix` | | Multi-axis matrix build design (OS x runtime x arch), `include` / `exclude`, dynamic `fromJSON` matrices, sparse coverage | `references/matrix-strategy.md` |
-| Cache Design | `cache` | | `actions/cache` key/`restore-keys` design, monorepo multi-cache, cross-OS keys, 10 GB eviction awareness | `references/cache-strategy.md` |
-| GHA Secret Architecture | `secret` | | OIDC federation, env vs repo secrets, `vars` vs `secrets`, fork-PR secret isolation | `references/gha-secrets.md` |
+| New Workflow | `workflow` | ✓ | Create a new GHA workflow | `reference/triggers-and-events.md` |
+| Reusable Workflow | `reusable` | | Reusable Workflow design | `reference/reusable-and-composite.md` |
+| Security Hardening | `security` | | GHA security hardening | `reference/security-hardening.md` |
+| PR Automation | `pr-automation` | | PR automation (label, assign, etc.) | `reference/automation-recipes.md` |
+| Matrix Strategy | `matrix` | | Multi-axis matrix build design (OS x runtime x arch), `include` / `exclude`, dynamic `fromJSON` matrices, sparse coverage | `reference/matrix-strategy.md` |
+| Cache Design | `cache` | | `actions/cache` key/`restore-keys` design, monorepo multi-cache, cross-OS keys, 10 GB eviction awareness | `reference/cache-strategy.md` |
+| GHA Secret Architecture | `secret` | | OIDC federation, env vs repo secrets, `vars` vs `secrets`, fork-PR secret isolation | `reference/gha-secrets.md` |
 
 ## Subcommand Dispatch
 
@@ -193,14 +193,14 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| default request | Standard Pipe workflow | analysis / recommendation | `references/` |
+| default request | Standard Pipe workflow | analysis / recommendation | `reference/` |
 | complex multi-agent task | Nexus-routed execution | structured handoff | `_common/BOUNDARIES.md` |
-| unclear request | Clarify scope and route | scoped analysis | `references/` |
+| unclear request | Clarify scope and route | scoped analysis | `reference/` |
 
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 
 ## Output Requirements
 
@@ -223,19 +223,19 @@ Routing rules:
 
 | File | Read this when... |
 |------|-------------------|
-| `references/triggers-and-events.md` | you need the right event, filter, dispatch, or merge-queue trigger. |
-| `references/security-hardening.md` | you are defining permissions, OIDC, SHA pinning, supply-chain defenses, or security governance. |
-| `references/performance-and-caching.md` | you are optimizing cache hits, job graphs, matrix cost, artifacts, or concurrency. |
-| `references/reusable-and-composite.md` | you are deciding between inline YAML, reusable workflows, composite actions, or org templates. |
-| `references/automation-recipes.md` | you are designing PR automation, merge queue, branch protection, environments, or release automation. |
-| `references/advanced-patterns.md` | you are handling monorepos, self-hosted runners, multi-platform builds, deployments, service containers, or deep debugging. |
-| `references/workflow-design-anti-patterns.md` | you need a fast structural audit for trigger design, YAML quality, or workflow graph mistakes. |
-| `references/security-anti-patterns.md` | you are checking for action pinning, permission leaks, runner hardening, or 2025-era supply-chain failures. |
-| `references/performance-cost-anti-patterns.md` | you are triaging slow CI, cache misses, runner overspend, or artifact bottlenecks. |
-| `references/reusable-maintenance-anti-patterns.md` | you are auditing duplication, reuse mistakes, monorepo CI maintenance, deployment hygiene, or org governance. |
-| `references/matrix-strategy.md` | you are designing a multi-axis matrix build (OS x runtime x arch), using `include` / `exclude`, sparse coverage, `fail-fast` / `max-parallel` tuning, or dynamic `fromJSON` matrices. |
-| `references/cache-strategy.md` | you are designing `actions/cache` keys, `restore-keys` fallback, cross-OS compatibility, monorepo multi-cache layout, cache-hit telemetry, or 10 GB eviction management. |
-| `references/gha-secrets.md` | you are designing the GHA secret surface — OIDC federation to AWS/GCP/Azure, env vs repo secrets, `vars` vs `secrets`, masking, or fork-PR secret isolation. |
+| `reference/triggers-and-events.md` | you need the right event, filter, dispatch, or merge-queue trigger. |
+| `reference/security-hardening.md` | you are defining permissions, OIDC, SHA pinning, supply-chain defenses, or security governance. |
+| `reference/performance-and-caching.md` | you are optimizing cache hits, job graphs, matrix cost, artifacts, or concurrency. |
+| `reference/reusable-and-composite.md` | you are deciding between inline YAML, reusable workflows, composite actions, or org templates. |
+| `reference/automation-recipes.md` | you are designing PR automation, merge queue, branch protection, environments, or release automation. |
+| `reference/advanced-patterns.md` | you are handling monorepos, self-hosted runners, multi-platform builds, deployments, service containers, or deep debugging. |
+| `reference/workflow-design-anti-patterns.md` | you need a fast structural audit for trigger design, YAML quality, or workflow graph mistakes. |
+| `reference/security-anti-patterns.md` | you are checking for action pinning, permission leaks, runner hardening, or 2025-era supply-chain failures. |
+| `reference/performance-cost-anti-patterns.md` | you are triaging slow CI, cache misses, runner overspend, or artifact bottlenecks. |
+| `reference/reusable-maintenance-anti-patterns.md` | you are auditing duplication, reuse mistakes, monorepo CI maintenance, deployment hygiene, or org governance. |
+| `reference/matrix-strategy.md` | you are designing a multi-axis matrix build (OS x runtime x arch), using `include` / `exclude`, sparse coverage, `fail-fast` / `max-parallel` tuning, or dynamic `fromJSON` matrices. |
+| `reference/cache-strategy.md` | you are designing `actions/cache` keys, `restore-keys` fallback, cross-OS compatibility, monorepo multi-cache layout, cache-hit telemetry, or 10 GB eviction management. |
+| `reference/gha-secrets.md` | you are designing the GHA secret surface — OIDC federation to AWS/GCP/Azure, env vs repo secrets, `vars` vs `secrets`, masking, or fork-PR secret isolation. |
 | `_common/OPUS_48_AUTHORING.md` | you are sizing the workflow spec, deciding adaptive thinking depth at security hardening, or front-loading visibility/trigger/target at AUDIT. Critical for Pipe: P3, P5. |
 
 ## Operational

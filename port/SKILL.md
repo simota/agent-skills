@@ -82,9 +82,9 @@ Route elsewhere when the task is primarily:
 - Produce a feature parity matrix with **explicit verdicts** for every web feature: `Full`, `Adapted`, `Deferred`, `Dropped`. No silent omissions.
 - Default native stacks: iOS = Swift 6 + SwiftUI + MVVM-C; Android = Kotlin + Jetpack Compose + MVVM (or MVI). Justify any deviation in writing.
 - Treat iOS and Android as **two separate first-class targets**. Never produce a unified design that hides platform divergence.
-- Offline strategy is mandatory. Every network-dependent web feature needs an offline tier (T0–T3, see `references/data-and-auth-porting.md`).
+- Offline strategy is mandatory. Every network-dependent web feature needs an offline tier (T0–T3, see `reference/data-and-auth-porting.md`).
 - Every phase in the migration roadmap must be independently shippable and reversible. No phase that requires both stores to ship simultaneously without a fallback.
-- Design only. Generate **specifications**, not code. Hand off implementation to `Native`, `Builder`, `Scaffold`, `Schema`, `Gateway` per `references/handoffs.md`.
+- Design only. Generate **specifications**, not code. Hand off implementation to `Native`, `Builder`, `Scaffold`, `Schema`, `Gateway` per `reference/handoffs.md`.
 - Quantify every risk: probability × impact. No qualitative-only risk entries.
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read the web codebase, package.json, routing config, state stores, API contracts, and storage usage during SURVEY — porting correctness requires grounding in concrete source state, not assumptions about a generic "React app"), P5 (think step-by-step at architecture mapping, parity verdict per feature, offline-tier selection, auth-flow translation, and phasing decisions — these compound and a wrong early decision propagates)** as critical for Port. P2 recommended: calibrated blueprint preserving the parity matrix, per-platform architecture, offline tiers, and phased roadmap. P1 recommended: front-load source web stack, target stacks (iOS/Android), scope, and parity goal at SURVEY.
 
@@ -100,10 +100,10 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Specify offline tier (T0–T3) per data domain (auth, user data, content, writes) and choose CRDT vs LWW vs server-reconciliation when T2/T3.
 - Translate auth: web cookies/JWT/OAuth → Passkeys (FIDO2/WebAuthn) first-class via ASAuthorizationController + Secure Enclave (iOS) and Credential Manager (Android); AppAuth + Custom Tabs as OAuth/OIDC fallback. Never reuse cookies on mobile.
 - Map every web third-party SDK to a native equivalent; verify Privacy Manifest (iOS) and 16KB / Privacy Sandbox SDK Runtime status (Android); flag absence as a risk.
-- Draft store compliance at blueprint stage: Privacy Manifest + Required Reasons API (iOS), Data Safety (Play), 5-tier Age Rating (Apple), IAP scope, AI disclosure (5.1.2(i) / Play AI Content Policy), DMA / EAA / Children / Fintech if applicable. Citations and deadlines → `references/regulatory-checklist-2026.md`.
+- Draft store compliance at blueprint stage: Privacy Manifest + Required Reasons API (iOS), Data Safety (Play), 5-tier Age Rating (Apple), IAP scope, AI disclosure (5.1.2(i) / Play AI Content Policy), DMA / EAA / Children / Fintech if applicable. Citations and deadlines → `reference/regulatory-checklist-2026.md`.
 - Define a Strangler-Fig phased roadmap (Foundations → MVP → Parity → Enhancement → Sunset) with policy-gate, milestones, web-shutdown gating, and rollback per phase.
 - When the web app has SSR / RSC or chatty REST, design a Mobile BFF with GraphQL Persisted Queries (or REST shrink) and hand off to `Gateway`.
-- Produce structured handoffs (`references/handoffs.md`) for every downstream agent the blueprint requires.
+- Produce structured handoffs (`reference/handoffs.md`) for every downstream agent the blueprint requires.
 - Check/log to `.agents/PROJECT.md`.
 
 ### Ask First
@@ -122,7 +122,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Produce a native blueprint without first surveying the web codebase.
 - Treat React/Vue routing as native navigation. SPA history-stack ≠ iOS NavigationStack ≠ Compose Navigation — each must be re-modeled. (Compose: Navigation 2.8+ type-safe `@Serializable` routes; no hand-rolled string routes for new designs.)
 - Port `localStorage` / cookies directly to UserDefaults / SharedPreferences for tokens or sensitive data. Sensitive data → Keychain (`kSecAttrAccessControl`) / EncryptedSharedPreferences. Cookies must not be reused on mobile — design token-based auth from day 1.
-- Reuse web third-party SDK assumptions without verifying iOS/Android availability, Privacy Manifest support, 16KB compatibility, and Privacy Sandbox SDK Runtime status (see thresholds in `references/native-stack-defaults.md`).
+- Reuse web third-party SDK assumptions without verifying iOS/Android availability, Privacy Manifest support, 16KB compatibility, and Privacy Sandbox SDK Runtime status (see thresholds in `reference/native-stack-defaults.md`).
 - Skip offline design. Mobile networks are unreliable; an online-only port will fail real-world use.
 - Hide platform divergence. Same UI on both with only color tokens swapped is an anti-pattern — call out iOS/Android divergence explicitly.
 - Promise **Big Bang** web shutdown. Always Strangler Fig with rollback per phase (the historical record is full of abandoned 3-year rewrites: IBM Queensland Health, Microsoft Midori, etc.).
@@ -137,28 +137,28 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Purpose | Required action | Read |
 |-------|---------|-----------------|------|
-| `SURVEY` | Web app baseline | Audit stack, routing, state, data, storage, auth, third-party SDKs, bundle, platform-feature usage | `references/web-analysis-checklist.md` |
-| `MAP` | Architecture translation | iOS SwiftUI MVVM-C and Android Compose MVVM/MVI per-screen mapping; navigation, state, DI, modules | `references/native-architecture-mapping.md` |
-| `BLUEPRINT` | Feature & UX spec | Parity matrix verdicts, platform-UX adaptation, data/auth porting, native capabilities | `references/feature-parity-matrix.md`, `references/platform-ux-adaptation.md`, `references/data-and-auth-porting.md` |
-| `ROADMAP` | Phased plan | Milestones (MVP / parity / enhancement), store submissions, web-shutdown gating, rollback | `references/migration-roadmap.md` |
-| `HANDOFF` | Downstream activation | Structured handoffs to Native / Scaffold / Gateway / Schema / Builder / Voyager / Launch | `references/handoffs.md` |
+| `SURVEY` | Web app baseline | Audit stack, routing, state, data, storage, auth, third-party SDKs, bundle, platform-feature usage | `reference/web-analysis-checklist.md` |
+| `MAP` | Architecture translation | iOS SwiftUI MVVM-C and Android Compose MVVM/MVI per-screen mapping; navigation, state, DI, modules | `reference/native-architecture-mapping.md` |
+| `BLUEPRINT` | Feature & UX spec | Parity matrix verdicts, platform-UX adaptation, data/auth porting, native capabilities | `reference/feature-parity-matrix.md`, `reference/platform-ux-adaptation.md`, `reference/data-and-auth-porting.md` |
+| `ROADMAP` | Phased plan | Milestones (MVP / parity / enhancement), store submissions, web-shutdown gating, rollback | `reference/migration-roadmap.md` |
+| `HANDOFF` | Downstream activation | Structured handoffs to Native / Scaffold / Gateway / Schema / Builder / Voyager / Launch | `reference/handoffs.md` |
 
 ### Critical Thresholds
 
-Escalation triggers and action gates (parity verdict mix, offline tier, auth, OS/targetSdk baselines, Xcode 26, 16KB, AI disclosure, EU/Children/Fintech) → `references/native-stack-defaults.md` (Critical Thresholds section).
+Escalation triggers and action gates (parity verdict mix, offline tier, auth, OS/targetSdk baselines, Xcode 26, 16KB, AI disclosure, EU/Children/Fintech) → `reference/native-stack-defaults.md` (Critical Thresholds section).
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Full Blueprint | `blueprint` | ✓ | Complete web-to-native porting design (all phases) | `references/web-analysis-checklist.md`, `references/native-architecture-mapping.md` |
-| Web Survey | `survey` | | Web app audit only — produces a porting feasibility report | `references/web-analysis-checklist.md` |
-| Parity Matrix | `parity` | | Feature parity matrix only (web feature × iOS × Android × verdict × regulatory × offline tier) | `references/feature-parity-matrix.md` |
-| Architecture Map | `map` | | Per-screen architecture mapping (web → SwiftUI + Compose) | `references/native-architecture-mapping.md` |
-| Roadmap | `roadmap` | | Strangler-Fig phased migration roadmap with policy gates, rollout, store, rollback | `references/migration-roadmap.md` |
-| Risk Assessment | `risk` | | Risk-only output: web-only gaps, SDK / 16KB / Privacy Sandbox, store policy, perf, regulatory | `references/risk-assessment.md` |
-| Regulatory Compliance | `regulatory` | | Regulatory-only sweep: Privacy Manifest / Data Safety / DMA / EAA / AI disclosure / Children / Fintech | `references/regulatory-checklist-2026.md` |
-| Cross-Platform Decision | `xplat` | | Pure-native vs KMP-shared-logic vs CMP vs RN vs Flutter trade-off and recommendation | `references/cross-platform-decision-tree.md` |
+| Full Blueprint | `blueprint` | ✓ | Complete web-to-native porting design (all phases) | `reference/web-analysis-checklist.md`, `reference/native-architecture-mapping.md` |
+| Web Survey | `survey` | | Web app audit only — produces a porting feasibility report | `reference/web-analysis-checklist.md` |
+| Parity Matrix | `parity` | | Feature parity matrix only (web feature × iOS × Android × verdict × regulatory × offline tier) | `reference/feature-parity-matrix.md` |
+| Architecture Map | `map` | | Per-screen architecture mapping (web → SwiftUI + Compose) | `reference/native-architecture-mapping.md` |
+| Roadmap | `roadmap` | | Strangler-Fig phased migration roadmap with policy gates, rollout, store, rollback | `reference/migration-roadmap.md` |
+| Risk Assessment | `risk` | | Risk-only output: web-only gaps, SDK / 16KB / Privacy Sandbox, store policy, perf, regulatory | `reference/risk-assessment.md` |
+| Regulatory Compliance | `regulatory` | | Regulatory-only sweep: Privacy Manifest / Data Safety / DMA / EAA / AI disclosure / Children / Fintech | `reference/regulatory-checklist-2026.md` |
+| Cross-Platform Decision | `xplat` | | Pure-native vs KMP-shared-logic vs CMP vs RN vs Flutter trade-off and recommendation | `reference/cross-platform-decision-tree.md` |
 
 ## Subcommand Dispatch
 
@@ -184,7 +184,7 @@ Map natural-language signals to a Recipe + primary reference:
 
 ## Native Stack Defaults
 
-Default iOS / Android stack table (Language, UI, Architecture, Async, DI, Navigation, Networking, Persistence, Auth, Push, Deep links, Biometrics, Widgets, AI on-device, Adaptive, Privacy, Analytics, Build, CI, Min-OS, targetSdk) → `references/native-stack-defaults.md`. Highlights:
+Default iOS / Android stack table (Language, UI, Architecture, Async, DI, Navigation, Networking, Persistence, Auth, Push, Deep links, Biometrics, Widgets, AI on-device, Adaptive, Privacy, Analytics, Build, CI, Min-OS, targetSdk) → `reference/native-stack-defaults.md`. Highlights:
 
 - iOS: Swift 6.3 + SwiftUI (Liquid Glass on iOS 26 SDK; standard SwiftUI 17-18); MV/MVVM/MVVM-C/TCA per scope; `@Observable`; Swift 6.3 Approachable Concurrency; NavigationStack + Coordinator; SwiftData (iOS 17+) / Core Data; Keychain; Passkeys via `ASAuthorizationController`; APNs + Live Activities; Universal Links; WidgetKit + Control Center API; Foundation Models on-device.
 - Android: Kotlin 2.4+ (K2) + Compose + Material 3 Expressive (BOM 2026.05.00 → Compose 1.11.1); Strong Skipping Mode default; MVVM (NiA) / MVI; Navigation Compose 2.8+ type-safe `@Serializable` routes; Ktor / Retrofit; Room 3.0 alpha (KMP) or Room 2.7+ + DataStore; Credential Manager (Passkey-first); FCM + Notification Channels; App Links; Jetpack Glance; Gemini Nano via ML Kit GenAI.
@@ -218,7 +218,7 @@ Port receives porting requests, web architecture analyses, codebase comprehensio
 
 Upstream handoffs: `USER_TO_PORT_REQUEST`, `ATLAS_TO_PORT_HANDOFF` (architecture), `LENS_TO_PORT_HANDOFF` (codebase comprehension), `FOSSIL_TO_PORT_HANDOFF` (legacy rules), `RESEARCHER_TO_PORT_HANDOFF`, `VISION_TO_PORT_HANDOFF` (design direction), `FRAME_TO_PORT_HANDOFF` (Figma).
 
-Downstream handoffs: `PORT_TO_NATIVE_HANDOFF` (per-screen impl spec), `PORT_TO_SCAFFOLD_HANDOFF` (project skeleton), `PORT_TO_GATEWAY_HANDOFF` (mobile API), `PORT_TO_SCHEMA_HANDOFF` (Core Data / Room), `PORT_TO_BUILDER_HANDOFF` (KMP shared logic), `PORT_TO_POLYGLOT_HANDOFF`, `PORT_TO_CLOAK_HANDOFF` (Privacy Manifest / Data Safety), `PORT_TO_CRYPT_HANDOFF` (token/Passkey), `PORT_TO_VOYAGER_HANDOFF` (E2E), `PORT_TO_LAUNCH_HANDOFF` (rollout). Schema and templates → `references/handoffs.md`.
+Downstream handoffs: `PORT_TO_NATIVE_HANDOFF` (per-screen impl spec), `PORT_TO_SCAFFOLD_HANDOFF` (project skeleton), `PORT_TO_GATEWAY_HANDOFF` (mobile API), `PORT_TO_SCHEMA_HANDOFF` (Core Data / Room), `PORT_TO_BUILDER_HANDOFF` (KMP shared logic), `PORT_TO_POLYGLOT_HANDOFF`, `PORT_TO_CLOAK_HANDOFF` (Privacy Manifest / Data Safety), `PORT_TO_CRYPT_HANDOFF` (token/Passkey), `PORT_TO_VOYAGER_HANDOFF` (E2E), `PORT_TO_LAUNCH_HANDOFF` (rollout). Schema and templates → `reference/handoffs.md`.
 
 ### Overlap Boundaries
 
@@ -251,17 +251,17 @@ Spawn when: web app has ≥30 routes / screens **and** parity goal is ≥80%. Be
 
 | File | Read this when... |
 |------|-------------------|
-| `references/web-analysis-checklist.md` | You are in `SURVEY` — auditing the web app's stack, routing, state, data, storage, auth, third-party SDKs, bundle, and platform-feature dependencies |
-| `references/native-architecture-mapping.md` | You are in `MAP` — translating SPA/SSR architecture into SwiftUI MVVM-C and Compose MVVM/MVI per-screen mapping |
-| `references/feature-parity-matrix.md` | You are scoring features `Full / Adapted / Deferred / Dropped` and need the matrix template, scoring rubric, and verdict-to-action mapping |
-| `references/platform-ux-adaptation.md` | You are translating web UX → HIG (iOS) and Material Design 3 (Android) — navigation, gestures, typography, motion, dark mode, a11y, OS-version baselines |
-| `references/data-and-auth-porting.md` | You are designing storage, offline tiers, sync, auth flows, token handling, biometric gating, and API client redesign for mobile |
-| `references/migration-roadmap.md` | You are in `ROADMAP` — designing phases, milestones, store submissions, web-shutdown gating, and rollback strategy |
-| `references/risk-assessment.md` | You are running `risk` Recipe or completing the risk-matrix section of a blueprint |
-| `references/regulatory-checklist-2026.md` | You are running `regulatory` Recipe, drafting the regulatory-compliance plan, or pre-flighting submission. Covers Privacy Manifest, Data Safety, DMA, EAA, AI disclosure, Children, Fintech-Crypto |
-| `references/cross-platform-decision-tree.md` | You are running `xplat` Recipe, or you need to confirm pure-native vs KMP-shared-logic vs CMP vs RN vs Flutter at SURVEY |
-| `references/native-stack-defaults.md` | You need the full Native Stack Defaults matrix (iOS/Android per layer) or the Critical Thresholds table (parity verdict mix, offline tier, OS/targetSdk baselines, Xcode 26, 16KB, AI disclosure, EU/Children/Fintech) |
-| `references/handoffs.md` | You are in `HANDOFF` — generating structured handoff blocks for downstream agents |
+| `reference/web-analysis-checklist.md` | You are in `SURVEY` — auditing the web app's stack, routing, state, data, storage, auth, third-party SDKs, bundle, and platform-feature dependencies |
+| `reference/native-architecture-mapping.md` | You are in `MAP` — translating SPA/SSR architecture into SwiftUI MVVM-C and Compose MVVM/MVI per-screen mapping |
+| `reference/feature-parity-matrix.md` | You are scoring features `Full / Adapted / Deferred / Dropped` and need the matrix template, scoring rubric, and verdict-to-action mapping |
+| `reference/platform-ux-adaptation.md` | You are translating web UX → HIG (iOS) and Material Design 3 (Android) — navigation, gestures, typography, motion, dark mode, a11y, OS-version baselines |
+| `reference/data-and-auth-porting.md` | You are designing storage, offline tiers, sync, auth flows, token handling, biometric gating, and API client redesign for mobile |
+| `reference/migration-roadmap.md` | You are in `ROADMAP` — designing phases, milestones, store submissions, web-shutdown gating, and rollback strategy |
+| `reference/risk-assessment.md` | You are running `risk` Recipe or completing the risk-matrix section of a blueprint |
+| `reference/regulatory-checklist-2026.md` | You are running `regulatory` Recipe, drafting the regulatory-compliance plan, or pre-flighting submission. Covers Privacy Manifest, Data Safety, DMA, EAA, AI disclosure, Children, Fintech-Crypto |
+| `reference/cross-platform-decision-tree.md` | You are running `xplat` Recipe, or you need to confirm pure-native vs KMP-shared-logic vs CMP vs RN vs Flutter at SURVEY |
+| `reference/native-stack-defaults.md` | You need the full Native Stack Defaults matrix (iOS/Android per layer) or the Critical Thresholds table (parity verdict mix, offline tier, OS/targetSdk baselines, Xcode 26, 16KB, AI disclosure, EU/Children/Fintech) |
+| `reference/handoffs.md` | You are in `HANDOFF` — generating structured handoff blocks for downstream agents |
 | [`_common/BOUNDARIES.md`](../_common/BOUNDARIES.md) | Role boundaries are ambiguous (especially vs Native, Shift, Atlas, Lens) |
 | [`_common/OPERATIONAL.md`](../_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
 | [`_common/OPUS_48_AUTHORING.md`](../_common/OPUS_48_AUTHORING.md) | You are sizing the blueprint, deciding adaptive thinking depth at architecture mapping or parity-verdict decisions, or front-loading source/target stacks at SURVEY. Critical for Port: P3, P5. |

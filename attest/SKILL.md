@@ -71,8 +71,8 @@ Route elsewhere when the task is primarily:
 - Calibrate verification depth using IEEE 1012-2024 integrity levels (1-4), derived from consequence × likelihood. Level 4 (catastrophic) demands all four V&V methods; Level 1 (negligible) permits inspection-only. When the user does not specify, default to Level 2.
 - Assess requirement quality using ISO/IEC/IEEE 29148 attributes: each acceptance criterion must be verifiable, unambiguous, consistent, singular, traceable, and implementation-free. Flag violations as `QUALITY_DEFECT`.
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P2 (calibrated verification report length — preserve per-criterion verdicts, evidence, and the traceability matrix even when Opus 4.8 trends shorter; truncated compliance reports lose audit value), P5 (think step-by-step at VERIFY — wrong PASS/FAIL/NOT_TESTED classification corrupts the compliance verdict and propagates into release/audit decisions)** as critical for Attest. P1 recommended: front-load mode (FULL/EXTRACT/AUDIT/ADVERSARIAL) and scope at INGEST before EXTRACT.
-- Pair every confirmed AC gap (verdict `FAIL` or `PARTIAL`) with a paste-ready `## LLM Fix Prompt` block addressed to Builder (code) or Scribe/Accord (spec rewrites). Suppress for verification-only, escalated spec rewrites, pending stakeholder decisions, or full conformance. Authoring rules in `_common/LLM_PROMPT_GENERATION.md`; Attest-specific verbs and template in `references/fix-prompt-generation.md`.
-- Recommend modern verification tooling when the target stack matches: **Schemathesis** for stateful OpenAPI/GraphQL conformance, **Tracetest** for internal-behaviour ACs (OTel span assertions), **PactFlow HaloAI** for consumer-driven contract derivation, **Reqnroll** (not SpecFlow) for .NET BDD. Details and sources in `references/modern-tooling.md`.
+- Pair every confirmed AC gap (verdict `FAIL` or `PARTIAL`) with a paste-ready `## LLM Fix Prompt` block addressed to Builder (code) or Scribe/Accord (spec rewrites). Suppress for verification-only, escalated spec rewrites, pending stakeholder decisions, or full conformance. Authoring rules in `_common/LLM_PROMPT_GENERATION.md`; Attest-specific verbs and template in `reference/fix-prompt-generation.md`.
+- Recommend modern verification tooling when the target stack matches: **Schemathesis** for stateful OpenAPI/GraphQL conformance, **Tracetest** for internal-behaviour ACs (OTel span assertions), **PactFlow HaloAI** for consumer-driven contract derivation, **Reqnroll** (not SpecFlow) for .NET BDD. Details and sources in `reference/modern-tooling.md`.
 
 ## Boundaries
 
@@ -84,8 +84,8 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Extract all acceptance criteria before issuing any verdict.
 - Generate BDD scenarios for every extracted criterion.
 - Cite `file:line` or `spec:section` evidence for every finding and every verdict.
-- **Supply-chain provenance fields**: Attach `sbom_ref`, `signature_ref`, `provenance_attestation` to the evidence package when Sigstore/Cosign/SBOM infra is available; downgrade to `skipped (org capability missing)` otherwise. Mandatory only when Tier policy declares it. Never block merge for absent supply-chain fields on orgs without infra. Full policy in `references/modern-tooling.md`.
-- **Citation form discipline**: Prefer symbol-based (`@source:billing-service::createInvoice`) or content-hash (`@source:openapi.yaml#sha256:abc...`) references over raw line numbers, which silently drift on refactor. Line-number citations require a paired content-hash anchor. Full rationale in `references/modern-tooling.md`.
+- **Supply-chain provenance fields**: Attach `sbom_ref`, `signature_ref`, `provenance_attestation` to the evidence package when Sigstore/Cosign/SBOM infra is available; downgrade to `skipped (org capability missing)` otherwise. Mandatory only when Tier policy declares it. Never block merge for absent supply-chain fields on orgs without infra. Full policy in `reference/modern-tooling.md`.
+- **Citation form discipline**: Prefer symbol-based (`@source:billing-service::createInvoice`) or content-hash (`@source:openapi.yaml#sha256:abc...`) references over raw line numbers, which silently drift on refactor. Line-number citations require a paired content-hash anchor. Full rationale in `reference/modern-tooling.md`.
 - Flag ambiguities with `AMBIGUOUS_FLAG`.
 - Include a traceability matrix in every compliance report.
 - Route remediation to the appropriate agent instead of fixing code directly.
@@ -113,7 +113,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Write abstract scenarios without concrete data values. Scenarios that express only the business rule without specific test data cannot be executed reliably and hide edge cases.
 - Overuse Scenario Outlines as exhaustive data tables. Limit rows to equivalence classes (typically ≤ 10 per outline); route exhaustive combinatorial coverage to unit tests.
 
-Source citations for BDD anti-patterns: `references/modern-tooling.md`.
+Source citations for BDD anti-patterns: `reference/modern-tooling.md`.
 
 ## INTERACTION_TRIGGERS
 
@@ -158,11 +158,11 @@ questions:
 
 | Phase | Goal | Required outputs | Read |
 |-------|------|------------------|------|
-| `INGEST` | Load the specification and detect its format | Spec source, format confidence, initial quality flags | `references/criteria-extraction.md` |
-| `EXTRACT` | Build the acceptance-criteria set | AC IDs, priority, testability, `AMBIGUOUS_FLAG`s | `references/criteria-extraction.md` |
-| `GENERATE` | Produce BDD scenarios from the criteria | `SC-*` scenarios with coverage counts | `references/bdd-generation.md` |
-| `VERIFY` | Compare the implementation to each criterion | Per-criterion verdicts, evidence, runtime-only exclusions | `references/verification-methods.md` |
-| `ATTEST` | Aggregate results and issue the final verdict | Compliance report, traceability matrix, handoff payloads | `references/compliance-report.md` |
+| `INGEST` | Load the specification and detect its format | Spec source, format confidence, initial quality flags | `reference/criteria-extraction.md` |
+| `EXTRACT` | Build the acceptance-criteria set | AC IDs, priority, testability, `AMBIGUOUS_FLAG`s | `reference/criteria-extraction.md` |
+| `GENERATE` | Produce BDD scenarios from the criteria | `SC-*` scenarios with coverage counts | `reference/bdd-generation.md` |
+| `VERIFY` | Compare the implementation to each criterion | Per-criterion verdicts, evidence, runtime-only exclusions | `reference/verification-methods.md` |
+| `ATTEST` | Aggregate results and issue the final verdict | Compliance report, traceability matrix, handoff payloads | `reference/compliance-report.md` |
 
 ## Operating Modes
 
@@ -249,7 +249,7 @@ Before finalizing generated scenarios, validate each against these attributes:
 | Independence | Executable in any order — no shared mutable state |
 | Grounded | Every asserted behavior traces to explicit spec content. LLM-generated scenarios hallucinate at ~5% rate; flag as `SCENARIO_DEFECT:grounded` |
 
-Flag violations as `SCENARIO_DEFECT:{attribute}`. Rewrite before including in deliverable. Source citations in `references/modern-tooling.md`.
+Flag violations as `SCENARIO_DEFECT:{attribute}`. Rewrite before including in deliverable. Source citations in `reference/modern-tooling.md`.
 
 ## Verification Methods
 
@@ -336,13 +336,13 @@ Single source of truth for Recipe definitions. The Mode column binds each Recipe
 
 | Recipe | Subcommand | Default? | Mode | When to Use | Behavior | Read First |
 |--------|-----------|---------|------|-------------|----------|------------|
-| AC Verify | `verify` | ✓ | `FULL` | FULL-mode verification that implementation meets spec acceptance criteria | Requires both spec and implementation. All CRITICAL criteria must PASS. Issue a verdict of CERTIFIED/CONDITIONAL/REJECTED. | `references/compliance-report.md` |
-| BDD Scenarios | `bdd` | | `EXTRACT` | Generate Given/When/Then scenarios from spec | Extract ACs from spec only and generate minimum scenario counts per priority (CRITICAL: 5, HIGH: 3, MEDIUM: 2, LOW: 1). | `references/bdd-generation.md` |
-| Traceability Matrix | `trace` | | `AUDIT` | Generate spec ↔ code traceability matrix | Generate bidirectional traceability from spec section → implementation code. Coverage ≥ 90% is the CERTIFIED condition. | `references/traceability-advanced.md` |
-| Compliance Report | `report` | | `AUDIT` | Audit-oriented compliance report (AUDIT mode) | Full-section compliance report generation. Hand off to Warden as audit evidence. | `references/compliance-report.md` |
-| Gherkin Authoring | `gherkin` | | `EXTRACT` / `GENERATE` | Gherkin/Cucumber/SpecFlow/Behave feature files with step-definition mapping | Author Gherkin .feature files with Background, Scenario Outline, Examples tables, Tags, and step-definition stubs for the target framework (Cucumber-JVM/JS, SpecFlow→Reqnroll, Behave, pytest-bdd). Map each Gherkin step to a code step-def with regex/cucumber-expression. | `references/gherkin-authoring.md` |
-| Property-Based | `property` | | `GENERATE` | Property-based test design from spec invariants (Hypothesis / fast-check / jqwik / ScalaCheck / proptest) | Identify spec invariants and generalize them into properties (idempotency, commutativity, round-trip, monotonicity, associativity). Produce framework-specific code (Hypothesis, fast-check, jqwik, proptest, ScalaCheck) with shrinking and stateful-machine tests. | `references/property-based-testing.md` |
-| Test Oracle | `oracle` | | `GENERATE` | Test oracle design — golden master, metamorphic, differential, model-based | Choose the test oracle pattern per criterion. Golden master for legacy; metamorphic relations when expected output is unknown; differential testing across implementations; model-based via state machine; consistency oracle for cross-API invariants. | `references/test-oracle-design.md` |
+| AC Verify | `verify` | ✓ | `FULL` | FULL-mode verification that implementation meets spec acceptance criteria | Requires both spec and implementation. All CRITICAL criteria must PASS. Issue a verdict of CERTIFIED/CONDITIONAL/REJECTED. | `reference/compliance-report.md` |
+| BDD Scenarios | `bdd` | | `EXTRACT` | Generate Given/When/Then scenarios from spec | Extract ACs from spec only and generate minimum scenario counts per priority (CRITICAL: 5, HIGH: 3, MEDIUM: 2, LOW: 1). | `reference/bdd-generation.md` |
+| Traceability Matrix | `trace` | | `AUDIT` | Generate spec ↔ code traceability matrix | Generate bidirectional traceability from spec section → implementation code. Coverage ≥ 90% is the CERTIFIED condition. | `reference/traceability-advanced.md` |
+| Compliance Report | `report` | | `AUDIT` | Audit-oriented compliance report (AUDIT mode) | Full-section compliance report generation. Hand off to Warden as audit evidence. | `reference/compliance-report.md` |
+| Gherkin Authoring | `gherkin` | | `EXTRACT` / `GENERATE` | Gherkin/Cucumber/SpecFlow/Behave feature files with step-definition mapping | Author Gherkin .feature files with Background, Scenario Outline, Examples tables, Tags, and step-definition stubs for the target framework (Cucumber-JVM/JS, SpecFlow→Reqnroll, Behave, pytest-bdd). Map each Gherkin step to a code step-def with regex/cucumber-expression. | `reference/gherkin-authoring.md` |
+| Property-Based | `property` | | `GENERATE` | Property-based test design from spec invariants (Hypothesis / fast-check / jqwik / ScalaCheck / proptest) | Identify spec invariants and generalize them into properties (idempotency, commutativity, round-trip, monotonicity, associativity). Produce framework-specific code (Hypothesis, fast-check, jqwik, proptest, ScalaCheck) with shrinking and stateful-machine tests. | `reference/property-based-testing.md` |
+| Test Oracle | `oracle` | | `GENERATE` | Test oracle design — golden master, metamorphic, differential, model-based | Choose the test oracle pattern per criterion. Golden master for legacy; metamorphic relations when expected output is unknown; differential testing across implementations; model-based via state machine; consistency oracle for cross-API invariants. | `reference/test-oracle-design.md` |
 
 ### Signal Keywords → Recipe
 
@@ -395,7 +395,7 @@ Every confirmed AC gap (`FAIL` or `PARTIAL`) ends with a `## LLM Fix Prompt` blo
 | `INVESTIGATE-FURTHER` | AC interpretation ambiguous | Spec author / Attest re-entry |
 | `WAIVE` | AC not applicable; document waiver | Builder + Scribe |
 
-Universal authoring rules, prompt structure, and the cross-agent verb/suppression principles: `_common/LLM_PROMPT_GENERATION.md`. Attest-specific authoring rules, suppression cases, template fields, and a worked example: `references/fix-prompt-generation.md`.
+Universal authoring rules, prompt structure, and the cross-agent verb/suppression principles: `_common/LLM_PROMPT_GENERATION.md`. Attest-specific authoring rules, suppression cases, template fields, and a worked example: `reference/fix-prompt-generation.md`.
 
 When suppressed, write a one-line note in the report explaining why.
 
@@ -433,19 +433,19 @@ Required section order:
 
 | File | Read this when |
 |------|----------------|
-| `references/criteria-extraction.md` | You need format detection, testability classification, ambiguity handling, quality metrics, or `AC-*` conventions. |
-| `references/bdd-generation.md` | You need `SC-*` conventions, Given/When/Then rules, priority-based scenario minimums, or BDD anti-pattern checks. |
-| `references/verification-methods.md` | You need static verification methods, evidence schema, confidence scoring, runtime-only routing, or resource allocation. |
-| `references/adversarial-probing.md` | You need the six probe families, risk levels, minimum probe counts, or probe output format. |
-| `references/compliance-report.md` | You need the full verdict thresholds, report template, traceability thresholds, or handoff payload schemas. |
-| `references/traceability-advanced.md` | You need bidirectional traceability, gap analysis, coverage optimization, or regulated audit support. |
-| `references/llm-verification-guardrails.md` | You need LLM capability limits, evidence-first guardrails, prompt strategies, or hallucination prevention rules. |
-| `references/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing an Attest-specific action verb (CLOSE-GAP / RECONCILE-SPEC / BREAKING-CLOSE / INVESTIGATE-FURTHER / WAIVE), or deciding whether to suppress for verification-only / Scribe-Accord rewrite / pending stakeholder / full conformance. |
+| `reference/criteria-extraction.md` | You need format detection, testability classification, ambiguity handling, quality metrics, or `AC-*` conventions. |
+| `reference/bdd-generation.md` | You need `SC-*` conventions, Given/When/Then rules, priority-based scenario minimums, or BDD anti-pattern checks. |
+| `reference/verification-methods.md` | You need static verification methods, evidence schema, confidence scoring, runtime-only routing, or resource allocation. |
+| `reference/adversarial-probing.md` | You need the six probe families, risk levels, minimum probe counts, or probe output format. |
+| `reference/compliance-report.md` | You need the full verdict thresholds, report template, traceability thresholds, or handoff payload schemas. |
+| `reference/traceability-advanced.md` | You need bidirectional traceability, gap analysis, coverage optimization, or regulated audit support. |
+| `reference/llm-verification-guardrails.md` | You need LLM capability limits, evidence-first guardrails, prompt strategies, or hallucination prevention rules. |
+| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing an Attest-specific action verb (CLOSE-GAP / RECONCILE-SPEC / BREAKING-CLOSE / INVESTIGATE-FURTHER / WAIVE), or deciding whether to suppress for verification-only / Scribe-Accord rewrite / pending stakeholder / full conformance. |
 | `_common/PROOF_CARRYING.md` | You are invoked from `nexus acceptance` Phase 1 (spec-diff) or Phase 4 (final conformance verdict). Defines the 12 evidence-package fields, Tier-S/A/B/C application policy, meta-oracle rules for spec self-bug mitigation, and unspecifiable-quality carve-out that bypasses the Gate. |
-| `references/gherkin-authoring.md` | You are running the `gherkin` recipe — authoring `.feature` files (Background, Scenario Outline, Examples, Tags) with step-definition stubs for Cucumber-JVM/JS, SpecFlow, Behave, or pytest-bdd. |
-| `references/property-based-testing.md` | You are running the `property` recipe — generalizing spec invariants into properties (idempotency, round-trip, monotonicity) and producing framework-specific code (Hypothesis, fast-check, jqwik, proptest, ScalaCheck). |
-| `references/test-oracle-design.md` | You are running the `oracle` recipe — selecting test oracle patterns (golden master, metamorphic, differential, model-based, consistency oracle) per criterion. |
-| `references/modern-tooling.md` | You are recommending Schemathesis / Tracetest / PactFlow HaloAI / Reqnroll in a verification report, applying supply-chain provenance fields, enforcing citation form discipline, or citing BDD anti-pattern / quality-attribute sources. |
+| `reference/gherkin-authoring.md` | You are running the `gherkin` recipe — authoring `.feature` files (Background, Scenario Outline, Examples, Tags) with step-definition stubs for Cucumber-JVM/JS, SpecFlow, Behave, or pytest-bdd. |
+| `reference/property-based-testing.md` | You are running the `property` recipe — generalizing spec invariants into properties (idempotency, round-trip, monotonicity) and producing framework-specific code (Hypothesis, fast-check, jqwik, proptest, ScalaCheck). |
+| `reference/test-oracle-design.md` | You are running the `oracle` recipe — selecting test oracle patterns (golden master, metamorphic, differential, model-based, consistency oracle) per criterion. |
+| `reference/modern-tooling.md` | You are recommending Schemathesis / Tracetest / PactFlow HaloAI / Reqnroll in a verification report, applying supply-chain provenance fields, enforcing citation form discipline, or citing BDD anti-pattern / quality-attribute sources. |
 | `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the verification report, deciding adaptive thinking depth at VERIFY, or front-loading mode/scope at INGEST. Critical for Attest: P2, P5. |
 

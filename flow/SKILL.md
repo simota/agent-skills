@@ -65,7 +65,7 @@ Route elsewhere when:
 - Prefer CSS `transform`, `opacity`, `filter`, and `clip-path` — these are compositor-only properties that avoid layout/paint and stay within the 16.7ms frame budget.
 - Respect `prefers-reduced-motion`. Remove or simplify decorative motion; preserve essential state communication.
 - Treat motion as feedback, guidance, or state communication. Decorative motion is optional.
-- **Limit to 2-3 distinct motion types per view.** Use the motion slot system (Hero Entrance / Scroll-Linked / Interaction Feedback) from `references/intentional-motion-framework.md`. More than 3 motion types creates visual chaos.
+- **Limit to 2-3 distinct motion types per view.** Use the motion slot system (Hero Entrance / Scroll-Linked / Interaction Feedback) from `reference/intentional-motion-framework.md`. More than 3 motion types creates visual chaos.
 - Prefer CSS-only solutions unless JS materially improves interaction quality. Use `requestAnimationFrame` — never `setInterval`/`setTimeout` — for JS-driven animation.
 - **Guard Core Web Vitals:** animations must not degrade CLS (< 0.1) or INP (< 200ms). Non-composited animations cause CLS on 39% of mobile pages. For animation-induced INP issues, use the rAF → setTimeout pattern: defer heavy post-animation logic via `requestAnimationFrame(() => setTimeout(heavyWork, 0))` to guarantee a paint between interaction and computation.
 - Auto-detect the active framework and follow local idioms. For React/Vue/vanilla JS, prefer Motion v12 (formerly Framer Motion, MIT, hardware-accelerated scroll animations, oklch/oklab color support, axis-locked layout animations via `layout="x"|"y"`, multi-framework via `motion/react` and vanilla APIs). For complex timeline work or projects needing premium plugins (SplitText, MorphSVG, ScrollTrigger), prefer GSAP (all plugins free since Webflow acquisition 2024; license only restricts tools competing with Webflow's visual animation builder).
@@ -87,7 +87,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 - Target 60fps. Use Long Animation Frames API (LoAF) in Chrome DevTools to identify frames exceeding the 50ms threshold.
 - Use standard transitions in the `150-300ms` range unless a pattern clearly requires otherwise.
-- Use canonical easing curves from `references/easing-guide.md`.
+- Use canonical easing curves from `reference/easing-guide.md`.
 - Define a reduced-motion path. The European Accessibility Act (EAA), enforced since June 2025, requires WCAG 2.1 AA compliance (including motion control) for digital products serving EU users.
 - Measure or reason about performance impact before shipping.
 - Set a hard cap of 30 seconds on any animation duration. Add an independent safety timer for state-driven animations (e.g., skeleton loaders) to prevent infinite loops when app logic breaks.
@@ -117,22 +117,22 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `SURVEY` | Confirm trigger, framework, constraints, reduced-motion path | Establish motion scope and applicable pattern | `references/animation-catalog.md` |
-| `PLAN` | Choose duration, easing, properties, fallback | Implementation plan and risk notes | `references/easing-guide.md` |
-| `VERIFY` | Check accessibility, performance, browser support | Reduced-motion and perf validation | `references/motion-accessibility-anti-patterns.md` |
-| `PRESENT` | Deliver code, notes, and next checks | Final implementation guidance | `references/framework-patterns.md` |
+| `SURVEY` | Confirm trigger, framework, constraints, reduced-motion path | Establish motion scope and applicable pattern | `reference/animation-catalog.md` |
+| `PLAN` | Choose duration, easing, properties, fallback | Implementation plan and risk notes | `reference/easing-guide.md` |
+| `VERIFY` | Check accessibility, performance, browser support | Reduced-motion and perf validation | `reference/motion-accessibility-anti-patterns.md` |
+| `PRESENT` | Deliver code, notes, and next checks | Final implementation guidance | `reference/framework-patterns.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Hover Effects | `hover` | ✓ | Hover effect implementation | `references/animation-catalog.md`, `references/easing-guide.md` |
-| Loading States | `loading` | | Loading state animations | `references/animation-catalog.md` |
-| Modal Transitions | `transition` | | Modal transition animations | `references/animation-catalog.md`, `references/modern-css-animations.md` |
-| Gesture Interaction | `gesture` | | Gesture interactions | `references/animation-catalog.md`, `references/framework-patterns.md` |
-| Spring Physics | `spring` | | Physics-based motion (stiffness/damping/mass tuning, drag-release, natural settle) | `references/spring-physics.md`, `references/easing-guide.md` |
-| Scroll-Triggered | `scroll` | | Scroll-triggered reveals (IntersectionObserver, animation-trigger, view() ranges) | `references/scroll-triggered.md`, `references/modern-css-animations.md` |
-| Parallax Effects | `parallax` | | Depth-illusion via differential layer translation (multi-layer, perf-budgeted) | `references/parallax-effects.md`, `references/animation-performance-anti-patterns.md` |
+| Hover Effects | `hover` | ✓ | Hover effect implementation | `reference/animation-catalog.md`, `reference/easing-guide.md` |
+| Loading States | `loading` | | Loading state animations | `reference/animation-catalog.md` |
+| Modal Transitions | `transition` | | Modal transition animations | `reference/animation-catalog.md`, `reference/modern-css-animations.md` |
+| Gesture Interaction | `gesture` | | Gesture interactions | `reference/animation-catalog.md`, `reference/framework-patterns.md` |
+| Spring Physics | `spring` | | Physics-based motion (stiffness/damping/mass tuning, drag-release, natural settle) | `reference/spring-physics.md`, `reference/easing-guide.md` |
+| Scroll-Triggered | `scroll` | | Scroll-triggered reveals (IntersectionObserver, animation-trigger, view() ranges) | `reference/scroll-triggered.md`, `reference/modern-css-animations.md` |
+| Parallax Effects | `parallax` | | Depth-illusion via differential layer translation (multi-layer, perf-budgeted) | `reference/parallax-effects.md`, `reference/animation-performance-anti-patterns.md` |
 
 ## Subcommand Dispatch
 
@@ -153,25 +153,25 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `hover`, `press`, `toggle`, `toast`, `feedback` | Micro animation | Component animation code | `references/animation-catalog.md` |
-| `route`, `modal`, `panel`, `page transition` | Page transition | Transition implementation | `references/animation-catalog.md` |
-| `drag`, `swipe`, `snap`, `gesture` | Gesture animation | Gesture handler code | `references/animation-catalog.md` |
-| `motion tokens`, `motion system`, `audit` | System design | Token definitions and audit report | `references/motion-system-design-patterns.md` |
-| `motion budget`, `intentional motion`, `2-3 motion rule` | Intentional motion planning | Motion slot allocation per view | `references/intentional-motion-framework.md` |
-| `view transitions`, `@starting-style`, `scroll timeline` | Modern CSS | Progressive enhancement code | `references/modern-css-animations.md` |
-| `reduced motion`, `a11y`, `accessibility` | Accessible motion | Reduced-motion path | `references/motion-accessibility-anti-patterns.md` |
-| `performance`, `jank`, `60fps` | Performance fix | Optimized animation code | `references/animation-performance-anti-patterns.md` |
-| `CLS`, `INP`, `Core Web Vitals`, `layout shift` | CWV remediation | Compositor-only animation refactor | `references/animation-performance-anti-patterns.md` |
-| `Motion`, `Framer Motion`, `GSAP`, `library` | Library selection | Library recommendation + implementation | `references/framework-patterns.md` |
-| `height auto`, `intrinsic size`, `accordion`, `expand collapse` | Intrinsic size animation | `interpolate-size`/`calc-size()` progressive enhancement | `references/modern-css-animations.md` |
-| `scroll-triggered`, `animation-trigger`, `entrance on scroll` | Scroll-triggered animation | Time-based animation with scroll offset trigger | `references/modern-css-animations.md` |
+| `hover`, `press`, `toggle`, `toast`, `feedback` | Micro animation | Component animation code | `reference/animation-catalog.md` |
+| `route`, `modal`, `panel`, `page transition` | Page transition | Transition implementation | `reference/animation-catalog.md` |
+| `drag`, `swipe`, `snap`, `gesture` | Gesture animation | Gesture handler code | `reference/animation-catalog.md` |
+| `motion tokens`, `motion system`, `audit` | System design | Token definitions and audit report | `reference/motion-system-design-patterns.md` |
+| `motion budget`, `intentional motion`, `2-3 motion rule` | Intentional motion planning | Motion slot allocation per view | `reference/intentional-motion-framework.md` |
+| `view transitions`, `@starting-style`, `scroll timeline` | Modern CSS | Progressive enhancement code | `reference/modern-css-animations.md` |
+| `reduced motion`, `a11y`, `accessibility` | Accessible motion | Reduced-motion path | `reference/motion-accessibility-anti-patterns.md` |
+| `performance`, `jank`, `60fps` | Performance fix | Optimized animation code | `reference/animation-performance-anti-patterns.md` |
+| `CLS`, `INP`, `Core Web Vitals`, `layout shift` | CWV remediation | Compositor-only animation refactor | `reference/animation-performance-anti-patterns.md` |
+| `Motion`, `Framer Motion`, `GSAP`, `library` | Library selection | Library recommendation + implementation | `reference/framework-patterns.md` |
+| `height auto`, `intrinsic size`, `accordion`, `expand collapse` | Intrinsic size animation | `interpolate-size`/`calc-size()` progressive enhancement | `reference/modern-css-animations.md` |
+| `scroll-triggered`, `animation-trigger`, `entrance on scroll` | Scroll-triggered animation | Time-based animation with scroll offset trigger | `reference/modern-css-animations.md` |
 
 Routing rules:
 
 - If the request involves a specific element (button, modal, page), target that element only.
 - If the request mentions "system" or "tokens," enter motion system design mode.
 - If the request mentions "performance" or "jank," prioritize performance diagnosis.
-- If the request involves scroll animations, read `references/modern-css-animations.md`.
+- If the request involves scroll animations, read `reference/modern-css-animations.md`.
 - Always confirm reduced-motion path for any animation work.
 - If the request involves library selection, consider bundle size (Tailwind CSS Motion ~5KB, GSAP core ~23KB, Motion ~32KB gzipped). Note: GSAP all plugins (SplitText, MorphSVG, ScrollTrigger, etc.) are now free — only restriction is building tools competing with Webflow's visual animation builder.
 
@@ -219,19 +219,19 @@ Flow receives UX friction reports and design direction from upstream agents. Flo
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/animation-catalog.md` | You need concrete motion patterns, durations, gestures, or page transitions. |
-| `references/easing-guide.md` | You need to choose easing curves or spring presets. |
-| `references/framework-patterns.md` | You need framework-specific implementation defaults. |
-| `references/modern-css-animations.md` | You need modern CSS APIs or browser-support-aware progressive enhancement. |
-| `references/motion-tokens.md` | You need token definitions, semantic aliases, or Muse alignment. |
-| `references/motion-system-design-patterns.md` | You are designing or auditing a motion system. |
-| `references/animation-performance-anti-patterns.md` | You need frame-budget, property-cost, or Core Web Vitals guidance. |
-| `references/motion-accessibility-anti-patterns.md` | You need reduced-motion, WCAG motion, or flash/parallax rules. |
-| `references/motion-design-anti-patterns.md` | You need timing, hierarchy, or functional-vs-decorative motion rules. |
-| `references/intentional-motion-framework.md` | You need the 2-3 motion rule, slot system, motion budget per view, or common slot configurations. |
-| `references/spring-physics.md` | You need spring physics tuning (stiffness/damping/mass), Motion v12 / react-spring presets, or CSS `linear()` spring approximation. |
-| `references/scroll-triggered.md` | You need scroll-triggered reveals, IntersectionObserver tuning, `animation-trigger` (Chrome 145+), or stagger choreography. |
-| `references/parallax-effects.md` | You need multi-layer parallax, depth-illusion implementation, GPU-layer budget, or vestibular-safe reduced-motion fallback. |
+| `reference/animation-catalog.md` | You need concrete motion patterns, durations, gestures, or page transitions. |
+| `reference/easing-guide.md` | You need to choose easing curves or spring presets. |
+| `reference/framework-patterns.md` | You need framework-specific implementation defaults. |
+| `reference/modern-css-animations.md` | You need modern CSS APIs or browser-support-aware progressive enhancement. |
+| `reference/motion-tokens.md` | You need token definitions, semantic aliases, or Muse alignment. |
+| `reference/motion-system-design-patterns.md` | You are designing or auditing a motion system. |
+| `reference/animation-performance-anti-patterns.md` | You need frame-budget, property-cost, or Core Web Vitals guidance. |
+| `reference/motion-accessibility-anti-patterns.md` | You need reduced-motion, WCAG motion, or flash/parallax rules. |
+| `reference/motion-design-anti-patterns.md` | You need timing, hierarchy, or functional-vs-decorative motion rules. |
+| `reference/intentional-motion-framework.md` | You need the 2-3 motion rule, slot system, motion budget per view, or common slot configurations. |
+| `reference/spring-physics.md` | You need spring physics tuning (stiffness/damping/mass), Motion v12 / react-spring presets, or CSS `linear()` spring approximation. |
+| `reference/scroll-triggered.md` | You need scroll-triggered reveals, IntersectionObserver tuning, `animation-trigger` (Chrome 145+), or stagger choreography. |
+| `reference/parallax-effects.md` | You need multi-layer parallax, depth-illusion implementation, GPU-layer budget, or vestibular-safe reduced-motion fallback. |
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 motion baselines — CSS `linear()` spring approximation, View Transitions Baseline (2025-10), M3 Expressive motion physics, WCAG 2.2.2/2.3.3 and `prefers-reduced-motion` mandates, decorative-motion anti-patterns. Read §1 Design motion. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the motion implementation, calibrating effort to single-interaction/page/system scope, or front-loading framework/target/slot at SURVEY. Critical for Flow: P3, P6. |
 | `_common/PROOF_CARRYING.md` | You verify motion tokens (animation duration / easing token compliance) in `nexus acceptance` Phase 2B as layer 3 of the Design-Code Contract. Motion-not-in-token = G9 Layer 1 AST FAIL via CSS variable / Framer Motion config check. Motion "feel" judgment (timing perception, emotional appropriateness) routes to G7 Unmeasurable-Quality Audit for Tier-S UI human sign-off. |

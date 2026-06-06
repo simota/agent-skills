@@ -145,23 +145,23 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Purpose | Key Outputs  Read |
 |-------|---------|-------------------|
-| **LISTEN** | Requirements discovery | Platform priority list · Message type inventory (text/rich/interactive/ephemeral) · Direction (in/out/bidirectional) · Latency budget · Volume estimates  `references/` |
-| **ROUTE** | Message architecture | Unified schema (discriminated union) · Routing matrix (event→handler) · Command parser spec · Conversation state machine · DLQ strategy  `references/` |
-| **ADAPT** | Channel adapter design | Adapter interface (send/receive/normalize/adapt) · SDK selection · Normalization rules (platform→unified) · Adaptation rules (unified→platform) · Feature mapping (threads/reactions/embeds)  `references/` |
-| **WIRE** | Transport implementation | Server architecture (WebSocket rooms/webhook endpoints) · Middleware chain (auth→validate→rate-limit→route→handle) · Connection lifecycle · Retry with backoff · Queue integration  `references/` |
-| **GUARD** | Security & reliability | HMAC-SHA256 verification · Token rotation · Rate limiting (per-user/channel/global) · Idempotency keys · Health checks · Alert thresholds  `references/` |
+| **LISTEN** | Requirements discovery | Platform priority list · Message type inventory (text/rich/interactive/ephemeral) · Direction (in/out/bidirectional) · Latency budget · Volume estimates  `reference/` |
+| **ROUTE** | Message architecture | Unified schema (discriminated union) · Routing matrix (event→handler) · Command parser spec · Conversation state machine · DLQ strategy  `reference/` |
+| **ADAPT** | Channel adapter design | Adapter interface (send/receive/normalize/adapt) · SDK selection · Normalization rules (platform→unified) · Adaptation rules (unified→platform) · Feature mapping (threads/reactions/embeds)  `reference/` |
+| **WIRE** | Transport implementation | Server architecture (WebSocket rooms/webhook endpoints) · Middleware chain (auth→validate→rate-limit→route→handle) · Connection lifecycle · Retry with backoff · Queue integration  `reference/` |
+| **GUARD** | Security & reliability | HMAC-SHA256 verification · Token rotation · Rate limiting (per-user/channel/global) · Idempotency keys · Health checks · Alert thresholds  `reference/` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Webhook Handler | `webhook` | ✓ | Webhook receive handler design (HMAC verification, idempotency) | `references/webhook-patterns.md` |
-| Bot Framework | `bot` | | Bot command framework and conversation state machine design | `references/bot-framework.md`, `references/channel-adapters.md` |
-| WebSocket Server | `websocket` | | WebSocket server and real-time communication design | `references/realtime-architecture.md` |
-| Channel Adapter | `adapter` | | Channel adapters (Slack/Discord/LINE normalization) | `references/channel-adapters.md`, `references/event-routing.md` |
-| SSE Streaming | `sse` | | Server-Sent Events design with Last-Event-ID resume, heartbeat, and proxy-safe headers | `references/sse-streaming.md` |
-| Queue Integration | `queue` | | Message-queue producer/consumer wiring (SQS/SNS/RabbitMQ/Kafka/NATS) with DLQ and idempotent consumers | `references/queue-integration.md` |
-| Rate Limiting | `rate` | | Rate limiting and backpressure for messaging (token/leaky bucket, 429/Retry-After, per-tenant quotas) | `references/rate-limiting.md` |
+| Webhook Handler | `webhook` | ✓ | Webhook receive handler design (HMAC verification, idempotency) | `reference/webhook-patterns.md` |
+| Bot Framework | `bot` | | Bot command framework and conversation state machine design | `reference/bot-framework.md`, `reference/channel-adapters.md` |
+| WebSocket Server | `websocket` | | WebSocket server and real-time communication design | `reference/realtime-architecture.md` |
+| Channel Adapter | `adapter` | | Channel adapters (Slack/Discord/LINE normalization) | `reference/channel-adapters.md`, `reference/event-routing.md` |
+| SSE Streaming | `sse` | | Server-Sent Events design with Last-Event-ID resume, heartbeat, and proxy-safe headers | `reference/sse-streaming.md` |
+| Queue Integration | `queue` | | Message-queue producer/consumer wiring (SQS/SNS/RabbitMQ/Kafka/NATS) with DLQ and idempotent consumers | `reference/queue-integration.md` |
+| Rate Limiting | `rate` | | Rate limiting and backpressure for messaging (token/leaky bucket, 429/Retry-After, per-tenant quotas) | `reference/rate-limiting.md` |
 
 ## Subcommand Dispatch
 
@@ -182,24 +182,24 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `slack`, `discord`, `telegram`, `whatsapp`, `line`, `adapter` | Channel adapter design | Adapter interface + normalization rules | `references/channel-adapters.md` |
-| `webhook`, `hmac`, `signature`, `idempotency` | Webhook handler design | Handler spec + verification flow | `references/webhook-patterns.md` |
-| `websocket`, `sse`, `webtransport`, `realtime`, `long polling`, `socket` | Real-time transport architecture | Server architecture + connection lifecycle | `references/realtime-architecture.md` |
-| `bot`, `command`, `slash`, `conversation`, `chatbot` | Bot framework design | Command parser + state machine + middleware | `references/bot-framework.md` |
-| `event`, `routing`, `fan-out`, `fan-in`, `schema`, `cloudevents`, `asyncapi` | Event routing design | Event schema (CloudEvents envelope) + routing matrix + AsyncAPI spec | `references/event-routing.md` |
-| `queue`, `pubsub`, `redis`, `bullmq`, `rabbitmq`, `kafka` | Message queue integration | Queue topology + delivery guarantees | `references/realtime-architecture.md` |
-| `circuit breaker`, `retry`, `backoff`, `dlq`, `resilience` | Resilience pattern design | Circuit breaker config + retry strategy + DLQ design | `references/webhook-patterns.md` |
-| `langbot`, `n8n`, `dify`, `ai bot`, `llm bot` | LLM-native bot integration | AI runner integration + adapter wiring | `references/bot-framework.md` |
-| `notification`, `broadcast`, `push` | Notification delivery design | Delivery pipeline + channel selection | `references/channel-adapters.md` |
-| unclear messaging request | Channel adapter design | Adapter interface | `references/channel-adapters.md` |
+| `slack`, `discord`, `telegram`, `whatsapp`, `line`, `adapter` | Channel adapter design | Adapter interface + normalization rules | `reference/channel-adapters.md` |
+| `webhook`, `hmac`, `signature`, `idempotency` | Webhook handler design | Handler spec + verification flow | `reference/webhook-patterns.md` |
+| `websocket`, `sse`, `webtransport`, `realtime`, `long polling`, `socket` | Real-time transport architecture | Server architecture + connection lifecycle | `reference/realtime-architecture.md` |
+| `bot`, `command`, `slash`, `conversation`, `chatbot` | Bot framework design | Command parser + state machine + middleware | `reference/bot-framework.md` |
+| `event`, `routing`, `fan-out`, `fan-in`, `schema`, `cloudevents`, `asyncapi` | Event routing design | Event schema (CloudEvents envelope) + routing matrix + AsyncAPI spec | `reference/event-routing.md` |
+| `queue`, `pubsub`, `redis`, `bullmq`, `rabbitmq`, `kafka` | Message queue integration | Queue topology + delivery guarantees | `reference/realtime-architecture.md` |
+| `circuit breaker`, `retry`, `backoff`, `dlq`, `resilience` | Resilience pattern design | Circuit breaker config + retry strategy + DLQ design | `reference/webhook-patterns.md` |
+| `langbot`, `n8n`, `dify`, `ai bot`, `llm bot` | LLM-native bot integration | AI runner integration + adapter wiring | `reference/bot-framework.md` |
+| `notification`, `broadcast`, `push` | Notification delivery design | Delivery pipeline + channel selection | `reference/channel-adapters.md` |
+| unclear messaging request | Channel adapter design | Adapter interface | `reference/channel-adapters.md` |
 
 Routing rules:
 
-- If the request mentions a specific platform (Slack, Discord, etc.), read `references/channel-adapters.md`.
-- If the request involves webhooks or signature verification, read `references/webhook-patterns.md`.
-- If the request involves WebSocket, SSE, or real-time connections, read `references/realtime-architecture.md`.
-- If the request involves bots, commands, or conversation flows, read `references/bot-framework.md`.
-- If the request involves event schemas, routing, or fan-out patterns, read `references/event-routing.md`.
+- If the request mentions a specific platform (Slack, Discord, etc.), read `reference/channel-adapters.md`.
+- If the request involves webhooks or signature verification, read `reference/webhook-patterns.md`.
+- If the request involves WebSocket, SSE, or real-time connections, read `reference/realtime-architecture.md`.
+- If the request involves bots, commands, or conversation flows, read `reference/bot-framework.md`.
+- If the request involves event schemas, routing, or fan-out patterns, read `reference/event-routing.md`.
 - Always consider security implications and DLQ strategy regardless of signal.
 
 ## Output Requirements
@@ -221,11 +221,11 @@ Every deliverable must include:
 
 | Domain | Key Patterns | Reference |
 |--------|-------------|-----------|
-| **Channel Adapters** | Adapter interface · SDK comparison · Unified message type · Platform feature matrix | `references/channel-adapters.md` |
-| **Webhook Patterns** | HMAC-SHA256 · TLS enforcement · Idempotency keys · Retry with backoff · Non-retriable error routing · Dead letter queue | `references/webhook-patterns.md` |
-| **Real-time Architecture** | WebSocket lifecycle · SSE · Heartbeat/Reconnect · Horizontal scaling · Redis Pub/Sub | `references/realtime-architecture.md` |
-| **Bot Framework** | Command parser · Slash commands · Conversation state machine · Middleware chain | `references/bot-framework.md` |
-| **Event Routing** | Discriminated union schema · Routing matrix · Fan-out/Fan-in · Event versioning | `references/event-routing.md` |
+| **Channel Adapters** | Adapter interface · SDK comparison · Unified message type · Platform feature matrix | `reference/channel-adapters.md` |
+| **Webhook Patterns** | HMAC-SHA256 · TLS enforcement · Idempotency keys · Retry with backoff · Non-retriable error routing · Dead letter queue | `reference/webhook-patterns.md` |
+| **Real-time Architecture** | WebSocket lifecycle · SSE · Heartbeat/Reconnect · Horizontal scaling · Redis Pub/Sub | `reference/realtime-architecture.md` |
+| **Bot Framework** | Command parser · Slash commands · Conversation state machine · Middleware chain | `reference/bot-framework.md` |
+| **Event Routing** | Discriminated union schema · Routing matrix · Fan-out/Fan-in · Event versioning | `reference/event-routing.md` |
 
 ## Agent Collaboration & Handoffs
 
@@ -255,14 +255,14 @@ Every deliverable must include:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/channel-adapters.md` | You need adapter interfaces, SDK comparisons, unified message types, or platform feature matrices for Slack/Discord/Telegram/WhatsApp/LINE. |
-| `references/webhook-patterns.md` | You need HMAC-SHA256 verification, idempotency key strategies, retry with exponential backoff, or dead letter queue design. |
-| `references/realtime-architecture.md` | You need WebSocket lifecycle management, SSE setup, heartbeat/reconnect logic, horizontal scaling, or Redis Pub/Sub integration. |
-| `references/bot-framework.md` | You need command parser design, slash command registration, conversation state machines, or middleware chain patterns. |
-| `references/event-routing.md` | You need discriminated union event schemas, routing matrix design, fan-out/fan-in patterns, or event versioning strategies. |
-| `references/sse-streaming.md` | You are running the `sse` recipe and need Last-Event-ID resume, heartbeat cadence, proxy-safe headers, or long-polling fallback design. |
-| `references/queue-integration.md` | You are running the `queue` recipe and need producer/consumer wiring (SQS/SNS/RabbitMQ/Kafka/NATS), DLQ topology, visibility timeout, or idempotent consumer patterns. |
-| `references/rate-limiting.md` | You are running the `rate` recipe and need token/leaky bucket / sliding window, 429 + Retry-After handling, cost-based quotas, or per-tenant isolation. |
+| `reference/channel-adapters.md` | You need adapter interfaces, SDK comparisons, unified message types, or platform feature matrices for Slack/Discord/Telegram/WhatsApp/LINE. |
+| `reference/webhook-patterns.md` | You need HMAC-SHA256 verification, idempotency key strategies, retry with exponential backoff, or dead letter queue design. |
+| `reference/realtime-architecture.md` | You need WebSocket lifecycle management, SSE setup, heartbeat/reconnect logic, horizontal scaling, or Redis Pub/Sub integration. |
+| `reference/bot-framework.md` | You need command parser design, slash command registration, conversation state machines, or middleware chain patterns. |
+| `reference/event-routing.md` | You need discriminated union event schemas, routing matrix design, fan-out/fan-in patterns, or event versioning strategies. |
+| `reference/sse-streaming.md` | You are running the `sse` recipe and need Last-Event-ID resume, heartbeat cadence, proxy-safe headers, or long-polling fallback design. |
+| `reference/queue-integration.md` | You are running the `queue` recipe and need producer/consumer wiring (SQS/SNS/RabbitMQ/Kafka/NATS), DLQ topology, visibility timeout, or idempotent consumer patterns. |
+| `reference/rate-limiting.md` | You are running the `rate` recipe and need token/leaky bucket / sliding window, 429 + Retry-After handling, cost-based quotas, or per-tenant isolation. |
 | `_common/OPUS_48_AUTHORING.md` | You need to size the integration spec, decide adaptive thinking depth at HMAC/retry design, or front-load platform/transport/scale at DESIGN. Critical for Relay: P3, P5. |
 
 ## Operational

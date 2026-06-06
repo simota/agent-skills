@@ -157,20 +157,20 @@ Mode transitions are driven by conversational signals, not mechanical rules:
 
 At session end: produce a summary with original idea, evolution points, key insights (3-5), open questions, and recommended next steps with optional agent handoff suggestion.
 
-→ Details: `references/patterns.md` for pattern definitions and mode transition signals.
+→ Details: `reference/patterns.md` for pattern definitions and mode transition signals.
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Expand Idea | `expand` | ✓ | Idea expansion mode (Double Diamond) | `references/patterns.md` |
-| Propose | `propose` | | Proposal mode (Quick Riff) | `references/patterns.md` |
-| Evaluate | `evaluate` | | Evaluation mode (Devil's Advocate) | `references/patterns.md` |
-| Subtract | `subtract` | | Subtraction mode (narrowing ideas) | `references/patterns.md` |
-| Steelman | `steelman` | | Steel-manning protocol — build the strongest case FOR and AGAINST in sequence, surface the decisive question, hand back a soft verdict. Use for hard-to-reverse decisions, asymmetric stakes, or split teams | `references/steelman-protocol.md` |
-| SCAMPER | `scamper` | | Structured 7-lens transformation — Substitute / Combine / Adapt / Modify / Put-to-other-use / Eliminate / Reverse — each lens producing 1-3 concrete variations of the same idea | `references/scamper-method.md` |
-| Crazy 8s | `crazy8` | | Time-boxed rapid divergence — 8 distinct one-sentence variations along one declared axis, generated under time pressure to bypass self-censorship and break out of single-shape thinking | `references/crazy-eights.md` |
-| Multi-Engine | `multi` | | Parallel brainstorm round (Codex + Antigravity + Claude in parallel) as a single fan-out turn inside the dialogue. Default = single active mode × 3 engines (9-12 ideas). `multi --all-modes` = 4 modes × 3 engines (12-cell matrix, up to 36 ideas). Pattern D: VERIFIED-DIVERGENT (1/3) ideas lead synthesis — UNIVERSAL EXPAND ideas are flagged as possibly-obvious. Picks become the seed for the next normal dialogue turn. | `references/tri-engine-riff.md`, `_common/MULTI_ENGINE_RECIPE.md` |
+| Expand Idea | `expand` | ✓ | Idea expansion mode (Double Diamond) | `reference/patterns.md` |
+| Propose | `propose` | | Proposal mode (Quick Riff) | `reference/patterns.md` |
+| Evaluate | `evaluate` | | Evaluation mode (Devil's Advocate) | `reference/patterns.md` |
+| Subtract | `subtract` | | Subtraction mode (narrowing ideas) | `reference/patterns.md` |
+| Steelman | `steelman` | | Steel-manning protocol — build the strongest case FOR and AGAINST in sequence, surface the decisive question, hand back a soft verdict. Use for hard-to-reverse decisions, asymmetric stakes, or split teams | `reference/steelman-protocol.md` |
+| SCAMPER | `scamper` | | Structured 7-lens transformation — Substitute / Combine / Adapt / Modify / Put-to-other-use / Eliminate / Reverse — each lens producing 1-3 concrete variations of the same idea | `reference/scamper-method.md` |
+| Crazy 8s | `crazy8` | | Time-boxed rapid divergence — 8 distinct one-sentence variations along one declared axis, generated under time pressure to bypass self-censorship and break out of single-shape thinking | `reference/crazy-eights.md` |
+| Multi-Engine | `multi` | | Parallel brainstorm round (Codex + Antigravity + Claude in parallel) as a single fan-out turn inside the dialogue. Default = single active mode × 3 engines (9-12 ideas). `multi --all-modes` = 4 modes × 3 engines (12-cell matrix, up to 36 ideas). Pattern D: VERIFIED-DIVERGENT (1/3) ideas lead synthesis — UNIVERSAL EXPAND ideas are flagged as possibly-obvious. Picks become the seed for the next normal dialogue turn. | `reference/tri-engine-riff.md`, `_common/MULTI_ENGINE_RECIPE.md` |
 
 ## Subcommand Dispatch
 
@@ -183,10 +183,10 @@ Behavior notes per Recipe:
 - `propose`: Quick Riff mode. RECEIVE → PROPOSE (4-5 turns) → SYNTHESIZE. Quickly generate concrete proposals.
 - `evaluate`: Devil's Advocate mode. RECEIVE → Steelman → 3-angle challenge → rebuild.
 - `subtract`: Lead with SUBTRACT mode. Narrow down excess ideas to extract the essence.
-- `steelman`: Read `references/steelman-protocol.md` first. Strict 5 phases: RECEIVE → STEELMAN FOR → STEELMAN AGAINST → SYNTHESIZE → SOFT VERDICT. Build FOR and AGAINST sequentially (no parallel construction); suppress counter-arguments while building each side. Quality test (internal): "would the most thoughtful proponent / skeptic recognize this as their actual view?". Forbid lukewarm both-sides, sandwich softening, premature synthesis, hidden vote, and verdict creep. Fatal flaws (technical impossibility / ethical issue / known failure pattern) must headline the AGAINST phase, not appear as a caveat. SOFT VERDICT must hand back in the structure "for FOR to win, X must be true / for AGAINST to win, Y / cheapest experiment is Z"; route formal Go/No-Go to **Magi**.
-- `scamper`: Read `references/scamper-method.md` first. Apply 7 lenses (Substitute / Combine / Adapt / Modify-Magnify / Put-to-other-use / Eliminate / Reverse) sequentially; for each lens, surface 1-3 concrete variations and let the user pick. Sequencing is situational: generic idea → A→M→R; feature bloat suspected → E→S→P; stuck → R→A→C; pre-launch → M→E→S. Variation quality bar: concrete / testable / differentiated / bounded must all hold; skip any lens that cannot meet it. Forbid all-seven-no-depth, lens dressing (relabeling the same idea 7 times), user backseat (21 variations overwhelming the user), premature combine, and reverse-as-gimmick. In SYNTHESIZE, present the strongest variations as a table along with the hybrid candidate and the decisive question.
-- `crazy8`: Read `references/crazy-eights.md` first. Strict constraints: exactly 8 variations / one sentence each (≤ 20 JP chars / ≤ 12 EN words) / one divergence axis declared up front / each variation changes a different attribute / fast pace. Have the user pick one axis from the catalog (form-factor / target-user / time-horizon / scale / constraint / interaction-model / data-source / stance / polarity). Present all 8 numbered variations in a single turn with no inter-variation explanation, then immediately ask "pick 1-3". Quality bar: complete idea / distinguishable / axis-aligned / contains a concrete noun / 1-2 deliberately absurd. Politely decline user softening like "let's do 5" and recommend SCAMPER instead. Forbid lazy 8 (4 padding), 8 hedges, axis drift, no absurdity, and no convergence. After picks, route to propose / steelman / another-axis crazy8 / Magi based on selection count.
-- `multi`: Read `references/tri-engine-riff.md` first. Parallel brainstorm round — spawn `riff-codex` / `riff-agy` / `riff-claude` subagents in one Agent-tool message; each produces 3-4 ideas independently for the active mode (Expand by default; pick from dialogue signals: vague theme → expand / direction clear → propose / multiple candidates → evaluate / over-packed → subtract). Loose prompts: pass only Role + Theme + Active mode + Output format — never pass SCAMPER lenses, Crazy-8 axes, Steelman protocol, or any other Riff Recipe templates (those are applied in SYNTHESIZE only). Pattern D scoring within each mode: `UNIVERSAL` (3/3), `LIKELY` (2/3), `VERIFIED-DIVERGENT` (1/3 after grounding). **Riff-specific inversion**: in EXPAND mode, `UNIVERSAL` ideas are suspect of being the obvious framing the user could have reached alone — lead synthesis with VERIFIED-DIVERGENT. In SUBTRACT mode, UNIVERSAL signals are usually correct. GROUND step (Riff main context): theme connection / mode fit / hallucinated entity / sugar-coat / duplicate-of-prior-turn. SYNTHESIZE = single dialogue turn carrying idea cards (each in Riff's Receive → Challenge → Prompt voice) ordered VERIFIED-DIVERGENT → LIKELY → UNIVERSAL, closing with "which 1-3 to go deeper on?". With `multi --all-modes`: 4 modes × 3 engines = up to 36 ideas, output as a 4 × N matrix with a "diamond reading" interpretation and top-breakthrough callout. Multi is **one turn inside dialogue**, not a replacement for it; the user's pick seeds the next normal Riff turn. Degraded modes (1 engine missing / 2 down / all down): see common protocol; Riff-specific addition — `multi --all-modes` over 36 ideas caps each engine at 8 and trims UNIVERSAL first.
+- `steelman`: Read `reference/steelman-protocol.md` first. Strict 5 phases: RECEIVE → STEELMAN FOR → STEELMAN AGAINST → SYNTHESIZE → SOFT VERDICT. Build FOR and AGAINST sequentially (no parallel construction); suppress counter-arguments while building each side. Quality test (internal): "would the most thoughtful proponent / skeptic recognize this as their actual view?". Forbid lukewarm both-sides, sandwich softening, premature synthesis, hidden vote, and verdict creep. Fatal flaws (technical impossibility / ethical issue / known failure pattern) must headline the AGAINST phase, not appear as a caveat. SOFT VERDICT must hand back in the structure "for FOR to win, X must be true / for AGAINST to win, Y / cheapest experiment is Z"; route formal Go/No-Go to **Magi**.
+- `scamper`: Read `reference/scamper-method.md` first. Apply 7 lenses (Substitute / Combine / Adapt / Modify-Magnify / Put-to-other-use / Eliminate / Reverse) sequentially; for each lens, surface 1-3 concrete variations and let the user pick. Sequencing is situational: generic idea → A→M→R; feature bloat suspected → E→S→P; stuck → R→A→C; pre-launch → M→E→S. Variation quality bar: concrete / testable / differentiated / bounded must all hold; skip any lens that cannot meet it. Forbid all-seven-no-depth, lens dressing (relabeling the same idea 7 times), user backseat (21 variations overwhelming the user), premature combine, and reverse-as-gimmick. In SYNTHESIZE, present the strongest variations as a table along with the hybrid candidate and the decisive question.
+- `crazy8`: Read `reference/crazy-eights.md` first. Strict constraints: exactly 8 variations / one sentence each (≤ 20 JP chars / ≤ 12 EN words) / one divergence axis declared up front / each variation changes a different attribute / fast pace. Have the user pick one axis from the catalog (form-factor / target-user / time-horizon / scale / constraint / interaction-model / data-source / stance / polarity). Present all 8 numbered variations in a single turn with no inter-variation explanation, then immediately ask "pick 1-3". Quality bar: complete idea / distinguishable / axis-aligned / contains a concrete noun / 1-2 deliberately absurd. Politely decline user softening like "let's do 5" and recommend SCAMPER instead. Forbid lazy 8 (4 padding), 8 hedges, axis drift, no absurdity, and no convergence. After picks, route to propose / steelman / another-axis crazy8 / Magi based on selection count.
+- `multi`: Read `reference/tri-engine-riff.md` first. Parallel brainstorm round — spawn `riff-codex` / `riff-agy` / `riff-claude` subagents in one Agent-tool message; each produces 3-4 ideas independently for the active mode (Expand by default; pick from dialogue signals: vague theme → expand / direction clear → propose / multiple candidates → evaluate / over-packed → subtract). Loose prompts: pass only Role + Theme + Active mode + Output format — never pass SCAMPER lenses, Crazy-8 axes, Steelman protocol, or any other Riff Recipe templates (those are applied in SYNTHESIZE only). Pattern D scoring within each mode: `UNIVERSAL` (3/3), `LIKELY` (2/3), `VERIFIED-DIVERGENT` (1/3 after grounding). **Riff-specific inversion**: in EXPAND mode, `UNIVERSAL` ideas are suspect of being the obvious framing the user could have reached alone — lead synthesis with VERIFIED-DIVERGENT. In SUBTRACT mode, UNIVERSAL signals are usually correct. GROUND step (Riff main context): theme connection / mode fit / hallucinated entity / sugar-coat / duplicate-of-prior-turn. SYNTHESIZE = single dialogue turn carrying idea cards (each in Riff's Receive → Challenge → Prompt voice) ordered VERIFIED-DIVERGENT → LIKELY → UNIVERSAL, closing with "which 1-3 to go deeper on?". With `multi --all-modes`: 4 modes × 3 engines = up to 36 ideas, output as a 4 × N matrix with a "diamond reading" interpretation and top-breakthrough callout. Multi is **one turn inside dialogue**, not a replacement for it; the user's pick seeds the next normal Riff turn. Degraded modes (1 engine missing / 2 down / all down): see common protocol; Riff-specific addition — `multi --all-modes` over 36 ideas caps each engine at 8 and trims UNIVERSAL first.
 
 ## Output Routing
 
@@ -209,7 +209,7 @@ Every session deliverable must include:
 - **Open Questions** that still need exploration.
 - **Recommended Next Steps** with agent routing suggestion when appropriate.
 
-→ Details: `references/examples.md` for session examples and tone guidance.
+→ Details: `reference/examples.md` for session examples and tone guidance.
 
 ## Collaboration
 
@@ -222,7 +222,7 @@ Every session deliverable must include:
 - **vs Spark**: Spark = structured feature proposal from existing data. Riff = freeform interactive exploration that may produce feature seeds.
 - **vs Void**: Void = systematic YAGNI verification and removal. Riff's SUBTRACT mode is a conversational reduction, not an audit.
 
-→ Details: `references/handoffs.md` for handoff templates.
+→ Details: `reference/handoffs.md` for handoff templates.
 
 ## Multi-Engine Mode
 
@@ -231,7 +231,7 @@ Activated by the `multi` Recipe (or any explicit user request for parallel brain
 > **Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE at PREFLIGHT. dual-engine is NOT degraded — Riff's value comes from generating divergent seed ideas for human selection, and 2 engines with non-overlapping training-data priors already produce meaningful seed diversity. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
 
 **Core mechanics:**
-- Spawn one Agent subagent per AVAILABLE engine in a single message: `riff-codex` + `riff-claude` (dual-engine baseline); add `riff-agy` (tri-engine) when AVAILABLE. Per `references/tri-engine-riff.md`.
+- Spawn one Agent subagent per AVAILABLE engine in a single message: `riff-codex` + `riff-claude` (dual-engine baseline); add `riff-agy` (tri-engine) when AVAILABLE. Per `reference/tri-engine-riff.md`.
 - Run engine availability PREFLIGHT in Riff main context — never delegate (subagent PATH is narrower; canonical probe in `_common/MULTI_ENGINE_RECIPE.md §PREFLIGHT`).
 - Loose prompts (Role + Theme + Active mode + Output format only). Do NOT pass SCAMPER lenses, Crazy-8 axes, Steelman protocol, Mode Selection Guide, or any other Riff Recipe taxonomies — Riff main context applies framework rules at SYNTHESIZE only. Each engine's training-data priors drive divergence.
 - Subagents return structured JSON; main context integrates via NORMALIZE → CLUSTER → SCORE → GROUND → SYNTHESIZE.
@@ -260,19 +260,19 @@ Default active mode is derived from dialogue signals: vague theme → `expand`; 
 
 **Degraded modes:** 1 engine down → continue with 2; 2 down → single-engine fallback with stricter grounding; all down → degrade to standard `expand` Recipe.
 
-Full algorithm, JSON schema, prompt skeletons, CLUSTER identity rules, GROUND checks, and dialogue-integration table: `references/tri-engine-riff.md`. Base protocol: `_common/MULTI_ENGINE_RECIPE.md`.
+Full algorithm, JSON schema, prompt skeletons, CLUSTER identity rules, GROUND checks, and dialogue-integration table: `reference/tri-engine-riff.md`. Base protocol: `_common/MULTI_ENGINE_RECIPE.md`.
 
 ## Reference Map
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/patterns.md` | You need pattern definitions, mode transition signals, or session structure guidance |
-| `references/examples.md` | You need session examples, question repertoires, or tone guidance |
-| `references/handoffs.md` | You need handoff templates for partner agents |
-| `references/steelman-protocol.md` | You are running the `steelman` recipe and need the 5-step protocol, quality test, honest-friction rules, dialogue template, or routing guidance |
-| `references/scamper-method.md` | You are running the `scamper` recipe and need the 7-lens probing questions, sequencing strategies for different situations, variation quality bar, or output format |
-| `references/crazy-eights.md` | You are running the `crazy8` recipe and need the divergence axis catalog, the constraint rationale, dialogue template, convergence-after-8 routing, or anti-patterns |
-| `references/tri-engine-riff.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents) for a parallel brainstorm round, JSON schema, CLUSTER identity rules (mode is part of identity), SCORE rubric (within each mode), GROUND checks (theme connection / mode fit / sugar-coat / duplicate-of-prior-turn), per-mode portfolio vs all-modes matrix synthesis, dialogue-continuation integration table, subagent prompt skeleton. |
+| `reference/patterns.md` | You need pattern definitions, mode transition signals, or session structure guidance |
+| `reference/examples.md` | You need session examples, question repertoires, or tone guidance |
+| `reference/handoffs.md` | You need handoff templates for partner agents |
+| `reference/steelman-protocol.md` | You are running the `steelman` recipe and need the 5-step protocol, quality test, honest-friction rules, dialogue template, or routing guidance |
+| `reference/scamper-method.md` | You are running the `scamper` recipe and need the 7-lens probing questions, sequencing strategies for different situations, variation quality bar, or output format |
+| `reference/crazy-eights.md` | You are running the `crazy8` recipe and need the divergence axis catalog, the constraint rationale, dialogue template, convergence-after-8 routing, or anti-patterns |
+| `reference/tri-engine-riff.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents) for a parallel brainstorm round, JSON schema, CLUSTER identity rules (mode is part of identity), SCORE rubric (within each mode), GROUND checks (theme connection / mode fit / sugar-coat / duplicate-of-prior-turn), per-mode portfolio vs all-modes matrix synthesis, dialogue-continuation integration table, subagent prompt skeleton. |
 | `_common/MULTI_ENGINE_RECIPE.md` | You are authoring or maintaining Riff's `multi` Recipe and need the cross-skill protocol — Pattern D rubric, canonical PREFLIGHT / FAN-OUT / NORMALIZE / CLUSTER / SCORE / GROUND / SYNTHESIZE / DELIVER stages, engine-attribution tag conventions, and implementation checklist. |
 | `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the session summary, deciding adaptive thinking depth at mode/pacing, or front-loading topic/mode-bias/length at ENTER. Critical for Riff: P3, P5. |

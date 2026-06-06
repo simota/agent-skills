@@ -180,10 +180,10 @@ questions:
 
 | Domain | Log Sources | Rule Format | Frameworks | Detail |
 |--------|------------|-------------|------------|--------|
-| **Endpoint** | Sysmon, EDR telemetry, Windows Event Log, auditd | Sigma, YARA | MITRE ATT&CK Enterprise | `references/detection-patterns.md` |
-| **Network** | Zeek, Suricata, DNS logs, proxy logs | Sigma, Suricata rules | MITRE ATT&CK Network | `references/detection-patterns.md` |
-| **Cloud** | CloudTrail, GCP Audit, Azure Activity, K8s audit | Sigma, platform-native | MITRE ATT&CK Cloud | `references/detection-patterns.md` |
-| **AI/LLM** | Application logs, token metrics, guardrail logs | Custom rules, Sigma | MITRE ATLAS, OWASP LLM Top 10 | `references/detection-patterns.md` |
+| **Endpoint** | Sysmon, EDR telemetry, Windows Event Log, auditd | Sigma, YARA | MITRE ATT&CK Enterprise | `reference/detection-patterns.md` |
+| **Network** | Zeek, Suricata, DNS logs, proxy logs | Sigma, Suricata rules | MITRE ATT&CK Network | `reference/detection-patterns.md` |
+| **Cloud** | CloudTrail, GCP Audit, Azure Activity, K8s audit | Sigma, platform-native | MITRE ATT&CK Cloud | `reference/detection-patterns.md` |
+| **AI/LLM** | Application logs, token metrics, guardrail logs | Custom rules, Sigma | MITRE ATLAS, OWASP LLM Top 10 | `reference/detection-patterns.md` |
 
 ---
 
@@ -193,12 +193,12 @@ questions:
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `ASSESS` | Map current detection coverage against MITRE ATT&CK v18+ Detection Strategies; identify gaps | Prioritize Initial Access + Execution gaps first; use per-technique Analytics as blueprints | `references/detection-patterns.md` |
-| `DESIGN` | Design detection rules for identified gaps or specific threats | Every rule must map to ATT&CK technique with sub-technique | `references/detection-patterns.md` |
-| `BUILD` | Write rules in Sigma/YARA/platform-native format | Use Sigma as default (platform-agnostic); YARA for file/memory patterns | `references/detection-patterns.md` |
-| `TEST` | Validate syntax, true positives, false positives, performance | FP rate must meet severity thresholds before deployment | `references/detection-as-code.md` |
-| `DEPLOY` | Produce Detection-as-Code CI/CD pipeline specifications | Git-managed, PR-reviewed, staged rollout | `references/detection-as-code.md` |
-| `HUNT` | Design hypothesis-driven hunting campaigns for areas without reliable detections | Every hunt starts with a testable ATT&CK-mapped hypothesis | `references/detection-patterns.md` |
+| `ASSESS` | Map current detection coverage against MITRE ATT&CK v18+ Detection Strategies; identify gaps | Prioritize Initial Access + Execution gaps first; use per-technique Analytics as blueprints | `reference/detection-patterns.md` |
+| `DESIGN` | Design detection rules for identified gaps or specific threats | Every rule must map to ATT&CK technique with sub-technique | `reference/detection-patterns.md` |
+| `BUILD` | Write rules in Sigma/YARA/platform-native format | Use Sigma as default (platform-agnostic); YARA for file/memory patterns | `reference/detection-patterns.md` |
+| `TEST` | Validate syntax, true positives, false positives, performance | FP rate must meet severity thresholds before deployment | `reference/detection-as-code.md` |
+| `DEPLOY` | Produce Detection-as-Code CI/CD pipeline specifications | Git-managed, PR-reviewed, staged rollout | `reference/detection-as-code.md` |
+| `HUNT` | Design hypothesis-driven hunting campaigns for areas without reliable detections | Every hunt starts with a testable ATT&CK-mapped hypothesis | `reference/detection-patterns.md` |
 
 ### 1. ASSESS (Coverage Analysis)
 
@@ -247,7 +247,7 @@ DETECTION_RULE:
   response_action: "[What SOC should do when triggered]"
 ```
 
-**Detailed patterns → `references/detection-patterns.md`**
+**Detailed patterns → `reference/detection-patterns.md`**
 
 ### 3. BUILD (Rule Implementation)
 
@@ -337,7 +337,7 @@ Git repo (detection rules)
   └─ Release tag → Deploy to production SIEM
 ```
 
-**Pipeline templates → `references/detection-as-code.md`**
+**Pipeline templates → `reference/detection-as-code.md`**
 
 ### 6. HUNT (Threat Hunting)
 
@@ -383,13 +383,13 @@ Single source of truth for Recipe definitions, primary outputs, and behavior not
 
 | Recipe | Subcommand | Default? | Primary Output | When to Use / Scope & Behavior | Read First |
 |--------|-----------|---------|----------------|--------------------------------|------------|
-| Sigma Rules | `sigma` | ✓ | Sigma YAML rules + ATT&CK mapping | Sigma v2.1+ detection rule design with ATT&CK sub-technique-level mapping (e.g. T1059.001). Keep FP rate at Critical < 25% and High < 50%. Validate with pySigma / sigma-cli. | `references/detection-patterns.md` |
-| YARA Rules | `yara` | | YARA rules | YARA malware/IoC file and memory pattern matching. ATT&CK mapping required. Run YARA compile for syntax validation, then TP/FP test. | `references/detection-patterns.md` |
-| Detection Coverage | `coverage` | | Coverage report with gap matrix | MITRE ATT&CK coverage mapping and gap analysis. Evaluate against ATT&CK v18+ Detection Strategies; prioritize Initial Access + Execution gaps; report coverage score (X/Y techniques, Z%). | `references/detection-patterns.md` |
-| Threat Hunting | `hunt` | | Hunting playbook | Hypothesis-driven threat hunting campaign design. Start from a testable, ATT&CK-mapped hypothesis; define success criteria and outcome (CONFIRMED / INCONCLUSIVE / NEGATIVE). | `references/detection-patterns.md` |
-| Snort / Suricata Rules | `snort` | | Network-layer rules + EVE JSON config | Network-layer detection rule authoring (Snort 3 / Suricata). Anchor every rule with `fast_pattern` and `flow:` state, emit EVE JSON with `mitre_attack` metadata, profile rule cost before promotion, and pin ET Open community rules by release tag with per-category FP measurement. For host-process detection use `sigma`; for file/memory patterns use `yara`. | `references/snort-network-detection.md` |
-| SOC Playbook | `playbook` | | IR runbook + SOAR hooks + D3FEND mapping | SOC incident-response runbook authoring. Template per incident class (phishing / credential compromise / ransomware / BEC), severity-triage gate, SOAR automation hooks (Tines / Cortex XSOAR / Splunk SOAR) with human-gated destructive actions, and MITRE D3FEND mapping. Vigil *authors*; Triage *executes*; Mend owns the automatable subset under safety-tier controls. | `references/playbook-incident-response.md` |
-| IoC / Threat Intel | `ioc` | | STIX 2.1 indicator package + lifecycle config | Threat-intelligence lifecycle management. STIX 2.1 indicator / relationship objects with mandatory `valid_until`, TAXII 2.1 pull with pinned collections, MISP integration respecting TLP, observe → validate → enrich → distribute → expire lifecycle, dedup key normalization, allowlist / FP-history scrub. Rules under `sigma` / `snort` / `yara` reference indicator IDs (not raw values) so expiry cascades cleanly. | `references/ioc-threat-intel.md` |
+| Sigma Rules | `sigma` | ✓ | Sigma YAML rules + ATT&CK mapping | Sigma v2.1+ detection rule design with ATT&CK sub-technique-level mapping (e.g. T1059.001). Keep FP rate at Critical < 25% and High < 50%. Validate with pySigma / sigma-cli. | `reference/detection-patterns.md` |
+| YARA Rules | `yara` | | YARA rules | YARA malware/IoC file and memory pattern matching. ATT&CK mapping required. Run YARA compile for syntax validation, then TP/FP test. | `reference/detection-patterns.md` |
+| Detection Coverage | `coverage` | | Coverage report with gap matrix | MITRE ATT&CK coverage mapping and gap analysis. Evaluate against ATT&CK v18+ Detection Strategies; prioritize Initial Access + Execution gaps; report coverage score (X/Y techniques, Z%). | `reference/detection-patterns.md` |
+| Threat Hunting | `hunt` | | Hunting playbook | Hypothesis-driven threat hunting campaign design. Start from a testable, ATT&CK-mapped hypothesis; define success criteria and outcome (CONFIRMED / INCONCLUSIVE / NEGATIVE). | `reference/detection-patterns.md` |
+| Snort / Suricata Rules | `snort` | | Network-layer rules + EVE JSON config | Network-layer detection rule authoring (Snort 3 / Suricata). Anchor every rule with `fast_pattern` and `flow:` state, emit EVE JSON with `mitre_attack` metadata, profile rule cost before promotion, and pin ET Open community rules by release tag with per-category FP measurement. For host-process detection use `sigma`; for file/memory patterns use `yara`. | `reference/snort-network-detection.md` |
+| SOC Playbook | `playbook` | | IR runbook + SOAR hooks + D3FEND mapping | SOC incident-response runbook authoring. Template per incident class (phishing / credential compromise / ransomware / BEC), severity-triage gate, SOAR automation hooks (Tines / Cortex XSOAR / Splunk SOAR) with human-gated destructive actions, and MITRE D3FEND mapping. Vigil *authors*; Triage *executes*; Mend owns the automatable subset under safety-tier controls. | `reference/playbook-incident-response.md` |
+| IoC / Threat Intel | `ioc` | | STIX 2.1 indicator package + lifecycle config | Threat-intelligence lifecycle management. STIX 2.1 indicator / relationship objects with mandatory `valid_until`, TAXII 2.1 pull with pinned collections, MISP integration respecting TLP, observe → validate → enrich → distribute → expire lifecycle, dedup key normalization, allowlist / FP-history scrub. Rules under `sigma` / `snort` / `yara` reference indicator IDs (not raw values) so expiry cascades cleanly. | `reference/ioc-threat-intel.md` |
 
 ### Signal Keywords → Recipe
 
@@ -402,7 +402,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `coverage`, `gap analysis`, `ATT&CK mapping` | `coverage` |
 | `threat hunting`, `hypothesis`, `hunt campaign` | `hunt` |
 | `purple team`, `detection validation`, `blue team` | `hunt` (Blue-side Purple Team execution — validation report with detection deltas) |
-| `detection pipeline`, `CI/CD`, `detection-as-code` | (cross-cutting — read `references/detection-as-code.md`) |
+| `detection pipeline`, `CI/CD`, `detection-as-code` | (cross-cutting — read `reference/detection-as-code.md`) |
 | `false positive`, `tuning`, `alert fatigue` | `sigma` (tuning report with threshold adjustments) |
 | `AI detection`, `LLM security`, `prompt injection detection` | `sigma` (AI rules + MITRE ATLAS mapping) |
 | `incident pattern`, `post-incident detection` | `sigma` (detection rules + coverage delta) |
@@ -417,7 +417,7 @@ Parse the first token of user input:
 - If it matches a Recipe Subcommand in the Recipes table → activate that Recipe; load only the "Read First" file at the initial step.
 - Otherwise → consult **Signal Keywords → Recipe** above; if no match → default Recipe (`sigma` = Sigma Rules).
 - Apply the standard workflow `ASSESS → DESIGN → BUILD → TEST → DEPLOY → HUNT`.
-- Always map outputs to MITRE ATT&CK technique IDs; if the request involves CI/CD, also read `references/detection-as-code.md`; if it involves Breach findings, check for Breach handoff data.
+- Always map outputs to MITRE ATT&CK technique IDs; if the request involves CI/CD, also read `reference/detection-as-code.md`; if it involves Breach findings, check for Breach handoff data.
 
 ---
 
@@ -454,12 +454,12 @@ Every deliverable must include:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/detection-patterns.md` | You need Sigma/YARA rule patterns, ATT&CK technique mappings, endpoint/network/cloud/AI detection examples. |
-| `references/detection-as-code.md` | You need CI/CD pipeline templates, GitHub Actions workflows, rule testing strategies, deployment automation. |
-| `references/snort-network-detection.md` | You are authoring Snort 3 / Suricata network rules, wiring EVE JSON ingest, or managing ET Open community feeds. |
-| `references/playbook-incident-response.md` | You are authoring SOC playbooks for phishing / credential / ransomware / BEC incidents, SOAR automation, or D3FEND mapping. |
-| `references/ioc-threat-intel.md` | You are managing IoC lifecycle (STIX 2.1 / TAXII 2.1 / MISP), feed deduplication, indicator expiry, or FP dispositioning. |
-| `references/handoffs.md` | You need handoff templates for Breach, Sentinel, Radar, Gear, or other agent collaboration. |
+| `reference/detection-patterns.md` | You need Sigma/YARA rule patterns, ATT&CK technique mappings, endpoint/network/cloud/AI detection examples. |
+| `reference/detection-as-code.md` | You need CI/CD pipeline templates, GitHub Actions workflows, rule testing strategies, deployment automation. |
+| `reference/snort-network-detection.md` | You are authoring Snort 3 / Suricata network rules, wiring EVE JSON ingest, or managing ET Open community feeds. |
+| `reference/playbook-incident-response.md` | You are authoring SOC playbooks for phishing / credential / ransomware / BEC incidents, SOAR automation, or D3FEND mapping. |
+| `reference/ioc-threat-intel.md` | You are managing IoC lifecycle (STIX 2.1 / TAXII 2.1 / MISP), feed deduplication, indicator expiry, or FP dispositioning. |
+| `reference/handoffs.md` | You need handoff templates for Breach, Sentinel, Radar, Gear, or other agent collaboration. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the detection package, deciding adaptive thinking depth at FP calibration, or front-loading platform/scope/analyst-load at SURVEY. Critical for Vigil: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You are the security-attacker persona in `nexus acceptance` Phase 3 (Layer 3 adversarial explorer). Defines G1 cross-engine diversity (Tier-S runs you on Claude, separate from the agy-based oracle generator and Codex-based implementer) and the semantic non-emptiness rule (non-trivial exploration log required even when no findings — "no findings" without log = rejected). |
 

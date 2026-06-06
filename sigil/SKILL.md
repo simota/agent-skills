@@ -59,7 +59,7 @@ Route elsewhere when the task is primarily:
 - Analyze project context (stack, conventions, existing skills) before any generation.
 - Discover high-value skill opportunities ranked by Priority = Frequency x Complexity x Risk.
 - Mirror the project's actual naming, imports, testing, and error handling conventions.
-- Default to Micro Skills (`10-80` lines, `< 2,000` tokens); promote to Full only when complexity requires it. Skills exceeding `2,000` tokens degrade activation reliability and consume disproportionate context window budget. Absolute cap per Anthropic best-practices is `500` SKILL.md lines — beyond this, split into `references/*.md` loaded on-demand via Read tool (three-level progressive disclosure: frontmatter → body → linked files).
+- Default to Micro Skills (`10-80` lines, `< 2,000` tokens); promote to Full only when complexity requires it. Skills exceeding `2,000` tokens degrade activation reliability and consume disproportionate context window budget. Absolute cap per Anthropic best-practices is `500` SKILL.md lines — beyond this, split into `reference/*.md` loaded on-demand via Read tool (three-level progressive disclosure: frontmatter → body → linked files).
 - Write skill `description` as a trigger phrase (how the user would naturally ask), not a summary — properly optimized descriptions improve activation from `~20%` to `50%`, and adding usage examples raises it from `72%` to `~90%`. Use Anthropic's skill-creator train/test split method (60/40 on ~20 synthetic prompts) to validate description activation before install. Always write in **third person** ("Processes Excel files and generates reports"); first/second-person POV drifts from the system-prompt voice and degrades discovery.
 - Counter Claude's documented **undertriggering tendency** — make descriptions explicit about *when to activate*, not just *what the skill does*. Include concrete trigger contexts ("Use when the user mentions dashboards, metrics, data visualization, or internal reporting, even if they don't say 'dashboard'"); passive summaries (e.g. "helps with documents") lose measurable activation rate.
 - Skill description budget has two distinct limits — distinguish them: (a) per-description hard cap is `1,024` characters (agentskills.io spec — exceeding this risks parser rejection or truncation), (b) per-description quality target is `< 250` characters (signal density goal — shorter descriptions improve routing precision and increase coexisting skill capacity). The runtime aggregate budget defaults to `~2%` of the context window (fallback `~16,000` characters total across all loaded skill descriptions, overridable via `SLASH_COMMAND_TOOL_CHAR_BUDGET`). Always validate against the hard cap; treat the target as a strong recommendation.
@@ -82,13 +82,13 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Repair sync drift before adding new skills.
 - Include frontmatter `name` and `description`.
 - Validate structure and quality before install; install only at `9+/12`.
-- Sync-write `SKILL.md` and `references/` to both directories.
+- Sync-write `SKILL.md` and `reference/` to both directories.
 - Log activity, record calibration data, and check evolution opportunities during `SCAN`.
 
 ### Ask First
 - A batch would generate `10+` skills.
 - The task would overwrite an existing skill.
-- The task requires a Full Skill with extensive `references/`.
+- The task requires a Full Skill with extensive `reference/`.
 - Domain conventions remain unclear after `SCAN`.
 
 ### Never
@@ -116,12 +116,12 @@ Six-phase canonical pipeline. ATTUNE is mandatory after every batch of 2+ skills
 
 | Phase | Do this | Explicit rules | Read when |
 |-------|---------|----------------|-----------|
-| `SCAN` | Detect stack, structure, rule files, existing skills, and drift | Mandatory. Audit both directories, collect evolution signals, infer conventions before any generation. | `references/context-analysis.md`, `references/cross-tool-rules-landscape.md`, `references/claude-md-best-practices.md` |
-| `DISCOVER` | Rank high-value skill opportunities | Use `Priority = Frequency × Complexity × Risk`; keep at most `20` candidates; reject duplicates and ecosystem overlap. | `references/skill-catalog.md` |
-| `CRAFT` | Choose type and author the skill | Mirror project conventions, substitute detected variables, keep references one hop away, set `disable-model-invocation` for explicit-only skills, decide inline vs `context: fork` per the decision table, and write platform-neutral instructions (SKILL.md is a universal format across `30+` agent platforms). | `references/skill-templates.md`, `references/advanced-patterns.md`, `references/claude-code-skills-api.md`, `references/official-skill-guide.md` |
-| `INSTALL` | Place and sync generated skills | Write identical skill contents to `.claude/skills/` and `.agents/skills/`; add `references/` only for Full Skills. | `references/claude-code-skills-api.md` |
-| `VERIFY` | Score and validate before finalizing | Use the `12`-point rubric, pass only at `9+`, recraft on `6-8`, abort on `0-5`. | `references/validation-rules.md`, `references/official-skill-guide.md` |
-| `ATTUNE` | Learn from outcomes after the batch | Record quality signals, recalibrate safely, and emit reusable insights. | `references/skill-effectiveness.md`, `references/meta-prompting-self-improvement.md` |
+| `SCAN` | Detect stack, structure, rule files, existing skills, and drift | Mandatory. Audit both directories, collect evolution signals, infer conventions before any generation. | `reference/context-analysis.md`, `reference/cross-tool-rules-landscape.md`, `reference/claude-md-best-practices.md` |
+| `DISCOVER` | Rank high-value skill opportunities | Use `Priority = Frequency × Complexity × Risk`; keep at most `20` candidates; reject duplicates and ecosystem overlap. | `reference/skill-catalog.md` |
+| `CRAFT` | Choose type and author the skill | Mirror project conventions, substitute detected variables, keep references one hop away, set `disable-model-invocation` for explicit-only skills, decide inline vs `context: fork` per the decision table, and write platform-neutral instructions (SKILL.md is a universal format across `30+` agent platforms). | `reference/skill-templates.md`, `reference/advanced-patterns.md`, `reference/claude-code-skills-api.md`, `reference/official-skill-guide.md` |
+| `INSTALL` | Place and sync generated skills | Write identical skill contents to `.claude/skills/` and `.agents/skills/`; add `reference/` only for Full Skills. | `reference/claude-code-skills-api.md` |
+| `VERIFY` | Score and validate before finalizing | Use the `12`-point rubric, pass only at `9+`, recraft on `6-8`, abort on `0-5`. | `reference/validation-rules.md`, `reference/official-skill-guide.md` |
+| `ATTUNE` | Learn from outcomes after the batch | Record quality signals, recalibrate safely, and emit reusable insights. | `reference/skill-effectiveness.md`, `reference/meta-prompting-self-improvement.md` |
 
 ### Decision: Micro vs Full
 
@@ -153,10 +153,10 @@ Six-phase canonical pipeline. ATTUNE is mandatory after every batch of 2+ skills
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Generate New Skill | `generate` | ✓ | Project-specific skill generation | `references/context-analysis.md`, `references/skill-templates.md` |
-| Analyze Project | `analyze` | | Codebase and stack analysis | `references/context-analysis.md` |
-| Extract Conventions | `convention` | | Convention extraction | `references/context-analysis.md`, `references/claude-md-best-practices.md` |
-| Migrate Existing | `migrate` | | Adapt an existing skill to the project | `references/evolution-patterns.md` |
+| Generate New Skill | `generate` | ✓ | Project-specific skill generation | `reference/context-analysis.md`, `reference/skill-templates.md` |
+| Analyze Project | `analyze` | | Codebase and stack analysis | `reference/context-analysis.md` |
+| Extract Conventions | `convention` | | Convention extraction | `reference/context-analysis.md`, `reference/claude-md-best-practices.md` |
+| Migrate Existing | `migrate` | | Adapt an existing skill to the project | `reference/evolution-patterns.md` |
 
 ### Signal Keywords → Workflow
 
@@ -164,13 +164,13 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 
 | Keywords | Workflow | Read next |
 |----------|----------|-----------|
-| `generate skills`, `create skills`, `new skills` | `generate` (SCAN → DISCOVER → CRAFT → INSTALL → VERIFY → ATTUNE) | `references/context-analysis.md` |
-| `update skills`, `refresh skills`, `stale skills` | `migrate` / Skill Evolution path (SCAN → DIFF → PLAN → UPDATE → VERIFY → ATTUNE) | `references/evolution-patterns.md` |
-| `audit skills`, `check skills`, `skill quality` | SCAN → VERIFY (no generation) | `references/validation-rules.md` |
-| `sync drift`, `repair sync`, `skill mismatch` | SCAN → sync repair | `references/context-analysis.md` |
-| `skill effectiveness`, `calibrate`, `attune` | ATTUNE-only (OBSERVE → MEASURE → ADAPT → PERSIST) | `references/skill-effectiveness.md` |
-| `analyze project`, `extract conventions` | `analyze` / `convention` | `references/context-analysis.md` |
-| unclear skill request | SCAN → DISCOVER → report | `references/skill-catalog.md` |
+| `generate skills`, `create skills`, `new skills` | `generate` (SCAN → DISCOVER → CRAFT → INSTALL → VERIFY → ATTUNE) | `reference/context-analysis.md` |
+| `update skills`, `refresh skills`, `stale skills` | `migrate` / Skill Evolution path (SCAN → DIFF → PLAN → UPDATE → VERIFY → ATTUNE) | `reference/evolution-patterns.md` |
+| `audit skills`, `check skills`, `skill quality` | SCAN → VERIFY (no generation) | `reference/validation-rules.md` |
+| `sync drift`, `repair sync`, `skill mismatch` | SCAN → sync repair | `reference/context-analysis.md` |
+| `skill effectiveness`, `calibrate`, `attune` | ATTUNE-only (OBSERVE → MEASURE → ADAPT → PERSIST) | `reference/skill-effectiveness.md` |
+| `analyze project`, `extract conventions` | `analyze` / `convention` | `reference/context-analysis.md` |
+| unclear skill request | SCAN → DISCOVER → report | `reference/skill-catalog.md` |
 
 ## Subcommand Dispatch
 
@@ -322,18 +322,18 @@ Use the canonical schema in `_common/HANDOFF.md` for all inter-agent communicati
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/context-analysis.md` | You are running SCAN on any project or refresh to detect stack, conventions, monorepo layout, existing skills, and sync drift. |
-| `references/skill-catalog.md` | You are ranking candidates in DISCOVER to map frameworks to likely high-value skills and migration paths. |
-| `references/skill-templates.md` | You are drafting any new skill in CRAFT to choose Micro vs Full, apply templates, and preserve required structure. |
-| `references/validation-rules.md` | You are scoring before install or after updates to apply structural checks, rubric scoring, and validation reporting. |
-| `references/evolution-patterns.md` | You are updating stale skills to choose lifecycle state, trigger handling, and update strategy. |
-| `references/advanced-patterns.md` | You are handling variants, monorepos, or composed skills with conditional branches, variable substitution, scoping, and composition rules. |
-| `references/skill-effectiveness.md` | You are running ATTUNE after a batch to record quality signals, calibrate ranking, and persist reusable patterns. |
-| `references/claude-code-skills-api.md` | You are authoring Claude Code skill metadata or sandbox rules to preserve frontmatter, routing-sensitive descriptions, dynamic context, and install paths. |
-| `references/claude-md-best-practices.md` | You are generating or reconciling CLAUDE.md-adjacent guidance to apply maturity levels, RFC 2119 wording, and split/import decisions. |
-| `references/cross-tool-rules-landscape.md` | You are reconciling project rules across AI tools to compare CLAUDE.md, .cursorrules, .windsurfrules, AGENTS.md, and Copilot instructions. |
-| `references/meta-prompting-self-improvement.md` | You are improving Sigil itself or its long-term calibration loop using self-improvement patterns such as Mistake Ledger and Self-Refine. |
-| `references/official-skill-guide.md` | You are authoring frontmatter, writing descriptions, structuring instructions, or validating against official Anthropic skill standards during CRAFT or VERIFY. |
+| `reference/context-analysis.md` | You are running SCAN on any project or refresh to detect stack, conventions, monorepo layout, existing skills, and sync drift. |
+| `reference/skill-catalog.md` | You are ranking candidates in DISCOVER to map frameworks to likely high-value skills and migration paths. |
+| `reference/skill-templates.md` | You are drafting any new skill in CRAFT to choose Micro vs Full, apply templates, and preserve required structure. |
+| `reference/validation-rules.md` | You are scoring before install or after updates to apply structural checks, rubric scoring, and validation reporting. |
+| `reference/evolution-patterns.md` | You are updating stale skills to choose lifecycle state, trigger handling, and update strategy. |
+| `reference/advanced-patterns.md` | You are handling variants, monorepos, or composed skills with conditional branches, variable substitution, scoping, and composition rules. |
+| `reference/skill-effectiveness.md` | You are running ATTUNE after a batch to record quality signals, calibrate ranking, and persist reusable patterns. |
+| `reference/claude-code-skills-api.md` | You are authoring Claude Code skill metadata or sandbox rules to preserve frontmatter, routing-sensitive descriptions, dynamic context, and install paths. |
+| `reference/claude-md-best-practices.md` | You are generating or reconciling CLAUDE.md-adjacent guidance to apply maturity levels, RFC 2119 wording, and split/import decisions. |
+| `reference/cross-tool-rules-landscape.md` | You are reconciling project rules across AI tools to compare CLAUDE.md, .cursorrules, .windsurfrules, AGENTS.md, and Copilot instructions. |
+| `reference/meta-prompting-self-improvement.md` | You are improving Sigil itself or its long-term calibration loop using self-improvement patterns such as Mistake Ledger and Self-Refine. |
+| `reference/official-skill-guide.md` | You are authoring frontmatter, writing descriptions, structuring instructions, or validating against official Anthropic skill standards during CRAFT or VERIFY. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the project skill package or deciding effort allocation across the six-phase pipeline. Critical for Sigil (Knowledge/Meta role): P6, P7. Recommended: P1. |
 
 ## Operational

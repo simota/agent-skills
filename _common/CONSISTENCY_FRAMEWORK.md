@@ -2,8 +2,8 @@
 
 Shared taxonomy of cross-file pattern consistency categories, examples, and severity scoring. Used by:
 
-- **Judge** — detection stage (find violations during review). See `judge/references/consistency-patterns.md` for detection heuristics.
-- **Zen** — unification stage (refactor toward canonical pattern). See `zen/references/consistency-audit.md` for refactor recipes.
+- **Judge** — detection stage (find violations during review). See `judge/reference/consistency-patterns.md` for detection heuristics.
+- **Zen** — unification stage (refactor toward canonical pattern). See `zen/reference/consistency-audit.md` for refactor recipes.
 
 Other agents may import this taxonomy when classifying multi-file inconsistencies.
 

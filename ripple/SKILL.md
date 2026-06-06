@@ -80,13 +80,13 @@ Pre-change impact analyst mapping consequences before code is written. Analyzes 
 
 Traces dependency chain to identify all affected areas. 5 categories: **Direct Dependents** · **Transitive Dependents** · **Interface Consumers** · **Test Files** · **Configuration**. Breaking changes: 7 types from CRITICAL (remove export) to LOW (internal refactoring). Depth levels 0 (changed file) → 1 (direct, high confidence) → 2 (transitive, medium) → 3+ (lower confidence). Overlay **file churn history** (git log frequency) and **bug history** (past defect density) onto the dependency graph — highly churned/buggy files amplify risk at any depth level.
 
-→ Details: `references/analysis-techniques.md` (commands, categories, detection methods)
+→ Details: `reference/analysis-techniques.md` (commands, categories, detection methods)
 
 ## Horizontal Consistency Analysis
 
 Ensures change follows established patterns. 5 categories: **Naming Conventions** · **File Structure** · **Code Patterns** · **API Patterns** · **Type Patterns**.
 
-→ Details: `references/analysis-techniques.md` (naming checks, pattern compliance matrix, discovery commands)
+→ Details: `reference/analysis-techniques.md` (naming checks, pattern compliance matrix, discovery commands)
 
 ## Cascade Analysis
 
@@ -104,7 +104,7 @@ Beyond direct dependency tracing, detect second-order effects that emerge from c
 
 **Output:** Cascade Risk Map — append to standard impact report with second-order effects highlighted, feedback loops diagrammed, and emergent risk scenarios enumerated.
 
-→ Details: `references/cascade-analysis.md`
+→ Details: `reference/cascade-analysis.md`
 
 ## Risk Scoring Matrix
 
@@ -176,21 +176,21 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ## Output Formats
 
-- **Combined** (default): Full analysis → `references/ripple-analysis-template.md`
-- **Impact Only** (vertical): Dependency/scope focus → `references/impact-report-template.md`
-- **Consistency Only** (horizontal): Pattern compliance → `references/consistency-report-template.md`
+- **Combined** (default): Full analysis → `reference/ripple-analysis-template.md`
+- **Impact Only** (vertical): Dependency/scope focus → `reference/impact-report-template.md`
+- **Consistency Only** (horizontal): Pattern compliance → `reference/consistency-report-template.md`
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Impact Analysis | `impact` | ✓ | Full impact analysis of changes (both vertical and horizontal) | `references/ripple-analysis-template.md` |
-| Vertical Only | `vertical` | | Vertical impact only: dependencies and call chains | `references/impact-report-template.md` |
-| Horizontal Only | `horizontal` | | Horizontal impact only: pattern consistency | `references/consistency-report-template.md` |
-| Naming Change | `naming` | | Impact analysis for symbol and API name changes | `references/cascade-analysis.md` |
-| Blast Radius Quant | `blast-radius` | | Quantify production-side blast radius — customer count, SLO burn, revenue, region/AZ scope, multi-tenant fan-out, data classification | `references/blast-radius-quant.md` |
-| Rollback Plan Design | `rollback-plan` | | Forward-compat / dual-write / backfill / reverse-migration plan for a change with a documented abort criteria | `references/rollback-plan-design.md` |
-| Canary Scope Design | `canary-scope` | | Canary cohort selection, metric gates, promotion/abort thresholds, and observation window design | `references/canary-scope-design.md` |
+| Impact Analysis | `impact` | ✓ | Full impact analysis of changes (both vertical and horizontal) | `reference/ripple-analysis-template.md` |
+| Vertical Only | `vertical` | | Vertical impact only: dependencies and call chains | `reference/impact-report-template.md` |
+| Horizontal Only | `horizontal` | | Horizontal impact only: pattern consistency | `reference/consistency-report-template.md` |
+| Naming Change | `naming` | | Impact analysis for symbol and API name changes | `reference/cascade-analysis.md` |
+| Blast Radius Quant | `blast-radius` | | Quantify production-side blast radius — customer count, SLO burn, revenue, region/AZ scope, multi-tenant fan-out, data classification | `reference/blast-radius-quant.md` |
+| Rollback Plan Design | `rollback-plan` | | Forward-compat / dual-write / backfill / reverse-migration plan for a change with a documented abort criteria | `reference/rollback-plan-design.md` |
+| Canary Scope Design | `canary-scope` | | Canary cohort selection, metric gates, promotion/abort thresholds, and observation window design | `reference/canary-scope-design.md` |
 
 ## Subcommand Dispatch
 Parse the first token of user input.
@@ -210,19 +210,19 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| Single file/function change | Lightweight vertical + horizontal | Mini impact report | `references/analysis-techniques.md` |
-| Multi-file refactoring | Full 5-phase workflow | Combined analysis report | `references/ripple-analysis-template.md` |
-| API/export removal or rename | Breaking change deep analysis | Breaking change report with migration path | `references/impact-report-template.md` |
-| New pattern introduction | Horizontal consistency focus | Pattern deviation report | `references/consistency-report-template.md` |
+| Single file/function change | Lightweight vertical + horizontal | Mini impact report | `reference/analysis-techniques.md` |
+| Multi-file refactoring | Full 5-phase workflow | Combined analysis report | `reference/ripple-analysis-template.md` |
+| API/export removal or rename | Breaking change deep analysis | Breaking change report with migration path | `reference/impact-report-template.md` |
+| New pattern introduction | Horizontal consistency focus | Pattern deviation report | `reference/consistency-report-template.md` |
 | Risk score > 7 (HIGH) | Escalated analysis with L3 depth | CRITICAL risk report + Ask First | `_common/BOUNDARIES.md` |
-| Cross-repo / monorepo change | Extended blast radius mapping | Cross-repo impact map | `references/analysis-techniques.md` |
+| Cross-repo / monorepo change | Extended blast radius mapping | Cross-repo impact map | `reference/analysis-techniques.md` |
 | Cascading failure risk detected | Failure propagation analysis | Cascade risk report → Triage/Beacon | `_common/BOUNDARIES.md` |
-| Multi-agent system change | OWASP 2026 agentic blast radius assessment | Agent trust boundary report → Sentinel | `references/analysis-techniques.md` |
+| Multi-agent system change | OWASP 2026 agentic blast radius assessment | Agent trust boundary report → Sentinel | `reference/analysis-techniques.md` |
 
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- Always read relevant `references/` files before producing output.
+- Always read relevant `reference/` files before producing output.
 - Changes with risk score ≥ 9 should trigger parallel routing to Sentinel (security) and Beacon (observability).
 
 
@@ -274,7 +274,7 @@ Three AI engines independently analyze change impact — engine dispatch & loose
 
 ## Quality Standards
 
-→ Checklists (Vertical/Horizontal/Risk) and Report Quality Gates: `references/analysis-techniques.md`
+→ Checklists (Vertical/Horizontal/Risk) and Report Quality Gates: `reference/analysis-techniques.md`
 
 ## Operational
 
@@ -287,14 +287,14 @@ Standard protocols and Pre-Handoff Checklist → `_common/OPERATIONAL.md`
 
 | File | Contents |
 |------|----------|
-| `references/ripple-analysis-template.md` | Combined analysis report template |
-| `references/impact-report-template.md` | Vertical impact report template |
-| `references/consistency-report-template.md` | Horizontal consistency report template |
-| `references/analysis-techniques.md` | Commands, categories, quality standards |
-| `references/cascade-analysis.md` | Cascade/second-order effect detection methodology |
-| `references/blast-radius-quant.md` | Blast-radius quantification (customers, SLO burn, revenue, region/AZ, tenant fan-out, data classification, SEV mapping) |
-| `references/rollback-plan-design.md` | Reversibility contract (forward-compat, dual-write, backfill, reverse-migration, abort criteria, time-to-rollback) |
-| `references/canary-scope-design.md` | Canary cohort selection, metric gates, ramp schedule, auto-promote/abort thresholds |
+| `reference/ripple-analysis-template.md` | Combined analysis report template |
+| `reference/impact-report-template.md` | Vertical impact report template |
+| `reference/consistency-report-template.md` | Horizontal consistency report template |
+| `reference/analysis-techniques.md` | Commands, categories, quality standards |
+| `reference/cascade-analysis.md` | Cascade/second-order effect detection methodology |
+| `reference/blast-radius-quant.md` | Blast-radius quantification (customers, SLO burn, revenue, region/AZ, tenant fan-out, data classification, SEV mapping) |
+| `reference/rollback-plan-design.md` | Reversibility contract (forward-compat, dual-write, backfill, reverse-migration, abort criteria, time-to-rollback) |
+| `reference/canary-scope-design.md` | Canary cohort selection, metric gates, ramp schedule, auto-promote/abort thresholds |
 | `_common/OPUS_48_AUTHORING.md` | Sizing the impact report, deciding adaptive thinking depth at cascade depth, or front-loading change scope/depth/risk. Critical for Ripple: P3, P5. |
 
 ## AUTORUN Support

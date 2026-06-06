@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Regenerate `compass/references/recipes-directory.md` from every SKILL.md `## Recipes` table.
+Regenerate `compass/reference/recipes-directory.md` from every SKILL.md `## Recipes` table.
 
 Format: `- **{skill}**: {sub}★ / {sub} / ...` alphabetical by skill name.
 The ★ marker indicates the Default Recipe (✓ in the Default? column).

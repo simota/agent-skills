@@ -83,7 +83,7 @@ Route elsewhere when the task is primarily:
 - Generate actionable A/B test hypotheses from friction findings.
 - Include environmental context (device, connectivity, attention level) in every simulation.
 - Prioritize learnability evaluation for complex, new, or unfamiliar workflows — cognitive walkthroughs are most effective here. Limit each walkthrough session to 1–4 tasks per persona to maintain evaluation depth; broader coverage requires multiple sessions.
-- Flag regulatory-risk dark patterns explicitly (FTC §5, EU DSA, CPRA, EU DFA, CRD financial-services amendment). Penalty/case detail → `references/ux-frameworks.md`.
+- Flag regulatory-risk dark patterns explicitly (FTC §5, EU DSA, CPRA, EU DFA, CRD financial-services amendment). Penalty/case detail → `reference/ux-frameworks.md`.
 - When using synthetic personas, mark findings as `[hypothesis]` until real-user confirmation. Flag WEIRD bias when target audience is non-Western/non-WEIRD. See `_common/AI_PERSONA_RISKS.md` for hallucination/over-sanitization/standardization risks.
 - For cognitive load measurement, prefer SUS + SEQ for consumer UX; reserve NASA-TLX for mission-critical domains (healthcare, aviation, finance). NASA-TLX lacks convergent validity for typical HCI tasks per 2025-2026 systematic reviews.
 - For WCAG 3.0 evaluation, apply the March 2026 Working Draft (Bronze ≥3.5 average; Silver/Gold require cognitive walkthroughs as testing method — Echo output serves as evidence). Do not treat as final until W3C Recommendation (CR expected Q4 2027).
@@ -117,7 +117,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 - Suggest technical solutions or touch code.
 - Assume user reads docs or use developer logic to dismiss feelings.
-- Dismiss dark patterns as "business decisions" — see `references/ux-frameworks.md` for current regulatory enforcement (FTC, EU DSA, EU DFA, CRD).
+- Dismiss dark patterns as "business decisions" — see `reference/ux-frameworks.md` for current regulatory enforcement (FTC, EU DSA, EU DFA, CRD).
 - Ignore latent needs.
 - Write code, debug logs, or run Lighthouse (leave to Growth).
 - Compliment dev team, use tech jargon, or accept "works as designed."
@@ -133,26 +133,26 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `PRE-SCAN` | Predictive friction detection using 8 risk signals | Pattern-based pre-analysis before walkthrough | `references/ux-frameworks.md` |
-| `MASK ON` | Select persona + environmental context | Never evaluate as a developer | `references/analysis-frameworks.md` |
-| `WALK` | Track emotions, cognitive load, biases, and JTBD | Assign emotion scores at every touchpoint | `references/ux-frameworks.md` |
-| `SPEAK` | Voice friction in persona's natural language | No tech jargon; perception is reality | `references/output-templates.md` |
-| `ANALYZE` | Journey patterns, Peak-End, cross-persona analysis | Classify as Universal/Segment/Edge Case/Non-Issue | `references/ux-frameworks.md` |
-| `PRESENT` | Report with persona, emotions, friction, dark patterns, Canvas data | Include A/B test hypotheses and recommended next agent | `references/output-templates.md` |
+| `PRE-SCAN` | Predictive friction detection using 8 risk signals | Pattern-based pre-analysis before walkthrough | `reference/ux-frameworks.md` |
+| `MASK ON` | Select persona + environmental context | Never evaluate as a developer | `reference/analysis-frameworks.md` |
+| `WALK` | Track emotions, cognitive load, biases, and JTBD | Assign emotion scores at every touchpoint | `reference/ux-frameworks.md` |
+| `SPEAK` | Voice friction in persona's natural language | No tech jargon; perception is reality | `reference/output-templates.md` |
+| `ANALYZE` | Journey patterns, Peak-End, cross-persona analysis | Classify as Universal/Segment/Edge Case/Non-Issue | `reference/ux-frameworks.md` |
+| `PRESENT` | Report with persona, emotions, friction, dark patterns, Canvas data | Include A/B test hypotheses and recommended next agent | `reference/output-templates.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Walkthrough | `walkthrough` | ✓ | Persona cognitive walkthrough, emotion scoring | `references/process-workflows.md`, `references/ux-frameworks.md` |
-| Confusion Points | `confusion` | | Identify confusion points, cognitive load, mental model gaps | `references/ux-frameworks.md`, `references/output-templates.md` |
-| Emotion Map | `emotion` | | Emotion map, detailed friction score analysis | `references/ux-frameworks.md`, `references/output-templates.md` |
-| Persona Switch | `persona` | | Multi-persona comparison, cross-persona analysis | `references/analysis-frameworks.md`, `references/cognitive-persona-model.md` |
-| Heuristic Evaluation | `heuristic` | | Nielsen 10 / domain-specific heuristic expert review with severity scoring and evaluator-panel reconciliation | `references/heuristic-evaluation.md` |
-| SUS Scoring | `sus` | | System Usability Scale authoring, scoring, and benchmark comparison with percentile / grade / adjective mapping | `references/sus-scoring.md` |
-| Think-Aloud | `aloud` | | Concurrent / retrospective think-aloud session moderation, prompt discipline, transcript coding, and finding extraction | `references/think-aloud-protocol.md` |
-| Multi-Engine | `multi` | | Tri-engine cognitive walkthrough (Codex + Antigravity + Claude in parallel) over a persona × step matrix. Pattern H scoring (confidence + perspective) plus cross-persona universality. Surfaces cross-persona-universal friction as the strongest synthetic UX signal and preserves single-engine divergent-voice insights. | `references/tri-engine-walkthrough.md`, `_common/SUBAGENT.md`, `_common/MULTI_ENGINE_RECIPE.md` |
-| Council | `council` | | **Persona Council mode (v4 fold-in)**: parallel multi-persona evaluation against a machine-readable Persona Contract (situation/goal/fear/comprehension/success/disqualification). Strict "no subjective opinion" output discipline — behavior trace + disqualification trigger + correction proposal only. Persona weights: Primary (must-pass) / Secondary (must-not-degrade) / Non-target (don't optimize) / Risk (block on damage). Required for `nexus growth-acceptance` Phase 0 persona evaluation. Cost-capped per Org Tier (Solo: skip, SMB: max 3 personas, Enterprise: max 9). | (inline below) + `references/cognitive-persona-model.md` |
+| Walkthrough | `walkthrough` | ✓ | Persona cognitive walkthrough, emotion scoring | `reference/process-workflows.md`, `reference/ux-frameworks.md` |
+| Confusion Points | `confusion` | | Identify confusion points, cognitive load, mental model gaps | `reference/ux-frameworks.md`, `reference/output-templates.md` |
+| Emotion Map | `emotion` | | Emotion map, detailed friction score analysis | `reference/ux-frameworks.md`, `reference/output-templates.md` |
+| Persona Switch | `persona` | | Multi-persona comparison, cross-persona analysis | `reference/analysis-frameworks.md`, `reference/cognitive-persona-model.md` |
+| Heuristic Evaluation | `heuristic` | | Nielsen 10 / domain-specific heuristic expert review with severity scoring and evaluator-panel reconciliation | `reference/heuristic-evaluation.md` |
+| SUS Scoring | `sus` | | System Usability Scale authoring, scoring, and benchmark comparison with percentile / grade / adjective mapping | `reference/sus-scoring.md` |
+| Think-Aloud | `aloud` | | Concurrent / retrospective think-aloud session moderation, prompt discipline, transcript coding, and finding extraction | `reference/think-aloud-protocol.md` |
+| Multi-Engine | `multi` | | Tri-engine cognitive walkthrough (Codex + Antigravity + Claude in parallel) over a persona × step matrix. Pattern H scoring (confidence + perspective) plus cross-persona universality. Surfaces cross-persona-universal friction as the strongest synthetic UX signal and preserves single-engine divergent-voice insights. | `reference/tri-engine-walkthrough.md`, `_common/SUBAGENT.md`, `_common/MULTI_ENGINE_RECIPE.md` |
+| Council | `council` | | **Persona Council mode (v4 fold-in)**: parallel multi-persona evaluation against a machine-readable Persona Contract (situation/goal/fear/comprehension/success/disqualification). Strict "no subjective opinion" output discipline — behavior trace + disqualification trigger + correction proposal only. Persona weights: Primary (must-pass) / Secondary (must-not-degrade) / Non-target (don't optimize) / Risk (block on damage). Required for `nexus growth-acceptance` Phase 0 persona evaluation. Cost-capped per Org Tier (Solo: skip, SMB: max 3 personas, Enterprise: max 9). | (inline below) + `reference/cognitive-persona-model.md` |
 
 ## Subcommand Dispatch
 
@@ -168,24 +168,24 @@ Behavior notes per Recipe:
 - `heuristic`: Structured Nielsen-10 (or domain-extended) expert review. 3-5 evaluators, two independent passes, severity 0-4 scoring with heuristic-citation audit trail. For empirical confirmation use `aloud` or Researcher.
 - `sus`: SUS authoring, per-respondent scoring, mean + 90% CI, Sauro/Lewis grade mapping. Pair with SEQ / task completion for triangulation; use UMUX-Lite / UEQ / CASTLE when SUS is the wrong fit.
 - `aloud`: Concurrent (default) or retrospective think-aloud moderation. Permitted-prompt discipline, 10-category transcript coding, n≥5 sweet spot. Findings are timestamped, quote-backed, and severity-tagged.
-- `council`: **Persona Council mode (v4 fold-in)** — parallel multi-persona evaluation against a machine-readable Persona Contract. Strict output discipline: no subjective opinion, only behavior trace + disqualification trigger + correction proposal. Org-Tier cost cap (Solo skip / SMB max 3 / Enterprise max 9), engine diversity required for Tier-S/A (`rally engine-paradigm`), `[hypothesis]` confidence by default. Full schema + always/never → `references/council-mode.md`.
+- `council`: **Persona Council mode (v4 fold-in)** — parallel multi-persona evaluation against a machine-readable Persona Contract. Strict output discipline: no subjective opinion, only behavior trace + disqualification trigger + correction proposal. Org-Tier cost cap (Solo skip / SMB max 3 / Enterprise max 9), engine diversity required for Tier-S/A (`rally engine-paradigm`), `[hypothesis]` confidence by default. Full schema + always/never → `reference/council-mode.md`.
 
-- `multi`: Tri-engine cognitive walkthrough. Spawn Codex / Antigravity / Claude subagents in one message; each walks the same persona set through the same UI flow with loose prompts. Pattern H scoring: confidence axis (CONFIRMED 3/3 / LIKELY 2/3 / CANDIDATE 1/3) × perspective axis (CONVERGENT / DIVERGENT-N) × cross-persona axis (CROSS-PERSONA-UNIVERSAL is the strongest signal). Dark-pattern findings auto-promote to CONFIRMED at 2/3 concurrence. Critical: CANDIDATE / DIVERGENT findings are NOT auto-low-value — single-engine breakthroughs often surface "normalized friction" others smoothed over. Full flow → `references/tri-engine-walkthrough.md`.
+- `multi`: Tri-engine cognitive walkthrough. Spawn Codex / Antigravity / Claude subagents in one message; each walks the same persona set through the same UI flow with loose prompts. Pattern H scoring: confidence axis (CONFIRMED 3/3 / LIKELY 2/3 / CANDIDATE 1/3) × perspective axis (CONVERGENT / DIVERGENT-N) × cross-persona axis (CROSS-PERSONA-UNIVERSAL is the strongest signal). Dark-pattern findings auto-promote to CONFIRMED at 2/3 concurrence. Critical: CANDIDATE / DIVERGENT findings are NOT auto-low-value — single-engine breakthroughs often surface "normalized friction" others smoothed over. Full flow → `reference/tri-engine-walkthrough.md`.
 
 ## Output Routing
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `walkthrough`, `cognitive walkthrough`, `persona review` | Full persona-based walkthrough | Emotion journey report | `references/process-workflows.md` |
-| `emotion`, `feeling`, `friction` | Emotion scoring focus | Emotion score breakdown | `references/output-templates.md` |
-| `dark pattern`, `bias`, `manipulation` | Behavioral economics analysis | Dark pattern audit | `references/ux-frameworks.md` |
-| `latent needs`, `JTBD`, `unspoken needs` | JTBD discovery | Latent needs report | `references/ux-frameworks.md` |
-| `cross-persona`, `comparison` | Multi-persona comparison | Cross-persona insight matrix | `references/ux-frameworks.md` |
-| `visual review`, `screenshot` | Visual review mode | Visual emotion score report | `references/visual-review.md` |
-| `a11y`, `accessibility` | Accessibility persona walkthrough | Accessibility audit | `references/ux-frameworks.md` |
-| `predictive`, `pre-launch` | Predictive friction detection | Risk signal report | `references/ux-frameworks.md` |
-| `multi-engine`, `tri-engine walkthrough`, `parallel persona walkthrough`, `cross-engine UX`, `multi`, `persona × engine matrix` | Tri-engine cognitive walkthrough | Persona × engine × step matrix report with cross-persona-universal findings | `references/tri-engine-walkthrough.md` |
-| `council`, `persona council`, `persona contract`, `multi-persona evaluation`, `disqualification check`, `persona weight matrix` | Persona Council evaluation (machine-readable Contract + no-opinion + behavior trace + disqualification triggers) | Council evaluation report per persona with PASS/FAIL + behavior trace + correction proposals | (inline in Subcommand Dispatch) + `references/cognitive-persona-model.md` |
+| `walkthrough`, `cognitive walkthrough`, `persona review` | Full persona-based walkthrough | Emotion journey report | `reference/process-workflows.md` |
+| `emotion`, `feeling`, `friction` | Emotion scoring focus | Emotion score breakdown | `reference/output-templates.md` |
+| `dark pattern`, `bias`, `manipulation` | Behavioral economics analysis | Dark pattern audit | `reference/ux-frameworks.md` |
+| `latent needs`, `JTBD`, `unspoken needs` | JTBD discovery | Latent needs report | `reference/ux-frameworks.md` |
+| `cross-persona`, `comparison` | Multi-persona comparison | Cross-persona insight matrix | `reference/ux-frameworks.md` |
+| `visual review`, `screenshot` | Visual review mode | Visual emotion score report | `reference/visual-review.md` |
+| `a11y`, `accessibility` | Accessibility persona walkthrough | Accessibility audit | `reference/ux-frameworks.md` |
+| `predictive`, `pre-launch` | Predictive friction detection | Risk signal report | `reference/ux-frameworks.md` |
+| `multi-engine`, `tri-engine walkthrough`, `parallel persona walkthrough`, `cross-engine UX`, `multi`, `persona × engine matrix` | Tri-engine cognitive walkthrough | Persona × engine × step matrix report with cross-persona-universal findings | `reference/tri-engine-walkthrough.md` |
+| `council`, `persona council`, `persona contract`, `multi-persona evaluation`, `disqualification check`, `persona weight matrix` | Persona Council evaluation (machine-readable Contract + no-opinion + behavior trace + disqualification triggers) | Council evaluation report per persona with PASS/FAIL + behavior trace + correction proposals | (inline in Subcommand Dispatch) + `reference/cognitive-persona-model.md` |
 
 ## Output Requirements
 
@@ -231,25 +231,25 @@ Activated by the `multi` Recipe. Step-level walkthrough cell as unit of work; Pa
 
 **Degraded modes:** 1 engine down → continue with 2; 2 down → single-engine fallback with stricter grounding + loud `[synthetic-only]` tags; all down → degrade to `walkthrough` Recipe.
 
-Full algorithm, JSON schema, CLUSTER identity rules, GROUND checks, prompt skeleton, and degraded-mode behavior: `references/tri-engine-walkthrough.md`. AI persona bias mitigation: `_common/AI_PERSONA_RISKS.md`.
+Full algorithm, JSON schema, CLUSTER identity rules, GROUND checks, prompt skeleton, and degraded-mode behavior: `reference/tri-engine-walkthrough.md`. AI persona bias mitigation: `_common/AI_PERSONA_RISKS.md`.
 
 ## Reference Map
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/ux-frameworks.md` | You need emotion model, journey patterns, cognitive psych, JTBD, behavioral economics, or a11y frameworks. |
-| `references/process-workflows.md` | You need the 6-step daily process, simulation standards, multi-engine mode, or AUTORUN/NEXUS_HANDOFF formats. |
-| `references/analysis-frameworks.md` | You need persona generation, context-aware simulation, or service-specific review. |
-| `references/output-templates.md` | You need report formats (emotion, cognitive, JTBD, behavioral, visual review, a11y). |
-| `references/collaboration-patterns.md` | You need agent handoff templates (6 patterns). |
-| `references/cognitive-persona-model.md` | You need the CPM framework: 6 dimensions, cross-dimension interactions, consistency verification. |
-| `references/question-templates.md` | You need interaction trigger YAML templates. |
-| `references/visual-review.md` | You need visual review mode detailed process. |
-| `references/heuristic-evaluation.md` | You are running a Nielsen-10 or domain-extended heuristic expert review and need evaluator panels, severity scoring, and anti-patterns. |
-| `references/sus-scoring.md` | You need SUS item set, scoring formula, benchmark mapping, minimum-detectable-difference curves, or variant selection (UMUX-Lite / UEQ / CASTLE). |
-| `references/think-aloud-protocol.md` | You are moderating or coding a concurrent / retrospective think-aloud session and need prompt discipline, intervention rules, and transcript categories. |
-| `references/tri-engine-walkthrough.md` | You are running the `multi` Recipe — tri-engine cognitive walkthrough fan-out, Pattern H scoring (confidence × perspective × cross-persona axes), JSON schema, subagent prompt skeleton, persona × engine matrix synthesis, dark-pattern auto-promotion rule, and degraded-mode behavior. |
-| `references/council-mode.md` | You are running the `council` Recipe — Persona Contract schema, output schema, Org-Tier cost cap, engine diversity for Tier-S/A, confidence discipline, always/never recap. |
+| `reference/ux-frameworks.md` | You need emotion model, journey patterns, cognitive psych, JTBD, behavioral economics, or a11y frameworks. |
+| `reference/process-workflows.md` | You need the 6-step daily process, simulation standards, multi-engine mode, or AUTORUN/NEXUS_HANDOFF formats. |
+| `reference/analysis-frameworks.md` | You need persona generation, context-aware simulation, or service-specific review. |
+| `reference/output-templates.md` | You need report formats (emotion, cognitive, JTBD, behavioral, visual review, a11y). |
+| `reference/collaboration-patterns.md` | You need agent handoff templates (6 patterns). |
+| `reference/cognitive-persona-model.md` | You need the CPM framework: 6 dimensions, cross-dimension interactions, consistency verification. |
+| `reference/question-templates.md` | You need interaction trigger YAML templates. |
+| `reference/visual-review.md` | You need visual review mode detailed process. |
+| `reference/heuristic-evaluation.md` | You are running a Nielsen-10 or domain-extended heuristic expert review and need evaluator panels, severity scoring, and anti-patterns. |
+| `reference/sus-scoring.md` | You need SUS item set, scoring formula, benchmark mapping, minimum-detectable-difference curves, or variant selection (UMUX-Lite / UEQ / CASTLE). |
+| `reference/think-aloud-protocol.md` | You are moderating or coding a concurrent / retrospective think-aloud session and need prompt discipline, intervention rules, and transcript categories. |
+| `reference/tri-engine-walkthrough.md` | You are running the `multi` Recipe — tri-engine cognitive walkthrough fan-out, Pattern H scoring (confidence × perspective × cross-persona axes), JSON schema, subagent prompt skeleton, persona × engine matrix synthesis, dark-pattern auto-promotion rule, and degraded-mode behavior. |
+| `reference/council-mode.md` | You are running the `council` Recipe — Persona Contract schema, output schema, Org-Tier cost cap, engine diversity for Tier-S/A, confidence discipline, always/never recap. |
 | `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
 | `_common/MULTI_ENGINE_RECIPE.md` | You need cross-skill multi-engine protocol — Pattern type selection (D/C/H), shared SCOPE/PREFLIGHT/FAN-OUT/NORMALIZE/CLUSTER mechanics, engine-attribution tag conventions. Echo applies Pattern H. |
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 evaluation evidence — NN/g navigation / IA studies, WCAG 2.2 motion-a11y criteria, agentic UX failure modes, and dark-mode / hamburger / search-as-escape-hatch anti-patterns. Read §2 IA and §1 Design a11y. |

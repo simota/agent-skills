@@ -103,25 +103,25 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Focus | Required checks | Read |
 |-------|-------|-----------------|------|
-| `INTAKE` | Confirm theme, level, goal, time budget, learner profile, prerequisites | Inputs present or defaulted; high-risk domain flagged | `references/learning-design-frameworks.md` |
-| `OBJECTIVES` | Author measurable objectives + outcome definition | Every `LO-ID` has Bloom's level + observable verb + success condition | `references/learning-design-frameworks.md` |
-| `CURRICULUM` | Build curriculum map, module overview, weekly plan, lesson plans | Sequencing respects prerequisites; MVP vs stretch separated | `references/curriculum-patterns.md` |
-| `MATERIALS` | Reading list, exercises, assignments, project briefs, glossary | Each material maps to >=1 objective | `references/curriculum-patterns.md` |
-| `ASSESSMENT` | Quizzes, rubrics, self-assessment, final-project evaluation | Each item traces to an objective; Bloom's level <= objective level | `references/assessment-rubrics.md` |
-| `SUPPORT` | Facilitator guide, coaching prompts, common mistakes, progress tracker | Common mistakes + remedy per module; checkpoints defined | `references/instructor-support.md` |
-| `ALIGN` | Self-audit | Alignment matrix complete; flag every `ALIGNMENT_GAP` | `references/assessment-rubrics.md` |
+| `INTAKE` | Confirm theme, level, goal, time budget, learner profile, prerequisites | Inputs present or defaulted; high-risk domain flagged | `reference/learning-design-frameworks.md` |
+| `OBJECTIVES` | Author measurable objectives + outcome definition | Every `LO-ID` has Bloom's level + observable verb + success condition | `reference/learning-design-frameworks.md` |
+| `CURRICULUM` | Build curriculum map, module overview, weekly plan, lesson plans | Sequencing respects prerequisites; MVP vs stretch separated | `reference/curriculum-patterns.md` |
+| `MATERIALS` | Reading list, exercises, assignments, project briefs, glossary | Each material maps to >=1 objective | `reference/curriculum-patterns.md` |
+| `ASSESSMENT` | Quizzes, rubrics, self-assessment, final-project evaluation | Each item traces to an objective; Bloom's level <= objective level | `reference/assessment-rubrics.md` |
+| `SUPPORT` | Facilitator guide, coaching prompts, common mistakes, progress tracker | Common mistakes + remedy per module; checkpoints defined | `reference/instructor-support.md` |
+| `ALIGN` | Self-audit | Alignment matrix complete; flag every `ALIGNMENT_GAP` | `reference/assessment-rubrics.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Full Curriculum | `curriculum` | ✓ | Build a complete learning package from a theme (objectives through support) | `references/learning-design-frameworks.md`, `references/curriculum-patterns.md` |
-| Learning Objectives | `objectives` | | Author/refine measurable, Bloom's-leveled objectives + outcome definition only | `references/learning-design-frameworks.md` |
-| Lesson Plans | `lessons` | | Author session-level lesson plans with timing, activities, and CFUs | `references/curriculum-patterns.md` |
-| Assessment | `assessment` | | Design quizzes, rubrics, self-assessment, and final-project evaluation | `references/assessment-rubrics.md` |
-| Progress Tracking | `progress` | | Build checkpoints, study tracker, review schedule, reflection/habit plans | `references/instructor-support.md` |
-| Instructor Support | `instructor` | | Facilitator guide, workshop plan, coaching prompts, common mistakes, feedback | `references/instructor-support.md` |
-| Alignment Audit | `align` | | Audit an existing curriculum for objective->material->assessment alignment gaps | `references/assessment-rubrics.md` |
+| Full Curriculum | `curriculum` | ✓ | Build a complete learning package from a theme (objectives through support) | `reference/learning-design-frameworks.md`, `reference/curriculum-patterns.md` |
+| Learning Objectives | `objectives` | | Author/refine measurable, Bloom's-leveled objectives + outcome definition only | `reference/learning-design-frameworks.md` |
+| Lesson Plans | `lessons` | | Author session-level lesson plans with timing, activities, and CFUs | `reference/curriculum-patterns.md` |
+| Assessment | `assessment` | | Design quizzes, rubrics, self-assessment, and final-project evaluation | `reference/assessment-rubrics.md` |
+| Progress Tracking | `progress` | | Build checkpoints, study tracker, review schedule, reflection/habit plans | `reference/instructor-support.md` |
+| Instructor Support | `instructor` | | Facilitator guide, workshop plan, coaching prompts, common mistakes, feedback | `reference/instructor-support.md` |
+| Alignment Audit | `align` | | Audit an existing curriculum for objective->material->assessment alignment gaps | `reference/assessment-rubrics.md` |
 
 ## Subcommand Dispatch
 
@@ -157,14 +157,14 @@ learning_package/
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `curriculum`, `learning path`, `course design`, `study plan` | `curriculum` flow | Full learning package | `references/curriculum-patterns.md` |
-| `learning objectives`, `learning goals`, `outcomes`, `Bloom's` | `objectives` flow | Objectives + outcome definition | `references/learning-design-frameworks.md` |
-| `lesson plan`, `syllabus`, `weekly plan` | `lessons` flow | Lesson plans | `references/curriculum-patterns.md` |
-| `quiz`, `rubric`, `assessment`, `self-assessment`, `exam` | `assessment` flow | Quizzes + rubrics | `references/assessment-rubrics.md` |
-| `progress tracker`, `checkpoints`, `review schedule`, `habit` | `progress` flow | Trackers + schedules | `references/instructor-support.md` |
-| `facilitator guide`, `coaching`, `workshop`, `common mistakes` | `instructor` flow | Instructor support pack | `references/instructor-support.md` |
-| `alignment`, `curriculum audit`, `coverage gap` | `align` flow | Alignment matrix + gaps | `references/assessment-rubrics.md` |
-| unclear learning/teaching request | `curriculum` flow | Full learning package | `references/curriculum-patterns.md` |
+| `curriculum`, `learning path`, `course design`, `study plan` | `curriculum` flow | Full learning package | `reference/curriculum-patterns.md` |
+| `learning objectives`, `learning goals`, `outcomes`, `Bloom's` | `objectives` flow | Objectives + outcome definition | `reference/learning-design-frameworks.md` |
+| `lesson plan`, `syllabus`, `weekly plan` | `lessons` flow | Lesson plans | `reference/curriculum-patterns.md` |
+| `quiz`, `rubric`, `assessment`, `self-assessment`, `exam` | `assessment` flow | Quizzes + rubrics | `reference/assessment-rubrics.md` |
+| `progress tracker`, `checkpoints`, `review schedule`, `habit` | `progress` flow | Trackers + schedules | `reference/instructor-support.md` |
+| `facilitator guide`, `coaching`, `workshop`, `common mistakes` | `instructor` flow | Instructor support pack | `reference/instructor-support.md` |
+| `alignment`, `curriculum audit`, `coverage gap` | `align` flow | Alignment matrix + gaps | `reference/assessment-rubrics.md` |
+| unclear learning/teaching request | `curriculum` flow | Full learning package | `reference/curriculum-patterns.md` |
 | complex multi-agent task | Nexus-routed execution | Structured handoff | `_common/BOUNDARIES.md` |
 
 ## Output Requirements
@@ -199,10 +199,10 @@ Read only the files required for the current decision.
 
 | File | Read this when... |
 |------|-------------------|
-| `references/learning-design-frameworks.md` | You need Bloom's taxonomy verb tables, backward design, objective formulation, or prerequisite mapping |
-| `references/curriculum-patterns.md` | You are building curriculum maps, module sequencing, weekly plans, lesson-plan structure, or material design |
-| `references/assessment-rubrics.md` | You are designing quizzes, rubrics, self-assessment, or running the alignment audit |
-| `references/instructor-support.md` | You need facilitator guides, coaching prompts, common-mistake catalogs, progress trackers, or feedback templates |
+| `reference/learning-design-frameworks.md` | You need Bloom's taxonomy verb tables, backward design, objective formulation, or prerequisite mapping |
+| `reference/curriculum-patterns.md` | You are building curriculum maps, module sequencing, weekly plans, lesson-plan structure, or material design |
+| `reference/assessment-rubrics.md` | You are designing quizzes, rubrics, self-assessment, or running the alignment audit |
+| `reference/instructor-support.md` | You need facilitator guides, coaching prompts, common-mistake catalogs, progress trackers, or feedback templates |
 | [`_common/BOUNDARIES.md`](_common/BOUNDARIES.md) | Role boundaries are ambiguous |
 | [`_common/OPERATIONAL.md`](_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
 | [`_common/OPUS_48_AUTHORING.md`](_common/OPUS_48_AUTHORING.md) | You are sizing the package or deciding thinking depth at DESIGN. Critical for Mentor: P5, P2. |

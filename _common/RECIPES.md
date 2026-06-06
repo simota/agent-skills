@@ -43,8 +43,8 @@ Include this table when the skill defines 3 or more distinct modes.
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| [Display Name] | `[token]` | ✓ | [activation condition] | `references/[file].md` |
-| [Display Name] | `[token]` | | [activation condition] | `references/[file].md` |
+| [Display Name] | `[token]` | ✓ | [activation condition] | `reference/[file].md` |
+| [Display Name] | `[token]` | | [activation condition] | `reference/[file].md` |
 ```
 
 **Column definitions:**
@@ -162,7 +162,7 @@ Phase 1 scope: Scout only. Builder, Sentinel, and other Tier 1 skills adopt Reci
 | Script | Purpose |
 |--------|---------|
 | `_common/scripts/validate-recipes.py` | Validate every SKILL.md against R-REC-01〜05 + heading integrity (H-REC-01/02). Exit non-zero on ERROR. Run before commit and in CI. |
-| `_common/scripts/generate-recipes-directory.py` | Regenerate `compass/references/recipes-directory.md` from all SKILL.md `## Recipes` tables. Idempotent; run after any Recipe change. |
+| `_common/scripts/generate-recipes-directory.py` | Regenerate `compass/reference/recipes-directory.md` from all SKILL.md `## Recipes` tables. Idempotent; run after any Recipe change. |
 
 Usage:
 

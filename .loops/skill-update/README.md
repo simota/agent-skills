@@ -2,7 +2,7 @@
 
 136 個のスキルエージェントに対し **architect の IMPROVE recipe**(`UNDERSTAND -> ANALYZE -> SCORE -> RESEARCH -> PRIORITIZE -> APPLY -> VALIDATE`)を一括適用する nexus-autoloop runner。Executor は Claude Code CLI(`claude --print` headless mode)。
 
-**read-write モード** で動作し、HIGH 重大度の改善は SKILL.md / references/*.md に直接適用、MID/LOW は `reports/improvements.md` に提案として集約します。**WebFetch / WebSearch** で各スキルの最新情報・トレンドを取り込み、取得コンテンツには `_common/WEB_FETCH_SAFETY.md` のプロンプトインジェクション検査を適用します(strong indicator 検出時はそのソースを破棄)。
+**read-write モード** で動作し、HIGH 重大度の改善は SKILL.md / reference/*.md に直接適用、MID/LOW は `reports/improvements.md` に提案として集約します。**WebFetch / WebSearch** で各スキルの最新情報・トレンドを取り込み、取得コンテンツには `_common/WEB_FETCH_SAFETY.md` のプロンプトインジェクション検査を適用します(strong indicator 検出時はそのソースを破棄)。
 
 各イテレーション後に AC1/AC2/AC4 dead count 回帰ガードが走り、悪化したら `git checkout HEAD --` でバッチ編集をロールバックします。
 
@@ -96,7 +96,7 @@ export CLAUDE_FLAGS="--print --dangerously-skip-permissions --output-format text
 
 ## 設計上の制約
 
-- **read-write スコープ限定**: 編集できるのはバッチに含まれるスキルディレクトリ配下の `SKILL.md` と既存の `references/*.md` のみ。`_common/` / `_templates/` / `.agents/` / `.loops/` / 他バッチのスキルは編集禁止(プロンプトで明示+回帰ガードで検出)。
+- **read-write スコープ限定**: 編集できるのはバッチに含まれるスキルディレクトリ配下の `SKILL.md` と既存の `reference/*.md` のみ。`_common/` / `_templates/` / `.agents/` / `.loops/` / 他バッチのスキルは編集禁止(プロンプトで明示+回帰ガードで検出)。
 - **新規ファイル作成・既存削除は禁止**(プロンプトで明示)。
 - **WebFetch safety**: 取得コンテンツに `_common/WEB_FETCH_SAFETY.md` のプロンプトインジェクション検査を適用。strong indicator 検出時はソースを破棄。`audit.md` の Sources 行に `injection-check: PASS / SOFT / STRONG-rejected` を必ず記録(AC7)。
 - **回帰ガード**: 各イテレーションの前後で AC1/AC2/AC4 dead count を計測。悪化したらバッチ編集をすべて `git checkout HEAD --` でロールバックして `BLOCKED` に。

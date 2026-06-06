@@ -4,8 +4,8 @@ Centralized taxonomy of structural code smells shared across skills.
 Each entry is a smell **name + definition + recognition pattern + canonical example + severity hint**.
 
 Consumers:
-- `zen/references/code-smells-metrics.md` — refactor mechanic + complexity metrics per smell.
-- `judge/references/code-smell-detection.md` — detection-during-review heuristic + severity weighting.
+- `zen/reference/code-smells-metrics.md` — refactor mechanic + complexity metrics per smell.
+- `judge/reference/code-smell-detection.md` — detection-during-review heuristic + severity weighting.
 
 Severity hint is a baseline for review reports; individual skills may re-weight based on context.
 
@@ -134,7 +134,7 @@ Severity hint is a baseline for review reports; individual skills may re-weight 
 
 ### DISP-007: Defensive Excess
 - **Definition:** Fallbacks/validation for scenarios that cannot occur.
-- **Severity hint:** LOW. (See `zen/references/defensive-excess.md`.)
+- **Severity hint:** LOW. (See `zen/reference/defensive-excess.md`.)
 
 ---
 

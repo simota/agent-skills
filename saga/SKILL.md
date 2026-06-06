@@ -192,14 +192,14 @@ questions:
 
 | Framework | Best For | Structure | Detail |
 |-----------|----------|-----------|--------|
-| **StoryBrand SB7** | Product messaging, LPs, pitches | Controlling Idea→Hero→Problem→Guide→Plan→CTA→Failure→Success | `references/frameworks.md` |
-| **Pixar Story Spine** | Short scenarios, internal sharing, elevator pitches | Once upon a time→Every day→Until one day→Because of that→Until finally | `references/frameworks.md` |
-| **Hero's Journey** | Large transformation stories, case studies | Ordinary World→Call→Threshold→Trials→Transformation→Return | `references/frameworks.md` |
-| **JTBD Job Story** | Feature-level use cases, dev team audience | When [situation], I want to [motivation], so I can [outcome] | `references/frameworks.md` |
-| **Story Mapping** | Full product narrative flow | Backbone(JTBD)→Walking Skeleton→Slices | `references/frameworks.md` |
-| **CAR** | Results-focused case studies | Context→Action→Results | `references/frameworks.md` |
-| **Promised Land** | Strategic positioning, fundraising pitches, org alignment | Change→Stakes→Promised Land→Magic Gifts→Evidence | `references/frameworks.md` |
-| **ABT** | Quick narrative structure, social posts, internal comms | And [context], But [tension], Therefore [resolution] | `references/frameworks.md` |
+| **StoryBrand SB7** | Product messaging, LPs, pitches | Controlling Idea→Hero→Problem→Guide→Plan→CTA→Failure→Success | `reference/frameworks.md` |
+| **Pixar Story Spine** | Short scenarios, internal sharing, elevator pitches | Once upon a time→Every day→Until one day→Because of that→Until finally | `reference/frameworks.md` |
+| **Hero's Journey** | Large transformation stories, case studies | Ordinary World→Call→Threshold→Trials→Transformation→Return | `reference/frameworks.md` |
+| **JTBD Job Story** | Feature-level use cases, dev team audience | When [situation], I want to [motivation], so I can [outcome] | `reference/frameworks.md` |
+| **Story Mapping** | Full product narrative flow | Backbone(JTBD)→Walking Skeleton→Slices | `reference/frameworks.md` |
+| **CAR** | Results-focused case studies | Context→Action→Results | `reference/frameworks.md` |
+| **Promised Land** | Strategic positioning, fundraising pitches, org alignment | Change→Stakes→Promised Land→Magic Gifts→Evidence | `reference/frameworks.md` |
+| **ABT** | Quick narrative structure, social posts, internal comms | And [context], But [tension], Therefore [resolution] | `reference/frameworks.md` |
 
 ### Framework Auto-Selection
 
@@ -225,15 +225,15 @@ INPUT
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `DISCOVER` | Gather narrative materials from input sources (Cast personas, Researcher journey maps, Voice feedback, Spark features, Compete differentiators, or user request) | Establish target audience before framing; list assumptions when data is missing | `references/frameworks.md` |
-| `FRAME` | Select framework via auto-selection tree; design story skeleton with Hero, Desire, Problem (3 levels), Guide, Plan, Stakes, Transformation | Focus on one core problem per narrative; connect external/internal/philosophical levels | `references/frameworks.md` |
-| `CRAFT` | Write the narrative following selected framework; open with concrete scene, include sensory details, embed tension | Never skip the conflict; plant "this is about me" anchors | `references/templates.md` |
-| `REFINE` | Validate against AP-1 through AP-9 anti-pattern checklist; fix all failures before delivery | All 9 checks must pass | `references/anti-patterns.md` |
-| `DELIVER` | Format output with metadata, anti-pattern results, assumptions, handoff info | Include framework name and recommended next agent | `references/handoffs.md` |
+| `DISCOVER` | Gather narrative materials from input sources (Cast personas, Researcher journey maps, Voice feedback, Spark features, Compete differentiators, or user request) | Establish target audience before framing; list assumptions when data is missing | `reference/frameworks.md` |
+| `FRAME` | Select framework via auto-selection tree; design story skeleton with Hero, Desire, Problem (3 levels), Guide, Plan, Stakes, Transformation | Focus on one core problem per narrative; connect external/internal/philosophical levels | `reference/frameworks.md` |
+| `CRAFT` | Write the narrative following selected framework; open with concrete scene, include sensory details, embed tension | Never skip the conflict; plant "this is about me" anchors | `reference/templates.md` |
+| `REFINE` | Validate against AP-1 through AP-9 anti-pattern checklist; fix all failures before delivery | All 9 checks must pass | `reference/anti-patterns.md` |
+| `DELIVER` | Format output with metadata, anti-pattern results, assumptions, handoff info | Include framework name and recommended next agent | `reference/handoffs.md` |
 
 ### Anti-Pattern Checklist (REFINE Phase)
 
-The canonical AP-1 through AP-9 checklist — Feature Dump / Hero Product / Missing Tension / No Transformation / Generic Persona / Narrative Bias / Jargon Wall / Happy Path Only / Ad Copy Disguise — lives in `references/anti-patterns.md`. Every narrative must pass all 9 checks (AP-8 may be N/A for short-form copy). See that file for the full check/fix table, output format, rejection codes, and per-recipe emphasis.
+The canonical AP-1 through AP-9 checklist — Feature Dump / Hero Product / Missing Tension / No Transformation / Generic Persona / Narrative Bias / Jargon Wall / Happy Path Only / Ad Copy Disguise — lives in `reference/anti-patterns.md`. Every narrative must pass all 9 checks (AP-8 may be N/A for short-form copy). See that file for the full check/fix table, output format, rejection codes, and per-recipe emphasis.
 
 ---
 
@@ -243,17 +243,17 @@ Single source of truth for Recipe definitions. Length targets and output format 
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Customer Story | `story` | ✓ | Feature-level customer-centric story (use cases, transformation arc). Apply JTBD or StoryBrand SB7; customer is the hero, product is the guide. AP-1~AP-9 required. **Use Case Story 300-800 chars.** | `references/templates.md` |
-| Scenario Story | `scenario` | | Persona-based scenario stories. Load Cast persona registry first. **Scenario Narrative 400-1000 chars/persona.** | `references/templates.md` |
-| Product Narrative | `narrative` | | Product-level positioning / brand narrative. Define Controlling Idea first; choose Promised Land or StoryBrand SB7. For pitches and LPs. **Product Narrative 500-1500 chars, Pitch Story 200-500 chars, Promised Land 500-1500 chars.** Default when narrative request is unclear. | `references/frameworks.md` |
-| Customer Journey | `customer` | | Customer experience narrative centered on observable/measurable Before→After transformation arc. Consider Hero's Journey. **Customer Success Story 800-2000 chars.** | `references/templates.md` |
-| Hero's Journey | `hero-journey` | | Joseph Campbell 12-stage monomyth (Ordinary World → Call → Refusal → Meeting Mentor → Crossing Threshold → Tests/Allies/Enemies → Approach → Ordeal → Reward → Road Back → Resurrection → Return with Elixir). For major case studies, high stakes, profound transformation. | `references/hero-journey.md` |
-| Before-After-Bridge | `bab` | | BAB copywriting structure: Before (current pain), After (ideal state), Bridge (product as connector). LPs, email, CTA-driven narratives. **Length 200-500 chars.** | `references/before-after-bridge.md` |
-| Minto Pyramid | `pyramid` | | Pyramid Principle for answer-first executive/stakeholder delivery: Answer → Supporting arguments (MECE) → Evidence. For board meetings, investor memos. Combine with SB7 or Promised Land for narrative warmth. | `references/minto-pyramid.md` |
-| Onboarding Flow | `onboarding` | | First-time user experience (FTUE) story flow. Coordinate with Researcher journey maps. **150 chars/step.** | `references/templates.md` |
-| Narrative Audit | `audit` | | Anti-pattern audit of existing narrative. Output: Audit Report with AP-1~AP-9 results + fixes. | `references/frameworks.md` |
-| Micro-Narrative | `micro` | | Platform-tailored micro-narrative series for social media, episodic content. **150-300 chars each.** | `references/templates.md` |
-| Multi-Engine | `multi` | | Tri-engine narrative generation (Codex + Antigravity + Claude in parallel) with concurrence-divergence scoring across narrative archetypes. Default merge = Portfolio (3 complementary arcs preserved across different archetypes for A/B/C channel testing); use `multi --compete` for single best narrative with re-mixed per-beat wording. Mirrors Spark/Plea Pattern D, adapted for narrative-archetype diversity. See **Multi-Engine Mode** below for full mechanics. | `references/tri-engine-narrate.md`, `_common/MULTI_ENGINE_RECIPE.md` |
+| Customer Story | `story` | ✓ | Feature-level customer-centric story (use cases, transformation arc). Apply JTBD or StoryBrand SB7; customer is the hero, product is the guide. AP-1~AP-9 required. **Use Case Story 300-800 chars.** | `reference/templates.md` |
+| Scenario Story | `scenario` | | Persona-based scenario stories. Load Cast persona registry first. **Scenario Narrative 400-1000 chars/persona.** | `reference/templates.md` |
+| Product Narrative | `narrative` | | Product-level positioning / brand narrative. Define Controlling Idea first; choose Promised Land or StoryBrand SB7. For pitches and LPs. **Product Narrative 500-1500 chars, Pitch Story 200-500 chars, Promised Land 500-1500 chars.** Default when narrative request is unclear. | `reference/frameworks.md` |
+| Customer Journey | `customer` | | Customer experience narrative centered on observable/measurable Before→After transformation arc. Consider Hero's Journey. **Customer Success Story 800-2000 chars.** | `reference/templates.md` |
+| Hero's Journey | `hero-journey` | | Joseph Campbell 12-stage monomyth (Ordinary World → Call → Refusal → Meeting Mentor → Crossing Threshold → Tests/Allies/Enemies → Approach → Ordeal → Reward → Road Back → Resurrection → Return with Elixir). For major case studies, high stakes, profound transformation. | `reference/hero-journey.md` |
+| Before-After-Bridge | `bab` | | BAB copywriting structure: Before (current pain), After (ideal state), Bridge (product as connector). LPs, email, CTA-driven narratives. **Length 200-500 chars.** | `reference/before-after-bridge.md` |
+| Minto Pyramid | `pyramid` | | Pyramid Principle for answer-first executive/stakeholder delivery: Answer → Supporting arguments (MECE) → Evidence. For board meetings, investor memos. Combine with SB7 or Promised Land for narrative warmth. | `reference/minto-pyramid.md` |
+| Onboarding Flow | `onboarding` | | First-time user experience (FTUE) story flow. Coordinate with Researcher journey maps. **150 chars/step.** | `reference/templates.md` |
+| Narrative Audit | `audit` | | Anti-pattern audit of existing narrative. Output: Audit Report with AP-1~AP-9 results + fixes. | `reference/frameworks.md` |
+| Micro-Narrative | `micro` | | Platform-tailored micro-narrative series for social media, episodic content. **150-300 chars each.** | `reference/templates.md` |
+| Multi-Engine | `multi` | | Tri-engine narrative generation (Codex + Antigravity + Claude in parallel) with concurrence-divergence scoring across narrative archetypes. Default merge = Portfolio (3 complementary arcs preserved across different archetypes for A/B/C channel testing); use `multi --compete` for single best narrative with re-mixed per-beat wording. Mirrors Spark/Plea Pattern D, adapted for narrative-archetype diversity. See **Multi-Engine Mode** below for full mechanics. | `reference/tri-engine-narrate.md`, `_common/MULTI_ENGINE_RECIPE.md` |
 
 ### Signal Keywords → Recipe
 
@@ -328,7 +328,7 @@ Activated by the `multi` Recipe (or any explicit user request for parallel narra
 > **Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE at PREFLIGHT. For Saga the dual-engine baseline (Claude's emotionally-calibrated Promised Land narratives + Codex's JTBD/technical case study patterns) covers two distinct narrative archetypes; agy adds Hero's Journey / BAB archetype coverage when reachable. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
 
 **Core mechanics:**
-- Spawn one Agent subagent per AVAILABLE engine in a single message: `narrate-codex` + `narrate-claude` (dual-engine baseline); add `narrate-agy` (tri-engine) when AVAILABLE. Per `references/tri-engine-narrate.md`.
+- Spawn one Agent subagent per AVAILABLE engine in a single message: `narrate-codex` + `narrate-claude` (dual-engine baseline); add `narrate-agy` (tri-engine) when AVAILABLE. Per `reference/tri-engine-narrate.md`.
 - Run engine availability PREFLIGHT in Saga main context — never delegate detection to subagents (subagent PATH is narrower; see `_common/MULTI_ENGINE_RECIPE.md §2` for the canonical probe).
 - Use loose prompts (Role + Customer + Feature + Channel + Output format only). Do NOT pass framework choice, the AP-1~AP-9 checklist, or length targets to subagents — apply Saga's rules in SYNTHESIZE, not at FAN-OUT. Each engine's narrative-archetype training-data priors should drive divergence (Codex → JTBD / technical case study; Claude → Promised Land / emotionally calibrated transformation; Antigravity when AVAILABLE → Hero's Journey / BAB).
 - Each subagent produces 2-3 narratives using **different arc_types** (target 4-6 raw narratives dual-engine, 6-9 tri-engine, before clustering).
@@ -353,7 +353,7 @@ Activated by the `multi` Recipe (or any explicit user request for parallel narra
 
 **Degraded modes:** 1 engine down → continue with 2, archetype coverage may drop; 2 down → single-engine fallback, Portfolio collapses to one narrative with full AP audit; all down → degrade to standard `story` Recipe.
 
-Full algorithm, JSON schema, AP-grounding rules, prompt skeletons: `references/tri-engine-narrate.md`.
+Full algorithm, JSON schema, AP-grounding rules, prompt skeletons: `reference/tri-engine-narrate.md`.
 
 ---
 
@@ -361,17 +361,17 @@ Full algorithm, JSON schema, AP-grounding rules, prompt skeletons: `references/t
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/frameworks.md` | You need StoryBrand SB7, Pixar Story Spine, Hero's Journey, JTBD, Story Mapping, or CAR framework details. |
-| `references/templates.md` | You need output templates for each narrative type (use case, product, pitch, success, onboarding, scenario). |
-| `references/anti-patterns.md` | You are validating a narrative in REFINE, running `audit` recipe, or grounding CANDIDATE narratives in `multi`. Canonical AP-1~AP-9 checklist, output format, rejection codes, and per-recipe emphasis. |
-| `references/examples.md` | You need example narratives for reference or comparison during REFINE phase. |
-| `references/handoffs.md` | You need handoff templates for Prose, Scribe, Accord, Director, or Prism. |
-| `references/hero-journey.md` | You chose `hero-journey` recipe. 12-stage monomyth deep-dive with stage-by-stage customer transformation scripting. |
-| `references/before-after-bridge.md` | You chose `bab` recipe. BAB copywriting structure with LP/email/ad templates and CTA-friction mapping. |
-| `references/minto-pyramid.md` | You chose `pyramid` recipe. Minto Pyramid Principle (answer-first, MECE arguments, evidence layering) for executive/stakeholder narrative delivery. |
-| `references/tri-engine-narrate.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents), Concurrence-Divergence scoring across narrative archetypes, Portfolio vs Compete merge strategies, JSON schema, AP-1~AP-9 grounding rules, subagent prompt skeletons, and degraded-mode behavior. |
+| `reference/frameworks.md` | You need StoryBrand SB7, Pixar Story Spine, Hero's Journey, JTBD, Story Mapping, or CAR framework details. |
+| `reference/templates.md` | You need output templates for each narrative type (use case, product, pitch, success, onboarding, scenario). |
+| `reference/anti-patterns.md` | You are validating a narrative in REFINE, running `audit` recipe, or grounding CANDIDATE narratives in `multi`. Canonical AP-1~AP-9 checklist, output format, rejection codes, and per-recipe emphasis. |
+| `reference/examples.md` | You need example narratives for reference or comparison during REFINE phase. |
+| `reference/handoffs.md` | You need handoff templates for Prose, Scribe, Accord, Director, or Prism. |
+| `reference/hero-journey.md` | You chose `hero-journey` recipe. 12-stage monomyth deep-dive with stage-by-stage customer transformation scripting. |
+| `reference/before-after-bridge.md` | You chose `bab` recipe. BAB copywriting structure with LP/email/ad templates and CTA-friction mapping. |
+| `reference/minto-pyramid.md` | You chose `pyramid` recipe. Minto Pyramid Principle (answer-first, MECE arguments, evidence layering) for executive/stakeholder narrative delivery. |
+| `reference/tri-engine-narrate.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents), Concurrence-Divergence scoring across narrative archetypes, Portfolio vs Compete merge strategies, JSON schema, AP-1~AP-9 grounding rules, subagent prompt skeletons, and degraded-mode behavior. |
 | `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
-| `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill base protocol for the `multi` Recipe — Pattern D/C/H selection, canonical SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND/CALIBRATE → SYNTHESIZE → DELIVER flow, engine-attribution tag convention, degraded modes, and Implementation Checklist. Read alongside `references/tri-engine-narrate.md` for the Saga delta. |
+| `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill base protocol for the `multi` Recipe — Pattern D/C/H selection, canonical SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND/CALIBRATE → SYNTHESIZE → DELIVER flow, engine-attribution tag convention, degraded modes, and Implementation Checklist. Read alongside `reference/tri-engine-narrate.md` for the Saga delta. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the narrative output, deciding adaptive thinking depth at framework selection, or front-loading audience/channel/format at FRAME. Critical for Saga: P3, P5. |
 
 ---

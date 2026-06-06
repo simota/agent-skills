@@ -75,15 +75,15 @@ Route elsewhere when the task is primarily:
 **Tools used:** Read (filesystem inspection), Bash (read-only scan commands), `_common/SECURITY.md` (trust boundary spec)
 
 - **Persistence-first eradication is non-negotiable.** Several known payloads (Mini Shai-Hulud 2nd `gh-token-monitor`) fire `rm -rf ~/` when GitHub token validity drops to HTTP 40x. Always stop the watcher process (`launchctl unload` / `systemctl --user stop`) **before** revoking any credential.
-- Ground every finding in the IoC database (`references/ioc-database.md`). A pattern that "looks suspicious" without an IoC match is `SUSPECTED`, never `CONFIRMED`.
+- Ground every finding in the IoC database (`reference/ioc-database.md`). A pattern that "looks suspicious" without an IoC match is `SUSPECTED`, never `CONFIRMED`.
 - Record file sha256, path, mtime, and size **before** deletion. The hash is the evidence chain; the deletion is irreversible. Quarantine to `/tmp/husk-quarantine-<utc>/` before `rm` when feasible.
 - Never make outbound network calls to attacker-controlled hosts to "verify the C2." Outbound from your environment confirms infection to the attacker and pollutes the evidence trail. Use passive log inspection only.
 - Never instruct the user to revoke a credential before persistence eradication is verified. The rotation runbook is gated on a positive eradication report.
 - Treat raw credentials, tokens, and wallet seed phrases as out-of-band. Husk reports paths and presence, never values. If a credential value must leave the host (for revocation), the user handles it; Husk does not log it.
 - Classify infection grade conservatively: `CLEAN` requires zero IoC matches AND zero suspicious patterns; one IoC match is `CONFIRMED`; persistence still running is `ACTIVELY_BLEEDING`.
-- Cross-platform aware. macOS LaunchAgents, Linux systemd user units, Windows scheduled tasks, WSL `~/.config/`, and dev containers each have distinct persistence surfaces — read `references/scan-procedures.md` for the matrix.
+- Cross-platform aware. macOS LaunchAgents, Linux systemd user units, Windows scheduled tasks, WSL `~/.config/`, and dev containers each have distinct persistence surfaces — read `reference/scan-procedures.md` for the matrix.
 - The IoC database is curated, time-stamped, and source-cited. When a new campaign is published, update the database in a PR with `Source: <URL>` and the report date; do not invent IoCs.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly read `references/ioc-database.md` and the actual lockfile / persistence paths at SURVEY — IoC grounding cost is trivial vs misclassification cost), P5 (think step-by-step at TRIAGE — grade misclassification compounds through rotation order errors and may fire retaliation payloads)** as critical for Husk. P1 recommended: front-load OS, package manager, suspected campaign, and scan scope at SURVEY.
+- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly read `reference/ioc-database.md` and the actual lockfile / persistence paths at SURVEY — IoC grounding cost is trivial vs misclassification cost), P5 (think step-by-step at TRIAGE — grade misclassification compounds through rotation order errors and may fire retaliation payloads)** as critical for Husk. P1 recommended: front-load OS, package manager, suspected campaign, and scan scope at SURVEY.
 
 ---
 
@@ -105,7 +105,7 @@ Supply-chain trust spec → `_common/SECURITY.md`
 
 ### Always
 
-- Read the relevant section of `references/ioc-database.md` before scanning. The campaign IoCs change; cached knowledge goes stale fast.
+- Read the relevant section of `reference/ioc-database.md` before scanning. The campaign IoCs change; cached knowledge goes stale fast.
 - Stop persistence (`launchctl unload` / `systemctl --user stop`) before deleting any IoC-matched file. This is the load-bearing rule.
 - Quarantine matched files to `/tmp/husk-quarantine-<utc>/` with sha256 manifest before deletion.
 - Use **read-only** scans by default. Modifying the environment requires explicit user confirmation per finding (or `--auto-quarantine` flag the user enables intentionally).
@@ -129,10 +129,10 @@ Supply-chain trust spec → `_common/SECURITY.md`
 - Issue a rotation step before persistence eradication is verified. **This is the load-bearing rule** — the `rm -rf ~/` payload fires on the first 40x response from `gh-token-monitor`.
 - Make outbound HTTP / DNS / TCP to known attacker hosts to "verify the C2." Use passive log inspection only.
 - Delete a file matching an IoC without first recording sha256 + path + mtime + size in the report.
-- Classify `CONFIRMED` without an IoC match in `references/ioc-database.md`. Pattern-only matches are `SUSPECTED`.
+- Classify `CONFIRMED` without an IoC match in `reference/ioc-database.md`. Pattern-only matches are `SUSPECTED`.
 - Log raw credential values, token values, or wallet seed phrases. Paths and existence flags only.
 - Auto-run `gh auth status` / `gh auth refresh` / `aws sts get-caller-identity` / `kubectl auth can-i` during a scan — these themselves leak environment fingerprints and may already be hooked.
-- Update `references/ioc-database.md` based on unverified rumor. Each IoC needs a source URL + report date.
+- Update `reference/ioc-database.md` based on unverified rumor. Each IoC needs a source URL + report date.
 - Modify production infrastructure, CI/CD secrets, or cloud KMS without explicit `triage` + user approval.
 - Stop a LaunchAgent / systemd unit that the IoC database does not flag — disabling legitimate services causes secondary outages.
 - Treat absence of matches as proof of safety in `ACTIVELY_BLEEDING`-class campaigns. Some payloads self-delete after exfil; the absence of droplet files does not mean no exfil happened — check the network and git-log layer too.
@@ -145,11 +145,11 @@ Supply-chain trust spec → `_common/SECURITY.md`
 
 | Phase | Purpose | Required action | Read |
 |-------|---------|-----------------|------|
-| `SURVEY` | Establish scan scope and target campaign | Identify OS, package managers in use, lockfiles present, IDE clients installed, install windows that overlap published campaign dates | `references/ioc-database.md` (campaign timeline section) |
-| `SCAN` | Match local state against IoC database | Run persistence sweep, droplet path check, lockfile pin diff, process tree inspection, git-log anomaly grep — **read-only** | `references/scan-procedures.md` |
-| `TRIAGE` | Classify infection grade | Aggregate matches; classify `CLEAN` / `SUSPECTED` / `CONFIRMED` / `ACTIVELY_BLEEDING`; record evidence chain per finding | `references/ioc-database.md` |
-| `ERADICATE` | Remove persistence and droplets in safe order | **Persistence first**, then quarantine + delete droplets; verify with second scan | `references/eradication-playbook.md` |
-| `ROTATE` | Issue dependency-ordered credential rotation | Gated on eradication-verified; never before. Order: cloud → identity → registry → wallet | `references/eradication-playbook.md` (rotation section) |
+| `SURVEY` | Establish scan scope and target campaign | Identify OS, package managers in use, lockfiles present, IDE clients installed, install windows that overlap published campaign dates | `reference/ioc-database.md` (campaign timeline section) |
+| `SCAN` | Match local state against IoC database | Run persistence sweep, droplet path check, lockfile pin diff, process tree inspection, git-log anomaly grep — **read-only** | `reference/scan-procedures.md` |
+| `TRIAGE` | Classify infection grade | Aggregate matches; classify `CLEAN` / `SUSPECTED` / `CONFIRMED` / `ACTIVELY_BLEEDING`; record evidence chain per finding | `reference/ioc-database.md` |
+| `ERADICATE` | Remove persistence and droplets in safe order | **Persistence first**, then quarantine + delete droplets; verify with second scan | `reference/eradication-playbook.md` |
+| `ROTATE` | Issue dependency-ordered credential rotation | Gated on eradication-verified; never before. Order: cloud → identity → registry → wallet | `reference/eradication-playbook.md` (rotation section) |
 | `REPORT` | Deliver findings + runbook + handoffs | Grade, evidence chain, eradication status, rotation checklist, handoff targets | This file (Output Requirements) |
 
 ---
@@ -160,13 +160,13 @@ Single source of truth for Recipe definitions. Behavior depth (gating, scope, su
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Full IoC Scan | `scan` | ✓ | Run all IoC families × all surfaces (persistence, droplets, lockfiles, process tree, network passive logs). Default cadence after suspected exposure. Applies full `SURVEY → SCAN → TRIAGE → ERADICATE → ROTATE → REPORT` workflow. | `references/scan-procedures.md`, `references/ioc-database.md` |
-| Campaign-Specific Scan | `shai-hulud` | | Mini Shai-Hulud only — narrow but deep. 1st wave (2026-04, 6 packages, IDE-fork-only) and 2nd wave (2026-05, 200+ packages, OS-level persistence + 3-channel exfil + retaliation payload). Cross-cuts persistence, lockfiles, IDE hooks, GitHub anomaly. | `references/ioc-database.md` (Shai-Hulud section) |
-| Lockfile Pin Check | `lockfile` | | Static check of `package-lock.json` / `pnpm-lock.yaml` / `yarn.lock` / `requirements.txt` against known-bad version pins. Pure file read; no FS traversal beyond lockfiles. Fast pre-merge check. | `references/ioc-database.md` (package@version table) |
-| Eradication Runbook | `eradicate` | | Produce the ordered removal runbook after `CONFIRMED` grade. Gated on `CONFIRMED` from a recent `scan` run — refuses to run on `SUSPECTED` (insufficient grounding). | `references/eradication-playbook.md` |
-| Rotation Runbook | `rotate` | | Produce the credential rotation sequence after eradication is verified. Gated on eradication-verified second scan — refuses to run before. Order in `references/eradication-playbook.md` is load-bearing; do not reorder. | `references/eradication-playbook.md` (rotation section) |
-| Hardening Checklist | `harden` | | Prevention controls — Dependency Cooldown, `--ignore-scripts`, provenance, registry proxy, GitHub Actions hardening. Independent of grade; can run on `CLEAN` environments as prevention. | `references/scan-procedures.md` (hardening section) |
-| Worm Propagation Audit | `propagation` | | Maintainer-side check: has my npm publish token been used to push tarballs I did not author? Requires npm publish credential context — coordinate with the user on whether to log into npm via a separate (uncompromised) session. | `references/scan-procedures.md` (maintainer section) |
+| Full IoC Scan | `scan` | ✓ | Run all IoC families × all surfaces (persistence, droplets, lockfiles, process tree, network passive logs). Default cadence after suspected exposure. Applies full `SURVEY → SCAN → TRIAGE → ERADICATE → ROTATE → REPORT` workflow. | `reference/scan-procedures.md`, `reference/ioc-database.md` |
+| Campaign-Specific Scan | `shai-hulud` | | Mini Shai-Hulud only — narrow but deep. 1st wave (2026-04, 6 packages, IDE-fork-only) and 2nd wave (2026-05, 200+ packages, OS-level persistence + 3-channel exfil + retaliation payload). Cross-cuts persistence, lockfiles, IDE hooks, GitHub anomaly. | `reference/ioc-database.md` (Shai-Hulud section) |
+| Lockfile Pin Check | `lockfile` | | Static check of `package-lock.json` / `pnpm-lock.yaml` / `yarn.lock` / `requirements.txt` against known-bad version pins. Pure file read; no FS traversal beyond lockfiles. Fast pre-merge check. | `reference/ioc-database.md` (package@version table) |
+| Eradication Runbook | `eradicate` | | Produce the ordered removal runbook after `CONFIRMED` grade. Gated on `CONFIRMED` from a recent `scan` run — refuses to run on `SUSPECTED` (insufficient grounding). | `reference/eradication-playbook.md` |
+| Rotation Runbook | `rotate` | | Produce the credential rotation sequence after eradication is verified. Gated on eradication-verified second scan — refuses to run before. Order in `reference/eradication-playbook.md` is load-bearing; do not reorder. | `reference/eradication-playbook.md` (rotation section) |
+| Hardening Checklist | `harden` | | Prevention controls — Dependency Cooldown, `--ignore-scripts`, provenance, registry proxy, GitHub Actions hardening. Independent of grade; can run on `CLEAN` environments as prevention. | `reference/scan-procedures.md` (hardening section) |
+| Worm Propagation Audit | `propagation` | | Maintainer-side check: has my npm publish token been used to push tarballs I did not author? Requires npm publish credential context — coordinate with the user on whether to log into npm via a separate (uncompromised) session. | `reference/scan-procedures.md` (maintainer section) |
 
 ### Signal Keywords → Recipe
 
@@ -268,10 +268,10 @@ Husk receives compromise reports from User, slopsquat/CVE escalations from Senti
 
 | File | Read this when |
 |------|----------------|
-| `references/ioc-database.md` | You need IoC tables per campaign (Mini Shai-Hulud 1st/2nd, S1ngularity, lottie-player), package@version pins, hashes, C2 hosts, source citations |
-| `references/scan-procedures.md` | You need OS-specific scan commands (macOS / Linux / Windows / WSL / container), passive log inspection patterns, maintainer-side propagation audit, hardening checklist |
-| `references/eradication-playbook.md` | You are producing the ordered removal sequence (persistence-first) or the rotation sequence (dependency-ordered, gated on eradication) |
-| `references/handoffs.md` | You need handoff templates for Triage / Sentinel / Chain / Gear / Vigil / Lore |
+| `reference/ioc-database.md` | You need IoC tables per campaign (Mini Shai-Hulud 1st/2nd, S1ngularity, lottie-player), package@version pins, hashes, C2 hosts, source citations |
+| `reference/scan-procedures.md` | You need OS-specific scan commands (macOS / Linux / Windows / WSL / container), passive log inspection patterns, maintainer-side propagation audit, hardening checklist |
+| `reference/eradication-playbook.md` | You are producing the ordered removal sequence (persistence-first) or the rotation sequence (dependency-ordered, gated on eradication) |
+| `reference/handoffs.md` | You need handoff templates for Triage / Sentinel / Chain / Gear / Vigil / Lore |
 | `_common/SECURITY.md` | You need the trust boundary spec, manifest format, or escalation matrix |
 | `_common/BOUNDARIES.md` | Role boundaries with Sentinel / Chain / Vigil / Triage are ambiguous |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the report, deciding adaptive thinking depth at TRIAGE (grade classification), or front-loading scope at SURVEY. Critical for Husk: P3, P5 |
@@ -353,7 +353,7 @@ Required fields:
 Husk-specific risks to surface in handoff:
 - `ACTIVELY_BLEEDING` grade — every minute of delay extends attacker access; rotation gated until eradication verified
 - Persistence-stop-before-revoke ordering must be preserved in any downstream automation
-- IoC database staleness — flag if `references/ioc-database.md` is older than the campaign report date
+- IoC database staleness — flag if `reference/ioc-database.md` is older than the campaign report date
 
 ---
 

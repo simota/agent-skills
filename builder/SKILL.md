@@ -168,11 +168,11 @@ Spawn only when the deliverable touches 4+ files and post-BUILD verification wou
 
 | Domain | Key Patterns | Reference |
 |--------|-------------|-----------|
-| **Domain Modeling** | Entity · Value Object · Aggregate · Repository · CQRS · Event Sourcing · Saga · Outbox | `references/domain-modeling.md` |
-| **Implementation** | Result/Railway · Zod v4 Validation · API Integration (REST/GraphQL/WS) · Performance | `references/implementation-patterns.md` |
-| **Frontend** | RSC · TanStack Query v5 + Zustand · State Selection Matrix · RHF + Zod · Optimistic | `references/frontend-patterns.md` |
-| **Architecture** | Clean/Hexagonal · SOLID/CUPID · Domain Complexity Assessment · DDD vs CRUD | `references/architecture-patterns.md` |
-| **Language Idioms** | TypeScript 6.0+ / tsgo · Go 1.26+ · Python 3.14+ · Rust Edition 2024 / 1.95+ · Per-language testing | `references/language-idioms.md` |
+| **Domain Modeling** | Entity · Value Object · Aggregate · Repository · CQRS · Event Sourcing · Saga · Outbox | `reference/domain-modeling.md` |
+| **Implementation** | Result/Railway · Zod v4 Validation · API Integration (REST/GraphQL/WS) · Performance | `reference/implementation-patterns.md` |
+| **Frontend** | RSC · TanStack Query v5 + Zustand · State Selection Matrix · RHF + Zod · Optimistic | `reference/frontend-patterns.md` |
+| **Architecture** | Clean/Hexagonal · SOLID/CUPID · Domain Complexity Assessment · DDD vs CRUD | `reference/architecture-patterns.md` |
+| **Language Idioms** | TypeScript 6.0+ / tsgo · Go 1.26+ · Python 3.14+ · Rust Edition 2024 / 1.95+ · Per-language testing | `reference/language-idioms.md` |
 
 ## Workflow
 
@@ -180,24 +180,24 @@ Spawn only when the deliverable touches 4+ files and post-BUILD verification wou
 
 | Phase | Focus | Key Actions | Read |
 |-------|-------|-------------|------|
-| SURVEY | Requirements and dependency analysis | Interface/Type definitions, I/O identification, failure mode enumeration, DDD pattern selection | `references/architecture-patterns.md` |
-| PLAN | Design and implementation planning | Dependency mapping, pattern selection, test strategy, risk assessment | `references/domain-modeling.md` |
-| BUILD | Implementation | Business rule implementation, validation (guard clauses), API/DB connections, state management | `references/implementation-patterns.md` |
-| VERIFY | Quality verification | Error handling, edge case verification, memory leak prevention, retry logic, **5-axis Impact Scope Check (callers / tests / types / configs / docs)** | `references/process-and-examples.md` |
-| PRESENT | Deliverable presentation | PR creation (architecture, safeguards, type info), self-review | `references/process-and-examples.md` |
+| SURVEY | Requirements and dependency analysis | Interface/Type definitions, I/O identification, failure mode enumeration, DDD pattern selection | `reference/architecture-patterns.md` |
+| PLAN | Design and implementation planning | Dependency mapping, pattern selection, test strategy, risk assessment | `reference/domain-modeling.md` |
+| BUILD | Implementation | Business rule implementation, validation (guard clauses), API/DB connections, state management | `reference/implementation-patterns.md` |
+| VERIFY | Quality verification | Error handling, edge case verification, memory leak prevention, retry logic, **5-axis Impact Scope Check (callers / tests / types / configs / docs)** | `reference/process-and-examples.md` |
+| PRESENT | Deliverable presentation | PR creation (architecture, safeguards, type info), self-review | `reference/process-and-examples.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Bug Fix | `fix` | ✓ | Scoped fix after Scout handoff, target <50 lines | `references/process-and-examples.md` |
-| CRUD | `crud` | | Single-aggregate CRUD, no invariants, 30-60 lines | `references/architecture-patterns.md` |
-| API Integration | `api` | | REST/GraphQL/WS client/server, idempotency critical | `references/implementation-patterns.md` |
-| Domain Model | `ddd` | | Aggregate root, invariants, domain events, multi-file | `references/domain-modeling.md` |
-| Prototype Harden | `harden` | | Productionize Forge output, raise quality L0-L3 | `references/process-and-examples.md`, `references/architecture-patterns.md` |
-| Cross-Language Port | `port` | | Port between languages / frameworks (semantic equivalence tests, Parallel Run) | `references/cross-language-port.md` |
-| External API Integrate | `integrate` | | External service integration (auth, webhook, sandbox verification, vendor-specific retry) | `references/external-integration.md` |
-| Targeted Patch | `patch` | | Scoped fix under 30 lines / 3 files (smaller than fix, lighter than harden) | `references/targeted-patch.md` |
+| Bug Fix | `fix` | ✓ | Scoped fix after Scout handoff, target <50 lines | `reference/process-and-examples.md` |
+| CRUD | `crud` | | Single-aggregate CRUD, no invariants, 30-60 lines | `reference/architecture-patterns.md` |
+| API Integration | `api` | | REST/GraphQL/WS client/server, idempotency critical | `reference/implementation-patterns.md` |
+| Domain Model | `ddd` | | Aggregate root, invariants, domain events, multi-file | `reference/domain-modeling.md` |
+| Prototype Harden | `harden` | | Productionize Forge output, raise quality L0-L3 | `reference/process-and-examples.md`, `reference/architecture-patterns.md` |
+| Cross-Language Port | `port` | | Port between languages / frameworks (semantic equivalence tests, Parallel Run) | `reference/cross-language-port.md` |
+| External API Integrate | `integrate` | | External service integration (auth, webhook, sandbox verification, vendor-specific retry) | `reference/external-integration.md` |
+| Targeted Patch | `patch` | | Scoped fix under 30 lines / 3 files (smaller than fix, lighter than harden) | `reference/targeted-patch.md` |
 
 ## Subcommand Dispatch
 
@@ -219,22 +219,22 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `business logic`, `domain model`, `entity` | DDD tactical patterns | Domain model + service layer | `references/domain-modeling.md` |
-| `api`, `rest`, `graphql`, `websocket` | API integration pattern | API client/server code | `references/implementation-patterns.md` |
-| `validation`, `zod`, `schema` | Validation layer | Zod schemas + guard clauses | `references/implementation-patterns.md` |
-| `state`, `tanstack`, `zustand` | State management | Store + hooks | `references/frontend-patterns.md` |
-| `event sourcing`, `cqrs`, `saga` | Event-driven pattern | Event handlers + projections | `references/domain-modeling.md` |
-| `bug fix`, `fix` | Investigation-to-fix | Targeted fix + regression test skeleton | `references/process-and-examples.md` |
-| `prototype conversion`, `forge handoff` | Forge-to-production | Production-grade rewrite | `references/process-and-examples.md` |
-| `architecture`, `clean`, `hexagonal` | Architecture pattern | Layered structure | `references/architecture-patterns.md` |
-| unclear implementation request | Domain assessment | DDD vs CRUD decision + implementation | `references/architecture-patterns.md` |
+| `business logic`, `domain model`, `entity` | DDD tactical patterns | Domain model + service layer | `reference/domain-modeling.md` |
+| `api`, `rest`, `graphql`, `websocket` | API integration pattern | API client/server code | `reference/implementation-patterns.md` |
+| `validation`, `zod`, `schema` | Validation layer | Zod schemas + guard clauses | `reference/implementation-patterns.md` |
+| `state`, `tanstack`, `zustand` | State management | Store + hooks | `reference/frontend-patterns.md` |
+| `event sourcing`, `cqrs`, `saga` | Event-driven pattern | Event handlers + projections | `reference/domain-modeling.md` |
+| `bug fix`, `fix` | Investigation-to-fix | Targeted fix + regression test skeleton | `reference/process-and-examples.md` |
+| `prototype conversion`, `forge handoff` | Forge-to-production | Production-grade rewrite | `reference/process-and-examples.md` |
+| `architecture`, `clean`, `hexagonal` | Architecture pattern | Layered structure | `reference/architecture-patterns.md` |
+| unclear implementation request | Domain assessment | DDD vs CRUD decision + implementation | `reference/architecture-patterns.md` |
 
 Routing rules:
 
-- If the request involves domain complexity, read `references/domain-modeling.md`.
-- If the request involves API calls or external services, read `references/implementation-patterns.md`.
-- If the request involves frontend state, read `references/frontend-patterns.md`.
-- If the request involves Go, Python, or Rust, read `references/language-idioms.md`.
+- If the request involves domain complexity, read `reference/domain-modeling.md`.
+- If the request involves API calls or external services, read `reference/implementation-patterns.md`.
+- If the request involves frontend state, read `reference/frontend-patterns.md`.
+- If the request involves Go, Python, or Rust, read `reference/language-idioms.md`.
 - Always generate test skeletons for Radar handoff.
 
 ## Output Requirements
@@ -265,7 +265,7 @@ ImpactScopeReport:
 
 ## Daily Process
 
-**Detail + examples**: See `references/process-and-examples.md` | **Tools:** TypeScript (Strict) · Zod v4 · TanStack Query v5 · Custom Hooks · XState
+**Detail + examples**: See `reference/process-and-examples.md` | **Tools:** TypeScript (Strict) · Zod v4 · TanStack Query v5 · Custom Hooks · XState
 
 ## Reference Map
 
@@ -273,17 +273,17 @@ Read only the files required for the current decision.
 
 | Reference | Read this when |
 |-----------|----------------|
-| `references/domain-modeling.md` | You need DDD tactical patterns, CQRS, Event Sourcing, Saga, Outbox, or domain vs integration events |
-| `references/implementation-patterns.md` | You need Result/Railway (neverthrow), Zod v4 validation, API integration (REST/GraphQL/WS), or performance patterns |
-| `references/frontend-patterns.md` | You need RSC, TanStack Query v5, Zustand, state management selection, or RHF + Zod |
-| `references/architecture-patterns.md` | You need Clean/Hexagonal Architecture, SOLID/CUPID, domain complexity assessment, or DDD vs CRUD decision |
-| `references/language-idioms.md` | You are working with Go 1.26+ [Source: go.dev/blog/go1.26], Python 3.14+ [Source: python.org/downloads], or Rust Edition 2024 / 1.95+ [Source: blog.rust-lang.org] (TypeScript is default) |
-| `references/process-and-examples.md` | You need Forge conversion flow, TDD examples, Seven Deadly Sins, or question templates |
-| `references/cross-language-port.md` | You are porting business logic between languages/frameworks with parallel-run black-box comparison and semantic equivalence tests (`port` recipe) |
-| `references/external-integration.md` | You are integrating an external API (Stripe/Slack/GitHub etc.) with sandbox-first verification, secret handling, vendor-specific retry, and webhook signature verification (`integrate` recipe) |
-| `references/targeted-patch.md` | You are applying a scoped patch under 30 lines / 3 files with regression-test coupling and clear rollback (`patch` recipe) |
-| `references/autorun-nexus.md` | You need exact AUTORUN or Nexus Hub mode compatibility details |
-| `references/ai-coding-patterns.md` | You need the consolidated 2026 AI-era pattern set (Verification-first / Make Illegal States Unrep / Parse-don't-validate / Result-Either / Functional Core+Shell / Branded Types / Vertical Slice / Locality of Behaviour / Explore-Plan-Implement-Commit / Slopsquat / AI-session smells). Use this when reviewing or planning AI-assisted implementation work. |
+| `reference/domain-modeling.md` | You need DDD tactical patterns, CQRS, Event Sourcing, Saga, Outbox, or domain vs integration events |
+| `reference/implementation-patterns.md` | You need Result/Railway (neverthrow), Zod v4 validation, API integration (REST/GraphQL/WS), or performance patterns |
+| `reference/frontend-patterns.md` | You need RSC, TanStack Query v5, Zustand, state management selection, or RHF + Zod |
+| `reference/architecture-patterns.md` | You need Clean/Hexagonal Architecture, SOLID/CUPID, domain complexity assessment, or DDD vs CRUD decision |
+| `reference/language-idioms.md` | You are working with Go 1.26+ [Source: go.dev/blog/go1.26], Python 3.14+ [Source: python.org/downloads], or Rust Edition 2024 / 1.95+ [Source: blog.rust-lang.org] (TypeScript is default) |
+| `reference/process-and-examples.md` | You need Forge conversion flow, TDD examples, Seven Deadly Sins, or question templates |
+| `reference/cross-language-port.md` | You are porting business logic between languages/frameworks with parallel-run black-box comparison and semantic equivalence tests (`port` recipe) |
+| `reference/external-integration.md` | You are integrating an external API (Stripe/Slack/GitHub etc.) with sandbox-first verification, secret handling, vendor-specific retry, and webhook signature verification (`integrate` recipe) |
+| `reference/targeted-patch.md` | You are applying a scoped patch under 30 lines / 3 files with regression-test coupling and clear rollback (`patch` recipe) |
+| `reference/autorun-nexus.md` | You need exact AUTORUN or Nexus Hub mode compatibility details |
+| `reference/ai-coding-patterns.md` | You need the consolidated 2026 AI-era pattern set (Verification-first / Make Illegal States Unrep / Parse-don't-validate / Result-Either / Functional Core+Shell / Branded Types / Vertical Slice / Locality of Behaviour / Explore-Plan-Implement-Commit / Slopsquat / AI-session smells). Use this when reviewing or planning AI-assisted implementation work. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the implementation report, deciding effort-level for codegen, or front-loading constraints/tests at PLAN. Critical for Builder: P3, P6. |
 
 ## Operational
