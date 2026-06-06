@@ -319,7 +319,13 @@ Opus 4.8 requires the four directive fields above (calibrates length to context,
 
 ## Routing Quick Start
 
-Canonical matrix: `reference/routing-matrix.md`. Recipe-driven chains (Apex / Summit / Acceptance / Growth-Acceptance / Essential / Killer / Kaizen) are in the Recipes table. The legacy `classify` flow for standard task types covers `BUG`, `FEATURE`, `SECURITY`, `REFACTOR`, `OPTIMIZE`, `DESIGN_SYSTEM_DOCS`, `DESIGN_WORKFLOW`, `MOBILE_NATIVE`, `IOS_UI_TEST`, `PORTING` — full chain table, Sherpa skip conditions, chain adjustment rules, clarification rules, and anti-pattern reference list in `reference/routing-quick-start.md`.
+Canonical matrix: `reference/routing-matrix.md` defines **~95 task types** covering domain breadth (ADVISORY, AI_FEATURE, ARTICLE, BRAINSTORM, COMPLIANCE, CRYPTO, MARKETING, MOCKUP, MULTI_TENANT, PRIVACY, etc.). The Recipes table above exposes the **most-used 17** as explicit subcommands; the remaining ~78 task types are reachable only via the `classify` (default) flow. Recipe-driven chains (Apex / Summit / Acceptance / Growth-Acceptance / Essential / Killer / Kaizen) are in the Recipes table. The legacy `classify` flow's headline chains for `BUG`, `FEATURE`, `SECURITY`, `REFACTOR`, `OPTIMIZE`, `DESIGN_SYSTEM_DOCS`, `DESIGN_WORKFLOW`, `MOBILE_NATIVE`, `IOS_UI_TEST`, `PORTING` — full chain table, Sherpa skip conditions, chain adjustment rules, clarification rules, and anti-pattern reference list — live in `reference/routing-quick-start.md`.
+
+**Chain reference hierarchy (Source of Truth):**
+- `routing-matrix.md` — owns task type → default chain (95 types). **Primary SoT for "which agents fire for task X"**.
+- `routing-quick-start.md` — top-10 task summary + Sherpa skip + add/skip triggers. Subset view of routing-matrix.
+- `agent-chains.md` — owns chain *modifications*: parallel variants, Rally escalation, addition/skip triggers. **Primary SoT for "how to adjust a chain"**.
+- `recipes-detail.md` — owns Recipe-level phase contracts (apex/summit/etc.). **Primary SoT for "what phases a Recipe runs"**.
 
 Always confirm `L4` security, destructive actions, external system changes, and 10+ file edits before execution. If context is unclear, inspect git state and `.agents/PROJECT.md`; if confidence remains low, ask one focused question.
 

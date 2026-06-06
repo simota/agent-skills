@@ -847,3 +847,9 @@ Has user acknowledged 8-22× cost vs feature?
   └─ NO  → present cost envelope, get confirmation
   └─ YES → summit
 ```
+
+---
+
+## Visualization
+
+Mermaid flow diagram: [`summit-recipe-flow.mmd`](summit-recipe-flow.mmd) — full five-team multi-engine topology.

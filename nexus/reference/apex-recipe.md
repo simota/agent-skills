@@ -422,3 +422,9 @@ Nexus AUTORUN apex            # or: apex goal=auto
 | Autonomous bootstrap (Phase 0 added) | + 4-8 agents (project_scan + spark + rank + voice/pulse/compete/sage/magi as available) | +4-8 over base | + 10-20% over base |
 
 Apex is not free. Budget guardrails (orbit cost-per-task, Nexus chain confirmation for 5+ agent chains, L4 confirmation gates) are enforced. Autonomous mode adds Phase 0 (~10-15 minutes, 4-8 agents) and one boundary-confirm checkpoint, but downstream cost is identical to goal-supplied mode. For repeated similar requests, propose a Sigil-generated project skill to amortise the chain design cost.
+
+---
+
+## Visualization
+
+Mermaid flow diagram: [`apex-recipe-flow.mmd`](apex-recipe-flow.mmd) — render via mermaid.live or compatible viewer for the full apex topology.

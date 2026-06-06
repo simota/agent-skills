@@ -42,3 +42,11 @@
 - **If No**: DELIVER "decided-not-to-ship" strategic record.
 - **If Modify**: loop back to Phase 1 with modification (e.g., "reframe around X constraint" → Flux re-runs with updated directive).
 - **Add-ons**: +Riff for iterative deep-dive on Spark output in Phase 2, +Field for additional market trend grounding in Phase 1.
+
+---
+
+## Visualizations
+
+Mermaid flow diagrams (render via mermaid.live or compatible viewer):
+- [`essential-recipe-flow.mmd`](essential-recipe-flow.mmd) — verdict funnel + conditional impl branch
+- [`killer-recipe-flow.mmd`](killer-recipe-flow.mmd) — cross-engine triangulation topology
