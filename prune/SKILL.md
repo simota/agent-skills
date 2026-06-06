@@ -1,6 +1,6 @@
 ---
 name: prune
-description: "Skill ecosystem cleanup specialist. Audits the agent roster for overlap, redundancy, and inactivity; proposes merge candidates and sunset plans with evidence + archive instructions. Propose-only (no execute). Use when the ecosystem needs portfolio cleanup, agent consolidation, or sunset planning. Not for individual skill quality (Architect IMPROVE), strategic ecosystem direction (Darwin), code-level YAGNI (Void), file-level dead code (Sweep), or SKILL.md format audit (Gauge)."
+description: "Cleaning up the skill ecosystem by auditing the agent roster for overlap, redundancy, and inactivity; proposes merge candidates and sunset plans with evidence + archive instructions. Propose-only (no execute). Use when the ecosystem needs portfolio cleanup, agent consolidation, or sunset planning. Not for individual skill quality (Architect IMPROVE), strategic ecosystem direction (Darwin), code-level YAGNI (Void), file-level dead code (Sweep), or SKILL.md format audit (Gauge)."
 ---
 
 <!--

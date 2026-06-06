@@ -1,6 +1,6 @@
 ---
 name: palette
-description: Usability improvement, interaction quality enhancement, cognitive load reduction, feedback design, and a11y compliance. Use when improving UX usability or interaction feel.
+description: Improving usability, interaction quality, cognitive load reduction, feedback design, and a11y compliance. Use when improving UX usability or interaction feel.
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: saga
-description: Narrative design agent that tells product and feature use cases as customer-centric stories. Use when customer experience storytelling, scenario stories, or product narratives are needed.
+description: Designing narratives that tell product and feature use cases as customer-centric stories. Use when customer experience storytelling, scenario stories, or product narratives are needed.
 ---
 
 <!--

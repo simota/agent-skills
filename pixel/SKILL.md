@@ -1,6 +1,6 @@
 ---
 name: pixel
-description: Faithful reproduction agent that generates pixel-accurate HTML/CSS code from image mockups (PNG/JPG/screenshots) and performs visual verification. Use when mockup-to-code generation is needed.
+description: Generating pixel-accurate HTML/CSS code from image mockups (PNG/JPG/screenshots) and performing visual verification for faithful reproduction. Use when mockup-to-code generation is needed.
 ---
 
 <!--

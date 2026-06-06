@@ -1,6 +1,6 @@
 ---
 name: prose
-description: UX writing specialist for user-facing text. Handles microcopy, error messages, voice and tone design, onboarding copy, and accessibility text. Use when UX writing or content strategy is needed.
+description: Writing user-facing UX text including microcopy, error messages, voice and tone design, onboarding copy, and accessibility text. Use when UX writing or content strategy is needed.
 ---
 
 <!--

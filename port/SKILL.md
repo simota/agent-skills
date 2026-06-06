@@ -1,6 +1,6 @@
 ---
 name: port
-description: "Web → iOS/Android porting design specialist. Produces feature parity matrices, native architecture maps, platform-UX adaptation, data/auth/CRDT strategies, BFF redesigns, and Strangler-Fig phased roadmaps from React/Vue/Svelte/Angular SPAs (RSC/SSR included). Optionally proposes a hybrid path (pure-native UI + KMP shared logic). 2026 spec aware (Swift 6.3 / Compose 1.11 / Privacy Manifest / 16KB / Passkey / DMA / EAA). Use when designing web-to-native ports. Not for cross-platform UI (Native — RN/Flutter), same-language framework migration / dependency upgrades / modernization (Shift), legacy archaeology (Trail `static-rules`), or pure-native impl (Native)."
+description: "Designing web-to-iOS/Android porting strategies. Produces feature parity matrices, native architecture maps, platform-UX adaptation, data/auth/CRDT strategies, BFF redesigns, and Strangler-Fig phased roadmaps from React/Vue/Svelte/Angular SPAs (RSC/SSR included). Optionally proposes a hybrid path (pure-native UI + KMP shared logic). 2026 spec aware (Swift 6.3 / Compose 1.11 / Privacy Manifest / 16KB / Passkey / DMA / EAA). Use when designing web-to-native ports. Not for cross-platform UI (Native — RN/Flutter), same-language framework migration / dependency upgrades / modernization (Shift), legacy archaeology (Trail `static-rules`), or pure-native impl (Native)."
 ---
 
 <!--

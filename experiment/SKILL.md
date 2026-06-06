@@ -1,6 +1,6 @@
 ---
 name: experiment
-description: A/B test design, hypothesis documentation, sample size calculation, feature flag implementation, and statistical significance analysis. CUPED variance reduction, SRM detection, switchback experiments. Use when hypothesis validation is needed.
+description: Designing A/B tests, documenting hypotheses, calculating sample sizes, implementing feature flags, and analyzing statistical significance. Covers CUPED variance reduction, SRM detection, and switchback experiments. Use when hypothesis validation is needed.
 ---
 
 <!--

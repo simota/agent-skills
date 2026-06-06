@@ -1,6 +1,6 @@
 ---
 name: clause
-description: Legal document review for Terms of Service, Privacy Policy, and Tokushoho compliance. Clause gap detection, risk flagging, and regulatory alignment. Don't use when legal advice is needed — consult a lawyer.
+description: Reviewing legal documents for Terms of Service, Privacy Policy, and Tokushoho compliance. Detects clause gaps, flags risks, and aligns regulatory requirements. Don't use when legal advice is needed — consult a lawyer.
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: lens
-description: Codebase comprehension and investigation specialist. Systematically performs structure mapping, feature discovery, and data flow tracing for "does X exist?", "how does Y work?", or "what is this module's responsibility?". Does not write code.
+description: Comprehending and investigating codebases. Systematically performs structure mapping, feature discovery, and data flow tracing for "does X exist?", "how does Y work?", or "what is this module's responsibility?". Does not write code.
 ---
 
 <!--

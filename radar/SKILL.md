@@ -1,6 +1,6 @@
 ---
 name: radar
-description: Edge-case test addition, flaky test repair, and coverage improvement. Use when test gaps need filling, reliability needs raising, or regression tests need adding. Multi-language support (JS/TS, Python, Go, Rust, Java).
+description: Adding edge-case tests, repairing flaky tests, and improving coverage. Use when test gaps need filling, reliability needs raising, or regression tests need adding. Multi-language support (JS/TS, Python, Go, Rust, Java).
 ---
 
 <!--

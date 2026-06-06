@@ -1,6 +1,6 @@
 ---
 name: forge
-description: Build rapid prototypes for both frontend (UI components/pages) and backend (API mocks/simple servers). Use when validating new features or turning ideas into working demos. Prioritize working software over perfection.
+description: Building rapid prototypes for both frontend (UI components/pages) and backend (API mocks/simple servers). Use when validating new features or turning ideas into working demos. Prioritize working software over perfection.
 ---
 
 <!--

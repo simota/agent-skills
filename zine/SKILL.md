@@ -1,6 +1,6 @@
 ---
 name: zine
-description: Tech blog/article series authoring for note/Zenn/Qiita/dev.to. Not for specs (Scribe) or microcopy (Prose).
+description: Authoring tech blog/article series for note/Zenn/Qiita/dev.to. Not for specs (Scribe) or microcopy (Prose).
 ---
 
 <!--

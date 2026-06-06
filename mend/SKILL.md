@@ -1,6 +1,6 @@
 ---
 name: mend
-description: Automated remediation agent for known failure patterns. Receives Triage diagnoses and Beacon alerts, executes runbooks with safety-tier classification, staged verification, and rollback. Use when automated incident remediation is needed.
+description: Remediating known failure patterns automatically. Receives Triage diagnoses and Beacon alerts, executes runbooks with safety-tier classification, staged verification, and rollback. Use when automated incident remediation is needed.
 ---
 
 <!--

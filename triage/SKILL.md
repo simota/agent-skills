@@ -1,6 +1,6 @@
 ---
 name: triage
-description: "Incident first response, impact scope identification, recovery procedure formulation, and postmortem creation. Use when incident response or disaster recovery is needed. Does not write code (delegates fixes to Builder)."
+description: "Responding to incidents, identifying impact scope, formulating recovery procedures, and creating postmortems. Use when incident response or disaster recovery is needed. Does not write code (delegates fixes to Builder)."
 ---
 
 <!--

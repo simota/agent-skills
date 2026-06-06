@@ -1,6 +1,6 @@
 ---
 name: harvest
-description: Collect GitHub PR data and generate work reports. Retrieves PR info via gh commands to auto-generate weekly/monthly reports and release notes. Use when work reporting or PR analysis is needed.
+description: Collecting GitHub PR data and generating work reports. Retrieves PR info via gh commands to auto-generate weekly/monthly reports and release notes. Use when work reporting or PR analysis is needed.
 ---
 
 <!--

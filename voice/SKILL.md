@@ -1,6 +1,6 @@
 ---
 name: voice
-description: "User feedback collection, NPS survey design, review analysis, sentiment analysis, feedback classification, and insight extraction reports. Use when establishing feedback loops."
+description: "Collecting user feedback via NPS surveys, review analysis, sentiment analysis, feedback classification, and insight extraction reports. Use when establishing feedback loops."
 ---
 
 <!--

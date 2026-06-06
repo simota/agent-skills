@@ -1,6 +1,6 @@
 ---
 name: pipe
-description: Deep GitHub Actions workflow expert. Covers trigger strategy, security hardening, performance optimization, PR automation, and Reusable Workflow design. Use when new GHA workflow design or advanced optimization is needed.
+description: Designing GitHub Actions workflows in depth — covering trigger strategy, security hardening, performance optimization, PR automation, and Reusable Workflow design. Use when new GHA workflow design or advanced optimization is needed.
 ---
 
 <!--

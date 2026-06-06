@@ -1,6 +1,6 @@
 ---
 name: shard
-description: "Multi-tenant architecture design. Tenant isolation strategies, RLS, routing, and scale design for SaaS."
+description: "Designing multi-tenant architectures with tenant isolation strategies, RLS, routing, and scale design for SaaS. Use when designing multi-tenant SaaS systems or tenant isolation."
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: trace
-description: "Session replay analysis, persona-based behavioral pattern extraction, and UX issue storytelling. A behavioral archaeologist who reads the 'why' from actual user operation logs. Collaborates with Researcher/Echo for persona validation."
+description: "Analyzing session replays, extracting persona-based behavioral patterns, and storytelling UX issues. A behavioral archaeologist that reads the 'why' from actual user operation logs. Collaborates with Researcher/Echo for persona validation."
 ---
 
 <!--

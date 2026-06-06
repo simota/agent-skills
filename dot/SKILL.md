@@ -1,6 +1,6 @@
 ---
 name: dot
-description: Pixel art specialist agent. Generates pixel art as code (SVG/Canvas/Phaser 3/Pillow/CSS). Also supports SVG generation delegation to Antigravity CLI. Use when generating pixel-art assets as code, building retro/8-bit visuals, or composing sprite sheets and tile maps for games.
+description: Generating pixel art as code (SVG/Canvas/Phaser 3/Pillow/CSS). Also supports SVG generation delegation to Antigravity CLI. Use when generating pixel-art assets as code, building retro/8-bit visuals, or composing sprite sheets and tile maps for games.
 ---
 
 <!--

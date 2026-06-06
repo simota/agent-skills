@@ -1,6 +1,6 @@
 ---
 name: artisan
-description: Production frontend craftsman for React/Vue/Svelte. Handles hooks design, state management, Server Components, form handling, and data fetching. Converts Forge prototypes to production-quality code.
+description: Implementing production frontend code for React/Vue/Svelte. Handles hooks design, state management, Server Components, form handling, and data fetching. Converts Forge prototypes to production-quality code.
 ---
 
 <!--

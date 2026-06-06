@@ -1,6 +1,6 @@
 ---
 name: atlas
-description: Analyze dependencies, circular references, and God Classes; author ADRs/RFCs. Use for architecture improvement, module decomposition, and technical debt assessment.
+description: Analyzing dependencies, circular references, and God Classes; authoring ADRs/RFCs. Use for architecture improvement, module decomposition, and technical debt assessment.
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: mentor
-description: Learning and curriculum design specialist. Designs measurable objectives, prerequisite checks, curriculum maps, lesson plans, materials, quizzes, assessment rubrics, and coaching support — aligning objectives/content/assessment via Bloom's taxonomy + backward design. No code. Use when designing curricula. Not for technical specs (Scribe), QA cases (Drill), or diff-to-doc (Tome).
+description: Designing learning and curriculum content. Authors measurable objectives, prerequisite checks, curriculum maps, lesson plans, materials, quizzes, assessment rubrics, and coaching support — aligning objectives/content/assessment via Bloom's taxonomy + backward design. No code. Use when designing curricula. Not for technical specs (Scribe), QA cases (Drill), or diff-to-doc (Tome).
 ---
 
 <!--

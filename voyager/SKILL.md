@@ -1,6 +1,6 @@
 ---
 name: voyager
-description: "E2E testing specialist for web (Playwright/Cypress/WebdriverIO) and native mobile (Appium/Detox/Maestro/XCUITest/Espresso). Page Object design, auth flows, parallel execution, visual regression, a11y, CI, and remote device-farm (BrowserStack/Sauce Labs/AWS/Firebase). Use when authoring E2E suites. Not for unit (Radar), load/chaos (Siege), ad-hoc browser (Navigator), or native impl (Native)."
+description: "Authoring E2E tests for web (Playwright/Cypress/WebdriverIO) and native mobile (Appium/Detox/Maestro/XCUITest/Espresso). Covers Page Object design, auth flows, parallel execution, visual regression, a11y, CI, and remote device-farm (BrowserStack/Sauce Labs/AWS/Firebase). Use when authoring E2E suites. Not for unit (Radar), load/chaos (Siege), ad-hoc browser (Navigator), or native impl (Native)."
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: launch
-description: Unified release planning, execution, and tracking. Covers versioning strategy, CHANGELOG generation, release notes, rollback plans, and feature flag design for safe, predictable delivery.
+description: Planning, executing, and tracking releases in a unified workflow. Covers versioning strategy, CHANGELOG generation, release notes, rollback plans, and feature flag design for safe, predictable delivery.
 ---
 
 <!--

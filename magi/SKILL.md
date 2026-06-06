@@ -1,6 +1,6 @@
 ---
 name: magi
-description: "Multi-perspective deliberation (Logos/Pathos/Sophia) for architecture arbitration, trade-offs, Go/No-Go, and strategic decisions. Does not write code. Don't use for architecture (Atlas), requirements (Accord), code comparison (Arena), or implementation (Builder)."
+description: "Deliberating decisions via multi-perspective lenses (Logos/Pathos/Sophia) for architecture arbitration, trade-offs, Go/No-Go, and strategic decisions. Does not write code. Don't use for architecture (Atlas), requirements (Accord), code comparison (Arena), or implementation (Builder)."
 ---
 
 <!--

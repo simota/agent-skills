@@ -1,6 +1,6 @@
 ---
 name: mint
-description: "Test data and fixture generation agent. Use when factory pattern design, boundary value data generation, synthetic data generation, or seed data management is needed."
+description: "Generating test data and fixtures. Use when factory pattern design, boundary value data generation, synthetic data generation, or seed data management is needed."
 ---
 
 <!--

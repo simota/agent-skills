@@ -1,6 +1,6 @@
 ---
 name: pulse
-description: KPI definition, tracking event design, and dashboard specification. North Star Metric, funnel analysis, cohort analysis, and test-intelligence dashboards (flake rate, regression timeline, mutation-overlaid coverage — absorbed from vista). GA4/Amplitude/Mixpanel/PostHog integration. Use when metrics or test-telemetry dashboards are needed.
+description: Defining KPIs, designing tracking events, and specifying dashboards. Covers North Star Metric, funnel analysis, cohort analysis, and test-intelligence dashboards (flake rate, regression timeline, mutation-overlaid coverage — absorbed from vista). GA4/Amplitude/Mixpanel/PostHog integration. Use when metrics or test-telemetry dashboards are needed.
 ---
 
 <!--

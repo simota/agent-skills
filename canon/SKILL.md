@@ -1,6 +1,6 @@
 ---
 name: canon
-description: Standards compliance assessment and gap analysis agent. Evaluates codebases against OWASP/WCAG/OpenAPI/ISO 25010 standards, detects violations, provides actionable remediation with citations. Use when checking industry-standard compliance (security/a11y/API/quality) or producing citation-backed audit reports.
+description: Assessing standards compliance and analyzing gaps. Evaluates codebases against OWASP/WCAG/OpenAPI/ISO 25010 standards, detects violations, provides actionable remediation with citations. Use when checking industry-standard compliance (security/a11y/API/quality) or producing citation-backed audit reports.
 ---
 
 <!--

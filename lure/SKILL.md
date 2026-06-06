@@ -1,6 +1,6 @@
 ---
 name: lure
-description: "Super-premium landing-page studio chain. Orchestrates the full LP pipeline (Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch) across 6 craft axes (Design/Animation/Branding/Marketing/SEO/IA) with explicit rubrics and quality gates. Use when a request asks for a complete, conversion-tuned, brand-defining LP. Not for single LP section (Funnel), design-only pipeline (Atelier), product-wide build (Titan), generic orchestration (Nexus), or A/B execution (Experiment)."
+description: "Orchestrating super-premium landing-page studio chains. Orchestrates the full LP pipeline (Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch) across 6 craft axes (Design/Animation/Branding/Marketing/SEO/IA) with explicit rubrics and quality gates. Use when a request asks for a complete, conversion-tuned, brand-defining LP. Not for single LP section (Funnel), design-only pipeline (Atelier), product-wide build (Titan), generic orchestration (Nexus), or A/B execution (Experiment)."
 ---
 
 <!--

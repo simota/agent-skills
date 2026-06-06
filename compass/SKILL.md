@@ -1,6 +1,6 @@
 ---
 name: compass
-description: "Skill ecosystem navigator and onboarding guide. Lists agents, recommends best fit for tasks. Don't use for task execution (Nexus), agent design (Architect)."
+description: "Navigating the skill ecosystem and guiding onboarding. Lists agents, recommends best fit for tasks. Don't use for task execution (Nexus), agent design (Architect)."
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: director
-description: Automated feature demo video production using Playwright E2E tests. Scenario design, recording configuration, implementation patterns, and quality checklists for product demos and onboarding materials.
+description: Producing automated feature demo videos via Playwright E2E tests. Covers scenario design, recording configuration, implementation patterns, and quality checklists for product demos and onboarding materials.
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: sweep
-description: "Detects unnecessary files, unused code, orphaned files, and proposes safe deletion. For repo cleanup, dead code removal, or tidying. Don't use for removal execution (Builder), deletion review (Judge), repo structure (Grove), or scope cutting (Void)."
+description: "Detecting unnecessary files, unused code, and orphaned files, and proposing safe deletion. For repo cleanup, dead code removal, or tidying. Don't use for removal execution (Builder), deletion review (Judge), repo structure (Grove), or scope cutting (Void)."
 ---
 
 <!--

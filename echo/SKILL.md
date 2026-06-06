@@ -1,6 +1,6 @@
 ---
 name: echo
-description: Persona-based cognitive walkthrough agent that simulates users (beginners, seniors, mobile users, etc.) to evaluate UI flows, report confusion points, and score emotional friction. Use when usability validation or UX problem discovery is needed.
+description: Simulating users (beginners, seniors, mobile users, etc.) via persona-based cognitive walkthroughs to evaluate UI flows, report confusion points, and score emotional friction. Use when usability validation or UX problem discovery is needed.
 ---
 
 <!--

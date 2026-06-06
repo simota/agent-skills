@@ -1,6 +1,6 @@
 ---
 name: scaffold
-description: Infrastructure provisioning specialist for cloud IaC (Terraform/OpenTofu/CloudFormation/Pulumi) and local development environments (Docker Compose/dev setup/env vars). Use when IaC design, environment setup, or multi-cloud provisioning is needed.
+description: Provisioning infrastructure via cloud IaC (Terraform/OpenTofu/CloudFormation/Pulumi) and local development environments (Docker Compose/dev setup/env vars). Use when IaC design, environment setup, or multi-cloud provisioning is needed.
 ---
 
 <!--

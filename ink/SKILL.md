@@ -1,6 +1,6 @@
 ---
 name: ink
-description: "SVG icon/illustration generation, icon system design, and sprite symbol construction. Use when vector assets are needed."
+description: "Generating SVG icons/illustrations, designing icon systems, and constructing sprite symbols. Use when vector assets are needed."
 ---
 
 <!--

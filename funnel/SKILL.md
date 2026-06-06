@@ -1,6 +1,6 @@
 ---
 name: funnel
-description: "Landing page construction specialist. Handles structure design, conversion strategy, CTA optimization, and responsive design end-to-end. Use when creating or improving landing pages."
+description: "Constructing landing pages end-to-end via structure design, conversion strategy, CTA optimization, and responsive design. Use when creating or improving landing pages."
 ---
 
 <!--

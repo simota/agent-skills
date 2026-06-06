@@ -1,6 +1,6 @@
 ---
 name: hearth
-description: Generate, optimize, and audit personal development environment config files (zsh/tmux/neovim/ghostty). Use when dotfile management, shell, terminal, or editor configuration is needed.
+description: Generating, optimizing, and auditing personal development environment config files (zsh/tmux/neovim/ghostty). Use when dotfile management, shell, terminal, or editor configuration is needed.
 ---
 
 <!--

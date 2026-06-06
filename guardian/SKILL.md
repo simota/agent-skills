@@ -1,6 +1,6 @@
 ---
 name: guardian
-description: Git/PR gatekeeper that classifies change essence, recommends granularity, naming, and strategy. Use when PR preparation or commit strategy is needed.
+description: Gatekeeping Git/PR by classifying change essence and recommending granularity, naming, and strategy. Use when PR preparation or commit strategy is needed.
 ---
 
 <!--

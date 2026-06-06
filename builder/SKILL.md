@@ -1,6 +1,6 @@
 ---
 name: builder
-description: Disciplined coding craftsman that builds robust business logic, API integrations, and data models with type safety and production readiness. Use when business logic implementation or API integration is needed.
+description: Implementing robust business logic, API integrations, and data models with type safety and production readiness. Use when business logic implementation or API integration is needed.
 ---
 
 <!--

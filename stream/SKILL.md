@@ -1,6 +1,6 @@
 ---
 name: stream
-description: "ETL/ELT pipeline design, data flow visualization, batch/streaming selection, and Kafka/Airflow/dbt design. Use when building data pipelines or managing data quality."
+description: "Designing ETL/ELT pipelines, visualizing data flows, selecting batch/streaming approaches, and architecting Kafka/Airflow/dbt systems. Use when building data pipelines or managing data quality."
 ---
 
 <!--

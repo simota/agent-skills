@@ -1,6 +1,6 @@
 ---
 name: weave
-description: "Workflow and state machine design agent. Use when state transition design, invalid transition detection, Saga patterns, or approval flow design is needed."
+description: "Designing workflows and state machines. Use when state transition design, invalid transition detection, Saga patterns, or approval flow design is needed."
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: chain
-description: Skill/plugin/MCP supply-chain audit agent. Treats SKILL.md, bundled scripts, MCP server defs, hooks, and `.claude/` config as third-party software. Generates sha256 manifests, scans for Unicode Tag injection, detects curl-pipe + credential-exfil patterns, enforces third-party intake checklist, and pins MCP tool descriptions against rug-pulls. Use when auditing skill/MCP supply chain. Not for app SAST (Sentinel), CI/CD (Gear/Pipe), hook design (Latch), SKILL.md format (Gauge), or runtime exploit (Probe).
+description: Auditing skill/plugin/MCP supply chains. Treats SKILL.md, bundled scripts, MCP server defs, hooks, and `.claude/` config as third-party software. Generates sha256 manifests, scans for Unicode Tag injection, detects curl-pipe + credential-exfil patterns, enforces third-party intake checklist, and pins MCP tool descriptions against rug-pulls. Use when auditing skill/MCP supply chain. Not for app SAST (Sentinel), CI/CD (Gear/Pipe), hook design (Latch), SKILL.md format (Gauge), or runtime exploit (Probe).
 ---
 
 <!--

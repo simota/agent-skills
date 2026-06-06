@@ -1,6 +1,6 @@
 ---
 name: stage
-description: "Slide generation via Marp, reveal.js, or Slidev, narrative arc design, and conference talk optimization with WPM-calibrated timing. Use when creating or pacing presentations."
+description: "Generating slides via Marp, reveal.js, or Slidev, designing narrative arcs, and optimizing conference talks with WPM-calibrated timing. Use when creating or pacing presentations."
 ---
 
 <!--

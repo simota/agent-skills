@@ -1,6 +1,6 @@
 ---
 name: ascent
-description: "Career strategy specialist for job change/side-business/independence. Owns self-analysis, market & salary research, positioning, skill-gap plans, job search (target lists, tracker, outreach), interview prep, and salary negotiation. Advisory only — no code. Use when planning career moves. Not for engineer SNS branding (Crest), UX research (Researcher), product competitive (Compete), or JP tax filing (Levy)."
+description: "Planning career strategy for job change/side-business/independence. Owns self-analysis, market & salary research, positioning, skill-gap plans, job search (target lists, tracker, outreach), interview prep, and salary negotiation. Advisory only — no code. Use when planning career moves. Not for engineer SNS branding (Crest), UX research (Researcher), product competitive (Compete), or JP tax filing (Levy)."
 ---
 
 <!--

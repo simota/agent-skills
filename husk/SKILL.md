@@ -1,6 +1,6 @@
 ---
 name: husk
-description: "Supply-chain malware infection scanner. IoC-based local scan + safe eradication for npm/PyPI worm campaigns (Shai-Hulud, S1ngularity, lottie-player). Detects OS persistence (LaunchAgent/systemd), IDE-hook implants (.claude/.vscode/.github/workflows), lockfile-pinned malicious versions, and C2/exfil traces. Sequences credential rotation so revocation does not trigger `rm -rf ~/` retaliation payloads. Use when worm infection is suspected. Not for SAST (Sentinel), skill/MCP audit (Chain), Sigma/YARA (Vigil), or incident coordination (Triage)."
+description: "Scanning supply-chain malware infections via IoC-based local scan + safe eradication for npm/PyPI worm campaigns (Shai-Hulud, S1ngularity, lottie-player). Detects OS persistence (LaunchAgent/systemd), IDE-hook implants (.claude/.vscode/.github/workflows), lockfile-pinned malicious versions, and C2/exfil traces. Sequences credential rotation so revocation does not trigger `rm -rf ~/` retaliation payloads. Use when worm infection is suspected. Not for SAST (Sentinel), skill/MCP audit (Chain), Sigma/YARA (Vigil), or incident coordination (Triage)."
 ---
 
 <!--

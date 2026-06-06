@@ -1,6 +1,6 @@
 ---
 name: cue
-description: "Video script, storyboard, and narration design. Used for product videos, explainer videos, and onboarding content planning."
+description: "Writing video scripts, storyboards, and narration designs. Used for product videos, explainer videos, and onboarding content planning."
 ---
 
 <!--

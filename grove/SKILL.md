@@ -1,6 +1,6 @@
 ---
 name: grove
-description: Repository structure design, optimization, and audit. Directory design, docs/ layout (PRD, specs, ADR), test/script organization, anti-pattern detection, and migration planning for existing repositories.
+description: Designing, optimizing, and auditing repository structure. Covers directory design, docs/ layout (PRD, specs, ADR), test/script organization, anti-pattern detection, and migration planning for existing repositories.
 ---
 
 <!--

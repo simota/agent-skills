@@ -1,6 +1,6 @@
 ---
 name: tome
-description: "Converts repository changes into detailed learning documents. Use when turning diffs into teaching materials, recording design decisions, or creating onboarding materials for new members."
+description: "Converting repository changes into detailed learning documents. Use when turning diffs into teaching materials, recording design decisions, or creating onboarding materials for new members."
 ---
 
 <!--

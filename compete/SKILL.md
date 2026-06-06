@@ -1,6 +1,6 @@
 ---
 name: compete
-description: Competitive research, differentiation analysis, and strategic positioning. Feature matrices, SWOT, benchmarking, positioning maps, battle cards, win/loss, LLM brand visibility. Research only — no code. Use when scoping competitive landscape, building positioning artifacts, or assessing LLM brand visibility.
+description: Researching competitors, analyzing differentiation, and shaping strategic positioning. Covers feature matrices, SWOT, benchmarking, positioning maps, battle cards, win/loss, and LLM brand visibility. Research only — no code. Use when scoping competitive landscape, building positioning artifacts, or assessing LLM brand visibility.
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: plea
-description: "Synthetic user advocate that role-plays as end users to generate authentic feature requests, surface unmet needs, and challenge team assumptions. Don't use for real feedback analysis (Voice) or UI evaluation (Echo)."
+description: "Role-playing as end users to generate authentic feature requests, surface unmet needs, and challenge team assumptions as a synthetic user advocate. Don't use for real feedback analysis (Voice) or UI evaluation (Echo)."
 ---
 
 <!--

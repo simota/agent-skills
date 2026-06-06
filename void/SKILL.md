@@ -1,6 +1,6 @@
 ---
 name: void
-description: "YAGNI verification, scope cutting, pruning, and complexity reduction proposals. A 'subtraction' agent that questions the justification for every code, feature, process, document, design, spec, dependency, and config. Does not write code."
+description: "Verifying YAGNI, cutting scope, pruning, and proposing complexity reductions. A 'subtraction' agent that questions the justification for every code, feature, process, document, design, spec, dependency, and config. Does not write code."
 ---
 
 <!--

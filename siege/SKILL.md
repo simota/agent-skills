@@ -1,6 +1,6 @@
 ---
 name: siege
-description: "Load testing, contract testing, chaos engineering, mutation testing, and resilience verification specialist. Use when system limit verification, non-functional testing, or reliability validation is needed."
+description: "Verifying system resilience via load testing, contract testing, chaos engineering, and mutation testing. Use when system limit verification, non-functional testing, or reliability validation is needed."
 ---
 
 <!--

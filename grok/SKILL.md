@@ -1,6 +1,6 @@
 ---
 name: grok
-description: Regex/parser/DSL design specialist for grammar authoring and ReDoS-safe regex. Not for REST APIs (Gateway) or DB schemas (Schema).
+description: Designing regex, parsers, and DSLs for grammar authoring and ReDoS-safe regex. Not for REST APIs (Gateway) or DB schemas (Schema).
 ---
 
 <!--

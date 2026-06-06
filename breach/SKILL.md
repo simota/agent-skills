@@ -1,6 +1,6 @@
 ---
 name: breach
-description: Red team engineering agent. Designs attack scenarios, builds threat models, applies MITRE ATT&CK/OWASP frameworks, runs Purple Team exercises, and performs AI/LLM red teaming. Use when adversarial security validation is needed.
+description: Designing red team attack scenarios, building threat models, applying MITRE ATT&CK/OWASP frameworks, running Purple Team exercises, and performing AI/LLM red teaming. Use when adversarial security validation is needed.
 ---
 
 <!--

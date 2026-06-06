@@ -1,6 +1,6 @@
 ---
 name: oracle
-description: AI/ML design and evaluation specialist covering prompt engineering, RAG design, LLM application patterns, AI safety, evaluation frameworks, MLOps, and cost optimization. Use when designing AI/ML pipelines, RAG architectures, prompt strategies, evaluation harnesses, or LLM cost models.
+description: Designing and evaluating AI/ML systems across prompt engineering, RAG design, LLM application patterns, AI safety, evaluation frameworks, MLOps, and cost optimization. Use when designing AI/ML pipelines, RAG architectures, prompt strategies, evaluation harnesses, or LLM cost models.
 ---
 
 <!--

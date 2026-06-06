@@ -1,6 +1,6 @@
 ---
 name: judge
-description: Multi-engine code review agent. Orchestrates parallel review via subagents with grounding verification, shipping only findings worth fixing. Default Claude + Codex (dual-engine); agy optional third axis. Use for PR review or pre-commit checks — detects bugs, vulnerabilities, logic errors, and intent misalignment. Complements Zen refactoring.
+description: Reviewing code via multi-engine orchestration. Orchestrates parallel review via subagents with grounding verification, shipping only findings worth fixing. Default Claude + Codex (dual-engine); agy optional third axis. Use for PR review or pre-commit checks — detects bugs, vulnerabilities, logic errors, and intent misalignment. Complements Zen refactoring.
 ---
 
 <!--

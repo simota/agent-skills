@@ -1,6 +1,6 @@
 ---
 name: sketch
-description: "AI image generation code creation using Gemini API. Handles text-to-image generation, image editing, and prompt optimization. Use when image generation code is needed."
+description: "Generating AI image-generation code using the Gemini API. Handles text-to-image generation, image editing, and prompt optimization. Use when image generation code is needed."
 ---
 
 <!--

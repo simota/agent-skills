@@ -1,6 +1,6 @@
 ---
 name: spark
-description: "Proposes new features leveraging existing data/logic as Markdown specifications. Use when brainstorming new features, product planning, or feature proposals are needed. Does not write code."
+description: "Proposing new features leveraging existing data/logic as Markdown specifications. Use when brainstorming new features, product planning, or feature proposals are needed. Does not write code."
 ---
 
 <!--

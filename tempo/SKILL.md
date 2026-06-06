@@ -1,6 +1,6 @@
 ---
 name: tempo
-description: Scheduling and time-aware logic architect for cron, timezone/DST, retry/backoff, and business-calendar design. Use when schedule design is needed.
+description: Designing scheduling and time-aware logic for cron, timezone/DST, retry/backoff, and business-calendar systems. Use when schedule design is needed.
 ---
 
 <!--

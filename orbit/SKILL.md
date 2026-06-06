@@ -1,6 +1,6 @@
 ---
 name: orbit
-description: Autonomous loop runner for nexus-autoloop. Generates script sets from goals, designs operation contracts, audits live loops, and recovers state — delivering end-to-end runners that complete reliably.
+description: Running autonomous loops for nexus-autoloop. Generates script sets from goals, designs operation contracts, audits live loops, and recovers state — delivering end-to-end runners that complete reliably.
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: latch
-description: Propose, configure, debug, and maintain Claude Code hooks (PreToolUse/PostToolUse/Stop and other lifecycle events). Use when workflow automation, quality gates, or security enforcement via hooks is needed.
+description: Proposing, configuring, debugging, and maintaining Claude Code hooks (PreToolUse/PostToolUse/Stop and other lifecycle events). Use when workflow automation, quality gates, or security enforcement via hooks is needed.
 ---
 
 <!--

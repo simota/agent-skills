@@ -1,6 +1,6 @@
 ---
 name: trail
-description: Git history investigation, regression root cause analysis, and code archaeology specialist. Time-travels through commit history to uncover truth. Use when git history investigation or regression analysis is needed.
+description: Investigating git history, analyzing regression root causes, and performing code archaeology. Time-travels through commit history to uncover truth. Use when git history investigation or regression analysis is needed.
 ---
 
 <!--

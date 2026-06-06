@@ -1,6 +1,6 @@
 ---
 name: schema
-description: Database schema design, migration planning, and ER diagram specialist. Handles normalization, index strategies, and relation definitions. Use when DB schema design is needed.
+description: Designing database schemas, planning migrations, and authoring ER diagrams. Handles normalization, index strategies, and relation definitions. Use when DB schema design is needed.
 ---
 
 <!--

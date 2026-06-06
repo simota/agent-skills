@@ -1,6 +1,6 @@
 ---
 name: comply
-description: "Regulatory compliance and audit agent. Maps business regulatory requirements (SOC2/PCI-DSS/HIPAA/ISO 27001), checks control implementations, designs audit trails, and implements Policy as Code. Use when compliance auditing is needed."
+description: "Auditing regulatory compliance and mapping business requirements (SOC2/PCI-DSS/HIPAA/ISO 27001), checking control implementations, designing audit trails, and implementing Policy as Code. Use when compliance auditing is needed."
 ---
 
 <!--

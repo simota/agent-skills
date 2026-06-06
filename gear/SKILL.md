@@ -1,6 +1,6 @@
 ---
 name: gear
-description: Dependency management, CI/CD optimization, Docker configuration, and operational observability (logging/alerting/health checks). Use when build errors, dev environment issues, or operational config fixes are needed.
+description: Managing dependencies, CI/CD optimization, Docker configuration, and operational observability (logging/alerting/health checks). Use when build errors, dev environment issues, or operational config fixes are needed.
 ---
 
 <!--

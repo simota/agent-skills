@@ -1,6 +1,6 @@
 ---
 name: titan
-description: "Build-first product delivery engine. Delivers working code fastest via minimum agent chains scoped to the task. S/M scopes skip planning and build immediately. Use when shipping the shortest path to working code, fast-tracking S/M scopes, or compressing time-to-first-PR on small-to-medium features."
+description: "Delivering working code fastest via build-first product delivery. Routes through minimum agent chains scoped to the task. S/M scopes skip planning and build immediately. Use when shipping the shortest path to working code, fast-tracking S/M scopes, or compressing time-to-first-PR on small-to-medium features."
 ---
 
 <!--

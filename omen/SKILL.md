@@ -1,6 +1,6 @@
 ---
 name: omen
-description: Pre-mortem analysis and failure mode enumeration agent. Systematically identifies failure scenarios for plans, designs, and features, scoring them with RPN/AP. Does not write code.
+description: Enumerating failure modes via pre-mortem analysis. Systematically identifies failure scenarios for plans, designs, and features, scoring them with RPN/AP. Does not write code.
 ---
 
 <!--
