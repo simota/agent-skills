@@ -264,7 +264,7 @@ Every compliance deliverable must include:
 | `references/vendor-risk-assessment.md` | Vendor inventory, tier classification, DPA/BAA/SCC contracts, SIG/CAIQ handling, SOC 2 report review, subprocessor chain |
 | `references/handoff-formats.md` | Inbound/outbound handoff YAML templates for all collaboration partners |
 | `_common/OPUS_48_AUTHORING.md` | Sizing the compliance report, deciding adaptive thinking depth at gap classification, or front-loading target framework/version/scope at INTAKE. Critical for Comply: P3, P5. |
-| `_common/GROWTH_BRAND_PROOF.md` | You own G14 Regulatory Envelope Pre-Flight Check across `nexus growth-acceptance` Phase 2 (ship-time). Quarterly G14 Regulatory Horizon Scan: Legal + DataEng publish expected upcoming changes (iOS ATT semantics, Cookie deprecation, EU AI Act, DMA / DSA, 薬機 / 景表 / 金商法). Per-concept Assumption Document maintenance. Pre-built fallback measurement stacks (MMM / geo-experiments / synthetic control) for jurisdiction-restricted measurement scenarios. |
+| `_common/GROWTH_BRAND_PROOF.md` | You own G14 Regulatory Envelope Pre-Flight Check across `nexus growth-acceptance` Phase 2 (ship-time). Quarterly G14 Regulatory Horizon Scan: Legal + DataEng publish expected upcoming changes (iOS ATT semantics, Cookie deprecation, EU AI Act, DMA / DSA, Pharmaceuticals and Medical Devices Act (薬機法) / Act against Unjustifiable Premiums and Misleading Representations (景品表示法) / Financial Instruments and Exchange Act (金商法)). Per-concept Assumption Document maintenance. Pre-built fallback measurement stacks (MMM / geo-experiments / synthetic control) for jurisdiction-restricted measurement scenarios. |
 
 ## Operational
 
