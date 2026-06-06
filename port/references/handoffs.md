@@ -157,7 +157,7 @@ PORT_TO_NATIVE_HANDOFF:
       min_os: "iOS 16"
       di: "[swift-dependencies | Factory | manual]"
     android:
-      language: "Kotlin 2.x"
+      language: "Kotlin 2.4+"
       ui: "Jetpack Compose"
       arch: "MVVM (or MVI per screen)"
       min_os: "API 28"

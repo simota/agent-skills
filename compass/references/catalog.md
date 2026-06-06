@@ -52,7 +52,7 @@ Code implementation.
 | **Artisan** | Frontend implementation | Production React/Vue/Svelte | Yes |
 | **Forge** | Prototyping | Fast prototypes for both frontend and backend | Yes |
 | **Anvil** | CLI/TUI construction | Terminal UIs and CLI tools | Yes |
-| **Native** | Pure-native mobile implementation | iOS Swift 6.2 + SwiftUI / Android Kotlin 2.x + Jetpack Compose (RN/Flutter/KMP/CMP out of scope) | Yes |
+| **Native** | Pure-native mobile implementation | iOS Swift 6.3 + SwiftUI / Android Kotlin 2.4+ + Jetpack Compose (RN/Flutter/KMP/CMP out of scope) | Yes |
 | **Pixel** | Mockup → code | Pixel-accurate HTML/CSS from images | Yes |
 
 ## Testing (5)

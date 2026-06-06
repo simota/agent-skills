@@ -10,7 +10,7 @@ Port's primary remit is **pure-native iOS + Android**. KMP-shared-logic is allow
 
 | Path | UI | Logic | Maturity (2026-05) |
 |------|----|----|------|
-| **Pure-Native** | SwiftUI (Swift 6.2, Xcode 26) + Compose (Material 3 / Material 3 Expressive) | Per-platform Swift / Kotlin 2.x | Mature |
+| **Pure-Native** | SwiftUI (Swift 6.3, Xcode 26) + Compose (Material 3 / Material 3 Expressive) | Per-platform Swift / Kotlin 2.4+ | Mature |
 | **KMP shared logic + Native UI** | SwiftUI + Compose | Kotlin Multiplatform (Kotlin 2.2.20+; K2 default; Swift export under active dev) shared business logic | Mature (Stable since Nov 2023) |
 | **Compose Multiplatform** | Compose for both iOS & Android | Kotlin Multiplatform | iOS Stable since 2025-05 (CMP 1.8); **CMP 1.11.0 (2026-05) — concurrent rendering on a dedicated render thread is default**; Web/Wasm still beta |
 | **React Native (New Arch)** | RN | TypeScript / React 19.1 | Mature. **Legacy Architecture frozen in 0.80 (2025-06); option to disable New Arch removed in 0.82; Legacy code fully removed in 0.83 + Expo SDK 55 (2026)** |

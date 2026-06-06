@@ -1,13 +1,13 @@
 # Modern Native Stack Reference (2026)
 
 **Purpose:** Latest stack reference for pure-native iOS Swift + Android Kotlin.
-**Read when:** Setting up a new project, modernizing an existing project, deciding on `@Observable` / Swift 6.2 / Compose Strong Skipping / Type-safe Navigation / Liquid Glass / Material 3 Expressive adoption.
+**Read when:** Setting up a new project, modernizing an existing project, deciding on `@Observable` / Swift 6.3 / Compose Strong Skipping / Type-safe Navigation / Liquid Glass / Material 3 Expressive adoption.
 
 > Out of scope: React Native, Flutter, Kotlin Multiplatform, Compose Multiplatform. Pure-native only.
 
 ---
 
-## iOS — Swift 6.2 / SwiftUI / iOS 26
+## iOS — Swift 6.3 / SwiftUI / iOS 26
 
 ### Observation framework — `@Observable` (2026 default)
 
@@ -211,7 +211,7 @@ Adoption policy:
 
 ---
 
-## Android — Kotlin 2.x / Jetpack Compose / Material 3 Expressive
+## Android — Kotlin 2.4+ / Jetpack Compose / Material 3 Expressive
 
 ### Kotlin 2.x (K2 compiler default)
 

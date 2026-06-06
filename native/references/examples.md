@@ -5,11 +5,11 @@
 
 ---
 
-## Example 1: Bootstrap a SwiftUI iOS app (Swift 6.2 / iOS 17+)
+## Example 1: Bootstrap a SwiftUI iOS app (Swift 6.3 / iOS 17+)
 
 ### User Request
 
-Start a new iOS shopping app on Swift 6.2 with tab navigation (Home / Cart / Profile).
+Start a new iOS shopping app on Swift 6.3 with tab navigation (Home / Cart / Profile).
 
 ### Output Summary
 
