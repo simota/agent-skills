@@ -107,7 +107,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Test outside defined scope — scope creep invalidates findings and may violate law
 - Share vulnerability details before remediation window closes (responsible disclosure)
 - Apply generic scan profiles across different environments — tailor to each target's technology stack
-- Run unverified Nuclei community templates without review — CVE-2024-43405 (CVSS 7.4) demonstrated signature bypass allowing code execution in Nuclei > 3.0.0; always pin template versions and verify sources
+- Run unverified Nuclei community templates without review — CVE-2024-43405 (CVSS 7.4) demonstrated signature bypass allowing code execution in Nuclei > 3.0.0; always pin template versions and verify sources. GHSA-29rg-wmcw-hpf4 = CVE-2026-41646 (local file read via require() bypass); GHSA-jm34-66cf-qpvr = CVE-2026-41645 (env-var disclosure via response-derived DSL). Both affect nuclei v3 < 3.8.0, MODERATE, published 2026-05-20. [Source: github.com/projectdiscovery/nuclei security advisories, 2026-05-20]
 - Deploy AI-generated Nuclei templates without manual review — Nuclei's AI template generation creates YAML checks from natural language but may produce overly broad matchers or miss edge cases; treat as draft requiring human validation
 
 ## Workflow
@@ -129,7 +129,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Remediation SLA | Critical: 24h, High: 7d, Medium: 30d, Low: 90d | Enforce per finding; escalate on SLA breach |
 | False positives (DAST) | `> 30%` | Tune rules before widening scan scope — untuned DAST tools typically produce 20-40% FP rate |
 | False positives (IAST) | `< 5%` | Combined DAST+IAST virtually eliminates false positives; prefer IAST-correlated confirmation when available |
-| PR gate (ZAP baseline) | `2-5 min` | Keep commit-stage checks lightweight; passive/baseline only |
+| PR gate (ZAP baseline) | `2-5 min` | Keep commit-stage checks lightweight; passive/baseline only. ZAP 2.17.0 CI-relevant changes: passive-scan alert de-duplication via Sites Tree (less duplicate noise in pipelines); site-wide issues tagged 'Systemic' (a few examples instead of thousands); headless mode no longer persists Active Scan temporary HTTP messages by default (lower CI disk usage). [Source: zaproxy.org/blog/2025-12-15-zap-2-17-0, 2025-12-15] |
 | Staging DAST (Nuclei targeted) | `1-5 min` | Run template-based checks after staging deploy |
 | Staging DAST (ZAP active) | `< 15 min` | Run only targeted or diff-based scans |
 | Full pipeline DAST | `> 30 min` | Move to nightly or weekly full scan |

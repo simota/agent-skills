@@ -209,6 +209,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | New `.npmrc` token description `IfYouRevokeThisTokenItWillWipeTheComputerOfTheOwner` | Retaliation hook | **Do not revoke yet** — eradicate persistence first |
 | Process matching `tanstack_runner` / `router_runtime` / `gh-token-monitor` / `bun` in unexpected paths | Live execution | `ACTIVELY_BLEEDING` grade |
 | Outbound passive trace to `git-tanstack[.]com`, `api[.]masscan[.]cloud`, `filev2.getsession[.]org`, `seed1-3.getsession[.]org` | Exfil channel | Passive log inspection — never probe |
+| Mini Shai-Hulud 3rd wave (2026-05-19): atool npm account compromised; 637 malicious versions across 317 packages in 22 min. High-impact IoCs: `size-sensor@1.0.4/1.1.4/1.2.4`, `echarts-for-react@3.0.7/3.1.7/3.2.7`, `@antv/g2@5.5.8/5.6.8`, `@antv/g6@5.2.1/5.3.1`. Payload SHA256: `a68dd1e6a6e35ec3771e1f94fe796f55dfe65a2b94560516ff4ac189390dfa1c`. [Source: microsoft.com/security/blog 2026-05-20; safedep.io 2026-05-19] | Mini Shai-Hulud 3rd (atool account compromise) | Lockfile pin check against listed versions; quarantine before delete |
 
 ---
 
