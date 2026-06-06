@@ -6,6 +6,37 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed — Anthropic Agent Skills official-spec alignment (2026-06-06)
+
+- **Directory convention**: `references/` (plural) → `reference/` (singular) across all 121 skill folders. Matches Anthropic official example layout. 5,048 path references updated across 375 .md files.
+- **Frontmatter `description`**: All 124 SKILL.md `description` fields rewritten to start with a gerund (`-ing` form) per official best-practices for model-invoked discovery. Third-person voice and exclusion rules preserved.
+
+### Changed — 9 skill renames for world-view consistency
+
+Non-metaphor / weak-metaphor names replaced with single-word metaphors that fit the established abstract-1-word convention:
+
+| Old → New | Rationale |
+|---|---|
+| `researcher` → `field` | role name → fieldwork metaphor |
+| `navigator` → `vector` | direct descriptor → directional intent |
+| `showcase` → `vitrine` | verb compound → display case |
+| `retain` → `bond` | English verb → relationship metaphor |
+| `comply` → `oath` | English verb → commitment |
+| `mentor` → `agora` | role name → learning marketplace |
+| `husk` → `cull` | weak fit → selective eradication |
+| `lure` → `bazaar` | manipulative → marketplace orchestration |
+| `spider` → `trawl` | industry literal → sweep metaphor |
+
+Git history preserved via `git mv`; all cross-references (PascalCase / paths / backticks / chain-DSL delimiters) updated. Tier 2 high-collision names (`schema` / `stream` / `growth` / `palette` / `pixel`) intentionally left as-is to avoid technical-term collisions.
+
+### Changed — Nexus Recipe refinements
+
+- `venture` Recipe row removed; alias only (≡ `package domain=startup`)
+- `bug` / `feature` / `refactor` / `optimize` chains surface conditional steps inline (`Sherpa?`, `Muse?`, `Radar?`, `Bolt (code) / Tuner (DB)` branch)
+- Hidden ~78 `classify`-only task types now explicitly documented in SKILL.md
+- Chain reference Source-of-Truth hierarchy declared in Routing Quick Start
+- 4 orphaned `.mmd` flow diagrams linked from corresponding recipe files
+
 ### Added
 
 #### New Agents

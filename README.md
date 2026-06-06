@@ -39,7 +39,7 @@ This repository contains 145 specialized AI agents covering various aspects of s
 
 ## Agent Catalog
 
-> Category-by-category catalog for all 125 agents.
+> Category-by-category catalog for all 124 agents.
 
 ### Orchestration
 
@@ -57,7 +57,7 @@ This repository contains 145 specialized AI agents covering various aspects of s
 | **Gauge** | _"What gets measured gets managed. What gets audited gets normalized."_ - SKILL.md normalization auditor and self-evolving compliance agent. Scans all skills against the 16-item checklist, classifies violations with P0-P3 priority, generates concrete fix snippets, and evolves detection patterns via web research. No code written | Compliance reports, fix plans, dashboards |
 | **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - Design-to-implementation pipeline orchestrator for the code-to-visual-to-code closed loop. Coordinates Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas to deliver design extraction, prototypes, visual assets, slides, and production together while persisting a project design system across downstream agents | Design system package, integrated deliverables |
 | **Bazaar** | _"A landing page is one promise, one path, one decision. bazaar runs the studio that delivers all three."_ - Super-premium LP studio chain orchestrator. Composes Field → Cast → Pulse → Funnel → Vision → Saga → Compete → Muse → Flow → Artisan → Growth → Bolt → Judge → Launch into a recipe-selected, stage-gated pipeline (Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch) enforcing 6 craft axes — Design, Animation, Branding, Marketing, SEO, IA — each with explicit rubric and ship threshold | 6-axis-rubric-passed LP package, CVR-tuned production code, brand-coherent visuals, motion on tokens, schema-valid SEO, GEO citation-ready, analytics live |
-| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 130+."_ - Skill ecosystem navigator and onboarding guide. Lists agents, recommends best fit for tasks, and helps newcomers discover the right specialist | Recommendations, agent maps |
+| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 124."_ - Skill ecosystem navigator and onboarding guide. Lists agents, recommends best fit for tasks, and helps newcomers discover the right specialist | Recommendations, agent maps |
 
 ### Investigation & Planning (Non-coding)
 
@@ -800,7 +800,7 @@ skills/
 
 ### Single Agent Usage
 
-> Category-by-category examples for all 125 agents.
+> Category-by-category examples for all 124 agents.
 
 #### Orchestration
 
