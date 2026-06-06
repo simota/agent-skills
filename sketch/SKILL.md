@@ -60,7 +60,7 @@ Route elsewhere when the task is primarily:
 
 Model routing within Sketch:
 - Image editing or style transfer: use Gemini-native models (Nano Banana / Nano Banana 2) — Imagen 4 is text-to-image only
-- 4K output: use Nano Banana 2 (`gemini-3.1-flash-image-preview`) — Imagen 4 caps at 2K
+- 4K output: use Nano Banana 2 (`gemini-3.1-flash-image`) — Imagen 4 caps at 2K
 - Best text rendering at lowest cost: Imagen 4 Fast ($0.02/image)
 
 ## Core Contract
@@ -127,8 +127,8 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Topic | Rule |
 | --- | --- |
-| Default model | Use `gemini-2.5-flash-image` (~$0.039/image) unless the user explicitly requires another supported path |
-| Model landscape 2026 | Nano Banana (`gemini-2.5-flash-image`, $0.039), Nano Banana 2 (`gemini-3.1-flash-image-preview`, 0.5K-4K, $0.045 @1K), Nano Banana Pro (`gemini-3-pro-image-preview`, $0.134 @1K-2K / $0.24 @4K), Imagen 4 Fast/Standard/Ultra ($0.02-$0.06, text-to-image only, max 2K) |
+| Default model | Use `gemini-2.5-flash-image` (~$0.039/image) unless the user explicitly requires another supported path. Note: `gemini-2.5-flash-image` is scheduled for deprecation 2026-10-02 [Source: ai.google.dev/gemini-api/docs, 2026-06] |
+| Model landscape 2026 | Nano Banana (`gemini-2.5-flash-image`, $0.039, deprecation 2026-10-02), Nano Banana 2 (`gemini-3.1-flash-image`, 0.5K-4K, $0.045 @1K; `gemini-3.1-flash-image-preview` variant deprecated), Nano Banana Pro (`gemini-3-pro-image`, $0.134 @1K-2K / $0.24 @4K; `gemini-3-pro-image-preview` variant deprecated), Imagen 4 Fast/Standard/Ultra ($0.02-$0.06, text-to-image only, max 2K) [Source: ai.google.dev/gemini-api/docs, 2026-06] |
 | Imagen 4 constraints | Text-to-image only — cannot edit existing images; max native resolution 2K (2048×2048); improved text rendering over Gemini-native models |
 | Google AI vs Vertex AI | `imagen-3.0-*` is Vertex AI only; on Google AI API it returns `404` |
 | SDK compatibility | `v1.38+` supports `GenerateContentConfig(response_modalities=["TEXT", "IMAGE"])`; `v1.50+` additionally supports `ImageGenerationConfig` and `person_generation` param |

@@ -6,7 +6,7 @@ description: "ETL/ELT pipeline design, data flow visualization, batch/streaming 
 <!--
 CAPABILITIES_SUMMARY:
 - pipeline_architecture: ETL/ELT design, batch vs streaming vs hybrid selection, medallion architecture (Bronze/Silver/Gold)
-- orchestration_design: Airflow 3.x (event-driven scheduling, Kafka/SQS sources), Dagster, Kafka, CDC, dbt, Flink 2.x (native AI/ML SQL) workflow planning
+- orchestration_design: Airflow 3.x (event-driven scheduling, Kafka/SQS sources), Dagster, Kafka, CDC, dbt, Flink 2.2 (native AI/ML SQL) workflow planning
 - data_quality: Quality gates at source/transform/sink, schema evolution, data contracts, schema drift detection
 - idempotency_design: At-least-once + idempotent sink, safe replay, backfill planning
 - lineage_tracking: Data lineage documentation, dependency mapping, impact analysis
@@ -84,12 +84,12 @@ Route elsewhere when the task is primarily:
 | Mode | Choose when | Default shape |
 |------|-------------|---------------|
 | `BATCH` | `latency >= 1 minute`, scheduled analytics, complex warehouse transforms | Airflow 3.x/Dagster + dbt/SQL |
-| `STREAMING` | `latency < 1 minute`, continuous events, operational projections | Kafka + Flink 2.x/Spark/consumer apps |
+| `STREAMING` | `latency < 1 minute`, continuous events, operational projections | Kafka + Flink 2.2/Spark/consumer apps |
 | `HYBRID` | both real-time outputs and warehouse-grade history are required | CDC/stream hot path + batch/dbt cold path |
 
 Decision rules:
 - `latency < 1 minute` is a streaming candidate.
-- `volume > 10K events/sec` with low latency favors Kafka + Flink 2.x/Spark. Flink 2.0 (GA: 2025-03-24) removed the DataSet API entirely — use Table API or DataStream API only; introduced Materialized Tables and Disaggregated State Management. Flink 2.1 (GA: 2025-07-31) adds Model DDL / `ML_PREDICT` for in-stream model inference, DeltaJoin operator (lower state overhead), and Python 3.12 support. Flink 2.2 (GA: 2025-12) adds VECTOR_SEARCH and Table API `model.predict()` parity. Source: [flink.apache.org](https://flink.apache.org/downloads/)
+- `volume > 10K events/sec` with low latency favors Kafka + Flink 2.2/Spark. Flink 2.0 (GA: 2025-03-24) removed the DataSet API entirely — use Table API or DataStream API only; introduced Materialized Tables and Disaggregated State Management. Flink 2.1 (GA: 2025-07-31) adds Model DDL / `ML_PREDICT` for in-stream model inference, DeltaJoin operator (lower state overhead), and Python 3.12 support. Flink 2.2 (GA: 2025-12-04, latest) adds VECTOR_SEARCH and Table API `model.predict()` parity. Source: [flink.apache.org](https://flink.apache.org/downloads/) 2025-12-04
 - daily or weekly reporting defaults to batch. **Airflow 3.0** (GA: 2025-04-22) introduced event-driven scheduling via AssetWatcher (Kafka / Amazon SQS sources), the Python **Task SDK** (lightweight runtime for containers and edge environments), **DAG versioning** (runs complete on the version active at start time), and Human-in-the-Loop (HITL) pause-and-resume. Latest stable: Airflow 3.1.x (2025-09+). Source: [airflow.apache.org/blog/airflow-three-point-oh-is-here](https://airflow.apache.org/blog/airflow-three-point-oh-is-here/)
 - cloud warehouses with strong compute usually favor ELT — 68% of cloud-first enterprises use medallion architecture (Bronze/Silver/Gold), reducing pipeline dev time by 40%.
 - constrained or transactional source systems often favor ETL before load.

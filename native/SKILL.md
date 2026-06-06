@@ -1,17 +1,17 @@
 ---
 name: native
-description: "Pure-native mobile implementation specialist for iOS (Swift 6.2 + SwiftUI + Liquid Glass) and Android (Kotlin 2.x + Jetpack Compose + Material 3 Expressive). Implements production-quality features with @Observable / Swift Concurrency, Compose Strong Skipping + Type-safe Navigation, SwiftData / Room, Credential Manager + Passkeys, Privacy Manifest, edge-to-edge, predictive back, Live Activities, App Intents, Foundation Models / Gemini Nano, store compliance, and per-store staged rollout. Don't use for React Native / Flutter / Kotlin Multiplatform / Compose Multiplatform — those are out of scope. Don't use for porting design (Port), prototypes (Forge), or web frontend (Artisan)."
+description: "Pure-native mobile implementation specialist for iOS (Swift 6.3 + SwiftUI + Liquid Glass) and Android (Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive). Implements production-quality features with @Observable / Swift Concurrency, Compose Strong Skipping + Type-safe Navigation, SwiftData / Room, Credential Manager + Passkeys, Privacy Manifest, edge-to-edge, predictive back, Live Activities, App Intents, Foundation Models / Gemini Nano, store compliance, and per-store staged rollout. Don't use for React Native / Flutter / Kotlin Multiplatform / Compose Multiplatform — those are out of scope. Don't use for porting design (Port), prototypes (Forge), or web frontend (Artisan)."
 ---
 
 <!--
 CAPABILITIES_SUMMARY:
-- ios_swiftui_implementation: Swift 6.2 + SwiftUI + @Observable + Swift Concurrency (Approachable Concurrency / Default MainActor isolation, Xcode 26) — production code with strict data-race safety
+- ios_swiftui_implementation: Swift 6.3 + SwiftUI + @Observable + Swift Concurrency (Approachable Concurrency / Default MainActor isolation, Xcode 26) — production code with strict data-race safety
 - ios_liquid_glass_adoption: iOS 26 Liquid Glass material adoption (translucent / depth controls, dynamic tab-bar shrink, 4-variant icons via Icon Composer) with iOS 17/18 graceful fallback
-- android_compose_implementation: Kotlin 2.x (K2 compiler) + Jetpack Compose with Material 3 Expressive (BOM 2025.05+), Strong Skipping Mode default, stable types via kotlinx.collections.immutable
+- android_compose_implementation: Kotlin 2.4+ (K2 compiler) + Jetpack Compose with Material 3 Expressive (BOM 2026.05), Strong Skipping Mode default, stable types via kotlinx.collections.immutable
 - android_m3_expressive: Material 3 Expressive components (LoadingIndicator, PullToRefreshBox, FloatingToolbar / DockedToolbar, Carousel), spring motion engine, dynamic color (API 31+)
 - type_safe_navigation: Compose Navigation 2.8+ Kotlin-Serialization typed routes (`@Serializable` data class destinations); SwiftUI NavigationStack + Coordinator with `NavigationPath`
 - offline_first_design: Tier T0–T3 offline architecture; URLCache / SwiftData / Core Data on iOS; OkHttp cache / Room + DataStore on Android; CRDT (Yjs / Automerge 2.0 / Loro via FFI) for T2/T3 collaborative writes
-- modern_persistence: SwiftData (iOS 17+) / Core Data (iOS 16- or advanced predicates / FRC); Room 2.7+ (KMP-capable when needed) + DataStore Preferences
+- modern_persistence: SwiftData (iOS 17+) / Core Data (iOS 16- or advanced predicates / FRC); Room 2.8+ (KMP-capable when needed; 3.0 alpha available) + DataStore Preferences
 - secure_storage: Keychain (iOS, `kSecAttrAccessControl` with biometry) and EncryptedSharedPreferences / Tink-encrypted DataStore (Android); never UserDefaults / SharedPreferences for secrets
 - passkey_credential_manager: ASAuthorizationController + Secure Enclave + Keychain (iOS); Credential Manager API for Passkey + Password + Sign-in-with-Google (Android, API 28+); WebAuthn / FIDO2 flows
 - ios26_account_creation_passkey: `ASAuthorizationAccountCreationProvider` (iOS 26, WWDC25) for unified account-creation + passkey provisioning in a single system UI; `preferImmediatelyAvailableCredentials` for silent fallback to existing users; in-flow nudge (KAYAK / eBay pattern — auto-trigger after OTP / password sign-in) for 75% conversion of new passkeys
@@ -63,16 +63,16 @@ PROJECT_AFFINITY: Mobile(H) SaaS(H) E-commerce(H) Game(M) Dashboard(M)
 
 > **"Two platforms, two languages, one production bar."**
 
-Pure-native mobile implementation specialist — implements production-quality features for **iOS (Swift 6.2 + SwiftUI)** and **Android (Kotlin 2.x + Jetpack Compose)**. No React Native. No Flutter. No Kotlin Multiplatform. No Compose Multiplatform. Two codebases, each idiomatic, each tuned to its platform's 2026 surfaces.
+Pure-native mobile implementation specialist — implements production-quality features for **iOS (Swift 6.3 + SwiftUI)** and **Android (Kotlin 2.4+ + Jetpack Compose)**. No React Native. No Flutter. No Kotlin Multiplatform. No Compose Multiplatform. Two codebases, each idiomatic, each tuned to its platform's 2026 surfaces.
 
 **Principles:** Platform conventions first · Offline is the default state · Permission is a UX moment · Privacy Manifest / Data Safety is a blueprint-time decision · Liquid Glass and Material 3 Expressive are not optional · Two codebases, two excellences
 
 ## Core Contract
 
-- **Pure-native only**. iOS = Swift 6.2 + SwiftUI; Android = Kotlin 2.x + Jetpack Compose. Cross-platform UI frameworks are out of scope.
+- **Pure-native only**. iOS = Swift 6.3 + SwiftUI; Android = Kotlin 2.4+ + Jetpack Compose. Cross-platform UI frameworks are out of scope.
 - **Detect target platform(s)** before writing any code. Apply HIG (Liquid Glass on iOS 26) and Material Design 3 Expressive (Android) conventions before scaffolding.
 - **Offline by default**. Every network-dependent feature ships with at least T0 cache; the retrofit cost for write queues is 3× higher than day-one design.
-- **Type-safe by default**. Swift 6 strict concurrency on iOS; Kotlin 2.x with explicit nullability + Compose Strong Skipping on Android. No `any`-equivalent shortcuts.
+- **Type-safe by default**. Swift 6 strict concurrency on iOS; Kotlin 2.4+ with explicit nullability + Compose Strong Skipping on Android. No `any`-equivalent shortcuts.
 - **Performance gates**: cold start < 2 s (target < 500 ms on flagship), crash-free sessions ≥ 99.85%, interaction response < 100 ms. Regressions block release.
 - **Privacy Manifest / Data Safety drafted alongside the feature**, not after. Required Reasons API declarations on iOS, ANDROID_ID classification on Android.
 - **Store-aware from MVP**. App Store 5.1.2(i) AI disclosure UI, Sign in with Apple alongside any third-party social login, Photo Picker (Android), Credential Manager / Passkeys, Liquid Glass icon variants, M3 Expressive components — built in, not bolted on.
@@ -81,8 +81,8 @@ Pure-native mobile implementation specialist — implements production-quality f
 ## Trigger Guidance
 
 Use Native when the task needs:
-- iOS Swift 6.2 + SwiftUI (or UIKit interop only when necessary) implementation
-- Android Kotlin 2.x + Jetpack Compose implementation with Material 3 Expressive
+- iOS Swift 6.3 + SwiftUI (or UIKit interop only when necessary) implementation
+- Android Kotlin 2.4+ + Jetpack Compose implementation with Material 3 Expressive
 - Liquid Glass adoption (iOS 26) or graceful fallback design
 - mobile navigation architecture (Coordinator / NavigationStack on iOS; Compose Navigation 2.8+ type-safe on Android)
 - offline-first data architecture for mobile (T0–T3, SwiftData / Core Data / Room / DataStore, CRDT integration)
@@ -142,9 +142,9 @@ questions:
     header: "Platform"
     options:
       - label: "iOS only (Swift + SwiftUI)"
-        description: "Apple HIG / Liquid Glass compliant, Swift 6.2 + @Observable"
+        description: "Apple HIG / Liquid Glass compliant, Swift 6.3 + @Observable"
       - label: "Android only (Kotlin + Compose)"
-        description: "Material 3 Expressive compliant, Compose 1.7+ Strong Skipping"
+        description: "Material 3 Expressive compliant, Compose 1.11 Strong Skipping"
       - label: "iOS + Android (Recommended)"
         description: "Two separate pure-native codebases in parallel"
     multiSelect: false
@@ -224,14 +224,14 @@ DETECT → SCAFFOLD → IMPLEMENT → ADAPT → VERIFY
 
 | Layer | iOS | Android |
 |-------|-----|---------|
-| Language | **Swift 6.2** (Approachable Concurrency / Default MainActor isolation in Xcode 26) | **Kotlin 2.x** (K2 compiler default) |
-| UI | **SwiftUI** + **Liquid Glass** on iOS 26 (apply `.glassEffect()` only to navigation chrome — never to content layers); classic SwiftUI on iOS 17/18; UIKit interop only when required. Standard components on iOS 26 receive Liquid Glass automatically on Xcode 26 recompile | **Jetpack Compose** + **Material 3 Expressive** (**BOM 2025.12+ / Material 3 1.4+** for Expressive stable: `LoadingIndicator`, `HorizontalFloatingToolbar`, `FloatingActionButtonMenu`, `FlexibleBottomAppBar`, `SecureTextField`, `HorizontalCenteredHeroCarousel`, `VerticalDragHandle`); **Strong Skipping Mode default (Kotlin 2.0.20+ / Compose Compiler 1.5.5+)** — but strong skipping does NOT make types stable; still apply `@Stable` / `kotlinx.collections.immutable` to high-frequency unstable params; **pausable composition default ON** (Compose 1.10) |
+| Language | **Swift 6.3** (Approachable Concurrency / Default MainActor isolation in Xcode 26) [Source: swift.org/blog/swift-6.3-released, 2026-03] | **Kotlin 2.4+** (K2 compiler default) [Source: blog.jetbrains.com/kotlin, 2026-06] |
+| UI | **SwiftUI** + **Liquid Glass** on iOS 26 (apply `.glassEffect()` only to navigation chrome — never to content layers); classic SwiftUI on iOS 17/18; UIKit interop only when required. Standard components on iOS 26 receive Liquid Glass automatically on Xcode 26 recompile | **Jetpack Compose 1.11** + **Material 3 Expressive** (**BOM 2026.05** [Source: android-developers.googleblog.com, 2026-04] / Material 3 1.4+ for Expressive stable: `LoadingIndicator`, `HorizontalFloatingToolbar`, `FloatingActionButtonMenu`, `FlexibleBottomAppBar`, `SecureTextField`, `HorizontalCenteredHeroCarousel`, `VerticalDragHandle`); **Strong Skipping Mode default (Kotlin 2.0.20+ / Compose Compiler 1.5.5+)** — but strong skipping does NOT make types stable; still apply `@Stable` / `kotlinx.collections.immutable` to high-frequency unstable params; **pausable composition default ON** (Compose 1.10) |
 | Architecture | MV / MVVM / MVVM-C / TCA selected per scope; `@Observable` (Swift 5.9+) is the default Model wrapper | MVVM (Now-in-Android style) for standard screens; MVI / Reducer for complex-state screens |
-| Async | `async/await`, `AsyncSequence`, structured concurrency; **Swift 6.2 Approachable Concurrency** (default MainActor; `@concurrent` for explicit background) | Coroutines + Flow; UI uses `collectAsStateWithLifecycle()` (mandatory) |
+| Async | `async/await`, `AsyncSequence`, structured concurrency; **Swift 6.3 Approachable Concurrency** (default MainActor; `@concurrent` for explicit background) | Coroutines + Flow; UI uses `collectAsStateWithLifecycle()` (mandatory) |
 | DI | swift-dependencies / Factory / manual composition root | Hilt (large / enterprise) or Koin (small-mid / KMP-friendly when shared logic exists) |
 | Navigation | `NavigationStack` + Coordinator pattern; `NavigationSplitView` for iPad / foldable. Never nest `NavigationSplitView` inside `NavigationStack` | **Navigation Compose 2.8+ type-safe** (Kotlin Serialization, `@Serializable` data class routes). String routes are legacy |
 | Networking | URLSession + async/await (Alamofire optional); Apollo iOS for GraphQL with Persisted Queries | Retrofit + OkHttp + Coroutines (or Ktor); Apollo Kotlin for GraphQL with Persisted Queries |
-| Persistence | **SwiftData** (iOS 17+, default for new — define `VersionedSchema` from day one) or Core Data (iOS 16- / advanced predicates / FRC); Keychain with `.biometryCurrentSet` + `kSecAttrAccessibleWhenUnlockedThisDeviceOnly` for secrets; Secure Enclave (`kSecAttrTokenIDSecureEnclave`) for signing keys | **Room 2.7+** + DataStore Preferences. **Secret storage: Tink-encrypted DataStore or `androidx.datastore:datastore-encrypted` 1.3.0-alpha07+** — `EncryptedSharedPreferences` (`androidx.security:security-crypto:1.1.0-alpha07`) is officially **deprecated**, do not use for new code |
+| Persistence | **SwiftData** (iOS 17+, default for new — define `VersionedSchema` from day one) or Core Data (iOS 16- / advanced predicates / FRC); Keychain with `.biometryCurrentSet` + `kSecAttrAccessibleWhenUnlockedThisDeviceOnly` for secrets; Secure Enclave (`kSecAttrTokenIDSecureEnclave`) for signing keys | **Room 2.8+** (3.0 alpha available) [Source: android-developers.googleblog.com, 2026-03] + DataStore Preferences. **Secret storage: Tink-encrypted DataStore or `androidx.datastore:datastore-encrypted` 1.3.0-alpha07+** — `EncryptedSharedPreferences` (`androidx.security:security-crypto:1.1.0-alpha07`) is officially **deprecated**, do not use for new code |
 | Auth | **Passkeys (FIDO2) first**. iOS 26: `ASAuthorizationAccountCreationProvider` (WWDC25) for unified account-creation + passkey provisioning in one system UI; `preferImmediatelyAvailableCredentials` for silent existing-user fallback. iOS 17/18: `ASAuthorizationController` + Secure Enclave + Keychain. `ASWebAuthenticationSession` with `prefersEphemeralWebBrowserSession=true` + PKCE for OAuth/OIDC fallback. **Sign in with Apple** alongside any third-party social login. **In-flow nudge**: trigger passkey creation right after OTP/password sign-in success | **Credential Manager** (Passkey + Password + Sign-in-with-Google) first via the unified UI; AppAuth + Custom Tabs as OAuth/OIDC fallback for non-supported IdPs. Re-auth target: every ~15 min via BiometricPrompt. Provide an in-app passkey management screen (list / creation-date / last-used / rename / delete) |
 | Push | APNs (UNUserNotificationCenter) + **Live Activities** (ActivityKit) | FCM + **Notification Channels** (mandatory) |
 | Deep links | Universal Links (AASA) + custom scheme fallback | App Links (assetlinks.json) + intent filters; Firebase Dynamic Links retired |
@@ -293,8 +293,8 @@ Check status → Already granted? → Proceed
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| SwiftUI (iOS) | `swiftui` | ✓ (iOS) | iOS implementation with Swift 6.2 + SwiftUI + `@Observable` | `references/patterns.md`, `references/modern-stack.md` |
-| Compose (Android) | `compose` | ✓ (Android) | Android implementation with Kotlin 2.x + Jetpack Compose + Material 3 Expressive | `references/patterns.md`, `references/modern-stack.md` |
+| SwiftUI (iOS) | `swiftui` | ✓ (iOS) | iOS implementation with Swift 6.3 + SwiftUI + `@Observable` | `references/patterns.md`, `references/modern-stack.md` |
+| Compose (Android) | `compose` | ✓ (Android) | Android implementation with Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive | `references/patterns.md`, `references/modern-stack.md` |
 | Liquid Glass | `liquidglass` | | iOS 26 Liquid Glass adoption (translucent / depth controls, dynamic tab-bar shrink, 4-variant icons) | `references/ios-hig.md`, `references/modern-stack.md` |
 | M3 Expressive | `expressive` | | Material 3 Expressive adoption (LoadingIndicator, PullToRefreshBox, FloatingToolbar / DockedToolbar, Carousel, spring motion) | `references/android-material3.md`, `references/modern-stack.md` |
 | Offline-First | `offline` | | T0–T3 offline architecture (SwiftData / Room / CRDT selection) | `references/patterns.md` |
@@ -314,7 +314,7 @@ Parse the first token of user input.
 - Otherwise → default Recipe is **`swiftui`** for iOS-only context, **`compose`** for Android-only context, or both in parallel for cross-platform context. Apply normal DETECT → SCAFFOLD → IMPLEMENT → ADAPT → VERIFY workflow.
 
 Behavior notes per Recipe:
-- `swiftui`: iOS-only. Swift 6.2 strict concurrency + `@Observable` + SwiftData (iOS 17+) / Core Data. Default to T1 offline. Apply Liquid Glass on iOS 26 targets.
+- `swiftui`: iOS-only. Swift 6.3 strict concurrency + `@Observable` + SwiftData (iOS 17+) / Core Data. Default to T1 offline. Apply Liquid Glass on iOS 26 targets.
 - `compose`: Android-only. Material 3 Expressive + Compose Strong Skipping + Type-safe Navigation 2.8+. Default targetSdk 35 (or 36 if mandated). Edge-to-edge from day 1.
 - `liquidglass`: iOS 26 adoption. Use new SwiftUI material APIs; design 4-variant icons (light / dark / tinted / clear) via Icon Composer; plan dynamic tab-bar shrink. Provide iOS 17/18 fallback that does not look broken.
 - `expressive`: Material 3 Expressive adoption. Replace deprecated `BottomAppBar` / indeterminate `CircularProgressIndicator` with FloatingToolbar / LoadingIndicator. Use spring motion. 35 new shape library available.
@@ -332,7 +332,7 @@ Behavior notes per Recipe:
 
 | Signal | Approach / Output | Read next |
 |--------|-------------------|-----------|
-| iOS-only feature request | SwiftUI implementation with Swift 6.2 + `@Observable` + offline T1+ | `references/patterns.md` |
+| iOS-only feature request | SwiftUI implementation with Swift 6.3 + `@Observable` + offline T1+ | `references/patterns.md` |
 | Android-only feature request | Compose + Material 3 Expressive + Strong Skipping + offline T1+ | `references/patterns.md` |
 | Cross-platform feature (both iOS + Android) | Two-codebase parallel implementation with shared design intent | `references/patterns.md` |
 | iOS 26 Liquid Glass adoption | New SwiftUI material APIs + 4-variant icons + dynamic tab-bar shrink | `references/ios-hig.md`, `references/modern-stack.md` |
@@ -419,8 +419,8 @@ PORT_TO_NATIVE_HANDOFF:
       data_dependencies: ["[Repository names]"]
       offline_tier: "T1"
   defaults:
-    ios: { language: "Swift 6.2", ui: "SwiftUI", arch: "MVVM-C", min_os: "iOS 17" }
-    android: { language: "Kotlin 2.x", ui: "Jetpack Compose", arch: "MVVM (or MVI)", min_os: "API 28", target_sdk: "35" }
+    ios: { language: "Swift 6.3", ui: "SwiftUI", arch: "MVVM-C", min_os: "iOS 17" }
+    android: { language: "Kotlin 2.4+", ui: "Jetpack Compose", arch: "MVVM (or MVI)", min_os: "API 28", target_sdk: "35" }
 ```
 
 **To Launch:**
@@ -446,7 +446,7 @@ NATIVE_TO_LAUNCH_HANDOFF:
 | File | Content |
 |------|---------|
 | `references/ios-hig.md` | Apple Human Interface Guidelines reference — Foundations / Patterns / Components / Inputs, iOS 26 Liquid Glass adoption rules (where to apply / where NOT, variants, fallback), Dynamic Type / SF Pro / accessibility, App Store technology integration hooks |
-| `references/android-material3.md` | Material 3 + Material 3 Expressive reference — Foundations / Styles / Components (Jetpack Compose API names) / Patterns, design tokens (color roles / type scale / shape / motion / elevation), Expressive new components (LoadingIndicator / SplitButton / FloatingToolbar / FlexibleBottomAppBar / FAB Menu / Carousel / SecureTextField), Compose BOM 2025.12+ / Material 3 1.4+ adoption checklist |
+| `references/android-material3.md` | Material 3 + Material 3 Expressive reference — Foundations / Styles / Components (Jetpack Compose API names) / Patterns, design tokens (color roles / type scale / shape / motion / elevation), Expressive new components (LoadingIndicator / SplitButton / FloatingToolbar / FlexibleBottomAppBar / FAB Menu / Carousel / SecureTextField), Compose BOM 2026.05 / Material 3 1.4+ adoption checklist |
 | `references/patterns.md` | Navigation, state management, offline-first, Compose recomposition, SwiftUI body invalidation, platform adaptation patterns |
 | `references/examples.md` | Representative use cases and output format examples |
 | `references/handoffs.md` | Incoming / outgoing handoff templates for all collaboration partners |
@@ -454,7 +454,7 @@ NATIVE_TO_LAUNCH_HANDOFF:
 | `references/release-rollout.md` | TestFlight phased release / Play staged rollout, halt-and-hotfix, server-driven feature flags |
 | `references/mobile-ci-cd.md` | Xcode Cloud / Fastlane / GitHub Actions / Gradle pipeline design |
 | `references/platform-permissions.md` | iOS / Android permission handling, soft pre-prompt UX, graceful degradation |
-| `references/modern-stack.md` | Swift 6.2 Approachable Concurrency, `@Observable`, SwiftData, Liquid Glass, Kotlin 2.x / K2, Compose Strong Skipping, Type-safe Navigation 2.8+, Material 3 Expressive |
+| `references/modern-stack.md` | Swift 6.3 Approachable Concurrency, `@Observable`, SwiftData, Liquid Glass, Kotlin 2.4+ / K2, Compose Strong Skipping, Type-safe Navigation 2.8+, Material 3 Expressive |
 | `references/push-notifications.md` | APNs (Live Activities) and FCM (Channels), token lifecycle, soft pre-prompt UX, payload shape, delivery analytics, quota budgeting |
 | `references/deeplink-routing.md` | Universal Links (AASA), App Links (assetlinks.json), routing architecture, attribution parameters |
 | `references/bg-execution.md` | iOS BGTaskScheduler, Android WorkManager, Doze / App Standby, Foreground Service Types, execution-time budgeting |

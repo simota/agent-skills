@@ -172,7 +172,7 @@ Spawn only when the deliverable touches 4+ files and post-BUILD verification wou
 | **Implementation** | Result/Railway · Zod v4 Validation · API Integration (REST/GraphQL/WS) · Performance | `references/implementation-patterns.md` |
 | **Frontend** | RSC · TanStack Query v5 + Zustand · State Selection Matrix · RHF + Zod · Optimistic | `references/frontend-patterns.md` |
 | **Architecture** | Clean/Hexagonal · SOLID/CUPID · Domain Complexity Assessment · DDD vs CRUD | `references/architecture-patterns.md` |
-| **Language Idioms** | TypeScript 6.0+ / tsgo · Go 1.22+ · Python 3.12+ · Rust Edition 2024 / 1.85+ · Per-language testing | `references/language-idioms.md` |
+| **Language Idioms** | TypeScript 6.0+ / tsgo · Go 1.26+ · Python 3.14+ · Rust Edition 2024 / 1.95+ · Per-language testing | `references/language-idioms.md` |
 
 ## Workflow
 
@@ -277,7 +277,7 @@ Read only the files required for the current decision.
 | `references/implementation-patterns.md` | You need Result/Railway (neverthrow), Zod v4 validation, API integration (REST/GraphQL/WS), or performance patterns |
 | `references/frontend-patterns.md` | You need RSC, TanStack Query v5, Zustand, state management selection, or RHF + Zod |
 | `references/architecture-patterns.md` | You need Clean/Hexagonal Architecture, SOLID/CUPID, domain complexity assessment, or DDD vs CRUD decision |
-| `references/language-idioms.md` | You are working with Go 1.22+, Python 3.12+, or Rust Edition 2024 / 1.85+ (TypeScript is default) |
+| `references/language-idioms.md` | You are working with Go 1.26+ [Source: go.dev/blog/go1.26], Python 3.14+ [Source: python.org/downloads], or Rust Edition 2024 / 1.95+ [Source: blog.rust-lang.org] (TypeScript is default) |
 | `references/process-and-examples.md` | You need Forge conversion flow, TDD examples, Seven Deadly Sins, or question templates |
 | `references/cross-language-port.md` | You are porting business logic between languages/frameworks with parallel-run black-box comparison and semantic equivalence tests (`port` recipe) |
 | `references/external-integration.md` | You are integrating an external API (Stripe/Slack/GitHub etc.) with sandbox-first verification, secret handling, vendor-specific retry, and webhook signature verification (`integrate` recipe) |

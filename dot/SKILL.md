@@ -13,7 +13,7 @@ CAPABILITIES_SUMMARY:
 - batch_export: Generate batch PNG/GIF export scripts via Pillow
 - engine_integration: Produce texture code for Phaser 3/Godot/Unity
 - gemini_delegation: Delegate single-SVG generation to Antigravity CLI in text mode
-- ai_spritesheet: Generate AI-assisted spritesheets via GPT Image Edit API (canvas prep, prompt, normalization)
+- ai_spritesheet: Generate AI-assisted spritesheets via GPT Image 2 (`gpt-image-2`) Edit API (canvas prep, prompt, normalization) [Source: developers.openai.com/api/docs/models/gpt-image-2, 2026-04]
 - sd_spritesheet: Generate SDXL + Pixel-Art-XL LoRA / Retro Diffusion pixel art pipeline code (ComfyUI workflow, 4-angle sheets, AI+manual refinement)
 - pixellab_pipeline: Generate PixelLab AI-assisted pixel art with skeleton animation, directional views, inpainting, scene animation (up to 400×400), environment creation, and animation-to-animation via API/Aseprite extension
 - accessibility_palette: Generate colorblind-friendly palette variants (deuteranopia/protanopia/tritanopia) and shape-based differentiation
@@ -52,7 +52,7 @@ Use Dot when the user needs:
 - pixel-perfect engine integration (Phaser 3/4, Godot, Unity, PixiJS) including Phaser Pixel Tools (Atlaspack/Fontpack/Tilepack) pipeline and Phaser 4 PixUI for pixel art UI components
 - SVG generation delegated to Antigravity CLI
 - CSS pixel art (box-shadow, CSS Grid sprites)
-- AI-assisted spritesheet generation using GPT Image Edit API
+- AI-assisted spritesheet generation using GPT Image 2 (`gpt-image-2`) Edit API
 - Stable Diffusion pixel art pipeline setup (SDXL + Pixel-Art-XL LoRA via ComfyUI, Retro Diffusion Aseprite extension, SD SpriteSheet Generator)
 - AI-assisted pixel art with skeleton-based animation, directional views, context-aware inpainting, scene animation (up to 400×400), environment creation, and animation-to-animation (PixelLab API/Aseprite extension)
 - colorblind-friendly palette variants or accessibility-tested pixel art
@@ -131,7 +131,7 @@ Single source of truth for Recipe definitions. The Notes column captures the uni
 | Limited Palette | `palette` | | Limited-palette pixel art (NES / Game Boy / PICO-8 / CGA / Pico-Pix) with color-cycling | base format + palette JSON | NES (54 colors, 4 per sprite), Game Boy (4 greys), PICO-8 (16), CGA (4 modes), Famicompo (16 from 64). Validate via Lospec. | `references/limited-palettes.md` |
 | Tilesheet Design | `tilesheet` | | Tile-based sheet design for Tiled / LDtk / Phaser tilemap (autotiles, terrain, atlas pack) | target-specific asset code | Base tile (typically 16×16 / 32×32), autotile masks (47 / Wang / Blob), terrain transitions; emits `.tsx` / `.ldtk` / Phaser config | `references/tilesheet-design.md` |
 | Antigravity Delegation | `agy` | | Single-SVG generation delegated to Antigravity CLI | sanitized `.svg` | Sanitize output to raw SVG with `-agy` suffix. Safe sizes: 8x8 / 16x16; 32x32 best-effort; 64x64+ switch to Dot direct. | `references/antigravity-delegation.md` |
-| AI Spritesheet | `ai-sheet` | | AI-assisted spritesheet via GPT Image Edit API / Stable Diffusion (SDXL + Pixel-Art-XL LoRA, Retro Diffusion) / PixelLab (skeleton animation, directional views, inpainting, scene animation, environment) | `.py` → PNG | Python pipeline with canvas prep, prompt engineering, normalization, post-process | `references/gpt-image-edit.md`, `references/sprite-animation.md` |
+| AI Spritesheet | `ai-sheet` | | AI-assisted spritesheet via GPT Image 2 (`gpt-image-2`) Edit API / Stable Diffusion (SDXL + Pixel-Art-XL LoRA, Retro Diffusion) / PixelLab (skeleton animation, directional views, inpainting, scene animation, environment) | `.py` → PNG | Python pipeline with canvas prep, prompt engineering, normalization, post-process | `references/gpt-image-edit.md`, `references/sprite-animation.md` |
 | Accessible Palette | `a11y` | | Colorblind-friendly palette variants (deuteranopia/protanopia/tritanopia) and shape-based differentiation | base format + palette JSON | Base route + colorblind variants; supplement color with shape/pattern | `references/pixel-craft.md` |
 | HD-2D | `hd2d` | | Pixel sprite designed for 3D environment compositing | `.svg` / `.html` | SVG or Canvas with alpha channel, no background | `references/code-patterns.md`, `references/engine-integration.md` |
 
@@ -148,7 +148,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `decoration`, `css`, very small asset | `css` |
 | `tileset`, `autotile`, terrain transition | `tilesheet` |
 | `agy`, `delegate`, external SVG generation | `agy` |
-| `ai spritesheet`, `GPT Image edit`, `stable diffusion`, `SDXL LoRA`, `retro diffusion`, `pixellab`, skeleton animation, AI directional views, inpainting, scene animation, environment creation, animation-to-animation | `ai-sheet` |
+| `ai spritesheet`, `GPT Image 2`, `GPT Image edit`, `gpt-image-2`, `stable diffusion`, `SDXL LoRA`, `retro diffusion`, `pixellab`, skeleton animation, AI directional views, inpainting, scene animation, environment creation, animation-to-animation | `ai-sheet` |
 | `accessible`, `colorblind`, a11y palette | `a11y` |
 | `HD-2D`, pixel sprite for 3D compositing | `hd2d` |
 | unclear request | `svg` (lowest dependency) |
@@ -256,7 +256,7 @@ Limits (apply only when delegating to agy):
 | `references/tilesheet-design.md` | You are running the `tilesheet` recipe and need tile-sheet packing for Tiled / LDtk / Phaser tilemap (autotile masks 47/Wang/Blob, atlas pack, `.tsx` / `.ldtk` / Phaser config emission). |
 | `references/engine-integration.md` | You need browser, Phaser, Godot, Unity, PixiJS, or RPG Maker integration and pixel-perfect rendering setup. |
 | `references/antigravity-delegation.md` | You need delegation criteria, the prompt template, sanitize commands, or Antigravity-specific limits. |
-| `references/gpt-image-edit.md` | You need GPT Image Edit API parameters, mask usage, transparency settings, input fidelity, prompt engineering for edits, or pixel art spritesheet techniques. |
+| `references/gpt-image-edit.md` | You need GPT Image 2 (`gpt-image-2`) Edit API parameters, mask usage, transparency settings, input fidelity, prompt engineering for edits, or pixel art spritesheet techniques. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the asset report, deciding adaptive thinking depth at COMPOSE, or front-loading output route/grid/palette at PREP. Critical for Dot: P3, P5. |
 
 ## Operational

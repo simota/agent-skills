@@ -6,7 +6,7 @@ description: Production frontend craftsman for React/Vue/Svelte. Handles hooks d
 <!--
 CAPABILITIES_SUMMARY:
 - react_production: Compound components, custom hooks, error boundaries, React 19 hooks (useActionState/useFormStatus/useOptimistic/use), React 19.2 APIs (Activity, ViewTransition, useEffectEvent), React Compiler v1.0 (stable auto-memoization), RSC streaming
-- vue_production: Vue 3.5+/3.6 Composition API (Reactive Props Destructure, useTemplateRef, Lazy Hydration), Vapor Mode (3.6 beta — compile-to-DOM bypassing VDOM, `<script setup>` only, no Suspense, opt-in per-component, not production-stable), composables, Pinia state management
+- vue_production: Vue 3.5.x (stable; 3.6 in beta) [Source: github.com/vuejs/core/releases, 2026-05] Composition API (Reactive Props Destructure, useTemplateRef, Lazy Hydration), Vapor Mode (3.6 beta — compile-to-DOM bypassing VDOM, `<script setup>` only, no Suspense, opt-in per-component, not production-stable), composables, Pinia state management
 - svelte_production: Svelte 5 Runes ($state/$derived/$effect), Snippet components, stores
 - state_management: Zustand, Pinia, Context API, local state with proper scoping
 - form_handling: React Hook Form + Zod v4 (14× faster, @zod/mini 1.9KB for edge), TanStack Form v1 (stable Mar 2025, cross-framework, type-safe paths), accessible error display
@@ -155,7 +155,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Framework | Patterns | State | Reference |
 |-----------|---------|-------|-----------|
 | **React** | Compound components, hooks, error boundaries, React 19.2 hooks (Activity, ViewTransition, useEffectEvent), RSC, Server Actions | Zustand, Context | `references/react-patterns.md` |
-| **Vue 3.5+/3.6** | Composition API, Reactive Props Destructure, composables, Lazy Hydration, Vapor Mode (3.6 beta — compile-to-DOM, `<script setup>` only, opt-in per-component, not production-stable) | Pinia | `references/vue-svelte-patterns.md` |
+| **Vue 3.5.x (stable); 3.6 in beta** | Composition API, Reactive Props Destructure, composables, Lazy Hydration, Vapor Mode (3.6 beta — compile-to-DOM, `<script setup>` only, opt-in per-component, not production-stable) | Pinia | `references/vue-svelte-patterns.md` |
 | **Svelte 5** | Runes, Snippets | Stores | `references/vue-svelte-patterns.md` |
 
 ### Cross-Framework Patterns
