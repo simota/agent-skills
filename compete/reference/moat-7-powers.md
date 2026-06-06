@@ -11,7 +11,7 @@ Purpose: Evaluate durable competitive advantage using Hamilton Helmer's 7 Powers
 - **compete `battle` (elsewhere)**: tactical sales ammunition. Battle cards may reference moats but cannot create them.
 - **compete `winloss` (elsewhere)**: behavioral evidence of differentiation. Win/loss tells you what wins deals today; moat tells you what will still win deals in 10 years.
 - **voice (elsewhere)**: customer feedback. Voice surfaces preference; moats explain why preference persists under competitive pressure.
-- **researcher (elsewhere)**: empirical user research. Field validates customer behavior; moat work analyzes industry structure.
+- **field (elsewhere)**: empirical user research. Field validates customer behavior; moat work analyzes industry structure.
 - **plea (elsewhere)**: synthetic-user assumption challenge. Plea stress-tests moat claims that lack market evidence.
 - **helm (elsewhere)**: strategic simulation. Helm consumes the moat assessment as input to multi-year scenario planning.
 

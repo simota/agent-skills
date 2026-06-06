@@ -10,7 +10,7 @@ Purpose: Sales-enablement one-pager that equips reps with head-to-head positioni
 - **compete `positioning` (elsewhere)**: positioning maps and category design — battle cards operationalize the positioning, they do not invent it.
 - **compete `winloss` (elsewhere)**: post-deal interviews. Win/loss feeds the "why we win / why we lose" sections; do not author them from internal opinion.
 - **voice (elsewhere)**: real customer feedback. Use Voice quotes as battle card evidence; do not synthesize testimonials.
-- **researcher (elsewhere)**: empirical user-research interviews. Field informs persona-fit talking points; battle cards are not research artifacts.
+- **field (elsewhere)**: empirical user-research interviews. Field informs persona-fit talking points; battle cards are not research artifacts.
 - **plea (elsewhere)**: synthetic-user assumption challenge. Plea stress-tests battle card claims that lack real-world validation.
 
 ## Workflow

@@ -4,10 +4,10 @@ Purpose: Hand-author rich component documentation in Storybook using MDX 3 + Sto
 
 ## Scope Boundary
 
-- **showcase `mdx`**: hand-authored `.mdx` documentation pages with Doc Blocks (`<Meta>`, `<Story>`, `<Canvas>`, `<Controls>`, `<Source>`, `<ArgTypes>`). Multi-page narrative docs.
-- **showcase `story` (default, elsewhere)**: CSF story authoring. MDX consumes those stories — does not replace them.
-- **showcase `catalog` (elsewhere)**: hierarchy/organization decisions (Atoms/Molecules/Organisms). MDX is the surface; catalog is the structure.
-- **showcase `interaction` (elsewhere)**: play-function tests. MDX can embed stories that contain play functions, but does not author them.
+- **vitrine `mdx`**: hand-authored `.mdx` documentation pages with Doc Blocks (`<Meta>`, `<Story>`, `<Canvas>`, `<Controls>`, `<Source>`, `<ArgTypes>`). Multi-page narrative docs.
+- **vitrine `story` (default, elsewhere)**: CSF story authoring. MDX consumes those stories — does not replace them.
+- **vitrine `catalog` (elsewhere)**: hierarchy/organization decisions (Atoms/Molecules/Organisms). MDX is the surface; catalog is the structure.
+- **vitrine `interaction` (elsewhere)**: play-function tests. MDX can embed stories that contain play functions, but does not author them.
 - **artisan (elsewhere)**: production component code. MDX documents components but never alters them.
 - **forge (elsewhere)**: prototype-stage docs are inline READMEs at most; MDX investment comes after promotion.
 - **voyager (elsewhere)**: E2E flow narratives belong in test reports, not component docs.

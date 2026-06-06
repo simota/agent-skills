@@ -4,10 +4,10 @@ Purpose: Embed user-flow tests directly inside stories via the `play` function. 
 
 ## Scope Boundary
 
-- **showcase `interaction`**: in-story play functions that exercise a single component's primary user flow (click, fill, submit) and assert visible output. Runs inside the Storybook iframe.
-- **showcase `story` (default, elsewhere)**: static variant/state authoring without interaction logic.
-- **showcase `vrt` (elsewhere)**: visual snapshot diffing — checks pixels after a play function runs, but does not assert behavior.
-- **showcase `csf3` (elsewhere)**: format migration — separate concern from interaction authoring.
+- **vitrine `interaction`**: in-story play functions that exercise a single component's primary user flow (click, fill, submit) and assert visible output. Runs inside the Storybook iframe.
+- **vitrine `story` (default, elsewhere)**: static variant/state authoring without interaction logic.
+- **vitrine `vrt` (elsewhere)**: visual snapshot diffing — checks pixels after a play function runs, but does not assert behavior.
+- **vitrine `csf3` (elsewhere)**: format migration — separate concern from interaction authoring.
 - **artisan (elsewhere)**: production component implementation. Play functions never modify component code.
 - **forge (elsewhere)**: prototype play scenarios are throwaway; promote to interaction tests only after the prototype graduates.
 - **voyager (elsewhere)**: cross-page E2E journeys (login → checkout → confirmation). Play functions stop at the component boundary.

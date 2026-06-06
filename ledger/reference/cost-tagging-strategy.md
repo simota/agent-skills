@@ -10,7 +10,7 @@ Purpose: Subcommand-scoped methodology for designing and enforcing a cloud-cost 
 - **ledger `anomaly` (elsewhere)**: anomaly attribution depends on tags. Untagged spike = team unknown = no escalation owner.
 - **scaffold (elsewhere)**: applies tag policy to IaC modules (Terraform `default_tags`, CloudFormation Stack tags, Pulumi resource transforms). `tagging` defines the schema; Scaffold enforces in code.
 - **beacon (elsewhere)**: reliability tags (oncall team, runbook URL) overlap with cost tags. `tagging` owns cost-allocation tags only — coordinate but do not collapse the tag sets.
-- **comply (elsewhere)**: regulatory tags (data classification, residency, PII flag) audit-trail. `tagging` references these but does not own classification policy.
+- **oath (elsewhere)**: regulatory tags (data classification, residency, PII flag) audit-trail. `tagging` references these but does not own classification policy.
 - **cloak (elsewhere)**: data-classification taxonomy. Cost tagging consumes Cloak's classification levels, never invents them.
 
 ## Workflow

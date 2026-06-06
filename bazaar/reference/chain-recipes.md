@@ -21,7 +21,7 @@ Brief intake
 ├── Whitepaper / ebook / template / checklist download?
 │   └── magnet
 └── Existing LP, single concern (perf / SEO / a11y / copy)?
-    └── Route out (not lure) — call bolt / growth / palette / prose directly
+    └── Route out (not bazaar) — call bolt / growth / palette / prose directly
 ```
 
 Choose ONE recipe. Recipe choice is locked at the RECIPE phase and logged to `.agents/bazaar/{project}.json`.

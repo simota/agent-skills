@@ -11,7 +11,7 @@ For hub-mediated flows, use `NEXUS_HANDOFF` / `_STEP_COMPLETE` in `SKILL.md`. Us
 - [Voyager → Director (E2E-to-Demo)](#voyager--director-e2e-to-demo)
 - [Vision → Director (Design-Review Demo)](#vision--director-design-review-demo)
 - [Echo → Director (Persona-Aware Demo)](#echo--director-persona-aware-demo)
-- [Director → Vitrine (Demo-to-Storybook)](#director--showcase-demo-to-storybook)
+- [Director → Vitrine (Demo-to-Storybook)](#director--vitrine-demo-to-storybook)
 - [Director → Quill (Demo-to-Documentation)](#director--quill-demo-to-documentation)
 - [Director → Growth (Demo-to-Marketing)](#director--growth-demo-to-marketing)
 

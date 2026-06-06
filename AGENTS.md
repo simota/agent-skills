@@ -71,7 +71,7 @@ Authoritative: [`_common/GIT_GUIDELINES.md`](_common/GIT_GUIDELINES.md). Summary
 
 - **Conventional Commits**: `<type>(<scope>): <description>` (e.g. `feat(nexus): add agy execution layer`).
 - **Types**: `feat` / `fix` / `docs` / `style` / `refactor` / `perf` / `test` / `chore` / `ci` / `security`.
-- **Scope = skill name** for skill-scoped changes (e.g. `feat(husk): add agy IoC paths`).
+- **Scope = skill name** for skill-scoped changes (e.g. `feat(cull): add agy IoC paths`).
 - **Imperative mood**, subject ≤50 chars.
 - **Never include agent names** in commit messages, PR titles, or PR descriptions.
 - **Never** add `Claude Code signatures` or `Co-Authored-By` lines.

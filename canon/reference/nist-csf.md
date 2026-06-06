@@ -5,7 +5,7 @@ Purpose: Standards-citation-driven assessment against NIST CSF 2.0 (released Feb
 ## Scope Boundary
 
 - **canon `nist`**: standards-citation-driven assessment. Pin version "NIST CSF 2.0", cite Function.Category.Subcategory (e.g., `GV.OC-01`, `PR.AA-05`), evidence at `file:line`, and Tier rating per Category.
-- **comply (elsewhere)**: audit-trail and Policy-as-Code. Once Canon surfaces gaps, Oath owns control evidence collection (OSCAL packages), continuous-control monitoring, and auditor-facing reports.
+- **oath (elsewhere)**: audit-trail and Policy-as-Code. Once Canon surfaces gaps, Oath owns control evidence collection (OSCAL packages), continuous-control monitoring, and auditor-facing reports.
 - **cloak (elsewhere)**: privacy-by-design implementation. CSF 2.0 references NIST Privacy Framework — Cloak owns privacy-engineering controls (PII flow maps, DPIA, consent) when overlap occurs (`ID.RA`, `PR.DS`).
 - **sentinel (elsewhere)**: static security scanning. SAST/secret detection feeds evidence into `DE.CM-01`, `PR.DS-01`, but Sentinel does not assess Profile/Tier alignment.
 - **probe (elsewhere)**: dynamic security testing for `DE.AE` / `DE.CM` validation.

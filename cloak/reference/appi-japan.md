@@ -12,7 +12,7 @@ Purpose: Implementation guidance for Japan's Act on the Protection of Personal I
 - **canon (elsewhere)**: standards-level audit. `appi` produces operational compliance code.
 - **crypt (elsewhere)**: encryption design backing the "appropriate safety management" duty (Art. 23 安全管理措置).
 - **clause (elsewhere)**: 個人情報保護方針 (Privacy Policy in Japanese), 利用目的の特定 wording, Tokushoho disclosures for EC.
-- **comply (elsewhere)**: ISMS / Pマーク (Privacy Mark) certification mapping; APPI is law, Pマーク is voluntary certification.
+- **oath (elsewhere)**: ISMS / Pマーク (Privacy Mark) certification mapping; APPI is law, Pマーク is voluntary certification.
 
 ## Workflow
 

@@ -10,7 +10,7 @@ Purpose: Systematic post-decision interview program that surfaces the real reaso
 - **compete `positioning` (elsewhere)**: positioning maps — win/loss surfaces positioning gaps; positioning resolves them.
 - **compete `battle` (elsewhere)**: battle cards consume win/loss themes as their evidence layer. Do not author "why we win/lose" sections from opinion.
 - **voice (elsewhere)**: existing-customer feedback and NPS. Voice is post-purchase satisfaction; win/loss is purchase-decision rationale. Different population, different question set.
-- **researcher (elsewhere)**: discovery-phase user research and persona work. Field designs the methodology; Compete owns the win/loss program structure and competitive lens.
+- **field (elsewhere)**: discovery-phase user research and persona work. Field designs the methodology; Compete owns the win/loss program structure and competitive lens.
 - **plea (elsewhere)**: synthetic-user assumption challenge. Plea is hypothesis stress-testing without real interviews — never substitute for real win/loss.
 
 ## Workflow

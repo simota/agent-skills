@@ -5,7 +5,7 @@ Purpose: Standards-citation-driven assessment against PCI-DSS v4.0 (effective Ma
 ## Scope Boundary
 
 - **canon `pci`**: standards-citation-driven assessment. Pin version "PCI-DSS v4.0.1", cite Requirement.Sub-requirement (e.g., `Req 3.5.1`, `Req 8.3.6`), evidence at `file:line`, scope-minimization analysis (tokenization, network segmentation).
-- **comply (elsewhere)**: audit-trail, ROC/SAQ submission preparation, Policy-as-Code mapping (OPA), continuous-control monitoring. Canon scopes; Oath executes audit workflow and QSA coordination.
+- **oath (elsewhere)**: audit-trail, ROC/SAQ submission preparation, Policy-as-Code mapping (OPA), continuous-control monitoring. Canon scopes; Oath executes audit workflow and QSA coordination.
 - **cloak (elsewhere)**: privacy-by-design for cardholder PAN/CVV handling — masking, tokenization choice (FPE vs. vault), secure deletion. Overlaps with `Req 3` (Protect Stored Account Data).
 - **sentinel (elsewhere)**: static scanning for hardcoded PAN, weak crypto (`Req 3.5`, `Req 6.2.4`), secret leakage.
 - **probe (elsewhere)**: DAST and ASV scanning for `Req 11.3` (external/internal vulnerability scans, pentests).

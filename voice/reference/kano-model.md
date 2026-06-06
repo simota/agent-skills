@@ -7,7 +7,7 @@ Purpose: Classify product features by the asymmetric relationship between functi
 - **voice `kano`**: Kano-style paired functional + dysfunctional surveys, classification matrix, Better/Worse coefficient computation, and feature prioritization recommendation. Operationalizes Kano on existing or proposed features.
 - **voice `nps` (default)**: relationship loyalty score, not feature-level classification. NPS tells you "would they recommend"; Kano tells you "which features earn that recommendation."
 - **voice `csat` / `ces` (elsewhere)**: touchpoint satisfaction or task effort. Kano operates at the feature level, CSAT/CES at the experience level.
-- **researcher (elsewhere)**: exploratory feature discovery and JTBD interviews. Field generates the candidate feature list; Voice `kano` classifies it.
+- **field (elsewhere)**: exploratory feature discovery and JTBD interviews. Field generates the candidate feature list; Voice `kano` classifies it.
 - **spark (elsewhere)**: feature ideation and product framing. Kano feeds Spark a prioritized backlog; Spark turns "delighters" into shipping specs.
 - **echo (elsewhere)**: persona-level cognitive walkthrough. Kano segments persona may diverge — must-haves for power users may be delighters for novices.
 

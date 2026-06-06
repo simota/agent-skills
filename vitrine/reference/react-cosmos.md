@@ -4,12 +4,12 @@ Purpose: React Cosmos 6+ is a fixture-based React component explorer positioned 
 
 ## Scope Boundary
 
-- **showcase `cosmos`**: React Cosmos 6+ fixture authoring (`*.fixture.tsx`), decorator chains, multi-instance prop iteration, Vite/Webpack bundler config. Cosmos-specific decisions.
-- **showcase `story` (default, elsewhere)**: Storybook CSF authoring. Cosmos and Storybook can coexist (`*.stories.tsx` + `*.fixture.tsx` in the same repo) but choose one as the primary docs surface.
-- **showcase `catalog` (elsewhere)**: hierarchy planning. Cosmos derives hierarchy from filesystem only — no `title` field; folder structure IS the catalog.
-- **showcase `vrt` (elsewhere)**: visual regression. Cosmos has weaker first-party VRT — Chromatic does not support Cosmos; use Playwright VRT or Loki against the Cosmos URL.
-- **showcase `interaction` (elsewhere)**: Cosmos has no built-in play-function equivalent; use Vitest browser-mode + React Testing Library against the fixture export directly.
-- **showcase `mdx` (elsewhere)**: Cosmos has no MDX docs system; use README files or external docs sites.
+- **vitrine `cosmos`**: React Cosmos 6+ fixture authoring (`*.fixture.tsx`), decorator chains, multi-instance prop iteration, Vite/Webpack bundler config. Cosmos-specific decisions.
+- **vitrine `story` (default, elsewhere)**: Storybook CSF authoring. Cosmos and Storybook can coexist (`*.stories.tsx` + `*.fixture.tsx` in the same repo) but choose one as the primary docs surface.
+- **vitrine `catalog` (elsewhere)**: hierarchy planning. Cosmos derives hierarchy from filesystem only — no `title` field; folder structure IS the catalog.
+- **vitrine `vrt` (elsewhere)**: visual regression. Cosmos has weaker first-party VRT — Chromatic does not support Cosmos; use Playwright VRT or Loki against the Cosmos URL.
+- **vitrine `interaction` (elsewhere)**: Cosmos has no built-in play-function equivalent; use Vitest browser-mode + React Testing Library against the fixture export directly.
+- **vitrine `mdx` (elsewhere)**: Cosmos has no MDX docs system; use README files or external docs sites.
 - **artisan (elsewhere)**: production component code. Fixtures observe; never modify.
 - **forge (elsewhere)**: throwaway prototype renders — Cosmos's lightness makes it tempting for prototyping, but the artifact is still throwaway until promoted.
 - **voyager (elsewhere)**: E2E. Cosmos fixtures are isolated by design; cross-page flows belong in Voyager.

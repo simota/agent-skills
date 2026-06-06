@@ -8,7 +8,7 @@ Purpose: Structured expert-review methodology applying Nielsen's 10 usability he
 - **echo `walkthrough` (default)**: persona-based cognitive walkthrough — simulates specific user minds through a flow.
 - **palette (elsewhere)**: remediation. Once heuristics surface violations, Palette owns the redesign.
 - **canon `wcag` (elsewhere)**: WCAG compliance assessment. Heuristic evaluation is broader than accessibility — overlap exists around heuristic 4 (consistency) and heuristic 9 (recognize/recover errors).
-- **researcher (elsewhere)**: empirical validation with real users. Heuristic evaluation predicts issues; research confirms them.
+- **field (elsewhere)**: empirical validation with real users. Heuristic evaluation predicts issues; research confirms them.
 
 ## Workflow
 

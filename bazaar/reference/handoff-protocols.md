@@ -45,7 +45,7 @@ LURE_STAGE_BUNDLE:
     - <stage-gate criterion this delegate must hit>
   Provenance:
     project_state: .agents/bazaar/{project}.json
-    decisions_log: .agents/lure.md
+    decisions_log: .agents/bazaar.md
   Open_Questions:
     - <unresolved item the delegate should flag, not silently decide>
 ```

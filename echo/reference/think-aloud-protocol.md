@@ -7,7 +7,7 @@ Purpose: Moderate a think-aloud usability session where participants verbalize t
 - **echo `aloud`**: moderator script, prompt discipline, transcript coding, and finding extraction for think-aloud sessions (concurrent + retrospective variants).
 - **echo `walkthrough` (default)**: persona-based cognitive walkthrough — simulated, not observed. Use when you have no users available.
 - **echo `heuristic` (elsewhere)**: expert-review prediction. Pair heuristic findings with think-aloud evidence to promote "predicted" to "confirmed."
-- **researcher `usability` (elsewhere)**: study logistics, recruitment, and statistical design. Field owns study design; `aloud` owns in-session moderation technique.
+- **field `usability` (elsewhere)**: study logistics, recruitment, and statistical design. Field owns study design; `aloud` owns in-session moderation technique.
 - **voice (elsewhere)**: captured feedback text analysis at scale — think-aloud is small-n deep, voice is large-n shallow.
 
 ## Workflow

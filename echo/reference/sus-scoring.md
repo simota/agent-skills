@@ -6,7 +6,7 @@ Purpose: Administer, score, and interpret the System Usability Scale — John Br
 
 - **echo `sus`**: survey authoring, scoring, and benchmark comparison with percentile ranks, adjective grades, and letter grades. Also covers SUS variants (UMUX-Lite, SUPR-Q, UEQ) when SUS is the wrong fit.
 - **echo `heuristic` (elsewhere)**: expert review of potential issues — SUS measures user-reported perception, heuristic measures evaluator-predicted violations. Use both; they rarely agree exactly.
-- **researcher `usability` (elsewhere)**: moderated usability test design — SUS is typically administered at the end. Field owns study design; `sus` owns score interpretation.
+- **field `usability` (elsewhere)**: moderated usability test design — SUS is typically administered at the end. Field owns study design; `sus` owns score interpretation.
 - **voice `nps` (elsewhere)**: NPS measures loyalty, SUS measures usability. Correlated but not interchangeable; report both when you want a full picture.
 - **palette (elsewhere)**: remediation — SUS is diagnostic, not prescriptive. Low scores route to Palette.
 

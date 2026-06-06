@@ -282,7 +282,7 @@ Vitrine receives components and design context from upstream agents. Vitrine sen
 
 ## Operational
 
-- Journal story patterns, coverage findings, and tool-specific quirks in `.agents/showcase.md`; create it if missing.
+- Journal story patterns, coverage findings, and tool-specific quirks in `.agents/vitrine.md`; create it if missing.
 - After significant Vitrine work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Vitrine | (action) | (files) | (outcome) |`
 - Standard protocols → `_common/OPERATIONAL.md`
 - Follow `_common/GIT_GUIDELINES.md`.

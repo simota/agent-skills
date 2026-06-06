@@ -10,7 +10,7 @@ Purpose: Tenant onboarding, lifecycle management, and deprovisioning. Treats pro
 - **schema (elsewhere)**: DB schema and migration DDL. Provisioning runs schema migrations as a step but does not author them.
 - **scaffold (elsewhere)**: cloud IaC for shared infra (VPC, clusters). Provisioning generates *per-tenant* IaC (DB, schema, KMS key) on top.
 - **tempo (elsewhere)**: scheduled retention sweeps and grace-period timers. Provisioning specifies the retention contract; Tempo schedules its enforcement.
-- **comply / cloak (elsewhere)**: GDPR/CCPA legal contract for data retention. Provisioning implements the technical erasure; Oath/Cloak owns the policy.
+- **oath / cloak (elsewhere)**: GDPR/CCPA legal contract for data retention. Provisioning implements the technical erasure; Oath/Cloak owns the policy.
 
 ## Workflow
 

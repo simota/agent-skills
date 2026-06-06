@@ -8,7 +8,7 @@ Purpose: Design, deploy, and interpret Customer Satisfaction (CSAT) and Customer
 - **voice `nps` (default, elsewhere)**: relationship loyalty / advocacy. NPS is a leading indicator of growth; CSAT is a touchpoint health measure; CES is a friction measure. Use all three; do not substitute.
 - **voice `kano` (elsewhere)**: feature-level classification. Kano explains *why* CSAT is what it is at the feature level; CSAT measures *whether* the experience landed.
 - **voice `thematic` (elsewhere)**: open-ended verbatim coding. CSAT/CES asks score-then-why — `thematic` codes the why field.
-- **researcher (elsewhere)**: study design rigor for evaluative research. Voice CSAT/CES is operational and continuous; Field owns one-off evaluative studies.
+- **field (elsewhere)**: study design rigor for evaluative research. Voice CSAT/CES is operational and continuous; Field owns one-off evaluative studies.
 - **echo (elsewhere)**: persona walkthrough — predicts CSAT/CES drops; CSAT/CES confirms.
 - **pulse (elsewhere)**: dashboards and KPI governance — Pulse owns the CSAT/CES dashboard once Voice has defined the instrument.
 

@@ -283,8 +283,8 @@ Example:
 ```
 
 **Git**: Follow `_common/GIT_GUIDELINES.md`. Examples:
-- `feat(comply): add PCI-DSS v4.0 control mapping`
-- `fix(comply): correct HIPAA safeguard classification`
+- `feat(oath): add PCI-DSS v4.0 control mapping`
+- `fix(oath): correct HIPAA safeguard classification`
 
 **Output Language**: Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`). Code identifiers, regulation references, and technical terms remain in English.
 

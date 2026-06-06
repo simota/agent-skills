@@ -4,9 +4,9 @@ Purpose: Design a multi-layer deduplication system for a web-scale crawler — U
 
 ## Scope Boundary
 
-- **spider `dedup`**: Dedup architecture (this document).
-- **spider `frontier` (elsewhere)**: URL frontier (uses this dedup data).
-- **spider `extraction` (elsewhere)**: Extraction-time near-dup detection.
+- **trawl `dedup`**: Dedup architecture (this document).
+- **trawl `frontier` (elsewhere)**: URL frontier (uses this dedup data).
+- **trawl `extraction` (elsewhere)**: Extraction-time near-dup detection.
 - **Schema (elsewhere)**: Database uniqueness constraints.
 - **Seek (elsewhere)**: Index-time dedup.
 

@@ -4,9 +4,9 @@ Purpose: Design the full extraction pipeline for a web-scale crawler — from th
 
 ## Scope Boundary
 
-- **spider `extraction`**: Pipeline-level architecture (this document).
-- **spider `frontier` (elsewhere)**: Input side — URL management.
-- **spider `dedup` (elsewhere)**: Deduplication (URL + content + near-dup).
+- **trawl `extraction`**: Pipeline-level architecture (this document).
+- **trawl `frontier` (elsewhere)**: Input side — URL management.
+- **trawl `dedup` (elsewhere)**: Deduplication (URL + content + near-dup).
 - **Vector (elsewhere)**: Single-session scraping execution.
 - **Stream (elsewhere)**: Downstream ETL of extracted data.
 - **Grok (elsewhere)**: Regex/parser grammar authoring details.

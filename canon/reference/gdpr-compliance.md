@@ -6,7 +6,7 @@ Purpose: Standards-citation-driven assessment against the EU General Data Protec
 
 - **canon `gdpr`**: standards-citation-driven assessment. Pin "GDPR (Regulation (EU) 2016/679)", cite Article and paragraph (e.g., `Art. 6(1)(b)`, `Art. 32(1)(a)`), evidence at `file:line`, lawful-basis mapping per processing activity.
 - **cloak (elsewhere)**: privacy-by-design implementation (`Art. 25`). PII detection, data-flow maps, consent-management code, DPIA facilitation, anonymization/pseudonymization design. Canon assesses; Cloak builds.
-- **comply (elsewhere)**: audit trail, Records of Processing Activities (RoPA — `Art. 30`), Policy-as-Code, DPA (Data Processing Agreement) registry, supervisory-authority correspondence.
+- **oath (elsewhere)**: audit trail, Records of Processing Activities (RoPA — `Art. 30`), Policy-as-Code, DPA (Data Processing Agreement) registry, supervisory-authority correspondence.
 - **clause (elsewhere)**: legal text review of Privacy Policy, Cookie Notice, DPA — clause-gap detection. Canon does not make legal determinations; defer to Clause + lawyer.
 - **sentinel (elsewhere)**: static scanning for PII leakage, hardcoded data-subject identifiers, insecure storage of personal data.
 

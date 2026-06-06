@@ -4,9 +4,9 @@ Purpose: Design trigger-based, behavior-branched email drip covering the full us
 
 ## Scope Boundary
 
-- **retain `lifecycle-email`**: Full lifecycle email drip design (this document).
-- **retain `reengagement` (elsewhere)**: Dormant re-engagement tactics. Lifecycle includes but is broader than re-engagement.
-- **retain `winback` (elsewhere)**: Cancelled/long-dormant recovery. Lifecycle is active-user nurture; winback is recovery.
+- **bond `lifecycle-email`**: Full lifecycle email drip design (this document).
+- **bond `reengagement` (elsewhere)**: Dormant re-engagement tactics. Lifecycle includes but is broader than re-engagement.
+- **bond `winback` (elsewhere)**: Cancelled/long-dormant recovery. Lifecycle is active-user nurture; winback is recovery.
 - **Prose `notification` (elsewhere)**: Copy authoring per email. Lifecycle designs the *plan*; Prose writes the *words*.
 - **relay (elsewhere)**: Email delivery infrastructure.
 - **Pulse (elsewhere)**: Funnel / open / click metrics.

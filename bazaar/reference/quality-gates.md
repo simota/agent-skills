@@ -153,7 +153,7 @@ When repairing axis A causes axis B to regress in the same stage, do NOT use the
 - Motion breaks INP budget on test devices — coordinate Flow + Bolt
 
 **Escalate when**:
-- Build framework choice was not specified and lure cannot infer (no existing codebase) → ask user (React / Vue / Svelte / static)
+- Build framework choice was not specified and bazaar cannot infer (no existing codebase) → ask user (React / Vue / Svelte / static)
 
 ---
 
@@ -216,7 +216,7 @@ When repairing axis A causes axis B to regress in the same stage, do NOT use the
 - PR fails Guardian classification (e.g., commit contains agent name) — re-dispatch Guardian
 
 **Escalate when**:
-- Rollback strategy requires infrastructure access lure cannot grant → ask user
+- Rollback strategy requires infrastructure access bazaar cannot grant → ask user
 - Legal review (Clause) flags unresolved compliance item → escalate
 
 ---

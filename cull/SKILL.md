@@ -384,12 +384,12 @@ Output language follows the CLI global config (`settings.json` `language` field,
 Follow `_common/GIT_GUIDELINES.md`.
 
 Good:
-- `feat(husk): add Mini Shai-Hulud 2nd IoC family`
-- `fix(husk): correct rotation order for npm vs GitHub PAT`
-- `docs(husk): cite StepSecurity advisory in ioc-database`
+- `feat(cull): add Mini Shai-Hulud 2nd IoC family`
+- `fix(cull): correct rotation order for npm vs GitHub PAT`
+- `docs(cull): cite StepSecurity advisory in ioc-database`
 
 Avoid:
-- `update husk skill`
+- `update cull skill`
 - `scan improvements`
 
 Never include agent names in commit subjects or PR titles unless project policy explicitly requires it.

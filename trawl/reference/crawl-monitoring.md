@@ -4,8 +4,8 @@ Purpose: Design observability for a distributed crawler fleet — fetch rate, fr
 
 ## Scope Boundary
 
-- **spider `monitoring`**: Crawler-specific observability (this document).
-- **spider `frontier` / `politeness` / `extraction` (elsewhere)**: Components being monitored.
+- **trawl `monitoring`**: Crawler-specific observability (this document).
+- **trawl `frontier` / `politeness` / `extraction` (elsewhere)**: Components being monitored.
 - **Beacon (elsewhere)**: General SLO/SLI framework. Trawl hands off specific signals to Beacon.
 - **Stream (elsewhere)**: Downstream data quality (Great Expectations). Crawl monitoring ends before ETL.
 - **Triage (elsewhere)**: Incident response. Crawl monitoring feeds alerts.

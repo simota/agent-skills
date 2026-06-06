@@ -4,8 +4,8 @@ Purpose: Identify the 10-20% of users driving disproportionate engagement and re
 
 ## Scope Boundary
 
-- **retain `power-user`**: Power-user identification and advocacy activation (this document).
-- **retain `loyalty` (elsewhere)**: Points / tier / reward programs. Power-user is earn-through-behavior; loyalty is earn-through-spend.
+- **bond `power-user`**: Power-user identification and advocacy activation (this document).
+- **bond `loyalty` (elsewhere)**: Points / tier / reward programs. Power-user is earn-through-behavior; loyalty is earn-through-spend.
 - **Voice (elsewhere)**: NPS survey and promoter signals. Power-user consumes Voice's promoter data.
 - **Growth (elsewhere)**: Referral mechanics and viral loops. Power-user feeds high-intent candidates into Growth's referral system.
 - **Pulse (elsewhere)**: L21+ MAU bucket metrics and overlap analysis.

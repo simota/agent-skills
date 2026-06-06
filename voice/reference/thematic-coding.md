@@ -7,7 +7,7 @@ Purpose: Inductive coding of open-ended feedback (survey free-text, interview tr
 - **voice `thematic`**: 6-phase Braun & Clarke coding, codebook governance, saturation tracking, inter-coder agreement (Cohen's κ / Krippendorff's α), and thematic map output. Inductive (data-driven) by default; deductive (framework-driven) on request.
 - **voice `classify` (elsewhere)**: pre-defined category tagging for high-volume routing. Classify uses fixed buckets; thematic discovers them. Once thematic stabilizes a codebook, hand it off to `classify` for ongoing tagging.
 - **voice `sentiment` (elsewhere)**: polarity / emotion detection per response. Orthogonal to themes — a single theme can carry positive and negative sentiment.
-- **researcher (elsewhere)**: qualitative interview design and sampling. Field owns study design and recruitment; `thematic` owns the coding methodology applied to the resulting transcripts.
+- **field (elsewhere)**: qualitative interview design and sampling. Field owns study design and recruitment; `thematic` owns the coding methodology applied to the resulting transcripts.
 - **echo (elsewhere)**: persona-driven UX walkthrough. Thematic findings can validate or challenge persona assumptions; echo cannot substitute for grounded coding.
 - **insight (elsewhere)**: synthesis-to-recommendation. Thematic produces themes; `insight` turns themes into prioritized actions.
 

@@ -11,7 +11,7 @@ Purpose: Disciplined cross-domain analogy generation grounded in Dedre Gentner's
 - **flux `challenge`**: assumption reversal. Use first if the source domain itself encodes hidden assumptions.
 - **flux `inversion`**: invert-the-goal. Inversion asks "what guarantees failure"; analogy asks "what shape solved it elsewhere".
 - **riff (elsewhere)**: iterative dialogue. Analogy is a single mapping pass; Riff can develop one analogy across turns.
-- **researcher (elsewhere)**: empirical validation. Analogies predict; research confirms transferability.
+- **field (elsewhere)**: empirical validation. Analogies predict; research confirms transferability.
 
 ## Workflow
 

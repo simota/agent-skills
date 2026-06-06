@@ -45,7 +45,7 @@ Parallel fan-out: Serial (Pulse → Magi). Magi consumes Pulse's KPI tree.
 
 | Agent | Role in chain | Returns | Overlap watch |
 |-------|---------------|---------|---------------|
-| **funnel** | LP structure (above-fold, sections, CTA strategy, form design, A/B variant outline) | Wireframe outline + copy direction brief | Funnel is the LP-section specialist; lure orchestrates it, not replaces it |
+| **funnel** | LP structure (above-fold, sections, CTA strategy, form design, A/B variant outline) | Wireframe outline + copy direction brief | Funnel is the LP-section specialist; bazaar orchestrates it, not replaces it |
 | **prose** | UX writing — headlines, microcopy, error states, button labels | Copy v1 (hero, sub, CTA micro, FAQ, error) | Prose owns voice and tone; funnel owns positioning. Prose also writes TL;DR / citable units per ia-blueprint §4.1 (Growth supplies structural brief, never the words). |
 | **saga** | **Two roles** — (1) at STRATEGY: Brand Story arc (Hero/Guide/Problem/Plan/Success/Failure) for the Brand System record; (2) at STRUCTURE: narrative-copy application onto wireframe sections | Strategy: brand_story.md; Structure: section-level narrative passes | Use only when narrative is the right framework (B2B, complex products, heritage brand) |
 
@@ -149,9 +149,9 @@ These agents may be invoked at any stage based on signal, not stage:
 
 | Orchestrator | Overlap with `bazaar` | Differentiation |
 |--------------|----------------------|------------------|
-| `funnel` | Stage 4 (Structure) | Funnel is the LP-section specialist; lure is the chain. Bazaar invokes funnel. |
-| `atelier` | Stage 5 (Design) | Atelier handles design pipeline for multi-artifact bundles; lure for single LP handles design directly. Bazaar invokes atelier on bundle requests. |
-| `titan` | Stage 6 (Build) | Titan delivers product-wide build; lure scopes to a single LP. If the LP is part of a product release, lure escalates to titan or coordinates via nexus. |
+| `funnel` | Stage 4 (Structure) | Funnel is the LP-section specialist; bazaar is the chain. Bazaar invokes funnel. |
+| `atelier` | Stage 5 (Design) | Atelier handles design pipeline for multi-artifact bundles; bazaar for single LP handles design directly. Bazaar invokes atelier on bundle requests. |
+| `titan` | Stage 6 (Build) | Titan delivers product-wide build; bazaar scopes to a single LP. If the LP is part of a product release, bazaar escalates to titan or coordinates via nexus. |
 | `nexus` | Generic multi-domain | Bazaar is LP-axis only. If the request crosses LP axis (security + data + infra + LP), escalate to nexus with the LP slice as a sub-task. |
 
 `bazaar` ≈ 30% capability overlap with the union of (funnel + atelier + portions of titan). The 70% unique surface is research-to-launch coordination, recipe selection, and quality-gate enforcement specific to landing pages.

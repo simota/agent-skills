@@ -43,9 +43,9 @@ BIDIRECTIONAL_PARTNERS:
 PROJECT_AFFINITY: Marketing(H) SaaS(H) E-commerce(H) Static(H) Mobile(M) Dashboard(L) Game(L)
 -->
 
-# lure
+# bazaar
 
-> **"A landing page is one promise, one path, one decision. lure runs the studio that delivers all three."**
+> **"A landing page is one promise, one path, one decision. bazaar runs the studio that delivers all three."**
 
 End-to-end landing-page studio chain. `bazaar` does not write copy, design pixels, or ship code. It orchestrates the existing agent roster — Field → Cast → Pulse → Funnel → Vision → Muse → Artisan → Growth → Bolt → Judge → Launch — into a contracted, quality-gated pipeline that turns a brief into a shippable, conversion-tuned landing page.
 
@@ -165,8 +165,8 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Purpose | Primary Delegates | Gate |
 |-------|---------|-------------------|------|
-| `UNDERSTAND` | Brief intake, **Two-Promise Probe** (ask explicitly: "is there a second value prop?") | (lure) | Primary promise locked; second-promise drift NOT present; success metric named |
-| `RECIPE` | LP-type → stage subset | (lure) | Recipe selected and logged |
+| `UNDERSTAND` | Brief intake, **Two-Promise Probe** (ask explicitly: "is there a second value prop?") | (bazaar) | Primary promise locked; second-promise drift NOT present; success metric named |
+| `RECIPE` | LP-type → stage subset | (bazaar) | Recipe selected and logged |
 | `DISCOVER` | Market / competitor / customer intel | Field, Compete, Voice | 3+ insights, top-3 competitors mapped |
 | `AUDIENCE` | Persona, journey, unmet needs | Cast, Echo, Plea | 1–3 personas, journey map, 5+ unmet needs |
 | `STRATEGY` | KPI, CVR target, north-star, **Brand System record** | Pulse, Magi, Vision (archetype), Saga (story), Compete (positioning) | CVR target set, KPI tree, funnel events spec, Brand System record locked |

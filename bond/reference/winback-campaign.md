@@ -4,9 +4,9 @@ Purpose: Recover cancelled or long-dormant users with a recency-weighted offer s
 
 ## Scope Boundary
 
-- **retain `winback`**: Cancelled / long-dormant user recovery (this document).
-- **retain `reengagement` (elsewhere)**: Still-active dormant user re-activation. Default. Winback is a deeper recovery path.
-- **retain `churn` (elsewhere)**: Churn prevention *before* cancellation.
+- **bond `winback`**: Cancelled / long-dormant user recovery (this document).
+- **bond `reengagement` (elsewhere)**: Still-active dormant user re-activation. Default. Winback is a deeper recovery path.
+- **bond `churn` (elsewhere)**: Churn prevention *before* cancellation.
 - **Growth (elsewhere)**: New-user acquisition campaigns. Winback is recovery, not acquisition.
 - **Prose (elsewhere)**: Campaign copy (`notification`). Winback designs the plan; Prose writes the words.
 - **relay (elsewhere)**: Delivery infrastructure.
