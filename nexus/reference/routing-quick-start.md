@@ -6,11 +6,11 @@ Extends the inline Routing Quick Start in `SKILL.md`. Canonical matrix: `referen
 
 | Task Type | Default Chain | Add When |
 |-----------|---------------|----------|
-| `BUG` | Scout → **Sherpa** → Builder → Radar | `+Sentinel` for security |
-| `FEATURE` | **Sherpa** → Forge → Builder → Radar | `+Muse` for UI, `+Artisan` for frontend implementation |
+| `BUG` | Scout → Sherpa? → Builder → Radar | `+Sentinel` for security. Sherpa skip when files ≤ 2 or single-component fix |
+| `FEATURE` | Sherpa → Forge → Builder → Radar | `+Muse` for UI (skip on backend/CLI), `+Artisan` for frontend implementation |
 | `SECURITY` | Sentinel → Builder → Radar | `+Probe` for dynamic testing, `+Specter` for concurrency risk |
-| `REFACTOR` | Zen → Radar | `+Sherpa` for multi-file refactors, `+Atlas` for architecture, `+Grove` for structure |
-| `OPTIMIZE` | Bolt/Tuner → Radar | `+Schema` for DB-heavy work |
+| `REFACTOR` | Zen → Radar? | `+Sherpa` for multi-file refactors, `+Atlas` for architecture, `+Grove` for structure. Radar skip for pure rename/extract |
+| `OPTIMIZE` | Bolt (code-side) / Tuner (DB queries) → Radar | `+Schema` for DB index/migration |
 | `DESIGN_SYSTEM_DOCS` | Muse → Vitrine + Canvas → Quill | `+Vision` for direction, `+Artisan` for live examples |
 | `DESIGN_WORKFLOW` | Atelier (orchestrates: Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas) | Full design→code loop with design-system persistence. When request spans direction + tokens + prototype + implementation + catalog |
 | `MOBILE_NATIVE` | **Native** → Radar → Vitrine → Launch | iOS Swift/SwiftUI or Android Kotlin/Compose. Pure-native only (RN/Flutter/KMP/CMP → Forge). Add-ons + full row → `reference/routing-matrix.md` MOBILE_NATIVE |

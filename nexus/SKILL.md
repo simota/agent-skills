@@ -136,11 +136,11 @@ Agent disambiguation → `reference/agent-disambiguation.md`
 | Recipe | Subcommand | When to Use | Chain Template | Read |
 |--------|-----------|-------------|----------------|------|
 | Auto Classify | `classify` (default) | No Recipe specified — auto-classification | `CLASSIFY → CHAIN_SELECT` (legacy flow) | `reference/routing-matrix.md` |
-| Bug Fix | `bug` | Bug reports and fix requests | `Scout → Sherpa → Builder → Radar (+Sentinel)` | `reference/routing-matrix.md` |
-| Feature | `feature` | New web/backend/generic feature. **iOS/Android native → `MOBILE_NATIVE` (Native) instead.** | `Sherpa → Forge → Builder → Radar (+Muse)` | `reference/routing-matrix.md` |
+| Bug Fix | `bug` | Bug reports and fix requests | `Scout → Sherpa? → Builder → Radar (+Sentinel)`<br>*Sherpa skip when files ≤ 2 or single-component fix* | `reference/routing-matrix.md` |
+| Feature | `feature` | New web/backend/generic feature. **iOS/Android native → `MOBILE_NATIVE` (Native) instead.** | `Sherpa → Forge → Builder → Radar (+Muse?)`<br>*Muse only when UI surface touched (design tokens). Backend/CLI features skip Muse.* | `reference/routing-matrix.md` |
 | Security | `security` | Security response | `Sentinel → Builder → Radar (+Probe)` | `reference/routing-matrix.md` |
-| Refactor | `refactor` | Internal-only refactor, no external behavior change | `Zen → Radar (+Atlas)` | `reference/routing-matrix.md` |
-| Optimize | `optimize` | Performance-only improvement | `Bolt/Tuner → Radar (+Schema)` | `reference/routing-matrix.md` |
+| Refactor | `refactor` | Internal-only refactor, no external behavior change | `Zen → Radar? (+Atlas?)`<br>*Radar skip for pure rename/extract; Atlas only when module boundaries change* | `reference/routing-matrix.md` |
+| Optimize | `optimize` | Performance-only improvement | `Bolt (code-side perf) / Tuner (DB queries) → Radar (+Schema?)`<br>*Schema only when index/migration recommended* | `reference/routing-matrix.md` |
 | Kaizen | `kaizen` | Existing-feature continuous improvement (perf / UX / code-quality / feature-extension). 4-8 agents | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/inline-recipes.md` |
 | Proactive | `proactive` | `/Nexus` with no arguments — project state scan | `Scan project → recommend` | `reference/proactive-mode.md` |
 | Apex | `apex` | Full-cycle auto-implementation: discovery → spec → parallel design → risk gate → loop → ship. 8-25 agents. **Confirm before launch.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/apex-recipe.md`, `reference/apex-walkthrough.md` |
@@ -152,8 +152,7 @@ Agent disambiguation → `reference/agent-disambiguation.md`
 | Summit | `summit` | Multi-engine **five-team** quality-maximization. Dual-engine default. 28-119 agents, 5-25× cost. **Always confirm.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/summit-recipe.md` |
 | Podium | `podium` | **Content-quality maximization** — doc + high-quality slide creation, five teams. 16-53 agents, 3-8× cost. Output_format variants. **Confirm release-critical.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/podium-recipe.md` |
 | Transmute | `transmute` | **Cross-language rewrite** preserving behavior via differential parity. 8-20 agents. **Confirm before big-bang.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/transmute-recipe.md` |
-| Venture | `venture` | **Business documentation package** from one idea — ~11 parallel doc tracks + traceability barrier. Depth 6-28 agents. **Confirm full.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/venture-recipe.md`, `reference/package-recipe.md` |
-| Package | `package` | **Generalized document-package generator** — 12-domain preset registry. Depth 5-28 agents. **Confirm full.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/package-recipe.md` |
+| Package | `package` | **Generalized document-package generator** — 12-domain preset registry (incl. `domain=startup` ≡ legacy `venture`). Depth 5-28 agents. **Confirm full.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/package-recipe.md`, `reference/venture-recipe.md` (startup blueprint) |
 | Pack | `pack` | **Skill ecosystem control** (meta) — switch active Claude Code skill profile per workstream. Forms: `list` / `current` / `<name>` / `reset`. **Confirms diff before writing `settings.json`.** | Inline edit (no spawn) | `reference/pack-subcommand.md`, `_common/SKILL_PACKS.md` |
 
 ### Signal Keywords → Recipe
@@ -181,7 +180,7 @@ For natural-language input without an explicit subcommand. **Subcommand match al
 | `summit`, `tri-engine`, `quality maximization`, `release-critical` | `summit` |
 | `podium`, `slide deck`, `keynote`, `presentation`, `doc + slide` | `podium` |
 | `transmute`, `rewrite in <lang>`, `language rewrite`, `differential parity` | `transmute` |
-| `venture`, `business plan`, `MVP dossier`, `pitch package` | `venture` (= `package domain=startup`) |
+| `venture`, `business plan`, `MVP dossier`, `pitch package` | → `package domain=startup` (alias only; not a standalone Recipe) |
 | `package`, `document package`, `generate a full package` | `package` (auto-detect preset) |
 | `pack`, `skill pack`, `skill profile`, `enable skills`, `switch profile` | `pack` |
 | `/Nexus` (no arguments) | `proactive` |
