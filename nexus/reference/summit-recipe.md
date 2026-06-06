@@ -268,7 +268,7 @@ parallel:
 
   - branch: agy_long_context
     engine: agy (direct spawn, not via rally wrapper)
-    agents: [trail, lore, atlas, researcher]
+    agents: [trail, lore, atlas, field]
     mission: git-history archaeology + legacy code analysis + pattern extraction + C4 architecture diagrams (multimodal) + web-grounded market survey
         (all long-context or multimodal; agy 1M context + multimodal native + Search grounding wins)
     output: agy_analysis.json
@@ -348,7 +348,7 @@ design_track:
           (judgment & language nuance — Claude irreplaceable)
     - branch: codex_implementation
       engine: codex
-      agents: [pixel, forge, flow, funnel, showcase]
+      agents: [pixel, forge, flow, funnel, vitrine]
       mission: mockup-to-HTML/CSS, prototype implementation, animation code, LP construction, component catalog generation
           (code-generation-heavy — Codex sandbox-first + Terminal-Bench leader)
     - branch: agy_creative_multimodal
@@ -434,7 +434,7 @@ parallel:
 
   - branch: agy_static_compliance
     engine: agy
-    agents: [attest, ripple, canon, comply]
+    agents: [attest, ripple, canon, oath]
     mission: spec compliance via long-context comparison (Attest) + impact analysis vertical+horizontal (Ripple)
         + standards compliance OWASP/WCAG/ISO 25010 (Canon) + legal/regulatory (Oath)
         — all need 1M context to hold spec + implementation simultaneously
@@ -667,7 +667,7 @@ phase_chain:
     parallel:
       - {engine: claude, agents: [atlas, sherpa]}   # judgment only
       - {engine: codex,  agents: [lens, scout, sentinel, siege]}   # sandbox-aided code analysis
-      - {engine: agy,    agents: [trail, lore, atlas, researcher]}   # long-context + multimodal + grounding
+      - {engine: agy,    agents: [trail, lore, atlas, field]}   # long-context + multimodal + grounding
       - if: ui_dimension != none
         parallel_sub:
           - {engine: claude, agents: [echo]}
@@ -689,7 +689,7 @@ phase_chain:
         coordinator: vision (claude)
         parallel:
           - {engine: claude, agents: [vision, prose, echo]}             # judgment + language
-          - {engine: codex,  agents: [pixel, forge, flow, funnel, showcase]}   # code generation
+          - {engine: codex,  agents: [pixel, forge, flow, funnel, vitrine]}   # code generation
           - {engine: agy,    agents: [sketch, muse, frame, palette, ink]}     # multimodal + creative
           - {engine: agy,    agent: rally, paradigm: COMPETE, mode: Solo}     # Deep Think alternatives
         synthesis: {agent: vision, convergence: single_direction}
@@ -706,7 +706,7 @@ phase_chain:
     parallel:
       - {agent: judge, mode: tri-engine-builtin}
       - {engine: codex, agents: [radar, voyager, siege, probe, sentinel, matrix]}   # all dynamic/execution
-      - {engine: agy,   agents: [attest, ripple, canon, comply]}                            # long-context compliance
+      - {engine: agy,   agents: [attest, ripple, canon, oath]}                            # long-context compliance
       - {engine: agy,   agent: rally, paradigm: COMPETE, mode: Solo}                        # independent multimodal review
       - {engine: claude, agents: [echo, palette], if: ui_dimension != none}                 # judgment-driven UX
     quorum: cross_engine_3_of_3

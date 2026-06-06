@@ -23,7 +23,7 @@ flowchart TD
 
     subgraph Phase1["Phase 1: Discovery"]
         direction TB
-        P1["plea (personas 3+)<br/>+ researcher (BEST)<br/>+ echo? (existing product)"]:::claude
+        P1["plea (personas 3+)<br/>+ field (BEST)<br/>+ echo? (existing product)"]:::claude
     end
 
     subgraph Phase2["Phase 2: Ideate"]
@@ -78,7 +78,7 @@ flowchart TD
     subgraph Phase6["Phase 6: Implementation Loop (engine = Codex CLI)"]
         direction TB
         OrbitHub["orbit (loop contract<br/>+ convergence + circuit breaker)"]:::subhub
-        LoopBody["spawn_agent on Codex:<br/>builder + artisan? + showcase?<br/>+ judge + radar + voyager?<br/>(4-8 iterations)"]:::codex
+        LoopBody["spawn_agent on Codex:<br/>builder + artisan? + vitrine?<br/>+ judge + radar + voyager?<br/>(4-8 iterations)"]:::codex
         OrbitHub --> LoopBody
         LoopBody --> OrbitHub
     end

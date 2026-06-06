@@ -25,7 +25,7 @@ flowchart TD
         direction LR
         A_Claude["Claude branch<br/>atlas + sherpa<br/>(architecture trade-off,<br/>epic decomposition)"]:::claude
         A_Codex["Codex branch<br/>lens + scout +<br/>sentinel + specter<br/>(sandbox code-analysis)"]:::codex
-        A_Agy["agy branch<br/>trail + fossil + lore<br/>+ stratum + researcher<br/>(1M ctx + Search)"]:::agy
+        A_Agy["agy branch<br/>trail + fossil + lore<br/>+ stratum + field<br/>(1M ctx + Search)"]:::agy
         A_Design["Design sub<br/>(if ui_dimension != none)<br/>echo[claude] + frame/palette[agy]"]:::design
     end
     Phase0 --> A_Claude
@@ -55,7 +55,7 @@ flowchart TD
         subgraph Design["Design Track (if UI) — Vision coords"]
             direction LR
             D_Claude["Claude: vision + prose + echo<br/>(direction, microcopy, persona)"]:::claude
-            D_Codex["Codex: pixel + forge + flow<br/>+ funnel + showcase"]:::codex
+            D_Codex["Codex: pixel + forge + flow<br/>+ funnel + vitrine"]:::codex
             D_Agy["agy: sketch + muse + frame<br/>+ palette + ink<br/>+ arena[Deep Think divergent]"]:::agy
         end
         subgraph Execution["Execution Track — arena[COLLABORATE]"]
@@ -73,7 +73,7 @@ flowchart TD
         direction LR
         V_Judge["judge<br/>(built-in tri-engine fan-out)"]:::triengine
         V_Codex["Codex dynamic<br/>radar + voyager + siege<br/>+ specter + probe + drill<br/>+ sentinel rescan"]:::codex
-        V_Agy["agy static/compliance<br/>attest + ripple + canon + comply<br/>+ arena[independent review]"]:::agy
+        V_Agy["agy static/compliance<br/>attest + ripple + canon + oath<br/>+ arena[independent review]"]:::agy
         V_Claude["Claude UX (if UI)<br/>echo + palette"]:::claude
     end
     FrameBridge --> V_Judge

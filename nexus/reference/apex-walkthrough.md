@@ -17,7 +17,7 @@ flowchart TD
     P0 --> CONFIRM{🚦 Boundary Confirm<br/>AUTORUN_FULL: 60s objection window<br/>others: explicit confirm}
     CONFIRM -->|approve or 60s timeout| P1
     CONFIRM -->|reject| ABORT[❌ Abort or<br/>suggest re-launch with explicit goal]
-    P1[Phase 1<br/>Discovery<br/>plea + researcher + echo?] --> P2
+    P1[Phase 1<br/>Discovery<br/>plea + field + echo?] --> P2
     P2[Phase 2<br/>Ideate<br/>riff] --> P3
     P3{Phase 3<br/>Verdict<br/>magi}
     P3 -->|Go| P4
@@ -180,7 +180,7 @@ phase1_input:
 sequenceDiagram
     participant N as Nexus
     participant Pl as plea
-    participant R as researcher
+    participant R as field
     participant E as echo
     Note over N: Phase 1 begins (parallel)
     par
@@ -201,7 +201,7 @@ sequenceDiagram
 | Agent | Sample output |
 |---|---|
 | plea | Beginner persona: "I can't join the conversation if I don't know how @mentions work"<br>Power user: "I want to react lightly with emoji"<br>External-contractor persona: "I want to see comment edit history" |
-| researcher | "Industry median NPS lift for comment features is +12pt (study N=320)"<br>"@mention learning cost: 2.3 sessions on average" |
+| field | "Industry median NPS lift for comment features is +12pt (study N=320)"<br>"@mention learning cost: 2.3 sessions on average" |
 | echo (optional) | Existing comment area Valence -0.3, Confusion high |
 
 ---
@@ -403,7 +403,7 @@ flowchart LR
         direction TB
         BU["codex.spawn_agent(builder)<br/>BE/logic"]
         AR["codex.spawn_agent(artisan)?<br/>FE"]
-        SH["codex.spawn_agent(showcase)?<br/>stories"]
+        SH["codex.spawn_agent(vitrine)?<br/>stories"]
         JU["codex.spawn_agent(judge)<br/>review"]
         RA["codex.spawn_agent(radar)<br/>unit test"]
         VO["codex.spawn_agent(voyager)?<br/>E2E persona"]
@@ -462,7 +462,7 @@ flowchart LR
 Iteration 1
   builder   : POST /comments + DB persistence  → SUCCESS
   artisan   : CommentList + Composer            → SUCCESS
-  showcase  : 8 stories                         → SUCCESS
+  vitrine  : 8 stories                         → SUCCESS
   judge     : 1 finding "authorisation logic is thin"   → BLOCKED
   → orbit: re-delegate to builder
 
@@ -549,7 +549,7 @@ flowchart TB
     end
 
     NEXUS -.Phase 1.-> PL[plea]
-    NEXUS -.Phase 1.-> RE[researcher]
+    NEXUS -.Phase 1.-> RE[field]
     NEXUS -.Phase 1.-> EC[echo]
     NEXUS -.Phase 2.-> RI[riff]
     NEXUS -.Phase 3.-> MA[magi]
@@ -576,7 +576,7 @@ flowchart TB
         ORBIT{Orbit<br/>spawn parent}
         ORBIT -.spawn_agent.-> BU[builder]
         ORBIT -.spawn_agent.-> AR[artisan]
-        ORBIT -.spawn_agent.-> SH[showcase]
+        ORBIT -.spawn_agent.-> SH[vitrine]
         ORBIT -.spawn_agent.-> JU[judge]
         ORBIT -.spawn_agent.-> RA[radar]
         ORBIT -.spawn_agent.-> VO[voyager]
@@ -608,7 +608,7 @@ gantt
     boundary confirm (60s window):p0e, after p0d, 1m
     section Discovery
     plea (parallel)              :a1, after p0e, 8m
-    researcher (parallel)        :a2, 00:00, 10m
+    field (parallel)        :a2, 00:00, 10m
     echo? (parallel)             :a3, 00:00, 6m
     section Ideate
     riff (4 turns)               :b1, 00:10, 8m
@@ -661,7 +661,7 @@ flowchart LR
 - `docs/adr/ADR-NNNN.md` (atlas)
 - `docs/api/openapi.yaml` (gateway)
 - `docs/design/tokens.json` (muse)
-- Storybook (showcase)
+- Storybook (vitrine)
 - E2E persona scenarios (voyager)
 - Release notes + rollback procedure (launch)
 

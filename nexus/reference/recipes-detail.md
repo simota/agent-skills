@@ -20,7 +20,7 @@ Full phase contract (DIAGNOSE/PROPOSE/IMPROVE/VERIFY/SHIP) → `reference/inline
 Full-cycle auto-implementation: discovery → spec → parallel design → risk gate → loop → ship. With no-args, Phase 0 autonomously discovers the goal. 8-25 agents, high-cost. **Confirm before launch.**
 
 **Chain template:**
-`(Phase 0 if no goal) → Discovery (plea+researcher+echo?) → Ideate (riff) → Verdict (magi) → Spec (accord+void?+scribe?) → Design [Tech (atlas+gateway?+schema?) ‖ UX (Vision sub-orchestrates muse+palette+prose+flow?+frame?+forge+echo)] → Risk Gate (omen+ripple+echo) → Loop (Orbit on Codex CLI drives builder+artisan?+showcase?+judge+radar+voyager?) → Ship (guardian+launch)`
+`(Phase 0 if no goal) → Discovery (plea+field+echo?) → Ideate (riff) → Verdict (magi) → Spec (accord+void?+scribe?) → Design [Tech (atlas+gateway?+schema?) ‖ UX (Vision sub-orchestrates muse+palette+prose+flow?+frame?+forge+echo)] → Risk Gate (omen+ripple+echo) → Loop (Orbit on Codex CLI drives builder+artisan?+vitrine?+judge+radar+voyager?) → Ship (guardian+launch)`
 
 Read: `reference/apex-recipe.md`, `reference/apex-walkthrough.md`.
 
@@ -64,7 +64,7 @@ Read: `_common/PROOF_CARRYING.md`, `reference/acceptance-recipe.md`.
 **Layer C lifecycle gate** (Market + Research + Brand axes) for Enterprise org-tier. Extends `acceptance` with pre-design Research Proof + Insight Ledger + Contract, ship-time Market Proof + Brand B.tone, post-launch +14/+30/+90d Measurement Loop. Org Tier gate (Solo abort / SMB Step 1 / Enterprise full). G11-G15 + 3-layer Brand Compiler. Cost: 1.1-8× on top of acceptance. **Confirm Step 3+.** Full lifecycle → `_common/GROWTH_BRAND_PROOF.md`, `reference/growth-acceptance-recipe.md`.
 
 **Chain template:**
-`Phase 0 classify → insight Ledger R/O → researcher?[fresh] → accord+spark Contract → 1 delegate to acceptance → 2 pulse+experiment Market+Incrementality ‖ ledger CAC/LTV ‖ compete cannibalization ‖ funnel+lure channel-fit ‖ vision+prose B.tone ‖ clause+comply+cloak+vigil G14 → 3 Measurement → G13 Stop → mend auto-halt → harvest+tome Ledger queue → 4 audits`
+`Phase 0 classify → insight Ledger R/O → field?[fresh] → accord+spark Contract → 1 delegate to acceptance → 2 pulse+experiment Market+Incrementality ‖ ledger CAC/LTV ‖ compete cannibalization ‖ funnel+bazaar channel-fit ‖ vision+prose B.tone ‖ clause+oath+cloak+vigil G14 → 3 Measurement → G13 Stop → mend auto-halt → harvest+tome Ledger queue → 4 audits`
 
 Read: `_common/GROWTH_BRAND_PROOF.md`, `reference/growth-acceptance-recipe.md`.
 
@@ -103,22 +103,14 @@ Read: `reference/transmute-recipe.md`.
 
 ---
 
-## venture
+## package (includes legacy `venture` as `domain=startup`)
 
-**Business documentation package** from one idea — research → product spine → ~11 parallel doc tracks → synthesis → traceability → multi-format file tree + zip. Canonical `feature_id` (F-001…) barrier at Phase 2 + propagation to all tracks. Depth tiers: lite 6-8, mvp(default) 14-18, raise 16-20, full 24-28 agents. **Confirm full depth.**
-
-**Chain template:**
-`Phase 0 Framing → 1 Research (researcher+compete ‖ plea+cast) → 2 Product Spine [BARRIER: F-001 + MoSCoW] (accord+spark+rank+pulse+void?) → 3 Parallel Doc Tracks, feature_id-bound (Brand / UX / LP / Mktg / Tech / AI / Legal / Test / PM / Mock / Assets) → 4 Overview synthesis → 5 Validate (attest/judge + manifest + report + README) → 6 Package (UTF-8 + zip + lint + unzip test + PII scrub)`
-
-Read: `reference/venture-recipe.md`, `reference/package-recipe.md`.
-
----
-
-## package
-
-**Generalized document-package generator** — venture engine + **12-domain preset registry** (startup=venture / generic / research / ai-adoption / legal* / saas / media / growth / career / learning / hiring* / local-gov*). Per-domain swap: directories, role→skill map, traceability anchor (F-/H-/UC-/R-/P-/E-/T-/LO-/I-), risk gates (*=mandatory). Same Phase 0-6 engine. Depth 5-28 agents. **Confirm full depth.**
+**Generalized document-package generator** — **12-domain preset registry**: `startup` (the legacy `venture` blueprint) / generic / research / ai-adoption / legal* / saas / media / growth / career / learning / hiring* / local-gov*. Per-domain swap: directories, role→skill map, traceability anchor (F-/H-/UC-/R-/P-/E-/T-/LO-/I-), risk gates (*=mandatory). Single Phase 0-6 engine. Depth 5-28 agents (`startup` tiers: lite 6-8, mvp(default) 14-18, raise 16-20, full 24-28). **Confirm full depth.**
 
 **Chain template:**
 `Phase 0 Framing (preset auto-detect + risk-flag) → 1 Research (preset skills; deep-research for research preset) → 2 Spine [BARRIER: entity-id per anchor] → 3 Parallel Doc Tracks (preset map, waves) → 4 Synthesis → 5 Validate (attest/judge + risk gate + manifest + report + README) → 6 Package`
 
-Read: `reference/package-recipe.md`.
+**`startup` preset chain (legacy `venture` form):**
+`Phase 0 → 1 Research (field+compete ‖ plea+cast) → 2 Product Spine [BARRIER: F-001 + MoSCoW] (accord+spark+rank+pulse+void?) → 3 Parallel Doc Tracks, feature_id-bound (Brand / UX / LP / Mktg / Tech / AI / Legal / Test / PM / Mock / Assets) → 4 Overview synthesis → 5 Validate → 6 Package (UTF-8 + zip + lint + unzip test + PII scrub)`
+
+Read: `reference/package-recipe.md`. Startup-preset deep blueprint: `reference/venture-recipe.md`.

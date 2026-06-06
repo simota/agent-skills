@@ -84,7 +84,7 @@ Route elsewhere when the task is:
 |---------|-----------------|
 | `mvp-dev` (default) | 03 product, 04 ux, 05 lp, 07 tech, 10 testing |
 | `fundraising` | 00 overview, 01 research, 06 marketing (GTM/pricing), 03 KPI tree, one_page_pitch |
-| `b2b-saas` | 07 security/auth, 09 legal/comply, 11 PM (SLA/sales), admin-panel screens in 04 |
+| `b2b-saas` | 07 security/auth, 09 legal/oath, 11 PM (SLA/sales), admin-panel screens in 04 |
 | `b2c-growth` | 02 brand, 05 lp, 06 SEO/social/onboarding/retention, 04 onboarding_flow |
 | `ai-product` | 08 ai_policy (full), 07 AI/LLM stack, 10 ai_evaluation_cases, human-review workflow |
 
@@ -94,12 +94,12 @@ Route elsewhere when the task is:
 Phase 0          Phase 1                Phase 2 [BARRIER]      ┌──────────── Phase 3: Parallel Doc Tracks ──────────────┐   Phase 4         Phase 5            Phase 6
 [Framing]        [Research]             [Product Spine]        │  (each track consumes the canonical feature_id table)   │   [Overview]      [Integrate+Validate] [Package]
 ┌────────────┐   ┌──────────────────┐   ┌──────────────────┐   │ 02 Brand    vision+muse+prose+tone                      │   ┌───────────┐   ┌────────────────┐  ┌──────────┐
-│ parse idea │   │ researcher       │   │ accord (PRD)     │   │ 04 UX       palette+canvas+echo+prose                   │   │ spark     │   │ attest/judge   │  │ write    │
+│ parse idea │   │ field       │   │ accord (PRD)     │   │ 04 UX       palette+canvas+echo+prose                   │   │ spark     │   │ attest/judge   │  │ write    │
 │ +conditions│──▶│ +compete         │──▶│ +spark (features)│──▶│ 05 LP       funnel+prose                                │──▶│ +scribe   │──▶│ traceability   │─▶│ tree     │
-│ +mode/depth│   │ ‖ plea +cast     │   │ +rank (MoSCoW)   │   │ 06 Mktg     funnel/lure+pulse+experiment                │   │ +magi     │   │ matrix         │  │ +zip -r  │
+│ +mode/depth│   │ ‖ plea +cast     │   │ +rank (MoSCoW)   │   │ 06 Mktg     funnel/bazaar+pulse+experiment                │   │ +magi     │   │ matrix         │  │ +zip -r  │
 │ +clarify≤3?│   │ (WebSearch       │   │ +pulse (KPI)     │   │ 07 Tech     atlas+schema+gateway+beacon+gear+crypt?     │   │ (00_*)    │   │ +manifest.csv  │  │ +syntax  │
 │ +web check │   │  grounded or     │   │ ═══ F-001… +     │   │ 08 AI       oracle                                      │   │           │   │ +validation_*  │  │  lint    │
-└────────────┘   │  research_todo)  │   │  MoSCoW FIXED ═══│   │ 09 Legal    clause+cloak+comply?+omen+ripple            │   │           │   │ +README        │  │ +report  │
+└────────────┘   │  research_todo)  │   │  MoSCoW FIXED ═══│   │ 09 Legal    clause+cloak+oath?+omen+ripple            │   │           │   │ +README        │  │ +report  │
                  └──────────────────┘   └──────────────────┘   │ 10 Test     matrix+radar?+mint                          │   └───────────┘   └────────────────┘  └──────────┘
                                                                │ 11 PM       sherpa+rank+scribe                          │
                                                                │ 12 Mock     mint                                        │
@@ -253,9 +253,9 @@ Without this barrier, parallel tracks would independently invent inconsistent fe
 | Condition | Add | Skip |
 |-----------|-----|------|
 | depth = lite | — | 02, 06, 07-deep, 08, 09, 10, 11, 12, 13 (keep 00/01-lite/03/04-lite/05) |
-| depth = full | void, comply, crypt, deeper scribe | — |
+| depth = full | void, oath, crypt, deeper scribe | — |
 | mode includes ai-product | full 08 + ai_evaluation_cases + human_review | — (08 never skipped in this mode) |
-| business_model = B2B / b2b-saas | comply, security_privacy deepened, sales_material, SLA in 11 | — |
+| business_model = B2B / b2b-saas | oath, security_privacy deepened, sales_material, SLA in 11 | — |
 | business_model = B2C / b2c-growth | 02 brand deep, 05 LP, SEO/social/onboarding in 06 | — |
 | web_grounding = unavailable | research_todo.md (enumerate needed lookups, mark hypotheses) | live references.md sourcing |
 | UI surface absent (API/infra product) | — | 04 UX, 05 LP (replace with API docs emphasis in 07) |
@@ -271,7 +271,7 @@ Nexus AUTORUN venture idea="<X>" depth=<...> mode=<...>
   → clarify gate (≤3 Qs only on domain/target/B2X-fork/high-risk/impermissible; else assume)
   → emit venture_contract
   ── Phase 1 Research ─────────────────────────────────
-  → researcher(market+trend+JTBD, web-grounded|research_todo)
+  → field(market+trend+JTBD, web-grounded|research_todo)
   ‖ compete(direct+indirect+diff)?        # skip at lite
   ‖ plea(user demands) → cast(personas)?  # cast if depth≥mvp
   ── Phase 2 Product Spine [BARRIER] ──────────────────
@@ -284,11 +284,11 @@ Nexus AUTORUN venture idea="<X>" depth=<...> mode=<...>
   → [Brand]  vision → muse(design_tokens.json) ‖ prose ‖ tone
   ‖ [UX]     palette ‖ canvas(mermaid) ‖ echo ‖ prose(states)
   ‖ [LP]     funnel(index.html+styles.css+copy) ‖ prose
-  ‖ [Mktg]   funnel/lure ‖ pulse ‖ experiment(growth_experiments)
+  ‖ [Mktg]   funnel/bazaar ‖ pulse ‖ experiment(growth_experiments)
   ‖ [Tech]   atlas(arch+mermaid) → schema(schema.sql) ‖ gateway(openapi.yaml)
                                   ‖ beacon ‖ gear ‖ crypt?
   ‖ [AI]     oracle(policy+prompts+eval+guardrails+human_review)
-  ‖ [Legal]  clause(ToS/Privacy/Cookie) ‖ cloak ‖ comply? ‖ omen+ripple(risk_register)
+  ‖ [Legal]  clause(ToS/Privacy/Cookie) ‖ cloak ‖ oath? ‖ omen+ripple(risk_register)
   ‖ [Test]   matrix qa-scenario(test_cases.csv TC-001 ↔ F-id) ‖ radar? ‖ mint(ai_eval_cases.csv)
   ‖ [PM]     sherpa(backlog.csv BL-001 ↔ F-id) ‖ rank ‖ scribe(raci/milestones)
   ‖ [Mock]   mint(sample_*.json/csv — fictional only)

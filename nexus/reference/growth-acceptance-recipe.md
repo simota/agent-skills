@@ -63,9 +63,9 @@ Do **not** invoke when:
 **Delegation**: This phase fully delegates to `nexus acceptance` recipe (`nexus/reference/acceptance-recipe.md`):
 - Phase 1 (Spec Diff) → attest
 - Phase 2A (Code Oracles) → radar / mint / matrix (qa-scenario) / sentinel / attest / rally[engine-paradigm COMPETE if applicable]
-- Phase 2B (Design Oracles) → atelier sub-orchestration: muse / frame / palette / weave / flow / canon / showcase / prose / matrix
+- Phase 2B (Design Oracles) → atelier sub-orchestration: muse / frame / palette / weave / flow / canon / vitrine / prose / matrix
 - Phase 3A (Code Adversaries) → vigil / sentinel / siege (concurrency + chaos)
-- Phase 3B (Design Adversaries) → atelier: echo / voyager+navigator / matrix (qa-scenario)
+- Phase 3B (Design Adversaries) → atelier: echo / voyager+vector / matrix (qa-scenario)
 - Phase 4A (Code Acceptance Gate) → judge[tri-engine] / attest
 - Phase 4B (Design Acceptance Gate) → atelier: canon / frame / vision
 - Phase 4C (Joint Verdict) → guardian
@@ -146,7 +146,7 @@ Phase 0 (Pre-Design, sequential):
   → if org_tier=Solo: abort with `acceptance` recommendation
   → if org_tier=SMB AND step_adoption < 2: abort with `acceptance` + Step 1 Measurement Loop recommendation
   → insight[query Ledger for evidence] (read-only per G11)
-  → if evidence stale/missing AND Step ≥ 2: researcher[queue fresh research, block design]
+  → if evidence stale/missing AND Step ≥ 2: field[queue fresh research, block design]
   → accord + spark[draft Growth-Brand Contract Tier 0/1/2]
   → if change_category=brand_critical: magi[Constitution alignment]
 
@@ -157,9 +157,9 @@ Phase 2 (Ship-Time, parallel):
   ‖ pulse + experiment[Market Proof setup + Incrementality Decision Tree]
   ‖ ledger[CAC/LTV thresholds]
   ‖ compete[cannibalization estimation]
-  ‖ funnel + lure[channel-fit + LP coherence]
+  ‖ funnel + bazaar[channel-fit + LP coherence]
   ‖ vision + prose[B.tone advisory, non-blocking]
-  ‖ clause + comply + cloak + vigil[G14 Regulatory Pre-Flight]
+  ‖ clause + oath + cloak + vigil[G14 Regulatory Pre-Flight]
   → Gate: regulatory toggle verified + statistical power adequate
   → if FAIL: block ship; route to remediation
 
@@ -195,7 +195,7 @@ Phase 4 (Cross-Cutting Audits, background):
 |---------|---------|------------|
 | Org Tier Solo invoking growth-acceptance | Phase 0 | Abort; recommend `acceptance` (Tier B only) |
 | Step adoption < 2 | Phase 0 | Abort; recommend Step 1 Measurement Loop first |
-| Insight Ledger missing evidence for segment | Phase 0 | Block design; queue researcher; resume when evidence is in Ledger |
+| Insight Ledger missing evidence for segment | Phase 0 | Block design; queue field; resume when evidence is in Ledger |
 | AI attempted to write to Insight Ledger | Phase 0 | Block; G11 violation; require Research Lead merge |
 | Constitution Operational layer stale | Phase 1 B.pattern | Block merge; G15 forcing function; require Constitution refresh |
 | Distinctiveness Score < threshold (G12) | Phase 1 B.hard | Block merge; require creative iteration |

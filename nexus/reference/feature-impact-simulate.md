@@ -226,7 +226,7 @@ DELIVER:
 | echo primary persona FAIL | Phase 3 | Forward to Phase 5; suggest re-design before re-evaluation |
 | echo risk persona FAIL | Phase 3 | Forward to Phase 5 as REJECT candidate |
 | experiment LOW confidence + insufficient_baseline | Phase 4 | Forward to Phase 5; magi may require user research before proceeding |
-| Insight Ledger insufficient evidence | Phase 4 | Block Phase 4; queue researcher for fresh research; resume when N≥3 |
+| Insight Ledger insufficient evidence | Phase 4 | Block Phase 4; queue field for fresh research; resume when N≥3 |
 | Persona Council single-engine on Tier-S | Phase 3 setup | Block; require `rally engine-paradigm` engine diversity |
 | Org Tier persona cap exceeded | Phase 3 | Truncate persona list to cap; flag deferred personas for next session |
 
@@ -253,7 +253,7 @@ DELIVER:
 | Running on trivial features (< 2 hours impl, single persona) | Phase 1 entry check — skip and recommend direct implementation |
 | Single-engine Council for Tier-S | Phase 3 enforcement — require `rally engine-paradigm` |
 | Treating echo Council output as `[validated]` without Voice/Trace calibration | echo `council` Always — output is `[hypothesis]` by default |
-| Skipping Phase 4 experiment because "we don't have data" | Block Phase 4; queue researcher; do not proceed to magi without baseline |
+| Skipping Phase 4 experiment because "we don't have data" | Block Phase 4; queue field; do not proceed to magi without baseline |
 | magi verdict without all 4 prior phases | Phase 5 enforcement — magi receives all 4 outputs as input, none optional |
 | Re-running simulation as a "stalling tactic" | Track simulation count per feature; > 3 runs without change triggers escalation |
 

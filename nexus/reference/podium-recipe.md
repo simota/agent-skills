@@ -124,7 +124,7 @@ Where `summit` triangulates strategic code decisions, podium triangulates **pros
                                     │  └──────────────────────────────┘    │
                                     │  ┌──────────────────────────────┐    │
                                     │  │ TRACK B: VISUAL              │    │
-                                    │  │  Codex: canvas, showcase     │    │
+                                    │  │  Codex: canvas, vitrine     │    │
                                     │  │  agy: sketch, ink, frame     │    │
                                     │  │  Claude: vision (direction)  │    │
                                     │  └──────────────────────────────┘    │
@@ -260,7 +260,7 @@ user_acknowledged: true | false
 parallel:
   - branch: audience_grounding
     engine: agy | claude          # agy preferred for fresh Search grounding
-    agents: [researcher]
+    agents: [field]
     mission: build the audience persona — who they are, what they already know, what they care about, what makes them tune out. Field (not Echo) owns this because the work is grounded fact-gathering about a target population, not UI walkthrough simulation. Echo is reserved for Phase 4 cognitive walkthrough on the finished artifact.
     output: audience_brief.json
 
@@ -281,7 +281,7 @@ parallel:
 
   - branch: external_grounding         # conditional: external-facing content
     engine: agy | claude
-    agents: [researcher]
+    agents: [field]
     mission: web/external grounding via Search; market positioning if announcement (this is a second Field invocation focused on external positioning, separate from the audience_grounding branch)
     output: external_brief.json
 ```
@@ -377,7 +377,7 @@ content_track:
 
     - branch: code_samples
       engine: codex
-      agents: [quill, showcase]
+      agents: [quill, vitrine]
       mission: verified, compilable code samples with proper JSDoc/TSDoc; component usage examples
       output: code_blocks.json
 
@@ -402,7 +402,7 @@ visual_track:
 
     - branch: diagrams_as_code
       engine: codex
-      agents: [canvas, showcase]
+      agents: [canvas, vitrine]
       mission: Mermaid / draw.io / Storybook examples for each visual_anchor of type diagram or component
       output: diagrams/ (set of .mmd / .drawio / .stories.tsx)
 
@@ -714,14 +714,14 @@ phase_chain:
 
   - phase: 1_research
     parallel:
-      - { engine: agy | claude, agents: [researcher], mission: audience persona grounding }
+      - { engine: agy | claude, agents: [field], mission: audience persona grounding }
       - { engine: claude | codex, agents: [lens, harvest, quill] }   # source aggregation
       - if: agy AVAILABLE AND (source_size > 200K_tokens OR mode == refresh)
         parallel_sub:
           - { engine: agy, agents: [tome, frame] }
       - if: external_facing
         parallel_sub:
-          - { engine: agy | claude, agents: [researcher], mission: external positioning grounding }
+          - { engine: agy | claude, agents: [field], mission: external positioning grounding }
     synthesis: nexus_aggregate
     duration_minutes: [5, 12]
     gate: gaps_to_address.critical == 0
@@ -743,14 +743,14 @@ phase_chain:
         parallel:
           - { engine: claude, agents: [zine | scribe | tome | saga] }
           - { engine: claude, agents: [cue, prose], mission: slide content blocks (titles + bullets + speaker notes) — Stage is NOT used here, only at Track C for compilation }
-          - { engine: codex,  agents: [quill, showcase] }
+          - { engine: codex,  agents: [quill, vitrine] }
           - if: agy AVAILABLE AND long_context
             parallel_sub: { engine: agy, agents: [tome, scribe] }
       - track: visual
         coordinator: vision (claude)
         parallel:
           - { engine: claude, agents: [vision, muse] }
-          - { engine: codex,  agents: [canvas, showcase] }
+          - { engine: codex,  agents: [canvas, vitrine] }
           - if: agy AVAILABLE
             parallel_sub: { engine: agy, agents: [sketch, ink] }
       - track: layout
