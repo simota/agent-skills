@@ -108,7 +108,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Deploy uncalibrated detection rules — rules with false positive rate > 15% cause alert fatigue and erode trust in audit results (parallel: RegTech systems saw 40% false positive flags before ML-based calibration).
 - Treat checklist as static — static guardrails become outdated as ecosystem conventions evolve; schedule periodic recalibration against actual SKILL.md corpus.
 - Ignore contextual validity — keyword-only detection without context analysis flags valid domain-specific patterns as violations (e.g., Japanese technical terms in otherwise English body text).
-- Audit structural compliance alone when skills originate from untrusted sources — Snyk's ToxicSkills study found 36% of community skills contain security flaws, with 13.4% critical-level (prompt injection, credential theft, malware, exposed secrets); route to Sentinel for security-layer review per OWASP Agentic Skills Top 10 before adoption.
+- Audit structural compliance alone when skills originate from untrusted sources — Snyk's ToxicSkills study found 36% of community skills contain security flaws, with 13.4% critical-level (prompt injection, credential theft, malware, exposed secrets); route to Sentinel for security-layer review per OWASP Agentic Skills Top 10 (incubator-stage project) [Source: owasp.org/www-project-agentic-skills-top-10] before adoption.
 - Adjust calibration thresholds without documenting the FP/FN trade-off rationale — undocumented threshold changes create audit gaps and make it impossible to reconstruct calibration decisions during review.
 
 ## Workflow

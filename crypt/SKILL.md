@@ -78,7 +78,7 @@ Route elsewhere when the task is primarily:
 - Include threat model context: what attacks the design defends against.
 - Provide migration paths from deprecated algorithms (SHA-1, RSA-1024, 3DES).
 - Mark quantum-vulnerable components and recommend NIST PQC standards: ML-KEM (FIPS 203), ML-DSA (FIPS 204), SLH-DSA (FIPS 205).
-- Design for crypto-agility: systems must support algorithm substitution without architectural redesign (NIST IR 8547 mandate).
+- Design for crypto-agility: systems must support algorithm substitution without architectural redesign (NIST IR 8547 mandate — IR 8547 is an Initial Public Draft as of Nov 2024; final pending as of June 2026).
 - Design for 128-bit minimum security strength; 112-bit algorithms (e.g., 2-key TDEA, RSA-2048) deprecated by end of 2030 (SP 800-131A Rev 3 draft).
 - For National Security Systems or CNSA 2.0 scope: all new systems quantum-safe by January 2027 (NSA CNSA 2.0); full application migration by 2030; complete infrastructure by 2035.
 - Author for Opus 4.8 defaults. Apply _common/OPUS_48_AUTHORING.md principles **P3 (eagerly Read existing algorithms, key management, threat model, and compliance scope at SCAN — anti-pattern detection and PQC migration depend on full grounding), P5 (think step-by-step at DESIGN — algorithm/parameter selection, key-rotation, and PQC substitution decisions drive multi-year crypto-agility posture)** as critical for Crypt. P2 recommended: calibrated crypto spec preserving exact parameters, threat-model coverage, and migration steps. P1 recommended: front-load compliance scope (FIPS/CNSA 2.0/general) and security-strength target at SCAN.
@@ -218,10 +218,10 @@ Behavior notes per Recipe:
 | FIPS 203 (ML-KEM) | CRYSTALS-Kyber | Key encapsulation | Recommended — finalized Aug 2024 |
 | FIPS 204 (ML-DSA) | CRYSTALS-Dilithium | Digital signatures (general) | Recommended — finalized Aug 2024 |
 | FIPS 205 (SLH-DSA) | SPHINCS+ | Digital signatures (conservative, hash-based) | Recommended — finalized Aug 2024 |
-| FIPS 206 (FN-DSA) | FALCON | Digital signatures (compact) | In development |
+| FIPS 206 (FN-DSA) | FALCON | Digital signatures (compact) | In development — final standard expected 2026 |
 | HQC | HQC | Key encapsulation (code-based backup for ML-KEM, code-based math distinct from lattice) | Selected 2025-03-11 from NIST's fourth round; draft standard expected early 2026 with 90-day public comment, final standard targeted 2027 [Source: NIST — Selects HQC as Fifth Algorithm for Post-Quantum Encryption](https://www.nist.gov/news-events/news/2025/03/nist-selects-hqc-fifth-algorithm-post-quantum-encryption) |
 
-**Migration timeline (NIST IR 8547):** Deprecate quantum-vulnerable algorithms by 2030; disallow by 2035. High-risk systems should transition now. Use hybrid schemes (classical + PQC) during transition.
+**Migration timeline (NIST IR 8547 — Initial Public Draft, Nov 2024; final standard pending as of June 2026 [Source: csrc.nist.gov/pubs/ir/8547/ipd]):** Deprecate quantum-vulnerable algorithms by 2030; disallow by 2035. High-risk systems should transition now. Use hybrid schemes (classical + PQC) during transition.
 
 **CNSA 2.0 timeline (NSA):** New NSS equipment quantum-safe by January 2027; application migration by 2030; infrastructure by 2035. CNSA 2.0 mandates ML-KEM and ML-DSA (does not include SLH-DSA).
 

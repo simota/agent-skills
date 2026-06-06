@@ -110,7 +110,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Themed SVG | `theme` | | `currentColor` / CSS custom property theming, dark-mode variants | `references/theme-tokens.md` |
 | Accessible SVG | `a11y` | | ARIA, `<title>`/`<desc>`, decorative vs informative annotation | `references/svg-accessibility.md` |
 | Optimize | `optimize` | | SVGO config, path simplification, decimal precision, transform flatten, sprite vs inline trade-off | `references/svg-optimization.md` |
-| Pictogram | `pictogram` | | ISO 7001 wayfinding, AIGA symbols, safety / accessibility pictograms with cross-cultural recognition | `references/pictogram-design.md` |
+| Pictogram | `pictogram` | | ISO 7001:2023 wayfinding (supersedes 2007 + amendments) [Source: iso.org/standard/77442.html], AIGA symbols, safety / accessibility pictograms with cross-cultural recognition | `references/pictogram-design.md` |
 | Logo / Wordmark | `logo` | | Wordmark / monogram / lockup construction with typographic design and licensing-aware delivery | `references/logo-construction.md` |
 
 ## Subcommand Dispatch
@@ -128,7 +128,7 @@ Behavior notes per Recipe:
 - `theme`: Theme icons via `currentColor` and CSS custom properties. Escalate to `var(--icon-*)` for multi-color icons; coordinate token names with Muse.
 - `a11y`: Annotate with ARIA / `<title>` / `<desc>`. Default to decorative (`aria-hidden="true"`); elevate to `role="img"` + `aria-labelledby` only when the icon is the sole carrier of meaning.
 - `optimize`: Apply SVGO with project-specific preset (preserve viewBox, currentColor, IDs only when needed), simplify paths to ≤2-decimal precision, flatten nested transforms, and decide sprite vs inline based on count and reuse.
-- `pictogram`: Design pictograms for cross-cultural recognition — apply ISO 7001 wayfinding conventions, AIGA Symbol Signs, ISO 7010 safety colors, or brand-pictogram principles; verify legibility at 16 px / 24 px / 48 px / 200 m viewing distance.
+- `pictogram`: Design pictograms for cross-cultural recognition — apply ISO 7001:2023 wayfinding (supersedes 2007 + amendments) [Source: iso.org/standard/77442.html] conventions, AIGA Symbol Signs, ISO 7010 safety colors, or brand-pictogram principles; verify legibility at 16 px / 24 px / 48 px / 200 m viewing distance.
 - `logo`: Construct wordmarks, monograms, and lockups — verify typographic license, kerning, baseline grid, clear-space rules, minimum-size threshold, and deliver SVG + PNG @1×/@2×/@3× + favicon + social-card variants.
 
 ## Output Routing
@@ -198,7 +198,7 @@ Behavior notes per Recipe:
 | `references/theme-tokens.md` | You are running `theme`: wiring `currentColor`, injecting CSS custom properties, or coordinating dark-mode / multi-color tokens with Muse. |
 | `references/svg-accessibility.md` | You are running `a11y`: deciding decorative vs informative, picking between `<title>` / `aria-label` / `aria-labelledby`, or annotating interactive SVG. |
 | `references/svg-optimization.md` | You are running `optimize`: tuning SVGO config, path simplification, decimal precision, transform flatten, sprite vs inline trade-off. |
-| `references/pictogram-design.md` | You are running `pictogram`: applying ISO 7001 wayfinding, AIGA Symbol Signs, ISO 7010 safety colors, or cross-cultural recognition rules. |
+| `references/pictogram-design.md` | You are running `pictogram`: applying ISO 7001:2023 wayfinding (supersedes 2007 + amendments) [Source: iso.org/standard/77442.html], AIGA Symbol Signs, ISO 7010 safety colors, or cross-cultural recognition rules. |
 | `references/logo-construction.md` | You are running `logo`: constructing wordmarks, monograms, lockups; verifying typographic licensing, kerning, clear-space, and asset deliverables. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the icon spec, deciding adaptive thinking depth at DESIGN, or front-loading grid/stroke/naming at AUDIT. Critical for Ink: P3, P5. |
 

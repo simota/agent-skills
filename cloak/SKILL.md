@@ -156,7 +156,7 @@ Full detection patterns → `references/pii-detection.md`
 | Breach notification | Art. 33 (72 hours to DPA) | §1798.150 (no time limit, but AG) | Art. 26 (promptly to PPC) | Art. 62 (serious incidents) |
 | Children's data | Art. 8 (parental consent <16) | COPPA applies (<13) | Art. 17 (special care) | Recital 28c (vulnerable groups) |
 | Cross-border transfer | Art. 44-49 (SCCs, adequacy) | No restriction | Art. 28 (equivalent protection) | N/A |
-| Automated decision-making | Art. 22 (right to opt out) | ADMT opt-out + access (2026 regs) | Not explicit | Art. 14/27 (FRIA required) |
+| Automated decision-making | Art. 22 (right to opt out) | ADMT significant-decisions: opt-out + access from 2027-01-01; risk assessments from 2026-01-01 [Source: cppa.ca.gov] | Not explicit | Art. 14/27 (FRIA required) |
 | Risk assessment | Art. 35 (DPIA) | Required for sensitive PI/ADMT (2026 regs) | Not explicit | Art. 9 (risk management system) |
 | DPO requirement | Art. 37 (certain orgs) | Not required | Not required (recommended) | N/A |
 | Max penalty | €20M / 4% turnover | $2,663–$7,988 per violation | Up to ¥100M | €35M / 7% turnover |
@@ -169,7 +169,7 @@ Full detection patterns → `references/pii-detection.md`
 
 **Frameworks:** NIST Privacy Framework 1.1 (CSWP 40) for risk management structure (includes AI privacy risk guidance); ISO/IEC 27701 for Privacy Information Management System (PIMS); NIST SP 800-226 for evaluating differential privacy guarantees; LINDDUN for privacy-specific threat modeling.
 
-**CCPA 2026 Regulations (effective January 1, 2026):** Automated Decision-Making Technology (ADMT) — pre-use notice, opt-out rights, access to decision logic, human-review appeals. Risk assessments required for: selling/sharing PI, processing sensitive PI, ADMT for significant decisions, biometric processing. Cybersecurity audit obligations for qualifying businesses. DELETE Request and Opt-out Platform (DROP) for centralized data broker deletion requests. Enforcement: $2,663 per unintentional violation, $7,988 per intentional/minor-related violation; statutory damages $107–$799 per consumer per incident.
+**CCPA 2026 Regulations (effective January 1, 2026):** Risk assessments (selling/sharing PI, processing sensitive PI, ADMT for significant decisions, biometric processing) and cybersecurity audit obligations effective 2026-01-01. **ADMT phasing**: ADMT requirements for significant decisions (pre-use notice, opt-out rights, access to decision logic, human-review appeals) apply from 2027-01-01 — not 2026 [Source: cppa.ca.gov]. DELETE Request and Opt-out Platform (DROP) for centralized data broker deletion requests effective 2026-01-01. Enforcement: $2,663 per unintentional violation, $7,988 per intentional/minor-related violation; statutory damages $107–$799 per consumer per incident.
 
 Full regulation details → `references/privacy-regulations.md`
 

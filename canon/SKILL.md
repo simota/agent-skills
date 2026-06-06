@@ -7,7 +7,7 @@ description: Standards compliance assessment and gap analysis agent. Evaluates c
 CAPABILITIES_SUMMARY:
 - Primary: Standards compliance assessment, compliance gap analysis, remediation recommendations
 - Secondary: Standards selection guidance, compliance report generation, cost-benefit analysis
-- Domains: Security (OWASP Top 10:2025, OWASP API Security Top 10:2023, ASVS 5.0, NIST CSF 2.0, CIS Controls v8, CWE Top 25:2025, NIST SSDF v1.1), Accessibility (WCAG 2.2 / ISO/IEC 40500:2025, WAI-ARIA), API (OpenAPI 3.1.2/3.2, RFC 9110, GraphQL), Quality (ISO/IEC 25010:2023 — 9 characteristics incl. Safety, ISO/IEC 25019:2023 Quality-in-Use, Clean Code, SOLID), Infrastructure (12-Factor, CNCF), AI Agent Security (OWASP Top 10 for Agentic Applications 2026, OWASP LLM Top 10:2025, OWASP MCP Top 10 2025, NIST AI RMF), AI Governance (ISO/IEC 42001:2023 AIMS)
+- Domains: Security (OWASP Top 10:2025, OWASP API Security Top 10:2023, ASVS 5.0, NIST CSF 2.0, CIS Controls v8.1, CWE Top 25:2025, NIST SSDF v1.1), Accessibility (WCAG 2.2 / ISO/IEC 40500:2025, WAI-ARIA), API (OpenAPI 3.1.2/3.2, RFC 9110, GraphQL), Quality (ISO/IEC 25010:2023 — 9 characteristics incl. Safety, ISO/IEC 25019:2023 Quality-in-Use, Clean Code, SOLID), Infrastructure (12-Factor, CNCF), AI Agent Security (OWASP Top 10 for Agentic Applications 2026, OWASP LLM Top 10:2025, OWASP MCP Top 10 2025, NIST AI RMF), AI Governance (ISO/IEC 42001:2023 AIMS)
 - Input: Codebase analysis requests, standards compliance checks, audit preparation
 - Output: Compliance reports with version-pinned standard citations, prioritized remediation plans, compliance-as-code integration guidance
 - fix_prompt_generation: Pair every confirmed standards violation routed for remediation with a paste-ready LLM Fix Prompt embedding the cited standard+version+section, gap classification (missing/partial/non-conforming/over-conforming), evidence at file:line, the standard's prescribed remediation, acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress when handing off to Sentinel (security source-level), Polyglot (i18n), or Comply (regulatory), and withhold in gap-analysis-only mode.
@@ -123,7 +123,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Category | Standards | Reference |
 |----------|----------|-----------|
-| Security | OWASP Top 10:2025, OWASP API Security Top 10:2023, OWASP ASVS 5.0, NIST CSF 2.0, CIS Controls v8, CWE Top 25 (2025), NIST SSDF v1.1 (SP 800-218) | references/security-standards.md |
+| Security | OWASP Top 10:2025, OWASP API Security Top 10:2023, OWASP ASVS 5.0, NIST CSF 2.0, CIS Controls v8.1 (released June 2024, aligns to NIST CSF 2.0) [Source: cisecurity.org/controls/v8-1], CWE Top 25 (2025), NIST SSDF v1.1 (SP 800-218) | references/security-standards.md |
 | Accessibility | WCAG 2.2 (ISO/IEC 40500:2025), WAI-ARIA 1.2, JIS X 8341-3, European Accessibility Act (EAA, enforceable June 2025), WCAG 3.0 (Working Draft — track only) | references/accessibility-standards.md |
 | API / Data | OpenAPI 3.1.2 / 3.2, JSON Schema, RFC 9110 (supersedes 7231), GraphQL Spec | references/api-standards.md |
 | Quality | ISO/IEC 25010:2023 (9 chars incl. Safety), ISO/IEC 25019:2023 (Quality-in-Use), IEEE 29148 (supersedes 830), Clean Code, SOLID | references/quality-standards.md |
