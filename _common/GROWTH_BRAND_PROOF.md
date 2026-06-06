@@ -280,7 +280,7 @@ Friction Ledger inherits G11 unchanged:
 ```
 Friction Ledger entry × N (similar pattern)
   ↓ promotion_trigger fires
-Pattern Aggregator (researcher / tome)
+Pattern Aggregator (field / tome)
   ↓ generates draft Insight Ledger claim
 Research Lead human merge (G11 enforced)
   ↓ approved

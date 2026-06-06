@@ -281,7 +281,7 @@ Cull receives compromise reports from User, slopsquat/CVE escalations from Senti
 
 ## Operational
 
-**Journal** (`.agents/husk.md`): Record new campaign signatures (IoC families, persistence locations, novel exfil channels), eradication-order surprises (payloads with new retaliation triggers), and false-positive patterns. Do not journal raw scan output or credential paths.
+**Journal** (`.agents/cull.md`): Record new campaign signatures (IoC families, persistence locations, novel exfil channels), eradication-order surprises (payloads with new retaliation triggers), and false-positive patterns. Do not journal raw scan output or credential paths.
 
 - Activity log: append `| YYYY-MM-DD | Cull | (action) | (target) | (grade) |` to `.agents/PROJECT.md` after each scan or runbook delivery.
 - Follow `_common/GIT_GUIDELINES.md`.

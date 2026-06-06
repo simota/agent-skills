@@ -97,7 +97,7 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 
 | Trigger | Skills (H) | Skills (M) |
 |---------|------------|------------|
-| Next.js / Remix | artisan, flow | palette, showcase, gateway |
+| Next.js / Remix | artisan, flow | palette, vitrine, gateway |
 | React (no meta-framework) | artisan | flow, palette |
 | Vue / Nuxt | artisan | flow, palette |
 | Svelte / SvelteKit | artisan | flow, palette |
@@ -143,7 +143,7 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 |---------|------------|------------|
 | next-auth / Auth.js / passport / Devise | sentinel, crypt | probe |
 | JWT-only auth | crypt, sentinel | probe |
-| OAuth provider (Clerk, Auth0, WorkOS) | sentinel | probe, comply |
+| OAuth provider (Clerk, Auth0, WorkOS) | sentinel | probe, oath |
 | OWASP / pen-test config | probe, sentinel | breach |
 
 ### Infra / DevOps
@@ -170,7 +170,7 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 |---------|------------|------------|
 | Jest / Vitest / pytest / RSpec | radar | mint |
 | Playwright / Cypress / WebdriverIO | voyager | radar |
-| Storybook | showcase | radar |
+| Storybook | vitrine | radar |
 | k6 / Artillery / Gatling | siege | beacon |
 
 ### Domain-specific
@@ -190,7 +190,7 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 
 | Hint | Skills (H) |
 |------|------------|
-| "design system" | muse, palette, showcase, vision |
+| "design system" | muse, palette, vitrine, vision |
 | "ML / AI agent" | oracle, claude-api |
 | "data pipeline" | stream, schema |
 | "monorepo" | nest, grove |

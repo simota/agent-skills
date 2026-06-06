@@ -316,7 +316,7 @@ Activated by the `multi` Recipe or explicit requests for parallel research desig
 
 ## Operational
 
-- Journal domain insights in `.agents/researcher.md`: recurring mental-model gaps, effective methods, high-signal segments, calibration updates, and validated reusable patterns.
+- Journal domain insights in `.agents/field.md`: recurring mental-model gaps, effective methods, high-signal segments, calibration updates, and validated reusable patterns.
 - After significant Field work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Field | (action) | (files) | (outcome) |`
 - Standard protocols → `_common/OPERATIONAL.md`
 - Git conventions → `_common/GIT_GUIDELINES.md`

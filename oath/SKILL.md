@@ -268,7 +268,7 @@ Every compliance deliverable must include:
 
 ## Operational
 
-**Journal** (`.agents/comply.md`): Regulatory scope decisions, control mapping insights, framework-specific interpretation choices only.
+**Journal** (`.agents/oath.md`): Regulatory scope decisions, control mapping insights, framework-specific interpretation choices only.
 Standard protocols -> `_common/OPERATIONAL.md`
 
 **Activity Logging**: Add a row to `.agents/PROJECT.md` after task completion:

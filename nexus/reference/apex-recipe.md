@@ -63,9 +63,9 @@ Phase 0 (no-args only)              Phase 1            Phase 2  Phase 3  Phase 4
 [Bootstrap / Goal Discovery]        [Discovery]        [Ideate] [Verdict][SPEC]     │ Tech Track    UX Track            │  [Implement Loop]
 ┌─────────────────────────────┐     ┌─────────────┐    ┌────┐   ┌────┐   ┌────────┐ │ ┌──────────┐  ┌──────────────┐    │  ┌──────────────┐  ┌────────┐
 │ project_scan (proactive)    │     │ plea        │    │riff│   │magi│   │ accord │ │ │ atlas    │  │ vision (sub) │    │  │ orbit         │  │guardian│
-│ + voice?  + pulse? +compete?│ ──▶ │ researcher  │ ─▶ │    │─▶ │    │─▶ │ +void? │▶│ │ +gateway?│  │  ├ muse      │    │▶ │  ├ builder    │ ─▶│ launch │
+│ + voice?  + pulse? +compete?│ ──▶ │ field       │ ─▶ │    │─▶ │    │─▶ │ +void? │▶│ │ +gateway?│  │  ├ muse      │    │▶ │  ├ builder    │ ─▶│ launch │
 │ → spark (3-5 ideas)         │     │ +echo (as-is)│    │    │   │    │   │ +scribe?│ │+schema?  │  │  ├ palette   │    │  │  ├ artisan?   │  └────────┘
-│ → rank (ICE/RICE)           │     └─────────────┘    └────┘   └────┘   └────────┘ │ └──────────┘  │  ├ prose     │    │  │  ├ showcase?  │
+│ → rank (ICE/RICE)           │     └─────────────┘    └────┘   └────┘   └────────┘ │ └──────────┘  │  ├ prose     │    │  │  ├ vitrine?   │
 │ → sage? (bottleneck check)  │                                                     │               │  ├ flow?     │    │  │  ├ judge      │
 │ → magi? (tie-break)         │                                                     │               │  ├ frame?    │    │  │  ├ radar      │
 │ → 👤 boundary confirm       │                                                     │               │  ├ forge     │    │  │  └ voyager?   │
@@ -167,7 +167,7 @@ The confirmation message includes: goal title, rationale, top 2 rejected alterna
 | `field` | BEST-framework validation or real research synthesis | Yes |
 | `echo` | Friction analysis on current flow (Emotion VAD + dark pattern audit) | Existing-product improvement only |
 
-**Exit gate:** Top-3 demands carry both persona rationale (plea) and evidence anchor (researcher). If product exists, echo confirms current friction baseline.
+**Exit gate:** Top-3 demands carry both persona rationale (plea) and evidence anchor (field). If product exists, echo confirms current friction baseline.
 
 ### Phase 2: Ideate
 
@@ -271,9 +271,9 @@ Orbit audits via Codex subagent return values: `convergence_detection`, `dedupli
 
 | Sub-hub | Engine | Specialists | Cap |
 |---------|--------|-------------|-----|
-| Nexus (top) | Claude Code (Agent tool) | plea, researcher, riff, magi, accord, atlas, vision, orbit, guardian, launch | ≤10 (acceptable; phases serialise most) |
+| Nexus (top) | Claude Code (Agent tool) | plea, field, riff, magi, accord, atlas, vision, orbit, guardian, launch | ≤10 (acceptable; phases serialise most) |
 | Vision (UX sub) | Claude Code (Agent tool) | muse, palette, prose, flow, frame, forge, echo, polyglot, pixel | ≤9 (parallelisable inside) |
-| **Orbit (loop sub)** | **Codex CLI (`spawn_agent`)** — fixed | builder, artisan, showcase, judge, radar, voyager | ≤6 (loop iterations) |
+| **Orbit (loop sub)** | **Codex CLI (`spawn_agent`)** — fixed | builder, artisan, vitrine, judge, radar, voyager | ≤6 (loop iterations) |
 
 Direct agent-to-agent handoff is forbidden across hubs. Within a sub-hub, the sub-orchestrator owns delegation. The Phase 5 → Phase 6 boundary doubles as an engine boundary: Claude Code (Nexus, Vision) → Codex CLI (Orbit). Orbit's spawn calls cross the engine via Nexus's documented Codex subagent contract (see `_common/SUBAGENT.md`).
 
@@ -294,7 +294,7 @@ Direct agent-to-agent handoff is forbidden across hubs. Within a sub-hub, the su
 | Figma in workflow | frame | — |
 | Mockup supplied | pixel | — |
 | Multi-locale | polyglot | — |
-| UI surface | vision, muse, palette, prose, forge, echo, artisan, showcase | — |
+| UI surface | vision, muse, palette, prose, forge, echo, artisan, vitrine | — |
 | Backend-only | (skip UX track entirely) | vision and downstream |
 | UI flows present | voyager | — |
 
@@ -330,7 +330,7 @@ Verification gates are mandatory:
 Nexus AUTORUN apex goal="<feature description>"
   ── Phase 1 Discovery ────────────────────────────────
   → [parallel] plea(personas=3+, output=demands+llm_prompts)
-            ‖ researcher(BEST_validation, output=evidence)
+            ‖ field(BEST_validation, output=evidence)
             ‖ echo(current_flow)?           # if existing product
   ── Phase 2 Ideate ───────────────────────────────────
   → riff(diamond_thinking, max_turns=4)
@@ -360,7 +360,7 @@ Nexus AUTORUN apex goal="<feature description>"
              codex.spawn_agent(builder, prompt=<BE contract>)        ‖
              codex.spawn_agent(artisan, prompt=<FE contract>)?
              → codex.wait_agent(all)
-             → codex.spawn_agent(showcase)? → codex.wait_agent
+             → codex.spawn_agent(vitrine)? → codex.wait_agent
              → codex.spawn_agent(judge) → codex.wait_agent
              → codex.spawn_agent(radar) → codex.wait_agent
              → codex.spawn_agent(voyager)? → codex.wait_agent

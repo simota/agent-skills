@@ -148,7 +148,7 @@ universal_skills: [scout, judge, zen, builder, scribe, sherpa, void, magi, riff,
 | pipe      | M | design   | reusable, security, performance | .github/workflows/ci.yml present |
 | muse      | M | tokens   | spacing, color, typography | Tailwind config with custom theme |
 | palette   | M | improve  | error, empty, loading | Frontend SaaS context |
-| showcase  | M | story    | a11y, chromatic, coverage | Storybook config detected |
+| vitrine   | M | story    | a11y, chromatic, coverage | Storybook config detected |
 | radar     | M | edge     | flaky, coverage, regression | __tests__/ folder + jest config |
 | voyager   | M | e2e      | auth, parallel, vrt | playwright.config.ts present |
 | polyglot  | M | extract  | rtl, plurals, dates | next-intl in deps |

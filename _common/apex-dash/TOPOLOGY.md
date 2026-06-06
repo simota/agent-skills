@@ -74,7 +74,7 @@ These rows are rendered into `topology.ts`. The `conditional` column is evaluate
 | id | label | parent | (rx,ry) | conditional |
 |----|-------|--------|---------|-------------|
 | `a.plea` | plea | pg.P1 | (60,160) | always |
-| `a.researcher` | researcher | pg.P1 | (60,300) | always |
+| `a.field` | field | pg.P1 | (60,300) | always |
 | `a.echo1` | echo (current flow) | pg.P1 | (60,440) | existing_product |
 
 ### 4.4 Phase 2 / 3 / 4
@@ -119,7 +119,7 @@ Tech column at x = 1820 onward, UX column at x = 2180 onward, Gate row at y = 66
 | `so.orbit` | Orbit (loop) | pg.P6 | (40,80) | always |
 | `a.builder` | builder | pg.P6 | (200,160) | always |
 | `a.artisan` | artisan | pg.P6 | (200,260) | ui_surface |
-| `a.showcase` | showcase | pg.P6 | (200,360) | components_added |
+| `a.vitrine` | vitrine | pg.P6 | (200,360) | components_added |
 | `a.judge` | judge | pg.P6 | (200,460) | always |
 | `a.radar` | radar | pg.P6 | (200,560) | always |
 | `a.voyager` | voyager | pg.P6 | (200,660) | ui_flows |

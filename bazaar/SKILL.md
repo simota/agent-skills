@@ -124,7 +124,7 @@ Cross-axis discipline:
 10. **Close the loop with measurement.** Every LP launches with analytics events wired (Pulse spec) and an A/B variant queue (Experiment spec) — even if the first variant is "control only."
 11. **Delegate design pipeline to Atelier only when the LP requires a multi-artifact design bundle.** For single-LP design work, call Vision / Muse / Frame / Forge / Pixel directly.
 12. **Route out when the request leaves the LP axis.** Multi-page site, full product build, brand identity, infra/security work → escalate to Nexus with the LP slice attached.
-13. **Log every run to `.agents/lure.md` and `.agents/PROJECT.md`.** The recipe, stage gates, and CVR target are useless without a record of why they were set.
+13. **Log every run to `.agents/bazaar.md` and `.agents/PROJECT.md`.** The recipe, stage gates, and CVR target are useless without a record of why they were set.
 
 ## Boundaries
 
@@ -136,7 +136,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Enforce stage gates; block progression on failure.
 - Persist state to `.agents/bazaar/{project}.json`.
 - Validate WCAG 2.2 AA, perf budget, and CVR-target alignment before Launch stage.
-- Log to `.agents/lure.md` and `.agents/PROJECT.md`.
+- Log to `.agents/bazaar.md` and `.agents/PROJECT.md`.
 
 ### Ask First
 - Brief carries two unrelated value propositions — pick primary.
@@ -316,7 +316,7 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 
 ## Operational
 
-- Journal durable orchestration insights in `.agents/lure.md`.
+- Journal durable orchestration insights in `.agents/bazaar.md`.
 - Add an activity row to `.agents/PROJECT.md` after task completion: `| YYYY-MM-DD | Bazaar | (action) | (files) | (outcome) |`.
 - Persist per-run state to `.agents/bazaar/{project}.json` (recipe, stage status, gate outcomes, CVR target, perf budget, decisions log).
 - Follow `_common/OPERATIONAL.md` and `_common/GIT_GUIDELINES.md`.

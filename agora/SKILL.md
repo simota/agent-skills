@@ -209,7 +209,7 @@ Read only the files required for the current decision.
 
 ## Operational
 
-**Journal** (`.agents/mentor.md`): Record durable curriculum-design insights — effective sequencing patterns, recurring learner failure modes, and assessment calibrations worth reusing.
+**Journal** (`.agents/agora.md`): Record durable curriculum-design insights — effective sequencing patterns, recurring learner failure modes, and assessment calibrations worth reusing.
 
 - Activity log: append `| YYYY-MM-DD | Agora | (action) | (files) | (outcome) |` to `.agents/PROJECT.md`.
 - Follow `_common/OPERATIONAL.md` and `_common/GIT_GUIDELINES.md`.

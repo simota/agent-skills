@@ -261,7 +261,7 @@ Phase 2B (Layer B — Design Oracles, parallel, atelier sub-orchestration, IF ui
     ‖ weave[state machine spec]
     ‖ flow[motion tokens]
     ‖ canon[a11y_proof, axe-core/Pa11y]
-    ‖ showcase[vrt_proof with matrix-sampled stories]
+    ‖ vitrine[vrt_proof with matrix-sampled stories]
     ‖ prose[copy_proof]
     ‖ matrix[pairwise / orthogonal-array story generation, per PD-2]
 
@@ -274,7 +274,7 @@ Phase 3A (Layer A — Code Adversaries, parallel, engine=claude for Tier-S):
 Phase 3B (Layer B — Design Adversaries, parallel, atelier sub-orchestration, IF ui_dimension != none):
   atelier orchestrates:
     ‖ echo[persona definition: standard / returning / impatient / mobile / screen-reader / slow-net / payment-fail / locale-edge / adversarial]
-    ‖ voyager + navigator[Playwright/CUA execution of persona scripts]
+    ‖ voyager + vector[Playwright/CUA execution of persona scripts]
     ‖ matrix[qa-scenario, converts persona walkthroughs to test scenarios]
 
 Phase 4A (Code Acceptance Gate, sequential, judge runs tri-engine):
@@ -411,7 +411,7 @@ Phase 6 (Random Sampling Audit, async post-merge, non-blocking):
 - `guardian/SKILL.md` — PR preparation with embedded evidence package
 
 **Layer B (Design) skill references**:
-- `atelier/SKILL.md` — Layer B sub-orchestrator; coordinates muse + frame + palette + canon + showcase + prose + echo + vision + matrix + weave + flow
+- `atelier/SKILL.md` — Layer B sub-orchestrator; coordinates muse + frame + palette + canon + vitrine + prose + echo + vision + matrix + weave + flow
 - `muse/SKILL.md` — design token allow-list + `token_proof`
 - `frame/SKILL.md` — Design-Code Contract + Code Connect + `component_proof` + G9 4-layer detection coordination
 - `palette/SKILL.md` — `state_proof` + `responsive_proof`

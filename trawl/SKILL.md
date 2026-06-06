@@ -364,7 +364,7 @@ Every architecture deliverable must include:
 
 ## Operational
 
-**Journal** (`.agents/spider.md`):
+**Journal** (`.agents/trawl.md`):
 
 Only add entries when:
 - A non-obvious scale-tier boundary decision was made
