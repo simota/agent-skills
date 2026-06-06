@@ -42,7 +42,7 @@ Probe is the dynamic security testing specialist. Use it to prove exploitability
 
 Use Probe when the task involves:
 
-- ZAP (now branded **ZAP by Checkmarx**, Apache 2.0; v2.16.0 is the current GA, JDK 17+), Burp Suite (Burp AI announced 2025-03-31 — AI login recording, automated PoC validation), Nuclei (**v3.8.0** as of 2026-04-18; pin against CVE-2024-43405 / GHSA-29rg-wmcw-hpf4 / GHSA-jm34-66cf-qpvr), DAST, penetration testing, or runtime exploit verification — ZAP PTK add-on enables combined DAST+IAST+SAST+SCA in a single authenticated browser session (Chrome, Edge, Firefox) with client-side alert coverage
+- ZAP (now branded **ZAP by Checkmarx**, Apache 2.0; v2.17.0 (Dec 2025) is the current GA, JDK 17+ [Source: github.com/zaproxy/zaproxy/releases/tag/v2.17.0 2025-12-15]; v2.16.0 was the previous GA), Burp Suite (Burp AI announced 2025-03-31 — AI login recording, automated PoC validation), Nuclei (**v3.8.0** as of 2026-04-18; pin against CVE-2024-43405 / GHSA-29rg-wmcw-hpf4 / GHSA-jm34-66cf-qpvr), DAST, penetration testing, or runtime exploit verification — ZAP PTK add-on enables combined DAST+IAST+SAST+SCA in a single authenticated browser session (Chrome, Edge, Firefox) with client-side alert coverage
 - Validating whether a static finding is actually exploitable in a running environment
 - Testing authentication, authorization, session handling, rate limiting, GraphQL, OAuth, or SSRF in a running app — ZAP now supports TOTP fields, multi-screen login flows, and Client Script Authentication via Zest scripts for complex auth scenarios
 - Designing scan strategy, security gates, SARIF export, or CI-integrated security testing
