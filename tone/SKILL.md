@@ -135,14 +135,14 @@ Parse the first token of user input.
 - Otherwise → default Recipe (`sfx` = SFX). Apply normal PLAN → GENERATE → PROCESS → VALIDATE → INTEGRATE workflow.
 
 Behavior notes per Recipe:
-- `sfx`: ElevenLabs Sound Effects API / eleven_text_to_sound_v2 (≤30s) または JSFXR (レトロ) で効果音生成コードを出力。3+ バリエーション必須。-24 LUFS 正規化付き。
-- `bgm`: Stable Audio 3.0 または MusicGen でループ可能な BGM 生成コード。ループポイント + クロスフェード付き。ライセンス状況を明記。
-- `voice`: ElevenLabs TTS または OpenAI TTS でナレーション/ダイアログ生成コード。de-essing + ダイナミクス処理付き。
-- `ambient`: AudioCraft/Bark でシームレスループの環境音生成コード。フェードイン/アウト処理付き。
-- `ui`: JSFXR で UI 操作音セットを生成。<200ms、-9 dB ミックスレベル、一貫したセット設計。
-- `spatial`: 3D positional audio. Steam Audio / Resonance Audio / Wwise Spatial Audio / Web Audio PannerNode 選定。HRTF + occlusion / reverb zone 設計、Ambisonics B-format 対応、Unity / Unreal / Phaser 統合コード。
-- `adaptive`: Interactive music. Vertical (stem layering: drums / bass / harmony / melody) と horizontal (segment re-sequencing) を選定。FMOD Studio / Wwise transition matrix、ゲーム状態 → 音楽状態のマッピング、stinger / one-shot 設計。
-- `lufs`: Loudness normalization. -23 LUFS (EBU R128 broadcast) / -16 (streaming) / -14 (Spotify / mobile) / -18 (gameplay default) / -10 (UI accent) を用途別に適用。pyloudnorm / ffmpeg loudnorm 対応コード、True Peak ≤ -1 dBTP 制約。
+- `sfx`: Generate sound-effect code via ElevenLabs Sound Effects API / eleven_text_to_sound_v2 (≤30s) or JSFXR (retro). 3+ variations required. -24 LUFS normalization included.
+- `bgm`: Loopable BGM generation code via Stable Audio 3.0 or MusicGen. Loop points + crossfade included. State licensing status explicitly.
+- `voice`: Narration/dialogue generation code via ElevenLabs TTS or OpenAI TTS. de-essing + dynamics processing included.
+- `ambient`: Seamless-loop ambient soundscape code via AudioCraft/Bark. Fade-in/out processing included.
+- `ui`: Generate UI sound sets via JSFXR. <200ms, -9 dB mix level, consistent set design.
+- `spatial`: 3D positional audio. Select Steam Audio / Resonance Audio / Wwise Spatial Audio / Web Audio PannerNode. HRTF + occlusion / reverb-zone design, Ambisonics B-format support, Unity / Unreal / Phaser integration code.
+- `adaptive`: Interactive music. Select vertical (stem layering: drums / bass / harmony / melody) and horizontal (segment re-sequencing). FMOD Studio / Wwise transition matrix, game-state → music-state mapping, stinger / one-shot design.
+- `lufs`: Loudness normalization. Apply -23 LUFS (EBU R128 broadcast) / -16 (streaming) / -14 (Spotify / mobile) / -18 (gameplay default) / -10 (UI accent) per use case. pyloudnorm / ffmpeg loudnorm code, True Peak ≤ -1 dBTP constraint.
 
 ## Output Routing
 
