@@ -205,7 +205,7 @@ Surface these in any skill that targets agy. Each is sourced from the official G
 | MCP `url` → `serverUrl` rename | Silent connection failure | Always document `serverUrl` in MCP setup snippets |
 | Skill description vague → tool bloat | 40-50K token overhead | Keep `description:` ≤2 sentences with explicit trigger keywords |
 | `agy plugin import gemini` does not migrate custom themes | Cosmetic regression | Note in migration guides |
-| **Headless stdout flush bug — `-p`/`--print` emits NOTHING to non-TTY stdout even on success** (official issue #115 "Can't Capture CLI Output", OPEN; root cause per gemini-cli #27466: `text_drip.go` renders to TUI but never flushes to a non-TTY stdout; unfixed through v1.0.5) | `agy ... --print "..." > log.txt` produces an empty file with `exit 0` — a SUCCESSFUL run is indistinguishable from a silent failure when reading stdout; redirect/`tee` capture nothing | **Never use stdout as the deliverable channel.** Apply the §9.2 file-handoff protocol (prompt-mandated absolute-path artifact + sentinel + verification chain + transcript fallback). Pseudo-TTY reattach (`script -q /dev/null agy ...`) partially mitigates but artifact verification is still mandatory |
+| **agy requires a TTY + headless stdout-flush bug** — `-p`/`--print` hangs with no controlling terminal AND emits NOTHING to non-TTY stdout even on success (TTY requirement verified 2026-06-08 agy 1.0.6; stdout flush = official issue #115 "Can't Capture CLI Output", OPEN; root cause per gemini-cli #27466: `text_drip.go` renders to TUI but never flushes to a non-TTY stdout) | From a socket-stdin shell (Claude Code `Bash`, CI, cron): bare `agy -p` **hangs to `exit 124`** (empty stdout, no artifact, no log) and `script -q /dev/null agy ...` dies with `tcgetattr/ioctl: Operation not supported on socket` — both are silent-output | **Never use stdout as the deliverable channel, and give agy a real pty.** Allocate the pty via `python3 -c 'import pty; pty.spawn([...])'` (the `script` reattach does NOT work here), then apply the §9.2 file-handoff protocol (prompt-mandated absolute-path artifact + sentinel + verification chain + transcript fallback). Canonical block: §9.2 |
 | **Bare file paths in prompts trigger silent subagent timeouts** | Headless `agy -p` exits with `exit 0` + empty stdout when given paths without `@`; main agent delegates file reads to a subagent that dies at the 60s cap (v1.0.2 changelog: "restricted the default 60-second interaction timeout specifically to subagents") | **Always use `@<path>` syntax** to inject file context into the main agent; combine with `--log-file` + post-run grep per `_common/MULTI_ENGINE_RECIPE.md §3.5` |
 | **`--output-format json` availability is INCONSISTENT across installs** (2026-06 re-verification: community guide demonstrates it, but a commenter on the same guide reports "flag not defined" error; no JSON schema documented anywhere; official issue #7 notes `stream-json` is Gemini CLI legacy, not agy) | A spawn script depending on the flag may hard-fail on some installs, or succeed with an unparseable schema | **Do not depend on the flag for output capture.** Request the structured JSON inside the §9.2 artifact file via the prompt instead; if the flag is used at all, treat failure as non-fatal |
 | **`--print-timeout` default 5min on heavy reviews** | Long multi-file syntheses may exceed default; main agent (not subagent) terminates | Pass `--print-timeout 15m` or larger for documents >1000 lines or multi-file comparisons |
@@ -260,9 +260,13 @@ Continuing the spawn now …
 
 ### 9.2. agy Headless Output-Capture Protocol (canonical)
 
-> Single source of truth for capturing deliverables from `agy -p` spawns. Verified 2026-06 against agy v1.0.5. All skills that spawn agy headless MUST follow this protocol instead of reading stdout.
+> Single source of truth for capturing deliverables from `agy -p` spawns. Verified 2026-06 against agy v1.0.5; **agy-as-agent TTY convention re-verified 2026-06-08 against agy 1.0.6 / codex 0.137.0 / Claude Code 2.1.168 (macOS)**. All skills that spawn agy headless MUST follow this protocol instead of reading stdout.
 
-**Why**: agy `-p`/`--print` mode has a non-TTY stdout-flush bug (official issue #115, OPEN; root cause `text_drip.go` per gemini-cli #27466) — the run authenticates, gets the model response, and exits 0 **without writing it to stdout** when stdout is a pipe or file. Unfixed through v1.0.5; no changelog entry targets it. Redirection (`>`), `tee`, and `tail` capture nothing. Therefore `exit 0 + empty stdout` no longer implies RUNTIME-BROKEN — it is also what a *successful* run looks like. Capture must move to disk artifacts.
+> **⚠ MANDATORY CONVENTION — read before spawning agy or codex as an agent.** When agy/codex are driven as sub-agents from an orchestrator's shell (Claude Code `Bash`, CI runner, cron — i.e. **no controlling terminal, socket stdin**), the silent-output failure is reproducible and has a verified fix per engine:
+> - **agy REQUIRES a TTY.** A bare `agy -p "..." > file` **hangs to timeout** (`exit 124`, empty stdout, **no artifact, no log file at all**) — a textbook silent-output. The previously-recommended pseudo-TTY reattach `script -q /dev/null agy ...` **also fails** in this context (`script: tcgetattr/ioctl: Operation not supported on socket`). The **only** verified mitigation is allocating a real pty via **`python3 -c 'import pty; pty.spawn([...])'`** (see canonical block below) — with the pty, agy runs, writes the artifact + sentinel, and even flushes stdout.
+> - **codex is robust** with `-o <abs path>`: foreground *and* fully-detached (`start_new_session` / no controlling tty) + non-trivial prompts both completed correctly (#19945 did NOT reproduce on 0.137.0 when `-o` is the capture channel). Always pass `-o` and treat the artifact (not stdout, not exit code) as the source of truth.
+
+**Why (agy)**: agy `-p`/`--print` mode has two compounding non-TTY failures. (1) **TTY requirement** — agy's runtime opens `/dev/tty`; with no controlling terminal it stalls until `--print-timeout`/the caller's timeout and dies leaving nothing (empty stdout, no artifact, no `--log-file` written). (2) **stdout-flush bug** (official issue #115, OPEN; root cause `text_drip.go` per gemini-cli #27466) — even when it does run, it exits 0 **without writing the response to a piped/redirected stdout**. Unfixed through v1.0.6. Therefore `exit 0/124 + empty stdout` does NOT imply RUNTIME-BROKEN and an empty stdout is also what a *successful* run looks like. Capture must move to disk artifacts, and the process must be given a pty.
 
 **Capture channels, in order of authority**:
 
@@ -286,10 +290,17 @@ SLUG="<task-slug>"
 OUT="/tmp/agy-${SLUG}.md"          # ABSOLUTE path — agy sandbox cwd ≠ orchestrator cwd
 LOG="/tmp/agy-${SLUG}.log"
 rm -f "$OUT"
-# Pseudo-TTY reattach dodges the non-TTY flush bug for the status line (macOS/BSD syntax;
-# Linux: script -qfc "agy -p ... " /dev/null). Exit code is NOT trusted either way.
-script -q /dev/null agy -p "$(cat /tmp/prompt.md)" --dangerously-skip-permissions \
-  --log-file "$LOG" --print-timeout 15m >/dev/null 2>&1 || true
+# agy REQUIRES a TTY. In a no-controlling-terminal / socket-stdin context (Claude Code's Bash
+# tool, CI, cron) a bare `agy -p` hangs to timeout (empty stdout, no artifact, no log), and
+# `script -q /dev/null agy ...` fails immediately ("tcgetattr/ioctl: Operation not supported
+# on socket"). Allocate a real pty via python pty.spawn — the ONLY mitigation verified in that
+# context (2026-06-08, agy 1.0.6). Exit code is NOT trusted; the artifact below is the truth.
+python3 - "$LOG" <<'PY' || true
+import pty, sys
+log = sys.argv[1]
+prompt = open("/tmp/prompt.md").read()
+pty.spawn(["agy","-p",prompt,"--dangerously-skip-permissions","--log-file",log,"--print-timeout","15m"])
+PY
 
 # Verification chain — ALL must pass before the artifact is trusted
 if [ -s "$OUT" ] && grep -q '<<<END_OF_OUTPUT>>>' "$OUT"; then

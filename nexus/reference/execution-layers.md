@@ -73,7 +73,8 @@ The `exit 0 + empty stdout` pattern detected by `_common/MULTI_ENGINE_RECIPE.md 
 
 | Root cause | Mechanism | Mitigation |
 |------------|-----------|------------|
-| **Non-TTY stdout flush bug (affects SUCCESSFUL runs too)** | `agy -p` renders output via TUI drip (`text_drip.go`) and never flushes to a non-TTY stdout — redirection/`tee` capture nothing even when the model responded (official issue #115, OPEN; unfixed through v1.0.5) | **Never use stdout as the deliverable channel.** Mandate an absolute-path artifact write + sentinel in the prompt per `_common/CLI_COMPATIBILITY.md §9.2`; pseudo-TTY reattach (`script -q /dev/null agy ...`) helps the status line but artifact verification stays mandatory |
+| **TTY requirement (silent hang from socket-stdin shells)** | agy opens `/dev/tty`; spawned from a no-controlling-terminal shell (Claude Code `Bash`, CI, cron) `agy -p` hangs to `exit 124` with empty stdout, **no artifact, and no log file**. `script -q /dev/null agy ...` also fails (`tcgetattr/ioctl: Operation not supported on socket`). Verified 2026-06-08, agy 1.0.6 | **Give agy a real pty** via `python3 -c 'import pty; pty.spawn([...])'` — the ONLY mitigation verified in that context (the `script` reattach does NOT work). Canonical block: `_common/CLI_COMPATIBILITY.md §9.2` |
+| **Non-TTY stdout flush bug (affects SUCCESSFUL runs too)** | `agy -p` renders output via TUI drip (`text_drip.go`) and never flushes to a non-TTY stdout — redirection/`tee` capture nothing even when the model responded (official issue #115, OPEN; unfixed through v1.0.6) | **Never use stdout as the deliverable channel.** Mandate an absolute-path artifact write + sentinel in the prompt per `_common/CLI_COMPATIBILITY.md §9.2`; combined with the pty wrapper above, artifact verification stays mandatory |
 | **File path written as plain string** | agy treats `docs/foo.md` (no `@`) as literal text; main agent delegates the read to an internal subagent | **Always use `@<path>` syntax** to inject file context directly into the main agent (e.g. `Compare @docs/a.md and @docs/b.md ...`) |
 | **Internal subagent 60s timeout** | v1.0.2 changelog restricts the 60s timeout to subagents only (main agent is no longer capped); long-file reads via delegated subagents still die silently | `@` syntax avoids subagent delegation entirely; for unavoidable delegation, split prompt into multiple smaller `agy -p` calls |
 | **`--print-timeout` exceeded** | Default 5min on the main agent's wait; long syntheses can hit it | Pass `--print-timeout 15m` (or appropriate) for heavy reviews |
@@ -81,10 +82,10 @@ The `exit 0 + empty stdout` pattern detected by `_common/MULTI_ENGINE_RECIPE.md 
 
 **`--output-format json` status (re-verified 2026-06, v1.0.5)**: availability is **inconsistent across installs** — demonstrated in a community guide, but "flag not defined" errors are reported on the same guide, and no JSON schema is documented anywhere. **Do not depend on it.** Request structured JSON inside the §9.2 artifact file instead.
 
-**Recommended headless template** (full protocol + verification chain: `_common/CLI_COMPATIBILITY.md §9.2`):
+**Recommended headless template** (full protocol + verification chain: `_common/CLI_COMPATIBILITY.md §9.2`). **agy needs a real pty — use `python3 pty.spawn`, NOT `script -q /dev/null`** (the latter fails with `tcgetattr/ioctl: Operation not supported on socket` from Claude Code's Bash tool):
 ```bash
 SLUG="<task-slug>"
-script -q /dev/null agy -p --dangerously-skip-permissions "$(cat <<EOF
+cat > /tmp/agy-${SLUG}.prompt <<EOF
 [Role and task]
 
 Primary: @<path>
@@ -95,7 +96,13 @@ MANDATORY OUTPUT PROTOCOL:
 - End that file with a final line containing exactly: <<<END_OF_OUTPUT>>>
 - To stdout, print only a single status line: DONE /tmp/agy-${SLUG}.md
 EOF
-)" --print-timeout 15m --log-file /tmp/agy-${SLUG}.log >/dev/null 2>&1 || true
+python3 - "$SLUG" <<'PY' || true
+import pty, sys
+slug = sys.argv[1]
+prompt = open(f"/tmp/agy-{slug}.prompt").read()
+pty.spawn(["agy","-p",prompt,"--dangerously-skip-permissions",
+           "--print-timeout","15m","--log-file",f"/tmp/agy-{slug}.log"])
+PY
 # Then run the §9.2 verification chain: [ -s /tmp/agy-${SLUG}.md ] && sentinel grep;
 # fallback 1 = transcript harvest (brain/<conv-id>/.../transcript.jsonl last PLANNER_RESPONSE);
 # fallback 2 = --log-file grep → RUNTIME-BROKEN. Typed retry: max 1.

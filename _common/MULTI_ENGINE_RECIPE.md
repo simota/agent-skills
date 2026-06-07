@@ -254,9 +254,14 @@ Some CLIs report runtime failures (quota exhaustion, auth expiry, executor error
 SLUG="<task-slug>"
 OUT="/tmp/agy-${SLUG}.md"; LOG="/tmp/agy-${SLUG}.log"
 rm -f "$OUT"
-# stdout is NOT captured — agy -p never flushes to non-TTY stdout (issue #115, unfixed v1.0.5)
-script -q /dev/null agy -p "$(cat /tmp/prompt.md)" --dangerously-skip-permissions \
-  --log-file "$LOG" --print-timeout 15m >/dev/null 2>&1 || true
+# agy REQUIRES a TTY: from a socket-stdin shell `agy -p` hangs silently and `script -q /dev/null`
+# fails ("Operation not supported on socket"). Give it a real pty via python pty.spawn (§9.2).
+# stdout is NOT the deliverable channel either — issue #115 (unfixed v1.0.6).
+python3 - "$LOG" <<'PY' || true
+import pty, sys
+pty.spawn(["agy","-p",open("/tmp/prompt.md").read(),"--dangerously-skip-permissions",
+           "--log-file",sys.argv[1],"--print-timeout","15m"])
+PY
 if [ -s "$OUT" ] && grep -q '<<<END_OF_OUTPUT>>>' "$OUT"; then
   echo "OK: deliverable at $OUT"
 else
@@ -362,14 +367,18 @@ Engine-specific invocation:
 codex exec --full-auto -o "/tmp/codex-<slug>.md" "$(cat /tmp/prompt.md)"
 [ -s "/tmp/codex-<slug>.md" ] || echo "VERDICT: codex RUNTIME-BROKEN (empty artifact despite RC=$?)"
 
-# Antigravity (subagent runs this) — file-handoff capture MANDATORY (stdout never flushes
-# to non-TTY: issue #115, unfixed v1.0.5). Prompt must end with the §9.2 OUTPUT PROTOCOL
-# block: write JSON deliverable to $OUT (absolute path) + final-line sentinel <<<END_OF_OUTPUT>>>.
+# Antigravity (subagent runs this) — agy needs a real pty (use python pty.spawn, NOT
+# `script -q /dev/null` which fails on socket stdin) + file-handoff capture MANDATORY (stdout
+# never flushes to non-TTY: issue #115, unfixed v1.0.6). Prompt must end with the §9.2 OUTPUT
+# PROTOCOL block: write JSON deliverable to $OUT (absolute path) + final-line sentinel <<<END_OF_OUTPUT>>>.
 SLUG="<task-slug>"
 OUT="/tmp/agy-${SLUG}.json"; LOG="/tmp/agy-${SLUG}.log"
 rm -f "$OUT"
-script -q /dev/null agy -p "$(cat /tmp/prompt.md)" --dangerously-skip-permissions \
-  --log-file "$LOG" --print-timeout 15m >/dev/null 2>&1 || true
+python3 - "$LOG" <<'PY' || true
+import pty, sys
+pty.spawn(["agy","-p",open("/tmp/prompt.md").read(),"--dangerously-skip-permissions",
+           "--log-file",sys.argv[1],"--print-timeout","15m"])
+PY
 if ! { [ -s "$OUT" ] && grep -q '<<<END_OF_OUTPUT>>>' "$OUT"; }; then
   grep -E "RESOURCE_EXHAUSTED|Resets in|error getting token|agent executor error|unexpected end of JSON" "$LOG" | head -5
   echo "VERDICT: agy RUNTIME-BROKEN — see §Engine Runtime Failure Detection (try transcript fallback per CLI_COMPATIBILITY §9.2 first)"

@@ -171,8 +171,13 @@ codex exec --full-auto -o "/tmp/codex-<slug>.md" "$(cat /tmp/prompt.md)"
 SLUG="<task-slug>"
 OUT="/tmp/agy-${SLUG}.md"; LOG="/tmp/agy-${SLUG}.log"
 rm -f "$OUT"
-script -q /dev/null agy -p "$(cat /tmp/prompt.md)" --dangerously-skip-permissions \
-  --log-file "$LOG" --print-timeout 15m >/dev/null 2>&1 || true
+# agy REQUIRES a TTY: from a socket-stdin shell `agy -p` hangs silently and `script -q /dev/null`
+# fails ("Operation not supported on socket"). Give it a real pty via python pty.spawn (§9.2).
+python3 - "$LOG" <<'PY' || true
+import pty, sys
+pty.spawn(["agy","-p",open("/tmp/prompt.md").read(),"--dangerously-skip-permissions",
+           "--log-file",sys.argv[1],"--print-timeout","15m"])
+PY
 if [ -s "$OUT" ] && grep -q '<<<END_OF_OUTPUT>>>' "$OUT"; then
   echo "OK: deliverable at $OUT"
 else

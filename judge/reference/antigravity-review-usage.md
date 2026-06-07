@@ -311,17 +311,21 @@ Always pair the prompt with `--dangerously-skip-permissions` for headless runs u
 
 ### Silent Failure Detection
 
-`agy` silently swallows several runtime-fatal errors to its log file while exiting 0 with empty stdout — quota exhaustion (`RESOURCE_EXHAUSTED` 429 with a `Resets in NhNm` window), OAuth token expiry, upstream model unavailability, corrupt `mcp_config.json`. **Additionally (unfixed through v1.0.5, issue #115): `agy -p` never flushes its response to a non-TTY stdout, so a SUCCESSFUL review also produces `exit 0 + empty stdout` when piped.** Capture must therefore use the file-handoff protocol (`_common/CLI_COMPATIBILITY.md §9.2`), not stdout.
+`agy` silently swallows several runtime-fatal errors to its log file while exiting 0 with empty stdout — quota exhaustion (`RESOURCE_EXHAUSTED` 429 with a `Resets in NhNm` window), OAuth token expiry, upstream model unavailability, corrupt `mcp_config.json`. **Additionally: agy REQUIRES a TTY — from a socket-stdin shell (Claude Code `Bash`, CI, cron) `agy -p` hangs to `exit 124` with no artifact/log, and `script -q /dev/null agy ...` fails with `tcgetattr/ioctl: Operation not supported on socket` (verified 2026-06-08, agy 1.0.6). And (unfixed through v1.0.6, issue #115) `agy -p` never flushes its response to a non-TTY stdout, so a SUCCESSFUL review also produces `exit 0 + empty stdout` when piped.** Capture must therefore give agy a real pty (`python3 pty.spawn`) and use the file-handoff protocol (`_common/CLI_COMPATIBILITY.md §9.2`), not stdout.
 
-**Mandatory pattern for headless invocations** (prompt must mandate the artifact write per §9.2):
+**Mandatory pattern for headless invocations** (prompt must mandate the artifact write per §9.2; agy gets a real pty via python pty.spawn — `script -q /dev/null` does NOT work here):
 
 ```bash
 OUT="/tmp/agy-review.md"; LOG="/tmp/agy-review.log"
 rm -f "$OUT"
 # Prompt ends with: "Write your COMPLETE findings to the absolute path /tmp/agy-review.md,
 #   final line <<<END_OF_OUTPUT>>>; print only a one-line status to stdout."
-script -q /dev/null agy -p "<prompt>" --dangerously-skip-permissions --log-file "$LOG" \
-  --print-timeout 15m >/dev/null 2>&1 || true
+# Write the prompt to /tmp/agy-review.prompt first, then:
+python3 - "$LOG" <<'PY' || true
+import pty, sys
+pty.spawn(["agy","-p",open("/tmp/agy-review.prompt").read(),"--dangerously-skip-permissions",
+           "--log-file",sys.argv[1],"--print-timeout","15m"])
+PY
 
 if ! { [ -s "$OUT" ] && grep -q '<<<END_OF_OUTPUT>>>' "$OUT"; }; then
   # Fallback: transcript harvest, then log grep (full chain: CLI_COMPATIBILITY §9.2)

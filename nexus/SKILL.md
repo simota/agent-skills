@@ -251,7 +251,9 @@ Full per-CLI prereqs, runtime notes, silent-failure mitigations, and the verifie
 |-----|----|----|----|-----------|
 | **Claude Code** | `Agent(... mode: bypassPermissions)` | `Agent(... run_in_background: true)` | `Agent("You are Rally...")` | `Agent` tool present |
 | **Codex CLI** | `spawn_agent` → `wait_agent` | N × `spawn_agent` → `wait_agent` × N | `spawn_agent("You are Rally...")` | `multi_agent = true` + `[agents] max_depth >= 2` |
-| **agy** | `/agent <name>` (TUI) or `agy -p --dangerously-skip-permissions` (headless) | Multiple `/agent` (async, `/tasks`) | Plugin team pack | TUI main session or OS-level isolation; artifact file capture (NOT stdout) |
+| **agy** | `/agent <name>` (TUI) or `agy -p --dangerously-skip-permissions` (headless) | Multiple `/agent` (async, `/tasks`) | Plugin team pack | TUI main session or OS-level isolation; **headless from a socket-stdin shell MUST allocate a real pty (`python3 pty.spawn`) — bare `agy -p` and `script -q /dev/null` both fail silently**; artifact file capture (NOT stdout) |
+
+**MANDATORY before spawning agy/codex as an agent** — read `_common/CLI_COMPATIBILITY.md §9.2` (agy: real pty via `python3 pty.spawn` + artifact/sentinel capture, NEVER stdout) and §9.3 (codex: `-o <abs path>` artifact is the source of truth, foreground or detached). These are silent-output regressions, not edge cases.
 
 Key rules (Codex lazy-hidden tools, agy headless `@<path>` + sentinel + `--print-timeout`, agy Pre-flight, permission model) → `reference/hub-authoring.md` § Execution-Layer Key Rules.
 
