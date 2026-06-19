@@ -59,6 +59,14 @@ The following rules apply as an internal Nexus capability (previously the Cipher
 - Single question: If still ambiguous, ask ONE focused question with options
 - Confidence boost: +0.20 on successful clarification
 
+When the blocker is **missing context** (not just ambiguous wording), run the Context Sufficiency
+Gate (`_common/CONTEXT_SUFFICIENCY.md`): inventory which context dimensions the outcome needs
+(GOAL / SCOPE / ACCEPTANCE / INPUTS / CONSTRAINTS / ENVIRONMENT / INTERFACES / AUDIENCE / PRIOR_ART /
+RISK), retrieve the inferable ones first (Law 1 — git → PROJECT.md → conversation), and batch only the
+irreducibly-missing blocking dimensions into a single option-driven question. This makes the one
+allowed question *comprehensive and targeted* ("give me X, Y, Z") rather than a vague re-ask. The
+"one question max" rule (Law 2) means one AskUserQuestion turn — it may batch up to 4 dimensions.
+
 ---
 
 ## Anti-Patterns

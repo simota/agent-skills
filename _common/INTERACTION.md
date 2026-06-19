@@ -251,6 +251,11 @@ Agents define their interaction triggers by name. Below are common trigger patte
 | ON_SCOPE_UNCLEAR | ON_AMBIGUITY | Request scope is too broad or too narrow |
 | ON_AMBIGUOUS_TASK | BEFORE_START | Task can be routed to multiple valid chains |
 
+For `ON_MISSING_CONTEXT` / `ON_SCOPE_UNCLEAR`, do not hand-roll a vague "can you clarify?". Run the
+**Context Sufficiency Gate** (`_common/CONTEXT_SUFFICIENCY.md`): inventory the context dimensions the
+outcome needs, retrieve what's derivable, and batch the irreducibly-missing dimensions into one
+option-driven `AskUserQuestion` turn using the per-dimension question seeds there.
+
 ### Discovery Triggers
 
 | Trigger Name | Timing | Description |
