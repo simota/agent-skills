@@ -29,6 +29,7 @@
 | `goal`, `/goal setup`, `goal recipe`, `long-running goal`, `autonomous loop setup` | `goal` |
 | `essential`, `must-have`, `MVP definition`, `core feature`, `minimum viable`, `cut scope`, `bare minimum` | `essential` |
 | `killer`, `killer feature`, `differentiator`, `WOW experience`, `decisive feature`, `competitive edge` | `killer` |
+| `trim`, `remove feature`, `dead weight`, `dead-weight feature`, `cut unused feature`, `feature sunset`, `retire feature`, `delete what we don't need`, `prune features`, `kill unused feature` | `trim` (inverse of essential/killer — removal via essential×killer 2-axis filter; core engine `void`) |
 | `acceptance`, `proof-carrying PR`, `acceptance gate`, `machine-adjudicated merge`, `tier-s merge`, `payment merge`, `auth merge`, `auto-merge with evidence` | `acceptance` |
 | `growth-acceptance`, `lifecycle gate`, `market proof`, `research proof`, `brand proof`, `insight ledger`, `incrementality gate`, `brand compiler`, `growth-brand contract`, `post-launch measurement` | `growth-acceptance` |
 | `summit`, `tri-engine`, `all engines`, `claude+codex+agy`, `quality maximization`, `strategic decision`, `release-critical`, `design-critical launch` | `summit` |

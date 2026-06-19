@@ -72,6 +72,17 @@ Full cross-engine triangulation + moat/refutation gate + verdict + flagged imple
 
 ---
 
+## trim
+
+Dead-weight feature **removal verdict + conditional excision** — the inverse of `essential`/`killer`. Applies the **essential axis** (must-have for the core job?) and **killer axis** (defensible differentiator?) as a 2×2 filter over the *existing* feature set: a feature survives if essential **OR** killer; only one that is **neither** and carries real cost (CoK ≥ 7) becomes a removal candidate. Core engine is `void` (YAGNI / Feature Sunset / CoK / blast radius); trim adds the dual-axis judgment + multi-agent *execution* void's propose-only recipes lack. Subtraction-and-removal-oriented. **`trim` with no target → whole-project auto-scan** (PDM full inventory + Void carrying-cost rank → top-N-by-CoK slate; defaults to GUIDED). **Confirm before Phase 5 excision** (semi-destructive; `PUBLIC_API`/`DATA` blast radius → Ask First).
+
+**Chain template:**
+`(PDM\|Lens[inventory] ‖ Void[CoK + usage/git/bug evidence]) → {Magi[essential axis] + Compete[killer axis/moat]} → 2×2 verdict → Sentinel-guard + refute×2-3[must-stay] + blast-radius → AskUserQuestion[removal slate Y/N/Modify] → if Y: Sherpa[phased, flag-off-first] → (Sweep[codex] ‖ Builder[codex]) → Radar[codex verify-green-after] → Guardian[removal report]`
+
+Full inventory + dual-axis gate + safety/must-stay refutation + verdict + phased excision → `reference/inline-recipes.md`.
+
+---
+
 ## acceptance
 
 **Proof-Carrying PR pipeline v2 — Two-Axis (Code + Design)** for Tier-S/A merges. 14-30 agents Tier-S (UI), 8-21 Tier-A; Tier-B/C auto-downgrade to `feature`. G1-G10 guardrails. Cost: 3-15× vs `feature`. **Confirm before Tier-S launch.** Full Tier policy + G1-G10 + chain → `_common/PROOF_CARRYING.md`, `reference/acceptance-recipe.md`.

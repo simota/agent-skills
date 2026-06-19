@@ -150,6 +150,7 @@ Agent disambiguation → `reference/agent-disambiguation.md`
 | Goal Setup | `goal` | `/goal` autonomous long-running execution setup. **Gates on a machine-checkable completion oracle + mandatory hard-stop bound** (rejects unverifiable goals). 1-3 agents, no code execution | `Hone → Latch → Scribe? → DELIVER` | `reference/goal-recipe.md` |
 | Essential | `essential` | Must-have feature **verdict + conditional implementation** — converges on THE ONE feature. Subtraction-oriented | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/inline-recipes.md` |
 | Killer | `killer` | Killer feature **verdict + conditional flagged implementation** via cross-engine triangulation, gated on **moat/defensibility + adversarial refutation**; flag carries differentiation KPI + kill criterion. Dual-engine baseline (Claude + Codex); agy optional | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/inline-recipes.md` |
+| Trim | `trim` | **Inverse of essential/killer** — dead-weight feature **removal verdict + conditional excision**. Scores existing features on the essential axis (must-have?) × killer axis (differentiator?); removes only those failing **both** AND CoK ≥ 7. Core engine `void`; adds multi-agent execution. **No target → whole-project auto-scan** (top-N by CoK, GUIDED). 4-10 agents. **Confirm before excision; PUBLIC_API/DATA → Ask First.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/inline-recipes.md` |
 | Acceptance | `acceptance` | **Proof-Carrying PR v2** (Code + Design) for Tier-S/A merges. 14-30 agents Tier-S; G1-G10. 3-15× cost. **Confirm Tier-S.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `_common/PROOF_CARRYING.md`, `reference/acceptance-recipe.md` |
 | Growth-Acceptance | `growth-acceptance` | **Layer C lifecycle gate** (Market + Research + Brand) for Enterprise. Insight Ledger + +14/+30/+90d loop. G11-G15. 1.1-8× on acceptance. **Confirm Step 3+.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `_common/GROWTH_BRAND_PROOF.md`, `reference/growth-acceptance-recipe.md` |
 | Summit | `summit` | Multi-engine **five-team** quality-maximization. Dual-engine default. 28-119 agents, 5-25× cost. **Always confirm.** | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/summit-recipe.md` |
@@ -182,6 +183,7 @@ For natural-language input without an explicit subcommand. **Subcommand match al
 | `goal`, `/goal setup`, `autonomous loop setup` | `goal` |
 | `essential`, `must-have`, `MVP definition`, `core feature`, `cut scope` | `essential` |
 | `killer`, `killer feature`, `differentiator`, `decisive feature` | `killer` |
+| `trim`, `remove feature`, `dead weight`, `cut unused feature`, `feature sunset`, `delete what we don't need` | `trim` |
 | `acceptance`, `proof-carrying PR`, `tier-s merge`, `auto-merge with evidence` | `acceptance` |
 | `growth-acceptance`, `lifecycle gate`, `market proof`, `insight ledger`, `post-launch measurement` | `growth-acceptance` |
 | `summit`, `tri-engine`, `quality maximization`, `release-critical` | `summit` |
@@ -203,7 +205,7 @@ Parse the first token of user input:
 - `/Nexus` with no arguments → `proactive` Recipe (`reference/proactive-mode.md`).
 - Otherwise → `classify` (default) = `RESOLVE → GATE → REDIRECT? → SELECT → CHAIN_SELECT`. **REDIRECT step**: if the resolved intent semantically matches a Recipe, redirect to that Recipe instead of hand-rolling a chain. Full contract → `reference/routing-matrix.md` § Classify Flow.
 
-Execution-control Mode (AUTORUN_FULL / AUTORUN / GUIDED / INTERACTIVE) is applied after Recipe selection (orthogonal). Inline Recipes (`kaizen`, `essential`, `killer`) have no top-level reference — full phase contracts in `reference/inline-recipes.md`.
+Execution-control Mode (AUTORUN_FULL / AUTORUN / GUIDED / INTERACTIVE) is applied after Recipe selection (orthogonal). Inline Recipes (`kaizen`, `essential`, `killer`, `trim`) have no top-level reference — full phase contracts in `reference/inline-recipes.md`.
 
 ## Workflow
 
@@ -335,7 +337,7 @@ Opus 4.8 requires the four directive fields above (calibrates length to context,
 
 ## Routing Quick Start
 
-Canonical matrix: `reference/routing-matrix.md` defines **~95 task types** covering domain breadth (ADVISORY, AI_FEATURE, ARTICLE, BRAINSTORM, COMPLIANCE, CRYPTO, MARKETING, MOCKUP, MULTI_TENANT, PRIVACY, etc.). The Recipes table above exposes the **most-used 19** as explicit subcommands; the remaining ~78 task types are reachable only via the `classify` (default) flow. Recipe-driven chains (Apex / Charter / Enact / Summit / Acceptance / Growth-Acceptance / Essential / Killer / Kaizen) are in the Recipes table. The legacy `classify` flow's headline chains for `BUG`, `FEATURE`, `SECURITY`, `REFACTOR`, `OPTIMIZE`, `DESIGN_SYSTEM_DOCS`, `DESIGN_WORKFLOW`, `MOBILE_NATIVE`, `IOS_UI_TEST`, `PORTING` — full chain table, Sherpa skip conditions, chain adjustment rules, clarification rules, and anti-pattern reference list — live in `reference/routing-quick-start.md`.
+Canonical matrix: `reference/routing-matrix.md` defines **~95 task types** covering domain breadth (ADVISORY, AI_FEATURE, ARTICLE, BRAINSTORM, COMPLIANCE, CRYPTO, MARKETING, MOCKUP, MULTI_TENANT, PRIVACY, etc.). The Recipes table above exposes the **most-used 20** as explicit subcommands; the remaining ~78 task types are reachable only via the `classify` (default) flow. Recipe-driven chains (Apex / Charter / Enact / Summit / Acceptance / Growth-Acceptance / Essential / Killer / Kaizen) are in the Recipes table. The legacy `classify` flow's headline chains for `BUG`, `FEATURE`, `SECURITY`, `REFACTOR`, `OPTIMIZE`, `DESIGN_SYSTEM_DOCS`, `DESIGN_WORKFLOW`, `MOBILE_NATIVE`, `IOS_UI_TEST`, `PORTING` — full chain table, Sherpa skip conditions, chain adjustment rules, clarification rules, and anti-pattern reference list — live in `reference/routing-quick-start.md`.
 
 **Chain reference hierarchy (Source of Truth):**
 - `routing-matrix.md` — owns task type → default chain (95 types). **Primary SoT for "which agents fire for task X"**.
