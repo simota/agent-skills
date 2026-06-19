@@ -71,6 +71,7 @@ Code review specialist delivering verdicts on correctness, security, and intent 
 - **Multi-engine parallel review is the default `/judge` flow**: spawn one Agent subagent per AVAILABLE engine in a single message. **Default baseline: Claude + Codex (dual-engine)**; **tri-engine** when agy is AVAILABLE. Integrate, ground, return **only findings worth fixing**. Algorithm in `reference/tri-engine-review.md` (covers both modes). Single-engine only when user explicitly requests one engine, ≤1 of Claude/Codex available, or trivial scope (<50 LOC low-risk).
 - Execute each engine's review CLI per its usage reference; never skip CLI execution inside a subagent.
 - Classify findings by severity (CRITICAL/HIGH/MEDIUM/LOW/INFO) with line-specific references; verify intent alignment between code and PR/commit description.
+- **Emit a structured `intent_alignment` verdict** (`PASS` | `FAIL` | `NOT_CHECKED`) as a first-class output field, not only as prose findings. `FAIL` whenever the diff contradicts, omits, or materially overshoots the stated PR/commit intent (scope creep). This field is the gate signal Guardian consumes at `ship` — Judge stays report-only on code, but the alignment verdict is machine-actionable. `NOT_CHECKED` only when no intent source (PR body / commit message) exists; never silently treat absent intent as `PASS`.
 - Provide actionable remediation + remediation agent for each shipped finding (Builder / Sentinel / Zen / Radar / Atlas).
 - Run consistency detection (error handling, null safety, async, naming, imports) and per-file test-quality scoring (5-dimension model).
 - **Mandatory subagent for any Claude-based review** (tri-engine `review-claude` subagent OR single-engine Claude). Main-context Claude review introduces self-bias and is rejected.
@@ -184,7 +185,7 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate **in a
 - `perf`: N+1 / render cost / bundle size focus. **VERIFY**: each finding is tied to a concrete cost signal (N+1 query count, render measurement, bundle bytes) — not speculative "looks slow"; grounded in actual code at GROUND; deep DB/SQL or measured-optimization work routed to Bolt/Tuner (Judge reports, does not optimize).
 - `style`: Claude single-engine, naming/structure/consistency only. **VERIFY**: runs as a Claude **subagent** (never main-context self-review); zero bug/security findings emitted (out of this recipe's scope — escalate those to `pr`); every finding passes `style_bias_check` (reject rationale that reduces to "looks unfamiliar"); routed to Zen.
 - `quick`: <50 LOC low-risk, Claude single-engine. **VERIFY**: scope confirmed <50 LOC low-risk (larger/high-risk → escalate to `pr`, do not stretch `quick`); runs as a Claude subagent; ALL findings treated as CANDIDATE and grounded before shipping (single-engine has no concurrence); self-grade-inflation guard — the evaluating model differs from the one that generated the code.
-- `intent`: Code-vs-PR-body alignment. **VERIFY**: intent extracted from the PR/commit description first; each finding maps a concrete code-vs-stated-intent delta; scope-creep (code beyond the PR description) flagged explicitly; stays alignment-focused (pure bugs belong to `pr`, not `intent`).
+- `intent`: Code-vs-PR-body alignment. **VERIFY**: intent extracted from the PR/commit description first; each finding maps a concrete code-vs-stated-intent delta; scope-creep (code beyond the PR description) flagged explicitly; a structured `intent_alignment: PASS | FAIL | NOT_CHECKED` verdict is emitted (the Guardian `ship` gate signal); stays alignment-focused (pure bugs belong to `pr`, not `intent`).
 
 ## Output Routing
 
@@ -214,7 +215,7 @@ Every deliverable must include:
 - Summary table (files reviewed, finding counts by severity, engine concurrence stats, verdict).
 - Review context (base, target, PR title, review mode, engines used).
 - Findings by severity with ID, file:line, issue, impact, evidence, suggested fix, **engine concurrence tag** (e.g., `[codex+agy+claude]`, `[claude-verified]`), remediation agent.
-- Intent alignment check; consistency findings (if applicable); test quality scores (if applicable); recommended next steps per agent.
+- **Intent alignment verdict** — explicit `intent_alignment: PASS | FAIL | NOT_CHECKED` line (the Guardian `ship` gate signal), plus the supporting code-vs-stated-intent deltas; consistency findings (if applicable); test quality scores (if applicable); recommended next steps per agent.
 - **Rejection ledger** (condensed) — counts per category (hallucination, style-only, already-mitigated, false-positive).
 - **SNR indicator** — shipped/engine-total ratio; flag if < 40%.
 - **`## LLM Fix Prompt`** block on every consensus-level finding per `reference/fix-prompt-generation.md`. One-line suppression note when omitted (nit/style, specialist escalation, single-engine no-consensus).
@@ -322,6 +323,7 @@ _STEP_COMPLETE:
       concurrence: "[3/3: N, 2/3: N, 1/3-grounded: N]"
       rejected: "[count + top categories]"
       verdict: "[APPROVE | REQUEST CHANGES | BLOCK]"
+      intent_alignment: "[PASS | FAIL | NOT_CHECKED]"
       consistency_issues: "[count or none]"
       test_quality_score: "[score or N/A]"
   Next: Builder | Sentinel | Zen | Radar | DONE
@@ -336,4 +338,5 @@ Judge-specific findings to surface in handoff:
 - Review mode (PR | Pre-Commit | Commit) + files reviewed count
 - Findings by severity: CRITICAL/HIGH/MEDIUM/LOW/INFO counts
 - Verdict (APPROVE | REQUEST CHANGES | BLOCK)
+- Intent alignment verdict (PASS | FAIL | NOT_CHECKED) — Guardian `ship` gate signal
 - Consistency issues + test quality score

@@ -71,7 +71,7 @@ Route elsewhere when the task is primarily:
 ## Core Contract
 
 - Use standardized templates matching the document type (PRD/SRS/HLD/LLD/Checklist/Test Spec). Choosing the wrong format causes stakeholder misalignment across 6+ document types (BRD, FRD, URS, SRS, PRD, MRD).
-- Assign requirement IDs: `REQ-001`, `FR-001`, `NFR-001`, `AC-001`, `IMPL-001`. Every ID must be unique and traceable per ISO/IEC/IEEE 29148:2018.
+- Assign requirement IDs from the canonical scheme in `_common/TRACEABILITY.md` (`REQ-*` functional, `CFR-*` cross-functional, `AC-{FEATURE}-{NNN}`, `IMPL-*`, `TEST-*`) so IDs link across Accord/Attest/Radar instead of drifting per-document; accept legacy `FR-*`/`NFR-*` on read. Every ID must be unique and traceable per ISO/IEC/IEEE 29148:2018. For SRS/durable specs, emit a `.traceability.yaml` ledger alongside the traceability matrix.
 - Make every requirement testable — reject any requirement that cannot produce a binary pass/fail test. IIBA's 2024 industry poll found 54% of project failures stem from requirements misinterpretation due to ambiguous language. Replace vague language ("fast", "secure", "user-friendly") with measurable thresholds (e.g., "P95 response ≤ 200ms", "OWASP Top 10 compliant").
 - Include a glossary for domain-specific and multi-meaning terms. Without a shared glossary, different engineers reading the same requirement reach different design conclusions — a silent source of defects that surfaces late in integration.
 - Use Given-When-Then for acceptance criteria. Each scenario must specify preconditions, actions, and expected outcomes.
@@ -284,6 +284,7 @@ Response shape:
 | [api-documentation.md](~/.claude/skills/scribe/reference/api-documentation.md)                 | You are running the `api-doc` recipe and need to transform OpenAPI specs into Redoc/Stoplight/Mintlify human-facing reference docs with code samples, error catalogs, and auth flows. |
 | [anti-patterns.md](~/.claude/skills/scribe/reference/anti-patterns.md)                         | A draft is weak, vague, bloated, untestable, or has AI-generation artifacts. |
 | [documentation-calibration.md](~/.claude/skills/scribe/reference/documentation-calibration.md) | You need INSCRIBE tracking, thresholds, or EVOLUTION_SIGNAL rules.           |
+| [TRACEABILITY.md](~/.claude/skills/_common/TRACEABILITY.md)                                     | You are assigning requirement/AC/test IDs or emitting a `.traceability.yaml` ledger. Canonical ID scheme + bidirectional linking rule shared with Accord/Attest/Radar/Guardian/Judge. |
 | [OPUS_48_AUTHORING.md](~/.claude/skills/_common/OPUS_48_AUTHORING.md)                           | You are sizing the spec, deciding adaptive thinking depth at PLAN, or front-loading doc type/audience/scope at SCAN. Critical for Scribe: P3, P5. |
 
 

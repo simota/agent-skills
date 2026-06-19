@@ -35,8 +35,9 @@ Before proposing ship commands, verify:
 4. **Quality gate passed**: `quality_score >= 65` (B grade or higher) — otherwise stop
 5. **Risk gate passed**: `risk_score <= 85` (not Critical) — otherwise require explicit override
 6. **Security gate passed**: `security_classification != CRITICAL` — otherwise require Sentinel handoff completion
-7. **`gh` CLI authenticated**: `gh auth status` succeeds
-8. **CI configuration discovered**: detected required status checks from branch protection rules
+7. **Intent alignment gate passed**: Judge `intent_alignment != FAIL` — otherwise reconcile code with stated intent or obtain explicit waiver (`NOT_CHECKED` allowed only with an explicit unverified-intent note)
+8. **`gh` CLI authenticated**: `gh auth status` succeeds
+9. **CI configuration discovered**: detected required status checks from branch protection rules
 
 If any precondition fails, stop and request confirmation or route to the appropriate Recipe.
 
@@ -72,6 +73,7 @@ gh auth status >/dev/null || { echo "gh CLI not authenticated"; exit 1; }
 # - quality_score >= 65
 # - risk_score <= 85
 # - security_classification != CRITICAL
+# - intent_alignment != FAIL  (Judge verdict; NOT_CHECKED only with unverified-intent note)
 # - noise_ratio <= 0.30
 # - coverage_gap <= 0.40
 ```
@@ -192,6 +194,7 @@ gh pr view "$PR_NUMBER" --json state -q .state   # MERGED
 | Quality | `quality_score < 65` | Stop; route to Zen or Builder for fixes |
 | Risk | `risk_score > 85` | Stop unless explicit override with justification |
 | Security | `security_classification == CRITICAL` | Blocking Sentinel handoff required |
+| Intent alignment | `intent_alignment == FAIL` (Judge verdict) | Stop; reconcile code with stated PR/commit intent or obtain explicit waiver. `NOT_CHECKED` permitted only with a note that intent was not verified |
 | CI | Any required check failed | Stop; surface failures |
 | Approvals | `reviewDecision != APPROVED` | Stop; request reviewers |
 | Conflicts | `mergeStateStatus == DIRTY` | Stop; route to `reshape` or manual rebase |
@@ -255,7 +258,7 @@ If destructive recovery is needed (force-push reversal), escalate to user; never
 Deliver this with every `ship` output:
 
 - [ ] All preconditions satisfied (clean tree, pushed, base synced, `gh` authed)
-- [ ] All hard gates passed (quality, risk, security, CI, approvals)
+- [ ] All hard gates passed (quality, risk, security, intent alignment, CI, approvals)
 - [ ] PR title and body match `pr` Recipe output
 - [ ] Reviewers requested per CODEOWNERS + expertise routing
 - [ ] CI watched to terminal state (no premature merge)

@@ -64,6 +64,7 @@ Route elsewhere when the task is primarily:
 - Treat the delivered package as an **executable specification** consumed by downstream AI agents (Builder/Radar/Voyager), not passive documentation. `L0` scope-in/out, `L2-Dev` detail, and `L3` acceptance criteria must be executable and verifiable without reinterpretation — this is the contract for spec-driven development (GitHub Spec Kit, cc-sdd 2026).
 - Include BDD acceptance criteria in `L3`.
 - Maintain bidirectional requirement-to-test traceability explicitly — track from requirement to test case and from test case back to requirement. Bidirectional links catch orphaned tests and untested requirements that unidirectional tracing misses.
+- Use the canonical ID scheme in `_common/TRACEABILITY.md` (`REQ-*` / `CFR-*` / `AC-{FEATURE}-{NNN}` / `SC-*`) instead of minting package-local IDs, so links survive across Scribe/Attest/Radar. For `Full`/`Standard` packages, emit a `.traceability.yaml` ledger (initial verdicts `NOT_TESTED`) that downstream Attest verifies and Guardian/Judge gate on.
 - Select `Full`, `Standard`, or `Lite` scope deliberately and state the reason.
 - Record post-task calibration data through `UNIFY`.
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`). IDs, YAML, BDD keywords, and technical terms remain in English.
@@ -320,6 +321,7 @@ Unified Specification Package: [Feature Name]
 | `reference/user-story-mapping.md` | You chose `story-map` recipe. Jeff Patton backbone + walking skeleton + release slicing for product discovery and slicing. |
 | `reference/stakeholder-map.md` | You chose `stakeholder` recipe. Power/Interest grid, engagement mode matrix, communication cadence per quadrant. |
 | `reference/raci-matrix.md` | You chose `raci` recipe. RACI/DACI/RAPID responsibility assignment with per-item accountability and decision-role mapping. |
+| `_common/TRACEABILITY.md` | You are assigning requirement/AC/scenario IDs or emitting a `.traceability.yaml` ledger. Canonical ID scheme + bidirectional linking rule shared with Scribe/Attest/Radar/Guardian/Judge. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the unified package, deciding adaptive thinking depth at PLAN, or front-loading audience/scope at INTAKE. Critical for Accord: P3, P5. |
 | `_common/PROOF_CARRYING.md` v3.1 | You are emitting accord L4 (Reversibility / Learning / Disqualification) per Persona+Journey+Product fold-in. Phase 1 recommended, Phase 2 mandatory. Persona Contract schema (situation/goal/fear/comprehension/success/disqualification) feeds via echo `council` mode. Proposal Intake Checklist applies before extending L4 schema further. |
 | `_common/GROWTH_BRAND_PROOF.md` | You emit accord package as input to `nexus growth-acceptance` Phase 0 (Pre-Design, Enterprise org-tier only). L4 disqualification feeds Phase 3 Measurement Loop fail conditions (G13 Stop Authority). |
