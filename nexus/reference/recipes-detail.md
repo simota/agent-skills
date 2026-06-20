@@ -50,6 +50,17 @@ Read: `reference/enact-recipe.md`.
 
 ---
 
+## spec
+
+**Interactive feature-proposal → locked specification through deep human-in-the-loop dialogue.** Takes a rough idea and refines it conversationally into a sign-off-ready spec carrying **mandatory testable acceptance criteria**, then **stops at the spec — writes no code**. The discovery half of `spec → feature`/`apex`, mirroring `charter → enact`. Uniquely **defaults to `INTERACTIVE`** (the dialogue is the deliverable); its phase-boundary checkpoints are contract-level, so even AUTORUN cannot skip them. Distinct from `essential`/`killer` (which-feature *verdict*, minimal dialogue), `feature`/`apex` (build code), `charter` (whole-repo team design), `converge` (automated grading loop), and `riff` (single-agent brainstorm, no artifact). 3-8 agents × dialogue turns.
+
+**Chain template:**
+`FRAME (Plea +Field?/Cast?) → ✓confirm-problem → EXPAND (Riff ‖ Flux +Compete?) → ✓steer → CHALLENGE (Magi + Void + Ripple +Omen?) → ✓pick + convergence-check → SHAPE (Spark +Rank?) → ✓edit → SPECIFY (Accord +Scribe?/Gateway?/Schema?, L3 ACs mandatory +Attest?/Echo?) → ✓iterate → LOCK (✓sign-off → docs/specs/<slug>.md + Open Questions → recommend /nexus feature|apex|acceptance)`
+
+Full phase contract (FRAME / EXPAND / CHALLENGE / SHAPE / SPECIFY / LOCK), boundaries, and anti-patterns → `reference/spec-recipe.md`.
+
+---
+
 ## essential
 
 Must-have feature **verdict + conditional implementation**. Converges on THE ONE feature without which the product cannot exist. Subtraction-oriented (MVP, core feature, scope reduction).
