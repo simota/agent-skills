@@ -160,6 +160,17 @@ Read: `reference/transmute-recipe.md`.
 
 ---
 
+## clone
+
+**Faithful product reproduction** — reverse-engineer an *existing* product's observable surface and rebuild it as a complete copy, **verified by differential parity** against a captured baseline (not assertion). The black-box analog of `transmute`: where transmute extracts its oracle *from your own source*, clone captures the oracle by *observing an external product* (UI / behavior / features / data shape). Two principles: **capture-from-evidence** (every reproduced screen is grounded in a captured artifact, never memory) and **fidelity-over-faith** (the copy is diffed against the baseline). Distinct from `transmute` (own-source rewrite) / `migrate` (own-system completeness) / `PORTING` (web→native) / `pixel` (single mockup) / `feature` (net-new inspired design). Strategy: extract-and-rebuild (default) ‖ scaffold-from-source ‖ incremental-clone ‖ big-bang. 8-22 agents. **Confirm before big-bang full clone.**
+
+**Chain template:**
+`Phase 0 Framing → 1 Capture (Vector/Voyager crawl+screenshot+network ‖ Frame/Pixel design-extract ‖ Lens? ‖ Schema? ‖ Echo/Trace? ‖ PDM/Lens feature-inventory) → 2 Spec+Baseline (Scribe/Accord spec → parity baseline + Capture Completeness Gate) → 3 Architect (Magi capture-strategy gate + Parity Map; Atlas?/Muse?) → 4 Rebuild (Forge→Artisan/Builder + Pixel pixel-accurate +gateway/schema?+flow?; rally COMPETE for fidelity-critical screens) → 5 Parity Verify (Pixel/Voyager visual ‖ Radar/Voyager behavioral ‖ Attest feature ‖ judge fidelity; loop ≤3) → 6 Ship (Guardian + Fidelity Report)`
+
+Read: `reference/clone-recipe.md`.
+
+---
+
 ## package (includes legacy `venture` as `domain=startup`)
 
 **Generalized document-package generator** — **12-domain preset registry**: `startup` (the legacy `venture` blueprint) / generic / research / ai-adoption / legal* / saas / media / growth / career / learning / hiring* / local-gov*. Per-domain swap: directories, role→skill map, traceability anchor (F-/H-/UC-/R-/P-/E-/T-/LO-/I-), risk gates (*=mandatory). Single Phase 0-6 engine. Depth 5-28 agents (`startup` tiers: lite 6-8, mvp(default) 14-18, raise 16-20, full 24-28). **Confirm full depth.**

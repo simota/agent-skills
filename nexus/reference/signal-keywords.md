@@ -79,6 +79,7 @@
 | `converge`, `iterate to rubric`, `generator-evaluator`, `evaluator loop`, `quality loop`, `iterate until accept`, `loop until it passes`, `converge to a quality bar` | `converge` (standalone, or `converge <recipe>` wrapping a generator; flatten rule for loop-recipes) |
 | `migrate`, `migrate everything`, `change without omission`, `もれなく`, `architecture change`, `framework migration`, `framework change`, `middleware swap`, `middleware change`, `mock to production`, `mock to prod`, `stub to real`, `change completeness`, `migrate the whole codebase` | `migrate` (case = arch \| framework \| middleware \| mock-to-prod; `case=lang` → `transmute`) |
 | `transmute`, `rewrite in`, `port to Rust`, `TS to Rust`, `Go to Rust`, `Python to Go`, `JS to TS`, `language rewrite`, `cross-language`, `rewrite in another language`, `idiomatic rewrite`, `differential parity` | `transmute` |
+| `clone`, `replicate`, `copy this product`, `clone this product`, `faithful copy`, `complete copy`, `reproduce the product`, `rebuild like <product>`, `make a copy of <product>`, `pixel-perfect clone`, `1:1 copy` | `clone` (faithful reproduction of an external product, parity-verified; black-box analog of `transmute`. `replicate` is an alias. **Bare `trace` deliberately excluded** — it routes to the `Trace` session-replay skill, not here; use `clone`/`replicate` for product copying) |
 
 ---
 
