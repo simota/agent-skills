@@ -12,6 +12,8 @@ Read this file before executing the `clone` Recipe. Phase contracts, the Parity 
 
 Use `clone` to **reproduce a whole product (or a self-contained product area) faithfully** from its observable surface — a legacy product being rebuilt on a new stack, an authorized reference implementation, a design you own, or an internal app whose source is lost. The defining trait: the target is treated as a **black box (or grey box)** — fidelity is *measured* against the original, not assumed.
 
+**Target platforms.** clone is **platform-agnostic on the observable surface** — `target_type` ∈ { **live-web**, **desktop** (macOS / Windows / Linux GUI app), **mobile** (native iOS/Android), **has-source**, **api-backed** }. The four Parity dimensions (visual / behavioral / feature / data) and the fidelity-over-faith principle are identical across platforms; only the **capture mechanism** changes (§2). Web and desktop are first-class peers — a desktop app's windows, menus, dialogs, and keyboard/pointer flows are captured and parity-verified the same way web screens/states are. For a desktop target the "screen" unit is a window/view/dialog state and the navigation graph spans menus, modals, and OS-level interactions.
+
 | Not this | Route to | Why |
 |----------|----------|-----|
 | Cross-language rewrite of **your own source** (TS→Rust) | `transmute` | White-box; parity oracle extracted *from* the source, not observed externally |
@@ -25,7 +27,7 @@ Use `clone` to **reproduce a whole product (or a self-contained product area) fa
 1. **Reproduce from evidence, not memory.** Every reproduced screen, flow, and behavior is grounded in a **captured artifact** (screenshot, recorded interaction, observed API response). "Rebuild what I remember of it" is rejected — capture is the entry condition for the spec (Phase 1 → Phase 2 gate).
 2. **Fidelity over faith.** The copy's match to the original is *proven* by diffing the rebuild against the Phase 2 parity baseline (visual / behavioral / feature / data), not asserted. A clone that "looks done" but was never diffed against the captured baseline is incomplete.
 
-Scale: 8–22 agents (capture-heavy), mid-to-high cost. **Confirm before launch when strategy = big-bang full clone** (whole product in one cutover).
+Scale: 8–24 agents (capture-heavy; desktop/robustness branches add capture agents), mid-to-high cost. **Confirm before launch when strategy = big-bang full clone** (whole product in one cutover).
 
 ---
 
@@ -38,38 +40,61 @@ Scale: 8–22 agents (capture-heavy), mid-to-high cost. **Confirm before launch 
 | **incremental-clone** (screen-by-screen) | Large product, live system | Reproduce one screen/flow at a time, each independently parity-gated | Low — each increment verifiable & shippable |
 | **big-bang full clone** | Small/self-contained product | Whole reproduction, single cutover | High — **requires user confirmation** |
 
-Capture-source bindings: **live web** = Vector/Voyager (crawl, screenshot, network observe) + Frame/Pixel (design extraction); **has Figma** = Frame (design context); **has source** = Lens (structure map); **mobile** = Snap/Voyager (native UI capture); **API-backed** = Schema (infer data model from observed responses).
+Capture-source bindings by `target_type`: **live web** = Vector/Voyager (crawl, screenshot, network observe) + Frame/Pixel (design extraction); **desktop** = Wield (macOS app automation via AppleScript/JXA — drive menus/windows/dialogs, capture per-window screenshots, script non-scriptable apps via System Events) + Pixel (visual diff of captured windows); **has Figma** = Frame (design context); **has source** = Lens (structure map); **mobile** = Snap/Voyager (native UI capture); **API-backed** = Schema (infer data model from observed responses).
+
+> **Desktop capture coverage.** Wield covers **macOS** GUI automation/screenshot natively. **Windows/Linux** desktop GUI automation has no first-class skill in this roster — capture those via an external automation harness (e.g. the OS's accessibility/UI-automation API driven through a script the run shells out to) and feed the resulting screenshots/interaction logs into the same parity baseline; **mark the capture mechanism in the Fidelity Report provenance stamp** so the gap in tooling is explicit, never silent. Visual/behavioral parity downstream (Pixel/Voyager/Radar/Attest/judge) is platform-independent and unchanged.
+
+### 2a. Capture Robustness (live targets resist capture)
+
+A live target — web or desktop — actively impedes complete capture. Plan for these at Phase 0 and handle them in Phase 1; an incompletely captured surface yields a thin baseline (§3a coverage gate), so robustness failures are *capture-coverage* failures, not mere annoyances.
+
+| Obstacle | Handling |
+|----------|----------|
+| **Auth-gated screens** (login wall, role-gated views, paywalled states) | Capture under each required identity/role; enumerate auth'd-vs-anon and per-role states as distinct baseline entries. Credentials are run inputs, never hardcoded into the spec. |
+| **Anti-bot / rate-limiting** | Throttle the crawl to a polite rate, back off on 429/challenge responses, and prefer authenticated session capture over aggressive crawling. If capture is blocked, **degrade to manual/assisted capture for the blocked surface** and record it — do not infer the screen from memory. |
+| **CAPTCHA / interactive challenge** | Do not attempt to defeat it. Pause for human-in-the-loop capture of the gated surface, then resume. Mark any surface that could not be reached as a named coverage gap. |
+| **Dynamic / lazy-loaded / virtualized content** | Drive scroll/pagination/expansion fully before screenshotting; wait for network-idle and settled layout so the captured state is complete, not mid-load. |
+| **Ephemeral / session-scoped state** | Capture with a pinned account/seed so the state is reproducible; record the seed in the provenance stamp (§3b). |
 
 ---
 
 ## 3. Phase Contract (AUTORUN chain template)
 
 ```
-Phase 0 FRAMING        Nexus internal: detect (target_type: live-web|has-source|mobile|api), scope (whole|area),
-                       define what "complete copy" covers (visual ∧ behavioral ∧ feature ∧ data), capture feasibility.
+Phase 0 FRAMING        Nexus internal: detect (target_type: live-web|desktop|mobile|has-source|api), scope (whole|area),
+                       define what "complete copy" covers (visual ∧ behavioral ∧ feature ∧ data ∧ asset),
+                       capture feasibility + robustness obstacles (§2a), and record the CAPTURE PROVENANCE STAMP
+                       (target version/build, capture date, environment/OS, locale, pinned account/seed) → §3b.
                        Big-bang full clone → confirm with user.
-Phase 1 CAPTURE     ∥  Vector/Voyager[crawl UI, capture per-screen screenshots, observe network/API traffic]
+Phase 1 CAPTURE     ∥  Vector/Voyager[live-web: crawl UI, per-screen screenshots, observe network/API traffic]
+                       Wield[desktop: drive menus/windows/dialogs, per-window screenshots, script non-scriptable apps]
                        Frame/Pixel[extract design system: tokens, layout, components from screenshots/Figma]
                        Lens?[map current structure + public surface]            (if source available)
                        Schema?[infer data model + API contract from observed responses]  (if API-backed)
                        Echo/Trace?[walk the flows; session-replay behavior if logs exist]
                        PDM/Lens[enumerate the FULL feature inventory in scope]
-                       → output: capture corpus (screenshots + flow recordings + API shapes + feature list)
+                       Ink/Pixel?[extract or recreate brand assets — fonts, icons, images — record license posture]
+                       → output: capture corpus (screenshots + flow recordings + API shapes + feature list + asset set),
+                         each artifact tagged with the provenance stamp
 Phase 2 SPEC+BASELINE  Scribe/Accord[author reconstruction spec from the capture corpus + acceptance criteria]
                        → establish the PARITY BASELINE = golden reference set (reference screenshots per screen/state,
-                         recorded behavior fixtures, API contract, feature checklist) = the fidelity oracle
-                       → CAPTURE COMPLETENESS GATE (§3a)
+                         recorded behavior fixtures, API contract, feature checklist, asset manifest) = the fidelity oracle,
+                         stamped with its capture provenance (§3b)
+                       → CAPTURE COMPLETENESS GATE (§3a) + PROVENANCE & DRIFT GATE (§3b)
 Phase 3 ARCHITECT      Magi[arbitrate capture strategy + CAPTURE GATE]
                        Atlas?[clone architecture + module boundaries]   Muse?[design tokens from extracted design]
-                       → confirm Parity Map (visual / behavioral / feature / data) targets for this product
+                       → confirm Parity Map (visual / behavioral / feature / data / asset) targets for this product
 Phase 4 REBUILD        Forge→Artisan/Builder[reproduce screens + logic on the target stack]
                        Pixel[pixel-accurate reproduction from reference screenshots]
                        +gateway?/schema?[API/DB boundaries]   +flow?[animations/interactions]
                        rally[engine COMPETE] for high-fidelity-critical screens → variants, pick closest
-Phase 5 PARITY VERIFY ∥ Pixel/Voyager[VISUAL parity: screenshot diff vs Phase 2 reference set, per screen/state]
-                       Radar/Voyager[BEHAVIORAL parity: flow + state-transition + edge-case fixtures]
+Phase 5 PARITY VERIFY ∥ Pixel/Voyager[VISUAL parity: differential diff vs Phase 2 reference set, per screen/state — §3c engine]
+                       Radar/Voyager[BEHAVIORAL parity: flow + state-transition + edge-case fixtures, canonicalized]
                        Attest[FEATURE parity: coverage vs the Phase 1 feature inventory]
+                       Pixel/Frame[ASSET parity: fonts/icons/images vs the asset manifest; recreate-vs-reuse honored]
                        judge[FIDELITY review: faithful copy vs approximate look-alike?]
+                       → DRIFT RE-CHECK (§3b): spot-recapture a sample of target screens; if the live target diverged
+                         from the stamped baseline, the baseline is stale → re-capture, do not "fix" the clone to a moved target
                        → loop to Phase 4 on any dimension below its parity threshold (cap 3 cycles)
 Phase 6 SHIP           Guardian[PR with Fidelity Report + per-screen parity scores + incremental scope]
 ```
@@ -87,6 +112,31 @@ Parity is only as strong as the baseline. A green visual diff on three captured 
 
 **Gate:** Phase 5 parity verification runs against a baseline that has passed both gates. A baseline that is landing-page-only OR compares raw against dynamic content is rejected — fix it in Phase 2, do not proceed to trust it.
 
+### 3b. Provenance & Drift Gate (the baseline is a snapshot of a moving target)
+
+A live target is not frozen — it ships new versions, A/B-rotates layouts, and refreshes content while the clone is being built. A baseline captured on day 1 and trusted on day 30 silently compares the clone against a target that no longer exists. Two controls keep the baseline honest:
+
+- **Provenance stamp** — every capture artifact and the parity baseline as a whole carry a stamp: **target version/build identifier (or capture date if unversioned), capture environment/OS, browser or app version, locale, viewport/window size, and the pinned account/seed** used. The stamp is the answer to "what exactly did we copy, and from when." It is recorded in Phase 0, attached in Phase 1, and surfaced in the Fidelity Report (§8). A baseline without a provenance stamp is rejected at the Phase 2 gate.
+- **Drift re-check** — before SHIP (Phase 5) and at the start of any resumed run, **spot-recapture a sample of baseline screens/flows from the live target and diff them against the stamped baseline**. If the target has drifted beyond the fidelity tolerance, the baseline is stale: **re-capture the drifted surface and re-establish the baseline — never silently re-tune the clone toward a target that moved**, because that produces a copy that matches neither the captured baseline nor the current target. For long incremental-clone runs, re-stamp per increment so each shippable PR states the target version it was verified against.
+
+**Gate:** a baseline with no provenance stamp, or a SHIP whose drift re-check was skipped, is rejected. Drift status (no-drift / re-captured / deferred) appears in the Fidelity Report.
+
+### 3c. Differential Parity Engine (how parity is actually computed)
+
+"Diff the rebuild against the baseline" is the contract; this is the mechanism, shared in spirit with `transmute` §3a (which extracts its oracle from source rather than by observation — same differential discipline, different oracle origin). Each dimension is computed by an explicit, reproducible comparator, not eyeballed:
+
+| Dimension | Comparator | Pass condition |
+|-----------|-----------|----------------|
+| **Visual** | Per-screen/state image diff: align → mask declared dynamic regions → normalize fonts/AA → compute SSIM + per-pixel delta against the reference artifact | SSIM ≥ declared threshold ∧ pixel-delta ≤ threshold, on the *significant* (unmasked) regions |
+| **Behavioral** | Replay each recorded flow against the clone; assert the canonicalized observable result (DOM/UI state, navigation target, validation message) equals the fixture | 100% of recorded flows green after canonicalization |
+| **Feature** | Attest coverage matrix: each inventory feature → present ∧ reachable ∧ exercised in the clone | 100% covered or explicitly deferred (named) |
+| **Data / API** | Structural diff of clone responses vs observed-contract shapes (field set, types, nesting); semantics spot-checked on sampled records | shape-equivalent; sampled semantics match |
+| **Asset** | Per-asset diff vs the asset manifest: fonts (family/metrics), icons/images (perceptual hash within tolerance, or confirmed faithful recreation) | each asset matches within tolerance, or is a declared faithful recreation |
+
+**Non-determinism canonicalization (both sides, before comparing).** A faithful clone of a *dynamic* product must not be failed by the product's own variance. For each dimension declare significant-vs-incidental and canonicalize the incidental on both baseline and clone before diffing: **mask dynamic regions** (clocks, feeds, randomized recommendations, ad slots, user-specific data), **freeze clock/seed/locale**, **pin the account**, **normalize ordering** of order-incidental collections, and **disable or mid-freeze animations** for static-frame comparison (verify motion separately via `+Flow`). A clone of a randomized feed is faithful when its *feed mechanism* reproduces the original's behavior, not when a single frame matches byte-for-byte — compare the mechanism, not a frozen sample of its output. Without canonicalization the differential either spuriously fails on incidental variance or masks real divergence under noise (the same failure pair as transmute's determinism contract).
+
+**Automated regression.** The Phase 5 comparators are emitted as a re-runnable parity harness (screenshot-diff suite + behavior fixtures + feature matrix), so a later change to the clone — or a later target re-capture — re-verifies parity without re-deriving the baseline. For incremental-clone, each increment's harness accretes into a growing regression suite.
+
 ---
 
 ## 4. Parity Map
@@ -95,10 +145,11 @@ The core knowledge of this recipe. Magi confirms the relevant dimensions in Phas
 
 | Dimension | What "faithful" means | Captured by (Phase 1) | Verified by (Phase 5) | Threshold (default) |
 |-----------|----------------------|------------------------|------------------------|---------------------|
-| **Visual** | Layout, spacing, color, typography, component look, responsive breakpoints match per screen/state | Vector/Voyager screenshots; Frame/Pixel design tokens | Pixel/Voyager screenshot diff (masked, normalized) | ≥ declared SSIM / ≤ pixel-delta per screen |
-| **Behavioral** | Interactions, navigation, state transitions, validation, edge-case responses behave identically | Echo/Trace flow recordings; Voyager interaction traces | Radar/Voyager behavior fixtures | 100% of recorded flows green |
+| **Visual** | Layout, spacing, color, typography, component look, responsive breakpoints / window states match per screen/state | Vector/Voyager screenshots (web); Wield per-window screenshots (desktop); Frame/Pixel design tokens | Pixel/Voyager screenshot diff (masked, normalized) — §3c | ≥ declared SSIM / ≤ pixel-delta per screen |
+| **Behavioral** | Interactions, navigation, state transitions, validation, edge-case responses behave identically | Echo/Trace flow recordings; Voyager (web) / Wield (desktop) interaction traces | Radar/Voyager behavior fixtures (canonicalized) | 100% of recorded flows green |
 | **Feature** | Every feature in the inventory is present and reachable | PDM/Lens feature inventory | Attest coverage vs inventory | 100% covered or explicitly deferred |
 | **Data / API** | Data model shape, API contract, and field semantics match the observed surface | Schema inference from observed responses | contract/shape diff (gateway/schema) | shape-equivalent; semantics spot-checked |
+| **Asset** | Fonts, icons, images, and other brand assets match — reused where licensed, faithfully recreated otherwise | Ink/Pixel asset extraction → asset manifest (with license posture) | Pixel/Frame per-asset diff (perceptual hash / font metrics) — §3c | each asset within tolerance or a declared faithful recreation |
 
 > Reproduce *idiomatically on the target stack* — a faithful copy is faithful in **observable result**, not in internal implementation. Re-expressing the original's UI in the target framework's idioms is correct; transliterating its internal code (when source exists) is not the goal — `judge` Phase 5 distinguishes faithful-result from cargo-cult-internals.
 
@@ -116,10 +167,17 @@ The core knowledge of this recipe. Magi confirms the relevant dimensions in Phas
 | **Feature drop-out** (a screen built, a feature silently lost) | Attest feature-parity coverage vs the Phase 1 inventory (Phase 5) |
 | **"Reproduce everything at once" risk blindness** | Magi capture-strategy gate (Phase 3) prefers incremental-clone; big-bang needs user confirm |
 | **Internal transliteration instead of idiomatic re-expression** | Parity Map "observable result, not internals" + judge review |
+| **Stale baseline** (target shipped a new version mid-clone; clone verified against a target that no longer exists) | §3b provenance stamp + pre-SHIP drift re-check; re-capture on drift, never re-tune toward a moved target |
+| **Capture blocked** (auth wall / anti-bot / CAPTCHA → surface never captured, inferred from memory) | §2a robustness handling: per-role/auth capture, polite throttle + backoff, human-in-the-loop for challenges; blocked surface named as a coverage gap, never reconstructed from memory |
+| **Spurious diff on dynamic content** (feeds, recommendations, timestamps, A/B, ad slots fail an exact diff) | §3c non-determinism canonicalization: mask dynamic regions, freeze clock/seed/locale, compare the mechanism not a frozen sample |
+| **Asset infidelity** (placeholder fonts/icons, wrong logo, or unlicensed reuse of copyrighted assets) | Asset Parity dimension + asset manifest with license posture; reuse where licensed, faithfully recreate otherwise |
+| **Desktop surface treated as second-class** (only web capture wired, native windows/menus/dialogs missed) | `target_type: desktop` first-class: Wield capture (macOS) / external UI-automation harness (Win/Linux) into the same baseline; coverage gate spans windows/menus/modals/OS interactions |
 
 ## 6. Add-ons
 
 - `+Snap` — native iOS UI capture/verification when the target is a mobile app.
+- `+Wield` — macOS desktop-app capture/automation when `target_type = desktop`.
+- `+Ink` — recreate brand assets (icons/illustrations) when the original's assets cannot be licensed for reuse.
 - `+Flow` — when motion/animation fidelity is part of "complete copy".
 - `+Schema` / `+Tuner` — when the data layer and query behavior must be reproduced, not just the UI.
 - `+Seek` — when search/ranking behavior is a reproduced feature.
@@ -135,9 +193,10 @@ Reproducing an EXISTING product faithfully (parity-verified)?
         | net-new design inspired by a reference? → feature/apex | single mockup→code? → pixel
   YES → target is mobile-native from a Web app? → PORTING (Port→Native)
         single Figma source, no full rebuild? → frame
-        otherwise (whole product, fidelity-verified) → clone
+        otherwise (whole product, fidelity-verified — web | desktop | mobile | api) → clone
+              target_type = desktop? → Wield capture (macOS) / external UI-automation harness (Win/Linux), same Parity Map
 ```
 
 ## 8. Output
 
-`NEXUS_COMPLETE` with the standard `## Nexus Execution Report` plus a **Fidelity Report**: per-screen visual parity scores (SSIM/pixel-delta vs threshold), behavioral-fixture pass rate, **capture coverage (screens/states/flows captured vs enumerated, with any deferred gaps named)**, **fidelity-tolerance contract (which regions/aspects were masked vs compared raw)**, feature-parity coverage vs inventory, fidelity-review verdict, and incremental scope (which screens reproduced this PR, which remain). For incremental-clone runs, each increment is a separate shippable PR.
+`NEXUS_COMPLETE` with the standard `## Nexus Execution Report` plus a **Fidelity Report**: **provenance stamp (target version/build, capture date, environment/OS, app/browser version, locale, pinned account/seed) + capture mechanism per surface (e.g. Wield/macOS, external harness/Win)**, **drift status (no-drift / re-captured / deferred)**, per-screen visual parity scores (SSIM/pixel-delta vs threshold), behavioral-fixture pass rate, **capture coverage (screens/states/flows/windows captured vs enumerated, with any deferred or capture-blocked gaps named)**, **fidelity-tolerance + non-determinism canonicalization contract (which regions/aspects were masked/frozen vs compared raw)**, feature-parity coverage vs inventory, **asset-parity results (per-asset match/recreation + license posture)**, fidelity-review verdict, and incremental scope (which screens reproduced this PR, which remain — each increment re-stamped with the target version it was verified against). For incremental-clone runs, each increment is a separate shippable PR carrying its own provenance stamp + accreted parity-regression harness.
