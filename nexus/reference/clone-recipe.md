@@ -2,7 +2,7 @@
 
 > `/nexus clone` — reproduce an existing product **completely and faithfully** by reverse-engineering its observable surface (UI / behavior / features / data shape), synthesizing a reconstruction spec, rebuilding it, and **verifying the copy against the original by differential parity** — not by assertion.
 
-Read this file before executing the `clone` Recipe. Phase contracts, the Parity Map, capture-strategy selection, and failure escalation are defined here.
+Read this file before executing the `clone` Recipe. Phase contracts, the **Phase 0.1 interactive Stack Dialogue** (§3·0), the Parity Map, capture-strategy selection, and failure escalation are defined here. The **Phase 0.5 web research sweep** that grounds fidelity before capture is specified in `reference/research-grounding.md`.
 
 > **Naming note.** The Recipe subcommand `clone` (alias `replicate`) is distinct from the **`Trace` skill** (session-replay analysis) that this Recipe *spawns* in Phase 1. "Clone the product" = the Recipe; "Trace skill" = one capture tool inside it. Bare `trace` deliberately does **not** route to this Recipe (it reaches the Trace skill) — do not conflate them.
 
@@ -27,7 +27,9 @@ Use `clone` to **reproduce a whole product (or a self-contained product area) fa
 1. **Reproduce from evidence, not memory.** Every reproduced screen, flow, and behavior is grounded in a **captured artifact** (screenshot, recorded interaction, observed API response). "Rebuild what I remember of it" is rejected — capture is the entry condition for the spec (Phase 1 → Phase 2 gate).
 2. **Fidelity over faith.** The copy's match to the original is *proven* by diffing the rebuild against the Phase 2 parity baseline (visual / behavioral / feature / data), not asserted. A clone that "looks done" but was never diffed against the captured baseline is incomplete.
 
-Scale: 8–24 agents (capture-heavy; desktop/robustness branches add capture agents), mid-to-high cost. **Confirm before launch when strategy = big-bang full clone** (whole product in one cutover).
+Scale: 8–24 agents (capture-heavy; desktop/robustness branches add capture agents; +1–2 for the Phase 0.5 research sweep), mid-to-high cost. **Confirm before launch when strategy = big-bang full clone** (whole product in one cutover).
+
+> **Stack-first, then research-grounded capture.** Two front-loaded foundations precede capture. (1) **Stack Dialogue** (Phase 0.1, §3·0) — clone opens with a thorough *interactive* dialogue that locks the **Stack Decision Record** (the target rebuild stack, per layer, with stack-vs-fidelity tradeoffs made explicit) before any capture/build; this is a **contract-level checkpoint AUTORUN cannot skip**. (2) **Research-grounded capture** — a thorough **web evidence sweep** (Phase 0.5, `reference/research-grounding.md`) mines first-party docs, design systems, API references, and changelogs into a cited **Evidence Ledger** that supplies the completeness-gate denominator, exact published values, and version/drift signals. Research raises fidelity **without displacing the oracle** — captured artifacts stay authoritative; a web claim is a lead to confirm, never a substitute (§3a coverage gate, §3b drift). `stack=` pre-supplies the SDR (dialogue confirms rather than explores).
 
 ---
 
@@ -66,6 +68,19 @@ Phase 0 FRAMING        Nexus internal: detect (target_type: live-web|desktop|mob
                        capture feasibility + robustness obstacles (§2a), and record the CAPTURE PROVENANCE STAMP
                        (target version/build, capture date, environment/OS, locale, pinned account/seed) → §3b.
                        Big-bang full clone → confirm with user.
+Phase 0.1 STACK    ⟷   INTERACTIVE, contract-level (AUTORUN cannot skip — §3·0). Nail the TARGET REBUILD STACK with the
+   DIALOGUE            user FIRST, before any capture/build: quick-probe the original's observable stack fingerprint
+                       (headers / JS+CSS bundle signatures / API style) ‖ Lens/Atlas read the user's existing repo +
+                       team/infra/license constraints → drive a LAYERED AskUserQuestion dialogue (runtime/lang →
+                       frontend → styling/tokens → state → backend → data/ORM → API → build/test → deploy/infra),
+                       surfacing every STACK-vs-FIDELITY tradeoff → lock the STACK DECISION RECORD (SDR).
+                       `stack=` arg pre-supplied → confirm-not-explore.
+Phase 0.5 RESEARCH  →  deep-research[+Compete?][thorough web EVIDENCE SWEEP: T1 docs/design-system/API-ref/changelog →
+   SWEEP                T4 community → cited, verified EVIDENCE LEDGER] → reference/research-grounding.md
+                       → Declared inventory = the Capture Completeness Gate denominator (§3a)
+                       → Exact-value catalog feeds the fidelity-tolerance contract (§3a) + Phase 4 precision
+                       → Version & drift signals sharpen the provenance stamp (§3b)
+                       (research-first, capture-authoritative: a web claim is a lead to CONFIRM by capture, never the oracle)
 Phase 1 CAPTURE     ∥  Vector/Voyager[live-web: crawl UI, per-screen screenshots, observe network/API traffic]
                        Wield[desktop: drive menus/windows/dialogs, per-window screenshots, script non-scriptable apps]
                        Frame/Pixel[extract design system: tokens, layout, components from screenshots/Figma]
@@ -82,7 +97,8 @@ Phase 2 SPEC+BASELINE  Scribe/Accord[author reconstruction spec from the capture
                          stamped with its capture provenance (§3b)
                        → CAPTURE COMPLETENESS GATE (§3a) + PROVENANCE & DRIFT GATE (§3b)
 Phase 3 ARCHITECT      Magi[arbitrate capture strategy + CAPTURE GATE]
-                       Atlas?[clone architecture + module boundaries]   Muse?[design tokens from extracted design]
+                       Atlas?[clone architecture + module boundaries — DESIGNED WITHIN THE LOCKED SDR (§3·0)]
+                       Muse?[design tokens from extracted design, expressed in the SDR's styling system]
                        → confirm Parity Map (visual / behavioral / feature / data / asset) targets for this product
 Phase 4 REBUILD        Forge→Artisan/Builder[reproduce screens + logic on the target stack]
                        Pixel[pixel-accurate reproduction from reference screenshots]
@@ -101,13 +117,42 @@ Phase 6 SHIP           Guardian[PR with Fidelity Report + per-screen parity scor
 
 **Parallelism:** Phase 1 capture branches and Phase 5 verifiers run concurrently (hub-spoke, no shared mutable state). Phase 4 screens may parallelize under `isolation: worktree` when incremental-clone splits the rebuild into independent screens/flows.
 
-**Checkpoint-resume:** ≥4 phases → persist the Phase 1 capture corpus, Phase 2 parity baseline, and per-screen Phase 4 outputs at boundaries so an interrupted run resumes from the last completed screen.
+**Checkpoint-resume:** ≥4 phases → persist the **Phase 0.1 SDR**, the Phase 1 capture corpus, Phase 2 parity baseline, and per-screen Phase 4 outputs at boundaries so an interrupted run resumes from the last completed screen.
+
+### 3·0. Stack Dialogue Gate (Phase 0.1 — interactive, contract-level)
+
+A clone rebuilds the target on a **new stack**, and that stack is the foundation every downstream phase sits on. It is largely the **user's decision** — driven by team skills, an existing codebase to rebuild into, infra, and licensing — not something Nexus may silently assume. So clone opens with a thorough **interactive dialogue** that locks the **Stack Decision Record (SDR)** before any capture-heavy or build work. This is the one place clone is human-in-the-loop; the checkpoint is **contract-level — AUTORUN_FULL cannot skip it** (mirroring `spec`'s contract-level checkpoints), because rebuilding on the wrong stack is expensive and hard to reverse (the "ambiguous + irreversible → ask" rule). The rest of clone proceeds per Mode; only this gate is mandatory-interactive.
+
+**Inputs gathered first (cheap, before asking):**
+- **Original stack fingerprint** — observable hints of what the target is built with: response headers, JS framework signatures, bundle analysis, CSS-framework markers, API style. A **lead, not a mandate** — clone reproduces the *observable surface, not the internals* (Parity Map §4), so you need not match the original's stack; the fingerprint just informs the option set and flags where matching vs diverging affects fidelity.
+- **Host-side constraints** — when rebuilding into/alongside an existing codebase, Lens/Atlas map the user's current stack, conventions, and team-standard libraries; these bound the viable choices and become defaults the dialogue confirms rather than re-litigates.
+
+**Layered decision checklist** — each a structured `AskUserQuestion`, thorough (every layer resolved, not a single "what stack?" question):
+
+| Layer | Decision locked |
+|-------|-----------------|
+| Runtime / language | e.g. Node/Deno/Bun, TS/JS, Python, Go, … + version floor |
+| Frontend framework | React/Vue/Svelte/Solid/none + SSR/SPA/MPA + meta-framework (Next/Nuxt/…) |
+| Styling & design tokens | Tailwind / CSS Modules / CSS-in-JS / vanilla + the token system Muse will target |
+| State management | built-in / Redux/Zustand/Pinia/signals / server-state lib |
+| Backend framework | the API/server stack (or "static / BaaS / none") |
+| Data layer | DB engine + ORM/query layer + migration tool |
+| API style | REST / GraphQL / RPC — matched to the observed contract or deliberately re-shaped |
+| Build tooling + package manager | Vite/Webpack/Turbopack/…, npm/pnpm/yarn/bun |
+| Test stack | unit/component/E2E frameworks (what Radar/Voyager will author against) |
+| Deployment target / infra | where the clone runs (constrains runtime, build output, env) |
+
+**Stack-vs-fidelity tradeoff rule (the load-bearing reason this is thorough, not a formality):** some stack choices **cap achievable parity** — reproducing a canvas/WebGL-rendered UI with the DOM, choosing a different font-rendering engine, or a different animation runtime can bound visual/behavioral fidelity. The dialogue must **surface each such tradeoff explicitly** so the user chooses knowingly; each accepted tradeoff is recorded in the SDR **with the parity ceiling it imposes**, and that ceiling flows into the Phase 2 fidelity-tolerance contract (§3a) — a stack-imposed parity limit is then a **declared tolerance, not a silent failure** at Phase 5.
+
+**Stack Decision Record (SDR)** — the locked deliverable: chosen stack per layer + rationale + host/infra/license constraints honored + stack-vs-fidelity tradeoffs accepted (each with its parity ceiling) + open stack risks. Stamped alongside the capture provenance (§3b).
+
+**Gate:** Phase 1 capture and Phase 4 rebuild may not begin until the SDR is **locked** (interactively, or supplied via `stack=` and confirmed). Phase 3 ARCHITECT designs strictly within the SDR; Phase 4 builds on it; Radar/Voyager author tests against its test stack. A clone that picked its stack implicitly — or let Phase 4 drift off the SDR — is rejected.
 
 ### 3a. Capture Completeness Gate (Phase 2 — the integrity backbone of "fidelity over faith")
 
 Parity is only as strong as the baseline. A green visual diff on three captured screens out of forty is *false confidence*, not a faithful copy. Phase 2 must clear two gates before Phase 5 may trust the baseline:
 
-- **Coverage gate** — the capture corpus must cover **every screen, every reachable state (empty / loading / error / populated / auth'd-vs-anon), and every flow** in scope, not just the landing page and the happy path. Drive the live target through its navigation graph (Voyager) and enumerate states explicitly; require the parity baseline to hold a reference artifact for each. If a screen or state was never captured, it cannot be parity-verified — **expand the corpus before Phase 5**, or mark the gap as out-of-scope in the Fidelity Report (never silently omit it).
+- **Coverage gate** — the capture corpus must cover **every screen, every reachable state (empty / loading / error / populated / auth'd-vs-anon), and every flow** in scope, not just the landing page and the happy path. The **denominator of "in scope" is the Phase 0.5 Declared inventory** (the researched feature/flow/state list from `reference/research-grounding.md`) unioned with what navigation-graph crawling (Voyager) discovers — so coverage is checked against a researched checklist, not guesswork. Require the parity baseline to hold a reference artifact for each. If a screen or state was declared (by research) or discovered (by crawl) but never captured, it cannot be parity-verified — **expand the corpus before Phase 5**, or mark the gap as out-of-scope in the Fidelity Report (never silently omit it).
 - **Fidelity-tolerance contract** — pixel-exact equality is the wrong bar for **incidental rendering variance**: anti-aliasing, font-hinting across platforms, dynamic/timestamped content, randomized feeds, A/B-varied layouts, animation mid-frames. For each dimension, declare what is **semantically significant vs incidental**, and set per-screen diff tolerances (mask dynamic regions, normalize fonts, freeze clock/seed, compare at a declared SSIM/pixel-delta threshold). Otherwise visual parity either **spuriously fails** on incidental variance or **masks real divergence** under a too-loose threshold.
 
 **Gate:** Phase 5 parity verification runs against a baseline that has passed both gates. A baseline that is landing-page-only OR compares raw against dynamic content is rejected — fix it in Phase 2, do not proceed to trust it.
@@ -159,7 +204,11 @@ The core knowledge of this recipe. Magi confirms the relevant dimensions in Phas
 
 | Failure | Mitigation |
 |---------|-----------|
+| **Wrong-stack rebuild** (clone built on an assumed stack the team can't maintain / that doesn't fit the existing codebase or infra) | Phase 0.1 Stack Dialogue Gate (§3·0): interactive, contract-level SDR locked before capture/build; AUTORUN cannot skip |
+| **Stack silently caps fidelity** (a rendering/animation/font-engine choice bounds parity, discovered only at Phase 5) | §3·0 stack-vs-fidelity tradeoff rule: each accepted tradeoff recorded with its parity ceiling → flows into the Phase 2 fidelity-tolerance contract as a *declared* tolerance |
 | **Memory-based rebuild** (reproduced from impression, not artifacts) | Phase 1 capture corpus is a mandatory entry condition for Phase 2 |
+| **Stumbled-onto capture / pixel-estimated values** (captured only the easy-to-reach surface; guessed values that are actually published) | Phase 0.5 research sweep (`reference/research-grounding.md`): Declared inventory = completeness-gate denominator; Exact-value catalog (T1 tokens/specs) confirmed into the baseline; capture stays authoritative |
+| **Doc-as-truth corruption** (rebuilt from an aspirational/stale doc never confirmed against the live surface) | research-first/capture-authoritative rule + per-claim verification status; a claim contradicted by capture flags stale/drift, capture wins |
 | **Thin baseline → false fidelity** (3 screens captured, 40 exist) | Phase 2 coverage gate: corpus must hold an artifact per screen/state/flow; expand or explicitly defer before Phase 5 trusts it |
 | **Spurious visual-diff failure on incidental variance** (AA, fonts, timestamps, A/B) | Phase 2 fidelity-tolerance contract: declare significant-vs-incidental, mask dynamic regions, normalize fonts, freeze clock/seed, compare at declared threshold |
 | **Approximate look-alike accepted as a copy** | `judge` fidelity review (Phase 5) + per-dimension thresholds block "close enough" |
@@ -199,4 +248,4 @@ Reproducing an EXISTING product faithfully (parity-verified)?
 
 ## 8. Output
 
-`NEXUS_COMPLETE` with the standard `## Nexus Execution Report` plus a **Fidelity Report**: **provenance stamp (target version/build, capture date, environment/OS, app/browser version, locale, pinned account/seed) + capture mechanism per surface (e.g. Wield/macOS, external harness/Win)**, **drift status (no-drift / re-captured / deferred)**, per-screen visual parity scores (SSIM/pixel-delta vs threshold), behavioral-fixture pass rate, **capture coverage (screens/states/flows/windows captured vs enumerated, with any deferred or capture-blocked gaps named)**, **fidelity-tolerance + non-determinism canonicalization contract (which regions/aspects were masked/frozen vs compared raw)**, feature-parity coverage vs inventory, **asset-parity results (per-asset match/recreation + license posture)**, fidelity-review verdict, and incremental scope (which screens reproduced this PR, which remain — each increment re-stamped with the target version it was verified against). For incremental-clone runs, each increment is a separate shippable PR carrying its own provenance stamp + accreted parity-regression harness.
+`NEXUS_COMPLETE` with the standard `## Nexus Execution Report` plus a **Fidelity Report**: the **Stack Decision Record** (locked stack per layer + rationale + constraints honored + stack-vs-fidelity tradeoffs accepted with their parity ceilings — §3·0), a **Research Grounding** subsection (Evidence Ledger size + per-tier source count, declared-vs-captured coverage delta, exact-values adopted, version/drift signals — per `reference/research-grounding.md` §6), **provenance stamp (target version/build, capture date, environment/OS, app/browser version, locale, pinned account/seed) + capture mechanism per surface (e.g. Wield/macOS, external harness/Win)**, **drift status (no-drift / re-captured / deferred)**, per-screen visual parity scores (SSIM/pixel-delta vs threshold), behavioral-fixture pass rate, **capture coverage (screens/states/flows/windows captured vs enumerated, with any deferred or capture-blocked gaps named)**, **fidelity-tolerance + non-determinism canonicalization contract (which regions/aspects were masked/frozen vs compared raw)**, feature-parity coverage vs inventory, **asset-parity results (per-asset match/recreation + license posture)**, fidelity-review verdict, and incremental scope (which screens reproduced this PR, which remain — each increment re-stamped with the target version it was verified against). For incremental-clone runs, each increment is a separate shippable PR carrying its own provenance stamp + accreted parity-regression harness.

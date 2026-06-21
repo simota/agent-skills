@@ -9,7 +9,7 @@ Engine-selection rule for orchestrators:
 | Orchestrator engine (hub) | Authoring protocol |
 |---------------------------|--------------------|
 | Claude Code | `_common/OPUS_48_AUTHORING.md` (P1–P11) |
-| **Codex CLI** | **this file (C1–C8)** |
+| **Codex CLI** | **this file (C1–C9)** |
 | Antigravity (`agy`) | best-effort; no dedicated protocol yet — apply C-principles by analogy, treat `/agent` constraints per `_common/CLI_COMPATIBILITY.md §3, §9` |
 
 ---
@@ -18,11 +18,11 @@ Engine-selection rule for orchestrators:
 
 The Nexus stack historically assumed Claude Code is the hub: the canonical spawn template is `Agent(...)`, model selection is `sonnet/opus/haiku`, parallelism is `run_in_background`, and the authoring protocol is Opus-4.8-specific (effort levels, P4 parallel triggers). None of those map cleanly to a Codex CLI hub, which spawns via `spawn_agent`/`wait_agent`, runs the latest model `gpt-5.5` throughout (see C3.0), has **no background-spawn primitive**, and gates fan-out via `agents.max_depth` rather than a soft "max 3" convention.
 
-When Codex drives the hub, apply the eight principles below instead of the Opus principles. They are grounded only in verified repository facts (`_common/CLI_COMPATIBILITY.md`, `nexus/SKILL.md` Execution Layers); items with no confirmed source are marked **未確認** and must not be speculatively completed.
+When Codex drives the hub, apply the nine principles below instead of the Opus principles. They are grounded in verified repository facts (`_common/CLI_COMPATIBILITY.md`, `nexus/SKILL.md` Execution Layers) and, for the config/prompting levers (C3, C7, C9), in the official Codex docs at `developers.openai.com/codex/*` and the OpenAI Codex prompting guide (verified 2026-06); items with no confirmed source are marked **未確認** and must not be speculatively completed.
 
 ---
 
-## The Eight Principles
+## The Nine Principles
 
 ### C1. Spawn-Depth Budget
 
@@ -32,6 +32,8 @@ Codex gates nested spawning with `agents.max_depth` (default `1` — root is dep
 - Before the first `spawn_agent` of a chain, verify both prereqs hold: `codex features list | grep multi_agent` → `true` (default since v0.115+), and `~/.codex/config.toml` has `[agents] max_depth >= 2`.
 - If `max_depth` is insufficient, fall back to internal execution and log the reason concretely (`Execution: internal (reason: agents.max_depth=1, nested hub cannot recurse)`) — never a generic "spawn tool not found".
 - Treat depth as the real fan-out governor; the `_common/SUBAGENT.md` "max 3 parallel" convention is a Claude soft-cap, not the Codex limit.
+- Tune the fan-out envelope with `[agents] max_threads` (concurrent workers, default `6`), `max_depth` (nesting), and `job_max_runtime_seconds`. For large homogeneous sweeps prefer the built-in **`spawn_agents_on_csv`** batch tool (`csv_path` + `{column}`-templated `instruction` + `output_schema` + `max_concurrency`; each worker reports once via `report_agent_job_result`) over hand-rolled per-item spawns. Built-in roles: `default`, `worker` (execution), `explorer` (read-heavy). [Verified 2026-06 — developers.openai.com/codex/subagents, /config-advanced.]
+- **Version caveat:** the subagents docs now state subagents are enabled by default (no flag), while older `config-advanced`/KB sources describe `[features] multi_agent` as an off-by-default experimental flag. This changed recently — confirm on the installed build via `/experimental` rather than assuming either state.
 
 ### C2. Synchronous Fan-Out / Join
 
@@ -79,12 +81,15 @@ For chains with 4+ steps (the SKILL checkpoint-resume threshold), continue an ex
 
 ### C7. Sandbox / Approval Posture
 
-Codex runs sandbox-on by default. An autonomous hub must set an approval policy consistent with the active Nexus mode.
+Codex runs sandbox-on by default. An autonomous hub must set an approval policy consistent with the active Nexus mode. Excessive per-action approval prompting is the **single biggest cause of lost autonomy** ("interrupts you forty times") — set the posture deliberately, do not leave the cautious default in an AUTORUN run. [Verified 2026-06 — developers.openai.com/codex/config-reference, /agent-approvals-security.]
 
 **Apply by:**
-- AUTORUN / AUTORUN_FULL → `codex exec --full-auto` (or equivalent config) so subagents proceed without per-action prompts.
-- Never use `--dangerously-bypass-approvals-and-sandbox` in production or untrusted workspaces; restrict to sandboxed/CI/authorized-dev contexts.
+- AUTORUN / AUTORUN_FULL → `approval_policy = "never"` + `sandbox_mode = "workspace-write"` in `config.toml` (or `-c` overrides) so subagents proceed without per-action prompts while writes stay confined to the workspace. (`--full-auto` is the legacy shortcut for this pairing and is now flagged **deprecated** in the CLI reference — prefer the explicit keys; the canonical key is `approval_policy` / `--ask-for-approval`, not the older `approval_mode` alias.)
+- To keep a safety gate without pausing for the human, route eligible approvals through the automated reviewer: `approvals_reviewer = "auto_review"` (vs `"user"`), or `approval_policy = { granular = { … } }` to auto-reject only high-risk categories.
+- Network is **off by default** under `workspace-write`; if the task needs installs/fetches, pre-grant `[sandbox_workspace_write] network_access = true` so it does not stall at the network boundary mid-run.
+- Never use `--dangerously-bypass-approvals-and-sandbox` (alias **`--yolo`**) in production or untrusted workspaces; restrict to sandboxed/CI/authorized-dev contexts.
 - Guided / Interactive modes keep the default per-action approval; do not silently widen it.
+- Known bug (track, don't rely on the per-session toggle): approval prompts can repeat even under auto-approve/`never`, notably in the VS Code extension (GitHub openai/codex #10187, #5038). The reliable mitigation is the config-level `never` + sandbox posture above.
 
 ### C8. AGENTS.md Authority
 
@@ -94,16 +99,28 @@ Codex reads `AGENTS.md` (`~/.codex/AGENTS.md` global, `<repo>/AGENTS.md` project
 - Resolve output-language and convention directives from `AGENTS.md`, not from a `CLAUDE.md` assumption.
 - When authoring cross-CLI skills, keep shared rules in `AGENTS.md` (per `_common/CLI_COMPATIBILITY.md §7`) so a Codex hub inherits them.
 
+### C9. Autonomy / Self-Driving Maximization
+
+The most common Codex underperformance is **premature stopping** — it analyzes instead of finishing, asks clarifying questions instead of acting, or hands back at the first uncertainty. Config (C3 effort, C7 approval) removes the *mechanical* interrupts; this principle removes the *behavioral* ones via the spawn prompt and `AGENTS.md`. These are the highest-leverage autonomy levers and several are **Codex-specific (opposite of general GPT-5 advice)**. [Verified 2026-06 — OpenAI Codex prompting guide + GPT-5 prompting guide (developers.openai.com/cookbook), /codex/learn/best-practices.]
+
+**Apply by:**
+- **Persistence directive** — include in the spawn prompt / `AGENTS.md`: *"Keep going until the query is completely resolved before yielding back. Never stop or hand back when you encounter uncertainty — research or deduce the most reasonable approach and continue."* Directly counters early termination.
+- **Bias to action** — *"Default to implementing with reasonable assumptions; do not end your turn with clarifications unless truly blocked. Decide the most reasonable assumption, proceed, and document it after acting."* Counters "asks instead of doing".
+- **⚠️ Remove preamble/plan/status-update prompting (Codex-specific).** On Codex models, prompting for an upfront plan, preambles, or running status updates *causes the model to stop abruptly* — the inverse of general GPT-5 guidance. If you ported a Claude/GPT-5 system prompt, strip these. This is the most-missed lever; it composes with C4 (loose-prompt spawning).
+- **Completion oracle ("Done when")** — give an explicit stop condition + self-validation loop (write/run tests, lint, types, confirm behavior matches request). Without it Codex "fixes one test and stops". Pairs with the recipe's own VERIFY gate.
+- **Raise effort for long-horizon work** — combine with C3: `model_reasoning_effort = "high"` (or `"xhigh"`) sustains multi-step autonomous runs; OpenAI's own guidance is to raise reasoning effort to increase tool-calling persistence and reduce clarifying questions.
+- Keep `AGENTS.md` short and command-exact (C8): paste runnable build/test/lint commands and concrete prohibitions so the agent self-validates rather than pausing to ask how.
+
 ---
 
 ## Per-Role Apply Matrix
 
 | Role | Critical (◎) | Recommended (○) |
 |------|---|---|
-| Orchestrators (Nexus, Orbit, Rally, Arena, Magi, Titan, Sherpa) | C1, C2, C6 | C3, C7 |
-| Builders / executors (Builder, Artisan, Forge, Native) spawned by a Codex hub | C4, C5 | C3 |
-| Investigators / reviewers spawned by a Codex hub | C4 | C6 |
-| Knowledge/Meta (Lore, Compass, Architect) authoring for Codex hubs | C3, C8 | C1 |
+| Orchestrators (Nexus, Orbit, Rally, Arena, Magi, Titan, Sherpa) | C1, C2, C6, C9 | C3, C7 |
+| Builders / executors (Builder, Artisan, Forge, Native) spawned by a Codex hub | C4, C5, C9 | C3, C7 |
+| Investigators / reviewers spawned by a Codex hub | C4 | C6, C9 |
+| Knowledge/Meta (Lore, Compass, Architect) authoring for Codex hubs | C3, C8 | C1, C9 |
 
 (◎ = address explicitly in SKILL.md; ○ = address if relevant)
 
@@ -113,7 +130,7 @@ C8 (AGENTS.md authority) applies to **every** role authored for a Codex hub.
 
 ## Validation Hooks
 
-When validating a skill's Codex-orchestrator path, use the eight checks below (Architect validation):
+When validating a skill's Codex-orchestrator path, use the nine checks below (Architect validation):
 
 - R-C1 Spawn-depth prereqs verified before fan-out; concrete internal fall-back reason
 - R-C2 Parallel branches use N `spawn_agent` → `wait_agent` join (no assumed background execution)
@@ -121,10 +138,11 @@ When validating a skill's Codex-orchestrator path, use the eight checks below (A
 - R-C4 Loose-prompt spawn (Role/Target/Output); no methodology padding
 - R-C5 Lazy-visibility handling (attempt call when prereqs hold)
 - R-C6 Checkpoint-resume via `send_input`/`resume_agent`/`close_agent` for 4+ step chains
-- R-C7 Approval posture matches the active Nexus mode; no prod bypass flags
+- R-C7 Approval posture matches the active Nexus mode (AUTORUN → `approval_policy="never"`+`workspace-write`, `network_access` pre-granted if needed); no prod bypass flags
 - R-C8 Rules resolved from `AGENTS.md`, not `CLAUDE.md`
+- R-C9 Autonomy directives present for self-driving runs: persistence + bias-to-action + **no preamble/plan/status prompting (Codex-specific)** + completion oracle; effort raised for long-horizon work
 
-Pass criterion: address all `◎` principles for the role; aim for ≥ 6/8 total.
+Pass criterion: address all `◎` principles for the role; aim for ≥ 7/9 total.
 
 ---
 
@@ -137,4 +155,4 @@ In a SKILL.md:
   Codex CLI hub → `_common/CODEX_ORCHESTRATION.md` (apply C[X], C[Y] for this role).
 ```
 
-Cite by ID (C1–C8); let this file be the single source of truth. Do not duplicate principle text into individual SKILL.md files.
+Cite by ID (C1–C9); let this file be the single source of truth. Do not duplicate principle text into individual SKILL.md files.
