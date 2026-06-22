@@ -23,38 +23,79 @@ A user has a feature idea — possibly vague ("I want notifications") — and wa
 `FRAME → EXPAND → CHALLENGE → SHAPE → SPECIFY → LOCK`
 
 ### Phase 0 — FRAME (problem before solution)
-Establish the shared problem statement **before** any option generation. Plea[claude latent-needs/pain-extraction] surfaces the real job-to-be-done; +Field[claude user-research grounding] when research data exists; +Cast[claude persona] when the audience is unclear. Nexus drives Socratic clarification with the user: who is this for, what job does it do, what does success look like, what is explicitly out of scope, what constraints (tech / time / compliance) bound it.
-- **Checkpoint (mandatory):** present a 3-5 line problem statement; the user confirms or corrects it. Option generation **cannot start** until the problem statement is confirmed. (Prevents "spec a half-baked idea".)
+Establish the shared problem statement **before** any option generation. Plea[claude latent-needs/pain-extraction] surfaces the real job-to-be-done; +Field[claude user-research grounding] when research data exists; +Cast[claude persona] when the audience is unclear. **+Lens[claude reuse-scan] on an existing codebase (skip greenfield):** before fixing the problem, survey what already ships — does a comparable feature/module/pattern already exist, which assets are reusable, and what technical constraints (current stack, data model, integration points) bound the solution. This grounds the spec in the real codebase and prevents an out-of-context spec that re-derives shipped code. Nexus drives Socratic clarification with the user: who is this for, what job does it do, what does success look like, what is explicitly out of scope, what constraints (tech / time / compliance) bound it.
+- **Checkpoint (mandatory):** present a 3-5 line problem statement (carrying any reuse/constraint findings from Lens); the user confirms or corrects it. Option generation **cannot start** until the problem statement is confirmed. (Prevents "spec a half-baked idea".)
+- **Draft init:** on problem-statement confirmation, write the initial `docs/specs/<slug>.draft.md` (status `draft`, L0 Vision + reuse/constraint findings filled). See **Draft persistence & resume**.
 
 ### Phase 1 — EXPAND (diverge)
 Generate the option space. Riff[claude Expand/Propose modes — iterative dialogue] ‖ Flux[claude challenge-assumptions / cross-domain reframes]. Produce **3-5 candidate directions**, each with a one-line rationale and rough shape. +Compete[claude+WebSearch] when market/differentiation framing matters.
-- **Checkpoint:** present the candidates; the user reacts, eliminates, combines, or adds. Expect **multiple turns** here — this is the divergent heart of the dialogue. Do not converge prematurely.
+- **Checkpoint:** present the candidates; the user reacts, eliminates, combines, or adds. Expect **multiple turns** here — this is the divergent heart of the dialogue. Do not converge prematurely. On checkpoint pass, append the surviving candidates to the draft.
 
 ### Phase 2 — CHALLENGE (stress-test + converge)
 Narrow to ONE direction *with the user*. Magi[claude multi-perspective necessity/trade-off arbitration] + Void[claude subtract scope / YAGNI] + Ripple[claude feasibility/impact] + Omen[claude pre-mortem on the leading candidate when stakes are high]. Each surfaces a distinct pressure: is it necessary, is it over-scoped, is it feasible, how does it fail.
-- **Checkpoint (mandatory):** the user makes the **explicit pick** of the single direction to specify. Carry forward rejected directions as recorded "considered but rejected" so the dialogue does not re-derive them.
+- **Checkpoint (mandatory):** the user makes the **explicit pick** of the single direction to specify. Carry forward rejected directions as recorded "considered but rejected" so the dialogue does not re-derive them. Record the pick and the considered-but-rejected list to the draft.
 - **Convergence check:** before looping back to EXPAND, Nexus asks "are we converging, or circling?" If circling ≥ 2 rounds with no new information, offer to (a) lock the leading candidate, or (b) park the disagreement as an Open Question and proceed. Never loop indefinitely.
 
 ### Phase 3 — SHAPE (proposal)
 Spark[claude feature-proposal] synthesizes the chosen direction into a structured proposal: problem → proposed solution → in-scope → out-of-scope → assumptions → open questions. +Rank[claude] when the direction decomposes into sub-features needing MoSCoW ordering.
-- **Checkpoint:** present the proposal; capture the user's edits section by section.
+- **Checkpoint:** present the proposal; capture the user's edits section by section, then write the agreed proposal sections to the draft.
 
 ### Phase 4 — SPECIFY (authoring with mandatory acceptance criteria)
-Accord[claude staged elaboration: L0 Vision → L1 Requirements → L2 Detail → L3 Acceptance Criteria] as the spine; +Scribe[claude PRD/SRS/HLD] for narrative spec sections; +Gateway/Schema[claude] when the spec needs API/data-model detail. Iterate with the user **section by section**.
-- **Lock precondition:** the spec is not lockable until it carries **testable L3 acceptance criteria** (the difference between a spec and a wish). +Attest[claude] to sanity-check that each AC is actually verifiable. +Echo[claude] for a quick usability sanity-pass on the shaped flow when there is a UI surface.
+Accord[claude staged elaboration: L0 Vision → L1 Requirements → L2 Detail → L3 Acceptance Criteria] as the spine; +Scribe[claude PRD/SRS/HLD] for narrative spec sections; +Gateway/Schema[claude] when the spec needs API/data-model detail. Author against the **Spec document template** (below) so the artifact is downstream-consumable, and iterate with the user **section by section**, persisting each agreed section to the draft.
+- Give every L3 acceptance criterion a **traceable ID (`AC-1`, `AC-2`, …)** mapped to the L1 requirement it verifies — this traceability is what the Spec Quality Gate's Completeness check verifies and what `feature`/`apex`/`orbit` consume as their verification contract.
+- **Lock preconditions (both mandatory, verified at LOCK):** (1) the spec carries **testable L3 acceptance criteria** (the difference between a spec and a wish) — +Attest[claude] sanity-checks that each AC is actually verifiable; (2) the spec **passes the Spec Quality Gate** (below). +Echo[claude] for a quick usability sanity-pass on the shaped flow when there is a UI surface.
 
 ### Phase 5 — LOCK (sign-off + persist, no code)
-Present the complete spec. Require the user's **explicit sign-off** ("lock it"). On sign-off:
-- Write the finalized spec to `docs/specs/<feature-slug>.md` (override path on request). Include an explicit **Open Questions / Deferred Decisions** section — parked items are recorded, never silently dropped.
+**Gate:** do not present for sign-off until **both lock preconditions pass** — testable L3 ACs (Attest) **and** the Spec Quality Gate (below). Then present the complete spec and require the user's **explicit sign-off** ("lock it"). On sign-off:
+- **Finalize the draft:** promote `docs/specs/<slug>.draft.md` to the locked `docs/specs/<feature-slug>.md` (status `locked`; override path on request), following the **Spec document template**. Include an explicit **Open Questions / Deferred Decisions** section — parked items (including any Quality-Gate findings downgraded rather than fixed) are recorded, never silently dropped. Archive or remove the `.draft.md` once promoted.
 - **Build-path selection (mandatory checkpoint):** before recommending a handoff, ask the user **how** they want the locked spec built. Present the two autonomous build paths as the headline choice, with the supervised recipes as fallbacks:
-  - **orbit loop** — turn the spec into a `nexus-autoloop` runner: the spec's L3 acceptance criteria become the loop's completion contract (machine-checkable DONE gate), with operation contract, resumable state, and recovery. Pick when the build is **long-running / unattended / multi-session**, benefits from checkpoint-resume, or the user wants a self-driving runner they can leave alone. Hands off to the `orbit` agent (loop generation) — see `/Users/simota/.claude/skills/orbit/SKILL.md`.
-    - **Executor-engine sub-choice (when orbit is picked):** select which CLI runs each loop iteration — **claude** (Claude Code; default, broadest tool/skill access), **codex** (Codex CLI; latest model `gpt-5.5`, requires `multi_agent=true` + `[agents] max_depth >= 2`), or **agy** (Antigravity CLI; headless needs a real pty + artifact capture). Orbit wires the choice into the generated runner's `EXEC_CMD` / engine flags — see `/Users/simota/.claude/skills/orbit/reference/executor-engines.md`. Pass the picked engine in the orbit handoff so the runner is generated for the right CLI; before handing off, note the engine's prereqs (Codex spawn-depth, agy pty) per `_common/CLI_COMPATIBILITY.md`. If unsure, default **claude**.
+  - **orbit loop** — turn the spec into a `nexus-autoloop` runner: the spec's L3 acceptance criteria become the loop's completion contract (machine-checkable DONE gate), with operation contract, resumable state, and recovery. Pick when the build is **long-running / unattended / multi-session**, benefits from checkpoint-resume, or the user wants a self-driving runner they can leave alone. Hands off to the `orbit` agent (loop generation) — see `~/.claude/skills/orbit/SKILL.md`.
+    - **Executor-engine sub-choice (when orbit is picked):** select which CLI runs each loop iteration — **claude** (Claude Code; default, broadest tool/skill access), **codex** (Codex CLI; latest model `gpt-5.5`, requires `multi_agent=true` + `[agents] max_depth >= 2`), or **agy** (Antigravity CLI; headless needs a real pty + artifact capture). Orbit wires the choice into the generated runner's `EXEC_CMD` / engine flags — see `~/.claude/skills/orbit/reference/executor-engines.md`. Pass the picked engine in the orbit handoff so the runner is generated for the right CLI; before handing off, note the engine's prereqs (Codex spawn-depth, agy pty) per `_common/CLI_COMPATIBILITY.md`. If unsure, default **claude**.
   - **apex** — autonomous end-to-end one-shot (design → risk gate → implement loop → AC-verify → ship) in a single sustained run. Pick when the build is **bounded, the user is present**, and one managed run can carry it to ship. Hands off to `/nexus apex`.
   - Decision aid — **orbit when unattended/resumable/goal-style autonomy is the point; apex when a single bounded present run suffices.** Both consume the locked spec's L3 ACs as their verification contract.
   - Fallbacks (supervised, not autonomous): `/nexus feature` (guided single build), `/nexus acceptance` (Tier-S proof-carrying merge), `/nexus essential`/`killer` if the verdict on *which* feature is still open.
 - Emit the chosen path as a **handoff recommendation, not execution** — `spec` itself **writes no code**; it is the upstream of the build recipes, mirroring `charter → enact`. (Under `AUTORUN_FULL`/`AUTORUN` the build-path selection is still a contract-level checkpoint and cannot be auto-picked.)
 
 ---
+
+## Draft persistence & resume
+
+`spec`'s value is a long multi-turn dialogue, so it must survive interruption. State is persisted **incrementally** to `docs/specs/<slug>.draft.md` — not only at the end.
+
+- **Incremental writes:** at each phase checkpoint pass, append/update the matching draft section (FRAME → L0 Vision + reuse/constraint findings; EXPAND → surviving candidates; CHALLENGE → pick + considered-but-rejected; SHAPE → proposal; SPECIFY → L1/L2/L3 + open questions). The draft also records a **current-phase marker** so a resume knows where to re-enter.
+- **Invocation forms:** `spec` (new dialogue) · `spec resume [<slug>]` (re-enter from the last checkpoint; `<slug>` omitted → most-recent draft) · `spec <slug-or-path>` (re-open a locked spec for revision — re-enters at SPECIFY and re-runs the lock preconditions before re-locking).
+- **Resume behavior:** read the draft, replay the current-phase marker, summarize decisions-so-far back to the user in 3-5 lines for confirmation, then continue the dialogue from that checkpoint. Never silently restart from FRAME.
+- **Finalize:** on LOCK the draft is promoted to the locked spec and the `.draft.md` archived/removed (Phase 5).
+
+## Spec Quality Gate (lock precondition)
+
+Before sign-off, the spec is adversarially self-reviewed **as an artifact** — Judge[claude spec-as-artifact review] (+Attest for AC verifiability, +Magi when requirements trade off). The gate scores five dimensions; each must pass, or its finding is explicitly downgraded into Open Questions (never silently passed):
+
+| Dimension | Question |
+|-----------|----------|
+| Ambiguity | Is any requirement/AC open to more than one reasonable interpretation? |
+| Completeness | Does every in-scope requirement have ≥ 1 L3 AC? (L1↔L3 coverage) |
+| Consistency | Do scope, requirements, and ACs contradict each other anywhere? |
+| Testability | Is every AC verifiable by a machine or a human (Attest)? |
+| Scope coherence | Are in-scope / out-of-scope collectively exhaustive and mutually exclusive? |
+
+A gate failure routes back to SPECIFY for a fix, or — with the user's agreement — the gap is parked in Open Questions. The gate is a **lock precondition**: AUTORUN cannot skip it.
+
+## Spec document template (`docs/specs/<slug>.md`)
+
+Both the draft and the locked spec follow one structure, so downstream `feature`/`apex`/`orbit` consume it without re-parsing prose:
+
+- **Metadata** — slug · feature title · status (`draft` | `locked`) · owner · build-path decision (filled at LOCK).
+- **L0 — Vision** — problem · audience (who) · job-to-be-done · success definition.
+- **L1 — Requirements** — functional + non-functional, each with a stable ID.
+- **L2 — Detail** — per component/team; API (Gateway) and data-model (Schema) detail when relevant.
+- **L3 — Acceptance Criteria** — testable, each with a traceable ID (`AC-n`) **mapped to the L1 requirement it verifies**.
+- **Scope** — in-scope / out-of-scope (collectively exhaustive, mutually exclusive).
+- **Considered but rejected** — directions dropped in CHALLENGE, one-line why (so revision/resume does not re-derive them).
+- **Open Questions / Deferred Decisions** — parked items, incl. downgraded Quality-Gate findings.
+- **Build-path decision** — orbit (engine: claude | codex | agy) | apex | fallback, recorded at LOCK.
+
+The L1↔L3 traceability (every requirement has an AC; every AC maps to a requirement) is exactly what the Quality Gate's Completeness check verifies and what the build recipes use as their verification contract.
 
 ## Boundaries
 
@@ -66,7 +107,7 @@ Present the complete spec. Require the user's **explicit sign-off** ("lock it").
 - **vs `accord` / `scribe` (agents)** — those *author* spec documents; `spec` drives the upstream discovery dialogue that decides *what* to specify, then uses them in Phase 4.
 
 ## Scale
-3-8 agents, multiplied by dialogue turns. Light by agent count, deliberately heavy by interaction turns — the value is in the conversation depth, not fan-out.
+3-9 agents (Lens reuse-scan in FRAME and Judge in the Quality Gate are conditional add-ons), multiplied by dialogue turns. Light by agent count, deliberately heavy by interaction turns — the value is in the conversation depth, not fan-out.
 
 ## Anti-patterns prevented
 1. **Spec a half-baked idea** — FRAME checkpoint requires a confirmed problem statement before options.
@@ -75,9 +116,15 @@ Present the complete spec. Require the user's **explicit sign-off** ("lock it").
 4. **Silently dropped open questions** — the locked spec carries an explicit Open Questions / Deferred Decisions section.
 5. **Jumping to build** — `spec` writes no code; it hands off to `feature`/`apex`/`acceptance`.
 6. **Single-pass spec masquerading as dialogue** — human-in-the-loop at every phase boundary; AUTORUN cannot skip the contract-level checkpoints.
+7. **Reinvent the wheel / out-of-context spec** — FRAME's Lens reuse-scan surfaces existing assets and codebase constraints before the problem is fixed (skipped only for greenfield).
+8. **Lost dialogue on interruption** — incremental draft persistence + `spec resume` re-enter from the last checkpoint instead of restarting.
+9. **Locking a low-quality spec** — the Spec Quality Gate (ambiguity / completeness / consistency / testability / scope) is a lock precondition AUTORUN cannot skip.
+10. **Downstream can't consume the spec** — the standard template + L1↔L3 AC traceability give `feature`/`apex`/`orbit` a machine-consumable verification contract.
 
 ## Add-ons
-+Field (real user-research grounding in FRAME), +Compete (market/differentiation framing in EXPAND), +Cast (persona grounding when the audience is unclear), +Rank (MoSCoW ordering of sub-features in SHAPE), +Omen (pre-mortem before LOCK on high-stakes specs), +Echo (usability sanity-pass when there is a UI surface), +Gateway/Schema (API/data-model detail in SPECIFY).
++Lens (reuse-scan + constraint grounding in FRAME on an existing codebase; skip greenfield), +Field (real user-research grounding in FRAME), +Compete (market/differentiation framing in EXPAND), +Cast (persona grounding when the audience is unclear), +Rank (MoSCoW ordering of sub-features in SHAPE), +Omen (pre-mortem before LOCK on high-stakes specs), +Echo (usability sanity-pass when there is a UI surface), +Gateway/Schema (API/data-model detail in SPECIFY), +Judge (spec-as-artifact adversarial review in the Spec Quality Gate).
 
 ## Chain template
-`FRAME (Plea +Field?/Cast? + Socratic dialogue) → ✓confirm-problem → EXPAND (Riff ‖ Flux +Compete?) → ✓steer → CHALLENGE (Magi + Void + Ripple +Omen?) → ✓pick + convergence-check → SHAPE (Spark +Rank?) → ✓edit → SPECIFY (Accord +Scribe?/Gateway?/Schema? + L3 ACs mandatory, Attest? +Echo?) → ✓iterate → LOCK (✓sign-off → write docs/specs/<slug>.md + Open Questions section → ✓build-path: orbit loop (✓engine: claude|codex|agy) ‖ apex (fallbacks: feature|acceptance|essential|killer) → recommend chosen handoff) [NO CODE]`
+`FRAME (Plea +Field?/Cast? +Lens?[reuse-scan/constraints] + Socratic dialogue) → ✓confirm-problem + draft-init → EXPAND (Riff ‖ Flux +Compete?) → ✓steer + draft → CHALLENGE (Magi + Void + Ripple +Omen?) → ✓pick + convergence-check + draft → SHAPE (Spark +Rank?) → ✓edit + draft → SPECIFY (Accord +Scribe?/Gateway?/Schema?, L3 ACs with traceable IDs mandatory, Attest? +Echo?) → ✓iterate + draft → LOCK (✓quality-gate: Judge spec-as-artifact +Attest +Magi? — ambiguity/completeness/consistency/testability/scope → ✓sign-off → promote draft to docs/specs/<slug>.md per template + Open Questions section → ✓build-path: orbit loop (✓engine: claude|codex|agy) ‖ apex (fallbacks: feature|acceptance|essential|killer) → recommend chosen handoff) [NO CODE]`
+
+Resumable: `spec resume [<slug>]` re-enters from the draft's current-phase marker; `spec <slug-or-path>` re-opens a locked spec for revision (re-enters at SPECIFY, re-runs the lock preconditions).
