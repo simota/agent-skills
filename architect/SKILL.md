@@ -123,7 +123,7 @@ Single source of truth for the canonical CREATE-mode phase chain. Each phase row
 
 | Phase | Purpose / Keep Inline | Read When |
 |-------|------------------------|-----------|
-| `UNDERSTAND` | Goal framing — category intent, collaboration surface, requirements | `agent-category-guide.md` for first-pass category choice; `agent-categories.md` only when you need the full roster |
+| `UNDERSTAND` | Goal framing — category intent, collaboration surface, requirements. First confirm the capability should be a skill at all: an "every time"/"never" enforcement is a hook, a path-specific constraint is a scoped rule, an isolated side task is a subagent. | `agent-category-guide.md` for first-pass category choice; `agent-categories.md` only when you need the full roster; `_common/MECHANISM_SELECTION.md` when unsure skill-vs-hook/rule/subagent |
 | `ENVISION` | Divergent exploration — creative thinking, value-first checklist; mandatory and typically `20-30%` of design effort | `creative-thinking.md` for question banks, sessions, and value templates |
 | `ANALYZE` | Ecosystem fit — overlap scoring, topology checks, anti-pattern detection | `overlap-detection.md`, `ecosystem-architecture-anti-patterns.md`, `multi-agent-system-anti-patterns.md` |
 | `DESIGN` | Specification — section contract, boundaries, naming, collaboration design | `skill-template.md`, `naming-conventions.md`, `agent-specification-anti-patterns.md`, `official-design-patterns.md` |

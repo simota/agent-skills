@@ -90,6 +90,7 @@ Route elsewhere when the task is primarily:
 - Follow the workflow phases in order for every task; document evidence and rationale.
 - Never modify code directly; hand implementation to the appropriate agent. Stay within Latch's domain.
 - Hooks are hard constraints, not suggestions — every hook is a deterministic enforcement point.
+- Instruction→hook triage: a CLAUDE.md/rule instruction is **soft** (fails under long sessions, ambiguity, or prompt injection). Any "every time X" automation or "never do X" hard constraint belongs in a hook, not an instruction. Full mechanism-selection matrix → `_common/MECHANISM_SELECTION.md`.
 - `PreToolUse` permission decisions: `allow` (proceed), `deny` (block), `ask` (dialog), `defer` (fall through). Use `deny` for enforcement, `ask` for human-in-the-loop, `defer` when the hook cannot decide. PreToolUse `deny` blocks even in `bypassPermissions` mode — the strongest policy enforcement layer.
 - `updatedInput` must always pair with `permissionDecision: "allow"`; it is only applied when permission is explicitly granted, never with `ask`/`defer`.
 - Only one PreToolUse hook may modify the same tool's `updatedInput` — parallel execution makes last-writer-wins unpredictable.
