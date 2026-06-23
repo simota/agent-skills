@@ -40,7 +40,7 @@ Codex has no background-spawn primitive (parallel = N `spawn_agent` → `wait_ag
 
 ## agy hub
 
-Best-effort; apply the C-principles by analogy under `_common/CLI_COMPATIBILITY.md §3, §9` constraints.
+Apply `_common/AGY_ORCHESTRATION.md` (A1–A9) — the first-class agy authoring protocol (analog of OPUS_48_AUTHORING / CODEX_ORCHESTRATION). Core levers: **A1** single-model effort-tier routing (Gemini 3.5 Flash mandate ‡; vary High/Medium/Low per step — High for plan/design/verify), **A2** file-handoff capture + real pty (headless `agy -p` never flushes non-TTY stdout), **A3** session-scoped model/tier (no per-agent switch — split mixed-effort chains into per-step headless invocations), **A4** spawn topology (no background primitive / no Rally L3 — flatten; resume via `-c`/`--conversation` since v1.0.8), **A6** never `--sandbox` + `--dangerously-skip-permissions` (#36). Full constraints: `_common/CLI_COMPATIBILITY.md §3, §9`.
 
 ## Spawn Template Variants
 
@@ -50,12 +50,12 @@ Best-effort; apply the C-principles by analogy under `_common/CLI_COMPATIBILITY.
 
 **Codex CLI variant**: same prompt body; resolve skill path to `~/.codex/skills/[agent]/SKILL.md` or `<repo>/.agents/skills/[agent]/SKILL.md`. Four directive fields stay required. Authoring follows `_common/CODEX_ORCHESTRATION.md` (C-principles), not the Opus note — always the latest model (`gpt-5.5`, C3.0; no cheaper tier), depth via `model_reasoning_effort` (C3); fan-out gated by `agents.max_depth` + `agents.max_threads` (C1). API patterns (L1 `spawn_agent`→`wait_agent`, L2 parallel-then-join, L3 `send_input`/`resume_agent`/`close_agent` for checkpoint-resume) → `reference/execution-layers.md` § Codex CLI.
 
-**agy variant**: same prompt body; TUI via `/agent [agent]-[task-slug] "<body>"`, headless via `agy -p "<body>" --dangerously-skip-permissions`. Headless capture is **file-handoff, not stdout** — append the `_common/CLI_COMPATIBILITY.md §9.2` MANDATORY OUTPUT PROTOCOL (absolute-path artifact + `<<<END_OF_OUTPUT>>>` sentinel) and reference files via `@<path>`. Full silent-failure mitigations + verified template → `reference/execution-layers.md` § agy. Replace skill path with `~/.gemini/antigravity-cli/skills/[agent]/SKILL.md` or `<repo>/.agents/skills/[agent]/SKILL.md`.
+**agy variant**: same prompt body; TUI via `/agent [agent]-[task-slug] "<body>"`, headless via `agy -p "<body>" --dangerously-skip-permissions`. **Model mandate (user policy, 2026-06-23): pin Gemini 3.5 Flash for every step / subagent** — `agy --model "Gemini 3.5 Flash"` (headless) or `/model` (TUI) before spawning; never Gemini 3.1 Pro / Claude / GPT-OSS (mirrors the Codex latest-model mandate ‡, but a fixed *fast* model). Headless capture is **file-handoff, not stdout** — append the `_common/CLI_COMPATIBILITY.md §9.2` MANDATORY OUTPUT PROTOCOL (absolute-path artifact + `<<<END_OF_OUTPUT>>>` sentinel) and reference files via `@<path>`. Full silent-failure mitigations + verified template → `reference/execution-layers.md` § agy. Replace skill path with `~/.gemini/antigravity-cli/skills/[agent]/SKILL.md` or `<repo>/.agents/skills/[agent]/SKILL.md`.
 
 ## Execution-Layer Key Rules
 
 - **Codex**: `spawn_agent` may be lazily hidden — attempt the call when prereqs hold ("tool not visible" ≠ "tool not callable"). Codex tools: `spawn_agent`, `send_input`, `wait_agent`, `resume_agent`, `close_agent`.
-- **agy headless**: use `@<path>` to inject file context; mandate absolute-path artifact write + `<<<END_OF_OUTPUT>>>` sentinel — `agy -p` never flushes to non-TTY stdout (issue #115, unfixed v1.0.5). Pass `--print-timeout 15m` for heavy syntheses; `--log-file <path>` for quota/OAuth failure diagnosis.
+- **agy headless**: use `@<path>` to inject file context; mandate absolute-path artifact write + `<<<END_OF_OUTPUT>>>` sentinel — `agy -p` never flushes to non-TTY stdout (issues #76 non-TTY/subprocess + #115 Windows/`text_drip`, both OPEN, unfixed through v1.0.10 / 2026-06-23). Pass `--print-timeout 15m` for heavy syntheses; `--log-file <path>` for quota/OAuth failure diagnosis. **Never add `--sandbox` to a `--dangerously-skip-permissions` spawn** (issue #36 — the skip flag auto-approves `bypassSandbox`, defeating the sandbox); contain via host-level isolation. Headless resume (`-c`/`--conversation <id>`) is usable since v1.0.8.
 - **agy Pre-flight Notification**: before the first `agy -p ... --dangerously-skip-permissions` spawn of a session, emit the notification per `_common/CLI_COMPATIBILITY.md §9.1`.
 - **Permission model**: agy defaults to `request-review`; autonomous Nexus must switch to `proceed-in-sandbox` (TUI) or `--dangerously-skip-permissions` (headless). Never use `always-proceed` in production.
 
@@ -70,8 +70,10 @@ Model names are hub-engine-specific. The role → tier mapping is stable; the co
 | High-complexity design (Sentinel, Atlas) | high-reasoning | opus / **fable-5** | `gpt-5.5` | Precision-critical |
 | Lightweight tasks (Quill, Morph) | fast | haiku | `gpt-5.5` † | Minimal cost |
 
-> **† Codex latest-model mandate (user policy, `CODEX_ORCHESTRATION.md` C3.0):** the Codex column is **always the latest model — currently `gpt-5.5`**, regardless of tier. There is no cheaper Codex tier. Differentiate tiers via `model_reasoning_effort`, not by model. (Claude Code / agy tiering is unaffected.)
+> **† Codex latest-model mandate (user policy, `CODEX_ORCHESTRATION.md` C3.0):** the Codex column is **always the latest model — currently `gpt-5.5`**, regardless of tier. There is no cheaper Codex tier. Differentiate tiers via `model_reasoning_effort`, not by model. (Claude Code tiering is unaffected.)
+>
+> **‡ agy model mandate (user policy, 2026-06-23):** when **agy** drives the hub, every step and every spawned subagent uses **Gemini 3.5 Flash** — never tier-switched to Gemini 3.1 Pro / Claude / GPT-OSS. Pin with `agy --model "Gemini 3.5 Flash"` / `/model`. Same shape as the Codex mandate (one fixed model), differing only in that the fixed model is the fast tier. Detail: `_common/CLI_COMPATIBILITY.md §4 ‡`.
 
 Fable 5 hub: `claude-fable-5` serves the high-reasoning tier (plan + hardest design/verify steps); default effort `high`, `xhigh` only for capability-sensitive steps, `medium`/`low` for routine fan-out — Fable 5's lower effort already exceeds prior-model `xhigh`. Route refusal-prone domain steps with an Opus 4.8 fallback (F6). Full behavior deltas → § Claude Code hub — Fable 5.
 
-Codex hub: every step and spawned subagent runs the **latest Codex model — currently `gpt-5.5`** (latest-model mandate, `CODEX_ORCHESTRATION.md` C3.0); there is no cheaper Codex tier. Tune depth via `model_reasoning_effort` (`minimal|low|medium|high|xhigh`, default `medium` — verified 2026-06), not by switching the model. agy hub: switch via `/model` in TUI (per-session, not per-agent).
+Codex hub: every step and spawned subagent runs the **latest Codex model — currently `gpt-5.5`** (latest-model mandate, `CODEX_ORCHESTRATION.md` C3.0); there is no cheaper Codex tier. Tune depth via `model_reasoning_effort` (`minimal|low|medium|high|xhigh`, default `medium` — verified 2026-06), not by switching the model. agy hub: **mandated to Gemini 3.5 Flash for all steps/subagents (‡)** — set per-session via `/model` (TUI) or `agy --model "Gemini 3.5 Flash"` (headless); not per-agent.

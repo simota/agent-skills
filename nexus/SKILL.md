@@ -54,7 +54,7 @@ Coordinate specialist agents, design the minimum viable chain, and execute safel
 - Verify acceptance criteria before delivery; pair quantitative metrics with human evaluation for high-stakes tasks.
 - Adapt routing from execution evidence with safety constraints; track OE (orchestration efficiency) per chain type.
 - Leverage standardized inter-agent protocols where available: MCP, A2A, ACP.
-- Apply Plan-and-Execute pattern: capable models for planning, cheaper models for execution. Per hub engine: Claude Code = opus (or fable-5) plan / sonnet-haiku execute; Codex CLI = **always the latest model (currently `gpt-5.5`) for every step and every spawned subagent** per the latest-model mandate (`CODEX_ORCHESTRATION.md` C3.0) — no cheaper Codex tier; tune depth via `model_reasoning_effort`, never by downgrading the model. On a Fable 5 hub, default plan/execute effort to `high` (Fable 5 `low`/`medium` already exceed prior-model `xhigh`).
+- Apply Plan-and-Execute pattern: capable models for planning, cheaper models for execution. Per hub engine: Claude Code = opus (or fable-5) plan / sonnet-haiku execute; Codex CLI = **always the latest model (currently `gpt-5.5`) for every step and every spawned subagent** per the latest-model mandate (`CODEX_ORCHESTRATION.md` C3.0) — no cheaper Codex tier; tune depth via `model_reasoning_effort`, never by downgrading the model; **agy = always Gemini 3.5 Flash for every step and every spawned subagent** (user policy, 2026-06-23; `_common/CLI_COMPATIBILITY.md §4 ‡`) — never tier-switch to Pro/Claude/GPT-OSS; pin via `agy --model "Gemini 3.5 Flash"` / `/model`. On a Fable 5 hub, default plan/execute effort to `high` (Fable 5 `low`/`medium` already exceed prior-model `xhigh`).
 - Use Anthropic **Managed Agents** vocabulary (SF 2026) — Multiagent Orchestration / Outcomes / Dreaming / Webhooks — and surface an escalation recommendation in `NEXUS_COMPLETE` when workload pattern (multi-day unattended runs, cross-user persistence, platform-level audit) justifies the managed platform. Prefer **Dynamic Workflows** (Claude Code-native, research preview) as execution substrate for large homogeneous parallel sweeps; Nexus stays the routing/recipe layer. Detail: `reference/managed-agents-mapping.md` §5.
 - Output language follows the CLI global config (`settings.json` `language`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`); identifiers and technical terms remain in English.
 
@@ -69,7 +69,7 @@ Coordinate specialist agents, design the minimum viable chain, and execute safel
 7. **Learn only from evidence.** Routing adaptation requires execution data, verification, and journaled results.
 8. **Prevent circular handoffs.** Enforce max-hop limits (default: 2 round-trips per agent pair) to prevent A→B→A loops.
 9. **Hierarchical decomposition for scale.** For chains with 6+ agents, spawn feature-lead agents that each coordinate 2-3 specialists.
-10. **Author for the active orchestrator engine.** Detect which CLI drives the hub (see **Execution Model → Orchestrator Detection**) and apply the matching authoring protocol per `reference/hub-authoring.md` (Claude Code → OPUS_48_AUTHORING P4/P6/P7/P9, **plus F-principles when the hub runs on Fable 5**; Codex CLI → CODEX_ORCHESTRATION C1/C2/C3/C6/C7; agy → C-principles by analogy under `_common/CLI_COMPATIBILITY.md §3, §9`).
+10. **Author for the active orchestrator engine.** Detect which CLI drives the hub (see **Execution Model → Orchestrator Detection**) and apply the matching authoring protocol per `reference/hub-authoring.md` (Claude Code → OPUS_48_AUTHORING P4/P6/P7/P9, **plus F-principles when the hub runs on Fable 5**; Codex CLI → CODEX_ORCHESTRATION C1/C2/C3/C6/C7; agy → **AGY_ORCHESTRATION A1/A2/A3/A4/A6** — Gemini 3.5 Flash mandate with per-step effort tiering, file-handoff capture, session-scoped tier, flattened fan-out).
 
 ## Boundaries
 
@@ -260,7 +260,7 @@ Before the first spawn, determine which CLI drives **this hub session**, then bi
 |--------|-----------|-----------|--------------------|-----------|
 | `Agent` tool present | **Claude Code** | `Agent(...)` (L1 fg / L2 `run_in_background`) | `_common/OPUS_48_AUTHORING.md` (P-principles); **Fable 5 hub → also `reference/hub-authoring.md` § Claude Code hub — Fable 5 (F-principles)** | sonnet / opus / haiku / **fable-5** (see Model Selection) |
 | `spawn_agent` callable (C1 prereqs hold) | **Codex CLI** | `spawn_agent` → `wait_agent` (parallel = N spawn → join all) | `_common/CODEX_ORCHESTRATION.md` (C-principles) | `gpt-5.5` (latest, all steps; see `CLI_COMPATIBILITY.md §4`) |
-| `/agent` in TUI main session | **agy** | `/agent` or `agy -p` headless | C-principles by analogy | per `/model` (see `CLI_COMPATIBILITY.md §4`) |
+| `/agent` in TUI main session | **agy** | `/agent` or `agy -p` headless | `_common/AGY_ORCHESTRATION.md` (A1–A9) | Gemini 3.5 Flash mandated (‡), effort tier per step via `/model` (see `CLI_COMPATIBILITY.md §4`) |
 
 Codex-hub prereqs (C1): `codex features list \| grep multi_agent` → `true`, and `~/.codex/config.toml` `[agents] max_depth >= 2`. If unmet → internal execution with a concrete reason (`agents.max_depth=1, nested hub cannot recurse`), never a generic "spawn tool not found". `spawn_agent` may be lazily hidden from the tool inventory — attempt the call when prereqs hold (C5). Full per-CLI prereqs and fall-back log forms: **Execution Layers** below + `_common/CLI_COMPATIBILITY.md`.
 
@@ -467,11 +467,12 @@ Read only the files that match the current decision point.
 | `_common/OPUS_48_AUTHORING.md` | **Claude Code hub** — P4 / P6 / P7 spawn prompts, output envelopes, effort |
 | `reference/hub-authoring.md` § Claude Code hub — Fable 5 | **Hub runs on `claude-fable-5`** — F-principles: lighter spawn prompts, `high` default effort, longer-turn / async harness, progress grounding, no-reasoning-reproduction rule, verbatim `send_to_user` tool for async runs |
 | `_common/CODEX_ORCHESTRATION.md` | **Codex CLI hub** — C1 spawn-depth, C2 sync fan-out, C3 effort-by-model, C6 checkpoint-resume |
+| `_common/AGY_ORCHESTRATION.md` | **agy hub** — A1 Flash-mandate effort-tier routing, A2 file-handoff+pty capture, A3 session-scoped tier, A4 flattened fan-out / `-c` resume, A6 sandbox posture (#36) |
 | `_common/IMAGE_INPUT.md` | Routing request carries an image — five-stage pipeline at CLASSIFY |
 
 ## Operational Notes
 
-Follow `_common/OPERATIONAL.md`, `_common/AUTORUN.md`, `_common/HANDOFF.md`, `_common/GIT_GUIDELINES.md`, `_common/HARNESS_EVOLUTION.md`. For the active orchestrator engine apply `_common/OPUS_48_AUTHORING.md` (Claude Code hub; add the F-principles in `reference/hub-authoring.md` when the hub runs on Fable 5) or `_common/CODEX_ORCHESTRATION.md` (Codex CLI hub). Journal in `.agents/nexus.md`; log to `.agents/PROJECT.md`. No agent names in commits/PRs. Decompose, route, execute, verify, deliver. Keep chains small, handoffs structured, recovery explicit.
+Follow `_common/OPERATIONAL.md`, `_common/AUTORUN.md`, `_common/HANDOFF.md`, `_common/GIT_GUIDELINES.md`, `_common/HARNESS_EVOLUTION.md`. For the active orchestrator engine apply `_common/OPUS_48_AUTHORING.md` (Claude Code hub; add the F-principles in `reference/hub-authoring.md` when the hub runs on Fable 5), `_common/CODEX_ORCHESTRATION.md` (Codex CLI hub), or `_common/AGY_ORCHESTRATION.md` (agy hub — A1–A9). Journal in `.agents/nexus.md`; log to `.agents/PROJECT.md`. No agent names in commits/PRs. Decompose, route, execute, verify, deliver. Keep chains small, handoffs structured, recovery explicit.
 
 ## AUTORUN Support
 

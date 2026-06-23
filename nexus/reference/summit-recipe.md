@@ -25,7 +25,7 @@
 
 Summit is a **quality-maximization recipe** that mobilizes multiple execution engines across five functional teams (Analysis / Design / Execution / Verification / Improvement). It produces engine-attributed, multi-perspective deliverables for strategic decisions and high-stakes outputs where the cost of failure dramatically exceeds the cost of triangulation.
 
-**Default baseline: Claude + Codex (dual-engine).** agy / Antigravity CLI is added as an **optional third axis** when AVAILABLE at PREFLIGHT — it contributes long-context (1M window), multimodal, Deep Think, and Search-grounding capabilities to Phase 1 / 3 / 4 / 5 when reachable, and is gracefully skipped when not. Dual-engine mode (Claude + Codex) is the recipe's normal operating state, NOT a degraded mode. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
+**Default baseline: Claude + Codex (dual-engine).** agy / Antigravity CLI is added as an **optional third axis** when AVAILABLE at PREFLIGHT — it contributes long-context (1M window), multimodal, High-effort-tier reasoning, and Search-grounding capabilities to Phase 1 / 3 / 4 / 5 when reachable, and is gracefully skipped when not (agy is mandated to Gemini 3.5 Flash — `_common/CLI_COMPATIBILITY.md §4 ‡`; no Deep Think — its divergence value is Gemini model-priors at the High effort tier). Dual-engine mode (Claude + Codex) is the recipe's normal operating state, NOT a degraded mode. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
 
 **Design Team conditional inclusion**: The Design team is included by default but skipped when Phase 0's `mission_charter.yaml` sets `ui_dimension: none` (pure backend / infrastructure tasks with no user-facing surface). When skipped, Design sub-tracks across all phases are bypassed and the recipe operates as a four-team workflow with proportionally reduced cost.
 
@@ -59,7 +59,7 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 | User cost acknowledgment | mandatory confirmation prompt | abort if declined |
 | Mission charter producible | Phase 0 must produce valid `mission_charter.yaml` | abort if FRAMING fails |
 
-**Why agy is optional (2026-05 policy update):** Earlier versions of this recipe required agy as a hard prerequisite on the assumption that two-engine workflows offered insufficient diversity vs `apex` + `judge`. Field experience with agy v1.0.x (frequent silent runtime failures — quota / OAuth / executor / subagent timeouts) showed that hard dependency made Summit brittle. Dual-engine baseline (Claude judgment + Codex sandbox-execution) provides the load-bearing diversity for tri-engine quorum logic; agy contributes a third axis (1M context / multimodal / Deep Think / Search) that meaningfully lifts quality when reachable but is not a correctness gate. The recipe automatically detects engine availability and adjusts engine distribution, agent counts, and cost estimates accordingly. Users who want guaranteed three-engine coverage should ensure `agy --version` succeeds before invocation.
+**Why agy is optional (2026-05 policy update):** Earlier versions of this recipe required agy as a hard prerequisite on the assumption that two-engine workflows offered insufficient diversity vs `apex` + `judge`. Field experience with agy v1.0.x (frequent silent runtime failures — quota / OAuth / executor / subagent timeouts) showed that hard dependency made Summit brittle. Dual-engine baseline (Claude judgment + Codex sandbox-execution) provides the load-bearing diversity for tri-engine quorum logic; agy contributes a third axis (1M context / multimodal / High effort tier / Search) that meaningfully lifts quality when reachable but is not a correctness gate. The recipe automatically detects engine availability and adjusts engine distribution, agent counts, and cost estimates accordingly. Users who want guaranteed three-engine coverage should ensure `agy --version` succeeds before invocation.
 
 ---
 
@@ -89,7 +89,7 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 - User has not confirmed the cost envelope
 - The task does not have a clear acceptance criteria definable in Phase 0
 
-> agy unavailability does NOT preclude Summit — the recipe runs in dual-engine mode (Claude + Codex) and surfaces the mode in the pre-launch confirmation. If you specifically need agy's third-axis lift (long-context whole-codebase reasoning, multimodal asset reading, Deep Think alternatives, Search-grounded competitive analysis) and agy is broken, defer Summit until agy is back rather than swapping recipes.
+> agy unavailability does NOT preclude Summit — the recipe runs in dual-engine mode (Claude + Codex) and surfaces the mode in the pre-launch confirmation. If you specifically need agy's third-axis lift (long-context whole-codebase reasoning, multimodal asset reading, High-effort-tier alternatives, Search-grounded competitive analysis) and agy is broken, defer Summit until agy is back rather than swapping recipes.
 
 ---
 
@@ -175,12 +175,12 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 
 > **Executive summary for routing planning.** Per-phase contracts below (Phase 0-6) restate the engine assignments inline with phase-specific gates and inputs. When designing a Summit run, use this matrix to allocate agents to engines; when executing a specific phase, follow the phase contract for the full step sequence.
 
-**Engine routing principle:** route each agent to the engine whose distinctive strength best fits the agent's job — Claude is reserved for judgment, orchestration, and ethics; Codex owns code generation, sandbox execution, and test running (Terminal-Bench 77.3% leader); agy owns long-context analysis (1M window), multimodal asset work, Deep Think creative alternatives, and Search grounding. Each cell below lists the agents spawned on that engine for that team.
+**Engine routing principle:** route each agent to the engine whose distinctive strength best fits the agent's job — Claude is reserved for judgment, orchestration, and ethics; Codex owns code generation, sandbox execution, and test running (Terminal-Bench 77.3% leader); agy owns long-context analysis (1M window), multimodal asset work, High-effort-tier creative alternatives (Gemini 3.5 Flash, High tier — no Deep Think), and Search grounding. Each cell below lists the agents spawned on that engine for that team.
 
 | | Claude (hub — judgment & orchestration) | Codex (sandbox & code generation) | Antigravity / agy (long-context & multimodal) |
 |---|---|---|---|
 | **Analysis** | Atlas (architecture trade-offs, ADR drafting), Sherpa (epic decomposition), magi (arbitration of cross-engine findings) | Lens (sandbox-aided codebase mapping), Scout (bug RCA via test execution), Sentinel (SAST scan), Siege (concurrency analysis) | Trail (git-history archaeology, 1M ctx), Trail (legacy code archaeology), Lore (cross-codebase pattern extraction), Atlas (architecture C4 diagrams via multimodal), Field (web-grounded market/tech survey) |
-| **Design** *(conditional)* | Vision (direction & arbitration), Echo (persona walkthrough), Prose (UX writing & microcopy) | Pixel (mockup-to-HTML/CSS), Forge (prototype implementation), Flow (CSS/JS animation), Funnel (LP construction), Vitrine (component catalog generation) | Sketch (Gemini-native image generation), Muse (token system synthesis via multimodal mockup analysis), Frame (Figma context extraction via multimodal), Palette (a11y + interaction-quality from screenshots), rally[agy, COMPETE, Deep Think] (creative alternative directions), Ink (SVG icon system generation) |
+| **Design** *(conditional)* | Vision (direction & arbitration), Echo (persona walkthrough), Prose (UX writing & microcopy) | Pixel (mockup-to-HTML/CSS), Forge (prototype implementation), Flow (CSS/JS animation), Funnel (LP construction), Vitrine (component catalog generation) | Sketch (Gemini-native image generation), Muse (token system synthesis via multimodal mockup analysis), Frame (Figma context extraction via multimodal), Palette (a11y + interaction-quality from screenshots), rally[agy, COMPETE, Flash-High] (creative alternative directions), Ink (SVG icon system generation) |
 | **Execution** | Sentinel (security review of generated code), Cloak (privacy review), Crypt (crypto architecture), magi (escalation arbitration), accord (atomic-spec gatekeeping) | Builder (general implementation), Artisan (frontend production), Native (iOS Swift / Android Kotlin), Schema (DB migrations), Bolt (perf-aware implementation), rally[COLLABORATE, codex] (bulk task distribution across DAG) | rally[COLLABORATE, agy] (alternative-implementation generation), Scribe (long-context spec & doc generation), Tome (learning-doc generation from diff), Morph (cross-format document conversion), Tone (game audio code), Lyric (Suno songwriting), Aether (AITuber/streaming pipeline) |
 | **Verification** | judge (tri-engine review with built-in fan-out), Echo (UX persona walkthrough), Palette (interaction & a11y), magi (verdict arbitration on conflicts) | Radar (unit/integration tests), Voyager (E2E web + mobile), Siege (load/chaos), Siege (concurrency stress), Probe (dynamic security), Matrix (manual QA scenarios), Sentinel (re-scan post-fix) | Attest (spec compliance via long-context comparison), Ripple (vertical + horizontal impact analysis), Canon (standards compliance: OWASP/WCAG/ISO 25010), Oath (legal/regulatory), rally[agy, review] (independent multimodal review of generated UI screenshots) |
 | **Improvement** | Zen (refactor judgment & code-review-style improvements), magi (improvement-selection arbitration), Sage (knowledge synthesis) | Bolt (perf optimization), Tuner (DB query plan + index recommendations), Sweep (dead code removal), Mend (automated remediation runbook execution), Schema (migration improvements) | Hex (technical-debt scoring with multimodal character generation), Atlas (architecture improvement via 1M ctx whole-codebase reasoning), Lore (pattern extraction & metapattern surfacing), Vista (long-range strategic refactor planning), Shift (deprecated-library detection, native-API modernization, tech radar — absorbed from horizon — plus framework/lang migration codemod generation) |
@@ -189,12 +189,12 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 - If a task **generates or executes code** → Codex (unless it requires deep ethical/security judgment, then Claude)
 - If a task **needs to hold > 200K tokens of context** (large codebase analysis, full doc set) → agy
 - If a task **processes images, mockups, screenshots, or diagrams** → agy (multimodal native)
-- If a task **requires creative divergence or alternative exploration** → agy (Deep Think) or rally[agy, COMPETE]
+- If a task **requires creative divergence or alternative exploration** → agy (Gemini 3.5 Flash, High tier) or rally[agy, COMPETE]
 - If a task **arbitrates between multiple perspectives or makes a Go/No-Go call** → Claude (magi or Vision)
 - If a task **involves security judgment, ethics, or regulatory review** → Claude (Sentinel/Cloak/Crypt/Oath)
 - Otherwise default to **Codex** (faster + cheaper for routine work), not Claude
 
-**Why this rebalance:** Previous matrix defaulted to Claude for most teams, leaving codex/agy as light-touch supplements. The new matrix moves all code-execution-heavy work to Codex (sandbox-first wins) and all long-context / multimodal / divergent work to agy (1M context + Deep Think wins). Claude retains exclusive ownership of judgment, orchestration, and ethics — areas where its reasoning quality is irreplaceable. Net effect: ~40% of work shifts from Claude to Codex/agy, increasing per-engine specialization, reducing Hub context pressure, and improving cost efficiency for routine work.
+**Why this rebalance:** Previous matrix defaulted to Claude for most teams, leaving codex/agy as light-touch supplements. The new matrix moves all code-execution-heavy work to Codex (sandbox-first wins) and all long-context / multimodal / divergent work to agy (1M context + High effort tier wins). Claude retains exclusive ownership of judgment, orchestration, and ethics — areas where its reasoning quality is irreplaceable. Net effect: ~40% of work shifts from Claude to Codex/agy, increasing per-engine specialization, reducing Hub context pressure, and improving cost efficiency for routine work.
 
 **Engine selection rationale:**
 
@@ -204,7 +204,7 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 | Large-scale code generation / refactor | Codex | 192K context, sandbox-first, Terminal-Bench 2.0 leader |
 | Long-context analysis (codebase > 200K tokens) | agy | 1M context window |
 | Multimodal (images, diagrams, screenshots) | agy | Native multimodal support |
-| Creative alternatives / divergent thinking | agy | Deep Think mode, different reasoning style |
+| Creative alternatives / divergent thinking | agy | Gemini 3.5 Flash (High tier), different (Gemini) reasoning priors |
 | Test execution | Codex | Sandbox-first, fast iteration |
 | Architecture decisions | Claude | Strongest at trade-off reasoning |
 
@@ -362,7 +362,7 @@ design_track:
       agent: rally
       paradigm: COMPETE
       mode: Solo
-      mission: creative alternative directions via Deep Think exploration
+      mission: creative alternative directions via Gemini High-effort-tier exploration
   synthesis:
     agent: vision (claude)
     role: arbitrate-design-direction
@@ -389,7 +389,7 @@ design_track:
 | Cross-format conversion (Markdown/Word/PDF) | **agy** (Morph) | multimodal |
 | Audio/music generation code | **agy** (Tone/Lyric) | divergent-creative |
 | Streaming pipeline (AITuber) | **agy** (Aether) | multimodal real-time |
-| Alternative implementation exploration | **agy** (rally[COMPETE]) | Deep Think |
+| Alternative implementation exploration | **agy** (rally[COMPETE]) | Gemini 3.5 Flash (High tier) |
 | **Security review** of generated code | **Claude** (Sentinel) | judgment-critical |
 | **Privacy/crypto review** | **Claude** (Cloak/Crypt) | judgment-critical |
 | **Spec gatekeeping** between phases | **Claude** (Accord) | judgment-critical |
@@ -689,7 +689,7 @@ phase_chain:
           - {engine: claude, agents: [vision, prose, echo]}             # judgment + language
           - {engine: codex,  agents: [pixel, forge, flow, funnel, vitrine]}   # code generation
           - {engine: agy,    agents: [sketch, muse, frame, palette, ink]}     # multimodal + creative
-          - {engine: agy,    agent: rally, paradigm: COMPETE, mode: Solo}     # Deep Think alternatives
+          - {engine: agy,    agent: rally, paradigm: COMPETE, mode: Solo}     # Gemini Flash High-tier alternatives
         synthesis: {agent: vision, convergence: single_direction}
       - track: execution
         coordinator: rally

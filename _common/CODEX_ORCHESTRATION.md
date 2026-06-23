@@ -10,7 +10,7 @@ Engine-selection rule for orchestrators:
 |---------------------------|--------------------|
 | Claude Code | `_common/OPUS_48_AUTHORING.md` (P1–P11) |
 | **Codex CLI** | **this file (C1–C9)** |
-| Antigravity (`agy`) | best-effort; no dedicated protocol yet — apply C-principles by analogy, treat `/agent` constraints per `_common/CLI_COMPATIBILITY.md §3, §9` |
+| Antigravity (`agy`) | `_common/AGY_ORCHESTRATION.md` (A1–A9) |
 
 ---
 

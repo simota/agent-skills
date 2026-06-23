@@ -12,7 +12,7 @@ Cross-skill protocol for the `multi` Recipe — spawning subagents in parallel a
 
 **Default baseline: Claude + Codex (dual-engine).** agy / Antigravity CLI is an **optional addon** — used when AVAILABLE at PREFLIGHT, gracefully skipped when not. Skills MUST NOT treat agy as a hard prerequisite; recipes MUST function correctly in dual-engine mode.
 
-Rationale: agy v1.0.x has frequent silent runtime failures (RESOURCE_EXHAUSTED quota, OAuth expiry, executor errors, internal subagent timeouts — see §3.5). Building hard dependencies on agy makes recipes brittle. The dual-engine Claude+Codex baseline covers the core diversity need (judgment-oriented engine + sandbox-execution engine with non-overlapping training-data priors); agy contributes a third axis (1M context / multimodal / Deep Think / Search grounding) when reachable but is never load-bearing.
+Rationale: agy v1.0.x has frequent silent runtime failures (RESOURCE_EXHAUSTED quota, OAuth expiry, executor errors, internal subagent timeouts — see §3.5). Building hard dependencies on agy makes recipes brittle. The dual-engine Claude+Codex baseline covers the core diversity need (judgment-oriented engine + sandbox-execution engine with non-overlapping training-data priors); agy contributes a third axis (1M context / multimodal / Gemini-Flash model-priors at High effort tier / Search grounding) when reachable but is never load-bearing. (agy is mandated to Gemini 3.5 Flash — `_common/CLI_COMPATIBILITY.md §4 ‡`; no Deep Think.)
 
 | Engine count at runtime | Mode | Tag convention | Confidence floor |
 |-------------------------|------|----------------|------------------|
@@ -242,7 +242,7 @@ Some CLIs report runtime failures (quota exhaustion, auth expiry, executor error
 
 | Engine | Failure mode | Detection contract (subagent MUST follow) |
 |--------|--------------|--------------------------------------------|
-| `agy` v1.0.5 | `exit 0` + empty stdout on any of: **non-TTY stdout-flush bug — a SUCCESSFUL run also emits nothing to piped stdout** (official issue #115, OPEN; unfixed through 1.0.5) / `RESOURCE_EXHAUSTED` 429 / OAuth revoked / `agent executor error` / corrupt `~/.gemini/config/mcp_config.json` / **internal subagent 60s timeout when bare file paths are used instead of `@<path>` syntax** (v1.0.2 changelog: timeout cap restricted to subagents only — main agent escapes it, but delegated file reads still die silently) / **`--print-timeout` (default 5min) exceeded on heavy multi-file synthesis** | **stdout is not the deliverable channel** — apply `_common/CLI_COMPATIBILITY.md §9.2`: prompt-mandated absolute-path artifact + sentinel, verify file exists / non-empty / sentinel present; fallback to transcript harvest (`brain/<conv-id>/.../transcript.jsonl` last `PLANNER_RESPONSE`); ONLY if both artifact and transcript are empty, `grep -E "RESOURCE_EXHAUSTED\|Resets in\|error getting token\|agent executor error\|unexpected end of JSON\|subagent.*timeout\|interaction timeout"` against `--log-file` and report `RUNTIME-BROKEN` with the matched excerpt; retry with `--print-timeout 15m` if heavy synthesis is suspected. Pass file refs as `@<path>` |
+| `agy` v1.0.10 | `exit 0` + empty stdout on any of: **non-TTY stdout-flush bug — a SUCCESSFUL run also emits nothing to piped stdout** (official issues #76 + #115, both OPEN; unfixed through v1.0.10 / 2026-06-23) / `RESOURCE_EXHAUSTED` 429 / OAuth revoked / `agent executor error` / corrupt `~/.gemini/config/mcp_config.json` / **internal subagent 60s timeout when bare file paths are used instead of `@<path>` syntax** (v1.0.2 changelog: timeout cap restricted to subagents only — main agent escapes it, but delegated file reads still die silently) / **`--print-timeout` (default 5min) exceeded on heavy multi-file synthesis** | **stdout is not the deliverable channel** — apply `_common/CLI_COMPATIBILITY.md §9.2`: prompt-mandated absolute-path artifact + sentinel, verify file exists / non-empty / sentinel present; fallback to transcript harvest (`brain/<conv-id>/.../transcript.jsonl` last `PLANNER_RESPONSE`); ONLY if both artifact and transcript are empty, `grep -E "RESOURCE_EXHAUSTED\|Resets in\|error getting token\|agent executor error\|unexpected end of JSON\|subagent.*timeout\|interaction timeout"` against `--log-file` and report `RUNTIME-BROKEN` with the matched excerpt; retry with `--print-timeout 15m` if heavy synthesis is suspected. Pass file refs as `@<path>` |
 | `codex` 0.137.0 | non-zero exit code on most failures; **EXCEPTION: detached-TTY + non-trivial prompt silently crashes with no output** (#19945, regression 0.124.0+, unfixed) — triggered by `setsid` / background-Bash spawns; also `--json`/`--output-schema` silently ignored when MCP tools are active (#15451) | Keep the spawn **foreground**; pass `-o <abs path>` and treat a missing/empty artifact as `RUNTIME-BROKEN` even on `RC == 0`; validate `--output-schema` artifacts parse before aggregating; capture stderr. See `_common/CLI_COMPATIBILITY.md §9.3` |
 | Claude subagent | structured Agent-tool errors | Surface verbatim |
 
@@ -256,7 +256,7 @@ OUT="/tmp/agy-${SLUG}.md"; LOG="/tmp/agy-${SLUG}.log"
 rm -f "$OUT"
 # agy REQUIRES a TTY: from a socket-stdin shell `agy -p` hangs silently and `script -q /dev/null`
 # fails ("Operation not supported on socket"). Give it a real pty via python pty.spawn (§9.2).
-# stdout is NOT the deliverable channel either — issue #115 (unfixed v1.0.6).
+# stdout is NOT the deliverable channel either — issues #76/#115 (unfixed through v1.0.10).
 python3 - "$LOG" <<'PY' || true
 import pty, sys
 pty.spawn(["agy","-p",open("/tmp/prompt.md").read(),"--dangerously-skip-permissions",
@@ -369,7 +369,7 @@ codex exec --full-auto -o "/tmp/codex-<slug>.md" "$(cat /tmp/prompt.md)"
 
 # Antigravity (subagent runs this) — agy needs a real pty (use python pty.spawn, NOT
 # `script -q /dev/null` which fails on socket stdin) + file-handoff capture MANDATORY (stdout
-# never flushes to non-TTY: issue #115, unfixed v1.0.6). Prompt must end with the §9.2 OUTPUT
+# never flushes to non-TTY: issues #76/#115, unfixed through v1.0.10). Prompt must end with the §9.2 OUTPUT
 # PROTOCOL block: write JSON deliverable to $OUT (absolute path) + final-line sentinel <<<END_OF_OUTPUT>>>.
 SLUG="<task-slug>"
 OUT="/tmp/agy-${SLUG}.json"; LOG="/tmp/agy-${SLUG}.log"

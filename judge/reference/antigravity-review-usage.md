@@ -73,7 +73,7 @@ Non-interactive review always uses `-p` (prompt) plus `--dangerously-skip-permis
 | `--log-file <PATH>` | Override CLI log file path | For debugging or audit trails |
 | `--print-timeout <DURATION>` | Timeout for print mode wait (default 5m0s) | When prompt may take >5 min |
 
-Authentication is resolved from the Google login session — do not supply API keys. There is no `-m`/`--model`, no `--approval-mode`, no `-e`/`--extensions` flag. Plugin loading is implicit once installed via `agy plugin install`.
+Authentication is resolved from the Google login session — do not supply API keys. No `--approval-mode`, no `-e`/`--extensions` flag. `--model` was absent in early agy (v1.0.2) but **re-added in v1.0.5** (`agy --model "<name>"` + `agy models` subcommand). Plugin loading is implicit once installed via `agy plugin install`. **agy model mandate (user policy, 2026-06-23): run reviews on Gemini 3.5 Flash** (agy's default — never switch to Pro/Claude/GPT-OSS); pin via `agy --model "Gemini 3.5 Flash"` or `/model`. Detail: `_common/CLI_COMPATIBILITY.md §4 ‡`.
 
 **File reference syntax**: always use `@<path>` (e.g. `@docs/spec.md`) inside the prompt. Bare path strings trigger silent subagent timeouts at the 60s cap — main agent stays alive while the delegated read dies and produces `exit 0` + empty stdout. v1.0.2 changelog: "restricted the default 60-second interaction timeout specifically to subagents, preventing the main agent from being unconditionally capped."
 
@@ -89,7 +89,7 @@ agy -p "Activate the code review skill and review all code changes on the curren
 agy -p "Activate the code review skill, review the current branch diff, and write the findings to code-review.md." --dangerously-skip-permissions
 
 # Structured JSON output (for CI pipelines — write JSON to an ABSOLUTE-path artifact file;
-# stdout never flushes to non-TTY (issue #115) and --output-format json is unreliable)
+# stdout never flushes to non-TTY (issues #76/#115) and --output-format json is unreliable)
 agy -p "Review the current branch diff. Write findings as JSON ({severity, file, line, issue, suggested_fix}) to the absolute path /tmp/agy-review.json, ending the file with a final line <<<END_OF_OUTPUT>>>. Print only 'DONE /tmp/agy-review.json' to stdout." --dangerously-skip-permissions
 
 # Plan mode (read-only, no writes to disk)
@@ -220,7 +220,7 @@ Apply the multi-agent verification rules in `codex-integration.md` — findings 
 ### 13. Structured JSON Output for CI
 
 ```bash
-# Write JSON to an absolute-path artifact — stdout is not a reliable channel (issue #115)
+# Write JSON to an absolute-path artifact — stdout is not a reliable channel (issues #76/#115)
 agy -p "Activate the code review skill. Review the current branch diff. Write strict JSON to the absolute path /tmp/agy-review-ci.json: {\"findings\":[{\"severity\":\"CRITICAL|HIGH|MEDIUM|LOW|INFO\",\"file\":\"...\",\"line\":N,\"issue\":\"...\",\"evidence\":\"...\",\"suggested_fix\":\"...\"}]}. End the file with a final line <<<END_OF_OUTPUT>>>." --dangerously-skip-permissions
 ```
 
@@ -290,7 +290,7 @@ Always pair the prompt with `--dangerously-skip-permissions` for headless runs u
 - Don't run headless without `--dangerously-skip-permissions`; tools will block awaiting approval and the run will hang.
 - Don't rely on `/pr-code-review` unless the repo has the GitHub MCP server configured.
 - Don't use Gemini when the user explicitly asked for Codex, or vice-versa. Fall back only on explicit unavailability.
-- Don't pass flags from Gemini CLI that Antigravity CLI does not support — no `--yolo` (renamed to `--dangerously-skip-permissions`), no `-e`/`--extensions` (use `agy plugin install`), no `--approval-mode`, no `-m`/`--model`. Note: `--output-format` IS supported (hidden — absent from `agy --help` but documented in official Google DEV.to examples). Use `agy --help` plus DEV.to as joint references — `--help` alone is insufficient.
+- Don't pass flags from Gemini CLI that Antigravity CLI does not support — no `--yolo` (renamed to `--dangerously-skip-permissions`), no `-e`/`--extensions` (use `agy plugin install`), no `--approval-mode`. (`--model` IS supported again as of v1.0.5 — see above.) ⚠ `--output-format` is **UNRELIABLE through v1.0.10** (re-verified 2026-06-23): "flag not defined" errors on some installs, no documented schema — do NOT depend on it; capture structured output via the §9.2 artifact-file protocol instead. ⚠ Never combine `--sandbox` with `--dangerously-skip-permissions` (issue #36 — sandbox is silently bypassed).
 
 ---
 
@@ -311,7 +311,7 @@ Always pair the prompt with `--dangerously-skip-permissions` for headless runs u
 
 ### Silent Failure Detection
 
-`agy` silently swallows several runtime-fatal errors to its log file while exiting 0 with empty stdout — quota exhaustion (`RESOURCE_EXHAUSTED` 429 with a `Resets in NhNm` window), OAuth token expiry, upstream model unavailability, corrupt `mcp_config.json`. **Additionally: agy REQUIRES a TTY — from a socket-stdin shell (Claude Code `Bash`, CI, cron) `agy -p` hangs to `exit 124` with no artifact/log, and `script -q /dev/null agy ...` fails with `tcgetattr/ioctl: Operation not supported on socket` (verified 2026-06-08, agy 1.0.6). And (unfixed through v1.0.6, issue #115) `agy -p` never flushes its response to a non-TTY stdout, so a SUCCESSFUL review also produces `exit 0 + empty stdout` when piped.** Capture must therefore give agy a real pty (`python3 pty.spawn`) and use the file-handoff protocol (`_common/CLI_COMPATIBILITY.md §9.2`), not stdout.
+`agy` silently swallows several runtime-fatal errors to its log file while exiting 0 with empty stdout — quota exhaustion (`RESOURCE_EXHAUSTED` 429 with a `Resets in NhNm` window), OAuth token expiry, upstream model unavailability, corrupt `mcp_config.json`. **Additionally: agy REQUIRES a TTY — from a socket-stdin shell (Claude Code `Bash`, CI, cron) `agy -p` hangs to `exit 124` with no artifact/log, and `script -q /dev/null agy ...` fails with `tcgetattr/ioctl: Operation not supported on socket` (verified 2026-06-08, agy 1.0.6). And (unfixed through v1.0.10 / 2026-06-23, issues #76 + #115) `agy -p` never flushes its response to a non-TTY stdout, so a SUCCESSFUL review also produces `exit 0 + empty stdout` when piped.** Capture must therefore give agy a real pty (`python3 pty.spawn`) and use the file-handoff protocol (`_common/CLI_COMPATIBILITY.md §9.2`), not stdout.
 
 **Mandatory pattern for headless invocations** (prompt must mandate the artifact write per §9.2; agy gets a real pty via python pty.spawn — `script -q /dev/null` does NOT work here):
 

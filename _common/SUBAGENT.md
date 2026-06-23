@@ -159,7 +159,7 @@ codex exec --full-auto -o "/tmp/codex-<slug>.md" "$(cat /tmp/prompt.md)"
 [ -s "/tmp/codex-<slug>.md" ] || echo "VERDICT: codex RUNTIME-BROKEN (empty artifact despite RC=$?)"
 
 # Antigravity — file-handoff capture MANDATORY (stdout never flushes to non-TTY:
-# issue #115, unfixed v1.0.5 — a SUCCESSFUL run also produces empty piped stdout).
+# issues #76 + #115, both OPEN/unfixed through v1.0.10 — a SUCCESSFUL run also produces empty piped stdout).
 # In the prompt itself:
 #   1. Reference files as @<path> (e.g. @docs/spec.md) — bare path strings trigger the
 #      subagent-delegate silent-timeout pattern.

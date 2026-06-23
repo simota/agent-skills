@@ -253,7 +253,7 @@ Every deliverable must include:
 
 Activated by the `multi` Recipe. Pattern D (Divergence-primary) per `_common/MULTI_ENGINE_RECIPE.md` — Flux pushes the pattern further because **divergent reframes are the literal product**, not a side effect.
 
-- **Baseline (2026-05)**: Claude + Codex (dual-engine). agy joins as third axis when AVAILABLE — agy's Deep Think + 1M-context analogy uplift is larger for Flux than for other Pattern D skills.
+- **Baseline (2026-05)**: Claude + Codex (dual-engine). agy joins as third axis when AVAILABLE — agy's Gemini model-priors (Gemini 3.5 Flash, High effort tier) + 1M-context analogy uplift is larger for Flux than for other Pattern D skills (Gemini 3.5 Flash mandated — `_common/CLI_COMPATIBILITY.md §4 ‡`; no Deep Think).
 - **Scoring**: Concurrence (`UNIVERSAL` 3/3 / `LIKELY` 2/3 / `VERIFIED-DIVERGENT` 1/3) × Novelty (`HIGH`/`MEDIUM`/`LOW`).
 - **Critical rule**: `VERIFIED-DIVERGENT × HIGH` reframes are **top-billed** ahead of `UNIVERSAL` (inverts Judge's polarity; absent in Spark). Breakthrough shifts come from outside the consensus prior.
 - **CLUSTER**: same `original_assumption` with different `inverted_form` → kept as **separate clusters** under shared `assumption_root` (negation / scale-shift / time-shift / observer-shift axes preserved).
