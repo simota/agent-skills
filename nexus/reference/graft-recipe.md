@@ -83,7 +83,7 @@ Phase 5 VERIFY      ∥  (a) CONCEPT-FIDELITY — Attest/judge: the graft reprod
                           intact, no value-path regression]; a graft that broke the host loops back regardless of novelty
                        (c) INNOVATION GATE — judge[novelty review] + refute×2-3[claude‖codex: "this is just a bolt-on /
                           a gimmick"] + Echo[do users experience an emergent NEW capability?] + Magi[Go/No-Go vs thesis] (§3e)
-                       → GRAFT-MAP COVERAGE re-check (every graft cleared all three oracles); loop to Phase 4 ≤3 cycles
+                       → GRAFT-MAP COVERAGE re-check (every graft cleared all three oracles); loop to Phase 4 ≤ 3 cycles (default 3)
 Phase 6 SHIP           Guardian[PR + GRAFT REPORT: Concept Catalog + Graft Map + concept-fidelity results + host-integrity
                        attestation + innovation verdict + originality posture] + flag[innovation behind a flag with
                        adoption KPI + kill criterion, killer-style, unless Phase 0 waived it]
@@ -117,7 +117,7 @@ The Graft Map is the core artifact — it is to `graft` what the Fusion Map is t
 
 ### 3b. Triple-Oracle Gate (graft's signature departure — three legs, not one)
 
-`clone` verifies surface parity; `fuse` splits parity vs spec; `graft` holds **every** graft to **three simultaneous oracles**, and dropping any leg is the core integrity failure:
+The shared differential-parity kernel — parity-over-faith, oracle adequacy + non-determinism canonicalization, comparator/harness, provenance/drift — is owned by `_common/DIFFERENTIAL_PARITY.md`. graft is the **fidelity-inverse** member of that family: high parity-vs-donor-*surface* is a failure *smell*, not a goal, so graft's specialization is the **triple oracle** (concept-fidelity ∧ host-integrity ∧ innovation) rather than surface parity. `clone` verifies surface parity; `fuse` splits parity vs spec; `graft` holds **every** graft to **three simultaneous oracles**, and dropping any leg is the core integrity failure:
 
 - **Concept-Fidelity** — the graft reproduces the donor concept's **mechanism/effect**, not its surface. Verified by Attest against the Phase 2 concept-fidelity spec + judge: *is the load-bearing idea actually present and working, re-expressed in the host's own surface?* The failure this catches is **cargo-cult transplant** — the donor's chrome copied, the principle missed (e.g. copying multiplayer cursors' *look* but not real-time conflict-free convergence). This is the **inverse of clone's pixel diff**: a high surface resemblance to the donor here is a *smell*, not a pass.
 - **Host-Integrity** — the host's existing-behavior baseline (Phase 1 regression net) stays **100% green**, and every declared invariant (§3c) holds. Verified by Radar + Ripple. A graft that improves novelty while regressing the host's value path **fails** and loops back regardless of how innovative it is — the living product is not sacrificed to the experiment.
@@ -147,7 +147,7 @@ Because graft transplants *abstracted concepts* and re-expresses them in the hos
 
 ### 3e. Innovation Gate (Phase 5 — the goal, proven not asserted)
 
-The reason `graft` exists is **novelty**, so novelty is gated as a first-class outcome, borrowing `killer`'s moat/refutation discipline:
+The reason `graft` exists is **novelty**, so novelty is gated as a first-class outcome, borrowing `killer`'s moat/refutation discipline. The skeptic-panel mechanics behind the not-a-bolt-on refutation (2-3 independent cross-engine skeptics, evidence-vs-novelty discipline, default-to-refuted-only-for-evidence-claims, GO-with-flag for unproven-because-new) are owned by `_common/ADVERSARIAL_REFUTATION.md` (graft is one of its consumers, §6); the Innovation Gate layers emergence + felt-novelty + defensibility on top.
 
 | Check | What it proves | Verified by |
 |-------|----------------|-------------|
@@ -156,7 +156,7 @@ The reason `graft` exists is **novelty**, so novelty is gated as a first-class o
 | **Defensibility** | The innovation has a moat / is non-trivial to copy back (else it is a transient feature, not a differentiator) | Compete (moat / time-to-copy) |
 | **Felt novelty** | Real users *experience* it as a new capability, not friction or confusion | Echo cognitive walkthrough |
 
-**Gate:** Emergence ∧ refutation-survived ∧ felt-novelty, with Magi Go/No-Go on the Innovation Thesis, before SHIP. A graft that is concept-faithful and host-safe but **fails the Innovation Gate** is delivered honestly as "a working feature, not an innovation" — the recipe does not relabel a bolt-on as innovation. The shipped innovation carries a **feature flag + adoption KPI + kill criterion** (killer-style) unless Phase 0 explicitly waived it.
+**Gate:** Emergence ∧ refutation-survived ∧ felt-novelty, with Magi Go/No-Go on the Innovation Thesis, before SHIP. A graft that is concept-faithful and host-safe but **fails the Innovation Gate** is delivered honestly as "a working feature, not an innovation" — the recipe does not relabel a bolt-on as innovation. The shipped innovation carries a **feature flag + adoption KPI + kill criterion** (killer-style) unless Phase 0 explicitly waived it; the flag-behind-a-bet structure (differentiation/adoption KPI, ramp schedule, kill criterion that falsifies the bet) is owned by `reference/verdict-gate.md` §3 — graft is the flag-clause consumer named there.
 
 ---
 

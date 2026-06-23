@@ -83,7 +83,7 @@ Phase 5 DUAL VERIFY ∥  (a) SELECTIVE PARITY — each adopted element diffed vs
                        (d) judge[SYNTHESIS review: coherent new product vs patchwork weld? provenance honored?]
                        → DRIFT RE-CHECK per source (clone §3b); FUSION-MAP COVERAGE re-check (every element verified
                          by its assigned oracle — no adopted element skipped parity, no net-new skipped ACs)
-                       → loop to Phase 4 on any failing element/dimension (cap 3 cycles)
+                       → loop to Phase 4 on any failing element/dimension (loop ≤ 3 cycles (default 3))
 Phase 6 SHIP           Guardian[PR + FUSION REPORT: per-source provenance + per-element provenance/oracle/result
                        + Conflict Ledger resolutions + coherence verdict + IP posture + incremental scope]
 ```
@@ -115,7 +115,7 @@ The Fusion Map is the core artifact of this recipe — it is to `fuse` what the 
 
 ### 3b. Selective-Oracle Gate (the dual oracle — fuse's signature departure from clone)
 
-`clone` has one oracle: parity vs the single baseline. `fuse` has **two, assigned per element by the Fusion Map**, and the integrity of the whole recipe depends on never confusing them:
+The shared differential-parity kernel — parity-over-faith, oracle adequacy + non-determinism canonicalization, comparator/harness, provenance/drift — is owned by `_common/DIFFERENTIAL_PARITY.md` (and applied per source via clone §3a–§3c, §2). fuse's specialization is the **selective/dual oracle**: per-element, the oracle is assigned by the Fusion Map. `clone` has one oracle: parity vs the single baseline. `fuse` has **two, assigned per element by the Fusion Map**, and the integrity of the whole recipe depends on never confusing them:
 
 - **Adopted element (`adopt-A`/`adopt-B`) → differential parity vs that source's baseline.** Held to clone's §3c engine *against the source it came from*: visual SSIM/pixel-delta, behavioral fixtures, asset perceptual-hash — all canonicalized (clone §3c non-determinism rules). An adopted element that "looks about right" but was never diffed against its source baseline is unverified — exactly the false-fidelity clone guards against.
 - **Merged / net-new element (`merge`/`net-new`) → spec conformance vs L3 ACs.** Has **no single baseline** (it is a deliberate blend or invention), so differential parity is *meaningless* — demanding byte-parity here spuriously fails every synthesis. Held instead to Accord's L3 acceptance criteria via Attest (feature discipline). The merge *may* inherit partial constraints from both sources (e.g. "preserve A's keyboard shortcuts AND B's data export schema") — those become testable ACs, not a parity diff.

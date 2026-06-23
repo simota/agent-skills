@@ -111,7 +111,7 @@ Phase 5 PARITY VERIFY ∥ Pixel/Voyager[VISUAL parity: differential diff vs Phas
                        judge[FIDELITY review: faithful copy vs approximate look-alike?]
                        → DRIFT RE-CHECK (§3b): spot-recapture a sample of target screens; if the live target diverged
                          from the stamped baseline, the baseline is stale → re-capture, do not "fix" the clone to a moved target
-                       → loop to Phase 4 on any dimension below its parity threshold (cap 3 cycles)
+                       → loop to Phase 4 on any dimension below its parity threshold (loop ≤ 3 cycles (default 3))
 Phase 6 SHIP           Guardian[PR with Fidelity Report + per-screen parity scores + incremental scope]
 ```
 
@@ -168,7 +168,7 @@ A live target is not frozen — it ships new versions, A/B-rotates layouts, and 
 
 ### 3c. Differential Parity Engine (how parity is actually computed)
 
-"Diff the rebuild against the baseline" is the contract; this is the mechanism, shared in spirit with `transmute` §3a (which extracts its oracle from source rather than by observation — same differential discipline, different oracle origin). Each dimension is computed by an explicit, reproducible comparator, not eyeballed:
+"Diff the rebuild against the baseline" is the contract; this is the mechanism. The shared kernel — parity-over-faith, the oracle/baseline-adequacy and non-determinism-canonicalization gates, the comparator/harness discipline, and provenance/drift — is owned by `_common/DIFFERENTIAL_PARITY.md` (§1–§5); clone's specialization is the **captured (black-box) oracle**: a stamped baseline observed from an external product. Each dimension is computed by an explicit, reproducible comparator, not eyeballed:
 
 | Dimension | Comparator | Pass condition |
 |-----------|-----------|----------------|
@@ -178,7 +178,7 @@ A live target is not frozen — it ships new versions, A/B-rotates layouts, and 
 | **Data / API** | Structural diff of clone responses vs observed-contract shapes (field set, types, nesting); semantics spot-checked on sampled records | shape-equivalent; sampled semantics match |
 | **Asset** | Per-asset diff vs the asset manifest: fonts (family/metrics), icons/images (perceptual hash within tolerance, or confirmed faithful recreation) | each asset matches within tolerance, or is a declared faithful recreation |
 
-**Non-determinism canonicalization (both sides, before comparing).** A faithful clone of a *dynamic* product must not be failed by the product's own variance. For each dimension declare significant-vs-incidental and canonicalize the incidental on both baseline and clone before diffing: **mask dynamic regions** (clocks, feeds, randomized recommendations, ad slots, user-specific data), **freeze clock/seed/locale**, **pin the account**, **normalize ordering** of order-incidental collections, and **disable or mid-freeze animations** for static-frame comparison (verify motion separately via `+Flow`). A clone of a randomized feed is faithful when its *feed mechanism* reproduces the original's behavior, not when a single frame matches byte-for-byte — compare the mechanism, not a frozen sample of its output. Without canonicalization the differential either spuriously fails on incidental variance or masks real divergence under noise (the same failure pair as transmute's determinism contract).
+**Non-determinism canonicalization (both sides, before comparing).** A faithful clone of a *dynamic* product must not be failed by the product's own variance. For each dimension declare significant-vs-incidental and canonicalize the incidental on both baseline and clone before diffing: **mask dynamic regions** (clocks, feeds, randomized recommendations, ad slots, user-specific data), **freeze clock/seed/locale**, **pin the account**, **normalize ordering** of order-incidental collections, and **disable or mid-freeze animations** for static-frame comparison (verify motion separately via `+Flow`). A clone of a randomized feed is faithful when its *feed mechanism* reproduces the original's behavior, not when a single frame matches byte-for-byte — compare the mechanism, not a frozen sample of its output. The "without canonicalization → spuriously-fails / masks-divergence" failure pair this prevents is owned by `_common/DIFFERENTIAL_PARITY.md` §3 (Gate B).
 
 **Automated regression.** The Phase 5 comparators are emitted as a re-runnable parity harness (screenshot-diff suite + behavior fixtures + feature matrix), so a later change to the clone — or a later target re-capture — re-verifies parity without re-deriving the baseline. For incremental-clone, each increment's harness accretes into a growing regression suite.
 
