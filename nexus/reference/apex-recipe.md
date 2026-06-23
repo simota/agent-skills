@@ -136,6 +136,8 @@ auto_selected_goal:
 
 #### 0e. CONFIRM (boundary safety, single human checkpoint)
 
+This is the **Confirm-before-launch** tier (`reference/recipe-contract.md` §3): apex confirms before launching the expensive Phase 1-6 + Ship chain. It is a launch gate, not a contract-level deliverable checkpoint — once approved, no further confirm is required unless an internal Risk Gate / Orbit circuit breaker / budget ceiling fires.
+
 | Mode | Behavior |
 |------|----------|
 | `INTERACTIVE` | Always confirm; user can edit goal before proceeding |
@@ -278,6 +280,22 @@ This is a distinct check from Phase 6's in-loop `judge` (code-quality review) an
 |-------|------|----------|
 | `guardian` | Commit policy, branch strategy, PR preparation | Yes |
 | `launch` | Release plan + CHANGELOG + rollback plan | Yes |
+
+### Output: apex Delivery Report
+
+Apex emits `NEXUS_COMPLETE` with the base `## Nexus Execution Report` (`reference/output-formats.md`) **plus the named apex Delivery Report** — the recipe-specific report (element #4 of `reference/recipe-contract.md` §5) that summarizes what apex produced end-to-end:
+
+| Section | Content | Sourced from |
+|---------|---------|--------------|
+| Discovery summary | Top-3 demands (+ personas + evidence anchors); for autonomous mode, the auto-selected goal + rejected alternatives | Phase 0-1 |
+| Spec & AC | accord traceability % + the L3 acceptance-criteria set (must-haves flagged) | Phase 4 |
+| Design decisions | atlas ADR(s) + API/schema deltas (gateway/schema); Vision direction + token/interaction summary | Phase 5 |
+| Risk-Gate verdict | tri-axis result (omen RPN / ripple blast / echo emotion+a11y) and any Conditional-Go conditions | Phase 5 Gate |
+| Loop iterations | Orbit iteration count, per-task cost, convergence reason, circuit-breaker status | Phase 6 |
+| AC-verify / attest | attest conformance % + traceability matrix (AC → evidence → verdict); unmet must-haves = 0 | Phase 6 → Ship gate |
+| Ship status | guardian PR + launch release/rollback plan; cumulative budget vs ceiling | Ship |
+
+On any non-ship exit (budget ceiling, Risk-Gate No-Go, attest fail past re-entry cap), the Delivery Report still emits with best-so-far per phase + the residual gap + the resumable checkpoint, never a silent stop.
 
 ## Sub-Orchestration
 
@@ -453,6 +471,36 @@ Orbit's cost-per-task circuit breaker bounds the *loop*, but the *whole apex run
 ### Cross-Phase Checkpoint-Resume
 
 Apex persists each phase-boundary output (Phase 0 goal artifact, Phase 3 verdict+AC, Phase 4 spec+traceability, Phase 5 design+Risk-Gate result, Phase 6 build state) as a resumable checkpoint, per the Nexus Safety Contract (chains with 4+ steps). A run that aborts mid-flight — budget ceiling hit, Risk Gate No-Go, Orbit circuit breaker, user interrupt — **resumes from the last good phase** instead of restarting from Phase 1. Orbit already owns in-loop checkpoint-resume (`CODEX_ORCHESTRATION.md` C6); this extends the same guarantee to the cross-phase boundaries so the most expensive recipe never re-pays for upstream phases it already completed.
+
+## Failure Modes Prevented
+
+Consolidated view of what apex's gates and phases guard against (drawn from the Phase 0 Failure Modes table, the Risk Gate, the Acceptance Verification gate, and Failure Escalation). Each row is a class of expensive post-implementation discovery that an upstream gate catches first.
+
+| Failure mode | Without apex | Prevented by |
+|--------------|--------------|--------------|
+| Build the wrong thing | A feature ships that no user needed or no metric supports | Phase 0 discovery (spark + rank + sage) + Phase 1 (plea + field evidence anchor) + boundary Confirm-before-launch |
+| Weak / unmeasurable spec | "Done" is subjective; scope creeps | Phase 4 accord traceability threshold + L3 measurable, orbit-consumable ACs |
+| Hidden architecture / blast-radius risk | A migration or contract change breaks neighbors post-merge | Phase 5 Risk Gate: omen FMEA (High-RPN residuals = 0) + ripple blast-radius (No-Go blocks) |
+| UX friction / dark patterns shipped | Brand-visible flow frustrates users, a11y regressions | Phase 5 echo gate (Emotion Valence ≥ median, 0 dark patterns, WCAG3 Bronze ≥ 3.5) + Plea-Echo divergence check |
+| Convergence mistaken for correctness | Loop passes its own tests but doesn't satisfy the spec | Acceptance Verification gate: independent attest conformance ≥ threshold ∧ 0 unmet must-haves (Claude-side, no shared context with builder) |
+| Runaway loop / re-entry storm | Open-ended spend, stuck iterations | Orbit circuit breaker (convergence + cost-per-task) + run-level budget envelope (hard-abort at ceiling) + attest re-entry cap (max 2) |
+| Engine silently degrades | Codex unreachable → silent fallback breaks the cost/convergence model | Phase 5→6 engine availability check fails the handoff with a clear runner error rather than falling back |
+| Decision deadlock | A 1-1-1 tie stalls or is resolved arbitrarily | Phase 3 magi split-decision escalation + Phase 0 magi tie-break / top-3 manual select |
+| Lost progress on interrupt | An abort re-pays for completed upstream phases | Cross-phase checkpoint-resume (resume from last good phase boundary) |
+
+## Boundaries / vs neighbors
+
+Apex is the discovery-through-ship single-feature recipe. How it differs from its siblings:
+
+| vs neighbor | Apex | The neighbor |
+|-------------|------|--------------|
+| **spec** | Discovers the need, specs it, **and** designs + builds + ships it (full cycle) | Authors the spec/AC only — stops at the document, no design/build/ship |
+| **enact** | Self-contained: apex discovers its own goal and ships one feature in one chain | Charter-driven: executes a pre-authored multi-package Charter roster end-to-end (no discovery) |
+| **summit** | Optimizes for shipping one feature correctly through verification gates | Quality-max tournament — multiple candidate solutions compete, judged to a winner |
+| **feature** | High-stakes, ≥3 trigger conditions, full discovery + Risk Gate + acceptance verification | Single guided build for small/medium work — lighter chain, no Phase 0 discovery, no tri-axis gate |
+| **charter** | Builds the thing | Authors the durable team-design document apex's sibling `enact` consumes (charter never builds) |
+
+Decision tree: single high-stakes feature, discovery→ship in one shot → **apex**. Spec/AC only → **spec**. Run a pre-authored Charter → **enact**. Quality-max with competing candidates → **summit**. Small/medium guided build → **feature**.
 
 ---
 

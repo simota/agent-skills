@@ -106,7 +106,7 @@ Team construction + full orchestration spawns the execution team and writes code
 | `INTERACTIVE` | Always confirm; user may adjust before build |
 | `GUIDED` | Always confirm; approve / abort |
 | `AUTORUN` | Explicit Y/N; default abort on no response |
-| `AUTORUN_FULL` | **Announce-and-proceed.** Print the construction summary (work-package count, roster size, estimated agent count / cost / time) and start immediately — **no objection window**, because run-to-completion is the contract. Cost is pre-authorized by invoking enact. |
+| `AUTORUN_FULL` | **Announce-and-proceed (no objection window)** — the `reference/recipe-contract.md` §3 tier for runs-to-completion recipes where only §8 red lines stop. Print the construction summary (work-package count, roster size, estimated agent count / cost / time) and start immediately, because run-to-completion is the contract. Cost is pre-authorized by invoking enact. |
 
 `dry-run` never reaches execution regardless of mode. The Confirm Gate is the *only* gate at the start; it is not re-evaluated mid-run (run-to-completion).
 
@@ -244,6 +244,33 @@ Under run-to-completion, only **precondition** and **safety red line** failures 
 | Build loop stuck / over budget | orbit | **Continue** — orbit switches strategy and keeps going; only a real §8 budget-ceiling breach escalates per §8 (not a blanket pause) |
 | Safety red line (L4 / destructive / out-of-scope per §8) | Nexus / §8 | **Stop + confirm** — the one intentional mid-run pause; resumes on approval, aborts only that action on denial |
 | §7 verification fails | radar/judge | **Continue to DELIVER** — report honestly with output; deliver FAILED/PARTIAL status; do not mask, retry forever, or bypass checks (global quality rule) |
+
+## Failure Modes Prevented
+
+Consolidated view of what enact's run-to-completion contract, recovery ladder, and red lines guard against (drawn from the Run-to-Completion Contract, the recovery ladder, §8 red lines, and Failure Escalation). The design goal is **forward progress to a true terminal verdict** — never an early stop, never a faked green.
+
+| Failure mode | Without enact's contract | Prevented by |
+|--------------|--------------------------|--------------|
+| Stalling on a recoverable failure | The run pauses mid-stream and waits for a human on every hiccup | Recovery ladder: retry (max 3) → `fallback_engine` (§5) → Scout RCA + Builder fix → alternate owner — auto-recovers without asking |
+| One blocked package aborting the whole run | A single unsatisfiable step kills an otherwise-complete delivery | `SKIPPED(blocked, reason)` terminal state — the run continues with remaining packages; circuit breaker (3 failures) skips, never aborts |
+| Engine unreachable hard-fails the run | Codex/agy down stops everything | Per-package `fallback_engine` (default `claude-code`) with logged cost/throughput trade-off; hard-fail only when no fallback defined |
+| Cost pausing the run open-endedly | Spend prompts interrupt an authorized run | Cost does not pause; proceeds to the Charter §8 budget ceiling automatically — only a genuine ceiling breach escalates |
+| Lost progress on interruption | A crash/context-limit restarts from scratch | Append-only run-log tail + auto-resume (treat last `PKG_DONE` as checkpoint; skip terminal packages; no re-confirm) |
+| Faking green to "finish" | Run-to-completion misread as "report success regardless" | Honesty red line: §7 failures reported truthfully with output; DELIVER carries FAILED/PARTIAL — terminal verdict, never fabricated |
+| Acting outside the Charter's scope | Force-mode runs destructive/L4/out-of-scope actions unprompted | §8 safety red lines pause for confirm even in force mode — run-to-completion pre-authorizes only what the Charter already scoped |
+| Improvising past a bad Charter | Missing section / non-existent skill silently patched | Precondition stop at parse/Phase 1 — report the gap, recommend re-authoring via `charter`; never improvise an owner |
+
+## Boundaries / vs neighbors
+
+Enact is the **execution half** of the `charter → enact` pair — it runs a document, it does not author one. How it differs from its siblings:
+
+| vs neighbor | Enact | The neighbor |
+|-------------|-------|--------------|
+| **charter** | **Executes** the Charter: constructs the team from §5, orchestrates §4 end-to-end, ships | **Authors** the Charter (analysis + team design) — stops at the document, spawns no execution agents |
+| **apex** | Charter-driven, **multi-package**: runs a pre-authored roster of work packages to completion (no discovery) | Self-contained **single-feature** discovery→ship: picks its own goal, specs, designs, builds, ships one feature in one chain |
+| **summit** | Drives every §4 package to a terminal state; one owner per package (no competition) | Quality-max tournament — multiple candidate solutions compete on one problem, judged to a winner |
+
+Decision tree: have a Charter (from `charter` or hand-written) and want it run end-to-end → **enact**. Need the Charter authored first → **charter**. One high-stakes feature, discovery→ship, no Charter → **apex**. Quality-max with competing candidates → **summit**.
 
 ## Cost and Latency Profile
 

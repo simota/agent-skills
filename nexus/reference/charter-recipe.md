@@ -280,6 +280,20 @@ Nexus AUTORUN charter "<objective>"
 | Phase 3 a work package has no constructable owner skill | scribe | Re-scope or flag the gap in §5 (so `enact` does not hit an unresolvable roster) |
 | Risk gate No-Go | omen/ripple | Return to Phase 2 (re-scope) |
 
+## Failure Modes Prevented
+
+Consolidated view of what charter's analysis-grounding and self-containment gates guard against — a summary surface over the **Failure Escalation** table above (the per-row escalation rules remain the source of truth). Because charter **stops at the document and runs no execution** (`reference/recipe-contract.md` §3: no execution → **no confirm gate**), the failures it prevents are *authoring* failures that would otherwise surface expensively downstream in `enact`.
+
+| Failure mode | Without charter's gates | Prevented by |
+|--------------|-------------------------|--------------|
+| Aspirational, unbuildable plan | A Charter assumes repo facts that aren't true | Phase 1 comprehensive analysis grounds every roster/work-package decision in repo reality; gaps flagged `UNKNOWN`, never fabricated |
+| Charter that can't self-drive | A reader (or `enact`) must re-run analysis to act | Phase 3 self-containment check — roster, WBS, AC, conventions, orchestration plan, gates all present and mutually consistent before DELIVER |
+| Unresolvable roster downstream | `enact` Phase 1 hits a work package with no constructable owner | Self-containment check: every §4 package maps to exactly one owner skill that exists in the ecosystem; gap re-scoped/flagged in §5 here, not at run time |
+| Engine assumptions fail silently at run | `enact` can't reach the assigned engine and hard-fails | §6 records per-engine prereqs + a `fallback_engine` per Codex/agy package so `enact` degrades gracefully instead of hard-failing |
+| Building the wrong body of work (autonomous) | Charter scopes low-value work | Phase 2 spark + rank (ICE/RICE/WSJF) select the chartered scope; no worthwhile work → present candidates or abort |
+| Scope/approach deadlock | Conflicting decompositions stall authoring | Phase 2 magi arbitration; risk-gate No-Go returns to Phase 2 re-scope |
+| Untrackable execution | `enact` has no objective gate, only prose judgment | §10 checklists generated from §3+§4+§7: pre-flight, per-package DoD, progress tracker, final delivery — testable gates `enact` ticks |
+
 ## Cost and Latency Profile
 
 | Profile | Phases active | Approx agent count | Approx cost |
