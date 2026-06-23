@@ -27,6 +27,7 @@
 | `charter`, `instruction document`, `team charter`, `team operating manual`, `runbook for a team`, `analyze repo and design a team`, `self-driving team charter`, `team design spec`, `comprehensive repo analysis to a plan` | `charter` |
 | `enact`, `run the charter`, `execute the charter`, `execute the instruction document`, `build team from charter and run`, `orchestrate the charter`, `run docs/CHARTER.md` | `enact` |
 | `goal`, `/goal setup`, `goal recipe`, `long-running goal`, `autonomous loop setup` | `goal` |
+| `gedanken`, `thought experiment`, `what if`, `reason through`, `counterfactual`, `limiting case`, `reductio ad absurdum`, `intuition pump`, `steelman scenario`, `hypothetically`, `思考実験`, `もし〜だったら`, `反実仮想` | `gedanken` (structured thought-experiment reasoning — construct a hypothetical → reason from independent lenses → perturb under controlled variation → adversarially refute → conclude with a falsifier; **no code**. Exploratory-reasoning analog of `magi` (which *decides*); orchestrates `flux`/`magi`/`omen`/`matrix`. Trivial one-off "what if" → `flux`/`magi` direct) |
 | `spec`, `spec out`, `spec this out`, `flesh out the spec`, `nail down the requirements`, `write the spec with me`, `talk through a feature`, `refine until the spec is locked`, `idea to spec`, `finalize the spec`, `requirements through dialogue`, `機能を相談して仕様にしたい`, `仕様を固める`, `対話で仕様を詰める` | `spec` (interactive feature-proposal → locked spec via deep dialogue; INTERACTIVE default; stops at the spec, no code; hands off to `feature`/`apex`. Distinct from `essential`/`killer` which deliver a *which-feature verdict* with minimal dialogue, and from `feature`/`apex` which *build*) |
 | `essential`, `must-have`, `MVP definition`, `core feature`, `minimum viable`, `cut scope`, `bare minimum` | `essential` |
 | `killer`, `killer feature`, `differentiator`, `WOW experience`, `decisive feature`, `competitive edge` | `killer` |
@@ -77,6 +78,15 @@
 | `XCUITest`, `XCUIApplication`, `XCUIElement`, `XCUIElementQuery`, `accessibilityIdentifier`, `fastlane snapshot`, `Snapfile`, `SnapshotHelper`, `App Store screenshot`, `frameit`, `xcresulttool`, `xcodebuild test`, `.xctestrun`, `iOS UI test`, `swift ui test`, `status bar override`, `simctl status_bar` | `IOS_UI_TEST` (Snap) |
 | `Web to iOS`, `Web to Android`, `Web to native`, `port to iOS`, `port to Android`, `feature parity matrix`, `nativize`, `porting design`, `Strangler Fig mobile` | `PORTING` (Port → Native) |
 | `UI terminology mapping`, `Web vs iOS vs Android UI`, `cross-platform UI naming`, `what is this component called on iOS/Android`, `HIG Material equivalent`, `compare UI parts across platforms`, `equivalent component`, `UI parity implementation` | `PORTING` (Port) — read `port/reference/ui-terminology-matrix.md` for the Web ↔ iOS (HIG) ↔ Android (Material 3) component-name matrix before per-screen specs / handoff |
+
+---
+
+## Loop, Migration & Reproduction Anchors
+
+Loop-control, change-completeness, cross-language, and product-reproduction/synthesis recipes (previously misfiled under Mobile Native).
+
+| Keywords | Recipe |
+|----------|--------|
 | `converge`, `iterate to rubric`, `generator-evaluator`, `evaluator loop`, `quality loop`, `iterate until accept`, `loop until it passes`, `converge to a quality bar` | `converge` (standalone, or `converge <recipe>` wrapping a generator; flatten rule for loop-recipes) |
 | `migrate`, `migrate everything`, `change without omission`, `もれなく`, `architecture change`, `framework migration`, `framework change`, `middleware swap`, `middleware change`, `mock to production`, `mock to prod`, `stub to real`, `change completeness`, `migrate the whole codebase` | `migrate` (case = arch \| framework \| middleware \| mock-to-prod; `case=lang` → `transmute`) |
 | `transmute`, `rewrite in`, `port to Rust`, `TS to Rust`, `Go to Rust`, `Python to Go`, `JS to TS`, `language rewrite`, `cross-language`, `rewrite in another language`, `idiomatic rewrite`, `differential parity` | `transmute` |

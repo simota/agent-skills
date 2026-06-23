@@ -69,6 +69,24 @@ allowed question *comprehensive and targeted* ("give me X, Y, Z") rather than a 
 
 ---
 
+## Overloaded-Anchor REDIRECT (recipe ambiguity)
+
+Some English anchors map cleanly to one recipe; these do **not** — the same word fits 2+ recipes, so a bare keyword match would mis-route. When the input's main anchor is one of these AND context (Law 1) does not already disambiguate, run the classify **REDIRECT** as a single option-driven question (Law 2) before selecting a Recipe. Pick the option from the family axis in SKILL.md `### Recipe Families`.
+
+| Overloaded anchor | Candidate recipes | The one question (options) |
+|-------------------|-------------------|----------------------------|
+| `improve` / `polish` / `enhance` / `refine` / `make it better` | `kaizen` · `optimize` · `refactor` · `converge` | "Improve *what*? — perf only (`optimize`) / internal cleanup, no behavior change (`refactor`) / multi-axis polish vs a target (`kaizen`) / iterate to a quality rubric (`converge`)" |
+| `audit` / `review` / `check` | legacy quality review · `security` (Sentinel) · `SUPPLY_CHAIN_AUDIT` (Chain) · `DESIGN_AUDIT` (Pixel) · `COMPLIANCE` (Oath) | "Audit for *what*? — code quality / security vulns / skill-MCP supply chain / design-a11y / regulatory compliance" |
+| `differential parity` | `transmute` · `clone` · `migrate` · `fuse` | "Parity against what? — your own source rewritten in another language (`transmute`) / an external product you're copying (`clone`) / your own system you're changing completely (`migrate`) / ≥2 sources synthesized (`fuse`)" |
+| `build` / `implement` (broad) | `feature` · `apex` | "Single guided build (`feature`) or autonomous discovery→ship (`apex`)?" — default `feature` unless 'whole thing / end-to-end' |
+| `migrate` (broad) | `migrate` · `transmute` · `PORTING` | "Same language (arch/framework/middleware → `migrate`) / cross-language rewrite (`transmute`) / web→native (`PORTING`)?" |
+| `combine` / `merge` / `mix in` | `fuse` · `graft` | "Synthesize ≥2 products' surfaces into one (`fuse`) or transplant another product's *concept* onto your own (`graft`)?" |
+| `define what we build` / `nail down` | `spec` · `essential` · `charter` | "Refine one feature into a locked spec via dialogue (`spec`) / decide which ONE feature (`essential`) / whole-repo team plan (`charter`)?" |
+
+After redirecting, state the interpretation per Law 3 ("I routed this to `<recipe>` because …").
+
+---
+
 ## Anti-Patterns
 
 | Anti-Pattern | Why It's Wrong | Better |
