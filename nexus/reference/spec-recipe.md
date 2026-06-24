@@ -14,7 +14,7 @@ A user has a feature idea — possibly vague ("I want notifications") — and wa
 
 ### Default Mode: `INTERACTIVE` (exceptional)
 
-`spec` is the one Recipe that defaults to `INTERACTIVE` instead of `AUTORUN_FULL`. The phase-boundary dialogue checkpoints below are **part of the recipe contract, not the Mode** — so even if `spec` is invoked under `AUTORUN_FULL`/`AUTORUN`, it still stops at each checkpoint for the user to steer. (Recipes = task shape; Modes = execution control; `spec`'s checkpoints are contract-level.) `GUIDED` is acceptable for a lighter touch (confirm only at FRAME / CHALLENGE-pick / LOCK); never silently drop a checkpoint.
+`spec` is one of two Recipes (with `delve`) that default to `INTERACTIVE` instead of `AUTORUN_FULL` — `spec` shapes a *new* feature, `delve` excavates an *existing* one. The phase-boundary dialogue checkpoints below are **part of the recipe contract, not the Mode** — so even if `spec` is invoked under `AUTORUN_FULL`/`AUTORUN`, it still stops at each checkpoint for the user to steer. (Recipes = task shape; Modes = execution control; `spec`'s checkpoints are contract-level.) `GUIDED` is acceptable for a lighter touch (confirm only at FRAME / CHALLENGE-pick / LOCK); never silently drop a checkpoint.
 
 ---
 
