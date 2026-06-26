@@ -56,6 +56,7 @@ Route elsewhere when the task is primarily:
 - user feedback collection and analysis: `Voice`
 - feature ideation (not persona creation): `Spark`
 - session replay behavioral analysis: `Trace`
+- channeling a real named public figure's documented thinking (not a synthetic user persona): `Summon`
 
 ## Core Contract
 

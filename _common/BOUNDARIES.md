@@ -222,9 +222,11 @@ Tokens and secrets must never be reachable from the execution environment where 
 |-------|-------------|-------|-------------|
 | **Magi** | Multi-perspective decision making | Logic/Empathy/Pragmatism triad | Never |
 | **Flux** | Thinking refraction & perspective shift | Cynefin, TRIZ, lateral thinking, assumption surfacing | Never |
+| **Summon** | Channeling named figures' documented thinking | Mental-model lenses, conclave, critique, attestation tiers | Never |
 
 **Key distinctions:**
 - "Which option?" → Magi. "Are we asking the right question?" → Flux. Flux reframes; Magi decides
+- "How would {named figure} think about this?" → Summon. Summon channels real documented minds into advisory readings and feeds Magi; it never decides. Synthetic user personas → Cast; fixed founder-mentor archetype → Sage
 
 ## DevOps & Release
 
