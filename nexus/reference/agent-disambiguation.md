@@ -138,7 +138,7 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
 | "Reframe this", "shift perspective", single-shot analysis | **Flux** | One-time perspective shift |
-| "Bounce ideas", "brainstorm with me", "壁打ち", iterative dialogue | **Riff** | Multi-turn interactive exploration |
+| "Bounce ideas", "brainstorm with me", "rubber-duck session", iterative dialogue | **Riff** | Multi-turn interactive exploration |
 | "Which should we pick?", "Go/No-Go", verdict needed | **Magi** | Structured decision with vote |
 | User wants to explore before knowing what to decide | **Riff** | Open-ended exploration first |
 | User is stuck and needs a new frame, not a conversation | **Flux** | Break the frame, then move on |
@@ -158,7 +158,7 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
 | "Propose a feature for our product", existing data/users/workflows in context | **Spark** | Feature proposal grounded in existing product |
-| "今日のアイデア", "週末ハック", "副業プロジェクト案", no existing product context | **Dawn** | Zero-start personal side-project idea |
+| "Idea for today", "weekend hack", "side-project concept", no existing product context | **Dawn** | Zero-start personal side-project idea |
 | "Add X to the app" (existing app) | **Spark** | Product feature proposal |
 | "What should I build this weekend?" | **Dawn** | Greenfield personal hack |
 | "RICE score this", "JTBD analysis", "OST" | **Spark** | Product discovery frameworks |
@@ -540,23 +540,23 @@ per-feature upside → Spark.
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
-| "Web app を iOS / Android にネイティブ移植したい" | **Port** | Web → pure-native blueprint |
+| "Port web app to iOS / Android as native" | **Port** | Web → pure-native blueprint |
 | "feature parity matrix between web and mobile" | **Port** | Parity verdicts (Full/Adapted/Deferred/Dropped) |
-| "ネイティブアーキテクチャ設計（SwiftUI / Compose）" | **Port** | Per-platform architecture mapping |
+| "Native architecture design (SwiftUI / Compose)" | **Port** | Per-platform architecture mapping |
 | "Strangler Fig phased migration roadmap (web → mobile)" | **Port** | Phased rollout & store-submission timeline |
 | "Pure-native vs KMP vs CMP vs RN vs Flutter trade-off" | **Port** | Cross-platform decision support |
-| "iOS Swift / SwiftUI を実装したい" | **Native** | Pure-native iOS implementation |
-| "Android Kotlin / Jetpack Compose を実装したい" | **Native** | Pure-native Android implementation |
-| "Liquid Glass / Material 3 Expressive 採用" | **Native** | iOS 26 / Android 16 modern surfaces |
-| "Privacy Manifest / Data Safety を仕上げたい" | **Native** → Cloak | Implementation then privacy review |
-| "Passkey / Credential Manager を組み込みたい" | **Native** → Crypt | Implementation then crypto review |
+| "Implement iOS Swift / SwiftUI" | **Native** | Pure-native iOS implementation |
+| "Implement Android Kotlin / Jetpack Compose" | **Native** | Pure-native Android implementation |
+| "Adopt Liquid Glass / Material 3 Expressive" | **Native** | iOS 26 / Android 16 modern surfaces |
+| "Finalize Privacy Manifest / Data Safety" | **Native** → Cloak | Implementation then privacy review |
+| "Integrate Passkey / Credential Manager" | **Native** → Crypt | Implementation then crypto review |
 | "TestFlight phased release / Play staged rollout" | **Native** → Launch | Implementation then release planning |
-| "React Native / Flutter / KMP / CMP で実装したい" | **out of scope** | Native は対象外。Forge でプロトタイプ可、本番は外部実装 |
-| "framework / library / DB の version migration（同一言語内）" | **Shift** `framework`/`lang` | Same-language migration orchestrator |
-| "deprecated library 検出と native API 置換" | **Shift** `detect`/`modernize` | Modernization scan (absorbed from horizon) |
-| "legacy web business rule 抽出（移植前）" | **Trail** `static-rules` | Read-only archaeology (absorbed from fossil) |
+| "Implement in React Native / Flutter / KMP / CMP" | **out of scope** | Out of Native scope. Forge for prototypes; production requires external implementation |
+| "Version migration of framework / library / DB (same language)" | **Shift** `framework`/`lang` | Same-language migration orchestrator |
+| "Detect deprecated libraries and replace with native APIs" | **Shift** `detect`/`modernize` | Modernization scan (absorbed from horizon) |
+| "Extract legacy web business rules (pre-port)" | **Trail** `static-rules` | Read-only archaeology (absorbed from fossil) |
 
-**Rule of thumb**: Web→Native の **設計図** → Port。**実装** → Native。同一言語の移行 → Shift `framework`/`lang`。非推奨検出 → Shift `detect`/`modernize`。Native は React Native / Flutter / KMP / CMP は受けない。
+**Rule of thumb**: Blueprint/design for Web→Native → Port. **Implementation** → Native. Same-language migration → Shift `framework`/`lang`. Deprecated-library detection → Shift `detect`/`modernize`. Native does not handle React Native / Flutter / KMP / CMP.
 
 ---
 
@@ -564,20 +564,20 @@ per-feature upside → Spark.
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
-| "商品画像を SKU / JAN / UPC で集めたい" | **Haul** | Identifier-driven product image acquisition |
-| "EC サイト / ブランドサイトから商品画像取得" | **Haul** | Multi-source product imagery aggregation |
+| "Collect product images by SKU / JAN / UPC" | **Haul** | Identifier-driven product image acquisition |
+| "Fetch product images from e-commerce / brand sites" | **Haul** | Multi-source product imagery aggregation |
 | "catalog images with provenance & license" | **Haul** | License-aware curation |
-| "perceptual hash で重複排除した画像セット" | **Haul** | Cross-source pHash dedup |
+| "Deduplicate image set with perceptual hash" | **Haul** | Cross-source pHash dedup |
 | "reverse image search → canonical product URL" | **Haul** (reverse recipe) | Sample image → product canonical |
 | "license / provenance audit (no new fetch)" | **Haul** (audit recipe) | Audit-only mode |
-| "ログインが必要な保護サイトから画像取得" | **Vector** → **Haul** | Auth handoff then download |
-| "1K+ URL/day, 100+ ドメインのフリート規模クロール設計" | **Trawl** | Architecture only |
-| "汎用ブラウザ自動化、フォーム入力、スクショ取得" | **Vector** | Generic browser tasks |
-| "テキストから画像を生成したい (text-to-image)" | **Sketch** | AI image generation |
-| "モックアップから HTML/CSS を再現したい" | **Pixel** | Mockup-to-code |
-| "アイコン / SVG イラスト" | **Ink** | Vector asset generation |
+| "Fetch images from login-protected sites" | **Vector** → **Haul** | Auth handoff then download |
+| "Fleet-scale crawl design: 1K+ URL/day, 100+ domains" | **Trawl** | Architecture only |
+| "General browser automation, form input, screenshot capture" | **Vector** | Generic browser tasks |
+| "Generate image from text (text-to-image)" | **Sketch** | AI image generation |
+| "Reproduce HTML/CSS from mockup" | **Pixel** | Mockup-to-code |
+| "Icon / SVG illustration" | **Ink** | Vector asset generation |
 
-**Rule of thumb**: 商品画像の取得 → Haul。汎用ブラウザ → Vector。フリート規模アーキ → Trawl。AI 生成 → Sketch。Haul は license_class 必須、unknown は配信不可。
+**Rule of thumb**: Product image acquisition → Haul. General browser automation → Vector. Fleet-scale crawl architecture → Trawl. AI image generation → Sketch. Haul requires license_class; unknown license blocks distribution.
 
 ---
 
@@ -585,19 +585,19 @@ per-feature upside → Spark.
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
-| "office hours" / "I'm stuck" / "what should I focus on" | **Sage** | YC 流アドバイザリー、ボトルネック1点抽出 |
-| "founder advisory" / "creative direction reality check" | **Sage** | パターンマッチ + 創業者アンチパターン検出 |
-| "review my pitch" / "Demo Day deck" / "投資家向け Q&A 練習" | **Sage** (pitch recipe) | STRUCTURE → CLARITY → TENSION → RESONANCE → REVISE |
-| "we just shipped X / hired Y / pivoted Z, postmortem" | **Sage** (retro recipe) | 直近の意思決定/結果の振り返り |
-| "we're stuck right now, need to unblock" | **Sage** (triage recipe) | 5 ターン以内の緊急アンブロック |
-| "アイデアを出したい、発散したい" | **Riff** | Iterative divergent ideation (4 modes) |
-| "新機能を提案して、Markdown spec で" | **Spark** | Feature proposals from existing data/logic |
-| "GO / NO-GO の意思決定、複数の選択肢から選びたい" | **Magi** | 三項審議 (Logos/Pathos/Sophia) |
-| "四半期 / 年次のシナリオシミュレーション、KPI forecast" | **Helm** | Long-term strategy simulation |
-| "前提を疑いたい、視点をずらしたい" | **Flux** | Single-shot reframing |
-| "1-3 日で作れる個人プロジェクト案" | **Dawn** | Daily personal idea ritual |
+| "office hours" / "I'm stuck" / "what should I focus on" | **Sage** | YC-style advisory; extract the single bottleneck |
+| "founder advisory" / "creative direction reality check" | **Sage** | Pattern match + founder anti-pattern detection |
+| "review my pitch" / "Demo Day deck" / "investor Q&A practice" | **Sage** (pitch recipe) | STRUCTURE → CLARITY → TENSION → RESONANCE → REVISE |
+| "we just shipped X / hired Y / pivoted Z, postmortem" | **Sage** (retro recipe) | Retrospective on recent decisions and outcomes |
+| "we're stuck right now, need to unblock" | **Sage** (triage recipe) | Emergency unblock within 5 turns |
+| "I want to generate ideas, diverge" | **Riff** | Iterative divergent ideation (4 modes) |
+| "Propose a new feature as a Markdown spec" | **Spark** | Feature proposals from existing data/logic |
+| "GO / NO-GO decision, pick among multiple options" | **Magi** | Three-perspective deliberation (Logos/Pathos/Sophia) |
+| "Quarterly / annual scenario simulation, KPI forecast" | **Helm** | Long-term strategy simulation |
+| "Question assumptions, shift perspective" | **Flux** | Single-shot reframing |
+| "Personal project idea buildable in 1-3 days" | **Dawn** | Daily personal idea ritual |
 
-**Rule of thumb**: 1 週間で動かす1つのアクションが欲しい → Sage。発散 → Riff。三項審議 → Magi。長期シナリオ → Helm。機能仕様 → Spark。前提反転 → Flux。Sage は idea を **作らず**、創業者が "避けていること" を言わせる。
+**Rule of thumb**: One actionable move to make this week → Sage. Diverge → Riff. Three-perspective deliberation → Magi. Long-term scenario → Helm. Feature spec → Spark. Flip assumptions → Flux. Sage does **not** generate ideas — it surfaces what the founder is avoiding.
 
 ---
 

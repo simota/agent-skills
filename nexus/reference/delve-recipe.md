@@ -41,7 +41,7 @@ The deep-dive proper — go past *what it does* to *what is really going on*. In
 - **Checkpoint (contract-level):** present the insights; the user validates against tacit knowledge (confirms, corrects, or adds — they often know *why* an insight is true or false). Persist confirmed insights to the draft.
 
 ### Phase 4 — DIVERGE (evolution directions)
-From each validated insight, generate evolution directions along **three axes** — the "進化・深化" generation:
+From each validated insight, generate evolution directions along **three axes** — the "evolve & deepen" generation:
 | Axis | Move |
 |------|------|
 | **deepen** | make the core job radically better — go deeper on what the feature already does |

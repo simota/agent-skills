@@ -70,7 +70,7 @@ The sweep runs **first** because it is cheap, broad, and tells capture *what to 
 
 - **clone** — runs as **Phase 0.5 RESEARCH SWEEP** between FRAMING and CAPTURE. The Declared inventory becomes the Phase 2 Capture Completeness Gate denominator; the Exact-value catalog feeds the fidelity-tolerance contract (§3a) and Phase 4 pixel/data precision; Version & drift signals sharpen the provenance stamp (§3b). Capture stays artifact-authoritative.
 - **fuse** — the sweep is **per source** (inherited via "fuse reuses clone per source," fuse §2), scoped to each source's *adopted slice*; plus one **fusion-level** competitive/positioning sweep that informs the Fusion Thesis and the Conflict Ledger rationale (fuse §3a). Each source's ledger is stamped to that source.
-- **graft** — the **donor** sweep is weighted toward `concept-rationale` (docs/engineering write-ups explaining *why a mechanism works* are the best raw material for essence distillation, graft §2) and explicitly **resists surface reproduction** (a doc screenshot is a concept lead, not a parity target — graft rejects surface copying). A lighter **host-domain / competitive** sweep sharpens the Innovation Thesis (graft §3e). Concept-fidelity, not surface-fidelity, is the "再現度" raised here.
+- **graft** — the **donor** sweep is weighted toward `concept-rationale` (docs/engineering write-ups explaining *why a mechanism works* are the best raw material for essence distillation, graft §2) and explicitly **resists surface reproduction** (a doc screenshot is a concept lead, not a parity target — graft rejects surface copying). A lighter **host-domain / competitive** sweep sharpens the Innovation Thesis (graft §3e). Concept-fidelity, not surface-fidelity, is the reproduction fidelity raised here.
 
 ---
 

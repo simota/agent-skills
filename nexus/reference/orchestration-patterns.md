@@ -44,7 +44,7 @@ result1 = Agent(
   description: "Root cause analysis"
   mode: bypassPermissions
   model: sonnet
-  prompt: "あなたは Scout エージェントです。まず ~/.claude/skills/scout/SKILL.md を読み..."
+  prompt: "You are the Scout agent. First, read ~/.claude/skills/scout/SKILL.md and follow its instructions. Task: ..."
 )
 
 # Step 2 - uses Step 1's output
@@ -53,8 +53,8 @@ result2 = Agent(
   description: "Implement fix"
   mode: bypassPermissions
   model: sonnet
-  prompt: "あなたは Builder エージェントです。まず ~/.claude/skills/builder/SKILL.md を読み...
-    前ステップからのコンテキスト: {result1}"
+  prompt: "You are the Builder agent. First, read ~/.claude/skills/builder/SKILL.md and follow its instructions.
+    Context from previous step: {result1}"
 )
 ```
 
@@ -113,9 +113,9 @@ Agent(
   run_in_background: true
   mode: bypassPermissions
   model: sonnet
-  prompt: "あなたは Builder エージェントです。まず ~/.claude/skills/builder/SKILL.md を読み...
-    ファイル所有権: src/validators/email.ts, tests/validators/email.test.ts
-    制約: 上記ファイルのみ変更可能..."
+  prompt: "You are the Builder agent. First, read ~/.claude/skills/builder/SKILL.md and follow its instructions.
+    File ownership: src/validators/email.ts, tests/validators/email.test.ts
+    Constraints: only the files above may be modified..."
 )
 
 Agent(
@@ -124,9 +124,9 @@ Agent(
   run_in_background: true
   mode: bypassPermissions
   model: sonnet
-  prompt: "あなたは Builder エージェントです。まず ~/.claude/skills/builder/SKILL.md を読み...
-    ファイル所有権: src/validators/phone.ts, tests/validators/phone.test.ts
-    制約: 上記ファイルのみ変更可能..."
+  prompt: "You are the Builder agent. First, read ~/.claude/skills/builder/SKILL.md and follow its instructions.
+    File ownership: src/validators/phone.ts, tests/validators/phone.test.ts
+    Constraints: only the files above may be modified..."
 )
 
 # Wait for both to complete (notifications arrive automatically)
@@ -272,22 +272,22 @@ Agent(
   mode: bypassPermissions
   model: sonnet
   prompt: |
-    あなたは Rally エージェントです。
-    まず ~/.claude/skills/rally/SKILL.md を読み、その指示に従ってください。
+    You are the Rally agent.
+    First, read ~/.claude/skills/rally/SKILL.md and follow its instructions.
 
-    タスク: 以下の機能を並列実装してください。
-    ワーカー:
-      1. Builder: ユーザー認証API (src/auth/)
-      2. Builder: プロフィールAPI (src/profile/)
-      3. Artisan: ログインUI (src/components/auth/)
-      4. Artisan: プロフィールUI (src/components/profile/)
-      5. Radar: 統合テスト (tests/)
+    Task: implement in parallel the following features.
+    Workers:
+      1. Builder: user authentication API (src/auth/)
+      2. Builder: profile API (src/profile/)
+      3. Artisan: login UI (src/components/auth/)
+      4. Artisan: profile UI (src/components/profile/)
+      5. Radar: integration tests (tests/)
 
-    制約:
-    - 各ワーカーは指定ディレクトリのみ変更可能
-    - ビルド・テスト・型チェック通過を確認
+    Constraints:
+    - Each worker may only modify its designated directory
+    - Verify build, tests, and type-check pass
 
-    完了時、_STEP_COMPLETE フォーマットで結果を出力してください。
+    On completion, emit results in the _STEP_COMPLETE format.
 )
 ```
 
@@ -323,9 +323,9 @@ result = Agent(
   description: "Implement feature"
   mode: bypassPermissions
   model: sonnet
-  prompt: "あなたは Builder エージェントです。まず ~/.claude/skills/builder/SKILL.md を読み...
+  prompt: "You are the Builder agent. First, read ~/.claude/skills/builder/SKILL.md and follow its instructions.
     Sprint Contract: {contract}
-    タスク: {task_description}"
+    Task: {task_description}"
 )
 
 # Step 2: Spawn Evaluators in parallel
@@ -335,10 +335,10 @@ Agent(
   run_in_background: true
   mode: bypassPermissions
   model: sonnet
-  prompt: "あなたは Judge エージェントです。まず ~/.claude/skills/judge/SKILL.md を読み...
-    モード: EVALUATOR (評価のみ、コード変更不可)
+  prompt: "You are the Judge agent. First, read ~/.claude/skills/judge/SKILL.md and follow its instructions.
+    Mode: EVALUATOR (evaluation only, no code changes)
     Sprint Contract: {contract}
-    評価対象: {result}"
+    Under evaluation: {result}"
 )
 
 Agent(
@@ -347,10 +347,10 @@ Agent(
   run_in_background: true
   mode: bypassPermissions
   model: sonnet
-  prompt: "あなたは Radar エージェントです。まず ~/.claude/skills/radar/SKILL.md を読み...
-    モード: EVALUATOR (評価のみ、コード変更不可)
+  prompt: "You are the Radar agent. First, read ~/.claude/skills/radar/SKILL.md and follow its instructions.
+    Mode: EVALUATOR (evaluation only, no code changes)
     Sprint Contract: {contract}
-    評価対象: {result}"
+    Under evaluation: {result}"
 )
 
 # Step 3: Aggregate feedback → ACCEPT / REVISE / BLOCK
@@ -363,24 +363,24 @@ Agent(
 ```
 # Step 1: Generator
 gen_id = spawn_agent(
-  prompt: "あなたは Builder エージェントです。まず ~/.claude/skills/builder/SKILL.md を読み...
+  prompt: "You are the Builder agent. First, read ~/.claude/skills/builder/SKILL.md and follow its instructions.
     Sprint Contract: {contract}
-    タスク: {task_description}"
+    Task: {task_description}"
 )
 gen_result = wait_agent(gen_id)
 
 # Step 2: Evaluators in parallel
 judge_id = spawn_agent(
-  prompt: "あなたは Judge エージェントです。まず ~/.claude/skills/judge/SKILL.md を読み...
-    モード: EVALUATOR (評価のみ、コード変更不可)
+  prompt: "You are the Judge agent. First, read ~/.claude/skills/judge/SKILL.md and follow its instructions.
+    Mode: EVALUATOR (evaluation only, no code changes)
     Sprint Contract: {contract}
-    評価対象: {gen_result}"
+    Under evaluation: {gen_result}"
 )
 radar_id = spawn_agent(
-  prompt: "あなたは Radar エージェントです。まず ~/.claude/skills/radar/SKILL.md を読み...
-    モード: EVALUATOR (評価のみ、コード変更不可)
+  prompt: "You are the Radar agent. First, read ~/.claude/skills/radar/SKILL.md and follow its instructions.
+    Mode: EVALUATOR (evaluation only, no code changes)
     Sprint Contract: {contract}
-    評価対象: {gen_result}"
+    Under evaluation: {gen_result}"
 )
 
 # Step 3: Collect feedback

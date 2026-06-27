@@ -155,11 +155,11 @@ Agent(
   mode: bypassPermissions
   model: sonnet
   prompt: |
-    あなたは Scout エージェントです。
-    まず ~/.claude/skills/scout/SKILL.md を読み、その指示に従ってください。
-    タスク: [task]
-    制約: [constraints]
-    完了時、_STEP_COMPLETE フォーマットで結果を出力してください。
+    You are the Scout agent.
+    First, read ~/.claude/skills/scout/SKILL.md and follow its instructions.
+    Task: [task]
+    Constraints: [constraints]
+    On completion, emit results in the _STEP_COMPLETE format.
 )
 
 # Step 2: Use Scout's output to spawn Builder
@@ -168,7 +168,7 @@ Agent(
   ...
   prompt: |
     ...
-    前ステップからのコンテキスト: [Scout's _STEP_COMPLETE output]
+    Context from previous step: [Scout's _STEP_COMPLETE output]
     ...
 )
 ```
@@ -192,12 +192,12 @@ Agent(
   mode: bypassPermissions
   model: sonnet
   prompt: |
-    あなたは Builder エージェントです。
-    まず ~/.claude/skills/builder/SKILL.md を読み、その指示に従ってください。
-    タスク: メールバリデーション機能を実装
-    ファイル所有権: src/validators/email.ts, tests/validators/email.test.ts
-    制約: 上記ファイルのみ変更可能
-    完了時、_STEP_COMPLETE フォーマットで結果を出力してください。
+    You are the Builder agent.
+    First, read ~/.claude/skills/builder/SKILL.md and follow its instructions.
+    Task: Implement the email-validation feature
+    File ownership: src/validators/email.ts, tests/validators/email.test.ts
+    Constraints: only the files above may be modified
+    On completion, emit results in the _STEP_COMPLETE format.
 )
 
 Agent(
@@ -207,12 +207,12 @@ Agent(
   mode: bypassPermissions
   model: sonnet
   prompt: |
-    あなたは Builder エージェントです。
-    まず ~/.claude/skills/builder/SKILL.md を読み、その指示に従ってください。
-    タスク: 電話番号バリデーション機能を実装
-    ファイル所有権: src/validators/phone.ts, tests/validators/phone.test.ts
-    制約: 上記ファイルのみ変更可能
-    完了時、_STEP_COMPLETE フォーマットで結果を出力してください。
+    You are the Builder agent.
+    First, read ~/.claude/skills/builder/SKILL.md and follow its instructions.
+    Task: Implement the phone-number-validation feature
+    File ownership: src/validators/phone.ts, tests/validators/phone.test.ts
+    Constraints: only the files above may be modified
+    On completion, emit results in the _STEP_COMPLETE format.
 )
 ```
 
@@ -232,17 +232,17 @@ Agent(
   mode: bypassPermissions
   model: sonnet
   prompt: |
-    あなたは Rally エージェントです。
-    まず ~/.claude/skills/rally/SKILL.md を読み、その指示に従ってください。
+    You are the Rally agent.
+    First, read ~/.claude/skills/rally/SKILL.md and follow its instructions.
 
-    タスク: 以下の実装を並列で実行してください。
-    ワーカー:
-      1. Builder: メールバリデーション (src/validators/email.ts)
-      2. Builder: 電話番号バリデーション (src/validators/phone.ts)
-      3. Artisan: フォームUIコンポーネント (src/components/Form.tsx)
-      4. Radar: 全体テスト (tests/)
+    Task: Run the following implementation work in parallel.
+    Workers:
+      1. Builder: email-validation (src/validators/email.ts)
+      2. Builder: phone-number-validation (src/validators/phone.ts)
+      3. Artisan: form UI component (src/components/Form.tsx)
+      4. Radar: full test suite (tests/)
 
-    完了時、_STEP_COMPLETE フォーマットで結果を出力してください。
+    On completion, emit results in the _STEP_COMPLETE format.
 )
 ```
 

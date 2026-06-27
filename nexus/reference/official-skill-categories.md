@@ -2,44 +2,44 @@
 
 > Source: "The Complete Guide to Building Skills for Claude" (Anthropic, 2025)
 
-Nexus が CLASSIFY フェーズでタスク分類精度を向上させるための公式カテゴリリファレンス。
+Official category reference for improving task classification accuracy in the Nexus CLASSIFY phase.
 
 ---
 
-## 1. 公式3ユースケースカテゴリ
+## 1. Official 3 Use-Case Categories
 
 ### Category 1: Document & Asset Creation
 
-**定義**: 一貫性のある高品質な出力（文書、プレゼン、アプリ、デザイン、コード等）の生成
+**Definition**: Generating consistent, high-quality output (documents, presentations, apps, designs, code, etc.)
 
-**タスク識別シグナル**:
-- `"create"`, `"generate"`, `"design"`, `"build"` + 成果物名
-- ファイル生成やテンプレート適用の要求
-- スタイルガイドやブランド基準への準拠要求
+**Task identification signals**:
+- `"create"`, `"generate"`, `"design"`, `"build"` + artifact name
+- Requests for file generation or template application
+- Requests for compliance with style guides or brand standards
 
-**推奨チェーンパターン**:
-- Scribe / Quill / Morph / Dot / Sketch / Clay → 成果物に応じた生成エージェント
-- 品質チェック: Warden / Judge
+**Recommended chain patterns**:
+- Scribe / Quill / Morph / Dot / Sketch / Clay → generation agent matched to the artifact
+- Quality check: Warden / Judge
 
-**Key Techniques** (公式):
+**Key Techniques** (official):
 - Embedded style guides and brand standards
 - Template structures for consistent output
 - Quality checklists before finalizing
 
 ### Category 2: Workflow Automation
 
-**定義**: 一貫した方法論で実行される多段階プロセスの自動化（複数MCP連携含む）
+**Definition**: Automating multi-step processes executed with a consistent methodology (including multi-MCP coordination)
 
-**タスク識別シグナル**:
-- `"automate"`, `"workflow"`, `"pipeline"`, `"process"` の言及
-- 複数のツール/サービス間の連携要求
-- 繰り返し実行されるタスクの効率化
+**Task identification signals**:
+- Mentions of `"automate"`, `"workflow"`, `"pipeline"`, `"process"`
+- Requests for coordination across multiple tools/services
+- Efficiency improvements for repeatedly executed tasks
 
-**推奨チェーンパターン**:
-- Sherpa（分解） → 各専門エージェント → Radar（検証）
-- 大規模: Titan → Nexus チェーン発行
+**Recommended chain patterns**:
+- Sherpa (decompose) → domain agents → Radar (verify)
+- Large-scale: Titan → Nexus chain dispatch
 
-**Key Techniques** (公式):
+**Key Techniques** (official):
 - Step-by-step workflow with validation gates
 - Templates for common structures
 - Built-in review and improvement suggestions
@@ -47,18 +47,18 @@ Nexus が CLASSIFY フェーズでタスク分類精度を向上させるため�
 
 ### Category 3: MCP Enhancement
 
-**定義**: MCPサーバーが提供するツールアクセスに、ワークフロー知識を付加
+**Definition**: Augmenting tool access provided by MCP servers with workflow knowledge
 
-**タスク識別シグナル**:
-- MCP ツール名やサービス名の直接言及
-- `"integrate"`, `"connect"`, `"sync"` + 外部サービス
-- API連携の最適化要求
+**Task identification signals**:
+- Direct mention of MCP tool names or service names
+- `"integrate"`, `"connect"`, `"sync"` + external service
+- Requests to optimize API integration
 
-**推奨チェーンパターン**:
-- Frame / Relay / Vector → サービス固有のフロー
-- Hone（設定最適化）
+**Recommended chain patterns**:
+- Frame / Relay / Vector → service-specific flow
+- Hone (configuration optimization)
 
-**Key Techniques** (公式):
+**Key Techniques** (official):
 - Coordinates multiple MCP calls in sequence
 - Embeds domain expertise
 - Provides context users would otherwise need to specify
@@ -66,9 +66,9 @@ Nexus が CLASSIFY フェーズでタスク分類精度を向上させるため�
 
 ---
 
-## 2. 公式5パターンとルーティング判断
+## 2. Official 5 Patterns and Routing Decisions
 
-### Pattern → Chain 最適化マッピング
+### Pattern → Chain Optimization Mapping
 
 | Official Pattern | When to Apply | Chain Design Guidance |
 |-----------------|---------------|----------------------|
@@ -104,49 +104,49 @@ IF task requires domain expertise (compliance, finance, security):
 
 ---
 
-## 3. CLASSIFY フェーズでの公式カテゴリ活用
+## 3. Official Category Usage in the CLASSIFY Phase
 
-### 拡張 CLASSIFY プロセス
+### Extended CLASSIFY Process
 
-既存の CLASSIFY（task type, complexity, confidence）に**公式カテゴリ分類**を追加:
+Adds **official category classification** on top of the existing CLASSIFY (task type, complexity, confidence):
 
-1. **Task Type 検出**（既存）: BUG / FEATURE / SECURITY / REFACTOR / OPTIMIZE / REVIEW
-2. **Official Category 検出**（新規）: Document & Asset / Workflow Automation / MCP Enhancement
-3. **Official Pattern 検出**（新規）: Sequential / Multi-MCP / Iterative / Context-Aware / Domain-Specific
-4. **Chain Selection 最適化**: 公式パターンに基づくチェーン調整
+1. **Task Type detection** (existing): BUG / FEATURE / SECURITY / REFACTOR / OPTIMIZE / REVIEW
+2. **Official Category detection** (new): Document & Asset / Workflow Automation / MCP Enhancement
+3. **Official Pattern detection** (new): Sequential / Multi-MCP / Iterative / Context-Aware / Domain-Specific
+4. **Chain Selection optimization**: chain adjustment based on official patterns
 
-### カテゴリ × Task Type マトリクス
+### Category × Task Type Matrix
 
 | | BUG | FEATURE | SECURITY | REFACTOR | OPTIMIZE | REVIEW |
 |--|-----|---------|----------|----------|----------|--------|
-| **Document & Asset** | — | Forge→専門→Judge | — | Zen→Judge | — | Judge |
+| **Document & Asset** | — | Forge→specialist→Judge | — | Zen→Judge | — | Judge |
 | **Workflow Automation** | Scout→Builder→Radar | Sherpa→Builder→Radar | Sentinel→Builder | Zen→Radar | Bolt→Radar | Judge→Canon |
 | **MCP Enhancement** | Scout→Builder→Radar | Frame/Relay→Builder→Radar | Sentinel→Probe | — | Bolt→Tuner | Judge |
 
 ---
 
-## 4. 公式成功基準によるVERIFY強化
+## 4. VERIFY Enhancement via Official Success Criteria
 
-### VERIFY フェーズでの公式メトリクス参照
+### Official Metrics Reference in the VERIFY Phase
 
-チェーン実行後の VERIFY で、公式成功基準を補助的に評価:
+After chain execution, VERIFY evaluates official success criteria as supplementary checks:
 
 | Metric | Check | Pass Criteria |
 |--------|-------|--------------|
-| Skill trigger accuracy | Description に対する auto-load 率 | 概念的確認（定量測定は別途） |
-| Workflow efficiency | チェーンのステップ数と冗長性 | 最小限のエージェント数で完了 |
-| Error handling | エラー発生時のリカバリ | L1-L4 ガードレールが機能 |
-| Output consistency | 同一タスクの結果一貫性 | 構造的一貫性の確認 |
+| Skill trigger accuracy | Auto-load rate against description | Conceptual confirmation (quantitative measurement separate) |
+| Workflow efficiency | Step count and redundancy in the chain | Completed with minimal number of agents |
+| Error handling | Recovery when errors occur | L1-L4 guardrails functioning |
+| Output consistency | Result consistency for identical tasks | Structural consistency confirmed |
 
 ---
 
-## 5. Problem-first vs Tool-first アプローチ判定
+## 5. Problem-first vs Tool-first Approach Classification
 
-CLASSIFY フェーズで、ユーザーのアプローチを判定しチェーン設計に反映:
+At the CLASSIFY phase, determine the user's approach and reflect it in chain design:
 
 | Approach | Detection Signal | Chain Impact |
 |----------|-----------------|-------------|
-| **Problem-first** | 成果物や目標を記述（"I need to set up..."） | Nexus がツール選択を自動化 |
-| **Tool-first** | ツール名やサービス名を直接指定（"I have X MCP..."） | ユーザー指定のツールを尊重しつつ最適化 |
+| **Problem-first** | Describes desired outcome or goal ("I need to set up...") | Nexus automates tool selection |
+| **Tool-first** | Directly specifies tool or service name ("I have X MCP...") | Respects user-specified tools while optimizing |
 
-> Problem-first ではチェーン設計の自由度が高い。Tool-first ではユーザーの明示的選択を尊重する。
+> Problem-first allows greater freedom in chain design. Tool-first respects the user's explicit choices.

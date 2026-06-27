@@ -95,11 +95,11 @@ Nexus maintains continuous context; spawned agents use file-based reset.
 1. **Step-focused prompting** — Frame each agent's prompt around its specific step only, not the full chain
    ```
    # Good: focused on current step
-   タスク: メール検証ロジックを実装してください。
+   Task: Implement the email-validation logic.
 
    # Bad: exposes full chain scope
-   タスク: メール検証を実装してください。その後、電話番号検証、住所検証、
-   プロフィールUI、テスト、セキュリティスキャンも必要です。
+   Task: Implement email validation. Then phone-number validation, address validation,
+   the profile UI, tests, and a security scan are also needed.
    ```
 
 2. **Context budget monitoring** — When Nexus context usage exceeds 70%, switch from `continuous` to `reset` for remaining steps
@@ -107,10 +107,10 @@ Nexus maintains continuous context; spawned agents use file-based reset.
 3. **Selective context injection** — Pass only relevant prior results, not full chain history
    ```
    # Good: selective
-   前ステップの結果: Scout が auth/refresh.ts:87 にトークンリフレッシュの競合状態を特定
+   Result from previous step: Scout identified a token-refresh race condition at auth/refresh.ts:87.
 
    # Bad: full dump
-   前ステップの結果: [Scout's entire 2000-line output]
+   Result from previous step: [Scout's entire 2000-line output]
    ```
 
 ---

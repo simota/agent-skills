@@ -224,14 +224,14 @@ Select a number or provide more specific instructions.
 | "Understand this codebase" | clear | Lens (full onboarding) |
 | "Why is X broken?" | clear | Scout (RCA), not Lens |
 | "When did X regress?" | clear | Trail (git history) |
-| "Web から iOS / Android にネイティブ移植したい" | clear | Port (porting blueprint) |
-| "iOS Swift / Android Kotlin で実装したい" | clear | Native (pure-native impl) |
-| "React Native / Flutter で実装したい" | clear | out of scope; Forge for prototype |
-| "商品画像を SKU で集めたい" | clear | Haul (product image acquisition) |
-| "ログイン必要なサイトから商品画像" | clear | Vector → Haul (auth handoff) |
-| "office hours 受けたい / 何にフォーカスすべきか" | clear | Sage (founder advisory) |
-| "創業者として stuck している" | clear | Sage triage recipe |
-| "ピッチ資料をレビューしてほしい" | clear | Sage pitch recipe |
+| "Port web app to iOS / Android natively" | clear | Port (porting blueprint) |
+| "Implement in iOS Swift / Android Kotlin" | clear | Native (pure-native impl) |
+| "Implement in React Native / Flutter" | clear | out of scope; Forge for prototype |
+| "Collect product images by SKU" | clear | Haul (product image acquisition) |
+| "Product images from a login-required site" | clear | Vector → Haul (auth handoff) |
+| "Want office hours / what should I focus on?" | clear | Sage (founder advisory) |
+| "Stuck as a founder" | clear | Sage triage recipe |
+| "Please review my pitch deck" | clear | Sage pitch recipe |
 
 ---
 

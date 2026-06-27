@@ -93,7 +93,7 @@ ripple_findings:
 
 **Agent**: `echo` in `council` mode (v4 fold-in)
 
-**Task**: Run Persona Council against the proposed feature mock-up / spec. Use 4-perspective minimum (per v4 proposal): Power user / 初回ユーザー (first-time) / Support / Strategy. Org Tier determines max persona count (Solo skip; SMB max 3; Enterprise max 9). Each persona evaluated with machine-readable Persona Contract.
+**Task**: Run Persona Council against the proposed feature mock-up / spec. Use 4-perspective minimum (per v4 proposal): Power user / first-time user / Support / Strategy. Org Tier determines max persona count (Solo skip; SMB max 3; Enterprise max 9). Each persona evaluated with machine-readable Persona Contract.
 
 **Engine diversity (Tier-S/A)**: Run via `rally engine-paradigm` mode (Codex + Antigravity + Claude) — single-engine Council forbidden for Tier-S.
 

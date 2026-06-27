@@ -1,6 +1,6 @@
 # Migrate Recipe — Change-Completeness Migration
 
-> `/nexus migrate` — execute a **wholesale change** (architecture / framework / middleware / mock→production / same-language modernization) across an entire codebase **with a proven-complete guarantee**: every change site migrated, behavior preserved, zero residual old pattern, old code decommissioned. The "もれなく" (no-omission) property is the deliverable, not a side effect.
+> `/nexus migrate` — execute a **wholesale change** (architecture / framework / middleware / mock→production / same-language modernization) across an entire codebase **with a proven-complete guarantee**: every change site migrated, behavior preserved, zero residual old pattern, old code decommissioned. The no-omission property is the deliverable, not a side effect.
 
 Read this file before executing the `migrate` Recipe. The double-loop structure, the RESIDUE-GATE completeness proof, and the gated DECOMMISSION phase are defined here.
 
