@@ -16,6 +16,22 @@ A loop = scheduled execution + isolated workspaces + maker/checker separation + 
 | Maker/checker separation | subagents (`.claude/agents/`, markdown) + agent teams; worktrees isolate *file edits*, subagents/teams coordinate *the work* | subagents spawned in parallel (≤8), results merged into one response; built-in `default`/`worker`/`explorer`; custom agents require `name`/`description`/`developer_instructions` (model + sandbox_mode inherited from parent); on-demand spawn only |
 | Persistent memory | markdown / Linear / state files on disk — "the agent forgets, the repo doesn't" | same: state file outside the conversation as the loop's spine |
 
+## Five moves → six parts → primitives (Osmani/HuaShu framing, 2026-06)
+
+The four-part skeleton above is the minimum. The Orange Book (HuaShu IEEE reformatting, *Loop Engineering: The Anthropic Playbook*, 2026-06) refines it into **five moves** of a single turn, each realized by one of **six parts**, each binding to a concrete primitive. Use this table when deciding *which primitive a recipe step needs* and *which failure it prevents*.
+
+| Move (one turn) | Part | Claude Code primitive | Codex primitive | Skipped → failure |
+|-----------------|------|-----------------------|-----------------|-------------------|
+| **Discovery** — find this turn's work | Skill | `SKILL.md` invoked by automation (not a pasted instruction wall) | `$skill-name` | Blind loop (human still picks work) |
+| **Handoff** — isolate & delegate | Worktree | `--worktree`/`-w`, `isolation: worktree` | background worktree | Tangled loop (parallel agents collide) |
+| **Verification** — say "no" | Sub-agent (generator ≠ judge) | `.claude/agents/` + `/goal` fresh-model check | `.codex/agents/` + automation rerun+judge | Nodding loop (self-approval, **most common**) |
+| **Persistence** — write state outside the chat | Memory + Connector | state file on disk + MCP | state file + MCP connector | Amnesiac loop (no cumulative progress) |
+| **Scheduling** — run round after round | Automation | `/loop`, Cloud Routines, GitHub Actions | Automations tab, cloud (planned) | Manual loop (silently stops) |
+
+- **Discovery sets the ceiling**: surface work via a maintainable skill, not a cron-glued prompt that rots (intent debt). The other four moves done well in service of bad discovery yield nothing.
+- **Verification is the floor and the hardest move**: the generator's level decides what the loop *can* produce; the evaluator's level decides what it *will not*. Tune the evaluator to assume-broken and judge by *acting* (Playwright MCP: click/screenshot/run) not reading — see `orbit/reference/loop-engineering.md` and the `goal` recipe.
+- The loop **shape** is engine-agnostic; only the brand of command differs. The design question is "are all six parts present?", not "which toolchain?".
+
 ## `/loop` modes & safety bounds (Claude Code, verified 2026-06-15)
 
 `/loop [interval] <prompt>` — the **leading token** is parsed as the interval iff it matches `^\d+[smhd]$` (e.g. `5m`, `2h`); the rest is the prompt. Input shape selects one of three modes (primary: `code.claude.com/docs/en/scheduled-tasks`):

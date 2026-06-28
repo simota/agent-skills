@@ -25,6 +25,16 @@ Hooks are **not** the timer — they are the per-event glue that makes each loop
 - **Findings routing** (`Notification`, see `notification-hook.md`): surface loop discoveries to a human/triage channel so an unattended loop stays auditable.
 - **Cost/governance** (`ConfigChange`, `PreToolUse`): unmonitored loops have escalated cost dramatically (documented runaways). Hooks can audit config changes and flag burn-rate-relevant actions.
 
+## Evaluator & cost guards as hooks (Osmani/HuaShu framing, 2026-06)
+
+The Orange Book (*Loop Engineering: The Anthropic Playbook*, HuaShu IEEE reformatting) names three loop disciplines that hooks can enforce deterministically — a model-independent complement to `/goal`'s fresh-model checker:
+
+- **Evaluator must act, not read** (Rajasekaran, Anthropic): a `Stop`/`SubagentStop` hook can require *execution evidence* (test output pasted, screenshot captured) before allowing "done", and default to assume-broken (exit-2 unless proof is present). The maker praises its own work; the hook is the skeptic that can't be talked out of it.
+- **Cap before you ship** (token-blowout guard): a `PreToolUse`/`ConfigChange` hook audits budget-relevant actions so an idle bug can't burn a night's quota — the cap converts open-ended risk into a bounded one.
+- **Keep one door open** (cognitive-surrender guard): a `Notification` hook routes uncertain findings to a human/triage inbox rather than auto-merging — the structural pause that keeps a human able to say "no".
+
+Of the five anti-patterns (one per skipped move — see `orbit/reference/loop-engineering.md`), hooks directly harden three: **Nodding** (verification-gate `Stop` hook), **Token blowout** (cap `PreToolUse` hook), and **Tangled** (a `PreToolUse` deny on cross-worktree writes). Scheduling (the **Manual** anti-pattern) is *not* a hook's job — that's `/loop`/Cloud Routines/GHA.
+
 ## Boundary
 
 Latch owns the **hook** primitive only. The loop's cadence/contract/recovery belongs to **Orbit**; multi-engine orchestration to **Nexus**. When a request is "build me the whole loop," route the loop design to Orbit/Nexus and supply the hooks they need.

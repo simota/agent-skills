@@ -53,6 +53,35 @@ Two well-documented loops anchor the design space — one official, one communit
 
 > Refuted in verification — do not repeat: `/loop` "expires after 3 days" (it's **7 days**); Ralph being "cost-efficient at ~$10-12/hr indefinitely"; "frequent context resets/compaction are *essential* to loop reliability" (fresh-context-per-iteration is one valid design, not a universal requirement).
 
+## Five anti-patterns — one per skipped move (Osmani/HuaShu, 2026-06)
+
+The Orange Book (HuaShu IEEE reformatting, *Loop Engineering: The Anthropic Playbook*) frames a loop's turn as five moves (discovery, handoff, verification, persistence, scheduling). Each failure mode is exactly one move skipped — and maps onto an Orbit guardrail.
+
+| Anti-pattern | Skipped move | Symptom | Orbit guard |
+|--------------|--------------|---------|-------------|
+| **Nodding loop** (most common) | Verification | self-approved output; "never said no in hundreds of turns" | independent `CRITIC_MODEL` DONE gate — never trust verify-PASS alone (AP-12/AP-18) |
+| **Amnesiac loop** | Persistence | no cumulative progress; restarts from the same place each morning | `state.env`/`progress.md` filesystem-as-memory |
+| **Manual loop** | Scheduling | silently stops when attention wanders | `run-loop.sh` cadence / a real cron/event trigger |
+| **Blind loop** | Discovery | human still spends the morning picking the work | discovery logic in a *skill*, not a pasted list |
+| **Tangled loop** | Handoff | parallel agents edit one dir; merge is unanswerable | `git worktree` isolation, one per task |
+
+These cluster: a loop careless about one check is usually careless about others. Hasty loops install only discovery + handoff (the two that produce *visible* output) and skip the three that produce *safety*.
+
+## Four silent costs (they reinforce each other)
+
+A loop that runs itself is a loop that errs quietly. Four costs accrue with no alarm, and each feeds the next (verification debt → comprehension rot → cognitive surrender → token blowout → more unverified output):
+
+- **Verification debt** — unverified output piling up between "runs" and "right"; guard = an independent evaluator (a different agent from the maker).
+- **Comprehension rot** — the gap between code written and code understood; guard = read a representative sample daily and force yourself to explain each change.
+- **Cognitive surrender** — "no longer want to bother" deciding; guard = keep the capacity to say "this is wrong" (the loop can execute, it cannot decide).
+- **Token blowout** — an idle bug burning a night's quota; guard = hard caps set *before* the first unattended run (`USD_PER_RUN_CAP` / `BURN_RATE_ANOMALY`).
+
+**Operational discipline (three standing practices):** Read a Sample Always · Cap Before You Ship · **Keep One Door Open** (build at least one checkpoint where the loop pauses for a human — the pause keeps a human *able* to say no, even if they rarely do).
+
+**Economics of judgment:** loops make generation abundant (code, plans, PRs near-free) and leave *judgment* as the only scarce resource. A loop is a faithful multiplier — the same loop built by two people yields opposite outcomes, separated by one or two checkpoints. Design it "like someone who intends to stay the engineer, not the one who presses go."
+
+**Enterprise structural lesson (Stripe's Minions, 1,300+ PRs/week, zero hand-written):** reliability comes from the *quality of the constraints, not the size of the model* — Minions is a fork of open-source Goose, not a stronger model. A deterministic orchestrator assembles context *before* the LLM wakes; rule-bound work is kept out of the probabilistic model and behind hard-coded gates. This is the same "bound the loop" discipline above, applied at scale.
+
 ## How this informs Orbit decisions
 
 - At `INTAKE`/`CONTRACT`: if the goal matches a "skip a loop" case above, say so and recommend a direct prompt instead of generating a runner. A loop with no automated verification command should fail `ON_GOAL_CONTRACT_WEAK`.
