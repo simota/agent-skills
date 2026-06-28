@@ -160,8 +160,8 @@ Never use a screenshot for terminal output a reader must copy.
 **From Quill (`tutorial`) → Quill (`readme`):**
 - Link the new tutorial from the README "Learn" section; keep the README short and route to the tutorial.
 
-**From Quill (`tutorial`) → Reel / Director:**
-- If the tutorial would benefit from a terminal GIF or video walkthrough, hand off to Reel (CLI demo) or Director (feature demo) with the exact command sequence and the timing budget.
+**From Quill (`tutorial`) → Director:**
+- If the tutorial would benefit from a video walkthrough, hand off to Director (feature demo) with the exact command sequence and the timing budget.
 
 **From Quill (`tutorial`) → Prose:**
 - If the tutorial surfaces in-product UI text that is confusing new users, hand off to Prose for microcopy revision — do not patch user-facing strings inside the tutorial.

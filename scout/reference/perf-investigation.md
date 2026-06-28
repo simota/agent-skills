@@ -133,7 +133,6 @@ git checkout $NEW_SHA && <run profiler> > after.svg
 |-----------|--------|---------|
 | Clear fix category | Bolt | `SCOUT_TO_BUILDER_HANDOFF` with category + brief |
 | Missing index / query plan issue | Tuner | query plan + EXPLAIN output |
-| Concurrency / lock contention | Specter | thread dump + lock trace |
 | Framework choice questionable | Atlas | architectural review |
 | Unclear after profiling | `consensus` Recipe | multi-engine hypothesis |
 

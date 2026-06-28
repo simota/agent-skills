@@ -31,19 +31,19 @@ Phase work complete
 
 ## Validation Chains (Phase-Specific)
 
-Each phase uses a tailored validation chain optimized for its artifact types. The universal `Lens→Radar→Warden` chain is replaced with phase-appropriate agents.
+Each phase uses a tailored validation chain optimized for its artifact types. The universal `Lens→Radar` chain is replaced with phase-appropriate agents.
 
 | Phase | Validation Chain | Rationale |
 |-------|-----------------|-----------|
-| DISCOVER | Lens → Field → Compete → Warden | Validate research quality, persona completeness, competitive coverage |
-| DEFINE | Lens → Canon → Magi → Warden | Validate specs against standards, decision quality |
-| ARCHITECT | Lens → Atlas → Schema → Warden | Validate architecture integrity, dependency analysis, schema quality |
-| BUILD | Lens → Radar → Warden | Validate code artifacts, test coverage, build health (default chain) |
-| HARDEN | Sentinel → Radar → Warden | Validate security audit, test suite, quality gate |
-| VALIDATE | Voyager → Echo → Warden | Validate E2E tests, UX persona review |
-| LAUNCH | Lens → Quill → Gear → Warden | Validate docs, CI/CD pipeline, deployment readiness |
-| GROW | Growth → Pulse → Warden | Validate SEO/CRO, analytics setup |
-| EVOLVE | Voice → Sweep → Warden | Validate feedback collection, tech debt assessment |
+| DISCOVER | Lens → Field → Compete | Validate research quality, persona completeness, competitive coverage |
+| DEFINE | Lens → Canon → Magi | Validate specs against standards, decision quality |
+| ARCHITECT | Lens → Atlas → Schema | Validate architecture integrity, dependency analysis, schema quality |
+| BUILD | Lens → Radar | Validate code artifacts, test coverage, build health (default chain) |
+| HARDEN | Sentinel → Radar | Validate security audit, test suite, quality gate |
+| VALIDATE | Voyager → Echo | Validate E2E tests, UX persona review |
+| LAUNCH | Lens → Quill → Gear | Validate docs, CI/CD pipeline, deployment readiness |
+| GROW | Growth → Pulse | Validate SEO/CRO, analytics setup |
+| EVOLVE | Voice → Sweep | Validate feedback collection, tech debt assessment |
 
 ### Chain Issuance
 
@@ -102,7 +102,6 @@ Acceptance: Validation report with per-criterion pass/fail and overall score
 |-----------|------------------|--------|---------------|
 | Security audit pass | Sentinel report: no critical | 0.30 | Zero critical |
 | Performance targets met | Bolt report: benchmarks | 0.25 | Within targets |
-| Code quality approved | Warden: quality score | 0.25 | ≥B grade |
 | All tests green | Radar: full suite | 0.20 | 100% pass |
 
 ### VALIDATE Phase Exit
@@ -112,7 +111,6 @@ Acceptance: Validation report with per-criterion pass/fail and overall score
 | E2E tests passing | Voyager: E2E suite | 0.30 | ≥95% pass |
 | UX validated | Echo: persona review | 0.25 | No critical issues |
 | Experiments configured | Experiment: A/B setup | 0.20 | Config complete | **XL only** — skipped for S/M/L |
-| Quality gate passed | Warden: final assessment | 0.25 | Approved |
 
 ### LAUNCH Phase Exit
 
@@ -200,9 +198,9 @@ When score <0.60:
 
 | Phase | S scope | M scope | L scope | XL scope |
 |-------|---------|---------|---------|----------|
-| BUILD | Radar (tests pass) | Radar (tests + coverage) | Lens → Radar → Warden | Lens → Radar → Warden |
-| HARDEN | SKIP | Sentinel → Radar | Sentinel → Radar → Warden | Full chain |
-| VALIDATE | Radar (final check) | Radar (comprehensive) | Voyager → Echo → Warden | Full chain |
+| BUILD | Radar (tests pass) | Radar (tests + coverage) | Lens → Radar | Lens → Radar |
+| HARDEN | SKIP | Sentinel → Radar | Sentinel → Radar | Full chain |
+| VALIDATE | Radar (final check) | Radar (comprehensive) | Voyager → Echo | Full chain |
 
 ### S/M Scope Exit Criteria (Simplified)
 

@@ -5,7 +5,6 @@ Purpose: Build a defensible third-party risk management (TPRM) program that keep
 ## Scope Boundary
 
 - **Oath `vendor`**: vendor risk program design — inventory, tier policy, contract requirements, questionnaire process, SOC 2 report review, monitoring cadence, findings tracking.
-- **Warden (elsewhere)**: V.A.I.R.E. functional quality gates on internal product, not vendor qualification.
 - **Crypt (elsewhere)**: cryptographic architecture — asked when reviewing a vendor's encryption claims or key management design; Oath consumes the verdict.
 - **Vigil (elsewhere)**: threat-hunt a vendor after a compromise; Oath runs the program that catches it earlier.
 - **Sentinel (elsewhere)**: scan vendor SDKs you embed for vulnerabilities.

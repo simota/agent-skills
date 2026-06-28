@@ -82,7 +82,6 @@ These agents provide value regardless of project type. Nexus should always consi
 | Echo | H | H | H | M | — | — | H | — | — |
 | Vitrine | H | H | H | — | H | — | M | — | — |
 | Frame | H | H | H | — | M | — | H | M | — |
-| Loom | H | H | H | — | M | — | H | M | — |
 | Ink | H | H | H | — | H | — | H | M | — |
 | Prose | H | H | H | M | — | — | H | M | — |
 | Funnel | M | H | — | — | — | — | M | H | — |
@@ -106,7 +105,6 @@ These agents provide value regardless of project type. Nexus should always consi
 | Saga | H | H | M | — | — | — | M | — | — |
 | Crest | M | — | — | M | H | — | — | — | — |
 | Helm | H | M | — | — | — | — | M | — | — |
-| Levy | — | — | — | — | — | — | — | — | — |
 
 ### Backend / Infrastructure Agents
 
@@ -130,7 +128,6 @@ These agents provide value regardless of project type. Nexus should always consi
 | Voyager | H | H | H | — | — | — | M | — | — |
 | Mint | H | H | H | — | M | H | — | — | H |
 | Siege | H | H | M | — | — | H | — | — | M |
-| Warden | H | H | M | — | — | — | H | M | — |
 | Attest | H | H | M | — | H | H | — | — | — |
 
 ### Security Agents
@@ -140,7 +137,6 @@ These agents provide value regardless of project type. Nexus should always consi
 | Sentinel | H | H | M | — | M | H | M | — | — |
 | Probe | H | H | M | — | — | H | — | — | — |
 | Canon | H | M | M | — | H | H | — | — | — |
-| Specter | H | M | M | — | — | H | — | — | H |
 | Breach | H | H | M | — | — | H | M | — | — |
 | Vigil | H | M | M | — | — | H | — | — | — |
 | Cloak | H | H | M | — | — | H | M | — | H |
@@ -160,14 +156,12 @@ These agents provide value regardless of project type. Nexus should always consi
 | Tome | H | M | M | — | H | H | — | — | — |
 | Stage | H | M | M | — | M | — | — | M | — |
 | Cue | H | H | M | — | — | — | M | — | — |
-| Prism | M | — | M | — | — | — | — | — | M |
 
 ### CLI / Tool Agents
 
 | Agent | SaaS | E-com | Dash | CLI | Lib | API | Mobile | Static | Data |
 |-------|------|-------|------|-----|-----|-----|--------|--------|------|
 | Anvil | — | — | — | H | H | M | — | — | — |
-| Reel | — | — | — | H | H | — | — | — | — |
 
 ### DevOps / Release Agents
 
@@ -185,7 +179,6 @@ These agents provide value regardless of project type. Nexus should always consi
 
 | Agent | SaaS | E-com | Dash | CLI | Lib | API | Mobile | Static | Data |
 |-------|------|-------|------|-----|-----|-----|--------|--------|------|
-| Stratum | H | M | M | — | M | H | — | — | — |
 | Shift | H | M | M | M | H | H | M | — | M |
 | Weave | H | M | M | — | — | H | — | — | M |
 
@@ -202,18 +195,13 @@ These agents provide value regardless of project type. Nexus should always consi
 | Polyglot | H | H | M | — | — | — | H | M | — |
 | Vector | H | H | H | — | — | — | — | M | — |
 | Triage | H | H | M | — | — | H | — | — | — |
-| Arena | H | M | — | M | M | H | — | — | — |
 | Oracle | H | M | M | — | M | H | — | — | H |
-| Aether | — | — | — | — | — | — | — | — | — |
 | Orbit | H | M | M | — | — | H | — | — | M |
 | Void | H | M | M | M | H | H | — | — | — |
 | Sketch | M | M | M | — | — | — | M | M | — |
 | Dot | — | — | — | — | — | — | — | — | — |
-| Clay | — | — | — | — | — | — | — | — | — |
-| Tone | — | — | — | — | — | — | — | — | — |
 | Quest | — | — | — | — | — | — | — | — | — |
 | Realm | — | — | — | — | — | — | — | — | — |
-| Lyric | — | — | — | — | — | — | — | — | — |
 
 ---
 
@@ -245,7 +233,6 @@ Consider (M for SaaS):
   - Stream (event logging)
 
 Skip (— for SaaS):
-  - Reel (CLI demos)
   - Anvil (CLI tools)
 ```
 
@@ -257,7 +244,6 @@ Task: "Build a database migration CLI"
 
 Must-include (H for CLI):
   - Anvil (CLI/TUI)
-  - Reel (demo recording)
   - Builder (core logic)
 
 Consider (M for CLI):
@@ -265,7 +251,6 @@ Consider (M for CLI):
   - Echo (UX walkthrough)
   - Quill (help text / README)
   - Launch (release management)
-  - Arena (multi-engine approach)
 
 Skip (— for CLI):
   - Artisan (frontend)

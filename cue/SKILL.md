@@ -19,12 +19,10 @@ COLLABORATION_PATTERNS:
 - Scribe -> Cue: Specifications converted to tutorial videos
 - Compete -> Cue: Competitive differentiation into comparison videos
 - Cue -> Director: Scripts handed off for Playwright recording
-- Cue -> Reel: CLI demo segments handed off for terminal recording
-- Cue -> Tone: BGM/SE specifications for audio design
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Saga (narratives), Scribe (specs), Compete (analysis), Prose (copy), User (requirements)
-- OUTPUT: Director (recording), Reel (CLI demos), Tone (audio), User (scripts)
+- OUTPUT: Director (recording), User (scripts)
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(M) Marketing(H)
 -->
@@ -46,10 +44,8 @@ Use Cue when the user needs:
 
 Route elsewhere when the task is primarily:
 - recording a demo with Playwright: `Director`
-- recording a terminal session: `Reel`
 - text-based narrative design: `Saga`
 - UX copy or microcopy: `Prose`
-- audio/music production: `Tone`
 - slide deck creation: `Stage`
 - specification writing: `Scribe`
 
@@ -62,7 +58,7 @@ Route elsewhere when the task is primarily:
 - Add timing markers for every scene; total must match target duration.
 - Include at least one CTA with placement rationale.
 - Provide narration in the target language with tone/pacing guidance.
-- Mark screen recording segments explicitly for Director/Reel handoff.
+- Mark screen recording segments explicitly for Director handoff.
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read brand voice, product features, and target audience profile at FRAME — script resonance depends on grounding in actual messaging and persona), P5 (think step-by-step at story structure (hook/problem/solution/CTA), scene pacing, and platform-specific tailoring (shorts vs long-form))** as critical for Cue. P2 recommended: calibrated script preserving scene markers, narration tone, and CTA placement. P1 recommended: front-load video type, audience, duration, and platform at FRAME.
 
 ## Boundaries
@@ -183,20 +179,18 @@ Parse the first token of user input.
 - Include video brief (audience, goal, duration, platform).
 - Include scene-by-scene breakdown with all fields populated.
 - Include total word count and estimated narration time.
-- Mark Director/Reel handoff points for recording segments.
+- Mark Director handoff points for recording segments.
 - Provide CTA placement with rationale.
 
 ## Collaboration
 
 **Receives:** Saga (narratives), Scribe (specs), Compete (analysis), Prose (copy), User (briefs)
-**Sends:** Director (recording scripts), Reel (CLI segments), Tone (audio specs), User (scripts)
+**Sends:** Director (recording scripts), User (scripts)
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
 | Saga → Cue | `SAGA_TO_CUE_HANDOFF` | Narrative to video adaptation |
 | Cue → Director | `CUE_TO_DIRECTOR_HANDOFF` | Script for Playwright recording |
-| Cue → Reel | `CUE_TO_REEL_HANDOFF` | CLI demo segment |
-| Cue → Tone | `CUE_TO_TONE_HANDOFF` | BGM/SE specifications |
 
 ## Reference Map
 
@@ -237,7 +231,7 @@ _STEP_COMPLETE:
       platform: "[YouTube | Twitter | Product Hunt | landing | general]"
       template: "[Problem-Solution | AIDA | Before-After | Step-by-Step | Hook-Payoff]"
     cta: "[CTA description and placement]"
-  Next: Director | Reel | Tone | DONE
+  Next: Director | DONE
   Reason: [Why this next step]
 ```
 

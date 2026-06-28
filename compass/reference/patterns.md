@@ -77,7 +77,6 @@ User request
       ├─ i18n → Polyglot
       ├─ Pixel art → Dot
       ├─ SVG icons → Ink
-      ├─ SFX / BGM → Tone
       └─ Idea generation → Riff
 ```
 

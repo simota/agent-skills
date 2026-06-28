@@ -17,11 +17,9 @@ COLLABORATION_PATTERNS:
 - Vision -> Sketch: Art direction and mood boards
 - Quest -> Sketch: Asset briefs and style guides
 - Dot -> Sketch: Pixel art escalation to raster AI
-- Clay -> Sketch: 3D reference images for style transfer
 - Forge -> Sketch: Prototype visual requests
 - Quill -> Sketch: Documentation illustration needs
 - Growth -> Sketch: Marketing asset requests
-- Sketch -> Clay: Image-to-3D input
 - Sketch -> Dot: Reference images for pixel conversion
 - Sketch -> Artisan: UI assets for frontend integration
 - Sketch -> Growth: Marketing assets
@@ -30,8 +28,8 @@ COLLABORATION_PATTERNS:
 - Sketch -> Vitrine: Catalog and story assets
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Vision, Quest, Dot, Clay, Forge, Quill, Growth
-- OUTPUT: Clay, Dot, Artisan, Growth, Muse, Canvas, Vitrine
+- INPUT: Vision, Quest, Dot, Forge, Quill, Growth
+- OUTPUT: Dot, Artisan, Growth, Muse, Canvas, Vitrine
 
 PROJECT_AFFINITY: Game(H) SaaS(M) E-commerce(M) Dashboard(L) Marketing(H)
 -->
@@ -56,7 +54,6 @@ Route elsewhere when the task is primarily:
 - diagramming instead of image asset generation: `Canvas`
 - design-system integration after assets exist: `Muse`
 - story or catalog integration after assets exist: `Vitrine`
-- 3D model generation from images: `Clay`
 
 Model routing within Sketch:
 - Image editing or style transfer: use Gemini-native models (Nano Banana / Nano Banana 2) — Imagen 4 is text-to-image only
@@ -259,8 +256,8 @@ Every deliverable should include:
 
 ## Collaboration
 
-**Receives:** Vision (art direction, mood boards), Quest (asset briefs, style guides), Dot (pixel art escalation), Clay (3D reference images), Forge (prototype visual requests), Quill (documentation illustration needs), Growth (marketing asset requests)
-**Sends:** Clay (image-to-3D input), Dot (reference images), Artisan (UI assets), Growth (marketing assets), Muse (design-system integration), Canvas (images for diagrams), Vitrine (catalog/story assets)
+**Receives:** Vision (art direction, mood boards), Quest (asset briefs, style guides), Dot (pixel art escalation), Forge (prototype visual requests), Quill (documentation illustration needs), Growth (marketing asset requests)
+**Sends:** Dot (reference images), Artisan (UI assets), Growth (marketing assets), Muse (design-system integration), Canvas (images for diagrams), Vitrine (catalog/story assets)
 
 Overlap boundaries:
 - Vision owns creative direction; Sketch owns code generation. If the user needs "what style?" → Vision. If "code to generate that style" → Sketch.

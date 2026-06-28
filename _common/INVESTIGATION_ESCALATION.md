@@ -1,6 +1,6 @@
 # Investigation Escalation Protocol
 
-Escalation standard across the investigation skill cluster (Scout, Lens, Trail, Specter).
+Escalation standard across the investigation skill cluster (Scout, Lens, Trail).
 
 ## Escalation Flow
 
@@ -12,15 +12,10 @@ Escalation standard across the investigation skill cluster (Scout, Lens, Trail, 
     │
     ▼ anomaly pattern / potential bug found
   Scout (TRIAGE→TRACE) ─── bug identified ─── Builder handoff
-    │                         │
-    │ history investigation    │ concurrency suspected
-    │ needed                   │
-    ▼                         ▼
-  Trail (bisect/archaeology)  Specter (SCAN→ANALYZE→SCORE)
-    │                         │
-    ▼ resource-related        ▼ onset timing needed
-      change found
-    └───→ Specter             └───→ Trail
+    │
+    │ history investigation needed
+    ▼
+  Trail (bisect/archaeology)
 ```
 
 ## Ownership Rule
@@ -58,28 +53,6 @@ SCOUT_TO_LENS_HANDOFF:
   bug_context: "[what is known so far]"
   specific_questions: "[what Scout needs to understand]"
   scope_hint: "[files/modules to focus on]"
-```
-
-### TRAIL_TO_SPECTER_HANDOFF
-
-```yaml
-TRAIL_TO_SPECTER_HANDOFF:
-  investigation_id: "[unique-id]"
-  bisect_result: "[commit hash and change summary]"
-  change_type: "[resource_management | concurrency_modification | lock_change | async_pattern_change]"
-  evidence: "[what the commit changed]"
-  suggested_scan_focus: "[race_condition | memory_leak | resource_leak | deadlock]"
-```
-
-### SPECTER_TO_TRAIL_HANDOFF
-
-```yaml
-SPECTER_TO_TRAIL_HANDOFF:
-  investigation_id: "[unique-id]"
-  issue_type: "[race_condition | memory_leak | resource_leak | deadlock]"
-  request: "[onset_identification | change_history | blame_analysis]"
-  suspected_components: "[files/modules]"
-  evidence: "[current analysis findings]"
 ```
 
 ## Stall Protocol (Cross-Cluster)

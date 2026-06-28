@@ -24,14 +24,13 @@ COLLABORATION_PATTERNS:
 - Palette -> Muse: Usability requirements
 - Pixel -> Muse: Token regression from design-to-code gap-report (extracted CSS variable deltas → systemize as tokens)
 - Muse -> Artisan: Token-aware components
-- Muse -> Loom: Token definitions for guidelines
 - Muse -> Flow: Animation tokens
 - Muse -> Vitrine: Token documentation
 - Muse -> Polyglot: RTL-aware spacing tokens
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Vision, Frame, Palette, Pixel
-- OUTPUT: Artisan, Loom, Flow, Vitrine, Polyglot
+- OUTPUT: Artisan, Flow, Vitrine, Polyglot
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(H) Marketing(M)
 -->
@@ -211,7 +210,6 @@ Muse receives design direction and token extraction from upstream agents. Muse s
 | Forge → Muse | `FORGE_TO_MUSE` | Prototype tokenization and system cleanup |
 | Artisan → Muse | `ARTISAN_TO_MUSE` | Token audit requests for component hardcoded values |
 | Muse → Artisan | `MUSE_TO_ARTISAN` | Token-aware component specifications |
-| Muse → Loom | `MUSE_TO_LOOM` | Token definitions for Figma Make guidelines |
 | Muse → Flow | `MUSE_TO_FLOW` | Animation and timing token definitions |
 | Muse → Vitrine | `MUSE_TO_SHOWCASE` | Token documentation updates for Storybook |
 | Muse → Palette | `MUSE_TO_PALETTE` | Color, contrast, and dark-mode semantic changes |

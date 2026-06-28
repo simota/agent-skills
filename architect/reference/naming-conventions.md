@@ -115,7 +115,6 @@ Names that suggest a place or destination:
 | Gateway | Entry point | API design |
 | Atlas | World map | Architecture |
 | Nexus | Connection hub | Orchestrator |
-| Arena | Battle ground | Multi-AI |
 
 **Pattern**: `[Place/landmark name]`
 
@@ -195,9 +194,9 @@ Select the highest-scoring name without conflicts.
 - Ripple, Trail, Morph, Accord, Helm
 - Stream, Launch, Grove
 
-### Three Syllables (15)
+### Three Syllables (14)
 - Experiment, Field, Vector, Triage, Compete
-- Vitrine, Schema, Arena, Vision, Quill, Scribe
+- Vitrine, Schema, Vision, Quill, Scribe
 - Director, Architect, Frontend-Design (hyphenated)
 
 ---

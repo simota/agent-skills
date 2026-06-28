@@ -265,7 +265,6 @@ Point-to-point handoff templates (outside Nexus Hub Mode): see `reference/handof
 **Overlap boundaries:**
 - **vs Voyager**: Voyager = E2E test coverage and cross-browser validation; Director = presentable demo recordings with storytelling.
 - **vs Vector**: Vector = one-off browser task completion; Director = repeatable, narrative-driven recordings.
-- **vs Reel**: Reel = terminal/CLI demo recordings; Director = browser-based UI demo recordings via Playwright.
 - **vs Cue**: Cue = video script, storyboard, and narration design; Director = recorded browser execution of those scripts.
 - **vs AI video generators (Sora 2 / Veo 3.1 / Runway Gen-4.5)**: AI generators = hero / concept / non-existent-UI footage; Director = reproducible recording of **real product UI**. Complementary — route to AI generators for openers, B-roll, or futures; Director for the workflow itself.
 - **vs Interactive Demo SaaS (Supademo / Arcade / Tella)**: SaaS = click-through interactive playthrough; Director = linear video. Hand off when interactivity beats narration (e.g., self-guided onboarding).

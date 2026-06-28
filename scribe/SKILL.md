@@ -30,14 +30,13 @@ COLLABORATION_PATTERNS:
 - Scribe -> Judge: Review criteria and acceptance gates
 - Scribe -> Sherpa: Completed specs broken into atomic tasks
 - Scribe -> Morph: Format conversion (MD to Word/PDF)
-- Scribe -> Prism: NotebookLM steering input
 - Scribe -> Lore: Reusable documentation patterns and INSCRIBE signals
 - Scribe -> PDM: Specs/PRD as planned-scope source for delivery reconciliation
 - PDM -> Scribe: Spec gaps from undocumented implemented features
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Accord, Vision, Spark, Helm, Gateway, Atlas, PDM (spec gaps)
-- OUTPUT: Builder, Artisan, Radar, Voyager, Judge, Sherpa, Morph, Prism, Lore, PDM (spec as scope source)
+- OUTPUT: Builder, Artisan, Radar, Voyager, Judge, Sherpa, Morph, Lore, PDM (spec as scope source)
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(M) Marketing(M)
 -->
@@ -259,7 +258,7 @@ Response shape:
 ## Collaboration
 
 **Receives:** Accord (integrated specs), Vision (design direction), Spark (feature proposals), Helm (strategy docs), Gateway (API design for SRS merge), Atlas (architecture decisions for HLD/LLD)
-**Sends:** Builder (implementation specs), Artisan (UI specs), Radar (test specs), Voyager (E2E test specs), Judge (review criteria), Sherpa (atomic task breakdown), Morph (format conversion), Prism (NotebookLM input), Lore (reusable doc patterns)
+**Sends:** Builder (implementation specs), Artisan (UI specs), Radar (test specs), Voyager (E2E test specs), Judge (review criteria), Sherpa (atomic task breakdown), Morph (format conversion), Lore (reusable doc patterns)
 
 ### Overlap Boundaries
 

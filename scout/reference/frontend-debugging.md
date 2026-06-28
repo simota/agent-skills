@@ -17,7 +17,7 @@ Browser and frontend-framework-specific bug investigation patterns.
 ### Performance Tab
 - Long Task (>50ms) → main thread blocking
 - Layout Shift → root cause of CLS issue (missing image dimensions, dynamic content insertion)
-- Memory timeline → leak detection (Specter escalation candidate)
+- Memory timeline → leak detection
 
 ## React-Specific Patterns
 
@@ -37,7 +37,6 @@ Browser and frontend-framework-specific bug investigation patterns.
 - Symptom: state update after unmount (memory leak)
 - Cause: forgotten cleanup for subscription, timer, or AbortController
 - Investigation: `Can't perform a React state update on an unmounted component` warning
-- Specter escalation: if memory leak suspected, use SCOUT_TO_SPECTER_HANDOFF
 
 ### Infinite Re-render Loop
 - Symptom: `Maximum update depth exceeded`

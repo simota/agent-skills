@@ -144,7 +144,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Recipe is unclear (LP type ambiguous between Lead Gen vs SaaS Signup vs Lead Magnet).
 - Stage gate fails twice in a row.
 - Fan-out would exceed 5 concurrent delegates.
-- External paid APIs (Sketch image generation, Clay 3D) would be triggered for hero assets.
+- External paid APIs (Sketch image generation) would be triggered for hero assets.
 - Scope expands beyond a single LP (multi-page funnel, full site).
 
 ### Never

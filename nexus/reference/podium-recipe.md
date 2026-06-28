@@ -178,7 +178,7 @@ Where `summit` triangulates strategic code decisions, podium triangulates **pros
 | **Narrative** | Accord (L0-L1 staged elaboration), Zine (story arc for articles), Scribe (spec structure), Stage (slide narrative arc), Cue (storyboard for presentation-heavy work), Magi (depth vs breadth arbitration), Void (scope cut) | — | — |
 | **Production: Content** | Scribe (PRD/SRS/HLD/LLD body), Zine (article body + hook), Prose (microcopy, headings, CTAs), Saga (product narrative) | Quill (code samples with proper JSDoc/TSDoc), Vitrine (component usage examples) | Tome (long-ctx learning-doc body), Scribe[long-ctx] (large spec bodies > 200K tokens) |
 | **Production: Visual** | Vision (visual direction), Muse (brand tokens application) | Canvas (Mermaid / draw.io diagram code), Vitrine (Storybook-style examples), Dot (pixel art via code) | Sketch (Gemini-native hero / cover / illustration imagery), Ink (SVG icon system), Frame (multimodal context extraction from existing visual references) |
-| **Production: Layout** | Prism (NotebookLM steering prompt design) | Stage (Marp / reveal.js / Slidev compilation), Morph (intermediate MD ↔ DOCX/PPTX/PDF/HTML conversion) | `figma:figma-use-slides` (Figma Slides — when target is Figma) |
+| **Production: Layout** | — | Stage (Marp / reveal.js / Slidev compilation), Morph (intermediate MD ↔ DOCX/PPTX/PDF/HTML conversion) | `figma:figma-use-slides` (Figma Slides — when target is Figma) |
 | **Verification** | Echo (persona walkthrough on finished artifact), Vision (design direction review), Magi (verdict arbitration), Nexus[claim-grounding scan] (token-level cross-reference between artifact claims and research_brief.source_facts — kept inside Nexus rather than spawned, see Phase 4) | Voyager (slide render-and-screenshot check), Radar?[testable assertions in technical docs] | Canon (style / brand / WCAG-AA / ISO 25010 compliance), Palette (visual a11y from screenshots), Attest (only when the artifact is itself a spec being verified against a separate normative document — otherwise claim-grounding stays in Nexus) |
 | **Improvement** | Prose (microcopy polish), Zine (prose tightening), Scribe (spec body refinement), Vision (design direction refinement), Magi (improvement-selection arbitration) | Canvas (diagram fixes), Stage (slide layout adjustment), Morph (re-render), Quill (code sample cleanup) | Sketch (re-generate imagery if rejected), Tome (re-extract from updated diff) |
 
@@ -672,7 +672,6 @@ Mode: AUTORUN_FULL
 | `doc` (or detected article/blog/spec) | doc only | body_doc.md only | full | Morph (no Stage) |
 | `slide` (or detected deck/keynote) | slide only | slide_content.yaml only | full | Stage only |
 | `both` (default) | both | body_doc.md + slide_content.yaml | full | Stage + Morph |
-| `notebooklm` | doc + NotebookLM input | body_doc.md | full | Prism + Morph |
 | `figma-slides` | slide via Figma | slide_content.yaml | full | `figma:figma-use-slides` + Stage (fallback) |
 
 **Primary artifact rule:**

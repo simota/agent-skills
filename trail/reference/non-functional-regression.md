@@ -64,7 +64,7 @@ fi
 
 ### Memory Leak Onset Identification
 
-1. Use blame on the leak location detected by Specter to identify the last modifier
+1. Use blame on the detected leak location to identify the last modifier
 2. Use bisect to identify the commit where the leak started
 3. Compare heap snapshots before and after the commit
 
@@ -86,12 +86,3 @@ THRESHOLD=500000  # 500KB
 - Container environment: measure wall time with `time docker run --rm app`
 - Node.js: identify bottleneck modules with `--prof` + `--prof-process`
 - Python: profile import time with `python -X importtime`
-
-## Specter Escalation Criteria
-
-When bisect result falls into any of the following, use `TRAIL_TO_SPECTER_HANDOFF` (`_common/INVESTIGATION_ESCALATION.md`):
-
-- Changes to concurrency control (lock, mutex, semaphore, channel)
-- Changes to resource management (connection pool, file handle, socket)
-- Changes to async processing patterns (Promise chain, async/await, event listener)
-- Changes to memory management (cache, buffer, stream)

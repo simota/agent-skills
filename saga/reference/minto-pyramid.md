@@ -243,7 +243,6 @@ Run the full AP-1~AP-9 checklist from `reference/anti-patterns.md` and report re
 - Scribe: full memo authoring
 - Magi: decision arbitration if multiple options
 - Prose: tone polish for sentences
-- Stratum: linked architecture decision (if technical)
 ```
 
 ## Anti-Patterns Specific to Pyramid
@@ -273,7 +272,7 @@ When `pyramid` completes, emit:
 - **Top-sentence-only test** result.
 - **Anti-pattern check** (AP-1~AP-9 per `reference/anti-patterns.md` + Pyramid-specific table below).
 - **Decision ask** (what / when / consequence).
-- **Handoffs**: Stage, Scribe, Magi, Prose, Stratum.
+- **Handoffs**: Stage, Scribe, Magi, Prose.
 
 ## References
 

@@ -10,7 +10,6 @@ Purpose: Author subtitle, SDH (Subtitles for the Deaf and Hard-of-hearing), and 
 - **cue `localize` (elsewhere)**: translated captions / dubbing scripts for multi-locale delivery — run after base captions are locked.
 - **cue `narration` (elsewhere)**: source narration script — captions derive from this.
 - **Polyglot (elsewhere)**: i18n key extraction for UI copy — not applicable to time-coded captions, but owns any surrounding UI strings.
-- **Warden (elsewhere)**: accessibility gate evaluation (WCAG 1.2.2 / 1.2.3 pass/fail).
 
 If the hypothesis is "can a hearing-impaired viewer follow this video?" → `captions`. If it's "can a Spanish speaker follow this video?" → `localize`.
 
@@ -137,6 +136,5 @@ Budget: ~2-3× video runtime for a full polish pass on a 3-minute video.
 On completion, hand off:
 
 - **To `localize`**: locked base-language SRT/VTT with speaker IDs, pronunciation notes for product names, glossary of non-translatable terms, and runtime caption-budget summary.
-- **To Director / Reel**: burn-in position spec (safe area, font, size, stroke) if delivery is hardsub.
-- **To Warden**: caption file + video file pairing for WCAG 1.2.2 / 1.2.3 accessibility gate evaluation.
+- **To Director**: burn-in position spec (safe area, font, size, stroke) if delivery is hardsub.
 - **To user**: caption file in target format, CPS/line-length validation report, and a one-line note on any passages that required editorial compression to hit reading speed.

@@ -9,7 +9,7 @@ CAPABILITIES_SUMMARY:
 - design_system_strategy: Plan design system architecture, token governance, and multi-brand coordination
 - redesign_planning: Plan and direct complete redesign efforts with ROI-driven success criteria
 - trend_analysis: Analyze and apply 2026 trends (AI-driven UI, spatial design, glassmorphism, hyper-personalization, Calm UI/Cognitive Clarity, Adaptive Design Systems, Figma Make AI workflow, multi-modal input direction, dynamic typography with Variable Fonts)
-- agent_orchestration: Coordinate Muse, Palette, Flow, Forge, Frame, and Loom for design work
+- agent_orchestration: Coordinate Muse, Palette, Flow, Forge, and Frame for design work
 - brand_alignment: Ensure design decisions align with brand identity and business outcomes
 - figma_mcp_strategy: Direct Figma MCP-driven design-to-code pipelines via Frame agent
 - tri_engine_direction: `multi` Recipe — parallel design-direction generation across Codex + Antigravity + Claude subagents with concurrence-divergence scoring and aesthetic-spectrum coverage; Portfolio-only merge by default (3–5 complementary directions for user selection) with opt-in Compete merge (`multi --compete`); preserves single-engine breakthrough directions and prepares downstream handoff stubs for Muse/Palette/Flow/Forge/Frame/Prose
@@ -24,13 +24,12 @@ COLLABORATION_PATTERNS:
 - Vision -> Flow: Animation direction and motion language
 - Vision -> Forge: Prototype specifications and concept builds
 - Vision -> Artisan: Implementation direction and component specs
-- Vision -> Loom: Guidelines direction for Figma Make
 - Vision -> Frame: Figma MCP design context extraction and design system bridging
 - Vision -> Prose: Design direction for UX copy and microcopy
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Field, Compete, Spark, Echo
-- OUTPUT: Muse, Palette, Flow, Forge, Artisan, Loom, Frame, Prose
+- OUTPUT: Muse, Palette, Flow, Forge, Artisan, Frame, Prose
 
 PROJECT_AFFINITY: Game(H) SaaS(H) E-commerce(H) Dashboard(H) Marketing(H) Spatial(M)
 -->
@@ -41,7 +40,7 @@ Creative-direction agent for redesigns, new-product design systems, trend applic
 ## Trigger Guidance
 
 - Use Vision when the primary question is design direction, not implementation.
-- Typical tasks: redesign an existing UI, define a new design system, audit visual/UX quality, apply 2026 trends safely, direct Figma MCP-driven workflows, or coordinate `Muse`, `Palette`, `Flow`, `Forge`, `Frame`, `Echo`, `Accord`, and `Warden`.
+- Typical tasks: redesign an existing UI, define a new design system, audit visual/UX quality, apply 2026 trends safely, direct Figma MCP-driven workflows, or coordinate `Muse`, `Palette`, `Flow`, `Forge`, `Frame`, `Echo`, and `Accord`.
 - Use Vision when evaluating AI-driven interface patterns (agent UIs, explainable AI surfaces, hyper-personalization strategies).
 - Use Vision when planning spatial/3D design direction (Apple Vision Pro, Z-axis layering, glassmorphism).
 - Use Vision when design must demonstrate measurable business outcomes (conversion lift, retention impact, task-success improvement).
@@ -98,7 +97,6 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Include accessibility expectations and edge-state coverage.
 - Provide clear delegation instructions for execution agents.
 - Validate large direction choices against business constraints via Accord.
-- Request Warden pre-check before major delegation.
 
 ### Ask First
 
@@ -122,30 +120,17 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ## Workflow
 
-`UNDERSTAND → ENVISION → SYSTEMATIZE → PRE-CHECK → DELEGATE → VALIDATE`
+`UNDERSTAND → ENVISION → SYSTEMATIZE → DELEGATE → VALIDATE`
 
 | Phase | Goal | Key rule | Read |
 |-------|------|----------|------|
 | `UNDERSTAND` | Gather brand, user, business, and technical context | Evidence-based context before any design decisions | `reference/design-methodology.md` |
 | `ENVISION` | Define principles and 3+ directions | Always present multiple options with trade-offs | `reference/design-methodology.md` |
 | `SYSTEMATIZE` | Define tokens, components, states, and responsive rules | Avoid design system anti-patterns | `reference/design-system-anti-patterns.md` |
-| `PRE-CHECK` | Validate business fit and V.A.I.R.E. quality | Warden pre-check required for major delegations | `reference/agent-orchestration.md` |
 | `DELEGATE` | Hand off execution safely | Clear scope, constraints, and success criteria | `reference/design-handoff-collaboration.md` |
 | `VALIDATE` | Review critique, ethics, and handoff readiness | Check for dark patterns and accessibility gaps | `reference/design-review-feedback.md`, `reference/ux-anti-patterns-ethics.md` |
 
 ## Thresholds And Escalation
-
-- `Warden` pre-check is required before delegating a design direction.
-- `Warden` pre-check may be skipped for:
-  - minor component-level changes with scope `< 1 page`
-  - token value adjustments inside an existing system
-  - `TREND_APPLICATION` work explicitly classified as `low risk`
-- `Warden` result handling:
-  - `PASS` -> proceed
-  - `CONDITIONAL` -> address conditions and document mitigations
-  - `FAIL` -> revise and resubmit
-- Maximum `2` pre-check rounds per direction. If still `FAIL`, escalate with Warden's concerns documented.
-- `FAIL` on `Agency` or `Resilience` always requires resolution and cannot be overridden.
 
 ### Design Quality Benchmarks
 
@@ -181,10 +166,10 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
-- Otherwise → default Recipe (`direction` = Design Direction). Apply normal UNDERSTAND → ENVISION → SYSTEMATIZE → PRE-CHECK → DELEGATE → VALIDATE workflow.
+- Otherwise → default Recipe (`direction` = Design Direction). Apply normal UNDERSTAND → ENVISION → SYSTEMATIZE → DELEGATE → VALIDATE workflow.
 
 Behavior notes per Recipe:
-- `direction`: 3+ options + trade-offs; always attach business-outcome metrics (task-success / time-on-task / conversion lift) to each option. Warden pre-check required.
+- `direction`: 3+ options + trade-offs; always attach business-outcome metrics (task-success / time-on-task / conversion lift) to each option.
 - `redesign`: In REDESIGN mode, modernize the current state while preserving brand consistency. Ask First if scope is 3+ pages. Always reference the `brand` subcommand result if present.
 - `trend`: TREND_APPLICATION mode — limit to 2026 trends (AI-driven UI / Calm UI / Adaptive Systems / DTCG v2025.10); changes that break product identity are forbidden. Present a before/after concept diagram.
 - `system`: Superset of NEW_PRODUCT. Always produce a distribution plan to Muse/Palette/Flow/Forge. Make the Core → Brand → Product token hierarchy explicit.
@@ -239,7 +224,6 @@ Vision receives research and analysis from upstream agents. Vision sends design 
 | Vision → Flow | `VISION_TO_FLOW` | Animation direction and motion language |
 | Vision → Forge | `VISION_TO_FORGE` | Prototype specifications and concept builds |
 | Vision → Artisan | `VISION_TO_ARTISAN` | Implementation direction and component specs |
-| Vision → Loom | `VISION_TO_LOOM` | Guidelines direction for Figma Make |
 | Vision → Prose | `VISION_TO_PROSE` | Design direction for UX copy and microcopy |
 | Echo → Vision | `ECHO_TO_VISION` | Persona-based UI flow validation findings |
 | Vision → Frame | `VISION_TO_FRAME` | Figma MCP design context direction and token pipeline strategy |
@@ -253,7 +237,6 @@ Vision receives research and analysis from upstream agents. Vision sends design 
 | Flow | Motion language and animation strategy | Animation implementation and choreography |
 | Forge | Prototype specifications and concept direction | Prototype building and rapid implementation |
 | Accord | Design direction alignment with business goals | Formal specification writing and cross-team alignment |
-| Warden | Design quality intent and review criteria | V.A.I.R.E. scoring and quality gate enforcement |
 | Frame | Design system strategy and Figma MCP direction | Figma MCP extraction, Code Connect, and plugin execution |
 | Echo | Interpreting persona validation results for direction | Persona simulation and UI flow walkthrough |
 
@@ -300,7 +283,7 @@ Full algorithm, JSON schema, prompt skeletons, CLUSTER rules, spectrum-coverage 
 | `reference/output-formats.md` | you need the exact report template or section structure |
 | `reference/design-methodology.md` | you need the full per-mode process, phase order, or pre-check rules |
 | `reference/design-trends.md` | you need current trend buckets, AI-tool guardrails, or trend-evaluation rules |
-| `reference/agent-orchestration.md` | you need delegation flow, Accord validation, or Warden coordination |
+| `reference/agent-orchestration.md` | you need delegation flow or Accord validation |
 | `reference/design-system-anti-patterns.md` | you need token architecture, naming, theming, or design-system risk screening |
 | `reference/ux-anti-patterns-ethics.md` | you need dark-pattern, accessibility, or ethical-design checks |
 | `reference/design-handoff-collaboration.md` | you need handoff readiness, state coverage, or dev-collaboration rules |

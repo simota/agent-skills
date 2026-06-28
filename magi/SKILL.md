@@ -1,6 +1,6 @@
 ---
 name: magi
-description: "Deliberating decisions via multi-perspective lenses (Logos/Pathos/Sophia) for architecture arbitration, trade-offs, Go/No-Go, and strategic decisions. Does not write code. Don't use for architecture (Atlas), requirements (Accord), code comparison (Arena), or implementation (Builder)."
+description: "Deliberating decisions via multi-perspective lenses (Logos/Pathos/Sophia) for architecture arbitration, trade-offs, Go/No-Go, and strategic decisions. Does not write code. Don't use for architecture (Atlas), requirements (Accord), or implementation (Builder)."
 ---
 
 <!--
@@ -24,9 +24,7 @@ CAPABILITIES_SUMMARY:
 
 COLLABORATION_PATTERNS:
 - Pattern A: Architecture Arbitration (Atlas → Magi → Builder/Scaffold)
-- Pattern B: Release Decision (Warden → Magi → Launch)
 - Pattern C: Strategy Resolution (Accord → Magi → Sherpa)
-- Pattern D: Trade-off Verdict (Arena → Magi → Builder)
 - Pattern E: Priority Arbitration (Nexus → Magi → Nexus)
 - Pattern F: Deadlock Reframing (Magi [1-1-1] → Flux → Magi [re-deliberate])
 - Pattern G: YAGNI Validation (Magi [do-nothing candidate] → Void → Magi [incorporate])
@@ -36,7 +34,7 @@ COLLABORATION_PATTERNS:
 - Pattern K: Experiment Interpretation (Experiment → Magi → Experiment) — A/B result Go/No-Go
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User (decision requests, mode selection), Nexus (complex decisions), Accord (stakeholder alignment), Atlas (architecture options), Arena (variant comparisons, suggested_deliberation_mode), Warden (quality assessments), Flux (reframed perspectives), Schema (DB design options), Gateway (API design options), Shift (migration strategy options), Experiment (A/B test results)
+- INPUT: User (decision requests, mode selection), Nexus (complex decisions), Accord (stakeholder alignment), Atlas (architecture options), Flux (reframed perspectives), Schema (DB design options), Gateway (API design options), Shift (migration strategy options), Experiment (A/B test results)
 - OUTPUT: Builder/Forge/Artisan (implementation decisions), Atlas/Scaffold (architecture decisions), Launch (release decisions), Nexus (decision results), Sherpa (prioritized task lists), Void (YAGNI validation), Schema (normalization verdicts), Gateway (API design verdicts), Shift (migration verdicts), Experiment (result interpretation)
 
 PROJECT_AFFINITY: universal
@@ -74,8 +72,7 @@ Route elsewhere when the task is primarily:
 - code implementation: `Builder` or `Forge`
 - requirement gathering or stakeholder alignment: `Accord`
 - task planning or breakdown: `Sherpa`
-- quality assessment or testing: `Warden` or `Radar`
-- code comparison or benchmarking: `Arena`
+- quality assessment or testing: `Radar`
 - creative reframing of a stuck problem (not a decision): `Flux`
 - questioning whether the decision is necessary at all (YAGNI): `Void`
 
@@ -175,7 +172,7 @@ Parse the first token of user input:
 - If it matches a Recipe Subcommand in the Recipes table → activate that Recipe; load only the "Read First" column files at the initial step. Apply FRAME → DELIBERATE → VOTE → SYNTHESIZE → DELIVER as the default phase contract; Recipe-specific behavior lives in the "Read First" references.
 - Otherwise → default Recipe (`decide` = Go/No-Go Decision) with the full workflow.
 - Auto-detect Engine Mode when: user explicitly requests, critical urgency + low reversibility, architecture with >1yr impact, previous Simple split (1-1-1), or re-deliberation for broader perspective. Engine Mode with heterogeneous models yields 4–6% accuracy gains and reduces factual errors by 30%+ (A-HMAD). Cap Engine debate at ≤2 rounds — additional rounds form a martingale with no expected accuracy gain. Always Simple when engines unavailable, low-stakes/reversible, or speed prioritized. [Source: springer.com — A-HMAD framework; arxiv.org/abs/2508.17536]
-- Collaborative Calibration: when multiple agents contribute assessments (e.g., Warden quality + Atlas architecture), use iterative confidence adjustment — ensemble-with-critique frameworks reduce ECE by up to 54% and improve accuracy by up to 47%. If findings require implementation, route to Builder/Forge/Artisan. [Source: arxiv.org/abs/2404.09127; arxiv.org/abs/2508.06225]
+- Collaborative Calibration: when multiple agents contribute assessments (e.g., Radar coverage + Atlas architecture), use iterative confidence adjustment — ensemble-with-critique frameworks reduce ECE by up to 54% and improve accuracy by up to 47%. If findings require implementation, route to Builder/Forge/Artisan. [Source: arxiv.org/abs/2404.09127; arxiv.org/abs/2508.06225]
 
 Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate **in addition to** Magi's universal discipline (3 perspectives evaluated independently, no score visible until all voted, confidence ≥85 stress-tested, dissent documented, risk register, 1-1-1 → human escalation, auditable trail).
 - `decide`: Go/No-Go, KNOWLEDGE task. **VERIFY**: factual evidence shared at FRAME **before** independent voting (KNOWLEDGE protocol, not REASONING); verdict is GO / NO-GO / CONDITIONAL against established criteria; reversibility classified (HIGH/MEDIUM/LOW); 3-0 unanimous triggers a devil's-advocate challenge.
@@ -224,8 +221,6 @@ Every deliverable must include:
 | Nexus → Magi | `NEXUS_TO_MAGI` | Complex decisions requiring arbitration |
 | Accord → Magi | `ACCORD_TO_MAGI` | Stakeholder alignment for strategy resolution |
 | Atlas → Magi | `ATLAS_TO_MAGI` | Architecture options for arbitration |
-| Arena → Magi | `ARENA_TO_MAGI` | Variant comparisons with suggested deliberation mode |
-| Warden → Magi | `WARDEN_TO_MAGI` | Quality assessments for Go/No-Go |
 | Flux → Magi | `FLUX_TO_MAGI` | Reframed perspectives for re-deliberation |
 | Schema → Magi | `SCHEMA_TO_MAGI` | DB design options for normalization verdicts |
 | Gateway → Magi | `GATEWAY_TO_MAGI` | API design options for versioning verdicts |
@@ -246,7 +241,6 @@ Every deliverable must include:
 **Overlap boundaries:**
 - **vs Atlas**: Atlas = architecture design and documentation; Magi = architecture decision arbitration.
 - **vs Accord**: Accord = stakeholder alignment and requirements; Magi = decision evaluation and verdict.
-- **vs Arena**: Arena = variant comparison and benchmarking; Magi = final decision based on comparison data.
 - **vs Flux**: Flux = creative reframing and perspective shifting; Magi = structured evaluation and verdict. If deliberation reaches 1-1-1 deadlock, consider routing to Flux for reframing before escalating to human.
 - **vs Void**: Void = questioning whether something should exist; Magi = choosing between options that should exist. Route to Void when "do nothing" emerges as a serious contender.
 

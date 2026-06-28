@@ -3,7 +3,7 @@
 Canonical YAML schemas for all Scout outbound handoffs. SKILL.md only lists handoff names; this file owns the schemas.
 
 Universal handoff conventions: `_common/HANDOFF.md`.
-Cross-cluster escalation handoffs (LENS_TO_SCOUT, SCOUT_TO_LENS, TRAIL↔SPECTER): `_common/INVESTIGATION_ESCALATION.md`.
+Cross-cluster escalation handoffs (LENS_TO_SCOUT, SCOUT_TO_LENS): `_common/INVESTIGATION_ESCALATION.md`.
 
 ## SCOUT_TO_BUILDER_HANDOFF
 
@@ -51,17 +51,6 @@ SCOUT_TO_TRIAGE_HANDOFF:
   affected_users: "[scope description]"
   workaround: "[available workaround or 'none']"
   escalation_reason: "[why Triage needs to re-evaluate]"
-```
-
-## SCOUT_TO_SPECTER_HANDOFF
-
-```yaml
-SCOUT_TO_SPECTER_HANDOFF:
-  bug_id: "[identifier or title]"
-  symptom: "[observed concurrency or resource issue]"
-  evidence: "[traces, timing, resource metrics]"
-  suspected_type: "[race condition | memory leak | deadlock | resource exhaustion]"
-  files_involved: ["file1", "file2"]
 ```
 
 ## SCOUT_TO_SENTINEL_HANDOFF

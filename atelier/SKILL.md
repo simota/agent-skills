@@ -10,7 +10,7 @@ CAPABILITIES_SUMMARY:
 - multi_granularity_operation: Drive downstream agents via four operation layers — prompt, structured comment, direct edit instruction, parametric slider (value-range hints)
 - design_intent_handoff: Standardize design intent propagation through the `DESIGN_INTENT_HANDOFF` schema from Vision -> Muse/Frame -> Forge -> Artisan
 - multi_artifact_range: Cover design, prototype, slide deck, 1-pager, marketing captures, and implementation artifacts within a single workflow
-- pipeline_routing: Select the minimum viable delegate set (Frame, Muse, Loom, Forge, Pixel, Ink/Sketch/Dot/Clay, Stage, Canvas, Morph, Artisan, Vitrine) scoped to the request shape
+- pipeline_routing: Select the minimum viable delegate set (Frame, Muse, Forge, Pixel, Ink/Sketch/Dot, Stage, Canvas, Morph, Artisan, Vitrine) scoped to the request shape
 - onboarding_caching: Avoid redundant extraction by reading the persisted design system and re-running onboarding only on tokens drift, file hash change, or explicit refresh
 - handoff_bundle_assembly: Assemble consumer-specific handoff bundles (tokens, components, intent, constraints, success criteria) per downstream agent
 - parametric_slider_authoring: Express design-intent hints as value ranges (e.g., radius 4-12, density compact|comfortable, motion subtle|expressive) so downstream agents can parametrize rather than hardcode
@@ -20,10 +20,9 @@ COLLABORATION_PATTERNS:
 - User -> atelier: single-entrypoint design-to-implementation request
 - atelier -> Frame: Figma extraction, Code Connect, design-system rule pull
 - atelier -> Muse: token definition, DTCG alignment, hardcoded-value migration
-- atelier -> Loom: Figma Make Guidelines packaging
 - atelier -> Forge: rapid prototype build from design intent
 - atelier -> Pixel: mockup-faithful reproduction
-- atelier -> Ink / Sketch / Dot / Clay: vector / AI image / pixel / 3D asset generation
+- atelier -> Ink / Sketch / Dot: vector / AI image / pixel asset generation
 - atelier -> Stage: slide deck authoring
 - atelier -> Canvas: diagram authoring
 - atelier -> Morph: multi-format export (MD/Word/Excel/PDF/HTML)
@@ -31,11 +30,10 @@ COLLABORATION_PATTERNS:
 - atelier -> Vitrine: Storybook catalog and visual regression
 - atelier -> Nexus: escalation when the request exceeds design-pipeline scope
 - Judge -> atelier: quality feedback on pipeline output
-- Warden -> atelier: pre-check result (PASS / CONDITIONAL / FAIL) prior to major delegation
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Vision (direction), User (request), Judge (quality feedback), Warden (pre-check)
-- OUTPUT: Frame, Muse, Loom, Forge, Pixel, Ink, Sketch, Dot, Clay, Stage, Canvas, Morph, Artisan, Vitrine, Nexus
+- INPUT: Vision (direction), User (request), Judge (quality feedback)
+- OUTPUT: Frame, Muse, Forge, Pixel, Ink, Sketch, Dot, Stage, Canvas, Morph, Artisan, Vitrine, Nexus
 
 PROJECT_AFFINITY: SaaS(H) Marketing(H) Dashboard(H) E-commerce(H) Mobile(M) Game(M)
 -->
@@ -89,10 +87,9 @@ Route elsewhere when the task is primarily:
 6. **Cap fan-out at 5 concurrent delegates per run.** Beyond 5, orchestrator context accumulation causes silent handoff failures. Split into sequenced batches or escalate to Nexus.
 7. **Validate WCAG 2.2 AA before DELIVER.** Any visual artifact that ships to users must pass AA contrast checks (4.5:1 text, 3:1 UI). Flag failures; never silently degrade.
 8. **Preserve token discipline.** Downstream agents must reference tokens from the persisted system. atelier rejects handoffs that reintroduce hardcoded values unless explicitly scoped as a prototype throwaway.
-9. **Close the loop.** Every pipeline run ends with either code (Artisan / Vitrine output), a reusable spec (Loom / Canvas), or a distributable artifact (Morph / Stage). No intermediate-only runs.
+9. **Close the loop.** Every pipeline run ends with either code (Artisan / Vitrine output), a reusable spec (Canvas), or a distributable artifact (Morph / Stage). No intermediate-only runs.
 10. **Route out when the request leaves the design axis.** If the request needs backend logic, infrastructure, security audit, or non-design multi-domain work, escalate to Nexus with a `DESIGN_INTENT_HANDOFF` attached for the design slice.
-11. **Request Warden pre-check before major delegation.** Applies to new-product builds, multi-page redesigns, or brand-touching work. Skip Warden only for scoped token tweaks and prototype-only slices.
-12. **Log every run into `.agents/atelier.md` and `.agents/PROJECT.md`.** The design-system cache is useless without a record of why it was updated.
+11. **Log every run into `.agents/atelier.md` and `.agents/PROJECT.md`.** The design-system cache is useless without a record of why it was updated.
 
 ## Boundaries
 
@@ -111,8 +108,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Scope crosses from scoped update to full redesign (3+ pages, identity-touching).
 - Token refresh would invalidate the persisted system for other agents mid-project.
 - Fan-out would exceed 5 concurrent delegates.
-- External paid APIs (Meshy for Clay, etc.) would be triggered.
-- Warden pre-check returns `CONDITIONAL` and the conditions are not auto-resolvable.
+- External paid APIs would be triggered.
 
 ### Ask First (operational additions)
 - Request asks atelier to originate aesthetic direction — route to Vision instead unless the user explicitly overrides.
@@ -130,7 +126,6 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Allow hardcoded design values through to Artisan — require token references.
 - Exceed 5 concurrent delegates; split or escalate to Nexus instead.
 - Silently re-run extraction when the cached system is valid.
-- Bypass Warden pre-check for new-product or brand-touching delegations.
 
 ## Workflow
 
@@ -189,7 +184,6 @@ Route artifacts by shape. Include a delegate only when its output is part of the
 |----------------|------------------|---------------------|-------|
 | Design-system extraction (Figma) | `Frame` | `Muse` (normalize), `Canvas` (diagram) | Rate-budget aware; Code Connect if mapping requested |
 | Design-system extraction (codebase) | `Muse` | `Frame` (verify in Figma) | DTCG 2025.10 alignment |
-| Design-system guideline package | `Loom` | `Muse`, `Frame` | Figma Make input |
 | Rapid prototype | `Forge` | `Muse` (tokens), `Vitrine` (stories) | Time-box ≤ 4h |
 | Mockup-faithful reproduction | `Pixel` | `Muse`, `Artisan` | Fidelity ≥ 95% |
 | Production frontend | `Artisan` | `Muse`, `Vitrine` | Token-driven only |
@@ -197,7 +191,6 @@ Route artifacts by shape. Include a delegate only when its output is part of the
 | Vector icon / illustration | `Ink` | `Muse` (token align) | SVG symbol sprite |
 | AI raster image | `Sketch` | — | Gemini API backend |
 | Pixel art | `Dot` | — | SVG / Canvas / Phaser |
-| 3D asset | `Clay` | — | Meshy / Tripo / Hunyuan3D; ask-first for paid APIs |
 | Slide deck | `Stage` | `Ink`, `Muse` | Marp / reveal.js / Slidev |
 | Diagram | `Canvas` | — | Mermaid / draw.io |
 | Multi-format export | `Morph` | — | MD/Word/Excel/PDF/HTML |
@@ -264,10 +257,9 @@ atelier receives direction from Vision and briefs from the user. atelier sends e
 | User → atelier | ad-hoc brief | Pipeline trigger |
 | atelier → Frame | `DESIGN_INTENT_HANDOFF` | Figma extraction / Code Connect |
 | atelier → Muse | `DESIGN_INTENT_HANDOFF` | Token definition / DTCG alignment |
-| atelier → Loom | `DESIGN_INTENT_HANDOFF` | Figma Make Guidelines package |
 | atelier → Forge | `DESIGN_INTENT_HANDOFF` | Prototype build |
 | atelier → Pixel | `DESIGN_INTENT_HANDOFF` | Mockup reproduction |
-| atelier → Ink / Sketch / Dot / Clay | `DESIGN_INTENT_HANDOFF` | Visual asset generation |
+| atelier → Ink / Sketch / Dot | `DESIGN_INTENT_HANDOFF` | Visual asset generation |
 | atelier → Stage | `DESIGN_INTENT_HANDOFF` | Slide deck |
 | atelier → Canvas | `DESIGN_INTENT_HANDOFF` | Diagram |
 | atelier → Morph | `DESIGN_INTENT_HANDOFF` | Multi-format export |
@@ -275,7 +267,6 @@ atelier receives direction from Vision and briefs from the user. atelier sends e
 | atelier → Vitrine | `DESIGN_INTENT_HANDOFF` | Storybook catalog |
 | atelier → Nexus | `NEXUS_ROUTING` | Escalation for out-of-scope multi-domain work |
 | Judge → atelier | `QUALITY_FEEDBACK` | Pipeline output quality review |
-| Warden → atelier | pre-check result | Gate on major delegation |
 
 ### Overlap Boundaries
 

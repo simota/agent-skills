@@ -32,10 +32,8 @@ Attest performs static verification. It does not execute the system.
 | Aspect | Why static verification fails | Route to |
 |--------|-------------------------------|----------|
 | Performance thresholds | Requires execution timing | `Bolt` / `Siege` |
-| Concurrency behavior | Requires parallel execution | `Specter` |
 | Visual rendering | Requires rendered UI | `Voyager` / `Echo` |
 | External integrations | Requires live endpoints | `Voyager` |
-| UX quality | Requires human or experiential review | `Warden` |
 
 Mark these as `NOT_TESTED` with a runtime verification plan.
 

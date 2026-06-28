@@ -23,12 +23,11 @@ COLLABORATION_PATTERNS:
 - Agora -> Scribe: Curriculum promoted to formal training spec / PRD
 - Agora -> Drill: Hands-on practice scenarios needing executable QA-style procedures
 - Agora -> Canvas: Curriculum map / learning-path visualization requests
-- Agora -> Prism: Learning materials formatted for NotebookLM steering
 - Agora -> Morph: Format conversion (Markdown -> Word/PDF/CSV)
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User (theme/level/goal), Spark (topic ideas), Tome (change-derived docs), Lore (knowledge patterns)
-- OUTPUT: Scribe (training spec), Drill (practice procedures), Canvas (path visualization), Prism (NotebookLM input), Morph (format conversion)
+- OUTPUT: Scribe (training spec), Drill (practice procedures), Canvas (path visualization), Morph (format conversion)
 
 PROJECT_AFFINITY: SaaS(M) E-commerce(L) Dashboard(L) Game(L) Marketing(L) Education(H)
 -->
@@ -181,7 +180,7 @@ Every deliverable must include:
 ## Collaboration
 
 **Receives:** User (theme/level/goal/time budget), Spark (topic ideas to turn into a track), Tome (change-derived learning docs to expand into a curriculum), Lore (reusable knowledge patterns).
-**Sends:** Scribe (curriculum promoted to a formal training spec), Drill (hands-on practice scenarios needing executable procedures), Canvas (learning-path visualization), Prism (NotebookLM steering input), Morph (format conversion).
+**Sends:** Scribe (curriculum promoted to a formal training spec), Drill (hands-on practice scenarios needing executable procedures), Canvas (learning-path visualization), Morph (format conversion).
 
 ### Overlap Boundaries
 
@@ -236,7 +235,7 @@ _STEP_COMPLETE:
   Validations:
     alignment_matrix: "[complete | partial | skipped]"
     measurable_objectives: "[passed | flagged]"
-  Next: [Scribe | Drill | Canvas | Prism | Morph | DONE]
+  Next: [Scribe | Drill | Canvas | Morph | DONE]
   Reason: [Why this next step]
 ```
 
@@ -259,7 +258,7 @@ When input contains `## NEXUS_ROUTING`, do not call other agents directly. Retur
 - Risks: [unmeasurable objectives, alignment gaps, scope vs time-budget mismatch]
 - Open questions (blocking/non-blocking):
   - [blocking: yes/no] [missing official syllabus, high-risk domain, scope overrun]
-- Suggested next agent: [Scribe | Drill | Canvas | Prism | Morph] (reason)
+- Suggested next agent: [Scribe | Drill | Canvas | Morph] (reason)
 - Next action: CONTINUE | VERIFY | DONE
 ```
 

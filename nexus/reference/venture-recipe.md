@@ -93,7 +93,7 @@ Route elsewhere when the task is:
 ```
 Phase 0          Phase 1                Phase 2 [BARRIER]      ┌──────────── Phase 3: Parallel Doc Tracks ──────────────┐   Phase 4         Phase 5            Phase 6
 [Framing]        [Research]             [Product Spine]        │  (each track consumes the canonical feature_id table)   │   [Overview]      [Integrate+Validate] [Package]
-┌────────────┐   ┌──────────────────┐   ┌──────────────────┐   │ 02 Brand    vision+muse+prose+tone                      │   ┌───────────┐   ┌────────────────┐  ┌──────────┐
+┌────────────┐   ┌──────────────────┐   ┌──────────────────┐   │ 02 Brand    vision+muse+prose                           │   ┌───────────┐   ┌────────────────┐  ┌──────────┐
 │ parse idea │   │ field       │   │ accord (PRD)     │   │ 04 UX       palette+canvas+echo+prose                   │   │ spark     │   │ attest/judge   │  │ write    │
 │ +conditions│──▶│ +compete         │──▶│ +spark (features)│──▶│ 05 LP       funnel+prose                                │──▶│ +scribe   │──▶│ traceability   │─▶│ tree     │
 │ +mode/depth│   │ ‖ plea +cast     │   │ +rank (MoSCoW)   │   │ 06 Mktg     funnel/bazaar+pulse+experiment                │   │ +magi     │   │ matrix         │  │ +zip -r  │
@@ -166,7 +166,7 @@ Each track receives the framing contract + canonical feature_id table. Tracks wr
 
 | Track | Dir | Agents | Key outputs |
 |-------|-----|--------|-------------|
-| Brand | 02 | `vision` (direction) → `muse` (`design_tokens.json`) ‖ `prose` (copy) ‖ `tone` (voice) | brand_strategy, naming_candidates (≥20), positioning, brand_voice, messaging_framework, visual_direction, design_tokens.json, copy_examples, brand_checklist |
+| Brand | 02 | `vision` (direction) → `muse` (`design_tokens.json`) ‖ `prose` (copy/voice) | brand_strategy, naming_candidates (≥20), positioning, brand_voice, messaging_framework, visual_direction, design_tokens.json, copy_examples, brand_checklist |
 | UX/UI | 04 | `palette` (usability/states) ‖ `canvas` (Mermaid wireframes) ‖ `echo` (walkthrough) ‖ `prose` (empty/error/loading copy) | ux_flows, screen_specifications, wireframes_mermaid, component_inventory, state_design, onboarding_flow, accessibility_guidelines, responsive_design_policy |
 | LP | 05 | `funnel` (`index.html` + `styles.css` + lp_copy + conversion) ‖ `prose` (microcopy) | lp_copy, index.html, styles.css, faq, conversion_strategy, seo_metadata, analytics_plan |
 | Marketing | 06 | `funnel`/`bazaar` (GTM/channels) ‖ `pulse` (metrics) ‖ `experiment` (`growth_experiments.md`) | go_to_market_strategy, channel_strategy, pricing_strategy, content_marketing_plan, launch_plan, social_posts (30-day), email_sequences, pr_plan, sales_material_outline, growth_experiments |
@@ -281,7 +281,7 @@ Nexus AUTORUN venture idea="<X>" depth=<...> mode=<...>
   → void(YAGNI)?                          # depth=full or bloat
   → ═══ EMIT canonical feature_id table → bind to all Phase 3 ═══
   ── Phase 3 Parallel Doc Tracks (waves, feature_id-bound) ─
-  → [Brand]  vision → muse(design_tokens.json) ‖ prose ‖ tone
+  → [Brand]  vision → muse(design_tokens.json) ‖ prose
   ‖ [UX]     palette ‖ canvas(mermaid) ‖ echo ‖ prose(states)
   ‖ [LP]     funnel(index.html+styles.css+copy) ‖ prose
   ‖ [Mktg]   funnel/bazaar ‖ pulse ‖ experiment(growth_experiments)

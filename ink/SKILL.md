@@ -51,7 +51,6 @@ Use Ink when the user needs:
 Route elsewhere when the task is primarily:
 - pixel art or raster sprites: `Dot`
 - AI-generated images or photos: `Sketch`
-- 3D models or assets: `Clay`
 - design token management: `Muse`
 - CSS animations (not SVG): `Flow`
 - frontend component implementation: `Artisan`

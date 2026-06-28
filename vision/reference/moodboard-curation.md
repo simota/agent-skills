@@ -195,7 +195,6 @@ Anti-keywords are the **most useful artifact** the moodboard produces — they p
 ## Next steps
 - → Vision direction (UNDERSTAND → ENVISION → SYSTEMATIZE)
 - → Muse (token derivation)
-- → Loom (Guidelines.md if Figma Make pipeline)
 ```
 
 ---
@@ -260,7 +259,6 @@ Stakeholder alignment round 1: ✓ / ✗
 Next handoff:
   □ Vision direction (continue UNDERSTAND → ENVISION)
   □ Muse (token derivation from finalist palette)
-  □ Loom (Guidelines.md draft)
 ```
 
 ---

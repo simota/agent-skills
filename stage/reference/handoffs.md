@@ -59,18 +59,3 @@ STAGE_TO_DIRECTOR_HANDOFF:
     total_duration: "[target video duration]"
   request: "Record presentation as demo video"
 ```
-
-### To Reel (CLI Demo Segment)
-
-```yaml
-STAGE_TO_REEL_HANDOFF:
-  source: Stage
-  destination: Reel
-  content:
-    cli_segment:
-      context: "[which slide this demo supports]"
-      commands: ["[command sequence]"]
-      expected_output: "[what the audience should see]"
-      duration: "[seconds for this segment]"
-  request: "Record CLI demo for presentation"
-```

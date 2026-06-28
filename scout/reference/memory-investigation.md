@@ -1,6 +1,6 @@
 # Memory Investigation Reference
 
-Purpose: Heap-snapshot-driven RCA for OOM, memory leaks, and GC pressure. Identifies retention path, leak class, and hands off a fix brief to Bolt or Specter.
+Purpose: Heap-snapshot-driven RCA for OOM, memory leaks, and GC pressure. Identifies retention path, leak class, and hands off a fix brief to Bolt.
 
 ## Contents
 
@@ -167,9 +167,7 @@ GC root → IngestService._cache (dict)
 | Condition | Target | Reason |
 |-----------|--------|--------|
 | Clear retention path + fix | Bolt | `SCOUT_TO_BUILDER_HANDOFF` |
-| Off-heap / native leak | Specter | resource management specialty |
 | GC pressure from allocation rate | Bolt + Tuner | may combine with DB layer |
-| Fragmentation / allocator issue | Specter | system-level diagnosis |
 | Unable to reproduce locally | `prod` Recipe | use production traces |
 
 ## Anti-Patterns

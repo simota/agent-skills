@@ -7,7 +7,6 @@ Purpose: Assess compliance with the EU General Data Protection Regulation (GDPR)
 - **Oath `gdpr`**: GDPR + EU AI Act regulatory mapping, article-level evidence, DPIA / ROPA / SCC design, DSAR workflow, lawful-basis documentation, AI Act conformity assessment.
 - **Cloak (elsewhere)**: hands-on privacy engineering — PII detection scanners, data-flow graphing, consent-SDK implementation, pseudonymization code, DPIA facilitation workshops.
 - **Crypt (elsewhere)**: cryptographic key management and KMS integration under Art. 32 (encryption at rest / in transit / envelope encryption / HSM attestation).
-- **Warden (elsewhere)**: V.A.I.R.E. pre-release functional quality gate (not a regulatory audit).
 - **Vigil (elsewhere)**: detection rule authoring for exfiltration / breach alerts (Art. 33/34 detection coverage, not notification workflow).
 
 If the question is "what article applies and what evidence does the DPA expect?" stay in `gdpr`. If it is "implement the consent banner / encrypt this column / run the DPIA workshop", hand off to Cloak or Crypt.

@@ -22,7 +22,6 @@ COLLABORATION_PATTERNS:
 - Vision -> Palette: Design direction
 - Echo -> Palette: Persona testing results
 - Field -> Palette: Usability research
-- Warden -> Palette: Quality assessment
 - Palette -> Artisan: Implementation specs
 - Palette -> Flow: Animation needs
 - Palette -> Muse: Token adjustments
@@ -31,7 +30,7 @@ COLLABORATION_PATTERNS:
 - Palette -> Voyager: Accessibility E2E test requests
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Vision, Echo, Field, Warden
+- INPUT: Vision, Echo, Field
 - OUTPUT: Artisan, Flow, Muse, Prose, Canon, Voyager
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(H) Marketing(H)
@@ -253,7 +252,6 @@ Palette receives UX direction and testing results from upstream agents. Palette 
 | Vision → Palette | `VISION_TO_PALETTE` | Design direction and visual system constraints |
 | Echo → Palette | `ECHO_TO_PALETTE` | Persona testing results and friction findings |
 | Field → Palette | `RESEARCHER_TO_PALETTE` | Usability research and user pain points |
-| Warden → Palette | `WARDEN_TO_PALETTE` | Quality assessment and V.A.I.R.E. score |
 | Palette → Artisan | `PALETTE_TO_ARTISAN` | Implementation specs and interaction requirements |
 | Palette → Flow | `PALETTE_TO_FLOW` | Animation and transition requirements |
 | Palette → Muse | `PALETTE_TO_MUSE` | Token adjustment requests |

@@ -8,7 +8,7 @@ Extends the inline Routing Quick Start in `SKILL.md`. Canonical matrix: `referen
 |-----------|---------------|----------|
 | `BUG` | Scout[RCA] → Sherpa? → Radar[failing repro] → Builder[root-cause] → Radar[verify] → Guardian | `+Sentinel` for security, `+Trail` when a past commit introduced it, `+Ripple` for wide blast radius. Sherpa skip when files ≤ 2 or single-component fix. Phase contract ↓ |
 | `FEATURE` | Lens?[reuse] → Sherpa[spec+AC] → Forge? → Builder → Radar[+verify gate] → Guardian | Lens reuse-scan on existing codebases (skip greenfield). Forge only when approach unproven (spike, not shipped). `+Muse`/`+Palette` for UI (skip on backend/CLI), `+Artisan` for frontend production. Phase contract ↓ |
-| `SECURITY` | Sentinel[triage] → Probe?[confirm-exploit] → Builder[root-cause] → Probe/Radar[verify-closed] → Vigil? → Guardian | Confirm-exploit before & verify-closed after the fix. `+Breach` red-team, `+Specter` concurrency, `+Shift` dep-CVE upgrade, `+Crypt` crypto. Phase contract ↓ |
+| `SECURITY` | Sentinel[triage] → Probe?[confirm-exploit] → Builder[root-cause] → Probe/Radar[verify-closed] → Vigil? → Guardian | Confirm-exploit before & verify-closed after the fix. `+Breach` red-team, `+Shift` dep-CVE upgrade, `+Crypt` crypto. Phase contract ↓ |
 | `REFACTOR` | Radar?[safety-net] → Zen → Radar[verify-equivalence] → Guardian | Green-before / same-suite-same-result-after. Safety-net skip for tool-assisted pure rename/extract. `+Sherpa` multi-file, `+Atlas` architecture, `+Grove` structure. Phase contract ↓ |
 | `OPTIMIZE` | Bolt/Tuner[measure→target→optimize] → Radar[verify-speedup] → Guardian | Measure-first / prove-with-a-number / no-regression. `+Schema` DB index, `+Siege` load-test, `+Beacon` prod SLO. Phase contract ↓ |
 | `DESIGN_SYSTEM_DOCS` | Muse → Vitrine + Canvas → Quill | `+Vision` for direction, `+Artisan` for live examples |
@@ -54,7 +54,7 @@ A security fix is only real when the exploit is **confirmed closed** — static 
 - **DETECT (Vigil, conditional)** — add a detection rule (Sigma / Detection-as-Code) so reintroduction or in-the-wild exploitation is caught. Recommended for high-severity or recurring vuln classes.
 - **SHIP (Guardian)** — **security-aware PR**: do NOT disclose exploit details in a public commit before the patch is deployed; link to the advisory/CVE; coordinate disclosure timing.
 
-**Add-ons**: `+Specter` (concurrency/race), `+Crypt` (cryptographic design fix), `+Shift` (dependency CVE → upgrade), `+Cloak`/`+Oath` (privacy/compliance dimension), `+Sentinel` re-scan after fix.
+**Add-ons**: `+Crypt` (cryptographic design fix), `+Shift` (dependency CVE → upgrade), `+Cloak`/`+Oath` (privacy/compliance dimension), `+Sentinel` re-scan after fix.
 
 **Anti-patterns prevented**: (1) "fixing" a SAST false positive (TRIAGE + CONFIRM-EXPLOIT), (2) band-aid filter the next payload bypasses (FIX root-cause/right-layer), (3) faith-based fix never validated against the actual exploit (VERIFY-CLOSED re-run), (4) same vuln class silently reintroduced (DETECT rule), (5) premature exploit disclosure in a public commit (SHIP security-aware PR), (6) secret "removed" but still in git history (VERIFY-CLOSED history check).
 

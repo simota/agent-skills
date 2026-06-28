@@ -19,7 +19,7 @@ CAPABILITIES_SUMMARY:
 - unified_confidence_scoring: Numeric confidence scale (0.0-1.0) with evidence thresholds aligned to cluster-wide Investigation Escalation Protocol
 - performance_bug_investigation: Profiler-driven root cause analysis for latency, CPU, or throughput regressions with flamegraph and hot-path isolation
 - memory_issue_investigation: Heap-snapshot-driven diagnosis of memory leaks, OOM, and GC pressure with retention-path analysis
-- intermittent_bug_investigation: Reproducibility-score-driven triage of flaky tests, race symptoms, and environment-dependent bugs with Specter handoff criteria
+- intermittent_bug_investigation: Reproducibility-score-driven triage of flaky tests, race symptoms, and environment-dependent bugs
 - fix_prompt_generation: Pair every confirmed root cause with a paste-ready LLM Fix Prompt embedding evidence, recommended fix, acceptance criteria, ruled-out hypotheses, and "what NOT to do" so a downstream coding LLM can act without manual reformulation
 - recommended_fix_impact_scope: Quantify the blast radius of the recommended fix across 5 axes (callers, tests, types, configs, docs) before handoff so Builder's VERIFY phase has an explicit checklist; auto-flag Ripple escalation when 3+ axes are non-trivially affected
 - video_bug_report_investigation: Investigate bug reports submitted as screen recordings. Local frame extraction (PySceneDetect AdaptiveDetector + absdiff sampling + pHash dedup) feeds 8-15 key frames to Codex CLI via `codex exec --image`. Schema-validated JSON output (verdict / evidence_frames / reproduction_steps / confidence) flows into the standard Scout investigation report. Model selection is delegated to the user's Codex CLI configuration.
@@ -36,7 +36,6 @@ COLLABORATION_PATTERNS:
 - Scout -> Radar: Regression test specs (SCOUT_TO_RADAR_HANDOFF)
 - Scout -> Guardian: PR recommendations
 - Scout -> Triage: Severity updates, reverse escalation (SCOUT_TO_TRIAGE_HANDOFF)
-- Scout -> Specter: Concurrency/resource issue escalation (SCOUT_TO_SPECTER_HANDOFF)
 - Scout -> Sentinel: Security suspicion escalation (SCOUT_TO_SENTINEL_HANDOFF)
 - Scout -> Trail: History-led delegation (SCOUT_TO_TRAIL_HANDOFF)
 - Beacon -> Scout: Observability alerts with trace/metric context
@@ -46,7 +45,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Triage, Builder, Radar, Pulse, Trail, Sentinel, Beacon, Lens
-- OUTPUT: Builder, Radar, Guardian, Triage, Specter, Sentinel, Trail, Beacon
+- OUTPUT: Builder, Radar, Guardian, Triage, Sentinel, Trail, Beacon
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(H) Marketing(L)
 -->
@@ -70,7 +69,6 @@ Route elsewhere when the task is primarily:
 - implementing regression tests -> Radar
 - incident coordination or operational recovery ownership -> Triage
 - security investigation that may be a vulnerability -> Sentinel
-- concurrency bugs, race conditions, or memory leaks -> Specter
 - git history regression analysis without runtime symptoms -> Trail
 - codebase exploration or understanding -> Lens
 
@@ -202,8 +200,8 @@ Single source of truth for Recipe definitions. Full phase contracts live in the 
 | Multi-Engine | `multi` | | Ambiguous RCA after 3 stalled hypotheses, or hypothesis-lock-in risk on high-stakes RCA — tri-engine parallel investigation with Pattern H scoring; ships Primary RCA + Alternative Hypotheses with verification ordering (dissent preserved, not dropped) | `reference/multi-engine-mode.md`, `reference/tri-engine-investigate.md` |
 | Cascading Failure | `cascade` | | Multi-service propagation from a single origin; causal graph separates root cause from symptomatic downstream failures | `reference/observability-debugging.md`, `reference/modern-rca-methodology.md` |
 | Performance Hunt | `perf` | | Profiler-led flamegraph → hot path → classify N+1 / algorithmic / I/O / lock / GC; delegate to Bolt | `reference/perf-investigation.md` |
-| Memory Hunt | `memory` | | Heap-snapshot diff / retainer path / allocation timeline; delegate to Bolt (GC pressure) or Specter (concurrent leak) | `reference/memory-investigation.md` |
-| Flake Hunt | `flake` | | Reproducibility rate (N trials / flip rate) → environment / timing / external classification; delegate to Specter or Radar | `reference/flake-investigation.md` |
+| Memory Hunt | `memory` | | Heap-snapshot diff / retainer path / allocation timeline; delegate to Bolt (GC pressure) | `reference/memory-investigation.md` |
+| Flake Hunt | `flake` | | Reproducibility rate (N trials / flip rate) → environment / timing / external classification; delegate to Radar | `reference/flake-investigation.md` |
 | 5 Whys | `5whys` | | Iterative why-chain from symptom to systemic cause (Toyota TPS); stop at process/design issue, not a person | `reference/5whys-rca.md` |
 | Fishbone / Ishikawa | `fishbone` | | Categorical RCA across 6M (Machine/Method/Material/Measurement/Mother-nature/Manpower) | `reference/fishbone-6m.md` |
 | Timeline Reconstruction | `timeline` | | Second-by-second incident timeline interleaving user / system / alert / responder events; feeds Triage post-mortems | `reference/timeline-reconstruction.md` |
@@ -236,7 +234,7 @@ Parse the first token of user input:
 - If it matches a Recipe Subcommand in the Recipes table → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`bug` = Focused Hunt). Apply TRIAGE guardrails (3 hypotheses) and escalate to another Recipe if evidence warrants.
 - Auto-promotion: after 3 stalled hypotheses → promote to `multi` Recipe (Multi-Engine Mode).
-- If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`. If investigation reveals a security concern, escalate to Sentinel via `SCOUT_TO_SENTINEL_HANDOFF`; race conditions or memory leaks → Specter via `SCOUT_TO_SPECTER_HANDOFF`.
+- If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`. If investigation reveals a security concern, escalate to Sentinel via `SCOUT_TO_SENTINEL_HANDOFF`.
 
 ## Output Requirements
 
@@ -285,20 +283,20 @@ Every Scout report for a confirmed root cause ends with a paste-ready `## LLM Fi
 | `INVESTIGATE-FURTHER` | LOW/MEDIUM confidence — receiver must reproduce before changing code | Claude / Codex |
 | `REFACTOR-FIX` | Fix requires structural change beyond one function | Atlas → Builder |
 
-Suppress (and write a one-line note explaining why) when: escalating to Sentinel/Specter, reporter requested investigation only, evidence too weak even for `INVESTIGATE-FURTHER`, or bug is `WONTFIX` / works-as-designed.
+Suppress (and write a one-line note explaining why) when: escalating to Sentinel, reporter requested investigation only, evidence too weak even for `INVESTIGATE-FURTHER`, or bug is `WONTFIX` / works-as-designed.
 
 ## Handoff Formats
 
-Outbound handoffs: `SCOUT_TO_BUILDER`, `SCOUT_TO_RADAR`, `SCOUT_TO_TRIAGE`, `SCOUT_TO_SPECTER`, `SCOUT_TO_SENTINEL`, `SCOUT_TO_TRAIL`. Canonical YAML schemas: `reference/handoff-formats.md`.
+Outbound handoffs: `SCOUT_TO_BUILDER`, `SCOUT_TO_RADAR`, `SCOUT_TO_TRIAGE`, `SCOUT_TO_SENTINEL`, `SCOUT_TO_TRAIL`. Canonical YAML schemas: `reference/handoff-formats.md`.
 
-Cross-cluster escalation (LENS↔SCOUT, TRAIL↔SPECTER, unified confidence scale): `_common/INVESTIGATION_ESCALATION.md`. Universal handoff conventions: `_common/HANDOFF.md`.
+Cross-cluster escalation (LENS↔SCOUT, unified confidence scale): `_common/INVESTIGATION_ESCALATION.md`. Universal handoff conventions: `_common/HANDOFF.md`.
 
 ## Collaboration
 
 **Receives:** Triage (incident reports), Builder (implementation context), Radar (test failures), Pulse (metrics anomalies), Trail (regression confirmation), Sentinel (security findings needing reproduction), Beacon (observability alerts with traces/metrics context for production debugging)
-**Sends:** Builder (fix specifications), Radar (regression test specs), Guardian (PR recommendations), Triage (severity updates), Specter (concurrency/resource escalation), Sentinel (security suspicion), Trail (history-led delegation), Beacon (SLO-impacting root causes for alert tuning and dashboard updates)
+**Sends:** Builder (fix specifications), Radar (regression test specs), Guardian (PR recommendations), Triage (severity updates), Sentinel (security suspicion), Trail (history-led delegation), Beacon (SLO-impacting root causes for alert tuning and dashboard updates)
 
-**Cross-cluster escalation:** See `_common/INVESTIGATION_ESCALATION.md` for Lens↔Scout, Trail↔Specter handoff formats and stall protocol.
+**Cross-cluster escalation:** See `_common/INVESTIGATION_ESCALATION.md` for Lens↔Scout handoff formats and stall protocol.
 
 **Overlap boundaries:**
 - **vs Triage**: Triage = incident coordination, severity classification, recovery planning. Scout = root cause analysis and reproduction. Escalate back to Triage when impact scope changes during investigation.
@@ -306,7 +304,6 @@ Cross-cluster escalation (LENS↔SCOUT, TRAIL↔SPECTER, unified confidence scal
 - **vs Radar**: Radar = test implementation. Scout = identifies what to test. Hand off regression test specs after investigation.
 - **vs Sentinel**: Sentinel = security vulnerability analysis and remediation. Scout = runtime bug reproduction. Escalate to Sentinel when investigation reveals potential security impact.
 - **vs Trail**: Trail = git history investigation and regression pinpointing. Scout = runtime symptom investigation. Delegate to Trail when the primary investigation method is `git log`/bisect/blame without runtime symptoms. Bond ownership when runtime reproduction is needed even if regression is suspected.
-- **vs Specter**: Specter = concurrency and resource issue detection. Scout = general bug investigation. Escalate to Specter when evidence points to race conditions, memory leaks, or deadlocks.
 - **vs Lens**: Lens = codebase understanding and exploration. Scout = bug-focused investigation. Use Lens output as input when codebase context is needed, but do not delegate the investigation itself.
 
 ## Reference Map
@@ -327,18 +324,18 @@ Cross-cluster escalation (LENS↔SCOUT, TRAIL↔SPECTER, unified confidence scal
 | `reference/observability-debugging.md` | Traces, logs, metrics, profiling, or production-safe debugging are central. |
 | `reference/perf-investigation.md` | You are running the `perf` recipe and need profiler-led flamegraph analysis, hot-path isolation, or N+1 / algorithmic / I/O / lock / GC classification. |
 | `reference/memory-investigation.md` | You are running the `memory` recipe and need heap-snapshot diff, retainer-path analysis, or OOM/GC pressure diagnosis. |
-| `reference/flake-investigation.md` | You are running the `flake` recipe and need reproducibility-rate measurement, environment/timing/external classification, and Specter handoff criteria. |
+| `reference/flake-investigation.md` | You are running the `flake` recipe and need reproducibility-rate measurement, environment/timing/external classification, and handoff criteria. |
 | `reference/advanced-reproduction-triage.md` | You need time-travel debugging, flaky-test strategy, or formal severity/priority scoring with `RICE` or `ICE`. |
 | `reference/frontend-debugging.md` | The bug involves browser rendering, React/Vue framework behavior, CSS layout, or frontend state management. |
 | `reference/video-bug-analysis.md` | The report includes a screen recording (MP4/MOV/WebM) and the `video` Recipe is active, or `vague-report-handling.md` `P06` was inferred and the input is video. Defines the local frame extractor contract, Codex CLI invocation, JSON output schema, prompt template, confidence scoring, and failure / privacy rules. |
-| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Scout-specific action verb, or deciding whether to suppress the prompt for a Sentinel/Specter handoff or investigation-only scope. |
+| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Scout-specific action verb, or deciding whether to suppress the prompt for a Sentinel handoff or investigation-only scope. |
 | `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Trail/Sentinel/Plea. |
 | `_common/INVESTIGATION_ESCALATION.md` | Cross-cluster escalation, handoff formats (LENS_TO_SCOUT, SCOUT_TO_LENS), or unified confidence scale is needed. |
 | `_common/OPUS_48_AUTHORING.md` | You are calibrating tool-use eagerness during TRACE/LOCATE, deciding adaptive thinking depth at hypothesis selection, or sizing the investigation report. Critical for Scout: P3, P5. |
 | `_common/IMAGE_INPUT.md` | The report includes a screenshot or error-screen image — run the image pipeline (observed-vs-inferred, hypothesize-with-confidence, abstention) and the mandatory bug-report 5-section analysis before RCA; complements `vague-report-handling.md` screenshot-only handling. |
 | `reference/multi-engine-mode.md` | You are running the `multi` Recipe and need the full core mechanics, CLUSTER/Confidence/Perspective rules, GROUND protocol, SYNTHESIZE merge, engine-attribution tag table, and degraded-mode rules. Companion to `tri-engine-investigate.md` (algorithm + JSON schema). |
 | `reference/tri-engine-investigate.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents), JSON schema, subagent prompt skeleton, GROUND verdict examples, and worked synthesis examples. |
-| `reference/handoff-formats.md` | You need the canonical YAML schemas for any `SCOUT_TO_*` handoff (Builder / Radar / Triage / Specter / Sentinel / Trail) or the AUTORUN `_STEP_COMPLETE` envelope (including the optional `tri_engine` block). |
+| `reference/handoff-formats.md` | You need the canonical YAML schemas for any `SCOUT_TO_*` handoff (Builder / Radar / Triage / Sentinel / Trail) or the AUTORUN `_STEP_COMPLETE` envelope (including the optional `tri_engine` block). |
 | `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose-prompt rule, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
 | `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill `multi` Recipe protocol — canonical SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND/CALIBRATE → SYNTHESIZE → DELIVER flow, Pattern D/C/H definitions, engine-attribution tag convention, degraded-mode table, and Implementation Checklist for adding `multi` to new skills. |
 

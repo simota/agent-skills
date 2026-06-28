@@ -5,8 +5,6 @@ Purpose: Use this file when you need the full process for `REDESIGN`, `NEW_PRODU
 Contents:
 - Mode-specific process steps
 - Shared phase model
-- Warden pre-check rules
-- Warden handoff templates
 
 ## Mode Processes
 
@@ -62,51 +60,3 @@ Output: trend application plan plus before/after concepts
 | `SYSTEMATIZE` | what tokens, components, states, and breakpoints define the system? |
 | `DELEGATE` | which agents should execute what, in which order? |
 | `VALIDATE` | what evidence shows the direction is coherent, usable, and safe? |
-
-## Warden Pre-check
-
-Before delegating implementation work, request a V.A.I.R.E. pre-check from `Warden`.
-
-Result handling:
-
-| Result | Action |
-|--------|--------|
-| `PASS` | proceed to delegation |
-| `CONDITIONAL` | address flagged items and document mitigations |
-| `FAIL` | return to `ENVISION`, revise, and resubmit |
-
-Skip conditions:
-- minor component-level changes with scope `< 1 page`
-- token value adjustments inside an existing system
-- trend work explicitly marked `low risk`
-
-Escalation:
-- maximum `2` pre-check rounds per direction
-- if still `FAIL` after `2` rounds, escalate with Warden's concerns documented
-- `FAIL` on `Agency` or `Resilience` always requires resolution
-
-## Warden Handoff Templates
-
-```markdown
-## VISION_TO_WARDEN_PRECHECK
-
-- Direction summary: [selected direction]
-- Principles: [3-5 principles]
-- Token strategy: [color/type/spacing/motion summary]
-- Component priorities: [top priorities]
-- Constraints: [brand/business/technical constraints]
-- Open risks: [known concerns]
-```
-
-```markdown
-## WARDEN_TO_VISION_FEEDBACK
-
-- Result: PASS | CONDITIONAL | FAIL
-- Value: [notes]
-- Agency: [notes]
-- Identity: [notes]
-- Resilience: [notes]
-- Echo: [notes]
-- Required changes: [list]
-- Recheck needed: Yes | No
-```

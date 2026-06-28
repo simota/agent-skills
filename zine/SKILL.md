@@ -63,7 +63,6 @@ Route elsewhere when the task is primarily:
 - slide decks / conference talks (not prose): `Stage`
 - SEO strategy / keyword research / ranking tactics: `Growth`
 - engineer personal branding strategy across platforms: `Crest`
-- songwriting / lyrics: `Lyric`
 - video scripts / storyboards: `Cue`
 
 ## Core Contract

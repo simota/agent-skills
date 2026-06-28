@@ -53,10 +53,10 @@ Complete chain templates and dynamic adjustment rules.
 | DB_DESIGN | optimize | Schema → Tuner → Builder → Radar |
 | E2E | new | Voyager → Lens |
 | E2E | ci | Voyager → Gear |
-| COMPARE | quality-critical | Sherpa → Arena → Guardian |
-| COMPARE | bug-fix | Scout → Arena → Radar |
-| COMPARE | feature | Spark → Arena → Guardian |
-| COMPARE | security | Arena → Sentinel → Arena (iterate) |
+| COMPARE | quality-critical | Sherpa → Guardian |
+| COMPARE | bug-fix | Scout → Radar |
+| COMPARE | feature | Spark → Guardian |
+| COMPARE | security | Sentinel |
 | BROWSER | data-collection | Vector → Builder |
 | BROWSER | bug-reproduction | Scout → Vector → Triage |
 | BROWSER | evidence | Vector → Lens → Canvas |
@@ -74,7 +74,7 @@ Complete chain templates and dynamic adjustment rules.
 | MODERNIZE | structure | Grove → Sherpa → Zen → Radar |
 | UX_DESIGN | flow | Flow → Artisan → Radar |
 | UX_DESIGN | creative | Vision → Muse → Forge → Artisan → Radar |
-| UX_DESIGN | audit | Warden → Palette → Artisan → Radar |
+| UX_DESIGN | audit | Palette → Artisan → Radar |
 | UX_DESIGN | storybook | Vitrine → Quill |
 | UX_DESIGN | demo | Director → Voyager |
 | UX_DESIGN | session | Trace → Echo → Palette |
@@ -82,7 +82,6 @@ Complete chain templates and dynamic adjustment rules.
 | FEATURE | cli | Anvil → Radar |
 | TEST | quality | Judge → Zen → Radar (iterative PDCA via Nexus) |
 | INVESTIGATE | regression | Trail → Scout → Builder → Radar |
-| SECURITY | concurrency | Specter → Builder → Radar |
 | DOCS | convert | Morph |
 | DOCS | report | Harvest → Morph |
 | STRATEGY | seo | Growth → Artisan → Radar |
@@ -119,9 +118,9 @@ Complete chain templates and dynamic adjustment rules.
 | AI_FEATURE | eval-only | Oracle → Radar |
 | AI_FEATURE | rag | Oracle → Gateway → Builder → Radar |
 | AI_FEATURE | llm-pipeline | Oracle → Stream → Builder → Radar → Sentinel |
-| PRERELEASE | quick | Warden → Guardian |
-| PRERELEASE | standard | Warden → Guardian → Launch |
-| PRERELEASE | full | Sentinel → Warden → Radar → Guardian → Launch → Harvest |
+| PRERELEASE | quick | Guardian |
+| PRERELEASE | standard | Guardian → Launch |
+| PRERELEASE | full | Sentinel → Radar → Guardian → Launch → Harvest |
 | REQUIREMENTS | quick | Accord → Scribe |
 | REQUIREMENTS | standard | Accord → Scribe → Sherpa |
 | REQUIREMENTS | complex | Accord → Magi → Scribe → Sherpa → Canvas |
@@ -139,18 +138,14 @@ Complete chain templates and dynamic adjustment rules.
 | LOAD_TEST | quick | Siege → Bolt |
 | LOAD_TEST | standard | Siege → Bolt → Builder → Radar |
 | LOAD_TEST | chaos | Siege → Bolt → Triage → Builder → Beacon |
-| DEMO | cli-demo | Reel → Quill |
 | DEMO | ui-demo | Director → Voyager → Vitrine |
-| DEMO | full | Director → Reel → Vitrine → Quill |
+| DEMO | full | Director → Vitrine → Quill |
 | SPRINT_RETRO | quick | Harvest |
 | SPRINT_RETRO | standard | Harvest → Canvas |
 | SPRINT_RETRO | full | Harvest → Canvas → Quill |
-| KNOWLEDGE | quick | Scribe → Prism |
-| KNOWLEDGE | full | Scribe → Quill → Prism → Morph |
-| KNOWLEDGE | research | Field → Scribe → Prism |
-| AITUBER | prototype | Cast → Aether → Builder |
-| AITUBER | full | Cast → Aether → Builder → Artisan → Scaffold |
-| AITUBER | production | Cast → Aether → Builder → Artisan → Scaffold → Beacon → Radar |
+| KNOWLEDGE | quick | Scribe |
+| KNOWLEDGE | full | Scribe → Quill → Morph |
+| KNOWLEDGE | research | Field → Scribe |
 | REVIEW | quick-scan | Judge |
 | REVIEW | standard | Judge → Builder → Radar |
 | REVIEW | deep-dive | Judge → Zen → Builder → Radar → Sentinel |
@@ -160,18 +155,14 @@ Complete chain templates and dynamic adjustment rules.
 | SECURITY | detection | Vigil → Gear → Radar |
 | SECURITY | detection-full | Sentinel → Vigil → Gear → Radar → Scribe |
 | SECURITY | ai-red-team | Oracle → Breach → Builder → Radar → Sentinel |
-| SECURITY | threat-model | Stratum → Breach → Scribe |
+| SECURITY | threat-model | Breach → Scribe |
 | GAME | prototype | Quest → Forge → Builder → Radar |
-| GAME | full | Quest → Forge → Builder → Tone → Dot → Radar |
-| GAME | 3d-asset | Quest → Vision → Clay → Builder → Radar |
-| GAME | audio | Quest → Tone → Builder → Radar |
+| GAME | full | Quest → Forge → Builder → Dot → Radar |
 | GAME | narrative | Quest → Saga → Prose → Builder |
-| GAME | soundtrack | Quest → Lyric → Tone → Builder |
 | GAME | balance | Quest → Matrix → Radar |
 | DESIGN | figma-to-code | Frame → Muse → Artisan → Radar |
-| DESIGN | figma-make | Vision → Loom → Frame → Artisan → Radar |
 | DESIGN | figma-handoff | Frame → Forge → Builder → Radar |
-| DESIGN | token-sync | Frame → Muse → Loom → Artisan |
+| DESIGN | token-sync | Frame → Muse → Artisan |
 | DESIGN_SYSTEM | figma-driven | Frame → Vision → Muse → Vitrine → Quill |
 | DESIGN_SYSTEM_DOCS | quick | Muse → Vitrine → Quill |
 | DESIGN_SYSTEM_DOCS | standard | Muse → Vitrine + Canvas → Quill |
@@ -180,12 +171,8 @@ Complete chain templates and dynamic adjustment rules.
 | FEATURE | innovation | Field → Flux → Spark → Builder → Radar |
 | STRATEGY | reframe | Accord → Flux → Helm → Scribe |
 | REFACTOR | rethink | Atlas → Flux → Atlas → Sherpa → Zen → Radar |
-| ARCHITECTURE | c4-model | Lens → Stratum → Canvas → Scribe |
-| ARCHITECTURE | c4-review | Stratum → Atlas → Scribe |
-| ARCHITECTURE | c4-evolution | Ripple → Stratum → Canvas |
-| ARCHITECTURE | deployment | Stratum → Scaffold → Gear → Canvas |
+| ARCHITECTURE | deployment | Scaffold → Gear → Canvas |
 | CREATIVE | image-gen | Vision → Sketch → Artisan |
-| CREATIVE | image-to-3d | Vision → Sketch → Clay → Builder |
 | CREATIVE | marketing-asset | Growth → Sketch → Prose → Artisan |
 | STRATEGY | simulation | Helm → Canvas → Scribe |
 | STRATEGY | simulation-full | Compete → Helm → Magi → Scribe → Canvas |
@@ -196,7 +183,7 @@ Complete chain templates and dynamic adjustment rules.
 | E2E | matrix | Matrix → Voyager → Lens → Radar |
 | SPEC_VERIFY | quick | Attest → Scribe |
 | SPEC_VERIFY | standard | Attest → Scribe → Radar → Builder |
-| SPEC_VERIFY | full | Attest → Scribe → Radar → Builder → Warden |
+| SPEC_VERIFY | full | Attest → Scribe → Radar → Builder |
 | LOOP_OPS | simple | Orbit → Builder → Radar |
 | LOOP_OPS | full | Orbit → Builder → Guardian → Radar |
 | EVOLUTION | quick | Darwin → Canvas |
@@ -221,11 +208,8 @@ Complete chain templates and dynamic adjustment rules.
 | ECOSYSTEM | visualization | Darwin → Realm → Canvas |
 | DEV_EXPERIENCE | cli-audit | Hone → Hearth → Gear |
 | DEV_EXPERIENCE | cli-full | Hone → Hearth → Latch → Gear → Sentinel |
-| BUSINESS | tax-guide | Levy → Scribe |
-| BUSINESS | tax-calc | Levy → Builder → Radar |
-| BUSINESS | tax-data | Levy → Schema → Builder → Radar |
-| PROJECT | onboarding | Lens → Stratum → Canvas → Scribe → Prism |
-| INVESTIGATE | architecture | Lens → Stratum → Atlas → Canvas |
+| PROJECT | onboarding | Lens → Canvas → Scribe |
+| INVESTIGATE | architecture | Lens → Atlas → Canvas |
 | QA | full | Matrix → Lens → Echo → Radar → Voyager |
 | QA | coverage | Matrix → Radar → Sentinel |
 | TEST | matrix | Matrix → Judge → Zen → Radar |
@@ -234,8 +218,8 @@ Complete chain templates and dynamic adjustment rules.
 | REVIEW | matrix | Matrix → Judge → Builder → Radar |
 | REVIEW | thorough | Matrix → Judge → Zen → Builder → Radar → Sentinel |
 | REVIEW | blind-spot | Judge → Flux → Matrix → Builder → Radar |
-| COMPARE | matrix | Matrix → Arena → Guardian |
-| COMPARE | thorough | Matrix → Sherpa → Arena → Radar → Guardian |
+| COMPARE | matrix | Matrix → Guardian |
+| COMPARE | thorough | Matrix → Sherpa → Radar → Guardian |
 | FEATURE | explore | Spark → Matrix → Magi → Builder → Radar |
 | FEATURE | L-matrix | Spark → Matrix → Sherpa → Forge → Builder → Radar → Quill |
 | FEATURE | UX-matrix | Field → Echo → Matrix → Spark → Builder → Radar |
@@ -245,13 +229,13 @@ Complete chain templates and dynamic adjustment rules.
 | STRATEGY | innovation | Flux → Compete → Spark → Matrix → Builder → Radar |
 | STRATEGY | pivot | Flux → Helm → Magi → Scribe → Canvas |
 | LOAD_TEST | matrix | Matrix → Siege → Bolt → Builder → Radar |
-| PRERELEASE | matrix | Matrix → Sentinel → Warden → Radar → Guardian → Launch |
+| PRERELEASE | matrix | Matrix → Sentinel → Radar → Guardian → Launch |
 | SECURITY | matrix | Matrix → Sentinel → Probe → Builder → Radar |
 | AI_FEATURE | explore | Oracle → Flux → Spark → Builder → Radar |
 | REFACTOR | lateral | Flux → Atlas → Sherpa → Zen → Radar |
 | INVESTIGATE | reframe | Lens → Flux → Canvas → Scribe |
 | INVESTIGATE | first-principles | Flux → Lens → Matrix → Canvas |
-| ARCHITECTURE | first-principles | Flux → Stratum → Atlas → Scribe |
+| ARCHITECTURE | first-principles | Flux → Atlas → Scribe |
 | REQUIREMENTS | first-principles | Flux → Accord → Matrix → Scribe |
 | BUG | first-principles | Flux → Scout → Lens → Builder → Radar |
 | REFACTOR | first-principles | Flux → Atlas → Matrix → Sherpa → Zen → Radar |
@@ -278,7 +262,7 @@ Complete chain templates and dynamic adjustment rules.
 | ECOSYSTEM | first-principles | Flux → Darwin → Architect → Void → Canvas |
 | MOCKUP | simple | Pixel → Radar |
 | MOCKUP | figma | Frame → Pixel → Radar |
-| MOCKUP | full | Frame → Pixel → Muse → Artisan → Warden → Radar |
+| MOCKUP | full | Frame → Pixel → Muse → Artisan → Radar |
 | MOCKUP | responsive | Pixel → Matrix → Artisan → Radar |
 | DESIGN_AUDIT | basic | Pixel[gap-report] → Artisan |
 | DESIGN_AUDIT | a11y | Pixel[gap-report] → Canon → Artisan |
@@ -291,16 +275,16 @@ Complete chain templates and dynamic adjustment rules.
 | GAME | first-principles | Flux → Quest → Saga → Matrix → Scribe |
 | GHA_WORKFLOW | matrix | Matrix → Pipe → Gear → Radar |
 | DESIGN_SYSTEM | matrix | Matrix → Vision → Muse → Vitrine → Artisan → Radar |
-| DESIGN | landing-page | Vision → Prose → Sherpa → Muse → Forge → Artisan → Warden → Radar |
-| DESIGN | app-ui-restrained | Vision → Sherpa → Muse → Artisan → Flow → Warden → Radar |
+| DESIGN | landing-page | Vision → Prose → Sherpa → Muse → Forge → Artisan → Radar |
+| DESIGN | app-ui-restrained | Vision → Sherpa → Muse → Artisan → Flow → Radar |
 | DESIGN | moodboard-first | Forge → Vision → Sherpa → Muse → Artisan → Radar |
-| UX_DESIGN | content-first | Prose → Vision → Sherpa → Muse → Forge → Artisan → Warden |
-| UX_DESIGN | motion-intentional | Vision → Flow → Artisan → Warden → Radar |
-| DESIGN_SYSTEM | composition | Vision → Sherpa → Muse → Artisan → Flow → Warden → Vitrine → Quill |
+| UX_DESIGN | content-first | Prose → Vision → Sherpa → Muse → Forge → Artisan |
+| UX_DESIGN | motion-intentional | Vision → Flow → Artisan → Radar |
+| DESIGN_SYSTEM | composition | Vision → Sherpa → Muse → Artisan → Flow → Vitrine → Quill |
 | STRATEGY | compete-reframe | Flux → Compete → Matrix → Spark → Scribe |
 | STRATEGY | ab-matrix | Matrix → Experiment → Builder → Radar |
 | SPEC_VERIFY | matrix | Matrix → Attest → Scribe → Radar |
-| KNOWLEDGE | first-principles | Flux → Field → Scribe → Prism |
+| KNOWLEDGE | first-principles | Flux → Field → Scribe |
 | PORTING | survey-only | Lens → Atlas → Port[survey] |
 | PORTING | parity | Port[parity] |
 | PORTING | blueprint | Lens → Atlas → Port[blueprint] |
@@ -379,13 +363,11 @@ Builder then applies:
 - Mockup/screenshot to code → Add Pixel (faithful reproduction from image)
 - Detailed design-to-code gap analysis / fidelity audit / design review requested → Add Pixel[gap-report]; chain to Canon for WCAG mapping when a11y is in scope, Judge for report quality review, Artisan for remediation
 - Personal branding or portfolio → Add Crest
-- Game assets needed → Add Tone/Dot/Clay as applicable
-- C4 architecture documentation needed → Add Stratum
+- Game assets needed → Add Dot as applicable
 - Combinatorial testing needed → Add Matrix before Radar
 - Feature has 3+ independent dimensions or variants → Add Matrix after Spark
 - Review covers 4+ files across 2+ modules → Add Matrix before Judge
 - Test coverage gaps identified → Add Matrix to define coverage matrix
-- Comparison involves 3+ candidates or criteria → Add Matrix before Arena
 - Load test targets multiple endpoints/scenarios → Add Matrix before Siege
 - Prerelease covers multiple platforms/environments → Add Matrix before Sentinel
 - Approach stuck or single-perspective bias detected → Add Flux for reframing
@@ -425,9 +407,7 @@ Builder then applies:
 - App UI with "clean" or "minimal" requirement → Use DESIGN/app-ui-restrained chain
 - Visual direction unclear → Add Forge with moodboard mode before Vision
 - Content strategy needed → Add Prose before or after Vision
-- First viewport has cards/stats/metadata → Warden litmus check triggers composition review
 - Design chain spans 5+ agents with implementation (Muse/Forge/Artisan) → Add Sherpa after Vision/Prose direction phase to decompose into atomic steps before implementation begins
-- Warden FAIL triggers redesign loop → Add Sherpa to re-decompose revised scope before re-entering implementation agents
 
 ### Rally Parallel Escalation Triggers
 

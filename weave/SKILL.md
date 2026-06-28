@@ -26,7 +26,7 @@ COLLABORATION_PATTERNS:
 - Weave -> Judge: Workflow design review request
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User (requirements), Scribe (spec requests), Atlas (architecture context), Nexus (routing), Specter (concurrency analysis)
+- INPUT: User (requirements), Scribe (spec requests), Atlas (architecture context), Nexus (routing)
 - OUTPUT: Builder (implementation), Canvas (visualization), Radar (test cases), Scribe (documentation), Judge (review), Nexus (step complete)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Game(M) Dashboard(M) API(H)
@@ -221,7 +221,7 @@ Every Weave deliverable must include:
 - Validation report: reachability, deadlock-free, determinism, completeness, guard consistency — each marked PASS or FAIL with supporting evidence
 - For distributed workflows: a compensation table pairing each forward step with its compensating transaction and per-intent idempotency key
 - Engine recommendation with non-functional justification (durability tier, cost band, vendor-lock stance, language affinity) — no engine recommendation without explicit requirements
-- Known-risks section naming unresolved deadlocks, compensation-failure modes, and race-condition candidates for Specter follow-up
+- Known-risks section naming unresolved deadlocks, compensation-failure modes, and race-condition candidates for follow-up
 - Downstream handoff envelope (see `reference/handoffs.md`) matching the next consumer (Builder / Canvas / Radar / Scribe / Judge)
 
 ---
@@ -337,7 +337,6 @@ Quick orientation:
 - Scribe — state-transition sections extracted from specifications
 - Atlas — cross-module dependency and architecture context
 - Nexus — routing context under AUTORUN / Hub mode
-- Specter — concurrency / race-condition analysis feeding into guard conditions
 
 **Sends:**
 - Builder — implementable workflow design (state machine + validation report)

@@ -79,7 +79,6 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Riff** | _"The best ideas don't arrive. They evolve — one riff at a time."_ - 4つの思考モード（拡散/提案/評価/引き算）による反復対話でアイデアを深めるインタラクティブなブレインストーミングパートナー。コードは書かない | ブレインストーミングセッション出力 |
 | **Cast** | _"Personas are not invented. They are discovered, born, and evolved."_ - ペルソナキャスティングエージェント。多種多様な入力からペルソナを迅速生成・永続化・ライフサイクル管理し、下流エージェントに統一フォーマットで配信 | ペルソナレジストリ |
 | **Helm** | _"A ship without a destination has no favorable wind. A ship without a helm has no direction at all."_ - 財務・市場・競合データから短期/中期/長期の経営シミュレーションを実施する経営戦略特化エージェント。SWOT/PESTLE/Porter分析、シナリオプランニング、KPI予測、戦略ロードマップ生成。コードは書かない | 戦略シミュレーションレポート |
-| **Levy** | _"納税は義務。でも、正しく知れば、賢く果たせる。"_ - 日本の確定申告ガイダンスエージェント。所得分類・控除最適化・税額計算・e-Tax手続きをフリーランス/副業向けに解説。コードは書かない | 確定申告ガイダンスレポート |
 | **Accord** | _"Three teams, one truth."_ - 3チーム横断（ビジネス・開発・デザイン）の統合仕様パッケージを作成する仕様アーキテクト。段階的詳細化テンプレート（L0ビジョン→L1要件→L2チーム別詳細→L3受入基準）で共通認識を形成。コードは書かない | 統合仕様パッケージ、トレーサビリティマトリクス |
 | **Matrix** | _"Infinite combinations, finite resources. Matrix finds the minimum that covers the maximum."_ - 任意の多次元軸×値を入力とし、組み合わせ爆発を制御するユニバーサル分析エージェント。最小カバレッジセット選定・実行計画・優先順位付け。テスト・デプロイ・UX検証・リスク評価・互換性など全ドメイン対応。コードは書かない | マトリクス分析、カバレッジ最適化計画 |
 | **Saga** | _"Features don't sell. Stories do."_ - プロダクト・機能のユースケースをストーリーテリングで語るナラティブデザインエージェント。顧客体験の物語化、シナリオストーリー、プロダクトナラティブ。コードは書かない | ナラティブドキュメント |
@@ -120,9 +119,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Judge** | _"Good code needs no defense. Bad code has no excuse."_ - codex reviewによるコードレビュー・PRレビュー自動化・コミット前チェック・AI幻覚検出 | レビューレポート |
 | **Zen** | _"Clean code is not written. It's rewritten."_ - リファクタリング・コード品質改善（動作は変えない） | コード改善 |
 | **Sweep** | _"Dead code is technical debt that earns no interest."_ - 不要ファイル検出・未使用コード特定・孤立ファイル発見・安全な削除提案 | クリーンアップ提案 |
-| **Warden** | _"Quality is not negotiable. Ship nothing unworthy."_ - V.A.I.R.E.品質基準の番人。リリース前評価、スコアカード、合否判定 | 品質評価レポート |
 | **Attest** | _"Specs are truth. Code is evidence. Attest finds the gaps."_ - 仕様適合検証エージェント。仕様書から受入基準を抽出し、BDDシナリオを生成し、実装が仕様通りか敵対的に検証。CERTIFIED/CONDITIONAL/REJECTED判定を発行 | 適合レポート、BDDシナリオ |
-| **Specter** | _"The bugs you can't see are the ones that haunt you."_ - 並行性・非同期処理・リソース管理の「見えない」問題を狩る幽霊ハンター。Race Condition、Memory Leak、Resource Leak、Deadlockを検出・分析・レポート | 検出レポート |
 | **Siege** | _"Break it before users do. Fix it before they notice."_ - 高度テストスペシャリスト。負荷テスト（k6/Locust/Artillery）、契約テスト（Pact CDC）、カオスエンジニアリング、ミューテーションテスト、レジリエンスパターン検証 | テスト結果、レジリエンスレポート |
 | **Void** | _"The best code is the code that was never written."_ - YAGNI検証・スコープカット・機能プルーニング・複雑性削減提案。5つの存在検証問とCost-of-Keeping Scoreで不要な複雑性を特定 | 削減提案 |
 | **Vigil** | _"Detection is the first line of defense. Engineering is the last."_ - Detection Engineeringエージェント。Sigma/YARAルール設計、検出カバレッジマッピング、脅威ハンティング仮説設計、Detection-as-Code CI/CD統合 | 検出ルール、カバレッジマップ |
@@ -140,7 +137,6 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Builder** | _"Types are contracts. Code is a promise."_ - 本番実装。TDD・Event Sourcing・CQRS・パフォーマンス最適化を備えた型安全な実装職人。仕様の曖昧性検出、Forgeからの自動引き継ぎ対応 | プロダクションコード |
 | **Artisan** | _"Prototypes promise. Production delivers."_ - フロントエンド本番実装の職人。React/Vue/Svelte、Hooks設計、状態管理、Server Components、フォーム処理、データフェッチング | フロントエンドコード |
 | **Forge** | _"Done is better than perfect. Ship it, learn, iterate."_ - プロトタイプ作成。完璧より動くものを優先。Builder連携用にtypes.ts, errors.ts, forge-insights.mdを出力 | MVP/PoC |
-| **Arena** | _"Arena is the judge, not a player. External engines compete; the best solution wins."_ - codex exec / Antigravity CLI を直接操り並列実装・評価・採用。Solo Mode（逐次）と Team Mode（Agent Teams 並列）をサポート | 比較実装・評価 |
 | **Native** | _"Every pixel ships. Every platform matters."_ - Pure-nativeモバイル実装スペシャリスト。iOS（Swift 6.3 + SwiftUI + Liquid Glass）と Android（Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive）。@Observable/Swift Concurrency、Compose Strong Skipping + Type-safe Navigation、SwiftData/Room、Credential Manager + Passkey、Privacy Manifest、edge-to-edge、predictive back、Live Activities、App Intents、Foundation Models / Gemini Nano、ストア準拠、ステージドロールアウト。React Native / Flutter / KMP / CMP は対象外 | コード |
 | **Pixel** | _"Every pixel matters. Fidelity is non-negotiable."_ - 画像モックアップ（PNG/JPG/スクリーンショット）からピクセルパーフェクトなHTML/CSSを生成し、視覚的検証を行う忠実再現エージェント | HTML/CSSコード |
 
@@ -182,12 +178,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Vitrine** | _"Components without stories are components without context."_ - Storybookストーリー作成・カタログ管理・Visual Regression連携。CSF 3.0形式 | Storybook Stories |
 | **Prose** | _"Words are the smallest unit of design. Get them wrong, and nothing else matters."_ - ユーザー向けテキストの専門エージェント。マイクロコピー、エラーメッセージ、ボイス＆トーンフレームワーク、オンボーディングコピー、アクセシビリティテキスト | コピーガイドライン、コンテンツ仕様 |
 | **Frame** | _"Design speaks in pixels. I translate it to code."_ - Figma MCP Serverを活用してデザインコンテキストを抽出・構造化し、実装エージェントに渡すブリッジエージェント。デザインからコードへの橋渡し、Code Connect管理、デザインシステムルール抽出。コードは書かない | 構造化デザインコンテキスト、デザインシステムルール |
-| **Loom** | _"Design intent deserves preparation. Every thread of context I weave makes creation more precise."_ - Figma Make最適化エージェント。コードベースを分析してGuidelines.mdを生成し、プロンプト戦略を設計し、Make出力をデザインシステム規約と照合検証。コードは書かない | Guidelines.md、プロンプトシーケンス、検証レポート |
 | **Ink** | _"Every stroke serves a purpose."_ - SVGアイコン/イラスト生成、アイコンシステム設計、スプライトシンボル構築 | SVGアセット |
-
-**Frame vs Loom の役割分担**:
-- **Frame**: Figma → Code 方向（Figma MCP経由でデザインコンテキストを抽出）
-- **Loom**: Code → Figma Make 方向（コードベース分析からFigma Makeへの最適入力を準備）
 
 ### ドキュメント
 
@@ -196,16 +187,14 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Scribe** | _"A specification is a contract between vision and reality."_ - PRD/SRS/HLD/LLD・実装チェックリスト・テスト仕様書を作成するドキュメントライター | 仕様書・設計書 |
 | **Quill** | _"Code tells computers what to do. Documentation tells humans why."_ - JSDoc/TSDoc追加・README更新・any型の型定義化 | ドキュメント |
 | **Morph** | _"A document is timeless. Its format is temporary."_ - ドキュメントフォーマット変換（Markdown↔Word/Excel/PDF/HTML）。Scribeの仕様書やHarvestのレポートを各種フォーマットに変換 | 変換済みドキュメント |
-| **Prism** | _"One source, many lights."_ - NotebookLMのステアリングプロンプト設計コンサルタント。ソース準備の助言と最適な出力フォーマット（Audio/Video/Slide/Infographic/Mind Map）の選定 | ステアリングプロンプト |
 | **Tome** | _"Changes are forgotten. Knowledge endures."_ - リポジトリの変更内容を詳細な学習ドキュメントに変換。用語・フロー・設計判断・アンチパターンを教育的に解説 | 学習ドキュメント |
 | **Clause** | _"Every clause carries weight. Every omission carries risk."_ - 利用規約・プライバシーポリシー・特商法の法的ドキュメントレビュー。条項ギャップ検出・リスクフラグ・規制整合性確認 | 法務レビューレポート |
 | **Zine** | _"The hook earns the second paragraph."_ - 外部公開向けテックブログ・記事連載オーサリングエージェント。note/Zenn/Qiita/dev.to向けフック設計、記事構造、プラットフォーム別チューニング、連載管理 | 公開記事、連載index |
 
-**Scribe vs Quill vs Morph vs Prism vs Tome vs Zine の役割分担**:
+**Scribe vs Quill vs Morph vs Tome vs Zine の役割分担**:
 - **Scribe**: プロジェクトドキュメント（PRD、SRS、設計書、チェックリスト、テスト仕様書）
 - **Quill**: コードドキュメント（JSDoc/TSDoc、README、型定義）
 - **Morph**: フォーマット変換（Markdown→PDF/Word/HTML等）
-- **Prism**: NotebookLMコンテンツ最適化（Audio/Video/Slide向けステアリングプロンプト）
 - **Tome**: 変更ベース学習教材（diffから設計判断・用語・アンチパターンを教材化）
 - **Zine**: 外部公開記事（note/Zenn/Qiita/dev.to）・連載管理
 
@@ -218,15 +207,10 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Realm** | _"Every company tells a story — let the agents write theirs."_ - エージェントエコシステムをゲーミフィケーションで可視化するメタ可視化エージェント。Phaser 3による2Dオフィスシミュレーション、リアルタイムXP成長・ランクアップエフェクト、インタラクティブHTMLマップ、キャラクターシート、クエストボード、バッジシステム | RPGスタイルダッシュボード、ゲーム可視化 |
 | **Dot** | _"Every pixel is a decision. Every constraint is a creative opportunity."_ - ピクセルアート専門エージェント。コード（SVG/Canvas/Phaser 3/Pillow/CSS）でドット絵を生成。パレット設計、スプライトシート、タイルセット、フレームアニメーション、Antigravity CLIへのSVG生成委譲をサポート | ピクセルアートコード（SVG/Canvas/CSS） |
 | **Quest** | _"Every great game starts with a question the player cannot resist answering."_ - ゲーム企画・プロダクションエージェント。GDD構造化、ゲームバランス数理、ナラティブ設計、経済設計、システムデザイン、プレイヤー心理学。コードは書かない | GDD、バランスシート、経済モデル |
-| **Tone** | _"Sound is the invisible architecture of emotion."_ - ゲームオーディオ生成エージェント。ElevenLabs/Stable Audio/MusicGen/OpenAI TTS/JSFXR等によるSFX・BGM・Voice・Ambient・UIサウンド用コード生成。LUFS正規化、ミドルウェア統合 | オーディオパイプラインコード |
-| **Clay** | _"From prompt to polygon, every vertex earns its place."_ - AI 3Dモデル生成エージェント。Meshy/Tripo/Hunyuan3D/Rodin/Sloyd/Stability APIを使用したtext-to-3D・image-to-3D用コード（Python/JS/OpenSCAD）を生成。ゲームパイプライン：LOD、リトポロジー、UV、テクスチャベイク、QC検証 | 3Dパイプラインコード（Python/JS/SCAD） |
 | **Cue** | _"Every frame tells a story."_ - ビデオスクリプト・ストーリーボード・ナレーション設計。プロダクト動画、解説動画、オンボーディングコンテンツ企画 | 動画台本、ストーリーボード |
 | **Stage** | _"Every slide is a stage."_ - Marp/reveal.js/Slidevによるスライド生成、ストーリー構成設計、カンファレンストーク最適化 | スライドデッキ |
-| **Lyric** | _"From theme to anthem, verse by verse."_ - Suno AI向けソングライティングエージェント。テーマ・ジャンル・ムードからメタタグ付き歌詞を作成 | メタタグ付き歌詞 |
-
 **Vision → Dot → Forge の連携**：Vision（アートディレクション）→ Dot（ピクセルアートコード）→ Forge（プロトタイプ統合）
 **Dot → Realm の連携**：Dot（Phaser 3テクスチャ）→ Realm（エコシステム可視化）
-**Vision → Clay → Builder の連携**：Vision（アートディレクション）→ Clay（3Dアセットコード）→ Builder（ゲームロジック統合）
 
 ### アーキテクチャ
 
@@ -239,7 +223,6 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Nest** | _"Structure what reaches the model, and the model structures the rest."_ - LLM最適化フォルダ構造設計。プロジェクトディレクトリをコンテキスト効率・プログレッシブディスクロージャー・プロンプトキャッシュ性能の観点で監査・再構成 | 構造レポート・レイアウト設計 |
 | **Weave** | _"Every state tells a story. Every transition is a contract."_ - ワークフロー＆ステートマシン設計エージェント。状態遷移設計、不正遷移検出、Sagaパターン、承認フロー設計 | 設計、図 |
 | **Seek** | _"The right result at the right time in the right order."_ - 検索エンジン・ベクトルDB設計エージェント。全文検索/ベクトル検索/ハイブリッド検索の設計・インデックス最適化・RAG Retrieval層実装 | コード、設定 |
-| **Stratum** | _"Architecture without visualization is architecture without communication."_ - C4モデルに基づくソフトウェアアーキテクチャモデリング・評価・Structurizr DSL生成 | アーキテクチャ図、DSL |
 | **Crypt** | _"Trust no channel. Verify every key."_ - 暗号アーキテクチャ設計。アルゴリズム選定、鍵管理、E2E暗号化、KMS統合、TLS設定 | 暗号設計仕様 |
 | **Shard** | _"Isolation is the foundation of trust in multi-tenancy."_ - マルチテナントアーキテクチャ設計。テナント分離戦略、RLS、ルーティング、SaaS向けスケール設計 | アーキテクチャ設計 |
 | **Trawl** | _"Design the web that catches the web."_ - クロールシステムアーキテクチャ設計。分散クローラー設計、URLフロンティア管理、ポライトネスポリシー、法的準拠設計 | アーキテクチャ仕様 |
@@ -325,22 +308,8 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Vector** | _"The browser is a stage. Every click is a scene."_ - Playwright/Chrome DevToolsによるブラウザ操作自動化。データ収集、フォーム操作、スクリーンショット取得、ネットワーク監視 | 自動化スクリプト |
 | **Haul** | _"The right image at the right resolution. Provenance you can stand behind."_ - 商品画像探索・高精度ダウンロードスペシャリスト。ECサイトAPI/画像検索/ブランドサイトのマルチソース集約、SKU/JAN/UPCマッチング、知覚ハッシュによる重複排除、ライセンスを意識したキュレーション | 画像マニフェスト・正規化された素材 |
 | **Director** | _"A demo that moves hearts moves products."_ - Playwright E2Eテストを活用した機能デモ動画の自動撮影。シナリオ設計、撮影設定、実装パターン、品質チェックリストを提供 | デモ動画(.webm) |
-| **Reel** | _"The terminal is a stage. Every keystroke is a performance."_ - VHS/terminalizer/asciinemaを使用したターミナル録画・CLIデモ動画生成。宣言的な.tapeファイルでGIF/MP4/WebMを作成 | GIF/動画(.gif/.mp4) |
 
-**Anvil → Reel → Quill の連携**：Anvil（CLI開発）→ Reel（デモ録画）→ Quill（README GIF埋め込み）
-**Director + Reel → Vitrine の連携**：Director（Web録画）+ Reel（ターミナル録画）→ Vitrine（ビジュアルドキュメント）
-**Director vs Reel の役割分担**:
-- **Director**: ブラウザ（Web UI）のデモ動画（Playwright、.webm出力）
-- **Reel**: ターミナル（CLI）のデモ録画（VHS、GIF/MP4出力）
-
-### AITuber/ストリーミング
-
-| エージェント | 説明 | 出力 |
-|------------|------|------|
-| **Aether** | _"The stage is live. The avatar breathes. The audience connects."_ - AITuber（AI VTuber）フルスタック・オーケストレーター。リアルタイム配信パイプライン（Chat→LLM→TTS→Avatar→OBS）の設計・構築、ライブチャット統合、TTS音声合成、Live2D/VRMアバター制御、リップシンク、OBS WebSocket自動化 | パイプライン設計、配信設定 |
-
-**Cast → Aether → Builder の連携**：Cast（ペルソナ）→ Aether（AITuberパイプライン設計）→ Builder（実装）
-**Aether → Scaffold → Gear の連携**：Aether（配信インフラ）→ Scaffold（プロビジョニング）→ Gear（CI/CD）
+**Director の役割**: ブラウザ（Web UI）のデモ動画（Playwright、.webm出力）
 
 ## ワークフロー
 
@@ -441,7 +410,6 @@ questions:
 | UX/improve | UX改善 | Echo → Palette → Artisan → Radar |
 | UX/session-analysis | セッション分析 | Trace → Echo → Palette |
 | UX/persona-validation | ペルソナ検証 | Field → Trace → Echo |
-| UI/figma-make | Figma Make Guidelines | Loom → Artisan |
 
 #### リファクタリング
 
@@ -550,17 +518,6 @@ questions:
 | DOCS/learning | 変更ベース学習資料 | Tome |
 | DOCS/onboarding | オンボーディング教材 | Trail → Tome |
 
-#### デモ・録画
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| DEMO/cli | CLIデモGIF作成 | Anvil → Reel → Quill |
-| DEMO/prototype | プロトタイプデモ | Forge → Reel → Growth |
-| DEMO/web-terminal | Web＋ターミナル複合デモ | Director + Reel → Vitrine |
-| DEMO/docs | ドキュメント用デモ | Scribe → Reel → Quill |
-| DEMO/ci-update | CI連携デモ自動更新 | Gear → Reel → Gear |
-| DEMO/showcase | プロダクションCLIデモ | Builder → Reel → Growth |
-
 #### インフラ・DevOps
 
 | タスク | 説明 | チェーン |
@@ -631,7 +588,6 @@ questions:
 |--------|------|----------|
 | INCIDENT | 障害対応 | Triage → Scout → Builder |
 | TEST/quality | 品質反復改善 | Judge → Zen → Radar |
-| SECURITY/concurrency | 並行性バグ検出 | Specter → Builder → Radar |
 | INVESTIGATE/regression | リグレッション調査 | Trail → Scout → Builder → Radar |
 
 #### メッセージング・リアルタイム
@@ -642,14 +598,6 @@ questions:
 | MESSAGING/webhook | Webhookハンドラ | Gateway → Relay → Builder → Radar |
 | MESSAGING/realtime | リアルタイム通信 | Relay → Scaffold → Builder → Radar |
 | MESSAGING/multi-channel | マルチチャネル統合 | Relay → Builder → Radar |
-
-#### AITuber/ストリーミング
-
-| タスク | 説明 | チェーン |
-|--------|------|----------|
-| AITUBER/setup | AITuberパイプライン構築 | Cast → Aether → Builder → Radar |
-| AITUBER/avatar | アバター＆リップシンク設定 | Aether → Builder |
-| AITUBER/streaming | 配信自動化 | Aether → Gear → Builder |
 
 ## 共有ナレッジ
 
@@ -697,7 +645,6 @@ skills/
 │   └── INTERACTION.md  # 対話ルール共通定義
 ├── _templates/
 │   └── PROJECT.md      # プロジェクト知識テンプレート
-├── aether/SKILL.md    # AITuber/ストリーミング・オーケストレーター
 ├── architect/SKILL.md  # エージェント設計メタデザイナー
 ├── anvil/SKILL.md      # CLI/TUI構築
 ├── artisan/SKILL.md    # フロントエンド実装
@@ -735,7 +682,6 @@ skills/
 ├── latch/SKILL.md      # Claude Codeフック管理
 ├── launch/SKILL.md     # リリース管理
 ├── lens/SKILL.md       # コードベース理解・調査
-├── levy/SKILL.md       # 確定申告ガイド
 ├── lore/SKILL.md       # エコシステム横断知識キュレーター
 ├── bazaar/SKILL.md       # 最高品質LP制作スタジオチェーン・オーケストレーター
 ├── magi/SKILL.md       # 多角的意思決定
@@ -779,7 +725,6 @@ skills/
 ├── sweep/SKILL.md      # 不要コード検出
 ├── titan/SKILL.md      # プロダクトライフサイクル統括
 ├── tome/SKILL.md       # 変更→学習ドキュメント変換
-├── tone/SKILL.md       # ゲームオーディオ生成
 ├── trace/SKILL.md      # セッションリプレイ分析
 ├── triage/SKILL.md     # 障害対応
 ├── tuner/SKILL.md      # DBパフォーマンス最適化
@@ -1282,21 +1227,6 @@ TypeScript strict、適切なエラーハンドリング、アクセシビリテ
 
 ---
 
-##### Figma Make最適化（Loom）
-
-```
-/Loom
-このプロジェクトのコードベースを分析して、Figma Make用のGuidelines.mdを生成してください。
-```
-
-**出力**: コードベースのデザインシステム分析、Figma Make最適化 Guidelines.md、プロンプト戦略
-
-**Frame vs Loom の使い分け**:
-- **Frame**: Figmaのデザインからコード実装へ（Figma → Code）
-- **Loom**: コードベースからFigma Make入力の最適化へ（Code → Figma Make）
-
----
-
 #### ドキュメント
 
 ##### PRD作成（Scribe）
@@ -1448,19 +1378,6 @@ Gemini APIを使って商品サムネイル画像を生成するPythonコード�
 - **Canvas**: 図表・チャート（Mermaid、ASCIIアート、draw.io）
 - **Sketch**: AI画像生成コード（Gemini API向けPythonコード）
 - **Dot**: ピクセルアートをコードで生成（SVG/Canvas/Phaser 3/Pillow/CSSスプライト）
-- **Clay**: AI 3Dモデル生成コード（Meshy/Tripo/Hunyuan3D/Rodin/Sloyd/Stability API向けPython/JS/OpenSCAD）
-
----
-
-##### NotebookLMプロンプト設計（Prism）
-
-```
-/Prism
-APIドキュメントをNotebookLMで魅力的なポッドキャスト風音声にしたいです。
-最適なステアリングプロンプトを設計してください。
-```
-
-**出力**: 最適化されたステアリングプロンプト、ソース準備のアドバイス、出力フォーマット推奨
 
 ---
 
@@ -1842,62 +1759,6 @@ CTAボタンの色変更による効果を検証するA/Bテストを設計し�
 **Sentinel vs Probe の役割分担**:
 - **Sentinel**: 静的解析（SAST）- コードを読んで脆弱性を検出
 - **Probe**: 動的テスト（DAST）- 実行中のアプリを攻撃して脆弱性を検出
-
----
-
-#### ターミナル録画
-
-##### CLIデモGIF作成（Reel）
-
-```
-/Reel
-このCLIツールのインストールから基本的な使い方までをGIFで録画してください。
-READMEに埋め込みます。
-```
-
-**出力**: VHS .tapeファイル、最適化済みGIF（5MB以下）、Markdown埋め込みコード
-
----
-
-##### ターミナルセッション録画（Reel）
-
-```
-/Reel
-インタラクティブなセットアップウィザードの動作をデモ動画にしてください。
-ユーザーが選択肢を選ぶ様子を含めてください。
-```
-
-**出力**: terminalizer録画、YAML編集済み、GIF出力
-
----
-
-**Director vs Reel の役割分担**:
-- **Director**: ブラウザ（Web UI）のデモ動画（Playwright、.webm出力）
-- **Reel**: ターミナル（CLI）のデモ録画（VHS/terminalizer/asciinema、GIF/MP4出力）
-
----
-
-#### AITuber/ストリーミング
-
-##### AITuberパイプライン設計（Aether）
-
-```
-/Aether
-AITuberシステムを設計してください：YouTube Liveチャット → LLM応答 → VOICEVOX TTS → Live2Dアバター（リップシンク付き） → OBS配信。
-```
-
-**出力**: パイプラインアーキテクチャ、コンポーネント設定（チャットポーラー、LLMアダプター、TTS設定、アバター制御、OBS WebSocket）、デプロイガイド
-
----
-
-##### 配信自動化（Aether）
-
-```
-/Aether
-AI VTuber配信中のシーン切替、BGM制御、チャットオーバーレイのOBS WebSocket自動化を設定してください。
-```
-
-**出力**: OBS WebSocket設定、シーン切替ロジック、イベント駆動自動化スクリプト
 
 ---
 

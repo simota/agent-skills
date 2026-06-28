@@ -10,8 +10,6 @@ Purpose: Adapt a source-language narration / voice-over script to multiple local
 - **cue `narration` (elsewhere)**: source-language narration drafting — always run before `localize`.
 - **cue `captions` (elsewhere)**: time-coded subtitle files — base captions should be locked before localizing.
 - **Polyglot (elsewhere)**: UI string / i18n key translation for in-product copy. Not for narration audio.
-- **Tone (elsewhere)**: per-locale TTS voice selection, dubbing mix, LUFS normalization across languages.
-- **Warden (elsewhere)**: LQA gate — pass/fail evaluation of delivered locales.
 
 If the hypothesis is "does this sound natural to a Japanese / German / Spanish viewer?" → `localize`. If it's "are the UI strings translated?" → Polyglot.
 
@@ -137,7 +135,5 @@ A single failure in claim preservation or legal copy is a hard reject; style iss
 
 On completion, hand off:
 
-- **To Tone**: per-locale final scripts, pronunciation guide, TTS voice selection recommendation per locale, LUFS target and delivery format.
 - **To `captions`**: localized script so translated captions can be timed against the dub, not the source.
-- **To Warden**: completed LQA checklist per locale for accessibility + quality gate.
 - **To user**: per-locale script package (script + brief + pronunciation guide + timing table), and a delta report listing any scenes where source-language intent was adapted rather than translated directly.

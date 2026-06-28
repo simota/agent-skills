@@ -151,7 +151,7 @@ The per-agent reference should explicitly link back to this file:
 
 ## Cross-Agent Consistency
 
-Agents that share downstream consumers (e.g., Scout / Trail / Sentinel / Specter all hand off to Builder) should keep verb naming consistent where the action is the same:
+Agents that share downstream consumers (e.g., Scout / Trail / Sentinel all hand off to Builder) should keep verb naming consistent where the action is the same:
 
 - `INVESTIGATE-FURTHER` is universal — same meaning across agents
 - `MITIGATE` is universal — workaround/symptom-only fix

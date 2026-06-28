@@ -13,7 +13,7 @@
 
 ---
 
-## Orchestration (6)
+## Orchestration (5)
 
 Decomposes, coordinates, and parallelizes tasks.
 
@@ -23,10 +23,9 @@ Decomposes, coordinates, and parallelizes tasks.
 | **Sherpa** | Task decomposition guide | Break work into atomic steps under 15 minutes | No |
 | **Titan** | Product delivery | Ship code fastest, prefer build over plan | No |
 | **Rally** | Parallel orchestrator | Multi-session parallel execution | No |
-| **Aether** | AITuber orchestrator | Building AI VTuber systems | No |
 | **Atelier** | Design → implementation pipeline | Integrates Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas | No |
 
-## Investigation (9)
+## Investigation (8)
 
 Investigation, analysis, and root-cause identification. Does not write code.
 
@@ -37,7 +36,6 @@ Investigation, analysis, and root-cause identification. Does not write code.
 | **Trail** | Git history investigation | Regression analysis, commit archaeology | No |
 | **Fossil** | Legacy code archaeology | Extract implicit business rules, assess migration risk | No |
 | **Ripple** | Impact analysis | Pre-change risk evaluation, blast-radius estimation | No |
-| **Specter** | Concurrency issue detection | Race conditions, memory leaks, deadlocks | No |
 | **Sweep** | Dead-code detection | Unused files, dead code, orphaned files | No |
 | **Spark** | New feature proposals | Feature ideas leveraging existing data/logic | No |
 | **Void** | YAGNI verification | Scope cuts, complexity reduction proposals | No |
@@ -80,7 +78,7 @@ Security analysis and testing.
 | **Chain** | Skill/plugin/MCP supply-chain audit | sha256 manifests, Unicode Tag injection scan, credential-exfiltration detection, MCP tool-description rug-pull prevention | Mixed |
 | **Cull** | Supply-chain malware infection scanner | IoC-based local scan for npm/PyPI worm campaigns; eradication and credential rotation runbooks | Mixed |
 
-## Review (7)
+## Review (6)
 
 Code review and quality checks.
 
@@ -91,7 +89,6 @@ Code review and quality checks.
 | **Canon** | Standards-compliance check | OWASP / WCAG / OpenAPI conformance evaluation | No |
 | **Gauge** | SKILL.md audit | 16-item checklist conformance | No |
 | **Attest** | Spec-compliance verification | Acceptance-criteria extraction, BDD scenario generation | No |
-| **Warden** | UX quality gate | V.A.I.R.E. evaluation, scorecard | No |
 | **Cloak** | Privacy engineering | PII detection, GDPR / CCPA compliance | Mixed |
 
 ## Performance (3)
@@ -117,7 +114,7 @@ Documentation authoring, visualization, and article writing.
 | **Canvas** | Diagramming and visualization | Mermaid / ASCII / draw.io for flow, sequence, ER diagrams | Mixed |
 | **Zine** | Tech blog series | Articles for note / Zenn / Qiita / dev.to | No |
 
-## Architecture (8)
+## Architecture (7)
 
 System design and structure.
 
@@ -126,7 +123,6 @@ System design and structure.
 | **Atlas** | Architecture analysis | Dependency analysis, ADR / RFC authoring | Mixed |
 | **Schema** | DB design | Normalization, indexing strategy, ER diagrams | Mixed |
 | **Gateway** | API design | OpenAPI generation, versioning | Mixed |
-| **Stratum** | C4 modeling | Structurizr DSL generation | Mixed |
 | **Grove** | Repository structure | Directory design, docs/ layout | Mixed |
 | **Nest** | LLM-optimized folder structure | Agent-friendly directory optimization | Mixed |
 | **Shard** | Multi-tenant design | Tenant isolation, RLS, scale design | Mixed |
@@ -222,7 +218,7 @@ Data pipelines and conversion.
 | **Stream** | ETL / ELT pipelines | Kafka / Airflow / dbt design | Mixed |
 | **Morph** | Document conversion | Markdown / Word / Excel / PDF / HTML conversion | Mixed |
 
-## Strategy (5)
+## Strategy (4)
 
 Business strategy and decision-making. Does not write code.
 
@@ -231,7 +227,6 @@ Business strategy and decision-making. Does not write code.
 | **Helm** | Business strategy | SWOT / PESTLE / Porter analysis | No |
 | **Compete** | Competitive research | Feature matrices, positioning | No |
 | **Rank** | Prioritization | ICE / RICE / WSJF / MoSCoW scoring | No |
-| **Levy** | Japanese tax-filing guide | Income classification, deduction optimization, filing procedure | No |
 | **Sage** | YC-style office-hours advisory | "Tell me what you're avoiding." Single-bottleneck extraction, founder anti-pattern detection, 1-2 week SMART action extraction | No |
 
 ## Incident (2)
@@ -267,7 +262,7 @@ Manages and evolves the ecosystem itself.
 | **Compass** | Skill navigator | Skill guidance, onboarding | No |
 | **Latch** | Claude Code Hooks design | PreToolUse / PostToolUse / Stop and other lifecycle hooks | Mixed |
 
-## Creative / Media (6)
+## Creative / Media (3)
 
 Media and creative generation.
 
@@ -275,12 +270,9 @@ Media and creative generation.
 |-------|------|---------|------|
 | **Dot** | Pixel art | SVG / Canvas / Phaser 3 pixel art | Yes |
 | **Ink** | SVG icons | Icon systems, sprite construction | Yes |
-| **Tone** | Game audio | SFX / BGM / voice / ambient | Yes |
 | **Sketch** | AI image generation | Text → image via Gemini API | Yes |
-| **Clay** | AI 3D generation | Text / image → 3D model | Yes |
-| **Lyric** | Lyric writing | Lyrics and metatags for Suno AI | No |
 
-## AI / ML (3)
+## AI / ML (2)
 
 AI design and thinking support.
 
@@ -288,7 +280,6 @@ AI design and thinking support.
 |-------|------|---------|------|
 | **Oracle** | AI / ML design | Prompt engineering, RAG design, evaluation | No |
 | **Flux** | Thinking refraction | Assumption challenges, perspective shifts | No |
-| **Prism** | NotebookLM optimization | Steering-prompt design | No |
 
 ## Other Specialists
 
@@ -307,14 +298,11 @@ Specialized skills that don't fit the categories above.
 | **Saga** | Narrative design | Customer-experience storytelling | No |
 | **Cue** | Video script | Product videos, storyboards | No |
 | **Director** | Demo-video production | Demos generated from Playwright E2E | Mixed |
-| **Reel** | Terminal recording | CLI demo GIFs / videos | Mixed |
 | **Stage** | Slide generation | Marp / reveal.js / Slidev | Mixed |
-| **Loom** | Figma Make preparation | Figma Make Guidelines.md generation | No |
 | **Frame** | Figma → code bridge | Design context extraction | No |
 | **Clause** | Legal-document review | Terms of service, privacy policy | No |
 | **Quest** | Game planning | GDD, balance design, economy design | No |
 | **Orbit** | Autonomous-loop design | Script generation for nexus-autoloop | Mixed |
-| **Arena** | Multi-AI comparison | Codex / Antigravity CLI compete or collaborate | Mixed |
 | **Hearth** | Dotfile management | zsh / tmux / neovim / ghostty configuration | Mixed |
 | **Mint** | Test-data generation | Factories, boundary values, seed management | Mixed |
 | **Tempo** | Schedule design | cron, timezone / DST, retry / backoff, business calendars | Mixed |

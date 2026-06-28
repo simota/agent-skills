@@ -9,7 +9,7 @@ Purpose: Read this file when choosing which agents to deploy, skip, or justify f
 - Common skip heuristics
 - Deployment anti-patterns
 
-Complete mapping of all 65 agents across 9 product lifecycle phases.
+Complete mapping of all 60 agents across 9 product lifecycle phases.
 
 ### Legend
 - **P** = Primary (core agent for this phase) · **S** = Supporting (used when needed) · **—** = Not deployed
@@ -46,12 +46,9 @@ Complete mapping of all 65 agents across 9 product lifecycle phases.
 | Judge | Review | — | — | — | — | P | — | — | — | — |
 | Zen | Review | — | — | — | — | P | — | — | — | — |
 | Sweep | Review | — | — | — | — | — | — | — | — | P |
-| Warden | Review | — | — | — | — | P | P | — | — | — |
-| Specter | Security | — | — | — | — | P | — | — | — | — |
 | Builder | Implementation | — | — | — | P | — | — | — | — | — |
 | Artisan | Implementation | — | — | — | P | — | — | — | — | — |
 | Forge | Implementation | — | — | — | P | — | — | — | — | — |
-| Arena | Implementation | — | — | — | S | — | — | — | — | — |
 | Schema | Data | — | — | P | — | — | — | — | — | — |
 | Stream | Data | — | — | — | S | — | — | — | P | — |
 | Bolt | Performance | — | — | — | — | P | — | — | — | — |
@@ -60,7 +57,6 @@ Complete mapping of all 65 agents across 9 product lifecycle phases.
 | Scribe | Documentation | — | P | — | — | — | — | — | — | — |
 | Canvas | Visualization | — | — | P | — | — | — | P | — | — |
 | Morph | Documentation | — | — | — | — | — | — | P | — | — |
-| Prism | Documentation | — | — | — | — | — | — | S | — | — |
 | Sketch | Visualization | — | — | — | — | — | — | S | — | — |
 | Atlas | Architecture | — | — | P | — | — | — | — | — | — |
 | Gateway | Architecture | — | — | P | — | — | — | — | — | — |
@@ -82,14 +78,13 @@ Complete mapping of all 65 agents across 9 product lifecycle phases.
 | Experiment | Analytics | — | — | — | — | — | P | — | S | — |
 | Vector | Browser | — | — | — | — | — | S | — | — | — |
 | Director | Browser | — | — | — | — | — | — | P | — | — |
-| Reel | Browser | — | — | — | — | — | — | P | — | — |
 | Hearth | Meta | — | — | — | S | — | — | — | — | — |
 
 ---
 
 ## Coverage Verification
 
-**Total unique agents deployed: 65** (including Nexus as universal execution engine)
+**Total unique agents deployed: 60** (including Nexus as universal execution engine)
 
 All agents have at least one phase with Primary (P) or Supporting (S) deployment.
 
@@ -103,7 +98,7 @@ Per-phase process details → `reference/product-lifecycle.md`
 | `Canvas` | `<= 10` files | Complex systems with `15+` modules |
 | `Echo` | CLI, API, or simple UI | User-facing UI with multiple personas |
 | `Sentinel` | Prototype or PoC | Pre-release or production code |
-| `Vitrine` / `Director` / `Reel` | No demo requirement | Reusable component library or launch needs |
+| `Vitrine` / `Director` | No demo requirement | Reusable component library or launch needs |
 | `Compete` / `Field` / `Voice` | Known domain, internal tool | New market, unknown users |
 | `Spark` | Requirements already clear | Product direction still ambiguous |
 

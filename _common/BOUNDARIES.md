@@ -53,7 +53,6 @@ For disambiguation of commonly confused agent pairs, see `nexus/reference/agent-
 |-------|-------------|--------|-------------|
 | **Sentinel** | Static security analysis | Code scan, CVE check, secret detection | Fixes only |
 | **Probe** | Dynamic security testing | OWASP ZAP, penetration testing | Never |
-| **Specter** | Concurrency & resource issue detection | Race conditions, memory/resource leaks | Never |
 | **Breach** | Red team engineering & threat modeling | STRIDE/PASTA/MITRE ATT&CK, attack simulation | Never |
 | **Vigil** | Detection engineering | Sigma/YARA rules, threat hunting, MITRE coverage | Never |
 | **Cloak** | Privacy engineering | PII detection, GDPR/CCPA, consent, DPIA | Yes (privacy patterns) |
@@ -62,7 +61,7 @@ For disambiguation of commonly confused agent pairs, see `nexus/reference/agent-
 | **Clause** | Legal document review | ToS, privacy policy, tokushoho, clause gap detection | Never |
 
 **Key distinctions:**
-- Static code scan → Sentinel. Running app test → Probe. Concurrency → Specter
+- Static code scan → Sentinel. Running app test → Probe
 - Attack simulation → Breach. Detection rules → Vigil. Purple team → Breach → Vigil
 - PII/privacy → Cloak. Regulatory frameworks → Oath. Crypto design → Crypt
 - Legal document review → Clause. Privacy implementation → Cloak. Regulatory audit → Oath
@@ -81,7 +80,6 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Forge** | Rapid prototyping (full-stack) | Speed over quality, PoC | Yes |
 | **Schema** | Database schema design & migration | Data modeling, normalization | Yes |
 | **Anvil** | CLI/TUI development | Terminal interfaces, dev tools | Yes |
-| **Arena** | Multi-engine competitive/collaborative development | Codex/Antigravity CLI comparison | Yes |
 | **Pixel** | Mockup-to-code faithful reproduction | Image→HTML/CSS with visual verification | Yes |
 
 **Key distinctions:**
@@ -99,13 +97,12 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Siege** | Load testing, chaos engineering, resilience | Non-functional testing | Yes |
 | **Judge** | Code review & bug detection | PR review, quality check | Never |
 | **Zen** | Refactoring & code smell remediation | Readability improvement | Yes (refactor only) |
-| **Warden** | V.A.I.R.E. UX quality gate | Pre-release assessment | Never |
 | **Attest** | Specification compliance verification | Spec-to-code gap analysis | Never |
 
 **Key distinctions:**
 - Find problems → Judge. Fix code smells → Zen
 - Unit tests → Radar. E2E tests → Voyager. Load tests → Siege
-- Code quality → Judge. UX quality → Warden. Spec compliance → Attest
+- Code quality → Judge. Spec compliance → Attest
 
 ## Performance
 
@@ -126,8 +123,6 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Accord** | Cross-team integrated spec packages | L0-L3 progressive refinement | Never |
 | **Canvas** | Visualization | Mermaid diagrams, ASCII art, draw.io | Yes (diagrams) |
 | **Morph** | Format conversion | Markdown ↔ Word/Excel/PDF/HTML | Yes (scripts) |
-| **Prism** | NotebookLM steering | Audio/Video quality prompts | Never |
-
 | **Saga** | Narrative design & product storytelling | SB7/Pixar/Hero's Journey/JTBD frameworks | Never |
 | **Cue** | Video script & storyboard design | Demo/explainer/tutorial scripts, narration | Never |
 | **Tome** | Learning document generation from changes | Diffs→teaching materials, decision records | Never |
@@ -167,9 +162,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Vitrine** | Storybook catalog management | Component documentation, visual regression | Yes |
 | **Trace** | Session replay analysis | Behavioral patterns from logs | Never |
 | **Director** | Demo video production | Playwright-based recordings | Yes |
-| **Reel** | Terminal recording | CLI demo GIF/video | Yes |
 | **Frame** | Figma MCP design context extraction | Figma→code bridge, Code Connect | Never |
-| **Loom** | Figma Make optimization | Guidelines.md generation, prompt strategy, output validation | Never |
 | **Ink** | SVG icon & illustration generation | Grid systems, sprite symbols, a11y | Yes (SVG) |
 | **Funnel** | Landing page structure & conversion | AIDA/PAS, CTA, form optimization | Yes |
 
@@ -177,7 +170,6 @@ Tokens and secrets must never be reachable from the execution environment where 
 - Design direction → Vision. Tokens → Muse. Usability → Palette. Animation → Flow
 - Write text → Prose. Test as persona → Echo. Research → Field
 - Figma data extraction → Frame. Token definition → Muse. Frame extracts, Muse defines
-- Figma Make optimization → Loom. Figma extraction → Frame. Token management → Muse
 - Code Connect mapping → Frame + Vitrine. Frame manages Figma side, Vitrine manages code side
 - SVG icons/illustrations → Ink. Pixel art → Dot. AI images → Sketch
 - Landing page design/conversion → Funnel. SEO/CRO tactics → Growth
@@ -206,14 +198,12 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Pulse** | KPI & metrics infrastructure | Tracking events, dashboards | Yes |
 | **Stream** | Data pipeline design | ETL/ELT, Kafka, Airflow, dbt | Yes |
 | **Helm** | Business strategy simulation | SWOT/PESTLE, scenario planning | Never |
-| **Levy** | Tax filing guidance (Japan) | Income tax, deductions, e-Tax | Never |
 | **Crest** | Engineer self-branding strategy | GitHub/blog/LinkedIn/talk positioning | Never |
 | **Ledger** | Cloud FinOps & cost optimization | IaC cost estimation, right-sizing, RI/SP | Yes (policies) |
 
 **Key distinctions:**
 - Competitive intel → Compete. Business simulation → Helm. Compete feeds into Helm
 - Feature ideas → Spark. Growth tactics → Growth. Metrics → Pulse
-- Tax filing guidance → Levy. Levy advises on tax law; Builder implements calculation logic
 - Cloud cost → Ledger. IaC provisioning → Scaffold. Monitoring → Beacon
 
 ## Decision & Intent
@@ -266,7 +256,6 @@ Tokens and secrets must never be reachable from the execution environment where 
 | Agent | Primary Role | Focus | Writes Code |
 |-------|-------------|-------|-------------|
 | **Oracle** | AI/ML design & evaluation | Prompts, RAG, LLM patterns, MLOps | Never |
-| **Aether** | AITuber system orchestration | Live streaming pipeline, TTS, avatar | Yes |
 | **Vector** | Browser automation | Playwright task execution | Yes |
 | **Orbit** | Autonomous loop execution | Loop contracts, script generation | Yes |
 | **Canon** | Standards compliance | OWASP, WCAG, OpenAPI, ISO 25010 | Never |
@@ -274,22 +263,18 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Void** | YAGNI verification | Scope cutting, complexity reduction | Never |
 | **Sketch** | AI image generation | Gemini API image creation | Yes |
 | **Dot** | Pixel art code generation | SVG/Canvas/Phaser 3/Pillow/CSS sprites, tilesets, palettes + Antigravity CLI delegation | Yes |
-| **Clay** | AI 3D model generation | Text-to-3D/Image-to-3D API code, Blender Python, Three.js, OpenSCAD, game pipeline (LOD/retopo/UV/QC) | Yes |
-| **Tone** | Game audio generation | SFX/BGM/Voice/Ambient/UI audio generation code, LUFS normalization, ffmpeg processing, FMOD/Wwise/engine integration | Yes |
 | **Quest** | Game planning & production | GDD, game balance, narrative, economy design | Never |
 | **Realm** | Ecosystem gamification visualization | Phaser 3 office sim, XP/rank, interactive HTML map | Yes |
 | **Omen** | Pre-mortem analysis & failure mode enumeration | FMEA, fault tree, Swiss Cheese, Murphy audit | Never |
 | **Seek** | Search & vector DB architecture | Full-text/vector/hybrid search, RAG retrieval | Partial (mappings) |
 | **Shard** | Multi-tenant architecture design | Tenant isolation, RLS, routing, noisy-neighbor | Partial (specs) |
 | **Weave** | Workflow & state machine design | FSM/Statechart, Saga patterns, approval flows | Partial (YAML/specs) |
-| **Lyric** | Songwriting for Suno AI | Lyrics with metatags, style prompts | Never |
 | **Native** | Mobile development | React Native/Flutter/SwiftUI/Jetpack Compose | Yes |
 | **Rank** | Priority quantification | ICE/RICE/WSJF/MoSCoW/Kano scoring | Never |
 | **Wield** | macOS desktop automation | AppleScript/JXA/osascript, Apple Events app control, UI scripting | Yes |
 
 **Key distinctions:**
 - Mobile app development → Native. Mobile-responsive frontend → Artisan
-- Songwriting/lyrics → Lyric. Audio generation code → Tone
 - Priority scoring → Rank. Multi-perspective decisions → Magi
 - Pre-mortem / failure analysis → Omen. Change impact → Ripple. Incident response → Triage
 - Browser/web automation → Vector. macOS native-app automation (Apple Events) → Wield. iOS app UI automation → Snap

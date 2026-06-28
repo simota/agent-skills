@@ -103,6 +103,5 @@ Treat allocation-site frames the same as CPU frames in the diff.
 - **To `bisect`**: offending frame + threshold script → narrows to single commit.
 - **To Bolt**: confirmed hotspot frame + diff SVG + suspect commit → forward optimization. Bolt owns the rewrite.
 - **To Builder**: suspect commit SHA + recommended action (revert vs. patch) → implementation.
-- **To Specter**: if the diff implicates lock/contention frames or async/await stacks → escalate via TRAIL_TO_SPECTER_HANDOFF (`_common/INVESTIGATION_ESCALATION.md`).
 - **To Radar**: if no perf regression test existed → request benchmark coverage so this regression class is caught next time.
 - **To Scout**: if the diff is flat but the symptom persists → Scout investigates non-history-bound causes (config drift, env var, data shape).

@@ -21,14 +21,13 @@ COLLABORATION_PATTERNS:
 - Hearth -> Hone: Environment context (OS, shell, tool versions)
 - Hone -> Hearth: Shell/env changes needed from config updates
 - Hone -> Judge: Review config verification after audit
-- Hone -> Arena: Exec config verification after audit
 - Hone -> Latch: Claude Code hooks design/debugging delegation
 - Hone -> Sentinel: MCP server security findings requiring deeper static analysis
 - Hone -> Nexus: Audit results and proposal summary
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User (audit requests), Nexus (task context), Hearth (environment context)
-- OUTPUT: Hearth (shell integration), Judge (review config), Arena (exec config), Latch (hooks design), Sentinel (MCP security escalation), Nexus (results)
+- OUTPUT: Hearth (shell integration), Judge (review config), Latch (hooks design), Sentinel (MCP security escalation), Nexus (results)
 
 PROJECT_AFFINITY: universal
 -->
@@ -94,7 +93,6 @@ Use Hone when the user needs:
 Route elsewhere when the task is primarily:
 - personal dev environment config (shell, editor, terminal): `Hearth`
 - code review via codex review: `Judge`
-- competitive development via codex exec / Antigravity CLI: `Arena`
 - industry standard compliance (OWASP, WCAG): `Canon`
 - SKILL.md normalization audit: `Gauge`
 - Claude Code hooks design, debugging, or creation: `Latch`
@@ -277,12 +275,11 @@ Every deliverable must include:
 ## Collaboration
 
 **Receives:** User (audit requests), Nexus (task context), Hearth (environment context — OS, shell, codex version)
-**Sends:** Hearth (shell/env changes needed), Judge (review config verification), Arena (exec config verification), Latch (hooks design/debugging), Nexus (results)
+**Sends:** Hearth (shell/env changes needed), Judge (review config verification), Latch (hooks design/debugging), Nexus (results)
 
 **Overlap boundaries:**
 - **vs Hearth**: Hearth = personal dev environment (dotfiles, shell, editor). Hone = AI CLI tool configuration (`~/.codex/`, `~/.gemini/`, `~/.claude/`).
 - **vs Judge**: Judge = code review via `codex review`. Hone = Codex CLI configuration itself, not review output.
-- **vs Arena**: Arena = development via `codex exec`. Hone = Codex CLI configuration itself, not exec behavior.
 - **vs Canon**: Canon = industry standards (OWASP, WCAG). Hone = AI CLI-specific best practices.
 - **vs Gauge**: Gauge = SKILL.md normalization audit. Hone = AI CLI configuration audit.
 - **vs Latch**: Latch = Claude Code hooks design, debugging, creation. Hone = hooks structural validity and security audit only (exit codes, permissionDecision fields).
@@ -299,7 +296,7 @@ Every deliverable must include:
 | `reference/key-thresholds.md` | You need the full rationale, source citations, and detailed semantics for any Key Threshold listed in the SKILL.md summary table. Required when audit reports must include source attribution. |
 | `reference/web-sources.md` | You need source tier classification, search queries, or freshness rules. |
 | `reference/proposal-templates.md` | You need Before/After diff templates for proposals. |
-| `reference/handoffs.md` | You need handoff templates for Hearth/Judge/Arena/Nexus collaboration. |
+| `reference/handoffs.md` | You need handoff templates for Hearth/Judge/Nexus collaboration. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the Before/After proposal, deciding adaptive thinking depth at source-tier/severity classification, or front-loading target CLI/scope/decision at AUDIT. Critical for Hone: P3, P5. |
 | `_common/PROMPT_CACHE_HIERARCHY.md` | You are auditing prompt cache hit rate, the session context layout (tools → system → messages), `_common/` load order stability, or breakpoint placement on T-static vs T-dynamic content. Required for the `cache-order` and `cache-hierarchy` audit triggers. |
 
@@ -335,7 +332,7 @@ _STEP_COMPLETE:
       p0_proposals: ["[list]"]
       sources_consulted: ["[URLs]"]
       source_tiers: ["[T1 | T2 | T3 | T4]"]
-  Next: Hearth | Judge | Arena | Nexus | DONE
+  Next: Hearth | Judge | Nexus | DONE
   Reason: [Why this next step]
 ```
 

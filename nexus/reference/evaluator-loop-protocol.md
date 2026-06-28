@@ -38,7 +38,7 @@ The Generator produces deliverables; independent Evaluators score them against t
 
 | Task Type | Complexity | Evaluator Loop | Default Evaluators |
 |-----------|-----------|----------------|--------------------|
-| FEATURE (UI) | MEDIUM+ | **YES** | Voyager + Warden + Radar |
+| FEATURE (UI) | MEDIUM+ | **YES** | Voyager + Radar |
 | FEATURE (Backend) | MEDIUM+ | **YES** | Judge + Radar + Attest |
 | FEATURE (Full-stack) | MEDIUM+ | **YES** | Judge + Voyager + Radar + Attest |
 | BUG | SIMPLE | NO | (VERIFY suffices) |
@@ -151,7 +151,6 @@ Generator receives the contract in its spawn prompt. Evaluators receive it to kn
 | Craft | 0.10 – 0.20 | Judge | Naming, formatting, idioms, documentation |
 | Functionality | 0.15 – 0.25 | Voyager, Attest | Feature works as specified, edge cases handled |
 | Security | 0.00 – 0.20 | Sentinel | No vulnerabilities, secure patterns |
-| UX Quality | 0.00 – 0.20 | Warden | V.A.I.R.E. compliance, accessibility, usability |
 
 **Constraint:** Dimension weights MUST sum to 1.0 per rubric instance.
 
@@ -209,7 +208,6 @@ Rubrics drive per-Sprint evaluation; UQS tracks long-term trends via PDCA (`qual
 |-----------|------------------|--------|
 | Judge | Code quality (static) | Code review, style, patterns |
 | Voyager | Functional behavior (dynamic) | Playwright E2E, active exploration |
-| Warden | UX quality | V.A.I.R.E. criteria |
 | Attest | Spec compliance | Acceptance-criteria verification |
 | Radar | Test coverage & correctness | Test execution, coverage measurement |
 | Sentinel | Security posture | Static security scan |

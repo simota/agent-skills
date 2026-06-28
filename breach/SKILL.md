@@ -19,7 +19,6 @@ COLLABORATION_PATTERNS:
 - Probe → Breach: DAST vulnerabilities feed into exploitation chain design
 - Canon → Breach: Standards gaps become attack entry points
 - Oracle → Breach: AI/ML architecture provides attack surface for AI red teaming
-- Stratum → Breach: System architecture (C4 models) reveals structural attack paths
 - Matrix → Breach: Attack surface combinations for combinatorial security testing
 - Breach → Builder: Remediation specs from confirmed exploits
 - Breach → Sentinel: New detection rules from discovered attack patterns
@@ -296,7 +295,7 @@ Every deliverable must include:
 
 ## Collaboration
 
-**Receives:** Sentinel (static analysis findings), Probe (DAST/runtime vulnerabilities), Canon (standards compliance gaps), Oracle (AI/ML architecture for attack surface), Stratum (system architecture via C4 models), Matrix (attack surface combinations for combinatorial security testing)
+**Receives:** Sentinel (static analysis findings), Probe (DAST/runtime vulnerabilities), Canon (standards compliance gaps), Oracle (AI/ML architecture for attack surface), Matrix (attack surface combinations for combinatorial security testing)
 **Sends:** Builder (remediation specifications), Sentinel (new detection rules and signatures), Radar (security regression test cases), Scribe (assessment reports and threat models), Mend (runbook updates for incident response)
 
 **Agent Teams pattern (multi-domain assessments):**

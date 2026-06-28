@@ -368,19 +368,6 @@ per-feature upside → Spark.
 
 **Chain pattern**: Attest (generate BDD) → Radar (implement tests) → Voyager (E2E from acceptance scenarios)
 
-### Attest vs Warden
-
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "Verify implementation against spec" | **Attest** | Spec compliance |
-| "Pre-release quality review" | **Warden** | UX quality gate |
-| "Acceptance criteria check" | **Attest** | Criterion-by-criterion verification |
-| "V.A.I.R.E. assessment" | **Warden** | UX framework evaluation |
-| "Traceability matrix" | **Attest** | Spec ↔ implementation mapping |
-| "Pass/fail for release" | **Warden** (after Attest) | Release decision |
-
-**Rule**: "Does code match spec?" → Attest. "Is UX quality sufficient?" → Warden. Use both for complete release gates: Attest (spec compliance) → Warden (UX quality) → Launch.
-
 ### Judge vs Zen
 
 **Rule**: "Find problems" → Judge. "Fix code smells" → Zen. Judge discovers, Zen fixes.

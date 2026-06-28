@@ -1,7 +1,7 @@
 # Codex Orchestration Authoring Protocol
 
 > Counterpart to `_common/OPUS_48_AUTHORING.md`. That file governs authoring when **Claude Code** drives the Nexus hub; this file governs authoring when **Codex CLI** drives the hub.
-> Owner: Architect (canonical doc); referenced by orchestrators (Nexus, Orbit, Rally, Arena, Magi) and any SKILL.md whose spawn path can run on Codex CLI.
+> Owner: Architect (canonical doc); referenced by orchestrators (Nexus, Orbit, Rally, Magi) and any SKILL.md whose spawn path can run on Codex CLI.
 > Scope: Codex CLI as the **orchestrator engine** (the CLI running the top-level hub session). Codex as a *worker / spawn target* of a Claude hub is covered by `_common/SUBAGENT.md` (MULTI_ENGINE) and `_common/MULTI_ENGINE_RECIPE.md`.
 
 Engine-selection rule for orchestrators:
@@ -117,7 +117,7 @@ The most common Codex underperformance is **premature stopping** — it analyzes
 
 | Role | Critical (◎) | Recommended (○) |
 |------|---|---|
-| Orchestrators (Nexus, Orbit, Rally, Arena, Magi, Titan, Sherpa) | C1, C2, C6, C9 | C3, C7 |
+| Orchestrators (Nexus, Orbit, Rally, Magi, Titan, Sherpa) | C1, C2, C6, C9 | C3, C7 |
 | Builders / executors (Builder, Artisan, Forge, Native) spawned by a Codex hub | C4, C5, C9 | C3, C7 |
 | Investigators / reviewers spawned by a Codex hub | C4 | C6, C9 |
 | Knowledge/Meta (Lore, Compass, Architect) authoring for Codex hubs | C3, C8 | C1, C9 |

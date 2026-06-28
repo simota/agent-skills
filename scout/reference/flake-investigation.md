@@ -1,6 +1,6 @@
 # Flake Investigation Reference
 
-Purpose: Triage intermittent / non-deterministic bugs and flaky tests. Measure reproducibility, classify the non-determinism source, and route to the right specialist (Specter for concurrency, Radar for test infra, Builder for code, Scaffold for env).
+Purpose: Triage intermittent / non-deterministic bugs and flaky tests. Measure reproducibility, classify the non-determinism source, and route to the right specialist (Radar for test infra, Builder for code, Scaffold for env).
 
 ## Contents
 
@@ -44,15 +44,15 @@ Always record **which configuration** (commit, OS, concurrency level, seed, load
 
 | Category | Signal | Specialist |
 |----------|--------|------------|
-| **Timing / race** | passes in isolation, fails in parallel | **Specter** (handoff) |
-| **Shared mutable state** | order of tests matters, one test pollutes another | Specter / Radar |
+| **Timing / race** | passes in isolation, fails in parallel | concurrency specialist (handoff) |
+| **Shared mutable state** | order of tests matters, one test pollutes another | Radar |
 | **Time-of-day dependency** | `Date.now()`, midnight, DST, timezone | Tempo |
-| **Clock / timer** | `setTimeout` tuning, polling intervals | Specter |
+| **Clock / timer** | `setTimeout` tuning, polling intervals | concurrency specialist |
 | **External dependency** | network / DNS / 3rd-party API | Scaffold (mocking) |
 | **Resource exhaustion** | passes fresh, fails under load | Siege |
 | **Randomness without seed** | `Math.random()` in test fixtures | Radar |
 | **Floating-point** | epsilon comparisons | Radar |
-| **Concurrency / async ordering** | promise/goroutine/thread order | Specter |
+| **Concurrency / async ordering** | promise/goroutine/thread order | concurrency specialist |
 | **Filesystem / tempdir** | file collision between parallel tests | Radar |
 | **Port / socket binding** | EADDRINUSE in parallel runs | Scaffold |
 | **CI-only** | passes local, fails CI | environment drift — Scaffold |
@@ -165,20 +165,18 @@ done
 
 ### Handoff
 
-→ **Specter**: confirm race analysis, propose synchronization primitive (sync.Map vs RWMutex vs shard)
 → **Radar**: add `-race` to CI; flake-quarantine this test until fix lands
-→ **Bolt**: implement fix per Specter's design
+→ **Bolt**: implement the synchronization fix (sync.Map vs RWMutex vs shard)
 ```
 
 ## Handoff Criteria
 
 | Condition | Target | Reason |
 |-----------|--------|--------|
-| Data race / concurrency confirmed | **Specter** | concurrency specialty |
 | Test-code flake (sleep waits, shared tempdir) | **Radar** | test-infra fix |
 | Timezone / clock / cron | **Tempo** | time-aware design |
 | CI-only (env drift) | **Scaffold** | env reproducibility |
-| Load-correlated | **Siege** + Specter | stress validation |
+| Load-correlated | **Siege** | stress validation |
 | Can't classify after N=50 | `consensus` Recipe | multi-engine hypothesis |
 
 ## Quarantine Policy

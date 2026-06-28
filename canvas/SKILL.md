@@ -18,7 +18,7 @@ CAPABILITIES_SUMMARY:
 - drawio_mcp: Programmatic draw.io manipulation via MCP server when available
 - ci_diagram_validation: Architecture-as-Code CI pipeline integration for .mmd/.d2 files
 - accessibility_compliance: WCAG 2.2 alt-text, color-blind-safe palettes, target size, ASCII fallback
-- c4_rendering: Mermaid C4 diagrams (C4Context / C4Container / C4Component) rendered from descriptions or Stratum DSL output, preserving System Context / Container / Component / Code level boundaries
+- c4_rendering: Mermaid C4 diagrams (C4Context / C4Container / C4Component) rendered from descriptions, preserving System Context / Container / Component / Code level boundaries
 - architecture_sketch: Informal architecture diagrams using Mermaid flowchart + subgraph for layered monolith, hexagonal, microservice, and event-driven topologies (logical / physical / deployment views)
 - gantt_roadmap: Gantt / roadmap / timeline diagrams with milestone markers, dependency arrows, critical path, and quarterly roadmap view rendered from Launch release plans or project schedules
 
@@ -28,11 +28,10 @@ COLLABORATION_PATTERNS:
 - Scout -> Canvas: Bug flow, auth flow, or data-flow investigation
 - Spark -> Canvas: Feature proposal visual explanation
 - Echo -> Canvas: Persona, journey, friction, team, or DX visualization
-- Stratum -> Canvas: C4/Structurizr model visualization
 - Canvas -> Quill: Diagram needs embedded documentation or reference text
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Atlas (architecture analysis), Sherpa (task plans), Scout (investigation), Spark (feature proposals), Echo (UX data), Bolt (perf diagrams), Stratum (C4 models)
+- INPUT: Atlas (architecture analysis), Sherpa (task plans), Scout (investigation), Spark (feature proposals), Echo (UX data), Bolt (perf diagrams)
 - OUTPUT: Quill (documentation), Any requesting agent (diagram artifacts)
 
 PROJECT_AFFINITY: universal
@@ -152,8 +151,8 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific REVIEW gate
 - `er`: ER diagram. Consider Schema skill integration and use only real entity names. **VERIFY**: entity + attribute names are real (sourced from Schema/DDL when available, never invented); cardinality notation correct on every relationship; no orphan entity; flag if the model was inferred rather than read from a schema source.
 - `journey`: Generate a user journey map from Echo data. Visualize emotion scores and friction points. **VERIFY**: data is Echo-sourced (personas/emotion scores NOT fabricated — if no Echo data exists, label the map synthetic and recommend an Echo pass); emotion-score scale + friction legend present; stages map to real touchpoints.
 - `class`: Class diagram. Express inheritance, aggregation, and dependencies. Ensure alignment with L3 Component level. **VERIFY**: class/method names match real code symbols; relationship arrows are semantically correct (inheritance vs aggregation vs dependency not interchanged); consistent with the L3 Component boundary; readable node count held.
-- `c4`: Mermaid C4 rendering (C4Context / C4Container / C4Component). Pick one level per diagram — never mix Context and Component nodes. If a Structurizr DSL exists from `Stratum`, derive node names and relationships from the DSL rather than re-authoring. For ad-hoc requests without DSL, keep scope to one level and flag that the canonical model lives with Stratum. Code-level (L4) views should fall back to `class` diagrams. **VERIFY**: exactly ONE C4 level per diagram (no Context↔Component mixing); when a Stratum DSL exists, names/relationships are derived from it (not re-authored); L4/code requests redirected to `class`; ad-hoc diagrams flag that the canonical model lives with Stratum.
-- `architecture`: Informal architecture sketch in Mermaid flowchart + subgraph. Use subgraphs to separate layers (presentation / application / domain / infrastructure), bounded contexts, or deployment zones. Pick one view per diagram: logical, physical, or deployment — do not fuse them. Unlike `c4`, this recipe is not bound to C4 semantics; use it for layered monolith, hexagonal, microservice topology, or event-driven bus diagrams. For formal C4 modeling, delegate to `Stratum`. **VERIFY**: exactly ONE view (logical / physical / deployment — never fused); layers/contexts/zones separated by subgraphs; real component names; formal-C4 requests redirected to `Stratum` (this recipe stays informal).
+- `c4`: Mermaid C4 rendering (C4Context / C4Container / C4Component). Pick one level per diagram — never mix Context and Component nodes. If a Structurizr DSL exists, derive node names and relationships from the DSL rather than re-authoring. For ad-hoc requests without DSL, keep scope to one level. Code-level (L4) views should fall back to `class` diagrams. **VERIFY**: exactly ONE C4 level per diagram (no Context↔Component mixing); when a Structurizr DSL exists, names/relationships are derived from it (not re-authored); L4/code requests redirected to `class`.
+- `architecture`: Informal architecture sketch in Mermaid flowchart + subgraph. Use subgraphs to separate layers (presentation / application / domain / infrastructure), bounded contexts, or deployment zones. Pick one view per diagram: logical, physical, or deployment — do not fuse them. Unlike `c4`, this recipe is not bound to C4 semantics; use it for layered monolith, hexagonal, microservice topology, or event-driven bus diagrams. **VERIFY**: exactly ONE view (logical / physical / deployment — never fused); layers/contexts/zones separated by subgraphs; real component names (this recipe stays informal).
 - `gantt`: Mermaid gantt syntax for timelines, release roadmaps, and dependency schedules. Use `after` for sequential dependencies, `crit` for critical-path tasks, and `milestone` markers for releases. Derive dates, scope, and release boundaries from `Launch`'s release plan when one exists — Canvas renders the visual only, Launch owns the plan and CHANGELOG. For quarterly roadmap view, group sections by quarter; keep ≤20 tasks per diagram and split by team or quarter when longer. **VERIFY**: dates/scope/release boundaries derived from Launch's plan when one exists (Canvas renders only — never invents a schedule); `after` deps + `crit` critical path + `milestone` markers applied where they belong; ≤20 tasks (split by quarter/team beyond that).
 
 ## Work Modes
@@ -224,7 +223,7 @@ For Echo output, state the visualization type and the scoring or friction legend
 
 ## Collaboration
 
-**Receives:** Atlas (architecture analysis), Sherpa (task plans), Scout (investigation flows), Spark (feature proposals), Echo (UX data), Bolt (perf diagrams), Stratum (C4/Structurizr models), Nexus (task context)
+**Receives:** Atlas (architecture analysis), Sherpa (task plans), Scout (investigation flows), Spark (feature proposals), Echo (UX data), Bolt (perf diagrams), Nexus (task context)
 **Sends:** Quill (documentation embedding), any requesting agent (diagram artifacts), Nexus (results)
 
 **Overlap boundaries:**
@@ -251,7 +250,7 @@ For Echo output, state the visualization type and the scoring or friction legend
 | `reference/ascii-templates.md` | You need a plain-text or comment-safe diagram. |
 | `reference/reverse-engineering.md` | You are deriving a diagram from code or schema. |
 | `reference/c4-model.md` | You need a C4 Context/Container/Component/Code view. |
-| `reference/c4-diagrams.md` | You are rendering Mermaid C4 diagrams (C4Context / C4Container / C4Component) for the `c4` recipe, deriving from a Stratum DSL or ad-hoc input. |
+| `reference/c4-diagrams.md` | You are rendering Mermaid C4 diagrams (C4Context / C4Container / C4Component) for the `c4` recipe, deriving from a Structurizr DSL or ad-hoc input. |
 | `reference/architecture-diagrams.md` | You are sketching informal architecture diagrams (layered / hexagonal / microservice / event-driven) using Mermaid flowchart + subgraph for the `architecture` recipe. |
 | `reference/gantt-diagrams.md` | You are rendering Mermaid gantt for timelines, release roadmaps, or quarterly roadmap views with milestones, dependencies, and critical-path markers (`gantt` recipe). |
 | `reference/diff-visualization.md` | You need before/after, schema, or architecture diff views. |

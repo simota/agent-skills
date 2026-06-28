@@ -48,12 +48,11 @@ PLAN(Diagnose) → DO(Execute) → CHECK(Measure) → ACT(Learn) → repeat or t
 
 | Agent | Normalization | Weight |
 |-------|--------------|--------|
-| Judge | `100 - (CRIT×25 + HIGH×15 + MED×5 + LOW×2)` | 0.25 |
+| Judge | `100 - (CRIT×25 + HIGH×15 + MED×5 + LOW×2)` | 0.37 |
 | Consistency | `100 - (HIGH×15 + MED×5 + LOW×2)` | 0.10 |
 | Test Quality | `isolation×0.25 + flaky×0.25 + edge×0.20 + mock×0.15 + read×0.15` | 0.10 |
 | Zen | `max(0, 100 - (avgCC - 10) × 5)` | 0.15 |
 | Radar | `coverage%` | 0.20 |
-| Warden | `avg(dimensions) / 3 × 100` | 0.12 |
 | Quill | `pass_rate × 100` | 0.08 |
 
 `UQS = Σ (normalized_score_i × weight_i)`
@@ -65,7 +64,7 @@ PLAN(Diagnose) → DO(Execute) → CHECK(Measure) → ACT(Learn) → repeat or t
 ## Agent Coordination Order
 
 ```
-Judge(detect) → Builder(fix critical) → Sentinel(if security) → Zen(simplify) → Radar(add tests) → Quill(document) → Warden(UX, if UI)
+Judge(detect) → Builder(fix critical) → Sentinel(if security) → Zen(simplify) → Radar(add tests) → Quill(document)
 ```
 
 | Quality Gap | Primary Agent | Skip If |
@@ -74,7 +73,7 @@ Judge(detect) → Builder(fix critical) → Sentinel(if security) → Zen(simpli
 | High complexity | Zen | avgCC < 10 |
 | Low coverage | Radar | coverage > 80% |
 | Poor docs | Quill | docs complete |
-| UX violations | Warden → Palette | Not UI |
+| UX violations | Palette | Not UI |
 
 ---
 

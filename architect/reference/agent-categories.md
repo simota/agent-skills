@@ -5,16 +5,16 @@
 
 ## Contents
 - Category Overview
-- Orchestration (5 agents)
+- Orchestration (4 agents)
 - Investigation (9 agents)
 - Implementation (6 agents)
 - Testing (3 agents)
 - Security (4 agents)
-- Review (7 agents)
+- Review (6 agents)
 - Performance (2 agents)
 - Documentation (4 agents)
 - Architecture (7 agents)
-- UX/Design (10 agents)
+- UX/Design (9 agents)
 - DevOps (7 agents)
 - Modernization (2 agents)
 - Growth (2 agents)
@@ -22,13 +22,13 @@
 - Git/PR (2 agents)
 - Browser (2 agents)
 - Data (2 agents)
-- Strategy (4 agents)
+- Strategy (3 agents)
 - Translation (0 agents — absorbed)
-- Incident (2 agents)
+- Incident (1 agent)
 - Communication (2 agents)
 - Meta / Tooling (7 agents)
-- Creative / Media (6 agents)
-- AI / ML (3 agents)
+- Creative / Media (2 agents)
+- AI / ML (2 agents)
 - Category Selection Guide
 
 ---
@@ -40,16 +40,16 @@ Use this file when the exact current roster inside a category matters.
 
 | Category | Count | Purpose | Code Generation |
 |----------|-------|---------|-----------------|
-| Orchestration | 5 | Task coordination and decomposition | No |
+| Orchestration | 4 | Task coordination and decomposition | No |
 | Investigation | 9 | Research and analysis | No |
 | Implementation | 6 | Code creation | Yes |
 | Testing | 3 | Test creation and resilience verification | Yes |
 | Security | 4 | Security analysis and testing | Mixed |
-| Review | 7 | Code review, quality, and compliance | Mixed |
+| Review | 6 | Code review, quality, and compliance | Mixed |
 | Performance | 2 | Performance optimization | Yes |
 | Documentation | 4 | Documentation and UX writing | No (text) |
 | Architecture | 7 | System design and structure | Mixed |
-| UX/Design | 10 | User experience, interface, and persona | Mixed |
+| UX/Design | 9 | User experience, interface, and persona | Mixed |
 | DevOps | 7 | Infrastructure, CI/CD, and environment | Yes |
 | Modernization | 2 | Technology migration | Mixed |
 | Growth | 2 | SEO/CRO and retention | Mixed |
@@ -57,17 +57,17 @@ Use this file when the exact current roster inside a category matters.
 | Git/PR | 2 | Version control workflows | No |
 | Browser | 2 | Browser automation | Yes |
 | Data | 2 | Data pipelines and conversion | Mixed |
-| Strategy | 4 | Business strategy and domain advisory | No |
-| Incident | 2 | Runtime issue detection and auto-repair | Mixed |
+| Strategy | 3 | Business strategy, game design, and domain advisory | No |
+| Incident | 1 | Runtime issue detection and auto-repair | Mixed |
 | Communication | 2 | Messaging, specification alignment | Mixed |
 | Meta / Tooling | 7 | Ecosystem tools, auditing, knowledge | Mixed |
-| Creative / Media | 6 | AI-generated visual, audio, and media content | Yes |
-| AI / ML | 3 | AI/ML design, prompt engineering, and reframing | No |
-**Total: 101 agents** (2 absorbed: Cipher → Nexus, Bridge → Accord)
+| Creative / Media | 2 | AI-generated visual, audio, and media content | Yes |
+| AI / ML | 2 | AI/ML design, prompt engineering, and reframing | No |
+**Total: 89 agents** (2 absorbed: Cipher → Nexus, Bridge → Accord)
 
 ---
 
-## Orchestration (5 agents)
+## Orchestration (4 agents)
 
 Agents that coordinate other agents or decompose complex tasks.
 
@@ -95,14 +95,8 @@ Agents that coordinate other agents or decompose complex tasks.
 - **Output**: Claude Code Agent Teams API sessions, merged results
 - **Trigger**: "parallel execution", "multi-session", "concurrent tasks"
 
-### Aether
-- **Role**: AITuber full-stack orchestrator
-- **Input**: AITuber system requirements, streaming goals
-- **Output**: Real-time pipeline (Chat→LLM→TTS→Avatar→OBS), integration code
-- **Trigger**: "AITuber", "AI VTuber", "live streaming pipeline"
-
 **Category Characteristics:**
-- Never write code directly (except Aether which generates pipeline code)
+- Never write code directly
 - Coordinate other agents or external sessions
 - Manage workflows and product lifecycle
 - Track progress
@@ -205,11 +199,11 @@ Agents that write production-quality code.
 - **Output**: Migrations, DDL, ER diagrams
 - **Trigger**: "schema", "migration", "DB design"
 
-### Arena
-- **Role**: Multi-AI implementation
-- **Input**: Complex requirements
-- **Output**: Multiple AI solutions for comparison
-- **Trigger**: "multiple implementations", "compare", "parallel"
+### Tick
+- **Role**: Game implementation engineer (engine-agnostic)
+- **Input**: Game design specs, prototypes (Forge), gameplay FSMs (Weave)
+- **Output**: Game loop, ECS, game state, collision/physics integration, save, netcode
+- **Trigger**: "game loop", "ECS", "netcode", "fixed timestep", "game architecture"
 
 ### Architect
 - **Role**: Agent meta-designer
@@ -291,7 +285,7 @@ Agents that handle security analysis and testing.
 
 ---
 
-## Review (7 agents)
+## Review (6 agents)
 
 Agents that review and improve code quality, enforce standards, and reduce complexity.
 
@@ -312,12 +306,6 @@ Agents that review and improve code quality, enforce standards, and reduce compl
 - **Input**: Codebase
 - **Output**: Unused file detection, safe deletions
 - **Trigger**: "unused", "dead code", "cleanup"
-
-### Warden
-- **Role**: V.A.I.R.E. quality gatekeeper
-- **Input**: Features, flows, prototypes
-- **Output**: Scorecard, PASS/FAIL verdict
-- **Trigger**: "quality gate", "pre-release review", "V.A.I.R.E."
 
 ### Attest
 - **Role**: Specification compliance verifier
@@ -341,7 +329,6 @@ Agents that review and improve code quality, enforce standards, and reduce compl
 - Quality improvement and complexity reduction
 - Code review automation
 - Best practices and standards enforcement
-- UX quality gating (Warden)
 - Specification compliance verification (Attest)
 - Standards compliance evaluation (Canon)
 - No feature changes
@@ -437,12 +424,6 @@ Agents that design system architecture and repository structure.
 - **Output**: Impact assessment, risk evaluation
 - **Trigger**: "impact analysis", "what will break", "change assessment"
 
-### Stratum
-- **Role**: C4 architecture modeler
-- **Input**: Systems, codebases, design intent
-- **Output**: C4 models (Context/Container/Component/Code), Structurizr DSL
-- **Trigger**: "C4 model", "architecture modeling", "Structurizr"
-
 ### Grove
 - **Role**: Repository structure designer
 - **Input**: Repository, organizational requirements
@@ -470,7 +451,7 @@ Agents that design system architecture and repository structure.
 
 ---
 
-## UX/Design (10 agents)
+## UX/Design (9 agents)
 
 Agents that handle user experience, interface design, persona management, and narrative design.
 
@@ -509,12 +490,6 @@ Agents that handle user experience, interface design, persona management, and na
 - **Input**: Components
 - **Output**: CSF 3.0 stories
 - **Trigger**: "Storybook", "story", "catalog"
-
-### Loom
-- **Role**: Figma Make optimization agent
-- **Input**: Codebase tokens, component patterns, Figma Variables
-- **Output**: Guidelines.md, prompt sequences, validation reports, token alignment reports
-- **Trigger**: "Figma Make", "Guidelines.md", "design guidelines", "make optimization"
 
 ### Frame
 - **Role**: Figma MCP design bridge
@@ -744,7 +719,7 @@ Agents that handle data pipelines and transformations.
 
 ---
 
-## Strategy (4 agents)
+## Strategy (3 agents)
 
 Agents that simulate and plan business strategy, provide domain-specific advisory, or support multi-perspective decision making.
 
@@ -754,12 +729,6 @@ Agents that simulate and plan business strategy, provide domain-specific advisor
 - **Output**: Strategy roadmap, KPI forecast, scenario analysis, risk matrix
 - **Trigger**: "business strategy", "business plan", "SWOT", "simulation", "M&A", "mid-term plan"
 
-### Levy
-- **Role**: Tax filing guidance agent (Japan)
-- **Input**: Income data, expense records, financial questions
-- **Output**: Income classification, deduction optimization, tax calculation, filing guidance
-- **Trigger**: "tax filing", "tax", "deduction", "blue return", "e-Tax", "income tax", "tax saving"
-
 ### Magi
 - **Role**: Multi-perspective decision advisor
 - **Input**: Decision context, options, constraints
@@ -767,16 +736,15 @@ Agents that simulate and plan business strategy, provide domain-specific advisor
 - **Trigger**: "decision", "tradeoff", "Go/No-Go", "which approach"
 
 ### Quest
-- **Role**: Game design and production agent
-- **Input**: Game concepts, design goals
-- **Output**: GDD, balance models, narrative design, economy design, production plans
-- **Trigger**: "game design", "GDD", "game balance", "narrative design"
+- **Role**: Game design specialist (design only, no code)
+- **Input**: Game concept, design goals
+- **Output**: GDD, mechanics, balance/economy models, progression, level/narrative design
+- **Trigger**: "game design", "GDD", "game balance", "game economy", "level design"
 
 **Category Characteristics:**
 - Read and analyze data, don't write code
 - Produce strategy documents, recommendations, and domain guidance
 - 3-scenario output (Baseline/Optimistic/Pessimistic) is mandatory (Helm)
-- All outputs include legal disclaimers (Levy)
 - Multi-perspective structured analysis (Magi)
 - Collaborate with Compete, Pulse, Scribe, Canvas, Sherpa, Builder
 
@@ -788,15 +756,9 @@ Agents that simulate and plan business strategy, provide domain-specific advisor
 
 ---
 
-## Incident (2 agents)
+## Incident (1 agent)
 
 Agents that detect, analyze, and auto-repair runtime issues.
-
-### Specter
-- **Role**: Concurrency/resource hunter
-- **Input**: Code with potential issues
-- **Output**: Race condition, memory leak, deadlock reports
-- **Trigger**: "race condition", "memory leak", "deadlock"
 
 ### Mend
 - **Role**: Auto-repair agent
@@ -891,15 +853,9 @@ Agents that generate project-specific tooling, audit ecosystem health, curate kn
 
 ---
 
-## Creative / Media (6 agents)
+## Creative / Media (2 agents)
 
 Agents that generate AI-powered visual, audio, and media content.
-
-### Clay
-- **Role**: AI 3D model generator
-- **Input**: Text/image prompts, asset requirements
-- **Output**: 3D generation code (Python/JS/OpenSCAD), pipeline integrations
-- **Trigger**: "3D model", "text-to-3D", "image-to-3D"
 
 ### Dot
 - **Role**: Pixel art specialist
@@ -913,24 +869,6 @@ Agents that generate AI-powered visual, audio, and media content.
 - **Output**: Gemini API image generation code, prompt optimization
 - **Trigger**: "generate image", "AI image", "Gemini image"
 
-### Lyric
-- **Role**: Songwriter for Suno AI
-- **Input**: Theme, genre, mood
-- **Output**: Lyrics with meta tags, style prompts for Suno
-- **Trigger**: "lyrics", "song", "Suno"
-
-### Tone
-- **Role**: Game audio generator
-- **Input**: Audio requirements (SFX/BGM/Voice/Ambient)
-- **Output**: Audio generation code (Python/JS/TS/Shell), LUFS normalization
-- **Trigger**: "sound effect", "BGM", "game audio", "SFX"
-
-### Reel
-- **Role**: Terminal recording and CLI demo creator
-- **Input**: CLI demo scenarios
-- **Output**: VHS/terminalizer/asciinema configs, GIF/video outputs
-- **Trigger**: "terminal recording", "CLI demo", "GIF demo"
-
 **Category Characteristics:**
 - Generate code that produces creative assets (not assets directly)
 - AI API integration (Gemini, Suno, ElevenLabs, Meshy, etc.)
@@ -939,7 +877,7 @@ Agents that generate AI-powered visual, audio, and media content.
 
 ---
 
-## AI / ML (3 agents)
+## AI / ML (2 agents)
 
 Agents that specialize in AI/ML design, prompt engineering, and cognitive reframing.
 
@@ -948,12 +886,6 @@ Agents that specialize in AI/ML design, prompt engineering, and cognitive refram
 - **Input**: AI/ML requirements, evaluation needs
 - **Output**: Prompt designs, RAG architectures, evaluation frameworks, MLOps plans
 - **Trigger**: "prompt engineering", "RAG design", "LLM evaluation", "MLOps"
-
-### Prism
-- **Role**: NotebookLM steering prompt consultant
-- **Input**: NotebookLM goals, source materials
-- **Output**: Steering prompts, output quality optimization strategies
-- **Trigger**: "NotebookLM", "steering prompt", "podcast generation"
 
 ### Flux
 - **Role**: Thinking refraction agent

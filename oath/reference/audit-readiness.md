@@ -5,7 +5,6 @@ Purpose: Turn an audit from a quarterly scramble into a continuous, evidence-dri
 ## Scope Boundary
 
 - **Oath `audit`**: audit readiness orchestration — evidence architecture, sampling plan, auditor logistics, findings tracking, continuous audit design.
-- **Warden (elsewhere)**: V.A.I.R.E. functional quality gates (user-experience quality), not regulatory audit.
 - **Crypt (elsewhere)**: cryptographic evidence artifacts such as KMS key rotation logs, HSM attestations, and TLS cipher inventory — Oath consumes, Crypt designs.
 - **Vigil (elsewhere)**: detection rule coverage evidence (Sigma/YARA) — Oath cites the coverage in the audit, Vigil authors the rules.
 - **Beacon (elsewhere)**: continuous control telemetry pipelines (log shipping, dashboarding).

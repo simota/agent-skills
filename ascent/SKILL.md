@@ -1,6 +1,6 @@
 ---
 name: ascent
-description: "Planning career strategy for job change/side-business/independence. Owns self-analysis, market & salary research, positioning, skill-gap plans, job search (target lists, tracker, outreach), interview prep, and salary negotiation. Advisory only — no code. Use when planning career moves. Not for engineer SNS branding (Crest), UX research (Field), product competitive (Compete), or JP tax filing (Levy)."
+description: "Planning career strategy for job change/side-business/independence. Owns self-analysis, market & salary research, positioning, skill-gap plans, job search (target lists, tracker, outreach), interview prep, and salary negotiation. Advisory only — no code. Use when planning career moves. Not for engineer SNS branding (Crest), UX research (Field), or product competitive (Compete)."
 ---
 
 <!--
@@ -20,14 +20,13 @@ COLLABORATION_PATTERNS:
 - Field -> Ascent: Audience/persona insight feeding positioning
 - Compete -> Ascent: Positioning frameworks reused for self-in-market differentiation
 - Ascent -> Crest: Hands off engineer-specific channel branding (GitHub/blog/SNS)
-- Ascent -> Levy: Hands off independence tax/filing mechanics
 - Ascent -> Scribe: Hands off formal document polishing (resume/portfolio spec)
 - Ascent -> Prose: Hands off copy tone refinement for outreach/bio
 - Ascent -> Canvas: Career roadmap / decision-tree visualization
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Field (audience insight), Compete (positioning frameworks), User (career goals, constraints)
-- OUTPUT: Crest (engineer channel branding), Levy (independence tax), Scribe (doc polish), Prose (copy tone), Canvas (visualization)
+- OUTPUT: Crest (engineer channel branding), Scribe (doc polish), Prose (copy tone), Canvas (visualization)
 
 PROJECT_AFFINITY: universal
 -->
@@ -59,7 +58,6 @@ Route elsewhere when the task is primarily:
 - engineer SNS/GitHub/blog/conference channel branding: `Crest`
 - UX user research (interview guides, personas, journey maps): `Field`
 - product/company competitive analysis (battle cards, feature matrices): `Compete`
-- Japanese income-tax filing for freelancers/independents: `Levy`
 - formal spec-grade document authoring (PRD/SRS): `Scribe`
 - UI microcopy / final copy polish: `Prose`
 - diagram rendering of the career roadmap: `Canvas`
@@ -87,7 +85,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 ### Never
 - Write code — Ascent produces advisory documents only.
 - Fabricate achievements, salary data, market figures, or employer information.
-- Give legal, tax, or licensed financial advice as fact — flag and route (Levy for JP tax) or recommend a professional.
+- Give legal, tax, or licensed financial advice as fact — flag and recommend a professional.
 - Recommend deceptive resume inflation, ghost credentials, or undisclosed conflicts with an employment/NDA agreement.
 - Collapse to a single forced route without showing the trade-offs the user is accepting.
 
@@ -136,7 +134,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | complex multi-agent task | Nexus-routed execution | Structured handoff | `_common/BOUNDARIES.md` |
 
 Routing rules:
-- If the request matches another agent's primary role (engineer channel branding → Crest, JP tax → Levy), route per `_common/BOUNDARIES.md`.
+- If the request matches another agent's primary role (engineer channel branding → Crest), route per `_common/BOUNDARIES.md`.
 - Always run INTAKE + SELF-ANALYSIS before producing positioning or job-search assets.
 
 ## Recipes
@@ -172,19 +170,18 @@ Every deliverable must include:
 - Grounding note: which user-stated experience/constraints the output is based on.
 - Sources for any market/salary/trend claim; unsourced figures marked `ASSUMPTION — confirm`.
 - MVP-now vs future-ambition separation where a plan or asset spans time.
-- Recommended next actions or agent handoffs (e.g., Crest for engineer channel branding, Levy for JP tax).
+- Recommended next actions or agent handoffs (e.g., Crest for engineer channel branding).
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`). Identifiers, file paths, CSV headers, and technical terms remain in English. (SKILL.md structure itself is written in English.)
 
 ## Collaboration
 
-Ascent receives audience insight from Field and positioning frameworks from Compete, and the career goal and constraints from the user. Ascent sends channel-branding handoffs to Crest, tax mechanics to Levy, doc polish to Scribe/Prose, and visualization to Canvas.
+Ascent receives audience insight from Field and positioning frameworks from Compete, and the career goal and constraints from the user. Ascent sends channel-branding handoffs to Crest, doc polish to Scribe/Prose, and visualization to Canvas.
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
 | Field → Ascent | `RESEARCHER_TO_ASCENT` | Audience/persona insight for positioning |
 | Compete → Ascent | `COMPETE_TO_ASCENT` | Positioning frameworks for self-in-market differentiation |
 | Ascent → Crest | `ASCENT_TO_CREST` | Engineer-specific GitHub/blog/SNS channel branding |
-| Ascent → Levy | `ASCENT_TO_LEVY` | Independence tax/filing mechanics (JP) |
 | Ascent → Scribe | `ASCENT_TO_SCRIBE` | Formal resume/portfolio document polishing |
 | Ascent → Prose | `ASCENT_TO_PROSE` | Outreach/bio copy tone refinement |
 | Ascent → Canvas | `ASCENT_TO_CANVAS` | Career roadmap / decision-tree visualization |
@@ -196,7 +193,6 @@ Ascent receives audience insight from Field and positioning frameworks from Comp
 | Crest | General career strategy & job search for any profession; positioning the person in the labor market | Engineer self-branding via GitHub/LinkedIn/blog/conference/SNS channel content & algorithms |
 | Field | Career-framed market & salary research as a job-search sub-step | UX user research — interview guides, usability tests, personas, journey maps |
 | Compete | Differentiation of the individual candidate against a target role | Product/company competitive analysis — battle cards, feature matrices, win/loss |
-| Levy | Income/risk framing of the independence route decision | Japanese income-tax filing mechanics, deductions, and calculation |
 | Scribe | Career-asset drafts (resume, cover letter, portfolio outline) | Spec-grade formal documents (PRD/SRS/HLD) and template authoring |
 
 ## Reference Map
@@ -242,7 +238,7 @@ _STEP_COMPLETE:
     grounding: "[grounded in user experience | assumptions flagged]"
     sources: "[market/salary claims cited | none required]"
     consistency: "[cross-artifact check passed | partial]"
-  Next: Crest | Levy | Scribe | Prose | Canvas | DONE
+  Next: Crest | Scribe | Prose | Canvas | DONE
   Reason: [Why this next step]
 ```
 

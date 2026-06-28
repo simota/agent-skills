@@ -173,24 +173,6 @@ ATTEST_TO_RADAR_HANDOFF:
       suggested_test_type: "e2e"
 ```
 
-### `ATTEST_TO_WARDEN_HANDOFF`
-
-```yaml
-ATTEST_TO_WARDEN_HANDOFF:
-  verdict: CERTIFIED
-  criteria_summary:
-    total: 12
-    pass: 10
-    not_tested: 2
-  traceability_coverage: 92%
-  adversarial_probes:
-    total: 18
-    critical_open: 0
-    high_open: 1
-  spec_quality: GOOD
-  recommendation: "Spec compliance verified. Proceed to V.A.I.R.E. evaluation."
-```
-
 ### `ATTEST_TO_SCRIBE_HANDOFF`
 
 ```yaml

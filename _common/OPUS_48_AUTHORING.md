@@ -131,7 +131,7 @@ Effort is the primary control surface on 4.8 — stronger than prompt wording �
 
 Opus 4.8 is better at finding bugs (higher recall and precision internally), but it follows conservative reporting instructions ("only high-severity", "be conservative", "don't nitpick") **more faithfully** than older models. A harness tuned for an older model can show *lower measured recall* — a harness effect, not a capability regression: same investigation depth, fewer findings converted to reports.
 
-**Apply by (reviewers/detectors — Judge, Gauge, Sentinel, Radar, Attest, Canon, Probe, Warden, Drill, Vigil, Cull, Chain):**
+**Apply by (reviewers/detectors — Judge, Gauge, Sentinel, Radar, Attest, Canon, Probe, Drill, Vigil, Cull, Chain):**
 - Separate *finding* from *filtering*. At the finding stage, instruct coverage explicitly: "Report every issue you find, including uncertain and low-severity ones. Do not filter for importance or confidence here — a later stage ranks them. Tag each with confidence + estimated severity."
 - Move confidence/severity filtering to a downstream verification, dedup, or ranking stage.
 - If self-filtering must happen in one pass, set a **concrete** bar, not a qualitative one: "report anything that could cause incorrect behavior, a test failure, or a misleading result; omit only pure style/naming nits."
@@ -141,7 +141,7 @@ Opus 4.8 is better at finding bugs (higher recall and precision internally), but
 
 **(a) Prose voice.** Opus 4.8 trends direct and opinionated, with minimal validation-forward phrasing and sparing emoji. Re-evaluate voice prompts against this baseline.
 - If a product voice is warmer/more conversational, state it: "Use a warm, collaborative tone. Acknowledge the user's framing before answering."
-- Relevant to Prose, Tone, Quill, Scribe, Cue, Zine, Crest, content/marketing skills.
+- Relevant to Prose, Quill, Scribe, Cue, Zine, Crest, content/marketing skills.
 
 **(b) Frontend & visual defaults.** Opus 4.8 has strong design instincts but a persistent house style — warm cream/off-white (~`#F4F1EA`), serif display type (Georgia/Fraunces/Playfair), italic accents, terracotta/amber. Great for editorial/hospitality/portfolio; wrong for dashboards, dev-tools, fintech, healthcare, enterprise. Appears in slides too.
 - Generic negation ("don't use cream", "make it minimal") just shifts to *another* fixed palette. Two reliable breaks: (1) specify a concrete alternative (exact palette hexes, typography, radius, spacing); (2) have the model propose 3–4 distinct directions first, then implement the chosen one.
@@ -156,12 +156,12 @@ Reference this matrix to know which principles your skill must address.
 
 | Role | Critical (◎) | Recommended (○) |
 |------|---|---|
-| Orchestrators (Nexus, Titan, Sherpa, Rally, Arena, Magi, Darwin, Orbit) | P4, P6, P7, P9 | P1, P8 |
+| Orchestrators (Nexus, Titan, Sherpa, Rally, Magi, Darwin, Orbit) | P4, P6, P7, P9 | P1, P8 |
 | Investigators (Scout, Lens, Trail, Atlas, Fossil, Triage) | P3, P5, P8 | P2, P9 |
-| Reviewers/Detectors (Judge, Gauge, Sentinel, Probe, Radar, Warden, Attest, Canon, Drill, Vigil, Cull, Chain) | P2, P5, P10 | P1, P8 |
+| Reviewers/Detectors (Judge, Gauge, Sentinel, Probe, Radar, Attest, Canon, Drill, Vigil, Cull, Chain) | P2, P5, P10 | P1, P8 |
 | Builders (Builder, Artisan, Forge, Anvil, Native) | P5, P7, P8 | P3, P9, P11 |
-| Designers (Vision, Muse, Palette, Schema, Gateway, Stratum, Flow) | P1, P11 | P5, P8 |
-| Writers (Prose, Tone, Quill, Scribe, Cue, Zine, Crest) | P2, P11 | P8 |
+| Designers (Vision, Muse, Palette, Schema, Gateway, Flow) | P1, P11 | P5, P8 |
+| Writers (Prose, Quill, Scribe, Cue, Zine, Crest) | P2, P11 | P8 |
 | Knowledge/Meta (Lore, Compass, Sigil, Architect) | P6, P7, P8 | P1, P9 |
 
 (◎ = address explicitly in SKILL.md; ○ = address if relevant)

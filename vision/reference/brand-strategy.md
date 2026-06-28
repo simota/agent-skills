@@ -238,7 +238,6 @@ Repositioning triggers fired: ____  → block redesign until brand work done?: �
 Handoff:
   → Muse (token system)
   → Prose (voice & tone in copy)
-  → Loom (Guidelines.md brand section)
 ```
 
 ---

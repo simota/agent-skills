@@ -50,7 +50,7 @@ Final delivery output when the entire product lifecycle is complete.
 - **Test coverage**: [N%]
 - **Security audit**: PASS / FAIL (details: [summary])
 - **Performance targets**: MET / UNMET (details: [summary])
-- **Code quality gate**: PASS / FAIL (Warden verdict)
+- **Code quality gate**: PASS / FAIL
 
 ### Known Limitations
 - [Limitation]: [Reason + mitigation]

@@ -1,6 +1,6 @@
 # Palette Collaboration Patterns
 
-Purpose: Provide the canonical handoff tokens and minimum fields for Palette coordination with Echo, Flow, Muse, Sentinel, Radar, Canvas, and Warden-related checks.
+Purpose: Provide the canonical handoff tokens and minimum fields for Palette coordination with Echo, Flow, Muse, Sentinel, Radar, and Canvas.
 
 ## Contents
 
@@ -168,5 +168,3 @@ Purpose: Provide the canonical handoff tokens and minimum fields for Palette coo
 **Source Artifacts**: [files or heuristics]
 **Key Story**: [what the visualization must show]
 ```
-
-If a change materially shifts Value, Agency, Identity, Resilience, or Echo, request a Warden pass after Palette’s own review.

@@ -47,7 +47,7 @@ Regression reflects design flaw (same pattern in 3+ sites) ─→ REFACTOR-FIX
 Tiebreakers:
 - Use `REVERT` only when history is local-only or the revert is for a shared branch via `git revert` (never `reset --hard` on shared history). Never recommend force-push to main/master.
 - For merge commits as first-bad, recommend testing each parent independently before deciding verb (often the integration is at fault, not either parent).
-- If Trail escalates to Specter (resource regression), Sentinel (security regression), or Atlas (architectural decay), do not emit a fix prompt — see suppression below.
+- If Trail escalates to Sentinel (security regression) or Atlas (architectural decay), do not emit a fix prompt — see suppression below.
 
 ---
 
@@ -57,7 +57,6 @@ Universal cases live in `_common/LLM_PROMPT_GENERATION.md`. Trail adds:
 
 | Case | Reason | Note in report |
 |------|--------|----------------|
-| Trail escalates to Specter (resource-related bisect finding) | Specter owns concurrency/resource fix prompts | "Fix prompt suppressed — Specter owns remediation prompt." |
 | Trail escalates to Sentinel (security regression detected in commit) | Sentinel owns secure-fix prompts | "Fix prompt suppressed — Sentinel owns remediation prompt." |
 | Trail escalates to Atlas (architectural archaeology reveals design issue, not regression) | Atlas owns architectural recommendation | "Fix prompt withheld — finding routed to Atlas as architectural concern, not regression." |
 | Bisect identifies a merge commit as first-bad and parents are not yet independently tested | Cannot recommend a fix until the actual breaking change inside the merge is isolated | "Fix prompt withheld — merge commit isolation incomplete; recommend testing parents." |

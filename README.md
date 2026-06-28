@@ -79,7 +79,6 @@ This repository contains 145 specialized AI agents covering various aspects of s
 | **Riff** | _"The best ideas don't arrive. They evolve — one riff at a time."_ - Interactive brainstorming partner that deepens ideas through iterative dialogue using four thinking modes (Expand/Propose/Evaluate/Subtract). No code written | Brainstorming session output |
 | **Cast** | _"Personas are not invented. They are discovered, born, and evolved."_ - Persona casting agent. Rapid generation, registry management, lifecycle tracking, and cross-agent distribution of personas from diverse inputs | Persona registry |
 | **Helm** | _"A ship without a destination has no favorable wind. A ship without a helm has no direction at all."_ - Business strategy simulation agent. Integrates financial/market/competitive data for short/mid/long-term simulations. SWOT/PESTLE/Porter analysis, scenario planning, KPI forecasting, strategy roadmap generation. No code written | Strategy simulation report |
-| **Levy** | _"納税は義務。でも、正しく知れば、賢く果たせる。"_ - Japan tax filing guidance agent. Income classification, deduction optimization, tax calculation, e-Tax procedures for freelancers and side-business workers. No code written | Tax filing guidance report |
 | **Accord** | _"Three teams, one truth."_ - Cross-team specification architect. Creates integrated spec packages across Business, Development, and Design teams using progressive refinement templates (L0 Vision > L1 Requirements > L2 Team-specific details > L3 Acceptance criteria). No code written | Integrated spec package, traceability matrix |
 | **Matrix** | _"Infinite combinations, finite resources. Matrix finds the minimum that covers the maximum."_ - Universal multi-dimensional analysis agent. Controls combinatorial explosion from arbitrary axis×value inputs. Minimum coverage set selection, execution planning, and prioritization across all domains (testing, deployment, UX validation, risk assessment, compatibility). No code written | Matrix analysis, coverage optimization plan |
 | **Quest** | _"Every great game starts with a question the player cannot resist answering."_ - Game planning & production agent. GDD authoring, balance math (DPS/TTK/Elo), narrative design, economy modeling, systems design, player psychology frameworks, production planning, game market research. No code written | GDD, balance sheets, economy models, system specs, game research briefs |
@@ -125,9 +124,7 @@ This repository contains 145 specialized AI agents covering various aspects of s
 | **Judge** | _"Good code needs no defense. Bad code has no excuse."_ - Code review via codex review, automated PR review, pre-commit checks, AI hallucination detection | Review report |
 | **Zen** | _"Clean code is not written. It's rewritten."_ - Refactoring and code quality improvement (behavior unchanged) | Code improvements |
 | **Sweep** | _"Dead code is technical debt that earns no interest."_ - Unused file detection, dead code identification, orphaned file discovery, safe deletion proposals | Cleanup proposals |
-| **Warden** | _"Quality is not negotiable. Ship nothing unworthy."_ - V.A.I.R.E. quality standards guardian. Pre-release evaluation, scorecards, pass/fail decisions | Quality evaluation report |
 | **Attest** | _"Specs are truth. Code is evidence. Attest finds the gaps."_ - Specification compliance verifier. Extracts acceptance criteria from specs, generates BDD scenarios, and adversarially probes for gaps between spec and implementation. Issues CERTIFIED/CONDITIONAL/REJECTED verdicts | Compliance report, BDD scenarios |
-| **Specter** | _"The bugs you can't see are the ones that haunt you."_ - Ghost hunter for "invisible" issues in concurrency, async processing, and resource management. Detects and analyzes Race Conditions, Memory Leaks, Resource Leaks, and Deadlocks | Detection report |
 | **Siege** | _"Break it before users do. Fix it before they notice."_ - Advanced testing specialist. Load testing (k6/Locust/Artillery), contract testing (Pact CDC), chaos engineering, mutation testing, resilience pattern verification | Test results, resilience reports |
 | **Void** | _"The best code is the code that was never written."_ - YAGNI enforcement, scope cutting, complexity reduction proposals. Challenges existence of every feature/abstraction with 5 questions and Cost-of-Keeping Score | Subtraction proposals |
 | **Mint** | _"Good tests deserve great data."_ - Test data and fixture generation specialist. Factory patterns, boundary value generation, synthetic data, seed management | Test data, fixtures |
@@ -142,7 +139,6 @@ This repository contains 145 specialized AI agents covering various aspects of s
 | **Builder** | _"Types are contracts. Code is a promise."_ - Production implementation. Type-safe craftsman with TDD, Event Sourcing, CQRS, and performance optimization. Detects spec ambiguity, supports auto-handoff from Forge | Production code |
 | **Artisan** | _"Prototypes promise. Production delivers."_ - Production frontend implementation craftsman. React/Vue/Svelte, Hooks design, state management, Server Components, form handling, data fetching | Frontend code |
 | **Forge** | _"Done is better than perfect. Ship it, learn, iterate."_ - Prototyping. Prioritizes working software over perfection. Outputs types.ts, errors.ts, forge-insights.md for Builder handoff | MVP/PoC |
-| **Arena** | _"Arena is the judge, not a player. External engines compete; the best solution wins."_ - Drives codex exec / Antigravity CLI directly for parallel implementation, evaluation, and adoption. Supports Solo Mode (sequential) and Team Mode (Agent Teams parallel) | Comparative implementation and evaluation |
 | **Native** | _"Every pixel ships. Every platform matters."_ - Pure-native mobile implementation specialist for iOS (Swift 6.3 + SwiftUI + Liquid Glass) and Android (Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive). Production-quality features with @Observable / Swift Concurrency, Compose Strong Skipping + Type-safe Navigation, SwiftData / Room, Credential Manager + Passkeys, Privacy Manifest, edge-to-edge, predictive back, Live Activities, App Intents, Foundation Models / Gemini Nano, store compliance, and per-store staged rollout. React Native / Flutter / KMP / CMP are out of scope | Code |
 | **Pixel** | _"Every pixel matters. Fidelity is non-negotiable."_ - Faithful reproduction agent. Generates pixel-accurate HTML/CSS from image mockups (PNG/JPG/screenshots) and performs visual verification | HTML/CSS code |
 
@@ -184,12 +180,7 @@ This repository contains 145 specialized AI agents covering various aspects of s
 | **Vitrine** | _"Components without stories are components without context."_ - Storybook story creation, catalog management, Visual Regression integration. CSF 3.0 format | Storybook Stories |
 | **Prose** | _"Words are the smallest unit of design. Get them wrong, and nothing else matters."_ - User-facing text specialist. Microcopy, error messages, voice & tone framework, onboarding copy, accessibility text | Copy guidelines, content specs |
 | **Frame** | _"Design speaks in pixels. I translate it to code."_ - Figma MCP Server bridge agent. Extracts and structures design context from Figma for implementation agents. Design-to-code bridging, Code Connect management, design system rule extraction. No code written | Structured design context, design system rules |
-| **Loom** | _"Design intent deserves preparation. Every thread of context I weave makes creation more precise."_ - Figma Make optimization agent. Analyzes codebase to generate Guidelines.md, designs prompt strategies, validates Make output against design system conventions. No code written | Guidelines.md, prompt sequences, validation reports |
 | **Ink** | _"Every stroke serves a purpose."_ - SVG icon/illustration generation, icon system design, and sprite symbol construction | SVG assets |
-
-**Frame vs Loom responsibilities**:
-- **Frame**: Figma → Code direction (extracts design context from Figma via MCP)
-- **Loom**: Code → Figma Make direction (prepares optimized input for Figma Make from codebase analysis)
 
 ### Documentation
 
@@ -198,16 +189,14 @@ This repository contains 145 specialized AI agents covering various aspects of s
 | **Scribe** | _"A specification is a contract between vision and reality."_ - Document writer for PRD/SRS/HLD/LLD, implementation checklists, and test specifications | Specs, design docs |
 | **Quill** | _"Code tells computers what to do. Documentation tells humans why."_ - JSDoc/TSDoc additions, README updates, typing `any` to proper type definitions | Documentation |
 | **Morph** | _"A document is timeless. Its format is temporary."_ - Document format conversion (Markdown <> Word/Excel/PDF/HTML). Converts Scribe specs and Harvest reports to various formats | Converted documents |
-| **Prism** | _"One source, many lights."_ - NotebookLM steering prompt design consultant. Advises on source preparation and optimal output format selection (Audio/Video/Slide/Infographic/Mind Map) | Steering prompts |
 | **Tome** | _"Changes are forgotten. Knowledge endures."_ - Transforms repository changes into detailed learning documentation. Explains terminology, flows, design decisions, and anti-patterns | Learning docs |
 | **Clause** | _"Every clause carries weight. Every omission carries risk."_ - Legal document review for Terms of Service, Privacy Policy, and Tokushoho compliance. Clause gap detection and risk flagging | Legal review report |
 | **Zine** | _"The hook earns the second paragraph."_ - External-facing tech blog/article series authoring for note/Zenn/Qiita/dev.to. Hook design, article structure, platform-specific tuning, multi-episode series management | Published articles, series index |
 
-**Scribe vs Quill vs Morph vs Prism vs Tome vs Zine responsibilities**:
+**Scribe vs Quill vs Morph vs Tome vs Zine responsibilities**:
 - **Scribe**: Project documentation (PRD, SRS, design docs, checklists, test specifications)
 - **Quill**: Code documentation (JSDoc/TSDoc, README, type definitions)
 - **Morph**: Format conversion (Markdown > PDF/Word/HTML, etc.)
-- **Prism**: NotebookLM content optimization (steering prompts for Audio/Video/Slide)
 - **Tome**: Change-based learning materials (design decisions, terminology, anti-patterns from diffs)
 - **Zine**: External-facing articles for public platforms (note/Zenn/Qiita/dev.to), series management
 
@@ -234,7 +223,6 @@ This repository contains 145 specialized AI agents covering various aspects of s
 | **Nest** | _"Structure what reaches the model, and the model structures the rest."_ - LLM-optimized folder structure design. Audits and restructures project directories for context efficiency, progressive disclosure, and prompt cache performance | Structure reports, layout plans |
 | **Weave** | _"Every state tells a story. Every transition is a contract."_ - Workflow and state machine design specialist. State transition design, invalid transition detection, Saga patterns, approval flows | Designs, diagrams |
 | **Seek** | _"The right result at the right time in the right order."_ - Search engine and vector DB design specialist. Full-text search, vector search, hybrid search, RAG retrieval layer | Code, configs |
-| **Stratum** | _"Architecture without visualization is architecture without communication."_ - C4 model-based software architecture modeling, evaluation, and Structurizr DSL generation | Architecture diagrams, DSL |
 | **Crypt** | _"Trust no channel. Verify every key."_ - Cryptographic architecture design: algorithm selection, key management, E2E encryption, KMS integration, TLS configuration | Crypto design specs |
 | **Shard** | _"Isolation is the foundation of trust in multi-tenancy."_ - Multi-tenant architecture design. Tenant isolation strategies, RLS, routing, and scale design for SaaS | Architecture design |
 | **Trawl** | _"Design the web that catches the web."_ - Crawl system architecture design. Distributed crawler design, URL frontier management, politeness policies, legal compliance | Architecture specs |
@@ -320,22 +308,9 @@ This repository contains 145 specialized AI agents covering various aspects of s
 | **Vector** | _"The browser is a stage. Every click is a scene."_ - Browser automation via Playwright/Chrome DevTools. Data collection, form interaction, screenshots, network monitoring | Automation scripts |
 | **Haul** | _"The right image at the right resolution. Provenance you can stand behind."_ - Product image search and high-precision download specialist. Multi-source aggregation (e-commerce APIs, image search, brand sites), SKU/JAN/UPC matching, perceptual-hash dedup, license-aware curation | Image manifest, normalized assets |
 | **Director** | _"A demo that moves hearts moves products."_ - Feature demo video production using Playwright 1.59 `page.screencast`. 3-sec layered hook, archetype-based scenarios (30s/60s/90s/180s), multi-aspect (16:9/9:16/4:5/1:1), WCAG 2.2 + Audio Description, VMAF/PSNR/SSIM quality gate, transcript + VideoObject JSON-LD for AI citation | Demo videos + transcript + JSON-LD + /97 quality report |
-| **Reel** | _"The terminal is a stage. Every keystroke is a performance."_ - Terminal recording and CLI demo video generation using VHS/terminalizer/asciinema. Creates GIF/MP4/WebM from declarative .tape files | GIF/video (.gif/.mp4) |
 
-**Anvil > Reel > Quill chain**: Anvil (CLI development) > Reel (demo recording) > Quill (README GIF embedding)
-**Director + Reel > Vitrine chain**: Director (web recording) + Reel (terminal recording) > Vitrine (visual documentation)
-**Director vs Reel responsibilities**:
+**Director vs Vitrine responsibilities**:
 - **Director**: Browser (Web UI) demo videos (Playwright, .webm output)
-- **Reel**: Terminal (CLI) demo recordings (VHS, GIF/MP4 output)
-
-### AITuber/Streaming
-
-| Agent | Description | Output |
-|-------|-------------|--------|
-| **Aether** | _"The stage is live. The avatar breathes. The audience connects."_ - AITuber (AI VTuber) full-stack orchestrator. Designs and builds real-time streaming pipelines (Chat>LLM>TTS>Avatar>OBS), live chat integration, TTS voice synthesis, Live2D/VRM avatar control, lip sync, and OBS WebSocket automation | Pipeline design, streaming config |
-
-**Cast > Aether > Builder chain**: Cast (persona) > Aether (AITuber pipeline design) > Builder (implementation)
-**Aether > Scaffold > Gear chain**: Aether (streaming infra) > Scaffold (provisioning) > Gear (CI/CD)
 
 ## Workflows
 
@@ -436,7 +411,6 @@ See `_common/INTERACTION.md` for details.
 | UX/improve | UX improvement | Echo > Palette > Artisan > Radar |
 | UX/session-analysis | Session analysis | Trace > Echo > Palette |
 | UX/persona-validation | Persona validation | Field > Trace > Echo |
-| UI/figma-make | Figma Make Guidelines | Loom > Artisan |
 
 #### Refactoring
 
@@ -551,12 +525,7 @@ See `_common/INTERACTION.md` for details.
 
 | Task | Description | Chain |
 |------|-------------|-------|
-| DEMO/cli | CLI demo GIF creation | Anvil > Reel > Quill |
-| DEMO/prototype | Prototype demo | Forge > Reel > Growth |
-| DEMO/web-terminal | Web + terminal combo demo | Director + Reel > Vitrine |
-| DEMO/docs | Documentation demo | Scribe > Reel > Quill |
-| DEMO/ci-update | CI-integrated demo auto-update | Gear > Reel > Gear |
-| DEMO/showcase | Production CLI demo | Builder > Reel > Growth |
+| DEMO/prototype | Prototype demo | Forge > Director > Growth |
 
 #### Infrastructure & DevOps
 
@@ -600,7 +569,7 @@ See `_common/INTERACTION.md` for details.
 | GAME/design | Game design document | Quest |
 | GAME/full | Full game pipeline | Vision > Quest > Forge > Builder > Radar |
 | GAME/balance | Balance iteration | Quest > Forge > Quest |
-| GAME/assets | Game asset pipeline | Vision > Quest > Tone + Dot + Clay |
+| GAME/assets | Game asset pipeline | Vision > Quest > Dot |
 | GAME/narrative | Story & narrative | Cast > Quest > Scribe |
 
 #### Parallel Execution (Rally Integration)
@@ -638,7 +607,6 @@ For large-scale tasks where parallel execution is beneficial, Nexus escalates to
 |------|-------------|-------|
 | INCIDENT | Incident response | Triage > Scout > Builder |
 | TEST/quality | Iterative quality improvement | Judge > Zen > Radar |
-| SECURITY/concurrency | Concurrency bug detection | Specter > Builder > Radar |
 | INVESTIGATE/regression | Regression investigation | Trail > Scout > Builder > Radar |
 
 #### Messaging & Real-time
@@ -649,14 +617,6 @@ For large-scale tasks where parallel execution is beneficial, Nexus escalates to
 | MESSAGING/webhook | Webhook handler | Gateway > Relay > Builder > Radar |
 | MESSAGING/realtime | Real-time communication | Relay > Scaffold > Builder > Radar |
 | MESSAGING/multi-channel | Multi-channel integration | Relay > Builder > Radar |
-
-#### AITuber/Streaming
-
-| Task | Description | Chain |
-|------|-------------|-------|
-| AITUBER/setup | AITuber pipeline setup | Cast > Aether > Builder > Radar |
-| AITUBER/avatar | Avatar & lip sync setup | Aether > Builder |
-| AITUBER/streaming | Streaming automation | Aether > Gear > Builder |
 
 ## Shared Knowledge
 
@@ -704,7 +664,6 @@ skills/
 │   └── INTERACTION.md  # Shared interaction rules
 ├── _templates/
 │   └── PROJECT.md      # Project knowledge template
-├── aether/SKILL.md    # AITuber/streaming orchestrator
 ├── architect/SKILL.md  # Agent design meta-designer
 ├── anvil/SKILL.md      # CLI/TUI construction
 ├── artisan/SKILL.md    # Frontend implementation
@@ -742,7 +701,6 @@ skills/
 ├── latch/SKILL.md      # Claude Code hook management
 ├── launch/SKILL.md     # Release management
 ├── lens/SKILL.md       # Codebase comprehension & investigation
-├── levy/SKILL.md       # Japan tax filing guidance
 ├── lore/SKILL.md       # Cross-ecosystem knowledge curator
 ├── bazaar/SKILL.md       # Premium LP studio chain orchestrator
 ├── magi/SKILL.md       # Multi-perspective decision making
@@ -786,7 +744,6 @@ skills/
 ├── sweep/SKILL.md      # Dead code detection
 ├── titan/SKILL.md      # Product lifecycle meta-orchestrator
 ├── tome/SKILL.md       # Change-to-learning documentation
-├── tone/SKILL.md       # Game audio generation
 ├── trace/SKILL.md      # Session replay analysis
 ├── triage/SKILL.md     # Incident response
 ├── tuner/SKILL.md      # DB performance optimization
@@ -1442,19 +1399,6 @@ Use a 16-color palette and output as SVG with spritesheet metadata.
 - **Canvas**: Diagrams and charts (Mermaid, ASCII art, draw.io)
 - **Sketch**: AI image generation code (Python code for Gemini API)
 - **Dot**: Pixel art via code (SVG/Canvas/Phaser 3/Pillow/CSS sprites)
-- **Clay**: AI 3D model generation code (Python/JS/OpenSCAD for Meshy/Tripo/Hunyuan3D/Rodin/Sloyd/Stability APIs)
-
----
-
-##### NotebookLM Prompt Design (Prism)
-
-```
-/Prism
-I want to create an engaging podcast-style audio overview of our API documentation using NotebookLM.
-Help me design the optimal steering prompt.
-```
-
-**Output**: Optimized steering prompt, source preparation advice, output format recommendations
 
 ---
 
@@ -1837,62 +1781,6 @@ Conduct penetration testing on the authentication API.
 **Sentinel vs Probe responsibilities**:
 - **Sentinel**: Static analysis (SAST) - reads code to detect vulnerabilities
 - **Probe**: Dynamic testing (DAST) - attacks running application to detect vulnerabilities
-
----
-
-#### Terminal Recording
-
-##### CLI Demo GIF Creation (Reel)
-
-```
-/Reel
-Record a GIF showing installation through basic usage of this CLI tool.
-I'll embed it in the README.
-```
-
-**Output**: VHS .tape file, optimized GIF (under 5MB), Markdown embed code
-
----
-
-##### Terminal Session Recording (Reel)
-
-```
-/Reel
-Create a demo video of the interactive setup wizard in action.
-Include the user selecting options.
-```
-
-**Output**: terminalizer recording, edited YAML, GIF output
-
----
-
-**Director vs Reel responsibilities**:
-- **Director**: Browser (Web UI) demo videos (Playwright, .webm output)
-- **Reel**: Terminal (CLI) demo recordings (VHS/terminalizer/asciinema, GIF/MP4 output)
-
----
-
-#### AITuber/Streaming
-
-##### AITuber Pipeline Setup (Aether)
-
-```
-/Aether
-Design an AITuber system: YouTube Live chat → LLM response → VOICEVOX TTS → Live2D avatar with lip sync → OBS streaming.
-```
-
-**Output**: Pipeline architecture, component configuration (Chat poller, LLM adapter, TTS settings, avatar control, OBS WebSocket), deployment guide
-
----
-
-##### Streaming Automation (Aether)
-
-```
-/Aether
-Set up OBS WebSocket automation for scene switching, BGM control, and chat overlay during AI VTuber streams.
-```
-
-**Output**: OBS WebSocket configuration, scene switching logic, event-driven automation scripts
 
 ---
 

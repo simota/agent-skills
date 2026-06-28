@@ -124,5 +124,4 @@ Property-based testing tools (Hypothesis, fast-check, QuickCheck) ship their own
 - **To Builder**: minimized reproducer + oracle script + suspect commit → fix implementation.
 - **To Radar**: 1-minimal input → formalize as regression test (deterministic, fast, scoped).
 - **To Scout**: minimized reproducer for current-state RCA when no breaking commit exists (`delta` only).
-- **To Specter**: if minimization implicates timing/ordering (race-only-with-event-sequence-X) → escalate via TRAIL_TO_SPECTER_HANDOFF.
 - **To Triage**: minimized input as the post-incident artifact for the postmortem.

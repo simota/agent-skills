@@ -73,13 +73,13 @@ Artifacts: Source code + test files
 
 ### HARDEN (L)
 ```
-Chain: Rally{Sentinel+Probe} → Judge → Zen → Bolt → Warden
+Chain: Rally{Sentinel+Probe} → Judge → Zen → Bolt
 Acceptance: Security audit pass, code quality ≥B, perf targets met
 ```
 
 ### VALIDATE (L)
 ```
-Chain: Rally{Voyager+Radar} → Echo → Warden
+Chain: Rally{Voyager+Radar} → Echo
 Acceptance: E2E passing, UX validated, quality gate approved
 ```
 
@@ -114,27 +114,27 @@ Chain: Magi → Atlas → Gateway → Schema → Grove → Scaffold → Canvas
 ```
 
 ### BUILD (XL additions)
-Add: Forge (prototypes), Arena (competitive impl), Stream (data), Anvil (CLI)
+Add: Forge (prototypes), Stream (data), Anvil (CLI)
 ```
 Rally teams by domain: Frontend(Artisan) | Backend(Builder) | Data(Stream) | CLI(Anvil)
 ```
 
 ### HARDEN (XL additions)
-Add: Specter (concurrency), Tuner (DB perf), Judge (PDCA), Canon (compliance)
+Add: Tuner (DB perf), Judge (PDCA), Canon (compliance)
 ```
-Chain: Rally{Sentinel+Probe+Specter} → Judge → Zen → Rally{Bolt+Tuner} → Judge → Canon → Warden
+Chain: Rally{Sentinel+Probe} → Judge → Zen → Rally{Bolt+Tuner} → Judge → Canon
 ```
 
 ### VALIDATE (XL additions)
 Add: Trace (session analysis), Experiment (A/B), Vector (browser)
 ```
-Chain: Rally{Voyager+Radar} → Echo → Trace → Experiment → Vector → Warden
+Chain: Rally{Voyager+Radar} → Echo → Trace → Experiment → Vector
 ```
 
 ### LAUNCH (XL additions)
-Add: Canvas (diagrams), Morph (conversion), Rally{Vitrine+Director+Reel} (demos)
+Add: Canvas (diagrams), Morph (conversion), Rally{Vitrine+Director} (demos)
 ```
-Chain: Quill → Canvas → Guardian → Launch → Rally{Vitrine+Director+Reel} → Gear
+Chain: Quill → Canvas → Guardian → Launch → Rally{Vitrine+Director} → Gear
 ```
 
 ### GROW (XL only)
@@ -181,9 +181,8 @@ On `NEXUS_COMPLETE`: SUCCESS → next Epic · PARTIAL → L1 retry · BLOCKED �
 | DISCOVER | Field, Compete, Voice | L scope knows its users |
 | DEFINE | Pulse, Canon | KPIs and standards optional at L |
 | ARCHITECT | Scaffold, Canvas | Infra and diagrams are XL concerns |
-| HARDEN | Specter | Concurrency is XL |
 | VALIDATE | Trace, Experiment | Session analysis/A/B are XL |
-| LAUNCH | Morph, Vitrine, Director, Reel | Multiple demo formats are XL |
+| LAUNCH | Morph, Vitrine, Director | Multiple demo formats are XL |
 
 Full agent × phase deployment map → `reference/agent-deployment-matrix.md`
 Phase exit checklists → `reference/exit-criteria-validation.md`

@@ -12,7 +12,7 @@ CAPABILITIES_SUMMARY:
 - adversarial_probing: Six-category probe framework (Boundary, Omission, Contradiction, Implicit, Negative, Concurrency)
 - compliance_reporting: Evidence-based verdicts (CERTIFIED/CONDITIONAL/REJECTED) with IEEE 1012-2024 V&V method classification and integrity-level-based depth calibration
 - ambiguity_detection: Specification quality assessment and ambiguity flagging
-- remediation_routing: Handoff to Builder/Radar/Warden/Scribe for fixes
+- remediation_routing: Handoff to Builder/Radar/Scribe for fixes
 - supply_chain_provenance: Optional evidence-package fields (`sbom_ref` / `signature_ref` / `provenance_attestation`) for SLSA-style supply-chain conformance. Advisory when org lacks Sigstore / Fulcio / Rekor / SBOM-generator infra (capability-gated like Design Proof Phase-0 prerequisite); blocking only when declared in Tier policy. v6 fold-in.
 - fix_prompt_generation: Pair every confirmed AC gap with a paste-ready LLM Fix Prompt embedding AC ID, AC verbatim, BDD scenario, verification verdict, evidence, recommended action, acceptance criteria, ruled-out alternatives, and "what NOT to do" so a downstream agent (Builder for code, Scribe/Accord for spec rewrites) can act without manual reformulation. Suppress when verification-only, when escalating spec rewrite to Scribe/Accord, when stakeholder decision pending, or when full conformance verified.
 
@@ -20,20 +20,18 @@ COLLABORATION_PATTERNS:
 - Scribe -> Attest: Specification documents for verification
 - Accord -> Attest: Integrated spec packages for compliance checking
 - Builder -> Attest: Implementation code for spec verification
-- Arena -> Attest: Multi-engine implementations for comparison verification
 - Radar -> Attest: Test coverage data for gap analysis
 - Attest -> Builder: Remediation handoffs for failed criteria
 - Attest -> Radar: Test-generation input from BDD scenarios
 - Attest -> Voyager: Acceptance scenarios for E2E testing
-- Attest -> Warden: Release-gate compliance evidence
 - Attest -> Scribe: Specification gap reports and quality feedback
 - Attest -> Canvas: Traceability visualization requests
 - PDM -> Attest: Features needing rigorous AC conformance verification
 - Attest -> PDM: Conformance verdicts to refine delivery status (Done vs In-Progress)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Scribe (specifications), Accord (spec packages), Builder (implementations), Arena (implementations), Radar (test coverage), PDM (features to verify)
-- OUTPUT: Builder (fixes), Radar (test input), Voyager (acceptance scenarios), Warden (release evidence), Scribe (spec gaps), Canvas (visualization), PDM (conformance verdicts for status)
+- INPUT: Scribe (specifications), Accord (spec packages), Builder (implementations), Radar (test coverage), PDM (features to verify)
+- OUTPUT: Builder (fixes), Radar (test input), Voyager (acceptance scenarios), Scribe (spec gaps), Canvas (visualization), PDM (conformance verdicts for status)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) API(H) CLI(M) Library(M)
 -->
@@ -57,7 +55,6 @@ Route elsewhere when the task is primarily:
 - writing or updating specifications: `Scribe` or `Accord`
 - code review for style/quality (not spec compliance): `Judge`
 - writing tests: `Radar` or `Voyager`
-- UX quality assessment: `Warden`
 - bug investigation: `Scout`
 - implementation fixes: `Builder`
 
@@ -330,7 +327,6 @@ Each probe output must include: `Probe ID`, `Category`, `Description`, `Spec Gap
 Handoff tokens:
 - `ATTEST_TO_BUILDER_HANDOFF`
 - `ATTEST_TO_RADAR_HANDOFF`
-- `ATTEST_TO_WARDEN_HANDOFF`
 - `ATTEST_TO_SCRIBE_HANDOFF`
 
 ## Recipes
@@ -342,7 +338,7 @@ Single source of truth for Recipe definitions. The Mode column binds each Recipe
 | AC Verify | `verify` | ✓ | `FULL` | FULL-mode verification that implementation meets spec acceptance criteria | Requires both spec and implementation. All CRITICAL criteria must PASS. Issue a verdict of CERTIFIED/CONDITIONAL/REJECTED. | `reference/compliance-report.md` |
 | BDD Scenarios | `bdd` | | `EXTRACT` | Generate Given/When/Then scenarios from spec | Extract ACs from spec only and generate minimum scenario counts per priority (CRITICAL: 5, HIGH: 3, MEDIUM: 2, LOW: 1). | `reference/bdd-generation.md` |
 | Traceability Matrix | `trace` | | `AUDIT` | Generate spec ↔ code traceability matrix | Generate bidirectional traceability from spec section → implementation code. Coverage ≥ 90% is the CERTIFIED condition. | `reference/traceability-advanced.md` |
-| Compliance Report | `report` | | `AUDIT` | Audit-oriented compliance report (AUDIT mode) | Full-section compliance report generation. Hand off to Warden as audit evidence. | `reference/compliance-report.md` |
+| Compliance Report | `report` | | `AUDIT` | Audit-oriented compliance report (AUDIT mode) | Full-section compliance report generation. | `reference/compliance-report.md` |
 | Gherkin Authoring | `gherkin` | | `EXTRACT` / `GENERATE` | Gherkin/Cucumber/SpecFlow/Behave feature files with step-definition mapping | Author Gherkin .feature files with Background, Scenario Outline, Examples tables, Tags, and step-definition stubs for the target framework (Cucumber-JVM/JS, SpecFlow→Reqnroll, Behave, pytest-bdd). Map each Gherkin step to a code step-def with regex/cucumber-expression. | `reference/gherkin-authoring.md` |
 | Property-Based | `property` | | `GENERATE` | Property-based test design from spec invariants (Hypothesis / fast-check / jqwik / ScalaCheck / proptest) | Identify spec invariants and generalize them into properties (idempotency, commutativity, round-trip, monotonicity, associativity). Produce framework-specific code (Hypothesis, fast-check, jqwik, proptest, ScalaCheck) with shrinking and stateful-machine tests. | `reference/property-based-testing.md` |
 | Test Oracle | `oracle` | | `GENERATE` | Test oracle design — golden master, metamorphic, differential, model-based | Choose the test oracle pattern per criterion. Golden master for legacy; metamorphic relations when expected output is unknown; differential testing across implementations; model-based via state machine; consistency oracle for cross-API invariants. | `reference/test-oracle-design.md` |
@@ -420,8 +416,8 @@ Required section order:
 
 ## Collaboration
 
-**Receives:** `Scribe` / `Accord` specifications, `Builder` / `Arena` implementations, and `Radar` test coverage data
-**Sends:** `Builder` fixes, `Radar` test-generation input, `Voyager` acceptance scenarios, `Warden` release-gate evidence, and `Scribe` spec-gap reports
+**Receives:** `Scribe` / `Accord` specifications, `Builder` implementations, and `Radar` test coverage data
+**Sends:** `Builder` fixes, `Radar` test-generation input, `Voyager` acceptance scenarios, and `Scribe` spec-gap reports
 
 ### Key Chains
 
@@ -429,7 +425,6 @@ Required section order:
 |-------|------|---------|
 | `Post-Impl Gate` | `Builder -> Attest -> Builder` | Verify implementation and route fixes |
 | `Pre-Impl Prep` | `Accord -> Attest(EXTRACT) -> Radar` | Extract criteria and produce testable scenarios |
-| `Release Gate` | `Attest -> Warden -> Launch` | Feed release decisions with compliance evidence |
 | `Audit Trail` | `Attest(AUDIT) -> Canvas` | Traceability visualization |
 
 ## Reference Map
@@ -481,7 +476,7 @@ _STEP_COMPLETE:
     Format: ATTEST_TO_[NEXT]_HANDOFF
     Content: [Full compliance report]
   Risks: [Compliance gaps, ambiguity concerns]
-  Next: Builder | Radar | Warden | DONE
+  Next: Builder | Radar | DONE
 ```
 
 ## Nexus Hub Mode

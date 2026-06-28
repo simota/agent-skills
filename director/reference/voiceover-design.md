@@ -7,7 +7,6 @@ Purpose: Design TTS narration for product demo videos. Cover voice selection (El
 - **director `voiceover`**: TTS narration for demo videos (this document).
 - **director `demo` / `record` / `scenario` / `onboard` (elsewhere)**: Scenario + recording orchestration.
 - **director `captions` (elsewhere)**: On-screen captions (complements voiceover).
-- **tone `voice` / `lufs` (elsewhere)**: Game / non-video voice generation + loudness normalization.
 - **Cue (elsewhere)**: Video script narrative authoring (pre-voiceover).
 - **Builder (elsewhere)**: Rendering pipeline code beyond ffmpeg stubs.
 
@@ -176,7 +175,7 @@ ffmpeg -i demo.webm -i narration_normalized.wav \
 | Podcast | -16 | -1 dBTP |
 | TikTok / Reels / Shorts | -14 to -16 | -1 dBTP |
 
-**Default**: -14 LUFS for YouTube + LinkedIn (the two primary demo destinations in 2026). -16 LUFS for self-host / Vimeo / docs. Verify True Peak ≤ -1 dBTP to prevent clipping on transcode. Hand off to **tone `lufs`** for deeper loudness analysis; perceptual quality verification via `reference/quality-metrics.md`.
+**Default**: -14 LUFS for YouTube + LinkedIn (the two primary demo destinations in 2026). -16 LUFS for self-host / Vimeo / docs. Verify True Peak ≤ -1 dBTP to prevent clipping on transcode. Perceptual quality verification via `reference/quality-metrics.md`.
 
 ## De-essing
 
@@ -238,7 +237,6 @@ DELIVER      →  MP4 (H.264 + AAC 192kbps) per platform
 
 HANDOFF      →  director `captions`: caption generation
              →  director `thumbnail`: thumbnail design
-             →  tone `lufs`: final loudness QC
              →  Builder: build-pipeline integration
 ```
 
@@ -289,7 +287,6 @@ HANDOFF      →  director `captions`: caption generation
 ### Handoffs
 - director `captions`: SRT / WebVTT
 - director `thumbnail`: thumbnail
-- tone `lufs`: loudness QC
 - Builder: build-pipeline integration
 ```
 
@@ -324,7 +321,7 @@ When `voiceover` completes, emit:
 - **Cue-to-text map** aligned to Playwright timeline.
 - **Audio pipeline** (TTS → de-esser → LUFS → overlay).
 - **Accessibility plan** (captions + AD + WCAG).
-- **Handoffs**: director captions, director thumbnail, tone lufs, Builder.
+- **Handoffs**: director captions, director thumbnail, Builder.
 
 ## References
 

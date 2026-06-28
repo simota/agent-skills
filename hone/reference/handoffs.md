@@ -83,20 +83,6 @@ HONE_TO_JUDGE_HANDOFF:
   verification_needed: "Confirm codex review behavior with proposed settings"
 ```
 
-### To Arena (Exec Config Verification)
-
-When Hone identifies that Codex exec settings need validation:
-
-```yaml
-HONE_TO_ARENA_HANDOFF:
-  context: "Codex exec configuration has been audited"
-  config_changes:
-    - setting: "[config key]"
-      before: "[old value]"
-      after: "[proposed value]"
-  verification_needed: "Confirm codex exec behavior with proposed settings"
-```
-
 ### To Nexus (Results Return)
 
 ```yaml
@@ -120,7 +106,6 @@ HONE_TO_NEXUS_HANDOFF:
 |-------------|------------|------|
 | Shell/env changes needed | Hearth | Config requires PATH, alias, or env var changes |
 | Review settings changed | Judge | `codex review` behavior may be affected |
-| Exec settings changed | Arena | `codex exec` behavior may be affected |
 | Security concern found | Sentinel | Plaintext secrets, permission issues |
 | Complex multi-agent task | Nexus | Findings span multiple agent domains |
 | No handoff needed | User | All proposals are self-contained |

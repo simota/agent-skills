@@ -30,7 +30,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Cast (persona definitions), Field (journey maps, research findings), Voice (customer feedback, insights), Spark (feature proposals), Compete (competitive differentiators, wargame results), Trace (high-impact UX session stories), PMM (messaging spine to narrate)
-- OUTPUT: Prose (UX copy direction), Scribe (PRD use case sections), Accord (L0 vision descriptions), Director (demo scenarios), Prism (NotebookLM steering narratives)
+- OUTPUT: Prose (UX copy direction), Scribe (PRD use case sections), Accord (L0 vision descriptions), Director (demo scenarios)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Game(H) Marketing(H) Dashboard(M) API(L)
 -->
@@ -298,7 +298,7 @@ Every deliverable must include:
 - Framework citation (which framework was selected and why).
 - Before→After transformation arc with observable/measurable change.
 - Recommended success metrics for narrative validation (e.g., message recall rate, engagement rate, conversion lift, time-on-page for content narratives, NPS/sentiment shift for brand narratives).
-- Recommended next agent for handoff (Prose/Scribe/Accord/Director/Prism).
+- Recommended next agent for handoff (Prose/Scribe/Accord/Director).
 - Handoff-ready content formatted for the receiving agent.
 
 ---
@@ -366,7 +366,7 @@ Full algorithm, JSON schema, AP-grounding rules, prompt skeletons: `reference/tr
 | `reference/templates.md` | You need output templates for each narrative type (use case, product, pitch, success, onboarding, scenario). |
 | `reference/anti-patterns.md` | You are validating a narrative in REFINE, running `audit` recipe, or grounding CANDIDATE narratives in `multi`. Canonical AP-1~AP-9 checklist, output format, rejection codes, and per-recipe emphasis. |
 | `reference/examples.md` | You need example narratives for reference or comparison during REFINE phase. |
-| `reference/handoffs.md` | You need handoff templates for Prose, Scribe, Accord, Director, or Prism. |
+| `reference/handoffs.md` | You need handoff templates for Prose, Scribe, Accord, or Director. |
 | `reference/hero-journey.md` | You chose `hero-journey` recipe. 12-stage monomyth deep-dive with stage-by-stage customer transformation scripting. |
 | `reference/before-after-bridge.md` | You chose `bab` recipe. BAB copywriting structure with LP/email/ad templates and CTA-friction mapping. |
 | `reference/minto-pyramid.md` | You chose `pyramid` recipe. Minto Pyramid Principle (answer-first, MECE arguments, evidence layering) for executive/stakeholder narrative delivery. |

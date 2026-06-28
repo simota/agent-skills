@@ -187,18 +187,3 @@ SAGA_TO_DIRECTOR_HANDOFF:
         emotion: "[この時点のユーザー感情]"
   voice_and_tone: "[ナレーションのトーン指示]"
 ```
-
-### SAGA_TO_PRISM_HANDOFF
-
-Saga のナラティブから NotebookLM ステアリング用コンテンツを Prism に渡す。
-
-```yaml
-SAGA_TO_PRISM_HANDOFF:
-  narrative_content: "[完成ナラティブ]"
-  output_format: "[audio | video | slide]"
-  key_messages:
-    - "[メッセージ1]"
-    - "[メッセージ2]"
-  tone_guidance: "[会話調 / プレゼン調 / ドキュメンタリー調]"
-  audience: "[ターゲットリスナー/視聴者]"
-```

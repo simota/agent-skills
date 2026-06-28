@@ -18,8 +18,8 @@ Official category reference for improving task classification accuracy in the Ne
 - Requests for compliance with style guides or brand standards
 
 **Recommended chain patterns**:
-- Scribe / Quill / Morph / Dot / Sketch / Clay → generation agent matched to the artifact
-- Quality check: Warden / Judge
+- Scribe / Quill / Morph / Dot / Sketch → generation agent matched to the artifact
+- Quality check: Judge
 
 **Key Techniques** (official):
 - Embedded style guides and brand standards
@@ -74,7 +74,7 @@ Official category reference for improving task classification accuracy in the Ne
 |-----------------|---------------|----------------------|
 | **Sequential Workflow** | Ordered multi-step, dependencies between steps | Sequential chain, no parallel branches |
 | **Multi-MCP Coordination** | Cross-service workflow | Phase-separated chain with data passing, validation gates between phases |
-| **Iterative Refinement** | Quality-sensitive output | Loop-capable chain with quality check agent (Judge/Warden) |
+| **Iterative Refinement** | Quality-sensitive output | Loop-capable chain with quality check agent (Judge) |
 | **Context-Aware Tool Selection** | Same outcome, different tools per context | Decision point at CLASSIFY, context-dependent chain selection |
 | **Domain-Specific Intelligence** | Regulatory/compliance/domain expertise required | Canon/domain expert injection before execution |
 

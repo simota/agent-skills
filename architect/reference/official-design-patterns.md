@@ -347,7 +347,7 @@ Input → Classifier → Handler A (domain 1)
 | **Voting** | Execute the same task multiple times and aggregate results | Multi-perspective evaluation, consensus judgment |
 
 **When to use**: Subtasks are independent (Sectioning), or reliability/diversity is needed (Voting).
-**Skill design implication**: Arena (Voting) and Nexus chains (Sectioning) are existing implementations. Specify parallelizable partners in `COLLABORATION_PATTERNS`.
+**Skill design implication**: Nexus chains and Rally (Sectioning) are existing implementations. Specify parallelizable partners in `COLLABORATION_PATTERNS`.
 
 ### Pattern D: Orchestrator-Worker
 
@@ -396,7 +396,7 @@ while (!done) {
 |----------------|--------------------------------------|--------------|-------------------|
 | A: Prompt Chaining | P1: Sequential Workflow | P1 is a concrete impl of A | Orbit (runner scripts) |
 | B: Routing | P4: Context-Aware Tool Selection | P4 is B specialized for tool selection | Nexus (Output Routing) |
-| C: Parallelization | — (new) | No existing pattern | Arena (Voting), Rally (Sectioning) |
+| C: Parallelization | — (new) | No existing pattern | Rally (Sectioning) |
 | D: Orchestrator-Worker | P2: Multi-MCP Coordination | P2 is D specialized for MCP | Nexus, Titan |
 | E: Evaluator-Optimizer | P3: Iterative Refinement | P3 is a self-contained version of E | Judge↔Builder loop |
 | F: Autonomous Agent | P5: Domain-Specific Intelligence | P5 adds domain knowledge to F | Scout, Vector |

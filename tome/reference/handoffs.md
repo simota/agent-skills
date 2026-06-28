@@ -108,19 +108,6 @@ TOME_TO_LORE_HANDOFF:
         applicability: "[applicability scope]"
 ```
 
-### To Prism (Audio Learning via NotebookLM)
-
-```yaml
-TOME_TO_PRISM_HANDOFF:
-  source:
-    learning_doc: "[path to generated learning document]"
-    audience_level: "[beginner | intermediate | advanced]"
-  request:
-    action: "[NotebookLM steering prompt generation]"
-    focus: "[key topics for audio overview]"
-    tone: "[educational | conversational | technical]"
-```
-
 ### To Director (Demo Narration Scripts)
 
 ```yaml

@@ -53,7 +53,7 @@ Route elsewhere when the task is primarily:
 - Requirements clarification or discovery only (no build requested): `Accord`
 - A single file edit or simple code question: directly via `Builder`
 - Architecture decision without implementation: `Magi` + `Atlas`
-- Post-build quality audit: `Sentinel`, `Probe`, `Warden`
+- Post-build quality audit: `Sentinel`, `Probe`
 - Git / PR operations: `Guardian`
 
 

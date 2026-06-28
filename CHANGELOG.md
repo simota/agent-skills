@@ -134,15 +134,15 @@ Git history preserved via `git mv`; all cross-references (PascalCase / paths / b
 |----------|-------|--------|
 | Orchestration | 8 | Nexus, Sherpa, Architect, Rally, Titan, Sigil, Orbit, Darwin |
 | Research & Planning | 10 | Scout, Ripple, Spark, Compete, Voice, Field, Trace, Canon, Lens, Cast |
-| Decision & Strategy | 4 | Magi, Helm, Levy, Accord |
+| Decision & Strategy | 3 | Magi, Helm, Accord |
 | Git/PR Management | 4 | Guardian, Harvest, Launch, Trail |
-| Quality Assurance | 12 | Radar, Voyager, Sentinel, Probe, Judge, Zen, Sweep, Warden, Specter, Siege, Void, Attest |
-| Implementation | 4 | Builder, Artisan, Forge, Arena |
+| Quality Assurance | 10 | Radar, Voyager, Sentinel, Probe, Judge, Zen, Sweep, Siege, Void, Attest |
+| Implementation | 3 | Builder, Artisan, Forge |
 | AI/ML | 1 | Oracle |
 | Performance | 2 | Bolt, Tuner |
 | Observability/SRE | 2 | Beacon, Mend |
 | UI/UX | 8 | Vision, Palette, Muse, Flow, Echo, Vitrine, Prose, Frame |
-| Documentation | 4 | Scribe, Quill, Morph, Prism |
+| Documentation | 3 | Scribe, Quill, Morph |
 | Visualization | 2 | Canvas, Sketch |
 | Architecture | 4 | Atlas, Horizon, Gateway, Grove |
 | Communication | 1 | Relay |
@@ -152,6 +152,5 @@ Git history preserved via `git mv`; all cross-references (PascalCase / paths / b
 | Growth | 2 | Growth, Bond |
 | Analytics | 3 | Pulse, Experiment, Matrix |
 | Operations | 1 | Triage |
-| Browser Automation | 3 | Vector, Director, Reel |
-| AITuber/Streaming | 1 | Aether |
-| **Total** | **85** | |
+| Browser Automation | 2 | Vector, Director |
+| **Total** | **78** | |

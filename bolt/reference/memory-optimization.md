@@ -5,13 +5,12 @@ Purpose: Reduce steady-state memory usage of an application — browser tab or N
 ## Scope Boundary
 
 - **Bolt `memory`** (this Recipe): *measure and reduce* app-process memory footprint. Trim retained size, remove unintentionally-held references, pick `WeakMap`/`WeakRef` where identity caches would pin GC. Output is bytes saved and a stable baseline across N repetitions.
-- **Specter**: *find the bug* — race conditions, deadlocks, resource leaks (unclosed file handles, unreleased DB connections, dangling timers). Specter produces reproduction steps and hands off to Builder for the fix.
-- **Overlap — "resource leak"**: Specter finds the leak (bug: who leaks, when, why). Bolt `memory` trims the fat (design: what could be smaller even without bugs). If the heap grows unboundedly under a deterministic loop → Specter. If the heap is simply larger than necessary at steady state → Bolt `memory`.
+- **Overlap — "resource leak"**: a leak is a bug (who leaks, when, why); Bolt `memory` trims the fat (design: what could be smaller even without bugs). If the heap grows unboundedly under a deterministic loop → treat as a leak bug. If the heap is simply larger than necessary at steady state → Bolt `memory`.
 - **Tuner**: DB-internal memory (PostgreSQL `shared_buffers`, `work_mem`, plan cache). Bolt `memory` is the app-process side of the client. Out of scope here.
 - **Bolt `bundle`**: ship fewer JS bytes. Bundle size and heap size correlate but are not the same — a 50 kB library can easily retain 5 MB at runtime.
 - **Bolt `cache`**: unbounded caches are both a memory *and* a cache-hygiene issue. Always cap with TTL or LRU size; then the remainder is `memory`.
 
-Default: if the ticket says "leak" with reproduction steps → Specter. If it says "RSS is high" or "tab grows to 1 GB over a day" → `memory`.
+Default: if the ticket says "leak" with reproduction steps → treat as a leak bug. If it says "RSS is high" or "tab grows to 1 GB over a day" → `memory`.
 
 ## Workflow
 
@@ -40,7 +39,7 @@ VERIFY    →  re-run the same repetition; compare snapshots
           →  no detached DOM growth; listener count stable
 
 PRESENT   →  Before / After: RSS, JS heap, retained-size top offenders
-          →  leak-vs-fat classification — if bug, handoff to Specter
+          →  leak-vs-fat classification
           →  baseline watch recommendation
 ```
 
@@ -109,8 +108,7 @@ Rules: `WeakMap` keys must be objects. `WeakRef` is a last resort — don't bran
 
 ## Handoff
 
-- **→ Specter**: heap grows unboundedly under deterministic repetition, or suspected concurrency hold (unresolved promise, dangling timer, unclosed connection).
-- **→ Builder**: Specter's reproduction + this profiling's pointer → Builder implements the fix.
+- **→ Builder**: this profiling's pointer → Builder implements the fix.
 - **→ Bolt `cache`**: uncapped cache is the root cause; needs TTL / LRU design.
 - **→ Bolt `bundle`**: shipped library is disproportionately heavy at runtime — consider replacement.
 - **→ Tuner**: retained size points at DB driver buffers — likely pool sizing, not app leak.

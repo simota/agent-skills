@@ -17,7 +17,7 @@ Ranked by fit with the loop pattern. Render on demand via `README.md` → "Insta
 | Review Knowledge | `review-knowledge` | PR review comments → coding conventions | judge, zen / artisan, builder / guardian, judge | lint rule (Semgrep/ESLint) | ★★★ |
 | Incident Learning | `incident-learning` | incidents / postmortems → reliability rules + runbook | beacon, triage, omen / beacon, builder / guardian, beacon | alert rule + SLO | ★★★ |
 | Secure-Coding Rules | `secure-coding` | vuln / CVE / audit findings → banned patterns + secure-impl rules | sentinel, chain, vigil / sentinel, builder / guardian, sentinel | lint rule (Semgrep) | ★★★ |
-| Voice & Tone | `voice-tone` | copy feedback → UX-writing / brand-voice rules | prose, canon, tone / prose, artisan / guardian, canon | none (reviewer judgment) | ★★★ |
+| Voice & Tone | `voice-tone` | copy feedback → UX-writing / brand-voice rules | prose, canon / prose, artisan / guardian, canon | none (reviewer judgment) | ★★★ |
 | AI-Eval | `ai-eval` | LLM-output feedback → prompt rules + eval rubric + regression cases | oracle / oracle, builder / guardian, oracle | eval harness (regression set) | ★★☆ |
 | API Convention | `api-convention` | API review feedback → naming/versioning/error-shape rules | gateway / gateway, builder / guardian, gateway | OpenAPI lint (spectral) | ★★☆ |
 | Architecture Decision | `arch-decision` | design decisions → architectural constraints | atlas (incl. c4-model recipe) / atlas, builder / guardian, atlas | fitness function / dep-cruiser | ★★☆ |

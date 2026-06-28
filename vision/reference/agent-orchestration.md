@@ -6,7 +6,6 @@ Contents:
 - Design-agent boundaries
 - Delegation patterns
 - Accord validation flow
-- Warden quality-prevalidation flow
 
 ## Design-Agent Boundaries
 
@@ -50,24 +49,3 @@ Flow:
 3. `Vision` requests impact validation from `Accord`.
 4. `Vision` adjusts if business fit is weak.
 5. `Vision` delegates only after the direction is business-valid.
-
-## Quality Pre-validated Design (`Vision <-> Warden`)
-
-Use this pattern before major delegation.
-
-V.A.I.R.E. dimensions:
-
-| Dimension | What to check | Common failure |
-|-----------|---------------|----------------|
-| `Value` | clear user value | style over substance |
-| `Agency` | user control preserved | forced flows, hidden options |
-| `Identity` | brand coherence | trend-chasing breaks brand |
-| `Resilience` | edge states handled | happy-path only |
-| `Echo` | fit to target personas | mismatch with user expectations |
-
-Rules:
-- `PASS` -> proceed
-- `CONDITIONAL` -> fix conditions, then proceed
-- `FAIL` -> revise before delegation
-- max `2` rounds per direction
-- `Agency` or `Resilience` failure cannot be overridden

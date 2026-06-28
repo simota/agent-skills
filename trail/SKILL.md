@@ -14,7 +14,6 @@ CAPABILITIES_SUMMARY:
 - commit_relationship_mapping: Understand change dependencies and causal chains
 - non_functional_regression_investigation: Benchmark-driven bisect for performance, memory, bundle size, and startup time regressions
 - ai_commit_archaeology: Detection and interpretation of AI-coauthored commits in blame/log/archaeology workflows
-- cross_cluster_escalation: Handoff to Specter for resource-related bisect findings via TRAIL_TO_SPECTER_HANDOFF
 - benchmark_driven_bisect: Custom bisect terms and automated scripts for non-binary pass/fail regression detection
 - fix_prompt_generation: Pair every confirmed regression with a paste-ready LLM Fix Prompt embedding breaking commit, bisect evidence, rollback safety, recommended action, acceptance criteria, ruled-out alternatives, and "what NOT to do" so a downstream coding LLM can act without manual reformulation
 - legacy_business_rule_extraction: Extract implicit business rules from undocumented legacy code without relying on commit history; surface hidden domain logic and tribal knowledge (absorbed from fossil)
@@ -32,8 +31,6 @@ COLLABORATION_PATTERNS:
 - Trail -> Guardian: Commit recommendations based on history
 - Trail -> Radar: Missing test identification from regression analysis
 - Trail -> Sentinel: Security regression findings
-- Trail -> Specter: Resource-related bisect findings escalation (TRAIL_TO_SPECTER_HANDOFF via _common/INVESTIGATION_ESCALATION.md)
-- Specter -> Trail: Onset identification requests for detected issues (SPECTER_TO_TRAIL_HANDOFF via _common/INVESTIGATION_ESCALATION.md)
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Scout (bug location), Triage (incident report), Atlas (dependency map), Judge (code review findings)
@@ -89,7 +86,7 @@ Route elsewhere when the task is primarily:
 - Use `git bisect skip <commit>..<commit>` to pre-mark known-untestable ranges (e.g., build system rewrites, large refactors) before starting the run. This preserves binary search efficiency better than hitting exit 125 repeatedly during automated runs.
 - Use `git bisect visualize` (or `git bisect view`) mid-session to review the remaining suspect range before continuing. Pipe to `--oneline --graph` for quick triage of complex merge topologies.
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly run safe `git log`/`blame`/`show` before forming hypothesis — checking history is cheaper than re-bisecting), P5 (think step-by-step at SCOPE — wrong good/bad pair wastes log₂(n) iterations)** as critical for Trail. P2 recommended: keep timeline visualization within `reference/output-formats.md` envelope.
-- Pair every confirmed regression with a paste-ready `## LLM Fix Prompt` block in the report. The prompt embeds breaking commit (SHA + diff hunk), bisect evidence, rollback safety, recommended action, acceptance criteria, ruled-out alternatives, and "what NOT to do" so a downstream coding LLM can act without manual reformulation. Suppress only when escalating to Specter/Sentinel/Atlas, when the task is archaeology-only, or when bisect identifies a merge commit and parents are not yet isolated. See `reference/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
+- Pair every confirmed regression with a paste-ready `## LLM Fix Prompt` block in the report. The prompt embeds breaking commit (SHA + diff hunk), bisect evidence, rollback safety, recommended action, acceptance criteria, ruled-out alternatives, and "what NOT to do" so a downstream coding LLM can act without manual reformulation. Suppress only when escalating to Sentinel/Atlas, when the task is archaeology-only, or when bisect identifies a merge commit and parents are not yet isolated. See `reference/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
 - **Escalate to time-travel debugging via MCP when bisect bottoms out on a non-deterministic regression.** `rr` (Mozilla, Linux x86_64), `Pernosco` (cloud-indexed rr traces, instant jump to any point in execution), and `Replay.io Precog` (browser/Node.js, MCP server that hands a failing-test recording to a coding agent and returns a proposed fix) cover the gap that `git bisect` cannot reach: races, time-dependent bugs, mid-commit unbuildable states, and heisenbugs. Hand off the recording URL or trace artifact rather than re-running the failure. [Source: replay.io; blog.replay.io — Introducing Replay Precog]
 - **Strictly enforce `git bisect run` exit-code semantics.** A bisect script must `exit 0` for good, `exit 1`-`124` for bad, and `exit 125` for skip (unbuildable commit). Any other exit code aborts bisect. The skip code is the failure-mode escape hatch for the "broken intermediate commit" case that otherwise sinks an automated bisect run. [Source: git-scm.com/docs/git-bisect]
 - **Pair `git bisect run` with an agent-facing `AGENTS.md`** so the bisect script and its acceptance contract are discoverable by a downstream agent without a human prompt. Document the script path, the good/bad signal, the per-commit timeout, and the skip-criteria (build failure, unrelated infra issue) in the root `AGENTS.md` next to the codebase summary. [Source: staabm.github.io/2026/02/07/git-bisect-run]
@@ -240,7 +237,7 @@ Authoring rules (full list in `_common/LLM_PROMPT_GENERATION.md`):
 - Wrap in a fenced `text` code block so the user can copy cleanly.
 
 Suppress the Fix Prompt block when:
-- Trail escalates to Specter (resource-related bisect finding), Sentinel (security regression in commit), or Atlas (architectural concern, not regression).
+- Trail escalates to Sentinel (security regression in commit) or Atlas (architectural concern, not regression).
 - Task is archaeology-only (explaining "why is this code like this?", no fix proposed).
 - Bisect identifies a merge commit as first-bad and parents are not yet independently tested.
 - Evidence is too weak even for `INVESTIGATE-FURTHER`.
@@ -313,9 +310,9 @@ Follow `_common/GIT_GUIDELINES.md`. Conventional Commits, no agent names, <50 ch
 | `reference/flamegraph-regression.md` | You need flamegraph tool selection, differential flamegraph workflow, hotspot thresholds, or bisect-with-frame-share script for the `flame` subcommand. |
 | `reference/delta-debugging.md` | You need ddmin pseudocode, granularity selection, flaky-test minimization tuning, or `git bisect run` integration for the `delta` subcommand. |
 | `reference/revert-strategies.md` | You need the revert vs reset decision matrix, merge-commit `-m` parent selection, partial revert techniques, post-revert verification checklist, or comms template for the `revert` subcommand. |
-| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Trail-specific action verb (FIX-REGRESSION / REVERT / REVERT-WITH-FORWARD-FIX / INVESTIGATE-FURTHER / REFACTOR-FIX), or deciding whether to suppress the prompt for a Specter/Sentinel/Atlas handoff or archaeology-only scope. |
+| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Trail-specific action verb (FIX-REGRESSION / REVERT / REVERT-WITH-FORWARD-FIX / INVESTIGATE-FURTHER / REFACTOR-FIX), or deciding whether to suppress the prompt for a Sentinel/Atlas handoff or archaeology-only scope. |
 | `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Sentinel/Plea. |
-| `_common/INVESTIGATION_ESCALATION.md` | Cross-cluster escalation to Specter, unified confidence scale, or stall protocol is needed. |
+| `_common/INVESTIGATION_ESCALATION.md` | Cross-cluster escalation, unified confidence scale, or stall protocol is needed. |
 | `_common/OPUS_48_AUTHORING.md` | You are scoping bisect iteration budget, deciding tool-use eagerness in LOCATE, or sizing CHANGE_STORY/REPORT outputs. Critical for Trail: P3, P5. |
 
 ---

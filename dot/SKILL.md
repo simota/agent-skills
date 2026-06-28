@@ -60,10 +60,8 @@ Use Dot when the user needs:
 
 Route elsewhere when the task is primarily:
 - AI image generation or photorealistic art: `Sketch`
-- 3D model or environment art: `Clay`
 - visual/UX creative direction without pixel output: `Vision`
 - game design documents or balance math: `Quest`
-- game audio or sound effects: `Tone`
 - front-end component styling (not pixel art): `Artisan`
 - code implementation beyond asset generation: `Builder` or `Forge`
 

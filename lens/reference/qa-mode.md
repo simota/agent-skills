@@ -123,7 +123,6 @@ Q&A Mode answers *current-state code comprehension*. When a question leaves that
 | "When / why did this change?", regression origin | `Trail` | Git history, not current state |
 | "Why is this broken?", reproduce a bug | `Scout` | Bug RCA with reproduction |
 | "Should we restructure X?", design decision | `Atlas` | Architecture evaluation, not comprehension |
-| Formal C4 model from findings | `Stratum` | Architecture modeling |
 | "What breaks if I change X?" (pre-change) | `Ripple` | Impact analysis |
 | "Which skill should I use for…" | `Compass` | Ecosystem navigation, not project code |
 | Documentation/spec writing from findings | `Scribe` / `Quill` | Authoring, not investigation |

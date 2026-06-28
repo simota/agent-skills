@@ -6,9 +6,8 @@ Purpose: Produce informal, ad-hoc system architecture sketches using Mermaid `fl
 
 - **Canvas `architecture`**: Informal architecture sketches. One view per diagram: logical, physical, or deployment. Topologies include layered monolith, hexagonal / ports-and-adapters, microservice mesh, event-driven bus, BFF + edge.
 - **Canvas `c4`**: Formal C4 rendering with Mermaid C4 syntax (System Context / Container / Component). Use when the conversation already speaks in C4 vocabulary.
-- **Stratum (elsewhere)**: Canonical C4 modeling via Structurizr DSL, ATAM/CBAM evaluation, fitness functions.
 
-If the ask is "sketch how the pieces fit" → `architecture`. If the ask is "give me a C4 Container view" → `c4`. If the ask is "model and evaluate our architecture" → `Stratum`.
+If the ask is "sketch how the pieces fit" → `architecture`. If the ask is "give me a C4 Container view" → `c4`.
 
 ## View Selection
 
@@ -141,7 +140,6 @@ flowchart LR
 
 ## Handoff
 
-- To `Stratum` when: the sketch stabilizes and the team wants a canonical model with evaluation (ATAM/CBAM) and fitness functions.
 - To `c4` (within Canvas): when the audience explicitly wants a C4 level rendering.
 - To `Atlas`: when the diagram exposes dependency cycles, god modules, or a debt assessment request emerges.
 

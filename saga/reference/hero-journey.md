@@ -150,7 +150,6 @@ Run the full AP-1~AP-9 checklist from `reference/anti-patterns.md` and report re
 ### Handoffs
 - Director: 12-scene demo video script
 - Prose: pull-quotes and LP hero
-- Prism: NotebookLM steering for audio narration
 - Growth: LP copy adapted from stages 1-2 (hook) and 11-12 (proof)
 ```
 
@@ -176,7 +175,7 @@ When `hero-journey` completes, emit:
 - **Three critical beats** (Call, Ordeal, Elixir) emphasized.
 - **Anti-pattern check** (AP-1~AP-9 per `reference/anti-patterns.md`).
 - **Assumptions** section.
-- **Handoffs**: Director, Prose, Prism, Growth.
+- **Handoffs**: Director, Prose, Growth.
 
 ## References
 

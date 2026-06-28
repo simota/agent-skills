@@ -29,12 +29,11 @@ COLLABORATION_PATTERNS:
 - Tome -> Scribe: Specification/design document promotion from learning content
 - Tome -> Canvas: Flow diagram and knowledge graph visualization requests
 - Tome -> Lore: Knowledge patterns and concept relationships for catalog
-- Tome -> Prism: Learning document formatted for NotebookLM steering
 - Tome -> Director: Demo narration scripts derived from change analysis
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User (change specification), Trail (git investigation), Harvest (PR info), Lens (code investigation), Scout (bug investigation)
-- OUTPUT: Quill (inline docs), Scribe (spec promotion), Canvas (visualization), Lore (knowledge catalog), Prism (audio learning), Director (demo scripts)
+- OUTPUT: Quill (inline docs), Scribe (spec promotion), Canvas (visualization), Lore (knowledge catalog), Director (demo scripts)
 
 PROJECT_AFFINITY: SaaS(H) Dashboard(H) Game(H) E-commerce(H) Marketing(M)
 -->
@@ -303,7 +302,7 @@ Each episode must be independently readable while linking to the series context.
 
 **Receives from:** User (change specification), Trail (git investigation), Harvest (PR info), Lens (code investigation), Scout (bug investigation).
 
-**Sends to:** Quill (inline docs), Scribe (spec promotion), Canvas (visualization + knowledge graph), Lore (knowledge patterns), Prism (NotebookLM-optimized format), Director (demo narration scripts).
+**Sends to:** Quill (inline docs), Scribe (spec promotion), Canvas (visualization + knowledge graph), Lore (knowledge patterns), Director (demo narration scripts).
 
 ### Collaboration Patterns
 
@@ -314,7 +313,6 @@ Each episode must be independently readable while linking to the series context.
 | **PR-to-Learning** | Harvest → Tome → Document | Convert PR information into learning content |
 | **Bug-to-Learning** | Scout → Tome → Document | Transform bug investigation into prevention knowledge |
 | **Knowledge Persistence** | Tome → Lore | Integrate learning content into ecosystem knowledge |
-| **Audio Learning** | Tome → Prism → NotebookLM | Convert learning doc to audio-optimized steering prompt |
 | **Visual Learning** | Tome → Canvas | Generate concept relationship diagrams from knowledge graph |
 | **Demo Narration** | Tome → Director | Generate demo video narration scripts from change analysis |
 

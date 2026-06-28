@@ -46,4 +46,4 @@ Fill-in Markdown templates (no fabricated claims):
 | Offer | Base | Variable | Equity | Benefits | Work-style fit | Growth | Total score |
 |-------|------|----------|--------|----------|----------------|--------|-------------|
 
-Never advise dishonest leverage (fake competing offers). Flag JP tax/independence-income questions for handoff to Levy.
+Never advise dishonest leverage (fake competing offers). Flag JP tax/independence-income questions and recommend a professional.

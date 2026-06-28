@@ -59,7 +59,7 @@ When `_AGENT_CONTEXT.mode = AUTORUN` or `AUTORUN_FULL`, the following stage acti
 | Trigger | Action |
 |---------|--------|
 | Brand System triple lock incomplete at STRATEGY exit | NEED_INFO with missing piece (archetype / story / positioning) |
-| External paid API would be called (Sketch image gen, Clay 3D, etc.) | NEED_INFO with budget estimate |
+| External paid API would be called (Sketch image gen, etc.) | NEED_INFO with budget estimate |
 | Recipe switch mid-pipeline | NEED_INFO with artifact-compatibility list |
 | Fan-out would exceed 5 concurrent delegates (including cross-stage specialists) | NEED_INFO with batching proposal |
 | `Brief carries two unrelated value propositions` detected | NEED_INFO with one-promise question |
@@ -73,7 +73,6 @@ When `_AGENT_CONTEXT.mode = AUTORUN` or `AUTORUN_FULL`, the following stage acti
 |---------|---------------|---------------|
 | **Frame** (Figma MCP 5xx) | get_design_context fails | Manual screenshot bundle from user; downgrade Code Connect to handwritten mapping |
 | **Sketch** (image-gen timeout) | hero asset not produced | Ink (vector illustration) or Haul (licensed stock with license check) |
-| **Clay** (3D API failure) | model not produced | Static hero illustration via Ink/Sketch; defer 3D to post-launch |
 | **Voyager** (BrowserStack/SauceLabs outage) | E2E run fails | Local Playwright run on representative devices; flag risk in Launch dossier |
 
 Triggers OUTAGE recovery: 2 consecutive retries fail with same error class within 5 min.

@@ -165,4 +165,4 @@ Append to the standard impact report:
 | Cascading failure path without circuit breaker | Triage (playbook creation) + Builder (circuit breaker implementation) |
 | Emergent behavior risk HIGH | Omen (pre-mortem analysis) + Magi (trade-off decision) |
 | Resource contention ≥ 3 components | Bolt (performance optimization) |
-| Temporal cascade risk | Specter (concurrency analysis) |
+| Temporal cascade risk | Scout (concurrency RCA) + Builder (fix) |

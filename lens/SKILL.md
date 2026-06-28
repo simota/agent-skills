@@ -33,7 +33,6 @@ COLLABORATION_PATTERNS:
 - Lens -> Artisan: Implementation context with code evidence
 - Lens -> Sherpa: Planning context with structure findings
 - Lens -> Atlas: Architecture input with module mapping
-- Lens -> Stratum: C4 model input with module boundaries and relationships
 - Lens -> Scribe: Documentation input with codebase understanding
 - Lens -> PDM: Implemented-feature evidence with file:line for delivery-status reconciliation
 - Lens -> Ripple: Pre-change impact context with dependency mapping
@@ -43,7 +42,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Nexus (investigation routing), User (direct questions), Scout (codebase context for bugs), Builder (implementation context requests), Trail (historical context)
-- OUTPUT: Builder (implementation context), Artisan (implementation context), Sherpa (planning context), Atlas (architecture input), Stratum (C4 model input), Scribe (documentation input), Ripple (impact analysis context), PDM (feature evidence for delivery status)
+- OUTPUT: Builder (implementation context), Artisan (implementation context), Sherpa (planning context), Atlas (architecture input), Scribe (documentation input), Ripple (impact analysis context), PDM (feature evidence for delivery status)
 
 PROJECT_AFFINITY: universal
 -->
@@ -89,7 +88,6 @@ Route elsewhere when the task is primarily:
 - code review for correctness: `Judge`
 - bug investigation with reproduction: `Scout`
 - Git history investigation ("when/why did this change?"): `Trail`
-- C4 architecture modeling from findings: `Stratum`
 
 ## Core Contract
 
@@ -174,7 +172,7 @@ When investigation stalls (no new findings after 2 search iterations):
 3. Try cross-referencing: find where key types/functions are used across the codebase, not just where they are defined. Cross-referencing reveals hidden dependencies that keyword search misses. [Source: intuitionlabs.ai]
 4. Apply multi-hop investigation: follow dependency chains across files (A imports B, B calls C, C writes to D) to build a dependency graph. Modern code investigation tools (Greptile, CodeScout) demonstrate that 2-3 hop traces uncover relationships invisible to single-file analysis. [Source: arxiv.org/html/2603.17829 — CodeScout]
 5. Re-decompose the question: if the original SCOPE decomposition was too vague, refine it using findings so far. CodeScout's "contextual problem statement enhancement" shows that converting underspecified questions into precise sub-questions through lightweight pre-exploration significantly improves downstream investigation success. [Source: arxiv.org/html/2603.05744 — CodeScout contextual enhancement]
-6. If still stalled after broadening, REPORT with `Status: PARTIAL`, include "What I didn't find" section, and suggest alternative investigation angles or agents (Scout for bug-related, Trail for history-based, Stratum for architectural modeling).
+6. If still stalled after broadening, REPORT with `Status: PARTIAL`, include "What I didn't find" section, and suggest alternative investigation angles or agents (Scout for bug-related, Trail for history-based).
 
 ## Output Routing
 
@@ -247,7 +245,7 @@ Every deliverable must include:
 ## Collaboration
 
 **Receives:** Nexus (investigation routing), User (direct questions), Scout (codebase context for bugs), Builder (implementation context requests)
-**Sends:** Builder (implementation context), Artisan (implementation context), Sherpa (planning context), Atlas (architecture input), Stratum (C4 model input), Scribe (documentation input), Ripple (impact analysis context)
+**Sends:** Builder (implementation context), Artisan (implementation context), Sherpa (planning context), Atlas (architecture input), Scribe (documentation input), Ripple (impact analysis context)
 
 ### Handoff Formats
 
@@ -258,7 +256,6 @@ Every deliverable must include:
 | Lens -> Builder | `LENS_TO_BUILDER_HANDOFF` | Implementation context with code evidence and entry points |
 | Lens -> Sherpa | `LENS_TO_SHERPA_HANDOFF` | Planning context with structure findings and scope |
 | Lens -> Atlas | `LENS_TO_ATLAS_HANDOFF` | Architecture input with module mapping and dependencies |
-| Lens -> Stratum | `LENS_TO_STRATUM_HANDOFF` | C4 model input with module boundaries and relationships |
 | Lens -> Ripple | `LENS_TO_RIPPLE_HANDOFF` | Dependency context for pre-change impact analysis |
 | Lens -> Scribe | `LENS_TO_SCRIBE_HANDOFF` | Documentation input with codebase understanding |
 
@@ -268,7 +265,6 @@ Every deliverable must include:
 - **vs Atlas**: Atlas = architecture evaluation and design decisions; Lens = code-level comprehension and mapping.
 - **vs Quill**: Quill = documentation writing; Lens = understanding generation.
 - **vs Trail**: Trail = Git history investigation and regression analysis; Lens = current codebase state comprehension. Use Trail when "when/why did this change?" is the question.
-- **vs Stratum**: Stratum = C4 architecture modeling; Lens = code-level investigation and discovery. Lens feeds findings into Stratum for formal modeling.
 - **vs Ripple**: Ripple = pre-change impact analysis; Lens = general codebase understanding. Lens provides dependency context that Ripple uses for impact assessment.
 - **vs PDM**: PDM = delivery-status reconciliation (planned scope vs implemented code); Lens = code comprehension ("how does X work"). Lens feeds PDM the "built" evidence with file:line.
 

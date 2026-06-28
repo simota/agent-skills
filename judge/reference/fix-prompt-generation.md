@@ -32,7 +32,6 @@ Judge is review-only — it does not ship code. The Fix Prompt is the bridge bet
 | Finding flagged but not blocking; advisory only | Emit Fix Prompt with `DOWNGRADE` → Builder (advisory, no enforcement) |
 | Finding is nit-only / style-only (no behavioral concern) | **Suppress Fix Prompt.** Note `Fix prompt N/A — nit-level feedback only; author's discretion.` |
 | Security smell detected during review | **Suppress Fix Prompt** — escalate to Sentinel (Sentinel owns remediation prompt) |
-| Concurrency smell detected | **Suppress Fix Prompt** — escalate to Specter (Specter owns remediation prompt) |
 | Refactoring suggestion, no bug | **Suppress Fix Prompt** — route to Zen (Zen owns refactoring) |
 | Single-engine finding without consensus and grounding inconclusive | **Suppress Fix Prompt** — require consensus before action |
 
@@ -90,7 +89,6 @@ Universal cases live in `_common/LLM_PROMPT_GENERATION.md`. Judge adds:
 |------|--------|----------------|
 | Judge ships nit-only / style-only feedback (no behavioral concern) | Style is Zen's domain; nit-level feedback should not block or pre-formulate fixes | "Fix prompt N/A — nit-level feedback only; author's discretion." |
 | Judge escalates to Sentinel (security smell detected during review) | Sentinel owns the security remediation prompt with OWASP/CWE classification | "Fix prompt suppressed — Sentinel owns security remediation prompt." |
-| Judge escalates to Specter (concurrency smell detected) | Specter owns the concurrency remediation prompt | "Fix prompt suppressed — Specter owns concurrency remediation prompt." |
 | Judge escalates to Zen (refactoring suggestion, no bug) | Zen owns refactoring; pre-formulated fix prompt would constrain Zen's analysis | "Fix prompt withheld — finding routed to Zen as refactoring suggestion." |
 | Single-engine finding without consensus (LOW confidence) | Acting on un-grounded single-engine findings erodes Judge's signal-to-noise ratio | "Fix prompt withheld — single-engine finding; require consensus before action." |
 

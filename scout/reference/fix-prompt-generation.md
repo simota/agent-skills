@@ -45,7 +45,7 @@ Root cause out of scope / blocked ──→ MITIGATE
 ```
 
 Tiebreakers:
-- If Scout escalates to Specter/Sentinel, do not emit a fix prompt — see suppression below.
+- If Scout escalates to Sentinel, do not emit a fix prompt — see suppression below.
 - If the bug spans 4+ files and reflects a design issue, prefer `REFACTOR-FIX` over `FIX`.
 - If reproduction failed but root cause is strongly hypothesized (MEDIUM evidence), prefer `INVESTIGATE-FURTHER` over `FIX` to force the receiving LLM to confirm the symptom first.
 
@@ -58,7 +58,6 @@ Universal cases live in `_common/LLM_PROMPT_GENERATION.md`. Scout adds:
 | Case | Reason | Note in report |
 |------|--------|----------------|
 | Scout escalates to Sentinel (security suspicion) | Sentinel owns secure-fix prompts | "Fix prompt suppressed — Sentinel owns remediation prompt." |
-| Scout escalates to Specter (concurrency/memory) | Specter owns concurrency-fix prompts | "Fix prompt suppressed — Specter owns remediation prompt." |
 
 ---
 

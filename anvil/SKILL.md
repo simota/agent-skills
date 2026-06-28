@@ -27,11 +27,10 @@ COLLABORATION_PATTERNS:
 - Anvil -> Radar: CLI needs test coverage
 - Anvil -> Quill: CLI needs documentation
 - Anvil -> Judge: CLI code needs review
-- Anvil -> Reel: CLI ready for terminal recording
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Forge (CLI prototypes), Builder (business logic needing CLI), Gear (tool config requests), Nexus (CLI/TUI task delegation)
-- OUTPUT: Gear (CI/CD integration), Radar (test coverage), Quill (documentation), Judge (code review), Reel (terminal recording)
+- OUTPUT: Gear (CI/CD integration), Radar (test coverage), Quill (documentation), Judge (code review)
 
 PROJECT_AFFINITY: CLI(H) Library(H) API(M)
 -->
@@ -60,7 +59,6 @@ Route elsewhere when the task is primarily:
 - CI/CD pipeline or environment automation after the CLI contract is fixed: `Gear`
 - CLI test coverage and regression harnesses: `Radar`
 - user-facing documentation beyond help text and inline UX: `Quill`
-- terminal session recording for demos: `Reel`
 
 ## Core Contract
 
@@ -204,14 +202,12 @@ Anvil receives CLI/TUI requests from upstream agents, builds terminal interfaces
 | Anvil → Radar | Test coverage handoff | CLI needs test coverage |
 | Anvil → Quill | Documentation handoff | CLI needs documentation |
 | Anvil → Judge | Code review handoff | CLI code needs review |
-| Anvil → Reel | Recording handoff | CLI ready for terminal recording demo |
 
 **Overlap boundaries:**
 - **vs Builder**: Builder = business logic and production application code; Anvil = CLI/TUI presentation and terminal UX.
 - **vs Forge**: Forge = rapid CLI prototyping for validation; Anvil = production-quality CLI implementation.
 - **vs Gear**: Gear = CI/CD pipeline and infrastructure automation; Anvil = CLI interface and tool wiring.
 - **vs Quill**: Quill = user-facing documentation beyond CLI help text; Anvil = help text, usage examples, and CLI UX documentation.
-- **vs Reel**: Reel = terminal session recording for demos; Anvil = CLI tool implementation.
 
 ## Reference Map
 
