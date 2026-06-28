@@ -156,10 +156,12 @@ Complete chain templates and dynamic adjustment rules.
 | SECURITY | detection-full | Sentinel → Vigil → Gear → Radar → Scribe |
 | SECURITY | ai-red-team | Oracle → Breach → Builder → Radar → Sentinel |
 | SECURITY | threat-model | Breach → Scribe |
-| GAME | prototype | Quest → Forge → Builder → Radar |
-| GAME | full | Quest → Forge → Builder → Dot → Radar |
-| GAME | narrative | Quest → Saga → Prose → Builder |
+| GAME | prototype | Quest → Forge → Tick → Radar |
+| GAME | full | Quest → Glance → Forge → Tick → Dot → Radar |
+| GAME | ui | Quest → Glance → Tick → Radar |
+| GAME | narrative | Quest → Saga → Prose → Tick |
 | GAME | balance | Quest → Matrix → Radar |
+| GAME | multiplayer | Quest → Tick[netcode] → Radar |
 | DESIGN | figma-to-code | Frame → Muse → Artisan → Radar |
 | DESIGN | figma-handoff | Frame → Forge → Builder → Radar |
 | DESIGN | token-sync | Frame → Muse → Artisan |
@@ -271,7 +273,7 @@ Complete chain templates and dynamic adjustment rules.
 | BRANDING | audit | Crest → Quill |
 | BRANDING | full | Crest → Growth → Prose → Quill → Canvas |
 | BRANDING | portfolio | Crest → Harvest → Quill |
-| GAME | design-matrix | Quest → Matrix → Forge → Builder → Radar |
+| GAME | design-matrix | Quest → Matrix → Forge → Tick → Radar |
 | GAME | first-principles | Flux → Quest → Saga → Matrix → Scribe |
 | GHA_WORKFLOW | matrix | Matrix → Pipe → Gear → Radar |
 | DESIGN_SYSTEM | matrix | Matrix → Vision → Muse → Vitrine → Artisan → Radar |
@@ -363,7 +365,9 @@ Builder then applies:
 - Mockup/screenshot to code → Add Pixel (faithful reproduction from image)
 - Detailed design-to-code gap analysis / fidelity audit / design review requested → Add Pixel[gap-report]; chain to Canon for WCAG mapping when a11y is in scope, Judge for report quality review, Artisan for remediation
 - Personal branding or portfolio → Add Crest
-- Game assets needed → Add Dot as applicable
+- Game implementation (loop/ECS/physics/netcode/save) → route to Tick, not Builder; Builder only for non-game backend/API glue
+- Game UI/UX (HUD/menus/controller nav/game-a11y) → Add Glance (design) before Tick implements it
+- Game assets needed → Add Dot (pixel/sprite) as applicable; gameplay FSM → Add Weave before Tick
 - Combinatorial testing needed → Add Matrix before Radar
 - Feature has 3+ independent dimensions or variants → Add Matrix after Spark
 - Review covers 4+ files across 2+ modules → Add Matrix before Judge
