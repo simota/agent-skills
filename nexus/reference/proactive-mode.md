@@ -148,7 +148,23 @@ A recommendation may only cite an indicator that was actually probed. An ⚪ ind
 
 ---
 
-## Output Format
+### Phase 0-D: North Star Alignment
+
+Phases 0-A–0-C are **reactive** — they surface what's broken or stale. Phase 0-D is **proactive**: read the project's North Star and propose one workstream that advances it, the way a teammate who knows the mission would. [Source: claude.com/blog/building-effective-human-agent-teams — "establish a north star", and the example of an agent proactively recommending onboarding-copy fixes that measurably improved onboarding.]
+
+**1. Locate the North Star (first hit wins, else skip this phase):**
+- `docs/CHARTER.md` §1 Mission & Objectives
+- `.agents/PROJECT.md` mission / goal section
+- `docs/specs/*` locked goals, or a `README` stated goal
+- If none exists → **emit no 0-D recommendation**; optionally note "No North Star found — `/nexus charter` or `/nexus goal` would establish one" (at most once, non-pushy).
+
+**2. Propose at most ONE North-Star-aligned workstream.** It must:
+- name the North Star clause it advances (cite the source line) — no citation, no proposal;
+- be **forward-looking** (a new capability/improvement that moves the goal), distinct from the reactive 0-C fixes;
+- be grounded in the current tree (an actual gap/opportunity you can point to), not aspirational filler;
+- route to a Recipe (`feature`/`kaizen`/`delve`/`spec`), clearly marked **🧭 North Star** and **optional**.
+
+**Restraint:** this phase is the legitimate use of the "at most 1-2 forward-looking opportunities" allowance in Phase 0-C — it does **not** add busywork on a healthy project; it replaces vague "optional ideas" with one mission-grounded one. If reactive 🔴/🟡 items exist, rank those first; the 🧭 item is always lowest urgency. Skip silently when no North Star is found or no honest opportunity exists.
 
 ```markdown
 ## Nexus Proactive Analysis
@@ -168,8 +184,9 @@ A recommendation may only cite an indicator that was actually probed. An ⚪ ind
 | 1 | 🔴 High | [suggestion] | [`bug`/`security`/…] | [probe result that grounds it] | [reason] |
 | 2 | 🟡 Medium | [suggestion] | [Recipe] | [evidence] | [reason] |
 | 3 | 🟢 Low | [suggestion] | [Recipe] | [evidence] | [reason] |
+| 4 | 🧭 North Star | [forward-looking workstream] | [`feature`/`kaizen`/…] | [North Star clause cited (Phase 0-D)] | [how it advances the mission] |
 
-*(If the project is healthy with nothing in-flight: state "Nothing urgent — all probed indicators 🟢" and list at most 1-2 optional forward-looking ideas, or none.)*
+*(The 🧭 North Star row appears only when Phase 0-D found a mission and an honest opportunity; omit it otherwise. If the project is healthy with nothing in-flight and no North Star item: state "Nothing urgent — all probed indicators 🟢".)*
 
 ### Next Step
 

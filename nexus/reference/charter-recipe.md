@@ -203,6 +203,14 @@ The Charter (`docs/CHARTER.md`) contains these sections; the companion `CHARTER.
 - [ ] Engine prereqs met (Codex `max_depth ≥ 2`) or `fallback_engine` set
 - [ ] Working tree clean; branch per §3 policy
 
+### Team readiness (human-agent teaming — 5 diagnostic questions)
+Derived from the human-agent-team diagnostic [Source: claude.com/blog/building-effective-human-agent-teams]. Each item is a cross-reference to the Charter section that must already answer it — a failed item means that section is under-specified, not a new work package.
+- [ ] **Information public & searchable** — every fact an owner/agent needs to act is in the Charter or a path it cites (§2 repo map, §3 conventions); no load-bearing knowledge lives only in a human's head or an unsearchable channel (§1·L1)
+- [ ] **Roster written, ownership unambiguous** — every team member (human + agent) and what they own is named; every §4 package maps to exactly one §5 owner (§5·L2)
+- [ ] **Tool/engine access matches the job** — each §5 owner has the engine + tool access its package requires; prereqs met or `fallback_engine` set (§5/§6·L2)
+- [ ] **Verification rubric or test exists** — every package has a testable gate, not prose judgment (§7 + §10 DoD·L4)
+- [ ] **North Star referenced** — §1 Mission is an ambitious, written goal every owner can point to, and at least one owner is tasked to propose North-Star-aligned work proactively (§1·L3)
+
 ### Per-package DoD (one block per §4 package, instantiated from §3 commands)
 - [ ] PKG-<id>: acceptance criteria (§4) met
 - [ ] PKG-<id>: tests added/updated and green (`<§3 test cmd>`)

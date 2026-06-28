@@ -10,6 +10,7 @@
 - Chain Effectiveness Score (CES)
 - Routing Adaptation Rules
 - Safety Guardrails
+- Autonomy Ledger
 - Integration Points
 - Templates
 
@@ -193,6 +194,32 @@ Before any CES claim or adaptation is trusted, run this checklist. It exists bec
 | Self-report discount | Any agent-self-reported quality score is corroborated by an independent signal (Judge score, regression result, user non-correction) | Treat the self-report as unverified; require corroboration |
 
 An adaptation proposal that fails any check is capped at **provisional** confidence and MUST NOT auto-apply, regardless of CES grade. Record which checks passed in the Adaptation Log.
+
+## Autonomy Ledger (trust calibration per task type)
+
+CES measures *how well a chain runs*; the Autonomy Ledger measures *how much we should let it run unattended*. Autonomy is earned, not assumed: it expands proportionally to demonstrated reliability and contracts immediately on regression. [Source: claude.com/blog/building-effective-human-agent-teams — "build trust incrementally", "track autonomous scope per task type".]
+
+The ledger is keyed by **task type** (not chain) so trust transfers across chain adaptations. Each entry carries an **Autonomy Tier** that determines how much confirmation Nexus seeks in AUTORUN/AUTORUN_FULL — it *tightens* the existing confidence/reversibility gate, never loosens an **Ask First** rule.
+
+| Tier | Stance | Confirmation behavior | Promotion precondition |
+|------|--------|----------------------|------------------------|
+| `T0` | Manual review | Verifier output + result surfaced for human review before SHIP | default for any task type with < 3 data points |
+| `T1` | Verify-then-trust | Auto-run; a verifier agent (Judge/Radar/Attest) gate is mandatory, escalate only on verifier fail | CES ≥ C over ≥ 3 runs **and** verifier-pass on each |
+| `T2` | Autonomous + spot-check | Auto-run; verifier on a sampled subset; full report at DELIVER | CES ≥ B over ≥ 5 runs, 0 user corrections, 0 rollbacks |
+| `T3` | Fully autonomous | Auto-run end-to-end; report only | CES ≥ A over ≥ 10 runs **and** an explicit human grant (Ask First — never auto-promote into T3) |
+
+**Rules:**
+- **Promotion is gated, demotion is automatic.** Any rollback, user override (LT-03), or verifier fail drops the task type **one tier** and resets its consecutive-clean counter. A T3→T2 demotion additionally voids the human grant (re-granted only by a human).
+- **Tier never overrides a safety gate.** L4 security, destructive actions, external-system changes, and 10+ file edits remain Ask First at every tier (per SKILL.md **Ask First**/**Never**). The ledger only governs *routine* confirmation, not red lines.
+- **Per task type, never per run.** A single lucky run does not promote; the consecutive-clean counter + minimum data requirements (≥ 3 / ≥ 5 / ≥ 10) above apply.
+- **Surface the tier.** Record the active tier and any tier change in the Adaptation Log and the Execution Report, so expanding/contracting autonomy is auditable rather than silent.
+
+```markdown
+## Autonomy Ledger — [TASK_TYPE]
+**Tier:** [T0/T1/T2/T3] | **CES:** [grade] over [N] runs | **Consecutive clean:** [N]
+**Verifier:** [Judge/Radar/Attest/none] | **Human grant (T3):** [yes/no/n-a]
+**Last change:** [promoted/demoted/held] on [DATE] — [trigger: LT-XX / rollback / verifier-fail]
+```
 
 ## Integration Points
 
