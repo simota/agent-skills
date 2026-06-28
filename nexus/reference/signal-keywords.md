@@ -25,6 +25,7 @@
 | `design system docs`, `token docs`, `component catalog` | `DESIGN_SYSTEM_DOCS` (see Routing Quick Start) |
 | `brainstorm`, `bounce ideas`, `riff`, `ideate`, `sounding board` | (Riff direct — single-agent) |
 | `apex`, `auto-impl`, `full implementation`, `discovery to launch`, `end-to-end feature`, `ultimate` | `apex` |
+| `playable`, `make a game`, `build a game`, `game from scratch`, `all-in-one game production`, `concept to playable`, `produce a full game` | `playable` (all-in-one game production — concept→playable build via the game cluster: **Quest** design · **Glance** UI/UX · **Tick** impl · **Dot** assets; vertical-slice-first gate + game acceptance fun/determinism/a11y/frame-budget; game-specialized `apex`. Component-level only → `GAME` task-type below; *design only* → `quest`/`spec`; *just UI* → `glance`; *just engine* → `tick`; *copy an existing game* → `clone`) |
 | `charter`, `instruction document`, `team charter`, `team operating manual`, `runbook for a team`, `analyze repo and design a team`, `self-driving team charter`, `team design spec`, `comprehensive repo analysis to a plan` | `charter` |
 | `enact`, `run the charter`, `execute the charter`, `execute the instruction document`, `build team from charter and run`, `orchestrate the charter`, `run docs/CHARTER.md` | `enact` |
 | `goal`, `/goal setup`, `goal recipe`, `long-running goal`, `autonomous loop setup` | `goal` |
@@ -38,6 +39,7 @@
 | `growth-acceptance`, `lifecycle gate`, `market proof`, `research proof`, `brand proof`, `insight ledger`, `incrementality gate`, `brand compiler`, `growth-brand contract`, `post-launch measurement` | `growth-acceptance` |
 | `summit`, `tri-engine`, `all engines`, `claude+codex+agy`, `quality maximization`, `strategic decision`, `release-critical`, `design-critical launch` | `summit` |
 | `podium`, `slide deck`, `keynote`, `conference talk`, `presentation`, `talk deck`, `speaker deck`, `onboarding kit (doc + deck)`, `learning material with companion deck`, `doc + slide`, `unified content package`, `article + slides`, `retrospective (doc + exec deck)`, `launch package (announcement + sales deck)` | `podium` |
+| `gamedev`, `GDD`, `game design document`, `game balance`, `game economy`, `game loop`, `fixed timestep`, `ECS`, `entity component system`, `netcode`, `rollback`, `lockstep`, `HUD`, `diegetic UI`, `game menu`, `controller navigation`, `game accessibility`, `save system`, `sprite`, `pixel art` | `GAME` (**component-level** game work via routing-matrix GAME row → **Quest** design/GDD/balance/economy · **Glance** UI-UX/HUD/controller/game-a11y · **Tick** loop/ECS/physics/netcode/save · **Forge** prototype · **Dot** pixel assets · **Weave** gameplay FSM). Variants via `agent-chains.md` GAME rows (prototype/full/ui/narrative/balance/multiplayer/design-matrix). **Whole game from scratch → `playable`** (all-in-one recipe, above). Game *implementation* routes to Tick, never Builder |
 | `/Nexus` (no arguments) | `proactive` |
 
 ---

@@ -39,6 +39,19 @@ Read: `reference/apex-recipe.md`, `reference/apex-walkthrough.md`.
 
 ---
 
+## playable
+
+**All-in-one game production** — concept → playable, shippable game via the game cluster, under a vertical-slice-first gate. The game-domain specialization of `apex`: routes design to Quest, UI/UX to Glance, implementation to Tick, assets to Dot (never generic Builder for game systems). 8-22 agents, high-cost. **Confirm before launch.**
+
+**Chain template:**
+`CONCEPT (quest[frame] +flux?/magi?) → DESIGN (quest[gdd/balance/economy] → glance[hud/menu/nav/a11y] ‖ weave?[FSM]) → SLICE (forge[vertical slice] → echo[playtest] → vertical-slice gate) → PRODUCE [tick[loop/ecs/state/physics/netcode/save] ‖ dot[assets]] → INTEGRATE (tick wires glance UI + dot assets; +builder? non-game backend; +flow? UI motion) → VERIFY (radar[sim/determinism] + echo[UX] + glance[a11y/glanceability] + bolt?[frame budget]) → SHIP (guardian +launch?)`
+
+Signature discipline: **prove the core loop is fun in a vertical slice before producing breadth** (SLICE gate). Game acceptance = core-loop fun (playtest) · determinism (if required) · a11y baseline · frame budget — not just "tests pass". Loop ≤ 3 cycles at SLICE (fun-loop) and VERIFY (fix-loop). Emits a named **Playable Report**. Residual gaps (e.g. audio — no audio specialist in the current roster) are surfaced, not hidden. vs `apex` (general) / `clone` (reproduce existing game) / GAME sub-chains in `agent-chains.md` (components).
+
+Read: `reference/playable-recipe.md`.
+
+---
+
 ## charter
 
 **Repo-wide analysis → self-driving Charter, team design included — stops at the document.** Document-first planning recipe; the execution half is `enact`. Where `apex` discovers a *feature* and ships it in one shot, `charter` reads the *whole repository*, distills a durable Charter artifact (`docs/CHARTER.md` + `CHARTER.roster.yaml`) that designs the team (§5 roster + §6 orchestration plan) and §10 checklists (pre-flight / per-package Definition-of-Done / progress tracker / final delivery) without building or running it. The team becomes a pure function of the document, so `enact` (or a future session) reconstructs the identical team and gates each boundary on the checklists. Distinct from `apex` (feature-centric, one-shot), `goal` (loop config only), `package` (docs only). The §5/§6 design is **multi-engine by default** (`engines=claude+codex`): Claude Code for plan/design/review, Codex CLI (model `gpt-5.5`) for build loops + high-volume parallel coding (Orbit sub-hub pinned to Codex, per-engine prereqs + `fallback_engine` recorded for `enact`). Modes: autonomous (no-args) / objective-supplied / `scope=` / `out=` / `engines=`. 5-15 agents (analysis + authoring only). No execution → no Confirm Gate.
