@@ -92,7 +92,7 @@ Instantiate the team strictly from Charter §5. This is "build the dev team from
 | Bind | For each roster entry, resolve role → skill SKILL.md path, model tier, engine (per Orchestrator Detection), and spawn config |
 | Verify prereqs | Confirm the active hub's spawn tool + per-CLI prereqs (`reference/execution-layers.md`); for Codex packages check `multi_agent = true` + `[agents] max_depth ≥ 2`, for agy check the TTY/real-pty path (`_common/CLI_COMPATIBILITY.md §9`). If a §5 engine is unreachable, apply that package's `fallback_engine` (default `claude-code`) and log the substitution + its cost/throughput trade-off; hard-fail only when no fallback is defined |
 | Sub-orchestrator setup | Where §5 nominates Vision/Orbit/Rally, prepare its sub-hub contract (≤7 specialists each) |
-| Pre-flight checklist | Run the Charter §10 pre-flight checklist (Charter complete, owners constructable, engine prereqs/fallbacks, clean tree/branch); tick each item and log `TEAM_BUILT` |
+| Pre-flight checklist | Run the Charter §10 pre-flight checklist (Charter complete, owners constructable, engine prereqs/fallbacks, clean tree/branch, team-readiness); tick each item and log `TEAM_BUILT` |
 | Dry-run check | Validate that every §4 work package has a constructable owner; any unconstructable entry escalates before execution begins |
 
 **Exit gate:** every work package has a verified, spawnable owner. Unresolvable roster entries do **not** get improvised — enact reports the gap and recommends re-authoring via `charter` (§5). `dry-run` mode stops here and delivers the constructability report.
