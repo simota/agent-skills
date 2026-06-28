@@ -349,7 +349,7 @@ Opus 4.8 requires the four directive fields above (calibrates length to context,
 - **Error handling:** `L1` retry (max 3) → `L2` auto-adjust or inject Builder → `L3` rollback + recovery chain → `L4` ask user (max 5) → `L5` abort.
 - **Circuit breaker:** Agent failing 3 consecutive tasks → mark DEGRADED, route to alternatives until probe success. Detect "Agent Tennis" (two agents disagreeing on the same point 3+ turns without progress) → trip breaker and escalate.
 - **Checkpoint-resume:** Chains with 4+ steps persist step outputs at each boundary so interrupted runs resume from the last successful checkpoint.
-- **Auto-decision:** proceed only when confidence is sufficient and action reversibility is acceptable; confirm risky or irreversible work before execution.
+- **Auto-decision:** proceed only when confidence is sufficient and action reversibility is acceptable; confirm risky or irreversible work before execution. Routine confirmation depth follows the per-task-type Autonomy Ledger (`reference/routing-learning.md`); it never relaxes an Ask First gate.
 - **Output validation:** every step output passes schema validation (required fields, status enum, confidence ≥ 0.6) before flowing onward. Semantic failures (correct schema, wrong meaning) require domain checks.
 - **Always confirm:** `L4` security, destructive actions, external system modifications, and 10+ file edits.
 
@@ -437,7 +437,7 @@ Read only the files that match the current decision point.
 | `reference/loop-engineering-primitives.md` | Mapping the loop-engineering pattern onto Claude Code / Codex primitives (`/loop`, `/goal`, worktree, subagents, memory) with 2026-06 version detail — read when designing a `goal`/apex/summit loop or explaining which primitive implements which loop part |
 | `reference/context-strategy.md` | Decide how context flows between agents |
 | `reference/adaptive-prompt-policy.md` | Tailor each spawn prompt to project + session context (Context-Adaptive Spawn Tuning); ephemeral, reversible, no durable global write |
-| `reference/routing-learning.md` | Adapting routing from execution evidence |
+| `reference/routing-learning.md` | Adapting routing from execution evidence; per-task-type autonomy calibration (Autonomy Ledger) |
 | `reference/quality-iteration.md` | Output needs post-delivery PDCA improvement |
 | `reference/{orchestration,task-routing,production-reliability,agent-communication}-anti-patterns.md` | Anti-pattern catalogs — orchestration / routing / reliability / handoff (load when chain ≥ 4 agents) |
 | `reference/execution-layers.md` | Per-CLI prereqs, runtime notes, agy headless mitigations + template |

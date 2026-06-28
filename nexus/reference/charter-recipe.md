@@ -141,7 +141,7 @@ The Charter MUST be **self-driving**: a reader (human, `enact`, or a fresh Nexus
 
 **Team-construction design (not execution).** Phase 3 finalizes §5 (roster: per work package, owner skill + model tier + engine + spawn config) and §6 (orchestration plan: chain order, parallel branches + file ownership, checkpoints, **per-package engine assignment**). It does **not** verify spawn prereqs or instantiate agents — that is `enact` Phase 1.
 
-**Exit gate:** Charter passes the self-containment check — roster, work breakdown, AC, conventions, orchestration plan, and verification gates are all present and mutually consistent; every work package maps to exactly one owner skill that exists in the ecosystem, and every package carries an engine assignment; and §10 checklists (pre-flight, per-package DoD, progress tracker, final delivery) are generated from §3+§4+§7 with one DoD block and one tracker row per §4 package. Then DELIVER the Charter and hand off to `enact` (recommend the `/nexus enact <out path>` command in `NEXUS_COMPLETE`).
+**Exit gate:** Charter passes the self-containment check — roster, work breakdown, AC, conventions, orchestration plan, and verification gates are all present and mutually consistent; every work package maps to exactly one owner skill that exists in the ecosystem, and every package carries an engine assignment; and §10 checklists (pre-flight incl. team-readiness, per-package DoD, progress tracker, final delivery) are generated from §3+§4+§7 (team-readiness cross-references §1/§2/§5/§6) with one DoD block and one tracker row per §4 package. Then DELIVER the Charter and hand off to `enact` (recommend the `/nexus enact <out path>` command in `NEXUS_COMPLETE`).
 
 ## Engine Assignment (multi-engine orchestration)
 
