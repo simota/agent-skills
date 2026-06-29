@@ -184,6 +184,17 @@ Read: `reference/podium-recipe.md`.
 
 ---
 
+## loop
+
+**Loop-engineering dispatcher & discipline gate** — the front-door for *underspecified* "make this a loop" requests. Does **not** run a loop: classifies the loop's *shape* (native-goal | rubric-quality | unattended-runner | discovery-to-ship), runs the **loop-engineering precondition gate** (verifiable oracle · external hard-stop bound · maker≠checker · persistent memory · drift-awareness — each failed precondition maps to a named anti-pattern: loopmaxxing / overbaking / nodding / amnesiac loop), then **routes to the engine that owns execution** (`goal` / `converge` / `orbit` / `apex`). Nexus stays the routing layer; `orbit` is the execution substrate — `loop` delegates and never re-implements it. Meta/control, not a task shape. The gate is contract-level (AUTORUN cannot skip); unattended `orbit` launches confirm before launch. 1 agent (inline classify + gate) + the routed engine's range. Distinct from `goal` (native `/goal` *setup only* — `loop` may route to it), `converge` (in-session rubric loop — `loop` routes to it), and `orbit` (the runner skill `loop` delegates to).
+
+**Chain template:**
+`FRAME (classify SHAPE) → GATE ★contract-level [oracle? bound? maker≠checker? memory? drift-aware? → fail → convert (1 question) or STOP] → ROUTE (native-goal→goal | rubric-quality→converge | unattended-runner→orbit [Confirm before launch] | discovery-to-ship→apex) → DELIVER (Loop Design Record)`
+
+Read: `reference/loop-recipe.md`, `orbit/reference/loop-engineering.md`, `reference/loop-engineering-primitives.md`.
+
+---
+
 ## converge
 
 **Quality-convergence loop** — the invocable entry point for the Generator-Evaluator pattern (`reference/evaluator-loop-protocol.md`). A Generator produces/revises; **independent** Evaluators score against a Rubric tied to a Sprint Contract; the loop runs until ACCEPT or a hard bound. Execution-control, not a task shape (exposed as a subcommand because it carries a Contract/Rubric/bounds args the Mode table can't). Two forms: `converge` (standalone) and `converge <recipe>` (inner recipe as Generator). **Mandatory termination bounds**: max_cycles (3) / token_budget / diminishing-returns ε / BLOCK escalation — no unbounded run. **Flatten rule**: wrapping a loop-recipe (kaizen/apex/summit) uses its *generator agents*, not its loop, so converge owns the single termination oracle (avoids loop-on-loop blowup + dueling oracles). 4-10 agents × ≤3 cycles. Distinct from `kaizen` (metric-PDCA on existing features) and `goal` (unattended setup).
