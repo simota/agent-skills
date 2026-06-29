@@ -2,7 +2,7 @@
 
 How the **loop engineering** pattern maps onto concrete orchestration primitives in each hub engine. Nexus stays the routing/recipe layer; this file is the reference for *which primitive implements which loop part* when designing a `/goal`-style or apex/summit loop. For the concept, lineage, and applicability limits see `orbit/reference/loop-engineering.md`.
 
-> Snapshot date: 2026-06-15. Versions move within weeks — verify against primary docs (`code.claude.com/docs`, `developers.openai.com/codex`) before quoting a version number.
+> Snapshot date: 2026-06-29 (refreshed; previously 2026-06-15). Versions move within weeks — verify against primary docs (`code.claude.com/docs`, `developers.openai.com/codex`) before quoting a version number.
 
 ## The pattern → primitive map
 
@@ -11,10 +11,12 @@ A loop = scheduled execution + isolated workspaces + maker/checker separation + 
 | Loop part | Claude Code | Codex |
 |-----------|-------------|-------|
 | Heartbeat (recurring) | `/loop` — **three modes by input** (see § `/loop` modes; interval mode v2.1.72+, self-pace v2.1.92-101); hooks; GitHub Actions / Desktop Scheduled tasks for laptop-closed runs | Automations tab (project + prompt + cadence + local/worktree target); Triage inbox for findings |
-| Stop-when-done (in-session) | `/goal` (v2.1.139+): runs until a written condition holds; **a separate fast model — default Haiku — checks completion each turn from what's surfaced in the conversation only (it runs no commands, reads no files)**, so the maker isn't the grader. Bound runaway with a `or stop after N turns` clause in the condition | `/goal`: same primitive — works across turns until a verifiable stop condition, with pause/resume/clear |
+| Stop-when-done (in-session) | `/goal` (v2.1.139+): runs until a written condition holds; **a separate fast model — default Haiku — checks completion each turn from what's surfaced in the conversation only (it runs no commands, reads no files)**, so the maker isn't the grader. Bound runaway with a `or stop after N turns` clause in the condition | `/goal` (Codex CLI **v0.128.0**; persisted goal workflows GA'd 2026-05-21, "no longer experimental"): same primitive — works across turns until a verifiable stop condition, with create/pause/resume/clear. Codex has **no native `/loop`** — for a heartbeat, wrap `codex exec` (non-interactive) in a shell/cron loop |
 | Workspace isolation | `git worktree`; `--worktree`/`-w` → `.claude/worktrees/<value>/` on branch `worktree-<value>` (v2.1.50); `isolation: worktree` in subagent frontmatter (temp worktree auto-removed if subagent finishes with no changes) | Built-in worktree support; multiple threads hit one repo without collision |
 | Maker/checker separation | subagents (`.claude/agents/`, markdown) + agent teams; worktrees isolate *file edits*, subagents/teams coordinate *the work* | subagents spawned in parallel (≤8), results merged into one response; built-in `default`/`worker`/`explorer`; custom agents require `name`/`description`/`developer_instructions` (model + sandbox_mode inherited from parent); on-demand spawn only |
 | Persistent memory | markdown / Linear / state files on disk — "the agent forgets, the repo doesn't" | same: state file outside the conversation as the loop's spine |
+
+> **Operational note (Claude Code Week 26, 2026-06-22–26, v2.1.185–v2.1.193):** background subagents now **surface permission prompts in the main session instead of auto-denying** — previously a background checker/critic subagent could silently stall read-only on an auto-denied permission. Relevant whenever a verification subagent runs in the background (the maker/checker row).
 
 ## Five moves → six parts → primitives (Osmani/HuaShu framing, 2026-06)
 
@@ -48,6 +50,8 @@ The four-part skeleton above is the minimum. The Orange Book (HuaShu IEEE reform
 - Fixed-interval loops run until stopped or 7 days elapse. **Esc** cancels a *waiting* `/loop` iteration — but **not** a `CronCreate` task made by asking Claude directly.
 
 For OS-reboot-persistent recurrence use Desktop Scheduled tasks (Hourly/Daily/Weekdays/Weekly) or Routines, not terminal `/loop` (3-way Cloud / Desktop / `/loop` taxonomy). `/goal` (next-turn, model-checked stop) vs `/loop` (time-elapsed tick, stop-op or Claude's completion call) vs **Stop hook** (your own script decides) are the three official "keep a session running" mechanisms — the docs distinguish them explicitly.
+
+**Official Stop-hook loop primitive:** Anthropic's `ralph-wiggum` plugin (`anthropics/claude-code` → `plugins/ralph-wiggum/`, public marketplace 2025-11-16, "Made by Anthropic / Anthropic Verified") is the packaged form of the "Stop hook decides" mechanism — `hooks/stop-hook.sh` intercepts session exit and re-feeds the prompt, implementing Huntley's Ralph loop-until-done. Reach for it when a recipe wants a community-Ralph-style continuous loop without hand-rolling the hook.
 
 ## Engine framing (official)
 
