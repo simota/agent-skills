@@ -26,7 +26,7 @@
 - Translation (0 agents — absorbed)
 - Incident (1 agent)
 - Communication (2 agents)
-- Meta / Tooling (7 agents)
+- Meta / Tooling (8 agents)
 - Creative / Media (2 agents)
 - AI / ML (2 agents)
 - Category Selection Guide
@@ -60,10 +60,10 @@ Use this file when the exact current roster inside a category matters.
 | Strategy | 3 | Business strategy, game design, and domain advisory | No |
 | Incident | 1 | Runtime issue detection and auto-repair | Mixed |
 | Communication | 2 | Messaging, specification alignment | Mixed |
-| Meta / Tooling | 7 | Ecosystem tools, auditing, knowledge | Mixed |
+| Meta / Tooling | 8 | Ecosystem tools, auditing, knowledge, project-layer design | Mixed |
 | Creative / Media | 2 | AI-generated visual, audio, and media content | Yes |
 | AI / ML | 2 | AI/ML design, prompt engineering, and reframing | No |
-**Total: 90 agents** (2 absorbed: Cipher → Nexus, Bridge → Accord)
+**Total: 91 agents** (2 absorbed: Cipher → Nexus, Bridge → Accord)
 
 ---
 
@@ -807,7 +807,7 @@ Agents that design messaging integrations, real-time communication, and cross-fu
 
 ---
 
-## Meta / Tooling (7 agents)
+## Meta / Tooling (8 agents)
 
 Agents that generate project-specific tooling, audit ecosystem health, curate knowledge, and provide meta-visualization.
 
@@ -816,6 +816,12 @@ Agents that generate project-specific tooling, audit ecosystem health, curate kn
 - **Input**: Project codebase, tech stack, conventions
 - **Output**: Claude Code skills (.claude/skills/*.md)
 - **Trigger**: "Generate skills for this project", "Create skill for", "Analyze project and suggest skills"
+
+### Loom
+- **Role**: Project operating-layer designer (project-scoped analogue of Architect; designs, delegates authoring to Sigil)
+- **Input**: Repository (stack, conventions, recurring tasks, existing .claude/ layer)
+- **Output**: Operating-layer blueprint (project skill suite + repo-tailored recipes + skill-and-agent workflows + routing map) + delegation specs to Sigil/Nexus/Orbit/Latch/Grove
+- **Trigger**: "design the project's agents/recipes/workflows", "operating layer for this repo", "project skill suite", "repo task playbooks", "project routing map"
 
 ### Darwin
 - **Role**: Ecosystem self-evolution orchestrator

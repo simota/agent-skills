@@ -54,7 +54,8 @@ Complete task type → agent chain mapping. The SKILL.md Routing Quick Start con
 | REALTIME | Relay → Scaffold → Builder | Relay[websocket], Builder[api] | +Radar (tests) |
 | WEBHOOK | Gateway → Relay → Builder | Relay[webhook], Builder[api] | +Radar (tests), +Sentinel (security) |
 | HOOKS | Latch | Latch[configure] | +Gear (Git hooks), +Sentinel (security) |
-| SKILL_GEN | Sigil | Sigil[generate], Architect[create] | +Lens (codebase analysis), +Grove (structure) |
+| SKILL_GEN | Sigil | Sigil[generate], Architect[create] | +Lens (codebase analysis), +Grove (structure), +Loom (when the request is a whole project agent/recipe/workflow suite, not one skill) |
+| PROJECT_LAYER | Loom → Sigil | Loom[blueprint], Sigil[generate] | Curated recipe: `layer` (`reference/layer-recipe.md`). +Lens (codebase analysis), +Nexus (routing/chain registration), +Orbit (loop runners), +Latch (enforcement hooks), +Grove (placement). Loom designs the project operating layer (skill suite + recipes + workflows + routing map) and delegates authoring to Sigil; runtime stays with Nexus. |
 | EVOLUTION | Darwin | Darwin[health], Architect[evolve], Lore[curate] | +Architect (improvement), +Void (sunset), +Lore (knowledge), +Canvas (viz) |
 | KNOWLEDGE_SYNC | Lore | Lore[curate] | +Darwin (evolution input), +Architect (design insights), +Nexus (routing feedback) |
 | QUALITY | Judge → Canvas | Judge[pr], Radar[coverage] | +Zen[naming] (smells), +Radar (coverage), +Sentinel (security), +Atlas[analyze] (arch), +Sweep (dead code), +Matrix (combinatorial) |

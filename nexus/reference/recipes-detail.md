@@ -74,6 +74,17 @@ Read: `reference/enact-recipe.md`.
 
 ---
 
+## layer
+
+**Design + stand up a repo's operating layer — Loom designs, Sigil authors, Nexus registers.** The Nexus surface over the **Loom** agent (project-scoped analogue of Architect). Where `charter` designs a *team + work plan* to deliver a body of work, `layer` designs the *reusable operating layer* a repository should carry: which project-local skills encode its conventions, which repo-tailored recipes chain them, which skill-and-agent workflows coordinate project outcomes, and a routing map (single-owner per task domain; ecosystem-owned tasks deferred, never duplicated). Loom **designs the system and delegates the threads** — it never writes a skill body, runs a chain, or authors a hook: Loom blueprints, Sigil authors each body (9+/12), Nexus registers recipes/workflows/routing map, Latch/Orbit take hooks/loops. Mechanism choice per task uses `_common/MECHANISM_SELECTION.md` for hook/rule/subagent/skill; `recipe`/`workflow` are Loom-local. Each designed workflow carries a formal topology + `≤ 5` phases (no Bag-of-Agents). Distinct from `charter` (team+work plan, one delivery), `sigil`/SKILL_GEN (one skill body), `spec` (one feature spec). Modes: whole-repo (no-args) / `<scope>` / `design-only` (stop at the blueprint, charter-style) / `resume` / `engines=`. **Confirm-before-launch** (DELEGATE writes files + changes routing); `≥10` skills or established-routing changes → Ask First. Named report: **Operating-Layer Blueprint** (+ Layer Report tail in full mode). Checkpoint-resume (`layer resume`). 5-15 agents (design-only 3-6); Low-Medium cost.
+
+**Chain template:**
+`Phase 0 Frame (detect repo/stack/scope/existing-layer/mode) → 1 Survey (loom drives ‖ lens(structure) ‖ atlas?(arch→topology) + read .claude/ layer + sigil inventory?; greenfield→infer from manifests/CI/history) → 2 Design (loom: coverage matrix + suite plan + recipes + workflows[topology,≤5] + routing map) → 3 ★Confirm blueprint (design-only stops here) → 4 Delegate (parallel: sigil×N author bodies 9+/12 ‖ latch hooks ‖ orbit loop specs → nexus registers recipes/workflows/routing map ‖ grove docs placement) → 5 Verify (loom 14-item + sigil 9+/12 + routing single-owner + workflow topology/≤5) → DELIVER Layer Report`
+
+Read: `reference/layer-recipe.md`.
+
+---
+
 ## spec
 
 **Interactive feature-proposal → locked specification through deep human-in-the-loop dialogue.** Takes a rough idea and refines it conversationally into a sign-off-ready spec carrying **mandatory testable, traceable acceptance criteria**, then **stops at the spec — writes no code**. The discovery half of `spec → feature`/`apex`, mirroring `charter → enact`. **Defaults to `INTERACTIVE`** (with `delve`; the dialogue is the deliverable); its phase-boundary checkpoints are contract-level, so even AUTORUN cannot skip them. **+Lens reuse-scan grounds it in the existing codebase; draft-persisted & resumable** (`spec resume [<slug>]`); locks only when **both lock preconditions pass — testable L3 ACs + the Spec Quality Gate** (ambiguity/completeness/consistency/testability/scope) — and writes `docs/specs/<slug>.md` per a standard template. Distinct from `essential`/`killer` (which-feature *verdict*, minimal dialogue), `feature`/`apex` (build code), `charter` (whole-repo team design), `converge` (automated grading loop), and `riff` (single-agent brainstorm, no artifact). 3-9 agents × dialogue turns.

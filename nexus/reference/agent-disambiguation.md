@@ -64,7 +64,7 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 
 ---
 
-### Sigil vs Architect (Skill/Agent Creation)
+### Sigil vs Architect vs Loom (Skill / Agent / Layer Creation)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
@@ -74,8 +74,11 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 | "Analyze this project and create shortcuts" | **Sigil** | Project context → lightweight skills |
 | "Ecosystem gap analysis" | **Architect** | Ecosystem-level concern |
 | "Improve this agent's SKILL.md" | **Architect** | Agent enhancement |
+| "Design this repo's agents, recipes, AND workflows together" | **Loom** | Project **operating layer** as one system — blueprints the suite, delegates skill bodies to Sigil |
+| "Author one project skill body" | **Sigil** | Single skill, not a coordinated suite |
+| "What agent owns which repo task?" (project routing map) | **Loom** | Project-local routing-map design (consumed by Nexus) |
 
-**Rule of thumb**: Ecosystem-wide permanent agent → Architect. Project-specific lightweight skill → Sigil.
+**Rule of thumb**: Ecosystem-wide permanent agent → Architect. One project-specific skill → Sigil. A coordinated *set* of project agents/recipes/workflows designed together → Loom (designs, then delegates authoring to Sigil and runtime to Nexus).
 
 ---
 
