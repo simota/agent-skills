@@ -80,7 +80,7 @@ gh auth status >/dev/null || { echo "gh CLI not authenticated"; exit 1; }
 
 ### 2. CREATE — Open the PR
 
-Build the body via HEREDOC to preserve formatting:
+Build the body via HEREDOC to preserve formatting. Follow the canonical lean template (`pr-workflow-patterns.md` § PR Description Template): essence only — Summary + Test plan are the baseline; add `## Changes` / `## Risk` only when the change warrants them. Do **not** dump the `pr` Recipe's full Change Classification Table or Risk breakdown into the body — distill, don't paste.
 
 ```bash
 gh pr create \
@@ -89,22 +89,18 @@ gh pr create \
   --title "<pr Recipe title>" \
   --body "$(cat <<'EOF'
 ## Summary
-<from pr Recipe>
-
-## Changes
-<from pr Recipe Change Classification Table>
-
-## Risk
-<from pr Recipe Risk Assessment>
+<1-3 sentences from pr Recipe: why + what>
 
 ## Test plan
-- [ ] <CI suite>
-- [ ] <manual verification>
+- <CI suite run>
+- <manual verification, if any>
 EOF
 )" \
   --reviewer "<from pr Recipe>" \
   --label "<inferred from change classification>"
 ```
+
+Add `## Changes` (one bullet per distinct essential change) only when the Summary cannot carry them, and `## Risk` only when the risk band is Medium+ — both distilled from the `pr` Recipe output, not pasted verbatim.
 
 For low quality_score (B band 65-74) or first-pass validation, propose `--draft`:
 

@@ -252,6 +252,8 @@ Purpose: Provide the canonical report headings and minimal skeletons Guardian sh
 
 ## Section 14: PR Description Templates
 
+The canonical PR body template, brevity rules, and conditional-section table live in `pr-workflow-patterns.md` § PR Description Template — follow it. The contrast below shows the essence-first bar.
+
 ### Bad Example (Avoid)
 
 ```markdown
@@ -260,7 +262,13 @@ Updated files.
 
 ## Changes
 - stuff
+
+## Checklist
+- [ ] self-review completed
+- [ ] docs updated
 ```
+
+Empty signal, boilerplate checklist, and a `## Changes` that adds nothing over the Summary.
 
 ### Good Example (Follow)
 
@@ -269,26 +277,10 @@ Updated files.
 Add OAuth2 provider support for internal SSO.
 
 ## Test plan
-- Added integration tests for login callback
-
-## Changes
-### Features
-- Added OAuth2 provider integration
+- Added integration tests for the login callback
 ```
 
-### PR Description Template
-
-```markdown
-## Summary
-
-## Test plan
-
-## Changes
-
-## Breaking changes (if applicable)
-
-## Notes (optional)
-```
+Two sections carry the whole change. Add `## Changes` / `## Risk` / `## Breaking changes` only when the change actually warrants them (see the canonical conditional-section table).
 
 ## Section 16: Monorepo PR Split
 
