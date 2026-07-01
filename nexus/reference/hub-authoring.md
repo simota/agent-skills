@@ -65,14 +65,16 @@ Model names are hub-engine-specific. The role → tier mapping is stable; the co
 
 | Agent Role | Tier | Claude Code hub | Codex CLI hub | Rationale |
 |-----------|------|-----------------|---------------|-----------|
-| Investigation / read-only (Scout, Lens, Trail) | balanced | sonnet | `gpt-5.5` † | Cost-efficient |
-| Standard implementation (Builder, Artisan, Radar) | balanced | sonnet | `gpt-5.5` † | Balanced |
+| Investigation / read-only (Scout, Lens, Trail) | balanced | **Sonnet 5** (`claude-sonnet-5`) ¶ | `gpt-5.5` † | Cost-efficient |
+| Standard implementation (Builder, Artisan, Radar) | balanced | **Sonnet 5** (`claude-sonnet-5`) ¶ | `gpt-5.5` † | Balanced |
 | High-complexity design (Sentinel, Atlas) | high-reasoning | opus / **fable-5** | `gpt-5.5` | Precision-critical |
 | Lightweight tasks (Quill, Morph) | fast | haiku | `gpt-5.5` † | Minimal cost |
 
 > **† Codex latest-model mandate (user policy, `CODEX_ORCHESTRATION.md` C3.0):** the Codex column is **always the latest model — currently `gpt-5.5`**, regardless of tier. There is no cheaper Codex tier. Differentiate tiers via `model_reasoning_effort`, not by model. (Claude Code tiering is unaffected.)
 >
 > **‡ agy model mandate (user policy, 2026-06-23):** when **agy** drives the hub, every step and every spawned subagent uses **Gemini 3.5 Flash** — never tier-switched to Gemini 3.1 Pro / Claude / GPT-OSS. Pin with `agy --model "Gemini 3.5 Flash"` / `/model`. Same shape as the Codex mandate (one fixed model), differing only in that the fixed model is the fast tier. Detail: `_common/CLI_COMPATIBILITY.md §4 ‡`.
+>
+> **¶ Claude Code subagent default (user policy, 2026-07-02):** when **Claude Code** drives the hub, spawned subagents use **Sonnet 5 (`claude-sonnet-5`)** by default, selected **task-appropriately** — Sonnet 5 for the balanced/execution tier (investigation, read-only, standard implementation), escalating to **opus / fable-5** only for the high-reasoning tier (planning, high-complexity design/verify) and dropping to **haiku** only for trivial/lightweight steps. Unlike the Codex `†` and agy `‡` mandates (one fixed model regardless of tier), this is a **task-aware default, not a blanket lock** — the Plan-and-Execute split still governs (capable model plans, Sonnet 5 executes). Pin a spawn with `model: claude-sonnet-5` in the Agent Spawn Template.
 
 Fable 5 hub: `claude-fable-5` serves the high-reasoning tier (plan + hardest design/verify steps); default effort `high`, `xhigh` only for capability-sensitive steps, `medium`/`low` for routine fan-out — Fable 5's lower effort already exceeds prior-model `xhigh`. Route refusal-prone domain steps with an Opus 4.8 fallback (F6). Full behavior deltas → § Claude Code hub — Fable 5.
 
