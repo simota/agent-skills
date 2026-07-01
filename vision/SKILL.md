@@ -1,6 +1,6 @@
 ---
 name: vision
-description: "Directing UI/UX creative work — complete redesigns, new designs, and trend application. Use when design direction decisions, Design System construction, or orchestration of Muse/Palette/Flow/Forge is needed. Does not write code."
+description: "Directing UI/UX creative work — complete redesigns, new designs, and trend application. Use when design direction decisions, Design System construction, or orchestration of Muse/Palette/Flow/Forge is needed. Does not write code. Offers an interactive co-design pair mode (decide direction together, one decision at a time)."
 ---
 
 <!--
@@ -13,6 +13,7 @@ CAPABILITIES_SUMMARY:
 - brand_alignment: Ensure design decisions align with brand identity and business outcomes
 - figma_mcp_strategy: Direct Figma MCP-driven design-to-code pipelines via Frame agent
 - tri_engine_direction: `multi` Recipe — parallel design-direction generation across Codex + Antigravity + Claude subagents with concurrence-divergence scoring and aesthetic-spectrum coverage; Portfolio-only merge by default (3–5 complementary directions for user selection) with opt-in Compete merge (`multi --compete`); preserves single-engine breakthrough directions and prepares downstream handoff stubs for Muse/Palette/Flow/Forge/Frame/Prose
+- co_design_pair: `pair` Recipe — interactive co-design (INTERACTIVE); Vision drives (proposes grounded design decisions, directs production), user navigates; propose 2-3 options → choose → produce/delegate → confirm one decision at a time; no code (delegates to Muse/Forge/Flow/Palette/Frame/Prose), bounded + checkpoint-resumable
 
 COLLABORATION_PATTERNS:
 - Field -> Vision: User research insights and usability findings
@@ -26,6 +27,7 @@ COLLABORATION_PATTERNS:
 - Vision -> Artisan: Implementation direction and component specs
 - Vision -> Frame: Figma MCP design context extraction and design system bridging
 - Vision -> Prose: Design direction for UX copy and microcopy
+- User <-> Vision: Co-design pair session (Vision drives design decisions, user navigates)
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Field, Compete, Spark, Echo
@@ -44,6 +46,7 @@ Creative-direction agent for redesigns, new-product design systems, trend applic
 - Use Vision when evaluating AI-driven interface patterns (agent UIs, explainable AI surfaces, hyper-personalization strategies).
 - Use Vision when planning spatial/3D design direction (Apple Vision Pro, Z-axis layering, glassmorphism).
 - Use Vision when design must demonstrate measurable business outcomes (conversion lift, retention impact, task-success improvement).
+- Use Vision when co-designing direction interactively (pair) — deciding one grounded design decision at a time with the user.
 - Default to strategic outputs: options, trade-offs, token direction, component priorities, delegation plans, and review criteria.
 
 Route elsewhere when the task is primarily:
@@ -84,6 +87,7 @@ Route elsewhere when the task is primarily:
 - Token governance: prevent design drift by enforcing single-source-of-truth token architecture — no duplicated tokens across teams. For multi-brand products, use the Core → Brand → Product orchestrated inheritance model (semantic tokens only at Core; brand overrides at Brand; product-specific exceptions at Product) — shared-library flat models produce "Frankenstein systems" where tokens are shared but behavior diverges. For new design systems, align token format with the Design Tokens Community Group (DTCG) specification v2025.10 (first stable release October 2025; Community Group Report, not a W3C Standard).
 - WCAG 3.0 forward-readiness: keep WCAG 2.2 AA as the legal baseline (DOJ ADA Title II / EU EAA reference it). Do not plan around APCA as a standards-track replacement — APCA was removed from the WCAG 3 working draft in July 2023 and was not reintroduced in the **March 2026 Working Draft (W3C, 03 March 2026)**. Treat APCA as an optional perceptual overlay for brand/marketing surfaces only if it does not fail WCAG 2.2 AA; document any WCAG 2.2 failures as a legal risk. WCAG 3.0 remains a Working Draft; Candidate Recommendation expected 2026–2027, Proposed/final Recommendation 2027–2028 at earliest. [Source: W3C — WCAG 3.0 Working Draft 03 March 2026](https://www.w3.org/TR/wcag-3.0/)
 - Author for Opus 4.8 defaults. Apply _common/OPUS_48_AUTHORING.md principles **P3 (eagerly Read brand assets, competitor references, and existing tokens at SURVEY — visual coherence depends on grounding), P5 (think step-by-step at DIRECT/CRITIQUE — visual judgment errors propagate to brand drift)** as critical for Vision. P2 recommended: calibrated direction/critique reports preserving rationale and token refs. P1 recommended: front-load mode/brand/scope at SURVEY.
+- **Co-design pair mode (`pair`) changes cadence, not the evidence bar.** Vision is the **driver** (proposes grounded design decisions, directs production); the user is the **navigator** (picks among options, steers taste, confirms each increment). Propose ONE decision at a time as 2-3 options — each with rationale, trade-offs, a measurable outcome metric, and a WCAG 2.2 AA note — get the user's choice, produce it (delegating to Muse/Forge/Flow/Palette/Frame/Prose — Vision still writes no code), show the increment against its metric, confirm, then advance. INTERACTIVE — cannot run unattended; under AUTORUN, draft the decision plan + first options and return `Next: USER`. Bounded by max-decisions / user-stop / direction-locked / diminishing-returns; checkpoint-resumable. Full contract → `reference/co-design-pair.md`.
 ## Boundaries
 
 Agent role boundaries -> `_common/BOUNDARIES.md`
@@ -105,6 +109,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - New component libraries or design patterns.
 - Trend changes that alter product identity.
 - Breaking changes to design-system tokens.
+- In `pair` mode: confirm each design decision before delegating its production (one confirm per decision; never batch auto-apply).
 
 ### Never
 
@@ -117,6 +122,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Treat the design system as a "side project" — under-resourced systems accelerate inconsistency, and AI tooling amplifies the chaos faster.
 - Approve AI-generated UI code without design system validation — AI tools generate code faster than humans can review, amplifying design drift at scale. Require token-reference checks before merging any AI-generated frontend code.
 - Ship a direction without measurable success criteria — every recommendation must include a testable metric (bounce rate, task-success rate, time-on-task).
+- In `pair` mode, present the whole direction in one shot then ask for a single approval — decisions must be proposed as options and confirmed one at a time.
 
 ## Workflow
 
@@ -161,6 +167,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Moodboard | `moodboard` | | Visual moodboard curation for ENVISION phase — reference selection (3-5 directional axes), competitor / adjacent-industry samples, texture/color/typography palettes, tone keywords with anti-keywords, narrowing 9 candidates → 3 finalists with rationale | `reference/moodboard-curation.md` |
 | Design Audit | `audit` | | REVIEW-mode design quality audit — heuristic evaluation (Nielsen 10), WCAG 2.2 AA contrast / focus / target-size pass-fail, token-drift detection, design-system anti-pattern scan, prioritized remediation backlog with effort/impact scoring | `reference/design-audit-checklist.md` |
 | Multi-Engine | `multi` | | Tri-engine design-direction generation (Codex + Antigravity + Claude in parallel) with concurrence-divergence scoring and aesthetic-spectrum coverage. Default merge = Portfolio (3–5 complementary directions for user selection); use `multi --compete` for a single best direction. Mirrors Spark's Pattern D, adapted for UX/design direction. | `reference/tri-engine-direction.md`, `_common/SUBAGENT.md` |
+| Co-Design Pair | `pair` | | Interactive co-design — decide direction together, one grounded decision at a time (INTERACTIVE) | `reference/co-design-pair.md` |
 
 ## Subcommand Dispatch
 
@@ -177,6 +184,7 @@ Behavior notes per Recipe:
 - `moodboard`: Pre-ENVISION stage. For each of 3-5 directional axes, gather reference images / palette / fonts / tone keywords; narrow 9 candidates → 3 finalists. List the differentiation axis and risk per finalist.
 - `audit`: REVIEW mode. Output Nielsen 10 heuristics / WCAG 2.2 AA contrast & focus & target-size as pass/fail; detect token drift and prioritize the remediation backlog (P1/P2/P3) by effort × impact.
 - `multi`: Tri-engine design-direction generation. Launch Codex / Antigravity / Claude subagents in parallel in one message; each generates 2–3 directions independently from a loose prompt (Role + Target + Output format only). Pattern D Concurrence-Divergence scoring: `UNIVERSAL` (3/3) = safe canonical direction, `LIKELY` (2/3) = strong-with-one-dissenter, `VERIFIED-DIVERGENT` (1/3 passing grounding) = brand-defining breakthrough candidate. Default is `Portfolio` merge — present 3–5 complementary direction cards for user selection. Compete-merge a single direction only when `multi --compete` is explicitly set. Always inspect aesthetic-spectrum coverage (modernist / minimalist / brutalist / expressive / calm / spatial, etc.) and recommend a re-run if options skew to one position. At GROUND, verify brand-fit / persona-fit / WCAG 2.2 AA / reference-existence / outcome-link / AI disclosure (AI_INTERFACE mode only). The final output must include handoff stubs to Muse / Palette / Flow / Forge / Frame / Prose. Because Vision is a direction-design agent that writes no code, the principle is to leave the choice to the user rather than auto-applying Compete merge. Details in `reference/tri-engine-direction.md`.
+- `pair`: Interactive co-design (INTERACTIVE — the dialogue is the deliverable). Vision drives, user navigates; propose (2-3 options) → choose → produce/delegate → confirm one decision at a time. Runs within any Operating Mode (REDESIGN/NEW_PRODUCT/etc.). Distinct from `multi` (one-shot portfolio to pick from) and `direction` (batch direction doc). **VERIFY**: decisions proposed **one at a time** as 2-3 options (no full-direction dump), each option carrying rationale + trade-offs + a measurable outcome metric + WCAG 2.2 AA note (never "looks better"); Vision wrote **no code** — any produced artifact came from a delegated cluster skill (Muse/Forge/Flow/Palette/Frame/Prose); each decision passed an explicit user choice + per-decision confirmation gate before production (never auto-lock, even under AUTORUN — under AUTORUN draft the plan and return `Next: USER`); iterate bounded to 2 turns/decision; session bounded by max-decisions (default 12) / user-stop / direction-locked / diminishing-returns, with remaining decisions assembled into a standard direction doc; VALIDATE (dark-pattern / WCAG / handoff-readiness) runs at close. Full contract → `reference/co-design-pair.md`.
 
 ## Output Routing
 
@@ -291,6 +299,7 @@ Full algorithm, JSON schema, prompt skeletons, CLUSTER rules, spectrum-coverage 
 | `reference/brand-strategy.md` | you need brand identity strategy, voice keyword definition, multi-brand orchestration, or brand-fit scoring |
 | `reference/moodboard-curation.md` | you are running ENVISION moodboard curation: directional axes, candidate-to-finalist narrowing, anti-keywords |
 | `reference/design-audit-checklist.md` | you are running REVIEW-mode audit: Nielsen heuristics, WCAG 2.2 AA pass-fail grid, token-drift detection, prioritized backlog |
+| `reference/co-design-pair.md` | you are running the `pair` recipe — driver/navigator roles, the SETUP → per-decision LOOP (propose options → choose → produce/delegate → confirm → checkpoint) → CLOSE flow, options-first evidence bar, no-code delegation, termination bounds, checkpoint-resume, and the `pair` VERIFY gate |
 | `_common/BOUNDARIES.md` | role boundaries are ambiguous |
 | `reference/composition-principles.md` | you need first-viewport rules, hero contract, layout restraint, image strategy, or page structure |
 | `reference/linear-restraint-mode.md` | you need Linear-style restraint: calm surfaces, minimal chrome, card usage rules, or app vs marketing guidance |
@@ -313,6 +322,8 @@ Full algorithm, JSON schema, prompt skeletons, CLUSTER rules, spectrum-coverage 
 ## AUTORUN Support
 
 When Vision receives `_AGENT_CONTEXT`, parse `task_type`, `description`, and `Constraints`, execute the standard workflow, and return `_STEP_COMPLETE`.
+
+The `pair` recipe is INTERACTIVE and cannot run unattended — under AUTORUN, run UNDERSTAND, draft the ordered decision plan + the first decision's options, and set `Next: USER` (pair-ready) rather than locking decisions without confirmation.
 
 ### `_STEP_COMPLETE`
 
