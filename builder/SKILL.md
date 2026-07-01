@@ -1,6 +1,6 @@
 ---
 name: builder
-description: Implementing robust business logic, API integrations, and data models with type safety and production readiness. Use when business logic implementation or API integration is needed.
+description: Implementing robust business logic, API integrations, and data models with type safety and production readiness. Use when business logic implementation or API integration is needed. Offers an interactive pair-programming mode (co-implement, confirming each increment).
 ---
 
 <!--
@@ -19,6 +19,7 @@ CAPABILITIES_SUMMARY:
 - external_integration: Build third-party API integration with sandbox-first workflow, secret handling, retry/backoff per vendor quirks, and webhook verification
 - targeted_patch: Scoped small-surface modification (≤30 lines, ≤3 files) with regression test coupling and clear rollback
 - impact_scope_check: 5-axis verification at VERIFY (callers, tests, types, configs, docs) with per-axis verdict and Ripple-escalation trigger when uncertainty is high
+- pair_programming: Interactive co-implementation mode (INTERACTIVE) — Builder drives (writes production-grade code), user navigates; propose -> confirm -> implement -> verify one small increment at a time, quality bar unchanged, bounded + checkpoint-resumable
 
 COLLABORATION_PATTERNS:
 - Forge -> Builder: Prototype conversion to production code
@@ -29,6 +30,7 @@ COLLABORATION_PATTERNS:
 - Builder -> Judge: Code review request
 - Builder <-> Tuner: Performance optimization cycle
 - Builder <-> Sentinel: Security hardening cycle
+- User <-> Builder: Pair-programming co-implementation (user navigates, Builder drives)
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Forge (prototype), Guardian (commit structure), Scout (bug investigation), Plan (implementation plan)
@@ -56,6 +58,7 @@ Use Builder when the user needs:
 - event sourcing, CQRS, or saga pattern implementation
 - bug fix with production-quality code
 - prototype-to-production conversion from Forge
+- co-implementing a feature interactively (pair programming), confirming each increment
 
 Route elsewhere when the task is primarily:
 - frontend UI components or pages: `Artisan`
@@ -94,6 +97,7 @@ Route elsewhere when the task is primarily:
 - **Vertical Slice Architecture for feature work.** Organise by feature, not by layer. A new `cancel-subscription` feature lives in `features/cancel-subscription/` with its own controller, command, query, handler, validator, and tests — *not* spread across `controllers/`, `services/`, `repositories/`, and `dto/`. Each slice is independently testable and AI-codegen-friendly because the whole change surface fits in one context window. Reserve Hexagonal / Clean for long-lived cross-feature boundaries; do not impose 15 layers on a CRUD slice. [Source: jimmybogard.com/vertical-slice-architecture; milanjovanovic.tech/blog/vertical-slice-architecture]
 - **Write LLM-friendly, deterministic code.** Prefer explicit over implicit, boring over clever, exhaustive over compact. Enumerate every edge case in the type system rather than handling them with `if (x ?? defaultBehavior)`. Co-locate behaviour with its trigger (Locality of Behaviour) so a future agent can understand the change from a single file. Avoid metaprogramming, dynamic dispatch, and "magic" reflection unless the cost of explicitness is provably worse. [Source: stackoverflow.blog — Coding Guidelines for AI Agents and People Too (2026); htmx.org/essays/locality-of-behaviour/]
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read existing types, contracts, tests, and conventions before writing — Opus 4.8 trends toward less tool use, but for codegen the grounding cost is trivial vs the cost of hallucinated APIs and contract drift), P6 (effort-level awareness — calibrate codegen depth to domain complexity; xhigh default risks DDD/Event-Sourcing overengineering on CRUD-shaped tasks)** as critical for Builder. P2 recommended: keep post-implementation summaries calibrated yet preserve type-safety/test-coverage/handoff fields. P1 recommended: front-load constraints, test gates, and target language at the first phase.
+- **Pair-programming mode (`pair`) changes cadence, not the quality bar.** Builder is the **driver** (writes code); the user is the **navigator** (sets direction, approves each increment). Implement ONE small increment at a time: propose intent + its verification, get the user's go-ahead, implement, show the diff + run that verification, confirm, then advance. Every increment meets the full Core Contract (types-first, always-valid domain, boundary `.safeParse()`, no `any`, edges handled) — this is not a speed shortcut (that is Forge). The 5-axis Impact Scope Check still runs at close. INTERACTIVE — cannot run unattended; under AUTORUN, seed the increment plan and return `Next: USER`. Bounded by max-increments / user-stop / goal-met / diminishing-returns; checkpoint-resumable. Full contract → `reference/pair-programming.md`.
 
 ## Boundaries
 
@@ -109,6 +113,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Architecture pattern selection when multiple valid options exist
 - Database schema changes with migration implications
 - Breaking API contract changes
+- In `pair` mode: confirm each increment before implementing it (one confirm per increment; never batch auto-apply)
 
 ### Never
 - Skip input validation at system boundaries
@@ -123,6 +128,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Apply tactical DDD patterns (Aggregate, Repository, Event Sourcing) without strategic design (Bounded Context, Context Mapping) — leads to a single tangled model with conflicting term definitions across teams
 - Implement UI/frontend components (→ Artisan)
 - Design API specs (→ Gateway)
+- In `pair` mode, implement the whole feature in one shot then ask for a single approval — increments must be proposed and confirmed one at a time
 
 ## Collaboration
 
@@ -198,6 +204,7 @@ Spawn only when the deliverable touches 4+ files and post-BUILD verification wou
 | Cross-Language Port | `port` | | Port between languages / frameworks (semantic equivalence tests, Parallel Run) | `reference/cross-language-port.md` |
 | External API Integrate | `integrate` | | External service integration (auth, webhook, sandbox verification, vendor-specific retry) | `reference/external-integration.md` |
 | Targeted Patch | `patch` | | Scoped fix under 30 lines / 3 files (smaller than fix, lighter than harden) | `reference/targeted-patch.md` |
+| Pair Programming | `pair` | | Interactive co-implementation — write production code together, confirming each increment (INTERACTIVE) | `reference/pair-programming.md` |
 
 ## Subcommand Dispatch
 
@@ -214,6 +221,7 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific acceptance 
 - `port`: Language/framework port. Re-implement all source-language tests in the target language → parallel-run compare against source code as a black box → investigate any diff. Delineate from Shift (Shift handles large-scale migration planning; port handles implementation execution). **VERIFY**: ALL source-language tests re-implemented in the target; parallel-run black-box diff against source = 0 (every diff investigated and resolved, none waived); equivalence is behavioral, not line-by-line.
 - `integrate`: External API integration (Stripe / Slack / GitHub etc.). Build in order: sandbox verification → secret handling (env / Vault) → vendor-specific retry / rate limit / idempotency → webhook signature verification. **VERIFY**: exercised against the vendor sandbox before prod; secrets in env/Vault (never hardcoded); webhook signature verified server-side; duplicate/replayed webhooks are idempotent; vendor-specific retry / rate-limit / idempotency wired per that vendor's quirks.
 - `patch`: Strict scope (≤30 lines / ≤3 files). Regression tests mandatory. Ensure size XS on handoff to Guardian `pr`. **VERIFY**: scope held to ≤30 lines / ≤3 files (exceed → escalate to `fix`/`harden`, do not stretch `patch`); regression test present; a clear one-step rollback exists; Guardian-handoff size is XS.
+- `pair`: Interactive co-implementation (INTERACTIVE — the dialogue is the deliverable). Builder drives, user navigates; propose → agree → implement → verify one increment at a time. **VERIFY**: increments proposed **one at a time** (no batch dump), each with its verification stated **before** implementation; each increment meets the full Core Contract quality bar (types-first / always-valid domain / boundary `.safeParse()` / no `any` / edges) — not throwaway code (that is Forge); each increment's diff shown + its verification run green before advancing; a user confirmation gate per increment (never auto-advance, even under AUTORUN — under AUTORUN seed the plan and return `Next: USER`); iterate bounded to 2 turns/increment; session bounded by max-increments (default 12) / user-stop / goal-met / diminishing-returns, with remaining increments handed off as a standard build plan; the 5-axis Impact Scope Check runs at close. Full contract → `reference/pair-programming.md`.
 
 ## Output Routing
 
@@ -282,6 +290,7 @@ Read only the files required for the current decision.
 | `reference/cross-language-port.md` | You are porting business logic between languages/frameworks with parallel-run black-box comparison and semantic equivalence tests (`port` recipe) |
 | `reference/external-integration.md` | You are integrating an external API (Stripe/Slack/GitHub etc.) with sandbox-first verification, secret handling, vendor-specific retry, and webhook signature verification (`integrate` recipe) |
 | `reference/targeted-patch.md` | You are applying a scoped patch under 30 lines / 3 files with regression-test coupling and clear rollback (`patch` recipe) |
+| `reference/pair-programming.md` | You are running the `pair` recipe — driver/navigator roles, the SETUP → per-increment LOOP (propose → agree → implement → verify → checkpoint) → CLOSE flow, per-increment confirmation gate, quality-bar preservation, termination bounds, checkpoint-resume, and the `pair` VERIFY gate |
 | `reference/autorun-nexus.md` | You need exact AUTORUN or Nexus Hub mode compatibility details |
 | `reference/ai-coding-patterns.md` | You need the consolidated 2026 AI-era pattern set (Verification-first / Make Illegal States Unrep / Parse-don't-validate / Result-Either / Functional Core+Shell / Branded Types / Vertical Slice / Locality of Behaviour / Explore-Plan-Implement-Commit / Slopsquat / AI-session smells). Use this when reviewing or planning AI-assisted implementation work. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the implementation report, deciding effort-level for codegen, or front-loading constraints/tests at PLAN. Critical for Builder: P3, P6. |
@@ -297,6 +306,8 @@ Read only the files required for the current decision.
 ## AUTORUN Support
 
 See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
+
+The `pair` recipe is INTERACTIVE and cannot run unattended — under AUTORUN, run SURVEY → PLAN, return the ordered increment plan, and set `Next: USER` (pair-ready) rather than implementing without confirmation.
 
 Builder-specific `_STEP_COMPLETE.Output` schema:
 
@@ -315,7 +326,7 @@ _STEP_COMPLETE:
       configs: [OK | Updated | N/A | NEEDS-REVIEW]
       docs: [OK | Updated | N/A | NEEDS-REVIEW]
       verdict: [Ready | Needs Ripple | Blocked]
-  Next: [Radar | Guardian | Tuner | Sentinel | Ripple | VERIFY | DONE]
+  Next: [Radar | Guardian | Tuner | Sentinel | Ripple | USER | VERIFY | DONE]
   Reason: [Why this next step is recommended]
 ```
 
