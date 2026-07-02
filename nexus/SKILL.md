@@ -95,6 +95,7 @@ Agent disambiguation → `reference/agent-disambiguation.md`
 - Chain designs with 5+ agents.
 - First-time use of a newly registered agent in a production chain.
 - **Before the first `agy -p ... --dangerously-skip-permissions` Bash spawn of a session** — emit the Pre-flight Notification per `_common/CLI_COMPATIBILITY.md §9.1` (informational, does not block AUTORUN).
+- **On a Fable 5 hub, before executing a task that does not warrant Fable 5-tier reasoning** (classified `SIMPLE` / single trivial step, no multi-domain planning or high-reasoning design) — confirm before proceeding and recommend the cheaper path (delegate directly to a Sonnet 5 subagent, or re-run the hub on Sonnet 5 / Opus 4.8). Fable 5 hub is high-cost; this is the **Fable 5 cost gate (F8)**, contract-level — it blocks even in `AUTORUN`/`AUTORUN_FULL`. See `reference/hub-authoring.md` § Claude Code hub — Fable 5.
 
 ### Never
 
