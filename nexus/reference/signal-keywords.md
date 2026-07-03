@@ -117,6 +117,7 @@ Loop-control, change-completeness, cross-language, and product-reproduction/synt
 | `career package`, `job-change plan`, `career strategy package`, `portfolio + interview + negotiation kit` | `package domain=career` (owner skill `ascent`) |
 | `learning package`, `curriculum package`, `course design package`, `training program docs` | `package domain=learning` (owner skill `agora`) |
 | `hiring package`, `recruitment package`, `JD + interview + onboarding kit`, `org design docs` | `package domain=hiring` (owner skill `guild`) |
+| `pack`, `skill pack`, `skill profile`, `enable skills`, `switch profile`, `skill preset` | `pack` (skill-profile switch — confirms diff before writing `settings.json`) |
 
 ---
 
