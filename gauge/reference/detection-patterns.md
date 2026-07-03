@@ -55,7 +55,9 @@
    - Agent names (e.g., `Nexus`, `Architect`)
    - Technical identifiers (e.g., `_STEP_COMPLETE`, `NEXUS_HANDOFF`)
    - Quoted proper nouns
-5. Scan `reference/` files for Japanese characters (none allowed)
+   - **User-input signal keywords** in routing tables (e.g. compass `一覧` / `おすすめ`, clause `プライバシーポリシー`) — users type Japanese; keyword anchors must match their input
+   - **Domain-content examples** for Japanese-market platforms or law (e.g. zine's note/Qiita opener/closer phrases, clause's Tokushoho terms) — the Japanese text IS the deliverable domain
+5. Scan `reference/` files for Japanese characters (none allowed, same whitelist applies)
 
 **PARTIAL trigger:** 1-3 Japanese character instances in body after whitelist filtering.
 **FAIL trigger:** `description:` contains Japanese characters, OR 4+ instances in body, OR `reference/` files contain Japanese.
@@ -151,6 +153,7 @@
 1. Search for heading matching: `## Output Routing` (case-insensitive)
 2. Search for routing table: markdown table with columns including "Signal" and at least one of "Approach", "Output", "Read"
 3. Count table rows (minimum 3)
+4. **Consolidated form (PASS):** no `## Output Routing` heading, but the `## Recipes` section contains a signal-routing table (`### Signal Keywords → Recipe` or a `| Keywords | ... |` table). Generation-3 skills deliberately consolidate routing into Recipes as a single source of truth — do not flag this as FAIL (2026-07 corpus audit: 39 skills use this form).
 
 **PARTIAL trigger:** Table present but missing key columns or fewer than 3 routes.
 
@@ -173,6 +176,8 @@
 1. Search for heading matching: `## Collaboration` (case-insensitive)
 2. Search for `Receives:` or `**Receives:**` pattern with agent names
 3. Search for `Sends:` or `**Sends:**` pattern with agent names
+4. **Equivalent forms (PASS):** a directed handoff table (`| Direction | Handoff | Purpose |` with `Agent → Agent` rows) or prose stating what the agent receives from upstream and sends downstream. The literal `Receives:`/`Sends:` labels are one accepted format, not the only one (2026-07 corpus audit: 46 skills use the directed-table form).
+5. **Hub exemption:** `nexus` documents handoffs across its entire body (`## Output Requirements & Handoffs`); score S7 as PASS-by-design for the hub.
 
 **PARTIAL trigger:** Heading exists but missing either Receives or Sends.
 

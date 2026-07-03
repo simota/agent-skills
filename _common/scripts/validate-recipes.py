@@ -26,7 +26,7 @@ from pathlib import Path
 SKILLS_ROOT = Path(__file__).resolve().parents[2]
 SKIP_DIRS = {"_common", "_templates"}
 RESERVED = {"default", "auto", "help", "list"}
-KEBAB = re.compile(r"^[a-z][a-z0-9-]{1,15}$")
+KEBAB = re.compile(r"^[a-z0-9][a-z0-9-]{1,19}$")
 MAX_RECIPES = 7
 
 
@@ -45,12 +45,27 @@ def extract_recipes_block(content: str) -> str | None:
 
 
 def parse_rows(block: str):
+    # Parse only the recipes table itself (header contains Recipe + Subcommand
+    # columns). The Recipes section may also hold keyword-routing tables whose
+    # second cell is a backtick-wrapped subcommand; parsing those produced
+    # false-positive R-REC-02 duplicates and inflated R-REC-04 counts.
+    lines = block.splitlines()
     rows = []
-    for row in re.finditer(r"^\|\s*([^|]+?)\s*\|\s*`([^`]+)`\s*\|\s*([^|]*)\s*\|", block, re.MULTILINE):
-        name = row.group(1).strip()
-        if name.lower() in ("recipe", "---") or name.startswith("-"):
+    in_table = False
+    for line in lines:
+        if not line.lstrip().startswith("|"):
+            in_table = False
             continue
-        rows.append((name, row.group(2).strip(), row.group(3).strip()))
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if not in_table:
+            if len(cells) >= 2 and "recipe" in cells[0].lower() and "subcommand" in cells[1].lower():
+                in_table = True
+            continue
+        if cells[0].startswith("-") or set(cells[0]) <= {"-", ":", " "}:
+            continue
+        m = re.match(r"^`([^`]+)`$", cells[1]) if len(cells) >= 2 else None
+        if m:
+            rows.append((cells[0], m.group(1).strip(), cells[2] if len(cells) >= 3 else ""))
     return rows
 
 
@@ -92,7 +107,7 @@ def validate(skill: str, path: Path) -> tuple[list[str], list[str], list[str]]:
         if subcmd in RESERVED:
             errors.append(f"R-REC-03: reserved word used as subcommand: `{subcmd}`")
         if not KEBAB.match(subcmd):
-            errors.append(f"R-REC-02: subcommand `{subcmd}` is not kebab-case / 2-12 chars")
+            errors.append(f"R-REC-02: subcommand `{subcmd}` is not kebab-case / 2-20 chars")
 
     if len(rows) > MAX_RECIPES:
         warnings.append(f"R-REC-04: {len(rows)} recipes exceeds max {MAX_RECIPES}")

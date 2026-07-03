@@ -19,8 +19,8 @@ Key properties:
 
 | Rule | Detail |
 |------|--------|
-| Length | 2-16 characters (favor brevity; extend only for unavoidable compound words) |
-| Format | kebab-case (lowercase, hyphens only) |
+| Length | 2-20 characters (favor brevity — aim for ≤ 12; extend only for unavoidable compound words, e.g. `growth-acceptance`) |
+| Format | kebab-case (lowercase, hyphens only; a leading digit is allowed for established domain terms, e.g. `5whys`, `1on1`) |
 | Reserved words | `default`, `auto`, `help`, `list` — forbidden as Recipe names |
 | Abstraction | Must be more specific than the skill name, less specific than a single use case |
 | Uniqueness | Unique within the skill; duplication across skills is OK |
@@ -125,7 +125,7 @@ The following rules are evaluated by **Gauge** during normalization audits.
 | Rule ID | Condition | Severity |
 |---------|-----------|---------|
 | R-REC-01 | A skill with `## Recipes` must declare exactly one `Default? = ✓` | ERROR |
-| R-REC-02 | All Subcommand values must match `^[a-z][a-z0-9-]{1,15}$` (kebab-case, 2-16 chars) | ERROR |
+| R-REC-02 | All Subcommand values must match `^[a-z0-9][a-z0-9-]{1,19}$` (kebab-case, 2-20 chars; leading digit allowed for domain terms like `5whys`) | ERROR |
 | R-REC-03 | Subcommand values must not be reserved words: `default`, `auto`, `help`, `list` | ERROR |
 | R-REC-04 | A skill must not define more than 7 Recipes | WARNING |
 | R-REC-05 | Presence of `## Recipes` section is RECOMMENDED for skills in Adoption Tiers 1-2, but not required | INFO |

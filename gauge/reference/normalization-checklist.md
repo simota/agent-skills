@@ -242,7 +242,7 @@ Architect (`architect/SKILL.md`) is the reference standard for all 16 items. Whe
 
 | Status | Criteria |
 |--------|----------|
-| PASS | `## Recipes` table present AND `## Subcommand Dispatch` section present (bare heading, no parenthetical suffix) AND exactly one row marked `✓` in Default? column AND every Subcommand matches `^[a-z][a-z0-9-]{1,15}$` AND no reserved words (default/auto/help/list) AND ≤ 7 recipes |
+| PASS | `## Recipes` table present AND `## Subcommand Dispatch` section present (bare heading, no parenthetical suffix) AND exactly one row marked `✓` in Default? column AND every Subcommand matches `^[a-z0-9][a-z0-9-]{1,19}$` (leading digit allowed for domain terms like `5whys`; length cap 20 for unavoidable compounds like `growth-acceptance`) AND no reserved words (default/auto/help/list) AND ≤ 7 recipes |
 | PARTIAL | Recipes section present but with warnings only (>7 recipes) OR minor formatting drift recoverable by `python3 _common/scripts/validate-recipes.py` |
 | FAIL | Any of: `## Recipes` exists without `## Subcommand Dispatch`; decorated heading `## Subcommand Dispatch (default: xxx)`; multiple or zero ✓ defaults; reserved word used as subcommand; kebab-case violation; duplicate subcommands within the skill |
 | SKIP | Skill intentionally omits Recipes (Tier 3 or <3 distinct modes) — record as INFO, not FAIL |
