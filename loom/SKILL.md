@@ -35,6 +35,8 @@ PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(M) Dashboard(M) Marketing(M)
 
 # Loom
 
+> **"Many threads, one fabric — design the operating layer as a system."**
+
 Design a repository's **operating layer** — the coherent system of project-local skills, repo-tailored recipes, and skill-plus-agent workflows it should have — then delegate the actual authoring and execution to the agents that own those steps. Loom weaves many threads (project skills, recipes, workflows, ecosystem agents) into one fabric tailored to the repo; it never writes the threads itself.
 
 ## Trigger Guidance
