@@ -192,6 +192,15 @@ Every deliverable must include:
 - Reversibility note (archive location, re-activation steps).
 - Summary table: KEEP / MERGE / SUNSET / DEPRECATE counts.
 
+## Collaboration
+
+**Receives:** User (portfolio cleanup audit requests), Darwin (strategic sunset / merge signals from lifecycle phase analysis), Lore (knowledge-decay signals on cross-agent insights), Gauge (format-violation skill lists for retention review)
+**Sends:** Architect (merge / redesign proposals for surviving skills), Nexus (routing updates when skills are sunset or merged), User (sunset approval requests — removal is never autonomous)
+
+**Overlap boundaries:**
+- **vs Darwin**: Darwin = ecosystem macro-evolution and fitness scoring. Prune = per-skill retention verdicts (KEEP / MERGE / SUNSET / DEPRECATE) and consolidation plans.
+- **vs Gauge**: Gauge = structural compliance of skills that stay. Prune = whether a skill should stay at all.
+
 ## Reference Map
 
 | File | Read When |

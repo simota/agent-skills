@@ -1,6 +1,6 @@
 ---
 name: cast
-description: Casting personas via rapid generation, persistence, lifecycle management, and inter-agent sync. Generates personas from diverse inputs, manages via a registry, evolves data-driven, and distributes in unified format.
+description: Casting personas via rapid generation, persistence, lifecycle management, and inter-agent sync. Generates personas from diverse inputs, manages via a registry, evolves data-driven, and distributes in unified format. Use when creating, updating, or syncing personas across agents. Not for UI walkthroughs (Echo) or user research design (Field).
 ---
 
 <!--

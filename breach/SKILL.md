@@ -242,7 +242,7 @@ Single source of truth for Recipe definitions, subcommand dispatch, and signal r
 | Supply Chain Attack | `supply` | | Supply chain attack scenarios — dependency confusion, typosquatting, build-tool compromise, SBOM (CycloneDX/SPDX) analysis, SLSA provenance, in-toto attestation, registry pinning | `reference/supply-chain-attack-design.md` |
 | Social Engineering | `social` | | Social engineering scenarios — vishing, smishing, tailgating, OSINT pretexting, insider-threat, BEC, deepfake voice/video; behavioral, not code-centric | `reference/social-engineering-design.md` |
 
-### Subcommand Dispatch
+## Subcommand Dispatch
 
 Parse the first token of user input. If it matches a Recipe Subcommand above → activate that Recipe. Otherwise:
 - Signal keywords in the "When to Use" column match → activate the corresponding Recipe.

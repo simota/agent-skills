@@ -198,7 +198,7 @@ Three core architecture decisions per feature — full tables and code samples �
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
 | SwiftUI (iOS) | `swiftui` | ✓ (iOS) | iOS — Swift 6.3 + SwiftUI + `@Observable` | `reference/patterns.md`, `reference/modern-stack.md` |
-| Compose (Android) | `compose` | ✓ (Android) | Android — Kotlin 2.4+ + Compose + M3 Expressive | `reference/patterns.md`, `reference/modern-stack.md` |
+| Compose (Android) | `compose` | (Android default — see Subcommand Dispatch) | Android — Kotlin 2.4+ + Compose + M3 Expressive | `reference/patterns.md`, `reference/modern-stack.md` |
 | Liquid Glass | `liquidglass` | | iOS 26 Liquid Glass adoption (depth controls, dynamic tab-bar, 4-variant icons) | `reference/ios-hig.md`, `reference/modern-stack.md` |
 | M3 Expressive | `expressive` | | M3 Expressive adoption (LoadingIndicator / PullToRefreshBox / FloatingToolbar / Carousel + spring) | `reference/android-material3.md`, `reference/modern-stack.md` |
 | Offline-First | `offline` | | T0-T3 offline architecture (SwiftData / Room / CRDT) | `reference/patterns.md` |

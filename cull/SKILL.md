@@ -183,7 +183,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `propagation`, `my packages`, `maintainer` | `propagation` |
 | unclear request mentioning supply-chain risk | `scan` (default) |
 
-### Subcommand Dispatch
+## Subcommand Dispatch
 
 - Parse the first token of user input. If it matches a Recipe Subcommand → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`scan` = Full IoC Scan).

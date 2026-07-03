@@ -223,7 +223,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `batch`, `sprint`, `series` | Learning Series |
 | `update`, `delta`, `incremental` | Incremental Doc |
 
-### Subcommand Dispatch
+## Subcommand Dispatch
 
 - Parse the first token of user input. If it matches a Recipe Subcommand → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → match Signal Keywords (above) → activate the mapped Recipe / format.
