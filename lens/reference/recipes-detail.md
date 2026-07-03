@@ -1,0 +1,33 @@
+# Recipes & Subcommand Dispatch — Full Detail
+
+Full "When to Use" descriptions and per-recipe behavior notes for Lens's recipes. The SKILL.md Recipes table and Subcommand Dispatch section carry first-sentence summaries; the complete text lives here.
+
+---
+
+## Recipe "When to Use" — full descriptions
+
+| Recipe | Subcommand | Default? | When to Use |
+|--------|-----------|---------|-------------|
+| Structure Map | `map` | ✓ | Structure mapping (overview, module boundaries and responsibility analysis) |
+| Ask (Q&A Mode) | `ask` | | Navigator-style conversational Q&A — free-form, multi-turn project questions answered progressively with session continuity |
+| Feature Discovery | `discover` | | Feature discovery ("does X exist?") |
+| Data Flow Trace | `trace` | | Data flow trace (origin → transformation → destination) |
+| Module Responsibility | `responsibility` | | Module responsibility analysis (cognitive complexity, comprehension debt evaluation) |
+| Dependency | `dependency` | | Deep dependency graph analysis — fan-in/fan-out per module, transitive closure, circular dependencies, dependency direction violations (UI → DB), package-boundary leakage detection |
+| Hotspot | `hotspot` | | Change-frequency hotspot identification — git log churn × cognitive complexity heatmap, coupling between churn and bug reports, "hot+complex" risk ranking for refactor prioritization |
+| Evolution | `evolution` | | Code evolution tracing via git history — file lifespan, author concentration (bus factor), abstraction churn, conceptual drift between commits, growth/decay trajectory of modules |
+
+---
+
+## Subcommand Dispatch — full behavior notes
+
+Each `**VERIFY**:` is the recipe-specific gate **in addition to** Lens's universal output discipline (file:line for every claim, confidence High/Med/Low per finding, "What I didn't find" section, zero confabulated relationships).
+
+- `ask`: Read `reference/qa-mode.md` first. Run the conversational loop `CLASSIFY → ANSWER → OFFER` per turn: map the free-form question to an investigation type, reuse session memory (skip SURVEY when stack/structure already known), answer at the lowest sufficient tier (T0 one-liner → T1 Quick Answer → T2 Investigation Report), then offer the single most-likely next question. Route out-of-scope questions (history → Trail, bug → Scout, design → Atlas, skill choice → Compass) instead of guessing. **VERIFY**: every claim (one-liners included) carries file:line; confidence stated with static-only inferences downgraded; absence answers state search coverage; no confabulated/cached relationships reused without re-verification; answer at lowest sufficient tier (deeper detail offered, not dumped); out-of-scope questions routed, not answered.
+- `map`: Classify investigation type as Structure in SCOPE. Establish module boundaries top-down before drilling into detail. **VERIFY**: boundaries grounded in actual files/dirs (not an idealized architecture); top-down precedes bottom-up; dynamic-dispatch boundaries (event bus / middleware / DI / plugins) flagged where static structure diverges from runtime; every module claim carries file:line.
+- `discover`: Shortened SCOPE → SURVEY → REPORT workflow allowed. REPORT immediately after existence confirmation. **VERIFY**: a definite yes/no with evidence — "exists" cites file:line, "doesn't exist" states exactly what was searched (search coverage), since absence-of-evidence ≠ evidence-of-absence; confidence level stated; broaden/escalate before declaring absent if <3 search iterations.
+- `trace`: Trace data from origin to destination. Explicitly flag dynamic-dispatch boundaries. **VERIFY**: each hop origin→transform→destination carries file:line; dynamic-dispatch boundaries flagged with an explicit confidence **downgrade** (static call graph ≠ runtime there); no runtime behavior inferred from static structure without that flag.
+- `responsibility`: Multi-signal cognitive complexity evaluation (SonarSource + nesting + naming). Identify comprehension debt hotspots. **VERIFY**: assessment is multi-signal (never a single SonarSource number); the asymmetry is honored (low value ⇒ understandable, but high value does NOT prove un-understandable); comprehension-debt hotspots (high churn + low review depth + no authorship continuity) flagged; every cross-reference verified against real code (no confabulation).
+- `dependency`: Read `reference/dependency-graph.md` first. Build the dependency graph with madge / dpdm (TS/JS) / pydeps (Python) / `go list -deps` (Go). Measure fan-in / fan-out per module (high fan-in = god-module candidate), measure transitive closure size, classify circular dependencies as HIGH / MED / LOW severity, flag direction violations (e.g. UI → DB direct import), and detect package-boundary leakage (external references into `internal/` packages). Output: dependency table + Mermaid graph + violation list. **VERIFY**: graph built from real tooling output (madge/dpdm/pydeps/`go list`), not inferred from reading imports by eye; fan-in/out measured per module; circular deps severity-classified; direction violations + boundary leakage each cited with the offending edge.
+- `hotspot`: Read `reference/change-hotspot.md` first. Collect file change frequency with `git log --since=N.months --name-only`, combine with SonarSource Cognitive Complexity to produce a `churn × complexity` heatmap. `hot+complex` (churn > median AND complexity > 15) is the top refactor candidate. Bug correlation: add the frequency of appearance in bug-fix commits via `git log --grep='fix\|bug'`. Output: ranked hotspot table + recommended refactor order. **VERIFY**: churn from actual `git log` and complexity from a real metric (neither estimated); `hot+complex` = churn>median AND complexity>15 applied as the rank key; bug-correlation computed via `git log --grep`; hotspots below CodeScene's AI-ready threshold (≥9.4/10) flagged "high-risk for agent-driven changes".
+- `evolution`: Read `reference/code-evolution.md` first. Per file, track lifespan (creation → last-change date), compute author concentration (bus factor: number of authors responsible for 80% of changes), measure abstraction churn (refactor-vs-feature ratio) via keyword extraction across commit messages and diffs, and detect conceptual drift (responsibility shift inferred from pre/post class/function changes). Long-stable files split into "stable" vs "dead code"; high-churn files split into "design unsettled" vs "feature growth". **VERIFY**: lifespan/author/churn all sourced from real git history; bus factor = authors covering 80% of changes (computed, not guessed); stable-vs-dead-code and unsettled-vs-growth distinctions each backed by commit evidence; conceptual-drift claims cite the pre/post change.

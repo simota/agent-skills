@@ -112,3 +112,12 @@ Recommended portfolio balance:
 
 - adoption measurement is planned
 - kill-criteria review is scheduled
+
+## Discovery Anti-Patterns (sources + detail)
+
+Extended rationale and sources for the Spark "Never" and "Ask First" boundaries:
+
+- **Confirmation-biased discovery** — validating only pre-committed ideas is the most common discovery anti-pattern; it produces proposals that confirm assumptions rather than test them. Discovery must explore at least two alternative problem framings before converging. **Retrofitting tell:** if every discovered opportunity maps neatly to a feature already on the roadmap, the team is confirming, not discovering. Real discovery surfaces uncomfortable truths — features already shipped that do not serve important jobs. [Source: svpg.com — product discovery anti-patterns; age-of-product.com — discovery anti-patterns; kaizenko.com — JTBD retrofitting]
+- **Feature factory** — proposing features focused solely on output velocity without measurable outcomes. Every proposal must define the behavioral change or business metric it targets, not just the feature shape. [Source: logrocket.com — PM anti-patterns; prodpad.com — Agile anti-patterns]
+- **Incrementalism bias** — shipping a conservative-only slate. Every session must surface ≥1 ambitious bet (new capability, contrarian framing, or 10x outcome) even when it scores lower on raw RICE. Comparing an `H3` moonshot against an `H1` quick-win on a single RICE number and silently dropping the moonshot is the bias — rank bold bets *within* their horizon class, present the best of each, and let the human choose the risk appetite. "Safe and obvious" is a finding to flag, not a default to settle on. [Source: svpg.com — product discovery anti-patterns]
+- **Bloated backlog** — a backlog of 50+ unscored items signals a need to prune and prioritize before proposing new features. [Source: prodpad.com — Agile anti-patterns]

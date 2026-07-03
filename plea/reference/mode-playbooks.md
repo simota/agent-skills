@@ -107,3 +107,33 @@ What is the user's goal?
 | Challenge → Validate | CHALLENGE → (Echo validation) | Counter assumptions, then verify in existing UI |
 | Compete → Prioritize | COMPETE → (Rank scoring) | Gather competitor-driven demands, then prioritize |
 | Edge → Mainstream | EDGE → EXPLORE | Start with minorities, extend patterns to mainstream |
+
+## Assumption Challenge (full template)
+
+Generate user-perspective counterarguments to common team assumptions. Used by the `challenge` Recipe / CHALLENGE mode.
+
+### Common "Curse of Knowledge" Patterns
+
+| Team Assumption | User Reality |
+|-----------------|-------------|
+| "Everyone knows this term" | Most users don't know industry jargon |
+| "They'll find it in settings" | Users don't notice the settings screen exists |
+| "They'll read the manual" | Users don't read manuals |
+| "Previous version users will understand" | New users are always arriving |
+| "The error message explains the cause" | Technical error messages cause fear |
+| "They can check the API docs" | Non-engineer users don't know APIs exist |
+
+### Challenge Template
+
+```yaml
+ASSUMPTION_CHALLENGE:
+  team_assumption: "[What the team believes]"
+  steelman: "[The assumption in its STRONGEST form — why a smart team holds it. State this before countering; a challenge that beats only a strawman is worthless.]"
+  user_reality: "[What users actually experience]"
+  user_voice: "[User's own words as counterargument]"
+  evidence_type: "[Behavioral observation / Churn data / Support tickets / Competitor comparison]"
+  falsifiable_test: "[The concrete observation that would CONFIRM or REFUTE this challenge — e.g. 'funnel drop-off at step 3 > 20%', 'A/B variant lifts activation'. A challenge with no resolving test is synthetic FUD; drop it.]"
+  impact: "[Impact if this assumption is wrong]"
+  verdict: "SURVIVES | WEAKENED | KILLED-pending-test  # synthetic verdict — the falsifiable_test settles it, not Plea"
+  calibration: "[hypothesis]  # ceiling until the test runs; a synthetic challenge is never user fact"
+```

@@ -101,3 +101,34 @@ Track:
 - `Status`
 - `Metric`
 - `Result`
+
+## RICE Guardrails (detailed)
+
+- **Reach**: use segment-specific reach, not total users. A settings feature reaching 100% of users is wrong — only 10-20% open settings. Always use a consistent time period (e.g., quarterly) across all features being compared. [Source: pmtoolkit.ai; saasfunnellab.com]
+- **Impact**: enforce distribution — ≤20% of features at Impact = 3. Define "High = ≥10% improvement in key metric." If everything is high impact, nothing is. [Source: pmtoolkit.ai]
+- **Confidence**: default to 50% for unvalidated ideas. Only increase above 80% with quantitative evidence (analytics, experiments, large-N surveys). Meeting discussions alone do not justify high confidence. [Source: saasfunnellab.com]
+- **Effort**: include design + testing + documentation + maintenance, not just engineering person-months. Always add a ≥30% buffer — things take longer than expected. [Source: monday.com; saasfunnellab.com]
+- **Scope limitation**: RICE deprioritizes tech debt and infrastructure improvements that lack direct user reach. For such items, flag the limitation and recommend a separate evaluation track or route to `Atlas`. [Source: productplan.com — RICE Scoring Model]
+- **Cross-team calibration**: when multiple teams use RICE, scores diverge without shared guidelines. If the context involves cross-team prioritization, recommend a calibration session with anchor examples before scoring. [Source: dovetail.com — RICE scoring model; productteacher.com — RICE guide]
+
+## RICE Anti-Patterns
+
+- **RICE is decision-support, not a decision-maker** — the estimation conversation teaches more than the final number. [Source: logrocket.com — RICE framework guide]
+- **No excessive precision** — RICE is a relative ranking system, not an exact science. Use rough estimates and ranges; debating whether Reach is 1,200 or 1,350 adds no signal. [Source: dovetail.com — RICE scoring model; productteacher.com — RICE guide]
+- **No black-box scoring** — computing RICE alone in a spreadsheet and announcing results in Slack makes prioritization opaque. Require cross-functional input during scoring: engineering for Effort, customer success for Reach/Impact evidence, sales for deal-blocking Confidence. With ±20% error on each factor, the resulting score carries ~80% compounded error — the scoring conversation teaches more than the number. [Source: fygurs.com — prioritization frameworks 2026; swkhan.medium.com — prioritization framework error compounding]
+- **Feature-level only** — do not use RICE to prioritize strategic initiatives; route those to `Magi`. [Source: pmtoolkit.ai — framework misapplication]
+
+## Horizon Ladder / Ambition Preservation (conservatism guard)
+
+Tag every proposal with a **Horizon**:
+- `H1` safe/incremental reuse
+- `H2` adjacent new capability
+- `H3` transformative/contrarian
+
+Rules:
+- Ensure at least one candidate or alternative framing is `H2`/`H3`. Reuse-bound discovery is the floor, not the ceiling — the best feature is sometimes one your data does *not* yet support.
+- Rank proposals **within** their Horizon, never `H3`-vs-`H1` on one raw number; a transformative bet competes against other transformative bets, not against a settings toggle.
+- RICE's Confidence factor structurally penalizes novel, unproven, high-upside bets — the more original the idea, the thinner its evidence, the lower its score. Do not let this silently kill bold options. Bold bets are tagged honestly (lower RICE confidence, explicit risk), never dropped.
+- A slate with zero `H2`/`H3` candidates fails the VERIFY gate. "Safe and obvious" is a finding to flag, not a default to settle on.
+
+[Source: McKinsey — Three Horizons of Growth]

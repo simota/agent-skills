@@ -184,17 +184,17 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`plan` = Migration Plan). Apply normal ASSESS → PLAN → PREPARE → EXECUTE → VERIFY → COMPLETE workflow.
 
-Behavior notes per Recipe:
-- `plan`: Default. General migration planning — strategy selection (Strangler Fig / Branch by Abstraction / Parallel Run / Big Bang), scope assessment, risk matrix. Use when the migration type is not yet decided or is architectural rather than framework/language-specific.
-- `codemod`: AST transform authoring — prefer ast-grep/jssg for cross-language or large-scale rewrites, jscodeshift or ts-morph for deep JS/TS semantics, LibCST for Python. Always dry-run before batch execution. Mechanical rewrite only — semantic verification still belongs to `verify`.
-- `strangler`: Strangler Fig implementation design — façade routing plan, old/new coexistence boundaries, migration sequence. Guard against façade-bottleneck (façade accumulating routing logic) and technical-layer decomposition (should be domain-boundary).
-- `verify`: Before/after behavioral-equivalence proof — golden fixtures, request replay, diff classification (expected / regression / benign). Required gate before removing compatibility layers in `COMPLETE`.
-- `framework`: Framework major-version migration (Vue 2→3, React 18→19, React CRA→Next.js, Next.js 15→16, Angular major, Svelte 4→5, Rails major, Spring Boot 2→3, Spring Boot 3→4, Express→Fastify/Hono). Produces a feature-parity checklist, adapter/compat shim plan, dual-run validation harness, and deprecation-warning triage. Consumes `detect`'s "framework deprecated" findings as input. For React 19: the React team co-published codemods with codemod.com covering `Context.Provider`, `forwardRef`, `useContext→use` rewrites ([codemod.com React 18→19 guide](https://docs.codemod.com/guides/migrations/react-18-19)). For Next.js 15→16: run `npx @next/codemod upgrade 16`; key changes are Cache Components and async `params`/`searchParams`. For Svelte 4→5: run `npx sv migrate svelte-5` or migrate per-component in VS Code; slots replaced by snippets. For Spring Boot 3→4: requires Java 21+, Jakarta EE 11, Spring Framework 7 — use OpenRewrite `UpgradeSpringBoot_4_0` recipe ([Moderne blog, 2025](https://www.moderne.ai/blog/spring-boot-4x-migration-guide)). Distinct from `plan`: `plan` chooses the strategy in the abstract; `framework` executes a specific framework transition with domain-specific gotchas.
-- `lang`: Language / runtime migration (JS→TS, TS `strict` staged enablement, Python 2→3 residual, Node LTS majors, Go toolchain, Java 8→17/21). Drives incremental type-inference strategy (leaves first, one `strict` sub-flag per PR) and runtime-behavior-diff verification (same deterministic workload on old + new runtime). Hand off crypto/TLS runtime diffs to Sentinel.
-- `deprecate`: Feature / API sunset orchestration — deprecation period, usage telemetry, Sunset HTTP header (RFC 8594), client migration docs, staged removal playbook with reversible rollback flag. Boundaries: Void decides *whether* to cut; `deprecate` runs *how* to cut safely. Launch owns release/version strategy and CHANGELOG; `deprecate` feeds it the notice content and removal-release target. Use when the surface being removed has external or cross-team callers.
-- `detect` (absorbed from horizon): Identify deprecated / outdated / unmaintained libraries via `npm audit`, maintenance signals (last-publish, contributors, GH issues), health scoring, and EOL runtime check. Emit replacement report — proposed alternatives, bundle-impact estimate, migration path (which Recipe handles execution: `modernize` / `framework` / `lang` / `deprecate`). Boundary: `detect` discovers; downstream Recipes execute. Gear escalates here when patch/minor reveals major-version-behind or EOL deps.
-- `modernize` (absorbed from horizon): Swap library with modern native API (Temporal > moment/date-fns, structuredClone > lodash.cloneDeep, fetch > axios/node-fetch, Intl > i18n libs, URLSearchParams > URI.js, Iterator helpers > lodash chains, Set methods > lodash set ops, Object.groupBy > lodash.groupBy, native WebSocket > ws, native glob() > glob pkg, `--env-file` > dotenv, native TS stripping > ts-node, URLPattern > path-to-regexp, node:test > jest/mocha for simple suites, node:sqlite > better-sqlite3). Quantify bundle-size delta (≤ 170KB initial JS compressed budget), caniuse coverage ≥ 95% for target browsers, and P99 latency ≤ baseline + 20%. Require ≥ 6 months post-stable-release before recommending adoption. Produce isolated PoC, not core rewrite — keep self-contained and easy to discard. Hand off Node 24+, Python 3.13, Java 25+ deep version diffs to `lang`.
-- `radar` (absorbed from horizon): Evaluate emerging technologies against maturity matrix before any recommendation — require ≥ 6 months post-stable-release, ≥ 1K GitHub stars or equivalent ecosystem signal, active maintenance (commits within last 90 days), and team learning-curve realism. Produce technology radar (adopt / trial / assess / hold rings) with browser/runtime compatibility matrix and supply-chain provenance check (npm provenance attestations, `npm audit signatures`, pnpm `trustPolicy: no-downgrade`, OIDC Trusted Publishing posture, release cooldown ≥ 72h for new versions / ≥ 60d for new packages per CIS Supply Chain Security Benchmark). Output is advisory — Magi makes the organizational decision; deep supply-chain forensics (worm campaigns, IoC matching) belong to cull/chain.
+Behavior notes per Recipe (full detail → `reference/recipes-detail.md`):
+- `plan`: Default. Strategy selection + scope + risk matrix when migration type is undecided or architectural.
+- `codemod`: AST transform authoring (ast-grep/jssg cross-language, jscodeshift/ts-morph JS/TS, LibCST Python); always dry-run; semantic verification belongs to `verify`.
+- `strangler`: Strangler Fig design — façade routing, coexistence boundaries, sequence; guard against façade-bottleneck and technical-layer decomposition.
+- `verify`: Before/after behavioral-equivalence proof (golden fixtures, replay, diff classification); gate before removing compat layers in `COMPLETE`.
+- `framework`: Framework major-version migration with feature-parity checklist, compat shim, dual-run, deprecation triage; consumes `detect` findings. Per-framework codemod commands (React 19, Next.js 16, Svelte 5, Spring Boot 4) in reference.
+- `lang`: Language/runtime migration with incremental type-inference and runtime-behavior-diff; hand off crypto/TLS diffs to Sentinel.
+- `deprecate`: API sunset orchestration; Void decides *whether*, `deprecate` runs *how*; Launch owns release/CHANGELOG. Use when removed surface has external/cross-team callers.
+- `detect` (absorbed from horizon): Identify deprecated/outdated/unmaintained libraries + replacement report + migration path; discovers only, downstream Recipes execute.
+- `modernize` (absorbed from horizon): Swap library with native API; quantify bundle/caniuse/P99 gates; isolated PoC, not core rewrite; hand off deep version diffs to `lang`.
+- `radar` (absorbed from horizon): Evaluate emerging tech against maturity matrix + provenance check; advisory only, Magi decides, forensics to cull/chain.
 
 ## Output Routing
 
@@ -264,31 +264,32 @@ Spawn when: migration touches ≥3 independent subsystems (e.g., API + DB + fron
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/migration-strategies.md` | You need Strangler Fig, Branch by Abstraction, Parallel Run, Big Bang patterns, risk assessment frameworks, phased rollout templates, monolith decomposition patterns. |
-| `reference/codemod-patterns.md` | You need jscodeshift/ts-morph/LibCST transforms, framework-specific migration recipes (React/Vue/ESM/TypeScript), API versioning patterns, AST manipulation techniques. |
-| `reference/database-migration.md` | You need zero-downtime schema changes, Expand-Contract pattern, dual-write strategies, data backfill procedures, PostgreSQL/MySQL version upgrade procedures, rollback procedures. |
-| `reference/framework-migration.md` | You run the `framework` recipe — need per-framework gotchas (Vue 2→3, React CRA→Next.js, Angular major, Rails major, Spring Boot 2→3, Express→Fastify/Hono), the feature-parity checklist template, adapter/compat shim patterns, dual-run validation, and deprecation-warning triage. |
-| `reference/language-migration.md` | You run the `lang` recipe — need type-inference / staged-strictness strategies (JS→TS, TS `strict` flags), runtime-behavior diff checklists for Node/Go/Java/Python major bumps, and type-debt ledger rules. |
-| `reference/deprecation-strategy.md` | You run the `deprecate` recipe — need deprecation-period sizing, telemetry patterns, RFC 8594 Sunset header usage, client migration doc structure, fallback-flag strategy, and staged removal playbook. |
-| `reference/deprecation-detection.md` | You run the `detect` recipe — need npm audit commands, maintenance signals, EOL runtime check, and health scoring. (absorbed from horizon) |
-| `reference/deprecated-library-catalog.md` | You run `detect` — need Date/Time, HTTP, Testing, CSS, Utility, Build Tool category replacement tables with code examples. (absorbed from horizon) |
-| `reference/deprecation-lifecycle.md` | You run `deprecate` — need the warn → deprecate → sunset → remove timeline, customer comms plan, SemVer alignment, and usage-metric gate for safe removal. (absorbed from horizon) |
-| `reference/native-replacements.md` | You run `modernize` — need the common library-to-native API replacement table with bundle-impact estimates. (absorbed from horizon) |
-| `reference/native-api-replacement-guide.md` | You run `modernize` — need Intl, Fetch, Dialog, Observers, BroadcastChannel, Crypto API code examples. (absorbed from horizon) |
-| `reference/strangler-fig-migration.md` | You run `strangler` — need façade design, per-route cutover criteria, parallel-run validation, and final-shutdown checklist. (absorbed from horizon) |
-| `reference/codemod-transformation.md` | You run `codemod` — need jscodeshift / ts-morph / ast-grep / comby tool selection, dry-run workflow, idempotency check, and rollout batching. (absorbed from horizon) |
-| `reference/browser-compatibility-matrix.md` | You run `radar` or `modernize` — need Safe/Check support tables, browserslist, and Decision Tree for compatibility. (absorbed from horizon) |
-| `reference/nodejs-version-compatibility.md` | You run `lang` or `radar` for Node.js — need LTS Timeline, Feature Matrix, and Upgrade Checklist. (absorbed from horizon) |
-| `reference/dependency-health-scan.md` | You run `detect` — need scan commands, Health Check Script, Matrix, and Checklist. (absorbed from horizon) |
-| `reference/bundle-size-analysis.md` | You run `modernize` — need analysis tools, Budget enforcement (≤170KB initial JS compressed), Optimization Strategies, and Vite config. (absorbed from horizon) |
-| `reference/migration-patterns.md` | You run `plan` — need Strangler Fig, Branch by Abstraction, Parallel Run patterns + Checklist + Risk Matrix. (absorbed from horizon) |
-| `reference/migration-risk-assessment.md` | You run `plan` — need risk matrix and migration strategy selection. (absorbed from horizon) |
-| `reference/code-standards.md` | You run `modernize` — need good/bad code examples and PoC commenting patterns. (absorbed from horizon) |
-| `reference/dependency-upgrade-anti-patterns.md` | You run `detect` — need dependency upgrade anti-patterns DU-01 to DU-07, staged update strategy, SemVer criteria. (absorbed from horizon) |
-| `reference/technology-adoption-anti-patterns.md` | You run `radar` — need technology adoption anti-patterns TA-01 to TA-07, Tech Maturity Matrix, Hype Cycle, Technology Radar. (absorbed from horizon) |
-| `reference/javascript-ecosystem-anti-patterns.md` | You run `radar` for the JS/Node ecosystem — need JS ecosystem anti-patterns JE-01 to JE-07, node_modules issues, PM selection guide, supply-chain security. (absorbed from horizon) |
-| `reference/frontend-modernization-anti-patterns.md` | You run `modernize` for the frontend — need frontend modernization anti-patterns FM-01 to FM-07, Outside-In migration, Micro Frontend, success KPIs. (absorbed from horizon) |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the migration plan, deciding adaptive thinking depth at strategy selection, or front-loading source/target versions and risk tier at ASSESS. Critical for Shift: P3, P5. |
+| `reference/recipes-detail.md` | You need the full per-recipe behavior notes behind the `## Subcommand Dispatch` one-liners. |
+| `reference/migration-strategies.md` | Strangler Fig / Branch by Abstraction / Parallel Run / Big Bang patterns, risk frameworks, phased rollout templates, monolith decomposition. |
+| `reference/codemod-patterns.md` | jscodeshift/ts-morph/LibCST transforms, framework recipes (React/Vue/ESM/TypeScript), API versioning, AST techniques. |
+| `reference/database-migration.md` | Zero-downtime schema changes, Expand-Contract, dual-write, data backfill, PostgreSQL/MySQL upgrade + rollback procedures. |
+| `reference/framework-migration.md` | `framework` recipe: per-framework gotchas (Vue 2→3, React CRA→Next.js, Angular/Rails major, Spring Boot 2→3, Express→Fastify/Hono), feature-parity checklist, compat shim, dual-run, deprecation triage. |
+| `reference/language-migration.md` | `lang` recipe: type-inference / staged-strictness (JS→TS, `strict` flags), runtime-diff checklists (Node/Go/Java/Python), type-debt ledger. |
+| `reference/deprecation-strategy.md` | `deprecate` recipe: period sizing, telemetry, RFC 8594 Sunset header, client migration docs, fallback-flag, staged removal playbook. |
+| `reference/deprecation-detection.md` | `detect` recipe: npm audit commands, maintenance signals, EOL check, health scoring. |
+| `reference/deprecated-library-catalog.md` | `detect`: Date/Time, HTTP, Testing, CSS, Utility, Build Tool replacement tables with code examples. |
+| `reference/deprecation-lifecycle.md` | `deprecate`: warn → deprecate → sunset → remove timeline, customer comms, SemVer alignment, usage-metric gate. |
+| `reference/native-replacements.md` | `modernize`: library-to-native API replacement table with bundle-impact estimates. |
+| `reference/native-api-replacement-guide.md` | `modernize`: Intl, Fetch, Dialog, Observers, BroadcastChannel, Crypto API code examples. |
+| `reference/strangler-fig-migration.md` | `strangler`: façade design, per-route cutover criteria, parallel-run validation, final-shutdown checklist. |
+| `reference/codemod-transformation.md` | `codemod`: jscodeshift / ts-morph / ast-grep / comby tool selection, dry-run workflow, idempotency check, rollout batching. |
+| `reference/browser-compatibility-matrix.md` | `radar`/`modernize`: Safe/Check support tables, browserslist, compatibility Decision Tree. |
+| `reference/nodejs-version-compatibility.md` | `lang`/`radar` for Node.js: LTS Timeline, Feature Matrix, Upgrade Checklist. |
+| `reference/dependency-health-scan.md` | `detect`: scan commands, Health Check Script, Matrix, Checklist. |
+| `reference/bundle-size-analysis.md` | `modernize`: analysis tools, Budget enforcement (≤170KB initial JS compressed), Optimization Strategies, Vite config. |
+| `reference/migration-patterns.md` | `plan`: Strangler Fig / Branch by Abstraction / Parallel Run patterns + Checklist + Risk Matrix. |
+| `reference/migration-risk-assessment.md` | `plan`: risk matrix and migration strategy selection. |
+| `reference/code-standards.md` | `modernize`: good/bad code examples and PoC commenting patterns. |
+| `reference/dependency-upgrade-anti-patterns.md` | `detect`: anti-patterns DU-01 to DU-07, staged update strategy, SemVer criteria. |
+| `reference/technology-adoption-anti-patterns.md` | `radar`: anti-patterns TA-01 to TA-07, Tech Maturity Matrix, Hype Cycle, Technology Radar. |
+| `reference/javascript-ecosystem-anti-patterns.md` | `radar` for JS/Node: anti-patterns JE-01 to JE-07, node_modules issues, PM selection guide, supply-chain security. |
+| `reference/frontend-modernization-anti-patterns.md` | `modernize` for frontend: anti-patterns FM-01 to FM-07, Outside-In migration, Micro Frontend, success KPIs. |
+| `_common/OPUS_48_AUTHORING.md` | Sizing the migration plan, adaptive thinking depth at strategy selection, front-loading versions/risk tier at ASSESS. Critical: P3, P5. |
 
 ## Output Requirements
 

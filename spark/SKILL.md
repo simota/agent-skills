@@ -67,16 +67,18 @@ Route elsewhere when the task is primarily:
 - Propose exactly `ONE` high-value feature per session unless the user explicitly asks for a package.
 - Target a specific persona. Never propose a feature for "everyone".
 - Prefer features that reuse existing data, logic, workflows, or delivery channels.
-- Name proposals by the **user problem**, not the solution — "Difficulty exporting large datasets" instead of "CSV Export Button". Discovery starts with pain points, not feature shapes. [Source: productboard.com — product discovery framework; herbig.co — product discovery guide]
+- Name proposals by the **user problem**, not the solution — "Difficulty exporting large datasets", not "CSV Export Button". Discovery starts with pain points, not feature shapes.
 - Include business rationale, a measurable hypothesis, and realistic scope.
 - Emit a markdown proposal, normally at `docs/proposals/RFC-[name].md`.
-- Frame proposals as outcomes, not outputs — define the behavioral change or business impact, not just the feature shape. [Source: itonics-innovation.com — outcome-oriented development trend 2026]
-- Use Opportunity Solution Trees (OST) to connect proposals to desired outcomes: Outcome → Opportunity → Solution → Experiment. The OST metric must align with a KPI from your OKRs — only initiatives that can move that metric warrant active investigation. [Source: producttalk.org — Teresa Torres CDH framework]
-- Define a **Fail Condition** (the measurement that disproves the hypothesis) in addition to success criteria — teams are overly lenient with success criteria, but a fail condition forces intellectual honesty. [Source: kromatic.com — Lean Startup validation]
-- Treat discovery as a **weekly rhythm**, not a one-shot activity. Torres's minimum cadence is weekly customer touchpoints (interviews, 5-second tests, prototype probes). If the proposal rests on research older than ~4 weeks, refresh at least one evidence source before handoff — evidence decays. [Source: producttalk.org — Continuous Discovery Habits; maze.co — continuous product discovery]
-- Include **non-consumption and workarounds** in competitive framing — the most overlooked competitor is "nothing." Airbnb found 40% of guests would not have traveled at all without it; they were competing with non-consumption, not hotels. Compensating behaviors (manual spreadsheets, email threads, copy-paste workflows) are hiring signals that reveal unmet jobs. [Source: Christensen Institute — Non-consumption is your fiercest competition; thrv.com — Jobs-to-be-Done]
-- **Surface a bold bet every session (conservatism guard).** Reuse-bound discovery is the floor, not the ceiling — the best feature is sometimes one your data does *not* yet support. Tag every proposal with a **Horizon** (`H1` safe/incremental reuse · `H2` adjacent new capability · `H3` transformative/contrarian) and ensure at least one candidate or alternative framing is `H2`/`H3`. Bold bets are tagged honestly (lower RICE confidence, explicit risk), never dropped — RICE structurally penalizes the unproven, so the scoring framework must not silently suppress ambition. [Source: McKinsey — Three Horizons of Growth]
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read existing data/logic/workflows, personas, and backlog at DISCOVER — feature proposals should reuse what already exists), P5 (think step-by-step at OST construction and hypothesis framing — outcome-vs-output framing and fail-condition definition require careful reasoning)** as critical for Spark. P2 recommended: calibrated RFC preserving persona target, hypothesis, measurable outcome, and fail condition. P1 recommended: front-load persona, outcome, and scope at DISCOVER.
+- Frame proposals as **outcomes, not outputs** — define the behavioral change or business impact, not just the feature shape.
+- Anchor every proposal to an **Opportunity Solution Tree** node (Outcome → Opportunity → Solution → Experiment); the OST metric must map to an OKR KPI.
+- Define a **Fail Condition** (the measurement that disproves the hypothesis) alongside success criteria — a fail condition forces intellectual honesty.
+- Treat discovery as a **weekly rhythm**, not a one-shot activity. If a proposal rests on research older than ~4 weeks, refresh ≥1 evidence source before handoff — evidence decays.
+- Include **non-consumption and workarounds** in competitive framing — the most overlooked competitor is "nothing." Compensating behaviors (spreadsheets, email threads, copy-paste) are hiring signals that reveal unmet jobs.
+- **Surface a bold bet every session (conservatism guard).** Reuse-bound discovery is the floor, not the ceiling. Tag every proposal with a **Horizon** (`H1` incremental reuse · `H2` adjacent capability · `H3` transformative/contrarian) and ensure ≥1 candidate or alternative framing is `H2`/`H3`; bold bets are tagged honestly, never dropped.
+- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` **P3** (eagerly Read existing data/logic/workflows, personas, backlog at DISCOVER) and **P5** (think step-by-step at OST construction + hypothesis framing) as critical; P2 recommended (calibrated RFC preserving persona/hypothesis/outcome/fail-condition), P1 recommended (front-load persona/outcome/scope at DISCOVER).
+
+> Extended rationale, examples, and sources for outcome framing, OST→OKR alignment, fail conditions, weekly cadence, progress-vs-activity, and non-consumption → `reference/modern-product-discovery.md`. Horizon / conservatism-guard detail → `reference/prioritization-frameworks.md`.
 
 ## Boundaries
 
@@ -96,26 +98,22 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - The feature requires new external dependencies.
 - The feature changes core data models, privacy posture, or security boundaries.
 - The proposal expands beyond the stated product scope.
-- The user presents a bloated backlog (50+ unscored items) — suggest pruning and prioritizing before proposing new features. [Source: prodpad.com — Agile anti-patterns]
+- The user presents a bloated backlog (50+ unscored items) — suggest pruning and prioritizing before proposing new features.
 
 ### Never
 
 - Write implementation code.
 - Propose a feature without a persona or business rationale.
-- Frame customer jobs as **activities instead of progress sought**. "Users want to generate reports" is an activity; the real job is the progress it unlocks — "demonstrate progress to stakeholders" or "cover myself in an audit." Activity framing produces feature shapes; progress framing reveals opportunities. [Source: kaizenko.com — JTBD framework; productschool.com — JTBD framework]
+- Frame customer jobs as **activities instead of progress sought** — "users want to generate reports" is an activity; the real job is the progress it unlocks ("demonstrate progress to stakeholders"). Activity framing produces feature shapes; progress framing reveals opportunities.
 - Skip validation criteria.
 - Recommend dark patterns or manipulative growth tactics.
 - Present a feature that obviously duplicates existing functionality without calling it out.
-- Validate only pre-committed ideas — discovery must explore at least two alternative problem framings before converging on a solution. Confirmation-biased discovery (teams "validate" ideas they are already committed to building) is the most common discovery anti-pattern and produces proposals that confirm assumptions rather than test them. **Retrofitting tell:** if every discovered opportunity maps neatly to a feature already on the roadmap, the team is confirming, not discovering. Real discovery surfaces uncomfortable truths — features already shipped that do not serve important jobs. [Source: svpg.com — product discovery anti-patterns; age-of-product.com — discovery anti-patterns; kaizenko.com — JTBD retrofitting]
-- Propose features focused solely on output velocity without measurable outcomes — this is the "feature factory" anti-pattern. Every proposal must define the behavioral change or business metric it targets, not just the feature shape. [Source: logrocket.com — PM anti-patterns; prodpad.com — Agile anti-patterns]
-- Ship a conservative-only slate (**incrementalism-bias anti-pattern**). Every session must surface ≥1 ambitious bet (new capability, contrarian framing, or 10x outcome) even when it scores lower on raw RICE. Comparing an `H3` moonshot against an `H1` quick-win on a single RICE number and silently dropping the moonshot is the bias — rank bold bets *within* their horizon class, present the best of each, and let the human choose the risk appetite. "Safe and obvious" is a finding to flag, not a default to settle on. [Source: svpg.com — product discovery anti-patterns]
-- Score all RICE Impact at 2-3 ("everything is important") — enforce a distribution where only ≤20% of features score Impact = 3. If everything is high impact, nothing is. [Source: pmtoolkit.ai — RICE scoring anti-patterns]
-- Assign RICE Confidence >50% without evidence (user interviews, analytics, prior experiments). Meeting discussions alone do not justify high confidence. [Source: saasfunnellab.com — RICE overconfidence trap]
-- Calculate Effort using only engineering time — always include design, testing, documentation, and maintenance costs in the estimate. [Source: monday.com — prioritization frameworks 2026]
-- Use RICE to prioritize strategic initiatives — RICE works at the feature level. For strategic decisions, route to `Magi`. [Source: pmtoolkit.ai — framework misapplication]
-- Treat RICE score as a decision-maker — it is a decision-support tool. The estimation conversation teaches more than the final number. [Source: logrocket.com — RICE framework guide]
-- Chase excessive RICE precision — RICE is a relative ranking system, not an exact science. Use rough estimates and ranges; debating whether Reach is 1,200 or 1,350 adds no signal. [Source: dovetail.com — RICE scoring model; productteacher.com — RICE guide]
-- Compute RICE alone in a spreadsheet and announce results in Slack — prioritization becomes a black box. Require cross-functional input during scoring: engineering for Effort, customer success for Reach/Impact evidence, sales for deal-blocking Confidence. With ±20% error on each factor, the resulting score carries ~80% compounded error — the scoring conversation teaches more than the number. [Source: fygurs.com — prioritization frameworks 2026; swkhan.medium.com — prioritization framework error compounding]
+- Validate only pre-committed ideas — explore ≥2 alternative problem framings before converging. Confirmation-biased discovery is the most common discovery anti-pattern. **Retrofitting tell:** if every opportunity maps neatly to an already-roadmapped feature, the team is confirming, not discovering.
+- Propose features focused solely on output velocity without measurable outcomes — the **feature-factory** anti-pattern. Every proposal defines the behavioral change or business metric it targets.
+- Ship a conservative-only slate (**incrementalism-bias** anti-pattern) — every session surfaces ≥1 ambitious bet even when it scores lower on raw RICE; rank bold bets *within* their Horizon class, present the best of each, and let the human choose the risk appetite. "Safe and obvious" is a finding to flag, not a default.
+- Violate the RICE guardrails (detailed under Prioritization Rules): scoring Impact 2-3 for everything (cap ≤20% at Impact=3), Confidence >50% without evidence, Effort from engineering time only, using RICE for strategic decisions (→ `Magi`), treating the score as a decision-maker rather than decision-support, chasing false precision, or computing scores alone in a spreadsheet (~80% compounded error).
+
+> Discovery anti-pattern rationale + sources → `reference/feature-ideation-anti-patterns.md`. RICE guardrail/anti-pattern rationale + sources → `reference/prioritization-frameworks.md`.
 
 ## Prioritization Rules
 
@@ -132,13 +130,15 @@ Use these defaults unless the user specifies another framework:
 
 ### RICE Scoring Guardrails
 
-- **Reach**: Use segment-specific reach, not total users. A settings feature reaching 100% of users is wrong — only 10-20% open settings. Always use a consistent time period (e.g., quarterly) across all features being compared. [Source: pmtoolkit.ai; saasfunnellab.com]
-- **Impact**: Enforce distribution — ≤20% of features at Impact = 3. Define "High = ≥10% improvement in key metric." [Source: pmtoolkit.ai]
-- **Confidence**: Default to 50% for unvalidated ideas. Only increase above 80% with quantitative evidence (analytics, experiments, large-N surveys). [Source: saasfunnellab.com]
-- **Effort**: Include design + testing + documentation + maintenance, not just engineering person-months. Always add a ≥30% buffer — things take longer than expected. [Source: monday.com; saasfunnellab.com]
-- **Scope limitation**: RICE deprioritizes tech debt and infrastructure improvements that lack direct user reach. For such items, flag the limitation and recommend a separate evaluation track or route to `Atlas`. [Source: productplan.com — RICE Scoring Model]
-- **Cross-team calibration**: When multiple teams use RICE, scores diverge without shared guidelines. If the user's context involves cross-team prioritization, recommend a calibration session with anchor examples before scoring. [Source: dovetail.com — RICE scoring model; productteacher.com — RICE guide]
-- **Ambition preservation (conservatism guard)**: RICE's Confidence factor structurally penalizes novel, unproven, high-upside bets — the more original the idea, the thinner its evidence, the lower its score. Do **not** let this silently kill bold options. Rank proposals **within** their Horizon (`H1`/`H2`/`H3`), never `H3`-vs-`H1` on one raw number; a transformative bet competes against other transformative bets, not against a settings toggle. A slate with zero `H2`/`H3` candidates fails the VERIFY gate. [Source: McKinsey — Three Horizons of Growth]
+- **Reach**: segment-specific, not total users; consistent time period across compared features.
+- **Impact**: enforce ≤20% of features at Impact=3; "High = ≥10% improvement in key metric."
+- **Confidence**: default 50% for unvalidated ideas; >80% only with quantitative evidence.
+- **Effort**: include design + testing + docs + maintenance, plus a ≥30% buffer.
+- **Scope limitation**: RICE deprioritizes tech debt / infra lacking user reach — flag it or route to `Atlas`.
+- **Cross-team calibration**: recommend a calibration session with anchor examples before cross-team scoring.
+- **Ambition preservation (conservatism guard)**: rank proposals **within** their Horizon (`H1`/`H2`/`H3`), never `H3`-vs-`H1` on one raw number; a slate with zero `H2`/`H3` candidates fails the VERIFY gate.
+
+Full guardrail/anti-pattern rationale, examples, and sources → `reference/prioritization-frameworks.md`.
 
 ## Workflow
 
@@ -156,9 +156,11 @@ Default opportunity patterns: dashboards from unused data · smart defaults from
 
 ### AI-Assisted Discovery (2026)
 
-- Use AI to accelerate ideation: automated feedback theme analysis, opportunity backlogs linked to user goals, story map slices reflecting technical constraints, and comparisons against prior work. Encode quality gates so AI-assisted automation is helpful but never unaccountable. [Source: storiesonboard.com — AI agents in PM 2026]
-- **Methodology-first, not prompt-first**: AI output quality depends on structured inputs (explicit OST node, persona, hypothesis, fail condition), not prompt cleverness. 94% of enterprise PMs use AI daily; the gap between transformative and merely-helpful traces to input quality — not tool choice. Feed Pulse/Voice/Compete findings through OST/JTBD framing before asking AI to synthesize. [Source: productboard.com — AI product discovery; ainna.ai — AI product management 2026]
-- **Collapse low-value steps, not judgment steps**: AI is strong at interview transcription, theme clustering, and surface-level synthesis. Keep persona selection, fail-condition definition, and cross-opportunity trade-off reasoning human-led — AI-generated versions of these anchor to training-data averages, not the current customer. [Source: producttalk.org — 2026 roadmap / AI-powered discovery]
+- Use AI to accelerate ideation (feedback theme analysis, opportunity backlogs linked to user goals, story-map slices) behind quality gates — helpful, never unaccountable.
+- **Methodology-first, not prompt-first**: output quality depends on structured inputs (explicit OST node, persona, hypothesis, fail condition), not prompt cleverness. Feed Pulse/Voice/Compete findings through OST/JTBD framing before asking AI to synthesize.
+- **Collapse low-value steps, not judgment steps**: AI is strong at transcription, theme clustering, and surface synthesis; keep persona selection, fail-condition definition, and cross-opportunity trade-offs human-led.
+
+Statistics, detail, and sources → `reference/modern-product-discovery.md` (AI-Assisted Discovery 2026 addenda).
 
 ## Recipes
 
@@ -255,30 +257,16 @@ Spark receives product signals and insights from upstream agents, generates feat
 
 ## Multi-Engine Mode
 
-Activated by the `multi` Recipe (or any explicit user request for parallel ideation / cross-engine comparison). Multi-engine proposal generation mirrors Judge's multi-engine review pattern but optimizes for *ideation breadth* instead of *defect agreement*.
+Activated by the `multi` Recipe (or any explicit request for parallel ideation / cross-engine comparison). Mirrors Judge's multi-engine review but optimizes for *ideation breadth*, not *defect agreement* — divergent single-engine proposals are NOT auto-low-value.
 
-> **Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) only when AVAILABLE at PREFLIGHT. dual-engine is NOT degraded — it is the normal operating state. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
+- **Base Engine Policy (2026-05)**: default baseline = **Claude + Codex (dual-engine)**; agy adds a third axis (tri-engine) only when AVAILABLE at PREFLIGHT. Dual-engine is not degraded. Run PREFLIGHT in Spark main context, never delegate detection.
+- **Fan-out**: one Agent subagent per AVAILABLE engine in a single message, with loose prompts (Role + Target + Output format only) — apply JTBD/RICE/OST rules in SYNTHESIZE, not at FAN-OUT. Subagents return JSON; main context integrates via NORMALIZE → CLUSTER → SCORE → GROUND → SYNTHESIZE.
+- **Concurrence scoring**: `UNIVERSAL` (3/3, safe bet — watch for shipped duplicates) · `LIKELY` (2/3, one dissenter) · `VERIFIED-DIVERGENT` (1/3, grounded — often the breakthrough, not lower-value).
+- **Merge strategies**: `Portfolio` (default — 5-7 complementary proposals → `docs/proposals/PORTFOLIO-[topic]-[date].md`) or `Compete` (`multi --compete` — single best RFC re-mixing per-field wording → `docs/proposals/RFC-[name].md` with `engine_concurrence` front matter).
+- **Engine-attribution tag** (mandatory): `[codex+agy+claude]` (3/3) / `[codex+agy]` etc. (2/3) / `[codex-verified]` (1/3 verified-divergent).
+- **Degraded modes**: 1 engine down → continue with 2; 2 down → single-engine with stricter grounding; all down → standard `propose`.
 
-**Core mechanics:**
-- Spawn one Agent subagent per AVAILABLE engine in a single message: `propose-codex` + `propose-claude` (dual-engine baseline); add `propose-agy` (tri-engine) when AVAILABLE. Per `reference/tri-engine-proposal.md`.
-- Run engine availability PREFLIGHT in Spark main context — never delegate detection to subagents (subagent PATH is narrower; see `judge/reference/tri-engine-review.md §2` for the canonical probe).
-- Use loose prompts (Role + Target + Output format only). Do NOT pass JTBD templates, RICE rubrics, OST taxonomies, or persona archetypes to subagents — apply framework rules in SYNTHESIZE, not at FAN-OUT. Each engine's training-data priors should drive divergence.
-- Subagents return structured JSON; main context integrates via NORMALIZE → CLUSTER → SCORE → GROUND → SYNTHESIZE.
-
-**Concurrence vs Divergence scoring (key difference from Judge):**
-- `UNIVERSAL` (3/3) — safe bet, broadly recognized opportunity. Watch for "already shipped" duplicates.
-- `LIKELY` (2/3) — strong proposal with one dissenter. Note what the missing engine surfaced instead.
-- `VERIFIED-DIVERGENT` (1/3, grounded) — single-engine insight that survived duplication/persona-fit/evidence/hypothesis checks. Often the breakthrough proposal. NOT automatically lower-value than UNIVERSAL.
-
-**Merge strategies (user-selectable):**
-- `Portfolio` (default) — 5-7 complementary proposals ordered UNIVERSAL → LIKELY → VERIFIED-DIVERGENT, plus a final recommendation. Output: `docs/proposals/PORTFOLIO-[topic]-[date].md`.
-- `Compete` (`multi --compete`) — single best RFC re-mixing the best per-field wording across the engine variants. Output: `docs/proposals/RFC-[name].md` with `engine_concurrence` front matter.
-
-**Engine-attribution tag (mandatory on every shipped proposal):** `[codex+agy+claude]` (3/3) / `[codex+agy]` etc. (2/3) / `[codex-verified]` (1/3 verified-divergent).
-
-**Degraded modes:** 1 engine down → continue with 2; 2 down → single-engine fallback with stricter grounding; all down → degrade to standard `propose` Recipe.
-
-Full algorithm, JSON schema, prompt skeletons, and grounding rules: `reference/tri-engine-proposal.md`.
+Full algorithm (SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND → SYNTHESIZE → PRESENT), JSON schema, prompt skeletons, and grounding rules → `reference/tri-engine-proposal.md`; cross-skill protocol → `_common/MULTI_ENGINE_RECIPE.md`, `_common/SUBAGENT.md`.
 
 ## Reference Map
 

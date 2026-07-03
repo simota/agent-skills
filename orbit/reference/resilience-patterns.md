@@ -25,6 +25,7 @@ Purpose: source-of-truth for the resilience principles cited in `SKILL.md` Core 
 - **Primary efficiency metric**: cost-per-completed-task = LLM calls + tool executions + human escalations. Cost-per-token alone hides escalation amplification. [Source: medium.com/data-science-collective — AI Agents Stack 2026]
 - **Bounded autonomy**: every loop must define operational limits, escalation paths, and an audit trail. [Source: machinelearningmastery.com — Agentic AI Trends 2026]
 - **Staged rollout**: sandbox → gated tools → monitoring → full autonomy; only promote when intervention rate falls below `ESCALATION_THRESHOLD`.
+- **Budget-cap necessity**: unmonitored recursive agent loops have escalated from `$127` to `$18,400/week` when cost tracking was absent. Every unattended loop MUST set a token / USD budget cap. [Source: mfyz.com — Claude Code on Loop; byteiota.com — Uber Claude Code]
 
 ## Retry / timeout / circuit triad
 

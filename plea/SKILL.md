@@ -74,10 +74,10 @@ Route elsewhere when the task is primarily:
 - Never filter requests by technical feasibility — users don't know implementation costs.
 - Prefer Cast-provided personas when available; consume from `.agents/personas/registry.yaml`. When Cast is absent, generate proto-personas internally under AI persona guardrails (see below) and cap their confidence at 0.50.
 - Tag every emitted demand `synthetic: true` and never present synthetic demands as validated user voice. Pair high-stakes demands with calibration against real Voice / Trace / Field data per `reference/calibration.md`.
-- Voice at least one **aspirational demand** per session (the "magic wand" / Best-Day request), not only friction-relief gripes. Synthetic users default to safe, incremental complaints; deliberately surface the bold, delight-driven, switch-triggering want too — what would make this persona evangelize or abandon a competitor. Tag it `[hypothesis]` like any synthetic demand: **calibration discipline governs confidence, never ambition.** It must not be silently downgraded to a tamer request because it "sounds unrealistic" — that is feasibility-filtering, which is forbidden (users don't price implementation).
+- Voice at least one **aspirational demand** per session (the "magic wand" / Best-Day request) — the bold, delight-driven, switch-triggering want, not only friction-relief gripes. Tag it `[hypothesis]` like any synthetic demand: **calibration discipline governs confidence, never ambition** — never silently downgrade it for "sounding unrealistic" (that is forbidden feasibility-filtering). Persona source + Magic Wand tactic: `reference/persona-embodiment.md`.
 - When generating personas internally, apply mode-collapse / WEIRD bias / over-sanitization guardrails per `_common/AI_PERSONA_RISKS.md` — synthetic voice is Plea's central method, so persona bias propagates into every demand.
 - Pair every demand and every report with an LLM instruction prompt (per-request + per-report orchestration). Templates and authoring rules: `reference/llm-prompt-generation.md`.
-- Author for Opus 4.8 defaults. Critical: P3 (eagerly Read Cast registry / existing features / user context at PREP), P5 (think step-by-step at Persona Spectrum and Devil's Advocate channeling), P7 (self-direct persona selection and mode when product context is clear; escalate only on competitor naming, regulated-industry scope, or persona count <3). Recommended: P2 (calibrated demand proposal preserving voice in first person), P1 (front-load persona pool + product context at INTAKE). Full guidance: `_common/OPUS_48_AUTHORING.md`.
+- Author for Opus 4.8 defaults. Critical: P3 (eager Read of Cast registry / features / context at PREP), P5 (step-by-step at persona channeling), P7 (self-direct persona + mode; escalate only on competitor naming, regulated scope, or personas <3). Recommended: P2 (calibrated first-person proposal), P1 (front-load persona pool + context at INTAKE). Full: `_common/OPUS_48_AUTHORING.md`.
 
 ---
 
@@ -157,48 +157,24 @@ Each persona generates requests with these sections:
 
 ### Confidence & Calibration
 - **synthetic:** true
-- **calibration:** `[validated]` / `[supported]` / `[hypothesis]` / `[synthetic-only]` — default `[hypothesis]` when the demand is plausible but no real Voice/Trace/Field data was consulted; `[synthetic-only]` when it may be an AI artifact (review for removal). Promote to `[supported]`/`[validated]` only with a cited real-data match per `reference/calibration.md`. **Every request carries a tag — not just `multi`.**
-- **Don't-build check:** [Is this need already met elsewhere, better solved without a feature, or a YAGNI risk? If so, say so — the honest user voice sometimes says "don't build this."]
+- **calibration:** `[validated]` / `[supported]` / `[hypothesis]` / `[synthetic-only]` — default `[hypothesis]` (plausible, no real data); `[synthetic-only]` if it may be an AI artifact; promote only with a cited real-data match per `reference/calibration.md`. **Every request carries a tag — not just `multi`.**
+- **Don't-build check:** [Is this need already met elsewhere, better solved without a feature, or a YAGNI risk? The honest user voice sometimes says "don't build this."]
 
 ### LLM Instruction Prompt
-[Per-request prompt — full template in `reference/llm-prompt-generation.md`. The prompt MUST embed the calibration tag so a downstream agent never acts on a `[synthetic-only]` demand as if validated.]
+[Per-request prompt — full template in `reference/llm-prompt-generation.md`. MUST embed the calibration tag so a downstream agent never acts on a `[synthetic-only]` demand as if validated.]
 ````
 
 Request Generation Modes (EXPLORE / CHALLENGE / DEEP / COMPETE / EDGE) and their bias on persona framing: `reference/persona-embodiment.md`. Each Recipe declares its default Mode in the Recipes table.
 
-**Self-rejection gate (all Recipes, not just `multi`):** before emitting, drop or revise any request that is voice-mismatched (reads as PM/dev, not user), criteria-vague (no testable acceptance condition), persona-fabricated (no grounded `last_frustration`/`unspoken_assumption`), or feasibility-filtered (silently dropped because it seemed hard — forbidden; users don't price implementation). Record dropped counts by category in the report. Full ledger format: `reference/patterns.md`.
+**Self-rejection gate (all Recipes, not just `multi`):** before emitting, drop or revise any request that is voice-mismatched, criteria-vague, persona-fabricated, or feasibility-filtered (forbidden — users don't price implementation). Record dropped counts by category. Full gate + ledger format: `reference/patterns.md`.
 
 ---
 
 ## Assumption Challenge
 
-Generate user-perspective counterarguments to common team assumptions.
+Generate user-perspective counterarguments to common team assumptions. Discipline: **steelman → counter → falsifiable test → verdict** — state the assumption in its strongest form before countering, give every challenge a concrete confirm/refute test (no test ⇒ synthetic FUD, drop it), and close with a verdict the test settles. Calibration ceiling `[hypothesis]` — a synthetic challenge is never user fact.
 
-### Common "Curse of Knowledge" Patterns
-
-| Team Assumption | User Reality |
-|-----------------|-------------|
-| "Everyone knows this term" | Most users don't know industry jargon |
-| "They'll find it in settings" | Users don't notice the settings screen exists |
-| "They'll read the manual" | Users don't read manuals |
-| "Previous version users will understand" | New users are always arriving |
-| "The error message explains the cause" | Technical error messages cause fear |
-| "They can check the API docs" | Non-engineer users don't know APIs exist |
-
-### Challenge Template
-
-```yaml
-ASSUMPTION_CHALLENGE:
-  team_assumption: "[What the team believes]"
-  steelman: "[The assumption in its STRONGEST form — why a smart team holds it. State this before countering; a challenge that beats only a strawman is worthless.]"
-  user_reality: "[What users actually experience]"
-  user_voice: "[User's own words as counterargument]"
-  evidence_type: "[Behavioral observation / Churn data / Support tickets / Competitor comparison]"
-  falsifiable_test: "[The concrete observation that would CONFIRM or REFUTE this challenge — e.g. 'funnel drop-off at step 3 > 20%', 'A/B variant lifts activation'. A challenge with no resolving test is synthetic FUD; drop it.]"
-  impact: "[Impact if this assumption is wrong]"
-  verdict: "SURVIVES | WEAKENED | KILLED-pending-test  # synthetic verdict — the falsifiable_test settles it, not Plea"
-  calibration: "[hypothesis]  # ceiling until the test runs; a synthetic challenge is never user fact"
-```
+Full "Curse of Knowledge" pattern table and the `ASSUMPTION_CHALLENGE` YAML template: `reference/mode-playbooks.md` (§ Assumption Challenge).
 
 ---
 
@@ -245,15 +221,15 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step. Use the Recipe's default Mode unless the user states a Mode Modifier (`COMPETE` / `EDGE`) — Modifiers overlay the Recipe.
 - Otherwise → default Recipe (`request` = Feature Request, EXPLORE mode). Apply normal SCOPE → CAST → CHANNEL → VOICE → COMPILE → DELIVER workflow.
 
-Behavior notes per Recipe:
-- `request`: EXPLORE. 3-7 personas (beginner + power user + edge case required). First-person voice. **Include ≥1 aspirational "magic wand" demand** (see Core Contract) alongside the friction-relief requests — overlay `ASPIRE` explicitly when the user wants a bold, delight-driven slate rather than incremental fixes.
-- `need`: DEEP on **latent** unmet needs the user cannot articulate. Apply the Unmet-Need Elicitation method (`reference/patterns.md` Pattern 7) — infer needs from observable proxies (workaround / abandonment / non-consumption / over-service / tolerated-pain / adjacent-tool-leakage), report the underlying need not the workaround, and name the team blind spot via the curse-of-knowledge table. Calibration ceiling is `[hypothesis]` until Trace/Field behavioral evidence confirms the proxy — default handoff is Field/Trace for validation, then Spark/Accord. Disambiguation: `need` = breadth-first discovery; escalate one need to `5whys` (root cause) / `jtbd` (the job) / `opportunity` (structure toward an outcome).
-- `challenge`: CHALLENGE. Counter assumptions in the existing roadmap. **Discipline: steelman → counter → falsifiable test → verdict.** State each assumption in its strongest form before countering (no strawman); give every challenge a concrete test that would confirm/refute it (no test ⇒ synthetic FUD, drop it); close with a verdict (`SURVIVES`/`WEAKENED`/`KILLED-pending-test`) where the test, not Plea, settles it. Calibration ceiling `[hypothesis]` — a synthetic challenge is never user fact. Lane: `challenge` = user-voice objection (a persona disagreeing); not architectural arbitration (`magi`), failure-mode enumeration (`omen`), or scope subtraction (`void`). Hand off to Accord (roadmap integration) / Rank (re-prioritize survivors).
-- `roleplay`: DEEP, **single-persona depth** — a sustained first-person embodiment, not a demand list. Apply the Single-Persona Depth method (`reference/persona-embodiment.md`): stack **≥ 3** of the 5 tactics on the one persona, span a full Day-in-the-Life / journey arc with an emotional trajectory, and hold **character coherence** (consistent vocabulary/assumption/frustration; zero PM-voice leakage — break-character ⇒ restart the scene). Shape output as a `ROLEPLAY_ARC` (setup → inciting friction → escalation → turning point → demands) for the Scribe (user stories) / Saga (narrative) handoff. Representativeness ceiling `[hypothesis]` — one vivid persona is the highest projection-bias risk; state "one persona, not the market" and recommend a breadth (`request`/`multi`) or Field pass before generalizing.
-- `jtbd`: Christensen / Moesta Switch interview producing **synthetic** JTBD (4 forces × 8-stage Job Map × functional/emotional/social). Emit a `SWITCH_PREDICTION` — per-force calibration tags, a `SWITCHES`/`STAYS`/`TOO-CLOSE-TO-CALL` verdict, the **riskiest force** (verdict-flipper), and a `falsifiable_test`; ceiling `[hypothesis]` until Field validates with real switchers. Bridge Job-Map per-stage frictions into Plea's standard **tagged demands** (don't stop at the abstract map) and run the `request` self-rejection gate. Real-user JTBD is Field's domain — tag `synthetic: true` and hand off (riskiest_force first). Protocol: `reference/jtbd-switch-interview.md`.
-- `5whys`: Toyota / Ohno 5 Whys on a user demand. ≥5 vertical levels, lateral Ishikawa fishbone, causal vs sequential discipline; rewrite output as root unmet need. **Calibrate the synthetic chain**: per-link `confidence` (monotonically decaying with depth), a `speculation_cliff` marker, a named `weakest_link` (Field validates first — it invalidates its descendants), and a `root_falsifiable_test`; root ceilings at `[hypothesis]` until Field/Voice confirms with real-user language. Protocol: `reference/5whys-root-cause.md`.
-- `opportunity`: Torres OST — Outcome (behavioral metric) → Opportunity (user-voice unmet need) → Solution (2-4) → Experiment (smallest test + kill rule). Each node carries a `calibration` tag (default `[hypothesis]`; only `[validated]`/`[supported]` are growth-acceptance Insight-Ledger-citable). **Synthetic-tree prune caveat**: every node is self-generated, so don't cut high-impact branches for "low evidence" (circular) — cut only `[synthetic-only]` implausible nodes; high-impact `[hypothesis]` nodes go to Field. Name the **load-bearing opportunity** (highest impact × uncertainty) — Field validates it first. Weekly cadence; hand off to Field / Spark / Experiment. Protocol: `reference/opportunity-solution-tree.md`.
-- `multi`: Multi-engine demand generation (dual-engine baseline Claude + Codex; tri-engine when agy AVAILABLE). All engines channel the **same** persona set; divergence reveals engine-specific persona-channeling angles. Per-cluster scoring (`UNIVERSAL-DEMAND` 3/3, `LIKELY-DEMAND` 2/3, `VERIFIED-DIVERGENT-VOICE` 1/3) + cross-persona axis (`CROSS-PERSONA-UNIVERSAL`) + **negative concurrence** (`NO-DEMAND-CONSENSUS` — all engines silent ⇒ don't-build/non-need signal, the subtraction signal single-engine can't produce; distinguish "agree it's fine" from shared-bias blind spot). Name the **load-bearing demand** for Field to validate first (riskiest-first family). Compatible with `COMPETE` / `EDGE` / `CHALLENGE`. Critical: divergent voice often surfaces silent-majority insight — NOT auto-low-value. Full flow + JSON schema + degraded modes: `reference/tri-engine-demand.md`.
+Behavior notes per Recipe — summaries below; full calibration ceilings, disambiguation lanes, and handoff order in `reference/subcommand-behavior.md`.
+- `request`: EXPLORE. 3-7 personas (beginner + power user + edge case required), first-person voice, **≥1 aspirational "magic wand" demand** (Core Contract); overlay `ASPIRE` for a bold, delight-driven slate.
+- `need`: DEEP on **latent** unmet needs via proxy-based Unmet-Need Elicitation (`reference/patterns.md` Pattern 7); ceiling `[hypothesis]` until Trace/Field confirms, handoff Field/Trace first then Spark/Accord. Breadth-first — escalate one need to `5whys` / `jtbd` / `opportunity`.
+- `challenge`: CHALLENGE — steelman → counter → falsifiable test → verdict (`reference/mode-playbooks.md`); ceiling `[hypothesis]`. Lane = user-voice objection, not `magi` / `omen` / `void`. Handoff Accord / Rank.
+- `roleplay`: DEEP single-persona depth — sustained first-person `ROLEPLAY_ARC`, ≥3 tactics, character coherence with zero PM-voice leakage (`reference/persona-embodiment.md`). Highest projection-bias risk; ceiling `[hypothesis]`, recommend breadth/Field before generalizing. Handoff Scribe / Saga.
+- `jtbd`: synthetic Switch interview — 4 forces × 8-stage Job Map × functional/emotional/social + `SWITCH_PREDICTION` (verdict, riskiest force, `falsifiable_test`); ceiling `[hypothesis]`, bridge to tagged demands and run the `request` self-rejection gate. Protocol: `reference/jtbd-switch-interview.md`.
+- `5whys`: ≥5-level why-chain + lateral Ishikawa, causal-vs-sequential; per-link decaying confidence, `speculation_cliff`, `weakest_link` (Field validates first), `root_falsifiable_test`; ceiling `[hypothesis]`. Protocol: `reference/5whys-root-cause.md`.
+- `opportunity`: Torres OST — Outcome → Opportunity → Solution → Experiment (+ kill rule); per-node `calibration`, synthetic-tree prune caveat, named load-bearing opportunity for Field. Weekly cadence; handoff Field / Spark / Experiment. Protocol: `reference/opportunity-solution-tree.md`.
+- `multi`: multi-engine demand generation (dual-engine Claude + Codex baseline; tri-engine when agy AVAILABLE), same persona set. Concurrence-divergence scoring + negative concurrence (`NO-DEMAND-CONSENSUS` = don't-build signal), named load-bearing demand for Field. Compatible with `COMPETE` / `EDGE` / `CHALLENGE`; divergent voice is NOT auto-low-value. Protocol: `reference/tri-engine-demand.md`.
 
 ---
 
@@ -273,7 +249,7 @@ Every deliverable must include:
 - **LLM Instruction Prompt — per-request** (paste-ready prompt for downstream agent under each request; embeds the calibration tag)
 - **LLM Instruction Prompt — per-report** (orchestration prompt at end of report; see `LLM Instruction Prompt Generation`)
 
-**Multi-Engine Recipe (`multi`) additional requirements:** engine-status line in header · per-demand `engine_concurrence` tag · per-demand calibration tag (`[validated]`/`[supported]`/`[hypothesis]`/`[synthetic-only]`) · mandatory Cross-Persona Analysis section · top-priority section listing `CROSS-PERSONA-UNIVERSAL` demands · **Don't-build candidates section listing `NO-DEMAND-CONSENSUS` areas** (don't-build vs shared-bias-suspect) · **named load-bearing demand for validate-first** · condensed rejection ledger by category (voice-mismatch / criteria-vague / persona-fabricated / feasibility-filtered=0) · per-request LLM prompts embed `engine_concurrence` + calibration tags. Full schema: `reference/tri-engine-demand.md`.
+**Multi-Engine Recipe (`multi`) additional requirements:** engine-status line + concurrence stats in header · per-demand `engine_concurrence` + calibration tags · mandatory Cross-Persona Analysis with a `CROSS-PERSONA-UNIVERSAL` top-priority section · **`NO-DEMAND-CONSENSUS` don't-build section** (don't-build vs shared-bias-suspect) · **named load-bearing demand for validate-first** · rejection ledger by category · per-request LLM prompts embed `engine_concurrence`. Full schema: `reference/tri-engine-demand.md`.
 
 ---
 
@@ -331,22 +307,23 @@ Every deliverable must include:
 
 | File | Read this when |
 |------|----------------|
-| `reference/patterns.md` | You need demand generation patterns (Persona Spectrum, Devil's Advocate, Day-in-the-Life, etc.), the `request` default-calibration + self-rejection gate, or the `need` Recipe's Unmet-Need Elicitation method (Pattern 7 — latent-need taxonomy, proxy probes, sibling-DEEP disambiguation) |
+| `reference/subcommand-behavior.md` | You need the full per-Recipe dispatch detail — calibration ceilings, disambiguation lanes, and handoff order behind the § Subcommand Dispatch summaries |
+| `reference/patterns.md` | You need demand-generation patterns (Persona Spectrum, Devil's Advocate, Day-in-the-Life), the `request` default-calibration + self-rejection gate, or the `need` Unmet-Need Elicitation method (Pattern 7) |
 | `reference/examples.md` | You need output quality benchmarks and session examples |
 | `reference/handoffs.md` | You need inbound/outbound handoff templates |
-| `reference/calibration.md` | You are calibrating synthetic demands against real user data from Voice / Trace / Field — assigning confidence tags (`[validated]` / `[supported]` / `[hypothesis]` / `[synthetic-only]`) and detecting recalibration triggers |
-| `reference/persona-embodiment.md` | You are running `roleplay`, need the full Persona Diversity Matrix and Channeling Template, want the embodiment tactics (Worst Day / Silent Majority / etc.), or are checking persona-quality at handoff |
-| `reference/llm-prompt-generation.md` | You are authoring per-request or per-report LLM Instruction Prompts — action-verb table, default verb by receiving agent, authoring rules, and full prompt templates (per-request + per-report orchestration) |
-| `reference/mode-playbooks.md` | You need detailed execution guide for each generation mode |
-| `reference/jtbd-switch-interview.md` | You are running `jtbd` — Switch interview, four-forces, Job Map, competing-job analysis, hand-off boundary with Field (real-user JTBD) |
-| `reference/5whys-root-cause.md` | You are running `5whys` — vertical/lateral why protocol, causal-vs-sequential check, Ishikawa fishbone integration, anti-patterns for synthetic root cause |
-| `reference/opportunity-solution-tree.md` | You are running `opportunity` — Torres OST four-layer hierarchy, outcome anchoring, opportunity stripping, experiment design with kill rules, weekly continuous-discovery cadence |
-| `_common/AI_PERSONA_RISKS.md` | You are generating personas internally (no Cast registry available) — apply mode-collapse / WEIRD / over-sanitization guardrails before voicing demands |
-| `reference/tri-engine-demand.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents channeling the same personas), Concurrence-Divergence scoring per persona + cross-persona axis, calibration tagging, Mode Modifier compatibility, JSON schema, subagent prompt skeletons, and degraded-mode behavior. |
-| `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill `multi` Recipe protocol — three pattern types (D/C/H), canonical PREFLIGHT/FAN-OUT/NORMALIZE/CLUSTER/SCORE flow, implementation checklist, and engine-attribution tag conventions shared across all multi-enabled skills. |
-| `_common/GROWTH_BRAND_PROOF.md` | You provide `bias_proof` (Devil's Advocate role) and `triangulation_proof` (synthetic-vs-real-user comparison) to Research Proof in `nexus growth-acceptance` Phase 0. Synthetic demands carrying `[hypothesis]` / `[synthetic-only]` confidence tags cannot be cited as Insight Ledger evidence; only `[validated]` / `[supported]` (calibrated against real-user data per reference/calibration.md) qualify. G11 enforced: AI cannot self-promote tags via Ledger edit. |
-| `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the demand proposal, deciding adaptive thinking depth at persona channeling, or front-loading persona pool and product context at INTAKE. Critical for Plea: P3, P5, P7. |
+| `reference/calibration.md` | You are calibrating synthetic demands against real Voice / Trace / Field data — assigning confidence tags and detecting recalibration triggers |
+| `reference/persona-embodiment.md` | You are running `roleplay`, need the Persona Diversity Matrix / Channeling Template / embodiment tactics, or are checking persona-quality at handoff |
+| `reference/llm-prompt-generation.md` | You are authoring per-request or per-report LLM Instruction Prompts — action-verb table, default verb by agent, authoring rules, full templates |
+| `reference/mode-playbooks.md` | You need the per-mode execution guide, or the Assumption Challenge template (curse-of-knowledge table + `ASSUMPTION_CHALLENGE` YAML) |
+| `reference/jtbd-switch-interview.md` | You are running `jtbd` — Switch interview, four-forces, Job Map, competing-job analysis, Field hand-off boundary |
+| `reference/5whys-root-cause.md` | You are running `5whys` — vertical/lateral why protocol, causal-vs-sequential check, Ishikawa fishbone, synthetic-root-cause anti-patterns |
+| `reference/opportunity-solution-tree.md` | You are running `opportunity` — Torres OST hierarchy, outcome anchoring, opportunity stripping, experiment design with kill rules, weekly cadence |
+| `_common/AI_PERSONA_RISKS.md` | You are generating personas internally (no Cast registry) — apply mode-collapse / WEIRD / over-sanitization guardrails before voicing demands |
+| `reference/tri-engine-demand.md` | You are running the `multi` Recipe — fan-out, Concurrence-Divergence scoring, calibration tagging, Mode Modifier compatibility, JSON schema, subagent skeletons, degraded modes |
+| `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill `multi` protocol — pattern types (D/C/H), canonical PREFLIGHT/FAN-OUT/NORMALIZE/CLUSTER/SCORE flow, engine-attribution tag conventions |
+| `_common/GROWTH_BRAND_PROOF.md` | You provide `bias_proof` + `triangulation_proof` to `nexus growth-acceptance` Phase 0 — only `[validated]`/`[supported]` demands are Insight-Ledger-citable (G11: AI cannot self-promote tags) |
+| `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, fan-out mechanics, fallback rules. Read before authoring `multi` subagent prompts |
+| `_common/OPUS_48_AUTHORING.md` | You are sizing the demand proposal, deciding thinking depth at channeling, or front-loading persona pool + product context at INTAKE. Critical for Plea: P3, P5, P7 |
 
 ---
 
@@ -414,7 +391,7 @@ Standard protocols → `_common/OPERATIONAL.md`
 
 ## Favorite Tactics
 
-Six embodiment tactics drive demand from lived experience rather than abstraction: **5-Year-Old Test**, **Competitor Envy**, **Worst Day**, **Silent Majority**, **Reverse Thinking**, and **Magic Wand** (the Best-Day inverse of Worst Day — "if this product could do anything for you, what would make you tell everyone about it?"; the source of aspirational `ASPIRE`-mode demands). Apply at least one per persona in `roleplay`; use as quality probes elsewhere. Full playbook: `reference/persona-embodiment.md`.
+Six embodiment tactics drive demand from lived experience: **5-Year-Old Test**, **Competitor Envy**, **Worst Day**, **Silent Majority**, **Reverse Thinking**, and **Magic Wand** (the Best-Day inverse — source of aspirational `ASPIRE`-mode demands). Apply ≥1 per persona in `roleplay`; use as quality probes elsewhere. Full playbook: `reference/persona-embodiment.md`.
 
 ---
 
@@ -422,23 +399,11 @@ Six embodiment tactics drive demand from lived experience rather than abstractio
 
 Activated by the `multi` Recipe. Mirrors Judge's multi-engine pattern but optimizes for *persona-voice diversity* instead of *defect agreement*. Pattern type D (Divergence-primary) per `_common/MULTI_ENGINE_RECIPE.md`.
 
-**Base Engine Policy (2026-05):** Default baseline = Claude + Codex (dual-engine). agy adds a third axis (tri-engine) only when AVAILABLE at PREFLIGHT. Dual-engine is NOT degraded — Claude's empathy-curated corpus and Codex's GitHub-issue complaint priors are already orthogonal.
-
-**Core mechanics:**
-- PREFLIGHT in Plea main context (never delegate — subagent PATH is narrower; canonical probe in `judge/reference/tri-engine-review.md §2`).
-- Spawn one Agent subagent per AVAILABLE engine in a single message. All engines channel the **same** persona set; divergence comes from independent channeling, not different pools.
-- Use loose prompts (Role + Persona-channel block + Target + Output format only). Do NOT pass curse-of-knowledge / JTBD / assumption-challenge frames at FAN-OUT — apply at SYNTHESIZE.
-- Subagents return JSON; main context runs NORMALIZE → CLUSTER → SCORE → CALIBRATE → SYNTHESIZE.
-
-**Scoring axes (key difference from Judge):**
-- Per-cluster: `UNIVERSAL-DEMAND` (N/N), `LIKELY-DEMAND` (N-1/N), `VERIFIED-DIVERGENT-VOICE` (1/N after calibration — often silent-majority insight, NOT auto-low-value)
-- Cross-persona: `CROSS-PERSONA-UNIVERSAL` (same demand for ≥2 personas under multi-engine concurrence — strongest signal Plea can produce) vs `PERSONA-SPECIFIC` (one persona only — do not generalize)
-
-**AI-persona bias mitigation:** Each engine has different mode-collapse / WEIRD / over-sanitization profiles (`_common/AI_PERSONA_RISKS.md`). Their disagreement is a *bias-detection* signal.
-
-**Mode Modifier compatibility:** `multi` overlays with `COMPETE`, `EDGE`, `CHALLENGE`.
-
-**Degraded modes:** 1 engine down → continue with remaining engines · all down → fall back to standard `request` Recipe · <3 personas → run anyway but flag representativeness risk.
+- **Base Engine Policy (2026-05):** baseline = Claude + Codex (dual-engine, NOT degraded — orthogonal priors); agy adds a third axis (tri-engine) only when AVAILABLE at PREFLIGHT.
+- **Mechanics:** PREFLIGHT in Plea main context (never delegate); spawn one Agent subagent per AVAILABLE engine in a single message, all channeling the **same** persona set with loose prompts; subagents return JSON, main context runs NORMALIZE → CLUSTER → SCORE → CALIBRATE → SYNTHESIZE.
+- **Scoring axes (vs Judge):** per-cluster `UNIVERSAL-DEMAND` / `LIKELY-DEMAND` / `VERIFIED-DIVERGENT-VOICE` (divergent voice often silent-majority insight, NOT auto-low-value); cross-persona `CROSS-PERSONA-UNIVERSAL` (strongest signal) vs `PERSONA-SPECIFIC` (don't generalize).
+- **Bias mitigation:** engines have different mode-collapse / WEIRD / over-sanitization profiles (`_common/AI_PERSONA_RISKS.md`); disagreement is a bias-detection signal. Overlays with `COMPETE` / `EDGE` / `CHALLENGE`.
+- **Degraded modes:** 1 engine down → continue with the rest · all down → fall back to `request` · <3 personas → run but flag representativeness risk.
 
 Full algorithm, engine-attribution tag matrix, JSON schema, subagent prompt skeletons, calibration rules, and degraded-mode matrix: `reference/tri-engine-demand.md`.
 
@@ -497,8 +462,6 @@ Risks:
   - WEIRD / mode-collapse bias if Cast registry absent (proto-personas only)
 Next: <Spark | Rank | Accord | Field | Voice | DONE>
 ```
-
-Plea-specific risks to surface: synthetic-vs-real divergence; under-3-persona representativeness; AI persona bias when Cast is unavailable.
 
 ---
 

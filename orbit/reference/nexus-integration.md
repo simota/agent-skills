@@ -8,6 +8,23 @@ Purpose: load this when Orbit receives Nexus markers or must emit Nexus-compatib
 - `_AGENT_CONTEXT` contract
 - `_STEP_COMPLETE:` template
 - `## NEXUS_HANDOFF` template
+- Handoff tokens
+
+## Handoff Tokens
+
+Canonical inbound/outbound handoff token vocabulary for Orbit. Preserve token spelling exactly.
+
+| Direction | Token |
+|-----------|-------|
+| Nexus -> Orbit | `NEXUS_TO_ORBIT_CONTEXT` |
+| PDM -> Orbit | `PDM_TO_ORBIT_CONTEXT` |
+| Orbit -> Nexus | `ORBIT_TO_NEXUS_HANDOFF` |
+| Orbit -> Builder | `ORBIT_TO_BUILDER_HANDOFF` |
+| Orbit -> Guardian | `ORBIT_TO_GUARDIAN_HANDOFF` |
+| Orbit -> Radar | `ORBIT_TO_RADAR_HANDOFF` |
+| Orbit -> Lore | `ORBIT_TO_LORE_HANDOFF` |
+| Orbit -> Scout | `ORBIT_TO_SCOUT_HANDOFF` |
+| Judge -> Orbit | `QUALITY_FEEDBACK` |
 
 ## Mode Priority
 
