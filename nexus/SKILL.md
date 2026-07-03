@@ -54,7 +54,7 @@ Coordinate specialist agents, design the minimum viable chain, and execute safel
 - Verify acceptance criteria before delivery; pair quantitative metrics with human evaluation for high-stakes tasks.
 - Adapt routing from execution evidence with safety constraints; track OE (orchestration efficiency) per chain type.
 - Leverage standardized inter-agent protocols where available: MCP, A2A, ACP.
-- Apply Plan-and-Execute pattern: capable models plan, cheaper models execute. Claude Code = opus (or fable-5) plan / **Sonnet 5 execute** (haiku only for trivial steps); Codex CLI = **always the latest model (`gpt-5.5`) for every step** — tune depth via `model_reasoning_effort`, never by downgrading; **agy = always Gemini 3.5 Flash** (user policy, 2026-06-23). On a Fable 5 hub, default plan/execute effort to `high`. Full map → `reference/hub-authoring.md` § Model Selection, `_common/CLI_COMPATIBILITY.md §4`.
+- Apply Plan-and-Execute pattern: capable models plan, cheaper models execute. Claude Code = opus/fable-5 plan / **Sonnet 5 execute** (haiku trivial only); Codex CLI = **always latest `gpt-5.5`** (depth via `model_reasoning_effort`); **agy = always Gemini 3.5 Flash**; Fable 5 hub → `high` effort. Full per-engine map → `reference/hub-authoring.md` § Model Selection, `_common/CLI_COMPATIBILITY.md §4`.
 - Use Anthropic **Managed Agents** vocabulary (SF 2026) and surface an escalation recommendation in `NEXUS_COMPLETE` when the workload justifies the managed platform; prefer **Dynamic Workflows** for large homogeneous parallel sweeps. Detail: `reference/managed-agents-mapping.md` §5.
 - Output language follows the CLI global config (`settings.json` `language`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`); identifiers and technical terms remain in English.
 
@@ -69,7 +69,7 @@ Coordinate specialist agents, design the minimum viable chain, and execute safel
 7. **Learn only from evidence.** Routing adaptation requires execution data, verification, and journaled results.
 8. **Prevent circular handoffs.** Enforce max-hop limits (default: 2 round-trips per agent pair) to prevent A→B→A loops.
 9. **Hierarchical decomposition for scale.** For chains with 6+ agents, spawn feature-lead agents that each coordinate 2-3 specialists.
-10. **Author for the active orchestrator engine.** Detect which CLI drives the hub (see **Execution Model → Orchestrator Detection**) and apply the matching authoring protocol per `reference/hub-authoring.md` (Claude Code → OPUS_48_AUTHORING P4/P6/P7/P9, **plus F-principles when the hub runs on Fable 5**; Codex CLI → CODEX_ORCHESTRATION C1/C2/C3/C6/C7; agy → **AGY_ORCHESTRATION A1/A2/A3/A4/A6** — Gemini 3.5 Flash mandate with per-step effort tiering, file-handoff capture, session-scoped tier, flattened fan-out).
+10. **Author for the active orchestrator engine.** Detect which CLI drives the hub (see **Execution Model → Orchestrator Detection**) and apply the matching authoring protocol per `reference/hub-authoring.md` (Claude Code → P-principles, **plus F-principles on a Fable 5 hub**; Codex CLI → C-principles; agy → A-principles — Gemini 3.5 Flash mandate).
 
 ## Boundaries
 
@@ -136,57 +136,57 @@ Agent disambiguation → `reference/agent-disambiguation.md`
 
 ### Recipe Families (mental model + within-family disambiguation)
 
-The full table below is flat; these families group it and name the axis that separates confusable siblings. **When an input fits a family but not a specific recipe, use the axis to pick — or, for an overloaded anchor, run the one-question REDIRECT (`reference/intent-clarification.md`).**
+The full table below is flat; these families group it by the axis that separates confusable siblings. **When an input fits a family but not a specific recipe, use the axis to pick — or, for an overloaded anchor, run the one-question REDIRECT (`reference/intent-clarification.md`).** Full axis prose + REDIRECT escalations → `reference/recipes-detail.md` § Recipe Families.
 
-| Family | Recipes | Distinguishing axis within the family |
-|--------|---------|----------------------------------------|
-| **Fix** | `bug` · `security` | fault class: defect vs vulnerability |
-| **Improve** (existing code) | `refactor` · `optimize` · `kaizen` · `anneal` | refactor = apply a *known* internal restructure (known scope) · optimize = perf-only (a number) · kaizen = multi-axis polish of *one feature* vs a known target · **anneal = *discover* undiagnosed design weaknesses across a scope → brush up the prioritized slate, behavior-preserving**. **`improve`/`polish`/`enhance` is overloaded across all four → REDIRECT** (`audit the design` / `brush up the codebase` / `harden the architecture` → `anneal`; `improve a feature vs a target` → `kaizen`; `known single restructure` → `refactor`; `iterate to a quality bar` → `converge` in the **Loop** family). |
-| **Loop** (autonomous / iterative execution) | `loop` · `goal` · `converge` | **loop = dispatcher / front-door**: classify the loop's shape + gate on loop-engineering preconditions (verifiable oracle · external hard-stop · maker≠checker · persistent memory · drift-aware) + route · goal = native `/goal` *setup only* (no run) · converge = in-session rubric Generator-Evaluator quality loop. **The runner itself is the `orbit` skill** — `loop` delegates unattended runs to it, never re-implements it. Underspecified `make a loop`/`automate with a loop`/`run until done` → `loop`; an explicit shape → the sibling direct. |
-| **Build** (new) | `feature` · `apex` · `playable` | feature = single guided build · apex = general discovery→ship one-shot (8-25 agents) · **playable = game-specialized all-in-one (Quest design→Glance UI/UX→Tick impl→Dot assets) with a vertical-slice-first gate** |
-| **Discover → build pairs** | `spec`→`feature`/`apex` · `charter`→`enact` · `layer`→`sigil`-authoring | spec = one feature *spec* (dialogue) · charter = whole-repo *team + work plan* · layer = whole-repo *reusable operating layer* (project skills + recipes + workflows + routing map). All stop at a design; the pair runs it. **`layer` vs `charter`**: charter plans *what work to do + who does it* (one delivery); layer designs *what reusable tooling the repo should have* (persists). **`layer` vs `sigil`**: layer designs the coordinated *set* (Loom), sigil authors *one* skill body. |
-| **Reason** (no code) | `gedanken` · `delve` | output = insight, not a build. **gedanken** = abstract thought-experiment about a claim/hypothesis (construct→reason→perturb→refute→conclude); **delve** = grounded deep-dive into a *shipped* feature → evolution directions (deepen/broaden/reframe). Axis: abstract-hypothetical vs grounded-existing-feature. Both orchestrate `magi`/`flux`; trivial "what if" → `flux`/`magi`, trivial "what could we do with X" → `riff`/`spark` direct. **`delve` vs `kaizen`** (discover directions vs execute vs a target): `evolve`/`improve a feature` is overloaded → REDIRECT. |
-| **Verdict** (which feature) | `essential` · `killer` · `trim` | essential = THE must-have · killer = THE differentiator · trim = remove dead-weight (inverse). Shared gate: `reference/verdict-gate.md`. |
-| **Reproduce & Synthesize** | `clone` · `fuse` · `graft` · `transmute` · `migrate` | source count/fidelity: clone = 1 source faithful · fuse = ≥2 sources synthesized · graft = host+donor *concept* (rejects surface copy) · transmute = own-source cross-language · migrate = own-system change-completeness. Shared discipline: `_common/DIFFERENTIAL_PARITY.md`. **`differential parity` alone is ambiguous → REDIRECT.** |
-| **Quality-Max** (expensive, confirm) | `acceptance` · `growth-acceptance` · `summit` · `podium` | acceptance = proof-carrying merge (G1-10) · growth-acceptance = post-launch lifecycle (G11-15) · summit = pre-merge quality tournament · podium = content/slide quality |
+| Family | Recipes | Axis (one-line; full → `reference/recipes-detail.md` § Recipe Families) |
+|--------|---------|-----------------|
+| **Fix** | `bug` · `security` | defect vs vulnerability |
+| **Improve** (existing code) | `refactor` · `optimize` · `kaizen` · `anneal` | known restructure / perf number / polish one feature vs target / discover design weaknesses → behavior-preserving brush-up. `improve`/`polish`/`enhance` overloaded → REDIRECT |
+| **Loop** (autonomous / iterative) | `loop` · `goal` · `converge` | dispatcher (runner is `orbit`) / `/goal` setup only / in-session rubric loop. Underspecified "make a loop" → `loop`; explicit shape → sibling direct |
+| **Build** (new) | `feature` · `apex` · `playable` | single guided build / discovery→ship one-shot (8-25 agents) / game-specialized all-in-one (vertical-slice-first gate) |
+| **Discover → build pairs** | `spec`→`feature`/`apex` · `charter`→`enact` · `layer`→`sigil` | one feature spec / whole-repo team+work plan / whole-repo reusable operating layer. All stop at a design; the pair runs it |
+| **Reason** (no code) | `gedanken` · `delve` | abstract thought-experiment on a claim / grounded deep-dive of a shipped feature → evolution directions. Both orchestrate `magi`/`flux`. `evolve a feature` overloaded → REDIRECT |
+| **Verdict** (which feature) | `essential` · `killer` · `trim` | THE must-have / THE differentiator / remove dead-weight (inverse). Shared gate: `reference/verdict-gate.md` |
+| **Reproduce & Synthesize** | `clone` · `fuse` · `graft` · `transmute` · `migrate` | 1 source faithful / ≥2 synthesized / host+donor concept / own-source cross-language / own-system change-completeness. Shared: `_common/DIFFERENTIAL_PARITY.md`. `differential parity` alone → REDIRECT |
+| **Quality-Max** (expensive, confirm) | `acceptance` · `growth-acceptance` · `summit` · `podium` | proof-carrying merge (G1-10) / post-launch lifecycle (G11-15) / pre-merge quality tournament / content-slide quality |
 | **Document package** | `package` (incl. `venture`) | 12-domain preset registry |
 | **Meta / control** | `classify` · `proactive` · `pack` | routing · project scan · skill-profile |
 
 | Recipe | Subcommand | Default? | When to Use | Chain Template | Read |
 |--------|-----------|---------|-------------|----------------|------|
 | Auto Classify | `classify` | ✓ | No Recipe specified — auto-classification. **Redirects to a curated Recipe when the resolved intent matches one; ad-hoc chain only for no-Recipe task types.** | `RESOLVE → GATE → REDIRECT? → SELECT → CHAIN_SELECT` | `reference/routing-matrix.md` (Classify Flow contract) |
-| Bug Fix | `bug` | | Bug reports and fix requests | `Scout[RCA] → Sherpa? → Radar[failing repro] → Builder[root-cause] → Radar[verify] → Guardian`<br>*Reproduce-before-fix (red→green); rules → `reference/routing-quick-start.md`.*  | `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
-| Feature | `feature` | | New web/backend/generic feature. **iOS/Android native → `MOBILE_NATIVE` (Native) instead.** | `Lens?[reuse] → Sherpa[spec+AC] → Forge? → Builder → Radar[+verify gate] → Guardian`<br>*Lens reuse-scan on existing codebases; UI-surface add-ons and skips → `reference/routing-quick-start.md`.*  | `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
-| Security | `security` | | Security response | `Sentinel[triage] → Probe?[confirm-exploit] → Builder[root-cause] → Probe/Radar[verify-closed] → Vigil? → Guardian`<br>*Confirm-exploit before & verify-closed after the fix; rules → `reference/routing-quick-start.md`.*  | `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
-| Refactor | `refactor` | | Internal-only refactor, no external behavior change | `Radar?[safety-net] → Zen → Radar[verify-equivalence] → Guardian`<br>*Green-before / same-suite-same-result-after; rules → `reference/routing-quick-start.md`.*  | `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
-| Optimize | `optimize` | | Performance-only improvement | `Bolt/Tuner[measure→target→optimize] → Radar[verify-speedup] → Guardian`<br>*Measure→target→optimize→verify; rules → `reference/routing-quick-start.md`.*  | `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
-| Kaizen | `kaizen` |  | Existing-feature continuous improvement covering perf / UX / code-quality / feature-extension. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/inline-recipes.md` |
-| Anneal | `anneal` |  | Codebase design audit → prioritized behavior-preserving brush-up. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/anneal-recipe.md` |
-| Converge | `converge` |  | **Quality-convergence loop** — the invocable entry point for the Generator-Evaluator pattern (`reference/evaluator-loop-protocol.md`). | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/converge-recipe.md`, `reference/evaluator-loop-protocol.md` |
-| Loop | `loop` |  | Loop-engineering dispatcher & discipline gate. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/loop-recipe.md` |
+| Bug Fix | `bug` | | Bug reports and fix requests | `Scout[RCA] → Sherpa? → Radar[failing repro] → Builder[root-cause] → Radar[verify] → Guardian`| `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
+| Feature | `feature` | | New web/backend/generic feature. **iOS/Android native → `MOBILE_NATIVE` (Native) instead.** | `Lens?[reuse] → Sherpa[spec+AC] → Forge? → Builder → Radar[+verify gate] → Guardian`| `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
+| Security | `security` | | Security response | `Sentinel[triage] → Probe?[confirm-exploit] → Builder[root-cause] → Probe/Radar[verify-closed] → Vigil? → Guardian`| `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
+| Refactor | `refactor` | | Internal-only refactor, no external behavior change | `Radar?[safety-net] → Zen → Radar[verify-equivalence] → Guardian`| `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
+| Optimize | `optimize` | | Performance-only improvement | `Bolt/Tuner[measure→target→optimize] → Radar[verify-speedup] → Guardian`| `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
+| Kaizen | `kaizen` |  | Existing-feature continuous improvement covering perf / UX / code-quality / feature-extension. | See `reference/recipes-detail.md` | `reference/inline-recipes.md` |
+| Anneal | `anneal` |  | Codebase design audit → prioritized behavior-preserving brush-up. | See `reference/recipes-detail.md` | `reference/anneal-recipe.md` |
+| Converge | `converge` |  | **Quality-convergence loop** — the invocable entry point for the Generator-Evaluator pattern (`reference/evaluator-loop-protocol.md`). | See `reference/recipes-detail.md` | `reference/converge-recipe.md`, `reference/evaluator-loop-protocol.md` |
+| Loop | `loop` |  | Loop-engineering dispatcher & discipline gate. | See `reference/recipes-detail.md` | `reference/loop-recipe.md` |
 | Proactive | `proactive` | | `/Nexus` with no arguments — project state scan | `Scan project → recommend` | `reference/proactive-mode.md` |
-| Apex | `apex` |  | Full-cycle auto-implementation: discovery → spec → parallel design → risk gate → loop → ship. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/apex-recipe.md`, `reference/apex-walkthrough.md` |
-| Playable | `playable` |  | All-in-one game production. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/playable-recipe.md` |
-| Charter | `charter` |  | Repo-wide analysis → self-driving Charter, team design included — stops at the document. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/charter-recipe.md` |
-| Enact | `enact` |  | Execute a Charter end-to-end. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/enact-recipe.md` |
-| Operating Layer | `layer` |  | Design + stand up a repo's operating layer — Loom designs, Sigil authors, Nexus registers. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/layer-recipe.md` |
+| Apex | `apex` |  | Full-cycle auto-implementation: discovery → spec → parallel design → risk gate → loop → ship. | See `reference/recipes-detail.md` | `reference/apex-recipe.md`, `reference/apex-walkthrough.md` |
+| Playable | `playable` |  | All-in-one game production. | See `reference/recipes-detail.md` | `reference/playable-recipe.md` |
+| Charter | `charter` |  | Repo-wide analysis → self-driving Charter, team design included — stops at the document. | See `reference/recipes-detail.md` | `reference/charter-recipe.md` |
+| Enact | `enact` |  | Execute a Charter end-to-end. | See `reference/recipes-detail.md` | `reference/enact-recipe.md` |
+| Operating Layer | `layer` |  | Design + stand up a repo's operating layer — Loom designs, Sigil authors, Nexus registers. | See `reference/recipes-detail.md` | `reference/layer-recipe.md` |
 | Goal Setup | `goal` | | `/goal` autonomous long-running execution setup. **Gates on a machine-checkable completion oracle + mandatory hard-stop bound** (rejects unverifiable goals). 1-3 agents, no code execution | `Hone → Latch → Scribe? → DELIVER` | `reference/goal-recipe.md` |
 | Gedanken | `gedanken` |  | Structured thought-experiment reasoning. | → `reference/recipes-detail.md` §gedanken | `reference/gedanken-recipe.md` |
 | Delve | `delve` | | Existing-feature deep-dive → evolution-direction dialogue; no code — stops at a named Evolution Map. | See `reference/recipes-detail.md` | `reference/delve-recipe.md` |
 | Spec | `spec` |  | Interactive feature-proposal → locked specification through deep human-in-the-loop dialogue. | → `reference/recipes-detail.md` §spec | `reference/spec-recipe.md` |
-| Essential | `essential` |  | Must-have feature **verdict + conditional implementation**. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/inline-recipes.md` |
-| Killer | `killer` |  | Killer-feature **verdict + conditional implementation with feature flag**. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/inline-recipes.md` |
-| Trim | `trim` |  | Dead-weight feature **removal verdict + conditional excision** — the inverse of `essential`/`killer`. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/inline-recipes.md` |
-| Acceptance | `acceptance` |  | Proof-Carrying PR pipeline v2 — Two-Axis (Code + Design). | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `_common/PROOF_CARRYING.md`, `reference/acceptance-recipe.md` |
-| Growth-Acceptance | `growth-acceptance` |  | **Layer C lifecycle gate** (Market + Research + Brand axes) for Enterprise org-tier. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `_common/GROWTH_BRAND_PROOF.md`, `reference/growth-acceptance-recipe.md` |
-| Summit | `summit` |  | Multi-engine **five-team** quality-maximization. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/summit-recipe.md` |
-| Podium | `podium` |  | Content-quality maximization. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/podium-recipe.md` |
-| Migrate | `migrate` |  | Change-completeness migration. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/migrate-recipe.md` |
-| Transmute | `transmute` |  | **Cross-language rewrite** preserving behavior (TS→Rust, Go→Rust, Python→Go, JS→TS, …). | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/transmute-recipe.md` |
-| Clone | `clone` | | Faithful product reproduction — reverse-engineer an existing product's observable surface, rebuild it, and verify the copy by differential parity against a stamped captured baseline. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/clone-recipe.md`, `reference/research-grounding.md` |
-| Fuse | `fuse` |  | Multi-source product synthesis. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/fuse-recipe.md`, `reference/research-grounding.md` |
-| Graft | `graft` |  | Concept transplant for innovation. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/graft-recipe.md`, `reference/research-grounding.md` |
-| Package | `package` |  | Generalized document-package generator. | See `reference/recipes-detail.md` | `reference/recipes-detail.md`, `reference/package-recipe.md`, `reference/venture-recipe.md` (startup blueprint) |
+| Essential | `essential` |  | Must-have feature **verdict + conditional implementation**. | See `reference/recipes-detail.md` | `reference/inline-recipes.md` |
+| Killer | `killer` |  | Killer-feature **verdict + conditional implementation with feature flag**. | See `reference/recipes-detail.md` | `reference/inline-recipes.md` |
+| Trim | `trim` |  | Dead-weight feature **removal verdict + conditional excision** — the inverse of `essential`/`killer`. | See `reference/recipes-detail.md` | `reference/inline-recipes.md` |
+| Acceptance | `acceptance` |  | Proof-Carrying PR pipeline v2 — Two-Axis (Code + Design). | See `reference/recipes-detail.md` | `_common/PROOF_CARRYING.md`, `reference/acceptance-recipe.md` |
+| Growth-Acceptance | `growth-acceptance` |  | **Layer C lifecycle gate** (Market + Research + Brand axes) for Enterprise org-tier. | See `reference/recipes-detail.md` | `_common/GROWTH_BRAND_PROOF.md`, `reference/growth-acceptance-recipe.md` |
+| Summit | `summit` |  | Multi-engine **five-team** quality-maximization. | See `reference/recipes-detail.md` | `reference/summit-recipe.md` |
+| Podium | `podium` |  | Content-quality maximization. | See `reference/recipes-detail.md` | `reference/podium-recipe.md` |
+| Migrate | `migrate` |  | Change-completeness migration. | See `reference/recipes-detail.md` | `reference/migrate-recipe.md` |
+| Transmute | `transmute` |  | **Cross-language rewrite** preserving behavior (TS→Rust, Go→Rust, Python→Go, JS→TS, …). | See `reference/recipes-detail.md` | `reference/transmute-recipe.md` |
+| Clone | `clone` | | Faithful product reproduction — reverse-engineer an existing product's observable surface, rebuild it, and verify the copy by differential parity against a stamped captured baseline. | See `reference/recipes-detail.md` | `reference/clone-recipe.md`, `reference/research-grounding.md` |
+| Fuse | `fuse` |  | Multi-source product synthesis. | See `reference/recipes-detail.md` | `reference/fuse-recipe.md`, `reference/research-grounding.md` |
+| Graft | `graft` |  | Concept transplant for innovation. | See `reference/recipes-detail.md` | `reference/graft-recipe.md`, `reference/research-grounding.md` |
+| Package | `package` |  | Generalized document-package generator. | See `reference/recipes-detail.md` | `reference/package-recipe.md`, `reference/venture-recipe.md` (startup blueprint) |
 | Pack | `pack` | | **Skill ecosystem control** (meta) — switch active Claude Code skill profile per workstream. Forms: `list` / `current` / `<name>` / `reset`. **Confirms diff before writing `settings.json`.** | Inline edit (no spawn) | `reference/pack-subcommand.md`, `_common/SKILL_PACKS.md` |
 
 ### Signal Keywords → Recipe
@@ -203,8 +203,8 @@ For natural-language input without an explicit subcommand. **Subcommand match al
 | `refactor`, `clean up`, `code smell` | `refactor` |
 | `optimize`, `slow`, `performance` | `optimize` |
 | `kaizen`, `improve`, `polish`, `enhance existing`, `refine` | `kaizen` |
-| `anneal`, `design audit`, `audit the design`, `brush up the design`, `brush up the codebase`, `harden the architecture`, `tighten loose ends`, `design weaknesses`, `design improvement`, `spec-code drift cleanup` | `anneal` |
-| `loop`, `loop engineering`, `loop-engineer this`, `make a loop`, `automate with an agent loop`, `run until done`, `autonomous loop`, `keep iterating until done`, `ralph loop` | `loop` (dispatcher → gate + route to goal/converge/orbit/apex) |
+| `anneal`, `design audit`, `brush up the codebase`, `harden the architecture`, `design weaknesses` | `anneal` |
+| `loop`, `make a loop`, `run until done`, `autonomous loop`, `ralph loop` | `loop` (dispatcher → gate + route to goal/converge/orbit/apex) |
 | `/Nexus` (no arguments) | `proactive` |
 | unclear or multi-domain request | `classify` → `reference/intent-clarification.md` |
 
@@ -247,7 +247,7 @@ Before the first spawn, determine which CLI drives **this hub session**, then bi
 | `spawn_agent` callable (C1 prereqs hold) | **Codex CLI** | `spawn_agent` → `wait_agent` (parallel = N spawn → join all) | `_common/CODEX_ORCHESTRATION.md` (C-principles) | `gpt-5.5` (latest, all steps; see `CLI_COMPATIBILITY.md §4`) |
 | `/agent` in TUI main session | **agy** | `/agent` or `agy -p` headless | `_common/AGY_ORCHESTRATION.md` (A1–A9) | Gemini 3.5 Flash mandated (‡), effort tier per step via `/model` (see `CLI_COMPATIBILITY.md §4`) |
 
-Codex-hub prereqs (C1): `codex features list \| grep multi_agent` → `true`, and `~/.codex/config.toml` `[agents] max_depth >= 2`. If unmet → internal execution with a concrete reason, never a generic "spawn tool not found"; `spawn_agent` may be lazily hidden — attempt the call when prereqs hold (C5). Details → `_common/CLI_COMPATIBILITY.md`.
+Codex-hub prereqs (C1): `multi_agent = true` + `[agents] max_depth >= 2`. If unmet → internal execution with a concrete reason, never a generic "spawn tool not found"; `spawn_agent` may be lazily hidden — attempt when prereqs hold (C5). Details → `_common/CLI_COMPATIBILITY.md`, `reference/execution-layers.md`.
 
 **Claude Code hub model detection.** The hub runs on Opus 4.8 or Claude Fable 5; on Fable 5, apply the F-principles in `reference/hub-authoring.md` § Claude Code hub — Fable 5 on top of the P-principles. When unknown, author for Opus 4.8 defaults — safe on both.
 
@@ -277,7 +277,7 @@ Full per-CLI prereqs, runtime notes, silent-failure mitigations, and the verifie
 | **Codex CLI** | `spawn_agent` → `wait_agent` | N × `spawn_agent` → `wait_agent` × N | `spawn_agent("You are Rally...")` | `multi_agent = true` + `[agents] max_depth >= 2` |
 | **agy** | `/agent <name>` (TUI) or `agy -p --dangerously-skip-permissions` (headless) | Multiple `/agent` (async, `/tasks`) | Plugin team pack | TUI main session or OS-level isolation; **headless from a socket-stdin shell MUST allocate a real pty (`python3 pty.spawn`) — bare `agy -p` and `script -q /dev/null` both fail silently**; artifact file capture (NOT stdout) |
 
-**MANDATORY before spawning agy/codex as an agent** — read `_common/CLI_COMPATIBILITY.md §9.2` (agy: real pty via `python3 pty.spawn` + artifact/sentinel capture, NEVER stdout) and §9.3 (codex: `-o <abs path>` artifact is the source of truth, foreground or detached). These are silent-output regressions, not edge cases.
+**MANDATORY before spawning agy/codex as an agent** — read `_common/CLI_COMPATIBILITY.md §9.2` (agy real-pty + artifact/sentinel capture, never stdout) and §9.3 (codex `-o <abs path>` artifact is the source of truth). These are silent-output regressions, not edge cases.
 
 Key rules (Codex lazy-hidden tools, agy headless `@<path>` + sentinel + `--print-timeout`, agy Pre-flight, permission model) → `reference/hub-authoring.md` § Execution-Layer Key Rules.
 
@@ -401,7 +401,7 @@ Read only the files that match the current decision point.
 | `reference/agent-chains.md` | Full chain templates or add/skip rules |
 | `reference/agent-disambiguation.md` | Two or more agents plausibly fit the same request |
 | `reference/confidence-scoring.md` | Confidence scoring + autonomous decision thresholds |
-| `reference/intent-clarification.md` | Ambiguous request needs interpretation before routing |
+| `reference/intent-clarification.md` | Ambiguous request needs interpretation before routing; overloaded-anchor REDIRECT |
 | `reference/proactive-mode.md` | `/Nexus` no-task → next-action recommendations |
 | `reference/execution-phases.md` | Phase-by-phase AUTORUN flow |
 | `reference/guardrails.md` | Task-specific checkpoints or guardrail state rules |
@@ -412,50 +412,33 @@ Read only the files that match the current decision point.
 | `reference/handoff-validation.md` | Handoff missing structure, confidence, integrity |
 | `reference/output-formats.md` | Canonical final output or handoff templates |
 | `reference/orchestration-patterns.md` | Concrete execution patterns (sequential, parallel, evaluator-loop, verification-gated) |
-| `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation: Sprint Contract + Rubric + orchestration pattern (the spec `converge` executes) |
-| `reference/loop-engineering-primitives.md` | Mapping the loop-engineering pattern onto Claude Code / Codex primitives (`/loop`, `/goal`, worktree, subagents, memory) with 2026-06 version detail — read when designing a `goal`/apex/summit loop or explaining which primitive implements which loop part |
+| `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation — the spec `converge` executes |
+| `reference/loop-engineering-primitives.md` | Map the loop-engineering pattern onto Claude Code / Codex primitives — when designing a `goal`/apex/summit loop |
 | `reference/context-strategy.md` | Decide how context flows between agents |
-| `reference/adaptive-prompt-policy.md` | Tailor each spawn prompt to project + session context (Context-Adaptive Spawn Tuning); ephemeral, reversible, no durable global write |
-| `reference/routing-learning.md` | Adapting routing from execution evidence; per-task-type autonomy calibration (Autonomy Ledger) |
+| `reference/adaptive-prompt-policy.md` | Tailor each spawn prompt to project + session context; ephemeral, reversible |
+| `reference/routing-learning.md` | Adapting routing from evidence; per-task-type Autonomy Ledger |
 | `reference/quality-iteration.md` | Output needs post-delivery PDCA improvement |
-| `reference/{orchestration,task-routing,production-reliability,agent-communication}-anti-patterns.md` | Anti-pattern catalogs — orchestration / routing / reliability / handoff (load when chain ≥ 4 agents) |
+| `reference/{orchestration,task-routing,production-reliability,agent-communication}-anti-patterns.md` | Anti-pattern catalogs (load when chain ≥ 4 agents) |
 | `reference/execution-layers.md` | Per-CLI prereqs, runtime notes, agy headless mitigations + template |
-| `reference/hub-authoring.md` | Per-engine authoring (Claude/Codex/agy), spawn-template variants, model selection table, execution-layer key rules |
-| `reference/recipes-detail.md` | Extended Recipe descriptions + full chain templates (kaizen, anneal, apex, essential, killer, trim, acceptance, growth-acceptance, summit, podium, migrate, transmute, clone, fuse, graft, venture, package) |
+| `reference/hub-authoring.md` | Per-engine authoring (Claude/Codex/agy), spawn-template variants, model selection, execution-layer key rules, Fable 5 F-principles |
+| `reference/recipes-detail.md` | Recipe Families full axis prose + extended Recipe descriptions + full chain templates |
+| `reference/{anneal,apex,playable,charter,enact,layer,gedanken,delve,spec,migrate,clone,fuse,graft,converge,loop,goal,acceptance,growth-acceptance,summit,transmute,venture,package,podium}-recipe.md`, `reference/apex-walkthrough.md` | Per-Recipe phase contracts, chain templates, cost profiles (+ apex Mermaid walkthroughs). Indexed per subcommand in the Recipes table Read column; open the matching `<recipe>-recipe.md` for full detail |
 | `reference/inline-recipes.md` | Full phase contracts for `kaizen` / `essential` / `killer` / `trim` |
-| `reference/anneal-recipe.md` | `/nexus anneal` — full phase contract for the design-audit → brush-up loop |
-| `reference/recipe-contract.md` | **Authoring standard for nexus recipes** — the 8 required elements + canonical phrasing (loop cap, confirm tiers, resume, report naming, shared-protocol refs). Read when authoring a new recipe, leveling up a thin one, or normalizing phrasing |
-| `reference/verdict-gate.md` | **Shared contract for verdict recipes** (`essential`/`killer`/`trim` + graft flag clause) — the AskUserQuestion verdict card, Yes/No/Modify branches (Modify bound = 2), flag + KPI + kill-criterion |
+| `reference/recipe-contract.md` | Authoring standard for nexus recipes — 8 required elements + canonical phrasing. Read when authoring/normalizing a recipe |
+| `reference/verdict-gate.md` | Shared contract for verdict recipes (`essential`/`killer`/`trim` + graft flag clause) |
 | `reference/signal-keywords.md` | Canonical full Signal Keywords → Recipe table (Core / Specialist / Mobile / Package / Fallback) |
 | `reference/official-skill-categories.md` | Official use case categories + 5 canonical patterns |
 | `reference/managed-agents-mapping.md` | Managed Agents / Outcomes / Dreaming / Webhooks mapping + Dynamic Workflows |
-| `reference/apex-recipe.md` | `/nexus apex` — phase contracts, sub-orchestration topology, Risk Gate |
-| `reference/playable-recipe.md` | `/nexus playable` — all-in-one game production (CONCEPT→DESIGN→SLICE→PRODUCE→INTEGRATE→VERIFY→SHIP); game cluster (Quest/Glance/Tick/Dot), vertical-slice-first gate, game acceptance, **Playable Report**; game-specialized apex; checkpoint-resume (`playable resume`) |
-| `reference/charter-recipe.md` | `/nexus charter` — repo analysis → Charter authoring incl. team design (stops at the document); Charter schema, invocation modes, charter→enact split |
-| `reference/enact-recipe.md` | `/nexus enact` — execute a Charter: team construction from §5 → end-to-end orchestration → verify/ship; Confirm Gate, `dry-run`/`resume` modes |
-| `reference/layer-recipe.md` | `/nexus layer` — design + stand up a repo's operating layer (FRAME→SURVEY→DESIGN→CONFIRM→DELEGATE→VERIFY); Loom designs the blueprint (skill suite + recipes + workflows + routing map), Sigil authors bodies, Nexus registers; `design-only` stops at the blueprint; Confirm-before-launch; checkpoint-resume (`layer resume`) |
-| `reference/apex-walkthrough.md` | Human-facing apex — Mermaid flowcharts, storyboards, failure paths |
-| `reference/{goal,acceptance,growth-acceptance,summit,transmute,venture,package,podium}-recipe.md` | Per-Recipe specs — phase contracts, chain templates, cost profiles |
-| `reference/gedanken-recipe.md` | `/nexus gedanken` — structured thought-experiment reasoning (FRAME→CONSTRUCT→REASON→PERTURB→REFUTE→CONCLUDE); archetype menu, controlled-variation bound (≤3), adversarial refute, Gedanken Report with falsifier + epistemic status; no code, exploratory analog of `magi` |
-| `reference/delve-recipe.md` | `/nexus delve` — full phase contract for the feature deep-dive dialogue |
-| `reference/spec-recipe.md` | `/nexus spec` — interactive feature-proposal → locked spec dialogue (FRAME→EXPAND→CHALLENGE→SHAPE→SPECIFY→LOCK); INTERACTIVE default, +Lens reuse-scan grounding, draft-persisted & resumable (`spec resume`), Spec Quality Gate + standard template as lock preconditions, stops at `docs/specs/<slug>.md`, no code |
-| `reference/migrate-recipe.md` | `/nexus migrate` — change-completeness double loop, RESIDUE-GATE proof, gated DECOMMISSION; `case=arch\|framework\|middleware\|mock-to-prod` |
-| `reference/clone-recipe.md` | `/nexus clone` — full phase contract for faithful product reproduction |
-| `reference/fuse-recipe.md` | `/nexus fuse` — full phase contract for multi-source product synthesis |
-| `reference/graft-recipe.md` | `/nexus graft` — full phase contract for concept transplant / innovation gate |
-| `_common/DIFFERENTIAL_PARITY.md` | **Shared parity discipline for `transmute`/`clone`/`fuse`/`graft`/`migrate`** — parity-over-faith, oracle adequacy + non-determinism canonicalization gates, comparator/harness, provenance/drift. Read when a recipe claims "verified by differential parity" |
-| `_common/ADVERSARIAL_REFUTATION.md` | **Shared skeptic-panel discipline for `killer`/`trim`/`graft`** — 2-3 cross-engine skeptics, evidence-vs-novelty, refute-vs-defend polarity, aggregation, safety exclusions. Read when a recipe gates a verdict on "refute ×2-3" |
+| `_common/DIFFERENTIAL_PARITY.md` | Shared parity discipline for `transmute`/`clone`/`fuse`/`graft`/`migrate` — read when a recipe claims "verified by differential parity" |
+| `_common/ADVERSARIAL_REFUTATION.md` | Shared skeptic-panel discipline for `killer`/`trim`/`graft` — read when a recipe gates a verdict on "refute ×2-3" |
 | `reference/research-grounding.md` | Phase 0.5 web-research sweep shared by `clone`/`fuse`/`graft` (Evidence Ledger) |
-| `reference/converge-recipe.md` | `/nexus converge` — invocable Generator-Evaluator loop, termination bounds, flatten rule for wrapping loop-recipes |
-| `reference/loop-recipe.md` | `/nexus loop` — loop-engineering dispatcher & discipline gate: classify loop shape → 5-point precondition gate (oracle / hard-stop / maker≠checker / persistent-memory / drift) → route to goal/converge/orbit/apex; named **Loop Design Record**; delegates execution to `orbit`, never re-implements it |
 | `_common/PROOF_CARRYING.md` | `/nexus acceptance` Tier policy + G1-G10. **Mandatory before `acceptance`.** |
 | `_common/GROWTH_BRAND_PROOF.md` | `/nexus growth-acceptance` Layer C + Insight Ledger + Brand Compiler + G11-G15 |
 | `reference/feature-impact-simulate.md` | Feature impact prediction (Persona+Journey+Product v4) |
-| `reference/apex-recipe.md`, `reference/apex-walkthrough.md` | `/nexus apex` phase contracts + Mermaid walkthroughs |
 | `reference/pack-subcommand.md` | `/nexus pack` — skill profile switch, settings.json edit, backup, diff, confirm |
 | `_common/SKILL_PACKS.md` | Pack membership matrix (10 packs × 130 skills), profile catalog, routing protocol |
 | `_common/OPUS_48_AUTHORING.md` | **Claude Code hub** — P4 / P6 / P7 spawn prompts, output envelopes, effort |
-| `reference/hub-authoring.md` § Claude Code hub — Fable 5 | **Hub runs on `claude-fable-5`** — F-principles: lighter spawn prompts, `high` default effort, longer-turn / async harness, progress grounding, no-reasoning-reproduction rule, verbatim `send_to_user` tool for async runs |
+| `reference/hub-authoring.md` § Claude Code hub — Fable 5 | **Hub runs on `claude-fable-5`** — F-principles (F1-F8): lighter spawn prompts, `high` default effort, async harness, no-reasoning-reproduction, cost gate |
 | `_common/CODEX_ORCHESTRATION.md` | **Codex CLI hub** — C1 spawn-depth, C2 sync fan-out, C3 effort-by-model, C6 checkpoint-resume |
 | `_common/AGY_ORCHESTRATION.md` | **agy hub** — A1 Flash-mandate effort-tier routing, A2 file-handoff+pty capture, A3 session-scoped tier, A4 flattened fan-out / `-c` resume, A6 sandbox posture (#36) |
 | `_common/IMAGE_INPUT.md` | Routing request carries an image — five-stage pipeline at CLASSIFY |

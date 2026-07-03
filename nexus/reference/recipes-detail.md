@@ -4,6 +4,26 @@ Extended descriptions for verbose Recipe rows. The Recipes table in `SKILL.md` c
 
 ---
 
+## Recipe Families (mental model + within-family disambiguation)
+
+Canonical home for the full family taxonomy + within-family axes. SKILL.md `### Recipe Families` keeps a compact grouping + one-line axis; this table carries the full axis prose and the overloaded-anchor REDIRECT escalations. The Recipes table below (and in SKILL.md) is flat; these families group it and name the axis that separates confusable siblings. **When an input fits a family but not a specific recipe, use the axis to pick — or, for an overloaded anchor, run the one-question REDIRECT (`reference/intent-clarification.md`).**
+
+| Family | Recipes | Distinguishing axis within the family |
+|--------|---------|----------------------------------------|
+| **Fix** | `bug` · `security` | fault class: defect vs vulnerability |
+| **Improve** (existing code) | `refactor` · `optimize` · `kaizen` · `anneal` | refactor = apply a *known* internal restructure (known scope) · optimize = perf-only (a number) · kaizen = multi-axis polish of *one feature* vs a known target · **anneal = *discover* undiagnosed design weaknesses across a scope → brush up the prioritized slate, behavior-preserving**. **`improve`/`polish`/`enhance` is overloaded across all four → REDIRECT** (`audit the design` / `brush up the codebase` / `harden the architecture` → `anneal`; `improve a feature vs a target` → `kaizen`; `known single restructure` → `refactor`; `iterate to a quality bar` → `converge` in the **Loop** family). |
+| **Loop** (autonomous / iterative execution) | `loop` · `goal` · `converge` | **loop = dispatcher / front-door**: classify the loop's shape + gate on loop-engineering preconditions (verifiable oracle · external hard-stop · maker≠checker · persistent memory · drift-aware) + route · goal = native `/goal` *setup only* (no run) · converge = in-session rubric Generator-Evaluator quality loop. **The runner itself is the `orbit` skill** — `loop` delegates unattended runs to it, never re-implements it. Underspecified `make a loop`/`automate with a loop`/`run until done` → `loop`; an explicit shape → the sibling direct. |
+| **Build** (new) | `feature` · `apex` · `playable` | feature = single guided build · apex = general discovery→ship one-shot (8-25 agents) · **playable = game-specialized all-in-one (Quest design→Glance UI/UX→Tick impl→Dot assets) with a vertical-slice-first gate** |
+| **Discover → build pairs** | `spec`→`feature`/`apex` · `charter`→`enact` · `layer`→`sigil`-authoring | spec = one feature *spec* (dialogue) · charter = whole-repo *team + work plan* · layer = whole-repo *reusable operating layer* (project skills + recipes + workflows + routing map). All stop at a design; the pair runs it. **`layer` vs `charter`**: charter plans *what work to do + who does it* (one delivery); layer designs *what reusable tooling the repo should have* (persists). **`layer` vs `sigil`**: layer designs the coordinated *set* (Loom), sigil authors *one* skill body. |
+| **Reason** (no code) | `gedanken` · `delve` | output = insight, not a build. **gedanken** = abstract thought-experiment about a claim/hypothesis (construct→reason→perturb→refute→conclude); **delve** = grounded deep-dive into a *shipped* feature → evolution directions (deepen/broaden/reframe). Axis: abstract-hypothetical vs grounded-existing-feature. Both orchestrate `magi`/`flux`; trivial "what if" → `flux`/`magi`, trivial "what could we do with X" → `riff`/`spark` direct. **`delve` vs `kaizen`** (discover directions vs execute vs a target): `evolve`/`improve a feature` is overloaded → REDIRECT. |
+| **Verdict** (which feature) | `essential` · `killer` · `trim` | essential = THE must-have · killer = THE differentiator · trim = remove dead-weight (inverse). Shared gate: `reference/verdict-gate.md`. |
+| **Reproduce & Synthesize** | `clone` · `fuse` · `graft` · `transmute` · `migrate` | source count/fidelity: clone = 1 source faithful · fuse = ≥2 sources synthesized · graft = host+donor *concept* (rejects surface copy) · transmute = own-source cross-language · migrate = own-system change-completeness. Shared discipline: `_common/DIFFERENTIAL_PARITY.md`. **`differential parity` alone is ambiguous → REDIRECT.** |
+| **Quality-Max** (expensive, confirm) | `acceptance` · `growth-acceptance` · `summit` · `podium` | acceptance = proof-carrying merge (G1-10) · growth-acceptance = post-launch lifecycle (G11-15) · summit = pre-merge quality tournament · podium = content/slide quality |
+| **Document package** | `package` (incl. `venture`) | 12-domain preset registry |
+| **Meta / control** | `classify` · `proactive` · `pack` | routing · project scan · skill-profile |
+
+---
+
 ## kaizen
 
 Existing-feature continuous improvement covering perf / UX / code-quality / feature-extension. **PDCA loop, not single-pass**: improves against a quantified target and stops on target-met or diminishing-returns. Differs from `refactor` (internal-only), `optimize` (perf-only), and `feature` (new addition). Scale: 4-8 agents (× ≤3 cycles).
