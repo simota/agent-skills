@@ -6,7 +6,10 @@ Validates every SKILL.md against the rules defined in `_common/RECIPES.md`:
   R-REC-01: Exactly one Default Recipe (✓) per skill with a Recipes section (ERROR)
   R-REC-02: Subcommand names are kebab-case, 2-16 chars (ERROR)
   R-REC-03: Reserved words (default/auto/help/list) unused (ERROR)
-  R-REC-04: At most 7 Recipes per skill (WARNING)
+  R-REC-04: Recipe count, tiered (calibrated 2026-07-03 against 132-skill corpus):
+            8-10 recipes → INFO (corpus norm band, ≤10 = P95);
+            11+ recipes → WARNING (consolidation review candidate);
+            hub skills (HUB_SKILLS) → always INFO (recipe breadth by design)
   R-REC-05: Recipes section is RECOMMENDED for Tier 1-2 skills (INFO)
 
 Plus heading integrity:
@@ -27,7 +30,9 @@ SKILLS_ROOT = Path(__file__).resolve().parents[2]
 SKIP_DIRS = {"_common", "_templates"}
 RESERVED = {"default", "auto", "help", "list"}
 KEBAB = re.compile(r"^[a-z0-9][a-z0-9-]{1,19}$")
-MAX_RECIPES = 7
+MAX_RECIPES = 7  # recommended ceiling (scannability)
+WARN_RECIPES = 10  # corpus P95 as of 2026-07-03 (125/132 skills ≤ 10); >10 warns
+HUB_SKILLS = {"nexus"}  # ecosystem hub: routes 130+ agents, recipe breadth by design
 
 
 def iter_skills():
@@ -110,7 +115,13 @@ def validate(skill: str, path: Path) -> tuple[list[str], list[str], list[str]]:
             errors.append(f"R-REC-02: subcommand `{subcmd}` is not kebab-case / 2-20 chars")
 
     if len(rows) > MAX_RECIPES:
-        warnings.append(f"R-REC-04: {len(rows)} recipes exceeds max {MAX_RECIPES}")
+        msg = f"R-REC-04: {len(rows)} recipes exceeds recommended {MAX_RECIPES}"
+        if skill in HUB_SKILLS:
+            infos.append(f"{msg} (hub skill — recipe breadth by design)")
+        elif len(rows) > WARN_RECIPES:
+            warnings.append(f"{msg} and warn threshold {WARN_RECIPES} — consolidation review candidate")
+        else:
+            infos.append(f"{msg} (corpus norm band 8-{WARN_RECIPES})")
 
     subs = [s for _, s, _ in rows]
     dup = {s for s in subs if subs.count(s) > 1}

@@ -10,7 +10,7 @@ A **Recipe** is a named preset within one skill that pre-selects a workflow mode
 
 Key properties:
 - Scope is **strictly one skill**. Recipes do not cross skill boundaries.
-- One skill may define 2-7 Recipes. Default is required; others are optional.
+- One skill should define 2-7 Recipes (recommended for dispatch-table scannability). 8-10 is an accepted corpus-norm band (INFO); 11+ triggers a consolidation review (WARNING). Hub skills (e.g. `nexus`) are exempt — recipe breadth is by design. Default is required; others are optional.
 - The `default` Recipe preserves full backward compatibility — any invocation without a matching Subcommand token falls through to it.
 
 ---
@@ -127,7 +127,7 @@ The following rules are evaluated by **Gauge** during normalization audits.
 | R-REC-01 | A skill with `## Recipes` must declare exactly one `Default? = ✓` | ERROR |
 | R-REC-02 | All Subcommand values must match `^[a-z0-9][a-z0-9-]{1,19}$` (kebab-case, 2-20 chars; leading digit allowed for domain terms like `5whys`) | ERROR |
 | R-REC-03 | Subcommand values must not be reserved words: `default`, `auto`, `help`, `list` | ERROR |
-| R-REC-04 | A skill must not define more than 7 Recipes | WARNING |
+| R-REC-04 | Recipe count, tiered (calibrated 2026-07-03 against the 132-skill corpus, where 54% exceeded the old flat max-7): ≤7 recommended; 8-10 = INFO (corpus norm band, ≤10 = P95); 11+ = WARNING (consolidation review candidate); hub skills (`HUB_SKILLS` in validator, currently `nexus`) always INFO — recipe breadth by design | INFO / WARNING (tiered) |
 | R-REC-05 | Presence of `## Recipes` section is RECOMMENDED for skills in Adoption Tiers 1-2, but not required | INFO |
 
 ---

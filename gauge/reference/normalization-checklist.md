@@ -242,8 +242,8 @@ Architect (`architect/SKILL.md`) is the reference standard for all 16 items. Whe
 
 | Status | Criteria |
 |--------|----------|
-| PASS | `## Recipes` table present AND `## Subcommand Dispatch` section present (bare heading, no parenthetical suffix) AND exactly one row marked `✓` in Default? column AND every Subcommand matches `^[a-z0-9][a-z0-9-]{1,19}$` (leading digit allowed for domain terms like `5whys`; length cap 20 for unavoidable compounds like `growth-acceptance`) AND no reserved words (default/auto/help/list) AND ≤ 7 recipes |
-| PARTIAL | Recipes section present but with warnings only (>7 recipes) OR minor formatting drift recoverable by `python3 _common/scripts/validate-recipes.py` |
+| PASS | `## Recipes` table present AND `## Subcommand Dispatch` section present (bare heading, no parenthetical suffix) AND exactly one row marked `✓` in Default? column AND every Subcommand matches `^[a-z0-9][a-z0-9-]{1,19}$` (leading digit allowed for domain terms like `5whys`; length cap 20 for unavoidable compounds like `growth-acceptance`) AND no reserved words (default/auto/help/list) AND ≤ 10 recipes (≤7 recommended; 8-10 recorded as INFO — corpus norm band, calibrated 2026-07-03 at P95; hub skills in validator `HUB_SKILLS` are always INFO regardless of count) |
+| PARTIAL | Recipes section present but 11+ recipes (R-REC-04 WARNING — consolidation review candidate, non-hub) OR minor formatting drift recoverable by `python3 _common/scripts/validate-recipes.py` |
 | FAIL | Any of: `## Recipes` exists without `## Subcommand Dispatch`; decorated heading `## Subcommand Dispatch (default: xxx)`; multiple or zero ✓ defaults; reserved word used as subcommand; kebab-case violation; duplicate subcommands within the skill |
 | SKIP | Skill intentionally omits Recipes (Tier 3 or <3 distinct modes) — record as INFO, not FAIL |
 
