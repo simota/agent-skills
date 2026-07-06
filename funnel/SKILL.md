@@ -297,7 +297,7 @@ Detailed performance optimization → delegate to Growth / Bolt. LP-specific pri
 | Phase | Purpose | Key Activities | Read |
 |-------|---------|----------------|------|
 | `BRIEF` | Requirements | CV goal, target, USP, competitor LP analysis | — |
-| `STRUCTURE` | Structure design | Framework selection, section map, wireframe | `reference/patterns.md` |
+| `STRUCTURE` | Structure design | Framework selection, section map, wireframe — present the section map as an ASCII wireframe per `_common/ASCII_PREVIEW.md` before BUILD | `reference/patterns.md`, `_common/ASCII_PREVIEW.md` |
 | `COPY` | Copy creation | Headline, benefits, CTA, FAQ | — |
 | `BUILD` | Implementation | HTML/CSS/JS, responsive, image optimization | `reference/examples.md` |
 | `OPTIMIZE` | Optimization | Performance, accessibility, variant design | — |

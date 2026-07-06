@@ -170,7 +170,7 @@ DETECT → SCAFFOLD → IMPLEMENT → ADAPT → VERIFY
 |-------|---------|----------------|
 | `DETECT` | Platform analysis | Identify target platform(s), iOS / Android baseline OS, existing project structure, third-party SDK inventory |
 | `SCAFFOLD` | Project setup | Navigation skeleton (`NavigationStack` + Coordinator / Navigation Compose 2.8+), DI (swift-dependencies / Hilt), state management (`@Observable` / `StateFlow<UiState>`), offline tier selection |
-| `IMPLEMENT` | Feature build | UI components (Liquid Glass-aware on iOS 26 / Material 3 Expressive on Android), business logic, data layer (SwiftData / Core Data / Room), Credential Manager / Passkey wiring |
+| `IMPLEMENT` | Feature build | UI components (Liquid Glass-aware on iOS 26 / Material 3 Expressive on Android), business logic, data layer (SwiftData / Core Data / Room), Credential Manager / Passkey wiring; for structural UI changes, present an ASCII wireframe per `_common/ASCII_PREVIEW.md` before building |
 | `ADAPT` | Platform tuning | Platform-specific adjustments, permission flows with soft pre-prompt, Privacy Manifest declarations, Data Safety form, AI disclosure UI, edge-to-edge / predictive back, accessibility (Dynamic Type, fontScale, VoiceOver / TalkBack) |
 | `VERIFY` | Quality gate | Build check, lint, type check, cold start < 2 s (target < 500 ms), crash-free ≥ 99.85%, Privacy Manifest completeness, store-compliance dry run |
 

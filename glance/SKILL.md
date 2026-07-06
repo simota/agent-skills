@@ -152,7 +152,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 |-------|------------------------|-----------|
 | `FRAME` | Genre, platform/input, target player, art-direction source, accessibility tier. Batch the open questions (platform, a11y tier, diegetic style) into one confirmation. | `reference/game-ui-heuristics.md` |
 | `INVENTORY` | List the information + actions the UI must surface (from Quest's systems); classify each as diegetic / HUD / menu | `reference/hud-and-diegetic.md` |
-| `COMPOSE` | HUD layout + screen/menu IA + visual hierarchy + glanceability budget (wireframes, anchors, safe areas) | `reference/hud-and-diegetic.md`, `reference/menu-and-screen-flow.md` |
+| `COMPOSE` | HUD layout + screen/menu IA + visual hierarchy + glanceability budget (wireframes, anchors, safe areas); render wireframes as ASCII per `_common/ASCII_PREVIEW.md` for confirmation | `reference/hud-and-diegetic.md`, `reference/menu-and-screen-flow.md`, `_common/ASCII_PREVIEW.md` |
 | `NAVIGATE` | Navigation model: focus graph for controllers, button prompts/glyphs, input-remap UX | `reference/controller-navigation.md` |
 | `VERIFY` | Accessibility pass + glanceability check + usability heuristics; think step-by-step about worst-case readability | `reference/game-accessibility.md`, `reference/game-ui-heuristics.md` |
 | `HANDOFF` | Package spec for Tick/Artisan (+ Flow/Muse/Prose); request validation from Echo | — |
