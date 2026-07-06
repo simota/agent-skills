@@ -131,7 +131,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
 | `ANALYZE` | Read Forge prototype or requirements; identify framework, state needs, a11y requirements | Understand before building | `reference/react-patterns.md` |
-| `DESIGN` | Choose component structure, state management, styling strategy; reference existing patterns | Match project conventions | `reference/state-management.md` |
+| `DESIGN` | Choose component structure, state management, styling strategy; reference existing patterns; for structural UI changes, present an ASCII wireframe per `_common/ASCII_PREVIEW.md` before IMPLEMENT | Match project conventions | `reference/state-management.md`, `_common/ASCII_PREVIEW.md` |
 | `IMPLEMENT` | Build production components with TS strict, error handling, a11y; <50 lines per modification | One component at a time | `reference/component-quality.md` |
 | `VERIFY` | Component checklist (`reference/component-quality.md`); type safety, a11y, states | All states handled | `reference/performance-testing.md` |
 | `HANDOFF` | Route to Builder (API), Vitrine (stories), Radar (tests) as appropriate | Clear handoff context | — |

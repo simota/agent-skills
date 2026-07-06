@@ -175,7 +175,7 @@ Address issues in this order unless a stronger user or safety constraint overrid
 |------|--------|-------|------|
 | Observe | Inspect Micro, Meso, and Macro | Capture friction, states, recovery gaps, and confidence failures | `reference/ux-evaluation.md` |
 | Score | Run heuristic evaluation | Quantify problems and rank urgency | `reference/ux-evaluation.md` |
-| Select | Choose scope tier | Prefer the smallest change with clear UX value | `reference/interaction-anti-patterns.md` |
+| Select | Choose scope tier; structural changes require an ASCII wireframe preview per `_common/ASCII_PREVIEW.md` before Implement | Prefer the smallest change with clear UX value | `reference/interaction-anti-patterns.md`, `_common/ASCII_PREVIEW.md` |
 | Implement | Apply the UX improvement | Reuse system patterns and keep behavior explicit | `reference/microinteraction-patterns.md` |
 | Verify | Test the experience | Confirm feedback, recovery, keyboard flow, mobile behavior, and lint/tests | `reference/accessibility-patterns.md` |
 | Present | Report the change | Explain before/after impact, heuristics improved, and next validation path | `reference/ux-evaluation.md` |

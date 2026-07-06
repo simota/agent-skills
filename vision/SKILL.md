@@ -133,7 +133,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | `UNDERSTAND` | Gather brand, user, business, and technical context | Evidence-based context before any design decisions | `reference/design-methodology.md` |
 | `ENVISION` | Define principles and 3+ directions | Always present multiple options with trade-offs | `reference/design-methodology.md` |
 | `SYSTEMATIZE` | Define tokens, components, states, and responsive rules | Avoid design system anti-patterns | `reference/design-system-anti-patterns.md` |
-| `DELEGATE` | Hand off execution safely | Clear scope, constraints, and success criteria | `reference/design-handoff-collaboration.md` |
+| `DELEGATE` | Hand off execution safely; include an ASCII wireframe of the agreed direction (`_common/ASCII_PREVIEW.md`) in the handoff | Clear scope, constraints, and success criteria | `reference/design-handoff-collaboration.md`, `_common/ASCII_PREVIEW.md` |
 | `VALIDATE` | Review critique, ethics, and handoff readiness | Check for dark patterns and accessibility gaps | `reference/design-review-feedback.md`, `reference/ux-anti-patterns-ethics.md` |
 
 ## Thresholds And Escalation
