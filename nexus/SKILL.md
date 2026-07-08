@@ -225,11 +225,11 @@ Execution-control Mode (AUTORUN_FULL / AUTORUN / GUIDED / INTERACTIVE) is applie
 
 | Phase | Purpose | Read When |
 |------|---------|-----------|
-| `CLASSIFY` | Detect task type, complexity, context confidence, official category, guardrail needs | `reference/confidence-scoring.md`, `reference/intent-clarification.md`, `reference/official-skill-categories.md` |
+| `CLASSIFY` | Detect task type, complexity, context confidence, official category, guardrail needs; crystallize the intent contract (goal + ACs + non-goals) | `reference/confidence-scoring.md`, `reference/intent-clarification.md`, `reference/official-skill-categories.md`, `reference/autonomy-quality-protocol.md` (Q1-Q3) |
 | `CHAIN` | Select minimum viable chain; plan parallel branches; Plan-and-Execute pattern (capable model plans, cheaper models execute — up to 90% cost reduction) | `reference/routing-matrix.md`, `reference/agent-chains.md`, `reference/agent-disambiguation.md`, `reference/task-routing-anti-patterns.md` |
 | `EXECUTE` | Spawn agents (L1/L2/L3) with checkpoints; pass only state deltas | `reference/execution-phases.md`, `reference/guardrails.md`, `reference/error-handling.md`, `reference/orchestration-patterns.md` |
-| `AGGREGATE` | Merge branch outputs; validate schema/required fields per step | `reference/conflict-resolution.md`, `reference/handoff-validation.md`, `reference/agent-communication-anti-patterns.md` |
-| `VERIFY` | Validate acceptance criteria; tests, build, security checks mandatory | `reference/guardrails.md`, `reference/output-formats.md`, `reference/quality-iteration.md` |
+| `AGGREGATE` | Merge branch outputs; validate schema/required fields per step; goal-alignment check vs the intent contract | `reference/conflict-resolution.md`, `reference/handoff-validation.md`, `reference/agent-communication-anti-patterns.md`, `reference/autonomy-quality-protocol.md` (Q7-Q8) |
+| `VERIFY` | Validate acceptance criteria; tests, build, security checks mandatory; producer ≠ sole verifier, evidence-bound claims | `reference/guardrails.md`, `reference/output-formats.md`, `reference/quality-iteration.md`, `reference/autonomy-quality-protocol.md` (Q9-Q15) |
 | `DELIVER` | Produce final user-facing response | `reference/output-formats.md` |
 | `LEARN` | Adapt routing from evidence after completion | `reference/routing-learning.md` |
 
@@ -366,7 +366,9 @@ Every deliverable must include:
 - Task description and acceptance criteria
 - Chain selected and mode used
 - Per-step results with agent, status, and output summary
-- Verification results (tests, build, security checks)
+- Verification results (tests, build, security checks) — evidence-bound; unexercised paths labeled `UNVERIFIED` (Q10)
+- **Acceptance Provenance** — every intent-contract criterion classified `verified`/`partial`/`missed`/`dropped(DEC-n)`, none silent (Q15)
+- **Decision Ledger** — `DEC-n` judgment calls made without the user, interpretation entries first; omit only when empty (Q4-Q6)
 - `## Prompt Tuning` trace when any spawn's directives were adapted (`field, old→new, trigger, reward_basis`) — delta-only; omit the subsection entirely when no spawn was tuned (`reference/adaptive-prompt-policy.md` §9)
 - Summary with overall status
 - Recommended follow-up actions if applicable
@@ -426,6 +428,9 @@ Read only the files that match the current decision point.
 | `reference/inline-recipes.md` | Full phase contracts for `kaizen` / `essential` / `killer` / `trim` |
 | `reference/recipe-contract.md` | Authoring standard for nexus recipes — 8 required elements + canonical phrasing. Read when authoring/normalizing a recipe |
 | `reference/verdict-gate.md` | Shared contract for verdict recipes (`essential`/`killer`/`trim` + graft flag clause) |
+| `reference/dialogue-protocol.md` | Conducting contract-level dialogue (`spec`/`delve` mandatory; `gedanken` INTERACTIVE, `clone` Stack Dialogue, verdict cards) — question craft, Assumption Ledger, Provenance Gate |
+| `reference/autonomy-quality-protocol.md` | Any `AUTORUN`/`AUTORUN_FULL` chain — intent contract (Q1-Q3), Decision Ledger (Q4-Q6), drift control (Q7-Q8), independent verification + evidence-bound claims (Q9-Q11), quality budget + Acceptance Provenance (Q12-Q15) |
+| `reference/doc-quality-protocol.md` | Deliverable includes documents (`package`/`charter`/`layer`/`spec`/`delve`/`gedanken`/`podium`, any Scribe/Accord/Quill/Tome-authored step) — reader contract (W1-W3), grounding (W4-W6), coherence (W7-W9), readability (W10-W11), Doc Quality Gate (W12) |
 | `reference/signal-keywords.md` | Canonical full Signal Keywords → Recipe table (Core / Specialist / Mobile / Package / Fallback) |
 | `reference/official-skill-categories.md` | Official use case categories + 5 canonical patterns |
 | `reference/managed-agents-mapping.md` | Managed Agents / Outcomes / Dreaming / Webhooks mapping + Dynamic Workflows |

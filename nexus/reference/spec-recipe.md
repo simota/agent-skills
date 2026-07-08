@@ -23,7 +23,7 @@ A user has a feature idea — possibly vague ("I want notifications") — and wa
 `FRAME → EXPAND → CHALLENGE → SHAPE → SPECIFY → LOCK`
 
 ### Phase 0 — FRAME (problem before solution)
-Establish the shared problem statement **before** any option generation. Plea[claude latent-needs/pain-extraction] surfaces the real job-to-be-done; +Field[claude user-research grounding] when research data exists; +Cast[claude persona] when the audience is unclear. **+Lens[claude reuse-scan] on an existing codebase (skip greenfield):** before fixing the problem, survey what already ships — does a comparable feature/module/pattern already exist, which assets are reusable, and what technical constraints (current stack, data model, integration points) bound the solution. This grounds the spec in the real codebase and prevents an out-of-context spec that re-derives shipped code. Nexus drives Socratic clarification with the user: who is this for, what job does it do, what does success look like, what is explicitly out of scope, what constraints (tech / time / compliance) bound it.
+Establish the shared problem statement **before** any option generation. Plea[claude latent-needs/pain-extraction] surfaces the real job-to-be-done; +Field[claude user-research grounding] when research data exists; +Cast[claude persona] when the audience is unclear. **+Lens[claude reuse-scan] on an existing codebase (skip greenfield):** before fixing the problem, survey what already ships — does a comparable feature/module/pattern already exist, which assets are reusable, and what technical constraints (current stack, data model, integration points) bound the solution. This grounds the spec in the real codebase and prevents an out-of-context spec that re-derives shipped code. Nexus drives Socratic clarification with the user — conducted per `reference/dialogue-protocol.md` (D1–D8: one focus per turn, recognition over recall, concrete anchors, tacit-knowledge probes, paraphrase-back before persisting) — covering: who is this for, what job does it do, what does success look like, what is explicitly out of scope, what constraints (tech / time / compliance) bound it. All dialogue throughout the recipe follows that protocol: checkpoints per D10–D12 (envelope / delta-only / orientation line), engagement calibration per D13–D15, and undecided gaps tracked in the draft's **Assumption Ledger** (D9).
 - **Checkpoint (mandatory):** present a 3-5 line problem statement (carrying any reuse/constraint findings from Lens); the user confirms or corrects it. Option generation **cannot start** until the problem statement is confirmed. (Prevents "spec a half-baked idea".)
 - **Draft init:** on problem-statement confirmation, write the initial `docs/specs/<slug>.draft.md` (status `draft`, L0 Vision + reuse/constraint findings filled). See **Draft persistence & resume**.
 
@@ -62,14 +62,14 @@ Accord[claude staged elaboration: L0 Vision → L1 Requirements → L2 Detail �
 
 `spec`'s value is a long multi-turn dialogue, so it must survive interruption. State is persisted **incrementally** to `docs/specs/<slug>.draft.md` — not only at the end.
 
-- **Incremental writes:** at each phase checkpoint pass, append/update the matching draft section (FRAME → L0 Vision + reuse/constraint findings; EXPAND → surviving candidates; CHALLENGE → pick + considered-but-rejected; SHAPE → proposal; SPECIFY → L1/L2/L3 + open questions). The draft also records a **current-phase marker** so a resume knows where to re-enter.
+- **Incremental writes:** at each phase checkpoint pass, append/update the matching draft section (FRAME → L0 Vision + reuse/constraint findings; EXPAND → surviving candidates; CHALLENGE → pick + considered-but-rejected; SHAPE → proposal; SPECIFY → L1/L2/L3 + open questions; every phase → **Assumption Ledger** delta per `reference/dialogue-protocol.md` §3). The draft also records a **current-phase marker** so a resume knows where to re-enter.
 - **Invocation forms:** `spec` (new dialogue) · `spec resume [<slug>]` (re-enter from the last checkpoint; `<slug>` omitted → most-recent draft) · `spec <slug-or-path>` (re-open a locked spec for revision — re-enters at SPECIFY and re-runs the lock preconditions before re-locking).
 - **Resume behavior:** read the draft, replay the current-phase marker, summarize decisions-so-far back to the user in 3-5 lines for confirmation, then continue the dialogue from that checkpoint. Never silently restart from FRAME.
 - **Finalize:** on LOCK the draft is promoted to the locked spec and the `.draft.md` archived/removed (Phase 5).
 
 ## Spec Quality Gate (lock precondition)
 
-Before sign-off, the spec is adversarially self-reviewed **as an artifact** — Judge[claude spec-as-artifact review] (+Attest for AC verifiability, +Magi when requirements trade off). The gate scores five dimensions; each must pass, or its finding is explicitly downgraded into Open Questions (never silently passed):
+Before sign-off, the spec is adversarially self-reviewed **as an artifact** — Judge[claude spec-as-artifact review] (+Attest for AC verifiability, +Magi when requirements trade off). The gate scores six dimensions; each must pass, or its finding is explicitly downgraded into Open Questions (never silently passed):
 
 | Dimension | Question |
 |-----------|----------|
@@ -78,6 +78,7 @@ Before sign-off, the spec is adversarially self-reviewed **as an artifact** — 
 | Consistency | Do scope, requirements, and ACs contradict each other anywhere? |
 | Testability | Is every AC verifiable by a machine or a human (Attest)? |
 | Scope coherence | Are in-scope / out-of-scope collectively exhaustive and mutually exclusive? |
+| Provenance | Is every load-bearing element `elicited` / `ratified` / `parked` — none `silent`? (Provenance Gate, `reference/dialogue-protocol.md` D16; open `ASSUME-n` entries are walked with the user here) |
 
 A gate failure routes back to SPECIFY for a fix, or — with the user's agreement — the gap is parked in Open Questions. The gate is a **lock precondition**: AUTORUN cannot skip it.
 
@@ -118,13 +119,19 @@ The L1↔L3 traceability (every requirement has an AC; every AC maps to a requir
 6. **Single-pass spec masquerading as dialogue** — human-in-the-loop at every phase boundary; AUTORUN cannot skip the contract-level checkpoints.
 7. **Reinvent the wheel / out-of-context spec** — FRAME's Lens reuse-scan surfaces existing assets and codebase constraints before the problem is fixed (skipped only for greenfield).
 8. **Lost dialogue on interruption** — incremental draft persistence + `spec resume` re-enter from the last checkpoint instead of restarting.
-9. **Locking a low-quality spec** — the Spec Quality Gate (ambiguity / completeness / consistency / testability / scope) is a lock precondition AUTORUN cannot skip.
+9. **Locking a low-quality spec** — the Spec Quality Gate (ambiguity / completeness / consistency / testability / scope / provenance) is a lock precondition AUTORUN cannot skip.
 10. **Downstream can't consume the spec** — the standard template + L1↔L3 AC traceability give `feature`/`apex`/`orbit` a machine-consumable verification contract.
+11. **Silent assumptions inside a signed spec** — the Assumption Ledger (D9) tracks every gap the user did not explicitly decide; the Provenance Gate (D16) blocks LOCK while any load-bearing element is `silent`.
+12. **Elicitation-quality failures** (wall-of-questions turns, leading questions at divergence, rubber-stamp checkpoints, vague answers swallowed as consent) — the dialogue itself is conducted per `reference/dialogue-protocol.md` D1–D15.
+
+## Shared protocols
+
+- **Dialogue conduct** → `reference/dialogue-protocol.md` (D1–D16: question craft, answer processing, Assumption Ledger, checkpoint presentation, engagement calibration, Provenance Gate). `spec` cites it rather than re-deriving elicitation rules; only the spec-specific specializations (which draft sections the Ledger lives in, Provenance as a sixth Quality-Gate dimension) are stated here.
 
 ## Add-ons
 +Lens (reuse-scan + constraint grounding in FRAME on an existing codebase; skip greenfield), +Field (real user-research grounding in FRAME), +Compete (market/differentiation framing in EXPAND), +Cast (persona grounding when the audience is unclear), +Rank (MoSCoW ordering of sub-features in SHAPE), +Omen (pre-mortem before LOCK on high-stakes specs), +Echo (usability sanity-pass when there is a UI surface), +Gateway/Schema (API/data-model detail in SPECIFY), +Judge (spec-as-artifact adversarial review in the Spec Quality Gate).
 
 ## Chain template
-`FRAME (Plea +Field?/Cast? +Lens?[reuse-scan/constraints] + Socratic dialogue) → ✓confirm-problem + draft-init → EXPAND (Riff ‖ Flux +Compete?) → ✓steer + draft → CHALLENGE (Magi + Void + Ripple +Omen?) → ✓pick + convergence-check + draft → SHAPE (Spark +Rank?) → ✓edit + draft → SPECIFY (Accord +Scribe?/Gateway?/Schema?, L3 ACs with traceable IDs mandatory, Attest? +Echo?) → ✓iterate + draft → LOCK (✓quality-gate: Judge spec-as-artifact +Attest +Magi? — ambiguity/completeness/consistency/testability/scope → ✓sign-off → promote draft to docs/specs/<slug>.md per template + Open Questions section → ✓build-path: orbit loop (✓engine: claude|codex|agy) ‖ apex (fallbacks: feature|acceptance|essential|killer) → recommend chosen handoff) [NO CODE]`
+`FRAME (Plea +Field?/Cast? +Lens?[reuse-scan/constraints] + Socratic dialogue) → ✓confirm-problem + draft-init → EXPAND (Riff ‖ Flux +Compete?) → ✓steer + draft → CHALLENGE (Magi + Void + Ripple +Omen?) → ✓pick + convergence-check + draft → SHAPE (Spark +Rank?) → ✓edit + draft → SPECIFY (Accord +Scribe?/Gateway?/Schema?, L3 ACs with traceable IDs mandatory, Attest? +Echo?) → ✓iterate + draft → LOCK (✓quality-gate: Judge spec-as-artifact +Attest +Magi? — ambiguity/completeness/consistency/testability/scope/provenance[D16 + walk open ASSUME-n] → ✓sign-off → promote draft to docs/specs/<slug>.md per template + Open Questions section → ✓build-path: orbit loop (✓engine: claude|codex|agy) ‖ apex (fallbacks: feature|acceptance|essential|killer) → recommend chosen handoff) [NO CODE]`
 
 Resumable: `spec resume [<slug>]` re-enters from the draft's current-phase marker; `spec <slug-or-path>` re-opens a locked spec for revision (re-enters at SPECIFY, re-runs the lock preconditions).

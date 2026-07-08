@@ -84,6 +84,9 @@ Every recipe emits `NEXUS_COMPLETE` with the base `## Nexus Execution Report` (`
 | `_common/ADVERSARIAL_REFUTATION.md` | skeptic panel, evidence-vs-novelty, polarity, exclusions | killer, trim, graft |
 | `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation, single termination oracle, flatten rule | converge, kaizen, apex, summit, podium |
 | `_common/TRACEABILITY.md` | canonical AC/REQ IDs | spec, accord-driven recipes, attest gates |
+| `reference/dialogue-protocol.md` | question craft, answer processing, Assumption Ledger, checkpoint presentation, Provenance Gate for contract-level dialogue | spec, delve (mandatory); gedanken INTERACTIVE, clone Stack Dialogue, verdict cards (D1–D4/D10–D11 only) |
+| `reference/autonomy-quality-protocol.md` | intent contract, Decision Ledger, drift control, producer≠verifier, evidence-bound claims, Acceptance Provenance | all autonomous (non-dialogue) recipes + ad-hoc chains; recipes cite it and add only specializations (parity oracles satisfy Q3/Q10; acceptance G1–G10 subsume Q11) |
+| `reference/doc-quality-protocol.md` | reader contract, universal grounding / UNKNOWN-over-fabrication, cross-doc single source of truth, summary-first readability, Doc Quality Gate (W12 = Q11 for documents) | package, charter, layer, podium, spec/delve artifacts, gedanken reports, any doc-authoring step; native gates (podium Verification Team, Spec Quality Gate, package Phase 5) subsume W12 and add only missing dimensions |
 | `_common/PROOF_CARRYING.md` | G1-G10 proof-carrying merge | acceptance, growth-acceptance |
 
 A recipe re-describing a primitive a `_common/` protocol already owns is drift — replace the prose with a citation + the recipe-specific specialization only.

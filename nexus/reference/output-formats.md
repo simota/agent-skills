@@ -31,14 +31,24 @@ Chain: [Executed chain]
 - Tests: [PASS/FAIL + details]
 - Build: [status]
 
+### Acceptance Provenance
+| Criterion | Class | Evidence / gap |
+|-----------|-------|----------------|
+| [AC or derived criterion] | verified \| partial \| missed \| dropped(DEC-n) | [observed evidence, or the precise gap] |
+
+### Decision Ledger
+- [DEC-n (class)]: [decision] — [why] ([interpretation entries first; omit section if empty])
+
 ### How to Verify
 1. [Verification step 1]
 2. [Verification step 2]
 
 ### Risks / Follow-ups
-- [Remaining risks]
+- [Remaining risks + any UNVERIFIED claims]
 - [Recommended follow-ups]
 ```
+
+Acceptance Provenance covers **every** intent-contract criterion (none silent); Decision Ledger and evidence rules per `reference/autonomy-quality-protocol.md` (Q4–Q6, Q10, Q15).
 
 ---
 
@@ -79,9 +89,14 @@ Parallel (if any):
 - Final Guardrail: [L2 CHECKPOINT result]
 
 ### Context Summary
-- Goal: [Original goal]
-- Acceptance: [All criteria met / Partial]
-- Key Decisions: [List of major decisions made]
+- Goal: [Original goal + non-goals from the intent contract]
+- Acceptance: [per-criterion — see Acceptance Provenance table; never a blanket "all criteria met"]
+- Key Decisions: [Decision Ledger — DEC-n entries, interpretation class first]
+
+### Acceptance Provenance
+| Criterion | Class | Evidence / gap |
+|-----------|-------|----------------|
+| [AC or derived criterion] | verified \| partial \| missed \| dropped(DEC-n) | [observed evidence, or the precise gap] |
 
 ### How to Verify
 1. [Verification step 1]

@@ -137,7 +137,7 @@ Turn analysis (+ objective) into a prioritized, decomposed, acceptance-bounded p
 
 Synthesize Phases 1-2 into the **Charter document** — the self-contained operating manual, including the team-construction design. Authored by `scribe` with `accord` supplying traceability; `void` optionally trims scope (full mode).
 
-The Charter MUST be **self-driving**: a reader (human, `enact`, or a fresh Nexus session) can construct the team and execute every work package from the document alone, without re-running analysis. Write it to `out` (default `docs/CHARTER.md`) and a machine-readable companion (`docs/CHARTER.roster.yaml`) holding the roster + orchestration plan for `enact` re-entry.
+The Charter MUST be **self-driving**: a reader (human, `enact`, or a fresh Nexus session) can construct the team and execute every work package from the document alone, without re-running analysis. This self-containment check is the reader-path test of `reference/doc-quality-protocol.md` (W12, reader = `enact`/the executing team); the Charter also follows its grounding (W4-W5 — Phase 1's `UNKNOWN`-over-guessing rule), coherence (W8-W9, terms follow the repo's vocabulary), and freshness (W3: as-of + review trigger) rules. Write it to `out` (default `docs/CHARTER.md`) and a machine-readable companion (`docs/CHARTER.roster.yaml`) holding the roster + orchestration plan for `enact` re-entry.
 
 **Team-construction design (not execution).** Phase 3 finalizes §5 (roster: per work package, owner skill + model tier + engine + spawn config) and §6 (orchestration plan: chain order, parallel branches + file ownership, checkpoints, **per-package engine assignment**). It does **not** verify spawn prereqs or instantiate agents — that is `enact` Phase 1.
 

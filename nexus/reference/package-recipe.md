@@ -114,6 +114,8 @@ The entity-id barrier guards *structural* integrity; this gate guards *factual* 
 
 `validation_report.md` reports the count of: sourced claims / assumptions / research-to-dos / **ungrounded-fact failures (must be 0 to ship)**.
 
+This gate is the origin of — and is generalized to all doc-producing runs by — `reference/doc-quality-protocol.md` (W4). The full document discipline (W1 reader contract per document, W3 freshness metadata, W8 cross-doc single source of truth via the traceability anchor, W12 reader-path check) applies to every package; Phase 5's cross-doc consistency + traceability matrix are its W8 implementation.
+
 ## Domain Preset Registry
 
 | Preset | Subcommand | Directories | Spine skills (Phase 2) | Track skills (Phase 3) | Risk gate |
