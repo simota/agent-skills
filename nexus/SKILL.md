@@ -146,6 +146,7 @@ The full table below is flat; these families group it by the axis that separates
 | **Build** (new) | `feature` · `apex` · `playable` | single guided build / discovery→ship one-shot (8-25 agents) / game-specialized all-in-one (vertical-slice-first gate) |
 | **Discover → build pairs** | `spec`→`feature`/`apex` · `charter`→`enact` · `layer`→`sigil` | one feature spec / whole-repo team+work plan / whole-repo reusable operating layer. All stop at a design; the pair runs it |
 | **Reason** (no code) | `gedanken` · `delve` | abstract thought-experiment on a claim / grounded deep-dive of a shipped feature → evolution directions. Both orchestrate `magi`/`flux`. `evolve a feature` overloaded → REDIRECT |
+| **Comprehend** (reverse-engineer existing code → understanding artifact, no code) | `cartograph` | multi-repo reverse-engineering → bird's-eye diagrams + design doc. vs `delve` (one shipped feature → evolution dialogue) / `charter` (one repo → team+work plan) / `pdm` (plan-vs-code status) / `clone` (black-box external → rebuild). Single repo/one diagram → `lens`/`atlas`/`canvas` direct |
 | **Verdict** (which feature) | `essential` · `killer` · `trim` | THE must-have / THE differentiator / remove dead-weight (inverse). Shared gate: `reference/verdict-gate.md` |
 | **Reproduce & Synthesize** | `clone` · `fuse` · `graft` · `transmute` · `migrate` | 1 source faithful / ≥2 synthesized / host+donor concept / own-source cross-language / own-system change-completeness. Shared: `_common/DIFFERENTIAL_PARITY.md`. `differential parity` alone → REDIRECT |
 | **Quality-Max** (expensive, confirm) | `acceptance` · `growth-acceptance` · `summit` · `podium` | proof-carrying merge (G1-10) / post-launch lifecycle (G11-15) / pre-merge quality tournament / content-slide quality |
@@ -173,6 +174,7 @@ The full table below is flat; these families group it by the axis that separates
 | Goal Setup | `goal` | | `/goal` autonomous long-running execution setup. **Gates on a machine-checkable completion oracle + mandatory hard-stop bound** (rejects unverifiable goals). 1-3 agents, no code execution | `Hone → Latch → Scribe? → DELIVER` | `reference/goal-recipe.md` |
 | Gedanken | `gedanken` |  | Structured thought-experiment reasoning. | → `reference/recipes-detail.md` §gedanken | `reference/gedanken-recipe.md` |
 | Delve | `delve` | | Existing-feature deep-dive → evolution-direction dialogue; no code — stops at a named Evolution Map. | See `reference/recipes-detail.md` | `reference/delve-recipe.md` |
+| Cartograph | `cartograph` | | Multi-repo reverse-engineering → bird's-eye architecture diagrams + design document; no code — stops at a named Cartography Map. | See `reference/recipes-detail.md` | `reference/cartograph-recipe.md` |
 | Spec | `spec` |  | Interactive feature-proposal → locked specification through deep human-in-the-loop dialogue. | → `reference/recipes-detail.md` §spec | `reference/spec-recipe.md` |
 | Essential | `essential` |  | Must-have feature **verdict + conditional implementation**. | See `reference/recipes-detail.md` | `reference/inline-recipes.md` |
 | Killer | `killer` |  | Killer-feature **verdict + conditional implementation with feature flag**. | See `reference/recipes-detail.md` | `reference/inline-recipes.md` |
@@ -205,6 +207,7 @@ For natural-language input without an explicit subcommand. **Subcommand match al
 | `kaizen`, `improve`, `polish`, `enhance existing`, `refine` | `kaizen` |
 | `anneal`, `design audit`, `brush up the codebase`, `harden the architecture`, `design weaknesses` | `anneal` |
 | `loop`, `make a loop`, `run until done`, `autonomous loop`, `ralph loop` | `loop` (dispatcher → gate + route to goal/converge/orbit/apex) |
+| `cartograph`, `reverse-engineer across repos`, `bird's-eye diagram`, `overview diagram`, `architecture map`, `design doc from code`, `understand the system across repos` | `cartograph` |
 | `/Nexus` (no arguments) | `proactive` |
 | unclear or multi-domain request | `classify` → `reference/intent-clarification.md` |
 
@@ -424,7 +427,7 @@ Read only the files that match the current decision point.
 | `reference/execution-layers.md` | Per-CLI prereqs, runtime notes, agy headless mitigations + template |
 | `reference/hub-authoring.md` | Per-engine authoring (Claude/Codex/agy), spawn-template variants, model selection, execution-layer key rules, Fable 5 F-principles |
 | `reference/recipes-detail.md` | Recipe Families full axis prose + extended Recipe descriptions + full chain templates |
-| `reference/{anneal,apex,playable,charter,enact,layer,gedanken,delve,spec,migrate,clone,fuse,graft,converge,loop,goal,acceptance,growth-acceptance,summit,transmute,venture,package,podium}-recipe.md`, `reference/apex-walkthrough.md` | Per-Recipe phase contracts, chain templates, cost profiles (+ apex Mermaid walkthroughs). Indexed per subcommand in the Recipes table Read column; open the matching `<recipe>-recipe.md` for full detail |
+| `reference/{anneal,apex,playable,charter,enact,layer,gedanken,delve,cartograph,spec,migrate,clone,fuse,graft,converge,loop,goal,acceptance,growth-acceptance,summit,transmute,venture,package,podium}-recipe.md`, `reference/apex-walkthrough.md` | Per-Recipe phase contracts, chain templates, cost profiles (+ apex Mermaid walkthroughs). Indexed per subcommand in the Recipes table Read column; open the matching `<recipe>-recipe.md` for full detail |
 | `reference/inline-recipes.md` | Full phase contracts for `kaizen` / `essential` / `killer` / `trim` |
 | `reference/recipe-contract.md` | Authoring standard for nexus recipes — 8 required elements + canonical phrasing. Read when authoring/normalizing a recipe |
 | `reference/verdict-gate.md` | Shared contract for verdict recipes (`essential`/`killer`/`trim` + graft flag clause) |
