@@ -248,6 +248,8 @@ Pre-flight & health gates, 3-Tier Timeout architecture, Convergence Detection th
 
 ### Circuit Breaker
 
+Single principle: **detect a stall or circular pattern, then stop.** The two mechanisms below are concrete applications of this one rule — repeated identical failures during retries, and an unresolved back-and-forth during summit-loop debate.
+
 Prevents infinite retry loops when the same error recurs.
 
 | State | Condition | Behavior |
@@ -260,7 +262,7 @@ State file `${LOOP_DIR}/.circuit-state`; reset via `recover.sh --reset-circuit` 
 
 #### Agent Tennis Circuit Breaker (summit Phase 5 only)
 
-When orbit drives the summit improvement loop (max 3 iterations), a dedicated **Agent Tennis** breaker fires if the same finding is debated between Improvement and Verification teams for `≥ 3` turns without resolution. Action: exit loop immediately, deliver with an unresolved-finding caveat, escalate to user. Independent of `CIRCUIT_THRESHOLD`; cannot be bypassed. See `nexus/reference/summit-recipe.md` §Phase 5 Circuit Breakers.
+When orbit drives the summit improvement loop (max 3 iterations), the same stall-detection principle applies to team debate: fires if the same finding is debated between Improvement and Verification teams for `≥ 3` turns without resolution. Action: exit loop immediately, deliver with an unresolved-finding caveat, escalate to user. Tracked separately from `CIRCUIT_THRESHOLD` (different signal — debate turns, not retry failures) but governed by the same stop-on-stall rule above; this stop is never skipped. See `nexus/reference/summit-recipe.md` §Phase 5 Circuit Breakers.
 
 ## Contract and Evidence Rules
 

@@ -86,21 +86,23 @@ Standard format for `## NEXUS_HANDOFF` output. Designed for flexibility: include
 3. **Be specific in Next** — include what the next agent should do, not just who
 4. **Findings should be actionable** — include file paths, line numbers, evidence
 5. **Risks should be concrete** — "might break X" is better than "there are risks"
-6. **Journaling is a hard gate** — before emitting handoff, confirm `.agents/{agent}.md` and `.agents/PROJECT.md` writes per `_common/OPERATIONAL.md` → *Pre-Handoff Checklist*. Reference both paths in `Artifacts`.
+6. **Journal what's worth keeping** — when a step produces a reusable insight, a notable decision, or state needed for recovery/learning, record it in `.agents/{agent}.md` / `.agents/PROJECT.md` per `_common/OPERATIONAL.md` and reference the paths in `Artifacts`. Routine or trivial steps don't need an entry.
 
 ---
 
-## Pre-Handoff Journaling Gate
+## Pre-Handoff Journaling
 
-Every `## NEXUS_HANDOFF` and `_STEP_COMPLETE` **MUST** be preceded by:
+When a handoff carries durable state, a reusable insight, or a notable decision, precede it with:
 
 1. Appending one row to `.agents/PROJECT.md` (or BLOCKED if write fails)
-2. Adding a journal entry to `.agents/{agent}.md` when a reusable insight was generated (or noting "no novel insight" in the PROJECT.md row)
+2. Adding a journal entry to `.agents/{agent}.md` when a reusable insight was generated
 3. Listing both file paths in the handoff `Artifacts` field
 
-**Orchestrator enforcement (Nexus/Rally):** A handoff returned without journaling evidence is treated as `PARTIAL`. The orchestrator reroutes the agent to complete the logging step before chain progression. After 2 consecutive journaling-gate failures from the same agent, escalate to the user.
+Routine or trivial steps that produce nothing worth persisting don't need an entry.
 
-**Why this is a gate, not a suggestion:** Session durability (next section) depends on persistent state outside the orchestrator context. A handoff that skips journaling breaks crash recovery and routing learning — see also `_common/EVOLUTION.md` and `reference/routing-learning.md` (Nexus).
+**Orchestrator handling (Nexus/Rally):** When recovery- or learning-relevant state is clearly missing from a handoff, the orchestrator asks the agent to record it before the chain moves on. Persistent journaling gaps from the same agent are a review signal — surface them rather than silently degrading.
+
+**Why journaling matters:** Session durability (next section) depends on persistent state outside the orchestrator context. A handoff that skips journaling weakens crash recovery and routing learning — see also `_common/EVOLUTION.md` and `reference/routing-learning.md` (Nexus).
 
 ---
 

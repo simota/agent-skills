@@ -107,12 +107,12 @@ CES = Success_Rate × 0.35 + Recovery_Efficiency × 0.20 + Step_Economy × 0.20 
 
 | Component | Weight | Definition | Range |
 |-----------|--------|------------|-------|
-| Success_Rate | 0.35 | Proportion of executions with final STATUS=SUCCESS **AND journaling-gate compliance** (Pre-Handoff Checklist passed per `_common/HANDOFF.md`) | 0.0–1.0 |
+| Success_Rate | 0.35 | Proportion of executions with final STATUS=SUCCESS | 0.0–1.0 |
 | Recovery_Efficiency | 0.20 | Auto-recovery success rate when errors occur | 0.0–1.0 |
 | Step_Economy | 0.20 | Expected steps / Actual steps (capped at 1.0; lower actual = higher score) | 0.0–1.0 |
 | User_Satisfaction | 0.25 | Proportion completed without user correction or re-execution | 0.0–1.0 |
 
-**Journaling-gate signal:** A handoff that omits `.agents/PROJECT.md` row or `.agents/{agent}.md` journal entry is treated as `PARTIAL` by the orchestrator (per `_common/HANDOFF.md` → *Pre-Handoff Journaling Gate*) and therefore lowers Success_Rate automatically. Track per-agent journaling-gate failure count alongside chain CES; ≥ 2 consecutive failures from the same agent triggers user escalation independent of CES grade.
+**Journaling signal:** Journaling is the evidence base LEARN adapts from — a handoff that omits durable state or a reusable insight weakens the learning record (per `_common/HANDOFF.md` → *Pre-Handoff Journaling*). Treat this as a quality signal on the learning trail, not an automatic Success_Rate penalty: track per-agent journaling gaps, and where they persist from the same agent, surface them for review rather than silently degrading the grade.
 
 ### Grading
 

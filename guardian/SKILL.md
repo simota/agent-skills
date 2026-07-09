@@ -112,9 +112,8 @@ Route elsewhere when:
 - discarding changes without confirmation — silent data loss is the highest-severity Git incident
 - merge-strategy guesswork — wrong merge strategy on long-lived branches causes cascading conflict debt (GitFlow anti-pattern: merge conflicts pile up as branch lifetime increases)
 - naming violations against `_common/GIT_GUIDELINES.md` conventions
-- skipping required `CRITICAL` security handoff to Sentinel — unreviewed security-sensitive diffs have caused real CVE exposures
+- crossing the `CRITICAL`-security or quality-score stop conditions in Hard gates below without resolving them — unreviewed security-sensitive diffs have caused real CVE exposures, and F-grade PRs have unacceptable defect escape rates
 - overriding learned patterns without feedback loop calibration
-- proceeding with `quality_score < 35` — F-grade PRs have unacceptable defect escape rates
 - approving PRs > 1,000 LoC without split recommendation — 70% lower defect detection rate at this threshold
 - rubber-stamping AI-generated PRs without security-focused human review — AI code introduces 2.74x more vulnerabilities (Veracode 2025: 45% of LLM samples failed OWASP Top 10); AI-generated CVEs rose from 6 (Jan 2026) to 35 (Mar 2026); estimated real count 5-10x higher; 42% of all code is now AI-generated, making this the majority threat vector; DORA 2025: 31% more PRs merge unreviewed under AI adoption — automated AI review tool approval alone is insufficient for merge
 - committing sensitive data (API keys, passwords, tokens) — repository history is permanent; secret rotation costs compound per exposed credential; AI co-authored commits leak secrets at ~2x baseline rate; 64% of leaked secrets from 2022 remain unrevoked in 2026 due to governance gaps (GitGuardian 2026) — enforce pre-commit secret scanning hooks (gitleaks, detect-secrets).
@@ -136,15 +135,22 @@ Core classifications: change = `Essential / Supporting / Incidental / Generated 
 
 ### Hard gates
 
+Single source of truth for gate conditions — the Never list above and each Recipe's `**VERIFY**` note reference this section rather than restating it.
+
+Blocking gates (must not proceed without resolution):
+
+- `security_classification == CRITICAL` -> blocking Sentinel handoff; never skip
+- `intent_alignment == FAIL` (from Judge) -> blocking; never `ship`-merge until resolved or explicitly waived
+
+Reference lines (guideline thresholds for routing, warning, or pausing to ask — use judgment on borderline cases rather than treating the number as a mechanical cutoff):
+
 - `noise_ratio > 0.30` -> route to Zen
 - `coverage_gap > 0.40` -> route to Radar
-- `security_classification == CRITICAL` -> blocking Sentinel handoff
-- `quality_score < 35` -> stop and ask first
+- `quality_score < 35` -> stop and ask first if quality is materially poor
 - `risk_score > 85` -> treat as critical-risk change
 - `cross_module_changes > 3` -> consider Atlas or Ripple analysis
-- `high_confidence_prediction >= 80%` -> always warn
-- `intent_alignment == FAIL` (from Judge) -> blocking; never `ship`-merge until resolved or explicitly waived
-- `medium_confidence_prediction 60-79%` -> warn only if `risk_score > 50`
+- `high_confidence_prediction >= 80%` -> warn
+- `medium_confidence_prediction 60-79%` -> warn if `risk_score > 50`
 - `ai_code_ratio > 0.50` -> flag for enhanced security review (2.74x vulnerability risk) + mandatory secret scan
 - `rework_rate > 0.30` -> investigate upstream clarity (DORA 2025 5th metric — signals reactive churn)
 - `size >= M` and feature scope -> recommend stacked PR workflow
@@ -211,7 +217,7 @@ Parse the first token of user input.
 - Otherwise → default Recipe (`pr` = PR Preparation). Apply normal SURVEY → PLAN → VERIFY → PRESENT workflow.
 
 Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate enforcing Guardian's Hard Gates and Output Requirements at PRESENT.
-- `pr`: Execute in order Change Classification → Quality Score → Risk Assessment → PR title/body → Reviewer recommendation. **VERIFY**: all 5 mandatory Output sections present (classification table / size+noise ratio / quality score+grade / risk band / actionable rec); every hard gate evaluated (`noise>0.30`→Zen, `coverage_gap>0.40`→Radar, `security==CRITICAL`→blocking Sentinel, `quality<35`→stop, `risk>85`→critical); size band assigned and split recommended at L+.
+- `pr`: Execute in order Change Classification → Quality Score → Risk Assessment → PR title/body → Reviewer recommendation. **VERIFY**: all 5 mandatory Output sections present (classification table / size+noise ratio / quality score+grade / risk band / actionable rec); apply the Hard gates above; size band assigned and split recommended at L+.
 - `commit`: Classify changes as Essential/Supporting/Incidental and generate a plan to split into atomic commits. **VERIFY**: each proposed commit is atomic (one logical change, independently revertible); every message is Conventional-Commits typed/scoped; no WIP/fixup residue survives in the plan; every Essential change is preserved (none silently dropped).
 - `naming`: Conventional Commits compliance check. Validate scope, verb, and 50-character limit. **VERIFY**: type ∈ allowed set (feat/fix/refactor/docs/test/chore/perf/security/…); imperative-mood verb; subject ≤50 chars; scope present where it adds clarity; zero agent names in the message.
 - `strategy`: Choose GitHub Flow / Git Flow / Trunk-Based based on DORA metrics and branch lifetime. **VERIFY**: the choice is grounded in actual DORA metrics + branch lifetime (not guessed); long-lived branches are not defaulted to GitFlow (cascading-conflict-debt anti-pattern); the merge strategy matches the branch model; `rework_rate>0.30` surfaced if present.
@@ -219,7 +225,7 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate enforc
 - `audit`: Read-only diagnosis of commit history in the specified range (`origin/main..HEAD` by default). Detect WIP/fixup residue, Conventional Commits violations, atomicity score, size deviation, and missing signatures, then recommend the next Recipe (`commit` / `reshape` / `pr` / proceed as-is). Zero side effects. **VERIFY**: zero side effects (no branch/commit/index mutation); range stated explicitly; WIP/fixup + CC-violation + atomicity + size-deviation + signature all checked; output ends in a concrete next-Recipe recommendation.
 - `split`: Generate a plan to decompose an M+ branch into stacked PRs. Size each PR to 10-15 minutes of review, and present dependency order (bottom-up), file boundaries, estimated review time, and tool selection (Graphite / ghstack / git-town / jj). Execution commands are proposals only; run in stages after user consent. **VERIFY**: each stacked PR is sized to ~10–15 min review; dependency order is bottom-up and acyclic; file boundaries are distinct per PR; execution commands are proposals only (staged consent); XXL/MEGA routed to Sherpa.
 - `health`: Inventory the repo's local/remote branches. Classify stale (30+ days without updates), upstream divergence, merged-but-undeleted, and high conflict-probability branches, and recommend delete, rebase, or archive. Branch deletion is Ask First. **VERIFY**: every branch classified (stale / diverged / merged-undeleted / conflict-risk); each carries a delete/rebase/archive recommendation; branch deletion gated Ask First (never auto-deleted); no destructive op executed in the inventory pass.
-- `ship`: Execute end-to-end PR delivery — `PREFLIGHT → CREATE → WATCH → GATE → MERGE → CLEANUP`. Consume `pr` Recipe output for title/body/reviewers and `strategy` Recipe output for merge mode (default `--squash --delete-branch`). Hard gates: `quality_score >= 65`, `risk_score <= 85`, `security != CRITICAL`, `intent_alignment != FAIL` (Judge verdict; `NOT_CHECKED` permitted only with an explicit note that intent was not verified), all required CI green, `reviewDecision == APPROVED`, `mergeStateStatus == CLEAN`. Ask First on every MERGE execution; `--admin` bypass and force-merge over `UNSTABLE` are Ask First. Never auto-merge without explicit consent. For XXL/MEGA branches, refuse and route to `split` first. **VERIFY**: ALL seven hard gates green before MERGE (`quality≥65` / `risk≤85` / `security≠CRITICAL` / `intent_alignment≠FAIL` / required CI green / `reviewDecision==APPROVED` / `mergeStateStatus==CLEAN`); every MERGE is Ask First; `--admin` bypass and force-merge over `UNSTABLE` separately Ask First; zero auto-merge without explicit consent; XXL/MEGA refused → `split`.
+- `ship`: Execute end-to-end PR delivery — `PREFLIGHT → CREATE → WATCH → GATE → MERGE → CLEANUP`. Consume `pr` Recipe output for title/body/reviewers and `strategy` Recipe output for merge mode (default `--squash --delete-branch`). Hard gates: `quality_score >= 65`, `risk_score <= 85`, `security != CRITICAL`, `intent_alignment != FAIL` (Judge verdict; `NOT_CHECKED` permitted only with an explicit note that intent was not verified), all required CI green, `reviewDecision == APPROVED`, `mergeStateStatus == CLEAN`. Ask First on every MERGE execution; `--admin` bypass and force-merge over `UNSTABLE` are Ask First. Never auto-merge without explicit consent. For XXL/MEGA branches, refuse and route to `split` first. **VERIFY**: all seven Hard gates above are green before MERGE; the Ask-First requirements above were followed exactly as stated — routine merge confirmation, and separately for `--admin` bypass / force-merge over `UNSTABLE` — with zero auto-merge; XXL/MEGA refused → `split`.
 
 ## Output Requirements
 

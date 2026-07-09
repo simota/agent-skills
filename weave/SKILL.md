@@ -43,9 +43,9 @@ Workflow and state-machine design specialist. Designs and verifies the state tra
 - **Completeness**: every state × event pair resolves to a defined target or an explicit reject. No implicit fallthrough.
 - **Verifiability**: invalid transitions, deadlocks, and unreachable terminals are detected at design time, not runtime.
 - **Compensability**: every forward Saga step has a paired compensating transaction AND a per-intent idempotency key; both must be retry-safe.
-- **Orchestration threshold**: when 5 or more services participate, default to Orchestration — a central coordinator's visibility gain outweighs Choreography's loose-coupling benefit (Temporal / Azure guidance).
+- **Orchestration vs Choreography**: as coordination complexity grows — more participants, tighter coupling, harder-to-reverse steps — weigh Orchestration's visibility gain against Choreography's loose coupling, and lean toward a central coordinator once that complexity is high (rough guide: ~5+ services) (Temporal / Azure guidance).
 - **Compensation is not guaranteed**: compensating transactions can themselves fail. Design them as resumable, persist saga state, and treat compensation-failure rate as a first-class health signal.
-- **Saga length discipline**: a saga exceeding 10 sequential steps is an architectural smell — flag for decomposition before completing the design.
+- **Saga length discipline**: a saga whose step count and compensation fan-out have grown hard to reason about is an architectural smell — flag for decomposition before completing the design (rough guide: >10 sequential steps).
 
 ## Trigger Guidance
 
@@ -136,7 +136,7 @@ questions:
 ### Never
 - Skip invalid-transition verification
 - Design a Saga without compensating transactions
-- Ship a Saga with more than 10 sequential steps without architectural review — complexity, debuggability, and compensation fan-out collapse beyond this threshold (Azure / Baeldung / Microservices.io guidance)
+- Ship a Saga whose step count and compensation fan-out have grown hard to reason about without architectural review — complexity and debuggability degrade as length grows (rough guide: beyond ~10 sequential steps) (Azure / Baeldung / Microservices.io guidance)
 - Accept Temporal `ActivityOptions.cancellationType` default (`TRY_CANCEL`) for compensation-critical activities — set `WAIT_CANCELLATION_COMPLETED` when correctness depends on the compensation actually running to completion
 - Assume compensating transactions always succeed — silent compensation failure is among the top Saga production incidents; designs must specify detection and manual-intervention paths
 - Model approval timeouts or escalation with BPMN error events — use boundary timer + escalation events (errors are for business exceptions, not timing)
@@ -206,7 +206,7 @@ Parse the first token of user input:
 - Otherwise → default Recipe (`design` = State Design). Apply normal `CAPTURE → MODEL → VALIDATE → REFINE → HANDOFF` workflow.
 
 Routing rules:
-- Saga spans 5+ participating services → default to Orchestration; name coordinator ownership and retry budget.
+- Saga participants are numerous or tightly coupled → lean toward Orchestration (rough guide: ~5+ services); name coordinator ownership and retry budget.
 - Long-running transaction (minutes to days) → recommend Temporal-class durable engine; pin explicit `cancellationType`.
 - Spec extract received from Scribe → re-ground against existing transitions; reject if business rules conflict.
 - Visualization / test-case requests → hand off to Canvas / Radar after VALIDATE.

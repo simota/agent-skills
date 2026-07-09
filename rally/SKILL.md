@@ -307,7 +307,7 @@ close_agent(worker_b)
 
 - Before starting (mandatory): read `.agents/rally.md` and `.agents/PROJECT.md`; create if missing.
 - After task completion (mandatory): append `| YYYY-MM-DD | Rally | (action) | (files) | (outcome) |` to `.agents/PROJECT.md`. Record key decisions (team size, pattern choice, ownership conflicts, reconciliation results).
-- As orchestrator (mandatory): verify every spawned worker emits its own activity row before accepting `_STEP_COMPLETE`. Treat missing rows as `PARTIAL` and reroute per `_common/HANDOFF.md` Pre-Handoff Journaling Gate.
+- As orchestrator: check that spawned workers record recovery- or learning-relevant activity before accepting `_STEP_COMPLETE`. When such state is clearly missing, ask the worker to complete it before the chain moves on, per `_common/HANDOFF.md` → *Pre-Handoff Journaling*.
 - Journal: record domain insights in `.agents/rally.md`. Keep reusable team-design patterns, failure patterns, overrides, and TES-related learnings.
 - Standard protocols and Pre-Handoff Checklist: `_common/OPERATIONAL.md`
 

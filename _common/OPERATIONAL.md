@@ -27,32 +27,30 @@ Each agent **MUST** maintain a personal journal at `.agents/{agent-name}.md`.
 
 ## Activity Log
 
-All agents **MUST** log activity to `.agents/PROJECT.md` (shared cross-agent log).
+Agents should log significant activity to `.agents/PROJECT.md` (shared cross-agent log) so that reusable knowledge and important cross-agent decisions stay visible to later agents.
 
 **Format:**
 ```
 | YYYY-MM-DD | AgentName | Action | Scope (files/area) | Outcome |
 ```
 
-**Rules:**
-- **Before starting work** (mandatory): Verify `.agents/PROJECT.md` exists (create if missing with header row) and read the last 10–20 entries to understand recent cross-agent activity.
-- **After task completion** (mandatory): Append exactly one row per logical task. This is a hard gate — see *Pre-Handoff Checklist* below.
-- **When orchestrating**: Verify downstream agents have appended their own activity rows before accepting `_STEP_COMPLETE`. If missing, reject and reroute.
-- **Failure protocol**: If you cannot write `.agents/PROJECT.md` (permission denied, filesystem error), surface this immediately as a `BLOCKED` status — do not silently skip.
+**Guidance:**
+- **Before starting work**: If `.agents/PROJECT.md` exists, skim the last 10–20 entries to understand recent cross-agent activity (create the file when the first entry is worth writing).
+- **After meaningful work**: Append a row when the task produced a reusable insight or a decision later agents need to know. Routine or trivial tasks need no entry.
+- **When orchestrating**: Treat the log as shared memory rather than a compliance checkbox — encourage downstream agents to record noteworthy outcomes.
+- If you cannot write the file (permission denied, filesystem error), note it and continue; do not block the task on logging.
 
 ---
 
-## Pre-Handoff Checklist (Hard Gate)
+## Pre-Handoff Checklist
 
-Before emitting `## NEXUS_HANDOFF`, `_STEP_COMPLETE`, or `## NEXUS_COMPLETE`, every agent **MUST** verify:
+Before emitting `## NEXUS_HANDOFF`, `_STEP_COMPLETE`, or `## NEXUS_COMPLETE`, capture what the next agent will need:
 
-- [ ] `.agents/PROJECT.md` activity row appended for this task
-- [ ] `.agents/{agent-name}.md` journal entry added (or explicit "no novel insight" note recorded in the activity log)
-- [ ] Both files referenced (file paths only, not content dumps) in the handoff's `Artifacts` field when applicable
+- A `.agents/PROJECT.md` activity row, when the task produced a reusable outcome or decision.
+- A `.agents/{agent-name}.md` journal entry, when a genuinely reusable insight emerged.
+- Reference these files (paths only, not content dumps) in the handoff's `Artifacts` field when they were written.
 
-**Rationale:** Handoff data is the session log (see `_common/HANDOFF.md` → *Session Durability Principle*). Without the journal/activity-log write, crash recovery, debuggability, and routing learning all degrade.
-
-**Enforcement:** Nexus and Rally treat a handoff that lacks evidence of `.agents/` writes as `PARTIAL` and reroute the agent to complete the logging step before chain progression.
+**Rationale:** Handoff data is the session log (see `_common/HANDOFF.md` → *Session Durability Principle*). The journal and activity log are what make crash recovery, debuggability, and routing learning possible — so record when there is something worth recording, and skip the ceremony when there is not.
 
 ---
 

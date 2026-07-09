@@ -323,7 +323,7 @@ Unified Specification Package: [Feature Name]
 | `reference/raci-matrix.md` | You chose `raci` recipe. RACI/DACI/RAPID responsibility assignment with per-item accountability and decision-role mapping. |
 | `_common/TRACEABILITY.md` | You are assigning requirement/AC/scenario IDs or emitting a `.traceability.yaml` ledger. Canonical ID scheme + bidirectional linking rule shared with Scribe/Attest/Radar/Guardian/Judge. |
 | `_common/OPUS_48_AUTHORING.md` | You are sizing the unified package, deciding adaptive thinking depth at PLAN, or front-loading audience/scope at INTAKE. Critical for Accord: P3, P5. |
-| `_common/PROOF_CARRYING.md` v3.1 | You are emitting accord L4 (Reversibility / Learning / Disqualification) per Persona+Journey+Product fold-in. Phase 1 recommended, Phase 2 mandatory. Persona Contract schema (situation/goal/fear/comprehension/success/disqualification) feeds via echo `council` mode. Proposal Intake Checklist applies before extending L4 schema further. |
+| `_common/PROOF_CARRYING.md` v3.1 | You are emitting accord L4 (Reversibility / Learning / Disqualification) per Persona+Journey+Product fold-in. Phase 1 recommended, Phase 2 mandatory. Persona Contract schema (situation/goal/fear/comprehension/success/disqualification) feeds via echo `council` mode. The Authoring Principles (Extending This Protocol) apply before extending the L4 schema further. |
 | `_common/GROWTH_BRAND_PROOF.md` | You emit accord package as input to `nexus growth-acceptance` Phase 0 (Pre-Design, Enterprise org-tier only). L4 disqualification feeds Phase 3 Measurement Loop fail conditions (G13 Stop Authority). |
 
 ## Operational

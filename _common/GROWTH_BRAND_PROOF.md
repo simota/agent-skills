@@ -37,7 +37,7 @@ Three structural reasons:
 | **SMB** | 5-50 people | Step 1 only (Measurement Loop optional opt-in) | v2 baseline + post-launch measurement loop is the only realistic Layer C subset |
 | **Enterprise** | 50+ with Research / Brand / Growth specialists | Step 1-4 phased (mandatory ordering) | Full Layer C achievable with sufficient organizational maturity |
 
-**Mandatory rule** (per magi C8): Never adopt Step N+1 before Step N is stable for ≥3 months. Skipping Steps risks adopting blocking gates without the supporting infrastructure (Insight Ledger before Research process, Brand Compiler before Constitution maturity).
+**Sequencing goal** (per magi C8): Confirm each step is operating stably before advancing to the next — the right interval is situational, not a fixed duration. Skipping steps risks adopting blocking gates without the supporting infrastructure (Insight Ledger before Research process, Brand Compiler before Constitution maturity).
 
 **Cross-Tier Ordering Note (v9 fold-in, partial absorption of Bootstrap Roadmap v9 proposal)**: Layer C Step 1-4 adoption presupposes Tier A (Code Acceptance) + Tier B (Design Acceptance via atelier when `ui_dimension != none`) are already operational in the org. Cross-tier sequence: Tier A merge-time → Tier B merge-time → Layer C Step 1 post-launch measurement → Layer C Step 2-4 advancing per the Mandatory rule above. Organizations attempting Layer C Step 1 before Tier A+B foundation produces post-launch measurement loops that cannot ground in pre-merge evidence — the loop becomes anecdotal rather than evidence-chained. This is the full-stack ordering observation Bootstrap Roadmap Phase 1-5 (v9 proposal) correctly identified; it is documented here as a cross-tier annotation rather than as a new framework artifact. Phase 6 (Proof of Proof / Gate Governance) from v9 is explicitly excluded per v8 FM-V8-4 (recursive-meta infinite regress) rejection.
 
@@ -236,7 +236,7 @@ Friction Ledger is **not a new protocol file**. It is an **independent child led
 ### Why a child ledger, not a new top-level Ledger
 
 The original proposal (Persona+Journey+Product, v4 source) treated Friction Ledger as standalone. Magi/Omen v4 review rejected that for two reasons:
-1. **Contract/Ledger proliferation** triggers Authoring Principles checklist failure (`PROOF_CARRYING.md` Proposal Intake Checklist § Item 3 Novelty Ratio)
+1. **Contract/Ledger proliferation** runs against the Authoring Principles judgment (`PROOF_CARRYING.md` → *Extending This Protocol*): fold-in over bolt-on, and no new ledger without genuinely new value
 2. **G11 KB Write Authority Separation** can be inherited from Insight Ledger rather than re-declared
 
 ### Schema

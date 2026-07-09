@@ -182,3 +182,9 @@ Record harness evolution decisions in `.agents/nexus.md` journal:
 ```
 
 Integration with Darwin: Harness evolution findings are reported as `EVOLUTION_SIGNAL` type `DRIFT` for ecosystem-wide tracking. Darwin may incorporate these signals into its Ecosystem Fitness Score (EFS) assessment.
+
+---
+
+## Open Follow-ups
+
+#TODO(agent): Fold the most recent Scaffold Audit cycle results back into `nexus/SKILL.md` and `_common/AUTORUN.md`. (The 2026-07 audit corrected cross-model retirement scaffolding and version drift in `_common/`; the next cycle should re-verify HE-01 L1-L4 checkpoint trigger frequency against the current model generation and simplify per the Evaluation Cycle if the condition is met.)

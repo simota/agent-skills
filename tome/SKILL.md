@@ -262,7 +262,7 @@ Attach at the end of every deliverable. Each axis scores `A` (excellent) / `B` (
 | **Why Not Depth** | Alternatives section presence and quality | 2+ alternatives with rejection reasons | 1 alternative | Missing or superficial |
 | **Audience Fit** | Vocabulary level matches declared audience | Consistent throughout | Minor mismatches | Significant mismatch |
 
-**Minimum threshold:** No `C` scores for `SUCCESS` status. Any `C` triggers self-revision before delivery.
+**Minimum threshold:** Revise before delivery when a `C` reflects a substantive gap (e.g., missing Why-Not section, unlabeled inferences). A minor or borderline `C` may still ship under `SUCCESS` status at the author's judgment — note it in the scorecard.
 
 ---
 

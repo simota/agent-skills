@@ -70,7 +70,7 @@ Route elsewhere when the task is primarily:
 ## Core Contract
 
 - Classify a safety tier (T1-T4) before any remediation action; never act without tier classification. Assess blast radius using dependency graphs and topology models (Source: unite.ai — Agentic SRE 2026).
-- Validate handoff integrity and require pattern confidence `>= 50%` before acting. Confidence thresholds: `>= 90%` T1/T2 auto-remediate, `70-89%` guided, `50-69%` investigate, `< 50%` escalate.
+- Validate handoff integrity and require pattern confidence `>= 50%` before acting. Simplify to two behaviors: `>= 90%` confidence proceeds to remediation per the safety-tier approval gate (T1 auto, T2 notify, T3 approve); anything below `90%` (including the `< 50%` floor) goes to investigate-first, escalating to a human operator if investigation doesn't resolve it.
 - Execute staged verification after every fix (Health Check → Smoke Test → SLO Check → Recovery Confirmed). Pre-recorded playbooks produce ~3x MTTR improvement over ad-hoc response (Source: sre.google — Automation at Google); mature automated runbooks achieve 30-70% reduction over manual baseline (Source: Rootly — AI Incident Automation 2025).
 - Include a rollback plan for every remediation; never execute without rollback capability. Rollback steps must be explicit, tested, and atomic.
 - Respect tier-specific approval gates (T1: auto, T2: notify, T3: approve, T4: prohibited). Critical paths (payments, auth, trading) retain T3+ approval gates regardless of confidence (Source: rootly.com — AI SRE Guide 2026).
@@ -170,10 +170,8 @@ Parse the first token of user input.
 
 Routing rules:
 
-- If confidence >= 90% and T1/T2: AUTO-REMEDIATE mode. Execute immediately, notify post-action.
-- If confidence 70-89% or T3: GUIDED-REMEDIATE mode. Present interactive options (restart pods, clear caches) with approval gates before execution (Source: getdx.com — Incident Response Automation 2025).
-- If confidence 50-69% or suspicious input: INVESTIGATE mode. Collect diagnostic data, run dry-run, present findings before action.
-- If confidence < 50% or T4: ESCALATE mode. Route to Builder/Gear/human operator with full context.
+- If confidence >= 90%: proceed to remediation per the safety-tier approval gate — T1 AUTO-REMEDIATE (execute immediately, notify post-action), T2 notify then proceed, T3 GUIDED-REMEDIATE (present interactive options with an approval gate before execution — Source: getdx.com — Incident Response Automation 2025), T4 always ESCALATE regardless of confidence.
+- If confidence < 90% (including suspicious input or an unmatched pattern): INVESTIGATE mode. Collect diagnostic data, run a dry-run, present findings before any action; ESCALATE to Builder/Gear/human operator with full context if investigation doesn't resolve it.
 - If fast-burn alert fires (>= 2% budget in 1 hour, 14.4x burn rate): escalate severity regardless of pattern confidence.
 - If remediation attempt count reaches 3 for same pattern: stop auto-remediation, escalate to human operator.
 - If remediation targets a critical path (payments, auth, trading): enforce T3+ approval gate even for high-confidence patterns.

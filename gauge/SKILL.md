@@ -73,10 +73,10 @@ Route elsewhere when the task is primarily:
 - Follow Safety Levels A/B/C/D for all self-evolution per `reference/self-evolution.md`.
 - Report using standard formats from `reference/report-templates.md`.
 - Adopt continuous compliance over periodic audits — detect drift early rather than batch-scanning on demand.
-- Target false positive rate ≤ 15% per detection rule; flag rules exceeding this for recalibration. When calibration data is available, prefer statistical FP/FN estimation (TPR/FPR from labeled calibration set) over heuristic thresholds — derive variance-corrected critical thresholds to control Type-I error. Document every threshold adjustment with precision/recall trade-off rationale in an audit trail.
-- Track compliance drift using stability index: score delta > 10% between scans triggers investigation, > 20% triggers mandatory re-audit (aligned with PSI thresholds: < 0.1 stable, 0.1-0.2 moderate, > 0.2 significant).
+- If a detection rule is flagging too often (alert fatigue, valid patterns marked FAIL), review its precision and recalibrate — treat "≤15% false positive rate" as a rough reference point, not a hard gate. Note the reasoning briefly when adjusting a threshold, so it isn't lost.
+- Watch compliance scores across scans for large swings — a big jump between audits is worth a closer look (rough reference: >10% investigate, >20% re-audit), but use judgment rather than an automatic trigger.
 - Flag SKILL.md files exceeding 500 lines as candidates for progressive disclosure refactoring (move detail to reference/). Note: Anthropic recommends ~50 lines for SKILL.md body when possible; defer implementation details to reference/ or scripts/.
-- Require 2-of-3 corroboration for violation flags: a detection rule fires only when at least 2 independent signals (structural pattern, semantic context, cross-reference consistency) agree — single-signal detection enters a "soft flag" queue for human review rather than automatic FAIL classification.
+- For important violation flags, confirm from more than one angle (e.g., structural pattern + semantic context) before committing to FAIL — a single weak signal is better routed to a soft-flag queue for human review than an automatic FAIL.
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P2 (calibrated compliance report length — preserve per-item PASS/PARTIAL/FAIL evidence and fix snippets even when Opus 4.8 trends shorter; concise audits that drop evidence are useless), P5 (think step-by-step at CLASSIFY — PASS/PARTIAL/FAIL assignment errors and priority misclassification cascade across the entire ecosystem health score)** as critical for Gauge. P1 recommended: front-load scan scope (target skills, items, tier) at SCAN before CLASSIFY.
 
 ## Boundaries
@@ -105,7 +105,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Modify own Safety Level definitions or trigger conditions (Safety Level D).
 - Skip the anti-pattern check on own evolution proposals.
 - Accept T4 sources without cross-referencing T1/T2 sources.
-- Exceed change budget (3 changes/session, 10 changes/month).
+- Batch multiple changes without checking impact in between — change one thing at a time and confirm it holds before moving to the next (rough guide: ~3/session, ~10/month).
 - Deploy uncalibrated detection rules — rules with false positive rate > 15% cause alert fatigue and erode trust in audit results (parallel: RegTech systems saw 40% false positive flags before ML-based calibration).
 - Treat checklist as static — static guardrails become outdated as ecosystem conventions evolve; schedule periodic recalibration against actual SKILL.md corpus.
 - Ignore contextual validity — keyword-only detection without context analysis flags valid domain-specific patterns as violations (e.g., Japanese technical terms in otherwise English body text).
@@ -151,11 +151,11 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 **EVOLVE** follows:
 - `RESEARCH → EVALUATE → CLASSIFY → UPDATE → VERIFY → PERSIST`
 - Full details -> `reference/self-evolution.md`
-- Drift detection thresholds (inspired by Population Stability Index): score delta < 10% = stable, 10-20% = investigate, > 20% = mandatory intervention (recalibrate rules or re-audit affected skills).
-- Track per-rule false positive/negative rates; rules with FP rate > 15% enter mandatory recalibration queue. When a labeled calibration set exists, compute TPR/FPR per rule and derive variance-corrected thresholds (ref: "Noisy but Valid", ICLR 2026) rather than relying on fixed 15% cutoff alone.
-- Trigger holistic checklist review (not just per-rule recalibration) when 3+ rules simultaneously exceed FP thresholds or when `_common/` protocols change — systemic drift requires system-level response, not piecemeal fixes.
+- Watch compliance scores across scans — a large swing is a signal worth investigating (rough reference: >10% look closer, >20% re-audit), not an automatic pass/fail trigger.
+- Watch each rule's false-positive pattern — if a rule keeps flagging valid patterns (rough reference point: >15% FP), review and recalibrate it rather than letting alert fatigue erode trust in the audit.
+- If several rules degrade at once, or `_common/` protocols change, step back and review the checklist holistically instead of patching rules one at a time.
 - Treat guardrails as living systems — capture detection pattern observations and refine controls where noisy, loosen where over-constrained.
-- Cross-reference multiple detection signals before flagging violations — multi-signal correlation reduces false positives significantly compared to single-rule detection. Apply 2-of-3 corroboration: structural match + semantic context + cross-reference consistency.
+- For important findings, confirm from more than one angle (e.g., structural pattern + semantic context) before flagging — cross-checking meaningfully cuts false positives versus relying on a single signal.
 - Apply eval-to-guardrail lifecycle: pre-production audit findings should inform production-time continuous monitoring rules — do not treat audit and runtime governance as separate concerns.
 
 ## Recipes

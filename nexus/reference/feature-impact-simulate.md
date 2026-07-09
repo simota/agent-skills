@@ -3,7 +3,7 @@
 Lightweight reference recipe for predicting feature impact across personas, journeys, and product strategy **before** implementation. Implements the "Feature Impact Simulator" concept from the v4 Persona+Journey+Product proposal using **existing skills only** — no new skill required.
 
 **Prerequisites**:
-- `_common/PROOF_CARRYING.md` v3.1 (Authoring Principles + Proposal Intake Checklist)
+- `_common/PROOF_CARRYING.md` v3.1 (Authoring Principles — Extending This Protocol)
 - `omen` (pre-mortem failure enumeration)
 - `ripple` (vertical + horizontal impact analysis)
 - `echo` (persona walkthrough, especially `council` Recipe with Persona Contract)
@@ -270,7 +270,7 @@ DELIVER:
 
 ## References
 
-- `_common/PROOF_CARRYING.md` v3.1 — Authoring Principles + Proposal Intake Checklist (justifies why this is a reference recipe, not a top-level)
+- `_common/PROOF_CARRYING.md` v3.1 — Authoring Principles — Extending This Protocol (justifies why this is a reference recipe, not a top-level)
 - `_common/GROWTH_BRAND_PROOF.md` — Friction Ledger, Insight Ledger (Phase 4 reference baseline)
 - `omen/SKILL.md` — pre-mortem DEEP mode
 - `ripple/SKILL.md` — vertical + horizontal impact analysis

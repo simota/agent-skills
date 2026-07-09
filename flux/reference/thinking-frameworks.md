@@ -55,6 +55,8 @@
 
 #### Full Procedure (5 stages)
 
+> 必要な段階のみ選択して用いてよい — 5段階すべてを固定順で実行することは必須ではない。問題の性質に応じて、例えば仮定検証だけ(Stage 2)や再構築だけ(Stage 4)を単独で使ってもよい。
+
 **Stage 1: DECOMPOSE — 問題を基本要素に分解**
 1. State the problem clearly in one sentence.
 2. Extract all nouns, verbs, adjectives — each is a potential assumption carrier.

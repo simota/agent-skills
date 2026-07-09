@@ -78,14 +78,14 @@ Route elsewhere when the task is primarily:
 ## Core Contract
 
 - Use curated demo data, explicit pacing, and repeatable recording settings.
-- Deliver clean video output, supporting assets, and quality-check evidence (`/97` scorecard; `< 50` triggers reshoot, `50–70` ships with fixes, `> 70` ships clean).
+- Deliver clean video output, supporting assets, and quality-check evidence — treat the perceptual metrics (VMAF/PSNR/SSIM) as the primary ship/reshoot signal, and the `/97` scorecard as a supporting checklist summary rather than a second required gate.
 - Treat demos as external-facing artifacts: never leak sensitive data or internal implementation details.
 - Prefer **`page.screencast`** (Playwright 1.59 Stable, "Agentic Release") as the primary recording API. Use `recordVideo` only for full-session failure receipts or as a `retain-on-failure` backup.
 - Set `video.size` (or `screencast.start({ size })`) explicitly — both APIs silently downscale to `800×800` when omitted, even if the viewport is larger.
 - Prefer built-in screencast helpers (`showActions`, `showChapter`) before building custom overlays (`showOverlay`); use `onFrame` for Vision-Model-in-the-loop or live-narration use cases.
 - Use locator-based waits for state changes; reserve `waitForTimeout()` for deliberate pacing pauses only.
 - Treat WCAG 2.2 **1.2.2 (captions) Level A** as mandatory for any externally distributed demo, **1.2.4 (live)** when streamed, and **1.2.5 (audio description) Level AA** when visual-only content is not fully narrated.
-- Verify perceptual quality with **VMAF ≥ 90 / PSNR ≥ 40 dB / SSIM ≥ 0.95** at 1080p before declaring a demo shippable. Lower thresholds → reshoot or re-encode.
+- Verify perceptual quality with **VMAF / PSNR / SSIM** via `ffmpeg-quality-metrics` at 1080p — as a reference line, `VMAF ~90+ / PSNR ~40dB+ / SSIM ~0.95+` reads as clean; well below that, prefer reshoot or re-encode, using judgment on borderline cases.
 - Loudness-normalize the final mix to **-14 LUFS** (YouTube / LinkedIn) or **-16 LUFS** (Web/Vimeo), TP ≤ -1 dBTP.
 - Hard cap a single demo at **120 seconds** — completion drops ~40% past this point. Split into a 3×45s chaptered series or a chaptered long-form instead.
 - Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read existing Playwright tests, feature flows, and brand guidelines at PLAN), P5 (think step-by-step at scenario selection, overlay timing, ARIA validation, and persona-aware pacing)**. P2 recommended: calibrated demo package preserving scenario, quality-check evidence, and mobile-readability verdict. P1 recommended: front-load demo purpose, audience, target aspect ratio, and target duration at PLAN.
@@ -137,7 +137,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | `Script` | Design the story | User story, audience fit, archetype (30/60/90/180s), operation steps, pacing, 3-sec hook plan | Open with a layered hook, then pain, then one Aha moment |
 | `Stage` | Prepare the environment | Test data, auth state, Playwright config, target aspect ratio (16:9 / 9:16 / 4:5), target device | Use `page.screencast` as primary; `retain-on-failure` `recordVideo` only for debug receipts |
 | `Shoot` | Record the demo | Playwright demo code, `.webm` baseline, per-aspect variants, chapter/action overlays | Locator-based waits for state, `waitForTimeout()` only for pacing; emit Playwright timeline cues |
-| `Deliver` | Validate and package | Playback check, VMAF/PSNR/SSIM verdict, captions (open + closed), transcript + VideoObject JSON-LD, optional `MP4/GIF/AV1`, next handoff | Quality gate: `/97` scorecard, `< 50` = reshoot, `50–70` = ship-with-fixes, `> 70` = ship |
+| `Deliver` | Validate and package | Playback check, VMAF/PSNR/SSIM verdict, captions (open + closed), transcript + VideoObject JSON-LD, optional `MP4/GIF/AV1`, next handoff | Quality gate: VMAF/PSNR/SSIM verdict decides ship/reshoot; `/97` checklist score is a supporting summary, not a second gate |
 
 ## Recipes
 
@@ -232,10 +232,10 @@ Decision-level thresholds. Implementation detail and rationale live in reference
 | Multilingual default | EN + JA captions minimum for external demos; auto-translate via DeepL/GPT-4o with human review | `reference/captions-design.md` |
 | Voiceover providers | Inworld Realtime TTS 1.5-Max (ELO 1,236 #1), ElevenLabs v3 (Audio Tags + 70+ languages), Cartesia Sonic-3 (90ms TTFA), OpenAI Realtime TTS | `reference/voiceover-design.md` |
 | LUFS target | `-14 LUFS` (YouTube, LinkedIn), `-16 LUFS` (Web, Vimeo), TP `≤ -1 dBTP` | `reference/voiceover-design.md` |
-| Perceptual quality | `VMAF ≥ 90` / `PSNR ≥ 40 dB` / `SSIM ≥ 0.95` at 1080p (via `ffmpeg-quality-metrics`); below → reshoot or re-encode | `reference/quality-metrics.md` |
+| Perceptual quality | `VMAF ~90+` / `PSNR ~40dB+` / `SSIM ~0.95+` at 1080p (via `ffmpeg-quality-metrics`) as a reference line for ship-readiness — the primary reshoot/re-encode signal, judged rather than treated as an absolute cutoff | `reference/quality-metrics.md` |
 | Accessibility | WCAG 2.2 1.2.2 (captions) Level A mandatory; 1.2.4 (live) AA; 1.2.5 (audio description) AA when visual-only content exists | `reference/checklist.md` |
 | GEO / AI citation | Ship `.vtt` transcript + plaintext + `VideoObject` JSON-LD with chapters for every external demo (AI citation +325%, CTR +41%) | `reference/geo-packaging.md` |
-| Quality gate | `/97` scorecard (was `/65`); `<50` = reshoot, `50–70` = ship-with-fixes, `>70` = ship | `reference/checklist.md` |
+| Quality gate | `/97` checklist score is a supporting readiness summary (rough guide: low → likely reshoot, high → likely ship); the perceptual-quality metrics above are the primary decision signal | `reference/checklist.md` |
 | Browser engine | Chrome for Testing since v1.57; pin `channel: 'chromium'` only if reproducibility / CI memory demands it | `reference/playwright-config.md` |
 | Agentic receipts | Prefer `@playwright/cli` with filesystem access; use MCP for sandboxed / iterative sessions; use `onFrame` JPEG stream for Vision-in-the-loop | `reference/playwright-config.md`, `reference/implementation-patterns.md` |
 | Shared session | `browser.bind()` (v1.59 Stable) shares a browser between demo, CLI, and MCP clients via WebSocket — view dashboard with `playwright-cli show` | `reference/playwright-config.md` |
