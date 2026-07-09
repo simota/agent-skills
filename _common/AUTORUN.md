@@ -24,37 +24,9 @@ This protocol works across different AI platforms (Claude Code, Codex CLI, Gemin
 
 ## Agent Spawn Execution
 
-In AUTORUN mode, Nexus spawns each agent as an independent Claude session via the Agent tool:
+In AUTORUN mode, Nexus spawns each agent as an independent Claude session via the Agent tool.
 
-```
-## Nexus Execution: [Goal]
-- Chain: Agent1 → Agent2 → Agent3
-- Mode: AUTORUN_FULL
-
-### Spawning Step [X/Y]: [AgentName]
-
-Agent(
-  name: "[agent-name]-[task-slug]"
-  description: "[Short task description]"
-  subagent_type: general-purpose
-  mode: bypassPermissions
-  model: [sonnet|opus|haiku]
-  prompt: |
-    You are the [AgentName] agent.
-    First, read ~/.claude/skills/[agent-name]/SKILL.md and follow its instructions.
-
-    Task: [task_description]
-    Context from previous step: [handoff_context]
-    Constraints: [constraints]
-
-    When complete, output the result in the following format:
-    _STEP_COMPLETE:
-      Agent: [AgentName]
-      Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-      Output: [deliverable]
-      Next: [recommended next agent or DONE]
-)
-```
+The canonical spawn prompt — including the four mandatory directive fields (Recipe, Acceptance criteria, Output length envelope, Tool-use directive, Thinking directive) — is defined once in `nexus/SKILL.md` § Agent Spawn Template. Author every spawn from that template; do not reproduce a reduced copy here.
 
 ### Execution Layers
 
@@ -91,16 +63,9 @@ Steps <= 4 AND sequential?     → L1: Direct Spawn (foreground / spawn_agent)
 
 ### Model Selection
 
-| Agent Role | model | Context Strategy | Rationale |
-|-----------|-------|-----------------|-----------|
-| Investigation / read-only (Scout, Lens, Trail) | sonnet | reset | Cost-efficient; focused context |
-| Standard implementation (Builder, Artisan, Radar) | sonnet | hybrid | Balanced; receives handoff context |
-| High-complexity design (Sentinel, Atlas) | opus | continuous | Precision-critical; deep reasoning |
-| Lightweight tasks (Quill, Morph) | haiku | reset | Minimal cost; fresh context |
-| Evaluator (Judge, Voyager in eval mode) | sonnet | reset | Evaluators need only contract + output |
-| Generator (revision iteration) | sonnet | continuous | Benefits from feedback accumulation |
+Model-per-role assignment is hub-engine-specific and defined once in `nexus/reference/hub-authoring.md` § Model Selection — Claude Code hub defaults to **Sonnet 5** (task-appropriate), escalating to **opus / fable-5** for the high-reasoning tier and **haiku** for trivial steps; Codex hub uses the latest `gpt-5.5` at every tier; agy hub is mandated to Gemini 3.5 Flash. Do not reproduce a bare `sonnet/opus/haiku` map here.
 
-**Context Strategy**: `reset` = file-based handoff (fresh context per agent), `continuous` = in-context handoff (accumulated context), `hybrid` = Nexus continuous + spawned agents reset. See `nexus/reference/context-strategy.md` for details.
+**Context Strategy** (orthogonal to model choice): `reset` = file-based handoff (fresh context per agent), `continuous` = in-context handoff (accumulated context), `hybrid` = Nexus continuous + spawned agents reset. Typical pairing — investigation/evaluator → `reset`, standard implementation → `hybrid`, high-complexity design/revision generator → `continuous`. See `nexus/reference/context-strategy.md` for details.
 
 ### Advanced Spawn Options
 
@@ -267,12 +232,14 @@ Guardrail definitions and configuration for autonomous execution. Used by AUTORU
 
 | Level | Name | Behavior | Use Case |
 |-------|------|----------|----------|
-| L1 | MONITORING | Log only, no pause | Lint warnings, minor deprecations, coverage drop < 5% |
-| L2 | CHECKPOINT | Auto-verify, attempt auto-fix | Test failures < 20%, type errors, low/medium CVEs |
-| L3 | PAUSE | Pause branch; auto-recover or escalate | Test failures > 50%, breaking changes, build failures, merge conflicts |
+| L1 | MONITORING | Log only, no pause | Lint warnings, minor deprecations, small coverage drop (~<5% guideline) |
+| L2 | CHECKPOINT | Auto-verify, attempt auto-fix | Minor test failures (goal still reachable; ~<20% guideline), type errors, low/medium CVEs |
+| L3 | PAUSE | Pause branch; auto-recover or escalate | Major test failures (goal not locally fixable; ~>50% guideline), breaking changes, build failures, merge conflicts |
 | L4 | ABORT | Immediate stop and rollback | Critical security, data integrity risk, user abort |
 
 ### Triggers by Level
+
+Classify by **goal impact**, not by a uniform cross-domain number: a **minor failure** (the step's goal is still reachable) → attempt auto-fix and continue; a **major failure** (the goal is no longer reachable by a local fix) → stop and reconsider (rollback / re-decompose / escalate). The percentages below are **rough guidelines**, not fixed thresholds — each task type (and domain) may draw the minor/major line differently.
 
 **L1 — MONITORING**
 
@@ -281,23 +248,23 @@ Guardrail definitions and configuration for autonomous execution. Used by AUTORU
 | `lint_warning` | Log, continue |
 | `minor_deprecation` | Log, continue |
 | `style_inconsistency` | Log, auto-fix if possible |
-| `coverage_decrease_minor` (< 5%) | Log, continue |
+| `coverage_decrease` (minor — goal unaffected; ~<5% guideline) | Log, continue |
 
 **L2 — CHECKPOINT**
 
 | Trigger | Action |
 |---------|--------|
-| `test_failure_minor` (< 20%) | Auto-fix attempt → retest (max 3) |
+| `test_failure` (minor — goal reachable by local fix; ~<20% guideline) | Auto-fix attempt → retest (max 3) |
 | `security_warning` (non-critical) | Add Sentinel scan |
 | `type_error` | Auto-fix attempt (max 2) |
-| `performance_regression` (< 10%) | Log, optional Bolt |
+| `performance_regression` (minor; ~<10% guideline) | Log, optional Bolt |
 | `dependency_vulnerability` (Low/Medium) | Log, suggest update |
 
 **L3 — PAUSE**
 
 | Trigger | Action |
 |---------|--------|
-| `test_failure_major` (> 50%) | Rollback, re-decompose with Sherpa |
+| `test_failure` (major — goal not reachable by local fix; ~>50% guideline) | Rollback, re-decompose with Sherpa |
 | `breaking_change` | Pause, verify consumers (Ripple) |
 | `security_critical` (High) | Pause, require Sentinel |
 | `merge_conflict` | Pause, resolve or escalate |

@@ -309,10 +309,10 @@ Agent(
     Task: [task_description]
     Context from previous step: [handoff_context]
     Constraints: [constraints]
-    Acceptance criteria: [acceptance_criteria]  # P1: front-loaded
-    Output length envelope: [length_envelope]   # P2
-    Tool-use directive: [tool_use_directive]    # P3
-    Thinking directive: [thinking_directive]    # P5
+    Acceptance criteria: [acceptance_criteria]  # P1: front-loaded (always)
+    Output length envelope: [length_envelope]   # P2: optional — add for L/XL output
+    Tool-use directive: [tool_use_directive]    # P3: optional — add when tool use matters
+    Thinking directive: [thinking_directive]    # P5: optional — add for high-stakes steps
 
     On completion, emit:
     _STEP_COMPLETE:
@@ -323,7 +323,7 @@ Agent(
 )
 ```
 
-Opus 4.8 requires the four directive fields above. **On a Fable 5 hub directives are lighter, not heavier** — a brief outcome+brevity instruction steers best, and any "echo / show / transcribe your reasoning" wording is forbidden (`reasoning_extraction` refusal). Engine variants, Opus 4.8 / Fable 5 notes, parallel-spawn rules → `reference/hub-authoring.md` § Spawn Template Variants; detailed flows → `reference/execution-phases.md`, `reference/orchestration-patterns.md`.
+Front-load acceptance criteria (P1) on every spawn. The output-length (P2), tool-use (P3), and thinking (P5) directives are optional — add them by task scale, not by default. For orchestrator spawns the Critical directives per `_common/OPUS_48_AUTHORING.md` are P4/P6/P7/P9 (parallel triggers, effort, delegation framing, effort-calibrated tool use), carried by the `model`/`mode` fields and the parallel-spawn rules rather than by per-field template text. **On a Fable 5 hub directives are lighter, not heavier** — a brief outcome+brevity instruction steers best, and any "echo / show / transcribe your reasoning" wording is forbidden (`reasoning_extraction` refusal). Engine variants, Opus 4.8 / Fable 5 notes, parallel-spawn rules → `reference/hub-authoring.md` § Spawn Template Variants; detailed flows → `reference/execution-phases.md`, `reference/orchestration-patterns.md`.
 
 ## Safety Contract
 
@@ -484,9 +484,9 @@ Nexus-specific findings to surface in handoff:
 - Task type classification + selected chain + execution mode
 - Verification result + chain complexity / unresolved gaps / safety concerns
 
-## Model Compatibility
-- **Scoring:** If weighted calculation is difficult, use the Simplified Scoring table in `confidence-scoring.md`.
+## Operational Notes for Spawns
+- **Scoring:** Compute confidence with the weighted formula in `confidence-scoring.md`. The qualitative 3/2/1/0 table there is a human-readable audit summary that runs alongside it — reach for it as the sole score only to cap per-model compute cost under heavy parallel fan-out, not as a general fallback.
 - **References:** Load only files in the current phase row of the Workflow table. Skip anti-pattern refs unless chain has 4+ agents.
-- **Output:** `_STEP_COMPLETE` and `NEXUS_HANDOFF` minimum: Summary + Status + Next. Optional fields when capable.
-- **State:** Track Phase + Step only. Full `_NEXUS_STATE` is optional.
+- **Output:** `_STEP_COMPLETE` and `NEXUS_HANDOFF` minimum: Summary + Status + Next. Add the Recommended/Optional fields by task complexity per `_common/HANDOFF.md` (detail proportional to complexity).
+- **State:** Track Phase + Step at minimum; keep the full `_NEXUS_STATE` for complex or long (4+ step) chains — driven by task complexity, not model capability.
 - **Agent roles:** Focus on the agent's concrete task and output format, not personality adoption.

@@ -59,9 +59,9 @@ Final = git_score × 0.30 + project_score × 0.25 + conversation_score × 0.25 +
       → confidence (0.00 – 1.00)
 ```
 
-### Simplified Scoring (cross-model)
+### Qualitative Scoring Summary
 
-When weighted arithmetic is difficult, classify each source qualitatively (3/2/1/0) and sum:
+The weighted formula above is the scoring method of record. This qualitative 3/2/1/0 table is a human-readable summary for audit logs — it runs in parallel with the weighted calculation as a legibility aid, not as a fallback for it. Classify each source qualitatively (3/2/1/0) and sum:
 
 | Source | HIGH (3) | MEDIUM (2) | LOW (1) | NONE (0) |
 |--------|----------|------------|---------|----------|

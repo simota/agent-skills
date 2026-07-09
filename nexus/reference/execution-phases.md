@@ -14,11 +14,11 @@ Detailed phase descriptions for AUTORUN modes.
 
 ---
 
-## Simplified 3-Phase Path (cross-model)
+## Short 3-Phase Path (SIMPLE + AUTORUN)
 
-When 7-phase state tracking is difficult, use this simplified path:
+For tasks classified SIMPLE and eligible for AUTORUN, collapse the 7 phases into this short path. It **folds the safety gates in — it does not skip them**: AGGREGATE still runs inside DO, and VERIFY still runs inside CHECK.
 
-| Simplified | Maps To | Actions |
+| Short | Maps To | Actions |
 |------------|---------|---------|
 | PLAN | PLAN + PREPARE + CHAIN_SELECT | Classify task, assess complexity, select chain |
 | DO | EXECUTE + AGGREGATE | Execute chain steps, merge parallel results |

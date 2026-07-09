@@ -204,9 +204,9 @@ recovery_confidence:
     - no_rollback_available: -0.10
 ```
 
-### Simplified Recovery Confidence (cross-model)
+### Recovery Confidence Legend
 
-When numeric calculation is difficult, use qualitative assessment:
+Always compute recovery confidence with the weighted formula above. The qualitative table below is an explanatory aid mapping the same factors to a coarse band — use it to read and communicate the score, not to replace the calculation:
 
 | Factor | YES | NO |
 |--------|-----|-----|
