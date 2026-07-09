@@ -20,7 +20,7 @@ Content-Type: application/json
 Accept: text/event-stream
 
 {
-  "model": "claude-opus-4-6",
+  "model": "claude-opus-4-8",
   "stream": true,
   "messages": [{"role": "user", "content": "Hello"}]
 }
@@ -136,7 +136,7 @@ Strict-mode constraints (enforced at request validation):
 
 ```json
 {
-  "model": "claude-opus-4-7",
+  "model": "claude-opus-4-8",
   "response_format": { "type": "json_object" },
   "messages": [
     { "role": "user", "content": "Extract product name, price, SKU from: ..." }

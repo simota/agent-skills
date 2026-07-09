@@ -66,7 +66,7 @@ Task received
 | High | `opus` | Complex reasoning, architecture decisions |
 | — | `inherit` (default) | Use parent session's model |
 
-Full model IDs (`claude-opus-4-8`, `claude-sonnet-4-6`, etc.) are also supported.
+Full model IDs (`claude-opus-4-8`, `claude-sonnet-5`, etc.) are also supported.
 
 ### Key Frontmatter Fields (Custom Subagents)
 
@@ -286,7 +286,7 @@ Multiple subagents implement different solutions to the same problem, then the b
 
 | Rule | Limit | Reason |
 |------|-------|--------|
-| Max parallel subagents | **3** | Beyond 3 → use Rally for proper coordination |
+| Max parallel subagents | **~3 (default guideline)** | Not an absolute ceiling — tune to the hub engine and model generation (e.g. a Fable 5 hub can fan out more aggressively). For large parallel workloads, delegating to Rally for proper coordination is recommended. |
 | File ownership | **Exclusive** | No two subagents modify the same file |
 | Cost awareness | **Each subagent = separate Claude instance** | Only parallelize when benefit > overhead |
 | Spawn decision | **Agent's judgment** | Unless Nexus explicitly instructs `multi-engine` |

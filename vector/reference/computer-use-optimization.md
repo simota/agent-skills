@@ -14,8 +14,8 @@ Pre-downscale screenshots **before** sending them to the API. The single most co
 
 | Model | Send screenshots at | API internal cap (informational) |
 |-------|---------------------|----------------------------------|
-| Claude Sonnet 4.6 | **1280 × 720** | longest edge 1568px, max ~1.15 MP |
-| Claude Opus 4.7 | **1920 × 1080** (full 1080p) | longest edge 2576px, max ~3.75 MP |
+| Claude Sonnet 5 | **1280 × 720** | longest edge 1568px, max ~1.15 MP |
+| Claude Opus 4.8 | **1920 × 1080** (full 1080p) | longest edge 2576px, max ~3.75 MP |
 | Claude Haiku 4.5 | 1280 × 720 | inherits Sonnet caps |
 
 Rules:
@@ -41,8 +41,8 @@ Decompose multi-step tasks. A single prompt asking for 4+ interactions degrades 
 
 | Model | Default thinking | Notes |
 |-------|------------------|-------|
-| Claude Sonnet 4.6 | `medium` | Best cost/precision balance |
-| Claude Opus 4.7 | `high` | Anthropic recommends `high` as the default — it captures most of the precision benefit at substantially fewer tokens than `max`; only escalate to `max` when a specific task demonstrably stalls at `high` |
+| Claude Sonnet 5 | `medium` | Best cost/precision balance |
+| Claude Opus 4.8 | `high` | Anthropic recommends `high` as the default — it captures most of the precision benefit at substantially fewer tokens than `max`; only escalate to `max` when a specific task demonstrably stalls at `high` |
 | Easy tasks (clear single click, idempotent form fill) | disable or `low` | |
 
 ## 4. Context Management
@@ -65,7 +65,7 @@ Decompose multi-step tasks. A single prompt asking for 4+ interactions degrades 
 | Clicks consistently off by a fixed offset in one direction | Resolution mismatch — API rescaled internally | Downscale to model-preferred resolution **before** sending |
 | Clicks near target but miss small UI (checkbox, chip) | Target too small at current resolution | Enable `enable_zoom: True` or interact via keyboard |
 | Clicks land on a completely different element | Ambiguous instruction or busy UI | Add positional anchor to the prompt ("in the top-right header") |
-| Broad accuracy collapse | 4K → aggressive downscale OR resolution too low | Use Opus 4.7 (larger resolution budget) or capture at lower DPI initially |
+| Broad accuracy collapse | 4K → aggressive downscale OR resolution too low | Use Opus 4.8 (larger resolution budget) or capture at lower DPI initially |
 | Latency creeping up across a long session | Screenshot buffer never trimmed | Apply the rolling 3-frame + 25-turn batch-delete rule |
 
 ## 7. Verification Loop

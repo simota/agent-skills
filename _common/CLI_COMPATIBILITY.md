@@ -99,7 +99,7 @@ Direct model names are CLI-specific. Authoring tip: write SKILL.md with role nam
 | Role | Claude Code | Codex CLI | agy |
 |------|-------------|-----------|-----|
 | Default / balanced | **`claude-sonnet-5`** (Sonnet 5) ¶ | `gpt-5.5` † | **Gemini 3.5 Flash** ‡ |
-| High-reasoning / precision | `opus` (claude-opus-4-8) | `gpt-5.5` (recommended frontier coding, Apr 2026) | **Gemini 3.5 Flash** ‡ |
+| High-reasoning / precision | `opus` (claude-opus-4-8) / `fable-5` (Fable 5 hub — see ¶) | `gpt-5.5` (recommended frontier coding, Apr 2026) | **Gemini 3.5 Flash** ‡ |
 | Fast / cheap | `haiku` (claude-haiku-4-5) | `gpt-5.5` † | **Gemini 3.5 Flash** ‡ |
 
 > **† Codex latest-model mandate (user policy):** Codex always uses the **latest model — currently `gpt-5.5`** for every step and every spawned subagent, regardless of tier. There is no cheaper Codex execute/fast tier. Tune reasoning depth via `model_reasoning_effort` (not by switching models). SoT: `_common/CODEX_ORCHESTRATION.md` (C3.0).

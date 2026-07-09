@@ -16,7 +16,7 @@ Claude Code is one of the engines in Judge's default multi-engine parallel revie
 | Model | Default (no `--model` flag) | Always rely on the session default — never override |
 | Review context | Subagent or plan mode (or `dontAsk` for locked CI) | Claude-based reviews must avoid self-bias (see Mandatory Subagent Pattern below) |
 | Working directory | Git repository root | Review commands operate on the current git worktree |
-| Auto mode availability | Max / Team / Enterprise / API plans only | **Not available on Pro**; requires Sonnet 4.6 / Opus 4.6 / Opus 4.7 on Anthropic API (not Bedrock / Vertex / Foundry). If a recipe uses `--permission-mode auto`, confirm the user's plan first |
+| Auto mode availability | Max / Team / Enterprise / API plans only | **Not available on Pro**; requires Sonnet 4.6 / Sonnet 5 / Opus 4.6 / Opus 4.7 / Opus 4.8 on Anthropic API (not Bedrock / Vertex / Foundry). If a recipe uses `--permission-mode auto`, confirm the user's plan first |
 
 **Never** pass `--model`, `--bare` (bypasses subscription auth, forces API-key mode), or set `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`, `AWS_ACCESS_KEY_ID`, `GOOGLE_APPLICATION_CREDENTIALS` for this flow. Authentication is managed by the Claude subscription login. Writes to [protected paths](https://code.claude.com/docs/en/permission-modes#protected-paths) (`.git`, `.vscode`, `.claude`, shell rc files, `.mcp.json`) always prompt regardless of mode — review flows should never write to them anyway.
 
@@ -58,7 +58,7 @@ Non-interactive review always uses `-p` plus `--permission-mode plan` for read-o
 | `-p, --print` | Headless mode — run once and print, then exit | Yes for automation |
 | `--permission-mode plan` | Reads only; Claude proposes without editing source. Other tool prompts may still appear | Recommended default for headless review |
 | `--permission-mode dontAsk` | Fully non-interactive: auto-denies any tool not pre-approved via `permissions.allow` (read-only Bash is allowed) | Locked-down CI runs; strictly safer than `plan` for unattended |
-| `--permission-mode auto` | Classifier-gated auto-approval; aborts under repeated blocks in `-p` (3 consecutive / 20 total). **Requires Max/Team/Enterprise/API plan** + Sonnet 4.6 / Opus 4.6 / Opus 4.7 | Use only when the review must run tools (e.g., run tests) and the user is on a qualifying plan |
+| `--permission-mode auto` | Classifier-gated auto-approval; aborts under repeated blocks in `-p` (3 consecutive / 20 total). **Requires Max/Team/Enterprise/API plan** + Sonnet 4.6 / Sonnet 5 / Opus 4.6 / Opus 4.7 / Opus 4.8 | Use only when the review must run tools (e.g., run tests) and the user is on a qualifying plan |
 | `--output-format <text\|json\|stream-json>` | Output shape for scripted parsing | `json` for CI, `text` for humans |
 | `--json-schema '<schema>'` | Enforce strict JSON schema on output | For deterministic CI ingestion |
 | `--agents '<json>'` | Inline custom agent definitions | To declare a reviewer persona |
@@ -324,7 +324,7 @@ Default headless runs pair with `--permission-mode plan`. For fully unattended C
 | Self-biased findings | Review ran in the main context | Re-run via `-p` headless or delegate to a subagent; main-context review is forbidden |
 | Hits `--max-budget-usd` cap | Fan-out too large or prompt too expensive | Narrow scope, lower effort, or raise the budget deliberately |
 | Auto mode aborts mid-run | Classifier blocked 3 consecutive or 20 total actions | Switch to `plan` mode for pure analysis; reserve `auto` for review + test runs |
-| Auto mode "unavailable" error | User on Pro plan, or non-Anthropic provider, or non-Sonnet/Opus model | Switch to `plan` or `dontAsk`; auto requires Max/Team/Enterprise/API + Sonnet 4.6 / Opus 4.6 / Opus 4.7 |
+| Auto mode "unavailable" error | User on Pro plan, or non-Anthropic provider, or non-Sonnet/Opus model | Switch to `plan` or `dontAsk`; auto requires Max/Team/Enterprise/API + Sonnet 4.6 / Sonnet 5 / Opus 4.6 / Opus 4.7 / Opus 4.8 |
 | Protected-path prompt during review | Reviewer tried to write `.git`, `.vscode`, `.claude/*` (except commands/agents/skills), shell rc files, or `.mcp.json` | Review flows should never write to these — narrow the prompt to forbid modifications |
 
 ---

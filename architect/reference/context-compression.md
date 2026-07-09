@@ -344,7 +344,7 @@ When designing agents that manage information across context boundaries, choose 
 | Strategy | Mechanism | Best When | Evidence (as of 2025) |
 |----------|-----------|-----------|----------------------|
 | **Compaction** | Summarize and compress context in-place | Session-scoped tasks, cost-sensitive, Sonnet-class models | Standard context management |
-| **Memory folders** | Write findings to files, read back on demand | Multi-session research, complex investigation, Opus-class models | BrowseComp: 84% (Opus 4.6) vs 43% flat (Sonnet 4.5) |
+| **Memory folders** | Write findings to files, read back on demand | Multi-session research, complex investigation, Opus-class models | BrowseComp: 84% (2025-era Opus 4.6 measurement) vs 43% flat (Sonnet 4.5); not re-verified on Opus 4.8 |
 | **Hybrid** | Compaction for working memory + files for durable findings | Long-horizon tasks with both immediate and archival needs | Combines benefits of both approaches |
 
 **Model-dependent effectiveness**: Memory folder strategies show strong model dependence. Opus-class models organize file-based memory tactically and benefit significantly; Sonnet-class models may not show improvement. Design persistence strategies with the target model tier in mind.

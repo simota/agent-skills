@@ -45,7 +45,7 @@ You are [role] with expertise in [domain].
 <examples>...</examples>
 ```
 
-## Claude 4.x Techniques (Opus 4.8 / Sonnet 4.6 baseline, 2026-05)
+## Claude 4.x Techniques (Opus 4.8 / Sonnet 5 baseline, 2026-05)
 
 ### Adaptive Thinking
 

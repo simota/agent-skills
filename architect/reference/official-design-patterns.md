@@ -475,9 +475,9 @@ Systematically question whether each piece of orchestration scaffolding is still
 
 | Dimension | Principle | Evidence (as of 2025) | Design Implication |
 |-----------|-----------|----------------------|-------------------|
-| **Orchestration** | Let agents write code to filter tool outputs instead of routing all results through context | BrowseComp: 45.3% → 61.6% with self-filtering (Opus 4.6) | Design agents with code execution for output filtering; avoid piping all tool results through context window |
+| **Orchestration** | Let agents write code to filter tool outputs instead of routing all results through context | BrowseComp: 45.3% → 61.6% with self-filtering (2025-era Opus 4.6 measurement; not re-verified on Opus 4.8) | Design agents with code execution for output filtering; avoid piping all tool results through context window |
 | **Context management** | Progressive disclosure via skills instead of pre-loading all instructions | See Section 5 (Three-Level System) | Keep L1 frontmatter minimal; load L2/L3 on demand |
-| **Persistence** | Memory folders (file-based) vs compaction (in-context summarization) | BrowseComp: 84% with memory folders (Opus 4.6) vs 43% flat (Sonnet 4.5) | For Opus-class models, design for file-based persistence; for Sonnet-class, keep context in-window. Effectiveness is model-dependent |
+| **Persistence** | Memory folders (file-based) vs compaction (in-context summarization) | BrowseComp: 84% with memory folders (2025-era Opus 4.6 measurement) vs 43% flat (Sonnet 4.5); not re-verified on Opus 4.8 | For Opus-class models, design for file-based persistence; for Sonnet-class, keep context in-window. Effectiveness is model-dependent |
 
 **Application**: Use `_common/HARNESS_EVOLUTION.md` Systematic Scaffold Audit protocol to evaluate each scaffolding component against these dimensions.
 

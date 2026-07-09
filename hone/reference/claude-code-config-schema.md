@@ -435,7 +435,7 @@ StatusLine JSON input fields: `workspace`, `model`, `cost`, `context_window`, `s
 | Model | ID | Recommendation |
 |-------|-----|----------------|
 | Claude Opus 4.8 | `claude-opus-4-8` | Most capable; long-horizon agentic, coding, complex tasks (default `xhigh` effort) |
-| Claude Sonnet 4.6 | `claude-sonnet-4-6` | Balanced performance and speed |
+| Claude Sonnet 5 | `claude-sonnet-5` | Balanced performance and speed |
 | Claude Haiku 4.5 | `claude-haiku-4-5-20251001` | Fast; simple tasks |
 
 ---

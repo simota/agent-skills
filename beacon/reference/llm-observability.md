@@ -14,7 +14,7 @@ OpenTelemetry defines standardized attribute names for AI/LLM telemetry under th
 |-----------|------|-------------|
 | `gen_ai.system` | string | Provider name (e.g., `openai`, `anthropic`, `vertex_ai`) |
 | `gen_ai.operation.name` | string | Operation type (`chat`, `text_completion`, `embeddings`) |
-| `gen_ai.request.model` | string | Requested model ID (e.g., `gpt-4o`, `claude-opus-4-6`) |
+| `gen_ai.request.model` | string | Requested model ID (e.g., `gpt-5.5`, `claude-opus-4-8`) |
 | `gen_ai.response.model` | string | Model actually used in response |
 | `gen_ai.usage.input_tokens` | int | Number of input/prompt tokens consumed |
 | `gen_ai.usage.output_tokens` | int | Number of output/completion tokens generated |
@@ -94,14 +94,18 @@ cost = (input_tokens / 1000) × input_price_per_1k
 
 | Provider | Model | Input $/1K tokens | Output $/1K tokens |
 |----------|-------|-------------------|---------------------|
-| Anthropic | claude-opus-4-6 | $0.015 | $0.075 |
-| Anthropic | claude-sonnet-4-6 | $0.003 | $0.015 |
+| Anthropic | claude-opus-4-8 | TBD (verify) | TBD (verify) |
+| Anthropic | claude-opus-4-6 (previous gen, reference) | $0.015 | $0.075 |
+| Anthropic | claude-sonnet-5 | TBD (verify) | TBD (verify) |
+| Anthropic | claude-sonnet-4-6 (previous gen, reference) | $0.003 | $0.015 |
 | Anthropic | claude-haiku-4-5 | $0.00025 | $0.00125 |
-| OpenAI | gpt-4o | $0.0025 | $0.010 |
+| OpenAI | gpt-5.5 | TBD (verify) | TBD (verify) |
+| OpenAI | gpt-4o (previous gen, reference) | $0.0025 | $0.010 |
 | OpenAI | gpt-4o-mini | $0.00015 | $0.0006 |
-| Google | gemini-2.0-flash | $0.0001 | $0.0004 |
+| Google | gemini-3.5-flash | TBD (verify) | TBD (verify) |
+| Google | gemini-2.0-flash (previous gen, reference) | $0.0001 | $0.0004 |
 
-> Note: Prices change frequently. Always verify from official provider documentation.
+> Note: Prices change frequently. Always verify from official provider documentation. Table last reviewed 2026-07-09; current-gen rows (`claude-opus-4-8`, `claude-sonnet-5`, `gpt-5.5`, `gemini-3.5-flash`) have unconfirmed pricing — do not treat `TBD` rows as billing-accurate.
 
 ### OTel Cost Metric
 
@@ -109,13 +113,16 @@ Derive cost as a computed metric in the collector or Grafana:
 
 ```yaml
 # Prometheus recording rule example
+# NOTE: per-token multipliers below are carried over from claude-sonnet-4-6
+# pricing and are unverified for claude-sonnet-5 — confirm current pricing
+# before relying on this rule for billing. #TODO(agent): verify claude-sonnet-5 per-token price and update multipliers
 - record: llm_request_cost_usd
   expr: |
     (
-      gen_ai_client_token_usage_total{token_type="input", gen_ai_system="anthropic", gen_ai_request_model="claude-sonnet-4-6"}
+      gen_ai_client_token_usage_total{token_type="input", gen_ai_system="anthropic", gen_ai_request_model="claude-sonnet-5"}
       * 0.000003
     ) + (
-      gen_ai_client_token_usage_total{token_type="output", gen_ai_system="anthropic", gen_ai_request_model="claude-sonnet-4-6"}
+      gen_ai_client_token_usage_total{token_type="output", gen_ai_system="anthropic", gen_ai_request_model="claude-sonnet-5"}
       * 0.000015
     )
 ```
