@@ -17,7 +17,7 @@ Engine-selection rule for orchestrators:
 
 ## Why This Exists
 
-The Nexus stack was built Claude-Code-first (`Agent(...)` spawns, `sonnet/opus/haiku` tiers, `run_in_background` parallelism, Opus-4.8 effort levels). Codex needed its own protocol because it spawns differently and runs one fixed latest model. **agy diverges even further from both**, and "apply the C-principles by analogy" (the old stub) under-serves it. The concrete gaps that change how you author and orchestrate:
+The Nexus stack was built Claude-Code-first (`Agent(...)` spawns, `sonnet/opus/haiku` tiers, `run_in_background` parallelism, Opus-4.8 effort levels). Codex needed its own protocol because it spawns differently and pins the latest model generation (role-based sol/terra/luna variants). **agy diverges even further from both**, and "apply the C-principles by analogy" (the old stub) under-serves it. The concrete gaps that change how you author and orchestrate:
 
 1. **One mandated model, but a real effort dial.** agy is under a user mandate to run **Gemini 3.5 Flash** for every step and every spawned subagent (`_common/CLI_COMPATIBILITY.md §4 ‡`). Unlike Codex (latest *frontier* model), the mandated model is a **fast** model — so reasoning-heavy steps (plan/design/verify) need the **Flash effort tier (High)** dialed up, not a bigger model. This is the single most important authoring lever (A1).
 2. **No reliable headless stdout.** `agy -p` never flushes to a non-TTY stdout (issues #76/#115, OPEN through v1.0.10) and requires a real pty. The deliverable channel is a prompt-mandated artifact file, always (A2).

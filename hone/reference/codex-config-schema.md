@@ -16,7 +16,7 @@ Primary: `~/.codex/config.toml`
 
 | Key | Type | Default | Description | Recommendation |
 |-----|------|---------|-------------|----------------|
-| `model` | string | `"gpt-5.5"` | Model identifier | Use latest stable (currently `gpt-5.5`) |
+| `model` | string | `"gpt-5.6"` | Model identifier | Use latest generation (currently gpt-5.6; generic ID auto-selects — or pin a variant: `gpt-5.6-sol`/`-terra`/`-luna`) |
 | `provider` | string | `"openai"` | API provider | Match to model availability |
 | `model_reasoning_effort` | string | `"medium"` | Reasoning depth: `none`, `minimal`, `low`, `medium`, `high`, `xhigh` | `medium` for general use |
 | `model_reasoning_summary` | string | `"auto"` | Reasoning summary: `auto`, `concise`, `detailed`, `none` | `concise` for transparency without verbosity |

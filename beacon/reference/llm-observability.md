@@ -14,7 +14,7 @@ OpenTelemetry defines standardized attribute names for AI/LLM telemetry under th
 |-----------|------|-------------|
 | `gen_ai.system` | string | Provider name (e.g., `openai`, `anthropic`, `vertex_ai`) |
 | `gen_ai.operation.name` | string | Operation type (`chat`, `text_completion`, `embeddings`) |
-| `gen_ai.request.model` | string | Requested model ID (e.g., `gpt-5.5`, `claude-opus-4-8`) |
+| `gen_ai.request.model` | string | Requested model ID (e.g., `gpt-5.6`, `claude-opus-4-8`) |
 | `gen_ai.response.model` | string | Model actually used in response |
 | `gen_ai.usage.input_tokens` | int | Number of input/prompt tokens consumed |
 | `gen_ai.usage.output_tokens` | int | Number of output/completion tokens generated |
@@ -99,13 +99,13 @@ cost = (input_tokens / 1000) × input_price_per_1k
 | Anthropic | claude-sonnet-5 | TBD (verify) | TBD (verify) |
 | Anthropic | claude-sonnet-4-6 (previous gen, reference) | $0.003 | $0.015 |
 | Anthropic | claude-haiku-4-5 | $0.00025 | $0.00125 |
-| OpenAI | gpt-5.5 | TBD (verify) | TBD (verify) |
+| OpenAI | gpt-5.6 | TBD (verify) | TBD (verify) |
 | OpenAI | gpt-4o (previous gen, reference) | $0.0025 | $0.010 |
 | OpenAI | gpt-4o-mini | $0.00015 | $0.0006 |
 | Google | gemini-3.5-flash | TBD (verify) | TBD (verify) |
 | Google | gemini-2.0-flash (previous gen, reference) | $0.0001 | $0.0004 |
 
-> Note: Prices change frequently. Always verify from official provider documentation. Table last reviewed 2026-07-09; current-gen rows (`claude-opus-4-8`, `claude-sonnet-5`, `gpt-5.5`, `gemini-3.5-flash`) have unconfirmed pricing — do not treat `TBD` rows as billing-accurate.
+> Note: Prices change frequently. Always verify from official provider documentation. Table last reviewed 2026-07-09; current-gen rows (`claude-opus-4-8`, `claude-sonnet-5`, `gpt-5.6`, `gemini-3.5-flash`) have unconfirmed pricing — do not treat `TBD` rows as billing-accurate.
 
 ### OTel Cost Metric
 

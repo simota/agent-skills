@@ -84,25 +84,25 @@ Note: `TOOL_TIMEOUT` is advisory — it requires executor-level support. Executo
 Recommended prompt pattern:
 
 ```bash
-EXEC_CMD='codex exec --full-auto -m gpt-5.5 "Read goal.md and complete the task described in it"'
+EXEC_CMD='codex exec --full-auto -m gpt-5.6-terra "Read goal.md and complete the task described in it"'
 ```
 
 ## Engine Quick Reference
 
 | Engine | Base command | Non-interactive flag | Auto-approve flag | Model override | Output format |
 |--------|--------------|----------------------|-------------------|----------------|---------------|
-| Codex | `codex exec` | default | `--full-auto` | `-m gpt-5.5` (**mandatory** — latest model, C3.0) | `--json` + `-o <path>` artifact. ⚠ Keep spawns **foreground** — detached-TTY silently crashes with no output (#19945, unfixed 0.137.0; `_common/CLI_COMPATIBILITY.md §9.3`) |
+| Codex | `codex exec` | default | `--full-auto` | `-m gpt-5.6-terra` (**mandatory** — latest generation, role-matched variant; build loops=terra, C3.0) | `--json` + `-o <path>` artifact. ⚠ Keep spawns **foreground** — detached-TTY silently crashes with no output (#19945, unfixed 0.137.0; `_common/CLI_COMPATIBILITY.md §9.3`) |
 | Antigravity | `agy` | `-p "prompt"` | `--dangerously-skip-permissions` | not supported (always default) | not supported (pin schema in prompt) |
 | Claude Code | `claude` | `-p "prompt"` | `--dangerously-skip-permissions` | `--model <model>` (default: auto) | `--output-format json` (capture via file redirect, not pipe — §9.3) |
 
-All engines use their default model when no model flag is specified. **Exception — Codex latest-model mandate (user policy, `_common/CODEX_ORCHESTRATION.md` C3.0):** always spawn Codex with `-m gpt-5.5` (the latest model); never rely on the default. Codex has no cheaper tier — tune depth via `model_reasoning_effort` (`-c model_reasoning_effort="..."`), not by changing the model. **Exception — agy model mandate (user policy, 2026-06-23):** always Gemini 3.5 Flash (agy's default; never `/model`-switch or `--model`-override away to Pro/Claude/GPT-OSS). For Claude Code, keep the default unless there is a specific reason to override.
+All engines use their default model when no model flag is specified. **Exception — Codex latest-generation mandate (user policy, `_common/CODEX_ORCHESTRATION.md` C3.0):** always spawn Codex with an explicit `-m gpt-5.6-<variant>` (build loops=terra, plan/design=sol, rote=luna); never rely on the default and never fall back to a previous generation. Tune depth within a variant via `model_reasoning_effort` (`-c model_reasoning_effort="..."`), not by changing the model. **Exception — agy model mandate (user policy, 2026-06-23):** always Gemini 3.5 Flash (agy's default; never `/model`-switch or `--model`-override away to Pro/Claude/GPT-OSS). For Claude Code, keep the default unless there is a specific reason to override.
 
 ## Codex
 
 ### Recommended command
 
 ```bash
-EXEC_CMD='codex exec --full-auto -m gpt-5.5 "Read goal.md and complete the task described in it"'
+EXEC_CMD='codex exec --full-auto -m gpt-5.6-terra "Read goal.md and complete the task described in it"'
 ```
 
 ### Key flags
@@ -120,7 +120,7 @@ EXEC_CMD='codex exec --full-auto -m gpt-5.5 "Read goal.md and complete the task 
 
 Note: `--dangerously-skip-permissions` (`--dangerously-bypass-approvals-and-sandbox`) disables all safety checks including sandboxing. Use `--full-auto` for Orbit loops.
 
-**Codex latest-model mandate (user policy, `_common/CODEX_ORCHESTRATION.md` C3.0):** always pass `-m gpt-5.5` (the latest Codex model) when spawning a Codex subagent — do not rely on the account default. Codex has no cheaper tier; adjust reasoning depth via `model_reasoning_effort` (`-c model_reasoning_effort="..."`), not by switching the model.
+**Codex latest-generation mandate (user policy, `_common/CODEX_ORCHESTRATION.md` C3.0):** always pass an explicit `-m gpt-5.6-<variant>` when spawning a Codex subagent (build loops=terra, plan/design=sol, rote=luna) — do not rely on the account default and never fall back to a previous generation. Adjust reasoning depth within a variant via `model_reasoning_effort` (`-c model_reasoning_effort="..."`), not by switching the model.
 
 ### Cloud execution
 
