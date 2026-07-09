@@ -15,7 +15,7 @@ Primary: `~/.gemini/settings.json`
 
 | Key | Type | Default | Description | Recommendation |
 |-----|------|---------|-------------|----------------|
-| `selectedModel` | string | `"gemini-2.5-pro"` | Model identifier for completions | Use latest stable model; verify availability for your API tier |
+| `selectedModel` | string | `"gemini-3.5-flash"` | Model identifier for completions | Use latest stable model; verify availability for your API tier |
 | `selectedAuthType` | string | `"oauth"` | Authentication method: `"oauth"` or `"api-key"` | OAuth for personal use; API key for CI/automation |
 | `theme` | string | `"system"` | Color theme: `"system"`, `"dark"`, `"light"` | Personal preference; no security impact |
 
