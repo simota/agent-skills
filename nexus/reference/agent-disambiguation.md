@@ -393,7 +393,7 @@ per-feature upside → Spark.
 
 ---
 
-### Fossil vs Lens vs Shift (Legacy / Migration)
+### Trail vs Lens vs Shift (Legacy / Migration)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|

@@ -153,8 +153,8 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
                                     │  ├─ Claude: Zen + Sage (judgment)    │
                                     │  ├─ Codex: Bolt/Tuner/Sweep/Mend/    │
                                     │  │   Schema (executable improve.)    │
-                                    │  ├─ agy: Hex/Atlas/Lore/Vista/       │
-                                    │  │   Shift (strategic)               │
+                                    │  ├─ agy: Hex/Atlas/Lore/Shift        │
+                                    │  │   (strategic)                     │
                                     │  └─ Design: Vision (claude) +        │
                                     │   Palette/Muse (agy) (if UI)         │
                                     │  magi arbitrates → Phase 3 loop      │
@@ -501,7 +501,6 @@ loop_iteration:
       agents: [atlas, lore, shift]
       mission: architecture improvement via whole-codebase 1M-context reasoning (Atlas)
           + cross-codebase pattern extraction + metapattern surfacing (Lore)
-          + long-range strategic refactor planning (Vista)
           + deprecated-library detection & native-API modernization & tech radar (Shift `detect`/`modernize`/`radar` — absorbed from horizon)
           + framework / lang migration codemod generation (Shift `framework`/`lang`/`codemod`)
           — all benefit from agy's 1M context for codebase-wide reasoning

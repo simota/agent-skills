@@ -131,7 +131,7 @@ Effort is the primary control surface on 4.8 — stronger than prompt wording �
 
 Opus 4.8 is better at finding bugs (higher recall and precision internally), but it follows conservative reporting instructions ("only high-severity", "be conservative", "don't nitpick") **more faithfully** than older models. A harness tuned for an older model can show *lower measured recall* — a harness effect, not a capability regression: same investigation depth, fewer findings converted to reports.
 
-**Apply by (reviewers/detectors — Judge, Gauge, Sentinel, Radar, Attest, Canon, Probe, Drill, Vigil, Cull, Chain):**
+**Apply by (reviewers/detectors — Judge, Gauge, Sentinel, Radar, Attest, Canon, Probe, Matrix, Vigil, Cull, Chain):**
 - Separate *finding* from *filtering*. At the finding stage, instruct coverage explicitly: "Report every issue you find, including uncertain and low-severity ones. Do not filter for importance or confidence here — a later stage ranks them. Tag each with confidence + estimated severity."
 - Move confidence/severity filtering to a downstream verification, dedup, or ranking stage.
 - If self-filtering must happen in one pass, set a **concrete** bar, not a qualitative one: "report anything that could cause incorrect behavior, a test failure, or a misleading result; omit only pure style/naming nits."
@@ -157,8 +157,8 @@ Reference this matrix to know which principles your skill must address.
 | Role | Critical (◎) | Recommended (○) |
 |------|---|---|
 | Orchestrators (Nexus, Titan, Sherpa, Rally, Magi, Darwin, Orbit) | P4, P6, P7, P9 | P1, P8 |
-| Investigators (Scout, Lens, Trail, Atlas, Fossil, Triage) | P3, P5, P8 | P2, P9 |
-| Reviewers/Detectors (Judge, Gauge, Sentinel, Probe, Radar, Attest, Canon, Drill, Vigil, Cull, Chain) | P2, P5, P10 | P1, P8 |
+| Investigators (Scout, Lens, Trail, Atlas, Triage) | P3, P5, P8 | P2, P9 |
+| Reviewers/Detectors (Judge, Gauge, Sentinel, Probe, Radar, Attest, Canon, Matrix, Vigil, Cull, Chain) | P2, P5, P10 | P1, P8 |
 | Builders (Builder, Artisan, Forge, Anvil, Native) | P5, P7, P8 | P3, P9, P11 |
 | Designers (Vision, Muse, Palette, Schema, Gateway, Flow) | P1, P11 | P5, P8 |
 | Writers (Prose, Quill, Scribe, Cue, Zine, Crest) | P2, P11 | P8 |

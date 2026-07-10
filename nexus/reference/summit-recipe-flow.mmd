@@ -25,7 +25,7 @@ flowchart TD
         direction LR
         A_Claude["Claude branch<br/>atlas + sherpa<br/>(architecture trade-off,<br/>epic decomposition)"]:::claude
         A_Codex["Codex branch<br/>lens + scout +<br/>sentinel + siege<br/>(sandbox code-analysis)"]:::codex
-        A_Agy["agy branch<br/>trail + fossil + lore<br/>+ atlas + field<br/>(1M ctx + Search)"]:::agy
+        A_Agy["agy branch<br/>trail + lore<br/>+ atlas + field<br/>(1M ctx + Search)"]:::agy
         A_Design["Design sub<br/>(if ui_dimension != none)<br/>echo[claude] + frame/palette[agy]"]:::design
     end
     Phase0 --> A_Claude
@@ -72,7 +72,7 @@ flowchart TD
     subgraph Phase4["Phase 4: VERIFICATION (tri-engine quorum)"]
         direction LR
         V_Judge["judge<br/>(built-in tri-engine fan-out)"]:::triengine
-        V_Codex["Codex dynamic<br/>radar + voyager + siege<br/>+ probe + drill<br/>+ sentinel rescan"]:::codex
+        V_Codex["Codex dynamic<br/>radar + voyager + siege<br/>+ probe + matrix<br/>+ sentinel rescan"]:::codex
         V_Agy["agy static/compliance<br/>attest + ripple + canon + oath<br/>+ rally[independent review]"]:::agy
         V_Claude["Claude UX (if UI)<br/>echo + palette"]:::claude
     end

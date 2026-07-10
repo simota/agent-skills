@@ -145,7 +145,7 @@ Use for chains where Nexus auto-renders visuals downstream.
 | Agent | Default layout | Default style_pack | Notes |
 |-------|----------------|--------------------|-------|
 | Sentinel | `card-grid` | `warning-alert` | CVE / secret / auth scorecards |
-| Pulse | `dashboard` | `data-viz-bold` | KPI overview |
+| Pulse | `dashboard` | `data-viz-bold` | KPI overview, test-quality snapshot (absorbed from vista) |
 | Atlas | `matrix` | `minimalist-iso` | Service × risk matrix |
 | Trail | `timeline` | `editorial-magazine` | Commits / regressions / releases |
 | Voice | `hero-stat` | `corporate-clean` | NPS / sentiment headline |
@@ -156,7 +156,6 @@ Use for chains where Nexus auto-renders visuals downstream.
 | Harvest | `dashboard` | `corporate-clean` | PR throughput, review time |
 | Schema | `matrix` | `minimalist-iso` | Entity-relationship overview |
 | Voyager | `dashboard` | `data-viz-bold` | E2E run summary |
-| Vista | `dashboard` | `data-viz-bold` | Test-quality snapshot |
 | Field | `card-grid` | `editorial-magazine` | Persona / insight cards |
 | Oath | `card-grid` | `warning-alert` | Control-status scorecard |
 | Triage | `timeline` | `warning-alert` | Incident timeline |

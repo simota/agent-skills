@@ -21,6 +21,6 @@ Ranked by fit with the loop pattern. Render on demand via `README.md` → "Insta
 | AI-Eval | `ai-eval` | LLM-output feedback → prompt rules + eval rubric + regression cases | oracle / oracle, builder / guardian, oracle | eval harness (regression set) | ★★☆ |
 | API Convention | `api-convention` | API review feedback → naming/versioning/error-shape rules | gateway / gateway, builder / guardian, gateway | OpenAPI lint (spectral) | ★★☆ |
 | Architecture Decision | `arch-decision` | design decisions → architectural constraints | atlas (incl. c4-model recipe) / atlas, builder / guardian, atlas | fitness function / dep-cruiser | ★★☆ |
-| Test Strategy | `test-strategy` | flaky / recurring failures → testing principles + quarantine rules | radar, vista / radar / guardian, radar | quarantine list + CI rule | ★☆☆ |
+| Test Strategy | `test-strategy` | flaky / recurring failures → testing principles + quarantine rules | radar, pulse / radar / guardian, radar | quarantine list + CI rule | ★☆☆ |
 
 > Adding a row to "Proposed" is cheap — it just records intent. Rendering is the work; do it when a real signal stream for that domain exists (don't render speculative kits with no signals to feed them — they become dead docs).

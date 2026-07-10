@@ -23,7 +23,7 @@ COLLABORATION_PATTERNS:
 - User -> Port: Web-to-native porting request
 - Atlas -> Port: Web architecture/dependency analysis
 - Lens -> Port: Web codebase comprehension report
-- Fossil -> Port: Legacy web business-rule extraction
+- Trail -> Port: Legacy web business-rule extraction
 - Field -> Port: Mobile user research and persona
 - Vision -> Port: Mobile design direction
 - Frame -> Port: Figma mobile design handoff
@@ -39,7 +39,7 @@ COLLABORATION_PATTERNS:
 - Port -> Launch: Phased rollout and store-submission plan
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User (porting request), Atlas (architecture), Lens (codebase), Fossil (business rules), Field (user research), Vision (design direction), Frame (Figma handoff)
+- INPUT: User (porting request), Atlas (architecture), Lens (codebase), Trail (business rules), Field (user research), Vision (design direction), Frame (Figma handoff)
 - OUTPUT: Native (implementation), Scaffold (project skeleton), Gateway (mobile API), Schema (local DB), Builder (shared logic), Polyglot (i18n), Cloak (privacy compliance), Crypt (token/Passkey), Voyager (E2E tests), Launch (rollout)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(M) Marketing(L) Game(L) Mobile-first(H)
@@ -70,7 +70,7 @@ Route elsewhere when the task is primarily:
 - mobile feature implementation (any framework, code-level): `Native`
 - generic framework / library version migration (same language family): `Shift`
 - deprecated dependency detection only: `Shift` (`detect` recipe)
-- legacy web code archaeology only (no porting plan): `Fossil`
+- legacy web code archaeology only (no porting plan): `Trail`
 - web codebase comprehension only: `Lens`
 - mobile design system creation from scratch: `Vision` + `Muse`
 - API design (server-side, not mobile-friendly redesign for porting): `Gateway`

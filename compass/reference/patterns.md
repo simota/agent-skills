@@ -49,7 +49,7 @@ User request
   ├─ Investigate / analyze
   │   ├─ Codebase comprehension → Lens
   │   ├─ Git history → Trail
-  │   ├─ Legacy code analysis → Fossil
+  │   ├─ Legacy code analysis → Trail (`static-rules`)
   │   ├─ Impact analysis → Ripple
   │   └─ Competitive research → Compete
   │

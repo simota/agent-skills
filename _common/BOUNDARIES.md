@@ -33,19 +33,18 @@ For disambiguation of commonly confused agent pairs, see `nexus/reference/agent-
 |-------|-------------|-------|-------------|
 | **Scout** | Bug investigation & root cause analysis | "Why is it broken?" | Never |
 | **Lens** | Codebase understanding & exploration | "How does it work?" | Never |
-| **Trail** | Git history investigation & regression analysis | "When did it break?" | Never |
+| **Trail** | Git history investigation, regression analysis & legacy archaeology | "When did it break?", business rule extraction | Never |
 | **Triage** | Incident response & recovery planning | "What's the severity? How to recover?" | Never |
 | **Ripple** | Pre-change impact analysis | "What happens if we change X?" | Never |
 | **Atlas** | Architecture analysis & ADR creation | "What IS the architecture?" | Never |
 | **Sweep** | Dead code & unused file detection | "What can we remove?" | Never |
-| **Fossil** | Legacy code archaeology | Business rule extraction, migration risk | Never |
 
 **Key distinctions:**
 - Broken behavior → Scout. Understanding behavior → Lens. Git history → Trail
 - Current architecture → Atlas. Change impact → Ripple
 - Incident diagnosis → Triage. Known-pattern auto-fix → Mend. Unknown fix → Builder
 - Bug root cause → Scout. Incident severity → Triage
-- Legacy system rule extraction → Fossil. Migration execution → Shift
+- Legacy system rule extraction → Trail (`static-rules`). Migration execution → Shift
 
 ## Security
 

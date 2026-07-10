@@ -44,7 +44,7 @@ FFI boundaries by pair: **TS→Rust** = napi-rs / neon (Node Native Addon) or WA
 ```
 Phase 0 FRAMING        Nexus internal: detect (source_lang, target_lang), scope (module|subsystem|whole),
                        strategy candidate, parity-test feasibility. Big-bang → confirm with user.
-Phase 1 ARCHAEOLOGY ∥  Fossil[extract implicit business rules + invariants]
+Phase 1 ARCHAEOLOGY ∥  Trail[extract implicit business rules + invariants]
                        Lens[map current structure, data flow, public surface]
                        Atlas?[architecture + module/dependency boundaries]   (if subsystem/whole)
                        Trail?[git history → why-decisions behind non-obvious code]  (optional)
@@ -158,7 +158,7 @@ The core knowledge of this recipe. Magi confirms the relevant table in Phase 3; 
 - `+Sentinel` — audit FFI boundary / `unsafe` blocks for memory & injection safety.
 - `+Siege` — load/throughput parity when the rewrite's motivation is performance.
 - `+Schema` — when persistence layer or serialization format crosses the boundary.
-- `+Scout` — deeper root-cause archaeology when Fossil+Lens leave behavior gaps.
+- `+Scout` — deeper root-cause archaeology when Trail+Lens leave behavior gaps.
 - `+Sherpa` — decompose a large strangler-fig migration into atomic per-module steps.
 - `+Shift[modernize]` — when the rewrite also modernizes deprecated APIs in the same pass (absorbed from horizon).
 

@@ -53,7 +53,7 @@
 |----------|----------------|
 | `skill audit`, `MCP supply chain`, `plugin intake`, `.claude config audit`, `Unicode Tag injection`, `curl-pipe scan`, `third-party intake` | `SUPPLY_CHAIN_AUDIT` (Chain) |
 | `Shai-Hulud`, `npm worm`, `PyPI worm`, `lottie-player`, `S1ngularity`, `infected lockfile`, `C2 traffic`, `credential rotation order`, `infected` | `MALWARE_RESPONSE` (Cull → Triage → Crypt) |
-| `auto-tune`, `continuous tuning`, `GC tuning`, `threadpool`, `connection pool`, `worker count`, `cache size auto-adjust` | `AUTO_TUNING` (Dial) |
+| `auto-tune`, `continuous tuning`, `GC tuning`, `threadpool`, `connection pool`, `worker count`, `cache size auto-adjust` | `AUTO_TUNING` (Bolt) |
 | `tech debt visualization`, `debt mascot`, `debt character`, `gamified retro`, `quarterly debt review` | `DEBT_VISUALIZATION` (Hex → Sketch) |
 | `audio analysis`, `LUFS`, `True Peak`, `BPM detect`, `key detect`, `mastering QC`, `EBU R128`, `librosa`, `pyloudnorm` | `AUDIO_ANALYSIS` (Sonar) |
 | `ToS`, `Terms of Service`, `Privacy Policy`, `Tokushoho`, `Specified Commercial Transactions Act`, `terms review`, `policy gap` | `LEGAL_REVIEW` (Clause → Scribe) |
@@ -67,8 +67,8 @@
 | `Bullseye`, `19 traction channels`, `channel selection`, `See-Think-Do-Care`, `RACE planning`, `lifecycle marketing plan` | `CHANNEL_LIFECYCLE` (Growth) |
 | `CBBE`, `brand equity`, `Keller pyramid`, `brand salience`, `brand resonance`, `brand strength` | `BRAND_EQUITY` (Compete — `brand-equity.md`) |
 | `pre-mortem`, `premortem`, `FMEA`, `failure modes`, `RPN`, `AP`, `failure scenario enumeration`, `what could go wrong` | `PREMORTEM` (Omen → Ripple) |
-| `manual QA`, `TestRail`, `Xray`, `Zephyr`, `Qase`, `BVA`, `equivalence class`, `decision table`, `exploratory charter`, `manual test procedure` | `MANUAL_QA` (Drill) |
-| `test pyramid`, `trophy`, `honeycomb`, `coverage heatmap`, `flake dashboard`, `Wilson lower-bound`, `mutation overlay`, `test shape` | `TEST_INTELLIGENCE` (Vista) |
+| `manual QA`, `TestRail`, `Xray`, `Zephyr`, `Qase`, `BVA`, `equivalence class`, `decision table`, `exploratory charter`, `manual test procedure` | `MANUAL_QA` (Matrix) |
+| `test pyramid`, `trophy`, `honeycomb`, `coverage heatmap`, `flake dashboard`, `Wilson lower-bound`, `mutation overlay`, `test shape` | `TEST_INTELLIGENCE` (Canvas/Pulse) |
 | `feature inventory`, `unimplemented features`, `what's built`, `what's left`, `roadmap status`, `WBS`, `work breakdown`, `delivery status`, `project status`, `is X shipped`, `plan vs code`, `docs-vs-code drift` | `PROJECT_STATUS` (PDM). Don't confuse with PROJECT (Titan lifecycle), PRIORITIZE (Rank), SPEC_VERIFY (Attest), INVESTIGATE (Lens) |
 | `positioning`, `positioning statement`, `messaging`, `messaging house`, `value proposition`, `go-to-market`, `GTM`, `launch plan`, `launch marketing`, `sales enablement`, `one-pager` | `GO_TO_MARKET` (PMM). Markets *shipped* capability; don't confuse with PROJECT_STATUS (PDM what's built), competitive research (Compete), narrative craft (Saga), landing-page build (Funnel), technical release (Launch) |
 | `AppleScript`, `osascript`, `JXA`, `JavaScript for Automation`, `Apple Events`, `macOS automation`, `Mac desktop automation`, `app control`, `tell application`, `UI scripting`, `System Events`, `sdef`, `scripting dictionary` | `MACOS_AUTOMATION` (Wield). Note: Automator *workflow* authoring is out of scope; only the "Run AppleScript" action within Automator falls under Wield |

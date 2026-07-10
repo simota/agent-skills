@@ -25,7 +25,7 @@ Decomposes, coordinates, and parallelizes tasks.
 | **Rally** | Parallel orchestrator | Multi-session parallel execution | No |
 | **Atelier** | Design → implementation pipeline | Integrates Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas | No |
 
-## Investigation (8)
+## Investigation (7)
 
 Investigation, analysis, and root-cause identification. Does not write code.
 
@@ -33,8 +33,7 @@ Investigation, analysis, and root-cause identification. Does not write code.
 |-------|------|---------|------|
 | **Scout** | Bug investigation / RCA | Diagnose bug causes, build reproduction steps | No |
 | **Lens** | Codebase comprehension | Structure mapping, feature discovery, data-flow tracing | No |
-| **Trail** | Git history investigation | Regression analysis, commit archaeology | No |
-| **Fossil** | Legacy code archaeology | Extract implicit business rules, assess migration risk | No |
+| **Trail** | Git history investigation & legacy archaeology | Regression analysis, commit archaeology, implicit business-rule extraction (`static-rules`) | No |
 | **Ripple** | Impact analysis | Pre-change risk evaluation, blast-radius estimation | No |
 | **Sweep** | Dead-code detection | Unused files, dead code, orphaned files | No |
 | **Spark** | New feature proposals | Feature ideas leveraging existing data/logic | No |
@@ -62,8 +61,8 @@ Test authoring and verification.
 | **Radar** | Unit tests | Edge-case additions, flaky-test repair, coverage improvement | Yes |
 | **Voyager** | E2E tests | Playwright/Cypress configuration, Page Object design | Yes |
 | **Siege** | Load and resilience testing | Load tests, contract tests, chaos engineering | Yes |
-| **Drill** | Manual QA test-case authoring | Systematic test procedures (BVA, equivalence class, decision table) for TestRail/Zephyr/Xray/Qase | No |
-| **Vista** | Test intelligence visualization | Coverage heatmaps, test-shape views, flake dashboards, mutation overlays from junit/lcov/allure/playwright artifacts | Mixed |
+| **Matrix** | Manual QA test-case authoring | Systematic QA procedures (BVA, equivalence class, decision table) for TestRail/Zephyr/Xray/Qase — `qa-scenario` recipe (absorbed from drill) | No |
+| **Canvas** | Test intelligence visualization | Coverage heatmaps, test-shape views, mutation overlays from junit/lcov/allure/playwright artifacts (absorbed from vista; live dashboards → Pulse) | Mixed |
 
 ## Security (6)
 
@@ -87,19 +86,18 @@ Code review and quality checks.
 | **Judge** | Automated code review | PR review automation, bug detection | Mixed |
 | **Zen** | Refactoring | Variable renaming, function extraction, dead-code removal | Mixed |
 | **Canon** | Standards-compliance check | OWASP / WCAG / OpenAPI conformance evaluation | No |
-| **Gauge** | SKILL.md audit | 16-item checklist conformance | No |
+| **Gauge** | SKILL.md audit | 18-item checklist conformance | No |
 | **Attest** | Spec-compliance verification | Acceptance-criteria extraction, BDD scenario generation | No |
 | **Cloak** | Privacy engineering | PII detection, GDPR / CCPA compliance | Mixed |
 
-## Performance (3)
+## Performance (2)
 
 Performance optimization.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Bolt** | Frontend / backend optimization | Re-render reduction, N+1 fixes, caching | Yes |
+| **Bolt** | Frontend / backend optimization & continuous auto-tuning | Re-render reduction, N+1 fixes, caching; profile→parameter→optimize→verify loops (absorbed from dial) | Yes |
 | **Tuner** | DB optimization | EXPLAIN ANALYZE, index recommendations, slow queries | Yes |
-| **Dial** | Continuous auto-tuning | profile→parameter→optimize→verify loop for GC/threadpool/pool/cache/worker settings | Mixed |
 
 ## Documentation (6)
 

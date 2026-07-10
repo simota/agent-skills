@@ -213,7 +213,7 @@ For natural-language input without an explicit subcommand. **Subcommand match al
 | `/Nexus` (no arguments) | `proactive` |
 | unclear or multi-domain request | `classify` → `reference/intent-clarification.md` |
 
-Specialist anchors (Chain / Cull-Triage-Crypt / Sonar / Clause-Scribe / Rank-Magi / Omen-Ripple / Drill / Sketch), mobile/cross-platform anchors (`MOBILE_NATIVE`, `IOS_UI_TEST`, `PORTING`), and package/domain-preset anchors (research / ai-adoption / legal / saas / media / growth / career / learning / hiring / local-gov) — see `reference/signal-keywords.md`.
+Specialist anchors (Chain / Cull-Triage-Crypt / Sonar / Clause-Scribe / Rank-Magi / Omen-Ripple / Matrix / Sketch), mobile/cross-platform anchors (`MOBILE_NATIVE`, `IOS_UI_TEST`, `PORTING`), and package/domain-preset anchors (research / ai-adoption / legal / saas / media / growth / career / learning / hiring / local-gov) — see `reference/signal-keywords.md`.
 
 ## Subcommand Dispatch
 

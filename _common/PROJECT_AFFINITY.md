@@ -52,7 +52,7 @@ These agents provide value regardless of project type. Nexus should always consi
 | Ripple | Impact analysis | Change analysis is universal |
 | Magi | Decision making | Multi-perspective judgment |
 | Atlas | Architecture | Dependency analysis for any project |
-| Trail | Git archaeology | History investigation |
+| Trail | Git archaeology | History investigation + legacy business-rule extraction |
 | Rally | Parallel orchestration | Multi-session for any large task |
 | Grove | Repo structure | Every project needs good structure |
 | Canvas | Visualization | Diagrams for any architecture |
@@ -65,7 +65,6 @@ These agents provide value regardless of project type. Nexus should always consi
 | Gauge | SKILL.md audit | Format compliance checking |
 | Flux | Perspective shift | Reframing and assumption challenge |
 | Rank | Priority scoring | ICE/RICE/WSJF quantification |
-| Fossil | Legacy archaeology | Business rule extraction |
 | Omen | Pre-mortem analysis | Failure mode enumeration |
 | Matrix | Combinatorial analysis | Multi-dimensional coverage |
 

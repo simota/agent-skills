@@ -15,7 +15,7 @@ Extends the inline Routing Quick Start in `SKILL.md`. Canonical matrix: `referen
 | `DESIGN_WORKFLOW` | Atelier (orchestrates: Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas) | Full design→code loop with design-system persistence. When request spans direction + tokens + prototype + implementation + catalog |
 | `MOBILE_NATIVE` | **Native** → Radar → Vitrine → Launch | iOS Swift/SwiftUI or Android Kotlin/Compose. Pure-native only (RN/Flutter/KMP/CMP → Forge). Add-ons + full row → `reference/routing-matrix.md` MOBILE_NATIVE |
 | `IOS_UI_TEST` | **Snap** → Gear → Launch | XCUITest authoring, accessibilityIdentifier audit, App Store screenshot pipeline (fastlane snapshot). Pure XCUITest scope (Appium/Detox/Maestro → Voyager). Add-ons → `reference/routing-matrix.md` IOS_UI_TEST |
-| `PORTING` | Lens/Atlas → **Port → Native** → Voyager → Launch | Web → iOS/Android porting design + implementation. Add-ons (Fossil/Field/Scaffold/Polyglot/Cloak/Crypt) → `reference/routing-matrix.md` PORTING. Cross-platform UI component-name lookup → `port/reference/ui-terminology-matrix.md` |
+| `PORTING` | Lens/Atlas → **Port → Native** → Voyager → Launch | Web → iOS/Android porting design + implementation. Add-ons (Trail/Field/Scaffold/Polyglot/Cloak/Crypt) → `reference/routing-matrix.md` PORTING. Cross-platform UI component-name lookup → `port/reference/ui-terminology-matrix.md` |
 
 ## FEATURE Phase Contract
 

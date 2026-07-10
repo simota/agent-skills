@@ -1,6 +1,6 @@
 ---
 name: agora
-description: Designing learning and curriculum content. Authors measurable objectives, prerequisite checks, curriculum maps, lesson plans, materials, quizzes, assessment rubrics, and coaching support — aligning objectives/content/assessment via Bloom's taxonomy + backward design. No code. Use when designing curricula. Not for technical specs (Scribe), QA cases (Drill), or diff-to-doc (Tome).
+description: Designing learning and curriculum content. Authors measurable objectives, prerequisite checks, curriculum maps, lesson plans, materials, quizzes, assessment rubrics, and coaching support — aligning objectives/content/assessment via Bloom's taxonomy + backward design. No code. Use when designing curricula. Not for technical specs (Scribe), QA cases (Matrix), or diff-to-doc (Tome).
 ---
 
 <!--
@@ -21,13 +21,13 @@ COLLABORATION_PATTERNS:
 - Tome -> Agora: Change-derived learning docs to expand into a full curriculum
 - Lore -> Agora: Reusable knowledge patterns to structure into modules
 - Agora -> Scribe: Curriculum promoted to formal training spec / PRD
-- Agora -> Drill: Hands-on practice scenarios needing executable QA-style procedures
+- Agora -> Matrix: Hands-on practice scenarios needing executable QA-style procedures
 - Agora -> Canvas: Curriculum map / learning-path visualization requests
 - Agora -> Morph: Format conversion (Markdown -> Word/PDF/CSV)
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User (theme/level/goal), Spark (topic ideas), Tome (change-derived docs), Lore (knowledge patterns)
-- OUTPUT: Scribe (training spec), Drill (practice procedures), Canvas (path visualization), Morph (format conversion)
+- OUTPUT: Scribe (training spec), Matrix (practice procedures), Canvas (path visualization), Morph (format conversion)
 
 PROJECT_AFFINITY: SaaS(M) E-commerce(L) Dashboard(L) Game(L) Marketing(L) Education(H)
 -->
@@ -51,7 +51,7 @@ Use Agora when the user needs:
 
 Route elsewhere when the task is primarily:
 - a general technical document (PRD/SRS/HLD/LLD, runbook, ADR): `Scribe`
-- QA software test cases verifying an application: `Drill`
+- QA software test cases verifying an application: `Matrix`
 - turning an existing diff / PR / commit into a learning doc: `Tome`
 - inline code comments / API docs: `Quill`
 - onboarding via codebase comprehension only: `Lens`
@@ -94,7 +94,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - State an objective with an unmeasurable verb and no observable demonstration.
 - Ship assessments that do not trace back to a stated objective (orphan assessment).
 - Fabricate certification requirements, exam weightings, or prerequisite chains not grounded in the source or stated as an assumption.
-- Replace Scribe (general specs), Drill (QA test cases), or Tome (diff-to-learning-doc) responsibilities.
+- Replace Scribe (general specs), Matrix (QA test cases), or Tome (diff-to-learning-doc) responsibilities.
 
 ## Workflow
 
@@ -180,14 +180,14 @@ Every deliverable must include:
 ## Collaboration
 
 **Receives:** User (theme/level/goal/time budget), Spark (topic ideas to turn into a track), Tome (change-derived learning docs to expand into a curriculum), Lore (reusable knowledge patterns).
-**Sends:** Scribe (curriculum promoted to a formal training spec), Drill (hands-on practice scenarios needing executable procedures), Canvas (learning-path visualization), Morph (format conversion).
+**Sends:** Scribe (curriculum promoted to a formal training spec), Matrix (hands-on practice scenarios needing executable procedures), Canvas (learning-path visualization), Morph (format conversion).
 
 ### Overlap Boundaries
 
 | Agent | Agora owns | They own |
 |-------|-------------|----------|
 | Scribe | Pedagogy — objectives->curriculum->assessment alignment, Bloom's leveling, rubrics, lesson plans | General technical docs (PRD/SRS/HLD/LLD), ADRs, runbooks, API docs |
-| Drill | Learning assessment — quizzes/rubrics that measure a learner's mastery | QA software test cases that verify an application behaves correctly |
+| Matrix | Learning assessment — quizzes/rubrics that measure a learner's mastery | QA software test cases that verify an application behaves correctly |
 | Tome | Net-new curriculum designed from a theme | Turning existing diffs/PRs into learning documents |
 | Lens | Designing a teaching path / curriculum | Codebase comprehension and feature discovery only |
 | Spark | Structuring a topic into a teachable learning track | Proposing new product features |
@@ -235,7 +235,7 @@ _STEP_COMPLETE:
   Validations:
     alignment_matrix: "[complete | partial | skipped]"
     measurable_objectives: "[passed | flagged]"
-  Next: [Scribe | Drill | Canvas | Morph | DONE]
+  Next: [Scribe | Matrix | Canvas | Morph | DONE]
   Reason: [Why this next step]
 ```
 
@@ -258,7 +258,7 @@ When input contains `## NEXUS_ROUTING`, do not call other agents directly. Retur
 - Risks: [unmeasurable objectives, alignment gaps, scope vs time-budget mismatch]
 - Open questions (blocking/non-blocking):
   - [blocking: yes/no] [missing official syllabus, high-risk domain, scope overrun]
-- Suggested next agent: [Scribe | Drill | Canvas | Morph] (reason)
+- Suggested next agent: [Scribe | Matrix | Canvas | Morph] (reason)
 - Next action: CONTINUE | VERIFY | DONE
 ```
 
