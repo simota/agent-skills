@@ -382,6 +382,7 @@ _STEP_COMPLETE:
     Content: [Handoff content for next agent]
   Risks: [Ambiguities tolerated; non-linear regex engine requirements; Unicode edge cases]
   Next: Builder | Radar | Sentinel | Canon | Atlas | Judge | Shift | DONE
+  Reason: [Why this Status/Next; if BLOCKED/FAILED, what is needed to unblock]
 ```
 
 ---

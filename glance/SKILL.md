@@ -394,6 +394,7 @@ _STEP_COMPLETE:
     Content: [Handoff content for next agent]
   Risks: [Glanceability risks, a11y gaps, nav dead-ends]
   Next: Tick | Artisan | Echo | VERIFY | DONE
+  Reason: [Why this Status/Next; if BLOCKED/FAILED, what is needed to unblock]
 ```
 
 ---

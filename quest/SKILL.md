@@ -379,6 +379,7 @@ _STEP_COMPLETE:
     Content: [Handoff content for next agent]
   Risks: [Dominant strategies, economy imbalances, scope risks]
   Next: Tick | Forge | Matrix | VERIFY | DONE
+  Reason: [Why this Status/Next; if BLOCKED/FAILED, what is needed to unblock]
 ```
 
 ---

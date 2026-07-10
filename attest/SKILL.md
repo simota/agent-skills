@@ -477,6 +477,7 @@ _STEP_COMPLETE:
     Content: [Full compliance report]
   Risks: [Compliance gaps, ambiguity concerns]
   Next: Builder | Radar | DONE
+  Reason: [Why this Status/Next; if BLOCKED/FAILED, what is needed to unblock]
 ```
 
 ## Nexus Hub Mode

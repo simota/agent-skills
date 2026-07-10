@@ -359,6 +359,7 @@ _STEP_COMPLETE:
     Content: [Handoff content for next agent]
   Risks: [Untested attack surfaces, scope limitations]
   Next: [NextAgent] | VERIFY | DONE
+  Reason: [Why this Status/Next; if BLOCKED/FAILED, what is needed to unblock]
 ```
 
 ---
