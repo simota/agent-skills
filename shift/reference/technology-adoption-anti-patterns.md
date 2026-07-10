@@ -1,138 +1,138 @@
 # Technology Adoption Anti-Patterns
 
-> 技術選定の失敗パターン、Hype Cycle の罠、評価フレームワーク、Resume Driven Development の回避
+> Failure patterns in technology selection, Hype Cycle traps, evaluation frameworks, and avoiding Resume Driven Development
 
-## 1. 技術採用 7 大アンチパターン
+## 1. The 7 Major Technology Adoption Anti-Patterns
 
-| # | アンチパターン | 問題 | 兆候 | 対策 |
+| # | Anti-Pattern | Problem | Symptoms | Countermeasure |
 |---|-------------|------|------|------|
-| **TA-01** | **Resume Driven Development（履歴書駆動開発）** | エンジニアのキャリア目的で技術を選定 | 「Rust で書き直そう」「Kubernetes 入れよう」（不要なのに） | ビジネス要件・チーム能力・プロジェクト規模に基づく判断 |
-| **TA-02** | **Hype Driven Adoption（ハイプ駆動採用）** | トレンドや話題性だけで技術を導入 | 「みんな使ってる」「HackerNews で人気」が根拠 | Gartner Hype Cycle の位置確認、Trough of Disillusionment 後を待つ |
-| **TA-03** | **FAANG Cargo Cult（FAANG カーゴカルト）** | 大企業の事例を自社のコンテキスト無視でコピー | Google規模の技術を10人チームで採用、過剰な複雑性 | 自社の規模・制約・チーム能力に適合する技術を選定 |
-| **TA-04** | **Shiny Object Syndrome（新しい物好き症候群）** | 常に最新技術に飛びつき既存を放棄 | 半年ごとにフレームワーク変更、完成しないプロジェクト | 「Good Enough」な技術は変えない、変更コストを定量化 |
-| **TA-05** | **Premature Optimization（早すぎる最適化）** | 将来の問題に対して先回りで技術投資 | ユーザー100人でマイクロサービス化、不要なスケーラビリティ対策 | YAGNI 原則、現在の問題に集中、将来は将来対応 |
-| **TA-06** | **Innovator's Dilemma（イノベーターのジレンマ）** | 既存技術に固執し破壊的変化を見逃す | 「jQuery で十分」が5年間続く、チームのスキル陳腐化 | 定期的な技術レーダー作成、20%の探索時間確保 |
-| **TA-07** | **AI Hype Trap（AI ハイプの罠）** | AI/LLM を万能と過信し不適切に適用 | text-to-SQL の精度不足、AI生成コードの品質未検証 | AI の限界を理解、人間のレビュー必須、適用領域を限定 |
+| **TA-01** | **Resume Driven Development** | Choosing a technology for the engineer's career goals | "Let's rewrite it in Rust," "let's add Kubernetes" (even when unneeded) | Base decisions on business requirements, team capability, and project scale |
+| **TA-02** | **Hype Driven Adoption** | Adopting a technology purely because it's trendy or buzzworthy | The justification is "everyone's using it" or "it's popular on Hacker News" | Check its position on the Gartner Hype Cycle; wait until past the Trough of Disillusionment |
+| **TA-03** | **FAANG Cargo Cult** | Copying a big-company case study while ignoring your own context | Adopting Google-scale technology for a 10-person team, excessive complexity | Choose technology that fits your own scale, constraints, and team capability |
+| **TA-04** | **Shiny Object Syndrome** | Always jumping to the newest technology, abandoning what already works | Changing frameworks every six months, projects that never ship | Don't change "good enough" technology; quantify the cost of change |
+| **TA-05** | **Premature Optimization** | Investing preemptively in technology for future problems | Going microservices at 100 users, unnecessary scalability work | Follow YAGNI, focus on the present problem, deal with the future later |
+| **TA-06** | **Innovator's Dilemma** | Clinging to existing technology and missing disruptive change | "jQuery is good enough" for 5 years straight, team skills stagnate | Build a regular technology radar, reserve 20% exploration time |
+| **TA-07** | **AI Hype Trap** | Over-trusting AI/LLMs as a cure-all and applying them inappropriately | Insufficient accuracy in text-to-SQL, unverified quality of AI-generated code | Understand AI's limits, require human review, limit the scope of application |
 
 ---
 
-## 2. 技術評価フレームワーク
+## 2. Technology Evaluation Framework
 
 ```
-Tech Maturity Matrix（2×2 評価）:
+Tech Maturity Matrix (2×2 evaluation):
 
-  技術成熟度（X軸）:
+  Technology maturity (X axis):
     Research → Proof of Concept → Early Adoption → Full Adoption
 
-  ビジネス適用性（Y軸）:
+  Business applicability (Y axis):
     Low → Medium → High
 
-  判断ロジック:
-    高成熟度 × 高適用性 → 積極採用（Adopt）
-    高成熟度 × 低適用性 → 監視（Watch）
-    低成熟度 × 高適用性 → 実験（Trial）
-    低成熟度 × 低適用性 → 回避（Avoid）
+  Decision logic:
+    High maturity × High applicability → Adopt aggressively
+    High maturity × Low applicability → Watch
+    Low maturity × High applicability → Trial
+    Low maturity × Low applicability → Avoid
 
-Gartner Hype Cycle の5段階:
-  1. Innovation Trigger（技術の引き金）
-  2. Peak of Inflated Expectations（過度な期待のピーク）
-  3. Trough of Disillusionment（幻滅の谷）→ ここで脱落多数
-  4. Slope of Enlightenment（啓発の坂）
-  5. Plateau of Productivity（生産性の安定期）→ 本番採用はここ
+Gartner Hype Cycle's 5 stages:
+  1. Innovation Trigger
+  2. Peak of Inflated Expectations
+  3. Trough of Disillusionment → most dropouts happen here
+  4. Slope of Enlightenment
+  5. Plateau of Productivity → production adoption belongs here
 
-  ⚠️ 注意: 実際に Hype Cycle を通過する技術は約20%
-  → 大半は Stage 3 で消滅する
+  ⚠️ Note: only about 20% of technologies actually make it through the Hype Cycle
+  → most die out at Stage 3
 
-Adoption Curve とキャズム:
+Adoption Curve and the Chasm:
   Innovators (2.5%) → Early Adopters (13.5%)
     → [CHASM] →
   Early Majority (34%) → Late Majority (34%) → Laggards (16%)
-  → キャズムを超えない技術はエンタープライズには危険
+  → Technology that doesn't cross the chasm is risky for the enterprise
 ```
 
 ---
 
-## 3. 実質と誇大宣伝の判別基準
+## 3. Criteria for Telling Substance from Hype
 
 ```
-技術の「実質性」を判断する 5 つの指標:
+5 indicators for judging a technology's "substance":
 
-  1. ユーザー準備度:
-     → チームの学習コストは許容範囲か？
-     → 採用企業のケーススタディが存在するか？
+  1. User readiness:
+     → Is the team's learning cost within an acceptable range?
+     → Do case studies from adopting companies exist?
 
-  2. ビジネスモデル持続性:
-     → OSS の資金源は？ 単一企業依存のリスクは？
-     → ライセンス変更の前例は？（Redis, Elasticsearch 等）
+  2. Business model sustainability:
+     → What funds the OSS project? What's the risk of single-company dependency?
+     → Any precedent of license changes? (Redis, Elasticsearch, etc.)
 
-  3. インフラ成熟度:
-     → ツールチェーン（CI/CD, 監視, デバッグ）は整備されているか？
-     → ホスティング・デプロイの選択肢は十分か？
+  3. Infrastructure maturity:
+     → Is the toolchain (CI/CD, monitoring, debugging) in place?
+     → Are there enough hosting/deployment options?
 
-  4. 規制・倫理的実現性:
-     → コンプライアンス要件を満たせるか？
-     → データプライバシーの懸念はないか？
+  4. Regulatory/ethical feasibility:
+     → Can compliance requirements be met?
+     → Are there data-privacy concerns?
 
-  5. エコシステム健全性:
-     → Stack Overflow の質問数・回答率
-     → npm weekly downloads の推移
-     → GitHub stars の成長率（急増→急落は危険信号）
-     → コントリビューター数とコミット頻度
+  5. Ecosystem health:
+     → Number of Stack Overflow questions and answer rate
+     → Trend in npm weekly downloads
+     → GitHub stars growth rate (a spike followed by a crash is a warning sign)
+     → Contributor count and commit frequency
 
-  失敗した技術の教訓:
-    → Google Glass: プライバシー懸念 + コスト
-    → Segway: ユーザー行動とのミスマッチ
-    → Deno (初期): エコシステム不足
-    → text-to-SQL: 精度が期待に達しない
-```
-
----
-
-## 4. Thoughtworks Technology Radar 活用法
-
-```
-Technology Radar の 4 リング:
-
-  Adopt（採用）:
-    → 業界で広く実証済み、本番利用に推奨
-    → Horizon: 既存プロジェクトへの導入を積極的に検討
-
-  Trial（試行）:
-    → リスクを管理できるプロジェクトで実験的に使用
-    → Horizon: PoC 作成の対象として適切
-
-  Assess（評価）:
-    → どう影響するか探索する価値がある
-    → Horizon: SCOUT フェーズでの調査対象
-
-  Hold（保留）:
-    → 新規プロジェクトでの採用は推奨しない
-    → Horizon: 既存利用の置換を検討
-
-  活用方法:
-    → 半年ごとの Technology Radar 確認
-    → プロジェクトの技術スタックとの照合
-    → Hold に入った技術の代替案調査を SCOUT に追加
+  Lessons from failed technologies:
+    → Google Glass: privacy concerns + cost
+    → Segway: mismatch with user behavior
+    → Deno (early on): insufficient ecosystem
+    → text-to-SQL: accuracy falling short of expectations
 ```
 
 ---
 
-## 5. Horizon との連携
+## 4. How to Use the Thoughtworks Technology Radar
 
 ```
-Horizon での活用:
-  1. SCOUT フェーズで TA-01〜07 のスクリーニング
-  2. Technology Radar との定期照合
-  3. LAB フェーズで Tech Maturity Matrix 評価
-  4. PRESENT フェーズで採用判断の根拠提示
+Technology Radar's 4 rings:
 
-品質ゲート:
-  - 「みんな使ってる」が根拠 → Hype Cycle 位置確認必須（TA-02 防止）
-  - FAANG 事例コピー → 自社規模適合性検証（TA-03 防止）
-  - 頻繁なフレームワーク変更 → 変更コスト定量化必須（TA-04 防止）
-  - 不要な先行投資 → YAGNI チェック（TA-05 防止）
-  - 5年間技術変更なし → 技術レーダー確認（TA-06 防止）
-  - AI 万能論 → 適用領域限定 + レビュー必須（TA-07 防止）
+  Adopt:
+    → Widely proven across the industry, recommended for production use
+    → Horizon: actively consider adoption in existing projects
+
+  Trial:
+    → Use experimentally on projects where risk can be managed
+    → Horizon: a suitable target for building a PoC
+
+  Assess:
+    → Worth exploring how it would impact you
+    → Horizon: an investigation target during the SCOUT phase
+
+  Hold:
+    → Adoption in new projects is not recommended
+    → Horizon: consider replacing existing usage
+
+  How to use it:
+    → Review the Technology Radar every six months
+    → Cross-check against the project's tech stack
+    → Add investigation of alternatives to SCOUT for anything that moves into Hold
+```
+
+---
+
+## 5. Integration with Horizon
+
+```
+Usage within Horizon:
+  1. Screen for TA-01 through TA-07 during the SCOUT phase
+  2. Cross-check regularly against the Technology Radar
+  3. Apply the Tech Maturity Matrix evaluation during the LAB phase
+  4. Present the rationale for the adoption decision during the PRESENT phase
+
+Quality gates:
+  - "Everyone's using it" as the justification → Hype Cycle position check required (prevents TA-02)
+  - Copying a FAANG case study → verify fit to your own scale (prevents TA-03)
+  - Frequent framework changes → change cost must be quantified (prevents TA-04)
+  - Unneeded upfront investment → YAGNI check (prevents TA-05)
+  - No technology change in 5 years → check the technology radar (prevents TA-06)
+  - "AI can do anything" thinking → limit scope of application + require review (prevents TA-07)
 ```
 
 **Source:** [Product Leadership: Emerging Technologies - Adopt or Avoid](https://www.productleadership.com/blog/emerging-technologies-adopt-or-avoid/) · [Thoughtworks Technology Radar](https://www.thoughtworks.com/radar) · [Gartner Hype Cycle Methodology](https://www.gartner.com/en/research/methodologies/gartner-hype-cycle)

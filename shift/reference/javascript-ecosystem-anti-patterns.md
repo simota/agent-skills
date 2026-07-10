@@ -1,134 +1,134 @@
 # JavaScript Ecosystem Anti-Patterns
 
-> node_modules の肥大化、依存関係管理の罠、エコシステム固有の問題、パッケージマネージャー選択
+> node_modules bloat, dependency-management traps, ecosystem-specific problems, and package manager choice
 
-## 1. JavaScript エコシステム 7 大アンチパターン
+## 1. The 7 Major JavaScript Ecosystem Anti-Patterns
 
-| # | アンチパターン | 問題 | 兆候 | 対策 |
+| # | Anti-Pattern | Problem | Symptoms | Countermeasure |
 |---|-------------|------|------|------|
-| **JE-01** | **Upgrade Cliff（更新の崖）** | 依存関係のバージョンが大幅に遅れ更新が困難 | 更新に数週間必要、チーム全体がブロック | 継続的な小口更新、Renovate/Dependabot の活用 |
-| **JE-02** | **Transitive Bloat（推移的肥大化）** | 直接依存が重い推移的依存を大量に持ち込む | node_modules が 500MB 超、40,000+ ファイル | Bundlephobia/Packagephobia で事前確認、軽量代替を検討 |
-| **JE-03** | **Duplicate Dependencies（依存関係の重複）** | 同一パッケージの複数メジャーバージョンが共存 | バンドルサイズ膨張、ランタイムの不整合 | `yarn-deduplicate`、`npm dedupe`、依存関係ツリーの定期整理 |
-| **JE-04** | **Dead Dependencies（死んだ依存関係）** | 使用されていないパッケージが残存 | 攻撃面の拡大、不要なバンドルサイズ | `depcheck` / `knip` で定期スキャン、CI に組み込み |
-| **JE-05** | **Hidden Config Dependencies（隠れた設定依存）** | Babel/ESLint/Jest 等の設定ファイルが暗黙的にパッケージを参照 | 設定変更時の予期しないエラー、追跡困難 | 設定ファイルの依存関係を明示的にドキュメント化 |
-| **JE-06** | **Single-Purpose Micro-Packages（単機能マイクロパッケージ）** | 数行の関数のために外部パッケージを導入 | left-pad 問題、サプライチェーン攻撃リスク | 10行以下の機能は自前実装、ネイティブ API で代替 |
-| **JE-07** | **Package Manager Churn（パッケージマネージャー乗り換え）** | npm/yarn/pnpm/bun を頻繁に切り替え | lockfile の不整合、チームの混乱、CI の不安定化 | プロジェクト単位で1つに統一、corepack で管理 |
+| **JE-01** | **Upgrade Cliff** | Dependency versions fall so far behind that updating becomes difficult | Updates take weeks, the whole team is blocked | Continuous small updates; use Renovate/Dependabot |
+| **JE-02** | **Transitive Bloat** | A direct dependency pulls in a mass of heavy transitive dependencies | node_modules exceeds 500MB, 40,000+ files | Check ahead of time with Bundlephobia/Packagephobia; consider lightweight alternatives |
+| **JE-03** | **Duplicate Dependencies** | Multiple major versions of the same package coexist | Bundle size bloat, runtime inconsistencies | `yarn-deduplicate`, `npm dedupe`, regular cleanup of the dependency tree |
+| **JE-04** | **Dead Dependencies** | Unused packages remain in the project | Larger attack surface, unnecessary bundle size | Regular scans with `depcheck` / `knip`, wired into CI |
+| **JE-05** | **Hidden Config Dependencies** | Config files for Babel/ESLint/Jest etc. implicitly reference packages | Unexpected errors on config changes, hard to trace | Explicitly document config-file dependencies |
+| **JE-06** | **Single-Purpose Micro-Packages** | Pulling in an external package for a few lines of function | The left-pad problem, supply-chain attack risk | Implement functionality under 10 lines yourself; use native APIs instead |
+| **JE-07** | **Package Manager Churn** | Frequently switching between npm/yarn/pnpm/bun | Lockfile inconsistency, team confusion, unstable CI | Standardize on one per project; manage it with corepack |
 
 ---
 
-## 2. node_modules 問題の構造的原因と対策
+## 2. Structural Causes of node_modules Problems and Countermeasures
 
 ```
-根本原因:
+Root cause:
 
-  「JavaScript の依存関係マネージャーは実際には依存関係を
-   管理していない。ダウンロード・展開ツールに過ぎない。」
+  "JavaScript's dependency managers don't actually manage dependencies.
+   They're just download-and-unpack tools."
   — Christoph Nakazawa (Meta)
 
-  構造的問題:
-    → インストール速度は依存グラフの複雑性に比例して劣化
-    → 大規模依存関係の追加は全体の開発速度を低下
-    → SemVer の範囲解決で不要な重複バージョンが発生
-    → インストール後の最適化アルゴリズムが不在
+  Structural issues:
+    → Install speed degrades in proportion to dependency graph complexity
+    → Adding a large dependency slows overall development speed
+    → SemVer range resolution produces unnecessary duplicate versions
+    → No post-install optimization algorithm exists
 
-対策マトリクス:
+Countermeasure matrix:
 
-  問題                  | ツール/手法
+  Problem               | Tool/Method
   ---------------------|----------------------------
-  不明な依存関係        | `yarn why`, ripgrep 分析
-  未使用パッケージ      | `depcheck`, `knip`, ripgrep
-  古いバージョン        | `yarn outdated`, `ncu`
-  重複バージョン        | `yarn-deduplicate`, `npm dedupe`
-  類似パッケージ併用    | チーム内統一ルール + レビュー
-  メンテナンス放棄      | Fork + カスタム公開, resolutions
-  サイズ増大            | CI で node_modules サイズ追跡
+  Unknown dependencies  | `yarn why`, ripgrep analysis
+  Unused packages       | `depcheck`, `knip`, ripgrep
+  Outdated versions     | `yarn outdated`, `ncu`
+  Duplicate versions    | `yarn-deduplicate`, `npm dedupe`
+  Overlapping similar packages | team-wide standardization rules + review
+  Abandoned maintenance  | fork + publish custom, resolutions
+  Growing size           | track node_modules size in CI
 
-  根本方針:
-    → サードパーティコードを自社コードと同じ厳格さで管理
-    → コードレビュー、チームコミュニケーション、継続的監視
+  Underlying principle:
+    → Manage third-party code with the same rigor as your own code
+    → Code review, team communication, continuous monitoring
 ```
 
 ---
 
-## 3. パッケージマネージャー選択ガイド（2024-2025）
+## 3. Package Manager Selection Guide (2024-2025)
 
 ```
-主要パッケージマネージャー比較:
+Comparison of major package managers:
 
   npm:
-    ✅ Node.js 同梱、エコシステム標準
-    ❌ 大規模プロジェクトでの速度、ディスク使用量
-    適用: 小〜中規模プロジェクト、チーム標準が npm
+    ✅ Bundled with Node.js, the ecosystem standard
+    ❌ Speed and disk usage on large-scale projects
+    Fits: small-to-medium projects, teams standardized on npm
 
   pnpm:
-    ✅ 高速、ディスク効率（コンテンツアドレッサブルストレージ）
-    ✅ 厳格なリンク（phantom dependency 防止）
-    ❌ 一部ツールとの互換性問題
-    適用: モノレポ、ディスク効率が重要な環境
+    ✅ Fast, disk-efficient (content-addressable storage)
+    ✅ Strict linking (prevents phantom dependencies)
+    ❌ Compatibility issues with some tools
+    Fits: monorepos, environments where disk efficiency matters
 
   Yarn (Berry):
-    ✅ Plug'n'Play、ゼロインストール
-    ✅ `yarn why`, `yarn-deduplicate` 等の分析ツール
-    ❌ PnP 移行の学習コスト
-    適用: 大規模プロジェクト、厳格な依存管理が必要
+    ✅ Plug'n'Play, zero-install
+    ✅ Analysis tools like `yarn why`, `yarn-deduplicate`
+    ❌ Learning cost of migrating to PnP
+    Fits: large-scale projects, environments needing strict dependency management
 
   Bun:
-    ✅ 極めて高速（Zig ネイティブ実装）
-    ✅ パッケージマネージャー + ランタイム + バンドラー統合
-    ❌ エコシステム成熟度、Node.js 100% 互換ではない
-    適用: 新規プロジェクト、速度が最優先
+    ✅ Extremely fast (native Zig implementation)
+    ✅ Package manager + runtime + bundler in one
+    ❌ Ecosystem maturity, not 100% Node.js compatible
+    Fits: new projects, when speed is the top priority
 
-  選択基準:
-    → チームの既存スキル + プロジェクト規模 + CI 環境
-    → corepack でバージョン固定、packageManager フィールド宣言
+  Selection criteria:
+    → The team's existing skills + project scale + CI environment
+    → Pin the version with corepack, declare it in the packageManager field
 ```
 
 ---
 
-## 4. サプライチェーンセキュリティ
+## 4. Supply Chain Security
 
 ```
-依存関係のセキュリティ対策:
+Dependency security measures:
 
-  攻撃面の認識:
-    → 典型的な Node.js プロジェクトは数百のサードパーティパッケージに依存
-    → 各パッケージが潜在的な攻撃ベクター
-    → 古いパッケージ = パッチ未適用のセキュリティホール
+  Recognizing the attack surface:
+    → A typical Node.js project depends on hundreds of third-party packages
+    → Each package is a potential attack vector
+    → An outdated package = an unpatched security hole
 
-  必須対策:
-    □ `npm audit` / `pnpm audit` の定期実行
-    □ `npm ls --prod` で本番依存関係の可視化
-    □ Snyk / Socket.dev による継続的監視
-    □ 未使用パッケージの積極的削除（攻撃面縮小）
+  Required measures:
+    □ Run `npm audit` / `pnpm audit` regularly
+    □ Visualize production dependencies with `npm ls --prod`
+    □ Continuous monitoring via Snyk / Socket.dev
+    □ Proactively remove unused packages (shrink the attack surface)
 
-  高度な対策:
-    □ npm overrides / pnpm overrides で脆弱な推移的依存を強制更新
-    □ プライベートリポジトリによる承認済みパッケージの管理
-    □ lockfile の差分レビューを PR プロセスに組み込み
-    □ `socket.dev` による悪意あるパッケージの検出
+  Advanced measures:
+    □ Force-update vulnerable transitive dependencies with npm overrides / pnpm overrides
+    □ Manage approved packages via a private repository
+    □ Build lockfile diff review into the PR process
+    □ Detect malicious packages with `socket.dev`
 
-  ❌ アンチパターン: `npm audit` の警告を無視して本番デプロイ
-  ✅ 推奨: セキュリティ監査を CI/CD パイプラインに統合
+  ❌ Anti-pattern: deploying to production while ignoring `npm audit` warnings
+  ✅ Recommended: integrate security audits into the CI/CD pipeline
 ```
 
 ---
 
-## 5. Horizon との連携
+## 5. Integration with Horizon
 
 ```
-Horizon での活用:
-  1. SCOUT フェーズで JE-01〜07 のスクリーニング
-  2. dependency-health-scan.md と連携したエコシステム監査
-  3. bundle-size-analysis.md と連携したサイズ最適化
-  4. LAB フェーズで代替パッケージの PoC 作成
+Usage within Horizon:
+  1. Screen for JE-01 through JE-07 during the SCOUT phase
+  2. Run an ecosystem audit in coordination with dependency-health-scan.md
+  3. Optimize size in coordination with bundle-size-analysis.md
+  4. Build a PoC for alternative packages during the LAB phase
 
-品質ゲート:
-  - バージョン大幅遅延 → 段階的更新計画（JE-01 防止）
-  - node_modules 500MB 超 → 依存関係の棚卸し（JE-02 防止）
-  - 重複バージョン検出 → dedupe 実行（JE-03 防止）
-  - 未使用パッケージ → 削除提案（JE-04 防止）
-  - 10行以下の外部依存 → 自前実装提案（JE-06 防止）
-  - PM 変更提案 → 移行コスト定量化必須（JE-07 防止）
+Quality gates:
+  - Versions far behind → staged update plan (prevents JE-01)
+  - node_modules exceeds 500MB → dependency inventory review (prevents JE-02)
+  - Duplicate versions detected → run dedupe (prevents JE-03)
+  - Unused packages → propose removal (prevents JE-04)
+  - External dependency under 10 lines → propose a self-implementation (prevents JE-06)
+  - Package manager change proposal → change cost must be quantified (prevents JE-07)
 ```
 
 **Source:** [Christoph Nakazawa: Dependency Managers Don't Manage Your Dependencies](https://cpojer.net/posts/dependency-managers-dont-manage-your-dependencies) · [NodeSource: Choosing the Right Package Manager (2024)](https://nodesource.com/blog/nodejs-package-manager-comparative-guide-2024) · [JavaScript Conference: Preventing Dependency Risks](https://javascript-conference.com/blog/node-js-dependency-authentication-security-part-2/)

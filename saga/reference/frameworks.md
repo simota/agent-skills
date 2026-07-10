@@ -1,38 +1,40 @@
 # Narrative Frameworks Reference
 
-**Purpose:** Saga が使用するストーリーテリングフレームワークの詳細仕様。
-**Read when:** フレームワークの詳細構造、適用ガイドライン、具体的な記入例が必要な時。
+**Purpose:** Detailed specification of the storytelling frameworks Saga uses.
+**Read when:** You need the detailed structure of a framework, application guidelines, or concrete filled examples.
 
 ---
 
 ## 1. StoryBrand SB7 Framework
 
-Donald Miller が提唱した7要素のブランドストーリーフレームワーク。プロダクトメッセージング、LP、ピッチに最適。
+A 7-element brand story framework proposed by Donald Miller. Best suited for product messaging, landing pages, and pitches.
 
 ### Structure
 
 ```
 ┌─────────────────────────────────────────────────────┐
 │  1. HERO (Customer)                                  │
-│     顧客が何かを望んでいる                           │
+│     The customer wants something                     │
 │            ↓                                         │
 │  2. PROBLEM                                          │
-│     外的・内的・哲学的な問題に直面                    │
+│     Facing an external, internal, and philosophical  │
+│     problem                                          │
 │            ↓                                         │
 │  3. GUIDE (Your Product)                             │
-│     共感 + 権威を持つガイドが現れる                  │
+│     A guide with empathy + authority appears         │
 │            ↓                                         │
 │  4. PLAN                                             │
-│     ガイドが明確なプラン（3ステップ以内）を示す      │
+│     The guide presents a clear plan (3 steps or fewer)│
 │            ↓                                         │
 │  5. CALL TO ACTION                                   │
-│     行動を促す（直接的 + 移行的）                    │
+│     Prompts action (direct + transitional)           │
 │            ↓                                         │
 │  ┌────────────┬────────────┐                         │
 │  │ 6. FAILURE │ 7. SUCCESS │                         │
-│  │ 行動しない │ 行動した   │                         │
-│  │ と何が起こ │ 結果の姿   │                         │
-│  │ るか       │            │                         │
+│  │ What       │ What       │                         │
+│  │ happens if │ results if │                         │
+│  │ they don't │ they act   │                         │
+│  │ act        │            │                         │
 │  └────────────┴────────────┘                         │
 └─────────────────────────────────────────────────────┘
 ```
@@ -40,105 +42,105 @@ Donald Miller が提唱した7要素のブランドストーリーフレーム�
 ### BrandScript Template
 
 ```markdown
-## BrandScript: [プロダクト名]
+## BrandScript: [product name]
 
-### 1. Hero（顧客）
-[顧客は誰か。何を望んでいるか]
-- 望み: ____
+### 1. Hero (Customer)
+[Who is the customer? What do they want?]
+- Desire: ____
 
-### 2. Problem（問題）
-- 外的問題（External）: [具体的・表面的な障壁]
-- 内的問題（Internal）: [感情的な不安・フラストレーション]
-- 哲学的問題（Philosophical）: [「〜であるべきだ」という信念]
-- 悪役（Villain）: [問題を擬人化した存在]
+### 2. Problem
+- External problem: [concrete, surface-level obstacle]
+- Internal problem: [emotional anxiety/frustration]
+- Philosophical problem: [a belief of the form "things should be..."]
+- Villain: [the problem personified]
 
-### 3. Guide（ガイド = プロダクト）
-- 共感（Empathy）: [「あなたの気持ちはわかります」]
-- 権威（Authority）: [実績・数字・証言]
+### 3. Guide (= the product)
+- Empathy: ["We understand how you feel"]
+- Authority: [track record, numbers, testimonials]
 
-### 4. Plan（プラン）
-1. [ステップ1]
-2. [ステップ2]
-3. [ステップ3]
+### 4. Plan
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
 
 ### 5. Call to Action
-- 直接的CTA: [今すぐ〜する]
-- 移行的CTA: [まずは〜してみる]
+- Direct CTA: [do X right now]
+- Transitional CTA: [first, try X]
 
-### 6. Failure（失敗）
-[行動しないと何を失うか]
+### 6. Failure
+[What is lost by not acting]
 
-### 7. Success（成功）
-[行動した結果、どんな姿になるか]
+### 7. Success
+[What results look like after acting]
 ```
 
 ### Application Tips
-- 問題は3レイヤー（外的/内的/哲学的）すべて埋める
-- Guideは「共感」が先、「権威」が後
-- Planは3ステップ以内（認知負荷を減らす）
-- FailureとSuccessは対比させる
+- Fill in all 3 layers of the Problem (external/internal/philosophical)
+- For the Guide, "empathy" comes first, "authority" comes second
+- Keep the Plan to 3 steps or fewer (reduce cognitive load)
+- Contrast Failure and Success against each other
 
 ---
 
 ## 2. Pixar Story Spine
 
-Pixar の Emma Coats が提唱した6行のストーリーテンプレート。短いシナリオ、社内共有、エレベーターピッチに最適。
+A 6-line story template proposed by Pixar's Emma Coats. Best suited for short scenarios, internal sharing, and elevator pitches.
 
 ### Structure
 
 ```markdown
-## Story Spine: [タイトル]
+## Story Spine: [title]
 
-**Once upon a time...（昔々…）**
-[主人公の日常と世界観]
+**Once upon a time...**
+[The protagonist's daily life and world]
 
-**Every day...（毎日…）**
-[繰り返されるルーティン・現状]
+**Every day...**
+[The recurring routine / current state]
 
-**Until one day...（ある日…）**
-[変化のきっかけ・出来事]
+**Until one day...**
+[The trigger for change / the event]
 
-**Because of that...（そのせいで…）**
-[連鎖する結果①]
+**Because of that...**
+[Chained consequence ①]
 
-**Because of that...（そのせいで…）**
-[連鎖する結果②]
+**Because of that...**
+[Chained consequence ②]
 
-**Until finally...（そしてついに…）**
-[クライマックス・解決]
+**Until finally...**
+[The climax / resolution]
 
-**And ever since that day...（それ以来…）**
-[新しい日常・変容後の世界]
+**And ever since that day...**
+[The new daily life / the transformed world]
 ```
 
 ### Product Adaptation
 
 | Spine Element | Product Context |
 |--------------|-----------------|
-| Once upon a time | ターゲット顧客の現状 |
-| Every day | 繰り返される課題・痛み |
-| Until one day | プロダクトとの出会い |
-| Because of that (×2) | プロダクトがもたらす変化の連鎖 |
-| Until finally | 最終的な成果・変容 |
-| Ever since that day | 新しい日常 |
+| Once upon a time | The target customer's current state |
+| Every day | The recurring challenge / pain point |
+| Until one day | The encounter with the product |
+| Because of that (×2) | The chain of change the product brings |
+| Until finally | The final outcome / transformation |
+| Ever since that day | The new daily life |
 
 ### Example
 
 ```
-Once upon a time, フリーランスの佐藤さんは毎月の請求書を手作業で作っていた。
-Every day, Excelを開いて金額を計算し、PDFに変換し、メールで送る作業に2時間かけていた。
-Until one day, [プロダクト名]を試してみた。
-Because of that, 請求書が取引データから自動生成されるようになった。
-Because of that, 月末の2時間が15分に短縮され、未回収も自動リマインドで減った。
-Until finally, 佐藤さんは請求業務のストレスから解放され、本業に集中できるようになった。
-And ever since that day, 「お金の管理」は不安の種ではなく、ビジネスの味方になった。
+Once upon a time, freelancer Sato-san made every month's invoices by hand.
+Every day, she spent two hours opening Excel, calculating amounts, converting to PDF, and sending by email.
+Until one day, she tried [Product Name].
+Because of that, invoices started generating automatically from transaction data.
+Because of that, the two hours at month-end shrank to fifteen minutes, and unpaid invoices declined thanks to automatic reminders.
+Until finally, Sato-san was freed from the stress of invoicing and could focus on her core work.
+And ever since that day, "managing money" stopped being a source of anxiety and became an ally to her business.
 ```
 
 ---
 
 ## 3. Hero's Journey (Product Adapted)
 
-Joseph Campbell / Dan Harmon の物語構造をプロダクト文脈に適応。大きな変容ストーリー、ケーススタディに最適。
+Joseph Campbell / Dan Harmon's story structure adapted to a product context. Best suited for major transformation stories and case studies.
 
 ### Simplified Product Journey (6 Stages)
 
@@ -146,22 +148,25 @@ Joseph Campbell / Dan Harmon の物語構造をプロダクト文脈に適応。
 ┌─────────────────────────────────────────────┐
 │                                             │
 │    1. ORDINARY WORLD                        │
-│    （顧客の日常・現状の課題）               │
+│    (the customer's daily life / current     │
+│    challenge)                                │
 │              ↓                              │
 │    2. CALL TO ADVENTURE                     │
-│    （変化の必要性に気づく）                 │
+│    (realizing change is needed)             │
 │              ↓                              │
 │    3. CROSSING THE THRESHOLD                │
-│    （プロダクトを試す決断）                 │
+│    (the decision to try the product)        │
 │              ↓                              │
 │    4. TRIALS & ALLIES                       │
-│    （導入の課題・サポートとの出会い）       │
+│    (adoption challenges / encountering       │
+│    support)                                  │
 │              ↓                              │
 │    5. TRANSFORMATION                        │
-│    （劇的な変化・成果）                     │
+│    (dramatic change / outcome)              │
 │              ↓                              │
 │    6. RETURN WITH THE ELIXIR                │
-│    （新しい日常・他者への共有）             │
+│    (the new daily life / sharing with       │
+│    others)                                   │
 │                                             │
 └─────────────────────────────────────────────┘
 ```
@@ -169,83 +174,83 @@ Joseph Campbell / Dan Harmon の物語構造をプロダクト文脈に適応。
 ### Template
 
 ```markdown
-## Hero's Journey: [顧客名/ペルソナ名]
+## Hero's Journey: [customer name/persona name]
 
-### 1. Ordinary World（日常）
-[顧客の現状。何に困っているか。どんな日々を送っているか]
+### 1. Ordinary World
+[The customer's current state. What they struggle with. What their days look like]
 
-### 2. Call to Adventure（冒険への誘い）
-[何がきっかけで変化を求めたか。限界点は何だったか]
+### 2. Call to Adventure
+[What triggered the search for change. What was the breaking point]
 
-### 3. Crossing the Threshold（境界の超越）
-[プロダクトを選んだ決断。何が後押しになったか]
+### 3. Crossing the Threshold
+[The decision to choose the product. What tipped the scale]
 
-### 4. Trials & Allies（試練と仲間）
-[導入初期の課題。どうやって乗り越えたか。誰が助けたか]
+### 4. Trials & Allies
+[Early adoption challenges. How they were overcome. Who helped]
 
-### 5. Transformation（変容）
-[具体的な成果。数字・感情の両面で何が変わったか]
+### 5. Transformation
+[Concrete outcomes. What changed, both numerically and emotionally]
 
-### 6. Return with the Elixir（帰還）
-[新しい日常。この経験から得た知恵。他者への影響]
+### 6. Return with the Elixir
+[The new daily life. The wisdom gained from this experience. Impact on others]
 ```
 
 ---
 
 ## 4. JTBD Job Story
 
-Clayton Christensen / Alan Klement の JTBD 理論に基づくジョブストーリー。個別機能のユースケース、開発チーム向けに最適。
+A job story based on Clayton Christensen / Alan Klement's JTBD theory. Best suited for individual feature use cases, aimed at dev teams.
 
 ### Structure
 
 ```
-When [状況/コンテキスト],
-I want to [モチベーション/行動],
-so I can [期待する成果].
+When [situation/context],
+I want to [motivation/action],
+so I can [expected outcome].
 ```
 
 ### Extended Job Story Template
 
 ```markdown
-## Job Story: [機能/ユースケース名]
+## Job Story: [feature/use case name]
 
-### Context（状況）
-**When** [具体的な状況・トリガー]
-- 場所: [どこで]
-- タイミング: [いつ]
-- 感情状態: [どんな気持ちで]
-- 制約: [何に縛られて]
+### Context
+**When** [the specific situation/trigger]
+- Location: [where]
+- Timing: [when]
+- Emotional state: [how they feel]
+- Constraints: [what they're bound by]
 
-### Motivation（動機）
-**I want to** [したい行動]
-- 機能的ニーズ: [タスクを完了したい]
-- 感情的ニーズ: [安心したい/自信を持ちたい]
-- 社会的ニーズ: [認められたい/貢献したい]
+### Motivation
+**I want to** [the desired action]
+- Functional need: [wanting to complete a task]
+- Emotional need: [wanting reassurance/confidence]
+- Social need: [wanting to be recognized/to contribute]
 
-### Outcome（成果）
-**So I can** [得たい結果]
-- 直接的成果: [すぐに得られること]
-- 間接的成果: [長期的に得られること]
+### Outcome
+**So I can** [the desired result]
+- Direct outcome: [what's gained immediately]
+- Indirect outcome: [what's gained long term]
 
-### Forces（採用/不採用の力学）
+### Forces (dynamics of adoption vs. non-adoption)
 | Force | Direction | Description |
 |-------|-----------|-------------|
-| Push（現状の不満） | → 新しい解決策へ | [何が不満か] |
-| Pull（新解決策の魅力） | → 新しい解決策へ | [何が魅力か] |
-| Anxiety（不安） | ← 現状維持へ | [何が不安か] |
-| Habit（習慣） | ← 現状維持へ | [何が障壁か] |
+| Push (dissatisfaction with the status quo) | → toward the new solution | [what's dissatisfying] |
+| Pull (appeal of the new solution) | → toward the new solution | [what's appealing] |
+| Anxiety | ← toward the status quo | [what's worrying] |
+| Habit | ← toward the status quo | [what's a barrier] |
 ```
 
 ---
 
 ## 5. Story Mapping (Jeff Patton)
 
-プロダクト全体のナラティブフローを可視化。プロダクトディスカバリー、ロードマップ設計に最適。
+Visualizes the narrative flow of the product as a whole. Best suited for product discovery and roadmap design.
 
 ### Structure
 
 ```
-Backbone（JTBD/大きな活動）
+Backbone (JTBD / major activities)
 ┌──────┬──────┬──────┬──────┬──────┐
 │Act 1 │Act 2 │Act 3 │Act 4 │Act 5 │
 ├──────┼──────┼──────┼──────┼──────┤  ← Walking Skeleton (MVP)
@@ -263,80 +268,82 @@ Backbone（JTBD/大きな活動）
 ### Narrative Flow Template
 
 ```markdown
-## Story Map: [プロダクト/機能名]
+## Story Map: [product/feature name]
 
 ### Narrative Backbone
-1. **[活動1]** - [ユーザーが最初にすること]
-2. **[活動2]** - [次にすること]
-3. **[活動3]** - [メインの活動]
-4. **[活動4]** - [結果の確認]
-5. **[活動5]** - [繰り返し/共有]
+1. **[activity 1]** - [what the user does first]
+2. **[activity 2]** - [what they do next]
+3. **[activity 3]** - [the main activity]
+4. **[activity 4]** - [confirming the result]
+5. **[activity 5]** - [repeating/sharing]
 
-### Walking Skeleton（MVP ストーリー）
-[最小限のストーリーフロー。各活動の最もシンプルなステップ]
+### Walking Skeleton (MVP story)
+[The minimal story flow. The simplest possible steps for each activity]
 
 ### Release Slices
-- **Release 1（MVP）:** [最小限の物語が成立するスライス]
-- **Release 2:** [物語を豊かにするスライス]
-- **Release 3:** [完全な物語体験のスライス]
+- **Release 1 (MVP):** [the slice where a minimal story holds together]
+- **Release 2:** [the slice that enriches the story]
+- **Release 3:** [the slice of the complete story experience]
 ```
 
 ---
 
 ## 6. CAR Framework
 
-Context→Action→Results の3要素。成果重視のケーススタディ、導入事例に最適。
+Three elements: Context → Action → Results. Best suited for outcome-focused case studies and success stories.
 
 ### Template
 
 ```markdown
-## Case Study: [顧客名/プロジェクト名]
+## Case Study: [customer name/project name]
 
-### Context（背景）
-[顧客の状況、業界、規模、課題]
-- 業界: [___]
-- 規模: [___]
-- 課題: [___]
+### Context
+[The customer's situation, industry, size, challenge]
+- Industry: [___]
+- Size: [___]
+- Challenge: [___]
 
-### Action（行動）
-[何を導入し、どのように活用したか]
-- 導入プロセス: [___]
-- 活用方法: [___]
-- 期間: [___]
+### Action
+[What was adopted and how it was used]
+- Adoption process: [___]
+- Usage approach: [___]
+- Duration: [___]
 
-### Results（成果）
-[具体的な成果。数値で示す]
-- 定量成果: [___% 改善 / ___時間削減 / ___円の効果]
-- 定性成果: [チームの変化 / 文化の変化]
-- 顧客の声: 「[引用]」
+### Results
+[Concrete outcomes. Shown with numbers]
+- Quantitative outcome: [___% improvement / ___ hours saved / ¥___ in value]
+- Qualitative outcome: [team change / culture change]
+- Customer quote: "[quote]"
 ```
 
 ---
 
 ## 7. Promised Land Framework (Andy Raskin)
 
-戦略的ポジショニングナラティブ。資金調達、組織アライメント、セールスデッキに最適。顧客を「約束の地」へ導く物語。
+A strategic positioning narrative. Best suited for fundraising, organizational alignment, and sales decks. A story that leads the customer to a "promised land."
 
 ### Structure (5 Elements)
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│  1. CHANGE（変化）                                   │
-│     世界に起きている大きく否定できない変化を示す     │
+│  1. CHANGE                                           │
+│     Show a major, undeniable change happening in     │
+│     the world                                        │
 │              ↓                                       │
-│  2. STAKES（賭け金）                                 │
-│     この変化により勝者と敗者が生まれることを示す     │
+│  2. STAKES                                           │
+│     Show that this change creates winners and losers │
 │              ↓                                       │
-│  3. PROMISED LAND（約束の地）                        │
-│     顧客が到達すべき魅力的な未来像を描く            │
-│     （自社なしでは到達が困難であること）             │
+│  3. PROMISED LAND                                    │
+│     Paint the compelling future the customer should  │
+│     reach                                             │
+│     (one that is difficult to reach without you)     │
 │              ↓                                       │
-│  4. MAGIC GIFTS（魔法の贈り物）                     │
-│     約束の地へ到達するためのプロダクト機能を         │
-│     「贈り物」として紹介する                         │
+│  4. MAGIC GIFTS                                      │
+│     Introduce the product's features as the "gifts"  │
+│     that get them to the promised land               │
 │              ↓                                       │
-│  5. EVIDENCE（証拠）                                 │
-│     この物語が実現可能であることを示す証拠           │
+│  5. EVIDENCE                                         │
+│     Show evidence that this story can actually happen│
 │                                                      │
 └─────────────────────────────────────────────────────┘
 ```
@@ -344,42 +351,42 @@ Context→Action→Results の3要素。成果重視のケーススタディ、�
 ### Template
 
 ```markdown
-## Strategic Narrative: [プロダクト名]
+## Strategic Narrative: [product name]
 
-### 1. Change（否定できない変化）
-[業界/世界に起きている大きな変化。データで裏付ける]
+### 1. Change (the undeniable change)
+[The major change happening in the industry/world. Backed by data]
 
-### 2. Stakes（勝者と敗者）
-- **勝者:** [この変化に適応した企業/人はどうなるか]
-- **敗者:** [適応しなかった企業/人はどうなるか]
+### 2. Stakes (winners and losers)
+- **Winners:** [what happens to companies/people who adapt to this change]
+- **Losers:** [what happens to companies/people who don't adapt]
 
-### 3. Promised Land（約束の地）
-[顧客が到達すべき未来像。具体的で魅力的に描写]
-- この未来は、自社プロダクトなしでは到達が困難
+### 3. Promised Land
+[The future the customer should reach. Depicted concretely and compellingly]
+- This future is difficult to reach without our product
 
-### 4. Magic Gifts（魔法の贈り物）
-[プロダクトの機能を「約束の地への道具」として紹介]
-- Gift 1: [機能→もたらす変化]
-- Gift 2: [機能→もたらす変化]
-- Gift 3: [機能→もたらす変化]
+### 4. Magic Gifts
+[Introduce the product's features as "tools for reaching the promised land"]
+- Gift 1: [feature → the change it brings]
+- Gift 2: [feature → the change it brings]
+- Gift 3: [feature → the change it brings]
 
-### 5. Evidence（証拠）
-[すでにこの物語が実現している事例・数値]
-- [顧客事例/トラクション]
-- [業界データ/第三者評価]
+### 5. Evidence
+[Cases/numbers where this story is already coming true]
+- [customer case / traction]
+- [industry data / third-party assessment]
 ```
 
 ### Application Tips
-- 「約束の地」は顧客にとって魅力的だが、自社なしでは到達困難（improbable）であること
-- 機能を「Magic Gifts」として位置付ける—顧客（Hero）が約束の地に到達するための「武器」
-- Change は否定できないものを選ぶ—聴衆が「それは違う」と言えないレベル
-- Zuora の "Subscription Economy" デッキが代表的成功例
+- The "promised land" should be compelling to the customer, yet improbable to reach without your company
+- Position features as "Magic Gifts" — the "weapons" the customer (Hero) needs to reach the promised land
+- Choose a Change that is undeniable — one the audience can't dismiss as "that's not true"
+- Zuora's "Subscription Economy" deck is a well-known successful example
 
 ---
 
 ## 8. ABT Framework (And, But, Therefore)
 
-Randy Olson が科学コミュニケーションから提唱した3要素の最小ナラティブ構造。ソーシャルメディア投稿、社内コミュニケーション、簡潔なメッセージングに最適。
+A minimal 3-element narrative structure proposed by Randy Olson, drawn from science communication. Best suited for social media posts, internal communication, and concise messaging.
 
 ### Structure
 
@@ -392,39 +399,39 @@ THEREFORE [Resolution/action].
 ### Template
 
 ```markdown
-## ABT Narrative: [テーマ]
+## ABT Narrative: [theme]
 
-### And（そして）
-[状況設定。共有できるコンテキスト。聴衆が「そうだね」と頷ける前提]
+### And
+[Set the scene. Shareable context. A premise the audience can nod along to]
 
-### But（しかし）
-[テンション。問題・課題・障壁。「だけど…」の転換点]
+### But
+[The tension. The problem/challenge/obstacle. The pivot point of "but..."]
 
-### Therefore（だから）
-[解決。行動・提案・結論。「だから…」の帰結]
+### Therefore
+[The resolution. The action/proposal/conclusion. The consequence of "therefore..."]
 
-### 完成文
+### Complete Sentence
 [Context] AND [Additional context], BUT [Tension], THEREFORE [Resolution].
 ```
 
 ### Application Tips
-- AAA（And, And, And）にならないよう注意—「But」のテンションがないと退屈になる
-- DHY（Despite, However, Yet）にならないよう注意—否定が重なると防御的な印象を与える
-- 1文で完結させることも、各要素を1段落に展開することも可能
-- プレゼンのスライド構成、メールの導入、Slack メッセージにも適用可能
+- Watch out for becoming AAA (And, And, And) — without the "But" tension, it becomes boring
+- Watch out for becoming DHY (Despite, However, Yet) — stacking negations creates a defensive impression
+- Can be completed in a single sentence, or each element can be expanded into a paragraph
+- Also applicable to slide structure in presentations, email openings, and Slack messages
 
 ---
 
 ## Framework Combination Patterns
 
-複数フレームワークを組み合わせる場合のパターン。
+Patterns for combining multiple frameworks.
 
 | Combination | Use Case | How |
 |-------------|----------|-----|
-| SB7 + Pixar | LP + エレベーターピッチ | SB7で構造設計→Pixarで要約版 |
-| JTBD + Hero's Journey | 機能提案 + ケーススタディ | JTBDで機能単位→Hero's Journeyで全体像 |
-| Story Mapping + JTBD | ロードマップ + 個別ストーリー | Story Mapのbackboneに各JTBDを配置 |
-| CAR + SB7 | 事例 + メッセージング | CARで事実→SB7でメッセージ化 |
-| Promised Land + SB7 | 戦略ナラティブ + LP/ピッチ | Promised Landで大局→SB7で個別メッセージ |
-| ABT + Pixar | ソーシャル + エレベーターピッチ | ABTで要約→Pixarで展開版 |
-| Promised Land + CAR | 戦略 + 導入事例 | Promised Landで未来像→CARで証拠 |
+| SB7 + Pixar | Landing page + elevator pitch | Design structure with SB7 → summarize with Pixar |
+| JTBD + Hero's Journey | Feature proposal + case study | Feature-level with JTBD → full picture with Hero's Journey |
+| Story Mapping + JTBD | Roadmap + individual stories | Place each JTBD onto the Story Map's backbone |
+| CAR + SB7 | Case study + messaging | Facts with CAR → messaging with SB7 |
+| Promised Land + SB7 | Strategic narrative + landing page/pitch | Big picture with Promised Land → individual messaging with SB7 |
+| ABT + Pixar | Social + elevator pitch | Summarize with ABT → expand with Pixar |
+| Promised Land + CAR | Strategy + case study | Future vision with Promised Land → evidence with CAR |

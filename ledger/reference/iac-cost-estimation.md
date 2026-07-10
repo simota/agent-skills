@@ -1,7 +1,7 @@
 # IaC Cost Estimation
 
-**Purpose:** IaCコードからクラウドコストを推定する手法とツール統合ガイド。
-**Read when:** Terraform/CloudFormation/Pulumiのコスト影響を評価する必要がある時。
+**Purpose:** Methods for estimating cloud costs from IaC code and a tool integration guide.
+**Read when:** Assessing the cost impact of Terraform/CloudFormation/Pulumi changes.
 
 ---
 
@@ -10,13 +10,13 @@
 ### Basic Workflow
 
 ```bash
-# Terraform plan からコスト推定
+# Estimate cost from a Terraform plan
 infracost breakdown --path .
 
-# PR差分のコスト比較
+# Compare cost across a PR diff
 infracost diff --path . --compare-to infracost-base.json
 
-# CI/CDパイプライン統合（GitHub Actions）
+# CI/CD pipeline integration (GitHub Actions)
 infracost comment --path . --format github-comment --behavior update
 ```
 
@@ -76,18 +76,18 @@ infracost comment --path . --format github-comment --behavior update
 
 ## High-Cost Resource Flags
 
-以下のリソースはコストインパクトが大きいため、作成時に必ずフラグを立てる：
+The following resources have a large cost impact, so always flag them at creation time:
 
 | Resource | Typical Monthly Cost | Warning |
 |----------|---------------------|---------|
-| NAT Gateway (AWS) | $32+ per gateway + data processing | 1 per AZ × AZ数 |
-| Transit Gateway | $36+ per attachment | VPC数に比例 |
-| HA Database (non-prod) | 2× single instance | 開発環境に不要な場合が多い |
-| GPU Instance | $500-$30,000+ | 利用時間ベースでスケジュール検討 |
-| Interface VPC Endpoint | $7+ per endpoint per AZ | 多数のサービス × AZ数 |
-| Cross-region data transfer | $0.02/GB | 予想外に高額になりやすい |
-| AlloyDB / Spanner (GCP) | $500+/month | 小規模には過剰 |
-| Premium SSD (Azure) | 2-3× Standard SSD | IOPS要件を確認 |
+| NAT Gateway (AWS) | $32+ per gateway + data processing | 1 per AZ × number of AZs |
+| Transit Gateway | $36+ per attachment | Scales with number of VPCs |
+| HA Database (non-prod) | 2× single instance | Often unnecessary in dev environments |
+| GPU Instance | $500-$30,000+ | Consider scheduling based on usage hours |
+| Interface VPC Endpoint | $7+ per endpoint per AZ | Many services × number of AZs |
+| Cross-region data transfer | $0.02/GB | Easy to end up costing more than expected |
+| AlloyDB / Spanner (GCP) | $500+/month | Overkill for small-scale use |
+| Premium SSD (Azure) | 2-3× Standard SSD | Check IOPS requirements |
 
 ---
 
@@ -138,4 +138,4 @@ infracost comment --path . --format github-comment --behavior update
 | Internet egress | $0.09/GB (first 10TB) | $0.12/GB (first 1TB) | $0.087/GB (first 5GB free) |
 | VPC Peering cross-region | $0.01/GB | $0.01/GB | $0.035/GB |
 
-**注意:** 料金は頻繁に変更される。最新価格は各クラウドプロバイダーの料金ページで確認すること。
+**Note:** Pricing changes frequently. Check each cloud provider's pricing page for current prices.

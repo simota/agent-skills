@@ -1,7 +1,7 @@
 # Optimization Strategies
 
-**Purpose:** Right-sizing、RI/SP、Spot戦略、waste elimination の詳細手法。
-**Read when:** コスト最適化の具体的な推奨が必要な時。
+**Purpose:** Detailed methods for right-sizing, RI/SP, Spot strategy, and waste elimination.
+**Read when:** Concrete cost optimization recommendations are needed.
 
 ---
 

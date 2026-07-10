@@ -22,7 +22,7 @@ description: [one Japanese sentence]
 ---
 ```
 
-Ecosystem-specific constraints (additive to the official spec — see [`official-skill-guide.md` § 2 YAML Frontmatter 完全仕様](official-skill-guide.md#2-yaml-frontmatter-完全仕様) for the canonical kebab-case / 1024-char / XML / reserved-name rules and the rationale behind them):
+Ecosystem-specific constraints (additive to the official spec — see [`official-skill-guide.md` § 2 YAML Frontmatter Full Specification](official-skill-guide.md#2-yaml-frontmatter-full-specification) for the canonical kebab-case / 1024-char / XML / reserved-name rules and the rationale behind them):
 
 - `name`: unique within the project, normally `2-4` words
 - `description`: one Japanese sentence, concise, routing-friendly (project guardrail — official limit is 1024 chars)

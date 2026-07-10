@@ -1,57 +1,57 @@
 # Narrative Templates
 
-**Purpose:** Saga の各出力タイプ別の実践テンプレート集。
-**Read when:** ナラティブを執筆する際にフォーマットと構成の参考が必要な時。
+**Purpose:** A practical collection of templates for each of Saga's output types.
+**Read when:** You need a reference for format and structure while writing a narrative.
 
-> フレームワーク本体（SB7 / Pixar Story Spine / Hero's Journey / JTBD / Story Mapping / CAR / Promised Land / ABT）の構造定義・記入例・組み合わせパターンは `reference/frameworks.md` を参照。本ファイルは各出力タイプへの**適用テンプレート**のみを提供する。
+> For the framework bodies themselves (SB7 / Pixar Story Spine / Hero's Journey / JTBD / Story Mapping / CAR / Promised Land / ABT) — their structural definitions, filled examples, and combination patterns — see `reference/frameworks.md`. This file provides only the **application templates** for each output type.
 
 ---
 
 ## 1. Use Case Story Template
 
-機能・シナリオのナラティブ化。JTBD + Pixar Story Spine を組み合わせた構造（フレームワーク詳細: `reference/frameworks.md` §1, §2, §4）。
+Turning a feature or scenario into a narrative. A structure combining JTBD + Pixar Story Spine (framework details: `reference/frameworks.md` §1, §2, §4).
 
 ```markdown
-## Use Case Story: [機能/シナリオ名]
+## Use Case Story: [feature/scenario name]
 
-### メタ情報
-- **ペルソナ:** [名前、役割、状況]
-- **フレームワーク:** JTBD + Pixar Story Spine
-- **ターゲット読者:** [開発チーム / PM / ステークホルダー]
+### Meta Info
+- **Persona:** [name, role, situation]
+- **Framework:** JTBD + Pixar Story Spine
+- **Target Audience:** [dev team / PM / stakeholders]
 
-### ストーリー
+### Story
 
-**[ペルソナ名]の日常**
+**[Persona name]'s daily life**
 
-[ペルソナ名]は[職業/立場]だ。[具体的な状況の描写]。
-毎日、[繰り返される課題やルーティン]に時間を取られていた。
-[感情的な負担: 不安、苛立ち、疲れ]を感じていた。
+[Persona name] is [occupation/position]. [Concrete depiction of the situation].
+Every day, [a recurring challenge or routine] ate up their time.
+They felt [emotional burden: anxiety, frustration, fatigue].
 
-**転機**
+**Turning point**
 
-ある日、[変化のきっかけ]が訪れた。
-[プロダクト/機能]を使ってみると、[最初の体験の描写]。
+One day, [the trigger for change] arrived.
+Trying [product/feature], [depiction of the first experience].
 
-**変化の連鎖**
+**Chain of change**
 
-そのおかげで、[直接的な変化①]。
-さらに、[間接的な変化②]。
-気づけば、[質的な変化③]。
+Thanks to that, [direct change ①].
+On top of that, [indirect change ②].
+Before they knew it, [qualitative change ③].
 
-**新しい日常**
+**New daily life**
 
-今では[ペルソナ名]は[変容後の姿]。
-[Before→Afterの対比を一文で]。
+Now [persona name] is [the transformed self].
+[The Before→After contrast in one sentence].
 
-### Job Story 形式
-> When [状況], I want to [動機], so I can [成果].
+### Job Story Format
+> When [situation], I want to [motivation], so I can [outcome].
 
-### ストーリー要素サマリー
-| 要素 | 内容 |
+### Story Element Summary
+| Element | Content |
 |------|------|
-| Hero | [ペルソナ] |
-| Problem | [外的/内的/哲学的] |
-| Guide | [プロダクト/機能] |
+| Hero | [persona] |
+| Problem | [external/internal/philosophical] |
+| Guide | [product/feature] |
 | Transformation | [Before] → [After] |
 ```
 
@@ -59,64 +59,64 @@
 
 ## 2. Product Narrative Template
 
-プロダクト全体のポジショニングナラティブ。StoryBrand SB7（フレームワーク本体: `reference/frameworks.md` §1 — Hero / Problem(外的・内的・哲学的) / Guide / Plan / CTA / Failure / Success の7要素と BrandScript Template を含む）を Product Narrative として運用する際の構成。
+A positioning narrative for the product as a whole. The structure for running StoryBrand SB7 (framework body: `reference/frameworks.md` §1 — includes the 7 elements Hero / Problem (external/internal/philosophical) / Guide / Plan / CTA / Failure / Success, plus the BrandScript Template) as a Product Narrative.
 
 ```markdown
-## Product Narrative: [プロダクト名]
+## Product Narrative: [product name]
 
 ### BrandScript
-`reference/frameworks.md §1 BrandScript Template` をそのまま埋める。Product Narrative では特に以下を意識する:
-- Hero の「根本的な望み」は機能ではなく**達成したい状態**で書く
-- Problem は3レイヤー（外的・内的・哲学的）すべて埋める
-- Plan は3ステップ以内（認知負荷を減らす）
-- Failure と Success は対比的に書く
+Fill in `reference/frameworks.md §1 BrandScript Template` as-is. For a Product Narrative, pay particular attention to:
+- Write the Hero's "fundamental desire" as **the state they want to achieve**, not a feature
+- Fill in all 3 layers of Problem (external, internal, philosophical)
+- Keep Plan to 3 steps or fewer (reduce cognitive load)
+- Write Failure and Success as contrasts
 
-### ワンライナー
-[問題] + [解決策] + [成果] を一文で。
+### One-liner
+[Problem] + [Solution] + [Outcome] in one sentence.
 
-> 「[ターゲット]が[問題]に悩んでいるなら、[プロダクト]で[成果]を手に入れよう。」
+> "If [target] is struggling with [problem], get [outcome] with [product]."
 
-### エレベーターピッチ（30秒版）
-`reference/frameworks.md §2 Pixar Story Spine` の6行構造で要約。
+### Elevator Pitch (30-second version)
+Summarize using the 6-line structure from `reference/frameworks.md §2 Pixar Story Spine`.
 ```
 
 ---
 
 ## 3. Pitch Story Template
 
-投資家・ステークホルダー向け。Pixar Story Spine（`reference/frameworks.md` §2）に数値を組み合わせた構造。
+For investors and stakeholders. A structure combining Pixar Story Spine (`reference/frameworks.md` §2) with numbers.
 
 ```markdown
-## Pitch Story: [プロダクト名]
+## Pitch Story: [product name]
 
 ### The Story
 
-[ターゲット市場規模]の[ターゲット顧客]は、毎日[課題]に直面している。
+[Target customer] in a market of [target market size] faces [challenge] every day.
 
-**現状の痛み:**
-- [具体的な数値で示す痛み①]
-- [具体的な数値で示す痛み②]
+**Current pain:**
+- [pain ① shown with a concrete number]
+- [pain ② shown with a concrete number]
 
-**私たちの発見:**
-[インサイト。なぜ既存の解決策では不十分か]
+**Our discovery:**
+[Insight. Why existing solutions fall short]
 
-**私たちの解決策:**
-[プロダクトの本質を一文で]
+**Our solution:**
+[The essence of the product in one sentence]
 
-**すでに起きている変化:**
-- [トラクション①: 数値]
-- [トラクション②: 数値]
-- [顧客の声: 引用]
+**Change already happening:**
+- [Traction ①: number]
+- [Traction ②: number]
+- [Customer quote]
 
-**これから起きること:**
-[ビジョン。このプロダクトが広がった世界の姿]
+**What happens next:**
+[Vision. What the world looks like once this product spreads]
 
-### 補足データ
-| 指標 | 数値 |
+### Supporting Data
+| Metric | Value |
 |------|------|
 | TAM | [___] |
-| 現在のユーザー数 | [___] |
-| 成長率 | [___] |
+| Current user count | [___] |
+| Growth rate | [___] |
 | NPS | [___] |
 ```
 
@@ -124,166 +124,165 @@
 
 ## 4. Customer Success Story Template
 
-導入事例・変容アーク。Hero's Journey（`reference/frameworks.md` §3、長尺は `reference/hero-journey.md`）+ CAR（`reference/frameworks.md` §6）を組み合わせ。
+A case study / transformation arc. Combines Hero's Journey (`reference/frameworks.md` §3, long form in `reference/hero-journey.md`) + CAR (`reference/frameworks.md` §6).
 
 ```markdown
-## Customer Success Story: [顧客名]
+## Customer Success Story: [customer name]
 
-### 概要
-| 項目 | 内容 |
+### Overview
+| Item | Content |
 |------|------|
-| 業界 | [___] |
-| 規模 | [___] |
-| 導入期間 | [___] |
-| 主要成果 | [___] |
+| Industry | [___] |
+| Size | [___] |
+| Adoption period | [___] |
+| Key outcome | [___] |
 
-### 1. 日常（Before）
-[顧客の導入前の状況。具体的なシーンで描写]
+### 1. Daily Life (Before)
+[The customer's situation before adoption. Depicted in a concrete scene]
 
-> 「[顧客の声: 当時の気持ち]」
+> "[Customer quote: how they felt at the time]"
 
-### 2. 転機
-[何がきっかけで変化を求めたか。限界点の描写]
+### 2. Turning Point
+[What triggered the search for change. Depiction of the breaking point]
 
-### 3. 決断
-[なぜこのプロダクトを選んだか。比較検討のプロセス]
+### 3. Decision
+[Why they chose this product. The comparison/evaluation process]
 
-### 4. 試練と克服
-[導入初期の課題とその乗り越え方]
+### 4. Trials and Overcoming
+[Early adoption challenges and how they were overcome]
 
-### 5. 変容（After）
-[具体的な成果。数値 + 感情面の変化]
+### 5. Transformation (After)
+[Concrete outcomes. Numbers + emotional change]
 
-**定量成果:**
-- [KPI改善①]
-- [KPI改善②]
+**Quantitative outcomes:**
+- [KPI improvement ①]
+- [KPI improvement ②]
 
-**定性成果:**
-- [チーム/文化の変化]
-- [顧客自身の成長]
+**Qualitative outcomes:**
+- [Team/culture change]
+- [The customer's own growth]
 
-> 「[顧客の声: 現在の気持ち]」
+> "[Customer quote: how they feel now]"
 
-### 6. 新しい日常
-[変容後の世界。今後の展望]
+### 6. New Daily Life
+[The post-transformation world. Future outlook]
 
-### Before → After サマリー
-| 観点 | Before | After |
+### Before → After Summary
+| Dimension | Before | After |
 |------|--------|-------|
-| [指標1] | [値] | [値] |
-| [指標2] | [値] | [値] |
-| [感情] | [状態] | [状態] |
+| [metric 1] | [value] | [value] |
+| [metric 2] | [value] | [value] |
+| [emotion] | [state] | [state] |
 ```
 
 ---
 
 ## 5. Onboarding Narrative Template
 
-初回体験のストーリーフロー。Story Mapping（`reference/frameworks.md` §5）を使用。
+The story flow of a first-time experience. Uses Story Mapping (`reference/frameworks.md` §5).
 
 ```markdown
-## Onboarding Narrative: [プロダクト名]
+## Onboarding Narrative: [product name]
 
-### ナラティブフロー
+### Narrative Flow
 
 ```text
 [Step 1]      [Step 2]       [Step 3]       [Step 4]       [Step 5]
 Welcome  →  First Value  →  Aha Moment  →  Habit Loop  →  Advocacy
-歓迎         初回価値       気づきの瞬間    習慣化          推奨
 ```
 
-### Step 1: Welcome（歓迎）
-**ユーザーの気持ち:** [不安、期待、好奇心]
-**ナラティブ:** 「[歓迎メッセージのトーン。安心感を与える]」
-**ゴール:** [このステップで達成すべきこと]
+### Step 1: Welcome
+**User's feeling:** [anxiety, anticipation, curiosity]
+**Narrative:** "[Tone of the welcome message. Reassuring]"
+**Goal:** [What should be achieved at this step]
 
-### Step 2: First Value（初回価値）
-**ユーザーの気持ち:** [探索、試行]
-**ナラティブ:** 「[最初の成功体験を導く語り]」
-**ゴール:** [Time-to-Value を最短にする]
+### Step 2: First Value
+**User's feeling:** [exploration, trial]
+**Narrative:** "[The narration that leads to the first successful experience]"
+**Goal:** [Minimize Time-to-Value]
 
-### Step 3: Aha Moment（気づきの瞬間）
-**ユーザーの気持ち:** [発見、感動]
-**ナラティブ:** 「[プロダクトの本質的な価値に気づく瞬間]」
-**ゴール:** [コアバリューの体感]
+### Step 3: Aha Moment
+**User's feeling:** [discovery, delight]
+**Narrative:** "[The moment they realize the product's essential value]"
+**Goal:** [Experiencing the core value]
 
-### Step 4: Habit Loop（習慣化）
-**ユーザーの気持ち:** [自信、効率感]
-**ナラティブ:** 「[繰り返し使いたくなる仕掛けの物語]」
-**ゴール:** [リテンションの確立]
+### Step 4: Habit Loop
+**User's feeling:** [confidence, sense of efficiency]
+**Narrative:** "[The story of the hook that makes them want to come back]"
+**Goal:** [Establishing retention]
 
-### Step 5: Advocacy（推奨）
-**ユーザーの気持ち:** [満足、共有欲]
-**ナラティブ:** 「[他者に勧めたくなる体験の物語]」
-**ゴール:** [口コミ・紹介]
+### Step 5: Advocacy
+**User's feeling:** [satisfaction, desire to share]
+**Narrative:** "[The story of the experience that makes them want to recommend it]"
+**Goal:** [Word of mouth / referral]
 ```
 
 ---
 
 ## 6. Scenario Narrative Template
 
-ペルソナ別シナリオ。JTBD（`reference/frameworks.md` §4）+ コンテキスト描写を組み合わせた構造。
+A persona-specific scenario. A structure combining JTBD (`reference/frameworks.md` §4) + context depiction.
 
 ```markdown
-## Scenario Narrative: [シナリオ名]
+## Scenario Narrative: [scenario name]
 
-### ペルソナ
-| 項目 | 内容 |
+### Persona
+| Item | Content |
 |------|------|
-| 名前 | [___] |
-| 年齢・職業 | [___] |
-| 技術レベル | [___] |
-| 主な目標 | [___] |
-| 主なフラストレーション | [___] |
+| Name | [___] |
+| Age / Occupation | [___] |
+| Tech proficiency | [___] |
+| Primary goal | [___] |
+| Primary frustration | [___] |
 
-### シーン設定
-**いつ:** [具体的なタイミング]
-**どこで:** [具体的な場所]
-**何をしている最中に:** [直前の行動]
+### Scene Setup
+**When:** [specific timing]
+**Where:** [specific location]
+**What's happening:** [the action right before]
 
-### ナラティブ
+### Narrative
 
-[ペルソナ名]は[場所]で[状況]。
-[五感に訴える描写: 見えるもの、聞こえるもの、感じていること]。
+[Persona name] is [situation] at [location].
+[A depiction appealing to the senses: what's seen, heard, felt].
 
-[課題の発生。具体的な描写]。
-[感情の変化]。
+[The challenge arises. Concrete depiction].
+[The emotional shift].
 
-[プロダクト/機能との接点]。
-[操作の描写。ステップバイステップで、感情の変化と共に]。
+[The point of contact with the product/feature].
+[Depiction of the operation. Step by step, alongside the emotional shift].
 
-[成果の実感]。
-[変容後の感情]。
+[The felt sense of the outcome].
+[The post-transformation emotion].
 
-### テンション・ポイント
-| ポイント | 内容 | 解決策 |
+### Tension Points
+| Point | Content | Resolution |
 |---------|------|--------|
-| [①] | [課題] | [プロダクトの対応] |
-| [②] | [不安] | [安心材料] |
-| [③] | [障壁] | [乗り越え方] |
+| [①] | [challenge] | [how the product addresses it] |
+| [②] | [anxiety] | [reassurance] |
+| [③] | [barrier] | [how it's overcome] |
 ```
 
 ---
 
 ## Writing Guidelines
 
-### トーンの選択
+### Choosing a Tone
 
-| 読者 | トーン | 特徴 |
+| Audience | Tone | Characteristics |
 |------|--------|------|
-| 開発チーム | 実直・具体的 | 技術的コンテキストを含む、仮説を明示 |
-| PM/PdM | 戦略的・洞察的 | ビジネスインパクトを強調 |
-| ステークホルダー | 簡潔・インパクト | 数字と変容を前面に |
-| エンドユーザー | 共感的・親しみやすい | 自分ごと化しやすい語り |
-| 投資家 | 確信的・データ裏付け | 市場規模とトラクション |
+| Dev team | Straightforward, concrete | Includes technical context, states hypotheses explicitly |
+| PM/PdM | Strategic, insightful | Emphasizes business impact |
+| Stakeholders | Concise, high-impact | Numbers and transformation front and center |
+| End users | Empathetic, approachable | A narrative easy to relate to personally |
+| Investors | Confident, data-backed | Market size and traction |
 
-### 長さの目安
+### Length Guidelines
 
-| 出力タイプ | 短め | 標準 | 詳細 |
+| Output Type | Short | Standard | Detailed |
 |-----------|------|------|------|
-| Use Case Story | 200字 | 500字 | 800字 |
-| Product Narrative | 300字 | 800字 | 1500字 |
-| Pitch Story | 150字 | 300字 | 500字 |
-| Customer Success | 500字 | 1200字 | 2000字 |
-| Onboarding | 各Step 100字 | 各Step 200字 | 各Step 300字 |
-| Scenario | 300字 | 600字 | 1000字 |
+| Use Case Story | 200 words | 500 words | 800 words |
+| Product Narrative | 300 words | 800 words | 1500 words |
+| Pitch Story | 150 words | 300 words | 500 words |
+| Customer Success | 500 words | 1200 words | 2000 words |
+| Onboarding | 100 words/step | 200 words/step | 300 words/step |
+| Scenario | 300 words | 600 words | 1000 words |

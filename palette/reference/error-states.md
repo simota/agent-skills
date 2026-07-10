@@ -167,9 +167,9 @@ error_design:
       placement: inline_field
       severity: error
       message:
-        what: "カード番号が正しくありません"
+        what: "Your card number isn't valid"
         why: ""             # implicit
-        recover: "番号をご確認ください"
+        recover: "Please check the number"
         escape: ""
       timing: on_blur
       recovery: inline_correction
@@ -182,10 +182,10 @@ error_design:
       placement: banner_below_button
       severity: error
       message:
-        what: "決済を完了できませんでした"
-        why: "カード会社で承認されませんでした"
-        recover: "別のカードを試すか、しばらく待って再試行してください"
-        escape: "問題が続く場合は support@example.com まで（REF-{id} を共有）"
+        what: "We couldn't complete your payment"
+        why: "Your card issuer declined the charge"
+        recover: "Try a different card, or wait a moment and retry"
+        escape: "If the problem continues, contact support@example.com (share REF-{id})"
       recovery: retry_button + escalation
       optimistic_ui: no   # high-stakes
       a11y:
@@ -200,10 +200,10 @@ error_design:
       placement: toast_persistent
       severity: warning
       message:
-        what: "オフラインです"
-        recover: "接続が回復したら自動で保存します"
+        what: "You're offline"
+        recover: "We'll save automatically once you're back online"
       recovery: auto_retry_with_feedback
-      banner_text: "再接続中…"
+      banner_text: "Reconnecting…"
 ```
 
 ## Anti-Patterns

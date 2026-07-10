@@ -10,10 +10,10 @@
 
 | File | Scope | Format | Merge behavior |
 |------|-------|--------|---------------|
-| `/Library/Application Support/ClaudeCode/managed-settings.json` | Managed (highest priority) | JSON | IT管理者が配布、ユーザー設定を上書き |
-| `~/.claude/settings.json` | User (global) | JSON | 全プロジェクト共通 |
-| `<project>/.claude/settings.json` | Project (shared) | JSON | git管理、チーム共有 |
-| `<project>/.claude/settings.local.json` | Project (local) | JSON | gitignore対象、個人用 |
+| `/Library/Application Support/ClaudeCode/managed-settings.json` | Managed (highest priority) | JSON | Distributed by IT admins, overrides user settings |
+| `~/.claude/settings.json` | User (global) | JSON | Shared across all projects |
+| `<project>/.claude/settings.json` | Project (shared) | JSON | Checked into git, shared with the team |
+| `<project>/.claude/settings.local.json` | Project (local) | JSON | Gitignored, personal use |
 | `~/.claude/CLAUDE.md` | Global instructions | Markdown | — |
 | `<project>/CLAUDE.md` | Project instructions | Markdown | — |
 | `<project>/.claude/commands/` | Custom slash commands | Markdown | — |

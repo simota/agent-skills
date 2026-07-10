@@ -1,125 +1,125 @@
 # Handoff Templates
 
-**Purpose:** Riff と他エージェント間のハンドオフ形式。
-**Read when:** セッション成果を他エージェントに引き渡すとき。
+**Purpose:** Handoff format between Riff and other agents.
+**Read when:** Handing off session outcomes to another agent.
 
 ---
 
 ## Riff → Magi (Decision Handoff)
 
-セッションで浮かび上がった選択肢群を Magi に意思決定依頼する。
+Ask Magi to make a decision on the set of options that emerged during the session.
 
 ```yaml
 RIFF_TO_MAGI_HANDOFF:
-  context: [ブレストのテーマと背景]
+  context: [the brainstorm theme and background]
   candidates:
-    - name: [選択肢1]
-      description: [概要]
-      pros: [セッション中に出たメリット]
-      cons: [セッション中に出た懸念]
-    - name: [選択肢2]
-      description: [概要]
-      pros: [メリット]
-      cons: [懸念]
+    - name: [option 1]
+      description: [summary]
+      pros: [benefits raised during the session]
+      cons: [concerns raised during the session]
+    - name: [option 2]
+      description: [summary]
+      pros: [benefits]
+      cons: [concerns]
   evaluation_axes:
-    - [セッション中に重要と判断された評価軸1]
-    - [評価軸2]
+    - [evaluation axis 1 judged important during the session]
+    - [evaluation axis 2]
   session_insights:
-    - [意思決定に影響する気づき]
-  decision_needed: [何を決めてほしいか]
+    - [insight that affects the decision]
+  decision_needed: [what needs to be decided]
 ```
 
 ---
 
 ## Riff → Spark (Feature Seed Handoff)
 
-有望なアイデアの種を Spark に渡して機能提案書に発展させる。
+Pass a promising idea seed to Spark to develop into a feature proposal.
 
 ```yaml
 RIFF_TO_SPARK_HANDOFF:
   idea_seed:
-    title: [アイデアタイトル]
-    one_liner: [1行要約]
-    origin: [どの問いから生まれたか]
+    title: [idea title]
+    one_liner: [one-line summary]
+    origin: [which question it grew out of]
   user_context:
-    pain_point: [解決したい課題]
-    target_user: [想定ユーザー]
+    pain_point: [the problem to solve]
+    target_user: [the intended user]
   exploration_notes:
-    - [セッション中の探索メモ1]
-    - [探索メモ2]
+    - [exploration note 1 from the session]
+    - [exploration note 2]
   constraints:
-    - [ユーザーが挙げた制約]
+    - [constraint the user raised]
   open_questions:
-    - [まだ答えが出ていない問い]
+    - [a question still unanswered]
 ```
 
 ---
 
 ## Riff → Accord (Requirement Seed Handoff)
 
-コンセプトを要件定義の種として Accord に渡す。
+Pass a concept to Accord as a seed for requirements definition.
 
 ```yaml
 RIFF_TO_ACCORD_HANDOFF:
   concept:
-    title: [コンセプトタイトル]
-    summary: [概要 2-3 文]
+    title: [concept title]
+    summary: [2-3 sentence summary]
   stakeholder_perspectives:
-    - perspective: [視点1（例: エンドユーザー）]
-      needs: [ニーズ]
-    - perspective: [視点2（例: 運用チーム）]
-      needs: [ニーズ]
+    - perspective: [perspective 1 (e.g. end user)]
+      needs: [needs]
+    - perspective: [perspective 2 (e.g. ops team)]
+      needs: [needs]
   scope_direction:
-    must_have: [絶対に必要な要素]
-    nice_to_have: [あると良い要素]
-    explicitly_excluded: [セッションで除外と判断された要素]
+    must_have: [absolutely necessary elements]
+    nice_to_have: [elements that would be nice to have]
+    explicitly_excluded: [elements the session decided to exclude]
   risks:
-    - [リスク]
+    - [risk]
 ```
 
 ---
 
 ## Riff → Void (Pruning Handoff)
 
-広げたアイデアの中から、Void に YAGNI 検証を依頼する。
+Ask Void to run a YAGNI check on the ideas that expanded during the session.
 
 ```yaml
 RIFF_TO_VOID_HANDOFF:
-  target: [検証対象]
+  target: [the target to verify]
   current_scope:
-    - [要素1]
-    - [要素2]
-    - [要素3]
-  suspicion: [過剰と思われる部分]
-  session_context: [なぜ過剰と感じたかの対話コンテキスト]
+    - [element 1]
+    - [element 2]
+    - [element 3]
+  suspicion: [the part suspected of being excessive]
+  session_context: [the dialogue context for why it felt excessive]
 ```
 
 ---
 
 ## Flux → Riff (Reframed Problem Handoff)
 
-Flux のリフレーミング結果を受け取って対話的探索を開始する。
+Receive Flux's reframing result and begin a dialogue-driven exploration.
 
 ```yaml
 FLUX_TO_RIFF_HANDOFF:
-  original_problem: [元の問題]
-  reframed_as: [リフレーミングされた問題]
-  key_assumption_reversed: [反転された前提]
-  exploration_request: [Riff に探索してほしい方向性]
+  original_problem: [the original problem]
+  reframed_as: [the reframed problem]
+  key_assumption_reversed: [the assumption that was reversed]
+  exploration_request: [the direction Riff should explore]
 ```
 
 ---
 
 ## Field → Riff (Research-to-Brainstorm Handoff)
 
-調査結果を受け取って、そこからアイデアを展開する。
+Receive research findings and develop ideas from them.
 
 ```yaml
 RESEARCHER_TO_RIFF_HANDOFF:
-  research_topic: [調査テーマ]
+  research_topic: [research theme]
   key_findings:
-    - [発見1]
-    - [発見2]
-  implications: [示唆されること]
-  brainstorm_request: [Riff に探索してほしい観点]
+    - [finding 1]
+    - [finding 2]
+  implications: [what is implied]
+  brainstorm_request: [the angle Riff should explore]
 ```

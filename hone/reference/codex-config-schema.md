@@ -45,43 +45,43 @@ notifications = true
 notification_method = "auto"
 ```
 
-### Status Line Items (v0.114.0 確認済み)
+### Status Line Items (verified against v0.114.0)
 
-| アイテムID | 表示内容 | 備考 |
+| Item ID | Displayed Content | Notes |
 |-----------|---------|------|
-| `model` | モデル名 | |
-| `model-with-reasoning` | モデル名 + reasoning レベル | デフォルト含む |
-| `model-name` | モデル名（reasoning なし） | |
-| `git-branch` | Git ブランチ名 | 非同期取得 |
-| `context-remaining` | コンテキスト残量 | デフォルト含む |
-| `context-used` | コンテキスト使用量 | |
-| `context-window-size` | コンテキストウィンドウサイズ | |
-| `current-dir` | ワーキングディレクトリ | デフォルト含む |
-| `project-root` | プロジェクトルート名 | |
-| `fast-mode` | Fast モード状態 | |
-| `session` | セッションID | |
-| `version` | Codex バージョン | |
+| `model` | Model name | |
+| `model-with-reasoning` | Model name + reasoning level | included by default |
+| `model-name` | Model name (without reasoning) | |
+| `git-branch` | Git branch name | fetched asynchronously |
+| `context-remaining` | Remaining context | included by default |
+| `context-used` | Context used | |
+| `context-window-size` | Context window size | |
+| `current-dir` | Working directory | included by default |
+| `project-root` | Project root name | |
+| `fast-mode` | Fast mode state | |
+| `session` | Session ID | |
+| `version` | Codex version | |
 
-> **注意:** PR #10546 で定義されたが v0.114.0 で未実装の可能性があるID: `rate-limits`, `tokens`, `tokens-input`, `tokens-output`, `cwd`。`/statusline` コマンドで実際の有効アイテムを確認可能。
+> **Note:** IDs defined in PR #10546 that may not yet be implemented in v0.114.0: `rate-limits`, `tokens`, `tokens-input`, `tokens-output`, `cwd`. Use the `/statusline` command to check which items are actually available.
 
-- `null` または `[]` でステータスライン非表示
-- `/statusline` コマンドでインタラクティブに設定可能
+- `null` or `[]` hides the status line
+- Can be configured interactively via the `/statusline` command
 
 ### TUI Options
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `tui.status_line` | array<string> \| null | `["model-with-reasoning", "context-remaining", "current-dir"]` | ステータスラインアイテム |
-| `tui.theme` | string | auto-detect | テーマ名（kebab-case）。`/theme` で選択可 |
-| `tui.animations` | boolean | `true` | ウェルカム画面・スピナー等のアニメーション |
-| `tui.show_tooltips` | boolean | `true` | オンボーディングツールチップ |
-| `tui.alternate_screen` | string | `"auto"` | 代替スクリーンバッファ: `auto`, `always`, `never` |
-| `tui.notifications` | boolean \| array | `true` | デスクトップ通知の有効化/イベントフィルタ |
-| `tui.notification_method` | string | `"auto"` | 通知方式: `auto`, `osc9`, `bel` |
+| `tui.status_line` | array<string> \| null | `["model-with-reasoning", "context-remaining", "current-dir"]` | Status line items |
+| `tui.theme` | string | auto-detect | Theme name (kebab-case). Selectable via `/theme` |
+| `tui.animations` | boolean | `true` | Animations for welcome screen, spinners, etc. |
+| `tui.show_tooltips` | boolean | `true` | Onboarding tooltips |
+| `tui.alternate_screen` | string | `"auto"` | Alternate screen buffer: `auto`, `always`, `never` |
+| `tui.notifications` | boolean \| array | `true` | Enable desktop notifications / event filter |
+| `tui.notification_method` | string | `"auto"` | Notification method: `auto`, `osc9`, `bel` |
 
 ### Custom Themes
 
-`$CODEX_HOME/themes/` に `.tmTheme` ファイルを配置して `/theme` で選択可能。
+Place `.tmTheme` files in `$CODEX_HOME/themes/` to make them selectable via `/theme`.
 
 ## Trust Levels
 
@@ -197,7 +197,7 @@ hide_xxx_migration_prompt = true
 "old-model" = "new-model"
 ```
 
-Codex CLI が自動管理するセクション。古い移行プロンプトは手動削除しても安全。
+A section auto-managed by Codex CLI. It's safe to manually remove stale migration prompts.
 
 ---
 

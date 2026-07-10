@@ -1,7 +1,7 @@
 # Cost Visibility
 
-**Purpose:** タグ戦略、コスト配分、ダッシュボード仕様、showback/chargebackの設計ガイド。
-**Read when:** コストの可視化・配分・レポート設計が必要な時。
+**Purpose:** Design guide for tag strategy, cost allocation, dashboard specs, and showback/chargeback.
+**Read when:** Cost visibility, allocation, or report design is needed.
 
 ---
 

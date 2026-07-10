@@ -11,10 +11,10 @@
 # Pre-mortem Analysis: [Subject]
 
 ## Scope
-- **対象:** [分析対象の名称と概要]
-- **前提:** [主要な前提条件]
-- **制約:** [制約事項]
-- **利害関係者:** [影響を受ける関係者]
+- **Target:** [name and overview of the subject being analyzed]
+- **Assumptions:** [key assumptions]
+- **Constraints:** [constraints]
+- **Stakeholders:** [affected parties]
 
 ## FMEA Table
 
@@ -26,13 +26,13 @@
 
 ### FM-[N]: [Failure Mode Name]
 - **RPN:** [score] (S:[s] × O:[o] × D:[d])
-- **シナリオ:** [具体的な失敗ストーリー]
-- **伝播経路:** [A → B → C の連鎖]
-- **緩和策:**
-  - 検出: [どう見つけるか]
-  - 予防: [どう防ぐか]
-  - 回復: [起きた場合どう復旧するか]
-- **残存リスク:** [緩和後のRPN]
+- **Scenario:** [concrete failure story]
+- **Propagation Path:** [A → B → C chain]
+- **Mitigation:**
+  - Detection: [how to find it]
+  - Prevention: [how to prevent it]
+  - Recovery: [how to recover if it happens]
+- **Residual Risk:** [RPN after mitigation]
 
 ## Risk Distribution
 
@@ -89,17 +89,17 @@
 ```markdown
 ## Mitigation Plan for FM-[N]
 
-### Detection (見つける)
+### Detection
 - [ ] [monitoring/alerting action]
 - [ ] [test case addition]
 - [ ] [review checklist item]
 
-### Prevention (防ぐ)
+### Prevention
 - [ ] [design change]
 - [ ] [validation addition]
 - [ ] [process change]
 
-### Recovery (復旧する)
+### Recovery
 - [ ] [rollback procedure]
 - [ ] [data recovery plan]
 - [ ] [communication plan]

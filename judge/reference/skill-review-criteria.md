@@ -2,81 +2,81 @@
 
 > Source: "The Complete Guide to Building Skills for Claude" (Anthropic, 2025)
 
-Judge が SKILL.md ファイルのレビュー時に参照する公式基準リファレンス。
+Official criteria reference that Judge consults when reviewing SKILL.md files.
 
 ---
 
-## 1. SKILL.md レビュー対象判定
+## 1. Determining SKILL.md Review Scope
 
-### レビュー対象条件
+### Conditions for Review
 
-以下のいずれかに該当する場合、SKILL.md レビューモードを適用:
+Apply SKILL.md review mode when any of the following holds:
 
-- レビュー対象に `SKILL.md` ファイルが含まれる
-- レビュー対象に `reference/*.md` ファイル（スキル内）が含まれる
-- YAML frontmatter を持つ `.md` ファイルの変更
-- `skills/` ディレクトリ配下の変更
+- The review target includes a `SKILL.md` file
+- The review target includes a `reference/*.md` file (within a skill)
+- A `.md` file with YAML frontmatter was changed
+- A change occurred under the `skills/` directory
 
-### 通常コードレビューとの使い分け
+### How This Differs from Regular Code Review
 
 | Aspect | Code Review | SKILL.md Review |
 |--------|------------|----------------|
-| Primary Tool | `codex review` CLI | 公式基準チェックリスト |
+| Primary Tool | `codex review` CLI | Official criteria checklist |
 | Focus | Correctness, security, logic | Structure, description quality, progressive disclosure |
-| Severity Scale | CRITICAL-INFO (5段階) | CRITICAL-LOW (4段階、公式基準ベース) |
+| Severity Scale | CRITICAL-INFO (5 levels) | CRITICAL-LOW (4 levels, based on official criteria) |
 | Routing | Builder / Sentinel / Zen | Sigil / Architect / Gauge |
 
 ---
 
-## 2. SKILL.md レビューチェックリスト
+## 2. SKILL.md Review Checklist
 
-### Critical (ブロッキング)
-
-| ID | Check | Rule |
-|----|-------|------|
-| SK-C01 | `SKILL.md` ファイル名が正確（case-sensitive） | `SKILL.md` のみ許可 |
-| SK-C02 | YAML frontmatter `---` デリミタが正しい | 開始・終了の両方が必要 |
-| SK-C03 | `name` フィールドが存在する | Required field |
-| SK-C04 | `description` フィールドが存在する | Required field |
-| SK-C05 | Frontmatter に XML タグ（`<` `>`）がない | Security restriction |
-| SK-C06 | `name` に `"claude"` / `"anthropic"` を含まない | Reserved prefix |
-
-### High (要修正)
+### Critical (Blocking)
 
 | ID | Check | Rule |
 |----|-------|------|
-| SK-H01 | `name` が kebab-case | Regex: `^[a-z0-9]+(-[a-z0-9]+)*$` |
-| SK-H02 | `name` がフォルダ名と一致 | String match |
-| SK-H03 | `description` が 1024 文字以下 | Official limit |
-| SK-H04 | `description` が WHAT を含む | "何をするか" の記述 |
-| SK-H05 | `description` が WHEN を含む | "いつ使うか" のトリガー条件 |
-| SK-H06 | `description` が vague でない | "Helps with projects" レベルを排除 |
-| SK-H07 | Step-by-step 構造が存在する | Heading or numbered list |
+| SK-C01 | `SKILL.md` filename is exact (case-sensitive) | Only `SKILL.md` is allowed |
+| SK-C02 | YAML frontmatter `---` delimiters are correct | Both opening and closing are required |
+| SK-C03 | A `name` field is present | Required field |
+| SK-C04 | A `description` field is present | Required field |
+| SK-C05 | No XML tags (`<` `>`) in frontmatter | Security restriction |
+| SK-C06 | `name` does not contain `"claude"` / `"anthropic"` | Reserved prefix |
 
-### Medium (推奨改善)
-
-| ID | Check | Rule |
-|----|-------|------|
-| SK-M01 | Examples セクションが存在する | ユーザーシナリオの具体例 |
-| SK-M02 | Troubleshooting セクションが存在する | エラー対応の記述 |
-| SK-M03 | `reference/` ディレクトリを活用している | Progressive Disclosure |
-| SK-M04 | SKILL.md が 5000 words 以下 | Context efficiency |
-| SK-M05 | Critical instructions が文書先頭付近 | 重要度の高い指示が上部に |
-
-### Low (任意改善)
+### High (Must Fix)
 
 | ID | Check | Rule |
 |----|-------|------|
-| SK-L01 | `compatibility` フィールドが 500 文字以下 | Official limit |
-| SK-L02 | Negative trigger がある（必要な場合） | Overtriggering prevention |
-| SK-L03 | `metadata` に `author` / `version` がある | Best practice |
-| SK-L04 | スキルフォルダに `README.md` がない | Official rule |
+| SK-H01 | `name` is kebab-case | Regex: `^[a-z0-9]+(-[a-z0-9]+)*$` |
+| SK-H02 | `name` matches the folder name | String match |
+| SK-H03 | `description` is 1024 characters or fewer | Official limit |
+| SK-H04 | `description` states WHAT | Describes what the skill does |
+| SK-H05 | `description` states WHEN | Trigger conditions for when to use it |
+| SK-H06 | `description` is not vague | Excludes "Helps with projects"-level phrasing |
+| SK-H07 | A step-by-step structure exists | Heading or numbered list |
+
+### Medium (Recommended Improvement)
+
+| ID | Check | Rule |
+|----|-------|------|
+| SK-M01 | An Examples section exists | Concrete user-scenario examples |
+| SK-M02 | A Troubleshooting section exists | Documents error handling |
+| SK-M03 | The `reference/` directory is utilized | Progressive Disclosure |
+| SK-M04 | SKILL.md is 5000 words or fewer | Context efficiency |
+| SK-M05 | Critical instructions appear near the top of the document | High-priority instructions placed first |
+
+### Low (Optional Improvement)
+
+| ID | Check | Rule |
+|----|-------|------|
+| SK-L01 | `compatibility` field is 500 characters or fewer | Official limit |
+| SK-L02 | A negative trigger exists (where needed) | Overtriggering prevention |
+| SK-L03 | `metadata` includes `author` / `version` | Best practice |
+| SK-L04 | No `README.md` exists in the skill folder | Official rule |
 
 ---
 
-## 3. Description 品質評価
+## 3. Description Quality Assessment
 
-### Good Description パターン
+### Good Description Pattern
 
 ```yaml
 # Pattern: Specific + Actionable + Trigger phrases
@@ -85,19 +85,19 @@ documentation. Use when user uploads .fig files, asks for "design specs",
 "component documentation", or "design-to-code handoff".
 ```
 
-**チェックポイント**:
-- ✅ 動詞で始まる（何をするか明確）
-- ✅ トリガーフレーズを含む（いつ使うか明確）
-- ✅ ファイルタイプを言及（対象が明確）
+**Checkpoints**:
+- ✅ Starts with a verb (clear about what it does)
+- ✅ Includes trigger phrases (clear about when to use it)
+- ✅ Mentions file types (clear about the target)
 
-### Bad Description アンチパターン
+### Bad Description Anti-Patterns
 
 | Anti-pattern | Example | Issue |
 |-------------|---------|-------|
-| Too vague | "Helps with projects" | トリガーしない |
-| Missing triggers | "Creates documentation systems" | WHEN がない |
-| Too technical | "Implements entity model with hierarchical relationships" | ユーザー視点でない |
-| Too long (>1024) | — | Frontmatter が肥大化 |
+| Too vague | "Helps with projects" | Fails to trigger |
+| Missing triggers | "Creates documentation systems" | No WHEN |
+| Too technical | "Implements entity model with hierarchical relationships" | Not written from the user's perspective |
+| Too long (>1024) | — | Bloats the frontmatter |
 
 ### Verdict Logic
 
@@ -110,17 +110,17 @@ ELSE → APPROVE (with notes if SK-L* issues exist)
 
 ---
 
-## 4. Progressive Disclosure レビュー
+## 4. Progressive Disclosure Review
 
-### 3段階構造の検証
+### Verifying the Three-Level Structure
 
 | Level | What to Check | Finding if Missing |
 |-------|--------------|-------------------|
-| 1st (Frontmatter) | `name` + `description` が最小限で十分か | SK-H04, SK-H05 |
-| 2nd (Body) | SKILL.md がコア指示に集中しているか | SK-M04 if word count > 5000 |
-| 3rd (References) | 詳細が `reference/` に分離されているか | SK-M03 |
+| 1st (Frontmatter) | Are `name` + `description` minimal yet sufficient? | SK-H04, SK-H05 |
+| 2nd (Body) | Does SKILL.md stay focused on core instructions? | SK-M04 if word count > 5000 |
+| 3rd (References) | Are details separated out into `reference/`? | SK-M03 |
 
-### Context Efficiency 評価
+### Context Efficiency Assessment
 
 ```
 IF SKILL.md > 5000 words AND reference/ is empty:
@@ -137,7 +137,7 @@ IF all content is inline AND no reference/ directory:
 
 ---
 
-## 5. レビューレポートフォーマット
+## 5. Review Report Format
 
 ### SKILL.md Review Finding
 
@@ -151,7 +151,7 @@ Recommendation: [actionable fix]
 Remediation: [Sigil | Architect | Gauge]
 ```
 
-### Summary に追加するセクション
+### Section to Add to the Summary
 
 ```markdown
 ## Skill Quality Assessment
@@ -164,12 +164,12 @@ Remediation: [Sigil | Architect | Gauge]
 
 ---
 
-## 6. ルーティング
+## 6. Routing
 
 | Finding Type | Route To |
 |-------------|---------|
-| Frontmatter 構造問題 | Sigil（再生成） or Architect（再設計） |
-| Description 品質問題 | Sigil（description 改善） |
-| Instruction 構造問題 | Sigil（再構造化） |
-| Progressive Disclosure 問題 | Architect（reference 分離設計） |
-| エコシステム内部基準違反 | Gauge（16項目チェックリスト） |
+| Frontmatter structure issue | Sigil (regenerate) or Architect (redesign) |
+| Description quality issue | Sigil (improve description) |
+| Instruction structure issue | Sigil (restructure) |
+| Progressive Disclosure issue | Architect (design reference separation) |
+| Ecosystem internal standards violation | Gauge (16-item checklist) |

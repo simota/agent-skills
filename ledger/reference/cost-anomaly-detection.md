@@ -1,7 +1,7 @@
 # Cost Anomaly Detection
 
-**Purpose:** コスト異常検知パターン、検知ルール設計、対応プレイブック。
-**Read when:** 予期しないコストスパイクや異常パターンの検知が必要な時。
+**Purpose:** Cost anomaly detection patterns, detection rule design, and response playbooks.
+**Read when:** Detecting unexpected cost spikes or anomalous patterns is needed.
 
 ---
 

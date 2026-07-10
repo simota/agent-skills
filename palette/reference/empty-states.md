@@ -160,44 +160,44 @@ empty_state_design:
     - id: first_use
       visual: illustration
       illustration_brief: "Hand placing a card on an empty board; warm tones; matches sibling illustrations"
-      headline: "プロジェクトをはじめよう"
-      body: "1つのプロジェクトに目標、メンバー、進捗をまとめて管理できます"
+      headline: "Let's start your first project"
+      body: "Keep goals, members, and progress together in one project"
       primary_action:
-        label: "新しいプロジェクトを作成"
+        label: "Create new project"
         action: open_create_modal
       secondary_action:
-        label: "テンプレートから選ぶ"
+        label: "Choose from a template"
         action: open_template_gallery
       templates_count: 5
       sample_data_toggle: yes
     - id: zero_results
       visual: spot_icon
-      headline: "「{query}」に一致するプロジェクトはありません"
+      headline: "No projects match \"{query}\""
       body: ""
       primary_action:
-        label: "フィルターをクリア"
+        label: "Clear filters"
         action: clear_filters
       secondary_action:
-        label: "全プロジェクトを表示"
+        label: "Show all projects"
         action: reset_search
       did_you_mean: yes
     - id: post_clear
       visual: text_only
-      headline: "すべて整理されました"
-      body: "新しいプロジェクトはいつでも作成できます"
+      headline: "Everything's organized"
+      body: "You can create a new project anytime"
       primary_action:
-        label: "新規作成"
+        label: "Create new"
         action: open_create_modal
     - id: post_error
       visual: spot_icon
       handoff: error-states.md
-      headline: "プロジェクトを読み込めませんでした"
-      body: "通信を確認して再試行してください"
+      headline: "We couldn't load your projects"
+      body: "Check your connection and try again"
       primary_action:
-        label: "再試行"
+        label: "Retry"
         action: retry_load
       secondary_action:
-        label: "サポートに連絡"
+        label: "Contact support"
         action: open_support
   a11y:
     illustration_alt: per_variant

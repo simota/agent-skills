@@ -1,7 +1,7 @@
 # Cost Governance
 
-**Purpose:** 予算アラート、CI/CDコストゲート、タグ強制、継続的コスト管理の運用設計。
-**Read when:** コストガバナンスの仕組み構築が必要な時。
+**Purpose:** Operational design for budget alerts, CI/CD cost gates, tag enforcement, and ongoing cost management.
+**Read when:** Building out cost governance mechanisms.
 
 ---
 

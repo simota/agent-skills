@@ -11,10 +11,10 @@
 # Priority Ranking: [Context]
 
 ## Summary
-- **アイテム数:** [N]
-- **使用フレームワーク:** [Framework 1], [Framework 2]
-- **フレームワーク間相関:** ρ = [value] ([Strong/Moderate/Weak])
-- **全体信頼度:** [HIGH/MEDIUM/LOW]
+- **Item count:** [N]
+- **Frameworks used:** [Framework 1], [Framework 2]
+- **Cross-framework correlation:** ρ = [value] ([Strong/Moderate/Weak])
+- **Overall confidence:** [HIGH/MEDIUM/LOW]
 
 ## Ranked List
 
@@ -33,8 +33,8 @@
 [Which rankings are stable vs fragile]
 
 ## Bias Report
-- **検出バイアス:** [list with evidence]
-- **補正措置:** [what was adjusted]
+- **Detected bias:** [list with evidence]
+- **Corrective measures:** [what was adjusted]
 
 ## Recommended Next Steps
 | Priority | Item | Route To | Reason |
@@ -53,7 +53,7 @@
 |------|------|-----------|-----------|
 | 1 | [name] | [I×C×E = score] | [1-line reason] |
 
-**注意:** 単一フレームワーク。重要な判断にはFULLモード推奨。
+**Note:** Single framework. FULL mode is recommended for important decisions.
 ```
 
 ---

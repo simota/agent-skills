@@ -1,7 +1,7 @@
 # Cloud Pricing Models
 
-**Purpose:** AWS/GCP/Azureのプライシングモデル比較とリファレンス。
-**Read when:** マルチクラウドのコスト比較やプライシングモデル理解が必要な時。
+**Purpose:** Comparison and reference of AWS/GCP/Azure pricing models.
+**Read when:** Multi-cloud cost comparison or pricing model understanding is needed.
 
 ---
 
@@ -28,7 +28,7 @@
 | Archive | $0.004/GB (Glacier) | $0.004/GB (Archive) | $0.002/GB (Archive) |
 | Operations (per 1K) | $0.005 PUT, $0.0004 GET | $0.005 PUT, $0.0004 GET | $0.005 PUT, $0.0004 GET |
 
-**注意:** 料金は頻繁に変更される。上記は参考値であり、最新価格は各プロバイダーで確認すること。
+**Note:** Pricing changes frequently. The figures above are reference values only — check each provider for current prices.
 
 ### Database
 
@@ -135,7 +135,7 @@ OPTIMIZED:
 
 ## Multi-Cloud Cost Comparison Checklist
 
-新しいワークロードのクラウド選定時に使用：
+Use when selecting a cloud provider for a new workload:
 
 ```markdown
 ## Cost Comparison: [Workload Name]

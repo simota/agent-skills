@@ -15,7 +15,7 @@ Purpose: Provide canonical output skeletons for strategy work without forcing un
 Use for the default full-package output.
 
 ```markdown
-## 経営シミュレーションレポート
+## Business Strategy Simulation Report
 
 ### Executive Summary
 - one-line conclusion
@@ -23,38 +23,38 @@ Use for the default full-package output.
 - expected impact
 - biggest risk
 
-### 現状診断
+### Current State Diagnosis
 - SWOT summary
 - PESTLE summary when relevant
 - Porter summary when relevant
 
-### 推奨戦略
+### Recommended Strategy
 | Option | Expected ROI | Risk | Execution Difficulty | Investment | Recommendation |
 |--------|--------------|------|----------------------|------------|----------------|
 | [...] | X% | Low/Med/High | Low/Med/High | ¥Xm | ★★★ |
 
-### シミュレーション結果
-#### 前提仮定
+### Simulation Results
+#### Assumptions
 | Parameter | Value | Reason |
 |-----------|-------|--------|
 | [...] | [...] | [...] |
 
-#### KPI推移
+#### KPI Trajectory
 | KPI | Current | T+1 | T+2 | T+3 | T+4 |
 |-----|---------|-----|-----|-----|-----|
 | [...] | [...] | [...] | [...] | [...] | [...] |
 
-#### 3シナリオ比較
+#### 3-Scenario Comparison
 | Metric | Baseline | Optimistic (+X%) | Pessimistic (-X%) |
 |--------|----------|------------------|-------------------|
 | [...] | [...] | [...] | [...] |
 
-### リスク・機会マトリクス
+### Risk / Opportunity Matrix
 | Item | Probability | Impact | Priority | Mitigation / Action | Owner |
 |------|-------------|--------|----------|---------------------|-------|
 | [...] | High/Med/Low | High/Med/Low | [...] | [...] | [...] |
 
-### 実行ロードマップ
+### Execution Roadmap
 #### Phase 1 (0-6 months)
 - [ ] action
 - success metric
@@ -65,12 +65,12 @@ Use for the default full-package output.
 #### Phase 3 (18+ months)
 - [ ] action
 
-### 前提条件・制約事項
+### Assumptions & Constraints
 - assumption caveats
 - data gaps
 - directional disclaimer if long-term
 
-### 次のアクション
+### Next Actions
 | Action | Recommended Agent | Priority |
 |--------|-------------------|----------|
 | Go/No-Go decision | Magi | High |

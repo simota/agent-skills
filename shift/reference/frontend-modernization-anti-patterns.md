@@ -1,146 +1,146 @@
 # Frontend Modernization Anti-Patterns
 
-> フロントエンドレガシー刷新の失敗パターン、フレームワーク移行の罠、段階的モダナイゼーション戦略
+> Failure patterns in legacy frontend renewal, framework-migration traps, and staged modernization strategy
 
-## 1. フロントエンドモダナイゼーション 7 大アンチパターン
+## 1. The 7 Major Frontend Modernization Anti-Patterns
 
-| # | アンチパターン | 問題 | 兆候 | 対策 |
+| # | Anti-Pattern | Problem | Symptoms | Countermeasure |
 |---|-------------|------|------|------|
-| **FM-01** | **Big Bang Rewrite（全面書き直し）** | フロントエンド全体を一括で新フレームワークに移行 | 数ヶ月の開発停止、機能喪失、ビジネス中断 | Strangler Fig パターン、Outside-In 移行 |
-| **FM-02** | **Dual Runtime Overhead（二重ランタイム負荷）** | React + AngularJS 等を同時実行 | パフォーマンス劣化、バンドルサイズ倍増、DX 悪化 | Feature Flag での段階的切替、カスタムイベントバスで状態同期 |
-| **FM-03** | **Global State Pollution（グローバル状態汚染）** | グローバル変数・共有 CSS が新旧コンポーネント間で干渉 | レイアウト崩壊、スタイル競合、予期しない副作用 | CSS Modules/Scoped Styles、デザイントークン統一、モノレポ活用 |
-| **FM-04** | **Knowledge Loss（暗黙知の喪失）** | レガシーコードに埋もれたビジネスルールが移行時に失われる | エッジケースの漏れ、顧客報告バグの増加 | レガシーコードの考古学的調査、テスト先行移行 |
-| **FM-05** | **Test-Free Migration（テストなし移行）** | 自動テストなしでフレームワーク移行を実行 | 回帰バグの頻発、UI 崩壊の見逃し | Playwright/Cypress E2E テスト整備、Visual Regression テスト |
-| **FM-06** | **Backend-Only Focus（バックエンド偏重）** | バックエンドのみ刷新しフロントエンドを放置 | 古い UI が複数データソースに対応できない、統合失敗 | フロントエンドとバックエンドの並行移行計画 |
-| **FM-07** | **Rollback Absence（ロールバック不在）** | 新 UI のデプロイにロールバック手段がない | 本番障害時に即座の復旧不能、ユーザー影響拡大 | Feature Flag によるコードデプロイ ≠ 機能リリース分離 |
+| **FM-01** | **Big Bang Rewrite** | Migrating the entire frontend to a new framework all at once | Months of stalled development, feature loss, business disruption | Strangler Fig pattern, Outside-In migration |
+| **FM-02** | **Dual Runtime Overhead** | Running React + AngularJS etc. simultaneously | Performance degradation, doubled bundle size, worse DX | Staged cutover via feature flags, sync state through a custom event bus |
+| **FM-03** | **Global State Pollution** | Global variables/shared CSS interfere between old and new components | Layout collapse, style conflicts, unexpected side effects | CSS Modules/scoped styles, unified design tokens, use a monorepo |
+| **FM-04** | **Knowledge Loss** | Business rules buried in legacy code get lost during migration | Missed edge cases, an increase in customer-reported bugs | Archaeological investigation of legacy code, test-first migration |
+| **FM-05** | **Test-Free Migration** | Performing a framework migration without automated tests | Frequent regression bugs, missed UI breakage | Set up Playwright/Cypress E2E tests, visual regression tests |
+| **FM-06** | **Backend-Only Focus** | Modernizing only the backend while leaving the frontend untouched | The old UI can't handle multiple data sources, integration failures | Plan frontend and backend migration in parallel |
+| **FM-07** | **Rollback Absence** | No rollback mechanism for the new UI's deployment | No way to recover instantly during a production incident, wider user impact | Separate code deployment from feature release via feature flags |
 
 ---
 
-## 2. 段階的移行パターン
+## 2. Staged Migration Patterns
 
 ```
-Outside-In（Strangler Fig for Frontend）:
+Outside-In (Strangler Fig for Frontend):
 
-  Step 1: モダンアプリケーションシェルの構築
-    → ルーティング・ナビゲーションを新フレームワークで
-    → リバースプロキシで新旧を透過的に切替
-    → ユーザーからは移行が見えない
+  Step 1: Build a modern application shell
+    → Handle routing/navigation in the new framework
+    → Transparently switch old and new via a reverse proxy
+    → The migration is invisible to users
 
-  Step 2: ページ単位の段階的置換
-    → 低リスクページから開始（設定画面、ダッシュボード等）
-    → 新旧が並行稼働
-    → パフォーマンス比較で効果を実証
+  Step 2: Replace pages incrementally
+    → Start with low-risk pages (settings screen, dashboard, etc.)
+    → Old and new run in parallel
+    → Prove the effect via performance comparison
 
-  Step 3: コンポーネント単位の統合
-    → Web Components / iframe でモダンコンポーネントをレガシーページに埋め込み
-    → CSS/JS の汚染を隔離
-    → 非クリティカル UI 要素から開始
+  Step 3: Integrate at the component level
+    → Embed modern components into legacy pages via Web Components / iframe
+    → Isolate CSS/JS contamination
+    → Start with non-critical UI elements
 
-  成果実績:
-    → BackboneJS → ReactJS 移行: 30-40% パフォーマンス向上
-    → 開発速度: レガシー比 55.8% 改善
-    → ビルド時間: Vite/Rspack で 40-60% 短縮
+  Track record:
+    → BackboneJS → ReactJS migration: 30-40% performance improvement
+    → Development speed: 55.8% improvement over legacy
+    → Build time: 40-60% reduction with Vite/Rspack
 
-Micro Frontend アーキテクチャ:
+Micro Frontend Architecture:
 
-  適用条件:
-    → 大規模アプリケーション（複数チーム）
-    → ドメインごとの独立デプロイが必要
-    → 異なるフレームワークの段階的統合
+  When it applies:
+    → Large-scale applications (multiple teams)
+    → Independent deployment needed per domain
+    → Staged integration of different frameworks
 
-  実装手段:
-    → Module Federation（Webpack 5）
-    → カスタムイベントバスによるモジュール間通信
-    → 独立デプロイ可能なドメイン固有モジュール
+  Implementation means:
+    → Module Federation (Webpack 5)
+    → Inter-module communication via a custom event bus
+    → Independently deployable, domain-specific modules
 
-  成果実績:
-    → ハイブリッド React/Vue プラットフォーム: 収益 45% 増
-```
-
----
-
-## 3. レガシーフロントエンド固有の課題
-
-```
-バックエンドより難しい理由:
-
-  1. ユーザー直接影響:
-     → フロントエンドの変更は即座にユーザーに可視
-     → ボタン崩壊・レイアウト崩れが直接 UX を損なう
-     → バックエンドは API 契約さえ守れば内部変更可能
-
-  2. 密結合コンポーネント:
-     → ビジネスロジックが UI コントローラーに埋め込み
-     → グローバル CSS・共有状態が分離を困難に
-     → jQuery/AngularJS 等の EOL フレームワークへの依存
-
-  3. テスト基盤の不足:
-     → レガシーフロントエンドはテストカバレッジが低い
-     → Selenium → Playwright への移行が必要
-     → Visual Regression テストの導入コスト
-
-  4. パフォーマンス指標の即時影響:
-     → Core Web Vitals（INP ≤200ms, LCP ≤2.5s, CLS ≤0.1）
-     → 悪化は SEO ランキング低下 + コンバージョン減少に直結
-     → 移行中のパフォーマンス監視が必須
-
-  EOL フレームワークのリスク:
-    → AngularJS: 2021年12月 EOL
-    → IE11: 2022年6月 EOL
-    → セキュリティ脆弱性、スキル人材の減少
+  Track record:
+    → Hybrid React/Vue platform: 45% revenue increase
 ```
 
 ---
 
-## 4. 成功のための組織的要因
+## 3. Challenges Unique to Legacy Frontends
 
 ```
-モダナイゼーション成功の 4 要素:
+Why it's harder than the backend:
 
-  1. ステークホルダー整合:
-     → 技術課題をビジネスインパクトで翻訳
-     → 「リファクタリング」ではなく「コスト削減・AI対応・人材確保」
-     → 3-4 週間のサンドボックス PoC で価値を実証
+  1. Direct user impact:
+     → Frontend changes are immediately visible to users
+     → Button/layout breakage directly damages UX
+     → The backend can change internally as long as the API contract holds
 
-  2. チーム編成:
-     → モダンフレームワーク開発者の採用
-     → AI ツール（GitHub Copilot）でスキルギャップを補填
-     → レガシー + モダン技術者のハイブリッドチーム
+  2. Tightly coupled components:
+     → Business logic embedded in UI controllers
+     → Global CSS/shared state make separation difficult
+     → Dependence on EOL frameworks like jQuery/AngularJS
 
-  3. ガバナンス:
-     → 手動レビューボードではなく自動化ルール
-     → ESLint ルール・Code Mods による強制
-     → Fitness Functions で Core Web Vitals を自動監視
+  3. Lack of test infrastructure:
+     → Legacy frontends tend to have low test coverage
+     → Migration from Selenium to Playwright is needed
+     → Cost of introducing visual regression tests
 
-  4. 段階的検証:
-     → Feature Flag で小規模ユーザーに先行リリース
-     → レガシー vs モダンのパフォーマンス比較
-     → 問題時の即時ロールバック
+  4. Immediate impact on performance metrics:
+     → Core Web Vitals (INP ≤200ms, LCP ≤2.5s, CLS ≤0.1)
+     → Degradation directly lowers SEO ranking + conversion
+     → Performance monitoring during migration is essential
 
-  KPI:
-    パフォーマンス: INP ≤200ms, LCP ≤2.5s, CLS ≤0.1
-    開発効率: ビルド時間 40-60% 短縮（Vite/Rspack）
-    ビジネス: コンバージョン 10-15% 向上
+  Risks of EOL frameworks:
+    → AngularJS: EOL December 2021
+    → IE11: EOL June 2022
+    → Security vulnerabilities, shrinking pool of skilled engineers
 ```
 
 ---
 
-## 5. Horizon との連携
+## 4. Organizational Factors for Success
 
 ```
-Horizon での活用:
-  1. SCOUT フェーズで FM-01〜07 のスクリーニング
-  2. migration-patterns.md と連携した移行戦略選定
-  3. LAB フェーズで Outside-In PoC の作成
-  4. PRESENT フェーズで移行計画と KPI 提示
+4 elements of successful modernization:
 
-品質ゲート:
-  - 全面書き直し提案 → Strangler Fig 検討必須（FM-01 防止）
-  - 二重フレームワーク → Feature Flag 段階切替（FM-02 防止）
-  - グローバル CSS 依存 → Scoped Styles 移行（FM-03 防止）
-  - テストなし移行 → E2E テスト整備が前提（FM-05 防止）
-  - バックエンドのみ → フロントエンド並行計画（FM-06 防止）
-  - ロールバック手段なし → Feature Flag 必須（FM-07 防止）
+  1. Stakeholder alignment:
+     → Translate technical issues into business impact
+     → Not "refactoring" but "cost reduction, AI readiness, talent retention"
+     → Prove value with a 3-4 week sandbox PoC
+
+  2. Team composition:
+     → Hire developers experienced with the modern framework
+     → Fill skill gaps with AI tools (GitHub Copilot)
+     → A hybrid team of legacy + modern engineers
+
+  3. Governance:
+     → Automated rules instead of manual review boards
+     → Enforcement via ESLint rules and code mods
+     → Auto-monitor Core Web Vitals via fitness functions
+
+  4. Staged verification:
+     → Early release to a small user segment via feature flags
+     → Legacy vs. modern performance comparison
+     → Immediate rollback if problems occur
+
+  KPIs:
+    Performance: INP ≤200ms, LCP ≤2.5s, CLS ≤0.1
+    Dev efficiency: 40-60% reduction in build time (Vite/Rspack)
+    Business: 10-15% increase in conversion
+```
+
+---
+
+## 5. Integration with Horizon
+
+```
+Usage within Horizon:
+  1. Screen for FM-01 through FM-07 during the SCOUT phase
+  2. Select a migration strategy in coordination with migration-patterns.md
+  3. Build an Outside-In PoC during the LAB phase
+  4. Present the migration plan and KPIs during the PRESENT phase
+
+Quality gates:
+  - Full-rewrite proposal → Strangler Fig review required (prevents FM-01)
+  - Dual framework → staged cutover via feature flags (prevents FM-02)
+  - Global CSS dependency → migrate to scoped styles (prevents FM-03)
+  - Test-free migration → E2E test setup is a prerequisite (prevents FM-05)
+  - Backend only → require a parallel frontend plan (prevents FM-06)
+  - No rollback mechanism → feature flags required (prevents FM-07)
 ```
 
 **Source:** [AlterSquare: Why Legacy Frontends Are Harder to Modernize](https://altersquare.io/legacy-frontends-harder-modernize-than-backends/) · [madewithlove: Legacy Code Modernization Without Rewrites](https://madewithlove.com/legacy-code/) · [Swimm: Best Legacy Code Modernization Tools (2025)](https://swimm.io/learn/legacy-code/best-legacy-code-modernization-tools-top-5-options-in-2025)

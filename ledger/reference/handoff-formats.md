@@ -1,7 +1,7 @@
 # Handoff Formats
 
-**Purpose:** Ledger と連携エージェント間のハンドオフYAMLテンプレート。
-**Read when:** エージェント間でコスト関連情報を受け渡す時。
+**Purpose:** Handoff YAML templates between Ledger and coordinating agents.
+**Read when:** Passing cost-related information between agents.
 
 ---
 

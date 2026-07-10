@@ -1,6 +1,6 @@
 # Judge: Code Smell Detection During Review
 
-> Judge レビュー時の構造的コードスメル検出ヒューリスティクスと Severity 加重ルール
+> Structural code smell detection heuristics and severity weighting rules used during Judge reviews
 
 For the shared smell taxonomy (definitions, recognition patterns, canonical examples), see
 `_common/CODE_SMELL_CATALOG.md`. This file only covers Judge-specific detection-during-review
@@ -8,89 +8,91 @@ heuristics, severity weighting, and routing.
 
 ---
 
-## 1. 検出レイヤーの位置づけ
+## 1. Position in the Detection Layers
 
 ```
-Judge の検出レイヤー:
-  Layer 1: バグパターン    → bug-patterns.md
-  Layer 2: 一貫性問題      → consistency-patterns.md
-  Layer 3: コードスメル    → 本ファイル + _common/CODE_SMELL_CATALOG.md
-  Layer 4: テスト品質      → test-quality-patterns.md
+Judge's detection layers:
+  Layer 1: Bug patterns        → bug-patterns.md
+  Layer 2: Consistency issues  → consistency-patterns.md
+  Layer 3: Code smells         → this file + _common/CODE_SMELL_CATALOG.md
+  Layer 4: Test quality        → test-quality-patterns.md
 
-コードスメル = 即座のバグではないが、メンテナンス性・拡張性を劣化させる構造的問題
-```
-
----
-
-## 2. レビュー時の検出ヒューリスティクス
-
-Diff レビュー中に「新規導入された」スメルを検出する手順。既存コードのスメルは対象外。
-
-```
-Step 1: 構造変化のあるファイルを抽出
-  - +50 行以上の追加 → BLOAT 系の疑い
-  - 新規クラス/モジュール → BLOAT-002/CHG-001 の疑い
-  - 同一修正が複数ファイル → CHG-002 (Shotgun Surgery)
-
-Step 2: 構造指標を機械的に算出（catalog の Recognition に従う）
-  - 関数 LOC、パラメータ数、ネスト深度、CC
-  - クラス LOC、メソッド数、依存数
-
-Step 3: しきい値超過のみフラグ（後述マトリクス）
-
-Step 4: route 先エージェントを決定
-  - リファクタ系 → Zen
-  - アーキテクチャ系 → Atlas
-  - 削除系 → Sweep
-  - 型設計系 → Quill
+Code smell = a structural problem that isn't an immediate bug, but degrades
+maintainability and extensibility
 ```
 
 ---
 
-## 3. 検出しきい値マトリクス（Judge 専用）
+## 2. Detection Heuristics During Review
 
-レビュー時に「報告するか否か」のしきい値。Catalog の Recognition より厳しめ
-（レビューノイズを抑えるため）。
+Procedure for detecting smells that were "newly introduced" during a diff review.
+Smells in pre-existing code are out of scope.
 
-| Catalog ID | スメル | 検出指標 | 報告しきい値 | Severity | Route |
+```
+Step 1: Extract files with structural changes
+  - +50 lines or more added → suspect BLOAT-family smell
+  - New class/module → suspect BLOAT-002/CHG-001
+  - Same fix repeated across multiple files → CHG-002 (Shotgun Surgery)
+
+Step 2: Mechanically compute structural metrics (per the catalog's Recognition section)
+  - Function LOC, parameter count, nesting depth, CC
+  - Class LOC, method count, dependency count
+
+Step 3: Flag only threshold violations (matrix below)
+
+Step 4: Determine the target routing agent
+  - Refactoring-related → Zen
+  - Architecture-related → Atlas
+  - Removal-related → Sweep
+  - Type-design-related → Quill
+```
+
+---
+
+## 3. Detection Threshold Matrix (Judge-Specific)
+
+Thresholds for "whether to report" during review. Stricter than the Catalog's
+Recognition thresholds (to keep review noise down).
+
+| Catalog ID | Smell | Detection Metric | Report Threshold | Severity | Route |
 |------------|-------|---------|------------|----------|-------|
-| BLOAT-001 | Long Function | 関数行数 | > 50 | LOW | → Zen |
-| BLOAT-001 | Long Function | パラメータ数 | > 5 | LOW | → Zen |
-| BLOAT-002 | God Class | メソッド数 | > 20 | MEDIUM | → Zen |
-| BLOAT-002 | God Class | クラス行数 | > 500 | MEDIUM | → Zen |
-| BLOAT-005 | Primitive Obsession | 同型パラメータ数 | ≥ 3 | LOW | → Zen / Quill |
-| CHG-002 | Shotgun Surgery | 同一修正の散在 | 5+ files | MEDIUM | → Atlas |
-| CPL-001 | Feature Envy | チェーン深度 | a.b.c.d | LOW | → Zen |
-| CPL-002 | Inappropriate Intimacy | private 越境/循環参照 | 任意 | MEDIUM | → Atlas |
-| CTRL-001 | Spaghetti | 循環的複雑度 | > 15 | MEDIUM | → Zen |
-| CTRL-001 | Spaghetti | ネスト深度 | > 4 | MEDIUM | → Zen |
-| DISP-001 | Dead Code | 未使用 export | 任意 | INFO | → Sweep |
-| DISP-004 | Duplicated Logic | 類似ブロック | 3行+ × 2箇所+ | LOW | → Zen |
-| DISP-006 | Magic Number | リテラル値 | context 依存 | INFO | → Zen |
+| BLOAT-001 | Long Function | Function line count | > 50 | LOW | → Zen |
+| BLOAT-001 | Long Function | Parameter count | > 5 | LOW | → Zen |
+| BLOAT-002 | God Class | Method count | > 20 | MEDIUM | → Zen |
+| BLOAT-002 | God Class | Class line count | > 500 | MEDIUM | → Zen |
+| BLOAT-005 | Primitive Obsession | Same-type parameter count | ≥ 3 | LOW | → Zen / Quill |
+| CHG-002 | Shotgun Surgery | Same fix scattered | 5+ files | MEDIUM | → Atlas |
+| CPL-001 | Feature Envy | Chain depth | a.b.c.d | LOW | → Zen |
+| CPL-002 | Inappropriate Intimacy | Private access violation/circular reference | any | MEDIUM | → Atlas |
+| CTRL-001 | Spaghetti | Cyclomatic complexity | > 15 | MEDIUM | → Zen |
+| CTRL-001 | Spaghetti | Nesting depth | > 4 | MEDIUM | → Zen |
+| DISP-001 | Dead Code | Unused export | any | INFO | → Sweep |
+| DISP-004 | Duplicated Logic | Similar blocks | 3+ lines × 2+ locations | LOW | → Zen |
+| DISP-006 | Magic Number | Literal value | context-dependent | INFO | → Zen |
 
 ---
 
-## 4. Severity 加重ルール
+## 4. Severity Weighting Rules
 
-Catalog の baseline severity を、レビュー文脈で上下させる規則。
+Rules for raising or lowering the Catalog's baseline severity based on review context.
 
 ```
-+1 段階 (LOW → MEDIUM, MEDIUM → HIGH):
-  - public API / 外部契約に露出
-  - hot path (1日10万回以上呼ばれる経路)
-  - セキュリティ境界に隣接
++1 level (LOW → MEDIUM, MEDIUM → HIGH):
+  - Exposed on a public API / external contract
+  - Hot path (called 100,000+ times/day)
+  - Adjacent to a security boundary
 
--1 段階 (MEDIUM → LOW, LOW → INFO):
-  - test / fixture / scripts/ 配下
-  - 一時的な migration コード（期限明記あり）
-  - prototyping / spike ブランチ
+-1 level (MEDIUM → LOW, LOW → INFO):
+  - Under test / fixture / scripts/
+  - Temporary migration code (with an explicit deadline)
+  - Prototyping / spike branch
 ```
 
 ---
 
-## 5. レポート出力
+## 5. Report Output
 
-### 報告フォーマット
+### Report Format
 
 ```markdown
 ## Code Smell Findings
@@ -102,38 +104,38 @@ Catalog の baseline severity を、レビュー文脈で上下させる規則�
 | F-003 | Dead Code (DISP-001) | src/legacy/old-helper.ts | Unused export (3 functions) | INFO | → Sweep |
 ```
 
-### 報告ポリシー
+### Reporting Policy
 
 ```
-1. バグパターンを優先（スメルは補助的情報）
-2. MEDIUM 以上のスメルのみ主要レポートに含める
-3. INFO / LOW は "Additional Observations" セクションへ
-4. 新規導入のスメルのみ報告（既存コードは対象外）
-5. route 先エージェントを必ず指定
-6. Catalog ID を併記して同義語の混乱を防ぐ
+1. Prioritize bug patterns (smells are supplementary information)
+2. Include only MEDIUM+ smells in the main report
+3. Put INFO / LOW under an "Additional Observations" section
+4. Report only newly introduced smells (pre-existing code is out of scope)
+5. Always specify the target routing agent
+6. Include the Catalog ID alongside to avoid confusion between synonyms
 ```
 
 ---
 
-## 6. フレームワーク固有のスメル（レビュー時の追加チェック）
+## 6. Framework-Specific Smells (Additional Checks During Review)
 
-Catalog の Section 8 に加え、Judge は以下を diff スキャン時に追加チェック。
+In addition to Catalog Section 8, Judge applies the following additional checks when scanning diffs.
 
 ```
 React:
-  - Prop Drilling 3層以上 → Context/State 管理を推奨
-  - useEffect 依存配列の不備 → bug-patterns.md にルーティング
-  - コンポーネント肥大化（300行+）→ 分割推奨 (Route: Zen)
+  - Prop drilling 3+ levels deep → recommend Context/State management
+  - Missing/incomplete useEffect dependency array → route to bug-patterns.md
+  - Component bloat (300+ lines) → recommend splitting (Route: Zen)
 
 Express / API:
-  - Fat Controller (ルートハンドラにビジネスロジック) → Service 層分離 (Route: Atlas)
-  - エラーハンドリングの不統一 → consistency-patterns.md にルーティング
-  - ミドルウェアチェーンの過度な複雑さ → 簡素化推奨 (Route: Zen)
+  - Fat Controller (business logic in the route handler) → separate into a Service layer (Route: Atlas)
+  - Inconsistent error handling → route to consistency-patterns.md
+  - Excessive middleware chain complexity → recommend simplification (Route: Zen)
 
 TypeScript:
-  - any 型の多用 → 型定義化 (Route: Quill)
-  - type assertion (as) の多用 → 型設計の見直し (Route: Quill)
-  - enum vs union type の不統一 → consistency-patterns.md にルーティング
+  - Overuse of the `any` type → define proper types (Route: Quill)
+  - Overuse of type assertions (`as`) → reconsider type design (Route: Quill)
+  - Inconsistent enum vs. union type usage → route to consistency-patterns.md
 ```
 
 ---

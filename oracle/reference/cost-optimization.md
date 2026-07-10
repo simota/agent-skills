@@ -19,19 +19,19 @@ Route to `Ledger` when the question is "is our vector DB oversized?" or "should 
 
 ## Token Economics
 
-> 価格は要検証（as of 2026-07-09）。最新の $/1M 価格は各社公式ページで確認のこと。現行世代（Opus 4.8 / Sonnet 5 / GPT-5.5 / Gemini 3.5 Flash）は価格未確定のため `TBD（要確認）` としている。旧世代行は参考値として残す。
+> Prices need verification (as of 2026-07-09). Check each vendor's official page for current $/1M pricing. Current-generation models (Opus 4.8 / Sonnet 5 / GPT-5.5 / Gemini 3.5 Flash) have unconfirmed pricing, so they're marked `TBD (needs confirmation)`. Prior-generation rows are kept for reference.
 
 | Model | Input / 1M | Output / 1M | Speed | Quality | Default use |
 |-------|------------|-------------|-------|---------|-------------|
-| Claude Opus 4.8 | `TBD（要確認）` | `TBD（要確認）` | Slow | Highest | Deep reasoning, `~10%` of traffic |
-| Claude Opus 4.7（旧世代・参考） | `$15.00` | `$75.00` | Slow | Highest | — |
-| Claude Sonnet 5 | `TBD（要確認）` | `TBD（要確認）` | Medium | High | Production default |
-| Claude Sonnet 4.6（旧世代・参考） | `$3.00` | `$15.00` | Medium | High | — |
+| Claude Opus 4.8 | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Slow | Highest | Deep reasoning, `~10%` of traffic |
+| Claude Opus 4.7 (prior gen, reference) | `$15.00` | `$75.00` | Slow | Highest | — |
+| Claude Sonnet 5 | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Medium | High | Production default |
+| Claude Sonnet 4.6 (prior gen, reference) | `$3.00` | `$15.00` | Medium | High | — |
 | Claude Haiku 4.5 | `$0.80` | `$4.00` | Fast | Good | Classification, extraction, tier-1 routing |
-| GPT-5.5 | `TBD（要確認）` | `TBD（要確認）` | Medium | High | Cross-vendor fallback |
-| GPT-4o（旧世代・参考） | `$2.50` | `$10.00` | Medium | High | — |
+| GPT-5.5 | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Medium | High | Cross-vendor fallback |
+| GPT-4o (prior gen, reference) | `$2.50` | `$10.00` | Medium | High | — |
 | GPT-4o-mini | `$0.15` | `$0.60` | Fast | Good | High-volume extraction |
-| Gemini 3.5 Flash | `TBD（要確認）` | `TBD（要確認）` | Fast | Good | High-volume extraction (Gemini) |
+| Gemini 3.5 Flash | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Fast | Good | High-volume extraction (Gemini) |
 
 Formula: `monthly cost = (input cost + output cost) × requests/day × 30`. Always compute this per feature before shipping.
 

@@ -1,159 +1,159 @@
 # Narrative Examples
 
-**Purpose:** Saga が生成するナラティブの具体的な完成例。
-**Read when:** ナラティブの品質基準・完成形を確認したい時。
+**Purpose:** Concrete finished examples of the narratives Saga generates.
+**Read when:** You want to check the quality bar and finished form of a narrative.
 
 ---
 
-## Example 1: Use Case Story（Pixar Story Spine）
+## Example 1: Use Case Story (Pixar Story Spine)
 
-### メタ情報
-- **プロダクト:** クラウド請求書管理 SaaS
-- **ペルソナ:** フリーランスデザイナー 佐藤美咲（32歳）
-- **フレームワーク:** Pixar Story Spine + JTBD
-- **ターゲット読者:** 開発チーム
+### Meta Info
+- **Product:** Cloud invoice management SaaS
+- **Persona:** Freelance designer Misaki Sato (32)
+- **Framework:** Pixar Story Spine + JTBD
+- **Target Audience:** Development team
 
-### ストーリー
+### Story
 
-**佐藤美咲の日常**
+**Misaki Sato's daily life**
 
-佐藤美咲はフリーランスのWebデザイナーだ。都内のコワーキングスペースで週5日働いている。腕は確かで、クライアントからの評判も良い。
+Misaki Sato is a freelance web designer. She works five days a week at a coworking space in the city. Her skills are solid, and clients speak well of her.
 
-毎月末になると、美咲の表情は曇る。5社のクライアントへの請求書を、Excelのテンプレートに一つずつ入力し、PDFに変換し、メールに添付して送る。源泉徴収の計算を間違えていないか、振込先の記載は正しいか、毎回ダブルチェックに30分かけている。「デザインの仕事が好きで独立したのに、なぜ経理作業に月4時間も使っているんだろう」。
+At the end of every month, Misaki's expression clouds over. She fills out invoices for five clients one by one in an Excel template, converts them to PDF, and attaches them to emails. She spends thirty minutes every time double-checking whether the withholding tax calculation is correct and whether the bank details are right. "I went independent because I love design work — so why am I spending four hours a month on bookkeeping?"
 
-**転機**
+**Turning point**
 
-ある金曜の夜、美咲は月末の請求作業中にクライアントの社名変更を見落としていたことに気づいた。修正して再送信。恥ずかしさと疲労が同時に押し寄せる。「もう限界だ」。
+One Friday night, while doing month-end invoicing, Misaki realized she had missed a client's company name change. She corrected it and resent the invoice. Embarrassment and exhaustion hit her at once. "I can't keep doing this."
 
-その週末、同じコワーキングの仲間から「請求書、自動化してるよ」と聞いた。
+That weekend, a friend from the same coworking space mentioned, "I automated my invoicing, you know."
 
-**変化の連鎖**
+**Chain of change**
 
-[プロダクト名]にクライアント情報を登録したら、毎月の請求書が取引履歴から自動生成された。源泉徴収の計算も自動。PDFのデザインも整っていて、自分のロゴまで入っている。
+After registering client information in [Product Name], monthly invoices were generated automatically from transaction history. Withholding tax was calculated automatically too. The PDF design was polished and even included her own logo.
 
-そのおかげで、月末の4時間が20分になった。さらに、未入金のリマインドも自動で飛ぶようになり、回収漏れがゼロになった。
+Thanks to that, the four hours at month-end became twenty minutes. On top of that, reminders for unpaid invoices started going out automatically, and missed collections dropped to zero.
 
-**新しい日常**
+**New daily life**
 
-今では美咲は、月末を「請求書の日」ではなく「来月のプロジェクト計画を立てる日」にしている。「数字が苦手」という自己認識が、「数字は任せて、私はデザインに集中」に変わった。
+Now Misaki treats month-end not as "invoice day" but as "the day I plan next month's projects." Her self-image of "bad with numbers" changed to "leave the numbers to the tool, I focus on design."
 
 ### Job Story
-> **When** 月末で複数クライアントへの請求書を作成する必要がある時、
-> **I want to** 取引データから請求書を自動生成したい、
-> **so I can** 経理作業の時間と心理的負担を減らし、本業に集中できる。
+> **When** I need to create invoices for multiple clients at month-end,
+> **I want to** automatically generate invoices from transaction data,
+> **so I can** reduce the time and psychological burden of bookkeeping and focus on my core work.
 
 ### Anti-Pattern Check
-全項目 PASS（基準は `reference/anti-patterns.md`）。本例の合格理由:
-- AP-1 ストーリーアークあり / AP-2 美咲が主人公 / AP-3 月末の苦痛を描写
-- AP-4 Before→After 明確 / AP-5 具体的な人物像 / AP-6 仮定なし
-- AP-7 平易な言葉 / AP-8 社名変更の見落とし（失敗）を描写 / AP-9 販促トーンなし
+All items PASS (criteria in `reference/anti-patterns.md`). Reasons this example passes:
+- AP-1 has a story arc / AP-2 Misaki is the protagonist / AP-3 depicts the month-end pain
+- AP-4 clear Before→After / AP-5 concrete persona / AP-6 no assumptions
+- AP-7 plain language / AP-8 depicts a failure (missed company name change) / AP-9 no promotional tone
 
 ---
 
-## Example 2: Product Narrative（StoryBrand SB7）
+## Example 2: Product Narrative (StoryBrand SB7)
 
-### メタ情報
-- **プロダクト:** チーム向けタスク管理ツール
-- **フレームワーク:** StoryBrand SB7
-- **ターゲット読者:** LP・マーケティング
+### Meta Info
+- **Product:** Task management tool for teams
+- **Framework:** StoryBrand SB7
+- **Target Audience:** Landing page / Marketing
 
 ### BrandScript
 
 #### 1. Hero
-スタートアップのチームリーダーは、メンバー全員が同じ方向を向いてプロジェクトを進めたいと願っている。
+A startup team lead wants everyone on the team to move a project forward in the same direction.
 
 #### 2. Problem
-- **外的:** タスクがSlack、メール、スプレッドシートに散在し、何が最新かわからない
-- **内的:** 「自分のマネジメントが悪いのでは」という不安。誰が何をしているか把握できない焦り
-- **哲学的:** チームで働くなら、全員が今何をすべきか迷わないのが当たり前であるべきだ
-- **悪役:** 「情報の散在」と「暗黙の了解文化」
+- **External:** Tasks are scattered across Slack, email, and spreadsheets, and it's unclear what's current
+- **Internal:** Anxiety that "maybe my management is bad." Frustration at not knowing who's doing what
+- **Philosophical:** When a team works together, everyone should know what to do right now without hesitation — that should be a given
+- **Villain:** "Scattered information" and "a culture of unspoken assumptions"
 
 #### 3. Guide
-- **共感:** 「10人を超えた途端、何が起きているかわからなくなりますよね。あなただけじゃありません」
-- **権威:** 累計1,200チームが導入。平均ミーティング時間が32%削減
+- **Empathy:** "Once you cross ten people, you lose track of what's happening. You're not alone in that."
+- **Authority:** Adopted by 1,200+ teams cumulatively. Average meeting time reduced by 32%
 
 #### 4. Plan
-1. **チームを招待する** — 3分でセットアップ完了
-2. **プロジェクトを可視化する** — ドラッグ&ドロップでタスクを整理
-3. **進捗をリアルタイムで共有する** — 「今どうなってる？」の質問がゼロに
+1. **Invite your team** — Setup complete in 3 minutes
+2. **Visualize the project** — Organize tasks with drag and drop
+3. **Share progress in real time** — Zero more "what's the status?" questions
 
 #### 5. Call to Action
-- **直接CTA:** 無料で始める
-- **移行CTA:** 3分のデモ動画を見る
+- **Direct CTA:** Start for free
+- **Transitional CTA:** Watch a 3-minute demo video
 
 #### 6. Failure
-このまま情報がバラバラだと、重要なタスクが漏れ、締め切りを逃し、メンバーの不満が蓄積する。優秀なメンバーから「もっとちゃんとしたところで働きたい」と言われる日が来るかもしれない。
+If information stays scattered like this, important tasks will slip through, deadlines will be missed, and team frustration will build up. A day may come when a top performer says, "I want to work somewhere more organized."
 
 #### 7. Success
-全員が自分の役割を理解し、自律的に動くチーム。「今何すべき？」と聞かれることがなくなる。リーダーは管理業務から解放され、戦略に集中できる。メンバーは「このチームで働いてよかった」と感じている。
+A team where everyone understands their role and acts autonomously. No one asks "what should I do now?" anymore. The lead is freed from management overhead and can focus on strategy. Team members feel glad they work on this team.
 
 ---
 
-### ワンライナー
-> タスクが散在して何が最新かわからないチームへ。[プロダクト名]で、全員が同じ地図を見て走れるチームに変わろう。
+### One-liner
+> To the team drowning in scattered tasks with no idea what's current: with [Product Name], become a team that runs from the same map.
 
 ---
 
-## Example 3: Pitch Story（Pixar + 数値）
+## Example 3: Pitch Story (Pixar + Numbers)
 
-### メタ情報
-- **プロダクト:** AI搭載カスタマーサポートツール
-- **フレームワーク:** Pixar Story Spine + 数値
-- **ターゲット読者:** 投資家
+### Meta Info
+- **Product:** AI-powered customer support tool
+- **Framework:** Pixar Story Spine + Numbers
+- **Target Audience:** Investors
 
-### ストーリー
+### Story
 
-日本のEC市場は23兆円。そのうち70%の事業者が「カスタマーサポートの品質と効率の両立」を最大の課題に挙げている。
+Japan's e-commerce market is worth 23 trillion yen. Of that, 70% of merchants cite "balancing customer support quality and efficiency" as their biggest challenge.
 
-毎日、サポートチームは同じ質問に何十回も答え、複雑な問い合わせは平均3.2回のやり取りを経てようやく解決される。エージェントの離職率は年40%。
+Every day, support teams answer the same questions dozens of times, and complex inquiries take an average of 3.2 exchanges to resolve. Agent turnover runs at 40% annually.
 
-私たちは気づいた。問題は「人が足りない」ことではなく、「人が人にしかできないことに集中できていない」ことだった。
+We realized: the problem wasn't "not enough people" — it was "people not being free to focus on the things only people can do."
 
-[プロダクト名]は、定型対応をAIが即座に処理し、人間のエージェントには「判断が必要な対応」だけを届ける。
+[Product Name] has AI instantly handle routine responses and routes only "cases that require judgment" to human agents.
 
-導入企業では、初回解決率が67%→89%に向上。エージェント一人あたりの対応件数が2.3倍に。そして離職率が40%→18%に改善した。
+At companies that adopted it, first-contact resolution rose from 67% to 89%. Cases handled per agent increased 2.3x. And turnover improved from 40% to 18%.
 
-私たちが目指すのは、「問い合わせる」という行為自体がなくなる世界。顧客が困る前に、AIが先回りして解決する。
+What we're aiming for is a world where the act of "having to ask a question" disappears altogether — where AI resolves issues before the customer is even troubled by them.
 
 ---
 
-## Example 4: Scenario Narrative（JTBD + コンテキスト描写）
+## Example 4: Scenario Narrative (JTBD + Context Depiction)
 
-### メタ情報
-- **プロダクト:** 家計管理アプリ
-- **ペルソナ:** 共働き夫婦・山田家（夫34歳・妻32歳・子1人）
-- **フレームワーク:** JTBD + シーン描写
-- **ターゲット読者:** 開発チーム
+### Meta Info
+- **Product:** Household budgeting app
+- **Persona:** Dual-income couple, the Yamada family (husband 34, wife 32, one child)
+- **Framework:** JTBD + Scene Depiction
+- **Target Audience:** Development team
 
-### シーン設定
-**いつ:** 日曜の夜21時、子どもを寝かしつけた後
-**どこで:** リビングのソファ
-**何をしている最中に:** 来月の出費を夫婦で相談している
+### Scene Setup
+**When:** Sunday night, 9 PM, after putting the child to bed
+**Where:** Living room sofa
+**What's happening:** The couple is discussing next month's expenses
 
-### ナラティブ
+### Narrative
 
-日曜の夜9時。山田夫妻はリビングのソファに並んで座っている。1歳の息子をようやく寝かしつけた。テーブルの上にはお互いのスマホと、来月の大きな出費リスト — 息子の保育園料、車の保険更新、妻の友人の結婚式のご祝儀。
+Sunday, 9 PM. The Yamadas sit side by side on the living room sofa. They've just finally gotten their one-year-old son to sleep. On the table sit both their phones and a list of next month's big expenses — daycare fees, car insurance renewal, a wedding gift for the wife's friend.
 
-「今月いくら使ったっけ？」と夫。妻は銀行アプリを開き、クレジットカードの明細を見て、別のメモアプリに書いた食費の概算を見比べる。「たぶん28万くらい…でも正確にはわからない」。
+"How much did we spend this month?" the husband asks. The wife opens her banking app, checks the credit card statement, and compares it against a rough food-spending estimate she'd jotted in a separate notes app. "Maybe around 280,000 yen... but I'm not sure exactly."
 
-二人とも疲れている。この「たぶん」がストレスの種だ。毎月この会話をするたびに、どちらかが「もっとちゃんと管理しないと」と言い、でも結局何も変わらない。
+They're both tired. This "maybe" is the source of their stress. Every month they have this same conversation, one of them says "we really need to manage this better," and yet nothing ever changes.
 
-[アプリ名]を開く。口座とカードを連携済みなので、今月の支出が自動でカテゴリ分けされている。食費18.7万、固定費8.2万、趣味・交際費4.1万。棒グラフが先月との比較を見せてくれる。
+They open [App Name]. Since their accounts and cards are already linked, this month's spending is automatically categorized. Food: 187,000 yen. Fixed costs: 82,000 yen. Hobbies and social spending: 41,000 yen. A bar chart shows the comparison with last month.
 
-「あ、食費が先月より2万増えてる。外食が多かったからかな」。妻が画面をタップすると、外食の明細が並ぶ。「週末のランチが5回で1.8万か…ちょっと気をつけよう」。
+"Oh, food spending is up 20,000 yen from last month. Probably because we ate out a lot." The wife taps the screen, and a list of dining-out expenses appears. "Five weekend lunches at 18,000 yen total... let's watch that a bit."
 
-来月の予算を一緒に調整する。保育園料と保険で固定費が3万増える分、趣味・交際費を少し抑えることに。5分で終わった。
+Together they adjust next month's budget. With daycare fees and insurance pushing fixed costs up by 30,000 yen, they decide to trim hobbies and social spending slightly. It's done in five minutes.
 
-「前は30分かけて結局わからなかったのに」。夫が笑う。妻もスマホをテーブルに置いて、ようやくリラックスした表情を見せた。
+"We used to spend thirty minutes and still not really know," the husband laughs. The wife sets her phone down on the table, finally looking relaxed.
 
 ### Job Story
-> **When** 月末に夫婦で来月の家計を話し合う時、
-> **I want to** 今月の支出が正確にカテゴリ別で見えている状態にしたい、
-> **so I can** 「たぶん」ではなく事実に基づいて、短時間で建設的な話し合いができる。
+> **When** the couple discusses next month's household budget at month-end,
+> **I want to** see this month's spending accurately broken down by category,
+> **so I can** have a short, constructive conversation grounded in facts instead of "maybe."
 
-### テンション・ポイント
-| # | ポイント | 内容 | 解決 |
+### Tension Points
+| # | Point | Content | Resolution |
 |---|---------|------|------|
-| 1 | 曖昧な把握 | 「たぶん28万くらい」 | 自動カテゴリ分類で正確に |
-| 2 | 時間の消耗 | 毎月30分の不毛な確認 | 5分で完了 |
-| 3 | 感情的な摩擦 | 「もっとちゃんと」の繰り返し | データに基づく客観的な会話 |
+| 1 | Vague grasp of spending | "Maybe around 280,000 yen" | Precise automatic categorization |
+| 2 | Time drain | 30 minutes of unproductive checking each month | Done in 5 minutes |
+| 3 | Emotional friction | Repeated "we should manage this better" | Objective, data-driven conversation |

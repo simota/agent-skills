@@ -2,13 +2,13 @@
 
 > Source: "The Complete Guide to Building Skills for Claude" (Anthropic, 2025)
 
-Lore が CATALOG / PROPAGATE フェーズで参照する公式パターン統合リファレンス。
+Official pattern integration reference that Lore consults during the CATALOG / PROPAGATE phases.
 
 ---
 
-## 1. 公式パターンとLoreパターン分類の統合マッピング
+## 1. Integrated Mapping of Official Patterns to Lore Pattern Classification
 
-### 公式5パターン → Lore Taxonomy 変換
+### Official 5 Patterns → Lore Taxonomy Conversion
 
 | Official Pattern | Lore Domain | Lore Type | Default Confidence | Scope |
 |-----------------|-------------|-----------|-------------------|-------|
@@ -18,9 +18,9 @@ Lore が CATALOG / PROPAGATE フェーズで参照する公式パターン統合
 | Context-Aware Tool Selection | `APP` | `HEURISTIC` | `ESTABLISHED` | `ECOSYSTEM` |
 | Domain-Specific Intelligence | `DESIGN` | `SUCCESS` | `ESTABLISHED` | `ECOSYSTEM` |
 
-> 公式パターンは Anthropic による観察に基づく `ESTABLISHED` レベル。エコシステム内での実証が蓄積すれば `FOUNDATIONAL` に昇格可能。
+> Official patterns start at the `ESTABLISHED` level based on Anthropic's observations. They can be promoted to `FOUNDATIONAL` once enough evidence accumulates within the ecosystem.
 
-### 公式3ユースケースカテゴリ → Lore Domain 変換
+### Official 3 Use-Case Categories → Lore Domain Conversion
 
 | Official Category | Primary Lore Domain | Secondary Domain |
 |------------------|--------------------|-----------------|
@@ -30,9 +30,9 @@ Lore が CATALOG / PROPAGATE フェーズで参照する公式パターン統合
 
 ---
 
-## 2. 公式品質シグナルとLore証拠分類の統合
+## 2. Integrating Official Quality Signals with Lore Evidence Classification
 
-### 定量シグナル
+### Quantitative Signals
 
 | Official Metric | Lore Evidence Type | Threshold | Mapping |
 |----------------|-------------------|-----------|---------|
@@ -40,7 +40,7 @@ Lore が CATALOG / PROPAGATE フェーズで参照する公式パターン統合
 | 0 failed API calls | Execution evidence | 0 failures per workflow | `SUCCESS` if met; `ANTI` if consistently failing |
 | Workflow efficiency (token reduction) | Performance evidence | Baseline comparison | `TRADEOFF` pattern with quantitative data |
 
-### 定性シグナル
+### Qualitative Signals
 
 | Official Metric | Lore Evidence Type | Assessment |
 |----------------|-------------------|-----------|
@@ -50,7 +50,7 @@ Lore が CATALOG / PROPAGATE フェーズで参照する公式パターン統合
 
 ---
 
-## 3. 公式反復シグナルとLore腐敗検出の統合
+## 3. Integrating Official Iteration Signals with Lore Decay Detection
 
 ### Undertriggering → Knowledge Gap Detection
 
@@ -78,41 +78,41 @@ Lore が CATALOG / PROPAGATE フェーズで参照する公式パターン統合
 
 ---
 
-## 4. CATALOG フェーズでの公式パターン照合ルール
+## 4. Official Pattern Cross-Check Rules During the CATALOG Phase
 
-### 新規パターン登録時の公式照合
+### Official Cross-Check When Registering a New Pattern
 
-1. **分類前チェック**: 新規パターン候補が公式5パターンのいずれかに該当するか確認
-2. **該当する場合**: 公式パターンの variant として登録（ID に `-V` suffix）
-3. **該当しない場合**: 通常の新規パターンとして登録
-4. **矛盾する場合**: 公式パターンとの差異を明示的に記録し、evidence count ≥ 3 で独立パターンとして昇格
+1. **Pre-classification check**: Confirm whether the new pattern candidate matches one of the official 5 patterns
+2. **If it matches**: Register it as a variant of the official pattern (append a `-V` suffix to the ID)
+3. **If it doesn't match**: Register it as a normal new pattern
+4. **If it conflicts**: Explicitly record the difference from the official pattern, and promote it to an independent pattern once evidence count ≥ 3
 
-### 公式基準によるパターン品質評価
+### Pattern Quality Assessment Against Official Criteria
 
-登録済みパターンが以下の公式基準を満たしているか定期的に評価:
+Periodically assess whether registered patterns satisfy the following official criteria:
 
 | Criterion | Check | Source |
 |-----------|-------|--------|
-| Progressive Disclosure 準拠 | パターンが3段階構造を反映しているか | Official Guide §1 |
-| Description 品質 | WHAT+WHEN 構造を含むか | Official Guide §2 |
-| テスト可能性 | 3 Areas (Triggering/Functional/Performance) で検証可能か | Official Guide §3 |
-| エラーハンドリング | トラブルシューティング6カテゴリに対応するか | Official Guide §5 |
+| Progressive Disclosure compliance | Does the pattern reflect the 3-level structure? | Official Guide §1 |
+| Description quality | Does it include a WHAT+WHEN structure? | Official Guide §2 |
+| Testability | Can it be verified across the 3 Areas (Triggering/Functional/Performance)? | Official Guide §3 |
+| Error handling | Does it address the 6 troubleshooting categories? | Official Guide §5 |
 
 ---
 
-## 5. PROPAGATE フェーズでの公式基準配信ルール
+## 5. Official Criteria Distribution Rules During the PROPAGATE Phase
 
-### 配信対象と公式基準の関連性
+### Relationship Between Distribution Targets and Official Criteria
 
 | Consumer Agent | Relevant Official Knowledge | Propagation Trigger |
 |---------------|---------------------------|-------------------|
-| **Sigil** | Description記述ルール、Instruction構造、テスト方法論 | Skill生成品質の低下パターン検出時 |
-| **Architect** | 5パターン、成功基準フレームワーク、Progressive Disclosure | 新エージェント設計品質の低下パターン検出時 |
-| **Gauge** | Frontmatter検証仕様、トラブルシューティング6カテゴリ | 監査精度の低下パターン検出時 |
-| **Darwin** | 品質シグナル（定量/定性）、反復シグナル | EFS評価精度の改善機会検出時 |
-| **Nexus** | 3ユースケースカテゴリ、パターン選択ガイド | ルーティング精度の低下パターン検出時 |
+| **Sigil** | Description writing rules, instruction structure, test methodology | When a decline in skill-generation quality patterns is detected |
+| **Architect** | The 5 patterns, success-criteria framework, Progressive Disclosure | When a decline in new-agent design quality patterns is detected |
+| **Gauge** | Frontmatter validation spec, 6 troubleshooting categories | When a decline in audit accuracy patterns is detected |
+| **Darwin** | Quality signals (quantitative/qualitative), iteration signals | When an opportunity to improve EFS assessment accuracy is detected |
+| **Nexus** | The 3 use-case categories, pattern selection guide | When a decline in routing accuracy patterns is detected |
 
-### LORE_INSIGHT での公式基準参照フォーマット
+### Official Criteria Reference Format in LORE_INSIGHT
 
 ```
 LORE_INSIGHT:

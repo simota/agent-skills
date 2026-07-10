@@ -1,34 +1,34 @@
 # Handoff Templates
 
-**Purpose:** Saga と他エージェント間のハンドオフテンプレート。
-**Read when:** 他エージェントからの入力を受け取る時、または他エージェントへ出力を渡す時。
+**Purpose:** Handoff templates between Saga and other agents.
+**Read when:** Receiving input from another agent, or passing output to another agent.
 
 ---
 
-## Inbound Handoffs（Saga への入力）
+## Inbound Handoffs (input to Saga)
 
 ### CAST_TO_SAGA_HANDOFF
 
-Cast からペルソナ定義を受け取り、ペルソナ別ストーリーを生成する。
+Receive persona definitions from Cast and generate persona-specific stories.
 
 ```yaml
 CAST_TO_SAGA_HANDOFF:
   persona:
-    name: "[ペルソナ名]"
-    demographics: "[年齢、職業、状況]"
-    goals: "[主な目標]"
-    frustrations: "[主なフラストレーション]"
-    tech_level: "[技術レベル]"
-    quotes: "[代表的な発言]"
+    name: "[persona name]"
+    demographics: "[age, occupation, situation]"
+    goals: "[primary goals]"
+    frustrations: "[primary frustrations]"
+    tech_level: "[tech proficiency level]"
+    quotes: "[representative quotes]"
   request:
     story_type: "[use_case | scenario | onboarding]"
-    feature_context: "[対象機能/プロダクト]"
-    audience: "[読者ターゲット]"
+    feature_context: "[target feature/product]"
+    audience: "[target audience]"
 ```
 
 ### RESEARCHER_TO_SAGA_HANDOFF
 
-Field からリサーチ結果を受け取り、ナラティブに変換する。
+Receive research findings from Field and convert them into a narrative.
 
 ```yaml
 RESEARCHER_TO_SAGA_HANDOFF:
@@ -36,154 +36,154 @@ RESEARCHER_TO_SAGA_HANDOFF:
   key_findings:
     - "[Finding 1]"
     - "[Finding 2]"
-  personas: "[ペルソナ情報（あれば）]"
-  journey_map: "[ジャーニーマップ（あれば）]"
+  personas: "[persona info (if available)]"
+  journey_map: "[journey map (if available)]"
   pain_points:
     - "[Pain 1]"
     - "[Pain 2]"
   request:
     story_type: "[customer_success | use_case | scenario]"
-    audience: "[読者ターゲット]"
+    audience: "[target audience]"
 ```
 
 ### VOICE_TO_SAGA_HANDOFF
 
-Voice から顧客フィードバックインサイトを受け取り、ストーリーに変換する。
+Receive customer feedback insights from Voice and convert them into a story.
 
 ```yaml
 VOICE_TO_SAGA_HANDOFF:
   feedback_summary:
     positive_themes:
-      - "[テーマ1]"
+      - "[theme 1]"
     negative_themes:
-      - "[テーマ2]"
-    nps_score: "[NPS（あれば）]"
+      - "[theme 2]"
+    nps_score: "[NPS (if available)]"
   representative_quotes:
-    - "[引用1]"
-    - "[引用2]"
+    - "[quote 1]"
+    - "[quote 2]"
   request:
     story_type: "[customer_success | use_case]"
-    focus: "[ポジティブ体験 | 課題改善]"
+    focus: "[positive experience | pain point improvement]"
 ```
 
 ### SPARK_TO_SAGA_HANDOFF
 
-Spark から機能提案を受け取り、「なぜ必要か」のナラティブを作成する。
+Receive a feature proposal from Spark and craft a "why it's needed" narrative.
 
 ```yaml
 SPARK_TO_SAGA_HANDOFF:
   feature:
-    name: "[機能名]"
-    hypothesis: "[仮説]"
-    target_persona: "[ターゲットペルソナ]"
+    name: "[feature name]"
+    hypothesis: "[hypothesis]"
+    target_persona: "[target persona]"
     rice_score: "[RICE Score]"
     acceptance_criteria:
-      - "[基準1]"
+      - "[criterion 1]"
   request:
     story_type: "[use_case | pitch]"
-    audience: "[開発チーム | ステークホルダー | 投資家]"
+    audience: "[dev team | stakeholders | investors]"
 ```
 
 ### COMPETE_TO_SAGA_HANDOFF
 
-Compete から競合分析を受け取り、差別化ナラティブを作成する。
+Receive competitive analysis from Compete and craft a differentiation narrative.
 
 ```yaml
 COMPETE_TO_SAGA_HANDOFF:
   differentiators:
-    - "[差別化ポイント1]"
-    - "[差別化ポイント2]"
-  competitive_landscape: "[市場状況]"
-  positioning: "[ポジショニング]"
+    - "[differentiator 1]"
+    - "[differentiator 2]"
+  competitive_landscape: "[market state]"
+  positioning: "[positioning]"
   request:
     story_type: "[product_narrative | pitch]"
-    emphasis: "[差別化 | 市場機会]"
+    emphasis: "[differentiation | market opportunity]"
 ```
 
 ---
 
-## Outbound Handoffs（Saga からの出力）
+## Outbound Handoffs (output from Saga)
 
 ### SAGA_TO_PROSE_HANDOFF
 
-Saga のナラティブから UX コピーの方向性を Prose に渡す。
+Pass UX copy direction to Prose, derived from Saga's narrative.
 
 ```yaml
 SAGA_TO_PROSE_HANDOFF:
-  narrative_summary: "[ナラティブの要約]"
+  narrative_summary: "[narrative summary]"
   brand_voice:
-    tone: "[トーン: 親しみやすい/プロフェッショナル/etc.]"
-    personality: "[パーソナリティ: 頼もしい/共感的/etc.]"
-    vocabulary_notes: "[使うべき/避けるべき言葉]"
+    tone: "[tone: friendly/professional/etc.]"
+    personality: "[personality: reliable/empathetic/etc.]"
+    vocabulary_notes: "[words to use/avoid]"
   key_messages:
-    - "[メッセージ1]"
-    - "[メッセージ2]"
+    - "[message 1]"
+    - "[message 2]"
   transformation_arc:
-    before: "[Before の状態]"
-    after: "[After の状態]"
+    before: "[Before state]"
+    after: "[After state]"
   copy_requests:
     - type: "[onboarding | error | cta | tooltip]"
-      context: "[使用される画面/状況]"
-      tone_note: "[このコピーのトーン指示]"
+      context: "[screen/situation where used]"
+      tone_note: "[tone instructions for this copy]"
 ```
 
 ### SAGA_TO_SCRIBE_HANDOFF
 
-Saga のナラティブから PRD のユースケースセクションを Scribe に渡す。
+Pass the PRD use-case section to Scribe, derived from Saga's narrative.
 
 ```yaml
 SAGA_TO_SCRIBE_HANDOFF:
   use_cases:
-    - name: "[ユースケース名]"
-      actor: "[アクター]"
-      precondition: "[前提条件]"
-      main_flow: "[メインフロー要約]"
-      narrative_context: "[ストーリーから得た背景]"
-      emotional_context: "[ユーザーの感情状態]"
+    - name: "[use case name]"
+      actor: "[actor]"
+      precondition: "[precondition]"
+      main_flow: "[main flow summary]"
+      narrative_context: "[background drawn from the story]"
+      emotional_context: "[user's emotional state]"
   personas_referenced:
-    - "[ペルソナ名]"
+    - "[persona name]"
   assumptions:
-    - "[仮定1]"
+    - "[assumption 1]"
 ```
 
 ### SAGA_TO_ACCORD_HANDOFF
 
-Saga のナラティブから L0 ビジョンの顧客体験記述を Accord に渡す。
+Pass the L0 vision's customer experience description to Accord, derived from Saga's narrative.
 
 ```yaml
 SAGA_TO_ACCORD_HANDOFF:
-  vision_narrative: "[プロダクトビジョンのナラティブ]"
+  vision_narrative: "[product vision narrative]"
   customer_scenarios:
-    - persona: "[ペルソナ名]"
-      scenario: "[シナリオ要約]"
-      desired_outcome: "[期待される成果]"
+    - persona: "[persona name]"
+      scenario: "[scenario summary]"
+      desired_outcome: "[desired outcome]"
   transformation:
-    before: "[現状]"
-    after: "[理想状態]"
+    before: "[current state]"
+    after: "[ideal state]"
   key_value_propositions:
-    - "[価値提案1]"
-    - "[価値提案2]"
+    - "[value proposition 1]"
+    - "[value proposition 2]"
 ```
 
 ### SAGA_TO_DIRECTOR_HANDOFF
 
-Saga のナラティブからデモ動画のシナリオを Director に渡す。
+Pass a demo video scenario to Director, derived from Saga's narrative.
 
 ```yaml
 SAGA_TO_DIRECTOR_HANDOFF:
   scenario:
-    title: "[デモタイトル]"
-    duration_target: "[目標尺: 30s / 60s / 120s]"
-    persona: "[主人公ペルソナ]"
+    title: "[demo title]"
+    duration_target: "[target length: 30s / 60s / 120s]"
+    persona: "[protagonist persona]"
     narrative_arc:
-      setup: "[状況設定]"
-      conflict: "[課題の提示]"
-      resolution: "[プロダクトによる解決]"
-      outcome: "[成果]"
+      setup: "[situation setup]"
+      conflict: "[presentation of the challenge]"
+      resolution: "[resolution via the product]"
+      outcome: "[outcome]"
     key_screens:
-      - screen: "[画面名]"
-        action: "[操作内容]"
-        narration: "[ナレーション/テキスト]"
-        emotion: "[この時点のユーザー感情]"
-  voice_and_tone: "[ナレーションのトーン指示]"
+      - screen: "[screen name]"
+        action: "[action taken]"
+        narration: "[narration/on-screen text]"
+        emotion: "[user's emotion at this point]"
+  voice_and_tone: "[narration tone instructions]"
 ```

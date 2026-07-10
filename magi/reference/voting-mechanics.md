@@ -125,15 +125,15 @@ Dissent:
 **Split Resolution Template:**
 ```yaml
 questions:
-  - question: "三視点で意見が分かれました。どの方針で進めますか？"
+  - question: "The three perspectives are split. Which direction should we proceed with?"
     header: "Split Vote"
     options:
       - label: "[Logos recommendation]"
-        description: "技術的観点: [rationale] (信頼度: X)"
+        description: "Technical perspective: [rationale] (confidence: X)"
       - label: "[Pathos recommendation]"
-        description: "人間中心的観点: [rationale] (信頼度: X)"
+        description: "Human-centered perspective: [rationale] (confidence: X)"
       - label: "[Sophia recommendation]"
-        description: "戦略的観点: [rationale] (信頼度: X)"
+        description: "Strategic perspective: [rationale] (confidence: X)"
     multiSelect: false
 ```
 

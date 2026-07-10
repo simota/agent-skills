@@ -1,118 +1,118 @@
 # Dependency Upgrade Anti-Patterns
 
-> npm/Node.js 依存関係アップグレードの失敗パターン、バージョン管理の罠、アップデート戦略のベストプラクティス
+> Failure patterns in npm/Node.js dependency upgrades, version-management traps, and best practices for update strategy
 
-## 1. 依存関係アップグレード 7 大アンチパターン
+## 1. The 7 Major Dependency Upgrade Anti-Patterns
 
-| # | アンチパターン | 問題 | 兆候 | 対策 |
+| # | Anti-Pattern | Problem | Symptoms | Countermeasure |
 |---|-------------|------|------|------|
-| **DU-01** | **All-at-Once（一括更新）** | 複数メジャーバージョンを同時に更新 | 解決不能な依存関係コンフリクト、デバッグ不能 | パッチ/マイナーは一括、メジャーは1つずつ個別コミット |
-| **DU-02** | **Changelog Skip（変更履歴スキップ）** | Breaking Changes を確認せずにバージョンアップ | 統合失敗、予期しない API 変更、ランタイムエラー | GitHub Releases の "Breaking Changes" セクションを必ず確認 |
-| **DU-03** | **Version Drift（バージョン漂流）** | 長期間アップデートせず大きなギャップが蓄積 | Node 16 で最新ライブラリが動かない、Upgrade Cliff 発生 | 定期的な小口アップデート、Renovate/Dependabot 活用 |
-| **DU-04** | **Legacy Peer Deps Abuse（--legacy-peer-deps 乱用）** | peer dependency 競合を --legacy-peer-deps で無視 | ランタイムエラー、予期しない動作、根本原因の放置 | 一時的ワークアラウンドとしてのみ使用、根本修正を優先 |
-| **DU-05** | **Binary Breakage Blindness（バイナリ破壊の軽視）** | Node メジャーバージョン変更時のネイティブモジュール破壊を無視 | 画像処理・暗号化ツールの動作不良、ビルド失敗 | node_modules + lockfile 削除→再インストール、C++ アドオン確認 |
-| **DU-06** | **Manual Version Editing（手動バージョン編集）** | package.json のバージョン番号を手動で書き換え | タイポ、lockfile との不整合、バージョン範囲の誤設定 | `pnpm update -i` / `npx ncu -i` 等のインタラクティブツール使用 |
-| **DU-07** | **Ambiguous Versioning（曖昧なバージョン指定）** | `^` や `*` で広いバージョン範囲を許容 | 環境間で異なるバージョンがインストール、再現不能バグ | lockfile のコミット必須、本番向けは厳格なバージョン固定 |
+| **DU-01** | **All-at-Once** | Updating multiple major versions simultaneously | Unresolvable dependency conflicts, undebuggable failures | Batch patch/minor updates together; commit each major update individually |
+| **DU-02** | **Changelog Skip** | Bumping versions without checking Breaking Changes | Integration failures, unexpected API changes, runtime errors | Always review the "Breaking Changes" section of GitHub Releases |
+| **DU-03** | **Version Drift** | A large gap accumulates from going long periods without updating | Latest libraries don't run on Node 16, an "Upgrade Cliff" forms | Regular small updates; use Renovate/Dependabot |
+| **DU-04** | **Legacy Peer Deps Abuse** | Ignoring peer dependency conflicts with `--legacy-peer-deps` | Runtime errors, unexpected behavior, root causes left unaddressed | Use only as a temporary workaround; prioritize a proper fix |
+| **DU-05** | **Binary Breakage Blindness** | Ignoring native module breakage on a Node major version change | Image-processing/crypto tools misbehave, build failures | Remove node_modules + lockfile → reinstall, verify C++ addons |
+| **DU-06** | **Manual Version Editing** | Manually rewriting version numbers in package.json | Typos, inconsistency with the lockfile, wrong version ranges | Use an interactive tool such as `pnpm update -i` / `npx ncu -i` |
+| **DU-07** | **Ambiguous Versioning** | Allowing wide version ranges with `^` or `*` | Different versions installed across environments, unreproducible bugs | Commit the lockfile; pin versions strictly for production |
 
 ---
 
-## 2. アップデート戦略フレームワーク
+## 2. Update Strategy Framework
 
 ```
-段階的アップデート手順:
+Staged update procedure:
 
-  Step 1: パッチ/マイナー一括更新
-    → Green/Yellow（パッチ/マイナー）を全て適用
-    → テスト実行 → 単独コミット
+  Step 1: Batch patch/minor updates
+    → Apply all Green/Yellow (patch/minor) updates
+    → Run tests → single commit
     → "chore: update non-breaking dependencies"
 
-  Step 2: メジャーバージョン個別更新
-    → 1 パッケージずつメジャーバージョンを更新
-    → Changelog の Breaking Changes を確認
-    → テスト実行 → パッケージごとに個別コミット
+  Step 2: Update major versions individually
+    → Update one package's major version at a time
+    → Review the changelog's Breaking Changes
+    → Run tests → commit each package separately
 
-  Step 3: 非推奨パッケージの置換
-    → 別チケットとして分離（メンテナンス PR に混ぜない）
-    → 代替ライブラリの調査 → PoC → 段階的移行
+  Step 3: Replace deprecated packages
+    → Split into a separate ticket (don't mix into a maintenance PR)
+    → Research alternative libraries → PoC → phased migration
 
-  Step 4: Node.js ランタイム更新
-    → LTS バージョンへの移行
-    → engines フィールドで最低バージョンを宣言
-    → ネイティブモジュールの動作確認
+  Step 4: Update the Node.js runtime
+    → Migrate to an LTS version
+    → Declare the minimum version in the engines field
+    → Verify native module behavior
 
-  自動化:
-    → Renovate Bot: パッチ自動マージ、メジャーは PR 作成
-    → Dependabot: セキュリティアップデートの自動 PR
-    → CI パイプラインでの依存関係更新テスト
+  Automation:
+    → Renovate Bot: auto-merge patches, open PRs for majors
+    → Dependabot: automatic PRs for security updates
+    → Dependency update tests in the CI pipeline
 ```
 
 ---
 
-## 3. SemVer 判断基準
+## 3. SemVer Decision Criteria
 
 ```
-バージョン番号の意味と対応:
+What version numbers mean and how to respond:
 
   PATCH (x.y.Z):
-    → バグ修正、セキュリティパッチ
-    → 通常安全、後方互換
-    → 対応: 自動マージ可
+    → Bug fixes, security patches
+    → Usually safe, backward compatible
+    → Response: can auto-merge
 
   MINOR (x.Y.z):
-    → 新機能追加、後方互換を維持
-    → 対応: テスト実行後マージ
+    → New features added, backward compatibility maintained
+    → Response: merge after running tests
 
   MAJOR (X.y.z):
-    → 意図的な Breaking Changes
-    → API 変更、削除、動作変更
-    → 対応: Changelog 確認 → コード修正 → テスト → 個別コミット
+    → Intentional Breaking Changes
+    → API changes, removals, behavior changes
+    → Response: review changelog → fix code → test → commit individually
 
-  ⚠️ 注意: SemVer は「約束」であり「保証」ではない
-    → マイナーでも Breaking Change が含まれることがある
-    → テストなしでの更新は常にリスク
+  ⚠️ Note: SemVer is a "promise," not a "guarantee"
+    → Even a minor bump can include a breaking change
+    → Updating without tests is always a risk
 ```
 
 ---
 
-## 4. 依存関係ロック戦略
+## 4. Dependency Lock Strategy
 
 ```
-Lockfile 管理のベストプラクティス:
+Lockfile management best practices:
 
-  必須:
-    □ package-lock.json / pnpm-lock.yaml / yarn.lock をコミット
-    □ CI で lockfile ベースのインストール（npm ci / pnpm install --frozen-lockfile）
-    □ 環境間で同一の依存関係ツリーを保証
+  Required:
+    □ Commit package-lock.json / pnpm-lock.yaml / yarn.lock
+    □ Install from the lockfile in CI (npm ci / pnpm install --frozen-lockfile)
+    □ Guarantee the same dependency tree across environments
 
-  プライベートリポジトリ:
-    → 企業内パッケージリポジトリの活用
-    → 「任意の依存関係アップグレードに対する保護層」
-    → 本番環境への昇格時の予期しない動作変更を防止
+  Private repositories:
+    → Leverage an internal package repository
+    → "A protective layer against arbitrary dependency upgrades"
+    → Prevents unexpected behavior changes when promoting to production
 
-  engines フィールド:
-    → package.json に Node.js/pnpm の最低バージョンを宣言
-    → CI/CD で自動検証
-    → チーム全員の環境を統一
+  engines field:
+    → Declare the minimum Node.js/pnpm version in package.json
+    → Auto-verify in CI/CD
+    → Keep the whole team's environments aligned
 ```
 
 ---
 
-## 5. Horizon との連携
+## 5. Integration with Horizon
 
 ```
-Horizon での活用:
-  1. SCOUT フェーズで DU-01〜07 のスクリーニング
-  2. dependency-health-scan.md と連携した定期監査
-  3. LAB フェーズで段階的アップデート戦略の適用
-  4. PRESENT フェーズで更新レポートの提出
+Usage within Horizon:
+  1. Screen for DU-01 through DU-07 during the SCOUT phase
+  2. Run regular audits in coordination with dependency-health-scan.md
+  3. Apply the staged update strategy during the LAB phase
+  4. Submit the update report during the PRESENT phase
 
-品質ゲート:
-  - 一括メジャー更新 → 個別更新に分離（DU-01 防止）
-  - Changelog 未確認 → Breaking Changes 確認必須（DU-02 防止）
-  - 長期未更新 → 定期更新サイクル設定（DU-03 防止）
-  - --legacy-peer-deps 使用 → 根本修正計画必須（DU-04 防止）
-  - Node バージョン変更 → ネイティブモジュール検証（DU-05 防止）
-  - lockfile 未コミット → コミット必須化（DU-07 防止）
+Quality gates:
+  - Batch major update → split into individual updates (prevents DU-01)
+  - Changelog not reviewed → Breaking Changes review required (prevents DU-02)
+  - Long unupdated → set a regular update cycle (prevents DU-03)
+  - `--legacy-peer-deps` used → a root-cause fix plan is required (prevents DU-04)
+  - Node version change → native module verification (prevents DU-05)
+  - Lockfile not committed → committing must be enforced (prevents DU-07)
 ```
 
 **Source:** [DEV.to: Updating Node Dependencies - The 2025 Survival Guide](https://dev.to/sarveshh/updating-node-dependencies-the-2025-survival-guide-1ge4) · [ButterCMS: Strategies for Keeping Dependencies Updated](https://buttercms.com/blog/strategies-for-keeping-your-packages-and-dependencies-updated/) · [4markdown: Full Tutorial on Updating Dependencies](https://4markdown.com/full-tutorial-on-updating-dependencies-in-js-projects/) · [freeCodeCamp: How to Update NPM Dependencies](https://www.freecodecamp.org/news/how-to-update-npm-dependencies/)

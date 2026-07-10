@@ -18,9 +18,9 @@ Use before Magi deliberation when:
 
 | Axis | Name | Question | Transforms |
 |------|------|----------|------------|
-| **視野** | Field / Scope | どのスケールで見るか？ | Zoom Out · Zoom In · Cross-Domain · Temporal Zoom |
-| **視座** | Standpoint / Vantage | 誰の立場から見るか？ | Role Shift · Hierarchy Shift · Timeline Shift · Adversarial Shift |
-| **視点** | Angle / Lens | どのフレームで見るか？ | Systems Lens · Inversion Lens · First Principles · Narrative Lens |
+| **Scope** | Field / Scope | What scale are you viewing this at? | Zoom Out · Zoom In · Cross-Domain · Temporal Zoom |
+| **Standpoint** | Standpoint / Vantage | Whose position are you viewing this from? | Role Shift · Hierarchy Shift · Timeline Shift · Adversarial Shift |
+| **Lens** | Angle / Lens | What frame are you viewing this through? | Systems Lens · Inversion Lens · First Principles · Narrative Lens |
 
 ---
 

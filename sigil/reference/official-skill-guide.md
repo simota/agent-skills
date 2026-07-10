@@ -2,13 +2,13 @@
 
 > Source: "The Complete Guide to Building Skills for Claude" (Anthropic, 2025)
 
-Sigil が CRAFT / VERIFY フェーズで参照する公式仕様リファレンス。
+The official spec reference that Sigil consults during the CRAFT / VERIFY phases.
 
 ---
 
-## 1. Progressive Disclosure 3段階アーキテクチャ
+## 1. Progressive Disclosure: The 3-Level Architecture
 
-Skills は3段階のコンテキスト管理を採用する:
+Skills adopt three levels of context management:
 
 | Level | What | When loaded | Token impact |
 |-------|------|-------------|-------------|
@@ -16,11 +16,11 @@ Skills は3段階のコンテキスト管理を採用する:
 | **2nd — SKILL.md body** | Full instructions | When Claude judges the skill relevant | Medium |
 | **3rd — Linked files** | `reference/`, `scripts/`, `assets/` | On-demand, as Claude navigates | Variable |
 
-**設計原則**: SKILL.md は core instructions に集中させ、詳細ドキュメントは `reference/` へ移動してリンクする。SKILL.md は 5,000 words 以下を推奨。
+**Design principle**: Keep SKILL.md focused on core instructions, and move detailed documentation to `reference/`, linking to it. SKILL.md is recommended to stay under 5,000 words.
 
 ---
 
-## 2. YAML Frontmatter 完全仕様
+## 2. YAML Frontmatter Full Specification
 
 ### Required Fields
 
@@ -31,22 +31,22 @@ description: What it does and when to use it. Include specific trigger phrases.
 ---
 ```
 
-### `name` ルール
+### `name` Rules
 
-- kebab-case only（`my-cool-skill`）
+- kebab-case only (`my-cool-skill`)
 - No spaces, no capitals, no underscores
-- フォルダ名と一致させる
-- `"claude"` / `"anthropic"` を含めてはならない（reserved）
+- Must match the folder name
+- Must not include `"claude"` / `"anthropic"` (reserved)
 
-### `description` ルール
+### `description` Rules
 
-- **必須構造**: `[What it does]` + `[When to use it]` + `[Key capabilities]`
-- **上限**: 1024 characters（公式）
-- XML タグ（`<` `>`）禁止（セキュリティ制約: frontmatter は system prompt に展開される）
-- 具体的なトリガーフレーズを含める
-- 関連するファイルタイプがあれば言及
+- **Required structure**: `[What it does]` + `[When to use it]` + `[Key capabilities]`
+- **Limit**: 1024 characters (official)
+- XML tags (`<` `>`) are forbidden (security constraint: frontmatter is expanded into the system prompt)
+- Include concrete trigger phrases
+- Mention relevant file types if applicable
 
-> **Note**: エコシステム内部の [`skill-templates.md`](skill-templates.md#frontmatter-rules) では description を「one Japanese sentence」に制限しているが、公式仕様の上限は 1024文字。エコシステム制限はコンテキスト効率とルーティング判定のための追加ガードレールであり、公式仕様を超えるものではない。
+> **Note**: The ecosystem-internal [`skill-templates.md`](skill-templates.md#frontmatter-rules) restricts `description` to "one Japanese sentence," but the official spec's limit is 1024 characters. The ecosystem restriction is an additional guardrail for context efficiency and routing decisions, and does not exceed the official spec.
 
 ### Optional Fields
 
@@ -59,13 +59,13 @@ description: What it does and when to use it. Include specific trigger phrases.
 
 ### Security Restrictions
 
-- XML angle brackets（`<` `>`）— frontmatter に含めてはならない
-- `"claude"` / `"anthropic"` を name に使用してはならない（reserved prefix）
-- Code execution in YAML は不可（safe YAML parsing）
+- XML angle brackets (`<` `>`) — must not appear in frontmatter
+- `"claude"` / `"anthropic"` must not be used in `name` (reserved prefix)
+- Code execution in YAML is not allowed (safe YAML parsing)
 
 ---
 
-## 3. Description 記述ルール
+## 3. Description Writing Rules
 
 ### Good Examples
 
@@ -99,7 +99,7 @@ description: Implements the Project entity model with hierarchical relationships
 
 ---
 
-## 4. Instruction 構造ベストプラクティス
+## 4. Instruction Structure Best Practices
 
 ### Recommended Structure
 
@@ -166,14 +166,14 @@ your-skill-name/
 ```
 
 **Critical Rules**:
-- ファイル名は正確に `SKILL.md`（case-sensitive）。`SKILL.MD`, `skill.md` は不可。
-- フォルダ名は kebab-case: `notion-project-setup`
-- `README.md` をスキルフォルダ内に含めてはならない（ドキュメントは `SKILL.md` or `reference/`）
-- GitHub repo レベルの README は別途用意（配布用）
+- The filename must be exactly `SKILL.md` (case-sensitive). `SKILL.MD` and `skill.md` are not allowed.
+- The folder name must be kebab-case: `notion-project-setup`
+- Do not include a `README.md` inside the skill folder (documentation belongs in `SKILL.md` or `reference/`)
+- Prepare a GitHub repo-level README separately (for distribution)
 
 ---
 
-## 6. MCP + Skills 関係性（Kitchen Analogy）
+## 6. The MCP + Skills Relationship (Kitchen Analogy)
 
 | Aspect | MCP (Connectivity) | Skills (Knowledge) |
 |--------|--------------------|--------------------|
@@ -205,15 +205,15 @@ your-skill-name/
 
 ---
 
-## 8. テスト方法論（3 Levels × 3 Areas）
+## 8. Testing Methodology (3 Levels × 3 Areas)
 
 ### 3 Testing Levels
 
 | Level | Method | Setup |
 |-------|--------|-------|
-| **Manual** | Claude.ai で直接クエリ実行 | No setup, fast iteration |
-| **Scripted** | Claude Code でテストケース自動化 | Repeatable validation |
-| **Programmatic** | Skills API で評価スイート実行 | Systematic, defined test sets |
+| **Manual** | Run queries directly in Claude.ai | No setup, fast iteration |
+| **Scripted** | Automate test cases in Claude Code | Repeatable validation |
+| **Programmatic** | Run an evaluation suite via the Skills API | Systematic, defined test sets |
 
 ### 3 Testing Areas
 
@@ -248,7 +248,7 @@ Baseline (without skill) vs With skill comparison:
 
 ---
 
-## 9. 反復シグナル
+## 9. Iteration Signals
 
 ### Undertriggering Signals
 
@@ -278,7 +278,7 @@ description: Advanced data analysis for CSV files. Use for statistical modeling,
 
 ---
 
-## 10. 公式クイックチェックリスト
+## 10. Official Quick Checklist
 
 ### Before You Start
 
