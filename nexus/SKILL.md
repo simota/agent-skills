@@ -141,7 +141,7 @@ The full table below is flat; these families group it by the axis that separates
 | Family | Recipes | Axis (one-line; full → `reference/recipes-detail.md` § Recipe Families) |
 |--------|---------|-----------------|
 | **Fix** | `bug` · `security` | defect vs vulnerability |
-| **Improve** (existing code) | `refactor` · `optimize` · `kaizen` · `anneal` | known restructure / perf number / polish one feature vs target / discover design weaknesses → behavior-preserving brush-up. `improve`/`polish`/`enhance` overloaded → REDIRECT |
+| **Improve** (existing code) | `refactor` · `optimize` · `kaizen` · `anneal` · `restyle` | known restructure / perf number / polish one feature vs target / discover design weaknesses → behavior-preserving brush-up / **UI-visual-interaction design of an existing surface (direction+rubric-driven)**. `improve`/`polish`/`enhance` overloaded → REDIRECT; `improve the design` overloaded (code design → `anneal`; UI/look-and-feel → `restyle`) → REDIRECT |
 | **Loop** (autonomous / iterative) | `loop` · `goal` · `converge` | dispatcher (runner is `orbit`) / `/goal` setup only / in-session rubric loop. Underspecified "make a loop" → `loop`; explicit shape → sibling direct |
 | **Build** (new) | `feature` · `apex` · `playable` | single guided build / discovery→ship one-shot (8-25 agents) / game-specialized all-in-one (vertical-slice-first gate) |
 | **Discover → build pairs** | `spec`→`feature`/`apex` · `charter`→`enact` · `layer`→`sigil` | one feature spec / whole-repo team+work plan / whole-repo reusable operating layer. All stop at a design; the pair runs it |
@@ -163,6 +163,7 @@ The full table below is flat; these families group it by the axis that separates
 | Optimize | `optimize` | | Performance-only improvement | `Bolt/Tuner[measure→target→optimize] → Radar[verify-speedup] → Guardian`| `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
 | Kaizen | `kaizen` |  | Existing-feature continuous improvement covering perf / UX / code-quality / feature-extension. | See `reference/recipes-detail.md` | `reference/inline-recipes.md` |
 | Anneal | `anneal` |  | Codebase design audit → prioritized behavior-preserving brush-up. | See `reference/recipes-detail.md` | `reference/anneal-recipe.md` |
+| Restyle | `restyle` |  | UI/visual design improvement of an existing surface — audit → direction → rubric-looped implementation → walkthrough+a11y+no-regression verify. | See `reference/recipes-detail.md` | `reference/restyle-recipe.md` |
 | Converge | `converge` |  | **Quality-convergence loop** — the invocable entry point for the Generator-Evaluator pattern (`reference/evaluator-loop-protocol.md`). | See `reference/recipes-detail.md` | `reference/converge-recipe.md`, `reference/evaluator-loop-protocol.md` |
 | Loop | `loop` |  | Loop-engineering dispatcher & discipline gate. | See `reference/recipes-detail.md` | `reference/loop-recipe.md` |
 | Proactive | `proactive` | | `/Nexus` with no arguments — project state scan | `Scan project → recommend` | `reference/proactive-mode.md` |
@@ -207,6 +208,7 @@ For natural-language input without an explicit subcommand. **Subcommand match al
 | `optimize`, `slow`, `performance` | `optimize` |
 | `kaizen`, `improve`, `polish`, `enhance existing`, `refine` | `kaizen` |
 | `anneal`, `design audit`, `brush up the codebase`, `harden the architecture`, `design weaknesses` | `anneal` |
+| `restyle`, `redesign`, `UI refresh`, `visual polish`, `modernize the UI`, `improve the look and feel` | `restyle` (UI/visual — code-design improvement → `anneal`) |
 | `loop`, `make a loop`, `run until done`, `autonomous loop`, `ralph loop` | `loop` (dispatcher → gate + route to goal/converge/orbit/apex) |
 | `cartograph`, `reverse-engineer across repos`, `bird's-eye diagram`, `overview diagram`, `architecture map`, `design doc from code`, `understand the system across repos` | `cartograph` |
 | `chronicle`, `repository history`, `commit history summary`, `how did we get here`, `evolution of the codebase`, `project timeline`, `git history narrative`, `history of the repo`, `feature/bug/decision history`, `decision log from history`, `design philosophy from history`, `project ethos/worldview` | `chronicle` (era timeline + storylines: feature/fix/improvement/decision + decision log + inferred ethos/worldview, from commit history) |
@@ -429,7 +431,7 @@ Read only the files that match the current decision point.
 | `reference/execution-layers.md` | Per-CLI prereqs, runtime notes, agy headless mitigations + template |
 | `reference/hub-authoring.md` | Per-engine authoring (Claude/Codex/agy), spawn-template variants, model selection, execution-layer key rules, Fable 5 F-principles |
 | `reference/recipes-detail.md` | Recipe Families full axis prose + extended Recipe descriptions + full chain templates |
-| `reference/{anneal,apex,playable,charter,enact,layer,gedanken,delve,cartograph,chronicle,spec,migrate,clone,fuse,graft,converge,loop,goal,acceptance,growth-acceptance,summit,transmute,venture,package,podium}-recipe.md`, `reference/apex-walkthrough.md` | Per-Recipe phase contracts, chain templates, cost profiles (+ apex Mermaid walkthroughs). Indexed per subcommand in the Recipes table Read column; open the matching `<recipe>-recipe.md` for full detail |
+| `reference/{anneal,restyle,apex,playable,charter,enact,layer,gedanken,delve,cartograph,chronicle,spec,migrate,clone,fuse,graft,converge,loop,goal,acceptance,growth-acceptance,summit,transmute,venture,package,podium}-recipe.md`, `reference/apex-walkthrough.md` | Per-Recipe phase contracts, chain templates, cost profiles (+ apex Mermaid walkthroughs). Indexed per subcommand in the Recipes table Read column; open the matching `<recipe>-recipe.md` for full detail |
 | `reference/inline-recipes.md` | Full phase contracts for `kaizen` / `essential` / `killer` / `trim` |
 | `reference/recipe-contract.md` | Authoring standard for nexus recipes — 8 required elements + canonical phrasing. Read when authoring/normalizing a recipe |
 | `reference/verdict-gate.md` | Shared contract for verdict recipes (`essential`/`killer`/`trim` + graft flag clause) |
