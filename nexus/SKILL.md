@@ -149,7 +149,7 @@ The full table below is flat; these families group it by the axis that separates
 | **Comprehend** (reverse-engineer existing code → understanding artifact, no code) | `cartograph` · `chronicle` | **space vs time**: `cartograph` = multi-repo structure → bird's-eye diagrams + design doc (how it works *today*); `chronicle` = commit history → era timeline + narrative storylines (feature/fix/improvement/decision) + decision log + inferred ethos/worldview (how it *got here* & what it *believes*). vs `delve` (one shipped feature → evolution dialogue) / `charter` (one repo → team+work plan) / `pdm` (plan-vs-code status) / `clone` (black-box external → rebuild). Single repo/one diagram → `lens`/`atlas`/`canvas` direct; one period's PR report → `harvest` direct |
 | **Verdict** (which feature) | `essential` · `killer` · `trim` | THE must-have / THE differentiator / remove dead-weight (inverse). Shared gate: `reference/verdict-gate.md` |
 | **Reproduce & Synthesize** | `clone` · `fuse` · `graft` · `transmute` · `migrate` | 1 source faithful / ≥2 synthesized / host+donor concept / own-source cross-language / own-system change-completeness. Shared: `_common/DIFFERENTIAL_PARITY.md`. `differential parity` alone → REDIRECT |
-| **Quality-Max** (expensive, confirm) | `acceptance` · `growth-acceptance` · `summit` · `podium` | proof-carrying merge (G1-10) / post-launch lifecycle (G11-15) / pre-merge quality tournament / content-slide quality |
+| **Quality-Max** (expensive, confirm) | `acceptance` · `growth-acceptance` · `summit` · `podium` · `wish` | proof-carrying merge (G1-10) / post-launch lifecycle (G11-15) / pre-merge quality tournament / content-slide quality / **once-in-a-lifetime one-shot ceiling — scarcity-gated, deliverable-agnostic, ACCEPT = all rubric dims = 3** |
 | **Document package** | `package` (incl. `venture`) | 12-domain preset registry |
 | **Meta / control** | `classify` · `proactive` · `pack` | routing · project scan · skill-profile |
 
@@ -185,6 +185,7 @@ The full table below is flat; these families group it by the axis that separates
 | Growth-Acceptance | `growth-acceptance` |  | **Layer C lifecycle gate** (Market + Research + Brand axes) for Enterprise org-tier. | See `reference/recipes-detail.md` | `_common/GROWTH_BRAND_PROOF.md`, `reference/growth-acceptance-recipe.md` |
 | Summit | `summit` |  | Multi-engine **five-team** quality-maximization. | See `reference/recipes-detail.md` | `reference/summit-recipe.md` |
 | Podium | `podium` |  | Content-quality maximization. | See `reference/recipes-detail.md` | `reference/podium-recipe.md` |
+| Wish | `wish` |  | **Once-in-a-lifetime request (一生のお願い)** — scarcity-gated one-shot quality-ceiling delivery: crystallize the true wish → tournament → adversarial gauntlet + ceiling convergence (all dims = 3) → One-Shot Gate. **Always confirm.** | See `reference/recipes-detail.md` | `reference/wish-recipe.md` |
 | Migrate | `migrate` |  | Change-completeness migration. | See `reference/recipes-detail.md` | `reference/migrate-recipe.md` |
 | Transmute | `transmute` |  | **Cross-language rewrite** preserving behavior (TS→Rust, Go→Rust, Python→Go, JS→TS, …). | See `reference/recipes-detail.md` | `reference/transmute-recipe.md` |
 | Clone | `clone` | | Faithful product reproduction — reverse-engineer an existing product's observable surface, rebuild it, and verify the copy by differential parity against a stamped captured baseline. | See `reference/recipes-detail.md` | `reference/clone-recipe.md`, `reference/research-grounding.md` |
@@ -212,6 +213,7 @@ For natural-language input without an explicit subcommand. **Subcommand match al
 | `loop`, `make a loop`, `run until done`, `autonomous loop`, `ralph loop` | `loop` (dispatcher → gate + route to goal/converge/orbit/apex) |
 | `cartograph`, `reverse-engineer across repos`, `bird's-eye diagram`, `overview diagram`, `architecture map`, `design doc from code`, `understand the system across repos` | `cartograph` |
 | `chronicle`, `repository history`, `commit history summary`, `how did we get here`, `evolution of the codebase`, `project timeline`, `git history narrative`, `history of the repo`, `feature/bug/decision history`, `decision log from history`, `design philosophy from history`, `project ethos/worldview` | `chronicle` (era timeline + storylines: feature/fix/improvement/decision + decision log + inferred ethos/worldview, from commit history) |
+| `wish`, `once-in-a-lifetime request`, `favor of a lifetime`, `your absolute best`, `spare nothing`, `no second chance`, `one shot to get this right` | `wish` (scarcity-gated one-shot ceiling; strategic code quality-max → `summit`, standard bar iteration → `converge`) |
 | `/Nexus` (no arguments) | `proactive` |
 | unclear or multi-domain request | `classify` → `reference/intent-clarification.md` |
 
@@ -431,7 +433,7 @@ Read only the files that match the current decision point.
 | `reference/execution-layers.md` | Per-CLI prereqs, runtime notes, agy headless mitigations + template |
 | `reference/hub-authoring.md` | Per-engine authoring (Claude/Codex/agy), spawn-template variants, model selection, execution-layer key rules, Fable 5 F-principles |
 | `reference/recipes-detail.md` | Recipe Families full axis prose + extended Recipe descriptions + full chain templates |
-| `reference/{anneal,restyle,apex,playable,charter,enact,layer,gedanken,delve,cartograph,chronicle,spec,migrate,clone,fuse,graft,converge,loop,goal,acceptance,growth-acceptance,summit,transmute,venture,package,podium}-recipe.md`, `reference/apex-walkthrough.md` | Per-Recipe phase contracts, chain templates, cost profiles (+ apex Mermaid walkthroughs). Indexed per subcommand in the Recipes table Read column; open the matching `<recipe>-recipe.md` for full detail |
+| `reference/{anneal,restyle,apex,playable,charter,enact,layer,gedanken,delve,cartograph,chronicle,spec,migrate,clone,fuse,graft,converge,loop,goal,acceptance,growth-acceptance,summit,transmute,venture,package,podium,wish}-recipe.md`, `reference/apex-walkthrough.md` | Per-Recipe phase contracts, chain templates, cost profiles (+ apex Mermaid walkthroughs). Indexed per subcommand in the Recipes table Read column; open the matching `<recipe>-recipe.md` for full detail |
 | `reference/inline-recipes.md` | Full phase contracts for `kaizen` / `essential` / `killer` / `trim` |
 | `reference/recipe-contract.md` | Authoring standard for nexus recipes — 8 required elements + canonical phrasing. Read when authoring/normalizing a recipe |
 | `reference/verdict-gate.md` | Shared contract for verdict recipes (`essential`/`killer`/`trim` + graft flag clause) |

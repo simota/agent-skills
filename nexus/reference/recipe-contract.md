@@ -81,10 +81,10 @@ Every recipe emits `NEXUS_COMPLETE` with the base `## Nexus Execution Report` (`
 |----------|------|---------------------------|
 | `_common/DIFFERENTIAL_PARITY.md` | parity-over-faith, oracle adequacy + non-determinism gates, comparator/harness, provenance/drift | transmute, clone, fuse, graft, migrate |
 | `reference/verdict-gate.md` | verdict card, Yes/No/Modify branches, flag+KPI+kill | essential, killer, trim, graft (flag clause) |
-| `_common/ADVERSARIAL_REFUTATION.md` | skeptic panel, evidence-vs-novelty, polarity, exclusions | killer, trim, graft |
-| `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation, single termination oracle, flatten rule | converge, kaizen, apex, summit, podium |
+| `_common/ADVERSARIAL_REFUTATION.md` | skeptic panel, evidence-vs-novelty, polarity, exclusions | killer, trim, graft, wish |
+| `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation, single termination oracle, flatten rule | converge, kaizen, apex, summit, podium, wish |
 | `_common/TRACEABILITY.md` | canonical AC/REQ IDs | spec, accord-driven recipes, attest gates |
-| `reference/dialogue-protocol.md` | question craft, answer processing, Assumption Ledger, checkpoint presentation, Provenance Gate for contract-level dialogue | spec, delve (mandatory); gedanken INTERACTIVE, clone Stack Dialogue, verdict cards (D1–D4/D10–D11 only) |
+| `reference/dialogue-protocol.md` | question craft, answer processing, Assumption Ledger, checkpoint presentation, Provenance Gate for contract-level dialogue | spec, delve, wish Crystallization (mandatory); gedanken INTERACTIVE, clone Stack Dialogue, verdict cards (D1–D4/D10–D11 only) |
 | `reference/autonomy-quality-protocol.md` | intent contract, Decision Ledger, drift control, producer≠verifier, evidence-bound claims, Acceptance Provenance | all autonomous (non-dialogue) recipes + ad-hoc chains; recipes cite it and add only specializations (parity oracles satisfy Q3/Q10; acceptance G1–G10 subsume Q11) |
 | `reference/doc-quality-protocol.md` | reader contract, universal grounding / UNKNOWN-over-fabrication, cross-doc single source of truth, summary-first readability, Doc Quality Gate (W12 = Q11 for documents) | package, charter, layer, podium, spec/delve artifacts, gedanken reports, any doc-authoring step; native gates (podium Verification Team, Spec Quality Gate, package Phase 5) subsume W12 and add only missing dimensions |
 | `_common/PROOF_CARRYING.md` | G1-G10 proof-carrying merge | acceptance, growth-acceptance |
@@ -99,7 +99,7 @@ Before a recipe reference is "done": all eight §1 elements present (or `N/A` + 
 
 ## 8. Cross-index wiring checklist (adding a NEW recipe)
 
-A recipe is not "live" until it appears — consistently — in **every** index, not just its own reference file. Omitting one is how a recipe becomes unroutable or mis-grouped (e.g. the signal-keywords mis-filing that put loop/reproduction recipes under "Mobile Native"). Wire all six:
+A recipe is not "live" until it appears — consistently — in **every** index, not just its own reference file. Omitting one is how a recipe becomes unroutable or mis-grouped (e.g. the signal-keywords mis-filing that put loop/reproduction recipes under "Mobile Native"). Wire all seven:
 
 1. `reference/<name>-recipe.md` — the deep contract (this file's §1-§7).
 2. `SKILL.md` `## Recipes` table — one row (Recipe · Subcommand · When to Use · Chain Template · Read).
