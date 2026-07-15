@@ -1,4 +1,4 @@
-# Wish Recipe — Once-in-a-Lifetime Request (一生のお願い)
+# Wish Recipe — Once-in-a-Lifetime Request
 
 > `/nexus wish "<request>"` — the **scarcity-gated, one-shot, quality-ceiling** delivery recipe. The invocation itself carries the semantics of a lifetime plea: the requester stakes everything on this ONE output, and the executor answers with maximum earnestness — no "we'll fix it in the next iteration," no routine-quality shortcuts. Deliverable-agnostic: the underlying task (code, document, design, content, plan) is routed to its natural generator, then wrapped in wish machinery — crystallization dialogue, tournament generation, adversarial gauntlet, ceiling convergence, and a final One-Shot Gate.
 
@@ -17,7 +17,7 @@ Read this file before executing the `wish` Recipe.
 
 ### Use `wish` for
 
-- A request the user explicitly frames as their most important ask: "this is the one," "your absolute best," "一生のお願い."
+- A request the user explicitly frames as their most important ask: "this is the one," "your absolute best," "the favor of a lifetime."
 - One-shot deliverables with no revision opportunity (a decisive proposal, a flagship document, a make-or-break artifact) of **any** type — code, prose, design, plan.
 - When the user wants the *recipe itself* to guarantee that nothing was left on the table.
 
@@ -139,7 +139,7 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 ## 9. Decision Tree vs Neighbors
 
 ```
-User frames the request as their single most important ask / one-shot / 一生のお願い?
+User frames the request as their single most important ask / one-shot / favor of a lifetime?
   NO  → the natural recipe for the task shape (feature/bug/package/…)
   YES ↓
 Is it strategic/release-critical CODE work wanting multi-engine triangulation?
