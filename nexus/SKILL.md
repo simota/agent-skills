@@ -160,7 +160,7 @@ The full table below is flat; these families group it by the axis that separates
 | Feature | `feature` | | New web/backend/generic feature. **iOS/Android native → `MOBILE_NATIVE` (Native) instead.** | `Lens?[reuse] → Sherpa[spec+AC] → Forge? → Builder → Radar[+verify gate] → Guardian`| `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
 | Security | `security` | | Security response | `Sentinel[triage] → Probe?[confirm-exploit] → Builder[root-cause] → Probe/Radar[verify-closed] → Vigil? → Guardian`| `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
 | Refactor | `refactor` | | Internal-only refactor, no external behavior change | `Radar?[safety-net] → Zen → Radar[verify-equivalence] → Guardian`| `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
-| Optimize | `optimize` | | Performance-only improvement | `Bolt/Tuner[measure→target→optimize] → Radar[verify-speedup] → Guardian`| `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
+| Optimize | `optimize` | | Performance-only improvement on *correct* code — measure-first, prove-with-a-number. Defect-caused slowdown → `bug` | `Bolt/Tuner[measure→target→optimize] → Radar[verify-speedup] → Guardian`| `reference/routing-quick-start.md`, `reference/routing-matrix.md` |
 | Kaizen | `kaizen` |  | Existing-feature continuous improvement covering perf / UX / code-quality / feature-extension. | See `reference/recipes-detail.md` | `reference/inline-recipes.md` |
 | Anneal | `anneal` |  | Codebase design audit → prioritized behavior-preserving brush-up. | See `reference/recipes-detail.md` | `reference/anneal-recipe.md` |
 | Restyle | `restyle` |  | UI/visual design improvement of an existing surface — audit → direction → rubric-looped implementation → walkthrough+a11y+no-regression verify. | See `reference/recipes-detail.md` | `reference/restyle-recipe.md` |
@@ -210,7 +210,7 @@ For natural-language input without an explicit subcommand. **Subcommand match al
 | `feature`, `implement`, `build` | `feature` |
 | `security`, `vulnerability`, `CVE` | `security` |
 | `refactor`, `clean up`, `code smell` | `refactor` |
-| `optimize`, `slow`, `performance` | `optimize` |
+| `optimize`, `slow`, `performance`, `speed up`, `latency`, `slow query`, `bottleneck` | `optimize` (`memory leak` → `bug`; post-deploy slowdown, output still correct → `optimize +Trail`; full REDIRECT notes → `reference/signal-keywords.md`) |
 | `kaizen`, `improve`, `polish`, `enhance existing`, `refine` | `kaizen` |
 | `anneal`, `design audit`, `brush up the codebase`, `harden the architecture`, `design weaknesses` | `anneal` |
 | `restyle`, `redesign`, `UI refresh`, `visual polish`, `modernize the UI`, `improve the look and feel` | `restyle` (UI/visual — code-design improvement → `anneal`) |
