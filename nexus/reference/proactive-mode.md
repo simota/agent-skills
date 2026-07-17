@@ -196,6 +196,18 @@ To start a new task, enter `/Nexus [task]`.
 
 ---
 
+### Phase 0-E: Adoption-Step Diagnostic (optional, one line)
+
+Locate the project on the AI-adoption ladder and name the **next unlock** — one line appended below the Recommended Actions table, never a table row. [Source: "Steps of AI Adoption" (Boris Cherny, 2026-07): Step 1 Assisted (~1 agent, supervised pair) → 2 Parallel (~10, orchestrator + trusted self-verification) → 3 Supervised autonomy (~100, loops/routines, Claude kicks off Claude) → 4 AI-native (~1,000+, steer by intent, monitor by exception).]
+
+**Diagnose from evidence already gathered in 0-A–0-C** (no extra probes): parallel spawn usage, self-verification loop presence (tests+build+lint gates), loop/routine registrations (`/loop`, schedules, orbit contracts), proactive/automated kickoff paths.
+
+**Emit format:** `🪜 Adoption step: N (label) — next unlock: <the step N→N+1 lever>` — levers per the ladder: 1→2 parallel agents + a self-verification loop you trust; 2→3 context auto-supply + work broken into loops/routines + Claude kicking off Claude; 3→4 scaled automation of domain-specific use cases with per-type guardrails.
+
+**Restraint:** skip silently when evidence is too thin to place a step (don't guess), and never generate work items from this line — it contextualizes the 🧭 North Star recommendation, it doesn't add tasks.
+
+---
+
 ## User Interaction
 
 Options after proactive analysis:
