@@ -86,7 +86,7 @@ Code review and quality checks.
 | **Judge** | Automated code review | PR review automation, bug detection | Mixed |
 | **Zen** | Refactoring | Variable renaming, function extraction, dead-code removal | Mixed |
 | **Canon** | Standards-compliance check | OWASP / WCAG / OpenAPI conformance evaluation | No |
-| **Gauge** | SKILL.md audit | 18-item checklist conformance | No |
+| **Gauge** | SKILL.md audit | 19-item checklist conformance | No |
 | **Attest** | Spec-compliance verification | Acceptance-criteria extraction, BDD scenario generation | No |
 | **Cloak** | Privacy engineering | PII detection, GDPR / CCPA compliance | Mixed |
 

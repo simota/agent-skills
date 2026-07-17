@@ -1,6 +1,6 @@
 # Normalization Checklist (Audit Reference)
 
-**Purpose:** Defines the 18-item checklist with PASS/PARTIAL/FAIL criteria and P0-P3 priority classification.
+**Purpose:** Defines the 19-item checklist with PASS/PARTIAL/FAIL criteria and P0-P3 priority classification.
 **Read when:** Starting any SCAN or CLASSIFY phase.
 **Source:** `.agents/skill-normalization-checklist.md` (ecosystem master checklist).
 
@@ -9,9 +9,12 @@
 - `S10` Body Size Constraint — line + token thresholds (P1). Anthropic recommendation is `<500 lines / <5000 tokens`. Repository-tuned tiers in `reference/detection-patterns.md`.
 - Automated detection for F1/F2/F3/N1/N2/C1/C2/S1/S2 is available via `python3 _common/scripts/lint-frontmatter.py --severity warning`. Use that as the source-of-truth scanner; this checklist remains the human-readable contract.
 
+**Recent additions (Generation 4 — Wish #1, Phase 3):**
+- `S11` Freshness / Staleness Check (P2, P1 on routing-critical paths) — dangling `reference/`/`_common/` citations left behind by a rename/delete/merge elsewhere in the repo. Partial automated detection for `nexus/` via `python3 _common/scripts/routing-oracle.py --severity warning` (RO-1).
+
 ---
 
-## 18-Item Checklist
+## 19-Item Checklist
 
 ### F1: YAML Frontmatter
 
@@ -175,6 +178,27 @@
 
 ---
 
+### S11: Freshness / Staleness Check
+
+| Status | Criteria |
+|--------|----------|
+| PASS | Every `reference/<file>.md` and `_common/<file>.md` path cited in the skill's SKILL.md body resolves to an existing file (no dangling reference left behind by a rename/delete/merge elsewhere in the repo), AND the skill has no Reference Map / Recipes-table row pointing at a file that was deleted or retired (e.g. the `nexus/reference/routing-quick-start.md` retirement class of drift) |
+| PARTIAL | 1-2 stale citations found, none on a P0/critical routing or safety path |
+| FAIL | 3+ stale citations, OR any stale citation on a routing-critical path (a Recipes table `Read` column, a `## Reference Map` row, or a Chain Template pointer) |
+
+**Detection:** `python3 _common/scripts/routing-oracle.py --severity warning` implements the mechanical half of this check for `nexus/` (dead-reference existence over routing tables, RO-1). For non-`nexus` skills, grep the skill's SKILL.md + `reference/*.md` for backticked `reference/*.md` / `_common/*.md` paths and confirm each resolves (`Path.exists()`), following the same skill-relative vs repo-root-relative resolution rules as `routing-oracle.py`'s `_resolve_ref`.
+
+**Rationale:** File merges/deletions/renames (subtraction work — collapsing duplicate files, deleting a superseded reference) are exactly the kind of change that leaves a citation dangling in a *different* file than the one being edited, because the editor's context doesn't include every citing file. This item exists so a subtraction PR is caught if it forgot to grep-and-fix every referencing file — the same discipline this checklist's own Generation-3/4 history required when `routing-quick-start.md` was retired (Wish #1, Phase 3).
+
+**Priority:** P2 (quality hygiene, promotes to **P1** when the stale citation sits on a routing-critical path per the FAIL criterion).
+
+**Fix hints:**
+- `grep -rln "<old-filename>" --include="*.md" .` before deleting or renaming any `reference/` or `_common/` file; fix every hit, not just the file you were originally editing.
+- Re-run `routing-oracle.py` (or the repo-wide grep equivalent) after any file deletion/rename/merge, not just after adding new content.
+- If a citation intentionally uses the "named-skill-then-implicit-reference/" shorthand (e.g. "`quest/SKILL.md` (+ `reference/x.md`, ...)"), make the skill prefix explicit (`quest/reference/x.md`) if it is ever hoisted into a different file where the shorthand's antecedent is lost.
+
+---
+
 ### A1: AUTORUN Support (_STEP_COMPLETE)
 
 | Status | Criteria |
@@ -199,7 +223,7 @@
 |----------|-------|-------|-----------|
 | **P0 (Critical)** | Ecosystem integration + routing | A1, A2, S7, **F2** | Required for AUTORUN execution, agent collaboration, **and skill selection** (F2: description is the single routing signal) |
 | **P1 (High)** | Quality and consistency | S2, S3, S4, L1, **S10** | Core behavioral contract, safety boundaries, workflow definition, language standard, **body size egregious tier** |
-| **P2 (Medium)** | Discoverability and routing | S1, S5, S6 | Trigger conditions, output routing, deliverable requirements |
+| **P2 (Medium)** | Discoverability and routing | S1, S5, S6, **S11** | Trigger conditions, output routing, deliverable requirements, **freshness/staleness (uplifts to P1 on a routing-critical path)** |
 | **P3 (Low)** | Metadata and reference | F1, H1, H2, H3, S8, S9 | Frontmatter, machine-readable metadata, reference pointers, operational logging |
 
 ### Priority-Based Fix Order
@@ -213,7 +237,7 @@
 
 ## Architect Exemplar Reference
 
-Architect (`architect/SKILL.md`) is the reference standard for all 16 items. When generating fix snippets, cite the corresponding Architect section as exemplar:
+Architect (`architect/SKILL.md`) is the reference standard for all 19 items. When generating fix snippets, cite the corresponding Architect section as exemplar:
 
 | Item | Architect Section Reference |
 |------|------------------------------|
@@ -233,6 +257,7 @@ Architect (`architect/SKILL.md`) is the reference standard for all 16 items. Whe
 | S8 | "Reference Map" section |
 | S9 | "Operational" section |
 | S10 | Body size ≤ 500 lines / ~5000 tokens |
+| S11 | No dangling `reference/`/`_common/` citations after a rename/delete/merge elsewhere in the repo |
 | A1 | "AUTORUN Support" section (_STEP_COMPLETE YAML) |
 | A2 | "Nexus Hub Mode" section (NEXUS_HANDOFF block) |
 

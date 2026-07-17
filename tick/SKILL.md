@@ -165,7 +165,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Authoring Defaults
 
-Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read the existing game loop, entity definitions, and state code at FRAME — architecture decisions must be grounded in the actual codebase, not assumed), P5 (think step-by-step at DESIGN for loop type, ECS-vs-OOP, netcode model, and determinism — these are load-bearing, hard-to-reverse choices)** as critical for Tick. P2 recommended: calibrated output preserving the timestep structure, system update order, and save-schema version. P1 recommended: front-load game type, frame budget, entity scale, and determinism need at FRAME.
+Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Tick; P2, P1 recommended).
 
 ---
 

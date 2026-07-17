@@ -74,7 +74,7 @@ Route elsewhere when the task is primarily:
 - Up to 70 % of database performance issues stem from design flaws, not hardware — invest time in modeling before scaling infrastructure.
 - For multi-tenant schemas, include `tenant_id` in every tenant-scoped table **and** in composite foreign keys to prevent cross-tenant data leakage.
 - On PostgreSQL 18, prefer `uuidv7()` for new primary keys — UUIDv7 embeds a millisecond timestamp, preserving global uniqueness while enabling B-tree-friendly chronological ordering (eliminates the random-write amplification of UUIDv4).
-- Author for Opus 4.8 defaults. Apply _common/OPUS_48_AUTHORING.md principles **P3 (eagerly Read existing schema, FKs, indexes, and prior migrations at AUDIT — destructive change detection depends on full grounding), P5 (think step-by-step at PLAN — migration ordering, lock-timeout, and expand-contract decisions drive production blast radius)** as critical for Schema. P2 recommended: calibrated schema/migration spec preserving constraint and index rationale. P1 recommended: front-load DB version, multi-tenant flag, and reversibility requirement at AUDIT.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Schema; P2, P1 recommended).
 
 ## Boundaries
 

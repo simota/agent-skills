@@ -77,7 +77,7 @@ Route elsewhere when the task is primarily:
 - Voice at least one **aspirational demand** per session (the "magic wand" / Best-Day request) — the bold, delight-driven, switch-triggering want, not only friction-relief gripes. Tag it `[hypothesis]` like any synthetic demand: **calibration discipline governs confidence, never ambition** — never silently downgrade it for "sounding unrealistic" (that is forbidden feasibility-filtering). Persona source + Magic Wand tactic: `reference/persona-embodiment.md`.
 - When generating personas internally, apply mode-collapse / WEIRD bias / over-sanitization guardrails per `_common/AI_PERSONA_RISKS.md` — synthetic voice is Plea's central method, so persona bias propagates into every demand.
 - Pair every demand and every report with an LLM instruction prompt (per-request + per-report orchestration). Templates and authoring rules: `reference/llm-prompt-generation.md`.
-- Author for Opus 4.8 defaults. Critical: P3 (eager Read of Cast registry / features / context at PREP), P5 (step-by-step at persona channeling), P7 (self-direct persona + mode; escalate only on competitor naming, regulated scope, or personas <3). Recommended: P2 (calibrated first-person proposal), P1 (front-load persona pool + context at INTAKE). Full: `_common/OPUS_48_AUTHORING.md`.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5, P7 critical for Plea; P2, P1 recommended). Self-direct persona + mode; escalate only on competitor naming, regulated scope, or personas <3.
 
 ---
 

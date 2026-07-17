@@ -1,6 +1,6 @@
 # Content Quality Audit (CQ items)
 
-Two content-level checks complementing the 18 structural items (F1, F2, L1, H1-H3, S1-S10, A1-A2).
+Two content-level checks complementing the 19 structural items (F1, F2, L1, H1-H3, S1-S11, A1-A2).
 Source: Anthropic Engineering, "Lessons from Building Claude Code: How We Use Skills" (2026).
 
 Structural items verify that the SKILL.md *looks* right.
@@ -99,7 +99,7 @@ Reference exemplar: Quest, Sigil, and Chain descriptions in the current ecosyste
 
 ## Audit invocation
 
-`gauge audit` runs CQ1 and CQ2 alongside the 18 structural items.
+`gauge audit` runs CQ1 and CQ2 alongside the 19 structural items.
 `gauge checklist CQ1` or `gauge checklist CQ2` narrows to a single content item.
 
 Both items respect the change-budget and self-evolution Safety Levels defined in `self-evolution.md`.

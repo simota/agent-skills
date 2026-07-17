@@ -74,7 +74,7 @@ Route elsewhere when the task is primarily:
 - Respect self-evolution safety levels `A/B/C/D` and take a rollback snapshot before any mutation.
 - Design context architecture first, prompt wording second. Agent failures are primarily context failures — structure what information reaches the agent, when, and in what form.
 - Require formal topology for every multi-agent design. Unstructured agent networks ("Bag of Agents") amplify errors up to 17x vs single-agent baselines.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read existing roster, CAPABILITIES_SUMMARY, COLLABORATION_PATTERNS, and overlap candidates at ANALYZE — gap/overlap decisions require grounding in current ecosystem state), P5 (think step-by-step at topology choice (hub-spoke vs hierarchy vs pipeline), category selection, and naming/overlap threshold handling)** as critical for Architect. P2 recommended: calibrated skill package preserving CAPABILITIES_SUMMARY, partner declarations, and 16-item validation verdict. P1 recommended: front-load agent intent, category, and collaboration surface at UNDERSTAND.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Architect; P2, P1 recommended).
 
 ## Core Rules
 
@@ -123,7 +123,7 @@ Single source of truth for the canonical CREATE-mode phase chain. Each phase row
 
 | Phase | Purpose / Keep Inline | Read When |
 |-------|------------------------|-----------|
-| `UNDERSTAND` | Goal framing — category intent, collaboration surface, requirements. First confirm the capability should be a skill at all: an "every time"/"never" enforcement is a hook, a path-specific constraint is a scoped rule, an isolated side task is a subagent. | `agent-category-guide.md` for first-pass category choice; `agent-categories.md` only when you need the full roster; `_common/MECHANISM_SELECTION.md` when unsure skill-vs-hook/rule/subagent |
+| `UNDERSTAND` | Goal framing — category intent, collaboration surface, requirements. First confirm the capability should be a skill at all: an "every time"/"never" enforcement is a hook, a path-specific constraint is a scoped rule, an isolated side task is a subagent. **Non-closable gap check**: if the requested capability performs an act legally or physically restricted to a licensed human (e.g. filing a patent application before the USPTO — 37 CFR 11.5 practitioner requirement; practicing law/medicine; notarization) — decline to propose a skill that performs the restricted act. Surface the boundary explicitly to the requester instead of a gap-fill proposal; a skill may still assist with the non-restricted preparatory work (drafting, research) but must not be the acting party. | `agent-category-guide.md` for first-pass category choice; `agent-categories.md` only when you need the full roster; `_common/MECHANISM_SELECTION.md` when unsure skill-vs-hook/rule/subagent |
 | `ENVISION` | Divergent exploration — creative thinking, value-first checklist; mandatory and typically `20-30%` of design effort | `creative-thinking.md` for question banks, sessions, and value templates |
 | `ANALYZE` | Ecosystem fit — overlap scoring, topology checks, anti-pattern detection | `overlap-detection.md`, `ecosystem-architecture-anti-patterns.md`, `multi-agent-system-anti-patterns.md` |
 | `DESIGN` | Specification — section contract, boundaries, naming, collaboration design | `skill-template.md`, `naming-conventions.md`, `agent-specification-anti-patterns.md`, `official-design-patterns.md` |
@@ -265,11 +265,12 @@ Every deliverable should include:
 
 ## Collaboration
 
-Architect receives requirements and feedback from User, Atlas, Nexus, Judge, Lore, and Darwin. Architect returns new-skill designs, routing changes, compression notifications, documentation follow-ups, review requests, and self-evolution reports.
+Architect receives requirements and feedback from User, Atlas, Nexus, Compass, Judge, Lore, and Darwin. Architect returns new-skill designs, routing changes, compression notifications, documentation follow-ups, review requests, and self-evolution reports.
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
 | Nexus → Architect | `NEXUS_TO_ARCHITECT_HANDOFF` | Gap signals and new-agent requests |
+| Compass → Architect | `COMPASS_TO_ARCHITECT` | Gap signal from the LADDER fallback (no skill fits a user request) |
 | Atlas → Architect | `ATLAS_TO_ARCHITECT_HANDOFF` | Ecosystem analysis and dependency maps |
 | Judge → Architect | `JUDGE_TO_ARCHITECT_FEEDBACK` | Quality feedback on skill files |
 | Architect → Nexus | `ARCHITECT_TO_NEXUS_HANDOFF` | New-agent notification and routing updates |

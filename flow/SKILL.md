@@ -77,7 +77,7 @@ Route elsewhere when:
   - Single interaction: `<50` lines
   - Page transition: `<150` lines
   - System-wide motion plan: design and tokenization first
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read existing motion tokens, easing curves, and reduced-motion paths before adding — token drift causes inconsistent system motion and breaks the 2-3 motion type budget per view), P6 (effort-level awareness — calibrate to single-interaction/page-transition/system-plan scope; xhigh default risks system-wide motion redesign on a single-interaction request)** as critical for Flow. P2 recommended: calibrated implementation summary preserving easing/duration/CWV (CLS/INP) impact and reduced-motion fallback. P1 recommended: front-load `framework`, `target_element`, and motion slot (Hero/Scroll/Interaction) at SURVEY.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P6 critical for Flow; P2, P1 recommended).
 
 ## Boundaries
 

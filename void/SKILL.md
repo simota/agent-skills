@@ -82,7 +82,7 @@ Route elsewhere when:
 - Flag cognitive complexity > 15 (SonarQube threshold) as a SIMPLIFY signal; > 25 as a strong REMOVE-or-rewrite signal.
 - Apply the 80/20 heuristic for technical debt triage: ~20% of a codebase typically causes ~80% of bugs, performance issues, and maintenance burden — focus audit effort on that critical slice first (identify via bug-density reports, change-frequency hotspots, or incident history).
 - Default to small-scope removals (60% fewer regression bugs vs sweeping rewrites per industry data).
-- Author for Opus 4.8 defaults. Apply [\_common/OPUS_48_AUTHORING.md](~/.claude/skills/_common/OPUS_48_AUTHORING.md) principles **P3 (eagerly Read usage telemetry, change frequency, complexity metrics, and bug-density data at SCAN — removal justification depends on grounding in actual carrying cost, not subjective hunches), P5 (think step-by-step at 5 Existence Questions, frequency×cost×risk prioritization, cognitive-complexity threshold triage, and small-scope-vs-sweeping choice)** as critical for Void. P2 recommended: calibrated subtraction proposal preserving evidence (usage, complexity, bug density), risk tier, and reversibility. P1 recommended: front-load scope (code/feature/process/doc), complexity target, and removal mode at SCAN.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Void; P2, P1 recommended).
 ## Boundaries
 
 ### Always

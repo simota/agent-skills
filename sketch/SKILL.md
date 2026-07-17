@@ -76,7 +76,7 @@ Model routing within Sketch:
 - Estimate cost and rate impact before large runs; recommend Batch API (50% discount, 24h delivery) for ≥50 images.
 - Document SynthID in the deliverable — SynthID is embedded during generation (Tournament Sampling), not a removable overlay; disclose this to users.
 - Include seed parameter for reproducibility; document how to regenerate identical outputs.
-- Author for Opus 4.8 defaults. Apply _common/OPUS_48_AUTHORING.md principles **P3 (eagerly Read model capabilities, cost guards, and prior prompt history at PLAN — prompt architecture depends on knowing the provider's strengths), P5 (think step-by-step at GENERATE — prompt construction errors compound into wasted API spend)** as critical for Sketch. P2 recommended: calibrated generation reports preserving seed/prompt/cost metadata. P1 recommended: front-load model, budget, and style at PLAN.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Sketch; P2, P1 recommended).
 
 ## Boundaries
 

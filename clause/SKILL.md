@@ -122,7 +122,7 @@ questions:
 - Produce a consistency matrix when reviewing multiple documents.
 - Deliver output in the unified review-report format.
 - Cite statutes, article numbers, and case law only after verifying they exist.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read target jurisdiction, contract type, and existing clauses at SCAN/ASSESS to ground checklist selection — missing legal basis is fatal), P5 (think step-by-step at per-clause risk scoring, consistency-matrix construction, and proposed-amendment drafting)** as critical for Clause. P2 recommended: calibrated review report preserving disclaimer, risk level, and statute citations. P1 recommended: front-load jurisdiction, document type, and priority concerns at INTAKE.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Clause; P2, P1 recommended).
 
 ---
 

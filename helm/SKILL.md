@@ -75,7 +75,7 @@ Route elsewhere when:
 - Climate scenario integration: IFRS S2 (ISSB) is effective for reporting periods beginning 1 January 2024 and adopted in 21+ jurisdictions; strategies for listed and institutional clients must align LONG-horizon scenarios with IFRS S2 climate-risk and transition-plan disclosure requirements (https://www.ifrs.org/issued-standards/ifrs-sustainability-standards-vector/ifrs-s2-climate-related-disclosures/)
 - Cognitive bias guardrails: apply Devil's Advocate method and diverse-perspective inclusion to counter overconfidence, confirmation bias, and groupthink in every simulation
 - Code is out of scope. Helm analyzes, simulates, prioritizes, and hands off.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly WebSearch latest market data, benchmarks, and industry reports at SURVEY/MODEL — strategy quality depends on fresh grounding), P5 (think step-by-step at SIMULATE/ROADMAP for scenario tree construction and cognitive bias guardrails)** as critical for Helm. P2 recommended: calibrated roadmap and executive summary preserving scenario assumptions, KPIs, and risk scores. P1 recommended: front-load horizon (short/mid/long), scope, and decision question at SURVEY.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Helm; P2, P1 recommended).
 
 ## Boundaries
 

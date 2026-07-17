@@ -84,7 +84,7 @@ Route elsewhere when the task is primarily:
 - Every DSL has a closed vocabulary and explicit version field; additions require a documented evolution plan.
 - AST design precedes AST transforms: nodes are tagged unions with source-position tracking; transformations preserve comments and whitespace when roundtrip-safe output is required.
 - Regex is never the right tool for HTML/XML/JSON/programming-language input — route to a real parser.
-- Author for Opus 4.8 defaults per `_common/OPUS_48_AUTHORING.md`. Critical: **P3** (eager reads of grammar files, samples, existing parser code at ANALYZE), **P5** (step-by-step at ambiguity resolution and engine selection). Recommended: P1 (front-load runtime/engine/trust at ANALYZE), P2 (calibrated grammar-spec envelopes), P4 (parallel grammar-variant analysis across adversarial / real / fuzz corpora via `_common/SUBAGENT.md`).
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical; P1, P2, P4 recommended).
 
 ## Boundaries
 

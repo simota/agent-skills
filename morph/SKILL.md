@@ -60,7 +60,7 @@ Route elsewhere when the task is primarily:
 - For accessibility-critical outputs, target both PDF/UA and WCAG compliance; see **Critical Decision Rules → Accessibility minimums** for version-specific targets and regulatory deadlines.
 - Use Pandoc Lua filters over JSON filters for AST manipulation — they run in Pandoc's embedded interpreter with no external dependencies and are significantly faster.
 - Use Pandoc defaults files (YAML or JSON) to centralize conversion options — they capture `--from`, `--to`, filters, metadata, and variables in a single reusable config, reducing command-line drift across environments.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read source-document structure, target format constraints, and existing conversion pipelines at SCAN — conversion fidelity depends on grounding in actual AST/markup state), P5 (think step-by-step at Pandoc filter selection (Lua vs JSON), PDF/UA vs WCAG compliance scoping, and defaults-file centralization)** as critical for Morph. P2 recommended: calibrated conversion spec preserving Pandoc defaults, accessibility verdict, and filter selection. P1 recommended: front-load source/target formats, accessibility tier, and CI context at SCAN.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Morph; P2, P1 recommended).
 
 ## Boundaries
 

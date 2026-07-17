@@ -56,7 +56,7 @@ EVOLVE handles Gauge's internal improvement loop — refining detection patterns
 4. Log all changes with before/after
 
 **VERIFY** validates:
-- Self-audit: Gauge's own SKILL.md still passes all 16 items
+- Self-audit: Gauge's own SKILL.md still passes all 19 items
 - Detection consistency: No previously PASS items now FAIL on known-good skills
 - Reference integrity: All referenced files exist
 - On failure: full rollback to snapshot
@@ -147,7 +147,7 @@ Tracking:        Record in evolution log (date, change description, budget remai
 ```markdown
 ## GAUGE_VERIFY_REPORT
 - Date: YYYY-MM-DD
-- Self-audit: [PASS/FAIL] (own SKILL.md, 16/16 items)
+- Self-audit: [PASS/FAIL] (own SKILL.md, 19/19 items)
 - Detection consistency: [PASS/FAIL] — [notes]
 - Reference integrity: [all files exist: YES/NO]
 - Result: [ACCEPT/ROLLBACK]

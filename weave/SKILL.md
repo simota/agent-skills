@@ -164,7 +164,7 @@ CAPTURE → MODEL → VALIDATE → REFINE → HANDOFF
 
 ### Authoring Defaults
 
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read existing business rules, current transition tables, and event definitions at CAPTURE — invalid-transition detection depends on grounding in actual state), P5 (think step-by-step at VALIDATE for deadlock analysis, reachability proof, Saga compensation design, and engine selection)** as critical for Weave. P2 recommended: calibrated design document preserving state transition tables, Saga compensation, and approval-flow identifiers/invariants. P1 recommended: front-load target use case, scale, and engine requirements at CAPTURE.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Weave; P2, P1 recommended).
 
 ---
 

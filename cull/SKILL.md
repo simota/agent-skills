@@ -83,7 +83,7 @@ Route elsewhere when the task is primarily:
 - Classify infection grade conservatively: `CLEAN` requires zero IoC matches AND zero suspicious patterns; one IoC match is `CONFIRMED`; persistence still running is `ACTIVELY_BLEEDING`.
 - Cross-platform aware. macOS LaunchAgents, Linux systemd user units, Windows scheduled tasks, WSL `~/.config/`, and dev containers each have distinct persistence surfaces — read `reference/scan-procedures.md` for the matrix.
 - The IoC database is curated, time-stamped, and source-cited. When a new campaign is published, update the database in a PR with `Source: <URL>` and the report date; do not invent IoCs.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly read `reference/ioc-database.md` and the actual lockfile / persistence paths at SURVEY — IoC grounding cost is trivial vs misclassification cost), P5 (think step-by-step at TRIAGE — grade misclassification compounds through rotation order errors and may fire retaliation payloads)** as critical for Cull. P1 recommended: front-load OS, package manager, suspected campaign, and scan scope at SURVEY.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Cull; P1 recommended).
 
 ---
 

@@ -52,12 +52,12 @@ Route elsewhere when the task is primarily:
 - Understand the user's question before recommending. Narrow recommendations to 1-3 skills.
 - Every recommendation must include "why this skill", a concrete usage example, **and the skill's default Recipe plus 2-4 notable Subcommands** (e.g., `/scout bug`, `/scout regression`, `/scout cascade`) so the user knows how to target specific variants.
 - When no skill fits, say so honestly and propose a gap signal to Architect.
-- **Cache-first lookup for `recommend`**: at the start of each `recommend` invocation, attempt to read `.claude/compass-cache.md`. If present and valid, use it as the primary source instead of `reference/catalog.md` (~95% context reduction). If missing, prompt the user once per session to run `init` before falling back to full catalog. If `catalog_version` mismatch or TTL expired, prepend a soft warning per `cache-format.md` § 7 and proceed with the stale cache. Never auto-refresh during `recommend` — refresh is always user-initiated.
+- **Cache-first lookup for `recommend`**: at the start of each `recommend` invocation, attempt to read `.claude/compass-cache.md`. If present and valid, use it as the primary source instead of `reference/catalog.md` (~95% context reduction). If missing, prompt the user once per session to run `init` before falling back to full catalog. If `catalog_version` mismatch or TTL expired, prepend a soft warning per `cache-format.md` § 7 and proceed with the stale cache. Never auto-refresh during `recommend` — refresh is always user-initiated. **Non-interactive/AUTORUN callers (e.g. Nexus's LADDER step spawning `compass(recommend)` with no user in the loop) decline the `init` prompt by default and go straight to full-catalog search** — a cold-cache prompt has no one to answer it, and a one-shot lookup doesn't justify persisting a cache file.
 - For `catalog`, `recipes`, `onboard`: bypass the cache and read full `reference/catalog.md` / `reference/recipes-directory.md`. The cache is a slim view scoped to `recommend`.
 - When using full catalog (cache miss or non-recommend recipes), retrieve catalog information from `reference/catalog.md` to reflect current ecosystem state. Cross-reference Recipe/Subcommand metadata from `reference/recipes-directory.md` — every recommendation must surface at least the default Recipe. For precise matching, cross-reference CAPABILITIES_SUMMARY metadata in target SKILL.md files — match by declared capabilities, not category labels alone.
 - When no single skill fits the full task, decompose into sub-tasks and recommend one skill per sub-task. Avoid suggesting loosely related agents for a monolithic task.
 - Cap recommendations at 3. Too many choices paralyze users.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read `reference/catalog.md` and CAPABILITIES_SUMMARY at LOOKUP — recommendations must ground in current roster, not stale memory), P5 (think step-by-step at task decomposition vs single-skill routing, and cap-3 ranking — over-recommendation degrades user trust)** as critical for Compass. P2 recommended: calibrated recommendation preserving capability-match rationale and cap-3 discipline. P1 recommended: front-load task surface, user skill level, and decomposability at LOOKUP.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Compass; P2, P1 recommended).
 
 ## Boundaries
 
@@ -130,7 +130,7 @@ Behavior notes per Recipe:
 | `組み合わせ`, `チェーン`, `ワークフロー` | Chain mode | Agent chain proposal | `reference/patterns.md` |
 | `cache 作って`, `init`, `高速化` | Cache init mode | Cache file + 5-line report | `reference/cache-recipes.md` |
 | `cache 更新`, `refresh`, `再生成` | Cache refresh mode | Cache file + before/after diff | `reference/cache-recipes.md` |
-| No matching skill | Gap mode | Gap report + Architect proposal | — |
+| No matching skill | Gap mode | Gap report + Architect proposal | `reference/gap-report.md` |
 
 ## Quick Overview: 5 Domains
 
@@ -186,6 +186,7 @@ Every deliverable must include:
 | `reference/catalog.md` | You need full skill listings, category details, or are running `catalog` / `recipes` / cache-miss `recommend` |
 | `reference/recipes-directory.md` | You need each skill's Subcommands (Recipes) — required for `catalog` / `recipes` / cache-miss `recommend`. Auto-generated from SKILL.md `## Recipes` tables |
 | `reference/patterns.md` | You need task-to-skill mapping patterns |
+| `reference/gap-report.md` | You are running Gap mode (no matching skill) and need the Gap Report structure to hand off to Architect via `COMPASS_TO_ARCHITECT` |
 | `reference/examples.md` | You need onboarding scenarios or concrete examples |
 | `reference/cache-format.md` | You are running `init` / `refresh`, validating a cache file, or interpreting cache invalidation rules / affinity scale / universal inclusions |
 | `reference/cache-recipes.md` | You are executing `init` or `refresh` and need the SCAN→SIZE→SCORE→PICK→WRITE→REPORT procedure, signal extraction sources, signal→skill mapping table, or top-N sizing formula |

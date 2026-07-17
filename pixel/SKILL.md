@@ -76,7 +76,7 @@ Route elsewhere when the task is primarily:
 - Target fidelity ≥90% overall; flag sections below 80%. AI design-to-code tools typically ship at 75-80% before manual refinement — ≥90% requires iteration.
 - Require high-resolution source images (≥2x); warn when input is lossy-compressed or sub-720p (fidelity ceiling drops to ~70-80%).
 - VERIFY phase essentials: use `animations: 'disabled'` in `toHaveScreenshot()`; `mask: [locator]` for dynamic content, `stylePath` for unmaskable elements; `maxDiffPixelRatio: 0.01-0.02` + `threshold: 0.2`; prefer element-level screenshots for component checks; run visual regression exclusively in Chromium with OS-normalized Docker in CI (cross-browser snapshots never match due to font/sub-pixel/scrollbar differences). Full workflow: `reference/visual-verification.md`.
-- Author for Opus 4.8 defaults. Critical principles: **P3** (eagerly Read source mockup, tokens, section structure at ANALYZE — fidelity ceiling depends on grounding) and **P5** (think step-by-step at VERIFY — refinement decisions drive iteration cost). Recommended: P2 calibrated reports, P1 front-loaded fidelity tier/scope.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical; P2, P1 recommended).
 - When a gap analysis report is requested, follow `reference/gap-analysis-report.md` (8 dimensions × 5 severity × 9 root causes, Markdown + JSON). REFINE loop uses the lightweight `visual-verification.md` diff; the detailed report is additive.
 
 ## Boundaries

@@ -63,7 +63,7 @@ Route elsewhere when the task is primarily:
 - Include visual cues (diagram placeholders, image suggestions) for non-text content; a single well-designed visual replaces paragraphs.
 - Generate a self-contained slide deck that can be previewed with a single command.
 - Calibrate timing with speaker pace (120-160 WPM; 140 WPM default for technical conference talks, 125 WPM for keynotes and non-native audiences). Total word budget = duration × WPM; flag decks that exceed the budget at DRAFT. Source: TED2026 cluster 130-150 WPM (https://conferences.ted.com/ted2026); University of Edinburgh study — listeners at 190+ WPM retain 30% less than at 150 WPM.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read story outline, audience profile, and talk duration at OUTLINE — slide resonance depends on grounding in actual audience and story arc), P5 (think step-by-step at framework selection (Marp/reveal.js/Slidev), 6x6 rule enforcement, and visual-cue placement)** as critical for Stage. P2 recommended: calibrated slide deck preserving 6x6 discipline, visual cues, and single-command preview. P1 recommended: front-load talk type, audience, and duration at OUTLINE.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Stage; P2, P1 recommended).
 
 ## Boundaries
 

@@ -86,7 +86,7 @@ Route elsewhere when the task is primarily:
 - Every phase in the migration roadmap must be independently shippable and reversible. No phase that requires both stores to ship simultaneously without a fallback.
 - Design only. Generate **specifications**, not code. Hand off implementation to `Native`, `Builder`, `Scaffold`, `Schema`, `Gateway` per `reference/handoffs.md`.
 - Quantify every risk: probability × impact. No qualitative-only risk entries.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read the web codebase, package.json, routing config, state stores, API contracts, and storage usage during SURVEY — porting correctness requires grounding in concrete source state, not assumptions about a generic "React app"), P5 (think step-by-step at architecture mapping, parity verdict per feature, offline-tier selection, auth-flow translation, and phasing decisions — these compound and a wrong early decision propagates)** as critical for Port. P2 recommended: calibrated blueprint preserving the parity matrix, per-platform architecture, offline tiers, and phased roadmap. P1 recommended: front-load source web stack, target stacks (iOS/Android), scope, and parity goal at SURVEY.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Port; P2, P1 recommended).
 
 ## Boundaries
 

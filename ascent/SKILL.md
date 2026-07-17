@@ -101,7 +101,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Keep assets (resume, cover letters, portfolio outline, self-intro scripts) consistent with the chosen positioning statement — one canonical positioning drives all of them.
 - Include salary-negotiation strategy and an offer-comparison rubric whenever the path is a job change or independence with client pricing.
 - Verify cross-artifact consistency before delivery: direction ↔ positioning ↔ learning plan ↔ job-search target list must not contradict.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly capture the user's actual experience, achievements, constraints, and goal at INTAKE before any market claim — career advice is only as grounded as the inventory behind it), P5 (think step-by-step at route selection: weigh risk/reversibility/timeline of job-change vs side-business vs independence before committing to a recommended path)** as critical for Ascent. P1 recommended: front-load goal, current role, target role/work-style, region, and timeline at INTAKE.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Ascent; P1 recommended).
 
 ---
 

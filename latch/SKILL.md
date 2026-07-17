@@ -98,7 +98,7 @@ Route elsewhere when the task is primarily:
 - Security-critical blocks require `exit 2` (not `exit 1`, which only logs a warning).
 - Every command hook must explicitly handle missing dependencies — fail-closed (`exit 2`) for security hooks, fail-open (`exit 0`) for monitoring, and document the choice.
 - File-protection PreToolUse on `Edit|Write` alone is bypassable via `Bash` (`sed`/`python -c`/`echo` redirection); always pair with a matching `Bash` hook that pattern-matches file-writing commands.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read existing `settings.json`, `hooks.json`, matchers, and tool-allowlist state at PROFILE), P5 (think step-by-step at event selection: PreToolUse vs PostToolUse vs PermissionRequest, permissionDecision choice, exit-code semantics, fail-closed vs fail-open)** as critical. P2 recommended: calibrated hook spec preserving event type, matcher, exit-code contract, and stderr/stdout discipline. P1 recommended: front-load scope (user/project/local), tools affected, and enforcement intent at PROFILE.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for this role; P2, P1 recommended).
 
 ## Boundaries
 

@@ -161,13 +161,15 @@ Phase 1 scope: Scout only. Builder, Sentinel, and other Tier 1 skills adopt Reci
 
 | Script | Purpose |
 |--------|---------|
-| `_common/scripts/validate-recipes.py` | Validate every SKILL.md against R-REC-01〜05 + heading integrity (H-REC-01/02). Exit non-zero on ERROR. Run before commit and in CI. |
+| `_common/scripts/validate-recipes.py` | Validate every SKILL.md against R-REC-01〜05 + heading integrity (H-REC-01/02). Default severity (`warning`) always exits 0 — pass `--severity error` to fail on ERROR findings. Run before commit and in CI. |
 | `_common/scripts/generate-recipes-directory.py` | Regenerate `compass/reference/recipes-directory.md` from all SKILL.md `## Recipes` tables. Idempotent; run after any Recipe change. |
 
 Usage:
 
 ```bash
-python3 _common/scripts/validate-recipes.py          # exit 1 on errors
-VERBOSE=1 python3 _common/scripts/validate-recipes.py  # also show INFO for skills without Recipes
-python3 _common/scripts/generate-recipes-directory.py  # refresh compass directory
+python3 _common/scripts/validate-recipes.py                          # bare invocation — severity=warning, always exits 0
+python3 _common/scripts/validate-recipes.py --severity error          # exit 1 on ERROR findings
+python3 _common/scripts/validate-recipes.py --severity error --changed-only  # ERROR-gate, git-diff scope only (CI PR check)
+VERBOSE=1 python3 _common/scripts/validate-recipes.py                 # also show INFO for skills without Recipes
+python3 _common/scripts/generate-recipes-directory.py                 # refresh compass directory
 ```

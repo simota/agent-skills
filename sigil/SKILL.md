@@ -70,7 +70,7 @@ Route elsewhere when the task is primarily:
 - Avoid duplicating ecosystem agent functionality.
 - Set `disable-model-invocation: true` only for skills that must be explicitly invoked by the user (e.g., destructive operations, one-off migrations).
 - Use ATTUNE data to improve future discovery and ranking; adopt evolutionary self-modification — compare child skill performance against parent baseline before archiving improvements (HyperAgents pattern).
-- Author for Opus 4.8 defaults. Sigil is a **Knowledge/Meta** role per `_common/OPUS_48_AUTHORING.md` (Per-Role Apply Matrix). Apply principles **P6 (Effort-Level Awareness — project-specific skill generation is an xhigh task; allocate full context budget across SCAN → DISCOVER → CRAFT → VERIFY → ATTUNE rather than premature short-circuiting), P7 (Delegation-Engineer Framing — once SCAN establishes project conventions and ecosystem inventory, drive subsequent phases autonomously without per-step micro-guidance)** as critical for Sigil. P1 recommended: front-load project stack, task domain, and scope (project vs global) at SCAN.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P6, P7 critical for Sigil; P1 recommended).
 
 ## Boundaries
 

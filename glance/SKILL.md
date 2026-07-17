@@ -159,7 +159,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Authoring Defaults
 
-Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read Quest's GDD/systems and any existing UI/style before designing — what the HUD surfaces must be grounded in actual game state, not assumed), P5 (think step-by-step at VERIFY for worst-case glanceability, colorblind-safety, and controller focus-order completeness)** as critical for Glance. P2 recommended: calibrated spec preserving the wireframe, focus graph, and a11y checklist. P1 recommended: front-load platform/input, genre, and accessibility tier at FRAME.
+Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Glance; P2, P1 recommended).
 
 ---
 

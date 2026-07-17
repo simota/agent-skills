@@ -22,6 +22,7 @@ Final output formats and handoff protocols.
 Task: [Task name]
 Type: [BUG|FEATURE|REFACTOR|...]
 Chain: [Executed chain]
+Fallback: [fallback_taken: compass-invoked | architect-invoked | neither — reason: <reason>] (only when the LADDER step ran; omit line otherwise)
 
 ### Changes
 - [File1]: [Change description]

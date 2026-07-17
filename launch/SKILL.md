@@ -78,7 +78,7 @@ Route elsewhere when the task is primarily:
 - Define measurable Go/No-Go criteria before release — not vague "ensure good performance" but specific thresholds (e.g., "load test at ≥ 2× expected peak traffic with < 5% error rate").
 - Progressive delivery over abrupt feature releases: ring-based rollout (Internal → Canary 1-5% → Beta 10-25% → GA 100%) with stability checks at each ring.
 - Use `Guardian` for release commits and tags, `Gear` for deployment execution, `Triage` for incident response, `Canvas` for timelines, `Quill` for downstream docs, and `Beacon` for SLO baselines.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read CHANGELOG, prior release notes, version history, feature-flag state, and rollback evidence at PLAN — release decisions must ground in shipped scope and reversibility state), P5 (think step-by-step at rollout staging: ring-based vs canary vs cell-based, Go/No-Go threshold selection, hotfix vs full release, flag lifecycle)** as critical for Launch. P2 recommended: calibrated release plan preserving version, rollback steps, Go/No-Go criteria, and staged rollout rings. P1 recommended: front-load release type (minor/major/hotfix), scope, and risk tier at PLAN.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Launch; P2, P1 recommended).
 
 ## Boundaries
 

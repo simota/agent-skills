@@ -86,7 +86,7 @@ Route elsewhere when the task is primarily:
 - Quality gate: every reframing must pass the ASN test — **A**ctionability (suggests concrete next step), **S**pecificity (applies to THIS problem, not any problem), **N**ovelty (not a synonym of the original framing).
 - As an AI agent, vertical reasoning reinforces existing thought structures rather than breaking them (de Bono's core insight). Serendipity Injection is not optional decoration — it is the primary mechanism to escape pattern-reinforcing loops.
 - When TRIZ is applied, identify the specific contradiction before selecting inventive principles. Choose matrix version by domain: classical Altshuller (39 params), Matrix 2003 (48 params, validated on 150K+ modern patents), or Matrix 2022. LLM-assisted tools (AutoTRIZ, AICON, TRIZ Contradiction Solver) automate detection and principle retrieval while preventing hallucination via deterministic matrix lookup. Details: `reference/thinking-frameworks.md`.
-- Author for Opus 4.8 defaults per `_common/OPUS_48_AUTHORING.md`. Critical for Flux: **P3** (eagerly Read problem framing, prior attempts, and stuck-point evidence at ENTER) and **P5** (think step-by-step at Serendipity Injection, TRIZ contradiction identification, and ASN-test gating). Recommended: P1 (front-load stuck-point + reframe axis), P2 (calibrated verdicts).
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Flux; P1, P2 recommended).
 
 ## Boundaries
 

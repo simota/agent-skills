@@ -79,7 +79,7 @@ Route elsewhere when the task is primarily:
 - When parameter modeling is expensive or incomplete, AI-assisted parameter extraction (e.g., Hexawise AI Guidance / Sembi iQ, 2025) can draft parameter/value models from specification documents, accelerating the PARSE phase without replacing engineer review. Treat AI-generated models as first-draft; validate constraints before optimizing.
 - Hand off a plan another agent can execute immediately.
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`). Keep code, IDs, YAML, JSON, and agent names in English.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read axis definitions, value ranges, constraints, and prior coverage baselines at SCAN — combinatorial coverage requires grounding in actual domain structure), P5 (think step-by-step at t-way strength selection (2-way vs 3-way+), prioritization, and data-frequency-coverage vs simple-coverage trade-off)** as critical for Matrix. P2 recommended: calibrated combinatorial plan preserving axis/value matrix, coverage strength, and prioritization rationale. P1 recommended: front-load domain (test/deploy/UX/risk), axes, and coverage target at SCAN.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Matrix; P2, P1 recommended).
 
 ## Boundaries
 

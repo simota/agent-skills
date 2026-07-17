@@ -86,7 +86,7 @@ Route elsewhere when the task is primarily:
 - Use `search_design_system` to discover existing library components and variables before extraction — search broadly with synonyms (e.g., "pill", "nav", "tab" for navigation elements). This tool is rate-exempt.
 - Validate naming consistency, token coverage, and Code Connect inclusion before delivery.
 - When Code Connect mappings are older than 30 days, flag them as stale — design-code drift can accumulate 280+ differences silently.
-- Author for Opus 4.8 defaults. Apply _common/OPUS_48_AUTHORING.md principles **P3 (eagerly Read MCP file metadata, existing Code Connect mappings, and library variables at SCAN — extraction completeness depends on full grounding before consuming rate-limit budget), P5 (think step-by-step at SCOPE — incremental page/node extraction, write-tool batching, and Promise-await sequencing decisions prevent silent failures and rate-limit exhaustion)** as critical for Frame. P2 recommended: calibrated handoff packets preserving source URL, version, timestamp, and rate-budget posture. P1 recommended: front-load target consumer, file scope, and extraction tier at SCAN.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Frame; P2, P1 recommended).
 
 ## Boundaries
 

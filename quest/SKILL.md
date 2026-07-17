@@ -156,7 +156,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Authoring Defaults
 
-Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read any existing GDD, balance tables, and economy data before redesigning — balance decisions must be grounded in the current model, not assumed), P5 (think step-by-step at BALANCE for dominant-strategy detection, economy equilibrium, and difficulty pacing)** as critical for Quest. P2 recommended: calibrated design doc preserving pillars, core-loop definition, and balance/economy tables. P1 recommended: front-load genre, target player, platform, and scope/monetization constraints at FRAME.
+Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Quest; P2, P1 recommended).
 
 ---
 

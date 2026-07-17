@@ -16,13 +16,24 @@ Plus heading integrity:
   H-REC-01: `## Subcommand Dispatch` heading exists alongside `## Recipes` (ERROR)
   H-REC-02: Heading is bare `## Subcommand Dispatch` — no parenthetical suffix (ERROR)
 
-Exit code: 0 if no ERROR-level violations, 1 otherwise.
+Usage:
+  python3 _common/scripts/validate-recipes.py [--severity warning|error|strict]
+                                              [--changed-only]  # only skills whose SKILL.md changed vs HEAD
+
+Severity tiers (mirrors lint-frontmatter.py):
+  --severity warning  (default)  print findings, exit 0
+  --severity error    exit 1 if any ERROR-level finding is reported
+  --severity strict   exit 1 if any finding (ERROR or WARNING) is reported
+
+Exit code: 0 if no ERROR-level violations under the chosen severity, 1 otherwise.
 """
 
 from __future__ import annotations
 
+import argparse
 import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -35,9 +46,28 @@ WARN_RECIPES = 10  # corpus P95 as of 2026-07-03 (125/132 skills ≤ 10); >10 wa
 HUB_SKILLS = {"nexus"}  # ecosystem hub: routes 130+ agents, recipe breadth by design
 
 
-def iter_skills():
+def changed_skill_names() -> set[str]:
+    """Skill folder names whose SKILL.md changed vs HEAD. Empty set on any git error (fail-open)."""
+    try:
+        out = subprocess.run(
+            ["git", "diff", "--name-only", "HEAD"],
+            cwd=str(SKILLS_ROOT), check=True, capture_output=True, text=True,
+        ).stdout.strip().splitlines()
+    except Exception:
+        return set()
+    names = set()
+    for p in out:
+        path = Path(p)
+        if path.name == "SKILL.md" and len(path.parts) >= 2:
+            names.add(path.parts[-2])
+    return names
+
+
+def iter_skills(only: set[str] | None = None):
     for entry in sorted(SKILLS_ROOT.iterdir()):
         if not entry.is_dir() or entry.name in SKIP_DIRS:
+            continue
+        if only is not None and entry.name not in only:
             continue
         skill_md = entry / "SKILL.md"
         if skill_md.is_file():
@@ -132,13 +162,27 @@ def validate(skill: str, path: Path) -> tuple[list[str], list[str], list[str]]:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--severity", choices=("warning", "error", "strict"),
+                        default="warning")
+    parser.add_argument("--changed-only", action="store_true",
+                        help="validate only skills whose SKILL.md changed vs HEAD")
+    args = parser.parse_args()
+
+    only = None
+    if args.changed_only:
+        only = changed_skill_names()
+        if not only:
+            print("no changed SKILL.md vs HEAD")
+            return 0
+
     total = 0
     err_count = 0
     warn_count = 0
     info_count = 0
     skills_with_errors: list[str] = []
 
-    for skill, path in iter_skills():
+    for skill, path in iter_skills(only=only):
         total += 1
         errors, warnings, infos = validate(skill, path)
         if errors:
@@ -162,7 +206,12 @@ def main() -> int:
     print(f"Checked {total} skills | {err_count} errors | {warn_count} warnings | {info_count} infos (VERBOSE)")
     if skills_with_errors:
         print(f"Skills with errors: {len(skills_with_errors)}")
-    return 1 if err_count else 0
+
+    if args.severity == "warning":
+        return 0
+    if args.severity == "error":
+        return 1 if err_count else 0
+    return 1 if (err_count or warn_count) else 0  # strict
 
 
 if __name__ == "__main__":

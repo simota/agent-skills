@@ -35,9 +35,11 @@ Methodology for decoding ambiguous user intent before agent routing. Previously 
 | "Improve" / "Enhance it" | Enhancement, broad scope | Narrow scope via recent activity |
 | "Something is wrong" | Vague bug report | Investigate before interpreting |
 | "Make it better" | Quality improvement | Check recent Judge feedback |
-| Frustrated tone | User wants action, not questions | Use safest default, proceed |
+| Frustrated tone | User wants action, not questions | Use safest default, proceed — **but never in place of a GATE-mandated question** (see Precedence rule below) |
 | Technical terms used | User knows domain | Match precision level |
 | Vague keywords | Scope ambiguity | Check .agents/PROJECT.md context |
+
+**Precedence rule (tone vs GATE):** frustrated tone changes *how much* is asked, never *whether* something is asked. When GATE fires (`context_confidence < 0.60` OR 2+ valid interpretations — see `routing-matrix.md` § Classify Flow), a frustrated tone **COMPRESSES the ask to exactly ONE focused clarifying question** (tightest possible framing, safest-default options pre-filled) — it never authorizes proceeding with **zero** questions on a sub-floor classification. "Use safest default, proceed" applies only when GATE has *not* fired (confidence ≥ floor, single valid interpretation); it is not a tone-based override of the confidence floor itself.
 
 ### Scope Detection
 
@@ -73,13 +75,16 @@ allowed question *comprehensive and targeted* ("give me X, Y, Z") rather than a 
 
 Some English anchors map cleanly to one recipe; these do **not** — the same word fits 2+ recipes, so a bare keyword match would mis-route. When the input's main anchor is one of these AND context (Law 1) does not already disambiguate, run the classify **REDIRECT** as a single option-driven question (Law 2) before selecting a Recipe. Pick the option from the family axis in SKILL.md `### Recipe Families`.
 
+**Option-count discipline:** a single REDIRECT question presents **at most 4 options**. When a row's candidate set is larger (e.g. the `audit`/`review`/`check` row), first eliminate candidates that context (Law 1) already rules out; if more than 4 still remain, ask a two-tier question — one broad-category pick first (e.g. "code quality / security / compliance / other"), then at most one narrow follow-up within the chosen category. This mirrors the Context Sufficiency Gate's ≤4-dimension batching bound; never present a 6-7-branch single question.
+
 | Overloaded anchor | Candidate recipes | The one question (options) |
 |-------------------|-------------------|----------------------------|
-| `improve` / `polish` / `enhance` / `refine` / `make it better` / `evolve` / `deepen a feature` | `delve` · `kaizen` · `optimize` · `refactor` · `converge` | "Execute an improvement, or first *discover* what to even do? — **`delve`** (deep-dive a shipped feature → insights + evolution directions, **no code**) when the direction is unsettled; else perf only (`optimize`) / internal cleanup, no behavior change (`refactor`) / multi-axis polish vs a target (`kaizen`) / iterate to a quality rubric (`converge`)" |
-| `audit` / `review` / `check` | legacy quality review · `security` (Sentinel) · `SUPPLY_CHAIN_AUDIT` (Chain) · `DESIGN_AUDIT` (Pixel) · `COMPLIANCE` (Oath) | "Audit for *what*? — code quality / security vulns / skill-MCP supply chain / design-a11y / regulatory compliance" |
+| `improve` / `polish` / `enhance` / `refine` / `make it better` / `evolve` / `deepen a feature` | `delve` · `kaizen` · `optimize` · `refactor` · `restyle` · `converge` | "Execute an improvement, or first *discover* what to even do? — **`delve`** (deep-dive a shipped feature → insights + evolution directions, **no code**) when the direction is unsettled; else perf only (`optimize`) / internal cleanup, no behavior change (`refactor`) / multi-axis polish vs a target (`kaizen`) / UI-visual-interaction design of an existing surface (`restyle`) / iterate to a quality rubric (`converge`)" |
+| `improve the design` / `design improvement` | `anneal` · `restyle` | "Improve *what* design? — code/architecture design (`anneal`: discover undiagnosed design weaknesses → behavior-preserving brush-up) / UI visual/look-and-feel design of an existing surface (`restyle`)" |
+| `audit` / `review` / `check` | legacy quality review · `security` (Sentinel) · `SUPPLY_CHAIN_AUDIT` (Chain) · `DESIGN_AUDIT` (Pixel) · `COMPLIANCE` (Oath) · red-team (Breach) · `AI_FEATURE` (Oracle+Sentinel) | "Audit for *what*? — code quality / security vulns / skill-MCP supply chain / design-a11y / regulatory compliance / adversarial AI/LLM red-team (prompt injection, jailbreak, misuse scenarios) / AI feature safety (prompt+output review)" |
 | `differential parity` | `transmute` · `clone` · `migrate` · `fuse` | "Parity against what? — your own source rewritten in another language (`transmute`) / an external product you're copying (`clone`) / your own system you're changing completely (`migrate`) / ≥2 sources synthesized (`fuse`)" |
 | `build` / `implement` (broad) | `feature` · `apex` | "Single guided build (`feature`) or autonomous discovery→ship (`apex`)?" — default `feature` unless 'whole thing / end-to-end' |
-| `migrate` (broad) | `migrate` · `transmute` · `PORTING` | "Same language (arch/framework/middleware → `migrate`) / cross-language rewrite (`transmute`) / web→native (`PORTING`)?" |
+| `migrate` (broad) | `migrate` · `transmute` · `PORTING` · `refactor` · `MODERNIZE` (Shift) | "Same-system change-completeness across arch/framework/middleware (`migrate`) / cross-language rewrite (`transmute`) / web→native (`PORTING`) / one known internal restructure, no behavior change (`refactor`) / same-language library swap or deprecated-API replacement (`MODERNIZE` — Shift)?" |
 | `combine` / `merge` / `mix in` | `fuse` · `graft` | "Synthesize ≥2 products' surfaces into one (`fuse`) or transplant another product's *concept* onto your own (`graft`)?" |
 | `define what we build` / `nail down` | `spec` · `essential` · `charter` | "Refine one feature into a locked spec via dialogue (`spec`) / decide which ONE feature (`essential`) / whole-repo team plan (`charter`)?" |
 

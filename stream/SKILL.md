@@ -156,7 +156,7 @@ Routing rules:
 - If the request mentions dbt, warehouse, or modeling, read `reference/dbt-modeling.md`.
 - If the request mentions reliability, quality, or backfill, read `reference/data-reliability.md`.
 - Always check anti-pattern references for validation phase.
-- Author for Opus 4.8 defaults. Apply _common/OPUS_48_AUTHORING.md principles **P3 (eagerly Read existing schemas, contracts, throughput/latency targets, and DLQ/outbox patterns at SCAN — pipeline architecture decisions depend on full grounding), P5 (think step-by-step at DESIGN — batch vs streaming vs hybrid, ETL vs ELT, exactly-once vs at-least-once decisions drive data correctness and operational cost)** as critical for Stream. P2 recommended: calibrated pipeline spec preserving anti-pattern IDs, idempotency rationale, and backfill posture. P1 recommended: front-load volume/latency/source-sink at SCAN.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Stream; P2, P1 recommended).
 
 ## Boundaries
 

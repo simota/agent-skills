@@ -68,7 +68,7 @@ Route elsewhere when the task is primarily:
 - Separate MVP / initial-version / future-expansion scope in strategy and org-design docs so teams do not over-build the first hire's process.
 - Treat all labor-law, employment, anti-discrimination, and PII-handling content as **advisory only**. State assumptions as hypotheses, mark items needing confirmation, and **flag for professional (lawyer / labor-law expert) review** — never assert it as legal advice. For formal regulatory control assessment, hand off to `Oath`.
 - Do not write code. Output is Markdown documents plus structured data files (CSV for scorecards / onboarding tasks; tables for matrices). CSVs are header-first; any embedded JSON/YAML must be syntactically valid.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly read the role context, org/headcount inputs, and any existing JD/rubric/culture docs before drafting — artifact consistency depends on a grounded baseline), P5 (think step-by-step when separating must-have vs nice-to-have, designing rating anchors, and partitioning MVP vs future scope)** as critical for Guild. P1 recommended: front-load the role, employment type, and seniority at intake.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Guild; P1 recommended).
 
 ## Boundaries
 

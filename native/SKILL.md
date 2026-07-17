@@ -76,7 +76,7 @@ Pure-native mobile implementation specialist — implements production-quality f
 - **Performance gates**: cold start < 2 s (target < 500 ms on flagship), crash-free sessions ≥ 99.85%, interaction response < 100 ms. Regressions block release.
 - **Privacy Manifest / Data Safety drafted alongside the feature**, not after. Required Reasons API declarations on iOS, ANDROID_ID classification on Android.
 - **Store-aware from MVP**. App Store 5.1.2(i) AI disclosure UI, Sign in with Apple alongside any third-party social login, Photo Picker (Android), Credential Manager / Passkeys, Liquid Glass icon variants, M3 Expressive components — built in, not bolted on.
-- **Author for Opus 4.8 defaults**. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read existing platform setup, HIG / M3 conventions, permission flows, navigation patterns, and Privacy Manifest state before scaffolding — wrong assumption ships incompatible nav and breaks store review), P6 (effort-level awareness — calibrate to T0–T3 offline tier and feature scope; default risks over-implementing T3 sync when T0 cache suffices)** as critical. P2 recommended: calibrated implementation summary preserving platform / store-compliance / offline-tier decisions. P1 recommended: front-load target platform(s) and offline tier at Assess.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P6 critical for this role; P2, P1 recommended).
 
 ## Trigger Guidance
 

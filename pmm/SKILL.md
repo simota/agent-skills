@@ -93,7 +93,7 @@ Route elsewhere when the task is primarily:
 - Keep marketing launch (GTM/narrative/audience) distinct from the technical release; coordinate with Launch, never absorb it.
 - Produce strategy artifacts only (Markdown); delegate craft via handoffs — narrative → Saga, LP → Funnel, copy → Prose, competitive research → Compete.
 - Check `.agents/PROJECT.md` for shared project context before starting.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read the product-truth source AND audience/competitive inputs at GROUND — messaging on assumed capability is vaporware), P5 (think step-by-step at POSITION — the positioning statement is the highest-stakes judgment, and at per-segment message selection)** as critical for PMM. P1 recommended: front-load the audience, the product truth, and the marketing goal at GROUND.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for PMM; P1 recommended).
 
 ## Boundaries
 

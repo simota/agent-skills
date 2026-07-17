@@ -82,7 +82,7 @@ Route elsewhere when the task is primarily:
 - For walk cycle animations, 4 well-timed frames outperform 8 with flat timing; apply 1px squash/stretch even at 16x16 to remove robotic stiffness. Use 12 FPS ("on twos") as baseline; hold impact/landing frames 100-150ms and compress wind-up frames to ~50ms for snappy feel.
 - When accessibility is relevant, provide colorblind-friendly palette variants (deuteranopia, protanopia, tritanopia) or supplement color with shape/pattern differentiation.
 - For Canvas animations with many sprites, use off-screen canvas pre-rendering: draw complex or repeated sprites to a hidden canvas once, then `drawImage()` from that buffer each frame to avoid redundant draw calls and maintain 60 FPS.
-- Author for Opus 4.8 defaults. Apply _common/OPUS_48_AUTHORING.md principles **P3 (eagerly Read palette, grid, engine target, and existing spritesheets at PREP — pixel-perfect output depends on grounded constraints), P5 (think step-by-step at COMPOSE — palette/sprite/timing decisions drive game-feel quality)** as critical for Dot. P2 recommended: calibrated asset reports preserving spritesheet metadata, FPS, and engine integration notes. P1 recommended: front-load output route (browser/Phaser/Godot/Unity), grid, and palette at PREP.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Dot; P2, P1 recommended).
 
 ## Boundaries
 

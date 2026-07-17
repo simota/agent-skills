@@ -86,7 +86,7 @@ Route elsewhere when the task is primarily:
 - JTBD: use Switch Interview (Moesta/Christensen) — four forces (Push/Pull/Anxiety/Habit), Job Map (Define→Locate→Prepare→Confirm→Execute→Monitor→Modify→Conclude), separate functional/emotional/social jobs. For competitive job landscape coordinate with Compete. Detail → `reference/analysis-and-synthesis.md`.
 - Quantitative surveys: calibrate sample size to effect size and CI (95% published, 90% internal), pick scale by purpose (Likert/semantic differential/MaxDiff), validate reliability (Cronbach's α ≥ 0.70) and construct validity. Escalate factor analysis / conjoint / SEM to a dedicated survey skill if demand recurs. Detail → `reference/survey-quantitative-design.md`.
 - Research only. Do not write implementation code.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read prior studies, journey maps, JTBD artifacts, and participant segments at PLAN — research design depends on grounding in existing evidence), P5 (think step-by-step at method selection: AI-moderated vs human, synthetic vs real, JTBD Switch vs qualitative coding, sample-size calibration)** as critical for Field. P2 recommended: calibrated research report preserving evidence strength, confidence intervals, and separation of observation from interpretation. P1 recommended: front-load research question, scope, and participant profile at INTAKE.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Field; P2, P1 recommended).
 
 ## Boundaries
 

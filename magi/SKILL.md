@@ -90,7 +90,7 @@ Route elsewhere when the task is primarily:
 - Auto-detect Engine Mode for high-stakes, low-reversibility decisions.
 - **Decision journal recommendation**: For recurring domains, advise tracking decisions and outcomes (≈3/week × 90 days reveals dominant biases). [Farnam Street]
 - **Pre-Decision Framing Check**: For high-stakes deliberations (architecture / strategy / Go-No-Go / irreversible), require the requester to name (a) **problem level** (individual / team / org / industry), (b) ≥1 **alternative framing** of the problem (not alternative solutions), (c) the **implicit assumption** being challenged. Reject requests missing these. Skip for low-stakes / reversible / clarification-only.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` **P3** (eagerly Read prior decisions / metrics / constraints / compliance evidence at FRAME — knowledge-intensive decisions need shared factual grounding) and **P5** (think step-by-step at independent evaluation and SYNTHESIZE bias scan) as critical. P2 recommended: calibrated deliberation trail preserving scores, dissent, risk register. P1 recommended: front-load scope/reversibility/domain at FRAME.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for this role; P2, P1 recommended).
 
 ## Boundaries
 

@@ -76,6 +76,17 @@ Orchestrators (Nexus, Rally) should be stateless and replaceable. Session state 
 
 **Frequency:** Aligned with Darwin ET-06 (30-day ecosystem review cycle).
 
+**Trigger (mechanical, not prose):** This 30-day cadence, Darwin's LT-06/ET-06, and Architect's ST-06 all cite "30+ days since last review" but historically depended on someone remembering to run it. Wire the tick itself: register a recurring routine via the **`schedule`** skill (Claude Code's built-in scheduled-cloud-agent mechanism — prefer it over a raw `CronCreate` call so the schedule is visible/manageable through the same interface a user would use to inspect or cancel it) with a 30-day interval that runs, in order:
+1. `python3 _common/scripts/lint-frontmatter.py --severity warning` and `python3 _common/scripts/validate-recipes.py --severity warning` — full-corpus health snapshot, reusing the exact scripts already wired into `.github/workflows/skill-lint.yml` (no new checker code).
+2. `python3 _common/scripts/routing-oracle.py --severity warning` — routing-machinery snapshot (dead-refs, ladder order, producer/verifier).
+3. Invoke `darwin`'s EFS scoring recipe against that snapshot.
+4. If EFS or compliance drift crosses `gauge`'s stability-index thresholds (<10% stable / 10-20% investigate / >20% intervene — `gauge/SKILL.md` CAPABILITIES_SUMMARY), kick a `_loops/skill-evolve` run bounded by its existing `MAX_ITERATIONS`/`CIRCUIT_BREAKER` guards (already present in `run-loop.sh`) rather than an unbounded new loop.
+5. Journal the outcome to `.agents/PROJECT.md`.
+
+This is additive scheduling only (no new script, no new loop, no new agent) — a `schedule`-registered routine pointed at machinery that already exists and is already tested, closing the "prescribed vs. wired" gap between this document's prose cadence and an actually-firing trigger.
+
+**Bootstrap clause:** on the first session in this repo, verify the 30-day audit routine actually exists (`CronList`); if missing, register it per this section (`schedule` skill, 30-day interval, the 5-step sequence above). This turns the prescription into a self-checking precondition instead of a one-time setup step someone has to remember.
+
 **Process:**
 
 ```

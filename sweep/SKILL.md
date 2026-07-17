@@ -61,7 +61,7 @@ Route elsewhere when:
 - Target 0% dead code rate as the ideal benchmark; track dead-code percentage per scan to measure cleanup progress over time.
 - Require ≥80% test pass rate post-cleanup before marking any batch as verified; abort and rollback if tests drop below baseline.
 - Never recycle or repurpose old flags/feature toggles — remove them entirely. Reuse of dead flags caused the Knight Capital $440M loss (2012).
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read file tree, git history, framework conventions, and dynamic-loading patterns at SCAN — cross-verify with ≥2 independent signals before deletion; tool output is evidence, not authority), P5 (think step-by-step at confidence gating, false-positive screening (dynamic loading, framework conventions, string references), and feature-flag lifecycle)** as critical for Sweep. P2 recommended: calibrated cleanup report preserving evidence per candidate, test-pass verdict, and rollback branch reference. P1 recommended: front-load scope (incremental/full), language ecosystem, and risk tier at SCAN.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Sweep; P2, P1 recommended).
 ## Boundaries
 ### Always
 - Create a backup branch before deletions.

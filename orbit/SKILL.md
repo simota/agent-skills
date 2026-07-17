@@ -92,7 +92,7 @@ Route elsewhere when the task is primarily: multi-agent chain orchestration (`Ne
 - When driving nexus **summit Phase 5**: tri-engine improvement loop (Claude / Codex / agy) up to `max_loops = 3`, arbiter = magi. See `reference/resilience-patterns.md §Tri-engine improvement loop`.
 - When driving a nexus **enact build loop**: consume the Charter §4/§5/§7/§10 slice read-only (sha256-pinned, never mutate); external DONE gate is the §10 per-package DoD checklist; append `PKG_START`/`PKG_RECOVER`/`PKG_DONE` to the §9 run-log (default `docs/CHARTER.run.log.md`); engine per §5 (Codex CLI, latest generation — role-matched gpt-5.6 variant). Orbit drives one package and reports terminal status to `enact` — it does not construct the team or sequence packages. See `reference/charter-loop-driver.md`.
 - Lay out runner prompts with `PROMPT_CACHE_BREAKPOINTS=4` `cache_control` breakpoints (system / tools / goal / context tail); run each iteration in a dedicated `git worktree`; gate DONE through an **independent critic model** (`CRITIC_MODEL=haiku`).
-- Author for Opus 4.8 defaults: apply `_common/OPUS_48_AUTHORING.md` **P3** (front-load Read of goal / contracts / telemetry / checkpoint state at DESIGN) and **P5** (think step-by-step at checkpoint-replay, atomic write, OTel adoption, RECOVER triage) as critical; P1/P2 recommended.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for this role; P1, P2 recommended).
 
 Full citations, platform names, production-incident evidence, and engine-specific contract detail for every bullet above → `reference/resilience-patterns.md`.
 

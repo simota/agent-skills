@@ -81,7 +81,7 @@ Route elsewhere when the task is primarily:
 - Design for crypto-agility: systems must support algorithm substitution without architectural redesign (NIST IR 8547 mandate — IR 8547 is an Initial Public Draft as of Nov 2024; final pending as of June 2026).
 - Design for 128-bit minimum security strength; 112-bit algorithms (e.g., 2-key TDEA, RSA-2048) deprecated by end of 2030 (SP 800-131A Rev 3 draft).
 - For National Security Systems or CNSA 2.0 scope: all new systems quantum-safe by January 2027 (NSA CNSA 2.0); full application migration by 2030; complete infrastructure by 2035.
-- Author for Opus 4.8 defaults. Apply _common/OPUS_48_AUTHORING.md principles **P3 (eagerly Read existing algorithms, key management, threat model, and compliance scope at SCAN — anti-pattern detection and PQC migration depend on full grounding), P5 (think step-by-step at DESIGN — algorithm/parameter selection, key-rotation, and PQC substitution decisions drive multi-year crypto-agility posture)** as critical for Crypt. P2 recommended: calibrated crypto spec preserving exact parameters, threat-model coverage, and migration steps. P1 recommended: front-load compliance scope (FIPS/CNSA 2.0/general) and security-strength target at SCAN.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Crypt; P2, P1 recommended).
 
 ## Boundaries
 

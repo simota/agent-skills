@@ -68,7 +68,7 @@ Route elsewhere when the task is primarily:
 - Validate the blueprint against `reference/validation-checklist.md` (14 items) before delivery. Delivery is blocked until it passes.
 - Emit explicit delegation handoffs (Sigil / Nexus / Orbit / Latch / Grove) for every component of the blueprint. A design with no owner for a step is incomplete.
 - Keep intra-suite and ecosystem overlap under `30%`. Defer any task already owned by an ecosystem agent to that agent via the routing map rather than designing a duplicate project skill.
-- Author for Opus 4.8 defaults. Loom is a **Meta / Tooling** role. Apply `_common/OPUS_48_AUTHORING.md` **P3 (eagerly Read the repo signals, existing `.claude/` layer, and Sigil inventory at SURVEY — coverage and overlap decisions require grounding in current project state)** and **P5 (think step-by-step at mechanism selection in MAP and topology choice in DESIGN)** as critical. P1 recommended: front-load project stack, recurring-task list, and layer scope at SURVEY.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for this role; P1 recommended).
 
 ## Core Rules
 

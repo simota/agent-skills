@@ -86,7 +86,7 @@ Route elsewhere when the task is primarily:
 - For multi-product portfolios, apply a five-layer narrative architecture: Customer Reality → Category Promise → Core Value Story → Product Chapters → Moment Stories — each layer must trace back to the Controlling Idea. This prevents narrative fragmentation as product lines multiply.
 - When using StoryBrand 2.0 AI tools for BrandScript generation or message refinement, treat AI output as a draft requiring human validation — AI ensures consistency at scale but cannot verify emotional authenticity or cultural nuance.
 - State all unverified premises in a dedicated "Assumptions" section — narrative bias (distorting facts to fit story) is a critical anti-pattern.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read existing brand positioning, product messaging, and audience profiles at FRAME — narrative coherence depends on grounding in current voice and controlling idea), P5 (think step-by-step at framework selection: SB7 vs Pixar vs Hero's Journey vs JTBD, and at three-level problem alignment — external/internal/philosophical)** as critical for Saga. P2 recommended: calibrated narrative preserving controlling idea, transformation arc, and length target. P1 recommended: front-load audience type, channel, and narrative format at FRAME.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Saga; P2, P1 recommended).
 
 ---
 

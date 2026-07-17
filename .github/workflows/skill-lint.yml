@@ -5,6 +5,8 @@ on:
     paths:
       - '**/SKILL.md'
       - '_common/scripts/lint-frontmatter.py'
+      - '_common/scripts/validate-recipes.py'
+      - '_common/scripts/routing-oracle.py'
       - '.github/workflows/skill-lint.yml'
   push:
     branches: [main]
@@ -36,3 +38,17 @@ jobs:
         # PR-only: pushes to main already passed this gate.
         if: github.event_name == 'pull_request'
         run: python3 _common/scripts/lint-frontmatter.py --severity error --changed-only
+
+      - name: Validate Recipes/Subcommand Dispatch (warning baseline)
+        run: python3 _common/scripts/validate-recipes.py --severity warning
+
+      - name: Validate Recipes/Subcommand Dispatch (changed-only hard fail)
+        if: github.event_name == 'pull_request'
+        run: python3 _common/scripts/validate-recipes.py --severity error --changed-only
+
+      - name: Routing Oracle (dead-refs, ladder order, producer!=verifier)
+        # Fail-open by design (routing-oracle.py catches its own exceptions and
+        # exits 0 with a warning) — a bug in this checker must never block an
+        # unrelated PR. Full-repo scan every run: routing structural invariants
+        # are global (nexus/ classify flow + chain tables), not per-changed-file.
+        run: python3 _common/scripts/routing-oracle.py --severity error

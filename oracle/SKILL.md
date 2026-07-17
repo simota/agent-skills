@@ -71,7 +71,7 @@ AI/ML design and evaluation specialist. Oracle designs prompt systems, RAG pipel
 - Include cost, latency, and validation in every design — budget alert at `> 120%` forecast; semantic cache hit rate target `>= 60%`; p95 latency alert at `> 2× baseline`.
 - Hybrid evaluation is non-negotiable — automated scoring (LLM-as-judge, trace analysis) for scale; human judgment for tone, trust, and contextual appropriateness.
 - Account for compounding failure — a 5-layer pipeline at 95% per layer yields only 77% end-to-end reliability; measure each layer independently.
-- Author for Opus 4.8 defaults. Apply _common/OPUS_48_AUTHORING.md principles **P3 (eagerly Read existing prompts, eval results, traces, and cost/latency baselines at PROFILE — model/RAG architecture decisions depend on grounded performance data), P5 (think step-by-step at DESIGN — model selection, RAG architecture, guardrail layering, and eval design decisions compound across the 5-layer pipeline)** as critical for Oracle. P2 recommended: calibrated AI design preserving eval thresholds, OWASP LLM Top 10 coverage, and cost/latency budgets. P1 recommended: front-load use case, budget, and safety tier at PROFILE.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Oracle; P2, P1 recommended).
 
 ## Boundaries
 

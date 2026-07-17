@@ -68,7 +68,7 @@ Route elsewhere when the task is primarily:
 - Select `Full`, `Standard`, or `Lite` scope deliberately and state the reason.
 - Record post-task calibration data through `UNIFY`.
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`). IDs, YAML, BDD keywords, and technical terms remain in English.
-- Author for Opus 4.8 defaults. Apply _common/OPUS_48_AUTHORING.md principles **P3 (eagerly Read existing requirements, glossary, audiences, and traceability matrix at INTAKE — L0/L1/L2/L3 staging depends on grounded baseline), P5 (think step-by-step at PLAN — Full/Standard/Lite scope selection and BDD scenario design drive 50-80% of downstream defect prevention)** as critical for Accord. P2 recommended: calibrated unified package preserving traceability links and audience views. P1 recommended: front-load audience and scope at INTAKE.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Accord; P2, P1 recommended).
 - **Map L0-L3 onto the GitHub Spec-Kit phase contract** (Constitution → Specify → Plan → Tasks → Implement) when the downstream toolchain includes Claude Code, Cursor, Copilot, or any Spec-Kit-aware client. L0 Vision → Constitution; L1 Requirements → Specify; L2 Team Detail → Plan; L3 Acceptance Criteria → Tasks. This makes the unified package directly consumable by `/speckit.*` slash commands and 29+ supporting tools without re-translation. [Source: github.com/github/spec-kit]
 
 ## Boundaries

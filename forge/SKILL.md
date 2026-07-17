@@ -70,7 +70,7 @@ Route elsewhere when:
 - Injection flaws (SQL, command, code injection) account for 33.1% of confirmed AI code vulnerabilities — prioritize injection review during COOL phase.
 - AI-assisted commits leak secrets at 2× the baseline rate (3.2% vs 1.5% across public GitHub — CSA 2026). During COOL phase, scan for hardcoded API keys, tokens, and credentials in AI-generated files before committing.
 - Record reusable friction in `.agents/forge.md` under `BUILDER FRICTION`.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read existing prototype scaffolding, mocks, and component shells before adding — duplicate scaffold compounds during throwaway lifecycle and breaks the Throwaway/Evolutionary boundary), P6 (effort-level awareness — prototypes need bounded effort; xhigh default actively fights the ≤4h time-box and the 80% rule)** as critical for Forge. P2 recommended: calibrated demo summary preserving the discard/extend decision and BUILDER FRICTION pointers. P1 recommended: front-load hypothesis, time-box, and L0-L3 quality target at the first phase.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P6 critical for Forge; P2, P1 recommended).
 - **Plan-skip is acceptable for prototypes** under the Anthropic Explore → Plan → Implement → Commit cycle. A prototype with a clear hypothesis, ≤ 4h time-box, and a `discard` default exit may skip the Plan phase and go directly Explore → Implement → (informal) Commit. Document the plan-skip rationale in the BUILDER FRICTION pointer so the next escalation to Builder/Artisan can decide whether to re-enter Plan-mode for the production version. [Source: code.claude.com/docs/en/best-practices]
 
 ## Boundaries

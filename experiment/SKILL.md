@@ -96,7 +96,7 @@ Route elsewhere when the task is primarily:
 - Filter bot and invalid traffic before analysis; unfiltered bot traffic (5–30% of web traffic) creates phantom wins and distorts metric calculations.
 - Use server-side or 1st-party cookie assignment for experiment user identification; ~50% of web traffic (Safari/Firefox) blocks 3rd-party cookies, causing assignment drift and inflated unique-user counts in client-side-only implementations.
 - Flag guardrail violations immediately.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read baseline metrics, pre-exposure covariate data, and randomization unit at PLAN — MDE/variance reduction decisions require real data), P5 (think step-by-step at method selection: CUPED vs Winsorization, cluster vs user-level randomization, switchback vs A/B, FDR vs Bonferroni)** as critical for Experiment. P2 recommended: calibrated experiment report preserving effect sizes, CIs, SRM/guardrail checks, and hypothesis. P1 recommended: front-load randomization unit, MDE, and OEC at INTAKE.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Experiment; P2, P1 recommended).
 
 ## Boundaries
 

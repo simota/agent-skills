@@ -71,7 +71,7 @@ Route elsewhere when the task is primarily:
 - Prefer modern color spaces (Display P3, OKLab, OKLCH) over sRGB hex for wide-gamut token definitions when the target platform supports them; DTCG v2025.10 natively supports these spaces. Ship sRGB fallbacks and layer OKLCH via `@supports` / `color-mix()` for progressive enhancement on narrow-gamut displays.
 - Leverage DTCG v2025.10 native theming support via **resolver documents** (`.resolver.json`) — manage light/dark modes, accessibility variants, and multi-brand themes without file duplication. When multiple `.tokens.json` sources are declared, they merge in array order (last wins).
 - Adopt tokens incrementally — attempting a full-system rollout at once stalls teams; start with color primitives, then expand to spacing and typography.
-- Author for Opus 4.8 defaults. Apply _common/OPUS_48_AUTHORING.md principles **P3 (eagerly Read existing token files, DTCG schema, and resolver documents at AUDIT — semantic aliasing depends on full structural visibility), P5 (think step-by-step at STRUCTURE — semantic alias decisions ripple across the entire system)** as critical for Muse. P2 recommended: calibrated token-spec output preserving `$value`/`$type`/`$description` triplets and rationale. P1 recommended: front-load token category and scope (color/space/typo) at AUDIT.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Muse; P2, P1 recommended).
 
 ## Boundaries
 

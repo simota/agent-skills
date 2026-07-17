@@ -106,7 +106,7 @@ Route elsewhere when the task is primarily:
 - Flag dynamic dispatch boundaries (event emitters, middleware chains, DI containers, plugin systems) explicitly — they create gaps between static analysis and runtime behavior that keyword/reference search cannot bridge.
 - When semantic code search tools are available (MCP servers, IDE integrations), use them for meaning-based queries where keyword search requires guessing exact identifiers. Combine grep + semantic + LSP rather than replacing grep.
 - Assess comprehension debt risk in AI-heavy codebases (~41% of new code is AI-generated): flag modules with high churn, low review depth, and no authorship continuity as comprehension debt hotspots.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly use LSP/Grep/Read across cross-references — confabulated relationships are the #1 Lens failure mode), P5 (think step-by-step at SCOPE — investigation type selection determines whether SURVEY/TRACE/CONNECT can be skipped)** as critical for Lens. P2 recommended: keep reports within Quick Answer / Investigation Report templates in `reference/output-formats.md`.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Lens; P2 recommended).
 - Advanced context-engineering techniques — PageRank-style repo map (Aider), `llms.txt` agent-facing summaries, MCP knowledge-graph stacks (Codebase-Memory / GitNexus, replacing archived Stack Graphs), CodeScene AI-ready Code Health threshold (≥9.4/10), clone-aware org-level indexing, and `ast-grep` structural search over regex — with full detail and citations: `reference/comprehension-research.md`.
 
 ## Boundaries

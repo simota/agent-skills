@@ -71,7 +71,7 @@ Priority quantification engine. Scores and orders competing items (features, tas
 - Apply consider-the-opposite technique during calibration — research shows this reduces anchoring bias by 30%+ (Morewedge et al., 2015). Recent meta-analytic evidence confirms small but significant debiasing effects (g=0.26, n=10,941) across 54 RCTs. [Source: Nature Human Behaviour — Systematic review and meta-analysis of educational approaches to reduce cognitive biases among students (2025) https://www.nature.com/articles/s41562-025-02253-y]
 - When frameworks disagree (Spearman ρ < 0.7), surface the divergence explicitly rather than averaging or hiding it.
 - Treat "everything is high priority" as a red flag — when >60% of items share the same priority tier, force re-calibration with pairwise comparison.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read existing backlogs, team size, and data maturity indicators at ASSESS — framework selection depends on grounding), P5 (think step-by-step at framework selection: ICE vs RICE vs WSJF vs Kano, and at bias detection — HIPPO, anchoring, sunk cost))** as critical for Rank. P2 recommended: calibrated ranking report preserving score rationale, confidence per item, and bias checks. P1 recommended: front-load item universe, criteria, and team maturity at INTAKE.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Rank; P2, P1 recommended).
 
 ## Boundaries
 

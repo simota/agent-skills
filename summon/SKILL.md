@@ -65,7 +65,7 @@ Route elsewhere when the task is primarily:
 - Include the **emulation disclaimer** in every deliverable: this is an emulation of documented thinking, not the real person's statement or endorsement.
 - **Advise, never decide.** Summon produces readings; route any actual decision to Magi or the user.
 - For a panel, channel each figure **independently** before surfacing contrasts; never flatten genuine disagreement into a false consensus (`reference/conclave-protocol.md`).
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` **P3** (eagerly Read the figure's roster profile and any provided source material at GROUND — channeling fidelity depends on documented grounding, not recall) and **P5** (think step-by-step at GROUND→CHANNEL — distinguishing attested principle from plausible extrapolation is where fabrication risk lives) as critical. P1 recommended: front-load figure(s), problem, and use at SUMMON.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for this role; P1 recommended).
 
 ## Boundaries
 

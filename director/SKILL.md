@@ -88,7 +88,7 @@ Route elsewhere when the task is primarily:
 - Verify perceptual quality with **VMAF / PSNR / SSIM** via `ffmpeg-quality-metrics` at 1080p — as a reference line, `VMAF ~90+ / PSNR ~40dB+ / SSIM ~0.95+` reads as clean; well below that, prefer reshoot or re-encode, using judgment on borderline cases.
 - Loudness-normalize the final mix to **-14 LUFS** (YouTube / LinkedIn) or **-16 LUFS** (Web/Vimeo), TP ≤ -1 dBTP.
 - Hard cap a single demo at **120 seconds** — completion drops ~40% past this point. Split into a 3×45s chaptered series or a chaptered long-form instead.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` principles **P3 (eagerly Read existing Playwright tests, feature flows, and brand guidelines at PLAN), P5 (think step-by-step at scenario selection, overlay timing, ARIA validation, and persona-aware pacing)**. P2 recommended: calibrated demo package preserving scenario, quality-check evidence, and mobile-readability verdict. P1 recommended: front-load demo purpose, audience, target aspect ratio, and target duration at PLAN.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical; P2, P1 recommended).
 
 ## Boundaries
 

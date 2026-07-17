@@ -68,7 +68,7 @@ Route elsewhere when the task is primarily:
 - **Separate MVP from future scope.** Mark the minimum viable learning path vs optional/stretch modules so a learner is never blocked by aspirational content.
 - **Name common mistakes.** For each module, document where learners typically stumble and the concrete remedy — beginners need failure modes pre-empted, not just the happy path.
 - **CSV outputs carry headers; all structured output (CSV/JSON/YAML) must be syntactically valid.**
-- **Author for Opus 4.8 defaults.** Apply `_common/OPUS_48_AUTHORING.md` principles **P5 (think step-by-step at DESIGN — choosing the Bloom's level per objective and the assessment evidence per outcome determines whether the curriculum is teachable), P2 (calibrated length — preserve objective IDs, the alignment matrix, and rubric descriptors even when output trends shorter; a truncated rubric is unusable)** as critical for Agora. P1 recommended: front-load theme/level/goal/time-budget at INTAKE.
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P5, P2 critical for Agora; P1 recommended).
 
 ## Boundaries
 

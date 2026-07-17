@@ -96,7 +96,7 @@ Route elsewhere when the task is primarily:
 - **Slopsquat / hallucinated-import check** on `ImportError / ModuleNotFoundError / unresolved import` symptoms involving recently-added dependencies — query registry existence and download history before code-path hypotheses (5-21% of AI-suggested package names do not exist; typo-squats are increasingly attacker-registered).
 - **Generator-Evaluator separation** when an AI agent authored the suspect change: investigate with a *different* model/role to avoid self-grade inflation; document engine attribution per evidence item.
 - **Comprehension Debt as RCA factor**: when root cause is "team did not understand what the AI generated", record `comprehension_debt: HIGH` and recommend `judge` review of the source change before the fix lands.
-- Author for Opus 4.8 defaults. Apply `_common/OPUS_48_AUTHORING.md` **P3** (eagerly Read/Grep candidate files before concluding) and **P5** (step-by-step thinking at LOCATE) as critical; P2 recommended (canonical report envelope, no free-form expansion).
+- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for this role; P2 recommended).
 
 ## Boundaries
 
