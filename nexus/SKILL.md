@@ -54,7 +54,7 @@ Coordinate specialist agents, design the minimum viable chain, and execute safel
 - Verify acceptance criteria before delivery; pair quantitative metrics with human evaluation for high-stakes tasks.
 - Adapt routing from execution evidence with safety constraints; track OE (orchestration efficiency) per chain type.
 - Leverage standardized inter-agent protocols where available: MCP, A2A, ACP.
-- Apply Plan-and-Execute pattern: capable models plan, cheaper models execute. Claude Code = opus/fable-5 plan / **Sonnet 5 execute** (haiku trivial only); Codex CLI = **latest `gpt-5.6` generation, variant by role** (sol plan/design / terra execute / luna rote; depth via `model_reasoning_effort`); **agy = always Gemini 3.5 Flash**; Fable 5 hub → `high` effort. Full per-engine map → `reference/hub-authoring.md` § Model Selection, `_common/CLI_COMPATIBILITY.md §4`.
+- Apply Plan-and-Execute pattern: capable models plan, cheaper models execute. Claude Code = opus/fable-5 plan / **Sonnet 5 execute** (haiku trivial only); Codex CLI = **latest `gpt-5.6` generation, variant by role** (sol plan/design / terra execute / luna rote; depth via `model_reasoning_effort`); **agy = always Gemini 3.6 Flash (High)**; Fable 5 hub → `high` effort. Full per-engine map → `reference/hub-authoring.md` § Model Selection, `_common/CLI_COMPATIBILITY.md §4`.
 - Use Anthropic **Managed Agents** vocabulary (SF 2026) and surface an escalation recommendation in `NEXUS_COMPLETE` when the workload justifies the managed platform; prefer **Dynamic Workflows** for large homogeneous parallel sweeps. Detail: `reference/managed-agents-mapping.md` §5.
 - Output language follows the CLI global config (`settings.json` `language`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`); identifiers and technical terms remain in English.
 
@@ -69,7 +69,7 @@ Coordinate specialist agents, design the minimum viable chain, and execute safel
 7. **Learn only from evidence.** Routing adaptation requires execution data, verification, and journaled results.
 8. **Prevent circular handoffs.** Enforce max-hop limits (default: 2 round-trips per agent pair) to prevent A→B→A loops.
 9. **Hierarchical decomposition for scale.** For chains with 6+ agents, spawn feature-lead agents that each coordinate 2-3 specialists.
-10. **Author for the active orchestrator engine.** Detect which CLI drives the hub (see **Execution Model → Orchestrator Detection**) and apply the matching authoring protocol per `reference/hub-authoring.md` (Claude Code → P-principles, **plus F-principles on a Fable 5 hub**; Codex CLI → C-principles; agy → A-principles — Gemini 3.5 Flash mandate).
+10. **Author for the active orchestrator engine.** Detect which CLI drives the hub (see **Execution Model → Orchestrator Detection**) and apply the matching authoring protocol per `reference/hub-authoring.md` (Claude Code → P-principles, **plus F-principles on a Fable 5 hub**; Codex CLI → C-principles; agy → A-principles — Gemini 3.6 Flash (High) mandate).
 
 ## Boundaries
 
@@ -264,7 +264,7 @@ Before the first spawn, determine which CLI drives **this hub session**, then bi
 |--------|-----------|-----------|--------------------|-----------|
 | `Agent` tool present | **Claude Code** | `Agent(...)` (L1 fg / L2 `run_in_background`) | `_common/OPUS_48_AUTHORING.md` (P-principles); **Fable 5 hub → also `reference/hub-authoring.md` § Claude Code hub — Fable 5 (F-principles)** | **Sonnet 5** (subagent default) / opus / haiku / **fable-5** (see Model Selection ¶) |
 | `spawn_agent` callable (C1 prereqs hold) | **Codex CLI** | `spawn_agent` → `wait_agent` (parallel = N spawn → join all) | `_common/CODEX_ORCHESTRATION.md` (C-principles) | `gpt-5.6` family — sol/terra/luna by role (see `CLI_COMPATIBILITY.md §4`) |
-| `/agent` in TUI main session | **agy** | `/agent` or `agy -p` headless | `_common/AGY_ORCHESTRATION.md` (A1–A9) | Gemini 3.5 Flash mandated (‡), effort tier per step via `/model` (see `CLI_COMPATIBILITY.md §4`) |
+| `/agent` in TUI main session | **agy** | `/agent` or `agy -p` headless | `_common/AGY_ORCHESTRATION.md` (A1–A9) | Gemini 3.6 Flash (High) mandated (‡), effort tier per step via `/model` (see `CLI_COMPATIBILITY.md §4`) |
 
 Codex-hub prereqs (C1): `multi_agent = true` + `[agents] max_depth >= 2`. If unmet → internal execution with a concrete reason, never a generic "spawn tool not found"; `spawn_agent` may be lazily hidden — attempt when prereqs hold (C5). Details → `_common/CLI_COMPATIBILITY.md`, `reference/execution-layers.md`.
 

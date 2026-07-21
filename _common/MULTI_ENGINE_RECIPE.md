@@ -12,7 +12,7 @@ Cross-skill protocol for the `multi` Recipe — spawning subagents in parallel a
 
 **Default baseline: Claude + Codex (dual-engine).** agy / Antigravity CLI is an **optional addon** — used when AVAILABLE at PREFLIGHT, gracefully skipped when not. Skills MUST NOT treat agy as a hard prerequisite; recipes MUST function correctly in dual-engine mode.
 
-Rationale: agy v1.0.x has frequent silent runtime failures (RESOURCE_EXHAUSTED quota, OAuth expiry, executor errors, internal subagent timeouts — see §3.5). Building hard dependencies on agy makes recipes brittle. The dual-engine Claude+Codex baseline covers the core diversity need (judgment-oriented engine + sandbox-execution engine with non-overlapping training-data priors); agy contributes a third axis (1M context / multimodal / Gemini-Flash model-priors at High effort tier / Search grounding) when reachable but is never load-bearing. (agy is mandated to Gemini 3.5 Flash — `_common/CLI_COMPATIBILITY.md §4 ‡`; no Deep Think.)
+Rationale: agy v1.0.x has frequent silent runtime failures (RESOURCE_EXHAUSTED quota, OAuth expiry, executor errors, internal subagent timeouts — see §3.5). Building hard dependencies on agy makes recipes brittle. The dual-engine Claude+Codex baseline covers the core diversity need (judgment-oriented engine + sandbox-execution engine with non-overlapping training-data priors); agy contributes a third axis (1M context / multimodal / Gemini-Flash model-priors at High effort tier / Search grounding) when reachable but is never load-bearing. (agy is mandated to Gemini 3.6 Flash (High) — `_common/CLI_COMPATIBILITY.md §4 ‡`; no Deep Think.)
 
 | Engine count at runtime | Mode | Tag convention | Confidence floor |
 |-------------------------|------|----------------|------------------|

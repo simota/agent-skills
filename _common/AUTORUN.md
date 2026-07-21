@@ -63,7 +63,7 @@ Steps <= 4 AND sequential?     → L1: Direct Spawn (foreground / spawn_agent)
 
 ### Model Selection
 
-Model-per-role assignment is hub-engine-specific and defined once in `nexus/reference/hub-authoring.md` § Model Selection — Claude Code hub defaults to **Sonnet 5** (task-appropriate), escalating to **opus / fable-5** for the high-reasoning tier and **haiku** for trivial steps; Codex hub uses the latest gpt-5.6 generation with role-based variants (sol plan / terra execute / luna rote); agy hub is mandated to Gemini 3.5 Flash. Do not reproduce a bare `sonnet/opus/haiku` map here.
+Model-per-role assignment is hub-engine-specific and defined once in `nexus/reference/hub-authoring.md` § Model Selection — Claude Code hub defaults to **Sonnet 5** (task-appropriate), escalating to **opus / fable-5** for the high-reasoning tier and **haiku** for trivial steps; Codex hub uses the latest gpt-5.6 generation with role-based variants (sol plan / terra execute / luna rote); agy hub is mandated to Gemini 3.6 Flash (High). Do not reproduce a bare `sonnet/opus/haiku` map here.
 
 **Context Strategy** (orthogonal to model choice): `reset` = file-based handoff (fresh context per agent), `continuous` = in-context handoff (accumulated context), `hybrid` = Nexus continuous + spawned agents reset. Typical pairing — investigation/evaluator → `reset`, standard implementation → `hybrid`, high-complexity design/revision generator → `continuous`. See `nexus/reference/context-strategy.md` for details.
 

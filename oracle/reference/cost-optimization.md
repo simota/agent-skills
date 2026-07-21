@@ -19,7 +19,7 @@ Route to `Ledger` when the question is "is our vector DB oversized?" or "should 
 
 ## Token Economics
 
-> Prices need verification (as of 2026-07-09). Check each vendor's official page for current $/1M pricing. Current-generation models (Opus 4.8 / Sonnet 5 / GPT-5.5 / Gemini 3.5 Flash) have unconfirmed pricing, so they're marked `TBD (needs confirmation)`. Prior-generation rows are kept for reference.
+> Prices need verification (as of 2026-07-09). Check each vendor's official page for current $/1M pricing. Current-generation models (Opus 4.8 / Sonnet 5 / GPT-5.5 / Gemini 3.6 Flash (High)) have unconfirmed pricing, so they're marked `TBD (needs confirmation)`. Prior-generation rows are kept for reference.
 
 | Model | Input / 1M | Output / 1M | Speed | Quality | Default use |
 |-------|------------|-------------|-------|---------|-------------|
@@ -31,7 +31,7 @@ Route to `Ledger` when the question is "is our vector DB oversized?" or "should 
 | GPT-5.5 | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Medium | High | Cross-vendor fallback |
 | GPT-4o (prior gen, reference) | `$2.50` | `$10.00` | Medium | High | — |
 | GPT-4o-mini | `$0.15` | `$0.60` | Fast | Good | High-volume extraction |
-| Gemini 3.5 Flash | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Fast | Good | High-volume extraction (Gemini) |
+| Gemini 3.6 Flash (High) | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Fast | Good | High-volume extraction (Gemini) |
 
 Formula: `monthly cost = (input cost + output cost) × requests/day × 30`. Always compute this per feature before shipping.
 

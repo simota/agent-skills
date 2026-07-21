@@ -102,10 +102,10 @@ cost = (input_tokens / 1000) × input_price_per_1k
 | OpenAI | gpt-5.6 | TBD (verify) | TBD (verify) |
 | OpenAI | gpt-4o (previous gen, reference) | $0.0025 | $0.010 |
 | OpenAI | gpt-4o-mini | $0.00015 | $0.0006 |
-| Google | gemini-3.5-flash | TBD (verify) | TBD (verify) |
+| Google | gemini-3.6-flash | TBD (verify) | TBD (verify) |
 | Google | gemini-2.0-flash (previous gen, reference) | $0.0001 | $0.0004 |
 
-> Note: Prices change frequently. Always verify from official provider documentation. Table last reviewed 2026-07-09; current-gen rows (`claude-opus-4-8`, `claude-sonnet-5`, `gpt-5.6`, `gemini-3.5-flash`) have unconfirmed pricing — do not treat `TBD` rows as billing-accurate.
+> Note: Prices change frequently. Always verify from official provider documentation. Table last reviewed 2026-07-09; current-gen rows (`claude-opus-4-8`, `claude-sonnet-5`, `gpt-5.6`, `gemini-3.6-flash`) have unconfirmed pricing — do not treat `TBD` rows as billing-accurate.
 
 ### OTel Cost Metric
 
