@@ -210,7 +210,7 @@ Engine Mode adapts based on available engines:
 
 | Available Engines | Mode | Behavior |
 |---|---|---|
-| 3 (Claude + Codex + Antigravity) | **3-Engine Mode** | 3 engines deliberate independently — adds agy's 1M context / multimodal / High-effort-tier axis (Gemini 3.5 Flash mandated — `_common/CLI_COMPATIBILITY.md §4 ‡`; no Deep Think) |
+| 3 (Claude + Codex + Antigravity) | **3-Engine Mode** | 3 engines deliberate independently — adds agy's 1M context / multimodal / High-effort-tier axis (Gemini 3.6 Flash (High) mandated — `_common/CLI_COMPATIBILITY.md §4 ‡`; no Deep Think) |
 | 2 (Claude + Codex — DEFAULT BASELINE) | **2-Engine Mode** | 2 engines deliberate independently; consensus patterns: 2-0 / 1-1 / 0-2. NOT degraded — this is the recipe's normal operating state |
 | 2 (Claude + agy, Codex unavailable) | **2-Engine Mode (variant)** | Same scoring as above but with agy in place of Codex; flag the substitution because Codex is the preferred second axis |
 | 1 (Claude only) | **Auto-fallback** | Automatic switch to Simple Mode, notify user |

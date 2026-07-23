@@ -25,7 +25,7 @@
 
 Summit is a **quality-maximization recipe** that mobilizes multiple execution engines across five functional teams (Analysis / Design / Execution / Verification / Improvement). It produces engine-attributed, multi-perspective deliverables for strategic decisions and high-stakes outputs where the cost of failure dramatically exceeds the cost of triangulation.
 
-**Default baseline: Claude + Codex (dual-engine).** agy / Antigravity CLI is added as an **optional third axis** when AVAILABLE at PREFLIGHT — it contributes long-context (1M window), multimodal, High-effort-tier reasoning, and Search-grounding capabilities to Phase 1 / 3 / 4 / 5 when reachable, and is gracefully skipped when not (agy is mandated to Gemini 3.5 Flash — `_common/CLI_COMPATIBILITY.md §4 ‡`; no Deep Think — its divergence value is Gemini model-priors at the High effort tier). Dual-engine mode (Claude + Codex) is the recipe's normal operating state, NOT a degraded mode. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
+**Default baseline: Claude + Codex (dual-engine).** agy / Antigravity CLI is added as an **optional third axis** when AVAILABLE at PREFLIGHT — it contributes long-context (1M window), multimodal, High-effort-tier reasoning, and Search-grounding capabilities to Phase 1 / 3 / 4 / 5 when reachable, and is gracefully skipped when not (agy is mandated to Gemini 3.6 Flash (High) — `_common/CLI_COMPATIBILITY.md §4 ‡`; no Deep Think — its divergence value is Gemini model-priors at the High effort tier). Dual-engine mode (Claude + Codex) is the recipe's normal operating state, NOT a degraded mode. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
 
 **Design Team conditional inclusion**: The Design team is included by default but skipped when Phase 0's `mission_charter.yaml` sets `ui_dimension: none` (pure backend / infrastructure tasks with no user-facing surface). When skipped, Design sub-tracks across all phases are bypassed and the recipe operates as a four-team workflow with proportionally reduced cost.
 
@@ -175,7 +175,7 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 
 > **Executive summary for routing planning.** Per-phase contracts below (Phase 0-6) restate the engine assignments inline with phase-specific gates and inputs. When designing a Summit run, use this matrix to allocate agents to engines; when executing a specific phase, follow the phase contract for the full step sequence.
 
-**Engine routing principle:** route each agent to the engine whose distinctive strength best fits the agent's job — Claude is reserved for judgment, orchestration, and ethics; Codex owns code generation, sandbox execution, and test running (Terminal-Bench 77.3% leader); agy owns long-context analysis (1M window), multimodal asset work, High-effort-tier creative alternatives (Gemini 3.5 Flash, High tier — no Deep Think), and Search grounding. Each cell below lists the agents spawned on that engine for that team.
+**Engine routing principle:** route each agent to the engine whose distinctive strength best fits the agent's job — Claude is reserved for judgment, orchestration, and ethics; Codex owns code generation, sandbox execution, and test running (Terminal-Bench 77.3% leader); agy owns long-context analysis (1M window), multimodal asset work, High-effort-tier creative alternatives (Gemini 3.6 Flash (High), High tier — no Deep Think), and Search grounding. Each cell below lists the agents spawned on that engine for that team.
 
 | | Claude (hub — judgment & orchestration) | Codex (sandbox & code generation) | Antigravity / agy (long-context & multimodal) |
 |---|---|---|---|
@@ -189,7 +189,7 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 - If a task **generates or executes code** → Codex (unless it requires deep ethical/security judgment, then Claude)
 - If a task **needs to hold > 200K tokens of context** (large codebase analysis, full doc set) → agy
 - If a task **processes images, mockups, screenshots, or diagrams** → agy (multimodal native)
-- If a task **requires creative divergence or alternative exploration** → agy (Gemini 3.5 Flash, High tier) or rally[agy, COMPETE]
+- If a task **requires creative divergence or alternative exploration** → agy (Gemini 3.6 Flash (High), High tier) or rally[agy, COMPETE]
 - If a task **arbitrates between multiple perspectives or makes a Go/No-Go call** → Claude (magi or Vision)
 - If a task **involves security judgment, ethics, or regulatory review** → Claude (Sentinel/Cloak/Crypt/Oath)
 - Otherwise default to **Codex** (faster + cheaper for routine work), not Claude
@@ -204,7 +204,7 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 | Large-scale code generation / refactor | Codex | 192K context, sandbox-first, Terminal-Bench 2.0 leader |
 | Long-context analysis (codebase > 200K tokens) | agy | 1M context window |
 | Multimodal (images, diagrams, screenshots) | agy | Native multimodal support |
-| Creative alternatives / divergent thinking | agy | Gemini 3.5 Flash (High tier), different (Gemini) reasoning priors |
+| Creative alternatives / divergent thinking | agy | Gemini 3.6 Flash (High tier), different (Gemini) reasoning priors |
 | Test execution | Codex | Sandbox-first, fast iteration |
 | Architecture decisions | Claude | Strongest at trade-off reasoning |
 
@@ -387,7 +387,7 @@ design_track:
 | Frontend production | **Codex** (Artisan) | code generation |
 | Long-context doc/spec generation | **agy** (Scribe/Tome/Morph) | 1M context wins |
 | Cross-format conversion (Markdown/Word/PDF) | **agy** (Morph) | multimodal |
-| Alternative implementation exploration | **agy** (rally[COMPETE]) | Gemini 3.5 Flash (High tier) |
+| Alternative implementation exploration | **agy** (rally[COMPETE]) | Gemini 3.6 Flash (High tier) |
 | **Security review** of generated code | **Claude** (Sentinel) | judgment-critical |
 | **Privacy/crypto review** | **Claude** (Cloak/Crypt) | judgment-critical |
 | **Spec gatekeeping** between phases | **Claude** (Accord) | judgment-critical |
