@@ -81,8 +81,8 @@ Every recipe emits `NEXUS_COMPLETE` with the base `## Nexus Execution Report` (`
 |----------|------|---------------------------|
 | `_common/DIFFERENTIAL_PARITY.md` | parity-over-faith, oracle adequacy + non-determinism gates, comparator/harness, provenance/drift | transmute, clone, fuse, graft, migrate |
 | `reference/verdict-gate.md` | verdict card, Yes/No/Modify branches, flag+KPI+kill | essential, killer, trim, graft (flag clause) |
-| `_common/ADVERSARIAL_REFUTATION.md` | skeptic panel, evidence-vs-novelty, polarity, exclusions | killer, trim, graft, wish |
-| `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation, single termination oracle, flatten rule | converge, kaizen, apex, summit, podium, wish |
+| `_common/ADVERSARIAL_REFUTATION.md` | skeptic panel, evidence-vs-novelty, polarity, exclusions | killer, trim, graft, wish, newsroom |
+| `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation, single termination oracle, flatten rule | converge, kaizen, apex, summit, podium, wish, newsroom |
 | `_common/TRACEABILITY.md` | canonical AC/REQ IDs | spec, accord-driven recipes, attest gates |
 | `reference/dialogue-protocol.md` | question craft, answer processing, Assumption Ledger, checkpoint presentation, Provenance Gate for contract-level dialogue | spec, delve, wish Crystallization (mandatory); gedanken INTERACTIVE, clone Stack Dialogue, verdict cards (D1–D4/D10–D11 only) |
 | `reference/autonomy-quality-protocol.md` | intent contract, Decision Ledger, drift control, producer≠verifier, evidence-bound claims, Acceptance Provenance | all autonomous (non-dialogue) recipes + ad-hoc chains; recipes cite it and add only specializations (parity oracles satisfy Q3/Q10; acceptance G1–G10 subsume Q11) |

@@ -4,6 +4,8 @@
 
 Read this when executing `clone` Phase 0.5, `fuse` Phase 1 (per source), or `graft` Phase 1 (donor + host-domain). The recipes invoke this sweep; this file owns its contract, the Evidence Ledger schema, the trust-tier model, and the governing principle.
 
+> **Reuse note — `newsroom`:** the grounded-article recipe (`reference/newsroom-recipe.md`) reuses this file's Evidence Ledger schema, trust tiers (T1–T4), and Research Completeness gate for its Phase 1 sweep, with one adaptation: newsroom has no captured artifact, so §2's capture-authoritative rule becomes **primary-source-authoritative** (highest-tier source wins ties, cross-corroborated). Everything else in this file remains reproduction-family-specific.
+
 ---
 
 ## 1. Why research first (what it buys fidelity)
