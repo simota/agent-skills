@@ -85,7 +85,7 @@ Agent disambiguation → `reference/agent-disambiguation.md`
 - Use `NEXUS_HANDOFF` format from `_common/HANDOFF.md`.
 - Validate execution results after each step (schema, required fields, confidence) to catch semantic failures.
 - Record routing corrections and user overrides in the journal.
-- Track orchestration efficiency (OE = successful tasks / total compute cost) and token efficiency per chain.
+- Track orchestration efficiency (OE = successful tasks / total compute cost) and token efficiency per chain. Where the API surface is available, split the denominator with `usage.output_tokens_details.thinking_tokens` — reasoning vs. deliverable spend are different problems (over-thinking → lower effort; over-writing → tighten the P2 envelope), and a single output-token total cannot tell them apart.
 
 ### Ask First
 
@@ -96,7 +96,7 @@ Agent disambiguation → `reference/agent-disambiguation.md`
 - First-time use of a newly registered agent in a production chain.
 - Approving creation of a new skill via LADDER (`architect`'s gap-fill proposal, before it is registered) — see `reference/routing-matrix.md` § LADDER.
 - **Before the first `agy -p ... --dangerously-skip-permissions` Bash spawn of a session** — emit the Pre-flight Notification per `_common/CLI_COMPATIBILITY.md §9.1` (informational, does not block AUTORUN).
-- **On a Fable 5 hub, before executing a task that does not warrant Fable 5-tier reasoning** (classified `SIMPLE` / single trivial step, no multi-domain planning or high-reasoning design) — confirm before proceeding and recommend the cheaper path (delegate directly to a Sonnet 5 subagent, or re-run the hub on Sonnet 5 / Opus 4.8). Fable 5 hub is high-cost; this is the **Fable 5 cost gate (F8)**, contract-level — it blocks even in `AUTORUN`/`AUTORUN_FULL`. See `reference/hub-authoring.md` § Claude Code hub — Fable 5.
+- **On a Fable 5 hub, before executing a task that does not warrant Fable 5-tier reasoning** (classified `SIMPLE` / single trivial step, no multi-domain planning or high-reasoning design) — confirm before proceeding and recommend the cheaper path (delegate directly to a Sonnet 5 subagent, or re-run the hub on Sonnet 5 / Opus 5). Fable 5 hub is high-cost; this is the **Fable 5 cost gate (F8)**, contract-level — it blocks even in `AUTORUN`/`AUTORUN_FULL`. See `reference/hub-authoring.md` § Claude Code hub — Fable 5.
 
 ### Never
 
@@ -265,29 +265,17 @@ Before the first spawn, determine which CLI drives **this hub session**, then bi
 
 | Signal | Hub engine | Spawn API | Authoring protocol | Model map |
 |--------|-----------|-----------|--------------------|-----------|
-| `Agent` tool present | **Claude Code** | `Agent(...)` (L1 fg / L2 `run_in_background`) | `_common/OPUS_48_AUTHORING.md` (P-principles); **Fable 5 hub → also `reference/hub-authoring.md` § Claude Code hub — Fable 5 (F-principles)** | **Sonnet 5** (subagent default) / opus / haiku / **fable-5** (see Model Selection ¶) |
+| `Agent` tool present | **Claude Code** | `Agent(...)` (L1 fg / L2 `run_in_background`) | `_common/OPUS_5_AUTHORING.md` (P-principles); **Fable 5 hub → also `reference/hub-authoring.md` § Claude Code hub — Fable 5 (F-principles)** | **Sonnet 5** (subagent default) / opus / haiku / **fable-5** (see Model Selection ¶) |
 | `spawn_agent` callable (C1 prereqs hold) | **Codex CLI** | `spawn_agent` → `wait_agent` (parallel = N spawn → join all) | `_common/CODEX_ORCHESTRATION.md` (C-principles) | `gpt-5.6` family — sol/terra/luna by role (see `CLI_COMPATIBILITY.md §4`) |
 | `/agent` in TUI main session | **agy** | `/agent` or `agy -p` headless | `_common/AGY_ORCHESTRATION.md` (A1–A9) | Gemini 3.6 Flash (High) mandated (‡), effort tier per step via `/model` (see `CLI_COMPATIBILITY.md §4`) |
 
 Codex-hub prereqs (C1): `multi_agent = true` + `[agents] max_depth >= 2`. If unmet → internal execution with a concrete reason, never a generic "spawn tool not found"; `spawn_agent` may be lazily hidden — attempt when prereqs hold (C5). Details → `_common/CLI_COMPATIBILITY.md`, `reference/execution-layers.md`.
 
-**Claude Code hub model detection.** The hub runs on Opus 4.8 or Claude Fable 5; on Fable 5, apply the F-principles in `reference/hub-authoring.md` § Claude Code hub — Fable 5 on top of the P-principles. When unknown, author for Opus 4.8 defaults — safe on both.
+**Claude Code hub model detection.** The hub runs on Opus 5 or Claude Fable 5; on Fable 5, apply the F-principles in `reference/hub-authoring.md` § Claude Code hub — Fable 5 on top of the P-principles. When unknown, author for Opus 5 defaults — safe on both.
 
 ### Spawn Decision Flow
 
-```
-EXECUTE step begins
-  ↓
-Is spawn tool available? (Agent / spawn_agent / /agent)
-  ├─ NO → Internal execution (log reason)
-  └─ YES
-       ↓
-     Step requires specialist expertise?
-       ├─ YES → SPAWN (mandatory)
-       └─ NO (trivial single-file edit)
-            ↓
-          Spawn overhead justified? → SPAWN (recommended) | Internal (log reason)
-```
+Core Rule #3 decides it: no spawn tool → internal (log the blocker); specialist expertise → spawn (mandatory); trivial edit → spawn only if overhead is justified. Opus 5 delegates readily (P4) — bound the *upper* count, and never spawn an agent to re-check another's output (that is a sequential Q9 step, not a sibling).
 
 ### Execution Layers
 
@@ -329,9 +317,10 @@ Agent(
     Context from previous step: [handoff_context]
     Constraints: [constraints]
     Acceptance criteria: [acceptance_criteria]  # P1: front-loaded (always)
-    Output length envelope: [length_envelope]   # P2: optional — add for L/XL output
+    Output length envelope: [length_envelope]   # P2: always — default output runs long
+    Scope bound: [in_scope / out_of_scope]      # P8: always — Opus 5 widens tasks on its own
     Tool-use directive: [tool_use_directive]    # P3: optional — add when tool use matters
-    Thinking directive: [thinking_directive]    # P5: optional — add for high-stakes steps
+    Thinking directive: [thinking_directive]    # P5: optional — depth nudge, never a self-check
 
     On completion, emit:
     _STEP_COMPLETE:
@@ -342,7 +331,7 @@ Agent(
 )
 ```
 
-Front-load acceptance criteria (P1) on every spawn. The output-length (P2), tool-use (P3), and thinking (P5) directives are optional — add them by task scale, not by default. For orchestrator spawns the Critical directives per `_common/OPUS_48_AUTHORING.md` are P4/P6/P7/P9 (parallel triggers, effort, delegation framing, effort-calibrated tool use), carried by the `model`/`mode` fields and the parallel-spawn rules rather than by per-field template text. **On a Fable 5 hub directives are lighter, not heavier** — a brief outcome+brevity instruction steers best, and any "echo / show / transcribe your reasoning" wording is forbidden (`reasoning_extraction` refusal). Engine variants, Opus 4.8 / Fable 5 notes, parallel-spawn rules → `reference/hub-authoring.md` § Spawn Template Variants; detailed flows → `reference/execution-phases.md`, `reference/orchestration-patterns.md`.
+Front-load acceptance criteria (P1), a length envelope (P2), and a scope bound (P8) on **every** spawn — Opus 5's default output runs long in both channels and it can widen a task unprompted. Tool-use (P3) and thinking (P5) directives are optional, added by task scale. **Never include self-verification wording** ("verify your work", "double-check", "re-verify before responding", "spawn a subagent to check this") — Opus 5 self-verifies and these cause over-verification (P9). Independent verification is unaffected: it lives in the *chain* as a separate agent (Radar after Builder, Judge after implementation), not in a producer's own prompt. For orchestrator spawns the Critical directives per `_common/OPUS_5_AUTHORING.md` are P4/P6/P7/P9 (delegation caps, effort, delegation framing, no redundant verification), carried by the `model`/`mode` fields and the spawn-ceiling rules rather than by per-field template text. **On a Fable 5 hub directives are lighter, not heavier** — a brief outcome+brevity instruction steers best, and any "echo / show / transcribe your reasoning" wording is forbidden (`reasoning_extraction` refusal). Engine variants, Opus 5 / Fable 5 notes, parallel-spawn rules → `reference/hub-authoring.md` § Spawn Template Variants; detailed flows → `reference/execution-phases.md`, `reference/orchestration-patterns.md`.
 
 ## Safety Contract
 
@@ -463,7 +452,7 @@ Read only the files that match the current decision point.
 | `reference/feature-impact-simulate.md` | Feature impact prediction (Persona+Journey+Product v4) |
 | `reference/pack-subcommand.md` | `/nexus pack` — skill profile switch, settings.json edit, backup, diff, confirm |
 | `_common/SKILL_PACKS.md` | Pack membership matrix (10 packs × 130 skills), profile catalog, routing protocol |
-| `_common/OPUS_48_AUTHORING.md` | **Claude Code hub** — P4 / P6 / P7 spawn prompts, output envelopes, effort |
+| `_common/OPUS_5_AUTHORING.md` | **Claude Code hub** — P1–P11 (delegation caps, effort against a `high` default, length envelopes, scope bounds, no self-verification scaffolding) + Opus 5 platform facts |
 | `reference/hub-authoring.md` § Claude Code hub — Fable 5 | **Hub runs on `claude-fable-5`** — F-principles (F1-F8): lighter spawn prompts, `high` default effort, async harness, no-reasoning-reproduction, cost gate |
 | `_common/CODEX_ORCHESTRATION.md` | **Codex CLI hub** — C1 spawn-depth, C2 sync fan-out, C3 effort-by-model, C6 checkpoint-resume |
 | `_common/AGY_ORCHESTRATION.md` | **agy hub** — A1 Flash-mandate effort-tier routing, A2 file-handoff+pty capture, A3 session-scoped tier, A4 flattened fan-out / `-c` resume, A6 sandbox posture (#36) |
@@ -471,7 +460,7 @@ Read only the files that match the current decision point.
 
 ## Operational Notes
 
-Follow `_common/OPERATIONAL.md`, `_common/AUTORUN.md`, `_common/HANDOFF.md`, `_common/GIT_GUIDELINES.md`, `_common/HARNESS_EVOLUTION.md`. For the active orchestrator engine apply `_common/OPUS_48_AUTHORING.md` (Claude Code hub; add the F-principles in `reference/hub-authoring.md` when the hub runs on Fable 5), `_common/CODEX_ORCHESTRATION.md` (Codex CLI hub), or `_common/AGY_ORCHESTRATION.md` (agy hub — A1–A9). Journal in `.agents/nexus.md`; log to `.agents/PROJECT.md`. No agent names in commits/PRs. Decompose, route, execute, verify, deliver. Keep chains small, handoffs structured, recovery explicit.
+Follow `_common/OPERATIONAL.md`, `_common/AUTORUN.md`, `_common/HANDOFF.md`, `_common/GIT_GUIDELINES.md`, `_common/HARNESS_EVOLUTION.md`. For the active orchestrator engine apply `_common/OPUS_5_AUTHORING.md` (Claude Code hub; add the F-principles in `reference/hub-authoring.md` when the hub runs on Fable 5), `_common/CODEX_ORCHESTRATION.md` (Codex CLI hub), or `_common/AGY_ORCHESTRATION.md` (agy hub — A1–A9). Journal in `.agents/nexus.md`; log to `.agents/PROJECT.md`. No agent names in commits/PRs. Decompose, route, execute, verify, deliver. Keep chains small, handoffs structured, recovery explicit.
 
 ## AUTORUN Support
 

@@ -76,4 +76,4 @@ Scope: <core|frontend|ios|android>
 | ENFORCE | `vision`, `artisan`, `flow`, `prose`, `native` | `canon`, `palette`, `echo` |
 | GATE | `guardian`, `judge` | `canon` |
 
-> Author spawn prompts per `_common/OPUS_48_AUTHORING.md`: front-load the principle IDs to honor, give a length envelope, and state the thinking directive. ANALYZE branches run as parallel `Agent(... run_in_background: true)` spawns.
+> Author spawn prompts per `_common/OPUS_5_AUTHORING.md`: front-load the principle IDs to honor, give a length envelope, and state the thinking directive. ANALYZE branches run as parallel `Agent(... run_in_background: true)` spawns.

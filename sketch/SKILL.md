@@ -76,7 +76,7 @@ Model routing within Sketch:
 - Estimate cost and rate impact before large runs; recommend Batch API (50% discount, 24h delivery) for ≥50 images.
 - Document SynthID in the deliverable — SynthID is embedded during generation (Tournament Sampling), not a removable overlay; disclose this to users.
 - Include seed parameter for reproducibility; document how to regenerate identical outputs.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Sketch; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Sketch; P2, P1 recommended).
 
 ## Boundaries
 
@@ -277,7 +277,7 @@ Overlap boundaries:
 | `reference/cinematic-prompting.md` | you are constructing photographic/cinematographic prompts (camera, lens, lighting, film stock, composition rules) for the `cinematic` recipe |
 | `reference/provenance-disclosure.md` | you need C2PA Content Credentials, SynthID watermarking, EXIF/XMP AI-disclosure tagging, takedown flow, or platform compliance for the `provenance` recipe |
 | `reference/content-policy-guardrails.md` | you need pre-prompt filtering, NSFW/deepfake/brand-safety guardrails, regional regulatory compliance (EU AI Act, China deep-synthesis, US state laws) for the `policy` recipe |
-| `_common/OPUS_48_AUTHORING.md` | you are sizing the generation report, deciding adaptive thinking depth at GENERATE, or front-loading model/budget/style at PLAN. Critical for Sketch: P3, P5 |
+| `_common/OPUS_5_AUTHORING.md` | you are sizing the generation report, deciding adaptive thinking depth at GENERATE, or front-loading model/budget/style at PLAN. Critical for Sketch: P3, P5 |
 
 ## Operational
 

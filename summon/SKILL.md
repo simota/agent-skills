@@ -65,7 +65,7 @@ Route elsewhere when the task is primarily:
 - Include the **emulation disclaimer** in every deliverable: this is an emulation of documented thinking, not the real person's statement or endorsement.
 - **Advise, never decide.** Summon produces readings; route any actual decision to Magi or the user.
 - For a panel, channel each figure **independently** before surfacing contrasts; never flatten genuine disagreement into a false consensus (`reference/conclave-protocol.md`).
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for this role; P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P1 recommended).
 
 ## Boundaries
 
@@ -205,7 +205,7 @@ Summon receives a figure + problem from the user or upstream agents, channels do
 | `reference/figure-roster.md` | You are authoring or reading reusable figure profiles (schema, storage, seed exemplars). |
 | `reference/conclave-protocol.md` | You are running a multi-figure panel and surfacing contrasts without forcing consensus. |
 | `_common/AI_PERSONA_RISKS.md` | You need the bias / over-sanitization / stereotyping risks shared across persona-style agents. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the reading, deciding thinking depth at GROUND→CHANNEL, or front-loading figure/problem/use. Critical for Summon: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the reading, deciding thinking depth at GROUND→CHANNEL, or front-loading figure/problem/use. Critical for Summon: P3, P5. |
 
 ## Output Contract
 

@@ -39,7 +39,7 @@ import ClaudeForFoundationModels
 
 ```swift
 let model = ClaudeLanguageModel(
-  name: .opus4_8,
+  name: .opus5,
   auth: .apiKey(ProcessInfo.processInfo.environment["ANTHROPIC_API_KEY"] ?? "")
 )
 let session = LanguageModelSession(model: model)
@@ -51,7 +51,7 @@ print(response.content)
 
 ## Model selection & capabilities
 
-- Model IDs are `ClaudeModel` values. Use a compiled-in constant (`.opus4_8` ≡ `claude-opus-4-8`, …) — new models ship as new constants per package release. #TODO(agent): confirm the compiled-in constant name for Sonnet 5 (e.g. `.sonnet5` vs `.sonnet5_0`) — removed the stale `.sonnet4_6` example rather than guess.
+- Model IDs are `ClaudeModel` values. Use a compiled-in constant (one per shipped model, e.g. a `claude-opus-5` constant) — new models ship as new constants per package release. #TODO(agent): confirm the compiled-in constant names for Opus 5 and Sonnet 5 (e.g. `.opus5` vs `.opus5_0`) — removed the stale `.sonnet4_6` example rather than guess.
 - Each `ClaudeModel` **declares its capabilities** (sampling params, effort levels, adaptive thinking, structured output, image input). The package uses this to decide which request fields to send — **sending a field a model rejects is a hard error**, so capabilities are not optional metadata.
 - For an ID not compiled in yet, construct one with explicit capabilities (no shorthand that guesses):
 
@@ -68,7 +68,7 @@ ClaudeLanguageModel(name: model, auth: auth)
 `fixedEffort:` pins the effort level for every request and **takes precedence over the framework's per-request reasoning hints**. It is the **only way to request `.xhigh` or `.max`** — the framework's reasoning levels stop at `high`. API defaults to `high` when no effort is sent. The level must be one the model accepts (some models accept no effort at all).
 
 ```swift
-ClaudeLanguageModel(name: .opus4_8, auth: auth, fixedEffort: .xhigh)
+ClaudeLanguageModel(name: .opus5, auth: auth, fixedEffort: .xhigh)
 ```
 
 ## Authentication
@@ -82,7 +82,7 @@ The proxy receives standard Messages API requests, attaches `x-api-key`, forward
 
 ```swift
 ClaudeLanguageModel(
-  name: .opus4_8,
+  name: .opus5,
   auth: .proxied(headers: ["X-App-Token": "..."]),
   baseURL: URL(string: "https://api.yourapp.com/claude")!
 )
@@ -119,7 +119,7 @@ Requires a model whose capabilities include structured output (all compiled-in c
 
 ```swift
 let model = ClaudeLanguageModel(
-  name: .opus4_8, auth: auth,
+  name: .opus5, auth: auth,
   serverTools: [.webSearch(maxUses: 5), .codeExecution]
 )
 ```

@@ -156,7 +156,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Authoring Defaults
 
-Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Quest; P2, P1 recommended).
+Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Quest; P2, P1 recommended).
 
 ---
 
@@ -340,7 +340,7 @@ SPARK_TO_QUEST_HANDOFF:
 | `reference/balance-and-economy.md` | Balance modeling (power curves, time-to-kill, cost/reward tables), dominant/degenerate-strategy detection, economy sources/sinks, equilibrium, inflation control |
 | `reference/level-and-progression.md` | Level/encounter design, difficulty pacing, tutorialization, XP/level curves, unlock trees, reward and retention loops |
 | `reference/narrative-design.md` | Story structure, world/lore bible, branching and reconvergence, environmental storytelling, narrative-vs-mechanics integration |
-| `_common/OPUS_48_AUTHORING.md` | Sizing the GDD, adaptive thinking depth at BALANCE, front-loading genre/player/platform/scope at FRAME. Critical for Quest: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the GDD, adaptive thinking depth at BALANCE, front-loading genre/player/platform/scope at FRAME. Critical for Quest: P3, P5. |
 
 ---
 

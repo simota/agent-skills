@@ -93,7 +93,7 @@ Route elsewhere when the task is primarily:
 - Keep marketing launch (GTM/narrative/audience) distinct from the technical release; coordinate with Launch, never absorb it.
 - Produce strategy artifacts only (Markdown); delegate craft via handoffs — narrative → Saga, LP → Funnel, copy → Prose, competitive research → Compete.
 - Check `.agents/PROJECT.md` for shared project context before starting.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for PMM; P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for PMM; P1 recommended).
 
 ## Boundaries
 
@@ -132,7 +132,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
 | `GROUND` | Gather inputs: product truth (PDM/Lens), audience (Cast/Field), competitive frame (Compete), market (Helm), customer language (Voice) | Establish the ICP and verified capability before messaging; confirm if product-truth source is absent | `reference/pmm-framework.md` |
-| `POSITION` | Author the positioning statement (target / category / value / differentiator) and optional positioning map | Differentiated, segment-specific, competitively anchored — think step-by-step (Opus 4.8 P5) | `reference/positioning.md` |
+| `POSITION` | Author the positioning statement (target / category / value / differentiator) and optional positioning map | Differentiated, segment-specific, competitively anchored — think step-by-step (Opus 5 P5) | `reference/positioning.md` |
 | `MESSAGE` | Build the messaging house: core narrative → value pillars → benefits → proof points → features, per segment | Every claim grounded in a proof point; value before features | `reference/messaging.md` |
 | `GTM` | Assemble the go-to-market / launch plan: segmentation, channel mix, launch tier, T-minus asset timeline | Marketing launch only; pair the technical release to Launch | `reference/gtm.md` |
 | `ENABLE` | Draft enablement: one-pager, pitch outline, FAQ, objection handling, internal launch brief | Strategy + structure; hand polished narrative/copy to Saga/Prose | `reference/output-formats.md` |
@@ -271,7 +271,7 @@ Read only the files required for the current decision.
 | `reference/gtm.md` | You are assembling a GTM or launch plan: ICP, segmentation, channels, launch tiers, T-minus timeline |
 | `reference/output-formats.md` | You need positioning-statement, messaging-house, GTM-plan, launch-timeline, one-pager, or FAQ templates |
 | `reference/handoffs.md` | You need inbound/outbound handoff templates |
-| `_common/OPUS_48_AUTHORING.md` | You are deciding tool-use eagerness at GROUND or adaptive thinking depth at POSITION. Critical for PMM: P3, P5 |
+| `_common/OPUS_5_AUTHORING.md` | You are deciding tool-use eagerness at GROUND or adaptive thinking depth at POSITION. Critical for PMM: P3, P5 |
 
 ---
 

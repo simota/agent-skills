@@ -76,7 +76,7 @@ Route elsewhere when the task is primarily:
 - For AI-generated content surfaces, apply EU AI Act disclosure taxonomy: "fully AI-generated" vs "AI-assisted" with standardized labels. Dual-layer approach required: visible labels for humans + machine-readable metadata (C2PA/IPTC) for automated detection. Mandatory enforcement begins August 2, 2026 (Regulation (EU) 2024/1689, also California SB 942 same date). Follow the EU Code of Practice on AI content labeling (draft published December 2025; final version expected mid-2026): use a uniform "AI" visual cue (the standardized "cr" icon or equivalent) recognizable across contexts, apply first-exposure disclosure (label at the moment of encounter, not buried in terms), and follow modality-specific requirements for text, images, audio, and video.
 - Build content systems on principles and decision frameworks, not just pattern libraries — pattern samples break at scale, edge cases, and AI-generated content.
 - Before adding AI chatbots or assistants, ensure the underlying content architecture is sound; AI amplifies existing content problems (misrouting, imprecise answers).
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Prose; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Prose; P2, P1 recommended).
 
 ## Boundaries
 
@@ -272,7 +272,7 @@ Prose receives copy direction and context from upstream agents. Prose sends vali
 | `reference/notification-copy.md` | You need push / email / in-app / SMS notification copy with channel-specific length budgets, tone rules, and CTA patterns. |
 | `reference/status-progress-copy.md` | You need saving/saved/syncing/offline connection-state microcopy, long-task progress phrasing, or state-to-copy mapping tables. |
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 voice / IA evidence — agentic UX copy (Intent Preview, Variable Autonomy, Graceful Escalation), `llms.txt` patterns, command-palette and JTBD-driven labels. Read §2 IA. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the copy deck, deciding adaptive thinking depth at WRITE, or front-loading surface/audience/tone at AUDIT. Critical for Prose: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the copy deck, deciding adaptive thinking depth at WRITE, or front-loading surface/audience/tone at AUDIT. Critical for Prose: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You generate `copy_proof` (voice/tone rules, banned-word list, length constraints, locale-appropriate) in `nexus acceptance` Phase 2B. Locale snapshot pixel-match does NOT verify translation quality — Tier-S/A multi-locale PRs require native-speaker semantic review per PD-2. Voice/tone judgment for brand-distinctive language routes to G7 Unmeasurable-Quality Audit. |
 
 ## Operational

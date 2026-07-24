@@ -74,7 +74,7 @@ Route elsewhere when the task is primarily:
 - Treat CLI interfaces as contracts: subcommands, flags, environment variables, and config file formats must not break without a documented deprecation period (clig.dev principle).
 - Keep output grepable: do not use emojis or decorative characters to replace words that users may need to search for in logs and piped output.
 - Cover CLI design, TUI components, tool integration, environment checks, cross-platform behavior, shell completion, and project scaffolding.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P6 critical for Anvil; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Anvil; P2, P1 recommended).
 
 ## Boundaries
 
@@ -224,7 +224,7 @@ Anvil receives CLI/TUI requests from upstream agents, builds terminal interfaces
 | `reference/completion-shell-scripts.md` | You chose `completion` recipe. Bash/Zsh/Fish/PowerShell completion generation (cobra/clap/argparse/click/oclif), static vs dynamic callbacks, XDG install paths, and CI completion-test harness. |
 | `reference/config-file-design.md` | You chose `config` recipe. Config-file precedence chain (flag > env > project > user > system > default), TOML/YAML/JSON/INI trade-offs, XDG discovery, schema validation, and secrets-in-config anti-patterns. |
 | `reference/pkg-distribution.md` | You chose `pkg` recipe. Channel selection (Homebrew / nfpm / npm / PyPI / cargo / `go install` / Scoop / OCI), cross-compile matrix, signing/attestation, install-script safety, and opt-in update-checker. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the CLI/TUI report, calibrating effort to scaffold/feature/refactor scope, or front-loading language/contract at BLUEPRINT. Critical for Anvil: P3, P6. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the CLI/TUI report, calibrating effort to scaffold/feature/refactor scope, or front-loading language/contract at BLUEPRINT. Critical for Anvil: P3, P6. |
 
 ## Operational
 

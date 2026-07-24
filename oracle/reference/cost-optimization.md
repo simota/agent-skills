@@ -19,19 +19,31 @@ Route to `Ledger` when the question is "is our vector DB oversized?" or "should 
 
 ## Token Economics
 
-> Prices need verification (as of 2026-07-09). Check each vendor's official page for current $/1M pricing. Current-generation models (Opus 4.8 / Sonnet 5 / GPT-5.5 / Gemini 3.6 Flash (High)) have unconfirmed pricing, so they're marked `TBD (needs confirmation)`. Prior-generation rows are kept for reference.
+> Claude rows verified against `platform.claude.com/docs/en/about-claude/pricing` on **2026-07-25**. Non-Anthropic rows still need verification — check each vendor's official page before quoting.
 
 | Model | Input / 1M | Output / 1M | Speed | Quality | Default use |
 |-------|------------|-------------|-------|---------|-------------|
-| Claude Opus 4.8 | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Slow | Highest | Deep reasoning, `~10%` of traffic |
-| Claude Opus 4.7 (prior gen, reference) | `$15.00` | `$75.00` | Slow | Highest | — |
-| Claude Sonnet 5 | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Medium | High | Production default |
-| Claude Sonnet 4.6 (prior gen, reference) | `$3.00` | `$15.00` | Medium | High | — |
-| Claude Haiku 4.5 | `$0.80` | `$4.00` | Fast | Good | Classification, extraction, tier-1 routing |
+| Claude Fable 5 | `$10.00` | `$50.00` | Slow | Highest | Frontier reasoning, long-running agents |
+| Claude Opus 5 | `$5.00` | `$25.00` | Moderate | Highest | Complex agentic coding, `~10%` of traffic |
+| Claude Sonnet 5 | `$2.00` → `$3.00` | `$10.00` → `$15.00` | Fast | High | Production default (intro pricing through 2026-08-31, then standard) |
+| Claude Haiku 4.5 | `$1.00` | `$5.00` | Fastest | Good | Classification, extraction, tier-1 routing |
 | GPT-5.5 | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Medium | High | Cross-vendor fallback |
-| GPT-4o (prior gen, reference) | `$2.50` | `$10.00` | Medium | High | — |
 | GPT-4o-mini | `$0.15` | `$0.60` | Fast | Good | High-volume extraction |
 | Gemini 3.6 Flash (High) | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Fast | Good | High-volume extraction (Gemini) |
+
+Claude cost modifiers (multiply the base rates above):
+
+| Modifier | Effect |
+|----------|--------|
+| Batch API | **0.5×** input and output (Opus 5 → `$2.50` / `$12.50`) |
+| Cache write, 5 min | 1.25× input |
+| Cache write, 1 h | 2× input |
+| Cache read (hit) | **0.1×** input — pays off after one read on the 5-min tier |
+| Fast mode (research preview, Opus 5 only) | 2× both (`$10` / `$50`); stacks with caching, excludes Batch |
+| `inference_geo: "us"` | 1.1× all categories |
+| 1M context window | **No premium** — a 900k-token request bills at the same per-token rate as 9k |
+
+Minimum cacheable prompt on Opus 5 is **512 tokens**, so short system prompts now cache.
 
 Formula: `monthly cost = (input cost + output cost) × requests/day × 30`. Always compute this per feature before shipping.
 
@@ -59,6 +71,27 @@ SPECIFY   →  hand to Builder: routing logic, cache keys, batch cadence, budget
 - **5-minute TTL (default)**: cache stable system prompts, few-shot examples, long context. Cache read = `10%` of input cost. Typical agentic multi-turn sessions land `45-80%` cost reduction and `13-31%` TTFT reduction.
 - **1-hour TTL (extended)**: high-stability prefixes (product docs, tool definitions). Costs more to write but persists longer; break even at ~2 hits per hour.
 - **Ordering rule**: `system prompt → tool defs → long context → examples → user variable input`. Put `cache_control` on the last token of each stable block.
+- **Minimum cacheable prompt is 512 tokens on Opus 5** (down from 1,024), so short system prompts now cache.
+- **Three silent invalidators** — each renders into the prompt, so changing it mid-conversation costs a full cache write instead of a 0.1× read: (1) `effort`; (2) the `tools` array (Opus 5 lifts this with the `mid-conversation-tool-changes-2026-07-01` beta); (3) `task_budget` if you mutate it per turn. Pick each once per conversation. `defer_loading: true` tools are exempt — they never enter the cached prefix.
+
+## Agentic Loop Cost Control
+
+Four levers, in the order to reach for them. Verified 2026-07-25.
+
+| Lever | What it bounds | Hard or soft |
+|-------|---------------|--------------|
+| `effort` | Reasoning **depth per step** — and all tokens, including tool-call volume | Soft, calibrated |
+| `task_budget` (beta `task-budgets-2026-03-13`) | Total **breadth across the loop** — thinking + tool calls + tool results + output | **Soft/advisory** — the model paces against a countdown it can see and finishes gracefully |
+| `max_tokens` | Generated tokens **per request** | **Hard** — truncates with `stop_reason: "max_tokens"` |
+| Per-message thinking nudge | Depth on **one turn**, cache-safe | Soft, wording-sensitive |
+
+- `effort` and `task_budget` are orthogonal: **depth vs breadth.** Use `task_budget` for the pacing target and `max_tokens` as the runaway ceiling; neither constrains the other.
+- **Size a budget from measurement, not a default**: run representative tasks with no budget, then start at the **p99** of per-task spend. Minimum `total` is 20,000 tokens.
+- **A too-small budget looks like a refusal.** The model may decline outright, de-scope hard, or stop early rather than begin work it cannot finish. On unexpected refusals after adding a budget, raise the budget before touching other parameters.
+- Do not mirror the countdown client-side — decrementing `remaining` while resending full history under-reports the budget and makes the model quit early. Pass `remaining` only across a compaction/context rewrite.
+- Not on Claude Code / Cowork, and not on Sonnet 5: `task_budget` is Messages API + Opus 5 / Fable 5 / Mythos 5 / Opus 4.8 / Opus 4.7 only.
+- **Attribute spend before tuning:** `usage.output_tokens_details.thinking_tokens` separates reasoning from deliverable output. Over-thinking → lower `effort`; over-writing → prompt an explicit length envelope (effort does *not* shorten visible output). Billed thinking is the full internal reasoning, not the summarized text you see — the `display` setting never changes the bill.
+- On `stop_reason: "max_tokens"`, the fix depends on the cause: raise `max_tokens` if the reasoning was needed, lower `effort` if it was over-thought.
 
 ## Model Routing Patterns
 

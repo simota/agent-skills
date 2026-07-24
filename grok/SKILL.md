@@ -84,7 +84,7 @@ Route elsewhere when the task is primarily:
 - Every DSL has a closed vocabulary and explicit version field; additions require a documented evolution plan.
 - AST design precedes AST transforms: nodes are tagged unions with source-position tracking; transformations preserve comments and whitespace when roundtrip-safe output is required.
 - Regex is never the right tool for HTML/XML/JSON/programming-language input — route to a real parser.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical; P1, P2, P4 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P1, P2, P4 recommended).
 
 ## Boundaries
 
@@ -314,7 +314,7 @@ Templates in `reference/handoffs.md`. From User: normalize sample text / informa
 | `reference/incremental-parsing.md` | Incremental reparse for IDE/LSP (tree-sitter, Roslyn, Rowan/salsa) |
 | `reference/interaction-questions.md` | INTERACTION_TRIGGERS question schemas (engine / generator / DSL kind / ambiguity / roundtrip) |
 | `reference/handoffs.md` | Packaging deliverables for Builder, Radar, Sentinel, Canon, Atlas, Judge, Shift |
-| `_common/OPUS_48_AUTHORING.md` | Grammar spec verbosity calibration; adaptive thinking. Critical: P3, P5 |
+| `_common/OPUS_5_AUTHORING.md` | Grammar spec verbosity calibration; adaptive thinking. Critical: P3, P5 |
 
 ## Operational
 

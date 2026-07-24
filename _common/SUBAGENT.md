@@ -40,6 +40,14 @@ Task received
   └─ Sequential chain? ────────────────────→ Do it yourself (or Nexus AUTORUN)
 ```
 
+### Why subagents pay: context isolation, not extra hands
+
+A subagent's value is that it explores in a **clean context window** and returns a **condensed, distilled summary — Anthropic's reference figure is 1,000–2,000 tokens** (*Effective context engineering for AI agents*). The detailed exploration (dozens of file reads, dead ends, raw tool output) is spent inside the subagent and *never enters the parent's context*; only the distillation crosses the boundary. That separation of detailed search from high-level synthesis is the mechanism — a subagent that streams its raw findings back has paid the spawn cost and kept the context cost.
+
+**Two consequences for authoring:**
+- **Give every spawn a return envelope in that range** unless the deliverable genuinely needs more. `_STEP_COMPLETE` / `## NEXUS_HANDOFF` already impose structure; the 1-2k figure is the default *size* to pair with it. On Opus 5 this is not optional — its default output runs long in both channels (`OPUS_5_AUTHORING.md` P2).
+- **Judge a fan-out by context saved, not tasks parallelized.** If each branch would return its full trace, the parent's context grows as fast as if it had done the work inline, and only wall-clock improves.
+
 ---
 
 ## Agent Tool Quick Reference
@@ -66,14 +74,14 @@ Task received
 | High | `opus` | Complex reasoning, architecture decisions |
 | — | `inherit` (default) | Use parent session's model |
 
-Full model IDs (`claude-opus-4-8`, `claude-sonnet-5`, etc.) are also supported.
+Full model IDs (`claude-opus-5`, `claude-sonnet-5`, etc.) are also supported.
 
 ### Key Frontmatter Fields (Custom Subagents)
 
 | Field | Description |
 |-------|-------------|
 | `maxTurns` | Maximum agentic turns (runaway prevention, cost control) |
-| `effort` | Reasoning effort: `low`/`medium`/`high`/`xhigh`/`max` (`xhigh` is the Opus 4.8 default, respected strictly) |
+| `effort` | Reasoning effort: `low`/`medium`/`high`/`xhigh`/`max`. Opus 5 defaults to **`high`** — set `xhigh` explicitly for coding/agentic subagents (and `max_tokens` ≥ 64k), or `low` for cheap fan-out, where `low`/`medium` are notably stronger than on earlier Opus models. Effort cannot be combined with disabled thinking above `high` |
 | `isolation` | `worktree` for git worktree isolation (prevents file conflicts during parallel work) |
 | `memory` | Persistent memory: `user`/`project`/`local` (cross-session learning) |
 | `skills` | Skill content to inject at startup (pre-injection of SKILL.md) |

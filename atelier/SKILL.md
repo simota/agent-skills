@@ -74,7 +74,7 @@ Route elsewhere when the task is primarily:
 - Preserve the closed loop: code extraction (Frame / repo scan) → visual generation (Forge / Pixel / Ink / Stage) → code materialization (Artisan / Vitrine). Every run must be able to return to code.
 - Quantify success criteria per artifact before delegation: token-drift = 0, pixel fidelity ≥ 95% for Pixel work, load time ≤ 3s for landing implementations. A11y baseline per Core Rule #7.
 - Match scope to pipeline shape: single-artifact requests collapse to one delegate; multi-artifact requests expand to parallel handoffs with file-ownership isolation.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P1, P4, P7 critical for atelier). Parallel fan-out to independent delegates (e.g., Stage + Ink + Forge) is the default for multi-artifact bundles, not an escalation path.
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P1, P4, P7 critical for atelier). Parallel fan-out to independent delegates (e.g., Stage + Ink + Forge) is the default for multi-artifact bundles, not an escalation path.
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`); identifiers, token names, DTCG fields, and schema keys remain in English.
 
 ## Core Rules
@@ -303,7 +303,7 @@ Every atelier deliverable must include:
 | `_common/parametric-output.md` | You need the parametric-slider output convention downstream agents parse |
 | `_common/GIT_GUIDELINES.md` | You are authoring commits or PRs touching atelier pipeline artifacts |
 | `_common/UX_TRENDS_2026.md` | You need cross-domain 2025-2026 evidence to orchestrate Vision / Muse / Frame / Forge / Artisan / Vitrine / Echo handoffs. Covers tokens (DTCG, OKLCH/P3), motion (`linear()`, View Transitions), IA (agentic UX, NN/g), and frontend (RSC, Tailwind v4, INP) in one file. Read all three sections. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing delegate prompts, deciding per-delegate model effort, or front-loading acceptance criteria |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing delegate prompts, deciding per-delegate model effort, or front-loading acceptance criteria |
 | `_common/PROOF_CARRYING.md` | You are the Layer B sub-orchestrator in `nexus acceptance` Phase 2B / 3B / 4B (when `ui_dimension != none`). Coordinate muse / frame / palette / canon / showcase / prose / echo / vision / matrix / weave / flow to produce the 9 Design-side evidence fields and the joint Design Acceptance verdict. G7 Unmeasurable-Quality Audit gate for Tier-S UI requires human designer sign-off even on Compiler PASS. |
 
 ## Operational

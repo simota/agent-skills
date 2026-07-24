@@ -16,7 +16,7 @@ CAPABILITIES_SUMMARY:
 - naming: Agent naming with syllable scoring and conflict checks
 - ecosystem_architecture: Anti-pattern detection for multi-agent systems (Bag-of-Agents, role overlap, topology gaps)
 - context_engineering: Context-aware agent design prioritizing information architecture over prompt tuning, with intelligence harnessing principles (general tools, scaffold audit, boundary-aware design)
-- opus_48_authoring: Generated-skill authoring tuned for Opus 4.8 defaults (front-loaded context, calibrated length, explicit tool-use rationale, parallel subagent triggers, adaptive thinking hints, effort-level awareness, delegation-engineer framing)
+- opus_5_authoring: Generated-skill authoring tuned for Opus 5 defaults (front-loaded context, explicit length control, tool-use rationale, subagent delegation caps, thinking-on assumptions, effort-level awareness against a `high` default, delegation-engineer framing, scope bounds, no self-verification scaffolding)
 
 COLLABORATION_PATTERNS:
 - User -> Architect: New agent requests, skill improvement requests
@@ -74,7 +74,7 @@ Route elsewhere when the task is primarily:
 - Respect self-evolution safety levels `A/B/C/D` and take a rollback snapshot before any mutation.
 - Design context architecture first, prompt wording second. Agent failures are primarily context failures — structure what information reaches the agent, when, and in what form.
 - Require formal topology for every multi-agent design. Unstructured agent networks ("Bag of Agents") amplify errors up to 17x vs single-agent baselines.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Architect; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Architect; P2, P1 recommended).
 
 ## Core Rules
 
@@ -85,7 +85,7 @@ Route elsewhere when the task is primarily:
 - Prefer general tools composed into patterns over specialized single-purpose tools. Promote to declarative tools only for security boundaries, reversibility, UX presentation, or observability requirements. See `reference/official-design-patterns.md` Section 10.3.
 - Choose the right parallelism layer for multi-agent designs: skill-internal subagents (2-3 independent subtasks, same session) vs Agent Teams (4+ workers, cross-session coordination, file ownership isolation). Refer to `_common/SUBAGENT.md` for the decision flow.
 - When invoking the `Agent` tool, append `Open with the deliverable, not with completion preamble. See _common/OUTPUT_STYLE.md §Subagent Completion Pattern.` to the prompt. Banned subagent openers cost tokens without signal.
-- Author for Opus 4.8 defaults. Generated skills must front-load context capture, calibrate response length explicitly, document tool-use "when/why", spell out parallel subagent triggers, and include adaptive thinking hints at high-stakes decisions. See `reference/official-design-patterns.md` Section 11.
+- Author for Opus 5 defaults. Generated skills must front-load context capture, state length envelopes for both output channels, bound task scope, document tool-use "when/why", cap subagent delegation, and carry **no** self-verification scaffolding. See `reference/official-design-patterns.md` Section 11.
 
 ## Boundaries
 
@@ -174,7 +174,7 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate **in a
 | Overlap handling | `0-10%` proceed, `10-20%` note, `20-30%` review, `30-49%` ask first, `50%+` reject by default | Use `overlap-detection.md` for scoring, report template, and exception cases |
 | Naming | `1-2` syllables ideal, `3` acceptable, `4+` avoid | Use `naming-conventions.md` for scoring and conflict checks |
 | Validation | All `REQUIRED` items pass; `RECOMMENDED` items pass at `80%+` | Use `validation-checklist.md` |
-| New-skill size | `SKILL.md` under `500` lines / `5000` tokens; `3-7` references | Agent Skills spec ceiling. Keep detail in references; context rot degrades performance as input grows |
+| New-skill size | `SKILL.md` under `500` lines / `5000` tokens; `3-7` references | Agent Skills spec ceiling. Keep detail in references; context rot degrades performance as input grows. **"Minimal does not necessarily mean short"** (Anthropic, *Effective context engineering*) — the target is the smallest set of *high-signal* tokens, not the smallest token count. Cut obvious, restated, and decorative content; do **not** cut a threshold, a safety rule, or a routing surface to hit a number. Write at the **right altitude**: specific enough to steer behavior, general enough to remain a heuristic — over-specified step-by-step prescription and vague principle both fail, and an over-long skill is usually a symptom of the former, fixed by raising altitude rather than by deletion. Start minimal and add on observed failure modes |
 | Multi-agent justification | Single-agent performance `<45%` on task | Below 45% saturation, multi-agent coordination yields highest marginal returns. Above 45%, improve the single agent first |
 | Agent count scaling | Beyond `4` agents, coordination tax outweighs gains without structured topology | Use hierarchy, fan-out/gather, or pipeline; avoid flat peer networks. See `multi-agent-system-anti-patterns.md` |
 | Hub-spoke scaling | ≤`7` specialists per orchestrator | Beyond 7, hub becomes coordination bottleneck; split into two-level hierarchy with sub-orchestrators |
@@ -189,7 +189,7 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate **in a
 - Design skills for three-level progressive disclosure: L1 (frontmatter ~100 tokens, loaded every call), L2 (SKILL.md instructions, loaded on activation), L3 (reference/, loaded on demand). Keep L1 lean and triggerable; move methodology and examples to L3.
 - Generated skills must remain Nexus-compatible and preserve hub-and-spoke routing.
 - Use references for detailed methodology, examples, and templates; keep `SKILL.md` procedural and routable.
-- Tune for Opus 4.8 defaults: front-load required inputs in Trigger Guidance, calibrate response length envelopes (line/bullet counts), document tool-use "when/why", spell out parallel subagent fan-out instructions, and add adaptive thinking nudges at high-stakes decision points. See `reference/official-design-patterns.md` Section 11.
+- Tune for Opus 5 defaults: front-load required inputs in Trigger Guidance, calibrate response length envelopes (line/bullet counts), document tool-use "when/why", spell out parallel subagent fan-out instructions, and add adaptive thinking nudges at high-stakes decision points. See `reference/official-design-patterns.md` Section 11.
 
 ### Compression Contract
 
@@ -326,8 +326,8 @@ Read only the files required for the current decision.
 | `reference/agent-specification-anti-patterns.md` | The spec, prompt structure, tool design, or role definition looks weak |
 | `reference/ecosystem-architecture-anti-patterns.md` | Ecosystem fit, modularity, governance, or discoverability looks risky |
 | `reference/agent-evaluation-guardrails.md` | You need production-grade evaluation, guardrails, or validation design |
-| `reference/official-design-patterns.md` | You need official use case categories, skill patterns, agentic composable patterns, simplicity-first design, intelligence harnessing principles, interoperability guidance, success criteria, or Opus 4.8 authoring principles (Section 11). |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the skill package, deciding adaptive thinking depth at topology/category selection, or front-loading intent/category/collaboration at UNDERSTAND. Critical for Architect: P3, P5. |
+| `reference/official-design-patterns.md` | You need official use case categories, skill patterns, agentic composable patterns, simplicity-first design, intelligence harnessing principles, interoperability guidance, success criteria, or Opus 5 authoring principles (Section 11). |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the skill package, deciding adaptive thinking depth at topology/category selection, or front-loading intent/category/collaboration at UNDERSTAND. Critical for Architect: P3, P5. |
 
 ## Operational
 

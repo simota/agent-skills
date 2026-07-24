@@ -165,7 +165,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Authoring Defaults
 
-Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Tick; P2, P1 recommended).
+Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Tick; P2, P1 recommended).
 
 ---
 
@@ -403,7 +403,7 @@ TICK_TO_BOLT_HANDOFF:
 | `reference/collision-and-physics.md` | Broadphase (spatial hash/quadtree/SAP) + narrowphase (AABB/SAT), fixed-step physics integration, engine-vs-handroll decision, tunneling/CCD |
 | `reference/netcode-patterns.md` | Authority models (client-server/lockstep/rollback), prediction + reconciliation, interpolation/extrapolation, determinism requirements, desync handling |
 | `reference/save-and-serialization.md` | Versioned save schema, forward migration, sim-vs-render state, replay save format, encoding separation |
-| `_common/OPUS_48_AUTHORING.md` | Sizing the deliverable, adaptive thinking depth at DESIGN, front-loading game type/budget/scale/determinism at FRAME. Critical for Tick: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the deliverable, adaptive thinking depth at DESIGN, front-loading game type/budget/scale/determinism at FRAME. Critical for Tick: P3, P5. |
 
 ---
 

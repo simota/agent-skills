@@ -77,7 +77,7 @@ Route elsewhere when:
   - Single interaction: `<50` lines
   - Page transition: `<150` lines
   - System-wide motion plan: design and tokenization first
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P6 critical for Flow; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Flow; P2, P1 recommended).
 
 ## Boundaries
 
@@ -233,7 +233,7 @@ Flow receives UX friction reports and design direction from upstream agents. Flo
 | `reference/scroll-triggered.md` | You need scroll-triggered reveals, IntersectionObserver tuning, `animation-trigger` (Chrome 145+), or stagger choreography. |
 | `reference/parallax-effects.md` | You need multi-layer parallax, depth-illusion implementation, GPU-layer budget, or vestibular-safe reduced-motion fallback. |
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 motion baselines — CSS `linear()` spring approximation, View Transitions Baseline (2025-10), M3 Expressive motion physics, WCAG 2.2.2/2.3.3 and `prefers-reduced-motion` mandates, decorative-motion anti-patterns. Read §1 Design motion. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the motion implementation, calibrating effort to single-interaction/page/system scope, or front-loading framework/target/slot at SURVEY. Critical for Flow: P3, P6. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the motion implementation, calibrating effort to single-interaction/page/system scope, or front-loading framework/target/slot at SURVEY. Critical for Flow: P3, P6. |
 | `_common/PROOF_CARRYING.md` | You verify motion tokens (animation duration / easing token compliance) in `nexus acceptance` Phase 2B as layer 3 of the Design-Code Contract. Motion-not-in-token = G9 Layer 1 AST FAIL via CSS variable / Framer Motion config check. Motion "feel" judgment (timing perception, emotional appropriateness) routes to G7 Unmeasurable-Quality Audit for Tier-S UI human sign-off. |
 
 ## Operational

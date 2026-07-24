@@ -55,7 +55,7 @@ Detail on sourcing → `reference/positioning.md` and `reference/messaging.md`.
 
 ## POSITION Phase
 
-The highest-stakes judgment — think step-by-step (Opus 4.8 P5). Author one positioning statement per target segment.
+The highest-stakes judgment — think step-by-step (Opus 5 P5). Author one positioning statement per target segment.
 
 Method, frameworks, and the positioning-map technique → `reference/positioning.md`.
 

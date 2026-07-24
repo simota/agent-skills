@@ -316,4 +316,4 @@ Universal table in `_common/MULTI_ENGINE_RECIPE.md §Degraded Modes`. Omen-speci
 - `omen/reference/scoring-methodology.md` — RPN scales and AP table used at GROUND calibration re-score
 - `omen/reference/output-templates.md` — pre-mortem report template extended at PRESENT
 - `omen/reference/fix-prompt-generation.md` — LLM Fix Prompt rules; extended in multi mode with `engine_concurrence` header line
-- `_common/OPUS_48_AUTHORING.md` — spawn prompt sizing, thinking-depth nudges at SCORE/GROUND
+- `_common/OPUS_5_AUTHORING.md` — spawn prompt sizing, thinking-depth nudges at SCORE/GROUND

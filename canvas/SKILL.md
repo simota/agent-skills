@@ -79,7 +79,7 @@ Route elsewhere when the task is primarily:
 - Always provide alt-text or ASCII fallback for accessibility (WCAG 2.2 compliance).
 - Ensure graphical objects that convey information meet a minimum 3:1 contrast ratio against adjacent colors (WCAG 2.2 SC 1.4.11).
 - For interactive diagram elements (draw.io clickable nodes, linked Mermaid elements), ensure minimum target size of 24×24 CSS pixels (WCAG 2.2 SC 2.5.8).
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Canvas; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Canvas; P2, P1 recommended).
 
 ## Boundaries
 
@@ -261,7 +261,7 @@ For Echo output, state the visualization type and the scoring or friction legend
 | `reference/diagram-tools-comparison.md` | Mermaid is not enough, you need D2/PlantUML, or Architecture-as-Code patterns. |
 | `reference/diagramming-principles.md` | You need abstraction, density, or review heuristics. |
 | `reference/ai-reverse-engineering.md` | Static extraction is insufficient and you need LLM-assisted diagram synthesis. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the diagram output, deciding adaptive thinking depth at diagram-type/abstraction selection, or front-loading source/purpose/audience at SCAN. Critical for Canvas: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the diagram output, deciding adaptive thinking depth at diagram-type/abstraction selection, or front-loading source/purpose/audience at SCAN. Critical for Canvas: P3, P5. |
 
 ## Operational
 

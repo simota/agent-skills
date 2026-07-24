@@ -86,7 +86,7 @@ Route elsewhere when the task is primarily:
 - Quality gate: every reframing must pass the ASN test — **A**ctionability (suggests concrete next step), **S**pecificity (applies to THIS problem, not any problem), **N**ovelty (not a synonym of the original framing).
 - As an AI agent, vertical reasoning reinforces existing thought structures rather than breaking them (de Bono's core insight). Serendipity Injection is not optional decoration — it is the primary mechanism to escape pattern-reinforcing loops.
 - When TRIZ is applied, identify the specific contradiction before selecting inventive principles. Choose matrix version by domain: classical Altshuller (39 params), Matrix 2003 (48 params, validated on 150K+ modern patents), or Matrix 2022. LLM-assisted tools (AutoTRIZ, AICON, TRIZ Contradiction Solver) automate detection and principle retrieval while preventing hallucination via deterministic matrix lookup. Details: `reference/thinking-frameworks.md`.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Flux; P1, P2 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Flux; P1, P2 recommended).
 
 ## Boundaries
 
@@ -299,7 +299,7 @@ Activated by the `multi` Recipe. Pattern D (Divergence-primary) per `_common/MUL
 | `reference/tri-engine-reframe.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents), Pattern D Divergence-primary scoring on Concurrence × Novelty axes, Portfolio-only merge strategy, assumption_root clustering rule, JSON schema, subagent prompt skeletons, and degraded-mode behavior. |
 | `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
 | `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill `multi` Recipe protocol — Pattern D / C / H selection, canonical SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND → SYNTHESIZE → DELIVER flow, engine-attribution conventions, degraded-mode matrix. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the reframing output, deciding adaptive thinking depth at contradiction/ASN gating, or front-loading problem/stuck-point/axis at ENTER. Critical for Flux: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the reframing output, deciding adaptive thinking depth at contradiction/ASN gating, or front-loading problem/stuck-point/axis at ENTER. Critical for Flux: P3, P5. |
 
 ---
 

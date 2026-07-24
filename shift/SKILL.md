@@ -119,7 +119,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Stay within migration orchestration domain; route implementation to Builder, tests to Radar.
 - Define measurable migration success criteria: data integrity ≥99.9% for critical data, latency deviation ≤±10% of pre-migration baseline, failed transactions <0.02%.
 - Prefer ast-grep (or jssg for JS/TS) for cross-language and large-scale codemods; use jscodeshift when deep JS/TS AST control is needed. Always dry-run codemods before batch execution. For Java/Kotlin/Python automated refactoring at scale, prefer OpenRewrite (Lossless Semantic Trees) over hand-written codemods — it ships official recipes for Spring Boot 3→4, Jakarta namespace renames, and dependency upgrades (source: [OpenRewrite Docs](https://docs.openrewrite.org/), 2025-2026). For LLM-assisted migration of large Java projects, GitHub Copilot agent mode (App Modernization extension) provides assessment → code-fix → validation guidance with CVE scanning on changed dependencies (source: [GitHub Blog, 2025](https://github.blog/ai-and-ml/github-copilot/a-step-by-step-guide-to-modernizing-java-projects-with-github-copilot-agent-mode/)).
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Shift; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Shift; P2, P1 recommended).
 
 ## Migration Strategy Decision
 
@@ -289,7 +289,7 @@ Spawn when: migration touches ≥3 independent subsystems (e.g., API + DB + fron
 | `reference/technology-adoption-anti-patterns.md` | `radar`: anti-patterns TA-01 to TA-07, Tech Maturity Matrix, Hype Cycle, Technology Radar. |
 | `reference/javascript-ecosystem-anti-patterns.md` | `radar` for JS/Node: anti-patterns JE-01 to JE-07, node_modules issues, PM selection guide, supply-chain security. |
 | `reference/frontend-modernization-anti-patterns.md` | `modernize` for frontend: anti-patterns FM-01 to FM-07, Outside-In migration, Micro Frontend, success KPIs. |
-| `_common/OPUS_48_AUTHORING.md` | Sizing the migration plan, adaptive thinking depth at strategy selection, front-loading versions/risk tier at ASSESS. Critical: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the migration plan, adaptive thinking depth at strategy selection, front-loading versions/risk tier at ASSESS. Critical: P3, P5. |
 
 ## Output Requirements
 

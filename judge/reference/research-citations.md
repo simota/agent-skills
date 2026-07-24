@@ -113,9 +113,9 @@ Teams that rubber-stamp reviews show **3x higher defect escape rate**. Approving
 
 ---
 
-## 10. Opus 4.8 Authoring Application
+## 10. Opus 5 Authoring Application
 
-From `_common/OPUS_48_AUTHORING.md`, critical for Judge:
-- **P2 — Calibrated review report length.** Opus 4.8 trends shorter; explicitly preserve evidence / file:line / severity / remediation per finding so concision does not collapse into rubber-stamping.
+From `_common/OPUS_5_AUTHORING.md`, critical for Judge:
+- **P2 — Calibrated review report length.** Opus 5 trends shorter; explicitly preserve evidence / file:line / severity / remediation per finding so concision does not collapse into rubber-stamping.
 - **P5 — Think step-by-step at ANALYZE.** Severity classification and intent-alignment errors propagate to wrong remediation routing.
 - **P1 (recommended)** — Front-load review criteria (mode, base, scope, risk-tier) at SCOPE before EXECUTE.

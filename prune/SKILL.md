@@ -63,7 +63,7 @@ Route elsewhere when the task is primarily:
 - **Propose only — never execute.** Merge execution → Architect. Sunset execution → user approval + manual.
 - Preserve reversibility: every sunset includes archive location + re-activation instructions (90-day window minimum).
 - Update `_common/SKILL_PACKS.md` and `~/.claude/profiles/*.json` impact analysis with every removal proposal.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical; P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P1 recommended).
 
 ## Core Rules
 
@@ -213,7 +213,7 @@ Every deliverable must include:
 | `reference/pack-impact.md` | Analyzing SKILL_PACKS.md and profile impact before removal |
 | `_common/SKILL_PACKS.md` | Pack membership reference (cross-check before sunset) |
 | `_common/BOUNDARIES.md` | Universal agent boundaries |
-| `_common/OPUS_48_AUTHORING.md` | Adaptive thinking at canonical-owner selection and sunset risk |
+| `_common/OPUS_5_AUTHORING.md` | Adaptive thinking at canonical-owner selection and sunset risk |
 
 ## Operational
 

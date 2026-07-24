@@ -82,9 +82,9 @@ Agent:
 | `opus` | highest capability |
 | `haiku` | lightest option |
 
-> Model ID reference (2026-07 snapshot): `opus` = `claude-opus-4-8`, `sonnet` = `claude-sonnet-5`, `haiku` = `claude-haiku-4-5-20251001`. Use the short names above when spawning teammates so future model bumps propagate automatically.
+> Model ID reference (2026-07 snapshot): `opus` = `claude-opus-5`, `sonnet` = `claude-sonnet-5`, `haiku` = `claude-haiku-4-5-20251001`. Use the short names above when spawning teammates so future model bumps propagate automatically.
 
-> **Opus 4.8 note for parallel work.** Opus 4.8 defaults to fewer subagent spawns and more in-line reasoning. When the lead teammate is on Opus 4.8, state the parallel-fan-out trigger explicitly in the spawn prompt (per `_common/OPUS_48_AUTHORING.md` P4) and pin an output-length envelope so completion reports stay comparable across teammates.
+> **Opus 5 note for parallel work.** Opus 5 defaults to fewer subagent spawns and more in-line reasoning. When the lead teammate is on Opus 5, state the parallel-fan-out trigger explicitly in the spawn prompt (per `_common/OPUS_5_AUTHORING.md` P4) and pin an output-length envelope so completion reports stay comparable across teammates.
 
 #### `isolation`
 

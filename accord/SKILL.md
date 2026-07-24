@@ -68,7 +68,7 @@ Route elsewhere when the task is primarily:
 - Select `Full`, `Standard`, or `Lite` scope deliberately and state the reason.
 - Record post-task calibration data through `UNIFY`.
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`). IDs, YAML, BDD keywords, and technical terms remain in English.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Accord; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Accord; P2, P1 recommended).
 - **Map L0-L3 onto the GitHub Spec-Kit phase contract** (Constitution → Specify → Plan → Tasks → Implement) when the downstream toolchain includes Claude Code, Cursor, Copilot, or any Spec-Kit-aware client. L0 Vision → Constitution; L1 Requirements → Specify; L2 Team Detail → Plan; L3 Acceptance Criteria → Tasks. This makes the unified package directly consumable by `/speckit.*` slash commands and 29+ supporting tools without re-translation. [Source: github.com/github/spec-kit]
 
 ## Boundaries
@@ -322,7 +322,7 @@ Unified Specification Package: [Feature Name]
 | `reference/stakeholder-map.md` | You chose `stakeholder` recipe. Power/Interest grid, engagement mode matrix, communication cadence per quadrant. |
 | `reference/raci-matrix.md` | You chose `raci` recipe. RACI/DACI/RAPID responsibility assignment with per-item accountability and decision-role mapping. |
 | `_common/TRACEABILITY.md` | You are assigning requirement/AC/scenario IDs or emitting a `.traceability.yaml` ledger. Canonical ID scheme + bidirectional linking rule shared with Scribe/Attest/Radar/Guardian/Judge. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the unified package, deciding adaptive thinking depth at PLAN, or front-loading audience/scope at INTAKE. Critical for Accord: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the unified package, deciding adaptive thinking depth at PLAN, or front-loading audience/scope at INTAKE. Critical for Accord: P3, P5. |
 | `_common/PROOF_CARRYING.md` v3.1 | You are emitting accord L4 (Reversibility / Learning / Disqualification) per Persona+Journey+Product fold-in. Phase 1 recommended, Phase 2 mandatory. Persona Contract schema (situation/goal/fear/comprehension/success/disqualification) feeds via echo `council` mode. The Authoring Principles (Extending This Protocol) apply before extending the L4 schema further. |
 | `_common/GROWTH_BRAND_PROOF.md` | You emit accord package as input to `nexus growth-acceptance` Phase 0 (Pre-Design, Enterprise org-tier only). L4 disqualification feeds Phase 3 Measurement Loop fail conditions (G13 Stop Authority). |
 

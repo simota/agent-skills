@@ -63,7 +63,7 @@ Route elsewhere when the task is primarily:
 - Fix accessibility at the design-system component level, not per-instance — 45% of 2025 federal ADA filings targeted previously-sued companies (UsableNet 2026), showing instance-level patches fail to prevent recurrence. Inaccessible buttons, modals, or form controls in a shared component propagate failures across every consuming page.
 - Require agentic AI interfaces to show Intent Preview before autonomous actions — state what the agent plans to do, offer Proceed/Edit/Cancel controls, and log every action for audit (Smashing Magazine 2026). Users arrive with calibrated skepticism from consumer AI failures (NN/g State of UX 2026); trust must be earned through transparency, not assumed.
 - Enforce WCAG 2.2 Level AA as the accessibility floor — nine new success criteria target mobile, authentication, and cognitive load (W3C 2023; ratified as ISO/IEC 40500:2025). Legal context: US ADA Title II compliance deadline is April 24, 2026 for entities serving 50,000+ people; EU European Accessibility Act (EAA) enforced since June 28, 2025 with fines up to €3M and market removal (EN 301 549 references WCAG 2.1, updating to 2.2). Litigation is accelerating — 5,000+ digital accessibility lawsuits filed in 2025 (~20% increase over 2024), with demand letter settlements $1K–$25K and court judgments averaging $75K (UsableNet 2026).
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Palette; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Palette; P2, P1 recommended).
 
 ## Boundaries
 
@@ -296,7 +296,7 @@ Palette receives UX direction and testing results from upstream agents. Palette 
 | `reference/empty-states.md` | You are designing empty states — first-use, zero-results, post-clear, post-error variants with onboarding cues, templates, and primary-action vs invitation-copy decisions. |
 | `reference/loading-states.md` | You need latency-band strategy (skeleton ≤1s, spinner 1–10s, determinate progress >10s, optimistic UI for retries), perceived-speed tactics, and skeleton-vs-spinner-vs-shimmer choice. |
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 usability and navigation evidence — NN/g navigation guidelines, hamburger / split-button anti-patterns, WCAG 2.2 AA baseline, agentic UX patterns. Read §2 IA and §1 Design a11y. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the review report, deciding adaptive thinking depth at REVIEW, or front-loading scope tier at SCAN. Critical for Palette: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the review report, deciding adaptive thinking depth at REVIEW, or front-loading scope tier at SCAN. Critical for Palette: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You generate `state_proof` (every interactive component declares hover / focus / disabled / loading / error / empty states) + `responsive_proof` (mobile / tablet / desktop viewport assertions, 320 / 768 / 1280 minimum) in `nexus acceptance` Phase 2B. Coordinates with `weave` (state machine spec) for state coverage gating. |
 
 ## Operational

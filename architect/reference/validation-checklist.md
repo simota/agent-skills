@@ -14,7 +14,7 @@
 - Validation Report Template
 - Quick Validation Checklist
 - 6. Context Efficiency Validation (OPTIONAL)
-- 7. Opus 4.8 Readiness Validation (RECOMMENDED)
+- 7. Opus 5 Readiness Validation (RECOMMENDED)
 - 8. Output Density Protocol Validation (REQUIRED)
 - Automated Validation Script
 
@@ -416,54 +416,61 @@ See `reference/context-compression.md` for compression strategies and equivalenc
 
 ---
 
-## 7. Opus 4.8 Readiness Validation (RECOMMENDED)
+## 7. Opus 5 Readiness Validation (RECOMMENDED)
 
-Validate that generated skills align with Opus 4.8 default behaviors. See `reference/official-design-patterns.md` Section 11 and `_common/OPUS_48_AUTHORING.md` (P1–P11).
+Validate that generated skills align with Opus 5 default behaviors. See `reference/official-design-patterns.md` Section 11 and `_common/OPUS_5_AUTHORING.md` (P1–P11).
 
 - [ ] **R7.1** Front-loaded context capture
   - Trigger Guidance enumerates first-turn required inputs (target files, success criteria, constraints)
   - INTERACTION_TRIGGERS batch related confirmations rather than serializing them
 
-- [ ] **R7.2** Calibrated response length
+- [ ] **R7.2** Explicit length control *(both channels)*
   - Output sections specify length envelopes (line counts, bullet counts, table dimensions)
   - Free-form summaries replaced with structured envelopes (`_STEP_COMPLETE`, `## NEXUS_HANDOFF`)
+  - Skills that write documents to disk carry a separate no-padding length calibration
+  - Long SKILL.md files repeat a one-line brevity reminder near the end
 
 - [ ] **R7.3** Explicit tool-use rationale
   - Tools used by the skill have documented "when" (trigger condition) and "why" (value provided)
   - Eager-read or think-first preferences are stated explicitly when they matter
+  - Web access goes through `web_search` (Opus 5-supported); any `web_fetch` dependency is isolated to a step explicitly modelled on Sonnet 5 / Fable 5
 
-- [ ] **R7.4** Parallel subagent triggers
-  - Workflows with independent subtasks include explicit "spawn N subagents in the same turn when…" instructions
+- [ ] **R7.4** Subagent delegation caps
+  - Delegation criteria + a cap are stated ("only large genuinely independent tracks; prefer one over several")
+  - Explicit prohibition on spawning subagents to verify the skill's own work
   - References `_common/SUBAGENT.md` for parallelism-layer choice
 
-- [ ] **R7.5** Adaptive thinking hints
-  - High-stakes decision points include "Think carefully and step-by-step…" nudge
-  - Throughput-sensitive points include "Prioritize responding quickly…" nudge
-  - No hardcoded numeric thinking budgets
+- [ ] **R7.5** Thinking-on assumptions
+  - Skill does not assume thinking is off, and contains no instruction against thinking/reasoning
+  - Depth steered via nudges at decision points ("Think carefully and step-by-step…" / "Prioritize responding quickly…")
+  - No hardcoded numeric thinking budgets; cost controlled via effort, not by disabling thinking
 
 - [ ] **R7.6** Effort-level expectations declared
-  - Default `xhigh` runtime envelope assumed
-  - Skills that require `max` effort flag this in `description` and Trigger Guidance
+  - Stated against the `high` default; `xhigh` named where coding/agentic work needs it
+  - Skills that require `xhigh`/`max` flag this in `description` and Trigger Guidance (with ~64k `max_tokens` note)
 
 - [ ] **R7.7** Delegation-engineer framing
   - Workflow is self-directing for the bulk of execution
   - User check-ins reserved for `Ask first` decisions, not micro-steps
 
-- [ ] **R7.8** Literal-scope instruction following *(4.8)*
-  - Instructions meant to apply broadly state their scope explicitly ("every section, not just the first")
-  - Rules are stated, not left to be generalized from a single example
+- [ ] **R7.8** Scope discipline — both directions
+  - Narrow tasks carry explicit bounds against scope expansion; out-of-scope stated
+  - Instructions meant to apply broadly state their scope ("every section, not just the first")
+  - No restrictive phrasing that will be obeyed literally at the cost of coverage
 
-- [ ] **R7.9** Effort-calibrated tool use *(4.8)*
-  - Tool-eager skills specify `high`/`xhigh` effort baseline, not just "use the tool" prompts
-  - No legacy forced-progress scaffolding ("summarize every N tool calls")
+- [ ] **R7.9** No redundant verification or narration scaffolding
+  - No "verify your work" / "double-check" / "re-verify" / "spawn a subagent to verify" instructions
+  - Independent-verifier steps (a *different* agent checks the producer) are intact and distinguishable from self-checks
+  - No legacy forced-progress scaffolding ("summarize every N tool calls"); correction narration bounded
 
-- [ ] **R7.10** Coverage-vs-filter (reviewers/detectors only) *(4.8)*
+- [ ] **R7.10** Coverage-vs-filter (reviewers/detectors only)
   - Finding stage instructs coverage (report all, tag confidence/severity); filtering deferred to a downstream stage
   - Any single-pass self-filter uses a concrete bar, not qualitative terms like "important"
 
-- [ ] **R7.11** Voice & design defaults (writers/designers only) *(4.8)*
-  - Voice prompts re-evaluated against the direct/opinionated baseline; warmer tone stated explicitly if needed
-  - Design/frontend skills break the house style with concrete specs or option-proposal, not generic negation
+- [ ] **R7.11** Voice & artifact defaults (writers/designers only)
+  - Voice baseline stated; warmer tone stated explicitly if the product needs it
+  - Document/slide skills pass in the target style or template rather than relying on a default
+  - Design/frontend skills give concrete specs or option-proposal, not generic negation
 
 ---
 

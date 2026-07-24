@@ -59,7 +59,7 @@ Route elsewhere when the task is primarily:
 - Include at least one CTA with placement rationale.
 - Provide narration in the target language with tone/pacing guidance.
 - Mark screen recording segments explicitly for Director handoff.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Cue; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Cue; P2, P1 recommended).
 
 ## Boundaries
 
@@ -202,7 +202,7 @@ Parse the first token of user input.
 | `reference/shorts-format.md` | You are authoring 9:16 TikTok / Reels / Shorts scripts with hooks, pattern interrupts, burn-in captions, and loopable endings. |
 | `reference/captions-authoring.md` | You are producing SRT / VTT / ASS / SDH caption files with timing, reading-speed limits, and burn-in vs soft-sub decisions. |
 | `reference/narration-localize.md` | You are adapting narration to new locales with expansion budgets, cultural rewrites, lip-sync decisions, and voice-talent briefs. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the script, deciding adaptive thinking depth at story structure, or front-loading video type/audience/duration at FRAME. Critical for Cue: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the script, deciding adaptive thinking depth at story structure, or front-loading video type/audience/duration at FRAME. Critical for Cue: P3, P5. |
 
 ## Operational
 

@@ -79,7 +79,7 @@ Route elsewhere when the task is primarily:
 - Align detection coverage mapping with MITRE ATT&CK v18+ Detection Strategies and Analytics — the framework now provides per-technique detection guidance replacing legacy Detections/Data Sources, giving structured blueprints for what to detect and how.
 - ATT&CK v19 (released 2026-04-28) splits Defense Evasion (TA0005) into two tactics: **Stealth** (inherits TA0005, covers masquerading/obfuscation/hiding like T1036, T1027, T1218, T1564) and **Defense Impairment** (net-new tactic TA0112, covers actively disabling security controls like stopping logging pipelines, tampering with EDR agents, and subverting trust controls). The former parent technique T1562 (Impair Defenses) has been reorganized — its sub-techniques merged into the new technique T1685 (Disable or Modify Tools) under TA0112. Enterprise v19 now includes 697 Detection Strategies and 1,758 Analytics. Any rule, dashboard, or report that still references TA0005 alone without the Stealth vs Defense Impairment distinction has tactic-level blind spots — audit all T1562-parent detections and realign sub-techniques to the new tactic mapping. Source: [attack.mitre.org/resources/updates/updates-april-2026/](https://attack.mitre.org/resources/updates/updates-april-2026/)
 - Harden Detection-as-Code CI/CD pipelines with GitHub Actions 2026 supply-chain controls: pin every third-party action to a **full commit SHA** (never mutable branch/tag), use **OIDC** for cloud authentication (never long-lived static secrets), set **job-level `permissions:`** to least-privilege (default `contents: read`), never use `pull_request_target` to execute untrusted PR code, enable secret scanning + push protection, and sign deployment artifacts with Sigstore/Cosign.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Vigil; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Vigil; P2, P1 recommended).
 
 ---
 
@@ -460,7 +460,7 @@ Every deliverable must include:
 | `reference/playbook-incident-response.md` | You are authoring SOC playbooks for phishing / credential / ransomware / BEC incidents, SOAR automation, or D3FEND mapping. |
 | `reference/ioc-threat-intel.md` | You are managing IoC lifecycle (STIX 2.1 / TAXII 2.1 / MISP), feed deduplication, indicator expiry, or FP dispositioning. |
 | `reference/handoffs.md` | You need handoff templates for Breach, Sentinel, Radar, Gear, or other agent collaboration. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the detection package, deciding adaptive thinking depth at FP calibration, or front-loading platform/scope/analyst-load at SURVEY. Critical for Vigil: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the detection package, deciding adaptive thinking depth at FP calibration, or front-loading platform/scope/analyst-load at SURVEY. Critical for Vigil: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You are the security-attacker persona in `nexus acceptance` Phase 3 (Layer 3 adversarial explorer). Defines G1 cross-engine diversity (Tier-S runs you on Claude, separate from the agy-based oracle generator and Codex-based implementer) and the semantic non-emptiness rule (non-trivial exploration log required even when no findings — "no findings" without log = rejected). |
 
 ---

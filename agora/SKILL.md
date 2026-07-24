@@ -68,7 +68,7 @@ Route elsewhere when the task is primarily:
 - **Separate MVP from future scope.** Mark the minimum viable learning path vs optional/stretch modules so a learner is never blocked by aspirational content.
 - **Name common mistakes.** For each module, document where learners typically stumble and the concrete remedy — beginners need failure modes pre-empted, not just the happy path.
 - **CSV outputs carry headers; all structured output (CSV/JSON/YAML) must be syntactically valid.**
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P5, P2 critical for Agora; P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P5, P2 critical for Agora; P1 recommended).
 
 ## Boundaries
 
@@ -204,7 +204,7 @@ Read only the files required for the current decision.
 | `reference/instructor-support.md` | You need facilitator guides, coaching prompts, common-mistake catalogs, progress trackers, or feedback templates |
 | [`_common/BOUNDARIES.md`](_common/BOUNDARIES.md) | Role boundaries are ambiguous |
 | [`_common/OPERATIONAL.md`](_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
-| [`_common/OPUS_48_AUTHORING.md`](_common/OPUS_48_AUTHORING.md) | You are sizing the package or deciding thinking depth at DESIGN. Critical for Agora: P5, P2. |
+| [`_common/OPUS_5_AUTHORING.md`](_common/OPUS_5_AUTHORING.md) | You are sizing the package or deciding thinking depth at DESIGN. Critical for Agora: P5, P2. |
 
 ## Operational
 

@@ -14,7 +14,7 @@ OpenTelemetry defines standardized attribute names for AI/LLM telemetry under th
 |-----------|------|-------------|
 | `gen_ai.system` | string | Provider name (e.g., `openai`, `anthropic`, `vertex_ai`) |
 | `gen_ai.operation.name` | string | Operation type (`chat`, `text_completion`, `embeddings`) |
-| `gen_ai.request.model` | string | Requested model ID (e.g., `gpt-5.6`, `claude-opus-4-8`) |
+| `gen_ai.request.model` | string | Requested model ID (e.g., `gpt-5.6`, `claude-opus-5`) |
 | `gen_ai.response.model` | string | Model actually used in response |
 | `gen_ai.usage.input_tokens` | int | Number of input/prompt tokens consumed |
 | `gen_ai.usage.output_tokens` | int | Number of output/completion tokens generated |
@@ -94,18 +94,15 @@ cost = (input_tokens / 1000) × input_price_per_1k
 
 | Provider | Model | Input $/1K tokens | Output $/1K tokens |
 |----------|-------|-------------------|---------------------|
-| Anthropic | claude-opus-4-8 | TBD (verify) | TBD (verify) |
-| Anthropic | claude-opus-4-6 (previous gen, reference) | $0.015 | $0.075 |
-| Anthropic | claude-sonnet-5 | TBD (verify) | TBD (verify) |
-| Anthropic | claude-sonnet-4-6 (previous gen, reference) | $0.003 | $0.015 |
-| Anthropic | claude-haiku-4-5 | $0.00025 | $0.00125 |
+| Anthropic | claude-fable-5 | $0.010 | $0.050 |
+| Anthropic | claude-opus-5 | $0.005 | $0.025 |
+| Anthropic | claude-sonnet-5 | $0.002 (intro, → $0.003 on 2026-09-01) | $0.010 (intro, → $0.015) |
+| Anthropic | claude-haiku-4-5 | $0.001 | $0.005 |
 | OpenAI | gpt-5.6 | TBD (verify) | TBD (verify) |
-| OpenAI | gpt-4o (previous gen, reference) | $0.0025 | $0.010 |
 | OpenAI | gpt-4o-mini | $0.00015 | $0.0006 |
 | Google | gemini-3.6-flash | TBD (verify) | TBD (verify) |
-| Google | gemini-2.0-flash (previous gen, reference) | $0.0001 | $0.0004 |
 
-> Note: Prices change frequently. Always verify from official provider documentation. Table last reviewed 2026-07-09; current-gen rows (`claude-opus-4-8`, `claude-sonnet-5`, `gpt-5.6`, `gemini-3.6-flash`) have unconfirmed pricing — do not treat `TBD` rows as billing-accurate.
+> Note: Prices change frequently. Always verify from official provider documentation. Anthropic rows verified 2026-07-25 against `platform.claude.com/docs/en/about-claude/pricing`; OpenAI and Google rows are unconfirmed — do not treat `TBD` rows as billing-accurate. Cost dashboards must also model the Batch (0.5×), cache-read (0.1×), cache-write (1.25× / 2×), and fast-mode (2×) multipliers, or per-request cost attribution will be wrong.
 
 ### OTel Cost Metric
 

@@ -76,7 +76,7 @@ Route elsewhere when the task is primarily:
 - Deliver a session summary capturing idea evolution at session end.
 - Steer toward convergence when divergence runs too long, and toward divergence when convergence arrives too early.
 - Limit each turn to 1-2 active modes to preserve dialogue rhythm.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Riff; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Riff; P2, P1 recommended).
 
 ## Boundaries
 
@@ -275,7 +275,7 @@ Full algorithm, JSON schema, prompt skeletons, CLUSTER identity rules, GROUND ch
 | `reference/tri-engine-riff.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents) for a parallel brainstorm round, JSON schema, CLUSTER identity rules (mode is part of identity), SCORE rubric (within each mode), GROUND checks (theme connection / mode fit / sugar-coat / duplicate-of-prior-turn), per-mode portfolio vs all-modes matrix synthesis, dialogue-continuation integration table, subagent prompt skeleton. |
 | `_common/MULTI_ENGINE_RECIPE.md` | You are authoring or maintaining Riff's `multi` Recipe and need the cross-skill protocol — Pattern D rubric, canonical PREFLIGHT / FAN-OUT / NORMALIZE / CLUSTER / SCORE / GROUND / SYNTHESIZE / DELIVER stages, engine-attribution tag conventions, and implementation checklist. |
 | `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the session summary, deciding adaptive thinking depth at mode/pacing, or front-loading topic/mode-bias/length at ENTER. Critical for Riff: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the session summary, deciding adaptive thinking depth at mode/pacing, or front-loading topic/mode-bias/length at ENTER. Critical for Riff: P3, P5. |
 
 ## Operational
 

@@ -56,7 +56,7 @@ Before emitting `## NEXUS_HANDOFF`, `_STEP_COMPLETE`, or `## NEXUS_COMPLETE`, ca
 
 ## Pre-Execution Planning
 
-Plan **proportional to task complexity** — not maximally. Over-planning a trivial task is itself an anti-pattern: it burns tokens, adds latency, and (on instruction-literal models like Opus 4.8) inflates output. Under-planning a complex task causes rework and silent drift. Calibrate.
+Plan **proportional to task complexity** — not maximally. Over-planning a trivial task is itself an anti-pattern: it burns tokens, adds latency, and (on instruction-literal models like Opus 5) inflates output. Under-planning a complex task causes rework and silent drift. Calibrate.
 
 **Before starting work, decide the planning tier:**
 

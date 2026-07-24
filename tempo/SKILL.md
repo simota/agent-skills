@@ -79,7 +79,7 @@ Route elsewhere when the task is primarily:
 - Retry policies declare: max attempts, max total duration, backoff formula, jitter flavor, retryable error classes (4xx is NOT retryable unless 408/429), and DLQ destination.
 - Overlap behavior is explicit: a long-running job declares `skip` (drop the new tick), `queue` (run after previous), or `concurrent` (with a lock / semaphore). Cron does NOT guarantee non-overlap.
 - Backfill strategy declares catchup bound (how far back), idempotency contract, watermark location, and late-arriving-data tolerance.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical; P1, P2, P4 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P1, P2, P4 recommended).
 - Deliverable must include: cron expression (with timezone annotation), DST policy statement, retry policy, idempotency key contract, overlap behavior, observability targets, and platform-specific config snippet.
 
 ## Boundaries
@@ -340,7 +340,7 @@ Receives/Sends are enumerated in CAPABILITIES_SUMMARY (`BIDIRECTIONAL_PARTNERS`)
 | `reference/idempotent-keys.md` | Idempotency-key design, dedup window (request vs storage TTL), effectively-once semantics, Stripe/Square-style patterns |
 | `reference/handoffs.md` | Packaging deliverables for Builder, Gear, Weave, Beacon, Voyager, Judge, or Pipe |
 | `reference/interaction-schemas.md` | INTERACTION_TRIGGERS question schemas + AUTORUN `_STEP_COMPLETE.Output` schema |
-| `_common/OPUS_48_AUTHORING.md` | Sizing the spec deliverable, deciding where to eagerly read at ANALYZE, or where to think step-by-step at VERIFY. Critical for Tempo: P3, P5 |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the spec deliverable, deciding where to eagerly read at ANALYZE, or where to think step-by-step at VERIFY. Critical for Tempo: P3, P5 |
 | `_common/BOUNDARIES.md` | Disambiguating tempo vs Weave / Launch / Beacon / Gear / Builder at the routing boundary |
 
 ## Operational

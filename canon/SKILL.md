@@ -69,7 +69,7 @@ Route elsewhere when the task is primarily:
 - Provide actionable, specific outputs rather than abstract guidance.
 - Stay within Canon's domain; route unrelated requests to the correct agent.
 - **Prefer continuous compliance over point-in-time audits** — by 2026, 70% of enterprises integrate compliance-as-code into DevOps toolchains (Gartner). Recommend OPA/Checkov/native cloud policy engines where applicable. For compliance evidence interoperability, recommend NIST OSCAL (Open Security Controls Assessment Language) as the machine-readable format — FedRAMP RFC-0024 mandates machine-readable authorization packages (new authorizations by September 30, 2026; existing authorizations at next annual assessment, grace period expires September 30, 2027) [Source: FedRAMP — RFC-0024 FedRAMP Rev5 Machine-Readable Packages (2026), https://www.fedramp.gov/rfcs/0024/]. FedRAMP 20x replaces narrative control documentation with 61 measurable Key Security Indicators (KSIs) validated through automation at least every 3 days for machine-based resources.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Canon; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Canon; P2, P1 recommended).
 - Pair every confirmed standards violation with a paste-ready `## LLM Fix Prompt` block. The prompt embeds standard+version+section, gap classification, evidence at `file:line`, the standard's prescribed remediation, acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress when escalating to Sentinel (security source-level OWASP/CWE), Polyglot (i18n CLDR/BCP-47), or Oath (regulatory GDPR/HIPAA/SOC2), and withhold when the engagement is gap-analysis-only mode. See `reference/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
 
 ## Boundaries
@@ -292,7 +292,7 @@ When a full compliance audit spans 3+ standard domains (e.g., Security + A11y + 
 | `reference/gdpr-compliance.md` | You need GDPR Articles 5/6/7/13/17/25/30/32/33/35, six lawful bases, DPIA triggers, 72h breach notification, DPO appointment threshold, or hand-off to Cloak for privacy-by-design. |
 | `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Canon-specific action verb (REMEDIATE / EXEMPT-WITH-RATIONALE / BREAKING-REMEDIATE / MITIGATE / INVESTIGATE-FURTHER), or deciding whether to suppress for a Sentinel/Polyglot/Oath handoff or gap-analysis-only scope. |
 | `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the compliance report, deciding adaptive thinking depth at version pinning, or front-loading standard/version/scope at ASSESS. Critical for Canon: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the compliance report, deciding adaptive thinking depth at version pinning, or front-loading standard/version/scope at ASSESS. Critical for Canon: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You generate `a11y_proof` (WCAG 2.2 AA verification via axe-core / Pa11y, keyboard navigation, focus order, ARIA correctness) in `nexus acceptance` Phase 2B and issue the final WCAG verdict in Phase 4B. Layer B (Design Acceptance) sub-orchestrated by `atelier`. Empty findings without exploration log = rejected (semantic-non-emptiness rule). |
 
 ## Operational

@@ -269,7 +269,7 @@
 
 ## RR-1: Reasoning-Reproduction (Fable 5 refusal risk)
 
-> Content-quality rule (not part of the 19 structural items). Flags instructions that tell the model or a spawned agent to reproduce its **internal reasoning as response text**. On a Claude Fable 5 hub these trip the `reasoning_extraction` safety classifier → `stop_reason:"refusal"` → forced Opus 4.8 fallback (elevated, silent fallback rate). Source: Nexus `reference/hub-authoring.md` § Claude Code hub — Fable 5 (F1); Anthropic "Prompting Claude Fable 5".
+> Content-quality rule (not part of the 19 structural items). Flags instructions that tell the model or a spawned agent to reproduce its **internal reasoning as response text**. On a Claude Fable 5 hub these trip the `reasoning_extraction` safety classifier → `stop_reason:"refusal"` → forced Opus 5 fallback (elevated, silent fallback rate). Source: Nexus `reference/hub-authoring.md` § Claude Code hub — Fable 5 (F1); Anthropic "Prompting Claude Fable 5".
 
 **Detection (grep, case-insensitive):**
 1. `(show|echo|transcribe|reproduce|narrate|verbalize|output|include|display|reveal|expose|print|render) .{0,30}(reasoning|thinking|thought process|chain[ -]of[ -]thought|internal monologue|deliberation)`
@@ -288,7 +288,7 @@
 
 **Fix:** delete the reproduction directive, or replace with summarized-thinking handling — read structured `thinking` blocks (adaptive thinking, `display:"summarized"`) and surface progress via a send-to-user tool, not response-text echo. See Nexus `reference/hub-authoring.md` F1.
 
-**Apply only on a Fable 5 hub** (or when authoring engine-agnostic skills intended to run there). On an Opus 4.8 hub this is informational, not a FAIL.
+**Apply only on a Fable 5 hub** (or when authoring engine-agnostic skills intended to run there). On an Opus 5 hub this is informational, not a FAIL.
 
 ---
 

@@ -83,7 +83,7 @@ Route elsewhere when the task is primarily:
 - Treat specs as living documents under version control (docs-as-code). Tie documentation versions to code releases so consumers always find the matching version. Use pull request reviews for spec changes to ensure multi-stakeholder accuracy.
 - When the spec will be consumed by AI agents, follow the AGENTS.md convention (stewarded by the Agentic AI Foundation under the Linux Foundation, founded by Anthropic, OpenAI, and Block) [Source: agents.md — AGENTS.md Specification (https://agents.md/)]: structure around Commands (full executable commands with flags), Testing (framework, file locations, coverage expectations), Project Structure (explicit directory mapping), Architecture, Security, and Conventions. Adopted by 60,000+ open-source projects since August 2025, these six areas are confirmed as highest-signal for agent effectiveness. Target ≤ 150 lines — long specs bury signal and exceed agent context budgets. Treat agent specs as executable artifacts (spec-driven development): the spec defines the contract, the agent generates code that honors it, and the spec evolves as decisions are made.
 - Record outputs for INSCRIBE calibration.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Scribe; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Scribe; P2, P1 recommended).
 - **Emit Spec-Kit-compatible artefacts** when the requested deliverable will feed an executable-spec pipeline. Match the GitHub Spec-Kit layout (`spec/`, `plan/`, `tasks/`) and the `/speckit.specify` / `/speckit.plan` / `/speckit.tasks` / `/speckit.implement` phase contract. PRD → `spec/<feature>.md`; HLD → `plan/<feature>.md`; LLD checklist → `tasks/<feature>.md`. This keeps the documents consumable by Claude Code, Cursor, Copilot, and 29+ Spec-Kit-aware clients without translation. [Source: github.com/github/spec-kit]
 
 ## Boundaries
@@ -284,7 +284,7 @@ Response shape:
 | [anti-patterns.md](~/.claude/skills/scribe/reference/anti-patterns.md)                         | A draft is weak, vague, bloated, untestable, or has AI-generation artifacts. |
 | [documentation-calibration.md](~/.claude/skills/scribe/reference/documentation-calibration.md) | You need INSCRIBE tracking, thresholds, or EVOLUTION_SIGNAL rules.           |
 | [TRACEABILITY.md](~/.claude/skills/_common/TRACEABILITY.md)                                     | You are assigning requirement/AC/test IDs or emitting a `.traceability.yaml` ledger. Canonical ID scheme + bidirectional linking rule shared with Accord/Attest/Radar/Guardian/Judge. |
-| [OPUS_48_AUTHORING.md](~/.claude/skills/_common/OPUS_48_AUTHORING.md)                           | You are sizing the spec, deciding adaptive thinking depth at PLAN, or front-loading doc type/audience/scope at SCAN. Critical for Scribe: P3, P5. |
+| [OPUS_5_AUTHORING.md](~/.claude/skills/_common/OPUS_5_AUTHORING.md)                           | You are sizing the spec, deciding adaptive thinking depth at PLAN, or front-loading doc type/audience/scope at SCAN. Critical for Scribe: P3, P5. |
 
 
 ## Operational

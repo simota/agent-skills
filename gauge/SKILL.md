@@ -77,7 +77,7 @@ Route elsewhere when the task is primarily:
 - Watch compliance scores across scans for large swings — a big jump between audits is worth a closer look (rough reference: >10% investigate, >20% re-audit), but use judgment rather than an automatic trigger.
 - Flag SKILL.md files exceeding 500 lines as candidates for progressive disclosure refactoring (move detail to reference/). Note: Anthropic recommends ~50 lines for SKILL.md body when possible; defer implementation details to reference/ or scripts/.
 - For important violation flags, confirm from more than one angle (e.g., structural pattern + semantic context) before committing to FAIL — a single weak signal is better routed to a soft-flag queue for human review than an automatic FAIL.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P2, P5 critical for Gauge; P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P2, P5 critical for Gauge; P1 recommended).
 
 ## Boundaries
 
@@ -175,7 +175,7 @@ Parse the first token of user input.
 - Otherwise → default Recipe (`audit` = SKILL Audit). Apply normal SCAN → CLASSIFY → REPORT → RECOMMEND workflow.
 
 Behavior notes per Recipe:
-- `audit`: Check all 19 structural items + CQ1 (obviousness density) + CQ2 (description trigger-word). PASS/PARTIAL/FAIL + P0-P3 priority. Compute Health Score. Generate fix snippets. On a Fable 5 hub (or for skills intended to run there), also apply RR-1 (reasoning-reproduction) per `reference/detection-patterns.md` § RR-1 — informational on an Opus 4.8 hub.
+- `audit`: Check all 19 structural items + CQ1 (obviousness density) + CQ2 (description trigger-word). PASS/PARTIAL/FAIL + P0-P3 priority. Compute Health Score. Generate fix snippets. On a Fable 5 hub (or for skills intended to run there), also apply RR-1 (reasoning-reproduction) per `reference/detection-patterns.md` § RR-1 — informational on an Opus 5 hub.
 - `fix`: Generate concrete fix snippets for FAIL/PARTIAL items. Quest section reference required. Do not edit SKILL.md directly.
 - `research`: Web search with T1-T4 source tier classification. Self-update at Safety Level A/B. Strictly respect the change budget (3 per session).
 - `checklist`: Evaluate only the specified item (F1, F2, L1, H1-H3, S1-S11, A1-A2, CQ1, CQ2) with narrowed scope.
@@ -243,7 +243,7 @@ Every deliverable must include:
 | `reference/official-standards.md` | You need official Anthropic standards for frontmatter validation, troubleshooting common issues, or comparing ecosystem checklist against official spec during CLASSIFY or RECOMMEND. |
 | `reference/staleness-detection.md` | You are running `gauge staleness` and need the 10-category detection catalog, grep commands, false-positive guard rules, severity matrix, output YAML envelope, or the 90-day catalog self-update protocol. |
 | `reference/content-quality-audit.md` | You are scoring CQ1 (obviousness density) or CQ2 (description trigger-word presence) — content-level checks derived from Anthropic "Lessons from Building Claude Code". |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the compliance report, deciding adaptive thinking depth at CLASSIFY, or front-loading scan scope at SCAN. Critical for Gauge: P2, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the compliance report, deciding adaptive thinking depth at CLASSIFY, or front-loading scan scope at SCAN. Critical for Gauge: P2, P5. |
 
 ## Operational
 

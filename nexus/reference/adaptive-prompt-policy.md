@@ -36,7 +36,7 @@ Assemble at Orchestrator Detection (before the first spawn) and cache for the se
 | `.agents/PROJECT.md` | project phase, goals, constraints | which references to front-load; tone |
 | repo stack (lang / framework) | TS-strict / dynamic / native | tool-use directive emphasis (type rigor, test-first) |
 | `CLAUDE.md` / `AGENTS.md` / `GEMINI.md` | conventions, language, style | output language, naming, commit style passed to spawns |
-| hub engine (Opus 4.8 / Fable 5 / Codex / agy) | authoring protocol | **Fable 5 → lighter prompt + `high` default effort + no-reasoning-reproduction; Opus 4.8 → full P1-P5 directives** (per `hub-authoring.md`) |
+| hub engine (Opus 5 / Fable 5 / Codex / agy) | authoring protocol | **Opus 5 → P1 + P2 envelope + P8 scope bound always, P3/P5 by scale, and P9 forbids any self-check wording; Fable 5 → lighter prompt + no-reasoning-reproduction.** Both default to `high` effort (per `hub-authoring.md`) |
 | domain affinity (Game/SaaS/…) | task domain | default add-on agents, envelope sizing |
 | repo size / file count | scope | base output envelope (small repo → tighter) |
 
@@ -78,9 +78,10 @@ spawn_prompt = base template (Agent Spawn Template)
 ```
 
 **Bounded to vetted ranges — the assembly is selection, not invention:**
-- Envelope length, effort tier, tool-use / thinking directives, and the reference subset are chosen from the libraries in `hub-authoring.md` / `OPUS_48_AUTHORING.md`. The policy **selects and dials within** those; it never authors a novel unsafe directive.
+- Envelope length, effort tier, tool-use / thinking directives, and the reference subset are chosen from the libraries in `hub-authoring.md` / `OPUS_5_AUTHORING.md`. The policy **selects and dials within** those; it never authors a novel unsafe directive.
 - **Never deletes a behavior or safety rule, acceptance criterion, or output-contract field** (Core Rule #4 — preserve behavior before style). Adaptation only *adds/sizes* guidance; it cannot strip the spawn's required structure.
-- **Honors the hub-authoring protocol**: Opus 4.8 → the four directive fields; Fable 5 → lighter prompts, `high` effort, and the **no-reasoning-reproduction rule** (any "echo/show/transcribe your reasoning" wording is forbidden — it trips `refusal`). Adjustments resolve through the **per-engine mapping** in `hub-authoring.md` — e.g. "raise effort" = a higher reasoning tier on Claude Code but `model_reasoning_effort` on Codex (the model never downgrades there), not a model swap.
+- **Two directives are floors, not dials.** The P2 length envelope and the P8 scope bound are present on every Opus 5 spawn and can be *sized* but never dropped — Opus 5 over-produces and widens scope by default, so removing them is not a token optimization, it is a regression. Likewise the P9 prohibition is absolute: the policy may never add "verify / double-check / re-check your work" wording as a response to a VERIFY failure (raise effort or tighten the scope bound instead; independent verification is a *chain* step, not a prompt field).
+- **Honors the hub-authoring protocol**: Opus 5 → P1/P2/P8 always plus P3/P5 by scale; Fable 5 → lighter prompts, and the **no-reasoning-reproduction rule** (any "echo/show/transcribe your reasoning" wording is forbidden — it trips `refusal`). Adjustments resolve through the **per-engine mapping** in `hub-authoring.md` — e.g. "raise effort" = a higher reasoning tier on Claude Code but `model_reasoning_effort` on Codex (the model never downgrades there), not a model swap.
 
 The tuning shapes the spawn prompt but does **not** bypass the active Mode's confirmations (in `INTERACTIVE`/`GUIDED` the step still stops where the Mode requires; only the prompt *content* is adapted, not the gating). It is **internal but never silent**: every adjustment that differs from the base template emits a **Tuning Trace** (§9) so the user can always see what was changed and why.
 
@@ -126,7 +127,7 @@ This keeps the irreversible, all-spawns-affecting writes behind evidence + appro
 ## 8. Relationship to neighbors
 
 - **`context-strategy.md`** — sibling: that decides *what context flows* between agents (reset / persist / hybrid); this decides *how the spawn directives adapt* to project+session signals. Used together at spawn time.
-- **`hub-authoring.md` / `OPUS_48_AUTHORING.md`** — the vetted directive library this policy selects from; the source of the P/F principles it must honor.
+- **`hub-authoring.md` / `OPUS_5_AUTHORING.md`** — the vetted directive library this policy selects from; the source of the P/F principles it must honor.
 - **LEARN / `routing-learning.md`** — LEARN adapts *routing* (which chain) across runs with durable safety; this adapts *spawn directives* within a session, ephemerally. Same evidence spirit, different target and scope.
 
 ---
@@ -139,7 +140,7 @@ The tuning is internal but **never silent** — a tuned spawn is never quietly d
 
 `{ step, agent, field, old → new, trigger, reward_basis }`
 
-- `field` — which directive changed (envelope / effort / tool-use / thinking / references / context-strategy).
+- `field` — which directive changed (envelope / scope-bound / effort / tool-use / thinking / references / context-strategy).
 - `trigger` — the §3 signal that caused it (e.g. `repeated overlength ×2`, `VERIFY-fail`, `user correction`, `token pressure`).
 - `reward_basis` — the evidence the decision rests on (e.g. `VERIFY pass×3`), so the user can judge whether the adaptation was warranted.
 

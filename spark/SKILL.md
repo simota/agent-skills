@@ -76,7 +76,7 @@ Route elsewhere when the task is primarily:
 - Treat discovery as a **weekly rhythm**, not a one-shot activity. If a proposal rests on research older than ~4 weeks, refresh ≥1 evidence source before handoff — evidence decays.
 - Include **non-consumption and workarounds** in competitive framing — the most overlooked competitor is "nothing." Compensating behaviors (spreadsheets, email threads, copy-paste) are hiring signals that reveal unmet jobs.
 - **Surface a bold bet every session (conservatism guard).** Reuse-bound discovery is the floor, not the ceiling. Tag every proposal with a **Horizon** (`H1` incremental reuse · `H2` adjacent capability · `H3` transformative/contrarian) and ensure ≥1 candidate or alternative framing is `H2`/`H3`; bold bets are tagged honestly, never dropped.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for this role; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P2, P1 recommended).
 
 > Extended rationale, examples, and sources for outcome framing, OST→OKR alignment, fail conditions, weekly cadence, progress-vs-activity, and non-consumption → `reference/modern-product-discovery.md`. Horizon / conservatism-guard detail → `reference/prioritization-frameworks.md`.
 
@@ -290,7 +290,7 @@ Full algorithm (SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SC
 | `reference/tri-engine-proposal.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents), Concurrence-Divergence scoring, Compete vs Portfolio merge strategies, JSON schema, subagent prompt skeletons, and degraded-mode behavior. |
 | `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill `multi` Recipe protocol — three pattern types (D/C/H), canonical PREFLIGHT/FAN-OUT/NORMALIZE/CLUSTER/SCORE flow, implementation checklist, and engine-attribution tag conventions shared across all multi-enabled skills. |
 | `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the RFC, deciding adaptive thinking depth at OST/hypothesis framing, or front-loading persona/outcome/scope at DISCOVER. Critical for Spark: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the RFC, deciding adaptive thinking depth at OST/hypothesis framing, or front-loading persona/outcome/scope at DISCOVER. Critical for Spark: P3, P5. |
 
 ## Operational
 

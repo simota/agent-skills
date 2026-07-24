@@ -1,6 +1,6 @@
 # Codex Orchestration Authoring Protocol
 
-> Counterpart to `_common/OPUS_48_AUTHORING.md`. That file governs authoring when **Claude Code** drives the Nexus hub; this file governs authoring when **Codex CLI** drives the hub.
+> Counterpart to `_common/OPUS_5_AUTHORING.md`. That file governs authoring when **Claude Code** drives the Nexus hub; this file governs authoring when **Codex CLI** drives the hub.
 > Owner: Architect (canonical doc); referenced by orchestrators (Nexus, Orbit, Rally, Magi) and any SKILL.md whose spawn path can run on Codex CLI.
 > Scope: Codex CLI as the **orchestrator engine** (the CLI running the top-level hub session). Codex as a *worker / spawn target* of a Claude hub is covered by `_common/SUBAGENT.md` (MULTI_ENGINE) and `_common/MULTI_ENGINE_RECIPE.md`.
 
@@ -8,7 +8,7 @@ Engine-selection rule for orchestrators:
 
 | Orchestrator engine (hub) | Authoring protocol |
 |---------------------------|--------------------|
-| Claude Code | `_common/OPUS_48_AUTHORING.md` (P1–P11) |
+| Claude Code | `_common/OPUS_5_AUTHORING.md` (P1–P11) |
 | **Codex CLI** | **this file (C1–C9)** |
 | Antigravity (`agy`) | `_common/AGY_ORCHESTRATION.md` (A1–A9) |
 
@@ -16,7 +16,7 @@ Engine-selection rule for orchestrators:
 
 ## Why This Exists
 
-The Nexus stack historically assumed Claude Code is the hub: the canonical spawn template is `Agent(...)`, model selection is `sonnet/opus/haiku`, parallelism is `run_in_background`, and the authoring protocol is Opus-4.8-specific (effort levels, P4 parallel triggers). None of those map cleanly to a Codex CLI hub, which spawns via `spawn_agent`/`wait_agent`, runs the latest gpt-5.6 generation throughout with role-based variants (sol/terra/luna, see C3.0), has **no background-spawn primitive**, and gates fan-out via `agents.max_depth` rather than a soft "max 3" convention.
+The Nexus stack historically assumed Claude Code is the hub: the canonical spawn template is `Agent(...)`, model selection is `sonnet/opus/haiku`, parallelism is `run_in_background`, and the authoring protocol is Opus-5-specific (effort levels, P4 parallel triggers). None of those map cleanly to a Codex CLI hub, which spawns via `spawn_agent`/`wait_agent`, runs the latest gpt-5.6 generation throughout with role-based variants (sol/terra/luna, see C3.0), has **no background-spawn primitive**, and gates fan-out via `agents.max_depth` rather than a soft "max 3" convention.
 
 When Codex drives the hub, apply the nine principles below instead of the Opus principles. They are grounded in verified repository facts (`_common/CLI_COMPATIBILITY.md`, `nexus/SKILL.md` Execution Layers) and, for the config/prompting levers (C3, C7, C9), in the official Codex docs at `developers.openai.com/codex/*` and the OpenAI Codex prompting guide (verified 2026-06); items with no confirmed source are marked **未確認** and must not be speculatively completed.
 
@@ -158,7 +158,7 @@ Pass criterion: address all `◎` principles for the role; aim for ≥ 7/9 total
 In a SKILL.md:
 
 ```markdown
-- Author for the active orchestrator engine. Claude Code hub → `_common/OPUS_48_AUTHORING.md`;
+- Author for the active orchestrator engine. Claude Code hub → `_common/OPUS_5_AUTHORING.md`;
   Codex CLI hub → `_common/CODEX_ORCHESTRATION.md` (apply C[X], C[Y] for this role).
 ```
 

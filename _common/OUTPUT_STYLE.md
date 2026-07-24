@@ -10,7 +10,7 @@ Skills inherit these rules so each agent does not re-invent its own output style
 
 ## Why This Exists
 
-Opus 4.8 calibrates verbosity to task complexity (`OPUS_48_AUTHORING.md` P2), but without a shared style baseline each skill drifts. Symptoms in the wild:
+Opus 5 calibrates verbosity to task complexity (`OPUS_5_AUTHORING.md` P2), but without a shared style baseline each skill drifts. Symptoms in the wild:
 
 - Filler preamble before the actual answer ("Let me now…", "I'll proceed to…")
 - Restating the user's request in different words
@@ -203,7 +203,7 @@ This rule applies even when the skill's `Output Contract` does not explicitly me
 
 | Protocol | Relationship |
 |----------|-------------|
-| `OPUS_48_AUTHORING.md` P2 | This file is the implementation. P2 says "calibrate length"; OUTPUT_STYLE says how. |
+| `OPUS_5_AUTHORING.md` P2 | This file is the implementation. P2 says "calibrate length"; OUTPUT_STYLE says how. |
 | `architect/reference/context-compression.md` | Different target: that file compresses SKILL.md; this file shapes runtime responses. |
 | `_common/parametric-output.md` | Compatible. Parametric blocks are valid M/L tier content. |
 | `_common/AUTORUN.md` | `_STEP_COMPLETE` and `NEXUS_HANDOFF` blocks are exempt from tier limits — they have their own envelopes. |

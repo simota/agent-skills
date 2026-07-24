@@ -82,7 +82,7 @@ Use these as evidence when proposing local chain patterns of the same shape (e.g
 
 **Activation (Claude Code).** Two paths:
 1. Ask directly: "Create a dynamic workflow".
-2. Enable the **`ultracode`** setting (effort menu) — sets effort to `xhigh` and lets Claude auto-decide when to deploy a workflow. Auto mode is recommended. `ultracode` ≈ AUTORUN_FULL + Opus 4.8 P6 (`xhigh` baseline).
+2. Enable the **`ultracode`** setting (effort menu) — sets effort to `xhigh` and lets Claude auto-decide when to deploy a workflow. Auto mode is recommended. `ultracode` ≈ AUTORUN_FULL + Opus 5 P6 (`xhigh` baseline).
 
 **Availability.** Research preview on Claude Code (CLI confirmed). Broader-surface claims — Desktop / VS Code extension, the Claude API, and partner platforms (Amazon Bedrock, Vertex AI, Microsoft Foundry) — rest on a **single secondary source (InfoQ)** and failed adversarial verification (vote 1-2); treat as unconfirmed until an Anthropic primary doc states the exact plan/surface coverage. Verify before quoting availability.
 

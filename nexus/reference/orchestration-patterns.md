@@ -62,6 +62,8 @@ result2 = Agent(
 
 ## Pattern B: Parallel Branches (L2: Parallel Spawn)
 
+> **Opus 5 note — the branch count is a ceiling, not a target.** Opus 5 delegates readily, so the failure mode this pattern must guard is *over*-fan-out, not under-fan-out (`OPUS_5_AUTHORING.md` P4). Two rules follow: (1) a branch must be a genuinely independent, sizeable track — work finishable in a handful of tool calls stays inline; prefer one branch over several when one suffices. (2) **Never open a branch whose job is to check another branch's output on that branch's behalf.** Independent verification is a *sequential* step after the barrier (a different specialist, Q9), not a parallel sibling — a verify-branch racing its producer has no output to verify yet. Multi-agent coordination is otherwise a strength on Opus 5: writer-verifier hand-offs work well and branches rarely clobber each other, so the file-ownership isolation below remains the load-bearing guard rather than a workaround for model confusion.
+
 ```
 Nexus → Agent(Builder-A, background) ──┐
       → Agent(Builder-B, background) ──┤

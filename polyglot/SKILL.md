@@ -84,7 +84,7 @@ Route elsewhere when the task is primarily:
 - For AI-powered translation: require glossary lock (domain terms must match approved glossary), human review for legal/safety-critical strings, and context metadata (UI location + max length) per string. Route models by content type: brand-sensitive marketing → Claude, technical docs/code → GPT-5.6+, long-context multi-file consistency → Gemini (3.5 Flash), high-volume low-risk → DeepSeek/cost-optimized. Industry benchmarks (2026): ~80% of enterprises enforce glossary matching, ~76% require human proofreading.
 - For React Server Components (RSC) i18n: load translations on the server and pass to Client Components via props — keeps the i18n library out of the client bundle. Use per-request cache (not React context) in Server Components.
 - Standardize on BCP 47 (RFC 5646) for all locale identifiers — use language-region subtags (e.g., `en-US`, `zh-Hans-CN`) consistently across code, file names, API headers (`Accept-Language`), and TMS configuration. Never invent non-standard locale codes.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P6 critical for Polyglot; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Polyglot; P2, P1 recommended).
 
 ## Boundaries
 
@@ -309,7 +309,7 @@ Polyglot receives features and UI components from upstream agents. Polyglot send
 | `reference/pluralize-cldr-rules.md` | You need CLDR plural categories per locale, ICU `plural` / `selectordinal` authoring, fallback strategy, or plural-branch test matrix. |
 | `reference/locale-negotiation.md` | You need BCP 47 parsing, `Accept-Language` negotiation, fallback chain design, user-override persistence, or geolocation-default resolution. |
 | `reference/translate-tms-workflow.md` | You need TMS integration (Lokalise/Crowdin/Phrase/Smartling), translation-memory reuse, translator briefing, QA gates, or release rollout strategy. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the i18n deliverable, calibrating effort to component/feature/app scope, or front-loading locale/library at SCAN. Critical for Polyglot: P3, P6. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the i18n deliverable, calibrating effort to component/feature/app scope, or front-loading locale/library at SCAN. Critical for Polyglot: P3, P6. |
 
 ## Operational
 

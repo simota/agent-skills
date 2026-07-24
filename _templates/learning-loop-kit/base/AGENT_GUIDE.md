@@ -43,4 +43,4 @@ Spawn {{ANALYZE_SKILLS}} (parallel where independent), then synthesize.
 | ENFORCE | {{ENFORCE_SKILLS}} |
 | GATE | {{GATE_SKILLS}} |
 
-> Author spawn prompts per `_common/OPUS_48_AUTHORING.md`: front-load the {{RULE_NOUN}} slugs to honor, set a length envelope, state the thinking directive. Run independent ANALYZE branches as parallel background spawns.
+> Author spawn prompts per `_common/OPUS_5_AUTHORING.md`: front-load the {{RULE_NOUN}} slugs to honor, set a length envelope, state the thinking directive. Run independent ANALYZE branches as parallel background spawns.

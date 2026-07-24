@@ -20,7 +20,7 @@ Content-Type: application/json
 Accept: text/event-stream
 
 {
-  "model": "claude-opus-4-8",
+  "model": "claude-opus-5",
   "stream": true,
   "messages": [{"role": "user", "content": "Hello"}]
 }
@@ -92,6 +92,8 @@ Tool use allows the model to request structured data from external systems durin
 3. **Idempotent tools first** — prefer read-only tools; flag state-mutating tools with `"confirm_required": true` (custom extension) to prompt user confirmation before execution.
 4. **Return structured data** — tool results should be JSON, not prose. The model parses the result; unstructured text increases hallucination risk.
 5. **Design for parallel calls** — models may invoke multiple tools simultaneously; tool implementations must be safe to run concurrently.
+6. **Namespace names by service** (`github_`, `slack_`) and put user-facing keywords in descriptions — once a catalog is searched rather than fully loaded, discoverability *is* the naming and description quality.
+7. **Design for a searched catalog past ~10 tools** — tool-selection accuracy degrades past 30-50 available tools. Anthropic's tool search (`tool_search_tool_regex_20251119` / `_bm25_20251119`) plus `defer_loading: true` loads only the tools a request needs. Note that `defer_loading` controls *context entry*, not the wire: you still transmit every definition each request. Full contract, versioning semantics, and per-tool model support → `oracle/reference/advanced-tool-use.md`.
 
 ---
 
@@ -136,7 +138,7 @@ Strict-mode constraints (enforced at request validation):
 
 ```json
 {
-  "model": "claude-opus-4-8",
+  "model": "claude-opus-5",
   "response_format": { "type": "json_object" },
   "messages": [
     { "role": "user", "content": "Extract product name, price, SKU from: ..." }

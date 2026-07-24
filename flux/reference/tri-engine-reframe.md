@@ -247,4 +247,4 @@ The three subagents return JSON; Flux main context handles NORMALIZE through PRE
 - `flux/reference/thinking-frameworks.md` — frameworks applied during SYNTHESIZE (not at FAN-OUT)
 - `flux/reference/anti-patterns.md` — synonym-substitution, framework name-dropping, assumption-padding guards used at GROUND
 - `flux/reference/output-formats.md` — Portfolio document template (Assumption Map, Insight Matrix, Blind Spot Report)
-- `_common/OPUS_48_AUTHORING.md` — subagent prompt sizing, thinking-depth nudges at SCORE/GROUND
+- `_common/OPUS_5_AUTHORING.md` — subagent prompt sizing, thinking-depth nudges at SCORE/GROUND

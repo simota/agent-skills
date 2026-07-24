@@ -76,7 +76,7 @@ Route elsewhere when the task is primarily:
 - Stay within Zine's domain: delegate SEO strategy to Growth, microcopy to Prose, slides to Stage, diagrams to Canvas.
 - No fabricated technical claims, benchmarks, or API behaviors. If uncertain, mark as LOW CONFIDENCE and request verification rather than inventing.
 - Never leak internal details in retrospectives — mask client names, non-public infrastructure, credentials, and unreleased features unless explicitly cleared.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Zine; P1, P2, P4 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Zine; P1, P2, P4 recommended).
 
 ## Boundaries
 
@@ -377,7 +377,7 @@ Stage owns slide pacing (WPM-calibrated), visual design, reveal.js/Marp output.
 | `reference/content-repurposing.md` | Cross-platform repurposing; need canonical → note/Zenn/Qiita/dev.to/X-thread/LinkedIn variants, atomic asset extraction, hub-and-spoke + canonical_url strategy |
 | `reference/interview-format.md` | Reshaping Q&A material — interview transcripts, podcast episodes, AMA threads, lightning talks — into Q&A articles with voice preservation and narrative re-sequencing |
 | `reference/handoffs.md` | Packaging deliverables for Growth / Prose / Stage / Canvas / Saga / Morph; need handoff templates per downstream agent |
-| `_common/OPUS_48_AUTHORING.md` | Deciding whether to read widely at FRAME, how deeply to think at STRUCTURE and hook design. Critical for Zine: P3, P5 |
+| `_common/OPUS_5_AUTHORING.md` | Deciding whether to read widely at FRAME, how deeply to think at STRUCTURE and hook design. Critical for Zine: P3, P5 |
 
 ## Operational
 

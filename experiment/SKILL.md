@@ -96,7 +96,7 @@ Route elsewhere when the task is primarily:
 - Filter bot and invalid traffic before analysis; unfiltered bot traffic (5–30% of web traffic) creates phantom wins and distorts metric calculations.
 - Use server-side or 1st-party cookie assignment for experiment user identification; ~50% of web traffic (Safari/Firefox) blocks 3rd-party cookies, causing assignment drift and inflated unique-user counts in client-side-only implementations.
 - Flag guardrail violations immediately.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Experiment; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Experiment; P2, P1 recommended).
 
 ## Boundaries
 
@@ -283,7 +283,7 @@ Experiment receives metric baselines and hypotheses from upstream agents, and de
 | `reference/srm-detection.md` | You are running `srm` — need chi-squared test (p < 0.001 threshold), segment-level decomposition (device/region/tenure/traffic source), bucket-mismatch and assignment-bug root causes. |
 | `reference/sequential-testing.md` | You are running `sequential` — need anytime-valid sequential testing (mSPRT, confidence sequences, group sequential α-spending: Pocock / O'Brien-Fleming / Lan-DeMets) for valid early stopping. |
 | `reference/bayesian-ab.md` | You are running `bayesian` — need prior specification, posterior updating, credible intervals, ROPE, probability-to-beat, and expected-loss decision rule. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the experiment report, deciding adaptive thinking depth at method selection, or front-loading randomization unit/MDE/OEC at INTAKE. Critical for Experiment: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the experiment report, deciding adaptive thinking depth at method selection, or front-loading randomization unit/MDE/OEC at INTAKE. Critical for Experiment: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You own the Incrementality Gate in `nexus growth-acceptance` Phase 2 (ship-time setup) + Phase 3 (post-launch +14d/+30d/+90d execution). Follow the Decision Tree: Conversion Lift / GeoLift / MMM / Synthetic Control / Holdout selection based on (Privacy regulation × budget × cross-device × time-sensitivity × industry). G14 mandatory: regulated industries (medical / financial / political / pharmaceutical) default to auto-scale OFF. G13 enforcement: Stop_Condition trigger → Stop_Accountable 24h auto-halt default deny. Step 3 (Market Proof + Incrementality Gate) requires Growth-analytics specialist. |
 
 ## Operational

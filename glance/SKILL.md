@@ -159,7 +159,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Authoring Defaults
 
-Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Glance; P2, P1 recommended).
+Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Glance; P2, P1 recommended).
 
 ---
 
@@ -354,7 +354,7 @@ GLANCE_TO_TICK_HANDOFF:
 | `reference/controller-navigation.md` | Focus-graph design, D-pad/stick traversal, default focus/wrap/back, platform button conventions, glyph swapping, input-remap UX, touch thumb-zones |
 | `reference/game-accessibility.md` | Game Accessibility Guidelines / Xbox AGT mapping, colorblind encoding, control remap, subtitles/captions, difficulty/assist, text/HUD scaling, motion/photosensitivity |
 | `reference/game-ui-heuristics.md` | Game UI usability heuristics, glanceability evaluation, genre-convention catalog, playtest/eval plan, common pitfalls |
-| `_common/OPUS_48_AUTHORING.md` | Sizing the spec, adaptive thinking depth at VERIFY, front-loading platform/genre/a11y tier at FRAME. Critical for Glance: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the spec, adaptive thinking depth at VERIFY, front-loading platform/genre/a11y tier at FRAME. Critical for Glance: P3, P5. |
 
 ---
 

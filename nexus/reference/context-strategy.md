@@ -10,6 +10,18 @@
 
 Different tasks and model combinations benefit from different context management strategies. This reference defines three strategies and when to apply each.
 
+### The principle the three strategies serve
+
+> Find **the smallest possible set of high-signal tokens that maximize the likelihood of the desired outcome.** — Anthropic, *Effective context engineering for AI agents*
+
+Context is a finite resource with **diminishing marginal returns**, not a bucket to fill. The mechanism is architectural: attention is n² over tokens, so every token added competes with every other for the model's attention. Degradation as context grows is **"context rot"** — and it is why a 1M-token window does not make context management obsolete. A large window raises the ceiling on what *can* be held; it does not make holding it free or harmless.
+
+Three implications that decide between the strategies below:
+
+- **Just-in-time beats up-front.** Prefer carrying **lightweight identifiers** — file paths, stored queries, links, `feature_id`s — and loading the content through a tool when a step actually needs it, over pre-loading everything a chain *might* need. This is progressive disclosure applied to a chain's state. The trade-off is real and must be named: runtime exploration is **slower** than reading pre-computed context, so a step whose data is stable and certainly needed can justify up-front loading. Anthropic's own guidance is **"do the simplest thing that works"** and hybrid is usually it — which is why `hybrid` is this file's default strategy.
+- **Handoffs are distillations, not transcripts.** A step passes forward the decision-relevant residue, not its trace (see `_common/SUBAGENT.md` — the reference figure for a subagent's condensed return is **1,000–2,000 tokens**).
+- **Compaction: maximize recall first, then precision.** When summarizing a long trace, start with a compaction prompt that captures *everything* relevant (architectural decisions, unresolved constraints, why a path was abandoned) and only then iterate to tighten it. Dropping a load-bearing detail is unrecoverable; a slightly verbose summary is not. **Tool-result clearing** is the lightweight alternative when stale tool output — not reasoning — is what is consuming the window.
+
 ---
 
 ## Strategies

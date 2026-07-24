@@ -79,7 +79,7 @@ Route elsewhere when the task is primarily:
 - When parameter modeling is expensive or incomplete, AI-assisted parameter extraction (e.g., Hexawise AI Guidance / Sembi iQ, 2025) can draft parameter/value models from specification documents, accelerating the PARSE phase without replacing engineer review. Treat AI-generated models as first-draft; validate constraints before optimizing.
 - Hand off a plan another agent can execute immediately.
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`). Keep code, IDs, YAML, JSON, and agent names in English.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Matrix; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Matrix; P2, P1 recommended).
 
 ## Boundaries
 
@@ -266,7 +266,7 @@ When results are already available (Remap mode), also include:
 - Read [pairwise-ipog.md](~/.claude/skills/matrix/reference/pairwise-ipog.md) when you need the IPOG/IPOG-F algorithm walk-through, OATS selection rubric, or pairwise vs n-wise trade-offs.
 - Read [equiv-class-bva.md](~/.claude/skills/matrix/reference/equiv-class-bva.md) when axes are input ranges (integers, strings, continuous values) and you need equivalence partitioning + BVA + one-defect-per-negative-case discipline.
 - Read [risk-weighted-coverage.md](~/.claude/skills/matrix/reference/risk-weighted-coverage.md) when prioritizing combinations by RPN / Action Priority or integrating with FMEA output from omen.
-- Read [\_common/OPUS_48_AUTHORING.md](~/.claude/skills/_common/OPUS_48_AUTHORING.md) when you are sizing the combinatorial plan, deciding adaptive thinking depth at t-way strength, or front-loading domain/axes/target at SCAN. Critical for Matrix: P3, P5.
+- Read [\_common/OPUS_5_AUTHORING.md](~/.claude/skills/_common/OPUS_5_AUTHORING.md) when you are sizing the combinatorial plan, deciding adaptive thinking depth at t-way strength, or front-loading domain/axes/target at SCAN. Critical for Matrix: P3, P5.
 - Read [\_common/PROOF_CARRYING.md](~/.claude/skills/_common/PROOF_CARRYING.md) when generating pairwise / orthogonal-array story sets for `vrt_proof` in `nexus acceptance` Phase 2B per PD-2 Matrix Sampling Policy. Default to 2-way coverage; full N-way reserved for Tier-S critical paths. Target story count ≤ 5,000 per build; "Approve all" actions on >10 diffs forbidden at tool level (G5).
 
 ## Operational

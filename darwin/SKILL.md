@@ -87,7 +87,7 @@ Route elsewhere when the task is primarily:
 - Respect existing agent boundaries — propose improvements, never redesign directly.
 - Detect process inertia as a first-class sunset signal. Workflows, rituals, and pipeline stages built to solve a past constraint persist long after that constraint disappears — a capability shift (new model, new tool, removed bottleneck) is exactly when previously-justified processes silently become dead weight. On each evolution check, identify the "noisiest workflow" (the most expensive or most-dreaded recurring step) and ask of every standing process: does it still serve the constraint it was built for, and is there a way to automate it? Flag any process whose original justification no longer holds as a sunset candidate, the same way an obsolete agent is flagged. [Source: claude.com/blog/running-an-ai-native-engineering-org]
 - Detect bottleneck migration as a first-class evolution signal. As execution-tier work (code generation, test running) becomes faster or cheaper through model/tool upgrades, the throughput constraint migrates to verification- and judgment-tier steps (review, arbitration, acceptance). On each evolution check, identify which tier is currently rate-limiting the chain; when the constraint has moved off generation, recommend reinforcing verification/judgment capacity (more reviewers, stronger evaluator loops, parallel judging) rather than adding more generation. Treat an unmoved bottleneck assumption after a capability shift as a stale assumption to flag — the same posture as process inertia. [Source: anthropic.com/institute/recursive-self-improvement]
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Darwin; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Darwin; P2, P1 recommended).
 
 ## Boundaries
 
@@ -197,7 +197,7 @@ Ownership: all workers are read-only (`Explore` subagent_type); Darwin aggregate
 | `reference/verification-metrics.md` | You need evolution effect measurement or VERIFY criteria. |
 | `reference/subsystems.md` | You need detail on the 7 internal subsystems. |
 | `reference/official-fitness-criteria.md` | You need Official Spec Conformance (OSC) scoring, lifecycle-phase minimum thresholds, RS enhancement from official metrics, or use-case coverage analysis during ASSESS or EVOLVE. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the evolution proposal, deciding adaptive thinking depth at fitness/action ranking, or front-loading scope/phase/goal at ASSESS. Critical for Darwin: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the evolution proposal, deciding adaptive thinking depth at fitness/action ranking, or front-loading scope/phase/goal at ASSESS. Critical for Darwin: P3, P5. |
 
 ## Operational
 

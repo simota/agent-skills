@@ -92,6 +92,8 @@ Rules:
 - return actionable error messages;
 - validate all outputs with a schema before downstream use.
 
+Scale limits — **tool selection accuracy degrades past 30-50 available tools**, and a multi-server MCP setup can burn ~55k tokens in definitions before any work happens. Past ~10 tools or ~10k tokens of definitions, stop hand-tuning descriptions and switch mechanism: tool search + `defer_loading` (loads only the 3-5 tools a request needs, ~85%+ definition-token reduction, and preserves the prompt cache), programmatic tool calling (many sequential calls collapse into one sandboxed script), or the advisor tool (server-side Plan-and-Execute). Full contract, type strings, and per-tool model-support gotchas → `reference/advanced-tool-use.md`.
+
 ## Caching And Multi-Agent Rules
 
 ### Cache Strategy
@@ -102,6 +104,8 @@ Rules:
 | semantic cache | similar chat queries | `10-30%` |
 | prompt cache | stable system prompts and tool definitions | up to `90%` input-cost reduction |
 | KV cache | multi-turn prefixes | provider-managed |
+
+Prompt-cache traps specific to tool-heavy designs: a changed tool list invalidates the cached prefix (Opus 5 lifts this with the `mid-conversation-tool-changes-2026-07-01` beta), a changed `effort` value invalidates it (effort shapes the rendered prompt — hold it constant within a cached conversation), and `defer_loading: true` tools are excluded from the prefix entirely, so adding them is cache-safe but they cannot carry `cache_control`.
 
 ### Multi-Agent Rules
 

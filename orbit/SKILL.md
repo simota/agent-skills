@@ -92,7 +92,7 @@ Route elsewhere when the task is primarily: multi-agent chain orchestration (`Ne
 - When driving nexus **summit Phase 5**: tri-engine improvement loop (Claude / Codex / agy) up to `max_loops = 3`, arbiter = magi. See `reference/resilience-patterns.md §Tri-engine improvement loop`.
 - When driving a nexus **enact build loop**: consume the Charter §4/§5/§7/§10 slice read-only (sha256-pinned, never mutate); external DONE gate is the §10 per-package DoD checklist; append `PKG_START`/`PKG_RECOVER`/`PKG_DONE` to the §9 run-log (default `docs/CHARTER.run.log.md`); engine per §5 (Codex CLI, latest generation — role-matched gpt-5.6 variant). Orbit drives one package and reports terminal status to `enact` — it does not construct the team or sequence packages. See `reference/charter-loop-driver.md`.
 - Lay out runner prompts with `PROMPT_CACHE_BREAKPOINTS=4` `cache_control` breakpoints (system / tools / goal / context tail); run each iteration in a dedicated `git worktree`; gate DONE through an **independent critic model** (`CRITIC_MODEL=haiku`).
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for this role; P1, P2 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P1, P2 recommended).
 
 Full citations, platform names, production-incident evidence, and engine-specific contract detail for every bullet above → `reference/resilience-patterns.md`.
 
@@ -245,6 +245,8 @@ Priority: `RF-02`/`RF-03` override lighter triggers; `RF-01` data is still consu
 ## Critical Thresholds
 
 Pre-flight & health gates, 3-Tier Timeout architecture, Convergence Detection thresholds, Core Defaults (all runner parameters), and Loop Tiers tables → `reference/core-defaults.md`.
+
+**Token bound for a loop (verified 2026-07-25).** The API's `task_budget` — an advisory loop-wide budget the model paces itself against, finishing gracefully as it depletes — is **unavailable on Claude Code and Cowork surfaces**, so a generated in-session runner cannot use it. Bound a loop with what *is* available: an explicit turn/iteration ceiling in the stop condition, `max_tokens` per request, and the circuit breaker below. Only a runner whose steps are direct Messages API calls (Opus 5 / Fable 5 / Opus 4.8 / Opus 4.7 — not Sonnet 5) can add `task_budget`; if it does, size it from the **p99** of measured per-task spend, never below 20,000 tokens, and set it **once** — mutating it per turn both invalidates the prompt cache and, if paired with resent history, makes the model wrap up early. A budget too small for the task produces refusal-like behavior, so on unexpected early stops raise the budget before touching other parameters. Detail → `nexus/reference/loop-engineering-primitives.md`.
 
 ### Circuit Breaker
 
@@ -416,7 +418,7 @@ Follow `_common/OPERATIONAL.md` for full operational protocol.
 | `reference/signal-keywords.md` | Full natural-language keyword → Recipe routing table (Subcommand Dispatch fallback). |
 | `reference/ralph-loop-pattern.md` | Generating/auditing/hardening a Ralph-style loop: 9 principles, 9xx guardrails, AGENTS.md 60-line cap, green-field constraint, §14 fleet. |
 | `reference/loop-engineering.md` | Deciding *whether* a loop is the right answer ("when NOT to build a loop" limits). Read at INTAKE/CONTRACT. |
-| `_common/OPUS_48_AUTHORING.md` | Sizing the runner spec, thinking depth at checkpoint/replay, front-loading reads at DESIGN. Critical: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the runner spec, thinking depth at checkpoint/replay, front-loading reads at DESIGN. Critical: P3, P5. |
 | `_common/SUBAGENT.md` | Spawning Claude Code Agent-tool subagents in Orbit's own work. apex Phase 6 Codex subagents → `nexus/reference/apex-recipe.md §Phase 6`. |
 | `nexus/reference/apex-recipe.md` | Driving apex Phase 6: Codex CLI availability check, loop contract (accord L3 ACs + omen + echo), spawn scripts, convergence/cost/circuit audit. |
 | `nexus/reference/summit-recipe.md` | Driving summit Phase 5: max-3 PDCA with parallel Claude / Codex / agy branches, Agent Tennis breaker, magi arbitration. |

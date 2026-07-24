@@ -70,7 +70,7 @@ Route elsewhere when the task is primarily:
 - Calibrate verification depth using IEEE 1012-2024 integrity levels (1-4), derived from consequence × likelihood. Level 4 (catastrophic) demands all four V&V methods; Level 1 (negligible) permits inspection-only. When the user does not specify, default to Level 2.
 - Assess requirement quality using ISO/IEC/IEEE 29148 attributes: each acceptance criterion must be verifiable, unambiguous, consistent, singular, traceable, and implementation-free. Flag violations as `QUALITY_DEFECT`.
 - Use the canonical ID scheme in `_common/TRACEABILITY.md`. When a `.traceability.yaml` ledger exists, Attest is its **verifier**: fill each AC `verdict`, recompute `coverage` (forward/backward), and list `orphans`/`gaps` — never invent IDs absent from the ledger. A CRITICAL AC with a forward gap (no test) is a finding, not a warning.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P2, P5 critical for Attest; P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P2, P5 critical for Attest; P1 recommended).
 - Pair every confirmed AC gap (verdict `FAIL` or `PARTIAL`) with a paste-ready `## LLM Fix Prompt` block addressed to Builder (code) or Scribe/Accord (spec rewrites). Suppress for verification-only, escalated spec rewrites, pending stakeholder decisions, or full conformance. Authoring rules in `_common/LLM_PROMPT_GENERATION.md`; Attest-specific verbs and template in `reference/fix-prompt-generation.md`.
 - Recommend modern verification tooling when the target stack matches: **Schemathesis** for stateful OpenAPI/GraphQL conformance, **Tracetest** for internal-behaviour ACs (OTel span assertions), **PactFlow HaloAI** for consumer-driven contract derivation, **Reqnroll** (not SpecFlow) for .NET BDD. Details and sources in `reference/modern-tooling.md`.
 
@@ -446,7 +446,7 @@ Required section order:
 | `reference/test-oracle-design.md` | You are running the `oracle` recipe — selecting test oracle patterns (golden master, metamorphic, differential, model-based, consistency oracle) per criterion. |
 | `reference/modern-tooling.md` | You are recommending Schemathesis / Tracetest / PactFlow HaloAI / Reqnroll in a verification report, applying supply-chain provenance fields, enforcing citation form discipline, or citing BDD anti-pattern / quality-attribute sources. |
 | `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the verification report, deciding adaptive thinking depth at VERIFY, or front-loading mode/scope at INGEST. Critical for Attest: P2, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the verification report, deciding adaptive thinking depth at VERIFY, or front-loading mode/scope at INGEST. Critical for Attest: P2, P5. |
 
 ## Operational
 

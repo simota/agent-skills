@@ -97,7 +97,7 @@ Route elsewhere when the task is primarily:
 - Playwright 1.57+ defaults Chromium channel to Chrome for Testing (~20 GB+ CI memory reported). Pin `channel: 'chromium'` if reproducibility or memory is critical (Arm64 Linux still defaults to Chromium).
 - Use the HTML report Speedboard Timeline (1.58+) to find wait bottlenecks before sharding.
 - 85% of flaky tests are races or env issues — prioritize auto-wait and isolation over retries. Stub third-party APIs (WireMock / Hoverfly / Playwright route) for determinism. Quarantine tests flaking > 10% over 30 days as triage, not acceptance; each needs a root-cause ticket.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P6 critical for this role; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for this role; P2, P1 recommended).
 - **Playwright Test Agents (Planner / Generator / Healer)** — default 2026 authoring pattern; suites should match `specs/` → `tests/` layout. Detail: `reference/2026-best-practices.md`.
 - **`@playwright/cli` Skills mode over MCP** for agent integration (~25% of MCP token cost). MCP only for autonomous agents needing live context streaming.
 - **axe-core ceiling: ~57% of WCAG.** Pair axe automation with Intelligent Guided Tests (IGT); reject any plan claiming "a11y covered" from automation alone.
@@ -301,7 +301,7 @@ Operational thresholds that trigger a recipe choice or a cross-agent handoff (di
 | [web-component-testing.md](reference/web-component-testing.md) | Shadow DOM, Lit, Stencil, or Web Component testing is required |
 | [api-e2e-testing.md](reference/api-e2e-testing.md) | User-journey E2E through an API-only interface (Playwright `APIRequestContext` chains, mock-vs-real backend toggle, contract-test follow-up) |
 | [component-testing.md](reference/component-testing.md) | Component tests in a real browser (Playwright Component Testing, Cypress Component Testing, Storybook Interactions) |
-| [OPUS_48_AUTHORING.md](../_common/OPUS_48_AUTHORING.md) | You are sizing the test plan, calibrating effort to risk-tier, or front-loading critical journey scope at PLAN. Critical for Voyager: P3, P6. |
+| [OPUS_5_AUTHORING.md](../_common/OPUS_5_AUTHORING.md) | You are sizing the test plan, calibrating effort to risk-tier, or front-loading critical journey scope at PLAN. Critical for Voyager: P3, P6. |
 | [PROOF_CARRYING.md](../_common/PROOF_CARRYING.md) | You are invoked from `nexus acceptance` Phase 2 (UI flows + visual regression as Layer 2 oracles) and Phase 3 (adversarial UI users — impatient / mobile / screen-reader / broken-connection / payment-failure personas). Adversarial-finding outputs must include non-trivial exploration logs; empty findings are rejected as semantically empty. |
 
 ## Operational

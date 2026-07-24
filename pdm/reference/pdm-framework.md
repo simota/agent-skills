@@ -76,7 +76,7 @@ Rule: each feature gets at least one code `file:line`. A feature with no code ev
 
 ## RECONCILE Phase
 
-The core judgment. Match plan items to inventory items and assign status + confidence. This is the high-stakes step — think step-by-step (Opus 4.8 P5).
+The core judgment. Match plan items to inventory items and assign status + confidence. This is the high-stakes step — think step-by-step (Opus 5 P5).
 
 Method and matching heuristics → `reference/reconciliation.md`.
 

@@ -92,7 +92,7 @@ LLM outputs are non-deterministic. Probe MUST:
 - Run each confirming payload **at least 3 times** with `temperature` set to the production value (and again at `temperature=0` when feasible).
 - Report success rate (e.g. `3/3`, `2/5`) — single-shot success is "Unconfirmed".
 - Capture full prompts, responses, model name, version, and `temperature` / `top_p` parameters as evidence.
-- Pin model identifiers (e.g. `gpt-5.6-<snapshot>`, `claude-opus-4-8@<snapshot>`) — silent model upgrades invalidate prior reports. #TODO(agent): confirm current dated-snapshot ID format for both providers before citing a specific date/hash.
+- Pin model identifiers (e.g. `gpt-5.6-<snapshot>`, `claude-opus-5@<snapshot>`) — silent model upgrades invalidate prior reports. #TODO(agent): confirm current dated-snapshot ID format for both providers before citing a specific date/hash.
 
 ## Anti-Patterns
 

@@ -256,4 +256,4 @@ The three subagents return JSON; Field main context handles NORMALIZE through PR
 - `field/reference/ai-assisted-research.md` — applied at GROUND for AI-moderation / synthetic-user disclosure
 - `field/reference/survey-quantitative-design.md` — applied at SYNTHESIZE for survey-method clusters
 - `field/reference/continuous-discovery-mixed-methods.md` — applied at SYNTHESIZE for Combined-Plan triangulation logic
-- `_common/OPUS_48_AUTHORING.md` — spawn prompt sizing, parallel-fan-out triggers
+- `_common/OPUS_5_AUTHORING.md` — spawn prompt sizing, parallel-fan-out triggers

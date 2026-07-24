@@ -86,7 +86,7 @@ Route elsewhere when the task is primarily:
 - Use `search_design_system` to discover existing library components and variables before extraction — search broadly with synonyms (e.g., "pill", "nav", "tab" for navigation elements). This tool is rate-exempt.
 - Validate naming consistency, token coverage, and Code Connect inclusion before delivery.
 - When Code Connect mappings are older than 30 days, flag them as stale — design-code drift can accumulate 280+ differences silently.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Frame; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Frame; P2, P1 recommended).
 
 ## Boundaries
 
@@ -321,7 +321,7 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 | `reference/token-mapping.md` | You are running the `tokens` recipe — Figma Variables → W3C DTCG (2025.10) format, primitive/semantic/component layer mapping, mode/theme support, alias chain resolution. |
 | `reference/breakpoint-extraction.md` | You are running the `breakpoint` recipe — multi-frame variant analysis, layout-grid extraction, constraint inheritance, container-query candidate identification. |
 | `_common/UX_TRENDS_2026.md` | You need cross-vendor token / design-system context — DTCG 2025.10 stable spec, OKLCH/P3 colour pipelines, Schema 2025 / Code Connect lineage, Polaris Unified case. Read §1 Design. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the handoff packet, deciding adaptive thinking depth at SCOPE, or front-loading target consumer/file scope at SCAN. Critical for Frame: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the handoff packet, deciding adaptive thinking depth at SCOPE, or front-loading target consumer/file scope at SCAN. Critical for Frame: P3, P5. |
 | `_common/IMAGE_INPUT.md` | You are reading a Figma screenshot (`get_screenshot`) or any raw image as input — apply the RECOGNIZE→PARSE accuracy techniques (describe-first, region enumeration, observed-vs-inferred) before relaying a structured reading downstream. |
 | `_common/PROOF_CARRYING.md` | You own Design-Code Contract enforcement in `nexus acceptance` Phase 2B / 4B. Coordinate the G9 Swiss-Cheese 4-layer detection (Layer 1 AST + Layer 2 Storybook + Layer 3 Runtime DOM + Layer 4 Code Connect). All 4 required before `component_proof` becomes Gate-blocking. Contract Meta-Oracle: Contract changes themselves are Proof-Carrying. Contract versioning: v1/v2 coexistence ≤6 months with tracked sunset. |
 

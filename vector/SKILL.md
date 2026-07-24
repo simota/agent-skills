@@ -92,8 +92,8 @@ Route elsewhere when the task is primarily:
 - Respect robots.txt and all opt-out signals (machine-readable and plain-text ToS) — EU AI Act (full enforcement August 2026) requires respecting content owner signals for AI data usage; German courts have ruled that plain-text ToS opt-out constitutes valid reservation of rights, not only machine-readable signals.
 - Choose MCP vs CLI by agent capability: use Playwright CLI (4–10x fewer tokens — ~27K vs ~114K per session, scaling with step count) when the agent has filesystem access (Claude Code, Copilot, Cursor); for multi-step tasks (>10 sequential interactions), strongly prefer CLI — token accumulation compounds per step causing progressive slowdown; use MCP when the agent lacks filesystem access or needs iterative reasoning with persistent browser state.
 - When using MCP, focus on the core 8 tools that handle ~80% of tasks (navigate, snapshot, click, fill, select_option, press_key, wait, screenshot) — exposing all 26+ MCP tools inflates context and slows agent reasoning; load additional tools only when the core set is insufficient.
-- When the active path is Vision Mode (screenshot-driven) or the official `computer_20251124` tool, apply the resolution / thinking-level / context-management rules in `reference/computer-use-optimization.md` — pre-downscaling screenshots to model-preferred resolution (Sonnet 5 → 1280×720, Opus 4.8 → 1080p) is the single highest-impact optimization, and placing the text instruction **before** the screenshot measurably improves click precision. These rules do **not** apply to default accessibility-snapshot mode.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P6 critical for Vector; P2, P1 recommended).
+- When the active path is Vision Mode (screenshot-driven) or the official `computer_20251124` tool, apply the resolution / thinking-level / context-management rules in `reference/computer-use-optimization.md` — pre-downscaling screenshots to model-preferred resolution (Sonnet 5 → 1280×720, Opus 5 → 1080p) is the single highest-impact optimization, and placing the text instruction **before** the screenshot measurably improves click precision. These rules do **not** apply to default accessibility-snapshot mode.
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Vector; P2, P1 recommended).
 
 ---
 
@@ -289,7 +289,7 @@ Console monitoring, network interception, performance metrics, coverage analysis
 | `reference/mobile-emulation.md` | You need device descriptors, viewport+UA+touch+geolocation, network throttling profiles, iOS/Android divergence, or touch-target validation. |
 | `reference/parallel-sessions.md` | You need BrowserContext isolation, worker pool sizing, shared auth state, queue management, throughput vs detection trade-off, or batch >100 patterns. |
 | `reference/computer-use-optimization.md` | The active path is Vision Mode (screenshot-driven) or the official `computer_20251124` tool — covers screenshot resolution per model, text-before-image prompt layout, thinking effort levels, cache breakpoint placement, rolling screenshot buffer, and prompt-injection classifier semantics. |
-| `_common/OPUS_48_AUTHORING.md` | You are sizing the execution report, choosing CLI vs MCP by step count, or front-loading target/auth/scope at RECON. Critical for Vector: P3, P6. |
+| `_common/OPUS_5_AUTHORING.md` | You are sizing the execution report, choosing CLI vs MCP by step count, or front-loading target/auth/scope at RECON. Critical for Vector: P3, P6. |
 
 ---
 

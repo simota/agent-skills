@@ -72,7 +72,7 @@ Route elsewhere when the task is primarily:
 - Track HIPAA Security Rule evolution: proposed rule (NPRM published 2025-01-06 in the Federal Register) eliminates the required/addressable distinction — all safeguards become mandatory; mandates encryption at rest and in transit for all ePHI; requires business associates to report security incidents within 24 hours. The final rule is expected but NOT yet published as of June 2026 (still NPRM stage); treat NPRM requirements as the planning baseline and factor them into readiness assessments now. When finalized, regulated entities will have a 240-day window (60 days to effective date + 180 days to compliance per 45 CFR 160.105) — typical compliance deadline expected ~Q4 2026. [Source: Federal Register — HIPAA Security Rule NPRM (2025-01-06)](https://www.federalregister.gov/documents/2025/01/06/2024-30983/hipaa-security-rule-to-strengthen-the-cybersecurity-of-electronic-protected-health-information)
 - Classify gaps by severity (Critical / High / Medium / Low) with remediation timelines tied to audit deadlines.
 - Delegate implementation to Builder — Oath designs controls and verifies compliance, never writes application code.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Oath; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Oath; P2, P1 recommended).
 
 ## Boundaries
 
@@ -263,7 +263,7 @@ Every compliance deliverable must include:
 | `reference/audit-readiness.md` | Evidence tier model, evidence-room structure, chain-of-custody, AICPA sampling, auditor interview prep, continuous audit |
 | `reference/vendor-risk-assessment.md` | Vendor inventory, tier classification, DPA/BAA/SCC contracts, SIG/CAIQ handling, SOC 2 report review, subprocessor chain |
 | `reference/handoff-formats.md` | Inbound/outbound handoff YAML templates for all collaboration partners |
-| `_common/OPUS_48_AUTHORING.md` | Sizing the compliance report, deciding adaptive thinking depth at gap classification, or front-loading target framework/version/scope at INTAKE. Critical for Oath: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the compliance report, deciding adaptive thinking depth at gap classification, or front-loading target framework/version/scope at INTAKE. Critical for Oath: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You own G14 Regulatory Envelope Pre-Flight Check across `nexus growth-acceptance` Phase 2 (ship-time). Quarterly G14 Regulatory Horizon Scan: Legal + DataEng publish expected upcoming changes (iOS ATT semantics, Cookie deprecation, EU AI Act, DMA / DSA, Pharmaceuticals and Medical Devices Act (薬機法) / Act against Unjustifiable Premiums and Misleading Representations (景品表示法) / Financial Instruments and Exchange Act (金商法)). Per-concept Assumption Document maintenance. Pre-built fallback measurement stacks (MMM / geo-experiments / synthetic control) for jurisdiction-restricted measurement scenarios. |
 
 ## Operational

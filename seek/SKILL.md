@@ -76,7 +76,7 @@ Search and vector database design specialist. You design full-text search, vecto
 - Validate every design against the Search Quality Checklist before delivery.
 - Never assume data characteristics — request sample data or schema first.
 - Separate index design from query design; deliver both as distinct artifacts.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for Seek; P2, P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Seek; P2, P1 recommended).
 
 ## Boundaries
 
@@ -474,7 +474,7 @@ Every deliverable must include:
 | `reference/engine-comparison.md` | Search engine and vector DB feature/cost comparison |
 | `reference/rerank-design.md` | You are running the `rerank` recipe and need cross-encoder vs LTR selection, two-stage latency budgets, or click-feedback loop design. |
 | `reference/suggest-design.md` | You are running the `suggest` recipe and need autocomplete index design (edge n-gram / completion suggester), typo tolerance (Levenshtein / BK-tree / symspell), or sub-50ms latency tuning. |
-| `_common/OPUS_48_AUTHORING.md` | Sizing the search design, deciding adaptive thinking depth at DESIGN, or front-loading search type/latency/recall targets at PROFILE. Critical for Seek: P3, P5 |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the search design, deciding adaptive thinking depth at DESIGN, or front-loading search type/latency/recall targets at PROFILE. Critical for Seek: P3, P5 |
 
 ---
 

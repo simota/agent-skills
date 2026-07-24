@@ -68,7 +68,7 @@ Route elsewhere when the task is primarily:
 - Validate the blueprint against `reference/validation-checklist.md` (14 items) before delivery. Delivery is blocked until it passes.
 - Emit explicit delegation handoffs (Sigil / Nexus / Orbit / Latch / Grove) for every component of the blueprint. A design with no owner for a step is incomplete.
 - Keep intra-suite and ecosystem overlap under `30%`. Defer any task already owned by an ecosystem agent to that agent via the routing map rather than designing a duplicate project skill.
-- Author for Opus 4.8 defaults. See `_common/OPUS_48_AUTHORING.md` (P3, P5 critical for this role; P1 recommended).
+- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P1 recommended).
 
 ## Core Rules
 
@@ -308,7 +308,7 @@ Read only the files required for the current decision.
 | `reference/validation-checklist.md` | You are validating a blueprint or auditing an existing layer against the 14-item checklist |
 | `_common/MECHANISM_SELECTION.md` | You are deciding skill vs hook vs scoped rule vs subagent vs recipe vs workflow for any task in MAP |
 | `_common/SUBAGENT.md` | You are choosing the parallelism layer for a designed workflow (skill-internal subagents vs Agent Teams) |
-| `_common/OPUS_48_AUTHORING.md` | You are grounding coverage/overlap decisions (P3) or choosing mechanism/topology (P5). Critical for Loom: P3, P5. Recommended: P1 |
+| `_common/OPUS_5_AUTHORING.md` | You are grounding coverage/overlap decisions (P3) or choosing mechanism/topology (P5). Critical for Loom: P3, P5. Recommended: P1 |
 
 ## Output Contract
 

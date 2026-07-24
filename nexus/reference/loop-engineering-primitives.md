@@ -15,6 +15,19 @@ A loop = scheduled execution + isolated workspaces + maker/checker separation + 
 | Workspace isolation | `git worktree`; `--worktree`/`-w` → `.claude/worktrees/<value>/` on branch `worktree-<value>` (v2.1.50); `isolation: worktree` in subagent frontmatter (temp worktree auto-removed if subagent finishes with no changes) | Built-in worktree support; multiple threads hit one repo without collision |
 | Maker/checker separation | subagents (`.claude/agents/`, markdown) + agent teams; worktrees isolate *file edits*, subagents/teams coordinate *the work* | subagents spawned in parallel (≤8), results merged into one response; built-in `default`/`worker`/`explorer`; custom agents require `name`/`description`/`developer_instructions` (model + sandbox_mode inherited from parent); on-demand spawn only |
 | Persistent memory | markdown / Linear / state files on disk — "the agent forgets, the repo doesn't" | same: state file outside the conversation as the loop's spine |
+| **Loop-wide token bound** | **Not available in Claude Code** — `task_budget` is a Messages API feature and is explicitly unsupported on Claude Code and Cowork surfaces. In-session, bound with a `stop after N turns` clause plus `max_tokens`; the countdown mechanism is unavailable | n/a — Codex has no equivalent; bound via harness-side turn counting |
+
+### `task_budget` — a loop bound for API-implemented steps only (beta `task-budgets-2026-03-13`)
+
+**The one primitive that gives a loop a token budget the model itself can see**, so it paces work and finishes gracefully instead of being cut off. Verified 2026-07-25.
+
+- **What it counts:** everything Claude *sees* in the agentic loop — thinking, tool calls, tool results, output. Not what the client resends: replayed history is counted once, so the countdown is far smaller than cumulative payload.
+- **Relationship to effort:** orthogonal and complementary — **`effort` tunes depth per step, `task_budget` tunes breadth across the loop.** `max_tokens` remains the only hard cap (per request); the budget is a **soft hint** the model may exceed rather than abandon an action mid-flight.
+- **Sizing:** measure a representative task set *without* a budget, then **start at the p99** of per-task spend. Minimum accepted `total` is **20,000 tokens** (below → 400).
+- **The failure mode to know:** a budget that is too small for the task reads as impossible and produces **refusal-like behavior** — the model declines, aggressively de-scopes, or stops early with a partial. If unexpected refusals or premature stops appear after adding a budget, **raise the budget before debugging anything else.**
+- **Do not mirror the countdown client-side.** Decrementing `remaining` while also resending full history double-counts: the model sees an under-reported budget and wraps up too early. Pass `remaining` **only** when the loop compacts or rewrites context between requests (the server has no memory across a rewrite); otherwise omit it and let the server track.
+- **Caching:** the budget value renders into the prompt, so changing it mid-conversation invalidates the cache prefix. Set it once on the initial request.
+- **Support:** Opus 5, Fable 5, Mythos 5, Opus 4.8, Opus 4.7. **Not** Sonnet 5, Opus 4.6, Sonnet 4.6, Haiku 4.5 — and **not Claude Code**. So for a Nexus loop this applies only to steps implemented as direct Messages API calls, never to the `/loop` + `/goal` in-session path.
 
 > **Operational note (Claude Code Week 26, 2026-06-22–26, v2.1.185–v2.1.193):** background subagents now **surface permission prompts in the main session instead of auto-denying** — previously a background checker/critic subagent could silently stall read-only on an auto-denied permission. Relevant whenever a verification subagent runs in the background (the maker/checker row).
 

@@ -41,7 +41,7 @@ Every byte that flows into the model belongs to exactly one tier. Place it accor
 Place at most 4 cache breakpoints, all on T-static content:
 
 1. **After tool definitions** — covers tools + skill registry.
-2. **After `_common/` shared protocols** — covers BOUNDARIES, HANDOFF, OPERATIONAL, OPUS_48_AUTHORING, CODEX_ORCHESTRATION, this file.
+2. **After `_common/` shared protocols** — covers BOUNDARIES, HANDOFF, OPERATIONAL, OPUS_5_AUTHORING, CODEX_ORCHESTRATION, this file.
 3. **After active skill SKILL.md(s)** — covers the skill's static body and any loaded reference excerpts.
 4. **After recipe / handoff template** (if T-semi-static) — covers per-task template before user input.
 
@@ -62,7 +62,7 @@ The order in which Nexus (and any orchestrator) assembles context must keep T-st
 [system]
   1. Agent persona / SKILL.md     ← T-static
   2. _common/ protocols loaded     ← T-static
-     (BOUNDARIES → HANDOFF → OPERATIONAL → OPUS_48_AUTHORING
+     (BOUNDARIES → HANDOFF → OPERATIONAL → OPUS_5_AUTHORING
       → CODEX_ORCHESTRATION → PROMPT_CACHE_HIERARCHY → ...)
   3. reference/ excerpts          ← T-static (loaded on demand, stable within session)
   4. Active recipe block           ← T-semi-static (cache breakpoint here)
@@ -99,7 +99,11 @@ Every SKILL.md should:
 6. **Recipe-specific date in the static recipe block** — move dates to `reference/` with explicit revision metadata.
 7. **MCP tool list churn** — adding/removing MCP servers per task changes the `tools` layer; consolidate MCP enablement at session start.
 8. **Mixing T-static and T-dynamic in a single message** — split into a cached system addendum + a fresh user/tool message.
-9. **Cache write on a tiny prefix** — 5-minute TTL writes cost 1.25×; if the prefix is < ~1k tokens, the break-even (1-2 hits) may not be reached. Group small skills under one breakpoint.
+9. **Cache write on a tiny prefix** — 5-minute TTL writes cost 1.25×, so break-even is one read (2 reads on the 1-hour tier at 2×). Opus 5 lowered the **minimum cacheable prompt to 512 tokens** (from 1,024), so short prefixes now create entries — but a prefix that is rarely re-read still loses. Group small skills under one breakpoint.
+
+10. **Effort changes invalidate the cache — steer per-message instead.** `effort` renders into the prompt, so varying it between requests drops the cached prefix (measured: a cache-read turn of 3,546 tokens becomes a 3,546-token cache *write* on the turn effort changes). Pick a level per conversation and hold it. When a step genuinely needs different depth, append the nudge to the **newest user message** ("Please think hard before responding." / "Answer directly without deliberating.") — guidance in the newest turn leaves earlier breakpoints intact where a parameter change does not. Setting `effort` explicitly to the model's default equals omitting it and is cache-neutral.
+
+11. **Tool-list churn invalidates the cache — unless deferred.** Changing the `tools` array drops the cached prefix (Opus 5 lifts this with the `mid-conversation-tool-changes-2026-07-01` beta). Tools marked `defer_loading: true` are stripped from the prefix *before* the cache key is computed and expand inline in the conversation body when discovered, so **adding deferred tools is cache-safe** and the cache survives both the discovery turn and the call turn. Trade-off: a deferred tool cannot carry `cache_control` (400) — keep the breakpoint on a non-deferred tool. Detail → `oracle/reference/advanced-tool-use.md` §2.
 10. **Forgetting the 1-hour TTL extended cache** for long sessions — pay 2× once, save 90% on every subsequent hour of work.
 
 ---
@@ -123,5 +127,5 @@ Report cache hit rate from prior session logs (if available) and flag any sessio
 
 - [Prompt Caching docs](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)
 - [Pricing — cache read/write multipliers](https://platform.claude.com/docs/en/about-claude/pricing)
-- `_common/OPUS_48_AUTHORING.md` — agent authoring conventions (Claude Code hub)
+- `_common/OPUS_5_AUTHORING.md` — agent authoring conventions (Claude Code hub)
 - `_common/CODEX_ORCHESTRATION.md` — agent authoring conventions (Codex CLI hub)

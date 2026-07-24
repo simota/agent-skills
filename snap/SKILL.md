@@ -239,7 +239,7 @@ Snap receives feature handoffs from Native, escalations from Radar, and screensh
 | `reference/screenshot-strategies.md` | Programmatic screenshot capture — XCTAttachment, `.lifetime` settings, per-failure vs checkpoint, screen vs element captures, swift-snapshot-testing distinction |
 | `reference/fastlane-snapshot.md` | fastlane snapshot pipeline — Snapfile, SnapshotHelper.swift, screenshot scheme, language / device matrix, status-bar override, frameit |
 | `reference/ci-integration.md` | xcodebuild test / test-without-building, `.xctestrun` packaging, xcresulttool parsing (Xcode 16+ schema + `--legacy`), Xcode Cloud / GitHub Actions / Bitrise, device-farm upload |
-| `_common/OPUS_48_AUTHORING.md` | Sizing the test plan, calibrating effort to risk-tier, and front-loading critical iOS flow scope at SCOPE. Critical for Snap: P3, P6 |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the test plan, calibrating effort to risk-tier, and front-loading critical iOS flow scope at SCOPE. Critical for Snap: P3, P6 |
 
 ## Operational
 

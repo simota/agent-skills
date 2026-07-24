@@ -98,7 +98,7 @@ Sign in with GitHub (preferred) or Microsoft. Sync Settings, Keybindings, Snippe
 
 ```jsonc
 {
-  "cursor.chat.defaultModel": "claude-opus-4-8",
+  "cursor.chat.defaultModel": "claude-opus-5",
   "cursor.cmdK.defaultModel": "claude-sonnet-5",
   "cursor.general.privacyMode": true
 }
