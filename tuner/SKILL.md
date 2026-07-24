@@ -288,6 +288,7 @@ In all suppression cases, write a one-line note in the report explaining why the
 | [\_common/BOUNDARIES.md](~/.claude/skills/_common/BOUNDARIES.md) | Role boundaries are ambiguous |
 | [\_common/OPERATIONAL.md](~/.claude/skills/_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
 | [\_common/OPUS_5_AUTHORING.md](~/.claude/skills/_common/OPUS_5_AUTHORING.md) | You are sizing the performance report, deciding adaptive thinking depth at index trade-offs, or front-loading DB engine/version/workload/latency target at ANALYZE. Critical for Tuner: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Tuner-specific Output/Next schema. |
 
 ## Operational
 
@@ -300,25 +301,7 @@ Shared protocols: [\_common/OPERATIONAL.md](~/.claude/skills/_common/OPERATIONAL
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Tuner-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Tuner
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [primary artifact]
-    parameters:
-      task_type: "[task type]"
-      scope: "[scope]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: CONTINUE | VERIFY | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Tuner-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

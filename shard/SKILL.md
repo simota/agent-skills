@@ -221,6 +221,7 @@ Key design points:
 | `reference/tenant-provisioning.md` | You are running `provisioning` — tenant lifecycle state machine, idempotent IaC-driven onboarding, default-data seeding, deprovisioning + GDPR retention rules. |
 | `reference/tenant-quota-throttling.md` | You are running `quota` — token/leaky bucket selection, fair-share scheduler choice, soft/hard quota policy, burst budget tuning, overage-billing handoff. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the tenancy spec, deciding adaptive thinking depth at DESIGN, or front-loading compliance scope/scale projection at SCAN. Critical for Shard: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Shard-specific Output/Next schema. |
 
 ## Operational
 
@@ -231,27 +232,7 @@ Key design points:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Shard-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Shard
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    design_type: "[full-strategy | rls-design | routing | noisy-neighbor | migration | billing | security-assessment]"
-    parameters:
-      isolation_level: "[database-per-tenant | schema-per-tenant | row-level | hybrid]"
-      tenant_scale: "[current] -> [projected]"
-      compliance: "[HIPAA | SOC2 | PCI-DSS | standard]"
-      rls_policy: "[fail-closed | query-filter | hybrid]"
-      routing: "[subdomain | header | path | jwt-claim]"
-      leakage_vectors: [N assessed]
-  Next: Schema | Scaffold | Builder | Sentinel | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Shard-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

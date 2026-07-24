@@ -457,6 +457,7 @@ Read only the files that match the current decision point.
 | `_common/CODEX_ORCHESTRATION.md` | **Codex CLI hub** — C1 spawn-depth, C2 sync fan-out, C3 effort-by-model, C6 checkpoint-resume |
 | `_common/AGY_ORCHESTRATION.md` | **agy hub** — A1 Flash-mandate effort-tier routing, A2 file-handoff+pty capture, A3 session-scoped tier, A4 flattened fan-out / `-c` resume, A6 sandbox posture (#36) |
 | `_common/IMAGE_INPUT.md` | Routing request carries an image — five-stage pipeline at CLASSIFY |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Nexus-specific Output/Next schema. |
 
 ## Operational Notes
 
@@ -464,24 +465,7 @@ Follow `_common/OPERATIONAL.md`, `_common/AUTORUN.md`, `_common/HANDOFF.md`, `_c
 
 ## AUTORUN Support
 
-When `_AGENT_CONTEXT` is present in the input, parse the following fields to configure execution:
-
-- **Task**: The delegated task description
-- **Context**: Handoff data from the previous step
-- **Constraints**: Boundaries and requirements for this step
-- **Expected Output**: Format and content expected by the caller
-
-After completing the delegated work, emit the following completion block:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Nexus
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output: |
-    [Execution report: chain selected, steps executed, verification results]
-  Next: [recommended next agent or DONE]
-  Reason: [why this status; if BLOCKED/FAILED, what is needed to unblock]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Nexus-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

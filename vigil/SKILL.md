@@ -462,6 +462,7 @@ Every deliverable must include:
 | `reference/handoffs.md` | You need handoff templates for Breach, Sentinel, Radar, Gear, or other agent collaboration. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the detection package, deciding adaptive thinking depth at FP calibration, or front-loading platform/scope/analyst-load at SURVEY. Critical for Vigil: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You are the security-attacker persona in `nexus acceptance` Phase 3 (Layer 3 adversarial explorer). Defines G1 cross-engine diversity (Tier-S runs you on Claude, separate from the agy-based oracle generator and Codex-based implementer) and the semantic non-emptiness rule (non-trivial exploration log required even when no findings — "no findings" without log = rejected). |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Vigil-specific Output/Next schema. |
 
 ---
 
@@ -507,28 +508,7 @@ Every deliverable must include:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `ASSESS → DESIGN → BUILD → TEST → DEPLOY → HUNT` and emit `_STEP_COMPLETE`.
-
-Vigil-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Vigil
-  Task_Type: coverage_assessment | rule_design | threat_hunt | purple_team_blue | detection_pipeline
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    rules_created: List[{id: "DET-XXX", technique: "T-ID", format: "Sigma|YARA|KQL"}]
-    coverage_delta: "+X techniques covered"
-    hunting_hypotheses: [count]
-    files_changed: List[{path, type, changes}]
-  Handoff:
-    Format: VIGIL_TO_[NEXT]_HANDOFF
-    Content: [Handoff content for next agent]
-  Risks: [Remaining coverage gaps, false positive concerns]
-  Next: [NextAgent] | VERIFY | DONE
-```
-
----
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Vigil-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

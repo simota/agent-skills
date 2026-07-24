@@ -326,6 +326,7 @@ All subagents share the threat model (read-only) produced in the MODEL phase. Th
 | `reference/social-engineering-design.md` | You are planning social engineering scenarios (vishing, smishing, tailgating, OSINT pretexting, BEC, deepfakes) coordinated with an awareness program. |
 | `reference/handoffs.md` | You need handoff templates for passing findings to Builder, Sentinel, Radar, Scribe, or Mend. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the red-team report, deciding adaptive thinking depth at framework selection, or front-loading target type/framework/cadence at FRAME. Critical for Breach: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Breach-specific Output/Next schema. |
 
 ---
 
@@ -340,29 +341,7 @@ All subagents share the threat model (read-only) produced in the MODEL phase. Th
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `SCOPE → MODEL → PLAN → EXECUTE → REPORT` and emit `_STEP_COMPLETE`. Breach-specific Constraints in `_AGENT_CONTEXT`: target scope, framework preference, authorization level.
-
-Breach-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Breach
-  Task_Type: threat_model | attack_scenario | ai_red_team | purple_team | full_assessment
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    findings: List[{id: "FIND-XXX", severity: Critical | High | Medium | Low, title}]
-    threat_model: [Framework used and key threats]
-    attack_scenarios: [Count and coverage]
-    files_changed: List[{path, type, changes}]
-  Handoff:
-    Format: BREACH_TO_[NEXT]_HANDOFF
-    Content: [Handoff content for next agent]
-  Risks: [Untested attack surfaces, scope limitations]
-  Next: [NextAgent] | VERIFY | DONE
-  Reason: [Why this Status/Next; if BLOCKED/FAILED, what is needed to unblock]
-```
-
----
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Breach-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

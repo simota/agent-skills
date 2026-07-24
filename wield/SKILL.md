@@ -151,6 +151,7 @@ Read only the files required for the current decision.
 | `reference/jxa-guide.md` | Choosing or writing JXA, or converting AppleScript ↔ JXA |
 | `reference/permissions-tcc.md` | Diagnosing Apple Events consent, error -1743, Automation/Accessibility/Full Disk Access |
 | `reference/safety-and-testing.md` | Dry-run design, idempotency, destructive-action guards, testing osascript |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Wield-specific Output/Next schema. |
 
 ## Output Requirements
 
@@ -177,21 +178,7 @@ Every deliverable must include:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Wield-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Wield
-  Recipe: automate | control | ui-script | integrate | audit | convert
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output: |
-    Script delivered (path/inline), target apps, run command,
-    required TCC permissions, dry-run result, destructive guards
-  Next: [Tempo (schedule) | Anvil (CLI) | Latch (hook) | Sentinel (security review) | DONE]
-  Reason: [why this status; if BLOCKED, the missing permission or app capability]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Wield-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

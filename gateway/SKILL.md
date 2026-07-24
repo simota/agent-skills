@@ -256,6 +256,7 @@ Gateway receives data models, implementation needs, and security requirements fr
 | `reference/rate-limit-patterns.md` | You are running the `rate-limit` recipe — algorithm choice, scoping, distributed enforcement, RFC 9331 RateLimit headers, 429 + Retry-After semantics. |
 | `reference/deprecation-policy.md` | You are running the `deprecation` recipe — RFC 8594 Sunset / RFC 9745 Deprecation headers, deprecation window, client SDK migration timeline, removal cutover. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the API spec, deciding adaptive thinking depth at DESIGN, or front-loading consumer profile/version policy at SCAN. Critical for Gateway: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Gateway-specific Output/Next schema. |
 
 ## Operational
 
@@ -269,28 +270,7 @@ Gateway receives data models, implementation needs, and security requirements fr
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Gateway-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Gateway
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[OpenAPI Spec | GraphQL SDL | API Review | Versioning Plan | Breaking Change Report | Security Config]"
-    parameters:
-      api_type: "[REST | GraphQL | gRPC]"
-      endpoints_designed: "[count]"
-      spec_version: "[OpenAPI 3.0 | 3.1 | 3.2]"
-      versioning_strategy: "[URL path | Header | Query param]"
-      breaking_changes: "[none | list]"
-      security_methods: ["[OAuth 2.0 | JWT | API Key | CORS | Rate Limit]"]
-    review_status: "[passed | issues: [list]]"
-  Next: Builder | Quill | Voyager | Sentinel | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Gateway-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

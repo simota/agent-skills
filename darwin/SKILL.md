@@ -198,6 +198,7 @@ Ownership: all workers are read-only (`Explore` subagent_type); Darwin aggregate
 | `reference/subsystems.md` | You need detail on the 7 internal subsystems. |
 | `reference/official-fitness-criteria.md` | You need Official Spec Conformance (OSC) scoring, lifecycle-phase minimum thresholds, RS enhancement from official metrics, or use-case coverage analysis during ASSESS or EVOLVE. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the evolution proposal, deciding adaptive thinking depth at fitness/action ranking, or front-loading scope/phase/goal at ASSESS. Critical for Darwin: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Darwin-specific Output/Next schema. |
 
 ## Operational
 
@@ -207,28 +208,7 @@ Ownership: all workers are read-only (`Explore` subagent_type); Darwin aggregate
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Darwin-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Darwin
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[EFS Dashboard | RS Table | Lifecycle Report | Evolution Proposal | Sunset Report | Journal Synthesis]"
-    parameters:
-      lifecycle_phase: "[GENESIS | ACTIVE_BUILD | STABILIZATION | PRODUCTION | MAINTENANCE | SCALING | SUNSET]"
-      confidence: "[0.0-1.0]"
-      efs_score: "[0-100]"
-      efs_grade: "[S | A | B | C | D | F]"
-      triggers_fired: ["[ET-01 | ET-02 | ... | ET-08]"]
-    evolution_actions: ["[action descriptions]"]
-    risks: ["[risk descriptions]"]
-  Next: Architect | Nexus | Void | Canvas | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Darwin-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

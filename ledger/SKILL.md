@@ -298,6 +298,7 @@ Spawn condition: task covers 3+ workflow phases with independent data sources. S
 | `reference/greenops-sustainability.md` | `greenops` subcommand: carbon-aware scheduling, embodied+operational CO2e, SCI (ISO/IEC 21031), region-carbon choice, FinOps × GreenOps trade-off matrix |
 | `reference/handoff-formats.md` | Inter-agent handoff YAML templates (inbound/outbound) |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the cost report, deciding adaptive thinking depth at commitment strategy, or front-loading cloud scope/timeframe/decision at INTAKE. Critical for Ledger: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Ledger-specific Output/Next schema. |
 
 ## Operational
 
@@ -312,25 +313,7 @@ Git commit/PR conventions → `_common/GIT_GUIDELINES.md`
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Ledger-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Ledger
-  Task_Type: ESTIMATE | OPTIMIZE | GOVERN | REVIEW
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Cost Estimate | Right-Sizing Report | RI/SP Recommendation | Budget Alert Config | Anomaly Detection Rules | Tag Strategy | Cost Dashboard Spec]"
-    parameters:
-      scope: "[single resource | service | account | organization]"
-      estimated_savings: "[monthly amount or percentage]"
-      confidence: "[high | medium | low]"
-  Next: Scaffold | Beacon | Gear | Canvas | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Ledger-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

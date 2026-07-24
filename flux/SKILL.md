@@ -300,6 +300,7 @@ Activated by the `multi` Recipe. Pattern D (Divergence-primary) per `_common/MUL
 | `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
 | `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill `multi` Recipe protocol — Pattern D / C / H selection, canonical SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND → SYNTHESIZE → DELIVER flow, engine-attribution conventions, degraded-mode matrix. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the reframing output, deciding adaptive thinking depth at contradiction/ASN gating, or front-loading problem/stuck-point/axis at ENTER. Critical for Flux: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Flux-specific Output/Next schema. |
 
 ---
 
@@ -351,50 +352,7 @@ Activated by the `multi` Recipe. Pattern D (Divergence-primary) per `_common/MUL
 
 ## AUTORUN Support
 
-When Flux receives `_AGENT_CONTEXT`, parse `task_type`, `description`, `problem_statement`, `constraints`, `work_mode`, and `Constraints`, choose the correct work mode, run the pipeline, and return `_STEP_COMPLETE`.
-
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Flux
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [reframing package path or inline]
-    artifact_type: "[Reframing Package | Assumption Map | Perspective Shift Report | Cross-Domain Insight | Tri-Engine Reframe Portfolio]"
-    parameters:
-      cynefin_domain: "[Clear | Complicated | Complex | Chaotic | Disorder]"
-      work_mode: "[DEEP | RAPID | LENS]"
-      frameworks_applied: "[list of frameworks used]"
-      reframed_statements_count: "[3-5]"
-      blind_spots_detected: "[count]"
-      serendipity_injections: "[count]"
-    tri_engine:                                  # present only when `multi` Recipe ran
-      engines_run: [codex, agy, claude]
-      engines_failed: [list or none]
-      merge_strategy: "[Portfolio | Compete]"   # Portfolio is the default for Flux
-      concurrence_distribution:
-        UNIVERSAL: [count]
-        LIKELY: [count]
-        VERIFIED-DIVERGENT: [count]
-      novelty_distribution:
-        HIGH: [count]
-        MEDIUM: [count]
-      top_billed_divergent: [count of VERIFIED-DIVERGENT × HIGH reframes promoted to top section]
-      assumption_roots: [count of distinct original_assumptions surfaced across engines]
-      rejected: [count + top categories — ASN-fail / hallucinated-domain / synonym-substitution / bias-inherited]
-  Handoff:
-    Format: FLUX_TO_[NEXT]_HANDOFF
-    Content: [Full handoff content]
-  Artifacts:
-    - [Reframed problem statements]
-    - [Insight Matrix]
-    - [Blind Spot Report]
-  Risks:
-    - [Risk 1]
-  Next: Magi | Spark | Helm | Atlas | Lore | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Flux-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

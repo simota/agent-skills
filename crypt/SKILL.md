@@ -284,6 +284,7 @@ Behavior notes per Recipe:
 | `reference/kms-integration.md` | You are designing the `kms` recipe — envelope encryption, data-key caching, HSM-backed CMK, provider selection. |
 | `reference/post-quantum-migration.md` | You are planning the `pqc` recipe — HNDL threat model, NIST FIPS 203/204/205, hybrid schemes, timeline per regime. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the crypto spec, deciding adaptive thinking depth at DESIGN, or front-loading compliance scope/security-strength target at SCAN. Critical for Crypt: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Crypt-specific Output/Next schema. |
 
 ## Operational
 
@@ -294,27 +295,7 @@ Behavior notes per Recipe:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Crypt-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Crypt
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    design_type: "[encryption | signature | password | key-management | e2ee | tls | audit | pqc]"
-    parameters:
-      algorithms: ["[algorithm list]"]
-      key_sizes: ["[key size list]"]
-      compliance: "[FIPS | NIST | standard]"
-      anti_patterns_found: [N]
-      quantum_vulnerable: [N components]
-      libraries: ["[recommended libraries]"]
-  Next: Builder | Sentinel | Cloak | Scaffold | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Crypt-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

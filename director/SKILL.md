@@ -285,6 +285,7 @@ Point-to-point handoff templates (outside Nexus Hub Mode): see `reference/handof
 | `reference/captions-design.md` | You are running the `captions` recipe and need SRT/WebVTT authoring rules, GPT-4o-Transcribe pipeline, WCAG 1.2.2 + 1.2.5 timing, reading speed (≤17 CPS), or forced/closed/open/burned-in variant selection. |
 | `reference/thumbnail-design.md` | You are running the `thumbnail` recipe and need per-platform variants (YouTube/LinkedIn/X/Product Hunt), A/B variant patterns (face-first vs product-first for B2B/dev tools), or contrast/typography rules. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the demo package, deciding adaptive thinking depth at scenario/overlay design, or front-loading purpose/audience/duration at PLAN. Critical for Director: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Director-specific Output/Next schema. |
 
 ## Operational
 
@@ -296,45 +297,7 @@ Point-to-point handoff templates (outside Nexus Hub Mode): see `reference/handof
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Director-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Director
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    demo_type: "[product demo | onboarding | stakeholder | comparison | persona | vision-stream | multi-aspect]"
-    feature: "[feature name]"
-    archetype: "[30s social | 60s producthunt | 90s linkedin | 180s walkthrough | 3x45s series]"
-    aspect_variants: ["16:9", "9:16", "4:5", "1:1"]   # actually produced
-    video_paths:
-      master: "[path to 1920×1080 master .webm]"
-      "16:9": "[path or null]"
-      "9:16": "[path or null]"
-      "4:5": "[path or null]"
-      "1:1": "[path or null]"
-    duration: "[seconds]"
-    resolution: "[WxH]"
-    captions:
-      closed_vtt: "[path]"
-      burned_in_mp4: "[path or null]"
-      languages: ["en", "ja", ...]
-    transcript: "[plaintext path]"
-    videoobject_jsonld: "[path]"
-    quality:
-      scorecard: "[X / 97]"
-      vmaf: "[≥ 90]"
-      psnr_db: "[≥ 40]"
-      ssim: "[≥ 0.95]"
-      lufs: "[-14 | -16]"
-      wcag: "1.2.2 ✓ / 1.2.4 N/A / 1.2.5 ✓"
-      verdict: "ship | ship-with-fixes | reshoot"
-  Artifacts: [scenario, master video, aspect variants, captions, transcript, JSON-LD, thumbnail set, checklist, quality report, or NONE]
-  Next: Vitrine | Quill | Growth | VERIFY | DONE
-  Reason: [blocking issue or packaging justification]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Director-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

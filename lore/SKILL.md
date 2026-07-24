@@ -279,6 +279,7 @@ When HARVEST scope includes 3+ independent source categories (e.g., agent journa
 | `reference/decay-detection.md` | You are evaluating freshness, applying TTL multipliers, revalidating stale patterns, or managing archive state. |
 | `reference/official-pattern-taxonomy.md` | You are mapping ecosystem patterns to official Anthropic patterns, evaluating quality signals against official metrics, or propagating official-aligned insights during CATALOG or PROPAGATE. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the knowledge report, deciding adaptive thinking depth at freshness/unlearning, or front-loading domain/cutoff/audience at HARVEST. Critical for Lore: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Lore-specific Output/Next schema. |
 
 ---
 
@@ -294,26 +295,7 @@ When HARVEST scope includes 3+ independent source categories (e.g., agent journa
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Lore-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Lore
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [report path or inline]
-    artifact_type: "[Harvest Report | Synthesis Report | METAPATTERNS Update | LORE_INSIGHT | Audit Report | Contradiction Resolution]"
-    parameters:
-      patterns_discovered: "[count]"
-      patterns_promoted: "[count]"
-      contradictions_found: "[count]"
-      stale_patterns: "[count]"
-      consumers_notified: ["[agent list]"]
-  Next: Architect | Darwin | Sigil | Nexus | Mend | Triage | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Lore-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

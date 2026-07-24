@@ -299,6 +299,7 @@ Every deliverable must include:
 | `reference/handoffs.md` | You need handoff templates for Hearth/Judge/Nexus collaboration. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the Before/After proposal, deciding adaptive thinking depth at source-tier/severity classification, or front-loading target CLI/scope/decision at AUDIT. Critical for Hone: P3, P5. |
 | `_common/PROMPT_CACHE_HIERARCHY.md` | You are auditing prompt cache hit rate, the session context layout (tools → system → messages), `_common/` load order stability, or breakpoint placement on T-static vs T-dynamic content. Required for the `cache-order` and `cache-hierarchy` audit triggers. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Hone-specific Output/Next schema. |
 
 ## Operational
 
@@ -310,31 +311,7 @@ Every deliverable must include:
 
 ## AUTORUN Support
 
-When Hone receives `_AGENT_CONTEXT`, parse `scope`, `concerns`, and `Constraints`, run FETCH→AUDIT→PROPOSE, and return `_STEP_COMPLETE`.
-
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Hone
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Audit Report | Focused Audit | Proposal Set]"
-    parameters:
-      target_cli: "[codex | agy | antigravity | claude-code | all]"
-      scope: "[full | model | trust | features | mcp | rules | agents | instructions | safety | extensions | permissions | commands | hooks]"
-      items_checked: "[count]"
-      total_pass: "[count]"
-      total_warn: "[count]"
-      total_fail: "[count]"
-      proposals_generated: "[count]"
-      p0_proposals: ["[list]"]
-      sources_consulted: ["[URLs]"]
-      source_tiers: ["[T1 | T2 | T3 | T4]"]
-  Next: Hearth | Judge | Nexus | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Hone-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

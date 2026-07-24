@@ -263,6 +263,7 @@ Every deliverable must include:
 | `reference/dotfile-security-anti-patterns.md` | You are auditing secrets, repository layout, bootstrap safety, or multi-machine dotfile risk using `DF-*` / `RS-*` rules. |
 | `reference/environment-workflow-anti-patterns.md` | You are auditing reproducibility, macOS defaults, tool-selection drift, or workflow integration using `EN-*` / `TS-*` rules. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the config spec, deciding adaptive thinking depth at tool-idiomatic selection, or front-loading OS/shell/profile/scope at DETECT. Critical for Hearth: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Hearth-specific Output/Next schema. |
 
 ## Collaboration
 
@@ -288,26 +289,7 @@ Impact: [How this affects future decisions]
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Hearth-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Hearth
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    configs_generated: [list of files]
-    backups_created: [list of backups]
-    verification:
-      - tool: [tool name]
-        check: [syntax/startup_time/functional]
-        result: [PASS/FAIL with details]
-  Artifacts: [generated files]
-  Risks: [potential issues]
-  Next: [next agent]
-  Reason: "[why next agent is needed]"
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Hearth-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

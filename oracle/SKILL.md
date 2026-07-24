@@ -222,6 +222,7 @@ Routing rules:
 | [embedding-strategy.md](~/.claude/skills/oracle/reference/embedding-strategy.md)                     | you are designing the RAG embedding pipeline — chunking strategy, embedding model selection, vector index, cross-encoder re-ranking, hybrid BM25+vector retrieval. |
 | [advanced-tool-use.md](~/.claude/skills/oracle/reference/advanced-tool-use.md)                       | the tool catalog is the bottleneck — ≥10 tools or >10k tokens of definitions, dropping tool-selection accuracy, aggregated MCP servers, many sequential calls over one tool, or a cheap executor that plans badly. Covers tool search + `defer_loading`, programmatic tool calling, the advisor tool, and the per-tool/per-version model-support gotchas. |
 | [OPUS_5_AUTHORING.md](~/.claude/skills/_common/OPUS_5_AUTHORING.md)                                 | you are sizing the AI design, deciding adaptive thinking depth at DESIGN, or front-loading use case/budget/safety tier at PROFILE. Critical for Oracle: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Oracle-specific Output/Next schema. |
 
 ## Operational
 
@@ -232,25 +233,8 @@ Routing rules:
 
 ## AUTORUN Support
 
-When Oracle receives `_AGENT_CONTEXT`, parse `task_type`, `description`, and `Constraints`, execute the standard workflow, and return `_STEP_COMPLETE`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Oracle-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Oracle
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [primary artifact]
-    parameters:
-      task_type: "[task type]"
-      scope: "[scope]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: [recommended next agent or DONE]
-  Reason: [Why this next step]
-```
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, do not call other agents directly. Return all work via `## NEXUS_HANDOFF`.

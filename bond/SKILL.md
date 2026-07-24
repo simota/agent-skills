@@ -244,6 +244,8 @@ Use the template that matches the task focus:
   Read this when you need 30/60/90 onboarding + lifecycle drip design, deliverability contract, or suppression rules.
 - `reference/power-user-advocacy.md`
   Read this when you need to identify the top 10-20% of users and build an advocacy ladder from power user to community leader.
+- `reference/autorun-schema.md`
+  Read this when you are emitting the AUTORUN `_STEP_COMPLETE` block — Bond-specific Output/Next schema.
 - `_common/OPUS_5_AUTHORING.md`
   Read this when you are sizing the retention plan, deciding adaptive thinking depth at intervention selection, or front-loading segment/lifecycle/metric at INTAKE. Critical for Bond: P3, P5.
 
@@ -259,25 +261,8 @@ Standard protocols and Pre-Handoff Checklist → `_common/OPERATIONAL.md`
 
 ## AUTORUN Support
 
-When Bond receives `_AGENT_CONTEXT`, parse `task_type`, `description`, and `Constraints`, execute the standard workflow, and return `_STEP_COMPLETE`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Bond-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Bond
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [primary artifact]
-    parameters:
-      task_type: "[task type]"
-      scope: "[scope]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: [recommended next agent or DONE]
-  Reason: [Why this next step]
-```
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, do not call other agents directly. Return all work via `## NEXUS_HANDOFF`.

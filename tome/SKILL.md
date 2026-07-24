@@ -332,6 +332,7 @@ All handoff templates → `reference/handoffs.md`
 | `reference/coding-kata.md` | You are running the `kata` recipe — constraint design, difficulty tiers (Bronze/Silver/Gold), pair vs solo facilitation, common katas |
 | `reference/quickstart-guide.md` | You are running the `quickstart` recipe — 15-minute time budget, prerequisite filtering, success anchors, troubleshooting decision tree |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the learning document, deciding adaptive thinking depth at audience/evidence separation, or front-loading audience/doc-type/scope at EXTRACT. Critical for Tome: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Tome-specific Output/Next schema. |
 
 ---
 
@@ -364,31 +365,7 @@ After each task, add a row to `.agents/PROJECT.md`:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `SCOPE → EXTRACT → ANALYZE → COMPOSE → REVIEW` and emit `_STEP_COMPLETE`.
-
-Tome-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Tome
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    summary: [Generated document overview]
-    artifact_type: learning_doc | glossary | decision_record | tutorial | learning_series | incremental_doc
-    parameters:
-      target_ref: [commit hash / PR number / branch]
-      audience_level: beginner | intermediate | advanced
-      audience_detection: explicit | auto (confidence)
-      output_format: [format used]
-      files_analyzed: [count]
-      inference_count: [count]
-      quality_scorecard: [A/B/C per axis]
-    files_changed: List[{path, type, changes}]
-  Risks: [Accuracy risks related to inference]
-  Next: [NextAgent] | VERIFY | DONE
-```
-
----
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Tome-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

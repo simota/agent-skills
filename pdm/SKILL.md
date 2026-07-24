@@ -267,6 +267,7 @@ Read only the files required for the current decision.
 | `reference/output-formats.md` | You need status-matrix, inventory, gap-list, roadmap, or WBS templates |
 | `reference/handoffs.md` | You need inbound/outbound handoff templates |
 | `_common/OPUS_5_AUTHORING.md` | You are deciding tool-use eagerness at LOCATE/INVENTORY or adaptive thinking depth at RECONCILE. Critical for PDM: P3, P5 |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — PDM-specific Output/Next schema. |
 
 ---
 
@@ -297,28 +298,7 @@ This skill follows the Output Density Protocol — see `_common/OUTPUT_STYLE.md`
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-PDM-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: PDM
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [report path or inline]
-    artifact_type: "[Status Matrix | Feature Inventory | Gap List | Roadmap View | WBS Tree | Navigator Answer | Drift Report]"
-    parameters:
-      scope_sources: "[specs/issues/roadmap/code areas located]"
-      features_total: "[count]"
-      status_breakdown: "[Done/In-Progress/Not-Started/Undocumented counts]"
-      confidence: "[High | Medium | Low]"
-      drift_flags: "[count]"
-      unreconciled: "[what couldn't be reconciled]"
-  Handoff: Rank | Sherpa | Orbit | Scribe | Spark | Canvas
-  Next: Rank | Sherpa | Orbit | Scribe | VERIFY | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). PDM-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

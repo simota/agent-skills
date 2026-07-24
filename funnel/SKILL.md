@@ -406,6 +406,7 @@ Handoff formats → `reference/handoffs.md`
 | `reference/trust-signal-placement.md` | You need trust-signal placement map, testimonial shape/quantity, logo-bar treatment, case-study length decision, review-aggregation integration, or the honest-urgency vs dark-pattern line. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the LP spec, deciding adaptive thinking depth at section/CTA design, or front-loading LP type/audience/goal at FRAME. Critical for Funnel: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You generate Market Proof `channel_proof` (channel-fit rationale) and `funnel_proof` (funnel stage targeting) in `nexus growth-acceptance` Phase 2 (ship-time). LP authoring is subject to Brand Compiler B.hard (taboo / legal / G12 Distinctiveness Floor) and B.pattern (token / Code Connect) layers from Layer B carry-over. LP copy is subject to `copy_proof` (Tier B Design) + `tone_proof` (Layer C Brand Proof). |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Funnel-specific Output/Next schema. |
 
 ## Operational
 
@@ -416,31 +417,7 @@ Handoff formats → `reference/handoffs.md`
 
 ## AUTORUN Support
 
-When invoked with `_AGENT_CONTEXT`, parse task scope and constraints, execute BRIEF → STRUCTURE → COPY → BUILD → OPTIMIZE workflow, skip verbose explanations, and return `_STEP_COMPLETE`.
-
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Funnel
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    framework: "[AIDA/PAS/BAB/4Ps]"
-    sections: "[list of sections with purpose]"
-    headline: "[main headline]"
-    cta_primary: "[primary CTA copy]"
-    files_changed:
-      - path: "[file path]"
-        type: "[created / modified]"
-        changes: "[brief description]"
-  Handoff:
-    Format: FUNNEL_TO_[NEXT]_HANDOFF
-    Content: "[Full handoff for next agent]"
-  Risks:
-    - "[Identified conversion risks]"
-  Next: Artisan | Growth | Echo | Experiment | DONE
-  Reason: "[Why this next step]"
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Funnel-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

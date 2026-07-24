@@ -285,6 +285,7 @@ Experiment receives metric baselines and hypotheses from upstream agents, and de
 | `reference/bayesian-ab.md` | You are running `bayesian` — need prior specification, posterior updating, credible intervals, ROPE, probability-to-beat, and expected-loss decision rule. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the experiment report, deciding adaptive thinking depth at method selection, or front-loading randomization unit/MDE/OEC at INTAKE. Critical for Experiment: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You own the Incrementality Gate in `nexus growth-acceptance` Phase 2 (ship-time setup) + Phase 3 (post-launch +14d/+30d/+90d execution). Follow the Decision Tree: Conversion Lift / GeoLift / MMM / Synthetic Control / Holdout selection based on (Privacy regulation × budget × cross-device × time-sensitivity × industry). G14 mandatory: regulated industries (medical / financial / political / pharmaceutical) default to auto-scale OFF. G13 enforcement: Stop_Condition trigger → Stop_Accountable 24h auto-halt default deny. Step 3 (Market Proof + Incrementality Gate) requires Growth-analytics specialist. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Experiment-specific Output/Next schema. |
 
 ## Operational
 
@@ -295,32 +296,7 @@ Experiment receives metric baselines and hypotheses from upstream agents, and de
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Experiment-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Experiment
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Hypothesis Doc | Experiment Plan | Power Analysis | Feature Flag Setup | Experiment Report | Sequential Test Plan | SRM Diagnosis | Switchback Plan]"
-    parameters:
-      hypothesis: "[falsifiable hypothesis statement]"
-      primary_metric: "[metric name]"
-      sample_size: "[calculated N]"
-      duration: "[estimated duration]"
-      statistical_method: "[Z-test | Welch's t-test | Chi-square | Bayesian]"
-      significance_level: "[alpha]"
-      power: "[1-beta]"
-      variance_reduction: "[CUPED | CUPAC | none]"
-      srm_status: "[clean | detected: [details]]"
-    guardrail_status: "[clean | flagged: [issues]]"
-    recommendation: "[ship | iterate | discard | continue]"
-  Next: Growth | Launch | Radar | Forge | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Experiment-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

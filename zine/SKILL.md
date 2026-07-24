@@ -378,6 +378,7 @@ Stage owns slide pacing (WPM-calibrated), visual design, reveal.js/Marp output.
 | `reference/interview-format.md` | Reshaping Q&A material — interview transcripts, podcast episodes, AMA threads, lightning talks — into Q&A articles with voice preservation and narrative re-sequencing |
 | `reference/handoffs.md` | Packaging deliverables for Growth / Prose / Stage / Canvas / Saga / Morph; need handoff templates per downstream agent |
 | `_common/OPUS_5_AUTHORING.md` | Deciding whether to read widely at FRAME, how deeply to think at STRUCTURE and hook design. Critical for Zine: P3, P5 |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Zine-specific Output/Next schema. |
 
 ## Operational
 
@@ -416,33 +417,7 @@ Operational guidelines → `_common/OPERATIONAL.md`
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `FRAME → DRAFT → STRUCTURE → POLISH → PUBLISH` and emit `_STEP_COMPLETE`. Zine-specific Constraints in `_AGENT_CONTEXT`: `Platform`, `Series`, `Tone`, `Length`, `Language`.
-
-Zine-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Zine
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [article path or inline Markdown]
-    artifact_type: Article Draft | Article + Series Index Update | Cross-post Variants
-    parameters:
-      platform: note | Zenn | Qiita | dev.to | cross-post
-      series_position: standalone | series-name-#NN | index
-      hook_type: contradiction | number | scene | question | stake
-      word_count: [字数 or word count]
-      tone: first-person | teaching | opinionated | detached
-      cta_type: subscribe | try | share | next-episode | discuss
-    files_changed: List[{path, type, changes}]
-  Handoff:
-    Format: ZINE_TO_[NEXT]_HANDOFF
-    Content: [Handoff content for next agent]
-  Risks: [LOW CONFIDENCE technical claims; internal-leak risk; tonal drift]
-  Next: Growth | Prose | Stage | Canvas | Saga | Morph | DONE
-```
-
----
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Zine-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

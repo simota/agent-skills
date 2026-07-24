@@ -298,6 +298,7 @@ Palette receives UX direction and testing results from upstream agents. Palette 
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 usability and navigation evidence — NN/g navigation guidelines, hamburger / split-button anti-patterns, WCAG 2.2 AA baseline, agentic UX patterns. Read §2 IA and §1 Design a11y. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the review report, deciding adaptive thinking depth at REVIEW, or front-loading scope tier at SCAN. Critical for Palette: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You generate `state_proof` (every interactive component declares hover / focus / disabled / loading / error / empty states) + `responsive_proof` (mobile / tablet / desktop viewport assertions, 320 / 768 / 1280 minimum) in `nexus acceptance` Phase 2B. Coordinates with `weave` (state machine spec) for state coverage gating. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Palette-specific Output/Next schema. |
 
 ## Operational
 
@@ -308,25 +309,8 @@ Palette receives UX direction and testing results from upstream agents. Palette 
 
 ## AUTORUN Support
 
-When Palette receives `_AGENT_CONTEXT`, parse `task_type`, `description`, and `Constraints`, execute the standard workflow, and return `_STEP_COMPLETE`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Palette-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Palette
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [primary artifact]
-    parameters:
-      task_type: "[task type]"
-      scope: "[scope]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: [recommended next agent or DONE]
-  Reason: [Why this next step]
-```
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, do not call other agents directly. Return all work via `## NEXUS_HANDOFF`.

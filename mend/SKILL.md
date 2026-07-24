@@ -224,6 +224,7 @@ Every deliverable must include:
 | `reference/canary-remediation.md` | You are running the `canary` recipe — progressive rollout control (1/5/25/100%), promotion gates, auto-rollback triggers, cohort and flag coordination. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the remediation plan, deciding adaptive thinking depth at tier/confidence classification, or front-loading severity/blast-radius/approval at CLASSIFY. Critical for Mend: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You register repair runbooks in `nexus acceptance` Phase 5 (Layer 5 — runtime self-verify with auto-rollback). Defines G3 repair-loop circuit breaker: same-signature cap = 3 attempts per 24h, escalation lockout = 7d, different-signature on same module = separate counter. Repair-loop telemetry (signature counts, escalation rate) is a first-class SLO — rising escalation = signal of spec-graph rot or correlated-failure leakage. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Mend-specific Output/Next schema. |
 
 ## Operational
 
@@ -236,30 +237,7 @@ Every deliverable must include:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Mend-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Mend
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [report path or inline]
-    artifact_type: "[Remediation Report | Auto-fix Report | Escalation Report | Rollback Report | Verification Report | Catalog Update]"
-    parameters:
-      safety_tier: "[T1 | T2 | T3 | T4]"
-      pattern_confidence: "[percentage]"
-      autonomy_mode: "[AUTO-REMEDIATE | GUIDED-REMEDIATE | INVESTIGATE | ESCALATE]"
-      verification_stage: "[Health Check | Smoke Test | SLO Check | Recovery Confirmed]"
-      rollback_triggered: "[yes | no]"
-    Validations:
-      completeness: "[complete | partial | blocked]"
-      quality_check: "[passed | flagged | skipped]"
-      safety_compliance: "[confirmed | needs_review]"
-  Next: Radar | Builder | Beacon | Gear | Triage | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Mend-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

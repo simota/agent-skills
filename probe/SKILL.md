@@ -260,25 +260,8 @@ In all suppression cases, write a one-line note in the report explaining why.
 
 ## AUTORUN Support
 
-When Probe receives `_AGENT_CONTEXT`, parse `task_type`, `description`, and `Constraints`, execute the standard workflow, and return `_STEP_COMPLETE`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Probe-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Probe
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [primary artifact]
-    parameters:
-      task_type: "[task type]"
-      scope: "[scope]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: [recommended next agent or DONE]
-  Reason: [Why this next step]
-```
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, do not call other agents directly. Return all work via `## NEXUS_HANDOFF`.
@@ -333,6 +316,7 @@ Follow `_common/GIT_GUIDELINES.md`. Use Conventional Commits such as `feat(secur
 | `reference/llm-agent-security-2026.md` | The target embeds an LLM endpoint, RAG retriever, agentic / tool-calling workflow, or MCP server. OWASP Top 10 for LLM 2025 v2.0 (LLM01-LLM10), OWASP Top 10 for Agentic Applications (ASI01 Agent Goal Hijacking, indirect prompt injection), MCP-specific checks, Garak / PyRIT / Promptfoo / DeepTeam tooling, stochasticity proof standards. |
 | `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Sentinel/Scout/Trail/Plea. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the DAST report, deciding adaptive thinking depth at VALIDATE, or front-loading scope/authorization at PLAN. Critical for Probe: P2, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Probe-specific Output/Next schema. |
 
 ## Operational
 

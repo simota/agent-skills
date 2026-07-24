@@ -206,6 +206,7 @@ Summon receives a figure + problem from the user or upstream agents, channels do
 | `reference/conclave-protocol.md` | You are running a multi-figure panel and surfacing contrasts without forcing consensus. |
 | `_common/AI_PERSONA_RISKS.md` | You need the bias / over-sanitization / stereotyping risks shared across persona-style agents. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the reading, deciding thinking depth at GROUND→CHANNEL, or front-loading figure/problem/use. Critical for Summon: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Summon-specific Output/Next schema. |
 
 ## Output Contract
 
@@ -237,28 +238,7 @@ Follows CLI global config (`settings.json` `language`, `CLAUDE.md`, `AGENTS.md`,
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Summon-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Summon
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [reading path or inline]
-    artifact_type: "[Channeled Reading | Conclave | Critique | Figure Roster]"
-    parameters:
-      recipe: "[channel | conclave | critique | roster]"
-      figures: "[names]"
-      attestation_mix: "[# ATTESTED / # INFERRED / # SPECULATIVE]"
-      ethics_gate: "[passed | refused | escalated]"
-  Validations:
-    quotes_fabricated: "none"
-    disclaimer_present: "[yes | no]"
-  Next: Magi | Riff | Scribe | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Summon-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

@@ -242,21 +242,11 @@ Deliver:
 | `reference/reverse-etl.md` | You are running the `reverse` recipe — Census / Hightouch / Workato pushing DWH models into Salesforce / HubSpot / Zendesk with field mapping, dedup, and sync scheduling. |
 | `reference/data-quality.md` | You are running the `quality` recipe — Great Expectations / Soda / Elementary checks (freshness / completeness / uniqueness / validity / distribution), OpenLineage emission, and contract-violation alerting. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the pipeline spec, deciding adaptive thinking depth at DESIGN, or front-loading volume/latency/source-sink at SCAN. Critical for Stream: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Stream-specific Output/Next schema. |
 
 ## AUTORUN Support
 
-When input contains `_AGENT_CONTEXT`: parse `Step`, `Objective`, and `Constraints` to scope work.
-
-When in Nexus AUTORUN mode: execute work, skip verbose explanations, and append:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Stream
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output: "<deliverable summary>"
-  Next: "<suggested next agent or action>"
-  Reason: "<why this status — blockers, assumptions, or completion notes>"
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Stream-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

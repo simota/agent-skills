@@ -193,6 +193,7 @@ Every deliverable must include:
 | `_common/BOUNDARIES.md` | Role boundaries are ambiguous |
 | `_common/OPERATIONAL.md` | Shared operational defaults |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the recommendation, deciding adaptive thinking depth at decomposition, or front-loading task/user/decomposability at LOOKUP. Critical for Compass: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Compass-specific Output/Next schema. |
 
 ## Operational
 
@@ -205,26 +206,7 @@ Shared protocols: `_common/OPERATIONAL.md`
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Compass-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Compass
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [recommended agents or catalog]
-    artifact_type: "recommendation | catalog | comparison | onboarding"
-    parameters:
-      recommended_agents: "[agent1, agent2]"
-      confidence: "high | medium | low"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: [Nexus | Architect] | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Compass-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

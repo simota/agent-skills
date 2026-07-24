@@ -273,6 +273,7 @@ When auditing observability for 4+ services, spawn 2–3 Explore subagents to sc
 | `reference/toil-reduction.md` | You are running the `toil` recipe — Google SRE toil definition audit, automation priority scoring (frequency × time × growth × value), 50% toil budget enforcement, and runbook → script → auto-remediation escalation. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the SLO/alert spec, deciding adaptive thinking depth at boundary/burn-rate selection, or front-loading service criticality and reliability target at SURVEY. Critical for Beacon: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You register `rollback_condition` as a live SLO oracle in `nexus acceptance` Phase 5 (Layer 5 — runtime self-verify). Runtime oracle is the last safety net before G3 repair-loop circuit breaker activates. Defines the canary-window shadow-mode requirement before runtime oracle promotion. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Beacon-specific Output/Next schema. |
 
 ## Operational
 
@@ -283,25 +284,7 @@ When auditing observability for 4+ services, spawn 2–3 Explore subagents to sc
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Beacon-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Beacon
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[SLO Document | Alert Strategy | Dashboard Spec | Capacity Model | Tracing Spec | Toil Plan | Reliability Review]"
-    parameters:
-      mode: "[MEASURE | MODEL | DESIGN | SPECIFY]"
-      slo_count: "[number or N/A]"
-      alert_count: "[number or N/A]"
-      cost_impact: "[Low | Medium | High]"
-  Next: Gear | Builder | Triage | Scaffold | Bolt | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Beacon-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

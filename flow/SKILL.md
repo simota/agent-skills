@@ -235,6 +235,7 @@ Flow receives UX friction reports and design direction from upstream agents. Flo
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 motion baselines — CSS `linear()` spring approximation, View Transitions Baseline (2025-10), M3 Expressive motion physics, WCAG 2.2.2/2.3.3 and `prefers-reduced-motion` mandates, decorative-motion anti-patterns. Read §1 Design motion. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the motion implementation, calibrating effort to single-interaction/page/system scope, or front-loading framework/target/slot at SURVEY. Critical for Flow: P3, P6. |
 | `_common/PROOF_CARRYING.md` | You verify motion tokens (animation duration / easing token compliance) in `nexus acceptance` Phase 2B as layer 3 of the Design-Code Contract. Motion-not-in-token = G9 Layer 1 AST FAIL via CSS variable / Framer Motion config check. Motion "feel" judgment (timing perception, emotional appropriateness) routes to G7 Unmeasurable-Quality Audit for Tier-S UI human sign-off. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Flow-specific Output/Next schema. |
 
 ## Operational
 
@@ -245,29 +246,7 @@ Flow receives UX friction reports and design direction from upstream agents. Flo
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Flow-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Flow
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Micro Animation | Page Transition | Gesture Handler | Motion System | Modern CSS | Accessible Motion]"
-    parameters:
-      work_mode: "[micro | page | gesture | system | modern-css]"
-      framework: "[React | Vue | Svelte | Vanilla | CSS-only]"
-      duration: "[Xms]"
-      easing: "[curve name]"
-      properties: ["[transform | opacity | etc.]"]
-      reduced_motion: "[approach]"
-    performance_notes: "[fps target, browser support]"
-    browser_gates: ["[API: browser versions]"]
-  Next: Radar | Canvas | Vitrine | Palette | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Flow-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

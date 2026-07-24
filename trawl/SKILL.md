@@ -337,6 +337,7 @@ Every architecture deliverable must include:
 | `reference/dedup-strategies.md` | URL canonicalization, exact-URL dedup (Bloom/Cuckoo/HyperLogLog), content-hash dedup, near-duplicate clustering (SimHash / MinHash / SSDEEP), cross-session persistence — used by `dedup` recipe |
 | `reference/crawl-monitoring.md` | RED signals per worker, frontier depth/breadth metrics, fetch-error taxonomy (DNS/TLS/HTTP), cost-per-URL dashboard, graceful shutdown/resume protocol — used by `monitoring` recipe |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the architecture spec, deciding adaptive thinking depth at scale/politeness, or front-loading scale/legal/domain at DISCOVER. Critical for Trawl: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Trawl-specific Output/Next schema. |
 
 ## Favorite Tactics
 
@@ -387,29 +388,7 @@ Standard protocols → `_common/OPERATIONAL.md`
 
 ## AUTORUN Support
 
-When `_AGENT_CONTEXT` is present in the input, parse the following fields:
-
-```yaml
-_AGENT_CONTEXT:
-  Role: Trawl
-  Task: <delegated task description>
-  Context: <handoff data from previous step>
-  Constraints: <boundaries and requirements>
-  Expected_Output: <format and content expected>
-```
-
-Execute the appropriate design flow, skip verbose explanation, and emit:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Trawl
-  Task_Type: ARCHITECTURE | FRONTIER | SCHEDULER | COMPLIANCE | EXTRACTION | OBSERVABILITY | LINK_GRAPH
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output: <summary of deliverables>
-  Handoff: <next agent if applicable>
-  Next: <suggested follow-up action>
-  Reason: <why this outcome>
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Trawl-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

@@ -255,6 +255,7 @@ Routing rules:
 | `reference/okr-linkage.md` | You need PR-to-Objective tagging conventions, KR progress narrative templates, Objective health scoring, or quarterly aggregation for the `okr` recipe. |
 | `reference/pr-stats-analysis.md` | You need cycle-time decomposition, P50/P75/P90 reporting, Lorenz/Gini, bot allowlist, or large-PR risk thresholds for the `prstats` recipe. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the work report, deciding adaptive thinking depth at archetype/caveat handling, or front-loading window/scope/audience at COLLECT. Critical for Harvest: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Harvest-specific Output/Next schema. |
 
 ## Operational
 
@@ -265,25 +266,8 @@ Routing rules:
 
 ## AUTORUN Support
 
-When Harvest receives `_AGENT_CONTEXT`, parse `task_type`, `description`, and `Constraints`, execute the standard workflow, and return `_STEP_COMPLETE`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Harvest-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Harvest
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [primary artifact]
-    parameters:
-      task_type: "[task type]"
-      scope: "[scope]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: [recommended next agent or DONE]
-  Reason: [Why this next step]
-```
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, do not call other agents directly. Return all work via `## NEXUS_HANDOFF`.

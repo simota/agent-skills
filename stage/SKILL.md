@@ -196,6 +196,7 @@ Pace baseline: 120-160 WPM; use 140 WPM for technical conference talks, 125 WPM 
 | `reference/slide-visual-design.md` | You are designing typography hierarchy, color/contrast (WCAG AA), image use, or alignment grid before applying a theme — used by the `visual` recipe. |
 | `reference/rehearsal-delivery.md` | You are producing a rehearsal plan covering breathing, pacing, pause discipline, eye-contact routing, and Q&A handling — used by the `rehearsal` recipe. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the slide deck, deciding adaptive thinking depth at framework/6x6, or front-loading talk-type/audience/duration at OUTLINE. Critical for Stage: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Stage-specific Output/Next schema. |
 
 ## Operational
 
@@ -206,26 +207,7 @@ Pace baseline: 120-160 WPM; use 140 WPM for technical conference talks, 125 WPM 
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Stage-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Stage
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    framework: "[Marp | reveal.js | Slidev]"
-    parameters:
-      slide_count: [N]
-      duration: "[estimated total time]"
-      narrative_pattern: "[Problem-Solution | AIDA | Before-After | Hero's Journey | Tutorial]"
-      audience: "[beginner | intermediate | expert]"
-    preview_command: "[command to preview]"
-  Next: Director | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Stage-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

@@ -322,6 +322,7 @@ Do not parallelize EVOLVE or FUSE — these require sequential confidence recalc
 | `reference/persona-bias-audit.md` | Subcommand `bias-audit` — you are running representation-matrix, intersectionality coverage, or inclusive-persona checks. |
 | `_common/AI_PERSONA_RISKS.md` | AI generation, human review, or bias/ethics risk is involved. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the persona packet, deciding adaptive thinking depth at SYNTH, or front-loading mode/scope at the first phase. Critical for Cast: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Cast-specific Output/Next schema. |
 
 ## Operational
 
@@ -332,25 +333,7 @@ Do not parallelize EVOLVE or FUSE — these require sequential confidence recalc
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Cast-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Cast
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Persona Set | Evolution Report | Audit Report | Distribution Package | Voice Output]"
-    parameters:
-      mode: "[CONJURE | FUSE | EVOLVE | AUDIT | DISTRIBUTE | SPEAK]"
-      persona_count: "[number]"
-      confidence_range: "[low-high]"
-      registry_changes: "[created | updated | unchanged]"
-  Next: Echo | Spark | Bond | Compete | Accord | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Cast-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

@@ -204,6 +204,7 @@ Forge receives concepts and direction from upstream agents, builds rapid prototy
 | `reference/dashboard-prototyping.md` | You are running `dashboard` — need charting library selection (Recharts/Chart.js/ECharts), table virtualization, filter/date-range shells, or seeded mock time-series generation. |
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 frontend stack defaults — React 19.2 RSC, Svelte 5 Runes, Vue 3.6 Vapor, Tailwind v4, Vite 7 / Turbopack — and waterfall / useEffect / context anti-patterns. Read §3 Frontend. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the demo summary, deciding effort-level for the time-box, or front-loading hypothesis/L-tier at the first phase. Critical for Forge: P3, P6. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Forge-specific Output/Next schema. |
 
 ## Operational
 
@@ -214,33 +215,7 @@ Forge receives concepts and direction from upstream agents, builds rapid prototy
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Forge-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Forge
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[UI Component | Page Flow | API Mock | Backend PoC | Full-Stack Slice | Builder Handoff]"
-    parameters:
-      hypothesis: "[what was tested]"
-      strategy: "[Throwaway | Evolutionary]"
-      mock_strategy: "[inline | MSW | json-server | Express]"
-      quality_level: "[L0 | L1 | L2 | L3]"
-      prototype_status: "[concept | structured | demoable | builder-ready]"
-    decision: "[ADOPT | ITERATE | DISCARD]"
-    known_debt: ["[debt items]"]
-  Validations:
-    - "[build compiles / renders without error]"
-    - "[happy path is demoable]"
-    - "[mock assumptions documented]"
-    - "[prototype status declared]"
-  Next: Builder | Artisan | Vitrine | Muse | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Forge-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

@@ -238,6 +238,7 @@ When documenting 3+ independent modules simultaneously, spawn parallel subagents
 | `reference/migrate-guide-authoring.md` | You are running the `migrate` Recipe — version-jump guides with breaking-change notation, codemod steps, rollback, and verification. |
 | `reference/tutorial-guide-authoring.md` | You are running the `tutorial` Recipe — Diátaxis-aligned tutorials and how-to guides with prerequisites, executable snippets, and validation checkpoints. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the doc update, deciding adaptive thinking depth at tag/TypeDoc selection, or front-loading module/doc-type/audience at SCAN. Critical for Quill: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Quill-specific Output/Next schema. |
 
 ---
 
@@ -251,27 +252,7 @@ When documenting 3+ independent modules simultaneously, spawn parallel subagents
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Quill-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Quill
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [files changed or artifact produced]
-    artifact_type: "[JSDoc/TSDoc | README | Type Improvement | Coverage Audit | API Docs | Code Comments | Changelog | Quality Report]"
-    parameters:
-      task_type: "[documentation | types | readme | api-docs | coverage-audit | comments | changelog]"
-      files_changed: "[count]"
-      coverage_delta: "[before → after]"
-      any_types_removed: "[count]"
-      quality_score: "[Completeness/Accuracy/Readability/Maintainability]"
-    handoff: "[token or NONE]"
-  Next: Canvas | Atlas | Gateway | Lore | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Quill-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

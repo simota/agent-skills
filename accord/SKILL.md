@@ -325,6 +325,7 @@ Unified Specification Package: [Feature Name]
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the unified package, deciding adaptive thinking depth at PLAN, or front-loading audience/scope at INTAKE. Critical for Accord: P3, P5. |
 | `_common/PROOF_CARRYING.md` v3.1 | You are emitting accord L4 (Reversibility / Learning / Disqualification) per Persona+Journey+Product fold-in. Phase 1 recommended, Phase 2 mandatory. Persona Contract schema (situation/goal/fear/comprehension/success/disqualification) feeds via echo `council` mode. The Authoring Principles (Extending This Protocol) apply before extending the L4 schema further. |
 | `_common/GROWTH_BRAND_PROOF.md` | You emit accord package as input to `nexus growth-acceptance` Phase 0 (Pre-Design, Enterprise org-tier only). L4 disqualification feeds Phase 3 Measurement Loop fail conditions (G13 Stop Authority). |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Accord-specific Output/Next schema. |
 
 ## Operational
 
@@ -334,27 +335,7 @@ Unified Specification Package: [Feature Name]
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Accord-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Accord
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Full | Standard | Lite] Specification Package"
-    parameters:
-      scope: "[Full | Standard | Lite]"
-      teams: ["Biz", "Dev", "Design"]
-      requirement_count: "[number]"
-      traceability_completeness: "[percentage]"
-      bdd_scenario_count: "[number]"
-  Handoff: "[target agent or N/A]"
-  Next: Sherpa | Builder | Radar | Voyager | Canvas | Scribe | Lore | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Accord-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

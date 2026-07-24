@@ -257,6 +257,7 @@ Full algorithm, JSON schema, CLUSTER identity rules, GROUND checks, prompt skele
 | `_common/IMAGE_INPUT.md` | You are evaluating a UI screenshot or visual as input — apply the image pipeline (describe-first, task-frame, region enumeration, observed-vs-inferred) before the walkthrough so confusion points are grounded in the pixels, not speculated. |
 | `_common/PROOF_CARRYING.md` v3.1 | You define the AI-user persona set for `ux_task_proof` in `nexus acceptance` Phase 3B: standard / returning / impatient / mobile / screen-reader / slow-net / payment-fail / locale-edge / adversarial. Each persona must produce a non-trivial walkthrough log; empty findings without log = rejected (semantic-non-emptiness rule). v4 fold-in: `council` Recipe with machine-readable Persona Contract (situation/goal/fear/comprehension/success/disqualification), no-opinion discipline, Org-Tier persona cap, engine diversity for Tier-S/A. |
 | `_common/GROWTH_BRAND_PROOF.md` | You provide `council` Recipe output to `nexus growth-acceptance` Phase 0 (Pre-Design, Enterprise org-tier) for Persona Proof. Friction Ledger entries (when writing trace evidence via the `echo` writer role per G11) capture persona-specific UI moments at second-grain. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Echo-specific Output/Next schema. |
 
 ## Operational
 
@@ -266,52 +267,7 @@ Full algorithm, JSON schema, CLUSTER identity rules, GROUND checks, prompt skele
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Echo-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Echo
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Emotion Journey | Dark Pattern Audit | Cross-Persona Analysis | Visual Review | Accessibility Audit | Latent Needs Report | Tri-Engine Persona × Step Matrix]"
-    parameters:
-      persona: "[persona name or list when multi-persona]"
-      environment: "[device, connectivity, context]"
-      emotion_range: "[min to max score]"
-      friction_count: "[number]"
-      dark_patterns_found: "[count or none]"
-      a11y_issues: "[count or none]"
-    ab_hypotheses: ["[hypothesis descriptions]"]
-    latent_needs: ["[JTBD findings]"]
-    tri_engine:                                  # present only when `multi` Recipe ran
-      engines_run: [codex, agy, claude]
-      engines_failed: [list or none]
-      personas_in_matrix: [list of persona_id]
-      steps_in_matrix: [list of step_id]
-      confidence_distribution:
-        CONFIRMED: [count]
-        LIKELY: [count]
-        VERIFIED-DIVERGENT: [count]
-      perspective_distribution:
-        CONVERGENT: [count]
-        DIVERGENT: [count]
-      cross_persona_distribution:
-        CROSS-PERSONA-UNIVERSAL: [count]
-        CROSS-PERSONA-SEGMENT: [count]
-        PERSONA-SPECIFIC: [count]
-      calibration_distribution:
-        validated: [count]
-        supported: [count]
-        hypothesis: [count]
-        synthetic-only: [count]
-      dark_pattern_auto_promoted: [count]
-      rejected: [count + top categories — hallucination / voice-mismatch / already-mitigated / needs-info]
-  Next: Palette | Experiment | Growth | Canvas | Spark | Scout | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Echo-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

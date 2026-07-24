@@ -374,6 +374,7 @@ Full algorithm, JSON schema, AP-grounding rules, prompt skeletons: `reference/tr
 | `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
 | `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill base protocol for the `multi` Recipe — Pattern D/C/H selection, canonical SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND/CALIBRATE → SYNTHESIZE → DELIVER flow, engine-attribution tag convention, degraded modes, and Implementation Checklist. Read alongside `reference/tri-engine-narrate.md` for the Saga delta. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the narrative output, deciding adaptive thinking depth at framework selection, or front-loading audience/channel/format at FRAME. Critical for Saga: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Saga-specific Output/Next schema. |
 
 ---
 
@@ -388,38 +389,7 @@ Full algorithm, JSON schema, AP-grounding rules, prompt skeletons: `reference/tr
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `DISCOVER → FRAME → CRAFT → REFINE → DELIVER` and emit `_STEP_COMPLETE`. Saga-specific Constraints in `_AGENT_CONTEXT`: target audience, framework preference, length/format constraints.
-
-Saga-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Saga
-  Task_Type: use_case_story | product_narrative | pitch_story | customer_success | onboarding | scenario | tri_engine_portfolio | tri_engine_compete
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    narrative: [Story content]
-    framework_used: [Framework name]
-    anti_pattern_check: [AP results]
-    files_changed: List[{path, type, changes}]
-    tri_engine:                                  # present only when `multi` Recipe ran
-      engines_run: [codex, agy, claude]
-      engines_failed: [list or none]
-      merge_strategy: "[Portfolio | Compete]"
-      concurrence_distribution:
-        UNIVERSAL: [count]
-        LIKELY: [count]
-        VERIFIED-DIVERGENT: [count]
-      archetype_coverage: ["Hero's Journey", "JTBD", "Before-After-Bridge", ...]
-      rejected: [count + top categories — no-arc / hero-product / no-tension / generic-persona / jargon / ad-copy / fabricated-evidence]
-  Handoff:
-    Format: SAGA_TO_[NEXT]_HANDOFF
-    Content: [Handoff content for next agent]
-  Risks: [Assumptions needing validation]
-  Next: [NextAgent] | VERIFY | DONE
-```
-
----
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Saga-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

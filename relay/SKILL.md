@@ -264,6 +264,7 @@ Every deliverable must include:
 | `reference/queue-integration.md` | You are running the `queue` recipe and need producer/consumer wiring (SQS/SNS/RabbitMQ/Kafka/NATS), DLQ topology, visibility timeout, or idempotent consumer patterns. |
 | `reference/rate-limiting.md` | You are running the `rate` recipe and need token/leaky bucket / sliding window, 429 + Retry-After handling, cost-based quotas, or per-tenant isolation. |
 | `_common/OPUS_5_AUTHORING.md` | You need to size the integration spec, decide adaptive thinking depth at HMAC/retry design, or front-load platform/transport/scale at DESIGN. Critical for Relay: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Relay-specific Output/Next schema. |
 
 ## Operational
 
@@ -274,18 +275,7 @@ Standard protocols → `_common/OPERATIONAL.md`
 
 ## AUTORUN Support
 
-When input contains `_AGENT_CONTEXT`, parse it for task parameters and constraints.
-
-When called in Nexus AUTORUN mode: execute normal work, skip verbose explanations, append completion block:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Relay
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output: "<deliverable summary>"
-  Next: "<recommended next agent or action>"
-  Reason: "<why this status>"
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Relay-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

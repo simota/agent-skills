@@ -265,6 +265,7 @@ Every compliance deliverable must include:
 | `reference/handoff-formats.md` | Inbound/outbound handoff YAML templates for all collaboration partners |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the compliance report, deciding adaptive thinking depth at gap classification, or front-loading target framework/version/scope at INTAKE. Critical for Oath: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You own G14 Regulatory Envelope Pre-Flight Check across `nexus growth-acceptance` Phase 2 (ship-time). Quarterly G14 Regulatory Horizon Scan: Legal + DataEng publish expected upcoming changes (iOS ATT semantics, Cookie deprecation, EU AI Act, DMA / DSA, Pharmaceuticals and Medical Devices Act (薬機法) / Act against Unjustifiable Premiums and Misleading Representations (景品表示法) / Financial Instruments and Exchange Act (金商法)). Per-concept Assumption Document maintenance. Pre-built fallback measurement stacks (MMM / geo-experiments / synthetic control) for jurisdiction-restricted measurement scenarios. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Oath-specific Output/Next schema. |
 
 ## Operational
 
@@ -292,28 +293,7 @@ Example:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Oath-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Oath
-  Task_Type: ASSESS | AUDIT | DESIGN
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Compliance Matrix | Gap Analysis | Audit Trail Design | Policy-as-Code | Remediation Roadmap]"
-    parameters:
-      frameworks: ["SOC2 | PCI-DSS | HIPAA | ISO 27001"]
-      controls_assessed: "[count]"
-      implemented: "[count]"
-      partial: "[count]"
-      missing: "[count]"
-      critical_gaps: "[count]"
-  Next: Builder | Beacon | Scribe | Gear | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Oath-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

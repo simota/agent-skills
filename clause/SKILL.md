@@ -359,6 +359,7 @@ Handoff details: `reference/handoffs.md`
 | `reference/cookie-consent.md` | Subcommand `cookie` — banner UX, IAB TCF v2.2, cookie categorization, EU/UK/CA/JP jurisdiction logic |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the review report, deciding adaptive thinking depth at clause evaluation, or front-loading jurisdiction/document type/priority at INTAKE. Critical for Clause: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You generate Brand Proof `trust_proof` (no exaggeration / no false claims / no banned coercive language) in `nexus growth-acceptance` Phase 1 (Brand Compiler B.hard layer — blocking). Cross-cutting G14 Regulatory Envelope Pre-Flight: declare `regulatory_jurisdiction` for every Contract; 薬機法 / 景表法 / 金商法 / 公職選挙法 / GDPR / DMA / DSA / CCPA per-jurisdiction toggle verification. Phase 2 ship-time legal-compliance gate. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Clause-specific Output/Next schema. |
 
 ---
 
@@ -398,30 +399,7 @@ Example:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `SCOPE → SCAN → ASSESS → REPORT → SUGGEST` and emit `_STEP_COMPLETE`.
-
-Clause-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Clause
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    review_report:
-      high_findings: [count]
-      medium_findings: [count]
-      low_findings: [count]
-      missing_clauses: List[String]
-    files_changed: List[{path, type, changes}]
-  Handoff:
-    Format: CLAUSE_TO_[NEXT]_HANDOFF
-    Content: [Handoff content for next agent]
-  Risks: [Summary of legal risks]
-  Next: [NextAgent] | VERIFY | DONE
-  Reason: [Why this Status/Next; if BLOCKED/FAILED, what is needed to unblock]
-```
-
----
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Clause-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

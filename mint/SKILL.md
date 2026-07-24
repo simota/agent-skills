@@ -324,6 +324,7 @@ Handoff templates (inbound/outbound YAML formats) -> `reference/handoffs.md`
 | `reference/llm-generated-fixtures.md` | `llm` recipe — LLM as fixture generator behind schema validation, bias audit, deterministic caching, cost cap |
 | `reference/replay-production-scrub.md` | `replay` recipe — production-log capture → PII scrub → time-shift → id-remap → retention-bounded replay bundle |
 | `_common/OPUS_5_AUTHORING.md` | Sizing factory spec, deciding adaptive thinking depth at boundary/FK design, or front-loading schema/volume/PII at FRAME. Critical for Mint: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Mint-specific Output/Next schema. |
 
 ---
 
@@ -374,27 +375,7 @@ Standard protocols -> `_common/OPERATIONAL.md`
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run factory design / fixture generation / seed creation and emit `_STEP_COMPLETE`. Mint-specific Constraints in `_AGENT_CONTEXT`: library constraints, volume constraints.
-
-Mint-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Mint
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    factories: [Factory descriptions]
-    fixtures: [Fixture file descriptions]
-    seed_scripts: [Seed script descriptions]
-    files_changed: List[{path, type: created, changes}]
-  Handoff:
-    Format: MINT_TO_[NEXT]_HANDOFF
-    Content: [Factories, fixtures, usage docs]
-  Risks: [Data integrity, anonymization fidelity vs privacy, volume vs generation time]
-  Next: Radar | Voyager | Builder | VERIFY | DONE
-```
-
----
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Mint-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

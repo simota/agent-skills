@@ -288,6 +288,7 @@ Every Native deliverable must include:
 | `reference/xcrun-cli.md` | `xcrun` toolchain — `simctl` / `devicectl` / `xctrace` / `xcresulttool` / `notarytool` / `atos` / binary introspection |
 | `reference/adb-cli.md` | `adb` reference — `pm` / `am` / `logcat` / `dumpsys` / wireless pair / Perfetto / iOS↔Android command map |
 | `_common/OPUS_5_AUTHORING.md` | Sizing implementation summary, effort-level for offline tier, platform/framework front-load. Critical: P3, P6 |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Native-specific Output/Next schema. |
 
 ---
 
@@ -319,29 +320,7 @@ Standard protocols → `_common/OPERATIONAL.md`
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `DETECT → SCAFFOLD → IMPLEMENT → ADAPT → VERIFY` and emit `_STEP_COMPLETE`. Native-specific Constraints in `_AGENT_CONTEXT`: `target_platforms`, `ios_baseline`, `android_baseline`, `target_sdk`, `offline_tier`.
-
-Native-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Native
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    implementation: [Feature per platform; Liquid Glass / M3 Expressive notes]
-    files_changed: List[{path, type, changes}]
-  Privacy_Compliance:
-    privacy_manifest: complete | partial | n/a
-    data_safety: complete | partial | n/a
-    ai_disclosure_ui: present | n/a
-  Handoff:
-    Format: NATIVE_TO_[NEXT]_HANDOFF
-    Content: [Handoff content for next agent]
-  Risks: [Platform-specific risks, store-review risks]
-  Next: [NextAgent] | VERIFY | DONE
-```
-
----
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Native-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

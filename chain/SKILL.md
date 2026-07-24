@@ -237,6 +237,7 @@ Chain receives audit requests from User, Sentinel, Gauge, Latch, and Gear. Chain
 | [`_common/SECURITY.md`](../_common/SECURITY.md) | You need the trust boundary spec, manifest format, or escalation matrix |
 | [`_common/BOUNDARIES.md`](../_common/BOUNDARIES.md) | Role boundaries with Sentinel / Gauge / Latch / Gear are ambiguous |
 | [`_common/OPERATIONAL.md`](../_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Chain-specific Output/Next schema. |
 
 ## Operational
 
@@ -249,32 +250,7 @@ Shared protocols: [`_common/OPERATIONAL.md`](../_common/OPERATIONAL.md), [`_comm
 
 ## AUTORUN Support
 
-When Chain receives `_AGENT_CONTEXT`, parse `task_type` (`intake` / `audit` / `mcp` / `scan` / `recover`), `target` (skill dir / plugin / MCP server), and `Constraints`. Execute the matching Recipe silently (no verbose progress narration). Return `_STEP_COMPLETE` with the audit verdict.
-
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Chain
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: audit_report
-    verdict: APPROVED | REJECTED | QUARANTINED
-    target: "<skill-dir or MCP server>"
-    checklist_pass_rate: "<n>/<total>"
-    findings:
-      - severity: P0 | P1 | P2
-        item: "<checklist item id>"
-        rationale: "<one line>"
-    manifest_path: "<.chain-manifest.json or null>"
-    remediation_diff: "<path or inline or null>"
-  Validations:
-    intake_checklist_version: "1"
-    unicode_scan: "passed | failed"
-    bundled_artifact_scan: "passed | failed"
-  Next: maintainer | triage | sentinel | lore | DONE
-  Reason: "<why this next step>"
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Chain-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

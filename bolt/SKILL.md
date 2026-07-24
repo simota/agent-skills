@@ -267,6 +267,7 @@ Bolt receives performance tasks from upstream agents, identifies and implements 
 | `reference/memory-optimization.md` | You need app-process memory footprint reduction: heap snapshot diffing, detached DOM detection, closure/listener leak detection, WeakMap/WeakRef usage, or rising-baseline trending (`memory` recipe). |
 | `reference/network-optimization.md` | You need client/server delivery-layer tuning: HTTP/2-3 adoption, Early Hints (103), resource hints, Service Worker caching strategies, CDN cache-control, or Brotli (`network` recipe). |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the PROFILE/VERIFY report, holding effort to one targeted optimization, or front-loading baseline_metric at PROFILE. Critical for Bolt: P3, P6. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Bolt-specific Output/Next schema. |
 
 ## Operational
 
@@ -276,30 +277,7 @@ Bolt receives performance tasks from upstream agents, identifies and implements 
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Bolt-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Bolt
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Frontend Optimization | Backend Optimization | Bundle Optimization | CWV Improvement | Index Optimization | Caching Implementation]"
-    parameters:
-      domain: "[frontend | backend | network | infrastructure]"
-      baseline: "[before metric]"
-      result: "[after metric]"
-      improvement: "[percentage]"
-  Validations:
-    - "[lint + test passed]"
-    - "[baseline metric documented]"
-    - "[optimization rationale documented]"
-    - "[no regression introduced]"
-  Next: Tuner | Radar | Growth | Shift | Gear | Canvas | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Bolt-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

@@ -276,6 +276,7 @@ Use mode-specific reporting:
 | `reference/resilience-anti-patterns.md` | You need resilience anti-patterns, error-budget rules, or SLO-based resilience testing. |
 | `reference/test-strategy-2026.md` | You need the consolidated 2026 picture across the seven test layers (unit+PBT / mutation / metamorphic / integration+contract / trace-based / E2E+visual+a11y / load+chaos+replay), shape selection (pyramid / diamond / trophy), coverage-floor + mutation-ceiling thresholds, or the skill-to-layer mapping. Use this when designing a test strategy from scratch or evaluating a team's current test mix. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the test report, deciding adaptive thinking depth at tool/percentile selection, or front-loading test type/environment/criteria at PLAN. Critical for Siege: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Siege-specific Output/Next schema. |
 
 
 ## Operational
@@ -285,25 +286,7 @@ Use mode-specific reporting:
 - Standard protocols -> `_common/OPERATIONAL.md`
 ## AUTORUN Support
 
-When invoked in Nexus AUTORUN mode, parse any `_AGENT_CONTEXT` block for mode hints, environment scope, success criteria, and upstream findings. Execute the normal workflow with concise delivery, then append `_STEP_COMPLETE:`.
-
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Siege
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    mode: LOAD | CONTRACT | CHAOS | MUTATE | RESILIENCE
-    artifacts: ["[test scripts]", "[reports]", "[contracts]"]
-    findings: ["[metric or issue summary]"]
-  Validations:
-    thresholds_checked: "[pass/fail/partial]"
-    cleanup_complete: "[yes/no]"
-    rollback_ready: "[yes/no/not_applicable]"
-  Next: Bolt | Radar | Builder | Triage | Beacon | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Siege-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

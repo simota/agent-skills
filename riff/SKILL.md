@@ -276,6 +276,7 @@ Full algorithm, JSON schema, prompt skeletons, CLUSTER identity rules, GROUND ch
 | `_common/MULTI_ENGINE_RECIPE.md` | You are authoring or maintaining Riff's `multi` Recipe and need the cross-skill protocol — Pattern D rubric, canonical PREFLIGHT / FAN-OUT / NORMALIZE / CLUSTER / SCORE / GROUND / SYNTHESIZE / DELIVER stages, engine-attribution tag conventions, and implementation checklist. |
 | `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the session summary, deciding adaptive thinking depth at mode/pacing, or front-loading topic/mode-bias/length at ENTER. Critical for Riff: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Riff-specific Output/Next schema. |
 
 ## Operational
 
@@ -286,48 +287,7 @@ Full algorithm, JSON schema, prompt skeletons, CLUSTER identity rules, GROUND ch
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Riff-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Riff
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    session_summary:
-      original_theme: [Starting point]
-      key_insights:
-        - [Insight 1]
-        - [Insight 2]
-        - [Insight 3]
-      idea_candidates:
-        - [Candidate 1 with brief context]
-        - [Candidate 2 with brief context]
-      open_questions:
-        - [Unresolved question]
-    files_changed: []
-    tri_engine:                                  # present only when `multi` Recipe ran
-      engines_run: [codex, agy, claude]
-      engines_failed: [list or none]
-      mode_coverage: "[single-mode | all-modes]"
-      active_mode: "[expand | propose | evaluate | subtract | ALL]"
-      output_shape: "[per-mode-portfolio | all-modes-matrix]"
-      concurrence_distribution:                  # per active mode (or summed across modes when --all-modes)
-        UNIVERSAL: [count]
-        LIKELY: [count]
-        VERIFIED-DIVERGENT: [count]
-      rejected: [count + top categories — duplicate-of-prior-turn / hallucination / theme-disconnect / mode-mismatch / sugar-coat]
-      user_picks: [list of idea IDs the user selected as seeds for next dialogue turn, or "none yet"]
-  Handoff:
-    Format: RIFF_TO_[NEXT]_HANDOFF
-    Content: [Brainstorming results for next agent]
-  Artifacts: []
-  Risks:
-    - [Identified risks or blind spots]
-  Next: [NextAgent] | VERIFY | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Riff-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

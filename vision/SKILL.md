@@ -286,6 +286,7 @@ Activated by the `multi` Recipe (or any explicit request for parallel design-dir
 | `_common/SUBAGENT.md` | you need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts |
 | `_common/MULTI_ENGINE_RECIPE.md` | you need the canonical Pattern D protocol (SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND/CALIBRATE → SYNTHESIZE → DELIVER), engine-attribution tag conventions, and degraded-mode rules shared across all `multi` Recipe skills |
 | `_common/PROOF_CARRYING.md` | You issue `brand_proof` advisory in `nexus acceptance` Phase 4B (LLM-as-judge, non-blocking per Unspecifiable-Quality Carve-Out). Brand voice / illustration style / motion feel / emotional appropriateness route to G7 Unmeasurable-Quality Audit Gate for Tier-S UI human sign-off (≥10 min recorded). Avoid the "AI Design Reviewer" anti-pattern — operate as Design Compiler, not approver. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Vision-specific Output/Next schema. |
 
 ## Operational
 
@@ -296,41 +297,8 @@ Activated by the `multi` Recipe (or any explicit request for parallel design-dir
 
 ## AUTORUN Support
 
-When Vision receives `_AGENT_CONTEXT`, parse `task_type`, `description`, and `Constraints`, execute the standard workflow, and return `_STEP_COMPLETE`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Vision-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
-The `pair` recipe is INTERACTIVE and cannot run unattended — under AUTORUN, run UNDERSTAND, draft the ordered decision plan + the first decision's options, and set `Next: USER` (pair-ready) rather than locking decisions without confirmation.
-
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Vision
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [primary artifact]
-    parameters:
-      task_type: "[task type]"
-      scope: "[scope]"
-    tri_engine:                                  # present only when `multi` Recipe ran
-      engines_run: [codex, agy, claude]
-      engines_failed: [list or none]
-      merge_strategy: "[Portfolio | Compete]"
-      concurrence_distribution:
-        UNIVERSAL: [count]
-        LIKELY: [count]
-        VERIFIED-DIVERGENT: [count]
-      spectrum_coverage:
-        positions: [list of distinct spectrum_position values across surviving directions]
-        spread_ok: [true | false]
-      rejected: [count + top categories — brand-drift / persona-mismatch / a11y / hallucination / vague-outcome / ai-trust]
-      lead_recommendation: "[direction concept_name]"
-      challenger: "[direction concept_name or none]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: [recommended next agent or DONE]
-  Reason: [Why this next step]
-```
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, do not call other agents directly. Return all work via `## NEXUS_HANDOFF`.

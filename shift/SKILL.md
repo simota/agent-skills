@@ -290,6 +290,7 @@ Spawn when: migration touches ≥3 independent subsystems (e.g., API + DB + fron
 | `reference/javascript-ecosystem-anti-patterns.md` | `radar` for JS/Node: anti-patterns JE-01 to JE-07, node_modules issues, PM selection guide, supply-chain security. |
 | `reference/frontend-modernization-anti-patterns.md` | `modernize` for frontend: anti-patterns FM-01 to FM-07, Outside-In migration, Micro Frontend, success KPIs. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the migration plan, adaptive thinking depth at strategy selection, front-loading versions/risk tier at ASSESS. Critical: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Shift-specific Output/Next schema. |
 
 ## Output Requirements
 
@@ -312,29 +313,7 @@ Every deliverable must include:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Shift-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Shift
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Migration Plan | Codemod | DB Migration | API Migration | Verification Plan]"
-    parameters:
-      migration_type: "[Framework | Library | Language | API | Database | Infrastructure]"
-      strategy: "[Strangler Fig | Branch by Abstraction | Parallel Run | Big Bang | Expand-Contract]"
-      scope: "[file count / module count]"
-      phases: "[phase count]"
-      rollback: "[available | partial | manual]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: Builder | Radar | Schema | Launch | Gear | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Shift-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

@@ -333,6 +333,7 @@ Templates: `reference/handoffs.md`. Key flows — **From Frame:** merge Figma da
 | `reference/examples.md` | Reference reproduction examples |
 | `_common/OPUS_5_AUTHORING.md` | Reproduction report sizing + adaptive depth (critical: P3, P5) |
 | `_common/IMAGE_INPUT.md` | Mockup/screenshot input pipeline (pre-crop, describe-first, observed-vs-inferred) before EXTRACT |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Pixel-specific Output/Next schema. |
 
 ## Operational
 
@@ -369,31 +370,7 @@ Operational guidelines → `_common/OPERATIONAL.md`
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `SCAN → EXTRACT → COMPOSE → VERIFY → REFINE` and emit `_STEP_COMPLETE`. Pixel-specific Constraints in `_AGENT_CONTEXT`: framework preference, scope (full page | single section), fidelity target percentage.
-
-Pixel-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Pixel
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: HTML/CSS Reproduction
-    parameters:
-      framework: Vanilla | React | Vue 3 | Svelte 5
-      fidelity_score: [percentage]
-      iterations_used: 1-3
-      confidence_breakdown: {high_values, medium_values, low_values}
-    files_changed: List[{path, type, changes}]
-  Handoff:
-    Format: PIXEL_TO_[NEXT]_HANDOFF
-    Content: [Handoff content for next agent]
-  Risks: [Low-confidence values needing manual verification; responsive assumptions]
-  Next: Artisan | Muse | Growth | Voyager | Canon | Judge | DONE
-```
-
----
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Pixel-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

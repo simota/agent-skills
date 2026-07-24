@@ -256,6 +256,7 @@ Limits (apply only when delegating to agy):
 | `reference/antigravity-delegation.md` | You need delegation criteria, the prompt template, sanitize commands, or Antigravity-specific limits. |
 | `reference/gpt-image-edit.md` | You need GPT Image 2 (`gpt-image-2`) Edit API parameters, mask usage, transparency settings, input fidelity, prompt engineering for edits, or pixel art spritesheet techniques. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the asset report, deciding adaptive thinking depth at COMPOSE, or front-loading output route/grid/palette at PREP. Critical for Dot: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Dot-specific Output/Next schema. |
 
 ## Operational
 
@@ -266,30 +267,7 @@ Limits (apply only when delegating to agy):
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Dot-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Dot
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[SVG | Canvas HTML | Phaser 3 JS | Pillow Script | CSS | Spritesheet | Tileset | Gemini SVG]"
-    parameters:
-      grid_size: "[WxH]"
-      palette_tier: "[1-bit | 2-bit | 8-color | 16-color | 32-color]"
-      palette_hex: ["#hex1", "#hex2"]
-      target_engine: "[Browser | Phaser 3 | Godot | Unity | PixiJS | RPG Maker | None]"
-      frame_count: [N]
-      animation_states: ["[idle | walk | attack | ...]"]
-      gemini_delegated: [true | false]
-    metadata_json: "[path or inline]"
-    rendering_mode: "[pixelated | crispEdges | nearest]"
-  Next: Realm | Forge | Artisan | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Dot-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

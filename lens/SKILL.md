@@ -289,6 +289,7 @@ Every deliverable must include:
 | `reference/comprehension-research.md` | Research backing and source citations behind the Principles, Core Contract, and Boundaries rules, plus advanced context-engineering techniques (PageRank repo map, `llms.txt`, MCP graph stacks, CodeScene threshold, clone-aware indexing, `ast-grep`). |
 | `_common/INVESTIGATION_ESCALATION.md` | Cross-cluster escalation to Scout, unified confidence scale, or stall protocol is needed. |
 | `_common/OPUS_5_AUTHORING.md` | You are choosing tool-use eagerness during SURVEY/TRACE, deciding adaptive thinking depth at SCOPE, or sizing the report. Critical for Lens: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Lens-specific Output/Next schema. |
 
 ---
 
@@ -303,26 +304,7 @@ Every deliverable must include:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Lens-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Lens
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [report path or inline]
-    artifact_type: "[Quick Answer | Investigation Report | Structure Map | Data Flow Report | Convention Report | Onboarding Report]"
-    parameters:
-      investigation_type: "[Existence | Flow | Structure | Data | Convention | Onboarding | ComprehensionDebt]"
-      scope: "[files/modules investigated]"
-      confidence: "[High | Medium | Low]"
-      findings_count: "[count]"
-      gaps: "[What I didn't find]"
-  Next: Builder | Sherpa | Atlas | Scribe | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Lens-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

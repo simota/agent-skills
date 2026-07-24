@@ -266,6 +266,7 @@ Include only the sections needed for the request, but keep assumptions, scenario
 | `reference/business-model-canvas.md` | you need the Business Model Canvas (9 blocks) or Lean Canvas (startup variant) to lay out / stress-test a whole business model — distinct from the Blue Ocean Strategy Canvas |
 | `reference/wardley-mapping.md` | you need Wardley mapping — user-need anchor, visibility + evolution axes, doctrine, climatic patterns, build-vs-buy decisions |
 | `_common/OPUS_5_AUTHORING.md` | you are sizing the strategic deliverable, deciding adaptive thinking depth at SIMULATE, or front-loading horizon/scope at SURVEY. Critical for Helm: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Helm-specific Output/Next schema. |
 
 ## Operational
 
@@ -277,25 +278,8 @@ Include only the sections needed for the request, but keep assumptions, scenario
 
 ## AUTORUN Support
 
-When Helm receives `_AGENT_CONTEXT`, parse `task_type`, `description`, and `Constraints`, execute the standard workflow, and return `_STEP_COMPLETE`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Helm-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Helm
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [primary artifact]
-    parameters:
-      task_type: "[task type]"
-      scope: "[scope]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: [recommended next agent or DONE]
-  Reason: [Why this next step]
-```
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, do not call other agents directly. Return all work via `## NEXUS_HANDOFF`.

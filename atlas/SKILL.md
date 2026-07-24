@@ -247,6 +247,7 @@ Full algorithm, JSON schema, prompt skeletons, clustering rules, and grounding/a
 | `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
 | `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill multi-engine protocol — Pattern H definition, canonical PREFLIGHT probe, CLUSTER/SCORE/GROUND/SYNTHESIZE flow, engine-attribution tag conventions, and degraded modes. |
 | `_common/OPUS_5_AUTHORING.md` | You are scoping SURVEY breadth, deciding adaptive thinking depth at PLAN, or sizing ADR/RFC outputs. Critical for Atlas: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Atlas-specific Output/Next schema. |
 
 ## Operational
 
@@ -256,39 +257,7 @@ Full algorithm, JSON schema, prompt skeletons, clustering rules, and grounding/a
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Atlas-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Atlas
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[ADR | RFC | Dependency Analysis | Debt Assessment | Module Boundary Design | Health Score | Tri-Engine Consensus ADR]"
-    parameters:
-      analysis_scope: "[module | package | system]"
-      coupling_score: "[metric]"
-      debt_items: "[count]"
-      migration_risk: "[Low | Medium | High]"
-    tri_engine:                                  # present only when `multi` Recipe ran
-      engines_run: [codex, agy, claude]
-      engines_failed: [list or none]
-      smell_confidence:
-        CONFIRMED: [count]
-        LIKELY: [count]
-        VERIFIED-CANDIDATE: [count]
-      option_perspective:
-        CONVERGENT: [count]
-        CONVERGENT-PARTIAL: [count]
-        DIVERGENT: [count]
-      recommended_option_style: "[Layered | Hexagonal | DDD | Event-Driven | Modular-Monolith | Microservices | CQRS | Vertical-Slice | Pipeline | Plugin]"
-      dissenting_option_styles: [list of architectural styles preserved as alternatives]
-      rejected: [count + top categories — hallucinated-module / already-mitigated / infeasible / anti-pattern]
-  Next: Zen | Quill | Sherpa | Canvas | Builder | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Atlas-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

@@ -240,6 +240,7 @@ Snap receives feature handoffs from Native, escalations from Radar, and screensh
 | `reference/fastlane-snapshot.md` | fastlane snapshot pipeline — Snapfile, SnapshotHelper.swift, screenshot scheme, language / device matrix, status-bar override, frameit |
 | `reference/ci-integration.md` | xcodebuild test / test-without-building, `.xctestrun` packaging, xcresulttool parsing (Xcode 16+ schema + `--legacy`), Xcode Cloud / GitHub Actions / Bitrise, device-farm upload |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the test plan, calibrating effort to risk-tier, and front-loading critical iOS flow scope at SCOPE. Critical for Snap: P3, P6 |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Snap-specific Output/Next schema. |
 
 ## Operational
 
@@ -250,30 +251,7 @@ Snap receives feature handoffs from Native, escalations from Radar, and screensh
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Snap-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Snap
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    recipe: "[xcuitest | identifier | screenshot | appstore | page-object | ci | farm | xcresult]"
-    deliverable: "[primary artifact]"
-    files_changed: List[{path, type, changes}]
-    test_target: "[name of XCUITest target]"
-    identifier_taxonomy: "[convention used or proposed]"
-    screenshot_scope: "[per-failure | checkpoint | appstore | none]"
-    device_matrix: "[simulator devices + languages exercised]"
-    xcresult_path: "[path or null]"
-  Validations:
-    build_check: "[passed | failed | n/a]"
-    flake_audit: "[passed | flagged | skipped]"
-    privacy_manifest: "[complete | partial | n/a]"
-  Next: Native | Voyager | Gear | Launch | Judge | VERIFY | DONE
-  Reason: [why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Snap-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

@@ -305,6 +305,7 @@ Every atelier deliverable must include:
 | `_common/UX_TRENDS_2026.md` | You need cross-domain 2025-2026 evidence to orchestrate Vision / Muse / Frame / Forge / Artisan / Vitrine / Echo handoffs. Covers tokens (DTCG, OKLCH/P3), motion (`linear()`, View Transitions), IA (agentic UX, NN/g), and frontend (RSC, Tailwind v4, INP) in one file. Read all three sections. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing delegate prompts, deciding per-delegate model effort, or front-loading acceptance criteria |
 | `_common/PROOF_CARRYING.md` | You are the Layer B sub-orchestrator in `nexus acceptance` Phase 2B / 3B / 4B (when `ui_dimension != none`). Coordinate muse / frame / palette / canon / showcase / prose / echo / vision / matrix / weave / flow to produce the 9 Design-side evidence fields and the joint Design Acceptance verdict. G7 Unmeasurable-Quality Audit gate for Tier-S UI requires human designer sign-off even on Compiler PASS. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Atelier-specific Output/Next schema. |
 
 ## Operational
 
@@ -317,30 +318,7 @@ Shared protocols → `_common/OPERATIONAL.md`.
 
 ## AUTORUN Support
 
-When atelier receives `_AGENT_CONTEXT`, parse `task_type`, `description`, `Constraints`, and any inbound `DESIGN_INTENT_HANDOFF`. Execute `ONBOARDING → INTAKE → PLAN → EXECUTE → HANDOFF → DELIVER` with verbose explanation suppressed. Return `_STEP_COMPLETE`.
-
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: atelier
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: <primary artifact bundle>
-    artifact_types: [prototype, production, deck, asset, export, story, diagram]
-    Registry_Ref: .agents/design-system/<slug>.json
-    delegates_used: [Frame, Muse, Forge, Artisan, Vitrine]
-    parameters:
-      Vision_Ref: <Vision direction or user-brief>
-      operation_layers: [prompt, structured-comment, direct-edit, parametric-slider]
-  Validations:
-    onboarding: reused | refreshed | first-run
-    a11y_check: passed | flagged | skipped
-    token_drift: 0 | <count>
-    fidelity: <percentage or n/a>
-  Next: <recommended next agent or DONE>
-  Reason: <why this next step>
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Atelier-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

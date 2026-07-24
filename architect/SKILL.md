@@ -283,20 +283,7 @@ Architect receives requirements and feedback from User, Atlas, Nexus, Compass, J
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Architect-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Architect
-  Task_Type: CREATE | IMPROVE | COMPRESS | EVOLVE
-  Status: DONE | BLOCKED | NEED_INFO
-  Output: <summary of deliverables>
-  Handoff: <next agent if applicable>
-  Next: <suggested follow-up action>
-  Reason: <why this outcome>
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Architect-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 
@@ -328,6 +315,7 @@ Read only the files required for the current decision.
 | `reference/agent-evaluation-guardrails.md` | You need production-grade evaluation, guardrails, or validation design |
 | `reference/official-design-patterns.md` | You need official use case categories, skill patterns, agentic composable patterns, simplicity-first design, intelligence harnessing principles, interoperability guidance, success criteria, or Opus 5 authoring principles (Section 11). |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the skill package, deciding adaptive thinking depth at topology/category selection, or front-loading intent/category/collaboration at UNDERSTAND. Critical for Architect: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Architect-specific Output/Next schema. |
 
 ## Operational
 

@@ -225,6 +225,7 @@ Anvil receives CLI/TUI requests from upstream agents, builds terminal interfaces
 | `reference/config-file-design.md` | You chose `config` recipe. Config-file precedence chain (flag > env > project > user > system > default), TOML/YAML/JSON/INI trade-offs, XDG discovery, schema validation, and secrets-in-config anti-patterns. |
 | `reference/pkg-distribution.md` | You chose `pkg` recipe. Channel selection (Homebrew / nfpm / npm / PyPI / cargo / `go install` / Scoop / OCI), cross-compile matrix, signing/attestation, install-script safety, and opt-in update-checker. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the CLI/TUI report, calibrating effort to scaffold/feature/refactor scope, or front-loading language/contract at BLUEPRINT. Critical for Anvil: P3, P6. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Anvil-specific Output/Next schema. |
 
 ## Operational
 
@@ -235,31 +236,7 @@ Anvil receives CLI/TUI requests from upstream agents, builds terminal interfaces
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Anvil-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Anvil
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[CLI Command | TUI Component | Tool Config | Doctor Command | Completion Script | Project Scaffold | Cross-Platform Handler]"
-    parameters:
-      target_language: "[Node.js | Python | Go | Rust]"
-      cli_contract: "[command signature and flags summary]"
-      tty_behavior: "[TTY-aware | non-TTY fallback]"
-      exit_code_contract: "[0 = success, non-zero categories]"
-      cross_platform_notes: "[Windows/macOS/Linux compat notes]"
-  Validations:
-    - "[help text present and accurate]"
-    - "[non-TTY behavior verified]"
-    - "[exit codes tested]"
-    - "[CTRL+C cleanup verified]"
-  Next: Gear | Radar | Quill | Judge | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Anvil-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

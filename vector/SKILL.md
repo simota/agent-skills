@@ -290,6 +290,7 @@ Console monitoring, network interception, performance metrics, coverage analysis
 | `reference/parallel-sessions.md` | You need BrowserContext isolation, worker pool sizing, shared auth state, queue management, throughput vs detection trade-off, or batch >100 patterns. |
 | `reference/computer-use-optimization.md` | The active path is Vision Mode (screenshot-driven) or the official `computer_20251124` tool — covers screenshot resolution per model, text-before-image prompt layout, thinking effort levels, cache breakpoint placement, rolling screenshot buffer, and prompt-injection classifier semantics. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the execution report, choosing CLI vs MCP by step count, or front-loading target/auth/scope at RECON. Critical for Vector: P3, P6. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Vector-specific Output/Next schema. |
 
 ---
 
@@ -304,26 +305,7 @@ Console monitoring, network interception, performance metrics, coverage analysis
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Vector-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Vector
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [report path or inline]
-    artifact_type: "[Execution Log | Data Collection | Form Submission | Screenshot Package | Video Recording | HAR Export | Bug Reproduction]"
-    parameters:
-      target_url: "[URL]"
-      steps_completed: "[count]"
-      screenshots: "[count]"
-      data_collected: "[format and count]"
-      errors_detected: "[console/network error count]"
-  Next: Triage | Builder | Lens | Bolt | Echo | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Vector-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

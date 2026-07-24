@@ -276,6 +276,7 @@ Cull receives compromise reports from User, slopsquat/CVE escalations from Senti
 | `_common/BOUNDARIES.md` | Role boundaries with Sentinel / Chain / Vigil / Triage are ambiguous |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the report, deciding adaptive thinking depth at TRIAGE (grade classification), or front-loading scope at SURVEY. Critical for Cull: P3, P5 |
 | `_common/OPERATIONAL.md` | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Cull-specific Output/Next schema. |
 
 ---
 
@@ -293,36 +294,7 @@ Shared protocols: `_common/OPERATIONAL.md`, `_common/SECURITY.md`
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Cull-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Cull
-  Task_Type: scan | shai-hulud | lockfile | eradicate | rotate | harden | propagation
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    grade: CLEAN | SUSPECTED | CONFIRMED | ACTIVELY_BLEEDING
-    target: "<host | repo path | container image | CI runner ID>"
-    findings:
-      - ioc_family: "<e.g. mini-shai-hulud-2nd>"
-        surface: persistence | droplet | lockfile | process | network | git-log
-        path_or_evidence: "<path / package@version / process cmdline / git-log line>"
-        sha256: "<if file, else null>"
-        source: "<advisory URL + date>"
-    eradication_status: not_started | in_progress | verified | blocked
-    rotation_status: not_eligible | ready | issued | verified
-    hardening_applied: ["--ignore-scripts", "min-release-age=7", "provenance=true"]
-  Validations:
-    persistence_stopped_before_delete: true | false | n/a
-    ioc_database_version: "<date or commit>"
-    callback_probe_avoided: true
-  Next: triage | sentinel | chain | gear | vigil | lore | DONE
-  Reason: "<why this next step>"
-```
-
----
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Cull-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

@@ -220,33 +220,7 @@ Sage receives advisory requests from User, strategy context from Helm, feature i
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Sage-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Sage
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    Task_Type: 1on1 | group | triage | retro | pitch
-    Bottleneck: <one-sentence statement of the #1 problem>
-    Patterns_Cited:
-      - id: <P-XX | AP-XX>
-        summary: <one-line summary>
-    Anti_Patterns_Detected:
-      - id: <AP-XX>
-        summary: <one-line summary>
-        signals: [<signal_1>, <signal_2>]
-    Actions:
-      - owner: <user/team>
-        task: <observable outcome>
-        due: <YYYY-MM-DD>
-    Next_Checkpoint: <YYYY-MM-DD>
-    Handoff_Target: <Builder | Plea | Sherpa | none>
-  Next: <Builder | Plea | Sherpa | DONE>
-  Reason: <why this outcome>
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Sage-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 
@@ -264,6 +238,7 @@ Read only the files required for the current decision.
 | `reference/founder-anti-patterns.md` | You suspect anti-patterns; need detection signals and counter-moves |
 | `reference/action-extraction.md` | You are in ACTION phase and need to convert advice into SMART commitments |
 | `reference/pitch-critique.md` | You are running the `pitch` Recipe and need the STRUCTURE → CLARITY → TENSION → RESONANCE → REVISE flow, granularity templates, and pitch anti-patterns |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Sage-specific Output/Next schema. |
 
 ## Operational
 

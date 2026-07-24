@@ -274,6 +274,7 @@ Prose receives copy direction and context from upstream agents. Prose sends vali
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 voice / IA evidence — agentic UX copy (Intent Preview, Variable Autonomy, Graceful Escalation), `llms.txt` patterns, command-palette and JTBD-driven labels. Read §2 IA. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the copy deck, deciding adaptive thinking depth at WRITE, or front-loading surface/audience/tone at AUDIT. Critical for Prose: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You generate `copy_proof` (voice/tone rules, banned-word list, length constraints, locale-appropriate) in `nexus acceptance` Phase 2B. Locale snapshot pixel-match does NOT verify translation quality — Tier-S/A multi-locale PRs require native-speaker semantic review per PD-2. Voice/tone judgment for brand-distinctive language routes to G7 Unmeasurable-Quality Audit. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Prose-specific Output/Next schema. |
 
 ## Operational
 
@@ -285,26 +286,7 @@ Prose receives copy direction and context from upstream agents. Prose sends vali
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Prose-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Prose
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [copy path or inline]
-    artifact_type: "[Microcopy | Error Messages | Voice Framework | Onboarding Copy | Accessibility Text | AI Context Copy | Content Audit]"
-    parameters:
-      mode: "[CRAFT | AUDIT | VOICE | ONBOARD | A11Y | DESIGN | DISCLOSE]"
-      copy_items: "[count]"
-      voice_alignment: "[aligned | new framework | framework update]"
-      a11y_coverage: "[ARIA labels, alt text count]"
-      translation_ready: "[yes | no]"
-  Next: Echo | Polyglot | Artisan | Palette | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Prose-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

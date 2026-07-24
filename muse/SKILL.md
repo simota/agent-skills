@@ -248,6 +248,7 @@ Muse receives design direction and token extraction from upstream agents. Muse s
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 token foundation standards — DTCG first stable spec (2025-10-28), OKLCH + Display P3 pipelines, dark-mode-as-first-class-context, token-sprawl anti-patterns. Read §1 Design. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the token spec, deciding adaptive thinking depth at STRUCTURE, or front-loading token category/scope at AUDIT. Critical for Muse: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You generate `token_proof` (color / spacing / radii / shadows / typography token allow-list compliance) in `nexus acceptance` Phase 2B. Emit ESLint custom rule + token allow-list extraction. Token-not-in-allow-list = G9 Layer 1 (AST) FAIL. Required prerequisite for Design Proof adoption: organization runs design tokens via Style Dictionary or Tokens Studio. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Muse-specific Output/Next schema. |
 
 ## Operational
 
@@ -258,25 +259,8 @@ Muse receives design direction and token extraction from upstream agents. Muse s
 
 ## AUTORUN Support
 
-When Muse receives `_AGENT_CONTEXT`, parse `task_type`, `description`, and `Constraints`, execute the standard workflow, and return `_STEP_COMPLETE`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Muse-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Muse
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [primary artifact]
-    parameters:
-      task_type: "[task type]"
-      scope: "[scope]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: [recommended next agent or DONE]
-  Reason: [Why this next step]
-```
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, do not call other agents directly. Return all work via `## NEXUS_HANDOFF`.

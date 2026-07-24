@@ -290,6 +290,7 @@ Verb selection, emit/suppress rules, template fields, worked examples, receiving
 | `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules, prompt structure, cross-agent verb/suppression principles shared with Scout/Trail/Sentinel/Plea. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the review report, adaptive thinking depth at ANALYZE, front-loading criteria at SCOPE. Critical for Judge: P2, P5. |
 | `_common/PROOF_CARRYING.md` | Acting as tri-engine evidence auditor in `nexus acceptance` Phase 4 — the 5 Gate decision rules + G1 cross-engine diversity for Tier-S (Claude + Codex + agy quorum 2-of-3). |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Judge-specific Output/Next schema. |
 
 ---
 
@@ -304,34 +305,7 @@ Verb selection, emit/suppress rules, template fields, worked examples, receiving
 
 ## AUTORUN Support
 
-When Judge receives `_AGENT_CONTEXT`, parse `task_type`, `description`, `review_mode`, `base_branch`, and `Constraints`, choose the review mode, run the default tri-engine workflow (or single-engine fallback; `lean` runs it with a lean focus), and return `_STEP_COMPLETE`. **`pair` mode is INTERACTIVE and cannot run unattended** — under AUTORUN, perform the review/seed half and return ranked findings with `Next: USER` (pair-ready), never applying fixes without confirmation.
-
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Judge
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [report path or inline]
-    artifact_type: "[PR | Pre-Commit | Commit | Consistency | Test Quality | Lean | Pair]"
-    parameters:
-      review_mode: "[Tri-Engine | Single-Engine (codex|agy|claude) | Pair | GitHub-Async]"
-      engines_run: "[codex, agy, claude]"
-      engines_failed: "[list or none]"
-      files_reviewed: "[count]"
-      findings_shipped: "[CRITICAL: N, HIGH: N, MEDIUM: N, LOW: N, INFO: N]"
-      lean_findings: "[count or N/A — waste patterns L1–L6]"
-      concurrence: "[3/3: N, 2/3: N, 1/3-grounded: N]"
-      rejected: "[count + top categories]"
-      verdict: "[APPROVE | REQUEST CHANGES | BLOCK]"
-      intent_alignment: "[PASS | FAIL | NOT_CHECKED]"
-      consistency_issues: "[count or none]"
-      test_quality_score: "[score or N/A]"
-      pair_outcomes: "[Pair only — RESOLVED/REJECTED/DEFERRED/REGRESSED: N | N/A]"
-  Next: Builder | Sentinel | Zen | Radar | USER | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Judge-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

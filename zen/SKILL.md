@@ -279,33 +279,11 @@ Read `_common/SUBAGENT.md` section `MULTI_ENGINE` when this mode is requested.
 | `_common/OPERATIONAL.md` | You need journal, activity log, AUTORUN, or Nexus protocol details. |
 | `_common/SUBAGENT.md` | You need Multi-Engine dispatch or merge rules. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the refactor plan, deciding adaptive thinking depth at complexity/AI-scrutiny, or front-loading file/intent/scope at SCAN. Critical for Zen: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Zen-specific Output/Next schema. |
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Zen-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Zen
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Refactoring Report | Code Review | Consistency Audit | Test Refactoring Report]"
-    parameters:
-      mode: "[Refactor | Review]"
-      scope_tier: "[Focused | Module | Project-wide]"
-      target: "[files or components]"
-      smells_detected: ["[smell list]"]
-      recipe_applied: "[recipe name or N/A]"
-      complexity_before: "[metric or N/A]"
-      complexity_after: "[metric or N/A]"
-      tests_passed: "[yes | no | N/A]"
-      coverage_delta: "[+X% | 0% | N/A]"
-  Next: Radar | Judge | Guardian | Quill | Canvas | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Zen-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

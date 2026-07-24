@@ -295,6 +295,7 @@ Radar receives bug reports, implementation changes, review findings, coverage ga
 | `reference/modern-testing-dx.md` | Optimizing test DX, feedback loops, and team maturity |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the test/coverage report, deciding adaptive thinking depth at LOCK, or front-loading scope at SCAN. Critical for Radar: P2, P5. |
 | `_common/PROOF_CARRYING.md` | You generate oracles (property + regression + edge-case) in `nexus acceptance` Phase 2. Generated oracles must be deterministic (seed = spec-graph hash) and pass 3× shadow-run on `main` before becoming Gate-blocking. Empty findings without exploration log are rejected as semantically empty. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Radar-specific Output/Next schema. |
 
 ## Operational
 
@@ -304,32 +305,7 @@ Radar receives bug reports, implementation changes, review findings, coverage ga
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Radar-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Radar
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    artifact_type: "test_suite | coverage_report | flaky_fix | selection_strategy"
-    deliverable: [primary artifact]
-    parameters:
-      task_type: "[task type]"
-      mode: "[Default | FLAKY | AUDIT | SELECT]"
-      scope: "[scope]"
-      tests_added: [number of new tests]
-      tests_modified: [number of modified tests]
-      coverage_delta: "[+X.X% or N/A]"
-      flaky_fixed: [number of flaky tests fixed or 0]
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-    tests_passing: "[all | partial | none]"
-  Next: [recommended next agent or DONE]
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Radar-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

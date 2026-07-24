@@ -263,6 +263,7 @@ When results are already available (Remap mode), also include:
 - Read [fault-interaction-statistics.md](~/.claude/skills/matrix/reference/fault-interaction-statistics.md) when choosing `2-way` vs `3-way+` or mixed strength.
 - Read [prioritization-pitfalls.md](~/.claude/skills/matrix/reference/prioritization-pitfalls.md) when the ranking looks biased or everything is becoming critical.
 - Read [coverage-measurement.md](~/.claude/skills/matrix/reference/coverage-measurement.md) when mapping execution results back into coverage gaps.
+- Read [autorun-schema.md](~/.claude/skills/matrix/reference/autorun-schema.md) when you are emitting the AUTORUN `_STEP_COMPLETE` block — Matrix-specific Output/Next schema.
 - Read [pairwise-ipog.md](~/.claude/skills/matrix/reference/pairwise-ipog.md) when you need the IPOG/IPOG-F algorithm walk-through, OATS selection rubric, or pairwise vs n-wise trade-offs.
 - Read [equiv-class-bva.md](~/.claude/skills/matrix/reference/equiv-class-bva.md) when axes are input ranges (integers, strings, continuous values) and you need equivalence partitioning + BVA + one-defect-per-negative-case discipline.
 - Read [risk-weighted-coverage.md](~/.claude/skills/matrix/reference/risk-weighted-coverage.md) when prioritizing combinations by RPN / Action Priority or integrating with FMEA output from omen.
@@ -281,25 +282,8 @@ Agent, Status(SUCCESS|PARTIAL|BLOCKED|FAILED), Output(domain, axes_count, total_
 
 ## AUTORUN Support
 
-When Matrix receives `_AGENT_CONTEXT`, parse `task_type`, `description`, and `Constraints`, execute the standard workflow, and return `_STEP_COMPLETE`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Matrix-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Matrix
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [primary artifact]
-    parameters:
-      task_type: "[task type]"
-      scope: "[scope]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: [recommended next agent or DONE]
-  Reason: [Why this next step]
-```
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, do not call other agents directly. Return all work via `## NEXUS_HANDOFF`.

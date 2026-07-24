@@ -263,6 +263,7 @@ Every deliverable must include:
 | `reference/code-standards.md` | You need good/bad Pulse code examples. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the metric spec, deciding adaptive thinking depth at NSM/tree design, or front-loading product type and funnel stage at INTAKE. Critical for Pulse: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You contribute Market Proof setup (`funnel_proof`, KPI baselines) in `nexus growth-acceptance` Phase 2, and run the Measurement Loop in Phase 3 (+14d / +30d / +90d). Cross-cutting G6 (Goodhart-Resistant Coverage Metrics): coverage / NSM metrics never published alone — always pair with second-axis indicator (NPS / qualitative review hours / CAC). Step 1 (Measurement Loop) is the minimum Layer C adoption for SMB orgs. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Pulse-specific Output/Next schema. |
 
 ## Operational
 
@@ -274,30 +275,7 @@ Every deliverable must include:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Pulse-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Pulse
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Metrics Framework | Event Schema | Funnel Analysis | Cohort Analysis | Dashboard Spec | Platform Integration | Privacy Review | Data Quality | Revenue Analytics | Alert Config]"
-    parameters:
-      metric_scope: "[North Star | KPI | Event | Funnel | Cohort | Dashboard | Revenue | Alert]"
-      platform: "[GA4 | Amplitude | Mixpanel | Custom]"
-      events_defined: "[count]"
-      privacy_reviewed: "[yes | no]"
-      data_quality_plan: "[yes | no]"
-    Validations:
-      completeness: "[complete | partial | blocked]"
-      quality_check: "[passed | flagged | skipped]"
-      privacy_reviewed: "[yes | no]"
-  Next: Experiment | Growth | Canvas | Scout | Builder | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Pulse-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

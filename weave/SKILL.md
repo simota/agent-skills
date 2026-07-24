@@ -417,6 +417,7 @@ WEAVE_TO_BUILDER_HANDOFF:
 | `reference/compensation-transactions.md` | Saga per-forward-step compensation — idempotency keys, LIFO ordering, compensation-of-compensation, failure-of-compensation escalation |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the design document, deciding adaptive thinking depth at VALIDATE/engine selection, or front-loading use case/scale/engine requirements at CAPTURE. Critical for Weave: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You emit state machine specs (XState / DSL) for interactive UI components in `nexus acceptance` Phase 2B as layer 3 of the Design-Code Contract (default → hover → focus → active → disabled → loading → error transitions). Used by `palette` for `state_proof` coverage gating. Also used in Layer A backend state machines for `rally engine-paradigm` Dual-Implementation Oracle in-scope (state-machine domain). |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Weave-specific Output/Next schema. |
 
 ---
 
@@ -439,25 +440,7 @@ Standard protocols → `_common/OPERATIONAL.md`
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `CAPTURE → MODEL → VALIDATE → HANDOFF` and emit `_STEP_COMPLETE`.
-
-Weave-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Weave
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    workflow_design: [State machine definition, transition table, validation report]
-    files_changed: List[{path, type, changes}]
-  Handoff:
-    Format: WEAVE_TO_[NEXT]_HANDOFF
-    Content: [Handoff content for next agent]
-  Risks: [Identified workflow risks]
-  Next: Builder | Canvas | Radar | VERIFY | DONE
-```
-
----
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Weave-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

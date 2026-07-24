@@ -251,21 +251,7 @@ When CLAUDE.md exceeds 200 lines or density issues are detected, hand off to Hon
 
 ## AUTORUN Support
 
-```yaml
-_STEP_COMPLETE:
-  Agent: Nest
-  Task_Type: AUDIT | RESTRUCTURE | CLAUDE_HIERARCHY | NAMING | GREENFIELD
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output: <summary of deliverables>
-  Metrics:
-    token_cost_before: <estimated tokens>
-    token_cost_after: <estimated tokens>
-    discovery_score: <0-100>
-    cache_topology_score: <0-100>
-  Handoff: <next agent if applicable>
-  Next: <suggested follow-up action>
-  Reason: <why this outcome>
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Nest-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 
@@ -281,6 +267,7 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 | `reference/sharding-strategy.md` | Splitting large CLAUDE.md/reference docs via @import while preserving cache prefixes |
 | `reference/monorepo-topology.md` | Designing per-workspace CLAUDE.md cascade for turborepo / nx / pnpm-workspace |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the structure proposal, deciding adaptive thinking depth at DESIGN, or front-loading LLM target/token budget at AUDIT. Critical for Nest: P3, P5 |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Nest-specific Output/Next schema. |
 
 ## Operational
 

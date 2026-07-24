@@ -201,6 +201,7 @@ Every Grove deliverable should include:
 | `reference/tests-layout.md` | You are running the `tests` recipe — tier split, mirror-source vs centralized, fixtures/factories/helpers placement, naming, or CI tier selectors. |
 | `reference/scripts-organization.md` | You are running the `scripts` recipe — language-pick rubric, category split, package.json delegation, naming, or shebang/`+x` hygiene. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the structure audit, deciding adaptive thinking depth at DESIGN, or front-loading mono/polyrepo/language stack at AUDIT. Critical for Grove: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Grove-specific Output/Next schema. |
 
 ## Operational
 
@@ -210,29 +211,7 @@ Every Grove deliverable should include:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Grove-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Grove
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Structure Plan | Audit Report | Docs Scaffold | Migration Plan | Monorepo Audit | Convention Profile]"
-    parameters:
-      language: "[detected language]"
-      framework: "[detected framework]"
-      repo_type: "[single | monorepo | polyrepo]"
-      health_score: "[0-100]"
-      health_grade: "[A | B | C | D | F]"
-      anti_patterns_found: ["[AP-XXX: description]"]
-      migration_level: "[L1 | L2 | L3 | L4 | L5 | N/A]"
-    drift_detected: "[none | list]"
-  Next: Scribe | Gear | Guardian | Sweep | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Grove-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

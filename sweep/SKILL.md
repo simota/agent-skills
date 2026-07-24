@@ -243,6 +243,7 @@ When scanning a polyglot monorepo, spawn language-specific scanner subagents in 
 | `reference/stale-comments.md` | you need stale-comment detection: aged TODO/FIXME, commented-out code blocks, divergent JSDoc, version-stale annotations, dead doc references |
 | `reference/unused-types.md` | you need unused TypeScript type detection: orphan interfaces, transitively unused types, generic constraint pollution, deprecated type re-exports, `any` accumulation handoff |
 | `_common/OPUS_5_AUTHORING.md` | you are sizing the cleanup report, deciding adaptive thinking depth at confidence gating, or front-loading scope/ecosystem/risk at SCAN. Critical for Sweep: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Sweep-specific Output/Next schema. |
 
 ## Operational
 
@@ -253,25 +254,8 @@ When scanning a polyglot monorepo, spawn language-specific scanner subagents in 
 
 ## AUTORUN Support
 
-When Sweep receives `_AGENT_CONTEXT`, parse `task_type`, `description`, and `Constraints`, execute the standard workflow, and return `_STEP_COMPLETE`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Sweep-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Sweep
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [primary artifact]
-    parameters:
-      task_type: "[task type]"
-      scope: "[scope]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: [recommended next agent or DONE]
-  Reason: [Why this next step]
-```
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, do not call other agents directly. Return all work via `## NEXUS_HANDOFF`.

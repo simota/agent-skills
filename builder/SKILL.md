@@ -294,6 +294,7 @@ Read only the files required for the current decision.
 | `reference/autorun-nexus.md` | You need exact AUTORUN or Nexus Hub mode compatibility details |
 | `reference/ai-coding-patterns.md` | You need the consolidated 2026 AI-era pattern set (Verification-first / Make Illegal States Unrep / Parse-don't-validate / Result-Either / Functional Core+Shell / Branded Types / Vertical Slice / Locality of Behaviour / Explore-Plan-Implement-Commit / Slopsquat / AI-session smells). Use this when reviewing or planning AI-assisted implementation work. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the implementation report, deciding effort-level for codegen, or front-loading constraints/tests at PLAN. Critical for Builder: P3, P6. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Builder-specific Output/Next schema. |
 
 ## Operational
 
@@ -305,30 +306,7 @@ Read only the files required for the current decision.
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-The `pair` recipe is INTERACTIVE and cannot run unattended — under AUTORUN, run SURVEY → PLAN, return the ordered increment plan, and set `Next: USER` (pair-ready) rather than implementing without confirmation.
-
-Builder-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Builder
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output: [Brief summary of implementation results]
-  Validations:
-    type_safety: [Complete | Partial | Needs Review]
-    test_coverage: [Generated | Partial | Needs Radar]
-    impact_scope:
-      callers: [OK | Updated | N/A | NEEDS-REVIEW]
-      tests: [OK | Updated | N/A | NEEDS-REVIEW]
-      types: [OK | Updated | N/A | NEEDS-REVIEW]
-      configs: [OK | Updated | N/A | NEEDS-REVIEW]
-      docs: [OK | Updated | N/A | NEEDS-REVIEW]
-      verdict: [Ready | Needs Ripple | Blocked]
-  Next: [Radar | Guardian | Tuner | Sentinel | Ripple | USER | VERIFY | DONE]
-  Reason: [Why this next step is recommended]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Builder-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

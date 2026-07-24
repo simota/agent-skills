@@ -262,6 +262,7 @@ For Echo output, state the visualization type and the scoring or friction legend
 | `reference/diagramming-principles.md` | You need abstraction, density, or review heuristics. |
 | `reference/ai-reverse-engineering.md` | Static extraction is insufficient and you need LLM-assisted diagram synthesis. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the diagram output, deciding adaptive thinking depth at diagram-type/abstraction selection, or front-loading source/purpose/audience at SCAN. Critical for Canvas: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Canvas-specific Output/Next schema. |
 
 ## Operational
 
@@ -271,25 +272,7 @@ For Echo output, state the visualization type and the scoring or friction legend
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Canvas-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Canvas
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Mermaid | draw.io | ASCII] Diagram"
-    parameters:
-      diagram_type: "[flowchart | sequence | class | ER | state | C4 | diff | journey | etc.]"
-      mode: "[Standard | Reverse | C4 | Diff | Echo | Library]"
-      node_count: "[number]"
-      format: "[Mermaid | draw.io | ASCII]"
-  Next: Quill | Atlas | Sherpa | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Canvas-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

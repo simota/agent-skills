@@ -280,6 +280,7 @@ Cloak receives security findings, standard requirements, and codebase analysis f
 | `reference/appi-japan.md` | You are processing data of subjects in Japan and need the personal information (個人情報) / pseudonymously processed information (仮名加工情報) / anonymously processed information (匿名加工情報) distinction, Article 24 cross-border transfer paths, Article 23 opt-out filing, special care-required personal information (要配慮個人情報) consent surface, or PPC notification thresholds. |
 | `reference/pseudonymization-techniques.md` | You are choosing a de-identification technique — k-anonymity / l-diversity / t-closeness / differential privacy parameters, tokenization vs HMAC vs FPE primitives, key custody and destruction to distinguish pseudonymized from anonymized data under GDPR Art. 4(5). |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the privacy report, deciding adaptive thinking depth at classification/DPIA, or front-loading regulations/sensitivity/jurisdiction at SCAN. Critical for Cloak: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Cloak-specific Output/Next schema. |
 
 ## Output Requirements
 
@@ -301,28 +302,7 @@ Every deliverable must include:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Cloak-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Cloak
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[PII Inventory | Compliance Audit | Consent Pattern | DSAR Handler | Data Flow Map | DPIA]"
-    parameters:
-      regulation: "[GDPR | CCPA | APPI | Multiple]"
-      pii_findings: "[count by severity]"
-      data_classification: "[tiers found]"
-      remediation_status: "[complete | partial | blocked]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: Builder | Schema | Gateway | Beacon | Scribe | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Cloak-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

@@ -335,6 +335,7 @@ Use the canonical schema in `_common/HANDOFF.md` for all inter-agent communicati
 | `reference/meta-prompting-self-improvement.md` | You are improving Sigil itself or its long-term calibration loop using self-improvement patterns such as Mistake Ledger and Self-Refine. |
 | `reference/official-skill-guide.md` | You are authoring frontmatter, writing descriptions, structuring instructions, or validating against official Anthropic skill standards during CRAFT or VERIFY. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the project skill package or deciding effort allocation across the six-phase pipeline. Critical for Sigil (Knowledge/Meta role): P6, P7. Recommended: P1. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Sigil-specific Output/Next schema. |
 
 ## Operational
 
@@ -345,46 +346,7 @@ Use the canonical schema in `_common/HANDOFF.md` for all inter-agent communicati
 
 ## AUTORUN Support
 
-When invoked with `_AGENT_CONTEXT`:
-- Parse `Role / Task / Task_Type / Mode / Chain / Input / Constraints / Expected_Output`.
-- Execute the canonical six-phase pipeline `SCAN → DISCOVER → CRAFT → INSTALL → VERIFY → ATTUNE` (or the Skill Evolution path when refresh is signalled).
-- Skip verbose narration; produce final report only.
-- Emit the completion block below.
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Sigil
-  Task_Type: SKILL_GEN | SKILL_REFRESH | SKILL_AUDIT | SYNC_REPAIR | ATTUNE_CALIBRATION
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    project: <name + detected stack>
-    skills_generated: <count>
-    skills_updated: <count>
-    skills_archived: <count>
-    average_quality: <0-12>
-    per_skill:
-      - name: <kebab-case-name>
-        type: Micro | Full
-        score: <0-12>
-        description_chars: <int>
-        description: <verbatim frontmatter description>
-        install_paths:
-          - .claude/skills/<name>/SKILL.md
-          - .agents/skills/<name>/SKILL.md
-    sync_status: in_sync | drift_detected | drift_repaired
-    evolution_opportunities: [<short label>, ...]
-  Handoff:
-    schema: see `_common/HANDOFF.md`
-    recommended_next:
-      - Judge   # when score 6-8 on any skill
-      - Grove   # when new skill directories created
-      - Lore    # when reusable pattern detected
-      - Nexus   # to broadcast new-skill availability
-  Next: <agent name> | DONE
-  Reason: <terse cause for non-SUCCESS, or "all skills passed 9+/12 with sync intact" for SUCCESS>
-```
-
-Full schema definitions → `_common/AUTORUN.md`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Sigil-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

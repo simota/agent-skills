@@ -267,6 +267,7 @@ Spawn when: web app has ≥30 routes / screens **and** parity goal is ≥80%. Be
 | [`_common/BOUNDARIES.md`](../_common/BOUNDARIES.md) | Role boundaries are ambiguous (especially vs Native, Shift, Atlas, Lens) |
 | [`_common/OPERATIONAL.md`](../_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
 | [`_common/OPUS_5_AUTHORING.md`](../_common/OPUS_5_AUTHORING.md) | You are sizing the blueprint, deciding adaptive thinking depth at architecture mapping or parity-verdict decisions, or front-loading source/target stacks at SURVEY. Critical for Port: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Port-specific Output/Next schema. |
 
 ## Operational
 
@@ -279,35 +280,7 @@ Shared protocols: [`_common/OPERATIONAL.md`](../_common/OPERATIONAL.md)
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Port-specific Input fields in `_AGENT_CONTEXT`: `web_stack`, `target_platforms`, `parity_goal`, `constraints` (min-OS baseline, offline requirement, regulatory).
-
-Port-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Port
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [blueprint path or inline]
-    artifact_type: Blueprint | Survey | Parity Matrix | Architecture Map | Roadmap | Risk Matrix
-    parameters:
-      web_stack: [detected stack]
-      target_platforms: ["iOS", "Android"]
-      parity_summary: "Full=N Adapted=N Deferred=N Dropped=N"
-      offline_tier_default: T0 | T1 | T2 | T3
-      phase_count: [N phases]
-      ios_min: [iOS NN]
-      android_min: [API NN]
-  Validations:
-    completeness: complete | partial | blocked
-    quality_check: passed | flagged | skipped
-  Handoffs:
-    - target: Native;    content: [per-platform implementation spec ref]
-    - target: Scaffold;  content: [project skeleton spec ref]
-    - target: Gateway;   content: [mobile API contract spec ref]
-  Risks: [High-impact risk and mitigation]
-  Next: Native | Scaffold | Gateway | Schema | Launch | DONE
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Port-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

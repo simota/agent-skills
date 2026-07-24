@@ -244,6 +244,7 @@ Every deliverable must include:
 | `reference/staleness-detection.md` | You are running `gauge staleness` and need the 10-category detection catalog, grep commands, false-positive guard rules, severity matrix, output YAML envelope, or the 90-day catalog self-update protocol. |
 | `reference/content-quality-audit.md` | You are scoring CQ1 (obviousness density) or CQ2 (description trigger-word presence) — content-level checks derived from Anthropic "Lessons from Building Claude Code". |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the compliance report, deciding adaptive thinking depth at CLASSIFY, or front-loading scan scope at SCAN. Critical for Gauge: P2, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Gauge-specific Output/Next schema. |
 
 ## Operational
 
@@ -256,31 +257,7 @@ Every deliverable must include:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Gauge-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Gauge
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Compliance Report | Compliance Dashboard | Fix Plan | Evolution Log]"
-    parameters:
-      target_skills: ["[skill names or 'all']"]
-      items_checked: 21
-      total_pass: "[count]"
-      total_partial: "[count]"
-      total_fail: "[count]"
-      health_score: "[percentage]"
-      p0_violations: ["[list]"]
-      sources_consulted: ["[URLs or references]"]
-      source_tiers: ["[T1 | T2 | T3 | T4]"]
-    evolution_applied: "[none | Level A: [changes] | Level B: [changes]]"
-  Next: Architect | Darwin | Nexus | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Gauge-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

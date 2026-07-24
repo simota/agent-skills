@@ -475,6 +475,7 @@ Every deliverable must include:
 | `reference/rerank-design.md` | You are running the `rerank` recipe and need cross-encoder vs LTR selection, two-stage latency budgets, or click-feedback loop design. |
 | `reference/suggest-design.md` | You are running the `suggest` recipe and need autocomplete index design (edge n-gram / completion suggester), typo tolerance (Levenshtein / BK-tree / symspell), or sub-50ms latency tuning. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the search design, deciding adaptive thinking depth at DESIGN, or front-loading search type/latency/recall targets at PROFILE. Critical for Seek: P3, P5 |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Seek-specific Output/Next schema. |
 
 ---
 
@@ -504,28 +505,7 @@ Every deliverable must include:
 
 ## AUTORUN Support
 
-When Seek receives `_AGENT_CONTEXT`, parse `task_type`, `description`, `data_profile`, `search_strategy`, `engine_preference`, and `Constraints`, choose the correct output route, run the PROFILE→SELECT→MAP→QUERY→RANK→EVALUATE workflow, produce the search design deliverable, and return `_STEP_COMPLETE`.
-
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Seek
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Index Mapping | Vector Index Spec | Hybrid Pipeline | RAG Retrieval Spec | Evaluation Spec | Scaling Plan | Engine Comparison]"
-    parameters:
-      engine: "[Elasticsearch | OpenSearch | Meilisearch | pgvector | Pinecone | Weaviate | Qdrant]"
-      strategy: "[full-text | vector | hybrid]"
-      embedding_model: "[model name]"
-      relevance_target: "[metric: threshold]"
-      latency_target_p95: "[ms]"
-    reranking: "[cross-encoder | ColBERT | cohere-rerank | none — reason]"
-    evaluation_plan: "[metric set and judgment methodology]"
-  Next: Builder | Oracle | Stream | Schema | Beacon | Radar | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Seek-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

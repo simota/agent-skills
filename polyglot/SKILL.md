@@ -310,6 +310,7 @@ Polyglot receives features and UI components from upstream agents. Polyglot send
 | `reference/locale-negotiation.md` | You need BCP 47 parsing, `Accept-Language` negotiation, fallback chain design, user-override persistence, or geolocation-default resolution. |
 | `reference/translate-tms-workflow.md` | You need TMS integration (Lokalise/Crowdin/Phrase/Smartling), translation-memory reuse, translator briefing, QA gates, or release rollout strategy. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the i18n deliverable, calibrating effort to component/feature/app scope, or front-loading locale/library at SCAN. Critical for Polyglot: P3, P6. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Polyglot-specific Output/Next schema. |
 
 ## Operational
 
@@ -320,28 +321,7 @@ Polyglot receives features and UI components from upstream agents. Polyglot send
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Polyglot-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Polyglot
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [file paths or inline]
-    artifact_type: "[String Extraction | Intl Integration | ICU Messages | Key Structure | RTL Support | Library Setup | Glossary | Audit Report]"
-    parameters:
-      strings_extracted: "[count]"
-      namespaces: ["[namespace list]"]
-      locales_affected: ["[locale list]"]
-      intl_apis_used: ["[API list]"]
-      rtl_changes: "[yes | no]"
-      coverage_delta: "[before% → after% per locale]"
-      pseudo_locale_configured: "[yes | no]"
-  Next: Radar | Muse | Canvas | Quill | Gear | Voyager | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Polyglot-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

@@ -302,6 +302,7 @@ Titan operates above the hub. It issues chains to Nexus and does not bypass the 
 | `reference/exit-criteria-validation.md` | you are validating phase exits, applying pass thresholds, or using scope-specific validation overrides |
 | `reference/founder-lifecycle-mapping.md` | the work spans a product's lifecycle (new product / new business line / founder-driven scope) and you need the **Idea → MVP → Launch → Scale** ↔ DISCOVER/DEFINE/ARCHITECT/BUILD/HARDEN/VALIDATE/LAUNCH/GROW/EVOLVE mapping plus Titan-authored extensions (failure-mode interpretations, operational exit-criteria defaults) and `founder_stage_entered` vocabulary for `TITAN_COMPLETE`. |
 | `_common/OPUS_5_AUTHORING.md` | you are designing per-phase chain prompts, selecting model effort across the lifecycle, or front-loading SUCCESS_CRITERIA. Critical principles for Titan: P1, P6, P7. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Titan-specific Output/Next schema. |
 
 ## Operational
 
@@ -313,25 +314,7 @@ Standard protocols → `_common/OPERATIONAL.md`
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Titan-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Titan
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [primary artifact]
-    parameters:
-      task_type: "[task type]"
-      scope: "[scope]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: [recommended next agent or DONE]
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Titan-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

@@ -326,6 +326,7 @@ Use this shape:
 | `reference/walking-skeleton.md` | you need Cockburn Walking Skeleton template, layer-coverage checklist, or thinnest-slice definition |
 | `reference/vertical-slice.md` | you need vertical vs horizontal decomposition trade-off, slice-quality checklist, or slice sizing rubric |
 | `_common/OPUS_5_AUTHORING.md` | you are drafting Atomic Step contracts, GUIDE-phase handoff prompts, or `SHERPA_TO_*_HANDOFF` blocks. Critical principles for Sherpa: P1 (front-loaded acceptance criteria), P2 (bounded step output), P7 (delegation framing). |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Sherpa-specific Output/Next schema. |
 
 
 ## Operational
@@ -337,34 +338,8 @@ Use this shape:
 
 ## AUTORUN Support
 
-When Sherpa receives `_AGENT_CONTEXT`, parse `task_type`, `description`, and `Constraints`, execute the standard workflow, and return `_STEP_COMPLETE`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Sherpa-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Sherpa
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    type: "[task_decomposition | progress_update | risk_assessment | replan]"
-    summary: "[1-2 line summary of what was produced]"
-    deliverable: [primary artifact]
-    files_changed: [list of files if applicable, or "none"]
-    parameters:
-      task_type: "[task type]"
-      scope: "[scope]"
-      steps_total: [N]
-      steps_completed: [M]
-      weather: "[Clear | Cloudy | Stormy | Dangerous]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Handoff:
-    Format: "[SHERPA_TO_*_HANDOFF format name]"
-    Content: "[Full handoff block for next agent]"
-  Next: [recommended next agent or DONE]
-  Reason: [Why this next step]
-```
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).

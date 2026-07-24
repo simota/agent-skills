@@ -272,6 +272,7 @@ Read only the files required for the current decision.
 | `reference/output-formats.md` | You need positioning-statement, messaging-house, GTM-plan, launch-timeline, one-pager, or FAQ templates |
 | `reference/handoffs.md` | You need inbound/outbound handoff templates |
 | `_common/OPUS_5_AUTHORING.md` | You are deciding tool-use eagerness at GROUND or adaptive thinking depth at POSITION. Critical for PMM: P3, P5 |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — PMM-specific Output/Next schema. |
 
 ---
 
@@ -302,29 +303,7 @@ This skill follows the Output Density Protocol — see `_common/OUTPUT_STYLE.md`
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-PMM-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: PMM
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [report path or inline]
-    artifact_type: "[Positioning Statement | Messaging House | GTM Plan | Launch Plan | Enablement Asset | Advisor Answer]"
-    parameters:
-      goal: "[marketing goal]"
-      segment: "[target ICP/persona]"
-      product_truth_source: "[PDM status / Lens survey / specs]"
-      competitive_frame: "[Compete input / stated absence]"
-      proof_grounding: "[grounded | partial | unsubstantiated claims flagged]"
-      confidence: "[High | Medium | Low]"
-      ungrounded: "[claims that couldn't be grounded]"
-  Handoff: Saga | Funnel | Prose | Compete | Launch | Stage | Canvas
-  Next: Saga | Funnel | Launch | VERIFY | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). PMM-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

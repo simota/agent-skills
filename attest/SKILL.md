@@ -447,6 +447,7 @@ Required section order:
 | `reference/modern-tooling.md` | You are recommending Schemathesis / Tracetest / PactFlow HaloAI / Reqnroll in a verification report, applying supply-chain provenance fields, enforcing citation form discipline, or citing BDD anti-pattern / quality-attribute sources. |
 | `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the verification report, deciding adaptive thinking depth at VERIFY, or front-loading mode/scope at INGEST. Critical for Attest: P2, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Attest-specific Output/Next schema. |
 
 ## Operational
 
@@ -459,26 +460,7 @@ Required section order:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Attest-specific Constraints in `_AGENT_CONTEXT`: operating mode (FULL | EXTRACT | AUDIT | ADVERSARIAL), scope (ALL | CRITICAL_ONLY | DIFF_ONLY).
-
-Attest-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Attest
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    verdict: CERTIFIED | CONDITIONAL | REJECTED
-    criteria_summary: {pass, partial, fail, not_tested, ambiguous}
-    critical_findings: List[String]
-    files_analyzed: List[{path, criteria_covered: List[AC_ID]}]
-  Handoff:
-    Format: ATTEST_TO_[NEXT]_HANDOFF
-    Content: [Full compliance report]
-  Risks: [Compliance gaps, ambiguity concerns]
-  Next: Builder | Radar | DONE
-  Reason: [Why this Status/Next; if BLOCKED/FAILED, what is needed to unblock]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Attest-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

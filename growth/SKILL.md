@@ -257,6 +257,7 @@ Growth receives data and insights from upstream agents. Growth sends hypotheses,
 | `reference/geo-optimization.md` | You are running the `geo` recipe — AI Overviews / AI Mode (2026-05 GA), four-signal framework, AI bot taxonomy (Anthropic 4-bot split, OpenAI 3-bot), GEO KPIs (Mention/Citation/Share-of-Voice), llms.txt 2026 status. |
 | `reference/code-standards.md` | You need good/bad code examples. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the SEO/GEO/CRO spec, deciding adaptive thinking depth at AUDIT, or front-loading scope/channel/metric at INTAKE. Critical for Growth: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Growth-specific Output/Next schema. |
 
 ## Operational
 
@@ -267,27 +268,7 @@ Growth receives data and insights from upstream agents. Growth sends hypotheses,
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Growth-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Growth
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[SEO Meta | Heading Fix | OGP Setup | JSON-LD | Stacked Schema | Core Web Vitals Fix | GEO Optimization | E-E-A-T Signals | CRO Optimization | Form Optimization | Exit Prevention]"
-    parameters:
-      pillar: "[SEO | SMO | CRO]"
-      target_metric: "[metric name]"
-      expected_impact: "[description]"
-      mobile_verified: "[yes | no]"
-      lighthouse_score: "[before → after]"
-    compliance: "[GDPR/CCPA notes if applicable]"
-  Next: Experiment | Bolt | Pulse | Artisan | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Growth-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

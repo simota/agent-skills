@@ -229,6 +229,7 @@ Every deliverable must include:
 | `reference/ai-era-strategy.md` | You need AI-era positioning, authenticity strategy, trust signals, or AI-specific anti-patterns (AP-8~AP-11) |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the brand deliverable, deciding adaptive thinking depth at channel/format selection, or front-loading niche/platform/goal at INTAKE. Critical for Crest: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You author Brand Constitution Strategic-layer content (3-5 year positioning, Distinctive Assets, Category Entry Points) per G15 Constitution Lifecycle Discipline. Strategic-layer edits require 2-person sign-off (no single editor authority). Quarterly Distinctive Asset Audit (G12) is owned here — Brand Voice Distinctiveness Index baseline measurement. Brand Proof `distinctiveness_proof` + `memory_proof` evidence generators. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Crest-specific Output/Next schema. |
 
 ---
 
@@ -242,31 +243,7 @@ Every deliverable must include:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Crest-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Crest
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    mode: "[AUDIT | POSITION | PROFILE | NARRATIVE | STRATEGY | CONTENT | VISIBILITY | AI-ERA]"
-    parameters:
-      niche: "[identified micro-niche]"
-      channels: "[target channels]"
-      anti_pattern_check: "[AP-1~AP-11 results]"
-    files_changed:
-      - path: [file path]
-        type: [created / modified]
-        changes: [brief description]
-  Handoff:
-    Format: CREST_TO_[NEXT]_HANDOFF
-    Content: [Full handoff content for next agent]
-  Next: Saga | Prose | Growth | Canvas | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Crest-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

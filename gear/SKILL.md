@@ -213,6 +213,7 @@ Every deliverable must include:
 | `reference/secrets-management.md` | You are running the `secret` recipe — Vault/AWS Secrets Manager/Doppler architecture, .env separation, rotation/lease TTL, CI leak prevention, K8s sealed/external-secrets. |
 | `reference/kubernetes-config.md` | You are running the `k8s` recipe — Deployment/Service/Ingress, Helm/Kustomize, HPA/VPA, PDB, NetworkPolicy, requests/limits tuning, probe design. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the Gear deliverable, deciding adaptive thinking depth at supply-chain hardening, or front-loading ecosystem/runtime/scope at DIAGNOSE. Critical for Gear: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Gear-specific Output/Next schema. |
 
 ## Operational
 
@@ -222,26 +223,7 @@ Every deliverable must include:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Gear-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Gear
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Dependency Update | CI Fix | Docker Config | Linter Setup | Env Config | Observability Setup | Monorepo Config | Build Fix]"
-    parameters:
-      area: "[dependencies | ci-cd | docker | linting | environment | observability | monorepo | build]"
-      change_type: "[update | fix | config | setup]"
-      risk_level: "[low | medium | high]"
-      verification: "[build passes | tests pass | linter clean]"
-    rollback: "[instructions if medium/high risk]"
-  Next: Shift | Sentinel | Radar | Bolt | Launch | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Gear-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

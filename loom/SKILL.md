@@ -228,49 +228,7 @@ Overlap boundaries:
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Loom-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Loom
-  Task_Type: BLUEPRINT | RECIPE | WORKFLOW | MAP | AUDIT
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    project: <name + detected stack>
-    coverage_matrix:
-      - task: <recurring task>
-        mechanism: skill | recipe | workflow | hook | scoped_rule | none
-        owner: <agent or skill that will own it>
-    suite_plan:
-      skills: [<proposed project skill names>]
-      recipes: [<proposed recipe subcommands>]
-      workflows:
-        - name: <workflow name>
-          topology: hub-spoke | pipeline | hierarchy
-          phases: <int (<= 5)>
-    routing_map: <which agent/skill owns which task domain>
-    delegations:
-      - to: Sigil | Nexus | Orbit | Latch | Grove | Architect
-        payload: <what that agent receives>
-    overlap:
-      intra_suite_max: <pct>
-      ecosystem_max: <pct + agent if any>
-      deferrals: [<task -> existing agent>]
-    validation: <pass | fail + failing items>
-  Handoff:
-    schema: see `_common/HANDOFF.md`
-    recommended_next:
-      - Sigil   # to author the skill bodies
-      - Nexus   # to register routing + chains
-      - Orbit   # when a workflow needs an autonomous loop
-      - Latch   # when an enforcement hook is part of the layer
-  Next: <agent name> | DONE
-  Reason: <terse cause for non-SUCCESS, or "blueprint validated; delegations emitted" for SUCCESS>
-```
-
-Full schema definitions → `_common/AUTORUN.md`.
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Loom-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 
@@ -309,6 +267,7 @@ Read only the files required for the current decision.
 | `_common/MECHANISM_SELECTION.md` | You are deciding skill vs hook vs scoped rule vs subagent vs recipe vs workflow for any task in MAP |
 | `_common/SUBAGENT.md` | You are choosing the parallelism layer for a designed workflow (skill-internal subagents vs Agent Teams) |
 | `_common/OPUS_5_AUTHORING.md` | You are grounding coverage/overlap decisions (P3) or choosing mechanism/topology (P5). Critical for Loom: P3, P5. Recommended: P1 |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Loom-specific Output/Next schema. |
 
 ## Output Contract
 

@@ -404,6 +404,7 @@ TICK_TO_BOLT_HANDOFF:
 | `reference/netcode-patterns.md` | Authority models (client-server/lockstep/rollback), prediction + reconciliation, interpolation/extrapolation, determinism requirements, desync handling |
 | `reference/save-and-serialization.md` | Versioned save schema, forward migration, sim-vs-render state, replay save format, encoding separation |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the deliverable, adaptive thinking depth at DESIGN, front-loading game type/budget/scale/determinism at FRAME. Critical for Tick: P3, P5. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Tick-specific Output/Next schema. |
 
 ---
 
@@ -426,26 +427,7 @@ Standard protocols → `_common/OPERATIONAL.md`
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). On AUTORUN, run `FRAME → DESIGN → IMPLEMENT → INTEGRATE → VERIFY` and emit `_STEP_COMPLETE`.
-
-Tick-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Tick
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    game_architecture: [loop type, entity architecture, state model, netcode model]
-    determinism: deterministic | non-deterministic-by-design
-    files_changed: List[{path, type, changes}]
-  Handoff:
-    Format: TICK_TO_[NEXT]_HANDOFF
-    Content: [Handoff content for next agent]
-  Risks: [Determinism gaps, frame-budget risks, sync edge cases]
-  Next: Bolt | Radar | Judge | VERIFY | DONE
-```
-
----
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Tick-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

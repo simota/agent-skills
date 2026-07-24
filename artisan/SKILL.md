@@ -250,6 +250,7 @@ Artisan receives prototypes, design direction, and review feedback from upstream
 | `reference/i18n-implementation.md` | You are running the `i18n` recipe — component-level i18n wiring (t() extraction, ICU MessageFormat, Intl API, RTL-safe logical properties). |
 | `reference/ui-performance.md` | You are running the `perf` recipe — frontend-component tuning (memoization gating, virtualization, dynamic import, bundle audit, INP/LCP measurement). |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the implementation report, deciding effort-level for component scope, or front-loading framework/route constraints. Critical for Artisan: P3, P6. |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Artisan-specific Output/Next schema. |
 
 ## Operational
 
@@ -260,28 +261,7 @@ Artisan receives prototypes, design direction, and review feedback from upstream
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Artisan-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Artisan
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[React | Vue | Svelte] Component"
-    parameters:
-      framework: "[React | Vue 3 | Svelte 5]"
-      state_management: "[Zustand | Pinia | Context | Local]"
-      accessibility: "[WCAG AA compliant | partial]"
-      typescript: "[strict | standard]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: Builder | Vitrine | Radar | Flow | Quill | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Artisan-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

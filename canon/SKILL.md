@@ -294,6 +294,7 @@ When a full compliance audit spans 3+ standard domains (e.g., Security + A11y + 
 | `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the compliance report, deciding adaptive thinking depth at version pinning, or front-loading standard/version/scope at ASSESS. Critical for Canon: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You generate `a11y_proof` (WCAG 2.2 AA verification via axe-core / Pa11y, keyboard navigation, focus order, ARIA correctness) in `nexus acceptance` Phase 2B and issue the final WCAG verdict in Phase 4B. Layer B (Design Acceptance) sub-orchestrated by `atelier`. Empty findings without exploration log = rejected (semantic-non-emptiness rule). |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Canon-specific Output/Next schema. |
 
 ## Operational
 
@@ -303,26 +304,7 @@ When a full compliance audit spans 3+ standard domains (e.g., Security + A11y + 
 
 ## AUTORUN Support
 
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling).
-
-Canon-specific `_STEP_COMPLETE.Output` schema:
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Canon
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [artifact path or inline]
-    artifact_type: "[Security Compliance | A11y Compliance | API Compliance | Quality Compliance | Full Audit]"
-    parameters:
-      standards: ["[OWASP | WCAG | OpenAPI | ISO 25010 | etc.]"]
-      compliant_count: "[number]"
-      partial_count: "[number]"
-      non_compliant_count: "[number]"
-      critical_findings: "[number]"
-  Next: Builder | Sentinel | Palette | Zen | Gateway | Scribe | DONE
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Canon-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 

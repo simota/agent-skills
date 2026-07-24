@@ -279,6 +279,7 @@ Vitrine receives components and design context from upstream agents. Vitrine sen
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 component catalogue context — token-layer linkage (§1), framework state (React 19.2 / Svelte 5 / Vue 3.6, §3), and case studies for Radix Themes 3.0 / Primer / Polaris Unified. Read §1 Design and §3 Frontend. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the story plan, deciding adaptive thinking depth at PLAN, or front-loading target component/coverage tier at SCAN. Critical for Vitrine: P3, P5 |
 | `_common/PROOF_CARRYING.md` | You generate `vrt_proof` (visual regression diff within tolerance per Matrix Sampling Policy PD-2) in `nexus acceptance` Phase 2B. Use matrix-sampled stories (pairwise default for Tier-A, full pairwise + critical-path full-coverage for Tier-S). New story-set additions pass shadow-run for ≥3 weeks before becoming Gate-blocking. Pixel-match snapshot ≠ translation quality (PD-2 locale semantic note). |
+| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Vitrine-specific Output/Next schema. |
 
 ## Operational
 
@@ -289,25 +290,7 @@ Vitrine receives components and design context from upstream agents. Vitrine sen
 
 ## AUTORUN Support
 
-When Vitrine receives `_AGENT_CONTEXT`, parse `task_type`, `description`, and `Constraints`, execute the standard workflow, and return `_STEP_COMPLETE`.
-
-### `_STEP_COMPLETE`
-
-```yaml
-_STEP_COMPLETE:
-  Agent: Vitrine
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    deliverable: [primary artifact]
-    parameters:
-      task_type: "[task type]"
-      scope: "[scope]"
-  Validations:
-    completeness: "[complete | partial | blocked]"
-    quality_check: "[passed | flagged | skipped]"
-  Next: [recommended next agent or DONE]
-  Reason: [Why this next step]
-```
+See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Vitrine-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
 
 ## Nexus Hub Mode
 
