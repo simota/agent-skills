@@ -36,9 +36,9 @@ When agy drives the hub, apply A1–A9 below instead of P- or C-principles. They
 The Plan-and-Execute cost principle is realized for agy **through the Flash effort tier, not through a cheaper or bigger model** — the model stays Gemini 3.6 Flash (High) throughout (mandate, `§4 ‡`, **UNIVERSAL scope**: every agy invocation — hub, chain-step executor, *and* multi-engine diversity-spoke — never Pro/Claude/GPT-OSS/Deep Think). agy `/model` exposes **Gemini 3.6 Flash (High / Medium / Low)**: these map to the Gemini API **`thinking_level`** parameter (`minimal | low | medium | high`; `thinking_budget` is **deprecated**) — reasoning-effort tiers of the *same* Flash model, the agy analog of Codex `model_reasoning_effort` and Claude effort levels. [VERIFIED-T1, ai.google.dev/gemini-api/docs/whats-new-gemini-3.5, 2026-06.] ⚠ **Migration caution:** Gemini 3.6 Flash (High)'s default `thinking_level` is **`medium`** (it was `high` on the older `gemini-3-flash-preview`) — a routine step left at the default gets `medium`, not `high`. In multi-engine recipes the agy axis's divergence value comes from **Gemini model-priors + the High tier**, which is why the mandate does not cost the recipes their third-axis independence.
 
 **Apply by:**
-- **High** tier → planning, high-complexity design, arbitration, and every VERIFY/acceptance step (a fast model on hard reasoning must compensate with maximum thinking — see A9).
-- **Medium** tier → standard implementation, investigation, review (default).
-- **Low** tier → trivial/mechanical steps (rename, format, single-line edits).
+- **High tier is the agy DEFAULT for every step** — hub, chain-step executor, recipe or ad-hoc (a fast model on orchestration work must compensate with maximum thinking — see A9). The mandate string itself pins it: `settings.json` `"model": "Gemini 3.6 Flash (High)"` persists the High tier session-wide, so "default" operationally means **never let a step fall to the API default `medium`, and never downgrade unless the next bullet explicitly allows it**. This also neutralizes the default-`medium` migration trap (⚠ above).
+- **Medium / Low** tier → an **explicit, logged downgrade** permitted only for trivial/mechanical **non-recipe** steps where latency/cost dominates (rename, format, single-line edits, rote batch transforms). Never downgrade planning, design, arbitration, VERIFY/acceptance, or any recipe step.
+- **Recipe Depth Rule (A1-R).** When an agy invocation executes a **nexus recipe step** — `apex`, `summit`, `playable`, or any curated recipe chain, whether agy is the hub or a spawned executor — the step runs **High with no downgrade**, and the spawn prompt MUST carry the **Deep Reasoning Directive (A9-D)** plus an explicit self-check pass before emitting `_STEP_COMPLETE`. Rationale: recipe steps carry multi-phase context and acceptance gates, and Flash produces observably shallow reasoning on them without both levers — the High `thinking_level` supplies the thinking *budget* (~1.5× vs `medium`), A9-D directs *what* to think about. High is the ceiling: above it, compensate with structure (A9), never a model swap (mandate ‡).
 - **Never** switch the *model* away from Gemini 3.6 Flash (High) to Pro/Claude/GPT-OSS (mandate). Vary only the tier.
 - **Tier-selection mechanism:** **verified** — persist the tier in `settings.json` `"model": "Gemini 3.6 Flash (High)"` (session default; T3 Antigravity Lab, 2026-06) or pick it in `/model` (TUI). **Unverified** — whether headless `agy -p` accepts the bracketed tier string as a `--model` argument (`agy --model "Gemini 3.6 Flash (High)"`) or a per-call flag; confirm with `agy models` on the target install. **Per-call headless tier switching is NOT confirmed**, so for a **mixed-effort headless chain** prefer setting the tier in `settings.json` for the dominant step class, or split the chain into separate runs each with its own `settings.json` tier (A3). If neither works on the install, pick the tier that fits the chain's *hardest* step.
 
@@ -117,10 +117,22 @@ Gemini 3.6 Flash (High) is a *fast* model running reasoning-heavy orchestration 
 **Apply by:**
 - **Compensate hard steps with the High effort tier (A1) + tighter decomposition.** Prefer more, smaller, well-scoped steps over one large under-specified step; a fast model degrades faster on ambiguous mega-prompts than a frontier model does.
 - **Lean on explicit, structured, literal prompts.** Use the four-section frame Gemini rewards — **Objective / Constraints / Output / Success criteria** — with a short role line. Gemini 3.5 follows instructions *literally* (like Opus) — make implicit expectations explicit and add **negative constraints** ("do not guess", "do not call external APIs without confirmation") to suppress hallucination/over-reach. Top-load instructions in normal prompts; **when injecting a large data/context block, place the instructions AFTER the data** and anchor with "Based on the preceding information…" (Gemini handles instruction-last better for big contexts).
+- **Deep Reasoning Directive (A9-D)** — mandatory in every recipe spawn prompt (A1-R), recommended for any reasoning-heavy step. Deliberation is demanded through *structure*, not CoT transcription — the High `thinking_level` supplies the budget, A9-D directs what to think about. Canonical block (adapt wording, keep all four elements):
+
+  ```
+  Reason deeply before you commit: (1) consider at least 2 alternative approaches
+  and state why the chosen one wins; (2) enumerate the edge cases and failure modes
+  of your solution; (3) verify the result against every acceptance criterion;
+  (4) run one self-check pass — re-read your output and fix inconsistencies —
+  before emitting _STEP_COMPLETE. Do not narrate step-by-step reasoning in the
+  output; report only conclusions, decisions, and evidence.
+  ```
+
+  This complements (does not violate) the no-CoT rule below: directing deliberation *targets* is fine; asking the model to *transcribe* its reasoning is not.
 - **Strengthen VERIFY gates.** Because the generator runs fast, weight the recipe's VERIFY/acceptance step (run tests/lint/types, check behavior against ACs) and run it at the **High** tier. Pair quantitative checks with the recipe's own gate.
 - **Self-driving directives** (headless run-to-completion): include a persistence directive ("keep going until fully resolved; don't hand back at the first uncertainty — deduce the most reasonable approach and continue") and a **completion oracle** ("Done when …" + self-validation loop). agy has **no confirmed `/goal` command** (not in the published slash-command list) — implement run-to-completion as external loop + headless `agy -p`, not an assumed `/goal`.
 - **Gemini-specific prompt do/don'ts** [VERIFIED-T1/T3, ai.google.dev/gemini-api/docs/function-calling + Gemini 3.5 dev guides, 2026-06]:
-  - **DON'T write chain-of-thought instructions** ("think step by step"). On Gemini 3.5, raise the **`thinking_level` (High tier)** instead — native reasoning replaces prompt-engineered CoT.
+  - **DON'T write chain-of-thought instructions** ("think step by step"). On Gemini 3.5, raise the **`thinking_level` (High tier)** instead — native reasoning replaces prompt-engineered CoT. (The A9-D directive above stays legal: it names *deliberation targets* — alternatives, edge cases, AC verification, self-check — without asking for a reasoning transcript.)
   - **DON'T set `temperature` / `top_p` / `top_k`.** Gemini 3.x degrades (looping) when these are moved off default; leave them unset.
   - **DO cap tool use** with an explicit budget line — "You have a limited action budget of N tool calls; use them efficiently." Active tool sets work best at ≤ 10–20 tools.
   - **DO check `finishReason` / validate every tool call** — Gemini agentic tool-calling misfires a non-trivial fraction of the time; build retry+validate into the harness, never ignore a failed call.
@@ -147,7 +159,7 @@ A6 (sandbox posture) + A7 (GEMINI.md authority) apply to **every** role authored
 
 When validating a skill's agy-orchestrator path (Architect validation):
 
-- R-A1 Model stays Gemini 3.6 Flash (High) (mandate); effort varied by tier (High plan/design/verify, Medium standard, Low trivial), never by model swap
+- R-A1 Model stays Gemini 3.6 Flash (High) (mandate); **High tier is the default for every step** — Medium/Low only as explicit, logged downgrades for trivial non-recipe steps; **recipe steps run High with no downgrade + A9-D directive (A1-R)**; never a model swap; nothing left at the API `medium` default
 - R-A2 Headless capture is file-handoff + real pty (`python3 pty.spawn`), not stdout; verification chain present (§9.2)
 - R-A3 Model/tier chosen at chain level; no per-agent `model:` assumption; mixed-effort chains split into per-step headless invocations
 - R-A4 Parallel = multiple `/agent` or external headless one-shots (no background primitive); L3 flattened (no Rally claim); resume via `-c`/`--conversation` for 4+ steps
@@ -155,7 +167,7 @@ When validating a skill's agy-orchestrator path (Architect validation):
 - R-A6 `--dangerously-skip-permissions` for headless autonomy, **never with `--sandbox`** (#36); host isolation; §9.1 Pre-flight emitted
 - R-A7 Rules resolved from `AGENTS.md` + `GEMINI.md` (not `CLAUDE.md`); `GEMINI.md` kept minimal (#16058)
 - R-A8 Structured output via artifact JSON (not `--output-format json`/`-o`); explicit small schema in prompt
-- R-A9 Fast-model compensation: High tier + decomposition on hard steps, strengthened VERIFY, explicit/literal/top-loaded prompts, persistence + completion-oracle for self-driving (no assumed `/goal`)
+- R-A9 Fast-model compensation: High tier + decomposition on hard steps, **Deep Reasoning Directive (A9-D) present in every recipe spawn prompt**, strengthened VERIFY, explicit/literal/top-loaded prompts, persistence + completion-oracle for self-driving (no assumed `/goal`)
 
 Pass criterion: address all `◎` principles for the role; aim for ≥ 7/9 total.
 
