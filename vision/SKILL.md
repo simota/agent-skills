@@ -287,6 +287,7 @@ Activated by the `multi` Recipe (or any explicit request for parallel design-dir
 | `_common/MULTI_ENGINE_RECIPE.md` | you need the canonical Pattern D protocol (SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND/CALIBRATE → SYNTHESIZE → DELIVER), engine-attribution tag conventions, and degraded-mode rules shared across all `multi` Recipe skills |
 | `_common/PROOF_CARRYING.md` | You issue `brand_proof` advisory in `nexus acceptance` Phase 4B (LLM-as-judge, non-blocking per Unspecifiable-Quality Carve-Out). Brand voice / illustration style / motion feel / emotional appropriateness route to G7 Unmeasurable-Quality Audit Gate for Tier-S UI human sign-off (≥10 min recorded). Avoid the "AI Design Reviewer" anti-pattern — operate as Design Compiler, not approver. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Vision-specific Output/Next schema. |
+| `reference/apple-design-trends.md` | you need Apple-platform design *direction and taste* — Liquid Glass adoption judgment, direction archetypes, Apple Design Award pattern analysis, macOS-specific direction, or cross-platform coherence (not HIG normative rules — those live in `native/reference/ios-hig.md`) |
 
 ## Operational
 

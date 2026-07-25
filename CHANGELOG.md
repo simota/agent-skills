@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added — Apple platform coverage: `dock` skill + perf/design-trend references (2026-07-25)
+
+Closes three verified gaps in Apple-platform knowledge. Agent count 132 → 133.
+
+- **New skill `dock`** (macOS native application development, 277-line SKILL.md + 15 references, ~3.9k lines total): SwiftUI for macOS + AppKit interop, scene/window architecture, menu bar Commands, document-based apps, NavigationSplitView layout, drag & drop / pasteboard / Services, App Sandbox + entitlements, distribution (App Store vs Developer ID, notarization, Sparkle), XPC / SMAppService helpers, Mac HIG + Liquid Glass on macOS Tahoe 26, and the Catalyst-vs-native decision. Boundary: `dock` **builds** Mac apps; `wield` **automates existing** Mac apps via AppleScript/JXA — zero functional overlap.
+- **`native/reference/apple-perf.md`** (324 lines): Apple-platform performance measurement — Instruments template decision table, SwiftUI render perf, launch time, hitches, memory, concurrency cost, MetricKit/`os_signpost` field telemetry, CI perf budgets. Resolves the dangling pointer in `bolt/reference/swift-cheatsheet.md` §11, which claimed to defer SwiftUI perf to a Native reference that did not exist.
+- **`vision/reference/apple-design-trends.md`** (266 lines): Apple design *direction* (as distinct from HIG's normative rules in `native/reference/ios-hig.md`) — the Liquid Glass era and its tasteful-vs-wrong uses, 6 direction archetypes, Apple Design Award pattern analysis (2025/2026 winners, multi-source verified), macOS-specific direction, cross-platform coherence, and a durability test.
+
+**Routing:** new `MACOS_NATIVE` task type (`Dock → Radar → Vitrine → Launch`) in `nexus/reference/routing-matrix.md` (99 task types); macOS anchors added to `nexus/reference/signal-keywords.md` (§ renamed *Mobile Native Anchors* → *Native App Anchors (mobile + macOS desktop)*); `mobile` Skill Pack extended to native-app scope with `dock` + `wield` (pack name kept for `mobile-dev` profile compatibility).
+
 ### Changed — Anthropic Agent Skills official-spec alignment (2026-06-06)
 
 - **Directory convention**: `references/` (plural) → `reference/` (singular) across all 121 skill folders. Matches Anthropic official example layout. 5,048 path references updated across 375 .md files.

@@ -230,7 +230,7 @@ For natural-language input without an explicit subcommand. **Subcommand match al
 | `/Nexus` (no arguments) | `proactive` |
 | unclear or multi-domain request | `classify` → `reference/intent-clarification.md` |
 
-Specialist anchors (Chain / Cull-Triage-Crypt / Sonar / Clause-Scribe / Rank-Magi / Omen-Ripple / Matrix / Sketch), mobile/cross-platform anchors (`MOBILE_NATIVE`, `IOS_UI_TEST`, `PORTING`), and package/domain-preset anchors (research / ai-adoption / legal / saas / media / growth / career / learning / hiring / local-gov) — see `reference/signal-keywords.md`.
+Specialist anchors (Chain / Cull-Triage-Crypt / Sonar / Clause-Scribe / Rank-Magi / Omen-Ripple / Matrix / Sketch), native-app / cross-platform anchors (`MOBILE_NATIVE`, `MACOS_NATIVE`, `IOS_UI_TEST`, `PORTING`), and package/domain-preset anchors (research / ai-adoption / legal / saas / media / growth / career / learning / hiring / local-gov) — see `reference/signal-keywords.md`.
 
 ## Subcommand Dispatch
 
@@ -360,7 +360,7 @@ Front-load acceptance criteria (P1), a length envelope (P2), and a scope bound (
 
 ## Routing Quick Start
 
-Canonical matrix: `reference/routing-matrix.md` defines **98 task types** (ground-truthed by row count, `grep -c` the Task Type table); the Recipes table exposes the most-used 20 as subcommands — the rest are reachable via the `classify` (default) flow. Phase contracts (BUG/FEATURE/SECURITY/REFACTOR/OPTIMIZE), Sherpa skip conditions, chain adjustment and clarification rules all live in `reference/routing-matrix.md` (merged from the retired `routing-quick-start.md` — see § Sherpa Skip & Chain Adjustment there).
+Canonical matrix: `reference/routing-matrix.md` defines **99 task types** (ground-truthed by row count, `grep -c` the Task Type table); the Recipes table exposes the most-used 20 as subcommands — the rest are reachable via the `classify` (default) flow. Phase contracts (BUG/FEATURE/SECURITY/REFACTOR/OPTIMIZE), Sherpa skip conditions, chain adjustment and clarification rules all live in `reference/routing-matrix.md` (merged from the retired `routing-quick-start.md` — see § Sherpa Skip & Chain Adjustment there).
 
 **Chain reference hierarchy (Source of Truth):**
 - `routing-matrix.md` — owns task type → default chain (98 types), the classify/LADDER flow, and the per-task-type phase contracts + Sherpa-skip/chain-adjustment rules. **Primary SoT for "which agents fire for task X"**.

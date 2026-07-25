@@ -82,13 +82,14 @@
 
 ---
 
-## Mobile Native Anchors
+## Native App Anchors (mobile + macOS desktop)
 
 | Keywords | Recipe |
 |----------|--------|
 | `iOS`, `iOS implementation`, `iPhone`, `iPad`, `Swift`, `SwiftUI`, `Swift 6.2`, `Liquid Glass`, `iOS 26`, `@Observable`, `SwiftData`, `Xcode`, `App Store`, `TestFlight`, `xcrun`, `simctl`, `devicectl`, `xctrace`, `WidgetKit`, `Live Activities`, `App Intents`, `ASAuthorizationController`, `Apple Intelligence`, `Foundation Models` | `MOBILE_NATIVE` (Native) — iOS path |
 | `Android`, `Android implementation`, `Kotlin`, `Jetpack Compose`, `Material 3 Expressive`, `M3 Expressive`, `Compose Multiplatform`, `Strong Skipping`, `Type-safe Navigation`, `Gradle`, `KSP`, `Android Gradle Plugin`, `AGP`, `Play Store`, `Play Console`, `adb`, `logcat`, `dumpsys`, `WorkManager`, `Credential Manager`, `Jetpack Glance`, `Gemini Nano`, `AICore` | `MOBILE_NATIVE` (Native) — Android path |
 | `native app`, `native implementation`, `mobile app implementation`, `both iOS and Android`, `mobile native`, `pure native`, `Passkey mobile`, `Privacy Manifest`, `Data Safety form`, `Universal Links`, `App Links`, `App Bundle`, `staged rollout`, `phased release` | `MOBILE_NATIVE` (Native) — cross-platform / shared mobile |
+| `macOS app`, `Mac app`, `SwiftUI for Mac`, `AppKit`, `NSViewRepresentable`, `NSWindow`, `MenuBarExtra`, `menu bar app`, `menu bar`, `DocumentGroup`, `NSDocument`, `document-based app`, `NavigationSplitView on Mac`, `App Sandbox`, `entitlements`, `security-scoped bookmark`, `hardened runtime`, `notarization`, `notarytool`, `Developer ID`, `Mac App Store`, `Sparkle`, `XPC`, `SMAppService`, `login item`, `launch agent`, `Mac Catalyst`, `macOS Tahoe`, `macOS 26` | `MACOS_NATIVE` (Dock) — building a Mac app. Automating an *existing* Mac app (AppleScript/JXA/System Events) → `Wield`; iOS/Android → `MOBILE_NATIVE` (Native) |
 | `XCUITest`, `XCUIApplication`, `XCUIElement`, `XCUIElementQuery`, `accessibilityIdentifier`, `fastlane snapshot`, `Snapfile`, `SnapshotHelper`, `App Store screenshot`, `frameit`, `xcresulttool`, `xcodebuild test`, `.xctestrun`, `iOS UI test`, `swift ui test`, `status bar override`, `simctl status_bar` | `IOS_UI_TEST` (Snap) |
 | `match this design on iOS/Android`, `the screen looks wrong`, `screenshot-driven iteration`, `agent visual loop`, `simulator screenshot loop`, `Compose preview screenshot`, `RenderPreview`, `xcrun mcpbridge`, `Xcode MCP`, `XcodeBuildMCP`, `mobile-mcp`, `Android Studio Agent Mode`, `Match UI to Target Image` | `MOBILE_NATIVE` (Native) — `visualloop` Recipe; read `native/reference/agent-visual-loop.md`. Native **screen** implementation/debug against a reference. Web mockup → HTML/CSS is `Pixel`; authoring a mobile test suite is `Snap`/`Voyager` |
 | `Web to iOS`, `Web to Android`, `Web to native`, `port to iOS`, `port to Android`, `feature parity matrix`, `nativize`, `porting design`, `Strangler Fig mobile` | `PORTING` (Port → Native) |

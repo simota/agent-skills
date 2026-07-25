@@ -327,14 +327,14 @@ Apple deprecating `@Published` → `@Observable` macro (Swift 5.9+) — the per-
 
 ## 11. SwiftUI performance — defer to native skill
 
-SwiftUI rendering cost (body re-evaluation, dependency tracking, diff, render) is a deep topic owned by the **native** skill. Key cross-cutting signals Bolt watches for:
+SwiftUI rendering cost (body re-evaluation, dependency tracking, diff, render) is a deep topic owned by the **native** skill — full decision table, `EquatableView`/`AnyView`/identity patterns, launch/hitch/memory/concurrency perf, and MetricKit field telemetry → [`native/reference/apple-perf.md`](../../native/reference/apple-perf.md). Key cross-cutting signals Bolt watches for:
 
 - `@State` of large struct → entire view tree re-evaluates on any field change → split state.
 - `ForEach` without stable `id:` → diff is O(n²).
 - Implicit `AnyView` wrapping in conditional content → defeats compile-time type optimization.
 - `.task { }` modifier inside `.id(...)`-changing parents → task re-runs unexpectedly.
 
-For SwiftUI-specific perf advice, route to native. Bolt's role is profiler interpretation, not SwiftUI architecture.
+For SwiftUI-specific perf advice, route to native (`native/reference/apple-perf.md`). Bolt's role is profiler interpretation, not SwiftUI architecture.
 
 ---
 

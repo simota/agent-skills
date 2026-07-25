@@ -61,13 +61,13 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `mobile` (iOS/Android native + cross-platform, ~7 skills)
+### `mobile` (iOS/Android/macOS native + cross-platform, ~9 skills)
 
-**Purpose:** pure-native (Swift/SwiftUI, Kotlin/Compose) + cross-platform (RN/Flutter/KMP/CMP) + store release.
+**Purpose:** pure-native app development — iOS/Android mobile (Swift/SwiftUI, Kotlin/Compose) **and macOS desktop** (SwiftUI for Mac / AppKit) — plus cross-platform (RN/Flutter/KMP/CMP) and store/direct release. Named `mobile` for backward compatibility with the `mobile-dev` profile; scope is native-app, not mobile-only.
 
-**Members:** `native`, `port`, `snap`, `voyager`, `forge`, `frame`
+**Members:** `native`, `dock`, `port`, `snap`, `voyager`, `forge`, `frame`, `wield`
 
-**Triggers:** `ios`, `android`, `swift`, `swiftui`, `kotlin`, `jetpack compose`, `xcuitest`, `appium`, `detox`, `maestro`, `react native`, `flutter`, `kmp`, `cmp`, `liquid glass`, `material 3`, `app store`, `play store`
+**Triggers:** `ios`, `android`, `macos`, `mac app`, `swift`, `swiftui`, `appkit`, `kotlin`, `jetpack compose`, `xcuitest`, `appium`, `detox`, `maestro`, `react native`, `flutter`, `kmp`, `cmp`, `liquid glass`, `material 3`, `app store`, `mac app store`, `play store`, `notarization`, `developer id`, `sparkle`, `menu bar app`, `entitlements`, `xpc`
 
 ---
 
