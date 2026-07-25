@@ -43,7 +43,7 @@ Production command reference for building, signing, notarizing, packaging, and d
 </plist>
 ```
 
-`(unverified)` — the exact accepted string for the App Store Connect export method has shifted across Xcode versions (`app-store` vs `app-store-connect`); confirm against `xcodebuild -help` / the Xcode release notes for the pinned Xcode version before relying on it in CI.
+**Export-method strings.** `app-store-connect` is the current value for App Store submission; `app-store` is its deprecated predecessor and still accepted by older Xcode. `developer-id` (direct distribution, notarized) and `mac-application` (unsigned/local) are the other Mac-relevant values. Pin the string to your CI's Xcode version — `xcodebuild -help` lists what that toolchain accepts.
 
 ---
 

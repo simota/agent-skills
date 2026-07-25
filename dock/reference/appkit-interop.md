@@ -95,11 +95,12 @@ containerView.addSubview(hostingView)
 
 `NSHostingSizingOptions` (macOS 13+) controls how the hosting controller reflects SwiftUI's ideal content size into Auto Layout / `preferredContentSize`:
 
+The type has exactly three members — there is no `.standardBounds` and no `.minSize`:
+
 | Option | Effect |
 |---|---|
-| `.standardBounds` | Constrains to the hosting view's own bounds (default-like behavior) |
-| `.minSize` | Reflects SwiftUI's minimum size into layout constraints |
 | `.intrinsicContentSize` | Publishes an `intrinsicContentSize` driven by SwiftUI content — lets Auto Layout size the hosting view |
+| `.maxSize` | Reflects SwiftUI's maximum size into the hosting view's layout |
 | `.preferredContentSize` | Updates `NSViewController.preferredContentSize` — useful when the hosting controller sits inside a popover/sheet that sizes to content |
 
 Choose `.intrinsicContentSize` when the hosting view lives inside an Auto Layout-managed AppKit hierarchy; `.preferredContentSize` when it's the content of an `NSPopover` or a sheet that should shrink-to-fit.

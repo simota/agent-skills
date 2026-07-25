@@ -61,7 +61,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `mobile` (iOS/Android/macOS native + cross-platform, ~9 skills)
+### `mobile` (iOS/Android/macOS native + cross-platform, ~8 skills)
 
 **Purpose:** pure-native app development — iOS/Android mobile (Swift/SwiftUI, Kotlin/Compose) **and macOS desktop** (SwiftUI for Mac / AppKit) — plus cross-platform (RN/Flutter/KMP/CMP) and store/direct release. Named `mobile` for backward compatibility with the `mobile-dev` profile; scope is native-app, not mobile-only.
 

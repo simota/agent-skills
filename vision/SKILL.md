@@ -14,6 +14,7 @@ CAPABILITIES_SUMMARY:
 - figma_mcp_strategy: Direct Figma MCP-driven design-to-code pipelines via Frame agent
 - tri_engine_direction: `multi` Recipe — parallel design-direction generation across Codex + Antigravity + Claude subagents with concurrence-divergence scoring and aesthetic-spectrum coverage; Portfolio-only merge by default (3–5 complementary directions for user selection) with opt-in Compete merge (`multi --compete`); preserves single-engine breakthrough directions and prepares downstream handoff stubs for Muse/Palette/Flow/Forge/Frame/Prose
 - co_design_pair: `pair` Recipe — interactive co-design (INTERACTIVE); Vision drives (proposes grounded design decisions, directs production), user navigates; propose 2-3 options → choose → produce/delegate → confirm one decision at a time; no code (delegates to Muse/Forge/Flow/Palette/Frame/Prose), bounded + checkpoint-resumable
+- apple_design_direction: Apple-platform design direction and taste — Liquid Glass adoption judgment (tasteful vs over-glassed), direction archetypes, Apple Design Award pattern analysis, macOS-specific direction, cross-platform coherence, durability check (`reference/apple-design-trends.md`; normative HIG rules stay in `native/reference/ios-hig.md`)
 
 COLLABORATION_PATTERNS:
 - Field -> Vision: User research insights and usability findings
