@@ -54,9 +54,15 @@ Phase 2 CONTRACT       Accord[author language-NEUTRAL behavior spec + acceptance
                        → ORACLE GATE: adequacy (covers source branches/error-paths/boundaries) + determinism contract (below)
 Phase 3 STRATEGY       Magi[arbitrate big-bang|strangler-fig|FFI + RISK GATE]
                        → confirm Transmutation Map (type / error / concurrency / memory) for the pair
+Phase 3.5 PILOT        Transmute ONE small representative module end-to-end (Phase 4 + Phase 5 in full)
+                       before scaling out. Every pilot failure amends the Transmutation Map (§4),
+                       not just the piloted files.
+                       GATE: pilot module reaches parity with no un-mapped idiom → scale out.
 Phase 4 TRANSMUTE      Builder/Artisan[idiomatic target-language implementation]
                        +grok?[parser/DSL-heavy modules]  +gateway?/schema?[API/DB boundaries]
                        rally[engine-paradigm COMPETE] for high-risk modules → 2-3 idiomatic variants, pick best
+                       Parity failure traced to a mapping rule → amend the Transmutation Map and
+                       regenerate the module; do not hand-patch the emitted code (§4)
 Phase 5 PARITY VERIFY ∥ Radar[differential + property tests against Phase 2 oracle; multi-lang incl. Rust]
                        Attest[conformance vs Accord contract]
                        judge[IDIOM review: idiomatic target-lang vs transliterated?]
@@ -81,7 +87,7 @@ The shared kernel — parity-over-faith, the oracle-adequacy and non-determinism
 
 ## 4. Transmutation Map
 
-The core knowledge of this recipe. Magi confirms the relevant table in Phase 3; Builder applies it in Phase 4; judge audits adherence in Phase 5.
+The core knowledge of this recipe — and its rulebook. Magi confirms the relevant table in Phase 3; the Phase 3.5 pilot amends it before scale-out; Builder applies it in Phase 4 and amends it again whenever a parity failure traces to a mapping rule rather than to one module; judge audits adherence in Phase 5. The map, not the emitted code, is what gets fixed.
 
 ### TS → Rust
 
@@ -147,6 +153,8 @@ The core knowledge of this recipe. Magi confirms the relevant table in Phase 3; 
 | Behavior regression | Mint golden oracle (Phase 2) + Radar differential/property tests (Phase 5) |
 | **Thin oracle → false parity** (target diverges on an untested branch yet passes) | Phase 2 adequacy gate: corpus must cover source branches / error paths / boundaries; expand if source-coverage short before Phase 5 trusts it |
 | **Spurious parity failure on incidental non-determinism** (map order, timestamps, float ULP, locale, RNG) | Phase 2 determinism contract: declare significant-vs-incidental per output, canonicalize incidental aspects on both sides before comparing, pin seeds/clock |
+| **Mapping error found only at full scale** — every module carries the same bad idiom translation | Phase 3.5 PILOT: one module through Phase 4+5 in full before scale-out; failures amend the Transmutation Map |
+| **Hand-patched output** — emitted code fixed per file, so the flawed mapping rule survives into later modules | Amend the Transmutation Map and regenerate (Phase 4); fix the rule, not the file |
 | "Rewrite everything at once" risk blindness | Magi risk gate (Phase 3) prefers strangler-fig; big-bang needs user confirm |
 | Source memory assumptions clash with target ownership | Phase 3 explicit lifetime/ownership design (esp. Go→Rust GC→borrow) |
 | Concurrency semantics drift (race conditions, ordering) | Concurrency axis in Transmutation Map + property tests on concurrent paths |

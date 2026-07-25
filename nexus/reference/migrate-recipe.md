@@ -28,10 +28,11 @@ Use `migrate` when a change must propagate **exhaustively** across a codebase an
 | Single deprecated-API swap, ≤2 sites | `shift detect` directly | Completeness loop is overhead |
 | One-off scoped feature | `feature` | Not a sweep |
 
-**Three non-negotiable principles:**
+**Four non-negotiable principles:**
 1. **Freeze the denominator first.** INVENTORY counts the total change surface *before* any edit. Completeness is undefined without a baseline to be 100% *of*.
 2. **Prove residue, do not trust the counter.** A forward "migrated N of M" counter can be wrong because INVENTORY itself can miss sites. Completeness is established by an **independent re-scan that finds zero**, looped until dry — not by the counter reaching M.
 3. **Delete only after the proof.** DECOMMISSION is gated on ATTEST passing. Removing old code before residue==0 conflates "migration incomplete" with "deletion bug" and destroys the rollback story.
+4. **Fix the loop, not the file.** When a batch fails VERIFY, the defect usually lives in the translation rule that produced it, not in that one site. Amend the RULEBOOK and regenerate the affected batch; hand-patching individual files leaves the bad rule in place and the same defect reappears in every later batch. Treat compiler errors and test failures as a **self-updating work queue** that refines the rulebook, and act on the *pattern* rather than the instance. [Source: claude.com/blog — *How Anthropic runs large-scale code migrations with Claude Code*, 2026-07-16]
 
 Scale: 6–20 agents (case- and size-dependent), mid-to-high cost. **Confirm policy:** migrate inherently touches 10+ files, so it confirms **once at launch** (not per batch) — and again before the destructive DECOMMISSION CUT (§3 GATE). The generic per-edit "10+ files" Ask-First is satisfied by the launch confirm and does not re-fire each batch. Always confirm before launch when `case=arch` whole-system or strategy=big-bang.
 
@@ -67,6 +68,16 @@ INVENTORY ── Lens[map all change sites] ‖ Ripple[blast radius] → freeze 
 STRATEGY ── Magi[strangler-fig | parallel-run | big-bang + RISK GATE]
             Sherpa[split surface into atomic batches]  (when total_sites large / multi-component)
    ▼
+RULEBOOK ── Scribe(+Atlas/Shift per case)[author the translation rulebook: per-pattern
+            source→target mapping, ambiguity policy, and an explicit "flag, do not guess" list]
+            The rulebook is the artifact batches are generated FROM — and the artifact that
+            gets amended when a batch fails (§1.4). High-reasoning tier writes and reviews it.
+   ▼
+PILOT ───── run the full INNER LOOP on a small representative sample (a handful of sites
+            spanning the §3a axes) BEFORE scale-out. Every pilot failure amends the RULEBOOK,
+            never just the sampled files.
+            GATE: pilot batch passes VERIFY with no un-ruled ambiguity → scale out.
+   ▼
 ┌─ OUTER LOOP (completeness) — repeat until RESIDUE-GATE passes ──────────────┐
 │                                                                            │
 │  ┌─ INNER LOOP (per batch: PLAN → EXECUTE → VERIFY) ───────────────┐       │
@@ -76,7 +87,9 @@ STRATEGY ── Magi[strangler-fig | parallel-run | big-bang + RISK GATE]
 │  │  VERIFY   Radar[behavior preserved: build+test+type]             │       │
 │  │           drift==0 = value-equality, EXCEPT mock-to-prod where    │       │
 │  │           it is contract/shape conformance (§2 oracle), not values│       │
-│  │           FAIL → rollback this batch, re-PLAN; do not advance     │       │
+│  │           FAIL → rollback this batch; if the cause is a rule,     │       │
+│  │           amend RULEBOOK and regenerate rather than hand-patching │       │
+│  │           (§1.4); re-PLAN; do not advance                         │       │
 │  └─────────────────────────────────────────────────────────────────┘       │
 │                                                                            │
 │  RESIDUE-GATE ★ completeness proof (§3a) — the integrity backbone           │
@@ -98,7 +111,9 @@ ATTEST ── Attest[completeness report: migrated==total, residue==0, drift==0,
 
 **Parallelism:** INVENTORY branches (Lens ‖ Ripple) run concurrently. Independent batches in the OUTER loop may parallelize under `isolation: worktree` when strangler-fig gives non-overlapping seams (hub-spoke ownership, no shared mutable state).
 
-**Checkpoint-resume:** ≥4 phases → persist the frozen baseline, per-batch VERIFY outputs, and the RESIDUE-GATE scan log at each boundary so an interrupted run resumes from the last completed batch with the denominator intact.
+**Model tiering across the loop.** Spend the high-reasoning tier where it changes the outcome — RULEBOOK authoring, PILOT failure diagnosis, and adversarial review of a batch — and run the high-volume translation itself on the balanced tier. This is the Plan-and-Execute split (`hub-authoring.md` § Model Selection) applied to a sweep, and it is what keeps a large migration's token cost proportionate; Anthropic's own million-line runs are budgeted this way.
+
+**Checkpoint-resume:** ≥4 phases → persist the frozen baseline, the current RULEBOOK revision, per-batch VERIFY outputs, and the RESIDUE-GATE scan log at each boundary so an interrupted run resumes from the last completed batch with the denominator intact.
 
 ### 3a. RESIDUE-GATE — the completeness proof
 
@@ -135,6 +150,8 @@ Plus `sweep` flags newly-orphaned code as an early DECOMMISSION signal.
 | **Incomplete inventory** — denominator itself missed sites | Re-scan from scratch on the latest tree + `matrix` axis coverage (finds forgotten categories) |
 | **Forgotten dimension** — a whole tier/env/platform skipped | Coverage-axis check enumerates dimensions, requires each touched |
 | **Arch residue invisible to grep** (boundary still violated, no string to find) | `case=arch` residue = `atlas` dependency/boundary-violation re-scan, not text (§3a check 2) |
+| **Same defect re-emerges in every batch** — fixed per-file instead of in the rule that produced it | RULEBOOK amend-and-regenerate loop (§1.4); hand-patching a generated site is the anti-pattern |
+| **Systemic rule error discovered only at full scale** — the whole sweep has to be redone | PILOT gate: run the complete inner loop on a small cross-axis sample before scale-out |
 | **Behavior drift mid-migration** | Inner-loop Radar VERIFY per batch (build+test+type); fail → rollback batch |
 | **mock→prod never converges on value-equality** (real data ≠ canned data) | VERIFY/parallel-run uses contract/shape-conformance oracle, not value parity (§2, §4) |
 | **Deleting still-referenced old code** | DECOMMISSION gated on ATTEST + RE-CHECK residual references on latest tree before CUT |
@@ -176,6 +193,7 @@ Change must propagate exhaustively across the codebase (omission = defect)?
 
 `NEXUS_COMPLETE` with the standard `## Nexus Execution Report` plus a **Completeness Report**:
 - `case`, strategy, and total_sites (frozen baseline) vs migrated.
+- **RULEBOOK trail**: the pilot's verdict and each subsequent rulebook amendment with the batch failure that prompted it — this is the audit trail showing defects were fixed in the rule rather than per file (§1.4).
 - **RESIDUE-GATE result**: final residue-scan output (must be the 2× zero proof; for `case=arch`, the `atlas` boundary-violation count), counter completeness, and the `matrix` axis-coverage table (every axis touched + axis-derivation source).
 - Per-batch VERIFY summary (value-equality, or — for mock→prod — contract/shape-conformance verdict).
 - **DECOMMISSION result**: old code removed, RE-CHECK residual-reference count (==0 before CUT), post-deletion Radar green, and the separate deletion PR reference.
