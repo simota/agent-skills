@@ -453,7 +453,7 @@ Read only the files that match the current decision point.
 | `reference/feature-impact-simulate.md` | Feature impact prediction (Persona+Journey+Product v4) |
 | `reference/pack-subcommand.md` | `/nexus pack` — skill profile switch, settings.json edit, backup, diff, confirm |
 | `_common/SKILL_PACKS.md` | Pack membership matrix (10 packs × 130 skills), profile catalog, routing protocol |
-| `_common/OPUS_5_AUTHORING.md` | **Claude Code hub** — P1–P11 (delegation caps, effort against a `high` default, length envelopes, scope bounds, no self-verification scaffolding) + Opus 5 platform facts |
+| `_common/OPUS_5_AUTHORING.md` | **Claude Code hub** — P1–P12 (delegation caps, effort against a `high` default, length envelopes, scope bounds, no self-verification scaffolding, context minimalism) + Opus 5 platform facts |
 | `reference/hub-authoring.md` § Claude Code hub — Fable 5 | **Hub runs on `claude-fable-5`** — F-principles (F1-F8): lighter spawn prompts, `high` default effort, async harness, no-reasoning-reproduction, cost gate |
 | `_common/CODEX_ORCHESTRATION.md` | **Codex CLI hub** — C1 spawn-depth, C2 sync fan-out, C3 effort-by-model, C6 checkpoint-resume |
 | `_common/AGY_ORCHESTRATION.md` | **agy hub** — A1 Flash-mandate effort-tier routing, A2 file-handoff+pty capture, A3 session-scoped tier, A4 flattened fan-out / `-c` resume, A6 sandbox posture (#36) |

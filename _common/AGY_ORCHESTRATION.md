@@ -1,6 +1,6 @@
 # agy (Antigravity CLI) Orchestration Authoring Protocol
 
-> Counterpart to `_common/OPUS_5_AUTHORING.md` (Claude Code hub, P1–P11) and `_common/CODEX_ORCHESTRATION.md` (Codex CLI hub, C1–C9). **This file governs authoring when Antigravity CLI (`agy`) drives the Nexus hub.**
+> Counterpart to `_common/OPUS_5_AUTHORING.md` (Claude Code hub, P1–P12) and `_common/CODEX_ORCHESTRATION.md` (Codex CLI hub, C1–C9). **This file governs authoring when Antigravity CLI (`agy`) drives the Nexus hub.**
 > Owner: Architect (canonical doc); referenced by orchestrators (Nexus, Orbit, Rally, Magi) and any SKILL.md whose spawn path can run on agy.
 > Scope: agy as the **orchestrator engine** (the CLI running the top-level hub session). agy as a *worker / spawn target* of a Claude or Codex hub is covered by `_common/SUBAGENT.md` (MULTI_ENGINE) + `_common/MULTI_ENGINE_RECIPE.md`.
 > Verified facts: `_common/CLI_COMPATIBILITY.md` (re-verified 2026-06-23 against agy v1.0.10). Items not yet confirmed against a T1 source are marked **未確認** and must not be speculatively completed.
@@ -9,7 +9,7 @@ Engine-selection rule for orchestrators:
 
 | Orchestrator engine (hub) | Authoring protocol |
 |---------------------------|--------------------|
-| Claude Code | `_common/OPUS_5_AUTHORING.md` (P1–P11; + Fable 5 F-principles when the hub runs `claude-fable-5`) |
+| Claude Code | `_common/OPUS_5_AUTHORING.md` (P1–P12; + Fable 5 F-principles when the hub runs `claude-fable-5`) |
 | Codex CLI | `_common/CODEX_ORCHESTRATION.md` (C1–C9) |
 | **Antigravity (`agy`)** | **this file (A1–A9)** |
 

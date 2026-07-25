@@ -418,7 +418,7 @@ See `reference/context-compression.md` for compression strategies and equivalenc
 
 ## 7. Opus 5 Readiness Validation (RECOMMENDED)
 
-Validate that generated skills align with Opus 5 default behaviors. See `reference/official-design-patterns.md` Section 11 and `_common/OPUS_5_AUTHORING.md` (P1–P11).
+Validate that generated skills align with Opus 5 default behaviors. See `reference/official-design-patterns.md` Section 11 and `_common/OPUS_5_AUTHORING.md` (P1–P12; P12 is Claude 5 generation-wide, not Opus-specific).
 
 - [ ] **R7.1** Front-loaded context capture
   - Trigger Guidance enumerates first-turn required inputs (target files, success criteria, constraints)
@@ -471,6 +471,12 @@ Validate that generated skills align with Opus 5 default behaviors. See `referen
   - Voice baseline stated; warmer tone stated explicitly if the product needs it
   - Document/slide skills pass in the target style or template rather than relying on a default
   - Design/frontend skills give concrete specs or option-proposal, not generic negation
+
+- [ ] **R7.12** Context minimalism (all roles; Claude 5 generation-wide)
+  - Style and craft guidance framed as the intended outcome, not as a prohibition list — safety gates, destructive-action confirmations, and protocol contracts are exempt
+  - Few-shot examples present only where the output shape is non-obvious (schemas, protocol markers), not where they merely illustrate judgment
+  - No instruction duplicated between SKILL.md and its reference or tool description; tool-usage rules live in the tool description
+  - References point at real artifacts (code, tests, rubrics, mockups) rather than paraphrasing them
 
 ---
 

@@ -8,7 +8,7 @@ Engine-selection rule for orchestrators:
 
 | Orchestrator engine (hub) | Authoring protocol |
 |---------------------------|--------------------|
-| Claude Code | `_common/OPUS_5_AUTHORING.md` (P1–P11) |
+| Claude Code | `_common/OPUS_5_AUTHORING.md` (P1–P12) |
 | **Codex CLI** | **this file (C1–C9)** |
 | Antigravity (`agy`) | `_common/AGY_ORCHESTRATION.md` (A1–A9) |
 

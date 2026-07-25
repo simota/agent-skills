@@ -505,7 +505,7 @@ If none of these thresholds apply, keep the action as a composed general-tool pa
 ## 11. Opus 5 Operating Principles for Generated Skills
 
 > Source: Anthropic *Prompting Claude Opus 5* + *Migrating to Claude Opus 5* + *Effort* (platform.claude.com, verified 2026-07-25)
-> Canonical detail: `_common/OPUS_5_AUTHORING.md` (P1–P11). This section mirrors it for the generation pass.
+> Canonical detail: `_common/OPUS_5_AUTHORING.md` (P1–P12). This section mirrors it for the generation pass; 11.12 mirrors P12, which is Claude 5 generation-wide rather than Opus-specific.
 
 Opus 5 has sharp default behaviors that generated skills must author for explicitly. Apply these when designing new agents or updating existing ones. **Three defaults cost tokens on every workload and are the highest-value checks: long output (11.2), scope expansion (11.8), and automatic self-verification (11.9).**
 
@@ -622,11 +622,21 @@ Opus 5 prose trends direct/opinionated with sparing emoji and narrates self-corr
 - For document/slide skills: pass the style or template in — do not rely on a house default.
 - For design/frontend skills: give a concrete alternative palette/typography, or have the model propose 3–4 directions first — generic negation just shifts to another fixed palette. The warm-cream/serif house style observed on prior Opus models is **not documented for Opus 5**; treat it as unverified rather than assumed.
 
-### 11.12 Application in Architect Phases
+### 11.12 Context Minimalism — Judgment Over Rules *(Claude 5 generation-wide)*
+
+Anthropic removed over 80% of Claude Code's own system prompt for Opus 5 and Fable 5 with no measurable loss on coding evals. On Claude 5 models, prompt volume that helped older models is cost, and some forms of it constrain the model. Unlike 11.1–11.11, this applies on Opus 5, Fable 5, and Sonnet 5 alike. [Source: claude.com/blog — *The new rules of context engineering for Claude 5 generation models*, 2026-07-24]
+
+**Design rules**:
+- Frame style and craft guidance as the intended outcome, not as a prohibition list — "write code that reads like the surrounding code: match its comment density, naming, and idiom" over "never write multi-paragraph docstrings". Safety gates, destructive-action confirmations, and protocol contracts stay as explicit constraints.
+- Do not teach by example where an interface would do: few-shot blocks now narrow the exploration space, so spend the tokens on expressive parameters and an enumeration of the available options instead. Keep examples only where the output shape is non-obvious (schemas, `_STEP_COMPLETE` / handoff markers).
+- State each instruction once. Tool-usage rules belong in the tool description, not in the skill body; guidance duplicated between a SKILL.md and its reference is paid for on every call. This does not repeal the 11.2 end-of-file brevity reminder, which calibrates length rather than restating a behavior.
+- Point generated references at real artifacts — code, test suites, rendered output, rubrics — rather than prose describing them.
+
+### 11.13 Application in Architect Phases
 
 | Phase | Apply |
 |-------|-------|
 | `UNDERSTAND` | Confirm caller-provided context is complete (11.1); flag missing fields once, not iteratively |
 | `DESIGN` | Bake length envelopes for both channels (11.2), tool-use rationale (11.3), delegation caps (11.4), thinking-on assumptions (11.5), scope bounds (11.8), and — for reviewers — coverage-vs-filter (11.10) into the section contract |
-| `GENERATE` | Verify generated SKILL.md states effort-level expectations against a `high` default (11.6), delegation-engineer framing (11.7), scope bounds (11.8), carries **no** self-verification scaffolding (11.9), and (writers/designers) voice/artifact defaults (11.11) |
-| `VALIDATE` | Add Opus 5 readiness checks to the validation pass — a skill that omits 11.2 / 11.8 / 11.9 guidance will over-produce, over-reach, and over-verify at runtime |
+| `GENERATE` | Verify generated SKILL.md states effort-level expectations against a `high` default (11.6), delegation-engineer framing (11.7), scope bounds (11.8), carries **no** self-verification scaffolding (11.9), (writers/designers) voice/artifact defaults (11.11), and holds to context minimalism (11.12) |
+| `VALIDATE` | Add Opus 5 readiness checks to the validation pass — a skill that omits 11.2 / 11.8 / 11.9 guidance will over-produce, over-reach, and over-verify at runtime; one that omits 11.12 ships prompt bloat that costs tokens on every call |

@@ -1,11 +1,11 @@
 # Opus 5 Authoring Protocol
 
-> Source: Anthropic *Prompting Claude Opus 5* + *Migrating to Claude Opus 5* + *Effort* + *Models overview* (platform.claude.com, verified 2026-07-25)
+> Source: Anthropic *Prompting Claude Opus 5* + *Migrating to Claude Opus 5* + *Effort* + *Models overview* (platform.claude.com, verified 2026-07-25) + *The new rules of context engineering for Claude 5 generation models* (claude.com/blog, 2026-07-24 → P12)
 > Owner: Architect (canonical doc); referenced by orchestrators, reviewers, investigators
 
 Shared protocol that aligns generated and existing skills with Opus 5 default behaviors. Reference this file from any SKILL.md that needs Opus 5 alignment instead of duplicating the rules.
 
-**Principle IDs `P1`–`P11` are stable and cited across the ecosystem.** Several principles inverted relative to prior Opus models — the ID is preserved, the content is not. Re-read a principle before applying it from memory.
+**Principle IDs `P1`–`P12` are stable and cited across the ecosystem.** Several principles inverted relative to prior Opus models — the ID is preserved, the content is not. Re-read a principle before applying it from memory. `P1`–`P11` are Opus 5-specific; **`P12` is Claude 5 generation-wide** (Opus 5 / Fable 5 / Sonnet 5).
 
 ---
 
@@ -161,6 +161,34 @@ Opus 5 reviews code with high precision *and* recall — it finds real bugs at a
 
 **(c) Frontend & visual defaults.** Vision and UI/frontend visual replication are strong on Opus 5. The persistent warm-cream/serif "house style" observed on prior Opus models is **not documented for Opus 5** — treat it as unverified rather than assumed. Independent of that, the reliable steering methods are unchanged: (1) specify a concrete alternative (exact palette hexes, typography, radius, spacing); (2) have the model propose 3–4 distinct directions first, then implement the chosen one. Generic negation ("don't use cream", "make it minimal") just shifts to another fixed palette. Relevant to Vision, Muse, Palette, Flow, Forge, Artisan, Funnel, Bazaar, Vitrine, Stage, frontend skills.
 
+### P12. Context Minimalism — Judgment Over Rules  *(Claude 5 generation-wide)*
+
+> Source: Anthropic *The new rules of context engineering for Claude 5 generation models* (claude.com/blog, 2026-07-24). Applies to **Opus 5, Fable 5, and Sonnet 5 alike** — unlike P1–P11, this principle is not Opus-specific.
+
+Anthropic removed **over 80% of Claude Code's own system prompt** for Opus 5 and Fable 5 **with no measurable loss on coding evaluations**. Prompt volume that helped older models is now pure cost, and in several forms it actively constrains the model. Four rules follow.
+
+**(a) Give judgment, not rigid rules.** State the outcome and let the model infer the rule from context, instead of enumerating prohibitions.
+
+> Old: "Never write multi-paragraph docstrings or multi-line comment blocks."
+> New: "Write code that reads like the surrounding code: match its comment density, naming, and idiom."
+
+**(b) Design the interface; do not supply examples.** Few-shot examples now *narrow* the exploration space on Claude 5 models. Where a skill teaches by example, invest instead in expressive parameters and an explicit enumeration of the available options.
+
+**(c) Say it once.** The same guidance repeated across SKILL.md, tool descriptions, and references is redundancy the model pays for on every call. Tool-usage instructions belong in the **tool description**, not the skill body. *(This does not repeal P2's end-of-file length reminder — P2 restates a length **envelope** to calibrate a long prompt, which is not a second copy of a behavioral instruction.)*
+
+**(d) Reference reality, not prose about it.** Point at actual code, test suites, rendered artifacts, and rubrics rather than describing the intended result. A code-based specification is higher-fidelity guidance than a written one.
+
+**Apply by:**
+- Audit SKILL.md files for prohibition lists ("never…", "always…", "do not…") that encode a *rule* where the *outcome* would steer better, and convert them. Safety gates, destructive-action confirmations, and protocol contracts are exempt — they are constraints, not style guidance.
+- Treat few-shot blocks as a cost. Keep them where the output shape is genuinely non-obvious (schemas, protocol markers, handoff blocks); drop them where they merely illustrate judgment.
+- Look for one instruction stated in both a SKILL.md and its reference or tool description, and keep a single copy.
+- Prefer `@`-referenced real artifacts (specs, mockups, existing modules, rubrics) over paraphrase.
+- Structural allocation: **system prompt** = product context + core behavior; **CLAUDE.md** = lightweight, repository gotchas only; **skills** = team-specific opinion, held short of overconstraint; **references** = the real material.
+- Do not force manual memory capture — the harness saves relevant memories automatically, so manual CLAUDE.md upkeep is the fallback rather than the mechanism.
+- `claude doctor` (CLI) / `/doctor` (in-session) reads the settings files in scope and reports installation and configuration health; the source article positions it as the entry point for trimming context for Claude 5 models.
+
+**Interaction with this repository's own style.** This repo's SKILL.md corpus was authored against older models and is prescription-dense. P12 is the standing justification for `gauge` normalization passes and `prune` sweeps to *remove* text, not only to add it — measured against evals, not taste.
+
 ---
 
 ## Platform Facts (Opus 5)
@@ -206,13 +234,13 @@ Reference this matrix to know which principles your skill must address.
 
 (◎ = address explicitly in SKILL.md; ○ = address if relevant)
 
-**P2 (explicit length control), P8 (scope discipline), and P9 (no redundant verification) apply to every role** — long output, scope creep, and over-verification are the three defaults that cost tokens on every workload.
+**P2 (explicit length control), P8 (scope discipline), P9 (no redundant verification), and P12 (context minimalism) apply to every role** — long output, scope creep, over-verification, and prompt bloat are the four defaults that cost tokens on every workload. P12 additionally applies on **any** Claude 5 hub model, not just Opus 5.
 
 ---
 
 ## Validation Hooks
 
-When validating a skill against this protocol, use the eleven checks below (mirrors Architect `validation-checklist.md` Section 7):
+When validating a skill against this protocol, use the twelve checks below (mirrors Architect `validation-checklist.md` Section 7):
 
 - R7.1 Front-loaded context capture
 - R7.2 Explicit length control — both conversational and written-deliverable channels
@@ -225,8 +253,9 @@ When validating a skill against this protocol, use the eleven checks below (mirr
 - R7.9 No self-verification / re-check / forced-progress scaffolding (independent-verifier steps exempt)
 - R7.10 (reviewers/detectors) Coverage-vs-filter separation; concrete severity bar
 - R7.11 (writers/designers) Voice baseline stated; design direction given as concrete specs or option-proposal
+- R7.12 Context minimalism — outcome-framed guidance rather than prohibition lists (safety/protocol constraints exempt); few-shot blocks only where output shape is non-obvious; no instruction duplicated between SKILL.md and its reference/tool description; references point at real artifacts
 
-Pass criterion: skills must address all `◎` principles for their role; aim for ≥ 7/11 total.
+Pass criterion: skills must address all `◎` principles for their role; aim for ≥ 8/12 total.
 
 ---
 
@@ -238,4 +267,4 @@ In a SKILL.md:
 - Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (apply P[X], P[Y], P[Z] for this role).
 ```
 
-Avoid duplicating the principle text in individual SKILL.md files. Cite by ID (P1–P11) and let this file be the single source of truth.
+Avoid duplicating the principle text in individual SKILL.md files. Cite by ID (P1–P12) and let this file be the single source of truth — that citation-over-copy discipline is P12(c) applied to this protocol itself.
