@@ -364,7 +364,7 @@ flow.map { transform(it) }                    // ~free
 
 ## 13. Compose UI — defer to native skill
 
-Jetpack Compose perf (recomposition, `remember` choices, `derivedStateOf`, `stable`/`immutable` annotations, bytecode growth from the Compose compiler plugin) is owned by the **native** skill.
+Jetpack Compose perf (recomposition, `remember` choices, `derivedStateOf`, `stable`/`immutable` annotations, bytecode growth from the Compose compiler plugin) is owned by the **native** skill — full treatment (measurement-first discipline, tooling, recomposition/startup/jank/memory/Flow perf, R8 build-side wins, field telemetry, anti-pattern table) lives in [`native/reference/compose-perf.md`](../../native/reference/compose-perf.md).
 
 What Bolt watches for at a high level:
 
@@ -372,7 +372,7 @@ What Bolt watches for at a high level:
 - `@Stable` / `@Immutable` annotations control re-composition skipping — wrong annotation = perf regression.
 - `remember { }` with capturing lambda → equality issue → recomposition loop.
 
-For Compose-specific guidance, route to native. Bolt's role is profiler interpretation, not Compose architecture.
+For Compose-specific guidance, route to native (`reference/compose-perf.md`). Bolt's role is profiler interpretation, not Compose architecture.
 
 ---
 
