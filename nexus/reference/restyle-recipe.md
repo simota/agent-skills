@@ -60,7 +60,7 @@ Engine routing follows summit principles: **Codex owns code-gen** (Artisan / Flo
 | 5 | Failure Modes Prevented | Consolidated section below. |
 | 6 | Boundaries / vs neighbors | Section below + Decision Tree. |
 | 7 | Scale | **5-12 agents × ≤ 3 cycles, medium cost** (cost scales with slate size — the top-N cap is the governor). |
-| 8 | Shared-protocol refs | `reference/evaluator-loop-protocol.md` (Brief = rubric, Echo/Palette = independent Evaluators, implement cluster = Generator); `reference/autonomy-quality-protocol.md` (intent contract, Decision Ledger, producer ≠ verifier — Echo/Palette never author the styles they score); `_common/PARALLEL.md` (Phase 3 ownership). Verdict/refutation/parity protocols: `N/A` (no verdict, no reproduction claim). |
+| 8 | Shared-protocol refs | `reference/evaluator-loop-protocol.md` (Brief = rubric, Echo/Palette = independent Evaluators, implement cluster = Generator); `reference/autonomy-quality-protocol.md` (intent contract, Decision Ledger, producer ≠ verifier — Echo/Palette never author the styles they score); `_common/PARALLEL.md` (Phase 3 ownership); `_common/PROPORTION_AND_SPACING.md` (sourced numbers for spacing/measure/grid/touch-target rubric axes — cite §9 defaults when the Brief sets a target score, §1 evidence tiers so a spec-level gap and a craft-convention gap are not scored alike, §4 inner ≤ outer as the density/hierarchy axis test). Verdict/refutation/parity protocols: `N/A` (no verdict, no reproduction claim). |
 
 ## Failure Modes Prevented
 

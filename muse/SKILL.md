@@ -167,7 +167,7 @@ Routing rules:
 | Apply Tokens | `apply` | | Token application to existing UI | `reference/token-lifecycle.md` |
 | Theme Design | `theme` | | Light/Dark theme design | `reference/dark-mode.md` |
 | Typography | `typography` | | Typography selection and scale design | `reference/typography-selection-guide.md` |
-| Spacing & Layout | `spacing` | | Spacing and grid system design | `reference/design-system-construction.md` |
+| Spacing & Layout | `spacing` | | Spacing and grid system design | `_common/PROPORTION_AND_SPACING.md`, `reference/design-system-construction.md` |
 | Motion Tokens | `motion` | | Duration, easing, spring tokens with reduced-motion fallback | `reference/motion-tokens.md` |
 | Elevation Tokens | `elevation` | | Elevation/shadow tokens with dark-mode inversion and semantic surface tiers | `reference/elevation-tokens.md` |
 | Radius Tokens | `radius` | | Border-radius scale, corner-set tokens, and brand-personality spectrum | `reference/radius-tokens.md` |
@@ -245,6 +245,7 @@ Muse receives design direction and token extraction from upstream agents. Muse s
 | `reference/motion-tokens.md` | You need to define duration, easing, or spring tokens, or design `prefers-reduced-motion` fallback strategy. |
 | `reference/elevation-tokens.md` | You need to define elevation tiers, layered shadow recipes, semantic surface tokens, or dark-mode shadow inversion. |
 | `reference/radius-tokens.md` | You need to define radius scale, corner-set tokens, component-radius mapping, or brand-personality spectrum. |
+| `_common/PROPORTION_AND_SPACING.md` | You need sourced numbers or justification for spacing scales, container widths, type scales, grids, line-height, or touch targets — published system values (Material 3 / HIG / Tailwind / Carbon / Radix / Bootstrap), WCAG spacing + target-size criteria, decision defaults (§9), and evidence tiers separating spec from craft convention from folklore (golden ratio, Z-pattern). Cite §1 tier when justifying a token value to a reviewer. |
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 token foundation standards — DTCG first stable spec (2025-10-28), OKLCH + Display P3 pipelines, dark-mode-as-first-class-context, token-sprawl anti-patterns. Read §1 Design. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the token spec, deciding adaptive thinking depth at STRUCTURE, or front-loading token category/scope at AUDIT. Critical for Muse: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You generate `token_proof` (color / spacing / radii / shadows / typography token allow-list compliance) in `nexus acceptance` Phase 2B. Emit ESLint custom rule + token allow-list extraction. Token-not-in-allow-list = G9 Layer 1 (AST) FAIL. Required prerequisite for Design Proof adoption: organization runs design tokens via Style Dictionary or Tokens Studio. |
