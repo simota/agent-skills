@@ -537,10 +537,19 @@ fun NotificationPermissionRequester(onResult: (Boolean) -> Unit) {
 |-----|-----|---------|
 | Unit test | XCTest / Swift Testing | JUnit 5 + MockK + Turbine (Flow) |
 | UI test | XCUITest | Espresso / Compose UI Test / Maestro |
-| Snapshot | swift-snapshot-testing | Paparazzi / Roborazzi |
+| Snapshot | swift-snapshot-testing | Paparazzi / Roborazzi / Compose Preview Screenshot Testing |
 | E2E | Maestro | Maestro / Espresso |
 
 Detail is owned by the handoff to `Radar` / `Voyager`.
+
+**Picking the Android snapshot tool** — all three render without a device; they differ in what they can capture:
+
+- **Compose Preview Screenshot Testing** (Google) — lowest setup: move `@Preview`s into the `screenshotTest` source set, and `@Preview` parameters generate the variant matrix. Default choice for a Compose-only screen.
+- **Paparazzi** (Cash App) — single-frame, View system + Compose. Choose for layout-level checks in unit-test CI.
+- **Roborazzi** — multi-frame / interaction-driven, with hardware-accelerated rendering. Choose when elevation shadows or clip-to-bounds content render incorrectly under the others, or when the capture must span an interaction.
+- **ComposablePreviewScanner** — auto-generates screenshot tests from existing `@Preview`s for whichever of the above is already adopted.
+
+The snapshot layer doubles as the render substrate for agent-driven visual iteration — see `reference/agent-visual-loop.md` §5.
 
 ---
 

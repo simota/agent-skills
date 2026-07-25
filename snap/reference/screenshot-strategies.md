@@ -140,7 +140,18 @@ XCUITest screenshots are **evidence**, not **baselines**. They confirm "here is 
 - Capturing only on failure and never at checkpoints for a release-gate smoke suite that a human is expected to visually spot-check — checkpoint captures are the intended trail there.
 - Committing screenshot output (`Snapshot.images/`, ad-hoc `.png` dumps) to the main branch — route to an artifact store or a dedicated screenshot branch (see `reference/fastlane-snapshot.md`).
 
+## Agent-Driven Capture (Distinct Third Mode)
+
+A coding agent iterating on a screen is a third consumer of screenshots, and it wants neither of the two modes above: not flow evidence, not a committed baseline, but a **throwaway render scored against a target**.
+
+- Do not route agent iteration through this file's `XCTAttachment` pattern — the capture is not diagnostic evidence of a failing assertion, and it should never land in `.xcresult`.
+- Preferred substrates are `swift-snapshot-testing` (fast, no boot), `xcrun simctl io <UDID> screenshot`, or an MCP tool that renders the SwiftUI preview directly (Xcode 26.3+ `RenderPreview`).
+- The agent's accept decision must come from a numeric diff, not its own reading of the image.
+
+Full loop contract, tool-layer selection, and documented failure modes → `native/reference/agent-visual-loop.md`.
+
 ## Cross-References
 
 - `reference/fastlane-snapshot.md` — the App Store screenshot pipeline that reuses this file's capture APIs inside dedicated `snapshot()` calls.
 - `reference/ci-integration.md` — extracting attached screenshots from `.xcresult` via `xcresulttool` in CI.
+- `native/reference/agent-visual-loop.md` — agent-in-the-loop screen implementation and visual debugging; consumes this skill's identifier taxonomy as its structural observation channel.

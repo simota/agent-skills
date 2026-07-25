@@ -1,6 +1,6 @@
 ---
 name: native
-description: "Implementing pure-native mobile features for iOS (Swift 6.3 + SwiftUI + Liquid Glass) and Android (Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive). Builds production features with @Observable/Swift Concurrency, Compose Strong Skipping, SwiftData/Room, Credential Manager + Passkeys, Privacy Manifest, App Intents, Foundation Models/Gemini Nano, and store-compliance staged rollout. Use when building production iOS/Android features. Not for cross-platform (RN/Flutter/KMP/CMP — out of scope), porting design (Port), prototypes (Forge), or web (Artisan)."
+description: "Implementing pure-native mobile features for iOS (Swift 6.3 + SwiftUI + Liquid Glass) and Android (Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive). Builds production features with @Observable/Swift Concurrency, Compose Strong Skipping, SwiftData/Room, Credential Manager + Passkeys, Privacy Manifest, App Intents, Foundation Models/Gemini Nano, and store-compliance staged rollout. Also runs the agent visual loop for screen implementation and visual debugging against a reference design — Xcode MCP RenderPreview, XcodeBuildMCP, mobile-mcp, Android Studio Agent Mode, simulator/emulator capture, and numeric screenshot diffing. Use when building production iOS/Android features or iterating a native screen until it matches a design. Not for cross-platform (RN/Flutter/KMP/CMP — out of scope), porting design (Port), prototypes (Forge), web mockup-to-code (Pixel), mobile test suites (Snap/Voyager), or web (Artisan)."
 ---
 
 <!--
@@ -210,6 +210,7 @@ Three core architecture decisions per feature — full tables and code samples �
 | Staged Rollout | `rollout` | | TestFlight phased / Play staged + feature flags + halt-hotfix | `reference/release-rollout.md` |
 | Store Compliance | `store` | | App Store / Play submission compliance audit | `reference/store-compliance.md` |
 | CLI Tooling | `cli` | | Terminal automation — `xcrun` (simctl/devicectl/xctrace/xcresulttool/notarytool/atos) + `adb` (pm/am/logcat/dumpsys/pair/Perfetto) | `reference/xcrun-cli.md`, `reference/adb-cli.md` |
+| Agent Visual Loop | `visualloop` | | Agent-driven screen implementation / visual debugging against a reference — render or capture, score with a numeric oracle, iterate under a ≤ 3-pass cap | `reference/agent-visual-loop.md` |
 
 ## Subcommand Dispatch
 
@@ -233,6 +234,8 @@ Per-Recipe behavior notes (key gotchas + thresholds) → `reference/recipes.md`.
 | iOS terminal tooling (`xcrun` / `simctl` / `devicectl` / `xctrace` / `notarytool` / `atos`) | `cli` Recipe — iOS | `reference/xcrun-cli.md` |
 | Android terminal tooling (`adb` / `logcat` / `dumpsys` / `am` / `pm` / wireless pair / `screenrecord`) | `cli` Recipe — Android | `reference/adb-cli.md` |
 | Cross-platform CLI (Perfetto / xctrace / cold-start / jank / demo capture) | `cli` Recipe — both platforms | `reference/xcrun-cli.md`, `reference/adb-cli.md` |
+| "Match this design", "the screen looks wrong", screenshot/mockup supplied as the target | `visualloop` Recipe — observe by accessibility tree first, score pixels numerically, cap at 3 passes | `reference/agent-visual-loop.md` |
+| Agent tooling for simulator/emulator control (Xcode MCP `xcrun mcpbridge` / XcodeBuildMCP / `mobile-mcp` / Android Studio Agent Mode) | `visualloop` Recipe — tool-layer selection table | `reference/agent-visual-loop.md` |
 
 ## Output Requirements
 
@@ -287,6 +290,7 @@ Every Native deliverable must include:
 | `reference/bg-execution.md` | iOS BGTaskScheduler, Android WorkManager, Doze / App Standby, Foreground Service Types |
 | `reference/xcrun-cli.md` | `xcrun` toolchain — `simctl` / `devicectl` / `xctrace` / `xcresulttool` / `notarytool` / `atos` / binary introspection |
 | `reference/adb-cli.md` | `adb` reference — `pm` / `am` / `logcat` / `dumpsys` / wireless pair / Perfetto / iOS↔Android command map |
+| `reference/agent-visual-loop.md` | Agent-in-the-loop screen work — loop contract + pass cap, accessibility-tree-before-pixels rule, iOS/Android agent tool layer (Xcode MCP `RenderPreview` / XcodeBuildMCP / `mobile-mcp` / Android Studio Agent Mode), ImageMagick numeric oracle, snapshot substrate, agent-readiness authoring, documented failure modes |
 | `_common/OPUS_5_AUTHORING.md` | Sizing implementation summary, effort-level for offline tier, platform/framework front-load. Critical: P3, P6 |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Native-specific Output/Next schema. |
 
