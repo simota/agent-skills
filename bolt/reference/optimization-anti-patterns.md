@@ -1,126 +1,126 @@
 # Performance Optimization Anti-Patterns
 
-> パフォーマンス最適化の落とし穴、早すぎる最適化、最適化順序の誤り、計測なき最適化の問題
+> Pitfalls of performance optimization, premature optimization, incorrect optimization ordering, and optimizing without measurement
 
-## 1. 最適化 10 大アンチパターン
+## 1. 10 Major Optimization Anti-Patterns
 
-| # | アンチパターン | 症状 | 影響 | 対策 |
+| # | Anti-Pattern | Symptom | Impact | Countermeasure |
 |---|-------------|------|------|------|
-| **PO-01** | **早すぎる最適化** | ボトルネック特定前にコードを複雑化 | 可読性低下・保守コスト増・実効果なし | 計測→特定→最適化の順序を厳守 |
-| **PO-02** | **計測なき最適化** | プロファイリングせず「遅そう」で最適化 | 実際のボトルネックを見逃す | Chrome DevTools / Lighthouse / clinic.js で計測してから着手 |
-| **PO-03** | **マイクロ最適化偏重** | ループ内 1ms 削減に集中、アーキ問題を無視 | N+1 クエリ等の大問題が放置される | 影響度の大きい問題から着手（DB > ネットワーク > レンダリング > JS計算） |
-| **PO-04** | **過剰メモ化** | 全てに useMemo/useCallback/memo を適用 | コード複雑化・メモ化コスト > 再計算コスト | 計測で効果確認。React Compiler 時代は手動メモ化を減らす方向へ |
-| **PO-05** | **最適化の層違い** | フロントエンドで頑張るがバックエンドがボトルネック | 効果が出ない最適化に時間を浪費 | リクエストライフサイクル全体をプロファイリング |
-| **PO-06** | **キャッシュ万能思考** | 全てをキャッシュで解決しようとする | 整合性問題・メモリ圧迫・デバッグ困難 | キャッシュは症状の緩和。根本原因（遅いクエリ等）を先に修正 |
-| **PO-07** | **ベンチマーク環境乖離** | 開発環境でのみ計測、本番と条件が異なる | 本番で改善されない・悪化する | RUM (Real User Monitoring) + Synthetic Monitoring の併用 |
-| **PO-08** | **回帰テスト不在** | 最適化後のパフォーマンス回帰を検知できない | 新機能追加で最適化が無効化される | Performance Budget + CI/CD 統合 |
-| **PO-09** | **ライブラリ盲信** | 「軽量」と謳うライブラリを無検証で導入 | 実際はバンドルサイズ増・パフォーマンス悪化 | bundlephobia で事前検証 + 実測 |
-| **PO-10** | **単一メトリクス偏重** | LCP だけ、またはバンドルサイズだけに注目 | 他の指標が悪化（INP 悪化、CLS 増加等） | Core Web Vitals 3 指標 + ビジネスメトリクスの総合評価 |
+| **PO-01** | **Premature optimization** | Code becomes complex before the bottleneck is identified | Reduced readability, higher maintenance cost, no real benefit | Strictly follow measure → identify → optimize order |
+| **PO-02** | **Optimizing without measurement** | Optimizing based on "this seems slow" without profiling | The actual bottleneck gets missed | Measure with Chrome DevTools / Lighthouse / clinic.js before starting |
+| **PO-03** | **Over-focus on micro-optimization** | Chasing 1ms savings inside a loop while ignoring architectural issues | Larger problems like N+1 queries go unaddressed | Tackle the highest-impact issues first (DB > network > rendering > JS computation) |
+| **PO-04** | **Excessive memoization** | Applying useMemo/useCallback/memo to everything | Code complexity increases; memoization cost > recomputation cost | Confirm impact via measurement. Trend toward less manual memoization in the React Compiler era |
+| **PO-05** | **Optimizing the wrong layer** | Working hard on the frontend while the backend is the bottleneck | Time wasted on optimizations that show no effect | Profile the entire request lifecycle |
+| **PO-06** | **Treating caching as a cure-all** | Trying to solve everything with caching | Consistency issues, memory pressure, hard-to-debug problems | Caching only masks symptoms — fix the root cause (e.g. slow queries) first |
+| **PO-07** | **Benchmark/production environment mismatch** | Measuring only in dev, where conditions differ from production | No improvement — or a regression — in production | Combine RUM (Real User Monitoring) with Synthetic Monitoring |
+| **PO-08** | **No regression testing** | Can't detect performance regressions after optimizing | New features silently undo the optimization | Performance Budget + CI/CD integration |
+| **PO-09** | **Blind trust in libraries** | Adopting libraries claiming to be "lightweight" without verification | Bundle size actually increases, performance worsens | Pre-verify with bundlephobia + measure directly |
+| **PO-10** | **Over-focus on a single metric** | Focusing only on LCP, or only on bundle size | Other metrics worsen (e.g. INP regresses, CLS increases) | Evaluate holistically across all 3 Core Web Vitals + business metrics |
 
 ---
 
-## 2. 最適化の正しい順序
+## 2. The Correct Order of Optimization
 
 ```
-最適化の ROI が高い順（一般的なWebアプリケーション）:
+Optimization in ROI order (for a typical web application):
 
-  1. データベースクエリ（最大効果）
-     - N+1 解消: 100→1 クエリ = 40x 高速化
-     - インデックス追加: Seq Scan → Index Scan = 10-100x
-     - 不要カラム除外: SELECT * → 必要カラム = 2-5x
+  1. Database queries (biggest impact)
+     - Resolving N+1: 100→1 queries = 40x faster
+     - Adding an index: Seq Scan → Index Scan = 10-100x
+     - Excluding unneeded columns: SELECT * → needed columns = 2-5x
 
-  2. ネットワーク・API
-     - ペイロード削減: 不要データ除外 = レイテンシ改善
-     - バッチ API: N リクエスト → 1 リクエスト
-     - 圧縮: gzip/brotli = 60-80% 転送量削減
+  2. Network / API
+     - Payload reduction: exclude unneeded data = latency improvement
+     - Batch API: N requests → 1 request
+     - Compression: gzip/brotli = 60-80% reduction in transfer size
 
-  3. キャッシュ戦略
-     - HTTP キャッシュ: 再リクエスト回避
-     - CDN: エッジ配信 = TTFB 改善
-     - アプリケーションキャッシュ: DB 負荷軽減
+  3. Caching strategy
+     - HTTP cache: avoid re-requests
+     - CDN: edge delivery = improves TTFB
+     - Application cache: reduces DB load
 
-  4. フロントエンドレンダリング
-     - SSR/SSG: 初期描画高速化
-     - コード分割: 初期バンドル削減
-     - 仮想化: 大量リスト対応
+  4. Frontend rendering
+     - SSR/SSG: speeds up initial paint
+     - Code splitting: reduces initial bundle
+     - Virtualization: handles large lists
 
-  5. JavaScript 計算（最小効果）
-     - 配列操作最適化: 250 アイテムソート < 2ms
-     - 重い計算 → Web Worker
-     - デバウンス/スロットル
+  5. JavaScript computation (smallest impact)
+     - Array operation optimization: sorting 250 items < 2ms
+     - Heavy computation → Web Worker
+     - Debounce/throttle
 
-注意: 5 から始めるのが PO-03 の典型例
-      1 から始めるのがプロの最適化
+Note: Starting from 5 is the classic case of PO-03;
+      starting from 1 is what professional optimization looks like.
 ```
 
 ---
 
-## 3. 計測の 3 層モデル
+## 3. The Three-Layer Measurement Model
 
-| 層 | ツール | メトリクス | タイミング |
+| Layer | Tools | Metrics | Timing |
 |---|--------|---------|---------|
-| **開発時** | React DevTools · Chrome Performance · Lighthouse | Render time · Bundle size · LCP/INP/CLS | PR ごと |
-| **CI/CD** | Lighthouse CI · webpack-bundle-analyzer · autocannon | Budget 超過 · 回帰検出 · スループット | マージごと |
-| **本番** | RUM (web-vitals) · Synthetic Monitoring · APM | p50/p75/p95 · エラー率 · ビジネス影響 | 常時 |
+| **Development** | React DevTools · Chrome Performance · Lighthouse | Render time · Bundle size · LCP/INP/CLS | Per PR |
+| **CI/CD** | Lighthouse CI · webpack-bundle-analyzer · autocannon | Budget overruns · regression detection · throughput | Per merge |
+| **Production** | RUM (web-vitals) · Synthetic Monitoring · APM | p50/p75/p95 · error rate · business impact | Continuous |
 
 ```
-計測なしで最適化してはいけない理由:
+Why you must never optimize without measuring:
 
-  人間の直感は信頼できない:
-    - 「この関数が遅い」→ 実測するとレンダリングの 2%
-    - 「メモ化すれば速くなる」→ メモ化のオーバーヘッド > 再計算コスト
-    - 「バンドルが大きい」→ 実は画像が 80%
+  Human intuition is unreliable:
+    - "This function seems slow" → measurement shows it's 2% of rendering
+    - "Memoizing this will make it faster" → memoization overhead > recomputation cost
+    - "The bundle is big" → actually 80% of it is images
 
-  正しいアプローチ:
-    1. 症状を特定（「ページ読み込みが 5 秒」）
-    2. プロファイリングで原因特定（「API レスポンス 3 秒 + レンダリング 1.5 秒」）
-    3. 最大要因から対処（「API の N+1 解消 → 3 秒→0.1 秒」）
-    4. 効果を計測（「5 秒 → 2.1 秒 = 58% 改善」）
-```
-
----
-
-## 4. 最適化判定フローチャート
-
-```
-パフォーマンス問題を検出したら:
-
-  1. 計測した？ → No → 計測してからやり直し
-                → Yes ↓
-
-  2. ボトルネックは？
-     ├─ DB クエリ → EXPLAIN ANALYZE → インデックス/N+1/クエリ書き換え
-     ├─ ネットワーク → ペイロード/リクエスト数/圧縮を確認
-     ├─ レンダリング → React DevTools で再レンダリング確認
-     ├─ バンドルサイズ → bundle-analyzer で大きいライブラリ特定
-     └─ JS 計算 → Chrome Performance で長いタスク特定
-
-  3. 変更は < 50 行？ → No → 分割できないか検討
-                     → Yes ↓
-
-  4. テストは通る？ → No → 修正
-                   → Yes ↓
-
-  5. 改善を計測した？ → No → 計測
-                     → Yes → PR 作成（What/Why/Impact/Measurement）
+  The correct approach:
+    1. Identify the symptom ("page load takes 5 seconds")
+    2. Profile to identify the cause ("API response 3s + rendering 1.5s")
+    3. Address the largest factor first ("resolve API N+1 → 3s → 0.1s")
+    4. Measure the impact ("5s → 2.1s = 58% improvement")
 ```
 
 ---
 
-## 5. Bolt との連携
+## 4. Optimization Decision Flowchart
 
 ```
-Bolt での活用:
-  1. PROFILE フェーズで PO-01〜10 のチェックリスト適用
-  2. SELECT フェーズで最適化の正しい順序を遵守
-  3. OPTIMIZE フェーズで計測の 3 層モデルを活用
-  4. VERIFY フェーズで回帰テスト実施
+When a performance problem is detected:
 
-品質ゲート:
-  - 計測データなしの最適化提案 → ブロック（PO-02 防止）
-  - < 1ms の改善 → マイクロ最適化として却下（PO-03 防止）
-  - 全関数に useMemo → 過剰メモ化として警告（PO-04 防止）
-  - パフォーマンスバジェット未設定 → CI 統合を推奨（PO-08 防止）
+  1. Did you measure it? → No → measure first, then redo
+                          → Yes ↓
+
+  2. Where's the bottleneck?
+     ├─ DB query → EXPLAIN ANALYZE → index / N+1 / query rewrite
+     ├─ Network → check payload / request count / compression
+     ├─ Rendering → check re-renders with React DevTools
+     ├─ Bundle size → identify large libraries with bundle-analyzer
+     └─ JS computation → identify long tasks with Chrome Performance
+
+  3. Is the change < 50 lines? → No → consider splitting it up
+                                → Yes ↓
+
+  4. Do the tests pass? → No → fix
+                        → Yes ↓
+
+  5. Did you measure the improvement? → No → measure
+                                       → Yes → open a PR (What/Why/Impact/Measurement)
+```
+
+---
+
+## 5. Integration with Bolt
+
+```
+Usage within Bolt:
+  1. Apply the PO-01 through PO-10 checklist in the PROFILE phase
+  2. Follow the correct optimization order in the SELECT phase
+  3. Leverage the three-layer measurement model in the OPTIMIZE phase
+  4. Run regression tests in the VERIFY phase
+
+Quality gates:
+  - Optimization proposals with no measurement data → blocked (prevents PO-02)
+  - Improvements < 1ms → rejected as micro-optimization (prevents PO-03)
+  - useMemo on every function → warn as excessive memoization (prevents PO-04)
+  - No performance budget configured → recommend CI integration (prevents PO-08)
 ```
 
 **Source:** [Stackify: Why Premature Optimization is Evil](https://stackify.com/premature-optimization-evil/) · [Revelo: How to Avoid Premature Optimization](https://www.revelo.com/blog/premature-optimization) · [Landskill: JavaScript Performance Optimization 2026](https://www.landskill.com/blog/javascript-performance-optimization/) · [TechLasi: Software Performance Optimization Tips 2026](https://techlasi.com/savvy/software-performance-optimization-tips/)

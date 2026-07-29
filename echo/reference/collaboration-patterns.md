@@ -7,43 +7,43 @@ Detailed collaboration patterns and handoff formats for Echo agent.
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    INPUT PROVIDERS                          │
-│  Field → ペルソナデータ                                │
-│  Voice → 実ユーザーフィードバック                           │
-│  Pulse → 定量メトリクス                                     │
+│  Field → Persona data                                │
+│  Voice → Real user feedback                           │
+│  Pulse → Quantitative metrics                                     │
 └─────────────────────┬───────────────────────────────────────┘
                       ↓
             ┌─────────────────┐
             │      ECHO       │
-            │  UX検証エンジン │
+            │  UX Validation Engine │
             └────────┬────────┘
                      ↓
 ┌─────────────────────────────────────────────────────────────┐
 │                   OUTPUT CONSUMERS                          │
-│  Palette → インタラクション改善                             │
+│  Palette → Interaction improvements                             │
 ...
 ```
 
 ## Pattern A: Validation Loop (Echo ↔ Palette)
 
 ```
-Echo（friction発見: -2.5/5）
+Echo (friction discovered: -2.5/5)
   ↓ handoff
-Palette（改善案: loading state追加）
+Palette (improvement: add loading state)
   ↓ handoff back
-Echo（改善後検証: +3.8/5）
-  ↓ 検証完了
+Echo (post-improvement validation: +3.8/5)
+  ↓ validation complete
 ```
 
 **Handoff Format (Echo → Palette):**
 ```markdown
 ## Echo → Palette Handoff
 
-**Friction Point**: [具体的な問題箇所]
-**Persona**: [検証ペルソナ]
+**Friction Point**: [Specific problem location]
+**Persona**: [Validation persona]
 **Emotion Score**: [Before score]
-**Root Cause**: [認知的原因 - mental model gap type]
-**User Quote**: [ペルソナの発言]
-**Suggested Focus**: [改善の方向性]
+**Root Cause**: [Cognitive cause - mental model gap type]
+**User Quote**: [Persona's statement]
+**Suggested Focus**: [Direction for improvement]
 
 → `/Palette improve interaction`
 ```
@@ -52,10 +52,10 @@ Echo（改善後検証: +3.8/5）
 ```markdown
 ## Palette → Echo Validation Request
 
-**Improvement Made**: [実施した改善]
-**Target Metric**: [改善したい指標]
-**Validation Persona**: [検証すべきペルソナ]
-**Expected Outcome**: [期待する結果]
+**Improvement Made**: [Improvement implemented]
+**Target Metric**: [Metric to improve]
+**Validation Persona**: [Persona to validate with]
+**Expected Outcome**: [Expected result]
 
 → `/Echo validate with [persona]`
 ```
@@ -63,32 +63,32 @@ Echo（改善後検証: +3.8/5）
 ## Pattern B: Hypothesis Generation Loop (Echo → Experiment → Pulse)
 
 ```
-Echo（フリクション発見 + JTBD分析）
+Echo (friction discovery + JTBD analysis)
   ↓
-Experiment（A/Bテスト仮説設計）
+Experiment (A/B test hypothesis design)
   ↓
-Pulse（成功メトリクス定義）
+Pulse (success metric definition)
   ↓
-実験実行
+Run experiment
   ↓
-Echo（勝者バリアントをペルソナ検証）
+Echo (validate winning variant with persona)
 ```
 
 **Handoff Format (Echo → Experiment):**
 ```markdown
 ## Echo → Experiment Handoff
 
-**Finding**: [発見した問題]
-**Location**: [フロー内の位置]
-**Affected Personas**: [影響を受けるペルソナ]
-**JTBD Insight**: [潜在ニーズ]
-**Current Emotion Score**: [現在スコア]
+**Finding**: [Problem discovered]
+**Location**: [Location in flow]
+**Affected Personas**: [Affected personas]
+**JTBD Insight**: [Latent need]
+**Current Emotion Score**: [Current score]
 
-**Hypothesis**: If [変更] then [結果] because [理由]
+**Hypothesis**: If [change] then [result] because [reason]
 **Suggested Variants**:
-- Control: [現状]
-- Variant A: [提案1]
-- Variant B: [提案2（オプション）]
+- Control: [Current state]
+- Variant A: [Proposal 1]
+- Variant B: [Proposal 2 (optional)]
 
 **Metrics to Track**:
 ...
@@ -97,30 +97,30 @@ Echo（勝者バリアントをペルソナ検証）
 ## Pattern C: Prediction Validation Loop (Echo ↔ Voice)
 
 ```
-Echo（フリクション予測）
+Echo (friction prediction)
   ↓
-Voice（実ユーザーフィードバック収集）
+Voice (real user feedback collection)
   ↓
-比較・精度測定
+Comparison / accuracy measurement
   ↓
-Echo（シミュレーション精度向上）
+Echo (improve simulation accuracy)
 ```
 
 **Validation Report Format:**
 ```markdown
 ## Echo-Voice Prediction Validation
 
-**Flow**: [検証フロー名]
-**Period**: [Voice収集期間]
+**Flow**: [Flow name being validated]
+**Period**: [Voice collection period]
 
 | Echo Prediction | Voice Finding | Match |
 |-----------------|---------------|-------|
-| [予測1] | [実際のフィードバック] | ✅/❌ |
-| [予測2] | [実際のフィードバック] | ✅/❌ |
+| [Prediction 1] | [Actual feedback] | ✅/❌ |
+| [Prediction 2] | [Actual feedback] | ✅/❌ |
 
 **Prediction Accuracy**: [%]
-**False Positives**: [Echoが予測したが発生しなかった]
-**False Negatives**: [Echoが見逃した実際の問題]
+**False Positives**: [Echo predicted but it did not occur]
+**False Negatives**: [Actual problem Echo missed]
 
 **Calibration Actions**:
 ...
@@ -129,11 +129,11 @@ Echo（シミュレーション精度向上）
 ## Pattern D: Visualization (Echo → Canvas)
 
 ```
-Echo（ジャーニーデータ + emotion scores）
+Echo (journey data + emotion scores)
   ↓
-Canvas（Journey Map / Friction Heatmap生成）
+Canvas (generate Journey Map / Friction Heatmap)
   ↓
-ステークホルダー共有
+Stakeholder sharing
 ```
 
 **Handoff Format (Echo → Canvas):**
@@ -141,8 +141,8 @@ Canvas（Journey Map / Friction Heatmap生成）
 ## Echo → Canvas Visualization Request
 
 **Visualization Type**: Journey Map | Friction Heatmap | Before/After Comparison
-**Flow**: [フロー名]
-**Persona**: [ペルソナ名]
+**Flow**: [Flow name]
+**Persona**: [Persona name]
 **Data**:
 | Step | Action | Score | Friction Type |
 |------|--------|-------|---------------|
@@ -158,41 +158,41 @@ Canvas（Journey Map / Friction Heatmap生成）
 
 ## Pattern E: Root Cause Analysis (Echo → Scout)
 
-UIバグとUXフリクションの切り分け：
+Distinguishing UI bugs from UX friction:
 
 ```
-Echo（「ボタンが反応しない」→ UIバグの可能性）
+Echo ("Button doesn't respond" → possible UI bug)
   ↓
-Scout（技術的根本原因分析）
+Scout (technical root cause analysis)
   ↓
-Builder or Palette（修正実装）
+Builder or Palette (fix implementation)
   ↓
-Echo（修正後検証）
+Echo (post-fix validation)
 ```
 
 **Handoff Format (Echo → Scout):**
 ```markdown
 ## Echo → Scout Investigation Request
 
-**Symptom**: [ユーザー視点の症状]
-**Location**: [発生箇所]
-**Persona Quote**: [ペルソナの発言]
+**Symptom**: [Symptom from user's perspective]
+**Location**: [Location where it occurs]
+**Persona Quote**: [Persona's statement]
 **Suspected Type**: UI Bug | UX Design Issue | Both
-**Reproduction Steps**: [再現手順（あれば）]
+**Reproduction Steps**: [Reproduction steps (if any)]
 
 → `/Scout investigate`
 ```
 
 ## Pattern F: Feature Proposal (Echo → Spark)
 
-潜在ニーズを新機能アイデアに変換：
+Converting latent needs into new feature ideas:
 
 ```
-Echo（JTBD分析で潜在ニーズ発見）
+Echo (discover latent need via JTBD analysis)
   ↓
-Spark（機能提案仕様書作成）
+Spark (create feature proposal spec)
   ↓
-Echo（提案をペルソナ視点で検証）
+Echo (validate proposal from persona perspective)
 ```
 
 **Handoff Format (Echo → Spark):**
@@ -200,47 +200,47 @@ Echo（提案をペルソナ視点で検証）
 ## Echo → Spark Feature Opportunity
 
 **Latent Need Discovered**:
-- Functional Job: [達成したいこと]
-- Emotional Job: [感じたいこと]
-- Social Job: [見られたいこと]
+- Functional Job: [What they want to accomplish]
+- Emotional Job: [What they want to feel]
+- Social Job: [How they want to be seen]
 
 **Evidence**:
-- Persona: [ペルソナ]
-- Behavior Observed: [観察された行動]
-- Friction Score: [スコア]
-- User Quote: [発言]
+- Persona: [Persona]
+- Behavior Observed: [Observed behavior]
+- Friction Score: [Score]
+- User Quote: [Quote]
 
-**Opportunity Size**: [影響を受けるペルソナ数/頻度]
+**Opportunity Size**: [Number of affected personas / frequency]
 
 ...
 ```
 
 ## Pattern G: Persona Generation (Echo ↔ Field)
 
-コード/ドキュメントからペルソナを生成し、Field の実データで検証:
+Generate a persona from code/documentation and validate it with Field's real data:
 
 ```
-Echo（コード/ドキュメント分析 → ペルソナ生成）
+Echo (analyze code/documentation → generate persona)
   ↓
-Field（実ユーザーデータで検証）
+Field (validate with real user data)
   ↓
-Echo（ペルソナ精度向上・更新）
+Echo (improve persona accuracy / update)
 ```
 
 **Handoff Format (Echo → Field):**
 ```markdown
 ## Echo → Field Persona Validation Request
 
-**Generated Persona**: [ペルソナ名]
-**Source**: [分析したファイル]
+**Generated Persona**: [Persona name]
+**Source**: [Files analyzed]
 **Key Assumptions**:
-- [仮定1: 例「モバイル利用が70%」]
-- [仮定2: 例「初回購入者が主要ターゲット」]
+- [Assumption 1: e.g. "70% mobile usage"]
+- [Assumption 2: e.g. "first-time buyers are the primary target"]
 
 **Validation Needed**:
-- [ ] ユーザータイプの割合
-- [ ] 実際の利用デバイス比率
-- [ ] ペインポイントの優先度
+- [ ] Proportion of user types
+- [ ] Actual device usage ratio
+- [ ] Pain point priority
 
 → `/Field validate persona assumptions`
 ```
@@ -249,16 +249,16 @@ Echo（ペルソナ精度向上・更新）
 ```markdown
 ## Field → Echo Persona Update
 
-**Persona**: [ペルソナ名]
+**Persona**: [Persona name]
 **Validation Result**:
-| 仮定 | 実データ | ギャップ |
+| Assumption | Actual Data | Gap |
 |------|---------|---------|
-| モバイル70% | モバイル82% | +12% |
-| 初回購入者中心 | リピーター40% | 要ペルソナ追加 |
+| Mobile 70% | Mobile 82% | +12% |
+| First-time-buyer focused | 40% repeat buyers | Additional persona needed |
 
 **Recommended Updates**:
-- [Profile 更新内容]
-- [Emotion Triggers 更新内容]
+- [Profile update content]
+- [Emotion Triggers update content]
 
 → Echo updates `.agents/personas/{service}/{persona}.md`
 ```
@@ -267,16 +267,16 @@ Echo（ペルソナ精度向上・更新）
 
 | Partner | Echo → Partner | Partner → Echo |
 |---------|----------------|----------------|
-| **Field** | ペルソナ検証結果、生成ペルソナの検証依頼 | 実データに基づくペルソナ定義、ペルソナ更新提案 |
-| **Voice** | 予測との比較データ | 実ユーザー感情フィードバック |
-| **Palette** | フリクションポイント | 改善後の検証依頼 |
-| **Experiment** | A/Bテスト仮説 | 勝者バリアント検証依頼 |
-| **Growth** | CRO対象フローの検証 | コンバージョン改善策の検証依頼 |
-| **Canvas** | ジャーニーデータ | 可視化済みフロー図 |
-| **Scout** | UIバグ疑いの調査依頼 | 根本原因に基づく再検証依頼 |
-| **Spark** | 潜在ニーズ/JTBD | 新機能案の検証依頼 |
-| **Muse** | デザイン一貫性問題 | トークン適用後の検証依頼 |
-| **Pulse** | 感情スコアのメトリクス化 | 定量データに基づく検証対象 |
+| **Field** | Persona validation results, requests to validate generated personas | Persona definitions based on real data, persona update proposals |
+| **Voice** | Comparison data against predictions | Real user emotional feedback |
+| **Palette** | Friction points | Post-improvement validation requests |
+| **Experiment** | A/B test hypotheses | Winning variant validation requests |
+| **Growth** | Validation of CRO target flows | Conversion improvement validation requests |
+| **Canvas** | Journey data | Visualized flow diagrams |
+| **Scout** | Investigation requests for suspected UI bugs | Re-validation requests based on root cause |
+| **Spark** | Latent needs / JTBD | Validation requests for new feature proposals |
+| **Muse** | Design consistency issues | Post-token-application validation requests |
+| **Pulse** | Metricization of emotion scores | Validation targets based on quantitative data |
 
 ## With Lens (Journey Evidence)
 

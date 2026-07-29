@@ -108,29 +108,29 @@ Contents: thematic analysis, affinity synthesis, insight cards, usability plan, 
 ## Report Template
 
 ```markdown
-## ユーザーリサーチレポート
+## User Research Report
 
-### リサーチ目的
+### Research Objective
 - [Research question]
 
-### 方法論
+### Methodology
 - Methods: [Methods]
 - Participants: [N]
 
-### 分析結果
+### Findings
 #### Finding 1: [Title]
 - Evidence: Y of X participants
 - Quote: "[Representative quote]"
 
-### ペルソナ/ジャーニーマップ
+### Personas / Journey Maps
 - [If applicable]
 
-### 推奨事項
+### Recommendations
 | Priority | Recommendation | Confidence | Rationale |
 |----------|----------------|------------|-----------|
 | High | [Recommendation] | High / Medium / Low | [Reason] |
 
-### 次のアクション
+### Next Actions
 1. [Action]
 2. [Action]
 ```

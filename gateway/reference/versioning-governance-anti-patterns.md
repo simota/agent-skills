@@ -1,121 +1,121 @@
 # API Versioning & Governance Anti-Patterns
 
-> バージョニング戦略、破壊的変更管理、OpenAPIスペック管理、APIガバナンスの失敗パターン
+> Failure patterns in versioning strategy, breaking-change management, OpenAPI spec management, and API governance
 >
-> **2026-05 baseline**: OpenAPI 3.2.0（2025-09-23 公開）が現在のターゲット。3.0/3.1 と完全後方互換のため既存仕様は無変更で valid。Stripe は 2024-09-30.`acacia` から **月次マイナー＋年2回 named major**（現行 `2026-04-22.dahlia`）の CalVer 運用に移行 — 月次は必ず additive。新規 SaaS で date-pinned versioning を採用する際は Stripe の運用ポリシーを参照する。**RFC 9745 Deprecation**（2025-03）が Standards Track として確定、構造化フィールド `Date` 型 (`Deprecation: @1727136000`) が canonical。
+> **2026-05 baseline**: OpenAPI 3.2.0 (published 2025-09-23) is the current target. It's fully backward-compatible with 3.0/3.1, so existing specs remain valid unchanged. Stripe moved from 2024-09-30 `acacia` to a CalVer operation of **monthly minor + two named majors per year** (currently `2026-04-22.dahlia`) — monthly releases must always be additive. When adopting date-pinned versioning for a new SaaS product, reference Stripe's operating policy. **RFC 9745 Deprecation** (2025-03) has been finalized as a Standards Track, and the structured `Date`-typed field (`Deprecation: @1727136000`) is now canonical.
 
-## 1. バージョニング 7 大アンチパターン
+## 1. The 7 Major Versioning Anti-Patterns
 
-| # | アンチパターン | 問題 | 兆候 | 対策 |
+| # | Anti-Pattern | Problem | Symptoms | Countermeasure |
 |---|-------------|------|------|------|
-| **VG-01** | **No Versioning Strategy（バージョニング戦略なし）** | APIにバージョンの概念がなく、変更が直接反映 | 破壊的変更でクライアントが突然動作停止 | 初期設計時にバージョニング方式選定（URL path推奨）、セマンティックバージョニング |
-| **VG-02** | **Over-Versioning（過剰バージョニング）** | 軽微な変更でもメジャーバージョンを発行 | v1→v2→v3→v7が数ヶ月で乱立、保守コスト爆発 | 破壊的変更のみバージョン発行、追加的変更は既存バージョン内で吸収 |
-| **VG-03** | **No Deprecation Plan（非推奨化計画なし）** | 旧バージョンを告知なく突然削除 or 永久に放置 | クライアント破壊 or 古いバージョンが無期限に稼働 | 6ヶ月告知→12ヶ月移行支援→18-24ヶ月で削除、Deprecation/Sunsetヘッダー |
-| **VG-04** | **Inconsistent Versioning Across Services（サービス間バージョン不統一）** | マイクロサービスごとに異なるバージョニング方式 | `/v1/users` + `?api_version=2` + `Accept: v3` が混在 | 組織横断で統一バージョニングポリシー策定 |
-| **VG-05** | **Silent Breaking Changes（無通知破壊的変更）** | 消費者への通知なく互換性を壊す変更をデプロイ | クライアントアプリが突然エラー、信頼喪失 | 変更ログ公開、breaking change検出ツール（oasdiff）、消費者への通知フロー |
-| **VG-06** | **Spec Drift（仕様と実装の乖離）** | OpenAPI仕様と実際のAPI動作が不一致 | 70%のAPI障害がスペックドリフトに起因、ドキュメント不信 | 契約テスト（Schemathesis/Dredd）、CI/CDでスペック検証、ランタイムモニタリング |
-| **VG-07** | **No Breaking Change Detection（破壊的変更検出なし）** | PRマージ前に互換性チェックがない | 破壊的変更が本番到達後に発覚 | oasdiff（300+ルール）をCI/CDに統合、PR時に自動チェック |
+| **VG-01** | **No Versioning Strategy** | The API has no concept of versions; changes apply directly | Breaking changes suddenly stop clients from working | Select a versioning approach at initial design time (URL path recommended), use semantic versioning |
+| **VG-02** | **Over-Versioning** | Issuing a major version even for minor changes | v1→v2→v3→v7 proliferate within months, maintenance cost explodes | Issue a version only for breaking changes; absorb additive changes within the existing version |
+| **VG-03** | **No Deprecation Plan** | Old versions are removed without notice, or left running indefinitely | Clients break, or old versions run indefinitely | 6-month notice → 12-month migration support → removal at 18-24 months, use Deprecation/Sunset headers |
+| **VG-04** | **Inconsistent Versioning Across Services** | Each microservice uses a different versioning scheme | `/v1/users` + `?api_version=2` + `Accept: v3` all coexist | Establish a unified versioning policy across the organization |
+| **VG-05** | **Silent Breaking Changes** | Deploying compatibility-breaking changes without notifying consumers | Client apps suddenly error out, trust is lost | Publish changelogs, use breaking-change detection tools (oasdiff), establish a consumer notification flow |
+| **VG-06** | **Spec Drift** | The OpenAPI spec and the actual API behavior diverge | 70% of API outages stem from spec drift, documentation becomes distrusted | Contract testing (Schemathesis/Dredd), spec validation in CI/CD, runtime monitoring |
+| **VG-07** | **No Breaking Change Detection** | No compatibility check before a PR is merged | Breaking changes are only discovered after reaching production | Integrate oasdiff (300+ rules) into CI/CD, auto-check on every PR |
 
 ---
 
-## 2. 破壊的変更 vs 非破壊的変更
+## 2. Breaking vs. Non-Breaking Changes
 
 ```
-非破壊的変更（バージョン不要）:
-  ✅ 新エンドポイントの追加
-  ✅ レスポンスへのオプショナルフィールド追加
-  ✅ リクエストへのオプショナルパラメータ追加
-  ✅ 新HTTPメソッドのサポート
-  ✅ 既存フィールドの説明文更新
-  ✅ レート制限の緩和
+Non-breaking changes (no version needed):
+  ✅ Adding a new endpoint
+  ✅ Adding an optional field to a response
+  ✅ Adding an optional parameter to a request
+  ✅ Supporting a new HTTP method
+  ✅ Updating the description of an existing field
+  ✅ Relaxing rate limits
 
-破壊的変更（バージョン発行 or 段階的移行）:
-  ❌ 既存エンドポイントの削除/名前変更
-  ❌ 必須パラメータの追加
-  ❌ レスポンスフィールドの削除/型変更
-  ❌ HTTPステータスコードの変更
-  ❌ 認証方式の変更
-  ❌ URLパスの変更
-  ❌ ページネーション方式の変更
-  ❌ エラーレスポンス形式の変更
+Breaking changes (require a version or staged migration):
+  ❌ Removing/renaming an existing endpoint
+  ❌ Adding a required parameter
+  ❌ Removing/changing the type of a response field
+  ❌ Changing an HTTP status code
+  ❌ Changing the authentication method
+  ❌ Changing the URL path
+  ❌ Changing the pagination method
+  ❌ Changing the error response format
 
-Stripe方式（ハイブリッドアプローチ）:
-  → 大半の変更はEvolution（追加的変更）で吸収
-  → 重要なアーキテクチャ変更のみフルバージョンリリース
-  → 安定性を最大化しつつ、大規模改善への明確な移行パスを提供
+Stripe's approach (hybrid):
+  → Most changes are absorbed via Evolution (additive changes)
+  → Only significant architectural changes get a full version release
+  → Maximizes stability while providing a clear migration path for major improvements
 ```
 
 ---
 
-## 3. APIガバナンスのアンチパターン
+## 3. API Governance Anti-Patterns
 
-| # | アンチパターン | 問題 | 兆候 | 対策 |
+| # | Anti-Pattern | Problem | Symptoms | Countermeasure |
 |---|-------------|------|------|------|
-| **GV-01** | **Code-First Spec（実装先行仕様）** | 実装後にOpenAPI仕様を自動生成 | 仕様が受動的成果物、設計意図が失われる | Design-First: 仕様を先に定義→モック→実装→契約テスト |
-| **GV-02** | **No Linting Rules（Lintルールなし）** | OpenAPI仕様の品質チェックが手動のみ | 命名不統一、セキュリティ定義漏れ、非標準エラーモデル | Spectral/Vacuumカスタムルールセットでpr時自動チェック |
-| **GV-03** | **Schema Duplication（スキーマ重複）** | 同一モデルを複数仕様にコピペ | 更新漏れで仕様間の微妙な差異、セキュリティリスク | `$ref`で共有モデル、components/schemasに一元定義 |
-| **GV-04** | **No Contract Testing（契約テストなし）** | 仕様と実装の整合性を検証するテストがない | デプロイ後にクライアント破壊が発覚 | Schemathesis/Dreddで自動検証、CI/CDパイプラインに統合 |
+| **GV-01** | **Code-First Spec** | Auto-generating the OpenAPI spec from the implementation after the fact | The spec becomes a passive artifact, design intent is lost | Design-First: define the spec first → mock → implement → contract test |
+| **GV-02** | **No Linting Rules** | OpenAPI spec quality checks are manual only | Naming inconsistency, missing security definitions, non-standard error models | Custom Spectral/Vacuum rule sets auto-checked on every PR |
+| **GV-03** | **Schema Duplication** | The same model is copy-pasted across multiple specs | Missed updates create subtle differences between specs, security risk | Share models via `$ref`, define centrally in components/schemas |
+| **GV-04** | **No Contract Testing** | No tests verify consistency between the spec and the implementation | Client breakage is only discovered after deployment | Automated verification via Schemathesis/Dredd, integrated into the CI/CD pipeline |
 
 ---
 
-## 4. スペック管理のベストプラクティス
+## 4. Spec Management Best Practices
 
 ```
-OpenAPI仕様管理:
+OpenAPI spec management:
 
-  バージョン管理:
-    - OpenAPI仕様をGitでバージョン管理（コードと同じリポジトリ or 専用リポジトリ）
-    - PRベースのレビューフロー
-    - 変更ログ自動生成（oasdiff/changelog）
+  Version control:
+    - Version the OpenAPI spec in Git (same repo as the code, or a dedicated repo)
+    - PR-based review flow
+    - Auto-generate changelogs (oasdiff/changelog)
 
-  CI/CDパイプライン:
-    1. Lint: Spectral/Vacuum → 命名規則・セキュリティ定義チェック
-    2. Diff: oasdiff → 破壊的変更検出（PR blocking）
-    3. Test: Schemathesis/Dredd → 実装との整合性検証
-    4. Publish: Redocly/SwaggerUI → ドキュメント自動公開
+  CI/CD pipeline:
+    1. Lint: Spectral/Vacuum → check naming conventions and security definitions
+    2. Diff: oasdiff → detect breaking changes (PR blocking)
+    3. Test: Schemathesis/Dredd → verify consistency with the implementation
+    4. Publish: Redocly/SwaggerUI → auto-publish documentation
 
-  ドリフト検出:
-    - ランタイムトラフィックとOpenAPI仕様の比較
-    - 未文書化エンドポイント・パラメータの自動検出
-    - Shadow API（ドキュメント化されていないAPI）の発見
+  Drift detection:
+    - Compare runtime traffic against the OpenAPI spec
+    - Auto-detect undocumented endpoints/parameters
+    - Discover Shadow APIs (undocumented APIs)
 
-  ガバナンスフレームワーク:
-    - 仕様承認フローの義務化（デプロイ前）
-    - APIライフサイクル管理（設計→開発→公開→非推奨→削除）
-    - 組織横断のAPIスタイルガイド
-    - 定期的なAPI監査（セキュリティ・一貫性・使用率）
+  Governance framework:
+    - Mandatory spec approval flow (before deployment)
+    - API lifecycle management (design → develop → publish → deprecate → remove)
+    - Organization-wide API style guide
+    - Regular API audits (security, consistency, usage rate)
 ```
 
 ---
 
-## 5. バージョニング方式比較
+## 5. Versioning Scheme Comparison
 
-| 方式 | 例 | 長所 | 短所 | 推奨度 |
+| Scheme | Example | Pros | Cons | Recommendation |
 |------|-----|------|------|--------|
-| URL Path | `/v1/users` | 明確、キャッシュ可能、デバッグ容易 | URL変更、リソース重複 | ★★★★★ |
-| Query Param | `/users?v=1` | 既存URL維持 | キャッシュキーに影響、見落としやすい | ★★★☆☆ |
-| Header | `Accept: application/vnd.api+json;v=1` | URL汚染なし、コンテンツネゴシエーション | テスト困難、ブラウザで直接確認不可 | ★★★★☆ |
-| Date-based | `2025-03-01` | 変更時期が明確 | セマンティック情報なし | ★★☆☆☆ |
+| URL Path | `/v1/users` | Clear, cacheable, easy to debug | Changes the URL, resource duplication | ★★★★★ |
+| Query Param | `/users?v=1` | Preserves existing URLs | Affects cache keys, easy to overlook | ★★★☆☆ |
+| Header | `Accept: application/vnd.api+json;v=1` | No URL pollution, content negotiation | Hard to test, can't verify directly in a browser | ★★★★☆ |
+| Date-based | `2025-03-01` | Clear timing of changes | No semantic information | ★★☆☆☆ |
 
 ---
 
-## 6. Gateway との連携
+## 6. Collaboration with Gateway
 
 ```
-Gateway での活用:
-  1. SURVEY フェーズで VG-01〜07 のバージョニング/ガバナンススクリーニング
-  2. PLAN フェーズで破壊的変更の影響分析
-  3. VERIFY フェーズでoasdiff/Spectral/契約テスト実行
-  4. PRESENT フェーズでバージョニング戦略・移行計画の提示
+Usage within Gateway:
+  1. SURVEY phase: screen versioning/governance against VG-01 through VG-07
+  2. PLAN phase: analyze the impact of breaking changes
+  3. VERIFY phase: run oasdiff/Spectral/contract tests
+  4. PRESENT phase: present versioning strategy and migration plan
 
-品質ゲート:
-  - バージョニング未設定 → URL Pathバージョニング追加提案（VG-01 防止）
-  - 軽微変更でメジャーバージョン → 追加的変更パターン提案（VG-02 防止）
-  - Deprecation計画なし → Sunset Header + 移行タイムライン設計（VG-03 防止）
-  - OpenAPI仕様不在/陳腐化 → Design-First移行 + CI/CD統合（VG-06 防止）
-  - PR時の互換性チェックなし → oasdiff GitHub Action追加（VG-07 防止）
-  - スキーマ重複 → $ref統合提案（GV-03 防止）
-  - 契約テストなし → Schemathesis/Dredd導入提案（GV-04 防止）
+Quality gates:
+  - Versioning not configured → propose adding URL Path versioning (prevents VG-01)
+  - Major version for a minor change → propose an additive-change pattern (prevents VG-02)
+  - No deprecation plan → design Sunset Header + migration timeline (prevents VG-03)
+  - OpenAPI spec missing/stale → migrate to Design-First + integrate CI/CD (prevents VG-06)
+  - No compatibility check on PRs → add an oasdiff GitHub Action (prevents VG-07)
+  - Schema duplication → propose `$ref` consolidation (prevents GV-03)
+  - No contract testing → propose introducing Schemathesis/Dredd (prevents GV-04)
 ```
 
 **Source:** [Zuplo: API Backwards Compatibility Best Practices](https://zuplo.com/learning-center/api-versioning-backward-compatibility-best-practices) · [Speakeasy: Versioning Best Practices](https://www.speakeasy.com/api-design/versioning) · [DEV.to: When Swagger Lies — Fixing API Drift](https://dev.to/copyleftdev/title-when-swagger-lies-fixing-api-drift-before-it-breaks-you-ijo) · [oasdiff: OpenAPI Diff & Breaking Change Detection](https://www.oasdiff.com/) · [Treblle: API Governance Best Practices 2026](https://treblle.com/blog/api-governance-best-practices) · [Nordic APIs: Understanding Root Causes of API Drift](https://nordicapis.com/understanding-the-root-causes-of-api-drift/)

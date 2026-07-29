@@ -2,11 +2,11 @@
 
 > Source: "The Complete Guide to Building Skills for Claude" (Anthropic, 2025)
 
-Gauge が CLASSIFY / RECOMMEND フェーズで参照する公式基準リファレンス。
+Official standards reference used by Gauge in the CLASSIFY / RECOMMEND phases.
 
 ---
 
-## 1. 公式4段階チェックリスト
+## 1. Official 4-Phase Checklist
 
 ### Phase 1: Before You Start
 
@@ -53,7 +53,7 @@ Gauge が CLASSIFY / RECOMMEND フェーズで参照する公式基準リファ�
 
 ---
 
-## 2. 公式 Frontmatter 検証仕様
+## 2. Official Frontmatter Validation Spec
 
 ### Required Fields
 
@@ -107,41 +107,41 @@ description: "Does things
 | Skill folder | kebab-case | `notion-project-setup` ✅, `Notion Project Setup` ❌ |
 | No README.md | Inside skill folder | Documentation in `SKILL.md` or `reference/` only |
 
-> **Note**: エコシステムの `normalization-checklist.md` は16項目の内部基準を使用するが、この公式チェックリストはAnthropic公式の品質基準。両方を満たすことが理想。
+> **Note**: The ecosystem's `normalization-checklist.md` uses a 16-item internal standard, while this official checklist is Anthropic's official quality standard. Meeting both is ideal.
 
 ---
 
-## 3. トラブルシューティング 6カテゴリ
+## 3. Troubleshooting — 6 Categories
 
 ### Category 1: Upload Failure
 
 | Error | Cause | Solution |
 |-------|-------|----------|
-| `"Could not find SKILL.md"` | ファイル名が正確でない | `ls -la` で確認、`SKILL.md` にリネーム |
-| `"Invalid frontmatter"` | YAML フォーマットエラー | `---` デリミタ確認、引用符閉じ確認 |
-| `"Invalid skill name"` | name にスペースまたは大文字 | kebab-case に修正 |
+| `"Could not find SKILL.md"` | Filename is not exact | Verify with `ls -la`, rename to `SKILL.md` |
+| `"Invalid frontmatter"` | YAML format error | Check `---` delimiters, check for unclosed quotes |
+| `"Invalid skill name"` | Spaces or capitals in name | Fix to kebab-case |
 
 ### Category 2: Skill Doesn't Trigger (Undertriggering)
 
 **Symptom**: Skill never loads automatically
 
 **Diagnosis**:
-- Description が generic すぎる（"Helps with projects"）
-- トリガーフレーズが不足
-- 関連ファイルタイプの言及がない
+- Description is too generic ("Helps with projects")
+- Missing trigger phrases
+- No mention of relevant file types
 
-**Solution**: Description を改善 — 具体的なキーワード・技術用語を追加
+**Solution**: Improve the description — add specific keywords and technical terms
 
-**Debug method**: `"When would you use the [skill name] skill?"` と Claude に問う
+**Debug method**: Ask Claude `"When would you use the [skill name] skill?"`
 
 ### Category 3: Skill Triggers Too Often (Overtriggering)
 
 **Symptom**: Skill loads for unrelated queries
 
 **Solutions**:
-1. Negative triggers 追加: `"Do NOT use for simple data exploration"`
-2. スコープ明確化: `"specifically for online payment workflows, not for general financial queries"`
-3. Description をより具体的に
+1. Add negative triggers: `"Do NOT use for simple data exploration"`
+2. Clarify scope: `"specifically for online payment workflows, not for general financial queries"`
+3. Make the description more specific
 
 ### Category 4: Instructions Not Followed (Execution Issues)
 
@@ -154,9 +154,9 @@ description: "Does things
 | Instructions too verbose | Concise bullet points, detailed docs to `reference/` |
 | Critical instructions buried | Put key rules at top, use `## Important` / `## Critical` |
 | Ambiguous language | `"CRITICAL: Before calling create_project, verify: ..."` |
-| Model laziness | Add `"Take your time to do this thoroughly"` (user prompt に追加がより効果的) |
+| Model laziness | Add `"Take your time to do this thoroughly"` (more effective when added to the user prompt) |
 
-**Advanced**: Deterministic validation にはスクリプトを bundling する
+**Advanced**: Bundle a script for deterministic validation
 
 ### Category 5: MCP Connection Issues
 
@@ -175,14 +175,14 @@ description: "Does things
 **Causes**: Skill content too large, too many skills enabled, no progressive disclosure
 
 **Solutions**:
-1. SKILL.md を 5,000 words 以下に最適化
-2. 詳細を `reference/` へ移動
-3. 20-50以上のスキルが同時有効なら選択的に有効化
-4. Skill packs で関連機能をグループ化
+1. Optimize SKILL.md to under 5,000 words
+2. Move details to `reference/`
+3. If 20-50+ skills are enabled simultaneously, enable selectively
+4. Group related features with Skill packs
 
 ---
 
-## 4. 品質シグナル
+## 4. Quality Signals
 
 ### Quantitative Metrics
 
@@ -202,7 +202,7 @@ description: "Does things
 
 ---
 
-## 5. 配布要件
+## 5. Distribution Requirements
 
 ### Distribution Surfaces
 

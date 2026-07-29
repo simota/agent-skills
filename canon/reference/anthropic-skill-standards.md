@@ -2,103 +2,103 @@
 
 > Source: "The Complete Guide to Building Skills for Claude" (Anthropic, 2025)
 
-Canon が ASSESS フェーズで SKILL.md の公式仕様準拠を評価するためのリファレンス。
+Reference used by Canon in the ASSESS phase to evaluate SKILL.md compliance with the official specification.
 
 ---
 
-## 1. 標準概要
+## 1. Standard Overview
 
 | Field | Value |
 |-------|-------|
 | Standard Name | Anthropic Agent Skill Specification |
 | Publisher | Anthropic |
 | Version | 2025 (The Complete Guide to Building Skills for Claude) |
-| Scope | Claude Code / Claude.ai / API でのスキル設計・構造・配布 |
+| Scope | Skill design, structure, and distribution across Claude Code / Claude.ai / API |
 | Category | AI Agent Quality |
 | Canon Category Code | `SKILL` |
 
 ---
 
-## 2. 要件マトリクス
+## 2. Requirements Matrix
 
 ### 2.1 Structural Requirements (STR)
 
 | ID | Requirement | Level | Evidence |
 |----|------------|-------|---------|
-| STR-01 | `SKILL.md` ファイルが存在する（case-sensitive） | CRITICAL | File existence check |
-| STR-02 | YAML frontmatter が `---` デリミタで囲まれている | CRITICAL | YAML parse validation |
-| STR-03 | `name` フィールドが kebab-case | HIGH | Regex: `^[a-z0-9]+(-[a-z0-9]+)*$` |
-| STR-04 | `name` がフォルダ名と一致 | HIGH | String comparison |
-| STR-05 | `name` に `"claude"` / `"anthropic"` を含まない | CRITICAL | String search |
-| STR-06 | `description` フィールドが存在する | CRITICAL | Field presence check |
-| STR-07 | `description` が 1024 文字以下 | HIGH | Character count |
-| STR-08 | `description` に XML タグ（`<` `>`）を含まない | CRITICAL | Character search |
-| STR-09 | スキルフォルダに `README.md` を含まない | MEDIUM | File absence check |
-| STR-10 | `compatibility` フィールドが 500 文字以下（使用時） | LOW | Character count |
+| STR-01 | A `SKILL.md` file exists (case-sensitive) | CRITICAL | File existence check |
+| STR-02 | YAML frontmatter is enclosed by `---` delimiters | CRITICAL | YAML parse validation |
+| STR-03 | The `name` field is kebab-case | HIGH | Regex: `^[a-z0-9]+(-[a-z0-9]+)*$` |
+| STR-04 | `name` matches the folder name | HIGH | String comparison |
+| STR-05 | `name` does not contain `"claude"` / `"anthropic"` | CRITICAL | String search |
+| STR-06 | A `description` field is present | CRITICAL | Field presence check |
+| STR-07 | `description` is 1024 characters or fewer | HIGH | Character count |
+| STR-08 | `description` contains no XML tags (`<` `>`) | CRITICAL | Character search |
+| STR-09 | The skill folder contains no `README.md` | MEDIUM | File absence check |
+| STR-10 | `compatibility` field is 500 characters or fewer (when used) | LOW | Character count |
 
 ### 2.2 Description Quality Requirements (DSC)
 
 | ID | Requirement | Level | Evidence |
 |----|------------|-------|---------|
-| DSC-01 | WHAT（何をするか）が記述されている | HIGH | Semantic analysis |
-| DSC-02 | WHEN（いつ使うか / トリガー条件）が記述されている | HIGH | Trigger phrase presence |
-| DSC-03 | 具体的なタスク・フレーズが含まれている | MEDIUM | Actionable keyword detection |
-| DSC-04 | ファイルタイプが関連する場合は言及されている | LOW | Context-dependent |
-| DSC-05 | Vague でない（"Helps with projects" レベルの generic を排除） | HIGH | Anti-pattern matching |
+| DSC-01 | WHAT (what it does) is described | HIGH | Semantic analysis |
+| DSC-02 | WHEN (when to use it / trigger conditions) is described | HIGH | Trigger phrase presence |
+| DSC-03 | Concrete tasks/phrases are included | MEDIUM | Actionable keyword detection |
+| DSC-04 | Relevant file types are mentioned when applicable | LOW | Context-dependent |
+| DSC-05 | Not vague (excludes generic wording like "Helps with projects") | HIGH | Anti-pattern matching |
 
 ### 2.3 Instruction Quality Requirements (INS)
 
 | ID | Requirement | Level | Evidence |
 |----|------------|-------|---------|
-| INS-01 | Step-by-step 構造が存在する | HIGH | Heading/list structure |
-| INS-02 | 具体的でアクション可能な指示 | HIGH | Imperative verb presence |
-| INS-03 | Examples セクションが存在する | MEDIUM | Section heading detection |
-| INS-04 | Troubleshooting / Error handling が記述されている | MEDIUM | Section heading detection |
-| INS-05 | `reference/` からのリンクが適切 | MEDIUM | Link validity check |
-| INS-06 | Critical instructions が文書先頭付近に配置されている | LOW | Position analysis |
+| INS-01 | A step-by-step structure is present | HIGH | Heading/list structure |
+| INS-02 | Instructions are concrete and actionable | HIGH | Imperative verb presence |
+| INS-03 | An Examples section is present | MEDIUM | Section heading detection |
+| INS-04 | Troubleshooting / error handling is described | MEDIUM | Section heading detection |
+| INS-05 | Links from `reference/` are appropriate | MEDIUM | Link validity check |
+| INS-06 | Critical instructions are placed near the top of the document | LOW | Position analysis |
 
 ### 2.4 Progressive Disclosure Requirements (PD)
 
 | ID | Requirement | Level | Evidence |
 |----|------------|-------|---------|
-| PD-01 | 1st level: frontmatter が最小限で判断に十分 | HIGH | Frontmatter content analysis |
-| PD-02 | 2nd level: SKILL.md body がコア指示に集中 | MEDIUM | Word count ≤ 5000 recommended |
-| PD-03 | 3rd level: 詳細が `reference/` に分離されている | MEDIUM | Directory structure check |
-| PD-04 | SKILL.md からの参照リンクが明示的 | LOW | Reference link presence |
+| PD-01 | 1st level: frontmatter is minimal yet sufficient for triggering decisions | HIGH | Frontmatter content analysis |
+| PD-02 | 2nd level: SKILL.md body focuses on core instructions | MEDIUM | Word count ≤ 5000 recommended |
+| PD-03 | 3rd level: details are separated into `reference/` | MEDIUM | Directory structure check |
+| PD-04 | Reference links from SKILL.md are explicit | LOW | Reference link presence |
 
 ### 2.5 Composability Requirements (CMP)
 
 | ID | Requirement | Level | Evidence |
 |----|------------|-------|---------|
-| CMP-01 | 他スキルとの共存を想定した設計 | LOW | Exclusive capability claims absence |
-| CMP-02 | 環境依存が `compatibility` フィールドに記載 | LOW | Field content check |
+| CMP-01 | Designed to coexist with other skills | LOW | Exclusive capability claims absence |
+| CMP-02 | Environment dependencies are recorded in the `compatibility` field | LOW | Field content check |
 
 ---
 
-## 3. トラブルシューティング準拠チェック
+## 3. Troubleshooting Compliance Check
 
-ASSESS フェーズで以下の6カテゴリに対するスキルの対応度を評価:
+In the ASSESS phase, evaluate skill compliance against the following 6 categories:
 
 | Category | Check | Compliant Criteria |
 |----------|-------|-------------------|
-| Upload Failure | SKILL.md命名、YAML形式、name形式 | STR-01〜STR-05 すべて PASS |
-| Undertriggering | Description品質 | DSC-01〜DSC-05 すべて PASS |
-| Overtriggering | スコープ明確性、negative trigger | DSC-02 + スコープ限定記述の存在 |
-| Instructions Not Followed | Instruction構造品質 | INS-01〜INS-06 の主要項目 PASS |
-| MCP Connection Issues | MCP依存の明示とエラーハンドリング | INS-04 + MCP関連のトラブルシューティング |
-| Large Context Issues | Progressive Disclosure 実装 | PD-01〜PD-04 すべて PASS |
+| Upload Failure | SKILL.md naming, YAML format, name format | STR-01 through STR-05 all PASS |
+| Undertriggering | Description quality | DSC-01 through DSC-05 all PASS |
+| Overtriggering | Scope clarity, negative triggers | DSC-02 + presence of scope-limiting statements |
+| Instructions Not Followed | Instruction structure quality | Key items in INS-01 through INS-06 PASS |
+| MCP Connection Issues | Explicit MCP dependencies and error handling | INS-04 + MCP-related troubleshooting |
+| Large Context Issues | Progressive Disclosure implementation | PD-01 through PD-04 all PASS |
 
 ---
 
-## 4. 準拠レベル判定
+## 4. Compliance Level Determination
 
-### 総合判定基準
+### Overall Determination Criteria
 
 | Level | Criteria | Action |
 |-------|---------|--------|
-| **Compliant** | CRITICAL 全 PASS + HIGH 80%+ PASS | Document and maintain |
-| **Partial** | CRITICAL 全 PASS + HIGH 50-79% PASS | Enhancement recommended |
-| **Non-compliant** | CRITICAL に 1+ FAIL | Remediation required |
+| **Compliant** | All CRITICAL PASS + 80%+ of HIGH PASS | Document and maintain |
+| **Partial** | All CRITICAL PASS + 50-79% of HIGH PASS | Enhancement recommended |
+| **Non-compliant** | 1+ CRITICAL FAIL | Remediation required |
 
 ### Severity Timeline
 
@@ -111,18 +111,18 @@ ASSESS フェーズで以下の6カテゴリに対するスキルの対応度を
 
 ---
 
-## 5. Gauge との役割境界
+## 5. Role Boundary with Gauge
 
 | Aspect | Canon | Gauge |
 |--------|-------|-------|
-| **対象基準** | Anthropic公式スキル仕様 + 業界標準 | エコシステム内部16項目正規化チェックリスト |
-| **評価視点** | 外部標準への準拠度 | 内部テンプレートへの適合度 |
-| **出力** | 準拠レポート with citations | PASS/PARTIAL/FAIL with fix snippets |
-| **連携** | Canon が公式基準違反を検出 → Gauge が内部チェックリストで詳細検証 | Gauge が構造問題を検出 → Canon が公式基準との照合 |
+| **Target standard** | Anthropic official skill specification + industry standards | Ecosystem's internal 16-item normalization checklist |
+| **Evaluation perspective** | Compliance with external standards | Conformance with internal templates |
+| **Output** | Compliance report with citations | PASS/PARTIAL/FAIL with fix snippets |
+| **Collaboration** | Canon detects official-standard violations → Gauge performs detailed verification against the internal checklist | Gauge detects structural issues → Canon cross-checks against official standards |
 
 ---
 
-## 6. 証拠フォーマット
+## 6. Evidence Format
 
 ```
 Standard: Anthropic Agent Skill Specification (2025)
