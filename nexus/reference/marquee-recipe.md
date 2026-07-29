@@ -8,7 +8,19 @@ Read this file before executing the `marquee` Recipe.
 
 ## 1. Nature / When to Use / Boundaries
 
-**Marquee is wish machinery specialized to one deliverable class: the acquisition landing page.** It inherits wish's four-stage quality apparatus (crystallization dialogue → tournament → gauntlet-converge → One-Shot Gate) and swaps wish's generic rubric authoring for a **fixed 5-dimension LP Ceiling Rubric** whose Performance dimension is anchored to **machine-checkable oracles** — the objective corner of the ceiling that no reviewer's taste can inflate or deflate.
+**Marquee is wish machinery specialized to one deliverable class: the acquisition landing page.** It inherits wish's quality apparatus (crystallization dialogue → exemplar anchoring → cross-engine blind tournament → calibrated gauntlet-converge → reception → One-Shot + Comparative exit gates) and swaps wish's generic rubric authoring for a **fixed 5-dimension LP Ceiling Rubric** whose Performance dimension is anchored to **machine-checkable oracles** — the objective corner of the ceiling that no reviewer's taste can inflate or deflate.
+
+**Inherited engine elements (owned by `reference/wish-recipe.md`, not re-derived here).** The preset does not re-implement them; it states only where its own phases already discharge them:
+
+| Engine element | How the `lp` preset satisfies it |
+|----------------|----------------------------------|
+| **Benchmark Anchor** (wish §6 Phase 1.5) | **Discharged by Phase 2 GROUND** — the Compete competitor-LP teardown *is* the exemplar sweep. Two additions apply: the teardown must name **2-4 exemplar LPs judged best-in-class** (not merely competitors) and **one routine-quality control LP**, and dims ①②③⑤ rewrite their score-3 anchors as **sourced** against those exemplars. Dim ④ needs no anchoring — its oracles are absolute. |
+| **Two-point calibration** (wish §7) | Evaluators for dims ①②③⑤ score the exemplar and the control before scoring any candidate direction. Dim ④ is **calibration-exempt** — a machine oracle cannot inflate. |
+| **Cross-engine blind tournament** (wish §6 Phase 2) | The 3 orthogonal directions are distributed across model families where the hub allows, one per (engine, direction), and judged with provenance stripped. A single-engine run declares the monoculture in the Dossier. |
+| **Reception Simulation** (wish §6 Phase 3.5) | The Cast+Field personas built at GROUND meet the produced page **cold** before the exit gates — no rubric, no loop history. First-impression failures enter as evidence on dims ① and ⑤. |
+| **Comparative Gate** (wish §6 Phase 4b) | Blind head-to-head: the produced page vs the strongest exemplar LP, and vs the retained runner-up direction. Runs alongside the One-Shot Gate; together they grant at most one bonus cycle. |
+| **Budget envelope** (wish §4) | Declared at launch confirmation; `budget-reached` delivers best-so-far with the residual gap. |
+| **Rubric amendment** (wish §7) | **Not available.** The 5-dim rubric is the preset's defining fixture — a request to amend it means the deliverable is not an acquisition LP, and the honest move is `wish` general or `runway`. |
 
 **Intentional difference from `wish`: no Scarcity Gate.** LP production is a legitimately repeatable demand — every product, campaign, and launch can warrant one — so marquee does not ration invocations. The anti-inflation anchor is objectivity instead: dim ④ cannot ACCEPT without Lighthouse Perf/SEO/Best-Practices ≥ 95, all Core Web Vitals green, and WCAG AA. This is a deliberate design choice, not drift.
 
@@ -32,7 +44,7 @@ Read this file before executing the `marquee` Recipe.
 
 **Overloaded anchor:** bare "landing page" with no ceiling framing → REDIRECT per `reference/intent-clarification.md` (normal quality → `bazaar`/`funnel`; ceiling one-shot → `marquee`).
 
-**Scale: 20-45 agents × ≤4 cycles (3 + ≤1 One-Shot-Gate bonus), 8-20× cost.** Per-phase: P0-P1 ≈ 2 · P2 ≈ 4-6 (Ground sweep) · P3 ≈ 9-12 (3 directions × structure+direction+prototype, + judge panel) · P4 ≈ 6-8 (craft-axis production) · P5 ≈ 5-7 Evaluators/cycle + 2-3 skeptics on near-ceiling cycles · P6-P7 ≈ 2. **Confirm-before-launch always** (unconditional — intentional parity with wish/summit).
+**Scale: 26-55 agents × ≤4 cycles (3 + ≤1 exit-gate bonus), 10-24× cost.** Per-phase: P0-P1 ≈ 2 · P2 ≈ 4-6 (Ground sweep) · P3 ≈ 9-12 (3 directions × structure+direction+prototype, + judge panel) · P4 ≈ 6-8 (craft-axis production) · P5 ≈ 5-7 Evaluators/cycle + 2-3 skeptics on near-ceiling cycles · P6-P7 ≈ 2. **Confirm-before-launch always** (unconditional — intentional parity with wish/summit).
 
 **Model selection (Plan-and-Execute):** Phase 1 Crystallize and the Phase 6 One-Shot Gate verdict are judgment-heavy → plan-tier (opus / Fable 5). Tournament generators, craft-axis producers, and Evaluators → Sonnet 5 default, per SKILL.md § Core Contract.
 
@@ -109,12 +121,21 @@ Phase 5  GAUNTLET-CONVERGE loop ≤ 3 cycles (evaluator-loop-protocol.md machine
                               with a competitor's logo swapped in?" (a YES kills ①);
                           panel also ratifies candidate ACCEPTs (§2)
    ▼
-Phase 6  ONE-SHOT GATE — fresh-context independent verifier (plan-tier), spawned with
-         ONLY the Marquee Contract + Ceiling Rubric + final page — no loop history.
-         MATERIALLY-BETTER requires cited evidence (a dim < 3 a redo would plausibly
-         raise, or a disappointment-criterion violation); bare "could be better" = NO.
-         → MATERIALLY-BETTER → exactly one bonus cycle → re-gate once (advisory only)
-         → NO → deliver
+Phase 5.5 RECEPTION — the GROUND personas (Cast/Field) meet the produced page COLD:
+         no rubric, no loop history, first-impression only → friction points enter as
+         evidence on dims ① message and ⑤ trust; unresolved failures become residuals
+   ▼
+Phase 6  EXIT GATES (both run; together they grant at most ONE bonus cycle, total 4)
+         (a) ONE-SHOT GATE — fresh-context independent verifier (plan-tier), spawned with
+             ONLY the Marquee Contract + Ceiling Rubric + final page — no loop history.
+             MATERIALLY-BETTER requires cited evidence (a dim < 3 a redo would plausibly
+             raise, or a disappointment-criterion violation); bare "could be better" = NO.
+         (b) COMPARATIVE GATE — blind head-to-head, provenance stripped: the produced page
+             vs the strongest Phase 2 exemplar LP, and vs the retained runner-up direction.
+             A loss to our own runner-up means convergence destroyed value the tournament
+             found — the loud failure this gate exists to catch.
+         → either fires → exactly one bonus cycle → re-gate once (advisory only)
+         → both pass → deliver
    ▼
 Phase 7  SHIP — Guardian [+ Launch? if deploying] + Marquee Dossier;
          Experiment[A/B test design] recorded as a handoff to growth-acceptance
@@ -141,7 +162,9 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 - **Tournament comparison** — the 3 directions' judge scores + why the winner won + salvage items applied
 - **Evidence Ledger** — every copy claim with citation, trust tier, and verification status
 - **Gauntlet ledger** — bounce-reasons raised / killed / fixed; differentiation-refutation verdict; open attacks listed on any plateau exit
-- **One-Shot Gate verdict** — redo assessment with cited evidence + bonus-cycle usage
+- **Exit gates** — One-Shot redo assessment with cited evidence + **Comparative verdict (vs exemplar / vs runner-up, with the property named on any loss)** + bonus-cycle usage
+- **Calibration record** — per evaluator: exemplar score, control score, verdict (dim ④ marked calibration-exempt)
+- **Reception simulation** — per-persona cold verdict + friction points + unresolved residuals
 - **Exit reason** (§2 vocabulary) + residual gap vs ceiling (empty only on ACCEPT)
 - **A/B handoff** — the Experiment test design queued for `growth-acceptance`
 
@@ -185,5 +208,5 @@ Does an LP already exist and just needs improvement?
 Is ceiling one-shot quality actually required (launch fires once, page defines the product)?
   NO  → bazaar skill (standard-to-premium studio) / funnel skill (single page or section)
   YES → marquee — crystallize → ground → tournament → produce → gauntlet-converge
-        → One-Shot Gate → ship (+ A/B handoff to growth-acceptance)
+        → reception (cold personas) → One-Shot + Comparative gates → ship (+ A/B handoff to growth-acceptance)
 ```
