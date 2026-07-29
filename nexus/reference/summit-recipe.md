@@ -34,7 +34,7 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 - **agy is OPTIONAL** — when AVAILABLE, the recipe runs in tri-engine mode (Claude + Codex + agy) and the Phase 1 / 3 / 4 / 5 agy branches activate. When UNAVAILABLE or RUNTIME-BROKEN, the recipe runs in dual-engine mode (Claude + Codex); the agy branches are recorded as `skipped (engine unavailable)` and their workload is absorbed by Claude or Codex per the engine-strength routing rules below.
 - **Multi-engine triangulation is load-bearing** in Phase 1 (Analysis) and Phase 4 (Verification). Dual-engine triangulation (Claude judgment ‖ Codex code-analysis) satisfies this requirement; the third axis is a quality lift, not a correctness gate.
 - **Improvement loop is capped at 3 iterations** with Agent Tennis circuit breaker to prevent runaway cost.
-- **User confirmation is mandatory** before launch (same gate as `apex`). Summit spawns 20-50 agents per run (tri-engine) or 14-36 (dual-engine).
+- **Confirm before launch — always** (unconditional; same gate as `apex`/`wish`. Intentionally stronger than `podium`'s conditional gate — stated to prevent drift). Summit spawns 20-50 agents per run (tri-engine) or 14-36 (dual-engine).
 
 ---
 
@@ -241,7 +241,7 @@ risk_tier: strategic | release-critical | major-refactor
 user_acknowledged: true
 ```
 
-**Gate:** If `cost_budget.max_agents × estimated_token_cost > L4 threshold` OR `risk_tier ∈ {strategic, release-critical}` → require explicit user confirmation before proceeding to Phase 1.
+**Gate: Ask First** when `cost_budget.max_agents × estimated_token_cost > L4 threshold` OR `risk_tier ∈ {strategic, release-critical}` — this is the L4 tier on top of the unconditional Confirm-before-launch gate; require explicit user confirmation before proceeding to Phase 1.
 
 ---
 
@@ -725,6 +725,31 @@ phase_chain:
 ```
 
 ---
+
+## Output Report — **Summit Verdict** (named)
+
+Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
+
+- **Engine roster** — which engines were reachable, the resulting quorum rule (3/3 or degraded 2/2), and any mid-run DEGRADED transition
+- **Finding ledger** — every finding with its per-engine votes and resulting CONFIRMED / LIKELY / disputed status
+- **Dispute record** — the `disputed_findings / total_findings` ratio and the Phase 1 escalation outcome when it exceeded 0.30
+- **Design sub-track findings** — Echo / Palette results folded into the quorum, when the run included them
+- **Improvement trajectory** — per-cycle results across the ≤ 3 cycles, Agent Tennis breaker status
+- **Release disposition** — blocked / delivered-with-caveat per the CONFIRMED × severity table
+- **Exit reason** (canonical vocabulary) + residual gap when not `ACCEPT`
+
+## Failure Modes Prevented
+
+| Failure | Mitigation |
+|---------|-----------|
+| Single-engine blind spots accepted as truth | **Tri-engine quorum**: a finding is CONFIRMED only on 3/3 agreement; single-engine findings are LIKELY at best |
+| One engine's outage silently degrading review quality without disclosure | Engine availability is detected at preflight; agy-unreachable degrades to a disclosed dual-engine mode with quorum relaxed to 2/2, surfaced in the confirmation prompt — never silently |
+| Two agents deadlocking on the same disagreement | **Agent Tennis circuit breaker** on the improvement loop |
+| Runaway cost on a strategic run | Improvement loop `loop ≤ 3 cycles`; Phase 0 gate requires confirmation when `cost_budget.max_agents × estimated_token_cost` exceeds the L4 threshold or `risk_tier ∈ {strategic, release-critical}` |
+| A contested finding set delivered as if it were settled | Phase 1 gate: `disputed_findings / total_findings > 0.30` escalates to the user before Phase 2 |
+| Critical defects shipped because the loop ran out of cycles | CONFIRMED + CRITICAL/HIGH **blocks release** and forces Phase 5; a non-`ACCEPT` exit reports best-so-far + residual gap |
+| UX regressions invisible to code-only review | Design sub-track findings (Echo persona friction, Palette interaction quality) join the cross-engine quorum as a first-class signal at LIKELY severity |
+| The producer reviewing its own output | Verification Team is Generator-excluded (Q9) per `reference/autonomy-quality-protocol.md` |
 
 ## Failure Escalation
 

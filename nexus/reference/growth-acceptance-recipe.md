@@ -1,4 +1,6 @@
-# Growth-Acceptance Recipe — Layer C Lifecycle Gate
+# Growth-Acceptance Blueprint — the `layer=c` preset of `acceptance`
+
+> `/nexus growth-acceptance` ≡ **`/nexus acceptance layer=c`** — the lifecycle-layer preset of the acceptance merge-adjudication engine. `growth-acceptance` is a **named alias kept for discoverability**; merge-time adjudication (Phases 0-6, Layer A/B, G1-G10, joint verdict) is owned by `reference/acceptance-recipe.md` and is **not** re-derived here — Phase 1 below delegates to it wholly at Tier B. This file owns only what the layer adds: the pre-design insight contract, ship-time market/brand/regulatory setup, the post-launch measurement loop with auto-halt, and G11-G15.
 
 Recipe contract for `nexus growth-acceptance` — orchestrates the **lifecycle gates** (pre-design → ship-time → post-launch) defined by `_common/GROWTH_BRAND_PROOF.md` (Layer C: Market + Research + Brand axes). Use when an Enterprise-tier organization wants AI-generated content / campaigns / brand-touching artifacts to be machine-adjudicated across their entire lifecycle, not only at merge.
 
@@ -244,7 +246,25 @@ Phase 4 (Cross-Cutting Audits, background):
 
 ---
 
-## Anti-Patterns Specific to Growth-Acceptance Recipe
+## Output Report — **Lifecycle Dossier** (named)
+
+Extends the engine's **Acceptance Dossier** (`reference/acceptance-recipe.md`) rather than replacing it — the merge-time sections come from there unchanged. Layer C adds:
+
+- **Insight Ledger** — each pre-design insight with its evidence and the contract clause it produced
+- **Market / Research / Brand axis verdicts** — G11-G15 disposition per `_common/GROWTH_BRAND_PROOF.md`
+- **Ship-time setup record** — market, brand-compiler, and regulatory checks with their outcomes
+- **Post-launch measurement state** — the metric contract, current readings, auto-halt status, and the next scheduled checkpoint (+14/+30/+90d)
+- **Learning entry** — what the launch taught, written back for the next cycle
+
+## Confirm / Safety Gate
+
+Inherits the engine's gates unchanged (`reference/acceptance-recipe.md`) — **Confirm before launch when `tier == S`**, plus standard **Ask First** tiers. Layer C adds one of its own: **Ask First before any ship-time action that touches an external surface** (market listing, brand asset publication, regulatory filing), since those are outward-facing and not reversible by a revert.
+
+## Resume
+
+**Schedule-resume** — Layer C's post-launch phase is a cadence, not a continuous run: state persists between the +14 / +30 / +90d checkpoints and each wake-up resumes from the recorded metric contract and prior readings. Merge-time phases use the engine's checkpoint-resume.
+
+## Failure Modes Prevented
 
 | Anti-Pattern | Counter-Rule |
 |--------------|--------------|

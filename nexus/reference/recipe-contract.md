@@ -27,7 +27,7 @@ The gold-standard exemplars are `reference/spec-recipe.md` and `reference/clone-
 
 ## 2. Termination-bound vocabulary (canonical)
 
-Use **one** phrasing for the loop cap: **`loop ≤ N cycles (default N=3)`** (podium's default is 2). Do not introduce `cap 3` / `max 3` / `capped at 3 iterations` / `max_loops: 3` as separate phrasings for the same thing — they read as different rules.
+Use **one** phrasing for the loop cap: **`loop ≤ N cycles (default N=3)`** (podium's default is 2). Do not introduce `cap 3` / `max 3` / `capped at 3 iterations` as separate **prose** phrasings for the same thing — they read as different rules. **Exempt: machine-readable config keys.** A YAML/JSON value handed to an executor (`max_loops: 3`, `max_cycles: 3`) is a machine value, not a restatement of the rule — keep the key its executor expects and state the canonical phrasing in the surrounding prose. Only prose is normalized.
 
 Every loop states its **exit reason** from this fixed vocabulary:
 

@@ -142,6 +142,17 @@ Plus `sweep` flags newly-orphaned code as an early DECOMMISSION signal.
 
 ---
 
+## 4a. Termination Bound
+
+Double loop, each separately bounded:
+
+| Loop | Bound | Exit reasons |
+|------|-------|--------------|
+| **Inner** (per batch: PLAN → EXECUTE → VERIFY) | one pass per batch; a batch failing VERIFY is re-planned **`loop ≤ 3 cycles (default N=3)`** before escalating | `ACCEPT` (batch verified) · `cap-reached` → escalate the batch · `BLOCK` |
+| **Outer** (completeness) | repeats until **RESIDUE-GATE** passes; bounded by the change-site denominator fixed at INVENTORY — the gate is the single termination oracle and cannot pass while residue > 0 | `ACCEPT` / `target-met` (residue = 0) · `BLOCK` (a site cannot be migrated — reported with the residual set) |
+
+On any non-`ACCEPT` exit the recipe reports migrated-vs-residual sites explicitly and **DECOMMISSION stays gated** — old code is never removed on an unproven-complete run.
+
 ## 5. Failure Modes Prevented
 
 | Failure | Mitigation |
@@ -162,6 +173,16 @@ Plus `sweep` flags newly-orphaned code as an early DECOMMISSION signal.
 | Batch ordering breaks dependents | Per-batch Ripple PLAN orders by dependency |
 
 ---
+
+## 5a. Shared-Protocol References
+
+`migrate` is a member of the Reproduce & Synthesize family and inherits its shared discipline rather than re-deriving it:
+
+| Protocol | What migrate takes from it | Migrate-specific specialization |
+|----------|---------------------------|--------------------------------|
+| `_common/DIFFERENTIAL_PARITY.md` | Parity-over-faith, oracle adequacy, comparator/harness discipline, non-determinism gates | The parity claim here is **behavior preservation across the change**, not source-vs-target reproduction: the pre-migration build is the reference and each inner-loop VERIFY is a parity check against it. `case=lang` forwards to `transmute`, where the family's full differential-parity oracle applies unchanged |
+| `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation, single termination oracle | RESIDUE-GATE is the outer loop's termination oracle; the inner loop's is per-site VERIFY |
+| `reference/autonomy-quality-protocol.md` | Intent contract (Q1-Q3), producer ≠ verifier (Q9), Acceptance Provenance (Q15) | The change-site denominator *is* the intent contract; residual sites are reported per Q15, never silently dropped |
 
 ## 6. Add-ons
 

@@ -306,6 +306,22 @@ Nexus AUTORUN venture idea="<X>" depth=<...> mode=<...>
   → report: zip path, file count, main contents, validation result, caveats
 ```
 
+## Output Report
+
+`venture` emits the engine's **Package Manifest Report** (`reference/package-recipe.md` § Output Report) with the `startup` preset's inventory — no separate report name. The startup-specific traceability anchor (`feature_id`) and distinctive files are listed in § Output and Packaging above.
+
+## Termination Bound / Resume
+
+Both inherited from the `package` engine (`reference/package-recipe.md`): **Termination bound `N/A`** (non-loop, single forward pass) and **checkpoint-resume** with the Phase 2 `feature_id` list frozen across resumes. This blueprint adds neither.
+
+## Shared-Protocol References
+
+`venture` cites the engine's protocol set rather than re-deriving it — `reference/doc-quality-protocol.md` (W1-W12, discharged by the engine's Phase 5 validation), `reference/autonomy-quality-protocol.md` (intent contract, Acceptance Provenance), and `_common/TRACEABILITY.md` (the `feature_id` anchor). See `reference/package-recipe.md` for how each is applied.
+
+## Failure Modes Prevented
+
+`venture` is the `startup` **preset** of the `package` engine and prevents failures through the engine's consolidated controls — entity-id barrier, Universal Grounding Gate, per-preset Risk Gates, cross-doc consistency, and format lint. See `reference/package-recipe.md` § Failure Modes Prevented; this blueprint adds no preset-specific failure modes beyond the `startup` risk-gate row tabulated there.
+
 ## Failure Escalation
 
 | Failure | Detected by | Escalation |

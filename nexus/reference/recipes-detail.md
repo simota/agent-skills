@@ -205,7 +205,7 @@ Read: `_common/PROOF_CARRYING.md`, `reference/acceptance-recipe.md`.
 
 ---
 
-## growth-acceptance
+## growth-acceptance (= `acceptance layer=c`)
 
 **Layer C lifecycle gate** (Market + Research + Brand axes) for Enterprise org-tier. Extends `acceptance` with pre-design Research Proof + Insight Ledger + Contract, ship-time Market Proof + Brand B.tone, post-launch +14/+30/+90d Measurement Loop. Org Tier gate (Solo abort / SMB Step 1 / Enterprise full). G11-G15 + 3-layer Brand Compiler. Cost: 1.1-8× on top of acceptance. **Confirm Step 3+.** Full lifecycle → `_common/GROWTH_BRAND_PROOF.md`, `reference/growth-acceptance-recipe.md`.
 
@@ -293,7 +293,7 @@ Read: `reference/rebrand-recipe.md`, `reference/migrate-recipe.md`, `_common/DIF
 
 ---
 
-## marquee
+## marquee (= `wish domain=lp`)
 
 **Wish-grade one-shot landing-page production** — crystallization dialogue → 3-direction tournament → adversarial gauntlet + ceiling convergence with machine oracles (Lighthouse / CWV / WCAG) → One-Shot Gate; ACCEPT = all rubric dims = 3. The LP specialization of `wish`: it keeps wish's quality machinery but **carries no Scarcity Gate — an intentional difference** (LP production is a legitimately repeatable demand per product); the objectivity anchor is instead a fixed 5-dim Ceiling Rubric whose Performance dim is **machine-checkable** (Lighthouse Perf/SEO/Best-Practices ≥ 95, all CWV green, WCAG AA) — one corner of the ceiling is not a judgment call. The other dims: **Message** (every Echo persona articulates the value from the hero alone), **Craft** (multi-engine judge + Vision bar), **Conversion** (Growth audit yields zero improvement proposals), **Trust** (Evidence Ledger-backed claims + Clause? legal alignment). LP-specific refutation angles per `_common/ADVERSARIAL_REFUTATION.md`: bounce-reason enumeration + "does it still hold with a competitor's logo swapped in?". Production runs on `bazaar`'s craft axes; the ship records an A/B handoff to `growth-acceptance`. Named **Marquee Dossier**; checkpoint-resume (`marquee resume`). Distinct from `wish` (deliverable-agnostic + Scarcity Gate), `bazaar` skill (standard-to-premium single-direction LP studio — routine LP → bazaar direct), `funnel` skill (one LP/section direct), `runway` (in-product flagship surface, not an acquisition device), `podium` (docs/slides), `kaizen`/`restyle` (improve an *existing* LP). **Bare `landing page` is overloaded → REDIRECT** (routine build → bazaar/funnel). 20-45 agents × ≤4 cycles (3 + ≤1 One-Shot-Gate bonus), 8-20× cost. **Always confirm** + Phase 1 Crystallize is contract-level dialogue.
 

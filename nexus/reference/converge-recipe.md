@@ -26,7 +26,7 @@ Use `converge` when a single deliverable must reach a **rubric-defined quality b
 | Full implementation discovery→ship with an internal loop | `apex` | converge exposes only the loop, for a single deliverable |
 | Just need the pattern spec, not an invocation | read `evaluator-loop-protocol.md` | converge *executes* it; the protocol *defines* it |
 
-Scale: 4-10 agents × cycles (cap 3 default). Mid cost (multiplied by cycle count). **Confirm when max_cycles raised above 3 or a wrapped Tier-S recipe is the generator.**
+Scale: 4-10 agents × cycles (cap 3 default). Mid cost (multiplied by cycle count). **Confirm before launch when `max_cycles` is raised above 3, or when a wrapped Tier-S recipe is the generator.**
 
 ---
 
@@ -36,7 +36,7 @@ The bare evaluator-loop can run forever or devolve into "Agent Tennis" (Generato
 
 | Bound | Default | Stop behavior |
 |-------|---------|---------------|
-| `max_cycles` | 3 | Hard ceiling — stop + report best-so-far. Raising > 3 needs confirm. |
+| `max_cycles` | 3 | Hard ceiling — stop + report best-so-far. Raising > 3 is **Confirm-before-launch**. |
 | `token_budget` | run-level | Stop + report when exhausted (shared pool, not per-cycle). |
 | diminishing-returns | **weighted score Δ < 0.2 between cycles** (`evaluator-loop-protocol.md` termination table) | If the aggregate weighted rubric score improves by < 0.2 versus the prior cycle, stop + report (further iteration not worth it). |
 | `BLOCK` escalation | — | If Aggregate verdict is BLOCK (un-fixable within scope, or Agent Tennis), stop + escalate to user. Agent Tennis = Nexus core circuit-breaker definition: two agents disagreeing on the same point 3+ turns without progress. |

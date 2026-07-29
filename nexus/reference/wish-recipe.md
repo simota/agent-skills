@@ -4,6 +4,17 @@
 
 Read this file before executing the `wish` Recipe.
 
+**Engine + domain presets.** `wish` factors into a **quality-ceiling engine** (this file: crystallization → tournament → gauntlet-converge → One-Shot Gate, §1-§9) and **domain presets** that fix the rubric and insert deliverable-specific phases. The engine is shared; only the preset varies.
+
+| Preset | Invocation | Blueprint | What the preset fixes |
+|--------|-----------|-----------|----------------------|
+| `general` (default) | `/nexus wish "<request>"` | this file | Rubric authored at Phase 1; Scarcity Gate **on** |
+| `lp` | `/nexus wish domain=lp` ≡ `/nexus marquee` | `reference/marquee-recipe.md` | Fixed 5-dim LP rubric with machine oracles (Lighthouse/CWV/WCAG); GROUND + PRODUCE phases inserted; Scarcity Gate **off** (intentional — LP production is legitimately repeatable, objectivity replaces rationing) |
+
+`marquee` is kept as a **named alias for discoverability** and dispatches to `wish domain=lp`; its full blueprint (fixed rubric anchors, bazaar craft-axis production substrate, LP skeptic angles, Marquee Dossier) lives in `reference/marquee-recipe.md`. A preset never weakens the engine's termination bound, One-Shot Gate, or Q9 separation — it may only fix the rubric, add phases, and state one intentional gate difference.
+
+**Not a preset:** `runway` (flagship in-product UI) deliberately carries **neither the One-Shot Gate nor the refutation gauntlet** — it shares only the ceiling ACCEPT. It is a `restyle` escalation, not a wish variant; see `reference/runway-recipe.md`.
+
 ---
 
 ## 1. Nature / When to Use / Boundaries

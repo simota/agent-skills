@@ -8,6 +8,15 @@ Recipe contract for `nexus acceptance` — orchestrates the 5-layer Proof-Carryi
 
 **Design-axis prerequisite gate** (Phase 0 sub-check): if the change touches UI but the org lacks Figma + design tokens (Style Dictionary / Tokens Studio) + Code Connect, Layer B downgrades to advisory-only (logged, never blocking). This prevents Design Proof from blocking organizations not yet equipped to satisfy it.
 
+**Engine + layer presets.** `acceptance` factors into a **merge-adjudication engine** (this file: Phases 0-6, Layer A code axis + Layer B design axis, G1-G10) and an optional **lifecycle layer** that extends the same engine past merge:
+
+| Layer | Invocation | Blueprint | What it adds |
+|-------|-----------|-----------|--------------|
+| `A+B` (default) | `/nexus acceptance` | this file | Merge-time adjudication: Code + Design axes, joint verdict at Phase 4C |
+| `C` | `/nexus acceptance layer=c` ≡ `/nexus growth-acceptance` | `reference/growth-acceptance-recipe.md` | Pre-design research/insight contract, ship-time market + brand + regulatory setup, post-launch measurement loop with auto-halt, and G11-G15. **Its merge-time phase delegates wholly back to this engine at Tier B** — Layer C never re-implements adjudication |
+
+`growth-acceptance` is kept as a **named alias for discoverability** and dispatches to `acceptance layer=c`; the Layer C axes (Market / Research / Brand), Insight Ledger, and Brand Compiler are specified in `_common/GROWTH_BRAND_PROOF.md`.
+
 **Distinguishes from**:
 - `feature` — implements a change with conventional tests. No spec graph, no evidence package, no Acceptance Gate.
 - `apex` — full discovery→ship cycle including spec authoring. `acceptance` assumes the spec graph exists (or is being amended) and focuses on the verification + Gate.
@@ -365,13 +374,34 @@ Phase 6 (Random Sampling Audit, async post-merge, non-blocking):
 | B | * | (use `feature` recipe) | — | — | — | 1× |
 | C | * | (use `feature` or standard PR) | — | — | — | 1× |
 
-**Confirm with user before launching Tier-S** — agent count and cost rival or exceed `apex` when Layer B activates. Tier-A with full UI is comparable to `kaizen` + `judge` combined.
+**Confirm before launch when `tier == S`** (canonical tier per `reference/recipe-contract.md` §3) — agent count and cost rival or exceed `apex` when Layer B activates. Tier-A with full UI is comparable to `kaizen` + `judge` combined.
 
 **Dual-Implementation cost overhead**: When in-scope (money / authz / state-machine / inventory / regulated), add 2-4 agents (rally engine-paradigm COMPETE + AI-A + AI-B + AI-C) and 1.4-1.8× compute multiplier on implementation tokens. Strictly enforce per-PR compute cap.
 
 ---
 
-## Anti-Patterns Specific to Acceptance
+## Resume
+
+**Checkpoint-resume** (7 phases): persist the Phase 0 classification, the Phase 1 spec diff, and each Layer's oracle + adversary output at its phase boundary. An interrupted run resumes at the last completed phase rather than regenerating oracles — regeneration would invalidate the evidence provenance stamps the Gate depends on.
+
+## Termination Bound
+
+**`N/A` — `acceptance` is a non-loop recipe.** It is a single forward pass (Phase 0 → 6) ending in a joint verdict; there is no convergence loop to cap. A FAIL does not re-enter a loop here — it returns to the author, who re-invokes after fixing. (`layer=c` adds a *scheduled* post-launch measurement cadence, not a convergence loop — see its blueprint.)
+
+## Output Report — **Acceptance Dossier** (named)
+
+Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
+
+- **Tier + axis classification** — `tier`, `ui_dimension`, `design_proof_mode`, and why each was assigned
+- **Evidence package** — the 12 Code-side + 9 Design-side fields per `_common/PROOF_CARRYING.md`, each with its provenance stamp
+- **Joint verdict** — Phase 4C result with the Layer A and Layer B verdicts that composed it, and which layer (if any) blocked
+- **Guardrail ledger** — G1-G10 disposition; any advisory-downgraded control named with its missing prerequisite
+- **Post-gate invalidation status** — evidence invalidated after the gate, if any
+- **Sampling audit queue** — what Phase 6 will re-check post-merge
+
+When `layer=c` is active the Dossier additionally carries the Layer C sections specified in `reference/growth-acceptance-recipe.md`.
+
+## Failure Modes Prevented
 
 | Anti-Pattern | Counter-Rule |
 |--------------|--------------|

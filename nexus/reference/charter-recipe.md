@@ -288,6 +288,18 @@ Nexus AUTORUN charter "<objective>"
 | Phase 3 a work package has no constructable owner skill | scribe | Re-scope or flag the gap in §5 (so `enact` does not hit an unresolvable roster) |
 | Risk gate No-Go | omen/ripple | Return to Phase 2 (re-scope) |
 
+## Resume
+
+**Checkpoint-resume** (≥ 4 phases): persist each analysis subsystem's findings as it completes, and the Charter draft at each section boundary. Resume continues authoring from the last completed section against the already-gathered analysis — the repo scan is not repeated.
+
+## Termination Bound
+
+**`N/A` — `charter` is a non-loop recipe.** It runs a single analysis-then-author pass and **stops at the document**; the loops it *configures* belong to `enact` and to the team the Charter describes, not to charter itself.
+
+## Scale
+
+**8-20 agents, single pass, mid-to-high cost** (repo-size dependent: the analysis fan-out over subsystems dominates; authoring is a small tail). No cycle multiplier — see Termination Bound.
+
 ## Failure Modes Prevented
 
 Consolidated view of what charter's analysis-grounding and self-containment gates guard against — a summary surface over the **Failure Escalation** table above (the per-row escalation rules remain the source of truth). Because charter **stops at the document and runs no execution** (`reference/recipe-contract.md` §3: no execution → **no confirm gate**), the failures it prevents are *authoring* failures that would otherwise surface expensively downstream in `enact`.

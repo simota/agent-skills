@@ -13,7 +13,7 @@ A user has a **claim to pressure-test, a counterfactual to explore, or a design 
 `gedanken` exists because thought experiments have a *method* — construct an idealized scenario, isolate one variable, push it to a limit, observe what the reasoning forces — and that method is exactly a controlled multi-agent protocol: construct → reason from independent lenses → perturb → refute → conclude. It is the **exploratory** reasoning recipe, distinct from `magi` (which delivers a *decision*) — `gedanken` is often `magi`'s upstream.
 
 ### Default Mode: `AUTORUN_FULL`
-Autonomous reasoning runs end-to-end. Use `INTERACTIVE` when the user wants a Socratic back-and-forth (each phase boundary becomes a steer point) — that is a Mode choice, not a contract requirement (unlike `spec`, whose checkpoints are contract-level). There is **no confirm/safety gate**: `gedanken` writes no code and takes no destructive action (same posture as `charter`).
+Autonomous reasoning runs end-to-end. Use `INTERACTIVE` when the user wants a Socratic back-and-forth (each phase boundary becomes a steer point) — that is a Mode choice, not a contract requirement (unlike `spec`, whose checkpoints are contract-level). **Confirm / safety gate: `N/A`** — `gedanken` writes no code and takes no destructive action, so no tier applies (same posture as `charter`); standard **Ask First** would only ever fire on a wrapped generator, of which there is none.
 
 ---
 

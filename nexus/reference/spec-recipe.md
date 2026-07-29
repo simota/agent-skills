@@ -58,6 +58,10 @@ Accord[claude staged elaboration: L0 Vision → L1 Requirements → L2 Detail �
 
 ---
 
+## Termination Bound
+
+**`N/A` for a convergence loop** — `spec` is a bounded *dialogue*, not a rubric loop. Its bound is structural: the Phase 2 convergence check ends exploration, and the explicit **LOCK gate** ends the recipe. A dialogue that will not converge exits `BLOCK` with the open questions listed, never by burning turns.
+
 ## Draft persistence & resume
 
 `spec`'s value is a long multi-turn dialogue, so it must survive interruption. State is persisted **incrementally** to `docs/specs/<slug>.draft.md` — not only at the end.
@@ -110,7 +114,7 @@ The L1↔L3 traceability (every requirement has an AC; every AC maps to a requir
 ## Scale
 3-9 agents (Lens reuse-scan in FRAME and Judge in the Quality Gate are conditional add-ons), multiplied by dialogue turns. Light by agent count, deliberately heavy by interaction turns — the value is in the conversation depth, not fan-out.
 
-## Anti-patterns prevented
+## Failure Modes Prevented
 1. **Spec a half-baked idea** — FRAME checkpoint requires a confirmed problem statement before options.
 2. **Endless circling** — Phase 2 convergence check + explicit LOCK gate bound the dialogue.
 3. **Spec without acceptance criteria** — Phase 4 mandates testable L3 ACs as the lock precondition.

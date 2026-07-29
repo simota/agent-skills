@@ -118,6 +118,6 @@ Checkpoint-resume: with ≥ 4 phases, the blueprint persists at the CONFIRM boun
 
 ---
 
-## Termination bound
+## Termination Bound
 
 No outer quality loop (**N/A** for the recipe shape — `layer` is design-then-delegate, not an iterate-to-rubric loop). The only bounded iteration is per-skill **recraft inside Sigil** (Sigil's own 6-8 → recraft-once rule); the recipe does not add an outer loop. For an iterate-to-a-quality-bar build, wrap with `converge`.

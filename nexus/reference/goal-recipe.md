@@ -416,7 +416,21 @@ steps:
 <1-3 sentence summary, recommended next action>
 ```
 
-## Failure Modes
+## Resume
+
+**`N/A`** — `goal` is a short single-pass setup (1-3 agents) that emits a launch command; there is no long-running state worth checkpointing. Re-invoking is cheaper than resuming. The *launched* run carries its own resume mechanism, specified in the Launch Contract.
+
+## Output Report — **Launch Contract** (named)
+
+Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
+
+- **Goal statement + completion oracle** — the machine-checkable predicate the run terminates on, and how it was made checkable when the original ask was vague
+- **Hard-stop bound** — the turn/budget/time limit in force and the mechanism enforcing it (native flag or budget-guard hook)
+- **Launch command** — the exact invocation, with its mode (`ci-headless` / attended) and output-capture path
+- **Hook configuration** — any snippets required before launch, ready to install
+- **Refusals** — an unverifiable goal or an unbounded launch is reported as *not delivered*, with the conversion needed
+
+## Failure Modes Prevented
 
 | Failure | Response |
 |---|---|
@@ -434,6 +448,6 @@ steps:
 - Spawns: 1-3 agents (Hone, Latch optional, Scribe optional)
 - Typical wall time: 2-4 minutes
 - Token cost: low — read-only audit and template generation
-- Confirmation gates: at most one (use-case classification when ambiguous)
+- Confirm / safety gate: **Ask First** at most once (use-case classification when ambiguous). `goal` writes no code and executes nothing — it delivers a launch command — so **Confirm-before-launch is `N/A`**; the launched run carries its own gates.
 
 This is a **lightweight Recipe**. Far below Apex. Suitable for `AUTORUN_FULL` in nearly all cases.

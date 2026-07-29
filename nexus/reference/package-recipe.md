@@ -247,6 +247,44 @@ Nexus AUTORUN package domain=<preset> theme="<X>" depth=<...> mode=<...>
   → report: zip path, file count, main contents, validation, caveats + routing notes
 ```
 
+## Resume
+
+**Checkpoint-resume** (7 phases): persist the Phase 0 framing contract, the Phase 2 frozen entity list, and each Phase 3 track's completed files at its boundary. Resume re-enters at the first incomplete track — **the entity list is never re-derived on resume**, since re-minting IDs would break every cross-reference already written.
+
+## Termination Bound
+
+**`N/A` — `package` is a non-loop recipe.** Phases 0-6 run once; Phase 5 validation either passes or fails the package with a named defect list. Validation failures are reported, not iterated over — the operator decides whether to re-run. Preset blueprints inherit this.
+
+## Output Report — **Package Manifest Report** (named)
+
+Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`, and mirrored on disk as `document_manifest.csv` + `validation_report.md` + `README.md`:
+
+- **Preset + blueprint** — which domain preset ran, and (for an auto-detected domain) the detection score that chose it
+- **File inventory** — every generated artifact with its owning track and format
+- **Traceability matrix** — primary entities vs the documents that reference them; dangling references and unmapped entities listed (must be empty to ship)
+- **Grounding tally** — sourced claims / assumptions / research-to-dos / **ungrounded-fact failures (must be 0)**
+- **Risk-gate disposition** — which gates fired and how each was satisfied
+- **Gap notes** — any novel domain produced as `generic`, with its `#TODO(agent)` promotion note
+
+## Scale
+
+**10-30 agents, single pass, mid-to-high cost** — preset-dependent: the Phase 3 parallel doc-track count is the multiplier (typically 5-8 tracks), Phase 1 research adds 2-4, Phase 5 validation 2-3. No cycle multiplier (see Termination Bound).
+
+## Failure Modes Prevented
+
+| Failure | Mitigation |
+|---------|-----------|
+| Tracks invent their own entities → a package that cross-references nothing | Canonical **entity-id barrier** at Phase 2: the primary entity list is frozen before any Phase 3 track runs; tracks reference existing IDs only, never mint new ones |
+| Dangling references / orphan primary entities surviving to delivery | Phase 5 **fails** the package on any dangling reference or unmapped primary entity |
+| Plausible-but-fabricated market sizes, adoption stats, and "studies show" numbers | **Universal Grounding Gate** (all presets, not just `research`): every external fact is sourced / `ASSUMPTION` / research-to-do; `validation_report.md` must report **0 ungrounded-fact failures** to ship |
+| Internal opinions policed as if they were external facts (gate over-firing) | The gate targets externally-checkable facts only; the plan's own proposals and recommendations are explicitly exempt |
+| Legal / medical / hiring content shipped as authoritative advice | Per-preset **Risk Gates**: mandatory disclaimer + `lawyer_review_points`; Phase 5 fails on omission |
+| A novel domain silently produced as `generic` with the gap hidden | Phase 0 emits an explicit gap note + `#TODO(agent)` to promote the domain once a dedicated skill exists |
+| Structurally valid but internally contradictory documents | Phase 5 attest/judge cross-doc consistency pass on top of the traceability matrix |
+| Format artifacts that do not load (broken CSV/JSON/YAML/SQL) | Phase 5 format syntax lint — every non-Markdown artifact must be real and parseable |
+
+**Preset blueprints inherit this section** — `reference/venture-recipe.md` (the `startup` preset) adds no failure modes of its own; per-preset risk gates are tabulated in § Risk Gates above.
+
 ## Failure Escalation
 
 | Failure | Detected by | Escalation |

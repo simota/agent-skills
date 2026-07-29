@@ -176,6 +176,10 @@ Magi confirms the relevant aspects in Phase 3; Phase 4 builds against them; Phas
 
 ---
 
+## 4a. Termination Bound
+
+**`N/A` for a convergence loop** — `graft` terminates on its **verdict gate** (`reference/verdict-gate.md`): each candidate transplant resolves to Yes / No / Modify, and the recipe ends when every candidate has a verdict. Adversarial refutation per `_common/ADVERSARIAL_REFUTATION.md` is a fixed-size panel, not an iterated loop. A candidate that cannot reach a verdict exits `BLOCK` with the unresolved question stated.
+
 ## 5. Failure Modes Prevented
 
 | Failure | Mitigation |

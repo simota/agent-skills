@@ -281,6 +281,15 @@ This is a distinct check from Phase 6's in-loop `judge` (code-quality review) an
 | `guardian` | Commit policy, branch strategy, PR preparation | Yes |
 | `launch` | Release plan + CHANGELOG + rollback plan | Yes |
 
+### Termination Bound
+
+| Loop | Bound | Exit reasons |
+|------|-------|--------------|
+| **Implementation loop** (Orbit sub-orchestration) | **`loop ≤ 6 cycles (default N=6)`** — the per-iteration ceiling declared in the agent-deployment table | `ACCEPT` (acceptance criteria met) · `diminishing-returns (Δ < ε)` · `cap-reached` · `BLOCK` |
+| **Acceptance-gap loop** (Phase 6 → Ship gate) | **`loop ≤ 2 cycles (default N=2)`** — re-enter Phase 6 with the attest gap list, then escalate to the user | `ACCEPT` (all criteria met) · `cap-reached` → user decision · `BLOCK` |
+
+On any non-`ACCEPT` exit the Delivery Report states which acceptance criteria remain unmet and the residual gap — apex never ships a silent partial.
+
 ### Output: apex Delivery Report
 
 Apex emits `NEXUS_COMPLETE` with the base `## Nexus Execution Report` (`reference/output-formats.md`) **plus the named apex Delivery Report** — the recipe-specific report (element #4 of `reference/recipe-contract.md` §5) that summarizes what apex produced end-to-end:

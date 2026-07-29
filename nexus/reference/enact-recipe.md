@@ -231,6 +231,24 @@ Nexus AUTORUN enact docs/CHARTER.md
   → NEXUS_COMPLETE(charter_path, run_log_path, checklists, statuses)
 ```
 
+## Termination Bound
+
+**`N/A` for a convergence loop** — `enact` runs the Charter's work packages to completion rather than iterating one deliverable to a bar. Its bound is **per-package**: each package terminates on its own §7 verification gate, and the run terminates when every package reaches a terminal verdict (`DONE` / `FAILED` / `PARTIAL` / `SKIPPED`). A package that cannot reach one escalates via §8 rather than retrying indefinitely — "run to completion" means a true terminal verdict, never a fabricated success.
+
+## Scale
+
+**Charter-dependent: typically 15-50 agents across all work packages, single pass per package, high cost.** The Charter's package count is the multiplier; `dry-run` mode costs 2-4 agents (constructability check only).
+
+## Output Report — **Execution Report** (named)
+
+Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
+
+- **Charter provenance** — which Charter drove the run and its §10 pre-flight checklist result
+- **Per-package disposition** — every work package with its owner, terminal status (DONE / FAILED / PARTIAL / SKIPPED), and verification output reference
+- **Run log tail** — the append-only event sequence (`PKG_START` / `PKG_RECOVER` / `PKG_DONE` / `SAFETY_STOP` …) that also serves as the resume state
+- **Constructability gaps** — roster entries that could not be resolved to a spawnable owner, with the `charter` re-authoring recommendation
+- **Truthful verification result** — §7 gate outcomes reported with output; a FAILED package is reported as FAILED, never masked (§8 honesty red line)
+
 ## Failure Escalation
 
 Under run-to-completion, only **precondition** and **safety red line** failures stop the run; every recoverable failure continues.

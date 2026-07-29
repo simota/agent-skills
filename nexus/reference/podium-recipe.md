@@ -246,7 +246,7 @@ user_acknowledged: true | false
 - `greenfield` — Phase 1 builds source/audience from scratch. Frame and Tome run only if the user provides reference materials (codebase, market sources).
 - `refresh` — Phase 1 mandatorily runs Frame (multimodal extraction from `existing_assets` of role `primary_deck` or `brand_sample`) and/or scribe-equivalent extraction for `primary_doc`. Phase 2 Narrative team is instructed to preserve the existing story spine unless Phase 4 verification flags a CRITICAL issue with it. Improvement loops favor surgical edits over rewrites. **Refresh-grounding guard:** any **new** claim introduced while refreshing must be grounded with the same rigor as greenfield (Phase 4 claim-grounding applies to additions, not just the original) — polishing must not smuggle in ungrounded claims under the cover of an "improvement"; and any original claim that is removed or materially changed is logged in the execution report so the edit is auditable.
 
-**Gate:** If `risk_tier == release-critical` (external press, regulatory, customer-facing keynote) → require explicit user confirmation before proceeding.
+**Gate: Confirm before launch when `risk_tier == release-critical`** (external press, regulatory, customer-facing keynote). Conditional by design — **intentionally weaker than `summit`'s unconditional gate**, because content runs are cheaper and more frequent than strategic code runs; this is a stated difference, not drift.
 
 ---
 
@@ -806,6 +806,29 @@ phase_chain:
 ```
 
 ---
+
+## Output Report — **Podium Pack** (named)
+
+Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
+
+- **Narrative lock** — the signed-off spine every format track built against
+- **Per-format inventory** — doc / slides / script artifacts with their render status
+- **Rubric trajectory** — per-cycle scores per dimension across the ≤ 2 improvement cycles
+- **Verification Team findings** — raised / fixed / accepted-with-caveat, Generator-excluded per Q9
+- **Grounding record** — every load-bearing claim with its source; critical gaps surfaced at the Phase 1 gate and how each was closed
+- **Exit reason** (canonical vocabulary) + residual gap when not `ACCEPT`
+
+## Failure Modes Prevented
+
+| Failure | Mitigation |
+|---------|-----------|
+| Release-critical content shipped without a human in the loop | Phase 0 gate: `risk_tier == release-critical` (press / regulatory / customer-facing keynote) requires explicit confirmation before proceeding |
+| A headline claim with no source behind it | Phase 1 gate: `gaps_to_address.critical > 0` pauses and presents to the user (canonical case: "we claim a 40% improvement but no source backs it") |
+| Parallel format tracks drifting into three different stories | **Narrative lock** is the cross-format contract — once signed off, Phase 3 tracks may not redesign the spine without restarting Phase 2 |
+| The producer grading its own content | Verification Team is Generator-excluded (Q9); the rubric is the single termination oracle per `reference/evaluator-loop-protocol.md` |
+| Endless polish on content that has already converged | Improvement loop **capped at 2 iterations** (vs summit's 3 — content converges faster than code; intentional difference, not drift) with a `diminishing-returns` exit |
+| A render failure silently shipping a stale artifact | Phase 4 render failure forces a Phase 5 loop with stage + morph re-run |
+| Ungrounded prose surviving into the deliverable | Doc Quality Gate W12 per `reference/doc-quality-protocol.md`, discharged by the Verification Team |
 
 ## Failure Escalation
 

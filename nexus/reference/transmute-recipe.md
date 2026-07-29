@@ -145,6 +145,10 @@ The core knowledge of this recipe — and its rulebook. Magi confirms the releva
 
 ---
 
+## 4a. Termination Bound
+
+**`N/A` for a convergence loop** — `transmute` terminates on its **differential-parity oracle** (`_common/DIFFERENTIAL_PARITY.md`): the rewrite is done when the comparator reports zero semantic divergence against the stamped baseline across the agreed corpus. Parity failures return to the per-module fix step; they do not iterate a rubric. A divergence that cannot be closed exits `BLOCK` with the residual divergence set reported, never silently accepted.
+
 ## 5. Failure Modes Prevented
 
 | Failure | Mitigation |

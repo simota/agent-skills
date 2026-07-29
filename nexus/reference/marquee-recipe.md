@@ -1,6 +1,6 @@
-# Marquee Recipe — Wish-Grade One-Shot Landing-Page Production
+# Marquee Blueprint — the `lp` domain preset of `wish`
 
-> `/nexus marquee "<product / offer>"` — Wish-grade one-shot landing-page production — crystallization dialogue → 3-direction tournament → adversarial gauntlet + ceiling convergence with machine oracles (Lighthouse / CWV / WCAG) → One-Shot Gate; ACCEPT = all rubric dims = 3. The page that is the product's face gets built once, to the ceiling — design, copy, conversion, performance, and trust are all first-class dimensions.
+> `/nexus marquee "<product/offer>"` ≡ **`/nexus wish domain=lp`** — the `lp` domain preset of the wish quality-ceiling engine. `marquee` is a **named alias kept for discoverability**; the engine (crystallization → tournament → gauntlet-converge → One-Shot Gate, termination bound, Q9 separation) is owned by `reference/wish-recipe.md` and is **not** re-derived here. This file owns only what the preset fixes: the 5-dimension LP Ceiling Rubric with machine oracles, the GROUND and PRODUCE phases, the LP skeptic angles, and the Marquee Dossier.
 
 Read this file before executing the `marquee` Recipe.
 

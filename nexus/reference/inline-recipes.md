@@ -74,6 +74,30 @@
 
 ---
 
+## Contract elements shared by all four
+
+Per `reference/recipe-contract.md` §1 — the elements these four inline recipes hold in common, so each section above states only its own specialization:
+
+| # | Element | Contract |
+|---|---------|----------|
+| 3 | **Resume** | **`N/A`** for `essential` / `killer` / `trim` — each is a short verdict pass (2-5 agents, one forward run); re-invoking is cheaper than checkpointing. `kaizen` uses **checkpoint-resume**: the baseline measurement and each cycle's rubric scores persist at cycle boundaries, so an interrupted run resumes mid-loop with its trajectory intact. |
+| 4 | **Output report** | `kaizen` → named **Before/After Report** (baseline vs final per axis, cycles run, exit reason, residual gap). The three verdict recipes → the named **Verdict Card** defined in `reference/verdict-gate.md` (verdict · evidence · Yes/No/Modify branch · flag + KPI + kill criteria where applicable). |
+| 5 | **Failure Modes Prevented** | See table below. |
+| 7 | **Scale** | `kaizen` **4-10 agents × ≤3 cycles**, mid cost. `essential` / `killer` / `trim` **2-5 agents, single pass**, low cost — the verdict is cheap; only the *conditional implementation* that follows a Yes carries real cost, and it is scoped by the branch taken. |
+
+## Failure Modes Prevented
+
+| Failure | Mitigation | Applies to |
+|---------|-----------|-----------|
+| "Improve it" with no measurable target → taste-driven churn | Baseline measurement is the entry condition; the rubric target is fixed before any change | `kaizen` |
+| Endless polish past the point of value | `loop ≤ N cycles (default N=3)` + `diminishing-returns (Δ < ε)` exit; non-`ACCEPT` exits report best-so-far | `kaizen` |
+| The producer grading its own improvement | Generator-Evaluator separation per `reference/evaluator-loop-protocol.md` | `kaizen` |
+| A verdict asserted from intuition rather than evidence | Verdict Card requires cited evidence per `reference/verdict-gate.md`; an unsupported verdict cannot be issued | verdict trio |
+| Confirmation bias toward the answer the asker wants | Adversarial refutation panel per `_common/ADVERSARIAL_REFUTATION.md` (polarity set against the proposed verdict) | `killer`, `trim` |
+| A "Yes" silently becoming an unbounded build | The Yes branch is *conditional* implementation, scoped by the card — `killer` additionally ships behind a feature flag with a stated KPI and kill criterion | `essential`, `killer` |
+| Removing something still load-bearing | `trim` requires a dependency/usage check before excision; an unresolved dependency turns the verdict into Modify, never Yes | `trim` |
+| A verdict that neither ships nor closes | Every card ends in exactly one of Yes / No / Modify — an undecidable case exits `BLOCK` with the missing evidence named | verdict trio |
+
 ## Visualizations
 
 Mermaid flow diagrams (render via mermaid.live or compatible viewer):
