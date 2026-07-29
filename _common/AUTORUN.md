@@ -53,14 +53,6 @@ The canonical spawn prompt — including the four mandatory directive fields (Re
 - `resume_agent` — Resume a paused subagent
 - `close_agent` — Close a subagent's thread
 
-### Layer Selection
-
-```
-Steps <= 4 AND sequential?     → L1: Direct Spawn (foreground / spawn_agent)
-2-3 independent branches?      → L2: Parallel Spawn (background / spawn_agent × N)
-4+ workers OR complex ownership? → L3: Rally Delegation
-```
-
 ### Model Selection
 
 Model-per-role assignment is hub-engine-specific and defined once in `nexus/reference/hub-authoring.md` § Model Selection — Claude Code hub defaults to **Sonnet 5** (task-appropriate), escalating to **opus / fable-5** for the high-reasoning tier and **haiku** for trivial steps; Codex hub uses the latest gpt-5.6 generation with role-based variants (sol plan / terra execute / luna rote); agy hub is mandated to Gemini 3.6 Flash (High). Do not reproduce a bare `sonnet/opus/haiku` map here.
@@ -443,23 +435,6 @@ CLASSIFY → CHAIN_SELECT → (first inference starts immediately)
 4. **Preserve context**: Use `_STEP_COMPLETE` to maintain chain context
 5. **Report progress**: Show clear step indicators during execution
 
----
-
-## Migration from Copy-Paste
-
-### Before (Manual)
-```
-/Nexus task → Copy $Agent prompt → Paste to Agent → Copy response → Paste to Nexus → Repeat
-```
-
-### After (Automatic)
-```
-## NEXUS_AUTORUN_FULL
-task
-```
-→ Nexus spawns each agent via Agent tool → Each agent reads its own SKILL.md → Final result
-
-**Key change**: Each agent runs as an independent Claude session with full access to its own expertise, rather than Nexus simulating the agent's role.
 
 ---
 
