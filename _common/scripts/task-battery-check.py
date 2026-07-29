@@ -59,19 +59,21 @@ ROUTING_MATRIX = NEXUS_DIR / "reference" / "routing-matrix.md"
 SIGNAL_KEYWORDS = NEXUS_DIR / "reference" / "signal-keywords.md"
 TASK_BATTERY = NEXUS_DIR / "reference" / "task-battery.md"
 AGENT_CHAINS = NEXUS_DIR / "reference" / "agent-chains.md"
+RECIPES_INDEX = NEXUS_DIR / "reference" / "recipes-index.md"
 
 FILES = {
     "SKILL.md": NEXUS_SKILL,
     "routing-matrix.md": ROUTING_MATRIX,
     "signal-keywords.md": SIGNAL_KEYWORDS,
     "agent-chains.md": AGENT_CHAINS,
+    "recipes-index.md": RECIPES_INDEX,
 }
 
 # Items 1-28: (item, short description, file key, required verbatim substring).
 # Each substring is the literal textual evidence in the routing artifact that
 # backs the item's "Expected routing" claim in task-battery.md.
 MECHANICAL_ITEMS = [
-    (1, "bug subcommand routes directly", "SKILL.md", "| Bug Fix | `bug` |"),
+    (1, "bug subcommand routes directly", "recipes-index.md", "| Bug Fix | `bug` |"),
     (2, "memory leak carve-out -> bug", "signal-keywords.md",
      "`memory leak`/`OOM over time`/`unbounded growth` → `bug`"),
     (3, "CVE keyword -> security", "signal-keywords.md",
@@ -86,11 +88,11 @@ MECHANICAL_ITEMS = [
      "architecture/code design → `anneal`; UI/visual/look-and-feel → `restyle`"),
     (8, "design weaknesses keyword -> anneal", "signal-keywords.md", "`design weaknesses`"),
     (9, "redesign the screen keyword -> restyle", "signal-keywords.md", "`redesign the screen`"),
-    (10, "loop dispatcher gates to goal/converge/orbit/apex", "signal-keywords.md",
-     "unattended autonomous runner → the `orbit` skill · discovery→ship → `apex`"),
+    (10, "loop shape-resolves to goal/converge/orbit/apex", "signal-keywords.md",
+     "unattended runner (scripts/contracts/recovery) → `orbit` skill · discovery→ship one-shot → `apex`"),
     (11, "goal keyword row -> goal", "signal-keywords.md",
      "`goal`, `/goal setup`, `goal recipe`, `long-running goal`, `autonomous loop setup` | `goal`"),
-    (12, "feature subcommand/keyword exists", "SKILL.md", "| Feature | `feature` |"),
+    (12, "feature subcommand/keyword exists", "recipes-index.md", "| Feature | `feature` |"),
     (13, "end-to-end feature keyword -> apex", "signal-keywords.md", "`end-to-end feature`"),
     (15, "spec out keyword -> spec", "signal-keywords.md", "`spec out`"),
     (16, "self-driving team charter keyword -> charter", "signal-keywords.md",

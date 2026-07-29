@@ -281,6 +281,10 @@ This is a distinct check from Phase 6's in-loop `judge` (code-quality review) an
 | `guardian` | Commit policy, branch strategy, PR preparation | Yes |
 | `launch` | Release plan + CHANGELOG + rollback plan | Yes |
 
+### Loop Precondition Gate
+
+Run `_common/LOOP_PRECONDITIONS.md` before entering the implementation loop. #2 is the declared cap below; #3 is the Orbit sub-orchestration's evaluator separation. Report the verdict in the Delivery Report.
+
 ### Termination Bound
 
 | Loop | Bound | Exit reasons |

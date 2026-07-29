@@ -152,9 +152,16 @@ def check_ladder_token_order(findings: list[Finding]):
     """RO-2: REDIRECT before SELECT before LADDER in the classify chain template;
     compass before architect in the LADDER clause."""
     skill_content = NEXUS_SKILL.read_text(encoding="utf-8")
-    m = re.search(r"\|\s*Auto Classify\s*\|.*?\|\s*(`[^`]+`)\s*\|", skill_content)
+    haystack = skill_content
+    if "Auto Classify" not in haystack:
+        # The Recipes table may live in the externalized registry
+        # (`_common/RECIPES.md` "Externalized registry"); follow the pointer.
+        idx = NEXUS_DIR / "reference" / "recipes-index.md"
+        if idx.is_file():
+            haystack = idx.read_text(encoding="utf-8")
+    m = re.search(r"\|\s*Auto Classify\s*\|.*?\|\s*(`[^`]+`)\s*\|", haystack)
     if not m:
-        findings.append(Finding("RO-2", "WARNING", "Auto Classify row not found in nexus/SKILL.md Recipes table — token-order check skipped"))
+        findings.append(Finding("RO-2", "WARNING", "Auto Classify row not found in nexus SKILL.md or reference/recipes-index.md — token-order check skipped"))
         return
     chain_template = m.group(1)
     tokens = ["REDIRECT", "SELECT", "LADDER"]

@@ -47,6 +47,19 @@ Include this table when the skill defines 3 or more distinct modes.
 | [Display Name] | `[token]` | | [activation condition] | `reference/[file].md` |
 ```
 
+### Externalized registry (size-ceiling escape hatch)
+
+A skill whose Recipes table has grown large enough to push `SKILL.md` toward the Anthropic size ceiling may move **the table** to a sibling registry file and keep only a **dispatch allowlist** in `SKILL.md`. The split is by purpose: `SKILL.md` keeps what is needed to *choose* (the allowlist, plus any family/keyword grouping), the registry holds what is needed to *execute* (When to Use · Chain Template · Read).
+
+Rules:
+
+1. The `## Recipes` section stays in `SKILL.md` — only its table moves. Removing the section entirely trips `R-REC-05`.
+2. The section must name the registry as a backticked path matching `reference/*recipes-index.md`; the validators follow that pointer and validate the table wherever it lives.
+3. The allowlist must list **every** subcommand, marking the default. A token absent from it is not a subcommand — Subcommand Dispatch reads the allowlist, not the registry.
+4. The registry file states its own purpose and read-trigger like any other reference.
+
+Use this only when the size ceiling actually forces it; a table that fits belongs inline, where it is one read away instead of two. Current user: `nexus` (`nexus/reference/recipes-index.md`) — 39 Recipes.
+
 **Column definitions:**
 - **Recipe** — human-readable display name (title case, spaces OK)
 - **Subcommand** — the exact token users type (kebab-case, backtick-quoted)

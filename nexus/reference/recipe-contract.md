@@ -102,7 +102,7 @@ Before a recipe reference is "done": all eight §1 elements present (or `N/A` + 
 A recipe is not "live" until it appears — consistently — in **every** index, not just its own reference file. Omitting one is how a recipe becomes unroutable or mis-grouped (e.g. the signal-keywords mis-filing that put loop/reproduction recipes under "Mobile Native"). Wire all seven:
 
 1. `reference/<name>-recipe.md` — the deep contract (this file's §1-§7).
-2. `SKILL.md` `## Recipes` table — one row (Recipe · Subcommand · When to Use · Chain Template · Read).
+2. `reference/recipes-index.md` — one row (Recipe · Subcommand · When to Use · Chain Template · Read), **and** the subcommand added to the `SKILL.md` `### Recipe Registry` allowlist. The full table lives in the index file; SKILL.md carries only the dispatch allowlist.
 3. `SKILL.md` `### Recipe Families` — add to the right family (create one only if no family fits); state the within-family distinguishing axis.
 4. `SKILL.md` `### Signal Keywords` inline table — add the most-used anchors (subset of #6).
 5. `SKILL.md` `## Reference Map` — one row pointing at the new reference file.

@@ -74,9 +74,22 @@ def iter_skills(only: set[str] | None = None):
             yield entry.name, skill_md
 
 
-def extract_recipes_block(content: str) -> str | None:
+def extract_recipes_block(content: str, skill_dir=None) -> str | None:
     m = re.search(r"^## Recipes\s*\n(.*?)(?=^## )", content, re.MULTILINE | re.DOTALL)
-    return m.group(1) if m else None
+    if m is None:
+        return None
+    block = m.group(1)
+    # A skill whose Recipes table has outgrown the SKILL.md size ceiling may keep
+    # the table in a sibling registry file and carry only a dispatch allowlist
+    # here (`_common/RECIPES.md` "Externalized registry"). Follow the pointer so
+    # the table is validated wherever it lives.
+    if skill_dir is not None and not re.search(r"^\|\s*Recipe\s*\|", block, re.MULTILINE):
+        ptr = re.search(r"`(reference/[a-z0-9-]*recipes?-index\.md)`", block)
+        if ptr:
+            target = skill_dir / ptr.group(1)
+            if target.is_file():
+                return target.read_text(encoding="utf-8")
+    return block
 
 
 def parse_rows(block: str):
@@ -124,7 +137,7 @@ def validate(skill: str, path: Path) -> tuple[list[str], list[str], list[str]]:
 
     errors.extend(heading_issues(content))
 
-    block = extract_recipes_block(content)
+    block = extract_recipes_block(content, path.parent)
     if block is None:
         infos.append("R-REC-05: no `## Recipes` section (RECOMMENDED for Tier 1-2)")
         return errors, warnings, infos

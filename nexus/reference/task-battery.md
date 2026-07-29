@@ -23,7 +23,7 @@ Items 1-30 are Candidate A's original battery (routing-level verification for th
 | 7 | "improve the design of this component" (ambiguous) **[E2E executed — Probe-Redirect]** | Improve | REDIRECT one-question: code-design → `anneal`, UI/look-and-feel → `restyle` |
 | 8 | "audit this codebase's architecture for weaknesses" | Improve | `anneal` |
 | 9 | "redesign the settings screen, make it modern" | Improve | `restyle` |
-| 10 | "run this until it's done, don't stop" | Loop | `loop` dispatcher → gates to goal/converge/orbit/apex |
+| 10 | "run this until it's done, don't stop" | Loop | shape-resolve per `_common/LOOP_PRECONDITIONS.md` → goal/converge/orbit/apex; the five-point gate runs at the resolved owner |
 | 11 | "set up a goal to keep the test suite green nightly" | Loop | `goal` (checks for machine-checkable oracle + hard-stop bound) |
 | 12 | "add OAuth login" **[E2E pending]** | Build | `feature` |
 | 13 | "build this whole idea end to end, 8-25 agent budget ok" | Build | `apex` |
@@ -57,6 +57,6 @@ Items 29-30 and 33-35 are the dim-3 proof points (5 total, exceeding the rubric'
 
 ## Regression discipline
 
-- Re-run items 1-28 whenever `routing-matrix.md`, `signal-keywords.md`, or `nexus/SKILL.md`'s Recipes table changes. Items 1-28 must resolve to byte-identical chain selections across the change — they prove REDIRECT/SELECT priority is untouched.
+- Re-run items 1-28 whenever `routing-matrix.md`, `signal-keywords.md`, or `nexus/SKILL.md`'s Recipe Registry or `reference/recipes-index.md` changes. Items 1-28 must resolve to byte-identical chain selections across the change — they prove REDIRECT/SELECT priority is untouched.
 - Items 29-30 and 33-35 (out-of-coverage) are the only items expected to exercise the LADDER path; re-run them whenever `routing-matrix.md` § LADDER, `compass/SKILL.md` Output Routing "No matching skill" row, or `architect`'s `ARCHITECT_TO_NEXUS_HANDOFF` schema changes.
 - Items 31-32 (ambiguous stress tests) are the only items expected to hard-stop at `GATE`/`REDIRECT` with a clarifying question — a regression here means an ambiguous anchor started silently resolving without a question, which is the DC-1-adjacent failure this battery exists to catch.

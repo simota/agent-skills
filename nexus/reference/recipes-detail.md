@@ -1,6 +1,6 @@
 # Recipes — Detail
 
-Extended descriptions for verbose Recipe rows. The Recipes table in `SKILL.md` carries the canonical name / subcommand / chain template / Read pointer; this file expands the "When to Use" prose that does not fit on one row.
+Extended descriptions for verbose Recipe rows. The Recipes table in `reference/recipes-index.md` carries the canonical name / subcommand / chain template / Read pointer; this file expands the "When to Use" prose that does not fit on one row.
 
 ---
 
@@ -304,16 +304,6 @@ Read: `reference/marquee-recipe.md`, `reference/wish-recipe.md`, `reference/rese
 
 ---
 
-## loop
-
-**Loop-engineering dispatcher & discipline gate** — the front-door for *underspecified* "make this a loop" requests. Does **not** run a loop: classifies the loop's *shape* (native-goal | rubric-quality | unattended-runner | discovery-to-ship), runs the **loop-engineering precondition gate** (verifiable oracle · external hard-stop bound · maker≠checker · persistent memory · drift-awareness — each failed precondition maps to a named anti-pattern: loopmaxxing / overbaking / nodding / amnesiac loop), then **routes to the engine that owns execution** (`goal` / `converge` / `orbit` / `apex`). Nexus stays the routing layer; `orbit` is the execution substrate — `loop` delegates and never re-implements it. Meta/control, not a task shape. The gate is contract-level (AUTORUN cannot skip); unattended `orbit` launches confirm before launch. 1 agent (inline classify + gate) + the routed engine's range. Distinct from `goal` (native `/goal` *setup only* — `loop` may route to it), `converge` (in-session rubric loop — `loop` routes to it), and `orbit` (the runner skill `loop` delegates to).
-
-**Chain template:**
-`FRAME (classify SHAPE) → GATE ★contract-level [oracle? bound? maker≠checker? memory? drift-aware? → fail → convert (1 question) or STOP] → ROUTE (native-goal→goal | rubric-quality→converge | unattended-runner→orbit [Confirm before launch] | discovery-to-ship→apex) → DELIVER (Loop Design Record)`
-
-Read: `reference/loop-recipe.md`, `orbit/reference/loop-engineering.md`, `reference/loop-engineering-primitives.md`.
-
----
 
 ## converge
 

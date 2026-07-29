@@ -416,6 +416,12 @@ steps:
 <1-3 sentence summary, recommended next action>
 ```
 
+## Loop Precondition Gate
+
+Run `_common/LOOP_PRECONDITIONS.md` **before emitting any launch command**. Preconditions #1 (verifiable completion oracle) and #2 (hard-stop bound) *are* this recipe's own delivery gate — an unverifiable goal or an unbounded launch is refused, not downgraded. #3-#5 are reported as run risks the launched session must carry. The gate verdict (per precondition: met / converted / blocking) is a required section of the Launch Contract.
+
+When the request arrives with **no named loop shape**, classify the shape first (`_common/LOOP_PRECONDITIONS.md` § Shape first, then gate) — a rubric-quality ask belongs to `converge`, an unattended runner to `orbit`, a full lifecycle to `apex`, and only a native single-session goal stays here.
+
 ## Resume
 
 **`N/A`** — `goal` is a short single-pass setup (1-3 agents) that emits a launch command; there is no long-running state worth checkpointing. Re-invoking is cheaper than resuming. The *launched* run carries its own resume mechanism, specified in the Launch Contract.

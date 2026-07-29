@@ -718,6 +718,6 @@ After execution, Nexus returns a `## Nexus Execution Report` with the Phase 0 se
 |---|---|
 | Technical contract (agent-facing) | `apex-recipe.md` |
 | This document (visual / human-facing) | `apex-walkthrough.md` |
-| Recipe overview | Recipes table / Subcommand Dispatch in `nexus/SKILL.md` |
+| Recipe overview | `nexus/reference/recipes-index.md` (full table) / Subcommand Dispatch in `nexus/SKILL.md` |
 | Sub-hub design rationale | `agent-chains.md`, `orchestration-patterns.md` |
 | Guardrails | `guardrails.md`, `error-handling.md` |

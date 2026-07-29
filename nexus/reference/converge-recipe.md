@@ -74,6 +74,10 @@ DELIVER ── convergence report: cycles run, per-cycle score trajectory,
 
 ---
 
+## 3a. Loop Precondition Gate
+
+Run `_common/LOOP_PRECONDITIONS.md` before cycle 1. Two of the five are structural here and pass by construction — #3 (maker ≠ checker) via Generator-Evaluator separation, #2 (hard-stop bound) via `max_cycles` — so the gate reduces to confirming #1 (the rubric *is* the completion oracle; a rubric with no score-3 anchor fails it), #4, and #5. Report the verdict in the Convergence Report.
+
 ## 4. Flatten Rule — wrapping a loop-recipe
 
 `converge <recipe>` runs the inner recipe as the Generator. But several recipes **own their own termination loop** (`kaizen` = PDCA cap 3, `apex`, `summit`). Nesting two loops causes **cost blowup** (cycles × inner-cycles) and **dueling termination oracles** (inner metric vs outer rubric).

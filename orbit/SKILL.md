@@ -418,6 +418,7 @@ Follow `_common/OPERATIONAL.md` for full operational protocol.
 | `reference/signal-keywords.md` | Full natural-language keyword → Recipe routing table (Subcommand Dispatch fallback). |
 | `reference/ralph-loop-pattern.md` | Generating/auditing/hardening a Ralph-style loop: 9 principles, 9xx guardrails, AGENTS.md 60-line cap, green-field constraint, §14 fleet. |
 | `reference/loop-engineering.md` | Deciding *whether* a loop is the right answer ("when NOT to build a loop" limits). Read at INTAKE/CONTRACT. |
+| `_common/LOOP_PRECONDITIONS.md` | The five-point precondition gate every loop passes before it runs (completion oracle · hard-stop bound · maker ≠ checker · persistent memory · drift awareness). **Run it at INTAKE, before generating a runner** — #4 and #5 are Orbit's structural responsibility; report the verdict with the runner. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the runner spec, thinking depth at checkpoint/replay, front-loading reads at DESIGN. Critical: P3, P5. |
 | `_common/SUBAGENT.md` | Spawning Claude Code Agent-tool subagents in Orbit's own work. apex Phase 6 Codex subagents → `nexus/reference/apex-recipe.md §Phase 6`. |
 | `nexus/reference/apex-recipe.md` | Driving apex Phase 6: Codex CLI availability check, loop contract (accord L3 ACs + omen + echo), spawn scripts, convergence/cost/circuit audit. |
