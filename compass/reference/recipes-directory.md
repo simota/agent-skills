@@ -72,7 +72,7 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **muse**: tokens★ / apply / theme / typography / spacing / motion / elevation / radius
 - **native**: swiftui★ / compose / liquidglass / expressive / offline / push / deeplink / bg / passkey / privacy / rollout / store / cli / visualloop / macos / macdist
 - **nest**: audit★ / restructure / progressive / cache / naming / sharding / monorepo
-- **nexus**: newsroom / classify★ / bug / feature / security / refactor / optimize / kaizen / anneal / restyle / converge / loop / proactive / apex / charter / enact / layer / goal / gedanken / delve / cartograph / chronicle / spec / essential / killer / trim / acceptance / growth-acceptance / summit / podium / newsroom / wish / runway / hallmark / rebrand / marquee / migrate / transmute / clone / fuse / graft / package / pack / bug / security / kaizen / cartograph / proactive
+- **nexus**: newsroom / classify★ / bug / feature / security / refactor / optimize / kaizen / anneal / restyle / converge / loop / proactive / apex / charter / enact / layer / goal / gedanken / delve / cartograph / chronicle / spec / essential / killer / trim / acceptance / growth-acceptance / summit / podium / newsroom / wish / eureka / runway / crucible / silhouette / lattice / chorus / assay / hallmark / rebrand / marquee / migrate / transmute / clone / fuse / graft / package / pack / bug / security / kaizen / cartograph / proactive
 - **oath**: soc2★ / pci / hipaa / iso / policy / gdpr / audit / vendor
 - **omen**: premortem★ / rpn / ap / mode / faulttree / bowtie / hazop / multi
 - **oracle**: prompt★ / rag / eval / safety / mlops / agent / cost / embed / tooling

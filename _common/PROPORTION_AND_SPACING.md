@@ -8,7 +8,11 @@ this file.**
 
 **Consumers:** `muse` (spacing/type/grid token values) · `vision` (direction justification,
 composition) · `palette` (touch targets, measure, proximity grouping) · `nexus restyle` /
-`runway` / `marquee` (rubric axis numbers) · `funnel` / `bazaar` (LP layout) · `native`
+`runway` / `marquee` (rubric axis numbers) · `nexus crucible` (Tier-1/2 numbers as **pass
+criteria** for condition cells — reflow, target size) · `nexus chorus` (Idiom-Gate citations
+against Apple HIG / Material 3) · `nexus lattice` (defensible values when a system `gap` is
+filled) · `nexus silhouette` (§1 tiers bound what may justify a distinctive move — Tier 4
+folklore may not) · `funnel` / `bazaar` (LP layout) · `native`
 (platform margin conventions) · `forge` / `artisan` / `pixel` (implementation defaults).
 
 Read this when deciding spacing scales, container widths, type scales, or when justifying a
