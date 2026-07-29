@@ -102,7 +102,7 @@ Example:
 **After (1 line per agent):**
 ```markdown
 ## Activity Logging
-See `_common/ACTIVITY_LOGGING.md` for format.
+See `_common/OPERATIONAL.md` § Activity Log for format.
 ```
 
 **High-value deduplication targets:**
@@ -160,7 +160,6 @@ Keep essential behavioral instructions in SKILL.md; move detailed methodology, e
 **After (in SKILL.md, 3 lines):**
 ```markdown
 ### Question Templates
-See `reference/interaction-templates.md` for full YAML templates.
 Triggers: ON_AGENT_OVERLAP, ON_VALUE_UNCLEAR, ON_QUALITY_FEEDBACK, ON_ENHANCEMENT_PRIORITY
 ```
 
@@ -222,7 +221,6 @@ Based on the Harvest pattern: provide essential intent and constraints only, omi
 ## Daily Process
 RECEIVE → ANALYZE → IMPLEMENT → VALIDATE
 - Each phase completes fully before the next begins
-- See `reference/workflow.md` for detailed phase descriptions
 ```
 
 **When to use Loose Prompt:**

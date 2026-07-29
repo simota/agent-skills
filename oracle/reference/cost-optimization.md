@@ -27,7 +27,7 @@ Route to `Ledger` when the question is "is our vector DB oversized?" or "should 
 | Claude Opus 5 | `$5.00` | `$25.00` | Moderate | Highest | Complex agentic coding, `~10%` of traffic |
 | Claude Sonnet 5 | `$2.00` → `$3.00` | `$10.00` → `$15.00` | Fast | High | Production default (intro pricing through 2026-08-31, then standard) |
 | Claude Haiku 4.5 | `$1.00` | `$5.00` | Fastest | Good | Classification, extraction, tier-1 routing |
-| GPT-5.5 | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Medium | High | Cross-vendor fallback |
+| GPT-5.6 | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Medium | High | Cross-vendor fallback |
 | GPT-4o-mini | `$0.15` | `$0.60` | Fast | Good | High-volume extraction |
 | Gemini 3.6 Flash (High) | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Fast | Good | High-volume extraction (Gemini) |
 

@@ -187,4 +187,3 @@ zip -r MyAppUITests.zip \
 
 - `reference/fastlane-snapshot.md` — the separate, non-PR-blocking scheme this file's CI patterns must isolate from the regression-test invocation.
 - `reference/screenshot-strategies.md` — the `XCTAttachment` content that `xcresulttool` extracts from the result bundle.
-- Native's `reference/xcrun-cli.md` — `simctl` / `devicectl` command reference underlying the simulator-pool and device-lifecycle steps above.

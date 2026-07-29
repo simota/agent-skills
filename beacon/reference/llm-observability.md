@@ -110,9 +110,11 @@ Derive cost as a computed metric in the collector or Grafana:
 
 ```yaml
 # Prometheus recording rule example
-# NOTE: per-token multipliers below are carried over from claude-sonnet-4-6
-# pricing and are unverified for claude-sonnet-5 — confirm current pricing
-# before relying on this rule for billing. #TODO(agent): verify claude-sonnet-5 per-token price and update multipliers
+# NOTE: per-token multipliers below (0.000003 / 0.000015) equal claude-sonnet-5's
+# standard post-2026-09-01 rate ($3.00 / $15.00 per 1M tokens; see the pricing
+# table above). The intro rate through 2026-08-31 is lower ($2.00 / $10.00 per
+# 1M, i.e. 0.000002 / 0.000010) — swap multipliers on that date if this rule
+# must track intro pricing until then.
 - record: llm_request_cost_usd
   expr: |
     (

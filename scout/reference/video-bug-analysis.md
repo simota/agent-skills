@@ -168,7 +168,7 @@ Place at `scout/schemas/video-bug-detection.schema.json`. Loaded by `--output-sc
 
 ## Prompt Template
 
-Place at `scout/prompts/video-bug-detection.md`. The body below is the full prompt — do not add the schema inline; `--output-schema` enforces it.
+Keep the prompt template inline in this reference file (no separate `scout/prompts/` path). The body below is the full prompt — do not add the schema inline; `--output-schema` enforces it.
 
 ````markdown
 You are a senior QA engineer analyzing a screen recording submitted as a bug report.

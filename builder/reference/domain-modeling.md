@@ -476,8 +476,3 @@ class OutboxProcessor {
 
 ---
 
-## Sources
-
-- `builder/reference/ddd-patterns.md` — Entity, Value Object, Aggregate Root, Repository, Domain Service
-- `builder/reference/cqrs-patterns.md` — Command/Handler, Query/Handler, Read Model Projection
-- `builder/reference/event-sourcing.md` — Domain Event, Event Store, Event-Sourced Aggregate, Saga, Outbox Pattern

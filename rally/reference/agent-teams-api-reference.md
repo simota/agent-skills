@@ -287,7 +287,7 @@ As of 2026-04, Anthropic ships a fully managed agent harness for running Claude 
 |------------------------|------------------|--------------------------------|
 | **Multiagent Orchestration** (lead agent fan-out to specialists with their own model / prompt / tools) | `Agent` spawn with `team_name`, hub-spoke discipline | Stay local for in-session work; escalate when the workload runs unattended for days or needs platform-level audit |
 | **Outcomes** (rubric + separate grader in its own context window) | Rally's evaluator pattern + `_common/HANDOFF.md` rubric fields | Escalate when grading must be tamper-resistant or shared across user accounts |
-| **Memory + Dreaming** (per-agent memory refined between sessions, shared learnings across agents) | `_common/JOURNAL.md` + Lore's `MEMORY.md` curation | Escalate when learnings must persist across users or be audited centrally |
+| **Memory + Dreaming** (per-agent memory refined between sessions, shared learnings across agents) | `_common/OPERATIONAL.md` § Journal + Lore's `MEMORY.md` curation | Escalate when learnings must persist across users or be audited centrally |
 | **Webhooks** (completion notifications) | `_STEP_COMPLETE` handoff back to Nexus / Mend | Escalate when external systems (incident bot, deploy gate) must be triggered without keeping a session open |
 
 Rally itself does not call the Managed Agents endpoints; Nexus surfaces the escalation recommendation in `NEXUS_COMPLETE` when the workload pattern actually justifies the managed platform.
