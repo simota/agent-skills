@@ -88,27 +88,12 @@ Audit with `requestIdleCallback` deferral, async loading, facade pattern (load s
 
 ### Targeted Fix Patterns
 
-#### LCP
+Remediation techniques for LCP / INP / CLS — with code examples — are canonical in `bolt/reference/core-web-vitals.md`. Apply them from there rather than restating them here.
 
-- **Image-LCP**: `fetchpriority="high"` + `loading="eager"` + `<link rel="preload" as="image">` + AVIF / WebP + correct `srcset`/`sizes`. Match LCP element to one preloaded resource only.
-- **Text-LCP**: critical CSS inline, font preload with `crossorigin`, `font-display: swap` plus a system fallback sized via `ascent-override` and `size-adjust`.
-- **Server-side**: edge SSR (Cloudflare Workers, Vercel Edge), HTML streaming, smaller above-the-fold payload.
-- **Render-blocking removal**: defer non-critical JS, async or defer external CSS via `media` attribute swap.
+Two fix areas stay owned by this document because they are search-specific rather than general performance work:
 
-#### INP
-
-- **Long tasks**: split tasks > 50 ms. Use `scheduler.yield()` (Chrome 129+ stable, Firefox since 2025-08; **Safari has not implemented** — polyfill with `setTimeout(0)`). Diagnose with LoAF API, not the legacy `longtask` entry type.
-- **Hydration**: progressive / partial / island hydration (Astro, Qwik, Marko, modern Next.js). Avoid full-page hydration on content sites.
-- **Re-render storms**: in React, memoize, split state, use `useDeferredValue` and `useTransition`.
-- **Heavy main-thread work**: move to Web Workers (`postMessage` JSON or `Comlink`).
-- **Event handler bloat**: throttle / debounce; defer analytics dispatch.
-
-#### CLS
-
-- **Images**: always set dimensions; `aspect-ratio` CSS for responsive.
-- **Fonts**: pair font-face declaration with a metric-matched fallback using `size-adjust`, `ascent-override`, `descent-override`, `line-gap-override`.
-- **Ads**: reserve max expected ad slot height; avoid above-the-fold ad load.
-- **SPAs**: Soft Navigations API (`PerformanceObserver` `navigation` entries) + scroll restoration policy.
+- **Ads**: reserve max expected ad slot height; avoid above-the-fold ad load. (CLS)
+- **SPAs**: Soft Navigations API (`PerformanceObserver` `navigation` entries) + scroll restoration policy, so soft-navigated views are still measured. (CLS)
 
 ### AI-Bot Rendering Parity
 

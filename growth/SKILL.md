@@ -185,7 +185,7 @@ Behavior notes per Recipe:
 | `heading`, `h1`, `h2`, `hierarchy` | Heading audit | Heading structure fix | `reference/seo-detailed-checklist.md` |
 | `OG`, `Open Graph`, `Twitter Card`, `social` | Social sharing | OGP/Twitter Card meta | `reference/ogp-twitter-card-guide.md` |
 | `JSON-LD`, `structured data`, `Schema.org` | Structured data | JSON-LD implementation | `reference/json-ld-templates.md` |
-| `LCP`, `INP`, `CLS`, `Core Web Vitals`, `performance` | Core Web Vitals | Performance fix + measurement at p75 (INP <200ms, LCP ≤2.5s, CLS <0.1); VSI for session stability when available | `reference/core-web-vitals.md` |
+| `LCP`, `INP`, `CLS`, `Core Web Vitals`, `performance` | Core Web Vitals | Ranking impact + p75 measurement gap (CrUX vs Lighthouse); remediation code → `bolt/reference/core-web-vitals.md` | `reference/core-web-vitals.md` |
 | `AI Overviews`, `AI Mode`, `GEO`, `AI search`, `citation` | Generative Engine Optimization | Triple schema stack + E-E-A-T + inline citations + platform-specific optimization (ChatGPT/Perplexity/Gemini/Claude/Copilot) | `reference/geo-optimization.md` |
 | `E-E-A-T`, `author`, `expertise`, `trust` | E-E-A-T signals | Author markup, credential schema, experience indicators | `reference/seo-checklist.md` |
 | `CTA`, `conversion`, `signup`, `checkout` | CRO optimization | CTA/form improvement | `reference/cro-patterns.md` |
@@ -247,7 +247,7 @@ Growth receives data and insights from upstream agents. Growth sends hypotheses,
 | `reference/ogp-social-templates.md` | You need OGP and social sharing quick reference. |
 | `reference/ogp-twitter-card-guide.md` | You need full OGP/Twitter Card implementation (HTML/Next.js/React Helmet/specs). |
 | `reference/json-ld-templates.md` | You need JSON-LD templates (Product/Article/FAQ/Breadcrumb/Org/Local/SoftwareApp). |
-| `reference/core-web-vitals.md` | You need Core Web Vitals optimization (LCP/INP/CLS strategies + code). |
+| `reference/core-web-vitals.md` | You need CWV ranking impact, CrUX-vs-Lighthouse measurement gap, or SEO verification checklist (remediation code lives in `bolt/reference/core-web-vitals.md`). |
 | `reference/core-web-vitals-deep.md` | You are running the `vitals` recipe — LCP/INP/CLS root-cause analysis at p75 (RUM not lab) with targeted fix patterns (priority hints, long-task breakup, layout reservation). |
 | `reference/cro-patterns.md` | You need CRO patterns (CTA/forms/exit-intent/social proof) + 2026 benchmarks (Baymard cart abandonment, form-field cliffs, Statsig/OpenAI tooling note). |
 | `reference/keyword-research.md` | You are running the `keyword` recipe — search intent classification, query clustering, SERP overlap, AI prompt mining. |

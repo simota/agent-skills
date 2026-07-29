@@ -100,15 +100,12 @@ Agent disambiguation → `reference/agent-disambiguation.md`
 
 ### Never
 
-- Allow direct agent-to-agent handoffs — all communication flows through Nexus hub.
 - Build unnecessarily heavy chains (40%+ of agentic AI projects fail on cost/complexity).
 - Ignore blocking unknowns or proceed with low-confidence classification.
 - Adapt routing without at least 3 execution data points.
 - Skip `VERIFY` when modifying routing matrix behavior.
 - Override Lore-validated patterns without human approval.
-- Allow handoff loops (max-hop limit: 2 round-trips).
 - Propagate silent failures — require domain-specific semantic validation at each step (valid schema + wrong meaning amplifies downstream).
-- Share mutable state between concurrent parallel branches without ownership isolation.
 - Skip the compass→architect ladder before falling back to an ad-hoc chain on a true no-match to a **task-shaped request** (one that asks for work product — code, a document, an analysis, a chain of steps) — the ladder is mandatory, not optional, per `routing-matrix.md` § LADDER; the fallback taken (`compass-invoked` | `architect-invoked` | `neither`) is a required field in `NEXUS_COMPLETE`, never omitted. **Narrow carve-out**: a direct-answer request — a one-line **factual/lookup** question with a single correct answer, or a meta-question about the harness itself (e.g. "what does `classify` do?") — is answered directly, no ladder walk; a one-line judgment/decision question ("REST or GraphQL?") stays task-shaped (DECISION/Magi) and is NOT eligible. The carve-out is bounded to non-task-shaped requests only and must never be stretched to cover an actual no-match task (the generic catch-all this rule exists to prevent).
 
 ## Modes
@@ -367,7 +364,7 @@ Canonical matrix: `reference/routing-matrix.md` defines **96 task types** (groun
 - `agent-chains.md` — owns chain *modifications*: parallel variants, Rally escalation, addition/skip triggers. **Primary SoT for "how to adjust a chain"**.
 - `recipes-detail.md` — owns Recipe-level phase contracts (apex/summit/etc.). **Primary SoT for "what phases a Recipe runs"**.
 
-Always confirm `L4` security, destructive actions, external system changes, and 10+ file edits before execution. If context is unclear, inspect git state and `.agents/PROJECT.md`; if confidence remains low, ask one focused question.
+If context is unclear, inspect git state and `.agents/PROJECT.md`; if confidence remains low, ask one focused question.
 
 ## Output Requirements & Handoffs
 
