@@ -4,7 +4,7 @@
 
 Read this file before executing the `wish` Recipe.
 
-**Engine + domain presets.** `wish` factors into a **quality-ceiling engine** (this file: crystallize → anchor → tournament → gauntlet-converge → reception → exit gates, §1-§10) and **domain presets** that fix the rubric and insert deliverable-specific phases. The engine is shared; only the preset varies.
+**Engine + domain presets.** `wish` factors into a **quality-ceiling engine** (this file: crystallize → anchor → tournament → gauntlet-converge → reception → exit gates, §1-§11) and **domain presets** that fix the rubric and insert deliverable-specific phases. The engine is shared; only the preset varies.
 
 | Preset | Invocation | Blueprint | What the preset fixes |
 |--------|-----------|-----------|----------------------|
@@ -46,15 +46,17 @@ Read this file before executing the `wish` Recipe.
 | Proof-carrying merge gate | `acceptance` | Merge adjudication, not one-shot delivery |
 | Routine tasks a user casually calls "best quality" | the natural recipe | Scarcity Gate exists precisely to catch this — recommend the cheaper path |
 
-**Scale: 24-60 agents × ≤5 cycles (+1 bonus), 10-28× `feature` cost** (deliverable-dependent; the wrapped generator dominates). Per-phase formula: P0-P1 ≈ 2 · P1.5 ≈ 3-6 (exemplar sweep + anchor authoring) · P2 ≈ 8-14 (3-5 cross-engine candidates + blind judge panel + calibration pass) · P3 ≈ 4-8 Evaluators/cycle + 2-4 skeptics on near-ceiling cycles only, ×1.6 while dual-lineage is active · P3.5 ≈ 3-5 personas · P4 ≈ 3 (One-Shot verifier + 2 comparative judges) · P5 ≈ 2. **Confirm-before-launch always** (intentional — same unconditional gate as `summit`; the Scarcity Gate is that confirmation) **with a declared budget envelope** (§4).
+**Scale: 27-102 agents × ≤5 cycles (+1 bonus), 10-28× `feature` cost** (deliverable-dependent; the wrapped generator dominates). Per-phase formula: P0-P1 ≈ 2 · P1.5 ≈ 3-6 (exemplar sweep + anchor authoring) · P2 ≈ 8-14 (3-5 cross-engine candidates + blind judge panel + calibration pass) · P3 ≈ 4-8 Evaluators/cycle + 2-4 skeptics per near-ceiling cycle, ×1.6 while dual-lineage is active · P3.5 ≈ 3-5 personas · P4 ≈ 3 (One-Shot verifier + 2 comparative judges) · P5 ≈ 2.
 
-**Model selection (Plan-and-Execute):** Phase 1 Crystallization, the Phase 1.5 anchor ratification, and both Phase 4 gate verdicts are judgment-heavy → plan-tier (opus / Fable 5). Phase 2 generators, Phase 3 Evaluators/skeptics, and Phase 3.5 personas → Sonnet 5 default, per SKILL.md § Core Contract. Cross-engine distribution overrides the per-tier default where §5 applies.
+*Range derivation (keep reconciled when a phase figure changes):* floor = S/M, ACCEPT on cycle 1 → 2+3+8+(4+2)+3+3+2 = **27**; ceiling = L/XL, 6 cycles (N=5 + bonus), dual-lineage cycles 1-2 at ×1.6, skeptics on 3 near-ceiling cycles → 2+6+14+(8×1.6×2 + 8×4 + 4×3 ≈ 70)+5+3+2 = **102**. The stated range is the sum of the per-phase figures, not an independent estimate. **Confirm-before-launch always** (intentional — same unconditional gate as `summit`; the Scarcity Gate is that confirmation) **with a declared budget envelope** (§4).
+
+**Model selection (Plan-and-Execute):** Phase 1 Crystallization, the Phase 1.5 anchor ratification, and both Phase 4 gate verdicts are judgment-heavy → plan-tier (opus / Fable 5). Phase 2 generators, Phase 3 Evaluators/skeptics, and Phase 3.5 personas → Sonnet 5 default, per SKILL.md § Core Contract. Cross-engine distribution overrides the per-tier default where the §6 Phase 2 mandate applies.
 
 ---
 
 ## 2. Termination Bound
 
-Convergence **`loop ≤ N cycles (default N=3, N=5 when scope = L/XL and the budget envelope allows)`**, plus the exit gates may grant **exactly one bonus cycle** — hard total 6. Exit reasons use the canonical vocabulary:
+Convergence **`loop ≤ N cycles (default N=3, N=5 when scope = L/XL and the budget envelope allows)`**, plus the exit gates may grant **exactly one bonus cycle** — hard total N+1 (6 when N=5, 4 on the N=3 default). Exit reasons use the canonical vocabulary:
 
 | Exit reason | Wish-specific meaning |
 |-------------|----------------------|
@@ -112,7 +114,8 @@ Phase 1.5 BENCHMARK ANCHOR ★contract-level ratification            [the ceilin
           → rewrite each score-3 anchor as SOURCED ("matches or exceeds <exemplar> on <property>")
           → ✓user ratifies the exemplar set + anchors → RUBRIC FREEZES → envelope restated (§4)
    ▼
-Phase 2   TOURNAMENT ‖ 3-5 independent candidates, CROSS-ENGINE where the hub allows (§5 mandate),
+Phase 2   TOURNAMENT ‖ 3-5 independent candidates, CROSS-ENGINE where the hub allows (§6 Phase 2
+          mandate),
           from angles derived at Crystallization
           S/M scope → outline-level competition, winner promoted to one full build
           L/XL scope → full builds (generator flattened per converge-recipe.md §4)
@@ -127,13 +130,16 @@ Phase 3   GAUNTLET-CONVERGE loop (evaluator-loop-protocol.md machinery, ceiling 
           Generator excluded from Evaluators; calibrated evaluators only; Sonnet 5 default)
           every cycle    ‖: independent Evaluators per rubric dim (disappointment criteria fire
                             automatically via their score-0 triggers)
-          dual-lineage    : L/XL + envelope allows → winner AND runner-up advance as parallel
+          dual-lineage    : L/XL + the Phase 1.5-restated envelope (§4) allows → winner AND
+                            runner-up advance as parallel
                             lineages through cycles 1-2, then LINEAGE MERGE GATE keeps the higher
                             weighted score and salvages from the loser (one lineage thereafter)
           staged         ‖: refutation panel per _common/ADVERSARIAL_REFUTATION.md — spawned ONLY
                             once all dims ≥ 2 (early cycles are obviously non-ceiling; skeptic
                             spend is reserved for candidates that could be "best achievable");
-                            panel also ratifies candidate ACCEPTs (§2)
+                            spawned FRESH on each qualifying cycle (attack history carried by the
+                            gauntlet ledger, not by panel memory — counted per-cycle in §1's
+                            formula); panel also ratifies candidate ACCEPTs (§2)
           on demand       : RUBRIC AMENDMENT (§7) — at most once, user-ratified, when a surviving
                             attack names a quality no frozen dimension can express
           near-ceiling    : Omen pre-mortem on the near-final artifact — "this shipped and the
@@ -148,7 +154,8 @@ Phase 3.5 RECEPTION SIMULATION                                    [the recipient
             gate (single-oracle discipline); an unresolved reception failure at cap is a named
             residual, never a silent one
    ▼
-Phase 4   EXIT GATES (both run; together they may grant at most ONE bonus cycle, hard total 6)
+Phase 4   EXIT GATES (both run; together they may grant at most ONE bonus cycle — hard total
+          N+1 per §2)
           (a) ONE-SHOT GATE — fresh-context independent verifier (plan-tier model), spawned with
               ONLY the Wish Contract + Ceiling Rubric + final artifact — no loop history.
               The information asymmetry is the design: Phase 3 discharges Q9 per-dimension inside
@@ -258,7 +265,7 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 | **A rubric-perfect artifact its actual recipient bounces off** | **Phase 3.5 Reception Simulation: named recipients meet it cold, no rubric, no loop history; unresolved failures are named residuals** |
 | Evaluator mis-fit for non-code deliverables | Deliverable-class roster table + Phase 1 roster selection rule (§6) |
 | Generator grades its own work | GAN separation per `evaluator-loop-protocol.md`; both Phase 4 gates are fresh-context/blind (Q9, second application) |
-| Unbounded pursuit of an unreachable ceiling | Cycle cap (+1 bonus, hard total 6) + honorable diminishing-returns exit (§2); second gate verdicts advisory-only |
+| Unbounded pursuit of an unreachable ceiling | Cycle cap (+1 bonus, hard total N+1 per §2) + honorable diminishing-returns exit (§2); second gate verdicts advisory-only |
 | **Open-ended spend on a "spare nothing" instruction** | **§4 budget envelope authorized at the Scarcity Gate; `budget-reached` delivers best-so-far, never a silent overrun** |
 | Loop-on-loop blowup when the inner task is apex/kaizen/summit-shaped | Flatten rule cited from `converge-recipe.md` §4 — wish owns the single loop |
 | Silent under-delivery on a one-shot | Fulfillment Report residual-gap section; non-ACCEPT exits always report best-so-far |

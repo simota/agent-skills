@@ -36,6 +36,7 @@ Every loop states its **exit reason** from this fixed vocabulary:
 | `ACCEPT` / `target-met` | the quality bar / quantified target was reached |
 | `diminishing-returns (Δ < ε)` | marginal gain fell below threshold |
 | `cap-reached` | hit `N` cycles without acceptance |
+| `budget-reached` | a declared budget envelope's ceiling was hit mid-run (budget-enveloped recipes: wish/marquee, eureka) |
 | `BLOCK` | a hard blocker needs escalation |
 
 On any non-`ACCEPT` exit the recipe **reports best-so-far + the residual gap** — never silently stops, never burns cycles past marginal value. The rich loop machinery (Generator-Evaluator separation, single termination oracle, flatten rule) lives in `reference/evaluator-loop-protocol.md`; loop recipes reference it rather than re-specifying it.
@@ -55,6 +56,8 @@ Four tiers — use the exact tier name so the strength is unambiguous:
 
 When two sibling recipes deliberately differ (summit = unconditional confirm vs podium = conditional), **say it is intentional** so it doesn't read as drift.
 
+**Shorthand rule:** after one full "contract-level checkpoint; AUTORUN cannot skip" statement in a file, later gates may abbreviate to **"contract-level"** (e.g. a ratification checkpoint). The abbreviation names the *same* tier — AUTORUN can never skip any gate labeled contract-level; there is no weaker unnamed variant.
+
 ---
 
 ## 4. Resume mechanisms (canonical)
@@ -71,7 +74,7 @@ A recipe with ≥ 4 phases and none of these is a gap, not a style choice.
 
 ## 5. Output-report naming (canonical)
 
-Every recipe emits `NEXUS_COMPLETE` with the base `## Nexus Execution Report` (`reference/output-formats.md`) **plus a named recipe report**. The name is stable and recipe-specific: **Parity** (transmute), **Fidelity** (clone), **Fusion** (fuse), **Graft** (graft), **Completeness** (migrate), **Convergence** (converge), **Before/After** (kaizen). A heavyweight recipe that emits only an unnamed `NEXUS_COMPLETE` (apex, enact) is missing element #4 — give it a named report (e.g. apex **Delivery Report**, enact **Execution Report**).
+Every recipe emits `NEXUS_COMPLETE` with the base `## Nexus Execution Report` (`reference/output-formats.md`) **plus a named recipe report**. The name is stable and recipe-specific: **Parity** (transmute), **Fidelity** (clone), **Fusion** (fuse), **Graft** (graft), **Completeness** (migrate), **Convergence** (converge), **Before/After** (kaizen), **Fulfillment Report** (wish), **Invention Dossier** (eureka). A heavyweight recipe that emits only an unnamed `NEXUS_COMPLETE` (apex, enact) is missing element #4 — give it a named report (e.g. apex **Delivery Report**, enact **Execution Report**).
 
 ---
 
@@ -80,13 +83,14 @@ Every recipe emits `NEXUS_COMPLETE` with the base `## Nexus Execution Report` (`
 | Protocol | Owns | Recipes that must cite it |
 |----------|------|---------------------------|
 | `_common/DIFFERENTIAL_PARITY.md` | parity-over-faith, oracle adequacy + non-determinism gates, comparator/harness, provenance/drift | transmute, clone, fuse, graft, migrate |
-| `reference/verdict-gate.md` | verdict card, Yes/No/Modify branches, flag+KPI+kill | essential, killer, trim, graft (flag clause) |
+| `reference/verdict-gate.md` | verdict card, Yes/No/Modify branches, flag+KPI+kill | essential, killer, trim, graft (flag clause), eureka (Phase 8 product-bet handoff) |
+| `reference/research-grounding.md` | tiered sources, per-claim verification, cited Evidence Ledger | clone, fuse, graft (Phase 0.5), eureka (Phase 1.5, inverted polarity), wish/marquee (Phase 1.5 exemplar anchoring), newsroom (ledger schema + trust tiers) |
 | `_common/ADVERSARIAL_REFUTATION.md` | skeptic panel, evidence-vs-novelty, polarity, exclusions | killer, trim, graft, wish, newsroom, eureka |
 | `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation, single termination oracle, flatten rule | converge, kaizen, apex, summit, podium, wish, newsroom, eureka |
 | `_common/TRACEABILITY.md` | canonical AC/REQ IDs | spec, accord-driven recipes, attest gates |
-| `reference/dialogue-protocol.md` | question craft, answer processing, Assumption Ledger, checkpoint presentation, Provenance Gate for contract-level dialogue | spec, delve, wish Crystallization (mandatory); gedanken INTERACTIVE, clone Stack Dialogue, verdict cards (D1–D4/D10–D11 only) |
+| `reference/dialogue-protocol.md` | question craft, answer processing, Assumption Ledger, checkpoint presentation, Provenance Gate for contract-level dialogue | spec, delve, wish Crystallization, eureka Phase 1 Contradiction Crystallization (mandatory); gedanken INTERACTIVE, clone Stack Dialogue, verdict cards (D1–D4/D10–D11 only) |
 | `reference/autonomy-quality-protocol.md` | intent contract, Decision Ledger, drift control, producer≠verifier, evidence-bound claims, Acceptance Provenance | all autonomous (non-dialogue) recipes + ad-hoc chains; recipes cite it and add only specializations (parity oracles satisfy Q3/Q10; acceptance G1–G10 subsume Q11) |
-| `reference/doc-quality-protocol.md` | reader contract, universal grounding / UNKNOWN-over-fabrication, cross-doc single source of truth, summary-first readability, Doc Quality Gate (W12 = Q11 for documents) | package, charter, layer, podium, spec/delve artifacts, gedanken reports, any doc-authoring step; native gates (podium Verification Team, Spec Quality Gate, package Phase 5) subsume W12 and add only missing dimensions |
+| `reference/doc-quality-protocol.md` | reader contract, universal grounding / UNKNOWN-over-fabrication, cross-doc single source of truth, summary-first readability, Doc Quality Gate (W12 = Q11 for documents) | package, charter, layer, podium, spec/delve artifacts, gedanken reports, wish (W12 as a rubric dimension), eureka Disclosure Package, any doc-authoring step; native gates (podium Verification Team, Spec Quality Gate, package Phase 5) subsume W12 and add only missing dimensions |
 | `_common/PROOF_CARRYING.md` | G1-G10 proof-carrying merge | acceptance, growth-acceptance |
 
 A recipe re-describing a primitive a `_common/` protocol already owns is drift — replace the prose with a citation + the recipe-specific specialization only.
