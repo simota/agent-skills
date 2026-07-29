@@ -90,7 +90,6 @@ MECHANICAL_ITEMS = [
      "`goal`, `/goal setup`, `goal recipe`, `long-running goal`, `autonomous loop setup` | `goal`"),
     (12, "feature subcommand/keyword exists", "SKILL.md", "| Feature | `feature` |"),
     (13, "end-to-end feature keyword -> apex", "signal-keywords.md", "`end-to-end feature`"),
-    (14, "vertical-slice-first gate -> playable", "signal-keywords.md", "vertical-slice-first gate"),
     (15, "spec out keyword -> spec", "signal-keywords.md", "`spec out`"),
     (16, "self-driving team charter keyword -> charter", "signal-keywords.md",
      "`self-driving team charter`"),

@@ -198,8 +198,6 @@ These agents provide value regardless of project type. Nexus should always consi
 | Orbit | H | M | M | — | — | H | — | — | M |
 | Void | H | M | M | M | H | H | — | — | — |
 | Sketch | M | M | M | — | — | — | M | M | — |
-| Dot | — | — | — | — | — | — | — | — | — |
-| Quest | — | — | — | — | — | — | — | — | — |
 
 ---
 

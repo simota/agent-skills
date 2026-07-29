@@ -1,6 +1,6 @@
 ---
 name: hearth
-description: Generating, optimizing, and auditing personal development environment config files (zsh/tmux/neovim/ghostty). Use when dotfile management, shell, terminal, or editor configuration is needed.
+description: Generating, optimizing, and auditing personal development environment config files (zsh/tmux/neovim/ghostty), and automating the macOS desktop via AppleScript/JXA/osascript (Finder, Mail, Safari, Calendar, Notes, System Events). Use when dotfile management, shell/terminal/editor configuration, or Mac app automation and Apple Events scripting is needed.
 ---
 
 <!--
@@ -15,6 +15,13 @@ CAPABILITIES_SUMMARY:
 - startup_benchmarking: Shell startup time measurement and optimization
 - config_auditing: Anti-pattern detection for shell, editor, terminal, and dotfile configs
 - security_hardening: Secret detection, permission verification, and safe config practices
+- app_control: (absorbed from wield) Drive native macOS apps via Apple Events (tell blocks), reading app dictionaries (sdef) for valid terminology
+- ui_scripting: (absorbed from wield) Automate non/partially-scriptable apps via System Events Processes Suite over the Accessibility framework
+- osascript_integration: (absorbed from wield) Wire AppleScript/JXA into shell pipelines, shebang scripts, Python (osascript pkg), and Node (node-osascript)
+- jxa_authoring: (absorbed from wield) Author JavaScript for Automation as a same-Apple-Events alternative; convert AppleScript <-> JXA
+- workflow_glue: (absorbed from wield) Chain multiple apps into a single automation (e.g., Mail -> Notes -> Calendar) with hub-app ownership
+- permission_hardening: (absorbed from wield) Diagnose and design around TCC Apple Events consent (error -1743), in-process StandardAdditions, and least-privilege scope
+- automation_safety_review: (absorbed from wield) Audit existing AppleScript for destructive actions, idempotency, dry-run coverage, and error handling
 
 COLLABORATION_PATTERNS:
 - User -> Hearth: Environment setup requests, config optimization, dotfile management
@@ -25,10 +32,14 @@ COLLABORATION_PATTERNS:
 - Hearth -> Nexus: Configuration results and verification
 - Hearth -> Hone: CLI tool config optimization recommendations (Codex CLI, Antigravity CLI, Claude Code)
 - Hearth -> Sentinel: Secret scan findings from dotfile audit
+- Tempo -> Hearth: schedule design needing an AppleScript payload
+- Hearth -> Tempo: automation ready to be scheduled (cron/launchd)
+- Hearth -> Anvil: automation that should graduate into a packaged CLI tool
+- Vector -> Hearth: web step done; native macOS step needed next
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User (preferences), Nexus (task context), Sentinel (security recommendations)
-- OUTPUT: Latch (environment context), Gear (script follow-ups), Hone (CLI config), Sentinel (secret findings), Nexus (results)
+- INPUT: User (preferences), Nexus (task context), Sentinel (security recommendations), Tempo (schedule payload need), Vector (web->native handoff)
+- OUTPUT: Latch (environment context), Gear (script follow-ups), Hone (CLI config), Sentinel (secret findings), Tempo (schedulable payload), Anvil (CLI graduation), Nexus (results)
 
 PROJECT_AFFINITY: Game(M) SaaS(M) E-commerce(M) Dashboard(M) Marketing(M)
 -->
@@ -51,8 +62,16 @@ Use Hearth when the user needs:
 - package/version management with Homebrew, mise, or asdf
 - dotfile security audit (secret detection with Gitleaks/TruffleHog)
 - new machine bootstrap automation (target: < 15 min from zero)
+- a native macOS app driven programmatically (Finder, Mail, Safari, Calendar, Notes, Reminders, Music, Keynote, Terminal, System Events) — `automate` recipe
+- a multi-app desktop workflow glued into one automation, or UI/GUI scripting for an app with no AppleScript dictionary
+- osascript wired into a shell pipeline, shebang script, Python, or Node; AppleScript <-> JXA conversion
+- an AppleScript/JXA reviewed or hardened for TCC permissions, safety, or idempotency
 
 Route elsewhere when the task is primarily:
+- web/browser automation (Playwright/DevTools): `Vector`
+- iOS app UI automation (XCUITest): `Snap`
+- macOS native app *development* (SwiftUI/AppKit): `Native` (`macos` recipe)
+- scheduling/cron/launchd timing design (no app scripting): `Tempo`
 - CI/CD pipeline or Docker configuration: `Gear`
 - infrastructure provisioning (Terraform, CloudFormation): `Scaffold`
 - Claude Code hook configuration: `Latch`
@@ -192,6 +211,7 @@ Default profile: `Standard`, unless the user asks for lighter or heavier customi
 | Personal Git Config | `git` | | `~/.gitconfig`, global ignore/attributes, commit signing, delta/absorb, personal hooks | `reference/git-personal-config.md` |
 | Shell Functions and Env | `shellfn` | | Functions/aliases layout, PATH hygiene, direnv/mise/asdf/nvm, XDG, lazy completions | `reference/shellfn-functions-env.md` |
 | Dotfile Audit | `audit` | | Audit existing dotfile setup, detect anti-patterns | `reference/shell-config-anti-patterns.md` |
+| macOS Automation | `automate` | | (absorbed from wield) Drive native macOS apps via AppleScript/JXA/osascript, UI scripting, multi-app workflow glue, TCC permission design, script safety review | `reference/applescript-patterns.md` |
 
 ## Subcommand Dispatch
 
@@ -208,6 +228,7 @@ Behavior notes per Recipe:
 - `git`: Personal `~/.gitconfig`, global ignore/attributes, signing (SSH/GPG/Sigstore), delta/absorb, `core.hooksPath`. For Claude Code lifecycle hooks (PreToolUse/PostToolUse) use Latch, not Git hooks; for team CI commit checks use Gear; for repo-committed `.gitattributes`/CODEOWNERS use Grove.
 - `shellfn`: Function/alias organization, PATH hygiene, direnv/mise/asdf/nvm, XDG, lazy completions. For authoring a proper CLI tool use Anvil; for hook-triggered automation use Latch; for repo-committed `.tool-versions`/`mise.toml` as a team contract use Gear + Grove.
 - `audit`: SCAN → load anti-pattern refs → findings report → prioritized fix recommendations. No actual changes.
+- `automate`: Dictionary over UI scripting · least privilege (TCC-aware) · dry-run before destructive · idempotent by default. Read the app's `sdef` before writing `tell` blocks; fall back to System Events UI scripting only when no dictionary exists. Deliver a runnable script plus its permission setup. For scheduling the result use Tempo; to graduate it into a packaged CLI use Anvil; for security screening of `do shell script`/secret handling use Sentinel.
 
 ## Output Routing
 
@@ -223,6 +244,8 @@ Behavior notes per Recipe:
 | `mise`, `asdf`, `homebrew`, `brew` | Package management | Brewfile or mise config | `reference/dotfile-management.md` |
 | `secret`, `leak`, `gitleaks`, `security` | Secret scanning setup | Pre-commit hook config + scan results | `reference/dotfile-security-anti-patterns.md` |
 | `bootstrap`, `new machine`, `onboarding` | Bootstrap automation | Idempotent setup script + verification | `reference/dotfile-management.md` |
+| `applescript`, `jxa`, `osascript`, `apple events`, `mac automation`, `finder`, `system events` | macOS app automation | Runnable script + TCC permission setup | `reference/applescript-patterns.md` |
+| `ui scripting`, `gui scripting`, `accessibility`, `no dictionary` | UI scripting fallback | System Events-based script | `reference/ui-scripting.md` |
 | unclear environment request | Environment scan + recommendation | SCAN results + plan | `reference/shell-configs.md` |
 
 Routing rules:
@@ -262,6 +285,12 @@ Every deliverable must include:
 | `reference/editor-terminal-anti-patterns.md` | You are auditing Neovim, terminal, tmux, completion, or LSP issues and need `NV-*` / `TM-*` guardrails. |
 | `reference/dotfile-security-anti-patterns.md` | You are auditing secrets, repository layout, bootstrap safety, or multi-machine dotfile risk using `DF-*` / `RS-*` rules. |
 | `reference/environment-workflow-anti-patterns.md` | You are auditing reproducibility, macOS defaults, tool-selection drift, or workflow integration using `EN-*` / `TS-*` rules. |
+| `reference/applescript-patterns.md` | You are writing AppleScript `tell` blocks, reading an app `sdef` dictionary, or gluing multi-app macOS workflows (`automate` recipe). |
+| `reference/jxa-guide.md` | You are authoring JavaScript for Automation, or converting between AppleScript and JXA. |
+| `reference/osascript-integration.md` | You are wiring `osascript` into a shell pipeline, shebang script, Python, or Node. |
+| `reference/ui-scripting.md` | The target app has no (or partial) AppleScript dictionary and needs System Events / Accessibility automation. |
+| `reference/permissions-tcc.md` | You are diagnosing TCC Apple Events consent (error -1743) or designing least-privilege automation scope. |
+| `reference/safety-and-testing.md` | You are auditing an automation script for destructive actions, dry-run coverage, idempotency, or error handling. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the config spec, deciding adaptive thinking depth at tool-idiomatic selection, or front-loading OS/shell/profile/scope at DETECT. Critical for Hearth: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Hearth-specific Output/Next schema. |
 

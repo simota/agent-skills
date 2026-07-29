@@ -31,12 +31,11 @@ COLLABORATION_PATTERNS:
 - PDM -> Scribe: Spec gaps needing authoring
 - PDM -> Spark: Unmet gaps as new-feature ideation seeds
 - PDM -> Canvas: Roadmap/status for visualization
-- PDM -> PMM: Shipped capability / delivery status as product-truth source for messaging
 - PDM -> Nexus: Status rollup for orchestration
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User (questions), Nexus (routing), Lens (code evidence), Atlas (architecture context), Scribe/Accord (spec source), Attest (conformance results), Trail (feature history)
-- OUTPUT: Rank (items to prioritize), Sherpa (epics to decompose), Orbit (loop-sized work packages as goal-contract seeds), Scribe (spec gaps), Spark (gap ideation), Canvas (visualization), Nexus (status rollup), PMM (product-truth source for messaging)
+- OUTPUT: Rank (items to prioritize), Sherpa (epics to decompose), Orbit (loop-sized work packages as goal-contract seeds), Scribe (spec gaps), Spark (gap ideation), Canvas (visualization), Nexus (status rollup)
 
 PROJECT_AFFINITY: SaaS(L) Dashboard(M) Game(M) E-commerce(M) Marketing(M)
 -->

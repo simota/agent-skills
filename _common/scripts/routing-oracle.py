@@ -128,8 +128,8 @@ def check_dead_references(findings: list[Finding]):
             if candidate.is_file():
                 continue
             # Fallback: some prose uses an implicit-prefix shorthand — e.g.
-            # "`quest/SKILL.md` (+ `reference/game-design-document.md`, ...)"
-            # means the reference/ file belongs to the just-named quest/ skill,
+            # "`architect/SKILL.md` (+ `reference/agent-categories.md`, ...)"
+            # means the reference/ file belongs to the just-named architect/ skill,
             # not to the citing file's own skill dir. Before flagging a true
             # dead link, check whether exactly one same-named file exists
             # anywhere else in the repo under a reference/ dir.

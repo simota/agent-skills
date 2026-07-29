@@ -26,7 +26,6 @@ COLLABORATION_PATTERNS:
 - Spark -> Builder: Implementation specification handoff
 - Spark -> Artisan: UI specification handoff
 - Spark -> Accord: Integrated specification packages
-- Spark -> Quest: Game design framing
 - Spark -> Forge: Prototype before build
 - Spark -> Magi: Strategic Go/No-Go for high-risk proposals
 - Flux -> Spark: Feature idea reframing
@@ -35,7 +34,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Pulse (usage metrics), Voice (user feedback), Compete (competitive gaps), Bond (engagement needs), Cast (feature-focused personas), Lens (codebase insight), Flux (idea reframing), Void (YAGNI pre-check), Magi (priority arbitration)
-- OUTPUT: Scribe (formal specs), Builder (implementation specs), Artisan (UI specs), Accord (integrated packages), Quest (game design), Forge (prototypes), Magi (strategic decisions)
+- OUTPUT: Scribe (formal specs), Builder (implementation specs), Artisan (UI specs), Accord (integrated packages), Forge (prototypes), Magi (strategic decisions)
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(M) Marketing(H)
 -->

@@ -18,7 +18,7 @@ Official category reference for improving task classification accuracy in the Ne
 - Requests for compliance with style guides or brand standards
 
 **Recommended chain patterns**:
-- Scribe / Quill / Morph / Dot / Sketch → generation agent matched to the artifact
+- Scribe / Quill / Morph / Sketch → generation agent matched to the artifact
 - Quality check: Judge
 
 **Key Techniques** (official):

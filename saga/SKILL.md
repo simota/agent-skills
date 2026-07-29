@@ -26,10 +26,9 @@ COLLABORATION_PATTERNS:
 - Saga → Director: Provide demo video scenarios from narratives
 - Compete → Saga: Express competitive differentiators as narratives (including wargame results)
 - Trace → Saga: Narrativize high-impact UX session analysis stories
-- PMM → Saga: Messaging spine needing narrative craft
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Cast (persona definitions), Field (journey maps, research findings), Voice (customer feedback, insights), Spark (feature proposals), Compete (competitive differentiators, wargame results), Trace (high-impact UX session stories), PMM (messaging spine to narrate)
+- INPUT: Cast (persona definitions), Field (journey maps, research findings), Voice (customer feedback, insights), Spark (feature proposals), Compete (competitive differentiators, wargame results), Trace (high-impact UX session stories)
 - OUTPUT: Prose (UX copy direction), Scribe (PRD use case sections), Accord (L0 vision descriptions), Director (demo scenarios)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Game(H) Marketing(H) Dashboard(M) API(L)
@@ -248,7 +247,7 @@ Single source of truth for Recipe definitions. Length targets and output format 
 | Scenario Story | `scenario` | | Persona-based scenario stories. Load Cast persona registry first. **Scenario Narrative 400-1000 chars/persona.** | `reference/templates.md` |
 | Product Narrative | `narrative` | | Product-level positioning / brand narrative. Define Controlling Idea first; choose Promised Land or StoryBrand SB7. For pitches and LPs. **Product Narrative 500-1500 chars, Pitch Story 200-500 chars, Promised Land 500-1500 chars.** Default when narrative request is unclear. | `reference/frameworks.md` |
 | Customer Journey | `customer` | | Customer experience narrative centered on observable/measurable Before→After transformation arc. Consider Hero's Journey. **Customer Success Story 800-2000 chars.** | `reference/templates.md` |
-| Hero's Journey | `hero-journey` | | Joseph Campbell 12-stage monomyth (Ordinary World → Call → Refusal → Meeting Agora → Crossing Threshold → Tests/Allies/Enemies → Approach → Ordeal → Reward → Road Back → Resurrection → Return with Elixir). For major case studies, high stakes, profound transformation. | `reference/hero-journey.md` |
+| Hero's Journey | `hero-journey` | | Joseph Campbell 12-stage monomyth (Ordinary World → Call → Refusal → Meeting Mentor → Crossing Threshold → Tests/Allies/Enemies → Approach → Ordeal → Reward → Road Back → Resurrection → Return with Elixir). For major case studies, high stakes, profound transformation. | `reference/hero-journey.md` |
 | Before-After-Bridge | `bab` | | BAB copywriting structure: Before (current pain), After (ideal state), Bridge (product as connector). LPs, email, CTA-driven narratives. **Length 200-500 chars.** | `reference/before-after-bridge.md` |
 | Minto Pyramid | `pyramid` | | Pyramid Principle for answer-first executive/stakeholder delivery: Answer → Supporting arguments (MECE) → Evidence. For board meetings, investor memos. Combine with SB7 or Promised Land for narrative warmth. | `reference/minto-pyramid.md` |
 | Onboarding Flow | `onboarding` | | First-time user experience (FTUE) story flow. Coordinate with Field journey maps. **150 chars/step.** | `reference/templates.md` |

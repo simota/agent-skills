@@ -1,14 +1,14 @@
 # AI Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Agents](https://img.shields.io/badge/Agents-133-blue.svg)]()
+[![Agents](https://img.shields.io/badge/Agents-123-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-🤖 133種類の専門AIエージェントチームによる協調開発を実現するスキルコレクション
+🤖 123種類の専門AIエージェントチームによる協調開発を実現するスキルコレクション
 
 ## ✨ Features
 
-- **133種類の専門エージェント** - バグ調査、テスト、セキュリティ、UI/UX、AI/ML、可観測性、インフラまで網羅
+- **123種類の専門エージェント** - バグ調査、テスト、セキュリティ、UI/UX、AI/ML、可観測性、インフラまで網羅
 - **Nexusオーケストレーター** - タスクを分析し最適なエージェントチェーンを自動設計
 - **プラットフォーム非依存** - Claude Code、Codex CLI、Antigravity CLI等で動作
 
@@ -35,11 +35,11 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 ## 📚 概要
 
-このリポジトリには、ソフトウェア開発の様々な側面を専門とする133種類のAIエージェントが含まれています。各エージェントは特定のドメインに特化しており、**Nexus**オーケストレーターによって統括・連携されます。
+このリポジトリには、ソフトウェア開発の様々な側面を専門とする123種類のAIエージェントが含まれています。各エージェントは特定のドメインに特化しており、**Nexus**オーケストレーターによって統括・連携されます。
 
 ## エージェント一覧
 
-> 全 133 エージェントのカテゴリ別カタログ。
+> 全 123 エージェントのカテゴリ別カタログ。
 
 ### オーケストレーション
 
@@ -49,7 +49,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Sherpa** | _"The mountain doesn't care about your deadline. Plan accordingly."_ - タスク分解ガイド。複雑なタスクを15分以内のAtomic Stepに分解 | チェックリスト |
 | **Architect** | _"Every agent is a possibility. Every SKILL.md is a birth certificate."_ - 新しいスキルエージェントを設計・生成するメタデザイナー。エコシステムギャップ分析、重複検出、SKILL.md生成 | SKILL.md、references |
 | **Rally** | _"One task, many hands. Parallel by design."_ - マルチセッション並列オーケストレーター。Claude Code Agent Teams APIで複数Claudeインスタンスを生成・管理し、並行タスク実行を実現 | チーム管理、並列実行 |
-| **Titan** | _"Give me a dream. I'll give you the product."_ - プロダクトライフサイクル統括メタオーケストレーター。曖昧なゴールから全133エージェントを9フェーズ（DISCOVER→BUILD→LAUNCH→EVOLVE）で指揮し、プロダクトを完走まで導く | プロダクトデリバリー |
+| **Titan** | _"Give me a dream. I'll give you the product."_ - プロダクトライフサイクル統括メタオーケストレーター。曖昧なゴールから全123エージェントを9フェーズ（DISCOVER→BUILD→LAUNCH→EVOLVE）で指揮し、プロダクトを完走まで導く | プロダクトデリバリー |
 | **Sigil** | _"Every project has patterns waiting to become power."_ - 動的スキル生成エージェント。プロジェクトのコードベースを分析し、パターン・規約を発見し、最適化されたClaude Codeスキルをプロジェクトの`.claude/skills/`に生成 | プロジェクト固有スキル |
 | **Gauge** | _"What gets measured gets managed. What gets audited gets normalized."_ - SKILL.md正規化監査・自己進化エージェント。18項目チェックリストに基づくコンプライアンススキャン、修正提案、Webベースのベストプラクティス自動取得 | コンプライアンスレポート、修正プラン |
 | **Orbit** | _"Give me a goal. I'll give you a runner that finishes."_ - Nexus-autoloop完走スペシャリスト。自律ループの完走スクリプト生成・運用契約設計・監査を担当。ゴールを渡せば完走できるランナー一式を生成 | ランナースクリプト、契約 |
@@ -57,7 +57,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Lore** | _"Forgotten lessons are lessons repeated. Institutional memory is the compound interest of experience."_ - エコシステム横断の知識統合・パターン抽出・伝播を担うメモリキュレーター。エージェントjournalから共通パターンを発見し、カタログ化して関連エージェントへ配信。知識の腐敗検出・ベストプラクティス伝播により制度的記憶を維持 | METAPATTERNS.md、知識インサイト |
 | **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - デザインから実装までを閉ループで繋ぐパイプラインオーケストレーター。Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas を統括し、デザイン抽出・プロトタイプ・ビジュアルアセット・スライド・本番実装をプロジェクトデザインシステムを永続化しながら一気通貫で提供 | デザインシステムパッケージ、統合成果物 |
 | **Bazaar** | _"A landing page is one promise, one path, one decision. bazaar runs the studio that delivers all three."_ - 超高品質LP制作スタジオチェーン・オーケストレーター。Field → Cast → Pulse → Funnel → Vision → Saga → Compete → Muse → Flow → Artisan → Growth → Bolt → Judge → Launch を、LP種別レシピと9段階の品質ゲート（Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch）で束ね、6つのクラフト軸（デザイン／アニメーション／ブランディング／マーケティング／SEO／IA）すべてにルーブリックと納品閾値を課したLPを納品 | 6軸ルーブリック通過済みLPパッケージ、CVR最適化された本番コード、ブランド整合性のあるビジュアル、トークン化されたモーション、スキーマ妥当性のあるSEO、AI検索引用対応GEO、計測稼働 |
-| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 133+."_ - スキルエコシステムのナビゲーター・オンボーディングガイド。エージェントを一覧化し、タスクに最適な担当を推薦し、初心者が適切なスペシャリストを発見できるよう支援 | レコメンド、エージェントマップ |
+| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 123+."_ - スキルエコシステムのナビゲーター・オンボーディングガイド。エージェントを一覧化し、タスクに最適な担当を推薦し、初心者が適切なスペシャリストを発見できるよう支援 | レコメンド、エージェントマップ |
 | **Loom** | _"Many threads, one fabric — design the operating layer as a system."_ - プロジェクトの運用レイヤー設計エージェント。リポジトリに必要なプロジェクト固有スキル・リポジトリ最適化レシピ（タスクプレイブック）・スキル/エージェントオーケストレーションワークフローを一つの整合したシステムとして設計。リポジトリを分析してレイヤーを設計し、スキル本体の記述はSigilへ、ランタイムのルーティングはNexusへ委譲 | 運用レイヤー設計、ルーティングマップ |
 | **Prune** | _"A garden grows by what you cut, not what you plant."_ - スキルエコシステム整理監査エージェント。エージェント編成の重複・冗長・不活性を監査し、統合候補とサンセット計画を根拠・アーカイブ手順付きで提案（提案のみ・実行はしない） | 整理監査レポート、統合/サンセット提案 |
 
@@ -86,8 +86,6 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Omen** | _"Plan for the worst. Build for the best."_ - プリモーテム分析・障害モード列挙。計画・設計・機能のリスクシナリオをRPN/APスコアリングで体系的に特定。コードは書かない | プリモーテムレポート |
 | **Rank** | _"Every priority tells a story of trade-offs."_ - 優先度定量化エージェント。ICE/RICE/WSJF/MoSCoW/Kanoフレームワークで競合アイテムをスコアリング・順序付け。コードは書かない | 優先度レポート |
 | **Sage** | _"Tell me what you're avoiding."_ - YC のオフィスアワー流アドバイザリーエージェント。ソクラテス式問答で「いま最も自分を止めているボトルネック」を1つに絞り込み、過去の数百スタートアップから引いたパターンで率直に診断し、1-2週間で実行する具体アクションに落とす。創業者アンチパターン検出付き。コードは書かない | オフィスアワー出力 (ボトルネック + アクション) |
-| **Ascent** | _"Plan the climb before you take the first step."_ - キャリア戦略プランナー。転職・副業・独立に向けた自己分析、市場・給与リサーチ、ポジショニング、スキルギャップ計画、求人探索（ターゲットリスト・トラッカー・アウトリーチ）、面接準備、給与交渉を担当。アドバイザリーのみでコードは書かない | キャリア戦略、求人トラッカー |
-| **Guild** | _"Hire the team you can build with — design the process before the offer."_ - 採用プロセス・チーム構造設計エージェント（雇用者側）。採用戦略、ジョブディスクリプション、コンピテンシーマトリクス、面接ルーブリック、スコアカード、アウトリーチテンプレート、候補者ジャーニーマップ、30/60/90オンボーディング、評価制度、カルチャードキュメント、バイアス低減チェックリストを作成。コードは書かず、労働法関連は専門家レビューを推奨 | 採用プロセス設計、チーム構造 |
 | **PDM** | _"Show where the project stands — planned, built, and the gap between."_ - PdMスタイルのリードオンリー・デリバリー状況ナビゲーター。計画スコープ（仕様/Issue/ロードマップ/PRD）と実装済みコードを突き合わせ、機能インベントリ、未実装機能リスト、ロードマップロールアップ、WBSビューを生成。「何ができていて、何が残っていて、今どこか」に回答 | 機能インベントリ、未実装リスト、WBS |
 | **Summon** | _"Channel the mind, not the mouth — documented thinking, never fabricated words."_ - 著名人の記録された思考をレンズとして適用する「イタコ」型エージェント。対象人物のメンタルモデル・ヒューリスティック・意思決定スタイルを問題に当てはめてアドバイザリー視点を提供（発言の捏造はしない） | 思考モデルレンズ、多視点アドバイス |
 
@@ -143,9 +141,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Artisan** | _"Prototypes promise. Production delivers."_ - フロントエンド本番実装の職人。React/Vue/Svelte、Hooks設計、状態管理、Server Components、フォーム処理、データフェッチング | フロントエンドコード |
 | **Forge** | _"Done is better than perfect. Ship it, learn, iterate."_ - プロトタイプ作成。完璧より動くものを優先。Builder連携用にtypes.ts, errors.ts, forge-insights.mdを出力 | MVP/PoC |
 | **Native** | _"Every pixel ships. Every platform matters."_ - Pure-nativeモバイル実装スペシャリスト。iOS（Swift 6.3 + SwiftUI + Liquid Glass）と Android（Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive）。@Observable/Swift Concurrency、Compose Strong Skipping + Type-safe Navigation、SwiftData/Room、Credential Manager + Passkey、Privacy Manifest、edge-to-edge、predictive back、Live Activities、App Intents、Foundation Models / Gemini Nano、ストア準拠、ステージドロールアウト。React Native / Flutter / KMP / CMP は対象外 | コード |
-| **Dock** | _"A Mac app should feel like it was born on the Mac."_ - macOS ネイティブアプリ実装スペシャリスト。SwiftUI for macOS + AppKit 相互運用（NSViewRepresentable / NSHostingController）、ウィンドウ・シーン設計（WindowGroup / Settings / MenuBarExtra / マルチウィンドウ / 状態復元）、メニューバー Commands、ドキュメントベースアプリ（DocumentGroup / NSDocument）、NavigationSplitView + ツールバー + インスペクタ、ドラッグ&ドロップ / ペーストボード / Services、App Sandbox + entitlements + hardened runtime、配布（App Store vs Developer ID + notarytool + Sparkle）、XPC / SMAppService ヘルパー、Mac HIG と macOS Tahoe 26 の Liquid Glass、Catalyst vs ネイティブの判断。既存 Mac アプリの自動化は Wield の担当 | コード |
 | **Pixel** | _"Every pixel matters. Fidelity is non-negotiable."_ - 画像モックアップ（PNG/JPG/スクリーンショット）からピクセルパーフェクトなHTML/CSSを生成し、視覚的検証を行う忠実再現エージェント | HTML/CSSコード |
-| **Tick** | _"The loop is the heartbeat. Everything else is what happens between beats."_ - エンジン非依存のゲームアーキテクチャ実装エージェント。ゲームループ、ECS、ゲームステート、衝突/物理統合、セーブ/ロード、ネットコード基盤を実装 | ゲームアーキテクチャコード |
 
 ### AI/ML
 
@@ -186,7 +182,6 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Prose** | _"Words are the smallest unit of design. Get them wrong, and nothing else matters."_ - ユーザー向けテキストの専門エージェント。マイクロコピー、エラーメッセージ、ボイス＆トーンフレームワーク、オンボーディングコピー、アクセシビリティテキスト | コピーガイドライン、コンテンツ仕様 |
 | **Frame** | _"Design speaks in pixels. I translate it to code."_ - Figma MCP Serverを活用してデザインコンテキストを抽出・構造化し、実装エージェントに渡すブリッジエージェント。デザインからコードへの橋渡し、Code Connect管理、デザインシステムルール抽出。コードは書かない | 構造化デザインコンテキスト、デザインシステムルール |
 | **Ink** | _"Every stroke serves a purpose."_ - SVGアイコン/イラスト生成、アイコンシステム設計、スプライトシンボル構築 | SVGアセット |
-| **Glance** | _"If the player can't read it at a glance, it isn't UI — it's noise on top of the game."_ - ゲームUI/UX設計エージェント（コードは書かない）。HUD＆ダイエジェティックUI、メニュー/インベントリフロー、コントローラー＆コンソールナビゲーション、ゲームアクセシビリティ、ジャンル別UIコンベンションを設計 | ゲームUI/UX設計 |
 
 ### ドキュメント
 
@@ -198,7 +193,6 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Tome** | _"Changes are forgotten. Knowledge endures."_ - リポジトリの変更内容を詳細な学習ドキュメントに変換。用語・フロー・設計判断・アンチパターンを教育的に解説 | 学習ドキュメント |
 | **Clause** | _"Every clause carries weight. Every omission carries risk."_ - 利用規約・プライバシーポリシー・特商法の法的ドキュメントレビュー。条項ギャップ検出・リスクフラグ・規制整合性確認 | 法務レビューレポート |
 | **Zine** | _"The hook earns the second paragraph."_ - 外部公開向けテックブログ・記事連載オーサリングエージェント。note/Zenn/Qiita/dev.to向けフック設計、記事構造、プラットフォーム別チューニング、連載管理 | 公開記事、連載index |
-| **Agora** | _"Design the objective first; the lesson follows the evidence."_ - 学習・カリキュラム設計エージェント。測定可能な学習目標、前提条件チェック、カリキュラムマップ、レッスンプラン、教材、クイズ、評価ルーブリック、コーチング支援を作成し、Bloomのタキソノミー＋逆向き設計で目標・コンテンツ・評価を整合。コードは書かない | カリキュラム、レッスンプラン、評価ルーブリック |
 
 **Scribe vs Quill vs Morph vs Tome vs Zine の役割分担**:
 - **Scribe**: プロジェクトドキュメント（PRD、SRS、設計書、チェックリスト、テスト仕様書）
@@ -213,11 +207,8 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 |------------|------|------|
 | **Canvas** | _"A diagram is worth a thousand lines of documentation."_ - 設計可視化。コード・仕様・コンテキストをMermaid図またはASCIIアート（フローチャート、シーケンス図、状態遷移図、クラス図、ER図等）に変換 | Mermaid図 / ASCII Art |
 | **Sketch** | _"From words to worlds, prompt to pixel."_ - AI画像生成コード職人。Gemini APIを使用した画像生成用Pythonコードの作成。プロンプトエンジニアリング、バッチ生成、コスト見積もり | Pythonコード |
-| **Dot** | _"Every pixel is a decision. Every constraint is a creative opportunity."_ - ピクセルアート専門エージェント。コード（SVG/Canvas/Phaser 3/Pillow/CSS）でドット絵を生成。パレット設計、スプライトシート、タイルセット、フレームアニメーション、Antigravity CLIへのSVG生成委譲をサポート | ピクセルアートコード（SVG/Canvas/CSS） |
-| **Quest** | _"Every great game starts with a question the player cannot resist answering."_ - ゲーム企画・プロダクションエージェント。GDD構造化、ゲームバランス数理、ナラティブ設計、経済設計、システムデザイン、プレイヤー心理学。コードは書かない | GDD、バランスシート、経済モデル |
 | **Cue** | _"Every frame tells a story."_ - ビデオスクリプト・ストーリーボード・ナレーション設計。プロダクト動画、解説動画、オンボーディングコンテンツ企画 | 動画台本、ストーリーボード |
 | **Stage** | _"Every slide is a stage."_ - Marp/reveal.js/Slidevによるスライド生成、ストーリー構成設計、カンファレンストーク最適化 | スライドデッキ |
-**Vision → Dot → Forge の連携**：Vision（アートディレクション）→ Dot（ピクセルアートコード）→ Forge（プロトタイプ統合）
 ### アーキテクチャ
 
 | エージェント | 説明 | 出力 |
@@ -266,7 +257,6 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Pipe** | _"Workflows are pipelines. Pipelines are promises."_ - GitHub Actionsワークフローの深い専門家。トリガー戦略、セキュリティ強化、パフォーマンス最適化、PR自動化、Reusable Workflow設計 | GHAワークフロー |
 | **Ledger** | _"Every dollar has a story. Make it a short one."_ - FinOps／クラウドコスト最適化エージェント。IaCコードからのコスト推定、right-sizing提案、RI/SP推奨、コスト異常検知 | レポート、設定 |
 | **Shift** | _"Migration is not moving. It's transforming."_ - マイグレーション＆アップグレードオーケストレーター。フレームワーク・ライブラリ・API・DB・インフラの移行をcodemod生成・段階的戦略でエンドツーエンド実行 | マイグレーション計画 |
-| **Wield** | _"Tell the Mac what to do — and it does."_ - AppleScript/JXA/osascript による macOS デスクトップ自動化。Apple Events でネイティブアプリ（Finder/Mail/Safari/Calendar/Notes/Music/System Events）を制御、非対応アプリの UI スクリプティング、複数アプリ連携、osascript の shell/Python/Node 統合。辞書優先・TCC考慮・破壊的操作はゲート | AppleScript/JXAスクリプト |
 
 **Hearth vs Hone vs Gear vs Scaffold vs Latch vs Pipe の役割分担**:
 - **Hearth**: 個人環境（dotfiles、シェル、エディタ、ターミナル）
@@ -290,7 +280,6 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Bond** | _"Acquisition is expensive. Retention is profitable."_ - リテンション施策・再エンゲージメント・チャーン予防。ゲーミフィケーション、習慣形成デザイン | リテンション施策 |
 | **Funnel** | _"Above the fold is your one shot. Make every pixel convert."_ - LP（ランディングページ）構造設計・コンバージョン戦略スペシャリスト。フレームワーク（AIDA/PAS/BAB/4Ps）に基づく構造設計、ヒーローセクション、CTA配置戦略、Social Proof階層、モバイルファーストのレスポンシブ実装 | LP構造、コピー、仕様 |
 | **Crest** | _"Your brand is what people say when you're not in the room."_ - エンジニアセルフブランディング戦略家。GitHub/LinkedIn/ブログ/カンファレンス/SNSのポジショニング・プロフィール最適化・コンテンツ戦略 | ブランディング戦略 |
-| **PMM** | _"Market what is built, not what is wished. Every promise traces to a shipped capability."_ - プロダクトマーケティング戦略家。出荷済みのプロダクト能力を市場ポジショニング・メッセージング・GTM計画に翻訳。ポジショニングステートメント、メッセージングハウス、GTM/ローンチマーケティング計画、セールスイネーブルメント素材を作成し、すべてのメッセージを実在の出荷済み能力に紐付ける | ポジショニング、メッセージング、GTM計画 |
 
 ### 分析
 
@@ -667,7 +656,6 @@ skills/
 ├── compete/SKILL.md    # 競合調査
 ├── darwin/SKILL.md     # エコシステム自己進化オーケストレーター
 ├── director/SKILL.md   # デモ動画撮影
-├── dot/SKILL.md        # ピクセルアート生成（SVG/Canvas/Phaser 3）
 ├── echo/SKILL.md       # ペルソナ検証
 ├── experiment/SKILL.md # A/Bテスト設計
 ├── flow/SKILL.md       # アニメーション
@@ -745,7 +733,7 @@ skills/
 
 ### 単一エージェントの使用
 
-> カテゴリ別に全133エージェントの使用例を紹介します。
+> カテゴリ別に全123エージェントの使用例を紹介します。
 
 #### オーケストレーション
 
@@ -1368,24 +1356,6 @@ Gemini APIを使って商品サムネイル画像を生成するPythonコード�
 
 ---
 
-##### ピクセルアート生成（Dot）
-
-```
-/Dot
-16x16のプレイヤーキャラクタースプライトを4フレームの歩行アニメーション付きで作成してください。
-16色パレットで、SVGとスプライトシートメタデータを出力してください。
-```
-
-**出力**: SVGスプライトコード、スプライトシートレイアウト、アニメーションメタデータJSON、パレット定義
-
----
-
-**Canvas vs Sketch vs Dot の役割分担**:
-- **Canvas**: 図表・チャート（Mermaid、ASCIIアート、draw.io）
-- **Sketch**: AI画像生成コード（Gemini API向けPythonコード）
-- **Dot**: ピクセルアートをコードで生成（SVG/Canvas/Phaser 3/Pillow/CSSスプライト）
-
----
 
 #### アーキテクチャ
 

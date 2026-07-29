@@ -96,9 +96,6 @@ venture's "feature_id (F-001) barrier" generalizes to a **canonical entity-id ba
 | legal | Risk / policy clause | `R-001` | risk ↔ mitigation ↔ policy clause ↔ lawyer-review point |
 | media | Content pillar | `P-001` | pillar ↔ episode/article ↔ channel ↔ metric |
 | growth | Hypothesis / experiment | `H-001` / `E-001` | hypothesis ↔ experiment ↔ metric ↔ learning-log entry |
-| career | Target role | `T-001` | self-analysis ↔ market/salary ↔ positioning ↔ skill-gap ↔ job-search ↔ asset |
-| learning | Learning objective | `LO-001` | objective ↔ curriculum ↔ material ↔ assessment (alignment matrix) |
-| hiring | Role | `R-001` | role ↔ JD ↔ competency ↔ rubric ↔ scorecard ↔ onboarding |
 
 ## Universal Grounding Gate (all presets — not just research)
 
@@ -110,7 +107,7 @@ The entity-id barrier guards *structural* integrity; this gate guards *factual* 
   3. **Research-to-do** — when grounding was unavailable, enumerated in `research_todo.md` as a lookup, not stated as fact.
 - **A bare number or external-fact stated as fact with none of the three fails Phase 5 validation** — for *all* presets, not only `research`. Fabricated market/statistic/citation claims presented as established fact are the package equivalent of a hallucinated source.
 - **Internal design content** (the user's own roadmap, the proposed feature set, opinions, recommendations) is exempt — the gate targets **externally-checkable facts**, not the plan's own propositions.
-- Preset-specific grounding rules **layer on top**, not replace: `research` requires reproducibility+ethics files; `career` marks unsourced salary `ASSUMPTION`; `legal`/`hiring` add the lawyer-review disclaimer. The universal gate is the floor every preset clears.
+- Preset-specific grounding rules **layer on top**, not replace: `research` requires reproducibility+ethics files; `legal` adds the lawyer-review disclaimer. The universal gate is the floor every preset clears.
 
 `validation_report.md` reports the count of: sourced claims / assumptions / research-to-dos / **ungrounded-fact failures (must be 0 to ship)**.
 
@@ -128,9 +125,6 @@ This gate is the origin of — and is generalized to all doc-producing runs by �
 | **saas** | `package domain=saas` | 00_vision,01_product,02_ai_system,03_integrations,04_technology,05_gtm,06_operations,07_testing | accord+spark+rank+pulse | oracle(ai_system) ‖ atlas/schema/gateway(tech) ‖ scribe(product/ops) ‖ funnel/bazaar+pulse(gtm) ‖ gear(integrations/CI) ‖ matrix+mint(testing) | standard (defaults to b2b-saas + ai-product modes) |
 | **media** | `package domain=media` | 00_strategy,01_content,02_brand,03_distribution,04_monetization,05_operations,06_assets | accord(content pillars)+spark+rank | cue(scripts/episodes) ‖ prose(articles/tone) ‖ vision/muse(brand/visual) ‖ field(SEO) ‖ funnel(monetization/sponsorship) ‖ pulse(analytics) | copyright/attribution/ad-compliance (clause-light) |
 | **growth** | `package domain=growth` | 00_current_state,01_hypotheses,02_experiments,03_design,04_measurement,05_execution | pulse(funnel/baseline)+experiment(hypotheses)+rank(RICE) | experiment(ab_test/backlog) ‖ funnel(friction/flows) ‖ palette/prose(ui_variants/copy_tests) ‖ pulse(event_tracking/dashboard) ‖ magi(opportunity) | standard — **planning only; route to kaizen for execution** |
-| **career** | `package domain=career` | 00_self_analysis,01_market_research,02_positioning,03_learning,04_job_search,05_assets,06_execution | ascent(self-analysis → target-role + skill-gap) | ascent(owns whole arc) ‖ field(market/salary) ‖ compete(positioning frameworks) ‖ crest(engineer channel branding) ‖ scribe/prose(asset polish) ‖ canvas(roadmap) | irreversible moves (quit-before-income/relocation/visa); unsourced salary = ASSUMPTION; no legal/tax/financial advice; no fabricated credentials |
-| **learning** | `package domain=learning` | 00_learning_goal,01_curriculum,02_materials,03_assessment,04_support,05_progress,06_instructor | agora(objectives → curriculum, Bloom's alignment owner) | agora(curriculum/assessment) ‖ field(topic) ‖ canvas(learning-path) ‖ morph(format) ‖ matrix(hands-on practice) ‖ scribe(formal syllabus) | ALIGNMENT_GAP / ORPHAN_ASSESSMENT; regulated domain (medical/legal/finance/safety/certification) → official-syllabus confirmation |
-| **hiring** | `package domain=hiring` | 00_strategy,01_roles,02_candidate_experience,03_onboarding,04_evaluation,05_culture,06_risk | guild(role → JD/competency)+scribe | guild(process/JD/rubric/onboarding) ‖ cast(candidate personas) ‖ prose(outreach/comms) ‖ helm?(headcount/org) ‖ oath(labor-law escalation) | **labor-law / anti-discrimination / PII → lawyer review; protected-class criteria removed, not encoded** |
 
 ## Preset Auto-Detection
 
@@ -152,9 +146,6 @@ When `domain=` is omitted, Phase 0 resolves the preset from the theme. Detection
 | The deliverable itself is a legal/compliance pack — ToS, Privacy Policy, AI usage policy, contracts, data rights, legal risk register | `legal` |
 | Content/editorial operation — YouTube/podcast/blog/newsletter, editorial calendar, channel growth, audience monetization, content pillars | `media` |
 | Improving an **existing** product's metrics — funnel/CVR/churn, A/B experiments, growth hypotheses, retention (planning a measurement program) | `growth` |
-| Personal career — job change, side-business, independence, portfolio, interview, salary negotiation | `career` |
-| Curriculum / course / training design, lesson plans, assessment, learning program | `learning` |
-| Recruitment / hiring process, job descriptions, interview rubrics, onboarding, org design | `hiring` |
 | Generic project/initiative/plan that matches none of the above (strategy → execution → operations) | `generic` |
 
 ### Precedence rules (multiple matches)
@@ -173,7 +164,7 @@ When `domain=` is omitted, Phase 0 resolves the preset from the theme. Detection
 | Single clear top preset | Proceed with it (state the detected preset in the opening line of the run). |
 | Top-2 within a close margin | Confirm preset with the user (present the top 2 + one-line rationale each). In `AUTORUN_FULL`, pick the higher and state the assumption + the alternative. |
 | No row scores (theme unmatched) | Fall back to `generic`; surface "matched no specialized preset → generic" in the report. |
-| Novel domain with no matching preset/skill (none of the 12 fit) | Use `generic`, and emit a **gap note**: "<domain> has no dedicated preset/skill — produced via generic; recommend a dedicated skill via `architect` if this recurs." Mark with `#TODO(agent): promote <domain> to a first-class preset once a dedicated skill exists`. |
+| Novel domain with no matching preset/skill (none of the 9 fit) | Use `generic`, and emit a **gap note**: "<domain> has no dedicated preset/skill — produced via generic; recommend a dedicated skill via `architect` if this recurs." Mark with `#TODO(agent): promote <domain> to a first-class preset once a dedicated skill exists`. |
 
 ## Per-Preset Blueprints
 
@@ -203,14 +194,8 @@ Distinctive: `content_pillars.md`, `editorial_calendar.csv`, `episode_ideas.md`,
 ### growth
 Distinctive: `funnel_analysis.md`, `friction_points.md`, `opportunity_matrix.md`, `growth_hypotheses.md`, `experiment_backlog.csv`, `ab_test_plan.md`, `success_metrics.md`, `prioritization_rice.csv`, `improved_flows.md`, `copy_tests.md`, `ui_variants.md`, `event_tracking_plan.md`, `dashboard_spec.md`, `analysis_template.md`, `learning_log.md`. Anchor: hypothesis_id `H-001` / experiment_id `E-001` ↔ metric ↔ learning-log entry. **Dedup discipline**: this preset produces a *planning package* only. If the user wants to actually implement an improvement → route to `kaizen`; to gate a merge with growth proof → `growth-acceptance`; for a single A/B test design → `experiment` direct. State this routing in the final report when growth is selected.
 
-### career
-Owner skill: `ascent`. Distinctive: `strengths_weaknesses.md`, `achievement_inventory.md`, `salary_research.md`, `skill_gap_analysis.md`, `positioning.md`, `elevator_pitch.md`, `portfolio_strategy.md`, `target_company_list.csv`, `application_tracker.csv`, `outreach_templates.md`, `cover_letter_templates.md`, `negotiation_strategy.md`, `90_day_plan.md`. Anchor: target_role `T-001` ↔ self-analysis ↔ market/salary ↔ positioning ↔ job-search ↔ asset. Engineer-specific channel branding → hand to `crest`. **Risk**: irreversible moves (quit-before-income / relocation / visa) flagged; salary claims without a source marked `ASSUMPTION — confirm`; no legal/tax/financial advice asserted as fact; never fabricate achievements/credentials.
 
-### learning
-Owner skill: `agora`. Distinctive: `learning_objectives.md`, `prerequisite_check.md`, `outcome_definition.md`, `lesson_plans.md`, `quizzes.csv`, `rubric.md`, `self_assessment.md`, `progress_checkpoints.md`, `study_tracker.csv`, `coaching_prompts.md`, `common_mistakes.md`, `alignment_matrix.md`. Anchor: learning objective `LO-001` (Bloom's-leveled) ↔ curriculum ↔ material ↔ assessment, via the alignment matrix. **Gate**: every objective has ≥1 aligned assessment (`ALIGNMENT_GAP` fails) and every assessment maps to an objective (`ORPHAN_ASSESSMENT` fails); objectives use measurable verbs; regulated domains (medical/legal/finance/safety/certification) require official-syllabus confirmation.
 
-### hiring
-Owner skill: `guild`. Distinctive: `recruitment_strategy.md`, `job_descriptions.md`, `competency_matrix.md`, `interview_rubric.md`, `scorecards.csv`, `candidate_journey.md`, `outreach_templates.md`, `communication_templates.md`, `onboarding_plan_30_60_90.md`, `first_week_checklist.md`, `performance_review_template.md`, `culture.md`, `bias_reduction_checklist.md`. Anchor: role `R-001` ↔ JD ↔ competency ↔ rubric ↔ scorecard ↔ onboarding. Candidate persona depth → `cast`; regulatory framework audit → `oath`. **HIGH-RISK gate (mandatory)**: labor-law / anti-discrimination / PII content is advisory only — every such doc carries a "requires labor-law (lawyer) review before use" disclaimer; **protected-class screening criteria must be removed, not encoded**; Phase 5 fails on encoded protected-class criteria.
 
 ## Risk Gates
 
@@ -218,8 +203,6 @@ Owner skill: `guild`. Distinctive: `recruitment_strategy.md`, `job_descriptions.
 |-----------|-------------------|------|
 | legal | legal (always); any preset with legal drafts | Mandatory "not legal advice / expert review required" disclaimer on every legal doc; Phase 5 fails on missing `lawyer_review_points` reference |
 | medical / finance / safety | any (from theme) | Phase 0 surfaces high-risk; mark all domain claims as hypotheses; recommend domain-expert review in final report |
-| labor-law / anti-discrimination | hiring | Every hiring-law doc carries "requires lawyer review"; protected-class screening criteria removed, not encoded (Phase 5 fails on encoded criteria) |
-| alignment (learning) | learning | Phase 5 fails on `ALIGNMENT_GAP` (objective w/o assessment) or `ORPHAN_ASSESSMENT` (assessment w/o objective); regulated domains need official-syllabus confirmation |
 | hallucination / data-sensitivity | ai-adoption, saas | Every use case requires an eval case + human-review rule; forbidden-use entries for high-risk use cases |
 | ungrounded fact (fabrication) | **all presets** | Universal Grounding Gate: every external fact must be sourced / `ASSUMPTION` / research-to-do; Phase 5 fails on a bare fabricated number or citation stated as fact |
 
@@ -277,7 +260,7 @@ Nexus AUTORUN package domain=<preset> theme="<X>" depth=<...> mode=<...>
 | AI use case missing eval/human-review | Phase 5 ai gate | Return ai-adoption track |
 | Format syntax invalid | Phase 6 lint | Fix file, re-lint before zipping |
 | Secrets/PII detected | Phase 6 scrub | Remove and re-package; never ship |
-| Novel domain outside the 12 presets | Phase 0 | Use `generic` + flag the missing dedicated skill; recommend `architect` for a new skill if recurring |
+| Novel domain outside the 9 presets | Phase 0 | Use `generic` + flag the missing dedicated skill; recommend `architect` for a new skill if recurring |
 
 ## Cost and Latency Profile
 
@@ -302,10 +285,7 @@ Same guardrails as venture (5+ agent chain confirmation, full-depth confirmation
 | 09 legal_compliance | legal | ✅ (high-risk gate) |
 | 10 growth_optimization | growth | ✅ (planning-only; dedup vs kaizen/growth-acceptance) |
 | 07 media_operation | media | ✅ (known editorial-skill gap, lossy) |
-| 03 career_strategy | career | ✅ (owner skill `ascent`; irreversible-move + salary-source gates) |
-| 04 learning | learning | ✅ (owner skill `agora`; Bloom's alignment gate) |
-| 06 hiring_org | hiring | ✅ (owner skill `guild`; labor-law lawyer-review gate) |
 | 00 pdca_prompt | — | ❌ out of scope (prompt-improvement meta — route to `architect` / `quality-iteration`) |
 | 12 templates (input sheet / quality gate) | — | ♻️ folded into Phase 0 framing contract / Phase 5 validation contract |
 
-All 12 source domains except the meta prompt-improvement prompt now have first-class presets backed by a dedicated owner skill. A novel domain outside these 12 still falls back to `generic` with a surfaced gap note; promote it once a dedicated skill exists (propose via `architect`).
+The remaining source domains now have first-class presets backed by a dedicated owner skill (career/learning/hiring were retired with their owner skills). A novel domain outside these still falls back to `generic` with a surfaced gap note; promote it once a dedicated skill exists (propose via `architect`).

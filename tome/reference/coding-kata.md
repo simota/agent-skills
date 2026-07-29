@@ -81,7 +81,7 @@ Match the platform to the practice goal, not vice versa. As of 2026-05:
 | **Exercism** | 82 language tracks with mentored feedback (free, volunteer mentors) | Language fluency, paradigm-shift katas, getting external feedback |
 | **Codewars** | 67 language challenges, gamified; 2026 roadmap announced platform upgrades and AI partnerships | Daily repetition, ranking-driven practice, language switching |
 | **LeetCode / HackerRank** | Interview-style problems | Interview prep — not deliberate-practice katas |
-| **Frontend Agora** | Frontend project briefs (HTML/CSS/JS/React) | UI kata, visual-design constraints |
+| **Frontend Mentor** | Frontend project briefs (HTML/CSS/JS/React) | UI kata, visual-design constraints |
 | **Scrimba** | Practice-while-learning, integrated editor | Tutorial-driven warmup before kata work |
 
 [Source: scrimba.com/articles — Best Coding Practice Platforms 2026; algocademy.com — 7 Best Coding Kata Sites]

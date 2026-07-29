@@ -23,11 +23,10 @@ COLLABORATION_PATTERNS:
 - Frame -> Ink: Figma design context for icon specifications
 - Ink -> Artisan: SVG components for React/Vue integration
 - Ink -> Vitrine: Icon stories for Storybook catalog
-- Ink -> Dot: Handoff when pixel art is more appropriate than vector
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Vision (art direction), Muse (design tokens), Frame (Figma context), User (requirements)
-- OUTPUT: Artisan (component integration), Vitrine (Storybook), Dot (pixel art handoff), User (SVG assets)
+- OUTPUT: Artisan (component integration), Vitrine (Storybook), User (SVG assets)
 
 PROJECT_AFFINITY: Game(L) SaaS(H) E-commerce(H) Dashboard(H) Marketing(M)
 -->
@@ -49,7 +48,6 @@ Use Ink when the user needs:
 - SVG optimization guidance
 
 Route elsewhere when the task is primarily:
-- pixel art or raster sprites: `Dot`
 - AI-generated images or photos: `Sketch`
 - design token management: `Muse`
 - CSS animations (not SVG): `Flow`
@@ -177,7 +175,7 @@ Behavior notes per Recipe:
 ## Collaboration
 
 **Receives:** Vision (art direction), Muse (design tokens), Frame (Figma context), User (icon requirements)
-**Sends:** Artisan (SVG components), Vitrine (icon stories), Dot (pixel art handoff), User (SVG files)
+**Sends:** Artisan (SVG components), Vitrine (icon stories), User (SVG files)
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|

@@ -10,7 +10,7 @@ CAPABILITIES_SUMMARY:
 - multi_granularity_operation: Drive downstream agents via four operation layers — prompt, structured comment, direct edit instruction, parametric slider (value-range hints)
 - design_intent_handoff: Standardize design intent propagation through the `DESIGN_INTENT_HANDOFF` schema from Vision -> Muse/Frame -> Forge -> Artisan
 - multi_artifact_range: Cover design, prototype, slide deck, 1-pager, marketing captures, and implementation artifacts within a single workflow
-- pipeline_routing: Select the minimum viable delegate set (Frame, Muse, Forge, Pixel, Ink/Sketch/Dot, Stage, Canvas, Morph, Artisan, Vitrine) scoped to the request shape
+- pipeline_routing: Select the minimum viable delegate set (Frame, Muse, Forge, Pixel, Ink/Sketch, Stage, Canvas, Morph, Artisan, Vitrine) scoped to the request shape
 - onboarding_caching: Avoid redundant extraction by reading the persisted design system and re-running onboarding only on tokens drift, file hash change, or explicit refresh
 - handoff_bundle_assembly: Assemble consumer-specific handoff bundles (tokens, components, intent, constraints, success criteria) per downstream agent
 - parametric_slider_authoring: Express design-intent hints as value ranges (e.g., radius 4-12, density compact|comfortable, motion subtle|expressive) so downstream agents can parametrize rather than hardcode
@@ -22,7 +22,7 @@ COLLABORATION_PATTERNS:
 - atelier -> Muse: token definition, DTCG alignment, hardcoded-value migration
 - atelier -> Forge: rapid prototype build from design intent
 - atelier -> Pixel: mockup-faithful reproduction
-- atelier -> Ink / Sketch / Dot: vector / AI image / pixel asset generation
+- atelier -> Ink / Sketch: vector / AI image asset generation
 - atelier -> Stage: slide deck authoring
 - atelier -> Canvas: diagram authoring
 - atelier -> Morph: multi-format export (MD/Word/Excel/PDF/HTML)
@@ -33,7 +33,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Vision (direction), User (request), Judge (quality feedback)
-- OUTPUT: Frame, Muse, Forge, Pixel, Ink, Sketch, Dot, Stage, Canvas, Morph, Artisan, Vitrine, Nexus
+- OUTPUT: Frame, Muse, Forge, Pixel, Ink, Sketch, Stage, Canvas, Morph, Artisan, Vitrine, Nexus
 
 PROJECT_AFFINITY: SaaS(H) Marketing(H) Dashboard(H) E-commerce(H) Mobile(M) Game(M)
 -->
@@ -190,7 +190,6 @@ Route artifacts by shape. Include a delegate only when its output is part of the
 | Storybook catalog | `Vitrine` | `Muse`, `Frame` | CSF 3.0 / Factories |
 | Vector icon / illustration | `Ink` | `Muse` (token align) | SVG symbol sprite |
 | AI raster image | `Sketch` | — | Gemini API backend |
-| Pixel art | `Dot` | — | SVG / Canvas / Phaser |
 | Slide deck | `Stage` | `Ink`, `Muse` | Marp / reveal.js / Slidev |
 | Diagram | `Canvas` | — | Mermaid / draw.io |
 | Multi-format export | `Morph` | — | MD/Word/Excel/PDF/HTML |
@@ -259,7 +258,7 @@ atelier receives direction from Vision and briefs from the user. atelier sends e
 | atelier → Muse | `DESIGN_INTENT_HANDOFF` | Token definition / DTCG alignment |
 | atelier → Forge | `DESIGN_INTENT_HANDOFF` | Prototype build |
 | atelier → Pixel | `DESIGN_INTENT_HANDOFF` | Mockup reproduction |
-| atelier → Ink / Sketch / Dot | `DESIGN_INTENT_HANDOFF` | Visual asset generation |
+| atelier → Ink / Sketch | `DESIGN_INTENT_HANDOFF` | Visual asset generation |
 | atelier → Stage | `DESIGN_INTENT_HANDOFF` | Slide deck |
 | atelier → Canvas | `DESIGN_INTENT_HANDOFF` | Diagram |
 | atelier → Morph | `DESIGN_INTENT_HANDOFF` | Multi-format export |

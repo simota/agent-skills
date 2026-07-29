@@ -42,9 +42,9 @@ Scale: 8–24 agents (capture-heavy; desktop/robustness branches add capture age
 | **incremental-clone** (screen-by-screen) | Large product, live system | Reproduce one screen/flow at a time, each independently parity-gated | Low — each increment verifiable & shippable |
 | **big-bang full clone** | Small/self-contained product | Whole reproduction, single cutover | High — **requires user confirmation** |
 
-Capture-source bindings by `target_type`: **live web** = Vector/Voyager (crawl, screenshot, network observe) + Frame/Pixel (design extraction); **desktop** = Wield (macOS app automation via AppleScript/JXA — drive menus/windows/dialogs, capture per-window screenshots, script non-scriptable apps via System Events) + Pixel (visual diff of captured windows); **has Figma** = Frame (design context); **has source** = Lens (structure map); **mobile** = Snap/Voyager (native UI capture); **API-backed** = Schema (infer data model from observed responses).
+Capture-source bindings by `target_type`: **live web** = Vector/Voyager (crawl, screenshot, network observe) + Frame/Pixel (design extraction); **desktop** = Hearth `automate` (macOS app automation via AppleScript/JXA — drive menus/windows/dialogs, capture per-window screenshots, script non-scriptable apps via System Events) + Pixel (visual diff of captured windows); **has Figma** = Frame (design context); **has source** = Lens (structure map); **mobile** = Snap/Voyager (native UI capture); **API-backed** = Schema (infer data model from observed responses).
 
-> **Desktop capture coverage.** Wield covers **macOS** GUI automation/screenshot natively. **Windows/Linux** desktop GUI automation has no first-class skill in this roster — capture those via an external automation harness (e.g. the OS's accessibility/UI-automation API driven through a script the run shells out to) and feed the resulting screenshots/interaction logs into the same parity baseline; **mark the capture mechanism in the Fidelity Report provenance stamp** so the gap in tooling is explicit, never silent. Visual/behavioral parity downstream (Pixel/Voyager/Radar/Attest/judge) is platform-independent and unchanged.
+> **Desktop capture coverage.** Hearth `automate` covers **macOS** GUI automation/screenshot natively. **Windows/Linux** desktop GUI automation has no first-class skill in this roster — capture those via an external automation harness (e.g. the OS's accessibility/UI-automation API driven through a script the run shells out to) and feed the resulting screenshots/interaction logs into the same parity baseline; **mark the capture mechanism in the Fidelity Report provenance stamp** so the gap in tooling is explicit, never silent. Visual/behavioral parity downstream (Pixel/Voyager/Radar/Attest/judge) is platform-independent and unchanged.
 
 ### 2a. Capture Robustness (live targets resist capture)
 
@@ -82,7 +82,7 @@ Phase 0.5 RESEARCH  →  deep-research[+Compete?][thorough web EVIDENCE SWEEP: T
                        → Version & drift signals sharpen the provenance stamp (§3b)
                        (research-first, capture-authoritative: a web claim is a lead to CONFIRM by capture, never the oracle)
 Phase 1 CAPTURE     ∥  Vector/Voyager[live-web: crawl UI, per-screen screenshots, observe network/API traffic]
-                       Wield[desktop: drive menus/windows/dialogs, per-window screenshots, script non-scriptable apps]
+                       Hearth[automate — desktop: drive menus/windows/dialogs, per-window screenshots, script non-scriptable apps]
                        Frame/Pixel[extract design system: tokens, layout, components from screenshots/Figma]
                        Lens?[map current structure + public surface]            (if source available)
                        Schema?[infer data model + API contract from observed responses]  (if API-backed)
@@ -190,8 +190,8 @@ The core knowledge of this recipe. Magi confirms the relevant dimensions in Phas
 
 | Dimension | What "faithful" means | Captured by (Phase 1) | Verified by (Phase 5) | Threshold (default) |
 |-----------|----------------------|------------------------|------------------------|---------------------|
-| **Visual** | Layout, spacing, color, typography, component look, responsive breakpoints / window states match per screen/state | Vector/Voyager screenshots (web); Wield per-window screenshots (desktop); Frame/Pixel design tokens | Pixel/Voyager screenshot diff (masked, normalized) — §3c | ≥ declared SSIM / ≤ pixel-delta per screen |
-| **Behavioral** | Interactions, navigation, state transitions, validation, edge-case responses behave identically | Echo/Trace flow recordings; Voyager (web) / Wield (desktop) interaction traces | Radar/Voyager behavior fixtures (canonicalized) | 100% of recorded flows green |
+| **Visual** | Layout, spacing, color, typography, component look, responsive breakpoints / window states match per screen/state | Vector/Voyager screenshots (web); Hearth `automate` per-window screenshots (desktop); Frame/Pixel design tokens | Pixel/Voyager screenshot diff (masked, normalized) — §3c | ≥ declared SSIM / ≤ pixel-delta per screen |
+| **Behavioral** | Interactions, navigation, state transitions, validation, edge-case responses behave identically | Echo/Trace flow recordings; Voyager (web) / Hearth `automate` (desktop) interaction traces | Radar/Voyager behavior fixtures (canonicalized) | 100% of recorded flows green |
 | **Feature** | Every feature in the inventory is present and reachable | PDM/Lens feature inventory | Attest coverage vs inventory | 100% covered or explicitly deferred |
 | **Data / API** | Data model shape, API contract, and field semantics match the observed surface | Schema inference from observed responses | contract/shape diff (gateway/schema) | shape-equivalent; semantics spot-checked |
 | **Asset** | Fonts, icons, images, and other brand assets match — reused where licensed, faithfully recreated otherwise | Ink/Pixel asset extraction → asset manifest (with license posture) | Pixel/Frame per-asset diff (perceptual hash / font metrics) — §3c | each asset within tolerance or a declared faithful recreation |
@@ -220,12 +220,12 @@ The core knowledge of this recipe. Magi confirms the relevant dimensions in Phas
 | **Capture blocked** (auth wall / anti-bot / CAPTCHA → surface never captured, inferred from memory) | §2a robustness handling: per-role/auth capture, polite throttle + backoff, human-in-the-loop for challenges; blocked surface named as a coverage gap, never reconstructed from memory |
 | **Spurious diff on dynamic content** (feeds, recommendations, timestamps, A/B, ad slots fail an exact diff) | §3c non-determinism canonicalization: mask dynamic regions, freeze clock/seed/locale, compare the mechanism not a frozen sample |
 | **Asset infidelity** (placeholder fonts/icons, wrong logo, or unlicensed reuse of copyrighted assets) | Asset Parity dimension + asset manifest with license posture; reuse where licensed, faithfully recreate otherwise |
-| **Desktop surface treated as second-class** (only web capture wired, native windows/menus/dialogs missed) | `target_type: desktop` first-class: Wield capture (macOS) / external UI-automation harness (Win/Linux) into the same baseline; coverage gate spans windows/menus/modals/OS interactions |
+| **Desktop surface treated as second-class** (only web capture wired, native windows/menus/dialogs missed) | `target_type: desktop` first-class: Hearth `automate` capture (macOS) / external UI-automation harness (Win/Linux) into the same baseline; coverage gate spans windows/menus/modals/OS interactions |
 
 ## 6. Add-ons
 
 - `+Snap` — native iOS UI capture/verification when the target is a mobile app.
-- `+Wield` — macOS desktop-app capture/automation when `target_type = desktop`.
+- `+Hearth[automate]` — macOS desktop-app capture/automation when `target_type = desktop`.
 - `+Ink` — recreate brand assets (icons/illustrations) when the original's assets cannot be licensed for reuse.
 - `+Flow` — when motion/animation fidelity is part of "complete copy".
 - `+Schema` / `+Tuner` — when the data layer and query behavior must be reproduced, not just the UI.
@@ -243,9 +243,9 @@ Reproducing an EXISTING product faithfully (parity-verified)?
   YES → target is mobile-native from a Web app? → PORTING (Port→Native)
         single Figma source, no full rebuild? → frame
         otherwise (whole product, fidelity-verified — web | desktop | mobile | api) → clone
-              target_type = desktop? → Wield capture (macOS) / external UI-automation harness (Win/Linux), same Parity Map
+              target_type = desktop? → Hearth `automate` capture (macOS) / external UI-automation harness (Win/Linux), same Parity Map
 ```
 
 ## 8. Output
 
-`NEXUS_COMPLETE` with the standard `## Nexus Execution Report` plus a **Fidelity Report**: the **Stack Decision Record** (locked stack per layer + rationale + constraints honored + stack-vs-fidelity tradeoffs accepted with their parity ceilings — §3·0), a **Research Grounding** subsection (Evidence Ledger size + per-tier source count, declared-vs-captured coverage delta, exact-values adopted, version/drift signals — per `reference/research-grounding.md` §6), **provenance stamp (target version/build, capture date, environment/OS, app/browser version, locale, pinned account/seed) + capture mechanism per surface (e.g. Wield/macOS, external harness/Win)**, **drift status (no-drift / re-captured / deferred)**, per-screen visual parity scores (SSIM/pixel-delta vs threshold), behavioral-fixture pass rate, **capture coverage (screens/states/flows/windows captured vs enumerated, with any deferred or capture-blocked gaps named)**, **fidelity-tolerance + non-determinism canonicalization contract (which regions/aspects were masked/frozen vs compared raw)**, feature-parity coverage vs inventory, **asset-parity results (per-asset match/recreation + license posture)**, fidelity-review verdict, and incremental scope (which screens reproduced this PR, which remain — each increment re-stamped with the target version it was verified against). For incremental-clone runs, each increment is a separate shippable PR carrying its own provenance stamp + accreted parity-regression harness.
+`NEXUS_COMPLETE` with the standard `## Nexus Execution Report` plus a **Fidelity Report**: the **Stack Decision Record** (locked stack per layer + rationale + constraints honored + stack-vs-fidelity tradeoffs accepted with their parity ceilings — §3·0), a **Research Grounding** subsection (Evidence Ledger size + per-tier source count, declared-vs-captured coverage delta, exact-values adopted, version/drift signals — per `reference/research-grounding.md` §6), **provenance stamp (target version/build, capture date, environment/OS, app/browser version, locale, pinned account/seed) + capture mechanism per surface (e.g. Hearth `automate`/macOS, external harness/Win)**, **drift status (no-drift / re-captured / deferred)**, per-screen visual parity scores (SSIM/pixel-delta vs threshold), behavioral-fixture pass rate, **capture coverage (screens/states/flows/windows captured vs enumerated, with any deferred or capture-blocked gaps named)**, **fidelity-tolerance + non-determinism canonicalization contract (which regions/aspects were masked/frozen vs compared raw)**, feature-parity coverage vs inventory, **asset-parity results (per-asset match/recreation + license posture)**, fidelity-review verdict, and incremental scope (which screens reproduced this PR, which remain — each increment re-stamped with the target version it was verified against). For incremental-clone runs, each increment is a separate shippable PR carrying its own provenance stamp + accreted parity-regression harness.

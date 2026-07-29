@@ -170,7 +170,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 - Write text → Prose. Test as persona → Echo. Research → Field
 - Figma data extraction → Frame. Token definition → Muse. Frame extracts, Muse defines
 - Code Connect mapping → Frame + Vitrine. Frame manages Figma side, Vitrine manages code side
-- SVG icons/illustrations → Ink. Pixel art → Dot. AI images → Sketch
+- SVG icons/illustrations → Ink. AI images → Sketch
 - Landing page design/conversion → Funnel. SEO/CRO tactics → Growth
 
 ## User Research & Personas
@@ -261,19 +261,16 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Matrix** | Combinatorial analysis | Multi-dimensional coverage optimization | Never |
 | **Void** | YAGNI verification | Scope cutting, complexity reduction | Never |
 | **Sketch** | AI image generation | Gemini API image creation | Yes |
-| **Dot** | Pixel art code generation | SVG/Canvas/Phaser 3/Pillow/CSS sprites, tilesets, palettes + Antigravity CLI delegation | Yes |
-| **Quest** | Game planning & production | GDD, game balance, narrative, economy design | Never |
 | **Omen** | Pre-mortem analysis & failure mode enumeration | FMEA, fault tree, Swiss Cheese, Murphy audit | Never |
 | **Seek** | Search & vector DB architecture | Full-text/vector/hybrid search, RAG retrieval | Partial (mappings) |
 | **Shard** | Multi-tenant architecture design | Tenant isolation, RLS, routing, noisy-neighbor | Partial (specs) |
 | **Weave** | Workflow & state machine design | FSM/Statechart, Saga patterns, approval flows | Partial (YAML/specs) |
 | **Native** | Mobile development | React Native/Flutter/SwiftUI/Jetpack Compose | Yes |
 | **Rank** | Priority quantification | ICE/RICE/WSJF/MoSCoW/Kano scoring | Never |
-| **Wield** | macOS desktop automation | AppleScript/JXA/osascript, Apple Events app control, UI scripting | Yes |
 
 **Key distinctions:**
 - Mobile app development → Native. Mobile-responsive frontend → Artisan
 - Priority scoring → Rank. Multi-perspective decisions → Magi
 - Pre-mortem / failure analysis → Omen. Change impact → Ripple. Incident response → Triage
-- Browser/web automation → Vector. macOS native-app automation (Apple Events) → Wield. iOS app UI automation → Snap
-- Runtime macOS app scripting → Wield. Dotfiles/shell/editor config → Hearth. AI CLI config → Hone
+- Browser/web automation → Vector. macOS native-app automation (Apple Events) → Hearth `automate`. iOS app UI automation → Snap
+- Runtime macOS app scripting + dotfiles/shell/editor config → Hearth. AI CLI config → Hone

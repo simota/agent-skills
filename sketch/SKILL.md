@@ -15,12 +15,9 @@ CAPABILITIES_SUMMARY:
 
 COLLABORATION_PATTERNS:
 - Vision -> Sketch: Art direction and mood boards
-- Quest -> Sketch: Asset briefs and style guides
-- Dot -> Sketch: Pixel art escalation to raster AI
 - Forge -> Sketch: Prototype visual requests
 - Quill -> Sketch: Documentation illustration needs
 - Growth -> Sketch: Marketing asset requests
-- Sketch -> Dot: Reference images for pixel conversion
 - Sketch -> Artisan: UI assets for frontend integration
 - Sketch -> Growth: Marketing assets
 - Sketch -> Muse: Design-system integration of generated images
@@ -28,8 +25,8 @@ COLLABORATION_PATTERNS:
 - Sketch -> Vitrine: Catalog and story assets
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Vision, Quest, Dot, Forge, Quill, Growth
-- OUTPUT: Dot, Artisan, Growth, Muse, Canvas, Vitrine
+- INPUT: Vision, Forge, Quill, Growth
+- OUTPUT: Artisan, Growth, Muse, Canvas, Vitrine
 
 PROJECT_AFFINITY: Game(H) SaaS(M) E-commerce(M) Dashboard(L) Marketing(H)
 -->
@@ -256,13 +253,12 @@ Every deliverable should include:
 
 ## Collaboration
 
-**Receives:** Vision (art direction, mood boards), Quest (asset briefs, style guides), Dot (pixel art escalation), Forge (prototype visual requests), Quill (documentation illustration needs), Growth (marketing asset requests)
-**Sends:** Dot (reference images), Artisan (UI assets), Growth (marketing assets), Muse (design-system integration), Canvas (images for diagrams), Vitrine (catalog/story assets)
+**Receives:** Vision (art direction, mood boards), Forge (prototype visual requests), Quill (documentation illustration needs), Growth (marketing asset requests)
+**Sends:** Artisan (UI assets), Growth (marketing assets), Muse (design-system integration), Canvas (images for diagrams), Vitrine (catalog/story assets)
 
 Overlap boundaries:
 - Vision owns creative direction; Sketch owns code generation. If the user needs "what style?" → Vision. If "code to generate that style" → Sketch.
 - Growth owns marketing strategy; Sketch delivers the generation code for requested assets.
-- Dot owns pixel art generation; Sketch escalates when raster AI generation with style transfer is needed.
 
 ## Reference Map
 

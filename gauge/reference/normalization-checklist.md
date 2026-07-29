@@ -195,7 +195,7 @@
 **Fix hints:**
 - `grep -rln "<old-filename>" --include="*.md" .` before deleting or renaming any `reference/` or `_common/` file; fix every hit, not just the file you were originally editing.
 - Re-run `routing-oracle.py` (or the repo-wide grep equivalent) after any file deletion/rename/merge, not just after adding new content.
-- If a citation intentionally uses the "named-skill-then-implicit-reference/" shorthand (e.g. "`quest/SKILL.md` (+ `reference/x.md`, ...)"), make the skill prefix explicit (`quest/reference/x.md`) if it is ever hoisted into a different file where the shorthand's antecedent is lost.
+- If a citation intentionally uses the "named-skill-then-implicit-reference/" shorthand (e.g. "`architect/SKILL.md` (+ `reference/x.md`, ...)"), make the skill prefix explicit (`architect/reference/x.md`) if it is ever hoisted into a different file where the shorthand's antecedent is lost.
 
 ---
 

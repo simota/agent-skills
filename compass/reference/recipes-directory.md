@@ -12,127 +12,131 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 
 - **accord**: vision★ / requirements / detail / ac / story-map / stakeholder / raci
 - **anvil**: cli★ / tui / wrap / devtool / completion / config / pkg
-- **architect**: create★ / improve / compress / evolve
+- **architect**: create★ / improve / compress / audit-verbosity / evolve
 - **artisan**: component★ / state / form / fetch / rsc / a11y / i18n / perf
 - **atelier**: pipeline★ / extract / persist / assets
-- **atlas**: analyze★ / deps / godclass / adr / rfc / cycle / coupling / boundary / multi / c4-model
-- **attest**: verify★ / bdd / trace / report / gherkin / property / oracle
+- **atlas**: analyze★ / deps / godclass / adr / rfc / cycle / coupling / boundary / multi / c4-model / deps / adr / boundary / c4-model / coupling / multi
+- **attest**: verify★ / bdd / trace / report / gherkin / property / oracle / verify / trace / bdd / property
 - **bazaar**: premium★ / lead-gen / saas / ecom / event / magnet
 - **beacon**: slo★ / tracing / alerts / dashboard / capacity / log / golden / toil
 - **bolt**: frontend★ / backend / render / async / cache / bundle / network / memory
 - **bond**: reengagement★ / churn / gamification / habit / loyalty / winback / lifecycle-email / power-user
 - **breach**: scenario★ / threat-model / purple / ai-red / phishing / supply / social
-- **builder**: fix★ / crud / api / ddd / harden / port / integrate / patch
+- **builder**: fix★ / crud / api / ddd / harden / port / integrate / patch / pair
 - **canon**: owasp★ / wcag / openapi / iso / gap / nist / pci / gdpr
 - **canvas**: flow★ / sequence / er / journey / class / c4 / architecture / gantt
-- **cast**: generate★ / registry / evolve / distribute / archetype / segment / bias-audit
+- **cast**: generate★ / registry / evolve / fuse / distribute / speak / retire / archetype / segment / bias-audit
 - **chain**: intake★ / audit / mcp / scan / recover
-- **clause**: tos★ / privacy / tokushoho / gap / dpa / eula / cookie
-- **cloak**: pii★ / flow / consent / dpia / gdpr / ccpa / appi / pseudonymize
+- **clause**: tos★ / privacy / tokushoho / gap / dpa / eula / cookie / appstore / tos / tokushoho / dpa / cookie
+- **cloak**: pii★ / flow / consent / dpia / gdpr / ccpa / appi / pseudonymize / mobile
 - **compass**: recommend★ / catalog / onboard / recipes / init / refresh
-- **compete**: matrix★ / swot / battle-card / positioning / llm-visibility / battle / winloss / moat
+- **compete**: matrix★ / swot / positioning / llm-visibility / battle / winloss / moat / multi
 - **crest**: github★ / linkedin / blog / conference / sns / topic-dna / portfolio / bio
-- **crypt**: algorithm★ / key / e2ee / tls / signature / password / kms / pqc
+- **crypt**: algorithm★ / key / e2ee / tls / signature / password / kms / pqc / mobile
 - **cue**: script★ / storyboard / narration / explainer / shorts / captions / localize
-- **cull**: scan★ / shai-hulud / lockfile / eradicate / rotate / harden / propagation
+- **cull**: scan★ / shai-hulud / lockfile / eradicate / rotate / harden / propagation / scan / lockfile / rotate / propagation
 - **darwin**: health★ / fitness / evolve / sunset
-- **director**: demo★ / scenario / record / onboard / voiceover / captions / thumbnail
-- **dot**: svg★ / canvas / phaser / pillow / css / animation / palette / tilesheet
-- **echo**: walkthrough★ / confusion / emotion / persona / heuristic / sus / aloud
+- **director**: demo★ / scenario / record / onboard / aspects / vision / quality / geo / voiceover / captions / thumbnail
+- **echo**: walkthrough★ / confusion / emotion / persona / heuristic / sus / aloud / multi / council
 - **experiment**: ab★ / cuped / switchback / analyze / guardrail / ff / srm / sequential / bayesian
 - **field**: interview★ / usability / analysis / persona / journey / survey / diary / cards / multi
 - **flow**: hover★ / loading / transition / gesture / spring / scroll / parallax
-- **flux**: reframe★ / shift / cross / challenge / scamper / analogy / inversion
+- **flux**: reframe★ / shift / cross / challenge / scamper / analogy / inversion / multi
 - **forge**: ui★ / api / fullstack / landing / mobile / dashboard / ai
 - **frame**: extract★ / code-connect / rules / inspect / variants / tokens / breakpoint
-- **funnel**: build★ / cta / conversion / responsive / form / copy / trust
-- **gateway**: design★ / openapi / versioning / breaking / rest / graphql / webhook / auth / rate-limit / deprecation
-- **gauge**: audit★ / fix / research / checklist
+- **funnel**: build★ / cta / conversion / responsive / form / copy / trust / build / conversion / form / trust
+- **gateway**: design★ / openapi / versioning / breaking / rest / graphql / webhook / auth / rate-limit / deprecation / rest / graphql / breaking / auth
+- **gauge**: audit★ / fix / research / checklist / staleness
 - **gear**: deps★ / ci / docker / logs / health / alert / secret / k8s
-- **grok**: regex★ / parser / dsl / ast / redos / lexer / error / incremental
-- **grove**: audit★ / design / docs / migrate / monorepo / tests / scripts
+- **grok**: regex★ / parser / dsl / ast / redos / lexer / error / incremental / regex / dsl / lexer / incremental
+- **grove**: audit★ / design / docs / migrate / monorepo / tests / scripts / audit / docs / monorepo
 - **growth**: seo★ / smo / cro / geo / keyword / audit / vitals
-- **guardian**: pr★ / commit / naming / strategy / reshape / audit / split / health
+- **guardian**: pr★ / commit / naming / strategy / reshape / audit / split / health / ship
 - **harvest**: weekly★ / monthly / release / retro / dora / okr / prstats
-- **hearth**: zsh★ / tmux / neovim / ghostty / vscode / git / shellfn / audit
-- **helm**: scenario★ / swot / pestle / porter / forecast / jtbd / blue-ocean / wardley
+- **hearth**: zsh★ / tmux / neovim / ghostty / vscode / git / shellfn / audit / automate
+- **helm**: scenario★ / swot / pestle / porter / forecast / jtbd / blue-ocean / wardley / scenario / pestle / forecast / blue-ocean / wardley
 - **hone**: audit★ / codex / agy / claude / diff
 - **ink**: icon★ / illustration / system / sprite / animate / theme / a11y / optimize / pictogram / logo
-- **judge**: pr★ / security / perf / style / quick / intent
-- **latch**: configure★ / debug / pretool / posttool / notification / sessionstart / security
-- **launch**: plan★ / changelog / notes / rollback / flag / hotfix / canary
+- **judge**: pr★ / security / perf / style / quick / intent / lean / pair
+- **latch**: configure★ / debug / pretool / posttool / notification / sessionstart / security / quarantine / claudemd-update / skill-telemetry / configure / pretool / notification / security / claudemd-update
+- **launch**: plan★ / changelog / notes / rollback / flag / hotfix / canary / mobile
 - **ledger**: estimate★ / rightsizing / anomaly / ri-sp / gpu-cost / tagging / finops-framework / unit-economics / greenops
-- **lens**: map★ / discover / trace / responsibility / dependency / hotspot / evolution
+- **lens**: map★ / ask / discover / trace / responsibility / dependency / hotspot / evolution
+- **loom**: blueprint★ / recipe / workflow / map / audit
 - **lore**: curate★ / decay / propagate / extract
-- **magi**: decide★ / tradeoff / arbitrate / strategic / sixhat / devil / delphi
+- **magi**: decide★ / tradeoff / arbitrate / strategic / sixhat / devil / delphi / multi
 - **matrix**: combine★ / cover / plan / prioritize / pairwise / equiv-class / risk-cover / qa-scenario
 - **mend**: runbook★ / diagnose / rollback / verify / scale / circuit / canary
-- **mint**: factory★ / boundary / synthetic / seed / pii / llm / replay
+- **mint**: factory★ / boundary / synthetic / seed / pii / llm / replay / factory / synthetic / pii / replay
 - **morph**: md★ / pdf / docx / xlsx / html / epub / latex / batch
 - **muse**: tokens★ / apply / theme / typography / spacing / motion / elevation / radius
-- **native**: swiftui★ / compose★ / liquidglass / expressive / offline / push / deeplink / bg / passkey / privacy / rollout / store
+- **native**: swiftui★ / compose / liquidglass / expressive / offline / push / deeplink / bg / passkey / privacy / rollout / store / cli / visualloop / macos / macdist
 - **nest**: audit★ / restructure / progressive / cache / naming / sharding / monorepo
-- **nexus**: classify★ / bug / feature / security / refactor / optimize / proactive
+- **nexus**: newsroom / classify★ / bug / feature / security / refactor / optimize / kaizen / anneal / restyle / converge / loop / proactive / apex / charter / enact / layer / goal / gedanken / delve / cartograph / chronicle / spec / essential / killer / trim / acceptance / growth-acceptance / summit / podium / newsroom / wish / runway / hallmark / rebrand / marquee / migrate / transmute / clone / fuse / graft / package / pack / bug / security / kaizen / cartograph / proactive
 - **oath**: soc2★ / pci / hipaa / iso / policy / gdpr / audit / vendor
-- **omen**: premortem★ / rpn / ap / mode / faulttree / bowtie / hazop
-- **oracle**: prompt★ / rag / eval / safety / mlops / agent / cost / embed
-- **orbit**: generate★ / contract / audit / recover
-- **palette**: usability★ / cognitive / feedback / a11y / keyboard / mobile / forms / error / empty / loading
+- **omen**: premortem★ / rpn / ap / mode / faulttree / bowtie / hazop / multi
+- **oracle**: prompt★ / rag / eval / safety / mlops / agent / cost / embed / tooling
+- **orbit**: plan / generate★ / contract / audit / recover / ralph
+- **palette**: usability★ / cognitive / feedback / a11y / keyboard / mobile / forms / error / empty / loading / usability / forms / error / mobile / cognitive / usability
+- **pdm**: status★ / features / gaps / roadmap / wbs / ask
 - **pipe**: workflow★ / reusable / security / pr-automation / matrix / cache / secret
 - **pixel**: reproduce★ / verify / gap / audit / responsive / dark / animation
-- **plea**: request★ / need / challenge / roleplay / jtbd / 5whys / opportunity
-- **polyglot**: extract★ / intl / keys / rtl / pluralize / locale / translate
+- **plea**: request★ / need / challenge / roleplay / jtbd / 5whys / opportunity / multi
+- **polyglot**: extract★ / intl / keys / rtl / pluralize / locale / translate / mobile
 - **port**: blueprint★ / survey / parity / map / roadmap / risk / regulatory / xplat
 - **probe**: zap★ / burp / nuclei / pentest / api / mobile / recon
 - **prose**: microcopy★ / errors / onboarding / a11y / tone / empty-state / notification / status
+- **prune**: audit★ / merge / sunset / pack-impact
 - **pulse**: kpi★ / funnel / cohort / event / dashboard / northstar / retention / activation
 - **quill**: docstring★ / readme / types / comments / adr / migrate / tutorial
 - **radar**: edge★ / flaky / coverage / regression / ci / unit / integration / mutation
 - **rally**: parallel★ / teams / codex-subagents / coordinate / engine-paradigm
 - **rank**: ice★ / rice / wsjf / moscow / kano / cod / value-effort / pokerplan
 - **relay**: webhook★ / bot / websocket / adapter / sse / queue / rate
-- **riff**: expand★ / propose / evaluate / subtract / steelman / scamper / crazy8
+- **riff**: expand★ / propose / evaluate / subtract / steelman / scamper / crazy8 / multi
 - **ripple**: impact★ / vertical / horizontal / naming / blast-radius / rollback-plan / canary-scope
-- **saga**: story★ / scenario / narrative / customer / hero-journey / bab / pyramid
+- **saga**: story★ / scenario / narrative / customer / hero-journey / bab / pyramid / onboarding / audit / micro / multi / story / narrative / hero-journey / pyramid / audit / multi
 - **sage**: 1on1★ / group / triage / retro / pitch
 - **scaffold**: terraform★ / cloudformation / pulumi / compose / env / k8s / helm / cdk
 - **schema**: design★ / migration / er / normalize / index / rollback / tenant / partition / audit-log / event-sourcing / soft-delete
-- **scout**: bug★ / regression / prod / consensus / cascade / perf / memory / flake / 5whys / fishbone / timeline
+- **scout**: bug★ / regression / prod / multi / cascade / perf / memory / flake / 5whys / fishbone / timeline / video / bug / prod / cascade / memory / 5whys / timeline
 - **scribe**: prd★ / srs / hld / lld / testspec / adr / runbook / api-doc
-- **seek**: fulltext★ / vector / hybrid / index / rag / rerank / suggest / eval
-- **sentinel**: scan★ / secrets / injection / deps / headers / authn / authz / aisec
+- **seek**: fulltext★ / vector / hybrid / index / rag / rerank / suggest / eval / fulltext / hybrid / eval
+- **sentinel**: scan★ / secrets / injection / deps / headers / authn / authz / aisec / mobile / multi / secrets / deps / mobile
 - **shard**: isolation★ / rls / routing / scale / migration / provisioning / quota
 - **sherpa**: epic★ / story / replan / review / atomic / walking-skeleton / vertical-slice
 - **shift**: plan★ / codemod / strangler / verify / framework / lang / deprecate / detect / modernize / radar
 - **siege**: load★ / contract / chaos / mutation / fuzz / property / smoke / concurrency
 - **sigil**: generate★ / analyze / convention / migrate
 - **sketch**: generate★ / edit / prompt / batch / style / upscale / cinematic / provenance / policy
-- **spark**: propose★ / plan / brainstorm / refine / opportunity / kill / retro
+- **snap**: xcuitest★ / identifier / screenshot / appstore / page-object / ci / farm / xcresult
+- **spark**: propose★ / plan / brainstorm / refine / opportunity / kill / retro / multi
 - **stage**: marp★ / reveal / slidev / conference / timing / narrative / visual / rehearsal
 - **stream**: etl★ / elt / stream / dbt / cdc / reverse / quality
-- **sweep**: dead★ / orphan / unused / tidy / imports / comments / types
-- **tempo**: cron★ / timezone / retry / backfill / calendar / deadline / window / idempotent
+- **summon**: channel★ / conclave / critique / roster
+- **sweep**: dead★ / orphan / unused / tidy / imports / comments / types / dead / tidy / comments
+- **tempo**: cron★ / timezone / retry / backfill / calendar / deadline / window / idempotent / cron / retry / calendar / window
 - **titan**: deliver★ / small / medium / epic
 - **tome**: learn★ / diff / onboard / record / worked / kata / quickstart
 - **trace**: replay★ / persona / story / archaeology / rageclick / funnel / heatmap
 - **trail**: regression★ / bisect / blame / history / flame / delta / revert / static-rules
-- **trawl**: topology★ / frontier / politeness / compliance / extraction / dedup / monitoring
+- **trawl**: topology★ / frontier / politeness / compliance / extraction / dedup / monitoring / topology / politeness / extraction / monitoring
 - **triage**: respond★ / impact / recover / postmortem / first-response / escalation / comms
-- **tuner**: explain★ / slow / index / plan / cache / connection / vacuum
+- **tuner**: explain★ / slow / index / plan / cache / connection / vacuum / explain / index / connection
 - **vector**: collect★ / form / screenshot / network / stealth / mobile / parallel
-- **vigil**: sigma★ / yara / coverage / hunt / snort / playbook / ioc
-- **vision**: direction★ / redesign / trend / system / brand / moodboard / audit
+- **vigil**: sigma★ / yara / coverage / hunt / snort / playbook / ioc / sigma / coverage / snort / ioc
+- **vision**: direction★ / redesign / trend / system / brand / moodboard / audit / multi / pair
 - **vitrine**: story★ / catalog / vrt / csf3 / interaction / mdx / cosmos / a11y / chromatic / coverage
 - **voice**: nps★ / review / sentiment / classify / insight / kano / thematic / csat
 - **void**: prune★ / cut / question / simplify
 - **voyager**: playwright★ / page-object / auth / a11y / visual / api / mobile / component
-- **weave**: design★ / saga / approval / detect / retry / timeout / compensation
-- **zen**: refactor★ / naming / extract / constants / dead / simplify / split / guard
-- **zine**: note★ / zenn / qiita / devto / series / headline / repurpose / interview
+- **weave**: design★ / saga / approval / detect / retry / timeout / compensation / design / approval / retry / compensation
+- **zen**: refactor★ / naming / extract / constants / dead / simplify / split / guard / naming / constants / simplify
+- **zine**: note★ / zenn / qiita / devto / series / headline / repurpose / interview / note / qiita / series / repurpose
 
 ---
 
-**Total**: 119 skills with Recipes.
+**Total**: 123 skills with Recipes.
 
 Auto-generated from SKILL.md `## Recipes` tables by `_common/scripts/generate-recipes-directory.py`. Do not edit by hand.
 

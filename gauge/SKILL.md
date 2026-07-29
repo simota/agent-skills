@@ -7,7 +7,7 @@ description: Auditing SKILL.md normalization and self-evolving compliance. Scans
 CAPABILITIES_SUMMARY:
 - normalization_audit: Scan SKILL.md files against the 19-item structural checklist (F1, F2, L1, H1-H3, S1-S11, A1-A2) plus 2-item content checklist (CQ1, CQ2)
 - violation_classification: Assign PASS/PARTIAL/FAIL per item with P0-P3 priority ranking
-- fix_generation: Produce concrete fix snippets using Quest as exemplar, not abstract suggestions
+- fix_generation: Produce concrete fix snippets using Architect as exemplar, not abstract suggestions
 - ecosystem_dashboard: Generate compliance matrices and health scores across all agents
 - best_practice_evolution: Web research to discover and integrate emerging skill design patterns
 - self_evolution: Safely update own detection patterns and checklist via tiered safety levels
@@ -67,7 +67,7 @@ Route elsewhere when the task is primarily:
 - Check all 19 structural items (F1, F2, L1, H1-H3, S1-S11, A1-A2) plus 2 content items (CQ1 obviousness, CQ2 trigger-word) per SKILL.md file.
 - Assign PASS / PARTIAL / FAIL for each item using exact detection patterns from `reference/detection-patterns.md`.
 - Assign priority P0-P3 to every violation per `reference/normalization-checklist.md`.
-- Generate concrete fix snippets (not abstract suggestions) using Quest as exemplar per `reference/fix-templates.md`.
+- Generate concrete fix snippets (not abstract suggestions) using Architect as exemplar per `reference/fix-templates.md`.
 - Never edit SKILL.md files directly — produce recommendations only.
 - Apply source tier classification (T1-T4) to all web-sourced claims per `reference/web-sources.md`.
 - Follow Safety Levels A/B/C/D for all self-evolution per `reference/self-evolution.md`.
@@ -89,7 +89,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Use exact detection patterns from `reference/detection-patterns.md`.
 - Assign P0-P3 priority to every violation.
 - Produce fix snippets with `{AGENT_NAME}` placeholders filled in.
-- Cite Quest sections as exemplar for every fix recommendation.
+- Cite Architect sections as exemplar for every fix recommendation.
 - Apply source tiers (T1-T4) to all web-sourced information.
 - Take pre-mutation snapshot before any self-evolution change.
 
@@ -121,7 +121,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | `SCAN` | Read target SKILL.md files, extract all 19 structural elements + 2 content elements (CQ1, CQ2) | Check every item — no sampling | `reference/normalization-checklist.md`, `reference/content-quality-audit.md` |
 | `CLASSIFY` | Compare against checklist, assign PASS/PARTIAL/FAIL per item | Use exact detection patterns | `reference/detection-patterns.md` |
 | `REPORT` | Generate compliance dashboard with priority P0-P3 | Include health score calculation | `reference/report-templates.md` |
-| `RECOMMEND` | Produce fix snippets for all FAIL and PARTIAL items | Use Quest as exemplar, fill placeholders | `reference/fix-templates.md` |
+| `RECOMMEND` | Produce fix snippets for all FAIL and PARTIAL items | Use Architect as exemplar, fill placeholders | `reference/fix-templates.md` |
 | `EVOLVE` | Web research, evaluate findings, update references safely | Respect Safety Levels A-D | `reference/web-sources.md`, `reference/self-evolution.md` |
 
 ### Phase Details
@@ -146,7 +146,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 **RECOMMEND** generates:
 - Priority-ordered fix plan per skill (P0 first)
 - Concrete markdown snippets ready to paste
-- Quest section references as exemplar for each fix
+- Architect section references as exemplar for each fix
 
 **EVOLVE** follows:
 - `RESEARCH → EVALUATE → CLASSIFY → UPDATE → VERIFY → PERSIST`
@@ -163,7 +163,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
 | SKILL Audit | `audit` | ✓ | 19-item checklist audit (PASS/PARTIAL/FAIL + P0-P3 classification) | `reference/normalization-checklist.md`, `reference/detection-patterns.md` |
-| Fix Violations | `fix` | | Automated fix proposals for violations (Quest-exemplar snippet generation) | `reference/fix-templates.md` |
+| Fix Violations | `fix` | | Automated fix proposals for violations (Architect-exemplar snippet generation) | `reference/fix-templates.md` |
 | Research Best Practices | `research` | | Research emerging best practices via web search (self-evolution EVOLVE phase) | `reference/web-sources.md`, `reference/self-evolution.md` |
 | Checklist Application | `checklist` | | Evaluate a specific checklist item (single-item focus, including `CQ1` / `CQ2`) | `reference/normalization-checklist.md`, `reference/content-quality-audit.md` |
 | Staleness Audit | `staleness` | | Detect outdated references in claude-skills itself (archived OSS / EOL runtimes / superseded versions / broken internal links / unannotated benchmarks / cross-skill drift). Different scope from `audit` — `audit` checks SKILL.md format; `staleness` checks whether the *facts cited* are still current. | `reference/staleness-detection.md` |
@@ -176,7 +176,7 @@ Parse the first token of user input.
 
 Behavior notes per Recipe:
 - `audit`: Check all 19 structural items + CQ1 (obviousness density) + CQ2 (description trigger-word). PASS/PARTIAL/FAIL + P0-P3 priority. Compute Health Score. Generate fix snippets. On a Fable 5 hub (or for skills intended to run there), also apply RR-1 (reasoning-reproduction) per `reference/detection-patterns.md` § RR-1 — informational on an Opus 5 hub.
-- `fix`: Generate concrete fix snippets for FAIL/PARTIAL items. Quest section reference required. Do not edit SKILL.md directly.
+- `fix`: Generate concrete fix snippets for FAIL/PARTIAL items. Architect section reference required. Do not edit SKILL.md directly.
 - `research`: Web search with T1-T4 source tier classification. Self-update at Safety Level A/B. Strictly respect the change budget (3 per session).
 - `checklist`: Evaluate only the specified item (F1, F2, L1, H1-H3, S1-S11, A1-A2, CQ1, CQ2) with narrowed scope.
 - `staleness`: Run the 10-category staleness scan (SD-1 archived OSS / SD-2 superseded version / SD-3 EOL runtime / SD-4 broken internal link / SD-5 single-year benchmark / SD-6 old standard / SD-7 single-CVE window / SD-8 deprecated API name / SD-9 cross-skill drift / SD-10 dangling optional pointer) against `*/SKILL.md` and `*/reference/*.md` from the repo root. Apply the 7 false-positive guard rules before emitting findings (migration-guide context, min-version baseline, historical anchor, migration-target side, feature-support boundary, CVE registry, deliberate cross-skill repetition). Emit the YAML envelope from `reference/staleness-detection.md` § 5; hand the finding list to Builder for the actual edits and Guardian for PR composition. Never edit files directly — Gauge produces reports, not patches.
@@ -211,7 +211,7 @@ Every deliverable must include:
 - Scan scope (which skills, which items).
 - Per-item PASS/PARTIAL/FAIL status with evidence.
 - Priority classification (P0-P3) for every violation.
-- Fix snippets for all non-PASS items (using Quest exemplar).
+- Fix snippets for all non-PASS items (using Architect exemplar).
 - Health score (per-skill and ecosystem-wide when applicable).
 - Compliance drift delta when prior scan data is available (stable / investigate / intervene).
 - Detection rule confidence: FP rate per rule when calibration data is available.
@@ -236,7 +236,7 @@ Every deliverable must include:
 |-----------|----------------|
 | `reference/normalization-checklist.md` | You need the 19-item checklist with PASS/PARTIAL/FAIL criteria and P0-P3 priority definitions. |
 | `reference/detection-patterns.md` | You need structural detection rules for each checklist item, or the RR-1 reasoning-reproduction rule (Fable 5 refusal risk). |
-| `reference/fix-templates.md` | You need skeleton templates and Quest-based exemplar patterns for fix generation. |
+| `reference/fix-templates.md` | You need skeleton templates and Architect-based exemplar patterns for fix generation. |
 | `reference/report-templates.md` | You need dashboard, per-skill, or ecosystem health score formats. |
 | `reference/web-sources.md` | You need web information source tiers, search query templates, or freshness rules. |
 | `reference/self-evolution.md` | You need safety levels, evolution triggers, change budget, or rollback procedures. |

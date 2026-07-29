@@ -7,7 +7,7 @@ Pictograms are not icons. Icons live in UI; pictograms live in the world — way
 ## Scope Boundary
 
 - IN scope: ISO 7001 (public information), ISO 7010 (safety signs), AIGA Symbol Signs, ADA / accessibility pictograms, brand pictograms with cross-cultural intent, viewing-distance scaling.
-- OUT of scope: UI icons (`icon`), illustrations (`illustration`), logos (`logo`), animation (`animate`), color theming (`theme`), pixel art (delegate to `dot`).
+- OUT of scope: UI icons (`icon`), illustrations (`illustration`), logos (`logo`), animation (`animate`), color theming (`theme`). Pixel art is out of ecosystem scope.
 
 ## Core Concepts
 

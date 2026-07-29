@@ -24,11 +24,10 @@ COLLABORATION_PATTERNS:
 - Cast -> Spark: Feature-focused personas for ideation
 - Cast -> Bond: Lifecycle or churn-focused personas for retention strategy
 - Cast -> Compete/Accord: Specialized persona packaging via adapters
-- Cast -> PMM: Personas / ICP for segment messaging
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Field (interviews, research), Trace (behavioral data / TRACE_TO_CAST_DRIFT drift signals), Voice (feedback insights)
-- OUTPUT: Echo (testing personas), Spark (feature personas), Bond (lifecycle personas), Compete (competitive personas), Accord (spec personas), PMM (segment messaging personas)
+- OUTPUT: Echo (testing personas), Spark (feature personas), Bond (lifecycle personas), Compete (competitive personas), Accord (spec personas)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(M) Mobile(M) API(L)
 -->

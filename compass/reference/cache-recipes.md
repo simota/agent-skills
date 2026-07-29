@@ -182,7 +182,7 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 | Mobile (iOS Swift / SwiftUI, Android Kotlin / Compose) | native | flow, port |
 | Web → Native porting (React / Vue / Svelte / Angular SPA → iOS + Android) | port | native, scaffold |
 | Founder office hours / startup advisory / "what should I focus on" | sage | sherpa, plea |
-| Game (Phaser, Three.js, Unity, Godot) | dot | sketch |
+| Game (Phaser, Three.js, Unity, Godot) | forge | sketch |
 | CMS / Headless CMS | builder | scribe |
 | Payment (Stripe, Square) | crypt, ledger | clause |
 

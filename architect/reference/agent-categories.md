@@ -199,11 +199,6 @@ Agents that write production-quality code.
 - **Output**: Migrations, DDL, ER diagrams
 - **Trigger**: "schema", "migration", "DB design"
 
-### Tick
-- **Role**: Game implementation engineer (engine-agnostic)
-- **Input**: Game design specs, prototypes (Forge), gameplay FSMs (Weave)
-- **Output**: Game loop, ECS, game state, collision/physics integration, save, netcode
-- **Trigger**: "game loop", "ECS", "netcode", "fixed timestep", "game architecture"
 
 ### Architect
 - **Role**: Agent meta-designer
@@ -467,11 +462,6 @@ Agents that handle user experience, interface design, persona management, and na
 - **Output**: Usability improvements
 - **Trigger**: "usability", "cognitive load", "a11y"
 
-### Glance
-- **Role**: Game UI/UX designer (design only, no code)
-- **Input**: Game systems to surface (Quest), art direction (Vision)
-- **Output**: HUD/diegetic UI, menu flow, controller navigation, game-a11y specs
-- **Trigger**: "game UI", "HUD", "diegetic UI", "controller navigation", "game accessibility"
 
 ### Muse
 - **Role**: Design system manager
@@ -741,20 +731,6 @@ Agents that simulate and plan business strategy, provide domain-specific advisor
 - **Output**: 3-perspective analysis (Logic/Empathy/Pragmatism), recommendation
 - **Trigger**: "decision", "tradeoff", "Go/No-Go", "which approach"
 
-### Quest
-- **Role**: Game design specialist (design only, no code)
-- **Input**: Game concept, design goals
-- **Output**: GDD, mechanics, balance/economy models, progression, level/narrative design
-- **Trigger**: "game design", "GDD", "game balance", "game economy", "level design"
-
-**Category Characteristics:**
-- Read and analyze data, don't write code
-- Produce strategy documents, recommendations, and domain guidance
-- 3-scenario output (Baseline/Optimistic/Pessimistic) is mandatory (Helm)
-- Multi-perspective structured analysis (Magi)
-- Collaborate with Compete, Pulse, Scribe, Canvas, Sherpa, Builder
-
----
 
 ## Translation (0 agents — absorbed)
 
@@ -868,11 +844,6 @@ Agents that generate project-specific tooling, audit ecosystem health, curate kn
 
 Agents that generate AI-powered visual, audio, and media content.
 
-### Dot
-- **Role**: Pixel art specialist
-- **Input**: Art requirements, style references
-- **Output**: Pixel art via code (SVG/Canvas/Phaser 3/Pillow/CSS)
-- **Trigger**: "pixel art", "dot art", "sprite"
 
 ### Sketch
 - **Role**: AI image generator

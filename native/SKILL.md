@@ -1,6 +1,6 @@
 ---
 name: native
-description: "Implementing pure-native mobile features for iOS (Swift 6.3 + SwiftUI + Liquid Glass) and Android (Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive). Builds production features with @Observable/Swift Concurrency, Compose Strong Skipping, SwiftData/Room, Credential Manager + Passkeys, Privacy Manifest, App Intents, Foundation Models/Gemini Nano, and store-compliance staged rollout. Also runs the agent visual loop for screen implementation and visual debugging against a reference design — Xcode MCP RenderPreview, XcodeBuildMCP, mobile-mcp, Android Studio Agent Mode, simulator/emulator capture, and numeric screenshot diffing. Use when building production iOS/Android features or iterating a native screen until it matches a design. Not for cross-platform (RN/Flutter/KMP/CMP — out of scope), porting design (Port), prototypes (Forge), web mockup-to-code (Pixel), mobile test suites (Snap/Voyager), or web (Artisan)."
+description: "Implementing pure-native app features for iOS (Swift 6.3 + SwiftUI + Liquid Glass), Android (Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive), and macOS desktop (SwiftUI for Mac + AppKit interop, scenes/menu bar/document apps, sandbox + notarization + Sparkle, Mac HIG). Builds production features with @Observable/Swift Concurrency, Compose Strong Skipping, SwiftData/Room, Passkeys, Privacy Manifest, App Intents, Foundation Models/Gemini Nano, and store-compliance staged rollout. Also runs the agent visual loop for screen implementation and visual debugging against a reference design (Xcode MCP RenderPreview, XcodeBuildMCP, mobile-mcp, screenshot diffing). Use when building production iOS/Android/macOS features or iterating a native screen until it matches a design. Not for cross-platform (RN/Flutter/KMP/CMP), porting design (Port), prototypes (Forge), mockup-to-code (Pixel), automating existing Mac apps via AppleScript/JXA (Hearth), test suites (Snap/Voyager), or web (Artisan)."
 ---
 
 <!--
@@ -34,6 +34,20 @@ CAPABILITIES_SUMMARY:
 - mobile_ci_cd: Xcode Cloud / Fastlane / GitHub Actions for iOS; Gradle + Fastlane / GitHub Actions for Android; signing, provisioning, automated TestFlight / Play Internal Testing builds
 - 16kb_page_size: Audit and rebuild NDK dependencies for 16KB page-size alignment (Android, mandatory for new releases since 2025-11-01)
 - staged_rollout: TestFlight Internal → External → App Review → Phased Release (iOS); Play Internal → Closed → Open → Production Staged Rollout (Android); rollback via halt + hotfix; server-driven feature flags as primary mitigation
+- macos_swiftui_scenes: (absorbed from dock) WindowGroup / Settings / MenuBarExtra / DocumentGroup scene composition, multi-window support, window restoration via SceneStorage / NSUserActivity
+- appkit_interop: (absorbed from dock) NSViewRepresentable / NSViewControllerRepresentable bridging, NSHostingView / NSHostingController for SwiftUI-in-AppKit, coexistence strategy for legacy AppKit views
+- menu_bar_commands: (absorbed from dock) Commands / CommandGroup / CommandMenu customization, main menu structure, ⌘-shortcut HIG conventions, MenuBarExtra (.window / .menu styles) for menu-bar-only apps
+- document_based_apps: (absorbed from dock) DocumentGroup with FileDocument / ReferenceFileDocument, legacy NSDocument / NSDocumentController, autosave-in-place, Versions, custom UTType export, iCloud document sync
+- sidebar_toolbar_inspector: (absorbed from dock) NavigationSplitView 3-column sidebar/detail, customizable .toolbar with ToolbarItem groups, .inspector() modifier (macOS 14+), Liquid Glass toolbar/sidebar adoption (macOS Tahoe 26)
+- drag_drop_pasteboard: (absorbed from dock) Transferable + .draggable/.dropDestination (SwiftUI), NSDraggingSource/NSDraggingDestination (AppKit), NSPasteboard type negotiation, Services menu (NSServices Info.plist)
+- app_sandbox_entitlements: (absorbed from dock) App Sandbox entitlement scoping, security-scoped bookmarks for persisted file access, Powerbox-mediated file pickers
+- distribution_notarization: (absorbed from dock) App Store vs Developer ID decision matrix, notarytool submit/staple workflow, hardened runtime entitlements, Gatekeeper behavior, DMG/pkg packaging
+- sparkle_updates: (absorbed from dock) Sparkle 2.x appcast-based auto-update for Developer ID distribution, EdDSA signing, delta updates
+- mac_hig_conventions: (absorbed from dock) Menu bar structure (File/Edit/View/Window/Help), pointer/hover states, keyboard shortcut conventions, window chrome, Liquid Glass on macOS Tahoe 26 (chrome only)
+- catalyst_vs_appkit: (absorbed from dock) Mac Catalyst vs native AppKit/SwiftUI decision framework
+- xpc_helpers: (absorbed from dock) XPC service design for privilege separation, SMAppService (macOS 13+) registration for LaunchAgents/LaunchDaemons/login items
+- macos_accessibility: (absorbed from dock) VoiceOver rotor, Full Keyboard Access, Accessibility Inspector audit, AX API usage for custom controls
+- universal_binary: (absorbed from dock) Apple Silicon + Intel universal build configuration, architecture-specific fallback handling
 
 COLLABORATION_PATTERNS:
 - Port -> Native: Web→native porting blueprint (per-screen impl spec, parity matrix, architecture map)
@@ -84,8 +98,11 @@ Pure-native mobile implementation specialist — implements production-quality f
 
 Use Native for: iOS Swift 6.3 + SwiftUI (UIKit interop only when needed); Android Kotlin 2.4+ + Compose + M3 Expressive; Liquid Glass adoption (iOS 26) + fallback; mobile navigation (Coordinator/NavigationStack ‖ Navigation Compose 2.8+ type-safe); offline-first (T0-T3, SwiftData/Core Data ‖ Room/DataStore, CRDT); push (APNs + Live Activities ‖ FCM + Channels); deep links (Universal/App Links); IAP/subscription (StoreKit 2 / Play Billing); store compliance (Privacy Manifest, Data Safety, Age Rating, Sign in with Apple, AI disclosure); Credential Manager / Passkey / Sign in with Apple; staged rollout (TestFlight phased / Play staged); mobile CI/CD (Xcode Cloud / Fastlane / GitHub Actions / Gradle).
 
+Also use Native for **macOS desktop apps** (`macos` recipe, absorbed from dock): SwiftUI for Mac + AppKit interop; scene composition (WindowGroup / Settings / MenuBarExtra / DocumentGroup); menu bar Commands; document-based apps; sidebar + toolbar + inspector; drag & drop / pasteboard / Services; App Sandbox + entitlements + hardened runtime; distribution (App Store vs Developer ID, notarytool, Sparkle); Mac HIG (Liquid Glass on macOS Tahoe 26); Catalyst-vs-native decision; XPC / helpers / LaunchAgents via SMAppService.
+
 Route elsewhere when:
 - RN / Flutter / KMP / CMP implementation → **out of scope** (use `Forge` for prototypes)
+- Automating an *existing* Mac app via AppleScript / JXA / osascript → `Hearth` (`automate` recipe) — Native builds the app, Hearth automates it externally
 - Web→native porting **design / blueprint** → `Port`
 - Quick prototype validation → `Forge`
 - Web frontend → `Artisan` · Backend API → `Builder` · Cross-team specs → `Accord` · Design tokens → `Muse` · Infrastructure/Docker → `Scaffold`
@@ -213,12 +230,14 @@ Three core architecture decisions per feature — full tables and code samples �
 | Store Compliance | `store` | | App Store / Play submission compliance audit | `reference/store-compliance.md` |
 | CLI Tooling | `cli` | | Terminal automation — `xcrun` (simctl/devicectl/xctrace/xcresulttool/notarytool/atos) + `adb` (pm/am/logcat/dumpsys/pair/Perfetto) | `reference/xcrun-cli.md`, `reference/adb-cli.md` |
 | Agent Visual Loop | `visualloop` | | Agent-driven screen implementation / visual debugging against a reference — render or capture, score with a numeric oracle, iterate under a ≤ 3-pass cap | `reference/agent-visual-loop.md` |
+| macOS App | `macos` | (macOS default) | (absorbed from dock) Mac app build — SwiftUI scenes, AppKit interop, menu bar Commands, document apps, sidebar/toolbar/inspector, Mac HIG | `reference/macos-modern-stack.md`, `reference/mac-hig.md`, `reference/scenes.md` |
+| macOS Distribution | `macdist` | | (absorbed from dock) App Sandbox + entitlements + hardened runtime, notarytool submit/staple, Developer ID vs App Store, Sparkle appcast | `reference/sandbox-entitlements.md`, `reference/distribution.md` |
 
 ## Subcommand Dispatch
 
 Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
-- Otherwise → default Recipe is **`swiftui`** for iOS-only context, **`compose`** for Android-only context, or both in parallel for cross-platform context. Apply normal DETECT → SCAFFOLD → IMPLEMENT → ADAPT → VERIFY workflow.
+- Otherwise → default Recipe is **`swiftui`** for iOS-only context, **`compose`** for Android-only context, **`macos`** for Mac-desktop context, or iOS+Android in parallel for cross-platform context. Apply normal DETECT → SCAFFOLD → IMPLEMENT → ADAPT → VERIFY workflow.
 
 Per-Recipe behavior notes (key gotchas + thresholds) → `reference/recipes.md`.
 
@@ -295,6 +314,20 @@ Every Native deliverable must include:
 | `reference/xcrun-cli.md` | `xcrun` toolchain — `simctl` / `devicectl` / `xctrace` / `xcresulttool` / `notarytool` / `atos` / binary introspection |
 | `reference/adb-cli.md` | `adb` reference — `pm` / `am` / `logcat` / `dumpsys` / wireless pair / Perfetto / iOS↔Android command map |
 | `reference/agent-visual-loop.md` | Agent-in-the-loop screen work — loop contract + pass cap, accessibility-tree-before-pixels rule, iOS/Android agent tool layer (Xcode MCP `RenderPreview` / XcodeBuildMCP / `mobile-mcp` / Android Studio Agent Mode), ImageMagick numeric oracle, snapshot substrate, agent-readiness authoring, documented failure modes |
+| `reference/macos-modern-stack.md` | (absorbed from dock) macOS stack baseline — SwiftUI for Mac, macOS Tahoe 26 Liquid Glass chrome, minimum-deployment decisions |
+| `reference/scenes.md` | WindowGroup / Settings / MenuBarExtra / DocumentGroup composition, multi-window, restoration (`macos` recipe) |
+| `reference/mac-hig.md` | Mac HIG — menu bar structure, pointer/hover, keyboard shortcuts, window chrome |
+| `reference/menu-commands.md` | Commands / CommandGroup / CommandMenu, main menu structure, ⌘-shortcut conventions |
+| `reference/appkit-interop.md` | NSViewRepresentable / NSHostingView bridging and AppKit coexistence |
+| `reference/documents.md` | Document-based apps — DocumentGroup, FileDocument / ReferenceFileDocument, NSDocument, UTType export |
+| `reference/layout-patterns.md` | NavigationSplitView sidebar/detail, toolbar groups, `.inspector()` |
+| `reference/drag-drop-services.md` | Transferable / .draggable / NSPasteboard type negotiation, Services menu |
+| `reference/sandbox-entitlements.md` | App Sandbox scoping, security-scoped bookmarks, Powerbox file pickers (`macdist` recipe) |
+| `reference/distribution.md` | App Store vs Developer ID, notarytool submit/staple, hardened runtime, Sparkle appcast, DMG/pkg |
+| `reference/catalyst-decision.md` | Mac Catalyst vs native AppKit/SwiftUI decision framework |
+| `reference/xpc-helpers.md` | XPC privilege separation, SMAppService LaunchAgent/Daemon/login-item registration |
+| `reference/macos-xcrun-cli.md` | macOS build/sign/notarize CLI — `xcodebuild`, `codesign`, `notarytool`, `spctl`, `stapler` |
+| `reference/macos-handoffs.md` | macOS-specific handoff templates (absorbed from dock) |
 | `_common/OPUS_5_AUTHORING.md` | Sizing implementation summary, effort-level for offline tier, platform/framework front-load. Critical: P3, P6 |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Native-specific Output/Next schema. |
 

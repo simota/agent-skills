@@ -27,7 +27,6 @@ Items 1-30 are Candidate A's original battery (routing-level verification for th
 | 11 | "set up a goal to keep the test suite green nightly" | Loop | `goal` (checks for machine-checkable oracle + hard-stop bound) |
 | 12 | "add OAuth login" **[E2E pending]** | Build | `feature` |
 | 13 | "build this whole idea end to end, 8-25 agent budget ok" | Build | `apex` |
-| 14 | "build our whole game vertical slice" | Build | `playable` |
 | 15 | "spec out a notifications feature before building" | Discover→build | `spec` (stops at spec; pairs with `feature`) |
 | 16 | "give our repo a self-driving team+work plan" | Discover→build | `charter` (stops at doc; pairs with `enact`) |
 | 17 | "think through whether microservices are worth it here, no code" | Reason | `gedanken` |

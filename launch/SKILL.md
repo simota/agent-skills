@@ -34,10 +34,9 @@ COLLABORATION_PATTERNS:
 - Launch -> Native: Store-compliance feedback (rejection signals, phased-release halt triggers, server-driven flag activation)
 - Magi -> Launch: Release Go/No-Go verdicts
 - Darwin -> Launch: Release timing lifecycle alignment
-- PMM -> Launch: Marketing-launch timeline needing technical-release coordination
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Guardian, Builder, Gear, Harvest, Beacon, Sentinel, Native (mobile release artifacts), Magi (Go/No-Go verdicts), Darwin (lifecycle alignment), PMM (marketing-launch timeline)
+- INPUT: Guardian, Builder, Gear, Harvest, Beacon, Sentinel, Native (mobile release artifacts), Magi (Go/No-Go verdicts), Darwin (lifecycle alignment)
 - OUTPUT: Guardian, Gear, Triage, Canvas, Quill, Experiment, Native (store-compliance feedback)
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Mobile(H) Dashboard(M) Marketing(L)

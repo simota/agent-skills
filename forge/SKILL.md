@@ -30,7 +30,7 @@ COLLABORATION_PATTERNS:
 - Forge -> Sentinel: AI-generated prototype needs security review before handoff
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Spark (feature concepts), Vision (direction), Muse (token context), Quest (prototype specs), Lens (code insights)
+- INPUT: Spark (feature concepts), Vision (direction), Muse (token context), Lens (code insights)
 - OUTPUT: Builder (production logic), Artisan (production frontend), Vitrine (story coverage), Muse (token polish), Sentinel (security review for AI-generated code)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) Mobile(M) Game(M)
@@ -169,7 +169,6 @@ Forge receives concepts and direction from upstream agents, builds rapid prototy
 | Vision → Forge | Direction handoff | Direction is clear enough for implementation exploration |
 | Muse → Forge | Token context handoff | Token context exists, behavior still needs prototyping |
 | Lens → Forge | Code insight handoff | Code-level insight informs prototype structure or mock strategy |
-| Quest → Forge | Prototype spec handoff | Game/product spec needs prototype validation |
 | Forge → Builder | `BUILDER_HANDOFF` | Prototype validated, needs production logic |
 | Forge → Artisan | `ARTISAN_HANDOFF` | Frontend prototype needs production-quality implementation |
 | Forge → Vitrine | `FORGE_TO_SHOWCASE` | Preview story exists, needs full coverage |

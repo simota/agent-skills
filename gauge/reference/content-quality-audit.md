@@ -93,7 +93,7 @@ Rewrite as:
 description: "<gerund/verb activation phrase>. Use when <concrete signal 1>, <concrete signal 2>, or <concrete signal 3>. Don't use for <X> (<OtherAgent>)."
 ```
 
-Reference exemplar: Quest, Sigil, and Chain descriptions in the current ecosystem.
+Reference exemplar: Architect, Sigil, and Chain descriptions in the current ecosystem.
 
 ---
 

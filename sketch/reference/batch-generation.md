@@ -6,7 +6,7 @@ Purpose: Produce many image variants in one run with consistent seed, style, and
 
 - **sketch `batch`**: batch Python script, seed stability plan, parallel API calls with rate limits, output naming, perceptual-hash dedup, `metadata.json` per asset.
 - **sketch `style` (sibling)**: defines the style anchor (reference image / token set) consumed by `batch`. Call `style` first if the style is not yet locked.
-- **Quest (elsewhere)**: asset brief, count, resolution, and naming spec — `batch` does not invent the list.
+- **Upstream caller (elsewhere)**: asset brief, count, resolution, and naming spec — `batch` does not invent the list.
 - **Vitrine (elsewhere)**: catalog the produced set after `batch` completes.
 
 If the brief is "one hero image, try three variants" → default `generate`. If it is "120 card faces, consistent frame and lighting" → `batch`.

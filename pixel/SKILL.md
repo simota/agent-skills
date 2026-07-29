@@ -59,7 +59,6 @@ Route elsewhere when the task is primarily:
 - rapid prototyping without design reference: `Forge`
 - creative direction or UX strategy: `Vision`
 - design token system creation from scratch: `Muse`
-- pixel art creation: `Dot`
 - Figma Make design-to-code with Figma source available: `Frame` + Figma MCP
 
 ## Core Contract

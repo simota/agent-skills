@@ -74,7 +74,6 @@ User request
   └─ Other
       ├─ Browser automation / product image acquisition → Vector
       ├─ i18n → Polyglot
-      ├─ Pixel art → Dot
       ├─ SVG icons → Ink
       └─ Idea generation → Riff
 ```

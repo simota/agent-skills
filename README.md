@@ -1,14 +1,14 @@
 # AI Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Agents](https://img.shields.io/badge/Agents-133-blue.svg)]()
+[![Agents](https://img.shields.io/badge/Agents-123-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 A skill collection that enables collaborative development with a team of specialized AI agents.
 
 ## Features
 
-- **133 Specialized Agents** - Covering bug investigation, testing, security, UI/UX, AI/ML, observability, and more
+- **123 Specialized Agents** - Covering bug investigation, testing, security, UI/UX, AI/ML, observability, and more
 - **Nexus Orchestrator** - Analyzes tasks and automatically designs optimal agent chains
 - **Platform Agnostic** - Works with Claude Code, Codex CLI, Antigravity CLI, and others
 
@@ -35,11 +35,11 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 ## Overview
 
-This repository contains 133 specialized AI agents covering various aspects of software development. Each agent specializes in a specific domain and is coordinated by the **Nexus** orchestrator.
+This repository contains 123 specialized AI agents covering various aspects of software development. Each agent specializes in a specific domain and is coordinated by the **Nexus** orchestrator.
 
 ## Agent Catalog
 
-> Category-by-category catalog for all 133 agents.
+> Category-by-category catalog for all 123 agents.
 
 ### Orchestration
 
@@ -57,7 +57,7 @@ This repository contains 133 specialized AI agents covering various aspects of s
 | **Gauge** | _"What gets measured gets managed. What gets audited gets normalized."_ - SKILL.md normalization auditor and self-evolving compliance agent. Scans all skills against the 19-item checklist, classifies violations with P0-P3 priority, generates concrete fix snippets, and evolves detection patterns via web research. No code written | Compliance reports, fix plans, dashboards |
 | **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - Design-to-implementation pipeline orchestrator for the code-to-visual-to-code closed loop. Coordinates Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas to deliver design extraction, prototypes, visual assets, slides, and production together while persisting a project design system across downstream agents | Design system package, integrated deliverables |
 | **Bazaar** | _"A landing page is one promise, one path, one decision. bazaar runs the studio that delivers all three."_ - Super-premium LP studio chain orchestrator. Composes Field → Cast → Pulse → Funnel → Vision → Saga → Compete → Muse → Flow → Artisan → Growth → Bolt → Judge → Launch into a recipe-selected, stage-gated pipeline (Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch) enforcing 6 craft axes — Design, Animation, Branding, Marketing, SEO, IA — each with explicit rubric and ship threshold | 6-axis-rubric-passed LP package, CVR-tuned production code, brand-coherent visuals, motion on tokens, schema-valid SEO, GEO citation-ready, analytics live |
-| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 133."_ - Skill ecosystem navigator and onboarding guide. Lists agents, recommends best fit for tasks, and helps newcomers discover the right specialist | Recommendations, agent maps |
+| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 123."_ - Skill ecosystem navigator and onboarding guide. Lists agents, recommends best fit for tasks, and helps newcomers discover the right specialist | Recommendations, agent maps |
 | **Loom** | _"Many threads, one fabric — design the operating layer as a system."_ - Project operating-layer designer. Blueprints the coherent set of project-local skills, repo-tailored recipes, and skill-plus-agent workflows a repository needs together as one system, then delegates body authoring to Sigil and runtime routing to Nexus | Operating-layer blueprint, routing map, recipe/workflow specs |
 | **Prune** | _"A garden grows by what you cut, not what you plant."_ - Ecosystem cleanup auditor. Audits the agent roster for overlap, redundancy, and inactivity, then proposes merge candidates and sunset plans with evidence and archive instructions. Propose-only, no execution | Merge/sunset proposals, archive instructions |
 
@@ -82,13 +82,10 @@ This repository contains 133 specialized AI agents covering various aspects of s
 | **Helm** | _"A ship without a destination has no favorable wind. A ship without a helm has no direction at all."_ - Business strategy simulation agent. Integrates financial/market/competitive data for short/mid/long-term simulations. SWOT/PESTLE/Porter analysis, scenario planning, KPI forecasting, strategy roadmap generation. No code written | Strategy simulation report |
 | **Accord** | _"Three teams, one truth."_ - Cross-team specification architect. Creates integrated spec packages across Business, Development, and Design teams using progressive refinement templates (L0 Vision > L1 Requirements > L2 Team-specific details > L3 Acceptance criteria). No code written | Integrated spec package, traceability matrix |
 | **Matrix** | _"Infinite combinations, finite resources. Matrix finds the minimum that covers the maximum."_ - Universal multi-dimensional analysis agent. Controls combinatorial explosion from arbitrary axis×value inputs. Minimum coverage set selection, execution planning, and prioritization across all domains (testing, deployment, UX validation, risk assessment, compatibility). No code written | Matrix analysis, coverage optimization plan |
-| **Quest** | _"Every great game starts with a question the player cannot resist answering."_ - Game planning & production agent. GDD authoring, balance math (DPS/TTK/Elo), narrative design, economy modeling, systems design, player psychology frameworks, production planning, game market research. No code written | GDD, balance sheets, economy models, system specs, game research briefs |
 | **Saga** | _"Every product has a story. Every story has a hero. Make the customer the hero."_ - Narrative design agent. Structures product and feature use cases as customer-centric stories. StoryBrand SB7, Pixar Story Spine, Hero's Journey, JTBD frameworks, pitch narratives, onboarding stories, transformation arcs. No code written | Narrative document |
 | **Omen** | _"Plan for the worst. Build for the best."_ - Pre-mortem analysis and failure mode enumeration. Systematically identifies failure scenarios, scores with RPN/AP. No code written | Pre-mortem report |
 | **Rank** | _"Every priority tells a story of trade-offs."_ - Priority quantification. Scores and orders competing items using ICE/RICE/WSJF/MoSCoW/Kano frameworks. No code written | Priority report |
 | **Sage** | _"Tell me what you're avoiding."_ - YC-style office hours advisory. Surfaces the #1 bottleneck via socratic probing, gives pattern-matched honest feedback, detects founder anti-patterns, and extracts concrete 1-2 week action items. No code written | Office hours session output (bottleneck + actions) |
-| **Ascent** | _"Plan the climb before you take the first step."_ - Career strategist for job change, side-business, and independence. Self-analysis, market & salary research, positioning, skill-gap plans, job search (target lists, tracker, outreach), interview prep, and salary negotiation. Advisory only — no code | Career strategy, job-search tracker, interview prep |
-| **Guild** | _"Hire the team you can build with — design the process before the offer."_ - Hiring process and team structure designer (employer side). Recruitment strategy, job descriptions, competency matrices, interview rubrics, scorecards, candidate-journey maps, 30/60/90 onboarding, and bias-reduction checklists. No code | Hiring process docs, rubrics, onboarding plans |
 | **PDM** | _"Show where the project stands — planned, built, and the gap between."_ - Project delivery status navigator (PdM-style, read-only). Reconciles planned scope (specs/issues/roadmap/PRD) against implemented code to produce feature inventories, unimplemented-feature lists, roadmap rollups, and WBS views | Feature inventory, gap list, roadmap rollup |
 | **Summon** | _"Channel the mind, not the mouth — documented thinking, never fabricated words."_ - Notable-figure thinking lenses. Channels the documented mental models, heuristics, and decision-style of named figures and applies them to your problem as advisory lenses. No code | Multi-perspective advisory lenses |
 
@@ -145,9 +142,7 @@ This repository contains 133 specialized AI agents covering various aspects of s
 | **Artisan** | _"Prototypes promise. Production delivers."_ - Production frontend implementation craftsman. React/Vue/Svelte, Hooks design, state management, Server Components, form handling, data fetching | Frontend code |
 | **Forge** | _"Done is better than perfect. Ship it, learn, iterate."_ - Prototyping. Prioritizes working software over perfection. Outputs types.ts, errors.ts, forge-insights.md for Builder handoff | MVP/PoC |
 | **Native** | _"Every pixel ships. Every platform matters."_ - Pure-native mobile implementation specialist for iOS (Swift 6.3 + SwiftUI + Liquid Glass) and Android (Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive). Production-quality features with @Observable / Swift Concurrency, Compose Strong Skipping + Type-safe Navigation, SwiftData / Room, Credential Manager + Passkeys, Privacy Manifest, edge-to-edge, predictive back, Live Activities, App Intents, Foundation Models / Gemini Nano, store compliance, and per-store staged rollout. React Native / Flutter / KMP / CMP are out of scope | Code |
-| **Dock** | _"A Mac app should feel like it was born on the Mac."_ - macOS native application specialist. SwiftUI for macOS + AppKit interop (NSViewRepresentable / NSHostingController), window & scene architecture (WindowGroup, Settings, MenuBarExtra, multi-window, restoration), menu bar Commands, document-based apps (DocumentGroup / NSDocument), NavigationSplitView + toolbar + inspector layout, drag & drop / pasteboard / Services, App Sandbox + entitlements + hardened runtime, distribution (App Store vs Developer ID + notarytool + Sparkle), XPC / SMAppService helpers, Mac HIG and Liquid Glass on macOS Tahoe 26, and the Catalyst-vs-native decision. Automating an existing Mac app is Wield, not Dock | Code |
 | **Pixel** | _"Every pixel matters. Fidelity is non-negotiable."_ - Faithful reproduction agent. Generates pixel-accurate HTML/CSS from image mockups (PNG/JPG/screenshots) and performs visual verification | HTML/CSS code |
-| **Tick** | _"The loop is the heartbeat. Everything else is what happens between beats."_ - Engine-agnostic game architecture implementer. Game loop, ECS, game state, collision/physics integration, save/load, and netcode foundations | Game architecture code |
 
 ### AI/ML
 
@@ -188,7 +183,6 @@ This repository contains 133 specialized AI agents covering various aspects of s
 | **Prose** | _"Words are the smallest unit of design. Get them wrong, and nothing else matters."_ - User-facing text specialist. Microcopy, error messages, voice & tone framework, onboarding copy, accessibility text | Copy guidelines, content specs |
 | **Frame** | _"Design speaks in pixels. I translate it to code."_ - Figma MCP Server bridge agent. Extracts and structures design context from Figma for implementation agents. Design-to-code bridging, Code Connect management, design system rule extraction. No code written | Structured design context, design system rules |
 | **Ink** | _"Every stroke serves a purpose."_ - SVG icon/illustration generation, icon system design, and sprite symbol construction | SVG assets |
-| **Glance** | _"If the player can't read it at a glance, it isn't UI — it's noise on top of the game."_ - Game UI/UX designer (no code). HUD & diegetic UI, menu/inventory flow, controller & console navigation, game accessibility, and genre UI conventions | Game UI/UX design specs |
 
 ### Documentation
 
@@ -200,7 +194,6 @@ This repository contains 133 specialized AI agents covering various aspects of s
 | **Tome** | _"Changes are forgotten. Knowledge endures."_ - Transforms repository changes into detailed learning documentation. Explains terminology, flows, design decisions, and anti-patterns | Learning docs |
 | **Clause** | _"Every clause carries weight. Every omission carries risk."_ - Legal document review for Terms of Service, Privacy Policy, and Tokushoho compliance. Clause gap detection and risk flagging | Legal review report |
 | **Zine** | _"The hook earns the second paragraph."_ - External-facing tech blog/article series authoring for note/Zenn/Qiita/dev.to. Hook design, article structure, platform-specific tuning, multi-episode series management | Published articles, series index |
-| **Agora** | _"Design the objective first; the lesson follows the evidence."_ - Learning and curriculum designer. Measurable objectives, prerequisite checks, curriculum maps, lesson plans, materials, quizzes, and assessment rubrics aligned via Bloom's taxonomy + backward design. No code | Curricula, lesson plans, rubrics |
 
 **Scribe vs Quill vs Morph vs Tome vs Zine responsibilities**:
 - **Scribe**: Project documentation (PRD, SRS, design docs, checklists, test specifications)
@@ -215,11 +208,9 @@ This repository contains 133 specialized AI agents covering various aspects of s
 |-------|-------------|--------|
 | **Canvas** | _"A diagram is worth a thousand lines of documentation."_ - Design visualization. Converts code, specs, and context into Mermaid diagrams or ASCII art (flowcharts, sequence diagrams, state machines, class diagrams, ER diagrams, etc.) | Mermaid diagrams / ASCII Art |
 | **Sketch** | _"From words to worlds, prompt to pixel."_ - AI image generation code craftsman. Produces production-ready Python code for image generation via Gemini API. Prompt engineering, batch generation, cost estimation | Python code |
-| **Dot** | _"Every pixel is a decision. Every constraint is a creative opportunity."_ - Pixel art specialist. Generates pixel art via code (SVG/Canvas/Phaser 3/Pillow/CSS). Palette design, spritesheets, tilesets, frame animation, Antigravity CLI delegation for SVG generation | Pixel art code (SVG/Canvas/CSS) |
 | **Cue** | _"Every frame tells a story."_ - Video script, storyboard, and narration design for product videos, explainer videos, and onboarding content | Video scripts, storyboards |
 | **Stage** | _"Every slide is a stage."_ - Marp/reveal.js/Slidev slide generation, story composition design, conference talk optimization | Slide decks |
 
-**Vision > Dot > Forge chain**: Vision (art direction) > Dot (pixel art code) > Forge (prototype integration)
 
 ### Architecture
 
@@ -269,7 +260,6 @@ This repository contains 133 specialized AI agents covering various aspects of s
 | **Pipe** | _"Workflows are pipelines. Pipelines are promises."_ - GitHub Actions workflow expert. Trigger strategies, security hardening, performance optimization, PR automation, Reusable Workflow design | GHA workflows |
 | **Ledger** | _"Every dollar has a story. Make it a short one."_ - FinOps and cloud cost optimization. IaC cost estimation, right-sizing, RI/SP recommendations, cost anomaly detection | Reports, configs |
 | **Shift** | _"Migration is not moving. It's transforming."_ - Migration and upgrade orchestrator. Framework, library, API, database, and infrastructure migrations end-to-end with codemod generation and incremental strategies | Migration plans |
-| **Wield** | _"Tell the Mac what to do — and it does."_ - macOS desktop automation via AppleScript/JXA/osascript. Controls native apps (Finder/Mail/Safari/Calendar/Notes/Music/System Events) through Apple Events, UI scripting for non-scriptable apps, multi-app workflow glue, and osascript integration into shell/Python/Node. Dictionary-first, TCC-aware, destructive ops gated | AppleScript/JXA scripts |
 
 **Hearth vs Hone vs Gear vs Scaffold vs Latch vs Pipe responsibilities**:
 - **Hearth**: Personal environment (dotfiles, shell, editor, terminal)
@@ -293,7 +283,6 @@ This repository contains 133 specialized AI agents covering various aspects of s
 | **Bond** | _"Acquisition is expensive. Retention is profitable."_ - Retention strategies, re-engagement, churn prevention. Gamification, habit-forming design | Retention initiatives |
 | **Funnel** | _"Above the fold is your one shot. Make every pixel convert."_ - LP (Landing Page) structure designer and conversion strategist. Framework-based structure design (AIDA/PAS/BAB/4Ps), hero section craft, CTA placement strategy, social proof hierarchy, mobile-first responsive implementation | LP structure, copy, specs |
 | **Crest** | _"Your brand is what people say when you're not in the room."_ - Engineer self-branding strategist. GitHub/LinkedIn/blog/conference/SNS positioning, profile optimization, content strategy | Branding strategy |
-| **PMM** | _"Market what is built, not what is wished. Every promise traces to a shipped capability."_ - Product-marketing strategist. Translates shipped capability into positioning statements, messaging houses, GTM/launch plans, and sales-enablement assets — every message grounded in a real, shipped capability | Positioning, messaging, GTM plans |
 
 ### Analytics
 
@@ -575,11 +564,6 @@ See `_common/INTERACTION.md` for details.
 
 | Task | Description | Chain |
 |------|-------------|-------|
-| GAME/design | Game design document | Quest |
-| GAME/full | Full game pipeline | Vision > Quest > Forge > Builder > Radar |
-| GAME/balance | Balance iteration | Quest > Forge > Quest |
-| GAME/assets | Game asset pipeline | Vision > Quest > Dot |
-| GAME/narrative | Story & narrative | Cast > Quest > Scribe |
 
 #### Parallel Execution (Rally Integration)
 
@@ -689,7 +673,6 @@ skills/
 ├── compete/SKILL.md    # Competitive research
 ├── darwin/SKILL.md     # Ecosystem self-evolution orchestrator
 ├── director/SKILL.md   # Demo video recording
-├── dot/SKILL.md        # Pixel art generation (SVG/Canvas/Phaser 3)
 ├── echo/SKILL.md       # Persona validation
 ├── experiment/SKILL.md # A/B test design
 ├── flow/SKILL.md       # Animation
@@ -767,7 +750,7 @@ skills/
 
 ### Single Agent Usage
 
-> Category-by-category examples for all 133 agents.
+> Category-by-category examples for all 123 agents.
 
 #### Orchestration
 
@@ -1392,24 +1375,6 @@ Include batch generation for multiple products.
 
 ---
 
-##### Pixel Art Generation (Dot)
-
-```
-/Dot
-Create a 16x16 player character sprite with 4-frame walk animation.
-Use a 16-color palette and output as SVG with spritesheet metadata.
-```
-
-**Output**: SVG sprite code, spritesheet layout, animation metadata JSON, palette definition
-
----
-
-**Canvas vs Sketch vs Dot responsibilities**:
-- **Canvas**: Diagrams and charts (Mermaid, ASCII art, draw.io)
-- **Sketch**: AI image generation code (Python code for Gemini API)
-- **Dot**: Pixel art via code (SVG/Canvas/Phaser 3/Pillow/CSS sprites)
-
----
 
 #### Architecture
 

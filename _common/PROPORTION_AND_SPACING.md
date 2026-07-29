@@ -8,7 +8,7 @@ this file.**
 
 **Consumers:** `muse` (spacing/type/grid token values) · `vision` (direction justification,
 composition) · `palette` (touch targets, measure, proximity grouping) · `nexus restyle` /
-`runway` / `marquee` (rubric axis numbers) · `funnel` / `bazaar` (LP layout) · `native` / `dock`
+`runway` / `marquee` (rubric axis numbers) · `funnel` / `bazaar` (LP layout) · `native`
 (platform margin conventions) · `forge` / `artisan` / `pixel` (implementation defaults).
 
 Read this when deciding spacing scales, container widths, type scales, or when justifying a

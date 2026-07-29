@@ -157,7 +157,6 @@ Infrastructure, CI/CD, and operations.
 | **Launch** | Release management | Versioning, CHANGELOG, rollback | Mixed |
 | **Oath** | Compliance | SOC2 / PCI-DSS / HIPAA conformance checks | Mixed |
 | **Ledger** | FinOps | Cloud cost optimization, RI / SP recommendations | No |
-| **Wield** | macOS desktop automation | AppleScript / JXA / osascript, Apple Events app control | Yes |
 
 ## Modernization (3)
 
@@ -264,7 +263,6 @@ Media and creative generation.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Dot** | Pixel art | SVG / Canvas / Phaser 3 pixel art | Yes |
 | **Ink** | SVG icons | Icon systems, sprite construction | Yes |
 | **Sketch** | AI image generation | Text → image via Gemini API | Yes |
 
@@ -297,7 +295,6 @@ Specialized skills that don't fit the categories above.
 | **Stage** | Slide generation | Marp / reveal.js / Slidev | Mixed |
 | **Frame** | Figma → code bridge | Design context extraction | No |
 | **Clause** | Legal-document review | Terms of service, privacy policy | No |
-| **Quest** | Game planning | GDD, balance design, economy design | No |
 | **Orbit** | Autonomous-loop design | Script generation for nexus-autoloop | Mixed |
 | **Hearth** | Dotfile management | zsh / tmux / neovim / ghostty configuration | Mixed |
 | **Mint** | Test-data generation | Factories, boundary values, seed management | Mixed |

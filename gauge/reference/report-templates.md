@@ -127,7 +127,7 @@
 
 **Status:** FAIL → PASS
 **Action:** Add {section/block description}
-**Exemplar:** Quest `{section name}` section
+**Exemplar:** Architect `{section name}` section
 
 \```markdown
 {fix snippet here}

@@ -1,6 +1,6 @@
 # Fix Templates
 
-**Purpose:** Skeleton templates and Quest-based exemplar patterns for generating fix snippets.
+**Purpose:** Skeleton templates and Architect-based exemplar patterns for generating fix snippets.
 **Read when:** Executing the RECOMMEND phase of the audit workflow.
 
 ---
@@ -11,13 +11,13 @@
 2. Fill all `{AGENT_NAME_LOWER}` placeholders with the lowercase agent name.
 3. Customize content descriptions based on the agent's existing SKILL.md content.
 4. Follow P0 → P1 → P2 → P3 priority order for fixes.
-5. Cite the corresponding Quest section as exemplar for each template.
+5. Cite the corresponding Architect section as exemplar for each template.
 
 ---
 
 ## F1: YAML Frontmatter
 
-**Quest exemplar:** Lines 1-4
+**Architect exemplar:** frontmatter block
 
 ```markdown
 ---
@@ -38,7 +38,7 @@ No template — this requires translating existing Japanese body text to English
 
 ## H1-H3: HTML Comment Block
 
-**Quest exemplar:** Lines 6-38
+**Architect exemplar:** CAPABILITIES_SUMMARY block
 
 ```markdown
 <!--
@@ -63,7 +63,7 @@ PROJECT_AFFINITY: [universal | Domain1(H) Domain2(M) Domain3(L)]
 
 ## S1: Trigger Guidance
 
-**Quest exemplar:** "Trigger Guidance" section
+**Architect exemplar:** "Trigger Guidance" section
 
 ```markdown
 ## Trigger Guidance
@@ -82,7 +82,7 @@ Route elsewhere when the task is primarily:
 
 ## S2: Core Contract
 
-**Quest exemplar:** "Core Contract" section
+**Architect exemplar:** "Core Contract" section
 
 ```markdown
 ## Core Contract
@@ -97,7 +97,7 @@ Route elsewhere when the task is primarily:
 
 ## S3: Boundaries
 
-**Quest exemplar:** "Boundaries" section
+**Architect exemplar:** "Boundaries" section
 
 ```markdown
 ## Boundaries
@@ -125,7 +125,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ## S4: Workflow
 
-**Quest exemplar:** "Workflow" section
+**Architect exemplar:** "Workflow" section
 
 ```markdown
 ## Workflow
@@ -143,7 +143,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ## S5: Output Routing
 
-**Quest exemplar:** "Output Routing" section
+**Architect exemplar:** "Output Routing" section
 
 ```markdown
 ## Output Routing
@@ -164,7 +164,7 @@ Routing rules:
 
 ## S6: Output Requirements
 
-**Quest exemplar:** "Output Requirements" section
+**Architect exemplar:** "Output Requirements" section
 
 ```markdown
 ## Output Requirements
@@ -181,7 +181,7 @@ Every deliverable must include:
 
 ## S7: Collaboration
 
-**Quest exemplar:** "Collaboration" section
+**Architect exemplar:** "Collaboration" section
 
 ```markdown
 ## Collaboration
@@ -197,7 +197,7 @@ Every deliverable must include:
 
 ## S8: Reference Map
 
-**Quest exemplar:** "Reference Map" section
+**Architect exemplar:** "Reference Map" section
 
 ```markdown
 ## Reference Map
@@ -220,7 +220,7 @@ No dedicated references. Domain knowledge is inline in this SKILL.md.
 
 ## S9: Operational
 
-**Quest exemplar:** "Operational" section
+**Architect exemplar:** "Operational" section
 
 ```markdown
 ## Operational
@@ -235,7 +235,7 @@ No dedicated references. Domain knowledge is inline in this SKILL.md.
 
 ## A1: AUTORUN Support
 
-**Quest exemplar:** "AUTORUN Support" section
+**Architect exemplar:** "AUTORUN Support" section
 
 ```markdown
 ## AUTORUN Support
@@ -263,7 +263,7 @@ _STEP_COMPLETE:
 
 ## A2: Nexus Hub Mode
 
-**Quest exemplar:** "Nexus Hub Mode" section
+**Architect exemplar:** "Nexus Hub Mode" section
 
 ```markdown
 ## Nexus Hub Mode
