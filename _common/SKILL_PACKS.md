@@ -121,13 +121,13 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `research` (user research + discovery + brainstorming + career, ~32 skills)
+### `research` (user research + discovery + brainstorming + advisory, ~26 skills)
 
-**Purpose:** discovery-side work — user research, brainstorming, strategic decisions, career/learning/hiring content generation, prose authoring.
+**Purpose:** discovery-side work — user research, brainstorming, strategic decisions, named-expert advisory lenses, prose authoring.
 
-**Members:** `field`, `plea`, `lens`, `cast`, `voice`, `echo`, `trace`, `compete`, `spark`, `riff`, `flux`, `omen`, `magi`, `rank`, `crest`, `sage`, `helm`, `harvest`, `tome`, `scribe`, `accord`, `void`, `quill`, `zine`, `saga`
+**Members:** `field`, `plea`, `lens`, `cast`, `voice`, `echo`, `trace`, `compete`, `spark`, `riff`, `flux`, `omen`, `magi`, `summon`, `rank`, `crest`, `sage`, `helm`, `harvest`, `tome`, `scribe`, `accord`, `void`, `quill`, `zine`, `saga`
 
-**Triggers:** `user research`, `interview`, `usability test`, `persona`, `journey map`, `jtbd`, `brainstorm`, `ideate`, `reframe`, `assumption challenge`, `pre-mortem`, `deliberation`, `prioritization`, `career`, `job change`, `side business`, `learning`, `curriculum`, `hiring`, `interview rubric`, `local government`, `civic`, `side project idea`, `office hours`, `advisory`, `strategy simulation`, `yagni`, `scope cut`, `documentation`, `jsdoc`, `tsdoc`, `tech blog`, `note`, `zenn`, `qiita`, `tax filing`, `tome`
+**Triggers:** `user research`, `interview`, `usability test`, `persona`, `journey map`, `jtbd`, `brainstorm`, `ideate`, `reframe`, `assumption challenge`, `pre-mortem`, `deliberation`, `prioritization`, `channel a thinker`, `what would <figure> do`, `expert panel`, `conclave`, `mental models`, `side project idea`, `office hours`, `advisory`, `strategy simulation`, `yagni`, `scope cut`, `documentation`, `jsdoc`, `tsdoc`, `tech blog`, `note`, `zenn`, `qiita`, `tome`
 
 ---
 

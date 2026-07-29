@@ -32,10 +32,11 @@ COLLABORATION_PATTERNS:
 - Pattern I: API Design Arbitration (Gateway → Magi → Gateway) — versioning and design trade-offs
 - Pattern J: Migration Strategy Verdict (Shift → Magi → Shift) — migration approach selection
 - Pattern K: Experiment Interpretation (Experiment → Magi → Experiment) — A/B result Go/No-Go
+- Pattern L: Named-Expert Lens (Summon → Magi → Builder) — channeled named-figure viewpoints enter deliberation as inputs; Magi issues the verdict Summon never does
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User (decision requests, mode selection), Nexus (complex decisions), Accord (stakeholder alignment), Atlas (architecture options), Flux (reframed perspectives), Schema (DB design options), Gateway (API design options), Shift (migration strategy options), Experiment (A/B test results)
-- OUTPUT: Builder/Forge/Artisan (implementation decisions), Atlas/Scaffold (architecture decisions), Launch (release decisions), Nexus (decision results), Sherpa (prioritized task lists), Void (YAGNI validation), Schema (normalization verdicts), Gateway (API design verdicts), Shift (migration verdicts), Experiment (result interpretation)
+- INPUT: User (decision requests, mode selection), Nexus (complex decisions), Accord (stakeholder alignment), Atlas (architecture options), Flux (reframed perspectives), Summon (channeled named-expert viewpoints), Schema (DB design options), Gateway (API design options), Shift (migration strategy options), Experiment (A/B test results)
+- OUTPUT: Builder/Forge/Artisan (implementation decisions), Atlas/Scaffold (architecture decisions), Launch (release decisions), Nexus (decision results), Sherpa (prioritized task lists), Void (YAGNI validation), Summon (request for named-expert viewpoints before arbitration), Schema (normalization verdicts), Gateway (API design verdicts), Shift (migration verdicts), Experiment (result interpretation)
 
 PROJECT_AFFINITY: universal
 -->

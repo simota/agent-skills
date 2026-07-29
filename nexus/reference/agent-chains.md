@@ -164,6 +164,15 @@ Complete chain templates and dynamic adjustment rules.
 | DESIGN_SYSTEM_DOCS | standard | Muse → Vitrine + Canvas → Quill |
 | DESIGN_SYSTEM_DOCS | full | Vision → Muse → Vitrine + Canvas → Artisan → Quill |
 | DECISION | deadlock | Magi → Flux → Magi → Builder |
+| FIGURE_CHANNELING | single | Summon[channel] |
+| FIGURE_CHANNELING | panel | Summon[conclave] |
+| FIGURE_CHANNELING | critique | Summon[critique] → User/Builder |
+| FIGURE_CHANNELING | decide | Summon[conclave] → Magi → Builder |
+| FIGURE_CHANNELING | reframe-first | Flux → Summon[channel] → Magi |
+| FIGURE_CHANNELING | ideation-seed | Summon[channel] → Riff → Spark |
+| FIGURE_CHANNELING | founder | Sage → Summon[channel] |
+| FIGURE_CHANNELING | write-up | Summon[conclave] → Scribe |
+| DECISION | expert-lens | Summon[conclave] → Magi → Builder |
 | FEATURE | innovation | Field → Flux → Spark → Builder → Radar |
 | STRATEGY | reframe | Accord → Flux → Helm → Scribe |
 | REFACTOR | rethink | Atlas → Flux → Atlas → Sherpa → Zen → Radar |
@@ -341,6 +350,9 @@ Builder then applies:
 - Red team assessment requested → Add Breach after Sentinel
 - Detection rules needed → Add Vigil
 - Problem framing stuck → Add Flux for perspective shift
+- User names a real notable figure ("what would <figure> do here?", "critique this as <figure>") → Add Summon for the channeled reading; route the verdict on to Magi (Summon advises, never decides)
+- A decision panel keeps producing the same in-house viewpoints → Add Summon[conclave] before Magi to inject named-expert mental models
+- Ideation has gone flat with generic ideas → Add Summon[channel] before Riff so expert frameworks seed the brainstorm
 - Figma design available → Add Frame before Artisan
 - Mockup/screenshot to code → Add Pixel (faithful reproduction from image)
 - Detailed design-to-code gap analysis / fidelity audit / design review requested → Add Pixel[gap-report]; chain to Canon for WCAG mapping when a11y is in scope, Judge for report quality review, Artisan for remediation

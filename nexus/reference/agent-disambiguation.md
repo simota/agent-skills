@@ -136,23 +136,30 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 
 ---
 
-### Flux vs Riff vs Magi (Thinking Support Trio)
+### Flux vs Riff vs Magi vs Summon (Thinking Support Quartet)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
 | "Reframe this", "shift perspective", single-shot analysis | **Flux** | One-time perspective shift |
 | "Bounce ideas", "brainstorm with me", "rubber-duck session", iterative dialogue | **Riff** | Multi-turn interactive exploration |
 | "Which should we pick?", "Go/No-Go", verdict needed | **Magi** | Structured decision with vote |
+| **A real person is named** — "what would Feynman do here?", "critique this as Christensen would", "panel of Buffett + Munger on this" | **Summon** | Named-figure documented thinking as an advisory lens |
 | User wants to explore before knowing what to decide | **Riff** | Open-ended exploration first |
 | User is stuck and needs a new frame, not a conversation | **Flux** | Break the frame, then move on |
 | User has options and needs a verdict, not more ideas | **Magi** | Converge and decide |
+| User wants *a specific documented thinker's* frame, not any new frame | **Summon** | Flux invents a frame; Summon borrows a person's |
 
-**Rule of thumb**: "Help me think about this" → Riff. "Help me see this differently" → Flux. "Help me decide" → Magi.
+**Rule of thumb**: "Help me think about this" → Riff. "Help me see this differently" → Flux. "Help me decide" → Magi. **"Help me see this as _<named person>_" → Summon.**
+
+**The Summon boundary is the named individual.** A real, documented, *named* person → Summon. A school/movement/collective, or no person at all → Flux or Riff. A synthetic user persona → Cast. A fixed founder-mentor archetype (no name) → Sage. Summon produces a **reading, never a verdict** — every claim is tagged `ATTESTED` / `INFERRED` / `SPECULATIVE`, fabricated quotes are stripped, and any actual decision hands off to Magi.
 
 **Chain patterns**:
 - Flux (reframe) → Riff (explore the new frame) → Magi (decide) → Builder (implement)
 - Riff (brainstorm) → Spark (formalize as spec) → Builder (implement)
 - Riff (brainstorm) → Void (cut scope) → Builder (implement)
+- **Summon (conclave: contrast named experts) → Magi (arbitrate) → Builder** — the canonical "expert lens for a decision" path
+- **Flux (reframe) → Summon (channel a thinker known for that frame)** — reframe first, then borrow the mind that fits it
+- **Summon (channel) → Riff (brainstorm off the expert's frameworks)** — expert mental models as ideation seeds
 
 ---
 

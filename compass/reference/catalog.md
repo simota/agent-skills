@@ -289,6 +289,7 @@ Specialized skills that don't fit the categories above.
 | **Seek** | Search-engine design | Full-text search, vector search, RAG | Mixed |
 | **Vigil** | Detection engineering | Sigma / YARA rule design | Mixed |
 | **Magi** | Multi-perspective deliberation | Architecture arbitration, Go / No-Go | No |
+| **Summon** | Named-figure thinking lenses | Channel a documented figure's mental models; conclave panel, expert critique; attestation-tagged, advisory only | No |
 | **Saga** | Narrative design | Customer-experience storytelling | No |
 | **Cue** | Video script | Product videos, storyboards | No |
 | **Director** | Demo-video production | Demos generated from Playwright E2E | Mixed |

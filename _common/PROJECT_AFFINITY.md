@@ -51,6 +51,7 @@ These agents provide value regardless of project type. Nexus should always consi
 | Sweep | Cleanup | Dead code exists everywhere |
 | Ripple | Impact analysis | Change analysis is universal |
 | Magi | Decision making | Multi-perspective judgment |
+| Summon | Named-expert lenses | Documented thinking of named figures, applied advisorily |
 | Atlas | Architecture | Dependency analysis for any project |
 | Trail | Git archaeology | History investigation + legacy business-rule extraction |
 | Rally | Parallel orchestration | Multi-session for any large task |

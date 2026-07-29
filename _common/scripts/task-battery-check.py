@@ -58,11 +58,13 @@ NEXUS_SKILL = NEXUS_DIR / "SKILL.md"
 ROUTING_MATRIX = NEXUS_DIR / "reference" / "routing-matrix.md"
 SIGNAL_KEYWORDS = NEXUS_DIR / "reference" / "signal-keywords.md"
 TASK_BATTERY = NEXUS_DIR / "reference" / "task-battery.md"
+AGENT_CHAINS = NEXUS_DIR / "reference" / "agent-chains.md"
 
 FILES = {
     "SKILL.md": NEXUS_SKILL,
     "routing-matrix.md": ROUTING_MATRIX,
     "signal-keywords.md": SIGNAL_KEYWORDS,
+    "agent-chains.md": AGENT_CHAINS,
 }
 
 # Items 1-28: (item, short description, file key, required verbatim substring).
@@ -98,6 +100,10 @@ MECHANICAL_ITEMS = [
     (18, "evolve this feature keyword -> delve", "signal-keywords.md", "`evolve this feature`"),
     (19, "map the system keyword -> cartograph", "signal-keywords.md", "`map the system`"),
     (20, "how did we get here keyword -> chronicle", "signal-keywords.md", "`how did we get here`"),
+    (36, "named-figure keyword -> FIGURE_CHANNELING (Summon)", "signal-keywords.md",
+     "`how would <figure> approach this`"),
+    (37, "Summon conclave hands the verdict to Magi", "agent-chains.md",
+     "| FIGURE_CHANNELING | decide | Summon[conclave] \u2192 Magi \u2192 Builder |"),
     (21, "must-have keyword -> essential", "signal-keywords.md", "`essential`, `must-have`"),
     (22, "dead weight keyword -> trim", "signal-keywords.md", "`dead weight`"),
     (23, "copy this product keyword -> clone", "signal-keywords.md",

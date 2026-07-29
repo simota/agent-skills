@@ -24,10 +24,11 @@ COLLABORATION_PATTERNS:
 - Sage -> Builder: Hand off committed action for implementation
 - Sage -> Plea: Validate hypothesis with synthetic user voice before commit
 - Sage -> Sherpa: Decompose multi-step committed action into atomic steps
+- Sage -> Summon: Founder problem needing a *specific named* investor/founder's documented thinking (`SAGE_TO_SUMMON`) — Sage is the unnamed YC-mentor archetype; Summon channels a real named person
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User (advisory request), Helm (strategy context), Spark (feature ideas), Magi (decisions), Field (user findings)
-- OUTPUT: Builder (action handoff), Plea (validation), Sherpa (decomposition)
+- OUTPUT: Builder (action handoff), Plea (validation), Sherpa (decomposition), Summon (named founder/investor to channel)
 
 PROJECT_AFFINITY: SaaS(L) E-commerce(M) Marketing(M) Game(M) Dashboard(M)
 -->

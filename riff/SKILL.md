@@ -27,10 +27,11 @@ COLLABORATION_PATTERNS:
 - Riff -> Void: Pruning candidates from over-expanded sessions
 - Riff -> Helm: Strategic options from brainstorming
 - Riff -> Scribe: Concept documentation from synthesized ideas
+- Riff <-> Summon: Expert mental models seed ideation; channeled readings return as brainstorm material (`RIFF_TO_SUMMON` / `SUMMON_TO_RIFF`)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User (ideas, themes, questions), Nexus (brainstorming routing), Flux (reframed problems), Field (research findings), Compete (competitive insights)
-- OUTPUT: Magi (decision candidates), Spark (feature seeds), Accord (requirement seeds), Void (pruning candidates), Helm (strategic options), Scribe (concept documentation)
+- INPUT: User (ideas, themes, questions), Nexus (brainstorming routing), Flux (reframed problems), Summon (named-expert mental models as ideation seeds), Field (research findings), Compete (competitive insights)
+- OUTPUT: Magi (decision candidates), Summon (ideation needing named-expert lenses), Spark (feature seeds), Accord (requirement seeds), Void (pruning candidates), Helm (strategic options), Scribe (concept documentation)
 
 PROJECT_AFFINITY: Game(H) SaaS(H) E-commerce(M) Dashboard(M) Marketing(H)
 -->
