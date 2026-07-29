@@ -173,7 +173,6 @@ Select a number or provide more specific instructions.
 - Git history investigation → Trail (commit archaeology)
 - Web → mobile native porting design → Port (blueprint, parity matrix, roadmap)
 - Pure-native mobile implementation (iOS Swift/SwiftUI, Android Kotlin/Compose) → Native
-- Product image acquisition with provenance / license → Haul
 - Founder office-hours advisory → Sage (bottleneck + 1-2 week action)
 - Incident impact scoping → Triage (first response)
 - Visualization of findings → +Canvas
@@ -227,8 +226,6 @@ Select a number or provide more specific instructions.
 | "Port web app to iOS / Android natively" | clear | Port (porting blueprint) |
 | "Implement in iOS Swift / Android Kotlin" | clear | Native (pure-native impl) |
 | "Implement in React Native / Flutter" | clear | out of scope; Forge for prototype |
-| "Collect product images by SKU" | clear | Haul (product image acquisition) |
-| "Product images from a login-required site" | clear | Vector → Haul (auth handoff) |
 | "Want office hours / what should I focus on?" | clear | Sage (founder advisory) |
 | "Stuck as a founder" | clear | Sage triage recipe |
 | "Please review my pitch deck" | clear | Sage pitch recipe |

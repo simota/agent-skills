@@ -156,29 +156,6 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 
 ---
 
-### Spark vs Dawn (Idea Generation)
-
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "Propose a feature for our product", existing data/users/workflows in context | **Spark** | Feature proposal grounded in existing product |
-| "Idea for today", "weekend hack", "side-project concept", no existing product context | **Dawn** | Zero-start personal side-project idea |
-| "Add X to the app" (existing app) | **Spark** | Product feature proposal |
-| "What should I build this weekend?" | **Dawn** | Greenfield personal hack |
-| "RICE score this", "JTBD analysis", "OST" | **Spark** | Product discovery frameworks |
-| "One idea a day", "every morning give me one" | **Dawn** | Daily ritual, 1-invocation = 1-idea |
-| "Coding-agent-ready prompt for a personal project" | **Dawn** | Section 8 implementation prompt |
-| Input has product metrics, personas, feedback | **Spark** | Context-bound proposal |
-| Input is just "give me something fun to build" | **Dawn** | Context-free ideation |
-
-**Rule of thumb**: Existing product context → Spark. Zero-start personal hack → Dawn. Spark produces RFCs with RICE/JTBD; Dawn produces 8-section side-project briefs with a ready-to-paste agent prompt.
-
-**Chain patterns**:
-- Dawn (daily idea) → Forge (prototype) → Builder (production) → Radar (tests)
-- Dawn (daily idea) → Zine (article-ify for a skill/tech blog series)
-- Spark (feature proposal) → Scribe (formal spec) → Builder (implement)
-
----
-
 ### Pixel vs Artisan vs Forge (UI Implementation)
 
 | Signal | Route to | Rationale |
@@ -338,6 +315,41 @@ informs*, not the acronym.
 
 **Rule of thumb**: whole-business/entry strategy → Helm; competitor-relative → Compete;
 per-feature upside → Spark.
+
+---
+
+### Cull vs Chain (Malware / Supply-Chain)
+
+| Signal | Route to | Rationale |
+|--------|----------|-----------|
+| "active malware infection scan", "IoC scan", "Shai-Hulud", "eradicate infected lockfile" | **Cull** | Active infection detection + eradication |
+| "pre-intake supply-chain trust audit", "manifest hashing", "third-party skill/plugin/MCP intake" | **Chain** | Pre-intake trust verification, not infection response |
+| "is this npm package currently infected/compromised" | **Cull** | Active-compromise scan |
+| "should we trust this new MCP server / plugin before installing" | **Chain** | Pre-intake audit |
+
+**Rule of thumb**: "Is something already infected right now?" → Cull. "Should we trust this before we let it in?" → Chain.
+
+---
+
+### Snap vs Voyager (Mobile / Cross-Platform UI Testing)
+
+| Signal | Route to | Rationale |
+|--------|----------|-----------|
+| "XCUITest", "accessibility-identifier query", "fastlane snapshot", "App Store screenshot pipeline" | **Snap** | Pure-iOS UI test / screenshot automation |
+| "Appium", "Detox", "Maestro", "Playwright", "cross-platform E2E" | **Voyager** | Cross-platform E2E authoring |
+
+**Rule of thumb**: Pure-iOS XCUITest/screenshot pipeline → Snap. Cross-platform E2E (Appium/Detox/Maestro/Playwright) → Voyager.
+
+---
+
+### Vector vs Voyager (Browser Automation)
+
+| Signal | Route to | Rationale |
+|--------|----------|-----------|
+| "collect data", "fill this form", "capture a screenshot", one-off browser task | **Vector** | Task completion, not durable test authoring |
+| "write a regression E2E test", "durable test suite" | **Voyager** | Durable regression test authoring |
+
+**Rule of thumb**: One-off browser task completion → Vector. Durable regression E2E test authoring → Voyager.
 
 ---
 
@@ -547,27 +559,6 @@ per-feature upside → Spark.
 | "Extract legacy web business rules (pre-port)" | **Trail** `static-rules` | Read-only archaeology (absorbed from fossil) |
 
 **Rule of thumb**: Blueprint/design for Web→Native → Port. **Implementation** → Native. Same-language migration → Shift `framework`/`lang`. Deprecated-library detection → Shift `detect`/`modernize`. Native does not handle React Native / Flutter / KMP / CMP.
-
----
-
-### Haul vs Vector vs Trawl vs Sketch (Image / Asset Acquisition)
-
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "Collect product images by SKU / JAN / UPC" | **Haul** | Identifier-driven product image acquisition |
-| "Fetch product images from e-commerce / brand sites" | **Haul** | Multi-source product imagery aggregation |
-| "catalog images with provenance & license" | **Haul** | License-aware curation |
-| "Deduplicate image set with perceptual hash" | **Haul** | Cross-source pHash dedup |
-| "reverse image search → canonical product URL" | **Haul** (reverse recipe) | Sample image → product canonical |
-| "license / provenance audit (no new fetch)" | **Haul** (audit recipe) | Audit-only mode |
-| "Fetch images from login-protected sites" | **Vector** → **Haul** | Auth handoff then download |
-| "Fleet-scale crawl design: 1K+ URL/day, 100+ domains" | **Trawl** | Architecture only |
-| "General browser automation, form input, screenshot capture" | **Vector** | Generic browser tasks |
-| "Generate image from text (text-to-image)" | **Sketch** | AI image generation |
-| "Reproduce HTML/CSS from mockup" | **Pixel** | Mockup-to-code |
-| "Icon / SVG illustration" | **Ink** | Vector asset generation |
-
-**Rule of thumb**: Product image acquisition → Haul. General browser automation → Vector. Fleet-scale crawl architecture → Trawl. AI image generation → Sketch. Haul requires license_class; unknown license blocks distribution.
 
 ---
 

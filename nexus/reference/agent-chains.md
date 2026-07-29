@@ -207,7 +207,6 @@ Complete chain templates and dynamic adjustment rules.
 | PROJECT | full | Titan → Sherpa → Builder → Radar → Guardian → Launch |
 | ECOSYSTEM | skill-audit | Gauge → Architect → Darwin |
 | ECOSYSTEM | health-check | Darwin → Gauge → Canvas |
-| ECOSYSTEM | visualization | Darwin → Realm → Canvas |
 | DEV_EXPERIENCE | cli-audit | Hone → Hearth → Gear |
 | DEV_EXPERIENCE | cli-full | Hone → Hearth → Latch → Gear → Sentinel |
 | PROJECT | onboarding | Lens → Canvas → Scribe |
@@ -301,17 +300,6 @@ Complete chain templates and dynamic adjustment rules.
 | MOBILE_NATIVE | privacy | Native[privacy] → Cloak → Radar |
 | MOBILE_NATIVE | rollout | Native[rollout] → Launch |
 | MOBILE_NATIVE | full | Port[blueprint] → Native[swiftui] + Native[compose] → Radar → Voyager → Cloak → Launch |
-| ASSET_IMAGE | catalog | Haul[catalog] → Cloak |
-| ASSET_IMAGE | lookup | Haul[lookup] |
-| ASSET_IMAGE | refresh | Haul[refresh] |
-| ASSET_IMAGE | reverse | Haul[reverse] → Cloak |
-| ASSET_IMAGE | brand | Haul[brand] → Cloak |
-| ASSET_IMAGE | audit | Haul[audit] |
-| ASSET_IMAGE | for-storybook | Haul[catalog] → Cloak → Vitrine |
-| ASSET_IMAGE | for-lp | Haul[catalog] → Cloak → Funnel |
-| ASSET_IMAGE | for-mockup | Haul[catalog] → Cloak → Pixel |
-| ASSET_IMAGE | for-atelier | Haul[catalog] → Cloak → Atelier |
-| ASSET_IMAGE | protected-source | Vector → Haul → Cloak |
 | ADVISORY | 1on1 | Sage[1on1] |
 | ADVISORY | group | Sage[group] |
 | ADVISORY | triage | Sage[triage] |
