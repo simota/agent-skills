@@ -37,6 +37,20 @@ Apex is **not** a default recipe. It is opt-in for high-stakes new features wher
 
 Autonomous mode is the **fully self-driven** form: Apex picks what to build, confirms once, and ships. The single human checkpoint is the boundary confirmation between Phase 0 and Phase 1 — once approved, everything downstream runs without further human input unless internal gates trigger.
 
+## Input Contracts (upstream handoffs)
+
+Apex is the downstream of several discovery recipes. When it is entered from one, it **consumes the packet instead of re-deriving it** — re-running discovery over a settled spec is the most common way apex wastes its most expensive phases.
+
+| Upstream | Packet | Effect on apex |
+|----------|--------|----------------|
+| `spec` | **Spec Handoff Packet** (`reference/spec-recipe.md` § Handoff contract) | **Phases 1-4 collapse to validation.** `acceptance_criteria` becomes the Phase 4 AC set directly (accord *validates* traceability rather than authoring it); `non_goals` becomes the scope bound on every spawn; `assumption_ledger` + `refutation_flags` are Phase 5 Risk-Gate inputs (omen starts from the known assumptions, not a blank pre-mortem); `reuse_findings` seeds Phase 1 so Lens does not re-scan. Phase 3 verdict is **skipped** — the direction was already picked and refuted upstream. |
+| `clone` | **Clone Handoff Packet** (`reference/clone-recipe.md` §7a) | `sdr` **constrains Phase 5 design** — the stack is locked, not re-decided; `parity_ceilings` are declared constraints, so a ceiling-bound behavior is never filed as a defect; `parity_harness` joins the Phase 6 verification set, so a new feature that breaks the clone's parity fails the loop; `coverage_gaps` are candidate goals in autonomous mode. |
+| `charter` | Charter roster | Prefer `enact` — apex ships **one** feature; a multi-package Charter is enact's shape. Apex consumes a Charter only when the user scopes it to a single package. |
+
+**Contract rule:** consuming a packet does **not** relax any apex gate. The Risk Gate, the acceptance verification, and the budget envelope run unchanged — what upstream removes is *re-derivation*, never *verification*. And per the upstream contract rule, apex does not re-litigate a settled direction; if it discovers a **must-have AC that is unbuildable as written**, it returns to `spec <slug>` rather than reinterpreting it locally.
+
+**No packet supplied** (bare `/nexus apex <goal>`): apex runs its own lightweight discovery inline, as today. On an **existing repo**, Phase 1 always includes a reuse scan before design — building a second implementation of something the repo already ships is a Phase 1 failure, not a Phase 6 one.
+
 ## When to Use Apex
 
 Use Apex when the request matches **at least 3** of:
@@ -260,7 +274,19 @@ Why Codex CLI is fixed for Phase 6:
 
 Orbit audits via Codex subagent return values: `convergence_detection`, `deduplication_guard`, `cost-per-completed-task`, `circuit_breaker`. Stuck-loop or budget-exceeded triggers `close_agent` on the running spawn and escalates to user.
 
-**Engine availability check (Phase 5 → 6 handoff prerequisite):** Orbit verifies Codex CLI is reachable, `agents.max_depth ≥ 2`, and required subagent tools (`spawn_agent`, `wait_agent`, `send_input`, `resume_agent`, `close_agent`) are permitted before consuming the contract. If unavailable, Orbit fails the handoff with a clear runner error rather than silently falling back to Claude Code Agent — Apex's cost and convergence model assumes Codex execution.
+**Engine availability check (Phase 5 → 6 handoff prerequisite):** Orbit verifies Codex CLI is reachable, `agents.max_depth ≥ 2`, and required subagent tools (`spawn_agent`, `wait_agent`, `send_input`, `resume_agent`, `close_agent`) are permitted before consuming the contract. If unavailable, Orbit **never silently falls back** — Apex's cost and convergence model assumes Codex execution, and a silent swap invalidates the budget envelope the run was authorized against. It enters the degradation protocol instead.
+
+#### Engine Degradation Protocol (Codex unavailable)
+
+Hard-failing the handoff wastes five completed phases over a runner problem. So the unavailability is surfaced as an **explicit choice with a restated cost model**, presented once via `AskUserQuestion` — it is a confirmation gate, not a fallback:
+
+| Option | Runner | Restated model | When it is the right call |
+|--------|--------|----------------|---------------------------|
+| **Abort & resume later** (default recommendation) | — | Phase 0-5 output is checkpointed; the run resumes at Phase 6 when Codex is reachable | The blocker is transient (config, auth, quota) |
+| **Claude Code fallback** | `Agent(... run_in_background)` per in-loop specialist | **Iteration ceiling drops** (`loop ≤ 4` instead of 6) and the **budget envelope is recomputed** at Claude per-token rates before the loop starts; context isolation is weaker (main-session rot risk), so Orbit tightens the deduplication guard | The feature is small-to-medium and the run should finish now |
+| **agy fallback** | `/agent` or headless `agy -p` (real pty + artifact capture, `_common/CLI_COMPATIBILITY.md §9.2`) | Gemini 3.6 Flash (High) mandate applies to every in-loop spawn; long-context branches benefit, code-gen throughput is lower | Long-context or multimodal-heavy implementation work |
+
+**Rules:** the chosen runner and its restated envelope are recorded in the Delivery Report's *Loop iterations* row (`runner: codex | claude-fallback | agy-fallback`), so a run's cost figures are never read against the wrong model. A fallback **never** relaxes the acceptance verification — `attest` stays on Claude Code, independent of whichever engine built. If the user does not answer, the run **checkpoints and stops**; it does not pick a runner on their behalf.
 
 ### Acceptance Verification (Phase 6 → Ship gate)
 
@@ -269,10 +295,13 @@ Orbit detects **loop convergence** (the iteration stopped producing changes), bu
 | Agent | Role | Pass Criterion |
 |-------|------|----------------|
 | `attest` | Extract the L3 ACs from the accord spec, adversarially check the delivered implementation for conformance, emit a traceability matrix (AC → evidence → verdict) | AC-conformance ≥ scope-mode threshold (Full ≥95% / Standard ≥85% / Lite ≥70%), zero unaddressed **must-have** ACs |
+| `attest` (**negative pass**) | Check the inverse: did the loop build anything the spec **forbade**? Walk `non_goals` / out-of-scope and the Phase 3 scope boundary against the actual diff — new surfaces, new dependencies, new config, new persisted state, and behavior outside the declared boundary | zero non-goal violations; every out-of-boundary change is either reverted or **explicitly ratified by the user**, never silently kept |
 
-This is a distinct check from Phase 6's in-loop `judge` (code-quality review) and `radar` (tests pass) — `attest` verifies **meaning**: that what was built is what the spec required. Run on Claude Code (judgment tier), independent of the Codex build engine, so the verifier shares no context with the builder.
+Conformance alone is a one-sided test: an implementation can satisfy every AC **and** have grown a feature nobody asked for, a dependency nobody approved, or a table nobody specified. An autonomous loop is exactly the setting where that happens, because "add a little more" always looks like progress from inside the loop. The negative pass is what makes the spec's scope boundary load-bearing rather than decorative.
 
-**Exit gate:** `attest.conformance ≥ threshold ∧ attest.unmet_must_haves == 0`. On fail, escalate the unmet ACs back to Phase 6 (Orbit re-enters the loop with the gap list as added contract) — bounded to 2 re-entries, then escalate to user. Never ship with unmet must-have ACs.
+Both passes are distinct from Phase 6's in-loop `judge` (code-quality review) and `radar` (tests pass) — `attest` verifies **meaning**: that what was built is what the spec required, and *only* that. Run on Claude Code (judgment tier), independent of whichever engine built (including under the degradation protocol), so the verifier shares no context with the builder.
+
+**Exit gate:** `attest.conformance ≥ threshold ∧ attest.unmet_must_haves == 0 ∧ attest.non_goal_violations == 0`. On fail, escalate the gap list (unmet ACs **and** out-of-scope additions) back to Phase 6 — Orbit re-enters the loop with it as added contract — bounded to 2 re-entries, then escalate to user. Never ship with unmet must-have ACs, and never ship an unratified scope violation.
 
 ### Ship
 
@@ -304,8 +333,10 @@ Apex emits `NEXUS_COMPLETE` with the base `## Nexus Execution Report` (`referenc
 | Spec & AC | accord traceability % + the L3 acceptance-criteria set (must-haves flagged) | Phase 4 |
 | Design decisions | atlas ADR(s) + API/schema deltas (gateway/schema); Vision direction + token/interaction summary | Phase 5 |
 | Risk-Gate verdict | tri-axis result (omen RPN / ripple blast / echo emotion+a11y) and any Conditional-Go conditions | Phase 5 Gate |
-| Loop iterations | Orbit iteration count, per-task cost, convergence reason, circuit-breaker status | Phase 6 |
-| AC-verify / attest | attest conformance % + traceability matrix (AC → evidence → verdict); unmet must-haves = 0 | Phase 6 → Ship gate |
+| Loop iterations | **`runner: codex \| claude-fallback \| agy-fallback`** + the envelope it was scored against, Orbit iteration count, per-task cost, convergence reason, circuit-breaker status | Phase 6 |
+| AC-verify / attest | attest conformance % + traceability matrix (AC → evidence → verdict); unmet must-haves = 0; **negative pass: non-goal violations = 0, with any ratified out-of-boundary change named** | Phase 6 → Ship gate |
+| Upstream packet | Which input contract was consumed (`spec` / `clone` / none) and which phases it collapsed — so the run's phase count reads correctly against its cost | § Input Contracts |
+| Follow-ups | Perf ACs left unmet within the envelope → `optimize` (target + budget handed over); coverage gaps → backlog | Ship |
 | Ship status | guardian PR + launch release/rollback plan; cumulative budget vs ceiling | Ship |
 
 On any non-ship exit (budget ceiling, Risk-Gate No-Go, attest fail past re-entry cap), the Delivery Report still emits with best-so-far per phase + the residual gap + the resumable checkpoint, never a silent stop.
@@ -497,7 +528,12 @@ Consolidated view of what apex's gates and phases guard against (drawn from the 
 | UX friction / dark patterns shipped | Brand-visible flow frustrates users, a11y regressions | Phase 5 echo gate (Emotion Valence ≥ median, 0 dark patterns, WCAG3 Bronze ≥ 3.5) + Plea-Echo divergence check |
 | Convergence mistaken for correctness | Loop passes its own tests but doesn't satisfy the spec | Acceptance Verification gate: independent attest conformance ≥ threshold ∧ 0 unmet must-haves (Claude-side, no shared context with builder) |
 | Runaway loop / re-entry storm | Open-ended spend, stuck iterations | Orbit circuit breaker (convergence + cost-per-task) + run-level budget envelope (hard-abort at ceiling) + attest re-entry cap (max 2) |
-| Engine silently degrades | Codex unreachable → silent fallback breaks the cost/convergence model | Phase 5→6 engine availability check fails the handoff with a clear runner error rather than falling back |
+| Engine silently degrades | Codex unreachable → silent fallback breaks the cost/convergence model | Phase 5→6 availability check + **Engine Degradation Protocol**: an explicit confirmed choice with a restated iteration ceiling and recomputed budget, recorded in the Delivery Report; no answer → checkpoint and stop |
+| Five phases thrown away over a runner problem | Codex unavailable → the whole run hard-fails and restarts later from scratch | Degradation protocol's abort option is a **checkpointed** resume at Phase 6, not a restart |
+| Scope creep shipped as success | The loop satisfies every AC *and* adds surfaces, deps, or persisted state nobody specified | Acceptance Verification **negative pass**: `non_goal_violations == 0`; out-of-boundary changes are reverted or explicitly ratified |
+| Re-deriving a settled spec | Apex re-runs discovery/verdict over a spec the user already locked and refuted | § Input Contracts: the Spec Handoff Packet collapses Phases 1-4 to validation; Phase 3 verdict skipped |
+| Rebuilding what the repo already ships | A second implementation of an existing module | Phase 1 reuse scan is mandatory on an existing repo (or inherited via `reuse_findings`) |
+| Filing a stack-imposed limit as a defect | A clone's declared parity ceiling gets "fixed" by the loop, moving the product off its baseline | `parity_ceilings` from the Clone Handoff Packet are declared constraints; the parity harness joins the Phase 6 verification set |
 | Decision deadlock | A 1-1-1 tie stalls or is resolved arbitrarily | Phase 3 magi split-decision escalation + Phase 0 magi tie-break / top-3 manual select |
 | Lost progress on interrupt | An abort re-pays for completed upstream phases | Cross-phase checkpoint-resume (resume from last good phase boundary) |
 
@@ -507,7 +543,8 @@ Apex is the discovery-through-ship single-feature recipe. How it differs from it
 
 | vs neighbor | Apex | The neighbor |
 |-------------|------|--------------|
-| **spec** | Discovers the need, specs it, **and** designs + builds + ships it (full cycle) | Authors the spec/AC only — stops at the document, no design/build/ship |
+| **spec** | Discovers the need, specs it, **and** designs + builds + ships it (full cycle). Entered *from* `spec` via the Spec Handoff Packet, it validates rather than re-derives (§ Input Contracts) | Authors the spec/AC only — stops at the document, no design/build/ship |
+| **optimize** | Ships the feature; a perf AC it could not meet inside the envelope is handed **to** `optimize` with its target and budget | Measures and improves one already-correct slow layer against a number — no discovery, no design, no ship-cycle |
 | **enact** | Self-contained: apex discovers its own goal and ships one feature in one chain | Charter-driven: executes a pre-authored multi-package Charter roster end-to-end (no discovery) |
 | **summit** | Optimizes for shipping one feature correctly through verification gates | Quality-max tournament — multiple candidate solutions compete, judged to a winner |
 | **feature** | High-stakes, ≥3 trigger conditions, full discovery + Risk Gate + acceptance verification | Single guided build for small/medium work — lighter chain, no Phase 0 discovery, no tri-axis gate |
