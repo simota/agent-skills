@@ -103,7 +103,7 @@ Rules:
 
 ### Targets
 
-- Keep flaky rate below `1%`.
+- Keep flaky rate below `3%` (`>10%` is a blocker — see SKILL.md Core Contract).
 - Limit retries to a maximum of `2`.
 - Track root cause, not just retry success.
 
@@ -126,7 +126,7 @@ Rules:
 
 ### CI
 - [ ] Do repeated runs surface flake before merge?
-- [ ] Is flaky rate below `1%`?
+- [ ] Is flaky rate below `3%` (`>10%` is a blocker)?
 - [ ] Are retries capped at `2`?
 - [ ] Is each flaky failure assigned a root cause?
 ```

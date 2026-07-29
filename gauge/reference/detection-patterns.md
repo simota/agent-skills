@@ -1,6 +1,6 @@
 # Detection Patterns
 
-**Purpose:** Structural detection rules for each of the 16 checklist items.
+**Purpose:** Structural detection rules for each of the 19 checklist items.
 **Read when:** Executing the CLASSIFY phase of the audit workflow.
 
 ---
@@ -231,6 +231,21 @@
 - Move detail sections (e.g. long `## Boundaries`, oversized recipe descriptions, full `## Workflow` phase notes) to `reference/<topic>.md`.
 - Replace inline `_common/` excerpts with pointers — the bytes are already cached in `_common/`.
 - Collapse multi-recipe inline notes into a `## Recipes` table + per-recipe `Read` reference.
+
+---
+
+## S11: Freshness / Staleness Check
+
+**Detection:**
+1. Extract every backticked `reference/*.md` and `_common/*.md` path cited in the SKILL.md body (Reference Map rows, Recipes table `Read` column, Chain Template pointers, inline prose citations).
+2. Resolve each path (skill-relative first, then repo-root-relative) and verify the file exists.
+3. Flag any path that does not resolve as a stale citation.
+4. Also scan the skill's `reference/*.md` files for citations to other `reference/`/`_common/` files that no longer exist.
+
+**PARTIAL trigger:** 1-2 stale citations found, none on a routing-critical path (a Recipes table `Read` column, a `## Reference Map` row, or a Chain Template pointer).
+**FAIL trigger:** 3+ stale citations, OR any stale citation on a routing-critical path.
+
+**Tooling:** `python3 _common/scripts/routing-oracle.py --severity warning` (RO-1) implements the mechanical check for `nexus/`. For other skills, grep the skill's SKILL.md + `reference/*.md` for backticked `reference/*.md` / `_common/*.md` paths and confirm each resolves (`Path.exists()`), per `normalization-checklist.md` § S11.
 
 ---
 

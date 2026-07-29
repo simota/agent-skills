@@ -263,7 +263,7 @@ After cache write, print 5 lines:
 ✓ Compass cache generated: .claude/compass-cache.md
   - Detected: <primary_language> + <frameworks joined by, max 3>
   - Size: <repo_size> ({file_count} files) → top_n = <N>
-  - Cached: <N> + universal 12 = <total> entries
+  - Cached: <N> + universal 11 = <total> entries
   - Next runs: /compass recommend works from cache only (~95% context reduction)
   - Refresh: /compass refresh / TTL: <ttl_days> days
 ```

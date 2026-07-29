@@ -100,12 +100,14 @@ Remaining budget:
 
 ## Burn Rate Alerts (Multi-Window)
 
+Canonical tier table (matches SKILL.md Core Contract — `alerting-strategy.md` points here for full detail):
+
 | Alert | Burn Rate | Long Window | Short Window | Budget Consumed |
 |-------|-----------|-------------|--------------|-----------------|
-| **Page (critical)** | 14.4x | 1h | 5min | 2% in 1h |
-| **Page (urgent)** | 6x | 6h | 30min | 5% in 6h |
-| **Ticket (warning)** | 3x | 1d | 2h | 10% in 1d |
-| **Ticket (low)** | 1x | 3d | 6h | 10% in 3d |
+| **Fast burn (page)** | 14.4x | 1h | 5min | ~2% in 1h |
+| **Medium burn (page)** | 6x | 6h | 30min | ~5% in 6h |
+| **Slow burn (ticket)** | 3x | 3d | 6h | ~10% in 3d |
+| **Baseline (trend)** | 1x | 30d | — | 100% at SLO window end |
 
 ```yaml
 # Prometheus alerting rules

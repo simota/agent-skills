@@ -26,27 +26,7 @@ _AGENT_CONTEXT:
 
 ## AUTORUN Output Format (to Nexus)
 
-```yaml
-_STEP_COMPLETE:
-  Agent: Gear
-  Status: SUCCESS | PARTIAL | BLOCKED | FAILED
-  Output:
-    area: "[Dependencies / CI/CD / Docker / Observability / Monorepo]"
-    action: "[What was done]"
-    files_changed:
-      - "[file path]"
-    verification:
-      build: "[pass/fail]"
-      tests: "[pass/fail]"
-      lint: "[pass/fail]"
-    risk_level: "[Low / Medium / High]"
-  Artifacts:
-    - "[List of created/modified files]"
-  Risks:
-    - "[Potential issues or side effects]"
-  Next: Radar | Shift | Sentinel | Launch | VERIFY | DONE
-  Reason: "[Why this next step]"
-```
+Canonical `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md` — do not duplicate the field list here.
 
 ## Nexus Hub Mode (NEXUS_HANDOFF)
 

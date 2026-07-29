@@ -244,24 +244,7 @@ For maintaining a record of all Magi decisions:
 
 ## Engine Mode Full Deliberation Report Template
 
-```markdown
-# MAGI Engine Mode Deliberation Report
-
-## Decision Request
-- **Type**: [Architecture / Trade-off / Go-No-Go / Strategy / Priority]
-- **Subject**: [Decision subject]
-- **Requestor**: [User / Agent name]
-- **Deliberation Mode**: Engine Mode
-- **Urgency**: [Low / Medium / High / Critical]
-- **Reversibility**: [Low / Medium / High]
-
----
-
-## Context Summary
-[2-3 sentences describing the decision context, constraints, and what's at stake]
-
-...
-```
+Same structure as the Full Deliberation Report Template above, with title `# MAGI Engine Mode Deliberation Report` and an added `- **Deliberation Mode**: Engine Mode` field after Requestor.
 
 ---
 
@@ -351,22 +334,7 @@ For maintaining a record of all Magi decisions:
 
 ## Engine Mode Compact Report Template (AUTORUN Mode)
 
-```markdown
-## MAGI Engine Mode Verdict: [Subject]
-
-| Engine | Vote | Conf | Rationale |
-|--------|------|------|-----------|
-| Claude | [A/R/AB] | [N] | [One line] |
-| Codex | [A/R/AB] | [N] | [One line] |
-| Gemini | [A/R/AB] | [N] | [One line] |
-
-**Consensus**: [Pattern] | **Confidence**: [Score] | **Decision**: [One sentence]
-
-[ENGINE_MODE_VERDICT_DISPLAY ASCII art]
-
-**Risks**: [Key risk] → [Mitigation]
-**Next**: [Recommended action/agent]
-```
+Same structure as the Compact Report Template above, with title `## MAGI Engine Mode Verdict: [Subject]`, header row `| Engine | Vote | Conf | Rationale |`, rows for Claude/Codex/agy (in place of Logos/Pathos/Sophia), and `[ENGINE_MODE_VERDICT_DISPLAY ASCII art]` in place of `[VERDICT_DISPLAY ASCII art]`.
 
 ---
 
@@ -380,9 +348,9 @@ For maintaining a record of all Magi decisions:
 
 **Codex (Confidence: 72):** APPROVE GraphQL. Type safety and introspection reduce integration bugs. Dataloader pattern solves N+1. Tooling ecosystem (Apollo, Relay) is mature. Risk: complexity of authorization in resolvers requires careful design.
 
-**Gemini (Confidence: 68):** REJECT GraphQL. Migration cost for 50+ consumers is significant. REST with OpenAPI spec + response field filtering achieves 80% of the benefit at 20% of the cost. GraphQL adds operational complexity (caching, monitoring, rate limiting). Recommend REST optimization first.
+**agy (Confidence: 68):** REJECT GraphQL. Migration cost for 50+ consumers is significant. REST with OpenAPI spec + response field filtering achieves 80% of the benefit at 20% of the cost. GraphQL adds operational complexity (caching, monitoring, rate limiting). Recommend REST optimization first.
 
-**Verdict:** 2-1 ENGINE MAJORITY — APPROVE GraphQL with incremental adoption (Gemini dissent recorded)
+**Verdict:** 2-1 ENGINE MAJORITY — APPROVE GraphQL with incremental adoption (agy dissent recorded)
 
 ```
     ╔══════════════════════════════════════════════════════════════╗

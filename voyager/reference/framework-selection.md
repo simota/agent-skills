@@ -157,7 +157,7 @@ test('displays mocked users', async (t) => {
 
 | Tool | Minimum Version | Recommended | Notes |
 |------|----------------|-------------|-------|
-| **Playwright** | 1.49+ | 1.50+ | Clock API, Aria Snapshots |
+| **Playwright** | 1.59+ | 1.60 | Screencast, browser-bind, HAR tracing — 2026-05 default target (see `reference/2026-best-practices.md`) |
 | **Cypress** | 13+ | 13.x | Component testing stable |
 | **WebdriverIO** | 9+ | 9.x | New APIs, Appium 2.0 |
 | **TestCafe** | 3.5+ | 3.6+ | Declining ecosystem |

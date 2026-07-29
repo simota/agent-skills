@@ -2,7 +2,7 @@
 
 Purpose: Use this reference when syncing Figma variables or Token Studio with code, generating DTCG tokens, or automating token diffs in CI.
 
-> **2026 baseline.** Adopt the **W3C Design Tokens Community Group (DTCG) stable format** as the on-disk source of truth — `$value` / `$type` / `$description` / `$extensions` with the `$`-prefix discipline (spec reached first stable version on 2025-10-28). The Figma side uses **Figma Variables** for simple flows and **Tokens Studio** when you need GitHub sync, multi-platform export, or CI/CD wiring. Style Dictionary v4+ and Terrazzo consume DTCG natively without legacy-format adapters. See `token-system.md` for the broader framing.
+> **2026 baseline.** Adopt the **W3C Design Tokens Community Group (DTCG) stable format** as the on-disk source of truth — `$value` / `$type` / `$description` / `$extensions` with the `$`-prefix discipline (spec reached first stable version on 2025-10-28). The Figma side uses **Figma Variables** for simple flows and **Tokens Studio** when you need GitHub sync, multi-platform export, or CI/CD wiring. Style Dictionary v5+ and Terrazzo consume DTCG natively without legacy-format adapters. See `token-system.md` for the broader framing.
 
 ## Contents
 
@@ -49,7 +49,7 @@ Rules:
 
 ## Style Dictionary Configuration
 
-### Style Dictionary v4
+### Style Dictionary v5
 
 ```js
 export default {
@@ -65,7 +65,7 @@ export default {
 };
 ```
 
-Use v4 for native DTCG support where possible.
+Use v5 for native DTCG support where possible.
 
 ## Token Studio For Figma
 
@@ -187,7 +187,7 @@ Auto-migration from v3:
 npx codemod styledictionary/4/migration-recipe
 ```
 
-Note: v4 has partial DTCG support. Full support is planned for v5.
+Note: v4 had only partial DTCG support. v5 supports DTCG 2025.10 dimension object values and all 14 DTCG color spaces; resolver module support is still in progress.
 
 ## Figma Variables Engine (2025-2026 Enhancements)
 

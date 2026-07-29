@@ -162,7 +162,7 @@ ENFORCEMENT  →  Redis Cluster + Lua for atomic
              →  or Envoy ratelimit / cloud-native
              →  fallback strategy if Redis is down (fail-open vs fail-closed)
 
-SIGNALING    →  RFC 9331 RateLimit headers on EVERY response (not just 429)
+SIGNALING    →  draft-ietf-httpapi-ratelimit-headers RateLimit headers on EVERY response (not just 429)
              →  429 response with Retry-After + Problem Details
              →  RateLimit-Policy header
 
@@ -264,7 +264,7 @@ When `rate-limit` completes, emit:
 - **Scoping plan** (key / tenant / IP / composite).
 - **Plan tier table** with limits + bursts.
 - **Enforcement backend** + failure mode.
-- **Header spec** (RFC 9331) + 429 body.
+- **Header spec** (draft-ietf-httpapi-ratelimit-headers) + 429 body.
 - **Observability hooks**.
 - **Client documentation** essentials.
 - **Handoffs**: Builder, Beacon, Scaffold, Probe, Vigil, Voice.

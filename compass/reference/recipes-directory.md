@@ -17,8 +17,10 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **atelier**: pipeline★ / extract / persist / assets
 - **atlas**: analyze★ / deps / godclass / adr / rfc / cycle / coupling / boundary / multi / c4-model
 - **attest**: verify★ / bdd / trace / report / gherkin / property / oracle
+- **bazaar**: premium★ / lead-gen / saas / ecom / event / magnet
 - **beacon**: slo★ / tracing / alerts / dashboard / capacity / log / golden / toil
 - **bolt**: frontend★ / backend / render / async / cache / bundle / network / memory
+- **bond**: reengagement★ / churn / gamification / habit / loyalty / winback / lifecycle-email / power-user
 - **breach**: scenario★ / threat-model / purple / ai-red / phishing / supply / social
 - **builder**: fix★ / crud / api / ddd / harden / port / integrate / patch
 - **canon**: owasp★ / wcag / openapi / iso / gap / nist / pci / gdpr
@@ -29,15 +31,16 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **cloak**: pii★ / flow / consent / dpia / gdpr / ccpa / appi / pseudonymize
 - **compass**: recommend★ / catalog / onboard / recipes / init / refresh
 - **compete**: matrix★ / swot / battle-card / positioning / llm-visibility / battle / winloss / moat
-- **comply**: soc2★ / pci / hipaa / iso / policy / gdpr / audit / vendor
 - **crest**: github★ / linkedin / blog / conference / sns / topic-dna / portfolio / bio
 - **crypt**: algorithm★ / key / e2ee / tls / signature / password / kms / pqc
 - **cue**: script★ / storyboard / narration / explainer / shorts / captions / localize
+- **cull**: scan★ / shai-hulud / lockfile / eradicate / rotate / harden / propagation
 - **darwin**: health★ / fitness / evolve / sunset
 - **director**: demo★ / scenario / record / onboard / voiceover / captions / thumbnail
 - **dot**: svg★ / canvas / phaser / pillow / css / animation / palette / tilesheet
 - **echo**: walkthrough★ / confusion / emotion / persona / heuristic / sus / aloud
 - **experiment**: ab★ / cuped / switchback / analyze / guardrail / ff / srm / sequential / bayesian
+- **field**: interview★ / usability / analysis / persona / journey / survey / diary / cards / multi
 - **flow**: hover★ / loading / transition / gesture / spring / scroll / parallax
 - **flux**: reframe★ / shift / cross / challenge / scamper / analogy / inversion
 - **forge**: ui★ / api / fullstack / landing / mobile / dashboard / ai
@@ -54,7 +57,6 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **hearth**: zsh★ / tmux / neovim / ghostty / vscode / git / shellfn / audit
 - **helm**: scenario★ / swot / pestle / porter / forecast / jtbd / blue-ocean / wardley
 - **hone**: audit★ / codex / agy / claude / diff
-- **husk**: scan★ / shai-hulud / lockfile / eradicate / rotate / harden / propagation
 - **ink**: icon★ / illustration / system / sprite / animate / theme / a11y / optimize / pictogram / logo
 - **judge**: pr★ / security / perf / style / quick / intent
 - **latch**: configure★ / debug / pretool / posttool / notification / sessionstart / security
@@ -62,7 +64,6 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **ledger**: estimate★ / rightsizing / anomaly / ri-sp / gpu-cost / tagging / finops-framework / unit-economics / greenops
 - **lens**: map★ / discover / trace / responsibility / dependency / hotspot / evolution
 - **lore**: curate★ / decay / propagate / extract
-- **lure**: premium★ / lead-gen / saas / ecom / event / magnet
 - **magi**: decide★ / tradeoff / arbitrate / strategic / sixhat / devil / delphi
 - **matrix**: combine★ / cover / plan / prioritize / pairwise / equiv-class / risk-cover / qa-scenario
 - **mend**: runbook★ / diagnose / rollback / verify / scale / circuit / canary
@@ -70,9 +71,9 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **morph**: md★ / pdf / docx / xlsx / html / epub / latex / batch
 - **muse**: tokens★ / apply / theme / typography / spacing / motion / elevation / radius
 - **native**: swiftui★ / compose★ / liquidglass / expressive / offline / push / deeplink / bg / passkey / privacy / rollout / store
-- **navigator**: collect★ / form / screenshot / network / stealth / mobile / parallel
 - **nest**: audit★ / restructure / progressive / cache / naming / sharding / monorepo
 - **nexus**: classify★ / bug / feature / security / refactor / optimize / proactive
+- **oath**: soc2★ / pci / hipaa / iso / policy / gdpr / audit / vendor
 - **omen**: premortem★ / rpn / ap / mode / faulttree / bowtie / hazop
 - **oracle**: prompt★ / rag / eval / safety / mlops / agent / cost / embed
 - **orbit**: generate★ / contract / audit / recover
@@ -90,8 +91,6 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **rally**: parallel★ / teams / codex-subagents / coordinate / engine-paradigm
 - **rank**: ice★ / rice / wsjf / moscow / kano / cod / value-effort / pokerplan
 - **relay**: webhook★ / bot / websocket / adapter / sse / queue / rate
-- **researcher**: interview★ / usability / analysis / persona / journey / survey / diary / cards
-- **retain**: reengagement★ / churn / gamification / habit / loyalty / winback / lifecycle-email / power-user
 - **riff**: expand★ / propose / evaluate / subtract / steelman / scamper / crazy8
 - **ripple**: impact★ / vertical / horizontal / naming / blast-radius / rollback-plan / canary-scope
 - **saga**: story★ / scenario / narrative / customer / hero-journey / bab / pyramid
@@ -105,12 +104,10 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **shard**: isolation★ / rls / routing / scale / migration / provisioning / quota
 - **sherpa**: epic★ / story / replan / review / atomic / walking-skeleton / vertical-slice
 - **shift**: plan★ / codemod / strangler / verify / framework / lang / deprecate / detect / modernize / radar
-- **showcase**: story★ / catalog / vrt / csf3 / interaction / mdx / cosmos / a11y / chromatic / coverage
 - **siege**: load★ / contract / chaos / mutation / fuzz / property / smoke / concurrency
 - **sigil**: generate★ / analyze / convention / migrate
 - **sketch**: generate★ / edit / prompt / batch / style / upscale / cinematic / provenance / policy
 - **spark**: propose★ / plan / brainstorm / refine / opportunity / kill / retro
-- **spider**: topology★ / frontier / politeness / compliance / extraction / dedup / monitoring
 - **stage**: marp★ / reveal / slidev / conference / timing / narrative / visual / rehearsal
 - **stream**: etl★ / elt / stream / dbt / cdc / reverse / quality
 - **sweep**: dead★ / orphan / unused / tidy / imports / comments / types
@@ -119,10 +116,13 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **tome**: learn★ / diff / onboard / record / worked / kata / quickstart
 - **trace**: replay★ / persona / story / archaeology / rageclick / funnel / heatmap
 - **trail**: regression★ / bisect / blame / history / flame / delta / revert / static-rules
+- **trawl**: topology★ / frontier / politeness / compliance / extraction / dedup / monitoring
 - **triage**: respond★ / impact / recover / postmortem / first-response / escalation / comms
 - **tuner**: explain★ / slow / index / plan / cache / connection / vacuum
+- **vector**: collect★ / form / screenshot / network / stealth / mobile / parallel
 - **vigil**: sigma★ / yara / coverage / hunt / snort / playbook / ioc
 - **vision**: direction★ / redesign / trend / system / brand / moodboard / audit
+- **vitrine**: story★ / catalog / vrt / csf3 / interaction / mdx / cosmos / a11y / chromatic / coverage
 - **voice**: nps★ / review / sentiment / classify / insight / kano / thematic / csat
 - **void**: prune★ / cut / question / simplify
 - **voyager**: playwright★ / page-object / auth / a11y / visual / api / mobile / component
@@ -132,7 +132,7 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 
 ---
 
-**Total**: 120 skills with Recipes.
+**Total**: 119 skills with Recipes.
 
 Auto-generated from SKILL.md `## Recipes` tables by `_common/scripts/generate-recipes-directory.py`. Do not edit by hand.
 

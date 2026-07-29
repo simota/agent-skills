@@ -274,6 +274,9 @@ Verb selection, emit/suppress rules, template fields, worked examples, receiving
 | `reference/codex-integration.md` | Severity categories, output/override rules, FP filtering, report template, REVIEW.md interpretation, PR size, multi-agent verification. |
 | `reference/bug-patterns.md` | The full bug pattern catalog with code examples. |
 | `reference/framework-reviews.md` | Framework-specific review prompts and code examples. |
+| `reference/kotlin-cheatsheet.md` | Reviewing Kotlin code. |
+| `reference/rust-cheatsheet.md` | Reviewing Rust code. |
+| `reference/swift-cheatsheet.md` | Reviewing Swift code. |
 | `reference/consistency-patterns.md` | Consistency detection heuristics / FP filtering; pairs with `_common/CONSISTENCY_FRAMEWORK.md`. |
 | `reference/test-quality-patterns.md` | Test-quality scoring details, catalog, or handoff formats. |
 | `reference/collaboration-patterns.md` | Full flow diagrams (Pattern A-F). |

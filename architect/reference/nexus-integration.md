@@ -195,67 +195,13 @@ Agents that [category purpose].
 
 ## NEXUS_HANDOFF Format
 
-### Required Fields
-
-```yaml
-NEXUS_HANDOFF_FIELDS:
-  required:
-    - Step: "[X/Y]"                    # Current step / total steps
-    - Agent: "[AgentName]"             # This agent's name
-    - Summary: "[1-3 lines]"           # What was done
-    - "Key findings / decisions"       # List of key items
-    - "Artifacts"                      # Files, links, commands
-    - "Risks / trade-offs"             # Identified risks
-    - "Open questions"                 # Blocking/non-blocking
-    - "Suggested next agent"           # With reason
-    - "Next action"                    # CONTINUE/VERIFY/DONE
-
-  conditional:
-    - "Pending Confirmations"          # If user input needed
-    - "User Confirmations"             # If user responded
-```
-
-### Format Template
-
-```text
-## NEXUS_HANDOFF
-- Step: [X/Y]
-- Agent: [AgentName]
-- Summary: [1-3 lines describing outcome]
-- Key findings / decisions:
-  - [Finding 1]
-  - [Finding 2]
-  - [Decision 1]
-- Artifacts (files/commands/links):
-  - [Artifact 1]
-  - [Artifact 2]
-- Risks / trade-offs:
-  - [Risk 1]
-  - [Trade-off 1]
-- Open questions (blocking/non-blocking):
-// ...
-```
+Canonical schema (required/recommended/optional fields, examples, rules) lives in `_common/HANDOFF.md` — do not duplicate it here. Architect emits it per that file's format when input contains `## NEXUS_ROUTING`.
 
 ---
 
 ## _AGENT_CONTEXT Format
 
-### Required Fields
-
-```yaml
-_AGENT_CONTEXT:
-  Role: "[AgentName]"           # Agent being invoked
-  Task: "[Specific task]"       # What to do
-  Mode: "AUTORUN"               # Execution mode
-  Chain: "[Previous agents]"    # Context of chain
-  Input: "[Handoff content]"    # From previous agent
-  Constraints:
-    - "[Constraint 1]"
-    - "[Constraint 2]"
-  Expected_Output: "[What Nexus expects]"
-```
-
-### Example
+Canonical schema lives in `_common/AUTORUN.md`. Architect's own field mapping example:
 
 ```yaml
 _AGENT_CONTEXT:
@@ -277,35 +223,7 @@ _AGENT_CONTEXT:
 
 ## _STEP_COMPLETE Format
 
-### Required Fields
-
-```yaml
-_STEP_COMPLETE:
-  Agent: "[AgentName]"
-  Status: "SUCCESS | PARTIAL | BLOCKED | FAILED"
-  Output:
-    [key]: "[value]"
-    files_changed:
-      - path: "[path]"
-        type: "[created/modified/deleted]"
-        changes: "[description]"
-  Handoff:
-    Format: "[SENDER]_TO_[RECEIVER]_HANDOFF"
-    Content: "[Full handoff content]"
-  Artifacts:
-    - "[Artifact 1]"
-  Risks:
-# ...
-```
-
-### Status Definitions
-
-| Status | Meaning | Next Action |
-|--------|---------|-------------|
-| SUCCESS | Task completed fully | Proceed to next agent |
-| PARTIAL | Task partially done | May need retry or skip |
-| BLOCKED | Cannot proceed | Needs user input or different agent |
-| FAILED | Task failed | Error recovery or abort |
+Architect-specific `Output` schema lives in `reference/autorun-schema.md`; general protocol (mode semantics, error handling) lives in `_common/AUTORUN.md`. Do not duplicate the field list here.
 
 ---
 
@@ -349,21 +267,26 @@ New agents must respect guardrail levels:
 
 ```yaml
 GUARDRAIL_LEVELS:
-  L1:
-    trigger: "lint_warning"
-    action: "Log, continue"
+  L1: # MONITORING
+    trigger: "minor_warning, lint_warning"
+    action: "Log only, continue execution"
     agent_response: "Note in artifacts, proceed"
 
-  L2:
-    trigger: "test_failure < 20%"
+  L2: # CHECKPOINT
+    trigger: "test_failure < 20%, security_warning"
     action: "Auto-verify, conditional continue"
     agent_response: "Report failures, suggest fixes"
 
-  L3:
+  L3: # PAUSE
     trigger: "test_failure > 50%, breaking_change"
-    action: "Pause, auto-recover"
+    action: "Pause, attempt auto-recovery"
     agent_response: "Set status BLOCKED, explain issue"
-# ...
+
+  L4: # ABORT
+    trigger: "critical_security, data_integrity_risk"
+    action: "Immediate stop, rollback"
+    agent_response: "Set status BLOCKED, escalate to user"
+# See nexus/reference/guardrails.md for the canonical definitions.
 ```
 
 ---
@@ -408,7 +331,7 @@ After integration, update:
    - Add to agent catalog table
    - Add usage example
 
-2. **nexus/SKILL.md**
+2. **nexus/reference/routing-matrix.md**
    - Update routing matrix
    - Update category list
 

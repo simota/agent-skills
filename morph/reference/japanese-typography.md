@@ -55,15 +55,9 @@ pandoc input.md -o output.pdf \
   --pdf-engine=xelatex \
   -V mainfont="Hiragino Mincho ProN"
 
-# wkhtmltopdf
-wkhtmltopdf \
-  --encoding UTF-8 \
-  --page-size A4 \
-  --margin-top 25mm \
-  --margin-bottom 25mm \
-  --margin-left 25mm \
-  --margin-right 25mm \
-  input.html output.pdf
+# wkhtmltopdf — DO NOT USE: archived/EOL since 2023, no security updates
+# (see SKILL.md Critical Decision Rules). For HTML -> PDF use weasyprint
+# or Chrome/Puppeteer instead.
 ```
 
 For encoding repair:

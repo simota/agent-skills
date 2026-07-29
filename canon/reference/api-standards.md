@@ -263,7 +263,9 @@ Content-Encoding: gzip
 
 ---
 
-## RFC 7807 - Problem Details for HTTP APIs
+## RFC 9457 (obsoletes RFC 7807) - Problem Details for HTTP APIs
+
+> RFC 7807 (2016) was obsoleted by **RFC 9457** (2023-07). The format below is unchanged; cite RFC 9457.
 
 ### Standard Error Format
 

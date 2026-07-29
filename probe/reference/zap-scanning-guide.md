@@ -3,7 +3,7 @@
 Purpose: Use this file when you need OWASP ZAP defaults for baseline web scanning, API scanning, authentication testing, or ZAP daemon/API usage.
 
 > **Currency note (2026-05)**:
-> - **ZAP 2.16.0** (released 2025-01-10, `zaproxy.org/blog/2025-01-10-zap-2-16-0/`) is the current GA. It is the **first full release under the "ZAP by Checkmarx" brand** (Checkmarx hired Simon Bennetts, Rick Mitchell, and Ricardo Pereira in 2024-09 and now funds development). Baseline Java requirement is now **JDK 17+**.
+> - **ZAP 2.17.0** (released 2025-12-15, `zaproxy.org/blog/2025-12-15-zap-2-17-0/`) is the current GA (v2.16.0, released 2025-01-10, was the previous GA and the **first full release under the "ZAP by Checkmarx" brand** — Checkmarx hired Simon Bennetts, Rick Mitchell, and Ricardo Pereira in 2024-09 and now funds development). Baseline Java requirement is now **JDK 17+**.
 > - **Client Trawl** was promoted to **Beta** with full Automation Framework support and an updated `spiderClient` job. The traditional spider also received a refactor.
 > - ZAP remains Apache 2.0; the PTK add-on continues to combine DAST + IAST + SAST + SCA in one authenticated browser session (Chrome / Edge / Firefox) with client-side alert coverage.
 > - Burp Suite Professional (PortSwigger) shipped **Burp AI** (announced 2025-03-31) with AI-driven login-sequence recording, automated issue validation via AI-generated PoCs, and AI insights inside Repeater. Every Pro user receives 10,000 AI credits. When evaluating tooling, treat Burp AI as the closest paid equivalent for authenticated scans / API DAST.
@@ -99,4 +99,4 @@ For each ZAP run, capture:
 - Rules emphasized or disabled
 - Confirmed findings vs noisy signals
 - Exported artifacts such as HTML, JSON, or SARIF-convertible results
-- ZAP version (e.g. `2.16.0`) and the active Automation Framework job set (`spiderClient`, `activeScan`, `passiveScan-wait`, etc.) — needed for reproducibility once Checkmarx promotes new Beta jobs to GA
+- ZAP version (e.g. `2.17.0`) and the active Automation Framework job set (`spiderClient`, `activeScan`, `passiveScan-wait`, etc.) — needed for reproducibility once Checkmarx promotes new Beta jobs to GA

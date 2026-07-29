@@ -85,13 +85,14 @@ Alert hygiene checklist (quarterly):
 
 ### Multi-Window Multi-Burn-Rate Alerting (2026 default)
 
-Google SRE's *Alerting on SLOs* recipe is the 2026 baseline for SLO-driven paging. Each rule pairs a **long window** that catches sustained burn with a **short window** that confirms the issue is current rather than historical residue. Three tiers cover the budget spectrum:
+Google SRE's *Alerting on SLOs* recipe is the 2026 baseline for SLO-driven paging. Each rule pairs a **long window** that catches sustained burn with a **short window** that confirms the issue is current rather than historical residue. Four tiers cover the budget spectrum (canonical values per SKILL.md Core Contract; full table with Prometheus rule examples and Sloth CRD mapping in `reference/slo-sli-design.md` → "Burn Rate Alerts (Multi-Window)"):
 
-| Tier | Long window | Short window | Long burn rate | Short burn rate | Budget consumed | Action |
-|------|-------------|---------------|------------------|------------------|------------------|--------|
-| Page | `1 h` | `5 m` | `> 14.4` | `> 14.4` | `~2%` of monthly budget in `1 h` | P1 page |
-| Ticket | `6 h` | `30 m` | `> 6` | `> 6` | `~5%` of monthly budget in `6 h` | P2 ticket, work within business hours |
-| Trend | `3 d` | `6 h` | `> 1` | `> 1` | `~10%` of monthly budget in `3 d` | Weekly review, prioritise reliability work |
+| Tier | Long window | Short window | Burn rate | Budget consumed | Action |
+|------|-------------|---------------|------------------|------------------|--------|
+| Fast burn | `1 h` | `5 m` | `14.4×` | `~2%` in `1h` | P1 page |
+| Medium burn | `6 h` | `30 m` | `6×` | `~5%` in `6h` | P2 page/ticket, work within business hours |
+| Slow burn | `3 d` | `6 h` | `3×` | `~10%` in `3d` | Ticket, prioritise reliability work |
+| Baseline | `30 d` | — | `1×` | Budget exhausted at SLO window end | Weekly trend review |
 
 Implementation rules:
 

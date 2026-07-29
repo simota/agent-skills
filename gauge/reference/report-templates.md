@@ -19,6 +19,7 @@
 | # | Item | Status | Priority | Evidence |
 |---|------|--------|----------|----------|
 | F1 | YAML Frontmatter | PASS/PARTIAL/FAIL | P3 | [brief evidence] |
+| F2 | Description Discoverability | PASS/PARTIAL/FAIL | P0 | [brief evidence] |
 | L1 | Language Compliance | PASS/PARTIAL/FAIL | P1 | [brief evidence] |
 | H1 | CAPABILITIES_SUMMARY | PASS/PARTIAL/FAIL | P3 | [brief evidence] |
 | H2 | COLLABORATION_PATTERNS | PASS/PARTIAL/FAIL | P3 | [brief evidence] |
@@ -32,14 +33,20 @@
 | S7 | Collaboration | PASS/PARTIAL/FAIL | P0 | [brief evidence] |
 | S8 | Reference Map | PASS/PARTIAL/FAIL | P3 | [brief evidence] |
 | S9 | Operational | PASS/PARTIAL/FAIL | P3 | [brief evidence] |
+| S10 | Body Size Constraint | PASS/PARTIAL/FAIL | P1 | [brief evidence] |
+| S11 | Freshness / Staleness Check | PASS/PARTIAL/FAIL | P2 | [brief evidence] |
 | A1 | AUTORUN Support | PASS/PARTIAL/FAIL | P0 | [brief evidence] |
 | A2 | Nexus Hub Mode | PASS/PARTIAL/FAIL | P0 | [brief evidence] |
+| CQ1 | Obviousness Density | PASS/PARTIAL/FAIL | P1 (FAIL) / P2 (PARTIAL)* | [brief evidence] |
+| CQ2 | Description Trigger-Word | PASS/PARTIAL/FAIL | P1 (FAIL) / P2 (PARTIAL)* | [brief evidence] |
+
+\* CQ1/CQ2 priority is status-dependent, not fixed — see `reference/content-quality-audit.md`.
 
 ### Summary
 
-- **PASS:** {count}/16
-- **PARTIAL:** {count}/16
-- **FAIL:** {count}/16
+- **PASS:** {count}/21
+- **PARTIAL:** {count}/21
+- **FAIL:** {count}/21
 - **P0 violations:** {list}
 - **P1 violations:** {list}
 
@@ -63,7 +70,7 @@
 
 ### Health Score Formula
 
-`Health Score = (total_pass / (total_skills × 16)) × 100`
+`Health Score = (total_pass / (total_skills × 21)) × 100` (19 structural + 2 content items — CQ1, CQ2)
 
 ### Grade Scale
 
@@ -78,9 +85,9 @@
 
 ### Compliance Matrix
 
-| Skill | F1 | L1 | H1 | H2 | H3 | S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | S9 | A1 | A2 | Score |
-|-------|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|-------|
-| accord | ✓/△/✗ | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | X/16 |
+| Skill | F1 | F2 | L1 | H1 | H2 | H3 | S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | S9 | S10 | S11 | A1 | A2 | CQ1 | CQ2 | Score |
+|-------|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|-----|-----|----|----|-----|-----|-------|
+| accord | ✓/△/✗ | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | X/21 |
 ...
 
 **Legend:** ✓ = PASS, △ = PARTIAL, ✗ = FAIL
@@ -110,8 +117,8 @@
 ## Fix Plan: {AGENT_NAME}
 
 **Date:** YYYY-MM-DD
-**Current score:** {score}/16 ({pct}%)
-**Target score:** 16/16 (100%)
+**Current score:** {score}/21 ({pct}%)
+**Target score:** 21/21 (100%)
 **Violations:** {count} ({p0_count} P0, {p1_count} P1, {p2_count} P2, {p3_count} P3)
 
 ### Fixes (priority order)
@@ -183,13 +190,13 @@ Use this format when auditing multiple skills in a single session.
 
 **Date:** YYYY-MM-DD
 **Skills audited:** {count}
-**Average score:** {score}/16 ({pct}%)
+**Average score:** {score}/21 ({pct}%)
 
 ### Quick Results
 
 | Skill | Score | Grade | P0 | P1 | P2 | P3 | Top violation |
 |-------|-------|-------|----|----|----|----|---------------|
-| {name} | X/16 | {grade} | {count} | {count} | {count} | {count} | {item} |
+| {name} | X/21 | {grade} | {count} | {count} | {count} | {count} | {item} |
 ...
 
 ### Action Items

@@ -19,7 +19,7 @@
 
 ```
 [agent_name]/
-├── SKILL.md              # Main specification (60-120 lines, principle-centered)
+├── SKILL.md              # Main specification (400-1400 lines, principle-centered)
 └── reference/
     ├── patterns.md       # Design patterns (required)
     ├── examples.md       # Usage examples (required)

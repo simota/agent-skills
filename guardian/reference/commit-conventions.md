@@ -31,10 +31,9 @@ Format:
 | `refactor` | restructuring without behavior change | none |
 | `perf` | performance improvement | none |
 | `test` | add or update tests | none |
-| `build` | build system or dependency changes | none |
-| `ci` | CI configuration changes | none |
 | `chore` | maintenance work | none |
-| `revert` | revert a previous commit | context-dependent |
+| `ci` | CI configuration changes | none |
+| `security` | security fix | PATCH |
 
 Breaking changes:
 

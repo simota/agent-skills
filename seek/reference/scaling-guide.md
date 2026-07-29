@@ -95,7 +95,7 @@ SET hnsw.ef_search = 40;
 -- Low latency (autocomplete, suggestions)
 CREATE INDEX ON docs USING hnsw (embedding vector_cosine_ops)
   WITH (m = 12, ef_construction = 128);
-SET hnsv.ef_search = 20;
+SET hnsw.ef_search = 20;
 ```
 
 ---

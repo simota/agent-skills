@@ -77,7 +77,7 @@ canonical_owner.collaboration_partners = union(canonical, merged_in)
 - Re-activation: restore directory, re-add to Pack(s) [<list>], re-add signal keywords
 
 ### Handoff
-→ Architect (`ARCHITECT_TO_NEXUS_HANDOFF` after execution)
+→ Architect (`PRUNE_TO_ARCHITECT_MERGE` after execution)
 ```
 
 ## Always

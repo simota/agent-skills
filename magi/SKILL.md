@@ -12,7 +12,7 @@ CAPABILITIES_SUMMARY:
 - strategy_decision: Build vs buy, refactor vs rewrite, invest vs defer recommendations
 - priority_arbitration: Competing requirements ordering, resource allocation decisions
 - confidence_weighted_voting: 4 consensus patterns (3-0 unanimous, 2-1 majority, 1-1-1 split, 0-3 rejection)
-- engine_mode_deliberation: Three-engine deliberation (Claude+Codex+Gemini) for high-stakes decisions with physical independence
+- engine_mode_deliberation: Three-engine deliberation (Claude+Codex+agy) for high-stakes decisions with physical independence
 - dissent_documentation: Minority perspective recording and risk register generation
 - decision_audit_trail: Full deliberation transcript with traceability
 - escalation_routing: Split decision escalation requiring human judgment

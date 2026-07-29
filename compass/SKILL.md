@@ -116,7 +116,7 @@ Behavior notes per Recipe:
 - `catalog`: Cache fully bypassed. Always read `reference/catalog.md` + `reference/recipes-directory.md` and emit the full listing.
 - `onboard`: Cache not used. Standard flow centered on `reference/examples.md`.
 - `recipes`: Cache not used. Read `reference/recipes-directory.md` directly; filter by argument (skill name) when supplied.
-- `init`: Read `reference/cache-recipes.md` first. SCAN (signals from `package.json` / `Cargo.toml` / `pyproject.toml` / `go.mod` / file-extension distribution / `CLAUDE.md`) → SIZE (file count → small / medium / large / xlarge → `top_n` 15-50) → SCORE (signal-to-skill mapping; direct dep match = H, convention match = M, speculative = L) → PICK (`top_n` + 12 universal skills) → WRITE (generate `.claude/compass-cache.md` in the format from `cache-format.md` § 2) → REPORT (5-line summary). If a cache already exists, ask before overwriting. Always exclude `node_modules` / `dist` / `.git` / `vendor` / `target` / `.venv` from the file count.
+- `init`: Read `reference/cache-recipes.md` first. SCAN (signals from `package.json` / `Cargo.toml` / `pyproject.toml` / `go.mod` / file-extension distribution / `CLAUDE.md`) → SIZE (file count → small / medium / large / xlarge → `top_n` 15-50) → SCORE (signal-to-skill mapping; direct dep match = H, convention match = M, speculative = L) → PICK (`top_n` + 11 universal skills) → WRITE (generate `.claude/compass-cache.md` in the format from `cache-format.md` § 2) → REPORT (5-line summary). If a cache already exists, ask before overwriting. Always exclude `node_modules` / `dist` / `.git` / `vendor` / `target` / `.venv` from the file count.
 - `refresh`: Read `reference/cache-recipes.md` first. Same flow as `init` but skip the existence check and force overwrite. Display a before/after diff (added / removed / affinity-changed skills) at the top of REPORT. Use after a catalog upgrade, when a new framework is introduced, or when a TTL warning has appeared. Auto-refresh is forbidden — always user-initiated.
 
 ## Output Routing
@@ -144,7 +144,7 @@ For beginners, present the ecosystem as 5 intuitive domains:
 | **Design** | Atlas, Schema, Gateway | `/atlas 依存関係を分析して` |
 | **Operate** | Pipe, Scaffold, Beacon | `/pipe GitHub Actionsワークフロー作って` |
 
-Full 24-category, 141-agent catalog: `reference/catalog.md`.
+Full 24-category, 123-agent catalog: `reference/catalog.md`.
 Recommendation and comparison output formats: `reference/patterns.md` Output Formats section.
 
 ## Output Requirements

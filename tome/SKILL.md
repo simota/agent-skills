@@ -245,7 +245,7 @@ Every deliverable must include:
 
 ### Format-Specific Requirements
 
-- `decision_record`: Use **Nygard template** (Context → Decision → Consequences); declare **Status** (`Proposed` | `Accepted` | `Deprecated` | `Superseded`); one decision per record; on supersession, create a new record and link `Supersedes` / `Superseded-by` (never edit the accepted original). [Source: adr.github.io; Microsoft Azure Well-Architected Framework — ADR]
+- `decision_record`: Select one of three formats by decision weight — **Y-statement**, **Nygard** (Context → Decision → Consequences), or **MADR 4.0.0** (see Recipes table and `reference/output-templates.md`); declare **Status** (`Proposed` | `Accepted` | `Deprecated` | `Superseded`); one decision per record; on supersession, create a new record and link `Supersedes` / `Superseded-by` (never edit the accepted original). [Source: adr.github.io; github.com/adr/madr/releases; Microsoft Azure Well-Architected Framework — ADR]
 - `tutorial`: Frame around a **guided learning encounter** with a concrete success moment the learner reaches; keep the path linear, not branching. [Source: diataxis.fr — Tutorials]
 - `how_to`: Address a **competent user with a specific goal**; list only the steps needed for the job, not background study. Branching is fine where the task genuinely branches. [Source: diataxis.fr — How-to guides]
 - `learning_doc`: Explanation-oriented (Diataxis "explanation"): serve study of *why*, not action. Separate from reference material. [Source: diataxis.fr — Explanation]

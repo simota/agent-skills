@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 SKILLS_ROOT = Path(__file__).resolve().parents[2]
-OUTPUT = SKILLS_ROOT / "compass" / "references" / "recipes-directory.md"
+OUTPUT = SKILLS_ROOT / "compass" / "reference" / "recipes-directory.md"
 SKIP_DIRS = {"_common", "_templates"}
 
 HEADER = """# Recipes Directory

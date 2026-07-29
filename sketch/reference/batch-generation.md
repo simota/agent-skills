@@ -66,7 +66,7 @@ Respect per-model rate limits; do not fan out unbounded.
 | Model | Free tier RPM | Paid RPM | Suggested concurrency |
 |-------|---------------|----------|-----------------------|
 | gemini-2.5-flash-image | 10 | 1000 | 4 (free) / 20 (paid) |
-| gemini-3.1-flash-image-preview | 5 | 500 | 2 (free) / 10 (paid) |
+| gemini-3.1-flash-image | 5 | 500 | 2 (free) / 10 (paid) |
 | gemini-3-pro-image-preview | 2 | 100 | 1 (free) / 4 (paid) |
 
 Pattern: `asyncio.Semaphore(concurrency)` + retry with jitter on 429/503. Checkpoint every asset to `progress.jsonl` so a crash resumes from the last completed slot.

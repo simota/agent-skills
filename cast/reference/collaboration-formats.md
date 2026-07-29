@@ -106,13 +106,18 @@ Minimum fields:
 
 ### AUTORUN step completion
 
-Return `_STEP_COMPLETE:` with:
+Return `_STEP_COMPLETE:` per `reference/autorun-schema.md` with:
 
-- `Mode`
-- `Personas processed`
-- `Registry updated`
-- `Confidence notes`
+- `Agent`
+- `Status`
+- `Output.deliverable`
+- `Output.artifact_type`
+- `Output.parameters.mode`
+- `Output.parameters.persona_count`
+- `Output.parameters.confidence_range`
+- `Output.parameters.registry_changes`
 - `Next`
+- `Reason`
 
 ### Hub handoff
 

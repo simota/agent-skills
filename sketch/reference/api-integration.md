@@ -60,7 +60,7 @@ GEMINI_API_KEY=your-api-key-here
 | Model | ID | API type | Speed | Cost | Use |
 | --- | --- | --- | --- | --- | --- |
 | Nano Banana (Flash) | `gemini-2.5-flash-image` | Google AI API | fast | ~$0.039/img | default |
-| Nano Banana 2 | `gemini-3.1-flash-image-preview` | Google AI API | fast | ~$0.045/img (1K) | 4K output, improved quality |
+| Nano Banana 2 | `gemini-3.1-flash-image` | Google AI API | fast | ~$0.045/img (1K) | 4K output, improved quality |
 | Nano Banana Pro | `gemini-3-pro-image-preview` | Google AI API | medium | ~$0.134/img | highest Gemini-native quality |
 | Imagen 4 Fast | `imagen-4-fast` | Google AI API | fast | $0.02/img | cheapest text-to-image only |
 | Imagen 4 Standard | `imagen-4-standard` | Google AI API | medium | $0.04/img | better quality text-to-image |
@@ -105,7 +105,7 @@ With Nano Banana 2, the model uses **Thought Signatures** to preserve visual con
 
 ### Grounding with Google Image Search
 
-Available for Nano Banana 2 (`gemini-3.1-flash-image-preview`). Enable via `google_search` tool config to allow the model to reference real-world images during generation, improving accuracy for specific objects, styles, or scenes.
+Available for Nano Banana 2 (`gemini-3.1-flash-image`). Enable via `google_search` tool config to allow the model to reference real-world images during generation, improving accuracy for specific objects, styles, or scenes.
 
 ### Style transfer
 

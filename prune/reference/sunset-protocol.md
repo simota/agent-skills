@@ -100,7 +100,7 @@ The skill is **archived, not deleted**. 90-day minimum retention window for reve
   2. Re-add to `_common/SKILL_PACKS.md` Pack entries [<list>]
   3. Re-add to profiles [<list>]
   4. Re-add signal keywords to `nexus/reference/signal-keywords.md`
-  5. Notify Nexus via `ARCHITECT_TO_NEXUS_HANDOFF`
+  5. Notify Nexus via `PRUNE_TO_NEXUS_ROUTING_UPDATE`
 
 ### Handoff
 → User (`PRUNE_TO_USER_SUNSET_APPROVAL`) — explicit approval gate before any file move

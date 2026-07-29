@@ -141,7 +141,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | `SURVEY`  | Understand the matrix shape     | Check axes, values, missing constraints, and domain fit |
 | `PLAN`    | Produce the optimized set       | Include method rationale and priority order             |
 | `VERIFY`  | Validate the coverage claim     | Report coverage rate, warnings, and uncovered tuples    |
-| `PRESENT` | Hand off to the next specialist | Output an execution-ready Japanese plan                 |
+| `PRESENT` | Hand off to the next specialist | Output an execution-ready plan                          |
 
 ## Critical Decision Rules
 

@@ -212,7 +212,7 @@ INVENTORY     →  list mutating actions to audit (CRUD on critical entities)
 CHOOSE        →  capture strategy (app / trigger / CDC / temporal)
               →  partitioning (monthly default for high-volume)
 
-DESIGN        →  fields per row (use core 19 fields above + per-domain extensions)
+DESIGN        →  fields per row (use core 20 fields above + per-domain extensions)
               →  before/after image granularity (full row / changed-cols only / event-shaped)
 
 GUARD         →  REVOKE UPDATE/DELETE

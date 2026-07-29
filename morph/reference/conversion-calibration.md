@@ -52,14 +52,14 @@ Example defaults:
 ```yaml
 markdown_to_pdf:
   pandoc_xelatex: 0.95
-  pandoc_wkhtmltopdf: 0.80
+  # pandoc_wkhtmltopdf removed — EOL since 2023, do not use (see SKILL.md Critical Decision Rules); use pandoc_weasyprint
   pandoc_lualatex: 0.90
 word_to_pdf:
   libreoffice: 0.90
   pandoc: 0.65
 html_to_pdf:
   chrome_puppeteer: 0.90
-  wkhtmltopdf: 0.80
+  # wkhtmltopdf removed — EOL since 2023, do not use (see SKILL.md Critical Decision Rules); use weasyprint
   pandoc: 0.60
 ```
 
@@ -99,6 +99,6 @@ reusable: true
 |---------|-----------|---------------|-------------|---------|
 | Japanese business doc | `pandoc+lualatex` | `corporate-ja` | Hiragino fonts, `A4`, `25mm` margins | Very High |
 | Technical specification | `pandoc+xelatex` | `technical-ja` | code highlighting, TOC, numbered sections | High |
-| Quick PDF export | `pandoc+wkhtmltopdf` | none | fast processing, basic styling | Medium |
+| Quick PDF export | `pandoc+weasyprint` | none | fast processing, basic styling | Medium |
 | Accessible PDF | `pandoc+lualatex` | tagged PDF options | PDF/UA, lang metadata, `12pt` min | High |
 | Stakeholder report | `pandoc+lualatex` | `corporate-ja` | TOC, header/footer, watermark | Very High |

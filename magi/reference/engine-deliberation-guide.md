@@ -1,6 +1,6 @@
 # Engine Deliberation Guide
 
-Engine Mode specification for Magi's three-engine deliberation system. In Engine Mode, Claude, Codex, and Gemini each provide a **single integrated analysis** (one unified position per engine) — they do **not** each simulate three internal viewpoints.
+Engine Mode specification for Magi's three-engine deliberation system. In Engine Mode, Claude, Codex, and agy each provide a **single integrated analysis** (one unified position per engine) — they do **not** each simulate three internal viewpoints.
 
 **Scope vs `tri-engine-deliberate.md`:** this file covers Engine Mode auto-activated *inside* Simple-Mode Recipes (`decide`, `tradeoff`, `arbitrate`, `strategic`) — one engine = one YAML position, aggregated as a 3-engine vote (or 2 / 1 depending on availability). The `multi` Recipe instead uses Pattern H (`tri-engine-deliberate.md`), where each engine emits **all three viewpoints** as JSON and the result is a 9-cell matrix. When a Recipe routes here, the output schema below applies; when routed to `multi`, the JSON schema in `tri-engine-deliberate.md §3` applies. Engine binaries and silent-failure detection are canonical in `_common/MULTI_ENGINE_RECIPE.md` — this file only references them.
 
@@ -71,7 +71,7 @@ Be direct. State your position clearly. Do not hedge."
 
 ---
 
-## Deliberation Prompt Template (Gemini)
+## Deliberation Prompt Template (agy)
 
 Antigravity CLI (`agy`) is invoked via `agy -p` with `--dangerously-skip-permissions` plus `--log-file <path>` for non-interactive execution. Antigravity benefits from additional context due to its larger context window. **agy v1.0.0 silent-failure detection is mandatory** — see `_common/MULTI_ENGINE_RECIPE.md §3.5 Engine Runtime Failure Detection` for the canonical headless pattern (mktemp log file, empty-stdout grep, `RUNTIME-BROKEN` ledger).
 
@@ -110,7 +110,7 @@ dissent_note: "Key concern if this decision goes the other way"
 Be direct. State your position clearly. Do not hedge." --dangerously-skip-permissions
 ```
 
-### Gemini Optimization Notes
+### agy Optimization Notes
 
 - Include a `## Background` section with extended context (leverages larger context window)
 - Same YAML output format as Codex for consistent parsing
@@ -125,7 +125,7 @@ In Engine Mode, Claude does **not** simulate three perspectives (that is Simple 
 ### Claude's Engine Mode Behavior
 
 1. Analyze the decision from a **unified perspective** (combining technical, human, and strategic considerations)
-2. Output in the **same YAML format** as Codex and Gemini
+2. Output in the **same YAML format** as Codex and agy
 3. Complete analysis **before** collecting external engine outputs (contamination prevention)
 
 ### Claude Output Format
@@ -231,7 +231,7 @@ When falling back to Simple Mode, inform the user:
 ```
 ⚠ Engine Mode requested but external engines unavailable.
   Codex: [available/not found]
-  Gemini: [available/not found]
+  agy: [available/not found]
 → Falling back to Simple Mode (Logos/Pathos/Sophia internal deliberation).
 ```
 
@@ -250,7 +250,7 @@ When falling back to Simple Mode, inform the user:
 
 ```yaml
 engine_error:
-  engine: "[Codex | Gemini]"
+  engine: "[Codex | agy]"
   error_type: "[timeout | parse_failure | cli_error]"
   detail: "[Error message or description]"
   action_taken: "[ABSTAIN | retry_succeeded | fallback_to_simple]"

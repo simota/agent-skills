@@ -50,7 +50,7 @@ npx bundlephobia date-fns
   "bundlesize": [
     {
       "path": "./build/static/js/main.*.js",
-      "maxSize": "200 kB"
+      "maxSize": "170 kB"
     },
     {
       "path": "./build/static/js/*.chunk.js",

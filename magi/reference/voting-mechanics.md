@@ -11,7 +11,7 @@ Each perspective casts a vote with:
 ```yaml
 Vote:
   perspective: Logos | Pathos | Sophia    # Simple Mode
-  engine: Claude | Codex | Gemini        # Engine Mode (alternative key)
+  engine: Claude | Codex | agy           # Engine Mode (alternative key)
   position: APPROVE | REJECT | ABSTAIN
   confidence: 0-100
   rationale: "One-line summary of reasoning"
@@ -272,7 +272,7 @@ THEN recommend option_A with monitoring plan
 
 ## 2-Engine Voting
 
-When only one external engine is available (Claude + Codex or Claude + Gemini), the voting system adapts to 2-engine consensus patterns.
+When only one external engine is available (Claude + Codex or Claude + agy), the voting system adapts to 2-engine consensus patterns.
 
 ### 2-Engine Consensus Patterns
 
@@ -308,7 +308,7 @@ When only one external engine is available (Claude + Codex or Claude + Gemini), 
 ║       2-ENGINE SPLIT                  ║
 ║                                       ║
 ║  Claude   → APPROVE (confidence: 72)  ║
-║  Gemini   → REJECT  (confidence: 68)  ║
+║  agy      → REJECT  (confidence: 68)  ║
 ║                                       ║
 ║  No consensus. Escalate to user.      ║
 ╚═══════════════════════════════════════╝

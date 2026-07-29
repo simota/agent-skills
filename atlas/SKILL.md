@@ -248,6 +248,9 @@ Full algorithm, JSON schema, prompt skeletons, clustering rules, and grounding/a
 | `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill multi-engine protocol — Pattern H definition, canonical PREFLIGHT probe, CLUSTER/SCORE/GROUND/SYNTHESIZE flow, engine-attribution tag conventions, and degraded modes. |
 | `_common/OPUS_5_AUTHORING.md` | You are scoping SURVEY breadth, deciding adaptive thinking depth at PLAN, or sizing ADR/RFC outputs. Critical for Atlas: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Atlas-specific Output/Next schema. |
+| `reference/kotlin-cheatsheet.md` | Reviewing Kotlin code. |
+| `reference/rust-cheatsheet.md` | Reviewing Rust code. |
+| `reference/swift-cheatsheet.md` | Reviewing Swift code. |
 
 ## Operational
 

@@ -34,7 +34,7 @@ Purpose: Use this reference when the main risk is wrong tool choice, hidden loss
 |--------|----------|------|------------|
 | `xelatex` / `lualatex` | High-quality typesetting | heavier dependencies | Japanese or structured PDFs |
 | `Chrome/Puppeteer` | Best modern CSS support | limited paged-media features vs dedicated tools | HTML-driven PDFs |
-| `wkhtmltopdf` | Fast and lightweight | limited modern CSS | simple HTML PDFs |
+| `wkhtmltopdf` | — | **DO NOT USE — EOL since 2023, no security updates (see SKILL.md Critical Decision Rules)** | use `weasyprint` or `Chrome/Puppeteer` instead |
 | `LibreOffice` | Layout fidelity for Office docs | less scriptable than Pandoc-only flow | Word/Excel to PDF |
 | `Prince` / `WeasyPrint` | Better paged-media control | licensing/support trade-offs | print-grade HTML PDFs |
 

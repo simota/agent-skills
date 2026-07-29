@@ -288,8 +288,8 @@ Every generated SKILL.md must pass this validation checklist before being consid
 
 ### Language
 
-- [ ] **Y5.1** Japanese for explanations
-  - Natural Japanese prose
+- [ ] **Y5.1** English for explanations
+  - Natural English prose
   - No machine translation artifacts
 
 - [ ] **Y5.2** English for code/identifiers

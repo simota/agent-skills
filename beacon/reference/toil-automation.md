@@ -125,13 +125,7 @@ class AutoRollback:
 
 ## Toil Budget
 
-### SRE Toil Budget Guidelines
-
-| Category | Target Allocation |
-|----------|------------------|
-| **Toil (operational work)** | ≤ 50% of team time |
-| **Engineering (project work)** | ≥ 50% of team time |
-| **On-call (included in toil)** | ≤ 25% of team time |
+See `reference/toil-reduction.md` → "Toil Budget (SRE)" for the current tiered thresholds (`< 25%` healthy / `25-50%` investigate / `50-75%` halt feature work and automate / `> 75%` escalate to leadership) and toil-vs-engineering allocation guidance.
 
 ### Toil Tracking
 
