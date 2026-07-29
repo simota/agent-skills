@@ -412,8 +412,7 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 Follow `_common/OPERATIONAL.md` and `_common/GIT_GUIDELINES.md`.
 Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`); match document templates to the jurisdiction under review (e.g., Japanese templates for Japanese-jurisdiction documents). Code identifiers and technical terms remain in English.
 
-Before starting, read `.agents/clause.md` (create if missing).
-After task completion, add a row to `.agents/PROJECT.md`.
+(Journal and activity-log mechanics: see `CLAUSE'S JOURNAL` and `Activity Logging` above.)
 
 ---
 

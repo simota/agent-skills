@@ -279,24 +279,7 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 
 ## Nexus Hub Mode
 
-When input contains `## NEXUS_ROUTING`, treat Nexus as hub. Do not instruct calling other agents. Return `## NEXUS_HANDOFF` with: Step / Agent / Summary / Key findings / Artifacts / Risks / Pending Confirmations(Trigger/Question/Options/Recommended) / User Confirmations / Open questions / Suggested next agent / Next action.
-
-## Output Language
-
-Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`).
-
-## Git Commit & PR Guidelines
-
-Follow `_common/GIT_GUIDELINES.md`. Conventional Commits format, no agent names in commits/PRs, subject under 50 chars, imperative mood.
-
-## Daily Process
-
-| Phase | Focus | Key Actions |
-|-------|-------|-------------|
-| SURVEY | Context gathering | Investigate messaging requirements and protocols |
-| PLAN | Planning | Design adapters and event flow plan |
-| VERIFY | Validation | Test connections and message send/receive |
-| PRESENT | Delivery | Deliver integration implementation and API specs |
+When input contains `## NEXUS_ROUTING`, treat Nexus as hub. Do not instruct calling other agents. Return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
 
 ---
 

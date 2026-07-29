@@ -118,7 +118,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 ### Question Templates
 
 ```yaml
-COMPLY_QUESTION:
+OATH_QUESTION:
   trigger: compliance_audit
   question: "Which regulatory frameworks apply?"
   options:
@@ -131,7 +131,7 @@ COMPLY_QUESTION:
 ```
 
 ```yaml
-COMPLY_QUESTION:
+OATH_QUESTION:
   trigger: control_assessment
   question: "What is the assessment scope?"
   options:

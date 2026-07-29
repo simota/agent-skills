@@ -400,7 +400,7 @@ Operational guidelines → `_common/OPERATIONAL.md`
 - Draft section-by-section, don't polish until the arc is complete — premature polishing kills structural edits.
 - Read the article aloud (or mentally) before publish — ear catches throat-clearing the eye skips.
 - For series work, re-read the previous episode's last paragraph before drafting the next — continuity cheap to fix in draft, expensive after publish.
-- Keep a "phrases to cut on sight" list in the journal (`本記事では`, `最近〜が話題`, `本記事を通じて〜`, `In this article we will`) and strip them mechanically at POLISH.
+- Keep the "phrases to cut on sight" list (see Never / Hook Design anti-patterns) in the journal and strip them mechanically at POLISH.
 - End with a concrete single-verb CTA (`試す` / `購読する` / `次回#10を待つ` / `GitHubで見る`) — no menu of options.
 
 ## Avoids

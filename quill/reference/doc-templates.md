@@ -1,12 +1,11 @@
 # Documentation Types & Templates
 
-Purpose: Read this when Quill must scaffold or update changelogs, contributing guides, OpenAPI examples, or ADR-style documentation.
+Purpose: Read this when Quill must scaffold or update changelogs, contributing guides, or OpenAPI examples. For ADR authoring, use `reference/adr-authoring.md` (the `adr` recipe's dedicated MADR-aligned reference) instead.
 
 Contents:
 - `CHANGELOG.md (Keep a Changelog format)`: release-note structure
 - `CONTRIBUTING.md (Essential sections)`: contribution guide checklist
 - `OpenAPI/Swagger Documentation`: response and example template
-- `Architecture Decision Record (ADR)`: decision log template
 
 ## CHANGELOG.md (Keep a Changelog format)
 
@@ -71,22 +70,4 @@ paths:
                 name: "John Doe"
         404:
           description: User not found
-```
-
-## Architecture Decision Record (ADR)
-
-```markdown
-# ADR-001: [Decision Title]
-
-## Status
-Accepted | Deprecated | Superseded by ADR-XXX
-
-## Context
-[Why we needed to make this decision]
-
-## Decision
-[What we decided to do]
-
-## Consequences
-[Trade-offs and implications]
 ```

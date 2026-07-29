@@ -50,7 +50,7 @@ Rule of thumb: **mock roles, not objects**. Don't mock value types or private in
 A unit test must not cross its boundary:
 - No network, no real clock, no real filesystem, no real DB.
 - Inject collaborators (`clock`, `uuid`, `logger`, `repository`) through the constructor or function arguments.
-- If the code reaches global state, that's a design signal — surface it in the COOL phase handoff to Zen.
+- If the code reaches global state, that's a design signal — surface it in the handoff to Zen.
 
 ## Naming Conventions
 

@@ -111,11 +111,9 @@ Below the "acceptable" threshold, return to phase 5 to clarify code definitions,
 
 ## LLM-Assisted Coding (Augment, Don't Replace)
 
-LLMs accelerate phase 2 (initial coding) but degrade phase 3-5 (theme construction) without human oversight.
+LLMs accelerate phase 2 (initial coding) but degrade phase 3-5 (theme construction) without human oversight (see Human-in-the-Loop Discipline above for the κ threshold and codebook-ownership rules).
 
 - Use LLMs to generate first-pass codes on raw segments at temperature 0; require structured JSON output.
-- Compare LLM codes against a 10-20% human-coded sample; reject if κ < 0.60 — re-prompt or fall back to manual.
-- Never let LLMs name themes — theme construction is interpretive and the highest-bias step.
 - Document LLM model, version, prompt, and seed in the report; LLM-coded studies are not reproducible without this.
 
 ## Anti-Patterns

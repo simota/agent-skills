@@ -97,14 +97,14 @@ Lockfile management best practices:
 
 ---
 
-## 5. Integration with Horizon
+## 5. Integration with `detect`
 
 ```
-Usage within Horizon:
-  1. Screen for DU-01 through DU-07 during the SCOUT phase
+Usage within `detect`:
+  1. Screen for DU-01 through DU-07 during the ASSESS phase
   2. Run regular audits in coordination with dependency-health-scan.md
-  3. Apply the staged update strategy during the LAB phase
-  4. Submit the update report during the PRESENT phase
+  3. Apply the staged update strategy during the PREPARE phase
+  4. Submit the update report during the COMPLETE phase
 
 Quality gates:
   - Batch major update → split into individual updates (prevents DU-01)

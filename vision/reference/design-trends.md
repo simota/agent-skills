@@ -287,9 +287,3 @@ Use AI generation for:
 - moodboards
 - layout alternatives
 - placeholder assets
-
-Do not use AI generation as the final authority for:
-- production code
-- brand-critical identity work
-- accessibility-sensitive components
-- performance-critical implementations

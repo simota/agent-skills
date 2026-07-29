@@ -159,48 +159,7 @@ validation_failure:
 
 ## NEXUS_HANDOFF_V2 Template
 
-```yaml
-## NEXUS_HANDOFF
-step: X/Y
-agent: [AgentName]
-status: [SUCCESS|PARTIAL|BLOCKED|FAILED]
-
-confidence: 0.XX
-confidence_breakdown:
-  task_completion: 0.XX
-  output_quality: 0.XX
-  next_step_clarity: 0.XX
-
-summary: |
-  [1-3 line summary of work completed]
-
-key_findings:
-  - [Finding 1]
-  - [Finding 2]
-
-artifacts:
-  - type: [file|command|link]
-    path: [path or URL]
-    description: [what it is]
-
-risks:
-  - [Risk 1]
-  - [Risk 2]
-
-open_questions:
-  - blocking: [true|false]
-    question: [Question]
-
-pending_confirmations:  # Only if status == BLOCKED
-  - trigger: [INTERACTION_TRIGGER]
-    question: [Question]
-    options: [List]
-    recommended: [Option]
-
-next_agent: [AgentName|DONE]
-next_action: [CONTINUE|MERGE|VERIFY|ESCALATE|ABORT]
-reason: [Why this next step]
-```
+Canonical schema (all fields, including `user_confirmations`) → `output-formats.md` § NEXUS_HANDOFF_V2. Validation below checks conformance to that template.
 
 ---
 

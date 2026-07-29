@@ -7,18 +7,7 @@
 
 ## Pattern 1: Single Document Review
 
-**When to use:** Reviewing a single legal document in isolation.
-
-```
-SCOPE → SCAN → ASSESS → REPORT → SUGGEST
-```
-
-### Steps
-1. **SCOPE**: Identify document type, jurisdiction, and target service.
-2. **SCAN**: Walk the relevant checklist (`legal-checklists.md`) clause by clause.
-3. **ASSESS**: Assign a risk level to each clause and identify missing ones.
-4. **REPORT**: Produce a structured report.
-5. **SUGGEST**: Propose concrete amendments and additional clauses.
+**When to use:** Reviewing a single legal document in isolation. Standard `SCOPE → SCAN → ASSESS → REPORT → SUGGEST` workflow — see SKILL.md → Workflow for the step definitions.
 
 ---
 

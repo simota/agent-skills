@@ -12,7 +12,6 @@ Purpose: Design the contract for sunsetting parts of an API. Cover RFC 8594 (`Su
 - **Launch (elsewhere)**: Actual rollout / cutover execution.
 - **Voice (elsewhere)**: Customer-facing announcements.
 - **Oath (elsewhere)**: Regulated APIs may have SLA-bound deprecation rules.
-- **horizon `sunset` (elsewhere)**: Internal tech-debt sunset (different concern).
 
 ## Deprecation Lifecycle
 

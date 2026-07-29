@@ -10,7 +10,7 @@ The complete delegate roster for the `bazaar` LP studio chain, organized by stag
 
 | Agent | Role in chain | Returns | Overlap watch |
 |-------|---------------|---------|---------------|
-| **researcher** | Market and trend intel for the product category | Top-3 insights, market size signals, sub-segments | Skip if brand+market are mature |
+| **field** | Market and trend intel for the product category | Top-3 insights, market size signals, sub-segments | Skip if brand+market are mature |
 | **compete** | Competitor LP teardown (top 3–5), feature matrix, positioning map | Battle card, differentiation hooks, AI brand visibility | Don't ask compete to write copy — that's prose/funnel |
 | **voice** | Existing-customer feedback synthesis (reviews, NPS, support tickets) | Sentiment themes, top pain quotes | Skip if no prior customers (greenfield product) |
 
@@ -139,7 +139,7 @@ These agents may be invoked at any stage based on signal, not stage:
 | **omen** | Pre-mortem for high-stakes launches — what could fail in production |
 | **siege** | Load test if the LP is expected to absorb a campaign spike |
 | **director** | Demo video of the LP for sales enablement / onboarding |
-| **navigator** | Quick browser checks during Build (visual sanity, console errors) |
+| **vector** | Quick browser checks during Build (visual sanity, console errors) |
 
 **Fan-out cap discipline**: cross-stage specialists count toward the 5-concurrent cap. If a stage already runs 5 primary delegates (e.g., VERIFY = Judge + Voyager + Attest + Sentinel + Echo) and PII / Tokushoho / a11y compliance requires Cloak + Clause + Canon, sequence those after the primary batch — never run 6–8 concurrently.
 

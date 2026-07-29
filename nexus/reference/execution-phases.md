@@ -30,40 +30,7 @@ Each phase completes before the next begins. Track only: current phase (PLAN/DO/
 
 ## Phase 0: PROACTIVE_ANALYSIS (Optional)
 
-Automatically activates when `/Nexus` is invoked by itself. Skip this phase when a normal task instruction is present.
-
-### 0-A: Project State Scan
-Collect the current state of the project:
-
-```bash
-# Git status
-git status --porcelain
-
-# Recent commits
-git log --oneline -10
-
-# Activity Log (if exists)
-.agents/PROJECT.md → Activity Log section
-```
-
-### 0-B: Health Assessment
-Assess project health across four indicators:
-
-| Indicator | Checks | Rating |
-|-----------|--------|--------|
-| `test_health` | Test execution, coverage | 🟢/🟡/🔴 |
-| `security_health` | `npm audit`, dependencies | 🟢/🟡/🔴 |
-| `code_health` | Linting, type checks | 🟢/🟡/🔴 |
-| `doc_health` | README freshness, JSDoc | 🟢/🟡/🔴 |
-
-### 0-C: Recommendation Generation
-Generate recommended actions with priorities:
-
-| Priority | Conditions |
-|----------|------------|
-| 🔴 High | Security issues, test failures, build errors |
-| 🟡 Medium | Lint warnings, coverage regression, missing documentation |
-| 🟢 Low | Refactoring opportunities, optimization suggestions |
+Automatically activates when `/Nexus` is invoked by itself. Skip this phase when a normal task instruction is present. Full scan steps (0-A Project State Scan, 0-B evidence-grounded Health Assessment, 0-C Recommendation Generation with priority table) → `reference/proactive-mode.md`.
 
 ### Flow After Phase 0
 
@@ -76,8 +43,6 @@ User Selection (ON_PROACTIVE_START)
 ├─ Continue previous work → Phase 1: PLAN (AUTORUN_FULL)
 └─ New task specified → Standard routing → Phase 1
 ```
-
-See `reference/proactive-mode.md` for detailed specifications.
 
 ---
 

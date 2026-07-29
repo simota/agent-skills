@@ -505,138 +505,15 @@ If none of these thresholds apply, keep the action as a composed general-tool pa
 ## 11. Opus 5 Operating Principles for Generated Skills
 
 > Source: Anthropic *Prompting Claude Opus 5* + *Migrating to Claude Opus 5* + *Effort* (platform.claude.com, verified 2026-07-25)
-> Canonical detail: `_common/OPUS_5_AUTHORING.md` (P1–P12). This section mirrors it for the generation pass; 11.12 mirrors P12, which is Claude 5 generation-wide rather than Opus-specific.
+> Canonical detail and full principle text: `_common/OPUS_5_AUTHORING.md` (P1–P12). That file is the single source of truth — cite by ID, do not duplicate the principle text here.
 
-Opus 5 has sharp default behaviors that generated skills must author for explicitly. Apply these when designing new agents or updating existing ones. **Three defaults cost tokens on every workload and are the highest-value checks: long output (11.2), scope expansion (11.8), and automatic self-verification (11.9).**
-
-### 11.1 Front-Loaded Task Specification
-
-Opus 5 rewards complete first-turn intent over progressive disclosure across multiple turns, and uses more tokens when intent arrives progressively. Generated skills should bias users and orchestrators toward stating intent, constraints, acceptance criteria, and file locations up front, and minimize required user round-trips for interactive skills.
-
-**Design rules**:
-- Trigger Guidance section should explicitly list what callers must provide on the first turn (target files, success criteria, constraints).
-- INTERACTION_TRIGGERS should batch multiple confirmations into a single multi-question prompt rather than serializing them across turns.
-- AUTORUN `_AGENT_CONTEXT` schemas should require all decision-affecting inputs be present before execution begins; ambiguity should resolve to safe defaults with documentation, not to a follow-up question.
-
-### 11.2 Explicit Length Control
-
-Opus 5's default output runs **longer** than prior Opus models', in two independent channels — conversational responses and files written to disk. Effort controls thinking volume, not visible length, so lowering effort does not shorten output. Length must be prompted.
-
-**Design rules**:
-- Output sections (reports, handoffs, summaries) must specify length envelopes (line counts, bullet counts, or table dimensions).
-- `_STEP_COMPLETE` and `## NEXUS_HANDOFF` blocks already provide structural envelopes — keep them; do not let agents emit free-form summaries instead.
-- For user-facing prose, state length explicitly (e.g., "1-3 sentence summary", "5-bullet checklist").
-- For skills that author documents to disk, add a separate calibration line: "Match the length of written documents to what the task needs; do not pad with filler sections, redundant summaries, or boilerplate."
-- In a long SKILL.md, repeat a one-line brevity reminder near the end — a single top-of-file instruction under-steers.
-
-### 11.3 Explicit Tool-Use Guidance
-
-Effort governs tool-call volume: lower effort combines operations into fewer calls and acts without preamble; higher effort makes more calls and explains the plan first. Skills state "when" and "why" per tool and pick a baseline effort to match.
-
-**Design rules**:
-- For each tool a skill expects to use, document the trigger condition (when) and the value the tool provides (why).
-- If a workflow benefits from eager tool use (e.g., reading multiple files to ground decisions), state it: "Read all candidate files before deciding, even if confidence seems sufficient — grounding cost is low compared to wrong-decision cost", and baseline it at `high`/`xhigh`.
-- Conversely, for skills that should think before acting, state it: "Reason about the design before invoking tools; do not begin file reads until the section contract is decided."
-- For vision/visual skills, give tools for iterative crop-and-verify — tool use is a more cost-effective lever than a larger reasoning budget.
-- Web tooling is asymmetric on Opus 5: `web_search` is supported, `web_fetch` is not (the tool is GA and un-renamed — Opus 5 is just absent from its model list). Generate skills that reach the web via `web_search`, and where full-page/PDF content is genuinely required, make the fetch a separately-modelled step (Sonnet 5 / Fable 5) rather than an assumption.
-
-### 11.4 Subagent Delegation Caps
-
-Opus 5 **delegates to subagents readily** — the authoring job is to bound fan-out, not encourage it. Delegation pays off on large independent tracks and wastes tokens on small ones.
-
-**Design rules**:
-- State delegation criteria and a cap: "Delegate only for large, genuinely independent, parallelizable tasks. Do not delegate work finishable in a handful of tool calls, and do not use subagents to verify your own work. Prefer one subagent over several; keep spawn counts low."
-- Multi-agent coordination is a strength (writer-verifier patterns work; agents rarely clobber each other) — keep independent-verifier architectures, cut self-check fan-out.
-- Reference `_common/SUBAGENT.md` for the parallelism-layer decision (skill-internal subagents vs Agent Teams).
-
-### 11.5 Thinking Is On By Default
-
-Thinking runs on by default in adaptive mode. `thinking: {type: "disabled"}` is accepted only at effort `high` or below — pairing it with `xhigh`/`max` returns a 400 error. `max_tokens` caps thinking + response text together.
-
-**Design rules**:
-- Never author a skill that assumes thinking is off, and never instruct the model not to think or reason — such rules increase internal-XML-tag leakage.
-- Steer depth instead of toggling: "Think carefully and step-by-step before responding; this decision affects [downstream impact]" at high-stakes points; "Prioritize responding quickly rather than thinking deeply" at throughput-sensitive ones.
-- Control cost with lower effort, not by disabling thinking.
-- Do not embed numeric thinking budgets — control depth via `effort` (11.6).
-
-### 11.6 Effort-Level Awareness
-
-The default effort level is **`high`** on the Claude API and Claude Code. Opus 5 supports all five levels and its effort scale was recalibrated — settings carried over from earlier models must be re-swept on real evals.
-
-| Effort | When skills should expect this |
-|--------|-------------------------------|
-| `low` | Short scoped tasks, subagents, latency-sensitive work — genuinely stronger on Opus 5 than earlier Opus models |
-| `medium` | Cost-saving step-down; viable for real agentic work wherever evals hold |
-| `high` (default) | Complex reasoning, difficult coding, agentic tasks; equivalent to omitting the parameter |
-| `xhigh` | Recommended starting point for coding/agentic and long-horizon (30 min+) work |
-| `max` | Unconstrained token spend; can overthink simpler tasks — flag in `description` if a skill expects it |
-
-If a skill's correctness depends on `xhigh`/`max`-level effort, state that expectation in the `description` and Trigger Guidance so callers can opt in, and note that `max_tokens` should start around 64k at those levels.
-
-### 11.7 Delegation-Engineer Framing
-
-Treat the model as a capable engineer being delegated to, not a line-by-line pair programmer. Skills should be authored to support coherent long sessions with infrequent check-ins.
-
-**Design rules**:
-- Skills must be self-directing for the bulk of their workflow; reserve user check-ins for genuine `Ask first` decisions.
-- Provide enough context inside the skill (or via references) that the model does not need to ask clarifying questions for documented decisions.
-- Avoid micro-step instructions that prevent the model from exercising judgment; prefer phase-level contracts with verification gates.
-
-### 11.8 Scope Discipline — Both Directions
-
-Two behaviors, opposite in sign. **(a)** Opus 5 can *expand* scope, adding steps that weren't requested or re-deciding what the task should be. **(b)** It follows *restrictive* instructions literally, so conservative phrasing suppresses output (see 11.10).
-
-**Design rules**:
-- Bound narrow tasks explicitly: "Deliver what was asked, at the scope intended. Make routine judgment calls yourself, and check in only when different readings would lead to materially different work. Finish the whole task, and stop short of actions clearly beyond what was asked." State what is out of scope.
-- When an instruction should apply broadly, state the scope: "Apply this to **every** section/file/case, not just the first."
-- For structured-extraction/pipeline skills, pin exact output schemas and field-level expectations.
-- Audit generated SKILL.md files for restrictive phrasing that will be taken literally and cost coverage.
-
-### 11.9 Delete Redundant Verification & Narration Scaffolding
-
-**Opus 5 verifies its own work and catches its own mistakes unprompted.** Explicit "verify", "double-check", "re-verify before responding", or "use a subagent to verify" instructions compound with that behavior and cause over-verification — wasted tokens, no quality gain. The same applies to legacy harness scaffolding that bolts on self-check steps.
-
-**Design rules**:
-- Do not generate self-check / re-verification instructions in SKILL.md prompts or spawn templates.
-- Distinguish **self**-verification from **independent** verification: a *different* agent checking a producer's output (`producer ≠ verifier`) is an architectural control and stays. Cut only agents told to re-check their own work.
-- Remove forced interim-status scaffolding ("summarize every N tool calls"). If cadence matters, describe the shape with an example: one sentence before the first tool call, brief updates only on discovery or direction change, outcome-first close.
-- Bound correction narration: "Only correct an earlier statement when the error would change the user's code, conclusions, or decisions; otherwise make the fix and move on."
-
-### 11.10 Coverage-vs-Filter for Review & Detection Skills
-
-Opus 5 reviews with high precision *and* recall, and accuracy holds at lower effort — but it follows conservative reporting instructions ("only high-severity", "don't nitpick") faithfully, so a harness tuned for older models shows *lower measured recall* (harness effect, not regression).
-
-**Design rules (reviewers/detectors)**:
-- Separate *finding* from *filtering*: at the finding stage instruct coverage ("report every issue including uncertain/low-severity; tag confidence + severity; a later stage ranks").
-- Move confidence/severity filtering to a downstream verification/ranking stage.
-- If self-filtering in one pass, set a **concrete** bar ("anything that could cause incorrect behavior, a test failure, or a misleading result"), not "important".
-- Exploit effort-insensitivity: wide pass at `low`/`medium`, `xhigh` reserved for adjudication.
-- Validate recall/F1 against an eval subset after prompt changes.
-
-### 11.11 Voice & Artifact Defaults
-
-Opus 5 prose trends direct/opinionated with sparing emoji and narrates self-corrections readily. Vision and UI/frontend visual replication are strong; it generates multi-sheet spreadsheets and structured slide decks but needs the target style or template supplied.
-
-**Design rules**:
-- For writer skills: state warmer/conversational tone explicitly when the product needs it; bound correction narration (11.9).
-- For document/slide skills: pass the style or template in — do not rely on a house default.
-- For design/frontend skills: give a concrete alternative palette/typography, or have the model propose 3–4 directions first — generic negation just shifts to another fixed palette. The warm-cream/serif house style observed on prior Opus models is **not documented for Opus 5**; treat it as unverified rather than assumed.
-
-### 11.12 Context Minimalism — Judgment Over Rules *(Claude 5 generation-wide)*
-
-Anthropic removed over 80% of Claude Code's own system prompt for Opus 5 and Fable 5 with no measurable loss on coding evals. On Claude 5 models, prompt volume that helped older models is cost, and some forms of it constrain the model. Unlike 11.1–11.11, this applies on Opus 5, Fable 5, and Sonnet 5 alike. [Source: claude.com/blog — *The new rules of context engineering for Claude 5 generation models*, 2026-07-24]
-
-**Design rules**:
-- Frame style and craft guidance as the intended outcome, not as a prohibition list — "write code that reads like the surrounding code: match its comment density, naming, and idiom" over "never write multi-paragraph docstrings". Safety gates, destructive-action confirmations, and protocol contracts stay as explicit constraints.
-- Do not teach by example where an interface would do: few-shot blocks now narrow the exploration space, so spend the tokens on expressive parameters and an enumeration of the available options instead. Keep examples only where the output shape is non-obvious (schemas, `_STEP_COMPLETE` / handoff markers).
-- State each instruction once. Tool-usage rules belong in the tool description, not in the skill body; guidance duplicated between a SKILL.md and its reference is paid for on every call. This does not repeal the 11.2 end-of-file brevity reminder, which calibrates length rather than restating a behavior.
-- Point generated references at real artifacts — code, test suites, rendered output, rubrics — rather than prose describing them.
+Opus 5 has sharp default behaviors that generated skills must author for explicitly. **Three defaults cost tokens on every workload and are the highest-value checks: long output (P2), scope expansion (P8), and automatic self-verification (P9).** Apply the phase mapping below when designing new agents or updating existing ones.
 
 ### 11.13 Application in Architect Phases
 
 | Phase | Apply |
 |-------|-------|
-| `UNDERSTAND` | Confirm caller-provided context is complete (11.1); flag missing fields once, not iteratively |
-| `DESIGN` | Bake length envelopes for both channels (11.2), tool-use rationale (11.3), delegation caps (11.4), thinking-on assumptions (11.5), scope bounds (11.8), and — for reviewers — coverage-vs-filter (11.10) into the section contract |
-| `GENERATE` | Verify generated SKILL.md states effort-level expectations against a `high` default (11.6), delegation-engineer framing (11.7), scope bounds (11.8), carries **no** self-verification scaffolding (11.9), (writers/designers) voice/artifact defaults (11.11), and holds to context minimalism (11.12) |
-| `VALIDATE` | Add Opus 5 readiness checks to the validation pass — a skill that omits 11.2 / 11.8 / 11.9 guidance will over-produce, over-reach, and over-verify at runtime; one that omits 11.12 ships prompt bloat that costs tokens on every call |
+| `UNDERSTAND` | Confirm caller-provided context is complete (P1); flag missing fields once, not iteratively |
+| `DESIGN` | Bake length envelopes for both channels (P2), tool-use rationale (P3), delegation caps (P4), thinking-on assumptions (P5), scope bounds (P8), and — for reviewers — coverage-vs-filter (P10) into the section contract |
+| `GENERATE` | Verify generated SKILL.md states effort-level expectations against a `high` default (P6), delegation-engineer framing (P7), scope bounds (P8), carries **no** self-verification scaffolding (P9), (writers/designers) voice/artifact defaults (P11), and holds to context minimalism (P12) |
+| `VALIDATE` | Add Opus 5 readiness checks to the validation pass — a skill that omits P2 / P8 / P9 guidance will over-produce, over-reach, and over-verify at runtime; one that omits P12 ships prompt bloat that costs tokens on every call |

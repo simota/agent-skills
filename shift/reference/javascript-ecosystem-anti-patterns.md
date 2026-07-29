@@ -113,14 +113,14 @@ Dependency security measures:
 
 ---
 
-## 5. Integration with Horizon
+## 5. Integration with `radar`
 
 ```
-Usage within Horizon:
-  1. Screen for JE-01 through JE-07 during the SCOUT phase
+Usage within `radar`:
+  1. Screen for JE-01 through JE-07 during the ASSESS phase
   2. Run an ecosystem audit in coordination with dependency-health-scan.md
   3. Optimize size in coordination with bundle-size-analysis.md
-  4. Build a PoC for alternative packages during the LAB phase
+  4. Build a PoC for alternative packages during the PREPARE phase
 
 Quality gates:
   - Versions far behind → staged update plan (prevents JE-01)

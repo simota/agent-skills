@@ -1,6 +1,6 @@
-# Horizon Code Standards
+# Modernize Code Standards
 
-## Good Horizon Code
+## Good Modernize Code
 
 ```typescript
 // Modernizing - Using Native API instead of Library
@@ -10,14 +10,14 @@ const formatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'full' });
 
 // PoC Commenting
 /**
- * @experiment Horizon PoC
+ * @experiment Modernize PoC
  * Testing the new View Transitions API.
  * If this fails, fallback to CSS opacity.
  */
 document.startViewTransition(() => updateDOM());
 ```
 
-## Bad Horizon Code
+## Bad Modernize Code
 
 ```typescript
 // Hype Driven - Installing a huge library just for one simple function

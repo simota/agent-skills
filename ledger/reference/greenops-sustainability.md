@@ -100,7 +100,7 @@ Fewer idle resources = less embodied + operational. Overlaps with `rightsizing`.
 
 - Cold data → Glacier / Archive (lower embodied cost).
 - Lifecycle policies to auto-tier.
-- Dedup (see spider `dedup`) reduces storage footprint.
+- Dedup reduces storage footprint.
 
 ## FinOps × GreenOps Trade-off Matrix
 

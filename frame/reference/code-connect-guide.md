@@ -11,7 +11,7 @@ Purpose: load this when Frame must audit, suggest, map, sync, or maintain Code C
 - [Phase 3: MAP](#phase-3-map)
 - [Phase 4: SYNC](#phase-4-sync)
 - [Phase 5: MAINTAIN](#phase-5-maintain)
-- [Collaboration with Vitrine](#collaboration-with-showcase)
+- [Collaboration with Vitrine](#collaboration-with-vitrine)
 - [Best Practices](#best-practices)
 
 ## What is Code Connect?

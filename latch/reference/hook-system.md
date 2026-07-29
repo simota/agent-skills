@@ -52,21 +52,7 @@ Structure rules:
 
 ## Event Catalog
 
-| Event | Timing | Can block | Prompt hook | Primary use |
-|-------|--------|-----------|-------------|-------------|
-| `PreToolUse` | Before tool execution | Yes | Yes | Approve, deny, or modify tool calls |
-| `PostToolUse` | After tool completion | No | Yes | Feedback, logging, post-action automation |
-| `UserPromptSubmit` | When the user sends a prompt | Yes | Yes | Prompt validation or context injection |
-| `Stop` | When the main agent considers stopping | Yes | Yes | Completion and quality gates |
-| `SubagentStop` | When a subagent considers stopping | Yes | Yes | Subagent completion checks |
-| `SessionStart` | When the session starts | No | No | Context loading and environment setup |
-| `SessionEnd` | When the session ends | No | No | Cleanup, final logging, state save |
-| `PreCompact` | Before context compaction | No | No | Preserve critical context |
-| `Notification` | When Claude sends a notification | No | No | External forwarding and audit logging |
-| `PermissionRequest` | When a permission dialog is about to show | Yes | No | Automated permission decisions (allow/deny) |
-| `SubagentStart` | When a subagent starts | No | No | Subagent resource limits and task redirection |
-| `PostCompact` | After context compaction | No | No | Post-compaction logging and state verification |
-| `InstructionsLoaded` | After instructions are loaded | No | No | Instruction validation and augmentation |
+Full 26-event lifecycle table (timing, block-capable, hook-type support, primary use) → `reference/event-catalog.md`. Always consult it before choosing an event.
 
 ### Event-Specific Contracts
 

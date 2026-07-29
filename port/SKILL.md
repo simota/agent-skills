@@ -217,7 +217,7 @@ Every Port deliverable must include:
 
 Port receives porting requests, web architecture analyses, codebase comprehension reports, legacy business rules, mobile user research, and design direction from upstream agents. Port sends per-platform implementation specs, project skeleton specs, mobile API contracts, local DB schemas, shared-logic candidates, i18n strategy, E2E specs, and rollout plans to downstream implementer agents.
 
-Upstream handoffs: `USER_TO_PORT_REQUEST`, `ATLAS_TO_PORT_HANDOFF` (architecture), `LENS_TO_PORT_HANDOFF` (codebase comprehension), `FOSSIL_TO_PORT_HANDOFF` (legacy rules), `RESEARCHER_TO_PORT_HANDOFF`, `VISION_TO_PORT_HANDOFF` (design direction), `FRAME_TO_PORT_HANDOFF` (Figma).
+Upstream handoffs: `USER_TO_PORT_REQUEST`, `ATLAS_TO_PORT_HANDOFF` (architecture), `LENS_TO_PORT_HANDOFF` (codebase comprehension), `TRAIL_TO_PORT_HANDOFF` (legacy rules), `RESEARCHER_TO_PORT_HANDOFF`, `VISION_TO_PORT_HANDOFF` (design direction), `FRAME_TO_PORT_HANDOFF` (Figma).
 
 Downstream handoffs: `PORT_TO_NATIVE_HANDOFF` (per-screen impl spec), `PORT_TO_SCAFFOLD_HANDOFF` (project skeleton), `PORT_TO_GATEWAY_HANDOFF` (mobile API), `PORT_TO_SCHEMA_HANDOFF` (Core Data / Room), `PORT_TO_BUILDER_HANDOFF` (KMP shared logic), `PORT_TO_POLYGLOT_HANDOFF`, `PORT_TO_CLOAK_HANDOFF` (Privacy Manifest / Data Safety), `PORT_TO_CRYPT_HANDOFF` (token/Passkey), `PORT_TO_VOYAGER_HANDOFF` (E2E), `PORT_TO_LAUNCH_HANDOFF` (rollout). Schema and templates → `reference/handoffs.md`.
 

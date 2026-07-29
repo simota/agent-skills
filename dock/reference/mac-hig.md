@@ -59,18 +59,7 @@ Unlike iOS, where in-view controls carry most affordances, **the menu bar is the
 - **Every command must be reachable via menu even when it also exists as a toolbar button or context-menu item.** A toolbar-only action with no menu equivalent fails discoverability and keyboard-only workflows.
 - **Menu items reflect current state**: disable (don't hide) items unavailable for the current selection; use `isEnabled` bindings, not conditional item removal, so users can predict menu shape.
 - **Ellipsis convention**: append `…` to any menu item that opens a dialog/sheet requiring further input before completing (e.g., "Export…", "Find…"). Omit it for immediate actions ("Save", "Duplicate").
-- **Keyboard shortcut conventions** (do not deviate without strong justification):
-
-| Shortcut | Action | Shortcut | Action |
-|----------|--------|----------|--------|
-| ⌘N | New | ⌘Z / ⇧⌘Z | Undo / Redo |
-| ⌘O | Open | ⌘X/⌘C/⌘V | Cut/Copy/Paste |
-| ⌘S / ⇧⌘S | Save / Save As | ⌘A | Select All |
-| ⌘W | Close Window | ⌘F | Find |
-| ⌥⌘W | Close All | ⌘, | Settings/Preferences |
-| ⌘Q | Quit | ⌘I | Get Info / Inspector |
-| ⌘P | Print | ⌘⌫ | Delete (destructive) |
-
+- **Keyboard shortcut conventions** (do not deviate without strong justification) — full table in `reference/menu-commands.md` §4.
 - **`MenuBarExtra`** (menu-bar-only utility apps): use `.menuBarExtraStyle(.window)` for rich custom content, `.menu` for a simple system-styled menu. Pair with `LSUIElement = true` in Info.plist to suppress a Dock icon and app-switcher entry when the app has no main window. See `reference/scenes.md` for scene wiring and `reference/menu-commands.md` for `Commands`/`CommandGroup` API detail.
 
 → Implementation: `reference/menu-commands.md` (full `Commands`/`CommandGroup`/`CommandMenu` API), `SKILL.md` Always list.

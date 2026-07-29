@@ -2,13 +2,7 @@
 
 ## Metrics
 
-| Metric | Definition | Threshold | Tool |
-|--------|-----------|-----------|------|
-| Afferent Coupling (Ca) | Incoming dependencies | < 20 per module | madge |
-| Efferent Coupling (Ce) | Outgoing dependencies | < 10 per module | madge |
-| Instability (I) | Ce / (Ca + Ce) | 0.0-0.3 (stable) or 0.7-1.0 (flexible) | calculated |
-| Abstractness (A) | Abstract types / Total types | Varies by layer | manual |
-| Distance from Main (D) | \|A + I - 1\| | < 0.3 | calculated |
+Coupling metric definitions/thresholds (Ca, Ce, Instability, Abstractness, Distance) → `reference/architecture-health-metrics.md`.
 
 ## Resolution Patterns
 

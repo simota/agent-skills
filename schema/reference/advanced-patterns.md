@@ -4,79 +4,9 @@ Reference for event sourcing, CQRS projections, pgvector/AI schema, and bitempor
 
 ---
 
-## Event Sourcing Schema
+## Event Sourcing Schema & CQRS Projections
 
-### Core Tables
-
-```sql
--- Append-only event store
-CREATE TABLE event_store (
-  event_id        UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
-  aggregate_id    UUID        NOT NULL,
-  aggregate_type  TEXT        NOT NULL,
-  event_type      TEXT        NOT NULL,
-  event_version   INT         NOT NULL,
-  payload         JSONB       NOT NULL,
-  metadata        JSONB       NOT NULL DEFAULT '{}',
-  occurred_at     TIMESTAMPTZ NOT NULL DEFAULT now(),
-  UNIQUE (aggregate_id, event_version)
-);
-
-CREATE INDEX idx_event_store_aggregate ON event_store(aggregate_id, event_version);
-CREATE INDEX idx_event_store_type_time ON event_store(aggregate_type, occurred_at);
-
--- Snapshot table for aggregate state cache
-CREATE TABLE aggregate_snapshots (
-  aggregate_id    UUID        PRIMARY KEY,
-  aggregate_type  TEXT        NOT NULL,
-  snapshot_data   JSONB       NOT NULL,
-  last_event_id   UUID        NOT NULL REFERENCES event_store(event_id),
-  last_version    INT         NOT NULL,
-  taken_at        TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-```
-
-### Design Rules
-
-1. `event_store` is **append-only** — never UPDATE or DELETE rows.
-2. Use `(aggregate_id, event_version)` unique constraint to detect optimistic concurrency conflicts.
-3. Rebuild projections from `event_store` on demand; snapshots are a performance optimization, not the source of truth.
-4. Partition `event_store` by `occurred_at` for long-running systems (> 1M events/month).
-
----
-
-## CQRS Projection Tables
-
-Projections are read-optimized materialized views of aggregate state, updated by event handlers.
-
-```sql
--- Order summary projection (read model)
-CREATE TABLE order_summary_projection (
-  order_id        UUID        PRIMARY KEY,
-  tenant_id       UUID        NOT NULL,
-  customer_id     UUID        NOT NULL,
-  status          TEXT        NOT NULL,
-  total_amount    NUMERIC(12,2) NOT NULL,
-  item_count      INT         NOT NULL DEFAULT 0,
-  created_at      TIMESTAMPTZ NOT NULL,
-  updated_at      TIMESTAMPTZ NOT NULL
-);
-
-CREATE INDEX idx_order_summary_tenant_status ON order_summary_projection(tenant_id, status, created_at DESC);
-
--- Projection checkpoint tracker
-CREATE TABLE projection_checkpoints (
-  projection_name TEXT        PRIMARY KEY,
-  last_event_id   UUID,
-  last_position   BIGINT      NOT NULL DEFAULT 0,
-  updated_at      TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-```
-
-**Design rules:**
-- Projections can be dropped and rebuilt from `event_store` at any time — they are dispensable.
-- Use `projection_checkpoints` to track replay progress and support resumable rebuilds.
-- Keep projections in a separate schema (`read_models`) to make the CQRS boundary explicit.
+Full event-store schema (events table, snapshots, projections, optimistic concurrency, aggregate boundaries, transactional outbox, schema evolution, anti-patterns) → `reference/event-sourcing-schema.md` (`event-sourcing` recipe). Not duplicated here.
 
 ---
 
@@ -115,16 +45,7 @@ CREATE INDEX idx_embeddings_ivfflat
 --   WITH (m = 16, ef_construction = 64);
 ```
 
-### IVFFlat vs HNSW Comparison
-
-| Dimension | IVFFlat | HNSW |
-|-----------|---------|------|
-| Build speed | Fast (minutes) | Slow (hours for large datasets) |
-| Search recall | ~95% at nprobe=10 | ~99% at ef=64 |
-| Memory usage | Low | High (graph stored in RAM) |
-| Dynamic inserts | Requires periodic rebuild | Fully dynamic |
-| Recommended for | Batch-loaded, static datasets | Live-updated, recall-critical datasets |
-| Key parameter | `lists = sqrt(n_rows)` | `m = 16`, `ef_construction = 64` |
+IVFFlat vs HNSW build speed / recall / memory / dynamic-insert trade-offs → `reference/index-strategies.md` § pgvector Index Selection. Not duplicated here.
 
 ### Hybrid Search SQL
 

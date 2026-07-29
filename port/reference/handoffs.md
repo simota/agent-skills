@@ -70,10 +70,10 @@ LENS_TO_PORT_HANDOFF:
   auth_flow_summary: "[textual]"
 ```
 
-### `FOSSIL_TO_PORT_HANDOFF` (input)
+### `TRAIL_TO_PORT_HANDOFF` (input)
 
 ```yaml
-FOSSIL_TO_PORT_HANDOFF:
+TRAIL_TO_PORT_HANDOFF:
   business_rules:
     - id: "[BR-001]"
       description: "[rule]"

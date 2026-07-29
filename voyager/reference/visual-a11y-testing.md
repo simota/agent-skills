@@ -216,26 +216,7 @@ test('works in forced-colors mode', async ({ browser }) => {
 
 ## Aria Snapshots for Accessibility
 
-> See also `playwright-patterns.md` → "Playwright 1.50+ Features" for code examples.
-
-```typescript
-test('navigation landmark structure', async ({ page }) => {
-  await page.goto('/');
-
-  // Verify accessible navigation structure
-  await expect(page.getByRole('navigation')).toMatchAriaSnapshot(`
-    - navigation:
-      - link "Home"
-      - link "Products"
-      - link "About"
-  `);
-});
-
-test('form accessibility', async ({ page }) => {
-  await page.goto('/contact');
-
-// ...
-```
+For ARIA snapshot syntax and code examples (navigation structure, form labels), see `playwright-patterns.md` → "Playwright 1.50+ Features" or `selector-accessibility-first.md` → "ARIA Snapshots".
 
 ---
 

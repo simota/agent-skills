@@ -6,11 +6,11 @@ Purpose: Execute a major framework version jump or cross-framework port with pre
 
 - **Shift `framework`**: executes a specific framework migration with a feature-parity checklist, incremental adapter pattern, and dual-run validation.
 - **Shift `migrate` (default)**: general migration planning — picks Strangler Fig vs Branch by Abstraction at an architectural level, no framework-specific gotchas.
-- **Horizon**: detects deprecated libraries/frameworks and suggests replacements — it produces the *input* for `framework`; it does not execute the migration.
+- **`detect` Recipe**: detects deprecated libraries/frameworks and suggests replacements — it produces the *input* for `framework`; it does not execute the migration.
 - **Zen**: refactor within a framework — does not cross versions.
 - **Launch**: plans the release where the migrated code ships; `framework` owns the code transition.
 
-If the request is "what should we move off?" → Horizon. If it is "we have chosen Vue 3, now move us" → `framework`.
+If the request is "what should we move off?" → `detect`. If it is "we have chosen Vue 3, now move us" → `framework`.
 
 ## Framework-Specific Gotchas
 
@@ -47,7 +47,7 @@ A codemod cannot replace the semantic verification column above. Treat the codem
 ```
 ASSESS   →  pin current + target minor/patch versions exactly
          →  inventory: entry points, framework-coupled modules, plugin/middleware list
-         →  capture Horizon findings if present (what forced this migration?)
+         →  capture `detect` findings if present (what forced this migration?)
          →  measure test coverage per surface; flag surfaces with <40% as high-risk
 
 PLAN     →  feature-parity checklist (one row per framework feature in use)
@@ -143,4 +143,4 @@ The SDK's `migrator` helper runs the validation function automatically in shadow
 - → `Radar`: dual-run harness as a regression test; feature-parity rows as acceptance tests.
 - → `Gear`: CI pipeline needs the new framework's build tooling and may need parallel test lanes during dual-run.
 - → `Launch`: cutover release plan, flag flip schedule, rollback runbook.
-- ← `Horizon`: consumes "framework is deprecated" findings as the trigger for this recipe.
+- ← `detect`: consumes "framework is deprecated" findings as the trigger for this recipe.

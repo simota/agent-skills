@@ -4,12 +4,11 @@ Purpose: Incrementally replace a legacy system by routing a growing share of tra
 
 ## Scope Boundary
 
-- **horizon `strangler`**: Strangler Fig pattern design (this document).
-- **horizon `poc` (elsewhere)**: Isolated proof of concept. Strangler is the production rollout of a validated PoC.
-- **horizon `codemod` (elsewhere)**: In-code transformation. Used inside a Strangler on the remaining legacy code.
-- **ripple `canary-scope` (elsewhere)**: Traffic ramp details. Strangler uses canary mechanics per route.
-- **ripple `rollback-plan` (elsewhere)**: Reversibility contract per cutover.
-- **shift (elsewhere)**: Broader migration orchestration. `strangler` is one pattern in `shift`'s toolkit.
+- **`strangler` Recipe**: Strangler Fig pattern design (this document).
+- **`modernize` Recipe, isolated PoC (elsewhere)**: Isolated proof of concept. Strangler is the production rollout of a validated PoC.
+- **`codemod` Recipe (elsewhere)**: In-code transformation. Used inside a Strangler on the remaining legacy code.
+- **Ripple `canary-scope` (elsewhere)**: Traffic ramp details. Strangler uses canary mechanics per route.
+- **Ripple `rollback-plan` (elsewhere)**: Reversibility contract per cutover.
 - **Launch (elsewhere)**: Release gating per cutover.
 
 ## Definition (Fowler)

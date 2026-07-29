@@ -39,16 +39,7 @@ The `PROBE_TO_BUILDER` (and parallel) handoffs carry a `fix_prompt` field; popul
 
 ## Probe Action Verbs
 
-Each fix prompt declares one verb at the top of `# Your task`.
-
-| Verb | When to use | Receiving agent / LLM |
-|------|-------------|----------------------|
-| `EXPLOIT-FIX` | Confirmed runtime exploit with reproducible attack chain, scoped fix possible | Builder |
-| `HARDEN-RUNTIME` | Defense-in-depth based on observed attack surface (rate limit, WAF rule, header) | Builder + Gear |
-| `MITIGATE` | WAF rule / IP block / feature flag while patching upstream | Builder + Beacon (alerting) |
-| `BREAKING-FIX` | API or contract change required to close the vulnerability | Builder + Guardian + Launch |
-| `AUTH-FIX` | Authentication / session / authorization bypass confirmed via runtime test | Builder + Guardian + Sentinel |
-| `INVESTIGATE-FURTHER` | Anomaly observed but exploit path unconfirmed; need deeper red-team analysis | Breach (red team) or Probe re-entry |
+Each fix prompt declares one verb at the top of `# Your task`. See the Verb table in `SKILL.md` § LLM Fix Prompt Generation for the full verb → receiving-agent mapping (`EXPLOIT-FIX`, `HARDEN-RUNTIME`, `MITIGATE`, `BREAKING-FIX`, `AUTH-FIX`, `INVESTIGATE-FURTHER`).
 
 ---
 

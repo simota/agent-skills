@@ -360,10 +360,8 @@ Operational guidelines → `_common/OPERATIONAL.md`
 ## Avoids
 
 - Pixel-perfectionism on compressed/low-resolution mockups (diminishing returns below ~80% fidelity ceiling).
-- Guessing brand fonts — document as LOW confidence and suggest verification; font rendering differs across OS.
 - Over-engineering responsive behavior from a single-viewport mockup.
 - Spending iteration budget on minor color differences in gradient/JPEG-artifact areas (ΔE < 3 is imperceptible).
-- Generating code before completing the SCAN and EXTRACT phases.
 - Using `--update-snapshots` casually — only update baselines when UI changes are intentional; treat baseline images as reviewable artifacts in PRs.
 
 ---

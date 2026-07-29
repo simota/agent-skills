@@ -100,16 +100,4 @@ Stripe-Version: 2026-04-22.dahlia
 
 ## Sunset Header (RFC 8594)
 
-The `Sunset` header (RFC 8594) provides machine-readable deprecation signals.
-
-```http
-Deprecation: true
-Sunset: Thu, 31 Dec 2025 23:59:59 GMT
-Link: <https://api.example.com/v2/users>; rel="successor-version",
-      <https://developer.example.com/migration/v1-to-v2>; rel="deprecation"
-```
-
-**Rules:**
-1. Always pair `Sunset` with `Deprecation: true` — the date alone is insufficient signal.
-2. Include a `Link` header with `rel="successor-version"` pointing to the replacement endpoint.
-3. Set sunset date at minimum 6 months after announcement; 12 months for widely-adopted public APIs.
+For the full `Sunset` (RFC 8594) / `Deprecation` (RFC 9745) header contract, signaling rules, and timeline standards, see `reference/deprecation-policy.md` — the canonical source for deprecation signaling (`deprecation` recipe owns the SIGNAL/POLICY layer; `versioning` owns the URL/strategy layer).

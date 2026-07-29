@@ -339,22 +339,9 @@ Tool sprawl prevention:
 
 ## 11. GenAI / Agent Observability
 
+GenAI semantic conventions, agent span attributes, token cost tracking, and quality metrics → `reference/llm-observability.md`.
+
 ```
-OTel GenAI Semantic Conventions (v1.37+):
-  Standard attributes:
-    gen_ai.request.model         # Model identifier
-    gen_ai.usage.input_tokens    # Token usage
-    gen_ai.usage.output_tokens
-    gen_ai.provider.name         # Provider (openai, anthropic, etc.)
-    gen_ai.request.temperature   # Model parameters
-    gen_ai.request.max_tokens
-
-  Agent-specific:
-    gen_ai.agent.name            # Agent identifier
-    gen_ai.agent.description
-    gen_ai.tool.name             # Tool calls
-    gen_ai.tool.description
-
 Instrumentation approaches:
   Option 1: Baked-in (framework embeds OTel)
     + Simplified adoption, feature-release control
@@ -363,13 +350,6 @@ Instrumentation approaches:
   Option 2: External OTel libraries (recommended)
     + Decoupled, community-maintained
     - Fragmentation risk if incompatible packages
-
-Key metrics for LLM observability:
-  - Token usage per request/session
-  - Latency per model call (time to first token, total)
-  - Error rates by model/provider
-  - Cost per request (tokens x price)
-  - Tool call success/failure rates
 ```
 
 ---

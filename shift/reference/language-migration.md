@@ -8,7 +8,7 @@ Purpose: Execute a language-level transition — adding or strengthening a type 
 - **Shift `migrate` (default)**: general migration planning at the architectural layer.
 - **Shift `framework`**: framework version jumps — may trigger a `lang` follow-up (e.g., Spring Boot 3 requires Java 17+).
 - **Zen**: refactor within the current language version — no runtime or type-system change.
-- **Horizon**: detects end-of-life runtimes — produces the input, does not execute.
+- **`detect` Recipe**: detects end-of-life runtimes — produces the input, does not execute.
 
 If the request is "enable `strict: true`" → `lang`. If it is "add types to one file for readability" → Zen.
 
@@ -95,4 +95,4 @@ COMPLETE →  drop old runtime from CI matrix
 - → `Radar`: runtime-diff harness; add tests at the boundaries where `str`/`bytes`, null/undefined, or numeric precision surfaced diffs.
 - → `Gear`: CI matrix updates, runtime-image bumps, lockfile regen.
 - → `Sentinel`: review crypto/TLS-related runtime changes (OpenSSL default diffs, JDK TLS changes).
-- ← `Horizon`: consumes "runtime EOL" findings as the trigger.
+- ← `detect`: consumes "runtime EOL" findings as the trigger.

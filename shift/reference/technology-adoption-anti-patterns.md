@@ -95,36 +95,36 @@ Technology Radar's 4 rings:
 
   Adopt:
     → Widely proven across the industry, recommended for production use
-    → Horizon: actively consider adoption in existing projects
+    → `radar`: actively consider adoption in existing projects
 
   Trial:
     → Use experimentally on projects where risk can be managed
-    → Horizon: a suitable target for building a PoC
+    → `radar`: a suitable target for building a PoC
 
   Assess:
     → Worth exploring how it would impact you
-    → Horizon: an investigation target during the SCOUT phase
+    → `radar`: an investigation target during the ASSESS phase
 
   Hold:
     → Adoption in new projects is not recommended
-    → Horizon: consider replacing existing usage
+    → `radar`: consider replacing existing usage
 
   How to use it:
     → Review the Technology Radar every six months
     → Cross-check against the project's tech stack
-    → Add investigation of alternatives to SCOUT for anything that moves into Hold
+    → Add investigation of alternatives to ASSESS for anything that moves into Hold
 ```
 
 ---
 
-## 5. Integration with Horizon
+## 5. Integration with `radar`
 
 ```
-Usage within Horizon:
-  1. Screen for TA-01 through TA-07 during the SCOUT phase
+Usage within `radar`:
+  1. Screen for TA-01 through TA-07 during the ASSESS phase
   2. Cross-check regularly against the Technology Radar
-  3. Apply the Tech Maturity Matrix evaluation during the LAB phase
-  4. Present the rationale for the adoption decision during the PRESENT phase
+  3. Apply the Tech Maturity Matrix evaluation during the PREPARE phase
+  4. Present the rationale for the adoption decision during the COMPLETE phase
 
 Quality gates:
   - "Everyone's using it" as the justification → Hype Cycle position check required (prevents TA-02)

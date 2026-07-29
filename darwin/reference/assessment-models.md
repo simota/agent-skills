@@ -197,7 +197,7 @@ Where:
 | PRODUCTION | Guardian, Beacon, Triage, Gear | Sentinel, Launch, Latch | All others |
 | MAINTENANCE | Shift (`detect`/`modernize`/`radar`), Sweep, Trail | Builder, Radar, Scout | All others |
 | SCALING | Bolt, Tuner, Scaffold | Beacon, Gear, Stream | All others |
-| SUNSET | Sweep, Quill, Morph | Canvas, Trail, Archive | All others |
+| SUNSET | Sweep, Quill, Morph | Canvas, Trail | All others |
 
 #### Feedback (20%)
 

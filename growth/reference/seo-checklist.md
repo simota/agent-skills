@@ -22,11 +22,7 @@
 
 ## AI Overview / AI Mode Optimization
 
-Google's AI Overviews has scaled to 200+ countries and 40+ languages as of May 2025, and AI Mode (the new fully conversational AI Search experience launched at I/O 2025) became globally available across nearly 200 countries and 98 languages following Google I/O 2026 (2026-05). Gemini 3.6 Flash (High) is the default model in AI Mode globally. The classic blue-link CTR for queries with AI Overviews dropped 61% (1.76% → 0.61%) per Seer Interactive's September 2025 study, but pages cited inside an AI Overview earn **35% more organic clicks** (and 91% more paid clicks) than uncited pages on the same SERP — citation is the new ranking. CTR is also recovering: Seer's follow-up showed AIO-query organic CTR rising from 1.3% (Dec 2025) to 2.4% (Feb 2026), an 85% rebound. Structured data + direct-answer formatting are now table stakes.
-
-[Source: Search Engine Land — Google AI Overviews CTR shows early signs of recovery (2026-02), https://searchengineland.com/google-ai-overviews-ctr-recovery-study-475566]
-[Source: Google blog — AI Mode expands languages and locations (2026-05), https://blog.google/products-and-platforms/products/search/ai-mode-expands-languages-locations/]
-[Source: Ahrefs — AI Overviews Reduce Clicks by 58% (2025-12), https://ahrefs.com/blog/ai-overviews-reduce-clicks-update/]
+AI Overviews and AI Mode now sit at or near-global reach; citation inside an AI Overview earns significantly more clicks than an uncited result on the same SERP, and structured data + direct-answer formatting are table stakes. Full CTR figures, rollout timeline, and sources → `reference/geo-optimization.md`.
 
 ### E-E-A-T Signals
 
@@ -41,7 +37,7 @@ Google's AI Overviews has scaled to 200+ countries and 40+ languages as of May 2
 
 ### Structured Data for AI Parsing
 
-> **2026 update:** Google has fully dropped FAQ rich results from blue-link SERPs (FAQ search appearance, rich result report, and Rich Results Test support removed June 2026; Search Console API support removed August 2026 — [Search Engine Land, 2026, https://searchengineland.com/google-to-no-longer-support-faq-rich-results-476957]). HowTo rich results were already deprecated in 2023. **FAQPage and HowTo schema remain valid Schema.org types and are still parsed by AI Overviews / AI Mode / Perplexity / ChatGPT** — keep them for AI citation, not for rich snippets. Schema.org released **v30.0 on 2026-03-19** (823 types), adding properties for credentials, e-commerce, and supply-chain transparency optimized for AI verification [Source: Schema.org release notes, https://schema.org/docs/releases.html].
+> **2026 update:** FAQ rich results were retired from blue-link SERPs (Jun/Aug 2026); FAQPage and HowTo schema remain valid and are still parsed by AI engines for citation — keep them. Full detail and sources → `reference/json-ld-templates.md`.
 
 ```html
 <!-- FAQ schema is still parsed by AI engines for Q&A extraction (no longer triggers blue-link rich results) -->

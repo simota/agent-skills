@@ -66,13 +66,3 @@ What kind of task is this?
    ├─ Specialist unknown -> Handoff
    └─ Solution path unknown -> Magentic -> Nexus or Sherpa
 ```
-
-### Rally Mapping
-
-| Orchestration style | Rally pattern |
-|---------------------|---------------|
-| Concurrent | Frontend/Backend Split, Feature Parallel |
-| Sequential | Pipeline |
-| Handoff | Specialist Team |
-| Group Chat | not Rally default |
-| Magentic | not Rally; hand off upstream |

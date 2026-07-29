@@ -250,11 +250,7 @@ Decision: emit Fix Prompt OR suppress:
 - Escalating to Breach for red-team validation → suppress, Breach owns remediation prompt
 - Reconnaissance / scope-mapping only → suppress, no actionable finding
 
-Suppress the Fix Prompt block when:
-- Sentinel owns the source-level remediation prompt — Probe's report covers runtime confirmation only.
-- Probe escalates to Breach for adversarial validation — Breach owns the red-team remediation prompt.
-- The engagement was reconnaissance / scope-mapping only — no exploit was attempted.
-- Exploit is out of scope (third-party service, infrastructure) — coordinate via the responsible party.
+Suppress the Fix Prompt block also when exploit is out of scope (third-party service, infrastructure) — coordinate via the responsible party.
 
 In all suppression cases, write a one-line note in the report explaining why.
 

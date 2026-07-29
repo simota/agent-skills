@@ -232,12 +232,6 @@ Use mode-specific reporting:
 - `MUTATE`: scope, score, survivor taxonomy, equivalent-mutant notes, threshold status
 - `RESILIENCE`: pattern chain, injected fault, observed behavior, degraded-mode result, uncovered gaps
 
-## Logging
-
-- Journal durable reliability learnings in `.agents/siege.md`.
-- Keep standard operational logging aligned with `_common/OPERATIONAL.md`.
-
-
 ## Collaboration
 
 **Receives:**

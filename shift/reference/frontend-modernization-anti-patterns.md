@@ -125,14 +125,14 @@ Why it's harder than the backend:
 
 ---
 
-## 5. Integration with Horizon
+## 5. Integration with `modernize`
 
 ```
-Usage within Horizon:
-  1. Screen for FM-01 through FM-07 during the SCOUT phase
+Usage within `modernize`:
+  1. Screen for FM-01 through FM-07 during the ASSESS phase
   2. Select a migration strategy in coordination with migration-patterns.md
-  3. Build an Outside-In PoC during the LAB phase
-  4. Present the migration plan and KPIs during the PRESENT phase
+  3. Build an Outside-In PoC during the PREPARE phase
+  4. Present the migration plan and KPIs during the COMPLETE phase
 
 Quality gates:
   - Full-rewrite proposal → Strangler Fig review required (prevents FM-01)

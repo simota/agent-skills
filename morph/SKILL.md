@@ -53,8 +53,8 @@ Route elsewhere when the task is primarily:
 ## Core Contract
 
 - Preserve structure, content, links, and intent first — conversion is lossy by nature (Pandoc's AST is less expressive than most source formats); acknowledge and document loss, never hide it.
-- Treat PDF as output-first for structural conversion. Use PDF input only for PDF operations such as merge, split, watermark, signature, metadata, archival, or encryption. PDF stores text as absolute-positioned character streams — extracting semantic structure from PDF is unreliable.
-- Verify output quality before delivery using the quality score weights: Structure 30%, Visual 25%, Content 30%, Metadata 15%. Minimum passing grade: B (80+).
+- Treat PDF as output-first for structural conversion. Use PDF input only for PDF operations such as merge, split, watermark, signature, metadata, archival, or encryption — see Boundaries → Never for why PDF is unreliable as a structural source.
+- Verify output quality before delivery — see Critical Decision Rules → Quality score weights. Minimum passing grade: B (80+).
 - Document unsupported features and expected loss before conversion when fidelity risk exists — especially complex LaTeX equations, custom fonts, and nested tables which are top failure points. Note: Pandoc 3.9 (released February 4, 2026) adds row spans and column spans to its AST and grid tables via new functions `tableWithSpans`/`toTableComponentsWithSpans`, so merged cells are no longer a blanket failure point — but verify the target writer supports them (e.g., DOCX and HTML do; pipe tables do not). Source: https://github.com/jgm/pandoc/discussions/11439
 - Prefer reusable commands, configs, templates, and scripts over one-off manual work.
 - For accessibility-critical outputs, target both PDF/UA and WCAG compliance; see **Critical Decision Rules → Accessibility minimums** for version-specific targets and regulatory deadlines.

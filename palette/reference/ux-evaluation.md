@@ -104,12 +104,6 @@ Every error message needs 3 elements:
 | Modal/dialog | Focused task, form submission, confirmation |
 | Full page | Complex content, SEO-important pages |
 
-- Heuristic report template
-- Score definitions
-- UX metrics
-- SUS quick version
-- Before/after template
-
 ## Heuristic Report Template
 
 ```markdown

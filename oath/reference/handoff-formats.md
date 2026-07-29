@@ -2,10 +2,10 @@
 
 ## Inbound Handoffs
 
-### SENTINEL_TO_COMPLY_HANDOFF
+### SENTINEL_TO_OATH_HANDOFF
 
 ```yaml
-SENTINEL_TO_COMPLY_HANDOFF:
+SENTINEL_TO_OATH_HANDOFF:
   from: Sentinel
   findings:
     - id: "[finding ID]"
@@ -16,10 +16,10 @@ SENTINEL_TO_COMPLY_HANDOFF:
   request: "Map findings to regulatory requirements and assess compliance impact"
 ```
 
-### CLOAK_TO_COMPLY_HANDOFF
+### CLOAK_TO_OATH_HANDOFF
 
 ```yaml
-CLOAK_TO_COMPLY_HANDOFF:
+CLOAK_TO_OATH_HANDOFF:
   from: Cloak
   privacy_controls:
     - control: "[control name]"
@@ -29,10 +29,10 @@ CLOAK_TO_COMPLY_HANDOFF:
   request: "Integrate privacy control status into broader compliance framework assessment"
 ```
 
-### CANON_TO_COMPLY_HANDOFF
+### CANON_TO_OATH_HANDOFF
 
 ```yaml
-CANON_TO_COMPLY_HANDOFF:
+CANON_TO_OATH_HANDOFF:
   from: Canon
   standards_context:
     - standard: "[OWASP | WCAG | ISO 25010]"
@@ -40,10 +40,10 @@ CANON_TO_COMPLY_HANDOFF:
   request: "Interpret technical standard findings in regulatory compliance context"
 ```
 
-### ATLAS_TO_COMPLY_HANDOFF
+### ATLAS_TO_OATH_HANDOFF
 
 ```yaml
-ATLAS_TO_COMPLY_HANDOFF:
+ATLAS_TO_OATH_HANDOFF:
   from: Atlas
   architecture:
     components: ["[component list]"]
@@ -56,10 +56,10 @@ ATLAS_TO_COMPLY_HANDOFF:
 
 ## Outbound Handoffs
 
-### COMPLY_TO_BUILDER_HANDOFF
+### OATH_TO_BUILDER_HANDOFF
 
 ```yaml
-COMPLY_TO_BUILDER_HANDOFF:
+OATH_TO_BUILDER_HANDOFF:
   from: Oath
   framework: "[SOC2 | PCI-DSS | HIPAA | ISO 27001]"
   requirement: "[specific requirement reference]"
@@ -73,10 +73,10 @@ COMPLY_TO_BUILDER_HANDOFF:
   evidence_needed: "[what auditor expects to verify]"
 ```
 
-### COMPLY_TO_BEACON_HANDOFF
+### OATH_TO_BEACON_HANDOFF
 
 ```yaml
-COMPLY_TO_BEACON_HANDOFF:
+OATH_TO_BEACON_HANDOFF:
   from: Oath
   monitoring_requirements:
     - control_id: "[regulatory control reference]"
@@ -89,10 +89,10 @@ COMPLY_TO_BEACON_HANDOFF:
       data_source: "[where to query]"
 ```
 
-### COMPLY_TO_SCRIBE_HANDOFF
+### OATH_TO_SCRIBE_HANDOFF
 
 ```yaml
-COMPLY_TO_SCRIBE_HANDOFF:
+OATH_TO_SCRIBE_HANDOFF:
   from: Oath
   document_type: "[policy | procedure | evidence_package | compliance_matrix]"
   framework: "[SOC2 | PCI-DSS | HIPAA | ISO 27001]"
@@ -103,10 +103,10 @@ COMPLY_TO_SCRIBE_HANDOFF:
   audience: "[auditor | management | engineering]"
 ```
 
-### COMPLY_TO_GEAR_HANDOFF
+### OATH_TO_GEAR_HANDOFF
 
 ```yaml
-COMPLY_TO_GEAR_HANDOFF:
+OATH_TO_GEAR_HANDOFF:
   from: Oath
   ci_cd_gates:
     - gate_name: "[compliance gate name]"

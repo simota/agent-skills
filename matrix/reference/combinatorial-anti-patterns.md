@@ -27,11 +27,7 @@ Purpose: Use this file when parameter modeling, constraint design, or pairwise a
 | `CT-07` | Unvalidated constraints | Assumptions hide real cases | confirm with product or engineering owners |
 | `CT-08` | Undocumented constraints | No one can maintain the model | record rule, rationale, and example |
 
-Constraint health:
-
-- `< 30%` excluded: healthy
-- `30-40%`: suspicious, review
-- `> 40%`: redesign recommended
+Constraint health thresholds (exclusion rate tiers) → `reference/combination-methods.md` (Constraint Handling).
 
 ## Coverage Misconceptions
 

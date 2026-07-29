@@ -7,7 +7,7 @@ Purpose: Orchestrate the sunset phase of a feature, API, or public interface —
 - **Shift `deprecate`**: orchestrates the sunset phase — deprecation period design, usage telemetry, Sunset header, removal playbook, client migration docs.
 - **Void**: proposes *what* to cut (YAGNI, scope trimming). Void's output is the input to `deprecate` when the candidate is a shipped/public surface.
 - **Launch**: owns release/version strategy — semver decisions, CHANGELOG, release notes. `deprecate` feeds Launch the deprecation-notice content and the removal-release target.
-- **Horizon**: detects *our own* reliance on deprecated third-party surfaces. `deprecate` governs *our* surfaces that others rely on.
+- **`detect` Recipe**: detects *our own* reliance on deprecated third-party surfaces. `deprecate` governs *our* surfaces that others rely on.
 - **Shift `migrate` / `framework` / `lang`**: execute the caller-side migration away from something deprecated. `deprecate` runs the provider-side sunset.
 
 If the question is "should we delete this?" → Void. If it is "we decided to delete it, how do we wind it down without breaking callers?" → `deprecate`.
@@ -55,7 +55,7 @@ Link: <https://api.example.com/docs/migrate-v1-to-v2>; rel="sunset"
 Every deprecated surface ships a migration doc with these sections:
 
 1. **What is deprecated** — exact symbol / endpoint / field, with version.
-2. **Why** — 1–3 sentences; link to the Void / Horizon finding if applicable.
+2. **Why** — 1–3 sentences; link to the Void / `detect` finding if applicable.
 3. **Replacement** — direct mapping with code examples in each supported language.
 4. **Behavior diffs** — call out any *semantic* change (e.g., null handling, timezone, default).
 5. **Timeline** — announced / warn-loudly / removed dates, copied verbatim from the deprecation registry.
@@ -113,4 +113,4 @@ Abort criteria: any previously-silent caller surfaces with >0.1% error rate attr
 - → `Radar`: test that deprecated surface emits warnings; test that removal with flag-off returns the migration-link error; test that flag-on restores behavior.
 - → `Gear`: telemetry dashboard, alert rules on sustained deprecated-usage.
 - ← `Void`: YAGNI / scope-cut proposals for surfaces that are already shipped.
-- ← `Horizon`: our-side mirror — when a third party deprecates something we use, Horizon triggers Shift `framework`/`lang`/`migrate`, not `deprecate`.
+- ← `detect`: our-side mirror — when a third party deprecates something we use, `detect` triggers `framework`/`lang`/`migrate`, not `deprecate`.

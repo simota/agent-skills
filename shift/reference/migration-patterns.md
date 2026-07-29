@@ -1,59 +1,6 @@
 # Migration Patterns
 
-## Strangler Fig Pattern
-
-Gradually replace legacy code by wrapping it with new implementation:
-
-```
-1. Create new implementation alongside old
-2. Route traffic/calls through a facade
-3. Gradually shift from old to new
-4. Remove old code when 100% migrated
-```
-
-```typescript
-// Facade that allows gradual migration
-class PaymentService {
-  async process(order: Order) {
-    if (featureFlag('new-payment-processor')) {
-      return this.newProcessor.process(order);
-    }
-    return this.legacyProcessor.process(order);
-  }
-}
-```
-
-## Branch by Abstraction
-
-Introduce an abstraction layer before replacing implementation:
-
-```
-1. Create interface/abstraction for the component to replace
-2. Refactor existing code to use the abstraction
-3. Create new implementation of the abstraction
-4. Switch implementations (feature flag or config)
-5. Remove old implementation
-```
-
-## Parallel Run
-
-Run old and new systems simultaneously to verify correctness:
-
-```typescript
-// Compare results during migration
-async function migrateWithVerification(input: Input) {
-  const [oldResult, newResult] = await Promise.all([
-    legacySystem.process(input),
-    newSystem.process(input)
-  ]);
-
-  if (!deepEqual(oldResult, newResult)) {
-    logger.warn('Migration mismatch', { input, oldResult, newResult });
-  }
-
-  return featureFlag('use-new-system') ? newResult : oldResult;
-}
-```
+Strangler Fig / Branch by Abstraction / Parallel Run pattern definitions, implementation steps, and code examples → `reference/migration-strategies.md`.
 
 ## Migration Checklist
 

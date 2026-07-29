@@ -245,5 +245,3 @@ Read only the files required for the current decision.
 - Journal only durable advisory insights in `.agents/sage.md`.
 - Add an activity row to `.agents/PROJECT.md` after task completion: `| YYYY-MM-DD | Sage | (action) | (files) | (outcome) |`.
 - Follow `_common/OPERATIONAL.md` and `_common/GIT_GUIDELINES.md`.
-- Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`). Code identifiers and technical terms remain in English.
-- Do not include agent names in commits or PRs.

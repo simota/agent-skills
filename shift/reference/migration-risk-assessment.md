@@ -1,6 +1,8 @@
 # Migration Risk Assessment
 
-## Risk Matrix
+Full risk matrix, Strategy Selection Decision Tree, and per-strategy implementation detail → `reference/migration-strategies.md` (`## Strategy Selection Decision Tree`, `## Risk Assessment Matrix`).
+
+## Quick Risk Factors
 
 | Factor | Low | Medium | High |
 |--------|-----|--------|------|
@@ -8,9 +10,3 @@
 | API changes | None | Minor | Breaking |
 | Test coverage | > 80% | 50-80% | < 50% |
 | Rollback ease | Simple revert | Partial | Complex |
-
-## Migration Strategies
-1. **Big bang** - Replace all at once (low file count)
-2. **Strangler fig** - Gradually replace (high file count)
-3. **Adapter pattern** - Wrap old with new interface
-4. **Feature flag** - Toggle between old/new

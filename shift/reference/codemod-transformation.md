@@ -4,10 +4,9 @@ Purpose: Author and apply AST-based code transformations across a codebase. Cove
 
 ## Scope Boundary
 
-- **horizon `codemod`**: AST-transformation authoring and rollout (this document).
-- **horizon `replace` (elsewhere)**: Library-level swap decisions; codemod is often the execution tool.
-- **horizon `strangler` (elsewhere)**: System-level incremental migration. Codemod is one tactic used inside a Strangler.
-- **shift (elsewhere)**: Migration orchestration. `shift` may commission a codemod; `codemod` here designs and runs it.
+- **`codemod` Recipe**: AST-transformation authoring and rollout (this document).
+- **`modernize` Recipe (elsewhere)**: Library-level swap decisions; codemod is often the execution tool.
+- **`strangler` Recipe (elsewhere)**: System-level incremental migration. Codemod is one tactic used inside a Strangler.
 - **Builder (elsewhere)**: Executes the codemod PRs at commit granularity.
 - **Judge (elsewhere)**: Reviews codemod output before merge.
 

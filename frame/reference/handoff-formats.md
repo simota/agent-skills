@@ -11,7 +11,7 @@ Purpose: load this when Frame must package extracted design context for a specif
 - [Frame -> Builder (API/Data Context)](#frame---builder-apidata-context)
 - [Frame -> Schema (Data Model)](#frame---schema-data-model)
 - [Frame -> Vision (Visual Context)](#frame---vision-visual-context)
-- [Frame -> Vitrine (Code Connect)](#frame---showcase-code-connect)
+- [Frame -> Vitrine (Code Connect)](#frame---vitrine-code-connect)
 - [Frame -> Canvas (Diagram)](#frame---canvas-diagram)
 
 ## Common Header (All Handoffs)

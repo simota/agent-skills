@@ -418,7 +418,7 @@ State per project lives at `.agents/bazaar/{project}.json`:
   "cvr_target": 0.05,
   "perf_budget": { "lcp_s": 2.5, "inp_ms": 200, "cls": 0.1 },
   "stages": {
-    "DISCOVER": { "status": "PASS", "delegates": ["researcher","compete","voice"], "artifacts": ["..."] },
+    "DISCOVER": { "status": "PASS", "delegates": ["field","compete","voice"], "artifacts": ["..."] },
     "AUDIENCE": { "status": "PASS", "delegates": ["cast","echo","plea"], "artifacts": ["..."] },
     "...": {}
   },

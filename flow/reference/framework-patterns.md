@@ -16,8 +16,8 @@ Purpose: Use this file when Flow work must match a specific frontend framework o
 | Vue | `<Transition>` / `<TransitionGroup>` | JS hooks or WAAPI when CSS is insufficient | media query or app-level flag |
 | Svelte | `transition:` / `in:` / `out:` / `animate:flip` | Custom gesture or timeline logic | media query or store-driven flag |
 | Vanilla JS | CSS transitions or `element.animate()` | WAAPI control, imperative sequencing | `matchMedia('(prefers-reduced-motion: reduce)')` |
-| Next.js | CSS or Motion; View Transitions if available | Shared layout, page choreography | same as React |
-| Astro | CSS first, `<ViewTransitions />` when supported | Cross-page progressive enhancement | media query |
+| Next.js | CSS or Motion; `@view-transition` for MPA | Shared layout, page choreography | same as React |
+| Astro | CSS first, `@view-transition { navigation: auto }` | Cross-page progressive enhancement | media query |
 
 ## Motion v12 (formerly Framer Motion)
 
@@ -63,18 +63,6 @@ Motion v12 automatically switches between requestAnimationFrame and Web Animatio
   navigation: auto;
 }
 ```
-
-### Updated Framework Table
-
-| Framework | Preferred Approach | Use JS When | Reduced Motion |
-|-----------|--------------------|-------------|----------------|
-| Tailwind | `transition-*`, `animate-*` | Gesture physics, orchestration | `motion-safe:` / `motion-reduce:` |
-| React | CSS first, then Motion (`motion/react`) | Gesture, layout, drag, sequencing | `useReducedMotion()` from `motion/react` |
-| Vue | `<Transition>` / `<TransitionGroup>` | JS hooks or WAAPI | media query or app-level flag |
-| Svelte | `transition:` / `in:` / `out:` / `animate:flip` | Custom gesture/timeline | media query or store-driven flag |
-| Vanilla | CSS transitions or `element.animate()` (WAAPI) | Imperative sequencing | `matchMedia('(prefers-reduced-motion)')` |
-| Next.js | CSS or Motion; `@view-transition` for MPA | Shared layout, page choreography | same as React |
-| Astro | CSS first, `@view-transition { navigation: auto }` | Cross-page progressive enhancement | media query |
 
 ## Implementation Rules
 

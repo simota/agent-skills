@@ -263,17 +263,3 @@ When input contains `## NEXUS_ROUTING`:
 Required fields:
 
 - `Step`, `Agent`, `Summary`, `Key findings / decisions`, `Artifacts`, `Risks / trade-offs`, `Open questions`, `Pending Confirmations`, `User Confirmations`, `Suggested next agent`, `Next action`
-
-## Git Guidelines
-
-Follow `_common/GIT_GUIDELINES.md`.
-
-Good:
-- `feat(chain): add unicode tag scan`
-- `fix(chain): tighten intake checklist on MCP pinning`
-
-Avoid:
-- `update chain skill`
-- `audit improvements`
-
-Never include agent names in commit or PR titles unless project policy explicitly requires it.

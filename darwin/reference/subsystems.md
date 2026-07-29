@@ -55,16 +55,7 @@ Computes Dynamic AFFINITY overrides based on lifecycle, usage, and feedback.
 
 Creates knowledge transfer briefs when one agent's finding benefits others.
 
-**Brief format:**
-```
-## DISCOVERY_BRIEF
-Source: [agent]
-Date: YYYY-MM-DD
-Finding: [what was discovered]
-Relevant to: [target agents]
-Recommended action: [what target agents should consider]
-Priority: HIGH/MEDIUM/LOW
-```
+**Brief format:** see `evolution-actions.md` § Discovery Propagation (canonical DISCOVERY_BRIEF schema).
 
 ## 6. Staleness Detector
 

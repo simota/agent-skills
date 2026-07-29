@@ -4,9 +4,9 @@ Purpose: Manage the lifecycle of deprecating a public API, library feature, CLI 
 
 ## Scope Boundary
 
-- **horizon `sunset`**: Deprecation lifecycle for existing features (this document).
-- **horizon `detect` (elsewhere)**: Identify deprecated third-party dependencies *you consume*. `sunset` manages things you *publish*.
-- **horizon `strangler` (elsewhere)**: Full system replacement. Sunset can be the exit stage of a Strangler.
+- **`deprecate` Recipe**: Deprecation lifecycle for existing features (this document).
+- **`detect` Recipe (elsewhere)**: Identify deprecated third-party dependencies *you consume*. `deprecate` manages things you *publish*.
+- **`strangler` Recipe (elsewhere)**: Full system replacement. Deprecation can be the exit stage of a Strangler.
 - **Launch (elsewhere)**: SemVer versioning and release gating.
 - **Prose (elsewhere)**: User-facing deprecation notice copy.
 - **Pulse (elsewhere)**: Usage metrics that gate safe removal.
@@ -229,7 +229,7 @@ For one-way deprecations, require:
 
 ## Deliverable Contract
 
-When `sunset` completes, emit:
+When `deprecate` completes, emit:
 
 - **Timeline** with per-stage dates and durations.
 - **Per-stage actions** (what ships in each stage).

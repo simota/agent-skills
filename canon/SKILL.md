@@ -133,9 +133,9 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | AI Governance | ISO/IEC 42001:2023 (AI Management System), EU AI Act alignment | reference/security-standards.md |
 | Industry (ref only) | PCI-DSS, HIPAA, GDPR, SOC 2, EU AI Act | Consult professionals |
 
-**ISO/IEC 25010:2023 key changes from 2011:** 8→9 characteristics (Safety added); Usability→Interaction Capability; Portability→Flexibility; new sub-chars: Inclusivity, Self-descriptiveness, Resistance, Scalability; Maturity→Faultlessness; User Interface Aesthetics→User Engagement.
+**ISO/IEC 25010:2023 key changes from 2011:** 8→9 characteristics (Safety added). Full changelog (Interaction Capability, Flexibility, sub-characteristics) → `reference/quality-standards.md`.
 
-**OWASP Top 10:2025 key changes from 2021:** Methodology shift from symptoms to root causes. Security Misconfiguration rose #5→#2; SSRF absorbed into A01 Broken Access Control; A03 Software Supply Chain Failures replaces "Vulnerable and Outdated Components" (scope expanded to entire supply chain); new A10 Mishandling of Exceptional Conditions; A07 renamed Authentication Failures; A09 renamed Security Logging and Alerting Failures. Data set doubled to 500k+ apps from 40+ orgs.
+**OWASP Top 10:2025 key changes from 2021:** Methodology shift from symptoms to root causes; dataset doubled to 500k+ apps from 40+ orgs. Full category remapping (rank changes, renames, new A10) → `reference/security-standards.md`.
 
 **OWASP Top 10 for Agentic Applications (2026) — full list:** ASI01 Agent Goal Hijack, ASI02 Tool Misuse & Exploitation, ASI03 Identity & Privilege Abuse, ASI04 Agentic Supply Chain Vulnerabilities, ASI05 Unexpected Code Execution (RCE), ASI06 Memory & Context Poisoning, ASI07 Insecure Inter-Agent Communication, ASI08 Cascading Failures, ASI09 Human-Agent Trust Exploitation, ASI10 Rogue Agents. Peer-reviewed by 100+ security researchers (released Dec 2025).
 
@@ -145,7 +145,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 **WCAG 3.0 awareness (Working Draft, W3C Recommendation targeted late 2029):** WCAG 3.0 shifts from binary pass/fail to outcome-based scoring (0–4) with Bronze/Silver/Gold conformance tiers. March 2026 Working Draft introduced 174 "requirements" (renamed from "outcomes"), signaling more concrete and testable criteria. It does NOT replace WCAG 2.2 — assess against WCAG 2.2 for current compliance, but note WCAG 3.0 trajectory when advising long-term accessibility strategy. Next WD expected ~September 2026; CR no earlier than Q4 2027; final Recommendation likely late 2029 per AGWG co-chair.
 
-**Automated accessibility tool ceiling:** W3C-approved automated testing rules provide full or partial coverage for only 31% of WCAG 2.2 Level A/AA Success Criteria (17/55 SC, as of March 2026). Actual issue detection rates vary by tool (axe-core ~57%, general range 30–57%). Always recommend manual expert audit alongside automated checks for any compliance assessment rated Partial or higher.
+**Automated accessibility tool ceiling:** automated rules cover only 31% of WCAG 2.2 Level A/AA Success Criteria — always require manual expert audit alongside automated checks. Full tool-coverage figures → `reference/accessibility-standards.md`.
 
 **ISO/IEC 42001:2023 (AI Management System):** First international AIMS standard. Voluntary but increasingly expected — EU AI Act high-risk obligations effective Aug 2, 2026; GPAI providers must comply from Aug 2, 2025. Commission enforcement powers (including fines) activate Aug 2, 2026: up to €15M or 3% of global turnover for non-compliance; €35M or 7% for prohibited practices. Recommend ISO 42001 alignment when assessing AI systems, especially those targeting EU markets.
 
@@ -232,15 +232,7 @@ Every deliverable must include:
 
 ## LLM Fix Prompt Generation
 
-Every Canon assessment for a confirmed remediable violation ends with a `## LLM Fix Prompt` block — a paste-ready, self-contained prompt that drives a downstream coding LLM (Builder, or specialist routing per overlap rules) toward a precise, standard-conformant change without manual reformulation. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; Canon-specific verbs, suppression cases, template fields, and a worked example live in `reference/fix-prompt-generation.md`.
-
-| Verb | Use when | Receiving agent |
-|------|----------|----------------|
-| `REMEDIATE` | Violation has clear remediation per the cited standard, scoped fix | Builder (or Polyglot for i18n, Sentinel for security-specific) |
-| `EXEMPT-WITH-RATIONALE` | Violation must remain (constraints, legacy); document exemption per the standard's exemption mechanism | Builder + Scribe |
-| `BREAKING-REMEDIATE` | Remediation requires breaking change (API shape, schema migration, response code) | Builder + Guardian + Launch |
-| `MITIGATE` | Compensating control while underlying remediation is blocked | Builder |
-| `INVESTIGATE-FURTHER` | Standard interpretation ambiguous; need to consult spec authority or domain expert | Domain expert OR Canon re-entry with clarified standard |
+Every Canon assessment for a confirmed remediable violation ends with a `## LLM Fix Prompt` block — a paste-ready, self-contained prompt that drives a downstream coding LLM (Builder, or specialist routing per overlap rules) toward a precise, standard-conformant change without manual reformulation. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; Canon-specific verbs (`REMEDIATE` / `EXEMPT-WITH-RATIONALE` / `BREAKING-REMEDIATE` / `MITIGATE` / `INVESTIGATE-FURTHER`), suppression cases, template fields, and a worked example live in `reference/fix-prompt-generation.md`.
 
 Authoring rules (full list in `_common/LLM_PROMPT_GENERATION.md`):
 - One verb per prompt; one violation per prompt.

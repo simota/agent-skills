@@ -80,32 +80,7 @@ Priority order:
 
 ## Motion Budget Categories
 
-When planning motion for a view, allocate animations to these 3 budget categories. Each view should use at most 2-3 categories. See [intentional-motion-framework.md](~/.claude/skills/flow/reference/intentional-motion-framework.md) for the full slot system.
-
-| Category | Purpose | Duration Range | Examples |
-|----------|---------|---------------|----------|
-| **Hero Entrance** | Draw attention to primary content on page load | 300-600ms | Fade up, scale reveal, stagger reveal |
-| **Scroll-Linked** | Create depth and progression as user scrolls | Continuous or 200-400ms | Scroll fade-in, sticky transitions, parallax |
-| **Interaction Feedback** | Confirm user actions immediately | 150-250ms | Hover, press, toggle, expand, tooltip |
-
-### Budget Rules
-
-- Maximum 3 distinct motion types per view
-- Fill Interaction Feedback first (highest priority)
-- Hero Entrance is optional — many views don't need it
-- Scroll-Linked is the highest risk for distraction
-- Every category requires a `prefers-reduced-motion` fallback
-
-### Per-View Motion Audit
-
-```markdown
-| Category | Active? | Motion Type | Duration | Reduced Motion |
-|----------|---------|-------------|----------|---------------|
-| Hero Entrance | [yes/no] | [type] | [ms] | [fallback] |
-| Scroll-Linked | [yes/no] | [type] | [ms] | [fallback] |
-| Interaction Feedback | [yes/no] | [type] | [ms] | [fallback] |
-Total distinct types: [N ≤ 3]
-```
+Each view should use at most 2-3 motion types (Hero Entrance / Scroll-Linked / Interaction Feedback). Full slot system, durations, budget rules, and the per-view audit template: `reference/intentional-motion-framework.md`.
 
 ## Quality Gate
 

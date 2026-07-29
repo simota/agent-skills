@@ -304,7 +304,7 @@ Every atelier deliverable must include:
 | `_common/GIT_GUIDELINES.md` | You are authoring commits or PRs touching atelier pipeline artifacts |
 | `_common/UX_TRENDS_2026.md` | You need cross-domain 2025-2026 evidence to orchestrate Vision / Muse / Frame / Forge / Artisan / Vitrine / Echo handoffs. Covers tokens (DTCG, OKLCH/P3), motion (`linear()`, View Transitions), IA (agentic UX, NN/g), and frontend (RSC, Tailwind v4, INP) in one file. Read all three sections. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing delegate prompts, deciding per-delegate model effort, or front-loading acceptance criteria |
-| `_common/PROOF_CARRYING.md` | You are the Layer B sub-orchestrator in `nexus acceptance` Phase 2B / 3B / 4B (when `ui_dimension != none`). Coordinate muse / frame / palette / canon / showcase / prose / echo / vision / matrix / weave / flow to produce the 9 Design-side evidence fields and the joint Design Acceptance verdict. G7 Unmeasurable-Quality Audit gate for Tier-S UI requires human designer sign-off even on Compiler PASS. |
+| `_common/PROOF_CARRYING.md` | You are the Layer B sub-orchestrator in `nexus acceptance` Phase 2B / 3B / 4B (when `ui_dimension != none`). Coordinate muse / frame / palette / canon / vitrine / prose / echo / vision / matrix / weave / flow to produce the 9 Design-side evidence fields and the joint Design Acceptance verdict. G7 Unmeasurable-Quality Audit gate for Tier-S UI requires human designer sign-off even on Compiler PASS. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Atelier-specific Output/Next schema. |
 
 ## Operational
