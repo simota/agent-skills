@@ -14,6 +14,16 @@ Checks (all derived from official Anthropic Agent Skills spec + repository conve
   C2  No README.md inside the skill folder (forbidden by Anthropic Complete Guide)
   S1  SKILL.md body <= 500 lines (Anthropic recommendation; warn at 500, error at 700)
   S2  SKILL.md body <= 5000 tokens approx (char_count / 3.5; warn at 5000, error at 7000)
+  H1  CAPABILITIES_SUMMARY HTML comment block present (presence only; rule ID aligned
+      with gauge's 19-item checklist H1)
+  H2  COLLABORATION_PATTERNS marker present inside the CAPABILITIES_SUMMARY block (H2)
+  H3  PROJECT_AFFINITY marker present inside the CAPABILITIES_SUMMARY block (H3)
+  ST1 Required section headings present (see REQUIRED_HEADINGS below) — headings
+      standardized empirically at >=90% frequency across the corpus, not hardcoded
+      by convention alone
+
+All H1-H3/ST1 findings are presence-only checks (P2, non-blocking) — quality
+judgment on marker *content* stays with the Gauge agent's H1-H3 checklist items.
 
 Severity tiers:
   --severity warning  (default)  print findings, exit 0
@@ -86,6 +96,28 @@ WHAT_HINTS = (
 SKIP_DIRS = {".git", "node_modules", ".agents", "_loops", "_prompts", "_templates"}
 
 SEVERITY_RANK = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
+
+CAPABILITIES_SUMMARY_PATTERN = re.compile(r"<!--[^>]*CAPABILITIES_SUMMARY:", re.DOTALL)
+
+# Headings required empirically at >=90% frequency across the 133-skill corpus
+# (measured via `grep -c '^## ' */SKILL.md` heading-set frequency, 2026-07-29).
+# Anything below 90% is corpus convention, not a near-universal structural norm,
+# so it is left to Gauge's content-quality judgment rather than hardcoded here.
+REQUIRED_HEADINGS = (
+    "Trigger Guidance",
+    "Core Contract",
+    "Boundaries",
+    "Collaboration",
+    "Workflow",
+    "Recipes",
+    "Subcommand Dispatch",
+    "Output Requirements",
+    "Reference Map",
+    "Operational",
+    "AUTORUN Support",
+    "Nexus Hub Mode",
+)
+HEADING_PATTERN = re.compile(r"^##\s+(.+)$", re.MULTILINE)
 
 
 @dataclass
@@ -292,6 +324,32 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
     elif token_estimate > 7000:
         report.add(Finding(name, "S2", "P3",
                            f"SKILL.md body ~{token_estimate} tokens > 7000 (over Anthropic 5000 rec)",
+                           rel, body_start))
+
+    # H1/H2/H3: CAPABILITIES_SUMMARY block + its COLLABORATION_PATTERNS/PROJECT_AFFINITY
+    # markers. Presence only — marker *content* quality is Gauge's H1-H3 checklist job.
+    cap_match = CAPABILITIES_SUMMARY_PATTERN.search(text)
+    if not cap_match:
+        report.add(Finding(name, "H1", "P2",
+                           "CAPABILITIES_SUMMARY HTML comment block not found", rel, 1))
+    else:
+        comment_end = text.find("-->", cap_match.start())
+        block = text[cap_match.start():comment_end if comment_end != -1 else len(text)]
+        if "COLLABORATION_PATTERNS:" not in block:
+            report.add(Finding(name, "H2", "P2",
+                               "COLLABORATION_PATTERNS marker missing inside "
+                               "CAPABILITIES_SUMMARY block", rel, 1))
+        if "PROJECT_AFFINITY:" not in block:
+            report.add(Finding(name, "H3", "P2",
+                               "PROJECT_AFFINITY marker missing inside "
+                               "CAPABILITIES_SUMMARY block", rel, 1))
+
+    # ST1: required section headings (>=90% corpus frequency, see REQUIRED_HEADINGS)
+    present_headings = {h.strip() for h in HEADING_PATTERN.findall(body_text)}
+    missing_headings = [h for h in REQUIRED_HEADINGS if h not in present_headings]
+    if missing_headings:
+        report.add(Finding(name, "ST1", "P2",
+                           f"missing required section heading(s): {missing_headings}",
                            rel, body_start))
 
 

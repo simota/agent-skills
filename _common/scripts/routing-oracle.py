@@ -2,7 +2,7 @@
 """
 Routing Oracle — mechanical reliability checks for Nexus's routing machinery.
 
-Four checks, all fail-open (S4: a script crash prints a warning and exits 0,
+Five checks, all fail-open (S4: a script crash prints a warning and exits 0,
 it never blocks a merge on its own bug):
 
   RO-1 Dead-reference check
@@ -29,6 +29,15 @@ it never blocks a merge on its own bug):
        that line must enumerate all three enum values (compass-invoked,
        architect-invoked, neither) — catches the LADDER outcome silently
        going unreported in the final handoff.
+
+  RO-5 Roster completeness
+       Every skill directory under the repo root (a directory containing
+       a SKILL.md, excluding names starting with `_` or `.`) must appear
+       (case-insensitive, word-boundary substring match) in at least one
+       of nexus/reference/routing-matrix.md or
+       nexus/reference/signal-keywords.md. Catches a live skill that has
+       no routing surface at all — the mirror image of RO-1's dead
+       reference (a routing mention with no skill behind it).
 
 Usage:
   python3 _common/scripts/routing-oracle.py [--severity warning|error|strict]
@@ -270,6 +279,39 @@ def check_fallback_field(findings: list[Finding]):
         ))
 
 
+def check_roster_completeness(findings: list[Finding]):
+    """RO-5: every skill directory (contains SKILL.md, name not starting with
+    `_` or `.`) must appear, case-insensitive word-boundary substring, in at
+    least one of routing-matrix.md or signal-keywords.md — the mirror image
+    of RO-1's dead-reference check (a live skill with no routing surface)."""
+    signal_keywords = NEXUS_DIR / "reference" / "signal-keywords.md"
+    if not ROUTING_MATRIX.is_file() or not signal_keywords.is_file():
+        findings.append(Finding("RO-5", "WARNING", "routing-matrix.md or signal-keywords.md not found — roster completeness check skipped"))
+        return
+    combined_text = ROUTING_MATRIX.read_text(encoding="utf-8") + "\n" + signal_keywords.read_text(encoding="utf-8")
+
+    skill_dirs = sorted(
+        p.parent.name
+        for p in REPO_ROOT.glob("*/SKILL.md")
+        if not p.parent.name.startswith("_") and not p.parent.name.startswith(".")
+    )
+    if not skill_dirs:
+        findings.append(Finding("RO-5", "WARNING", "no skill directories with SKILL.md found — roster completeness check may be stale vs repo layout"))
+        return
+
+    orphans = []
+    for name in skill_dirs:
+        pattern = re.compile(r"\b" + re.escape(name) + r"\b", re.IGNORECASE)
+        if not pattern.search(combined_text):
+            orphans.append(name)
+
+    if orphans:
+        findings.append(Finding(
+            "RO-5", "WARNING",
+            f"{len(orphans)} skill(s) with no routing surface in routing-matrix.md or signal-keywords.md: {', '.join(orphans)}",
+        ))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--severity", choices=("warning", "error", "strict"), default="warning")
@@ -280,6 +322,7 @@ def main() -> int:
     safe_check(check_ladder_token_order, findings)
     safe_check(check_producer_verifier, findings)
     safe_check(check_fallback_field, findings)
+    safe_check(check_roster_completeness, findings)
 
     errors = [f for f in findings if f.level == "ERROR"]
     warnings = [f for f in findings if f.level == "WARNING"]

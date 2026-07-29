@@ -78,7 +78,7 @@ Orchestrators (Nexus, Rally) should be stateless and replaceable. Session state 
 
 **Trigger (mechanical, not prose):** This 30-day cadence, Darwin's LT-06/ET-06, and Architect's ST-06 all cite "30+ days since last review" but historically depended on someone remembering to run it. Wire the tick itself: register a recurring routine via the **`schedule`** skill (Claude Code's built-in scheduled-cloud-agent mechanism — prefer it over a raw `CronCreate` call so the schedule is visible/manageable through the same interface a user would use to inspect or cancel it) with a 30-day interval that runs, in order:
 1. `python3 _common/scripts/lint-frontmatter.py --severity warning` and `python3 _common/scripts/validate-recipes.py --severity warning` — full-corpus health snapshot, reusing the exact scripts already wired into `.github/workflows/skill-lint.yml` (no new checker code).
-2. `python3 _common/scripts/routing-oracle.py --severity warning` — routing-machinery snapshot (dead-refs, ladder order, producer/verifier).
+2. `python3 _common/scripts/routing-oracle.py --severity warning` and `python3 _common/scripts/task-battery-check.py --severity warning` — routing-machinery snapshot (dead-refs, ladder order, producer/verifier, roster completeness, task-battery mechanical assertions).
 3. Invoke `darwin`'s EFS scoring recipe against that snapshot.
 4. If EFS or compliance drift crosses `gauge`'s stability-index thresholds (<10% stable / 10-20% investigate / >20% intervene — `gauge/SKILL.md` CAPABILITIES_SUMMARY), kick a `_loops/skill-evolve` run bounded by its existing `MAX_ITERATIONS`/`CIRCUIT_BREAKER` guards (already present in `run-loop.sh`) rather than an unbounded new loop.
 5. Journal the outcome to `.agents/PROJECT.md`.
