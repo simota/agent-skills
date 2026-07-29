@@ -576,7 +576,6 @@ per-feature upside → Spark.
 | "GO / NO-GO decision, pick among multiple options" | **Magi** | Three-perspective deliberation (Logos/Pathos/Sophia) |
 | "Quarterly / annual scenario simulation, KPI forecast" | **Helm** | Long-term strategy simulation |
 | "Question assumptions, shift perspective" | **Flux** | Single-shot reframing |
-| "Personal project idea buildable in 1-3 days" | **Dawn** | Daily personal idea ritual |
 
 **Rule of thumb**: One actionable move to make this week → Sage. Diverge → Riff. Three-perspective deliberation → Magi. Long-term scenario → Helm. Feature spec → Spark. Flip assumptions → Flux. Sage does **not** generate ideas — it surfaces what the founder is avoiding.
 

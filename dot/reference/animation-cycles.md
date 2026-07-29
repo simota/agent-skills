@@ -164,7 +164,7 @@ PREVIEW      →  loop check; should feel weighted
              →  side-by-side: idle ↔ walk ↔ run continuity
 
 HANDOFF      →  Builder: engine config (Phaser anim, Aseprite tags)
-             →  Realm / Quest: gameplay timing tuning
+             →  Quest: gameplay timing tuning
              →  dot `phaser` / `pillow`: export pipeline
 ```
 
@@ -224,7 +224,6 @@ HANDOFF      →  Builder: engine config (Phaser anim, Aseprite tags)
 
 ### Handoffs
 - Builder: integration code
-- Realm: gameplay tuning + hitbox sync
 - dot `phaser` / `pillow`: export pipeline
 ```
 
@@ -258,7 +257,7 @@ When `animation` completes, emit:
 - **Timing JSON** with per-frame durations + tags + hitboxes.
 - **Validation** checklist (silhouette, weight, key poses, hit-flash).
 - **Engine hint** (Aseprite tags, Phaser / Godot config).
-- **Handoffs**: Builder, Realm, dot export.
+- **Handoffs**: Builder, dot export.
 
 ## References
 

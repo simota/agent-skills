@@ -22,16 +22,14 @@ COLLABORATION_PATTERNS:
 - Vision -> Dot: Art direction translated into pixel code
 - Forge -> Dot: Prototype asset requests
 - Sketch -> Dot: AI-generated image to pixel code conversion
-- Realm -> Dot: Additional sprite requests for ecosystem visualization
 - Muse -> Dot: Design tokens mapped to pixel palettes
 - Canon -> Dot: WCAG accessibility standards for palette validation
-- Dot -> Realm: Phaser 3 texture code
 - Dot -> Forge: SVG/Canvas sprite code
 - Dot -> Artisan: CSS/SVG sprite assets
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Vision (art direction), Forge (asset requests), Sketch (image to code), Realm (sprite requests), Muse (design tokens), Canon (accessibility standards)
-- OUTPUT: Realm (Phaser 3 textures), Forge (SVG/Canvas code), Artisan (CSS/SVG sprites)
+- INPUT: Vision (art direction), Forge (asset requests), Sketch (image to code), Muse (design tokens), Canon (accessibility standards)
+- OUTPUT: Forge (SVG/Canvas code), Artisan (CSS/SVG sprites)
 
 PROJECT_AFFINITY: Game(H) SaaS(L) E-commerce(M) Dashboard(M) Marketing(M)
 -->
@@ -122,7 +120,7 @@ Single source of truth for Recipe definitions. The Notes column captures the uni
 |--------|-----------|---------|-------------|----------------|-------|------------|
 | SVG Output | `svg` | ✓ | SVG pixel art generation; icons, simple sprites, web assets | `.svg` | SVG `<rect>` grid; supports up to ~500 pixel elements; `image-rendering: pixelated` required | `reference/code-patterns.md`, `reference/pixel-craft.md` |
 | Canvas Output | `canvas` | | Canvas drawing; previews, interactive, 32x32+ sprites, multi-frame scenes | `.html` preview/export | HTML Canvas; use off-screen canvas to maintain 60fps | `reference/code-patterns.md` |
-| Phaser 3 | `phaser` | | Phaser 3 sprites; game sprites, Realm handoff | `.js` | `generateTexture()` with `pixelArt: true`; intended for Realm | `reference/code-patterns.md`, `reference/engine-integration.md` |
+| Phaser 3 | `phaser` | | Phaser 3 sprites; game sprites | `.js` | `generateTexture()` with `pixelArt: true`; intended for game-engine integration | `reference/code-patterns.md`, `reference/engine-integration.md` |
 | Pillow (Python) | `pillow` | | Batch PNG/GIF export, spritesheets, AI-assisted pipelines | `.py` → PNG/GIF | Python + Pillow with spritesheet metadata JSON | `reference/code-patterns.md`, `reference/sprite-animation.md` |
 | CSS Pixel Art | `css` | | CSS pixel art; decorative, very small assets | `.css` | CSS `box-shadow` or CSS Grid | `reference/code-patterns.md` |
 | Animation Cycle | `animation` | | Sprite animation cycles (idle / walk / run / attack / hit / death) with frame timing | frames + JSON timing | Canonical cycles — idle (8-12fr @ 6fps), walk (4-6fr @ 8fps), run (4-6fr @ 12fps), attack (4-8fr @ 12-15fps), hit (2-3fr), death (4-8fr non-looping). Apply squash-and-stretch and anticipation ticks. | `reference/animation-cycles.md` |
@@ -141,7 +139,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 |----------|--------|
 | `icon`, `simple`, web asset | `svg` |
 | `preview`, `interactive` | `canvas` |
-| game sprite, `Phaser`, `Realm` | `phaser` |
+| game sprite, `Phaser` | `phaser` |
 | `batch`, `spritesheet`, `gif` | `pillow` |
 | `decoration`, `css`, very small asset | `css` |
 | `tileset`, `autotile`, terrain transition | `tilesheet` |
@@ -238,8 +236,8 @@ Limits (apply only when delegating to agy):
 
 ## Collaboration
 
-**Receives:** Vision (art direction, mood), Forge (prototype asset requests), Sketch (AI image to pixel code conversion), Realm (Phaser 3 sprite requests), Muse (design tokens to palette mapping), Canon (WCAG accessibility standards for palette validation)
-**Sends:** Realm (Phaser 3 `generateTexture()` code), Forge (SVG/Canvas sprite code), Artisan (CSS/SVG sprite assets)
+**Receives:** Vision (art direction, mood), Forge (prototype asset requests), Sketch (AI image to pixel code conversion), Muse (design tokens to palette mapping), Canon (WCAG accessibility standards for palette validation)
+**Sends:** Forge (SVG/Canvas sprite code), Artisan (CSS/SVG sprite assets)
 
 ## Reference Map
 

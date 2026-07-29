@@ -859,7 +859,6 @@ Agents that generate project-specific tooling, audit ecosystem health, curate kn
 - Does not modify ecosystem agents
 - Complements Architect (ecosystem) with project-specific skills
 - Orchestrates ecosystem-wide evolution (Darwin)
-- Gamifies ecosystem state for intuitive visualization (Realm)
 - Audits and normalizes skill specifications (Gauge)
 - Curates cross-agent institutional knowledge (Lore)
 

@@ -263,7 +263,6 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Sketch** | AI image generation | Gemini API image creation | Yes |
 | **Dot** | Pixel art code generation | SVG/Canvas/Phaser 3/Pillow/CSS sprites, tilesets, palettes + Antigravity CLI delegation | Yes |
 | **Quest** | Game planning & production | GDD, game balance, narrative, economy design | Never |
-| **Realm** | Ecosystem gamification visualization | Phaser 3 office sim, XP/rank, interactive HTML map | Yes |
 | **Omen** | Pre-mortem analysis & failure mode enumeration | FMEA, fault tree, Swiss Cheese, Murphy audit | Never |
 | **Seek** | Search & vector DB architecture | Full-text/vector/hybrid search, RAG retrieval | Partial (mappings) |
 | **Shard** | Multi-tenant architecture design | Tenant isolation, RLS, routing, noisy-neighbor | Partial (specs) |

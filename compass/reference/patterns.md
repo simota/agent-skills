@@ -72,8 +72,7 @@ User request
   │   └─ Deprecated-library detection → Shift `detect`
   │
   └─ Other
-      ├─ Browser automation → Vector
-      ├─ Product image acquisition → Haul
+      ├─ Browser automation / product image acquisition → Vector
       ├─ i18n → Polyglot
       ├─ Pixel art → Dot
       ├─ SVG icons → Ink
@@ -190,7 +189,7 @@ Sage (bottleneck + action) → Sherpa (decompose) / Builder (implement) / Plea (
 
 ### Product Image Acquisition Chain
 ```
-Haul (acquire + manifest) → Cloak (PII review) → Vitrine / Funnel / Pixel / Atelier (downstream delivery)
+Vector (acquire) → Cloak (PII review) → Vitrine / Funnel / Pixel / Atelier (downstream delivery)
 ```
 
 ---
@@ -213,7 +212,6 @@ A reverse lookup to prevent common mistakes.
 | Technical specifications | Quill | Scribe | Quill is for in-code docs |
 | Production implementation | Forge | Builder | Forge produces prototypes |
 | Web → mobile porting | Native | Port | Native implements; Port produces blueprint and parity matrix |
-| Product image acquisition | Vector | Haul | Vector is generic browser; Haul is product-image specific (matching / dedup / license) |
 | Idea ideation (divergent) | Sage | Riff | Sage is advisory (single bottleneck); Riff is divergent brainstorming |
 | Strategic decision | Sage | Magi | Sage is YC-style advisory; Magi is triadic deliberation |
 | Long-term scenarios | Sage | Helm | Sage handles weekly tactics; Helm handles quarterly+ scenarios |

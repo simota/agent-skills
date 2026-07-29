@@ -9,7 +9,7 @@ All handoffs follow `_common/HANDOFF.md` canonical schema. The fields below are 
 
 ## Inbound
 
-### USER_TO_HUSK_REQUEST
+### USER_TO_CULL_REQUEST
 
 ```yaml
 from: User
@@ -27,7 +27,7 @@ constraints:
   may_quarantine: false       # set true only with explicit user opt-in
 ```
 
-### SENTINEL_TO_HUSK_HANDOFF
+### SENTINEL_TO_CULL_HANDOFF
 
 ```yaml
 from: Sentinel
@@ -44,7 +44,7 @@ ask:
   - Return grade and evidence chain
 ```
 
-### CHAIN_TO_HUSK_HANDOFF
+### CHAIN_TO_CULL_HANDOFF
 
 ```yaml
 from: Chain
@@ -61,7 +61,7 @@ ask:
   - If CONFIRMED, return eradication runbook + Chain quarantine actions
 ```
 
-### BUILDER_TO_HUSK_PRESCAN
+### BUILDER_TO_CULL_PRESCAN
 
 ```yaml
 from: Builder
@@ -79,7 +79,7 @@ ask:
   - Return grade and per-finding evidence
 ```
 
-### TRAIL_TO_HUSK_HANDOFF
+### TRAIL_TO_CULL_HANDOFF
 
 ```yaml
 from: Trail
@@ -96,7 +96,7 @@ ask:
   - Confirm whether dev environment shows corresponding droplets / persistence
 ```
 
-### TRIAGE_TO_HUSK_HANDOFF
+### TRIAGE_TO_CULL_HANDOFF
 
 ```yaml
 from: Triage
@@ -126,7 +126,7 @@ ask:
 
 ## Outbound
 
-### HUSK_TO_TRIAGE_INCIDENT
+### CULL_TO_TRIAGE_INCIDENT
 
 ```yaml
 from: Cull
@@ -142,7 +142,7 @@ context:
         status: stopped | running
     droplets:
       - count: <n>
-        quarantine_path: "/tmp/husk-quarantine-<utc>/"
+        quarantine_path: "/tmp/cull-quarantine-<utc>/"
     lockfile_pins:
       - package: "<name@version>"
         lockfile: "<path>"
@@ -161,7 +161,7 @@ recommended_first_actions:
   - "Coordinate disclosure with legal if customer data was on host"
 ```
 
-### HUSK_TO_SENTINEL_LOCKFILE
+### CULL_TO_SENTINEL_LOCKFILE
 
 ```yaml
 from: Cull
@@ -179,7 +179,7 @@ ask:
   - If slopsquat candidate, integrate into Sentinel's slopsquat detection registry
 ```
 
-### HUSK_TO_CHAIN_QUARANTINE
+### CULL_TO_CHAIN_QUARANTINE
 
 ```yaml
 from: Cull
@@ -189,7 +189,7 @@ context:
   affected_skill_dirs:
     - "<repo>/.claude/"
     - "<repo>/.vscode/"
-  quarantine_path: "/tmp/husk-quarantine-<utc>/"
+  quarantine_path: "/tmp/cull-quarantine-<utc>/"
   manifest_before:
     - file: ".claude/setup.mjs"
       sha256: "<malicious hash>"
@@ -202,7 +202,7 @@ ask:
   - Pin known-clean MCP server tool descriptions
 ```
 
-### HUSK_TO_GEAR_HARDEN
+### CULL_TO_GEAR_HARDEN
 
 ```yaml
 from: Cull
@@ -228,7 +228,7 @@ ask:
   - Confirm secret-scanning + push-protection enabled
 ```
 
-### HUSK_TO_VIGIL_RULE_REQUEST
+### CULL_TO_VIGIL_RULE_REQUEST
 
 ```yaml
 from: Cull
@@ -251,7 +251,7 @@ ask:
   - Test with sample data; verify FP rate within Vigil thresholds
 ```
 
-### HUSK_TO_LORE_JOURNAL
+### CULL_TO_LORE_JOURNAL
 
 ```yaml
 from: Cull

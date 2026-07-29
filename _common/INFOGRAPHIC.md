@@ -162,8 +162,6 @@ Use for chains where Nexus auto-renders visuals downstream.
 | Experiment | `hero-stat` | `data-viz-bold` | Uplift / verdict summary |
 | Echo | `card-grid` | `editorial-magazine` | Friction / emotion summary |
 
-Hex (character anthropomorphization) and Realm (pixel-art ecosystem) intentionally use their own pipelines and do not emit `Infographic_Payload`.
-
 ## Versioning
 
 This spec is v1. Schema changes require Architect approval. Adopters reference `_common/INFOGRAPHIC.md` without pinning a version; backward-compatible additions are expected.

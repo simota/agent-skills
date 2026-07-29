@@ -197,7 +197,7 @@ Version-control workflow.
 | **Guardian** | PR management | Change classification, granularity recommendations, strategy | No |
 | **Harvest** | PR data collection / reporting | Weekly / monthly reports, release notes | No |
 
-## Browser (3)
+## Browser (2)
 
 Browser automation and asset acquisition.
 
@@ -205,7 +205,6 @@ Browser automation and asset acquisition.
 |-------|------|---------|------|
 | **Vector** | Browser automation | Task completion via Playwright / DevTools | Yes |
 | **Trawl** | Crawl architecture | Distributed crawler, politeness design | No |
-| **Haul** | Product image acquisition | SKU / JAN / UPC matching, multi-source aggregation, perceptual-hash dedup, license verification | Yes |
 
 ## Data (2)
 
@@ -245,7 +244,7 @@ Coordination and communication.
 | **Relay** | Messaging integration | Bot development, webhooks, WebSocket | Mixed |
 | **Accord** | Spec alignment | Cross-team Business / Dev / Design specifications | No |
 
-## Meta / Tooling (8)
+## Meta / Tooling (7)
 
 Manages and evolves the ecosystem itself.
 
@@ -256,7 +255,6 @@ Manages and evolves the ecosystem itself.
 | **Lore** | Knowledge curation | Pattern extraction, knowledge-decay detection | No |
 | **Darwin** | Ecosystem evolution | Lifecycle detection, fitness evaluation | No |
 | **Hone** | AI CLI configuration optimization | Claude Code / Antigravity CLI configuration audit | No |
-| **Realm** | Ecosystem visualization | Gamification, interactive maps | Yes |
 | **Compass** | Skill navigator | Skill guidance, onboarding | No |
 | **Latch** | Claude Code Hooks design | PreToolUse / PostToolUse / Stop and other lifecycle hooks | Mixed |
 
@@ -304,6 +302,4 @@ Specialized skills that don't fit the categories above.
 | **Hearth** | Dotfile management | zsh / tmux / neovim / ghostty configuration | Mixed |
 | **Mint** | Test-data generation | Factories, boundary values, seed management | Mixed |
 | **Tempo** | Schedule design | cron, timezone / DST, retry / backoff, business calendars | Mixed |
-| **Dawn** | Daily idea proposal | One personal-project idea per invocation as an 8-section brief for morning / daily / weekend hacks | No |
-| **Hex** | Technical-debt visualization | Debt detection, severity scoring, gamified anthropomorphization (T1 Veil → T5 Calamity) + exorcism roadmap | Mixed |
 | **Bazaar** | Premium LP studio orchestrator | Full 9-stage LP pipeline (Discover→Audience→Strategy→Structure→Design→Build→Optimize→Verify→Launch) across existing agents | Mixed |

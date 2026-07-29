@@ -190,7 +190,6 @@ EXPORT       →  indexed PNG (palette in file metadata)
 HANDOFF      →  dot `animation`: animation cycles within palette
              →  dot `tilesheet`: tiles within palette
              →  Builder: engine palette swap code
-             →  Realm: gameplay palette tints (damage flash, etc.)
 ```
 
 ## Output Template
@@ -247,7 +246,6 @@ HANDOFF      →  dot `animation`: animation cycles within palette
 - dot `animation`: cycles within palette
 - dot `tilesheet`: tiles within palette
 - Builder: palette swap code
-- Realm: gameplay tints
 ```
 
 ## Anti-Patterns
@@ -281,7 +279,7 @@ When `palette` completes, emit:
 - **Color cycling** definitions if used.
 - **Validation** against Lospec / hardware spec / value test.
 - **Export** files (Aseprite .ase / .gpl / indexed PNG).
-- **Handoffs**: dot animation, dot tilesheet, Builder, Realm.
+- **Handoffs**: dot animation, dot tilesheet, Builder.
 
 ## References
 

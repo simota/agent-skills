@@ -72,7 +72,7 @@ When `_AGENT_CONTEXT.mode = AUTORUN` or `AUTORUN_FULL`, the following stage acti
 | Delegate | Outage Symptom | Fallback Path |
 |---------|---------------|---------------|
 | **Frame** (Figma MCP 5xx) | get_design_context fails | Manual screenshot bundle from user; downgrade Code Connect to handwritten mapping |
-| **Sketch** (image-gen timeout) | hero asset not produced | Ink (vector illustration) or Haul (licensed stock with license check) |
+| **Sketch** (image-gen timeout) | hero asset not produced | Ink (vector illustration) |
 | **Voyager** (BrowserStack/SauceLabs outage) | E2E run fails | Local Playwright run on representative devices; flag risk in Launch dossier |
 
 Triggers OUTAGE recovery: 2 consecutive retries fail with same error class within 5 min.

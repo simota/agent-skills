@@ -113,7 +113,7 @@ grep -l 'optionalDependencies' ~/.npm/_logs/*.log 2>/dev/null | head -5
 ### File quarantine staging (read-only check)
 
 ```bash
-mkdir -p "/tmp/husk-quarantine-$(date -u +%Y%m%dT%H%M%SZ)"
+mkdir -p "/tmp/cull-quarantine-$(date -u +%Y%m%dT%H%M%SZ)"
 # Do NOT move files yet. The directory is staged for eradication phase.
 ```
 

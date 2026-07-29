@@ -27,7 +27,7 @@
 Before any destructive action, record evidence. The hash is the chain of custody; the deletion is irreversible.
 
 ```bash
-QDIR="/tmp/husk-quarantine-$(date -u +%Y%m%dT%H%M%SZ)"
+QDIR="/tmp/cull-quarantine-$(date -u +%Y%m%dT%H%M%SZ)"
 mkdir -p "$QDIR/manifest" "$QDIR/files"
 
 # Manifest header
@@ -83,7 +83,7 @@ If cron entries or `.bashrc` lines were matched, comment them out (do not delete
 
 ```bash
 cp ~/.bashrc "$QDIR/files/.bashrc.bak"
-sed -i.before-husk -E '/<exact malicious line pattern>/s/^/# HUSK-DISABLED /' ~/.bashrc
+sed -i.before-cull -E '/<exact malicious line pattern>/s/^/# CULL-DISABLED /' ~/.bashrc
 ```
 
 ### Live process kill (only after unit-file disable)

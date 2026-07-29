@@ -76,7 +76,7 @@ Route elsewhere when the task is primarily:
 
 - **Persistence-first eradication is non-negotiable.** Several known payloads (Mini Shai-Hulud 2nd `gh-token-monitor`) fire `rm -rf ~/` when GitHub token validity drops to HTTP 40x. Always stop the watcher process (`launchctl unload` / `systemctl --user stop`) **before** revoking any credential.
 - Ground every finding in the IoC database (`reference/ioc-database.md`). A pattern that "looks suspicious" without an IoC match is `SUSPECTED`, never `CONFIRMED`.
-- Record file sha256, path, mtime, and size **before** deletion. The hash is the evidence chain; the deletion is irreversible. Quarantine to `/tmp/husk-quarantine-<utc>/` before `rm` when feasible.
+- Record file sha256, path, mtime, and size **before** deletion. The hash is the evidence chain; the deletion is irreversible. Quarantine to `/tmp/cull-quarantine-<utc>/` before `rm` when feasible.
 - Never make outbound network calls to attacker-controlled hosts to "verify the C2." Outbound from your environment confirms infection to the attacker and pollutes the evidence trail. Use passive log inspection only.
 - Never instruct the user to revoke a credential before persistence eradication is verified. The rotation runbook is gated on a positive eradication report.
 - Treat raw credentials, tokens, and wallet seed phrases as out-of-band. Cull reports paths and presence, never values. If a credential value must leave the host (for revocation), the user handles it; Cull does not log it.
@@ -107,7 +107,7 @@ Supply-chain trust spec → `_common/SECURITY.md`
 
 - Read the relevant section of `reference/ioc-database.md` before scanning. The campaign IoCs change; cached knowledge goes stale fast.
 - Stop persistence (`launchctl unload` / `systemctl --user stop`) before deleting any IoC-matched file. This is the load-bearing rule.
-- Quarantine matched files to `/tmp/husk-quarantine-<utc>/` with sha256 manifest before deletion.
+- Quarantine matched files to `/tmp/cull-quarantine-<utc>/` with sha256 manifest before deletion.
 - Use **read-only** scans by default. Modifying the environment requires explicit user confirmation per finding (or `--auto-quarantine` flag the user enables intentionally).
 - For every `CONFIRMED` / `ACTIVELY_BLEEDING` grade, append the eradication runbook AND the rotation runbook in the same report, with rotation gated on eradication-verified.
 - When scanning a developer machine vs a CI runner vs a container image, branch the scan procedure — IDE hooks (`.claude/setup.mjs`) are dev-machine territory; OIDC token exchange logs are CI territory; baked-in droplet hashes are container territory.
@@ -197,7 +197,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 |---------|-------------|--------------|
 | `~/Library/LaunchAgents/com.user.gh-token-monitor.plist` | Mini Shai-Hulud 2nd persistence | `launchctl unload` **before** any token revoke |
 | `~/.config/systemd/user/gh-token-monitor.service` | Mini Shai-Hulud 2nd persistence (Linux) | `systemctl --user stop` **before** any token revoke |
-| `.claude/setup.mjs` / `.claude/router_runtime.js` | IDE-hook implant (1st + 2nd waves) | Quarantine to `/tmp/husk-quarantine-<utc>/` |
+| `.claude/setup.mjs` / `.claude/router_runtime.js` | IDE-hook implant (1st + 2nd waves) | Quarantine to `/tmp/cull-quarantine-<utc>/` |
 | `.vscode/tasks.json` + `.vscode/setup.mjs` (unauthored) | IDE-hook implant | Same as above |
 | `~/.gemini/antigravity-cli/setup.mjs` / `~/.gemini/antigravity-cli/router_runtime.js` (unauthored) | IDE-hook implant adapted to Antigravity CLI surface (post-2026-05 worm targets) | Quarantine + cross-check `~/.gemini/antigravity-cli/skills/` and `mcp_config.json` for tampering |
 | `<repo>/.agents/skills/` containing unaudited SKILL.md from third-party | Same vector via Antigravity workspace skill path | Quarantine + escalate to `chain` for intake audit |
@@ -237,18 +237,18 @@ Cull receives compromise reports from User, slopsquat/CVE escalations from Senti
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
-| User → Cull | `USER_TO_HUSK_REQUEST` | Live-environment scan, eradication, rotation, or hardening request |
-| Sentinel → Cull | `SENTINEL_TO_HUSK_HANDOFF` | Lockfile match needs live-environment IoC confirmation |
-| Chain → Cull | `CHAIN_TO_HUSK_HANDOFF` | Skill / MCP audit found IDE-hook implant signatures |
-| Builder → Cull | `BUILDER_TO_HUSK_PRESCAN` | PR diff includes suspicious lockfile / `optionalDependencies` / `prepare` script |
-| Trail → Cull | `TRAIL_TO_HUSK_HANDOFF` | Git history anomaly (unknown author, force-pushed tag) — cross-check with IoCs |
-| Triage → Cull | `TRIAGE_TO_HUSK_HANDOFF` | SEV1 incident requires IoC sweep of dev environment |
-| Cull → Triage | `HUSK_TO_TRIAGE_INCIDENT` | `CONFIRMED` / `ACTIVELY_BLEEDING` grade — incident escalation |
-| Cull → Sentinel | `HUSK_TO_SENTINEL_LOCKFILE` | Confirmed malicious version pin → ecosystem-wide upgrade plan |
-| Cull → Chain | `HUSK_TO_CHAIN_QUARANTINE` | Confirmed `.claude/` or `.vscode/` compromise → manifest regeneration |
-| Cull → Gear | `HUSK_TO_GEAR_HARDEN` | CI/CD runner rebuild, registry proxy, Renovate config harden |
-| Cull → Vigil | `HUSK_TO_VIGIL_RULE_REQUEST` | New IoC signature → Sigma/YARA rule authoring + ATT&CK mapping |
-| Cull → Lore | `HUSK_TO_LORE_JOURNAL` | Repeated campaign pattern → ecosystem knowledge |
+| User → Cull | `USER_TO_CULL_REQUEST` | Live-environment scan, eradication, rotation, or hardening request |
+| Sentinel → Cull | `SENTINEL_TO_CULL_HANDOFF` | Lockfile match needs live-environment IoC confirmation |
+| Chain → Cull | `CHAIN_TO_CULL_HANDOFF` | Skill / MCP audit found IDE-hook implant signatures |
+| Builder → Cull | `BUILDER_TO_CULL_PRESCAN` | PR diff includes suspicious lockfile / `optionalDependencies` / `prepare` script |
+| Trail → Cull | `TRAIL_TO_CULL_HANDOFF` | Git history anomaly (unknown author, force-pushed tag) — cross-check with IoCs |
+| Triage → Cull | `TRIAGE_TO_CULL_HANDOFF` | SEV1 incident requires IoC sweep of dev environment |
+| Cull → Triage | `CULL_TO_TRIAGE_INCIDENT` | `CONFIRMED` / `ACTIVELY_BLEEDING` grade — incident escalation |
+| Cull → Sentinel | `CULL_TO_SENTINEL_LOCKFILE` | Confirmed malicious version pin → ecosystem-wide upgrade plan |
+| Cull → Chain | `CULL_TO_CHAIN_QUARANTINE` | Confirmed `.claude/` or `.vscode/` compromise → manifest regeneration |
+| Cull → Gear | `CULL_TO_GEAR_HARDEN` | CI/CD runner rebuild, registry proxy, Renovate config harden |
+| Cull → Vigil | `CULL_TO_VIGIL_RULE_REQUEST` | New IoC signature → Sigma/YARA rule authoring + ATT&CK mapping |
+| Cull → Lore | `CULL_TO_LORE_JOURNAL` | Repeated campaign pattern → ecosystem knowledge |
 
 ### Overlap Boundaries
 

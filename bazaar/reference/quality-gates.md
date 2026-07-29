@@ -124,7 +124,7 @@ When repairing axis A causes axis B to regress in the same stage, do NOT use the
 - Vision direction approved (`direction.md` or equivalent) with: archetype, mood, type direction, palette intent
 - Tokens frozen (Muse) — color, type scale, spacing scale, radius, motion duration baseline
 - WCAG 2.2 AA contrast ratios verified — 4.5:1 text, 3:1 UI (Palette)
-- Hero assets locked (Ink or Sketch or Haul) — production-ready, license-cleared
+- Hero assets locked (Ink or Sketch) — production-ready, license-cleared
 - If Figma source exists: Frame extraction complete, Code Connect mapping if needed
 
 **Repair triggers**:

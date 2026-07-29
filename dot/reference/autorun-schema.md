@@ -21,6 +21,6 @@ _STEP_COMPLETE:
       gemini_delegated: [true | false]
     metadata_json: "[path or inline]"
     rendering_mode: "[pixelated | crispEdges | nearest]"
-  Next: Realm | Forge | Artisan | DONE
+  Next: Forge | Artisan | DONE
   Reason: [Why this next step]
 ```

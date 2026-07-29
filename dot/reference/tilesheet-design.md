@@ -12,7 +12,6 @@ Purpose: Author tile-based sheets for 2D maps and platformers. Covers the **reci
 - **dot `palette` (elsewhere)**: Palette constraint applied to tiles.
 - **Quest (elsewhere)**: Game design level concepts.
 - **Builder (elsewhere)**: Engine integration code (TileMap loaders).
-- **Realm (elsewhere)**: Phaser-specific level rendering.
 
 ## Autotile System Selection
 
@@ -199,7 +198,7 @@ VALIDATE     →  paint a sample map; verify autotile correctness
              →  collision shape vs visual
 
 HANDOFF      →  Builder: engine integration code
-             →  Realm / Phaser: level rendering
+             →  Phaser: level rendering
              →  Quest: level design with tilesheet
              →  dot `palette`: palette compatibility
 ```
@@ -258,7 +257,7 @@ HANDOFF      →  Builder: engine integration code
 
 ### Handoffs
 - Builder: tile loader integration
-- Realm / Phaser: in-game rendering
+- Phaser: in-game rendering
 - Quest: level design constraints
 - dot `palette`: ensure tile palette match
 ```
@@ -296,7 +295,7 @@ When `tilesheet` completes, emit:
 - **Engine outputs** (Tiled / LDtk / Phaser / Godot / Unity).
 - **Palette inheritance** from dot `palette`.
 - **Validation** (autotile coverage, seam, collision).
-- **Handoffs**: Builder, Realm, Quest, dot palette.
+- **Handoffs**: Builder, Quest, dot palette.
 
 ## References
 
