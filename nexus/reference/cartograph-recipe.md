@@ -8,7 +8,7 @@
 
 ## What `cartograph` is for
 
-A user has a feature or system whose implementation is **scattered across multiple repositories** — a web frontend repo, a BFF, two backend services, a shared library, an infra repo — and no single up-to-date document explains how the pieces fit. They (a new team member, an architect, an auditor) want a **bird's-eye view** (俯瞰図): aggregated architecture diagrams that show the components, the boundaries, and where the feature crosses repo lines, **plus a design document** that reconstructs the design from the code. The deliverable is a named **Cartography Map** — cross-repo architecture diagrams + a design document + a per-repo breakdown, every element **grounded in a code citation**.
+A user has a feature or system whose implementation is **scattered across multiple repositories** — a web frontend repo, a BFF, two backend services, a shared library, an infra repo — and no single up-to-date document explains how the pieces fit. They (a new team member, an architect, an auditor) want a **bird's-eye view**: aggregated architecture diagrams that show the components, the boundaries, and where the feature crosses repo lines, **plus a design document** that reconstructs the design from the code. The deliverable is a named **Cartography Map** — cross-repo architecture diagrams + a design document + a per-repo breakdown, every element **grounded in a code citation**.
 
 `cartograph` exists because **reverse-engineering a cross-repo feature into a coherent overview has a method distinct from the single-agent comprehension tools**. `lens` comprehends *one* codebase; `atlas` analyzes *one* repo's architecture; `canvas` draws a diagram from *one* input; none of them **read N repos independently, correlate the feature across the seams between them (API calls, events, shared contracts), and synthesize a single grounded bird's-eye model + design doc**. That is exactly a controlled multi-agent protocol: scope the repo set + feature boundary → map each repo independently → correlate across the seams → synthesize the bird's-eye model → draw the diagrams → author the design doc → verify every claim is grounded.
 
@@ -71,7 +71,7 @@ The distinctive phase: connect the independent repo cards into **one** model by 
 
 ### Phase 5 — DIAGRAM (the visual bird's-eye view)
 `Canvas` renders the aggregated visuals from the model (Mermaid by default; draw.io/ASCII per `canvas` conventions) — **multiple diagram types**, each serving a different altitude:
-- **System-context / component diagram** — the 俯瞰図: all repos/services as nodes, the typed seams as edges (the headline artifact).
+- **System-context / component diagram** — the bird's-eye layer: all repos/services as nodes, the typed seams as edges (the headline artifact).
 - **Sequence diagram(s)** — the feature's key end-to-end flow(s) across repos (request → BFF → services → data).
 - **Data-flow / ER diagram** — where the feature's data lives and moves, across the repos' stores (when a data surface exists).
 - **Cross-repo dependency diagram** — library/build/deploy dependencies between repos.

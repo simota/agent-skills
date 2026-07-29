@@ -52,7 +52,7 @@ Every gap the user did **not** explicitly decide — skipped questions, D7 vague
 |---|------|-----------|
 | D13 | **Depth follows signal** | Rich, detailed answers → deepen (more D5 probes, finer options). Terse answers trending shorter → compress: batch dimensions into one AskUserQuestion, propose defaults, lean on the Ledger. Matching the user's bandwidth is part of the contract, not a courtesy. |
 | D14 | **Circling detection (all phases)** | If any dialogue point circles ≥ 2 rounds with no new information, name it and offer: (a) lock the leading option, or (b) park it as `ASSUME-n`/Open Question and proceed. (Generalizes the spec Phase 2 convergence check to every phase of every dialogue recipe.) |
-| D15 | **Delegate mode** | When the user says "just decide" / "任せる", switch to propose-and-confirm: make the call, record it as `ASSUME-n (delegated)`, and continue. Contract-level checkpoints still fire — but they present the delegated decisions for ratification instead of asking the original questions. Delegation compresses the dialogue; it never deletes the checkpoints. |
+| D15 | **Delegate mode** | When the user says "just decide" / "makaseru", switch to propose-and-confirm: make the call, record it as `ASSUME-n (delegated)`, and continue. Contract-level checkpoints still fire — but they present the delegated decisions for ratification instead of asking the original questions. Delegation compresses the dialogue; it never deletes the checkpoints. |
 
 ## 6. Provenance Gate (D16)
 
