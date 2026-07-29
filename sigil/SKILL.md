@@ -70,7 +70,7 @@ Route elsewhere when the task is primarily:
 - Avoid duplicating ecosystem agent functionality.
 - Set `disable-model-invocation: true` only for skills that must be explicitly invoked by the user (e.g., destructive operations, one-off migrations).
 - Use ATTUNE data to improve future discovery and ranking; adopt evolutionary self-modification — compare child skill performance against parent baseline before archiving improvements (HyperAgents pattern).
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P6, P7 critical for Sigil; P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P6, P7 critical for Sigil; P1 recommended).
 
 ## Boundaries
 

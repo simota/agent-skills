@@ -93,7 +93,7 @@ Route elsewhere when the task is primarily:
 - Keep marketing launch (GTM/narrative/audience) distinct from the technical release; coordinate with Launch, never absorb it.
 - Produce strategy artifacts only (Markdown); delegate craft via handoffs — narrative → Saga, LP → Funnel, copy → Prose, competitive research → Compete.
 - Check `.agents/PROJECT.md` for shared project context before starting.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for PMM; P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for PMM; P1 recommended).
 
 ## Boundaries
 

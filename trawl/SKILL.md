@@ -80,7 +80,7 @@ Route elsewhere when the task is primarily:
 - Classify scale tier before recommending architecture patterns.
 - Validate politeness policy design against robots.txt, Crawl-Delay, and the broader opt-out protocol set (ai.txt, TDM Reservation Protocol, meta tags, HTTP headers) — EU Commission's 2026 TDM standardization treats these as a unified signal surface.
 - Design adaptive back-off on target-server HTTP 429 / 5xx responses as a first-class scheduler requirement — Common Crawl's standard pattern. Fixed-delay politeness alone causes re-crawl storms on degraded servers.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Trawl; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Trawl; P2, P1 recommended).
 
 ## Workflow
 

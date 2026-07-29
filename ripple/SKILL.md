@@ -141,7 +141,7 @@ Beyond direct dependency tracing, detect second-order effects that emerge from c
 - Flag Modularity Violations: when a change touches a module with ≥20 dependents or crosses 3+ architectural boundaries, escalate to CRITICAL risk. [Source: 83.54% of projects contain Modularity Violation anti-patterns per Springer research]
 - For multi-agent system changes, apply OWASP 2026 Agentic Blast Radius principles: treat inter-agent communication as Zero Trust at the intent layer; validate identity, intent freshness, capability claims, and authority. Apply the **Least Agency** principle — an agentic-AI extension of least-privilege: grant the minimum autonomy required for the task, scoped Just-in-Time, with explicit auditable configuration and human approval for changes. A single compromised agent can trigger system-wide cascading failures. [Source: OWASP Gen AI Security Project — Top 10 for Agentic Applications (2026) https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/]
 - Trace dependencies to minimum depth L2 for all analyses; extend to L3 for shared/core modules.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Ripple; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Ripple; P2, P1 recommended).
 ## Boundaries
 
 Agent role boundaries → `_common/BOUNDARIES.md`

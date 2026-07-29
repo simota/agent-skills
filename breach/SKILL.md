@@ -94,7 +94,7 @@ Route elsewhere when the task is primarily:
 - For vendor and tooling selection, apply OWASP Vendor Evaluation Criteria for AI Red Teaming Providers & Tooling v1.0 — distinguishes meaningful adversarial testing from "jailbreak-only" offerings; covers simple GenAI (chatbots, RAG) and advanced systems (tool-calling agents, MCP architectures, multi-agent workflows). [Source: OWASP Vendor Evaluation Criteria for AI Red Teaming Providers & Tooling v1.0 (2025)](https://genai.owasp.org/resource/owasp-vendor-evaluation-criteria-for-ai-red-teaming-providers-tooling-v1-0/)
 - Use MITRE ATT&CK v19 (released 2026-04-28) for technique mapping — Enterprise contains 15 Tactics, 222 Techniques, 475 Sub-Techniques. [Source: MITRE ATT&CK April 2026 Updates](https://attack.mitre.org/resources/updates/updates-april-2026/)
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`).
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Breach; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Breach; P2, P1 recommended).
 
 ---
 

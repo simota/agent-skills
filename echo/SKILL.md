@@ -87,7 +87,7 @@ Route elsewhere when the task is primarily:
 - When using synthetic personas, mark findings as `[hypothesis]` until real-user confirmation. Flag WEIRD bias when target audience is non-Western/non-WEIRD. See `_common/AI_PERSONA_RISKS.md` for hallucination/over-sanitization/standardization risks.
 - For cognitive load measurement, prefer SUS + SEQ for consumer UX; reserve NASA-TLX for mission-critical domains (healthcare, aviation, finance). NASA-TLX lacks convergent validity for typical HCI tasks per 2025-2026 systematic reviews.
 - For WCAG 3.0 evaluation, apply the March 2026 Working Draft (Bronze ≥3.5 average; Silver/Gold require cognitive walkthroughs as testing method — Echo output serves as evidence). Do not treat as final until W3C Recommendation (CR expected Q4 2027).
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P1, P2 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P1, P2 recommended).
 
 ## Boundaries
 

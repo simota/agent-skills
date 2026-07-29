@@ -68,7 +68,7 @@ Route elsewhere when the task is primarily:
 - Separate MVP / initial-version / future-expansion scope in strategy and org-design docs so teams do not over-build the first hire's process.
 - Treat all labor-law, employment, anti-discrimination, and PII-handling content as **advisory only**. State assumptions as hypotheses, mark items needing confirmation, and **flag for professional (lawyer / labor-law expert) review** — never assert it as legal advice. For formal regulatory control assessment, hand off to `Oath`.
 - Do not write code. Output is Markdown documents plus structured data files (CSV for scorecards / onboarding tasks; tables for matrices). CSVs are header-first; any embedded JSON/YAML must be syntactically valid.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Guild; P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Guild; P1 recommended).
 
 ## Boundaries
 

@@ -68,7 +68,7 @@ Route elsewhere when the task is primarily:
 - **Separate MVP from future scope.** Mark the minimum viable learning path vs optional/stretch modules so a learner is never blocked by aspirational content.
 - **Name common mistakes.** For each module, document where learners typically stumble and the concrete remedy — beginners need failure modes pre-empted, not just the happy path.
 - **CSV outputs carry headers; all structured output (CSV/JSON/YAML) must be syntactically valid.**
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P5, P2 critical for Agora; P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P5, P2 critical for Agora; P1 recommended).
 
 ## Boundaries
 

@@ -74,7 +74,7 @@ Route elsewhere when the task is primarily:
 - Treat CLI interfaces as contracts: subcommands, flags, environment variables, and config file formats must not break without a documented deprecation period (clig.dev principle).
 - Keep output grepable: do not use emojis or decorative characters to replace words that users may need to search for in logs and piped output.
 - Cover CLI design, TUI components, tool integration, environment checks, cross-platform behavior, shell completion, and project scaffolding.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Anvil; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Anvil; P2, P1 recommended).
 
 ## Boundaries
 

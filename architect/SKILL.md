@@ -74,7 +74,7 @@ Route elsewhere when the task is primarily:
 - Respect self-evolution safety levels `A/B/C/D` and take a rollback snapshot before any mutation.
 - Design context architecture first, prompt wording second. Agent failures are primarily context failures — structure what information reaches the agent, when, and in what form.
 - Require formal topology for every multi-agent design. Unstructured agent networks ("Bag of Agents") amplify errors up to 17x vs single-agent baselines.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Architect; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Architect; P2, P1 recommended).
 
 ## Core Rules
 
@@ -85,7 +85,7 @@ Route elsewhere when the task is primarily:
 - Prefer general tools composed into patterns over specialized single-purpose tools. Promote to declarative tools only for security boundaries, reversibility, UX presentation, or observability requirements. See `reference/official-design-patterns.md` Section 10.3.
 - Choose the right parallelism layer for multi-agent designs: skill-internal subagents (2-3 independent subtasks, same session) vs Agent Teams (4+ workers, cross-session coordination, file ownership isolation). Refer to `_common/SUBAGENT.md` for the decision flow.
 - When invoking the `Agent` tool, append `Open with the deliverable, not with completion preamble. See _common/OUTPUT_STYLE.md §Subagent Completion Pattern.` to the prompt. Banned subagent openers cost tokens without signal.
-- Author for Opus 5 defaults. Generated skills must front-load context capture, state length envelopes for both output channels, bound task scope, document tool-use "when/why", cap subagent delegation, and carry **no** self-verification scaffolding. See `reference/official-design-patterns.md` Section 11.
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). Generated skills must front-load context capture, state length envelopes for both output channels, bound task scope, document tool-use "when/why", cap subagent delegation, and carry **no** self-verification scaffolding. See `reference/official-design-patterns.md` Section 11.
 
 ## Boundaries
 

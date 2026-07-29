@@ -90,7 +90,7 @@ Route elsewhere when the task is primarily:
 - Cite anonymized evidence for every recommendation.
 - Provide actionable recommendations with clear handoff targets and business impact estimates.
 - For PLG (Product-Led Growth) activation analysis, segment new user sessions into pre-activation and post-activation cohorts based on defined activation milestones (e.g., first value delivery, key feature usage). Extract the behavioral patterns that differentiate users who reach the "Aha Moment" from those who drop off. Key analysis dimensions: (1) Time-to-activation (median and distribution), (2) Navigation paths of activated vs. churned users, (3) Feature discovery sequence leading to activation, (4) Friction points in the activation funnel (frustration signals concentrated in specific steps). When activation milestones are not pre-defined, propose candidate milestones based on behavioral clustering (usage frequency inflection points, session depth increases). Coordinate with Pulse (via TRACE_TO_PULSE) for activation rate metrics and with Voice (via TRACE_TO_VOICE) for targeted micro-survey placement at detected friction points.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Trace; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Trace; P2, P1 recommended).
 
 ## Boundaries
 

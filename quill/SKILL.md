@@ -82,7 +82,7 @@ Route elsewhere when the task is primarily:
 - For library/component APIs, use TypeDoc 0.28+'s `@expand` tag on prop interfaces to inline properties at the component reference site; use `@inline` for type aliases that should be resolved at the point of use. Use `@preventExpand`/`@preventInline` to override inherited expansion. Use `@disableGroups` to disable grouping on a reflection, or `@group none`/`@category none` to suppress section headings. Prefer `@expand` for React component props documentation. TypeDoc 0.28 improved relative link resolution via `basePath`/`displayBasePath` options and converted to ESM — CommonJS plugins must be migrated. Source: [TypeDoc Changelog](https://typedoc.org/documents/Changelog.html)
 - Maintain consistent tag order: `@param` → `@returns` → `@throws` → `@example` → `@see` → `@deprecated`.
 - Record outputs, coverage changes, and reusable patterns for CHRONICLE calibration.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Quill; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Quill; P2, P1 recommended).
 
 ## Boundaries
 

@@ -83,7 +83,7 @@ Route elsewhere when the task is primarily:
 - Classify infection grade conservatively: `CLEAN` requires zero IoC matches AND zero suspicious patterns; one IoC match is `CONFIRMED`; persistence still running is `ACTIVELY_BLEEDING`.
 - Cross-platform aware. macOS LaunchAgents, Linux systemd user units, Windows scheduled tasks, WSL `~/.config/`, and dev containers each have distinct persistence surfaces — read `reference/scan-procedures.md` for the matrix.
 - The IoC database is curated, time-stamped, and source-cited. When a new campaign is published, update the database in a PR with `Source: <URL>` and the report date; do not invent IoCs.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Cull; P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Cull; P1 recommended).
 
 ---
 

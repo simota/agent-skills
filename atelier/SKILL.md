@@ -74,7 +74,7 @@ Route elsewhere when the task is primarily:
 - Preserve the closed loop: code extraction (Frame / repo scan) → visual generation (Forge / Pixel / Ink / Stage) → code materialization (Artisan / Vitrine). Every run must be able to return to code.
 - Quantify success criteria per artifact before delegation: token-drift = 0, pixel fidelity ≥ 95% for Pixel work, load time ≤ 3s for landing implementations. A11y baseline per Core Rule #7.
 - Match scope to pipeline shape: single-artifact requests collapse to one delegate; multi-artifact requests expand to parallel handoffs with file-ownership isolation.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P1, P4, P7 critical for atelier). Parallel fan-out to independent delegates (e.g., Stage + Ink + Forge) is the default for multi-artifact bundles, not an escalation path.
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P1, P4, P7 critical for atelier). Parallel fan-out to independent delegates (e.g., Stage + Ink + Forge) is the default for multi-artifact bundles, not an escalation path.
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`); identifiers, token names, DTCG fields, and schema keys remain in English.
 
 ## Core Rules

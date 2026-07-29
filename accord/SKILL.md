@@ -68,7 +68,7 @@ Route elsewhere when the task is primarily:
 - Select `Full`, `Standard`, or `Lite` scope deliberately and state the reason.
 - Record post-task calibration data through `UNIFY`.
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`). IDs, YAML, BDD keywords, and technical terms remain in English.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Accord; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Accord; P2, P1 recommended).
 - **Map L0-L3 onto the GitHub Spec-Kit phase contract** (Constitution → Specify → Plan → Tasks → Implement) when the downstream toolchain includes Claude Code, Cursor, Copilot, or any Spec-Kit-aware client. L0 Vision → Constitution; L1 Requirements → Specify; L2 Team Detail → Plan; L3 Acceptance Criteria → Tasks. This makes the unified package directly consumable by `/speckit.*` slash commands and 29+ supporting tools without re-translation. [Source: github.com/github/spec-kit]
 
 ## Boundaries

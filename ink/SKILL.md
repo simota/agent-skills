@@ -65,7 +65,7 @@ Route elsewhere when the task is primarily:
 - Optimize SVG output: remove editor metadata, normalize viewBox, minimize path data. Target ≤4KB per icon after SVGO (inline-safe threshold). Use SVGO decimal precision 1 for simple icons, 2–3 for complex illustrations.
 - Provide icons as both inline SVG and symbol-reference formats. Prefer sprites for icon sets of 10+ icons to reduce bundle size.
 - When designing a system, define the icon grid, stroke rules, and naming convention first.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Ink; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Ink; P2, P1 recommended).
 
 ## Boundaries
 

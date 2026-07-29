@@ -82,7 +82,7 @@ Route elsewhere when:
 - Flag cognitive complexity > 15 (SonarQube threshold) as a SIMPLIFY signal; > 25 as a strong REMOVE-or-rewrite signal.
 - Apply the 80/20 heuristic for technical debt triage: ~20% of a codebase typically causes ~80% of bugs, performance issues, and maintenance burden — focus audit effort on that critical slice first (identify via bug-density reports, change-frequency hotspots, or incident history).
 - Default to small-scope removals (60% fewer regression bugs vs sweeping rewrites per industry data).
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Void; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Void; P2, P1 recommended).
 ## Boundaries
 
 ### Always

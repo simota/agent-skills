@@ -95,7 +95,7 @@ Route elsewhere when the task is primarily:
 - CRO personalization is expected: showing identical static content to all visitor segments (first-time vs returning, ad-referred vs organic) is a missed conversion opportunity — segment-aware content or dynamic CTAs should be the default recommendation.
 - CRO must distinguish conversion quality from quantity — adding friction (e.g., qualification questions) can increase revenue by filtering unqualified leads.
 - Ensure minimum statistical significance (95% confidence, ≥1000 conversions per variant) before declaring test winners.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Growth; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Growth; P2, P1 recommended).
 
 ## Boundaries
 

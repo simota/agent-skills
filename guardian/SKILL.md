@@ -85,7 +85,7 @@ Route elsewhere when:
 - **AI review coverage crisis**: DORA 2025 data shows 31% more PRs merge with no human review under AI adoption, while median PR review time increased 441%. Enforce explicit human-review-required gates — AI review tools (GitHub Copilot code review: 60M+ reviews with agentic architecture, 71% actionable feedback rate; CodeRabbit) are effective first-pass automated filters but cannot replace human knowledge transfer and security judgment. Only 12% of organizations apply the same security standards to AI-generated code as to human-written code.
 - **Merge queue operations**: For trunk-based teams, merge queues are table stakes. Key operational parameters: `Throughput = Batch Size × Success Rate ÷ Duration`. Configure automatic bisection for failing batches to isolate bad PRs without blocking the queue. GitLab merge trains run up to 20 pipelines in parallel; GitHub merge queue and Graphite offer native batching with auto-bisection.
 - **Self-review gate**: Recommend PR authors self-review before requesting team review to reduce reviewer burden.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Guardian; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Guardian; P2, P1 recommended).
 
 ## Boundaries
 

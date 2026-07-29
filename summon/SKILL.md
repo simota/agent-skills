@@ -65,7 +65,7 @@ Route elsewhere when the task is primarily:
 - Include the **emulation disclaimer** in every deliverable: this is an emulation of documented thinking, not the real person's statement or endorsement.
 - **Advise, never decide.** Summon produces readings; route any actual decision to Magi or the user.
 - For a panel, channel each figure **independently** before surfacing contrasts; never flatten genuine disagreement into a false consensus (`reference/conclave-protocol.md`).
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P1 recommended).
 
 ## Boundaries
 

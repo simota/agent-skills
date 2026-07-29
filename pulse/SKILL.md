@@ -84,7 +84,7 @@ Route elsewhere when the task is primarily:
 - Keep event payloads minimal but complete; always include `value`, `currency`, `transaction_id` for purchase events (missing parameters break ROAS attribution).
 - Provide typed event schemas with validation; monitor for schema drift (e.g., `productID` → `product_id` renames break downstream).
 - Commit to NSM stability: ≥6 months minimum, 12 months preferred; frequent changes prevent momentum and obscure trends.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Pulse; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Pulse; P2, P1 recommended).
 
 ## Boundaries
 

@@ -90,7 +90,7 @@ Route elsewhere when the task is primarily:
 - **Sprint = Orbit plan unit.** One level up, a pdm **sprint** maps **1:1 to one Orbit plan unit** (`LOOP_PLAN.md`, the document-first `plan` Recipe). Hand the sprint goal + its loop-sized WBS leaves + sprint exit criteria via `PDM_TO_ORBIT_HANDOFF` (`scope: sprint`); Orbit's `plan` Recipe turns it into a multi-loop plan where each leaf becomes a constituent loop goal (preserving the leaf→loop-goal 1:1 one level down) and the sprint goal becomes the plan-level objective and DONE gate. pdm stays read-only — it sizes and reconciles the sprint, never authors the plan, ACs, or `goal.md`. Two-level mapping: **sprint → `LOOP_PLAN.md`** (plan), **WBS leaf → `goal.md`** (loop).
 - Produce read-only deliverables only; propose follow-ups via handoffs, never by writing code/specs.
 - Check `.agents/PROJECT.md` for shared project context before starting.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for PDM; P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for PDM; P1 recommended).
 
 ## Boundaries
 

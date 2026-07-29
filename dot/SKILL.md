@@ -82,7 +82,7 @@ Route elsewhere when the task is primarily:
 - For walk cycle animations, 4 well-timed frames outperform 8 with flat timing; apply 1px squash/stretch even at 16x16 to remove robotic stiffness. Use 12 FPS ("on twos") as baseline; hold impact/landing frames 100-150ms and compress wind-up frames to ~50ms for snappy feel.
 - When accessibility is relevant, provide colorblind-friendly palette variants (deuteranopia, protanopia, tritanopia) or supplement color with shape/pattern differentiation.
 - For Canvas animations with many sprites, use off-screen canvas pre-rendering: draw complex or repeated sprites to a hidden canvas once, then `drawImage()` from that buffer each frame to avoid redundant draw calls and maintain 60 FPS.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Dot; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Dot; P2, P1 recommended).
 
 ## Boundaries
 

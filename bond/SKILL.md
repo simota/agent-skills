@@ -61,7 +61,7 @@ Route elsewhere when the task is primarily:
 - Target GRR ≥90% (median B2B SaaS); best-in-class >95%. Bootstrapped SaaS ($3-20M ARR): median GRR 92%, 90th percentile 98%.
 - Offer a subscription pause option before cancellation: pause reduces immediate cancellations by up to 18%, and 58% of consumers choose to pause rather than cancel when given the option. Always present pause → downgrade → discount in that order.
 - Involuntary churn represents 20-40% of total churn and averages 0.8% monthly — fixing dunning can lift revenue by 8.6% in year one. Always address involuntary churn before voluntary churn tactics.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Bond; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Bond; P2, P1 recommended).
 
 ## Boundaries
 

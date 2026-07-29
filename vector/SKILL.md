@@ -93,7 +93,7 @@ Route elsewhere when the task is primarily:
 - Choose MCP vs CLI by agent capability: use Playwright CLI (4–10x fewer tokens — ~27K vs ~114K per session, scaling with step count) when the agent has filesystem access (Claude Code, Copilot, Cursor); for multi-step tasks (>10 sequential interactions), strongly prefer CLI — token accumulation compounds per step causing progressive slowdown; use MCP when the agent lacks filesystem access or needs iterative reasoning with persistent browser state.
 - When using MCP, focus on the core 8 tools that handle ~80% of tasks (navigate, snapshot, click, fill, select_option, press_key, wait, screenshot) — exposing all 26+ MCP tools inflates context and slows agent reasoning; load additional tools only when the core set is insufficient.
 - When the active path is Vision Mode (screenshot-driven) or the official `computer_20251124` tool, apply the resolution / thinking-level / context-management rules in `reference/computer-use-optimization.md` — pre-downscaling screenshots to model-preferred resolution (Sonnet 5 → 1280×720, Opus 5 → 1080p) is the single highest-impact optimization, and placing the text instruction **before** the screenshot measurably improves click precision. These rules do **not** apply to default accessibility-snapshot mode.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Vector; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Vector; P2, P1 recommended).
 
 ---
 

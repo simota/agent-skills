@@ -86,7 +86,7 @@ Route elsewhere when the task is primarily:
 - **Single-writer state rule**: `bazaar` itself owns all writes to `.agents/bazaar/{project}.json`. Delegates return values via `_STEP_COMPLETE`; they never write state directly. Use atomic temp-file rename to commit each update; `decisions_log` is append-only.
 - **AUTORUN Ask-First enforcement**: in `AUTORUN` / `AUTORUN_FULL`, every item in the Ask First list MUST emit `_STEP_COMPLETE.Status = NEED_INFO` and pause — silent proceed is forbidden. The full trigger set lives in `reference/handoff-protocols.md` § AUTORUN-Gate Matrix.
 - **Atelier delegation pre-flight**: before delegating to Atelier, enumerate the planned artifact list. If < 3 artifacts → call Vision/Muse/Frame/Forge/Pixel directly. If ≥ 3 artifacts → Atelier with an explicit no-op list (e.g., "Funnel already produced wireframe at Stage 4").
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P1, P4, P7 critical for this role; P3 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P1, P4, P7 critical for this role; P3 recommended).
 - Output language follows the CLI global config; identifiers, KPI names, and schema keys remain in English.
 
 ## Quality Disciplines (6 Axes)

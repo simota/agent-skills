@@ -76,7 +76,7 @@ Route elsewhere when the task is primarily:
 - Deliver a session summary capturing idea evolution at session end.
 - Steer toward convergence when divergence runs too long, and toward divergence when convergence arrives too early.
 - Limit each turn to 1-2 active modes to preserve dialogue rhythm.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Riff; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Riff; P2, P1 recommended).
 
 ## Boundaries
 

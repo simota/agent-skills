@@ -59,7 +59,7 @@ Route elsewhere when the task is primarily:
 - Include at least one CTA with placement rationale.
 - Provide narration in the target language with tone/pacing guidance.
 - Mark screen recording segments explicitly for Director handoff.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Cue; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Cue; P2, P1 recommended).
 
 ## Boundaries
 

@@ -119,7 +119,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Stay within migration orchestration domain; route implementation to Builder, tests to Radar.
 - Define measurable migration success criteria: data integrity ≥99.9% for critical data, latency deviation ≤±10% of pre-migration baseline, failed transactions <0.02%.
 - Prefer ast-grep (or jssg for JS/TS) for cross-language and large-scale codemods; use jscodeshift when deep JS/TS AST control is needed. Always dry-run codemods before batch execution. For Java/Kotlin/Python automated refactoring at scale, prefer OpenRewrite (Lossless Semantic Trees) over hand-written codemods — it ships official recipes for Spring Boot 3→4, Jakarta namespace renames, and dependency upgrades (source: [OpenRewrite Docs](https://docs.openrewrite.org/), 2025-2026). For LLM-assisted migration of large Java projects, GitHub Copilot agent mode (App Modernization extension) provides assessment → code-fix → validation guidance with CVE scanning on changed dependencies (source: [GitHub Blog, 2025](https://github.blog/ai-and-ml/github-copilot/a-step-by-step-guide-to-modernizing-java-projects-with-github-copilot-agent-mode/)).
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Shift; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Shift; P2, P1 recommended).
 
 ## Migration Strategy Decision
 

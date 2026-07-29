@@ -97,7 +97,7 @@ Route elsewhere when the task is primarily:
 - Playwright 1.57+ defaults Chromium channel to Chrome for Testing (~20 GB+ CI memory reported). Pin `channel: 'chromium'` if reproducibility or memory is critical (Arm64 Linux still defaults to Chromium).
 - Use the HTML report Speedboard Timeline (1.58+) to find wait bottlenecks before sharding.
 - 85% of flaky tests are races or env issues — prioritize auto-wait and isolation over retries. Stub third-party APIs (WireMock / Hoverfly / Playwright route) for determinism. Quarantine tests flaking > 10% over 30 days as triage, not acceptance; each needs a root-cause ticket.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for this role; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for this role; P2, P1 recommended).
 - **Playwright Test Agents (Planner / Generator / Healer)** — default 2026 authoring pattern; suites should match `specs/` → `tests/` layout. Detail: `reference/2026-best-practices.md`.
 - **`@playwright/cli` Skills mode over MCP** for agent integration (~25% of MCP token cost). MCP only for autonomous agents needing live context streaming.
 - **axe-core ceiling: ~57% of WCAG.** Pair axe automation with Intelligent Guided Tests (IGT); reject any plan claiming "a11y covered" from automation alone.

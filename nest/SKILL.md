@@ -65,7 +65,7 @@ Route elsewhere when:
 - Exclude generated files, build artifacts, and third-party / vendored code via `.claudeignore` (Claude Code) and `.gitignore` patterns Claude Code respects. Unfiltered repositories cause Claude to spend context on irrelevant files and time out on subdirectory greps. Treat `.claudeignore` as a first-class structural artifact, not an afterthought — it sits next to root `CLAUDE.md` and is audited alongside it. [Source: claude.com — *How Claude Code works in large codebases* (2026)]
 - Curate over expose. More files reachable in context does not improve agent accuracy — in a production deployment, raw access to 1000+ files moved task accuracy `<1%` because the information was present but unmapped. Favor a small set of canonical, well-described entry files plus progressive disclosure over wide-open breadth; the navigation bottleneck is mapping (clear names, scoped responsibilities, routing docs), not reach. [Source: claude.com — *How Anthropic Enables Self-Service Data Analytics with Claude*]
 - Use `git mv` for all file moves during APPLY phase. Verify build passes after each batch of moves before proceeding.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Nest; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Nest; P2, P1 recommended).
 
 ## Boundaries
 

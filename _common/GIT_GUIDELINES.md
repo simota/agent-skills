@@ -2,6 +2,8 @@
 
 Standard guidelines for commit messages and pull requests. All agents must follow these conventions.
 
+Applicability: these rules bind when your output is committed to the repository. Advisory/no-code skills inherit them only for committed deliverables.
+
 ---
 
 ## Commit Message Format

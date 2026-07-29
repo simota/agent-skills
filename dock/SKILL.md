@@ -74,7 +74,7 @@ Route elsewhere when:
 - **Notarization is a day-one decision for Developer ID builds.** Hardened runtime + `notarytool` submission belongs in the first build config, not bolted on before release.
 - **Mac HIG over ported mobile habits.** Menu bar structure, keyboard shortcuts, window chrome, and pointer/hover states are macOS-specific — do not carry iOS/iPad layout conventions over unexamined.
 - **Liquid Glass scope**: apply on macOS Tahoe (26) to chrome only (sidebar, toolbar, menu bar, window controls). Never content (documents, lists, canvas).
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for this role; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for this role; P2, P1 recommended).
 
 ## Boundaries
 

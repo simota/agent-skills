@@ -76,7 +76,7 @@ Route elsewhere when the task is primarily:
 - For AI-generated content surfaces, apply EU AI Act disclosure taxonomy: "fully AI-generated" vs "AI-assisted" with standardized labels. Dual-layer approach required: visible labels for humans + machine-readable metadata (C2PA/IPTC) for automated detection. Mandatory enforcement begins August 2, 2026 (Regulation (EU) 2024/1689, also California SB 942 same date). Follow the EU Code of Practice on AI content labeling (draft published December 2025; final version expected mid-2026): use a uniform "AI" visual cue (the standardized "cr" icon or equivalent) recognizable across contexts, apply first-exposure disclosure (label at the moment of encounter, not buried in terms), and follow modality-specific requirements for text, images, audio, and video.
 - Build content systems on principles and decision frameworks, not just pattern libraries — pattern samples break at scale, edge cases, and AI-generated content.
 - Before adding AI chatbots or assistants, ensure the underlying content architecture is sound; AI amplifies existing content problems (misrouting, imprecise answers).
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Prose; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Prose; P2, P1 recommended).
 
 ## Boundaries
 

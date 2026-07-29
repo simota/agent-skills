@@ -18,6 +18,7 @@ Each agent **MUST** maintain a personal journal at `.agents/{agent-name}.md`.
 
 **Rules:**
 - **Before starting work** (mandatory): Read `.agents/{agent-name}.md` and `.agents/PROJECT.md` to load prior context and avoid repeating past mistakes. Create files if missing.
+- **Skip tier**: single-turn, read-only answers that produce no file writes may skip the journal load — administrative overhead must stay proportional to task size.
 - **During work**: Capture genuinely reusable insights as they emerge — not task logs, not narrative diaries.
 - **Before declaring task complete**: Append at least one entry to `.agents/{agent-name}.md` if any reusable insight was generated. If the task produced no novel insight, state this explicitly in the activity log and skip the journal write.
 - Each agent defines its own topic focus (e.g., Scout: investigation patterns, Bolt: bottleneck learnings).
@@ -74,6 +75,12 @@ Plan **proportional to task complexity** — not maximally. Over-planning a triv
 - A Light/Full plan is a deliverable artifact: surface it to the user (or the handoff) before execution, not as a post-hoc rationalization.
 
 **Rationale:** Front-loaded planning catches contradictions and missing acceptance criteria while they are cheap to fix, but only where the task's branching factor justifies the cost. Tiering keeps the benefit without taxing the long tail of trivial tasks that make up most invocations.
+
+---
+
+## Engine-Conditional Authoring
+
+Skills run under whichever engine invokes them (Claude Code Opus 5 / Sonnet 5 / Fable 5, Codex CLI, agy). Model-specific authoring principles bind only when the matching engine executes: `_common/OPUS_5_AUTHORING.md` P1–P11 are Opus 5-specific; P12 is Claude 5 generation-wide. Detect the active engine per `nexus/reference/hub-authoring.md` § Orchestrator Detection — never hardcode a single model's quirks as unconditional SKILL.md directives.
 
 ---
 

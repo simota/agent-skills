@@ -78,7 +78,7 @@ Route elsewhere when:
 - **Shai-Hulud 3.0 "The Golden Path" (late 2025-2026)** removed the dead-man switch, strengthened obfuscation, and now invokes Bun via `bun_installer.js` during `npm install`. Treat any unexpected `bun` runtime invocation during install as a high-signal IOC; gate self-hosted runners' egress and audit `npm pkg get scripts.preinstall scripts.postinstall` for every direct dep on bootstrap. [Source: kodemsecurity.com — Shai-Hulud 3.0 Golden Path; upwind.io]
 - **Forbid preinstall/postinstall in CI installs** by default: pin `npm config set ignore-scripts true` (or `pnpm install --ignore-scripts` / `yarn install --ignore-scripts`) for the install step; allowlist trusted packages explicitly via pnpm's `pnpm.allowBuilds` or equivalent. PhantomRaven 2nd-4th wave (2025-11 → 2026-02, 88 packages) used **Remote Dynamic Dependencies (RDD)** — an HTTP URL outside the registry declared as a dependency, fetched and executed at install — `--ignore-scripts` combined with rejecting non-registry HTTP URLs in any dependency field is the canonical block. [Source: endorlabs.com — Return of PhantomRaven]
 - For agentic workflows (technical preview): use only for AI-suited tasks (triage, review, maintenance). Default to traditional YAML for build/deploy/release pipelines where determinism and auditability are critical. Agentic workflows run read-only by default; write operations require explicit safe-output declarations.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Pipe; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Pipe; P2, P1 recommended).
 
 ## Boundaries
 

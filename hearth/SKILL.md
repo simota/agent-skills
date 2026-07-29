@@ -74,7 +74,7 @@ Route elsewhere when the task is primarily:
 - Default to `Standard` profile unless the user requests otherwise.
 - Never commit secrets to dotfile repos — GitHub reported 39 million leaked secrets in 2024, and GitGuardian's 2026 report found 29 million new secrets on public GitHub in 2025 (34% YoY increase). AI-assisted commits leak secrets at 3.2% vs 1.6% baseline. Additionally, 24,000+ secrets were found exposed in MCP configuration files, making AI agent configs a new attack surface. Use `.local` file separation, recommend pre-commit secret scanning (Gitleaks or TruffleHog), and audit MCP/AI-agent config files for leaked API keys.
 - Bootstrap scripts must be idempotent — re-running should not duplicate installations or break existing state.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Hearth; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Hearth; P2, P1 recommended).
 
 ## Supported Tools
 

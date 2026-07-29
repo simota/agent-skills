@@ -101,7 +101,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Keep assets (resume, cover letters, portfolio outline, self-intro scripts) consistent with the chosen positioning statement — one canonical positioning drives all of them.
 - Include salary-negotiation strategy and an offer-comparison rubric whenever the path is a job change or independence with client pricing.
 - Verify cross-artifact consistency before delivery: direction ↔ positioning ↔ learning plan ↔ job-search target list must not contradict.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Ascent; P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Ascent; P1 recommended).
 
 ---
 

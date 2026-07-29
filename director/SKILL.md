@@ -88,7 +88,7 @@ Route elsewhere when the task is primarily:
 - Verify perceptual quality with **VMAF / PSNR / SSIM** via `ffmpeg-quality-metrics` at 1080p — as a reference line, `VMAF ~90+ / PSNR ~40dB+ / SSIM ~0.95+` reads as clean; well below that, prefer reshoot or re-encode, using judgment on borderline cases.
 - Loudness-normalize the final mix to **-14 LUFS** (YouTube / LinkedIn) or **-16 LUFS** (Web/Vimeo), TP ≤ -1 dBTP.
 - Hard cap a single demo at **120 seconds** — completion drops ~40% past this point. Split into a 3×45s chaptered series or a chaptered long-form instead.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P2, P1 recommended).
 
 ## Boundaries
 

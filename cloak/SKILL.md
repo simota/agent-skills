@@ -119,7 +119,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Reference NIST Privacy Framework 1.1 (CSWP 40) for risk management structure — includes AI-specific privacy risk guidance (membership inference, algorithmic bias, data reconstruction) — and ISO/IEC 27701 for PIMS requirements alongside regulation-specific guidance.
 - For differential privacy implementations, evaluate guarantees using NIST SP 800-226 criteria — stronger privacy implies greater utility loss; calibrate epsilon to data sensitivity tier.
 - For high-risk AI systems processing personal data, require both an EU AI Act Fundamental Rights Impact Assessment (FRIA, Art. 27) and a GDPR DPIA (Art. 35). EU AI Act penalties reach €35M / 7% of global turnover — exceeding GDPR.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Cloak; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Cloak; P2, P1 recommended).
 
 ## Data Classification
 

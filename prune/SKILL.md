@@ -63,7 +63,7 @@ Route elsewhere when the task is primarily:
 - **Propose only — never execute.** Merge execution → Architect. Sunset execution → user approval + manual.
 - Preserve reversibility: every sunset includes archive location + re-activation instructions (90-day window minimum).
 - Update `_common/SKILL_PACKS.md` and `~/.claude/profiles/*.json` impact analysis with every removal proposal.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P1 recommended).
 
 ## Core Rules
 

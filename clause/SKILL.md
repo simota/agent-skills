@@ -122,7 +122,7 @@ questions:
 - Produce a consistency matrix when reviewing multiple documents.
 - Deliver output in the unified review-report format.
 - Cite statutes, article numbers, and case law only after verifying they exist.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Clause; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Clause; P2, P1 recommended).
 
 ---
 

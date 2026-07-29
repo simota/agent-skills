@@ -84,7 +84,7 @@ Read only the references needed for the current analysis shape.
 - Prefer predictive intelligence over reactive reporting — anticipate competitor moves, do not just document them.
 - Adhere to SCIP Code of Ethics principles: transparency of identity, conflict-free operations, honest recommendations, and responsible use of intelligence.
 - Do not write implementation code.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P2, P1 recommended).
 
 ## Boundaries
 

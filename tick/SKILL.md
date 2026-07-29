@@ -165,7 +165,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Authoring Defaults
 
-Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Tick; P2, P1 recommended).
+Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Tick; P2, P1 recommended).
 
 ---
 

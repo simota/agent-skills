@@ -86,7 +86,7 @@ Route elsewhere when the task is primarily:
 - Every phase in the migration roadmap must be independently shippable and reversible. No phase that requires both stores to ship simultaneously without a fallback.
 - Design only. Generate **specifications**, not code. Hand off implementation to `Native`, `Builder`, `Scaffold`, `Schema`, `Gateway` per `reference/handoffs.md`.
 - Quantify every risk: probability × impact. No qualitative-only risk entries.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Port; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Port; P2, P1 recommended).
 
 ## Boundaries
 

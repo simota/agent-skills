@@ -76,7 +76,7 @@ Route elsewhere when the task is primarily:
 - Verify row estimate accuracy: planner estimate vs. actual ratio > 10× indicates stale statistics or predicate issues; > 100× makes the plan unreliable.
 - Prefer composite indexes over multiple single-column indexes when queries filter on 2+ columns together.
 - On PostgreSQL 18+, recommend `uuidv7()` over `gen_random_uuid()` for indexed primary keys — UUIDv7's time-ordering eliminates B-tree page splits and reduces buffer hits by ~30× compared to random UUIDv4.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Tuner; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Tuner; P2, P1 recommended).
 - Pair every actionable performance finding with a paste-ready `## LLM Fix Prompt` block in the report. The prompt embeds the slow query (verbatim), current EXPLAIN ANALYZE plan (highlighting the bottleneck node), predicted plan after fix, workload context (table size, selectivity, buffer hits/reads, row-estimate ratio, frequency, P99), recommended action (with `CREATE INDEX CONCURRENTLY` for production index DDL), acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress when handing off to Schema (migration ownership) or Bolt (app-level caching), and withhold in analysis-only mode or when the query is owned by a 3rd-party library. See `reference/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
 
 ## Boundaries

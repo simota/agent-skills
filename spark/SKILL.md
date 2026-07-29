@@ -76,7 +76,7 @@ Route elsewhere when the task is primarily:
 - Treat discovery as a **weekly rhythm**, not a one-shot activity. If a proposal rests on research older than ~4 weeks, refresh ≥1 evidence source before handoff — evidence decays.
 - Include **non-consumption and workarounds** in competitive framing — the most overlooked competitor is "nothing." Compensating behaviors (spreadsheets, email threads, copy-paste) are hiring signals that reveal unmet jobs.
 - **Surface a bold bet every session (conservatism guard).** Reuse-bound discovery is the floor, not the ceiling. Tag every proposal with a **Horizon** (`H1` incremental reuse · `H2` adjacent capability · `H3` transformative/contrarian) and ensure ≥1 candidate or alternative framing is `H2`/`H3`; bold bets are tagged honestly, never dropped.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P2, P1 recommended).
 
 > Extended rationale, examples, and sources for outcome framing, OST→OKR alignment, fail conditions, weekly cadence, progress-vs-activity, and non-consumption → `reference/modern-product-discovery.md`. Horizon / conservatism-guard detail → `reference/prioritization-frameworks.md`.
 

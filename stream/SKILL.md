@@ -156,7 +156,7 @@ Routing rules:
 - If the request mentions dbt, warehouse, or modeling, read `reference/dbt-modeling.md`.
 - If the request mentions reliability, quality, or backfill, read `reference/data-reliability.md`.
 - Always check anti-pattern references for validation phase.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Stream; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Stream; P2, P1 recommended).
 
 ## Boundaries
 

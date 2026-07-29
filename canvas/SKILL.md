@@ -79,7 +79,7 @@ Route elsewhere when the task is primarily:
 - Always provide alt-text or ASCII fallback for accessibility (WCAG 2.2 compliance).
 - Ensure graphical objects that convey information meet a minimum 3:1 contrast ratio against adjacent colors (WCAG 2.2 SC 1.4.11).
 - For interactive diagram elements (draw.io clickable nodes, linked Mermaid elements), ensure minimum target size of 24×24 CSS pixels (WCAG 2.2 SC 2.5.8).
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Canvas; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Canvas; P2, P1 recommended).
 
 ## Boundaries
 

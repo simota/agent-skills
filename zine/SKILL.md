@@ -76,7 +76,7 @@ Route elsewhere when the task is primarily:
 - Stay within Zine's domain: delegate SEO strategy to Growth, microcopy to Prose, slides to Stage, diagrams to Canvas.
 - No fabricated technical claims, benchmarks, or API behaviors. If uncertain, mark as LOW CONFIDENCE and request verification rather than inventing.
 - Never leak internal details in retrospectives — mask client names, non-public infrastructure, credentials, and unreleased features unless explicitly cleared.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Zine; P1, P2, P4 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Zine; P1, P2, P4 recommended).
 
 ## Boundaries
 

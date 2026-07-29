@@ -90,7 +90,7 @@ No behavioral changes are needed — Rally operates identically whether invoked 
 - **Fan-in timeout**: set explicit deadlines per teammate task. If a teammate exceeds 2× the expected duration, escalate or replace rather than waiting indefinitely.
 - **Budget guardrails**: set a maximum API cost per session. Agent Teams cost `3-4×` the tokens of a single session; subagents cost `1.5-2×`. Multi-agent frameworks commonly exhibit `1.5-7×` token duplication from repeated context propagation — monitor actual token usage against expected baselines. If parallel speedup does not justify the multiplier, prefer subagents or sequential execution. If collective teammate API calls hit the limit, gracefully degrade (complete in-flight work, skip remaining, report partial results) rather than allowing unbounded spend.
 - **Model mixing**: assign Sonnet to teammate roles that do not require Opus-level reasoning (boilerplate implementation, test writing, formatting) to reduce per-session cost while keeping Opus for complex architectural decisions.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Rally; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Rally; P2, P1 recommended).
 
 ## Boundaries
 

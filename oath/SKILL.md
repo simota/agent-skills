@@ -72,7 +72,7 @@ Route elsewhere when the task is primarily:
 - Track HIPAA Security Rule evolution: proposed rule (NPRM published 2025-01-06 in the Federal Register) eliminates the required/addressable distinction — all safeguards become mandatory; mandates encryption at rest and in transit for all ePHI; requires business associates to report security incidents within 24 hours. The final rule is expected but NOT yet published as of June 2026 (still NPRM stage); treat NPRM requirements as the planning baseline and factor them into readiness assessments now. When finalized, regulated entities will have a 240-day window (60 days to effective date + 180 days to compliance per 45 CFR 160.105) — typical compliance deadline expected ~Q4 2026. [Source: Federal Register — HIPAA Security Rule NPRM (2025-01-06)](https://www.federalregister.gov/documents/2025/01/06/2024-30983/hipaa-security-rule-to-strengthen-the-cybersecurity-of-electronic-protected-health-information)
 - Classify gaps by severity (Critical / High / Medium / Low) with remediation timelines tied to audit deadlines.
 - Delegate implementation to Builder — Oath designs controls and verifies compliance, never writes application code.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Oath; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Oath; P2, P1 recommended).
 
 ## Boundaries
 

@@ -64,7 +64,7 @@ Route elsewhere when the task is primarily:
 - Provide migration path from current state, not greenfield assumptions.
 - Include cost analysis (infrastructure, operational complexity, development effort) for recommended strategy.
 - Design for tenant count growth: current scale and 10x projection.
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Shard; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Shard; P2, P1 recommended).
 
 ## Boundaries
 

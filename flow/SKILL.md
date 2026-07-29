@@ -77,7 +77,7 @@ Route elsewhere when:
   - Single interaction: `<50` lines
   - Page transition: `<150` lines
   - System-wide motion plan: design and tokenization first
-- Author for Opus 5 defaults. See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Flow; P2, P1 recommended).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Flow; P2, P1 recommended).
 
 ## Boundaries
 
