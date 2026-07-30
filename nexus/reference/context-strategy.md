@@ -129,18 +129,24 @@ Nexus maintains continuous context; spawned agents use file-based reset.
 
 ## Platform Compatibility
 
-| Strategy Aspect | Claude Code | Codex CLI |
-|----------------|-------------|-----------|
-| `reset` handoff | Agent prompt contains summary only | `spawn_agent()` prompt contains summary only |
-| `continuous` handoff | Prior Agent results in Nexus context | Prior `wait_agent()` results in orchestrator context |
-| `hybrid` default | Nexus context + Agent(fresh) | Orchestrator context + `spawn_agent(fresh)` |
-| Context budget check | Monitor via conversation length | Monitor via `agents.max_depth` and prompt size |
-| Fallback trigger | Context usage > 70% | Prompt token count approaches model limit |
+| Strategy Aspect | Claude Code | Codex CLI | agy |
+|----------------|-------------|-----------|-----|
+| `reset` handoff | Agent prompt contains summary only | `spawn_agent()` prompt contains summary only | `agy -p` prompt contains summary only + `@<path>` to the handoff file |
+| `continuous` handoff | Prior Agent results in Nexus context | Prior `wait_agent()` results in orchestrator context | **Not natively available** — subagent contexts are isolated; approximate with `-c`/`--conversation <id>` resume, or pass prior artifacts by `@<path>` |
+| `hybrid` default | Nexus context + Agent(fresh) | Orchestrator context + `spawn_agent(fresh)` | Hub context + fresh `agy -p` one-shot; **filesystem artifacts are the handoff bus** |
+| Context budget check | Monitor via conversation length | Monitor via `agents.max_depth` and prompt size | Monitor injected size against the **~128k effective** band, not the 1M window |
+| Fallback trigger | Context usage > 70% | Prompt token count approaches model limit | Handoff approaching ~128k → summarize/segment before the next spawn |
 
 **Codex-specific notes:**
 - `agents.max_depth` (default: 1) limits nesting — factor this into strategy selection
 - Use `send_input` for incremental context injection in `continuous` strategy
 - Use `close_agent` to release context when switching from `continuous` to `reset`
+
+**agy-specific notes** (`_common/AGY_ORCHESTRATION.md` A2/A4/A5/A9):
+- **Isolated by default.** agy subagents get their own context window and inherit none of the hub's history, so `continuous` cannot be assumed — write the state delta into an artifact and hand it over by path. This makes `reset`/`hybrid` the practical defaults on agy.
+- **Inject files with `@<path>`, never a bare path** — a bare path is delegated to an internal subagent that dies at the 60s cap, producing a silent empty result.
+- **Window ≠ usable window.** Gemini 3.6 Flash (High) offers 1,048,576 input tokens, but effective accuracy degrades past ~128k ("lost in the middle"). Summarize or segment a handoff before it crosses that band rather than trusting the nominal window; label multiple sources with numbered headers ("Document 1", "Document 2").
+- **Instruction placement flips for large injections.** With a big data/context block, put the instructions *after* the data and anchor with "Based on the preceding information…"; top-load only in normal-size prompts.
 
 ---
 

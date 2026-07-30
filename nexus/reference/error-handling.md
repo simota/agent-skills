@@ -17,6 +17,22 @@ Error levels, recovery flow, and escalation procedures.
 
 ## Error Levels
 
+### Level 0 - CAPTURE_FAILURE (agy headless only — classify before L1)
+
+**Applies when the hub is agy and the step ran as headless `agy -p`.** On that path an *empty result is not evidence of a failed step*: `agy -p` never flushes to a non-TTY stdout, so `exit 0 + empty stdout` is exactly what a **successful** run looks like, and `exit 124 + empty stdout` is the pty-less silent hang (`_common/CLI_COMPATIBILITY.md §9.2`, issues #76/#115/pty). Sending such a step into L1 retry re-runs work that may already be done and burns quota; sending it to L3 rollback discards a completed step.
+
+Classify a missing/empty artifact **before** assigning an error level:
+
+| Observation | Verdict | Action |
+|-------------|---------|--------|
+| Artifact non-empty **and** ends with `<<<END_OF_OUTPUT>>>` | Step succeeded | Continue — read `_STEP_COMPLETE` from the artifact, not stdout |
+| Artifact missing/empty, **transcript shows model content** (`PLANNER_RESPONSE` / `status=DONE`) | **Capture failure, not task failure** | **Typed retry, max 1**, with the repair directive: "the previous run did not write the file — rewrite your full output to `/tmp/agy-<slug>.md`". Never loop blindly |
+| Artifact and transcript both empty, `--log-file` shows quota / OAuth / executor error | Runtime failure | Escalate per the log verdict — quota/auth → **L4** (human), executor error → **L1** retry once |
+| Artifact and transcript both empty, no log file at all | pty was not allocated | Not an agent error — re-spawn under `python3 pty.spawn` (`script -q /dev/null` does **not** work). Does not count against the L1 retry budget |
+| Artifact present and sentinel present, but content fails the step's acceptance check | Genuine task failure | Fall through to L1-L5 below as normal |
+
+**Rule:** an agy step is never escalated past L0 on the strength of empty stdout alone, and the exit code is never the deciding signal — the artifact is. Capture failure is also **not** a REVISE signal in an evaluator loop (`orchestration-patterns.md` § Pattern H → agy Implementation).
+
 ### Level 1 - AUTO_RETRY (Transient Errors)
 - Syntax error → Re-execute with the same agent (max 3 retries)
 - Test failure (1st time) → Fix with Builder and retest
@@ -89,7 +105,7 @@ Error Detected
 
 ```
 _ERROR_EVENT:
-  Level: [L1|L2|L3|L4|L5]
+  Level: [L0|L1|L2|L3|L4|L5]   # L0 = agy capture failure (see Level 0)
   Type: [Error type]
   Step: [X/Y]
   Agent: [Current agent]

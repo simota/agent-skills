@@ -135,6 +135,8 @@ Agent(
 # Then proceed to AGGREGATE → VERIFY → DELIVER
 ```
 
+**agy note — there is no background primitive.** On an agy hub this pattern is realized as either multiple async TUI `/agent` invocations (aggregated by polling `/tasks`, no explicit `wait`) or N externally-launched headless `agy -p` one-shots joined by artifact polling (`_common/AGY_ORCHESTRATION.md` A4). Three consequences: (1) the branch **barrier is manual** — the hub polls until every branch's artifact exists and carries the `<<<END_OF_OUTPUT>>>` sentinel, so a missing artifact is a capture question before it is a task failure (`error-handling.md` § Level 0); (2) branches share one session-scoped tier (A3) — do not design a branch set that needs different effort levels; (3) subagent contexts are **isolated** and do not inherit hub history, so each branch prompt carries its own state delta and branches exchange nothing but filesystem artifacts. File-ownership isolation is unchanged and remains the load-bearing guard.
+
 ### Auto-Conflict Resolution Rules
 
 | Conflict Type | Auto-Resolve? | Method |
@@ -396,6 +398,30 @@ close_agent(gen_id)
 close_agent(judge_id)
 close_agent(radar_id)
 ```
+
+### agy Implementation
+
+No background spawn and no per-agent model field, so the loop is driven as sequential + wave-parallel headless one-shots, each pinning the mandated Gemini 3.6 Flash (High) tier and capturing via artifact (`_common/AGY_ORCHESTRATION.md` A1-R/A2/A4, `_common/CLI_COMPATIBILITY.md §9.2`):
+
+```bash
+# Step 1: Generator (recipe step → High tier, Deep Reasoning Directive appended)
+#   prompt = Builder body + Sprint Contract + A9-D block + MANDATORY OUTPUT PROTOCOL
+#   python3 pty.spawn(["agy","-p",prompt,"--dangerously-skip-permissions",
+#                      "--print-timeout","15m","--log-file","/tmp/agy-gen.log"])
+#   verify: [ -s /tmp/agy-gen.md ] && grep -q '<<<END_OF_OUTPUT>>>' /tmp/agy-gen.md
+
+# Step 2: Evaluators — launched as a wave of independent one-shots, joined by artifact polling
+#   each evaluator prompt injects the generator artifact with @/tmp/agy-gen.md   (A5 — never a bare path)
+#   Mode: EVALUATOR (evaluation only, no code changes)
+#   → /tmp/agy-judge.md, /tmp/agy-radar.md   (each sentinel-verified before it is read)
+
+# Step 3: Aggregate → ACCEPT / REVISE / BLOCK
+#   If REVISE: new one-shot for the Generator carrying @<revision-brief path>
+#   Capture failure (empty artifact / missing sentinel) is NOT a REVISE signal — resolve it
+#   as a Level 0 capture failure first (typed retry, max 1).
+```
+
+**agy-specific loop rules:** the maker ≠ checker separation is unaffected (separate processes, isolated contexts) and is the reason this pattern ports cleanly; but the generator runs a *fast* model, so weight the evaluator rubric and keep every loop step at the High tier (A1-R, A9). Iterate by re-spawning one-shots or resuming with `-c`/`--conversation <id>`; loop limits (max 3 iterations, score-delta stop) are unchanged.
 
 See `reference/evaluator-loop-protocol.md` for the full end-to-end specification (loop pattern + Sprint Contract format + Rubric scoring criteria).
 

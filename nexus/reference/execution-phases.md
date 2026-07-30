@@ -211,13 +211,26 @@ Agent(
 )
 ```
 
+**agy hub variant (L1/L2/L3)**
+
+The blocks above are Claude Code (`Agent(...)`) shapes. On an **agy** hub the phase logic is unchanged, but three primitives do not exist — author against these substitutions (`_common/AGY_ORCHESTRATION.md` A1-A4, `reference/execution-layers.md` § Antigravity CLI):
+
+| Claude Code | agy substitution | Consequence for Phase 4 |
+|-------------|------------------|-------------------------|
+| `Agent(... model: sonnet)` per spawn | **no per-spawn model field** — tier is session-scoped (A3) | Pick the tier at *chain* level; a mixed-effort chain splits into per-step headless `agy -p` runs, each pinning its own tier. Recipe steps stay **High**, no downgrade (A1-R) |
+| `Agent(...)` foreground | TUI `/agent <slug> "<body>"`, or headless `agy -p` under a **real pty** (`python3 pty.spawn`) | Deliverable is read from the **prompt-mandated artifact file**, never stdout (A2, `_common/CLI_COMPATIBILITY.md §9.2`). Step 3 of the L1 loop becomes "read `_STEP_COMPLETE` from the artifact after the verification chain passes" |
+| `Agent(run_in_background: true)` | **no background primitive** (A4) | L2 = multiple TUI `/agent` calls (async, polled via `/tasks`) **or** N externally-launched headless one-shots joined by artifact polling. File-ownership isolation is unchanged and still load-bearing |
+| `Agent("You are Rally...")` | **no Rally equivalent** (A4) | L3 **flattens**: drive the fan-out from the hub in waves of 2-3, or use an installed team pack (`oh-my-antigravity` `/oma:taskboard`). Log the flattening honestly — never report a Rally spawn on agy |
+
+Two further Phase 4 rules on agy: append the **Deep Reasoning Directive** (A9-D) to every recipe spawn prompt, and inject file context with `@<path>` — a bare path is read by an internal subagent that dies at the 60s cap (A5). For 4+ step chains, resume with `-c`/`--conversation <id>` instead of re-spawning (A4).
+
 ### Layer Selection Criteria
 
 | Condition | Layer | Rationale |
 |-----------|-------|-----------|
 | Sequential chain, 1-4 steps | L1: Direct Spawn | Simple, low overhead |
-| 2-3 independent branches, clear file ownership | L2: Parallel Spawn | True parallelism via background agents |
-| 4+ workers, complex ownership, or multi-step branches | L3: Rally Delegation | Full team management needed |
+| 2-3 independent branches, clear file ownership | L2: Parallel Spawn | True parallelism via background agents (agy: async `/agent` or N headless one-shots) |
+| 4+ workers, complex ownership, or multi-step branches | L3: Rally Delegation | Full team management needed (agy: no Rally — flatten into hub-driven waves) |
 
 ### Phase 5: AGGREGATE
 Merge parallel results:

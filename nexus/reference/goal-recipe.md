@@ -65,14 +65,29 @@ Inline detection (no agent spawn). Apply in order:
 | Signal | Action |
 |---|---|
 | `CLAUDE.md` exists in cwd | Claude Code is primary |
-| `AGENTS.md` exists in cwd | Codex CLI is primary |
+| `GEMINI.md` exists in cwd | **agy is primary** (agy-specific marker; outranks the `AGENTS.md` signal below, which agy also reads) |
+| `AGENTS.md` exists in cwd | Codex CLI is primary — **but `AGENTS.md` is cross-tool** (agy reads it natively too). If the hub session is agy, or `~/.gemini/antigravity-cli/` exists, treat as ambiguous and ask |
 | Both `CLAUDE.md` and `AGENTS.md` exist | Multi-platform — ask user to pick primary |
 | Only `~/.claude/settings.json` exists globally | Claude Code |
 | Only `~/.codex/config.toml` exists globally | Codex CLI |
+| Only `~/.gemini/antigravity-cli/` exists globally | agy |
 | Both global configs exist, no project marker | Ask user once |
 | Neither global config exists | Stop: instruct user to install Claude Code or Codex CLI first |
 
-Emit `PLATFORM = claude-code | codex | both` for downstream phases.
+Emit `PLATFORM = claude-code | codex | agy | both` for downstream phases.
+
+### agy: no native `/goal` — the recipe changes shape
+
+`/goal` is a **Claude Code and Codex primitive**. agy has **no confirmed `/goal`** (absent from its published slash-command list) and no `/loop` equivalent, so on `PLATFORM = agy` this recipe does **not** produce a `/goal` launch command. Say so explicitly rather than emitting an unverified command, and deliver the substitute instead:
+
+- **Loop driver** = external shell/cron/CI loop over headless `agy -p` one-shots — not an in-agy command.
+- **Completion oracle** = written into the prompt ("Done when …" + a self-validation pass) plus a persistence directive; the *hub*, not agy, decides when to stop.
+- **Hard-stop bound (still MANDATORY)** = harness-side turn counting + `--print-timeout`; agy exposes no `--max-turns`/`--max-budget-usd`, and `/usage` does not update live mid-run, so the bound must live in the external loop.
+- **Resume** = `-c`/`--conversation <id>` (v1.0.8+) between rounds instead of re-spawning cold.
+- **Capture** = artifact + `<<<END_OF_OUTPUT>>>` sentinel under a real pty, never stdout (`_common/CLI_COMPATIBILITY.md §9.2`); each round's exit code is not the completion signal.
+- **Permissions** = `--dangerously-skip-permissions` for headless autonomy, **never combined with `--sandbox`** (issue #36); contain by host isolation. Emit the §9.1 Pre-flight Notification before the first such spawn.
+
+Full primitive map → `reference/loop-engineering-primitives.md` § agy column; principles → `_common/AGY_ORCHESTRATION.md` A2/A4/A9.
 
 ## Use Case Templates
 

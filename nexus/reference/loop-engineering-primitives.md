@@ -1,4 +1,4 @@
-# Loop-Engineering Primitives — Claude Code & Codex (2026-06)
+# Loop-Engineering Primitives — Claude Code, Codex & agy (2026-06)
 
 How the **loop engineering** pattern maps onto concrete orchestration primitives in each hub engine. Nexus stays the routing/recipe layer; this file is the reference for *which primitive implements which loop part* when designing a `/goal`-style or apex/summit loop. For the concept, lineage, and applicability limits see `orbit/reference/loop-engineering.md`.
 
@@ -16,6 +16,21 @@ A loop = scheduled execution + isolated workspaces + maker/checker separation + 
 | Maker/checker separation | subagents (`.claude/agents/`, markdown) + agent teams; worktrees isolate *file edits*, subagents/teams coordinate *the work* | subagents spawned in parallel (≤8), results merged into one response; built-in `default`/`worker`/`explorer`; custom agents require `name`/`description`/`developer_instructions` (model + sandbox_mode inherited from parent); on-demand spawn only |
 | Persistent memory | markdown / Linear / state files on disk — "the agent forgets, the repo doesn't" | same: state file outside the conversation as the loop's spine |
 | **Loop-wide token bound** | **Not available in Claude Code** — `task_budget` is a Messages API feature and is explicitly unsupported on Claude Code and Cowork surfaces. In-session, bound with a `stop after N turns` clause plus `max_tokens`; the countdown mechanism is unavailable | n/a — Codex has no equivalent; bound via harness-side turn counting |
+
+### agy column
+
+agy ships **fewer** loop parts natively than either engine above, so more of the loop is hand-rolled by the hub. Author against these (`_common/AGY_ORCHESTRATION.md` A2/A4/A9, `reference/execution-layers.md` § Antigravity CLI):
+
+| Loop part | agy | Note |
+|-----------|-----|------|
+| Heartbeat (recurring) | **No `/loop` equivalent.** `/schedule` exists in the slash-command list but its semantics are unverified — do not build on it | Implement the heartbeat *outside* agy: cron / CI / an external shell loop driving headless `agy -p` one-shots |
+| Stop-when-done (in-session) | **No confirmed `/goal`** (absent from the published slash-command list — do not assume it) | Implement run-to-completion as an **external loop + completion oracle in the prompt** ("Done when …" + a self-validation pass) plus a persistence directive; the hub owns the stop decision |
+| Workspace isolation | `/fork` branches the conversation into a separate workspace; git worktrees are managed by the hub, not by agy | Fork before risky/destructive trials so the main session stays clean |
+| Maker/checker separation | Separate `/agent` invocations or separate headless one-shots — contexts are isolated by construction | **Ports cleanly and matters more here**: the generator is a fast model, so keep the checker at the High tier and give it an assume-broken rubric (A9) |
+| Persistent memory | Filesystem artifacts (the same channel A2 mandates for deliverables) | The artifact bus doubles as the loop's state spine; `-c`/`--conversation <id>` resume (v1.0.8+) preserves session context between rounds |
+| Loop-wide token bound | Not available — no `task_budget`, no countdown the model can see | Bound harness-side: turn counting + `--print-timeout`; poll `/usage` between rounds (it does not update live mid-run) |
+
+**Consequence for recipe design:** an agy loop is *always* hub-driven. Every one of the five moves that Claude Code or Codex would delegate to a native primitive (heartbeat, stop-when-done) becomes explicit hub logic on agy — which means an agy loop must never be authored as "tell agy to keep going until done".
 
 ### `task_budget` — a loop bound for API-implemented steps only (beta `task-budgets-2026-03-13`)
 

@@ -273,7 +273,7 @@ Front-load acceptance criteria (P1), a length envelope (P2), and a scope bound (
 ## Safety Contract
 
 - **Guardrails:** `L1` monitor/log → `L2` auto-verify/checkpoint → `L3` pause + auto-recovery → `L4` abort + rollback.
-- **Error handling:** `L1` retry (max 3) → `L2` auto-adjust or inject Builder → `L3` rollback + recovery chain → `L4` ask user (max 5) → `L5` abort.
+- **Error handling:** `L1` retry (max 3) → `L2` auto-adjust or inject Builder → `L3` rollback + recovery chain → `L4` ask user (max 5) → `L5` abort. **On an agy hub, headless-step failures are classified `L0` CAPTURE_FAILURE first** — `exit 0/124 + empty stdout` is also what a *successful* `agy -p` run looks like, so the artifact (not the exit code) decides, and a capture failure gets one typed repair retry rather than an L1-L3 escalation (`reference/error-handling.md` § Level 0).
 - **Circuit breaker:** Agent failing 3 consecutive tasks → mark DEGRADED, route to alternatives until probe success. Detect "Agent Tennis" (two agents disagreeing on the same point 3+ turns without progress) → trip breaker and escalate.
 - **Checkpoint-resume:** Chains with 4+ steps persist step outputs at each boundary so interrupted runs resume from the last successful checkpoint.
 - **Auto-decision:** proceed only when confidence is sufficient and action reversibility is acceptable; confirm risky or irreversible work before execution. Routine confirmation depth follows the per-task-type Autonomy Ledger (`reference/routing-learning.md`); it never relaxes an Ask First gate.
@@ -353,7 +353,7 @@ Read only the files that match the current decision point.
 | `reference/proactive-mode.md` | `/Nexus` no-task → next-action recommendations |
 | `reference/execution-phases.md` | Phase-by-phase AUTORUN flow |
 | `reference/guardrails.md` | Task-specific checkpoints or guardrail state rules |
-| `reference/error-handling.md` | Failure needs retry, rollback, recovery injection, escalation, abort |
+| `reference/error-handling.md` | Failure needs retry, rollback, recovery injection, escalation, abort; **agy hub — classify L0 capture failure before any retry** (empty stdout is also what success looks like) |
 | `reference/routing-explanation.md` | Explaining why a chain was chosen |
 | `reference/conflict-resolution.md` | Parallel branches touch overlapping files |
 | `_common/PARALLEL.md` | Parallel branch definitions, file ownership, merge, rollback |
@@ -362,7 +362,7 @@ Read only the files that match the current decision point.
 | `reference/orchestration-patterns.md` | Concrete execution patterns (sequential, parallel, evaluator-loop, verification-gated) |
 | `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation — the spec `converge` executes |
 | `_common/LOOP_PRECONDITIONS.md` | You are about to build, configure, or launch **any** agent loop — the five-point precondition gate (completion oracle · hard-stop bound · maker ≠ checker · persistent memory · drift awareness) + shape resolution when the request names no shape |
-| `reference/loop-engineering-primitives.md` | Map the loop-engineering pattern onto Claude Code / Codex primitives — when designing a `goal`/apex/summit loop |
+| `reference/loop-engineering-primitives.md` | Map the loop-engineering pattern onto Claude Code / Codex / **agy** primitives — when designing a `goal`/apex/summit loop (agy ships neither `/loop` nor a confirmed `/goal`: the loop is hub-driven, see § agy column) |
 | `reference/context-strategy.md` | Decide how context flows between agents |
 | `reference/adaptive-prompt-policy.md` | Tailor each spawn prompt to project + session context; ephemeral, reversible |
 | `reference/routing-learning.md` | Adapting routing from evidence; per-task-type Autonomy Ledger |
