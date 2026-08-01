@@ -6,8 +6,9 @@
 **Boundary vs `execution-phases.md`:** That file owns the **7-phase workflow sequence** (PLAN → … → DELIVER); this file owns the **pattern catalog** used inside any phase that spawns agents. The phase contract picks the pattern; this file describes the pattern.
 
 ## Contents
+- Spawn Boilerplate (shared `Agent(...)` fields)
 - Pattern A: Sequential Chain
-- Pattern B: Parallel Branches (with Auto-Conflict Resolution)
+- Pattern B: Parallel Branches (conflict resolution → `conflict-resolution.md`)
 - Pattern C: Conditional Routing
 - Pattern D: Recovery Loop
 - Pattern E: Escalation Path
@@ -18,6 +19,24 @@
 - Hub Communication Protocol
 
 Detailed patterns for agent chain execution.
+
+---
+
+## Spawn Boilerplate (applies to every worked block below)
+
+Every `Agent(...)` block in this file omits the fields that never vary. Assume on each spawn:
+
+```
+subagent_type: general-purpose
+mode: bypassPermissions
+model: sonnet                    # tier per hub-authoring.md § Model Selection
+prompt prefix: "You are the <Agent> agent. First, read ~/.claude/skills/<agent>/SKILL.md
+                and follow its instructions."
+```
+
+Per-pattern blocks below show **only the distinguishing fields** (name, background flag, and the
+prompt delta that makes that spawn different). Canonical full template → `nexus/SKILL.md` §
+**Agent Spawn Template**; per-CLI spawn syntax → `reference/execution-layers.md`.
 
 ---
 
@@ -38,24 +57,11 @@ Nexus → VERIFY → DELIVER
 **Implementation**: Each agent is spawned via `Agent(foreground)`. Nexus extracts `_STEP_COMPLETE` output from the returned result and passes it as handoff context to the next agent's prompt.
 
 ```
-# Step 1
-result1 = Agent(
-  name: "scout-investigation"
-  description: "Root cause analysis"
-  mode: bypassPermissions
-  model: sonnet
-  prompt: "You are the Scout agent. First, read ~/.claude/skills/scout/SKILL.md and follow its instructions. Task: ..."
-)
+result1 = Agent(name: "scout-investigation", description: "Root cause analysis",
+                prompt: <Scout prefix> + "Task: ...")
 
-# Step 2 - uses Step 1's output
-result2 = Agent(
-  name: "builder-fix"
-  description: "Implement fix"
-  mode: bypassPermissions
-  model: sonnet
-  prompt: "You are the Builder agent. First, read ~/.claude/skills/builder/SKILL.md and follow its instructions.
-    Context from previous step: {result1}"
-)
+result2 = Agent(name: "builder-fix", description: "Implement fix",
+                prompt: <Builder prefix> + "Context from previous step: {result1}")
 ```
 
 ---
@@ -108,59 +114,21 @@ Nexus → Agent(Builder-A, background) ──┐
 **Implementation**: Each branch is spawned as a background Agent. Nexus waits for completion notifications, then aggregates results.
 
 ```
-# Spawn both branches simultaneously in a single response
-Agent(
-  name: "builder-email"
-  description: "Email validation"
-  run_in_background: true
-  mode: bypassPermissions
-  model: sonnet
-  prompt: "You are the Builder agent. First, read ~/.claude/skills/builder/SKILL.md and follow its instructions.
-    File ownership: src/validators/email.ts, tests/validators/email.test.ts
-    Constraints: only the files above may be modified..."
-)
+# Both spawns issued in a single response; each adds run_in_background: true and the
+# distinguishing "File ownership: <its own files> / Constraints: only those files may be modified".
+Agent(name: "builder-email", run_in_background: true,
+      prompt: <Builder prefix> + "File ownership: src/validators/email.ts, tests/validators/email.test.ts ...")
+Agent(name: "builder-phone", run_in_background: true,
+      prompt: <Builder prefix> + "File ownership: src/validators/phone.ts, tests/validators/phone.test.ts ...")
 
-Agent(
-  name: "builder-phone"
-  description: "Phone validation"
-  run_in_background: true
-  mode: bypassPermissions
-  model: sonnet
-  prompt: "You are the Builder agent. First, read ~/.claude/skills/builder/SKILL.md and follow its instructions.
-    File ownership: src/validators/phone.ts, tests/validators/phone.test.ts
-    Constraints: only the files above may be modified..."
-)
-
-# Wait for both to complete (notifications arrive automatically)
-# Then proceed to AGGREGATE → VERIFY → DELIVER
+# Wait for both (notifications arrive automatically) → AGGREGATE → VERIFY → DELIVER
 ```
 
 **agy note — there is no background primitive.** On an agy hub this pattern is realized as either multiple async TUI `/agent` invocations (aggregated by polling `/tasks`, no explicit `wait`) or N externally-launched headless `agy -p` one-shots joined by artifact polling (`_common/AGY_ORCHESTRATION.md` A4). Three consequences: (1) the branch **barrier is manual** — the hub polls until every branch's artifact exists and carries the `<<<END_OF_OUTPUT>>>` sentinel, so a missing artifact is a capture question before it is a task failure (`error-handling.md` § Level 0); (2) branches share one session-scoped tier (A3) — do not design a branch set that needs different effort levels; (3) subagent contexts are **isolated** and do not inherit hub history, so each branch prompt carries its own state delta and branches exchange nothing but filesystem artifacts. File-ownership isolation is unchanged and remains the load-bearing guard.
 
-### Auto-Conflict Resolution Rules
-
-| Conflict Type | Auto-Resolve? | Method |
-|---------------|---------------|--------|
-| ADJACENT | ✅ Always | Accept both, merge in order |
-| FORMATTING | ✅ Always | Regenerate with formatter |
-| SEMANTIC (owner clear) | ✅ If ownership >= 0.70 | Ownership priority |
-| SEMANTIC (owner unclear) | ❌ | Escalate to user |
-| STRUCTURAL | ❌ Never | Always escalate |
-
-### Ownership Priority
-
-When two branches modify the same code semantically:
-
-```yaml
-ownership_score:
-  primary_agent_role: 0.40  # Domain specialist bonus
-  change_volume: 0.30       # More changes = more ownership
-  task_alignment: 0.30      # Is file central to task?
-
-  auto_resolve_if: ownership_score >= 0.70
-```
-
-See `reference/conflict-resolution.md` for detailed resolution strategies.
+Conflict classification, the auto-resolve/escalate matrix, and the ownership-score formula that
+decides a SEMANTIC conflict are owned by `reference/conflict-resolution.md` — the CONFLICT DETECTION
+box above is the entry point into it.
 
 ---
 
@@ -272,13 +240,7 @@ Nexus → Agent(Rally, foreground) → Rally manages team
 Agent(
   name: "rally-feature-impl"
   description: "Parallel feature implementation"
-  subagent_type: general-purpose
-  mode: bypassPermissions
-  model: sonnet
-  prompt: |
-    You are the Rally agent.
-    First, read ~/.claude/skills/rally/SKILL.md and follow its instructions.
-
+  prompt: <Rally prefix> + |
     Task: implement in parallel the following features.
     Workers:
       1. Builder: user authentication API (src/auth/)
@@ -301,129 +263,35 @@ Agent(
 
 ## Pattern H: Evaluator Loop
 
-```
-Nexus → Agent(Generator, foreground) → _STEP_COMPLETE
-                                          ↓
-Nexus → spawn Evaluators in parallel:
-         Agent(Evaluator-1, bg) + Agent(Evaluator-2, bg)
-                                          ↓ (wait for all)
-Nexus → Aggregate EVALUATION_FEEDBACK
-         ├─ All ACCEPT     → DELIVER
-         ├─ Any REVISE     → compile REVISION_BRIEF
-         │                    → Agent(Generator, with feedback) → loop
-         └─ Any BLOCK      → ESCALATE to user
-```
+**Spec is `reference/evaluator-loop-protocol.md`** — it owns the loop ladder diagram, the Sprint
+Contract format, the Rubric, and the aggregation rules. Read it before authoring this pattern; the
+notes here are only the per-engine execution delta.
 
 **Use when**: Task qualifies for Evaluator Loop (FEATURE MEDIUM+, SECURITY, complex tasks). The Generator produces deliverables; independent Evaluator agents assess them against the Sprint Contract rubric.
 
 **Key constraint**: Evaluators are read-only — they assess but do not modify code. Only the Generator makes changes.
 
-**Implementation**: Generator runs in foreground. Evaluators spawn as background agents with the Sprint Contract and Generator's output. Nexus aggregates feedback and either accepts, compiles a revision brief for the Generator, or escalates.
+**Shared prompt delta** (all engines): the Generator carries `Sprint Contract: {contract}` + the task;
+each Evaluator carries `Mode: EVALUATOR (evaluation only, no code changes)` + the same contract +
+`Under evaluation: {generator output}`. **Loop limits**: max 3 iterations; stop on all-ACCEPT,
+score delta < 0.2, or max reached.
 
-```
-# Step 1: Generator produces deliverable
-result = Agent(
-  name: "builder-feature-impl"
-  description: "Implement feature"
-  mode: bypassPermissions
-  model: sonnet
-  prompt: "You are the Builder agent. First, read ~/.claude/skills/builder/SKILL.md and follow its instructions.
-    Sprint Contract: {contract}
-    Task: {task_description}"
-)
+| Engine | Generator | Evaluator fan-out | Join / cleanup |
+|--------|-----------|-------------------|----------------|
+| **Claude Code** | `Agent(...)` foreground | N × `Agent(..., run_in_background: true)` in one response | completion notifications; no cleanup call |
+| **Codex CLI** | `spawn_agent` → `wait_agent` | N × `spawn_agent` issued before any wait | `wait_agent` each, then `close_agent` each |
+| **agy** | headless one-shot (no background primitive) | wave of independent one-shots | artifact polling — no `wait` primitive exists |
 
-# Step 2: Spawn Evaluators in parallel
-Agent(
-  name: "judge-eval-feature"
-  description: "Code quality evaluation"
-  run_in_background: true
-  mode: bypassPermissions
-  model: sonnet
-  prompt: "You are the Judge agent. First, read ~/.claude/skills/judge/SKILL.md and follow its instructions.
-    Mode: EVALUATOR (evaluation only, no code changes)
-    Sprint Contract: {contract}
-    Under evaluation: {result}"
-)
+Per-CLI API detail (tool names, prereqs, flags) → `reference/execution-layers.md`.
 
-Agent(
-  name: "radar-eval-feature"
-  description: "Test coverage evaluation"
-  run_in_background: true
-  mode: bypassPermissions
-  model: sonnet
-  prompt: "You are the Radar agent. First, read ~/.claude/skills/radar/SKILL.md and follow its instructions.
-    Mode: EVALUATOR (evaluation only, no code changes)
-    Sprint Contract: {contract}
-    Under evaluation: {result}"
-)
-
-# Step 3: Aggregate feedback → ACCEPT / REVISE / BLOCK
-```
-
-**Loop limits**: Max iterations default 3. Terminate on: all ACCEPT, diminishing returns (score delta < 0.2), or max iterations reached.
-
-### Codex CLI Implementation
-
-```
-# Step 1: Generator
-gen_id = spawn_agent(
-  prompt: "You are the Builder agent. First, read ~/.claude/skills/builder/SKILL.md and follow its instructions.
-    Sprint Contract: {contract}
-    Task: {task_description}"
-)
-gen_result = wait_agent(gen_id)
-
-# Step 2: Evaluators in parallel
-judge_id = spawn_agent(
-  prompt: "You are the Judge agent. First, read ~/.claude/skills/judge/SKILL.md and follow its instructions.
-    Mode: EVALUATOR (evaluation only, no code changes)
-    Sprint Contract: {contract}
-    Under evaluation: {gen_result}"
-)
-radar_id = spawn_agent(
-  prompt: "You are the Radar agent. First, read ~/.claude/skills/radar/SKILL.md and follow its instructions.
-    Mode: EVALUATOR (evaluation only, no code changes)
-    Sprint Contract: {contract}
-    Under evaluation: {gen_result}"
-)
-
-# Step 3: Collect feedback
-judge_feedback = wait_agent(judge_id)
-radar_feedback = wait_agent(radar_id)
-
-# Step 4: Aggregate → ACCEPT / REVISE / BLOCK
-# If REVISE: spawn_agent(Generator with REVISION_BRIEF)
-# Cleanup
-close_agent(gen_id)
-close_agent(judge_id)
-close_agent(radar_id)
-```
-
-### agy Implementation
-
-No background spawn and no per-agent model field, so the loop is driven as sequential + wave-parallel headless one-shots, each pinning the mandated Gemini 3.6 Flash (High) tier and capturing via artifact (`_common/AGY_ORCHESTRATION.md` A1-R/A2/A4, `_common/CLI_COMPATIBILITY.md §9.2`):
-
-```bash
-# Step 1: Generator (recipe step → High tier, Deep Reasoning Directive appended)
-#   prompt = Builder body + Sprint Contract + A9-D block + MANDATORY OUTPUT PROTOCOL
-#   python3 pty.spawn(["agy","-p",prompt,"--dangerously-skip-permissions",
-#                      "--print-timeout","15m","--log-file","/tmp/agy-gen.log"])
-#   verify: [ -s /tmp/agy-gen.md ] && grep -q '<<<END_OF_OUTPUT>>>' /tmp/agy-gen.md
-
-# Step 2: Evaluators — launched as a wave of independent one-shots, joined by artifact polling
-#   each evaluator prompt injects the generator artifact with @/tmp/agy-gen.md   (A5 — never a bare path)
-#   Mode: EVALUATOR (evaluation only, no code changes)
-#   → /tmp/agy-judge.md, /tmp/agy-radar.md   (each sentinel-verified before it is read)
-
-# Step 3: Aggregate → ACCEPT / REVISE / BLOCK
-#   If REVISE: new one-shot for the Generator carrying @<revision-brief path>
-#   Capture failure (empty artifact / missing sentinel) is NOT a REVISE signal — resolve it
-#   as a Level 0 capture failure first (typed retry, max 1).
-```
-
-**agy-specific loop rules:** the maker ≠ checker separation is unaffected (separate processes, isolated contexts) and is the reason this pattern ports cleanly; but the generator runs a *fast* model, so weight the evaluator rubric and keep every loop step at the High tier (A1-R, A9). Iterate by re-spawning one-shots or resuming with `-c`/`--conversation <id>`; loop limits (max 3 iterations, score-delta stop) are unchanged.
-
-See `reference/evaluator-loop-protocol.md` for the full end-to-end specification (loop pattern + Sprint Contract format + Rubric scoring criteria).
+**agy-specific loop rules:** every step pins the mandated Gemini 3.6 Flash (High) tier with the Deep
+Reasoning Directive appended (`_common/AGY_ORCHESTRATION.md` A1-R/A9-D), captures via the
+prompt-mandated artifact + sentinel (`_common/CLI_COMPATIBILITY.md §9.2`), and injects the upstream
+artifact with `@<path>` — never a bare path (A5). Maker ≠ checker still holds (separate processes,
+isolated contexts), which is why the pattern ports; but the generator runs a *fast* model, so weight
+the evaluator rubric accordingly. A capture failure (empty artifact / missing sentinel) is **not** a
+REVISE signal — resolve it as a Level 0 capture failure first (typed retry, max 1). Iterate by
+re-spawning one-shots or resuming with `-c`/`--conversation <id>`.
 
 ---
 
@@ -431,16 +299,16 @@ See `reference/evaluator-loop-protocol.md` for the full end-to-end specification
 
 Claude Code's Dynamic Workflows feature names six canonical orchestration shapes. When a request describes one of these, use the official name (per the shared-vocabulary rule in `managed-agents-mapping.md §3`) and reuse the matching Nexus pattern below — they are the same shapes under different labels. On Claude Code, a large fan-out of any of these may delegate execution to a native dynamic workflow (`managed-agents-mapping.md §5`); off Claude Code, implement with the Nexus pattern directly.
 
-| Dynamic Workflows pattern | What it does | Nexus equivalent |
-|---------------------------|--------------|------------------|
-| **Classify-and-act** | A router agent determines task type and directs to specialized handlers | Pattern C: Conditional Routing |
-| **Fan-out-and-synthesize** | Split into parallel subtasks with independent agents, then merge at a synchronization barrier | Pattern B: Parallel Branches (barrier = AGGREGATE) |
-| **Adversarial verification** | A separate agent verifies each output against a rubric | Pattern F: Verification Gate / Pattern H: Evaluator Loop |
-| **Generate-and-filter** | Generate many candidates, then filter by quality criteria | Pattern H variant (generate → rubric filter) |
-| **Tournament** | N agents compete on an identical task with pairwise judging | Pattern B fan-out + pairwise judge (see `essential`/`killer` convergence) |
-| **Loop-until-done** | Spawn iteratively until a stop condition (no new findings, error resolved) | Pattern D: Recovery Loop / loop-until-dry |
+| Dynamic Workflows pattern | Nexus equivalent |
+|---------------------------|------------------|
+| **Classify-and-act** | Pattern C: Conditional Routing |
+| **Fan-out-and-synthesize** | Pattern B: Parallel Branches (barrier = AGGREGATE) |
+| **Adversarial verification** | Pattern F: Verification Gate / Pattern H: Evaluator Loop |
+| **Generate-and-filter** | Pattern H variant (generate → rubric filter) |
+| **Tournament** | Pattern B fan-out + pairwise judge (see `essential`/`killer` convergence) |
+| **Loop-until-done** | Pattern D: Recovery Loop / loop-until-dry |
 
-These six combat the single-context failure modes (agentic laziness, self-preferential bias, goal drift) documented in `managed-agents-mapping.md §5`. [Source: claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code]
+What each official pattern does, and the single-context failure modes the six combat (agentic laziness, self-preferential bias, goal drift), are described in `managed-agents-mapping.md §5`. [Source: claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code]
 
 ---
 

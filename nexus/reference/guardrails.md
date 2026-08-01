@@ -204,23 +204,15 @@ recovery_confidence:
     - no_rollback_available: -0.10
 ```
 
-### Recovery Confidence Legend
+### Recovery Confidence Bands
 
-Always compute recovery confidence with the weighted formula above. The qualitative table below is an explanatory aid mapping the same factors to a coarse band — use it to read and communicate the score, not to replace the calculation:
+Always compute the score with the weighted formula above; the bands below only say what to do with it and how to name it when reporting. A chain's own `confidence_threshold` (A 0.75 / B 0.70 / C 0.80) is the authoritative auto-execute gate for that chain and overrides the generic band.
 
-| Factor | YES | NO |
-|--------|-----|-----|
-| Similar recovery succeeded before? | +1 | 0 |
-| Rollback point available? | +1 | 0 |
-| Failure cause is clear? | +1 | 0 |
-| Change scope is small (< 5 files)? | +1 | 0 |
-| Previous recovery failed? | -1 | 0 |
-
-| Total | Confidence | Action |
-|-------|-----------|--------|
-| 3-4 | HIGH | Auto-execute recovery chain |
-| 1-2 | MEDIUM | Execute with caution (AUTORUN_FULL) or ask user |
-| 0 or less | LOW | Ask user before recovery |
+| Score | Band | Action |
+|-------|------|--------|
+| ≥ 0.75 | HIGH | Auto-execute the recovery chain |
+| 0.60 – 0.74 | MEDIUM | Execute with caution in AUTORUN_FULL; otherwise ask the user |
+| < 0.60 | LOW | Ask the user before recovering |
 
 ---
 

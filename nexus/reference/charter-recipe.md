@@ -17,7 +17,7 @@
 - Charter Document Schema
 - AUTORUN Chain Template
 - Failure Escalation
-- Cost and Latency Profile
+- Scale, Cost and Latency Profile
 
 ---
 
@@ -277,11 +277,9 @@ Because charter **stops at the document and runs no execution** (`reference/reci
 
 **`N/A` — `charter` is a non-loop recipe.** It runs a single analysis-then-author pass and **stops at the document**; the loops it *configures* belong to `enact` and to the team the Charter describes, not to charter itself.
 
-## Scale
+## Scale, Cost and Latency Profile
 
-**8-20 agents, single pass, mid-to-high cost** (repo-size dependent: the analysis fan-out over subsystems dominates; authoring is a small tail). No cycle multiplier — see Termination Bound.
-
-## Cost and Latency Profile
+The profile table is canonical; the scale line is read off it. **5-15 agents, single pass, low-to-medium cost** — repo-size dependent, since the Phase 1 analysis fan-out over subsystems dominates and authoring is a small tail. No cycle multiplier — see Termination Bound.
 
 | Profile | Phases active | Approx agent count | Approx cost |
 |---------|---------------|--------------------|-------------|

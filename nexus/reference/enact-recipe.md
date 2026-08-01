@@ -238,32 +238,18 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 
 ## Failure Escalation
 
-Under run-to-completion, only **precondition** and **safety red line** failures stop the run; every recoverable failure continues.
+Merges the operational trigger/escalation view with the failure-mode rationale (what goes wrong without the rule) — one table, no second index; this section is enact's `reference/recipe-contract.md` §1 element 5. Under run-to-completion, only **precondition** and **safety red line** failures stop the run; every recoverable failure continues. The design goal is **forward progress to a true terminal verdict** — never an early stop, never a faked green.
 
-| Failure | Detected by | Escalation (run-to-completion) |
+| Failure / anti-pattern | Detected by | Escalation (run-to-completion) |
 |---------|-------------|------------|
-| Charter missing/invalid section | enact parse | **Stop (precondition)** — report which section; recommend `charter` to re-author. Cannot run without a valid Charter |
+| Charter missing/invalid section — improvising past a bad Charter | enact parse | **Stop (precondition)** — report which section; recommend `charter` to re-author. A missing section is never silently patched |
 | §5 roster names a non-existent skill | enact bind | **Stop (precondition)** at Phase 1; report the gap; do not improvise an owner |
-| Phase 1 engine prereq unmet (e.g. Codex `max_depth < 2`) | Nexus | **Continue** — apply package `fallback_engine` (log substitution + trade-off); skip only that package if no fallback, run continues |
-| Phase 2 package repeat failure | judge/radar | **Continue** — walk the recovery ladder (§ Run-to-Completion Contract); if still failing, mark `SKIPPED(blocked)` + log §9, proceed to remaining packages. Never aborts the run |
-| Build loop stuck / over budget | orbit | **Continue** — orbit switches strategy and keeps going; only a real §8 budget-ceiling breach escalates per §8 (not a blanket pause) |
-| Safety red line (L4 / destructive / out-of-scope per §8) | Nexus / §8 | **Stop + confirm** — the one intentional mid-run pause; resumes on approval, aborts only that action on denial |
-| §7 verification fails | radar/judge | **Continue to DELIVER** — report honestly with output; deliver FAILED/PARTIAL status; do not mask, retry forever, or bypass checks (global quality rule) |
-
-## Failure Modes Prevented
-
-Consolidated view of what enact's run-to-completion contract, recovery ladder, and red lines guard against (drawn from the Run-to-Completion Contract, the recovery ladder, §8 red lines, and Failure Escalation). The design goal is **forward progress to a true terminal verdict** — never an early stop, never a faked green.
-
-| Failure mode | Without enact's contract | Prevented by |
-|--------------|--------------------------|--------------|
-| Stalling on a recoverable failure | The run pauses mid-stream and waits for a human on every hiccup | Recovery ladder (§ Run-to-Completion Contract) auto-recovers without asking |
-| One blocked package aborting the whole run | A single unsatisfiable step kills an otherwise-complete delivery | `SKIPPED(blocked, reason)` terminal state — the run continues with remaining packages; circuit breaker (3 failures) skips, never aborts |
-| Engine unreachable hard-fails the run | Codex/agy down stops everything | Per-package `fallback_engine` (default `claude-code`) with logged cost/throughput trade-off; hard-fail only when no fallback defined |
-| Cost pausing the run open-endedly | Spend prompts interrupt an authorized run | Cost does not pause; proceeds to the Charter §8 budget ceiling automatically — only a genuine ceiling breach escalates |
-| Lost progress on interruption | A crash/context-limit restarts from scratch | Append-only run-log tail + auto-resume (treat last `PKG_DONE` as checkpoint; skip terminal packages; no re-confirm) |
-| Faking green to "finish" | Run-to-completion misread as "report success regardless" | Honesty red line: §7 failures reported truthfully with output; DELIVER carries FAILED/PARTIAL — terminal verdict, never fabricated |
-| Acting outside the Charter's scope | Force-mode runs destructive/L4/out-of-scope actions unprompted | §8 safety red lines pause for confirm even in force mode — run-to-completion pre-authorizes only what the Charter already scoped |
-| Improvising past a bad Charter | Missing section / non-existent skill silently patched | Precondition stop at parse/Phase 1 — report the gap, recommend re-authoring via `charter`; never improvise an owner |
+| Phase 1 engine prereq unmet (e.g. Codex `max_depth < 2`) — an engine outage hard-failing the run | Nexus | **Continue** — apply package `fallback_engine` (default `claude-code`; log substitution + cost/throughput trade-off); hard-fail only that package when no fallback is defined |
+| Phase 2 package repeat failure — stalling on a recoverable failure, or one blocked package aborting an otherwise-complete delivery | judge/radar | **Continue** — walk the recovery ladder (§ Run-to-Completion Contract) without asking; if still failing, mark `SKIPPED(blocked, reason)` + log §9 and proceed to remaining packages. The 3-failure circuit breaker skips that package, never aborts the run |
+| Build loop stuck / over budget — spend prompts interrupting an authorized run | orbit | **Continue** — orbit switches strategy and keeps going; spend proceeds to the Charter §8 budget ceiling automatically, and only a genuine ceiling breach escalates per §8 |
+| Interruption (crash / context limit / harness restart) — progress lost, run restarts from scratch | harness | **Continue** — auto-resume from the append-only run-log tail (last `PKG_DONE` is the checkpoint); terminal packages skipped, no re-confirmation |
+| Safety red line (L4 / destructive / out-of-scope per §8) — force mode acting outside the Charter's scope | Nexus / §8 | **Stop + confirm** — the one intentional mid-run pause, not bypassed by run-to-completion (which pre-authorizes only what the Charter already scoped); resumes on approval, aborts only that action on denial |
+| §7 verification fails — run-to-completion misread as "report success regardless" | radar/judge | **Continue to DELIVER** — report honestly with output; deliver FAILED/PARTIAL status; do not mask, retry forever, or bypass checks (global quality rule) |
 
 ## Boundaries / vs neighbors
 

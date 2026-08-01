@@ -11,7 +11,7 @@
 - Validation Rules
 - Validation Failure Handling
 - NEXUS_HANDOFF_V2 Template
-- Backward Compatibility
+- Compliance Levels (incl. V1 migration)
 - Validation Event Format
 - Integration with Auto-Decision
 
@@ -114,25 +114,9 @@ validation_checks:
     - confidence_breakdown average ≈ confidence (±0.05)
 ```
 
-### Auto-Routing Rules
+### Auto-Routing
 
-```yaml
-auto_routing:
-  proceed_if:
-    - confidence >= 0.75
-    - status == SUCCESS
-    - next_action == CONTINUE
-
-  pause_if:
-    - confidence < 0.50
-    - status == BLOCKED
-    - pending_confirmations present
-
-  escalate_if:
-    - status == FAILED
-    - next_action == ESCALATE
-    - confidence < 0.30
-```
+Confidence bands (≥ 0.75 auto-route · 0.50-0.74 route with logged assumptions · < 0.50 pause for user input) are canonical in `output-formats.md` § Auto-Routing Rules. Independent of the band, `status == BLOCKED` or a pending confirmation pauses, and `status == FAILED` / `next_action == ESCALATE` escalates.
 
 ---
 
@@ -182,26 +166,7 @@ Level 1 confidence inference (applied automatically):
 
 Level 2 without breakdown: all three components assumed equal to overall confidence.
 
-## Backward Compatibility
-
-The Compliance Levels above formalize the backward compatibility rules:
-
-```yaml
-v1_to_v2_migration:
-  if_missing_confidence:
-    infer_from:
-      - status: SUCCESS → confidence: 0.80
-      - status: PARTIAL → confidence: 0.60
-      - status: BLOCKED → confidence: 0.40
-      - status: FAILED → confidence: 0.20
-
-    log_warning: true
-    request_update: true  # Flag agent for V2 update
-
-  if_missing_breakdown:
-    assume_equal_distribution: true
-    # All three components = overall confidence
-```
+A V1 handoff is migrated by applying those same two rules — infer confidence from `status`, distribute it equally across the three components — and is accepted with a logged warning flagging the agent for a V2 update.
 
 ---
 

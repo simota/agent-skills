@@ -162,17 +162,15 @@ The reason `graft` exists is **novelty**, so novelty is gated as a first-class o
 
 ## 4. Graft Verification Map
 
-Magi confirms the relevant aspects in Phase 3; Phase 4 builds against them; Phase 5 verifies each graft by **all three oracle legs**.
+Magi confirms the relevant aspects in Phase 3; Phase 4 builds against them; Phase 5 verifies each graft by **all three oracle legs**. What each leg proves — and why dropping one is the core integrity failure — is defined once in §3b; this table states only what each leg *inspects* per aspect, and who inspects it.
 
-| Aspect | Concept-Fidelity leg | Host-Integrity leg | Innovation leg |
+| Aspect | Concept-Fidelity | Host-Integrity | Innovation |
 |--------|----------------------|--------------------|-----------------|
-| **Mechanism** | donor concept's mechanism/effect reproduced (Attest vs concept spec) | host mechanisms unregressed (Radar baseline) | emergent mechanism neither had (judge) |
-| **Experience** | the concept *feels* like its essence, in the host's idiom (Echo) | existing workflows intact (Echo seam) | felt as a new capability (Echo) |
-| **Surface** | re-expressed **originally**; high donor resemblance = smell (§3d) | host design language preserved/extended (Muse) | distinct identity, not a clone of either |
-| **Data/contract** | concept's data needs met within host schema | data + public-contract invariants hold (Gateway/Schema) | new capability without contract break |
-| **Defensibility** | — | — | moat / time-to-copy (Compete) + refutation (§3e) |
-
-> Re-express the donor concept *idiomatically in the host* — fidelity is to the **principle**, expressed in the host's own surface and architecture. High visual/structural resemblance to the donor is the wrong target here (the inverse of clone); the right target is "the idea is unmistakably present and working, and the expression is ours."
+| **Mechanism** | Attest vs the concept spec | Radar regression baseline | judge: emergent mechanism neither side had |
+| **Experience** | Echo: the concept *feels* like its essence, in the host's idiom | Echo: existing workflows intact at the seam | Echo: felt as a new capability |
+| **Surface** | re-expressed **originally** (§3d) | Muse: host design language preserved/extended | distinct identity, not a clone of either |
+| **Data/contract** | concept's data needs met within host schema | Gateway/Schema: data + public-contract invariants hold | new capability without contract break |
+| **Defensibility** | — | — | Compete moat / time-to-copy + refutation (§3e) |
 
 ---
 

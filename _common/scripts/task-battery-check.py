@@ -81,7 +81,7 @@ MECHANICAL_ITEMS = [
     (4, "clean up keyword -> refactor", "signal-keywords.md",
      "`refactor`, `clean up`, `code smell` | `refactor`"),
     (5, "optimize is measure-first", "routing-matrix.md",
-     "**Measure-first / prove-with-a-number**"),
+     "**Measure-first / prove-with-a-number"),
     (6, "polish (feature-scoped) -> kaizen", "signal-keywords.md",
      "`polish`/`improve`/`enhance` a *feature* → `kaizen`"),
     (7, "improve the design REDIRECT -> anneal/restyle", "signal-keywords.md",

@@ -10,11 +10,8 @@ Recipe contract for `nexus growth-acceptance` — orchestrates the **lifecycle g
 - `nexus/reference/acceptance-recipe.md` (Phase 1 delegates here for merge-time gates)
 
 **Distinguishes from / integrates with**:
-- `feature` — implements a change with conventional tests (no Insight Ledger, no Brand Compiler, no Incrementality Gate); recommended downgrade when Phase 0 detects Solo / SMB or sub-Step-2 adoption.
 - `acceptance` — Code + Design merge-time gate (Tier B); `growth-acceptance` includes it as Phase 1 (full delegation, shared v3 protocol foundation) and extends to pre-design (Phase 0) + ship-time (Phase 2) + post-launch (Phase 3).
-- `apex` — full discovery → ship cycle; `growth-acceptance` assumes the spec graph + Insight Ledger + Brand Constitution exist and focuses on gating, not authoring. Apex's Phase 6 (Ship) can chain into growth-acceptance for Enterprise org deliverables — apex authors, growth-acceptance gates the lifecycle.
-- `summit` — strategic decisions and high-stakes releases (tri-engine); `growth-acceptance` is the lifecycle gate for brand-touching content resulting from summit's strategic decisions — summit decides, growth-acceptance gates execution.
-- `kaizen` — single-axis improvement (perf / UX / code-quality / feature-extension); chain kaizen → growth-acceptance for brand-touching surfaces (kaizen produces, growth-acceptance gates the lifecycle).
+- Every other distinction `acceptance` draws (`feature`, `apex`, `summit`, `judge`) applies here unchanged — see `reference/acceptance-recipe.md` § Distinguishes from. The Layer-C-specific chaining on top: `apex` authors → growth-acceptance gates the lifecycle; `summit` decides → growth-acceptance gates execution; `kaizen` produces → growth-acceptance gates brand-touching surfaces; and `feature` is the recommended downgrade when Phase 0 detects Solo / SMB or sub-Step-2 adoption.
 
 ---
 
@@ -118,7 +115,7 @@ A measurement-backed launch is only honest if the success bar is set **before** 
 7. **`tome`** — update Insight Ledger with validated findings (queue for Research Lead merge per G11)
 
 **Gate (G13 mandatory)**:
-- **Evaluate against the frozen pre-registered plan only.** The primary metric, MDE, and decision thresholds are read from the Phase 2 hash-stamped plan — they are NOT re-chosen now. Auto-scale/halt fires on the **pre-declared primary metric**, not whichever secondary metric happened to win. Any proposed change to metric/threshold/window post-launch is a **flagged deviation** requiring explicit Stop_Accountable + Research Lead sign-off (recorded with reason) — never a silent re-baseline.
+- **Evaluate against the frozen pre-registered plan only** — read the primary metric, MDE, and thresholds from the Phase 2 Pre-Registration sub-gate's hash-stamped plan; they are not re-chosen now. Any proposed post-launch change to metric/threshold/window is a **flagged deviation** requiring explicit Stop_Accountable + Research Lead sign-off (recorded with reason) — never a silent re-baseline.
 - Stop_Condition trigger fires → Stop_Accountable notified immediately
 - 24h no-response → auto-halt (default deny)
 - Brand Director has unilateral veto on Brand-related stops (Growth Lead cannot override)
@@ -162,8 +159,8 @@ Phase 2 (Ship-Time, parallel):
   ‖ funnel + bazaar[channel-fit + LP coherence]
   ‖ vision + prose[B.tone advisory, non-blocking]
   ‖ clause + oath + cloak + vigil[G14 Regulatory Pre-Flight]
-  ‖ experiment[pre-register: freeze primary metric + MDE + thresholds + decision rule, hash-stamp; control-validity / SRM check]
-  → Gate: regulatory toggle verified + statistical power adequate + analysis plan frozen + control valid (SRM clean)
+  ‖ experiment[pre-register + control-validity/SRM check, per § Pre-Registration sub-gate]
+  → Gate: regulatory toggle verified + statistical power adequate + analysis plan frozen + control valid
   → if FAIL: block ship; route to remediation
 
 Phase 3 (Post-Launch, scheduled):
@@ -179,12 +176,8 @@ Phase 3 (Post-Launch, scheduled):
     ‖ compete[Distinctive Asset audit]
     ‖ harvest[Learning record]
     ‖ tome[Insight Ledger proposed-edit queue]
-  Per-checkpoint Gate (G13):
-    Evaluate against the FROZEN pre-registered plan only (primary metric/thresholds not re-chosen)
-    Stop_Condition trigger fires → notify Stop_Accountable
-    24h no-response → mend[auto-halt]
-    Auto-scale: incrementality+ on pre-registered primary (SRM-clean control) AND Brand Lift not degraded AND CAC<threshold AND no cannibalization
-    Post-launch metric/threshold change → flagged deviation, requires sign-off (no silent re-baseline)
+  Per-checkpoint Gate (G13) — evaluated against the frozen plan; rules in § Phase 3:
+    Stop_Condition fires → notify Stop_Accountable → 24h no-response → mend[auto-halt]
 
 Phase 4 (Cross-Cutting Audits, background):
   Quarterly: G15 Constitution Health / G6 Goodhart / G14 Horizon Scan / G12 Distinctive Asset
@@ -205,7 +198,7 @@ Phase 4 (Cross-Cutting Audits, background):
 | Constitution Operational layer stale | Phase 1 B.pattern | Block merge; G15 forcing function; require Constitution refresh |
 | Distinctiveness Score < threshold (G12) | Phase 1 B.hard | Block merge; require creative iteration |
 | Statistical power inadequate for measurement | Phase 2 | Block ship; require N increase or method change per Decision Tree |
-| No frozen pre-registered analysis plan before ship | Phase 2 | Block ship; lock primary metric + MDE + thresholds + decision rule (hash-stamped) before launch |
+| No frozen pre-registered analysis plan before ship | Phase 2 | Block ship; freeze the plan per the § Pre-Registration sub-gate before launch |
 | Control invalid (SRM mismatch / contamination / broken holdout) | Phase 2 | Block ship; incrementality counterfactual unsound — fix assignment before launch |
 | Post-launch metric/threshold change without sign-off | Phase 3 | Reject silent re-baseline; flagged deviation requires Stop_Accountable + Research Lead sign-off |
 | Auto-scale fired on a secondary metric (not pre-registered primary) | Phase 3 | Block; HARKing/p-hacking guard — decision binds to the frozen primary metric only |
@@ -260,8 +253,8 @@ Inherits the engine's gates unchanged (`reference/acceptance-recipe.md`) — **C
 |--------------|--------------|
 | Phase 1 inline orchestration instead of delegating to acceptance | Delegate to acceptance recipe; avoid duplication |
 | Phase 2 auto-scale enabled without Decision Tree compliance | Block; require explicit method declaration |
-| Picking the winning metric after results are in (HARKing / p-hacking) | Pre-registration: primary metric + thresholds frozen + hash-stamped before ship; Phase 3 binds to the frozen plan |
-| Claiming incrementality on an invalid control (SRM / contaminated holdout) | Phase 2 control-validity check blocks ship until the counterfactual is sound |
+| Picking the winning metric after results are in (HARKing / p-hacking) | Phase 2 Pre-Registration sub-gate; Phase 3 binds to the frozen plan |
+| Claiming incrementality on an invalid control (SRM / contaminated holdout) | Phase 2 Pre-Registration control-validity check blocks ship |
 | Phase 3 Auto-halt blocked by Growth Lead override | G13 enforcement; Brand Director veto authority preserved |
 | Skipping Phase 4 cross-cutting audits | Long-term drift; mandatory schedule |
 | Treating Phase 3 as one-shot post-launch check | Phase 3 has 3 scheduled gates (+14/+30/+90); each is mandatory |

@@ -314,12 +314,9 @@ Compare via `/resume` session picker. For Codex use `codex resume --last` per wo
 
 ### safe-bounded — Codex CLI profile
 
-```toml
-[profiles.goal-safe]
-model_reasoning_effort = "high"
-approval_policy = "on-request"
-sandbox_mode = "workspace-write"
+A delta over `[profiles.goal-ci]` above — copy its three keys under `[profiles.goal-safe]`, then add the sandbox stanza, which is the only difference:
 
+```toml
 [profiles.goal-safe.sandbox_workspace_write]
 writable_roots = ["./src", "./tests"]
 network_access = false
@@ -419,7 +416,7 @@ steps:
 ```
 
 ### Verification checklist
-- [ ] **Completion oracle is machine-checkable** and identical in the goal statement and the verification hook (exit 0 ⟺ done)
+- [ ] **Completion oracle** satisfies the Phase 2.5 gate (machine-checkable; the same command in the goal statement and the verification hook)
 - [ ] **Hard-stop bound in place** (native `--max-turns`/`--max-budget-usd` or budget-guard hook) — run cannot loop unbounded
 - [ ] Hooks installed and validated with `claude --debug` / `codex /hooks`
 - [ ] Permission rules / sandbox settings applied
@@ -455,7 +452,7 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 
 | Failure | Response |
 |---|---|
-| Goal has no machine-checkable completion oracle | Ask once to convert it into a checkable predicate; if still vague, stop — do not produce a launch command for an unverifiable goal (it will runaway or false-complete) |
+| Goal has no machine-checkable completion oracle | Phase 2.5 gate — ask once to convert it, else stop; no launch command is produced for an unverifiable goal |
 | No hard-stop bound available (native flags absent + no budget hook) | Do not deliver an unbounded autonomous launch; require the budget-guard hook first |
 | Platform unknown after detection + ask | Stop with install instructions; do not guess |
 | `/goal` version too old (Claude Code < v2.1.139) | Emit upgrade instruction; do not produce launch command |

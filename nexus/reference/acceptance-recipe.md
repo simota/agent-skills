@@ -132,11 +132,7 @@ See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy` (dual-engine fallback 
 - `vitrine` — `vrt_proof` generator with Matrix Sampling Policy applied (`matrix` skill produces pairwise / orthogonal-array story set)
 - `prose` — `copy_proof` generator (voice/tone rules, banned-word list, length constraints, locale-appropriate copy)
 
-**Matrix Sampling Policy** (applies to `vitrine` + `voyager` VRT runs, per PROOF_CARRYING.md PD-2):
-- Tier-S: full pairwise + critical-path full-coverage; full N-way only for payment/auth/PII paths
-- Tier-A: pairwise (2-way) on all DS components; 3-way for Tier-A critical user journey
-- Tier-B: critical-path only (top 10 user journeys)
-- `matrix` skill is the canonical pairwise generator; story count target ≤ 5,000 per build
+**Matrix Sampling Policy** — applies to `vitrine` + `voyager` VRT runs. The per-Tier sampling defaults, reduction techniques, and the ≤ 5,000-stories-per-build ceiling are owned by `_common/PROOF_CARRYING.md` § Matrix Sampling Policy (PD-2); the `matrix` skill is the canonical pairwise generator. Taking the matrix as a full Cartesian product, or exceeding the ceiling, **blocks here** — apply equivalence partitioning + pairwise reduction rather than raising the ceiling.
 
 **Engine routing**: per § Engine Routing table above; no delta for this phase.
 
@@ -214,7 +210,7 @@ Each adversarial agent (Layer A or B) must produce a non-trivial exploration rep
 1. All 9 Design-side evidence fields present and non-empty (when `ui_dimension != none`)
 2. Design-Code Contract changes (if any) pass Contract Meta-Oracle
 3. 4-layer G9 detection all live (AST + Storybook + Runtime DOM + Code Connect) — none missing
-4. Matrix Sampling Policy compliance: pairwise default for Tier-A, full critical-path for Tier-S
+4. Matrix Sampling Policy compliance per PD-2
 5. No unspecifiable-quality red flag (brand / ethics / dark-pattern) — if flagged, route to G7 Unmeasurable-Quality Audit
 6. `design_proof_mode == blocking` for Layer B FAIL to block merge; `advisory` mode logs but allows merge
 
@@ -232,10 +228,7 @@ Each adversarial agent (Layer A or B) must produce a non-trivial exploration rep
 - PASS_A + FAIL_B (advisory mode) → PASS_WITH_ADVISORY (merge allowed; advisory recorded for follow-up)
 - ESCALATE_A or ESCALATE_B → ESCALATE (route to human review)
 
-**G7 Unmeasurable-Quality Audit Gate** (when `ui_dimension != none` AND Tier-S/A):
-- Tier-S UI: human designer sign-off required even on Compiler/Matrix/Contract PASS (≥10 min recorded review)
-- Tier-A UI: weekly aggregate review; sampled per G2
-- Designer-review hours YoY tracked; >30% drop triggers atrophy warning
+**G7 Unmeasurable-Quality Audit Gate** — fires when `ui_dimension != none` AND Tier-S/A. Its rules (per-Tier designer sign-off, the recorded review-time floor, PASS-badge wording, the YoY atrophy warning) are owned by `_common/PROOF_CARRYING.md` § G7 and are not restated here.
 
 **Output**: PASS / PASS_WITH_ADVISORY / FAIL (specific gaps) / ESCALATE
 
@@ -258,7 +251,7 @@ A "proof" only carries weight if it is bound to **exactly what merges**. The Gat
 ### Phase 6 — Random Sampling Audit (asynchronous, post-merge)
 
 For successful Tier-S/A merges:
-- Roll a deterministic dice (seed = PR ID + date) at the configured sample rate (5% S / 2% A per `PROOF_CARRYING.md` G2)
+- Roll a deterministic dice (seed = PR ID + date) at the sample rate configured in `_common/PROOF_CARRYING.md` G2
 - If sampled, file a human-review task with the full evidence package attached
 - Review findings feed back into Gate rule updates (no automatic re-routing — explicit human decision required)
 
@@ -326,8 +319,7 @@ Phase 5 (Runtime Oracle Hookup, sequential, on PASS / PASS_WITH_ADVISORY only):
   beacon[register runtime oracle] → mend[register repair runbook with G3 circuit breaker]
 
 Phase 6 (Random Sampling Audit, async post-merge, non-blocking):
-  sample(rate=5% Tier-S / 2% Tier-A per G2) → human-review task if sampled
-  audits the Gate, not the change
+  sample(rate per G2) → human-review task if sampled
 ```
 
 ---
@@ -358,11 +350,10 @@ Merges the operational trigger/escalation view with the anti-pattern rationale (
 | Dual-Implementation same-LLM family detected | Phase 2A | Block; G4 requires different families for AI-A / AI-B / AI-C; recipe re-selects engines |
 | Dual-Implementation semantic diff non-zero | Phase 2A | Block; triangulate against Source-of-Truth Spec (G10); incorrect implementation must be fixed |
 | G9 4-layer detection incomplete (AST/Storybook/Runtime/CodeConnect not all live) | Phase 2B | `component_proof` downgrades to advisory until all 4 live |
-| Matrix story count >5,000 per build / taken as full Cartesian product | Phase 2B | Block; apply equivalence partitioning + pairwise reduction (PD-2 defaults to pairwise; full N-way Tier-S critical-path only) |
 | VRT diff classifier flags "Approve all" attempt on >10 diffs | Phase 4 | Block; G5 enforces tool-level ban; force PR split if >50 diffs |
 | Layer B FAIL with `design_proof_mode == blocking` / Code Proof PASS shipped despite Design Proof FAIL | Phase 4C | Block merge; Code-side PASS does not split-merge in blocking mode |
 | Layer B FAIL with `design_proof_mode == advisory` | Phase 4C | Allow merge with `PASS_WITH_ADVISORY`; advisory recorded; >3 advisories/sprint per product flags process review |
-| Unmeasurable-Quality flag raised on UI change / Compiler PASS celebrated as "design approved" | Phase 4-G7 | Tier-S routes to designer human sign-off (≥10 min recorded) despite Compiler/Matrix/Contract PASS; Tier-A queues for weekly audit (sampled per G2) |
+| Unmeasurable-Quality flag raised on UI change / Compiler PASS celebrated as "design approved" | Phase 4-G7 | Route to the G7 audit per `_common/PROOF_CARRYING.md` § G7 — a Compiler PASS is rule coverage, never design approval |
 | Designer-review hours dropped >30% YoY | Phase 4-G7 monitoring | Atrophy warning logged; flag for review process audit |
 | Carve-out invoked on >20% of Tier-S/A PRs in quarter | Cross-phase monitoring | Process review: either extend Design Compiler rules OR invest in human design review capacity |
 | Component Sandbox prototype aged >6 months without promotion/removal | Cross-phase monitoring | Cleanup task auto-filed; sandbox SLA enforcement |

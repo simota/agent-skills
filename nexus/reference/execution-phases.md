@@ -51,16 +51,7 @@ User Selection (ON_PROACTIVE_START)
 ### Phase 1: PLAN
 Classify and analyze the task:
 
-**Task Classification:**
-- **BUG**: Error fix, defect response, "not working", "broken"
-- **INCIDENT**: Production outage, service degradation, "down", "emergency", "SEV1/2/3/4"
-- **API**: API design, endpoint creation, OpenAPI spec
-- **FEATURE**: New feature, "I want to...", "add..."
-- **REFACTOR**: Code cleanup (behavior unchanged)
-- **OPTIMIZE**: Performance improvement
-- **SECURITY**: Security response, vulnerability
-- **DOCS**: Documentation
-- **INFRA**: Infrastructure provisioning
+**Task Classification:** resolve the task type against `routing-matrix.md` — it owns the type list, the signals that select each type, and each type's default chain.
 
 **Complexity Assessment:**
 - **SIMPLE**: 1-2 steps to complete
@@ -98,38 +89,9 @@ _PARALLEL_CHAINS:
 ```
 
 ### Phase 4: EXECUTE
-Spawn agents via Agent tool with guardrail checkpoints:
+Spawn agents via the Agent tool with guardrail checkpoints. Three layers — **L1** sequential spawn (foreground) for 1-4 step chains, **L2** parallel spawn (background) for 2-3 independent branches, **L3** Rally delegation for 4+ workers or complex ownership. Every spawned agent reads its own SKILL.md and executes autonomously; the hub takes `_STEP_COMPLETE` from the result, runs the Guardrail Check at configured checkpoints, and either passes accumulated context to the next spawn or triggers recovery. After an L2 barrier, proceed to AGGREGATE.
 
-**L1: Sequential Spawn (foreground)**
-
-For chains with 1-4 sequential steps:
-
-1. Spawn agent via `Agent(name, description, subagent_type: general-purpose, mode: bypassPermissions, model, prompt)` in foreground
-2. Agent reads its own SKILL.md and executes autonomously
-3. Receive `_STEP_COMPLETE` from the spawned agent's response
-4. Guardrail Check at configured checkpoints
-5. Extract handoff context from result
-6. Spawn next agent with accumulated context OR trigger recovery
-
-**L2: Parallel Spawn (background)**
-
-For 2-3 independent branches:
-
-1. Spawn independent agents via `Agent(run_in_background: true)` simultaneously
-2. Each agent reads its own SKILL.md and works independently
-3. Wait for all background agents to complete (notifications arrive automatically)
-4. Collect results from all agents
-5. Proceed to AGGREGATE
-
-**L3: Rally Delegation**
-
-For 4+ workers or complex ownership management:
-
-1. Spawn Rally as an Agent with full task context
-2. Rally reads its own SKILL.md and manages team creation, task distribution, and monitoring
-3. Rally returns aggregated results via `_STEP_COMPLETE`
-
-Worked spawn examples for all three layers (Scout→Builder chain, email/phone parallel branches, Rally team) live in `orchestration-patterns.md` Patterns A/B/G.
+Per-layer spawn procedures and API signatures → `reference/execution-layers.md`. Worked spawn examples (Scout→Builder chain, email/phone parallel branches, Rally team) → `orchestration-patterns.md` Patterns A/B/G.
 
 **agy hub variant (L1/L2/L3)**
 

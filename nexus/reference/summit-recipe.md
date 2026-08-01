@@ -2,7 +2,7 @@
 
 > **"Multiple engines, five teams, one verdict — quality maximized through orchestrated diversity."**
 >
-> **Default baseline (2026-05 update): Claude + Codex (dual-engine), fully supported and NOT degraded.** See Overview for agy's optional third-axis role, and `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy`.
+> Engine baseline and agy's optional third-axis role: see § Overview (and `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy`).
 
 ## Contents
 
@@ -32,7 +32,7 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 **Key design decisions:**
 - **Claude is always the hub**; Codex and (optionally) Antigravity are accessed exclusively through `rally` (no direct CLI invocation from Nexus).
 - **agy is optional** — see Overview for the tri-engine/dual-engine mode switch.
-- **Multi-engine triangulation is load-bearing** in Phase 1 (Analysis) and Phase 4 (Verification). Dual-engine triangulation (Claude judgment ‖ Codex code-analysis) satisfies this requirement; the third axis is a quality lift, not a correctness gate.
+- **Multi-engine triangulation is load-bearing** in Phase 1 (Analysis) and Phase 4 (Verification) — and the dual-engine baseline satisfies it (the third axis is a quality lift, not a correctness gate).
 - **Improvement loop is capped at 3 iterations** with Agent Tennis circuit breaker to prevent runaway cost.
 - **Confirm before launch — always** (unconditional; same gate as `apex`/`wish`. Intentionally stronger than `podium`'s conditional gate — stated to prevent drift). Summit spawns 20-50 agents per run (tri-engine) or 14-36 (dual-engine).
 
@@ -53,7 +53,7 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 |--------------|-------|---------------|
 | `claude` binary | always available (host) | n/a |
 | `codex` binary | reachable via `which codex` or fallback paths (`~/.bun/bin/`, `~/.local/bin/`, `/usr/local/bin/`, `/opt/homebrew/bin/`, `~/.npm-global/bin/`) | abort with "Codex CLI required for summit; install or use apex/feature instead" |
-| `agy` binary | reachable via `which agy` or fallback paths (same list) | **OPTIONAL** — record verdict (AVAILABLE / UNAVAILABLE / RUNTIME-BROKEN). UNAVAILABLE switches the recipe to dual-engine mode (Claude + Codex); does NOT abort. Surface the mode choice to the user in the confirmation prompt |
+| `agy` binary | reachable via `which agy` or fallback paths (same list) | **OPTIONAL** — record the verdict (AVAILABLE / UNAVAILABLE / RUNTIME-BROKEN) and surface the resulting mode in the confirmation prompt; never an abort (§ Overview) |
 | `rally` skill available | check `~/.claude/skills/rally/SKILL.md` exists | abort with "rally skill required for engine bridging" |
 | `rally.max_depth >= 2` (Codex config) | inspect `~/.codex/config.toml` | warn and continue; sub-spawning may fail |
 | User cost acknowledgment | mandatory confirmation prompt | abort if declined |
@@ -171,26 +171,20 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 | **Verification** | judge (tri-engine review with built-in fan-out), Echo (UX persona walkthrough), Palette (interaction & a11y), magi (verdict arbitration on conflicts) | Radar (unit/integration tests), Voyager (E2E web + mobile), Siege (load/chaos), Siege (concurrency stress), Probe (dynamic security), Matrix (manual QA scenarios), Sentinel (re-scan post-fix) | Attest (spec compliance via long-context comparison), Ripple (vertical + horizontal impact analysis), Canon (standards compliance: OWASP/WCAG/ISO 25010), Oath (legal/regulatory), rally[agy, review] (independent multimodal review of generated UI screenshots) |
 | **Improvement** | Zen (refactor judgment & code-review-style improvements), magi (improvement-selection arbitration), Sage (knowledge synthesis) | Bolt (perf optimization), Tuner (DB query plan + index recommendations), Sweep (dead code removal), Mend (automated remediation runbook execution), Schema (migration improvements) | Atlas (architecture improvement via 1M ctx whole-codebase reasoning), Lore (pattern extraction & metapattern surfacing), Vista (long-range strategic refactor planning), Shift (deprecated-library detection, native-API modernization, tech radar — absorbed from horizon — plus framework/lang migration codemod generation) |
 
-**Cross-engine routing rules:**
-- If a task **generates or executes code** → Codex (unless it requires deep ethical/security judgment, then Claude)
-- If a task **needs to hold > 200K tokens of context** (large codebase analysis, full doc set) → agy
-- If a task **processes images, mockups, screenshots, or diagrams** → agy (multimodal native)
-- If a task **requires creative divergence or alternative exploration** → agy (Gemini 3.6 Flash (High), High tier) or rally[agy, COMPETE]
-- If a task **arbitrates between multiple perspectives or makes a Go/No-Go call** → Claude (magi or Vision)
-- If a task **involves security judgment, ethics, or regulatory review** → Claude (Sentinel/Cloak/Crypt/Oath)
-- Otherwise default to **Codex** (faster + cheaper for routine work), not Claude
+**Cross-engine routing table — canonical.** This is the single owner of the per-task engine heuristic; every phase that assigns a task to an engine (Phase 2 DAG planning, Phase 3 Track B, and every rally dispatch) applies this table rather than restating it.
 
-**Engine selection rationale:**
-
-| Task characteristic | Preferred engine | Why |
-|--------------------|-----------------|-----|
-| Security / design judgment | Claude | Deepest reasoning, OWASP knowledge baseline |
-| Large-scale code generation / refactor | Codex | 192K context, sandbox-first, Terminal-Bench 2.0 leader |
-| Long-context analysis (codebase > 200K tokens) | agy | 1M context window |
-| Multimodal (images, diagrams, screenshots) | agy | Native multimodal support |
-| Creative alternatives / divergent thinking | agy | Gemini 3.6 Flash (High tier), different (Gemini) reasoning priors |
-| Test execution | Codex | Sandbox-first, fast iteration |
-| Architecture decisions | Claude | Strongest at trade-off reasoning |
+| Task characteristic | Engine | Why |
+|--------------------|--------|-----|
+| Code generation, refactor, file edits, DB migration (Schema), mobile native (Native), frontend production (Artisan) | **Codex** | 192K context, sandbox-first, Terminal-Bench 2.0 / 77.3% leader |
+| Test writing and test execution | **Codex** | Sandbox-first, fast iteration |
+| Holding > 200K tokens of context — large-codebase analysis, full doc set, long-context spec/doc generation (Scribe/Tome) | **agy** | 1M context window |
+| Images, mockups, screenshots, diagrams; cross-format conversion (Morph) | **agy** | Native multimodal support |
+| Creative divergence / alternative exploration | **agy** (Gemini 3.6 Flash, High tier) or rally[agy, COMPETE] | Different (Gemini) reasoning priors |
+| Architecture decisions, design judgment, arbitration between perspectives, Go/No-Go calls (Atlas, Vision, magi) | **Claude** | Strongest at trade-off reasoning |
+| Security, ethics, privacy/crypto, regulatory review (Sentinel/Cloak/Crypt/Oath) | **Claude** | Deepest reasoning, OWASP knowledge baseline |
+| Spec gatekeeping between phases (Accord) | **Claude** | Judgment-critical |
+| Ambiguous **risk** class — could be security-sensitive or architecture-defining | **Claude** | Safe default when the risk class itself is unclear |
+| Anything else (routine, clearly non-judgment work) | **Codex** | Faster + cheaper; the fallback is Codex, **not** Claude |
 
 ---
 
@@ -233,34 +227,32 @@ user_acknowledged: true
 
 **Input:** `mission_charter.yaml`
 
-**Parallel branches (L2 spawn, isolated sub-contexts; engine assignments reflect engine-strength routing):**
+**Parallel branches (L2 spawn, isolated sub-contexts). Rosters are owned by § Engine × Team Matrix — each branch names its Matrix cell plus any phase-specific delta:**
 
 ```yaml
 parallel:
   - branch: claude_judgment
     engine: claude
-    agents: [atlas, sherpa]
-    mission: architecture trade-off reasoning + epic decomposition (judgment-heavy work that requires deep reasoning)
+    agents: Matrix[Analysis × Claude] less magi (magi runs at synthesis, below)
+    mission: architecture trade-off reasoning + epic decomposition
     output: claude_analysis.json
 
   - branch: codex_code_analysis
     engine: codex (direct spawn, not via rally wrapper)
-    agents: [lens, scout, sentinel, siege]
+    agents: Matrix[Analysis × Codex]
     mission: sandbox-aided codebase mapping + bug RCA + SAST scan + concurrency analysis
-        (all code-execution-heavy; Codex sandbox-first is the right fit)
     output: codex_analysis.json
 
   - branch: agy_long_context
     engine: agy (direct spawn, not via rally wrapper)
-    agents: [trail, lore, atlas, field]
-    mission: git-history archaeology + legacy code analysis + pattern extraction + C4 architecture diagrams (multimodal) + web-grounded market survey
-        (all long-context or multimodal; agy 1M context + multimodal native + Search grounding wins)
+    agents: Matrix[Analysis × agy]
+    mission: git-history + legacy archaeology, pattern extraction, C4 diagrams, web-grounded market survey
     output: agy_analysis.json
 
   - branch: design_analysis   # conditional: skip if ui_dimension == none
     parallel_sub:
       - {engine: claude, agents: [echo], mission: persona-based UX walkthrough}
-      - {engine: agy,    agents: [frame, palette], mission: Figma/screenshot extraction + interaction-quality scan via multimodal}
+      - {engine: agy,    agents: [frame, palette], mission: Figma/screenshot extraction + interaction-quality scan}
     output: design_analysis.json
 ```
 
@@ -287,11 +279,7 @@ engine_attribution: {...}    # which finding came from which engine
 1. Sherpa[plan_DAG] — convert findings into atomic task DAG
 2. Magi[trade-off arbitration] — resolve plan-level conflicts
 
-**Engine assignment rules (applied per-task in DAG):**
-- Security-sensitive OR architecture-defining → Claude
-- Bulk code generation OR test execution → Codex
-- Multimodal OR alternative-exploration → agy
-- If ambiguous → Claude (default safe)
+**Engine assignment:** Sherpa tags every DAG task with an engine by applying the canonical cross-engine routing table (§ Engine × Team Matrix) — the per-task assignments this phase emits are what Phase 3 Track B dispatches against.
 
 **Output:** `execution_plan.yaml`
 ```yaml
@@ -325,20 +313,16 @@ design_track:
   parallel:
     - branch: claude_judgment
       engine: claude
-      agents: [vision, prose, echo]
+      agents: Matrix[Design × Claude]
       mission: direction-setting, UX writing/microcopy, persona validation
-          (judgment & language nuance — Claude irreplaceable)
     - branch: codex_implementation
       engine: codex
-      agents: [pixel, forge, flow, funnel, vitrine]
-      mission: mockup-to-HTML/CSS, prototype implementation, animation code, LP construction, component catalog generation
-          (code-generation-heavy — Codex sandbox-first + Terminal-Bench leader)
+      agents: Matrix[Design × Codex]
+      mission: mockup-to-HTML/CSS, prototype implementation, animation code, LP construction, component catalog
     - branch: agy_creative_multimodal
       engine: agy
-      agents: [sketch, muse, frame, palette, ink]
-      mission: Gemini-native image generation, token system synthesis via multimodal mockup analysis,
-          Figma context extraction, a11y + interaction-quality from screenshots, SVG icon system generation
-          (multimodal-native + creative — agy unique value)
+      agents: Matrix[Design × agy] less rally (own branch, below)
+      mission: image generation, token synthesis from mockups, Figma extraction, a11y/interaction from screenshots, SVG icons
     - branch: agy_divergent
       engine: agy
       agent: rally
@@ -356,21 +340,7 @@ design_track:
 
 **Coordinator:** rally[COLLABORATE]
 
-**Default engine assignment rules** (Phase 2 planner applies these per task):
-
-| Task characteristic | Engine | Reason |
-|--------------------|--------|--------|
-| Code generation, refactor, file edits | **Codex** | sandbox-first, Terminal-Bench 77.3% leader |
-| Test writing, test execution | **Codex** | sandbox-first execution |
-| DB migration, schema changes | **Codex** (Schema agent) | code + execution |
-| Mobile native impl (iOS/Android) | **Codex** (Native agent) | code generation |
-| Frontend production | **Codex** (Artisan) | code generation |
-| Long-context doc/spec generation | **agy** (Scribe/Tome/Morph) | 1M context wins |
-| Cross-format conversion (Markdown/Word/PDF) | **agy** (Morph) | multimodal |
-| Alternative implementation exploration | **agy** (rally[COMPETE]) | Gemini 3.6 Flash (High tier) |
-| **Security review** of generated code | **Claude** (Sentinel) | judgment-critical |
-| **Privacy/crypto review** | **Claude** (Cloak/Crypt) | judgment-critical |
-| **Spec gatekeeping** between phases | **Claude** (Accord) | judgment-critical |
+**Default engine assignment:** per-task, as tagged by the Phase 2 planner from the canonical cross-engine routing table (§ Engine × Team Matrix). Track B dispatches each task to the engine the plan names; it does not re-decide routing.
 
 **Process:**
 1. rally receives `execution_plan.yaml` and DAG with per-task engine assignments
@@ -392,7 +362,7 @@ design_track:
 
 ### Phase 4: Verification Team (tri-engine quorum + optional Design sub-track, 4-9 agents, 10-25 min)
 
-**Parallel branches** (engine-strength routing for verification; Codex owns test/security execution, agy owns compliance/impact analysis, Claude reserved for judgment):
+**Parallel branches.** Rosters per § Engine × Team Matrix (Verification row); each branch names its cell plus any phase-specific delta:
 
 ```yaml
 parallel:
@@ -403,18 +373,15 @@ parallel:
 
   - branch: codex_dynamic_verification
     engine: codex
-    agents: [radar, voyager, siege, probe, sentinel, matrix]
-    mission: unit/integration tests (Radar) + E2E web+mobile (Voyager) + load/chaos (Siege)
-        + concurrency stress (Siege) + dynamic security probing (Probe) + re-scan SAST after fixes (Sentinel)
-        + manual QA scenario authoring (Matrix)
-        — all execution-heavy, Codex sandbox is the right environment
+    agents: Matrix[Verification × Codex]
+    mission: unit/integration + E2E web+mobile + load/chaos + concurrency stress + dynamic security probe
+        + post-fix SAST re-scan + manual QA scenario authoring
     output: codex_verification.json
 
   - branch: agy_static_compliance
     engine: agy
-    agents: [attest, ripple, canon, oath]
-    mission: spec compliance via long-context comparison (Attest) + impact analysis vertical+horizontal (Ripple)
-        + standards compliance OWASP/WCAG/ISO 25010 (Canon) + legal/regulatory (Oath)
+    agents: Matrix[Verification × agy] less rally (own branch, below)
+    mission: spec compliance, vertical+horizontal impact, standards (OWASP/WCAG/ISO 25010), legal/regulatory
         — all need 1M context to hold spec + implementation simultaneously
     output: agy_compliance.json
 
@@ -428,13 +395,13 @@ parallel:
 
   - branch: claude_judgment_verification
     engine: claude
-    agents: [echo, palette]      # if ui_dimension != none
-    mission: persona-based UX walkthrough (Echo) + interaction-quality and a11y check (Palette)
-        — judgment work, Claude irreplaceable
+    agents: Matrix[Verification × Claude] less judge (own branch) and magi (arbitration only)
+    if: ui_dimension != none
+    mission: persona-based UX walkthrough + interaction-quality and a11y check
     output: design_findings.json
 ```
 
-judge keeps its own internal tri-engine fan-out unchanged (agent → engine assignments per the Engine × Team Matrix above).
+judge keeps its own internal tri-engine fan-out unchanged.
 
 **Design findings integration:** Echo's persona friction reports and Palette's interaction-quality issues join the cross-engine quorum as an additional signal source alongside judge / codex_dynamic / agy_static / agy_review. A UX regression flagged by Echo is treated as LIKELY severity by default and feeds the Phase 5 improvement loop alongside code-side findings.
 
@@ -458,32 +425,26 @@ judge keeps its own internal tri-engine fan-out unchanged (agent → engine assi
 
 **Driver:** orbit (autonomous loop runner)
 
-**Per-loop process** (engine-strength routing; Claude restricted to refactor judgment + arbitration only):
+**Per-loop process.** Rosters per § Engine × Team Matrix (Improvement row); each branch names its cell plus any phase-specific delta:
 
 ```yaml
 loop_iteration:
   parallel_improvement_proposals:
     - branch: claude_judgment_only
       engine: claude
-      agents: [zen, sage]
+      agents: Matrix[Improvement × Claude] less magi (arbitration step, below)
       mission: refactor judgment + knowledge synthesis
-          (Claude irreplaceable for nuanced "is this improvement worth it" calls)
 
     - branch: codex_executable_improvements
       engine: codex
-      agents: [bolt, tuner, sweep, mend, schema]
-      mission: performance optimization (Bolt) + DB query plan/index recommendations (Tuner)
-          + dead code removal (Sweep) + automated remediation runbook execution (Mend)
-          + schema migration improvements
-          — all execution-heavy improvements; Codex sandbox enables safe verification
+      agents: Matrix[Improvement × Codex]
+      mission: perf optimization, DB query-plan/index work, dead-code removal, remediation runbooks,
+          schema migration improvements — Codex sandbox enables safe verification
     - branch: agy_strategic_improvements
       engine: agy
-      agents: [atlas, lore, shift]
-      mission: architecture improvement via whole-codebase 1M-context reasoning (Atlas)
-          + cross-codebase pattern extraction + metapattern surfacing (Lore)
-          + deprecated-library detection & native-API modernization & tech radar (Shift `detect`/`modernize`/`radar` — absorbed from horizon)
-          + framework / lang migration codemod generation (Shift `framework`/`lang`/`codemod`)
-          — all benefit from agy's 1M context for codebase-wide reasoning
+      agents: Matrix[Improvement × agy] less vista (long-range planning is out of the loop's scope)
+      mission: whole-codebase 1M-ctx architecture improvement, cross-codebase pattern/metapattern extraction,
+          Shift `detect`/`modernize`/`radar` + `framework`/`lang`/`codemod`
     - branch: design_improvements   # conditional: skip if ui_dimension == none
       parallel_sub:
         - {engine: claude, agents: [vision], mission: design direction refinement (judgment)}
@@ -621,71 +582,50 @@ If `disputed_findings / total_findings > 0.30` in Phase 1, Nexus pauses and pres
 
 ## AUTORUN Chain Template
 
-> Engine assignments below mirror the Engine × Team Matrix — that section is authoritative if this template drifts.
+> The run skeleton only. Per-phase rosters come from § Engine × Team Matrix; per-phase inputs, outputs, branch structure, and gate criteria come from § Phase Contracts. Both are authoritative over this template.
 
 ```yaml
 recipe: summit
 mode: AUTORUN_FULL
 required_confirmation: true   # ALWAYS — same gate as apex
 prerequisites:
-  - claude_available: true
-  - codex_available:  true    # abort if false (Codex is required)
-  - agy_available:    detect  # OPTIONAL — AVAILABLE → tri-engine; UNAVAILABLE/RUNTIME-BROKEN → dual-engine (Claude + Codex), NOT an abort
-  - rally_skill:      true
+  - claude_available:  true
+  - codex_available:   true    # abort if false — Codex is required
+  - agy_available:     detect  # optional third axis (§ Overview)
+  - rally_skill:       true
   - cost_acknowledged: true
 
 phase_chain:
   - phase: 0_framing
-    agents: [nexus.classify, accord, sherpa]
     engine: claude
     duration_minutes: [3, 5]
 
   - phase: 1_analysis
-    parallel:
-      - {engine: claude, agents: [atlas, sherpa]}   # judgment only
-      - {engine: codex,  agents: [lens, scout, sentinel, siege]}   # sandbox-aided code analysis
-      - {engine: agy,    agents: [trail, lore, atlas, field]}   # long-context + multimodal + grounding
-      - if: ui_dimension != none
-        parallel_sub:
-          - {engine: claude, agents: [echo]}
-          - {engine: agy,    agents: [frame, palette]}
+    parallel: one branch per engine + design sub-track (if ui_dimension != none)
     synthesis: {agent: magi, engine: claude, role: arbitrate-tri-engine}
     duration_minutes: [8, 15]
     gate: disputed_findings_ratio < 0.30
 
   - phase: 2_planning
-    agents: [sherpa, magi]
     engine: claude
     model: opus
     duration_minutes: [5, 8]
 
   - phase: 3_design_and_execution
     parallel_tracks:
-      - track: design
-        if: ui_dimension != none
+      - track: design         # if ui_dimension != none
         coordinator: vision (claude)
-        parallel:
-          - {engine: claude, agents: [vision, prose, echo]}             # judgment + language
-          - {engine: codex,  agents: [pixel, forge, flow, funnel, vitrine]}   # code generation
-          - {engine: agy,    agents: [sketch, muse, frame, palette, ink]}     # multimodal + creative
-          - {engine: agy,    agent: rally, paradigm: COMPETE, mode: Solo}     # Gemini Flash High-tier alternatives
         synthesis: {agent: vision, convergence: single_direction}
       - track: execution
         coordinator: rally
         paradigm: COLLABORATE
-        engine_distribution_target: {codex: 0.60, agy: 0.25, claude: 0.15}    # Claude restricted to security/judgment tasks only
-        engines: [claude, codex, agy]
+        engine_distribution_target: {codex: 0.60, agy: 0.25, claude: 0.15}
     convergence: frame_bridges_design_to_implementation
     duration_minutes: [25, 75]
     checkpoint: after_each_parallel_group
 
   - phase: 4_verification
-    parallel:
-      - {agent: judge, mode: tri-engine-builtin}
-      - {engine: codex, agents: [radar, voyager, siege, probe, sentinel, matrix]}   # all dynamic/execution
-      - {engine: agy,   agents: [attest, ripple, canon, oath]}                            # long-context compliance
-      - {engine: agy,   agent: rally, paradigm: COMPETE, mode: Solo}                        # independent multimodal review
-      - {engine: claude, agents: [echo, palette], if: ui_dimension != none}                 # judgment-driven UX
+    parallel: judge[tri-engine-builtin] + one branch per engine
     quorum: cross_engine_3_of_3
     duration_minutes: [10, 25]
 
@@ -693,14 +633,10 @@ phase_chain:
     driver: orbit
     max_loops: 3
     arbiter: magi
-    circuit_breakers:
-      - agent_tennis_3_turns
-      - cost_budget_overrun
-      - loops_exceeded
+    circuit_breakers: [agent_tennis_3_turns, cost_budget_overrun, loops_exceeded]
     per_loop_minutes: [10, 15]
 
   - phase: 6_delivery
-    agents: [guardian, launch]
     engine: claude
     output: NEXUS_COMPLETE
     duration_minutes: [3, 5]
@@ -727,7 +663,7 @@ Merged view of every failure mode Summit guards against, with detection phase an
 | Failure | Detection Phase | Mitigation | Escalation Threshold |
 |---------|----------------|-----------|--------------------|
 | Single-engine blind spot accepted as truth | Any phase (structural) | **Tri-engine quorum**: a finding is CONFIRMED only on 3/3 agreement; single-engine findings are LIKELY at best | N/A (design guarantee) |
-| agy CLI unreachable | Preflight | **Switch to dual-engine mode (Claude + Codex); do NOT abort.** Record agy branches as `skipped (engine unavailable)`; Phase 1/4 quorum degrades to 2/2 (CONFIRMED only). Surface the mode in the confirmation prompt | Never (dual-engine is supported) |
+| agy CLI unreachable | Preflight | Dual-engine mode (§ Overview); agy branches recorded as `skipped (engine unavailable)`, Phase 1/4 quorum degrades to 2/2 (CONFIRMED only) | Never — not an abort |
 | codex CLI unreachable | Preflight | Abort with message "use apex (claude only) instead" (Codex is required) | Immediate |
 | agy fails mid-run (after preflight: quota / OAuth / executor / subagent timeout) | Any phase | Mark agy DEGRADED, absorb its workload into Claude/Codex per engine-strength routing, continue in dual-engine mode; log the transition | Never (graceful) |
 | Phase 1 disputed-findings ratio exceeds threshold | Phase 1 synthesis | Pause, present disagreement matrix (definition + rationale in § Cross-Engine Quorum Rules → Disagreement escalation) | Immediate |
@@ -739,7 +675,7 @@ Merged view of every failure mode Summit guards against, with detection phase an
 | UX regressions invisible to code-only review | Phase 4 (Design sub-track) | Echo persona-friction + Palette interaction-quality findings join the cross-engine quorum as a first-class signal at LIKELY severity | N/A (structural) |
 | The producer reviewing its own output | Phase 4 (Verification Team) | Verification Team is Generator-excluded (Q9) per `reference/autonomy-quality-protocol.md` | N/A (structural) |
 
-**Hard rule:** Summit requires **Codex** — abort if unreachable. **agy is optional**: its absence degrades to dual-engine mode, announced (not silent); tri-engine quorum tightens to 2/2-CONFIRMED. Only a mid-run **Codex** failure is a recipe-level failure requiring user judgment.
+**Hard rule:** only a **Codex** failure is a recipe-level failure — unreachable at preflight aborts, mid-run requires user judgment. Every agy outcome is handled by the rows above and announced, never silent.
 
 ---
 
@@ -803,7 +739,7 @@ Phase 6 DELIVER includes an "Engine Distribution Audit" section showing actual v
 | **Teams** | Implicit (sub-orchestrators) | Single (verification) | Explicit (analysis / **design** / execution / verification / improvement; Design conditional on `ui_dimension`) |
 | **Verification** | Risk Gate (pre-implementation) + Judge in loop | Tri-engine quorum review | Cross-engine quorum + grounded verification + UX walkthrough + improvement loop |
 | **Loop** | Implementation loop (Orbit) | None (single-shot) | Improvement loop (max 3, magi-arbitrated, includes design refinement) |
-| **Agents** | 8-25 | 3-6 | 32-119 (UI tasks 44-119, non-UI tasks 32-92) |
+| **Agents** | 8-25 | 3-6 | 20-50 (tri-engine) / 14-36 (dual-engine) |
 | **Wall time** | 30-90 min | 5-15 min | 49-193 min |
 | **Cost multiplier vs feature** | 4-8× | 0.5-1× | 7-25× (lowered vs previous 8-28× due to engine rebalance) |
 | **Engine distribution** | Claude + Codex (apex spec) | judge built-in multi | tri-engine: ~50-55% Codex / ~25-30% agy / ~20% Claude · dual-engine fallback: ~65-70% Codex / ~30-35% Claude |

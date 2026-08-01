@@ -151,17 +151,15 @@ Combining the reproduced trade dress, assets, and distinctive UI of **two or mor
 
 ## 4. Verification Map (extends clone's Parity Map with the oracle column)
 
-Magi confirms the relevant dimensions in Phase 3; Phase 4 builds against them; Phase 5 verifies each **by the oracle the Fusion Map assigned**. The five dimensions are clone's, plus the per-element oracle split and the whole-product coherence row.
+Magi confirms the relevant dimensions in Phase 3; Phase 4 builds against them; Phase 5 verifies each **by the oracle the Fusion Map assigned**. The five dimensions are clone's. *Which* oracle an element falls under (and why a mislabel is the recipe's most common silent failure) is §3b; the whole-product column is gated in §3c. This table names only the **comparator** each cell uses.
 
-| Dimension | Adopted element oracle (parity-vs-source) | Merged/net-new oracle (spec-AC) | Whole-product (coherence) |
+| Dimension | Adopted (parity-vs-source) | Merged/net-new (spec-AC) | Whole-product (coherence) |
 |-----------|-------------------------------------------|----------------------------------|---------------------------|
-| **Visual** | Pixel/Voyager SSIM/pixel-delta vs source baseline (clone §3c) | Attest vs visual ACs | One unified token system (§3c) |
-| **Behavioral** | Radar/Voyager fixtures vs source baseline, canonicalized | Attest vs behavioral ACs | One interaction grammar (§3c) |
-| **Feature** | Attest: adopted feature present ∧ reachable ∧ parity-faithful | Attest: merged/net-new feature meets ACs | No duplicated/overlapping features |
-| **Data / API** | Shape/contract diff vs source baseline | Attest vs reconciled-schema ACs | One reconciled schema (§3c) |
-| **Asset** | Pixel/Frame perceptual-hash vs source manifest (+IP posture §3d) | Faithful recreation / net-new vs ACs | Consistent asset language |
-
-> Build *idiomatically on the new product's chosen stack*. Adopted elements are faithful in **observable result** for the aspects the Fusion Map preserves — re-expressed in the target framework's idioms and re-grammared into the unified interaction model. Faithfulness is per-aspect, governed by the Fusion Map, not whole-element.
+| **Visual** | Pixel/Voyager SSIM/pixel-delta | Attest vs visual ACs | One unified token system |
+| **Behavioral** | Radar/Voyager fixtures, canonicalized | Attest vs behavioral ACs | One interaction grammar |
+| **Feature** | Attest: present ∧ reachable ∧ parity-faithful | Attest vs feature ACs | No duplicated/overlapping features |
+| **Data / API** | shape/contract diff | Attest vs reconciled-schema ACs | One reconciled schema |
+| **Asset** | Pixel/Frame perceptual-hash vs source manifest (+IP posture §3d) | faithful recreation / net-new vs ACs | Consistent asset language |
 
 ---
 

@@ -119,8 +119,8 @@ Complete task type → agent chain mapping. The SKILL.md Routing Quick Start con
 | LEGAL_REVIEW | Clause → Scribe | Clause[tos], Clause[privacy], Clause[tokushoho], Clause[gap], Scribe[policy] | +Oath (SOC2/GDPR translation), +Cloak (PII handling design), +Vigil (regulation → detection rule), +Canon (standards compliance), +Scribe (policy documentation). Legal advice belongs to a lawyer — Clause covers clause completeness and risk flags only |
 | PRIORITIZE | Rank → Magi | Rank[ice], Rank[rice], Rank[wsjf], Rank[moscow], Rank[kano], Rank[cod] | +Magi (final verdict), +Spark (candidate generation), +Pulse (KPI evidence), +Plea (user-value evidence), +Helm (strategic alignment), +Void (cut bottom items). Don't confuse with MAGI (qualitative arbitration) or VOID (scope cutting) |
 | PREMORTEM | Omen → Ripple | Omen[premortem], Omen[fmea], Omen[rpn], Omen[ap], Ripple[impact] | +Magi (failure-scenario selection), +Echo (UX failure modes), +Experiment (validation experiment design), +Triage (postmortem contrast), +Matrix (failure-scenario combinations). Pre-event — Triage's postmortem is post-event |
-| MANUAL_QA | Matrix | Matrix[qa-scenario], Matrix[equiv-class] | +Radar (bridge to auto tests), +Mint (test data), +Voyager (automation candidates for E2E), +Attest (spec compliance). Trigger: "manual QA", "TestRail", "Xray", "Zephyr", "Qase", "test case design", "BVA", "equivalence class", "decision table", "exploratory charter", "manual test procedure". Automated code belongs to Radar/Voyager |
-| TEST_INTELLIGENCE | Canvas/Pulse | Canvas[heatmap], Canvas[traceability], Canvas[test-shape], Pulse[flake-dashboard], Pulse[regression-timeline], Pulse[mutation-overlay] (absorbed from vista) | +Radar (fix test bodies), +Voyager (consume E2E results), +Siege (load-test results). Trigger: "test pyramid", "trophy", "honeycomb", "coverage heatmap", "flake dashboard", "Wilson lower-bound", "mutation overlay", "junit.xml visualize", "lcov visualize", "test shape". Visualization side — writing tests belongs elsewhere |
+| MANUAL_QA | Matrix | Matrix[qa-scenario], Matrix[equiv-class] | +Radar (bridge to auto tests), +Mint (test data), +Voyager (automation candidates for E2E), +Attest (spec compliance). Trigger anchors → `reference/signal-keywords.md`. Automated code belongs to Radar/Voyager |
+| TEST_INTELLIGENCE | Canvas/Pulse | Canvas[heatmap], Canvas[traceability], Canvas[test-shape], Pulse[flake-dashboard], Pulse[regression-timeline], Pulse[mutation-overlay] (absorbed from vista) | +Radar (fix test bodies), +Voyager (consume E2E results), +Siege (load-test results). Trigger anchors → `reference/signal-keywords.md`. Visualization side — writing tests belongs elsewhere |
 | PROJECT_STATUS | PDM | PDM[status], PDM[features], PDM[gaps], PDM[roadmap], PDM[wbs], PDM[ask] | +Lens[map] (code-feature evidence), +Attest (AC conformance → status refinement), +Rank (prioritize the roadmap), +Sherpa (decompose epics into execution), +Scribe (author spec gaps), +Trail (when features landed), +Canvas (roadmap/status viz). **Boundary**: read-only reconciliation of *planned scope vs implemented code*; differs from PROJECT (Titan delivery lifecycle), PRIORITIZE (Rank scoring), SPEC_VERIFY (Attest AC conformance), REQUIREMENTS (Accord/Scribe authoring), INVESTIGATE (Lens code comprehension) |
 
 ---
@@ -215,11 +215,7 @@ Skip Sherpa from the default chain only when ALL apply:
 
 ### Clarification and Decision Rules
 
-- If context is clear, proceed.
-- If unclear, inspect git state and `.agents/PROJECT.md`.
-- If confidence remains low, ask the user one focused question.
-- If the action is risky or irreversible, confirm before execution.
-- Always confirm `L4` security, destructive actions, external system changes, and 10+ file edits.
+Canonical: `SKILL.md` § Routing Quick Start (unclear context → inspect git state + `.agents/PROJECT.md` → one focused question) and § Safety Contract (auto-decision reversibility rule; the Ask First confirm triggers).
 
 ### Anti-Pattern References
 

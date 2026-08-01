@@ -132,7 +132,10 @@ Select a number or provide more specific instructions.
 
 ## Task Type Explanation Templates
 
-### BUG Type
+One worked template, then a derivation rule — the other task types follow the same shape, so they are
+not re-tabled here.
+
+### BUG Type (worked example)
 
 ```markdown
 ### Selection Rationale
@@ -146,93 +149,55 @@ Select a number or provide more specific instructions.
 - Complex impact scope → +Sherpa (pre-decomposition)
 ```
 
-### FEATURE Type
+### Derivation rule for every other task type
 
-```markdown
-### Selection Rationale
+Take the task type's **default chain** and its **Additions** column from `routing-matrix.md`, then:
 
-1. **Forge**: Rapidly build prototype of new feature
-2. **Builder**: Elevate prototype to production quality
-3. **Radar**: Add tests for new feature
+1. Number the default-chain agents in order; one line each, stating the role bracket the matrix
+   assigns it (e.g. `Radar[failing repro test]` → "write the failing repro test").
+2. List that row's conditional Additions verbatim under **Additional considerations**, as
+   `<trigger> → +<Agent>`.
+3. Optional steps in the matrix (marked `?`) stay optional in the explanation — say what makes them
+   fire, don't present them as unconditional.
 
-**Additional considerations:**
-- UI changes involved → +Muse (design tokens)
-- Complex feature → +Sherpa (pre-decomposition)
-- API addition → +Gateway (API design)
-```
+Worked check — FEATURE resolves to `Lens? → Sherpa → Forge? → Builder → Radar → Guardian`
+(Lens reuse-scan on existing codebases, Forge only when the approach is unproven), with additions
+`+Muse/+Palette` (UI), `+Artisan` (frontend production), `+Matrix` (variant exploration),
+`+Flux[reframe]`, `+Riff[expand]`. If a derived explanation disagrees with `routing-matrix.md`, the
+matrix wins.
 
-### INVESTIGATE Type
-
-```markdown
-### Selection Rationale
-
-1. **Lens**: Systematic codebase investigation using 4-layer search architecture
-
-**Additional considerations:**
-- Bug-related investigation → Scout (RCA-focused)
-- Git history investigation → Trail (commit archaeology)
-- Web → mobile native porting design → Port (blueprint, parity matrix, roadmap)
-- Pure-native mobile implementation (iOS Swift/SwiftUI, Android Kotlin/Compose) → Native
-- Founder office-hours advisory → Sage (bottleneck + 1-2 week action)
-- Incident impact scoping → Triage (first response)
-- Visualization of findings → +Canvas
-- Implementation after investigation → +Builder
-```
-
-### REFACTOR Type
-
-```markdown
-### Selection Rationale
-
-1. **Zen**: Code quality improvement, refactoring execution
-2. **Radar**: Verify behavior remains unchanged
-
-**Additional considerations:**
-- Architecture change → +Atlas
-- Large-scale change → +Sherpa (phased execution plan)
-```
-
-### SECURITY Type
-
-```markdown
-### Selection Rationale
-
-1. **Sentinel**: Vulnerability detection and static analysis
-2. **Builder**: Implement security fixes
-3. **Radar**: Verify fixes
-
-**Additional considerations:**
-- Dynamic testing needed → +Probe
-- Auth/authz related → focused review
-```
+INVESTIGATE has no matrix row of its own; its sibling-routing contrasts (Scout for RCA, Trail for git
+history, Port for web→native design, Native for pure-native implementation, Triage for incident
+scoping, Sage for founder advisory) live in the table below and in `signal-keywords.md`.
 
 ---
 
 ## Ambiguous Request Patterns
 
+Rows here carry a verdict **this file owns** (MULTI_CANDIDATE_MODE triggers and sibling-routing
+contrasts). Anchors already routed elsewhere are not repeated: keyword → recipe mappings live in
+`signal-keywords.md`, and overloaded anchors that need a one-question REDIRECT (`fix this`,
+`improve`, `audit`/`review`/`check`, `migrate`, …) live in `intent-clarification.md` §
+Overloaded-Anchor REDIRECT.
+
 | Request Pattern | uncertainty_level | Action |
 |----------------|-------------------|--------|
-| "Fix this bug" | partial | Identify from context, start with Scout |
-| "Improve performance" | partial | Select Bolt, confirm target area |
 | "Make it better" | ambiguous | MULTI_CANDIDATE_MODE |
 | "Something is wrong" | ambiguous | MULTI_CANDIDATE_MODE |
-| "Review this" | partial | Select Judge/Zen based on context |
 | "Test this" | clear | Select Radar/Voyager based on scope |
-| "Does X feature exist?" | clear | Lens (feature discovery) |
-| "How does X flow work?" | clear | Lens (flow tracing) |
-| "Understand this codebase" | clear | Lens (full onboarding) |
+| "Does X feature exist?" / "How does X flow work?" / "Understand this codebase" | clear | Lens (feature discovery / flow tracing / full onboarding) |
 | "Why is X broken?" | clear | Scout (RCA), not Lens |
 | "When did X regress?" | clear | Trail (git history) |
-| "Port web app to iOS / Android natively" | clear | Port (porting blueprint) |
-| "Implement in iOS Swift / Android Kotlin" | clear | Native (pure-native impl) |
 | "Implement in React Native / Flutter" | clear | out of scope; Forge for prototype |
-| "Want office hours / what should I focus on?" | clear | Sage (founder advisory) |
-| "Stuck as a founder" | clear | Sage triage recipe |
-| "Please review my pitch deck" | clear | Sage pitch recipe |
+| "Want office hours / what should I focus on?" · "Stuck as a founder" · "Please review my pitch deck" | clear | Sage (founder advisory — triage / pitch recipe by phrasing) |
 
 ---
 
 ## Rally Parallel Escalation
+
+**Source of truth: `agent-chains.md`** § Rally Parallel Escalation Triggers / § Rally Non-Escalation /
+§ Rally Parallel Chain Variants. It owns which conditions escalate to Rally, which keep the chain
+sequential, and what the parallel chain becomes. Only the routing-side decision factor lives here.
 
 ### Additional Decision Factor
 
@@ -248,39 +213,10 @@ Select a number or provide more specific instructions.
 | `light` | 2-3 small independent branches (< 50 lines each) | Nexus _PARALLEL_BRANCHES (internal) |
 | `heavy` | 2+ domains, 4+ files, real implementation work | Escalate to Rally |
 
-### Rally Routing Decision
-
-```
-Chain designed by Nexus
-    ↓
-Check for parallelizable steps
-    ├── No parallel steps → Execute sequentially
-    ├── Light parallel (< 50 lines/branch) → Nexus _PARALLEL_BRANCHES
-    └── Heavy parallel → Check further
-         ├── Sherpa produced parallel_group → Rally via SHERPA_TO_RALLY_HANDOFF
-         ├── Frontend + Backend split detected → Rally (Frontend/Backend Split)
-         ├── Multiple independent features → Rally (Feature Parallel)
-         └── Impl + Test + Docs simultaneous → Rally (Code/Test/Docs Triple)
-```
-
-### Rally Routing Explanation Template
-
-```markdown
-### Selection Rationale
-
-1. **Rally**: Parallel execution of independent implementation tasks
-   - Team pattern: [Frontend/Backend Split / Feature Parallel / Specialist Team]
-   - Teammates: [count] ([role descriptions])
-
-**Parallel justification:**
-- [Why sequential is insufficient]
-- [File ownership partitioning]
-- [Expected speedup]
-
-**Alternatives:**
-- Sequential (Nexus): Simpler but slower
-- Nexus _PARALLEL_BRANCHES: Insufficient for this scope
-```
+When the level resolves to `heavy`, pick the team pattern from `agent-chains.md` and explain the
+choice with the standard Selection Rationale shape: Rally + team pattern + teammate count, a parallel
+justification (why sequential is insufficient, how file ownership partitions, expected speedup), and
+the two alternatives it beats (sequential Nexus; `_PARALLEL_BRANCHES`, insufficient at this scope).
 
 ---
 

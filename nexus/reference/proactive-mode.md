@@ -95,56 +95,20 @@ A recommendation may only cite an indicator that was actually probed. An ⚪ ind
 - **No busywork on a healthy project.** If all probed indicators are 🟢 and nothing is in-flight, say so plainly — surface at most 1-2 *forward-looking* opportunities (clearly marked optional) or recommend nothing. Do not manufacture low-value tasks to fill the table; "nothing urgent" is a valid, honest result.
 - **Confidence honesty.** An ⚪ unknown indicator yields a "run the check to confirm" recommendation, never a fix for an unverified problem.
 
-**Category-Specific Suggestion Templates:**
+**Category-Specific Suggestion Templates** — each row is keyed by the **Recipe** that runs it, per the rule above; the Recipe's lead agent is shown only to say who fronts the chain.
 
-```yaml
-# Testing
-- condition: "Tests are failing"
-  priority: 🔴
-  suggestion: "Fix failing tests"
-  agent: Radar
-  reason: "Restore a passing CI/CD state"
-
-- condition: "Coverage is below 80%"
-  priority: 🟡
-  suggestion: "Improve test coverage"
-  agent: Radar
-  reason: "Reduce regression risk"
-
-# Security
-- condition: "npm audit reports vulnerabilities"
-  priority: 🔴
-  suggestion: "Update vulnerable dependencies"
-  agent: Sentinel
-  reason: "Remove security exposure"
-
-# Code Quality
-- condition: "There are more than 10 lint warnings"
-  priority: 🟡
-  suggestion: "Resolve lint warnings"
-  agent: Zen
-  reason: "Maintain code quality"
-
-- condition: "Unused code is detected"
-  priority: 🟢
-  suggestion: "Remove dead code"
-  agent: Sweep
-  reason: "Improve maintainability"
-
-# Documentation
-- condition: "README has not been updated for more than 30 days"
-  priority: 🟢
-  suggestion: "Refresh the README"
-  agent: Quill
-  reason: "Keep documentation current"
-
-# Work Continuation
-- condition: "There are uncommitted changes"
-  priority: 🟡
-  suggestion: "Continue the previous task"
-  agent: "(previous agent)"
-  reason: "Finish interrupted work"
-```
+| Condition (from a probe) | Priority | Suggestion | Recipe (lead) | Reason |
+|--------------------------|----------|------------|---------------|--------|
+| Tests are failing | 🔴 | Fix failing tests | `bug` (Scout→…→Radar) | Restore a passing CI/CD state |
+| Build errors | 🔴 | Fix the broken build | `bug` | Nothing downstream is trustworthy until it builds |
+| `npm audit` / `pip-audit` reports vulnerabilities | 🔴 | Update vulnerable dependencies | `security` (Sentinel) | Remove security exposure |
+| Coverage below 80% | 🟡 | Improve test coverage | `refactor` +Radar | Reduce regression risk |
+| More than 10 lint warnings | 🟡 | Resolve lint warnings | `refactor` (Zen) | Maintain code quality |
+| Measured slow path | 🟡 | Speed up the measured hotspot | `optimize` | Measure-first; prove the speedup with a number |
+| Unused / dead code detected | 🟢 | Remove dead code | `refactor` (Sweep→Zen) | Improve maintainability |
+| Multi-axis polish on a shipped feature | 🟢 | Polish across axes | `kaizen` | Existing feature, several quality axes at once |
+| README stale > 30 days vs last code commit | 🟢 | Refresh the README | Quill direct | Keep documentation current |
+| Uncommitted changes / open branch for this work | 🟡 | Continue the previous task | the in-flight work's own Recipe | Finish interrupted work — never start a duplicate |
 
 ---
 

@@ -32,8 +32,6 @@ The chain is **depth-scaled and mode-overlaid**. A lite run produces a lean prot
 
 Venture is **not** a default recipe. It is opt-in for the "I have an idea, give me everything a team needs to act on it" request. Confirm before launching at **full depth** (24+ agents).
 
-Because Phase 3 is a large homogeneous parallel sweep, it is a natural candidate for a **native Dynamic Workflow** execution substrate (`reference/managed-agents-mapping.md` §5) when available — Nexus stays the routing/recipe layer and delegates the parallel track execution (same delegation as `reference/package-recipe.md` § Cost and Latency Profile). Fall back to L2 parallel spawn otherwise.
-
 ## Invocation Modes
 
 | Form | Behavior |
@@ -67,14 +65,14 @@ Route elsewhere when the task is:
 
 ## Depth Tiers and Mode Overlays
 
-**Depth controls fan-out breadth.** Inferred from the `depth` condition field, or explicit `depth=`.
+**Depth controls fan-out breadth.** Inferred from the `depth` condition field, or explicit `depth=`. Tier semantics and cost bands are the engine's (`reference/package-recipe.md` § Cost and Latency Profile); the table below is the **startup delta** — it renames the default tier (`mvp`, not `standard`), binds each tier to startup directories, and narrows the agent counts, which are canonical for `venture` where they differ from the engine's.
 
-| Depth | Directories produced | Approx agents | Approx cost | Use |
-|-------|----------------------|---------------|-------------|-----|
-| `lite` (lightweight prototype) | 00, 01(lite), 03, 04(lite), 05 | 6-8 | Low | Fast concept validation, hackathon, idea triage |
-| `mvp` (default — MVP build + business prep) | 00-13, lean | 14-18 | Medium | The standard full package |
-| `raise` (fundraising) | 00-13, research/overview/marketing/KPI deepened | 16-20 | Medium-High | Fundraising-grade |
-| `full` (full commercialization) | 00-13, all tracks deep + void/oath/crypt | 24-28 | High | Production business build — **confirm before launch** |
+| Depth | Directories produced | Approx agents | Use |
+|-------|----------------------|---------------|-----|
+| `lite` (lightweight prototype) | 00, 01(lite), 03, 04(lite), 05 | 6-8 | Fast concept validation, hackathon, idea triage |
+| `mvp` (default — MVP build + business prep) | 00-13, lean | 14-18 | The standard full package |
+| `raise` (fundraising) | 00-13, research/overview/marketing/KPI deepened | 16-20 | Fundraising-grade |
+| `full` (full commercialization) | 00-13, all tracks deep + void/oath/crypt | 24-28 | Production business build — **confirm before launch** |
 
 Venture is not free. Budget guardrails (Nexus chain confirmation for 5+ agent chains, full-depth confirmation, no-secrets package scrub) are enforced. For repeated ventures with a stable house style, propose a Sigil-generated project skill to amortize the chain design cost.
 

@@ -48,7 +48,7 @@ max_depth = 3
 
 | Layer | Method | When | API |
 |-------|--------|------|-----|
-| **L1: Direct Spawn** | `/agent <name> "<task>"` (TUI) or `agy -p "<prompt>"` (one-shot) | 1-4 step sequential chains | TUI: `/agent <slug> "<prompt>"` / Headless: `agy -p "<prompt>" --dangerously-skip-permissions` (use `@<path>` to inject file context; **deliverable captured via prompt-mandated artifact file, NOT stdout** — see "agy headless silent-failure root causes" below + `_common/CLI_COMPATIBILITY.md §9.2`) |
+| **L1: Direct Spawn** | `/agent <name> "<task>"` (TUI) or `agy -p "<prompt>"` (one-shot) | 1-4 step sequential chains | TUI: `/agent <slug> "<prompt>"` / Headless: `agy -p "<prompt>" --dangerously-skip-permissions` (use `@<path>` to inject file context; **deliverable captured via prompt-mandated artifact file, NOT stdout** — see § agy headless capture below + `_common/CLI_COMPATIBILITY.md §9.2`) |
 | **L2: Parallel Spawn** | Multiple `/agent` invocations (async, each own context) | 2-3 independent branches | Aggregate via `/tasks`; no explicit `wait` primitive |
 | **L3: Role-Driven Team** | Plugin-installed team pack (`oh-my-antigravity` etc. via `agy plugin install <url>`) | 4+ workers, complex ownership | Community pattern — `/oma:taskboard` priority queue + approval gates (no Rally equivalent documented) |
 
@@ -63,49 +63,14 @@ max_depth = 3
 3. **Headless (`agy -p`) requires OS-level process isolation** — TUI slash commands unavailable. Substitute with `Bash("agy -p '<spawn prompt>' --dangerously-skip-permissions")` to run a separate agy process. The `--dangerously-skip-permissions` flag is **required for autonomous Nexus execution** because headless `agy -p` cannot interactively respond to `request-review` prompts and will hang or fail otherwise. Treat this flag like Claude Code's `bypassPermissions` mode — never use it in production / untrusted-workspace contexts; restrict to ephemeral sandboxes, CI runners, or explicitly-authorized dev environments.
 4. **No tool named `spawn_agent` exists in agy** — the correct fallback log form is "`/agent` slash command unavailable (reason: <not in TUI main session | toolNames does not permit | headless mode without --prompt-interactive>)".
 
-**Runtime notes**: (0) **Model mandate (user policy, 2026-06-23): when agy drives the harness, always use Gemini 3.6 Flash (High) for every step and every spawned subagent** — never switch to Gemini 3.1 Pro / Claude / GPT-OSS. Pin with `agy --model "Gemini 3.6 Flash (High)"` (headless) or `/model` (TUI) before spawning (stricter than the Codex latest-generation mandate — agy is one fixed model with no variant tiering). (0.5) **Never combine `--sandbox` with `--dangerously-skip-permissions`** (issue #36, OPEN — the skip flag auto-approves the agent's `bypassSandbox` escape, defeating the sandbox); rely on host-level isolation (ephemeral VM/CI) for containment. (1) Model is switched via `/model` in TUI before spawning, not per-agent — design recipes around the active model or instruct the user to switch. (2) `/usage` does not update live — for long chains (>20 min) prefer `agy -p` one-shot triggered externally over TUI-resident `/agent` to avoid mid-run quota cliffs. (3) Permission mode defaults to `request-review`; recipes assuming autonomy must instruct the user to switch to `proceed-in-sandbox` (TUI) or pass `--dangerously-skip-permissions` (headless `agy -p`) — never use `always-proceed` or unrestricted skip in production. The headless flag is the only way to bypass the interactive review prompt that would otherwise stall a Nexus-orchestrated agy spawn. (4) `request-review` is reported as occasionally ignored for file edits — treat as runtime risk, not configuration guarantee.
+**Runtime notes**: (0) **Model mandate** — every step and every spawned subagent runs Gemini 3.6 Flash (High); pin before spawning. Canonical: `_common/CLI_COMPATIBILITY.md §4 ‡`. (0.5) **Never combine `--sandbox` with `--dangerously-skip-permissions`** (issue #36, OPEN — the skip flag auto-approves the agent's `bypassSandbox` escape, defeating the sandbox); rely on host-level isolation (ephemeral VM/CI) for containment. (1) Model is switched via `/model` in TUI before spawning, not per-agent — design recipes around the active model or instruct the user to switch. (2) `/usage` does not update live — for long chains (>20 min) prefer `agy -p` one-shot triggered externally over TUI-resident `/agent` to avoid mid-run quota cliffs. (3) Permission mode defaults to `request-review`; recipes assuming autonomy must instruct the user to switch to `proceed-in-sandbox` (TUI) or pass `--dangerously-skip-permissions` (headless `agy -p`) — never use `always-proceed` or unrestricted skip in production. The headless flag is the only way to bypass the interactive review prompt that would otherwise stall a Nexus-orchestrated agy spawn. (4) `request-review` is reported as occasionally ignored for file edits — treat as runtime risk, not configuration guarantee.
 
 **⚠ MANDATORY Pre-flight Notification**: before the first `agy -p ... --dangerously-skip-permissions` spawn of a session, Nexus MUST emit the Pre-flight Notification defined in `_common/CLI_COMPATIBILITY.md §9.1`. Rationale: spawning agy headless from Claude Code's `Bash` tool creates a two-layer autonomous loop that bypasses both sides' approval gates. The notification recommends running the `update-config` skill once to allowlist the specific Bash pattern in `settings.json permissions.allow`. The notification fires in AUTORUN / AUTORUN_FULL too (informational, not a gate). See §9.1 for canonical template.
 
-### agy headless silent-failure root causes (verified 2026-06; re-verified 2026-06-23 against v1.0.10 — all root causes below still present)
+### agy headless capture — the artifact decides success
 
-The `exit 0 + empty stdout` pattern detected by `_common/MULTI_ENGINE_RECIPE.md §3.5` has five root causes, with mitigations. The first is the most consequential: **empty stdout no longer implies failure** — a successful run looks identical when stdout is piped.
+**Neither stdout nor the exit code is a success signal.** agy needs a real pty (`python3 pty.spawn`; `script -q /dev/null` fails on socket stdin) and never flushes non-TTY stdout, so `exit 0/124` with empty stdout is also what a *successful* run looks like. The prompt-mandated absolute-path artifact plus its `<<<END_OF_OUTPUT>>>` sentinel is the only thing that decides whether a spawn succeeded; inject inputs with `@<path>` (a bare path is read by an internal subagent that dies at the 60s cap).
 
-| Root cause | Mechanism | Mitigation |
-|------------|-----------|------------|
-| **TTY requirement (silent hang from socket-stdin shells)** | agy opens `/dev/tty`; spawned from a no-controlling-terminal shell (Claude Code `Bash`, CI, cron) `agy -p` hangs to `exit 124` with empty stdout, **no artifact, and no log file**. `script -q /dev/null agy ...` also fails (`tcgetattr/ioctl: Operation not supported on socket`). Verified 2026-06-08, agy 1.0.6 | **Give agy a real pty** via `python3 -c 'import pty; pty.spawn([...])'` — the ONLY mitigation verified in that context (the `script` reattach does NOT work). Canonical block: `_common/CLI_COMPATIBILITY.md §9.2` |
-| **Non-TTY stdout flush bug (affects SUCCESSFUL runs too)** | `agy -p` renders output via TUI drip (`text_drip.go`) and never flushes to a non-TTY stdout — redirection/`tee` capture nothing even when the model responded (official issues **#76** non-TTY/subprocess + **#115** Windows/`text_drip`, both OPEN; unfixed through v1.0.10 / 2026-06-23) | **Never use stdout as the deliverable channel.** Mandate an absolute-path artifact write + sentinel in the prompt per `_common/CLI_COMPATIBILITY.md §9.2`; combined with the pty wrapper above, artifact verification stays mandatory |
-| **File path written as plain string** | agy treats `docs/foo.md` (no `@`) as literal text; main agent delegates the read to an internal subagent | **Always use `@<path>` syntax** to inject file context directly into the main agent (e.g. `Compare @docs/a.md and @docs/b.md ...`) |
-| **Internal subagent 60s timeout** | v1.0.2 changelog restricts the 60s timeout to subagents only (main agent is no longer capped); long-file reads via delegated subagents still die silently | `@` syntax avoids subagent delegation entirely; for unavoidable delegation, split prompt into multiple smaller `agy -p` calls |
-| **`--print-timeout` exceeded** | Default 5min on the main agent's wait; long syntheses can hit it | Pass `--print-timeout 15m` (or appropriate) for heavy reviews |
-| **Quota / OAuth expiry** | Silent runtime failure with no stderr emission | `--log-file <path>` + post-run `grep -i "quota\|auth\|expired"` per `_common/MULTI_ENGINE_RECIPE.md §3.5` |
-
-**`--output-format json` status (re-verified 2026-06, v1.0.5)**: availability is **inconsistent across installs** — demonstrated in a community guide, but "flag not defined" errors are reported on the same guide, and no JSON schema is documented anywhere. **Do not depend on it.** Request structured JSON inside the §9.2 artifact file instead.
-
-**Recommended headless template** (full protocol + verification chain: `_common/CLI_COMPATIBILITY.md §9.2`). **agy needs a real pty — use `python3 pty.spawn`, NOT `script -q /dev/null`** (the latter fails with `tcgetattr/ioctl: Operation not supported on socket` from Claude Code's Bash tool):
-```bash
-SLUG="<task-slug>"
-cat > /tmp/agy-${SLUG}.prompt <<EOF
-[Role and task]
-
-Primary: @<path>
-References: @<path1>, @<path2>
-
-MANDATORY OUTPUT PROTOCOL:
-- Write your COMPLETE deliverable to the absolute path /tmp/agy-${SLUG}.md (create or overwrite).
-- End that file with a final line containing exactly: <<<END_OF_OUTPUT>>>
-- To stdout, print only a single status line: DONE /tmp/agy-${SLUG}.md
-EOF
-python3 - "$SLUG" <<'PY' || true
-import pty, sys
-slug = sys.argv[1]
-prompt = open(f"/tmp/agy-{slug}.prompt").read()
-pty.spawn(["agy","-p",prompt,"--dangerously-skip-permissions",
-           "--print-timeout","15m","--log-file",f"/tmp/agy-{slug}.log"])
-PY
-# Then run the §9.2 verification chain: [ -s /tmp/agy-${SLUG}.md ] && sentinel grep;
-# fallback 1 = transcript harvest (brain/<conv-id>/.../transcript.jsonl last PLANNER_RESPONSE);
-# fallback 2 = --log-file grep → RUNTIME-BROKEN. Typed retry: max 1.
-```
+Canonical spawn block, verification chain, transcript/log fallbacks, and the typed-retry rule: **`_common/CLI_COMPATIBILITY.md §9.2`** — copy it, do not re-derive. Per-pitfall mechanisms (#76/#115 flush, 60s subagent cap, `--print-timeout` default, inconsistent `--output-format json`, quota/OAuth) are tabled in `_common/CLI_COMPATIBILITY.md §9`; failure-detection contract in `_common/MULTI_ENGINE_RECIPE.md §3.5`.
 
 **Cross-CLI mapping:** see `_common/CLI_COMPATIBILITY.md`.

@@ -134,10 +134,10 @@ Plus `sweep` flags newly-orphaned code as an early DECOMMISSION signal.
 
 ## 4. Per-case detail
 
-- **`case=arch`** — `atlas` owns the target boundary model + ADR before any batch; batches follow module seams. **Residue is structural, not textual**: `atlas` re-scans the dependency/import graph for target-boundary violations (§3a check 2) — RESIDUE-GATE is dry only when violation count is zero, which a grep cannot establish. Whole-system arch change → confirm before launch. Watch for cross-cutting concerns (auth, logging, tx) as their own axis in the coverage check.
+- **`case=arch`** — `atlas` owns the target boundary model + ADR before any batch; batches follow module seams. **Residue is structural, not textual** — `atlas` re-scans the dependency/import graph for target-boundary violations (§3a check 2), which a grep cannot establish. Whole-system arch change → confirm before launch. Watch for cross-cutting concerns (auth, logging, tx) as their own axis in the coverage check.
 - **`case=framework`** — `shift` drives deprecated-API mapping; codemods where available. The old framework's import/annotation is the residue signature. JS/TS UI frameworks pull in `artisan`; test-framework migrations pull in `radar`.
 - **`case=middleware`** — protocol/broker/store swap. `gateway` (API contract), `schema` (data store), `stream` (messaging) join EXECUTE. **Strategy defaults to parallel-run**: dual-write / shadow-read and compare until divergence==0 before cutover. Residue includes old client SDK usage + old connection config.
-- **`case=mock-to-prod`** — `forge` first maps every mock/stub/in-memory/fixture seam (these are the change sites; they are the denominator). EXECUTE wires real services; `sentinel`/`crypt` join when the real path introduces secrets/credentials. Residue signature = the mock library imports + stub factory calls. **VERIFY uses the contract/shape-conformance oracle, NOT value-equality** (§2): the mock's canned data and the real service's data differ by design, so the gate checks schema / types / error contract / status / SLA conformance and integration health — never `realOutput == mockOutput`. Requiring value parity here never converges and is a defect.
+- **`case=mock-to-prod`** — `forge` first maps every mock/stub/in-memory/fixture seam (these are the change sites; they are the denominator). EXECUTE wires real services; `sentinel`/`crypt` join when the real path introduces secrets/credentials. Residue signature = the mock library imports + stub factory calls. **VERIFY uses the contract/shape-conformance oracle, not value-equality — mandatory for this case (§2)**, plus integration health.
 - **`case=lang`** — forwards to `transmute`; the differential-parity oracle subsumes the residue concept. See §7.
 
 ---
@@ -157,14 +157,14 @@ On any non-`ACCEPT` exit the recipe reports migrated-vs-residual sites explicitl
 
 | Failure | Mitigation |
 |---------|-----------|
-| **Silent omission** — some sites never migrated, looks done | RESIDUE-GATE independent re-scan, loop-until-dry (2× zero), not the forward counter |
-| **Incomplete inventory** — denominator itself missed sites | Re-scan from scratch on the latest tree + `matrix` axis coverage (finds forgotten categories) |
-| **Forgotten dimension** — a whole tier/env/platform skipped | Coverage-axis check enumerates dimensions, requires each touched |
-| **Arch residue invisible to grep** (boundary still violated, no string to find) | `case=arch` residue = `atlas` dependency/boundary-violation re-scan, not text (§3a check 2) |
+| **Silent omission** — some sites never migrated, looks done | RESIDUE-GATE §3a check 2 (independent loop-until-dry re-scan), which is what proves completeness — not the forward counter of check 1 |
+| **Incomplete inventory** — denominator itself missed sites | §3a checks 2 + 3 together: the re-scan starts from the latest tree, not the baseline, and axis coverage finds forgotten categories |
+| **Forgotten dimension** — a whole tier/env/platform skipped | §3a check 3 (`matrix` coverage-axis), with axes derived mechanically rather than recalled |
+| **Arch residue invisible to grep** (boundary still violated, no string to find) | §3a check 2's structural-signature branch — `atlas` boundary-violation re-scan for `case=arch` |
 | **Same defect re-emerges in every batch** — fixed per-file instead of in the rule that produced it | RULEBOOK amend-and-regenerate loop (§1.4); hand-patching a generated site is the anti-pattern |
 | **Systemic rule error discovered only at full scale** — the whole sweep has to be redone | PILOT gate: run the complete inner loop on a small cross-axis sample before scale-out |
 | **Behavior drift mid-migration** | Inner-loop Radar VERIFY per batch (build+test+type); fail → rollback batch |
-| **mock→prod never converges on value-equality** (real data ≠ canned data) | VERIFY/parallel-run uses contract/shape-conformance oracle, not value parity (§2, §4) |
+| **mock→prod never converges on value-equality** (real data ≠ canned data) | VERIFY/parallel-run uses the contract/shape-conformance oracle (§2) |
 | **Deleting still-referenced old code** | DECOMMISSION gated on ATTEST + RE-CHECK residual references on latest tree before CUT |
 | **parallel-run scaffolding left behind** (dual-write / shadow / comparison harness) | DECOMMISSION DETECT includes the comparison harness as removal scope |
 | Destructive deletion run unattended | DECOMMISSION GATE = ATTEST pass AND announce-and-confirm before CUT |
@@ -215,7 +215,7 @@ Change must propagate exhaustively across the codebase (omission = defect)?
 `NEXUS_COMPLETE` with the standard `## Nexus Execution Report` plus a **Completeness Report**:
 - `case`, strategy, and total_sites (frozen baseline) vs migrated.
 - **RULEBOOK trail**: the pilot's verdict and each subsequent rulebook amendment with the batch failure that prompted it — this is the audit trail showing defects were fixed in the rule rather than per file (§1.4).
-- **RESIDUE-GATE result**: final residue-scan output (must be the 2× zero proof; for `case=arch`, the `atlas` boundary-violation count), counter completeness, and the `matrix` axis-coverage table (every axis touched + axis-derivation source).
-- Per-batch VERIFY summary (value-equality, or — for mock→prod — contract/shape-conformance verdict).
+- **RESIDUE-GATE result**: the §3a three-check verdict with its evidence — final residue-scan output, counter completeness, and the `matrix` axis-coverage table (every axis touched + axis-derivation source).
+- Per-batch VERIFY summary, naming the oracle applied per §2.
 - **DECOMMISSION result**: old code removed, RE-CHECK residual-reference count (==0 before CUT), post-deletion Radar green, and the separate deletion PR reference.
 - For strangler-fig runs, each batch + the decommission are separate revertible PRs.

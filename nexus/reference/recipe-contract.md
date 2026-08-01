@@ -18,7 +18,7 @@ A complete recipe reference carries all eight (mark `N/A` with a one-line reason
 | 4 | **Output report** | A *named* report on top of `## Nexus Execution Report` (§5). |
 | 5 | **Failure Modes Prevented** | A consolidated section (canonical heading `## Failure Modes Prevented`), not only phase-scoped notes. |
 | 6 | **Boundaries / vs neighbors** | A "vs <neighbor recipe>" block + a Decision Tree where ≥1 sibling exists. |
-| 7 | **Scale** | Agent-count range (× cycles for loops) and relative cost. |
+| 7 | **Scale** | Agent-count range (× cycles for loops) and relative cost. Where a recipe states per-phase agent figures, the stated range **is the sum of those figures**, not an independent estimate: show the floor/ceiling arithmetic under a *Range derivation* line and keep it reconciled whenever a phase figure changes. |
 | 8 | **Shared-protocol refs** | Cite the `_common/` protocol instead of re-deriving it (§6). |
 
 The gold-standard exemplars are `reference/spec-recipe.md` and `reference/clone-recipe.md` (both carry all eight).
@@ -108,9 +108,9 @@ A recipe is not "live" until it appears — consistently — in **every** index,
 1. `reference/<name>-recipe.md` — the deep contract (this file's §1-§7).
 2. `reference/recipes-index.md` — one row (Recipe · Subcommand · When to Use · Chain Template · Read), **and** the subcommand added to the `SKILL.md` `### Recipe Registry` allowlist. The full table lives in the index file; SKILL.md carries only the dispatch allowlist.
 3. `SKILL.md` `### Recipe Families` — add to the right family (create one only if no family fits); state the within-family distinguishing axis.
-4. `SKILL.md` `### Signal Keywords` inline table — add the most-used anchors (subset of #6).
+4. *(retired)* — SKILL.md no longer carries an inline Signal Keywords table; anchors live only in #6 (`reference/signal-keywords.md`).
 5. `SKILL.md` `## Reference Map` — one row pointing at the new reference file.
 6. `reference/signal-keywords.md` — the **canonical full** anchor row, under the **correct section header** (Core / Specialist / Loop-Migration-Reproduction / Package), with English anchors + key non-English paraphrases.
-7. `reference/recipes-detail.md` — the identity line + cross-recipe disambiguation only (the catalog every recipe appears in). **No chain template here** — phase contracts and chain templates live solely in `reference/<name>-recipe.md` (or `inline-recipes.md` for lightweight recipes); `recipes-detail.md`'s Chain Template column/pointer must point there, never duplicate it.
+7. `reference/recipes-detail.md` — ensure the recipe's **family row** covers it (within-family axis); add a per-recipe identity/disambiguation section **only when** the axis needs more than the recipes-index row states. Not every recipe has a section here. **No chain template here** — phase contracts and chain templates live solely in `reference/<name>-recipe.md` (or `inline-recipes.md` for lightweight recipes); `recipes-detail.md` must point there, never duplicate it.
 
-Consistency rule: the recipe's name, one-line purpose, agent count, and confirm tier must read **identically** across #2 (`recipes-index.md`) and #6 (`signal-keywords.md`) (no drift between the SKILL.md row and the keyword entries); `recipes-detail.md`'s identity line (#7) must state the same purpose but carries no chain template to keep in sync.
+Consistency rule: the recipe's name, one-line purpose, and confirm tier must read **consistently** across #2 (`recipes-index.md`) and #6 (`signal-keywords.md`) (no drift between the index row and the keyword entries); agent count and cost figures are canonical in `<name>-recipe.md` §1 element 7 (Scale) only — index/keyword rows omit them. A `recipes-detail.md` section (#7), when present, must state the same purpose but carries no chain template to keep in sync.

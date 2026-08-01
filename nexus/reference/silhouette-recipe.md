@@ -38,7 +38,7 @@ Silhouette's identity is four things no sibling carries together:
 
 **Scale: 14-30 agents × ≤3 cycles, 5-9× `feature` cost.** Per-phase: P0 ≈ 1 · P1 ≈ 3 (blind default-move panel) · P1.5 ≈ 3-6 (visual prior-art sweep) · P2 ≈ 3-4 (recognition panel + sameness scoring) · P3 ≈ 3-6 per cycle (direction + implementation + re-measure + regression guards) · P4 ≈ 3 (fresh panel + derivation check) · P5 ≈ 1.
 
-*Range derivation (keep reconciled when a phase figure changes):* floor = one surface, ACCEPT on cycle 1 → 1+3+3+3+3+... = **14**; ceiling = a surface set, 3 cycles, wide competitor pool → 1+3+6+4+(6×3=18 with shrinking re-measures ≈ 14)+3+1 = **30**. The stated range is the sum of the per-phase figures, not an independent estimate. **Confirm-before-launch always** (intentional parity with `runway`/`wish`).
+*Range derivation* (convention: `reference/recipe-contract.md` §1 element 7): floor = one surface, ACCEPT on cycle 1 → 1+3+3+3+3+... = **14**; ceiling = a surface set, 3 cycles, wide competitor pool → 1+3+6+4+(6×3=18 with shrinking re-measures ≈ 14)+3+1 = **30**. **Confirm-before-launch always** (intentional parity with `runway`/`wish`).
 
 **Model selection (Plan-and-Execute):** the Phase 1 default-move panel, the Phase 4 derivation check, and threshold adjudication are judgment-heavy → plan-tier (opus / Fable 5). The recognition panels, sweep, and implementation → Sonnet 5 default. The recognition panel is **engine-diverse where the hub allows** (`_common/CLI_COMPATIBILITY.md §4`) — a single model family attributing surfaces carries one set of visual priors, which is exactly the bias the test is meant to exclude.
 

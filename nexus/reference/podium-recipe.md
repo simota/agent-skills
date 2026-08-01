@@ -25,7 +25,7 @@
 
 Podium is a **content-quality maximization recipe** for documentation and high-quality slide creation. It mobilizes five functional teams (Research / Narrative / Production / Verification / Improvement) across multiple engines to produce a **unified deliverable package** — typically a primary document plus a derived slide deck (or vice versa) — from a single source-of-truth outline.
 
-Where `summit` triangulates strategic code decisions, podium triangulates **prose, narrative arc, visual asset, and format rendering** quality. The recipe is intentionally lighter than summit (15-40 agents vs 32-119) because content artifacts are lower-stakes than production code merges, and most polish iterations are cheap.
+Where `summit` triangulates strategic code decisions, podium triangulates **prose, narrative arc, visual asset, and format rendering** quality. The recipe is intentionally lighter than summit (16-53 agents vs summit's 20-50) because content artifacts are lower-stakes than production code merges, and most polish iterations are cheap.
 
 **Default baseline: Claude + Codex (dual-engine).** Claude owns prose, narrative judgment, story arc, audience walkthrough, and tone arbitration (irreducibly judgment-heavy). Codex owns code samples, diagram-as-code rendering, slide framework compilation (Marp/reveal.js/Slidev), and format conversion (Morph). agy is added as an optional third axis when AVAILABLE — it contributes long-context source synthesis (1M window for whole-codebase learning docs), multimodal asset reading (existing decks, screenshots, mockups), and AI image generation (Sketch/Ink hero imagery and illustrations).
 
@@ -625,108 +625,59 @@ Mode: AUTORUN_FULL
 
 ## Cross-Engine Quorum Rules
 
-Applied in Phase 4 (Verification). Same labels as summit; treatment adapted for content findings.
+Applied in Phase 4 (Verification). The label set (CONFIRMED / LIKELY / CANDIDATE / MINORITY), their default trust levels, and the Nexus grounding-verification protocol for CANDIDATE findings (VERIFIED / REJECTED / MITIGATED / STYLE-ONLY / NEEDS-INFO) are defined once in `reference/summit-recipe.md` § Cross-Engine Quorum Rules and apply here unchanged except for the three podium adaptations below.
 
-| Label | Definition | Default Trust |
-|-------|------------|---------------|
-| CONFIRMED | 3+ verification branches independently surface the same finding | High — proceed without grounding |
-| LIKELY | 2 branches surface the same finding | Medium — proceed but flag |
-| CANDIDATE | 1 branch surfaces a finding | Low — requires grounding verification by Nexus before action |
-| MINORITY | 1 branch surfaces a finding that other branches explicitly considered and rejected | Very low — log as transparency, do not act |
+| Adaptation | Podium treatment | Why it differs from summit |
+|------------|------------------|----------------------------|
+| **What is counted** | Concurrence counts **verification branches**, not engines — CONFIRMED = 3+ branches, LIKELY = 2, CANDIDATE = 1 | Podium's Phase 4 branches are heterogeneous checks (claim-grounding, canon, echo, palette, voyager, judge) rather than three engines running the same review |
+| **What is verified** | Nexus reads the referenced **artifact section** (prose, slide, rendered output) rather than the referenced code | The deliverable is content, so the ground truth is the artifact plus `research_brief.source_facts` |
+| **STYLE-ONLY** | Discard **unless Phase 5 has spare loop budget** — not an unconditional discard | On a content artifact, style *is* partly the deliverable; a spare polish cycle is worth spending on it, which is never true of a code review |
 
-### Grounding verification protocol (for CANDIDATE findings)
-
-Nexus (in main context) reads the actual artifact section referenced by the finding and classifies:
-
-| Verdict | Definition | Treatment |
-|---------|------------|-----------|
-| VERIFIED | Finding accurately describes a real issue | Promote to LIKELY |
-| REJECTED | Finding does not match artifact reality | Discard, log as engine false positive |
-| MITIGATED | Finding describes a real issue addressed elsewhere | Discard with note |
-| STYLE-ONLY | Finding is preference, not correctness or clarity | Discard unless Phase 5 has spare loop budget |
-| NEEDS-INFO | Cannot verify without external context | Escalate to user |
+**Content-severity mapping:** the concurrence × severity action table — what counts as CRITICAL / HIGH / MEDIUM for a content artifact and which combinations force a Phase 5 loop — is podium-specific and lives with the gates it drives, in § Phase 4.
 
 ---
 
 ## AUTORUN Chain Template
+
+> The run skeleton only. Per-phase rosters and their engines come from § Engine × Team Matrix; per-phase branches, inputs, outputs, and gate criteria come from § Phase Contracts. Both are authoritative over this template.
 
 ```yaml
 recipe: podium
 mode: AUTORUN_FULL
 required_confirmation: false   # only required for risk_tier == release-critical
 prerequisites:
-  - claude_available: true
-  - codex_available:  true (warn if false, fall back to Claude)
-  - agy_available:    optional (record verdict, dual-engine mode if false)
+  - claude_available:  true
+  - codex_available:   true (warn if false, fall back to Claude)
+  - agy_available:     optional (record verdict, dual-engine mode if false)
   - cost_acknowledged: optional
 
 phase_chain:
   - phase: 0_framing
-    agents: [nexus.classify, accord]
     engine: claude
     duration_minutes: [3, 5]
-    gate: if risk_tier == release-critical → user_confirmation
+    gate: risk_tier == release-critical → user_confirmation
 
   - phase: 1_research
-    parallel:
-      - { engine: agy | claude, agents: [field], mission: audience persona grounding }
-      - { engine: claude | codex, agents: [lens, harvest, quill] }   # source aggregation
-      - if: agy AVAILABLE AND (source_size > 200K_tokens OR mode == refresh)
-        parallel_sub:
-          - { engine: agy, agents: [tome, frame] }
-      - if: external_facing
-        parallel_sub:
-          - { engine: agy | claude, agents: [field], mission: external positioning grounding }
+    parallel: audience ‖ source-aggregation ‖ long-ctx? ‖ external-grounding?
     synthesis: nexus_aggregate
     duration_minutes: [5, 12]
     gate: gaps_to_address.critical == 0
 
   - phase: 2_narrative
     engine: claude
-    agents_route_by_format:
-      doc_article:   [zine, prose, accord, magi]
-      doc_technical: [scribe, accord, void, magi]
-      doc_learning:  [tome, scribe, zine, magi]
-      slide:         [stage, cue, prose, magi]
-      both:          [zine | scribe | tome, stage, cue, prose, magi]
+    roster: routed by output_format (§ Phase 2 table)
     duration_minutes: [5, 10]
     gate: narrative_lock.yaml signed off
 
   - phase: 3_production
-    parallel_tracks:
-      - track: content
-        parallel:
-          - { engine: claude, agents: [zine | scribe | tome | saga] }
-          - { engine: claude, agents: [cue, prose], mission: slide content blocks (titles + bullets + speaker notes) — Stage is NOT used here, only at Track C for compilation }
-          - { engine: codex,  agents: [quill, vitrine] }
-          - if: agy AVAILABLE AND long_context
-            parallel_sub: { engine: agy, agents: [tome, scribe] }
-      - track: visual
-        coordinator: vision (claude)
-        parallel:
-          - { engine: claude, agents: [vision, muse] }
-          - { engine: codex,  agents: [canvas, vitrine] }
-          - if: agy AVAILABLE
-            parallel_sub: { engine: agy, agents: [sketch, ink] }
-      - track: layout
-        agents_by_target:
-          - if: includes_slide,         use: [stage],      engine: codex
-          - if: target_format_needed,   use: [morph],      engine: codex
-          - if: target == figma_slides, use: [figma:figma-use-slides], engine: agy
+    parallel_tracks: [content, visual, layout]   # Stage compiles in layout only, never in content
     convergence: cross_reference_resolution
     duration_minutes: [15, 45]
     checkpoint: after_each_track
 
   - phase: 4_verification
-    parallel:
-      - { owner: nexus_internal, scan: claim_grounding_token_cross_reference }
-      - { owner: nexus_internal, scan: cross_format_consistency, if: output_format == both }
-      - { engine: agy | claude,  agent: attest, if: artifact_is_spec_verified_against_normative_doc }
-      - { engine: claude | agy,  agent: canon }
-      - { engine: claude,        agent: echo }
-      - { engine: agy,           agent: palette }
-      - { engine: codex,         agent: voyager (or stage --dry-run) }
-      - { agent: judge, mode: multi-engine-builtin }
+    parallel: nexus-internal scans (claim-grounding, + cross-format if output_format == both)
+              ‖ canon ‖ echo ‖ palette ‖ voyager ‖ judge ‖ attest?
     quorum: cross_branch
     duration_minutes: [8, 20]
 
@@ -734,14 +685,10 @@ phase_chain:
     driver: orbit
     max_loops: 2
     arbiter: magi
-    circuit_breakers:
-      - agent_tennis_3_turns
-      - magi_rejects_all_proposals
-      - loops_exceeded
+    circuit_breakers: [agent_tennis_3_turns, magi_rejects_all_proposals, loops_exceeded]
     per_loop_minutes: [8, 15]
 
   - phase: 6_publish
-    agents: [morph, guardian?, launch?]
     engine: codex + claude
     output: NEXUS_COMPLETE
     duration_minutes: [3, 8]
@@ -751,13 +698,12 @@ phase_chain:
 
 ## Output Report — **Podium Pack** (named)
 
-Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
+Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`. **The report template is canonical in § Phase 6** — Output Artifacts, Phase Results, Engine Contributions, Quorum Summary, Improvement Loop Summary, Verification, Engine Distribution Audit, Summary, and Cost are emitted in the shape given there. The Podium Pack adds the elements that template does not carry:
 
-- **Narrative lock** — the signed-off spine every format track built against
-- **Per-format inventory** — doc / slides / script artifacts with their render status
-- **Rubric trajectory** — per-cycle scores per dimension across the ≤ 2 improvement cycles
-- **Verification Team findings** — raised / fixed / accepted-with-caveat, Generator-excluded per Q9
-- **Grounding record** — every load-bearing claim with its source; critical gaps surfaced at the Phase 1 gate and how each was closed
+- **Narrative lock** — the signed-off spine every format track built against (Phase 2)
+- **Rubric trajectory** — per-cycle scores per dimension across the ≤ 2 improvement cycles (Phase 5)
+- **Verification Team disposition** — each finding as raised / fixed / accepted-with-caveat, Generator-excluded per Q9
+- **Grounding record** — every load-bearing claim with its source, plus each critical gap raised at the Phase 1 gate and how it was closed
 - **Exit reason** (canonical vocabulary) + residual gap when not `ACCEPT`
 
 ## Failure Modes Prevented
@@ -825,7 +771,7 @@ Phase-triggered failures — release-critical shipped without human sign-off, a 
 | `podium` both formats, no loops | 21-43 | 39-100 min | 4-6× |
 | `podium` both formats, 2 loops | 27-53 | 55-130 min | 5-8× |
 | `apex` | 8-25 | 30-90 min | 4-8× |
-| `summit` | 32-119 | 49-193 min | 7-25× |
+| `summit` | 20-50 (tri) / 14-36 (dual) | 49-193 min | 7-25× |
 
 **Rule of thumb:** podium costs 3-8× a typical `feature` chain. Use when the content artifact's polish materially affects external perception (audience impression, technical credibility, sales conversion) — not for internal scratch notes. For internal-only routine docs, prefer single-skill direct call.
 
@@ -841,7 +787,7 @@ Phase-triggered failures — release-critical shipped without human sign-off, a 
 | **Teams** | 1 | Sub-orchestration (design-domain) | 5 (Research / Narrative / Production / Verification / Improvement) | 5 (Analysis / Design / Execution / Verification / Improvement) |
 | **Verification** | Self-only | Vitrine + Canvas audit | Multi-branch cross-engine quorum on content | Multi-engine quorum on code |
 | **Loop** | None | None (single-pass pipeline) | Max 2 loops (magi-arbitrated) | Max 3 loops (magi-arbitrated) |
-| **Agents** | 1 | 5-10 | 16-53 | 32-119 |
+| **Agents** | 1 | 5-10 | 16-53 | 20-50 (tri) / 14-36 (dual) |
 | **Wall time** | 3-15 min | 20-60 min | 35-130 min | 49-193 min |
 | **Cost vs feature** | 0.5-1× | 2-4× | 3-8× | 7-25× |
 | **agy required** | No | No | No (optional) | No (optional) |

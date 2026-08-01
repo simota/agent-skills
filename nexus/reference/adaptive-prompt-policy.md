@@ -110,17 +110,17 @@ This keeps the irreversible, all-spawns-affecting writes behind evidence + appro
 
 ## 7. Guards
 
-| Risk | Guard |
-|------|-------|
-| Overfitting to one task in the session | Adjustments are agent/task-class scoped, not global; a directive flips only on a repeated signal (≥ 2 same-class observations, §3), never on a single outlier |
-| Reinforcing confident-but-wrong output | Reward is the downstream VERIFY result, not self-reported `_STEP_COMPLETE.status` (§3) |
-| Meta-overhead on trivial work | Applicability gate (§1): skip for single-spawn/trivial runs; apply only at ≥ 3 spawns / loop recipes / repeated agent |
-| Ledger growing into the context it protects | Bounded ledger (§3): last-good per agent + short tail, not full history |
-| Free-form prompt injection via user corrections | Corrections map to structured constraint fields, never raw prepended text (§3) |
-| Adaptation masking a real problem | Session Ledger surfaces persistent VERIFY-fail / BLOCKED / FAILED to the normal error-handling escalation, it does not just keep re-tuning |
-| Stripping required structure | §4 hard rule: never delete behavior/safety/AC/output-contract fields |
-| Cross-session contamination | Ephemeral by default; warm-start (§5) is opt-in and pre-seeds Layer ① only |
-| Unsafe directive on Fable 5 | §4 enforces the no-reasoning-reproduction rule from `hub-authoring.md` |
+Each guard is defined where it operates; this is the index of what is guarded and where the rule lives.
+
+- **G1 Overfitting to one task** — agent/task-class scoping + the ≥ 2-same-class-observation flip rule (§3).
+- **G2 Reinforcing confident-but-wrong output** — reward is the downstream VERIFY result, not self-reported status (§3).
+- **G3 Meta-overhead on trivial work** — the applicability gate (§1).
+- **G4 Ledger growing into the context it protects** — bounded ledger: last-good per agent + short tail (§3).
+- **G5 Free-form injection via user corrections** — corrections map to structured constraint fields, never raw text (§3).
+- **G6 Adaptation masking a real problem** — persistent VERIFY-fail / BLOCKED / FAILED escalates through normal error handling instead of being re-tuned (§3).
+- **G7 Stripping required structure** — the hard rule that behavior/safety/AC/output-contract fields are never deleted (§4).
+- **G8 Cross-session contamination** — ephemeral by default; warm-start pre-seeds Layer ① only (§5).
+- **G9 Unsafe directive on Fable 5** — the no-reasoning-reproduction rule enforced at assembly (§4).
 
 ---
 
