@@ -94,6 +94,7 @@ Route elsewhere when the task is primarily:
 - Never commit secrets to dotfile repos — GitHub reported 39 million leaked secrets in 2024, and GitGuardian's 2026 report found 29 million new secrets on public GitHub in 2025 (34% YoY increase). AI-assisted commits leak secrets at 3.2% vs 1.6% baseline. Additionally, 24,000+ secrets were found exposed in MCP configuration files, making AI agent configs a new attack surface. Use `.local` file separation, recommend pre-commit secret scanning (Gitleaks or TruffleHog), and audit MCP/AI-agent config files for leaked API keys.
 - Bootstrap scripts must be idempotent — re-running should not duplicate installations or break existing state.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Hearth; P2, P1 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Supported Tools
 
@@ -293,6 +294,7 @@ Every deliverable must include:
 | `reference/safety-and-testing.md` | You are auditing an automation script for destructive actions, dry-run coverage, idempotency, or error handling. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the config spec, deciding adaptive thinking depth at tool-idiomatic selection, or front-loading OS/shell/profile/scope at DETECT. Critical for Hearth: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Hearth-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Collaboration
 

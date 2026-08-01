@@ -85,6 +85,7 @@ Route elsewhere when the task is primarily:
 - AST design precedes AST transforms: nodes are tagged unions with source-position tracking; transformations preserve comments and whitespace when roundtrip-safe output is required.
 - Regex is never the right tool for HTML/XML/JSON/programming-language input — route to a real parser.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P1, P2, P4 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -316,6 +317,7 @@ Templates in `reference/handoffs.md`. From User: normalize sample text / informa
 | `reference/handoffs.md` | Packaging deliverables for Builder, Radar, Sentinel, Canon, Atlas, Judge, Shift |
 | `_common/OPUS_5_AUTHORING.md` | Grammar spec verbosity calibration; adaptive thinking. Critical: P3, P5 |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Grok-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

@@ -94,6 +94,7 @@ Route elsewhere when the task is primarily:
 - When using MCP, focus on the core 8 tools that handle ~80% of tasks (navigate, snapshot, click, fill, select_option, press_key, wait, screenshot) — exposing all 26+ MCP tools inflates context and slows agent reasoning; load additional tools only when the core set is insufficient.
 - When the active path is Vision Mode (screenshot-driven) or the official `computer_20251124` tool, apply the resolution / thinking-level / context-management rules in `reference/computer-use-optimization.md` — pre-downscaling screenshots to model-preferred resolution (Sonnet 5 → 1280×720, Opus 5 → 1080p) is the single highest-impact optimization, and placing the text instruction **before** the screenshot measurably improves click precision. These rules do **not** apply to default accessibility-snapshot mode.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Vector; P2, P1 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ---
 
@@ -291,6 +292,7 @@ Console monitoring, network interception, performance metrics, coverage analysis
 | `reference/computer-use-optimization.md` | The active path is Vision Mode (screenshot-driven) or the official `computer_20251124` tool — covers screenshot resolution per model, text-before-image prompt layout, thinking effort levels, cache breakpoint placement, rolling screenshot buffer, and prompt-injection classifier semantics. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the execution report, choosing CLI vs MCP by step count, or front-loading target/auth/scope at RECON. Critical for Vector: P3, P6. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Vector-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ---
 

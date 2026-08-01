@@ -79,6 +79,7 @@ Route elsewhere when the task is primarily:
 - **xcresult is the source of truth**. CI parses `.xcresult` via `xcresulttool` (Xcode 16+ schema, `--legacy` for older bundles); plain console output is unreliable for failure attachment retrieval.
 - **Pre-read the existing test target, identifier conventions, and CI scheme** before authoring. Adding tests with a different identifier convention or scheme fragments the suite and breaks shared helpers.
 - **Calibrate response length to task tier**. Single-flow XCUITest authoring: M output. Full screenshot pipeline (fastlane Snapfile + SnapshotHelper.swift + status-bar override + CI wiring): L. One-off identifier addition: S.
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -241,6 +242,7 @@ Snap receives feature handoffs from Native, escalations from Radar, and screensh
 | `reference/ci-integration.md` | xcodebuild test / test-without-building, `.xctestrun` packaging, xcresulttool parsing (Xcode 16+ schema + `--legacy`), Xcode Cloud / GitHub Actions / Bitrise, device-farm upload |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the test plan, calibrating effort to risk-tier, and front-loading critical iOS flow scope at SCOPE. Critical for Snap: P3, P6 |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Snap-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

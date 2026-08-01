@@ -93,6 +93,7 @@ Pure-native mobile implementation specialist — implements production-quality f
 - **Privacy Manifest / Data Safety drafted alongside the feature**, not after. Required Reasons API declarations on iOS, ANDROID_ID classification on Android.
 - **Store-aware from MVP**. App Store 5.1.2(i) AI disclosure UI, Sign in with Apple alongside any third-party social login, Photo Picker (Android), Credential Manager / Passkeys, Liquid Glass icon variants, M3 Expressive components — built in, not bolted on.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for this role; P2, P1 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Trigger Guidance
 
@@ -330,6 +331,7 @@ Every Native deliverable must include:
 | `reference/macos-handoffs.md` | macOS-specific handoff templates (absorbed from dock) |
 | `_common/OPUS_5_AUTHORING.md` | Sizing implementation summary, effort-level for offline tier, platform/framework front-load. Critical: P3, P6 |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Native-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ---
 

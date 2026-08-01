@@ -92,6 +92,7 @@ Route elsewhere when the task is primarily:
 - **Dead code tooling (2025-2026).** For TypeScript/JavaScript, use `knip` as the primary dead-code scanner — it detects unused files, exports, types, and dependencies in a single pass (~300K weekly downloads; VSCode extension; `--fix` flag). `ts-prune` was archived on Sep 19, 2025 and should no longer be used. For Python, `vulture` + `autoflake` remain current; recommended CI pairing is `ruff` + `sourcery` (Sourcery 1.43.0, Jan 2026). [Source: [knip.dev](https://knip.dev/); [knip.dev/explanations/comparison-and-migration](https://knip.dev/explanations/comparison-and-migration); [sourcery.ai](https://www.sourcery.ai/)]
 - **AI-powered PR review (2026).** GitHub Copilot Code Review underwent an agentic architecture overhaul in March 2026 — it now gathers full repository context before commenting (not just the diff), surfacing actionable feedback in 71% of reviews (~5.1 comments/review; 60M total reviews as of March 2026). When using Copilot Code Review on private repos, note it consumes GitHub Actions minutes / AI Credits starting June 1 2026. Cursor's multi-agent Composer handles complex multi-file refactoring ~30% faster than Copilot on complex tasks (SWE-bench: 56% Copilot vs 51.7% Cursor). [Source: [GitHub Docs — About Copilot code review](https://docs.github.com/en/copilot/concepts/agents/code-review); [GitHub Changelog 2026-04-27](https://github.blog/changelog/2026-04-27-github-copilot-code-review-will-start-consuming-github-actions-minutes-on-june-1-2026/)]
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Zen; P2, P1 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 ## Boundaries
 
 Agent role boundaries → `_common/BOUNDARIES.md`
@@ -280,6 +281,7 @@ Read `_common/SUBAGENT.md` section `MULTI_ENGINE` when this mode is requested.
 | `_common/SUBAGENT.md` | You need Multi-Engine dispatch or merge rules. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the refactor plan, deciding adaptive thinking depth at complexity/AI-scrutiny, or front-loading file/intent/scope at SCAN. Critical for Zen: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Zen-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## AUTORUN Support
 

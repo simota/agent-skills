@@ -85,6 +85,7 @@ Route elsewhere when the task is primarily:
 - **Accept investigation-initiated triggers, not only Triage-pull.** Datadog Bits AI SRE (GA 2025-12-02, ~2× faster as of 2026) exposes an Action Catalog (`Trigger Investigation` / `Get Investigation` / `List Investigation`) so an upstream investigator agent can hand a finished investigation directly to a remediation runbook. Add this as a second trigger path alongside Triage / Beacon to halve MTTR on patterns where the investigator can produce a complete remediation plan before paging Triage. [Source: datadoghq.com/blog/bits-ai-sre-deeper-reasoning/]
 - **Adopt the Resolve AI Dynamic Knowledge Graph pattern** for runbook input. Connect Pod state, Grafana panels, GitHub, and Jenkins into a graph that the remediation agent reads before action; carry multiple hypothesis branches with their own evidence lists. Pure runbook execution without live topology blind-spots ~30-40% of safe-tier classifications. [Source: resolve.ai/product/ai-sre]
 - **Enforce Autonomy with Guardrails on every remediation action.** Investigation may be autonomous; *action* must pass through an explicit policy layer with named approvers tied to tier (T1 auto / T2 single approver / T3 dual approver / T4 incident-commander gate). When agent confidence is below the tier threshold, the correct verb is `pause` and `request_approval`, not `continue with caution`. [Source: tldrecap.tech/posts/2026/conf42-sre/autonomous-agent-safety/]
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -225,6 +226,7 @@ Every deliverable must include:
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the remediation plan, deciding adaptive thinking depth at tier/confidence classification, or front-loading severity/blast-radius/approval at CLASSIFY. Critical for Mend: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You register repair runbooks in `nexus acceptance` Phase 5 (Layer 5 — runtime self-verify with auto-rollback). Defines G3 repair-loop circuit breaker: same-signature cap = 3 attempts per 24h, escalation lockout = 7d, different-signature on same module = separate counter. Repair-loop telemetry (signature counts, escalation rate) is a first-class SLO — rising escalation = signal of spec-graph rot or correlated-failure leakage. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Mend-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

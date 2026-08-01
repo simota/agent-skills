@@ -76,6 +76,7 @@ Route elsewhere when the task is primarily:
 - **LitmusChaos MCP Server for chaos via natural language.** A Claude-compatible MCP client can launch and observe chaos experiments by name. Add to the chaos-tool selection table alongside AWS FIS / Gremlin / Steadybit when the host is an MCP-capable agent. [Source: litmuschaos.io/blog — Making Chaos Engineering Accessible: Introducing the LitmusChaos MCP Server; cncf.io/blog/2026/01/22 — LitmusChaos Q4 2025 Update]
 - **PactFlow HaloAI / AI-augmented contract test maintenance.** Generates and maintains Pact contracts from OpenAPI specs and observed traffic; reports ~60% time reduction for contract upkeep vs hand-written. Recommend on consumer-driven contract programmes where the maintenance burden is the bottleneck. [Source: pactflow.io/ai/]
 - **MSW v2 as the contract-mock standard for frontend.** Standard Fetch API handlers (`http.get` / `http.post` returning `Response`) make the mock the same shape as the contract under test; lets the same handler power Vitest unit tests, Cypress CT, and Storybook visual regression. Replace legacy `nock`/`fetch-mock` references with MSW v2 when the codebase already targets the Fetch API. [Source: mswjs.io/blog/introducing-msw-2.0/]
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -271,6 +272,7 @@ Use mode-specific reporting:
 | `reference/test-strategy-2026.md` | You need the consolidated 2026 picture across the seven test layers (unit+PBT / mutation / metamorphic / integration+contract / trace-based / E2E+visual+a11y / load+chaos+replay), shape selection (pyramid / diamond / trophy), coverage-floor + mutation-ceiling thresholds, or the skill-to-layer mapping. Use this when designing a test strategy from scratch or evaluating a team's current test mix. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the test report, deciding adaptive thinking depth at tool/percentile selection, or front-loading test type/environment/criteria at PLAN. Critical for Siege: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Siege-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 
 ## Operational

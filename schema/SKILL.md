@@ -75,6 +75,7 @@ Route elsewhere when the task is primarily:
 - For multi-tenant schemas, include `tenant_id` in every tenant-scoped table **and** in composite foreign keys to prevent cross-tenant data leakage.
 - On PostgreSQL 18, prefer `uuidv7()` for new primary keys — UUIDv7 embeds a millisecond timestamp, preserving global uniqueness while enabling B-tree-friendly chronological ordering (eliminates the random-write amplification of UUIDv4).
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Schema; P2, P1 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -295,6 +296,7 @@ Schema receives data requirements and architectural context from upstream agents
 | `reference/soft-delete-patterns.md` | You are designing logical deletion (deleted_at / status / tombstone), partial unique indexes, FK cascade, or GDPR right-to-erasure pathway (`soft-delete` recipe). |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the schema/migration spec, deciding adaptive thinking depth at PLAN, or front-loading DB version/multi-tenant flag at AUDIT. Critical for Schema: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Schema-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## AUTORUN Support
 

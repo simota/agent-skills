@@ -78,6 +78,7 @@ Route elsewhere when:
   - Page transition: `<150` lines
   - System-wide motion plan: design and tokenization first
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Flow; P2, P1 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -236,6 +237,7 @@ Flow receives UX friction reports and design direction from upstream agents. Flo
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the motion implementation, calibrating effort to single-interaction/page/system scope, or front-loading framework/target/slot at SURVEY. Critical for Flow: P3, P6. |
 | `_common/PROOF_CARRYING.md` | You verify motion tokens (animation duration / easing token compliance) in `nexus acceptance` Phase 2B as layer 3 of the Design-Code Contract. Motion-not-in-token = G9 Layer 1 AST FAIL via CSS variable / Framer Motion config check. Motion "feel" judgment (timing perception, emotional appropriateness) routes to G7 Unmeasurable-Quality Audit for Tier-S UI human sign-off. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Flow-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

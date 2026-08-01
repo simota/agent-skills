@@ -85,6 +85,7 @@ Route elsewhere when the task is primarily:
 - For React Server Components (RSC) i18n: load translations on the server and pass to Client Components via props — keeps the i18n library out of the client bundle. Use per-request cache (not React context) in Server Components.
 - Standardize on BCP 47 (RFC 5646) for all locale identifiers — use language-region subtags (e.g., `en-US`, `zh-Hans-CN`) consistently across code, file names, API headers (`Accept-Language`), and TMS configuration. Never invent non-standard locale codes.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Polyglot; P2, P1 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -311,6 +312,7 @@ Polyglot receives features and UI components from upstream agents. Polyglot send
 | `reference/translate-tms-workflow.md` | You need TMS integration (Lokalise/Crowdin/Phrase/Smartling), translation-memory reuse, translator briefing, QA gates, or release rollout strategy. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the i18n deliverable, calibrating effort to component/feature/app scope, or front-loading locale/library at SCAN. Critical for Polyglot: P3, P6. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Polyglot-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

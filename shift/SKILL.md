@@ -120,6 +120,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Define measurable migration success criteria: data integrity ≥99.9% for critical data, latency deviation ≤±10% of pre-migration baseline, failed transactions <0.02%.
 - Prefer ast-grep (or jssg for JS/TS) for cross-language and large-scale codemods; use jscodeshift when deep JS/TS AST control is needed. Always dry-run codemods before batch execution. For Java/Kotlin/Python automated refactoring at scale, prefer OpenRewrite (Lossless Semantic Trees) over hand-written codemods — it ships official recipes for Spring Boot 3→4, Jakarta namespace renames, and dependency upgrades (source: [OpenRewrite Docs](https://docs.openrewrite.org/), 2025-2026). For LLM-assisted migration of large Java projects, GitHub Copilot agent mode (App Modernization extension) provides assessment → code-fix → validation guidance with CVE scanning on changed dependencies (source: [GitHub Blog, 2025](https://github.blog/ai-and-ml/github-copilot/a-step-by-step-guide-to-modernizing-java-projects-with-github-copilot-agent-mode/)).
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Shift; P2, P1 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Migration Strategy Decision
 
@@ -291,6 +292,7 @@ Spawn when: migration touches ≥3 independent subsystems (e.g., API + DB + fron
 | `reference/frontend-modernization-anti-patterns.md` | `modernize` for frontend: anti-patterns FM-01 to FM-07, Outside-In migration, Micro Frontend, success KPIs. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the migration plan, adaptive thinking depth at strategy selection, front-loading versions/risk tier at ASSESS. Critical: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Shift-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Output Requirements
 

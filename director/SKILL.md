@@ -89,6 +89,7 @@ Route elsewhere when the task is primarily:
 - Loudness-normalize the final mix to **-14 LUFS** (YouTube / LinkedIn) or **-16 LUFS** (Web/Vimeo), TP ≤ -1 dBTP.
 - Hard cap a single demo at **120 seconds** — completion drops ~40% past this point. Split into a 3×45s chaptered series or a chaptered long-form instead.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P2, P1 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -286,6 +287,7 @@ Point-to-point handoff templates (outside Nexus Hub Mode): see `reference/handof
 | `reference/thumbnail-design.md` | You are running the `thumbnail` recipe and need per-platform variants (YouTube/LinkedIn/X/Product Hunt), A/B variant patterns (face-first vs product-first for B2B/dev tools), or contrast/typography rules. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the demo package, deciding adaptive thinking depth at scenario/overlay design, or front-loading purpose/audience/duration at PLAN. Critical for Director: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Director-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

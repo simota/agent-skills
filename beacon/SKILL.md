@@ -80,6 +80,7 @@ Route elsewhere when the task is primarily:
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Beacon; P2, P1 recommended).
 - **Standardise continuous profiling on Pyroscope 2.0 / Parca for production-scale.** Pyroscope 2.0 ingests 19.5 PB/year at Grafana with 95% symbol-storage reduction via write-once symbols; Parca offers the same continuous-profiling primitives under a CNCF-incubating posture. Add continuous profiling as the third pillar alongside metrics (Prometheus / Mimir) and traces (Tempo / Jaeger) — flame graphs over time make the "slow in production only" class of bugs observable. Coordinate with `siege` (concurrency recipe) for memory-leak handoffs (temporal flame graphs) and with `bolt` for CPU hotspot remediation. [Source: grafana.com/blog/pyroscope-2-0-release/; parca.dev]
 - **Wire flame-graph temporal-window analysis** into the leak-detection runbook. `memray` (Python) emits temporal flame graphs that isolate "allocations made inside a window that remain unfreed at the window's end" — the canonical leak signature, not "high allocation rate". Same primitive in `jemalloc heap profiling`, Pyroscope 2.0, and Parca. Surface continuous-profiling burn-rate alerts (allocation rate × retention rate) alongside latency / error burn rates. [Source: bloomberg.github.io/memray/temporal-flame-graphs.html]
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 ## Boundaries
 
 Agent role boundaries → `_common/BOUNDARIES.md`
@@ -273,6 +274,7 @@ When auditing observability for 4+ services, spawn 2–3 Explore subagents to sc
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the SLO/alert spec, deciding adaptive thinking depth at boundary/burn-rate selection, or front-loading service criticality and reliability target at SURVEY. Critical for Beacon: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You register `rollback_condition` as a live SLO oracle in `nexus acceptance` Phase 5 (Layer 5 — runtime self-verify). Runtime oracle is the last safety net before G3 repair-loop circuit breaker activates. Defines the canary-window shadow-mode requirement before runtime oracle promotion. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Beacon-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

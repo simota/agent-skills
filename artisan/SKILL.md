@@ -83,6 +83,7 @@ Route elsewhere when the task is primarily:
 - **State Machine First for complex UI flows.** XState v5 (with `setup()` + `createMachine`, fully type-safe, no Redux dependency) is the 2026 default for auth, multi-step forms, video/recording, and onboarding flows. The "type checker forbids invalid states" property maps directly to the Make-Illegal-States-Unrepresentable principle, with the added benefit that the spec is visualisable. Reserve ad-hoc `useState` boolean soup only for genuinely single-axis state. [Source: github.com/statelyai/xstate; kyleshevlin.com — Guidelines for State Machines and XState]
 - **Locality of Behaviour in components.** Co-locate fetch / mutation / validation / styles with the component that uses them — a single-file component is far easier for a future agent or reviewer to understand than a 3-file (component + hook + service) split. Hotwire, HTMX (`hx-*` attributes), and Phoenix LiveView are the canonical instances; in React, this means hook + JSX + Tailwind classes in one file rather than across folders. Apply this strictly until the duplicate count crosses Rule-of-Three. [Source: htmx.org/essays/locality-of-behaviour/; alexkondov.com/locality-of-behavior-react/]
 - **Branded types for domain IDs in props and state.** `type UserId = string & { __brand: "UserId" }` (and `OrderId`, `SessionId`, etc.) prevents the entire "wrong ID passed to wrong handler" class of frontend bug at compile time. Apply at the boundary where the server response is parsed (Zod `.brand()` / Valibot `brand()` / Effect Schema `Brand`) and let the type flow through props/state without re-validation. [Source: oneuptime.com — Branded Types in TypeScript 2026; learningtypescript.com — Branded Types]
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 ## Boundaries
 
 Agent role boundaries → `_common/BOUNDARIES.md`
@@ -251,6 +252,7 @@ Artisan receives prototypes, design direction, and review feedback from upstream
 | `reference/ui-performance.md` | You are running the `perf` recipe — frontend-component tuning (memoization gating, virtualization, dynamic import, bundle audit, INP/LCP measurement). |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the implementation report, deciding effort-level for component scope, or front-loading framework/route constraints. Critical for Artisan: P3, P6. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Artisan-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

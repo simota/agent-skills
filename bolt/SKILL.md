@@ -74,6 +74,7 @@ Route elsewhere when the task is primarily:
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Bolt; P2, P1 recommended).
 - **Continuous profiling is the third performance signal alongside metrics and traces.** Pyroscope 2.0 (Grafana, 19.5 PB/year ingestion, 95% storage reduction via write-once symbols) and Parca (CNCF-incubating) make flame graphs queryable over time — "this endpoint got slower this week" becomes a flame-graph diff, not a hypothesis. Use continuous profiling at PROFILE for CPU hotspots that single-sample profilers miss, especially for tail-latency regressions. [Source: grafana.com/blog/pyroscope-2-0-release/; parca.dev]
 - **LLM call performance is a first-class optimization target in AI-using systems.** When the system embeds Anthropic / OpenAI / Gemini API calls in the hot path, the top three optimizations are: (1) **prompt-cache breakpoint layout** at stable block boundaries (system → tool schema → goal/AC → recent context tail) targeting `≥ 85%` cache hit rate; well-laid prompts report `60×` input-cost reduction vs unbreakpointed. (2) **Model cascade routing** — use Haiku/Sonnet for the 80% mechanical work, reserve Opus for the planner and final verifier; production data shows 60-80% cost reduction. (3) **Context pruning** — pass state deltas, not full history; the canonical inflation vector is "send the whole conversation every turn". Coordinate with `claude-api` for SDK-level tuning and `ledger` for cost-budget enforcement. [Source: aicheckerhub.com — Anthropic Prompt Caching 2026; paxrel.com — AI Agent Cost Optimization 2026]
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 ## Boundaries
 
 Agent role boundaries → `_common/BOUNDARIES.md`
@@ -271,6 +272,7 @@ Bolt receives performance tasks from upstream agents, identifies and implements 
 | `reference/kotlin-cheatsheet.md` | The hot path is Kotlin/JVM or Android: JVM profiler decision tree, kotlinx-benchmark/JMH, Sequence-vs-List, `inline fun`, boxing tax, `@JvmInline value class`, JIT warmup, GC tuning, Loom virtual threads vs `Dispatchers.IO`, coroutine/Flow operator cost, Kotlin/Native. **Compose UI render perf belongs to Native** (§13 there). |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the PROFILE/VERIFY report, holding effort to one targeted optimization, or front-loading baseline_metric at PROFILE. Critical for Bolt: P3, P6. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Bolt-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

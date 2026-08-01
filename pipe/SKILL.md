@@ -79,6 +79,7 @@ Route elsewhere when:
 - **Forbid preinstall/postinstall in CI installs** by default: pin `npm config set ignore-scripts true` (or `pnpm install --ignore-scripts` / `yarn install --ignore-scripts`) for the install step; allowlist trusted packages explicitly via pnpm's `pnpm.allowBuilds` or equivalent. This blocks Remote Dynamic Dependencies (RDD) attacks (PhantomRaven waves — see `reference/security-hardening.md`), where an HTTP URL outside the registry is declared as a dependency and fetched/executed at install.
 - For agentic workflows (technical preview): use only for AI-suited tasks (triage, review, maintenance). Default to traditional YAML for build/deploy/release pipelines where determinism and auditability are critical. Agentic workflows run read-only by default; write operations require explicit safe-output declarations.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Pipe; P2, P1 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -238,6 +239,7 @@ Routing rules:
 | `reference/gha-secrets.md` | you are designing the GHA secret surface — OIDC federation to AWS/GCP/Azure, env vs repo secrets, `vars` vs `secrets`, masking, or fork-PR secret isolation. |
 | `_common/OPUS_5_AUTHORING.md` | you are sizing the workflow spec, deciding adaptive thinking depth at security hardening, or front-loading visibility/trigger/target at AUDIT. Critical for Pipe: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Pipe-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

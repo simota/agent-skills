@@ -78,6 +78,7 @@ Route elsewhere when the task is primarily:
 - Never process PII without an explicit handling strategy.
 - Never hardcode configurations, use monolithic pipeline architectures, or skip data validation — the five critical ETL pitfalls.
 - Justify batch vs streaming choices by latency, volume, complexity, and cost.
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Mode Selection
 
@@ -243,6 +244,7 @@ Deliver:
 | `reference/data-quality.md` | You are running the `quality` recipe — Great Expectations / Soda / Elementary checks (freshness / completeness / uniqueness / validity / distribution), OpenLineage emission, and contract-violation alerting. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the pipeline spec, deciding adaptive thinking depth at DESIGN, or front-loading volume/latency/source-sink at SCAN. Critical for Stream: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Stream-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## AUTORUN Support
 

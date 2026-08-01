@@ -93,6 +93,7 @@ Route elsewhere when the task is primarily: multi-agent chain orchestration (`Ne
 - When driving a nexus **enact build loop**: consume the Charter §4/§5/§7/§10 slice read-only (sha256-pinned, never mutate); external DONE gate is the §10 per-package DoD checklist; append `PKG_START`/`PKG_RECOVER`/`PKG_DONE` to the §9 run-log (default `docs/CHARTER.run.log.md`); engine per §5 (Codex CLI, latest generation — role-matched gpt-5.6 variant). Orbit drives one package and reports terminal status to `enact` — it does not construct the team or sequence packages. See `reference/charter-loop-driver.md`.
 - Lay out runner prompts with `PROMPT_CACHE_BREAKPOINTS=4` `cache_control` breakpoints (system / tools / goal / context tail); run each iteration in a dedicated `git worktree`; gate DONE through an **independent critic model** (`CRITIC_MODEL=haiku`).
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P1, P2 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 Full citations, platform names, production-incident evidence, and engine-specific contract detail for every bullet above → `reference/resilience-patterns.md`.
 
@@ -423,6 +424,7 @@ Follow `_common/OPERATIONAL.md` for full operational protocol.
 | `_common/SUBAGENT.md` | Spawning Claude Code Agent-tool subagents in Orbit's own work. apex Phase 6 Codex subagents → `nexus/reference/apex-recipe.md §Phase 6`. |
 | `nexus/reference/apex-recipe.md` | Driving apex Phase 6: Codex CLI availability check, loop contract (accord L3 ACs + omen + echo), spawn scripts, convergence/cost/circuit audit. |
 | `nexus/reference/summit-recipe.md` | Driving summit Phase 5: max-3 PDCA with parallel Claude / Codex / agy branches, Agent Tennis breaker, magi arbitration. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## AUTORUN Support
 

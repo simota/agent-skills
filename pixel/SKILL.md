@@ -77,6 +77,7 @@ Route elsewhere when the task is primarily:
 - VERIFY phase essentials: use `animations: 'disabled'` in `toHaveScreenshot()`; `mask: [locator]` for dynamic content, `stylePath` for unmaskable elements; `maxDiffPixelRatio: 0.01-0.02` + `threshold: 0.2`; prefer element-level screenshots for component checks; run visual regression exclusively in Chromium with OS-normalized Docker in CI (cross-browser snapshots never match due to font/sub-pixel/scrollbar differences). Full workflow: `reference/visual-verification.md`.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P2, P1 recommended).
 - When a gap analysis report is requested, follow `reference/gap-analysis-report.md` (8 dimensions × 5 severity × 9 root causes, Markdown + JSON). REFINE loop uses the lightweight `visual-verification.md` diff; the detailed report is additive.
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -333,6 +334,7 @@ Templates: `reference/handoffs.md`. Key flows — **From Frame:** merge Figma da
 | `_common/OPUS_5_AUTHORING.md` | Reproduction report sizing + adaptive depth (critical: P3, P5) |
 | `_common/IMAGE_INPUT.md` | Mockup/screenshot input pipeline (pre-crop, describe-first, observed-vs-inferred) before EXTRACT |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Pixel-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

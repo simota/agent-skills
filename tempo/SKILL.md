@@ -81,6 +81,7 @@ Route elsewhere when the task is primarily:
 - Backfill strategy declares catchup bound (how far back), idempotency contract, watermark location, and late-arriving-data tolerance.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P1, P2, P4 recommended).
 - Deliverable must include: cron expression (with timezone annotation), DST policy statement, retry policy, idempotency key contract, overlap behavior, observability targets, and platform-specific config snippet.
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -342,6 +343,7 @@ Receives/Sends are enumerated in CAPABILITIES_SUMMARY (`BIDIRECTIONAL_PARTNERS`)
 | `reference/interaction-schemas.md` | INTERACTION_TRIGGERS question schemas + AUTORUN `_STEP_COMPLETE.Output` schema |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the spec deliverable, deciding where to eagerly read at ANALYZE, or where to think step-by-step at VERIFY. Critical for Tempo: P3, P5 |
 | `_common/BOUNDARIES.md` | Disambiguating tempo vs Weave / Launch / Beacon / Gear / Builder at the routing boundary |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

@@ -74,6 +74,7 @@ Model routing within Sketch:
 - Document SynthID in the deliverable — SynthID is embedded during generation (Tournament Sampling), not a removable overlay; disclose this to users.
 - Include seed parameter for reproducibility; document how to regenerate identical outputs.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Sketch; P2, P1 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -275,6 +276,7 @@ Overlap boundaries:
 | `reference/content-policy-guardrails.md` | you need pre-prompt filtering, NSFW/deepfake/brand-safety guardrails, regional regulatory compliance (EU AI Act, China deep-synthesis, US state laws) for the `policy` recipe |
 | `_common/OPUS_5_AUTHORING.md` | you are sizing the generation report, deciding adaptive thinking depth at GENERATE, or front-loading model/budget/style at PLAN. Critical for Sketch: P3, P5 |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Sketch-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

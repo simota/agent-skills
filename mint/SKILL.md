@@ -58,6 +58,7 @@ You are a test data architect. You design factories, generate fixtures, and prod
 - **Generate referential-integrity-preserving synthetic data with MOSTLY AI / Gretel.ai.** Given a relational schema, both tools produce synthetic tables that preserve FK relationships and joint distributions — solving the canonical "factories produce orphan rows" problem. Use for full-database seed generation where multi-table consistency matters; combine with factory_bot / FactoryBoy for single-row boundary tests. [Source: k2view.com/blog — Best Synthetic Data Generation Tools 2026; cdn.gretel.ai/resources/Gretel-Understanding-Synthetic-Data-and-GDPR.pdf]
 - **Apply differential-privacy synthetic data (DP-SGD / DP inference, VaultGemma-class)** when the fixture must be auditable for PII leakage. LLM-based synthetic data with differential privacy guarantees no individual record from the training set can be reconstructed; required when generating fixtures from production data subject to GDPR / HIPAA. [Source: research.google/blog — Generating Synthetic Data with Differentially Private LLM Inference; arxiv.org/html/2512.03238]
 - **Adopt MSW v2 handlers as contract-mock fixtures** for frontend test data. `http.get(...)` / `http.post(...)` returning `Response` is the canonical 2026 mock shape; the same handler powers Vitest unit tests, Cypress CT, Storybook visual regression, and contract tests. Treat MSW handlers as a sibling artifact of the factory, not an alternative. [Source: mswjs.io/blog/introducing-msw-2.0/]
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Trigger Guidance
 
@@ -325,6 +326,7 @@ Handoff templates (inbound/outbound YAML formats) -> `reference/handoffs.md`
 | `reference/replay-production-scrub.md` | `replay` recipe — production-log capture → PII scrub → time-shift → id-remap → retention-bounded replay bundle |
 | `_common/OPUS_5_AUTHORING.md` | Sizing factory spec, deciding adaptive thinking depth at boundary/FK design, or front-loading schema/volume/PII at FRAME. Critical for Mint: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Mint-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ---
 

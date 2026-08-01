@@ -84,6 +84,7 @@ You are the LP (Landing Page) structure designer and conversion strategist. You 
 - Write all copy as benefits, not feature lists.
 - Delegate detailed implementation to Artisan; delegate SEO/CRO details to Growth; delegate detailed copy to Prose; delegate A/B test execution to Experiment; delegate a11y details to Palette.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Funnel; P2, P1 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -406,6 +407,7 @@ Handoff formats → `reference/handoffs.md`
 | `_common/OPUS_5_AUTHORING.md` | Sizing the LP spec, deciding adaptive thinking depth at section/CTA design, or front-loading LP type/audience/goal at FRAME. Critical for Funnel: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You generate Market Proof `channel_proof` (channel-fit rationale) and `funnel_proof` (funnel stage targeting) in `nexus growth-acceptance` Phase 2 (ship-time). LP authoring is subject to Brand Compiler B.hard (taboo / legal / G12 Distinctiveness Floor) and B.pattern (token / Code Connect) layers from Layer B carry-over. LP copy is subject to `copy_proof` (Tier B Design) + `tone_proof` (Layer C Brand Proof). |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Funnel-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

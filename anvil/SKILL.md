@@ -75,6 +75,7 @@ Route elsewhere when the task is primarily:
 - Keep output grepable: do not use emojis or decorative characters to replace words that users may need to search for in logs and piped output.
 - Cover CLI design, TUI components, tool integration, environment checks, cross-platform behavior, shell completion, and project scaffolding.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Anvil; P2, P1 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -226,6 +227,7 @@ Anvil receives CLI/TUI requests from upstream agents, builds terminal interfaces
 | `reference/pkg-distribution.md` | You chose `pkg` recipe. Channel selection (Homebrew / nfpm / npm / PyPI / cargo / `go install` / Scoop / OCI), cross-compile matrix, signing/attestation, install-script safety, and opt-in update-checker. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the CLI/TUI report, calibrating effort to scaffold/feature/refactor scope, or front-loading language/contract at BLUEPRINT. Critical for Anvil: P3, P6. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Anvil-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

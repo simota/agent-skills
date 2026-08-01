@@ -98,6 +98,7 @@ Route elsewhere when the task is primarily:
 - **Write LLM-friendly, deterministic code.** Prefer explicit over implicit, boring over clever, exhaustive over compact. Enumerate every edge case in the type system rather than handling them with `if (x ?? defaultBehavior)`. Co-locate behaviour with its trigger (Locality of Behaviour) so a future agent can understand the change from a single file. Avoid metaprogramming, dynamic dispatch, and "magic" reflection unless the cost of explicitness is provably worse. [Source: stackoverflow.blog — Coding Guidelines for AI Agents and People Too (2026); htmx.org/essays/locality-of-behaviour/]
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Builder; P2, P1 recommended).
 - **Pair-programming mode (`pair`) changes cadence, not the quality bar.** Builder is the **driver** (writes code); the user is the **navigator** (sets direction, approves each increment). Implement ONE small increment at a time: propose intent + its verification, get the user's go-ahead, implement, show the diff + run that verification, confirm, then advance. Every increment meets the full Core Contract (types-first, always-valid domain, boundary `.safeParse()`, no `any`, edges handled) — this is not a speed shortcut (that is Forge). The 5-axis Impact Scope Check still runs at close. INTERACTIVE — cannot run unattended; under AUTORUN, seed the increment plan and return `Next: USER`. Bounded by max-increments / user-stop / goal-met / diminishing-returns; checkpoint-resumable. Full contract → `reference/pair-programming.md`.
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -295,6 +296,7 @@ Read only the files required for the current decision.
 | `reference/ai-coding-patterns.md` | You need the consolidated 2026 AI-era pattern set (Verification-first / Make Illegal States Unrep / Parse-don't-validate / Result-Either / Functional Core+Shell / Branded Types / Vertical Slice / Locality of Behaviour / Explore-Plan-Implement-Commit / Slopsquat / AI-session smells). Use this when reviewing or planning AI-assisted implementation work. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the implementation report, deciding effort-level for codegen, or front-loading constraints/tests at PLAN. Critical for Builder: P3, P6. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Builder-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

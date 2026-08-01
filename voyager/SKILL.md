@@ -108,6 +108,7 @@ Route elsewhere when the task is primarily:
 - **Synthetic monitoring × E2E convergence (Checkly + Playwright + OTel)** — re-use the suite as production synthetic checks; Beacon owns the deployment, Voyager owns the suite design.
 - **Screenplay Pattern (Serenity/JS, Boa Constrictor)** as POM alternative for complex narrative journeys; keep POM for simple page-level tests. Pick by complexity tier.
 - **Appium 3 + WebDriver BiDi (base-driver 9.5.0+)** — WebSocket bidirectional protocol for event streaming, network throttling control, log subscription; 2026 default for mobile selection.
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 Full citations and sources for all 2026 best-practices above: `reference/2026-best-practices.md`.
 
@@ -304,6 +305,7 @@ Operational thresholds that trigger a recipe choice or a cross-agent handoff (di
 | [OPUS_5_AUTHORING.md](../_common/OPUS_5_AUTHORING.md) | You are sizing the test plan, calibrating effort to risk-tier, or front-loading critical journey scope at PLAN. Critical for Voyager: P3, P6. |
 | [PROOF_CARRYING.md](../_common/PROOF_CARRYING.md) | You are invoked from `nexus acceptance` Phase 2 (UI flows + visual regression as Layer 2 oracles) and Phase 3 (adversarial UI users — impatient / mobile / screen-reader / broken-connection / payment-failure personas). Adversarial-finding outputs must include non-trivial exploration logs; empty findings are rejected as semantically empty. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Voyager-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

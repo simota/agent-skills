@@ -31,7 +31,8 @@ Cross-tool agent instructions for this repository. Read by **Antigravity CLI (`a
 | `_common/BOUNDARIES.md` | Centralized agent-role boundaries |
 | `_common/GIT_GUIDELINES.md` | Commit / PR conventions (authoritative) |
 | `_common/HANDOFF.md` | Inter-agent handoff schema |
-| `_common/SECURITY.md` | Supply-chain trust boundary |
+| `_common/SECURITY.md` | Supply-chain trust boundary (skills/plugins — **not** application security) |
+| `_common/CODE_QUALITY.md` | 7-axis quality bar for code-writing skills (solid / secure / readable / maintainable / testable / performant / scalable) + `CODE_QUALITY_GATE` |
 | `_templates/SKILL_TEMPLATE.md` | Starting template for new skills |
 | `.agents/` | Per-skill journals + project log (gitignored) |
 
@@ -45,6 +46,7 @@ Cross-tool agent instructions for this repository. Read by **Antigravity CLI (`a
 4. **References**: Heavy content (checklists, schemas, anti-patterns) goes in `reference/<topic>.md` and is loaded on demand. Keep `SKILL.md` ≤300 lines.
 5. **Cross-CLI compatibility**: Skills meant to run on multiple CLIs MUST include a `## Compatibility` section and consult `_common/CLI_COMPATIBILITY.md` instead of hard-coding `Agent(...)` syntax.
 6. **Boundaries**: Link to `_common/BOUNDARIES.md` rather than maintaining per-skill role-boundary tables.
+7. **Code quality**: Any skill whose `Writes Code` value in `_common/BOUNDARIES.md` is not `Never` links to `_common/CODE_QUALITY.md` rather than restating quality principles. Domain-specific mechanics still live in the skill's own `reference/`.
 
 ---
 

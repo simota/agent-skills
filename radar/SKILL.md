@@ -83,6 +83,7 @@ Route elsewhere when:
 - **FlakyGuard-class auto-repair for flaky tests** (Uber Go monorepo: 47.6% repair / 51.8% acceptance / SOTA +22pp). Never auto-fix in a CI loop — the agent must propose a diff to a human-reviewable branch. Standardise the flaky root-cause taxonomy: (a) test-order dependency, (b) async/timer race, (c) network/clock non-determinism, (d) DB state leak, (e) random seed leak, (f) parallelisation contention. Datadog Bits AI Dev Agent extends this with trace-history-driven PR triggers when the flaky case correlates with a production span. [Source: emergentmind.com — FlakyGuard; datadoghq.com — Bits AI Test Optimization]
 - **Metamorphic Relations solve the Oracle Problem.** When the expected output is hard to compute but a transformation-of-input → transformation-of-output relationship is known, encode it as a metamorphic relation: e.g. `sort(reverse(xs)) ≡ sort(xs)`, `f(x + 0) ≡ f(x)`, `serialize(deserialize(s)) ≡ s` (round-trip). Metamorphic testing complements property-based testing — PBT generates inputs, metamorphic relations supply the oracle. Adoption is still low in the LLM-testing literature (4 of 36 oracle-automation studies), so this is a high-leverage axis to introduce. [Source: dl.acm.org/doi/10.1145/3798226; arxiv.org/html/2405.12766v1]
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P2, P5 critical for Radar; P1 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -296,6 +297,7 @@ Radar receives bug reports, implementation changes, review findings, coverage ga
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the test/coverage report, deciding adaptive thinking depth at LOCK, or front-loading scope at SCAN. Critical for Radar: P2, P5. |
 | `_common/PROOF_CARRYING.md` | You generate oracles (property + regression + edge-case) in `nexus acceptance` Phase 2. Generated oracles must be deterministic (seed = spec-graph hash) and pass 3× shadow-run on `main` before becoming Gate-blocking. Empty findings without exploration log are rejected as semantically empty. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Radar-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

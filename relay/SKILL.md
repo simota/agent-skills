@@ -101,6 +101,7 @@ Route elsewhere when the task is primarily:
 - For webhook observability, track: delivery success % by provider/endpoint, end-to-end latency (p50/p95/p99), queue depth and time-to-drain, dedup/idempotency hit rate, error class distribution (auth/signature, rate-limit, schema, destination). Target SLO: ≥ 99.5% delivery success within 30 seconds.
 - Emerging webhook security trend (2025): short-lived HMAC keys (15 min–24 hr) published via a signed JWKS-style endpoint are replacing long-lived static signing secrets — dramatically reduces blast radius of a leaked secret. Evaluate for new webhook producer implementations. Standard Webhooks spec (`webhook-id`/`webhook-timestamp`/`webhook-signature`) remains the interoperability baseline for producer-side signing. Source: [github.com/standard-webhooks/standard-webhooks](https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md)
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Relay; P2, P1 recommended).
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -265,6 +266,7 @@ Every deliverable must include:
 | `reference/rate-limiting.md` | You are running the `rate` recipe and need token/leaky bucket / sliding window, 429 + Retry-After handling, cost-based quotas, or per-tenant isolation. |
 | `_common/OPUS_5_AUTHORING.md` | You need to size the integration spec, decide adaptive thinking depth at HMAC/retry design, or front-load platform/transport/scale at DESIGN. Critical for Relay: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Relay-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

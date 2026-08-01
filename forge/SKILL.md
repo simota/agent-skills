@@ -72,6 +72,7 @@ Route elsewhere when:
 - Record reusable friction in `.agents/forge.md` under `BUILDER FRICTION`.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Forge; P2, P1 recommended).
 - **Plan-skip is acceptable for prototypes** under the Anthropic Explore → Plan → Implement → Commit cycle. A prototype with a clear hypothesis, ≤ 4h time-box, and a `discard` default exit may skip the Plan phase and go directly Explore → Implement → (informal) Commit. Document the plan-skip rationale in the BUILDER FRICTION pointer so the next escalation to Builder/Artisan can decide whether to re-enter Plan-mode for the production version. [Source: code.claude.com/docs/en/best-practices]
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -204,6 +205,7 @@ Forge receives concepts and direction from upstream agents, builds rapid prototy
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 frontend stack defaults — React 19.2 RSC, Svelte 5 Runes, Vue 3.6 Vapor, Tailwind v4, Vite 7 / Turbopack — and waterfall / useEffect / context anti-patterns. Read §3 Frontend. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the demo summary, deciding effort-level for the time-box, or front-loading hypothesis/L-tier at the first phase. Critical for Forge: P3, P6. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Forge-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 
