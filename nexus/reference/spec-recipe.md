@@ -70,18 +70,12 @@ Accord[claude staged elaboration: L0 Vision → L1 Requirements → L2 Detail �
 
 ---
 
-## Termination Bound
-
-**`N/A` for a convergence loop** — `spec` is a bounded *dialogue*, not a rubric loop. Its bound is structural: the Phase 2 convergence check ends exploration, and the explicit **LOCK gate** ends the recipe. A dialogue that will not converge exits `BLOCK` with the open questions listed, never by burning turns.
-
 ## Draft persistence & resume
 
-`spec`'s value is a long multi-turn dialogue, so it must survive interruption. State is persisted **incrementally** to `docs/specs/<slug>.draft.md` — not only at the end.
+`spec`'s value is a long multi-turn dialogue, so it must survive interruption. Its bound is structural, not a rubric loop: the Phase 2 convergence check ends exploration, and the explicit **LOCK gate** ends the recipe (a dialogue that will not converge exits `BLOCK` with the open questions listed, never by burning turns). Each phase's checkpoint bullet above already states what gets written to `docs/specs/<slug>.draft.md` at that boundary (plus a **current-phase marker** and the **Assumption Ledger** delta per `reference/dialogue-protocol.md` §3, and the Phase 5 promote-and-archive step) — this section covers only resume-specific behavior:
 
-- **Incremental writes:** at each phase checkpoint pass, append/update the matching draft section (FRAME → L0 Vision + reuse/constraint findings; EXPAND → surviving candidates; CHALLENGE → pick + considered-but-rejected; SHAPE → proposal; SPECIFY → L1/L2/L3 + open questions; every phase → **Assumption Ledger** delta per `reference/dialogue-protocol.md` §3). The draft also records a **current-phase marker** so a resume knows where to re-enter.
 - **Invocation forms:** `spec` (new dialogue) · `spec resume [<slug>]` (re-enter from the last checkpoint; `<slug>` omitted → most-recent draft) · `spec <slug-or-path>` (re-open a locked spec for revision — re-enters at SPECIFY and re-runs the lock preconditions before re-locking).
 - **Resume behavior:** read the draft, replay the current-phase marker, summarize decisions-so-far back to the user in 3-5 lines for confirmation, then continue the dialogue from that checkpoint. Never silently restart from FRAME.
-- **Finalize:** on LOCK the draft is promoted to the locked spec and the `.draft.md` archived/removed (Phase 5).
 
 ## Spec Quality Gate (lock precondition)
 
@@ -159,22 +153,25 @@ The L1↔L3 traceability (every requirement has an AC; every AC maps to a requir
 **3-12 agents**, multiplied by dialogue turns — depth-dependent: `light` 3-5 · `standard` 5-9 · `deep` 8-12 (Lens reuse-scan in FRAME, Judge in the Quality Gate, and the 2-3 refutation skeptics are the conditional additions). Light by agent count, deliberately heavy by interaction turns — the value is in the conversation depth, not fan-out.
 
 ## Failure Modes Prevented
-1. **Spec a half-baked idea** — FRAME checkpoint requires a confirmed problem statement before options.
-2. **Endless circling** — Phase 2 convergence check + explicit LOCK gate bound the dialogue.
-3. **Spec without acceptance criteria** — Phase 4 mandates testable L3 ACs as the lock precondition.
-4. **Silently dropped open questions** — the locked spec carries an explicit Open Questions / Deferred Decisions section.
-5. **Jumping to build** — `spec` writes no code; it hands off to `feature`/`apex`/`acceptance`.
-6. **Single-pass spec masquerading as dialogue** — human-in-the-loop at every phase boundary; AUTORUN cannot skip the contract-level checkpoints.
-7. **Reinvent the wheel / out-of-context spec** — FRAME's Lens reuse-scan surfaces existing assets and codebase constraints before the problem is fixed (skipped only for greenfield).
-8. **Lost dialogue on interruption** — incremental draft persistence + `spec resume` re-enter from the last checkpoint instead of restarting.
-9. **Locking a low-quality spec** — the Spec Quality Gate (ambiguity / completeness / consistency / testability / scope / provenance) is a lock precondition AUTORUN cannot skip.
-10. **Downstream can't consume the spec** — the standard template + L1↔L3 AC traceability give `feature`/`apex`/`orbit` a machine-consumable verification contract.
-11. **Silent assumptions inside a signed spec** — the Assumption Ledger (D9) tracks every gap the user did not explicitly decide; the Provenance Gate (D16) blocks LOCK while any load-bearing element is `silent`.
-12. **Elicitation-quality failures** (wall-of-questions turns, leading questions at divergence, rubber-stamp checkpoints, vague answers swallowed as consent) — the dialogue itself is conducted per `reference/dialogue-protocol.md` D1–D15.
-13. **A internally-perfect but wrong spec** (consistent, traceable, fully testable — and solving a problem nobody has, or with ACs that a non-conforming implementation passes) — the pre-lock refutation panel attacks the four load-bearing claims; the six document dimensions cannot catch this.
-14. **Ceremony driving users away from specifying at all** — depth modes scale the dialogue (`light` 3-5 turns) without weakening any lock precondition.
-15. **Downstream re-derives the dialogue** (the build recipe re-scans for reuse, re-reads prose for ACs, loses the assumption ledger) — the Spec Handoff Packet carries the settled state in machine-consumable fields.
-16. **Downstream silently reinterprets an unbuildable AC** — the contract rule routes it back to `spec <slug>` for revision instead of a quiet local reading.
+
+| Failure | Mitigation |
+|---------|-----------|
+| Spec a half-baked idea | FRAME checkpoint requires a confirmed problem statement before options |
+| Endless circling | Phase 2 convergence check + explicit LOCK gate |
+| Spec without acceptance criteria | Phase 4 mandates testable L3 ACs as the lock precondition |
+| Silently dropped open questions | locked spec carries an explicit Open Questions / Deferred Decisions section |
+| Jumping to build | `spec` writes no code; hands off to `feature`/`apex`/`acceptance` |
+| Single-pass spec masquerading as dialogue | human-in-the-loop at every phase boundary; AUTORUN cannot skip contract-level checkpoints |
+| Reinvent the wheel / out-of-context spec | FRAME's Lens reuse-scan (skipped only for greenfield) |
+| Lost dialogue on interruption | incremental draft persistence + `spec resume` |
+| Locking a low-quality spec | Spec Quality Gate (6 dimensions) is a lock precondition AUTORUN cannot skip |
+| Downstream can't consume the spec | standard template + L1↔L3 AC traceability |
+| Silent assumptions inside a signed spec | Assumption Ledger (D9) + Provenance Gate (D16) blocks LOCK on any `silent` element |
+| Elicitation-quality failures (wall-of-questions, leading questions, rubber-stamp checkpoints, swallowed vague answers) | dialogue conducted per `reference/dialogue-protocol.md` D1–D15 |
+| An internally-perfect but wrong spec (consistent/traceable/testable, yet solving no real problem, or ACs a non-conforming impl passes) | pre-lock refutation panel — the six document dimensions cannot catch this |
+| Ceremony driving users away from specifying at all | depth modes scale the dialogue without weakening any lock precondition |
+| Downstream re-derives the dialogue | Spec Handoff Packet carries the settled state in machine-consumable fields |
+| Downstream silently reinterprets an unbuildable AC | contract rule routes it back to `spec <slug>` for revision |
 
 ## Shared protocols
 
@@ -187,6 +184,6 @@ The L1↔L3 traceability (every requirement has an AC; every AC maps to a requir
 +Lens (reuse-scan + constraint grounding in FRAME on an existing codebase; skip greenfield), +Field (real user-research grounding in FRAME), +Compete (market/differentiation framing in EXPAND), +Cast (persona grounding when the audience is unclear), +Rank (MoSCoW ordering of sub-features in SHAPE), +Omen (pre-mortem before LOCK on high-stakes specs), +Echo (usability sanity-pass when there is a UI surface), +Gateway/Schema (API/data-model detail in SPECIFY), +Judge (spec-as-artifact adversarial review in the Spec Quality Gate).
 
 ## Chain template
-`FRAME (Plea +Field?/Cast? +Lens?[reuse-scan/constraints] + ✓depth-mode + Socratic dialogue) → ✓confirm-problem + draft-init → EXPAND (Riff ‖ Flux +Compete?) → ✓steer + draft → CHALLENGE (Magi + Void + Ripple +Omen?) → ✓pick + convergence-check + draft → SHAPE (Spark +Rank?) → ✓edit + draft → SPECIFY (Accord +Scribe?/Gateway?/Schema?, L3 ACs with traceable IDs mandatory, Attest? +Echo?) → ✓iterate + draft → LOCK (✓quality-gate: Judge spec-as-artifact +Attest +Magi? — ambiguity/completeness/consistency/testability/scope/provenance[D16 + walk open ASSUME-n] → ✓refutation-panel: 2-3 skeptics ‖ refute-polarity on problem-real / direction-beats-rejected / ACs-entail-REQs / scope-separable [skipped at depth=light] → ✓sign-off → promote draft to docs/specs/<slug>.md per template + Open Questions section → ✓build-path: orbit loop (✓engine: claude|codex|agy) ‖ apex (fallbacks: feature|acceptance|essential|killer) → emit Spec Handoff Packet + recommend chosen handoff) [NO CODE]`
+`FRAME (Plea +Field?/Cast? +Lens?[reuse-scan/constraints] + ✓depth-mode + Socratic dialogue) → ✓confirm-problem + draft-init → EXPAND (Riff ‖ Flux +Compete?) → ✓steer + draft → CHALLENGE (Magi + Void + Ripple +Omen?) → ✓pick + convergence-check + draft → SHAPE (Spark +Rank?) → ✓edit + draft → SPECIFY (Accord +Scribe?/Gateway?/Schema?, L3 ACs with traceable IDs mandatory, Attest? +Echo?) → ✓iterate + draft → LOCK (✓quality-gate: Judge spec-as-artifact +Attest +Magi? — 6 dimensions per Spec Quality Gate above[D16 + walk open ASSUME-n] → ✓refutation-panel: 2-3 skeptics ‖ refute-polarity on the 4 load-bearing claims per Pre-lock refutation panel above [skipped at depth=light] → ✓sign-off → promote draft to docs/specs/<slug>.md per template + Open Questions section → ✓build-path: orbit loop (✓engine: claude|codex|agy) ‖ apex (fallbacks: feature|acceptance|essential|killer) → emit Spec Handoff Packet + recommend chosen handoff) [NO CODE]`
 
 Resumable: `spec resume [<slug>]` re-enters from the draft's current-phase marker; `spec <slug-or-path>` re-opens a locked spec for revision (re-enters at SPECIFY, re-runs the lock preconditions).

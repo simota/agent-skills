@@ -111,6 +111,6 @@ A recipe is not "live" until it appears — consistently — in **every** index,
 4. `SKILL.md` `### Signal Keywords` inline table — add the most-used anchors (subset of #6).
 5. `SKILL.md` `## Reference Map` — one row pointing at the new reference file.
 6. `reference/signal-keywords.md` — the **canonical full** anchor row, under the **correct section header** (Core / Specialist / Loop-Migration-Reproduction / Package), with English anchors + key non-English paraphrases.
-7. `reference/recipes-detail.md` — the extended description + chain template (the catalog every recipe appears in).
+7. `reference/recipes-detail.md` — the identity line + cross-recipe disambiguation only (the catalog every recipe appears in). **No chain template here** — phase contracts and chain templates live solely in `reference/<name>-recipe.md` (or `inline-recipes.md` for lightweight recipes); `recipes-detail.md`'s Chain Template column/pointer must point there, never duplicate it.
 
-Consistency rule: the recipe's name, one-line purpose, agent count, and confirm tier must read **identically** across #2/#6/#7 (no drift between the SKILL.md row and the detail/keyword entries).
+Consistency rule: the recipe's name, one-line purpose, agent count, and confirm tier must read **identically** across #2 (`recipes-index.md`) and #6 (`signal-keywords.md`) (no drift between the SKILL.md row and the keyword entries); `recipes-detail.md`'s identity line (#7) must state the same purpose but carries no chain template to keep in sync.

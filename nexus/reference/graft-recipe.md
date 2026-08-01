@@ -176,23 +176,21 @@ Magi confirms the relevant aspects in Phase 3; Phase 4 builds against them; Phas
 
 ---
 
-## 4a. Termination Bound
-
-**`N/A` for a convergence loop** — `graft` terminates on its **verdict gate** (`reference/verdict-gate.md`): each candidate transplant resolves to Yes / No / Modify, and the recipe ends when every candidate has a verdict. Adversarial refutation per `_common/ADVERSARIAL_REFUTATION.md` is a fixed-size panel, not an iterated loop. A candidate that cannot reach a verdict exits `BLOCK` with the unresolved question stated.
-
 ## 5. Failure Modes Prevented
+
+Each gate below (§3a Graft Map, §3b Triple-Oracle, §3c Host-Invariant, §3d Originality, §3e Innovation Gate) states its own failure mode in full; this table is the index.
 
 | Failure | Mitigation |
 |---------|-----------|
-| **Cargo-cult transplant** (donor's surface/chrome copied, the load-bearing principle missed) | Concept-Fidelity oracle (§3b) vs a *mechanism* spec + §2 distillation-to-essence (a concept describable only by donor screenshots is rejected) |
-| **Host broken by the graft** (novelty shipped, the living product's value path regressed) | Host-Integrity oracle (§3b) + Host-Invariant Contract (§3c): existing-behavior baseline 100% green + invariants proven before SHIP |
-| **Bolt-on relabeled as innovation** (donor's feature pasted on; no emergent novelty) | Innovation Gate (§3e): emergence + adversarial not-a-bolt-on refutation + felt-novelty; a failed gate ships as "a feature, not an innovation" |
-| **Gimmick** (novel-looking but useless / friction-inducing) | Innovation Gate felt-novelty (Echo) + defensibility (Compete) + refutation |
-| **Donor wholesale-copied** (every concept grafted = a reproduction, not an innovation) | Graft Map selection gate (§3a): subtraction; Magi grafts the few that serve the thesis, records what was left behind |
-| **Concept with no viable attachment force-fitted** | Attachment-feasibility gate (§3a): Ripple blast radius; no-attachment → `reject` or escalate, never force-fit |
-| **Invariant broken silently** (autonomous run trades away a host non-negotiable) | §3c: invariant-breaking graft escalated to the user (product-strategy decision), never auto-shipped |
-| **IP/originality leak** (donor's distinctive expression transliterated, or a patented mechanism copied) | Originality Posture (§3d): default original re-expression; `flag-for-review` resolved before SHIP; surface-resemblance check |
-| **Innovation shipped raw** (no way to measure adoption or pull it back) | §3e flag + adoption KPI + kill criterion (killer-style), unless Phase 0 waived |
+| Cargo-cult transplant (donor's surface copied, principle missed) | Concept-Fidelity oracle (§3b) + §2 distillation-to-essence |
+| Host broken by the graft | Host-Integrity oracle (§3b) + Host-Invariant Contract (§3c) |
+| Bolt-on relabeled as innovation | Innovation Gate (§3e) — a failed gate ships as "a feature, not an innovation" |
+| Gimmick (novel-looking but useless) | Innovation Gate (§3e) felt-novelty + defensibility + refutation |
+| Donor wholesale-copied (every concept grafted) | Graft Map selection gate (§3a) |
+| Concept with no viable attachment force-fitted | Attachment-feasibility gate (§3a) |
+| Invariant broken silently | §3c: escalated to the user, never auto-shipped |
+| IP/originality leak | Originality Posture (§3d) |
+| Innovation shipped raw (no adoption measure / kill switch) | Innovation Gate (§3e) flag + adoption KPI + kill criterion, unless Phase 0 waived |
 
 ## 6. Add-ons
 
@@ -206,22 +204,7 @@ Magi confirms the relevant aspects in Phase 3; Phase 4 builds against them; Phas
 - `+experiment` — when the innovation ships behind a flag and its KPI needs an A/B / incrementality design (pairs with §3e).
 - `+Hearth[automate]` / `+Snap` — desktop / native-mobile donor observation (the concept source is a non-web app).
 
-## 7. Decision Tree vs Neighbors
-
-```
-Innovating YOUR OWN product by importing another product's IDEA?
-  NO  → faithfully copy one product's surface? → clone
-        synthesize 2+ peer external products into a new one (no owned host)? → fuse
-        improve an existing feature vs a metric (no external concept)? → kaizen
-        add a net-new feature (no donor concept, no novelty bar)? → feature / apex
-        decide whether a differentiator is worth it (verdict only)? → killer
-        consolidate / re-architect your own systems? → migrate
-  YES → owned living host + donor concept(s), transplanted (not surface-copied), result must be NOVEL?
-              → graft   (extract concept → adapt/hybridize/invert onto host → triple-oracle verify)
-              unsure the bet is worth it? → killer → graft
-```
-
-## 8. Output
+## 7. Output
 
 `NEXUS_COMPLETE` with the standard `## Nexus Execution Report` plus a **Graft Report**:
 - **Research Grounding** — the concept-rationale sources that grounded each Concept Catalog entry + the host-domain/competitive sweep behind the Innovation Thesis (`reference/research-grounding.md` §6).

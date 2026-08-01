@@ -4,7 +4,7 @@
 
 Read this file before executing the `wish` Recipe.
 
-**Engine + domain presets.** `wish` factors into a **quality-ceiling engine** (this file: crystallize → anchor → tournament → gauntlet-converge → reception → exit gates, §1-§11) and **domain presets** that fix the rubric and insert deliverable-specific phases. The engine is shared; only the preset varies.
+**Engine + domain presets.** `wish` factors into a **quality-ceiling engine** (this file: crystallize → anchor → tournament → gauntlet-converge → reception → exit gates, §1-§10) and **domain presets** that fix the rubric and insert deliverable-specific phases. The engine is shared; only the preset varies.
 
 | Preset | Invocation | Blueprint | What the preset fixes |
 |--------|-----------|-----------|----------------------|
@@ -96,86 +96,24 @@ Wish is the most expensive per-deliverable recipe in the roster, and "spare noth
 ## 6. Phase Contract (AUTORUN chain template)
 
 ```
-Phase 0   SCARCITY GATE ★Confirm-before-launch (always)
-          Nexus[classify + Wish Ledger check + outcome backfill + preliminary envelope + cycle cap]
-          → routine task detected → recommend cheaper recipe (override journaled)
+Phase 0   SCARCITY GATE ★Confirm-before-launch (always) — classify + Wish Ledger check + preliminary envelope; routine task → recommend cheaper recipe (override journaled)
    ▼
-Phase 1   CRYSTALLIZE ★contract-level dialogue (AUTORUN cannot skip; plan-tier model)
-          → Wish Contract (goal + ACs + non-goals + disappointment criteria + NAMED RECIPIENT(S))
-          → draft Ceiling Rubric (3-5 dims, task-specific score-3 anchors)
-          → Evaluator roster selected per deliverable class (table below)
+Phase 1   CRYSTALLIZE ★contract-level dialogue (AUTORUN cannot skip; plan-tier) — Wish Contract + draft Ceiling Rubric + Evaluator roster
    ▼
-Phase 1.5 BENCHMARK ANCHOR ★contract-level ratification            [the ceiling gets a reference point]
-          deep-research ‖ Compete? ‖ Canon? — sweep for the BEST KNOWN artifacts of this class
-          (per reference/research-grounding.md: tiered sources, cited Evidence Ledger)
-          → EXEMPLAR SET (2-4 artifacts judged best-in-class, each with why-it-is-excellent notes)
-          → CONTROL (1 routine-quality artifact of the same class — the natural recipe's own
-            output, or a competent-but-ordinary published example)
-          → rewrite each score-3 anchor as SOURCED ("matches or exceeds <exemplar> on <property>")
-          → ✓user ratifies the exemplar set + anchors → RUBRIC FREEZES → envelope restated (§4)
+Phase 1.5 BENCHMARK ANCHOR ★contract-level ratification — sourced exemplar set + control → rubric freezes, envelope restated (§4)
    ▼
-Phase 2   TOURNAMENT ‖ 3-5 independent candidates, CROSS-ENGINE where the hub allows (§6 Phase 2
-          mandate),
-          from angles derived at Crystallization
-          S/M scope → outline-level competition, winner promoted to one full build
-          L/XL scope → full builds (generator flattened per converge-recipe.md §4)
-          → CALIBRATION PASS: the judge panel scores the EXEMPLAR and the CONTROL against the
-            frozen rubric BEFORE seeing any candidate (two-point calibration, §7)
-          → BLIND JUDGING: candidates presented as A/B/C… with engine + angle stripped;
-            provenance revealed only after scores are recorded
-          → winner + runner-up (both retained) + salvage list (informal cherry-pick from the
-            field — NOT the graft recipe; fed as starting input to Phase 3 cycle 1's Generator)
+Phase 2   TOURNAMENT ‖ 3-5 cross-engine candidates → two-point calibration pass → blind judging → winner + runner-up + salvage list
    ▼
-Phase 3   GAUNTLET-CONVERGE loop (evaluator-loop-protocol.md machinery, ceiling ACCEPT per §2;
-          Generator excluded from Evaluators; calibrated evaluators only; Sonnet 5 default)
-          every cycle    ‖: independent Evaluators per rubric dim (disappointment criteria fire
-                            automatically via their score-0 triggers)
-          dual-lineage    : L/XL + the Phase 1.5-restated envelope (§4) allows → winner AND
-                            runner-up advance as parallel
-                            lineages through cycles 1-2, then LINEAGE MERGE GATE keeps the higher
-                            weighted score and salvages from the loser (one lineage thereafter)
-          staged         ‖: refutation panel per _common/ADVERSARIAL_REFUTATION.md — spawned ONLY
-                            once all dims ≥ 2 (early cycles are obviously non-ceiling; skeptic
-                            spend is reserved for candidates that could be "best achievable");
-                            spawned FRESH on each qualifying cycle (attack history carried by the
-                            gauntlet ledger, not by panel memory — counted per-cycle in §1's
-                            formula); panel also ratifies candidate ACCEPTs (§2)
-          on demand       : RUBRIC AMENDMENT (§7) — at most once, user-ratified, when a surviving
-                            attack names a quality no frozen dimension can express
-          near-ceiling    : Omen pre-mortem on the near-final artifact — "this shipped and the
-                            recipient was disappointed; why?" → findings enter as rubric evidence
+Phase 3   GAUNTLET-CONVERGE loop — ceiling ACCEPT per §2; dual-lineage on L/XL; staged refutation once dims ≥ 2; on-demand rubric amendment (§7); near-ceiling Omen pre-mortem
    ▼
-Phase 3.5 RECEPTION SIMULATION                                    [the recipient is the real oracle]
-          Cast/Echo/Plea ‖ personas instantiated as the Wish Contract's NAMED RECIPIENTS
-          (the investor, the hiring committee, the end user, the reviewer — whoever this is FOR),
-          each meeting the artifact COLD, with no rubric and no loop history
-          → reception verdict + friction points + first-impression failures
-          → findings enter as EVIDENCE against existing rubric dimensions, never as a separate
-            gate (single-oracle discipline); an unresolved reception failure at cap is a named
-            residual, never a silent one
+Phase 3.5 RECEPTION SIMULATION — named-recipient personas meet the artifact cold, no rubric/history → findings enter as rubric evidence
    ▼
-Phase 4   EXIT GATES (both run; together they may grant at most ONE bonus cycle — hard total
-          N+1 per §2)
-          (a) ONE-SHOT GATE — fresh-context independent verifier (plan-tier model), spawned with
-              ONLY the Wish Contract + Ceiling Rubric + final artifact — no loop history.
-              The information asymmetry is the design: Phase 3 discharges Q9 per-dimension inside
-              the loop; this is a SECOND, differently-scoped Q9 application — a holistic
-              fresh-eyes redo-value judgment, not rubric re-scoring.
-              MATERIALLY-BETTER requires evidence: name (i) a specific dimension currently < 3
-              that a redo would plausibly move to 3 with a stated approach, or (ii) a specific
-              disappointment-criterion violation. A bare "could be better" = NO.
-          (b) COMPARATIVE GATE — blind head-to-head, plan-tier judges, provenance stripped:
-              final artifact vs the Phase 1.5 EXEMPLAR, and vs the Phase 2 RUNNER-UP lineage.
-              LOSS to the exemplar names the property it lost on. LOSS to our own runner-up is
-              the loud one — it means convergence destroyed value the tournament had found.
-          → either gate fires → exactly one bonus cycle → re-gate once; the second verdicts are
-            ADVISORY ONLY — Phase 5 delivers unconditionally, a second fire becomes a residual
-            note, never another cycle
-          → both pass → deliver
+Phase 4   EXIT GATES — (a) One-Shot Gate (fresh-context redo-value verdict) + (b) Comparative Gate (blind vs exemplar + vs runner-up); together grant at most one bonus cycle
    ▼
-Phase 5   DELIVER — Fulfillment Report + Unexplored-Space Ledger + Wish Ledger append
-          (Guardian if code)
+Phase 5   DELIVER — Fulfillment Report + Unexplored-Space Ledger + Wish Ledger append (Guardian if code)
 ```
+
+Each phase's full mechanics are in the prose rules that follow (Phase 0 Wish Ledger schema, Phase 1 rubric-drafting rules, Phase 1.5 anchoring rules, Phase 2 cross-engine mandate, §7 Calibration & Rubric Amendment) — the diagram above is the sequence, not the specification.
 
 **Phase 0 — Wish Ledger schema and routine heuristics.** The ledger lives under a `## Wish Ledger` heading in `.agents/nexus.md` (create on first use); Phase 0 counts entries rather than parsing prose:
 
@@ -265,8 +203,8 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 | **A rubric-perfect artifact its actual recipient bounces off** | **Phase 3.5 Reception Simulation: named recipients meet it cold, no rubric, no loop history; unresolved failures are named residuals** |
 | Evaluator mis-fit for non-code deliverables | Deliverable-class roster table + Phase 1 roster selection rule (§6) |
 | Generator grades its own work | GAN separation per `evaluator-loop-protocol.md`; both Phase 4 gates are fresh-context/blind (Q9, second application) |
-| Unbounded pursuit of an unreachable ceiling | Cycle cap (+1 bonus, hard total N+1 per §2) + honorable diminishing-returns exit (§2); second gate verdicts advisory-only |
-| **Open-ended spend on a "spare nothing" instruction** | **§4 budget envelope authorized at the Scarcity Gate; `budget-reached` delivers best-so-far, never a silent overrun** |
+| Unbounded pursuit of an unreachable ceiling | §2 cycle cap (+1 bonus) + diminishing-returns exit; second gate verdicts advisory-only |
+| **Open-ended spend on a "spare nothing" instruction** | **§4 budget envelope; `budget-reached` delivers best-so-far, never a silent overrun** |
 | Loop-on-loop blowup when the inner task is apex/kaizen/summit-shaped | Flatten rule cited from `converge-recipe.md` §4 — wish owns the single loop |
 | Silent under-delivery on a one-shot | Fulfillment Report residual-gap section; non-ACCEPT exits always report best-so-far |
 | **"Nothing was left on the table" as an unfalsifiable claim** | **Unexplored-Space Ledger (§8): angles not run, salvage rejected, trade-offs taken, escalations not bought — stated, not implied** |
@@ -284,20 +222,4 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 | `reference/doc-quality-protocol.md` | W1-W12 for document deliverables | W12 becomes a rubric dimension |
 | `_common/CLI_COMPATIBILITY.md` §4 | Per-engine model map and spawn prerequisites | The Phase 2 cross-engine distribution and the engine-diverse judge panel resolve against it |
 
-## 11. Decision Tree vs Neighbors
-
-```
-User frames the request as their single most important ask / one-shot / favor of a lifetime?
-  NO  → the natural recipe for the task shape (feature/bug/package/…)
-  YES ↓
-Is it strategic/release-critical CODE work wanting multi-engine triangulation?
-  YES → summit (wish's Scarcity Gate will recommend this itself)
-  NO ↓
-Is "good enough" (all dims ≥ 2) actually acceptable, with revision chances later?
-  YES → converge (standard bar, cheaper)
-  NO ↓
-Scarcity Gate: does the ledger show wish used recently for routine work?
-  YES → challenge + recommend cheaper recipe (user may override, journaled)
-  NO  → wish — crystallize → anchor → cross-engine tournament → calibrated gauntlet
-        → reception → One-Shot + Comparative gates → deliver
-```
+Neighbor routing (summit / converge / the natural recipe) is the § 1 "Not this — route to" table above; no separate decision tree is needed.

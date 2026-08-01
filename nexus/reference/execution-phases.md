@@ -111,33 +111,6 @@ For chains with 1-4 sequential steps:
 5. Extract handoff context from result
 6. Spawn next agent with accumulated context OR trigger recovery
 
-```
-# Step 1: Spawn Scout
-Agent(
-  name: "scout-[task-slug]"
-  description: "[Short description]"
-  subagent_type: general-purpose
-  mode: bypassPermissions
-  model: sonnet
-  prompt: |
-    You are the Scout agent.
-    First, read ~/.claude/skills/scout/SKILL.md and follow its instructions.
-    Task: [task]
-    Constraints: [constraints]
-    On completion, emit results in the _STEP_COMPLETE format.
-)
-
-# Step 2: Use Scout's output to spawn Builder
-Agent(
-  name: "builder-[task-slug]"
-  ...
-  prompt: |
-    ...
-    Context from previous step: [Scout's _STEP_COMPLETE output]
-    ...
-)
-```
-
 **L2: Parallel Spawn (background)**
 
 For 2-3 independent branches:
@@ -148,39 +121,6 @@ For 2-3 independent branches:
 4. Collect results from all agents
 5. Proceed to AGGREGATE
 
-```
-# Spawn Branch A and Branch B simultaneously
-Agent(
-  name: "builder-email-validation"
-  description: "Implement email validation"
-  run_in_background: true
-  mode: bypassPermissions
-  model: sonnet
-  prompt: |
-    You are the Builder agent.
-    First, read ~/.claude/skills/builder/SKILL.md and follow its instructions.
-    Task: Implement the email-validation feature
-    File ownership: src/validators/email.ts, tests/validators/email.test.ts
-    Constraints: only the files above may be modified
-    On completion, emit results in the _STEP_COMPLETE format.
-)
-
-Agent(
-  name: "builder-phone-validation"
-  description: "Implement phone validation"
-  run_in_background: true
-  mode: bypassPermissions
-  model: sonnet
-  prompt: |
-    You are the Builder agent.
-    First, read ~/.claude/skills/builder/SKILL.md and follow its instructions.
-    Task: Implement the phone-number-validation feature
-    File ownership: src/validators/phone.ts, tests/validators/phone.test.ts
-    Constraints: only the files above may be modified
-    On completion, emit results in the _STEP_COMPLETE format.
-)
-```
-
 **L3: Rally Delegation**
 
 For 4+ workers or complex ownership management:
@@ -189,48 +129,21 @@ For 4+ workers or complex ownership management:
 2. Rally reads its own SKILL.md and manages team creation, task distribution, and monitoring
 3. Rally returns aggregated results via `_STEP_COMPLETE`
 
-```
-Agent(
-  name: "rally-parallel-impl"
-  description: "Parallel implementation coordination"
-  subagent_type: general-purpose
-  mode: bypassPermissions
-  model: sonnet
-  prompt: |
-    You are the Rally agent.
-    First, read ~/.claude/skills/rally/SKILL.md and follow its instructions.
-
-    Task: Run the following implementation work in parallel.
-    Workers:
-      1. Builder: email-validation (src/validators/email.ts)
-      2. Builder: phone-number-validation (src/validators/phone.ts)
-      3. Artisan: form UI component (src/components/Form.tsx)
-      4. Radar: full test suite (tests/)
-
-    On completion, emit results in the _STEP_COMPLETE format.
-)
-```
+Worked spawn examples for all three layers (Scout→Builder chain, email/phone parallel branches, Rally team) live in `orchestration-patterns.md` Patterns A/B/G.
 
 **agy hub variant (L1/L2/L3)**
 
-The blocks above are Claude Code (`Agent(...)`) shapes. On an **agy** hub the phase logic is unchanged, but three primitives do not exist — author against these substitutions (`_common/AGY_ORCHESTRATION.md` A1-A4, `reference/execution-layers.md` § Antigravity CLI):
+The layers above are Claude Code (`Agent(...)`) shapes. On an **agy** hub the phase logic is unchanged, but three primitives do not exist — author against the substitutions in `_common/AGY_ORCHESTRATION.md` A1-A4 / `reference/execution-layers.md` § Antigravity CLI (no per-spawn model field, no foreground/background distinction, no Rally equivalent). Consequence for this phase:
 
-| Claude Code | agy substitution | Consequence for Phase 4 |
-|-------------|------------------|-------------------------|
-| `Agent(... model: sonnet)` per spawn | **no per-spawn model field** — tier is session-scoped (A3) | Pick the tier at *chain* level; a mixed-effort chain splits into per-step headless `agy -p` runs, each pinning its own tier. Recipe steps stay **High**, no downgrade (A1-R) |
-| `Agent(...)` foreground | TUI `/agent <slug> "<body>"`, or headless `agy -p` under a **real pty** (`python3 pty.spawn`) | Deliverable is read from the **prompt-mandated artifact file**, never stdout (A2, `_common/CLI_COMPATIBILITY.md §9.2`). Step 3 of the L1 loop becomes "read `_STEP_COMPLETE` from the artifact after the verification chain passes" |
-| `Agent(run_in_background: true)` | **no background primitive** (A4) | L2 = multiple TUI `/agent` calls (async, polled via `/tasks`) **or** N externally-launched headless one-shots joined by artifact polling. File-ownership isolation is unchanged and still load-bearing |
-| `Agent("You are Rally...")` | **no Rally equivalent** (A4) | L3 **flattens**: drive the fan-out from the hub in waves of 2-3, or use an installed team pack (`oh-my-antigravity` `/oma:taskboard`). Log the flattening honestly — never report a Rally spawn on agy |
+| Missing primitive | Consequence for Phase 4 |
+|--------------------|--------------------------|
+| No per-spawn model field (tier is session-scoped, A3) | Pick the tier at *chain* level; a mixed-effort chain splits into per-step headless `agy -p` runs, each pinning its own tier. Recipe steps stay **High**, no downgrade (A1-R) |
+| No foreground/background distinction (A2) | Deliverable is read from the **prompt-mandated artifact file**, never stdout (`_common/CLI_COMPATIBILITY.md §9.2`). Step 3 of the L1 loop becomes "read `_STEP_COMPLETE` from the artifact after the verification chain passes" |
+| No Rally equivalent (A4) | L3 **flattens**: drive the fan-out from the hub in waves of 2-3, or use an installed team pack (`oh-my-antigravity` `/oma:taskboard`). Log the flattening honestly — never report a Rally spawn on agy |
 
 Two further Phase 4 rules on agy: append the **Deep Reasoning Directive** (A9-D) to every recipe spawn prompt, and inject file context with `@<path>` — a bare path is read by an internal subagent that dies at the 60s cap (A5). For 4+ step chains, resume with `-c`/`--conversation <id>` instead of re-spawning (A4).
 
-### Layer Selection Criteria
-
-| Condition | Layer | Rationale |
-|-----------|-------|-----------|
-| Sequential chain, 1-4 steps | L1: Direct Spawn | Simple, low overhead |
-| 2-3 independent branches, clear file ownership | L2: Parallel Spawn | True parallelism via background agents (agy: async `/agent` or N headless one-shots) |
-| 4+ workers, complex ownership, or multi-step branches | L3: Rally Delegation | Full team management needed (agy: no Rally — flatten into hub-driven waves) |
+Layer selection criteria (1-4 steps → L1, 2-3 independent branches → L2, 4+ workers → L3) and per-engine API mapping: `reference/execution-layers.md` § Claude Code.
 
 ### Phase 5: AGGREGATE
 Merge parallel results:

@@ -39,7 +39,7 @@ Capture is **clone's Phase 0.5 + Phase 1, run once per source**, producing one s
 - **Per-source research sweep** — each source gets its own web Evidence Ledger (`reference/research-grounding.md`), **scoped to the slice it contributes** to the fusion, so each adopted slice's completeness denominator + exact values are research-grounded. Plus **one fusion-level** competitive/positioning sweep (`+Compete`) that informs the **Fusion Thesis** (Phase 0) and the **Conflict Ledger** rationale (§3a) — knowing *why* each product designed a contested element the way it did sharpens the reconciliation decision.
 
 - **Per-source capture strategy** — each source picks its own clone strategy (`extract-and-rebuild` default | `scaffold-from-source` if you own/license it | `incremental` | …) and its own capture-source binding by `target_type` (web=Vector/Voyager, desktop=Hearth `automate`/external harness, has-source=Lens, api=Schema, …).
-- **Per-source provenance stamp** (clone §3b) — every source baseline is stamped with *its* target version/build, capture date, environment, locale, pinned account/seed. The Fusion Report (§8) lists **one stamp per source**; a source baseline without a stamp is rejected at the Phase 2 gate exactly as in clone.
+- **Per-source provenance stamp** (clone §3b) — every source baseline is stamped with *its* target version/build, capture date, environment, locale, pinned account/seed. The Fusion Report (§7) lists **one stamp per source**; a source baseline without a stamp is rejected at the Phase 2 gate exactly as in clone.
 - **Per-source coverage** — clone's Capture Completeness Gate (clone §3a) applies per source *for the surface area that source contributes to the fusion*. You need not capture all of Product B if only B's billing flow is being adopted — but you must capture **every screen/state/flow of B's billing flow** (coverage gate scoped to the adopted slice), and the Fusion Map must declare that scoping so the un-captured remainder of B is an explicit, named non-goal, never a silent omission.
 - **Drift** — clone's drift re-check (clone §3b) runs per source before SHIP; a source that shipped a new version mid-fusion re-stamps and re-captures *its adopted slice*, never re-tunes the fused product toward a moved source.
 
@@ -74,12 +74,11 @@ Phase 4 BUILD          adopted elements → Pixel/Forge→Artisan/Builder[reprod
                        discipline] ‖ merged/net-new → Forge→Artisan/Builder[build to spec + ACs — feature discipline]
                        +flow?[reconcile motion] +polyglot?[reconcile locales]
                        rally[engine COMPETE] for fidelity-critical adopted screens AND for hard merges
-Phase 5 DUAL VERIFY ∥  (a) SELECTIVE PARITY — each adopted element diffed vs its SOURCE baseline (clone §3c engine,
-                          canonicalized): Pixel/Voyager visual, Radar/Voyager behavioral, Pixel/Frame asset
-                       (b) SPEC CONFORMANCE — each merged/net-new element vs its L3 ACs: Attest (no baseline parity)
-                       (c) COHERENCE GATE (§3c) — one visual language ∧ one interaction grammar ∧ one terminology
-                          ∧ one reconciled data model: Echo/Palette[interaction+terminology coherence],
-                          Pixel/Frame[visual coherence vs the unified token system], Atlas/Schema[data coherence]
+Phase 5 DUAL VERIFY ∥  (a) SELECTIVE PARITY per §3b — each adopted element vs its SOURCE baseline: Pixel/Voyager visual,
+                          Radar/Voyager behavioral, Pixel/Frame asset
+                       (b) SPEC CONFORMANCE per §3b — each merged/net-new element vs its L3 ACs: Attest
+                       (c) COHERENCE GATE per §3c — Echo/Palette[interaction+terminology], Pixel/Frame[visual vs
+                          the unified token system], Atlas/Schema[data]
                        (d) judge[SYNTHESIS review: coherent new product vs patchwork weld? provenance honored?]
                        → DRIFT RE-CHECK per source (clone §3b); FUSION-MAP COVERAGE re-check (every element verified
                          by its assigned oracle — no adopted element skipped parity, no net-new skipped ACs)
@@ -143,7 +142,7 @@ Four coherence dimensions, each independently gated:
 
 Combining the reproduced trade dress, assets, and distinctive UI of **two or more** products raises sharper IP and confusability questions than cloning one. Two controls:
 
-- **Per-element attribution** — the Fusion Map's `resolution` doubles as an attribution ledger: every adopted element names the source it reproduces. The Fusion Report (§8) surfaces this so "what did we take from whom" is answerable per element, not hand-waved.
+- **Per-element attribution** — the Fusion Map's `resolution` doubles as an attribution ledger: every adopted element names the source it reproduces. The Fusion Report (§7) surfaces this so "what did we take from whom" is answerable per element, not hand-waved.
 - **IP / trade-dress posture** — each adopted asset and each piece of distinctive trade dress carries a license/IP posture (reuse-if-licensed / faithful-recreation / **redesign-to-de-risk**), exactly as clone's Asset dimension but **across multiple rights-holders**. Merging two products' distinctive looks can produce a result confusable with — or derivative of — either; flag such rows for `redesign-to-de-risk` and record the posture. This is a **recorded posture, not legal advice** — surface it for human/legal sign-off, never silently reuse copyrighted trade dress from multiple sources.
 
 **Gate:** every adopted asset/trade-dress element has a recorded IP posture; rows flagged `redesign-to-de-risk` are routed to a net-new/recreated treatment (their oracle flips to spec-AC) before SHIP.
@@ -168,18 +167,20 @@ Magi confirms the relevant dimensions in Phase 3; Phase 4 builds against them; P
 
 ## 5. Failure Modes Prevented
 
+Each gate below states its own failure mode in full (§3a Fusion Map, §3b Selective-Oracle, §3c Coherence, §3d IP/Trade-Dress); this table is the index, not a re-explanation.
+
 | Failure | Mitigation |
 |---------|-----------|
-| **Frankenstein product** (every element passes its own oracle; the whole is an incoherent patchwork) | Coherence Gate (§3c) — visual/interaction/conceptual/data coherence + judge synthesis review, gated before SHIP |
-| **Oracle confusion** (adopted element relabeled "merge" to dodge parity; or net-new failed by a meaningless parity diff) | Selective-Oracle Gate (§3b) — oracle derived from resolution; Phase 5 coverage re-check asserts the mapping held per row |
-| **Orphan element** (a source feature captured but never decided; a feature built but not on the map) | Fusion Map completeness gate (§3a) — every new element and every captured source element accounted for; `drop` is a recorded decision |
-| **Unresolved conflict built over** (two nav models / two schemas welded without a decision) | Conflict-resolution gate (§3a) — every `conflict?` row resolved + rationale in the Conflict Ledger before Phase 3 |
-| **Memory-based synthesis** (blended from impression, not captured artifacts) | Per-source clone Phase 1 capture is a mandatory entry condition (§2); the Fusion Map can't reference an un-captured element |
-| **Thin per-source baseline** (adopted slice under-captured) | clone §3a coverage gate, scoped to each source's contributed slice (§2) |
-| **Stale source** (a source shipped a new version mid-fusion) | clone §3b drift re-check per source; re-capture the adopted slice, never re-tune the fused product toward a moved source |
-| **Coherence-vs-parity false conflict** (re-grammaring an adopted flow tanks its parity score and reads as a regression) | §3c explicit split — Fusion Map records preserved-aspects (parity) vs changed-aspects (spec-AC) per element |
-| **Multi-source IP/trade-dress risk** (a result confusable with or derivative of either source) | IP / Trade-Dress Gate (§3d) — per-element attribution + posture; `redesign-to-de-risk` rows flipped to net-new before SHIP |
-| **Silent feature loss in the merge** (an adopted feature dropped while welding) | Feature dimension Attest (§4) vs the Fusion Map's adopted set; drop must be an explicit `drop` row |
+| Frankenstein product (per-element oracles pass, whole is a patchwork) | Coherence Gate (§3c) |
+| Oracle confusion (adopted relabeled to dodge parity, or net-new held to parity) | Selective-Oracle Gate (§3b) |
+| Orphan element (captured-but-undecided source; built-but-unmapped new element) | Fusion Map completeness gate (§3a) |
+| Unresolved conflict built over | Conflict-resolution gate (§3a) |
+| Memory-based synthesis (blended from impression, not captured artifacts) | Per-source clone Phase 1 capture is a mandatory entry condition (§2) |
+| Thin per-source baseline | clone §3a coverage gate, scoped per source (§2) |
+| Stale source | clone §3b drift re-check per source (§2) |
+| Coherence-vs-parity false conflict | §3c preserved-vs-changed aspect split |
+| Multi-source IP/trade-dress risk | IP / Trade-Dress Gate (§3d) |
+| Silent feature loss in the merge | Feature dimension Attest (§4) vs the Fusion Map's adopted set |
 
 ## 6. Add-ons
 
@@ -193,22 +194,7 @@ Magi confirms the relevant dimensions in Phase 3; Phase 4 builds against them; P
 - `+Siege` — when the fused product must meet a performance envelope drawn from either source.
 - `+Sentinel` / `+Clause` — when the multi-source IP/trade-dress posture (§3d) needs a security/legal-surface pass before sign-off.
 
-## 7. Decision Tree vs Neighbors
-
-```
-Building a product from EXISTING products' captured surfaces?
-  NO  → faithful copy of ONE product? → clone
-        net-new, only inspired by references (no captured surface)? → feature / apex
-        consolidate YOUR OWN repos/systems? → migrate (case=arch)
-        cross-language rewrite of your source? → transmute
-        which-features verdict / spec only (no build)? → essential / killer / spec
-  YES → exactly one source, fidelity is the goal? → clone
-        ≥2 sources, synthesized into one new product (not a faithful copy of any)?
-              → fuse   (decide which to take per element, resolve conflicts, prove coherence)
-              unsure which elements to take from each? → spec → fuse
-```
-
-## 8. Output
+## 7. Output
 
 `NEXUS_COMPLETE` with the standard `## Nexus Execution Report` plus a **Fusion Report**:
 - **Research Grounding** — per-source Evidence Ledger summary + the fusion-level positioning sweep that informed the Thesis/Conflict Ledger (`reference/research-grounding.md` §6).

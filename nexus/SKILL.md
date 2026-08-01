@@ -131,7 +131,7 @@ Agent disambiguation → `reference/agent-disambiguation.md`
 
 ## Recipes
 
-> **Recipes = task shape; `## Modes` = execution control. Orthogonal.** Full phase contracts live in each Recipe's `Read` reference; complex Chain Templates (`See reference/recipes-detail.md`) live there; simple Recipes inline their chain.
+> **Recipes = task shape; `## Modes` = execution control. Orthogonal.** Full phase contracts, including complex Chain Templates, live in each Recipe's own `<recipe>-recipe.md` `Read` reference (or `reference/inline-recipes.md` for lightweight recipes); simple Recipes inline their chain.
 
 ### Recipe Families (mental model + within-family disambiguation)
 
@@ -298,7 +298,7 @@ Agent(
 **Chain reference hierarchy (Source of Truth):**
 - `routing-matrix.md` — owns task type → default chain (**93 task types**), the classify/LADDER flow, and the per-task-type phase contracts + Sherpa-skip/chain-adjustment rules. **Primary SoT for "which agents fire for task X"**. The Recipe Registry exposes the most-used types as subcommands; the rest are reachable via the `classify` (default) flow.
 - `agent-chains.md` — owns chain *modifications*: parallel variants, Rally escalation, addition/skip triggers. **Primary SoT for "how to adjust a chain"**.
-- `recipes-detail.md` — owns Recipe-level phase contracts (apex/summit/etc.). **Primary SoT for "what phases a Recipe runs"**.
+- `recipes-detail.md` — owns the Recipe Families axis prose + extended Recipe descriptions. **Primary SoT for phase contracts is each recipe's own `<recipe>-recipe.md`** (or `inline-recipes.md` for lightweight recipes) — "what phases a Recipe runs" lives there, not here.
 
 If context is unclear, inspect git state and `.agents/PROJECT.md`; if confidence remains low, ask one focused question.
 
@@ -354,7 +354,7 @@ Files already indexed by the Workflow table's Read-When column (routing-matrix, 
 | `reference/execution-layers.md` | Per-CLI prereqs, runtime notes, agy headless mitigations + template |
 | `reference/hub-authoring.md` | Per-engine authoring (Claude/Codex/agy), spawn-template variants, model selection, execution-layer key rules, Fable 5 F-principles |
 | `reference/recipes-index.md` | A subcommand matched at Dispatch and you need its chain template + `Read` reference, or you are scanning the full registry to pick a Recipe — **the complete Recipes table** |
-| `reference/recipes-detail.md` | Recipe Families full axis prose + extended Recipe descriptions + full chain templates |
+| `reference/recipes-detail.md` | Recipe Families full axis prose + extended Recipe descriptions (chain templates and phase contracts live in each `<recipe>-recipe.md`) |
 | `reference/{optimize,anneal,restyle,apex,charter,enact,layer,gedanken,delve,cartograph,chronicle,spec,migrate,clone,fuse,graft,eureka,converge,goal,acceptance,growth-acceptance,summit,transmute,venture,package,podium,newsroom,wish,runway,crucible,silhouette,lattice,chorus,assay,hallmark,rebrand,marquee}-recipe.md`, `reference/apex-walkthrough.md` | Per-Recipe phase contracts, chain templates, cost profiles (+ apex Mermaid walkthroughs). Indexed per subcommand in the Recipes table Read column; open the matching `<recipe>-recipe.md` for full detail |
 | `reference/inline-recipes.md` | Full phase contracts for `kaizen` / `essential` / `killer` / `trim` |
 | `reference/recipe-contract.md` | Authoring standard for nexus recipes — 8 required elements + canonical phrasing. Read when authoring/normalizing a recipe |

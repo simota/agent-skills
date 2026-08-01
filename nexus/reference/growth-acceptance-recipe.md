@@ -9,12 +9,12 @@ Recipe contract for `nexus growth-acceptance` — orchestrates the **lifecycle g
 - `_common/GROWTH_BRAND_PROOF.md` (mandatory — Layer C protocol)
 - `nexus/reference/acceptance-recipe.md` (Phase 1 delegates here for merge-time gates)
 
-**Distinguishes from**:
-- `feature` — implements a change with conventional tests. No Insight Ledger, no Brand Compiler, no Incrementality Gate.
-- `acceptance` — Code + Design merge-time gate (Tier B). `growth-acceptance` includes this as Phase 1 and extends to pre-design (Phase 0) + ship-time (Phase 2) + post-launch (Phase 3).
-- `apex` — full discovery → ship cycle. `growth-acceptance` assumes the spec graph + Insight Ledger + Brand Constitution exist; focus is on gating, not authoring.
-- `summit` — strategic decisions and high-stakes releases (tri-engine). `growth-acceptance` is the lifecycle gate; `summit` is the upstream judgment.
-- `kaizen` — single-axis improvement (perf / UX / code-quality / feature-extension). `growth-acceptance` is multi-axis lifecycle gating.
+**Distinguishes from / integrates with**:
+- `feature` — implements a change with conventional tests (no Insight Ledger, no Brand Compiler, no Incrementality Gate); recommended downgrade when Phase 0 detects Solo / SMB or sub-Step-2 adoption.
+- `acceptance` — Code + Design merge-time gate (Tier B); `growth-acceptance` includes it as Phase 1 (full delegation, shared v3 protocol foundation) and extends to pre-design (Phase 0) + ship-time (Phase 2) + post-launch (Phase 3).
+- `apex` — full discovery → ship cycle; `growth-acceptance` assumes the spec graph + Insight Ledger + Brand Constitution exist and focuses on gating, not authoring. Apex's Phase 6 (Ship) can chain into growth-acceptance for Enterprise org deliverables — apex authors, growth-acceptance gates the lifecycle.
+- `summit` — strategic decisions and high-stakes releases (tri-engine); `growth-acceptance` is the lifecycle gate for brand-touching content resulting from summit's strategic decisions — summit decides, growth-acceptance gates execution.
+- `kaizen` — single-axis improvement (perf / UX / code-quality / feature-extension); chain kaizen → growth-acceptance for brand-touching surfaces (kaizen produces, growth-acceptance gates the lifecycle).
 
 ---
 
@@ -62,15 +62,7 @@ Do **not** invoke when:
 
 **Goal**: Code + Design merge-time gates per existing `acceptance` recipe.
 
-**Delegation**: This phase fully delegates to `nexus acceptance` recipe (`nexus/reference/acceptance-recipe.md`):
-- Phase 1 (Spec Diff) → attest
-- Phase 2A (Code Oracles) → radar / mint / matrix (qa-scenario) / sentinel / attest / rally[engine-paradigm COMPETE if applicable]
-- Phase 2B (Design Oracles) → atelier sub-orchestration: muse / frame / palette / weave / flow / canon / vitrine / prose / matrix
-- Phase 3A (Code Adversaries) → vigil / sentinel / siege (concurrency + chaos)
-- Phase 3B (Design Adversaries) → atelier: echo / voyager+vector / matrix (qa-scenario)
-- Phase 4A (Code Acceptance Gate) → judge[tri-engine] / attest
-- Phase 4B (Design Acceptance Gate) → atelier: canon / frame / vision
-- Phase 4C (Joint Verdict) → guardian
+**Delegation**: This phase **fully and wholly** delegates to `nexus acceptance` recipe (`nexus/reference/acceptance-recipe.md`) — its complete Phase 1-6 chain (Spec Diff → Layer A/B Oracle Generation → Layer A/B Adversarial Exploration → Layer A/B/Joint Acceptance Gate → Runtime Oracle Hookup) runs unmodified; growth-acceptance never re-implements or re-derives any part of that adjudication (see `reference/acceptance-recipe.md` § Phase Contract for the full agent-level detail).
 
 **Tier C extensions during Phase 1**:
 - Brand Compiler **B.hard layer** runs during Phase 4B alongside Design Compiler — blocks taboo words / legal compliance / Distinctiveness Floor violations
@@ -136,15 +128,15 @@ A measurement-backed launch is only honest if the success bar is set **before** 
 
 ### Phase 4 — Continuous Cross-Cutting Audits (background, not per-change)
 
-These run on schedule, not per-change, but affect every Layer C operation:
+These run on schedule, not per-change, but affect every Layer C operation. Audit content and mechanics are defined in `_common/GROWTH_BRAND_PROOF.md` (§ Cross-cutting Application of G11/G14/G15 and the Ledger/Constitution audit sections); cadence below is this recipe's own schedule:
 
-- **Quarterly Constitution Health Audit (G15)** — % of Operational entries refreshed in past 6mo; Stale ratio
-- **Quarterly Goodhart Audit (G6 carry-over from Tier B)** — coverage metrics vs second-axis indicators
-- **Quarterly Regulatory Horizon Scan (G14)** — Legal + DataEng publish upcoming changes
+- **Quarterly Constitution Health Audit (G15)**
+- **Quarterly Goodhart Audit (G6 carry-over from Tier B)**
+- **Quarterly Regulatory Horizon Scan (G14)**
 - **Quarterly Distinctive Asset Audit (G12)** — Brand Voice Distinctiveness Index; competitor Colour Stealing detection
-- **Monthly Insight Ledger Audit (G11)** — AI-proposal acceptance rate, category minimum N coverage, stale ratio
-- **Monthly Override Audit (G14 + G15 + Hot-Fix Fast-Path)** — Emergency Overrides per quarter; > 5 triggers process review
-- **Weekly B.tone Sampling Audit (G7 carry-over)** — Brand Director reviews sampled B.tone advisory findings
+- **Monthly Insight Ledger Audit (G11)**
+- **Monthly Override Audit (G14 + G15 + Hot-Fix Fast-Path)**
+- **Weekly B.tone Sampling Audit (G7 carry-over)**
 
 ---
 
@@ -223,10 +215,8 @@ Phase 4 (Cross-Cutting Audits, background):
 | Stop_Condition triggered, 24h no-response | Phase 3 | Auto-halt; default-deny per G13 |
 | Brand Director invokes unilateral veto on Brand-related stop | Phase 3 | Halt; Growth Lead cannot override; veto recorded with reason |
 | Auto-scale eligibility partial (incrementality+ but cannibalization > X%) | Phase 3 | Hold; require manual review |
-| Insight Ledger AI-proposal acceptance rate > 80% | Monthly audit | Flag rubber-stamping; Research Lead audit triggered |
-| Brand Voice Distinctiveness Index < baseline -1σ | Quarterly audit | Compiler threshold tightening; investigate homogenization |
-| Override count > 5 / quarter | Monthly audit | Process review; check Emergency Override commonality |
-| Constitution Operational layer not refreshed > 18mo | Quarterly audit | Compiler refuses new content (G15 forcing function); Renewal Committee mandatory |
+
+4 further rows (Insight Ledger AI-proposal rubber-stamping, Brand Voice Distinctiveness Index degradation, Emergency Override-count review, Constitution staleness lockout) are the Phase 4 audit-triggered failure modes — detection detail in `_common/GROWTH_BRAND_PROOF.md`; escalation actions are as the pattern above (flag / block / process review).
 
 ---
 
@@ -268,27 +258,15 @@ Inherits the engine's gates unchanged (`reference/acceptance-recipe.md`) — **C
 
 | Anti-Pattern | Counter-Rule |
 |--------------|--------------|
-| Invoking growth-acceptance on Solo org | Phase 0 aborts; recommends `acceptance` |
-| Invoking growth-acceptance below Step 2 adoption | Phase 0 aborts; recommends progressive Step adoption |
 | Phase 1 inline orchestration instead of delegating to acceptance | Delegate to acceptance recipe; avoid duplication |
-| Phase 0 evidence queue cleared by AI alone | G11 violation; Research Lead merge required |
 | Phase 2 auto-scale enabled without Decision Tree compliance | Block; require explicit method declaration |
 | Picking the winning metric after results are in (HARKing / p-hacking) | Pre-registration: primary metric + thresholds frozen + hash-stamped before ship; Phase 3 binds to the frozen plan |
 | Claiming incrementality on an invalid control (SRM / contaminated holdout) | Phase 2 control-validity check blocks ship until the counterfactual is sound |
 | Phase 3 Auto-halt blocked by Growth Lead override | G13 enforcement; Brand Director veto authority preserved |
 | Skipping Phase 4 cross-cutting audits | Long-term drift; mandatory schedule |
 | Treating Phase 3 as one-shot post-launch check | Phase 3 has 3 scheduled gates (+14/+30/+90); each is mandatory |
-| Bypassing Compiler via CEO/executive direct content | Acknowledged structural residual (Magi-arbitrated, not technical); requires culture commitment |
 
----
-
-## Integration with Existing Recipes
-
-- **`acceptance`** — Phase 1 fully delegates to acceptance recipe. Both recipes share the v3 protocol foundation.
-- **`apex`** — Phase 6 (Ship) of apex can chain into growth-acceptance for Enterprise org deliverables. Apex authors the change; growth-acceptance gates its lifecycle.
-- **`summit`** — Strategic-decision deliverables resulting in brand-touching content flow through growth-acceptance. Summit decides strategy; growth-acceptance gates execution.
-- **`kaizen`** — Improvements to brand-touching surfaces should chain kaizen → growth-acceptance (kaizen produces; growth-acceptance gates the lifecycle).
-- **`feature`** — recommended downgrade when growth-acceptance Phase 0 detects Solo / SMB or sub-Step-2 adoption.
+4 further anti-patterns (Solo-org adoption, sub-Step-2 adoption, AI write authority on the Insight Ledger, CEO/executive Compiler bypass) are Layer C anti-patterns owned by `_common/GROWTH_BRAND_PROOF.md` § Anti-Patterns Specific to Layer C — not re-derived here.
 
 ---
 
@@ -300,8 +278,4 @@ Inherits the engine's gates unchanged (`reference/acceptance-recipe.md`) — **C
 - `nexus/reference/apex-recipe.md` — discovery → ship cycle; Phase 6 can chain into growth-acceptance
 - `nexus/reference/summit-recipe.md` — strategic decisions; can author Layer C content for growth-acceptance gating
 
-**Layer C skill references** (see also each skill's Reference Map):
-- **Research axis**: `field` (core), `voice` (sentiment), `trace` (replay), `plea` (synthetic demand), `tome` (knowledge), `insight` (proposed Insight Ledger skill, Architect responsibility)
-- **Brand axis**: `vision` (Compiler orchestration + direction), `crest` (brand strategy), `prose` (voice/tone), `clause` (legal), `oath` (regulatory), `muse` (token discipline carry-over)
-- **Market axis**: `pulse` (KPI), `experiment` (A/B + Incrementality), `funnel` (LP), `bazaar` (LP studio), `compete` (cannibalization + Distinctiveness), `ledger` (FinOps), `harvest` (PR data), `cloak` (privacy), `vigil` (brand safety)
-- **Auto-action**: `mend` (auto-halt + remediation), `beacon` (Brand Lift monitoring)
+Layer C's per-axis skill roster (Research / Brand / Market / Auto-action) is not re-listed here — every skill already appears against its owning phase in § Phase Contract above.

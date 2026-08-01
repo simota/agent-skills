@@ -56,7 +56,7 @@ Decision tree for decomposition depth:
 
 ```
 Treat the specification like an API contract:
-  → Spec ambiguity is a root cause in 41.77% of observed failures
+  → Spec ambiguity root-cause rate: see `production-reliability-anti-patterns.md` §3 (41.77% of observed failures)
   → Replace narrative-only instructions with machine-checkable constraints where possible
   → Encode role, capability, constraint, and success criteria explicitly
 
@@ -108,10 +108,7 @@ Designing an action schema to prevent ambiguous delegation:
 ```
 Preventing context loss:
 
-  Quantifying the problem:
-    → A 3-agent chain can degrade the original intent to ~60%
-    → Token truncation can silently drop critical details
-    → In some 8,000-token windows, as much as 40% of context is lost
+  Quantifying the problem: intent-degradation and token-truncation-loss figures are owned by `agent-communication-anti-patterns.md` AC-07 (Handoff Information Loss).
 
   Structured propagation:
     1. Define required fields (goal, constraints, success criteria)
@@ -119,8 +116,7 @@ Preventing context loss:
     3. Pass structured data, not narrative summaries alone
     4. Manage the context window with selective memory
 
-  ❌ Anti-pattern: passing the entire conversation history to the next agent
-    → Explodes token cost and diffuses attention
+  ❌ Anti-pattern: passing the entire conversation history to the next agent — see `agent-communication-anti-patterns.md` AC-04 (Context Bloat)
 
   ✅ Recommended: structured handoff templates
     → Goal + completed work + open issues + constraints
@@ -138,14 +134,7 @@ How Nexus uses this reference:
   4. Use agent-disambiguation.md to prevent role confusion
   5. Use handoff-validation.md to prevent context loss
 
-Quality gates:
-  - Low-complexity task → skip decomposition (prevents TR-01)
-  - High-complexity task → planning phase is mandatory (prevents TR-02)
-  - Agent choice → validate role boundaries first (prevents TR-03)
-  - Critical operation → enforce static mapping (prevents TR-04)
-  - Delegation schema → require discriminated union form (prevents TR-05)
-  - Multi-hop chain → run context integrity checks at each hop (prevents TR-06)
-  - Critical fallback → escalate instead of rerouting blindly (prevents TR-07)
+Quality gates: apply the Mitigation column of the §1 table at the cited phase (CLASSIFY / CHAIN_SELECT / EXECUTE).
 ```
 
 **Source:** [Augment Code: Why Multi-Agent LLM Systems Fail](https://www.augmentcode.com/guides/why-multi-agent-llm-systems-fail-and-how-to-fix-them) · [GitHub Blog: Multi-Agent Workflows](https://github.blog/ai-and-ml/generative-ai/multi-agent-workflows-often-fail-heres-how-to-engineer-ones-that-dont/) · [TechAhead: Multi-Agent Reality Check](https://www.techaheadcorp.com/blog/ways-multi-agent-ai-fails-in-production/) · [Google Cloud: Choose a Design Pattern](https://docs.cloud.google.com/architecture/choose-design-pattern-agentic-ai-system)

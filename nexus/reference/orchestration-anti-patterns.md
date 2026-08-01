@@ -66,15 +66,11 @@ Recommended Plan-and-Execute pattern:
   → Cheaper model executes routine steps
   → Often cuts cost by ~90% vs all-frontier-model execution
 
-Cost tiering:
-  Tier 1 (frontier): planning, hard reasoning, orchestration
-  Tier 2 (mid): standard task execution
-  Tier 3 (lightweight): routing and high-frequency decisions
-
   ❌ Anti-pattern: frontier models for every agent
   ❌ Anti-pattern: production deployment with no cost monitoring
-  ✅ Recommended: real-time cost monitoring plus threshold alerts
 ```
+
+Model-tiering tactics, the demo→production cost multiplier, and cost monitoring are owned by `production-reliability-anti-patterns.md` §5 Cost Management Strategy.
 
 ---
 
@@ -109,12 +105,7 @@ How Nexus uses this reference:
   3. Reflect cost optimization rules during EXECUTE
   4. Feed anti-pattern detection into CES evaluation in routing-learning.md
 
-Quality gates:
-  - Solvable by a single agent plus tools → reject multi-agent expansion (prevents OA-01)
-  - Deterministic workflow → use a fixed pipeline (prevents OA-02)
-  - Hub turning into a bottleneck → consider hierarchy or distribution (prevents OA-03)
-  - Three failed prompt-only attempts → revisit architecture (prevents OA-07)
-  - Any loop pattern → require termination condition and cap (prevents OA-05)
+Quality gates: apply the Mitigation column of the §1 table at the cited phase (CHAIN_SELECT / EXECUTE).
 ```
 
 **Source:** [Google Cloud: Choose a Design Pattern for Your Agentic AI System](https://docs.cloud.google.com/architecture/choose-design-pattern-agentic-ai-system) · [Microsoft: AI Agent Orchestration Patterns](https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns) · [GitHub Blog: Multi-Agent Workflows](https://github.blog/ai-and-ml/generative-ai/multi-agent-workflows-often-fail-heres-how-to-engineer-ones-that-dont/) · [StackAI: 2026 Guide to Agentic Workflow Architectures](https://www.stackai.com/blog/the-2026-guide-to-agentic-workflow-architectures)

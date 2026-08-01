@@ -18,11 +18,9 @@
 - Traceability Anchor (the core design constraint)
 - Directory → File → Agent Mapping (14 directories)
 - Output and Packaging
-- Validation Contract
 - Conditional Inclusion
 - AUTORUN Chain Template
 - Failure Escalation
-- Cost and Latency Profile
 
 ---
 
@@ -34,7 +32,7 @@ The chain is **depth-scaled and mode-overlaid**. A lite run produces a lean prot
 
 Venture is **not** a default recipe. It is opt-in for the "I have an idea, give me everything a team needs to act on it" request. Confirm before launching at **full depth** (24+ agents).
 
-Because Phase 3 is a large homogeneous parallel sweep, it is a natural candidate for a **native Dynamic Workflow** execution substrate (`reference/managed-agents-mapping.md` §5) when available — Nexus stays the routing/recipe layer (which tracks, what feature_id contract) and delegates the parallel track execution. Fall back to L2 parallel spawn otherwise.
+Because Phase 3 is a large homogeneous parallel sweep, it is a natural candidate for a **native Dynamic Workflow** execution substrate (`reference/managed-agents-mapping.md` §5) when available — Nexus stays the routing/recipe layer and delegates the parallel track execution (same delegation as `reference/package-recipe.md` § Cost and Latency Profile). Fall back to L2 parallel spawn otherwise.
 
 ## Invocation Modes
 
@@ -71,12 +69,14 @@ Route elsewhere when the task is:
 
 **Depth controls fan-out breadth.** Inferred from the `depth` condition field, or explicit `depth=`.
 
-| Depth | Directories produced | Approx agents | Use |
-|-------|----------------------|---------------|-----|
-| `lite` (lightweight prototype) | 00, 01(lite), 03, 04(lite), 05 | 6-8 | Fast concept validation, hackathon, idea triage |
-| `mvp` (default — MVP build + business prep) | 00-13, lean | 14-18 | The standard full package |
-| `raise` (fundraising) | 00-13, research/overview/marketing/KPI deepened | 16-20 | Fundraising-grade |
-| `full` (full commercialization) | 00-13, all tracks deep + void/oath/crypt | 24-28 | Production business build — **confirm before launch** |
+| Depth | Directories produced | Approx agents | Approx cost | Use |
+|-------|----------------------|---------------|-------------|-----|
+| `lite` (lightweight prototype) | 00, 01(lite), 03, 04(lite), 05 | 6-8 | Low | Fast concept validation, hackathon, idea triage |
+| `mvp` (default — MVP build + business prep) | 00-13, lean | 14-18 | Medium | The standard full package |
+| `raise` (fundraising) | 00-13, research/overview/marketing/KPI deepened | 16-20 | Medium-High | Fundraising-grade |
+| `full` (full commercialization) | 00-13, all tracks deep + void/oath/crypt | 24-28 | High | Production business build — **confirm before launch** |
+
+Venture is not free. Budget guardrails (Nexus chain confirmation for 5+ agent chains, full-depth confirmation, no-secrets package scrub) are enforced. For repeated ventures with a stable house style, propose a Sigil-generated project skill to amortize the chain design cost.
 
 **Mode overlays bias depth allocation.** Multiple may combine; they reweight tracks, never remove the core 14.
 
@@ -91,44 +91,29 @@ Route elsewhere when the task is:
 ## Topology
 
 ```
-Phase 0          Phase 1                Phase 2 [BARRIER]      ┌──────────── Phase 3: Parallel Doc Tracks ──────────────┐   Phase 4         Phase 5            Phase 6
-[Framing]        [Research]             [Product Spine]        │  (each track consumes the canonical feature_id table)   │   [Overview]      [Integrate+Validate] [Package]
-┌────────────┐   ┌──────────────────┐   ┌──────────────────┐   │ 02 Brand    vision+muse+prose                           │   ┌───────────┐   ┌────────────────┐  ┌──────────┐
-│ parse idea │   │ field       │   │ accord (PRD)     │   │ 04 UX       palette+canvas+echo+prose                   │   │ spark     │   │ attest/judge   │  │ write    │
-│ +conditions│──▶│ +compete         │──▶│ +spark (features)│──▶│ 05 LP       funnel+prose                                │──▶│ +scribe   │──▶│ traceability   │─▶│ tree     │
-│ +mode/depth│   │ ‖ plea +cast     │   │ +rank (MoSCoW)   │   │ 06 Mktg     funnel/bazaar+pulse+experiment                │   │ +magi     │   │ matrix         │  │ +zip -r  │
-│ +clarify≤3?│   │ (WebSearch       │   │ +pulse (KPI)     │   │ 07 Tech     atlas+schema+gateway+beacon+gear+crypt?     │   │ (00_*)    │   │ +manifest.csv  │  │ +syntax  │
-│ +web check │   │  grounded or     │   │ ═══ F-001… +     │   │ 08 AI       oracle                                      │   │           │   │ +validation_*  │  │  lint    │
-└────────────┘   │  research_todo)  │   │  MoSCoW FIXED ═══│   │ 09 Legal    clause+cloak+oath?+omen+ripple            │   │           │   │ +README        │  │ +report  │
-                 └──────────────────┘   └──────────────────┘   │ 10 Test     matrix+radar?+mint                          │   └───────────┘   └────────────────┘  └──────────┘
-                                                               │ 11 PM       sherpa+rank+scribe                          │
-                                                               │ 12 Mock     mint                                        │
-                                                               │ 13 Assets   sketch+canvas                               │
-                                                               └────────────────────────────────────────────────────────┘
+Phase 0          Phase 1                Phase 2 [BARRIER]      Phase 3 [11 tracks, waves]         Phase 4          Phase 5              Phase 6
+[Framing]        [Research]             [Product Spine]        (feature_id-bound; see Phase        [Overview]       [Integrate+Validate] [Package]
+┌────────────┐   ┌──────────────────┐   ┌──────────────────┐    Contracts § Phase 3 table below)  ┌───────────┐    ┌────────────────┐   ┌──────────┐
+│ parse idea │──▶│ field+compete    │──▶│ accord+spark     │───▶┌────────────────────────────┐───▶│ spark     │───▶│ attest/judge   │──▶│ write    │
+│ +mode/depth│   │ ‖ plea+cast      │   │ +rank+pulse      │    │ 02,04-13 parallel doc tracks│    │ +scribe   │    │ traceability   │   │ tree+zip │
+│ +clarify≤3 │   │ (web-grounded or │   │ ═══ F-001… +     │    └────────────────────────────┘    │ +magi     │    │ +manifest+lint │   │ +report  │
+└────────────┘   │  research_todo)  │   │  MoSCoW FIXED ═══│                                      └───────────┘    └────────────────┘   └──────────┘
+                 └──────────────────┘   └──────────────────┘
 ```
 
 Hub-and-spoke is preserved: Nexus is the only top-level orchestrator. **Phase 2 is a hard barrier** — no Phase 3 track may start until the canonical `feature_id` + MoSCoW table exists, because every track (testing, PM, KPI, LP) references it. Phase 3 tracks are mutually independent (separate output files, no shared mutable state) and reconverge only at Phase 5 validation. With 11 tracks, Phase 3 exceeds the ≤7-per-hub cap and is run as **waves** (or a native Dynamic Workflow); group dependent file-writers so no two agents write the same file.
 
 ## Phase 0: Framing
 
-**Purpose:** Establish the contract for the whole package before any agent spawns.
+As the engine's Phase 0 (`reference/package-recipe.md` § Shared Engine) — parse + resolve depth/mode + WebSearch availability check (`01_research/references.md` if grounded, else `01_research/research_todo.md`) + ≤3 clarify gate, each with a stated fallback assumption so work proceeds without a reply. Clarify only on: business domain unidentifiable, target extremely unclear, B2C vs B2B fork, high-risk domain (legal/medical/finance/security), content may be impermissible.
 
-1. **Parse** the business idea + optional condition fields. Missing fields → documented assumptions (written to `00_overview/assumptions.md`), do not block.
-2. **Resolve depth + mode overlays** (defaults: `depth=mvp`, `mode=mvp-dev` + business prep).
-3. **WebSearch availability check.** If browsing is available, Phase 1 research is grounded with sources in `01_research/references.md`. If unavailable, all items needing fresh data are enumerated in `01_research/research_todo.md` and marked as hypotheses (not asserted as fact).
-4. **Clarify gate (max 3 questions).** Ask **only** if one of these would materially change the package: (a) business domain unidentifiable, (b) target extremely unclear, (c) B2C vs B2B forks the whole package, (d) high-risk domain (legal/medical/finance/security), (e) content may be impermissible. Even when asking, state the fallback assumption so work can proceed without a reply.
-5. **Emit the framing contract** bound to all downstream phases:
+Startup-specific contract fields (extend `package_contract`, `entity_anchor: F-`):
 
 ```yaml
 venture_contract:
   idea: <one-paragraph normalized idea>
-  depth: lite | mvp | raise | full
-  modes: [mvp-dev, business-prep, ...]
   audience_tone: <startup | investor | internal | enterprise | dev>
   business_model: B2C | B2B | API | marketplace | hybrid
-  output_language: <from CLI config>
-  web_grounding: available | unavailable
-  assumptions: [(field, assumed_value, why), ...]
   output_dir: project_document_package
   zip_name: project_document_package_<slug>.zip   # [A-Za-z0-9_-] only
 ```
@@ -203,27 +188,15 @@ Run **after** Phase 3 so the overview reflects (not predicts) the package.
 
 **Traceability matrix verifies:** feature_id↔user_story, feature_id↔acceptance_criteria, feature_id↔test_cases.csv, feature_id↔backlog.csv, KPI↔feature, LP value-prop↔brand message, risk↔mitigation, AI usage↔evaluation case.
 **Consistency checks:** idea↔all docs; MVP not over-scoped; MVP vs future not conflated; tech stack ↔ DB/API/infra; target↔LP↔channel↔pricing; tests exist for major features; AI eval cases exist if AI is used; legal/privacy/security noted.
+**`validation_report.md` also records:** directory/file completeness vs the depth tier's required set; CSV/JSON/YAML/SQL/HTML/CSS syntax validity (lint command results); post-unzip usability (file count + structure from `unzip -l`).
 
 ### Phase 6: Package
 
-Nexus internal (Bash):
-
-1. Write the full `project_document_package/` tree to the working directory (UTF-8).
-2. **Syntax lint** before zipping — JSON (`python3 -m json.tool` or `jq`), YAML (`python3 -c "import yaml,sys;yaml.safe_load(...)"`), SQL (basic parse), HTML/CSS (structural), CSV (header presence). Record results in `validation_report.md`.
-3. `zip -r project_document_package_<slug>.zip project_document_package/` — zip name uses `[A-Za-z0-9_-]` only.
-4. **Expansion test:** `unzip -l` the archive; report file count and top-level structure.
-5. Ensure no secrets / API keys / real personal data / temp files are included.
+As the engine's Phase 6 (`reference/package-recipe.md` § Shared Engine, incl. the format syntax lint commands) — write tree (UTF-8) → syntax lint → zip → expansion test → secrets/PII scrub. Startup-specific naming: tree root `project_document_package/`, archive `project_document_package_<slug>.zip`.
 
 ## Traceability Anchor (core design constraint)
 
-The single most important property is that **one canonical feature list flows through the entire package**. This is enforced structurally:
-
-- Phase 2 is a **barrier** — the feature_id table (F-001…) is produced before any track that references features.
-- ID formats are fixed: features `F-001`, test cases `TC-001`, backlog `BL-001`.
-- The feature_id table is passed verbatim in every Phase 3 `_AGENT_CONTEXT` handoff (Testing, PM, KPI, UX, LP). Tracks must reference existing IDs, never mint new feature IDs.
-- Phase 5 fails the package if any test case or backlog item references a non-existent feature_id, or any Must-have feature lacks a user story / AC / test case.
-
-Without this barrier, parallel tracks would independently invent inconsistent feature sets — the dominant failure mode of naive "generate everything at once" prompts.
+As the engine's Generalized Traceability Anchor (`reference/package-recipe.md` § Generalized Traceability Anchor) — the `F-001` entity-id barrier at Phase 2, passed verbatim into every Phase 3 `_AGENT_CONTEXT` handoff; tracks reference existing IDs only, never mint new ones. Startup-specific ID formats: features `F-001`, test cases `TC-001`, backlog `BL-001`. Phase 5 fails the package if any `TC-`/`BL-` item references a non-existent `F-`, or any Must-have feature lacks a user story / AC / test case.
 
 ## Output and Packaging
 
@@ -236,39 +209,26 @@ Without this barrier, parallel tracks would independently invent inconsistent fe
 - `backlog.csv` columns: `id,epic,feature_id,task,description,priority,owner,estimate,dependency,status`.
 - `growth_experiments.md` items: `experiment_id,hypothesis,target_segment,channel,action,success_metric,duration,required_assets,priority`.
 
-## Validation Contract
-
-`validation_report.md` records:
-- Directory/file completeness vs the depth tier's required set.
-- MVP scope ↔ roadmap non-conflict.
-- feature_catalog ↔ user_stories ↔ test_cases ↔ backlog correspondence (traceability matrix result).
-- tech_stack ↔ database_schema.sql ↔ api_design_openapi.yaml coherence.
-- LP copy ↔ brand strategy alignment.
-- Legal/risk notes present; AI eval/guardrail/human-review present if AI is used.
-- CSV header presence; JSON/YAML/SQL/HTML/CSS syntax validity (with the lint command results).
-- Post-unzip usability (file count + structure from `unzip -l`).
-
 ## Conditional Inclusion
 
 | Condition | Add | Skip |
 |-----------|-----|------|
 | depth = lite | — | 02, 06, 07-deep, 08, 09, 10, 11, 12, 13 (keep 00/01-lite/03/04-lite/05) |
-| depth = full | void, oath, crypt, deeper scribe | — |
 | mode includes ai-product | full 08 + ai_evaluation_cases + human_review | — (08 never skipped in this mode) |
 | business_model = B2B / b2b-saas | oath, security_privacy deepened, sales_material, SLA in 11 | — |
 | business_model = B2C / b2c-growth | 02 brand deep, 05 LP, SEO/social/onboarding in 06 | — |
-| web_grounding = unavailable | research_todo.md (enumerate needed lookups, mark hypotheses) | live references.md sourcing |
 | UI surface absent (API/infra product) | — | 04 UX, 05 LP (replace with API docs emphasis in 07) |
 | Figma in workflow | frame (extract tokens) | — |
+
+(`depth = full` and `web_grounding = unavailable` rows are as the engine's Conditional Inclusion — see `reference/package-recipe.md`.)
 
 ## AUTORUN Chain Template
 
 ```
 Nexus AUTORUN venture idea="<X>" depth=<...> mode=<...>
   ── Phase 0 Framing ──────────────────────────────────
-  → parse idea + condition fields → resolve depth/modes
-  → web_grounding check
-  → clarify gate (≤3 Qs only on domain/target/B2X-fork/high-risk/impermissible; else assume)
+  → as package AUTORUN Phase 0 (`reference/package-recipe.md`), fixed to preset=startup (no
+    auto-detect); clarify gate: domain/target/B2X-fork/high-risk/impermissible (else assume)
   → emit venture_contract
   ── Phase 1 Research ─────────────────────────────────
   → field(market+trend+JTBD, web-grounded|research_todo)
@@ -297,13 +257,12 @@ Nexus AUTORUN venture idea="<X>" depth=<...> mode=<...>
   → spark(concept+one_page_pitch) ‖ scribe(exec_summary+decision+90day)
   → magi(coherence)?                      # depth≥raise
   ── Phase 5 Integrate + Validate ─────────────────────
-  → attest/judge(traceability matrix + cross-doc consistency)
-  → Nexus: document_manifest.csv + validation_report.md + README.md
-  → format syntax lint (json/yaml/sql/html/css/csv-header)
+  → as package AUTORUN Phase 5 (`reference/package-recipe.md`) — traceability matrix + cross-doc
+    consistency + universal grounding gate + document_manifest.csv/validation_report.md/README.md
+    + syntax lint (no legal/ai-adoption risk gate; startup carries none)
   ── Phase 6 Package ──────────────────────────────────
-  → write tree (UTF-8) → zip -r project_document_package_<slug>.zip
-  → unzip -l expansion test → secrets/PII scrub check
-  → report: zip path, file count, main contents, validation result, caveats
+  → as package AUTORUN Phase 6 (`reference/package-recipe.md`); startup naming:
+    project_document_package/ tree → project_document_package_<slug>.zip
 ```
 
 ## Output Report
@@ -327,22 +286,8 @@ Both inherited from the `package` engine (`reference/package-recipe.md`): **Term
 | Failure | Detected by | Escalation |
 |---------|-------------|------------|
 | Business idea missing | Phase 0 | Ask for the idea — do not invent a venture |
-| Domain unidentifiable / high-risk | Phase 0 clarify gate | Ask ≤3 questions with fallback assumptions stated |
-| Phase 2 feature table incomplete | accord/spark | Block Phase 3; re-run spine — barrier must not be bypassed |
-| Track references non-existent feature_id | Phase 5 traceability | Return that track for correction |
 | MVP over-scoped (Won't-have leaked) | Phase 5 / void | Re-run rank or void, downgrade scope |
 | tech_stack ↔ schema/API mismatch | Phase 5 | Return Tech track |
 | LP copy ↔ brand mismatch | Phase 5 | Return LP/Brand track |
-| Format syntax invalid | Phase 6 lint | Fix the file, re-lint before zipping |
-| Secrets/PII detected in tree | Phase 6 scrub | Remove and re-package; never ship |
 
-## Cost and Latency Profile
-
-| Depth | Directories | Approx agents | Approx cost |
-|-------|-------------|---------------|-------------|
-| lite | 5 | 6-8 | Low |
-| mvp (default) | 14 | 14-18 | Medium |
-| raise | 14 (research/marketing/overview deep) | 16-20 | Medium-High |
-| full | 14 + void/oath/crypt | 24-28 | High — **confirm before launch** |
-
-Venture is not free. Budget guardrails (Nexus chain confirmation for 5+ agent chains, full-depth confirmation, no-secrets package scrub) are enforced. For repeated ventures with a stable house style, propose a Sigil-generated project skill to amortize the chain design cost. When a native Dynamic Workflow substrate is available, delegate the Phase 3 parallel sweep to it and keep Nexus as the feature_id-contract + validation layer.
+5 further rows (domain-unidentifiable clarify gate, Phase 2 entity-table barrier, dangling entity-id reference, format-lint failure, secrets/PII scrub) inherit the engine's Failure Escalation verbatim — see `reference/package-recipe.md` § Failure Escalation.

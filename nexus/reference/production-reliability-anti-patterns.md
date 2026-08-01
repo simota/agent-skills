@@ -67,12 +67,7 @@ Observed root-cause distribution:
   Verification issues  : 21.30% → independent Judge + thresholds
   Infrastructure issues: ~16%   → observability + circuit breakers
 
-Failure levels and response:
-  L1 (transient)     : auto-retry with exponential backoff, max 3
-  L2 (adjustable)    : auto-tune parameters and reroute to an alternative agent
-  L3 (recoverable)   : rollback state and run a recovery chain
-  L4 (escalation)    : require human intervention
-  L5 (abort)         : safe stop and preserve partial results
+Failure levels and response: owned by `error-handling.md` § Error Levels (L1 AUTO_RETRY → L5 ABORT).
 
   ❌ Anti-pattern: treating L3+ with blind retry
   ❌ Anti-pattern: one retry policy for every failure class
@@ -172,14 +167,7 @@ How Nexus uses this reference:
   3. Coordinate circuit-breaker behavior with guardrails.md (PR-01, PR-05)
   4. Feed production incident data into CES in routing-learning.md
 
-Quality gates:
-  - 5+ agent chain → calculate reliability first (prevents PR-01)
-  - No cost estimate → estimate before production rollout (prevents PR-02)
-  - 3+ serial agents → review for parallelism (prevents PR-03)
-  - Missing trace ID → observability is mandatory (prevents PR-04)
-  - No boundary validation → validate every handoff (prevents PR-05)
-  - Narrative-only spec → require schema (prevents PR-06)
-  - No independent Judge → require validation for critical outputs (prevents PR-07)
+Quality gates: apply the Mitigation column of the §1 table before production rollout.
 ```
 
 **Source:** [TechAhead: Multi-Agent Reality Check: 7 Failure Modes](https://www.techaheadcorp.com/blog/ways-multi-agent-ai-fails-in-production/) · [Augment Code: Why Multi-Agent LLM Systems Fail](https://www.augmentcode.com/guides/why-multi-agent-llm-systems-fail-and-how-to-fix-them) · [GitHub Blog: Multi-Agent Workflows](https://github.blog/ai-and-ml/generative-ai/multi-agent-workflows-often-fail-heres-how-to-engineer-ones-that-dont/) · [Agents Arcade: Error Handling in Agentic Systems](https://agentsarcade.com/blog/error-handling-agentic-systems-retries-rollbacks-graceful-failure)

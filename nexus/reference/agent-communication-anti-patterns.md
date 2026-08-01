@@ -44,7 +44,7 @@ Three-layer architecture for agent communication:
     → reject : refuse work with a reason
     → Define required fields per message type
 
-  Layer 3: Action constraints (Discriminated Union)
+  Layer 3: Action constraints (Discriminated Union — full schema owned by `task-routing-anti-patterns.md` §4)
     → Restrict the allowed actions for each agent
     → Block execution of undefined actions
     → Log the rationale for the selected action
@@ -171,14 +171,7 @@ How Nexus uses this reference:
   3. Use output-formats.md to prevent AC-03 and AC-05 drift
   4. Run context integrity checks throughout execution phases
 
-Quality gates:
-  - Natural-language handoff only → require schema (prevents AC-01)
-  - Hidden state assumptions → require explicit state tracking (prevents AC-02)
-  - Missing message type → require structured protocol (prevents AC-03)
-  - Full conversation transfer → convert to structured handoff (prevents AC-04)
-  - Schema not enforced → add boundary validation (prevents AC-05)
-  - Undefined ownership → require ownership mapping (prevents AC-06)
-  - No handoff validation → add integrity checks (prevents AC-07)
+Quality gates: apply the Mitigation column of the §1 table at the cited handoff.
 ```
 
 **Source:** [GitHub Blog: Multi-Agent Workflows](https://github.blog/ai-and-ml/generative-ai/multi-agent-workflows-often-fail-heres-how-to-engineer-ones-that-dont/) · [Augment Code: Why Multi-Agent LLM Systems Fail](https://www.augmentcode.com/guides/why-multi-agent-llm-systems-fail-and-how-to-fix-them) · [OpenReview: Why Do Multiagent Systems Fail?](https://openreview.net/forum?id=wM521FqPvI) · [Codebridge: Multi-Agent Systems & AI Orchestration Guide](https://www.codebridge.tech/articles/mastering-multi-agent-orchestration-coordination-is-the-new-scale-frontier)

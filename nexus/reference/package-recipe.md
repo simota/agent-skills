@@ -67,6 +67,8 @@ Identical to venture's engine; only the blueprint binds differ.
 | **5 Integrate+Validate** | attest/judge build the traceability matrix + cross-doc consistency + **Universal Grounding Gate** (every external fact sourced / `ASSUMPTION` / research-to-do — fails on ungrounded fact, all presets); Nexus writes `document_manifest.csv`, `validation_report.md`, `README.md`; format syntax lint | manifest + report + README |
 | **6 Package** | Write tree (UTF-8) → `zip -r` → `unzip -l` test → secrets/PII scrub → report absolute zip path | zip |
 
+**Format syntax lint** (Phase 5→6, engine-generic, all presets): JSON via `python3 -m json.tool` or `jq`; YAML via `python3 -c "import yaml,sys;yaml.safe_load(...)"`; SQL via basic parse; HTML/CSS via structural check; CSV via header presence. Results recorded in `validation_report.md` before the Phase 6 zip.
+
 `package_contract` (Phase 0 emit):
 ```yaml
 package_contract:

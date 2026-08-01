@@ -99,74 +99,20 @@ Where `summit` triangulates strategic code decisions, podium triangulates **pros
 ## Topology
 
 ```
-                  ┌──────────────────────────────────┐
-                  │       Nexus (Claude, hub)        │
-                  └────────────────┬─────────────────┘
-                                   │
-       ┌───────────────────────────┼───────────────────────────┐
-       │                           │                           │
-   Phase 0                     Phase 1                     Phase 2
-   FRAMING                     RESEARCH                    NARRATIVE
-   (Claude)                    (parallel ‖)                (Claude)
-       │                           │                           │
-       ▼                           ▼                           ▼
-  content_charter        research_brief.json            narrative_lock.yaml
-                                                               │
-                                                               ▼
-                                    ┌──────────────────────────────────────┐
-                                    │  Phase 3 PRODUCTION (3 tracks ‖)     │
-                                    │  ┌──────────────────────────────┐    │
-                                    │  │ TRACK A: CONTENT             │    │
-                                    │  │  Claude judgment-heavy:      │    │
-                                    │  │  scribe/zine/prose/saga      │    │
-                                    │  │  Codex: quill (code samples) │    │
-                                    │  │  agy: tome (long-ctx body)   │    │
-                                    │  └──────────────────────────────┘    │
-                                    │  ┌──────────────────────────────┐    │
-                                    │  │ TRACK B: VISUAL              │    │
-                                    │  │  Codex: canvas, vitrine     │    │
-                                    │  │  agy: sketch, ink, frame     │    │
-                                    │  │  Claude: vision (direction)  │    │
-                                    │  └──────────────────────────────┘    │
-                                    │  ┌──────────────────────────────┐    │
-                                    │  │ TRACK C: LAYOUT / FORMAT     │    │
-                                    │  │  Codex: stage, morph         │    │
-                                    │  │  agy: figma:figma-use-slides │    │
-                                    │  └──────────────────────────────┘    │
-                                    │  Convergence: doc ↔ slide cross-refs │
-                                    └──────────────────────────────────────┘
-                                                               │
-                                                               ▼
-                                    ┌──────────────────────────────────────┐
-                                    │  Phase 4 VERIFICATION (parallel ‖)   │
-                                    │  ├─ Nexus[claim grounding scan]      │
-                                    │  ├─ canon (style / brand / a11y)     │
-                                    │  ├─ echo (audience walkthrough)      │
-                                    │  ├─ palette (visual a11y for slides) │
-                                    │  ├─ voyager (slide render check)     │
-                                    │  └─ judge (multi-engine review)      │
-                                    └──────────────────────────────────────┘
-                                                   │
-                                  CONFIRMED/LIKELY findings
-                                                   │
-                                                   ▼
-                                    ┌──────────────────────────────────────┐
-                                    │  Phase 5 IMPROVEMENT LOOP (max 2×)   │
-                                    │  ├─ prose (microcopy polish)         │
-                                    │  ├─ canvas (diagram fixes)           │
-                                    │  ├─ stage (slide layout)             │
-                                    │  ├─ zine/scribe (prose tightening)   │
-                                    │  └─ magi arbitrates                  │
-                                    └──────────────────────────────────────┘
-                                                               │
-                                                               ▼
-                                                          Phase 6
-                                                          PUBLISH
-                                              (Morph + Guardian + Launch?)
-                                                               │
-                                                               ▼
-                                                   NEXUS_COMPLETE
+Nexus (Claude, hub)
+  → Phase 0 FRAMING (Claude)                          → content_charter
+  → Phase 1 RESEARCH (parallel ‖)                     → research_brief.json
+  → Phase 2 NARRATIVE (Claude)                        → narrative_lock.yaml
+  → Phase 3 PRODUCTION (3 tracks ‖: Content/Visual/Layout — rosters in § Engine × Team Matrix)
+                                                       → converged doc + slide draft
+  → Phase 4 VERIFICATION (parallel ‖: claim-grounding, canon, echo, palette, voyager, judge)
+                                                       → CONFIRMED/LIKELY findings
+  → Phase 5 IMPROVEMENT LOOP (max 2×, magi-arbitrated)
+  → Phase 6 PUBLISH (Morph + Guardian? + Launch?)
+  → NEXUS_COMPLETE
 ```
+
+Per-track and per-branch engine/agent assignment is the § Engine × Team Matrix below (this diagram's superset).
 
 ---
 
@@ -204,7 +150,7 @@ Phase 6 PUBLISH includes an "Engine Distribution Audit" in the execution report 
 
 ## Phase Contracts
 
-### Phase 0: Framing (Claude only, 1-2 agents, 3-5 min)
+### Phase 0: Framing (Claude only, 1-2 agents)
 
 **Input:** User request (`/nexus podium "<goal>"` with optional `--format`)
 
@@ -250,7 +196,7 @@ user_acknowledged: true | false
 
 ---
 
-### Phase 1: Research Team (parallel, 3-6 agents, 5-12 min)
+### Phase 1: Research Team (parallel, 3-6 agents)
 
 **Input:** `content_charter.yaml`
 
@@ -302,7 +248,7 @@ gaps_to_address: [...]     # facts requested but not findable — Phase 2 must d
 
 ---
 
-### Phase 2: Narrative Team (Claude, 2-4 agents, 5-10 min)
+### Phase 2: Narrative Team (Claude, 2-4 agents)
 
 **Input:** `content_charter.yaml` + `research_brief.json`
 
@@ -347,7 +293,7 @@ cross_references:
 
 ---
 
-### Phase 3: Production Team (3 parallel tracks, 6-18 agents, 15-45 min)
+### Phase 3: Production Team (3 parallel tracks, 6-18 agents)
 
 When `output_format == both`, three tracks run concurrently and converge via cross-reference resolution. When `doc` only, Track C runs only Morph (no Stage). When `slide` only, Track A focuses on slide-body content (no long-form doc body).
 
@@ -372,7 +318,7 @@ content_track:
     - branch: slide_body
       engine: claude
       agents: [cue, prose]
-      mission: slide-by-slide content blocks (titles + bullets + speaker notes) authored from the storyboard. Cue owns narrative beats and speaker notes; Prose owns slide titles and bullet phrasing. Stage is NOT used at this branch — Stage's job is compilation (Track C), not content-only authoring
+      mission: slide-by-slide content blocks (titles + bullets + speaker notes) authored from the storyboard. Cue owns narrative beats and speaker notes; Prose owns slide titles and bullet phrasing (Stage-vs-Track-C division stated once in the AUTORUN chain template below)
       output: slide_content.yaml
 
     - branch: code_samples
@@ -410,14 +356,10 @@ visual_track:
       engine: agy
       agents: [sketch, ink]
       mission: |
-        Sketch produces Gemini-API image-generation CODE (Python/JS) for hero/cover/illustration imagery — it does NOT itself emit PNG files.
-        Ink produces SVG icon system source directly (SVG is code).
-        For visual_anchors of type image: Sketch authors `gen_<anchor_id>.py` (or .js); Phase 6 PUBLISH executes the code under the user's GEMINI_API_KEY to materialize `assets/<anchor_id>.png` (or skip+placeholder if the user defers execution).
-        For visual_anchors of type icon: Ink emits `assets/<icon>.svg` directly with no execution step needed.
+        Sketch authors Gemini-API image-generation CODE (`gen_<anchor_id>.py`/.js, not PNG) for hero/cover/illustration visual_anchors; Ink emits `assets/<icon>.svg` directly for icon anchors, no execution step needed. Materialization (running Sketch's code under GEMINI_API_KEY) happens at Phase 6 PUBLISH, not here — see Phase 6 Agents §1.
       output: |
         image_generation_code/  (Python/JS files from Sketch — runnable but not yet run)
         assets/icons/           (SVG files from Ink — final form)
-      materialization_step: Phase 6 PUBLISH runs `image_generation_code/*` if `--materialize-images` flag is set; otherwise PR/output preserves the code and Phase 6 records a `#TODO(user): run scripts under GEMINI_API_KEY` note in the execution report
       fallback_if_agy_unavailable: Sketch and Ink skipped — placeholder TODO with image_brief.txt for the user to author manually
 ```
 
@@ -462,7 +404,7 @@ layout_track:
 
 ---
 
-### Phase 4: Verification Team (parallel, 3-6 agents, 8-20 min)
+### Phase 4: Verification Team (parallel, 3-6 agents)
 
 **Parallel branches:**
 
@@ -596,7 +538,7 @@ loop_iteration:
 
 ---
 
-### Phase 6: Publish (Claude + Codex, 1-4 agents, 3-10 min)
+### Phase 6: Publish (Claude + Codex, 1-4 agents)
 
 **Agents:**
 1. **Image materialization (conditional)** — if `--materialize-images` flag AND `image_generation_code/` exists from Track B Visual: run the Sketch-authored scripts under the user's `GEMINI_API_KEY` to produce final `assets/<anchor>.png`. Owned by Nexus (Bash execution), not a separate spawned agent. If the flag is omitted, the code is kept as-is and a `#TODO(user): execute image_generation_code/*` note is added to the execution report.
@@ -822,13 +764,11 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 
 | Failure | Mitigation |
 |---------|-----------|
-| Release-critical content shipped without a human in the loop | Phase 0 gate: `risk_tier == release-critical` (press / regulatory / customer-facing keynote) requires explicit confirmation before proceeding |
-| A headline claim with no source behind it | Phase 1 gate: `gaps_to_address.critical > 0` pauses and presents to the user (canonical case: "we claim a 40% improvement but no source backs it") |
-| Parallel format tracks drifting into three different stories | **Narrative lock** is the cross-format contract — once signed off, Phase 3 tracks may not redesign the spine without restarting Phase 2 |
 | The producer grading its own content | Verification Team is Generator-excluded (Q9); the rubric is the single termination oracle per `reference/evaluator-loop-protocol.md` |
 | Endless polish on content that has already converged | Improvement loop **capped at 2 iterations** (vs summit's 3 — content converges faster than code; intentional difference, not drift) with a `diminishing-returns` exit |
-| A render failure silently shipping a stale artifact | Phase 4 render failure forces a Phase 5 loop with stage + morph re-run |
 | Ungrounded prose surviving into the deliverable | Doc Quality Gate W12 per `reference/doc-quality-protocol.md`, discharged by the Verification Team |
+
+Phase-triggered failures — release-critical shipped without human sign-off, a headline claim with no source, narrative-lock drift, a render failure shipping stale — are detection/threshold rows in § Failure Escalation below, not restated here.
 
 ## Failure Escalation
 
