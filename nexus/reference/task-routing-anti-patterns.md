@@ -67,11 +67,11 @@ Role-boundary enforcement:
   4. Ban fallback routing for critical operations such as approvals or payments
   5. Monitor ownership and alert on violations
 
-Routing confidence and action:
-  HIGH (≥0.85)       → Auto-route
-  MEDIUM (0.70-0.84) → Route and show rationale
-  LOW (0.50-0.69)    → Present multiple candidates
-  VERY_LOW (<0.50)   → Escalate to a human
+Routing confidence and action (bands = `confidence-scoring.md` § Confidence Thresholds):
+  HIGH (≥0.80)       → Auto-route
+  MEDIUM (0.60-0.79) → Route and show rationale
+  LOW (0.40-0.59)    → Present multiple candidates
+  VERY_LOW (<0.40)   → Escalate to a human
 ```
 
 ---

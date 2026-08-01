@@ -15,7 +15,6 @@
 - Phase 3: Charter Authoring
 - Engine Assignment (multi-engine orchestration)
 - Charter Document Schema
-- Conditional Inclusion
 - AUTORUN Chain Template
 - Failure Escalation
 - Cost and Latency Profile
@@ -69,19 +68,7 @@ Charter always stops after authoring. To run the result: `/nexus enact <out path
 
 ## Topology
 
-```
-Phase 0          Phase 1 (parallel sweep)                Phase 2              Phase 3              DELIVER
-[Framing]        [Comprehensive Repo Analysis]           [Objective+WBS]      [Charter Authoring]
-┌──────────┐     ┌─────────────────────────────────┐     ┌──────────────┐     ┌────────────────┐   ┌──────────────┐
-│ detect   │     │ lens   (structure/data-flow)    │     │ spark+rank?  │     │ scribe +accord │   │ docs/CHARTER  │
-│ repo type│ ──▶ │ atlas  (arch/deps/debt/ADR)     │ ──▶ │  (autonomous)│ ──▶ │ (trace)        │ ─▶│ .md           │
-│ stack,   │     │ grove  (repo/docs layout)       │     │ sherpa (WBS) │     │ + design team  │   │ + roster.yaml │
-│ size,    │     │ trail  (history/hotspots)       │     │ accord (AC)  │     │   §5 roster    │   │ → handoff to  │
-│ scope,   │     │ sentinel? canon? sweep? pulse?  │     │ magi? omen?  │     │   §6 orch plan │   │   `enact`     │
-│ out path │     │ + read CLAUDE/AGENTS/README     │     │ ripple?      │     │ → write files  │   └──────────────┘
-└──────────┘     └─────────────────────────────────┘     └──────────────┘     └────────────────┘
-                                                  ◀──────── Failure escalation (back to originating phase) ──────┘
-```
+Five stages in sequence — Phase 0 Framing → Phase 1 Comprehensive Repository Analysis (parallel sweep) → Phase 2 Objective & Work Breakdown → Phase 3 Charter Authoring → DELIVER — each detailed in its own section below (full agent list, not repeated here). Failure escalation loops back to the originating phase (see § Failure Escalation).
 
 Hub-and-spoke is preserved: Nexus is the only orchestrator. Charter spawns only analysis/authoring specialists. The Charter's §5 *nominates* sub-orchestrators (Vision/Orbit/Rally) for execution clusters, but they are instantiated later by `enact`, not here.
 
@@ -127,7 +114,7 @@ Turn analysis (+ objective) into a prioritized, decomposed, acceptance-bounded p
 | `spark` | Propose candidate bodies of work from the Intelligence Report | Autonomous mode only |
 | `rank` | Score candidates (ICE/RICE/WSJF) and select the chartered scope | Autonomous mode only |
 | `sherpa` | Decompose chartered scope into atomic steps / work packages (<15 min each), with dependencies + sequencing | Yes |
-| `accord` | Requirements (L0→L3) + measurable acceptance criteria + traceability per work package | Yes |
+| `accord` | Requirements (L0→L3) + measurable acceptance criteria + traceability per work package | Yes (reduced to Lite threshold at `scope=lite`) |
 | `magi` | Arbitrate scope/approach when candidates or decompositions conflict | Conditional: ambiguity / tie |
 | `omen` + `ripple` | Pre-mortem (FMEA/RPN) + blast-radius for the planned work → embedded as Charter risk gates | Conditional: full scope or high reversibility cost |
 
@@ -230,16 +217,6 @@ Derived from the human-agent-team diagnostic [Source: claude.com/blog/building-e
 
 §5 + §6 make the team a pure function of the document. Each §5 entry is a ready-to-use spawn spec aligned to the Agent Spawn Template (SKILL.md) — role → skill SKILL.md path, model tier, engine, acceptance criteria, output envelope — so `enact` can construct the team without re-deriving anything.
 
-## Conditional Inclusion
-
-| Condition | Add | Skip |
-|-----------|-----|------|
-| Autonomous (no objective) | spark, rank in Phase 2 | — |
-| Objective supplied | — | spark, rank |
-| `scope=lite` | — | grove, trail, canon, sweep; accord at Lite threshold |
-| `scope=full` | canon, sweep, omen+ripple, void | — |
-| Security-sensitive repo | sentinel (P1) | — |
-
 ## AUTORUN Chain Template
 
 ```
@@ -279,14 +256,18 @@ Nexus AUTORUN charter "<objective>"
 
 ## Failure Escalation
 
-| Failure | Detected by | Escalation |
+Because charter **stops at the document and runs no execution** (`reference/recipe-contract.md` §3: no execution → **no confirm gate**), most rows below are *authoring*-time gates that prevent failures from surfacing expensively downstream in `enact`.
+
+| Failure | Detected by | Escalation / what it prevents |
 |---------|-------------|------------|
-| Phase 1 analyzer can't read a subsystem | lens/atlas | Flag section `UNKNOWN`, continue; never fabricate |
-| Phase 2 no worthwhile work (autonomous) | rank | Present top candidates or abort, suggest explicit objective |
-| Phase 2 scope/approach tie | magi | Pause for human verdict |
-| Phase 3 self-containment check fails | scribe/accord | Re-author missing sections before DELIVER |
-| Phase 3 a work package has no constructable owner skill | scribe | Re-scope or flag the gap in §5 (so `enact` does not hit an unresolvable roster) |
+| Phase 1 analyzer can't read a subsystem | lens/atlas | Flag section `UNKNOWN`, continue; never fabricate — prevents a Charter that assumes repo facts that aren't true |
+| Phase 2 no worthwhile work (autonomous) | rank | Present top candidates or abort, suggest explicit objective — prevents chartering low-value work |
+| Phase 2 scope/approach tie | magi | Pause for human verdict — prevents a scope/approach deadlock stalling authoring |
 | Risk gate No-Go | omen/ripple | Return to Phase 2 (re-scope) |
+| Phase 3 self-containment check fails | scribe/accord | Re-author missing sections before DELIVER — prevents a Charter that can't self-drive (a reader, or `enact`, would have to re-run analysis to act) |
+| Phase 3 a work package has no constructable owner skill | scribe | Re-scope or flag the gap in §5 — prevents `enact` Phase 1 hitting an unresolvable roster at run time |
+| Engine assumptions fail silently at run | N/A (design-time gate) | §6 records per-engine prereqs + a `fallback_engine` per Codex/agy package so `enact` degrades gracefully instead of hard-failing |
+| Untrackable execution downstream | N/A (design-time gate) | §10 checklists (pre-flight, per-package DoD, progress tracker, final delivery), generated from §3+§4+§7, give `enact` testable gates instead of prose judgment |
 
 ## Resume
 
@@ -299,20 +280,6 @@ Nexus AUTORUN charter "<objective>"
 ## Scale
 
 **8-20 agents, single pass, mid-to-high cost** (repo-size dependent: the analysis fan-out over subsystems dominates; authoring is a small tail). No cycle multiplier — see Termination Bound.
-
-## Failure Modes Prevented
-
-Consolidated view of what charter's analysis-grounding and self-containment gates guard against — a summary surface over the **Failure Escalation** table above (the per-row escalation rules remain the source of truth). Because charter **stops at the document and runs no execution** (`reference/recipe-contract.md` §3: no execution → **no confirm gate**), the failures it prevents are *authoring* failures that would otherwise surface expensively downstream in `enact`.
-
-| Failure mode | Without charter's gates | Prevented by |
-|--------------|-------------------------|--------------|
-| Aspirational, unbuildable plan | A Charter assumes repo facts that aren't true | Phase 1 comprehensive analysis grounds every roster/work-package decision in repo reality; gaps flagged `UNKNOWN`, never fabricated |
-| Charter that can't self-drive | A reader (or `enact`) must re-run analysis to act | Phase 3 self-containment check — roster, WBS, AC, conventions, orchestration plan, gates all present and mutually consistent before DELIVER |
-| Unresolvable roster downstream | `enact` Phase 1 hits a work package with no constructable owner | Self-containment check: every §4 package maps to exactly one owner skill that exists in the ecosystem; gap re-scoped/flagged in §5 here, not at run time |
-| Engine assumptions fail silently at run | `enact` can't reach the assigned engine and hard-fails | §6 records per-engine prereqs + a `fallback_engine` per Codex/agy package so `enact` degrades gracefully instead of hard-failing |
-| Building the wrong body of work (autonomous) | Charter scopes low-value work | Phase 2 spark + rank (ICE/RICE/WSJF) select the chartered scope; no worthwhile work → present candidates or abort |
-| Scope/approach deadlock | Conflicting decompositions stall authoring | Phase 2 magi arbitration; risk-gate No-Go returns to Phase 2 re-scope |
-| Untrackable execution | `enact` has no objective gate, only prose judgment | §10 checklists generated from §3+§4+§7: pre-flight, per-package DoD, progress tracker, final delivery — testable gates `enact` ticks |
 
 ## Cost and Latency Profile
 
@@ -328,4 +295,4 @@ Charter only spawns analysis/authoring agents, so it stays cheap relative to `en
 
 ## Visualization
 
-Topology ASCII above. The Charter document (`docs/CHARTER.md`) is the human-facing artifact; `CHARTER.roster.yaml` is the machine-readable team/orchestration spec consumed by `enact`.
+See § Topology for the phase flow. The Charter document (`docs/CHARTER.md`) is the human-facing artifact; `CHARTER.roster.yaml` is the machine-readable team/orchestration spec consumed by `enact`.

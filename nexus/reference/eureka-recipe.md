@@ -22,14 +22,16 @@ Conditions 1-2 make it *new*; condition 3 makes it *real*. Most "breakthroughs" 
 
 **The frame is engineering, not law.** *Prior art*, *enablement*, and *reduction to practice* are used here in their plain engineering sense: what already exists, whether someone else can build it from the write-up, whether it was actually built and tested. The recipe borrows the *discipline* of examined novelty and nothing else — rights, licensing and patentability are **out of scope at every phase** (route those to `clause`; see the Not-this table).
 
-Eureka's identity is six things no sibling carries together:
+Eureka's identity is six things no sibling carries together — each is fully specified in the phase named, not repeated here:
 
-1. **Contradiction extraction** — an invention is what dissolves a trade-off that everyone else treats as a law of nature. Phase 1 names the contradiction explicitly ("faster *requires* more expensive"), because a problem statement that does not name one usually describes a task, not an invention opportunity.
-2. **Prior-Art Ledger** — a cited, tiered record of what already exists, **inverted in polarity from every other sweep in the roster**: `clone` researches to *reproduce*, `wish` researches to *reach*, `eureka` researches to *avoid*. It is the denominator both Phase 3 tests are measured against: no candidate survives without a stated delta from its nearest neighbor in it (`COLLISION`), **and** no candidate survives if that delta is a routine move from the same ledger (`OBVIOUS`). The ledger is what makes "not ordinary" checkable instead of asserted.
-3. **Failure archaeology** — the sweep's highest-value output is not what exists but **what was tried and abandoned, and why**. Those reasons are the real constraints. An invention that has not beaten them is a repeat of a known failure, which is the most expensive kind of "novel."
-4. **Reduction to practice** — the minimum artifact that demonstrates the mechanism, built **falsification-first**: the spike is designed to kill the mechanism, not to demo it. This is the line between an invention and an idea, and it is a contract-level requirement, not an optional add-on.
-5. **Blind ordinariness test** — novelty alone lets a routine substitution pass as an invention, so every candidate also faces the **Routine-Move Test**: a pre-committed panel proposes the ordinary next moves *before any candidate exists*, so "anyone would have done this" is settled by reproduction rather than by hindsight. Nothing else in the roster asks whether a new thing is also a **non-ordinary** thing. Survivors then clear the **Tetrad Gate** — novelty · value · feasibility · defensibility — four axes that exist scattered across other recipes but are nowhere gated together.
-6. **Sacrifice accounting** — the trade-off the invention claims to dissolve is checked for **relocation**, across every axis a real system pays on, including *time* (paid later) and *other people* (paid by someone not in the room). A candidate that merely moved the cost is not an invention, and the ledger is what makes "nothing was sacrificed" a checked claim instead of a sales line. This is why a **free lunch raises scrutiny rather than confidence** here: the usual explanation for one is an axis nobody counted.
+| # | Identity element | Specified in |
+|---|-------------------|--------------|
+| 1 | Contradiction extraction | Phase 1 |
+| 2 | Prior-Art Ledger (inverted polarity: research to *avoid*, not reproduce) | Phase 1.5 |
+| 3 | Failure archaeology | Phase 1.5 |
+| 4 | Reduction to practice (falsification-first) | Phase 5 |
+| 5 | Blind ordinariness test (panel + Routine-Move Test) → Tetrad Gate | Phase 2-3 (panel/verdict) · Phase 4 (gate) |
+| 6 | Sacrifice accounting (relocation check, incl. *time* and *other people*) | Phase 4 (Sacrifice Ledger) |
 
 ### Use `eureka` for
 
@@ -88,7 +90,7 @@ The continuation **collapses rather than repeats**: `spec` enters with the Inven
 
 Convergence **`loop ≤ N cycles (default N=3)`**, plus at most **one full re-ideation** (return to Phase 2 with the failure reasons as added constraints).
 
-**`depth=scout` has no loop at all.** It runs Phases 1 → 1.5 → 2′ → 3 once and exits `NOVEL-CANDIDATES` or `SATURATED` (§1a) — the cycle budget, the re-ideation, `ACCEPT`, `cap-reached` and `BLOCK` are **inapplicable, not merely unused**. One exit reason below does survive: **`budget-reached`** — a scout whose envelope runs out mid-sweep delivers the partial ledger and whatever verdicts exist, labelled as a **partial denominator** so no absence of a collision is read as evidence of novelty.
+**`depth=scout` has no loop at all** (full contract: §1a) — only `budget-reached` applies, delivered as a **partial denominator**.
 
 **Two returns, one cycle budget.** The Phase 6 convergence cycles and the Phase 2 re-ideation are different loops, and they are bounded by one shared counter so the run cannot silently double:
 
@@ -116,7 +118,7 @@ Exit reasons use the canonical vocabulary:
 
 ## 3. Confirm / Safety Gate
 
-**`depth=scout` collapses this section to one stop:** the combined contradiction + ledger-scope ratification at Phase 1.5 exit. No launch gate, no separate Phase 1 checkpoint, no Ship Gate (the mode cannot reach it), and no Phase 5 spike gate (there is no spike). The Pivot Advisory rule below applies unchanged — it is the cheapest place in the recipe to learn the framing is wrong. Standard Ask First tiers still apply. Everything else in this section describes the full run.
+**`depth=scout` collapses this section to one stop** — the combined contradiction + ledger-scope ratification at Phase 1.5 exit (full contract: §1a). Everything else below describes the full run.
 
 - **Phase 0 framing gate: Confirm before launch — always** (unconditional, intentional parity with `wish`/`summit`). Surfaces: the declared contradiction, the budget envelope, the estimated prior-art sweep breadth, and — when the request is a **known solution to a known problem** — a recommendation to route to `feature`/`spark`/`graft` instead. Invention framing on routine work is this recipe's inflation risk, and the gate is where it is caught.
 - **Phase 1 Contradiction Crystallization: contract-level checkpoint; AUTORUN cannot skip.** A contradiction the user does not recognize as theirs produces an invention nobody wanted.
@@ -143,7 +145,7 @@ Exit reasons use the canonical vocabulary:
 
 **Checkpoint-resume:** persist the Invention Contract + contradiction at Phase 1 exit; **the Prior-Art Ledger + failure archaeology at Phase 1.5 exit** (it is the single most expensive artifact in the run, and a re-swept ledger would silently move the novelty denominator, invalidating every earlier verdict); **the Ordinary-Move Set** (produced blind, before any candidate is known — re-deriving it after the candidates exist would destroy exactly the hindsight-freedom it is built for) and the full candidate set with per-candidate `COLLISION`/`OBVIOUS`/`INCREMENTAL`/`NOVEL` verdicts at Phase 3 exit — **the persisted candidate set and the emitted Idea Ledger (§6a) are the same artifact, one stored and one shown**, so a resumed run never re-derives ideas the user has already seen; **every Pivot Advisory with its outcome** (`accepted`/`declined`/`unanswered`) at each emission boundary, so a resumed run neither re-raises a declined advisory nor loses an unanswered one; spike code and results at Phase 5 exit; per-cycle scores and surviving attacks at each Phase 6 boundary. A re-ideation pass **reuses the persisted ledger** rather than re-sweeping.
 
-**`depth=scout` persists for promotion, not just for resume.** Its ledger, 2-agent panel proposals, and adjudicated Idea Ledger are written at the same boundaries, so a later full run enters at Phase 2 against the frozen artifacts (§1a) instead of re-sweeping — and a scout that is never promoted has still left the expensive artifact behind for the next attempt.
+**`depth=scout` persists for promotion, not just for resume** — same boundaries as the full run, so a later run enters at Phase 2 against the frozen artifacts instead of re-sweeping (full contract: §1a).
 
 **`ship=true` adds one checkpoint and one freeze.** The Invention Dossier is **frozen at the Ship Gate** and is never re-opened by a downstream phase — a build that discovers a problem returns to Phase 9 (spec revision) or stops, but it may not edit the novelty verdict that authorized it. A run interrupted during the build resumes at **Phase 9 or 10 against the frozen dossier**; Phases 1.5-7 never re-run, because a re-swept ledger would move the novelty denominator under a decision already made on the old one. A Phase 11 `RETRACTED` outcome does **not** edit the frozen dossier: the Ship-Gate-time verdict stands as recorded, and the retraction is a **separate Novelty Regression verdict** layered alongside it (§6) — the freeze rule and the retraction never conflict.
 
@@ -337,8 +339,6 @@ Phase 11  NOVELTY REGRESSION CHECK ★before ship
 Phase 12  DELIVER — frozen Invention Dossier + apex Delivery Report + Novelty Regression verdict
 ```
 
-**Phase 1.5 — prior-art tier reweighting.** `reference/research-grounding.md` owns the sweep contract (tiered sources, per-claim verification, cited ledger). Eureka's specialization is the **polarity and the weighting**: prior art is strongest where it is most independently examined, so **peer-reviewed papers, standards, and inspectable implementations (OSS, published benchmarks) outrank vendor claims and marketing** — the inverse of the fidelity sweeps, where first-party product docs sit at T1. A vendor's "world's first" is T2 *intent* and never settles novelty. Adjacent-industry search is mandatory, not optional: the same contradiction is usually named differently in another field. Note what those entries are *for* — a foreign-domain match is **not** an automatic kill (the denominator is domain-scoped; see the Phase 3 composite rule), it is the input that decides whether importing the mechanism here is the ordinary move.
-
 **Phase 2 — generator independence.** Six heuristics is the point: three prompts to one model produce three framings of one set of priors, and invention is exactly the task where priors are the constraint. Distribute across engines where the hub allows (`_common/CLI_COMPATIBILITY.md §4`); a single-engine run **declares the monoculture** in the dossier. Generators do not see each other's output before submitting — cross-pollination happens at Phase 3, after each has committed.
 
 **Phase 3 — the Routine-Move Test (how `OBVIOUS` is decided).** "Would anyone have reached this?" is unanswerable by asking an evaluator who has already seen the answer — hindsight makes every good idea look inevitable. So it is decided by **reproduction, not judgment**:
@@ -467,55 +467,33 @@ So **every kill and every non-`ACCEPT` exit carries a salvage verdict**: either 
 | `SATURATED` / `BLOCK (prior-art saturation)` | a **map of the field** plus why every attempt failed | `compete` (positioning against what exists) · `graft` (import the best existing mechanism) · `feature` (build the known solution deliberately) |
 | `cap-reached` / plateau-with-open-attacks | the best candidate, with its unmet dimensions named | **`killer`** for a go/no-go on it as a bet · re-enter later at Phase 6 against the frozen ledger, not from scratch |
 
-**Contract rules.** (a) **No silent discards** — a candidate leaves the run either routed or explicitly discarded with a reason; "not an invention" is a verdict on the definition (§1), never a judgment that the thing is useless. (b) **Recommendation, not auto-continuation** — salvage routes are emitted with the handover content and a ready-to-run command; the run does **not** spawn another recipe on its own, because that would spend an envelope the user never approved (`ship=true` is the one continuation this recipe pays for, and it is opt-in). (c) **Bounded** — at most three routes per run, ranked by expected value; the rest are listed as discards. (d) **Related to, but distinct from, `WRONG-RECIPE`** — that Pivot Advisory detector fires *mid-run* to stop paying invention cost early (§6a); salvage runs *after* the verdicts and is about extracting value from what the run already produced. Both can fire in the same run without contradiction. (e) **`depth=scout` salvages too** — a `SATURATED` scout is the cheapest possible version of this table: 11-14 agents spent, a field map delivered, and a route out.
+**Contract rules.** (a) **No silent discards** — a candidate leaves the run either routed or explicitly discarded with a reason; "not an invention" is a verdict on the definition (§1), never a judgment that the thing is useless. (b) **Recommendation, not auto-continuation** — salvage routes are emitted with the handover content and a ready-to-run command; the run does **not** spawn another recipe on its own, because that would spend an envelope the user never approved (`ship=true` is the one continuation this recipe pays for, and it is opt-in). (c) **Bounded** — at most three routes per run, ranked by expected value; the rest are listed as discards. (d) **Related to, but distinct from, `WRONG-RECIPE`** — that Pivot Advisory detector fires *mid-run* to stop paying invention cost early (§6a); salvage runs *after* the verdicts and is about extracting value from what the run already produced. Both can fire in the same run without contradiction. (e) **`depth=scout` salvages too** (§1a) — a `SATURATED` scout is this table's cheapest form: 11-14 agents, a field map, a route out.
 
 ## 8. Failure Modes Prevented
 
 | Failure | Mitigation |
 |---------|-----------|
-| **Reinventing something that already ships** | Prior-Art Ledger as the novelty denominator + Phase 3 `COLLISION` kill-with-citation; no candidate advances without a stated delta |
-| **Ordinary work called an invention** — the delta is real but is a standard combination, a like-for-like substitution, or a parameter/scale change anyone would have made | Phase 3 `OBVIOUS` verdict, decided by the blind Routine-Move Test rather than by an evaluator's impression; killed with the matching proposals as evidence |
-| **Hindsight obviousness** — an evaluator who has seen the answer judges it inevitable, killing real inventions | The ordinary-move panel is **blind and pre-committed**: it runs concurrently with Phase 2 on the ledger alone, never sees a candidate, and its set is frozen before Phase 3 opens |
-| **Cross-domain transplant auto-killed by its own source** — generator ② imports a mechanism, and the Phase 1.5 adjacent-industry entry it came from reads as prior art | Domain-scoped denominator + composite judgment (mechanism + local adaptation); a foreign entry sets the `OBVIOUS` bar, never an automatic `COLLISION`. Routine imports route to `graft` instead |
+| **Novelty misjudged** — reinvention slips through, a routine substitution is called an invention, hindsight makes a real invention look obvious, or a cross-domain transplant is auto-killed by its own source | Phase 3 two-test gate: `COLLISION` (cited kill) / `OBVIOUS` (blind, pre-committed Routine-Move Test, never an evaluator's impression) + domain-scoped composite judgment for transplants (§5 Phase 3) |
 | **Repeating a known failure** ("nobody does this" because it was tried and it failed) | Failure archaeology at Phase 1.5; the reasons become Phase 2 constraints and Phase 4 value tests |
 | **Novelty for its own sake** (new, and nobody cares) | Tetrad VALUE axis + the adoption-failure reasons re-run as tests |
-| **A re-priced trade-off sold as a dissolved one** — X improves, Y holds, and the bill lands on complexity, ops burden, trust, another team, or next quarter | **Sacrifice Ledger** gate (§5, Phase 4): every axis accounted including *later* and *whose*; `DISPLACED-HIDDEN` is a kill, and definition condition 3 (§1) makes this constitutive rather than advisory |
-| **A legitimate cost relocation punished as a defect** — trading memory for latency when memory is genuinely free is generator ③'s whole point | `DISPLACED-DECLARED` **passes**, on one condition: the move lands on an axis the Phase 1 constraint budget declared free, and it is stated as part of the mechanism rather than buried |
-| **Unaudited free lunch** — a candidate that appears to cost nothing anywhere is accepted because nobody looked | `FREE-LUNCH` does not pass on sight: one extra skeptic runs with the single brief "name the axis we failed to count", and only a failed search promotes it to `DISSOLVED` |
+| **Sacrifice mis-accounted** — a re-priced trade-off sold as dissolved, a legitimate relocation punished as a defect, or an unaudited free lunch accepted on sight | **Sacrifice Ledger** gate (§5, Phase 4): `DISSOLVED` / `DISPLACED-DECLARED` (passes) / `DISPLACED-HIDDEN` (kill) / `FREE-LUNCH` (one extra skeptic must fail to find the missing axis first) |
 | **Science fiction** (novel, valuable, unbuildable) | Tetrad FEASIBILITY sketch + Phase 5 reduction to practice as a contract requirement |
 | **Trivially copyable "invention"** | Tetrad DEFENSIBILITY (moat class + time-to-copy), buildable-emergent moats not auto-downgraded |
-| **Idea mistaken for invention** (a claim with no artifact) | Phase 5 falsification-first spike, judged by Radar rather than its builder |
-| **Demo-driven self-deception** (the spike was built to succeed) | Falsification criterion declared before the run; producer ≠ judge (Q9) |
-| **An invention only its inventor can build** | ENABLEMENT as a scored rubric dimension on a defined 0-3 scale (§5, Phase 6 note) + the Phase 7 Disclosure Package; ENABLEMENT = 3 is Ship Gate precondition ③ |
-| **Generator monoculture** (six prompts, one set of priors) | Six structurally-different heuristics, cross-engine distribution, no cross-pollination before commitment; monoculture declared when unavoidable |
-| **Novelty grading inflation** (everything looks new to a generous evaluator) | Prior-art-anchored calibration: the nearest prior art must score NOVELTY 0 / FEASIBILITY 3, or the evaluator is re-prompted |
-| **Contradiction never named** → a task dressed as an invention | Phase 1 requires an explicit "<better X> requires <worse Y>"; unnameable → route out |
-| **Invention framing on routine work** | Phase 0 gate recommends `feature`/`spark`/`graft` when the ask is a known solution to a known problem |
-| **Invention-grade cost for a novelty question** — "is this already out there?" is answered by a 32-62-agent run because nothing cheaper judges novelty | **`depth=scout`** (§1a): 11-14 agents, one confirmation, ledger + adjudicated candidates, promotion re-enters at Phase 2 against the frozen ledger |
-| **A scout result mistaken for a proven invention** | Separately named **Novelty Scout Report** (never "dossier"), every survivor labelled `UNPROVEN` with what is missing stated, `ACCEPT` unreachable by construction, and `depth=scout` + `ship=true` refused as mutually exclusive |
-| **The idea field invisible until the end** — 8-15 mechanisms are generated, most are killed at Phase 3, and the user sees none of them until Phase 8 (or none at all if the run is cancelled at Phase 5) | **Idea Ledger emitted mid-run** at Phase 2 (raw) and Phase 3 (adjudicated), kills included with their evidence, persisted at the same boundaries (§6a, §4) |
-| **Silent deduplication** — near-duplicate mechanisms are merged before the user ever sees the variants | Dedup is **shown, not applied silently**: the v1 ledger lists merged ideas with their `dedup_into` target |
-| **Framing lock-in** — the run learns mid-ideation that a neighboring direction is the better one, but the contradiction is frozen, so it grinds to a weak `ACCEPT` on the wrong problem | **Pivot Advisory** with five named detectors on already-produced artifacts (§6a), emitted at Phases 2, 3 and 5; a `BLOCK` delivery carries it too |
-| **Silent self-re-framing** — the run quietly switches the contradiction or the ledger scope, invalidating every verdict measured against the frozen versions | Emitting an advisory is free; **acting** on one is a contract-level confirm AUTORUN cannot skip (§3), and the run continues on the declared framing until the user says otherwise |
-| **Pivot chasing** — advisories become a licence to wander, and the run never converges | Evidence-bound or not emitted, ≤ 3 per emission, deduplicated across emissions, only three emission points, declined ones not re-raised by the same detector |
-| **Value below the invention bar thrown away** — a `COLLISION` (someone already built it, so it *works*), an `OBVIOUS` (a cheap improvement nobody made), or a priced trade-off is discarded because it is "not an invention" | **Salvage Routing** (§7): every kill and non-`ACCEPT` exit carries `route:<recipe>` with its handover content or an explicit `discard(<reason>)`; `salvage` is a required Idea Ledger field, so silence is not a valid outcome |
-| **Auto-spending on the salvage route** — the run notices a `kaizen` opportunity and starts building it on an envelope nobody approved | Salvage is **recommendation-only** with a ready-to-run command; `ship=true` remains the sole continuation this recipe pays for, and it is opt-in |
-| **"No, not yet" reported as "no"** — a novel, valuable mechanism dies on feasibility and the condition that would revive it is lost | `FEASIBILITY`-failed candidates carry a **dated re-check trigger**: the specific constraint whose price change makes them buildable (generator ⑤ run backwards) |
-| **A null result thrown away** | `BLOCK (prior-art saturation)` still ships the dossier — the ledger and failure archaeology are the run's most valuable artifact |
-| **Unbounded search for a breakthrough** | `loop ≤ 3` + exactly one re-ideation + budget envelope with `budget-reached` best-so-far delivery |
-| **Cycle-budget double-spend** — a re-ideation silently buys a fresh set of convergence cycles, doubling the run | §2 two-returns-one-budget rule: the Phase 6 counter is run-wide and a re-ideation does not reset it; Phase 3 and Phase 5 draw on the *same* single re-ideation |
-| **Novelty erosion during the build** (`ship=true`) — the load-bearing delta is simplified away and a generic feature ships under an invention's name | Novelty Invariant at Phase 10 (a scope cut removing the delta is a gate failure, not a trade-off) + Phase 11 regression check by a non-builder + `RETRACTED` as an honest terminal verdict |
-| **The verdict follows the code** — the novelty claim is softened after the fact to match what got built | Dossier **frozen** at the Ship Gate; no downstream phase may edit the novelty verdict that authorized it |
-| **Spike promoted to production** — a design chosen for falsifiability becomes the architecture | Phase 10 contract: the spike is evidence, not a foundation; production re-derives from the Disclosure Package |
-| **Building an unratified invention** | Ship Gate preconditions ①②③④ — only an `ACCEPT` exit with zero surviving attacks, ENABLEMENT = 3, and a surviving spike reaches Phase 9 |
-| **Silent cost escalation from invention into product** | `ship=true` is opt-in and never inferred; a **second** unconditional confirm with a **separate** build envelope (precondition ⑤) |
-| **Re-running settled discovery** (invention proven, then spec re-brainstorms it) | Phase 9 collapses FRAME/EXPAND/CHALLENGE against the Invention Handoff Packet; re-litigating a ratified mechanism is drift (Q7) |
+| **Idea mistaken for invention, or demo-driven self-deception** (a claim with no artifact; the spike was built to succeed) | Phase 5 falsification-first spike, criterion declared before the run, judged by Radar not the builder (Q9) |
+| **An invention only its inventor can build** | ENABLEMENT as a scored 0-3 rubric dimension (§5, Phase 6 note) + Phase 7 Disclosure Package; ENABLEMENT = 3 is Ship Gate precondition ③ |
+| **Generator monoculture, or novelty grading inflation** (three prompts to one model; everything looks new to a generous evaluator) | Six cross-engine heuristics with no cross-pollination before commitment + prior-art-anchored calibration (nearest prior art must score NOVELTY 0 / FEASIBILITY 3) |
+| **Contradiction never named, or invention framing on routine work** | Phase 1 requires an explicit "<better X> requires <worse Y>"; Phase 0 gate recommends `feature`/`spark`/`graft` when the ask is a known solution |
+| **Invention-grade cost paid for a novelty-only question, or a scout result mistaken for a proven invention** | **`depth=scout`** (§1a): 11-14 agents, one confirmation, every survivor labelled `UNPROVEN`, `ACCEPT` unreachable by construction, reported as a Novelty Scout Report never a dossier |
+| **The idea field opaque or unstable mid-run** — invisible until the end, silently deduplicated, framing lock-in, silent self-re-framing, or pivot chasing | **Idea Ledger + Pivot Advisory** contract (§6a): emitted at Phases 2/3/5, dedup shown not applied, evidence-bound bounded advisories, and acting on one is a contract-level confirm AUTORUN cannot skip (§3) |
+| **Value below the invention bar thrown away, auto-spent on, or its revival condition lost** | **Salvage Routing** (§7): every kill/non-`ACCEPT` exit carries a required `route:<recipe>` or `discard(<reason>)`, recommendation-only (never auto-spawned), `FEASIBILITY`-fails carry a dated re-check trigger |
+| **A null result thrown away, unbounded search, or a cycle-budget double-spend** | `BLOCK (prior-art saturation)` still ships the dossier; `loop ≤ 3` + exactly one re-ideation + budget envelope; §2 two-returns-one-budget rule (Phase 6 counter is run-wide, never reset by a re-ideation) |
+| **Ship-time integrity** (`ship=true`) — novelty erosion, the verdict following the code, the spike promoted to production, an unratified build, silent cost escalation, or re-running settled discovery | Novelty Invariant + Phase 11 regression check (non-builder, `RETRACTED` as an honest verdict) + dossier **frozen** at the Ship Gate + Ship Gate preconditions ①-⑤ (§3) + Phase 9 collapses FRAME/EXPAND/CHALLENGE to validation |
 
 ## 9. Shared-Protocol References
 
 | Protocol | What eureka takes from it | Eureka-specific specialization |
 |----------|--------------------------|-------------------------------|
-| `reference/research-grounding.md` | Tiered sources, per-claim verification, cited Evidence Ledger | **Inverted polarity** (research to avoid, not reproduce) + prior-art tier reweighting (papers/standards/inspectable implementations over vendor claims) + mandatory adjacent-industry search + failure archaeology as a required output |
+| `reference/research-grounding.md` | Tiered sources, per-claim verification, cited Evidence Ledger, incl. tier reweighting + mandatory adjacent-industry search (§4, eureka row) | **Inverted polarity** (research to avoid, not reproduce) + failure archaeology as a required output |
 | `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation, score scale, aggregation, Δ < 0.2 | Ceiling ACCEPT (all 5 dims = 3) with prior-art-anchored calibration |
 | `_common/ADVERSARIAL_REFUTATION.md` | Skeptic panel, evidence-vs-novelty, polarity, aggregation, exclusions | Target claim = "this is new, wanted, buildable, and defensible"; the protocol's **unproven-because-new** rule is load-bearing here — an invention cannot be refuted for lacking evidence that can only exist after it is built |
 | `reference/dialogue-protocol.md` | Question craft, Assumption Ledger, checkpoint presentation | Contradiction extraction is **eureka-original**, built on its question-craft rules |
@@ -529,39 +507,10 @@ So **every kill and every non-`ACCEPT` exit carries a salvage verdict**: either 
 ## 10. Decision Tree vs Neighbors
 
 ```
-Is the ask a BREAKTHROUGH way of solving something — new, AND not the ordinary next move?
-  NO ↓
-    known solution to a known problem?          → feature / spark
-    mechanism proven elsewhere, routine port?   → graft  (non-routine adaptation → stay here)
-    combine ≥2 existing products?               → fuse
-    pick the best bet from candidates in hand?  → killer
-    reason about a claim, no artifact?          → gedanken
-    maximize execution of a known deliverable?  → wish
-  YES ↓
-Can you name the contradiction it dissolves ("<better X> requires <worse Y>")?
-  NO  → it is a task or a preference, not an invention — route out and say why
-  YES ↓
-Does the dissolution hold up when you ask WHO PAYS, and WHEN?
-  the cost just moved somewhere undeclared → not an invention by this recipe's definition (cond. 3);
-    it may still be a good change — Salvage Routing (§7) sends it to feature / kaizen with the
-    Sacrifice Ledger attached as a declared cost, or to magi when the trade needs an owner
-  the cost moved onto a genuinely free axis, and you will declare it → stay here (DISPLACED-DECLARED)
-  nothing is paid anywhere → stay here, and expect the FREE-LUNCH audit rather than applause
-   ▼
-Is being FIRST load-bearing (and being wrong about first, expensive)?
-  NO  → graft / spark are cheaper and sufficient
-  YES ↓
-Do you need it PROVEN, or do you just need to know whether it is new?
-  just check  → eureka depth=scout — ledger + adjudicated candidates, 11-14 agents, one confirm,
-                every survivor UNPROVEN; promote later at +21-46 against the frozen ledger
-  proven      → eureka — crystallize the contradiction → prior-art ledger + failure archaeology
-        → six-generator divergence ‖ blind ordinary-move panel
-        → novelty gate: COLLISION (kill w/ citation) · OBVIOUS (kill w/ proposals) → tetrad gate
-        → falsification-first reduction to practice → gauntlet-converge → disclosure → deliver
-          ↓
-        Do you also want it BUILT in this run?
-          NO  → ship=false (default) — dossier + handoff; run spec → apex later if it earns it
-          YES → ship=true — Ship Gate (5 preconditions, second confirm, separate build envelope)
-                → collapsed spec → apex → novelty regression check → ship
-                (any precondition missed → ends at the dossier, precondition named)
+Is the ask a BREAKTHROUGH — new AND not the ordinary next move?           NO → §1 Not-this table
+Can you name the contradiction it dissolves ("<better X> requires <worse Y>")?  NO → task/preference, route out
+Does the dissolution hold up when you ask WHO PAYS, and WHEN?             cost moved undeclared → not an invention (§7 salvage); moved onto a declared-free axis, or nothing paid → stay here
+Is being FIRST load-bearing (wrong-about-first expensive)?                NO → graft / spark cheaper
+Need it PROVEN, or just whether it is new?                                → §1a mode ladder (depth=scout vs full run)
+Want it BUILT in this run too?                                            → §1a ship=true; default ship=false ends at the dossier
 ```

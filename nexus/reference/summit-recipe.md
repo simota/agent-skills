@@ -2,7 +2,7 @@
 
 > **"Multiple engines, five teams, one verdict — quality maximized through orchestrated diversity."**
 >
-> **Default baseline (2026-05 update): Claude + Codex (dual-engine).** agy is an **optional third axis** when AVAILABLE; dual-engine mode is fully supported and NOT degraded. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy`.
+> **Default baseline (2026-05 update): Claude + Codex (dual-engine), fully supported and NOT degraded.** See Overview for agy's optional third-axis role, and `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy`.
 
 ## Contents
 
@@ -31,7 +31,7 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 
 **Key design decisions:**
 - **Claude is always the hub**; Codex and (optionally) Antigravity are accessed exclusively through `rally` (no direct CLI invocation from Nexus).
-- **agy is OPTIONAL** — when AVAILABLE, the recipe runs in tri-engine mode (Claude + Codex + agy) and the Phase 1 / 3 / 4 / 5 agy branches activate. When UNAVAILABLE or RUNTIME-BROKEN, the recipe runs in dual-engine mode (Claude + Codex); the agy branches are recorded as `skipped (engine unavailable)` and their workload is absorbed by Claude or Codex per the engine-strength routing rules below.
+- **agy is optional** — see Overview for the tri-engine/dual-engine mode switch.
 - **Multi-engine triangulation is load-bearing** in Phase 1 (Analysis) and Phase 4 (Verification). Dual-engine triangulation (Claude judgment ‖ Codex code-analysis) satisfies this requirement; the third axis is a quality lift, not a correctness gate.
 - **Improvement loop is capped at 3 iterations** with Agent Tennis circuit breaker to prevent runaway cost.
 - **Confirm before launch — always** (unconditional; same gate as `apex`/`wish`. Intentionally stronger than `podium`'s conditional gate — stated to prevent drift). Summit spawns 20-50 agents per run (tri-engine) or 14-36 (dual-engine).
@@ -59,8 +59,6 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 | User cost acknowledgment | mandatory confirmation prompt | abort if declined |
 | Mission charter producible | Phase 0 must produce valid `mission_charter.yaml` | abort if FRAMING fails |
 
-**Why agy is optional (2026-05 policy update):** Earlier versions of this recipe required agy as a hard prerequisite on the assumption that two-engine workflows offered insufficient diversity vs `apex` + `judge`. Field experience with agy v1.0.x (frequent silent runtime failures — quota / OAuth / executor / subagent timeouts) showed that hard dependency made Summit brittle. Dual-engine baseline (Claude judgment + Codex sandbox-execution) provides the load-bearing diversity for tri-engine quorum logic; agy contributes a third axis (1M context / multimodal / High effort tier / Search) that meaningfully lifts quality when reachable but is not a correctness gate. The recipe automatically detects engine availability and adjusts engine distribution, agent counts, and cost estimates accordingly. Users who want guaranteed three-engine coverage should ensure `agy --version` succeeds before invocation.
-
 ---
 
 ## When to Use Summit
@@ -85,11 +83,11 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 
 ### Do NOT use Summit when
 
-- Codex is unavailable → use single-engine chain or `apex` (Codex is required; only agy is optional)
+- Codex is unavailable → use single-engine chain or `apex` (Codex is required — see Overview)
 - User has not confirmed the cost envelope
 - The task does not have a clear acceptance criteria definable in Phase 0
 
-> agy unavailability does NOT preclude Summit — the recipe runs in dual-engine mode (Claude + Codex) and surfaces the mode in the pre-launch confirmation. If you specifically need agy's third-axis lift (long-context whole-codebase reasoning, multimodal asset reading, High-effort-tier alternatives, Search-grounded competitive analysis) and agy is broken, defer Summit until agy is back rather than swapping recipes.
+> If you specifically need agy's third-axis lift (long-context whole-codebase reasoning, multimodal asset reading, High-effort-tier alternatives, Search-grounded competitive analysis) and agy is broken, defer Summit until agy is back rather than swapping recipes.
 
 ---
 
@@ -114,13 +112,9 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
                                     │  Phase 3 (Design ‖ Execution Tracks) │
                                     │  ┌──────────────────────────────┐    │
                                     │  │ DESIGN TRACK (if UI)         │    │
-                                    │  │  Vision (claude) coords:     │    │
-                                    │  │  ├─ Claude: Vision/Prose/Echo│    │
-                                    │  │  │   (judgment + language)   │    │
-                                    │  │  ├─ Codex:  Pixel/Forge/Flow/│    │
-                                    │  │  │   Funnel/Vitrine         │    │
-                                    │  │  └─ agy: Sketch/Muse/Frame/  │    │
-                                    │  │    Palette/Ink + rally[DT]   │    │
+                                    │  │  Vision (claude) coordinates;│    │
+                                    │  │  agents per engine × team    │    │
+                                    │  │  matrix below                │    │
                                     │  └──────────────────────────────┘    │
                                     │  ┌──────────────────────────────┐    │
                                     │  │ EXECUTION TRACK              │    │
@@ -136,12 +130,9 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
                                                                ▼
                                     ┌──────────────────────────────────────┐
                                     │  Phase 4 VERIFICATION TEAM (‖)       │
-                                    │  ├─ judge (tri-engine built-in)      │
-                                    │  ├─ Codex: Radar/Voyager/Siege/      │
-                                    │  │   Siege/Probe/Sentinel/Matrix   │
-                                    │  ├─ agy: Attest/Ripple/Canon/Oath  │
-                                    │  │   + rally[independent review]    │
-                                    │  └─ Claude: Echo + Palette (if UI)   │
+                                    │  judge (tri-engine built-in) +       │
+                                    │  per-engine agents — see Engine ×    │
+                                    │  Team Matrix (Verification row)      │
                                     └──────────────────────────────────────┘
                                                    │
                                   CONFIRMED/LIKELY findings
@@ -149,15 +140,10 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
                                                    ▼
                                     ┌──────────────────────────────────────┐
                                     │  Phase 5 IMPROVEMENT LOOP (max 3×)   │
-                                    │  orbit drives:                       │
-                                    │  ├─ Claude: Zen + Sage (judgment)    │
-                                    │  ├─ Codex: Bolt/Tuner/Sweep/Mend/    │
-                                    │  │   Schema (executable improve.)    │
-                                    │  ├─ agy: Atlas/Lore/Shift            │
-                                    │  │   (strategic)                     │
-                                    │  └─ Design: Vision (claude) +        │
-                                    │   Palette/Muse (agy) (if UI)         │
-                                    │  magi arbitrates → Phase 3 loop      │
+                                    │  orbit drives per-engine agents —    │
+                                    │  see Engine × Team Matrix            │
+                                    │  (Improvement row); magi arbitrates  │
+                                    │  → Phase 3 loop                      │
                                     └──────────────────────────────────────┘
                                                                │
                                                                ▼
@@ -173,7 +159,7 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 
 ## Engine × Team Matrix
 
-> **Executive summary for routing planning.** Per-phase contracts below (Phase 0-6) restate the engine assignments inline with phase-specific gates and inputs. When designing a Summit run, use this matrix to allocate agents to engines; when executing a specific phase, follow the phase contract for the full step sequence.
+> **This matrix is the sole owner of agent → engine assignments.** Per-phase contracts below (Phase 0-6) list only phase-specific deltas (gates, inputs, branch names) — for which agent runs on which engine, consult this matrix.
 
 **Engine routing principle:** route each agent to the engine whose distinctive strength best fits the agent's job — Claude is reserved for judgment, orchestration, and ethics; Codex owns code generation, sandbox execution, and test running (Terminal-Bench 77.3% leader); agy owns long-context analysis (1M window), multimodal asset work, High-effort-tier creative alternatives (Gemini 3.6 Flash (High), High tier — no Deep Think), and Search grounding. Each cell below lists the agents spawned on that engine for that team.
 
@@ -193,8 +179,6 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 - If a task **arbitrates between multiple perspectives or makes a Go/No-Go call** → Claude (magi or Vision)
 - If a task **involves security judgment, ethics, or regulatory review** → Claude (Sentinel/Cloak/Crypt/Oath)
 - Otherwise default to **Codex** (faster + cheaper for routine work), not Claude
-
-**Why this rebalance:** Previous matrix defaulted to Claude for most teams, leaving codex/agy as light-touch supplements. The new matrix moves all code-execution-heavy work to Codex (sandbox-first wins) and all long-context / multimodal / divergent work to agy (1M context + High effort tier wins). Claude retains exclusive ownership of judgment, orchestration, and ethics — areas where its reasoning quality is irreplaceable. Net effect: ~40% of work shifts from Claude to Codex/agy, increasing per-engine specialization, reducing Hub context pressure, and improving cost efficiency for routine work.
 
 **Engine selection rationale:**
 
@@ -280,8 +264,6 @@ parallel:
     output: design_analysis.json
 ```
 
-**Engine attribution shift from previous design:** Lens/Scout moved from Claude to Codex (sandbox-first is the right fit for codebase exploration); Trail/Trail/Lore/Atlas/Field moved to agy (long-context + multimodal native wins). Claude retains only the deepest reasoning agents (Atlas/Sherpa) and judgment roles (magi at synthesis).
-
 **Synthesis:** `magi[arbitrate-tri-engine]` runs Logos / Pathos / Sophia perspectives across all three engine reports.
 
 **Output:** `analysis_consensus.md`
@@ -293,7 +275,7 @@ disputed_findings:  [...]    # active disagreement requiring user judgment
 engine_attribution: {...}    # which finding came from which engine
 ```
 
-**Gate:** If `disputed_findings / total_findings > 0.30` → escalate to user before Phase 2.
+**Gate:** disputed-findings ratio exceeds threshold → escalate to user before Phase 2 (threshold + rationale defined once in § Cross-Engine Quorum Rules → Disagreement escalation).
 
 ---
 
@@ -369,8 +351,6 @@ design_track:
     convergence: single design direction (no enumeration); rejected directions surfaced with one-line reason
   output: design_direction.yaml + design_tokens.json + prototype_links + image_assets
 ```
-
-**Engine shift:** Muse/Palette/Frame moved from Claude to agy (multimodal mockup/screenshot reading is agy's home turf). Pixel/Flow/Funnel/Vitrine added on Codex (all code-generation). Sketch/Ink added on agy (image/asset generation native to Gemini). Claude retains only Vision/Prose/Echo (direction, language, persona — irreducibly judgment-heavy).
 
 **Track B: Execution Team** (5-15 agents, 20-60 min) — Codex-heavy by default
 
@@ -454,11 +434,11 @@ parallel:
     output: design_findings.json
 ```
 
-**Engine shift:** Radar/Voyager/Siege/Siege/Probe/Sentinel/Matrix consolidated on Codex (all execution-heavy). Attest/Ripple/Canon/Oath consolidated on agy (all benefit from 1M context for spec+impl simultaneous reasoning). Claude reduced to Echo+Palette (only judgment-driven UX agents). judge keeps its own internal tri-engine fan-out unchanged.
+judge keeps its own internal tri-engine fan-out unchanged (agent → engine assignments per the Engine × Team Matrix above).
 
 **Design findings integration:** Echo's persona friction reports and Palette's interaction-quality issues join the cross-engine quorum as an additional signal source alongside judge / codex_dynamic / agy_static / agy_review. A UX regression flagged by Echo is treated as LIKELY severity by default and feeds the Phase 5 improvement loop alongside code-side findings.
 
-**Quorum rules:**
+**Quorum rules** (label definitions in § Cross-Engine Quorum Rules below; this table crosses them with severity):
 
 | Concurrence | Finding Severity | Action |
 |-------------|------------------|--------|
@@ -641,6 +621,8 @@ If `disputed_findings / total_findings > 0.30` in Phase 1, Nexus pauses and pres
 
 ## AUTORUN Chain Template
 
+> Engine assignments below mirror the Engine × Team Matrix — that section is authoritative if this template drifts.
+
 ```yaml
 recipe: summit
 mode: AUTORUN_FULL
@@ -738,34 +720,26 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 - **Release disposition** — blocked / delivered-with-caveat per the CONFIRMED × severity table
 - **Exit reason** (canonical vocabulary) + residual gap when not `ACCEPT`
 
-## Failure Modes Prevented
-
-| Failure | Mitigation |
-|---------|-----------|
-| Single-engine blind spots accepted as truth | **Tri-engine quorum**: a finding is CONFIRMED only on 3/3 agreement; single-engine findings are LIKELY at best |
-| One engine's outage silently degrading review quality without disclosure | Engine availability is detected at preflight; agy-unreachable degrades to a disclosed dual-engine mode with quorum relaxed to 2/2, surfaced in the confirmation prompt — never silently |
-| Two agents deadlocking on the same disagreement | **Agent Tennis circuit breaker** on the improvement loop |
-| Runaway cost on a strategic run | Improvement loop `loop ≤ 3 cycles`; Phase 0 gate requires confirmation when `cost_budget.max_agents × estimated_token_cost` exceeds the L4 threshold or `risk_tier ∈ {strategic, release-critical}` |
-| A contested finding set delivered as if it were settled | Phase 1 gate: `disputed_findings / total_findings > 0.30` escalates to the user before Phase 2 |
-| Critical defects shipped because the loop ran out of cycles | CONFIRMED + CRITICAL/HIGH **blocks release** and forces Phase 5; a non-`ACCEPT` exit reports best-so-far + residual gap |
-| UX regressions invisible to code-only review | Design sub-track findings (Echo persona friction, Palette interaction quality) join the cross-engine quorum as a first-class signal at LIKELY severity |
-| The producer reviewing its own output | Verification Team is Generator-excluded (Q9) per `reference/autonomy-quality-protocol.md` |
-
 ## Failure Escalation
+
+Merged view of every failure mode Summit guards against, with detection phase and escalation threshold (supersedes a separate "Failure Modes Prevented" table — same content, one table).
 
 | Failure | Detection Phase | Mitigation | Escalation Threshold |
 |---------|----------------|-----------|--------------------|
+| Single-engine blind spot accepted as truth | Any phase (structural) | **Tri-engine quorum**: a finding is CONFIRMED only on 3/3 agreement; single-engine findings are LIKELY at best | N/A (design guarantee) |
 | agy CLI unreachable | Preflight | **Switch to dual-engine mode (Claude + Codex); do NOT abort.** Record agy branches as `skipped (engine unavailable)`; Phase 1/4 quorum degrades to 2/2 (CONFIRMED only). Surface the mode in the confirmation prompt | Never (dual-engine is supported) |
 | codex CLI unreachable | Preflight | Abort with message "use apex (claude only) instead" (Codex is required) | Immediate |
 | agy fails mid-run (after preflight: quota / OAuth / executor / subagent timeout) | Any phase | Mark agy DEGRADED, absorb its workload into Claude/Codex per engine-strength routing, continue in dual-engine mode; log the transition | Never (graceful) |
-| Phase 1 disputed findings > 30% | Phase 1 synthesis | Pause, present disagreement matrix | Immediate |
-| Phase 4 CONFIRMED CRITICAL after max_loops | Phase 5 exit | Deliver with explicit "unresolved CRITICAL" caveat | Always |
-| Agent Tennis (same issue 3+ turns) | Phase 5 loop | Circuit breaker, deliver | Always |
-| Cost budget projected overrun | Per-phase gate | Reduce remaining scope to CRITICAL findings only; if still over, escalate | After 50% budget consumed |
+| Phase 1 disputed-findings ratio exceeds threshold | Phase 1 synthesis | Pause, present disagreement matrix (definition + rationale in § Cross-Engine Quorum Rules → Disagreement escalation) | Immediate |
+| Phase 4 CONFIRMED CRITICAL/HIGH after max_loops | Phase 5 exit | Deliver with explicit "unresolved CRITICAL" caveat; non-`ACCEPT` exit reports best-so-far + residual gap | Always |
+| Agent Tennis (same issue debated 3+ turns without resolution) | Phase 5 loop | Circuit breaker trips, deliver | Always |
+| Runaway/overrun cost | Per-phase gate (Phase 0 pre-authorizes; Phase 5 caps `loop ≤ 3`) | Reduce remaining scope to CRITICAL findings only; if still over, escalate | After 50% budget consumed |
 | Engine returns invalid schema 3× | Per-phase | Treat engine as DEGRADED for remainder of run, continue with remaining 2 engines (Phase 1/4 quorum degrades to 2/2) | After 3rd schema violation |
 | Total wall time > 2× estimate | Per-phase | Pause, present time-vs-quality trade-off to user | Always |
+| UX regressions invisible to code-only review | Phase 4 (Design sub-track) | Echo persona-friction + Palette interaction-quality findings join the cross-engine quorum as a first-class signal at LIKELY severity | N/A (structural) |
+| The producer reviewing its own output | Phase 4 (Verification Team) | Verification Team is Generator-excluded (Q9) per `reference/autonomy-quality-protocol.md` | N/A (structural) |
 
-**Hard rule:** Summit requires **Codex** (abort if unreachable — it carries the load-bearing code-execution axis). **agy is optional**: its absence switches the recipe to dual-engine mode (Claude + Codex), never an abort — the degrade is *announced* (surfaced in the confirmation prompt and the Phase 6 report), not silent. Tri-engine quorum (Phase 1/4) tightens to 2/2-CONFIRMED in dual-engine mode. Only a mid-run **Codex** failure is a recipe-level failure requiring user judgment.
+**Hard rule:** Summit requires **Codex** — abort if unreachable. **agy is optional**: its absence degrades to dual-engine mode, announced (not silent); tri-engine quorum tightens to 2/2-CONFIRMED. Only a mid-run **Codex** failure is a recipe-level failure requiring user judgment.
 
 ---
 
@@ -784,8 +758,6 @@ Agent counts updated to reflect the rebalanced engine routing (more Codex + agy 
 | 4 VERIFICATION | 14-18 / 12-16 | 5 / 4 | 10-25 min / 10-20 min | ~280-360K |
 | 5 IMPROVEMENT (per loop) | 13-17 / 10-14 | 4 | 10-20 min / 10-15 min | ~200-280K |
 | 6 DELIVERY | 1-2 / 1-2 | 1 | 3-5 min | ~20K |
-
-**Cost shift from previous design:** total agent count rises ~30% because more specialist agents now fan out across Codex and agy in parallel (rather than serializing through fewer Claude agents). Wall time stays similar because the extra agents run in parallel. Per-token cost on Codex and agy is typically lower than Claude opus, so total $ cost drops ~10-20% despite higher agent count.
 
 ### Total envelopes
 
@@ -816,8 +788,6 @@ Phase 6 DELIVER includes an "Engine Distribution Audit" section showing actual v
 | `summit` UI (no loops) | 44-68 | 54-133 min | 9-16× |
 | `summit` non-UI (3 loops) | 62-92 | 79-158 min | 11-20× |
 | `summit` UI (3 loops) | 83-119 | 84-193 min | 13-25× |
-
-**Cost note:** Agent counts roughly doubled vs the previous Claude-default design, but $ cost only rose modestly (and per-token may drop) because the additional agents run on cheaper engines. The previous "8-22×" estimate was based on Claude-heavy execution; the rebalanced design is "7-25×" because of engine mix.
 
 **Rule of thumb:** Summit costs 7-25× a typical `feature` chain depending on UI inclusion and loop count. Use only when the cost of failure exceeds the cost of triangulation by at least an order of magnitude. For pure-backend strategic work, force `ui_dimension: none` in Phase 0 to skip the Design Team and recover ~25% of cost.
 
@@ -868,9 +838,3 @@ Has user acknowledged 7-25× cost vs feature?
   └─ NO  → present cost envelope (+ tri/dual-engine mode), get confirmation
   └─ YES → summit
 ```
-
----
-
-## Visualization
-
-Mermaid flow diagram: [`summit-recipe-flow.mmd`](summit-recipe-flow.mmd) — full five-team multi-engine topology.

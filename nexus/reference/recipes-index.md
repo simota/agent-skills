@@ -1,6 +1,6 @@
 # Recipes Index — full subcommand registry
 
-**Purpose:** the complete `## Recipes` table for nexus — one row per Recipe with its subcommand, when to use it, its chain template, and the reference to read before executing. Split out of `SKILL.md` so the always-loaded skill body stays under the Anthropic size ceiling; the mental model (`### Recipe Families`) and the routing anchors (`### Signal Keywords`) remain in `SKILL.md` because they are needed to *choose*, while this file is needed to *execute*.
+**Purpose:** the complete `## Recipes` table for nexus — one row per Recipe with its subcommand, when to use it, its chain template, and the reference to read before executing. Split out of `SKILL.md` so the always-loaded skill body stays under the Anthropic size ceiling; the mental model (`### Recipe Families`) remains in `SKILL.md` and the routing anchors live in `reference/signal-keywords.md`, because those are needed to *choose*, while this file is needed to *execute*.
 
 **Read when:** a subcommand matched at Subcommand Dispatch and you need its chain template and `Read` reference, or you are scanning the full registry to pick a Recipe.
 

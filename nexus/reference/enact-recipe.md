@@ -64,20 +64,7 @@ Run-to-completion is the **default and enforced** behavior under `AUTORUN_FULL`.
 
 ## Topology
 
-```
-                Phase 1                  ★ Confirm   Phase 2                          Phase 3
-                [Team Construction]                  [End-to-End Orchestration]       [Verify & Deliver]
-read Charter    ┌──────────────────┐     ┌───────┐  ┌────────────────────────────┐   ┌──────────────┐
-docs/CHARTER.md │ §5 → bind        │     │ 👤    │  │ per §4 work package (§6 order):│   │ §7 gates     │
-+ roster.yaml ─▶│  role→skill→spawn│ ──▶ │ build │─▶│  spawn assigned owner       │ ─▶│ radar?/judge?│
-                │ verify prereqs   │     │ team? │  │  ‖ parallel + file ownership│   │ guardian?    │
-                │ sub-orch setup   │     │ cost  │  │  build loops → orbit (sub)  │   │ launch?      │
-                │ dry-run check    │     └───────┘  │  checkpoints + guardrails   │   │ → RUN_END    │
-                └──────────────────┘                │  aggregate; append run log  │   │ → DELIVER    │
-                                                    └──────────────┬─────────────┘   └──────────────┘
-                          append-only run log: docs/CHARTER.run.log.md  (Charter §9 = pointer + summary)
-                          ◀──────── Failure escalation (per Charter §8) ───────────────────┘
-```
+Three phases in sequence — Phase 1 Team Construction → ★ Confirm Gate → Phase 2 End-to-End Orchestration → Phase 3 Verify & Deliver — each detailed in its own section below (full step sequence, not repeated here). Every progress event streams to the append-only run log `docs/CHARTER.run.log.md`, mirrored as a pointer + summary in Charter §9; failure escalation (per Charter §8) loops back into Phase 2 rather than halting.
 
 Hub-and-spoke is preserved: Nexus is the only top-level orchestrator. Where Charter §5 nominates a sub-orchestrator (Vision for UX clusters, Orbit for build loops, Rally for parallel sessions), Nexus spawns it as a ≤7-specialist sub-hub — never agent-to-agent.
 
@@ -165,7 +152,7 @@ Execute Charter §4 via the §6 Orchestration Plan. Standard Nexus EXECUTE → A
 - **Spawn per work package** in §4 order; pass only state deltas (`reference/context-strategy.md`). Independent packages run as parallel branches with file ownership from §6 (`_common/PARALLEL.md`); no shared mutable state.
 - **Build loops** (multi-iteration implementation packages) delegate to `orbit` as a sub-orchestrator (build → judge → test → converge), as in Apex Phase 6. Engine per Charter §5 (Codex CLI for high-volume coding loops where available). Orbit drives these **Charter-natively** — it receives the read-only §4/§5/§7/§10 slice, uses the §10 per-package DoD as its external DONE gate, and appends `PKG_*` events to the same §9 run-log (`orbit/reference/charter-loop-driver.md`). Orbit owns the single package's loop; enact retains cross-package sequencing and aggregation (hub-spoke).
 - **Guardrails** L1-L4 + checkpoint-resume on 4+ step chains; max-hop limit enforced; destructive/L4/out-of-scope actions pause per §3/§8 (safety red line). The circuit breaker after 3 consecutive package failures does **not** abort the run — it marks that package `SKIPPED(blocked)` and moves on (run-to-completion).
-- **Run-to-completion recovery:** a failing package walks the recovery ladder (retry → `fallback_engine` → Scout RCA + Builder fix → alternate owner) before being skipped; the run never pauses to ask on recoverable failures.
+- **Run-to-completion recovery:** a failing package walks the recovery ladder (§ Run-to-Completion Contract) before being skipped; the run never pauses to ask on recoverable failures.
 - **Aggregate** branch outputs hub-spoke; validate schema + semantic correctness at each boundary.
 - **Definition of Done.** A package is `SUCCESS` only when its Charter §10 per-package DoD checklist fully passes (AC met + tests green + lint/build/typecheck + review); partial pass → `PARTIAL`, unrecoverable → `SKIPPED`. DoD is the objective terminal-state criterion, not prose judgment.
 - **Append** one run-log line per event (`PKG_START` / `PKG_RECOVER` / `PKG_DONE` / `SAFETY_STOP` …) the moment it occurs; at `PKG_DONE` also tick that package's row in the §10 progress tracker. Mirror a compact pointer into Charter §9, so an interrupted run auto-resumes from the run-log tail (see **Run Log**).
@@ -217,7 +204,7 @@ Nexus AUTORUN enact docs/CHARTER.md
        terminal = §10 per-package DoD checklist result (SUCCESS|PARTIAL|SKIPPED)
        append run-log: PKG_START → PKG_RECOVER* → PKG_DONE (immediately)
          → tick §10 progress-tracker row at PKG_DONE
-       on recoverable failure: retry→fallback_engine→Scout+Builder→alt owner
+       on recoverable failure: walk the recovery ladder (§ Run-to-Completion Contract)
          → still failing: mark SKIPPED(blocked, reason), CONTINUE (no abort)
        on safety red line (L4/destructive/out-of-scope per §8): pause + confirm
        on interruption: auto-resume from run-log tail
@@ -233,7 +220,7 @@ Nexus AUTORUN enact docs/CHARTER.md
 
 ## Termination Bound
 
-**`N/A` for a convergence loop** — `enact` runs the Charter's work packages to completion rather than iterating one deliverable to a bar. Its bound is **per-package**: each package terminates on its own §7 verification gate, and the run terminates when every package reaches a terminal verdict (`DONE` / `FAILED` / `PARTIAL` / `SKIPPED`). A package that cannot reach one escalates via §8 rather than retrying indefinitely — "run to completion" means a true terminal verdict, never a fabricated success.
+**`N/A` for a convergence loop** — see § Run-to-Completion Contract → Completion guarantee for the per-package terminal-state bound that governs when `enact` stops.
 
 ## Scale
 
@@ -258,7 +245,7 @@ Under run-to-completion, only **precondition** and **safety red line** failures 
 | Charter missing/invalid section | enact parse | **Stop (precondition)** — report which section; recommend `charter` to re-author. Cannot run without a valid Charter |
 | §5 roster names a non-existent skill | enact bind | **Stop (precondition)** at Phase 1; report the gap; do not improvise an owner |
 | Phase 1 engine prereq unmet (e.g. Codex `max_depth < 2`) | Nexus | **Continue** — apply package `fallback_engine` (log substitution + trade-off); skip only that package if no fallback, run continues |
-| Phase 2 package repeat failure | judge/radar | **Continue** — recovery ladder (retry→fallback→Scout RCA+Builder→alt owner); if still failing, mark `SKIPPED(blocked)` + log §9, proceed to remaining packages. Never aborts the run |
+| Phase 2 package repeat failure | judge/radar | **Continue** — walk the recovery ladder (§ Run-to-Completion Contract); if still failing, mark `SKIPPED(blocked)` + log §9, proceed to remaining packages. Never aborts the run |
 | Build loop stuck / over budget | orbit | **Continue** — orbit switches strategy and keeps going; only a real §8 budget-ceiling breach escalates per §8 (not a blanket pause) |
 | Safety red line (L4 / destructive / out-of-scope per §8) | Nexus / §8 | **Stop + confirm** — the one intentional mid-run pause; resumes on approval, aborts only that action on denial |
 | §7 verification fails | radar/judge | **Continue to DELIVER** — report honestly with output; deliver FAILED/PARTIAL status; do not mask, retry forever, or bypass checks (global quality rule) |
@@ -269,7 +256,7 @@ Consolidated view of what enact's run-to-completion contract, recovery ladder, a
 
 | Failure mode | Without enact's contract | Prevented by |
 |--------------|--------------------------|--------------|
-| Stalling on a recoverable failure | The run pauses mid-stream and waits for a human on every hiccup | Recovery ladder: retry (max 3) → `fallback_engine` (§5) → Scout RCA + Builder fix → alternate owner — auto-recovers without asking |
+| Stalling on a recoverable failure | The run pauses mid-stream and waits for a human on every hiccup | Recovery ladder (§ Run-to-Completion Contract) auto-recovers without asking |
 | One blocked package aborting the whole run | A single unsatisfiable step kills an otherwise-complete delivery | `SKIPPED(blocked, reason)` terminal state — the run continues with remaining packages; circuit breaker (3 failures) skips, never aborts |
 | Engine unreachable hard-fails the run | Codex/agy down stops everything | Per-package `fallback_engine` (default `claude-code`) with logged cost/throughput trade-off; hard-fail only when no fallback defined |
 | Cost pausing the run open-endedly | Spend prompts interrupt an authorized run | Cost does not pause; proceeds to the Charter §8 budget ceiling automatically — only a genuine ceiling breach escalates |
@@ -305,4 +292,4 @@ Enact is the expensive half of the pair; the ★ Confirm Gate, 5+-agent chain co
 
 ## Visualization
 
-Topology ASCII above. Enact consumes `docs/CHARTER.md` (+ `CHARTER.roster.yaml`), streams every progress event to the append-only run log `docs/CHARTER.run.log.md`, and writes back the Charter §9 pointer/summary; the Charter stays the single source of truth and the run log is the auditable, resumable timeline.
+See § Topology for the phase flow. Enact consumes `docs/CHARTER.md` (+ `CHARTER.roster.yaml`), streams every progress event to the append-only run log `docs/CHARTER.run.log.md`, and writes back the Charter §9 pointer/summary; the Charter stays the single source of truth and the run log is the auditable, resumable timeline.

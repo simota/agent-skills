@@ -182,113 +182,47 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 
 ### Artisan vs Forge (Frontend Implementation)
 
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "Prototype this quickly", "just make it work" | **Forge** | Speed over quality |
-| "Production-ready component", "hooks design", "state management" | **Artisan** | Production quality |
-| "Validate idea with working demo" | **Forge** | Proof of concept |
-| "Convert prototype to production" | **Forge → Artisan** | Standard handoff |
-| "Build this React component" (no existing prototype) | **Artisan** | Direct production build |
-| Backend mock/API stub | **Forge** | Backend prototyping |
-
-**Rule of thumb**: Uncertain requirements or exploration → Forge first. Clear requirements → Artisan directly. Never use both if requirements are already clear.
+**Rule of thumb**: Uncertain requirements or exploration → Forge first ("just make it work", backend mock/API stub). Clear requirements ("hooks design", "state management", production-ready component) → Artisan directly. "Convert prototype to production" is the standard Forge → Artisan handoff; never use both if requirements are already clear.
 
 ---
 
 ### Atlas vs Ripple (Architecture Analysis)
 
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "Analyze dependencies", "find God Classes", "circular references" | **Atlas** | Current architecture evaluation |
-| "What's the impact of changing X?", "is this change safe?" | **Ripple** | Pre-change impact assessment |
-| "Create ADR", "architecture decision" | **Atlas** → Magi | Architecture documentation |
-| "Should we proceed with this refactor?" | **Ripple** | Risk evaluation before action |
-| "Module decomposition strategy" | **Atlas** | Structural analysis |
-| "Will renaming this break anything?" | **Ripple** | Change impact |
-
-**Rule of thumb**: "What IS the architecture?" → Atlas. "What HAPPENS IF we change it?" → Ripple.
+**Rule of thumb**: "What IS the architecture?" → Atlas (dependency graphs, God Classes, module decomposition, "create ADR" → Magi). "What HAPPENS IF we change it?" → Ripple ("is this change safe?", "will renaming this break anything?").
 
 ---
 
 ### Scout vs Lens (Code Investigation)
 
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "Why is X broken?", "find the bug" | **Scout** | Bug-driven investigation |
-| "How does X work?", "explain this module" | **Lens** | Comprehension-driven exploration |
-| "What caused this regression?" | **Trail** → Scout | Git history then RCA |
-| "Does feature X exist?", "where is X implemented?" | **Lens** | Code exploration |
-| "Reproduce this error" | **Scout** | Bug reproduction |
-| "Map the data flow for X" | **Lens** → Canvas | Understanding then visualization |
-
-**Rule of thumb**: Broken behavior → Scout. Understanding behavior → Lens.
+**Rule of thumb**: Broken behavior → Scout ("find the bug", "reproduce this error"). Understanding behavior → Lens ("how does X work?", "does feature X exist?"). Regression root cause → Trail (history) → Scout (RCA); data-flow mapping → Lens → Canvas (visualize).
 
 ---
 
 ### Voice vs Field (User Insights)
 
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "Analyze app store reviews", "NPS survey", "sentiment analysis" | **Voice** | Quantitative feedback analysis |
-| "Design interview questions", "usability test plan" | **Field** | Research methodology |
-| "What are users saying about X?" | **Voice** | Existing feedback collection |
-| "What do users NEED from X?" | **Field** | Deep user understanding |
-| "Create feedback collection system" | **Voice** | Feedback infrastructure |
-| "Create journey map" | **Field** | User experience mapping |
-
-**Rule of thumb**: Collect/analyze existing feedback → Voice. Design new research → Field.
+**Rule of thumb**: Collect/analyze existing feedback → Voice ("NPS survey", "sentiment analysis", "what are users saying about X?", feedback collection systems). Design new research → Field ("usability test plan", "journey map", "what do users NEED from X?").
 
 ---
 
 ### Palette vs Flow (UI Interaction)
 
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "Improve usability", "reduce cognitive load", "a11y" | **Palette** | UX quality improvement |
-| "Add hover animation", "loading transition", "modal animation" | **Flow** | CSS/JS animation implementation |
-| "This button feels unresponsive" | **Palette** | Interaction quality |
-| "Animate this page transition" | **Flow** | Motion design |
-| "Micro-interaction design" | **Palette** (simple) / **Flow** (complex) | Complexity determines agent |
-
-**Rule of thumb**: UX/usability concern → Palette. Animation implementation → Flow.
+**Rule of thumb**: UX/usability concern → Palette ("reduce cognitive load", "a11y", "this button feels unresponsive"). Animation implementation → Flow ("hover animation", "loading transition", "animate this page transition"). Micro-interaction design: simple → Palette, complex → Flow.
 
 ---
 
 ### Prose vs Palette (Content & UX)
 
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "Write error messages", "improve button labels" | **Prose** | Content creation |
-| "Evaluate UX quality", "audit interaction patterns" | **Palette** | UX assessment |
-| "Onboarding copy", "voice & tone guide" | **Prose** | Content strategy |
-| "Form feels confusing" | **Palette** (assess) → Prose (rewrite) | Assessment then content |
-
-**Rule of thumb**: Write/rewrite text → Prose. Evaluate/improve interaction → Palette.
+**Rule of thumb**: Write/rewrite text → Prose ("error messages", "button labels", "onboarding copy", "voice & tone guide"). Evaluate/improve interaction → Palette ("audit interaction patterns"). "Form feels confusing" → Palette (assess) → Prose (rewrite).
 
 ---
 
 ### Void vs Zen vs Sweep (Necessity / Quality / Cleanup)
 
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "Do we need this?" "YAGNI" "over-engineering" | **Void** | Evaluates whether the thing should exist at all, including non-code assets |
-| "Refactor" "improve the code" "make it more readable" | **Zen** | Improves code quality |
-| "Dead code" "unused files" | **Sweep** | Physically detects unused code/files |
-| "Do we need this process?" "too many meetings" | **Void** | Evaluates whether the process is justified |
-| "This document is outdated" | **Void** (evaluate) → Sweep (remove) | Validate the document's necessity, then remove it if warranted |
-
-**Rule of thumb**: "Is it necessary?" → Void. "Is it clean?" → Zen. "Is it being used?" → Sweep.
+**Rule of thumb**: "Is it necessary?" → Void ("YAGNI", "over-engineering", "do we need this process?" — includes non-code assets). "Is it clean?" → Zen ("make it more readable"). "Is it being used?" → Sweep ("dead code", "unused files"). An outdated document → Void (validate necessity) → Sweep (remove).
 
 ### Grove vs Nest (Repository Structure / LLM-Optimized Folders)
 
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "Repository structure", "directory layout", "monorepo design" | **Grove** | Human developer conventions and CI/CD paths |
-| "Optimize folders for LLM", "context cost", "CLAUDE.md hierarchy" | **Nest** | LLM navigation efficiency and cache topology |
-| "Agents can't find files", "token budget too high" | **Nest** | LLM-specific discovery and cost optimization |
-| "Project organization", "team conventions" | **Grove** | Developer workflow optimization |
-
-**Rule of thumb**: Human developer experience → Grove. LLM/AI tool navigation efficiency → Nest.
+**Rule of thumb**: Human developer experience → Grove ("directory layout", "monorepo design", "team conventions", CI/CD paths). LLM/AI tool navigation efficiency → Nest ("context cost", "CLAUDE.md hierarchy", "agents can't find files", "token budget too high").
 
 ---
 
@@ -297,15 +231,11 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 Three skills hold full JTBD content, each applying it through a different lens — this is
 intentional multi-lens coverage, not duplication. Route by *what the JTBD output feeds*.
 
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "Define the competitive set by job", "market/category strategy via JTBD", "disruption" | **Helm** | Strategic lens — job as the unit of competition (`jobs-to-be-done.md`) |
-| "Target a feature to a persona's job", "feature brief", "proposal hypothesis" | **Spark** | Product lens — persona + JTBD → feature proposal (`persona-jtbd.md`) |
-| "Switch interview", "forces of progress for demand", "why users would switch" | **Plea** | Demand lens — synthetic switch interviews (`jtbd-switch-interview.md`) |
-
-**Rule of thumb**: strategy/competitive-set → Helm; feature targeting → Spark; demand/switch
-interview → Plea. Value Proposition Canvas (jobs/pains/gains zoom-in) lives in **Spark**
-(`value-proposition-canvas.md`) and pulls its jobs block from `persona-jtbd.md`.
+**Rule of thumb**: strategy/competitive-set ("market/category strategy via JTBD", "disruption") →
+Helm (`jobs-to-be-done.md`); feature targeting ("feature brief", "proposal hypothesis") → Spark
+(`persona-jtbd.md`); demand/switch interview ("forces of progress for demand", "why users would
+switch") → Plea (`jtbd-switch-interview.md`). Value Proposition Canvas (jobs/pains/gains zoom-in)
+lives in **Spark** (`value-proposition-canvas.md`) and pulls its jobs block from `persona-jtbd.md`.
 
 ---
 
@@ -314,49 +244,28 @@ interview → Plea. Value Proposition Canvas (jobs/pains/gains zoom-in) lives in
 Three skills size markets, each for a different decision. Route by *the decision the number
 informs*, not the acronym.
 
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "Strategic market headroom", "entry scoring", "portfolio sizing" | **Helm** | Strategy lens — market-entry / scenario interpretation (`market-sizing-strategy.md`) |
-| "Market size vs competitors", "competitive TAM", "share capture" | **Compete** | Competitive lens — sizing within a competitor landscape (`market-sizing.md`) |
-| "How much can this feature earn", "opportunity upper bound" | **Spark** | Feature lens — opportunity sizing for a single proposal (`opportunity-sizing.md`) |
-
-**Rule of thumb**: whole-business/entry strategy → Helm; competitor-relative → Compete;
-per-feature upside → Spark.
+**Rule of thumb**: whole-business/entry strategy ("strategic market headroom", "entry scoring",
+"portfolio sizing") → Helm (`market-sizing-strategy.md`); competitor-relative ("market size vs
+competitors", "competitive TAM", "share capture") → Compete (`market-sizing.md`); per-feature
+upside ("how much can this feature earn", "opportunity upper bound") → Spark (`opportunity-sizing.md`).
 
 ---
 
 ### Cull vs Chain (Malware / Supply-Chain)
 
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "active malware infection scan", "IoC scan", "Shai-Hulud", "eradicate infected lockfile" | **Cull** | Active infection detection + eradication |
-| "pre-intake supply-chain trust audit", "manifest hashing", "third-party skill/plugin/MCP intake" | **Chain** | Pre-intake trust verification, not infection response |
-| "is this npm package currently infected/compromised" | **Cull** | Active-compromise scan |
-| "should we trust this new MCP server / plugin before installing" | **Chain** | Pre-intake audit |
-
-**Rule of thumb**: "Is something already infected right now?" → Cull. "Should we trust this before we let it in?" → Chain.
+**Rule of thumb**: "Is something already infected right now?" → Cull ("IoC scan", "Shai-Hulud", "eradicate infected lockfile", "is this npm package currently infected/compromised"). "Should we trust this before we let it in?" → Chain ("manifest hashing", "third-party skill/plugin/MCP intake", "should we trust this new MCP server / plugin before installing").
 
 ---
 
 ### Snap vs Voyager (Mobile / Cross-Platform UI Testing)
 
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "XCUITest", "accessibility-identifier query", "fastlane snapshot", "App Store screenshot pipeline" | **Snap** | Pure-iOS UI test / screenshot automation |
-| "Appium", "Detox", "Maestro", "Playwright", "cross-platform E2E" | **Voyager** | Cross-platform E2E authoring |
-
-**Rule of thumb**: Pure-iOS XCUITest/screenshot pipeline → Snap. Cross-platform E2E (Appium/Detox/Maestro/Playwright) → Voyager.
+**Rule of thumb**: Pure-iOS XCUITest/screenshot pipeline → Snap ("accessibility-identifier query", "fastlane snapshot", "App Store screenshot pipeline"). Cross-platform E2E (Appium/Detox/Maestro/Playwright) → Voyager.
 
 ---
 
 ### Vector vs Voyager (Browser Automation)
 
-| Signal | Route to | Rationale |
-|--------|----------|-----------|
-| "collect data", "fill this form", "capture a screenshot", one-off browser task | **Vector** | Task completion, not durable test authoring |
-| "write a regression E2E test", "durable test suite" | **Voyager** | Durable regression test authoring |
-
-**Rule of thumb**: One-off browser task completion → Vector. Durable regression E2E test authoring → Voyager.
+**Rule of thumb**: One-off browser task completion → Vector ("collect data", "fill this form", "capture a screenshot"). Durable regression E2E test authoring → Voyager ("write a regression E2E test", "durable test suite").
 
 ---
 

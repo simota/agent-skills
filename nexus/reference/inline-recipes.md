@@ -97,9 +97,3 @@ Per `reference/recipe-contract.md` §1 — the elements these four inline recipe
 | A "Yes" silently becoming an unbounded build | The Yes branch is *conditional* implementation, scoped by the card — `killer` additionally ships behind a feature flag with a stated KPI and kill criterion | `essential`, `killer` |
 | Removing something still load-bearing | `trim` requires a dependency/usage check before excision; an unresolved dependency turns the verdict into Modify, never Yes | `trim` |
 | A verdict that neither ships nor closes | Every card ends in exactly one of Yes / No / Modify — an undecidable case exits `BLOCK` with the missing evidence named | verdict trio |
-
-## Visualizations
-
-Mermaid flow diagrams (render via mermaid.live or compatible viewer):
-- [`essential-recipe-flow.mmd`](essential-recipe-flow.mmd) — verdict funnel + conditional impl branch
-- [`killer-recipe-flow.mmd`](killer-recipe-flow.mmd) — cross-engine triangulation topology

@@ -7,12 +7,9 @@
 - Overview
 - When to Use Apex
 - Invocation Modes
-- Topology
 - Phase 0: Bootstrap (no-args / autonomous goal discovery)
 - Phase Contracts (1 → 6 + Ship)
 - Sub-Orchestration: Vision (UX) and Orbit (Loop)
-- Conditional Agent Inclusion
-- Risk Gate Criteria
 - Workflow Accuracy Rationale
 - AUTORUN Chain Template
 - Failure Escalation
@@ -70,27 +67,9 @@ Route elsewhere when the task is:
 - Decomposition only (no execution) → Sherpa direct
 - Cross-language rewrite preserving behavior (TS→Rust, Go→Rust, …) → `transmute` recipe (`reference/transmute-recipe.md`)
 
-## Topology
+## Architecture
 
-```
-Phase 0 (no-args only)              Phase 1            Phase 2  Phase 3  Phase 4    ┌── Phase 5 (parallel) ─────────────┐  Phase 6           Ship
-[Bootstrap / Goal Discovery]        [Discovery]        [Ideate] [Verdict][SPEC]     │ Tech Track    UX Track            │  [Implement Loop]
-┌─────────────────────────────┐     ┌─────────────┐    ┌────┐   ┌────┐   ┌────────┐ │ ┌──────────┐  ┌──────────────┐    │  ┌──────────────┐  ┌────────┐
-│ project_scan (proactive)    │     │ plea        │    │riff│   │magi│   │ accord │ │ │ atlas    │  │ vision (sub) │    │  │ orbit         │  │guardian│
-│ + voice?  + pulse? +compete?│ ──▶ │ field       │ ─▶ │    │─▶ │    │─▶ │ +void? │▶│ │ +gateway?│  │  ├ muse      │    │▶ │  ├ builder    │ ─▶│ launch │
-│ → spark (3-5 ideas)         │     │ +echo (as-is)│    │    │   │    │   │ +scribe?│ │+schema?  │  │  ├ palette   │    │  │  ├ artisan?   │  └────────┘
-│ → rank (ICE/RICE)           │     └─────────────┘    └────┘   └────┘   └────────┘ │ └──────────┘  │  ├ prose     │    │  │  ├ vitrine?   │
-│ → sage? (bottleneck check)  │                                                     │               │  ├ flow?     │    │  │  ├ judge      │
-│ → magi? (tie-break)         │                                                     │               │  ├ frame?    │    │  │  ├ radar      │
-│ → 👤 boundary confirm       │                                                     │               │  ├ forge     │    │  │  └ voyager?   │
-└─────────────────────────────┘                                                     │               │  └ echo      │    │  └ orbit audits  │
-                                                                                    │ ─────────────────────────────────  │       │
-                                                                                    │ ★ omen + ripple + echo Risk Gate   │       │
-                                                                                    └────────────────────────────────────┘       │
-                                                ◀──────── Failure escalation ──────────────────────────────────────────────────┘
-```
-
-Hub-and-spoke is preserved: Nexus is the only top-level orchestrator. Vision is the **UX sub-orchestrator** (already contracted to delegate Muse/Palette/Flow/Forge/Frame/Prose). Orbit is the **implementation-loop sub-orchestrator** (drives nexus-autoloop with Builder/Judge/Radar). This two-tier structure keeps each hub at ≤7 specialists.
+Hub-and-spoke is preserved: Nexus is the only top-level orchestrator. Vision is the **UX sub-orchestrator** (already contracted to delegate Muse/Palette/Flow/Forge/Frame/Prose). Orbit is the **implementation-loop sub-orchestrator** (drives nexus-autoloop with Builder/Judge/Radar). This two-tier structure keeps each hub at ≤7 specialists. For the full phase-by-phase sequencing and parallelism, see § AUTORUN Chain Template — the phase flow is not duplicated here as a separate diagram.
 
 Phase 0 runs only in autonomous mode and emits a single goal artifact bound as Phase 1 input. The boundary confirm at Phase 0 exit is the **only** human checkpoint in autonomous mode under `AUTORUN_FULL`; everything downstream relies on the internal Risk Gate and Orbit's circuit breaker.
 
@@ -161,15 +140,7 @@ This is the **Confirm-before-launch** tier (`reference/recipe-contract.md` §3):
 
 The confirmation message includes: goal title, rationale, top 2 rejected alternatives, estimated cost (agent count / time / token budget), and "edit/abort" instructions. Once approved (explicitly or by timeout in `AUTORUN_FULL`), Apex proceeds to Phase 1 with the goal bound and **no further human input is required** unless an internal Risk Gate or Orbit circuit breaker fires.
 
-### Phase 0 Failure Modes
-
-| Failure | Cause | Action |
-|---------|-------|--------|
-| No data sources for 0a | Greenfield project, no real users yet | Fall back to "spark from project scan only", flag candidates as low-confidence |
-| Spark produces 0 candidates | Project state extremely stable, no TODOs/feedback | Escalate "no work to propose" to user — apex aborts |
-| All candidates ICE < threshold | No clearly worthwhile work | Present top 3 to user for manual selection or abort |
-| `magi` returns split (1-1-1) | Tie-break failed | Escalate top 2 to user with magi rationale |
-| User rejects in 0e | User has different priority | Apex aborts, suggests user invoke with explicit goal |
+Phase 0 failure modes (no candidates, all-ICE-below-threshold, split tie-break, boundary rejection, and the no-data-sources fallback) are consolidated into § Failure Escalation below rather than kept as a separate table.
 
 ---
 
@@ -242,11 +213,11 @@ UX Track internal pipeline: `vision → muse → [palette ‖ prose ‖ flow] �
 
 | Agent | Role | Pass Criterion |
 |-------|------|----------------|
-| `omen` | FMEA + RPN + Mitigation 3-layer (Detection / Prevention / Recovery) | High RPN residuals = 0, or Mitigation defined |
-| `ripple` | Vertical + horizontal impact + blast radius | Go or Conditional-Go (No-Go blocks) |
-| `echo` | UX friction signals fed into gate | Emotion Valence ≥ median, dark pattern = 0, WCAG 3.0 Bronze ≥ 3.5 |
+| `omen` | FMEA + RPN + Mitigation 3-layer (Detection / Prevention / Recovery) | High RPN residuals = 0, or Mitigation defined; AP-class A items require all three layers filled |
+| `ripple` | Vertical + horizontal impact + blast radius | Go or Conditional-Go (No-Go blocks); on Conditional-Go, omen Mitigations must address the conditions before forwarding to orbit |
+| `echo` | UX friction signals fed into gate | Emotion Valence ≥ median, dark pattern = 0, WCAG 3.0 Bronze ≥ 3.5, cognitive load within target range |
 
-Plea ↔ Echo loop closure: if echo's actual walkthrough reaction diverges fatally from plea's predicted demand, send back to Phase 4 (accord) for spec refinement.
+Plea ↔ Echo loop closure: if echo's actual walkthrough reaction diverges fatally from plea's predicted demand, send back to Phase 4 (accord) for spec refinement — do not proceed even if all three axes nominally pass.
 
 **Exit gate:** `go = ripple.verdict ∈ {Go, Conditional-Go} ∧ omen.high_rpn_count == 0 ∧ echo.gate_pass`. On No-Go, escalate to the originating phase.
 
@@ -351,36 +322,7 @@ On any non-ship exit (budget ceiling, Risk-Gate No-Go, attest fail past re-entry
 
 Direct agent-to-agent handoff is forbidden across hubs. Within a sub-hub, the sub-orchestrator owns delegation. The Phase 5 → Phase 6 boundary doubles as an engine boundary: Claude Code (Nexus, Vision) → Codex CLI (Orbit). Orbit's spawn calls cross the engine via Nexus's documented Codex subagent contract (see `_common/SUBAGENT.md`).
 
-## Conditional Agent Inclusion
-
-| Condition | Add | Skip |
-|-----------|-----|------|
-| No-args / `goal=auto` invocation | Phase 0 (project_scan + spark + rank, plus voice/pulse/compete/sage/magi as data permits) | — |
-| Goal supplied explicitly | — | Phase 0 entirely |
-| Existing product (improvement) | echo in Phase 1 | — |
-| New product (greenfield) | — | echo in Phase 1 |
-| accord scope = Full | void, scribe | — |
-| accord scope = Standard | scribe (optional) | void |
-| accord scope = Lite | — | void, scribe |
-| API change | gateway | — |
-| DB change | schema | — |
-| Motion in scope | flow | — |
-| Figma in workflow | frame | — |
-| Mockup supplied | pixel | — |
-| Multi-locale | polyglot | — |
-| UI surface | vision, muse, palette, prose, forge, echo, artisan, vitrine | — |
-| Backend-only | (skip UX track entirely) | vision and downstream |
-| UI flows present | voyager | — |
-
-## Risk Gate Criteria
-
-The Phase 5 Risk Gate is **tri-axis**. All three must pass:
-
-1. **Failure mode coverage (omen)**: No High RPN residuals; AP-class A items have full Detection/Prevention/Recovery layers.
-2. **Impact and blast radius (ripple)**: Verdict in `{Go, Conditional-Go}`. On Conditional-Go, omen Mitigations must address the conditions before forwarding to orbit.
-3. **UX friction (echo)**: Emotion Valence ≥ baseline median; zero dark patterns; WCAG 3.0 Bronze tier average ≥ 3.5; cognitive load within target range.
-
-**Plea-Echo divergence check** (early-warning): if plea's predicted user reaction and echo's measured prototype walkthrough diverge fatally on a top-priority demand, return to Phase 4 — do not proceed even if all three axes nominally pass.
+Conditional agent inclusion (which agents Add/Skip under which condition) is owned by each phase's **Required** column in § Phase Contracts and by the Phase 0 trigger conditions above — not restated here as a second index.
 
 ## Workflow Accuracy Rationale
 
@@ -477,21 +419,37 @@ Nexus AUTORUN apex            # or: apex goal=auto
 
 ## Failure Escalation
 
-| Failure | Detected by | Escalation |
-|---------|-------------|------------|
-| Phase 0 no candidates | spark (autonomous mode) | Apex aborts, suggests user invoke with explicit goal |
-| Phase 0 all ICE < threshold | rank (autonomous mode) | Present top 3 to user for manual selection |
+Consolidated view of what apex's gates and phases guard against, merging the operational trigger/escalation (what happens now) with the failure-class rationale (what it prevents without apex).
+
+| Failure | Cause / Detected by | Escalation / Prevented by |
+|---------|----------------------|----------------------------|
+| No data sources for 0a | Greenfield project, no real users yet | Fall back to "spark from project scan only", flag candidates as low-confidence |
+| Phase 0 no candidates | spark (autonomous mode); project state extremely stable | Apex aborts, suggests user invoke with explicit goal |
+| Phase 0 all ICE < threshold | rank (autonomous mode); no clearly worthwhile work | Present top 3 to user for manual selection |
 | Phase 0 split tie-break | magi (autonomous mode) | Escalate top 2 to user with magi rationale |
 | Phase 0 boundary rejected | user (autonomous mode) | Apex aborts; user input within 60s window cancels |
-| Phase 3 split decision | magi | Pause for human verdict |
+| Build the wrong thing | No evidence anchor for the feature | Phase 0 discovery (spark + rank + sage) + Phase 1 (plea + field evidence anchor) + boundary Confirm-before-launch |
+| Phase 3 split decision | magi | Pause for human verdict; prevents an arbitrarily-resolved deadlock |
+| Weak / unmeasurable spec | "Done" is subjective; scope creeps | Phase 4 accord traceability threshold + L3 measurable, orbit-consumable ACs |
 | Phase 4 traceability < threshold | accord | Re-run accord with scope downgrade or refine inputs |
+| Hidden architecture / blast-radius risk | A migration or contract change breaks neighbors post-merge | Phase 5 Risk Gate: omen FMEA (High-RPN residuals = 0) + ripple blast-radius (No-Go blocks) |
 | Risk Gate No-Go | omen / ripple / echo | Return to originating phase |
+| UX friction / dark patterns shipped | Brand-visible flow frustrates users, a11y regressions | Phase 5 echo gate (Emotion Valence ≥ median, 0 dark patterns, WCAG3 Bronze ≥ 3.5, cognitive load in range) + Plea-Echo divergence check |
 | Plea-Echo divergence | echo | Return to Phase 4 (accord re-spec) |
+| Convergence mistaken for correctness | Loop passes its own tests but doesn't satisfy the spec | Acceptance Verification gate: independent attest conformance ≥ threshold ∧ 0 unmet must-haves (Claude-side, no shared context with builder) |
 | Orbit stuck loop | orbit (convergence_detection) | Triage handoff |
 | Orbit budget exceeded | orbit (cost-per-task) | User confirmation before continuation |
+| Runaway loop / re-entry storm | Open-ended spend, stuck iterations | Orbit circuit breaker (convergence + cost-per-task) + run-level budget envelope (hard-abort at ceiling) + attest re-entry cap (max 2) |
 | Builder/Artisan repeat failure | judge / radar | Scout investigation, then back to orbit |
 | Unmet acceptance criteria | attest (Phase 6 → Ship gate) | Re-enter Phase 6 loop with gap list (max 2), then user |
+| Scope creep shipped as success | The loop satisfies every AC *and* adds surfaces, deps, or persisted state nobody specified | Acceptance Verification **negative pass**: `non_goal_violations == 0`; out-of-boundary changes reverted or explicitly ratified |
+| Engine silently degrades | Codex unreachable → silent fallback breaks the cost/convergence model | Phase 5→6 availability check + Engine Degradation Protocol: explicit confirmed choice with restated ceiling/budget, recorded in the Delivery Report; no answer → checkpoint and stop |
+| Five phases thrown away over a runner problem | Codex unavailable → whole run would otherwise hard-fail and restart later from scratch | Degradation protocol's abort option is a **checkpointed** resume at Phase 6, not a restart |
+| Re-deriving a settled spec | Apex re-runs discovery/verdict over a spec already locked and refuted | § Input Contracts: the Spec Handoff Packet collapses Phases 1-4 to validation; Phase 3 verdict skipped |
+| Rebuilding what the repo already ships | A second implementation of an existing module | Phase 1 reuse scan is mandatory on an existing repo (or inherited via `reuse_findings`) |
+| Filing a stack-imposed limit as a defect | A clone's declared parity ceiling gets "fixed" by the loop, moving the product off its baseline | `parity_ceilings` from the Clone Handoff Packet are declared constraints; the parity harness joins the Phase 6 verification set |
 | Run budget ceiling reached | apex (run-level envelope) | Hard-abort with resumable checkpoint; user resumes or raises ceiling |
+| Lost progress on interrupt | An abort would otherwise re-pay for completed upstream phases | Cross-phase checkpoint-resume (resume from last good phase boundary) |
 
 ## Cost and Latency Profile
 
@@ -516,27 +474,6 @@ Orbit's cost-per-task circuit breaker bounds the *loop*, but the *whole apex run
 
 Apex persists each phase-boundary output (Phase 0 goal artifact, Phase 3 verdict+AC, Phase 4 spec+traceability, Phase 5 design+Risk-Gate result, Phase 6 build state) as a resumable checkpoint, per the Nexus Safety Contract (chains with 4+ steps). A run that aborts mid-flight — budget ceiling hit, Risk Gate No-Go, Orbit circuit breaker, user interrupt — **resumes from the last good phase** instead of restarting from Phase 1. Orbit already owns in-loop checkpoint-resume (`CODEX_ORCHESTRATION.md` C6); this extends the same guarantee to the cross-phase boundaries so the most expensive recipe never re-pays for upstream phases it already completed.
 
-## Failure Modes Prevented
-
-Consolidated view of what apex's gates and phases guard against (drawn from the Phase 0 Failure Modes table, the Risk Gate, the Acceptance Verification gate, and Failure Escalation). Each row is a class of expensive post-implementation discovery that an upstream gate catches first.
-
-| Failure mode | Without apex | Prevented by |
-|--------------|--------------|--------------|
-| Build the wrong thing | A feature ships that no user needed or no metric supports | Phase 0 discovery (spark + rank + sage) + Phase 1 (plea + field evidence anchor) + boundary Confirm-before-launch |
-| Weak / unmeasurable spec | "Done" is subjective; scope creeps | Phase 4 accord traceability threshold + L3 measurable, orbit-consumable ACs |
-| Hidden architecture / blast-radius risk | A migration or contract change breaks neighbors post-merge | Phase 5 Risk Gate: omen FMEA (High-RPN residuals = 0) + ripple blast-radius (No-Go blocks) |
-| UX friction / dark patterns shipped | Brand-visible flow frustrates users, a11y regressions | Phase 5 echo gate (Emotion Valence ≥ median, 0 dark patterns, WCAG3 Bronze ≥ 3.5) + Plea-Echo divergence check |
-| Convergence mistaken for correctness | Loop passes its own tests but doesn't satisfy the spec | Acceptance Verification gate: independent attest conformance ≥ threshold ∧ 0 unmet must-haves (Claude-side, no shared context with builder) |
-| Runaway loop / re-entry storm | Open-ended spend, stuck iterations | Orbit circuit breaker (convergence + cost-per-task) + run-level budget envelope (hard-abort at ceiling) + attest re-entry cap (max 2) |
-| Engine silently degrades | Codex unreachable → silent fallback breaks the cost/convergence model | Phase 5→6 availability check + **Engine Degradation Protocol**: an explicit confirmed choice with a restated iteration ceiling and recomputed budget, recorded in the Delivery Report; no answer → checkpoint and stop |
-| Five phases thrown away over a runner problem | Codex unavailable → the whole run hard-fails and restarts later from scratch | Degradation protocol's abort option is a **checkpointed** resume at Phase 6, not a restart |
-| Scope creep shipped as success | The loop satisfies every AC *and* adds surfaces, deps, or persisted state nobody specified | Acceptance Verification **negative pass**: `non_goal_violations == 0`; out-of-boundary changes are reverted or explicitly ratified |
-| Re-deriving a settled spec | Apex re-runs discovery/verdict over a spec the user already locked and refuted | § Input Contracts: the Spec Handoff Packet collapses Phases 1-4 to validation; Phase 3 verdict skipped |
-| Rebuilding what the repo already ships | A second implementation of an existing module | Phase 1 reuse scan is mandatory on an existing repo (or inherited via `reuse_findings`) |
-| Filing a stack-imposed limit as a defect | A clone's declared parity ceiling gets "fixed" by the loop, moving the product off its baseline | `parity_ceilings` from the Clone Handoff Packet are declared constraints; the parity harness joins the Phase 6 verification set |
-| Decision deadlock | A 1-1-1 tie stalls or is resolved arbitrarily | Phase 3 magi split-decision escalation + Phase 0 magi tie-break / top-3 manual select |
-| Lost progress on interrupt | An abort re-pays for completed upstream phases | Cross-phase checkpoint-resume (resume from last good phase boundary) |
-
 ## Boundaries / vs neighbors
 
 Apex is the discovery-through-ship single-feature recipe. How it differs from its siblings:
@@ -551,9 +488,3 @@ Apex is the discovery-through-ship single-feature recipe. How it differs from it
 | **charter** | Builds the thing | Authors the durable team-design document apex's sibling `enact` consumes (charter never builds) |
 
 Decision tree: single high-stakes feature, discovery→ship in one shot → **apex**. Spec/AC only → **spec**. Run a pre-authored Charter → **enact**. Quality-max with competing candidates → **summit**. Small/medium guided build → **feature**.
-
----
-
-## Visualization
-
-Mermaid flow diagram: [`apex-recipe-flow.mmd`](apex-recipe-flow.mmd) — render via mermaid.live or compatible viewer for the full apex topology.

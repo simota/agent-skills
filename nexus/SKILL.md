@@ -54,7 +54,7 @@ Coordinate specialist agents, design the minimum viable chain, and execute safel
 - Verify acceptance criteria before delivery; pair quantitative metrics with human evaluation for high-stakes tasks.
 - Adapt routing from execution evidence with safety constraints; track OE (orchestration efficiency) per chain type.
 - Leverage standardized inter-agent protocols where available: MCP, A2A, ACP.
-- Apply Plan-and-Execute pattern: capable models plan, cheaper models execute. Claude Code = opus/fable-5 plan / **Sonnet 5 execute** (haiku trivial only); Codex CLI = **latest `gpt-5.6` generation, variant by role** (sol plan/design / terra execute / luna rote; depth via `model_reasoning_effort`); **agy = always Gemini 3.6 Flash (High)**, High `thinking_level` default for every step + Deep Reasoning Directive on recipe spawns (`AGY_ORCHESTRATION.md` A1-R/A9-D); Fable 5 hub → `high` effort. Full per-engine map → `reference/hub-authoring.md` § Model Selection, `_common/CLI_COMPATIBILITY.md §4`.
+- Apply Plan-and-Execute pattern: capable models plan, cheaper models execute (Claude Code = plan opus/fable-5, execute Sonnet 5; Codex CLI = `gpt-5.6` variants by role; **agy = always Gemini 3.6 Flash (High)**). Full per-engine map → `reference/hub-authoring.md` § Model Selection, `_common/CLI_COMPATIBILITY.md §4`.
 - Use Anthropic **Managed Agents** vocabulary (SF 2026) and surface an escalation recommendation in `NEXUS_COMPLETE` when the workload justifies the managed platform; prefer **Dynamic Workflows** for large homogeneous parallel sweeps. Detail: `reference/managed-agents-mapping.md` §5.
 - Output language follows the CLI global config (`settings.json` `language`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`); identifiers and technical terms remain in English.
 
@@ -140,17 +140,17 @@ The full table below is flat; these families group it by the axis that separates
 | Family | Recipes | Axis (one-line; full → `reference/recipes-detail.md` § Recipe Families) |
 |--------|---------|-----------------|
 | **Fix** | `bug` · `security` | defect vs vulnerability |
-| **Improve** (existing code) | `refactor` · `optimize` · `kaizen` · `anneal` · `restyle` | known restructure / perf number / polish one feature vs target / discover design weaknesses → behavior-preserving brush-up / **UI-visual-interaction design of an existing surface (direction+rubric-driven)**. `improve`/`polish`/`enhance` overloaded → REDIRECT: UI-scoped (`polish the UI`, `improve the look and feel`) → `restyle`; plain feature-scoped (`polish X feature`) → `kaizen`. `improve the design` overloaded (code design → `anneal`; UI/look-and-feel → `restyle`) → REDIRECT. **Prove vs fix:** the *stated* code design in question ("is this actually a good design", "is this abstraction necessary", "do the layering rules hold") → `assay` (Quality-Max) — it hands `anneal` a pre-evidenced slate; plain "it drifted, clean it up" stays on `anneal` |
+| **Improve** (existing code) | `refactor` · `optimize` · `kaizen` · `anneal` · `restyle` | known restructure / perf number / polish one feature vs target / discover design weaknesses → behavior-preserving brush-up / UI-visual design of an existing surface. `improve`/`polish`/`enhance`/`improve the design` overloaded → REDIRECT (UI-scoped → `restyle`; feature-scoped → `kaizen`; code design → `anneal`). **Prove vs fix:** stated design claims in question → `assay` (Quality-Max); plain "it drifted, clean it up" → `anneal` |
 | **Loop** (autonomous / iterative) | `goal` · `converge` | `/goal` setup only / in-session rubric loop (unattended runner → `orbit` skill; discovery→ship → `apex`). **Every loop passes `_common/LOOP_PRECONDITIONS.md` first** — its § Shape first, then gate resolves an underspecified "make a loop" to the right owner |
 | **Build** (new) | `feature` · `apex` | single guided build / discovery→ship one-shot (8-25 agents) |
 | **Discover → build pairs** | `spec`→`feature`/`apex` · `charter`→`enact` · `layer`→`sigil` | one feature spec / whole-repo team+work plan / whole-repo reusable operating layer. All stop at a design; the pair runs it |
 | **Reason** (no code) | `gedanken` · `delve` | abstract thought-experiment on a claim / grounded deep-dive of a shipped feature → evolution directions. Both orchestrate `magi`/`flux`. `evolve a feature` overloaded → REDIRECT |
-| **Comprehend** (reverse-engineer existing code → understanding artifact, no code) | `cartograph` · `chronicle` | **space vs time**: `cartograph` = multi-repo structure → bird's-eye diagrams + design doc (how it works *today*); `chronicle` = commit history → era timeline + narrative storylines (feature/fix/improvement/decision) + decision log + per-lens deep-dive files (security/domain/architecture/perf/UX/issues) + inferred ethos/worldview (how it *got here* & what it *believes*). vs `delve` (one shipped feature → evolution dialogue) / `charter` (one repo → team+work plan) / `pdm` (plan-vs-code status) / `clone` (black-box external → rebuild). Single repo/one diagram → `lens`/`atlas`/`canvas` direct; one period's PR report → `harvest` direct |
+| **Comprehend** (reverse-engineer existing code → understanding artifact, no code) | `cartograph` · `chronicle` | **space vs time**: `cartograph` = multi-repo structure → bird's-eye diagrams + design doc (how it works *today*); `chronicle` = commit history → timeline + storylines + decision log + inferred ethos (how it *got here* & what it *believes*). vs `delve` (one shipped feature → evolution dialogue) / `charter` (one repo → team+work plan) / `pdm` (plan-vs-code status) / `clone` (black-box external → rebuild). Single repo/one diagram → `lens`/`atlas`/`canvas` direct; one period's PR report → `harvest` direct |
 | **Verdict** (which feature) | `essential` · `killer` · `trim` | THE must-have / THE differentiator / remove dead-weight (inverse). Shared gate: `reference/verdict-gate.md` |
-| **Reproduce, Synthesize & Invent** | `clone` · `fuse` · `graft` · `transmute` · `migrate` · `eureka` | **source count**: 1 source faithful / ≥2 synthesized / host+donor concept / own-source cross-language / own-system change-completeness — **`eureka` = zero sources by construction: it *originates* and proves the result novel, so a collision with an existing source is a kill, not an input**. Shared: `_common/DIFFERENTIAL_PARITY.md` (all but `eureka`, which has no reproduction target — its oracle is the Prior-Art Ledger). `differential parity` alone → REDIRECT; `invent`/`breakthrough` → `eureka` (proven mechanism from another domain → `graft`); **`eureka ship=true`** = opt-in end-to-end (Ship Gate → collapsed `spec` → `apex` under a Novelty Invariant → novelty regression check), never inferred from an invention ask alone; **`eureka depth=scout`** = the light rung for *is it new?* alone (prior-art ledger + adjudicated candidates, all `UNPROVEN`, 11-14 agents, no `ACCEPT`), mutually exclusive with `ship=true` |
-| **Quality-Max** (expensive, confirm) | `acceptance` (+`layer=c`) · `summit` · `podium` · `wish` (+`domain=lp`) · `runway` · `crucible` · `silhouette` · `lattice` · `chorus` · `assay` · `hallmark` · `rebrand` | proof-carrying merge (G1-10; `layer=c` alias `growth-acceptance` extends it to the post-launch lifecycle, G11-15) / pre-merge quality tournament / content-slide quality / **once-in-a-lifetime one-shot ceiling — scarcity-gated, deliverable-agnostic, ACCEPT = all rubric dims = 3 on *calibrated* evaluators, with the ceiling anchored to sourced exemplars and exit gated by One-Shot + Comparative verdicts** (`domain=lp` alias `marquee` = wish-grade acquisition LP with machine oracles, Scarcity Gate off) / **design-brand wing — one question each, one oracle each:** *is it the best?* → `runway` (flagship in-product UI tournament; shares the ceiling ACCEPT but carries **neither One-Shot Gate nor gauntlet**, so it is a `restyle` escalation, not a wish preset) · *does it work at all?* → `crucible` (**floor**: binary task-completion per condition cell, never a score) · *is it recognizably ours?* → `silhouette` (blind attribution vs K competitors against a **pre-committed** Sameness Ledger) · *is it one system?* → `lattice` (steady-state token/component conformance, RESIDUE-GATE to dry) · *is it one product across platforms?* → `chorus` (Idiom Gate × Kinship Gate over a ratified Invariant/Variant Contract) · *what is the brand?* → `hallmark` (proof-carrying Brand Book) · *did the brand land everywhere?* → `rebrand` (completeness-proven propagation). `runway` vs `wish domain=lp` = in-product surface vs conversion LP; `runway`(ceiling) vs `crucible`(floor) = orthogonal, commonly sequential; `lattice` vs `rebrand` = steady-state conformance vs identity migration; `lattice`(within one platform) vs `chorus`(between platforms); `hallmark`→`rebrand` = create→propagate pair. **Code-design wing:** *are the design claims true?* → **`assay`** (harvest the codebase's load-bearing design claims, then resolve each by an **executed experiment** — `ADD` change rehearsal · `SUBTRACT` removal test · `REWRITE` blind simpler-implementation panel · `ASSERT` executable fitness function; single oracle = zero `UNPROVEN` claims, `REFUTED` counts as resolved; gated by an **Adequacy Gate** because a zero-diff removal on an unexercised element means *untested*, not *unnecessary*). `assay`(prove) → `anneal`(fix) is a **measure→fix pair** — `anneal` alone stays the cheaper default when the ask is "find what's wrong" rather than "prove what we claim" |
-| **Grounded content** | `newsroom` | claim-grounding maximization for a single article — Evidence Ledger before writing (compose) or against an existing draft (audit) → producer≠verifier claim audit with citation-support re-open → adversarial refutation of load-bearing claims → remediation; ships a **Provenance Report**, zero ungrounded facts for external-facing. vs `podium` = package polish (grounding is one branch there); vs `zine` direct = authoring with no grounding requirement; vs `attest` = prose-vs-world, not impl-vs-spec |
-| **Document package** | `package` (incl. `venture`) | 9-domain preset registry |
+| **Reproduce, Synthesize & Invent** | `clone` · `fuse` · `graft` · `transmute` · `migrate` · `eureka` | **source count**: 1 source faithful / ≥2 synthesized / host+donor concept / own-source cross-language / own-system change-completeness — **`eureka` = zero sources by construction: it *originates* and proves the result novel, so a collision with an existing source is a kill, not an input** (its oracle is the Prior-Art Ledger). Shared: `_common/DIFFERENTIAL_PARITY.md` (all but `eureka`). `differential parity` alone → REDIRECT; `invent`/`breakthrough` → `eureka` (proven mechanism from another domain → `graft`); **`eureka ship=true`** = opt-in end-to-end, never inferred from an invention ask alone; **`eureka depth=scout`** = the light rung for *is it new?* alone (no `ACCEPT`), mutually exclusive with `ship=true` |
+| **Quality-Max** (expensive, confirm) | `acceptance` (+`layer=c`) · `summit` · `podium` · `wish` (+`domain=lp`) · `runway` · `crucible` · `silhouette` · `lattice` · `chorus` · `assay` · `hallmark` · `rebrand` | proof-carrying merge (G1-10; `layer=c` alias `growth-acceptance` = post-launch, G11-15) / pre-merge quality tournament / content-slide quality / once-in-a-lifetime one-shot ceiling (`domain=lp` alias `marquee` = wish-grade acquisition LP). **Design-brand wing — one question each, one oracle each:** *best?* → `runway` (ceiling; a `restyle` escalation, not a wish preset) · *works at all?* → `crucible` (floor: binary, never a score) · *recognizably ours?* → `silhouette` (blind attribution) · *one system?* → `lattice` · *one product across platforms?* → `chorus` · *what is the brand?* → `hallmark` · *landed everywhere?* → `rebrand`. **Code-design wing:** *are the design claims true?* → `assay` (executed experiments; Adequacy Gate); `assay`(prove) → `anneal`(fix) = measure→fix pair — `anneal` alone when the ask is "find what's wrong" |
+| **Grounded content** | `newsroom` | claim-grounding maximization for a single article — Evidence Ledger → producer≠verifier claim audit → adversarial refutation → **Provenance Report** (zero ungrounded facts for external-facing). vs `podium` (package polish) / `zine` direct (no grounding requirement) / `attest` (impl-vs-spec, not prose-vs-world) |
+| **Document package** | `package` (incl. `venture`) | 12-domain preset registry |
 | **Meta / control** | `classify` · `proactive` · `pack` | routing · project scan · skill-profile |
 
 ### Recipe Registry
@@ -166,7 +166,7 @@ rebrand             crucible            silhouette          lattice             
 clone               fuse                graft               package             pack
 ```
 
-`*` = default when no subcommand is given. **Named preset aliases** (not separate Recipes): `venture` → `package domain=startup` · `marquee` → `wish domain=lp` · `growth-acceptance` → `acceptance layer=c`.
+`*` = default when no subcommand is given. Named preset aliases (`venture` / `marquee` / `growth-acceptance`) → **Subcommand Dispatch** below.
 
 ## Subcommand Dispatch
 
@@ -194,8 +194,6 @@ Execution-control Mode (AUTORUN_FULL / AUTORUN / GUIDED / INTERACTIVE) is applie
 
 ## Execution Model
 
-**Default: spawn.** Every EXECUTE step spawns a real agent session unless an explicit exception applies (Core Rule #3).
-
 ### Orchestrator Detection
 
 Before the first spawn, determine which CLI drives **this hub session**, then bind the spawn API, authoring protocol, and model map accordingly. The hub engine is implicit in the available tooling — detect it once and reuse:
@@ -206,7 +204,7 @@ Before the first spawn, determine which CLI drives **this hub session**, then bi
 | `spawn_agent` callable (C1 prereqs hold) | **Codex CLI** | `spawn_agent` → `wait_agent` (parallel = N spawn → join all) | `_common/CODEX_ORCHESTRATION.md` (C-principles) | `gpt-5.6` family — sol/terra/luna by role (see `CLI_COMPATIBILITY.md §4`) |
 | `/agent` in TUI main session | **agy** | `/agent` or `agy -p` headless | `_common/AGY_ORCHESTRATION.md` (A1–A9) | Gemini 3.6 Flash (High) mandated (‡), effort tier per step via `/model` (see `CLI_COMPATIBILITY.md §4`) |
 
-Codex-hub prereqs (C1): `multi_agent = true` + `[agents] max_depth >= 2`. If unmet → internal execution with a concrete reason, never a generic "spawn tool not found"; `spawn_agent` may be lazily hidden — attempt when prereqs hold (C5). Details → `_common/CLI_COMPATIBILITY.md`, `reference/execution-layers.md`.
+Codex-hub prereqs (C1): `multi_agent = true` + `[agents] max_depth >= 2`. If unmet → internal execution per Core Rule #3; `spawn_agent` may be lazily hidden — attempt when prereqs hold (C5). Details → `_common/CLI_COMPATIBILITY.md`, `reference/execution-layers.md`.
 
 **Claude Code hub model detection.** The hub runs on Opus 5 or Claude Fable 5; on Fable 5, apply the F-principles in `reference/hub-authoring.md` § Claude Code hub — Fable 5 on top of the P-principles. When unknown, author for Opus 5 defaults — safe on both.
 
@@ -222,9 +220,9 @@ Full per-CLI prereqs, runtime notes, silent-failure mitigations, and the verifie
 |-----|----|----|----|-----------|
 | **Claude Code** | `Agent(... mode: bypassPermissions)` | `Agent(... run_in_background: true)` | `Agent("You are Rally...")` | `Agent` tool present |
 | **Codex CLI** | `spawn_agent` → `wait_agent` | N × `spawn_agent` → `wait_agent` × N | `spawn_agent("You are Rally...")` | `multi_agent = true` + `[agents] max_depth >= 2` |
-| **agy** | `/agent <name>` (TUI) or `agy -p --dangerously-skip-permissions` (headless) | Multiple `/agent` (async, `/tasks`) | Plugin team pack | TUI main session or OS-level isolation; **headless from a socket-stdin shell MUST allocate a real pty (`python3 pty.spawn`) — bare `agy -p` and `script -q /dev/null` both fail silently**; artifact file capture (NOT stdout) |
+| **agy** | `/agent <name>` (TUI) or `agy -p --dangerously-skip-permissions` (headless) | Multiple `/agent` (async, `/tasks`) | Plugin team pack | TUI main session or OS-level isolation; headless → MANDATORY note below |
 
-**MANDATORY before spawning agy/codex as an agent** — read `_common/CLI_COMPATIBILITY.md §9.2` (agy real-pty + artifact/sentinel capture, never stdout) and §9.3 (codex `-o <abs path>` artifact is the source of truth). These are silent-output regressions, not edge cases.
+**MANDATORY before spawning agy/codex as an agent** — read `_common/CLI_COMPATIBILITY.md §9.2` (agy headless from a socket-stdin shell MUST allocate a real pty (`python3 pty.spawn`) — bare `agy -p` and `script -q /dev/null` both fail silently; artifact/sentinel capture, never stdout) and §9.3 (codex `-o <abs path>` artifact is the source of truth). These are silent-output regressions, not edge cases.
 
 Key rules (Codex lazy-hidden tools, agy headless `@<path>` + sentinel + `--print-timeout`, agy Pre-flight, permission model) → `reference/hub-authoring.md` § Execution-Layer Key Rules.
 
@@ -268,7 +266,7 @@ Agent(
 )
 ```
 
-Front-load acceptance criteria (P1), a length envelope (P2), and a scope bound (P8) on **every** spawn — Opus 5's default output runs long in both channels and it can widen a task unprompted. Tool-use (P3) and thinking (P5) directives are optional, added by task scale. **Never include self-verification wording** ("verify your work", "double-check", "re-verify before responding", "spawn a subagent to check this") — Opus 5 self-verifies and these cause over-verification (P9). Independent verification is unaffected: it lives in the *chain* as a separate agent (Radar after Builder, Judge after implementation), not in a producer's own prompt. For orchestrator spawns the Critical directives per `_common/OPUS_5_AUTHORING.md` are P4/P6/P7/P9 (delegation caps, effort, delegation framing, no redundant verification), carried by the `model`/`mode` fields and the spawn-ceiling rules rather than by per-field template text. **On a Fable 5 hub directives are lighter, not heavier** — a brief outcome+brevity instruction steers best, and any "echo / show / transcribe your reasoning" wording is forbidden (`reasoning_extraction` refusal). Engine variants, Opus 5 / Fable 5 notes, parallel-spawn rules → `reference/hub-authoring.md` § Spawn Template Variants; detailed flows → `reference/execution-phases.md`, `reference/orchestration-patterns.md`.
+**Never include self-verification wording** ("verify your work", "double-check", "re-verify before responding", "spawn a subagent to check this") — Opus 5 self-verifies and these cause over-verification (P9); independent verification lives in the *chain* as a separate agent, never in a producer's own prompt. **On a Fable 5 hub directives are lighter, not heavier** — a brief outcome+brevity instruction steers best, and any "echo / show / transcribe your reasoning" wording is forbidden (`reasoning_extraction` refusal). Orchestrator-spawn directives (P4/P6/P7/P9), engine variants, parallel-spawn rules → `_common/OPUS_5_AUTHORING.md`, `reference/hub-authoring.md` § Spawn Template Variants; detailed flows → `reference/execution-phases.md`, `reference/orchestration-patterns.md`.
 
 ## Safety Contract
 
@@ -297,10 +295,8 @@ Front-load acceptance criteria (P1), a length envelope (P2), and a scope bound (
 
 ## Routing Quick Start
 
-Canonical matrix: `reference/routing-matrix.md` defines **93 task types** (ground-truthed by row count, `grep -c` the Task Type table); the Recipe Registry exposes the most-used ones as subcommands (full table → `reference/recipes-index.md`) — the rest are reachable via the `classify` (default) flow. Phase contracts (BUG/FEATURE/SECURITY/REFACTOR/OPTIMIZE), Sherpa skip conditions, chain adjustment and clarification rules all live in `reference/routing-matrix.md` (merged from the retired `routing-quick-start.md` — see § Sherpa Skip & Chain Adjustment there).
-
 **Chain reference hierarchy (Source of Truth):**
-- `routing-matrix.md` — owns task type → default chain (96 types), the classify/LADDER flow, and the per-task-type phase contracts + Sherpa-skip/chain-adjustment rules. **Primary SoT for "which agents fire for task X"**.
+- `routing-matrix.md` — owns task type → default chain (**93 task types**), the classify/LADDER flow, and the per-task-type phase contracts + Sherpa-skip/chain-adjustment rules. **Primary SoT for "which agents fire for task X"**. The Recipe Registry exposes the most-used types as subcommands; the rest are reachable via the `classify` (default) flow.
 - `agent-chains.md` — owns chain *modifications*: parallel variants, Rally escalation, addition/skip triggers. **Primary SoT for "how to adjust a chain"**.
 - `recipes-detail.md` — owns Recipe-level phase contracts (apex/summit/etc.). **Primary SoT for "what phases a Recipe runs"**.
 
@@ -309,7 +305,7 @@ If context is unclear, inspect git state and `.agents/PROJECT.md`; if confidence
 ## Output Requirements & Handoffs
 
 Every deliverable must include:
-- `## Nexus Execution Report` header
+- `## NEXUS_COMPLETE` header (canonical template: `reference/output-formats.md`)
 - Task description and acceptance criteria
 - Chain selected and mode used
 - Per-step results with agent, status, and output summary
@@ -323,7 +319,7 @@ Every deliverable must include:
 **Required contracts:**
 - `DELIVER` returns `NEXUS_COMPLETE` semantics. Canonical formats: `reference/output-formats.md`.
 - `AUTORUN` appends `_STEP_COMPLETE:` with `Agent`, `Status`, `Output`, `Next` after normal work.
-- Hub mode uses `## NEXUS_ROUTING` as input and returns `## NEXUS_HANDOFF` (canonical schema: `_common/HANDOFF.md`).
+- Hub mode uses `## NEXUS_ROUTING` as input and returns `## NEXUS_HANDOFF` (canonical schema: `_common/HANDOFF.md`); no direct agent-to-agent calls. Surface in the handoff: task type classification + selected chain + execution mode; verification result + chain complexity / unresolved gaps / safety concerns.
 - Output language follows the CLI global config; identifiers, protocol markers, schema keys, and technical terms stay in English.
 
 | Direction | Handoff | Purpose |
@@ -343,31 +339,18 @@ External feedback sources: Titan (epic-chain results), Judge (quality), Architec
 
 Read only the files that match the current decision point.
 
+Files already indexed by the Workflow table's Read-When column (routing-matrix, agent-chains, confidence-scoring, execution-phases, guardrails, error-handling, output-formats, the anti-pattern catalogs, etc.) are not repeated here — the Workflow row is their index.
+
 | File | Read When |
 |------|-----------|
-| `reference/routing-matrix.md` | Canonical task-type → chain mapping, classify/LADDER flow, per-task-type phase contracts, Sherpa skip / chain adjustment / clarification rules |
-| `reference/agent-chains.md` | Full chain templates or add/skip rules |
-| `reference/agent-disambiguation.md` | Two or more agents plausibly fit the same request |
-| `reference/confidence-scoring.md` | Confidence scoring + autonomous decision thresholds |
-| `reference/intent-clarification.md` | Ambiguous request needs interpretation before routing; overloaded-anchor REDIRECT |
 | `reference/proactive-mode.md` | `/Nexus` no-task → next-action recommendations |
-| `reference/execution-phases.md` | Phase-by-phase AUTORUN flow |
-| `reference/guardrails.md` | Task-specific checkpoints or guardrail state rules |
-| `reference/error-handling.md` | Failure needs retry, rollback, recovery injection, escalation, abort; **agy hub — classify L0 capture failure before any retry** (empty stdout is also what success looks like) |
 | `reference/routing-explanation.md` | Explaining why a chain was chosen |
-| `reference/conflict-resolution.md` | Parallel branches touch overlapping files |
 | `_common/PARALLEL.md` | Parallel branch definitions, file ownership, merge, rollback |
-| `reference/handoff-validation.md` | Handoff missing structure, confidence, integrity |
-| `reference/output-formats.md` | Canonical final output or handoff templates |
-| `reference/orchestration-patterns.md` | Concrete execution patterns (sequential, parallel, evaluator-loop, verification-gated) |
 | `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation — the spec `converge` executes |
 | `_common/LOOP_PRECONDITIONS.md` | You are about to build, configure, or launch **any** agent loop — the five-point precondition gate (completion oracle · hard-stop bound · maker ≠ checker · persistent memory · drift awareness) + shape resolution when the request names no shape |
 | `reference/loop-engineering-primitives.md` | Map the loop-engineering pattern onto Claude Code / Codex / **agy** primitives — when designing a `goal`/apex/summit loop (agy ships neither `/loop` nor a confirmed `/goal`: the loop is hub-driven, see § agy column) |
 | `reference/context-strategy.md` | Decide how context flows between agents |
 | `reference/adaptive-prompt-policy.md` | Tailor each spawn prompt to project + session context; ephemeral, reversible |
-| `reference/routing-learning.md` | Adapting routing from evidence; per-task-type Autonomy Ledger |
-| `reference/quality-iteration.md` | Output needs post-delivery PDCA improvement |
-| `reference/{orchestration,task-routing,production-reliability,agent-communication}-anti-patterns.md` | Anti-pattern catalogs (load when chain ≥ 4 agents) |
 | `reference/execution-layers.md` | Per-CLI prereqs, runtime notes, agy headless mitigations + template |
 | `reference/hub-authoring.md` | Per-engine authoring (Claude/Codex/agy), spawn-template variants, model selection, execution-layer key rules, Fable 5 F-principles |
 | `reference/recipes-index.md` | A subcommand matched at Dispatch and you need its chain template + `Read` reference, or you are scanning the full registry to pick a Recipe — **the complete Recipes table** |
@@ -377,23 +360,20 @@ Read only the files that match the current decision point.
 | `reference/recipe-contract.md` | Authoring standard for nexus recipes — 8 required elements + canonical phrasing. Read when authoring/normalizing a recipe |
 | `reference/verdict-gate.md` | Shared contract for verdict recipes (`essential`/`killer`/`trim` + graft flag clause) |
 | `reference/dialogue-protocol.md` | Conducting contract-level dialogue (`spec`/`delve` mandatory; `gedanken` INTERACTIVE, `clone` Stack Dialogue, verdict cards) — question craft, Assumption Ledger, Provenance Gate |
-| `reference/autonomy-quality-protocol.md` | Any `AUTORUN`/`AUTORUN_FULL` chain — intent contract (Q1-Q3), Decision Ledger (Q4-Q6), drift control (Q7-Q8), independent verification + evidence-bound claims (Q9-Q11), quality budget + Acceptance Provenance (Q12-Q15) |
 | `reference/doc-quality-protocol.md` | Deliverable includes documents (`package`/`charter`/`layer`/`spec`/`delve`/`gedanken`/`podium`, any Scribe/Accord/Quill/Tome-authored step) — reader contract (W1-W3), grounding (W4-W6), coherence (W7-W9), readability (W10-W11), Doc Quality Gate (W12) |
 | `reference/signal-keywords.md` | Canonical full Signal Keywords → Recipe table (Core / Specialist / Mobile / Package / Fallback) |
 | `reference/task-battery.md` | Verifying a routing-machinery change (LADDER wiring, Recipe additions, Signal Keyword edits) before merge — standing regression battery |
 | `reference/official-skill-categories.md` | Official use case categories + 5 canonical patterns |
 | `reference/managed-agents-mapping.md` | Managed Agents / Outcomes / Dreaming / Webhooks mapping + Dynamic Workflows |
-| `_common/DIFFERENTIAL_PARITY.md` | Shared parity discipline for `transmute`/`clone`/`fuse`/`graft`/`migrate`/`lattice`/`chorus`/`assay` — read when a recipe claims "verified by differential parity" (`lattice` = rendered appearance as the oracle; `chorus` = the invariant list compared literally across platforms; **`assay` promotes its oracle-adequacy clause to a gating phase** — a zero-diff removal on an unexercised element is `untested`, not `unnecessary`) |
-| `_common/ADVERSARIAL_REFUTATION.md` | Shared skeptic-panel discipline for `killer`/`trim`/`graft`/`newsroom`/`silhouette`/`assay` — read when a recipe gates a verdict on "refute ×2-3" (`silhouette` executes the refutation as a blind measurement rather than an argument; `assay`'s REWRITE panel refutes "this complexity is essential" **by construction**) |
-| `_common/PROPORTION_AND_SPACING.md` | Shared sourced proportion/spacing reference for design recipes (`restyle`/`runway`/`marquee`/`hallmark`/`rebrand`/`crucible`/`silhouette`/`lattice`/`chorus`) — read when a rubric axis needs a defensible number (spacing scale, measure, grid, touch target), when a pass criterion must cite a spec (`crucible` conditions, `chorus` Idiom Gate), or when a design rationale is about to invoke the golden ratio (§1 evidence tiers, §10 contradictions) |
-| `reference/research-grounding.md` | Web-research sweep shared by `clone`/`fuse`/`graft` (Phase 0.5, Evidence Ledger) and `eureka` (Phase 1.5, **inverted polarity** — the ledger is a novelty denominator to avoid, not a target to reproduce); `silhouette` (Phase 1.5, **inverted polarity** for *visual* prior art — the sweep's competitor set doubles as the blind-test distractor pool); `wish`/`marquee` (Phase 1.5 — the ledger sources the ceiling's exemplar anchors + calibration control); `newsroom` reuses the ledger schema + trust tiers (primary-source-authoritative variant) |
+| `_common/DIFFERENTIAL_PARITY.md` | Shared parity discipline for `transmute`/`clone`/`fuse`/`graft`/`migrate`/`lattice`/`chorus`/`assay` — read when a recipe claims "verified by differential parity". Oracle specializations: `lattice` = rendered appearance; `chorus` = the invariant list compared literally across platforms; `assay` promotes oracle-adequacy to a gating phase (zero-diff removal on an unexercised element = `untested`, not `unnecessary`) |
+| `_common/ADVERSARIAL_REFUTATION.md` | Shared skeptic-panel discipline for `killer`/`trim`/`graft`/`newsroom`/`silhouette`/`assay` — read when a recipe gates a verdict on "refute ×2-3" (`silhouette` refutes by blind measurement, not argument; `assay`'s REWRITE panel refutes "this complexity is essential" by construction) |
+| `_common/PROPORTION_AND_SPACING.md` | Shared sourced proportion/spacing reference for design recipes — read when a rubric axis or pass criterion needs a defensible sourced number (spacing scale, measure, grid, touch target, golden-ratio claims) |
+| `reference/research-grounding.md` | Web-research sweep + Evidence Ledger shared by `clone`/`fuse`/`graft` (reproduce), `eureka` (inverted polarity — avoid; documented in the file), `silhouette` (inverted polarity for *visual* prior art — the competitor set doubles as the blind-test distractor pool), `wish`/`marquee` (ledger sources the ceiling's exemplar anchors + calibration control), `newsroom` (ledger schema + trust tiers, primary-source-authoritative) |
 | `_common/PROOF_CARRYING.md` | `/nexus acceptance` Tier policy + G1-G10. **Mandatory before `acceptance`.** |
 | `_common/GROWTH_BRAND_PROOF.md` | `/nexus acceptance layer=c` (alias `growth-acceptance`) Layer C + Insight Ledger + Brand Compiler + G11-G15 |
-| `reference/feature-impact-simulate.md` | Feature impact prediction (Persona+Journey+Product v4) |
 | `reference/pack-subcommand.md` | `/nexus pack` — skill profile switch, settings.json edit, backup, diff, confirm |
 | `_common/SKILL_PACKS.md` | Pack membership matrix (10 packs × 130 skills), profile catalog, routing protocol |
 | `_common/OPUS_5_AUTHORING.md` | **Claude Code hub** — P1–P12 (delegation caps, effort against a `high` default, length envelopes, scope bounds, no self-verification scaffolding, context minimalism) + Opus 5 platform facts |
-| `reference/hub-authoring.md` § Claude Code hub — Fable 5 | **Hub runs on `claude-fable-5`** — F-principles (F1-F8): lighter spawn prompts, `high` default effort, async harness, no-reasoning-reproduction, cost gate |
 | `_common/CODEX_ORCHESTRATION.md` | **Codex CLI hub** — C1 spawn-depth, C2 sync fan-out, C3 effort-by-model, C6 checkpoint-resume |
 | `_common/AGY_ORCHESTRATION.md` | **agy hub** — A1 Flash-mandate effort-tier routing, A2 file-handoff+pty capture, A3 session-scoped tier, A4 flattened fan-out / `-c` resume, A6 sandbox posture (#36) |
 | `_common/IMAGE_INPUT.md` | Routing request carries an image — five-stage pipeline at CLASSIFY |
@@ -402,18 +382,6 @@ Read only the files that match the current decision point.
 ## Operational Notes
 
 Follow `_common/OPERATIONAL.md`, `_common/AUTORUN.md`, `_common/HANDOFF.md`, `_common/GIT_GUIDELINES.md`, `_common/HARNESS_EVOLUTION.md`. For the active orchestrator engine apply `_common/OPUS_5_AUTHORING.md` (Claude Code hub; add the F-principles in `reference/hub-authoring.md` when the hub runs on Fable 5), `_common/CODEX_ORCHESTRATION.md` (Codex CLI hub), or `_common/AGY_ORCHESTRATION.md` (agy hub — A1–A9). Journal in `.agents/nexus.md`; log to `.agents/PROJECT.md`. No agent names in commits/PRs. Decompose, route, execute, verify, deliver. Keep chains small, handoffs structured, recovery explicit.
-
-## AUTORUN Support
-
-See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Nexus-specific `_STEP_COMPLETE.Output` schema lives in `reference/autorun-schema.md`.
-
-## Nexus Hub Mode
-
-When input contains `## NEXUS_ROUTING`, operate as the hub. Do not instruct direct agent-to-agent calls. Return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-
-Nexus-specific findings to surface in handoff:
-- Task type classification + selected chain + execution mode
-- Verification result + chain complexity / unresolved gaps / safety concerns
 
 ## Operational Notes for Spawns
 - **Scoring:** Compute confidence with the weighted formula in `confidence-scoring.md`. The qualitative 3/2/1/0 table there is a human-readable audit summary that runs alongside it — reach for it as the sole score only to cap per-model compute cost under heavy parallel fan-out, not as a general fallback.

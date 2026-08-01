@@ -135,9 +135,9 @@ Phase 3    EXPERIMENT ‖ pipeline — per claim, independently, NO barrier betw
                       → measure files touched · layers crossed · locality · unrelated-test
                         breakage · turns → IMPLEMENTATIONS DISCARDED (§6)
            SUBTRACT : remove the element on a throwaway branch ★Ask First → build + suite +
-                      behavioral diff per _common/DIFFERENTIAL_PARITY.md
+                      behavioral diff per _common/DIFFERENTIAL_PARITY.md (two-reading split: §1.3)
                       → zero diff ∧ ADEQUATE → UNNECESSARY (refutes the necessity claim)
-                      → zero diff ∧ BLIND     → UNTESTED (proves nothing; `oracle-limited`)
+                      → zero diff ∧ BLIND     → UNTESTED (`oracle-limited`)
                       → diff present           → NECESSARY, and the failing test IS the
                         recorded reason the element exists
            REWRITE  : pre-committed, engine-diverse panel (3) attempts a simpler implementation
@@ -172,7 +172,7 @@ Phase 6    DELIVER — Design Proof + handoff of every REFUTED claim to `anneal`
 
 - **Assignment is mechanical.** Claim type → instrument, per the Phase 2 table. Letting an agent choose the instrument reintroduces exactly the judgment the recipe exists to replace.
 - **Rehearsals are apparatus, not output.** Every ADD implementation is discarded. A rehearsal that looks good is the most tempting contract violation in this recipe: it was written to be *measured*, under no review, against no acceptance criteria. Carrying one forward is forbidden; the change it rehearsed goes through `feature`/`anneal` like any other work.
-- **Zero diff has two readings, and the Adequacy Gate picks between them.** This is the single most important rule in the file (§1.3). A recipe that reports "removable" from an unexercised element will eventually delete something load-bearing.
+- **Zero diff has two readings** (§1.3 owns the rule) — the Adequacy Gate, not the instrument, picks between them.
 - **The REWRITE panel is pre-committed and blind.** Panelists are briefed and their attempt is scoped *before* seeing each other's work, so "nobody could simplify it" is a reproduction result rather than a consensus (the discipline `eureka` uses for its ordinary-move panel).
 - **ASSERT amends rules, not just code.** A constraint that reality contradicts may be the wrong constraint; forcing the code to a wrong rule is worse than the drift. `constraint-gap` is a first-class outcome, and it changes the rule.
 - **Justified exceptions are preserved.** An intentional deviation with a recorded reason and an owner is a healthy part of a design; an undocumented one is the defect (inherited from `lattice`).
@@ -196,25 +196,17 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 
 | Failure | Mitigation |
 |---------|-----------|
-| **"Good design" asserted from proxy metrics** | Four instruments that *execute* rather than estimate; the oracle counts resolved claims, not scores (§1) |
-| **A zero-diff removal read as "unnecessary"** | Adequacy Gate: zero diff on a BLIND element is `UNTESTED`, a different verdict entirely (§1.3, §6) |
-| Mutation testing skipped because it is slow | Phase 0.5 is a gate, not an option; its results are checkpointed so a resume never re-spends it (§4) |
+| **"Good design" asserted from proxy metrics, or an instrument chosen to get the desired answer** | Four instruments that *execute* rather than estimate, oracle counts resolved claims not scores, mechanical claim-type → instrument assignment (§1, Phase 2) |
+| **A zero-diff removal read as "unnecessary"** | Adequacy Gate — zero diff on a BLIND element is `UNTESTED`, a different verdict entirely (§1.3) |
+| Mutation testing skipped because it is slow, or the proof decays the week after delivery | Phase 0.5 is a gate, not an option, checkpointed so resume never re-spends it (§4); ASSERT fitness functions become CI checks via `latch` (Phase 5, §7) |
 | A rehearsal implementation shipped because it looked good | Rehearsals are discarded by contract, with an attestation in the report (§6, §7) |
-| Instrument chosen to get the desired answer | Assignment is mechanical from claim type (Phase 2, §6) |
-| An unmeasurable claim adjudicated by opinion | `instrument-limited` claims stay `UNPROVEN`; Phase 4 forbids closing a claim by argument |
-| Denominator chosen after seeing results | The ledger freezes at the contract-level Phase 1 gate; deferred claims recorded |
-| Refuted claims treated as a failed run | `REFUTED` counts toward `ACCEPT` — the oracle measures resolution, not favorability (§2) |
-| **A codebase that cannot be reasoned about, reported as fine** | `BLOCK (oracle-inadequate)` is a legitimate delivery shipping the blind-spot map (§2) |
-| Forcing code to comply with a wrong rule | ASSERT's `constraint-gap` class amends the rule instead (§6) |
-| Intentional exceptions erased as violations | `justified` is a first-class class with a reason and owner, preserved in the report (§6, inherited from `lattice`) |
-| "Nobody could simplify it" from three prompts to one model | REWRITE panel is pre-committed, blind, and engine-diverse (§6, §1a model selection) |
-| Experimenter grading its own experiment | Phase 4 adjudicators are independent of the experimenters (Q9) |
-| Proving knowledge, then silently changing the codebase | `apply=true` is opt-in, never inferred, with its own confirm and four preconditions (§1a, §3) |
-| An unproven edit riding out under a proof's badge | Phase 5 precondition ① — the change must have been *produced by* an experiment |
-| Instrument defect reported as a design defect | One permitted re-design per claim (§2) |
-| The proof decaying the week after delivery | ASSERT fitness functions become CI checks via `latch` (Phase 5, §7) |
-| Open-ended spend on a whole-codebase scope | Claim cap N + budget envelope declared at Phase 0; `budget-reached` delivers resolved-so-far (§2, §3) |
-| Duplicating `anneal` | Claims vs weaknesses; prove vs fix. The pair composes: assay's refuted slate is anneal's pre-evidenced input (§1, §10) |
+| An unmeasurable claim adjudicated by opinion, or the denominator chosen after seeing results | `instrument-limited` claims stay `UNPROVEN` and Phase 4 forbids closing by argument; the ledger freezes at the contract-level Phase 1 gate (§1, §3) |
+| Refuted claims treated as a failed run, or **a codebase that cannot be reasoned about, reported as fine** | `REFUTED` counts toward `ACCEPT`; `BLOCK (oracle-inadequate)` is a legitimate delivery shipping the blind-spot map (§2) |
+| Forcing code to comply with a wrong rule, or intentional exceptions erased as violations | ASSERT's `constraint-gap` (amends the rule) and `justified` (reason + owner, preserved) classes (§6) |
+| "Nobody could simplify it" from three prompts to one model, or the experimenter grading its own experiment | REWRITE panel is pre-committed, blind, engine-diverse (§1a, §6); Phase 4 adjudicators are independent of the experimenters (Q9) |
+| Proving knowledge then silently changing the codebase, or an unproven edit riding out under a proof's badge | `apply=true` is opt-in with its own confirm and four preconditions, incl. precondition ① — the change must have been *produced by* an experiment (§1a, §3) |
+| Instrument defect reported as a design defect, or open-ended spend on a whole-codebase scope | One permitted re-design per claim; claim cap N + budget envelope declared at Phase 0 (§2, §3) |
+| Duplicating `anneal` | Claims vs weaknesses; prove vs fix — the pair composes as a measure→fix sequence (§1, §10) |
 
 ## 9. Shared-Protocol References
 
@@ -243,20 +235,13 @@ Running `anneal` alone remains correct and is the cheaper default — its CRITIQ
 
 ## 11. Decision Tree vs Neighbors
 
+Not sure this is assay's job at all? → §1 Not-this table (weakness discovery → `anneal`, decided restructure → `refactor`, PR review → `acceptance`/`summit`, etc.). The one branch not covered there:
+
 ```
-Is there a design CLAIM in question, or an undiagnosed weakness to find?
-  WEAKNESS → anneal (discover → prioritize → brush up)
-  CLAIM ↓
-Is the restructure already decided?
-  YES → refactor (nothing to prove)
-  NO ↓
 Can the test suite detect a behavior change on the elements in question?
-  NO  → radar / siege first — assay would exit BLOCK (oracle-inadequate) and say exactly this
+  NO        → radar / siege first — assay would exit BLOCK (oracle-inadequate) and say exactly this
   PARTIALLY → assay runs, restricted to adequate elements, BLIND ones recorded oracle-limited
-  YES ↓
-Is the scope a change under review, or the codebase itself?
-  A CHANGE → acceptance / summit (merge-scoped gates)
-  THE CODEBASE → assay — harvest claims → freeze → assign instruments → experiment
-                 (ADD ‖ SUBTRACT ‖ REWRITE ‖ ASSERT) → adjudicate → prove
-                 → hand the refuted slate to anneal
+  YES       → assay — harvest claims → freeze → assign instruments → experiment
+              (ADD ‖ SUBTRACT ‖ REWRITE ‖ ASSERT) → adjudicate → prove
+              → hand the refuted slate to anneal
 ```

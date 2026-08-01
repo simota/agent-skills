@@ -66,6 +66,27 @@ Read `_common/PROOF_CARRYING.md` v2 Tier table. Classify the change by inspectin
 - Verify Storybook configuration exists for interactive component coverage
 - Missing any → `design_proof_mode` downgrades from `blocking` to `advisory`
 
+### Engine Routing (G1 cross-engine diversity, Tier-S) — canonical table
+
+G1 mandates cross-engine diversity for Tier-S; this table is the single owning location for *which* engine handles *which* task. Each phase section below states only its delta from this table, never the full assignment again.
+
+| Phase | Task | Engine (Tier-S) | Fallback / delta |
+|---|---|---|---|
+| 2A Code oracle generation | Oracle generation | agy (AVAILABLE, long-context spec reasoning) | Codex, with explicit "treat spec as ground truth, do not regenerate from training-data priors" framing — preserves cross-engine diversity against the Claude-based AI-A implementation; implementation engine recorded for later split-check |
+| 2B Design Compiler rules | Rule-evaluation (deterministic) + token/contract validation | Codex (CI / static-analysis strength) | — |
+| 2B Design brand advisory | LLM-as-judge (`brand_proof` residual) | Claude (judgment strength) | advisory only, per Unspecifiable Carve-Out |
+| 3A Code adversaries | Adversarial explorers | Claude (judgment + edge-case enumeration) | — |
+| 3B Design adversaries (personas) | Adversarial UI users | Claude (persona judgment + UX edge enumeration) | — |
+| 3B Design adversaries (deterministic) | Token/contract violation checks | Codex | — |
+| 4A Code Gate | `judge` multi-engine evidence audit | tri-engine (Claude + Codex + agy) when agy AVAILABLE | dual-engine (Claude + Codex) when agy UNAVAILABLE / RUNTIME-BROKEN |
+| 4B Design Gate (deterministic) | Design Compiler verdicts | Codex | — |
+| 4B Design Gate (multimodal) | Long-context VRT review | agy (AVAILABLE) | Claude (multimodal-capable — reads screenshots natively, batched 5-10 image groups; only loss vs agy is the 1M-context whole-set scan) when UNAVAILABLE, with "image-by-image VRT comparison" framing |
+| 4B Design Gate (advisory) | Brand / unspecifiable advisory | Claude | — |
+
+**4A quorum threshold** (Gate verdict, not just routing): 2-of-3 (tri-engine: CONFIRMED or LIKELY) or 2-of-2 (dual-engine: CONFIRMED only — `LIKELY` is unreachable with two engines, so the gate naturally tightens).
+
+See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy` (dual-engine fallback rationale) and `§Engine Availability Modes` (judge tri/dual-engine mechanics).
+
 ### Phase 1 — Spec Diff (sequential)
 
 **Agent**: `attest` (spec compliance) + `accord` (if requirements need to be re-expressed as spec nodes) + `scribe` (only if spec graph needs human-readable annotation)
@@ -95,7 +116,7 @@ Read `_common/PROOF_CARRYING.md` v2 Tier table. Classify the change by inspectin
 - Diff classifier (G5) categorizes cosmetic / semantic / breaking
 - Any semantic diff blocks merge; Source-of-Truth Spec (G10) is queried to identify which is correct
 
-**Engine routing for Tier-S** (G1 cross-engine diversity): Oracle generation → agy when AVAILABLE (long-context spec reasoning is its strength); when agy is UNAVAILABLE or RUNTIME-BROKEN, route Oracle generation to Codex with explicit "treat spec as ground truth, do not regenerate from training-data priors" framing — this preserves cross-engine diversity against the Claude-based AI-A implementation. Implementation engine recorded for later split-check. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy` for the dual-engine fallback rationale.
+**Engine routing**: per § Engine Routing table above (agy / Codex fallback); no delta for this phase.
 
 #### Phase 2B — Design-Axis Oracles (atelier sub-orchestration, when `ui_dimension != none`)
 
@@ -117,10 +138,7 @@ Read `_common/PROOF_CARRYING.md` v2 Tier table. Classify the change by inspectin
 - Tier-B: critical-path only (top 10 user journeys)
 - `matrix` skill is the canonical pairwise generator; story count target ≤ 5,000 per build
 
-**Engine routing for Tier-S Layer B**:
-- Design Compiler rule-evaluation (deterministic) → Codex (CI / static analysis strength)
-- Token / contract validation → Codex
-- LLM-as-judge advisory (brand_proof residual) → Claude (judgment strength, advisory only per Unspecifiable Carve-Out)
+**Engine routing**: per § Engine Routing table above; no delta for this phase.
 
 **Gate (both 2A and 2B)**: Generated oracles must be deterministic (seed = spec-graph hash + Design-Code Contract hash) and pass shadow-run on `main` 3× before becoming Gate-blocking. Matrix new story-set additions also pass shadow-run for ≥3 weeks.
 
@@ -134,7 +152,7 @@ Read `_common/PROOF_CARRYING.md` v2 Tier table. Classify the change by inspectin
 - `siege concurrency` — concurrency / race / state-machine edge cases
 - `siege` — load / chaos (Tier-S only)
 
-**Engine routing for Tier-S Layer A** (G1 cross-engine diversity): Adversarial explorers → Claude (judgment + edge-case enumeration).
+**Engine routing**: per § Engine Routing table above; no delta for this phase.
 
 #### Phase 3B — Design-Axis Adversaries (atelier sub-orchestration, when `ui_dimension != none`)
 
@@ -152,7 +170,7 @@ Read `_common/PROOF_CARRYING.md` v2 Tier table. Classify the change by inspectin
 - `voyager` + `vector` — Playwright / CUA execution of persona scripts
 - `matrix qa-scenario` — converts persona walkthroughs to executable test scenarios
 
-**Engine routing for Tier-S Layer B**: Adversarial UI users → Claude (persona judgment + UX edge enumeration); deterministic UI checks (token / contract violations) → Codex.
+**Engine routing**: per § Engine Routing table above; no delta for this phase.
 
 #### Combined Output contract
 
@@ -170,9 +188,7 @@ Each adversarial agent (Layer A or B) must produce a non-trivial exploration rep
 - `judge` — tri-engine evidence audit (schema completeness, semantic non-emptiness, cross-engine quorum)
 - `attest` — final spec-implementation conformance verdict
 
-**Engine routing for Tier-S** (G1 cross-engine diversity):
-- `judge` runs multi-engine — tri-engine (Claude + Codex + agy) when agy AVAILABLE, dual-engine (Claude + Codex) when agy UNAVAILABLE / RUNTIME-BROKEN. See `_common/MULTI_ENGINE_RECIPE.md §Engine Availability Modes`.
-- Gate verdict requires 2-of-3 quorum (tri-engine: CONFIRMED or LIKELY) or 2-of-2 quorum (dual-engine: CONFIRMED only — `LIKELY` is unreachable with two engines, so the gate naturally tightens)
+**Engine routing**: per § Engine Routing table above, including the 4A quorum threshold noted there; no delta for this phase.
 
 **Layer A Decision rules**:
 1. All 12 Code-side evidence fields present and non-empty (semantic-non-emptiness rule)
@@ -192,10 +208,7 @@ Each adversarial agent (Layer A or B) must produce a non-trivial exploration rep
 - `frame` — final Design-Code Contract conformance verdict (4-layer G9 detection all PASS)
 - `vision` — brand_proof advisory verdict (LLM-as-judge, non-blocking per Unspecifiable Carve-Out)
 
-**Engine routing for Tier-S Layer B**:
-- Deterministic Design Compiler verdicts → Codex
-- Multi-modal compliance checks (long-context VRT review) → agy when AVAILABLE; when UNAVAILABLE, route to Claude (multimodal-capable model — i.e. Claude reading screenshot/image inputs directly, NOT the `vision` skill agent) with explicit "image-by-image VRT comparison" framing. Claude handles screenshots natively; the only loss vs agy is the 1M-context whole-set scan, which can be batched into 5-10 image groups
-- Brand / unspecifiable advisory → Claude
+**Engine routing**: per § Engine Routing table above. Delta: the multimodal Claude fallback reads screenshot/image inputs directly (i.e. Claude itself, NOT the `vision` skill agent).
 
 **Layer B Decision rules**:
 1. All 9 Design-side evidence fields present and non-empty (when `ui_dimension != none`)
@@ -307,17 +320,7 @@ Phase 4B (Design Acceptance Gate, sequential, atelier sub-orchestration, IF ui_d
 
 Phase 4C (Joint Verdict, sequential):
   guardian[PR with both Layer A + Layer B evidence, stamped with provenance triple {commit SHA, spec-graph hash, contract hash}]
-  → PASS is valid only while the triple matches PR head; any post-Gate head change invalidates + re-runs affected layer
-  Joint Verdict rules:
-    PASS_A + (PASS_B | SKIP_B) → PASS
-    FAIL_A + * → FAIL
-    PASS_A + FAIL_B(blocking) → FAIL
-    PASS_A + FAIL_B(advisory) → PASS_WITH_ADVISORY
-    ESCALATE_* → ESCALATE → human
-
-Phase 4-G7 (Unmeasurable-Quality Audit, when ui_dimension != none AND Tier-S/A):
-  Tier-S UI: human designer sign-off (≥10 min recorded)
-  Tier-A UI: weekly aggregate review (sampled per G2)
+  → Joint Verdict rules, post-Gate invalidation, and the G7 Unmeasurable-Quality Audit: see § Phase 4C above (not restated here)
 
 Phase 5 (Runtime Oracle Hookup, sequential, on PASS / PASS_WITH_ADVISORY only):
   beacon[register runtime oracle] → mend[register repair runbook with G3 circuit breaker]
@@ -331,35 +334,40 @@ Phase 6 (Random Sampling Audit, async post-merge, non-blocking):
 
 ## Failure Escalation
 
-| Failure | Trigger | Escalation |
-|---------|---------|------------|
+Merges the operational trigger/escalation view with the anti-pattern rationale (why the rule exists) — one table, no second index.
+
+| Failure / Anti-Pattern | Trigger | Escalation / Counter-Rule |
+|---|---|---|
+| Running `acceptance` on Tier-C scope | Phase 0 | Abort; use `feature` |
 | No spec graph for the touched surface | Phase 0 | Abort; redirect to `apex` to author the spec first — `acceptance` cannot validate against a non-existent spec |
 | Evidence provenance triple ≠ PR head | Phase 4C | Block; evidence was generated against a different SHA/spec/contract — re-run affected layer against current head |
-| PR head changed after PASS (commit / force-push / rebase) | Post-Gate | Invalidate PASS; re-run the layer whose inputs changed; merge only on a head-matching PASS |
-| Evidence field not reproducible from recorded seed | Phase 4 | Reject as fabricated/tampered; hard re-generate under provenance binding |
+| PR head changed after PASS (commit / force-push / rebase) | Post-Gate | Invalidate PASS; re-run the layer whose inputs changed; merge only on a head-matching PASS — approval does not survive a force-push |
+| Evidence field not reproducible from recorded seed / hand-edited to flip a verdict | Phase 4 | Reject as fabricated/tampered; hard re-generate under provenance binding |
 | Spec parse fails | Phase 1 | Block; ask user to fix spec syntax or remove spec changes |
-| Meta-oracle fails | Phase 1 | Block; spec change is internally inconsistent (e.g., unreachable state) |
+| Meta-oracle fails / spec change without meta-oracle re-validation | Phase 1 | Block; spec change is internally inconsistent (e.g., unreachable state) — spec changes are themselves Proof-Carrying |
 | Oracle generation non-deterministic | Phase 2 | Block; seed not stable or generator has un-seeded randomness — investigate before allowing as Gate-blocking |
-| Shadow-run flaky on main | Phase 2 | Defer new oracle to shadow-only for 3 more weeks; do not Gate-block |
-| Adversarial empty without exploration log | Phase 3 | Hard re-run with explicit exploration requirement; reject if re-runs also empty |
-| Cross-engine quorum fails (Tier-S) | Phase 4 | Block; require 2-of-3 CONFIRMED/LIKELY before merge eligible |
+| Shadow-run flaky on main / skipped on new oracles | Phase 2 | Defer new oracle to shadow-only for 3 more weeks; do not Gate-block |
+| Adversarial empty without exploration log / "no findings" treated as proof | Phase 3 | Hard re-run with explicit exploration requirement; semantic-emptiness rejected; reject if re-runs also empty |
+| Cross-engine quorum fails (Tier-S) / single-engine evidence for Tier-S | Phase 4 | Block; G1 cross-engine diversity mandatory; require 2-of-3 CONFIRMED/LIKELY before merge eligible |
 | Compute cap exceeded | Phase 4 | Escalate to human triage; do not auto-extend |
-| Unspecifiable-quality flag raised | Phase 4 | Route to human review regardless of Tier evidence completeness |
-| Repair-loop signature cap hit (same-signature 3/24h) | Phase 5 runtime | Auto-rollback, 7d escalation, no further auto-repair on that signature |
-| Hot-fix needed mid-pipeline | Any phase | Switch to Hot-Fix Fast-Path: downgrade Tier-S→A, Tier-A→B; require normal-Gate follow-up within 24h |
+| Unspecifiable-quality flag raised / quality dimensions reduced to spec | Phase 4 | Route to human review regardless of Tier evidence completeness |
+| Layer A + Layer B run in series (vs parallel) | Phase 2-3 | Explicitly parallel; serial run wastes wall time |
+| Repair-loop signature cap hit (same-signature 3/24h) / auto-repair without circuit breaker | Phase 5 runtime | Auto-rollback, 7d escalation, no further auto-repair on that signature; G3 enforces the cap |
+| Hot-fix needed mid-pipeline / Gate bypassed for "urgent" merges | Any phase | Switch to Hot-Fix Fast-Path: downgrade Tier-S→A, Tier-A→B; require normal-Gate follow-up within 24h — never invent `[skip-acceptance]` style labels |
 | Design-axis prerequisite missing (no tokens / no Code Connect) | Phase 0 sub-check | `design_proof_mode` downgrades to `advisory`; Layer B runs but cannot block merge |
 | Dual-Implementation same-LLM family detected | Phase 2A | Block; G4 requires different families for AI-A / AI-B / AI-C; recipe re-selects engines |
 | Dual-Implementation semantic diff non-zero | Phase 2A | Block; triangulate against Source-of-Truth Spec (G10); incorrect implementation must be fixed |
 | G9 4-layer detection incomplete (AST/Storybook/Runtime/CodeConnect not all live) | Phase 2B | `component_proof` downgrades to advisory until all 4 live |
-| Matrix story count >5,000 per build | Phase 2B | Block; apply equivalence partitioning + pairwise reduction; escalate matrix sampling skill |
+| Matrix story count >5,000 per build / taken as full Cartesian product | Phase 2B | Block; apply equivalence partitioning + pairwise reduction (PD-2 defaults to pairwise; full N-way Tier-S critical-path only) |
 | VRT diff classifier flags "Approve all" attempt on >10 diffs | Phase 4 | Block; G5 enforces tool-level ban; force PR split if >50 diffs |
-| Layer B FAIL with `design_proof_mode == blocking` | Phase 4C | Block merge; Code-side PASS does not split-merge |
+| Layer B FAIL with `design_proof_mode == blocking` / Code Proof PASS shipped despite Design Proof FAIL | Phase 4C | Block merge; Code-side PASS does not split-merge in blocking mode |
 | Layer B FAIL with `design_proof_mode == advisory` | Phase 4C | Allow merge with `PASS_WITH_ADVISORY`; advisory recorded; >3 advisories/sprint per product flags process review |
-| Unmeasurable-Quality flag raised on UI change | Phase 4-G7 | Tier-S routes to designer human sign-off; Tier-A queues for weekly audit |
+| Unmeasurable-Quality flag raised on UI change / Compiler PASS celebrated as "design approved" | Phase 4-G7 | Tier-S routes to designer human sign-off (≥10 min recorded) despite Compiler/Matrix/Contract PASS; Tier-A queues for weekly audit (sampled per G2) |
 | Designer-review hours dropped >30% YoY | Phase 4-G7 monitoring | Atrophy warning logged; flag for review process audit |
 | Carve-out invoked on >20% of Tier-S/A PRs in quarter | Cross-phase monitoring | Process review: either extend Design Compiler rules OR invest in human design review capacity |
 | Component Sandbox prototype aged >6 months without promotion/removal | Cross-phase monitoring | Cleanup task auto-filed; sandbox SLA enforcement |
 | Time-Boxed Deviation exceeded 90-day expiration | Cross-phase monitoring | Auto-rollback to Contract OR force removal; >3 active deviations per product triggers brand-system review |
+| Atelier replaced by inline nexus orchestration | Design-domain coordination | Layer B coordination requires design-domain expertise; atelier is the sub-orchestrator by design |
 
 ---
 
@@ -401,31 +409,6 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 
 When `layer=c` is active the Dossier additionally carries the Layer C sections specified in `reference/growth-acceptance-recipe.md`.
 
-## Failure Modes Prevented
-
-| Anti-Pattern | Counter-Rule |
-|--------------|--------------|
-| Running `acceptance` on Tier-C scope | Phase 0 aborts; use `feature` |
-| Running `acceptance` with no spec graph | Phase 0 spec-existence gate aborts; author the spec via `apex` first |
-| Merging on a PASS whose evidence predates the current PR head | Provenance binding + post-Gate invalidation: PASS is void unless its `{SHA, spec-hash, contract-hash}` triple matches head |
-| Hand-editing an evidence field to flip a verdict | Tamper-evidence: package must reproduce from recorded seeds, else rejected |
-| Single-engine evidence for Tier-S | G1 cross-engine diversity is mandatory; Phase 4 quorum check enforces |
-| Skipping shadow-run on new oracles | Phase 2 Gate; new oracles are shadow-only until 3 weeks of stability |
-| Treating "no findings" as proof | Phase 3 requires exploration log; semantic-emptiness is rejected |
-| Bypassing Gate for "urgent" merges | Use Hot-Fix Fast-Path; never invent `[skip-acceptance]` style labels |
-| Auto-repair loop without circuit breaker | Phase 5 G3 enforces same-signature 3/24h cap |
-| Spec change without meta-oracle re-validation | Phase 1 blocks; spec changes are themselves Proof-Carrying |
-| Quality dimensions reduced to spec | Phase 4 unspecifiable-quality carve-out routes to human |
-| Layer A + Layer B run in series (vs parallel) | Phase 2-3 explicitly parallel; serial run wastes wall time |
-| Layer B blocking on org without prerequisites | Phase 0 prerequisite check downgrades to advisory |
-| Code Proof PASS shipped despite Design Proof FAIL | Phase 4C joint verdict rules — split-merge forbidden in blocking mode |
-| Dual-Implementation with same engine for AI-A and AI-B | G4 mandatory diversity check at Phase 2A spawn time |
-| Matrix taken literally as full Cartesian product | PD-2 default to pairwise; full N-way Tier-S critical-path only |
-| Compiler PASS celebrated as "design approved" | G7 Unmeasurable-Quality Audit Gate enforces human sign-off on Tier-S UI |
-| Atelier replaced by inline nexus orchestration | Layer B coordination requires design-domain expertise; atelier is the sub-orchestrator by design |
-
----
-
 ## Integration with Existing Recipes
 
 - `apex` Phase 6 (Ship) can chain into `acceptance` for Tier-S deliverables. `apex` produces the spec and implementation; `acceptance` provides the Gate.
@@ -441,33 +424,4 @@ When `layer=c` is active the Dossier additionally carries the Layer C sections s
 - `nexus/reference/apex-recipe.md` — discovery→ship cycle; `acceptance` is the merge-gate portion
 - `nexus/reference/summit-recipe.md` — engine-strength routing pattern that `acceptance` Tier-S inherits
 
-**Layer A (Code) skill references**:
-- `judge/SKILL.md` — tri-engine evidence audit
-- `attest/SKILL.md` — spec compliance verification + final conformance
-- `rally/SKILL.md` (engine-paradigm recipe) — Dual-Implementation Oracle (COMPETE mode, G4 orchestration)
-- `radar/SKILL.md` — property-based + regression oracle generation
-- `mint/SKILL.md` — fixture / data generation
-- `matrix/SKILL.md` (qa-scenario recipe) — E2E scenario authoring
-- `sentinel/SKILL.md` — SAST + attack-surface (Layer A oracle + Layer A adversary)
-- `vigil/SKILL.md` — security attacker persona (Layer A adversary)
-- `voyager/SKILL.md` — Playwright/CUA E2E (shared Layer A + Layer B)
-- `vector/SKILL.md` — browser automation for UI persona walkthroughs
-- `siege/SKILL.md` (concurrency recipe) — concurrency / race condition edge cases
-- `siege/SKILL.md` — load + chaos (Tier-S only)
-- `beacon/SKILL.md` — runtime oracle registration
-- `mend/SKILL.md` — repair runbook with circuit-breaker semantics
-- `guardian/SKILL.md` — PR preparation with embedded evidence package
-
-**Layer B (Design) skill references**:
-- `atelier/SKILL.md` — Layer B sub-orchestrator; coordinates muse + frame + palette + canon + vitrine + prose + echo + vision + matrix + weave + flow
-- `muse/SKILL.md` — design token allow-list + `token_proof`
-- `frame/SKILL.md` — Design-Code Contract + Code Connect + `component_proof` + G9 4-layer detection coordination
-- `palette/SKILL.md` — `state_proof` + `responsive_proof`
-- `weave/SKILL.md` — state machine spec (XState DSL for interactive components)
-- `flow/SKILL.md` — motion token verification (animation duration / easing)
-- `canon/SKILL.md` — `a11y_proof` (WCAG 2.2 AA, axe-core/Pa11y integration)
-- `vitrine/SKILL.md` — `vrt_proof` with Matrix Sampling
-- `prose/SKILL.md` — `copy_proof` (voice / tone / banned words / length / locale)
-- `echo/SKILL.md` — UX persona definition for `ux_task_proof`
-- `vision/SKILL.md` — brand_proof advisory (LLM-as-judge, non-blocking)
-- `matrix/SKILL.md` — pairwise / orthogonal-array story-set generation
+Per-agent roles for both layers are not re-listed here — each agent's role is already stated once, in the Phase Contract section (Phase 1-6 above) where it is invoked.
