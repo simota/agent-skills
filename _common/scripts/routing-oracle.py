@@ -2,7 +2,7 @@
 """
 Routing Oracle — mechanical reliability checks for Nexus's routing machinery.
 
-Five checks, all fail-open (S4: a script crash prints a warning and exits 0,
+Six checks, all fail-open (S4: a script crash prints a warning and exits 0,
 it never blocks a merge on its own bug):
 
   RO-1 Dead-reference check
@@ -38,6 +38,18 @@ it never blocks a merge on its own bug):
        nexus/reference/signal-keywords.md. Catches a live skill that has
        no routing surface at all — the mirror image of RO-1's dead
        reference (a routing mention with no skill behind it).
+
+  RO-6 Bare-subcommand dispatch consistency
+       nexus/SKILL.md's Subcommand Dispatch says a first-token match
+       skips CLASSIFY. But nexus/reference/task-battery.md carries
+       fixtures asserting that certain *bare* subcommands (a Recipe name
+       with no object/target) must NOT dispatch silently and must instead
+       reach GATE for one clarifying question. Those two rules contradict
+       unless Subcommand Dispatch declares a bare-subcommand exception.
+       This check asserts (a) the exception clause exists whenever such a
+       fixture exists, and (b) no token named by a fixture is also listed
+       as exempt from the exception. Found live: `optimize` is both a
+       registered subcommand and a battery fixture requiring a GATE.
 
 Usage:
   python3 _common/scripts/routing-oracle.py [--severity warning|error|strict]
@@ -319,6 +331,64 @@ def check_roster_completeness(findings: list[Finding]):
         ))
 
 
+def check_bare_subcommand_dispatch(findings: list[Finding]):
+    """RO-6: task-battery fixtures of the form `bare "<token>"` assert that a
+    bare Recipe subcommand must reach GATE instead of dispatching silently.
+    SKILL.md's Subcommand Dispatch must therefore carry a bare-subcommand
+    exception, and must not list any such token as exempt from it."""
+    battery = NEXUS_DIR / "reference" / "task-battery.md"
+    if not NEXUS_SKILL.is_file() or not battery.is_file():
+        findings.append(Finding("RO-6", "WARNING", "nexus/SKILL.md or task-battery.md not found — bare-subcommand check skipped"))
+        return
+
+    skill_text = NEXUS_SKILL.read_text(encoding="utf-8")
+
+    # The dispatch allowlist is the fenced block inside the Recipe Registry section.
+    registry = re.search(r"dispatch allowlist only.*?```\n(.*?)```", skill_text, re.S)
+    if not registry:
+        findings.append(Finding("RO-6", "WARNING", "Recipe Registry allowlist block not found in nexus/SKILL.md — bare-subcommand check skipped"))
+        return
+    subcommands = {t.rstrip("*") for t in registry.group(1).split()}
+
+    # Fixtures written as: bare "optimize" / bare "landing page"
+    fixtures = {m.lower() for m in re.findall(r'bare\s+"([^"]+)"', battery.read_text(encoding="utf-8"))}
+    contested = sorted(f for f in fixtures if f in subcommands)
+    if not contested:
+        return  # no fixture asserts a bare subcommand must not dispatch — nothing to enforce
+
+    dispatch = re.search(r"^## Subcommand Dispatch$(.*?)^## ", skill_text, re.S | re.M)
+    if not dispatch:
+        findings.append(Finding("RO-6", "WARNING", "`## Subcommand Dispatch` section not found in nexus/SKILL.md — bare-subcommand check skipped"))
+        return
+    section = dispatch.group(1)
+
+    # Require the exception's DEFINITION (a bolded bullet lead-in), not merely a
+    # cross-reference to it — a surviving "see the bare-subcommand exception below"
+    # must not satisfy the check after the defining bullet has been deleted.
+    defined = re.search(r"\*\*Bare-subcommand exception[.:]?\*\*", section)
+    if not (defined and re.search(r"\bGATE\b", section)):
+        findings.append(Finding(
+            "RO-6", "ERROR",
+            "Subcommand Dispatch skips CLASSIFY on a first-token match, but task-battery.md requires "
+            f"bare {', '.join('`' + c + '`' for c in contested)} to reach GATE instead of dispatching silently. "
+            "Subcommand Dispatch must define a **Bare-subcommand exception** routing them to GATE, "
+            "or the fixture(s) must be retired.",
+        ))
+        return
+
+    # The exception's own exempt list must not re-admit a contested token.
+    exempt_clause = re.search(r"\*\*Exempt\*\*[^.]*?:\s*(.+?)(?:\.|$)", section, re.S)
+    if exempt_clause:
+        exempt = {t.lower() for t in re.findall(r"`([a-z][a-z0-9-]*)`", exempt_clause.group(1))}
+        clashes = sorted(exempt & set(contested))
+        if clashes:
+            findings.append(Finding(
+                "RO-6", "ERROR",
+                f"bare-subcommand exception lists {', '.join('`' + c + '`' for c in clashes)} as exempt, "
+                "but task-battery.md has a fixture requiring the same token to reach GATE — contradiction.",
+            ))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--severity", choices=("warning", "error", "strict"), default="warning")
@@ -330,6 +400,7 @@ def main() -> int:
     safe_check(check_producer_verifier, findings)
     safe_check(check_fallback_field, findings)
     safe_check(check_roster_completeness, findings)
+    safe_check(check_bare_subcommand_dispatch, findings)
 
     errors = [f for f in findings if f.level == "ERROR"]
     warnings = [f for f in findings if f.level == "WARNING"]
