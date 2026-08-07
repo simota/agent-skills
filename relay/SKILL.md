@@ -142,7 +142,9 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Use Slack RTM API in new apps — RTM API is legacy; Events API or Socket Mode is the required replacement for all new Slack app development; see [docs.slack.dev/legacy/legacy-rtm-api](https://docs.slack.dev/legacy/legacy-rtm-api/)
 - Use Discord API versions earlier than v10 — v10 is current as of 2026; legacy version responses are unversioned and may break; always pin to `/api/v10`
 
-## Workflow: LISTEN → ROUTE → ADAPT → WIRE → GUARD
+## Workflow
+
+`LISTEN → ROUTE → ADAPT → WIRE → GUARD`
 
 | Phase | Purpose | Key Outputs  Read |
 |-------|---------|-------------------|

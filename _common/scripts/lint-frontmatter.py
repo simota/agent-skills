@@ -117,6 +117,12 @@ REQUIRED_HEADINGS = (
     "AUTORUN Support",
     "Nexus Hub Mode",
 )
+# Documented equivalents: some headings have an accepted alternate spelling
+# per the normalization checklist. "References" is the accepted short form
+# of "Reference Map" (same section, same content contract).
+HEADING_EQUIVALENTS = {
+    "Reference Map": ("References",),
+}
 HEADING_PATTERN = re.compile(r"^##\s+(.+)$", re.MULTILINE)
 
 
@@ -333,7 +339,14 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
         report.add(Finding(name, "H1", "P2",
                            "CAPABILITIES_SUMMARY HTML comment block not found", rel, 1))
     else:
-        comment_end = text.find("-->", cap_match.start())
+        # The block's true closing tag is "-->" on its own line. A naive
+        # text.find("-->", ...) can match an embedded "-->" inside an
+        # inline-code example within a bullet (e.g. a literal
+        # "`<!-- translator comment -->`" snippet), truncating the scan
+        # window before later markers like COLLABORATION_PATTERNS /
+        # PROJECT_AFFINITY are reached. Anchor on a standalone closing line.
+        closing_match = re.search(r"^\s*-->\s*$", text[cap_match.start():], re.MULTILINE)
+        comment_end = (cap_match.start() + closing_match.start()) if closing_match else -1
         block = text[cap_match.start():comment_end if comment_end != -1 else len(text)]
         if "COLLABORATION_PATTERNS:" not in block:
             report.add(Finding(name, "H2", "P2",
@@ -346,7 +359,11 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
 
     # ST1: required section headings (>=90% corpus frequency, see REQUIRED_HEADINGS)
     present_headings = {h.strip() for h in HEADING_PATTERN.findall(body_text)}
-    missing_headings = [h for h in REQUIRED_HEADINGS if h not in present_headings]
+    missing_headings = [
+        h for h in REQUIRED_HEADINGS
+        if h not in present_headings
+        and not any(alt in present_headings for alt in HEADING_EQUIVALENTS.get(h, ()))
+    ]
     if missing_headings:
         report.add(Finding(name, "ST1", "P2",
                            f"missing required section heading(s): {missing_headings}",
