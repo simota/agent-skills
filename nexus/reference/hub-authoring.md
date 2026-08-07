@@ -1,6 +1,18 @@
 # Hub-Engine Authoring
 
-Per-engine authoring protocols that apply once the hub orchestrator is detected (see SKILL.md → **Execution Model → Orchestrator Detection**).
+Per-engine authoring protocols that apply once the hub orchestrator is detected (see § Orchestrator Detection below). **Canonical home** for the Agent Spawn Template and the Orchestrator Detection table — SKILL.md carries only the dispatch-critical minimum and a pointer here.
+
+## Orchestrator Detection
+
+Before the first spawn, detect which CLI drives **this hub session** (implicit in the available tooling — detect once, reuse), then bind the spawn API, authoring protocol, and model map:
+
+| Signal | Hub engine | Spawn API | Authoring protocol | Model map |
+|--------|-----------|-----------|--------------------|-----------|
+| `Agent` tool present | **Claude Code** | `Agent(...)` (L1 fg / L2 background) | `_common/OPUS_5_AUTHORING.md` (P); Fable 5 hub → +§ Claude Code hub — Fable 5 (F) | Sonnet 5 default / opus / haiku / fable-5 (§ Model Selection) |
+| `spawn_agent` callable (C1 holds) | **Codex CLI** | `spawn_agent`→`wait_agent` (N spawn → join all) | `_common/CODEX_ORCHESTRATION.md` (C) | `gpt-5.6` sol/terra/luna by role (`CLI_COMPATIBILITY.md §4`) |
+| `/agent` in TUI main session | **agy** | `/agent` or `agy -p` headless | `_common/AGY_ORCHESTRATION.md` (A1–A9) | Gemini 3.6 Flash (High) mandated ‡, tier via `/model` |
+
+Codex-hub prereqs (C1): `multi_agent = true` + `[agents] max_depth >= 2`; unmet → internal per SKILL.md Core Rule #3 (`spawn_agent` may be lazily hidden — attempt when prereqs hold, C5). Details → `_common/CLI_COMPATIBILITY.md`, `reference/execution-layers.md`. Unknown Claude Code model → author for Opus 5, safe on both.
 
 ## Claude Code hub
 
@@ -35,11 +47,47 @@ Codex has no background-spawn primitive (parallel = N `spawn_agent` → `wait_ag
 
 Apply `_common/AGY_ORCHESTRATION.md` (A1–A9) — the first-class agy authoring protocol (analog of OPUS_5_AUTHORING / CODEX_ORCHESTRATION). Core levers: **A1** single-model effort-tier routing (model mandate ‡, full definition in § Model Selection — recipe steps run High with no downgrade + the Deep Reasoning Directive per A1-R/A9-D), **A2** file-handoff capture + real pty (headless `agy -p` never flushes non-TTY stdout), **A3** session-scoped model/tier (no per-agent switch — split mixed-effort chains into per-step headless invocations), **A4** spawn topology (no background primitive / no Rally L3 — flatten; resume via `-c`/`--conversation` since v1.0.8), **A6** never `--sandbox` + `--dangerously-skip-permissions` (#36). Full constraints: `_common/CLI_COMPATIBILITY.md §3, §9`.
 
+## Agent Spawn Template
+
+> Canonical template — SKILL.md § Execution Model carries only the P1/P2/P8 always-include rule and the no-self-verification prohibition inline; this is the full prompt structure those rules bind.
+
+```
+Agent(
+  name: "[agent]-[task-slug]"
+  description: "[Short task description]"
+  subagent_type: general-purpose
+  mode: bypassPermissions
+  model: [claude-sonnet-5 (task-appropriate default) | opus | haiku]
+  prompt: |
+    You are the [AgentName] agent.
+    First, read ~/.claude/skills/[agent]/SKILL.md and follow its instructions.
+
+    Recipe: [recipe-name or auto]                # P-REC
+    Task: [task_description]
+    Context from previous step: [handoff_context]
+    Constraints: [constraints]
+    Acceptance criteria: [acceptance_criteria]   # P1 — always
+    Output length envelope: [length_envelope]    # P2 — always
+    Scope bound: [in_scope / out_of_scope]       # P8 — always
+    Tool-use directive: [tool_use_directive]     # P3 — optional
+    Thinking directive: [thinking_directive]     # P5 — optional
+
+    On completion, emit:
+    _STEP_COMPLETE:
+      Agent: [AgentName]
+      Status: SUCCESS | PARTIAL | BLOCKED | FAILED
+      Output: [deliverable — strictly within the envelope above]
+      Next: [recommended next agent or DONE]
+)
+```
+
+**Never include self-verification wording** ("verify your work", "double-check", "re-verify before responding") — Opus 5 self-verifies and these cause over-verification (P9); independent verification lives in the *chain* as a separate agent, never in a producer's own prompt. Fable 5 hub directives are lighter, not heavier, and must never request reasoning reproduction (`reasoning_extraction` refusal). Detailed flows → `reference/execution-phases.md`, `reference/orchestration-patterns.md`.
+
 ## Spawn Template Variants
 
 > The directive fields below are the **vetted library** that `reference/adaptive-prompt-policy.md` selects and dials within when it tailors a spawn prompt to project + session context. That policy chooses *which* envelope/effort/directive values to use; this file defines the safe ranges and the per-engine rules it must honor.
 
-**Claude Code (`Agent(...)`)** uses the canonical template in SKILL.md → **Agent Spawn Template**. On an **Opus 5** hub the load-bearing fields are acceptance criteria, **output length envelope**, and **scope bound**: Opus 5's default output runs long in both channels and it can widen a task on its own, and effort does not shorten visible output. Omit self-check wording entirely (P9) — it triggers over-verification. Tool-use directives stay useful, but effort is what moves call volume. On a **Fable 5** hub these directives are lighter (F2): keep acceptance-criteria + a one-line brevity/outcome instruction, drop enumerated per-behavior directives, and **never** include reasoning-reproduction wording (F1 — trips `reasoning_extraction` refusal). For parallel spawns, issue multiple `Agent(... run_in_background: true)` calls in the same turn (Fable 5 dispatches these readily — F4). Shared protocol: `_common/OPUS_5_AUTHORING.md`; Fable 5 deltas: § Claude Code hub — Fable 5.
+**Claude Code (`Agent(...)`)** uses the canonical template above → **Agent Spawn Template**. On an **Opus 5** hub the load-bearing fields are acceptance criteria, **output length envelope**, and **scope bound**: Opus 5's default output runs long in both channels and it can widen a task on its own, and effort does not shorten visible output. Omit self-check wording entirely (P9) — it triggers over-verification. Tool-use directives stay useful, but effort is what moves call volume. On a **Fable 5** hub these directives are lighter (F2): keep acceptance-criteria + a one-line brevity/outcome instruction, drop enumerated per-behavior directives, and **never** include reasoning-reproduction wording (F1 — trips `reasoning_extraction` refusal). For parallel spawns, issue multiple `Agent(... run_in_background: true)` calls in the same turn (Fable 5 dispatches these readily — F4). Shared protocol: `_common/OPUS_5_AUTHORING.md`; Fable 5 deltas: § Claude Code hub — Fable 5.
 
 **Codex CLI variant**: same prompt body; resolve skill path to `~/.codex/skills/[agent]/SKILL.md` or `<repo>/.agents/skills/[agent]/SKILL.md`. Four directive fields stay required. Authoring follows `_common/CODEX_ORCHESTRATION.md` (C-principles), not the Opus note — always the latest gpt-5.6 generation with the role-matched variant (sol/terra/luna, C3.0), depth via `model_reasoning_effort` (C3); fan-out gated by `agents.max_depth` + `agents.max_threads` (C1). API patterns (L1 `spawn_agent`→`wait_agent`, L2 parallel-then-join, L3 `send_input`/`resume_agent`/`close_agent` for checkpoint-resume) → `reference/execution-layers.md` § Codex CLI.
 

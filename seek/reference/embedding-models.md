@@ -5,6 +5,19 @@
 
 ---
 
+## 2026 Model Set (Quick Reference)
+
+| Model | Dimensions | Multilingual | Cost | Quality | Notes |
+|-------|------------|-------------|------|---------|-------|
+| `text-embedding-3-large` | 3072 (or 256-3072) | Yes | $$ | High | Matryoshka support for dimension reduction |
+| `text-embedding-3-small` | 1536 (or 256-1536) | Yes | $ | Good | Best cost/quality for general use |
+| `voyage-3-large` | 1024 | Yes | $$ | High | Strong on code and technical content |
+| `cohere-embed-v4` | 1024 | Yes (100+) | $$ | High | Native int8/binary quantization; Matryoshka support |
+| `bge-m3` | 1024 | Yes (100+) | Free | Good | Open-source; dense + sparse + late-interaction in one model |
+| `jina-colbert-v2` | variable | Yes (89 langs) | $$ | High | Late interaction — token-level matching for reranking |
+| `all-MiniLM-L6-v2` | 384 | No | Free | Moderate | Lightweight, fast inference |
+| `multilingual-e5-large-instruct` | 1024 | Yes (100+) | Free | Good | Best free multilingual option |
+
 ## Model Comparison Matrix
 
 ### Commercial Models

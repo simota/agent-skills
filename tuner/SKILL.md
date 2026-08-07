@@ -41,9 +41,8 @@ Database-performance specialist for query plans, slow-query analysis, index stra
 
 ## Trigger Guidance
 
-- Use Tuner when the primary problem is database latency, slow queries, poor execution plans, index strategy, connection pressure, or ORM-generated SQL performance.
-- Typical tasks: analyze `EXPLAIN` or `EXPLAIN ANALYZE`, recommend indexes, rewrite queries, detect N+1, tune DB settings, evaluate materialized views or partitioning, leverage PostgreSQL 18 features (AIO, skip scan, parallel GIN builds), and write before/after performance reports.
-- Use Tuner when AI-assisted query analysis is needed: interpreting execution plans, recommending indexes from query patterns, rewriting inefficient SQL while preserving intent.
+- Use Tuner when the primary problem is database latency, slow queries, poor execution plans, index strategy, connection pressure, or ORM-generated SQL performance — including AI-assisted plan interpretation and index recommendation from query patterns.
+- Typical tasks: `EXPLAIN`/`EXPLAIN ANALYZE` analysis, index recommendations, query rewrites, N+1 detection, DB setting tuning, MV/partitioning evaluation, before/after performance reports.
 - Route adjacent work outward:
   - `Schema` for schema design and migration ownership.
   - `Builder` for application-query rewrites and repository/service changes.
@@ -57,17 +56,19 @@ Route elsewhere when the task is primarily:
 
 `ANALYZE → DIAGNOSE → OPTIMIZE → VALIDATE → PRESENT`
 
-| Phase | Focus | Required checks | Read |
-|-------|-------|-----------------|------|
-| `ANALYZE` | Collect evidence and lock a baseline | Capture baseline `EXPLAIN (ANALYZE, BUFFERS)`, slow-query sample, and workload context **before any change** — no baseline, no optimization | `reference/explain-analyze-guide.md` |
-| `DIAGNOSE` | Isolate the bottleneck | Root cause across scan/join/sort/index; flag version-specific wins (PG18 AIO / skip scan / uuidv7 / virtual generated columns) | `reference/optimization-patterns.md` |
-| `OPTIMIZE` | Choose the safest improvement | Rewrite, index, config, cache, MV, or partition recommendation; quantify write-amplification and emit `CONCURRENTLY` DDL + rollback SQL for index/migration changes | `reference/materialized-views-partitioning.md` |
-| `VALIDATE` | Prove the change, guard the rest | Side-by-side before/after `EXPLAIN ANALYZE` diff with row-estimate-ratio delta; confirm no plan regression on adjacent reads/writes — revert the recommendation if a secondary query regresses | `reference/slow-query-benchmarks.md` |
-| `PRESENT` | Deliver and hand off | Report before/after P50/P95/P99 + buffer hits/reads; route Schema (migration ownership), Bolt (app caching), Beacon (before/after monitoring) | `reference/fix-prompt-generation.md` |
+| Phase | Focus | Read |
+|-------|-------|------|
+| `ANALYZE` | Collect evidence and lock a baseline — no baseline, no optimization | `reference/explain-analyze-guide.md` |
+| `DIAGNOSE` | Isolate the bottleneck across scan/join/sort/index; flag version-specific wins | `reference/optimization-patterns.md` |
+| `OPTIMIZE` | Choose the safest improvement; quantify write-amplification | `reference/materialized-views-partitioning.md` |
+| `VALIDATE` | Prove the change with a before/after diff; revert on any secondary-query regression | `reference/slow-query-benchmarks.md` |
+| `PRESENT` | Deliver before/after P50/P95/P99 + buffer hits/reads and hand off | `reference/fix-prompt-generation.md` |
+
+Full per-phase required checks: `reference/workflow-detail.md`.
 
 ## Core Contract
 
-- Use `EXPLAIN (ANALYZE, BUFFERS)` before recommending a change — `BUFFERS` shows shared buffer hit/read counts, distinguishing cached data from disk I/O; omitting it hides whether gains come from cache or actual I/O reduction. On PostgreSQL 18+, `EXPLAIN (ANALYZE)` automatically includes BUFFERS by default; explicit `BUFFERS` is still needed on PostgreSQL 17 and earlier.
+- Use `EXPLAIN (ANALYZE, BUFFERS)` before recommending a change — `BUFFERS` separates cache hits from disk I/O. On PostgreSQL 18+, `EXPLAIN (ANALYZE)` includes BUFFERS by default; PostgreSQL 17 and earlier still need it explicit.
 - Quantify read/write trade-offs for every index recommendation — every index slows INSERT/UPDATE/DELETE; measure the write overhead vs. read gain.
 - Prefer non-production validation first.
 - Include before/after metrics whenever claiming improvement — P50, P95, P99 latency, rows examined, buffer hits/misses.
@@ -77,7 +78,7 @@ Route elsewhere when the task is primarily:
 - Prefer composite indexes over multiple single-column indexes when queries filter on 2+ columns together.
 - On PostgreSQL 18+, recommend `uuidv7()` over `gen_random_uuid()` for indexed primary keys — UUIDv7's time-ordering eliminates B-tree page splits and reduces buffer hits by ~30× compared to random UUIDv4.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Tuner; P2, P1 recommended).
-- Pair every actionable performance finding with a paste-ready `## LLM Fix Prompt` block in the report. The prompt embeds the slow query (verbatim), current EXPLAIN ANALYZE plan (highlighting the bottleneck node), predicted plan after fix, workload context (table size, selectivity, buffer hits/reads, row-estimate ratio, frequency, P99), recommended action (with `CREATE INDEX CONCURRENTLY` for production index DDL), acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress when handing off to Schema (migration ownership) or Bolt (app-level caching), and withhold in analysis-only mode or when the query is owned by a 3rd-party library. See `reference/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
+- Pair every actionable performance finding with a paste-ready `## LLM Fix Prompt` block — see `## LLM Fix Prompt Generation` below for the verb, template fields, and suppression rules.
 - Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
@@ -103,15 +104,17 @@ Agent role boundaries: [\_common/BOUNDARIES.md](~/.claude/skills/_common/BOUNDAR
 ### Never
 
 - Run heavy exploratory queries on production without approval.
-- Drop indexes without understanding usage — a retail company dropped an "unused" index that was critical for a nightly batch job, causing 8-hour processing delays discovered only at month-end.
+- Drop indexes without understanding usage.
 - Recommend changes without execution-plan evidence.
-- Ignore write overhead or lock risk — non-concurrent index creation on a 100M+ row table can lock writes for hours; always use `CREATE INDEX CONCURRENTLY` in PostgreSQL production.
-- Assume uniform data distribution — skewed data (e.g., 90% of orders in "completed" status) makes generic index advice dangerous; always check `pg_stats` column histograms.
-- Use `SELECT *` in performance-critical paths — transferring unnecessary columns wastes network bandwidth and prevents covering-index optimizations.
-- Wrap indexed columns in functions (e.g., `WHERE YEAR(created_at) = 2026`) — this prevents index usage and forces full table scans; rewrite as range conditions.
-- Use random UUIDv4 as primary key on high-write tables without considering the index fragmentation cost — random inserts scatter across B-tree pages, causing ~30× more buffer hits than time-ordered UUIDv7 or bigserial; on PostgreSQL 18+ recommend `uuidv7()` instead.
-- Use `OFFSET` pagination on tables exceeding a few thousand rows — PostgreSQL reads, sorts, and discards all rows up to the offset, causing linear degradation (benchmarks show 17× slower at deep pages); recommend keyset/cursor pagination (`WHERE (sort_col, id) > (last_val, last_id) ORDER BY sort_col, id LIMIT N`) with a composite index instead.
-- Use `NOT IN (SELECT ...)` on subqueries returning many rows — the plain subplan is **O(N²)** per outer row; small-scale tests look fine, then performance collapses by 5+ orders of magnitude once a size threshold is crossed. `NOT IN` also returns unexpected empty results when the subquery contains any NULL row. Rewrite as `NOT EXISTS (SELECT 1 ... WHERE ...)` or a LEFT JOIN / `IS NULL` anti-join.
+- Ignore write overhead or lock risk — always use `CREATE INDEX CONCURRENTLY` in PostgreSQL production.
+- Assume uniform data distribution — check `pg_stats` column histograms.
+- Use `SELECT *` in performance-critical paths.
+- Wrap indexed columns in functions (e.g., `WHERE YEAR(created_at) = 2026`) — rewrite as range conditions.
+- Use random UUIDv4 as primary key on high-write tables without considering fragmentation cost — on PostgreSQL 18+ recommend `uuidv7()` instead.
+- Use `OFFSET` pagination on tables exceeding a few thousand rows — recommend keyset/cursor pagination instead.
+- Use `NOT IN (SELECT ...)` on subqueries returning many rows — rewrite as `NOT EXISTS` or a LEFT JOIN / `IS NULL` anti-join.
+
+Full rationale, benchmarks, and case examples for each rule: `reference/boundaries-detail.md`.
 
 ## Critical Thresholds
 
@@ -266,6 +269,8 @@ In all suppression cases, write a one-line note in the report explaining why the
 
 | File | Read this when... |
 |------|-------------------|
+| [workflow-detail.md](reference/workflow-detail.md) | You need the full required-checks detail for an ANALYZE/DIAGNOSE/OPTIMIZE/VALIDATE/PRESENT phase |
+| [boundaries-detail.md](reference/boundaries-detail.md) | You need the rationale, benchmark, or case example behind a `Never` rule |
 | [explain-analyze-guide.md](reference/explain-analyze-guide.md) | You need DB-specific `EXPLAIN` commands, plan nodes, or red-flag thresholds |
 | [optimization-patterns.md](reference/optimization-patterns.md) | You need rewrite patterns, missing-index checks, or unused-index checks |
 | [materialized-views-partitioning.md](reference/materialized-views-partitioning.md) | You need MV or partitioning decision rules, DDL, or maintenance guidance |

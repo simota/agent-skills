@@ -26,7 +26,7 @@ This protocol works across different AI platforms (Claude Code, Codex CLI, Gemin
 
 In AUTORUN mode, Nexus spawns each agent as an independent Claude session via the Agent tool.
 
-The canonical spawn prompt — including the four mandatory directive fields (Recipe, Acceptance criteria, Output length envelope, Tool-use directive, Thinking directive) — is defined once in `nexus/SKILL.md` § Agent Spawn Template. Author every spawn from that template; do not reproduce a reduced copy here.
+The canonical spawn prompt — including the four mandatory directive fields (Recipe, Acceptance criteria, Output length envelope, Tool-use directive, Thinking directive) — is defined once in `nexus/reference/hub-authoring.md` § Agent Spawn Template. Author every spawn from that template; do not reproduce a reduced copy here.
 
 ### Execution Layers
 

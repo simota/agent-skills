@@ -116,6 +116,10 @@ Lay out generated runner prompts with `cache_control` breakpoints at stable boun
 
 Each iteration runs in a dedicated `git worktree`. Success → squash-merge back; failure → leave the worktree path in stderr for forensic inspection. `WORKTREE_ISOLATION=true` is the default and supersedes `BRANCH_ISOLATION` for parallel-safe runners. Rollback becomes a single `git worktree remove`. [Source: towardsdatascience.com — AI Agents Need Their Own Desk; codeline.co — Sandcastle Isolation]
 
+## Token budget bound (loop-wide)
+
+Verified 2026-07-25. The API's `task_budget` — an advisory loop-wide budget the model paces itself against, finishing gracefully as it depletes — is **unavailable on Claude Code and Cowork surfaces**, so a generated in-session runner cannot use it. Bound a loop with what *is* available: an explicit turn/iteration ceiling in the stop condition, `max_tokens` per request, and the circuit breaker (SKILL.md `## Circuit Breaker`). Only a runner whose steps are direct Messages API calls (Opus 5 / Fable 5 / Mythos 5 / Opus 4.8 / Opus 4.7 — not Sonnet 5) can add `task_budget`; if it does, size it from the **p99** of measured per-task spend, never below 20,000 tokens, and set it **once** — mutating it per turn both invalidates the prompt cache and, if paired with resent history, makes the model wrap up early. A budget too small for the task produces refusal-like behavior, so on unexpected early stops raise the budget before touching other parameters. Detail → `nexus/reference/loop-engineering-primitives.md`.
+
 ## Independent critic model
 
 Gate DONE through an independent critic model (`CRITIC_MODEL=haiku` by default): a different model + different system prompt reviews the iteration output. Only critic-approved iterations advance to the DONE Evidence Gate. Same-model self-eval inherits the same blind spots and produces shallow agreement; an independent critic catches false-DONE that conventional verify cannot. [Source: genta.dev — Agentic Design Patterns; addyosmani.com — Self-Improving Agents]

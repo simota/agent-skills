@@ -77,11 +77,12 @@ Route elsewhere when:
 - Risk-informed testing over coverage-driven: not all failures have equal impact — prioritize tests proportional to business and operational risk rather than chasing raw coverage numbers.
 - Branch coverage over statement coverage: branch coverage verifies both true and false outcomes of conditionals and catches more real defects than statement-only metrics.
 - Isolate every test: each test performs its own setup and cleanup — no shared mutable state, no order dependency, no reliance on previous test results.
-- **Verification-first is the dominant practice.** Anthropic's Claude Code best practices name verification the "single highest-leverage thing" you can give an AI coding agent. Lock the verifier (test, snapshot, screenshot, expected stdout, type signature, schema) *before* implementation lands; never accept code whose verifier was written by the same model that wrote the code. [Source: code.claude.com/docs/en/best-practices]
-- **Detect Tautological Tests and Coverage Hacking.** When code and tests are both AI-generated, blind spots are shared and `100%` line coverage can hide a mutation score as low as `20.32%` (≈ 80% latent bugs undetected). Reject any test that matches one of the canonical Tautological Test patterns: (1) asserts only that a field exists, (2) asserts only that a call happened, (3) asserts only "no exception was thrown", (4) mirrors the implementation's exact arithmetic, (5) only checks length / count, (6) uses snapshot as the sole oracle. Require at least one behavioural assertion per public path. [Source: codeintelligently.com — AI Generated Tests False Confidence; keelcode.dev — AI Tests Safety Illusion]
-- **Use Mutation Score as the ceiling, not Coverage.** Coverage is a Goodhart-vulnerable floor metric (target → tautological tests). Mutation score (Stryker / mutmut / Pitest) is the ceiling that measures whether tests actually *catch* defects. Recommended thresholds: `break: 50`, `low: 60`, `high: 80`. Teams hitting `high: 80` in CI report ~70% fewer production bugs vs coverage-only teams. Apply mutation gate to changed files only (incremental mutation) to keep CI under 5 minutes. [Source: stryker-mutator.io/docs; medium.com/@jaychopra05 — 100% Code Coverage Is a Lie]
-- **FlakyGuard-class auto-repair for flaky tests** (Uber Go monorepo: 47.6% repair / 51.8% acceptance / SOTA +22pp). Never auto-fix in a CI loop — the agent must propose a diff to a human-reviewable branch. Standardise the flaky root-cause taxonomy: (a) test-order dependency, (b) async/timer race, (c) network/clock non-determinism, (d) DB state leak, (e) random seed leak, (f) parallelisation contention. Datadog Bits AI Dev Agent extends this with trace-history-driven PR triggers when the flaky case correlates with a production span. [Source: emergentmind.com — FlakyGuard; datadoghq.com — Bits AI Test Optimization]
-- **Metamorphic Relations solve the Oracle Problem.** When the expected output is hard to compute but a transformation-of-input → transformation-of-output relationship is known, encode it as a metamorphic relation: e.g. `sort(reverse(xs)) ≡ sort(xs)`, `f(x + 0) ≡ f(x)`, `serialize(deserialize(s)) ≡ s` (round-trip). Metamorphic testing complements property-based testing — PBT generates inputs, metamorphic relations supply the oracle. Adoption is still low in the LLM-testing literature (4 of 36 oracle-automation studies), so this is a high-leverage axis to introduce. [Source: dl.acm.org/doi/10.1145/3798226; arxiv.org/html/2405.12766v1]
+- **Verification-first is the dominant practice.** Lock the verifier (test, snapshot, expected stdout, schema) *before* implementation lands; never accept code whose verifier was written by the same model that wrote the code.
+- **Reject Tautological Tests and Coverage Hacking.** Canonical patterns: (1) field-exists-only, (2) call-happened-only, (3) no-throw-only, (4) mirrors implementation's exact arithmetic, (5) length/count-only, (6) snapshot-as-sole-oracle. Require ≥1 behavioural assertion per public path.
+- **Use Mutation Score as the ceiling, not Coverage.** Coverage is a Goodhart-vulnerable floor metric. Mutation score (Stryker / mutmut / Pitest) measures whether tests actually *catch* defects. Thresholds: `break: 50`, `low: 60`, `high: 80`. Scope mutation gates to changed files to keep CI under 5 minutes.
+- **FlakyGuard-class discipline for flaky tests.** Never auto-fix in a CI loop — propose a diff to a human-reviewable branch. Root-cause taxonomy: (a) test-order dependency, (b) async/timer race, (c) network/clock non-determinism, (d) DB state leak, (e) random seed leak, (f) parallelisation contention.
+- **Metamorphic Relations solve the Oracle Problem.** When output is hard to compute directly but a transformation relationship is known, encode it as a metamorphic relation: `sort(reverse(xs)) ≡ sort(xs)`, `f(x + 0) ≡ f(x)`, `serialize(deserialize(s)) ≡ s`. Metamorphic relations supply the oracle that property-based testing lacks.
+- Full rationale, examples, and sources for the five bullets above → `reference/testing-research-rationale.md`.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P2, P5 critical for Radar; P1 recommended).
 - Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
@@ -107,14 +108,16 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ### Never
 - Comment out failing tests without context.
-- Write assertion-free tests — surviving mutants show 41.62% of weak tests fail to exercise assertion boundaries adequately (Source: IEEE ICST 2026 Mutation Workshop — https://conf.researchr.org/home/icst-2026/mutation-2026).
+- Write assertion-free tests.
 - Over-mock private internals.
 - Use `any` to silence types.
 - Test implementation details instead of behavior.
-- Use arbitrary delays such as `waitForTimeout` — async wait/timing issues are the #1 cause of flaky tests, with academic research finding 45% of all flaky test fixes address async timing (Source: TestDino Flaky Test Benchmark 2026, accelq.com 2026). Use `waitFor`, `findBy*`, deterministic clocks, or explicit retry with context instead.
-- Depend on external services without mocks or stubs — third-party instability cascades into false failures and blocks CI pipelines.
+- Use arbitrary delays such as `waitForTimeout` — use `waitFor`, `findBy*`, deterministic clocks, or explicit retry with context instead.
+- Depend on external services without mocks or stubs.
 - Train teams to ignore test results by leaving flaky tests in the main pipeline — quarantine immediately and fix in dedicated sessions.
-- Let AI agents auto-fix flaky failures in CI loops without verifying flaky vs. real regression first — autonomous retry-fix cycles cause regression cascades (observed pattern: multiple iterations, zero real bugs fixed, introduced regressions and wasted compute). Always confirm the failure is a genuine regression before applying code changes (Source: Frontiers AI-augmented CI/CD 2026).
+- Let AI agents auto-fix flaky failures in CI loops without verifying flaky vs. real regression first.
+
+Full rationale and sources for the above → `reference/boundaries-rationale.md`.
 
 ## Recipes
 
@@ -138,15 +141,7 @@ Parse the first token of user input:
 - Otherwise → default Recipe (`edge` = Edge Cases).
 - Apply SCAN → LOCK → PING → VERIFY → DELIVER workflow regardless of Recipe.
 
-Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate at the VERIFY phase **in addition to** Radar's universal discipline (zero tautological / assertion-free tests, ≥1 behavioral assertion per public path, behavior-not-implementation, project-native style, test isolation).
-- `edge`: **VERIFY**: boundary / null / empty / timeout / error branches each covered; branch coverage exercises **both** true and false outcomes (not statement-only); regression-style edges confirmed fail-first on unpatched code; no test asserts only existence / call-happened / no-throw.
-- `flaky`: **VERIFY**: root cause identified against the 6-cause taxonomy (order / async-race / network-clock / DB-leak / seed-leak / parallel-contention) **before** any fix; confirmed flaky-vs-real-regression first (never an auto-fix CI loop); fix proposed to a human-reviewable branch; reduced nondeterminism shown by repeated re-run stability; flaky test quarantined out of the blocking gate with a root-cause ticket.
-- `coverage`: **VERIFY**: ≥80% diff coverage (critical modules ≥90%, security-critical 100%); gaps selected by risk × blast-radius, not raw %; mutation score used as the ceiling metric (coverage alone is a Goodhart floor); zero coverage-hacking tautological tests introduced.
-- `regression`: **VERIFY**: entered only after a Scout/Builder handoff; the bug-reproducing test **fails on the unpatched code** then passes after the fix (fail-first proven, not assumed); the assertion targets the actual buggy behavior, not an incidental side effect.
-- `ci`: **VERIFY**: TIA / selection runs only change-affected tests without cutting real signal (no silent skip of covering tests); suite targets respected (unit <5min, full <15min); CI infrastructure changes (runner/cache/shard) delegated to Gear, not done here.
-- `unit`: **VERIFY**: AAA structure; the lightest sufficient test double chosen (fake > stub > mock > spy); deterministic (no clock / network / filesystem without injection); fully isolated (own setup+cleanup, no shared mutable state, no order dependency); ≥1 behavioral assertion per public path.
-- `integration`: **VERIFY**: ephemeral real deps via Testcontainers (not shared/global); HTTP boundary stubbed at the edge (WireMock/MSW); a DB fixture strategy explicitly chosen (rollback fastest / truncate if triggers / per-test DB only for migrations); browser-level / full user journey routed to Voyager (out of this recipe's scope).
-- `mutation`: **VERIFY**: a mutation tool actually run against the real suite (Stryker/PIT/mutmut/cargo-mutants); survivors analyzed as weak assertions and hardened; equivalent mutants triaged and accepted (not gamed); a mutation-score threshold wired to CI (critical ≥85%, project-wide ≥60%); scoped incrementally to changed files to keep CI under ~5min.
+Each Recipe's `**VERIFY**:` gate applies **in addition to** Radar's universal discipline (zero tautological / assertion-free tests, ≥1 behavioral assertion per public path, behavior-not-implementation, project-native style, test isolation). Full per-recipe VERIFY gate detail → `reference/recipe-verify-gates.md`.
 
 ## Workflow
 
@@ -180,24 +175,27 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate at the
 
 Additional layers:
 
-- Property-based testing for invariants and edge discovery — pairing with mutation testing boosts kill scores from 70% to 92% on async code (Source: johal.in 2026). Use `fast-check` 4.x (JS/TS; `@fast-check/vitest` for Vitest integration), `hypothesis` (Python), `proptest` (Rust). See [fast-check.dev](https://fast-check.dev/) for current API.
-- Contract testing for service boundaries
-- Mutation testing to verify test strength — StrykerJS 7.0+ supports Vitest and Node Tap runners natively (Source: [stryker-mutator.io/blog/announcing-stryker-js-7](https://stryker-mutator.io/blog/announcing-stryker-js-7/)). Watch for equivalent mutants (false survivors) and tool-specific timeouts in distributed CI (>200ms latency causes Stryker .NET failures; apply exponential backoff, Source: johal.in 2026). Stryker .NET now uses ML to prune equivalent mutants, reducing noise by 30% (Source: johal.in 2026). Agentic mutation tools (mewt for Rust/Solidity) enable LLM-guided mutant generation targeting high-risk code paths (Source: Trail of Bits 2026)
-- Snapshot testing only for stable, intentional output shapes
-- AI-assisted test generation for accelerating edge-case discovery — AI augments testing capacity but does not replace human judgment on test intent and assertion quality. LLM-powered mutation testing (e.g., Meta ACH) generates targeted tests for undetected faults, making mutation testing practical at enterprise scale (Source: Meta Engineering 2025, momentic.ai 2026). AI-assisted flaky repair (FlakyGuard) achieves 47.6% automated repair rate with 51.8% developer acceptance on reproducible flaky tests (Source: ASE 2025)
+- Property-based testing for invariants and edge discovery. Use `fast-check` 4.x (JS/TS), `hypothesis` (Python), `proptest` (Rust).
+- Contract testing for service boundaries.
+- Mutation testing to verify test strength — StrykerJS 7.0+ (Vitest/Node Tap), watch for equivalent mutants and CI timeouts.
+- Snapshot testing only for stable, intentional output shapes.
+- AI-assisted test generation for accelerating edge-case discovery — augments capacity, does not replace human judgment on test intent and assertion quality.
+
+Tool version detail, benchmark data, and sources for the layers above → `reference/testing-research-rationale.md`.
 
 ## Critical Constraints
 
 - Default diff coverage floor: `80%+`; then apply code-type targets from `reference/coverage-strategy.md`.
-- Critical module coverage (payments, auth, data integrity): `90%+`; security-related code: target `100%` (Source: LaunchDarkly, BotGauge QA Metrics 2025).
-- Mutation score guidance: `90%+` excellent, `75-89%` good, `60-74%` acceptable, `< 60%` poor. Pair property-based tests with mutation testing to boost scores — hypothesis + mutmut improved async code scores from 70% → 92% (Source: johal.in 2026).
-- Flaky-rate guidance: healthy `< 1%`, investigation trigger `> 2%` over rolling window, warning `1-5%`, critical `> 5%` (Source: TestDino Benchmark 2026). In large industrial projects, 11–27% of tests exhibit flaky behavior, accounting for 5–16% of build failures (Source: Ranorex 2026, Harness 2026). Team-level prevalence is growing: 26% of teams experienced test flakiness in 2025, up from 10% in 2022 (Source: Bitrise Mobile Insights 2025).
-- Top 3 flaky root causes: (1) async wait/timing issues, (2) concurrency and shared state (up to 15% of flaky failures in large CI pipelines, Source: Ranorex 2026), (3) test order dependency — address in this priority order (Source: accelq.com, TestDino 2026).
-- Flaky cost benchmark: flaky tests consume ~2.5% of developer productive time (~1 FTE per 50 engineers); quantify team-specific cost to justify quarantine investment (Source: Atlassian Engineering 2026). Google reports 16% and Microsoft 13% of all test failures are flaky — expect similar ratios in mature CI systems. Furthermore, 84% of CI pass-to-fail transitions at Google are caused by flaky tests, not real regressions (Source: Google Testing Research) — most "failures" engineers investigate are noise, making quarantine ROI extremely high.
+- Critical module coverage (payments, auth, data integrity): `90%+`; security-related code: target `100%`.
+- Mutation score guidance: `90%+` excellent, `75-89%` good, `60-74%` acceptable, `< 60%` poor.
+- Flaky-rate guidance: healthy `< 1%`, investigation trigger `> 2%` over rolling window, warning `1-5%`, critical `> 5%`.
+- Top 3 flaky root causes, in priority order: (1) async wait/timing issues, (2) concurrency and shared state, (3) test order dependency.
 - Unit suite target: `< 5min`; full suite target: `< 15min`; use selection strategies before cutting signal.
-- Test Impact Analysis (TIA) and predictive test selection: in SELECT mode, leverage TIA to run only tests affected by the code change — enterprise deployments report up to 80% faster test execution and 40% shorter build times (Source: CloudBees Smart Tests 2026, Frontiers AI-augmented CI/CD 2026). Evaluate platform-native TIA (Azure DevOps, CloudBees, Launchable) before building custom selection logic.
+- Test Impact Analysis (TIA): in SELECT mode, run only tests affected by the change; evaluate platform-native TIA (Azure DevOps, CloudBees, Launchable) before building custom selection logic.
 - Prefer `waitFor`, `findBy*`, retries with context, and deterministic clocks over sleeps.
-- Quarantine flaky tests out of the main CI/CD pipeline immediately; schedule dedicated fix sessions rather than deprioritizing against feature work (Source: oneuptime.com 2026). Modern CI platforms (Bitbucket, Harness) now offer built-in AI-powered flaky detection and auto-quarantine — leverage platform-native capabilities before building custom solutions (Source: Atlassian Engineering 2026, Harness 2026).
+- Quarantine flaky tests out of the main CI/CD pipeline immediately; schedule dedicated fix sessions rather than deprioritizing against feature work.
+
+Benchmarks, prevalence data, and sources for every threshold above → `reference/testing-research-rationale.md`.
 
 ## Output Routing
 
@@ -291,6 +289,9 @@ Radar receives bug reports, implementation changes, review findings, coverage ga
 | `reference/async-testing-patterns.md` | Testing async flows, streams, races, and timeout-heavy code |
 | `reference/framework-deep-patterns.md` | Using advanced framework-specific features |
 | `reference/testing-anti-patterns.md` | Auditing test quality and common test smells |
+| `reference/testing-research-rationale.md` | You need the full rationale, benchmark data, and sources behind Core Contract, Critical Constraints, or Test Mix bullets. |
+| `reference/boundaries-rationale.md` | You need the full rationale and sources behind the `Never` list. |
+| `reference/recipe-verify-gates.md` | You need the full per-recipe VERIFY gate detail beyond the Recipes table's Behavior column. |
 | `reference/ai-assisted-testing.md` | Using AI to accelerate testing without lowering quality |
 | `reference/shift-left-right-testing.md` | Connecting Radar to observability, QAOps, or production feedback loops |
 | `reference/modern-testing-dx.md` | Optimizing test DX, feedback loops, and team maturity |

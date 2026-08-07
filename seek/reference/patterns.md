@@ -7,6 +7,48 @@
 
 ## Full-Text Search Patterns
 
+### Mapping Example (Elasticsearch/OpenSearch)
+
+Field types, analyzers, and multi-fields for language-aware search:
+
+```json
+{
+  "mappings": {
+    "properties": {
+      "title": {
+        "type": "text",
+        "analyzer": "custom_analyzer",
+        "fields": {
+          "keyword": { "type": "keyword" },
+          "ngram": { "type": "text", "analyzer": "ngram_analyzer" }
+        }
+      },
+      "content": { "type": "text", "analyzer": "content_analyzer" }
+    }
+  },
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "custom_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": ["lowercase", "synonym_filter", "stemmer"]
+        }
+      }
+    }
+  }
+}
+```
+
+### Analyzer Selection Guide
+
+| Use Case | Tokenizer | Filters | Notes |
+|----------|-----------|---------|-------|
+| English text | `standard` | `lowercase`, `stop`, `stemmer` | Default for most cases |
+| Japanese text | `kuromoji_tokenizer` | `kuromoji_part_of_speech`, `ja_stop` | Requires analysis-kuromoji plugin |
+| Autocomplete | `edge_ngram` | `lowercase` | Index-time ngram, search-time standard |
+| Exact match | `keyword` | `lowercase` | For filters and facets |
+
 ### Pattern 1: Multi-Field Mapping
 
 Use multi-fields for different analysis strategies on the same content.
@@ -124,9 +166,58 @@ combined = rrf_fusion(title_results, content_results, k=60)
 
 **When to use:** Documents with semantically distinct sections (e.g., title vs body).
 
+### pgvector Configuration
+
+```sql
+-- Create vector column
+ALTER TABLE documents ADD COLUMN embedding vector(1536);
+
+-- HNSW index (recommended for most cases)
+CREATE INDEX idx_documents_embedding ON documents
+  USING hnsw (embedding vector_cosine_ops)
+  WITH (m = 16, ef_construction = 200);
+
+-- Query with distance
+SELECT id, title, embedding <=> $1::vector AS distance
+FROM documents
+WHERE category = $2
+ORDER BY embedding <=> $1::vector
+LIMIT 20;
+```
+
 ---
 
 ## Hybrid Search Patterns
+
+### Reciprocal Rank Fusion (RRF)
+
+```
+RRF_score(d) = Σ 1 / (k + rank_i(d))
+```
+
+Default `k = 60`. Combine BM25 rank and vector rank for each document.
+
+### Hybrid Search Pipeline
+
+```
+Query → [BM25 Search] → Top-N₁ results (ranked by BM25)
+     ↘ [Vector Search] → Top-N₂ results (ranked by similarity)
+         ↓
+     [Fusion Layer (RRF / Weighted)] → Combined Top-K
+         ↓
+     [Optional Reranker (Cross-Encoder)] → Final Top-K
+```
+
+### Fusion Strategy Selection
+
+| Strategy | When to Use | Pros | Cons |
+|----------|------------|------|------|
+| RRF | Default for hybrid | Simple, no tuning | Equal weight assumed |
+| Weighted Sum | Known relevance distribution | Tunable | Requires labeled data |
+| Cross-Encoder Rerank | High-precision RAG | Best quality | Latency cost (50-100ms) |
+| ColBERT Late Interaction | High-recall + speed | Token-level matching, precomputable | Higher storage (multi-vector per doc) |
+| SPLADE + ColBERT | Default production pipeline | Learned sparse + late interaction | Two-model complexity |
+| Cohere Rerank API | Quick reranking | Easy integration | API dependency |
 
 ### Pattern 7: Elasticsearch Hybrid with RRF
 

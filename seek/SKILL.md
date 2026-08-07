@@ -183,215 +183,9 @@ SEARCH_PROFILE:
 
 ---
 
-## Full-Text Search Patterns
+## Design Pattern References
 
-### Elasticsearch/OpenSearch Index Design
-
-**Mapping strategy:** Field types, analyzers, and multi-fields for language-aware search.
-
-```json
-{
-  "mappings": {
-    "properties": {
-      "title": {
-        "type": "text",
-        "analyzer": "custom_analyzer",
-        "fields": {
-          "keyword": { "type": "keyword" },
-          "ngram": { "type": "text", "analyzer": "ngram_analyzer" }
-        }
-      },
-      "content": {
-        "type": "text",
-        "analyzer": "content_analyzer"
-      }
-    }
-  },
-  "settings": {
-    "analysis": {
-      "analyzer": {
-        "custom_analyzer": {
-          "type": "custom",
-          "tokenizer": "standard",
-          "filter": ["lowercase", "synonym_filter", "stemmer"]
-        }
-      }
-    }
-  }
-}
-```
-
-### Analyzer Selection Guide
-
-| Use Case | Tokenizer | Filters | Notes |
-|----------|-----------|---------|-------|
-| English text | `standard` | `lowercase`, `stop`, `stemmer` | Default for most cases |
-| Japanese text | `kuromoji_tokenizer` | `kuromoji_part_of_speech`, `ja_stop` | Requires analysis-kuromoji plugin |
-| Autocomplete | `edge_ngram` | `lowercase` | Index-time ngram, search-time standard |
-| Exact match | `keyword` | `lowercase` | For filters and facets |
-
----
-
-## Vector Search Patterns
-
-### Embedding Model Selection
-
-| Model | Dimensions | Multilingual | Cost | Quality | Notes |
-|-------|------------|-------------|------|---------|-------|
-| `text-embedding-3-large` | 3072 (or 256-3072) | Yes | $$ | High | Matryoshka support for dimension reduction |
-| `text-embedding-3-small` | 1536 (or 256-1536) | Yes | $ | Good | Best cost/quality for general use |
-| `voyage-3-large` | 1024 | Yes | $$ | High | Strong on code and technical content |
-| `cohere-embed-v4` | 1024 | Yes (100+) | $$ | High | Native int8/binary quantization; Matryoshka support |
-| `bge-m3` | 1024 | Yes (100+) | Free | Good | Open-source; dense + sparse + late-interaction in one model |
-| `jina-colbert-v2` | variable | Yes (89 langs) | $$ | High | Late interaction — token-level matching for reranking |
-| `all-MiniLM-L6-v2` | 384 | No | Free | Moderate | Lightweight, fast inference |
-| `multilingual-e5-large-instruct` | 1024 | Yes (100+) | Free | Good | Best free multilingual option |
-
-### Vector Index Strategy
-
-| Engine | Index Type | Best For | Trade-off |
-|--------|-----------|----------|-----------|
-| pgvector 0.8+ | HNSW (iterative scan) | <5M vectors, hybrid with RDBMS | Iterative scan auto-expands; improved cost estimation — [github.com/pgvector/pgvector](https://github.com/pgvector/pgvector) |
-| pgvector + pgvectorscale | StreamingDiskANN | <50M vectors, cost-sensitive | Single-DB advantage, lower cost than dedicated vector DBs |
-| pgvector 0.8+ | IVFFlat (iterative scan) | <500K vectors, batch workloads | Faster build, iterative scan mitigates low-probe recall loss |
-| Pinecone serverless | Proprietary | Zero-ops managed, BYOC available | Pay-per-use; dedicated read nodes (early access) — [docs.pinecone.io/release-notes/2025](https://docs.pinecone.io/release-notes/2025) |
-| Weaviate 1.28+ | HNSW | Multi-modal, enterprise RBAC | BlockMax WAND speeds BM25/hybrid; RBAC tech preview — [weaviate.io/blog/weaviate-1-28-release](https://weaviate.io/blog/weaviate-1-28-release) |
-| Qdrant 1.16+ | HNSW + ACORN | Heavy filtering + vector | ACORN improves filtered search quality; tiered multitenancy — [qdrant.tech/blog/qdrant-1.16.x](https://qdrant.tech/blog/qdrant-1.16.x/) |
-| Milvus 2.6 | HNSW, DiskANN, RaBitQ | Billion-scale, cost-sensitive | 1-bit RaBitQ quantization (~28% memory, 4× QPS); hot-cold tiered storage — [milvus.io/blog/introduce-milvus-2-6](https://milvus.io/blog/introduce-milvus-2-6-built-for-scale-designed-to-reduce-costs.md) |
-
-### pgvector Configuration
-
-```sql
--- Create vector column
-ALTER TABLE documents ADD COLUMN embedding vector(1536);
-
--- HNSW index (recommended for most cases)
-CREATE INDEX idx_documents_embedding ON documents
-  USING hnsw (embedding vector_cosine_ops)
-  WITH (m = 16, ef_construction = 200);
-
--- Query with distance
-SELECT id, title, embedding <=> $1::vector AS distance
-FROM documents
-WHERE category = $2
-ORDER BY embedding <=> $1::vector
-LIMIT 20;
-```
-
----
-
-## Hybrid Search Design
-
-### Reciprocal Rank Fusion (RRF)
-
-```
-RRF_score(d) = Σ 1 / (k + rank_i(d))
-```
-
-Default `k = 60`. Combine BM25 rank and vector rank for each document.
-
-### Hybrid Search Pipeline
-
-```
-Query → [BM25 Search] → Top-N₁ results (ranked by BM25)
-     ↘ [Vector Search] → Top-N₂ results (ranked by similarity)
-         ↓
-     [Fusion Layer (RRF / Weighted)] → Combined Top-K
-         ↓
-     [Optional Reranker (Cross-Encoder)] → Final Top-K
-```
-
-### Fusion Strategy Selection
-
-| Strategy | When to Use | Pros | Cons |
-|----------|------------|------|------|
-| RRF | Default for hybrid | Simple, no tuning | Equal weight assumed |
-| Weighted Sum | Known relevance distribution | Tunable | Requires labeled data |
-| Cross-Encoder Rerank | High-precision RAG | Best quality | Latency cost (50-100ms) |
-| ColBERT Late Interaction | High-recall + speed | Token-level matching, precomputable | Higher storage (multi-vector per doc) |
-| SPLADE + ColBERT | Default production pipeline | Learned sparse + late interaction | Two-model complexity |
-| Cohere Rerank API | Quick reranking | Easy integration | API dependency |
-
----
-
-## RAG Retrieval Layer
-
-### RAG Retrieval Anti-Patterns
-
-| Anti-Pattern | Impact | Fix |
-|-------------|--------|-----|
-| Naive fixed-size chunking | Splits mid-sentence, loses context | Use semantic or recursive chunking with overlap |
-| Missing chunk context | Chunks lack surrounding context needed to determine relevance | Use Contextual Retrieval — prepend per-chunk context before embedding and BM25 indexing; reduces retrieval failures by ~49%, or ~67% with reranking — [anthropic.com/news/contextual-retrieval](https://www.anthropic.com/news/contextual-retrieval) |
-| Vector-only retrieval (no reranking) | Semantically plausible but suboptimal chunks | Add cross-encoder (BGE v2-m3, Cohere Rerank 3.5) or ColBERT reranker over top-k |
-| Embedding rot (stale embeddings) | Silent drift toward hallucination | Re-embed on model update; version embeddings |
-| No retrieval evaluation | Cannot detect degradation | Track Recall@20 ≥ 0.80 and Precision@5 ≥ 0.70 |
-| Domain-mismatched embeddings | Weak representations for specialized content | Fine-tune or benchmark domain-specific models |
-| Ignoring chunk overlap | Adjacent context lost at boundaries | 10-20% overlap between chunks |
-
-### Chunking-Aware Retrieval
-
-```yaml
-RAG_RETRIEVAL_SPEC:
-  chunking:
-    strategy: "[fixed-size / semantic / recursive / document-aware]"
-    chunk_size: "[256-1024 tokens typical]"
-    overlap: "[10-20% of chunk_size]"
-  retrieval:
-    method: "[vector / hybrid / multi-stage]"
-    top_k_initial: 20
-    top_k_reranked: 5
-  reranking:
-    model: "[cross-encoder / cohere-rerank / none]"
-    threshold: "[minimum score to include]"
-  context_assembly:
-    max_tokens: "[context window budget]"
-    dedup: true
-    ordering: "[relevance / chronological / source-grouped]"
-```
-
-### Multi-Stage Retrieval
-
-```
-Stage 1: Sparse retrieval (BM25) → 100 candidates
-Stage 2: Dense retrieval (vector) → 100 candidates
-Stage 3: Fusion (RRF) → Top 50
-Stage 4: Reranking (cross-encoder) → Top 10
-Stage 5: Context assembly → Final context for LLM
-```
-
----
-
-## Search Quality Evaluation
-
-### Metrics
-
-| Metric | Formula | When to Use |
-|--------|---------|------------|
-| **Precision@k** | Relevant in top-k / k | When false positives are costly |
-| **Recall@k** | Relevant in top-k / total relevant | When completeness matters |
-| **MRR** | 1/rank of first relevant | Single-answer queries |
-| **NDCG@k** | DCG@k / IDCG@k | Graded relevance judgments |
-
-### Evaluation Workflow
-
-```yaml
-EVALUATION_SPEC:
-  judgment_set:
-    queries: "[50-200 representative queries]"
-    judgments: "[3-point: not_relevant/partial/relevant or 5-point scale]"
-    source: "[manual annotation / click data / LLM-as-judge]"
-  metrics:
-    primary: "NDCG@10"
-    secondary: ["MRR", "Recall@20"]
-  baseline:
-    current_system: "[measure before changes]"
-    target_improvement: "[+X% over baseline]"
-  ab_testing:
-    method: "[interleaving / parallel traffic split]"
-    sample_size: "[statistical significance calculator]"
-```
-
----
+Full-text mapping/analyzer examples, vector index and embedding-model quick-reference tables, hybrid fusion (RRF) design, RAG retrieval anti-patterns and chunking spec, and evaluation metric/workflow detail all live in `reference/` now — see `## Reference Map` for the exact file per topic. Load only the file the current Recipe needs.
 
 ## Recipes
 
@@ -449,7 +243,9 @@ Every deliverable must include:
 - Scaling considerations (shard count, replica strategy, caching).
 - Recommended next agent for handoff.
 
-## Collaboration (Compact)
+## Collaboration
+
+Seek receives search and RAG requirements from upstream agents and sends retrieval specs, metrics, and schema recommendations downstream.
 
 **Receives:** Oracle (RAG specs) · Schema (data models) · Stream (ingestion) · Builder (requirements) · Tuner (DB perf context)
 **Sends:** Builder (search API specs) · Oracle (retrieval metrics) · Stream (index ingestion) · Schema (vector schema) · Beacon (SLO) · Radar (search tests)
@@ -473,6 +269,7 @@ Every deliverable must include:
 | `reference/scaling-guide.md` | Shard sizing, vector DB scaling, caching strategies |
 | `reference/engine-comparison.md` | Search engine and vector DB feature/cost comparison |
 | `reference/rerank-design.md` | You are running the `rerank` recipe and need cross-encoder vs LTR selection, two-stage latency budgets, or click-feedback loop design. |
+| `reference/rag-retrieval.md` | You are running the `rag` recipe and need chunking-aware retrieval anti-patterns, the `RAG_RETRIEVAL_SPEC` template, or the multi-stage retrieval pipeline. |
 | `reference/suggest-design.md` | You are running the `suggest` recipe and need autocomplete index design (edge n-gram / completion suggester), typo tolerance (Levenshtein / BK-tree / symspell), or sub-50ms latency tuning. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the search design, deciding adaptive thinking depth at DESIGN, or front-loading search type/latency/recall targets at PROFILE. Critical for Seek: P3, P5 |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Seek-specific Output/Next schema. |

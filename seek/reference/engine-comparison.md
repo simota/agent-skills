@@ -34,6 +34,18 @@ Is your data > 100M documents?
 
 ---
 
+## Vector Index Strategy (Quick Reference)
+
+| Engine | Index Type | Best For | Trade-off |
+|--------|-----------|----------|-----------|
+| pgvector 0.8+ | HNSW (iterative scan) | <5M vectors, hybrid with RDBMS | Iterative scan auto-expands; improved cost estimation |
+| pgvector + pgvectorscale | StreamingDiskANN | <50M vectors, cost-sensitive | Single-DB advantage, lower cost than dedicated vector DBs |
+| pgvector 0.8+ | IVFFlat (iterative scan) | <500K vectors, batch workloads | Faster build, iterative scan mitigates low-probe recall loss |
+| Pinecone serverless | Proprietary | Zero-ops managed, BYOC available | Pay-per-use; dedicated read nodes (early access) |
+| Weaviate 1.28+ | HNSW | Multi-modal, enterprise RBAC | BlockMax WAND speeds BM25/hybrid; RBAC tech preview |
+| Qdrant 1.16+ | HNSW + ACORN | Heavy filtering + vector | ACORN improves filtered search quality; tiered multitenancy |
+| Milvus 2.6 | HNSW, DiskANN, RaBitQ | Billion-scale, cost-sensitive | 1-bit RaBitQ quantization (~28% memory, 4× QPS); hot-cold tiered storage |
+
 ## Vector Databases
 
 | Feature | pgvector | Pinecone | Weaviate | Qdrant | Milvus | ChromaDB |

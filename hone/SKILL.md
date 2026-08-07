@@ -119,10 +119,12 @@ Route elsewhere when the task is primarily:
 - Verify MCP OAuth configurations include RFC 8707 resource indicators — tokens without explicit resource binding are vulnerable to mis-redemption attacks where a malicious server replays tokens against unintended services (MCP spec 2026-03-15).
 - Audit plugin configurations for source trust (official vs third-party marketplaces), auto-update settings (third-party auto-update = supply chain risk), and permission scope.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Hone; P2, P1 recommended).
-- **Run the CLAUDE.md / AGENTS.md anti-bloat audit.** Apply Anthropic's official rule for every line: "would Claude actually do this wrong without it?". Lines failing that test belong in a hook, in a skill on-demand reference, or in progressive disclosure (split into a separate small file imported only when needed). P0 finding: file > 400 lines or hard-rule content (lint/formatter) duplicated as English; P1 finding: file > 200 lines or any rule expressible as a hook still living in CLAUDE.md. Route each failing line to its correct mechanism via `_common/MECHANISM_SELECTION.md` ("every time"/"never" → hook; runbook → skill; path-specific → `paths:`-scoped rule). [Source: code.claude.com/docs/en/best-practices; alexop.dev — Stop Bloating Your CLAUDE.md; claude.com — Steering Claude Code]
-- **Detect AGENTS.md / CLAUDE.md coexistence drift** in multi-tool projects. AGENTS.md is the Agentic AI Foundation standard read by 29+ tools; CLAUDE.md is Claude-native. If both exist, audit for content divergence (same rule stated differently in each file) and recommend a single source of truth (typically a thin `CLAUDE.md` that imports `AGENTS.md`). [Source: agents.md; linuxfoundation.org — AAIF]
-- **Run the prompt cache hierarchy audit when auditing a multi-skill orchestration session, large CLAUDE.md / GEMINI.md instructions, or any setup that loads `_common/` shared protocols.** Apply `_common/PROMPT_CACHE_HIERARCHY.md`'s three-tier rule: T-static content (tool defs, skill bodies, `_common/` protocols) must sit above T-semi-static (recipe template) which must sit above T-dynamic (user input, ARGUMENTS, timestamps, tool results). Flag as **P0** any cache breakpoint placed on a `Date.now()` / ISO timestamp / random ID / per-request data line — this is the single most common cache-buster (90% savings lost on every request). Flag as **P1** `_common/` load order that varies per task (re-ordering invalidates the entire `_common/` prefix), inlined `_common/` excerpts that duplicate the cached bytes, and per-task MCP tool churn that mutates the `tools` layer. Flag as **P2** missing 1-hour-TTL cache breakpoints in long sessions and reference/ excerpts re-appended below the active recipe block on follow-up turns. Report cache hit rate from session logs when available; flag sessions below 70% hit rate as P1. [Source: platform.claude.com/docs/en/build-with-claude/prompt-caching, `_common/PROMPT_CACHE_HIERARCHY.md`]
-- **Schedule periodic config re-evaluation every 3-6 months and at every major model release.** Instructions written to work around a prior model's limitations frequently become inert or actively harmful on a newer model — e.g. a CLAUDE.md rule that instructed an earlier model to break every refactor into single-file changes (to stay on track) can prevent a newer model from making coordinated cross-file edits. Audits older than 6 months should automatically flag every CLAUDE.md / GEMINI.md / AGENTS.md instruction tied to a specific prior model behavior for re-validation. [Source: claude.com — *How Claude Code works in large codebases* (2026)]
+- **Run the CLAUDE.md / AGENTS.md anti-bloat audit.** Apply the "would Claude actually do this wrong without it?" test to every line. P0: file > 400 lines or lint/formatter rules duplicated as English. P1: file > 200 lines or any rule expressible as a hook still living in CLAUDE.md. Route failing lines to the correct mechanism via `_common/MECHANISM_SELECTION.md`.
+- **Detect AGENTS.md / CLAUDE.md coexistence drift** in multi-tool projects. If both exist, audit for content divergence and recommend a single source of truth (typically a thin `CLAUDE.md` that imports `AGENTS.md`).
+- **Run the prompt cache hierarchy audit** for multi-skill orchestration sessions, large CLAUDE.md/GEMINI.md instructions, or setups loading `_common/` protocols. Apply `_common/PROMPT_CACHE_HIERARCHY.md`'s T-static > T-semi-static > T-dynamic ordering. P0: cache breakpoint on a timestamp / random ID / per-request data line. P1: `_common/` load order varying per task, or MCP tool churn mutating the `tools` layer. Flag session cache hit rate below 70% as P1.
+- **Schedule periodic config re-evaluation every 3-6 months and at every major model release** — instructions written around a prior model's limitations can become inert or harmful on a newer model. Flag audits older than 6 months for re-validation of model-behavior-tied instructions.
+
+Full rationale, mechanism detail, and sources for the four bullets above → `reference/core-contract-rationale.md`.
 
 ## Boundaries
 
@@ -158,16 +160,18 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Design or debug Claude Code hooks (delegate to Latch).
 - Recommend changes based solely on T4 sources.
 - Skip the FETCH phase (always verify against official docs first).
-- Approve MCP servers using broad-scope PATs without flagging — over-privileged MCP permissions can cascade into shell access and data exfiltration (CoSAI 2025 white paper documents this as a primary MCP attack vector); 66% of scanned MCP servers have at least one security finding (43% shell injection).
-- Ignore tool poisoning risk — malicious modification of MCP tool metadata/descriptors can redirect agent behavior to compromised endpoints, leading to data leaks or system compromise (Praetorian 2025 research).
-- Accept token passthrough in MCP configurations — reusing tokens not explicitly issued for a specific MCP server bypasses security controls and breaks audit trails (OAuth 2.1 specification explicitly forbids this).
-- Skip MCP OAuth endpoint validation — CVE-2025-6514 (mcp-remote, CVSS 9.6) demonstrated that a malicious `authorization_endpoint` URL achieves command injection; always verify OAuth discovery URLs against known-good registries.
-- Trust FastMCP OAuth proxy callbacks without consent verification — CVE-2026-27124 (FastMCP, patched 3.2.0): missing consent verification in the OAuth proxy callback enables confused-deputy account takeover — an attacker-initiated auth flow can hijack a victim's MCP session (CWE-441). [Source: github.com/PrefectHQ/fastmcp security advisory GHSA-rww4-4w9c-7733, 2026-03-31]
-- Recommend `allow: ["*"]` or equivalent wildcard permissions — 36.9% of AI CLI tool bugs stem from API/integration/configuration errors (arxiv:2603.20847), and overly permissive settings amplify their blast radius.
-- Accept CLAUDE.md files >300 lines without flagging — instruction-following quality degrades uniformly as instruction count exceeds ~150-200 (Arize research, Anthropic best practices).
-- Accept MCP Dynamic Client Registration (DCR) endpoints without verification — compromised DCR endpoints enable token theft; always validate DCR discovery URLs against known-good registries.
-- Accept MCP OAuth tokens without RFC 8707 resource indicators — the MCP 2026-03-15 specification mandates resource parameter inclusion in both authorization and token requests to prevent token mis-redemption; tokens without resource binding can be replayed against unintended servers.
-- Accept third-party marketplace plugins with auto-update enabled without flagging — auto-updating third-party plugins can introduce supply chain attacks; flag for manual version review and source trust verification.
+- Approve MCP servers using broad-scope PATs without flagging.
+- Ignore tool poisoning risk on MCP tool metadata/descriptors.
+- Accept token passthrough in MCP configurations.
+- Skip MCP OAuth endpoint validation (CVE-2025-6514).
+- Trust FastMCP OAuth proxy callbacks without consent verification (CVE-2026-27124).
+- Recommend `allow: ["*"]` or equivalent wildcard permissions.
+- Accept CLAUDE.md files >300 lines without flagging.
+- Accept MCP Dynamic Client Registration (DCR) endpoints without verification.
+- Accept MCP OAuth tokens without RFC 8707 resource indicators.
+- Accept third-party marketplace plugins with auto-update enabled without flagging.
+
+Full rationale and sources for the above → `reference/boundaries-rationale.md`.
 
 ## Workflow
 
@@ -181,44 +185,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ### Phase Details
 
-**FETCH** collects:
-- Latest target CLI version and supported models
-- Current recommended configuration patterns
-- Known deprecated settings or feature flags
-- New features available since last config update
-
-**AUDIT** evaluates:
-- Model settings (M1-M3): currency, reasoning_effort, verbosity
-- Trust levels (T1-T5): stale paths, over-trust, wildcards
-- Wire API (W1): `wire_api = "chat"` detection in custom providers (hard error since Feb 2026)
-- Feature flags (F1-F3): coverage, deprecation, new features
-- MCP servers (C1-C4): accessibility, necessity, secrets, versions
-- Rules (R1-R3): duplicates, validity, staleness
-- AGENTS.md (A1-A3): clarity, priority, redundancy
-- Instructions (I1-I2): existence, currency
-- **Antigravity-specific** (when target includes Gemini):
-- Antigravity Model (GM1-GM3): currency, API tier compatibility, capability support
-- Antigravity Safety (GS1-GS2): threshold appropriateness, over-permissive/restrictive
-- Antigravity Extensions (GE1-GE4): accessibility, necessity, secrets, versions
-- Antigravity Instructions (GI1-GI3): GEMINI.md existence, currency, progressive disclosure via `@file.md` imports and boundary markers for large instruction sets
-- Antigravity Auth (GA1-GA2): auth configuration, hardcoded key detection
-- **Claude Code-specific** (when target includes Claude Code):
-- Claude Code Model (CCM1-CCM2): model currency, model-task alignment
-- Claude Code Permissions (CCP1-CCP5): overly permissive allow, missing deny, pattern syntax, global vs project, wildcard `allow: ["*"]` detection
-- Claude Code MCP Servers (CCS1-CCS10): accessibility, secrets in env, necessity, version currency, scope, PAT least-privilege audit, tool poisoning risk (metadata integrity), OAuth 2.1 transport compliance (PKCE for user-facing, client-credentials for M2M), token passthrough detection, version pinning
-- Claude Code Instructions (CCI1-CCI7): CLAUDE.md existence, quality, global/project consistency, staleness, line count (≤200 recommended / ≤300 max), progressive disclosure via `@path` imports and `.claude/rules/` modules, advisory-vs-hook triage (rules that must always execute → convert to hooks)
-- Claude Code Commands (CCK1-CCK2): custom command validity, usefulness
-- Claude Code Hooks (CCH1-CCH8): structural validity, security (design/debug → Latch), exit code correctness (0/2), `permissionDecision: "deny"` usage for security-critical gates (caveat: may be ignored for Edit/Write tools per anthropics/claude-code#37210), non-interactive mode coverage (PermissionRequest hooks do not fire with `-p`; flag pipelines that depend on them), HTTP hook URL validation (`allowedHttpHookUrls` patterns, env var exposure via `httpHookAllowedEnvVars`), hook tighten-only semantics verification (hooks returning "allow" do not bypass deny rules), handler type audit (command/http/prompt/agent — verify `$CLAUDE_PROJECT_DIR` usage for portable paths, validate prompt/agent handlers for cost implications)
-- Claude Code Auth (CCA1-CCA2): authentication configured, API key not hardcoded
-- Claude Code Settings Hierarchy (CCG1-CCG3): override conflict detection (user/project/local/managed), managed policy compliance, managed-settings.d/ drop-in fragment merge order verification (alphabetical sort, later filenames win)
-- Claude Code Plugins (CCPL1-CCPL4): source verification (official vs third-party marketplace), marketplace trust and subscription review, auto-update configuration (flag third-party auto-update as supply chain risk), plugin permission scope audit
-- Claude Code MCP OAuth Resource Binding (CCS11): RFC 8707 resource indicator presence in OAuth configurations, token binding verification
-
-**PROPOSE** generates:
-- Priority-ordered proposals (P0 first)
-- Before/After diff for each change
-- Safety classification per proposal
-- Source citations with tier
+FETCH collects CLI version/model/config-pattern/deprecation signal; AUDIT evaluates every item code by category (M/T/W/F/C/R/A/I for Codex, GM/GS/GE/GI/GA for Antigravity, CCM/CCP/CCS/CCI/CCK/CCH/CCA/CCG/CCPL for Claude Code); PROPOSE emits priority-ordered, cited Before/After diffs. Full phase detail and the complete, current item-code list per category → `reference/phase-details.md`.
 
 ## Recipes
 
@@ -297,6 +264,9 @@ Every deliverable must include:
 | `reference/web-sources.md` | You need source tier classification, search queries, or freshness rules. |
 | `reference/proposal-templates.md` | You need Before/After diff templates for proposals. |
 | `reference/handoffs.md` | You need handoff templates for Hearth/Judge/Nexus collaboration. |
+| `reference/core-contract-rationale.md` | You need the full rationale and sources behind the anti-bloat, coexistence-drift, cache-hierarchy, or periodic re-evaluation Core Contract bullets. |
+| `reference/boundaries-rationale.md` | You need the full rationale and sources behind the `Never` list. |
+| `reference/phase-details.md` | You need full FETCH/AUDIT/PROPOSE phase detail and the complete, current audit item-code list per category. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the Before/After proposal, deciding adaptive thinking depth at source-tier/severity classification, or front-loading target CLI/scope/decision at AUDIT. Critical for Hone: P3, P5. |
 | `_common/PROMPT_CACHE_HIERARCHY.md` | You are auditing prompt cache hit rate, the session context layout (tools → system → messages), `_common/` load order stability, or breakpoint placement on T-static vs T-dynamic content. Required for the `cache-order` and `cache-hierarchy` audit triggers. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Hone-specific Output/Next schema. |
