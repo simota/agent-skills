@@ -15,6 +15,7 @@
 | Keywords | Recipe |
 |----------|--------|
 | `bug`, `error`, `broken` | `bug` |
+| screenshot/image attached + `this screen is broken`, `fix what's in this screenshot`, `see attached screenshot`, `looks wrong` (web) | `bug` — **image branch** (routing-matrix § BUG Phase Contract → IMAGE BRANCH): five-section analysis at CLASSIFY, Visual Fix Loop at VERIFY. Native mobile screen vs reference image → `MOBILE_NATIVE` `visualloop` row. **Screenshot + `improve`/`make this better` is overloaded → REDIRECT**: visual/look-and-feel → `restyle`; feature behavior → `kaizen`; usability findings only (no code) → `echo` direct |
 | `feature`, `implement`, `build` | `feature` |
 | `security`, `vulnerability`, `CVE` | `security` |
 | `refactor`, `clean up`, `code smell` | `refactor` |

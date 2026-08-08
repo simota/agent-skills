@@ -199,10 +199,12 @@ When an agent references an image (screenshot, Figma frame, photograph, diagram,
 
 **Rules:**
 - Separate every image-derived statement into (a) **observed** (literally present) and (b) **inferred** (reasonably implied); surface (b) explicitly before acting on it.
+- Evidence-bearing images get a **layered read** — global → regional crops → detail crops → reconcile (real crop files, not "mental crops"); high-stakes claims add an independent blind re-read. Layer conflicts are re-read once, then treated as ambiguity → § Multi-Layer Analysis in `IMAGE_INPUT.md`.
 - Stop and ask via `AskUserQuestion` before proceeding when text is unreadable, symbols/connections admit multiple readings, the target element among several is unstated, numbers/units/scale are ambiguous, the image references off-screen context, or the request and visible content disagree. Quote the specific region, not a generic "clarify the image?".
 - This Ask-First gate applies in **AUTORUN and AUTORUN_FULL** — image ambiguity overrides the default no-confirmation policy. Skip confirmation only when the image is fully self-evident for the task.
 - For **bug-report / "this is broken"** images, the mandatory five-section analysis (Observations / Inferred context / Problem points / Improvement proposals / Open questions) is required; a one-line description is `PARTIAL`, not `SUCCESS`.
 - When delegating downstream, pass the **structured reading**, not the raw image. Log image-derived decisions and ambiguity resolutions in the agent journal so the verified reading propagates.
+- When a chain **fixes** a visually-reported defect/improvement, close with the **Visual Fix Loop**: re-capture the same screen post-fix and compare per problem point; no capture path → mark the visual claim `UNVERIFIED`, never assert it.
 
 **Full pipeline, image-type taxonomy, hypothesis framework, bug-report sections:** → `_common/IMAGE_INPUT.md`
 

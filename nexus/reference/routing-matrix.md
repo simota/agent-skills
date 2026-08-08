@@ -151,7 +151,12 @@ Bug-fixing has a best-practice order the default chain must honor — **reproduc
 - **VERIFY (Radar + gate)** — the repro test now **passes** (bug gone), the existing build + test suite stays green (no new regression), and Scout's blast-radius areas are spot-checked. `+Sentinel` when the bug has a security dimension.
 - **SHIP (Guardian)** — PR carrying the repro test + root-cause explanation, so the fix is auditable and the regression is permanently guarded.
 
-**Anti-patterns prevented** (prevents: regression test that never actually failed → REPRODUCE-FIRST red→green, symptom patch leaving the cause live → FIX root-cause, fix that breaks something else → VERIFY suite+blast-radius, "fix" for a non-bug → RCA gate, no PR/regression guard → SHIP)
+**IMAGE BRANCH (screenshot attached)** — when the bug report carries a screenshot/error-screen image, two extra obligations bind:
+- **At CLASSIFY**: run the full `_common/IMAGE_INPUT.md` pipeline including the mandatory five-section bug-report analysis (Observations / Inferred context / Problem points / Improvement proposals / Open questions). The **structured reading — never the raw image alone — enters Scout's `_AGENT_CONTEXT`**; image Ask-First triggers override AUTORUN.
+- **At VERIFY**: when the defect is visually observable and a capture path exists, add the **Visual Fix Loop** (`IMAGE_INPUT.md` § Visual Fix Loop): re-capture the same screen post-fix and compare per Problem point (`resolved`/`unresolved`/`regressed`/`not-capturable`). No capture path → the visual claim is marked `UNVERIFIED` in `NEXUS_COMPLETE`, never silently asserted.
+- Improvement proposals from the analysis that the user did not bundle stay **incidental** — listed in `NEXUS_COMPLETE` follow-ups, not folded into the fix scope.
+
+**Anti-patterns prevented** (prevents: regression test that never actually failed → REPRODUCE-FIRST red→green, symptom patch leaving the cause live → FIX root-cause, fix that breaks something else → VERIFY suite+blast-radius, "fix" for a non-bug → RCA gate, no PR/regression guard → SHIP, downstream agents re-interpreting raw screenshot pixels → IMAGE BRANCH structured reading, visually-reported defect claimed fixed without an after-capture → IMAGE BRANCH Visual Fix Loop)
 
 ### SECURITY Phase Contract
 

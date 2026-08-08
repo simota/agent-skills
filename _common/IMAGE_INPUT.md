@@ -19,6 +19,8 @@ Run every stage for evidence-bearing or ambiguous images. Collapse to a lightwei
 | Lightweight | Single self-evident image whose content *is* the entire input (e.g., one legible error-message screenshot) | RECOGNIZE + PARSE, state the reading, proceed |
 | Full | Bug reports, design comps, multi-element frames, diagrams, anything driving downstream work | All five stages |
 
+Full-depth runs execute the stages as **layered passes** (global → regional → detail → reconcile, plus an optional independent blind re-read) — see **§ Multi-Layer Analysis** below for the layer table, depth selection, and reconciliation rules.
+
 ### Stage 1 — RECOGNIZE (classify the image)
 
 Identify the image type first; type determines what to extract and who owns the follow-up.
@@ -102,9 +104,36 @@ Convert the analysis into action:
 
 ---
 
+## Multi-Layer Analysis (accuracy discipline)
+
+A single glance at a whole image hallucinates on dense, small, or low-contrast content — and the misread is invisible because the reader *feels* confident. For evidence-bearing images, execute the pipeline as **layered passes**, each anchored to the one before it:
+
+| Layer | Pass over | Produces |
+|-------|-----------|----------|
+| **L1 Global** | the whole image (or thumbnail) | image type (Stage 1), overall layout, numbered region enumeration — scene-level claims only |
+| **L2 Regional** | one crop per L1 region | zone-by-zone verbatim extraction (Stage 2) on the tight crop, never the downscaled whole |
+| **L3 Detail** | high-risk crops (dense tables, small labels, stack traces, axis numbers, low-contrast text) | cell-by-cell / line-by-line extraction; pair with OCR/text-extraction when available |
+| **L4 Reconcile** | all layer outputs | one merged reading; every claim tagged with its source layer and region index |
+| **L5 Blind re-read** | the original image, by an **independent reader** | a second reading produced without seeing the first one's conclusions (fresh subagent or second engine, prompt carries the task frame but no hypotheses); discrepancies vs L4 listed explicitly |
+
+**Depth selection** (extends the Lightweight/Full table above):
+- Lightweight images → L1 only.
+- Full-pipeline images (bug evidence, comps, diagrams, data) → **L1–L4 minimum**.
+- Add **L5** when: a number/unit read drives an irreversible or costly decision, the evidence is contested ("the log says X" vs user says Y), or a load-bearing claim came out of L1–L4 at Low confidence.
+
+**Reconciliation rules (L4):**
+- For **local detail** (text, values, labels), lower layers win: L3 > L2 > L1. A claim about small text sourced only from L1 is presumptively unreliable — re-read at L2/L3 before using it.
+- For **scene-level structure** (what kind of screen, overall flow), L1 wins — tiling loses global context (Stage 1 caveat).
+- A conflict between layers is a **signal, not noise**: re-crop and re-read the conflicting region once; still conflicting → treat as a Stage 3 ambiguity (Ask-First triggers apply).
+- L5 discrepancies: resolve by targeted re-crop where possible; otherwise downgrade the claim to Low confidence and surface it in Open questions / abstention — never silently pick one reading.
+
+**Execution mechanics:** produce crops as real files and `Read` each one — do not "mentally crop". macOS: `sips -c <h> <w> --cropOffset <y> <x>` (or `-z` to upscale a small region); alternatives: ImageMagick `magick input.png -crop WxH+X+Y crop.png`, Python PIL `Image.open(p).crop((l,t,r,b))`. Write crops to the scratchpad, never the repo. Obtain a lossless/original-resolution source before L3 when the input is visibly compressed.
+
+---
+
 ## Specialization: Bug Report Images (mandatory full analysis)
 
-When the user attaches an image to a bug report, defect report, or "this is broken" request, a one-line description is **not** sufficient. The image is primary evidence. Produce the full five-section analysis before proposing a fix or routing downstream. The sections below follow **report order** (how the analysis reads to a human), not pipeline order — the parenthetical stage tags show which pipeline stage produces each:
+When the user attaches an image to a bug report, defect report, or "this is broken" request, a one-line description is **not** sufficient. The image is primary evidence — read it at **L1–L4 minimum** (§ Multi-Layer Analysis), adding **L5** when error text, codes, or numeric evidence is contested or load-bearing. Produce the full five-section analysis before proposing a fix or routing downstream. The sections below follow **report order** (how the analysis reads to a human), not pipeline order — the parenthetical stage tags show which pipeline stage produces each:
 
 1. **Observations** (Stage 2) — verbatim: error text, status codes, stack traces, UI state, highlighted regions, cursor, timestamps, environment indicators, reporter annotations.
 2. **Inferred context** (Stage 3b) — implied-but-not-shown facts, each marked inferred.
@@ -113,6 +142,24 @@ When the user attaches an image to a bug report, defect report, or "this is brok
 5. **Open questions** (Stage 4) — what the image alone cannot resolve (repro steps, exact API response, prior actions, account state).
 
 Skipping this on a bug-report image is a `PARTIAL` outcome, not `SUCCESS`. If the image is genuinely under-determined, produce the partial analysis from what *is* observable and push the rest into Open questions — never skip the analysis entirely.
+
+---
+
+## Specialization: Visual Fix Loop (screenshot-driven fix / improvement)
+
+When a chain **executes a fix or improvement** for a problem identified from a screenshot, the reading pipeline alone is not the finish line — a visually-reported defect demands **visual re-verification**. Tests passing does not prove the pixels changed; the loop closes only when an after-capture of the same screen is compared against the reported screenshot.
+
+`STRUCTURED READING → FIX → RE-CAPTURE → COMPARE → VERDICT`
+
+- **RE-CAPTURE** — after the fix, capture the same screen/state the reported screenshot shows, matching route, viewport, theme, and data state as closely as reproducible (note any unavoidable deltas). Capture executor by platform:
+  - Web (local app) — `run` skill to launch + screenshot, or `vector` (Playwright capture), or Claude-in-Chrome tools.
+  - Web (component-level) — `vitrine` (Storybook/VRT) when the surface is catalogued.
+  - iOS — `snap` (XCUITest screenshot); native mobile screen iteration → `native` `visualloop` (`native/reference/agent-visual-loop.md`).
+- **COMPARE** — walk the **Problem points list from the five-section analysis** item by item against the after-capture. Verdict per item: `resolved` / `unresolved` / `regressed` / `not-capturable`. Never issue a single global "looks fixed".
+- **VERDICT** — deliverable carries before/after evidence (or paths to both captures) and the per-item verdict table. If no capture path is available (no runnable app, auth-walled screen, device-only state), mark the visual claim `UNVERIFIED` explicitly — a visual fix without an after-capture is asserted, not verified.
+- **Incidental items** — improvements the user did not bundle into scope are not fixed, but the COMPARE step still checks the fix did not *regress* them.
+
+This loop is mandatory whenever the defect or improvement is visually observable and a capture path exists; skipping RE-CAPTURE on a capturable surface downgrades the outcome to `PARTIAL`.
 
 ---
 

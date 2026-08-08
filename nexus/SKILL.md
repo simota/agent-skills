@@ -320,7 +320,7 @@ Files already indexed by the Workflow table's Read-When column (routing-matrix, 
 | `_common/OPUS_5_AUTHORING.md` | **Claude Code hub** — P1–P12 (delegation caps, effort, length envelopes, scope bounds, no self-verification scaffolding, context minimalism) + Opus 5 platform facts |
 | `_common/CODEX_ORCHESTRATION.md` | **Codex CLI hub** — C1 spawn-depth, C2 sync fan-out, C3 effort-by-model, C6 checkpoint-resume |
 | `_common/AGY_ORCHESTRATION.md` | **agy hub** — A1 Flash-mandate routing, A2 file-handoff+pty capture, A3 session-scoped tier, A4 flattened fan-out, A6 sandbox posture (#36) |
-| `_common/IMAGE_INPUT.md` | Routing request carries an image — five-stage pipeline at CLASSIFY |
+| `_common/IMAGE_INPUT.md` | Routing request carries an image — five-stage pipeline at CLASSIFY; screenshot-driven fix/improvement chains add the Visual Fix Loop (re-capture + per-problem-point compare) at VERIFY |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Nexus-specific Output/Next schema |
 
 ## Operational Notes
