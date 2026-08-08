@@ -56,6 +56,7 @@ Model routing within Sketch:
 - Image editing or style transfer: use Gemini-native models (Nano Banana / Nano Banana 2) — Imagen 4 is text-to-image only
 - 4K output: use Nano Banana 2 (`gemini-3.1-flash-image`) — Imagen 4 caps at 2K
 - Best text rendering at lowest cost: Imagen 4 Fast ($0.02/image)
+- No API billing wanted and user has a ChatGPT Plus/Pro subscription: Codex built-in `image_gen` (gpt-image-2) — operating guidance, not Python code; see `reference/codex-image-gen.md`
 
 ## Core Contract
 
@@ -230,6 +231,7 @@ Behavior notes per Recipe:
 | style transfer / reference-based edit | REFERENCE_BASED mode | reference-aware script (up to 14 images) | `reference/prompt-patterns.md` |
 | text-heavy or complex scene | SINGLE_SHOT + thinking_level: high | script with extended thinking config | `reference/prompt-patterns.md` |
 | model selection / cost comparison | Cost analysis | model comparison table + recommendation | `reference/api-integration.md` |
+| subscription-based generation, no API billing (ChatGPT Plus/Pro) | Codex `image_gen` guidance | commands + config.toml setup, not Python code | `reference/codex-image-gen.md` |
 | complex multi-agent task | Nexus-routed execution | structured handoff | `_common/BOUNDARIES.md` |
 | unclear request | Clarify scope and route | scoped analysis | `reference/` |
 
@@ -274,6 +276,7 @@ Overlap boundaries:
 | `reference/cinematic-prompting.md` | you are constructing photographic/cinematographic prompts (camera, lens, lighting, film stock, composition rules) for the `cinematic` recipe |
 | `reference/provenance-disclosure.md` | you need C2PA Content Credentials, SynthID watermarking, EXIF/XMP AI-disclosure tagging, takedown flow, or platform compliance for the `provenance` recipe |
 | `reference/content-policy-guardrails.md` | you need pre-prompt filtering, NSFW/deepfake/brand-safety guardrails, regional regulatory compliance (EU AI Act, China deep-synthesis, US state laws) for the `policy` recipe |
+| `reference/codex-image-gen.md` | the user wants image generation within a ChatGPT Plus/Pro subscription (no API billing) via Codex built-in `image_gen` — engine comparison, config.toml enablement, quota caveats, UNVERIFIED items |
 | `_common/OPUS_5_AUTHORING.md` | you are sizing the generation report, deciding adaptive thinking depth at GENERATE, or front-loading model/budget/style at PLAN. Critical for Sketch: P3, P5 |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Sketch-specific Output/Next schema. |
 | `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
