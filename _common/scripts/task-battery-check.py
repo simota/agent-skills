@@ -115,6 +115,10 @@ MECHANICAL_ITEMS = [
     (26, "generate a full package keyword -> package", "signal-keywords.md",
      "`generate a full package`"),
     (27, "bare /Nexus -> proactive", "signal-keywords.md", "`/Nexus` (no arguments) | `proactive`"),
+    (40, "review-to-zero keyword -> quell", "signal-keywords.md",
+     "`loop until zero findings`"),
+    (41, "behavior-preserving review loop -> quell profile=refactor", "signal-keywords.md",
+     "→ `quell profile=refactor`"),
     (28, "switch profile keyword -> pack", "signal-keywords.md",
      "`pack`, `skill pack`, `skill profile`, `enable skills`, `switch profile`, `skill preset` | `pack`"),
 ]

@@ -141,7 +141,7 @@ The full table below is flat; these families group it by the axis that separates
 |--------|---------|-----------------|
 | **Fix** | `bug` · `security` | defect vs vulnerability |
 | **Improve** (existing code) | `refactor` · `optimize` · `kaizen` · `anneal` · `restyle` | known restructure / perf number / polish one feature vs target / discover design weaknesses → brush-up / UI-visual design. `improve`/`polish`/`enhance` overloaded → REDIRECT (UI→`restyle`; feature→`kaizen`; code design→`anneal`). Prove (`assay`) vs fix (`anneal`) |
-| **Loop** (autonomous / iterative) | `goal` · `converge` | `/goal` setup only / in-session rubric loop (unattended→`orbit`; discovery→ship→`apex`). Every loop passes `_common/LOOP_PRECONDITIONS.md` first |
+| **Loop** (autonomous / iterative) | `goal` · `converge` · `quell` | **what the completion oracle is**: `/goal` setup only / in-session rubric score (`converge`) / an external reviewer's finding count reaching zero (`quell`). Unattended→`orbit`; discovery→ship→`apex`. Every loop passes `_common/LOOP_PRECONDITIONS.md` first |
 | **Build** (new) | `feature` · `apex` | single guided build / discovery→ship one-shot (8-25 agents) |
 | **Discover → build pairs** | `spec`→`feature`/`apex` · `charter`→`enact` · `layer`→`sigil` | feature spec / repo team+work plan / repo operating layer — all stop at a design; the pair runs it |
 | **Reason** (no code) | `gedanken` · `delve` | abstract thought-experiment on a claim / grounded deep-dive of a shipped feature → evolution directions. `evolve a feature` overloaded → REDIRECT |
@@ -164,6 +164,7 @@ gedanken            delve               cartograph          chronicle           
 acceptance          summit              podium              newsroom            wish                eureka              runway              hallmark
 rebrand             crucible            silhouette          lattice             chorus              assay               migrate             transmute
 clone               fuse                graft               package             pack
+quell
 ```
 
 `*` = default when no subcommand is given. Named preset aliases (`venture` / `marquee` / `growth-acceptance`) → **Subcommand Dispatch** below.
@@ -300,6 +301,7 @@ Files already indexed by the Workflow table's Read-When column (routing-matrix, 
 | `reference/recipes-index.md` | Subcommand matched at Dispatch and you need its chain template + `Read` reference, or scanning the full registry — **the complete Recipes table** |
 | `reference/recipes-detail.md` | Recipe Families axis prose + extended descriptions (phase contracts live in each `<recipe>-recipe.md`) |
 | `reference/<recipe>-recipe.md`, `reference/apex-walkthrough.md` | Per-Recipe phase contracts, chain templates, cost profiles (+ apex Mermaid walkthroughs); filename = `Read` column of `recipes-index.md` |
+| `reference/quell-recipe.md` | `/nexus quell` — review-to-zero fix loop: Finding Ledger, disposition integrity, oscillation detection, termination bounds, `profile=general\|refactor` |
 | `reference/inline-recipes.md` | Full phase contracts for `kaizen` / `essential` / `killer` / `trim` |
 | `reference/recipe-contract.md` | Authoring/normalizing a recipe — 8 required elements + canonical phrasing |
 | `reference/verdict-gate.md` | Shared contract for verdict recipes (`essential`/`killer`/`trim` + graft flag clause) |
