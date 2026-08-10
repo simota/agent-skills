@@ -44,12 +44,19 @@ Fallback: [fallback_taken: compass-invoked | architect-invoked | neither — rea
 1. [Verification step 1]
 2. [Verification step 2]
 
-### Risks / Follow-ups
+### Risks / Residual Ledger
 - [Remaining risks + any UNVERIFIED claims]
-- [Recommended follow-ups]
+
+| ID | Residual | Class | Blocker / owner | Marker location | Route |
+|----|----------|-------|-----------------|-----------------|-------|
+| RES-n | [what is not done] | blocked-external \| gate-pending \| out-of-contract \| budget-exhausted \| user-declined | [named blocker] | [file:line `#TODO(agent):`, or `none`] | [recipe/agent that finishes it] |
+
+Completion sweep: [command run] — [N hits: each mapped to a RES-n, or `pre-existing`] (`scanned, 0 hits` when clean)
 ```
 
 Acceptance Provenance covers **every** intent-contract criterion (none silent); Decision Ledger and evidence rules per `reference/autonomy-quality-protocol.md` (Q4–Q6, Q10, Q15).
+
+The **Residual Ledger** replaces free-text "Recommended follow-ups": every leftover carries a Q17 class, and an untyped residual is a defect that caps status at `PARTIAL` (Q16–Q19). Rows and in-artifact `#TODO(agent):` markers bind bidirectionally — no orphan markers, no orphan rows. Omit the table only when the sweep is clean, and keep the sweep line either way.
 
 ---
 
@@ -103,9 +110,14 @@ Parallel (if any):
 1. [Verification step 1]
 2. [Verification step 2]
 
-### Risks / Follow-ups
-- [Remaining risks]
-- [Recommended follow-ups]
+### Risks / Residual Ledger
+- [Remaining risks + any UNVERIFIED claims]
+
+| ID | Residual | Class | Blocker / owner | Marker location | Route |
+|----|----------|-------|-----------------|-----------------|-------|
+| RES-n | [what is not done] | blocked-external \| gate-pending \| out-of-contract \| budget-exhausted \| user-declined | [named blocker] | [file:line `#TODO(agent):`, or `none`] | [recipe/agent that finishes it] |
+
+Completion sweep: [command run] — [N hits: each mapped to a RES-n, or `pre-existing`] (`scanned, 0 hits` when clean)
 
 ### Rollback (if needed)
 - Rollback available: [Yes/No]

@@ -52,6 +52,7 @@ Coordinate specialist agents, design the minimum viable chain, and execute safel
 - Apply guardrails (L1-L4) and validate output schema/required fields at each step boundary.
 - Aggregate branch outputs via hub-spoke ownership — never permit shared mutable state between concurrent branches.
 - Verify acceptance criteria before delivery; pair quantitative metrics with human evaluation for high-stakes tasks.
+- **Finish what the contract covers** (every recipe): no artifact ships with `TODO`/placeholder/stub residue, every deferral carries a class, DELIVER reports a scanned sweep. Done is deliverable-type relative and finishing never widens scope — `reference/autonomy-quality-protocol.md` §7 (Q16–Q19).
 - Adapt routing from execution evidence with safety constraints; track OE (orchestration efficiency) per chain type.
 - Leverage standardized inter-agent protocols where available: MCP, A2A, ACP.
 - Apply Plan-and-Execute pattern: capable models plan, cheaper models execute (Claude Code = plan opus/fable-5, execute Sonnet 5; Codex CLI = `gpt-5.6` variants by role; **agy = always Gemini 3.6 Flash (High)**). Full per-engine map → `reference/hub-authoring.md` § Model Selection, `_common/CLI_COMPATIBILITY.md §4`.
@@ -106,6 +107,7 @@ Agent disambiguation → `reference/agent-disambiguation.md`
 - Skip `VERIFY` when modifying routing matrix behavior.
 - Override Lore-validated patterns without human approval.
 - Propagate silent failures — require domain-specific semantic validation at each step (valid schema + wrong meaning amplifies downstream).
+- Close a run by moving in-scope work into an untyped "recommended follow-up", or report `SUCCESS` over an artifact holding `TODO`/stub residue — deferral needs a Q17 class + `RES-n`; unclassed caps status at `PARTIAL` ("for brevity" / "can be added later" are not classes).
 - Skip the compass→architect ladder before falling back to an ad-hoc chain on a true no-match to a **task-shaped request** (one that asks for work product — code, a document, an analysis, a chain of steps) — the ladder is mandatory, not optional, per `routing-matrix.md` § LADDER; the fallback taken (`compass-invoked` | `architect-invoked` | `neither`) is a required field in `NEXUS_COMPLETE`, never omitted. **Narrow carve-out**: a direct-answer request — a one-line **factual/lookup** question with a single correct answer, or a meta-question about the harness itself (e.g. "what does `classify` do?") — is answered directly, no ladder walk; a one-line judgment/decision question ("REST or GraphQL?") stays task-shaped (DECISION/Magi) and is NOT eligible. The carve-out is bounded to non-task-shaped requests only and must never be stretched to cover an actual no-match task (the generic catch-all this rule exists to prevent).
 
 ## Modes
@@ -222,7 +224,7 @@ Before each spawn, tailor the prompt to the current **project + session** contex
 
 ### Agent Spawn Template
 
-Every spawn prompt MUST front-load acceptance criteria (P1), an output length envelope (P2), and a scope bound (P8) — Opus 5's default output runs long in both channels and can widen a task on its own. **Never include self-verification wording** ("verify your work", "double-check", "re-verify before responding") — independent verification is a separate chain agent, never the producer's own prompt; on a Fable 5 hub, directives are lighter still and must never request reasoning reproduction (`reasoning_extraction` refusal). Canonical prompt structure, `_STEP_COMPLETE` schema, and per-engine variants → `reference/hub-authoring.md` § Agent Spawn Template.
+Every spawn prompt MUST front-load acceptance criteria (P1), an output length envelope (P2), a scope bound (P8), and a **completion bound** (Q16–Q17: finish every in-scope item, or return `PARTIAL` + a typed residual — never `SUCCESS` over a stub) — Opus 5's default output runs long in both channels and can widen a task on its own. **Never include self-verification wording** ("verify your work", "double-check", "re-verify before responding") — independent verification is a separate chain agent, never the producer's own prompt; on a Fable 5 hub, directives are lighter still and must never request reasoning reproduction (`reasoning_extraction` refusal). Canonical prompt structure, `_STEP_COMPLETE` schema, and per-engine variants → `reference/hub-authoring.md` § Agent Spawn Template.
 
 ## Safety Contract
 
@@ -259,7 +261,7 @@ Every deliverable must include:
 - **Decision Ledger** — `DEC-n` judgment calls made without the user, interpretation entries first; omit only when empty (Q4-Q6)
 - `## Prompt Tuning` trace when any spawn's directives were adapted (`field, old→new, trigger, reward_basis`) — delta-only; omit the subsection entirely when no spawn was tuned (`reference/adaptive-prompt-policy.md` §9)
 - Summary with overall status
-- Recommended follow-up actions if applicable
+- **Residual Ledger** — each leftover as `RES-n` (class, blocker/owner, marker location, route), bound bidirectionally to any `#TODO(agent):` left behind, plus the completion-sweep line (`scanned, 0 hits` when clean; the line is never omitted)
 
 **Required contracts:**
 - `DELIVER` returns `NEXUS_COMPLETE` semantics. Canonical formats: `reference/output-formats.md`.

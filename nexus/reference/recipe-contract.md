@@ -89,7 +89,7 @@ Every recipe emits `NEXUS_COMPLETE` with the base `## Nexus Execution Report` (`
 | `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation, single termination oracle, flatten rule | converge, kaizen, apex, summit, podium, wish, newsroom, eureka |
 | `_common/TRACEABILITY.md` | canonical AC/REQ IDs | spec, accord-driven recipes, attest gates |
 | `reference/dialogue-protocol.md` | question craft, answer processing, Assumption Ledger, checkpoint presentation, Provenance Gate for contract-level dialogue | spec, delve, wish Crystallization, eureka Phase 1 Contradiction Crystallization (mandatory); gedanken INTERACTIVE, clone Stack Dialogue, verdict cards (D1–D4/D10–D11 only) |
-| `reference/autonomy-quality-protocol.md` | intent contract, Decision Ledger, drift control, producer≠verifier, evidence-bound claims, Acceptance Provenance | all autonomous (non-dialogue) recipes + ad-hoc chains; recipes cite it and add only specializations (parity oracles satisfy Q3/Q10; acceptance G1–G10 subsume Q11) |
+| `reference/autonomy-quality-protocol.md` | intent contract, Decision Ledger, drift control, producer≠verifier, evidence-bound claims, Acceptance Provenance, **completion integrity (Q16–Q19: artifact-level Done, typed deferral, Residual Ledger, completion sweep)** | all autonomous (non-dialogue) recipes + ad-hoc chains; recipes cite it and add only specializations (parity oracles satisfy Q3/Q10; acceptance G1–G10 subsume Q11) |
 | `reference/doc-quality-protocol.md` | reader contract, universal grounding / UNKNOWN-over-fabrication, cross-doc single source of truth, summary-first readability, Doc Quality Gate (W12 = Q11 for documents) | package, charter, layer, podium, spec/delve artifacts, gedanken reports, wish (W12 as a rubric dimension), eureka Disclosure Package, any doc-authoring step; native gates (podium Verification Team, Spec Quality Gate, package Phase 5) subsume W12 and add only missing dimensions |
 | `_common/PROOF_CARRYING.md` | G1-G10 proof-carrying merge | acceptance, growth-acceptance |
 
@@ -97,9 +97,21 @@ A recipe re-describing a primitive a `_common/` protocol already owns is drift �
 
 ---
 
+## 6.5 Completion policy (inherited, not per-recipe)
+
+Every recipe finishes what its contract covers. The rule is **inherited** from `reference/autonomy-quality-protocol.md` §7 (Q16–Q19) — a recipe cites it and does **not** restate it (§6's cite-don't-re-derive rule). What a recipe *does* own:
+
+- **Its Done definition**, stated in deliverable terms in element #4's named report. Done is deliverable-type relative: a design recipe (`spec`, `layer`, `charter`, `cartograph`) is done when the design is complete — that is a Q2 non-goal, not a residual. A build recipe is done when the code runs, not when it compiles around a stub.
+- **Its residual route**: where a `RES-n` goes next (`quell` routes behavior-changing findings to `bug`/`feature`/`security`; `apex` routes to a follow-on `feature`; `migrate` routes to the next tranche). A recipe that produces residuals with no named route is missing element #4.
+- **Recipe-specific residue markers** beyond the Q19 default probe, when its artifact type has them (`package`'s `#TODO(agent): promote <domain>` gap note is the existing exemplar).
+
+A recipe whose report has a free-text "Recommended follow-ups" list instead of a typed Residual Ledger is out of contract — that list is where unfinished in-scope work hides.
+
+`quell` is the reference implementation: its disposition vocabulary (`reference/quell-recipe.md` §3) and disposition integrity (§4, the fixer never disposes) are Q17–Q18 specialized to a review loop, and other recipes should follow its shape rather than invent a parallel one.
+
 ## 7. Authoring checklist
 
-Before a recipe reference is "done": all eight §1 elements present (or `N/A` + reason) · loop phrasing matches §2 · confirm tier named per §3 · resume mechanism named per §4 · report named per §5 · every reused primitive cites its §6 protocol · Failure Modes Prevented is a consolidated section, not scattered notes.
+Before a recipe reference is "done": all eight §1 elements present (or `N/A` + reason) · loop phrasing matches §2 · confirm tier named per §3 · resume mechanism named per §4 · report named per §5 · every reused primitive cites its §6 protocol · **completion policy per §6.5 — the named report carries a typed Residual Ledger (never a free-text follow-up list), Done is stated in deliverable terms, and every residual class has a route** · Failure Modes Prevented is a consolidated section, not scattered notes.
 
 ## 8. Cross-index wiring checklist (adding a NEW recipe)
 

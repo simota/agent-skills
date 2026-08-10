@@ -69,6 +69,10 @@ Agent(
     Acceptance criteria: [acceptance_criteria]   # P1 — always
     Output length envelope: [length_envelope]    # P2 — always
     Scope bound: [in_scope / out_of_scope]       # P8 — always
+    Completion bound: finish every in-scope item; no TODO/FIXME/placeholder/
+      stub bodies in what you produce. Cannot finish an item? return PARTIAL
+      with residual + class (blocked-external | gate-pending | out-of-contract
+      | budget-exhausted), never SUCCESS over a skeleton.   # Q16-Q17 — always
     Tool-use directive: [tool_use_directive]     # P3 — optional
     Thinking directive: [thinking_directive]     # P5 — optional
 
@@ -77,9 +81,12 @@ Agent(
       Agent: [AgentName]
       Status: SUCCESS | PARTIAL | BLOCKED | FAILED
       Output: [deliverable — strictly within the envelope above]
+      Residual: [none | <item> (class: …, marker: file:line)]   # Q17-Q18
       Next: [recommended next agent or DONE]
 )
 ```
+
+**The `Completion bound` field is not optional.** A spawned agent that trims the hard 20% into a "future work" note is the single largest source of unfinished chains: the hub aggregates a `SUCCESS`, the residue never reaches the Residual Ledger, and DELIVER reports a skeleton as done. The field is a *scope-honesty* control, not a quality exhortation — it tells the agent that `PARTIAL` + a typed residual is the **preferred** answer when it genuinely cannot finish, which is why it does not read as "try harder" filler. It never widens the task: `Scope bound` (P8) still decides what is in scope; `Completion bound` only decides that whatever is in scope is carried to done. Full contract: `reference/autonomy-quality-protocol.md` §7 (Q16–Q19); the hub owns the Q18 ledger and the Q19 sweep — never delegate a step's completion sweep to that same step (Q9).
 
 **Never include self-verification wording** ("verify your work", "double-check", "re-verify before responding") — Opus 5 self-verifies and these cause over-verification (P9); independent verification lives in the *chain* as a separate agent, never in a producer's own prompt. Fable 5 hub directives are lighter, not heavier, and must never request reasoning reproduction (`reasoning_extraction` refusal). Detailed flows → `reference/execution-phases.md`, `reference/orchestration-patterns.md`.
 
