@@ -2,9 +2,22 @@
 
 **Purpose:** The shared discipline for maximizing deliverable quality when Nexus executes **without a human in the loop** — the autonomous counterpart of `reference/dialogue-protocol.md`. Dialogue recipes elicit intent from the user; autonomous runs must **derive** intent from artifacts, **track** every decision made in the user's absence, **prove** the deliverable against the derived contract with evidence, and **finish** it — every criterion the contract claims is carried to done or accounted for as a typed residual. Quality here is not a final check — it is contracted before execution, guarded during it, and independently verified at the end.
 
-**Read when:** any `AUTORUN`/`AUTORUN_FULL` chain at CLASSIFY (Q1–Q3), AGGREGATE (Q7–Q8), and VERIFY/DELIVER (Q9–Q19). Applies to all non-dialogue recipes (`apex`, `enact`, `converge`, `kaizen`, `feature`, `bug`, reproduction family, quality-max family, …) and to the autonomous phases of dialogue recipes (`spec`'s spawned agents, `delve`'s EXCAVATE). Cites — never re-derives — `reference/evaluator-loop-protocol.md`, `reference/handoff-validation.md`, `reference/guardrails.md`, `reference/quality-iteration.md`, `reference/recipe-contract.md` §2.
+**Read when:** any `AUTORUN`/`AUTORUN_FULL` chain at CLASSIFY (Q1–Q3), AGGREGATE (Q7–Q8), and VERIFY/DELIVER (Q9–Q19); §0 and Q20–Q22 apply throughout. Applies to all non-dialogue recipes (`apex`, `enact`, `converge`, `kaizen`, `feature`, `bug`, reproduction family, quality-max family, …) and to the autonomous phases of dialogue recipes (`spec`'s spawned agents, `delve`'s EXCAVATE). Cites — never re-derives — `reference/evaluator-loop-protocol.md`, `reference/handoff-validation.md`, `reference/guardrails.md`, `reference/quality-iteration.md`, `reference/recipe-contract.md` §2.
 
 ---
+
+## 0. Stance — the disposition the rules encode
+
+Q1–Q22 are mechanical; the disposition behind them is not, and it is the part that decays first on a long autonomous run. State it once, keep it for the whole run:
+
+> **Do not compromise the goal to make the run easier. Do not abandon a task because the part that is left is the hard part. Do not forget, at step nine of a twelve-step chain, what finishing was supposed to mean.**
+
+Where a rule and this disposition point the same way, follow the rule; where the rules are silent — and on a real run they often are — the disposition decides. It cashes out as three concrete behaviors, specified as Q20–Q22 in §7: the bar is never quietly lowered to meet the output, an alternative is actually tried before `BLOCKED` is claimed, and the difficult core is built before the easy polish.
+
+**What it is not.** Persistence is not stubbornness, and this section never overrides a stop rule:
+- Repeating a failing approach is not perseverance — **two identical failures ⇒ stop and diagnose**, then try a *different* approach. Thrash is giving up while looking busy.
+- Burning budget past marginal value is Q13's failure mode, not its virtue. Exiting at `diminishing-returns` with an honest residual gap **is** finishing.
+- Grinding past an **Ask First** gate, a Q6 escalation, or an L3/L4 guardrail is not determination — it is an unreviewed gamble. The disposition raises effort, never permission.
 
 ## 1. Intent Contract (Q1–Q3) — quality is defined before execution
 
@@ -69,7 +82,7 @@ At DELIVER, classify **every intent-contract criterion**:
 
 A criterion that vanishes between the intent contract and the final report is the autonomous equivalent of a `silent` assumption — the report must account for all of them, and `dropped` without a Ledger entry is scope creep in reverse.
 
-## 7. Completion Integrity (Q16–Q19) — "done" means nothing was quietly left behind
+## 7. Completion Integrity (Q16–Q22) — "done" means nothing was quietly left behind
 
 Q13's best-so-far exit and Q11's deferral branch are honest **only** when the deferral itself is disciplined. Without that discipline the Follow-ups section becomes the run's disposal chute: in-scope work reclassified as "future work", artifacts shipped with `TODO` markers and stub bodies, and a `SUCCESS` status over a skeleton. `quell` already solves this for one recipe with its disposition ledger (`reference/quell-recipe.md` §3–§4, "nothing is silently dropped"); Q16–Q19 generalize that mechanism to **every** autonomous run and every recipe.
 
@@ -92,6 +105,16 @@ Q13's best-so-far exit and Q11's deferral branch are honest **only** when the de
 
 **Not classes** — these are the phrasings that hide unfinished work, and each one means "go finish it": *for brevity · left as an exercise · can be added later · beyond the scope of this response · the pattern is the same for the rest · wire this up when convenient · similar changes needed in the other N files*.
 
+### Persistence rules (Q20–Q22) — §0's disposition, made checkable
+
+Q16–Q19 catch work that was left *visibly* undone. Q20–Q22 catch the quieter version: the run that reaches `SUCCESS` by making success cheaper.
+
+| # | Rule | Discipline |
+|---|------|-----------|
+| Q20 | **The bar does not move to meet the output** | Acceptance criteria are frozen once the intent contract is set (Q1). Rewriting a criterion, relaxing a threshold, weakening an assertion, or narrowing a test so the run can pass is a **goalpost move**: it requires an explicit `DEC-n` (class `interpretation`), lands in Acceptance Provenance as `partial`/`dropped` — never as `verified` — and can never be made by the agent whose output failed the bar (Q9, the same fixer≠adjudicator rule `quell` §4 applies to dispositions). A criterion that quietly changed wording between CLASSIFY and DELIVER is the single hardest self-deception to catch after the fact; re-read the original at each Q8 re-grounding. |
+| Q21 | **`BLOCKED` is earned, not declared** | Before a step returns `BLOCKED` — or a residual is classed `blocked-external` (Q17) — at least one *materially different* approach must have been attempted and **named in the report** ("tried X, failed because Y"). "This is difficult", "the API is unclear", "no obvious way" are not blockers; they are the point where the work starts. Bounded by §0: the alternative must be genuinely different, and after two identical failures the step diagnoses instead of retrying. A `BLOCKED` with no named attempt is a defect, and the hub routes it back rather than aggregating it. |
+| Q22 | **Hard core before easy polish** | Order the work so the load-bearing, uncertain, or unpleasant part is done **first**, and the cosmetic pass last. Two payoffs: a `budget-exhausted` exit then leaves a working core rather than a polished shell around a hole, and difficulty is discovered while there is still budget to route around it. Where a plan defers the hardest step to the end without a stated reason (a genuine dependency), that ordering is itself the compromise — fix the order, not the report. |
+
 ## Failure Modes Prevented
 
 | Failure | Mitigation |
@@ -113,10 +136,14 @@ Q13's best-so-far exit and Q11's deferral branch are honest **only** when the de
 | The Follow-ups section used as a disposal chute for the hard 20% | Q18 Residual Ledger — every row carries class + blocker + route |
 | Residue in files the report never mentions / follow-ups with no anchor in the code | Q18 bidirectional marker binding (no orphan markers, no orphan rows) |
 | "No TODOs left" claimed without looking | Q19 scanned zero as Q10 evidence |
+| **The bar quietly lowered so the run can pass** (criterion reworded, threshold relaxed, assertion weakened) | Q20 frozen criteria — a goalpost move needs a `DEC-n`, can never be `verified`, and is never made by the failing producer |
+| `BLOCKED` / `blocked-external` used as a synonym for "hard" | Q21 — at least one materially different attempt, named in the report, or the hub routes it back |
+| Budget exit leaving a polished shell around an unbuilt core | Q22 hard-core-first ordering |
+| "Never give up" degenerating into thrash or budget burn | §0 — two identical failures ⇒ diagnose; `diminishing-returns` exit is finishing, not quitting |
 
 ## Wiring
 
-- **All autonomous chains** (recipe or ad-hoc `classify` output): Q1–Q3 at CLASSIFY/PLAN, Q4–Q6 during EXECUTE, Q7–Q8 at AGGREGATE, Q9–Q19 at VERIFY/DELIVER. Enforced at the Workflow level — individual recipe references cite this protocol instead of re-deriving it, adding only recipe-specific specializations (e.g. reproduction recipes' parity oracles already satisfy Q3/Q10 via `_common/DIFFERENTIAL_PARITY.md`; `acceptance`'s G1–G10 subsume Q11).
+- **All autonomous chains** (recipe or ad-hoc `classify` output): §0 for the whole run, Q1–Q3 at CLASSIFY/PLAN, Q4–Q6 + Q21–Q22 during EXECUTE, Q7–Q8 + Q20 at AGGREGATE, Q9–Q19 at VERIFY/DELIVER. Enforced at the Workflow level — individual recipe references cite this protocol instead of re-deriving it, adding only recipe-specific specializations (e.g. reproduction recipes' parity oracles already satisfy Q3/Q10 via `_common/DIFFERENTIAL_PARITY.md`; `acceptance`'s G1–G10 subsume Q11).
 - **`NEXUS_COMPLETE` / `NEXUS_COMPLETE_FULL`** (`reference/output-formats.md`): the Decision Ledger (interpretation entries first), the per-criterion Acceptance Provenance table, and the **Residual Ledger** (Q18, with the Q19 sweep line) are part of the final report — omit each section only when genuinely empty, and an empty Residual Ledger still reports the sweep as `scanned, 0 hits`.
 - **Spawn prompts** inherit Q16–Q17 as the `Completion bound` field of the Agent Spawn Template (`reference/hub-authoring.md`): a spawned agent finishes its slice or returns `PARTIAL` with a typed residual — it never returns a stub as `SUCCESS`. The hub owns Q18–Q19; a step never self-certifies its own completion sweep (Q9).
 - **Dialogue recipes** (`spec`, `delve`): the dialogue itself follows `reference/dialogue-protocol.md`; their spawned autonomous work (EXPAND fan-outs, EXCAVATE lenses, Quality-Gate reviews) follows this protocol. The two ledgers are siblings: ASSUME-n tracks what the *user* didn't decide; DEC-n tracks what the *run* decided alone.
