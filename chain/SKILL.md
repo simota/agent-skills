@@ -151,6 +151,8 @@ Behavior notes per Recipe:
 | `curl ... | bash`, `wget ... | sh`, `eval $(...)` in bundled script | `P0` | `REJECT` | triage |
 | `~/.ssh`, `~/.aws`, `~/.npmrc`, `~/.netrc` read without declaration | `P0` | `REJECT` | triage |
 | `settings.json` mutation that changes `permissions` | `P0` | `REJECT` + `QUARANTINE` | triage |
+| Project-local `.claude/settings.json` `hooks` parsed or executed **before** the trust prompt is answered | `P0` | `REJECT` | triage |
+| Path containment checked **before** symlinks are resolved (validation sees the link, not its target) | `P0` | `REJECT` | triage |
 | Frontmatter contains custom keys outside `name` / `description` | `P1` | `REJECT` (forward-compat) | maintainer |
 | Bundled binary without provenance attestation | `P1` | `REJECT` until provenance provided | sentinel |
 | Outbound HTTP to non-allowlisted host | `P1` | `REJECT` until network allowlist updated | maintainer |

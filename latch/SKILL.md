@@ -251,6 +251,22 @@ Hook sources (merged at runtime): `~/.claude/settings.json` (user), `.claude/set
 - Use PID-scoped temp files such as `/tmp/hook-state-$$`.
 - Set explicit timeouts even when defaults would apply.
 
+### Model-Based Gate Design
+
+When a hook's decision cannot be expressed as a pattern (`security` / `quarantine` recipes reaching for an LLM judgment), copy the shipped auto-mode architecture rather than inventing one. Source: `anthropic.com/engineering/claude-code-auto-mode` (2026-03-25), measured FPR **0.4%** on 10,000 real actions, FNR **17%** on real overeager actions and **5.7%** on synthetic exfiltration.
+
+| Principle | Rule |
+|-----------|------|
+| **Two-stage cascade** | Stage 1 = single-token classifier tuned to over-block (cheap, runs on every action). Stage 2 = chain-of-thought, invoked **only** on a Stage 1 flag. Never pay CoT latency on the common path. |
+| **Starve the judge** | Feed the classifier the **user messages and the executable payload only**. Strip assistant messages, tool-call descriptions, and tool outputs. Anything the agent authored is an attack surface — it lets the agent argue its way past the gate. |
+| **Tier before classify** | Tier 1 always-allow (reads, searches). Tier 2 auto-allow (in-project edits — version control is the undo). Tier 3 classify (shell, network, out-of-project paths, **subagent spawns**). Only Tier 3 pays for a model call. |
+| **Denials are a tool result, not a crash** | Return the denial to the agent with "find a safer alternative". Then bound it: terminate the session at **3 consecutive** or **20 cumulative** denials and escalate to a human — an agent looping against a gate is a signal, not noise. |
+| **Gate both directions on delegation** | Outbound: catch work that looks authorized inside the subagent but was never user-intended. Inbound: screen the subagent's result for injection before it re-enters the orchestrator's context. |
+
+**Timing rule (`quarantine`).** Project-local config — `.claude/settings.json`, including its `hooks` block — must not be parsed until *after* the user's trust prompt is answered. Anthropic shipped this inverted and a repo could execute hook commands pre-consent. Any hook or tool that reads untrusted repo config inherits this ordering requirement. Related ordering bug: **resolve symlinks first, then validate containment** — "symlink resolution has to happen *before* path validation, not after, or a symlink inside an authorized folder can point outside and escape" (`anthropic.com/engineering/how-we-contain-claude`).
+
+**Scope limit.** A hook is a *model-layer* control and never the sole defense. Environment controls (sandbox, egress policy) catch what a classifier misses: prompt-injection success is ~0.1% single-shot but **5-6% under 100 adaptive attempts**, and when the *user* is the one typing the hostile prompt, no intent-anchored classifier fires at all (credentials exfiltrated 24/25 times in Anthropic's own phishing test). Recommend sandboxing alongside any `security` hook — it independently removed 84% of permission prompts.
+
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |

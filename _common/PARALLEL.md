@@ -135,6 +135,24 @@ file_ownership:
     - src/utils/*.ts
 ```
 
+### Dynamic Claim (upfront declaration impossible)
+
+Upfront ownership requires knowing the work list before execution. When the work list is discovered *during* the run — a long-lived swarm on a shared repo, an open-ended bug queue — switch to **claim-on-start** instead of declare-upfront:
+
+1. Before touching any file, the agent writes a claim file to `current_tasks/<task-id>.md` naming the task and the files it will own, then commits it.
+2. Push rejection / merge conflict on the claim file **is** the duplicate-work signal — no lock server needed. A rejected agent pulls, drops the claim, and picks another task.
+3. Work, commit, push, then delete the claim.
+
+Verified at 16 concurrent agents on one shared git repo (`anthropic.com/engineering/building-c-compiler`, 2026-02-05: 2,000 sessions / 2 weeks / ~$20,000). Git's own merge detection was the entire synchronization mechanism.
+
+### Blocking-Task Split (parallelism collapse)
+
+Parallelism fails when every branch converges on the same blocker — one monolithic task that all agents must clear before any can proceed. Symptom: N branches, all `IN_PROGRESS`, all on the same failure.
+
+**Fix:** find an *oracle* that decomposes the monolith into independently attributable units. In the C-compiler run, "compile the Linux kernel" blocked all 16 agents; using GCC as an online oracle to diff outputs per file turned one blocker into per-file bugs that 16 agents could fix in parallel.
+
+Generalized: when a shared blocker appears, look for a **known-good reference implementation** to differential-test against (`_common/DIFFERENTIAL_PARITY.md`). Absent an oracle, serialize the blocker on one branch and re-fan-out after — do not leave branches spinning.
+
 ---
 
 ## Branch States

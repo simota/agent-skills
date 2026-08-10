@@ -345,3 +345,15 @@ Traditional VERIFY checks (tests pass, build OK) are subsumed by the Evaluator t
 3. Run without Max Iterations — accept best result when exhausted.
 4. Accept vague feedback — Evaluators must include `file:line` + actionable suggestion.
 5. Let Evaluators modify code — they only return feedback.
+
+### Where to Spend Tuning Effort
+
+Source: `anthropic.com/engineering/harness-design-long-running-apps` (2026-03-24).
+
+1. **Tune the Evaluator, not the Generator.** Making an Evaluator appropriately skeptical is *far more tractable* than making a Generator self-critical. Iterate the Evaluator prompt against logged cases where its verdict diverged from a human's — that log is the tuning dataset, and it is the highest-leverage artifact in the loop.
+2. **Ground the Evaluator in tools, not description.** An Evaluator that reads a diff guesses; one that drives the artifact (Playwright/browser MCP for UI, the actual test runner for code) observes. Give every Evaluator at least one tool that exercises what it scores.
+3. **Calibrate with scored few-shots.** Attach 2-3 worked examples with full score breakdowns to the rubric — without them, scores drift across iterations and cross-iteration comparison is meaningless.
+4. **Rubric wording is a steering input, not just a measurement.** Criterion phrasing measurably shifts what the Generator produces even with no explicit feedback ("museum quality" reshaped visual output on its own). Weight the dimensions where the model is *weak*; over-weighting dimensions it already handles buys nothing.
+5. **Budget the loop against solo-agent baseline.** A measured comparison: solo agent 20 min / $9 (core feature broken) vs. full Generator-Evaluator harness 6 hr / $200 (working) — ~18× wall-clock and ~22× cost. The loop earns that only when the task sits *beyond* what the model does reliably solo. For a task inside solo range, the loop is pure overhead; check this before spawning Evaluators.
+6. **Expect non-linear scores.** Improvement is not monotonic across 5-15 iterations, and a mid-run iteration is sometimes the best one. Retain per-iteration artifacts and select the best, rather than shipping the last.
+7. **A tuned Evaluator still misses.** Subtle bugs, layout defects, and deeply nested features survive it. `converge` passing is not a substitute for an independent VERIFY step.

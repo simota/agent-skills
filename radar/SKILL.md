@@ -119,6 +119,20 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 Full rationale and sources for the above → `reference/boundaries-rationale.md`.
 
+## Agent-Readable Test Output
+
+When an autonomous agent — not a human — is the primary consumer of a suite's output, the suite is also an **interface for the agent**, and a human-optimized one degrades the agent. Apply when tests run inside an agent loop (CI-driven fix loops, `nexus quell`, long-running swarms). Source: `anthropic.com/engineering/building-c-compiler` (2026-02-05).
+
+| Rule | Why |
+|------|-----|
+| Console output = a few lines; full detail to a file the agent can `grep` | Verbose stdout is context pollution; the agent pays for every line on every iteration |
+| Emit **pre-computed** aggregates (pass/fail counts, per-category rates) | Otherwise the agent burns reasoning re-deriving totals it could have read |
+| Log failures with a fixed `ERROR` prefix, cause on the **same line** | Grep-ability requires one record per line — multi-line stack-first output is unsearchable |
+| Provide a `--fast` subset flag (1-10% sample), **deterministic per agent, random across agents** | Agents have no time sense and will run the full suite for hours; deterministic per-agent keeps a regression attributable to the agent that caused it |
+| A near-perfect verifier is a precondition, not a nice-to-have | An autonomous agent optimizes exactly what the verifier measures — a weak oracle makes it solve the wrong problem confidently |
+
+The last row is the load-bearing one: before starting any autonomous fix loop, verify the suite actually discriminates correct from incorrect behavior. Pair with `_common/LOOP_PRECONDITIONS.md` (completion oracle).
+
 ## Recipes
 
 Single source of truth for Recipe definitions. Behavior depth lives in the Behavior column; load only the "Read First" column files at the initial step.

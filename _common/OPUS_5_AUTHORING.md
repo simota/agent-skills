@@ -54,6 +54,12 @@ State intent, constraints, acceptance criteria, and file locations on the first 
 - Output sections specify envelopes (line counts, bullet counts, table dimensions). `_STEP_COMPLETE` / `## NEXUS_HANDOFF` blocks already provide them — keep them.
 - Prefer positive concision examples over negative "do not" instructions.
 
+**Lower bound — an envelope is not a hard cap.** Anthropic shipped a system-prompt instruction capping inter-tool-call text at 25 words and final responses at 100 words. It passed internal evals, then measured a **3% intelligence drop** in broader testing (`anthropic.com/engineering/april-23-postmortem`, 2026-04-23). Caps tight enough to truncate reasoning-bearing prose degrade capability, and the degradation does not show up in task-level evals.
+
+- Express P2 as a **target envelope** ("match length to what the task needs"; tiers `S`/`M`/`L`/`XL`), never as a hard word cap on the model's own prose.
+- **Never cap the text between tool calls** — that channel carries plan state across the agentic loop.
+- A new length constraint that could bind on a reasoning channel needs an ablation before it ships, not just a pass on the existing eval suite.
+
 ### P3. Explicit Tool-Use "When/Why"
 
 Effort — not prompt wording alone — governs tool-call volume: lower effort combines operations into fewer calls and proceeds directly to action; higher effort makes more calls and explains the plan first.

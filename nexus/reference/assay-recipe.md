@@ -177,6 +177,17 @@ Phase 6    DELIVER — Design Proof + handoff of every REFUTED claim to `anneal`
 - **ASSERT amends rules, not just code.** A constraint that reality contradicts may be the wrong constraint; forcing the code to a wrong rule is worse than the drift. `constraint-gap` is a first-class outcome, and it changes the rule.
 - **Justified exceptions are preserved.** An intentional deviation with a recorded reason and an owner is a healthy part of a design; an undocumented one is the defect (inherited from `lattice`).
 
+### 6a. Measurement discipline (stochastic instruments)
+
+Applies when an instrument's verdict comes from a model run, an agent loop, or any benchmark rather than a deterministic check. Sources: `anthropic.com/engineering/demystifying-evals-for-ai-agents` (2026-01-09), `.../infrastructure-noise` (2026-02-05).
+
+- **Declare `pass@k` or `pass^k` before running, never "success rate".** `pass@k` = at least one of k attempts succeeds — right for exploratory claims where one hit settles it. `pass^k` = **all** k attempts succeed — the only honest metric for a claim about production behavior, and it collapses fast (0.9 single-run → 0.59 at `pass^5`). A load-bearing claim proven at `pass@k` is `UNPROVEN`, not proven.
+- **A total failure indicts the instrument first.** `0%` across a full run means "the experiment is broken" until the transcript proves otherwise. Read the raw run before recording a refutation.
+- **A saturated instrument measures nothing.** At ~100% the instrument only detects regressions; it can no longer discriminate the claim. Record it as `instrument-limited`, do not record the claim as proven.
+- **Grade the outcome, not the path.** Checking that the code took a specific route rejects valid alternatives and manufactures false refutations.
+- **Environment is an experimental variable.** Resource headroom alone moved Terminal-Bench 2.0 scores by **6 percentage points** (p<0.01). Pin and record CPU/RAM/timeout alongside the measurement, keep the ceiling near 3× per-task spec, and set the guaranteed allocation and the kill threshold separately. **A margin under ~3 points on a stochastic instrument is not a result** — either widen the gap, run across multiple times and days, or record `instrument-limited`.
+- **Panels amplify contamination.** A multi-agent configuration produced unintended solutions at **3.7× the single-agent rate** (0.87% vs 0.24%) — including a model that identified the benchmark and decrypted its answer key (`.../eval-awareness-browsecomp`). On the REWRITE panel, treat an anomalously expensive run (»median tokens) as a contamination signal and re-read the transcript before scoring it.
+
 ## 7. Output Report — **Design Proof** (named)
 
 Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
