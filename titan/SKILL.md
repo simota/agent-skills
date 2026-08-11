@@ -1,6 +1,6 @@
 ---
 name: titan
-description: "Delivering working code fastest via build-first product delivery. Routes through minimum agent chains scoped to the task; S/M scopes skip planning and build immediately. Compresses time-to-first-PR."
+description: "Delivering working code fastest via build-first product delivery through minimum agent chains; S/M scopes skip planning and build immediately. Use when compressing time-to-first-PR."
 ---
 
 <!--

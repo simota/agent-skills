@@ -123,3 +123,22 @@ Verified 2026-07-25. The API's `task_budget` — an advisory loop-wide budget th
 ## Independent critic model
 
 Gate DONE through an independent critic model (`CRITIC_MODEL=haiku` by default): a different model + different system prompt reviews the iteration output. Only critic-approved iterations advance to the DONE Evidence Gate. Same-model self-eval inherits the same blind spots and produces shallow agreement; an independent critic catches false-DONE that conventional verify cannot. [Source: genta.dev — Agentic Design Patterns; addyosmani.com — Self-Improving Agents]
+
+
+---
+
+## Nexus Recipe Driver Contracts
+
+- **apex Phase 6** — engine fixed to **Codex CLI**; run the availability check before consuming
+  the contract. No silent fallback to Claude Agent. See §Codex CLI engine check.
+- **summit Phase 5** — tri-engine improvement loop (Claude / Codex / agy) up to `max_loops = 3`,
+  arbiter = magi. See §Tri-engine improvement loop.
+- **enact build loop** — Charter-native per `reference/charter-loop-driver.md`: read-only
+  §4/§5/§7/§10 slice, §10 DoD as the external DONE gate, `PKG_*` events appended to the §9
+  run-log. Orbit drives one package only; it never sequences packages.
+
+## Runner Prompt Layout
+
+Lay out runner prompts with `PROMPT_CACHE_BREAKPOINTS=4` `cache_control` breakpoints
+(system / tools / goal / context tail); run each iteration in a dedicated `git worktree`;
+gate DONE through an independent critic model (`CRITIC_MODEL=haiku`).

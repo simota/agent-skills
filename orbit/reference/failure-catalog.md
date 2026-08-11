@@ -275,3 +275,27 @@ Run in `AUDIT` mode against a running or completed loop (vs the pre-launch Preve
 | `AP-21` | last `DEDUP_WINDOW` tool argv hashes contain a duplicate with no mtime change |
 | `CONVERGENCE_STALL` | `.action-sig.log` has `CONVERGENCE_WINDOW` identical trailing lines |
 | `OSCILLATION_LOOP` | `.action-sig.log` shows A↔B alternation `>= 3` cycles in last `6` lines |
+
+
+---
+
+## Failure Class Table
+
+Canonical home for the failure taxonomy referenced from `SKILL.md` -> Failure and Learning Rules.
+
+| Class | Primary risk | Default action |
+|-------|--------------|----------------|
+| `CONTRACT_MISSING` | non-deterministic execution | rebuild contract first |
+| `STATE_DRIFT` | corrupted resume state | recover from evidence |
+| `VERIFY_GAP` | false completion | downgrade to `CONTINUE` |
+| `COMMIT_SCOPE_RISK` | unrelated changes in commit scope | restrict staging or delegate commit policy |
+| `TOOL_FAILURE` | runner or executor halt | bounded retry, then recovery or escalation |
+| `CIRCUIT_OPEN` | repeated same-signature failure | cooldown or manual reset |
+| `CONVERGENCE_STALL` | semantically equivalent actions with no progress | persist state, escalate to human |
+| `OSCILLATION_LOOP` | A→B→A→B alternation with no net progress | inject disambiguation or restrict action space, then escalate |
+| `CONTEXT_OVERFLOW` | tool outputs inflate context beyond model capacity | memory pointer pattern (outputs > `1KB` externalised), rotate/summarize, retry |
+| `VALIDATOR_GAP` | verify passes on stub/placeholder code (AP-12) | extend verify with placeholder grep + AC-derived behavioural assertions |
+| `REWARD_HACK` | agent modified `tests/`/`verify.sh` to soften assertions (AP-13) | revert changes, ABORT, escalate; retry from write-isolated worktree |
+| `GOAL_DRIFT` | `goal.md`/AC files mutated mid-run (AP-16) | restore sha256-pinned baseline, ABORT, escalate |
+| `BURN_RATE_ANOMALY` | token / USD burn rate exceeds EWMA threshold (AP-17) | PAUSE, snapshot, require explicit user resume |
+| `PERMISSION_HIJACK` | `.claude/settings*.json` permissions widened mid-run (AP-20) | restore baseline, ABORT, P0 security escalation |

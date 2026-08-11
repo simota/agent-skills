@@ -154,3 +154,14 @@ Contracts use semantic versioning: `MAJOR.MINOR.PATCH`
 | `1.0.0` | — | initial contract: `NEXT_ITERATION`, `LAST_STATUS`, `LAST_UPDATED_AT`, branch fields |
 | `1.1.0` | 2026-03-22 | add `CONTRACT_VERSION`, cost tracking fields (`TOTAL_TOKENS`, `TOTAL_API_CALLS`, `ESTIMATED_COST_USD`), circuit breaker fields |
 | `1.2.0` | 2026-06-12 | AC→verify-oracle + mandatory-terminator checklist requirements; Contract Validation Gates; `.cost-usd` hard-cap enforcement (`USD_PER_RUN_CAP`/`USD_PER_ITER_CAP`); companion artifacts (`.goal.sha256`, `.cost-usd`, `.action-sig.log`); placeholder-clean DONE evidence |
+
+
+---
+
+## Multi-Loop Rules
+
+- **Parallel loops**: keep separate `state.env`/`progress.md`; block overlapping candidate paths.
+- **Sequential loops**: successor `goal.md` references predecessor output and validates prerequisites independently.
+- **Loop of loops**: consume only inner `_STEP_COMPLETE`; never write inner loop state directly.
+
+Detail -> `reference/patterns.md`.

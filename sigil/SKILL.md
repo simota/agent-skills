@@ -1,6 +1,6 @@
 ---
 name: sigil
-description: "Generating, updating, auditing, and sync-repairing project-specific Claude Code skills. Analyzes repo stack and conventions, synthesizes Micro or Full skills, installs to .claude/ and .agents/skills/."
+description: "Generating, updating, auditing, and sync-repairing project-specific Claude Code skills from the repo stack and conventions. Use when authoring project-local skills (Micro or Full)."
 ---
 
 <!--

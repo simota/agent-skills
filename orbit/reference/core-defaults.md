@@ -102,3 +102,25 @@ Traditional circuit breakers catch error-code failures but miss **semantic failu
 | Token burn rate | `> 2×` median cost per iteration | alert and review |
 
 Detection runs after each iteration. **Similarity** catches same-action repetition. **Oscillation** catches agents alternating between two contradictory actions (A → state favoring B; B → state favoring A) where individual actions differ but net progress is zero. [Source: dev.to/boucle2026 — Stuck Agent Detection from 220 Loops; agentpatterns.tech — Infinite Agent Loop patterns]
+
+
+---
+
+### Circuit Breaker
+
+Single principle: **detect a stall or circular pattern, then stop** — applied below to repeated identical retry failures and unresolved summit-loop debate.
+
+| State | Condition | Behavior |
+|-------|-----------|----------|
+| `CLOSED` | `< CIRCUIT_THRESHOLD` consecutive same failures | normal retry policy |
+| `HALF_OPEN` | exactly `CIRCUIT_THRESHOLD` same failures | allow one probe; fail → `OPEN` |
+| `OPEN` | probe failed or threshold exceeded | block execution, emit `BLOCKED` |
+
+State file `${LOOP_DIR}/.circuit-state`; reset via `recover.sh --reset-circuit` or deletion; `OPEN` → `HALF_OPEN` after `CIRCUIT_COOLDOWN` seconds. Detail → `reference/failure-catalog.md`.
+
+
+
+## Agent Tennis Circuit Breaker (summit Phase 5)
+
+Same principle applied to team debate: fires after `>= 3` unresolved turns between Improvement and Verification teams. Action: exit loop, deliver with an unresolved-finding caveat, escalate — never skipped. See `nexus/reference/summit-recipe.md` §Phase 5.
+

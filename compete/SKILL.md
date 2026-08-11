@@ -1,6 +1,6 @@
 ---
 name: compete
-description: "Researching competitors and shaping positioning: feature matrices, SWOT, benchmarking, positioning maps, battle cards, win/loss, LLM brand visibility. Research only — no code."
+description: "Researching competitors and shaping positioning: feature matrices, SWOT, benchmarking, positioning maps, battle cards, win/loss, LLM brand visibility. Research only — use for strategy, not code."
 ---
 
 <!--

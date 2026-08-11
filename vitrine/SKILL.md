@@ -1,6 +1,6 @@
 ---
 name: vitrine
-description: "Authoring Storybook stories, managing component catalogs, and integrating Visual Regression. Covers UI component docs, visual testing, CSF 3.0/Factories, Storybook 10 (ESM-only), and React Cosmos."
+description: "Authoring Storybook stories, component catalogs, and Visual Regression integration (CSF 3.0/Factories, Storybook 10 ESM-only, React Cosmos). Use when building a component catalog."
 ---
 
 <!--

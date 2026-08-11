@@ -1,6 +1,6 @@
 ---
 name: breach
-description: "Designing red team attack scenarios, building threat models, applying MITRE ATT&CK/OWASP, running Purple Team exercises, and performing AI/LLM red teaming."
+description: "Designing red team attack scenarios, threat models, MITRE ATT&CK/OWASP application, Purple Team exercises, and AI/LLM red teaming. Use when adversarial security validation is needed."
 ---
 
 <!--

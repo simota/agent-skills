@@ -1,6 +1,6 @@
 ---
 name: oath
-description: "Auditing regulatory compliance (SOC2/PCI-DSS/HIPAA/ISO 27001): maps business requirements, checks control implementations, designs audit trails, and implements Policy as Code."
+description: "Auditing regulatory compliance (SOC2/PCI-DSS/HIPAA/ISO 27001): maps requirements, checks controls, designs audit trails, implements Policy as Code. Use when compliance auditing is needed."
 ---
 
 <!--

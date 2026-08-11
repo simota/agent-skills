@@ -1,6 +1,6 @@
 ---
 name: cloak
-description: "Engineering privacy and data governance: PII detection, data flow mapping, consent management patterns, GDPR/CCPA-compliant implementation, and DPIA facilitation."
+description: "Engineering privacy and data governance: PII detection, data flow mapping, consent patterns, GDPR/CCPA-compliant implementation, DPIA. Use when privacy-by-design is needed."
 ---
 
 <!--

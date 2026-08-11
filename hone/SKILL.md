@@ -1,6 +1,6 @@
 ---
 name: hone
-description: "Auditing and optimizing AI CLI configs — Codex (~/.codex/), Antigravity/agy (~/.gemini/), Claude Code (~/.claude/): config.toml, settings.json, CLAUDE.md, hooks, MCP. Proposes diffs, never edits."
+description: "Auditing and optimizing AI CLI configs — Codex (~/.codex/), agy (~/.gemini/), Claude Code (~/.claude/): settings.json, CLAUDE.md, hooks, MCP. Use when auditing; proposes diffs, never edits."
 ---
 
 <!--

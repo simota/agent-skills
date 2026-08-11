@@ -1,6 +1,6 @@
 ---
 name: muse
-description: "Defining and managing design tokens, applying token systems to existing codebases, and building design system foundations: spacing, color, typography, dark mode, cross-platform output."
+description: "Defining and managing design tokens, applying token systems to existing codebases, building design system foundations. Use for spacing, color, typography, dark mode, cross-platform output."
 ---
 
 <!--

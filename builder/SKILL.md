@@ -1,6 +1,6 @@
 ---
 name: builder
-description: "Implementing robust business logic, API integrations, and data models with type safety and production readiness. Offers an interactive pair-programming mode (co-implement, confirming each increment)."
+description: "Implementing robust business logic, API integrations, and data models with type safety. Use when business logic or API integration is needed. Offers an interactive pair-programming mode."
 ---
 
 <!--
@@ -72,33 +72,30 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Use TypeScript strict mode (`strict: true` + `noUncheckedIndexedAccess` + `exactOptionalPropertyTypes` + `noPropertyAccessFromIndexSignature`) with no `any` — types are the first line of defense. Both TS 6.x (the final JS-based release series) and tsgo (the Go-native rewrite that will ship as TS 7.0 once it reaches feature parity) default `strict: true` in `tsc --init` but do NOT fold these additional flags into the `--strict` umbrella; keep all four explicit. For new projects, ensure zero TS 6.x deprecation warnings — tsgo hard-removes deprecated options (`target: es5`, `moduleResolution: "node"`, `baseUrl` without `paths`, `esModuleInterop: false`). [Source: Microsoft TypeScript Blog — A 10x Faster TypeScript (native-port post)](https://devblogs.microsoft.com/typescript/typescript-native-port/)
+Rationale, thresholds, and sources for every rule below: `reference/core-contract-rationale.md`.
+
+- TypeScript strict mode with no `any` — `strict: true` + `noUncheckedIndexedAccess` + `exactOptionalPropertyTypes` + `noPropertyAccessFromIndexSignature`, all four explicit. Zero TS 6.x deprecation warnings on new projects.
 - Define interfaces and types before writing implementation code.
-- Enforce always-valid domain model: entities and value objects must be valid at construction time; reject invalid state in constructors/factories, never allow half-built objects to exist.
+- Enforce always-valid domain model: reject invalid state in constructors/factories; never allow half-built objects.
 - Handle all edge cases: null, empty, error states, timeouts.
-- Write testable pure functions; isolate side effects at boundaries.
-- Apply DDD patterns when domain complexity warrants it; use CRUD for simple domains.
+- Write testable pure functions; isolate side effects at boundaries (functional core, imperative shell).
+- Apply DDD patterns when domain complexity warrants it; CRUD for simple domains. Organise feature work as vertical slices, not layers.
 - Include error handling with actionable messages at every system boundary.
-- Use `.safeParse()` (not `.parse()`) at system boundaries — `.parse()` throws and can crash the process in Express/Hono handlers. Use `z.prettifyError()` or `z.flattenError()` to format validation failures into structured API responses.
-- Define Zod schemas at module level as constants, not inside functions — recreating schemas per call wastes CPU; module-level constants are 2–5× faster for repeated validations.
-- API resilience: categorize errors before retry (4xx = caller bug, don't retry; 429 = backoff with Retry-After; 5xx = exponential backoff, 3–5 max attempts). Track retry count per request — unbounded retries create infinite loops that exhaust processing capacity. Never retry non-idempotent mutations without idempotency key.
-- Apply circuit breaker for external API calls: scope per endpoint, not per host. Open after consecutive failures (default 5 in 60 s; tune by criticality — payment ≤ 3, search ≤ 10), half-open after cooldown (30 s–2 min), close on success.
-- Prefer contract-driven API types: generate TypeScript types from OpenAPI specs (e.g. `openapi-typescript`) rather than hand-writing response types — hand-written types drift from backend reality and fail silently at runtime. Use Zod v4 `.toJSONSchema()` (built in since Zod v4 — defaults to JSON Schema Draft 2020-12; pass `target: "openapi-3.0"` for OpenAPI 3.0 sync) to export boundary schemas as JSON Schema, closing the loop between runtime validation and API documentation. [Source: Zod — JSON Schema conversion docs](https://zod.dev/json-schema)
-- Use `using` / `await using` declarations for disposable resources (DB connections, file handles, HTTP clients) — guarantees deterministic cleanup on early return or exception, eliminating resource-leak classes of bugs.
-- Always type `catch` parameters as `unknown` and narrow with `instanceof` — untyped catch allows accessing non-existent properties and hides real error shapes.
+- Boundary validation: `.safeParse()` (never `.parse()`), Zod schemas as module-level constants, types generated from OpenAPI specs rather than hand-written.
+- **Parse, don't validate** — one one-way transform at each boundary; downstream code never re-checks.
+- **Make illegal states unrepresentable** — discriminated unions over boolean flag soup.
+- **Return `Result<T, E>`; do not throw across module boundaries.** Reserve throws for non-recoverable invariant violations.
+- **Branded / nominal types** for every domain ID, monetary amount, duration, and percentage.
+- API resilience: categorize before retry (4xx no retry, 429 backoff with `Retry-After`, 5xx exponential 3-5 attempts), bound retry count, never retry non-idempotent mutations without an idempotency key.
+- Circuit breaker per endpoint (not per host): open after 5 failures in 60s (payment <= 3, search <= 10), half-open after 30s-2min, close on success.
+- Use `using` / `await using` for disposable resources; type `catch` parameters as `unknown` and narrow with `instanceof`.
+- Write LLM-friendly deterministic code: explicit over implicit, boring over clever, behaviour co-located with its trigger.
 - Generate test skeletons for Radar handoff on every deliverable.
-- **Run impact scope check at VERIFY before declaring done.** For every modified symbol/file, verify five axes: (1) callers/importers (grep references — none broken?), (2) tests (related unit/integration/e2e — added or updated?), (3) types/contracts (TypeScript types, OpenAPI, DB schema, GraphQL — consistent?), (4) configs (env vars, feature flags, config files — propagated?), (5) docs (README, CHANGELOG, API docs — update needed?). Document each axis verdict in the deliverable. If 3+ axes are non-trivially affected or uncertainty is high, recommend `ripple` (pre-change impact analysis) before completion. Never close VERIFY with axes marked "unchecked".
-- **Verification-first** — *the single highest-leverage practice for AI-assisted coding*. Before writing implementation code, identify or create the verification path (tests, screenshot diff, expected stdout, type signature, schema contract) and hand it to the build loop alongside the spec. Code without a verifier is data, not deliverable. Fix root causes; do not suppress symptoms. [Source: code.claude.com/docs/en/best-practices — Anthropic Claude Code Best Practices]
-- **Make illegal states unrepresentable** at the type level. Prefer discriminated unions (e.g. `type Order = { state: "draft", items?: Item[] } | { state: "submitted", items: NonEmptyArray<Item>, submittedAt: Date }`) over boolean flag soup. The compiler enforces the spec for free, and AI codegen self-detects missing branches via exhaustiveness checks. [Source: deviq.com — Make Illegal States Unrepresentable (Yaron Minsky); learningtypescript.com — Discriminated Unions]
-- **Parse, don't validate.** At every system boundary, parse `unknown` into a fully-typed value with a single one-way transform (Zod / Valibot / Effect Schema / ArkType). Downstream code receives the parsed type and never repeats boundary checks. The parser is the contract; the type is the proof. [Source: lexi-lambda.github.io — Parse Don't Validate (Alexis King); pockit.tools — Zod vs Valibot vs ArkType 2026]
-- **Return `Result<T, E>`; do not throw across module boundaries.** Use the Railway-Oriented Programming style with `neverthrow`, Effect-TS, or a hand-rolled discriminated union. Throwing forces every caller to defend; returning a `Result` puts the error path in the type system and shrinks AI's "wrap-everything-in-try/catch" reflex. Reserve throws for truly exceptional, non-recoverable invariant violations. [Source: fsharpforfunandprofit.com — Railway Oriented Programming; effect.website — Effect vs neverthrow]
-- **Functional core, imperative shell.** Pure, deterministic domain logic in the core (no I/O, no clocks, no random); wrap side effects (HTTP, DB, filesystem, time) in a thin shell at the edges. The core is the part you let AI write and verify with property-based tests; the shell is the part a human reviews line by line. [Source: destroyallsoftware.com/talks/boundaries (Gary Bernhardt); kennethlange.com/functional-core-imperative-shell/]
-- **Branded / nominal types for IDs and units.** `type UserId = string & { __brand: "UserId" }`. Zero runtime cost, prevents the entire "I passed an `orderId` where a `userId` was expected" class of bug. Apply to every domain ID, every monetary amount, every duration, every percentage. Zod v4 `z.string().brand<"UserId">()` is the idiomatic constructor. [Source: oneuptime.com — Implementing Branded Types in TypeScript 2026; learningtypescript.com — Branded Types]
-- **Vertical Slice Architecture for feature work.** Organise by feature, not by layer. A new `cancel-subscription` feature lives in `features/cancel-subscription/` with its own controller, command, query, handler, validator, and tests — *not* spread across `controllers/`, `services/`, `repositories/`, and `dto/`. Each slice is independently testable and AI-codegen-friendly because the whole change surface fits in one context window. Reserve Hexagonal / Clean for long-lived cross-feature boundaries; do not impose 15 layers on a CRUD slice. [Source: jimmybogard.com/vertical-slice-architecture; milanjovanovic.tech/blog/vertical-slice-architecture]
-- **Write LLM-friendly, deterministic code.** Prefer explicit over implicit, boring over clever, exhaustive over compact. Enumerate every edge case in the type system rather than handling them with `if (x ?? defaultBehavior)`. Co-locate behaviour with its trigger (Locality of Behaviour) so a future agent can understand the change from a single file. Avoid metaprogramming, dynamic dispatch, and "magic" reflection unless the cost of explicitness is provably worse. [Source: stackoverflow.blog — Coding Guidelines for AI Agents and People Too (2026); htmx.org/essays/locality-of-behaviour/]
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Builder; P2, P1 recommended).
-- **Pair-programming mode (`pair`) changes cadence, not the quality bar.** Builder is the **driver** (writes code); the user is the **navigator** (sets direction, approves each increment). Implement ONE small increment at a time: propose intent + its verification, get the user's go-ahead, implement, show the diff + run that verification, confirm, then advance. Every increment meets the full Core Contract (types-first, always-valid domain, boundary `.safeParse()`, no `any`, edges handled) — this is not a speed shortcut (that is Forge). The 5-axis Impact Scope Check still runs at close. INTERACTIVE — cannot run unattended; under AUTORUN, seed the increment plan and return `Next: USER`. Bounded by max-increments / user-stop / goal-met / diminishing-returns; checkpoint-resumable. Full contract → `reference/pair-programming.md`.
-- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
+- **Verification-first** — identify or create the verification path (tests, screenshot diff, expected stdout, type signature, schema contract) *before* implementation code. Code without a verifier is data, not deliverable. Fix root causes; never suppress symptoms.
+- **Run the 5-axis impact scope check at VERIFY before declaring done** — callers / tests / types+contracts / configs / docs, each with a documented verdict. 3+ axes non-trivially affected or high uncertainty -> recommend `ripple` before completion. Never close VERIFY with an axis marked "unchecked".
+- Author for the executing engine (P1-P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Builder; P2, P1 recommended).
+- **Pair-programming mode (`pair`) changes cadence, not the quality bar.** Builder drives (writes code); the user navigates (sets direction, approves each increment). ONE small increment at a time: propose intent + its verification, get go-ahead, implement, show diff + run that verification, confirm, advance. Every increment meets the full Core Contract — this is not a speed shortcut (that is Forge). The 5-axis check still runs at close. INTERACTIVE — cannot run unattended; under AUTORUN, seed the increment plan and return `Next: USER`. Bounded by max-increments / user-stop / goal-met / diminishing-returns; checkpoint-resumable. Full contract -> `reference/pair-programming.md`.
+- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD / SEC / RDB / MNT / TST / PRF / SCL), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -210,19 +207,22 @@ Spawn only when the deliverable touches 4+ files and post-BUILD verification wou
 ## Subcommand Dispatch
 
 Parse the first token of user input.
-- If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
-- Otherwise → default Recipe (`fix` = Bug Fix). Apply normal SURVEY → PLAN → BUILD → VERIFY → PRESENT workflow.
+- Matches a Recipe Subcommand above -> activate that Recipe; load only its "Read First" files at the initial step.
+- Otherwise -> default Recipe (`fix` = Bug Fix), normal SURVEY -> PLAN -> BUILD -> VERIFY -> PRESENT.
 
-Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific acceptance gate **in addition to** the universal 5-axis Impact Scope Check (callers/tests/types/configs/docs).
-- `fix`: Scout handoff or standalone bug fix. Target <50 lines. Always include a regression test skeleton at VERIFY. **VERIFY**: a regression test reproduces the bug red→green (fails on the pre-fix code, passes after); the fix targets the root cause, not the symptom; diff stays <50 lines (else re-scope).
-- `crud`: Decide DDD vs CRUD at SURVEY and confirm CRUD. Entity + Repository + simple service layer. **VERIFY**: the DDD-vs-CRUD decision is recorded and "CRUD" is justified (no hidden invariants — if any surface, escalate to `ddd`, don't smuggle them into a service); boundary input uses `.safeParse()`; each CRUD op carries a test.
-- `api`: Always include error categorization (4xx/429/5xx), retry limits, idempotency keys, and circuit breakers. **VERIFY**: 4xx not retried / 429 honors `Retry-After` / 5xx bounded exponential backoff (3–5 attempts); retry count is bounded per request; every non-idempotent mutation carries an idempotency key; circuit breaker scoped per-endpoint; responses parsed with `.safeParse()`.
-- `ddd`: Design Aggregate / Value Object / Domain Event after confirming the Bounded Context. Focus on PLAN. **VERIFY**: Bounded Context confirmed **before** any tactical pattern (never tactical-without-strategic); entities/VOs are valid-at-construction (invariants enforced in constructor/factory, never in callers — no half-built objects); domain events emitted at state transitions; exhaustiveness checks on discriminated unions.
-- `harden`: Read the Forge L0-L3 level and raise it to production quality (type safety, validation, test skeletons). **VERIFY**: starting Forge L-level recorded and raised; zero `any` / `as`-at-boundary / `.parse()`-at-HTTP remain; boundary validation added; secrets externalized (env/Vault, never inline); test skeletons generated for Radar.
-- `port`: Language/framework port. Re-implement all source-language tests in the target language → parallel-run compare against source code as a black box → investigate any diff. Delineate from Shift (Shift handles large-scale migration planning; port handles implementation execution). **VERIFY**: ALL source-language tests re-implemented in the target; parallel-run black-box diff against source = 0 (every diff investigated and resolved, none waived); equivalence is behavioral, not line-by-line.
-- `integrate`: External API integration (Stripe / Slack / GitHub etc.). Build in order: sandbox verification → secret handling (env / Vault) → vendor-specific retry / rate limit / idempotency → webhook signature verification. **VERIFY**: exercised against the vendor sandbox before prod; secrets in env/Vault (never hardcoded); webhook signature verified server-side; duplicate/replayed webhooks are idempotent; vendor-specific retry / rate-limit / idempotency wired per that vendor's quirks.
-- `patch`: Strict scope (≤30 lines / ≤3 files). Regression tests mandatory. Ensure size XS on handoff to Guardian `pr`. **VERIFY**: scope held to ≤30 lines / ≤3 files (exceed → escalate to `fix`/`harden`, do not stretch `patch`); regression test present; a clear one-step rollback exists; Guardian-handoff size is XS.
-- `pair`: Interactive co-implementation (INTERACTIVE — the dialogue is the deliverable). Builder drives, user navigates; propose → agree → implement → verify one increment at a time. **VERIFY**: increments proposed **one at a time** (no batch dump), each with its verification stated **before** implementation; each increment meets the full Core Contract quality bar (types-first / always-valid domain / boundary `.safeParse()` / no `any` / edges) — not throwaway code (that is Forge); each increment's diff shown + its verification run green before advancing; a user confirmation gate per increment (never auto-advance, even under AUTORUN — under AUTORUN seed the plan and return `Next: USER`); iterate bounded to 2 turns/increment; session bounded by max-increments (default 12) / user-stop / goal-met / diminishing-returns, with remaining increments handed off as a standard build plan; the 5-axis Impact Scope Check runs at close. Full contract → `reference/pair-programming.md`.
+Each Recipe carries its own acceptance gate **in addition to** the universal 5-axis Impact Scope Check. Full per-recipe gates: `reference/recipe-verify-gates.md`.
+
+| Subcommand | Behavior | Scope bound |
+|-----------|----------|-------------|
+| `fix` | Scout handoff or standalone bug fix; regression test skeleton always | <50 lines |
+| `crud` | DDD-vs-CRUD decided at SURVEY and recorded; Entity + Repository + simple service | — |
+| `api` | Error categorization, retry limits, idempotency keys, circuit breakers mandatory | — |
+| `ddd` | Bounded Context confirmed *before* any tactical pattern; Aggregate / VO / Domain Event | PLAN-heavy |
+| `harden` | Raise a Forge L0-L3 prototype to production quality | — |
+| `port` | Re-implement all source tests in the target, parallel-run black-box compare, diff = 0 | impl only (planning -> Shift) |
+| `integrate` | Sandbox -> secrets (env/Vault) -> vendor retry/rate-limit/idempotency -> webhook signature | — |
+| `patch` | Regression test mandatory; one-step rollback; Guardian handoff size XS | <=30 lines / <=3 files |
+| `pair` | INTERACTIVE co-implementation, one increment at a time, user gate per increment | max 12 increments |
 
 ## Output Routing
 
@@ -282,21 +282,23 @@ Read only the files required for the current decision.
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/domain-modeling.md` | You need DDD tactical patterns, CQRS, Event Sourcing, Saga, Outbox, or domain vs integration events |
-| `reference/implementation-patterns.md` | You need Result/Railway (neverthrow), Zod v4 validation, API integration (REST/GraphQL/WS), or performance patterns |
-| `reference/frontend-patterns.md` | You need RSC, TanStack Query v5, Zustand, state management selection, or RHF + Zod |
-| `reference/architecture-patterns.md` | You need Clean/Hexagonal Architecture, SOLID/CUPID, domain complexity assessment, or DDD vs CRUD decision |
-| `reference/language-idioms.md` | You are working with Go 1.26+ [Source: go.dev/blog/go1.26], Python 3.14+ [Source: python.org/downloads], or Rust Edition 2024 / 1.95+ [Source: blog.rust-lang.org] (TypeScript is default) |
-| `reference/process-and-examples.md` | You need Forge conversion flow, TDD examples, Seven Deadly Sins, or question templates |
-| `reference/cross-language-port.md` | You are porting business logic between languages/frameworks with parallel-run black-box comparison and semantic equivalence tests (`port` recipe) |
-| `reference/external-integration.md` | You are integrating an external API (Stripe/Slack/GitHub etc.) with sandbox-first verification, secret handling, vendor-specific retry, and webhook signature verification (`integrate` recipe) |
-| `reference/targeted-patch.md` | You are applying a scoped patch under 30 lines / 3 files with regression-test coupling and clear rollback (`patch` recipe) |
-| `reference/pair-programming.md` | You are running the `pair` recipe — driver/navigator roles, the SETUP → per-increment LOOP (propose → agree → implement → verify → checkpoint) → CLOSE flow, per-increment confirmation gate, quality-bar preservation, termination bounds, checkpoint-resume, and the `pair` VERIFY gate |
-| `reference/autorun-nexus.md` | You need exact AUTORUN or Nexus Hub mode compatibility details |
-| `reference/ai-coding-patterns.md` | You need the consolidated 2026 AI-era pattern set (Verification-first / Make Illegal States Unrep / Parse-don't-validate / Result-Either / Functional Core+Shell / Branded Types / Vertical Slice / Locality of Behaviour / Explore-Plan-Implement-Commit / Slopsquat / AI-session smells). Use this when reviewing or planning AI-assisted implementation work. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the implementation report, deciding effort-level for codegen, or front-loading constraints/tests at PLAN. Critical for Builder: P3, P6. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Builder-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `reference/core-contract-rationale.md` | A Core Contract rule needs its reasoning, tuning number, or source. |
+| `reference/domain-modeling.md` | DDD tactical patterns, CQRS, Event Sourcing, Saga, Outbox, domain vs integration events. |
+| `reference/implementation-patterns.md` | Result/Railway (neverthrow), Zod v4 validation, REST/GraphQL/WS integration, performance patterns. |
+| `reference/frontend-patterns.md` | RSC, TanStack Query v5, Zustand, state management selection, RHF + Zod. |
+| `reference/architecture-patterns.md` | Clean/Hexagonal, SOLID/CUPID, domain complexity assessment, DDD vs CRUD decision. |
+| `reference/language-idioms.md` | Working in Go 1.26+, Python 3.14+, or Rust Edition 2024 / 1.95+ (TypeScript is default). |
+| `reference/process-and-examples.md` | Forge conversion flow, TDD examples, Seven Deadly Sins, question templates. |
+| `reference/cross-language-port.md` | `port` recipe — parallel-run black-box comparison, semantic equivalence tests. |
+| `reference/external-integration.md` | `integrate` recipe — sandbox-first, secret handling, vendor retry, webhook signatures. |
+| `reference/targeted-patch.md` | `patch` recipe — scoped patch with regression coupling and clear rollback. |
+| `reference/pair-programming.md` | `pair` recipe — driver/navigator roles, SETUP -> LOOP -> CLOSE, gates, termination bounds. |
+| `reference/recipe-verify-gates.md` | The per-recipe acceptance gate for the active subcommand. |
+| `reference/ai-coding-patterns.md` | The consolidated 2026 AI-era pattern set; reviewing or planning AI-assisted work. |
+| `reference/autorun-nexus.md` | Exact AUTORUN or Nexus Hub mode compatibility details. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Builder-specific Output/Next schema. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the report, effort-level for codegen, front-loading constraints at PLAN. Critical: P3, P6. |
+| `_common/CODE_QUALITY.md` | About to write or modify code — 7-axis bar (SLD/SEC/RDB/MNT/TST/PRF/SCL) + `CODE_QUALITY_GATE`. |
 
 ## Operational
 

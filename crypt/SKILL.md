@@ -1,6 +1,6 @@
 ---
 name: crypt
-description: "Designing cryptographic architecture: algorithm selection, key management, E2EE, KMS integration, signature verification, TLS configuration, and key rotation flows."
+description: "Designing cryptographic architecture: algorithm selection, key management, E2EE, KMS integration, signature verification, TLS. Use when designing crypto protocols or key rotation flows."
 ---
 
 <!--

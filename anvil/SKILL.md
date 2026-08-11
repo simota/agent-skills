@@ -1,6 +1,6 @@
 ---
 name: anvil
-description: "Building terminal UIs, CLI tools, and dev-tool integrations (linter/test-runner/build-tool wiring). Language-agnostic — supports Node.js, Python, Go, and Rust."
+description: "Building terminal UIs, CLI tools, and dev-tool integrations (linter/test-runner/build-tool wiring). Use when CLI/TUI design or implementation is needed. Node.js, Python, Go, and Rust."
 ---
 
 <!--

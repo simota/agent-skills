@@ -1,6 +1,6 @@
 ---
 name: matrix
-description: "Controlling combinatorial explosion across multi-dimensional axes: selects minimum coverage sets, generates execution plans, prioritizes across test/deploy/UX/risk/compatibility. No code."
+description: "Controlling combinatorial explosion across multi-dimensional axes: minimum coverage sets, execution plans, test/deploy/UX/risk prioritization. Use when scoping multi-axis combinations."
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: attest
-description: "Verifying spec compliance: extracts ACs from specs, adversarially checks implementation conformance, generates BDD scenarios, traceability matrices, and evidence-based conformance reports. No code."
+description: "Verifying spec compliance: extracts ACs from specs, adversarially checks conformance, generates BDD scenarios and traceability matrices. Use when impl must be proven to match a PRD/SRS/AC."
 ---
 
 <!--

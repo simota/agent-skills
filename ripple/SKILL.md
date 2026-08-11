@@ -1,6 +1,6 @@
 ---
 name: ripple
-description: "Analyzing pre-change impact across vertical (dependency chains, affected files) and horizontal (pattern consistency, naming) dimensions. Estimates blast radius before a refactor. Does not write code."
+description: "Analyzing pre-change impact across vertical (dependency chains, files) and horizontal (pattern consistency, naming) dimensions. Use to estimate blast radius before a refactor. No code."
 ---
 
 <!--

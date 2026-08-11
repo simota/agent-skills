@@ -1,6 +1,6 @@
 ---
 name: experiment
-description: "Designing A/B tests: hypothesis docs, sample size calculation, feature flags, statistical significance analysis, CUPED variance reduction, SRM detection, and switchback experiments."
+description: "Designing A/B tests: hypothesis docs, sample size, feature flags, significance analysis, CUPED, SRM detection, switchback experiments. Use when hypothesis validation is needed."
 ---
 
 <!--

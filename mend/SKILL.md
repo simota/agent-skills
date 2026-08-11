@@ -1,6 +1,6 @@
 ---
 name: mend
-description: "Remediating known failure patterns automatically. Takes Triage diagnoses and Beacon alerts, executes runbooks with safety-tier classification, staged verification, and rollback."
+description: "Remediating known failure patterns automatically from Triage diagnoses and Beacon alerts: runbooks with safety-tier classification, staged verification, rollback. Use for automated remediation."
 ---
 
 <!--

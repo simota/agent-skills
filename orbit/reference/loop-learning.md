@@ -280,3 +280,36 @@ Lifecycle:
 - If a later incident matches a retired entry, reactivate and append a delta entry referencing the original.
 
 Connect to `RF-02`: when `RF-02` fires (same tier blocked 3+ times), the eval harvest is the first step of the full REFINE cycle.
+
+
+---
+
+## Recovery Metrics
+
+| Metric | Target | Escalation threshold |
+|--------|--------|---------------------|
+| MTTR | P1 `< 60s`, P2 `< 300s` | `> 2×` target → RECOVER mode |
+| Cost per completed task | LLM calls + tool executions + escalations | `> 3×` median → efficiency review |
+| Human intervention rate | `< 30%` of iterations | `≥ 30%` → loop contract redesign |
+| Completion rate | `≥ 90%` per tier | `< 80%` → full REFINE cycle |
+
+## Learning Guardrails
+
+`LES` valid only after `≥ 3` completed loops of the same tier; `LES ≥ B` requires human approval; max `3` parameter changes per session with a pre-adaptation snapshot; roll back if LES drops `≥ 0.05`; Lore sync mandatory for reusable patterns; staged-autonomy rollout (sandbox → gated tools → monitoring → full). Detail → `reference/loop-learning.md`, `reference/resilience-patterns.md`.
+
+
+---
+
+## Interaction and Learning Triggers
+
+| Trigger | Condition | Required response |
+|---------|-----------|-------------------|
+| `ON_GOAL_CONTRACT_WEAK` | `goal.md` is missing, vague, or has non-measurable ACs | strengthen the contract before execution |
+| `RF-01` | every completed loop | lightweight learning record |
+| `RF-02` | same tier hits `BLOCKED` or `MAX_ITER` `3+` times | full `REFINE` cycle |
+| `RF-03` | user overrides loop parameters | full `REFINE` cycle |
+| `RF-04` / `RF-05` | Judge quality feedback / Lore reusable-pattern updates | medium `REFINE` cycle |
+| `RF-06` | `30+` days since the last full `REFINE` cycle | full `REFINE` cycle |
+
+Priority: `RF-02`/`RF-03` override lighter triggers; `RF-01` data is still consumed by a concurrent full/medium cycle. Full trigger detail → `reference/loop-learning.md`.
+
