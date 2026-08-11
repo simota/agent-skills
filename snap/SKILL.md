@@ -1,6 +1,6 @@
 ---
 name: snap
-description: "Automating iOS UI via XCUITest, accessibility-identifier-driven queries, programmatic screenshot capture, and fastlane snapshot pipelines for App Store assets. Authors XCUITest targets with XCUIApplication/XCUIElement/XCUIElementQuery patterns, Page Objects in Swift, status-bar-clean sessions, and xcodebuild+xcresulttool CI. Use when authoring iOS UI tests or store-screenshot pipelines. Not for cross-platform E2E (Voyager — Appium/Detox/Maestro), iOS feature impl (Native), demo recording (Director), or unit tests (Radar)."
+description: "Automating iOS UI via XCUITest and fastlane snapshot pipelines for App Store screenshots. Not for cross-platform E2E (Voyager), iOS feature impl (Native), or unit tests (Radar)."
 ---
 
 <!--

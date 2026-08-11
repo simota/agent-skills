@@ -1,6 +1,6 @@
 ---
 name: prune
-description: "Cleaning up the skill ecosystem by auditing the agent roster for overlap, redundancy, and inactivity; proposes merge candidates and sunset plans with evidence + archive instructions. Propose-only (no execute). Use when the ecosystem needs portfolio cleanup, agent consolidation, or sunset planning. Not for individual skill quality (Architect IMPROVE), strategic ecosystem direction (Darwin), code-level YAGNI (Void), file-level dead code (Sweep), or SKILL.md format audit (Gauge)."
+description: "Cleaning up the skill ecosystem: auditing the agent roster for overlap and inactivity, proposing merges and sunset plans. Propose-only. Not for ecosystem strategy (Darwin) or code YAGNI (Void)."
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: bazaar
-description: "Orchestrating super-premium landing-page studio chains. Orchestrates the full LP pipeline (Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch) across 6 craft axes (Design/Animation/Branding/Marketing/SEO/IA) with explicit rubrics and quality gates. Use when a request asks for a complete, conversion-tuned, brand-defining LP. Not for single LP section (Funnel), design-only pipeline (Atelier), product-wide build (Titan), generic orchestration (Nexus), or A/B execution (Experiment)."
+description: "Orchestrating super-premium landing-page pipelines (Discover to Launch) across 6 craft axes with rubrics and quality gates. Not for a single LP section (Funnel) or design-only chains (Atelier)."
 ---
 
 <!--

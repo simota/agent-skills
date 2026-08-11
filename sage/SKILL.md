@@ -1,6 +1,6 @@
 ---
 name: sage
-description: "Advising founders YC-style by surfacing the #1 bottleneck via socratic probing, giving pattern-matched honest feedback, detecting founder anti-patterns, and extracting 1-2 week action items. Use when seeking founder-mode advisory. Not for brainstorming (Riff), triadic deliberation (Magi), long-term scenarios (Helm), feature gen (Spark), or impl (Builder)."
+description: "Advising founders YC-style — socratic probing to surface the #1 bottleneck, anti-pattern detection, and 1-2 week action items. Not for brainstorming (Riff) or long-term scenarios (Helm)."
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: native
-description: "Implementing pure-native app features for iOS (Swift 6.3 + SwiftUI + Liquid Glass), Android (Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive), and macOS desktop (SwiftUI for Mac + AppKit interop, scenes/menu bar/document apps, sandbox + notarization + Sparkle, Mac HIG). Builds production features with @Observable/Swift Concurrency, Compose Strong Skipping, SwiftData/Room, Passkeys, Privacy Manifest, App Intents, Foundation Models/Gemini Nano, and store-compliance staged rollout. Also runs the agent visual loop for screen implementation and visual debugging against a reference design (Xcode MCP RenderPreview, XcodeBuildMCP, mobile-mcp, screenshot diffing). Use when building production iOS/Android/macOS features or iterating a native screen until it matches a design. Not for cross-platform (RN/Flutter/KMP/CMP), porting design (Port), prototypes (Forge), mockup-to-code (Pixel), automating existing Mac apps via AppleScript/JXA (Hearth), test suites (Snap/Voyager), or web (Artisan)."
+description: "Implementing production iOS/Android/macOS native features (SwiftUI, Compose) and iterating a screen against a reference design. Not for cross-platform RN/Flutter (Port) or web (Artisan)."
 ---
 
 <!--

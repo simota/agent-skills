@@ -1,6 +1,6 @@
 ---
 name: loom
-description: "Designing a project's operating layer — the blueprint of which project-local skills, repo-tailored recipes (task playbooks), and skill-and-agent orchestration workflows a repository needs, designed together as a coherent system. Analyzes the repo, designs the layer, then delegates skill-body authoring to Sigil and runtime routing to Nexus. Use when a repository needs a coordinated set of project agents, recipes, and orchestration workflows designed together. Don't use for authoring a single skill body (Sigil), runtime request orchestration (Nexus), autonomous loop runners (Orbit), application or business-process workflows and code-level state machines (Weave), or ecosystem-wide global agents (Architect)."
+description: "Designing a repository's operating layer — which project-local skills, recipes, and orchestration workflows it needs, as one system. Not for a single skill body (Sigil) or runtime routing (Nexus)."
 ---
 
 <!--

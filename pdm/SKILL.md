@@ -1,6 +1,6 @@
 ---
 name: pdm
-description: Navigating project delivery status as a PdM-style read-only navigator. Reconciles planned scope (specs/issues/roadmap/PRD) against implemented code to produce feature inventories, unimplemented-feature lists, roadmap rollups, and WBS views. Use for "what's built / what's left / where are we". Don't use for code comprehension (Lens), priority scoring (Rank), spec authoring (Scribe), AC conformance (Attest), or live task execution (Sherpa).
+description: "Navigating delivery status read-only: reconciles planned scope (specs/roadmap/PRD) against implemented code for what's built vs left. Not for priority scoring (Rank) or AC conformance (Attest)."
 ---
 
 <!--
