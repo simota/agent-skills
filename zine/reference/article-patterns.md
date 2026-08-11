@@ -308,3 +308,17 @@ Avoid these structural failures regardless of chosen pattern:
 - **CTA-less ending.** "Hope this helps!" wastes the one moment readers are most engaged. Replace with specific verb.
 - **No reader-breath points.** Unbroken walls of text past 600 characters. Break with subheading, blockquote, code block, or a one-sentence paragraph acting as visual punctuation.
 - **Pattern mismatch.** Using Tutorial structure for a deep-dive question ("how does X work" delivered as numbered steps reads as shallow). Match pattern to intent.
+
+
+---
+
+## Core Pattern Skeletons (SKILL.md excerpt)
+
+| Pattern | When to use | Skeleton |
+|---------|-------------|----------|
+| **Problem → Tension → Insight → Solution → CTA** | Default for deep-dive / opinion pieces | Set up reader pain → twist the knife → reveal insight → concrete fix → what to do next |
+| **Tutorial** | Step-by-step instruction | Prerequisites → Steps (numbered, each verifiable) → Gotchas → What's next |
+| **Listicle** | Curated collection with a through-line | Anchor theme → N items (each self-contained but connected) → synthesis |
+| **Retrospective** | Project reflection / migration story / postmortem | Context (where we started) → Journey (what we did, in chronological honesty) → Lessons (what we'd tell past-self) |
+| **Deep-dive technical** | Mechanism explainers, architecture posts | History / context → Mechanism (how it actually works) → Implications / trade-offs |
+| **Announcement** | Launches, releases, feature news | News (one sentence) → Why it matters (reader-first) → Demo / screenshot → Where to go next |

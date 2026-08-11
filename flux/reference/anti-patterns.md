@@ -193,3 +193,17 @@ When an anti-pattern is detected mid-pipeline:
 | First-Reframe Anchoring | Apply Serendipity Injection; force next reframing from a different pillar |
 | Complexity Theater | Strip formatting; rewrite in plain language; add formatting only where it adds clarity |
 | Domain Blindness | Pause and gather more domain context; ask user if needed |
+
+
+---
+
+## Avoids (SKILL.md excerpt, with sourced failure cases)
+
+- **SCAMPER-only runs**: SCAMPER alone produces incremental ideas. Always pair with CHALLENGE or SHIFT.
+- **Assumption padding**: Listing trivial assumptions to hit "10-20". 7 genuine beat 20 shallow.
+- **Reframe-as-synonym**: Words without frame change. Must suggest ≥1 new action. Fails ASN → reject.
+- **Framework name-dropping**: Naming frameworks without executing their procedures.
+- **Infinite divergence**: Diverging without converging. Always complete CRYSTALLIZE.
+- **Overconfidence reframing**: Reinforces existing conviction instead of challenging it (cf. AOL–Time Warner $99B loss — "digital convergence" assumption left unchallenged).
+- **Sunk cost anchoring**: Preserving original framing because effort was invested, producing hybrid framings that satisfy no perspective.
+- **Confirmation-biased research**: Cross-domain analogies chosen to confirm a candidate reframe. Deliberately seek contradicting analogies.

@@ -276,3 +276,65 @@ For custom OG asset generation (beyond platform default), hand off to Growth (OG
 - [ ] `series:` if part of a series (auto prev/next nav)
 - [ ] Scannable H2s, short paragraphs (mobile readers common)
 - [ ] Emoji in H2 headings is acceptable (cultural norm)
+
+
+---
+
+## INTERACTION_TRIGGERS Question Set
+
+Canonical AskUserQuestion payload referenced from `SKILL.md` -> Boundaries.
+
+```yaml
+questions:
+  - question: "Which platform is this article targeting?"
+    header: "Platform"
+    options:
+      - label: "note (Recommended for JP long-form)"
+        description: "note — 日本語読者向け、マガジン連載向け、3000-6000字、目次自動生成"
+      - label: "Zenn"
+        description: "Zenn — エンジニア向け、絵文字+トピック、GitHub連携可、2000-5000字"
+      - label: "Qiita"
+        description: "Qiita — 技術Tips中心、タグ戦略重要、1500-4000字、LGTM指標"
+      - label: "dev.to"
+        description: "dev.to — English global audience, cover image 1000x420, liquid tags, 1000-2500 words"
+      - label: "Cross-post (canonical + variants)"
+        description: "Write canonical draft, then produce platform-adapted variants"
+      - label: "Other (please specify)"
+        description: "Specify a different platform or blog system"
+    multiSelect: false
+  - question: "Is this a standalone article or part of a series?"
+    header: "Series"
+    options:
+      - label: "Standalone (Recommended if unsure)"
+        description: "One-shot article, no cross-links to previous/next episodes"
+      - label: "Part of existing series"
+        description: "Episode #N of an existing series — will update index and prev/next links"
+      - label: "Kicking off a new series"
+        description: "Episode #00 (index) or #01 of a fresh series — will establish naming and cadence"
+    multiSelect: false
+  - question: "What tone should the article use?"
+    header: "Tone"
+    options:
+      - label: "First-person personal (Recommended for note/dev.to)"
+        description: "「〜と思う」「I found that」 — story-driven, author voice foregrounded"
+      - label: "Teaching / explanatory"
+        description: "「〜とは」「How to」 — neutral, structured, stepwise"
+      - label: "Opinionated / argumentative"
+        description: "「〜すべき」「Why X is wrong」 — takes a position, invites debate"
+      - label: "Professional detached"
+        description: "「〜である」「It is observed that」 — formal, report-style"
+    multiSelect: false
+```
+
+
+
+---
+
+## Per-Platform Quick Reference (SKILL.md excerpt)
+
+| Platform | Audience | Length | Key metadata | Discoverability |
+|----------|----------|--------|--------------|-----------------|
+| **note** | 日本語読者、ビジネス/クリエイティブ寄りも混在 | 3000-6000字 | タグ 3-5 (1 primary), マガジン, 見出しで目次自動, AI学習対価還元設定 | マガジン購読, タグ, note内検索, 外部SNS, AI引用 (#2 after Wikipedia) |
+| **Zenn** | エンジニア、技術コミュニティ | 2000-5000字 | emoji + topics max 5, タイプ (Tech/Idea), Scrap限定公開(2025-03〜) | GitHub連携, トレンド, トピック購読, Publication Pro |
+| **Qiita** | 日本語エンジニア、Tips志向 | 1500-4000字 | tags, Organizations, TL;DR 冒頭 | タグトレンド, LGTM, Organization feed |
+| **dev.to** | English global, friendly tone | 1000-2500 words | cover image 1000×420, tags max 4, liquid tags, canonical_url | Tag feeds, series feature, discuss tag, dashboard |

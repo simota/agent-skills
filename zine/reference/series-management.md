@@ -273,3 +273,17 @@ For every episode after #00:
 - [ ] Update previous episode's bottom-nav if it had `次回 (予定): TBD` — fill it in now
 - [ ] Add to magazine (note) / series (dev.to)
 - [ ] Commit with `feat(series): publish #NN Title and update index`
+
+
+---
+
+## Core Elements (SKILL.md excerpt)
+
+- **Index article** (e.g., `#00 Overview`) serves as anchor readers return to — must list all episodes with one-sentence teasers and update on every new episode.
+- **Cross-links** at top and bottom of each episode: 前回 → / → 次回, plus "see episode #3 for background".
+- **Naming convention**: `#NN タイトル` or `Part N: Title`. Pick one and stay consistent across the arc.
+- **Release cadence**: weekly (discipline but pressure), burst (2-3 in a week, then gap), as-ready (no commitment). State the cadence in the index article so readers know what to expect.
+- **Tonal continuity**: series bible (stored in `.agents/PROJECT.md` or journal) locks first/third-person, formality, recurring metaphors, character references across episodes.
+- **Finale vs open-ended**: decide at series kickoff. Open-ended needs periodic "state of the series" recap episodes.
+- **Downstream conversion**: a completed series is prime material for a PDF zine, paid magazine, or talk deck — plan the anthology from #00.
+

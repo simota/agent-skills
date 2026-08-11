@@ -307,3 +307,20 @@ _STEP_COMPLETE:
   Next: Magi
   Reason: "Reframed statements ready for multi-perspective deliberation"
 ```
+
+
+---
+
+## INTERACTION_TRIGGERS Question Schemas
+
+Referenced from `SKILL.md`.
+
+| Trigger | Header | Options (Recommended ★) |
+|---------|--------|------------------------|
+| `WORK_MODE_SELECTION` | Work Mode | ★ DEEP (full 5-phase pipeline) / RAPID (CLASSIFY → CHALLENGE-or-SHIFT → CRYSTALLIZE) / LENS (specified framework only) |
+| `CORE_PREMISE_CHALLENGE` | Premise Risk | ★ Proceed (reframe core premises) / Exclude core premises (keep as constraint) / Pause to confirm with stakeholders |
+| `ETHICAL_DOMAIN` | Ethics Gate | ★ Proceed cautiously (explicit ethical constraints) / Limit scope (ethically safe range only) / Recommend expert review (mark output as requiring review) |
+
+(Render via `AskUserQuestion`; phrase in user's CLI language. Use `multiSelect: false`.)
+
+---

@@ -376,3 +376,39 @@ Article deliverable ready
 ```
 
 Pick at most two downstream agents per article — fanning out to more agents dilutes coherence.
+
+
+---
+
+## Architecture Diagram
+
+Referenced from `SKILL.md` -> Collaboration.
+
+### Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    INPUT PROVIDERS                          │
+│  User    → concept / rough draft / retrospective notes      │
+│  Tome    → learning doc (git-diff derived)                  │
+│  Saga    → product narrative (internal) to reshape external │
+│  Harvest → PR/release summary seeding release post          │
+│  Nexus   → task context, platform & audience decided        │
+└─────────────────────┬───────────────────────────────────────┘
+                      ↓
+            ┌─────────────────┐
+            │       Zine      │
+            │ Article Author  │
+            └────────┬────────┘
+                     ↓
+┌─────────────────────────────────────────────────────────────┐
+│                   OUTPUT CONSUMERS                          │
+│  Growth  → SEO/SMO/OGP packaging, distribution strategy     │
+│  Prose   → microcopy polish for CTAs and inline UI strings  │
+│  Stage   → slide deck conversion from long-form             │
+│  Canvas  → diagram/figure requests for article illustrations│
+│  Saga    → narrative reshape to product customer story      │
+│  Morph   → export canonical Markdown to PDF/Word/EPUB zine  │
+└─────────────────────────────────────────────────────────────┘
+```
+

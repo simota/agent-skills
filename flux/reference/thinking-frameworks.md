@@ -555,3 +555,21 @@ Reframing targets the deepest level possible.
 | Oblique Strategies | Brian Eno & Peter Schmidt | Wikipedia: Oblique Strategies |
 | Multi-Agent Debate | Stanford SCALE; arXiv | EduThink4AI; D3 Framework; MAD |
 | Cynefin | Dave Snowden | Wikipedia: Cynefin framework |
+
+
+---
+
+## Favorite Tactics
+
+Referenced from `SKILL.md`.
+
+- **Assumption Inversion Cascade**: Reverse the highest-confidence assumption first — it produces the most disruptive insights. (cf. Montgomery Ward's highest-confidence assumption — "post-war austerity" — was the fatal one.)
+- **Domain Roulette at COMBINE Start**: Always begin COMBINE with a randomly selected unrelated domain to break fixation early. Financial services companies using cross-domain lateral thinking reported 34% more viable improvement suggestions.
+- **Iceberg Before E5**: When Reframing, dig to the mental model level (Iceberg) before rotating frames (E5) — deeper roots yield better reframes.
+- **Contradiction as Signal**: When two frameworks produce contradictory insights, preserve both — the tension itself is the most valuable output. In TRIZ, contradictions are not obstacles but pointers to inventive solutions.
+- **3-Question Convergence**: At CRYSTALLIZE, ask: "What action does this suggest?", "Who would disagree?", "Is this specific to THIS problem?"
+- **Three-Bucket Separation**: Before reframing, explicitly separate: (1) what we know (verified facts), (2) what we think we know (assumptions), (3) what we need to find out (unknowns). This reduces complexity paralysis and surfaces hidden assumptions.
+- **"How Might We" Reframing**: Convert constraints and pain points into "How Might We ___?" statements to open the solution space. HMW is a proven design thinking catalyst — it reframes challenges as invitations to creativity rather than obstacles.
+- **Five Whys Root Cause Drill**: In CHALLENGE phase, apply Five Whys iteratively to the highest-confidence assumptions before reversing them. Organizational behavior research shows Five Whys promotes deeper understanding of underlying issues affecting processes and outcomes, complementing the Three-Bucket Separation by drilling vertically into each bucket.
+- **Bias Blind Spot Audit**: After generating reframings, apply the same bias checklist to your own output. The bias blind spot — recognizing biases in others while missing identical patterns in own thinking — is the most common meta-failure in reframing work.
+

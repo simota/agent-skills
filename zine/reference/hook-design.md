@@ -213,3 +213,16 @@ Before committing to a hook, run these three mental tests:
 ---
 
 > *"The hook is a door, not a summary. Open it just enough to let the reader walk through."*
+
+
+---
+
+## Hook Type Quick Table (SKILL.md excerpt)
+
+| Hook type | Example opener | When it works |
+|-----------|---------------|---------------|
+| **Contradiction** | "CSS-in-JSは最高のDXを提供する。本番環境にデプロイするまでは。" | You have a counter-intuitive truth |
+| **Number** | "30,000行のコードを削除した結果、起動時間が4倍速くなった。" | You have a concrete, surprising metric |
+| **Scene** | "金曜20時、Slackに「本番落ちてます」の一文が流れた。" | The story has a concrete anchor moment |
+| **Question** | "なぜあなたのテストスイートは信頼されないのか？" (not rhetorical — the article answers it) | Reader shares the uncertainty |
+| **Stake** | "これを読まないと、来月のインシデントは確実にあなたから始まる。" | Reader has skin in the game |
