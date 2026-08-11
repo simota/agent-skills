@@ -210,3 +210,59 @@ Use the evolution-path column during updates:
 2. If migration is detected, use the path to guide the update.
 3. If the path is `—`, prefer in-place updates for minor version changes.
 4. Framework switches usually require replacement, not in-place editing.
+
+
+---
+
+# Worked Examples
+
+Canonical home for the invocation examples referenced from `SKILL.md`.
+
+Representative invocations and their expected behavior. Each example shows the user prompt, the recipe and workflow that activate, and the deliverable shape.
+
+### Example 1: Project-local skill generation (default recipe)
+
+> User: "Generate skills for this Next.js + Prisma + tRPC project."
+
+- Subcommand: none → default `generate` recipe.
+- Workflow: `SCAN → DISCOVER → CRAFT → INSTALL → VERIFY → ATTUNE`.
+- SCAN detects Next.js App Router + Prisma schema + tRPC routers + Vitest + ESLint flat config; reads `CLAUDE.md` if present.
+- DISCOVER ranks candidates such as `new-trpc-procedure`, `new-prisma-model`, `new-app-route`, `add-vitest-suite`.
+- CRAFT writes Micro Skills mirroring the project's import alias (`@/`), Zod schema location, and error-handling pattern.
+- INSTALL writes identical content to `.claude/skills/<name>/SKILL.md` and `.agents/skills/<name>/SKILL.md`.
+- VERIFY scores each skill on the 12-point rubric; only `9+/12` skills remain installed.
+- ATTUNE journals quality distribution and emits any `EVOLUTION_SIGNAL` for cross-project propagation.
+- Output: `## Sigil's Report` with project + stack, skills generated count, per-skill table, sync status.
+
+### Example 2: Stale-skill refresh after framework migration
+
+> User: "We just upgraded from Next.js 14 to 15. Refresh our skills."
+
+- Subcommand: `migrate` (Migrate Existing recipe).
+- Workflow: Skill Evolution path — `SCAN → DIFF → PLAN → UPDATE → VERIFY → ATTUNE`.
+- SCAN re-detects framework version from `package.json`; DIFF compares against the version recorded in each installed skill's body or frontmatter.
+- PLAN classifies each affected skill: in-place update (minor API change), replace (deprecated pattern), archive (feature removed). Asks user before archiving any actively used skill.
+- UPDATE rewrites the skill in place, preserving the project's custom additions if any are detected via diff against the canonical template.
+- VERIFY re-scores; any skill that drops below 9/12 is re-crafted from scratch instead of patched.
+- ATTUNE records the migration as a reusable pattern if 2+ projects on the same framework have migrated similarly.
+
+### Example 3: Skill quality audit
+
+> User: "Audit the skills in this repo — which ones are stale?"
+
+- Subcommand: none, but Output Routing matches `audit skills` signal.
+- Workflow: `SCAN → VERIFY` (no generation).
+- SCAN inventories both `.claude/skills/` and `.agents/skills/`; detects sync drift if directories diverge.
+- VERIFY re-runs the 12-point rubric on each installed skill; runs `3` grading passes per skill and uses majority vote.
+- Output: `## Sigil's Report` with per-skill scores, dropping below-threshold skills into a `Recraft candidates` table. No file changes unless the user confirms remediation.
+
+### Example 4: Sync drift repair
+
+> User: "`.claude/skills/` and `.agents/skills/` are out of sync — fix it."
+
+- Subcommand: none, Output Routing matches `sync drift` signal.
+- Workflow: `SCAN → sync repair`.
+- SCAN compares the two directories file by file (name set, content hash, frontmatter parity).
+- Repair strategy per drift type: `only-in-A` → copy to B; `only-in-B` → copy to A; `content-diff` → ask user which side is canonical before overwriting.
+- Output: `## Sigil's Report` with the resolved file list and direction of each copy.
+

@@ -840,3 +840,48 @@ Microsoft's public guidance (early 2026) recommends CLI for coding agents and re
 | Video size is 800×800 despite 1920 viewport | `size` omitted in `screencast.start()` or `recordVideo` | Always pass `size: { width, height }` explicitly |
 | VMAF < 90 with default encoder | VP8 default codec, high motion content | Switch to VP9 (`PLAYWRIGHT_VIDEO_CODEC=vp9`) or post-encode with AV1 |
 | Transcript missing for new external demo | GEO/AI-citation step skipped | Always run the `geo` recipe before Deliver |
+
+
+---
+
+# Critical Constraints (full table)
+
+Canonical home for the constraint table summarized in `SKILL.md`. Each row's own reference holds the implementation detail.
+
+Decision-level thresholds. Implementation detail and rationale live in references.
+
+| Topic | Threshold / Rule | Reference |
+|-------|------------------|-----------|
+| Recording API | **Primary: `page.screencast`** (1.59 Stable) for precise start/stop, chapters, action overlays, and onFrame; `recordVideo` for failure receipts / full-session backup | `reference/playwright-config.md` |
+| Resolution default | `1920×1080` baseline (was 720p); 720p for inline / GIF-only flows; always set `size` explicitly — both APIs scale to `800×800` if omitted | `reference/playwright-config.md` |
+| HiDPI (default for external) | `deviceScaleFactor: 2` for Retina-class fonts/icons at 1080p file size; or `--force-device-scale-factor=2` Chrome flag (don't combine both). Native 4K = raise viewport+video.size to 3840×2160 | `reference/playwright-config.md` (High-Fidelity Capture) |
+| Render flags | `--font-render-hinting=none`, `--disable-gpu-vsync`, `--disable-features=PaintHolding` stabilize fonts and motion | `reference/playwright-config.md` (High-Fidelity Capture) |
+| `screencast.quality` | `90–95` for external demos; below `80` shows visible compression | `reference/playwright-config.md` |
+| Aspect presets | `16:9` 1920×1080 (web/YouTube), `9:16` 1080×1920 (TikTok/Reels/Shorts), `4:5` 1080×1350 (LinkedIn 2026 default), `1:1` 1080×1080 (Product Hunt) | `reference/playwright-config.md` |
+| `slowMo` anchors | `300` quick, `500` standard, `600-700` form-heavy, `800-1000` presentation | `reference/playwright-config.md` |
+| Typing | `pressSequentially` for on-camera forms (`50-200ms` delay); reserve `fill()` for off-camera setup | `reference/implementation-patterns.md` |
+| Wait strategy | Locator-based waits for state; `waitForTimeout` only for pacing | `reference/scenario-guidelines.md` |
+| Action annotations | Prefer `screencast.showActions()` / `showChapter()` before custom `showOverlay()` | `reference/implementation-patterns.md` |
+| Output formats | `WebM` (VP9) baseline; `MP4` (H.264) for broad playback; `AV1` for high-compression archival; `GIF` only for inline/README | `reference/playwright-config.md` |
+| 3-sec hook | Open with layered (visual + text + optional audio) hook in 0–3s — TikTok/Reels drop ~70% otherwise | `reference/scenario-guidelines.md`, `reference/storytelling-archetypes.md` |
+| Duration | `<30s` social/hook, `30-60s` standard, `60-90s` LinkedIn/YouTube optimal, `90-120s` complex; **HARD CAP 120s — split or chapterize past this (engagement -40%)** | `reference/scenario-guidelines.md`, `reference/storytelling-archetypes.md` |
+| Archetypes | `30s` social hook, `60s` Product Hunt/LP/X, `90s` LinkedIn/Hero, `180s` walkthrough (chaptered); `3×45s` series for complex products | `reference/storytelling-archetypes.md` |
+| Platform optimal length | TikTok `21–34s` (Explore-friendly), Reels `<90s`, Shorts `<90s`, YouTube long `60–180s`, LinkedIn `15–60s` B2B | `reference/scenario-guidelines.md` |
+| Embed steps | `6-8` for email/social, `8-15` for website/docs | `reference/scenario-guidelines.md` |
+| Captions | Open captions (burned-in) for muted-autoplay social; closed captions (`.vtt`) for accessibility / SEO; ≤17 CPS, ≤42 chars/line, ≤2 lines | `reference/captions-design.md` |
+| Caption pipeline | GPT-4o-Transcribe (WER 4.1%) preferred; Whisper-large-v3 fallback; always human QC for product names / homophones | `reference/captions-design.md` |
+| Multilingual default | EN + JA captions minimum for external demos; auto-translate via DeepL/GPT-4o with human review | `reference/captions-design.md` |
+| Voiceover providers | Inworld Realtime TTS 1.5-Max (ELO 1,236 #1), ElevenLabs v3 (Audio Tags + 70+ languages), Cartesia Sonic-3 (90ms TTFA), OpenAI Realtime TTS | `reference/voiceover-design.md` |
+| LUFS target | `-14 LUFS` (YouTube, LinkedIn), `-16 LUFS` (Web, Vimeo), TP `≤ -1 dBTP` | `reference/voiceover-design.md` |
+| Perceptual quality | `VMAF ~90+` / `PSNR ~40dB+` / `SSIM ~0.95+` at 1080p (via `ffmpeg-quality-metrics`) as a reference line for ship-readiness — the primary reshoot/re-encode signal, judged rather than treated as an absolute cutoff | `reference/quality-metrics.md` |
+| Accessibility | WCAG 2.2 1.2.2 (captions) Level A mandatory; 1.2.4 (live) AA; 1.2.5 (audio description) AA when visual-only content exists | `reference/checklist.md` |
+| GEO / AI citation | Ship `.vtt` transcript + plaintext + `VideoObject` JSON-LD with chapters for every external demo (AI citation +325%, CTR +41%) | `reference/geo-packaging.md` |
+| Quality gate | `/97` checklist score is a supporting readiness summary (rough guide: low → likely reshoot, high → likely ship); the perceptual-quality metrics above are the primary decision signal | `reference/checklist.md` |
+| Browser engine | Chrome for Testing since v1.57; pin `channel: 'chromium'` only if reproducibility / CI memory demands it | `reference/playwright-config.md` |
+| Agentic receipts | Prefer `@playwright/cli` with filesystem access; use MCP for sandboxed / iterative sessions; use `onFrame` JPEG stream for Vision-in-the-loop | `reference/playwright-config.md`, `reference/implementation-patterns.md` |
+| Shared session | `browser.bind()` (v1.59 Stable) shares a browser between demo, CLI, and MCP clients via WebSocket — view dashboard with `playwright-cli show` | `reference/playwright-config.md` |
+| Snapshot mode | v1.59 default `incremental snapshot` cuts long-session token cost vs full snapshot — beneficial for agent-driven recording | `reference/playwright-config.md` |
+| Artifact hygiene | Clean `test-results/` after each session — `.webm` files are `2–5 MB/min` at 720p, `4–8 MB/min` at 1080p | `reference/playwright-config.md` |
+| File naming | `[feature]_[action]_[aspect]_[date].webm` (e.g., `checkout_complete_9x16_20260515.webm`) — always rename after recording | `reference/playwright-config.md` |
+| Demo vs AI-video | Director records **real product UI** with Playwright. For non-existent UI / hero films, route to AI video generators (Sora 2, Veo 3.1, Runway Gen-4.5) — these are complementary, not competitive | `reference/scenario-guidelines.md` |
+

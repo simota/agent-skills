@@ -314,3 +314,27 @@ description: Advanced data analysis for CSV files. Use for statistical modeling,
 - [ ] Monitor for under/over-triggering
 - [ ] Collect user feedback
 - [ ] Iterate on description and instructions
+
+
+---
+
+# Core Contract — Rationale and Measured Rates
+
+Canonical home for the numbers and citations behind the Core Contract in `SKILL.md`.
+
+- Analyze project context (stack, conventions, existing skills) before any generation.
+- Discover high-value skill opportunities ranked by Priority = Frequency x Complexity x Risk.
+- Mirror the project's actual naming, imports, testing, and error handling conventions.
+- Default to Micro Skills (`10-80` lines, `< 2,000` tokens); promote to Full only when complexity requires it. Skills exceeding `2,000` tokens degrade activation reliability and consume disproportionate context window budget. Absolute cap per Anthropic best-practices is `500` SKILL.md lines — beyond this, split into `reference/*.md` loaded on-demand via Read tool (three-level progressive disclosure: frontmatter → body → linked files).
+- Write skill `description` as a trigger phrase (how the user would naturally ask), not a summary — properly optimized descriptions improve activation from `~20%` to `50%`, and adding usage examples raises it from `72%` to `~90%`. Use Anthropic's skill-creator train/test split method (60/40 on ~20 synthetic prompts) to validate description activation before install. Always write in **third person** ("Processes Excel files and generates reports"); first/second-person POV drifts from the system-prompt voice and degrades discovery.
+- Counter Claude's documented **undertriggering tendency** — make descriptions explicit about *when to activate*, not just *what the skill does*. Include concrete trigger contexts ("Use when the user mentions dashboards, metrics, data visualization, or internal reporting, even if they don't say 'dashboard'"); passive summaries (e.g. "helps with documents") lose measurable activation rate.
+- Skill description budget has two distinct limits — distinguish them: (a) per-description hard cap is `1,024` characters (agentskills.io spec — exceeding this risks parser rejection or truncation), (b) per-description quality target is `< 250` characters (signal density goal — shorter descriptions improve routing precision and increase coexisting skill capacity). The runtime aggregate budget defaults to `~2%` of the context window (fallback `~16,000` characters total across all loaded skill descriptions, overridable via `SLASH_COMMAND_TOOL_CHAR_BUDGET`). Always validate against the hard cap; treat the target as a strong recommendation.
+- Validate skill `name` against agentskills.io spec: kebab-case only, max `64` characters, must not start/end with hyphen, no consecutive hyphens, must not contain `"claude"` or `"anthropic"` (reserved words). Prefer **gerund form** (verb + `-ing`, e.g., `processing-pdfs`, `analyzing-spreadsheets`, `managing-databases`) — this signals activity/capability more clearly than noun-only names and improves discovery. Do **not** add namespace prefixes (`myorg/skillname`, `myorg:skillname`) — Claude Code silently fails to load such skills without error.
+- Emit an `agents/eval-set.json` trigger dataset alongside each non-trivial skill: `13+` queries mixing positive + negative + edge cases, each tagged with `should_trigger: true|false`. Run skill-creator 2.0 loop at `--max-iterations 5 --holdout 0.4` with `3` evaluations per query for stable trigger rate; pick the winning description by **held-out test score**, never train score, to avoid overfitting the trigger heuristic.
+- Validate every skill against the 12-point rubric; install only at `9+/12`. Run `3` independent grading passes per evaluation and use majority vote to counter LLM grader non-determinism.
+- Sync-write to both `.claude/skills/` and `.agents/skills/`.
+- Avoid duplicating ecosystem agent functionality.
+- Set `disable-model-invocation: true` only for skills that must be explicitly invoked by the user (e.g., destructive operations, one-off migrations).
+- Use ATTUNE data to improve future discovery and ranking; adopt evolutionary self-modification — compare child skill performance against parent baseline before archiving improvements (HyperAgents pattern).
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P6, P7 critical for Sigil; P1 recommended).
+

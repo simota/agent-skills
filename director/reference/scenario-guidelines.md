@@ -442,3 +442,62 @@ When the request mixes both, Director records the real-UI segments; route the AI
 - [ ] Reproducible scenario
 - [ ] No flaky elements
 - [ ] All selectors are stable
+
+
+---
+
+# Output Routing (full table)
+
+Canonical home for the signal-to-approach table summarized in `SKILL.md`.
+
+| Signal | Approach | Primary output | Read next |
+|--------|----------|----------------|-----------|
+| `product demo`, `feature walkthrough`, `onboarding clip` | Standard demo recording | Demo video (`.webm`) + transcript + VideoObject JSON-LD | `reference/scenario-guidelines.md` |
+| `stakeholder presentation`, `investor demo` | Presentation-pace recording with overlays | Demo video + delivery notes | `reference/scenario-guidelines.md`, `reference/implementation-patterns.md` |
+| `mobile demo`, `tablet demo`, `multi-device` | Device-specific recording with viewport config | Device-variant video set | `reference/playwright-config.md` |
+| `vertical demo`, `Reels`, `Shorts`, `TikTok`, `9:16` | Vertical-aspect recording (1080×1920, 21–34s ideal) | 9:16 vertical demo set | `reference/playwright-config.md`, `reference/scenario-guidelines.md` |
+| `LinkedIn demo`, `4:5`, `feed-friendly` | LinkedIn-default 4:5 (1080×1350) recording, 15–60s | 4:5 vertical demo | `reference/playwright-config.md`, `reference/scenario-guidelines.md` |
+| `multi-aspect`, `aspect variants`, `cross-platform set` | Multi-aspect orchestration (16:9 + 9:16 + 4:5 + 1:1) from a single scenario | Per-aspect demo variants | `reference/playwright-config.md`, `reference/scenario-guidelines.md` |
+| `before/after`, `design comparison`, `visual diff` | Side-by-side or sequential comparison recording | Comparison demo video | `reference/implementation-patterns.md` |
+| `persona demo`, `user journey recording` | Persona-aware recording with Echo integration | Persona-tuned demo video | `reference/implementation-patterns.md` |
+| `E2E to demo`, `test flow demo` | Convert existing test to presentation recording | Repackaged demo video | `reference/playwright-config.md`, `reference/scenario-guidelines.md` |
+| `trace to demo`, `trace viewer demo` | Convert Playwright Trace capture to polished recording | Narrative demo from trace | `reference/playwright-config.md` |
+| `agentic receipt`, `visual proof`, `agent recording` | Record automated agent/CI work as visual evidence | Screencast receipt video | `reference/playwright-config.md`, `reference/implementation-patterns.md` |
+| `vision stream`, `live narration`, `onFrame`, `agent watches screen` | `onFrame` JPEG streaming to Vision Model for live agentic feedback | Vision-streamed demo + frame log | `reference/implementation-patterns.md`, `reference/playwright-config.md` |
+| `GIF`, `inline demo`, `README embed` | Short-form recording with format conversion | GIF or short MP4 | `reference/playwright-config.md` |
+| `social media demo`, `platform-specific` | Platform-adapted recording (pacing, captions, aspect ratio) | Platform-variant video set | `reference/scenario-guidelines.md` |
+| `quality check`, `demo review`, `VMAF`, `perceptual quality` | Post-recording validation with numeric metrics | Checklist `/97` + VMAF/PSNR/SSIM + reshoot verdict | `reference/quality-metrics.md`, `reference/checklist.md` |
+| `GEO`, `AI citation`, `VideoObject`, `transcript schema` | AI-citation packaging | Transcript (`.vtt` + text) + VideoObject JSON-LD + chapters | `reference/geo-packaging.md` |
+| `accessibility`, `WCAG`, `audio description`, `AD track` | WCAG 2.2 audit + AD authoring | Caption + AD + AAA verdict | `reference/captions-design.md`, `reference/voiceover-design.md` |
+| unclear demo request | Standard demo recording | Demo video (`.webm`) + transcript + VideoObject JSON-LD | `reference/scenario-guidelines.md` |
+
+Routing rules:
+
+- If the request involves a specific device, viewport, or aspect ratio, read `reference/playwright-config.md`.
+- If the request involves storytelling, pacing, hook design, or audience tuning, read `reference/scenario-guidelines.md` (and `reference/storytelling-archetypes.md` for durations).
+- If the request involves overlays, annotations, advanced patterns, or Vision-Model streaming, read `reference/implementation-patterns.md`.
+- If the request involves AI citation, transcript schema, or GEO, read `reference/geo-packaging.md`.
+- If the request involves numeric quality verdict or reshoot decision, read `reference/quality-metrics.md`.
+- If a handoff is inbound from Forge/Voyager/Vision/Echo or outbound to Vitrine/Quill/Growth, read `reference/handoff-formats.md`.
+- Always read `reference/checklist.md` in the Deliver phase.
+
+
+
+---
+
+## Per-Recipe Behavior Notes
+
+Referenced from `SKILL.md` -> Subcommand Dispatch.
+
+- `demo`: Produce a feature demo video end-to-end with Playwright, from scenario design to recording.
+- `scenario`: Pre-design persona, archetype (30/60/90/180s), 3-sec layered hook, Aha moment, and duration, then output a scenario document.
+- `record`: Fix Playwright settings (slowMo / viewport / codec / aspect) and execute recording with `page.screencast`.
+- `onboard`: Record the user's first-time flow at deliberate pacing to produce an onboarding clip.
+- `aspects`: Drive a single scenario through multiple aspect-tuned viewports (16:9 = 1920×1080, 9:16 = 1080×1920, 4:5 = 1080×1350, 1:1 = 1080×1080), re-frame overlays, and emit one demo per channel.
+- `vision`: Use `page.screencast` `onFrame` to stream JPEG frames to a Vision Model (GPT-4o vision / Claude vision) for agentic loops, live narration, or QA-by-vision.
+- `quality`: Run `ffmpeg-quality-metrics` to compute VMAF / PSNR / SSIM against a baseline, verify LUFS ≤ -14 (YouTube/LinkedIn) or -16 (Web), and audit WCAG 1.2.2 / 1.2.4 / 1.2.5 status. Emit a numeric reshoot verdict.
+- `geo`: Package transcript (`.vtt` + plaintext), chapter cue map, and VideoObject JSON-LD schema for AI Overviews / ChatGPT / AI Mode citation. Pairs with `captions` and `voiceover`.
+- `voiceover`: Produce narration script with SSML timing (150-160 WPM), voice selection (Inworld Realtime TTS 1.5-Max #1, ElevenLabs v3 with Audio Tags, Cartesia Sonic-3 for low latency, OpenAI Realtime TTS), de-essing + breathing pauses, and -14 / -16 LUFS normalization. Sync audio to Playwright timeline via ffmpeg.
+- `captions`: Author SRT / WebVTT captions via GPT-4o-Transcribe (WER 4.1%) or Whisper-large-v3 with manual QC. ≤42 chars/line, ≤2 lines, ≥1s / ≤7s per cue, reading speed ≤17 CPS. WCAG 1.2.2 + 1.2.5 compliance. Forced vs closed vs open vs burned-in variant selection.
+- `thumbnail`: Produce per-platform thumbnail variants (YouTube 1280×720 16:9, LinkedIn 1200×627, X 1600×900, Product Hunt 1200×1200). 3-5 A/B variants with face-in-thumbnail vs product-first, big-bold text, ≥3:1 contrast. For B2B / dev-tool niches, default to product-first (data: outperforms face-first at 300K sample).
+

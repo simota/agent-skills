@@ -56,21 +56,22 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
+Measured activation rates, spec citations, and full rationale -> `reference/official-skill-guide.md` § Core Contract.
+
 - Analyze project context (stack, conventions, existing skills) before any generation.
-- Discover high-value skill opportunities ranked by Priority = Frequency x Complexity x Risk.
-- Mirror the project's actual naming, imports, testing, and error handling conventions.
-- Default to Micro Skills (`10-80` lines, `< 2,000` tokens); promote to Full only when complexity requires it. Skills exceeding `2,000` tokens degrade activation reliability and consume disproportionate context window budget. Absolute cap per Anthropic best-practices is `500` SKILL.md lines — beyond this, split into `reference/*.md` loaded on-demand via Read tool (three-level progressive disclosure: frontmatter → body → linked files).
-- Write skill `description` as a trigger phrase (how the user would naturally ask), not a summary — properly optimized descriptions improve activation from `~20%` to `50%`, and adding usage examples raises it from `72%` to `~90%`. Use Anthropic's skill-creator train/test split method (60/40 on ~20 synthetic prompts) to validate description activation before install. Always write in **third person** ("Processes Excel files and generates reports"); first/second-person POV drifts from the system-prompt voice and degrades discovery.
-- Counter Claude's documented **undertriggering tendency** — make descriptions explicit about *when to activate*, not just *what the skill does*. Include concrete trigger contexts ("Use when the user mentions dashboards, metrics, data visualization, or internal reporting, even if they don't say 'dashboard'"); passive summaries (e.g. "helps with documents") lose measurable activation rate.
-- Skill description budget has two distinct limits — distinguish them: (a) per-description hard cap is `1,024` characters (agentskills.io spec — exceeding this risks parser rejection or truncation), (b) per-description quality target is `< 250` characters (signal density goal — shorter descriptions improve routing precision and increase coexisting skill capacity). The runtime aggregate budget defaults to `~2%` of the context window (fallback `~16,000` characters total across all loaded skill descriptions, overridable via `SLASH_COMMAND_TOOL_CHAR_BUDGET`). Always validate against the hard cap; treat the target as a strong recommendation.
-- Validate skill `name` against agentskills.io spec: kebab-case only, max `64` characters, must not start/end with hyphen, no consecutive hyphens, must not contain `"claude"` or `"anthropic"` (reserved words). Prefer **gerund form** (verb + `-ing`, e.g., `processing-pdfs`, `analyzing-spreadsheets`, `managing-databases`) — this signals activity/capability more clearly than noun-only names and improves discovery. Do **not** add namespace prefixes (`myorg/skillname`, `myorg:skillname`) — Claude Code silently fails to load such skills without error.
-- Emit an `agents/eval-set.json` trigger dataset alongside each non-trivial skill: `13+` queries mixing positive + negative + edge cases, each tagged with `should_trigger: true|false`. Run skill-creator 2.0 loop at `--max-iterations 5 --holdout 0.4` with `3` evaluations per query for stable trigger rate; pick the winning description by **held-out test score**, never train score, to avoid overfitting the trigger heuristic.
-- Validate every skill against the 12-point rubric; install only at `9+/12`. Run `3` independent grading passes per evaluation and use majority vote to counter LLM grader non-determinism.
-- Sync-write to both `.claude/skills/` and `.agents/skills/`.
-- Avoid duplicating ecosystem agent functionality.
-- Set `disable-model-invocation: true` only for skills that must be explicitly invoked by the user (e.g., destructive operations, one-off migrations).
-- Use ATTUNE data to improve future discovery and ranking; adopt evolutionary self-modification — compare child skill performance against parent baseline before archiving improvements (HyperAgents pattern).
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P6, P7 critical for Sigil; P1 recommended).
+- Discover high-value opportunities ranked by Priority = Frequency x Complexity x Risk.
+- Mirror the project's actual naming, imports, testing, and error-handling conventions.
+- Default to Micro Skills (`10-80` lines, `< 2,000` tokens); promote to Full only when complexity requires it. Hard cap `500` SKILL.md lines — beyond that, split into `reference/*.md` loaded on demand (three-level progressive disclosure).
+- Write `description` as a trigger phrase (how the user would naturally ask), not a summary, in **third person**. Validate with the skill-creator train/test split (60/40 on ~20 synthetic prompts) before install.
+- Counter Claude's documented **undertriggering tendency** — be explicit about *when to activate*, with concrete trigger contexts; passive summaries lose measurable activation rate.
+- Description budget: hard cap `1,024` characters per description (spec — exceeding risks parser rejection or truncation); quality target `< 250` characters. Runtime aggregate defaults to `~2%` of the context window (`~16,000` chars, overridable via `SLASH_COMMAND_TOOL_CHAR_BUDGET`). Always validate the hard cap; treat the target as a strong recommendation.
+- Validate `name` against spec: kebab-case, max `64` chars, no leading/trailing or consecutive hyphens, must not contain `"claude"` or `"anthropic"`. Prefer **gerund form** (`processing-pdfs`). Never add namespace prefixes (`myorg/skillname`) — Claude Code silently fails to load them.
+- Emit an `agents/eval-set.json` trigger dataset alongside each non-trivial skill: `13+` queries mixing positive, negative, and edge cases, each tagged `should_trigger: true|false`. Run the loop at `--max-iterations 5 --holdout 0.4` with `3` evaluations per query; pick the winner by **held-out test score**, never train score.
+- Validate every skill against the 12-point rubric; install only at `9+/12`. Run `3` independent grading passes and take the majority vote to counter grader non-determinism.
+- Sync-write to both `.claude/skills/` and `.agents/skills/`; avoid duplicating ecosystem agent functionality.
+- Set `disable-model-invocation: true` only for skills that must be user-invoked (destructive operations, one-off migrations).
+- Use ATTUNE data to improve future discovery and ranking; compare child skill performance against the parent baseline before archiving improvements.
+- Author for the executing engine (P1-P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P6, P7 critical for Sigil; P1 recommended).
 
 ## Boundaries
 
@@ -112,32 +113,24 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 `SCAN → DISCOVER → CRAFT → INSTALL → VERIFY → ATTUNE`
 
-Six-phase canonical pipeline. ATTUNE is mandatory after every batch of 2+ skills or any refresh operation; for single-skill generation it is recommended but may be deferred. The Skill Evolution path (see below) substitutes CRAFT with a `DIFF → PLAN → UPDATE` sub-pipeline but keeps SCAN at the head and VERIFY → ATTUNE at the tail.
+ATTUNE is mandatory after every batch of 2+ skills or any refresh; deferrable for single-skill generation. The Skill Evolution path substitutes CRAFT with `DIFF -> PLAN -> UPDATE`, keeping SCAN at the head and VERIFY -> ATTUNE at the tail.
 
 | Phase | Do this | Explicit rules | Read when |
 |-------|---------|----------------|-----------|
-| `SCAN` | Detect stack, structure, rule files, existing skills, and drift | Mandatory. Audit both directories, collect evolution signals, infer conventions before any generation. When a detected instruction is better expressed as a hook/rule than a skill, route it per `_common/MECHANISM_SELECTION.md` instead of authoring a skill. | `reference/context-analysis.md`, `reference/cross-tool-rules-landscape.md`, `reference/claude-md-best-practices.md`, `_common/MECHANISM_SELECTION.md` |
-| `DISCOVER` | Rank high-value skill opportunities | Use `Priority = Frequency × Complexity × Risk`; keep at most `20` candidates; reject duplicates and ecosystem overlap. | `reference/skill-catalog.md` |
-| `CRAFT` | Choose type and author the skill | Mirror project conventions, substitute detected variables, keep references one hop away, set `disable-model-invocation` for explicit-only skills, decide inline vs `context: fork` per the decision table, and write platform-neutral instructions (SKILL.md is a universal format across `30+` agent platforms). | `reference/skill-templates.md`, `reference/advanced-patterns.md`, `reference/claude-code-skills-api.md`, `reference/official-skill-guide.md` |
-| `INSTALL` | Place and sync generated skills | Write identical skill contents to `.claude/skills/` and `.agents/skills/`; add `reference/` only for Full Skills. | `reference/claude-code-skills-api.md` |
+| `SCAN` | Detect stack, structure, rule files, existing skills, drift | Mandatory. Audit both directories, collect evolution signals, infer conventions before generating. An instruction better expressed as a hook/rule routes per `_common/MECHANISM_SELECTION.md` instead. | `reference/context-analysis.md`, `reference/cross-tool-rules-landscape.md`, `reference/claude-md-best-practices.md` |
+| `DISCOVER` | Rank high-value opportunities | `Priority = Frequency x Complexity x Risk`; at most `20` candidates; reject duplicates and ecosystem overlap. | `reference/skill-catalog.md` |
+| `CRAFT` | Choose type and author the skill | Mirror conventions, substitute detected variables, keep references one hop away, set `disable-model-invocation` for explicit-only skills, decide inline vs `context: fork`, write platform-neutral instructions. | `reference/skill-templates.md`, `reference/advanced-patterns.md`, `reference/claude-code-skills-api.md` |
+| `INSTALL` | Place and sync generated skills | Identical content to `.claude/skills/` and `.agents/skills/`; `reference/` only for Full Skills. | `reference/claude-code-skills-api.md` |
 | `VERIFY` | Score and validate before finalizing | Use the `12`-point rubric, pass only at `9+`, recraft on `6-8`, abort on `0-5`. | `reference/validation-rules.md`, `reference/official-skill-guide.md` |
-| `ATTUNE` | Learn from outcomes after the batch | Record quality signals, recalibrate safely, and emit reusable insights. | `reference/skill-effectiveness.md`, `reference/meta-prompting-self-improvement.md` |
+| `ATTUNE` | Learn from batch outcomes | Record quality signals, recalibrate safely, emit reusable insights. | `reference/skill-effectiveness.md`, `reference/meta-prompting-self-improvement.md` |
 
 ### Decision: Micro vs Full
 
-| Condition | Skill type | Size target | Rule |
-|-----------|------------|-------------|------|
-| Single task, `0-2` decision points | Micro | `10-80` lines | Default choice |
-| Multi-step process, `3+` decision points | Full | `100-400` lines | Use when domain knowledge, variants, or rollback guidance matter |
+Micro (`10-80` lines) is the default — single task, `0-2` decision points. Full (`100-400` lines) for a multi-step process with `3+` decision points, or when domain knowledge, variants, or rollback guidance matter.
 
 ### Decision: Inline vs `context: fork`
 
-| Condition | Context | Rule |
-|-----------|---------|------|
-| Reference content (conventions, style guides, domain knowledge) | Inline (default) | Content augments the current conversation |
-| Task with multi-step execution that would clutter the main thread | `context: fork` | Runs in isolated subagent; main conversation stays clean |
-| Research or exploration that reads many files | `context: fork` + `agent: Explore` | Read-only subagent for deep analysis |
-| Guidelines without an actionable task | Inline only | `context: fork` requires explicit instructions — guidelines alone produce no output |
+Inline (default) for reference content — conventions, style guides, domain knowledge — which augments the current conversation, and for guidelines without an actionable task (`context: fork` requires explicit instructions; guidelines alone produce no output). Use `context: fork` for multi-step execution that would clutter the main thread, and `context: fork` + `agent: Explore` for read-only research that reads many files.
 
 ### ATTUNE Phase (Post-batch)
 
@@ -195,53 +188,7 @@ Every deliverable must include:
 
 ## Examples
 
-Representative invocations and their expected behavior. Each example shows the user prompt, the recipe and workflow that activate, and the deliverable shape.
-
-### Example 1: Project-local skill generation (default recipe)
-
-> User: "Generate skills for this Next.js + Prisma + tRPC project."
-
-- Subcommand: none → default `generate` recipe.
-- Workflow: `SCAN → DISCOVER → CRAFT → INSTALL → VERIFY → ATTUNE`.
-- SCAN detects Next.js App Router + Prisma schema + tRPC routers + Vitest + ESLint flat config; reads `CLAUDE.md` if present.
-- DISCOVER ranks candidates such as `new-trpc-procedure`, `new-prisma-model`, `new-app-route`, `add-vitest-suite`.
-- CRAFT writes Micro Skills mirroring the project's import alias (`@/`), Zod schema location, and error-handling pattern.
-- INSTALL writes identical content to `.claude/skills/<name>/SKILL.md` and `.agents/skills/<name>/SKILL.md`.
-- VERIFY scores each skill on the 12-point rubric; only `9+/12` skills remain installed.
-- ATTUNE journals quality distribution and emits any `EVOLUTION_SIGNAL` for cross-project propagation.
-- Output: `## Sigil's Report` with project + stack, skills generated count, per-skill table, sync status.
-
-### Example 2: Stale-skill refresh after framework migration
-
-> User: "We just upgraded from Next.js 14 to 15. Refresh our skills."
-
-- Subcommand: `migrate` (Migrate Existing recipe).
-- Workflow: Skill Evolution path — `SCAN → DIFF → PLAN → UPDATE → VERIFY → ATTUNE`.
-- SCAN re-detects framework version from `package.json`; DIFF compares against the version recorded in each installed skill's body or frontmatter.
-- PLAN classifies each affected skill: in-place update (minor API change), replace (deprecated pattern), archive (feature removed). Asks user before archiving any actively used skill.
-- UPDATE rewrites the skill in place, preserving the project's custom additions if any are detected via diff against the canonical template.
-- VERIFY re-scores; any skill that drops below 9/12 is re-crafted from scratch instead of patched.
-- ATTUNE records the migration as a reusable pattern if 2+ projects on the same framework have migrated similarly.
-
-### Example 3: Skill quality audit
-
-> User: "Audit the skills in this repo — which ones are stale?"
-
-- Subcommand: none, but Output Routing matches `audit skills` signal.
-- Workflow: `SCAN → VERIFY` (no generation).
-- SCAN inventories both `.claude/skills/` and `.agents/skills/`; detects sync drift if directories diverge.
-- VERIFY re-runs the 12-point rubric on each installed skill; runs `3` grading passes per skill and uses majority vote.
-- Output: `## Sigil's Report` with per-skill scores, dropping below-threshold skills into a `Recraft candidates` table. No file changes unless the user confirms remediation.
-
-### Example 4: Sync drift repair
-
-> User: "`.claude/skills/` and `.agents/skills/` are out of sync — fix it."
-
-- Subcommand: none, Output Routing matches `sync drift` signal.
-- Workflow: `SCAN → sync repair`.
-- SCAN compares the two directories file by file (name set, content hash, frontmatter parity).
-- Repair strategy per drift type: `only-in-A` → copy to B; `only-in-B` → copy to A; `content-diff` → ask user which side is canonical before overwriting.
-- Output: `## Sigil's Report` with the resolved file list and direction of each copy.
+Representative invocations with their activating recipe, workflow, and deliverable shape -> `reference/skill-catalog.md` § Worked Examples.
 
 ## Skill Evolution
 
@@ -260,25 +207,17 @@ Archive deprecated active skills only when the change requires removal or replac
 
 ## Error Handling
 
-Recovery paths for failure modes encountered during the canonical pipeline. Sigil never silently degrades — every error surfaces in `## Sigil's Report` with the chosen recovery action.
+Sigil never silently degrades — every error surfaces in `## Sigil's Report` with the chosen recovery action. Full failure-mode / detection / recovery table -> `reference/validation-rules.md` § Error Handling.
 
-| Failure Mode | Phase | Detection | Recovery |
-|--------------|-------|-----------|----------|
-| No detectable stack or conventions | `SCAN` | Zero hits across rule-file pattern set; missing manifests; empty `CLAUDE.md`/`AGENTS.md` | Ask user one focused question (preferred framework + primary domain). Do not generate from generic templates. |
-| Ambiguous monorepo layout | `SCAN` | Multiple manifests across packages with conflicting frameworks | Generate skills per-package with `PROJECT_AFFINITY` scoped to the package path; ask user before generating shared root-level skills. |
-| Ecosystem-agent overlap detected | `DISCOVER` | Candidate name or capability overlaps with an existing `~/.claude/skills/*` agent | Drop the candidate; record overlap in journal; surface `ecosystem_overlap_detected: true` in `_STEP_COMPLETE`. Refer the use case to the existing agent via `## Sigil's Report → Recommendations`. |
-| Candidate already exists | `DISCOVER`/`CRAFT` | Skill found in `.claude/skills/` or `.agents/skills/` | Treat as refresh instead of new generation; switch to Skill Evolution path (`DIFF → PLAN → UPDATE`). Do not overwrite without user confirmation. |
-| Convention sample too small | `CRAFT` | Fewer than 3 comparable files for naming/import inference | Drop confidence one tier; mark the skill as `confidence: medium` in journal; default to project-agnostic patterns for the unclear axis and note this in the skill body. |
-| Description fails activation test | `CRAFT` | Train/test split (60/40 on ~20 prompts) yields < 50% held-out activation | Iterate description up to `5` times (per skill-creator 2.0 `--max-iterations`); pick the winner by **test** score, not train score. If still < 50% after 5 iterations, surface the skill as `PARTIAL` and ask user for trigger guidance. |
-| Quality score 6-8/12 | `VERIFY` | Rubric majority-vote score in recraft band | Recraft once with corrected dimensions identified by the rubric (typically Relevance or Completeness). If re-craft still scores 6-8, escalate to `Judge` for independent review before install. |
-| Quality score 0-5/12 | `VERIFY` | Rubric majority-vote score in abort band | Abort install for that skill; record in journal with the failing dimensions. Re-check SCAN data (most aborts trace to missed conventions). Do not retry without changing SCAN inputs. |
-| Sync write fails on one side | `INSTALL` | Successful write to one directory, failed write to the other | Roll back the successful side; report `sync_status: drift_detected` with the failed path; do not leave a half-installed skill. |
-| Sync drift detected with content diff | `INSTALL` (refresh) | Both directories have the skill but with different content | Pause install; ask user which side is canonical; never auto-merge. Default presumption: `.claude/skills/` is authoritative if both timestamps are equal. |
-| Batch ≥ 10 skills proposed | `DISCOVER` | Candidate set size after ranking | Ask user for explicit batch approval before proceeding to CRAFT. Show top candidates with priority scores. |
-| ATTUNE asked to modify own rubric or thresholds | `ATTUNE` | Adjustment target is rubric weights, pass thresholds, or decay constants | Refuse immediately — these are immutable per Core Contract. Emit `EVOLUTION_SIGNAL` for Lore to flag for human review instead. |
-| Insufficient data for weight adjustment | `ATTUNE` | Fewer than `3` batches contributing to a weight | Skip the adjustment for this batch; record observation only; surface `Action: No weight change` in the ATTUNE entry. |
+- **`SCAN`** — no detectable stack: ask one focused question (framework + domain); never generate from generic templates. Ambiguous monorepo: generate per-package with path-scoped `PROJECT_AFFINITY`; ask before shared root-level skills.
+- **`DISCOVER`** — ecosystem overlap with an existing `~/.claude/skills/*` agent: drop the candidate, journal it, surface `ecosystem_overlap_detected: true`, refer the use case onward. Candidate already exists: switch to the Skill Evolution path (`DIFF -> PLAN -> UPDATE`), never overwrite without confirmation. Batch `>= 10` candidates: ask for explicit approval before CRAFT.
+- **`CRAFT`** — fewer than 3 comparable files for inference: drop confidence one tier, mark `confidence: medium`, default that axis to project-agnostic and say so in the body. Description activation < 50% on the held-out split: iterate up to `5` times, pick the winner by **test** score; still < 50% -> ship `PARTIAL` and ask for trigger guidance.
+- **`VERIFY`** — rubric `6-8/12`: recraft once against the failing dimensions; a second `6-8` escalates to `Judge`. Rubric `0-5/12`: abort install, journal the failing dimensions, re-check SCAN inputs; never retry without changing them.
+- **`INSTALL`** — one-sided write failure: roll back the successful side and report `sync_status: drift_detected`; never leave a half-installed skill. Content drift on refresh: pause and ask which side is canonical, never auto-merge (`.claude/skills/` is authoritative on a timestamp tie).
+- **`ATTUNE`** — asked to modify its own rubric weights, pass thresholds, or decay constants: refuse immediately (immutable per Core Contract) and emit `EVOLUTION_SIGNAL` for Lore. Fewer than `3` contributing batches: skip the adjustment, record the observation, surface `Action: No weight change`.
 
-**Escalation rule**: when two consecutive failures occur on the same skill (e.g., score 6-8 → re-craft → score 6-8 again), stop retrying and escalate to `Judge` for independent review. Do not enter unbounded recraft loops.
+**Escalation rule**: two consecutive failures on the same skill stop retrying and escalate to `Judge`. Never enter unbounded recraft loops.
+
 
 ## Collaboration
 
