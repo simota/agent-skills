@@ -343,3 +343,36 @@ The three subagents return JSON; Magi main context handles NORMALIZE through DEL
 - `magi/reference/decision-domains.md` — domain-specific viewpoint focus matrices applied at SYNTHESIZE
 - `magi/reference/engine-deliberation-guide.md` — Engine Mode sibling for Simple-Mode Recipes (`decide` / `tradeoff` / `arbitrate` / `strategic`); each engine emits ONE integrated YAML position (not 3 viewpoints) and the result is a 3-engine vote, not a 9-cell matrix. `multi` Recipe supersedes it when tri-engine 9-cell deliberation is required.
 - `magi/reference/devils-advocate.md` — DA challenge protocol invoked when 9-cell matrix is unanimous
+
+
+---
+
+## Multi-Engine Mode (SKILL.md excerpt)
+
+Activated by the `multi` Recipe (or explicit user request for cross-engine arbitration). Produces a **deliberation matrix sized by AVAILABLE engines × 3 viewpoints**: **dual-engine = 6-cell** (Claude + Codex × Logos/Pathos/Sophia, default baseline), **tri-engine = 9-cell** when agy is AVAILABLE.
+
+**Base Engine Policy (2026-05)**: Default baseline = Claude + Codex (dual-engine). agy is added when AVAILABLE — never required. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`. Filename `tri-engine-deliberate.md` covers both dual and tri modes.
+
+**Core mechanics:**
+- Spawn one Agent subagent per AVAILABLE engine in a single message: `deliberate-codex` + `deliberate-claude` (baseline); add `deliberate-agy` when AVAILABLE.
+- Each subagent emits all three viewpoints in one JSON payload — matrix is N×3 cells from N fan-out calls. Cross-engine independence via parallel spawn; cross-viewpoint independence via prompt discipline.
+- Engine availability PREFLIGHT runs in Magi main context (never delegated).
+- Loose prompts only (Role + Target + Output format). Do NOT pass domain matrices, rubrics, bias checklists, or viewpoint templates — framework rules apply at SYNTHESIZE.
+- Pipeline: NORMALIZE → CLUSTER (two-pass) → SCORE → GROUND → SYNTHESIZE.
+
+**Pattern H — both axes matter:** concurrence within a viewpoint raises confidence; divergence across viewpoints surfaces real trade-offs ("All Logos APPROVE, all Pathos REJECT" → `CONDITIONAL`, not averaged 50%).
+
+**Two-pass scoring:** Pass A — per-viewpoint engine clustering (concurrence: `CONFIRMED` / `LIKELY` / `CANDIDATE` / `UNDECIDED`; perspective: `CONVERGENT` / `DIVERGENT-N`). Pass B — per-engine viewpoint clustering (consistency: `consistent` / `mostly-aligned` / `internally-split` / `consistent-reject`). Dual-engine omits `LIKELY` (unreachable with 2). Full cluster rules → `reference/tri-engine-deliberate.md`.
+
+**Pattern-based final verdict** (not averaged confidence): map matrix shape to verdict. Examples — all cells APPROVE → `GO` (still run DA per 3-0 rule); Logos APPROVE × Pathos REJECT × Sophia split → `CONDITIONAL with ethical guardrails`; one engine approve / others reject → engine-bias asymmetry; all engines `internally-split` → `ESCALATE`. Full catalog → `reference/tri-engine-deliberate.md §6`.
+
+**Engine-attribution tags (mandatory):** concurrence tag (e.g., `[codex+agy+claude]` 3/3, `[codex+agy]` 2/3, `[codex-verified]` 1/3 grounded); perspective tag (`[CONVERGENT]` / `[DIVERGENT-N]`); matrix-pattern label on final verdict (`[matrix:all-cells-approve]`, `[matrix:pathos-block]`, etc. — cell count adapts to engine count).
+
+**All-cells-unanimous trigger:** 6/6 dual or 9/9 tri unanimous → 3-0 groupthink rule applies; DA mandatory and must attack the matrix pattern, not just one cell.
+
+**Output structure:** the deliberation matrix table is the primary artifact — never collapse to a single averaged verdict. Per-cell rationale, matrix pattern, pattern-based verdict, aggregated risk register, and dissent record sit on top.
+
+**Engine Availability Modes:** Tri (9-cell) / Dual (6-cell, DEFAULT BASELINE — not degraded, log agy absence) / Single (3-cell, all CANDIDATE, pattern detection disabled — flag reduced confidence) / Zero → degrade to `decide` Simple Mode.
+
+Full algorithm, JSON schema, prompt skeletons, two-pass cluster rules, grounding checks, and matrix-pattern catalog → `reference/tri-engine-deliberate.md`.
+

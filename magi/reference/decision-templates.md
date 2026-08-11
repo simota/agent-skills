@@ -369,3 +369,51 @@ Same structure as the Compact Report Template above, with title `## MAGI Engine 
     ║                                                              ║
     ╚══════════════════════════════════════════════════════════════╝
 ```
+
+
+---
+
+# Per-Recipe Behavior Notes and VERIFY Gates
+
+Canonical home for the per-recipe notes referenced from `SKILL.md` -> Subcommand Dispatch. Each gate runs **in addition to** Magi's universal discipline.
+
+Each `**VERIFY**:` is the recipe-specific gate **in addition to** Magi's universal discipline (3 perspectives evaluated independently, no score visible until all voted, confidence ≥85 stress-tested, dissent documented, risk register, 1-1-1 → human escalation, auditable trail).
+- `decide`: Go/No-Go, KNOWLEDGE task. **VERIFY**: factual evidence shared at FRAME **before** independent voting (KNOWLEDGE protocol, not REASONING); verdict is GO / NO-GO / CONDITIONAL against established criteria; reversibility classified (HIGH/MEDIUM/LOW); 3-0 unanimous triggers a devil's-advocate challenge.
+- `tradeoff`: X vs Y, REASONING task. **VERIFY**: both options made explicit before any vote; strict independent voting (no perspective sees another's conclusion); each perspective scores **both** sides (not only its preferred one); Pathos names who bears the cost; weighted aggregation, not a raw average.
+- `arbitrate`: 2+ architecture options. **VERIFY**: Engine Mode auto-detected when low-reversibility + high-impact; ≥2 options laid out explicitly; Pre-Decision Framing Check satisfied (problem level + ≥1 alternative framing + implicit assumption named — high-stakes, so mandatory); independent voting before synthesis.
+- `strategic`: long-term direction, REASONING task. **VERIFY**: strict independent voting; Sophia weights long-term ROI / time-to-market; Pre-Decision Framing Check satisfied (high-stakes); reversibility surfaced (strategy is typically LOW — flag the undo horizon); risk register spans the decision's time horizon.
+- `sixhat`: parallel-thinking modes before voting. **VERIFY**: all six hats run; **Black is always paired with equal-time Yellow** (no unbalanced negativity or positivity); Blue (process) frames the open and close; each hat's output captured before synthesis.
+- `devil`: red-team stress test. **VERIFY**: DA perspective is rotated and the dissenting source anonymized (psychological safety); 3–7 ranked objections produced; each scored addressed / partial / unaddressed; backfire watched (entrenchment / dilution / conflict); runs mandatorily on any 3-0 unanimity.
+- `delphi`: anonymous multi-round convergence. **VERIFY**: panelist anonymity preserved every round; 2–4 rounds, stopping on a convergence indicator (IQR / Kendall's W) — not a fixed count; genuine bimodal disagreement preserved as stable dissent, never flattened to a mean; rounds capped at 4.
+- `multi`: multi-engine deliberation. **VERIFY**: dual-engine baseline actually spawned (Claude+Codex; agy added only when AVAILABLE); the deliberation matrix is the primary artifact (**never collapsed to a single averaged verdict**); each cell carries concurrence + consistency + engine-attribution tags; final verdict is pattern-based (matrix shape → GO/NO-GO/CONDITIONAL/ESCALATE); single-engine influence capped at 50% (Byzantine); debate ≤2 rounds; all-cells-unanimous (6/6 or 9/9) → mandatory DA attacking the matrix pattern.
+
+
+
+---
+
+## Collaboration Handoff Tokens
+
+Referenced from `SKILL.md` -> Collaboration.
+
+| Direction | Handoff token | Purpose |
+|-----------|---------------|---------|
+| User → Magi | — | Decision requests, mode selection |
+| Nexus → Magi | `NEXUS_TO_MAGI` | Complex decisions requiring arbitration |
+| Accord → Magi | `ACCORD_TO_MAGI` | Stakeholder alignment for strategy resolution |
+| Atlas → Magi | `ATLAS_TO_MAGI` | Architecture options for arbitration |
+| Flux → Magi | `FLUX_TO_MAGI` | Reframed perspectives for re-deliberation |
+| Schema → Magi | `SCHEMA_TO_MAGI` | DB design options for normalization verdicts |
+| Gateway → Magi | `GATEWAY_TO_MAGI` | API design options for versioning verdicts |
+| Shift → Magi | `SHIFT_TO_MAGI` | Migration strategy options |
+| Experiment → Magi | `EXPERIMENT_TO_MAGI` | A/B test results for interpretation |
+| Void → Magi | `VOID_TO_MAGI` | YAGNI analysis results for incorporation |
+| Magi → Builder/Forge/Artisan | `MAGI_TO_BUILDER` | Implementation decisions |
+| Magi → Atlas/Scaffold | `MAGI_TO_ATLAS` | Architecture decisions |
+| Magi → Launch | `MAGI_TO_LAUNCH` | Release decisions |
+| Magi → Nexus | `MAGI_TO_NEXUS` | Decision results |
+| Magi → Sherpa | `MAGI_TO_SHERPA` | Prioritized task lists |
+| Magi → Void | `MAGI_TO_VOID` | YAGNI validation when "do nothing" is a candidate |
+| Magi → Schema | `MAGI_TO_SCHEMA` | Normalization verdicts |
+| Magi → Gateway | `MAGI_TO_GATEWAY` | API design verdicts |
+| Magi → Shift | `MAGI_TO_SHIFT` | Migration verdicts |
+| Magi → Experiment | `MAGI_TO_EXPERIMENT` | Result interpretation |

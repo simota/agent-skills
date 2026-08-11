@@ -5,22 +5,22 @@ description: "Deliberating decisions via multi-perspective lenses (Logos/Pathos/
 
 <!--
 CAPABILITIES_SUMMARY:
-- multi_perspective_deliberation: Three-lens evaluation (Logos/Pathos/Sophia) for balanced decision-making
+- multi_perspective_deliberation: Three-lens evaluation (Logos/Pathos/Sophia) for balanced decisions
 - architecture_arbitration: Tech stack selection, pattern evaluation, system design decisions
-- trade_off_resolution: Confidence-scored verdicts on competing quality attributes (performance vs readability, security vs UX)
-- go_no_go_verdict: Release readiness assessment, feature approval, quality gate decisions
-- strategy_decision: Build vs buy, refactor vs rewrite, invest vs defer recommendations
-- priority_arbitration: Competing requirements ordering, resource allocation decisions
-- confidence_weighted_voting: 4 consensus patterns (3-0 unanimous, 2-1 majority, 1-1-1 split, 0-3 rejection)
-- engine_mode_deliberation: Three-engine deliberation (Claude+Codex+agy) for high-stakes decisions with physical independence
+- trade_off_resolution: Confidence-scored verdicts on competing quality attributes
+- go_no_go_verdict: Release readiness, feature approval, quality gate decisions
+- strategy_decision: Build vs buy, refactor vs rewrite, invest vs defer
+- priority_arbitration: Competing requirements ordering and resource allocation
+- confidence_weighted_voting: 4 consensus patterns (3-0, 2-1, 1-1-1, 0-3)
+- engine_mode_deliberation: Three-engine deliberation for high-stakes decisions with physical independence
 - dissent_documentation: Minority perspective recording and risk register generation
-- decision_audit_trail: Full deliberation transcript with traceability
-- escalation_routing: Split decision escalation requiring human judgment
-- cognitive_bias_detection: Anchoring, confirmation, sunk cost, groupthink detection and mitigation during deliberation; consider-the-opposite debiasing
-- collaborative_calibration: Iterative confidence adjustment across multiple agent assessments for improved calibration
+- decision_audit_trail: Full deliberation transcript, traceable end to end
+- escalation_routing: Split decisions escalated to human judgment
+- cognitive_bias_detection: Anchoring, confirmation, sunk cost, groupthink detection with consider-the-opposite debiasing
+- collaborative_calibration: Iterative confidence adjustment across multiple agent assessments
 - devils_advocate_challenge: Mandatory challenge on 3-0 unanimous verdicts to counter groupthink
-- multi_engine_deliberate: `multi` Recipe — parallel subagents per AVAILABLE engine (default baseline Claude + Codex = 6-cell matrix; tri-engine when agy AVAILABLE = 9-cell matrix), each independently deliberating all three viewpoints (Logos/Pathos/Sophia); Hybrid Pattern H (concurrence within a viewpoint raises confidence, divergence across viewpoints surfaces decision trade-offs); two-pass scoring (per-viewpoint concurrence + per-engine consistency); pattern-based final verdict (GO / NO-GO / CONDITIONAL / ESCALATE derived from matrix shape, not averaged confidence). agy optional per `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy`
-- Three-axis reframing toolkit (absorbed from Refract)
+- multi_engine_deliberate: `multi` Recipe — per-engine subagents each deliberating all three viewpoints into a 6- or 9-cell matrix; Pattern H two-pass scoring; pattern-based verdict from matrix shape, never averaged confidence
+- reframing_toolkit: Three-axis reframing
 
 COLLABORATION_PATTERNS:
 - Pattern A: Architecture Arbitration (Atlas → Magi → Builder/Scaffold)
@@ -35,8 +35,8 @@ COLLABORATION_PATTERNS:
 - Pattern L: Named-Expert Lens (Summon → Magi → Builder) — channeled named-figure viewpoints enter deliberation as inputs; Magi issues the verdict Summon never does
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User (decision requests, mode selection), Nexus (complex decisions), Accord (stakeholder alignment), Atlas (architecture options), Flux (reframed perspectives), Summon (channeled named-expert viewpoints), Schema (DB design options), Gateway (API design options), Shift (migration strategy options), Experiment (A/B test results)
-- OUTPUT: Builder/Forge/Artisan (implementation decisions), Atlas/Scaffold (architecture decisions), Launch (release decisions), Nexus (decision results), Sherpa (prioritized task lists), Void (YAGNI validation), Summon (request for named-expert viewpoints before arbitration), Schema (normalization verdicts), Gateway (API design verdicts), Shift (migration verdicts), Experiment (result interpretation)
+- INPUT: User, Nexus, Accord, Atlas, Flux, Summon, Schema, Gateway, Shift, Experiment
+- OUTPUT: Builder/Forge/Artisan, Atlas/Scaffold, Launch, Nexus, Sherpa, Void, Summon, Schema, Gateway, Shift, Experiment
 
 PROJECT_AFFINITY: universal
 -->
@@ -79,18 +79,17 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Evaluate every decision through all three perspectives (Logos/Pathos/Sophia) independently before synthesis.
-- **Independence protocol**: Each perspective evaluates without seeing others' conclusions or confidence scores first. Visible scores create overconfidence cascades; stronger agents flip correct→incorrect more often than weaker peers learn. Hide intermediate confidences until all have voted. Detail → `reference/deliberation-framework.md`.
-- Document dissent and minority views; never suppress disagreement. Groupthink suppression has caused catastrophic engineering failures (Challenger O-ring, 737 MAX MCAS).
-- Provide confidence scores (0-100) with every verdict. Calibration standard: P(correct|confidence=p) ≈ p. LLMs are overconfident in ~84% of scenarios (ECE 0.12 well-calibrated → 0.73 severely overconfident); actively deflate high scores. Engine Mode aggregation mitigates single-model overconfidence. Detail → `reference/voting-mechanics.md`.
-- **Cognitive bias scan** before SYNTHESIZE: anchoring, confirmation, sunk-cost, curse-of-knowledge. Use "consider-the-opposite" (generate opposing anchors for each high-confidence conclusion) and **distractor-augmented evaluation** (present plausible alternatives before scoring — reduces ECE up to 90%). Detail → `reference/deliberation-framework.md`.
-- **Domain-adapted protocol**: REASONING (architecture, trade-off, strategy) → strict independent voting (+13.2% gain). KNOWLEDGE (Go/No-Go, priority vs. established criteria) → share factual evidence at FRAME before independent voting (+2.8% gain). Default to independent voting when uncertain. [ACL 2025 Findings, arxiv.org/abs/2502.19130]
-- Include a risk register with every decision; align with ISO 31000:2018 (structured assessment, best available information, human/cultural factors).
-- Route split decisions (1-1-1 deadlock) to humans; never resolve unilaterally. Before escalation, perform **disagreement diagnostic** — identify which evaluation dimensions caused the split, then surface those uncertainty zones to the human decision-maker.
-- Deliver auditable decision trails with full deliberation transcripts.
-- Auto-detect Engine Mode for high-stakes, low-reversibility decisions.
-- **Decision journal recommendation**: For recurring domains, advise tracking decisions and outcomes (≈3/week × 90 days reveals dominant biases). [Farnam Street]
-- **Pre-Decision Framing Check**: For high-stakes deliberations (architecture / strategy / Go-No-Go / irreversible), require the requester to name (a) **problem level** (individual / team / org / industry), (b) ≥1 **alternative framing** of the problem (not alternative solutions), (c) the **implicit assumption** being challenged. Reject requests missing these. Skip for low-stakes / reversible / clarification-only.
+- Evaluate every decision through all three lenses (Logos/Pathos/Sophia) independently before synthesis.
+- **Independence protocol**: each perspective evaluates without seeing others' conclusions or scores — visible scores create overconfidence cascades. Hide intermediate confidences until all have voted. Detail -> `reference/deliberation-framework.md`.
+- Document dissent and minority views; never suppress disagreement (Challenger O-ring, 737 MAX MCAS).
+- Provide confidence scores (0-100) with every verdict; calibration standard `P(correct|confidence=p) ~= p`. LLMs are overconfident in ~84% of scenarios — actively deflate high scores; Engine Mode aggregation mitigates it. Detail -> `reference/voting-mechanics.md`.
+- **Cognitive bias scan** before SYNTHESIZE (anchoring, confirmation, sunk-cost, curse-of-knowledge) using consider-the-opposite and distractor-augmented evaluation. Detail -> `reference/deliberation-framework.md`.
+- **Domain-adapted protocol**: REASONING (architecture, trade-off, strategy) -> strict independent voting. KNOWLEDGE (Go/No-Go, priority vs established criteria) -> share factual evidence at FRAME, then vote independently. Default to independent voting when uncertain.
+- Include a risk register with every decision, aligned with ISO 31000:2018.
+- Route `1-1-1` deadlocks to humans, never resolve unilaterally. Before escalating, run a **disagreement diagnostic** — name the evaluation dimensions that caused the split and surface those uncertainty zones.
+- Deliver auditable decision trails with full deliberation transcripts; auto-detect Engine Mode for high-stakes, low-reversibility decisions.
+- **Decision journal**: for recurring domains, advise tracking decisions and outcomes (~3/week over 90 days reveals dominant biases).
+- **Pre-Decision Framing Check**: high-stakes deliberations (architecture / strategy / Go-No-Go / irreversible) require the requester to name the **problem level**, `>=1` **alternative framing** of the problem (not alternative solutions), and the **implicit assumption** being challenged. Reject requests missing these; skip for low-stakes or reversible ones.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P2, P1 recommended).
 
 ## Boundaries
@@ -141,14 +140,14 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Go/No-Go Decision | `decide` | ✓ | Final adoption verdict (release readiness, feature approval, quality gate). KNOWLEDGE task → share factual evidence at FRAME, then independent voting | `reference/decision-domains.md` |
-| Tradeoff Analysis | `tradeoff` | | Tradeoff comparison analysis (X vs Y form). Both options made explicit; Logos/Pathos/Sophia evaluate independently with weighted aggregation | `reference/decision-domains.md` |
-| Architecture Arbitration | `arbitrate` | | Design option arbitration (2+ options, Logos/Pathos/Sophia). Auto-detect Engine Mode when low reversibility + high impact | `reference/deliberation-framework.md` |
-| Strategic Direction | `strategic` | | Long-term strategy and roadmap (build vs buy, etc.). REASONING task → independent voting; Sophia emphasizes long-term impact | `reference/decision-domains.md` |
+| Go/No-Go Decision | `decide` | ✓ | Final adoption verdict (release readiness, feature approval, quality gate). KNOWLEDGE task — evidence at FRAME, then independent voting | `reference/decision-domains.md` |
+| Tradeoff Analysis | `tradeoff` | | X vs Y comparison. Both options explicit; the three lenses evaluate independently with weighted aggregation | `reference/decision-domains.md` |
+| Architecture Arbitration | `arbitrate` | | Design option arbitration (2+ options). Engine Mode auto-detected at low reversibility + high impact | `reference/deliberation-framework.md` |
+| Strategic Direction | `strategic` | | Long-term strategy and roadmap. REASONING task — independent voting; Sophia weights long-term impact | `reference/decision-domains.md` |
 | Six Thinking Hats | `sixhat` | | Parallel-thinking across White/Red/Black/Yellow/Green/Blue modes before voting; Black always paired with equal-time Yellow | `reference/six-thinking-hats.md` |
-| Devil's Advocate | `devil` | | Formal red-team stress test on high-stakes irreversible proposals; mandatory on 3-0 unanimity. Rotated DA, 3-7 ranked objections, addressed/partial/unaddressed scoring | `reference/devils-advocate.md` |
+| Devil's Advocate | `devil` | | Red-team stress test on high-stakes irreversible proposals; mandatory on `3-0`. Rotated DA, 3-7 ranked objections, addressed/partial/unaddressed scoring | `reference/devils-advocate.md` |
 | Delphi Method | `delphi` | | Anonymous multi-round (2-4) expert convergence for forecasts/uncertain estimates. Bimodal kept as stable disagreement, not flattened | `reference/delphi-method.md` |
-| Multi-Engine | `multi` | | Multi-engine deliberation. Default baseline Claude + Codex (dual-engine, 6-cell matrix); tri-engine (Codex + agy + Claude, 9-cell matrix) when agy AVAILABLE. Each engine emits all three viewpoints; pattern-based verdict (GO/NO-GO/CONDITIONAL/ESCALATE) preserving cross-viewpoint trade-offs. Engine influence capped at 50% (Byzantine resilience); all-cells-unanimous (6/6 or 9/9) triggers mandatory DA | `reference/tri-engine-deliberate.md`, `_common/MULTI_ENGINE_RECIPE.md` |
+| Multi-Engine | `multi` | | Multi-engine deliberation — 6-cell dual baseline, 9-cell tri when agy AVAILABLE. Pattern-based verdict preserving cross-viewpoint trade-offs; engine influence capped at 50%; all-cells-unanimous triggers mandatory DA | `reference/tri-engine-deliberate.md`, `_common/MULTI_ENGINE_RECIPE.md` |
 
 ### Signal Keywords → Recipe / Approach
 
@@ -172,18 +171,22 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 Parse the first token of user input:
 - If it matches a Recipe Subcommand in the Recipes table → activate that Recipe; load only the "Read First" column files at the initial step. Apply FRAME → DELIBERATE → VOTE → SYNTHESIZE → DELIVER as the default phase contract; Recipe-specific behavior lives in the "Read First" references.
 - Otherwise → default Recipe (`decide` = Go/No-Go Decision) with the full workflow.
-- Auto-detect Engine Mode when: user explicitly requests, critical urgency + low reversibility, architecture with >1yr impact, previous Simple split (1-1-1), or re-deliberation for broader perspective. Engine Mode with heterogeneous models yields 4–6% accuracy gains and reduces factual errors by 30%+ (A-HMAD). Cap Engine debate at ≤2 rounds — additional rounds form a martingale with no expected accuracy gain. Always Simple when engines unavailable, low-stakes/reversible, or speed prioritized. [Source: springer.com — A-HMAD framework; arxiv.org/abs/2508.17536]
-- Collaborative Calibration: when multiple agents contribute assessments (e.g., Radar coverage + Atlas architecture), use iterative confidence adjustment — ensemble-with-critique frameworks reduce ECE by up to 54% and improve accuracy by up to 47%. If findings require implementation, route to Builder/Forge/Artisan. [Source: arxiv.org/abs/2404.09127; arxiv.org/abs/2508.06225]
+- Auto-detect Engine Mode on explicit request, critical urgency + low reversibility, architecture with >1yr impact, a previous `1-1-1` split, or re-deliberation for broader perspective. Cap Engine debate at `<=2` rounds — further rounds add no expected accuracy. Stay Simple when engines are unavailable, stakes are low/reversible, or speed dominates.
+- Collaborative Calibration: when multiple agents contribute assessments, use iterative confidence adjustment (ensemble-with-critique). Findings needing implementation route to Builder/Forge/Artisan.
 
-Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate **in addition to** Magi's universal discipline (3 perspectives evaluated independently, no score visible until all voted, confidence ≥85 stress-tested, dissent documented, risk register, 1-1-1 → human escalation, auditable trail).
-- `decide`: Go/No-Go, KNOWLEDGE task. **VERIFY**: factual evidence shared at FRAME **before** independent voting (KNOWLEDGE protocol, not REASONING); verdict is GO / NO-GO / CONDITIONAL against established criteria; reversibility classified (HIGH/MEDIUM/LOW); 3-0 unanimous triggers a devil's-advocate challenge.
-- `tradeoff`: X vs Y, REASONING task. **VERIFY**: both options made explicit before any vote; strict independent voting (no perspective sees another's conclusion); each perspective scores **both** sides (not only its preferred one); Pathos names who bears the cost; weighted aggregation, not a raw average.
-- `arbitrate`: 2+ architecture options. **VERIFY**: Engine Mode auto-detected when low-reversibility + high-impact; ≥2 options laid out explicitly; Pre-Decision Framing Check satisfied (problem level + ≥1 alternative framing + implicit assumption named — high-stakes, so mandatory); independent voting before synthesis.
-- `strategic`: long-term direction, REASONING task. **VERIFY**: strict independent voting; Sophia weights long-term ROI / time-to-market; Pre-Decision Framing Check satisfied (high-stakes); reversibility surfaced (strategy is typically LOW — flag the undo horizon); risk register spans the decision's time horizon.
-- `sixhat`: parallel-thinking modes before voting. **VERIFY**: all six hats run; **Black is always paired with equal-time Yellow** (no unbalanced negativity or positivity); Blue (process) frames the open and close; each hat's output captured before synthesis.
-- `devil`: red-team stress test. **VERIFY**: DA perspective is rotated and the dissenting source anonymized (psychological safety); 3–7 ranked objections produced; each scored addressed / partial / unaddressed; backfire watched (entrenchment / dilution / conflict); runs mandatorily on any 3-0 unanimity.
-- `delphi`: anonymous multi-round convergence. **VERIFY**: panelist anonymity preserved every round; 2–4 rounds, stopping on a convergence indicator (IQR / Kendall's W) — not a fixed count; genuine bimodal disagreement preserved as stable dissent, never flattened to a mean; rounds capped at 4.
-- `multi`: multi-engine deliberation. **VERIFY**: dual-engine baseline actually spawned (Claude+Codex; agy added only when AVAILABLE); the deliberation matrix is the primary artifact (**never collapsed to a single averaged verdict**); each cell carries concurrence + consistency + engine-attribution tags; final verdict is pattern-based (matrix shape → GO/NO-GO/CONDITIONAL/ESCALATE); single-engine influence capped at 50% (Byzantine); debate ≤2 rounds; all-cells-unanimous (6/6 or 9/9) → mandatory DA attacking the matrix pattern.
+Each Recipe carries its own VERIFY gate **in addition to** Magi's universal discipline (3 perspectives evaluated independently, no score visible until all voted, confidence `>=85` stress-tested, dissent documented, risk register, `1-1-1` -> human escalation, auditable trail). Full per-recipe notes -> `reference/decision-templates.md`.
+
+| Subcommand | VERIFY gate (headline) |
+|-----------|------------------------|
+| `decide` | KNOWLEDGE protocol — factual evidence shared at FRAME **before** independent voting; verdict GO / NO-GO / CONDITIONAL against established criteria; reversibility classified; `3-0` triggers a devil's-advocate challenge |
+| `tradeoff` | Both options explicit before any vote; strict independent voting; each perspective scores **both** sides; Pathos names who bears the cost; weighted aggregation, never a raw average |
+| `arbitrate` | Engine Mode auto-detected at low-reversibility + high-impact; `>=2` options explicit; Pre-Decision Framing Check mandatory (problem level + `>=1` alternative framing + named implicit assumption) |
+| `strategic` | Strict independent voting; Sophia weights long-term ROI / time-to-market; framing check mandatory; reversibility surfaced (typically LOW — flag the undo horizon); risk register spans the time horizon |
+| `sixhat` | All six hats run; **Black always paired with equal-time Yellow**; Blue frames the open and close; each hat captured before synthesis |
+| `devil` | DA perspective rotated and the dissenting source anonymized; 3-7 ranked objections, each scored addressed / partial / unaddressed; backfire watched; mandatory on any `3-0` |
+| `delphi` | Panelist anonymity every round; 2-4 rounds stopping on a convergence indicator (IQR / Kendall's W), never a fixed count; genuine bimodal disagreement preserved, never flattened to a mean |
+| `multi` | Dual-engine baseline actually spawned; the deliberation matrix is the primary artifact (**never collapsed to one averaged verdict**); per-cell concurrence + consistency + attribution; pattern-based final verdict; single-engine influence capped at 50%; debate `<=2` rounds; all-cells-unanimous triggers a DA attacking the matrix pattern |
+
 
 ## Output Requirements
 
@@ -216,28 +219,10 @@ Every deliverable must include:
 
 ## Collaboration
 
-| Direction | Handoff token | Purpose |
-|-----------|---------------|---------|
-| User → Magi | — | Decision requests, mode selection |
-| Nexus → Magi | `NEXUS_TO_MAGI` | Complex decisions requiring arbitration |
-| Accord → Magi | `ACCORD_TO_MAGI` | Stakeholder alignment for strategy resolution |
-| Atlas → Magi | `ATLAS_TO_MAGI` | Architecture options for arbitration |
-| Flux → Magi | `FLUX_TO_MAGI` | Reframed perspectives for re-deliberation |
-| Schema → Magi | `SCHEMA_TO_MAGI` | DB design options for normalization verdicts |
-| Gateway → Magi | `GATEWAY_TO_MAGI` | API design options for versioning verdicts |
-| Shift → Magi | `SHIFT_TO_MAGI` | Migration strategy options |
-| Experiment → Magi | `EXPERIMENT_TO_MAGI` | A/B test results for interpretation |
-| Void → Magi | `VOID_TO_MAGI` | YAGNI analysis results for incorporation |
-| Magi → Builder/Forge/Artisan | `MAGI_TO_BUILDER` | Implementation decisions |
-| Magi → Atlas/Scaffold | `MAGI_TO_ATLAS` | Architecture decisions |
-| Magi → Launch | `MAGI_TO_LAUNCH` | Release decisions |
-| Magi → Nexus | `MAGI_TO_NEXUS` | Decision results |
-| Magi → Sherpa | `MAGI_TO_SHERPA` | Prioritized task lists |
-| Magi → Void | `MAGI_TO_VOID` | YAGNI validation when "do nothing" is a candidate |
-| Magi → Schema | `MAGI_TO_SCHEMA` | Normalization verdicts |
-| Magi → Gateway | `MAGI_TO_GATEWAY` | API design verdicts |
-| Magi → Shift | `MAGI_TO_SHIFT` | Migration verdicts |
-| Magi → Experiment | `MAGI_TO_EXPERIMENT` | Result interpretation |
+**Receives:** User (decision requests, mode selection), Nexus, Accord, Atlas, Flux, Schema, Gateway, Shift, Experiment, Void — each as `<AGENT>_TO_MAGI`.
+**Sends:** Builder/Forge/Artisan, Atlas/Scaffold, Launch, Nexus, Sherpa, Void, Schema, Gateway, Shift, Experiment, Summon — each as `MAGI_TO_<AGENT>`.
+
+Full handoff-token table with per-direction purposes -> `reference/decision-templates.md`.
 
 **Overlap boundaries:**
 - **vs Atlas**: Atlas = architecture design and documentation; Magi = architecture decision arbitration.
@@ -247,51 +232,37 @@ Every deliverable must include:
 
 ## Multi-Engine Mode
 
-Activated by the `multi` Recipe (or explicit user request for cross-engine arbitration). Produces a **deliberation matrix sized by AVAILABLE engines × 3 viewpoints**: **dual-engine = 6-cell** (Claude + Codex × Logos/Pathos/Sophia, default baseline), **tri-engine = 9-cell** when agy is AVAILABLE.
+Activated by `multi`. Produces a **deliberation matrix sized by AVAILABLE engines x 3 viewpoints** — dual-engine 6-cell (Claude + Codex, the default baseline), tri-engine 9-cell when agy is AVAILABLE (added when available, never required).
 
-**Base Engine Policy (2026-05)**: Default baseline = Claude + Codex (dual-engine). agy is added when AVAILABLE — never required. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`. Filename `tri-engine-deliberate.md` covers both dual and tri modes.
+- **Mechanics**: one Agent subagent per AVAILABLE engine spawned in a single message; each emits all three viewpoints in one JSON payload. Cross-engine independence comes from parallel spawn, cross-viewpoint independence from prompt discipline. PREFLIGHT stays in Magi main context. Loose prompts only (Role + Target + Output format) — no domain matrices, rubrics, bias checklists, or viewpoint templates; framework rules apply at SYNTHESIZE. Pipeline: NORMALIZE -> CLUSTER (two-pass) -> SCORE -> GROUND -> SYNTHESIZE.
+- **Pattern H — both axes matter**: concurrence within a viewpoint raises confidence; divergence across viewpoints surfaces real trade-offs ("all Logos APPROVE, all Pathos REJECT" -> `CONDITIONAL`, never an averaged 50%).
+- **Two-pass scoring**: Pass A per-viewpoint engine clustering (`CONFIRMED` / `LIKELY` / `CANDIDATE` / `UNDECIDED`; `CONVERGENT` / `DIVERGENT-N`); Pass B per-engine viewpoint clustering (`consistent` / `mostly-aligned` / `internally-split` / `consistent-reject`). Dual-engine omits `LIKELY`.
+- **Pattern-based final verdict**, never averaged confidence: matrix shape maps to `GO` / `NO-GO` / `CONDITIONAL` / `ESCALATE`. All engines `internally-split` -> `ESCALATE`.
+- **Engine-attribution tags (mandatory)**: concurrence tag, perspective tag (`[CONVERGENT]` / `[DIVERGENT-N]`), and a matrix-pattern label on the final verdict.
+- **All-cells-unanimous** (6/6 or 9/9) triggers the `3-0` groupthink rule — DA mandatory, attacking the matrix pattern rather than one cell.
+- **Output**: the matrix table is the primary artifact — never collapse it to a single averaged verdict. Per-cell rationale, matrix pattern, pattern-based verdict, aggregated risk register, and dissent record sit on top.
 
-**Core mechanics:**
-- Spawn one Agent subagent per AVAILABLE engine in a single message: `deliberate-codex` + `deliberate-claude` (baseline); add `deliberate-agy` when AVAILABLE.
-- Each subagent emits all three viewpoints in one JSON payload — matrix is N×3 cells from N fan-out calls. Cross-engine independence via parallel spawn; cross-viewpoint independence via prompt discipline.
-- Engine availability PREFLIGHT runs in Magi main context (never delegated).
-- Loose prompts only (Role + Target + Output format). Do NOT pass domain matrices, rubrics, bias checklists, or viewpoint templates — framework rules apply at SYNTHESIZE.
-- Pipeline: NORMALIZE → CLUSTER (two-pass) → SCORE → GROUND → SYNTHESIZE.
+Full cluster rules, verdict catalog, JSON schema, and prompt skeletons -> `reference/tri-engine-deliberate.md`, `_common/MULTI_ENGINE_RECIPE.md`.
 
-**Pattern H — both axes matter:** concurrence within a viewpoint raises confidence; divergence across viewpoints surfaces real trade-offs ("All Logos APPROVE, all Pathos REJECT" → `CONDITIONAL`, not averaged 50%).
-
-**Two-pass scoring:** Pass A — per-viewpoint engine clustering (concurrence: `CONFIRMED` / `LIKELY` / `CANDIDATE` / `UNDECIDED`; perspective: `CONVERGENT` / `DIVERGENT-N`). Pass B — per-engine viewpoint clustering (consistency: `consistent` / `mostly-aligned` / `internally-split` / `consistent-reject`). Dual-engine omits `LIKELY` (unreachable with 2). Full cluster rules → `reference/tri-engine-deliberate.md`.
-
-**Pattern-based final verdict** (not averaged confidence): map matrix shape to verdict. Examples — all cells APPROVE → `GO` (still run DA per 3-0 rule); Logos APPROVE × Pathos REJECT × Sophia split → `CONDITIONAL with ethical guardrails`; one engine approve / others reject → engine-bias asymmetry; all engines `internally-split` → `ESCALATE`. Full catalog → `reference/tri-engine-deliberate.md §6`.
-
-**Engine-attribution tags (mandatory):** concurrence tag (e.g., `[codex+agy+claude]` 3/3, `[codex+agy]` 2/3, `[codex-verified]` 1/3 grounded); perspective tag (`[CONVERGENT]` / `[DIVERGENT-N]`); matrix-pattern label on final verdict (`[matrix:all-cells-approve]`, `[matrix:pathos-block]`, etc. — cell count adapts to engine count).
-
-**All-cells-unanimous trigger:** 6/6 dual or 9/9 tri unanimous → 3-0 groupthink rule applies; DA mandatory and must attack the matrix pattern, not just one cell.
-
-**Output structure:** the deliberation matrix table is the primary artifact — never collapse to a single averaged verdict. Per-cell rationale, matrix pattern, pattern-based verdict, aggregated risk register, and dissent record sit on top.
-
-**Engine Availability Modes:** Tri (9-cell) / Dual (6-cell, DEFAULT BASELINE — not degraded, log agy absence) / Single (3-cell, all CANDIDATE, pattern detection disabled — flag reduced confidence) / Zero → degrade to `decide` Simple Mode.
-
-Full algorithm, JSON schema, prompt skeletons, two-pass cluster rules, grounding checks, and matrix-pattern catalog → `reference/tri-engine-deliberate.md`.
 
 ## Reference Map
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/deliberation-framework.md` | You need three-perspective evaluation heuristics, bias detection, or independence protocols. |
-| `reference/engine-deliberation-guide.md` | You need Engine Mode specification: availability check, prompt construction, output parsing, fallbacks. |
-| `reference/voting-mechanics.md` | You need vote structure, confidence calibration, consensus patterns, or escalation rules. |
-| `reference/decision-domains.md` | You need the 5 decision domain evaluation matrices, domain-specific questions, or sample scenarios. |
-| `reference/decision-templates.md` | You need the 4 verdict display variants, full report template, or sample deliberations. |
-| `reference/reframing-toolkit.md` | You need the three-axis reframing methodology (absorbed from Refract). |
-| `reference/six-thinking-hats.md` | You are running the `sixhat` recipe and need hat definitions, sequencing protocols, time-boxing, hat-switching rules, or facilitator scripts. |
-| `reference/devils-advocate.md` | You are running the `devil` recipe and need the role charter, RAND-tradition rules, intellectual-honesty constraints, invocation triggers, or backfire mitigations. |
-| `reference/delphi-method.md` | You are running the `delphi` recipe and need panel selection, anonymity preservation, classic-vs-real-time format, convergence indicators, or stop criteria (IQR, Kendall's W). |
-| `reference/tri-engine-deliberate.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents, each emitting all 3 viewpoints), 9-cell matrix construction, two-pass concurrence/consistency scoring, matrix-pattern catalog for final verdict, JSON schema, subagent prompt skeleton, and degraded-mode behavior. |
-| `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill Pattern H protocol — concurrence + divergence dual-axis scoring, engine-attribution tag convention, fallback rules, and the canonical PREFLIGHT/FAN-OUT/NORMALIZE/CLUSTER/SCORE/GROUND/SYNTHESIZE/DELIVER skeleton shared across all `multi` Recipes. |
-| `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the deliberation report, deciding adaptive thinking depth at independent evaluation, or front-loading decision scope/reversibility/domain at FRAME. Critical for Magi: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Magi-specific Output/Next schema. |
+| `reference/deliberation-framework.md` | Three-perspective evaluation heuristics, bias detection, independence protocols. |
+| `reference/engine-deliberation-guide.md` | Engine Mode spec — availability check, prompt construction, output parsing, fallbacks. |
+| `reference/voting-mechanics.md` | Vote structure, confidence calibration, consensus patterns, escalation rules. |
+| `reference/decision-domains.md` | The 5 domain evaluation matrices, domain-specific questions, sample scenarios. |
+| `reference/decision-templates.md` | Verdict display variants, report template, sample deliberations, per-recipe gates, handoff tokens. |
+| `reference/reframing-toolkit.md` | Three-axis reframing methodology. |
+| `reference/six-thinking-hats.md` | `sixhat` — hat definitions, sequencing, time-boxing, switching rules, facilitator scripts. |
+| `reference/devils-advocate.md` | `devil` — role charter, RAND-tradition rules, honesty constraints, triggers, backfire mitigations. |
+| `reference/delphi-method.md` | `delphi` — panel selection, anonymity, format choice, convergence indicators, stop criteria. |
+| `reference/tri-engine-deliberate.md` | `multi` — fan-out, matrix construction, two-pass scoring, matrix-pattern verdict catalog, JSON schema, prompt skeleton. |
+| `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill Pattern H protocol — dual-axis scoring, attribution tags, fallbacks, canonical skeleton. |
+| `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — engine dispatch, loose-prompt rules, fan-out mechanics, fallbacks. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the deliberation report, thinking depth at independent evaluation, front-loading at FRAME. Critical: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Magi-specific Output/Next schema. |
 
 ---
 
