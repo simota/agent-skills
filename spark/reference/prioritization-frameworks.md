@@ -132,3 +132,19 @@ Rules:
 - A slate with zero `H2`/`H3` candidates fails the VERIFY gate. "Safe and obvious" is a finding to flag, not a default to settle on.
 
 [Source: McKinsey — Three Horizons of Growth]
+
+
+---
+
+## RICE Scoring Guardrails (SKILL.md excerpt)
+
+- **Reach**: segment-specific, not total users; consistent time period across compared features.
+- **Impact**: enforce ≤20% of features at Impact=3; "High = ≥10% improvement in key metric."
+- **Confidence**: default 50% for unvalidated ideas; >80% only with quantitative evidence.
+- **Effort**: include design + testing + docs + maintenance, plus a ≥30% buffer.
+- **Scope limitation**: RICE deprioritizes tech debt / infra lacking user reach — flag it or route to `Atlas`.
+- **Cross-team calibration**: recommend a calibration session with anchor examples before cross-team scoring.
+- **Ambition preservation (conservatism guard)**: rank proposals **within** their Horizon (`H1`/`H2`/`H3`), never `H3`-vs-`H1` on one raw number; a slate with zero `H2`/`H3` candidates fails the VERIFY gate.
+
+Full guardrail/anti-pattern rationale, examples, and sources → `reference/prioritization-frameworks.md`.
+

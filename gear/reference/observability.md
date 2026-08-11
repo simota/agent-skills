@@ -409,3 +409,12 @@ eBPF is complementary to OTel, not a replacement: use eBPF for *zero-instrumenta
 ## EU CRA Reporting (2026-09-11)
 
 For any product placed on the EU market, the CRA reporting obligation takes effect **2026-09-11**: a 24-hour Early Warning + 72-hour Full Notification through the **ENISA Single Reporting Platform** for actively exploited vulnerabilities and severe incidents. The observability stack must therefore (a) detect anomalies fast enough to trigger the 24h timer, and (b) preserve enough forensic context (traces + logs + SBOM diff) to produce the 72h report. CE marking with SBOM as a *legal requirement* applies from **2027-12-11** — but SBOM tooling must already be operational by 2026-09 to support the reporting workflow.
+
+
+---
+
+## Environment Drift Advisory
+
+Canonical detail behind the Core Contract bullet in `SKILL.md`.
+
+- **Environment drift advisory (v6 fold-in)**: When the engagement scope includes environment configuration changes (env vars, Secret refs, K8s manifests, IaC plans across dev/staging/prod), produce an advisory drift report comparing declared spec vs current live state at config-file granularity. Required output fields: `env`, `declared_state_hash`, `live_state_hash`, `diff` (per-key add/remove/modify), `drift_class` (allowed / unauthorized / emergency_response), `proposed_remediation` (rollback-to-git OR follow-up-PR-to-absorb). Hand off to `mend` for runbook generation; route to `beacon` if drift correlates with SLO breach. **Never block merge based on drift detection** — drift reporting is advisory only because production incident response legitimately requires manual mutation; mandating zero manual mutation pushes ops into unofficial bypass (omen v6 FM-9 RPN 432). Suppress when scope has no environment touch.

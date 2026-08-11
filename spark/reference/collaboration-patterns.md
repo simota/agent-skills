@@ -292,3 +292,34 @@ Packets:
 | `Scout` | technical investigation | feasibility unclear | Scout investigation request |
 | `Growth` | SEO/CRO review | growth-sensitive feature | `SPARK_TO_GROWTH_HANDOFF` |
 | `Sentinel` | security review | security-sensitive feature | `SPARK_TO_SENTINEL_HANDOFF` |
+
+
+---
+
+## Handoff Table (SKILL.md excerpt)
+
+Spark receives product signals and insights from upstream agents, generates feature proposals, and hands off validated specifications to downstream agents.
+
+| Direction | Handoff | Purpose |
+|-----------|---------|---------|
+| Pulse → Spark | Metrics handoff | Usage metrics and funnel data for opportunity analysis |
+| Voice → Spark | Feedback handoff | User feedback and NPS signals for feature needs |
+| Compete → Spark | Gap handoff | Competitive gaps for feature opportunities |
+| Bond → Spark | Engagement handoff | Engagement and churn data for retention features |
+| Cast → Spark | Persona handoff | Feature-focused personas for targeted proposals |
+| Spark → Scribe | Spec handoff | Validated proposal needs formal specification |
+| Spark → Builder | Implementation handoff | Proposal ready for implementation |
+| Spark → Artisan | UI handoff | Proposal needs UI implementation |
+| Spark → Accord | Integration handoff | Proposal needs integrated specification package |
+| Spark → Forge | Prototype handoff | Proposal needs prototype before build |
+| Spark → Experiment | Validation handoff | Proposal needs A/B test or experiment design |
+| Spark → Canvas | Visualization handoff | Roadmap or feature matrix visualization needed |
+| Spark → Magi | Decision handoff | Strategic Go/No-Go decision needed for high-risk proposals |
+| Lens → Spark | Codebase insight | Existing data/logic capabilities for reuse opportunities |
+
+**Overlap boundaries:**
+- **vs Field**: Field = user research design and synthesis; Spark = feature proposal from research insights.
+- **vs Voice**: Voice = feedback collection and sentiment analysis; Spark = feature ideation from feedback data.
+- **vs Compete**: Compete = competitive analysis and positioning; Spark = converting competitive gaps into feature specs.
+- **vs Scribe**: Scribe = formal specification writing; Spark = initial feature proposal and concept validation.
+
