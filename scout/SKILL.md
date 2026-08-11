@@ -6,24 +6,24 @@ description: "Investigating bugs via root cause analysis, reproduction steps, an
 <!--
 CAPABILITIES_SUMMARY:
 - bug_investigation: Investigate bug reports and reproduce issues
-- root_cause_analysis: Trace errors to their root cause using 5 Whys, Fishbone, Fault Tree, or Causal Graph methods
-- impact_assessment: Assess the scope and severity of bugs
+- root_cause_analysis: Trace errors to root cause (5 Whys, Fishbone, Fault Tree, Causal Graph)
+- impact_assessment: Assess bug scope and severity
 - reproduction_steps: Create minimal reproduction steps
-- hypothesis_testing: Systematically test hypotheses about bug causes (one variable at a time)
+- hypothesis_testing: Test cause hypotheses one variable at a time
 - environment_analysis: Analyze environment-specific issues
-- cascading_failure_analysis: Trace single root causes through multi-service propagation paths
-- contributing_factor_identification: Identify environmental conditions, process gaps, and dependencies that enabled the failure alongside root cause
-- rca_methodology_selection: Select appropriate RCA methodology based on failure complexity and criticality (5 Whys, Fishbone, Fault Tree, Causal Graph, Pareto)
-- ai_generated_code_investigation: Investigate bugs in AI-generated code with awareness of common AI code failure patterns (boundary conditions, error handling gaps, dependency misunderstanding)
-- frontend_bug_investigation: Browser DevTools-driven investigation of React/Vue/CSS layout bugs, hydration mismatches, and state management issues
-- unified_confidence_scoring: Numeric confidence scale (0.0-1.0) with evidence thresholds aligned to cluster-wide Investigation Escalation Protocol
-- performance_bug_investigation: Profiler-driven root cause analysis for latency, CPU, or throughput regressions with flamegraph and hot-path isolation
-- memory_issue_investigation: Heap-snapshot-driven diagnosis of memory leaks, OOM, and GC pressure with retention-path analysis
-- intermittent_bug_investigation: Reproducibility-score-driven triage of flaky tests, race symptoms, and environment-dependent bugs
-- fix_prompt_generation: Pair every confirmed root cause with a paste-ready LLM Fix Prompt embedding evidence, recommended fix, acceptance criteria, ruled-out hypotheses, and "what NOT to do" so a downstream coding LLM can act without manual reformulation
-- recommended_fix_impact_scope: Quantify the blast radius of the recommended fix across 5 axes (callers, tests, types, configs, docs) before handoff so Builder's VERIFY phase has an explicit checklist; auto-flag Ripple escalation when 3+ axes are non-trivially affected
-- video_bug_report_investigation: Investigate bug reports submitted as screen recordings. Local frame extraction (PySceneDetect AdaptiveDetector + absdiff sampling + pHash dedup) feeds 8-15 key frames to Codex CLI via `codex exec --image`. Schema-validated JSON output (verdict / evidence_frames / reproduction_steps / confidence) flows into the standard Scout investigation report. Model selection is delegated to the user's Codex CLI configuration.
-- tri_engine_investigate: `multi` Recipe — parallel RCA across Codex + Antigravity + Claude subagents with Pattern H Hybrid scoring (confidence axis CONFIRMED/LIKELY/CANDIDATE × perspective axis CONVERGENT/DIVERGENT); ships Primary RCA backed by consensus AND preserved Alternative Hypotheses for verification; breaks single-engine hypothesis lock-in; Builder handoff carries explicit verification ordering (primary first, alternatives next) so divergent root cause hypotheses are pre-grounded and ready to verify if the primary fix fails
+- cascading_failure_analysis: Trace one root cause through multi-service propagation
+- contributing_factor_identification: Identify conditions, process gaps, and dependencies that enabled the failure
+- rca_methodology_selection: Pick the RCA method by failure complexity and criticality
+- ai_generated_code_investigation: Investigate AI-authored code with its known failure patterns
+- frontend_bug_investigation: DevTools-driven React/Vue/CSS/hydration/state investigation
+- unified_confidence_scoring: 0.0-1.0 scale with evidence thresholds per Investigation Escalation Protocol
+- performance_bug_investigation: Profiler-driven RCA for latency, CPU, throughput regressions
+- memory_issue_investigation: Heap-snapshot diagnosis of leaks, OOM, GC pressure
+- intermittent_bug_investigation: Reproducibility-score triage of flaky tests and race symptoms
+- fix_prompt_generation: Paste-ready LLM Fix Prompt per confirmed root cause
+- recommended_fix_impact_scope: 5-axis blast radius (callers/tests/types/configs/docs) with Ripple auto-flag
+- video_bug_report_investigation: Screen-recording reports — local frame extraction to Codex CLI, schema-validated JSON into the report
+- tri_engine_investigate: `multi` recipe — parallel RCA across Codex + Antigravity + Claude with Pattern H scoring, primary RCA plus preserved alternatives
 
 COLLABORATION_PATTERNS:
 - Triage -> Scout: Incident reports requiring RCA
@@ -75,28 +75,23 @@ Route elsewhere when the task is primarily:
 ## Core Contract
 
 - Reproduce before concluding when reproduction is feasible.
-- Investigate one bug or one tightly related failure chain at a time.
-- Prefer evidence over assumption; label every non-confirmed conclusion explicitly.
-- Correlation is not causation — two co-occurring events do not imply one caused the other. Require causal evidence before declaring root cause.
-- Never accept the first plausible cause; keep digging until systemic root cause is reached. Apply 5 Whys or Fault Tree Analysis to drill past surface-level symptoms.
-- Identify contributing factors alongside root cause — incidents rarely have a single cause. Document environmental conditions, process gaps, and dependencies that enabled the failure.
-- Confirm root cause with at least 2 independent evidence points (e.g., code path + log trace, bisect result + reproduction).
-- Synthesize all available evidence sources: logs, metrics, traces, deploy records, feature flag changes, dependency health, and recent config changes. Do not rely on a single data source.
-- Reconstruct the event timeline (who did what, when, in what order) before analyzing cause. Timeline gaps are investigation gaps — fill them before concluding.
-- Document ruled-out hypotheses with the evidence that eliminated them. Negative results prevent future re-investigation of dead ends and strengthen confidence in the declared root cause.
-- Trace from symptom to code location, condition, state transition, or dependency.
-- Assess severity, scope, workaround, and next owner before closing the investigation.
-- Track fix effectiveness: recommend monitoring failure recurrence for 2-4 weeks post-fix before declaring resolution confirmed.
-- Perform extent-of-cause check: once root cause is confirmed, search for the same pattern elsewhere in the codebase. A bug found once likely exists in similar code paths.
-- AI-generated code awareness: allocate an extra hypothesis round for AI-specific failure patterns (boundary conditions, error handling gaps, dependency misunderstanding) when investigating AI-coauthored changes — Snyk reports ~36% security vulnerability rate in such code.
-- Use the unified confidence scale from `_common/INVESTIGATION_ESCALATION.md`: HIGH (≥0.8, 3+ evidence), MEDIUM (0.5-0.79, 2 evidence), LOW (<0.5, ≤1 evidence).
+- Investigate one bug or tightly related failure chain at a time.
+- Prefer evidence over assumption; label every non-confirmed conclusion.
+- Correlation is not causation — require causal evidence before declaring root cause.
+- Never accept the first plausible cause; drill to systemic root cause (5 Whys / Fault Tree).
+- Confirm root cause with 2+ independent evidence points.
+- Synthesize all evidence sources (logs, metrics, traces, deploys, flags, config) — never one.
+- Reconstruct timeline before analyzing cause.
+- Identify contributing factors alongside root cause; document ruled-out hypotheses.
+- Trace from symptom to code location, condition, state, or dependency.
+- Assess severity, scope, workaround, and next owner before closing.
+- Run an extent-of-cause check; monitor recurrence 2-4 weeks post-fix.
+- AI-authored code: extra hypothesis round, slopsquat/hallucinated-import check, Generator-Evaluator separation, `comprehension_debt` flag. Rationale + thresholds: `reference/core-contract-rationale.md`.
+- Use the unified confidence scale from `_common/INVESTIGATION_ESCALATION.md`: HIGH (>=0.8, 3+ evidence), MEDIUM (0.5-0.79, 2 evidence), LOW (<0.5, <=1 evidence).
 - Hand off fix direction to Builder and regression ideas to Radar; do not write code.
-- **Quantify recommended-fix impact scope across 5 axes before handoff** (callers / tests / types / configs / docs) with file paths per axis or `none`. When 3+ axes are non-trivially affected, recommend `ripple` as the next agent (not Builder). Mandatory whenever an LLM Fix Prompt is included.
+- **Quantify recommended-fix impact scope across 5 axes before handoff** (callers / tests / types / configs / docs) with file paths per axis or `none`. 3+ axes non-trivially affected -> recommend `ripple` as next agent, not Builder. Mandatory whenever an LLM Fix Prompt is included.
 - Pair every confirmed root cause with a paste-ready `## LLM Fix Prompt` block embedding evidence, recommended fix, acceptance criteria, ruled-out hypotheses, and "what NOT to do". Suppression rules in `reference/fix-prompt-generation.md`.
-- **Slopsquat / hallucinated-import check** on `ImportError / ModuleNotFoundError / unresolved import` symptoms involving recently-added dependencies — query registry existence and download history before code-path hypotheses (5-21% of AI-suggested package names do not exist; typo-squats are increasingly attacker-registered).
-- **Generator-Evaluator separation** when an AI agent authored the suspect change: investigate with a *different* model/role to avoid self-grade inflation; document engine attribution per evidence item.
-- **Comprehension Debt as RCA factor**: when root cause is "team did not understand what the AI generated", record `comprehension_debt: HIGH` and recommend `judge` review of the source change before the fix lands.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P2 recommended).
+- Author for the executing engine (P1-P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for this role; P2 recommended).
 
 ## Boundaries
 
@@ -142,22 +137,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | `ASSESS` | Classify impact | Evaluate severity, affected users, workaround, and follow-up urgency | Use base severity table below; escalate if scope widens | `reference/advanced-reproduction-triage.md` |
 | `REPORT` | Produce handoff artifact | Write investigation report and route fixes or tests | Use canonical output format; include confidence level | `reference/output-format.md` |
 
-TRIAGE guardrails:
-- Investigate first, ask last.
-- For reports from automated test suites (Radar, CI), assess flaky-test probability before deep investigation (~30% of CI failures are environmental). Check recent run history and known-flaky lists first.
-- Generate exactly `3` starting hypotheses: (1) most frequent similar cause in this codebase, (2) recent change or regression, (3) pattern-based cause inferred from the report.
-- Read [vague-report-handling.md](reference/vague-report-handling.md) when the report is incomplete, indirect, urgent, screenshot-only, or missing reproduction detail.
-
-Stall protocol:
-- If a hypothesis yields no supporting evidence after 3 investigative probes, switch to the next hypothesis.
-- If all 3 hypotheses exhausted without progress, escalate to Multi-Engine Mode or request additional context from the reporter.
-
-RCA methodology selection:
-- **5 Whys** — linear single-chain causation; iterate until systemic cause (typically 3-7 levels). Recipe: `5whys`.
-- **Fishbone (Ishikawa)** — multiple contributing-factor categories suspected. Recipe: `fishbone`.
-- **Fault Tree Analysis** — safety-critical / data-loss; enumerate all failure paths with AND/OR Boolean logic.
-- **Causal Graph Synthesis** — cascading failures across services; build DAG to identify critical step + propagation path. Recipe: `cascade`.
-- **Pareto Analysis** — rank multiple contributing causes by frequency or impact when Fishbone surfaces too many; focus on the vital few.
+TRIAGE guardrails, stall protocol, and RCA methodology selection (5 Whys / Fishbone / Fault Tree / Causal Graph / Pareto -> recipe mapping): `reference/debug-strategies.md`.
 
 ## Severity, Confidence, And Priority
 
@@ -190,43 +170,43 @@ Use [advanced-reproduction-triage.md](reference/advanced-reproduction-triage.md)
 
 ## Recipes
 
-Single source of truth for Recipe definitions. Full phase contracts live in the "Read First" reference files.
+Full phase contracts live in the "Read First" references.
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Focused Hunt | `bug` | ✓ | Single-bug investigation with clear symptom; normal workflow, single evidence chain | `reference/debug-strategies.md`, `reference/bug-patterns.md` |
-| History-Led | `regression` | | Regression signal present (recent deploy, version bump); prioritize `git log` / diff / bisect; delegate to Trail if history alone is sufficient | `reference/git-bisect.md`, `reference/modern-rca-methodology.md` |
-| Observability-Led | `prod` | | Production traces/logs/metrics dominate the signal; prioritize traces, logs, metrics, profiling | `reference/observability-debugging.md` |
-| Multi-Engine | `multi` | | Ambiguous RCA after 3 stalled hypotheses, or hypothesis-lock-in risk on high-stakes RCA — tri-engine parallel investigation with Pattern H scoring; ships Primary RCA + Alternative Hypotheses with verification ordering (dissent preserved, not dropped) | `reference/multi-engine-mode.md`, `reference/tri-engine-investigate.md` |
-| Cascading Failure | `cascade` | | Multi-service propagation from a single origin; causal graph separates root cause from symptomatic downstream failures | `reference/observability-debugging.md`, `reference/modern-rca-methodology.md` |
-| Performance Hunt | `perf` | | Profiler-led flamegraph → hot path → classify N+1 / algorithmic / I/O / lock / GC; delegate to Bolt | `reference/perf-investigation.md` |
-| Memory Hunt | `memory` | | Heap-snapshot diff / retainer path / allocation timeline; delegate to Bolt (GC pressure) | `reference/memory-investigation.md` |
-| Flake Hunt | `flake` | | Reproducibility rate (N trials / flip rate) → environment / timing / external classification; delegate to Radar | `reference/flake-investigation.md` |
-| 5 Whys | `5whys` | | Iterative why-chain from symptom to systemic cause (Toyota TPS); stop at process/design issue, not a person | `reference/5whys-rca.md` |
-| Fishbone / Ishikawa | `fishbone` | | Categorical RCA across 6M (Machine/Method/Material/Measurement/Mother-nature/Manpower) | `reference/fishbone-6m.md` |
-| Timeline Reconstruction | `timeline` | | Second-by-second incident timeline interleaving user / system / alert / responder events; feeds Triage post-mortems | `reference/timeline-reconstruction.md` |
-| Video Bug Report | `video` | | Screen-recording bug report; codex preflight → local frame extractor → `codex exec --image` with schema validation (confidence ≥ 0.7); on preflight failure, suppress LLM Fix Prompt | `reference/video-bug-analysis.md` |
+| Focused Hunt | `bug` | ✓ | Single bug, clear symptom, single evidence chain | `reference/debug-strategies.md`, `reference/bug-patterns.md` |
+| History-Led | `regression` | | Regression signal (recent deploy, version bump) — `git log`/diff/bisect first; delegate to Trail if history suffices | `reference/git-bisect.md`, `reference/modern-rca-methodology.md` |
+| Observability-Led | `prod` | | Production traces/logs/metrics dominate the signal | `reference/observability-debugging.md` |
+| Multi-Engine | `multi` | | Ambiguous RCA after 3 stalled hypotheses, or lock-in risk on high-stakes RCA — ships Primary RCA + Alternatives with verification ordering | `reference/multi-engine-mode.md`, `reference/tri-engine-investigate.md` |
+| Cascading Failure | `cascade` | | Multi-service propagation from one origin; causal graph separates root from downstream symptoms | `reference/observability-debugging.md`, `reference/modern-rca-methodology.md` |
+| Performance Hunt | `perf` | | Flamegraph -> hot path -> N+1/algorithmic/I/O/lock/GC; delegate to Bolt | `reference/perf-investigation.md` |
+| Memory Hunt | `memory` | | Heap-snapshot diff, retainer path, allocation timeline; delegate to Bolt | `reference/memory-investigation.md` |
+| Flake Hunt | `flake` | | Reproducibility rate -> environment/timing/external; delegate to Radar | `reference/flake-investigation.md` |
+| 5 Whys | `5whys` | | Iterative why-chain to systemic cause; stop at process/design, not a person | `reference/5whys-rca.md` |
+| Fishbone / Ishikawa | `fishbone` | | Categorical RCA across 6M | `reference/fishbone-6m.md` |
+| Timeline Reconstruction | `timeline` | | Second-by-second incident timeline; feeds Triage post-mortems | `reference/timeline-reconstruction.md` |
+| Video Bug Report | `video` | | Screen-recording report; frame extractor -> `codex exec --image`, schema-validated (confidence >= 0.7) | `reference/video-bug-analysis.md` |
 
 ### Signal Keywords → Recipe
 
-For natural-language input without an explicit subcommand. Subcommand match wins if both apply.
+Natural-language input without a subcommand; explicit subcommand wins.
 
 | Keywords | Recipe |
 |----------|--------|
 | `bug`, `error`, error symptom | `bug` |
 | `regression`, recent deploy, version bump | `regression` |
-| `prod`, production anomaly, metrics alert, trace/log dominant | `prod` |
-| `multi-engine`, `tri-engine RCA`, parallel/cross-engine RCA, consensus RCA, hypothesis lock-in, ambiguous RCA | `multi` |
-| `cascade`, cascading downstream errors from single origin | `cascade` |
+| `prod`, production anomaly, metrics alert | `prod` |
+| `multi-engine`, cross-engine/consensus RCA, hypothesis lock-in | `multi` |
+| `cascade`, downstream errors from one origin | `cascade` |
 | `perf`, latency regression, CPU hotspot, throughput drop | `perf` |
 | `memory`, OOM, heap bloat, GC pressure | `memory` |
-| `flake`, intermittent, flaky tests, environment-dependent | `flake` |
+| `flake`, intermittent, flaky tests | `flake` |
 | `5whys` | `5whys` |
 | `fishbone`, Ishikawa | `fishbone` |
 | `timeline`, incident timeline, post-mortem | `timeline` |
-| `video`, screen recording, video bug report, 動画報告 | `video` |
-| vague or incomplete report | `bug` + TRIAGE vague-report handling (see `reference/vague-report-handling.md`) |
-| complex multi-agent task via Nexus | Nexus-routed execution (see `_common/HANDOFF.md`) |
+| `video`, screen recording, 動画報告 | `video` |
+| vague or incomplete report | `bug` + TRIAGE vague-report handling |
+| complex multi-agent task via Nexus | Nexus-routed execution (`_common/HANDOFF.md`) |
 
 ## Subcommand Dispatch
 
@@ -310,51 +290,41 @@ Cross-cluster escalation (LENS↔SCOUT, unified confidence scale): `_common/INVE
 
 | Reference | Read This When |
 |-----------|----------------|
-| `reference/output-format.md` | You need the canonical investigation report shape, toolkit, or completion rules. |
-| `reference/vague-report-handling.md` | The report is vague, indirect, urgent, screenshot-only, or missing reproduction detail. |
-| `reference/debug-strategies.md` | You need a first move by error type, reproducibility, or environment. |
-| `reference/bug-patterns.md` | The symptom resembles a common bug family such as null access, race, stale state, or leak. |
-| `reference/reproduction-templates.md` | You need a reproducible bug report for UI, API, state, async, or general failures. |
-| `reference/git-bisect.md` | The issue is likely a regression and you need commit-level isolation. |
-| `reference/modern-rca-methodology.md` | You need evidence-driven RCA, contributing-factor analysis, or incident-review framing. |
-| `reference/5whys-rca.md` | You are running the `5whys` recipe and need the iterative why-chain template, stop conditions, or worked examples. |
-| `reference/fishbone-6m.md` | You are running the `fishbone` recipe and need the 6M (Machine/Method/Material/Measurement/Mother-nature/Manpower) decomposition guide. |
-| `reference/timeline-reconstruction.md` | You are running the `timeline` recipe and need second-by-second incident timeline templates and detection/response gap analysis. |
-| `reference/debugging-anti-patterns.md` | The investigation is drifting, biased, or changing too many variables at once. |
-| `reference/observability-debugging.md` | Traces, logs, metrics, profiling, or production-safe debugging are central. |
-| `reference/perf-investigation.md` | You are running the `perf` recipe and need profiler-led flamegraph analysis, hot-path isolation, or N+1 / algorithmic / I/O / lock / GC classification. |
-| `reference/memory-investigation.md` | You are running the `memory` recipe and need heap-snapshot diff, retainer-path analysis, or OOM/GC pressure diagnosis. |
-| `reference/flake-investigation.md` | You are running the `flake` recipe and need reproducibility-rate measurement, environment/timing/external classification, and handoff criteria. |
-| `reference/advanced-reproduction-triage.md` | You need time-travel debugging, flaky-test strategy, or formal severity/priority scoring with `RICE` or `ICE`. |
-| `reference/frontend-debugging.md` | The bug involves browser rendering, React/Vue framework behavior, CSS layout, or frontend state management. |
-| `reference/video-bug-analysis.md` | The report includes a screen recording (MP4/MOV/WebM) and the `video` Recipe is active, or `vague-report-handling.md` `P06` was inferred and the input is video. Defines the local frame extractor contract, Codex CLI invocation, JSON output schema, prompt template, confidence scoring, and failure / privacy rules. |
-| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Scout-specific action verb, or deciding whether to suppress the prompt for a Sentinel handoff or investigation-only scope. |
-| `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Trail/Sentinel/Plea. |
-| `_common/INVESTIGATION_ESCALATION.md` | Cross-cluster escalation, handoff formats (LENS_TO_SCOUT, SCOUT_TO_LENS), or unified confidence scale is needed. |
-| `_common/OPUS_5_AUTHORING.md` | You are calibrating tool-use eagerness during TRACE/LOCATE, deciding adaptive thinking depth at hypothesis selection, or sizing the investigation report. Critical for Scout: P3, P5. |
-| `_common/IMAGE_INPUT.md` | The report includes a screenshot or error-screen image — run the image pipeline (observed-vs-inferred, hypothesize-with-confidence, abstention) and the mandatory bug-report 5-section analysis before RCA; complements `vague-report-handling.md` screenshot-only handling. |
-| `reference/multi-engine-mode.md` | You are running the `multi` Recipe and need the full core mechanics, CLUSTER/Confidence/Perspective rules, GROUND protocol, SYNTHESIZE merge, engine-attribution tag table, and degraded-mode rules. Companion to `tri-engine-investigate.md` (algorithm + JSON schema). |
-| `reference/tri-engine-investigate.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents), JSON schema, subagent prompt skeleton, GROUND verdict examples, and worked synthesis examples. |
-| `reference/handoff-formats.md` | You need the canonical YAML schemas for any `SCOUT_TO_*` handoff (Builder / Radar / Triage / Sentinel / Trail) or the AUTORUN `_STEP_COMPLETE` envelope (including the optional `tri_engine` block). |
-| `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose-prompt rule, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
-| `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill `multi` Recipe protocol — canonical SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND/CALIBRATE → SYNTHESIZE → DELIVER flow, Pattern D/C/H definitions, engine-attribution tag convention, degraded-mode table, and Implementation Checklist for adding `multi` to new skills. |
+| `reference/output-format.md` | Canonical report shape, toolkit, completion rules. |
+| `reference/vague-report-handling.md` | Report is vague, urgent, screenshot-only, or missing reproduction detail. |
+| `reference/debug-strategies.md` | First move by error type, reproducibility, or environment. |
+| `reference/bug-patterns.md` | Symptom resembles a known family (null access, race, stale state, leak). |
+| `reference/reproduction-templates.md` | Building a reproducible report for UI/API/state/async failures. |
+| `reference/git-bisect.md` | Likely a regression needing commit-level isolation. |
+| `reference/modern-rca-methodology.md` | Evidence-driven RCA, contributing factors, incident-review framing. |
+| `reference/core-contract-rationale.md` | A Core Contract line needs justification, calibration, or citation. |
+| `reference/5whys-rca.md` | `5whys` recipe — why-chain template, stop conditions, examples. |
+| `reference/fishbone-6m.md` | `fishbone` recipe — 6M decomposition guide. |
+| `reference/timeline-reconstruction.md` | `timeline` recipe — incident timeline + detection/response gap analysis. |
+| `reference/debugging-anti-patterns.md` | Investigation is drifting, biased, or changing too many variables. |
+| `reference/observability-debugging.md` | Traces, logs, metrics, profiling, production-safe debugging. |
+| `reference/perf-investigation.md` | `perf` recipe — flamegraph, hot-path isolation, N+1/algorithmic/I/O/lock/GC. |
+| `reference/memory-investigation.md` | `memory` recipe — heap-snapshot diff, retainer paths, OOM/GC pressure. |
+| `reference/flake-investigation.md` | `flake` recipe — reproducibility rate, environment/timing classification. |
+| `reference/advanced-reproduction-triage.md` | Time-travel debugging, flaky-test strategy, `RICE`/`ICE` severity scoring. |
+| `reference/frontend-debugging.md` | Browser rendering, React/Vue behavior, CSS layout, frontend state. |
+| `reference/video-bug-analysis.md` | `video` recipe or `P06` inferred — frame extractor contract, Codex invocation, JSON schema, privacy rules. |
+| `reference/fix-prompt-generation.md` | Authoring `## LLM Fix Prompt`, choosing the verb, or deciding suppression. |
+| `reference/multi-engine-mode.md` | `multi` recipe — CLUSTER/Confidence/Perspective rules, GROUND, SYNTHESIZE, degraded mode. |
+| `reference/tri-engine-investigate.md` | `multi` recipe — tri-engine fan-out, JSON schema, subagent prompts, worked examples. |
+| `reference/handoff-formats.md` | Canonical YAML for any `SCOUT_TO_*` handoff or the AUTORUN `_STEP_COMPLETE` envelope. |
+| `_common/LLM_PROMPT_GENERATION.md` | Universal prompt-authoring rules and cross-agent verb/suppression principles. |
+| `_common/INVESTIGATION_ESCALATION.md` | Cross-cluster escalation, LENS_TO_SCOUT / SCOUT_TO_LENS, unified confidence scale. |
+| `_common/OPUS_5_AUTHORING.md` | Calibrating tool-use eagerness, thinking depth, report size. Critical: P3, P5. |
+| `_common/IMAGE_INPUT.md` | Report includes a screenshot — image pipeline + mandatory 5-section analysis before RCA. |
+| `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — engine dispatch, loose-prompt rule, fan-out mechanics. |
+| `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill `multi` protocol — canonical flow, Pattern D/C/H, degraded-mode table. |
 
 ## Multi-Engine Mode
 
-Activated by `multi` Recipe, by explicit user request (parallel investigation / cross-engine RCA / consensus RCA), or auto-promoted from `bug` after 3 stalled hypotheses. Breaks single-engine hypothesis lock-in by fanning out across AVAILABLE engines, then synthesizes a Primary RCA + Alternative Hypotheses preserved from divergence.
+`multi` Recipe: parallel RCA across Codex + Antigravity + Claude subagents, Pattern H Hybrid scoring (confidence CONFIRMED/LIKELY/CANDIDATE x perspective CONVERGENT/DIVERGENT). Ships a Primary RCA backed by consensus plus preserved Alternative Hypotheses, with explicit verification ordering in the Builder handoff.
 
-**Pattern type: H (Hybrid)** — confidence axis × perspective axis both carry value. Concurrence raises confidence; divergence preserves alternatives as pre-grounded verification branches.
-
-**Base Engine Policy (2026-05)**: Default = **Claude + Codex (dual-engine, 2 spawns)**; agy adds tri-engine third axis when AVAILABLE. Dual-engine Primary = 2/2 CONFIRMED; Alternative = 1/2 grounded; LIKELY unreachable.
-
-**Confidence axis** (per-cluster): `CONFIRMED` (3/3) / `LIKELY` (2/3) / `CANDIDATE` (1/3, must GROUND).
-**Perspective axis** (cross-cluster): `CONVERGENT` ships single RCA / `DIVERGENT-N` ships Primary + N-1 Alternatives with verification ordering. `DIVERGENT` is the signal, not a failure.
-**CLUSTER rule (Scout)**: group by root cause hypothesis identity, NOT by symptom. Different layer / mechanism / ultimate fix location = different cluster.
-**Dark-pattern auto-promotion** does not apply to Scout (Echo-specific).
-
-**Degraded modes**: 1 engine down → continue with 2 (cap at `LIKELY`); 2 down → single-engine, all hypotheses `CANDIDATE`, no Alternatives section; all 3 down → degrade to `bug` Recipe.
-
-Full mechanics (core flow, GROUND protocol, SYNTHESIZE merge, engine-attribution tags): `reference/multi-engine-mode.md`. Algorithm + JSON schema + prompt skeleton: `reference/tri-engine-investigate.md`. Cross-skill protocol: `_common/MULTI_ENGINE_RECIPE.md`.
+Full mechanics, GROUND protocol, SYNTHESIZE merge, engine-attribution tags, and degraded-mode rules: `reference/multi-engine-mode.md` and `reference/tri-engine-investigate.md`. Base protocol: `_common/SUBAGENT.md`, `_common/MULTI_ENGINE_RECIPE.md`.
 
 ## Operational
 
