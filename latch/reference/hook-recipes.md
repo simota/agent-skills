@@ -359,3 +359,53 @@ Use stack sets as combinations of recipe IDs plus one or two stack-specific chec
 - Keep recipe comments or IDs in the config so the purpose stays discoverable.
 - Start with `1-2` recipes and add more gradually.
 - Too many hooks can slow the workflow or create false positives.
+
+
+---
+
+# Per-Recipe Behavior Depth
+
+Referenced from `SKILL.md` -> Subcommand Dispatch.
+
+Per-Recipe behavior depth is documented in the inline sections below. Recipes with a `Read First` reference follow that reference for full contracts.
+
+### `configure` — Default hook configuration flow
+
+Full SCAN → PROPOSE → IMPLEMENT run. `settings.json` backup required. Instruct session restart after JSON syntax validation.
+
+### `debug` — Diagnose existing hook issues
+
+Check `/hooks` → run `claude --debug` → manual stdin test. Validate timeout, exit code, and stdout/stderr mixing in order.
+
+### `pretool` — PreToolUse specialization
+
+Choose `permissionDecision` (`allow` / `deny` / `ask` / `defer`). Block with `exit 2`. `updatedInput` must always pair with `permissionDecision: allow`.
+
+### `posttool` — PostToolUse specialization
+
+`exit 0` only (no blocking). Optional context injection via JSON stdout. Can background with `async: true`.
+
+### `notification` — Notification event hook
+
+Read `reference/notification-hook.md` first. Branch on message regex via the matcher to route to terminal-notifier / Slack / Discord / desktop sinks. Apply dedup windows, prefer `async: true`, gate time-based rules with session start time.
+
+### `sessionstart` — SessionStart event hook
+
+Read `reference/sessionstart-hook.md` first. Fires on session start and after `/clear` / `/compact`. Stdout injects into next turn's context (keep <~10K tokens). Offload heavy work to cron + `~/.cache/`; the hook itself should be a lazy `cat`. Use `exit 2` only for env validation gates.
+
+### `security` — PreToolUse security guard
+
+Read `reference/security-guard-hook.md` first. Use `permissionDecision: deny` for dangerous Bash (`rm -rf /`, `chmod -R 777`, force-push to main), sensitive-file Write/Edit (`.env`, `id_rsa`, `*.pem`), secret-regex matches (use `updatedInput` to redact), and MCP tool ACL via `LATCH_BLOCKED_MCP_TOOLS`. In `CI=true`, promote interactive denies to auto-deny.
+
+### `quarantine` — Distribution-side skill/plugin/MCP guard
+
+Read `reference/skill-quarantine-hook.md` first. Guards the **distribution side** (vs `security`'s runtime side). Three baselines: SessionStart sha256 drift vs `.chain-manifest.json`, PreToolUse `Bash` deny on `claudemarketplaces.com` installs unless `CLAUDE_PLUGIN_INSTALL_ACK=1`, SessionStart MCP tool-description pinning to detect rug-pulls. Pairs with the `chain` agent. Defense against SkillJect, Unicode Tag, Shai-Hulud-class attacks.
+
+### `claudemd-update` — Stop hook CLAUDE.md proposer
+
+Read `reference/claude-md-update-proposer.md` first. Stop hook extracting "should have known" candidates to `.claude/proposals/`. Always `exit 0` + `async: true` (advisory only, never trap shutdown). Filters out linter-duplicates, single-anecdote observations, rules better expressed as hooks. Pair with Hone when 3+ proposals accumulate.
+
+### `skill-telemetry` — PreToolUse skill-usage logger
+
+Read `reference/skill-usage-telemetry.md` first. PreToolUse hook on the `Skill` matcher appending `{ts, skill, session, cwd}` JSONL to `${CLAUDE_PLUGIN_DATA:-$HOME/.claude}/telemetry/skill-usage.jsonl`. Always `async: true` + `exit 0` (monitoring, never enforcement). No `tool_input` capture (PII risk). Provides Darwin/Prune/Gauge/Lore with usage signals. Pattern source: Anthropic "Lessons from Building Claude Code".
+

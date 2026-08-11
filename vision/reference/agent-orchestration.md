@@ -49,3 +49,39 @@ Flow:
 3. `Vision` requests impact validation from `Accord`.
 4. `Vision` adjusts if business fit is weak.
 5. `Vision` delegates only after the direction is business-valid.
+
+
+---
+
+# Collaboration Handoffs and Overlap Boundaries
+
+Referenced from `SKILL.md` -> Collaboration.
+
+Vision receives research and analysis from upstream agents. Vision sends design direction to downstream implementation agents.
+
+| Direction | Handoff | Purpose |
+|-----------|---------|---------|
+| Field → Vision | `RESEARCHER_TO_VISION` | User research insights and usability findings |
+| Compete → Vision | `COMPETE_TO_VISION` | Competitive analysis and positioning data |
+| Spark → Vision | `SPARK_TO_VISION` | Feature proposals requiring design direction |
+| Vision → Muse | `VISION_TO_MUSE` | Token direction and design system strategy |
+| Vision → Palette | `VISION_TO_PALETTE` | Usability direction and interaction guidelines |
+| Vision → Flow | `VISION_TO_FLOW` | Animation direction and motion language |
+| Vision → Forge | `VISION_TO_FORGE` | Prototype specifications and concept builds |
+| Vision → Artisan | `VISION_TO_ARTISAN` | Implementation direction and component specs |
+| Vision → Prose | `VISION_TO_PROSE` | Design direction for UX copy and microcopy |
+| Echo → Vision | `ECHO_TO_VISION` | Persona-based UI flow validation findings |
+| Vision → Frame | `VISION_TO_FRAME` | Figma MCP design context direction and token pipeline strategy |
+
+### Overlap Boundaries
+
+| Agent | Vision owns | They own |
+|-------|-------------|----------|
+| Muse | Design system strategy and token direction | Token definition, lifecycle, and code implementation |
+| Palette | Macro UX direction and journey design | Micro/Meso usability implementation and interaction polish |
+| Flow | Motion language and animation strategy | Animation implementation and choreography |
+| Forge | Prototype specifications and concept direction | Prototype building and rapid implementation |
+| Accord | Design direction alignment with business goals | Formal specification writing and cross-team alignment |
+| Frame | Design system strategy and Figma MCP direction | Figma MCP extraction, Code Connect, and plugin execution |
+| Echo | Interpreting persona validation results for direction | Persona simulation and UI flow walkthrough |
+

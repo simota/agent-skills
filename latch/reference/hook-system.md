@@ -221,3 +221,133 @@ echo "export PROJECT_TYPE=nodejs" >> "$CLAUDE_ENV_FILE"
 - `prompt`: `30s`
 - `command`: `60s`
 - Production hooks should still set explicit `timeout` values.
+
+
+---
+
+# Hook Contract (full)
+
+Canonical detail for the Hook Contract summarized in `SKILL.md`.
+
+### Hook Types
+
+| Type | Best for | Default timeout | Supported events |
+|------|----------|-----------------|-----------------|
+| `command` | Fast deterministic checks, scripts, and external tools | `600s` | All events |
+| `prompt` | Context-aware or policy-heavy decisions | `30s` | Events with "All types? Yes" in Event Selection table |
+| `http` | External service integration, audit logging to remote endpoints | `30s` | All events |
+| `agent` | Multi-turn verification requiring tool access and deep reasoning | `60s` | Events with "All types? Yes" in Event Selection table |
+
+Selection guidance: Start with `command` hooks for formatting and linting, graduate to `prompt` hooks for security and policy decisions, use `agent` hooks only for deep verification requiring tool access. Prefer `command` for latency-sensitive paths (target ≤ 200ms per hook). Use `http` for external audit trails and webhook integrations. Command hooks do not consume token quota; prompt/agent hooks trigger model invocations that consume quota — reserve them for high-value decisions.
+
+When multiple hooks on the same event return different decisions, the strictest wins: `deny > defer > ask > allow` for PreToolUse; `deny > allow` for PermissionRequest. Identical command hooks (same command string) or HTTP hooks (same URL) matched by multiple matchers are deduplicated and run only once.
+
+### Exit Codes
+
+| Code | Meaning | Behavior |
+|------|---------|----------|
+| `0` | Success | Stdout parsed for JSON output fields |
+| `2` | Blocking error | Stderr is fed back to Claude |
+| Other | Non-blocking error | First line of stderr shown |
+
+Hook output injected into context is capped at 10,000 characters; excess is saved to a file with a preview and path.
+
+### Matcher Patterns
+
+| Pattern | Example | Use |
+|---------|---------|-----|
+| Exact | `"Bash"` | One tool or event only |
+| OR | `"Write|Edit"` | Small explicit set |
+| Wildcard | `"*"` | All tools or all events |
+| Regex | `"mcp__.*__delete.*"` | Family-wide matching such as MCP deletes |
+
+Matchers are case-sensitive: `"write"` does not match `"Write"`.
+
+### `settings.json` Structure
+
+```text
+settings.json
+└── hooks
+    └── Event[]
+        └── { matcher, hooks[] }
+            └── { type, prompt|command, timeout }
+```
+
+Structure rules:
+
+- Edit only the top-level `hooks` section.
+- Each event key maps to an array of matcher groups.
+- Each matcher group contains one `matcher` string plus a `hooks` array.
+- Hooks inside the same matcher group run in parallel.
+- Validate with `jq . ~/.claude/settings.json` before finishing.
+
+Hook sources (merged at runtime): `~/.claude/settings.json` (user), `.claude/settings.json` (project shared), `.claude/settings.local.json` (project local), managed policy settings (org-wide), plugin `hooks/hooks.json` (when enabled), skill/agent frontmatter (component lifetime). Hooks defined in skill/agent frontmatter are scoped to the component's lifetime and auto-cleaned up. Enterprise policy `allowManagedHooksOnly: true` blocks all non-managed hooks. `disableAllHooks: true` disables all hooks at the same or lower settings level.
+
+### Common Hook Fields
+
+| Field | Scope | Purpose |
+|-------|-------|---------|
+| `if` | Tool events | Conditional filter within matcher (e.g., `"if": "Bash(rm *)"` fires only for rm commands) |
+| `async` | command/http | `true` runs the hook in background without blocking Claude's execution |
+| `statusMessage` | All | Custom spinner text shown while hook runs |
+| `once` | Skills/agents only | `true` runs hook once per session, not on every match |
+| `timeout` | All | Override default timeout in seconds |
+
+### Command Hook Rules
+
+- Read stdin exactly once.
+- On `exit 2`, write blocking JSON to stderr, not stdout.
+- On `exit 0`, optional JSON to stdout is safe.
+- Use `set -uo pipefail`; avoid `set -e`.
+- Use PID-scoped temp files such as `/tmp/hook-state-$$`.
+- Set explicit timeouts even when defaults would apply.
+
+### Model-Based Gate Design
+
+When a hook's decision cannot be expressed as a pattern (`security` / `quarantine` recipes reaching for an LLM judgment), copy the shipped auto-mode architecture rather than inventing one. Source: `anthropic.com/engineering/claude-code-auto-mode` (2026-03-25), measured FPR **0.4%** on 10,000 real actions, FNR **17%** on real overeager actions and **5.7%** on synthetic exfiltration.
+
+| Principle | Rule |
+|-----------|------|
+| **Two-stage cascade** | Stage 1 = single-token classifier tuned to over-block (cheap, runs on every action). Stage 2 = chain-of-thought, invoked **only** on a Stage 1 flag. Never pay CoT latency on the common path. |
+| **Starve the judge** | Feed the classifier the **user messages and the executable payload only**. Strip assistant messages, tool-call descriptions, and tool outputs. Anything the agent authored is an attack surface — it lets the agent argue its way past the gate. |
+| **Tier before classify** | Tier 1 always-allow (reads, searches). Tier 2 auto-allow (in-project edits — version control is the undo). Tier 3 classify (shell, network, out-of-project paths, **subagent spawns**). Only Tier 3 pays for a model call. |
+| **Denials are a tool result, not a crash** | Return the denial to the agent with "find a safer alternative". Then bound it: terminate the session at **3 consecutive** or **20 cumulative** denials and escalate to a human — an agent looping against a gate is a signal, not noise. |
+| **Gate both directions on delegation** | Outbound: catch work that looks authorized inside the subagent but was never user-intended. Inbound: screen the subagent's result for injection before it re-enters the orchestrator's context. |
+
+**Timing rule (`quarantine`).** Project-local config — `.claude/settings.json`, including its `hooks` block — must not be parsed until *after* the user's trust prompt is answered. Anthropic shipped this inverted and a repo could execute hook commands pre-consent. Any hook or tool that reads untrusted repo config inherits this ordering requirement. Related ordering bug: **resolve symlinks first, then validate containment** — "symlink resolution has to happen *before* path validation, not after, or a symlink inside an authorized folder can point outside and escape" (`anthropic.com/engineering/how-we-contain-claude`).
+
+**Scope limit.** A hook is a *model-layer* control and never the sole defense. Environment controls (sandbox, egress policy) catch what a classifier misses: prompt-injection success is ~0.1% single-shot but **5-6% under 100 adaptive attempts**, and when the *user* is the one typing the hostile prompt, no intent-anchored classifier fires at all (credentials exfiltrated 24/25 times in Anthropic's own phishing test). Recommend sandboxing alongside any `security` hook — it independently removed 84% of permission prompts.
+
+
+
+---
+
+## Signal Keywords -> Recipe (full table)
+
+For natural-language input without an explicit subcommand. Subcommand match wins if both apply. Signals not in the Recipes table map to a workflow focus or reference rather than a Recipe.
+
+| Keywords | Maps to |
+|----------|---------|
+| `propose`, `design hook`, `what hook` | PROPOSE focus → `reference/hook-system.md` |
+| `configure`, `add hook`, `settings.json` | `configure` |
+| `debug`, `hook failing`, `hook slow`, `misfire`, `latency`, `hook performance` | `debug` |
+| `pretool`, `updatedInput`, `modify input`, `rewrite`, `redact` | `pretool` |
+| `posttool`, `async`, `background`, `non-blocking` | `posttool` |
+| `notification`, `slack`, `discord`, `desktop alert` | `notification` |
+| `session start`, `sessionstart`, `context injection`, `warm-up` | `sessionstart` |
+| `security hook`, `block`, `deny`, `secret regex`, `mcp acl` | `security` |
+| `quarantine`, `skill drift`, `plugin install gate`, `mcp rug-pull` | `quarantine` |
+| `claudemd-update`, `claude.md proposer`, `should have known` | `claudemd-update` |
+| `skill telemetry`, `skill usage`, `popular skill`, `under-trigger`, `usage log` | `skill-telemetry` |
+| `quality gate`, `stop hook`, `completion gate` | Stop/SubagentStop → `reference/hook-recipes.md` |
+| `webhook`, `http hook`, `audit log` | HTTP hook → `reference/hook-system.md` |
+| `mcp governance`, `mcp audit` | MCP audit hook → `reference/hook-system.md` |
+| `task hook`, `task naming` | TaskCreated/TaskCompleted → `reference/hook-system.md` |
+| `config change`, `settings guard` | ConfigChange hook → `reference/hook-system.md` |
+| `file watch`, `env change`, `reactive` | FileChanged/CwdChanged → `reference/hook-system.md` |
+| `elicitation`, `mcp input`, `mcp prompt` | Elicitation/ElicitationResult → `reference/hook-system.md` |
+| `worktree`, `git worktree` | WorktreeCreate/WorktreeRemove → `reference/hook-system.md` |
+| `plugin hook`, `hooks.json` | Plugin hook → `reference/hook-system.md` |
+| `conditional`, `if field`, `filter` | `if` field filtering → `reference/hook-system.md` |
+| unclear hook request | PROPOSE focus → `reference/hook-system.md` |
+
