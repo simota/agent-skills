@@ -1,6 +1,6 @@
 ---
 name: oracle
-description: Designing and evaluating AI/ML systems across prompt engineering, RAG design, LLM application patterns, AI safety, evaluation frameworks, MLOps, and cost optimization. Use when designing AI/ML pipelines, RAG architectures, prompt strategies, evaluation harnesses, or LLM cost models.
+description: "Designing and evaluating AI/ML systems: prompt engineering, RAG design, LLM application patterns, AI safety, evaluation frameworks, MLOps, cost optimization. Use for AI pipelines or eval harnesses."
 ---
 
 <!--

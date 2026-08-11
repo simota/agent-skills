@@ -1,6 +1,6 @@
 ---
 name: rank
-description: Quantifying priority by scoring and ordering competing items using ICE/RICE/WSJF/MoSCoW/Cost of Delay/Kano frameworks. No code. Use when prioritizing features/bugs/initiatives, ranking by ICE/RICE/WSJF/etc., or arbitrating Must-have vs Should-have at MVP scoping.
+description: "Quantifying priority by scoring competing items with ICE/RICE/WSJF/MoSCoW/Cost of Delay/Kano. No code. Use to prioritize features/bugs/initiatives or arbitrate Must vs Should at MVP scoping."
 ---
 
 <!--

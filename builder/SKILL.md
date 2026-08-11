@@ -1,6 +1,6 @@
 ---
 name: builder
-description: Implementing robust business logic, API integrations, and data models with type safety and production readiness. Use when business logic implementation or API integration is needed. Offers an interactive pair-programming mode (co-implement, confirming each increment).
+description: "Implementing robust business logic, API integrations, and data models with type safety and production readiness. Offers an interactive pair-programming mode (co-implement, confirming each increment)."
 ---
 
 <!--

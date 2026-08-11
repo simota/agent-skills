@@ -1,6 +1,6 @@
 ---
 name: architect
-description: Designing new skill agents via gap analysis, overlap detection, SKILL.md + reference generation, and Nexus integration. Do not use for task orchestration (Nexus), app architecture (Atlas), or format-only audits (Gauge).
+description: "Designing new skill agents via gap analysis, overlap detection, SKILL.md + reference generation, and Nexus integration. Not for task orchestration (Nexus) or format-only audits (Gauge)."
 ---
 
 <!--

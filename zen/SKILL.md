@@ -1,6 +1,6 @@
 ---
 name: zen
-description: "Refactoring code via variable name improvement, function extraction, magic number constants, dead code removal, and code review. Does not change behavior. Don't use for bug/security (Judge), new tests (Radar), architecture (Atlas), or feature implementation (Builder)."
+description: "Refactoring code: variable naming, function extraction, magic number constants, dead code removal. Does not change behavior. Not for bugs/security (Judge), tests (Radar), or features (Builder)."
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: relay
-description: Integrating messaging platforms, developing bots, and designing/implementing real-time communication. Covers channel adapter patterns, webhook handlers, WebSocket servers, event-driven architecture, bot command frameworks. Use when integrating Slack/Discord/Teams bots, designing webhook receivers, or wiring event-driven messaging.
+description: "Integrating messaging platforms and bots: channel adapters, webhook handlers, WebSocket servers, event-driven architecture, bot command frameworks. Use for Slack/Discord/Teams integration."
 ---
 
 <!--

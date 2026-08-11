@@ -1,6 +1,6 @@
 ---
 name: bolt
-description: Optimizing frontend (re-render reduction, memoization, lazy loading) and backend (N+1 fix, indexing, caching, async) performance, including continuous auto-tuning loops (profile → parameter → optimize → verify for GC/threadpool/pool/cache/worker settings — absorbed from dial). Use when one-shot speed improvement or continuous tuning is needed.
+description: "Optimizing frontend (re-render, memoization, lazy loading) and backend (N+1, indexing, caching, async) performance, plus continuous auto-tuning loops for GC/threadpool/cache/worker settings."
 ---
 
 <!--

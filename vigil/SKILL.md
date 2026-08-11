@@ -1,6 +1,6 @@
 ---
 name: vigil
-description: "Engineering detection rules (Sigma/YARA), mapping detection coverage, designing threat hunting hypotheses, executing Purple Team Blue side, and integrating Detection-as-Code CI/CD. Use when defensive security verification is needed."
+description: "Engineering detection rules (Sigma/YARA), mapping detection coverage, designing threat hunting hypotheses, running Purple Team Blue side, and integrating Detection-as-Code CI/CD."
 ---
 
 <!--

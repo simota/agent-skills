@@ -1,6 +1,6 @@
 ---
 name: lens
-description: Comprehending and investigating codebases. Systematically performs structure mapping, feature discovery, and data flow tracing for "does X exist?", "how does Y work?", or "what is this module's responsibility?". Includes a conversational Q&A mode ("ask") for navigator-style, multi-turn questions about a project. Does not write code.
+description: "Comprehending and investigating codebases: structure mapping, feature discovery, data flow tracing for 'does X exist?' or 'how does Y work?'. Includes a conversational ask mode. Does not write code."
 ---
 
 <!--

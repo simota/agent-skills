@@ -1,6 +1,6 @@
 ---
 name: frame
-description: Extracting and structuring design context from Figma via MCP Server for downstream implementation agents. Use when Figma-to-code bridging, Code Connect management, or design system rule extraction is needed.
+description: "Extracting and structuring design context from Figma via MCP Server for downstream implementation agents. Use for Figma-to-code bridging or Code Connect management."
 # skill-routing-alias: figma-mcp, design-context, code-connect, figma-bridge, design-to-code
 ---
 

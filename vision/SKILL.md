@@ -1,6 +1,6 @@
 ---
 name: vision
-description: "Directing UI/UX creative work — complete redesigns, new designs, and trend application. Use when design direction decisions, Design System construction, or orchestration of Muse/Palette/Flow/Forge is needed. Does not write code. Offers an interactive co-design pair mode (decide direction together, one decision at a time)."
+description: "Directing UI/UX creative work — complete redesigns, new designs, trend application, Design System construction, orchestration of Muse/Palette/Flow/Forge. No code. Offers a co-design pair mode."
 ---
 
 <!--

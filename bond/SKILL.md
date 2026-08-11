@@ -1,6 +1,6 @@
 ---
 name: bond
-description: Designing retention strategy, re-engagement, and churn prevention. Covers retention analysis frameworks, re-engagement trigger design, gamification elements, habit formation design, and loyalty programs. Use when engagement tactics are needed.
+description: "Designing retention strategy, re-engagement, and churn prevention: retention analysis frameworks, re-engagement triggers, gamification, habit formation, and loyalty programs."
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: canvas
-description: Visualizing code/designs/context as Mermaid, ASCII, or draw.io diagrams. Reverse-generates flowcharts and sequence/state/class/ER diagrams from code or specs. Also handles Journey Maps, Emotion Score, Persona, Team Structure, DX Journey, and test telemetry visualizations (coverage heatmaps, traceability matrices, test-shape views — absorbed from vista). Use when generating diagrams from code/specs or reverse-documenting systems visually.
+description: "Visualizing code, specs, or context as Mermaid, ASCII, or draw.io diagrams: flowcharts, sequence/state/class/ER, Journey Maps, personas, coverage heatmaps. Use to reverse-document systems visually."
 ---
 
 <!--

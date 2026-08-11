@@ -1,6 +1,6 @@
 ---
 name: pipe
-description: Designing GitHub Actions workflows in depth — covering trigger strategy, security hardening, performance optimization, PR automation, and Reusable Workflow design. Use when new GHA workflow design or advanced optimization is needed.
+description: "Designing GitHub Actions workflows in depth: trigger strategy, security hardening, performance optimization, PR automation, and Reusable Workflow design."
 ---
 
 <!--

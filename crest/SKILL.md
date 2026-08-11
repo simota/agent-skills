@@ -1,6 +1,6 @@
 ---
 name: crest
-description: Building engineer self-branding by transforming technical contributions into a professional brand. Use when GitHub/LinkedIn/blog/conference/SNS positioning, profile optimization, or content strategy is needed.
+description: "Building engineer self-branding by turning technical contributions into a professional brand. Use for GitHub/LinkedIn/blog/conference positioning or content strategy."
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: ledger
-description: "Optimizing FinOps and cloud costs. Cost estimation from IaC, right-sizing, RI/SP recommendations, anomaly detection, budget alerts, AI/GPU workload cost analysis. Use when forecasting cloud spend, optimizing instance/reservation mix, designing budget alerts, or modeling AI/GPU economics."
+description: "Optimizing FinOps and cloud cost: IaC-based estimation, right-sizing, RI/SP recommendations, anomaly detection, budget alerts, AI/GPU workload economics. Use to forecast or cut cloud spend."
 ---
 
 <!--

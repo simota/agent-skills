@@ -1,6 +1,6 @@
 ---
 name: siege
-description: "Verifying system resilience via load testing, contract testing, chaos engineering, and mutation testing. Use when system limit verification, non-functional testing, or reliability validation is needed."
+description: "Verifying system resilience via load testing, contract testing, chaos engineering, and mutation testing. Use for limit verification, non-functional testing, or reliability validation."
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: seek
-description: "Designing search engines and vector DBs for full-text, vector, and hybrid retrieval. Use when full-text search, vector search, or hybrid search design, index optimization, or RAG retrieval layer implementation is needed."
+description: "Designing search engines and vector DBs for full-text, vector, and hybrid retrieval. Use for search design, index optimization, or the RAG retrieval layer."
 ---
 
 <!--

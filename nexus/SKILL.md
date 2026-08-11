@@ -1,6 +1,6 @@
 ---
 name: nexus
-description: Orchestrating specialist AI agent teams as a meta-coordinator. Decomposes requests into minimum viable chains, spawns each as an independent session in AUTORUN modes, and drives to final output. Use when a task spans multiple specialist domains, requires parallel agent execution, or needs hub-and-spoke routing across the skill ecosystem.
+description: "Orchestrating specialist AI agent teams as a meta-coordinator: decomposes requests into minimum viable chains, spawns each as an independent session, drives to final output. For multi-domain tasks."
 ---
 
 <!--

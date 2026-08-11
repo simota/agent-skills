@@ -1,6 +1,6 @@
 ---
 name: field
-description: Conducting user research via interview guides, usability test plans, qualitative data analysis, persona creation, and journey mapping. Complements Echo's UI validation. Use when user research design or analysis is needed.
+description: "Conducting user research: interview guides, usability test plans, qualitative data analysis, persona creation, and journey mapping. Complements Echo's UI validation."
 ---
 
 <!--

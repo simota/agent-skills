@@ -1,6 +1,6 @@
 ---
 name: beacon
-description: Engineering observability and reliability through SLO/SLI design, distributed tracing, alerting, dashboards, capacity planning, toil automation, and reliability review. Use when designing observability instrumentation, defining SLOs/SLIs, building dashboards/alerts, or reviewing reliability posture.
+description: "Engineering observability and reliability: SLO/SLI design, distributed tracing, alerting, dashboards, capacity planning, toil automation, reliability review. Use for instrumentation or SLO definition."
 ---
 
 <!--

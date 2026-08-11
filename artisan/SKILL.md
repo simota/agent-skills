@@ -1,6 +1,6 @@
 ---
 name: artisan
-description: Implementing production frontend code for React/Vue/Svelte. Handles hooks design, state management, Server Components, form handling, and data fetching. Converts Forge prototypes to production-quality code.
+description: "Implementing production frontend code for React/Vue/Svelte: hooks design, state management, Server Components, form handling, data fetching. Converts Forge prototypes to production quality."
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: flow
-description: Implementing CSS/JS animations for hover effects, loading states, modal transitions, and gesture interactions. Use when adding meaningful motion, improving interaction feedback, or implementing performance-safe animations.
+description: "Implementing CSS/JS animations for hover effects, loading states, modal transitions, and gesture interactions. Use for meaningful motion, interaction feedback, or performance-safe animation."
 ---
 
 <!--

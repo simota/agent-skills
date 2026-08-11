@@ -1,6 +1,6 @@
 ---
 name: hearth
-description: Generating, optimizing, and auditing personal development environment config files (zsh/tmux/neovim/ghostty), and automating the macOS desktop via AppleScript/JXA/osascript (Finder, Mail, Safari, Calendar, Notes, System Events). Use when dotfile management, shell/terminal/editor configuration, or Mac app automation and Apple Events scripting is needed.
+description: "Generating and auditing personal dev environment configs (zsh/tmux/neovim/ghostty) and automating the macOS desktop via AppleScript/JXA (Finder, Mail, Safari). Use for dotfiles or Apple Events."
 ---
 
 <!--

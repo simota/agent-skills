@@ -1,6 +1,6 @@
 ---
 name: rally
-description: Orchestrating multi-session parallel execution using Claude Code Agent Teams API and Codex CLI Subagents to launch, manage, and coordinate concurrent task execution across multiple instances. Use when parallel work is needed.
+description: "Orchestrating multi-session parallel execution via Claude Code Agent Teams API and Codex CLI Subagents — launches, manages, and coordinates concurrent tasks across instances."
 ---
 
 <!--

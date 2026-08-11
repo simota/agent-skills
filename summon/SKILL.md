@@ -1,6 +1,6 @@
 ---
 name: summon
-description: "Channeling the documented thinking of named notable figures (an 'itako' medium) — applies their mental models, heuristics, and decision-style to your problem as advisory lenses. Don't use for decisions/verdicts (Magi), synthetic user personas (Cast), or fixed founder-mentor coaching (Sage)."
+description: "Channeling the documented thinking of named notable figures (an 'itako' medium) — their mental models, heuristics, and decision-style as advisory lenses. Not for decisions (Magi) or personas (Cast)."
 ---
 
 <!--

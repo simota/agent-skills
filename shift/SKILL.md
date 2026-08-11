@@ -1,6 +1,6 @@
 ---
 name: shift
-description: "Orchestrating migrations, upgrades, and modernization across frameworks, libraries, APIs, databases, native runtimes, and dependencies. Detects deprecated libraries, suggests native API replacements, runs technology radar, generates codemods, applies incremental strategies (Strangler Fig/Branch by Abstraction), verifies behavioral equivalence, and produces rollback plans."
+description: "Orchestrating migrations, upgrades, and modernization across frameworks, libraries, APIs, databases, and dependencies. Generates codemods, applies Strangler Fig, verifies equivalence, plans rollback."
 ---
 
 <!--

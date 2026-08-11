@@ -1,6 +1,6 @@
 ---
 name: accord
-description: Authoring unified specification packages across Business/Development/Design teams via staged elaboration (L0 Vision → L1 Requirements → L2 Team Detail → L3 Acceptance Criteria). No code. Use when authoring cross-team specs, building L0-L3 packages, or aligning Biz/Dev/Design on a single source of truth.
+description: "Authoring unified specification packages across Business/Development/Design teams via staged elaboration (L0 Vision, L1 Requirements, L2 Team Detail, L3 Acceptance Criteria). No code."
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: tuner
-description: "Tuning database queries via EXPLAIN ANALYZE, query plan optimization, index recommendations, and slow query detection/fixing. Complements Schema's schema design. Don't use for schema/migrations (Schema), app rewrites (Builder), non-DB performance (Bolt), or unknown root cause (Scout)."
+description: "Tuning database queries via EXPLAIN ANALYZE, query plan optimization, index recommendations, and slow query detection. Not for schema/migrations (Schema) or non-DB performance (Bolt)."
 ---
 
 <!--

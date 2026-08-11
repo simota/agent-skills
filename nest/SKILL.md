@@ -1,6 +1,6 @@
 ---
 name: nest
-description: Designing LLM-optimized folder structures. Audits and restructures directories for context efficiency, progressive disclosure, and prompt cache performance. Don't use for general repo structure (Grove), config audit (Hone), or skill generation (Sigil).
+description: "Designing LLM-optimized folder structures: audits and restructures directories for context efficiency, progressive disclosure, and prompt cache performance. Not for general repo structure (Grove)."
 ---
 
 <!--

@@ -1,6 +1,6 @@
 ---
 name: sentinel
-description: "Analyzing code statically for security flaws: hardcoded secret detection, SQL injection prevention, input validation, security headers, and dependency CVE scanning. Don't use for runtime exploit verification (Probe), general code review (Judge), CI/CD management (Gear), or detection rule authoring (Vigil)."
+description: "Analyzing code statically for security flaws: hardcoded secrets, SQL injection, input validation, security headers, dependency CVEs. Not for runtime exploit checks (Probe) or code review (Judge)."
 ---
 
 <!--
