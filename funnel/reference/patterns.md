@@ -270,3 +270,78 @@ Narrative-style LPs using CSS scroll-driven animations:
   - "Seems hard" → "How long to set up?" → emphasize simplicity.
   - "Can I trust you?" → "Is it secure?" → certifications and track record.
   - "Not urgent" → "When should I start?" → frame opportunity cost.
+
+
+---
+
+## A/B Testing Platform Landscape
+
+Referenced from `SKILL.md` -> Subcommand Dispatch.
+
+When delegating variant execution to Experiment, specify the target platform from current options:
+
+| Platform | Architecture | Best For | Pricing model |
+|----------|-------------|----------|---------------|
+| **GrowthBook** | Warehouse-native; open source | Data/engineering teams with existing data warehouse; statistical rigor (CUPED, post-stratification) | Free (OSS self-hosted); $20/user/mo Pro |
+| **PostHog** | All-in-one (analytics + experiments + session replay) | Product teams wanting no-SQL setup; generous free tier | Usage-based; 1M events/mo free |
+| **Statsig** | Acquired by OpenAI 2025; large-scale feature flags | High-volume experimentation; faster insights with fewer samples | Contact sales |
+| **Optimizely** | Enterprise; visual editor | Marketing/non-dev teams; WYSIWYG variant creation | Enterprise contract |
+
+Source: [GrowthBook — Best A/B Platforms 2025](https://blog.growthbook.io/the-best-a-b-testing-platforms-of-2025/).
+
+### LP Framework Guidance (2025–2026)
+
+| Framework | LP Fit | Key LP Features |
+|-----------|--------|----------------|
+| **Astro 5+** | Best for static/content LPs | Zero JS by default; View Transitions API built-in (2 lines); Islands architecture for interactive CTAs; top CWV scores out-of-box |
+| **Next.js 15/16** | SaaS LPs with dynamic personalization | Partial Prerendering (PPR) GA in 2025; React View Transitions integration; Turbopack stable production builds |
+| **SvelteKit 2+** | Performance-sensitive LPs, smaller bundle | Svelte 5 runes; excellent INP profile; CSS scroll-driven animations native support |
+
+**View Transitions API:** Browser support exceeded 85% in 2025 (Chrome 111+, Edge 111+, Safari 18+). Use for multi-step form transitions and hero-to-content navigation without full page reload — eliminates layout jank and improves perceived performance. Source: [Astro Docs — View Transitions](https://docs.astro.build/en/guides/view-transitions/).
+
+**CSS Scroll-Driven Animations:** Use `animation-timeline: scroll()` / `view()` for progress bars, fade-ins, and parallax — zero JS scroll listeners, direct INP benefit. Delegate implementation to Flow or Artisan; specify in LP performance requirements.
+
+---
+
+
+
+## Standard Section Map
+
+Referenced from `SKILL.md` -> LP Structure Frameworks.
+
+### Standard Section Map
+
+```
+┌─────────────────────────────────────────────┐
+│ 1. HERO (First View)                        │
+│    Headline + Sub + CTA + Hero Image/Video  │
+├─────────────────────────────────────────────┤
+│ 2. PAIN / PROBLEM                           │
+│    Target's current frustration              │
+├─────────────────────────────────────────────┤
+│ 3. SOLUTION OVERVIEW                        │
+│    What you offer (high level)               │
+├─────────────────────────────────────────────┤
+│ 4. BENEFITS (not features)                  │
+│    3-5 benefit blocks with icons             │
+├─────────────────────────────────────────────┤
+│ 5. SOCIAL PROOF                             │
+│    Testimonials / logos / numbers             │
+├─────────────────────────────────────────────┤
+│ 6. HOW IT WORKS                             │
+│    3-step process visualization              │
+├─────────────────────────────────────────────┤
+│ 7. FEATURES (detail)                        │
+│    Feature grid or comparison table          │
+├─────────────────────────────────────────────┤
+│ 8. PRICING / OFFER                          │
+│    Pricing table or special offer            │
+├─────────────────────────────────────────────┤
+│ 9. FAQ                                      │
+│    Objection-handling disguised as FAQ        │
+├─────────────────────────────────────────────┤
+│ 10. FINAL CTA                               │
+│     Urgency + last push + form/button        │
+└─────────────────────────────────────────────┘
+```
+

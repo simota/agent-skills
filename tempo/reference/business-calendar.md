@@ -295,3 +295,21 @@ Calendar data MUST be dynamic, not baked:
 - [ ] Tests cover Happy Monday dates (vary by year).
 - [ ] Tests cover equinox edge cases (20 vs 21, 22 vs 23).
 - [ ] Multi-region product: per-region calendar resolution (user location / tenant config).
+
+
+---
+
+## SKILL.md Excerpt
+
+Read `reference/business-calendar.md` for the full spec.
+
+### Japan essentials
+
+- **Public holidays (祝日)**: Source of truth is 内閣府 (`cao.go.jp/chosei/shukujitsu/`). Update at least annually.
+- **振替休日 (substitute holiday)**: If a 祝日 falls on a Sunday, the following non-holiday weekday becomes a holiday.
+- **国民の休日 (sandwich holiday)**: A non-祝日 weekday sandwiched by two 祝日s becomes a holiday (rare; occurs around May 4 in some years before 2007, and around other clusters).
+- **Happy Monday system (ハッピーマンデー制度)**: Certain holidays are defined as "second Monday of January" etc., not fixed dates.
+- **Banking days (銀行営業日)**: Exclude weekends, 祝日, and 12/31, 1/2, 1/3 (年末年始 — regulated by 銀行法施行令).
+- **Fiscal year**: Apr 1 – Mar 31 for most Japanese corporations and government/education.
+- **Libraries**: `@holiday-jp/holiday_jp` (npm), `japanese-holidays` (npm), `jpholiday` (Python, PyPI).
+

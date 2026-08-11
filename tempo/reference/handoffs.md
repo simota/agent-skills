@@ -437,3 +437,17 @@ _STEP_COMPLETE:
   Next: Builder | Gear | Pipe | Weave | Beacon | Voyager | Judge | DONE
   Reason: [why next step]
 ```
+
+
+---
+
+## Collaboration Patterns (SKILL.md excerpt)
+
+| Pattern | Flow | Purpose |
+|---------|------|---------|
+| **A** Schedule-Design-to-Impl | User → Tempo → Builder → Gear | End-to-end schedule rollout |
+| **B** Retry-Hardening | User → Tempo → Weave → Builder | Retry policy + state machine co-design |
+| **C** Timezone-Audit | User → Tempo[audit] → Judge → Builder | Audit existing TZ handling, review, fix |
+| **D** Backfill-Recovery | Triage → Tempo[replay] → Builder → Beacon | Incident recovery with watermark + observability |
+| **E** Schedule-Observability | Tempo → Beacon → Builder | Missed-run alert + execution SLO design |
+| **F** CI-Cron-Optimization | Tempo → Gear/Pipe | Optimize GHA `schedule.cron` across repos |

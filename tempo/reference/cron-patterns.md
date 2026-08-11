@@ -367,3 +367,55 @@ Date next = ce.getNextValidTimeAfter(new Date());
 - [ ] Validated via crontab.guru or equivalent.
 - [ ] Paired with retry policy (see `retry-strategies.md`).
 - [ ] Paired with idempotency key (see `retry-strategies.md`).
+
+
+---
+
+## Common Anti-patterns (SKILL.md excerpt)
+
+| Anti-pattern | Symptom | Fix |
+|--------------|---------|-----|
+| `* * * * *` with task > 60s | Overlapping runs, resource contention | Add distributed lock OR increase interval OR set overlap policy `skip` |
+| `0 0 * * *` in `America/New_York` | Skipped or duplicated once per DST transition | Run in UTC, or set explicit DST policy |
+| `0 0 31 * *` | Fires only in 31-day months (7 times/year) | Use last-day-of-month (`L` in Quartz) or application-level logic |
+| `0 0 * * 0,7` | Ambiguous (Sunday = 0 or 7?) | Use `0` only; verify platform docs |
+| GHA `schedule.cron: '* * * * *'` | Free-tier min interval 5 min; skew 5-15 min under load | Use EventBridge + Lambda or Cloud Scheduler for tight SLA |
+
+
+---
+
+## Platform Implementation Matrix (SKILL.md excerpt)
+
+| Platform | Cron format | Timezone | Retry | DLQ | Idempotency |
+|----------|------------|----------|-------|-----|-------------|
+| **GitHub Actions** | 5-field Unix | UTC only | Manual in workflow | None native — log + issue | Manual |
+| **AWS EventBridge** | 6-field `cron(...)` | UTC or local via rule | Lambda retry (2 default) + async DLQ | SQS DLQ | Request-ID based |
+| **K8s CronJob** | 5-field Unix | UTC (cluster) or spec.timeZone (stable since v1.27; embedded Go tzdata fallback) | `backoffLimit` | Failed-job history + external | Manual |
+| **Cloud Scheduler** (GCP) | 5-field Unix + `timeZone` | Any IANA | Retry config on Job | Pub/Sub DLQ | Manual |
+| **Sidekiq** (Ruby) | cron-parser via sidekiq-cron | Any IANA | Built-in exp backoff (25 retries) | Morgue queue | `sidekiq_options lock: :until_executed` |
+| **BullMQ** (Node) | Job Schedulers API (v5.16+; `repeat` deprecated) | Any IANA | `attempts` + `backoff: exponential` | `failed` list | Custom via job ID |
+| **Celery Beat** (Python) | crontab() | Any IANA | `autoretry_for`, `retry_backoff` | Result backend + manual | `task_ignore_result`, custom |
+| **Temporal** | Built-in cron + workflow | Any IANA | `RetryPolicy` with backoff/coefficient/max | `CancelChildWorkflow` / Queues | Workflow ID = idempotency key |
+
+
+---
+
+## Signal Keywords -> Recipe (full table)
+
+For natural-language input without an explicit subcommand. Subcommand match wins if both apply.
+
+| Keywords | Recipe |
+|----------|--------|
+| `cron`, `schedule`, `recurring`, `periodic` | `cron` |
+| `timezone`, `TZ`, `DST`, `UTC`, `daylight saving` | `timezone` |
+| `retry`, `backoff`, `DLQ`, `dead letter`, `rate limit`, `throttle`, `token bucket`, `leaky bucket`, `GCRA` | `retry` |
+| `backfill`, `catchup`, `replay`, `reprocess` | `backfill` |
+| `holiday`, `business day`, `fiscal year`, `営業日`, `祝日` | `calendar` |
+| `deadline`, `context deadline`, `timeout budget`, `AbortSignal deadline`, `grpc-timeout` | `deadline` |
+| `window`, `tumbling`, `sliding`, `session window`, `watermark`, `late arrival` | `window` |
+| `idempotent`, `idempotency key`, `dedup`, `exactly-once`, `effectively-once`, `Stripe-Idempotency` | `idempotent` |
+| `GitHub Actions cron`, `GHA schedule` | `cron` (apply UTC-only + best-effort caveat; `.github/workflows/*.yml` snippet) |
+| `EventBridge`, `AWS scheduled rule` | `cron` (6-field + SQS/DLQ plan via `retry`) |
+| `K8s CronJob`, `Kubernetes scheduled` | `cron` (manifest with `concurrencyPolicy` + `startingDeadlineSeconds`) |
+| unclear temporal request | `cron` (full ANALYZE → HARDEN workflow; schedule contract with all six fields) |
+

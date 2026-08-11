@@ -340,3 +340,18 @@ Store this on the user profile at signup. Prefer an explicit setting over re-det
 - [ ] tzdata version pinned in container images; refresh cadence documented.
 - [ ] No Moment.js in new code; existing Moment usage has a migration ticket.
 - [ ] User TZ preference stored, not inferred per-request.
+
+
+---
+
+## Library Choice Matrix (SKILL.md excerpt)
+
+| Library | State | Recommendation |
+|---------|-------|----------------|
+| **Temporal API** | ECMAScript Stage 4 (ES2026); native in Node 26+, Firefox 139+, Chrome 144+; polyfill `@js-temporal/polyfill` | New TS/JS code — preferred |
+| **Luxon** | Mature, IANA-aware | Excellent for current production JS/TS |
+| **date-fns v4 + `@date-fns/tz`** | v4.0 (Sep 2024) first-class TZ via `@date-fns/tz` / `@date-fns/utc` packages | Preferred for date-fns codebases |
+| **date-fns-tz** | Pre-v4 companion; `@date-fns/tz` is the successor | Legacy — migrate on v4+ |
+| **Moment.js** | Maintenance mode since 2020 | Do NOT use in new code |
+| **Python `zoneinfo`** | Stdlib 3.9+, IANA-backed | Preferred over `pytz` |
+| **pytz** | Footguns (use `.localize()`, not constructor) | Replace with `zoneinfo` |

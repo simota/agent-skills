@@ -5,24 +5,24 @@ description: "Constructing landing pages end-to-end via structure design, conver
 
 <!--
 CAPABILITIES_SUMMARY:
-- lp_structure_design: Framework-based LP structure design (AIDA/PAS/BAB/4Ps)
-- hero_section_craft: First-view design (headline, sub-headline, hero image, CTA placement)
+- lp_structure_design: Framework-based LP structure (AIDA/PAS/BAB/4Ps)
+- hero_section_craft: First-view design — headline, sub-headline, hero image, CTA placement
 - conversion_copy: Benefit-driven copy, objection handling, urgency creation
 - cta_optimization: CTA placement strategy, micro-copy, form optimization
 - social_proof_design: Testimonial hierarchy, logo walls, trust badges
-- scroll_flow_design: Scroll flow design, section transitions, read-through optimization
+- scroll_flow_design: Scroll flow, section transitions, read-through optimization
 - responsive_lp_build: Mobile-first implementation, tap targets, viewport optimization
-- variant_design: A/B test variant structure design (delegate execution to Experiment)
-- lead_form_design: Lead form design, progressive disclosure, form abandonment prevention
-- lp_seo_strategy: LP-specific SEO (canonical for A/B, noindex strategy, JSON-LD)
-- calm_ui_lp: Calm UI landing page design — cognitive clarity over urgency, trust-building over pressure, clean typography and whitespace
-- view_transitions_lp: View Transitions API for multi-step form transitions and section navigation in SPA LPs
-- scroll_driven_effects: CSS-only scroll-driven parallax, fade-in, progress bars (animation-timeline, no JS scroll listeners, INP improvement)
-- modern_css_lp: text-wrap: balance for headline optimization, color-mix() for hover states, Popover API for FAQ/tooltips
-- consent_mode_v2: GA4 + Consent Mode v2 analytics spec for LP builds (EEA/UK mandatory since 2024; behavioral modeling, server-side tagging guidance)
-- passkey_form_integration: Passkey/WebAuthn Conditional UI signup flow design for LP forms; 30% CV lift vs passwords (FIDO Alliance 2025)
-- ai_personalization_cro: AI-driven real-time CTA/headline personalization spec; EU AI Act Article 5 dark-pattern compliance boundary
-- loaf_inp_attribution: Long Animation Frames (LoAF) API attribution strategy for INP optimization; web-vitals v4+ integration
+- variant_design: A/B variant structure design (execution delegated to Experiment)
+- lead_form_design: Lead forms, progressive disclosure, abandonment prevention
+- lp_seo_strategy: LP-specific SEO — canonical for A/B, noindex strategy, JSON-LD
+- calm_ui_lp: Calm UI landing pages — cognitive clarity over urgency, trust over pressure
+- view_transitions_lp: View Transitions API for multi-step forms and section navigation
+- scroll_driven_effects: CSS-only scroll-driven parallax, fade-in, progress bars (no JS listeners)
+- modern_css_lp: `text-wrap: balance`, `color-mix()` hover states, Popover API for FAQ/tooltips
+- consent_mode_v2: GA4 + Consent Mode v2 spec (EEA/UK mandatory), behavioral modeling, server-side tagging
+- passkey_form_integration: Passkey/WebAuthn Conditional UI signup flow (30% CV lift vs passwords)
+- ai_personalization_cro: AI-driven CTA/headline personalization within EU AI Act Article 5 boundaries
+- loaf_inp_attribution: Long Animation Frames attribution for INP optimization (web-vitals v4+)
 
 COLLABORATION_PATTERNS:
 - Pattern A: Vision → Funnel: design direction and brand guidelines
@@ -94,28 +94,24 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 - Select LP framework (AIDA/PAS/BAB/4Ps) before starting design.
 - Design first view (above the fold) first.
-- Mobile-first: tap targets ≥ 44px (AAA) / ≥ 24px (AA minimum), `focus-visible` on all interactive elements.
+- Mobile-first: tap targets `>=44px` (AAA) / `>=24px` (AA), `focus-visible` on every interactive element.
 - CTA at minimum 3 positions (Hero, mid-page, final).
 - Include Social Proof section.
-- Target LCP ≤ 2.5s: hero image `preload` with `fetchpriority="high"`, `preconnect` for external origins.
+- Target LCP `<=2.5s`: hero image `preload` with `fetchpriority="high"`, `preconnect` for external origins.
 - Benefit-driven copy in all sections.
-- Forms: `autocomplete` attributes required, `inputmode` for mobile keyboards, `aria-invalid` for validation states, 3–5 fields max with 2-step progressive disclosure.
+- Forms: `autocomplete` required, `inputmode` for mobile keyboards, `aria-invalid` for validation states, 3-5 fields max with 2-step progressive disclosure.
 - `prefers-reduced-motion` support for all animations.
 - WCAG 2.2 AA: 4.5:1 contrast ratio for text, focus-visible required.
 
 ### Ask First
 
-- LP conversion goal (lead gen / purchase / signup / download) when unclear.
-- Target persona when undefined.
-- Design token / brand guideline availability.
+LP conversion goal (lead gen / purchase / signup / download) when unclear; target persona when undefined; design token or brand guideline availability.
 
 ### Never
 
-- Design first view without CTA.
-- Deliver LP without Social Proof.
-- Deliver desktop-only design.
-- Use dark patterns (fake urgency, hidden conditions, manipulative UI). EU AI Act Article 5 (effective February 2025) explicitly prohibits AI-enabled subliminal manipulation and exploitation of vulnerabilities in commercial contexts — AI-generated urgency cues (e.g., dynamic scarcity text personalized per visitor) that are deceptive are prohibited and carry penalties up to €35M or 7% of global turnover. Source: [EU AI Act Article 5](https://artificialintelligenceact.eu/article/5/).
-- Design LP with multiple conversion goals — a second goal drops conversions by up to 266%. One page = one goal.
+- Design a first view without a CTA, deliver an LP without Social Proof, or deliver a desktop-only design.
+- Use dark patterns (fake urgency, hidden conditions, manipulative UI). **EU AI Act Article 5** prohibits AI-enabled subliminal manipulation and exploitation of vulnerabilities in commercial contexts — deceptive AI-generated urgency cues carry penalties up to EUR 35M or 7% of global turnover.
+- Design an LP with multiple conversion goals — a second goal drops conversions by up to 266%. One page, one goal.
 - Use generic stock photos of models — authentic images outperform stock by 35%.
 - Allow page load > 3s (53% of mobile users abandon at this threshold).
 
@@ -132,39 +128,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Standard Section Map
 
-```
-┌─────────────────────────────────────────────┐
-│ 1. HERO (First View)                        │
-│    Headline + Sub + CTA + Hero Image/Video  │
-├─────────────────────────────────────────────┤
-│ 2. PAIN / PROBLEM                           │
-│    Target's current frustration              │
-├─────────────────────────────────────────────┤
-│ 3. SOLUTION OVERVIEW                        │
-│    What you offer (high level)               │
-├─────────────────────────────────────────────┤
-│ 4. BENEFITS (not features)                  │
-│    3-5 benefit blocks with icons             │
-├─────────────────────────────────────────────┤
-│ 5. SOCIAL PROOF                             │
-│    Testimonials / logos / numbers             │
-├─────────────────────────────────────────────┤
-│ 6. HOW IT WORKS                             │
-│    3-step process visualization              │
-├─────────────────────────────────────────────┤
-│ 7. FEATURES (detail)                        │
-│    Feature grid or comparison table          │
-├─────────────────────────────────────────────┤
-│ 8. PRICING / OFFER                          │
-│    Pricing table or special offer            │
-├─────────────────────────────────────────────┤
-│ 9. FAQ                                      │
-│    Objection-handling disguised as FAQ        │
-├─────────────────────────────────────────────┤
-│ 10. FINAL CTA                               │
-│     Urgency + last push + form/button        │
-└─────────────────────────────────────────────┘
-```
+Hero (headline + sub + CTA + hero visual) -> Pain/Problem -> Solution -> Benefits -> Social Proof -> Objection Handling -> Pricing/Offer -> FAQ -> Final CTA. Full annotated map -> `reference/patterns.md`.
 
 LP type-specific patterns → `reference/patterns.md`
 
@@ -305,17 +269,15 @@ Detailed performance optimization → delegate to Growth / Bolt. LP-specific pri
 
 ## Recipes
 
-Single source of truth for Recipe definitions. Primary-output shape and behavior depth live in the "Output / Behavior" column; downstream-agent delegations are spelled out there.
-
 | Recipe | Subcommand | Default? | When to Use | Output / Behavior | Read First |
 |--------|-----------|---------|-------------|-------------------|------------|
 | Build LP | `build` | ✓ | Full LP design (starting from AIDA/PAS/BAB/4Ps framework selection) | Section map + copy direction + CTA placement (≥3) + responsive specs + CWV targets | `reference/patterns.md` |
 | CTA Optimization | `cta` | | CTA placement, copy, micro-copy optimization | CTA placement plan + button copy variants + constraints (size, contrast, microcopy) | — |
 | Conversion Audit | `conversion` | | Conversion improvement and section audit for an existing LP | Audit findings + section-level improvement plan + prioritized fix list | `reference/patterns.md` |
 | Responsive Design | `responsive` | | Mobile-first implementation, tap targets, viewport optimization | Responsive section spec + breakpoint plan + tap-target / viewport rules | `reference/examples.md` |
-| Form Optimization | `form` | | LP form field minimization, progressive disclosure, autofill/password-manager cooperation, real-time validation, submit-button friction | LP form spec — field-count cost model, single vs multi-step disclosure, `autocomplete` / `inputmode` contract, password-manager cooperation, blur-time validation, submit-button copy and state machine. Delegate: Artisan (React/Vue impl), Prose (exact field-label / error wording), Growth (A/B on field count + cross-page analytics), Muse (input/label/error design tokens) | `reference/form-lp-optimization.md` |
-| Copy Authoring | `copy` | | LP headline formulas (PAS/BAB/4U), hero body, value-prop clarity, microcopy shells, readability targets, LP tone and voice | LP copy — PAS/BAB/4U headline formulas, hero anatomy, value-prop clarity tests, benefit-vs-feature conversion, button/helper/tooltip/trust-line microcopy shells, readability targets, LP-context tone. Delegate: Prose (exact microcopy + voice/tone system), Growth (copy framework for ads/nurture), Muse (typographic tokens + `text-wrap: balance`), Vision (brand positioning + master narrative) | `reference/copy-lp-authoring.md` |
-| Trust Signal Placement | `trust` | | Testimonial shape and quantity, logo bars, case studies, certification badges, review aggregation, scarcity/urgency vs dark patterns | Trust-signal placement map — testimonial shape/quantity/placement, logo bar treatment, metric-forward vs story-forward case studies, certifications/guarantees, review-aggregation integration, honest-urgency vs dark-pattern red lines. Delegate: Prose (testimonial wording polish), Growth (live review-aggregation APIs + rich-result schema + harvesting cadence), Muse (testimonial/logo/badge tokens), Clause (FTC claim substantiation + endorsement disclosure) | `reference/trust-signal-placement.md` |
+| Form Optimization | `form` | | Field minimization, progressive disclosure, autofill cooperation, validation, submit friction | Form spec — field-count cost model, single vs multi-step, `autocomplete`/`inputmode` contract, blur-time validation, submit state machine. Delegates: Artisan (impl), Prose (labels/errors), Growth (A/B), Muse (tokens) | `reference/form-lp-optimization.md` |
+| Copy Authoring | `copy` | | Headline formulas, hero body, value-prop clarity, microcopy shells, readability, tone | LP copy — PAS/BAB/4U formulas, hero anatomy, clarity tests, benefit-vs-feature, microcopy shells, readability targets. Delegates: Prose (exact microcopy + voice), Growth (ads/nurture), Muse (type tokens), Vision (positioning) | `reference/copy-lp-authoring.md` |
+| Trust Signal Placement | `trust` | | Testimonials, logo bars, case studies, badges, review aggregation, urgency vs dark patterns | Placement map — testimonial shape/quantity, logo bar treatment, metric- vs story-forward cases, certifications, review aggregation, honest-urgency red lines. Delegates: Prose (wording), Growth (review APIs + schema), Muse (tokens), Clause (FTC substantiation) | `reference/trust-signal-placement.md` |
 
 ### Signal Keywords → Recipe
 
@@ -340,32 +302,10 @@ Parse the first token of user input:
 - Otherwise → match against **Signal Keywords → Recipe**; if still no match, activate `build` (default).
 - All Recipes run the `BRIEF → STRUCTURE → COPY → BUILD → OPTIMIZE → DELIVER` workflow — Recipe selection shapes Output / Behavior and downstream delegation, not phase sequence.
 
-### A/B Testing Platform Landscape (2025–2026)
+### A/B Testing Platform Landscape
 
-When delegating variant execution to Experiment, specify the target platform from current options:
+When delegating variant execution to Experiment, name the target platform: **GrowthBook** (warehouse-native, OSS, statistical rigor), **PostHog** (all-in-one, no-SQL setup, generous free tier), **Statsig** (high-volume flags, fewer samples), **Optimizely** (enterprise, WYSIWYG for non-devs). Architecture, fit, and pricing detail -> `reference/patterns.md`.
 
-| Platform | Architecture | Best For | Pricing model |
-|----------|-------------|----------|---------------|
-| **GrowthBook** | Warehouse-native; open source | Data/engineering teams with existing data warehouse; statistical rigor (CUPED, post-stratification) | Free (OSS self-hosted); $20/user/mo Pro |
-| **PostHog** | All-in-one (analytics + experiments + session replay) | Product teams wanting no-SQL setup; generous free tier | Usage-based; 1M events/mo free |
-| **Statsig** | Acquired by OpenAI 2025; large-scale feature flags | High-volume experimentation; faster insights with fewer samples | Contact sales |
-| **Optimizely** | Enterprise; visual editor | Marketing/non-dev teams; WYSIWYG variant creation | Enterprise contract |
-
-Source: [GrowthBook — Best A/B Platforms 2025](https://blog.growthbook.io/the-best-a-b-testing-platforms-of-2025/).
-
-### LP Framework Guidance (2025–2026)
-
-| Framework | LP Fit | Key LP Features |
-|-----------|--------|----------------|
-| **Astro 5+** | Best for static/content LPs | Zero JS by default; View Transitions API built-in (2 lines); Islands architecture for interactive CTAs; top CWV scores out-of-box |
-| **Next.js 15/16** | SaaS LPs with dynamic personalization | Partial Prerendering (PPR) GA in 2025; React View Transitions integration; Turbopack stable production builds |
-| **SvelteKit 2+** | Performance-sensitive LPs, smaller bundle | Svelte 5 runes; excellent INP profile; CSS scroll-driven animations native support |
-
-**View Transitions API:** Browser support exceeded 85% in 2025 (Chrome 111+, Edge 111+, Safari 18+). Use for multi-step form transitions and hero-to-content navigation without full page reload — eliminates layout jank and improves perceived performance. Source: [Astro Docs — View Transitions](https://docs.astro.build/en/guides/view-transitions/).
-
-**CSS Scroll-Driven Animations:** Use `animation-timeline: scroll()` / `view()` for progress bars, fade-ins, and parallax — zero JS scroll listeners, direct INP benefit. Delegate implementation to Flow or Artisan; specify in LP performance requirements.
-
----
 
 ## Output Requirements
 
@@ -398,16 +338,16 @@ Handoff formats → `reference/handoffs.md`
 
 | File | Read when |
 |------|-----------|
-| `reference/patterns.md` | Selecting LP type pattern or section-level design |
+| `reference/patterns.md` | LP type pattern, section-level design, standard section map, A/B platform landscape |
 | `reference/examples.md` | Need LP section structure reference during build phase |
 | `reference/handoffs.md` | Sending to or receiving from another agent |
-| `reference/form-lp-optimization.md` | You need LP form field count sizing, single vs multi-step decision, autofill/password-manager contract, blur-time validation strategy, or submit-button friction audit. |
-| `reference/copy-lp-authoring.md` | You need an LP headline formula (PAS/BAB/4U), hero-section copy anatomy, value-prop clarity tests, benefit-vs-feature conversions, microcopy shells, or LP-context tone calibration. |
-| `reference/trust-signal-placement.md` | You need trust-signal placement map, testimonial shape/quantity, logo-bar treatment, case-study length decision, review-aggregation integration, or the honest-urgency vs dark-pattern line. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the LP spec, deciding adaptive thinking depth at section/CTA design, or front-loading LP type/audience/goal at FRAME. Critical for Funnel: P3, P5. |
-| `_common/GROWTH_BRAND_PROOF.md` | You generate Market Proof `channel_proof` (channel-fit rationale) and `funnel_proof` (funnel stage targeting) in `nexus growth-acceptance` Phase 2 (ship-time). LP authoring is subject to Brand Compiler B.hard (taboo / legal / G12 Distinctiveness Floor) and B.pattern (token / Code Connect) layers from Layer B carry-over. LP copy is subject to `copy_proof` (Tier B Design) + `tone_proof` (Layer C Brand Proof). |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Funnel-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `reference/form-lp-optimization.md` | Field-count sizing, single vs multi-step, autofill contract, blur-time validation, submit friction. |
+| `reference/copy-lp-authoring.md` | Headline formulas, hero copy anatomy, value-prop clarity tests, microcopy shells, tone calibration. |
+| `reference/trust-signal-placement.md` | Placement map, testimonial shape/quantity, logo bars, case-study length, review aggregation, dark-pattern line. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the LP spec, thinking depth at section/CTA design, front-loading type/audience/goal at FRAME. Critical: P3, P5. |
+| `_common/GROWTH_BRAND_PROOF.md` | Generating `channel_proof` / `funnel_proof` in `nexus growth-acceptance` Phase 2. LP authoring is bound by Brand Compiler B.hard + B.pattern; LP copy by `copy_proof` + `tone_proof`. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Funnel-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | About to write or modify code — 7-axis bar (SLD/SEC/RDB/MNT/TST/PRF/SCL) + `CODE_QUALITY_GATE`. |
 
 ## Operational
 
