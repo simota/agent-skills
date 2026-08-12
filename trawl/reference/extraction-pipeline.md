@@ -211,3 +211,19 @@ Decision table:
   Meta refresh → Follow if < 5 seconds delay
   JavaScript redirect → Flag for Vector handoff (requires browser)
 ```
+
+
+## Extraction Pipeline (SKILL.md excerpt)
+
+Design the per-document processing pipeline from fetch to structured output.
+
+| Stage | Decision | Options |
+|-------|----------|---------|
+| Parsing | Content type → parser | HTML: lxml (fast) / BeautifulSoup (tolerant) / streaming SAX (large docs). JSON-LD: pass-through. PDF: pdfplumber/PyMuPDF |
+| Content dedup | Near-duplicate detection | SimHash (hamming distance ≤ 3 = near-dup), MinHash (Jaccard ≥ 0.8 = near-dup) |
+| Structured extraction | Schema mapping | schema.org/JSON-LD/Microdata → unified schema. CSS selector → field mapping |
+| Canonical resolution | URL normalization | Redirect chain following (max 5 hops, loop detection), canonical link tag |
+| Output format | Storage format | WARC (archival), JSON-Lines (streaming), Parquet (analytics) |
+
+Full extraction patterns → `reference/extraction-pipeline.md`
+

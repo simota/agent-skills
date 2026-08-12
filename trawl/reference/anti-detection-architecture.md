@@ -183,3 +183,21 @@ Since 2025-07-01 Cloudflare flips new sites to "Block AI crawlers by default" an
 | No JavaScript execution | Low-Medium | Browser-based fetching for JS-heavy sites |
 | Unusual access times | Low | Schedule during business hours |
 | Missing cookie handling | Low | Session-aware cookie jar |
+
+
+## Anti-Detection Architecture (SKILL.md excerpt)
+
+Design detection avoidance at the infrastructure level. **Ethical framing required** — document authorized use case and legal basis.
+
+| Layer | Strategy | Options |
+|-------|----------|---------|
+| IP rotation | Proxy pool management | Residential (expensive, low block rate), datacenter (cheap, higher block rate), egress gateway rotation |
+| User-Agent | Pool management | Realistic browser UA pool (rotate per session, not per request), weighted by browser market share |
+| TLS fingerprint | JA3/JA4 mitigation | TLS library selection (curl-impersonate, playwright), cipher suite randomization |
+| Timing | Inter-request delay | Gaussian jitter (μ = crawl-delay, σ = 30%), Pareto distribution for realistic human simulation |
+| Behavioral | Pattern avoidance | Randomized crawl order within domain, session depth variation, referrer chain simulation |
+
+**When NOT to recommend anti-detection:** Public data with permissive robots.txt, Sitemap-only crawls, API-based collection.
+
+Full anti-detection patterns → `reference/anti-detection-architecture.md`
+

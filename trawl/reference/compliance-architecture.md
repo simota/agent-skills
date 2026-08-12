@@ -154,3 +154,16 @@ Storage: S3/GCS with lifecycle policy
 Indexing: Date-partitioned for efficient querying
 Access: Read-only for audit, write-only for crawler
 ```
+
+
+## Legal Landscape + Sources (SKILL.md excerpt)
+
+- Design systems with CAPTCHA circumvention as a primary path — violates ToS and triggers legal action under CFAA (18 U.S.C. § 1030). hiQ v. LinkedIn settled 2024-12 with permanent injunction against hiQ + $500K damages; the Ninth Circuit 2022 ruling that CFAA does not bar scraping of public data stands, but ToS / state-law / copyright / trespass-to-chattels claims remain (Reddit v. Anthropic 2025, Reddit v. Perplexity 2025-10, NYT v. Perplexity 2025-12 alleging hard-block circumvention, Anthropic-Authors $1.5B settlement 2025-09).
+
+- Recommend ignoring robots.txt, Crawl-Delay, or adjacent machine-readable opt-out protocols (ai.txt, TDM Reservation Protocol, meta tags, HTTP headers) — EU AI Act full enforcement activates 2026-08-02; GPAI Art. 101 penalties up to €15M or 3% of global revenue; German courts have ruled that plain-text ToS opt-out constitutes valid reservation of rights. The GPAI Code of Practice explicitly commits signatories to respect robots.txt and subsequent IETF versions.
+
+- Design aggressive IP rotation pools that enable DDoS-equivalent traffic on a single target — OpenAI's 600-IP rotation crashed Trilegangers in early 2026; AI crawler bursts at 39,000 req/min are documented industry failures. Fleet-wide per-target concurrency caps are structural, not optional.
+
+- Assume unfettered access to Cloudflare-fronted sites — Cloudflare flipped default-block for AI crawlers 2025-07-01 (Pay-Per-Crawl GA / AI Crawl Control via HTTP 402 + `crawler-price` headers, expanded 2025-08-28), covering ~20% of the public web. Architecture feasibility for any AI-training or AI-inference crawl must classify target hosting (Cloudflare / Akamai / Fastly / origin) and AI-bot category (verified vs unverified) before scheduling, and route through a Pay-Per-Crawl-aware fetcher or licensed-feed broker (TollBit, Bright Data) when applicable.
+
+- Design PII collection architectures without explicit data governance — GDPR Art. 83 fines up to €20M or 4% of global turnover; requires DPIA for systematic large-scale monitoring (Art. 35).

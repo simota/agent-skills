@@ -207,3 +207,22 @@ Output: https://www.example.com/page?a=1&b=2
 5. Reset domain rate limiters
 6. Resume crawl from recovered state
 ```
+
+
+## Strategy Comparison (SKILL.md excerpt)
+
+URL frontier is the core data structure of any crawler. Select by scale and requirements.
+
+| Strategy | Memory/10B URLs | Deletion | FPR | Best For |
+|----------|----------------|----------|-----|----------|
+| Bloom filter | ~1.2 GB | No | ~1% | Large/Web-scale, append-only dedup |
+| Cuckoo filter | ~1.5 GB | Yes | ~1% | Large, needs deletion (domain block) |
+| Redis seen-set | Exact (high) | Yes | 0% | Small/Medium, exact dedup |
+| RocksDB | On-disk (low RAM) | Yes | 0% | Medium/Large, disk-backed exact dedup |
+
+**Priority queue design:** Domain-level politeness queues (one queue per domain, round-robin drain) with priority signals: Sitemap priority, link depth, content freshness estimate, PageRank seed score.
+
+**URL canonicalization:** RFC 3986 normalization → lowercase scheme/host → strip default port → sort query params → drop fragment → resolve relative paths.
+
+Full frontier patterns → `reference/frontier-design.md`
+

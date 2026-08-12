@@ -342,3 +342,16 @@ These rules govern how Design, Animation, and Branding stay aligned:
 2. **Motion story comes from brand archetype.** A "Sage" brand uses deliberate, calm motion; a "Jester" brand uses snappy, playful motion. Flow consults Vision's `direction.md` before authoring motion tokens.
 3. **Design rubric scoring happens before Build.** No production code on a < 18/24 design or < 15/20 motion or < 14/20 brand score. Repair or escalate.
 4. **Detail craft is the Verify checklist's secret tier.** Judge re-walks for cursor states, focus rings, empty states, loading states, error states, icon consistency, image craft. Anything missing = P2 finding.
+
+
+## Six-Axis Ownership + Ship Rubrics (SKILL.md excerpt)
+
+| Axis | Primary owners | Ship rubric | Where the bar lives |
+|------|----------------|-------------|---------------------|
+| **Design** | Vision (direction) + Muse (tokens) + Palette (a11y/feel) + Frame (Figma) + Pixel (fidelity); or Atelier when multi-artifact bundle — rubric still enforced | Visual hierarchy ≥ 20/27 (incl. Hero-Contract Legibility); typography craft; color discipline; whitespace rhythm; tap targets ≥ 44px; detail craft (cursor / focus / empty / loading / error / icon / image) | `craft-standards.md` § Design Discipline |
+| **Animation** | Flow (impl) + Muse (motion tokens) + Bolt (INP budget) | Motion rubric ≥ 15/20; tokenized duration / easing / stagger; reduced-motion alternative path; **INP ≤ 50ms is a hard ceiling — not a rubric criterion** | `craft-standards.md` § Animation Discipline |
+| **Branding** | Vision (archetype + visual identity, voice spectrum) + Saga (story arc at Strategy, narrative copy at Structure) + Compete (positioning + anti-archetype) + Prose (voice execution) | Brand rubric ≥ 17/24 (incl. Trust-Signal Density); Brand System record (Promise+Type / Story / Verbal_Identity / Voice & Tone / Positioning / Visual Identity / Accessibility Stance / Evidence Bank); voice consistency variance < 1.5 / spectrum axis | `craft-standards.md` § Branding Discipline |
+| **Marketing** | Funnel (structure) + Pulse (KPI) + Growth (CRO) + Experiment (variants) + Magi (strategy) | CVR target met (industry-calibrated, recipe-aligned, traffic-source-qualified per playbook); messaging hierarchy (Big Idea → Headline → Sub → Proof); copy framework chosen via Recipe→Framework map; first A/B variant queued (≥1000 conv/variant, 95% sig, ≥14 days); analytics + GEO Mention/Citation/SoV events live | `conversion-playbook.md` |
+| **SEO** | Growth (4-pillar: SEO / SMO / CRO / GEO) + Bolt (CWV + TTFB + FCP) + Polyglot (hreflang) | Technical SEO checklist 100% (incl. AI Bot Policy, IndexNow, image/video schema); Schema.org valid + content-consistent; CWV all Green; content SEO intent-aligned (5 intents incl. Answer-Engine); Author entity with `sameAs`; Lighthouse Mobile Perf ≥ 90 / Acc ≥ 95 / BP ≥ 95 / SEO ≥ 95 | `ia-blueprint.md` §§ 2–4 |
+| **IA** | Funnel (structure + scan pattern + navigation pattern) + Canvas (journey-map viz) + Echo (cognitive walk + baseline) + Prose (heading craft) | IA rubric ≥ 15/20; one promise (Two-Promise Probe at UNDERSTAND) / 5-second scan / coherent scroll arc / chunking ≤ 7 elements above fold / clean heading hierarchy / navigation pattern locked at Structure | `ia-blueprint.md` § 1 |
+

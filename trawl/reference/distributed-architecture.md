@@ -185,3 +185,18 @@ Recovery procedure:
 | Medium | 10-200 GB | 4-20 vCPU, 8-40 GB RAM | 100 GB-2 TB | Redis cluster (2-8 GB) |
 | Large | 200 GB-5 TB | 40-400 vCPU, 80-800 GB RAM | 2-50 TB | Kafka cluster (3-10 brokers) |
 | Web-scale | 5+ TB | 400+ vCPU, 800+ GB RAM | 50+ TB | Kafka + HDFS cluster |
+
+
+## Infrastructure Topology (SKILL.md excerpt)
+
+| Scale Tier | Recommended Stack | Components |
+|------------|------------------|------------|
+| Small | Scrapy 2.13 + Redis 7 | Scrapy scheduler + Redis queue + local storage; Crawl4AI 0.8+ for LLM-ready Markdown output |
+| Medium | Scrapy-Redis / Crawlee 3.x cluster | Coordinator + 2-10 workers + Redis 7 cluster frontier + S3/GCS output |
+| Large | Custom Kafka-backed | Kafka topic per domain shard + worker fleet + RocksDB frontier + object storage |
+| Web-scale | StormCrawler 3.x / Nutch 1.20+ / Common Crawl-style | S3 + Spark crawl jobs + RocksDB/HBase URL store + sharded distributed frontier |
+
+**Key infrastructure decisions:** worker fault tolerance (heartbeat + requeue), checkpoint design (WAL for frontier state), domain-to-worker assignment (consistent hashing ring), network egress estimation.
+
+Full topology patterns → `reference/distributed-architecture.md`
+
