@@ -257,22 +257,22 @@ Use mode-specific reporting:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/load-testing-guide.md` | You need tool selection, k6/Locust/Artillery patterns, SLO validation, CI snippets, or report structure. |
-| `reference/load-testing-anti-patterns.md` | You need load-test design guardrails, shift-left strategy, Azure performance anti-patterns, or performance budgets. |
-| `reference/contract-testing-patterns.md` | You need Pact, AsyncAPI, contract CI, or breaking-change guidance. |
-| `reference/chaos-engineering-guide.md` | You need steady-state templates, fault-injection scenarios, tools, or Game Day checklists. |
-| `reference/chaos-observability.md` | You need observability integration, chaos CI maturity, Game Day practices, or chaos anti-patterns. |
-| `reference/mutation-testing-guide.md` | You need tool setup, survivor analysis, CI wiring, or baseline mutation thresholds. |
-| `reference/mutation-testing-advanced.md` | You need equivalent-mutant handling, tiered mutation strategy, or risk-based thresholds. |
-| `reference/fuzz-testing-guide.md` | You need coverage-guided fuzzing setup (AFL++/libFuzzer/go-fuzz/cargo-fuzz/Jazzer), corpus/dictionary design, sanitizer selection, crash triage, or continuous-fuzz CI wiring. |
-| `reference/property-based-testing.md` | You need property-based test design (fast-check/Hypothesis/jqwik/PropEr), generator composition, shrinking tuning, or stateful/model-based testing patterns. |
-| `reference/smoke-deployment-gates.md` | You need post-deploy smoke suite design, the canary/smoke/regression hierarchy, synthetic-check topology, or ≤3-min deploy-gate time-budget discipline. |
-| `reference/resilience-patterns.md` | You need retry, timeout, circuit-breaker, or bulkhead verification patterns. |
-| `reference/resilience-anti-patterns.md` | You need resilience anti-patterns, error-budget rules, or SLO-based resilience testing. |
-| `reference/test-strategy-2026.md` | You need the consolidated 2026 picture across the seven test layers (unit+PBT / mutation / metamorphic / integration+contract / trace-based / E2E+visual+a11y / load+chaos+replay), shape selection (pyramid / diamond / trophy), coverage-floor + mutation-ceiling thresholds, or the skill-to-layer mapping. Use this when designing a test strategy from scratch or evaluating a team's current test mix. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the test report, deciding adaptive thinking depth at tool/percentile selection, or front-loading test type/environment/criteria at PLAN. Critical for Siege: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Siege-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `reference/load-testing-guide.md` | Tool selection, k6/Locust/Artillery patterns, SLO validation, CI snippets, or report structure. |
+| `reference/load-testing-anti-patterns.md` | Load-test design guardrails, shift-left strategy, Azure performance anti-patterns, or performance budgets. |
+| `reference/contract-testing-patterns.md` | Pact, AsyncAPI, contract CI, or breaking-change guidance. |
+| `reference/chaos-engineering-guide.md` | Steady-state templates, fault-injection scenarios, tools, or Game Day checklists. |
+| `reference/chaos-observability.md` | Observability integration, chaos CI maturity, Game Day practices, or chaos anti-patterns. |
+| `reference/mutation-testing-guide.md` | Tool setup, survivor analysis, CI wiring, or baseline mutation thresholds. |
+| `reference/mutation-testing-advanced.md` | Equivalent-mutant handling, tiered mutation strategy, or risk-based thresholds. |
+| `reference/fuzz-testing-guide.md` | Coverage-guided fuzzing setup (AFL++/libFuzzer/go-fuzz/cargo-fuzz/Jazzer), corpus/dictionary design, sanitizer selection, crash triage, or continuous-fuzz CI wiring. |
+| `reference/property-based-testing.md` | Property-based test design (fast-check/Hypothesis/jqwik/PropEr), generator composition, shrinking tuning, or stateful/model-based testing patterns. |
+| `reference/smoke-deployment-gates.md` | Post-deploy smoke suite design, the canary/smoke/regression hierarchy, synthetic-check topology, or ≤3-min deploy-gate time-budget discipline. |
+| `reference/resilience-patterns.md` | Retry, timeout, circuit-breaker, or bulkhead verification patterns. |
+| `reference/resilience-anti-patterns.md` | Resilience anti-patterns, error-budget rules, or SLO-based resilience testing. |
+| `reference/test-strategy-2026.md` | The consolidated 2026 picture across the seven test layers (unit+PBT / mutation / metamorphic / integration+contract / trace-based / E2E+visual+a11y / load+chaos+replay), shape selection (pyramid / diamond / trophy), coverage-floor + mutation-ceiling thresholds, or the skill-to-layer mapping. Use this when designing a test strategy from scratch or evaluating a team's current test mix. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the test report, deciding adaptive thinking depth at tool/percentile selection, or front-loading test type/environment/criteria at PLAN. Critical for Siege: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Siege-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 
 ## Operational

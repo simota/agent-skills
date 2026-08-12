@@ -23,3 +23,18 @@ Report cache hit rate from session logs when available; flag sessions below 70% 
 ## Periodic config re-evaluation
 
 Schedule every 3-6 months and at every major model release. Instructions written to work around a prior model's limitations frequently become inert or actively harmful on a newer model — e.g. a CLAUDE.md rule that instructed an earlier model to break every refactor into single-file changes (to stay on track) can prevent a newer model from making coordinated cross-file edits. Audits older than 6 months should automatically flag every CLAUDE.md / GEMINI.md / AGENTS.md instruction tied to a specific prior model behavior for re-validation. [Source: claude.com — *How Claude Code works in large codebases* (2026)]
+
+
+---
+
+## Hook and MCP Audit Rules (SKILL.md excerpt)
+
+- Validate PreToolUse hooks return correct exit codes (0=allow, 2=block) and that security-critical hooks use `permissionDecision: "deny"` which cannot be bypassed even in bypassPermissions mode.
+
+- Verify that automated/CI pipelines do not rely on PermissionRequest hooks (they do not fire with `-p` flag); recommend PreToolUse hooks for non-interactive permission enforcement.
+
+- Verify hook "allow" decisions are not relied upon for security — hooks can tighten (deny) but cannot loosen permissions past deny rules. Flag configurations where a hook "allow" is the sole security gate.
+
+- Flag HTTP hooks with overly broad `allowedHttpHookUrls` patterns; verify `httpHookAllowedEnvVars` does not expose sensitive environment variables to external endpoints.
+
+- Verify MCP OAuth configurations include RFC 8707 resource indicators — tokens without explicit resource binding are vulnerable to mis-redemption attacks where a malicious server replays tokens against unintended services (MCP spec 2026-03-15).

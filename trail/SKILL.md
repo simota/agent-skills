@@ -300,20 +300,20 @@ Follow `_common/GIT_GUIDELINES.md`. Conventional Commits, no agent names, <50 ch
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/framework-templates.md` | You need SCOPE/LOCATE/TRACE/REPORT/RECOMMEND templates, bisect script, or edge case handling. |
-| `reference/output-formats.md` | You need timeline visualization or investigation summary templates. |
-| `reference/patterns.md` | You need investigation pattern workflows, commands, or gotchas. |
-| `reference/git-commands.md` | You need the full git command reference with safety classification. |
-| `reference/best-practices.md` | You need investigation best practices or anti-pattern avoidance. |
-| `reference/examples.md` | You need complete investigation examples for pattern matching. |
+| `reference/framework-templates.md` | SCOPE/LOCATE/TRACE/REPORT/RECOMMEND templates, bisect script, or edge case handling. |
+| `reference/output-formats.md` | Timeline visualization or investigation summary templates. |
+| `reference/patterns.md` | Investigation pattern workflows, commands, or gotchas. |
+| `reference/git-commands.md` | The full git command reference with safety classification. |
+| `reference/best-practices.md` | Investigation best practices or anti-pattern avoidance. |
+| `reference/examples.md` | Complete investigation examples for pattern matching. |
 | `reference/non-functional-regression.md` | Performance, memory, bundle size, or startup time regression bisect is needed. |
-| `reference/flamegraph-regression.md` | You need flamegraph tool selection, differential flamegraph workflow, hotspot thresholds, or bisect-with-frame-share script for the `flame` subcommand. |
-| `reference/delta-debugging.md` | You need ddmin pseudocode, granularity selection, flaky-test minimization tuning, or `git bisect run` integration for the `delta` subcommand. |
-| `reference/revert-strategies.md` | You need the revert vs reset decision matrix, merge-commit `-m` parent selection, partial revert techniques, post-revert verification checklist, or comms template for the `revert` subcommand. |
-| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Trail-specific action verb (FIX-REGRESSION / REVERT / REVERT-WITH-FORWARD-FIX / INVESTIGATE-FURTHER / REFACTOR-FIX), or deciding whether to suppress the prompt for a Sentinel/Atlas handoff or archaeology-only scope. |
-| `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Sentinel/Plea. |
+| `reference/flamegraph-regression.md` | Flamegraph tool selection, differential flamegraph workflow, hotspot thresholds, or bisect-with-frame-share script for the `flame` subcommand. |
+| `reference/delta-debugging.md` | Ddmin pseudocode, granularity selection, flaky-test minimization tuning, or `git bisect run` integration for the `delta` subcommand. |
+| `reference/revert-strategies.md` | The revert vs reset decision matrix, merge-commit `-m` parent selection, partial revert techniques, post-revert verification checklist, or comms template for the `revert` subcommand. |
+| `reference/fix-prompt-generation.md` | Authoring the `## LLM Fix Prompt` block, choosing a Trail-specific action verb (FIX-REGRESSION / REVERT / REVERT-WITH-FORWARD-FIX / INVESTIGATE-FURTHER / REFACTOR-FIX), or deciding whether to suppress the prompt for a Sentinel/Atlas handoff or archaeology-only scope. |
+| `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Sentinel/Plea. |
 | `_common/INVESTIGATION_ESCALATION.md` | Cross-cluster escalation, unified confidence scale, or stall protocol is needed. |
-| `_common/OPUS_5_AUTHORING.md` | You are scoping bisect iteration budget, deciding tool-use eagerness in LOCATE, or sizing CHANGE_STORY/REPORT outputs. Critical for Trail: P3, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Scoping bisect iteration budget, deciding tool-use eagerness in LOCATE, or sizing CHANGE_STORY/REPORT outputs. Critical for Trail: P3, P5. |
 
 ---
 

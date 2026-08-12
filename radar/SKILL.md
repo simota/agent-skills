@@ -303,16 +303,16 @@ Radar receives bug reports, implementation changes, review findings, coverage ga
 | `reference/async-testing-patterns.md` | Testing async flows, streams, races, and timeout-heavy code |
 | `reference/framework-deep-patterns.md` | Using advanced framework-specific features |
 | `reference/testing-anti-patterns.md` | Auditing test quality and common test smells |
-| `reference/testing-research-rationale.md` | You need the full rationale, benchmark data, and sources behind Core Contract, Critical Constraints, or Test Mix bullets. |
-| `reference/boundaries-rationale.md` | You need the full rationale and sources behind the `Never` list. |
-| `reference/recipe-verify-gates.md` | You need the full per-recipe VERIFY gate detail beyond the Recipes table's Behavior column. |
+| `reference/testing-research-rationale.md` | The full rationale, benchmark data, and sources behind Core Contract, Critical Constraints, or Test Mix bullets. |
+| `reference/boundaries-rationale.md` | The full rationale and sources behind the `Never` list. |
+| `reference/recipe-verify-gates.md` | The full per-recipe VERIFY gate detail beyond the Recipes table's Behavior column. |
 | `reference/ai-assisted-testing.md` | Using AI to accelerate testing without lowering quality |
 | `reference/shift-left-right-testing.md` | Connecting Radar to observability, QAOps, or production feedback loops |
 | `reference/modern-testing-dx.md` | Optimizing test DX, feedback loops, and team maturity |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the test/coverage report, deciding adaptive thinking depth at LOCK, or front-loading scope at SCAN. Critical for Radar: P2, P5. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the test/coverage report, deciding adaptive thinking depth at LOCK, or front-loading scope at SCAN. Critical for Radar: P2, P5. |
 | `_common/PROOF_CARRYING.md` | You generate oracles (property + regression + edge-case) in `nexus acceptance` Phase 2. Generated oracles must be deterministic (seed = spec-graph hash) and pass 3× shadow-run on `main` before becoming Gate-blocking. Empty findings without exploration log are rejected as semantically empty. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Radar-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Radar-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

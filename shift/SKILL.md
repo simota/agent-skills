@@ -265,7 +265,7 @@ Spawn when: migration touches ≥3 independent subsystems (e.g., API + DB + fron
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/recipes-detail.md` | You need the full per-recipe behavior notes behind the `## Subcommand Dispatch` one-liners. |
+| `reference/recipes-detail.md` | The full per-recipe behavior notes behind the `## Subcommand Dispatch` one-liners. |
 | `reference/migration-strategies.md` | Strangler Fig / Branch by Abstraction / Parallel Run / Big Bang patterns, risk frameworks, phased rollout templates, monolith decomposition. |
 | `reference/codemod-patterns.md` | jscodeshift/ts-morph/LibCST transforms, framework recipes (React/Vue/ESM/TypeScript), API versioning, AST techniques. |
 | `reference/database-migration.md` | Zero-downtime schema changes, Expand-Contract, dual-write, data backfill, PostgreSQL/MySQL upgrade + rollback procedures. |
@@ -291,8 +291,8 @@ Spawn when: migration touches ≥3 independent subsystems (e.g., API + DB + fron
 | `reference/javascript-ecosystem-anti-patterns.md` | `radar` for JS/Node: anti-patterns JE-01 to JE-07, node_modules issues, PM selection guide, supply-chain security. |
 | `reference/frontend-modernization-anti-patterns.md` | `modernize` for frontend: anti-patterns FM-01 to FM-07, Outside-In migration, Micro Frontend, success KPIs. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the migration plan, adaptive thinking depth at strategy selection, front-loading versions/risk tier at ASSESS. Critical: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Shift-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Shift-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Output Requirements
 

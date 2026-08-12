@@ -184,3 +184,22 @@ By 2026 the dominant industry pattern is **autonomous investigation + governed r
 2. **Toil is removed from the loop; humans are not.** Mend's contribution is *removing friction* on tier-classified actions, not replacing approval on irreversible ones.
 3. **Investigation handoffs must carry: incident ID, the failing signal, the candidate root cause with confidence, and the proposed remediation tier-classified.** Reject any handoff missing one of those four fields — confidence without a tier prevents safety-gate routing.
 4. **Time-to-investigation, not time-to-fix, is the metric to optimise.** Wiz's published 30 min → 60 s number is a *triage* speedup; the remediation tier still gates the action.
+
+
+---
+
+## Core Contract Long Form (SKILL.md excerpt)
+
+- Monitor error budget burn rate post-remediation using multi-window, multi-burn-rate alerting (Source: sre.google — Alerting on SLOs). Fast-burn page: `>= 2%` budget consumed in 1 hour (14.4x burn rate). Secondary page: `>= 5%` budget consumed in 6 hours (6x burn rate). Slow-burn ticket: `>= 10%` budget consumed in 3 days. Short window = 1/12 of long window to confirm budget is still being consumed, reducing false positives. If a single incident consumes `> 20%` of 4-week error budget, escalate for mandatory postmortem with P0 action item. **Low-traffic caveat**: multi-window burn-rate alerting produces unreliable signals for services with low request rates or natural low-traffic periods; fall back to count-based or event-based alerting for these services (Source: sre.google — Alerting on SLOs).
+
+- Validate runbook freshness before automated execution: runbooks unreviewed for > 90 days must trigger a freshness warning. A single outdated command can destroy trust and cause secondary incidents (Source: incident.io — Automated Runbook Guide). Beyond time-based freshness, detect infrastructure drift — platform upgrades, permission changes, deprecated APIs, or schema migrations since last review invalidate runbooks even within the 90-day window (Source: ilert.com — Runbooks Are History; incident.io — Automated Runbook Guide).
+
+- Measure remediation effectiveness by severity: target MTTR < 1 hour for SEV-1, < 4 hours for SEV-2, < 24 hours for SEV-3. Context gathering (topology, recent deploys, change history) typically consumes 50%+ of remediation time and is the largest MTTR improvement opportunity; automate it in the CLASSIFY phase (Source: rootly.com — Incident Response Metrics; getdx.com — Incident Response Automation 2025).
+
+- **Accept investigation-initiated triggers, not only Triage-pull.** Datadog Bits AI SRE (GA 2025-12-02, ~2× faster as of 2026) exposes an Action Catalog (`Trigger Investigation` / `Get Investigation` / `List Investigation`) so an upstream investigator agent can hand a finished investigation directly to a remediation runbook. Add this as a second trigger path alongside Triage / Beacon to halve MTTR on patterns where the investigator can produce a complete remediation plan before paging Triage. [Source: datadoghq.com/blog/bits-ai-sre-deeper-reasoning/]
+
+- **Adopt the Resolve AI Dynamic Knowledge Graph pattern** for runbook input. Connect Pod state, Grafana panels, GitHub, and Jenkins into a graph that the remediation agent reads before action; carry multiple hypothesis branches with their own evidence lists. Pure runbook execution without live topology blind-spots ~30-40% of safe-tier classifications. [Source: resolve.ai/product/ai-sre]
+
+- **Enforce Autonomy with Guardrails on every remediation action.** Investigation may be autonomous; *action* must pass through an explicit policy layer with named approvers tied to tier (T1 auto / T2 single approver / T3 dual approver / T4 incident-commander gate). When agent confidence is below the tier threshold, the correct verb is `pause` and `request_approval`, not `continue with caution`. [Source: tldrecap.tech/posts/2026/conf42-sre/autonomous-agent-safety/]
+
+- Validate runbook freshness (< 90 days since last review) and infrastructure drift before automated execution.

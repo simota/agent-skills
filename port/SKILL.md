@@ -252,22 +252,22 @@ Spawn when: web app has ≥30 routes / screens **and** parity goal is ≥80%. Be
 
 | File | Read this when... |
 |------|-------------------|
-| `reference/web-analysis-checklist.md` | You are in `SURVEY` — auditing the web app's stack, routing, state, data, storage, auth, third-party SDKs, bundle, and platform-feature dependencies |
-| `reference/native-architecture-mapping.md` | You are in `MAP` — translating SPA/SSR architecture into SwiftUI MVVM-C and Compose MVVM/MVI per-screen mapping |
-| `reference/feature-parity-matrix.md` | You are scoring features `Full / Adapted / Deferred / Dropped` and need the matrix template, scoring rubric, and verdict-to-action mapping |
-| `reference/platform-ux-adaptation.md` | You are translating web UX → HIG (iOS) and Material Design 3 (Android) — navigation, gestures, typography, motion, dark mode, a11y, OS-version baselines |
-| `reference/ui-terminology-matrix.md` | You are naming UI components in per-screen specs or handoffs and need the Web ↔ iOS (HIG) ↔ Android (Material 3 / Compose) terminology conversion matrix, incl. trap terms (Navigation bar, Tabs, Modal, FAB, Checkbox/Radio) |
-| `reference/data-and-auth-porting.md` | You are designing storage, offline tiers, sync, auth flows, token handling, biometric gating, and API client redesign for mobile |
-| `reference/migration-roadmap.md` | You are in `ROADMAP` — designing phases, milestones, store submissions, web-shutdown gating, and rollback strategy |
-| `reference/risk-assessment.md` | You are running `risk` Recipe or completing the risk-matrix section of a blueprint |
-| `reference/regulatory-checklist-2026.md` | You are running `regulatory` Recipe, drafting the regulatory-compliance plan, or pre-flighting submission. Covers Privacy Manifest, Data Safety, DMA, EAA, AI disclosure, Children, Fintech-Crypto |
-| `reference/cross-platform-decision-tree.md` | You are running `xplat` Recipe, or you need to confirm pure-native vs KMP-shared-logic vs CMP vs RN vs Flutter at SURVEY |
-| `reference/native-stack-defaults.md` | You need the full Native Stack Defaults matrix (iOS/Android per layer) or the Critical Thresholds table (parity verdict mix, offline tier, OS/targetSdk baselines, Xcode 26, 16KB, AI disclosure, EU/Children/Fintech) |
-| `reference/handoffs.md` | You are in `HANDOFF` — generating structured handoff blocks for downstream agents |
+| `reference/web-analysis-checklist.md` | In `SURVEY` — auditing the web app's stack, routing, state, data, storage, auth, third-party SDKs, bundle, and platform-feature dependencies |
+| `reference/native-architecture-mapping.md` | In `MAP` — translating SPA/SSR architecture into SwiftUI MVVM-C and Compose MVVM/MVI per-screen mapping |
+| `reference/feature-parity-matrix.md` | Scoring features `Full / Adapted / Deferred / Dropped` and need the matrix template, scoring rubric, and verdict-to-action mapping |
+| `reference/platform-ux-adaptation.md` | Translating web UX → HIG (iOS) and Material Design 3 (Android) — navigation, gestures, typography, motion, dark mode, a11y, OS-version baselines |
+| `reference/ui-terminology-matrix.md` | Naming UI components in per-screen specs or handoffs and need the Web ↔ iOS (HIG) ↔ Android (Material 3 / Compose) terminology conversion matrix, incl. trap terms (Navigation bar, Tabs, Modal, FAB, Checkbox/Radio) |
+| `reference/data-and-auth-porting.md` | Designing storage, offline tiers, sync, auth flows, token handling, biometric gating, and API client redesign for mobile |
+| `reference/migration-roadmap.md` | In `ROADMAP` — designing phases, milestones, store submissions, web-shutdown gating, and rollback strategy |
+| `reference/risk-assessment.md` | `risk` Recipe or completing the risk-matrix section of a blueprint |
+| `reference/regulatory-checklist-2026.md` | `regulatory` Recipe, drafting the regulatory-compliance plan, or pre-flighting submission. Covers Privacy Manifest, Data Safety, DMA, EAA, AI disclosure, Children, Fintech-Crypto |
+| `reference/cross-platform-decision-tree.md` | `xplat` Recipe, or you need to confirm pure-native vs KMP-shared-logic vs CMP vs RN vs Flutter at SURVEY |
+| `reference/native-stack-defaults.md` | The full Native Stack Defaults matrix (iOS/Android per layer) or the Critical Thresholds table (parity verdict mix, offline tier, OS/targetSdk baselines, Xcode 26, 16KB, AI disclosure, EU/Children/Fintech) |
+| `reference/handoffs.md` | In `HANDOFF` — generating structured handoff blocks for downstream agents |
 | [`_common/BOUNDARIES.md`](../_common/BOUNDARIES.md) | Role boundaries are ambiguous (especially vs Native, Shift, Atlas, Lens) |
-| [`_common/OPERATIONAL.md`](../_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
-| [`_common/OPUS_5_AUTHORING.md`](../_common/OPUS_5_AUTHORING.md) | You are sizing the blueprint, deciding adaptive thinking depth at architecture mapping or parity-verdict decisions, or front-loading source/target stacks at SURVEY. Critical for Port: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Port-specific Output/Next schema. |
+| [`_common/OPERATIONAL.md`](../_common/OPERATIONAL.md) | Journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
+| [`_common/OPUS_5_AUTHORING.md`](../_common/OPUS_5_AUTHORING.md) | Sizing the blueprint, deciding adaptive thinking depth at architecture mapping or parity-verdict decisions, or front-loading source/target stacks at SURVEY. Critical for Port: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Port-specific Output/Next schema. |
 
 ## Operational
 

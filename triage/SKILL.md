@@ -265,15 +265,15 @@ Routing rules:
 
 | File | Read this when |
 |------|----------------|
-| `reference/collaboration-flows.md` | You need the exact standard, critical, security, rollback, postmortem, or multi-service handoff flow. |
-| `reference/postmortem-templates.md` | You are drafting an internal postmortem, PIR, or executive summary. |
-| `reference/response-workflow.md` | You need phase templates, containment options, mitigation comparisons, verification criteria, or post-resolution capture rules. |
-| `reference/runbooks-communication.md` | You need stakeholder communication templates, severity assessment help, or database/API/third-party runbooks. |
-| `reference/first-response.md` | You are inside the first 15 minutes of an incident: assigning IC, opening the war-room, classifying SEV, assigning a scribe, capturing the initial timeline, or drafting a holding comm. |
-| `reference/escalation-matrix.md` | You are designing the tiered escalation policy: on-call rotation, paging thresholds, auto-escalation timers, handoff scripts, after-hours rules, or PagerDuty / Opsgenie / VictorOps integration. |
-| `reference/incident-communications.md` | You are authoring stakeholder-specific incident templates: internal engineering / leadership / sales / support, external status page, customer notices, social updates, with SEV-based cadence and legal-review hooks. |
-| `_common/OPUS_5_AUTHORING.md` | You are calibrating tool-use eagerness at DETECT, deciding adaptive thinking depth at CLASSIFY, or sizing the postmortem. Critical for Triage: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Triage-specific Output/Next schema. |
+| `reference/collaboration-flows.md` | The exact standard, critical, security, rollback, postmortem, or multi-service handoff flow. |
+| `reference/postmortem-templates.md` | Drafting an internal postmortem, PIR, or executive summary. |
+| `reference/response-workflow.md` | Phase templates, containment options, mitigation comparisons, verification criteria, or post-resolution capture rules. |
+| `reference/runbooks-communication.md` | Stakeholder communication templates, severity assessment help, or database/API/third-party runbooks. |
+| `reference/first-response.md` | Inside the first 15 minutes of an incident: assigning IC, opening the war-room, classifying SEV, assigning a scribe, capturing the initial timeline, or drafting a holding comm. |
+| `reference/escalation-matrix.md` | Designing the tiered escalation policy: on-call rotation, paging thresholds, auto-escalation timers, handoff scripts, after-hours rules, or PagerDuty / Opsgenie / VictorOps integration. |
+| `reference/incident-communications.md` | Authoring stakeholder-specific incident templates: internal engineering / leadership / sales / support, external status page, customer notices, social updates, with SEV-based cadence and legal-review hooks. |
+| `_common/OPUS_5_AUTHORING.md` | Calibrating tool-use eagerness at DETECT, deciding adaptive thinking depth at CLASSIFY, or sizing the postmortem. Critical for Triage: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Triage-specific Output/Next schema. |
 
 ## Daily Process
 

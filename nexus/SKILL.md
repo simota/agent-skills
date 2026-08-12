@@ -303,7 +303,7 @@ Files already indexed by the Workflow table's Read-When column (routing-matrix, 
 | `reference/recipes-index.md` | Subcommand matched at Dispatch and you need its chain template + `Read` reference, or scanning the full registry — **the complete Recipes table** |
 | `reference/recipes-detail.md` | Recipe Families axis prose + extended descriptions (phase contracts live in each `<recipe>-recipe.md`) |
 | `reference/<recipe>-recipe.md`, `reference/apex-walkthrough.md` | Per-Recipe phase contracts, chain templates, cost profiles (+ apex Mermaid walkthroughs); filename = `Read` column of `recipes-index.md` |
-| `reference/quell-recipe.md` | `/nexus quell` — review-to-zero fix loop: Finding Ledger, disposition integrity, oscillation detection, termination bounds, `profile=general\|refactor` |
+| `reference/quell-recipe.md` | `/nexus quell` — review-to-zero fix loop: Finding Ledger, disposition integrity, oscillation detection, termination bounds, `profile=general\| refactor` |
 | `reference/inline-recipes.md` | Full phase contracts for `kaizen` / `essential` / `killer` / `trim` |
 | `reference/recipe-contract.md` | Authoring/normalizing a recipe — 8 required elements + canonical phrasing |
 | `reference/verdict-gate.md` | Shared contract for verdict recipes (`essential`/`killer`/`trim` + graft flag clause) |

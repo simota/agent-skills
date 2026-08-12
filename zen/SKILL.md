@@ -259,29 +259,29 @@ Read `_common/SUBAGENT.md` section `MULTI_ENGINE` when this mode is requested.
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/code-smells-metrics.md` | You need Zen refactor mechanics per smell, complexity thresholds, or measurement commands. Pairs with `_common/CODE_SMELL_CATALOG.md` (shared smell taxonomy / definitions / severity hints). |
-| `reference/refactoring-recipes.md` | You need a specific refactoring recipe. |
+| `reference/code-smells-metrics.md` | Zen refactor mechanics per smell, complexity thresholds, or measurement commands. Pairs with `_common/CODE_SMELL_CATALOG.md` (shared smell taxonomy / definitions / severity hints). |
+| `reference/refactoring-recipes.md` | A specific refactoring recipe. |
 | `reference/dead-code-detection.md` | You plan to remove code. |
 | `reference/defensive-excess.md` | You suspect fallback-heavy code is hiding bugs or noise. |
-| `reference/consistency-audit.md` | You need cross-file standardization or migration planning. Pairs with `_common/CONSISTENCY_FRAMEWORK.md` (shared taxonomy / severity rubric). |
+| `reference/consistency-audit.md` | Cross-file standardization or migration planning. Pairs with `_common/CONSISTENCY_FRAMEWORK.md` (shared taxonomy / severity rubric). |
 | `reference/test-refactoring.md` | The target is test structure or you need the Zen vs Radar boundary. |
-| `reference/review-report-templates.md` | You need exact output anchors or report shapes. |
-| `reference/agent-integrations.md` | You need Radar, Canvas, Judge, Guardian, AUTORUN, or Nexus collaboration rules. |
+| `reference/review-report-templates.md` | Exact output anchors or report shapes. |
+| `reference/agent-integrations.md` | Radar, Canvas, Judge, Guardian, AUTORUN, or Nexus collaboration rules. |
 | `reference/typescript-react-patterns.md` | The target is TypeScript, JavaScript, or React. |
 | `reference/language-patterns.md` | The target is Python, Go, Rust, Java, or concurrency-heavy code. |
-| `reference/refactoring-anti-patterns.md` | You need pre-flight checks or anti-pattern avoidance. |
-| `reference/ai-assisted-refactoring.md` | You are using Multi-Engine or AI-assisted refactoring. |
+| `reference/refactoring-anti-patterns.md` | Pre-flight checks or anti-pattern avoidance. |
+| `reference/ai-assisted-refactoring.md` | Using Multi-Engine or AI-assisted refactoring. |
 | `reference/cognitive-complexity-research.md` | Complexity is the main issue and you need cognitive-metric guidance. |
-| `reference/tech-debt-prioritization.md` | You need hotspot prioritization or safe migration guidance. |
+| `reference/tech-debt-prioritization.md` | Hotspot prioritization or safe migration guidance. |
 | `reference/logic-simplification.md` | Behavior-preserving compression of redundant conditionals, ternary chains, and `if/else return true/false` shapes. |
 | `reference/function-splitting.md` | Incremental responsibility-seam splitting for functions exceeding 50 lines or cognitive complexity > 20, with rollback checkpoints. |
 | `reference/guard-clauses.md` | Convert nested conditionals (depth >=3) to early returns / guard clauses with measurable before/after complexity reduction. |
-| `_common/BOUNDARIES.md` | You need agent-role disambiguation. |
-| `_common/OPERATIONAL.md` | You need journal, activity log, AUTORUN, or Nexus protocol details. |
-| `_common/SUBAGENT.md` | You need Multi-Engine dispatch or merge rules. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the refactor plan, deciding adaptive thinking depth at complexity/AI-scrutiny, or front-loading file/intent/scope at SCAN. Critical for Zen: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Zen-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `_common/BOUNDARIES.md` | Agent-role disambiguation. |
+| `_common/OPERATIONAL.md` | Journal, activity log, AUTORUN, or Nexus protocol details. |
+| `_common/SUBAGENT.md` | Multi-Engine dispatch or merge rules. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the refactor plan, deciding adaptive thinking depth at complexity/AI-scrutiny, or front-loading file/intent/scope at SCAN. Critical for Zen: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Zen-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## AUTORUN Support
 

@@ -5,21 +5,21 @@ description: "Remediating known failure patterns automatically from Triage diagn
 
 <!--
 CAPABILITIES_SUMMARY:
-- known_pattern_remediation: Match and execute automated fixes for catalogued failure patterns with confidence-based autonomy modes
+- known_pattern_remediation: Automated fixes for catalogued failure patterns with confidence-based autonomy
 - safety_tier_classification: Assess blast radius via dependency graphs, reversibility, and data sensitivity to assign T1-T4 tier
-- runbook_execution: Parse and execute Triage-authored runbooks with idempotency, dry-run, and atomic step verification
-- staged_verification: Run Health Check → Smoke Test → SLO Check → Recovery Confirmed pipeline with automatic rollback triggers
+- runbook_execution: Triage-authored runbooks with idempotency, dry-run, atomic step verification
+- staged_verification: Health Check -> Smoke Test -> SLO Check -> Recovery Confirmed, with automatic rollback triggers
 - automatic_rollback: Trigger rollback on crash loop, error spike (>= 2% error budget burn/hour), or latency surge
 - escalation_routing: Route unmatched or T4 patterns to Builder, Gear, or human operator with full incident context
-- slo_recovery_tracking: Monitor error budget burn rate via multi-window multi-burn-rate alerting (2%/1h page 14.4x, 5%/6h page 6x, 10%/3d ticket 1x, >20%/4w escalation) and SLI recovery post-remediation
+- slo_recovery_tracking: Multi-window multi-burn-rate error-budget monitoring and SLI recovery post-remediation
 - remediation_rate_limiting: Cap remediation attempts at 3 per pattern per incident with exponential backoff to prevent retry storms
-- runbook_freshness_validation: Validate runbook last-reviewed timestamp (< 90 days) and infrastructure drift (platform upgrades, permission changes, deprecated APIs) before automated execution
+- runbook_freshness_validation: Last-reviewed timestamp (`<90` days) plus infrastructure-drift detection before automated execution
 - pattern_learning: Convert postmortem outcomes into catalog entries via learning loop with human curation gate
-- mttr_measurement: Track remediation effectiveness by severity (SEV-1 < 1h, SEV-2 < 4h, SEV-3 < 24h) with context-gathering optimization as primary MTTR reduction lever
+- mttr_measurement: Effectiveness by severity, with context-gathering automation as the primary MTTR lever
 - circuit_breaker_management: Activate, monitor, and reset circuit breakers for cascading failure containment
 - k8s_self_healing: Kubernetes pod restart, CrashLoopBackOff recovery, liveness/readiness probe failure remediation
-- scale_remediation: Incident-time horizontal / vertical scaling, HPA/KEDA tuning, predictive and reactive autoscale, pre-warm for expected load, stateful-service scaling with connection drain and session stickiness guards
-- circuit_intervention: Trip breaker for failing dependency, adjust rate-limit thresholds, queue-based load shedding, bulkhead isolation, and graceful degradation during cascading failure
+- scale_remediation: Incident-time horizontal/vertical scaling, autoscaler tuning, pre-warm, stateful scaling with drain and stickiness guards
+- circuit_intervention: Trip breakers, adjust rate limits, queue-based load shedding, bulkhead isolation, graceful degradation
 - canary_control: Progressive rollout control (1% / 5% / 25% / 100%), health-metric promotion gates, automatic rollback triggers, cohort selection, feature-flag coordination, and partial-rollback tactics
 
 COLLABORATION_PATTERNS:
@@ -69,23 +69,23 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Classify a safety tier (T1-T4) before any remediation action; never act without tier classification. Assess blast radius using dependency graphs and topology models (Source: unite.ai — Agentic SRE 2026).
-- Validate handoff integrity and require pattern confidence `>= 50%` before acting. Simplify to two behaviors: `>= 90%` confidence proceeds to remediation per the safety-tier approval gate (T1 auto, T2 notify, T3 approve); anything below `90%` (including the `< 50%` floor) goes to investigate-first, escalating to a human operator if investigation doesn't resolve it.
-- Execute staged verification after every fix (Health Check → Smoke Test → SLO Check → Recovery Confirmed). Pre-recorded playbooks produce ~3x MTTR improvement over ad-hoc response (Source: sre.google — Automation at Google); mature automated runbooks achieve 30-70% reduction over manual baseline (Source: Rootly — AI Incident Automation 2025).
-- Include a rollback plan for every remediation; never execute without rollback capability. Rollback steps must be explicit, tested, and atomic.
-- Respect tier-specific approval gates (T1: auto, T2: notify, T3: approve, T4: prohibited). Critical paths (payments, auth, trading) retain T3+ approval gates regardless of confidence (Source: rootly.com — AI SRE Guide 2026).
-- Every remediation step must be idempotent — check current state first, apply only the delta, and treat no-op as a normal success path. Stateful operations must not be treated as idempotent without explicit verification (Source: sreschool.com — Runbook Automation 2026).
-- Monitor error budget burn rate post-remediation using multi-window, multi-burn-rate alerting (Source: sre.google — Alerting on SLOs). Fast-burn page: `>= 2%` budget consumed in 1 hour (14.4x burn rate). Secondary page: `>= 5%` budget consumed in 6 hours (6x burn rate). Slow-burn ticket: `>= 10%` budget consumed in 3 days. Short window = 1/12 of long window to confirm budget is still being consumed, reducing false positives. If a single incident consumes `> 20%` of 4-week error budget, escalate for mandatory postmortem with P0 action item. **Low-traffic caveat**: multi-window burn-rate alerting produces unreliable signals for services with low request rates or natural low-traffic periods; fall back to count-based or event-based alerting for these services (Source: sre.google — Alerting on SLOs).
-- Cap remediation attempts at 3 per pattern per incident with exponential backoff between retries. After 3 failures, stop auto-remediation and escalate to human operator to avoid masking deeper issues or causing retry storms (Source: incident.io — SRE Tools & Reliability Practices 2026).
+- Classify a safety tier (T1-T4) before any remediation action — never act without one. Assess blast radius with dependency graphs and topology models.
+- Validate handoff integrity and require pattern confidence `>=50%` before acting. Two behaviors only: `>=90%` proceeds to remediation under the tier gate (T1 auto, T2 notify, T3 approve); anything below goes investigate-first, escalating to a human if investigation does not resolve it.
+- Execute staged verification after every fix (Health Check -> Smoke Test -> SLO Check -> Recovery Confirmed). Pre-recorded playbooks materially outperform ad-hoc response on MTTR.
+- Include a rollback plan for every remediation and never execute without rollback capability — steps explicit, tested, atomic.
+- Respect tier approval gates (T1 auto, T2 notify, T3 approve, T4 prohibited). Critical paths (payments, auth, trading) stay at T3+ regardless of confidence.
+- Every step is idempotent — check current state, apply only the delta, treat no-op as a normal success. Stateful operations are never assumed idempotent without explicit verification.
+- Monitor error-budget burn post-remediation with multi-window, multi-burn-rate alerting: fast-burn page at `>=2%` in 1 hour, secondary at `>=5%` in 6 hours, slow-burn ticket at `>=10%` in 3 days, short window `1/12` of the long window. A single incident consuming `>20%` of the 4-week budget escalates to a mandatory postmortem with a P0 action item. **Low-traffic caveat**: burn-rate alerting is unreliable at low request rates — fall back to count- or event-based alerting.
+- Cap attempts at 3 per pattern per incident with exponential backoff; after 3 failures stop auto-remediation and escalate, to avoid masking deeper issues or causing retry storms.
 - Log all actions with timestamps to the incident timeline; every automated action must be auditable and explainable.
-- Learn from postmortems to update the remediation pattern catalog. Note: general-purpose LLMs struggle with emerging failure patterns in proprietary systems — human curation remains essential for pattern accuracy (Source: engineering.zalando.com — AI Postmortem Analysis).
-- Validate runbook freshness before automated execution: runbooks unreviewed for > 90 days must trigger a freshness warning. A single outdated command can destroy trust and cause secondary incidents (Source: incident.io — Automated Runbook Guide). Beyond time-based freshness, detect infrastructure drift — platform upgrades, permission changes, deprecated APIs, or schema migrations since last review invalidate runbooks even within the 90-day window (Source: ilert.com — Runbooks Are History; incident.io — Automated Runbook Guide).
-- Measure remediation effectiveness by severity: target MTTR < 1 hour for SEV-1, < 4 hours for SEV-2, < 24 hours for SEV-3. Context gathering (topology, recent deploys, change history) typically consumes 50%+ of remediation time and is the largest MTTR improvement opportunity; automate it in the CLASSIFY phase (Source: rootly.com — Incident Response Metrics; getdx.com — Incident Response Automation 2025).
+- Learn from postmortems to update the pattern catalog — human curation stays essential, since general-purpose models struggle with emerging failure patterns in proprietary systems.
+- Validate runbook freshness before automated execution — unreviewed for `>90` days triggers a freshness warning. Beyond time, detect **infrastructure drift** (platform upgrades, permission changes, deprecated APIs, schema migrations), which invalidates runbooks even inside the window.
+- Measure effectiveness by severity: MTTR `<1h` for SEV-1, `<4h` for SEV-2, `<24h` for SEV-3. Context gathering (topology, recent deploys, change history) consumes over half of remediation time and is the largest MTTR opportunity — automate it in CLASSIFY.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Mend; P2, P1 recommended).
-- **Accept investigation-initiated triggers, not only Triage-pull.** Datadog Bits AI SRE (GA 2025-12-02, ~2× faster as of 2026) exposes an Action Catalog (`Trigger Investigation` / `Get Investigation` / `List Investigation`) so an upstream investigator agent can hand a finished investigation directly to a remediation runbook. Add this as a second trigger path alongside Triage / Beacon to halve MTTR on patterns where the investigator can produce a complete remediation plan before paging Triage. [Source: datadoghq.com/blog/bits-ai-sre-deeper-reasoning/]
-- **Adopt the Resolve AI Dynamic Knowledge Graph pattern** for runbook input. Connect Pod state, Grafana panels, GitHub, and Jenkins into a graph that the remediation agent reads before action; carry multiple hypothesis branches with their own evidence lists. Pure runbook execution without live topology blind-spots ~30-40% of safe-tier classifications. [Source: resolve.ai/product/ai-sre]
-- **Enforce Autonomy with Guardrails on every remediation action.** Investigation may be autonomous; *action* must pass through an explicit policy layer with named approvers tied to tier (T1 auto / T2 single approver / T3 dual approver / T4 incident-commander gate). When agent confidence is below the tier threshold, the correct verb is `pause` and `request_approval`, not `continue with caution`. [Source: tldrecap.tech/posts/2026/conf42-sre/autonomous-agent-safety/]
-- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
+- **Accept investigation-initiated triggers**, not only Triage-pull — an upstream investigator agent can hand a finished investigation straight to a remediation runbook, halving MTTR where the investigation already yields a complete plan.
+- **Read live topology before acting**: connect workload state, dashboards, source control, and CI into a graph the agent consults pre-action, carrying multiple hypothesis branches with their own evidence. Pure runbook execution without live topology blind-spots a large share of safe-tier classifications.
+- **Enforce autonomy with guardrails on every action.** Investigation may be autonomous; *action* passes an explicit policy layer with named approvers per tier (T1 auto / T2 single / T3 dual / T4 incident-commander). Below the tier confidence threshold the correct verb is `pause` and `request_approval`, never "continue with caution". Sources -> `reference/safety-model.md`.
+- Apply `_common/CODE_QUALITY.md` to every code change — seven axes (SLD/SEC/RDB/MNT/TST/PRF/SCL), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -214,19 +214,19 @@ Every deliverable must include:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/safety-model.md` | You need detailed tier examples, risk-score factor definitions, emergency override rules, or audit-trail fields. |
-| `reference/remediation-patterns.md` | You are matching a diagnosis to the catalog, checking confidence decay, or selecting a known remediation. |
-| `reference/runbook-execution.md` | You are executing or simulating a Triage runbook and need parsing, idempotency, retry, or dry-run details. |
-| `reference/verification-strategies.md` | You are running staged verification, deciding rollback, or reporting recovery and error-budget impact. |
-| `reference/learning-loop.md` | You are turning a postmortem into a new pattern, updating an existing one, or reviewing pattern-health metrics. |
+| `reference/safety-model.md` | Detailed tier examples, risk-score factor definitions, emergency override rules, or audit-trail fields. |
+| `reference/remediation-patterns.md` | Matching a diagnosis to the catalog, checking confidence decay, or selecting a known remediation. |
+| `reference/runbook-execution.md` | Executing or simulating a Triage runbook and need parsing, idempotency, retry, or dry-run details. |
+| `reference/verification-strategies.md` | Staged verification, deciding rollback, or reporting recovery and error-budget impact. |
+| `reference/learning-loop.md` | Turning a postmortem into a new pattern, updating an existing one, or reviewing pattern-health metrics. |
 | `reference/adversarial-defense.md` | You suspect telemetry manipulation, contradictory signals, novel input, or unsafe free-text matching. |
-| `reference/scale-remediation.md` | You are running the `scale` recipe — incident-time horizontal/vertical scaling, HPA/KEDA tuning, pre-warm, or stateful scaling with drain/stickiness guards. |
-| `reference/circuit-remediation.md` | You are running the `circuit` recipe — trip / tune circuit breakers, rate-limit thresholds, queue-based load shedding, bulkhead isolation, or graceful degradation. |
-| `reference/canary-remediation.md` | You are running the `canary` recipe — progressive rollout control (1/5/25/100%), promotion gates, auto-rollback triggers, cohort and flag coordination. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the remediation plan, deciding adaptive thinking depth at tier/confidence classification, or front-loading severity/blast-radius/approval at CLASSIFY. Critical for Mend: P3, P5. |
+| `reference/scale-remediation.md` | `scale` recipe — incident-time horizontal/vertical scaling, HPA/KEDA tuning, pre-warm, or stateful scaling with drain/stickiness guards. |
+| `reference/circuit-remediation.md` | `circuit` recipe — trip / tune circuit breakers, rate-limit thresholds, queue-based load shedding, bulkhead isolation, or graceful degradation. |
+| `reference/canary-remediation.md` | `canary` recipe — progressive rollout control (1/5/25/100%), promotion gates, auto-rollback triggers, cohort and flag coordination. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the remediation plan, deciding adaptive thinking depth at tier/confidence classification, or front-loading severity/blast-radius/approval at CLASSIFY. Critical for Mend: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You register repair runbooks in `nexus acceptance` Phase 5 (Layer 5 — runtime self-verify with auto-rollback). Defines G3 repair-loop circuit breaker: same-signature cap = 3 attempts per 24h, escalation lockout = 7d, different-signature on same module = separate counter. Repair-loop telemetry (signature counts, escalation rate) is a first-class SLO — rising escalation = signal of spec-graph rot or correlated-failure leakage. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Mend-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Mend-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

@@ -303,16 +303,16 @@ Polyglot receives features and UI components from upstream agents. Polyglot send
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/library-setup.md` | You need i18next, react-intl, vue-i18n, or Next.js App Router configuration guides. |
-| `reference/intl-api-patterns.md` | You need Intl API code examples, performance tips, or caching patterns. |
-| `reference/icu-message-format.md` | You need ICU MessageFormat patterns, key naming conventions, or namespace design. |
-| `reference/rtl-support.md` | You need CSS logical property mappings, bidi components, or RTL testing checklist. |
-| `reference/pluralize-cldr-rules.md` | You need CLDR plural categories per locale, ICU `plural` / `selectordinal` authoring, fallback strategy, or plural-branch test matrix. |
-| `reference/locale-negotiation.md` | You need BCP 47 parsing, `Accept-Language` negotiation, fallback chain design, user-override persistence, or geolocation-default resolution. |
-| `reference/translate-tms-workflow.md` | You need TMS integration (Lokalise/Crowdin/Phrase/Smartling), translation-memory reuse, translator briefing, QA gates, or release rollout strategy. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the i18n deliverable, calibrating effort to component/feature/app scope, or front-loading locale/library at SCAN. Critical for Polyglot: P3, P6. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Polyglot-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `reference/library-setup.md` | I18next, react-intl, vue-i18n, or Next.js App Router configuration guides. |
+| `reference/intl-api-patterns.md` | Intl API code examples, performance tips, or caching patterns. |
+| `reference/icu-message-format.md` | ICU MessageFormat patterns, key naming conventions, or namespace design. |
+| `reference/rtl-support.md` | CSS logical property mappings, bidi components, or RTL testing checklist. |
+| `reference/pluralize-cldr-rules.md` | CLDR plural categories per locale, ICU `plural` / `selectordinal` authoring, fallback strategy, or plural-branch test matrix. |
+| `reference/locale-negotiation.md` | BCP 47 parsing, `Accept-Language` negotiation, fallback chain design, user-override persistence, or geolocation-default resolution. |
+| `reference/translate-tms-workflow.md` | TMS integration (Lokalise/Crowdin/Phrase/Smartling), translation-memory reuse, translator briefing, QA gates, or release rollout strategy. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the i18n deliverable, calibrating effort to component/feature/app scope, or front-loading locale/library at SCAN. Critical for Polyglot: P3, P6. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Polyglot-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

@@ -295,27 +295,27 @@ Read only the files required for the current decision.
 
 | File | Read This When |
 |------|----------------|
-| `reference/agent-category-guide.md` | You need first-pass category selection or category-boundary guidance |
-| `reference/agent-categories.md` | You need the exact current roster, per-category agent summaries, or full catalog lookup |
-| `reference/creative-thinking.md` | You are still deciding what should exist, not yet specifying it |
-| `reference/naming-conventions.md` | You are naming a new or revised agent |
-| `reference/overlap-detection.md` | You need overlap scoring, threshold handling, or differentiation logic |
-| `reference/skill-template.md` | You are drafting or checking the canonical generated-skill structure |
-| `reference/validation-checklist.md` | You are validating a generated or improved skill |
-| `reference/context-compression.md` | You are planning or reviewing compression and need token-budget or equivalence rules |
-| `reference/output-audit.md` | You are scoring runtime output verbosity for an agent and proposing Output Contract corrections (audit-verbosity recipe) |
-| `_common/OUTPUT_STYLE.md` | You need the canonical runtime output style (tiers, banned patterns, format priority) for the Output Density Protocol |
-| `reference/review-loop.md` | You need `Health Score`, review cadence, or degradation triggers |
-| `reference/enhancement-framework.md` | You are improving an existing skill and need prioritization or proposal structure |
-| `reference/nexus-integration.md` | You need exact AUTORUN or hub-mode compatibility details |
-| `reference/self-evolution.md` | You are evaluating or performing self-modification |
+| `reference/agent-category-guide.md` | First-pass category selection or category-boundary guidance |
+| `reference/agent-categories.md` | The exact current roster, per-category agent summaries, or full catalog lookup |
+| `reference/creative-thinking.md` | Still deciding what should exist, not yet specifying it |
+| `reference/naming-conventions.md` | Naming a new or revised agent |
+| `reference/overlap-detection.md` | Overlap scoring, threshold handling, or differentiation logic |
+| `reference/skill-template.md` | Drafting or checking the canonical generated-skill structure |
+| `reference/validation-checklist.md` | Validating a generated or improved skill |
+| `reference/context-compression.md` | Planning or reviewing compression and need token-budget or equivalence rules |
+| `reference/output-audit.md` | Scoring runtime output verbosity for an agent and proposing Output Contract corrections (audit-verbosity recipe) |
+| `_common/OUTPUT_STYLE.md` | The canonical runtime output style (tiers, banned patterns, format priority) for the Output Density Protocol |
+| `reference/review-loop.md` | `Health Score`, review cadence, or degradation triggers |
+| `reference/enhancement-framework.md` | Improving an existing skill and need prioritization or proposal structure |
+| `reference/nexus-integration.md` | Exact AUTORUN or hub-mode compatibility details |
+| `reference/self-evolution.md` | Evaluating or performing self-modification |
 | `reference/multi-agent-system-anti-patterns.md` | The proposal may be overbuilt, poorly coordinated, or topologically mismatched |
 | `reference/agent-specification-anti-patterns.md` | The spec, prompt structure, tool design, or role definition looks weak |
 | `reference/ecosystem-architecture-anti-patterns.md` | Ecosystem fit, modularity, governance, or discoverability looks risky |
-| `reference/agent-evaluation-guardrails.md` | You need production-grade evaluation, guardrails, or validation design |
-| `reference/official-design-patterns.md` | You need official use case categories, skill patterns, agentic composable patterns, simplicity-first design, intelligence harnessing principles, interoperability guidance, success criteria, or Opus 5 authoring principles (Section 11). |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the skill package, deciding adaptive thinking depth at topology/category selection, or front-loading intent/category/collaboration at UNDERSTAND. Critical for Architect: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Architect-specific Output/Next schema. |
+| `reference/agent-evaluation-guardrails.md` | Production-grade evaluation, guardrails, or validation design |
+| `reference/official-design-patterns.md` | Official use case categories, skill patterns, agentic composable patterns, simplicity-first design, intelligence harnessing principles, interoperability guidance, success criteria, or Opus 5 authoring principles (Section 11). |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the skill package, deciding adaptive thinking depth at topology/category selection, or front-loading intent/category/collaboration at UNDERSTAND. Critical for Architect: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Architect-specific Output/Next schema. |
 
 ## Operational
 

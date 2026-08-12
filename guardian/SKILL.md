@@ -261,31 +261,31 @@ Additional sections as needed (use canonical headings from `reference/output-tem
 
 | Reference | Read this when... |
 |-----------|-------------------|
-| `reference/commit-conventions.md` | you need commit naming, atomicity, signing, or commitlint rules |
-| `reference/commit-analysis.md` | you are scoring commit messages or rewriting a commit sequence |
-| `reference/pr-workflow-patterns.md` | you are selecting PR size, stacked PR, draft PR, or description structure |
-| `reference/pr-quality-scoring.md` | you need the exact PR quality component weights and grade mapping |
+| `reference/commit-conventions.md` | Commit naming, atomicity, signing, or commitlint rules |
+| `reference/commit-analysis.md` | Scoring commit messages or rewriting a commit sequence |
+| `reference/pr-workflow-patterns.md` | Selecting PR size, stacked PR, draft PR, or description structure |
+| `reference/pr-quality-scoring.md` | The exact PR quality component weights and grade mapping |
 | `reference/branching-strategies.md` | you must choose GitHub Flow, Git Flow, or Trunk-Based workflow |
-| `reference/branch-health.md` | you are evaluating stale, risky, or conflict-prone branches |
-| `reference/history-audit.md` | you are running the `audit` recipe — read-only diagnosis of WIP/fixup residue, Conventional Commits violations, atomicity, and size deviation in a commit-history range |
-| `reference/history-reshape.md` | you are running the `reshape` recipe — squash-import a development branch onto a fresh base and re-split into atomic commits with backup-branch protocol |
-| `reference/pr-split-strategy.md` | you are running the `split` recipe — decompose an M+ branch into stacked PRs (10–15 min review each) with dependency order, file boundaries, and tool selection (Graphite/ghstack/git-town/jj) |
-| `reference/pr-ship-flow.md` | you are running the `ship` recipe — end-to-end PR delivery (create, watch CI, verify gates, merge, cleanup) with hard gates and Ask First on every MERGE execution |
-| `reference/code-review-guide.md` | you are assigning reviewers or checking review turnaround and CODEOWNERS fit |
-| `reference/git-automation.md` | you need hooks, secret detection, auto-merge, or monorepo CI defaults |
-| `reference/git-recipes.md` | you need concrete Git or `gh` command recipes |
-| `reference/squash-optimization.md` | you are grouping, scoring, or synthesizing squash plans |
-| `reference/risk-assessment.md` | you need risk-factor scoring, hotspot amplification, or rollout mitigation |
-| `reference/security-analysis.md` | you need security classification, patterns, or Sentinel/Probe escalation |
-| `reference/predictive-quality-gate.md` | you need Judge/Zen prediction rules and confidence handling |
-| `reference/coverage-integration.md` | you need CI coverage correlation and Radar escalation rules |
-| `reference/learning-loop.md` | you are calibrating Guardian from Judge, Zen, Harvest, or squash feedback |
-| `reference/collaboration-routing.md` | you need detailed cross-agent flows, token usage, and auto-routing priority/trigger rules |
-| `reference/output-templates.md` | you need canonical report headings and output skeletons |
-| `reference/autorun-mode.md` | you are running Guardian in AUTORUN mode |
-| `_common/OPUS_5_AUTHORING.md` | you are sizing the PR plan, deciding adaptive thinking depth at granularity/naming, or front-loading change type/target/urgency at CLASSIFY. Critical for Guardian: P3, P5. |
+| `reference/branch-health.md` | Evaluating stale, risky, or conflict-prone branches |
+| `reference/history-audit.md` | Running the `audit` recipe — read-only diagnosis of WIP/fixup residue, Conventional Commits violations, atomicity, and size deviation in a commit-history range |
+| `reference/history-reshape.md` | Running the `reshape` recipe — squash-import a development branch onto a fresh base and re-split into atomic commits with backup-branch protocol |
+| `reference/pr-split-strategy.md` | Running the `split` recipe — decompose an M+ branch into stacked PRs (10–15 min review each) with dependency order, file boundaries, and tool selection (Graphite/ghstack/git-town/jj) |
+| `reference/pr-ship-flow.md` | Running the `ship` recipe — end-to-end PR delivery (create, watch CI, verify gates, merge, cleanup) with hard gates and Ask First on every MERGE execution |
+| `reference/code-review-guide.md` | Assigning reviewers or checking review turnaround and CODEOWNERS fit |
+| `reference/git-automation.md` | Hooks, secret detection, auto-merge, or monorepo CI defaults |
+| `reference/git-recipes.md` | Concrete Git or `gh` command recipes |
+| `reference/squash-optimization.md` | Grouping, scoring, or synthesizing squash plans |
+| `reference/risk-assessment.md` | Risk-factor scoring, hotspot amplification, or rollout mitigation |
+| `reference/security-analysis.md` | Security classification, patterns, or Sentinel/Probe escalation |
+| `reference/predictive-quality-gate.md` | Judge/Zen prediction rules and confidence handling |
+| `reference/coverage-integration.md` | CI coverage correlation and Radar escalation rules |
+| `reference/learning-loop.md` | Calibrating Guardian from Judge, Zen, Harvest, or squash feedback |
+| `reference/collaboration-routing.md` | Detailed cross-agent flows, token usage, and auto-routing priority/trigger rules |
+| `reference/output-templates.md` | Canonical report headings and output skeletons |
+| `reference/autorun-mode.md` | Running Guardian in AUTORUN mode |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the PR plan, deciding adaptive thinking depth at granularity/naming, or front-loading change type/target/urgency at CLASSIFY. Critical for Guardian: P3, P5. |
 | `_common/PROOF_CARRYING.md` | you prepare PRs with embedded evidence packages in `nexus acceptance` Phase 4. Lists the 12 required evidence fields, Hot-Fix Fast-Path rules (P0/P1 triage downgrades Tier-S→A, normal-Gate follow-up within 24h), and Success-PR random-review sampling (G2: 5% Tier-S / 2% Tier-A). |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Guardian-specific Output/Next schema. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Guardian-specific Output/Next schema. |
 
 ## Operational
 

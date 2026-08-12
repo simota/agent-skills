@@ -274,27 +274,27 @@ Every deliverable must include:
 
 | File | Read this when |
 |------|----------------|
-| `reference/shell-configs.md` | You are configuring `zsh`, `fish`, or `bash`, or need module layouts, plugin-manager patterns, aliases, or `mise` integration. |
-| `reference/terminal-configs.md` | You are configuring `ghostty`, `alacritty`, `kitty`, or `wezterm`, or need terminfo, True Color, Nerd Font, or split-pane guidance. |
-| `reference/editor-configs.md` | You are configuring `neovim`, `vim`, or `Zed`, or need plugin layout, `lazy.nvim`, `vim.pack`, or Neovim 0.12+ guidance. |
-| `reference/vscode-editor-config.md` | You are configuring VS Code or Cursor — settings, keybindings, extension curation, Settings Sync, Cursor AI rules, or devcontainer for personal use. |
-| `reference/tmux-starship.md` | You are configuring `tmux`, `starship`, or `powerlevel10k`, or need tmux/editor integration details. |
-| `reference/git-personal-config.md` | You are configuring `~/.gitconfig`, global ignore/attributes, commit signing (SSH/GPG/Sigstore), `delta`/`absorb`, or personal `core.hooksPath`. |
-| `reference/shellfn-functions-env.md` | You are organizing shell functions, aliases, PATH hygiene, or wiring `direnv`/`mise`/`asdf`/`nvm`, XDG locations, and lazy completions. |
-| `reference/dotfile-management.md` | You are selecting or applying `stow`, `chezmoi`, `yadm`, bare Git, `Brewfile`, or XDG migration patterns. |
-| `reference/shell-config-anti-patterns.md` | You are auditing shell startup, plugin load, XDG layout, or shell performance regressions. |
-| `reference/editor-terminal-anti-patterns.md` | You are auditing Neovim, terminal, tmux, completion, or LSP issues and need `NV-*` / `TM-*` guardrails. |
-| `reference/dotfile-security-anti-patterns.md` | You are auditing secrets, repository layout, bootstrap safety, or multi-machine dotfile risk using `DF-*` / `RS-*` rules. |
-| `reference/environment-workflow-anti-patterns.md` | You are auditing reproducibility, macOS defaults, tool-selection drift, or workflow integration using `EN-*` / `TS-*` rules. |
-| `reference/applescript-patterns.md` | You are writing AppleScript `tell` blocks, reading an app `sdef` dictionary, or gluing multi-app macOS workflows (`automate` recipe). |
-| `reference/jxa-guide.md` | You are authoring JavaScript for Automation, or converting between AppleScript and JXA. |
-| `reference/osascript-integration.md` | You are wiring `osascript` into a shell pipeline, shebang script, Python, or Node. |
+| `reference/shell-configs.md` | Configuring `zsh`, `fish`, or `bash`, or need module layouts, plugin-manager patterns, aliases, or `mise` integration. |
+| `reference/terminal-configs.md` | Configuring `ghostty`, `alacritty`, `kitty`, or `wezterm`, or need terminfo, True Color, Nerd Font, or split-pane guidance. |
+| `reference/editor-configs.md` | Configuring `neovim`, `vim`, or `Zed`, or need plugin layout, `lazy.nvim`, `vim.pack`, or Neovim 0.12+ guidance. |
+| `reference/vscode-editor-config.md` | Configuring VS Code or Cursor — settings, keybindings, extension curation, Settings Sync, Cursor AI rules, or devcontainer for personal use. |
+| `reference/tmux-starship.md` | Configuring `tmux`, `starship`, or `powerlevel10k`, or need tmux/editor integration details. |
+| `reference/git-personal-config.md` | Configuring `~/.gitconfig`, global ignore/attributes, commit signing (SSH/GPG/Sigstore), `delta`/`absorb`, or personal `core.hooksPath`. |
+| `reference/shellfn-functions-env.md` | Organizing shell functions, aliases, PATH hygiene, or wiring `direnv`/`mise`/`asdf`/`nvm`, XDG locations, and lazy completions. |
+| `reference/dotfile-management.md` | Selecting or applying `stow`, `chezmoi`, `yadm`, bare Git, `Brewfile`, or XDG migration patterns. |
+| `reference/shell-config-anti-patterns.md` | Auditing shell startup, plugin load, XDG layout, or shell performance regressions. |
+| `reference/editor-terminal-anti-patterns.md` | Auditing Neovim, terminal, tmux, completion, or LSP issues and need `NV-*` / `TM-*` guardrails. |
+| `reference/dotfile-security-anti-patterns.md` | Auditing secrets, repository layout, bootstrap safety, or multi-machine dotfile risk using `DF-*` / `RS-*` rules. |
+| `reference/environment-workflow-anti-patterns.md` | Auditing reproducibility, macOS defaults, tool-selection drift, or workflow integration using `EN-*` / `TS-*` rules. |
+| `reference/applescript-patterns.md` | Writing AppleScript `tell` blocks, reading an app `sdef` dictionary, or gluing multi-app macOS workflows (`automate` recipe). |
+| `reference/jxa-guide.md` | Authoring JavaScript for Automation, or converting between AppleScript and JXA. |
+| `reference/osascript-integration.md` | Wiring `osascript` into a shell pipeline, shebang script, Python, or Node. |
 | `reference/ui-scripting.md` | The target app has no (or partial) AppleScript dictionary and needs System Events / Accessibility automation. |
-| `reference/permissions-tcc.md` | You are diagnosing TCC Apple Events consent (error -1743) or designing least-privilege automation scope. |
-| `reference/safety-and-testing.md` | You are auditing an automation script for destructive actions, dry-run coverage, idempotency, or error handling. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the config spec, deciding adaptive thinking depth at tool-idiomatic selection, or front-loading OS/shell/profile/scope at DETECT. Critical for Hearth: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Hearth-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `reference/permissions-tcc.md` | Diagnosing TCC Apple Events consent (error -1743) or designing least-privilege automation scope. |
+| `reference/safety-and-testing.md` | Auditing an automation script for destructive actions, dry-run coverage, idempotency, or error handling. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the config spec, deciding adaptive thinking depth at tool-idiomatic selection, or front-loading OS/shell/profile/scope at DETECT. Critical for Hearth: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Hearth-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Collaboration
 

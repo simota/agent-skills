@@ -204,3 +204,52 @@ Reserve `coordinate(withNormalizedOffset:)` for drawing canvases, maps, and syst
 - `reference/identifier-strategy.md` — designing the identifier taxonomy these queries depend on.
 - `reference/screenshot-strategies.md` — attaching evidence when a Screen Object assertion fails.
 - `reference/ci-integration.md` — running the resulting suite under `xcodebuild test` with sharding and parallelism.
+
+
+---
+
+## Per-Recipe Behavior Notes (SKILL.md excerpt)
+
+- `xcuitest`: end-to-end XCUITest target authoring. Establish identifier convention first; Screen Object structure; `XCTNSPredicateExpectation` waits; launch arguments for state. Default timeout 10s; justify longer.
+- `identifier`: audit-only Recipe. Produce a taxonomy doc (`screen.section.element`), a gap list (which views lack identifiers), and a handoff to Native for retrofit. Verify findings with Accessibility Inspector and recorded UI hierarchy.
+- `screenshot`: in-test capture via `XCTAttachment.screenshot(...)` with `.lifetime = .keepAlways`. Capture on failure (default) and at key checkpoints (opt-in). Do not introduce pixel-diff assertions inside XCUITest — refer that to `swift-snapshot-testing` or visual-AI vendor.
+- `appstore`: fastlane snapshot wiring. Produces `Snapfile` (devices / languages), `SnapshotHelper.swift` (drops into test target), a dedicated `Screenshots` scheme, and a status-bar override pre-script. Combine with frameit for marketing frames. Output goes to artifact store, never committed to main.
+- `page-object`: refactor existing or recorded XCUITest code into Swift Screen Object classes. One class per screen; expose user-intent methods; isolate query chains; share helpers via a `BaseScreen` protocol or class.
+- `ci`: wire `xcodebuild test -workspace <ws> -scheme <scheme> -destination "<dest>" -resultBundlePath Result.xcresult -parallel-testing-enabled YES` into CI; archive `.xcresult`; convert via `xcresulttool get --format json` and optional JUnit shim. Cover Xcode Cloud, GitHub Actions (`macos-14`+), Bitrise.
+- `farm`: build `.xctestrun` via `xcodebuild build-for-testing`, package the resulting `.app` + `.xctestrun`, upload to BrowserStack App Automate / Sauce Labs Real Device Cloud / AWS Device Farm. Tier the matrix: simulator on PR → 1 farm device on merge → multi-device on release gate.
+- `xcresult`: parse-only Recipe. Extract attachments (`xcrun xcresulttool get --path Result.xcresult --id <ref> > out.png`), pass/fail counts, durations. Pin parser to Xcode major or use `--legacy`.
+
+### Signal Keywords → Recipe
+
+| Keywords | Recipe |
+|----------|--------|
+| `xcuitest`, `XCUIApplication`, `XCUIElement`, `XCUIElementQuery`, `ios ui test`, `swift ui test` | `xcuitest` |
+| `accessibility identifier`, `accessibilityIdentifier`, `identifier taxonomy`, `swiftui identifier`, `uikit isAccessibilityElement` | `identifier` |
+| `screenshot`, `XCTAttachment`, `failure screenshot`, `regression screenshot`, `ios screenshot test` | `screenshot` |
+| `fastlane snapshot`, `Snapfile`, `SnapshotHelper`, `App Store screenshot`, `frameit`, `marketing screenshot` | `appstore` |
+| `page object`, `screen object`, `XCUITest refactor`, `recorded test cleanup` | `page-object` |
+| `xcodebuild test`, `xcodebuild test-without-building`, `xctestrun`, `Xcode Cloud xcuitest`, `github actions ios test`, `bitrise ios` | `ci` |
+| `browserstack ios`, `sauce labs ios`, `aws device farm ios`, `real device ios`, `.xctestrun upload` | `farm` |
+| `xcresult`, `xcresulttool`, `result bundle`, `junit ios`, `test attachment extract` | `xcresult` |
+| `status bar override`, `simctl status_bar`, `clean status bar`, `9:41 screenshot` | `appstore` (status-bar branch) |
+| `swift snapshot testing`, `pointfree snapshot`, `view snapshot baseline` | `screenshot` (baseline branch — clarify whether XCUITest or unit-snapshot scope) |
+| unclear iOS test request | `xcuitest` (default) |
+
+
+
+## Capability Detail (SKILL.md excerpt)
+
+- xcuitest_authoring: Author XCUITest targets using XCUIApplication / XCUIElement / XCUIElementQuery, async waits via expectations and XCTNSPredicateExpectation, gesture APIs (tap / swipe / pinch / dragAndDrop), and launch arguments / environment for deterministic state
+- accessibility_identifier_strategy: Design Swift-side accessibilityIdentifier taxonomy (screen.section.element), enforce via SwiftUI .accessibilityIdentifier() / UIKit isAccessibilityElement + accessibilityIdentifier, and verify with Accessibility Inspector and recorded UI hierarchy
+- swift_page_object: Implement Page Object / Screen Object patterns in Swift around XCUIApplication, expose user-intent methods, isolate XCUIElementQuery chains, and reuse via test helpers and BaseScreen abstractions
+- programmatic_screenshot: Capture screenshots via XCUIScreen.main.screenshot() / XCUIElement.screenshot() / XCUIScreenshotProviding, attach via XCTAttachment.lifetime = .keepAlways, and stitch device + screen + element captures for regression evidence
+- fastlane_snapshot_pipeline: Configure fastlane snapshot (Snapfile, SnapshotHelper.swift, snapshot() calls in UI tests) for App Store screenshots across device matrix, languages, and orientations; combine with frameit for marketing frames
+- status_bar_clean_capture: Use xcrun simctl status_bar override (time 9:41, full battery, wifi/cellular bars) before App Store captures to satisfy Apple's clean status-bar requirement
+- xcodebuild_test_runner: Drive headless runs via xcodebuild test / test-without-building with -destination matrix, -resultBundlePath, -parallel-testing-enabled, and -only-testing / -skip-testing for sharding
+- xcresult_parsing: Parse .xcresult bundles with xcresulttool (Xcode 16+ schema awareness, --legacy fallback), extract attachments / failure screenshots, and emit JUnit / CI-friendly reports
+- ui_test_recording: Use Xcode UI Recording to bootstrap queries, then refactor recorded code into Page Objects and identifier-based locators (recordings are scaffolding, not the final test)
+- ci_device_matrix: Wire XCUITest into Xcode Cloud, GitHub Actions (macos runners), Bitrise, or self-hosted runners with simulator pool management, derived data isolation, and result-bundle archiving
+- device_farm_handoff: Route XCUITest .xctestrun bundles to BrowserStack App Automate / Sauce Labs Real Device Cloud / AWS Device Farm for real-device matrices when local simulator coverage is insufficient
+- snapshot_testing_libraries: Optional integration with pointfreeco/swift-snapshot-testing for view-snapshot baselines distinct from XCUITest end-to-end screenshots; choose by scope (unit-of-UI vs full flow)
+- privacy_manifest_for_test_targets: Declare PrivacyInfo.xcprivacy on the test target itself when it bundles SDKs with required-reason APIs; Apple aggregates app + SDK manifests and a missing test-bundle entry can block TestFlight builds
+

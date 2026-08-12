@@ -296,24 +296,24 @@ Activated by the `multi` Recipe or explicit requests for parallel research desig
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/interview-guide.md` | You need interview guides, question hierarchies, or session checklists. |
-| `reference/participant-screening.md` | You need screeners, consent forms, qualification logic, or sample-size guidance. |
-| `reference/bias-checklist.md` | You need bias checks or report-language validation. |
-| `reference/analysis-and-synthesis.md` | You need thematic analysis, insight cards, personas, journey maps, usability test plans, or report templates. |
-| `reference/research-calibration.md` | You need DISTILL, adoption tracking, calibration rules, or EVOLUTION_SIGNAL. |
+| `reference/interview-guide.md` | Interview guides, question hierarchies, or session checklists. |
+| `reference/participant-screening.md` | Screeners, consent forms, qualification logic, or sample-size guidance. |
+| `reference/bias-checklist.md` | Bias checks or report-language validation. |
+| `reference/analysis-and-synthesis.md` | Thematic analysis, insight cards, personas, journey maps, usability test plans, or report templates. |
+| `reference/research-calibration.md` | DISTILL, adoption tracking, calibration rules, or EVOLUTION_SIGNAL. |
 | `reference/ai-assisted-research.md` | AI is part of the research workflow or synthetic users are being considered. |
 | `reference/research-ops-democratization.md` | The task is ResearchOps, repository design, democratization, or self-service research governance. |
-| `reference/research-anti-patterns-impact.md` | You need anti-pattern prevention, ROI framing, or stakeholder alignment. |
-| `reference/continuous-discovery-mixed-methods.md` | You need continuous discovery cadence, mixed-methods design, triangulation, or always-on research. |
-| `reference/survey-quantitative-design.md` | You need quantitative survey design, scale selection, sample-size math, order-bias control, or reliability checks. |
-| `reference/diary-longitudinal-study.md` | You need diary / longitudinal study design, ESM scheduling, fatigue management, or media-capture guidance. |
-| `reference/cards-ia-validation.md` | You need card sort, tree testing, first-click testing, or IA validation analysis. |
-| `reference/tri-engine-research.md` | You are running the `multi` Recipe — tri-engine research-design fan-out (Codex + Antigravity + Claude subagents), methodology-coverage matrix (qual/quant × generative/evaluative), CLUSTER identity rules that keep different methodologies in separate clusters, ethics/IRB/feasibility GROUND checklist, Combined-Plan vs Portfolio merge strategies, JSON schema, and subagent prompt skeleton. |
-| `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
-| `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill `multi` Recipe protocol — Pattern D (Divergence-primary) scoring rules, canonical PREFLIGHT probe, degraded modes, engine-attribution tag convention, and the Implementation Checklist that this skill's `multi` Recipe follows. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the research report, deciding adaptive thinking depth at method selection, or front-loading research question/scope/participants at INTAKE. Critical for Field: P3, P5. |
-| `_common/GROWTH_BRAND_PROOF.md` | You are the core Research-axis agent in `nexus growth-acceptance` Phase 0 (pre-design). Generate Research Proof 9 fields (source / sample / bias / contradiction / triangulation / recency / decision / confidence / reproducibility). Queue insights to the Insight Ledger (G11 mandatory: AI cannot directly write; submit to queue, Research Lead merges). Required for Step 2+ adoption. Mandatory 3 categories: customer / lost-customer / non-customer with minimum N per quarter to defeat Survivor Bias (omen FM-F5). |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Field-specific Output/Next schema. |
+| `reference/research-anti-patterns-impact.md` | Anti-pattern prevention, ROI framing, or stakeholder alignment. |
+| `reference/continuous-discovery-mixed-methods.md` | Continuous discovery cadence, mixed-methods design, triangulation, or always-on research. |
+| `reference/survey-quantitative-design.md` | Quantitative survey design, scale selection, sample-size math, order-bias control, or reliability checks. |
+| `reference/diary-longitudinal-study.md` | Diary / longitudinal study design, ESM scheduling, fatigue management, or media-capture guidance. |
+| `reference/cards-ia-validation.md` | Card sort, tree testing, first-click testing, or IA validation analysis. |
+| `reference/tri-engine-research.md` | `multi` Recipe — tri-engine research-design fan-out (Codex + Antigravity + Claude subagents), methodology-coverage matrix (qual/quant × generative/evaluative), CLUSTER identity rules that keep different methodologies in separate clusters, ethics/IRB/feasibility GROUND checklist, Combined-Plan vs Portfolio merge strategies, JSON schema, and subagent prompt skeleton. |
+| `_common/SUBAGENT.md` | The base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
+| `_common/MULTI_ENGINE_RECIPE.md` | The cross-skill `multi` Recipe protocol — Pattern D (Divergence-primary) scoring rules, canonical PREFLIGHT probe, degraded modes, engine-attribution tag convention, and the Implementation Checklist that this skill's `multi` Recipe follows. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the research report, deciding adaptive thinking depth at method selection, or front-loading research question/scope/participants at INTAKE. Critical for Field: P3, P5. |
+| `_common/GROWTH_BRAND_PROOF.md` | The core Research-axis agent in `nexus growth-acceptance` Phase 0 (pre-design). Generate Research Proof 9 fields (source / sample / bias / contradiction / triangulation / recency / decision / confidence / reproducibility). Queue insights to the Insight Ledger (G11 mandatory: AI cannot directly write; submit to queue, Research Lead merges). Required for Step 2+ adoption. Mandatory 3 categories: customer / lost-customer / non-customer with minimum N per quarter to defeat Survivor Bias (omen FM-F5). |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Field-specific Output/Next schema. |
 
 ## Operational
 

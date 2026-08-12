@@ -286,21 +286,21 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/execution-templates.md` | You need phase-by-phase reports, validation checkpoints, delivery report format, or package templates. |
-| `reference/infrastructure-constraints.md` | You need connection setup, plan limits, budget strategy, error handling, or security rules. |
-| `reference/handoff-formats.md` | You need target-agent handoff schemas for Muse, Forge, Artisan, Builder, Schema, Vision, Vitrine, or Canvas. |
-| `reference/code-connect-guide.md` | You are auditing, creating, syncing, or maintaining Code Connect mappings. |
-| `reference/prompt-strategy.md` | You need tool-specific prompt patterns or chaining strategies. |
-| `reference/figma-mcp-server-ga.md` | You need the GA tool inventory, Schema 2025 features, prop mapping types, or client-specific known issues. |
-| `reference/design-to-code-anti-patterns.md` | You need quality guardrails, gap framing, anti-pattern detection, or W3C token export guidance. |
-| `reference/variant-extraction.md` | You are running the `variants` recipe — Component Set discovery, prop/state matrix flattening, default-variant identification, missing-state detection. |
-| `reference/token-mapping.md` | You are running the `tokens` recipe — Figma Variables → W3C DTCG (2025.10) format, primitive/semantic/component layer mapping, mode/theme support, alias chain resolution. |
-| `reference/breakpoint-extraction.md` | You are running the `breakpoint` recipe — multi-frame variant analysis, layout-grid extraction, constraint inheritance, container-query candidate identification. |
-| `_common/UX_TRENDS_2026.md` | You need cross-vendor token / design-system context — DTCG 2025.10 stable spec, OKLCH/P3 colour pipelines, Schema 2025 / Code Connect lineage, Polaris Unified case. Read §1 Design. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the handoff packet, deciding adaptive thinking depth at SCOPE, or front-loading target consumer/file scope at SCAN. Critical for Frame: P3, P5. |
-| `_common/IMAGE_INPUT.md` | You are reading a Figma screenshot (`get_screenshot`) or any raw image as input — apply the RECOGNIZE→PARSE accuracy techniques (describe-first, region enumeration, observed-vs-inferred) before relaying a structured reading downstream. |
+| `reference/execution-templates.md` | Phase-by-phase reports, validation checkpoints, delivery report format, or package templates. |
+| `reference/infrastructure-constraints.md` | Connection setup, plan limits, budget strategy, error handling, or security rules. |
+| `reference/handoff-formats.md` | Target-agent handoff schemas for Muse, Forge, Artisan, Builder, Schema, Vision, Vitrine, or Canvas. |
+| `reference/code-connect-guide.md` | Auditing, creating, syncing, or maintaining Code Connect mappings. |
+| `reference/prompt-strategy.md` | Tool-specific prompt patterns or chaining strategies. |
+| `reference/figma-mcp-server-ga.md` | The GA tool inventory, Schema 2025 features, prop mapping types, or client-specific known issues. |
+| `reference/design-to-code-anti-patterns.md` | Quality guardrails, gap framing, anti-pattern detection, or W3C token export guidance. |
+| `reference/variant-extraction.md` | `variants` recipe — Component Set discovery, prop/state matrix flattening, default-variant identification, missing-state detection. |
+| `reference/token-mapping.md` | `tokens` recipe — Figma Variables → W3C DTCG (2025.10) format, primitive/semantic/component layer mapping, mode/theme support, alias chain resolution. |
+| `reference/breakpoint-extraction.md` | `breakpoint` recipe — multi-frame variant analysis, layout-grid extraction, constraint inheritance, container-query candidate identification. |
+| `_common/UX_TRENDS_2026.md` | Cross-vendor token / design-system context — DTCG 2025.10 stable spec, OKLCH/P3 colour pipelines, Schema 2025 / Code Connect lineage, Polaris Unified case. Read §1 Design. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the handoff packet, deciding adaptive thinking depth at SCOPE, or front-loading target consumer/file scope at SCAN. Critical for Frame: P3, P5. |
+| `_common/IMAGE_INPUT.md` | Reading a Figma screenshot (`get_screenshot`) or any raw image as input — apply the RECOGNIZE→PARSE accuracy techniques (describe-first, region enumeration, observed-vs-inferred) before relaying a structured reading downstream. |
 | `_common/PROOF_CARRYING.md` | You own Design-Code Contract enforcement in `nexus acceptance` Phase 2B / 4B. Coordinate the G9 Swiss-Cheese 4-layer detection (Layer 1 AST + Layer 2 Storybook + Layer 3 Runtime DOM + Layer 4 Code Connect). All 4 required before `component_proof` becomes Gate-blocking. Contract Meta-Oracle: Contract changes themselves are Proof-Carrying. Contract versioning: v1/v2 coexistence ≤6 months with tracked sunset. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Frame-specific Output/Next schema. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Frame-specific Output/Next schema. |
 
 ## Operational
 

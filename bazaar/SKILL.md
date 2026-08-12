@@ -289,15 +289,15 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 
 | File | Read This When |
 |------|----------------|
-| `reference/chain-recipes.md` | You are selecting a Recipe, mapping LP type → stage subset, or comparing time/quality trade-offs |
-| `reference/agent-roster.md` | You need the full per-stage delegate map, role responsibility, axis ownership map, and overlap notes |
-| `reference/quality-gates.md` | You are evaluating a stage exit, repair trigger, or measuring CVR/perf/a11y/6-axis thresholds |
-| `reference/handoff-protocols.md` | You are emitting `LURE_STAGE_BUNDLE` or coordinating across delegates |
-| `reference/conversion-playbook.md` | You need industry CVR baselines, copy framework choice, messaging hierarchy, or CTA strategy per LP type |
-| `reference/craft-standards.md` | You are scoring Design / Animation / Branding axes (rubrics, motion tokens, brand system anatomy, detail-craft checklist, 2026 trend calibration) |
-| `reference/ia-blueprint.md` | You are designing IA (visual hierarchy / scan pattern / scroll narrative / heading tree), running technical or content SEO, or scoring GEO citation-readiness for AI search |
+| `reference/chain-recipes.md` | Selecting a Recipe, mapping LP type → stage subset, or comparing time/quality trade-offs |
+| `reference/agent-roster.md` | The full per-stage delegate map, role responsibility, axis ownership map, and overlap notes |
+| `reference/quality-gates.md` | Evaluating a stage exit, repair trigger, or measuring CVR/perf/a11y/6-axis thresholds |
+| `reference/handoff-protocols.md` | Emitting `LURE_STAGE_BUNDLE` or coordinating across delegates |
+| `reference/conversion-playbook.md` | Industry CVR baselines, copy framework choice, messaging hierarchy, or CTA strategy per LP type |
+| `reference/craft-standards.md` | Scoring Design / Animation / Branding axes (rubrics, motion tokens, brand system anatomy, detail-craft checklist, 2026 trend calibration) |
+| `reference/ia-blueprint.md` | Designing IA (visual hierarchy / scan pattern / scroll narrative / heading tree), running technical or content SEO, or scoring GEO citation-readiness for AI search |
 | `_common/GROWTH_BRAND_PROOF.md` | You orchestrate full LP pipeline in `nexus growth-acceptance` Phase 2 (ship-time). LP bundles consume Brand Compiler 3-layer (B.hard / B.pattern blocking + B.tone advisory) — your 6-axis quality gates align with Brand Proof field set (tone / message / distinctiveness / asset / memory / trust / consistency / brand_lift). G12 Distinctiveness Floor: LP creatives are subject to embedding-distance check against past 90d + top-10 competitor recent LPs. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Bazaar-specific Output/Next schema. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Bazaar-specific Output/Next schema. |
 
 ## Operational
 

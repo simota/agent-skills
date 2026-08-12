@@ -294,17 +294,17 @@ Every atelier deliverable must include:
 
 | File | Read this when |
 |------|----------------|
-| `_templates/handoff-bundle.template.json` | You are assembling per-consumer handoff bundles and need the field-level template |
+| `_templates/handoff-bundle.template.json` | Assembling per-consumer handoff bundles and need the field-level template |
 | `_common/BOUNDARIES.md` | Role boundaries vs Vision / Nexus / Titan / Frame / Muse / Forge / Artisan are ambiguous |
-| `_common/HANDOFF.md` | You need the canonical `DESIGN_INTENT_HANDOFF` / `NEXUS_HANDOFF` schema |
-| `_common/OPERATIONAL.md` | You need journal, activity log, AUTORUN, Nexus hub, or shared operational defaults |
-| `_common/design-system-registry.md` | You need the registry contract for `.agents/design-system/{project}.json` persistence |
-| `_common/parametric-output.md` | You need the parametric-slider output convention downstream agents parse |
-| `_common/GIT_GUIDELINES.md` | You are authoring commits or PRs touching atelier pipeline artifacts |
-| `_common/UX_TRENDS_2026.md` | You need cross-domain 2025-2026 evidence to orchestrate Vision / Muse / Frame / Forge / Artisan / Vitrine / Echo handoffs. Covers tokens (DTCG, OKLCH/P3), motion (`linear()`, View Transitions), IA (agentic UX, NN/g), and frontend (RSC, Tailwind v4, INP) in one file. Read all three sections. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing delegate prompts, deciding per-delegate model effort, or front-loading acceptance criteria |
-| `_common/PROOF_CARRYING.md` | You are the Layer B sub-orchestrator in `nexus acceptance` Phase 2B / 3B / 4B (when `ui_dimension != none`). Coordinate muse / frame / palette / canon / vitrine / prose / echo / vision / matrix / weave / flow to produce the 9 Design-side evidence fields and the joint Design Acceptance verdict. G7 Unmeasurable-Quality Audit gate for Tier-S UI requires human designer sign-off even on Compiler PASS. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Atelier-specific Output/Next schema. |
+| `_common/HANDOFF.md` | The canonical `DESIGN_INTENT_HANDOFF` / `NEXUS_HANDOFF` schema |
+| `_common/OPERATIONAL.md` | Journal, activity log, AUTORUN, Nexus hub, or shared operational defaults |
+| `_common/design-system-registry.md` | The registry contract for `.agents/design-system/{project}.json` persistence |
+| `_common/parametric-output.md` | The parametric-slider output convention downstream agents parse |
+| `_common/GIT_GUIDELINES.md` | Authoring commits or PRs touching atelier pipeline artifacts |
+| `_common/UX_TRENDS_2026.md` | Cross-domain 2025-2026 evidence to orchestrate Vision / Muse / Frame / Forge / Artisan / Vitrine / Echo handoffs. Covers tokens (DTCG, OKLCH/P3), motion (`linear()`, View Transitions), IA (agentic UX, NN/g), and frontend (RSC, Tailwind v4, INP) in one file. Read all three sections. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing delegate prompts, deciding per-delegate model effort, or front-loading acceptance criteria |
+| `_common/PROOF_CARRYING.md` | The Layer B sub-orchestrator in `nexus acceptance` Phase 2B / 3B / 4B (when `ui_dimension != none`). Coordinate muse / frame / palette / canon / vitrine / prose / echo / vision / matrix / weave / flow to produce the 9 Design-side evidence fields and the joint Design Acceptance verdict. G7 Unmeasurable-Quality Audit gate for Tier-S UI requires human designer sign-off even on Compiler PASS. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Atelier-specific Output/Next schema. |
 
 ## Operational
 

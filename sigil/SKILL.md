@@ -261,20 +261,20 @@ Use the canonical schema in `_common/HANDOFF.md` for all inter-agent communicati
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/context-analysis.md` | You are running SCAN on any project or refresh to detect stack, conventions, monorepo layout, existing skills, and sync drift. |
-| `reference/skill-catalog.md` | You are ranking candidates in DISCOVER to map frameworks to likely high-value skills and migration paths. |
-| `reference/skill-templates.md` | You are drafting any new skill in CRAFT to choose Micro vs Full, apply templates, and preserve required structure. |
-| `reference/validation-rules.md` | You are scoring before install or after updates to apply structural checks, rubric scoring, and validation reporting. |
-| `reference/evolution-patterns.md` | You are updating stale skills to choose lifecycle state, trigger handling, and update strategy. |
-| `reference/advanced-patterns.md` | You are handling variants, monorepos, or composed skills with conditional branches, variable substitution, scoping, and composition rules. |
-| `reference/skill-effectiveness.md` | You are running ATTUNE after a batch to record quality signals, calibrate ranking, and persist reusable patterns. |
-| `reference/claude-code-skills-api.md` | You are authoring Claude Code skill metadata or sandbox rules to preserve frontmatter, routing-sensitive descriptions, dynamic context, and install paths. |
-| `reference/claude-md-best-practices.md` | You are generating or reconciling CLAUDE.md-adjacent guidance to apply maturity levels, RFC 2119 wording, and split/import decisions. |
-| `reference/cross-tool-rules-landscape.md` | You are reconciling project rules across AI tools to compare CLAUDE.md, .cursorrules, .windsurfrules, AGENTS.md, and Copilot instructions. |
-| `reference/meta-prompting-self-improvement.md` | You are improving Sigil itself or its long-term calibration loop using self-improvement patterns such as Mistake Ledger and Self-Refine. |
-| `reference/official-skill-guide.md` | You are authoring frontmatter, writing descriptions, structuring instructions, or validating against official Anthropic skill standards during CRAFT or VERIFY. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the project skill package or deciding effort allocation across the six-phase pipeline. Critical for Sigil (Knowledge/Meta role): P6, P7. Recommended: P1. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Sigil-specific Output/Next schema. |
+| `reference/context-analysis.md` | SCAN on any project or refresh to detect stack, conventions, monorepo layout, existing skills, and sync drift. |
+| `reference/skill-catalog.md` | Ranking candidates in DISCOVER to map frameworks to likely high-value skills and migration paths. |
+| `reference/skill-templates.md` | Drafting any new skill in CRAFT to choose Micro vs Full, apply templates, and preserve required structure. |
+| `reference/validation-rules.md` | Scoring before install or after updates to apply structural checks, rubric scoring, and validation reporting. |
+| `reference/evolution-patterns.md` | Updating stale skills to choose lifecycle state, trigger handling, and update strategy. |
+| `reference/advanced-patterns.md` | Handling variants, monorepos, or composed skills with conditional branches, variable substitution, scoping, and composition rules. |
+| `reference/skill-effectiveness.md` | ATTUNE after a batch to record quality signals, calibrate ranking, and persist reusable patterns. |
+| `reference/claude-code-skills-api.md` | Authoring Claude Code skill metadata or sandbox rules to preserve frontmatter, routing-sensitive descriptions, dynamic context, and install paths. |
+| `reference/claude-md-best-practices.md` | Generating or reconciling CLAUDE.md-adjacent guidance to apply maturity levels, RFC 2119 wording, and split/import decisions. |
+| `reference/cross-tool-rules-landscape.md` | Reconciling project rules across AI tools to compare CLAUDE.md, .cursorrules, .windsurfrules, AGENTS.md, and Copilot instructions. |
+| `reference/meta-prompting-self-improvement.md` | Improving Sigil itself or its long-term calibration loop using self-improvement patterns such as Mistake Ledger and Self-Refine. |
+| `reference/official-skill-guide.md` | Authoring frontmatter, writing descriptions, structuring instructions, or validating against official Anthropic skill standards during CRAFT or VERIFY. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the project skill package or deciding effort allocation across the six-phase pipeline. Critical for Sigil (Knowledge/Meta role): P6, P7. Recommended: P1. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Sigil-specific Output/Next schema. |
 
 ## Operational
 

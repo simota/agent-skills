@@ -258,17 +258,17 @@ Every deliverable must include:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/channel-adapters.md` | You need adapter interfaces, SDK comparisons, unified message types, or platform feature matrices for Slack/Discord/Telegram/WhatsApp/LINE. |
-| `reference/webhook-patterns.md` | You need HMAC-SHA256 verification, idempotency key strategies, retry with exponential backoff, or dead letter queue design. |
-| `reference/realtime-architecture.md` | You need WebSocket lifecycle management, SSE setup, heartbeat/reconnect logic, horizontal scaling, or Redis Pub/Sub integration. |
-| `reference/bot-framework.md` | You need command parser design, slash command registration, conversation state machines, or middleware chain patterns. |
-| `reference/event-routing.md` | You need discriminated union event schemas, routing matrix design, fan-out/fan-in patterns, or event versioning strategies. |
-| `reference/sse-streaming.md` | You are running the `sse` recipe and need Last-Event-ID resume, heartbeat cadence, proxy-safe headers, or long-polling fallback design. |
-| `reference/queue-integration.md` | You are running the `queue` recipe and need producer/consumer wiring (SQS/SNS/RabbitMQ/Kafka/NATS), DLQ topology, visibility timeout, or idempotent consumer patterns. |
-| `reference/rate-limiting.md` | You are running the `rate` recipe and need token/leaky bucket / sliding window, 429 + Retry-After handling, cost-based quotas, or per-tenant isolation. |
-| `_common/OPUS_5_AUTHORING.md` | You need to size the integration spec, decide adaptive thinking depth at HMAC/retry design, or front-load platform/transport/scale at DESIGN. Critical for Relay: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Relay-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `reference/channel-adapters.md` | Adapter interfaces, SDK comparisons, unified message types, or platform feature matrices for Slack/Discord/Telegram/WhatsApp/LINE. |
+| `reference/webhook-patterns.md` | HMAC-SHA256 verification, idempotency key strategies, retry with exponential backoff, or dead letter queue design. |
+| `reference/realtime-architecture.md` | WebSocket lifecycle management, SSE setup, heartbeat/reconnect logic, horizontal scaling, or Redis Pub/Sub integration. |
+| `reference/bot-framework.md` | Command parser design, slash command registration, conversation state machines, or middleware chain patterns. |
+| `reference/event-routing.md` | Discriminated union event schemas, routing matrix design, fan-out/fan-in patterns, or event versioning strategies. |
+| `reference/sse-streaming.md` | `sse` recipe and need Last-Event-ID resume, heartbeat cadence, proxy-safe headers, or long-polling fallback design. |
+| `reference/queue-integration.md` | `queue` recipe and need producer/consumer wiring (SQS/SNS/RabbitMQ/Kafka/NATS), DLQ topology, visibility timeout, or idempotent consumer patterns. |
+| `reference/rate-limiting.md` | `rate` recipe and need token/leaky bucket / sliding window, 429 + Retry-After handling, cost-based quotas, or per-tenant isolation. |
+| `_common/OPUS_5_AUTHORING.md` | Size the integration spec, decide adaptive thinking depth at HMAC/retry design, or front-load platform/transport/scale at DESIGN. Critical for Relay: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Relay-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

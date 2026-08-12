@@ -237,27 +237,27 @@ Full algorithm, JSON schema, CLUSTER identity rules, GROUND checks, prompt skele
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/ux-frameworks.md` | You need emotion model, journey patterns, cognitive psych, JTBD, behavioral economics, or a11y frameworks. |
-| `reference/process-workflows.md` | You need the 6-step daily process, simulation standards, multi-engine mode, or AUTORUN/NEXUS_HANDOFF formats. |
-| `reference/analysis-frameworks.md` | You need persona generation, context-aware simulation, or service-specific review. |
-| `reference/output-templates.md` | You need report formats (emotion, cognitive, JTBD, behavioral, visual review, a11y). |
-| `reference/collaboration-patterns.md` | You need agent handoff templates (6 patterns). |
-| `reference/cognitive-persona-model.md` | You need the CPM framework: 6 dimensions, cross-dimension interactions, consistency verification. |
-| `reference/question-templates.md` | You need interaction trigger YAML templates. |
-| `reference/visual-review.md` | You need visual review mode detailed process. |
-| `reference/heuristic-evaluation.md` | You are running a Nielsen-10 or domain-extended heuristic expert review and need evaluator panels, severity scoring, and anti-patterns. |
-| `reference/sus-scoring.md` | You need SUS item set, scoring formula, benchmark mapping, minimum-detectable-difference curves, or variant selection (UMUX-Lite / UEQ / CASTLE). |
-| `reference/think-aloud-protocol.md` | You are moderating or coding a concurrent / retrospective think-aloud session and need prompt discipline, intervention rules, and transcript categories. |
-| `reference/tri-engine-walkthrough.md` | You are running the `multi` Recipe — tri-engine cognitive walkthrough fan-out, Pattern H scoring (confidence × perspective × cross-persona axes), JSON schema, subagent prompt skeleton, persona × engine matrix synthesis, dark-pattern auto-promotion rule, and degraded-mode behavior. |
-| `reference/council-mode.md` | You are running the `council` Recipe — Persona Contract schema, output schema, Org-Tier cost cap, engine diversity for Tier-S/A, confidence discipline, always/never recap. |
-| `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
-| `_common/MULTI_ENGINE_RECIPE.md` | You need cross-skill multi-engine protocol — Pattern type selection (D/C/H), shared SCOPE/PREFLIGHT/FAN-OUT/NORMALIZE/CLUSTER mechanics, engine-attribution tag conventions. Echo applies Pattern H. |
-| `_common/UX_TRENDS_2026.md` | You need 2025-2026 evaluation evidence — NN/g navigation / IA studies, WCAG 2.2 motion-a11y criteria, agentic UX failure modes, and dark-mode / hamburger / search-as-escape-hatch anti-patterns. Read §2 IA and §1 Design a11y. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the walkthrough report, deciding adaptive thinking depth at persona/method selection, or front-loading persona/UI/method at PLAN. Critical for Echo: P3, P5. |
-| `_common/IMAGE_INPUT.md` | You are evaluating a UI screenshot or visual as input — apply the image pipeline (describe-first, task-frame, region enumeration, observed-vs-inferred) before the walkthrough so confusion points are grounded in the pixels, not speculated. |
+| `reference/ux-frameworks.md` | Emotion model, journey patterns, cognitive psych, JTBD, behavioral economics, or a11y frameworks. |
+| `reference/process-workflows.md` | The 6-step daily process, simulation standards, multi-engine mode, or AUTORUN/NEXUS_HANDOFF formats. |
+| `reference/analysis-frameworks.md` | Persona generation, context-aware simulation, or service-specific review. |
+| `reference/output-templates.md` | Report formats (emotion, cognitive, JTBD, behavioral, visual review, a11y). |
+| `reference/collaboration-patterns.md` | Agent handoff templates (6 patterns). |
+| `reference/cognitive-persona-model.md` | The CPM framework: 6 dimensions, cross-dimension interactions, consistency verification. |
+| `reference/question-templates.md` | Interaction trigger YAML templates. |
+| `reference/visual-review.md` | Visual review mode detailed process. |
+| `reference/heuristic-evaluation.md` | A Nielsen-10 or domain-extended heuristic expert review and need evaluator panels, severity scoring, and anti-patterns. |
+| `reference/sus-scoring.md` | SUS item set, scoring formula, benchmark mapping, minimum-detectable-difference curves, or variant selection (UMUX-Lite / UEQ / CASTLE). |
+| `reference/think-aloud-protocol.md` | Moderating or coding a concurrent / retrospective think-aloud session and need prompt discipline, intervention rules, and transcript categories. |
+| `reference/tri-engine-walkthrough.md` | `multi` Recipe — tri-engine cognitive walkthrough fan-out, Pattern H scoring (confidence × perspective × cross-persona axes), JSON schema, subagent prompt skeleton, persona × engine matrix synthesis, dark-pattern auto-promotion rule, and degraded-mode behavior. |
+| `reference/council-mode.md` | `council` Recipe — Persona Contract schema, output schema, Org-Tier cost cap, engine diversity for Tier-S/A, confidence discipline, always/never recap. |
+| `_common/SUBAGENT.md` | The base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
+| `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill multi-engine protocol — Pattern type selection (D/C/H), shared SCOPE/PREFLIGHT/FAN-OUT/NORMALIZE/CLUSTER mechanics, engine-attribution tag conventions. Echo applies Pattern H. |
+| `_common/UX_TRENDS_2026.md` | 2025-2026 evaluation evidence — NN/g navigation / IA studies, WCAG 2.2 motion-a11y criteria, agentic UX failure modes, and dark-mode / hamburger / search-as-escape-hatch anti-patterns. Read §2 IA and §1 Design a11y. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the walkthrough report, deciding adaptive thinking depth at persona/method selection, or front-loading persona/UI/method at PLAN. Critical for Echo: P3, P5. |
+| `_common/IMAGE_INPUT.md` | Evaluating a UI screenshot or visual as input — apply the image pipeline (describe-first, task-frame, region enumeration, observed-vs-inferred) before the walkthrough so confusion points are grounded in the pixels, not speculated. |
 | `_common/PROOF_CARRYING.md` v3.1 | You define the AI-user persona set for `ux_task_proof` in `nexus acceptance` Phase 3B: standard / returning / impatient / mobile / screen-reader / slow-net / payment-fail / locale-edge / adversarial. Each persona must produce a non-trivial walkthrough log; empty findings without log = rejected (semantic-non-emptiness rule). v4 fold-in: `council` Recipe with machine-readable Persona Contract (situation/goal/fear/comprehension/success/disqualification), no-opinion discipline, Org-Tier persona cap, engine diversity for Tier-S/A. |
 | `_common/GROWTH_BRAND_PROOF.md` | You provide `council` Recipe output to `nexus growth-acceptance` Phase 0 (Pre-Design, Enterprise org-tier) for Persona Proof. Friction Ledger entries (when writing trace evidence via the `echo` writer role per G11) capture persona-specific UI moments at second-grain. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Echo-specific Output/Next schema. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Echo-specific Output/Next schema. |
 
 ## Operational
 

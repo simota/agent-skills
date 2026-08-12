@@ -224,22 +224,22 @@ Routing rules:
 
 | File | Read this when... |
 |------|-------------------|
-| `reference/triggers-and-events.md` | you need the right event, filter, dispatch, or merge-queue trigger. |
-| `reference/security-hardening.md` | you are defining permissions, OIDC, SHA pinning, supply-chain defenses, or security governance. |
-| `reference/performance-and-caching.md` | you are optimizing cache hits, job graphs, matrix cost, artifacts, or concurrency. |
-| `reference/reusable-and-composite.md` | you are deciding between inline YAML, reusable workflows, composite actions, or org templates. |
-| `reference/automation-recipes.md` | you are designing PR automation, merge queue, branch protection, environments, or release automation. |
-| `reference/advanced-patterns.md` | you are handling monorepos, self-hosted runners, multi-platform builds, deployments, service containers, or deep debugging. |
-| `reference/workflow-design-anti-patterns.md` | you need a fast structural audit for trigger design, YAML quality, or workflow graph mistakes. |
-| `reference/security-anti-patterns.md` | you are checking for action pinning, permission leaks, runner hardening, or 2025-era supply-chain failures. |
-| `reference/performance-cost-anti-patterns.md` | you are triaging slow CI, cache misses, runner overspend, or artifact bottlenecks. |
-| `reference/reusable-maintenance-anti-patterns.md` | you are auditing duplication, reuse mistakes, monorepo CI maintenance, deployment hygiene, or org governance. |
-| `reference/matrix-strategy.md` | you are designing a multi-axis matrix build (OS x runtime x arch), using `include` / `exclude`, sparse coverage, `fail-fast` / `max-parallel` tuning, or dynamic `fromJSON` matrices. |
-| `reference/cache-strategy.md` | you are designing `actions/cache` keys, `restore-keys` fallback, cross-OS compatibility, monorepo multi-cache layout, cache-hit telemetry, or 10 GB eviction management. |
-| `reference/gha-secrets.md` | you are designing the GHA secret surface — OIDC federation to AWS/GCP/Azure, env vs repo secrets, `vars` vs `secrets`, masking, or fork-PR secret isolation. |
-| `_common/OPUS_5_AUTHORING.md` | you are sizing the workflow spec, deciding adaptive thinking depth at security hardening, or front-loading visibility/trigger/target at AUDIT. Critical for Pipe: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Pipe-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `reference/triggers-and-events.md` | The right event, filter, dispatch, or merge-queue trigger. |
+| `reference/security-hardening.md` | Defining permissions, OIDC, SHA pinning, supply-chain defenses, or security governance. |
+| `reference/performance-and-caching.md` | Optimizing cache hits, job graphs, matrix cost, artifacts, or concurrency. |
+| `reference/reusable-and-composite.md` | Deciding between inline YAML, reusable workflows, composite actions, or org templates. |
+| `reference/automation-recipes.md` | Designing PR automation, merge queue, branch protection, environments, or release automation. |
+| `reference/advanced-patterns.md` | Handling monorepos, self-hosted runners, multi-platform builds, deployments, service containers, or deep debugging. |
+| `reference/workflow-design-anti-patterns.md` | A fast structural audit for trigger design, YAML quality, or workflow graph mistakes. |
+| `reference/security-anti-patterns.md` | Checking for action pinning, permission leaks, runner hardening, or 2025-era supply-chain failures. |
+| `reference/performance-cost-anti-patterns.md` | Triaging slow CI, cache misses, runner overspend, or artifact bottlenecks. |
+| `reference/reusable-maintenance-anti-patterns.md` | Auditing duplication, reuse mistakes, monorepo CI maintenance, deployment hygiene, or org governance. |
+| `reference/matrix-strategy.md` | Designing a multi-axis matrix build (OS x runtime x arch), using `include` / `exclude`, sparse coverage, `fail-fast` / `max-parallel` tuning, or dynamic `fromJSON` matrices. |
+| `reference/cache-strategy.md` | Designing `actions/cache` keys, `restore-keys` fallback, cross-OS compatibility, monorepo multi-cache layout, cache-hit telemetry, or 10 GB eviction management. |
+| `reference/gha-secrets.md` | Designing the GHA secret surface — OIDC federation to AWS/GCP/Azure, env vs repo secrets, `vars` vs `secrets`, masking, or fork-PR secret isolation. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the workflow spec, deciding adaptive thinking depth at security hardening, or front-loading visibility/trigger/target at AUDIT. Critical for Pipe: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Pipe-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

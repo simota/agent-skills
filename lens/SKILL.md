@@ -275,11 +275,11 @@ Every deliverable must include:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/lens-framework.md` | You need SCOPE/SURVEY/TRACE/CONNECT/REPORT phase details with YAML templates. |
-| `reference/investigation-patterns.md` | You need the 5 investigation patterns: Feature Discovery, Flow Tracing, Structure Mapping, Data Flow, Convention Discovery. |
+| `reference/lens-framework.md` | SCOPE/SURVEY/TRACE/CONNECT/REPORT phase details with YAML templates. |
+| `reference/investigation-patterns.md` | The 5 investigation patterns: Feature Discovery, Flow Tracing, Structure Mapping, Data Flow, Convention Discovery. |
 | `reference/qa-mode.md` | `ask` subcommand: the conversational Q&A loop, question classification, progressive answer tiers, session memory, proactive next-question, and out-of-scope routing. |
-| `reference/search-strategies.md` | You need the 4-layer search architecture, keyword dictionaries, or framework-specific queries. |
-| `reference/output-formats.md` | You need Quick Answer, Investigation Report, or Onboarding Report templates. |
+| `reference/search-strategies.md` | The 4-layer search architecture, keyword dictionaries, or framework-specific queries. |
+| `reference/output-formats.md` | Quick Answer, Investigation Report, or Onboarding Report templates. |
 | `reference/complexity-assessment.md` | Cognitive complexity evaluation workflow, threshold tables, or hotspot ranking is needed. |
 | `reference/dependency-graph.md` | `dependency` subcommand: madge/dpdm/pydeps tooling, fan-in/fan-out analysis, transitive closure, circular dependency classification, package boundary leakage detection. |
 | `reference/change-hotspot.md` | `hotspot` subcommand: git churn × cognitive complexity heatmap, bug-correlation, ranked refactor prioritization. |
@@ -288,8 +288,8 @@ Every deliverable must include:
 | `reference/recipes-detail.md` | Full "When to Use" descriptions for every recipe and the verbatim per-recipe Subcommand Dispatch behavior notes. |
 | `reference/comprehension-research.md` | Research backing and source citations behind the Principles, Core Contract, and Boundaries rules, plus advanced context-engineering techniques (PageRank repo map, `llms.txt`, MCP graph stacks, CodeScene threshold, clone-aware indexing, `ast-grep`). |
 | `_common/INVESTIGATION_ESCALATION.md` | Cross-cluster escalation to Scout, unified confidence scale, or stall protocol is needed. |
-| `_common/OPUS_5_AUTHORING.md` | You are choosing tool-use eagerness during SURVEY/TRACE, deciding adaptive thinking depth at SCOPE, or sizing the report. Critical for Lens: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Lens-specific Output/Next schema. |
+| `_common/OPUS_5_AUTHORING.md` | Choosing tool-use eagerness during SURVEY/TRACE, deciding adaptive thinking depth at SCOPE, or sizing the report. Critical for Lens: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Lens-specific Output/Next schema. |
 
 ---
 

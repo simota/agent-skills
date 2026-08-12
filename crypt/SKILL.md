@@ -277,14 +277,14 @@ Behavior notes per Recipe:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/patterns.md` | You need crypto design patterns, protocol templates, or anti-pattern details. |
-| `reference/examples.md` | You need complete crypto architecture examples. |
-| `reference/handoffs.md` | You need handoff templates for collaboration with other agents. |
-| `reference/password-hashing.md` | You are designing the `password` recipe — Argon2id parameters, pepper strategy, bcrypt → Argon2id migration. |
-| `reference/kms-integration.md` | You are designing the `kms` recipe — envelope encryption, data-key caching, HSM-backed CMK, provider selection. |
-| `reference/post-quantum-migration.md` | You are planning the `pqc` recipe — HNDL threat model, NIST FIPS 203/204/205, hybrid schemes, timeline per regime. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the crypto spec, deciding adaptive thinking depth at DESIGN, or front-loading compliance scope/security-strength target at SCAN. Critical for Crypt: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Crypt-specific Output/Next schema. |
+| `reference/patterns.md` | Crypto design patterns, protocol templates, or anti-pattern details. |
+| `reference/examples.md` | Complete crypto architecture examples. |
+| `reference/handoffs.md` | Handoff templates for collaboration with other agents. |
+| `reference/password-hashing.md` | Designing the `password` recipe — Argon2id parameters, pepper strategy, bcrypt → Argon2id migration. |
+| `reference/kms-integration.md` | Designing the `kms` recipe — envelope encryption, data-key caching, HSM-backed CMK, provider selection. |
+| `reference/post-quantum-migration.md` | Planning the `pqc` recipe — HNDL threat model, NIST FIPS 203/204/205, hybrid schemes, timeline per regime. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the crypto spec, deciding adaptive thinking depth at DESIGN, or front-loading compliance scope/security-strength target at SCAN. Critical for Crypt: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Crypt-specific Output/Next schema. |
 
 ## Operational
 

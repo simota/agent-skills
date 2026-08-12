@@ -272,25 +272,25 @@ Sentinel receives security-flagged artifacts from upstream agents, performs stat
 
 | File | Read this when... |
 |------|-------------------|
-| `reference/vulnerability-patterns.md` | You are in `SCAN` and need detection heuristics, regex patterns, or good/bad secure coding examples |
-| `reference/defensive-controls.md` | You need implementation patterns for headers, validation, secret handling, rate limiting, confidence scoring, delta scanning, SARIF output, or FP suppression |
-| `reference/owasp-2025-checklist.md` | You need OWASP 2025 mapping, audit checklists, severity matrix, or report templates |
+| `reference/vulnerability-patterns.md` | In `SCAN` and need detection heuristics, regex patterns, or good/bad secure coding examples |
+| `reference/defensive-controls.md` | Implementation patterns for headers, validation, secret handling, rate limiting, confidence scoring, delta scanning, SARIF output, or FP suppression |
+| `reference/owasp-2025-checklist.md` | OWASP 2025 mapping, audit checklists, severity matrix, or report templates |
 | `reference/supply-chain-security.md` | The work involves CVEs, SBOM, SCA tools, lockfiles, CI/CD hardening, package provenance, or slopsquatting |
 | `reference/ai-code-security.md` | The code is AI-generated, AI-assisted, uses LLM/MCP tooling, or the SAST landscape needs consulting |
-| `reference/ai-security.md` | You are running the `aisec` recipe and need OWASP LLM Top 10 2025 mapping (LLM01/02/06/07), prompt-injection surface analysis, indirect-injection via RAG content, or tool-use boundary patterns. |
-| `reference/authn-audit.md` | You are running the `authn` recipe and need session/JWT/OAuth-OIDC/MFA/password-storage audit checks (OWASP A07:2025, CWE-287/384/521/798). |
-| `reference/authz-audit.md` | You are running the `authz` recipe and need RBAC/ABAC, IDOR, BOLA/BFLA, or horizontal/vertical privilege-escalation audit checks (OWASP A01:2025, CWE-285/639/863). |
+| `reference/ai-security.md` | `aisec` recipe and need OWASP LLM Top 10 2025 mapping (LLM01/02/06/07), prompt-injection surface analysis, indirect-injection via RAG content, or tool-use boundary patterns. |
+| `reference/authn-audit.md` | `authn` recipe and need session/JWT/OAuth-OIDC/MFA/password-storage audit checks (OWASP A07:2025, CWE-287/384/521/798). |
+| `reference/authz-audit.md` | `authz` recipe and need RBAC/ABAC, IDOR, BOLA/BFLA, or horizontal/vertical privilege-escalation audit checks (OWASP A01:2025, CWE-285/639/863). |
 | `reference/api-security.md` | The target is an HTTP API, GraphQL endpoint, OAuth flow, or SSRF/BOLA/BFLA risk |
-| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Sentinel-specific verb (SECURE-FIX / HARDEN / MITIGATE / BREAKING-FIX / AUTH-FIX / REVOKE-AND-ROTATE / INVESTIGATE-FURTHER), or deciding whether to ship inline vs hand off. |
-| `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Plea. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the security report, deciding adaptive thinking depth at PRIORITIZE/FILTER, or front-loading scope at SCAN. Critical for Sentinel: P2, P5. |
-| `reference/mobile-security.md` | You are running the `mobile` Recipe — MASVS v2.1.0 + MAS Checklist 8 categories, MASWE-0005 priority, MobSF integration, mobile binary secret-scan targets. |
-| `reference/multi-engine-mode.md` | You are activating the `multi` Recipe and need the full operational detail — triggers, loose-prompt rule, training-data divergence, Plausible Hallucination check, concurrence + arbitration rubric, degraded modes. |
-| `reference/tri-engine-scan.md` | You are running the `multi` Recipe — Sentinel-specific JSON schema, CLUSTER identity rules, SCORE rubric, Sentinel-strict GROUND, ARBITRATE overrides, FILTER rule, subagent prompt skeleton. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Sentinel-specific Output/Validations/Next schema with `tri_engine` sub-block. |
-| `_common/SUBAGENT.md` | You need base engine dispatch mechanics for parallel Agent-tool calls — invocation pattern, JSON-output mandate, engine-failure fallback. |
-| `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill canonical flow, Pattern C/D/H rubric, PREFLIGHT engine probe, engine-attribution conventions, degraded-mode matrix. |
-| `_common/PROOF_CARRYING.md` | You are invoked from `nexus acceptance` Phase 2 (security regression oracles) and Phase 3 (attack surface enumeration). Defines G1 cross-engine diversity. |
+| `reference/fix-prompt-generation.md` | Authoring the `## LLM Fix Prompt` block, choosing a Sentinel-specific verb (SECURE-FIX / HARDEN / MITIGATE / BREAKING-FIX / AUTH-FIX / REVOKE-AND-ROTATE / INVESTIGATE-FURTHER), or deciding whether to ship inline vs hand off. |
+| `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Plea. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the security report, deciding adaptive thinking depth at PRIORITIZE/FILTER, or front-loading scope at SCAN. Critical for Sentinel: P2, P5. |
+| `reference/mobile-security.md` | `mobile` Recipe — MASVS v2.1.0 + MAS Checklist 8 categories, MASWE-0005 priority, MobSF integration, mobile binary secret-scan targets. |
+| `reference/multi-engine-mode.md` | Activating the `multi` Recipe and need the full operational detail — triggers, loose-prompt rule, training-data divergence, Plausible Hallucination check, concurrence + arbitration rubric, degraded modes. |
+| `reference/tri-engine-scan.md` | `multi` Recipe — Sentinel-specific JSON schema, CLUSTER identity rules, SCORE rubric, Sentinel-strict GROUND, ARBITRATE overrides, FILTER rule, subagent prompt skeleton. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Sentinel-specific Output/Validations/Next schema with `tri_engine` sub-block. |
+| `_common/SUBAGENT.md` | Base engine dispatch mechanics for parallel Agent-tool calls — invocation pattern, JSON-output mandate, engine-failure fallback. |
+| `_common/MULTI_ENGINE_RECIPE.md` | The cross-skill canonical flow, Pattern C/D/H rubric, PREFLIGHT engine probe, engine-attribution conventions, degraded-mode matrix. |
+| `_common/PROOF_CARRYING.md` | Invoked from `nexus acceptance` Phase 2 (security regression oracles) and Phase 3 (attack surface enumeration). Defines G1 cross-engine diversity. |
 
 ## Multi-Engine Mode
 

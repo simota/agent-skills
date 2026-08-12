@@ -317,3 +317,46 @@ Universal table in `_common/MULTI_ENGINE_RECIPE.md §Degraded Modes`. Omen-speci
 - `omen/reference/output-templates.md` — pre-mortem report template extended at PRESENT
 - `omen/reference/fix-prompt-generation.md` — LLM Fix Prompt rules; extended in multi mode with `engine_concurrence` header line
 - `_common/OPUS_5_AUTHORING.md` — spawn prompt sizing, thinking-depth nudges at SCORE/GROUND
+
+
+---
+
+## Multi-Engine Mode (SKILL.md long form)
+
+Activated by the `multi` Recipe (or any explicit user request for parallel failure enumeration / cross-engine pre-mortem). Multi-engine failure-mode enumeration applies Pattern D (Divergence-primary) — different training-data biases map directly to different failure-class blindspots, so a single-engine `VERIFIED-DIVERGENT` mode is often the most catastrophic finding, not a low-value outlier.
+
+> **Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE at PREFLIGHT. For Omen the agy uplift is meaningful because failure-class blindspots are highly engine-specific (Codex misses non-code failure modes; Claude under-indexes hardware/infrastructure failures; agy adds the third-axis coverage when reachable). Dual-engine still covers the load-bearing diversity for pre-mortem use. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
+
+**Core mechanics:**
+- Spawn one Agent subagent per AVAILABLE engine in a single message: `failure-codex` + `failure-claude` (dual-engine baseline); add `failure-agy` (tri-engine) when AVAILABLE. Per `reference/tri-engine-failure.md`.
+- Run engine availability PREFLIGHT in Omen main context — never delegate detection to subagents (subagent PATH is narrower; canonical probe in `_common/MULTI_ENGINE_RECIPE.md §PREFLIGHT`).
+- Use loose prompts (Role + Target + Output format only). Do NOT pass the FMEA scoring rubric, AIAG-VDA AP table, Swiss-Cheese layer taxonomy, severity-9 critical gate, or example failure-mode IDs to subagents — apply framework rules in the Omen main context at SYNTHESIZE, not at FAN-OUT. Each engine's training-data priors should drive **independent failure-class discovery**.
+- Subagents return structured JSON (failure_mode with id / category / cause_chain / effect / severity / occurrence / detectability / current_controls / scenario); main context integrates via NORMALIZE → CLUSTER → SCORE → GROUND → SYNTHESIZE.
+
+**Failure-mode-taxonomy diversification (the key Pattern D advantage for Omen):**
+- Codex (GitHub OSS corpus) → strong on race conditions, dependency / supply-chain failures, integer overflow, regex DoS, lock-ordering bugs.
+- Antigravity (Google production-incident corpus) → strong on capacity / quota / sharding / cross-region replication / SRE failure modes, post-mortem patterns at scale.
+- Claude (Anthropic-curated corpus) → strong on prompt-injection, model misalignment, refusal-edge-case, data exfiltration via context, safety/regulatory failure modes.
+- A `VERIFIED-DIVERGENT` mode is **expected to be valuable** when it reflects an engine seeing a class the other two are structurally blind to.
+
+**Composite priority scoring (concurrence × RPN — Omen-specific):**
+
+```
+composite_priority = concurrence_weight × RPN_max
+
+concurrence_weight: UNIVERSAL=1.0, LIKELY=1.1, VERIFIED-DIVERGENT=1.3
+severity-9 critical gate: if any S≥9 in cluster, composite_priority = max(composite_priority, RPN_max × 1.5)
+```
+
+The severity-9 gate **dominates concurrence**. Catastrophic outcomes do not need consensus — one engine surfacing a regulatory-violation or safety pathway is sufficient to flag the cluster `CRITICAL`. This preserves Omen's existing Core Contract rule under multi mode.
+
+**Risk Matrix integration:** Plot all surviving clusters on a severity × occurrence grid with concurrence as glyph shape (`●U` UNIVERSAL, `▲L` LIKELY, `◆D` VERIFIED-DIVERGENT). Top-N Critical Failures section is ranked by composite_priority. A **Divergent Spotlight** sub-section names which engine surfaced each VERIFIED-DIVERGENT mode and the likely training-data angle that explains why the other two missed.
+
+**Engine-attribution tag (mandatory on every shipped failure mode):** `[codex+agy+claude]` (3/3 UNIVERSAL) / `[codex+agy]` etc. (2/3 LIKELY) / `[codex-verified]` (1/3 VERIFIED-DIVERGENT).
+
+**LLM Fix Prompt extension:** In multi mode, every actionable Fix Prompt header includes `engine_concurrence` and `composite_priority`. VERIFIED-DIVERGENT prompts append `[divergent-mode]` with a note that counterpart engines were structurally blind to this failure class — receiving agents (Builder/Beacon/Triage/Mend) should treat the mitigation as a higher priority than concurrence alone suggests.
+
+**Degraded modes:** 1 engine down → continue with 2; note the lost engine's failure-class blindspot may now be uncovered (recommend manual audit of that domain). 2 engines down → single-engine fallback, every mode treated as CANDIDATE, all grounded before reporting. All 3 down → degrade to standard `premortem` Recipe. Severity-9 disagreement across engines → default to the higher severity (one-way door).
+
+Full algorithm, JSON schema, prompt skeletons, CLUSTER identity rules, GROUND checks, and Risk Matrix rendering: `reference/tri-engine-failure.md`.
+

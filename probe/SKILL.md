@@ -296,23 +296,23 @@ Follow `_common/GIT_GUIDELINES.md`. Use Conventional Commits such as `feat(secur
 
 | File | Read this when... |
 | --- | --- |
-| `reference/zap-scanning-guide.md` | You need ZAP baseline/API/auth scan defaults, CLI commands, or daemon/API usage |
-| `reference/vulnerability-testing-patterns.md` | You are testing REST, GraphQL, OAuth, SQLi, XSS, or session-aware attack paths |
-| `reference/nuclei-templates.md` | You need template-based scanning, custom Nuclei checks, or CI severity gates |
-| `reference/sarif-integration.md` | You need SARIF output, ZAP-to-SARIF conversion, or GitHub Security upload flow |
-| `reference/security-report-template.md` | You are preparing the final report or need the finding schema |
-| `reference/dast-anti-patterns.md` | You need false-positive control, proof-based scanning rules, or DAST triage stages |
-| `reference/pentest-methodology-pitfalls.md` | You are designing a penetration workflow or checking methodology gaps |
+| `reference/zap-scanning-guide.md` | ZAP baseline/API/auth scan defaults, CLI commands, or daemon/API usage |
+| `reference/vulnerability-testing-patterns.md` | Testing REST, GraphQL, OAuth, SQLi, XSS, or session-aware attack paths |
+| `reference/nuclei-templates.md` | Template-based scanning, custom Nuclei checks, or CI severity gates |
+| `reference/sarif-integration.md` | SARIF output, ZAP-to-SARIF conversion, or GitHub Security upload flow |
+| `reference/security-report-template.md` | Preparing the final report or need the finding schema |
+| `reference/dast-anti-patterns.md` | False-positive control, proof-based scanning rules, or DAST triage stages |
+| `reference/pentest-methodology-pitfalls.md` | Designing a penetration workflow or checking methodology gaps |
 | `reference/owasp-api-top10-2023.md` | API scope exists and you need API1-API10 priorities and test strategy |
-| `reference/security-pipeline-pitfalls.md` | You are designing CI/CD security gates, scan stages, or pipeline KPIs |
-| `reference/api-dast.md` | You are running the `api` Recipe — REST/GraphQL/WebSocket DAST, BOLA/BFLA dual-identity testing, schemathesis+restler fuzzing, GraphQL introspection/depth/batching abuse |
-| `reference/mobile-dast.md` | You are running the `mobile` Recipe — iOS/Android built-app dynamic testing, MobSF orchestration, Frida instrumentation, authorized SSL pinning bypass, OWASP MASVS/MASTG mapping |
-| `reference/recon.md` | You are running the `recon` Recipe — passive external attack-surface mapping (subfinder/amass/crt.sh, dnsx/httpx, public-repo secret hunting, shodan/fofa/censys), no exploitation |
-| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Probe-specific verb (EXPLOIT-FIX / HARDEN-RUNTIME / MITIGATE / BREAKING-FIX / AUTH-FIX / INVESTIGATE-FURTHER), or deciding whether to suppress the prompt (Sentinel ownership / Breach escalation / reconnaissance only). |
+| `reference/security-pipeline-pitfalls.md` | Designing CI/CD security gates, scan stages, or pipeline KPIs |
+| `reference/api-dast.md` | `api` Recipe — REST/GraphQL/WebSocket DAST, BOLA/BFLA dual-identity testing, schemathesis+restler fuzzing, GraphQL introspection/depth/batching abuse |
+| `reference/mobile-dast.md` | `mobile` Recipe — iOS/Android built-app dynamic testing, MobSF orchestration, Frida instrumentation, authorized SSL pinning bypass, OWASP MASVS/MASTG mapping |
+| `reference/recon.md` | `recon` Recipe — passive external attack-surface mapping (subfinder/amass/crt.sh, dnsx/httpx, public-repo secret hunting, shodan/fofa/censys), no exploitation |
+| `reference/fix-prompt-generation.md` | Authoring the `## LLM Fix Prompt` block, choosing a Probe-specific verb (EXPLOIT-FIX / HARDEN-RUNTIME / MITIGATE / BREAKING-FIX / AUTH-FIX / INVESTIGATE-FURTHER), or deciding whether to suppress the prompt (Sentinel ownership / Breach escalation / reconnaissance only). |
 | `reference/llm-agent-security-2026.md` | The target embeds an LLM endpoint, RAG retriever, agentic / tool-calling workflow, or MCP server. OWASP Top 10 for LLM 2025 v2.0 (LLM01-LLM10), OWASP Top 10 for Agentic Applications (ASI01 Agent Goal Hijacking, indirect prompt injection), MCP-specific checks, Garak / PyRIT / Promptfoo / DeepTeam tooling, stochasticity proof standards. |
-| `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Sentinel/Scout/Trail/Plea. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the DAST report, deciding adaptive thinking depth at VALIDATE, or front-loading scope/authorization at PLAN. Critical for Probe: P2, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Probe-specific Output/Next schema. |
+| `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Sentinel/Scout/Trail/Plea. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the DAST report, deciding adaptive thinking depth at VALIDATE, or front-loading scope/authorization at PLAN. Critical for Probe: P2, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Probe-specific Output/Next schema. |
 
 ## Operational
 

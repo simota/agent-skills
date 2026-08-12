@@ -254,25 +254,25 @@ Bolt receives performance tasks from upstream agents, identifies and implements 
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/react-performance.md` | You need React patterns: memo, useMemo, useCallback, context splitting, lazy, virtualization. |
-| `reference/database-optimization.md` | You need EXPLAIN ANALYZE, index design, N+1 solutions, or query rewriting. |
-| `reference/caching-patterns.md` | You need in-memory LRU, Redis, or HTTP cache implementations. |
-| `reference/bundle-optimization.md` | You need code splitting, tree shaking, library replacement, or Next.js config. |
-| `reference/agent-integrations.md` | You need Radar/Canvas handoff templates, benchmark examples, or Mermaid diagrams. |
-| `reference/core-web-vitals.md` | You need LCP/INP/CLS issue-fix details or web-vitals monitoring code. |
-| `reference/profiling-tools.md` | You need frontend/backend profiling tools, React Profiler, or Node.js commands. |
-| `reference/optimization-anti-patterns.md` | You need optimization anti-patterns (PO-01–10), correct optimization order, 3-layer measurement model, or decision flowchart. |
-| `reference/backend-anti-patterns.md` | You need Node.js anti-patterns (BP-01–08), event loop blocking detection, memory leak patterns, or async anti-patterns. |
-| `reference/frontend-anti-patterns.md` | You need React anti-patterns (FP-01–10), React Compiler impact analysis, render optimization priority, or image/third-party management. |
-| `reference/performance-regression-prevention.md` | You need performance budget design, CI/CD 3-layer approach, regression detection methodology, or production monitoring strategy. |
-| `reference/memory-optimization.md` | You need app-process memory footprint reduction: heap snapshot diffing, detached DOM detection, closure/listener leak detection, WeakMap/WeakRef usage, or rising-baseline trending (`memory` recipe). |
-| `reference/network-optimization.md` | You need client/server delivery-layer tuning: HTTP/2-3 adoption, Early Hints (103), resource hints, Service Worker caching strategies, CDN cache-control, or Brotli (`network` recipe). |
+| `reference/react-performance.md` | React patterns: memo, useMemo, useCallback, context splitting, lazy, virtualization. |
+| `reference/database-optimization.md` | EXPLAIN ANALYZE, index design, N+1 solutions, or query rewriting. |
+| `reference/caching-patterns.md` | In-memory LRU, Redis, or HTTP cache implementations. |
+| `reference/bundle-optimization.md` | Code splitting, tree shaking, library replacement, or Next.js config. |
+| `reference/agent-integrations.md` | Radar/Canvas handoff templates, benchmark examples, or Mermaid diagrams. |
+| `reference/core-web-vitals.md` | LCP/INP/CLS issue-fix details or web-vitals monitoring code. |
+| `reference/profiling-tools.md` | Frontend/backend profiling tools, React Profiler, or Node.js commands. |
+| `reference/optimization-anti-patterns.md` | Optimization anti-patterns (PO-01–10), correct optimization order, 3-layer measurement model, or decision flowchart. |
+| `reference/backend-anti-patterns.md` | Node.js anti-patterns (BP-01–08), event loop blocking detection, memory leak patterns, or async anti-patterns. |
+| `reference/frontend-anti-patterns.md` | React anti-patterns (FP-01–10), React Compiler impact analysis, render optimization priority, or image/third-party management. |
+| `reference/performance-regression-prevention.md` | Performance budget design, CI/CD 3-layer approach, regression detection methodology, or production monitoring strategy. |
+| `reference/memory-optimization.md` | App-process memory footprint reduction: heap snapshot diffing, detached DOM detection, closure/listener leak detection, WeakMap/WeakRef usage, or rising-baseline trending (`memory` recipe). |
+| `reference/network-optimization.md` | Client/server delivery-layer tuning: HTTP/2-3 adoption, Early Hints (103), resource hints, Service Worker caching strategies, CDN cache-control, or Brotli (`network` recipe). |
 | `reference/swift-cheatsheet.md` | The hot path is Swift: profiler decision tree + `OSSignposter`, COW tuning, `ContiguousArray`, unsafe buffers, ARC/autoreleasepool, `JSONDecoder` reuse, string perf, Combine-vs-AsyncSequence cost, Embedded Swift, linker size, server-side Swift. **SwiftUI render / launch / hitch / MetricKit work belongs to Native — see `native/reference/apple-perf.md`.** |
 | `reference/rust-cheatsheet.md` | The hot path is Rust: profiler decision tree, allocator selection, SIMD decision, `#[inline]` policy, build-profile recipes, PGO + BOLT, zero-copy pattern selector, Tokio async signals, benchmark methodology, compile-time perf. |
 | `reference/kotlin-cheatsheet.md` | The hot path is Kotlin/JVM or Android: JVM profiler decision tree, kotlinx-benchmark/JMH, Sequence-vs-List, `inline fun`, boxing tax, `@JvmInline value class`, JIT warmup, GC tuning, Loom virtual threads vs `Dispatchers.IO`, coroutine/Flow operator cost, Kotlin/Native. **Compose UI render perf belongs to Native** (§13 there). |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the PROFILE/VERIFY report, holding effort to one targeted optimization, or front-loading baseline_metric at PROFILE. Critical for Bolt: P3, P6. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Bolt-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the PROFILE/VERIFY report, holding effort to one targeted optimization, or front-loading baseline_metric at PROFILE. Critical for Bolt: P3, P6. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Bolt-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

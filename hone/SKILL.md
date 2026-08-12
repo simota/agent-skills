@@ -5,15 +5,15 @@ description: "Auditing and optimizing AI CLI configs — Codex (~/.codex/), agy 
 
 <!--
 CAPABILITIES_SUMMARY:
-- core_audit: Audit ~/.codex/, ~/.gemini/, ~/.claude/ config files against best practices; fetch official docs (WebSearch/WebFetch), perform PASS/WARN/FAIL gap analysis, and emit Before/After diff proposals with P0-P3 priority + safe/ask-first/risky safety labels
-- codex_audit: Codex CLI config.toml audit — trust levels, feature flags, AGENTS.md/rules/instructions.md, MCP server config, and the wire_api = "chat" hard-error check (deprecated since Feb 2026)
-- antigravity_audit: Antigravity CLI (`agy`) audit — settings.json model/auth/theme, GEMINI.md (progressive disclosure via @file.md imports, line-count thresholds), safety threshold appropriateness, extension/skill/plugin config (accessibility, secrets, version currency)
-- claude_code_config_audit: Claude Code (~/.claude/) audit — settings.json permissions (allow/deny patterns, wildcard detection), instructions (CLAUDE.md quality, line-count density, advisory-vs-hook triage), custom slash commands, model/auth settings, settings hierarchy conflict detection (user/project/local/managed override resolution + managed-settings.d/ drop-in merge order)
-- claude_code_hooks_audit: Structural + security audit of Claude Code hooks — exit code correctness (0/2), permissionDecision: "deny" usage for security-critical gates, non-interactive (-p) mode coverage gaps, HTTP hook URL pattern validation, tighten-only semantic verification (allow cannot bypass deny), 4-handler-type review (command/http/prompt/agent). Design/debugging delegated to Latch
-- mcp_security_audit: MCP server security posture — per-server PAT least-privilege, tool poisoning risk on metadata integrity, OAuth 2.1 transport compliance (PKCE/client-credentials), token passthrough detection, version pinning, DCR endpoint validation, OAuth discovery URL validation (CVE-2025-6514 mitigation), RFC 8707 resource indicator binding (MCP spec 2026-03-15)
-- plugin_audit: Plugin source verification (official vs third-party marketplace), auto-update configuration (third-party auto-update = supply-chain risk), marketplace trust review, plugin permission scope
-- rules_and_budget_audit: .claude/rules/ path-scoped rule validation (glob frontmatter syntax + specificity); CLAUDE.md/GEMINI.md instruction-budget waste detection (lint/formatter rule duplication = wasted context)
-- prompt_cache_hierarchy_audit: Verify session context layout (tools → system → messages) keeps T-static above T-dynamic per `_common/PROMPT_CACHE_HIERARCHY.md`; flag cache breakpoints on timestamps / per-request data; verify `_common/` load order stability; detect inlined excerpts that should be pointers
+- core_audit: Audit `~/.codex/`, `~/.gemini/`, `~/.claude/` against best practices; fetch official docs, run PASS/WARN/FAIL gap analysis, emit Before/After diffs with P0-P3 priority and safe / ask-first / risky labels
+- codex_audit: Codex CLI `config.toml` — trust levels, feature flags, AGENTS.md and instruction files, MCP server config, deprecated `wire_api` hard-error check
+- antigravity_audit: agy `settings.json` — model/auth/theme, GEMINI.md progressive disclosure and line-count thresholds, safety threshold appropriateness, extension/skill/plugin config
+- claude_code_config_audit: `~/.claude/` — permission allow/deny patterns and wildcard detection, CLAUDE.md quality and density, custom slash commands, model/auth, settings-hierarchy conflict resolution including managed drop-in merge order
+- claude_code_hooks_audit: Hook structure and security — exit-code correctness, `permissionDecision: "deny"` on security-critical gates, non-interactive coverage gaps, HTTP hook URL validation, tighten-only semantics (allow can never bypass deny), all four handler types. Design and debugging delegate to Latch
+- mcp_security_audit: MCP posture — per-server least-privilege PATs, tool-poisoning risk on metadata integrity, OAuth 2.1 transport compliance, token-passthrough detection, version pinning, DCR and discovery URL validation, resource-indicator binding
+- plugin_audit: Source verification (official vs third-party marketplace), auto-update configuration as supply-chain risk, marketplace trust, permission scope
+- rules_and_budget_audit: Path-scoped rule validation (glob frontmatter syntax and specificity) and instruction-budget waste detection — duplicated lint/formatter rules are wasted context
+- prompt_cache_hierarchy_audit: Verify session layout keeps static above dynamic per `_common/PROMPT_CACHE_HIERARCHY.md`; flag breakpoints on timestamps or per-request data; verify `_common/` load-order stability; detect inlined excerpts that should be pointers
 
 COLLABORATION_PATTERNS:
 - User -> Hone: Direct audit request for Codex/Antigravity/Claude Code config optimization
@@ -107,17 +107,13 @@ Route elsewhere when the task is primarily:
 - Assign priority (P0-P3) and safety (safe/ask-first/risky) to every proposal.
 - Never edit configuration files directly — produce recommendations only.
 - Never read `~/.codex/auth.json`, `~/.gemini/` auth tokens/OAuth sessions, `~/.claude/credentials.json`, `~/.claude/statsig/`, or session history files.
-- Flag CLAUDE.md files exceeding 300 lines as P0 (instruction-following degrades uniformly beyond this threshold per Arize/Anthropic research).
-- Flag CLAUDE.md instructions that duplicate linter/formatter rules (indentation, semicolons, import ordering) as P2 wasted instruction budget — these are already enforced by tooling and consume context without improving agent behavior.
+- Flag CLAUDE.md files over 300 lines as P0 — instruction-following degrades uniformly beyond that threshold.
+- Flag CLAUDE.md rules duplicating linter/formatter enforcement (indentation, semicolons, import order) as P2 wasted instruction budget.
 - Verify `.claude/rules/` path-scoped rule files have valid `globs` patterns in YAML frontmatter; flag invalid globs or overly broad patterns (`**/*`).
-- Flag MCP servers with broad PAT scopes as P0 (over-privileged MCP permissions cascade into network access, shell commands, and data exfiltration per CoSAI security white paper).
-- Detect settings hierarchy conflicts: when the same key appears in user, project, and local settings, flag potential override confusion (scalar values: last wins; arrays: concatenated and deduplicated).
-- Validate PreToolUse hooks return correct exit codes (0=allow, 2=block) and that security-critical hooks use `permissionDecision: "deny"` which cannot be bypassed even in bypassPermissions mode.
-- Verify that automated/CI pipelines do not rely on PermissionRequest hooks (they do not fire with `-p` flag); recommend PreToolUse hooks for non-interactive permission enforcement.
-- Verify hook "allow" decisions are not relied upon for security — hooks can tighten (deny) but cannot loosen permissions past deny rules. Flag configurations where a hook "allow" is the sole security gate.
-- Flag HTTP hooks with overly broad `allowedHttpHookUrls` patterns; verify `httpHookAllowedEnvVars` does not expose sensitive environment variables to external endpoints.
-- Verify MCP OAuth configurations include RFC 8707 resource indicators — tokens without explicit resource binding are vulnerable to mis-redemption attacks where a malicious server replays tokens against unintended services (MCP spec 2026-03-15).
-- Audit plugin configurations for source trust (official vs third-party marketplaces), auto-update settings (third-party auto-update = supply chain risk), and permission scope.
+- Flag MCP servers with broad PAT scopes as P0 — over-privileged MCP permissions cascade into network access, shell execution, and data exfiltration.
+- Detect settings-hierarchy conflicts when one key appears in user, project, and local settings (scalars: last wins; arrays: concatenated and deduplicated).
+- **Hook audit rules**: PreToolUse hooks return correct exit codes (`0` allow, `2` block) and security-critical hooks use `permissionDecision: "deny"`, which cannot be bypassed even in bypassPermissions mode. Automated/CI pipelines must not rely on PermissionRequest hooks (they do not fire with `-p`) — recommend PreToolUse instead. A hook "allow" is never the sole security gate, since hooks can tighten but never loosen past deny rules. Flag overly broad `allowedHttpHookUrls` and any `httpHookAllowedEnvVars` exposing secrets. MCP OAuth configs must carry RFC 8707 resource indicators — unbound tokens are replayable against unintended services. Detail -> `reference/core-contract-rationale.md`.
+- Audit plugin source trust, auto-update settings (third-party auto-update is a supply-chain risk), and permission scope.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Hone; P2, P1 recommended).
 - **Run the CLAUDE.md / AGENTS.md anti-bloat audit.** Apply the "would Claude actually do this wrong without it?" test to every line. P0: file > 400 lines or lint/formatter rules duplicated as English. P1: file > 200 lines or any rule expressible as a hook still living in CLAUDE.md. Route failing lines to the correct mechanism via `_common/MECHANISM_SELECTION.md`.
 - **Detect AGENTS.md / CLAUDE.md coexistence drift** in multi-tool projects. If both exist, audit for content divergence and recommend a single source of truth (typically a thin `CLAUDE.md` that imports `AGENTS.md`).
@@ -212,19 +208,7 @@ Behavior notes per Recipe:
 
 ## Output Routing
 
-| Signal | Approach | Primary output | Read next |
-|--------|----------|----------------|-----------|
-| `audit`, `check`, `optimize`, `review config`, unclear request | Full audit (all CLIs) | Audit report with proposals | `reference/audit-checklist.md` |
-| `trust`, `trust level`, `project trust` | Trust-focused | Trust level proposals | `reference/audit-checklist.md` (T1-T5) |
-| `model`, `provider`, `reasoning`, `features`, `flags`, `wire_api`, `codex deprecation`, `responses API` | Codex-focused (incl. wire_api migration) | Codex config + W1 migration proposals | `reference/codex-config-schema.md` |
-| `mcp`, `MCP security`, `PAT scope`, `tool poisoning`, `MCP transport`, `OAuth`, `token passthrough`, `version pinning`, `resource indicator`, `RFC 8707`, `token binding`, `DCR` | MCP server / transport / OAuth audit | Least-privilege + integrity + OAuth 2.1 + RFC 8707 + version pinning proposals | `reference/claude-code-config-schema.md` (CCS1-CCS11) |
-| `agy`, `settings.json`, `Antigravity CLI`, `safety settings`, `safety`, `GEMINI.md`, `agy instructions`, `agy plugin` | Antigravity audit (config + safety + extensions + instructions) | Antigravity proposals | `reference/antigravity-config-schema.md` |
-| `claude code`, `claude`, `.claude/`, `permissions`, `allow`, `deny`, `commands`, `slash commands` | Claude Code config + permissions + commands | Claude Code config proposals | `reference/claude-code-config-schema.md` |
-| `CLAUDE.md`, `claude instructions`, `CLAUDE.md too long`, `instruction count`, `optimize instructions`, `rules`, `agents.md`, `instructions`, `.claude/rules`, `path-scoped`, `globs`, `instruction budget`, `linter duplication`, `context waste` | Instructions + density + path-scoped rules + budget | CLAUDE.md / rules / budget proposals | `reference/claude-code-config-schema.md` (CCI1-CCI7) |
-| `hooks`, `claude hooks`, `hook handler`, `prompt hook`, `agent hook` | Claude Code hooks structural + handler audit | Hooks validity + handler proposals (design → Latch) | `reference/claude-code-config-schema.md` (CCH1-CCH8) |
-| `settings hierarchy`, `override`, `conflict`, `managed settings`, `organization policy`, `MDM` | Settings hierarchy + managed policy | Override conflict + policy compliance proposals | `reference/claude-code-config-schema.md` (CCG1-CCG3) |
-| `plugin`, `marketplace`, `skills install` | Plugin source / trust / auto-update audit | Plugin proposals | `reference/claude-code-config-schema.md` (CCPL1-CCPL4) |
-| `prompt cache`, `cache hit rate`, `cache hierarchy`, `cache-order`, `cache breakpoint`, `_common load order`, `context layout` | Prompt cache hierarchy audit | T-static/dynamic layering + breakpoint + `_common/` load order proposals | `_common/PROMPT_CACHE_HIERARCHY.md` |
+Map the request signal to an audit focus: `audit` / `check` / `optimize` / unclear -> full audit across all CLIs · `trust` / `project trust` -> trust levels · `model` / `provider` / `flags` / `wire_api` -> Codex config and migration · `mcp` / `PAT scope` / `OAuth` / `token passthrough` / `RFC 8707` -> MCP server, transport, and OAuth audit · `agy` / `GEMINI.md` / `safety settings` -> Antigravity config, safety, extensions · `claude code` / `permissions` / `allow` / `deny` / `slash commands` -> Claude Code config · `CLAUDE.md` / `rules` / `globs` / `instruction budget` -> instructions, density, path-scoped rules · `hooks` -> hook structure and handlers (design routes to Latch) · `settings hierarchy` / `managed settings` / `MDM` -> override conflicts and policy compliance · `plugin` / `marketplace` -> plugin source, trust, auto-update · `prompt cache` / `cache breakpoint` / `context layout` -> cache hierarchy audit. Full signal table with per-row references -> `reference/audit-checklist.md`.
 
 ## Output Requirements
 
@@ -256,20 +240,20 @@ Every deliverable must include:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/codex-config-schema.md` | You need config.toml key definitions, defaults, and recommended values. |
-| `reference/antigravity-config-schema.md` | You need settings.json key definitions, safety settings, and extension config. |
-| `reference/claude-code-config-schema.md` | You need Claude Code settings.json, permissions, MCP, CLAUDE.md, commands, and hooks config. |
-| `reference/audit-checklist.md` | You need the full audit checklist with PASS/WARN/FAIL criteria. |
-| `reference/key-thresholds.md` | You need the full rationale, source citations, and detailed semantics for any Key Threshold listed in the SKILL.md summary table. Required when audit reports must include source attribution. |
-| `reference/web-sources.md` | You need source tier classification, search queries, or freshness rules. |
-| `reference/proposal-templates.md` | You need Before/After diff templates for proposals. |
-| `reference/handoffs.md` | You need handoff templates for Hearth/Judge/Nexus collaboration. |
-| `reference/core-contract-rationale.md` | You need the full rationale and sources behind the anti-bloat, coexistence-drift, cache-hierarchy, or periodic re-evaluation Core Contract bullets. |
-| `reference/boundaries-rationale.md` | You need the full rationale and sources behind the `Never` list. |
-| `reference/phase-details.md` | You need full FETCH/AUDIT/PROPOSE phase detail and the complete, current audit item-code list per category. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the Before/After proposal, deciding adaptive thinking depth at source-tier/severity classification, or front-loading target CLI/scope/decision at AUDIT. Critical for Hone: P3, P5. |
-| `_common/PROMPT_CACHE_HIERARCHY.md` | You are auditing prompt cache hit rate, the session context layout (tools → system → messages), `_common/` load order stability, or breakpoint placement on T-static vs T-dynamic content. Required for the `cache-order` and `cache-hierarchy` audit triggers. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Hone-specific Output/Next schema. |
+| `reference/codex-config-schema.md` | Config.toml key definitions, defaults, and recommended values. |
+| `reference/antigravity-config-schema.md` | Settings.json key definitions, safety settings, and extension config. |
+| `reference/claude-code-config-schema.md` | Claude Code settings.json, permissions, MCP, CLAUDE.md, commands, and hooks config. |
+| `reference/audit-checklist.md` | The full audit checklist with PASS/WARN/FAIL criteria. |
+| `reference/key-thresholds.md` | The full rationale, source citations, and detailed semantics for any Key Threshold listed in the SKILL.md summary table. Required when audit reports must include source attribution. |
+| `reference/web-sources.md` | Source tier classification, search queries, or freshness rules. |
+| `reference/proposal-templates.md` | Before/After diff templates for proposals. |
+| `reference/handoffs.md` | Handoff templates for Hearth/Judge/Nexus collaboration. |
+| `reference/core-contract-rationale.md` | The full rationale and sources behind the anti-bloat, coexistence-drift, cache-hierarchy, or periodic re-evaluation Core Contract bullets. |
+| `reference/boundaries-rationale.md` | The full rationale and sources behind the `Never` list. |
+| `reference/phase-details.md` | Full FETCH/AUDIT/PROPOSE phase detail and the complete, current audit item-code list per category. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the Before/After proposal, deciding adaptive thinking depth at source-tier/severity classification, or front-loading target CLI/scope/decision at AUDIT. Critical for Hone: P3, P5. |
+| `_common/PROMPT_CACHE_HIERARCHY.md` | Auditing prompt cache hit rate, the session context layout (tools → system → messages), `_common/` load order stability, or breakpoint placement on T-static vs T-dynamic content. Required for the `cache-order` and `cache-hierarchy` audit triggers. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Hone-specific Output/Next schema. |
 
 ## Operational
 

@@ -296,15 +296,15 @@ Every deliverable must include:
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/detection-patterns.md` | You need Sigma/YARA rule patterns, ATT&CK technique mappings, endpoint/network/cloud/AI detection examples. |
-| `reference/detection-as-code.md` | You need CI/CD pipeline templates, GitHub Actions workflows, rule testing strategies, deployment automation. |
-| `reference/snort-network-detection.md` | You are authoring Snort 3 / Suricata network rules, wiring EVE JSON ingest, or managing ET Open community feeds. |
-| `reference/playbook-incident-response.md` | You are authoring SOC playbooks for phishing / credential / ransomware / BEC incidents, SOAR automation, or D3FEND mapping. |
-| `reference/ioc-threat-intel.md` | You are managing IoC lifecycle (STIX 2.1 / TAXII 2.1 / MISP), feed deduplication, indicator expiry, or FP dispositioning. |
-| `reference/handoffs.md` | You need handoff templates for Breach, Sentinel, Radar, Gear, or other agent collaboration. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the detection package, deciding adaptive thinking depth at FP calibration, or front-loading platform/scope/analyst-load at SURVEY. Critical for Vigil: P3, P5. |
-| `_common/PROOF_CARRYING.md` | You are the security-attacker persona in `nexus acceptance` Phase 3 (Layer 3 adversarial explorer). Defines G1 cross-engine diversity (Tier-S runs you on Claude, separate from the agy-based oracle generator and Codex-based implementer) and the semantic non-emptiness rule (non-trivial exploration log required even when no findings — "no findings" without log = rejected). |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Vigil-specific Output/Next schema. |
+| `reference/detection-patterns.md` | Sigma/YARA rule patterns, ATT&CK technique mappings, endpoint/network/cloud/AI detection examples. |
+| `reference/detection-as-code.md` | CI/CD pipeline templates, GitHub Actions workflows, rule testing strategies, deployment automation. |
+| `reference/snort-network-detection.md` | Authoring Snort 3 / Suricata network rules, wiring EVE JSON ingest, or managing ET Open community feeds. |
+| `reference/playbook-incident-response.md` | Authoring SOC playbooks for phishing / credential / ransomware / BEC incidents, SOAR automation, or D3FEND mapping. |
+| `reference/ioc-threat-intel.md` | Managing IoC lifecycle (STIX 2.1 / TAXII 2.1 / MISP), feed deduplication, indicator expiry, or FP dispositioning. |
+| `reference/handoffs.md` | Handoff templates for Breach, Sentinel, Radar, Gear, or other agent collaboration. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the detection package, deciding adaptive thinking depth at FP calibration, or front-loading platform/scope/analyst-load at SURVEY. Critical for Vigil: P3, P5. |
+| `_common/PROOF_CARRYING.md` | The security-attacker persona in `nexus acceptance` Phase 3 (Layer 3 adversarial explorer). Defines G1 cross-engine diversity (Tier-S runs you on Claude, separate from the agy-based oracle generator and Codex-based implementer) and the semantic non-emptiness rule (non-trivial exploration log required even when no findings — "no findings" without log = rejected). |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Vigil-specific Output/Next schema. |
 
 ---
 

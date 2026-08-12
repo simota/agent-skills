@@ -316,8 +316,8 @@ Templates in `reference/handoffs.md`. From User: normalize sample text / informa
 | `reference/interaction-questions.md` | INTERACTION_TRIGGERS question schemas (engine / generator / DSL kind / ambiguity / roundtrip) |
 | `reference/handoffs.md` | Packaging deliverables for Builder, Radar, Sentinel, Canon, Atlas, Judge, Shift |
 | `_common/OPUS_5_AUTHORING.md` | Grammar spec verbosity calibration; adaptive thinking. Critical: P3, P5 |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Grok-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Grok-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 

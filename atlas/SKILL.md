@@ -228,26 +228,26 @@ Full algorithm, JSON schema, prompt skeletons, clustering rules, and grounding/a
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/adr-rfc-templates.md` | You need ADR (Full/Lightweight) + RFC templates or status management. |
-| `reference/architecture-patterns.md` | You need Clean / Hexagonal / Feature-Based / Modular Monolith patterns. |
-| `reference/dependency-analysis-patterns.md` | You need God Class, circular deps, coupling metrics, or layer violations. |
-| `reference/technical-debt-scoring.md` | You need severity matrix, categories, inventory/repayment/ROI templates. |
-| `reference/architecture-health-metrics.md` | You need coupling/complexity metrics, health score card, or CI integration. |
-| `reference/canvas-integration.md` | You need CANVAS_REQUEST templates (4 diagram types) + Mermaid examples. |
-| `reference/zen-integration.md` | You need ZEN_HANDOFF templates (God Class split, separation, coupling). |
-| `reference/daily-process-checklists.md` | You need SURVEY/PLAN/VERIFY/PRESENT detailed checklists. |
-| `reference/architecture-decision-anti-patterns.md` | You need ADR/RFC decision anti-patterns (AD-01–07), document quality traps, or decision DoD. |
-| `reference/technical-debt-management-anti-patterns.md` | You need technical debt management anti-patterns (TM-01–07), 4-quadrant classification, 5-stage management, or AI-era debt. |
-| `reference/dependency-modularization-anti-patterns.md` | You need dependency/modularization anti-patterns (DM-01–07), distributed monolith detection, or Modular Monolith reassessment. |
-| `reference/architecture-modernization-anti-patterns.md` | You need modernization anti-patterns (AM-01–07), Strangler Fig implementation, or migration judgment framework. |
-| `reference/circular-dependency-remediation.md` | You are running the `cycle` recipe — SCC detection and removal strategies (dependency inversion, interface extraction, re-layering, merge). |
-| `reference/coupling-metrics.md` | You are running the `coupling` recipe — Martin metrics (Ca/Ce/Instability/Abstractness/Distance) and Main Sequence assessment. |
-| `reference/module-boundary-evaluation.md` | You are running the `boundary` recipe — bounded-context fit, cross-boundary leak detection, and anti-corruption layer recommendations. |
-| `reference/tri-engine-architect.md` | You are running the `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents), Pattern H two-axis scoring, Consensus + Dissenting Options ADR structure, JSON schema, subagent prompt skeleton, and degraded-mode behavior. |
-| `_common/SUBAGENT.md` | You need the base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
-| `_common/MULTI_ENGINE_RECIPE.md` | You need the cross-skill multi-engine protocol — Pattern H definition, canonical PREFLIGHT probe, CLUSTER/SCORE/GROUND/SYNTHESIZE flow, engine-attribution tag conventions, and degraded modes. |
-| `_common/OPUS_5_AUTHORING.md` | You are scoping SURVEY breadth, deciding adaptive thinking depth at PLAN, or sizing ADR/RFC outputs. Critical for Atlas: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Atlas-specific Output/Next schema. |
+| `reference/adr-rfc-templates.md` | ADR (Full/Lightweight) + RFC templates or status management. |
+| `reference/architecture-patterns.md` | Clean / Hexagonal / Feature-Based / Modular Monolith patterns. |
+| `reference/dependency-analysis-patterns.md` | God Class, circular deps, coupling metrics, or layer violations. |
+| `reference/technical-debt-scoring.md` | Severity matrix, categories, inventory/repayment/ROI templates. |
+| `reference/architecture-health-metrics.md` | Coupling/complexity metrics, health score card, or CI integration. |
+| `reference/canvas-integration.md` | CANVAS_REQUEST templates (4 diagram types) + Mermaid examples. |
+| `reference/zen-integration.md` | ZEN_HANDOFF templates (God Class split, separation, coupling). |
+| `reference/daily-process-checklists.md` | SURVEY/PLAN/VERIFY/PRESENT detailed checklists. |
+| `reference/architecture-decision-anti-patterns.md` | ADR/RFC decision anti-patterns (AD-01–07), document quality traps, or decision DoD. |
+| `reference/technical-debt-management-anti-patterns.md` | Technical debt management anti-patterns (TM-01–07), 4-quadrant classification, 5-stage management, or AI-era debt. |
+| `reference/dependency-modularization-anti-patterns.md` | Dependency/modularization anti-patterns (DM-01–07), distributed monolith detection, or Modular Monolith reassessment. |
+| `reference/architecture-modernization-anti-patterns.md` | Modernization anti-patterns (AM-01–07), Strangler Fig implementation, or migration judgment framework. |
+| `reference/circular-dependency-remediation.md` | `cycle` recipe — SCC detection and removal strategies (dependency inversion, interface extraction, re-layering, merge). |
+| `reference/coupling-metrics.md` | `coupling` recipe — Martin metrics (Ca/Ce/Instability/Abstractness/Distance) and Main Sequence assessment. |
+| `reference/module-boundary-evaluation.md` | `boundary` recipe — bounded-context fit, cross-boundary leak detection, and anti-corruption layer recommendations. |
+| `reference/tri-engine-architect.md` | `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents), Pattern H two-axis scoring, Consensus + Dissenting Options ADR structure, JSON schema, subagent prompt skeleton, and degraded-mode behavior. |
+| `_common/SUBAGENT.md` | The base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
+| `_common/MULTI_ENGINE_RECIPE.md` | The cross-skill multi-engine protocol — Pattern H definition, canonical PREFLIGHT probe, CLUSTER/SCORE/GROUND/SYNTHESIZE flow, engine-attribution tag conventions, and degraded modes. |
+| `_common/OPUS_5_AUTHORING.md` | Scoping SURVEY breadth, deciding adaptive thinking depth at PLAN, or sizing ADR/RFC outputs. Critical for Atlas: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Atlas-specific Output/Next schema. |
 | `reference/kotlin-cheatsheet.md` | Reviewing Kotlin code. |
 | `reference/rust-cheatsheet.md` | Reviewing Rust code. |
 | `reference/swift-cheatsheet.md` | Reviewing Swift code. |

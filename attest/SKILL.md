@@ -431,23 +431,23 @@ Required section order:
 
 | File | Read this when |
 |------|----------------|
-| `reference/criteria-extraction.md` | You need format detection, testability classification, ambiguity handling, quality metrics, or `AC-*` conventions. |
-| `reference/bdd-generation.md` | You need `SC-*` conventions, Given/When/Then rules, priority-based scenario minimums, or BDD anti-pattern checks. |
-| `reference/verification-methods.md` | You need static verification methods, evidence schema, confidence scoring, runtime-only routing, or resource allocation. |
-| `reference/adversarial-probing.md` | You need the six probe families, risk levels, minimum probe counts, or probe output format. |
-| `reference/compliance-report.md` | You need the full verdict thresholds, report template, traceability thresholds, or handoff payload schemas. |
-| `reference/traceability-advanced.md` | You need bidirectional traceability, gap analysis, coverage optimization, or regulated audit support. |
-| `_common/TRACEABILITY.md` | You are reading or updating a `.traceability.yaml` ledger, or reconciling AC/scenario/test IDs. Canonical ID scheme + verifier protocol shared with Accord/Scribe/Radar/Guardian/Judge. |
-| `reference/llm-verification-guardrails.md` | You need LLM capability limits, evidence-first guardrails, prompt strategies, or hallucination prevention rules. |
-| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing an Attest-specific action verb (CLOSE-GAP / RECONCILE-SPEC / BREAKING-CLOSE / INVESTIGATE-FURTHER / WAIVE), or deciding whether to suppress for verification-only / Scribe-Accord rewrite / pending stakeholder / full conformance. |
-| `_common/PROOF_CARRYING.md` | You are invoked from `nexus acceptance` Phase 1 (spec-diff) or Phase 4 (final conformance verdict). Defines the 12 evidence-package fields, Tier-S/A/B/C application policy, meta-oracle rules for spec self-bug mitigation, and unspecifiable-quality carve-out that bypasses the Gate. |
-| `reference/gherkin-authoring.md` | You are running the `gherkin` recipe — authoring `.feature` files (Background, Scenario Outline, Examples, Tags) with step-definition stubs for Cucumber-JVM/JS, SpecFlow, Behave, or pytest-bdd. |
-| `reference/property-based-testing.md` | You are running the `property` recipe — generalizing spec invariants into properties (idempotency, round-trip, monotonicity) and producing framework-specific code (Hypothesis, fast-check, jqwik, proptest, ScalaCheck). |
-| `reference/test-oracle-design.md` | You are running the `oracle` recipe — selecting test oracle patterns (golden master, metamorphic, differential, model-based, consistency oracle) per criterion. |
-| `reference/modern-tooling.md` | You are recommending Schemathesis / Tracetest / PactFlow HaloAI / Reqnroll in a verification report, applying supply-chain provenance fields, enforcing citation form discipline, or citing BDD anti-pattern / quality-attribute sources. |
-| `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the verification report, deciding adaptive thinking depth at VERIFY, or front-loading mode/scope at INGEST. Critical for Attest: P2, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Attest-specific Output/Next schema. |
+| `reference/criteria-extraction.md` | Format detection, testability classification, ambiguity handling, quality metrics, or `AC-*` conventions. |
+| `reference/bdd-generation.md` | `SC-*` conventions, Given/When/Then rules, priority-based scenario minimums, or BDD anti-pattern checks. |
+| `reference/verification-methods.md` | Static verification methods, evidence schema, confidence scoring, runtime-only routing, or resource allocation. |
+| `reference/adversarial-probing.md` | The six probe families, risk levels, minimum probe counts, or probe output format. |
+| `reference/compliance-report.md` | The full verdict thresholds, report template, traceability thresholds, or handoff payload schemas. |
+| `reference/traceability-advanced.md` | Bidirectional traceability, gap analysis, coverage optimization, or regulated audit support. |
+| `_common/TRACEABILITY.md` | Reading or updating a `.traceability.yaml` ledger, or reconciling AC/scenario/test IDs. Canonical ID scheme + verifier protocol shared with Accord/Scribe/Radar/Guardian/Judge. |
+| `reference/llm-verification-guardrails.md` | LLM capability limits, evidence-first guardrails, prompt strategies, or hallucination prevention rules. |
+| `reference/fix-prompt-generation.md` | Authoring the `## LLM Fix Prompt` block, choosing an Attest-specific action verb (CLOSE-GAP / RECONCILE-SPEC / BREAKING-CLOSE / INVESTIGATE-FURTHER / WAIVE), or deciding whether to suppress for verification-only / Scribe-Accord rewrite / pending stakeholder / full conformance. |
+| `_common/PROOF_CARRYING.md` | Invoked from `nexus acceptance` Phase 1 (spec-diff) or Phase 4 (final conformance verdict). Defines the 12 evidence-package fields, Tier-S/A/B/C application policy, meta-oracle rules for spec self-bug mitigation, and unspecifiable-quality carve-out that bypasses the Gate. |
+| `reference/gherkin-authoring.md` | `gherkin` recipe — authoring `.feature` files (Background, Scenario Outline, Examples, Tags) with step-definition stubs for Cucumber-JVM/JS, SpecFlow, Behave, or pytest-bdd. |
+| `reference/property-based-testing.md` | `property` recipe — generalizing spec invariants into properties (idempotency, round-trip, monotonicity) and producing framework-specific code (Hypothesis, fast-check, jqwik, proptest, ScalaCheck). |
+| `reference/test-oracle-design.md` | `oracle` recipe — selecting test oracle patterns (golden master, metamorphic, differential, model-based, consistency oracle) per criterion. |
+| `reference/modern-tooling.md` | Recommending Schemathesis / Tracetest / PactFlow HaloAI / Reqnroll in a verification report, applying supply-chain provenance fields, enforcing citation form discipline, or citing BDD anti-pattern / quality-attribute sources. |
+| `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the verification report, deciding adaptive thinking depth at VERIFY, or front-loading mode/scope at INGEST. Critical for Attest: P2, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Attest-specific Output/Next schema. |
 
 ## Operational
 

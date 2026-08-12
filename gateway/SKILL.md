@@ -235,28 +235,28 @@ Gateway receives data models, implementation needs, and security requirements fr
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/api-design-principles.md` | You need RESTful checklist, URL patterns, HTTP status codes, or coverage scope. |
-| `reference/openapi-templates.md` | You need OpenAPI 3.0/3.1 templates, endpoint/schema/components definitions. |
-| `reference/versioning-strategies.md` | You need version placement comparison, migration strategy, or breaking vs non-breaking. |
-| `reference/api-security-patterns.md` | You need auth methods, CORS, input validation, or security review checklist. (For rate-limit headers, see `rate-limit-patterns.md`.) |
-| `reference/breaking-change-detection.md` | You need detection checklist or compatibility matrix. |
-| `reference/api-review-checklist.md` | You need design review, spec validation, or security review. |
-| `reference/error-pagination.md` | You need error format/catalog or offset/cursor pagination. (For rate-limit, see `rate-limit-patterns.md`.) |
-| `reference/api-decision-tree.md` | You need REST vs GraphQL vs gRPC selection flowchart. |
-| `reference/output-format-template.md` | You need the standard API design output template. |
-| `reference/api-design-anti-patterns.md` | You need REST API design anti-patterns: URL/HTTP method/error/pagination/response design. |
-| `reference/api-security-anti-patterns.md` | You need API security anti-patterns: OWASP Top 10/auth/CORS/rate limiting/defense-in-depth. |
-| `reference/versioning-governance-anti-patterns.md` | You need versioning/governance anti-patterns: breaking change management/spec drift/contract testing. |
-| `reference/graphql-spec-anti-patterns.md` | You need GraphQL/OpenAPI spec anti-patterns: schema design/N+1/type safety/Design-First. |
-| `reference/ai-api-patterns.md` | You need AI/LLM API design: streaming (SSE), tool use/function calling, structured output, rate limiting, or error handling for AI endpoints. |
-| `reference/rest-api-design.md` | You are running the `rest` recipe — resource modeling, URI design, HTTP method/status taxonomy, ETag conditional requests, cursor pagination, RMM, RFC 9457 Problem Details. |
-| `reference/graphql-design.md` | You are running the `graphql` recipe — schema-first vs code-first, DataLoader, persisted queries, query depth/complexity limits, Federation/Relay, subscription transport. |
-| `reference/webhook-design.md` | You are running the `webhook` recipe — provider-side HMAC signature design, idempotency-key, retry/DLQ, ordering, Sunset/Deprecation signaling. |
-| `reference/api-auth-patterns.md` | You are running the `auth` recipe — OAuth 2.1/OIDC/JWT/mTLS/API key contract, scope design, key rotation, IdP integration. |
-| `reference/rate-limit-patterns.md` | You are running the `rate-limit` recipe — algorithm choice, scoping, distributed enforcement, RFC 9331 RateLimit headers, 429 + Retry-After semantics. |
-| `reference/deprecation-policy.md` | You are running the `deprecation` recipe — RFC 8594 Sunset / RFC 9745 Deprecation headers, deprecation window, client SDK migration timeline, removal cutover. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the API spec, deciding adaptive thinking depth at DESIGN, or front-loading consumer profile/version policy at SCAN. Critical for Gateway: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Gateway-specific Output/Next schema. |
+| `reference/api-design-principles.md` | RESTful checklist, URL patterns, HTTP status codes, or coverage scope. |
+| `reference/openapi-templates.md` | OpenAPI 3.0/3.1 templates, endpoint/schema/components definitions. |
+| `reference/versioning-strategies.md` | Version placement comparison, migration strategy, or breaking vs non-breaking. |
+| `reference/api-security-patterns.md` | Auth methods, CORS, input validation, or security review checklist. (For rate-limit headers, see `rate-limit-patterns.md`.) |
+| `reference/breaking-change-detection.md` | Detection checklist or compatibility matrix. |
+| `reference/api-review-checklist.md` | Design review, spec validation, or security review. |
+| `reference/error-pagination.md` | Error format/catalog or offset/cursor pagination. (For rate-limit, see `rate-limit-patterns.md`.) |
+| `reference/api-decision-tree.md` | REST vs GraphQL vs gRPC selection flowchart. |
+| `reference/output-format-template.md` | The standard API design output template. |
+| `reference/api-design-anti-patterns.md` | REST API design anti-patterns: URL/HTTP method/error/pagination/response design. |
+| `reference/api-security-anti-patterns.md` | API security anti-patterns: OWASP Top 10/auth/CORS/rate limiting/defense-in-depth. |
+| `reference/versioning-governance-anti-patterns.md` | Versioning/governance anti-patterns: breaking change management/spec drift/contract testing. |
+| `reference/graphql-spec-anti-patterns.md` | GraphQL/OpenAPI spec anti-patterns: schema design/N+1/type safety/Design-First. |
+| `reference/ai-api-patterns.md` | AI/LLM API design: streaming (SSE), tool use/function calling, structured output, rate limiting, or error handling for AI endpoints. |
+| `reference/rest-api-design.md` | `rest` recipe — resource modeling, URI design, HTTP method/status taxonomy, ETag conditional requests, cursor pagination, RMM, RFC 9457 Problem Details. |
+| `reference/graphql-design.md` | `graphql` recipe — schema-first vs code-first, DataLoader, persisted queries, query depth/complexity limits, Federation/Relay, subscription transport. |
+| `reference/webhook-design.md` | `webhook` recipe — provider-side HMAC signature design, idempotency-key, retry/DLQ, ordering, Sunset/Deprecation signaling. |
+| `reference/api-auth-patterns.md` | `auth` recipe — OAuth 2.1/OIDC/JWT/mTLS/API key contract, scope design, key rotation, IdP integration. |
+| `reference/rate-limit-patterns.md` | `rate-limit` recipe — algorithm choice, scoping, distributed enforcement, RFC 9331 RateLimit headers, 429 + Retry-After semantics. |
+| `reference/deprecation-policy.md` | `deprecation` recipe — RFC 8594 Sunset / RFC 9745 Deprecation headers, deprecation window, client SDK migration timeline, removal cutover. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the API spec, deciding adaptive thinking depth at DESIGN, or front-loading consumer profile/version policy at SCAN. Critical for Gateway: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Gateway-specific Output/Next schema. |
 
 ## Operational
 

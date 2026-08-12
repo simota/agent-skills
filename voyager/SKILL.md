@@ -273,28 +273,28 @@ Operational thresholds that trigger a recipe choice or a cross-agent handoff (di
 | [framework-selection.md](reference/framework-selection.md) | You must choose or justify the framework |
 | [cypress-guide.md](reference/cypress-guide.md) | The project already uses Cypress |
 | [visual-a11y-testing.md](reference/visual-a11y-testing.md) | Visual regression, keyboard flows, or WCAG checks matter |
-| [selector-accessibility-first.md](reference/selector-accessibility-first.md) | You need selector rules, ARIA snapshots, or fallback criteria |
-| [ci-reporting.md](reference/ci-reporting.md) | You are wiring CI, sharding, artifacts, or reporters |
+| [selector-accessibility-first.md](reference/selector-accessibility-first.md) | Selector rules, ARIA snapshots, or fallback criteria |
+| [ci-reporting.md](reference/ci-reporting.md) | Wiring CI, sharding, artifacts, or reporters |
 | [performance-testing.md](reference/performance-testing.md) | Core Web Vitals, Lighthouse CI, or browser performance budgets are in scope |
 | [complex-scenarios.md](reference/complex-scenarios.md) | The flow includes multi-tab, iframe, file, WebSocket, offline, or Shadow DOM behavior |
-| [environment-management.md](reference/environment-management.md) | You need Docker, preview envs, auth setup, mail capture, or local-only E2E workflow |
-| [ephemeral-env-test-data.md](reference/ephemeral-env-test-data.md) | You need test isolation, factories, preview environments, or network interception strategy |
-| [debug-monitoring.md](reference/debug-monitoring.md) | You are diagnosing flake, console issues, traces, HARs, or retries |
+| [environment-management.md](reference/environment-management.md) | Docker, preview envs, auth setup, mail capture, or local-only E2E workflow |
+| [ephemeral-env-test-data.md](reference/ephemeral-env-test-data.md) | Test isolation, factories, preview environments, or network interception strategy |
+| [debug-monitoring.md](reference/debug-monitoring.md) | Diagnosing flake, console issues, traces, HARs, or retries |
 | [edge-cases-i18n.md](reference/edge-cases-i18n.md) | Timezone, locale, cookie, storage, offline, or network-condition cases matter |
 | [cloud-testing.md](reference/cloud-testing.md) | BrowserStack / Sauce Labs / LambdaTest / AWS Device Farm / Firebase Test Lab sessions — matrices, App Automate config, tunnels, parallel-session caps, cost-tier strategy, credentials |
 | [mobile-testing.md](reference/mobile-testing.md) | Artifact is a shipping `.ipa`/`.apk`/`.aab` or RN bundle — framework selection, mobile POM, accessibility-id locators, two-axis flake taxonomy, device-farm tier matrix, WebdriverIO+Appium config, real-device capabilities, mobile-emulation alternatives, rotation/push/airplane patterns. **Start here for native mobile E2E.** |
-| [2026-best-practices.md](reference/2026-best-practices.md) | You need full source citations for Playwright Test Agents, CLI-vs-MCP, axe-core ceiling, Datadog flake loop, mobile AI, Cypress AI, visual-regression tiers, synthetic convergence, Screenplay, Appium 3 BiDi, Playwright version notes, mobile/device-farm version notes, Privacy Manifest timeline, or flake/budget thresholds |
-| [e2e-anti-patterns.md](reference/e2e-anti-patterns.md) | You need suite architecture, anti-pattern checks, or flaky-prevention thresholds |
+| [2026-best-practices.md](reference/2026-best-practices.md) | Full source citations for Playwright Test Agents, CLI-vs-MCP, axe-core ceiling, Datadog flake loop, mobile AI, Cypress AI, visual-regression tiers, synthetic convergence, Screenplay, Appium 3 BiDi, Playwright version notes, mobile/device-farm version notes, Privacy Manifest timeline, or flake/budget thresholds |
+| [e2e-anti-patterns.md](reference/e2e-anti-patterns.md) | Suite architecture, anti-pattern checks, or flaky-prevention thresholds |
 | [ai-powered-e2e-testing.md](reference/ai-powered-e2e-testing.md) | AI-assisted planning, generation, healing, or cost/risk tradeoffs are in scope |
 | [container-testing.md](reference/container-testing.md) | Container-based test environments, Testcontainers, or Docker-integrated E2E are required |
 | [web-component-testing.md](reference/web-component-testing.md) | Shadow DOM, Lit, Stencil, or Web Component testing is required |
 | [api-e2e-testing.md](reference/api-e2e-testing.md) | User-journey E2E through an API-only interface (Playwright `APIRequestContext` chains, mock-vs-real backend toggle, contract-test follow-up) |
 | [component-testing.md](reference/component-testing.md) | Component tests in a real browser (Playwright Component Testing, Cypress Component Testing, Storybook Interactions) |
-| [recipe-verify-gates.md](reference/recipe-verify-gates.md) | You need the full rationale and VERIFY checklist for a Recipe beyond the one-line summary under `## Subcommand Dispatch` |
-| [OPUS_5_AUTHORING.md](../_common/OPUS_5_AUTHORING.md) | You are sizing the test plan, calibrating effort to risk-tier, or front-loading critical journey scope at PLAN. Critical for Voyager: P3, P6. |
-| [PROOF_CARRYING.md](../_common/PROOF_CARRYING.md) | You are invoked from `nexus acceptance` Phase 2 (UI flows + visual regression as Layer 2 oracles) and Phase 3 (adversarial UI users — impatient / mobile / screen-reader / broken-connection / payment-failure personas). Adversarial-finding outputs must include non-trivial exploration logs; empty findings are rejected as semantically empty. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Voyager-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| [recipe-verify-gates.md](reference/recipe-verify-gates.md) | The full rationale and VERIFY checklist for a Recipe beyond the one-line summary under `## Subcommand Dispatch` |
+| [OPUS_5_AUTHORING.md](../_common/OPUS_5_AUTHORING.md) | Sizing the test plan, calibrating effort to risk-tier, or front-loading critical journey scope at PLAN. Critical for Voyager: P3, P6. |
+| [PROOF_CARRYING.md](../_common/PROOF_CARRYING.md) | Invoked from `nexus acceptance` Phase 2 (UI flows + visual regression as Layer 2 oracles) and Phase 3 (adversarial UI users — impatient / mobile / screen-reader / broken-connection / payment-failure personas). Adversarial-finding outputs must include non-trivial exploration logs; empty findings are rejected as semantically empty. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Voyager-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## Operational
 
