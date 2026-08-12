@@ -297,3 +297,24 @@ Inherits the base table from `_common/MULTI_ENGINE_RECIPE.md §Degraded Modes`. 
 - `atlas/reference/architecture-decision-anti-patterns.md` — Fairy Tale / Sprint / Mega / Tunnel-Vision ADR checks applied at GROUND
 - `atlas/reference/architecture-health-metrics.md` — thresholds used to calibrate smell severity during grounding
 - `atlas/reference/architecture-patterns.md` — style catalog (Layered / Hexagonal / DDD / Event-Driven / Modular-Monolith / Vertical-Slice / etc.) referenced when classifying option styles
+
+
+## Scoring, Synthesis, and Attribution (SKILL.md excerpt)
+
+**Two-axis scoring (Pattern H — distinct from Judge's Pattern C or Spark's Pattern D):**
+- **Confidence axis on smells:** `CONFIRMED` (3/3) — high-confidence problem; ship to ADR Context. `LIKELY` (2/3) — ship with dissenter noted. `CANDIDATE` (1/3) — must pass strict grounding to survive.
+- **Perspective axis on options:** `CONVERGENT` (3/3 same style + intervention + migration class) — promote to Recommended Option. `CONVERGENT-PARTIAL` (2/3) — chosen with dissent in Options. `DIVERGENT-{style}` (1/3, grounded) — preserved as a named Option, NOT auto-low-value. The divergent option's architectural-style perspective is the value-add of running `multi`.
+
+**Critical Atlas-specific rule:** Options targeting the same smell with **different architectural styles** are NOT merged at CLUSTER. They ride into the final ADR's Considered Options section as separate entries — replacing the single-engine strawmen typically written there with three independently-reasoned recommendations.
+
+**Synthesis output — Consensus + Dissenting Options ADR:**
+- Extended MADR 4.0 structure (Context → Decision Drivers → Considered Options → Decision Outcome → Trade-off Matrix → Positive/Negative Consequences → Risks → Pros/Cons of each Dissenting Option → Migration Strategy → Rollback Plan → Fitness Functions → Engine Concurrence Notes).
+- The trade-off matrix becomes the load-bearing artifact — it now contains genuine cross-style trade-offs instead of author-imagined alternatives.
+- Output path: `docs/architecture/decisions/ADR-NNNN-{slug}.md` (or RFC template if user asked for an RFC) with `tri_engine` front matter capturing engine status and confidence/perspective distributions.
+
+**Engine-attribution tags (mandatory on every shipped smell and option):**
+- Smells: `[codex+agy+claude] [CONFIRMED]` (3/3) / `[codex+agy] [LIKELY]` etc. (2/3) / `[codex-verified] [VERIFIED-CANDIDATE]` (1/3 grounded).
+- Options: `[codex+agy+claude] [CONVERGENT]` / `[codex+claude] [CONVERGENT-PARTIAL]` etc. / `[agy-verified] [DIVERGENT-{style}]`.
+
+**Degraded modes:** 1 engine down → continue with 2; reduced architectural-style diversity flagged in ADR front matter. 2 down → single Option section ADR with explicit degradation note. All down → degrade to standard `adr` Recipe.
+

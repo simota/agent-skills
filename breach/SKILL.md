@@ -72,27 +72,27 @@ Route elsewhere when the task is primarily:
 - Frame every assessment with a threat model before attacking — no model, no attack.
 - Map all attack scenarios to established frameworks (MITRE ATT&CK, OWASP, STRIDE, ATLAS).
 - Test AI/LLM systems as deployed (with RAG, tools, plugins, MCP servers, glue code), not as standalone models.
-- Test MCP server trust boundaries and tool registration integrity — MITRE ATLAS (monthly release cadence since 2025; Technique Maturity filter added for prioritization) documents MCP server compromise and indirect prompt injection via MCP channels as real-world attack vectors.
+- Test MCP server trust boundaries and tool-registration integrity — MCP server compromise and indirect prompt injection via MCP channels are documented real-world vectors.
 - **Agentic AI testing principle** (canonical — referenced by AP-9, AP-17): Include multi-turn attack chains for AI systems — single-shot testing is insufficient (multi-turn jailbreaks succeed 97% within 5 turns). For agentic systems, generic jailbreak libraries measure response risk only; the dangerous failures are the operational risks — tool misuse, unauthorized actions, cross-account data access via conversational redirection, privilege escalation through delegated trust. Test operational behavior, not just outputs.
 - Classify findings by severity (Critical/High/Medium/Low) using CVSS 4.0 (Base + Threat + Environmental + Supplemental metric groups) and exploitability evidence.
 - Provide remediation guidance (immediate + long-term) for every confirmed vulnerability.
 - Pair every attack finding with detection recommendations for the blue team.
 - Document complete attack chains end-to-end (entry point → lateral movement → impact).
 - Distinguish between theoretical risks and confirmed exploitable findings.
-- Reference MITRE ATLAS (monthly release cadence since 2025; use Technique Maturity filter to prioritize emerging vs. mature threats) for AI-specific threat modeling — covers agentic execution-layer attacks (Publish Poisoned AI Agent Tool, Escape to Host, MCP server compromise, indirect LLM prompt injection, AI agent tool invocation) as documented in the ATLAS OpenClaw Investigation (2026-02). [Source: MITRE ATLAS OpenClaw Investigation — CTID (2026-02-09)](https://ctid.mitre.org/blog/2026/02/09/mitre-atlas-openclaw-investigation/)
+- Use MITRE ATLAS for AI-specific threat modeling (Technique Maturity filter prioritizes emerging vs mature) — it covers agentic execution-layer attacks: poisoned agent tools, escape to host, MCP server compromise, indirect prompt injection, agent tool invocation.
 - Test RAG systems for data poisoning — 5 crafted documents can manipulate AI responses 90% of the time.
 - Align testing cadence to risk: quarterly (high-risk), semi-annual (medium), annual (baseline). For AI systems in CI/CD, integrate continuous automated red teaming into staging and production pipelines — point-in-time assessments alone miss post-deployment drift.
-- Use CSA MAESTRO (Multi-Agent Environment, Security, Threat Risk, and Outcome) for agentic AI threat modeling — its 7-layer architecture (Foundation Models → Data Operations → Agent Frameworks → Deployment → Evaluation → Security → Ecosystem) captures attack surfaces that STRIDE/PASTA alone miss in multi-agent systems. Prioritize cross-layer attack path analysis — the most dangerous threats chain from lower layers (e.g., Foundation Model poisoning) through Agent Frameworks to Ecosystem Integration; single-layer assessments miss cascading impact.
-- Enforce security controls (tool-call approvals, file-type firewalls, kill switches) outside the LLM — prompt-level guardrails are unreliable. A joint study by OpenAI, Anthropic, and Google DeepMind (October 2025) showed adaptive attacks bypass 12 published prompt-injection defenses with >90% success rate.
-- For systems subject to EU AI Act: adversarial testing and documentation are mandatory for high-risk and general-purpose AI models with systemic risk. Full compliance required by August 2, 2026; penalties up to €35M or 7% of global annual turnover.
-- For AI red teaming, do not rely solely on binary Attack Success Rate (ASR) — use multi-dimensional scoring (violation severity × attack naturalness × semantic preservation). Binary ASR comparisons across different success criteria or threat models are often invalid and misleading. Use NIST AI 100-2 E2025 as the canonical taxonomy for evasion, poisoning, and privacy attack classification. [Source: NIST AI 100-2 E2025 — Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations](https://csrc.nist.gov/pubs/ai/100/2/e2025/final)
-- For agentic AI systems, validate the principle of least agency (OWASP Agentic Top 10 2026 [ASI01–ASI10]) — agents must be granted only the minimum autonomy required for safe, bounded tasks. Test for excessive tool access, credential scope, and unchecked autonomous decision chains. [Source: OWASP Gen AI Security Project — OWASP Top 10 for Agentic Applications for 2026 (2025-12-09)](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
+- Use CSA MAESTRO for agentic AI threat modeling — its 7 layers (Foundation Models → Data Ops → Agent Frameworks → Deployment → Evaluation → Security → Ecosystem) capture surfaces STRIDE/PASTA miss. **Prioritize cross-layer attack paths**: the dangerous threats chain from lower layers through Agent Frameworks to Ecosystem Integration, and single-layer assessments miss the cascade.
+- Enforce security controls (tool-call approvals, file-type firewalls, kill switches) **outside** the LLM — adaptive attacks bypass published prompt-injection defenses at >90% success rate.
+- Under the EU AI Act, adversarial testing and documentation are **mandatory** for high-risk and systemic-risk general-purpose models — full compliance by 2026-08-02, penalties up to €35M or 7% of global turnover.
+- Never rely on binary Attack Success Rate alone — score multi-dimensionally (violation severity × attack naturalness × semantic preservation); ASR comparisons across different success criteria or threat models are invalid. NIST AI 100-2 E2025 is the canonical taxonomy for evasion, poisoning, and privacy attacks.
+- Validate the principle of least agency (OWASP Agentic Top 10 2026, ASI01-ASI10) — test for excessive tool access, credential scope, and unchecked autonomous decision chains.
 - For supply chain assessments, specifically test third-party OAuth token access — enumerate which integrations have OAuth access to sensitive systems (CRM, email, HRIS) and attempt access via simulated compromised tokens.
-- For agent skill/tool ecosystems, test supply chain integrity per OWASP Agentic Skills Top 10 (AST01-AST10) — skill registry poisoning, manifest signing verification (ed25519), permission scope minimization. Treat agent skill registries as untrusted by default; verify manifest signatures and audit permission scopes before deployment. MITRE ATLAS OpenClaw Investigation (2026-02) documents how agentic AI-first ecosystems introduce new exploit execution paths including tool invocation abuse and agentic configuration modification. [Source: MITRE ATLAS OpenClaw Investigation — CTID (2026-02)](https://ctid.mitre.org/blog/2026/02/09/mitre-atlas-openclaw-investigation/)
-- For agentic AI, prioritize contextual red teaming over generic jailbreak testing — standard jailbreaks measure response risk, but agentic systems require testing of operational risks: tool misuse, unauthorized actions, and data exfiltration via conversational redirection. A red team demonstrated a financial assistant executing a $440K portfolio rebalancing through a movie roleplay frame without re-authorization.
-- Structure AI red teaming engagements around four assessment areas: model evaluation, implementation testing, infrastructure assessment, and runtime behavior analysis. [Source: OWASP GenAI Red Teaming Guide (2025)](https://genai.owasp.org/resource/genai-red-teaming-guide/)
-- For vendor and tooling selection, apply OWASP Vendor Evaluation Criteria for AI Red Teaming Providers & Tooling v1.0 — distinguishes meaningful adversarial testing from "jailbreak-only" offerings; covers simple GenAI (chatbots, RAG) and advanced systems (tool-calling agents, MCP architectures, multi-agent workflows). [Source: OWASP Vendor Evaluation Criteria for AI Red Teaming Providers & Tooling v1.0 (2025)](https://genai.owasp.org/resource/owasp-vendor-evaluation-criteria-for-ai-red-teaming-providers-tooling-v1-0/)
-- Use MITRE ATT&CK v19 (released 2026-04-28) for technique mapping — Enterprise contains 15 Tactics, 222 Techniques, 475 Sub-Techniques. [Source: MITRE ATT&CK April 2026 Updates](https://attack.mitre.org/resources/updates/updates-april-2026/)
+- Test agent skill/tool ecosystems per OWASP Agentic Skills Top 10 (AST01-AST10) — registry poisoning, manifest signature verification (ed25519), permission-scope minimization. **Treat skill registries as untrusted by default**: verify signatures and audit scopes before deployment.
+- Prioritize contextual red teaming over generic jailbreaks for agentic AI (see the Agentic AI testing principle above) — a roleplay frame has driven a financial assistant to execute a $440K rebalancing without re-authorization.
+- Structure AI red-team engagements around four areas: model evaluation, implementation testing, infrastructure assessment, runtime behavior analysis.
+- Apply the OWASP Vendor Evaluation Criteria for AI Red Teaming Providers & Tooling when selecting vendors — it separates meaningful adversarial testing from "jailbreak-only" offerings.
+- Map techniques against MITRE ATT&CK v19 (Enterprise: 15 Tactics, 222 Techniques, 475 Sub-Techniques).
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`).
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Breach; P2, P1 recommended).
 
@@ -132,59 +132,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | `FRAMEWORK_SELECTION` | ON_DECISION | Multiple threat modeling frameworks apply and would produce different attack priorities |
 | `SEVERITY_DISPUTE` | ON_RISK | A finding's severity classification could reasonably differ by one or more levels |
 
-### SCOPE_DEFINITION
-
-```yaml
-questions:
-  - question: "What is the scope of this red team assessment?"
-    header: "Scope"
-    options:
-      - label: "Application layer (Recommended)"
-        description: "Web/API endpoints, business logic, authentication, authorization, input handling"
-      - label: "AI/LLM system"
-        description: "Prompt injection, jailbreak, data poisoning, agentic risks, guardrail bypass"
-      - label: "Full stack"
-        description: "Application + infrastructure + CI/CD + supply chain"
-      - label: "Purple Team exercise"
-        description: "Collaborative Red/Blue with detection validation and SIEM rule tuning"
-    multiSelect: false
-```
-
-### FRAMEWORK_SELECTION
-
-```yaml
-questions:
-  - question: "Which threat modeling approach should be applied?"
-    header: "Framework"
-    options:
-      - label: "STRIDE (Recommended)"
-        description: "Categorize threats by Spoofing/Tampering/Repudiation/Info Disclosure/DoS/Elevation"
-      - label: "PASTA"
-        description: "Risk-centric 7-step process aligned to business objectives"
-      - label: "MITRE ATT&CK mapping"
-        description: "Map attack techniques to known adversary TTPs"
-      - label: "Attack Trees"
-        description: "Goal-oriented tree decomposition of attack paths"
-    multiSelect: false
-```
-
-### SEVERITY_DISPUTE
-
-```yaml
-questions:
-  - question: "How should this finding's severity be classified?"
-    header: "Severity"
-    options:
-      - label: "Critical"
-        description: "Remote code execution, auth bypass, or data exfiltration with no user interaction"
-      - label: "High"
-        description: "Significant impact requiring minimal attacker effort or privilege"
-      - label: "Medium"
-        description: "Moderate impact requiring specific conditions or elevated access"
-      - label: "Low"
-        description: "Limited impact, difficult to exploit, or defense-in-depth already mitigates"
-    multiSelect: false
-```
+Full `AskUserQuestion` YAML for all three triggers -> `reference/threat-modeling.md` § INTERACTION_TRIGGERS Question Templates. Defaults when the user does not choose: scope **Application layer**, framework **MITRE ATT&CK**, and on a severity dispute state both readings with the exploitability evidence rather than picking silently.
 
 ---
 
@@ -234,13 +182,13 @@ Single source of truth for Recipe definitions, subcommand dispatch, and signal r
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Attack Scenario | `scenario` | ✓ | Attack scenario design, kill chain planning, `attack scenario` / `kill chain` / `pentest plan` / `WAF bypass` / `guardrail` / `control validation` signals | `reference/attack-playbooks.md` |
-| Threat Model | `threat-model` | | Threat modeling (STRIDE/PASTA/Attack Trees), `threat model` / `STRIDE` / `PASTA` / `attack surface` / `entry point` / `exposure` signals; per-engagement models — never reuse templates | `reference/threat-modeling.md` |
-| Purple Team | `purple` | | Purple Team exercise, Red/Blue coordination, `purple team` / `detection validation` / `blue team` signals; outputs exercise plan + detection rules | `reference/attack-playbooks.md` |
-| AI/LLM Red Team | `ai-red` | | AI/LLM-focused red team (prompt injection, agentic risks), `prompt injection` / `jailbreak` / `LLM red team` / `agentic risk` / `RAG poisoning` / `system prompt leakage` / `data poisoning` / `automated red teaming` / `AI-on-AI testing` / `MAESTRO` / `multi-agent security` / `agent skill` / `tool registry` / `skill supply chain` signals; multi-turn attack chains against deployed pipeline (RAG, tools, MCP, plugins); OWASP LLM Top 10 2025, Agentic Top 10 2026, MITRE ATLAS monthly, CSA MAESTRO, NIST AI 100-2 E2025; Garak v0.15.0+ / PyRIT for automation | `reference/ai-red-teaming.md` |
-| Phishing Campaign | `phishing` | | Authorized phishing campaign design — pretexting, landing-page clones, MFA-fatigue, quishing, OAuth consent-phishing, SPF/DKIM/DMARC evasion, awareness-training integration | `reference/phishing-campaign-design.md` |
-| Supply Chain Attack | `supply` | | Supply chain attack scenarios — dependency confusion, typosquatting, build-tool compromise, SBOM (CycloneDX/SPDX) analysis, SLSA provenance, in-toto attestation, registry pinning | `reference/supply-chain-attack-design.md` |
-| Social Engineering | `social` | | Social engineering scenarios — vishing, smishing, tailgating, OSINT pretexting, insider-threat, BEC, deepfake voice/video; behavioral, not code-centric | `reference/social-engineering-design.md` |
+| Attack Scenario | `scenario` | ✓ | Attack scenario and kill-chain design — signals `attack scenario` / `kill chain` / `pentest plan` / `WAF bypass` / `control validation` | `reference/attack-playbooks.md` |
+| Threat Model | `threat-model` | | STRIDE / PASTA / Attack Trees — signals `threat model` / `attack surface` / `entry point` / `exposure`. Per-engagement models; **never reuse templates** | `reference/threat-modeling.md` |
+| Purple Team | `purple` | | Red/Blue coordination — signals `purple team` / `detection validation` / `blue team`; outputs exercise plan + detection rules | `reference/attack-playbooks.md` |
+| AI/LLM Red Team | `ai-red` | | AI/LLM red team — signals `prompt injection` / `jailbreak` / `agentic risk` / `RAG poisoning` / `prompt leakage` / `MAESTRO` / `agent skill` / `tool registry`. Multi-turn chains against the deployed pipeline (RAG, tools, MCP, plugins) under OWASP LLM + Agentic Top 10, ATLAS, MAESTRO, NIST AI 100-2 E2025; Garak / PyRIT for automation | `reference/ai-red-teaming.md` |
+| Phishing Campaign | `phishing` | | Authorized campaign design — pretexting, landing-page clones, MFA fatigue, quishing, OAuth consent phishing, SPF/DKIM/DMARC evasion, awareness-training integration | `reference/phishing-campaign-design.md` |
+| Supply Chain Attack | `supply` | | Dependency confusion, typosquatting, build-tool compromise, SBOM analysis, SLSA provenance, in-toto attestation, registry pinning | `reference/supply-chain-attack-design.md` |
+| Social Engineering | `social` | | Vishing, smishing, tailgating, OSINT pretexting, insider threat, BEC, deepfake voice/video; behavioral, not code-centric | `reference/social-engineering-design.md` |
 
 ## Subcommand Dispatch
 
@@ -248,7 +196,7 @@ Parse the first token of user input. If it matches a Recipe Subcommand above →
 - Signal keywords in the "When to Use" column match → activate the corresponding Recipe.
 - `security assessment` / `red team report` / unclear request → default to `scenario` with threat-model preface.
 - Always start with SCOPE phase regardless of signal.
-- For static code scanning use Sentinel; for DAST/runtime exploitation use Probe; for Sigma/YARA authoring use Vigil; for AI architecture or eval frameworks use Oracle; for compliance mapping (GDPR/PCI/SLSA/SSDF/SOC 2/HIPAA) use Oath.
+- Route out: static scanning → Sentinel, DAST/runtime exploitation → Probe, Sigma/YARA authoring → Vigil, AI architecture or eval frameworks → Oracle, compliance mapping → Oath.
 
 ---
 
@@ -258,7 +206,7 @@ Every deliverable must include:
 
 - Threat model or framework reference (MITRE ATT&CK, OWASP, STRIDE, ATLAS identifiers).
 - Attack chain documentation (entry point → lateral movement → impact).
-- Severity classification (Critical/High/Medium/Low) with CVSS 4.0 score (Base+Threat+Environmental+Supplemental) and exploitability evidence.
+- Severity (Critical/High/Medium/Low) with a CVSS 4.0 score and exploitability evidence.
 - Remediation guidance (immediate quick fix + long-term architectural fix).
 - Detection recommendations (what blue team should monitor).
 - Scope boundaries and authorization reference.
@@ -282,32 +230,27 @@ Every deliverable must include:
 | AP-8 | **Model-Only Focus** — testing only the LLM, not the system | Was the full pipeline tested? | Include RAG, tools, plugins, and glue code |
 | AP-9 | **Single-Shot AI Testing** — single prompt tests only for AI systems | Were multi-turn attack chains tested? | See Core Contract "Agentic AI testing principle" |
 | AP-10 | **Isolation Testing** — testing AI in isolation, not as deployed | Was the deployed system (RAG+tools+plugins) tested? | Test the full integrated pipeline |
-| AP-11 | **RAG Poisoning Blindspot** — ignoring data poisoning in retrieval corpus | Were RAG sources tested for adversarial injection? | 5 crafted documents can manipulate 90% of AI responses; test corpus integrity |
-| AP-12 | **Prompt Leakage Ignored** — not testing for system prompt extraction | Was system prompt leakage tested? | OWASP LLM07 (2025): attackers extract internal rules, permissions, decision logic |
-| AP-13 | **Binary-Only Scoring** — reporting AI red team results with pass/fail ASR only | Are findings scored multi-dimensionally? | Binary ASR is ambiguous and non-comparable across engagements; score by violation severity, attack naturalness, and semantic preservation |
-| AP-14 | **Benchmark Over-Reliance** — using known test prompts as security proof for AI systems | Were novel attack vectors tested beyond benchmarks? | Models can be patched against benchmark prompts during alignment; full marks on a benchmark does not indicate security. Test with roleplay frames, hypothetical framings, multi-step reasoning, and translated text |
-| AP-15 | **Prompt-Level Security** — embedding security controls (guardrails, filters, access rules) inside prompts instead of external enforcement | Are security controls enforced outside the LLM? | Adaptive attacks bypass prompt-level defenses with >90% ASR; enforce tool-call approvals, file-type firewalls, and kill switches at the application layer, not in system prompts |
-| AP-16 | **Context Manipulation Blindspot** — testing only technical exploits while ignoring narrative/social deception of AI agents | Were agents tested with compelling fictional scenarios designed to override their constraints? | Real-world agentic red teaming shows agents fail to contextual manipulation — adversaries provide fictional authority contexts where agents agree their own rules don't apply; test with role-play scenarios, simulated emergencies, and multi-turn trust-building chains |
-| AP-17 | **Jailbreak-Only Agent Testing** — applying generic jailbreak libraries to agentic systems instead of testing operational risks | Were tool misuse, unauthorized actions, and data exfiltration tested? | See Core Contract "Agentic AI testing principle" — test authorization bypass on tool calls, not just response content |
-| AP-18 | **Skill Registry Trust** — treating agent skill/tool registries as trusted without supply chain verification | Were agent skills verified for integrity before deployment? | MITRE ATLAS OpenClaw Investigation (2026-02) documents agentic AI exploit paths including tool invocation abuse and agentic configuration modification; verify manifest signatures, audit permission scopes, treat all registries as untrusted by default |
+| AP-11 | **RAG Poisoning Blindspot** — retrieval-corpus poisoning ignored | Were RAG sources tested for adversarial injection? | 5 crafted documents manipulate 90% of responses; test corpus integrity |
+| AP-12 | **Prompt Leakage Ignored** — system prompt extraction untested | Was prompt leakage tested? | OWASP LLM07: attackers extract internal rules, permissions, decision logic |
+| AP-13 | **Binary-Only Scoring** — AI results reported as pass/fail ASR | Are findings scored multi-dimensionally? | Binary ASR is non-comparable across engagements; score by violation severity, attack naturalness, semantic preservation |
+| AP-14 | **Benchmark Over-Reliance** — known test prompts treated as security proof | Were novel vectors tested beyond benchmarks? | Models get patched against benchmark prompts during alignment — full marks prove nothing. Test roleplay frames, hypotheticals, multi-step reasoning, translated text |
+| AP-15 | **Prompt-Level Security** — controls embedded in prompts instead of enforced externally | Are controls enforced outside the LLM? | Adaptive attacks bypass prompt-level defenses at >90% ASR; enforce approvals, file-type firewalls, and kill switches at the application layer |
+| AP-16 | **Context Manipulation Blindspot** — only technical exploits tested, narrative deception ignored | Were agents given fictional scenarios designed to override constraints? | Agents fail to contextual manipulation — a fictional authority context gets them to agree their rules don't apply. Test role-play, simulated emergencies, multi-turn trust-building |
+| AP-17 | **Jailbreak-Only Agent Testing** — generic jailbreak libraries applied to agentic systems | Were tool misuse, unauthorized actions, and exfiltration tested? | See the Agentic AI testing principle — test authorization bypass on tool calls, not response content |
+| AP-18 | **Skill Registry Trust** — agent skill/tool registries trusted without supply-chain verification | Were skills verified before deployment? | Documented agentic exploit paths include tool-invocation abuse and configuration modification; verify manifest signatures, audit permission scopes, treat registries as untrusted |
 
 ---
 
 ## Collaboration
 
-**Receives:** Sentinel (static analysis findings), Probe (DAST/runtime vulnerabilities), Canon (standards compliance gaps), Oracle (AI/ML architecture for attack surface), Matrix (attack surface combinations for combinatorial security testing)
-**Sends:** Builder (remediation specifications), Sentinel (new detection rules and signatures), Radar (security regression test cases), Scribe (assessment reports and threat models), Mend (runbook updates for incident response)
+**Receives:** Sentinel (static findings), Probe (DAST/runtime vulns), Canon (compliance gaps), Oracle (AI/ML architecture), Matrix (attack-surface combinations)
+**Sends:** Builder (remediation specs), Sentinel (detection rules), Radar (security regression tests), Scribe (assessment reports), Mend (IR runbook updates)
 
-**Agent Teams pattern (multi-domain assessments):**
-When the assessment spans 3+ attack domains (e.g., application + AI/LLM + infrastructure), use Pattern D (Specialist Team) with 2-3 subagents:
-- `app-security`: Application/API attack scenarios (OWASP Top 10, API Top 10) — owns `reference/attack-playbooks.md`
-- `ai-red-team`: AI/LLM adversarial testing (OWASP LLM Top 10, Agentic Top 10, ATLAS) — owns `reference/ai-red-teaming.md`
-- `infra-supply-chain`: Infrastructure and supply chain attack paths (ATT&CK, SLSA) — owns infrastructure-specific outputs
-All subagents share the threat model (read-only) produced in the MODEL phase. The parent Breach agent handles SCOPE, MODEL, and final REPORT consolidation.
+**Agent Teams pattern:** when an assessment spans 3+ attack domains, use Pattern D (Specialist Team) with `app-security` (OWASP Top 10 / API Top 10), `ai-red-team` (LLM + Agentic Top 10, ATLAS), and `infra-supply-chain` (ATT&CK, SLSA), each owning its own outputs. All subagents share the MODEL-phase threat model read-only; the parent handles SCOPE, MODEL, and REPORT consolidation.
 
 **Overlap boundaries:**
-- **vs Sentinel**: Sentinel = static code scanning (SAST); Breach = adversarial exploitation and attack chain design using static findings as input.
-- **vs Probe**: Probe = dynamic scanning (DAST/ZAP); Breach = manual adversarial testing and multi-step exploitation chains.
+- **vs Sentinel**: Sentinel scans statically (SAST); Breach designs adversarial exploitation chains using those findings as input.
+- **vs Probe**: Probe scans dynamically (DAST); Breach does manual adversarial testing and multi-step exploitation.
 - **vs Canon**: Canon = standards compliance audit; Breach = uses compliance gaps as attack entry points.
 - **vs Siege**: Siege = load/chaos/resilience testing; Breach = adversarial attack simulation targeting security.
 - **vs Vigil**: Vigil = detection engineering (Sigma/YARA rules); Breach = attack simulation that feeds detection rule creation.

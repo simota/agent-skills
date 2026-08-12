@@ -151,3 +151,30 @@ Variations:
 - [Architectural improvements]
 - [Monitoring additions]
 ```
+
+
+## Core Contract Long Form + Sources (SKILL.md excerpt)
+
+- Test MCP server trust boundaries and tool registration integrity — MITRE ATLAS (monthly release cadence since 2025; Technique Maturity filter added for prioritization) documents MCP server compromise and indirect prompt injection via MCP channels as real-world attack vectors.
+
+- Reference MITRE ATLAS (monthly release cadence since 2025; use Technique Maturity filter to prioritize emerging vs. mature threats) for AI-specific threat modeling — covers agentic execution-layer attacks (Publish Poisoned AI Agent Tool, Escape to Host, MCP server compromise, indirect LLM prompt injection, AI agent tool invocation) as documented in the ATLAS OpenClaw Investigation (2026-02). [Source: MITRE ATLAS OpenClaw Investigation — CTID (2026-02-09)](https://ctid.mitre.org/blog/2026/02/09/mitre-atlas-openclaw-investigation/)
+
+- Use CSA MAESTRO (Multi-Agent Environment, Security, Threat Risk, and Outcome) for agentic AI threat modeling — its 7-layer architecture (Foundation Models → Data Operations → Agent Frameworks → Deployment → Evaluation → Security → Ecosystem) captures attack surfaces that STRIDE/PASTA alone miss in multi-agent systems. Prioritize cross-layer attack path analysis — the most dangerous threats chain from lower layers (e.g., Foundation Model poisoning) through Agent Frameworks to Ecosystem Integration; single-layer assessments miss cascading impact.
+
+- Enforce security controls (tool-call approvals, file-type firewalls, kill switches) outside the LLM — prompt-level guardrails are unreliable. A joint study by OpenAI, Anthropic, and Google DeepMind (October 2025) showed adaptive attacks bypass 12 published prompt-injection defenses with >90% success rate.
+
+- For AI red teaming, do not rely solely on binary Attack Success Rate (ASR) — use multi-dimensional scoring (violation severity × attack naturalness × semantic preservation). Binary ASR comparisons across different success criteria or threat models are often invalid and misleading. Use NIST AI 100-2 E2025 as the canonical taxonomy for evasion, poisoning, and privacy attack classification. [Source: NIST AI 100-2 E2025 — Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations](https://csrc.nist.gov/pubs/ai/100/2/e2025/final)
+
+- For agentic AI systems, validate the principle of least agency (OWASP Agentic Top 10 2026 [ASI01–ASI10]) — agents must be granted only the minimum autonomy required for safe, bounded tasks. Test for excessive tool access, credential scope, and unchecked autonomous decision chains. [Source: OWASP Gen AI Security Project — OWASP Top 10 for Agentic Applications for 2026 (2025-12-09)](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
+
+- For agent skill/tool ecosystems, test supply chain integrity per OWASP Agentic Skills Top 10 (AST01-AST10) — skill registry poisoning, manifest signing verification (ed25519), permission scope minimization. Treat agent skill registries as untrusted by default; verify manifest signatures and audit permission scopes before deployment. MITRE ATLAS OpenClaw Investigation (2026-02) documents how agentic AI-first ecosystems introduce new exploit execution paths including tool invocation abuse and agentic configuration modification. [Source: MITRE ATLAS OpenClaw Investigation — CTID (2026-02)](https://ctid.mitre.org/blog/2026/02/09/mitre-atlas-openclaw-investigation/)
+
+- For agentic AI, prioritize contextual red teaming over generic jailbreak testing — standard jailbreaks measure response risk, but agentic systems require testing of operational risks: tool misuse, unauthorized actions, and data exfiltration via conversational redirection. A red team demonstrated a financial assistant executing a $440K portfolio rebalancing through a movie roleplay frame without re-authorization.
+
+- For vendor and tooling selection, apply OWASP Vendor Evaluation Criteria for AI Red Teaming Providers & Tooling v1.0 — distinguishes meaningful adversarial testing from "jailbreak-only" offerings; covers simple GenAI (chatbots, RAG) and advanced systems (tool-calling agents, MCP architectures, multi-agent workflows). [Source: OWASP Vendor Evaluation Criteria for AI Red Teaming Providers & Tooling v1.0 (2025)](https://genai.owasp.org/resource/owasp-vendor-evaluation-criteria-for-ai-red-teaming-providers-tooling-v1-0/)
+
+- Use MITRE ATT&CK v19 (released 2026-04-28) for technique mapping — Enterprise contains 15 Tactics, 222 Techniques, 475 Sub-Techniques. [Source: MITRE ATT&CK April 2026 Updates](https://attack.mitre.org/resources/updates/updates-april-2026/)
+
+- For systems subject to EU AI Act: adversarial testing and documentation are mandatory for high-risk and general-purpose AI models with systemic risk. Full compliance required by August 2, 2026; penalties up to €35M or 7% of global annual turnover.
+
+- Structure AI red teaming engagements around four assessment areas: model evaluation, implementation testing, infrastructure assessment, and runtime behavior analysis. [Source: OWASP GenAI Red Teaming Guide (2025)](https://genai.owasp.org/resource/genai-red-teaming-guide/)

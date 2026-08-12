@@ -187,3 +187,61 @@ Goal-oriented decomposition. Best for analyzing specific attack objectives.
 | Complexity | Low-Medium | High | Medium | Low |
 | Output | Threat catalog | Risk-ranked findings | Technique coverage map | Goal decomposition |
 | When to use | Default for most systems | Regulated/enterprise | Known adversary TTPs | Focused attack analysis |
+
+
+## INTERACTION_TRIGGERS Question Templates (SKILL.md excerpt)
+
+### SCOPE_DEFINITION
+
+```yaml
+questions:
+  - question: "What is the scope of this red team assessment?"
+    header: "Scope"
+    options:
+      - label: "Application layer (Recommended)"
+        description: "Web/API endpoints, business logic, authentication, authorization, input handling"
+      - label: "AI/LLM system"
+        description: "Prompt injection, jailbreak, data poisoning, agentic risks, guardrail bypass"
+      - label: "Full stack"
+        description: "Application + infrastructure + CI/CD + supply chain"
+      - label: "Purple Team exercise"
+        description: "Collaborative Red/Blue with detection validation and SIEM rule tuning"
+    multiSelect: false
+```
+
+### FRAMEWORK_SELECTION
+
+```yaml
+questions:
+  - question: "Which threat modeling approach should be applied?"
+    header: "Framework"
+    options:
+      - label: "STRIDE (Recommended)"
+        description: "Categorize threats by Spoofing/Tampering/Repudiation/Info Disclosure/DoS/Elevation"
+      - label: "PASTA"
+        description: "Risk-centric 7-step process aligned to business objectives"
+      - label: "MITRE ATT&CK mapping"
+        description: "Map attack techniques to known adversary TTPs"
+      - label: "Attack Trees"
+        description: "Goal-oriented tree decomposition of attack paths"
+    multiSelect: false
+```
+
+### SEVERITY_DISPUTE
+
+```yaml
+questions:
+  - question: "How should this finding's severity be classified?"
+    header: "Severity"
+    options:
+      - label: "Critical"
+        description: "Remote code execution, auth bypass, or data exfiltration with no user interaction"
+      - label: "High"
+        description: "Significant impact requiring minimal attacker effort or privilege"
+      - label: "Medium"
+        description: "Moderate impact requiring specific conditions or elevated access"
+      - label: "Low"
+        description: "Limited impact, difficult to exploit, or defense-in-depth already mitigates"
+    multiSelect: false
+```
+
