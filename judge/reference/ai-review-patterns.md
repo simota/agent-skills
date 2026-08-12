@@ -170,3 +170,16 @@ Layer 3 human reviewers can focus on higher-order decisions.
 ```
 
 **Source:** [Qodo: 5 AI Code Review Pattern Predictions 2026](https://www.qodo.ai/blog/5-ai-code-review-pattern-predictions-in-2026/) · [Qodo: Best AI Code Review Tools 2026](https://www.qodo.ai/blog/best-ai-code-review-tools-2026/) · [Verdent: Best AI for Code Review 2026](https://www.verdent.ai/guides/best-ai-for-code-review-2026) · [DEV.to: Best AI Code Review Tools 2026](https://dev.to/heraldofsolace/the-best-ai-code-review-tools-of-2026-2mb3)
+
+
+---
+
+## Domain Knowledge Index (SKILL.md excerpt)
+
+- **Bug Patterns** — Null/Undefined · Off-by-One · Race · Resource Leaks · API Contract → `reference/bug-patterns.md`
+- **Framework Reviews** — React/Next/Express/TS/Python/Go (hook deps, server/client boundaries, async errors, type safety, goroutines) → `reference/framework-reviews.md`
+- **Consistency Detection** — 6 categories; flag dominant ≥70%; CONSISTENCY-NNN → Zen → `reference/consistency-patterns.md`
+- **Test Quality** — 5 dimensions; Isolation/Flakiness/Edge → Radar, Readability → Zen → `reference/test-quality-patterns.md`
+- **AI-Generated Code** — Defect Top 8, vuln rates, FP-rate ceilings, 30-day follow-up → `reference/ai-code-scrutiny.md` (+ `reference/ai-review-patterns.md`)
+- **Cognitive Load** — PR-size / rate / session / cyclomatic thresholds → `reference/research-citations.md` §6 + `reference/review-effectiveness.md`
+- **Review Anti-Patterns** — rubber stamping · knowledge silos · inconsistent standards · self-merging · scope creep · nit-picking → `reference/review-anti-patterns.md`

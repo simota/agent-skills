@@ -249,3 +249,15 @@ Do not modify any files. Do not emit commentary outside the JSON.
 - `claude-review-usage.md` — how `review-claude` subagent invokes Claude
 - `codex-integration.md` — severity override rules, report template, multi-agent verification rationale
 - `review-anti-patterns.md` — why filtering noise matters more than maximizing recall
+
+
+---
+
+## Review Modes Table (SKILL.md excerpt)
+
+| Mode | Trigger | Flow | Subagent → CLI usage ref |
+|------|---------|------|--------------------------|
+| **Multi-Engine (DEFAULT)** | `/judge`, "review PR / changes" | Fan out 2 (Claude+Codex) or 3 (agy AVAILABLE) subagents -> integrate -> ground -> filter | `review-{codex,claude,agy}` -> matching `*-review-usage.md` |
+| **Single-Engine** | user names one engine, `>=2` unavailable, or `<50` LOC low-risk | Run the named engine via its usage reference | That engine's usage reference |
+| **Pair (INTERACTIVE)** | `/judge pair`, "fix as we go" | Seed -> one at a time -> on agree spawn a driver -> re-verify -> next | `reference/pair-review.md` |
+| **GitHub Async** | "review on GitHub", CI/CD | `@codex review` in PR comment | n/a |
