@@ -435,3 +435,89 @@ Patterns for combining multiple frameworks.
 | Promised Land + SB7 | Strategic narrative + landing page/pitch | Big picture with Promised Land → individual messaging with SB7 |
 | ABT + Pixar | Social + elevator pitch | Summarize with ABT → expand with Pixar |
 | Promised Land + CAR | Strategy + case study | Future vision with Promised Land → evidence with CAR |
+
+
+---
+
+## INTERACTION_TRIGGERS Question Schemas (SKILL.md excerpt)
+
+### AUDIENCE_UNCLEAR
+
+```yaml
+questions:
+  - question: "Who is the primary audience for this narrative?"
+    header: "Audience"
+    options:
+      - label: "Development team"
+        description: "Technical context included, hypothesis-driven, JTBD format preferred"
+      - label: "Stakeholders / investors"
+        description: "Data-backed, concise pitch format, transformation arc emphasized"
+      - label: "End users / customers"
+        description: "Empathetic tone, relatable scenarios, plain language"
+      - label: "Cross-team (Biz/Dev/Design)"
+        description: "Balanced depth, shared vocabulary, L0 vision style"
+    multiSelect: false
+```
+
+### FRAMEWORK_CHOICE
+
+```yaml
+questions:
+  - question: "Which storytelling framework should be applied?"
+    header: "Framework"
+    options:
+      - label: "StoryBrand SB7 (Recommended)"
+        description: "7-element brand story: Hero→Problem→Guide→Plan→CTA→Failure→Success"
+      - label: "Pixar Story Spine"
+        description: "6-line narrative: Once upon a time→Every day→Until one day→Because of that→Until finally"
+      - label: "JTBD Job Story"
+        description: "When [situation], I want to [motivation], so I can [outcome]"
+      - label: "Hero's Journey"
+        description: "6-stage transformation: Ordinary World→Call→Threshold→Trials→Transformation→Return"
+      - label: "Promised Land (Andy Raskin)"
+        description: "Strategic positioning: Change→Stakes→Promised Land→Magic Gifts→Evidence"
+      - label: "ABT (And, But, Therefore)"
+        description: "Quick narrative structure for social posts, internal comms, concise messaging"
+    multiSelect: false
+```
+
+### VOICE_ALIGNMENT
+
+```yaml
+questions:
+  - question: "How should the narrative align with the existing brand voice?"
+    header: "Voice"
+    options:
+      - label: "Follow existing guide (Recommended)"
+        description: "Adhere strictly to the project's established voice and tone guidelines"
+      - label: "Adapt for this context"
+        description: "Use the existing guide as a base but adjust tone for the specific audience"
+      - label: "No existing guide"
+        description: "No brand voice guide exists; Saga will propose a tone direction"
+    multiSelect: false
+```
+
+
+
+---
+
+## Core Contract — Long Form with Rationale (SKILL.md excerpt)
+
+- Position the customer as the hero and the product as the guide in every narrative — brands that position themselves as the hero distance customers who perceive competition for scarce resources (StoryBrand SB7 principle).
+- Explicitly apply a named story framework (SB7/Pixar/Hero's Journey/JTBD/CAR/Story Mapping/Promised Land/ABT) to every narrative and state which was chosen and why.
+- Focus on one core problem per narrative — tackling multiple problems causes audience confusion and dilutes the call to action (common SB7 anti-pattern).
+- Connect all three problem levels: external (tangible obstacle), internal (emotional frustration), and philosophical (why it matters universally) — companies sell solutions to external problems, but customers buy solutions to internal problems. Disconnected levels break narrative coherence.
+- Include a Before→After transformation arc with observable or measurable change — "metric-free success" is an anti-pattern.
+- Embed tension (challenge/conflict) in every narrative — resolution without struggle fails to engage.
+- Use concrete scenes with sensory details (visual, auditory, emotional) — avoid abstract feature descriptions.
+- Target narratives by audience type: development team (hypothesis-driven, JTBD), stakeholders/investors (data-backed, transformation arc), end users (empathetic, relatable), cross-team (balanced depth, shared vocabulary).
+- Validate every narrative against the AP-1 through AP-9 anti-pattern checklist before delivery.
+- Narrative length targets: Use Case Story 300-800 chars, Product Narrative 500-1500 chars, Pitch Story 200-500 chars, Customer Success 800-2000 chars, Onboarding Flow 150 chars/step.
+- Adapt narratives for micro-narrative formats (short, interconnected, platform-tailored stories) when the target channel is social media or episodic content.
+- For product-level narratives, define a "Controlling Idea" (StoryBrand 2.0) — a single statement capturing the brand's promised transformation that unifies all messaging touchpoints. Every narrative, tagline, and CTA should trace back to this one idea.
+- For strategic positioning and fundraising, consider the Promised Land framework (Andy Raskin): define a compelling future state the product commits to bringing about — this aligns customers, product teams, and sales around a single purpose without corporate jargon.
+- When the audience can participate (community, beta, co-creation contexts), design narratives that invite audience contribution — participatory storytelling drives deeper engagement than passive consumption.
+- For multi-product portfolios, apply a five-layer narrative architecture: Customer Reality → Category Promise → Core Value Story → Product Chapters → Moment Stories — each layer must trace back to the Controlling Idea. This prevents narrative fragmentation as product lines multiply.
+- When using StoryBrand 2.0 AI tools for BrandScript generation or message refinement, treat AI output as a draft requiring human validation — AI ensures consistency at scale but cannot verify emotional authenticity or cultural nuance.
+- State all unverified premises in a dedicated "Assumptions" section — narrative bias (distorting facts to fit story) is a critical anti-pattern.
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Saga; P2, P1 recommended).

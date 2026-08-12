@@ -244,3 +244,43 @@ Per `_common/MULTI_ENGINE_RECIPE.md §Degraded Modes`. Saga-specific notes:
 - `saga/reference/examples.md` — example narratives for AP-1~AP-9 calibration during GROUND
 - `spark/reference/tri-engine-proposal.md` — sibling Pattern D implementation (Portfolio/Compete merge precedent)
 - `plea/reference/tri-engine-demand.md` — sibling Pattern D with persona-channel diversity (closest analog to Saga's archetype diversity)
+
+
+---
+
+## Multi-Engine Mode (SKILL.md long form)
+
+Activated by the `multi` Recipe (or any explicit user request for parallel narrative generation, cross-engine arcs, archetype portfolio, or A/B/C narrative testing). Multi-engine narrative generation mirrors Spark/Plea's Pattern D — Divergence-Primary — and is optimized for *narrative-archetype diversity* across the same customer-feature pair.
+
+> **Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE at PREFLIGHT. For Saga the dual-engine baseline (Claude's emotionally-calibrated Promised Land narratives + Codex's JTBD/technical case study patterns) covers two distinct narrative archetypes; agy adds Hero's Journey / BAB archetype coverage when reachable. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
+
+**Core mechanics:**
+- Spawn one Agent subagent per AVAILABLE engine in a single message: `narrate-codex` + `narrate-claude` (dual-engine baseline); add `narrate-agy` (tri-engine) when AVAILABLE. Per `reference/tri-engine-narrate.md`.
+- Run engine availability PREFLIGHT in Saga main context — never delegate detection to subagents (subagent PATH is narrower; see `_common/MULTI_ENGINE_RECIPE.md §2` for the canonical probe).
+- Use loose prompts (Role + Customer + Feature + Channel + Output format only). Do NOT pass framework choice, the AP-1~AP-9 checklist, or length targets to subagents — apply Saga's rules in SYNTHESIZE, not at FAN-OUT. Each engine's narrative-archetype training-data priors should drive divergence (Codex → JTBD / technical case study; Claude → Promised Land / emotionally calibrated transformation; Antigravity when AVAILABLE → Hero's Journey / BAB).
+- Each subagent produces 2-3 narratives using **different arc_types** (target 4-6 raw narratives dual-engine, 6-9 tri-engine, before clustering).
+- Subagents return structured JSON; Saga main context integrates via NORMALIZE → CLUSTER → SCORE → GROUND → SYNTHESIZE.
+
+**Concurrence vs Divergence scoring (Pattern D):**
+- `UNIVERSAL` (3/3) — same arc_type + same protagonist + same emotional payoff across all engines. Empathetic baseline. May be the most obvious / least differentiated.
+- `LIKELY` (2/3) — two engines concur on archetype; one chose a different arc_type. Note the dissenting archetype — it may be the channel-fit alternative.
+- `VERIFIED-DIVERGENT` (1/3 grounded) — single-engine archetype that survived AP-1~AP-9 audit. Often the most channel-fit narrative (e.g., only one engine surfaced a Failure-Redemption arc that fits a B2B case study). NOT automatically lower-value than UNIVERSAL.
+
+**CLUSTER critical rule (Saga-specific):** different `arc_type`s for the same protagonist are NOT clustered together — they are preserved as separate clusters. Collapsing across archetypes would destroy Portfolio output (Saga's whole value is offering multiple A/B/C-testable arcs across distinct archetypes).
+
+**GROUND step**: every CANDIDATE narrative runs the full AP-1~AP-9 anti-pattern audit before becoming VERIFIED-DIVERGENT. UNIVERSAL/LIKELY clusters get a lightweight AP-2 (Hero Product) and AP-9 (Ad Copy) spot-check only.
+
+**Merge strategies (user-selectable):**
+- `Portfolio` (default) — 3 complementary narratives ordered UNIVERSAL → LIKELY → VERIFIED-DIVERGENT, across distinct arc_types where possible, plus a Portfolio Rationale section mapping each narrative to a recommended channel (case study / LP / dev-team page / investor memo / etc.). Output: `docs/narratives/PORTFOLIO-[topic]-[date].md`.
+- `Compete` (`multi --compete`) — single best narrative, re-mixing per-beat wording across the engines that contributed (e.g., Codex's inciting incident + Antigravity's resolution + Claude's emotional payoff line). Output: `docs/narratives/NARRATIVE-[name].md` with `engine_concurrence` front matter.
+
+**Archetype coverage audit**: after SCORE, Saga main context audits the surviving Portfolio for archetype diversity. If all 3 surviving clusters are the same arc_type, flag the loss of Portfolio value and recommend either re-running multi mode or accepting a single-archetype output with explicit rationale.
+
+**Engine-attribution tag (mandatory on every shipped narrative):** `[codex+agy+claude]` (3/3) / `[codex+agy]` etc. (2/3) / `[codex-verified]` (1/3 verified-divergent).
+
+**Degraded modes:** 1 engine down → continue with 2, archetype coverage may drop; 2 down → single-engine fallback, Portfolio collapses to one narrative with full AP audit; all down → degrade to standard `story` Recipe.
+
+Full algorithm, JSON schema, AP-grounding rules, prompt skeletons: `reference/tri-engine-narrate.md`.
+
+---
+

@@ -298,3 +298,26 @@ When adding a new campaign section:
 9. Bump the `ioc_database_version` value emitted in `_STEP_COMPLETE` to the new commit date.
 
 **Never copy raw exfil URLs without defanging.** Defang scheme (`https` → `hxxps`) and TLDs (`com` → `[.]com`) so the reference file is not itself a click-trap.
+
+
+---
+
+## Critical Patterns Quick Reference (SKILL.md excerpt)
+
+| Pattern | Risk family | First action |
+|---------|-------------|--------------|
+| `~/Library/LaunchAgents/com.user.gh-token-monitor.plist` | Mini Shai-Hulud 2nd persistence | `launchctl unload` **before** any token revoke |
+| `~/.config/systemd/user/gh-token-monitor.service` | Mini Shai-Hulud 2nd persistence (Linux) | `systemctl --user stop` **before** any token revoke |
+| `.claude/setup.mjs` / `.claude/router_runtime.js` | IDE-hook implant (1st + 2nd waves) | Quarantine to `/tmp/cull-quarantine-<utc>/` |
+| `.vscode/tasks.json` + `.vscode/setup.mjs` (unauthored) | IDE-hook implant | Same as above |
+| `~/.gemini/antigravity-cli/setup.mjs` / `~/.gemini/antigravity-cli/router_runtime.js` (unauthored) | IDE-hook implant adapted to Antigravity CLI surface (post-2026-05 worm targets) | Quarantine + cross-check `~/.gemini/antigravity-cli/skills/` and `mcp_config.json` for tampering |
+| `<repo>/.agents/skills/` containing unaudited SKILL.md from third-party | Same vector via Antigravity workspace skill path | Quarantine + escalate to `chain` for intake audit |
+| `.github/workflows/codeql_analysis.yml` (attacker-added) | CI-side implant | `git log --diff-filter=A --name-only -- .github/workflows/codeql_analysis.yml` |
+| `/tmp/tmp.ts018051808.lock` | Mini Shai-Hulud 2nd runtime lock | Process tree check first |
+| `optionalDependencies: "@tanstack/setup": "github:tanstack/router#<commit>"` | Stage-1 launcher pattern | Lockfile pin check |
+| `"prepare": "node ..."` calling Bun on unrelated package | Stage-1 execution | Audit script body |
+| `"chore: update dependencies"` from `claude <claude@users.noreply.github.com>` | GitHub anomaly | `git log --author='claude <claude@users.noreply.github.com>'` |
+| New `.npmrc` token description `IfYouRevokeThisTokenItWillWipeTheComputerOfTheOwner` | Retaliation hook | **Do not revoke yet** — eradicate persistence first |
+| Process matching `tanstack_runner` / `router_runtime` / `gh-token-monitor` / `bun` in unexpected paths | Live execution | `ACTIVELY_BLEEDING` grade |
+| Outbound passive trace to `git-tanstack[.]com`, `api[.]masscan[.]cloud`, `filev2.getsession[.]org`, `seed1-3.getsession[.]org` | Exfil channel | Passive log inspection — never probe |
+| Mini Shai-Hulud 3rd wave (2026-05-19): atool npm account compromised; 637 malicious versions across 317 packages in 22 min. High-impact IoCs: `size-sensor@1.0.4/1.1.4/1.2.4`, `echarts-for-react@3.0.7/3.1.7/3.2.7`, `@antv/g2@5.5.8/5.6.8`, `@antv/g6@5.2.1/5.3.1`. Payload SHA256: `a68dd1e6a6e35ec3771e1f94fe796f55dfe65a2b94560516ff4ac189390dfa1c`. [Source: microsoft.com/security/blog 2026-05-20; safedep.io 2026-05-19] | Mini Shai-Hulud 3rd (atool account compromise) | Lockfile pin check against listed versions; quarantine before delete |

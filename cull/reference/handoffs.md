@@ -280,3 +280,40 @@ ask:
 - Defang attacker URLs in handoffs (`https` → `hxxps`, `.com` → `[.]com`). Recipients will undefang as needed; the handoff file itself should not be a click-trap.
 - Do not embed credential values in handoffs. Paths and existence flags only.
 - When the partner agent does not exist in the current installation (e.g. `lore` not present), still emit the handoff block — it documents intent and the next maintainer can wire it.
+
+
+---
+
+## Collaboration Handoffs and Overlap Boundaries (SKILL.md excerpt)
+
+Cull receives compromise reports from User, slopsquat/CVE escalations from Sentinel, skill-audit handoffs from Chain, PR pre-merge requests from Builder, git-history anomalies from Trail, and incident-IoC requests from Triage. Cull returns confirmed-incident handoffs to Triage, lockfile remediation to Sentinel, skill quarantine to Chain, CI/CD hardening to Gear, rule-authoring requests to Vigil, and campaign-pattern journals to Lore.
+
+**Receives:** User (compromise reports), Sentinel (slopsquat escalations), Chain (skill-audit handoff), Builder (PR pre-merge scan), Trail (history anomaly), Triage (incident IoC sweep)
+**Sends:** Triage (incident handoff), Sentinel (lockfile remediation), Chain (skill quarantine), Gear (CI/CD harden), Vigil (rule authoring), Lore (campaign journal)
+
+| Direction | Handoff | Purpose |
+|-----------|---------|---------|
+| User → Cull | `USER_TO_CULL_REQUEST` | Live-environment scan, eradication, rotation, or hardening request |
+| Sentinel → Cull | `SENTINEL_TO_CULL_HANDOFF` | Lockfile match needs live-environment IoC confirmation |
+| Chain → Cull | `CHAIN_TO_CULL_HANDOFF` | Skill / MCP audit found IDE-hook implant signatures |
+| Builder → Cull | `BUILDER_TO_CULL_PRESCAN` | PR diff includes suspicious lockfile / `optionalDependencies` / `prepare` script |
+| Trail → Cull | `TRAIL_TO_CULL_HANDOFF` | Git history anomaly (unknown author, force-pushed tag) — cross-check with IoCs |
+| Triage → Cull | `TRIAGE_TO_CULL_HANDOFF` | SEV1 incident requires IoC sweep of dev environment |
+| Cull → Triage | `CULL_TO_TRIAGE_INCIDENT` | `CONFIRMED` / `ACTIVELY_BLEEDING` grade — incident escalation |
+| Cull → Sentinel | `CULL_TO_SENTINEL_LOCKFILE` | Confirmed malicious version pin → ecosystem-wide upgrade plan |
+| Cull → Chain | `CULL_TO_CHAIN_QUARANTINE` | Confirmed `.claude/` or `.vscode/` compromise → manifest regeneration |
+| Cull → Gear | `CULL_TO_GEAR_HARDEN` | CI/CD runner rebuild, registry proxy, Renovate config harden |
+| Cull → Vigil | `CULL_TO_VIGIL_RULE_REQUEST` | New IoC signature → Sigma/YARA rule authoring + ATT&CK mapping |
+| Cull → Lore | `CULL_TO_LORE_JOURNAL` | Repeated campaign pattern → ecosystem knowledge |
+
+### Overlap Boundaries
+
+| Agent | Cull owns | They own |
+|-------|-----------|----------|
+| Sentinel | Live IoC match + eradication runbook | Static SAST, dependency CVE scan, slopsquat detection |
+| Chain | Live-environment scan of `.claude/` / `.vscode/` artifacts | SKILL.md / MCP / plugin intake audit + `.chain-manifest.json` |
+| Vigil | IoC database curation + ground-truth matching | Sigma/YARA rule authoring, MITRE ATT&CK mapping |
+| Triage | Technical IoC sweep + eradication/rotation runbook | Incident command, SEV classification, stakeholder comms |
+| Trail | IoC cross-check on suspicious commits | Git history archaeology, regression bisection |
+| Mend | Eradication runbook authoring | Automated runbook execution for catalogued patterns |
+| Gear | CI/CD harden recommendation (delivered as runbook) | CI/CD config implementation, container hardening |
