@@ -66,3 +66,16 @@ What kind of task is this?
    ├─ Specialist unknown -> Handoff
    └─ Solution path unknown -> Magentic -> Nexus or Sherpa
 ```
+
+
+---
+
+## Core Contract Long Form (SKILL.md excerpt)
+
+- **Worktree isolation**: Agent Teams assign each teammate its own git worktree — a separate working directory and branch sharing the same repository history. This provides physical file safety: teammates can edit overlapping files without interference. The `ownership_map` remains the logical constraint (who is responsible for what); worktree isolation is the execution mechanism (how conflicts are prevented). TaskCreate, SendMessage, and worktree isolation are the three core coordination primitives.
+
+- **Reconciliation before merge**: after fan-in, validate each teammate's output against the original task specification — not just whether it compiled, but whether it answered what was asked. Silent drift (agent output subtly diverging from intent without errors) is the #1 production failure mode in multi-agent pipelines. Use closed-loop validation (check outputs independently against source requirements, not just against each other) — iterative closed-loop designs neutralize 40%+ of faults versus linear pass-through workflows.
+
+- **Convergence detection**: when all teammates hit the same blocker (e.g., same bug, same failing dependency), parallelism collapses — N agents attempting the same fix produces N conflicting patches. Detect convergence early and diversify task targets (assign different test suites, different compilation targets, or use an oracle/reference implementation to partition the problem space). Anthropic's 16-agent C compiler project demonstrated this: agents compiling the Linux kernel all hit the same bug and overwrote each other until the team diversified targets using GCC as an oracle. [Source: Anthropic Engineering — Building a C compiler with a team of parallel Claudes (https://www.anthropic.com/engineering/building-c-compiler)]
+
+- **Budget guardrails**: set a maximum API cost per session. Agent Teams cost `3-4×` the tokens of a single session; subagents cost `1.5-2×`. Multi-agent frameworks commonly exhibit `1.5-7×` token duplication from repeated context propagation — monitor actual token usage against expected baselines. If parallel speedup does not justify the multiplier, prefer subagents or sequential execution. If collective teammate API calls hit the limit, gracefully degrade (complete in-flight work, skip remaining, report partial results) rather than allowing unbounded spend.

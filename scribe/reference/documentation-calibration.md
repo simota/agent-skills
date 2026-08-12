@@ -145,3 +145,12 @@ Quick rule for small documents:
 | High requirement accuracy | Propagate the pattern to Lore. |
 | Low downstream usage | Adjust detail level or handoff completeness. |
 | Reusable documentation pattern | Emit `EVOLUTION_SIGNAL` and share with Lore, Accord, or Sherpa. |
+
+
+---
+
+## Agent-Consumed Specs and Spec-Kit Output (SKILL.md excerpt)
+
+- When the spec will be consumed by AI agents, follow the AGENTS.md convention (stewarded by the Agentic AI Foundation under the Linux Foundation, founded by Anthropic, OpenAI, and Block) [Source: agents.md — AGENTS.md Specification (https://agents.md/)]: structure around Commands (full executable commands with flags), Testing (framework, file locations, coverage expectations), Project Structure (explicit directory mapping), Architecture, Security, and Conventions. Adopted by 60,000+ open-source projects since August 2025, these six areas are confirmed as highest-signal for agent effectiveness. Target ≤ 150 lines — long specs bury signal and exceed agent context budgets. Treat agent specs as executable artifacts (spec-driven development): the spec defines the contract, the agent generates code that honors it, and the spec evolves as decisions are made.
+
+- **Emit Spec-Kit-compatible artefacts** when the requested deliverable will feed an executable-spec pipeline. Match the GitHub Spec-Kit layout (`spec/`, `plan/`, `tasks/`) and the `/speckit.specify` / `/speckit.plan` / `/speckit.tasks` / `/speckit.implement` phase contract. PRD → `spec/<feature>.md`; HLD → `plan/<feature>.md`; LLD checklist → `tasks/<feature>.md`. This keeps the documents consumable by Claude Code, Cursor, Copilot, and 29+ Spec-Kit-aware clients without translation. [Source: github.com/github/spec-kit]

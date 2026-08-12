@@ -7,10 +7,10 @@ description: "Assessing standards compliance and gaps: evaluates codebases again
 CAPABILITIES_SUMMARY:
 - Primary: Standards compliance assessment, compliance gap analysis, remediation recommendations
 - Secondary: Standards selection guidance, compliance report generation, cost-benefit analysis
-- Domains: Security (OWASP Top 10:2025, OWASP API Security Top 10:2023, ASVS 5.0, NIST CSF 2.0, CIS Controls v8.1, CWE Top 25:2025, NIST SSDF v1.1), Accessibility (WCAG 2.2 / ISO/IEC 40500:2025, WAI-ARIA), API (OpenAPI 3.1.2/3.2, RFC 9110, GraphQL), Quality (ISO/IEC 25010:2023 — 9 characteristics incl. Safety, ISO/IEC 25019:2023 Quality-in-Use, Clean Code, SOLID), Infrastructure (12-Factor, CNCF), AI Agent Security (OWASP Top 10 for Agentic Applications 2026, OWASP LLM Top 10:2025, OWASP MCP Top 10 2025, NIST AI RMF), AI Governance (ISO/IEC 42001:2023 AIMS)
+- Domains: Security, Accessibility, API, Quality, Infrastructure, AI Agent Security, AI Governance — the version-pinned standard list per domain lives in the Standards Categories table
 - Input: Codebase analysis requests, standards compliance checks, audit preparation
-- Output: Compliance reports with version-pinned standard citations, prioritized remediation plans, compliance-as-code integration guidance
-- fix_prompt_generation: Pair every confirmed standards violation routed for remediation with a paste-ready LLM Fix Prompt embedding the cited standard+version+section, gap classification (missing/partial/non-conforming/over-conforming), evidence at file:line, the standard's prescribed remediation, acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress when handing off to Sentinel (security source-level), Polyglot (i18n), or Oath (regulatory), and withhold in gap-analysis-only mode.
+- Output: Compliance reports with version-pinned citations, prioritized remediation plans, compliance-as-code guidance
+- fix_prompt_generation: Paste-ready LLM Fix Prompt per confirmed violation routed for remediation — cited standard+version+section, gap classification, evidence at `file:line`, prescribed remediation, acceptance criteria, ruled-out alternatives, what NOT to do. Suppressed on handoff to Sentinel / Polyglot / Oath and in gap-analysis-only mode
 
 COLLABORATION_PATTERNS:
 - Sentinel -> Canon: security standards compliance request after vulnerability scan
@@ -123,31 +123,31 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Category | Standards | Reference |
 |----------|----------|-----------|
-| Security | OWASP Top 10:2025, OWASP API Security Top 10:2023, OWASP ASVS 5.0, NIST CSF 2.0, CIS Controls v8.1 (released June 2024, aligns to NIST CSF 2.0) [Source: cisecurity.org/controls/v8-1], CWE Top 25 (2025), NIST SSDF v1.1 (SP 800-218) | reference/security-standards.md |
-| Accessibility | WCAG 2.2 (ISO/IEC 40500:2025), WAI-ARIA 1.2, JIS X 8341-3, European Accessibility Act (EAA, enforceable June 2025), WCAG 3.0 (Working Draft — track only) | reference/accessibility-standards.md |
-| API / Data | OpenAPI 3.1.2 / 3.2, JSON Schema, RFC 9110 (supersedes 7231), GraphQL Spec | reference/api-standards.md |
-| Quality | ISO/IEC 25010:2023 (9 chars incl. Safety), ISO/IEC 25019:2023 (Quality-in-Use), IEEE 29148 (supersedes 830), Clean Code, SOLID | reference/quality-standards.md |
-| Infrastructure | 12-Factor App, CNCF Best Practices, SRE Principles | reference/quality-standards.md |
-| AI Agent Skill | Anthropic Skill Specification (2025) | reference/anthropic-skill-standards.md |
-| AI Agent Security | OWASP Top 10 for Agentic Applications (2026), OWASP LLM Top 10:2025, OWASP MCP Top 10 (2025), NIST SP 800-53 AI Overlays, MAESTRO | reference/security-standards.md |
-| AI Governance | ISO/IEC 42001:2023 (AI Management System), EU AI Act alignment | reference/security-standards.md |
+| Security | OWASP Top 10:2025, OWASP API Security Top 10:2023, OWASP ASVS 5.0, NIST CSF 2.0, CIS Controls v8.1, CWE Top 25 (2025), NIST SSDF v1.1 | `reference/security-standards.md` |
+| Accessibility | WCAG 2.2 (ISO/IEC 40500:2025), WAI-ARIA 1.2, JIS X 8341-3, European Accessibility Act, WCAG 3.0 (Working Draft — track only) | `reference/accessibility-standards.md` |
+| API / Data | OpenAPI 3.1.2 / 3.2, JSON Schema, RFC 9110 (supersedes 7231), GraphQL Spec | `reference/api-standards.md` |
+| Quality | ISO/IEC 25010:2023 (9 chars incl. Safety), ISO/IEC 25019:2023 (Quality-in-Use), IEEE 29148 (supersedes 830), Clean Code, SOLID | `reference/quality-standards.md` |
+| Infrastructure | 12-Factor App, CNCF Best Practices, SRE Principles | `reference/quality-standards.md` |
+| AI Agent Skill | Anthropic Skill Specification (2025) | `reference/anthropic-skill-standards.md` |
+| AI Agent Security | OWASP Top 10 for Agentic Applications (2026), OWASP LLM Top 10:2025, OWASP MCP Top 10 (2025), NIST SP 800-53 AI Overlays, MAESTRO | `reference/security-standards.md` |
+| AI Governance | ISO/IEC 42001:2023 (AI Management System), EU AI Act alignment | `reference/security-standards.md` |
 | Industry (ref only) | PCI-DSS, HIPAA, GDPR, SOC 2, EU AI Act | Consult professionals |
 
 **ISO/IEC 25010:2023 key changes from 2011:** 8→9 characteristics (Safety added). Full changelog (Interaction Capability, Flexibility, sub-characteristics) → `reference/quality-standards.md`.
 
 **OWASP Top 10:2025 key changes from 2021:** Methodology shift from symptoms to root causes; dataset doubled to 500k+ apps from 40+ orgs. Full category remapping (rank changes, renames, new A10) → `reference/security-standards.md`.
 
-**OWASP Top 10 for Agentic Applications (2026) — full list:** ASI01 Agent Goal Hijack, ASI02 Tool Misuse & Exploitation, ASI03 Identity & Privilege Abuse, ASI04 Agentic Supply Chain Vulnerabilities, ASI05 Unexpected Code Execution (RCE), ASI06 Memory & Context Poisoning, ASI07 Insecure Inter-Agent Communication, ASI08 Cascading Failures, ASI09 Human-Agent Trust Exploitation, ASI10 Rogue Agents. Peer-reviewed by 100+ security researchers (released Dec 2025).
+**OWASP Top 10 for Agentic Applications (2026):** ASI01-ASI10 covering goal hijack, tool misuse, identity/privilege abuse, agentic supply chain, unexpected code execution, memory/context poisoning, insecure inter-agent communication, cascading failures, human-agent trust exploitation, and rogue agents. Full list -> `reference/security-standards.md`.
 
 **OWASP MCP Top 10 (2025):** dedicated framework for Model Context Protocol server / tool / resource layer. The supply-chain entry is **MCP04 Software Supply Chain Attacks & Dependency Tampering** (dependency confusion against internal MCP packages, registry compromise, build-pipeline poisoning, trojanized connectors, typo-squatting, preview-package abuse). Other categories cover MCP-specific concerns such as tool description poisoning, prompt-template injection at the MCP transport layer, and resource exfiltration via the resources/* endpoints. Use this framework in addition to ASI04 when the audited system exposes or consumes MCP servers — ASI04 is application-side, MCP Top 10 is protocol-side. [Source: owasp.org/www-project-mcp-top-10]
 
-**OWASP Agentic Skills Top 10 (2025):** focused on the SKILL.md / plugin / agent-skill distribution channel itself, including malicious skill payloads (SkillJect class), Unicode Tag hidden instructions, marketplace dependency hijack, and capability over-declaration. Pair with the `chain` agent in this repo for the in-repo audit recipe. [Source: owasp.org/www-project-agentic-skills-top-10]
+**OWASP Agentic Skills Top 10 (2025):** covers the SKILL.md / plugin distribution channel itself — malicious skill payloads, Unicode Tag hidden instructions, marketplace dependency hijack, capability over-declaration. Pair with `chain` for the in-repo audit recipe.
 
-**WCAG 3.0 awareness (Working Draft, W3C Recommendation targeted late 2029):** WCAG 3.0 shifts from binary pass/fail to outcome-based scoring (0–4) with Bronze/Silver/Gold conformance tiers. March 2026 Working Draft introduced 174 "requirements" (renamed from "outcomes"), signaling more concrete and testable criteria. It does NOT replace WCAG 2.2 — assess against WCAG 2.2 for current compliance, but note WCAG 3.0 trajectory when advising long-term accessibility strategy. Next WD expected ~September 2026; CR no earlier than Q4 2027; final Recommendation likely late 2029 per AGWG co-chair.
+**WCAG 3.0 awareness (Working Draft):** shifts from binary pass/fail to outcome-based scoring with Bronze/Silver/Gold tiers. It does **not** replace WCAG 2.2 — assess against 2.2 for current compliance and note the 3.0 trajectory only for long-term strategy.
 
 **Automated accessibility tool ceiling:** automated rules cover only 31% of WCAG 2.2 Level A/AA Success Criteria — always require manual expert audit alongside automated checks. Full tool-coverage figures → `reference/accessibility-standards.md`.
 
-**ISO/IEC 42001:2023 (AI Management System):** First international AIMS standard. Voluntary but increasingly expected — EU AI Act high-risk obligations effective Aug 2, 2026; GPAI providers must comply from Aug 2, 2025. Commission enforcement powers (including fines) activate Aug 2, 2026: up to €15M or 3% of global turnover for non-compliance; €35M or 7% for prohibited practices. Recommend ISO 42001 alignment when assessing AI systems, especially those targeting EU markets.
+**ISO/IEC 42001:2023 (AI Management System):** the first international AIMS standard — voluntary but increasingly expected. Recommend alignment when assessing AI systems, especially those targeting EU markets under the AI Act. Enforcement dates and penalty ceilings -> `reference/security-standards.md`.
 
 **Important:** Canon does NOT make legal compliance determinations. Always consult appropriate professionals for regulated industries.
 
@@ -273,20 +273,20 @@ When a full compliance audit spans 3+ standard domains (e.g., Security + A11y + 
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/security-standards.md` | You need OWASP, NIST, or CIS details. |
-| `reference/accessibility-standards.md` | You need WCAG, WAI-ARIA, or JIS details. |
-| `reference/api-standards.md` | You need OpenAPI, JSON Schema, RFC, or GraphQL. |
-| `reference/quality-standards.md` | You need ISO 25010, 12-Factor, CNCF, or SRE. |
-| `reference/compliance-templates.md` | You need compliance report template. |
-| `reference/anthropic-skill-standards.md` | You need Anthropic official skill specification for SKILL.md compliance assessment, frontmatter validation, description quality evaluation, or progressive disclosure verification during ASSESS. |
-| `reference/nist-csf.md` | You need NIST CSF 2.0 Functions/Categories/Subcategories, Implementation Tiers, Current vs. Target Profile mapping, or hand-off to Oath for OSCAL packages. |
-| `reference/pci-dss.md` | You need PCI-DSS v4.0.1 12 Requirements, CDE scoping, SAQ type selection (A/A-EP/B/B-IP/C/C-VT/D/P2PE), or scope minimization (tokenization, segmentation). |
-| `reference/gdpr-compliance.md` | You need GDPR Articles 5/6/7/13/17/25/30/32/33/35, six lawful bases, DPIA triggers, 72h breach notification, DPO appointment threshold, or hand-off to Cloak for privacy-by-design. |
-| `reference/fix-prompt-generation.md` | You are authoring the `## LLM Fix Prompt` block, choosing a Canon-specific action verb (REMEDIATE / EXEMPT-WITH-RATIONALE / BREAKING-REMEDIATE / MITIGATE / INVESTIGATE-FURTHER), or deciding whether to suppress for a Sentinel/Polyglot/Oath handoff or gap-analysis-only scope. |
-| `_common/LLM_PROMPT_GENERATION.md` | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the compliance report, deciding adaptive thinking depth at version pinning, or front-loading standard/version/scope at ASSESS. Critical for Canon: P3, P5. |
-| `_common/PROOF_CARRYING.md` | You generate `a11y_proof` (WCAG 2.2 AA verification via axe-core / Pa11y, keyboard navigation, focus order, ARIA correctness) in `nexus acceptance` Phase 2B and issue the final WCAG verdict in Phase 4B. Layer B (Design Acceptance) sub-orchestrated by `atelier`. Empty findings without exploration log = rejected (semantic-non-emptiness rule). |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Canon-specific Output/Next schema. |
+| `reference/security-standards.md` | OWASP, NIST, or CIS details, and the OWASP Agentic Top 10 list. |
+| `reference/accessibility-standards.md` | WCAG, WAI-ARIA, or JIS details. |
+| `reference/api-standards.md` | OpenAPI, JSON Schema, RFC, or GraphQL. |
+| `reference/quality-standards.md` | ISO 25010, 12-Factor, CNCF, or SRE. |
+| `reference/compliance-templates.md` | Compliance report template and capability detail. |
+| `reference/anthropic-skill-standards.md` | SKILL.md compliance — frontmatter validation, description quality, progressive disclosure. |
+| `reference/nist-csf.md` | NIST CSF 2.0 functions/categories, Implementation Tiers, Current vs Target Profile, Oath handoff. |
+| `reference/pci-dss.md` | PCI-DSS v4.0.1 requirements, CDE scoping, SAQ type selection, scope minimization. |
+| `reference/gdpr-compliance.md` | GDPR articles, lawful bases, DPIA triggers, 72h breach notification, DPO threshold, Cloak handoff. |
+| `reference/fix-prompt-generation.md` | Authoring `## LLM Fix Prompt` — verb choice and suppression rules. |
+| `_common/LLM_PROMPT_GENERATION.md` | Universal prompt-authoring rules and cross-agent verb/suppression principles. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the report, thinking depth at version pinning, front-loading standard/scope at ASSESS. Critical: P3, P5. |
+| `_common/PROOF_CARRYING.md` | Generating `a11y_proof` in `acceptance` Phase 2B and the final WCAG verdict in 4B. Empty findings without an exploration log are rejected. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Canon-specific Output/Next schema. |
 
 ## Operational
 

@@ -70,21 +70,21 @@ Route elsewhere when the task is primarily:
 ## Core Contract
 
 - Use standardized templates matching the document type (PRD/SRS/HLD/LLD/Checklist/Test Spec). Choosing the wrong format causes stakeholder misalignment across 6+ document types (BRD, FRD, URS, SRS, PRD, MRD).
-- Assign requirement IDs from the canonical scheme in `_common/TRACEABILITY.md` (`REQ-*` functional, `CFR-*` cross-functional, `AC-{FEATURE}-{NNN}`, `IMPL-*`, `TEST-*`) so IDs link across Accord/Attest/Radar instead of drifting per-document; accept legacy `FR-*`/`NFR-*` on read. Every ID must be unique and traceable per ISO/IEC/IEEE 29148:2018. For SRS/durable specs, emit a `.traceability.yaml` ledger alongside the traceability matrix.
-- Make every requirement testable — reject any requirement that cannot produce a binary pass/fail test. IIBA's 2024 industry poll found 54% of project failures stem from requirements misinterpretation due to ambiguous language. Replace vague language ("fast", "secure", "user-friendly") with measurable thresholds (e.g., "P95 response ≤ 200ms", "OWASP Top 10 compliant").
-- Include a glossary for domain-specific and multi-meaning terms. Without a shared glossary, different engineers reading the same requirement reach different design conclusions — a silent source of defects that surfaces late in integration.
+- Assign requirement IDs from the canonical scheme in `_common/TRACEABILITY.md` so IDs link across Accord/Attest/Radar instead of drifting per document; accept legacy `FR-*`/`NFR-*` on read. Every ID is unique and traceable per ISO/IEC/IEEE 29148:2018; SRS and durable specs also emit a `.traceability.yaml` ledger.
+- Make every requirement testable — reject any that cannot produce a binary pass/fail test. Replace vague language ("fast", "secure", "user-friendly") with measurable thresholds ("P95 response `<=200ms`", "OWASP Top 10 compliant").
+- Include a glossary for domain-specific and multi-meaning terms — without one, engineers reading the same requirement reach different designs, a defect source that surfaces late in integration.
 - Use Given-When-Then for acceptance criteria. Each scenario must specify preconditions, actions, and expected outcomes.
 - Include scope, non-goals, success metrics, dependencies, and change history in every document.
 - Validate against ISO/IEC/IEEE 29148:2018 quality attributes: completeness, consistency, unambiguity, verifiability, traceability, stability.
-- Explicitly address NFRs (scalability, performance, security) — ~48% of ICT projects fail due to neglected non-functional parameters.
+- Explicitly address NFRs (scalability, performance, security) — neglected non-functional parameters are a leading project-failure cause.
 - Add reviewer/approver fields and related-document links. Documents without ownership are orphan artifacts.
 - Keep docs in `docs/` with predictable names. Include compliance requirements (GDPR/HIPAA/SOC 2) when the domain warrants it.
 - Target 8-12 pages for MVP-scope SRS; scale proportionally for larger scopes. Keep sentences ≤ 20 words to minimize misinterpretation.
 - Treat specs as living documents under version control (docs-as-code). Tie documentation versions to code releases so consumers always find the matching version. Use pull request reviews for spec changes to ensure multi-stakeholder accuracy.
-- When the spec will be consumed by AI agents, follow the AGENTS.md convention (stewarded by the Agentic AI Foundation under the Linux Foundation, founded by Anthropic, OpenAI, and Block) [Source: agents.md — AGENTS.md Specification (https://agents.md/)]: structure around Commands (full executable commands with flags), Testing (framework, file locations, coverage expectations), Project Structure (explicit directory mapping), Architecture, Security, and Conventions. Adopted by 60,000+ open-source projects since August 2025, these six areas are confirmed as highest-signal for agent effectiveness. Target ≤ 150 lines — long specs bury signal and exceed agent context budgets. Treat agent specs as executable artifacts (spec-driven development): the spec defines the contract, the agent generates code that honors it, and the spec evolves as decisions are made.
+- Specs consumed by AI agents follow the **AGENTS.md convention**: Commands (full executable commands with flags), Testing (framework, locations, coverage), Project Structure (explicit directory mapping), Architecture, Security, Conventions. Target `<=150` lines — long specs bury signal and exceed agent context budgets. Treat them as executable artifacts: the spec is the contract, the agent generates code honouring it, and the spec evolves with decisions.
 - Record outputs for INSCRIBE calibration.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Scribe; P2, P1 recommended).
-- **Emit Spec-Kit-compatible artefacts** when the requested deliverable will feed an executable-spec pipeline. Match the GitHub Spec-Kit layout (`spec/`, `plan/`, `tasks/`) and the `/speckit.specify` / `/speckit.plan` / `/speckit.tasks` / `/speckit.implement` phase contract. PRD → `spec/<feature>.md`; HLD → `plan/<feature>.md`; LLD checklist → `tasks/<feature>.md`. This keeps the documents consumable by Claude Code, Cursor, Copilot, and 29+ Spec-Kit-aware clients without translation. [Source: github.com/github/spec-kit]
+- **Emit Spec-Kit-compatible artefacts** for executable-spec pipelines: PRD -> `spec/<feature>.md`, HLD -> `plan/<feature>.md`, LLD checklist -> `tasks/<feature>.md`, matching the Specify / Plan / Tasks / Implement phase contract. Detail -> `reference/documentation-calibration.md`.
 
 ## Boundaries
 
@@ -130,7 +130,7 @@ Route elsewhere when the task is primarily:
 
 ### INSCRIBE Rules
 
-Keep these rules explicit. Full detail lives in [documentation-calibration.md](~/.claude/skills/scribe/reference/documentation-calibration.md).
+Keep these rules explicit. Full detail lives in `reference/documentation-calibration.md`.
 
 | Metric               | Threshold         | Action                                         |
 | -------------------- | ----------------- | ---------------------------------------------- |
@@ -148,14 +148,14 @@ Keep these rules explicit. Full detail lives in [documentation-calibration.md](~
 
 | Type               | Use When                                          | Output Path                       | Read This                                                                         |
 | ------------------ | ------------------------------------------------- | --------------------------------- | --------------------------------------------------------------------------------- |
-| `PRD`              | Business scope, user needs, goals, non-goals      | `docs/prd/PRD-[name].md`          | [prd-template.md](~/.claude/skills/scribe/reference/prd-template.md)             |
-| `SRS`              | Technical behavior, interfaces, constraints, NFRs | `docs/specs/SRS-[name].md`        | [srs-template.md](~/.claude/skills/scribe/reference/srs-template.md)             |
-| `HLD`              | System architecture, components, deployment       | `docs/design/HLD-[name].md`       | [design-template.md](~/.claude/skills/scribe/reference/design-template.md)       |
-| `LLD`              | Module design, data structures, sequences, config | `docs/design/LLD-[name].md`       | [design-template.md](~/.claude/skills/scribe/reference/design-template.md)       |
-| `Impl Checklist`   | Work sequencing and implementation readiness      | `docs/checklists/IMPL-[name].md`  | [checklist-template.md](~/.claude/skills/scribe/reference/checklist-template.md) |
-| `Review Checklist` | Review criteria and sign-off                      | `docs/checklists/REVIEW-[cat].md` | [checklist-template.md](~/.claude/skills/scribe/reference/checklist-template.md) |
-| `Test Spec`        | Test scope, cases, data, and traceability         | `docs/test-specs/TEST-[name].md`  | [test-spec-template.md](~/.claude/skills/scribe/reference/test-spec-template.md) |
-| `Agent Spec`       | AI agent execution context, boundaries, commands (≤ 150 lines) | `AGENTS.md` or `docs/specs/AGENT-[name].md` | [srs-template.md](~/.claude/skills/scribe/reference/srs-template.md) |
+| `PRD`              | Business scope, user needs, goals, non-goals      | `docs/prd/PRD-[name].md`          | `reference/prd-template.md`             |
+| `SRS`              | Technical behavior, interfaces, constraints, NFRs | `docs/specs/SRS-[name].md`        | `reference/srs-template.md`             |
+| `HLD`              | System architecture, components, deployment       | `docs/design/HLD-[name].md`       | `reference/design-template.md`       |
+| `LLD`              | Module design, data structures, sequences, config | `docs/design/LLD-[name].md`       | `reference/design-template.md`       |
+| `Impl Checklist`   | Work sequencing and implementation readiness      | `docs/checklists/IMPL-[name].md`  | `reference/checklist-template.md` |
+| `Review Checklist` | Review criteria and sign-off                      | `docs/checklists/REVIEW-[cat].md` | `reference/checklist-template.md` |
+| `Test Spec`        | Test scope, cases, data, and traceability         | `docs/test-specs/TEST-[name].md`  | `reference/test-spec-template.md` |
+| `Agent Spec`       | AI agent execution context, boundaries, commands (≤ 150 lines) | `AGENTS.md` or `docs/specs/AGENT-[name].md` | `reference/srs-template.md` |
 
 ## Quality Gates
 
@@ -168,7 +168,7 @@ Reject or revise the document if any of these fail:
 - Target audience is not stated
 - Reviewer path or next handoff is missing
 
-Use this reference when the draft is weak: [anti-patterns.md](~/.claude/skills/scribe/reference/anti-patterns.md)
+Use this reference when the draft is weak: `reference/anti-patterns.md`
 
 ## Routing And Handoffs
 
@@ -271,21 +271,21 @@ Response shape:
 
 ## Reference Map
 
-| Reference                                                                                       | Read This When                                                               |
-| ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [prd-template.md](~/.claude/skills/scribe/reference/prd-template.md)                           | You need a PRD, a quick PRD, or PRD quality checks.                          |
-| [srs-template.md](~/.claude/skills/scribe/reference/srs-template.md)                           | You need technical requirements, interfaces, or measurable NFRs.             |
-| [design-template.md](~/.claude/skills/scribe/reference/design-template.md)                     | You need HLD, LLD, scaling strategy, config, or rollback sections.           |
-| [checklist-template.md](~/.claude/skills/scribe/reference/checklist-template.md)               | You need implementation, review, or quick delivery checklists.               |
-| [test-spec-template.md](~/.claude/skills/scribe/reference/test-spec-template.md)               | You need test plans, traceability, or Gherkin structure.                     |
-| [adr-writing.md](~/.claude/skills/scribe/reference/adr-writing.md)                             | You are running the `adr` recipe and need Nygard/MADR format, ADR numbering, immutability, or supersede chain rules. |
-| [runbook-writing.md](~/.claude/skills/scribe/reference/runbook-writing.md)                     | You are running the `runbook` recipe and need symptom→triage→recover→verify structure, idempotency notes, escalation paths, or rollback sections for Triage/Mend consumers. |
-| [api-documentation.md](~/.claude/skills/scribe/reference/api-documentation.md)                 | You are running the `api-doc` recipe and need to transform OpenAPI specs into Redoc/Stoplight/Mintlify human-facing reference docs with code samples, error catalogs, and auth flows. |
-| [anti-patterns.md](~/.claude/skills/scribe/reference/anti-patterns.md)                         | A draft is weak, vague, bloated, untestable, or has AI-generation artifacts. |
-| [documentation-calibration.md](~/.claude/skills/scribe/reference/documentation-calibration.md) | You need INSCRIBE tracking, thresholds, or EVOLUTION_SIGNAL rules.           |
-| [TRACEABILITY.md](~/.claude/skills/_common/TRACEABILITY.md)                                     | You are assigning requirement/AC/test IDs or emitting a `.traceability.yaml` ledger. Canonical ID scheme + bidirectional linking rule shared with Accord/Attest/Radar/Guardian/Judge. |
-| [OPUS_5_AUTHORING.md](~/.claude/skills/_common/OPUS_5_AUTHORING.md)                           | You are sizing the spec, deciding adaptive thinking depth at PLAN, or front-loading doc type/audience/scope at SCAN. Critical for Scribe: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Scribe-specific Output/Next schema. |
+| Reference | Read This When |
+|-----------|----------------|
+| `reference/prd-template.md` | A PRD, quick PRD, or PRD quality checks. |
+| `reference/srs-template.md` | Technical requirements, interfaces, measurable NFRs. |
+| `reference/design-template.md` | HLD, LLD, scaling strategy, config, rollback sections. |
+| `reference/checklist-template.md` | Implementation, review, or quick delivery checklists. |
+| `reference/test-spec-template.md` | Test plans, traceability, Gherkin structure. |
+| `reference/adr-writing.md` | `adr` — Nygard/MADR format, numbering, immutability, supersede chains. |
+| `reference/runbook-writing.md` | `runbook` — symptom/triage/recover/verify structure, idempotency, escalation, rollback. |
+| `reference/api-documentation.md` | `api-doc` — OpenAPI to human-facing reference docs with samples, error catalogs, auth flows. |
+| `reference/anti-patterns.md` | A draft is weak, vague, bloated, untestable, or shows AI-generation artifacts. |
+| `reference/documentation-calibration.md` | INSCRIBE tracking, thresholds, `EVOLUTION_SIGNAL` rules, agent-spec conventions. |
+| `_common/TRACEABILITY.md` | Assigning requirement/AC/test IDs or emitting a `.traceability.yaml` ledger. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the spec, thinking depth at PLAN, front-loading doc type/audience at SCAN. Critical: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Scribe-specific Output/Next schema. |
 
 
 ## Operational

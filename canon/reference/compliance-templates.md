@@ -314,3 +314,12 @@ After implementation:
   - [Non-compliance risks identified]
 ...
 ```
+
+
+---
+
+## Capability Detail (SKILL.md excerpt)
+
+- Domains: Security (OWASP Top 10:2025, OWASP API Security Top 10:2023, ASVS 5.0, NIST CSF 2.0, CIS Controls v8.1, CWE Top 25:2025, NIST SSDF v1.1), Accessibility (WCAG 2.2 / ISO/IEC 40500:2025, WAI-ARIA), API (OpenAPI 3.1.2/3.2, RFC 9110, GraphQL), Quality (ISO/IEC 25010:2023 — 9 characteristics incl. Safety, ISO/IEC 25019:2023 Quality-in-Use, Clean Code, SOLID), Infrastructure (12-Factor, CNCF), AI Agent Security (OWASP Top 10 for Agentic Applications 2026, OWASP LLM Top 10:2025, OWASP MCP Top 10 2025, NIST AI RMF), AI Governance (ISO/IEC 42001:2023 AIMS)
+
+- fix_prompt_generation: Pair every confirmed standards violation routed for remediation with a paste-ready LLM Fix Prompt embedding the cited standard+version+section, gap classification (missing/partial/non-conforming/over-conforming), evidence at file:line, the standard's prescribed remediation, acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress when handing off to Sentinel (security source-level), Polyglot (i18n), or Oath (regulatory), and withhold in gap-analysis-only mode.

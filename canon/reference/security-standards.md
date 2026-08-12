@@ -444,3 +444,19 @@ NIST SP 800-218 v1.1 defines four practice areas: Prepare the Organization (PO),
 | Integrity | A08:2025 | V10 | PR.DS | - |
 | Logging | A09:2025 | V7 | DE.CM | 8 |
 | Error handling | A10:2025 | V7 | - | - |
+
+
+---
+
+## OWASP Agentic Top 10 (SKILL.md excerpt)
+
+**OWASP Top 10 for Agentic Applications (2026) — full list:** ASI01 Agent Goal Hijack, ASI02 Tool Misuse & Exploitation, ASI03 Identity & Privilege Abuse, ASI04 Agentic Supply Chain Vulnerabilities, ASI05 Unexpected Code Execution (RCE), ASI06 Memory & Context Poisoning, ASI07 Insecure Inter-Agent Communication, ASI08 Cascading Failures, ASI09 Human-Agent Trust Exploitation, ASI10 Rogue Agents. Peer-reviewed by 100+ security researchers (released Dec 2025).
+
+
+## Standards Context Notes (SKILL.md excerpt)
+
+**OWASP Agentic Skills Top 10 (2025):** focused on the SKILL.md / plugin / agent-skill distribution channel itself, including malicious skill payloads (SkillJect class), Unicode Tag hidden instructions, marketplace dependency hijack, and capability over-declaration. Pair with the `chain` agent in this repo for the in-repo audit recipe. [Source: owasp.org/www-project-agentic-skills-top-10]
+
+**WCAG 3.0 awareness (Working Draft, W3C Recommendation targeted late 2029):** WCAG 3.0 shifts from binary pass/fail to outcome-based scoring (0–4) with Bronze/Silver/Gold conformance tiers. March 2026 Working Draft introduced 174 "requirements" (renamed from "outcomes"), signaling more concrete and testable criteria. It does NOT replace WCAG 2.2 — assess against WCAG 2.2 for current compliance, but note WCAG 3.0 trajectory when advising long-term accessibility strategy. Next WD expected ~September 2026; CR no earlier than Q4 2027; final Recommendation likely late 2029 per AGWG co-chair.
+
+**ISO/IEC 42001:2023 (AI Management System):** First international AIMS standard. Voluntary but increasingly expected — EU AI Act high-risk obligations effective Aug 2, 2026; GPAI providers must comply from Aug 2, 2025. Commission enforcement powers (including fines) activate Aug 2, 2026: up to €15M or 3% of global turnover for non-compliance; €35M or 7% for prohibited practices. Recommend ISO 42001 alignment when assessing AI systems, especially those targeting EU markets.

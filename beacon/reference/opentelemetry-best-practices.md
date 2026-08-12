@@ -557,3 +557,22 @@ Scrape interval optimization:
   | Business metrics         | 60s                  |
   | Build/deploy metrics     | 300s                 |
 ```
+
+
+---
+
+## OTel and Profiling Long Form (SKILL.md excerpt)
+
+- For brownfield services, evaluate OTel eBPF Instrumentation (OBI) for zero-code observability before committing to SDK integration. OBI captures HTTP/gRPC traces and RED metrics without code changes, suitable for initial visibility; add SDK instrumentation selectively for business-critical spans. OBI is in beta (2026), targeting a stable 1.0 release; expanding protocol coverage to messaging (MQTT, AMQP, NATS) and NoSQL (MongoDB). Evaluate for initial rollout in Kubernetes environments.
+
+- Mandate OTel semantic conventions (stable core since 1.28; track latest release, currently 1.40+) for all instrumentation — non-negotiable for cross-service correlation and vendor portability. For GenAI workloads, adopt `gen_ai.*` namespace conventions including agent spans (`create_agent`, `invoke_agent` operations); these remain experimental as of 2026 — set `OTEL_SEMCONV_STABILITY_OPT_IN=http/dup` for dual-emission during version transitions to avoid breaking changes on stabilization.
+
+- Prefer OTel Declarative Configuration (YAML-based SDK config) over code-based setup — stable since 1.0.0 (JSON schema, YAML data model, `OTEL_CONFIG_FILE` env var). Implementations available in Java, Go, PHP, JS, and C++; .NET and Python in development. Reduces instrumentation drift across services and enables configuration-as-code alongside SLOs-as-code.
+
+- For environments with 10+ Collectors, adopt OpAMP (Open Agent Management Protocol) with supervisor-based orchestration for fleet management — enables remote configuration reload, health reporting, version discovery, and dynamic pipeline reconfiguration without redeployment. OpAMP Gateway Extension addresses WebSocket connection scaling limits for large fleets.
+
+- Evaluate OTel Profiles (continuous profiling) as the 4th observability pillar during the DESIGN phase. Profiles entered public Alpha in March 2026 with eBPF-based whole-system profiling (donated by Elastic); include profiling assessment for latency-sensitive services but mark as experimental in implementation specs until the signal reaches stable status.
+
+- **Standardise continuous profiling on Pyroscope 2.0 / Parca for production-scale.** Pyroscope 2.0 ingests 19.5 PB/year at Grafana with 95% symbol-storage reduction via write-once symbols; Parca offers the same continuous-profiling primitives under a CNCF-incubating posture. Add continuous profiling as the third pillar alongside metrics (Prometheus / Mimir) and traces (Tempo / Jaeger) — flame graphs over time make the "slow in production only" class of bugs observable. Coordinate with `siege` (concurrency recipe) for memory-leak handoffs (temporal flame graphs) and with `bolt` for CPU hotspot remediation. [Source: grafana.com/blog/pyroscope-2-0-release/; parca.dev]
+
+- **Wire flame-graph temporal-window analysis** into the leak-detection runbook. `memray` (Python) emits temporal flame graphs that isolate "allocations made inside a window that remain unfreed at the window's end" — the canonical leak signature, not "high allocation rate". Same primitive in `jemalloc heap profiling`, Pyroscope 2.0, and Parca. Surface continuous-profiling burn-rate alerts (allocation rate × retention rate) alongside latency / error burn rates. [Source: bloomberg.github.io/memray/temporal-flame-graphs.html]

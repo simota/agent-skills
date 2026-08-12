@@ -110,3 +110,16 @@ Rule: checkpoint cadence ≈ (mean time between interruptions / 4). If MTBI is 6
 - **To Oracle**: feasible quantization / serving choices given cost envelope; cost-per-1K-tokens ceiling per model tier.
 - **To Ledger `ri-sp`**: GPU-baseline commitment plan (1y, 20-40% coverage on inference floor only).
 - **To Atlas**: AI platform topology view — training cluster, inference fleet, eval pipeline as separate cost centers.
+
+
+---
+
+## LLM Cost Optimisation Long Form (SKILL.md excerpt)
+
+- **Prompt-cache breakpoint layout is the highest-leverage LLM cost optimisation.** Anthropic prompt caching, with breakpoints placed at stable block boundaries (system → tool schema → goal/AC → recent context tail), achieves ~91.8% cache hit rate on agentic workloads and delivers `60×` input-token cost reduction vs unbreakpointed prompts. Conversely, unbreakpointed prompts sustain ~3% hit rates. The recommended layout is `PROMPT_CACHE_BREAKPOINTS=4` with the first three on stable content. Track cache-hit-rate as a top-line LLM cost metric, on par with average tokens-per-task. [Source: aicheckerhub.com — Anthropic Prompt Caching 2026; projectdiscovery.io — Cut LLM Cost with Prompt Caching]
+
+- **Model cascade routing for agentic workloads.** Production deployments report 60-80% cost reduction by using a tiered model selection: Haiku/Sonnet for ~80% mechanical work (file read, simple edits, status reporting), Opus reserved for the planner and the final verifier/critic. Recommend cascade routing in any cost report where a single high-tier model handles `> 50%` of calls — that is the leading hidden cost driver in AI-using systems. [Source: paxrel.com — AI Agent Cost Optimization 2026; openreview.net/forum?id=AAl89VNNy1]
+
+- **Cap loop costs absolutely, not by token count.** Unmonitored agentic loops have produced multi-thousand-dollar incidents (e.g. a documented $47k loop and a $6k overnight `/loop` event). Recommend three independent caps on every unattended agent: `USD_PER_ITER_CAP` (per-iteration), `USD_PER_RUN_CAP` (per-run), and `BURN_RATE_THRESHOLD` (e.g. 5-min window vs prior 3×). Auto-reload billing must be disabled for any unattended workload. Coordinate with `orbit` which enforces these inside the autonomous-loop runner. [Source: earezki.com — The $47,000 AI Agent Loop; byteiota.com — Uber AI Budget Blown]
+
+- **Context-engineering cost: pass state deltas, not full history.** The canonical inflation vector is "send the entire conversation every turn"; even with caching this scales linearly with iteration count and breaks cache once any earlier turn changes. Recommend a context-engineering audit when the trailing 7-day average input-tokens-per-task is rising without a feature-flag explanation — context bloat is the dominant 2026 LLM cost regression cause. [Source: getdynamiq.ai; martinfowler.com — Context Engineering for Coding Agents]
