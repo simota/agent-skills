@@ -304,3 +304,18 @@ Constraints:
 ````
 
 This prompt is self-contained: a coding LLM can act on it without seeing the rest of the Sentinel report.
+
+
+## Verb Table (SKILL.md excerpt)
+
+| Verb | Use when | Receiving agent / operator |
+|------|----------|---------------------------|
+| `SECURE-FIX` | Fix >50 lines, no auth or breaking concern | Builder |
+| `HARDEN` | ENHANCEMENT-class (defense-in-depth, audit logging) | Builder |
+| `MITIGATE` | Compensating control while the real fix is blocked | Builder + Beacon |
+| `BREAKING-FIX` | Requires API shape or response-code change | Builder + Guardian + Launch |
+| `AUTH-FIX` | Touches authn / authz / session / token logic | Builder + Guardian + Probe |
+| `REVOKE-AND-ROTATE` | Hardcoded secret — file removal insufficient | Operator (human) |
+| `INVESTIGATE-FURTHER` | Static analysis inconclusive; needs runtime proof | Probe (DAST) |
+
+

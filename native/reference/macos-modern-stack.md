@@ -247,3 +247,23 @@ Migration guidance for existing macOS targets (opt-in per target, raise `SWIFT_S
 - Sibling reference: [`reference/modern-stack.md`](modern-stack.md) — shared Swift 6.3 concurrency model, `@Observable` pattern, SwiftData/Core Data trade-off (not duplicated here)
 
 `#TODO(agent)`: independently confirm MetricKit report-type parity between macOS and iOS in the current SDK — flagged `(unverified)` above pending direct Apple documentation cross-check beyond base availability.
+
+
+## macOS Reference Index (SKILL.md excerpt)
+
+| File | Content |
+|------|---------|
+| `reference/scenes.md` | `macos` — WindowGroup / Settings / MenuBarExtra / DocumentGroup, multi-window, restoration |
+| `reference/mac-hig.md` | Mac HIG — menu bar structure, pointer/hover, keyboard shortcuts, window chrome |
+| `reference/menu-commands.md` | Commands / CommandGroup / CommandMenu, menu structure, ⌘-shortcut conventions |
+| `reference/appkit-interop.md` | NSViewRepresentable / NSHostingView bridging and AppKit coexistence |
+| `reference/documents.md` | Document apps — DocumentGroup, FileDocument, NSDocument, UTType export |
+| `reference/layout-patterns.md` | NavigationSplitView sidebar/detail, toolbar groups, `.inspector()` |
+| `reference/drag-drop-services.md` | Transferable / `.draggable` / NSPasteboard negotiation, Services menu |
+| `reference/sandbox-entitlements.md` | `macdist` — App Sandbox scoping, security-scoped bookmarks, Powerbox pickers |
+| `reference/distribution.md` | App Store vs Developer ID, notarytool submit/staple, hardened runtime, Sparkle, DMG/pkg |
+| `reference/catalyst-decision.md` | Mac Catalyst vs native AppKit/SwiftUI decision framework |
+| `reference/xpc-helpers.md` | XPC privilege separation, SMAppService LaunchAgent/Daemon/login-item registration |
+| `reference/macos-xcrun-cli.md` | macOS build/sign/notarize CLI — xcodebuild, codesign, notarytool, spctl, stapler |
+| `reference/macos-handoffs.md` | macOS-specific handoff templates |
+
