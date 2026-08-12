@@ -156,16 +156,16 @@ Full algorithm and phase-specific references -> `reference/tri-engine-review.md`
 
 ## Recipes
 
-| Subcommand | Default? | When to Use | Engine + Focus |
-|-----------|---------|-------------|----------------|
-| `pr` | ✓ | Full diff review of a PR | Fan-out; cognitive-load gate + SNR |
-| `security` | | CWE/OWASP focus, stricter on AI code | Security focus; OWASP/CWE per finding |
-| `perf` | | N+1 / render cost / bundle size | Perf focus |
-| `style` | | Naming and structure only | Claude single-engine; no bug/security flags |
-| `quick` | | `<50` LOC low-risk | Claude single-engine; all findings grounded |
-| `intent` | | Code-vs-PR-body alignment | Intent focus (PR body vs diff) |
-| `lean` | | Over-engineering, YAGNI, dead code, redundancy | Lean focus (6 patterns); routes Void/Zen |
-| `pair` | | Conversational, fix-as-you-go | Seed -> one at a time -> driver -> re-verify; INTERACTIVE |
+| Recipe | Subcommand | Default? | When to Use | Engine + Focus |
+|--------|-----------|---------|-------------|----------------|
+| Tri-Engine PR Review | `pr` | ✓ | Full diff review of a PR | Fan-out; cognitive-load gate + SNR |
+| Security-First | `security` | | CWE/OWASP focus, stricter on AI code | Security focus; OWASP/CWE per finding |
+| Perf Focus | `perf` | | N+1 / render cost / bundle size | Perf focus |
+| Style Readability | `style` | | Naming and structure only | Claude single-engine; no bug/security flags |
+| Quick Check | `quick` | | `<50` LOC low-risk | Claude single-engine; all findings grounded |
+| Intent Alignment | `intent` | | Code-vs-PR-body alignment | Intent focus (PR body vs diff) |
+| Lean / Waste | `lean` | | Over-engineering, YAGNI, dead code, redundancy | Lean focus (6 patterns); routes Void/Zen |
+| Pair Review | `pair` | | Conversational, fix-as-you-go | Seed -> one at a time -> driver -> re-verify; INTERACTIVE |
 
 Full "When to Use", per-Recipe `Read First` files, and VERIFY gates -> `reference/recipes-detail.md`.
 
