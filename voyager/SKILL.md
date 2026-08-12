@@ -204,57 +204,10 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`playwright` = Playwright Suite). Apply normal PLAN → AUTOMATE → STABILIZE → SCALE → DELIVER workflow.
 
-Behavior notes per Recipe (full VERIFY gate detail in `reference/recipe-verify-gates.md`) — each gate applies **in addition to** Voyager's universal discipline (accessible selectors first, POM by user intent, zero fixed-delay waits, fresh context per test, risk tags, never modify app code — report/hand off).
-- `playwright`: full Playwright E2E suite. VERIFY: accessible selectors primary, zero fixed-delay waits, fresh context per test, risk tag applied, budgets held.
-- `page-object`: POM classes from existing tests/specs. VERIFY: modeled around user intent (not DOM), no god-object (≥50 methods → split), zero CSS-class/positional primary selectors.
-- `auth`: login/OAuth/MFA flows via `storageState`. VERIFY: auth reused not re-driven per test, zero hard-coded credentials, setup never skipped, tests isolated.
-- `a11y`: axe-core / Playwright a11y checks. VERIFY: paired with Intelligent Guided Tests (axe ceiling ≈57% WCAG — never "covered" from automation alone), keyboard flow exercised, findings cite WCAG criterion.
-- `visual`: screenshot diff + baseline management. VERIFY: dynamic regions masked at source (not threshold-raised), tier (pixel/perceptual/Visual AI) chosen deliberately, anti-aliasing blur before threshold changes.
-- `api`: API-only journey via `APIRequestContext`. VERIFY: ≥1 cross-endpoint state check, mock-vs-real toggle defined at PLAN, real backend pinned for critical-path smoke, stays journey-level (backend internals → Radar, DAST → Probe).
-- `mobile`: shipped-app E2E (Detox/Maestro/Appium, device farm at ≥3 combos). VERIFY: PR gate = 1 sim + 1 emu only (full matrix → nightly), release gated on oldest+newest OS per platform, accessibility-id locators, device flake quarantined from logic flake.
-- `component`: real-browser component tests (not jsdom). VERIFY: one component per test (page-level → `playwright`), executes against Vitrine-owned stories when they exist.
+Per-Recipe behavior notes and full `VERIFY` gate detail -> `reference/recipe-verify-gates.md`. Read once a subcommand matches.
 
-### Signal Keywords → Recipe
+**Universal discipline every gate assumes:** accessible selectors first, POM organized by user intent, zero fixed-delay waits, a fresh context per test, risk tags on every spec, and never modifying application code — report the defect or hand it off.
 
-For natural-language input without an explicit subcommand. Subcommand match wins if both apply. See `## Reference Map` for the file pointer associated with each Recipe.
-
-| Keywords | Recipe |
-|----------|--------|
-| `playwright`, `e2e`, `browser test`, `journey test` | `playwright` |
-| `cypress`, `cy.` | `playwright` (Cypress branch — read `cypress-guide.md`) |
-| `visual regression`, `screenshot`, `pixel diff` | `visual` |
-| `accessibility`, `a11y`, `axe`, `WCAG` | `a11y` |
-| `auth flow`, `login test`, `session` | `auth` |
-| `CI`, `pipeline`, `sharding`, `parallel` | `playwright` (CI scope — read `ci-reporting.md`) |
-| `flaky`, `flake`, `retry`, `instability` | `playwright` (flake diagnosis — read `debug-monitoring.md`) |
-| `mobile emulation`, `mobile viewport`, `responsive E2E`, `PWA mobile` | `playwright` (mobile emulation — read `mobile-testing.md`) |
-| `native mobile E2E`, `appium`, `detox`, `maestro`, `xcuitest`, `espresso`, `.ipa`, `.apk`, `.aab` | `mobile` |
-| `device farm`, `browserstack app automate`, `app percy`, `sauce labs real device`, `aws device farm`, `firebase test lab`, `lambdatest`, `hyperexecute`, `testmu ai`, `real device`, `parallel session`, `cloud session`, `remote webdriver`, `appium server`, `appium 3`, `webdriver bidi` | `mobile` (device-farm tier — read `cloud-testing.md` + `mobile-testing.md`) |
-| `foldable`, `galaxy z fold`, `pixel fold`, `window size class`, `compact medium expanded`, `stage manager`, `split view`, `multi-window`, `posture` | `mobile` (adaptive/foldable — read `mobile-testing.md`) |
-| `privacy manifest`, `PrivacyInfo.xcprivacy`, `required reason api`, `tracking domain`, `privacy sandbox`, `data access auditing` | `mobile` (privacy-aware — read `mobile-testing.md`) |
-| `applitools`, `app percy`, `testrigor`, `mabl`, `native visual ai`, `self-healing mobile`, `vision ai`, `maestro ai` | `visual` / `mobile` (native visual AI — read `ai-powered-e2e-testing.md` + `mobile-testing.md`) |
-| `container`, `testcontainers`, `docker test` | `playwright` (container — read `container-testing.md`) |
-| `web component`, `shadow DOM`, `lit`, `stencil` | `component` (read `web-component-testing.md`) |
-| `AI test`, `MCP`, `self-healing`, `codegen`, `playwright cli` | `playwright` (AI lifecycle — read `ai-powered-e2e-testing.md`) |
-| `screencast`, `video receipt`, `visual proof`, `recording` | `playwright` (screencast — read `ai-powered-e2e-testing.md`) |
-| `API test`, `request context`, `backend verify` | `api` |
-| complex multi-agent task | Hand off to Nexus per `_common/BOUNDARIES.md` |
-| unclear request | Default `playwright`; clarify via `framework-selection.md` |
-
-### Handoff Thresholds
-
-Operational thresholds that trigger a recipe choice or a cross-agent handoff (distinct from per-recipe behavior, which is documented under `## Subcommand Dispatch`):
-
-- For shipped mobile apps: never run the full device matrix on PRs — keep PR gate on 1 sim + 1 emu (smoke only), push the matrix to nightly, gate releases on real devices for oldest + newest supported OS per platform.
-- If E2E flake rate exceeds 10%, prioritize flake stabilization before adding new tests.
-- If suite duration exceeds 10 min, investigate sharding, parallelization, or test pruning before scaling further.
-- If coverage is `<80%` or the issue belongs lower in the test pyramid, hand off to `Radar`.
-- If flake or regression root cause may be outside the test suite, hand off to `Scout`.
-- If CI pipeline ownership, secrets, or general infra becomes the main work, hand off to `Gear`; Voyager owns only E2E-specific test config.
-- If measured browser performance regressions need code fixes, hand off to `Bolt` after capturing metrics and evidence.
-- If load, chaos, or resilience testing is required, hand off to `Siege`.
-- If the request is interactive browser operation, not reusable E2E automation, hand off to `Vector`.
-- If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
 
 ## Output Requirements
 
@@ -272,29 +225,29 @@ Operational thresholds that trigger a recipe choice or a cross-agent handoff (di
 | [playwright-patterns.md](reference/playwright-patterns.md) | Playwright is the default or current framework |
 | [framework-selection.md](reference/framework-selection.md) | You must choose or justify the framework |
 | [cypress-guide.md](reference/cypress-guide.md) | The project already uses Cypress |
-| [visual-a11y-testing.md](reference/visual-a11y-testing.md) | Visual regression, keyboard flows, or WCAG checks matter |
+| [visual-a11y-testing.md](reference/visual-a11y-testing.md) | Visual regression, keyboard flows, or WCAG checks |
 | [selector-accessibility-first.md](reference/selector-accessibility-first.md) | Selector rules, ARIA snapshots, or fallback criteria |
 | [ci-reporting.md](reference/ci-reporting.md) | Wiring CI, sharding, artifacts, or reporters |
-| [performance-testing.md](reference/performance-testing.md) | Core Web Vitals, Lighthouse CI, or browser performance budgets are in scope |
-| [complex-scenarios.md](reference/complex-scenarios.md) | The flow includes multi-tab, iframe, file, WebSocket, offline, or Shadow DOM behavior |
-| [environment-management.md](reference/environment-management.md) | Docker, preview envs, auth setup, mail capture, or local-only E2E workflow |
-| [ephemeral-env-test-data.md](reference/ephemeral-env-test-data.md) | Test isolation, factories, preview environments, or network interception strategy |
+| [performance-testing.md](reference/performance-testing.md) | Core Web Vitals, Lighthouse CI, or browser performance budgets |
+| [complex-scenarios.md](reference/complex-scenarios.md) | Multi-tab, iframe, file, WebSocket, offline, or Shadow DOM behavior |
+| [environment-management.md](reference/environment-management.md) | Docker, preview envs, auth setup, mail capture, local-only E2E |
+| [ephemeral-env-test-data.md](reference/ephemeral-env-test-data.md) | Test isolation, factories, preview environments, network interception |
 | [debug-monitoring.md](reference/debug-monitoring.md) | Diagnosing flake, console issues, traces, HARs, or retries |
 | [edge-cases-i18n.md](reference/edge-cases-i18n.md) | Timezone, locale, cookie, storage, offline, or network-condition cases matter |
-| [cloud-testing.md](reference/cloud-testing.md) | BrowserStack / Sauce Labs / LambdaTest / AWS Device Farm / Firebase Test Lab sessions — matrices, App Automate config, tunnels, parallel-session caps, cost-tier strategy, credentials |
-| [mobile-testing.md](reference/mobile-testing.md) | Artifact is a shipping `.ipa`/`.apk`/`.aab` or RN bundle — framework selection, mobile POM, accessibility-id locators, two-axis flake taxonomy, device-farm tier matrix, WebdriverIO+Appium config, real-device capabilities, mobile-emulation alternatives, rotation/push/airplane patterns. **Start here for native mobile E2E.** |
-| [2026-best-practices.md](reference/2026-best-practices.md) | Full source citations for Playwright Test Agents, CLI-vs-MCP, axe-core ceiling, Datadog flake loop, mobile AI, Cypress AI, visual-regression tiers, synthetic convergence, Screenplay, Appium 3 BiDi, Playwright version notes, mobile/device-farm version notes, Privacy Manifest timeline, or flake/budget thresholds |
+| [cloud-testing.md](reference/cloud-testing.md) | Cloud device sessions (BrowserStack / Sauce / LambdaTest / Device Farm / Test Lab) — matrices, tunnels, parallel caps, cost tiers, credentials |
+| [mobile-testing.md](reference/mobile-testing.md) | Artifact is a shipping `.ipa`/`.apk`/`.aab` or RN bundle — framework selection, mobile POM, accessibility-id locators, flake taxonomy, device-farm tiers, Appium config, rotation/push/airplane patterns. **Start here for native mobile E2E.** |
+| [2026-best-practices.md](reference/2026-best-practices.md) | Source citations and version notes — Test Agents, CLI-vs-MCP, axe-core ceiling, flake loops, visual-regression tiers, Appium 3 BiDi, flake/budget thresholds |
 | [e2e-anti-patterns.md](reference/e2e-anti-patterns.md) | Suite architecture, anti-pattern checks, or flaky-prevention thresholds |
 | [ai-powered-e2e-testing.md](reference/ai-powered-e2e-testing.md) | AI-assisted planning, generation, healing, or cost/risk tradeoffs are in scope |
 | [container-testing.md](reference/container-testing.md) | Container-based test environments, Testcontainers, or Docker-integrated E2E are required |
 | [web-component-testing.md](reference/web-component-testing.md) | Shadow DOM, Lit, Stencil, or Web Component testing is required |
-| [api-e2e-testing.md](reference/api-e2e-testing.md) | User-journey E2E through an API-only interface (Playwright `APIRequestContext` chains, mock-vs-real backend toggle, contract-test follow-up) |
-| [component-testing.md](reference/component-testing.md) | Component tests in a real browser (Playwright Component Testing, Cypress Component Testing, Storybook Interactions) |
-| [recipe-verify-gates.md](reference/recipe-verify-gates.md) | The full rationale and VERIFY checklist for a Recipe beyond the one-line summary under `## Subcommand Dispatch` |
-| [OPUS_5_AUTHORING.md](../_common/OPUS_5_AUTHORING.md) | Sizing the test plan, calibrating effort to risk-tier, or front-loading critical journey scope at PLAN. Critical for Voyager: P3, P6. |
-| [PROOF_CARRYING.md](../_common/PROOF_CARRYING.md) | Invoked from `nexus acceptance` Phase 2 (UI flows + visual regression as Layer 2 oracles) and Phase 3 (adversarial UI users — impatient / mobile / screen-reader / broken-connection / payment-failure personas). Adversarial-finding outputs must include non-trivial exploration logs; empty findings are rejected as semantically empty. |
+| [api-e2e-testing.md](reference/api-e2e-testing.md) | E2E through an API-only interface — `APIRequestContext` chains, mock-vs-real toggle, contract-test follow-up |
+| [component-testing.md](reference/component-testing.md) | Component tests in a real browser (Playwright CT, Cypress CT, Storybook Interactions) |
+| [recipe-verify-gates.md](reference/recipe-verify-gates.md) | Per-Recipe behavior and the full VERIFY checklist |
+| [OPUS_5_AUTHORING.md](../_common/OPUS_5_AUTHORING.md) | Sizing the test plan, calibrating effort to risk tier, front-loading journey scope at PLAN. Critical: P3, P6. |
+| [PROOF_CARRYING.md](../_common/PROOF_CARRYING.md) | Invoked from `nexus acceptance` Phase 2 (UI flows + visual regression, Layer 2 oracles) and Phase 3 (adversarial UI personas). Findings need non-trivial exploration logs — empty ones are rejected. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Voyager-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `_common/CODE_QUALITY.md` | Writing or modifying code — 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL) + `CODE_QUALITY_GATE`. |
 
 ## Operational
 

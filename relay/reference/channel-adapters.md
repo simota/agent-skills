@@ -238,3 +238,26 @@ class MessageRouter {
   }
 }
 ```
+
+
+## Platform Limits + Transport Detail (SKILL.md excerpt)
+
+- Monitor platform-specific rate limit tiers and design accordingly. Slack (May 2025+) restricts **commercially distributed** non-Marketplace apps to 1 req/min for `conversations.history`/`conversations.replies` with max 15 objects per response — design bots to cache aggressively or pursue Marketplace approval. Custom/internal apps are unaffected (50+ req/min, 1000 objects). **Slack legacy custom bots stopped functioning on March 31, 2025.** Slack classic apps deprecation deadline: **November 16, 2026** — after that date classic apps will no longer function and API calls will be rejected; migrate to granular bot tokens. **Slack RTM API is legacy and new apps must NOT use RTM methods** — use Events API (webhooks) or Socket Mode instead; see [docs.slack.dev/legacy/legacy-rtm-api](https://docs.slack.dev/legacy/legacy-rtm-api/). Non-Marketplace `conversations.history`/`conversations.replies` rate limit (1 req/min, 15 objects) starts hitting existing installations on March 3, 2026. Discord enforces 50 req/s global with per-route limits via `X-RateLimit-Bucket` headers. **Discord API v10 is current** (v11 not yet released as of 2026). Discord Components V2 (IS_COMPONENTS_V2 flag `1 << 15`) is the recommended approach for new apps — enables Section, Container, Separator, Text Display components with 40-component limit. Discord permission splits effective February 23, 2026: PIN_MESSAGES required to pin (MANAGE_MESSAGES alone insufficient); CREATE_EVENTS required for scheduled events.
+
+- For transport selection: WebSocket over HTTP/3 (RFC 9220) has zero production browser implementations as of 2026 despite RFC publication in 2022. Recommend standard WebSocket over HTTP/1.1 or HTTP/2 (RFC 8441) for production deployments. Do not recommend HTTP/3 WebSocket upgrades until browser/server support materializes.
+- WebTransport advantages over WebSocket for specific use cases: (1) multiplexed independent streams eliminate head-of-line blocking — a lost packet in stream A does not block streams B/C; (2) unreliable datagrams for latency-sensitive data (game state, cursor positions) where freshness beats reliability; (3) transparent connection migration (Wi-Fi → cellular) without session loss. Evaluate WebTransport when these properties are required; default to WebSocket for general real-time needs.
+
+- Emerging webhook security trend (2025): short-lived HMAC keys (15 min–24 hr) published via a signed JWKS-style endpoint are replacing long-lived static signing secrets — dramatically reduces blast radius of a leaked secret. Evaluate for new webhook producer implementations. Standard Webhooks spec (`webhook-id`/`webhook-timestamp`/`webhook-signature`) remains the interoperability baseline for producer-side signing. Source: [github.com/standard-webhooks/standard-webhooks](https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md)
+
+
+## Per-Recipe Behavior (SKILL.md excerpt)
+
+Behavior notes per Recipe:
+- `webhook`: Must include HMAC-SHA256 (raw bytes), timestamp verification (≤5 min), idempotency key, DLQ, and Circuit Breaker. Return 2xx within 3 seconds.
+- `bot`: Design command parser, slash commands, conversation state machine, and middleware chain. Includes LLM-native runner integration evaluation.
+- `websocket`: Connection lifecycle, heartbeats, horizontal scaling (Redis session externalization), and WebSocketStream API evaluation.
+- `adapter`: Cross-platform normalization. Normalize-in/Adapt-out pattern. CloudEvents envelope and AsyncAPI spec.
+- `sse`: Unidirectional server-push with `Last-Event-ID` resume, heartbeat cadence tuned to proxy/LB idle timeouts, proxy/CDN buffering disabled, and long-polling fallback. For bidirectional low-latency use `websocket`; for HTTP request/response API use Gateway.
+- `queue`: Message-queue producer/consumer wiring (envelope, DLQ, visibility timeout, partition/group keys, idempotent consumer). For streaming ETL pipeline design use Stream; for retry/backoff policy use Tempo; for queue-depth SLO/alerting use Beacon.
+- `rate`: Transport-level rate limiting and backpressure for messaging surfaces (token bucket / leaky bucket / sliding window, 429 + `Retry-After`, cost-based quotas, per-tenant isolation). For public REST/GraphQL rate limits use Gateway; for retry schedule design use Tempo.
+
