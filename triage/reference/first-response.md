@@ -169,3 +169,16 @@ Hard rules:
 - Does NOT write the postmortem → `postmortem` / `postmortem-templates.md`.
 
 The deliverable of `first-response` is: a classified incident, a named command structure, an open war-room with a running timeline, and one holding comm sent — all within 15 minutes.
+
+
+## Per-Recipe Behavior (SKILL.md excerpt)
+
+Behavior notes per Recipe:
+- `respond`: classify SEV within 5 minutes. Fan out in parallel: hand RCA to Scout, request the fix from Builder.
+- `impact`: scope the incident on 4 axes — affected users, feature outage surface, data risk, and business impact.
+- `recover`: decide rollback vs forward fix. Coordinate with Gear; validate regression risk with Radar.
+- `postmortem`: author within 24h (SEV1) / 48h (SEV2). 5 Whys + timeline + concrete action items (owner + due date).
+- `first-response`: T-0 to T+15 min only. Assign Incident Commander (IC) before any technical action (FEMA ICS / Google SRE) — IC owns coordination, not diagnosis. Open a war-room (Slack channel / Zoom bridge / dedicated doc) and assign a Scribe separate from the IC. Classify SEV1-4 within 5 min; when in doubt, pick the higher severity — downgrade costs nothing, late escalation compounds blast radius. Capture the initial timeline in UTC with decision rationale. Send a holding comm within 10 min ("aware, investigating, next update by HH:MM UTC") even without a root cause — silence breeds escalation. Does NOT execute remediation (→ Mend for catalogued runbooks, Builder for novel fixes); does NOT design the escalation policy (→ `escalation`).
+- `escalation`: Design-time, not runtime. Output the escalation matrix as a document: tier 0 (primary on-call) → tier 1 (secondary) → tier 2 (EM) → tier 3 (VP/CTO) with paging thresholds, SLA per tier, auto-escalation timers (e.g., unacked in 5 min → tier 1), and after-hours engagement rules (PagerDuty / Opsgenie / VictorOps schedules). Include a handoff script for end-of-shift and follow-the-sun rotations. Gear `alert` configures the alerting tool (Alertmanager routes, webhook targets); `escalation` defines what humans do once paged. Cross-link: Gear routes alert → PagerDuty; Triage `escalation` specifies PagerDuty's escalation policy, override rules, and override-by-role (PagerDuty Incident Response training).
+- `comms`: Author incident-specific templates with time-sensitive tone and severity-aware language — NOT generic microcopy (→ Prose for product voice / tone). Produce the full stakeholder matrix: internal engineering (technical detail), leadership (business impact + ETA), sales (customer talking points), support (canned responses + escalation flags), external status page (public-facing, legally reviewed), direct customer notices (email / in-app), and social (Twitter/X / LinkedIn short form). Define SEV-based cadence: SEV1 every 15 min, SEV2 every 30 min, SEV3 every 2 hours, SEV4 on resolution only. Include a legal-review hook for any external comms mentioning data loss, breach, or regulated systems. Prose voice/tone is inherited — incident-specific tone overrides: directness, no marketing polish, explicit "Next update by HH:MM UTC" (Atlassian Incident Handbook).
+

@@ -152,11 +152,11 @@ Citations for these constraints: `reference/comprehension-research.md`.
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `SCOPE` | Decompose question: identify investigation type (Existence/Flow/Structure/Data/Convention), define search targets, set scope boundaries | Define investigation type before searching | `reference/lens-framework.md` |
+| `SCOPE` | Decompose the question — investigation type (Existence/Flow/Structure/Data/Convention), search targets, scope boundaries | Type before searching | `reference/lens-framework.md` |
 | `SURVEY` | Structural overview: project structure scan, entry point identification, tech stack detection | Top-down before bottom-up | `reference/search-strategies.md` |
 | `TRACE` | Follow the flow: execution flow trace, data flow trace, dependency trace | Follow the data to reveal architecture | `reference/investigation-patterns.md` |
-| `CONNECT` | Build big picture: relate findings, map module relationships, identify conventions | Connect isolated findings into coherent understanding | `reference/investigation-patterns.md` |
-| `REPORT` | Deliver understanding: structured report, file:line references, recommendations | Every claim needs evidence | `reference/output-formats.md` |
+| `CONNECT` | Build the big picture — relate findings, map module relationships, identify conventions | Isolated findings must cohere | `reference/investigation-patterns.md` |
+| `REPORT` | Deliver understanding — structured report, file:line references, recommendations | Every claim needs evidence | `reference/output-formats.md` |
 
 Phase skip: Existence check investigations may use `SCOPE → SURVEY → REPORT` when flow tracing is unnecessary.
 
@@ -167,11 +167,11 @@ Full framework details: `reference/lens-framework.md`
 When investigation stalls (no new findings after 2 search iterations):
 
 1. Document what was searched and what was not found.
-2. Broaden search strategy (move to next search layer per `reference/search-strategies.md`). If semantic code search is available, try meaning-based queries — they recover results that keyword search misses when exact identifiers are unknown.
-3. Try cross-referencing: find where key types/functions are used across the codebase, not just where they are defined. Cross-referencing reveals hidden dependencies that keyword search misses. [Source: intuitionlabs.ai]
-4. Apply multi-hop investigation: follow dependency chains across files (A imports B, B calls C, C writes to D) to build a dependency graph. Modern code investigation tools (Greptile, CodeScout) demonstrate that 2-3 hop traces uncover relationships invisible to single-file analysis. [Source: arxiv.org/html/2603.17829 — CodeScout]
-5. Re-decompose the question: if the original SCOPE decomposition was too vague, refine it using findings so far. CodeScout's "contextual problem statement enhancement" shows that converting underspecified questions into precise sub-questions through lightweight pre-exploration significantly improves downstream investigation success. [Source: arxiv.org/html/2603.05744 — CodeScout contextual enhancement]
-6. If still stalled after broadening, REPORT with `Status: PARTIAL`, include "What I didn't find" section, and suggest alternative investigation angles or agents (Scout for bug-related, Trail for history-based).
+2. Broaden the search strategy (next layer per `reference/search-strategies.md`); if semantic code search is available, try meaning-based queries — they recover what keyword search misses when identifiers are unknown.
+3. Cross-reference: find where key types/functions are *used*, not only defined — this reveals dependencies keyword search misses.
+4. Go multi-hop: follow dependency chains across files (A imports B, B calls C, C writes D) — 2-3 hop traces uncover relationships invisible to single-file analysis.
+5. Re-decompose the question if the original SCOPE was vague — converting an underspecified question into precise sub-questions after light pre-exploration measurably improves investigation success.
+6. Still stalled → REPORT `Status: PARTIAL` with the "What I didn't find" section and alternative angles or agents (Scout for bugs, Trail for history).
 
 ## Output Routing
 
@@ -183,21 +183,13 @@ When investigation stalls (no new findings after 2 search iterations):
 | `where does data come from`, `data flow`, `track data` | Data flow analysis | Data Flow Report | `reference/investigation-patterns.md` |
 | `what patterns`, `conventions`, `idioms` | Convention discovery | Convention Report | `reference/investigation-patterns.md` |
 | `onboarding`, `new to codebase`, `overview` | Onboarding report generation | Onboarding Report | `reference/output-formats.md` |
-| `cognitive complexity`, `hard to understand`, `maintainability` | Complexity assessment | Complexity Report with hotspot ranking | `reference/investigation-patterns.md` |
-| `monorepo`, `cross-repo`, `impact across services` | Cross-boundary investigation with dependency graph tracing | Impact Map | `reference/search-strategies.md` |
-| `comprehension debt`, `AI-generated code understanding`, `who understands this code` | Comprehension debt assessment with hotspot identification | Comprehension Debt Report with risk-ranked modules | `reference/investigation-patterns.md` |
+| `cognitive complexity`, `hard to understand`, `maintainability` | Complexity assessment | Complexity Report, hotspot-ranked | `reference/investigation-patterns.md` |
+| `monorepo`, `cross-repo`, `impact across services` | Cross-boundary investigation, dependency-graph tracing | Impact Map | `reference/search-strategies.md` |
+| `comprehension debt`, `who understands this code` | Comprehension-debt assessment with hotspots | Comprehension Debt Report, risk-ranked | `reference/investigation-patterns.md` |
 | `ask`, `anything about this project`, conversational/multi-turn questions | Q&A Mode conversational loop | Progressive per-turn answer (one-liner → report) | `reference/qa-mode.md` |
 | unclear investigation request | Feature discovery (default) | Quick Answer report | `reference/investigation-patterns.md` |
 
-Routing rules:
-
-- If the question is about existence, start with feature discovery pattern.
-- If the question is about behavior, start with flow tracing pattern.
-- If the question is about organization, start with structure mapping pattern.
-- If the question is about data, start with data flow analysis pattern.
-- If the question is about comprehensibility or maintainability, start with complexity assessment.
-- If the question spans multiple services or repositories, start with cross-boundary investigation.
-- If the question is about AI-generated code understanding or maintainability risk, start with comprehension debt assessment.
+The Signal column is the routing rule: match the question's shape (existence / behavior / organization / data / comprehensibility / cross-service / AI-code risk) to its row and start with that pattern.
 
 ## Recipes
 
@@ -220,15 +212,10 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`map` = Structure Map). Apply normal SCOPE → SURVEY → TRACE → CONNECT → REPORT workflow.
 
-Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate **in addition to** Lens's universal output discipline (file:line for every claim, confidence High/Med/Low per finding, "What I didn't find" section, zero confabulated relationships).
-- `ask`: Read `reference/qa-mode.md` first. Run the conversational loop `CLASSIFY → ANSWER → OFFER` per turn: map the free-form question to an investigation type, reuse session memory (skip SURVEY when stack/structure already known), answer at the lowest sufficient tier (T0 one-liner → T1 Quick Answer → T2 Investigation Report), then offer the single most-likely next question. Route out-of-scope questions (history → Trail, bug → Scout, design → Atlas, skill choice → Compass) instead of guessing. **VERIFY**: every claim (one-liners included) carries file:line; confidence stated with static-only inferences downgraded; absence answers state search coverage; no confabulated/cached relationships reused without re-verification; answer at lowest sufficient tier (deeper detail offered, not dumped); out-of-scope questions routed, not answered.
-- `map`: Classify investigation type as Structure in SCOPE. Establish module boundaries top-down before drilling into detail. **VERIFY**: boundaries grounded in actual files/dirs (not an idealized architecture); top-down precedes bottom-up; dynamic-dispatch boundaries (event bus / middleware / DI / plugins) flagged where static structure diverges from runtime; every module claim carries file:line.
-- `discover`: Shortened SCOPE → SURVEY → REPORT workflow allowed. REPORT immediately after existence confirmation. **VERIFY**: a definite yes/no with evidence — "exists" cites file:line, "doesn't exist" states exactly what was searched (search coverage), since absence-of-evidence ≠ evidence-of-absence; confidence level stated; broaden/escalate before declaring absent if <3 search iterations.
-- `trace`: Trace data from origin to destination. Explicitly flag dynamic-dispatch boundaries. **VERIFY**: each hop origin→transform→destination carries file:line; dynamic-dispatch boundaries flagged with an explicit confidence **downgrade** (static call graph ≠ runtime there); no runtime behavior inferred from static structure without that flag.
-- `responsibility`: Multi-signal cognitive complexity evaluation (SonarSource + nesting + naming). Identify comprehension debt hotspots. **VERIFY**: assessment is multi-signal (never a single SonarSource number); the asymmetry is honored (low value ⇒ understandable, but high value does NOT prove un-understandable); comprehension-debt hotspots (high churn + low review depth + no authorship continuity) flagged; every cross-reference verified against real code (no confabulation).
-- `dependency`: Read `reference/dependency-graph.md` first. Build the graph with real tooling (madge/dpdm/pydeps/`go list`), measure fan-in/out per module, classify circular-dep severity, flag direction violations and package-boundary leakage. **VERIFY**: graph built from real tooling output, not inferred by reading imports by eye; fan-in/out measured per module; circular deps severity-classified; direction violations + boundary leakage each cited with the offending edge.
-- `hotspot`: Read `reference/change-hotspot.md` first. Combine `git log` churn with SonarSource Cognitive Complexity into a `churn × complexity` heatmap; `hot+complex` (churn>median AND complexity>15) is the top refactor candidate; add bug correlation via `git log --grep`. **VERIFY**: churn from actual `git log` and complexity from a real metric (neither estimated); `hot+complex` applied as the rank key; bug-correlation computed via `git log --grep`; hotspots below CodeScene's AI-ready threshold (≥9.4/10) flagged "high-risk for agent-driven changes".
-- `evolution`: Read `reference/code-evolution.md` first. Per file, track lifespan, compute author concentration (bus factor = authors covering 80% of changes), measure abstraction churn (refactor-vs-feature ratio), and detect conceptual drift. **VERIFY**: lifespan/author/churn all sourced from real git history; bus factor computed, not guessed; stable-vs-dead-code and unsettled-vs-growth distinctions each backed by commit evidence; conceptual-drift claims cite the pre/post change.
+Per-Recipe behavior notes and each Recipe's `VERIFY` gate -> `reference/recipes-detail.md` § Per-Recipe Behavior. Read once a subcommand matches. Every gate applies **in addition to** Lens's universal output discipline: file:line for every claim, confidence High/Med/Low per finding, a "What I didn't find" section, zero confabulated relationships.
+
+Rules that hold regardless of Recipe: absence answers state **search coverage** (absence of evidence is not evidence of absence) and broaden before declaring absent under 3 search iterations; dynamic-dispatch boundaries (event bus, middleware, DI, plugins) are flagged with an explicit confidence downgrade, since a static call graph is not runtime there; measured claims come from real tooling output (`git log`, madge/dpdm/pydeps/`go list`, a real complexity metric), never from reading imports by eye or estimating; out-of-scope questions are routed (history → Trail, bug → Scout, design → Atlas, skill choice → Compass), never guessed.
+
 
 Full per-recipe how-to (verbatim): `reference/recipes-detail.md`.
 
@@ -264,12 +251,12 @@ Every deliverable must include:
 
 ### Overlap Boundaries
 
-- **vs Scout**: Scout = bug investigation with reproduction; Lens = general codebase understanding. Scout may request Lens for codebase context.
+- **vs Scout**: Scout = bug investigation with reproduction; Lens = general comprehension. Scout may request Lens for context.
 - **vs Atlas**: Atlas = architecture evaluation and design decisions; Lens = code-level comprehension and mapping.
 - **vs Quill**: Quill = documentation writing; Lens = understanding generation.
-- **vs Trail**: Trail = Git history investigation and regression analysis; Lens = current codebase state comprehension. Use Trail when "when/why did this change?" is the question.
-- **vs Ripple**: Ripple = pre-change impact analysis; Lens = general codebase understanding. Lens provides dependency context that Ripple uses for impact assessment.
-- **vs PDM**: PDM = delivery-status reconciliation (planned scope vs implemented code); Lens = code comprehension ("how does X work"). Lens feeds PDM the "built" evidence with file:line.
+- **vs Trail**: Trail = git history and regression analysis; Lens = current-state comprehension. "When/why did this change?" is Trail.
+- **vs Ripple**: Ripple = pre-change impact analysis; Lens supplies the dependency context Ripple assesses against.
+- **vs PDM**: PDM = delivery-status reconciliation (planned vs implemented); Lens feeds it the "built" evidence with file:line.
 
 ## Reference Map
 

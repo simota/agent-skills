@@ -357,3 +357,17 @@ Before sending any handoff, verify:
 - [ ] Risk matrix's Red entries each have a phase-pinned mitigation.
 
 If any check fails, the blueprint is incomplete — return to `BLUEPRINT` before handing off.
+
+
+## Agent Teams Aptitude (SKILL.md excerpt)
+
+Port supports **Pattern D: Specialist Team** (2-3 workers) for large blueprints when the web app spans many features:
+
+| Worker | Ownership | Task |
+|--------|-----------|------|
+| `web-surveyor` | `_audit/web-survey.md` | Web stack, routing, state, data, storage, auth, third-party SDKs |
+| `ios-mapper` | `_audit/ios-architecture.md` | SwiftUI MVVM-C per-screen mapping, iOS-specific UX adaptation |
+| `android-mapper` | `_audit/android-architecture.md` | Compose MVVM/MVI per-screen mapping, Android-specific UX adaptation |
+
+Spawn when the web app has ≥30 routes/screens **and** parity goal ≥80%; below that single-session is faster. Each worker writes only its assigned file (file-ownership isolation).
+
