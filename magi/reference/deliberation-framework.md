@@ -102,6 +102,8 @@ To ensure each perspective provides genuine, uninfluenced analysis:
 - Explicitly note when a perspective has "nothing to add" (rather than forcing agreement)
 - Flag when one perspective's conclusion was influenced by another's framing
 
+**Why order matters:** iterative debate is a martingale — majority voting over independent votes captures most of the available gain. A single persuasive agent can lower group accuracy 10-40% and raise consensus on wrong answers by >30%. In Engine Mode, never expose one engine's output to another before all have voted.
+
 ---
 
 ## Engine Independence Protocol

@@ -32,6 +32,8 @@
 | Cascading-error trap | fixes secondary failures first | resolve the first error, then rerun |
 | Unverified assumptions | wrong mental model | assume nothing, verify everything |
 | Multiple simultaneous changes | unclear causal result | isolate one variable per experiment |
+| Surface error as root cause | timeout, HTTP 5xx, or connection failure recorded as the cause | trace upstream first — the surface error is the last link, not the first |
+| "Human error" as root cause | systemic weakness left unaddressed, recurrence guaranteed | treat it as a symptom of missing validation, unclear API, or inadequate tooling |
 
 ## Scientific Debugging
 

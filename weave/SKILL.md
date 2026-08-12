@@ -146,7 +146,7 @@ questions:
 
 ---
 
-## Core Workflow
+## Workflow
 
 ### Overview
 

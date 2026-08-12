@@ -145,10 +145,10 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Page load time | ≤ 3 seconds (perceived) | Google/Hotjar |
 | Bounce rate | flag if > 55% | Hotjar 2026 |
 | WCAG conformance | AA minimum, AAA for text-heavy | WCAG 2.2 |
-| WCAG 3.0 readiness | Hold WCAG 2.2 AA as baseline; APCA optional (removed from WCAG 3 draft July 2023, not reintroduced in Mar 2026 WD) | W3C WCAG 3 Working Draft 03 Mar 2026; Adrian Roselli (Apr 2026) |
+| WCAG 3.0 readiness | Hold WCAG 2.2 AA as baseline; APCA optional | `reference/core-contract-rationale.md` |
 | Contrast ratio (text) | ≥ 4.5:1 | WCAG 2.2 AA |
 | Contrast ratio (UI components) | ≥ 3:1 | WCAG 2.2 AA |
-| ADA Title II compliance | WCAG 2.1 AA by 2026-04-24 (pop. ≥ 50K) or 2027-04-26 (pop. < 50K); federal penalties up to $150K/violation | DOJ final rule |
+| ADA Title II compliance | WCAG 2.1 AA by 2026-04-24 (≥50K pop.) or 2027-04-26 (<50K); penalties up to $150K/violation | DOJ final rule |
 | Design options presented | ≥ 3 per direction decision | Vision policy |
 | Task success rate | ≥ 78% (typical baseline); target 85–90% | NN/g, DesignRush 2026 |
 | Token duplication | 0 cross-team duplicates | Design system health |
@@ -209,8 +209,6 @@ Full per-recipe notes -> `reference/design-methodology.md`; `pair` contract -> `
 | `multi`, `multi-engine`, `parallel design direction`, `cross-engine compare` | Tri-engine direction generation | Portfolio doc (default, 3-5 directions) or one Compete-merged direction | `reference/tri-engine-direction.md` |
 | unclear request | Clarify scope and operating mode | Scoped analysis | `reference/design-methodology.md` |
 
-Routing rules: design trends -> `reference/design-trends.md`; design-system architecture -> `reference/design-system-anti-patterns.md`; agent delegation -> `reference/agent-orchestration.md`; ethics or dark patterns -> `reference/ux-anti-patterns-ethics.md`; layout composition -> `reference/composition-principles.md`.
-
 ## Output Requirements
 
 - Deliver structured Markdown.
@@ -230,11 +228,11 @@ Overlap boundaries — Vision owns strategy and direction; the partner owns exec
 
 Activated by the `multi` Recipe. Mirrors Spark's Pattern D but optimizes for *aesthetic-spectrum coverage and brand-defining divergence* rather than feature ideation.
 
-- **Base engine policy**: default Claude + Codex (2 spawns); agy adds a third axis when AVAILABLE at PREFLIGHT — meaningful here because Antigravity surfaces Material 3 Expressive / Google design-language patterns the other two under-index.
-- **Mechanics**: one Agent subagent per AVAILABLE engine, spawned in one message; PREFLIGHT stays in Vision main context (never delegated); loose prompts only (Role + Target + Output format) so each engine's aesthetic priors drive divergence; main context runs NORMALIZE -> CLUSTER -> SCORE -> GROUND -> SYNTHESIZE -> DELIVER.
-- **Concurrence scoring**: `UNIVERSAL` (3/3) = safe baseline (check against competitor identity); `LIKELY` (2/3); `VERIFIED-DIVERGENT` (1/3, grounded) = often the brand-defining direction, never automatically lower-value.
-- **Aesthetic-spectrum coverage**: surviving directions span >= 2 `spectrum_position` values, at least one opposite the most-concurrent direction. `LINEAR_RESTRAINT` suppresses maximalist/brutalist; `SPATIAL` requires spatial coverage; `AI_INTERFACE` requires `ai_disclosure_pattern` on every direction.
-- **Merge**: `Portfolio` (default) — 3-5 complementary direction cards ordered UNIVERSAL -> LIKELY -> VERIFIED-DIVERGENT with lead-recommendation + challenger footer. `Compete` (opt-in via `multi --compete`) — one re-mixed direction. Portfolio is default because direction is a human selection decision.
+- **Base engine policy**: default Claude + Codex (2 spawns); agy adds a third axis when AVAILABLE at PREFLIGHT.
+- **Mechanics**: one Agent subagent per AVAILABLE engine, spawned in one message; PREFLIGHT stays in Vision main context; loose prompts only; main context runs NORMALIZE -> CLUSTER -> SCORE -> GROUND -> SYNTHESIZE -> DELIVER.
+- **Concurrence scoring**: `UNIVERSAL` (3/3) safe baseline; `LIKELY` (2/3); `VERIFIED-DIVERGENT` (1/3, grounded) — never automatically lower-value.
+- **Aesthetic-spectrum coverage**: surviving directions span >= 2 `spectrum_position` values. `LINEAR_RESTRAINT` suppresses maximalist/brutalist; `SPATIAL` requires spatial coverage; `AI_INTERFACE` requires `ai_disclosure_pattern` on every direction.
+- **Merge**: `Portfolio` (default) — 3-5 complementary direction cards, UNIVERSAL -> LIKELY -> VERIFIED-DIVERGENT. `Compete` (opt-in via `multi --compete`) — one re-mixed direction.
 - **Engine-attribution tag** (mandatory on every shipped direction): `[codex+agy+claude]` / `[codex+agy]` / `[codex-verified]`.
 
 Full algorithm, JSON schema, subagent prompt skeletons, GROUND rules, handoff stubs, and degraded modes -> `reference/tri-engine-direction.md`, `_common/MULTI_ENGINE_RECIPE.md`, `_common/SUBAGENT.md`.
@@ -244,32 +242,32 @@ Full algorithm, JSON schema, subagent prompt skeletons, GROUND rules, handoff st
 
 | File | Read this when... |
 |------|-------------------|
-| `reference/output-formats.md` | you need the exact report template or section structure |
-| `reference/design-methodology.md` | you need the full per-mode process, phase order, or pre-check rules |
-| `reference/design-trends.md` | you need current trend buckets, AI-tool guardrails, or trend-evaluation rules |
-| `reference/agent-orchestration.md` | you need delegation flow or Accord validation |
-| `reference/design-system-anti-patterns.md` | you need token architecture, naming, theming, or design-system risk screening |
-| `reference/ux-anti-patterns-ethics.md` | you need dark-pattern, accessibility, or ethical-design checks |
-| `reference/design-handoff-collaboration.md` | you need handoff readiness, state coverage, or dev-collaboration rules |
-| `reference/design-review-feedback.md` | you need critique structure, review cadence, or feedback quality rules |
-| `reference/brand-strategy.md` | you need brand identity strategy, voice keyword definition, multi-brand orchestration, or brand-fit scoring |
-| `reference/moodboard-curation.md` | ENVISION moodboard curation: directional axes, candidate-to-finalist narrowing, anti-keywords |
-| `reference/design-audit-checklist.md` | REVIEW-mode audit: Nielsen heuristics, WCAG 2.2 AA grid, token-drift detection, prioritized backlog |
-| `reference/co-design-pair.md` | `pair` recipe — driver/navigator roles, SETUP -> per-decision LOOP -> CLOSE, options-first evidence bar, termination bounds, VERIFY gate |
+| `reference/output-formats.md` | exact report template or section structure |
+| `reference/design-methodology.md` | full per-mode process, phase order, pre-check rules |
+| `reference/design-trends.md` | trend buckets, AI-tool guardrails, trend-evaluation rules |
+| `reference/agent-orchestration.md` | delegation flow or Accord validation |
+| `reference/design-system-anti-patterns.md` | token architecture, naming, theming, design-system risk screening |
+| `reference/ux-anti-patterns-ethics.md` | dark-pattern, accessibility, or ethical-design checks |
+| `reference/design-handoff-collaboration.md` | handoff readiness, state coverage, dev-collaboration rules |
+| `reference/design-review-feedback.md` | critique structure, review cadence, feedback quality rules |
+| `reference/brand-strategy.md` | brand identity strategy, voice keywords, multi-brand orchestration, brand-fit scoring |
+| `reference/moodboard-curation.md` | ENVISION moodboard: directional axes, candidate-to-finalist narrowing, anti-keywords |
+| `reference/design-audit-checklist.md` | REVIEW-mode audit: Nielsen heuristics, WCAG 2.2 AA grid, token-drift, backlog |
+| `reference/co-design-pair.md` | `pair` recipe — driver/navigator roles, SETUP -> LOOP -> CLOSE, evidence bar, termination bounds |
 | `_common/BOUNDARIES.md` | role boundaries are ambiguous |
-| `reference/composition-principles.md` | you need first-viewport rules, hero contract, layout restraint, image strategy, or page structure |
-| `reference/linear-restraint-mode.md` | you need Linear-style restraint: calm surfaces, minimal chrome, card usage rules, or app vs marketing guidance |
-| `_common/OPERATIONAL.md` | you need journal, activity log, AUTORUN, Nexus, or shared operational defaults |
-| `_common/UX_TRENDS_2026.md` | 2025-2026 direction signals — OS design languages, brand-system case studies, visual-language standards. Read §1 Design. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the direction/critique report, thinking depth at DIRECT/CRITIQUE, front-loading brand/scope at SURVEY. Critical: P3, P5 |
-| `_common/IMAGE_INPUT.md` | Brand assets, competitor screenshots, or mockups as input — run the image pipeline before direction or critique |
-| `reference/tri-engine-direction.md` | `multi` Recipe — fan-out, Concurrence-Divergence scoring, spectrum coverage, Portfolio vs Compete merge, JSON schema, GROUND checks |
-| `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — engine dispatch, loose-prompt rules, fan-out mechanics, fallbacks |
-| `_common/MULTI_ENGINE_RECIPE.md` | Canonical Pattern D protocol, engine-attribution tag conventions, degraded-mode rules |
-| `_common/PROPORTION_AND_SPACING.md` | Justifying a proportional system — type scale ratio, grid/container, composition claims. **Read §1 and §10 before invoking the golden ratio** — φ-as-beauty-law is contested; asserting it unqualified is a grounding failure. |
-| `_common/PROOF_CARRYING.md` | Issuing `brand_proof` advisory in `nexus acceptance` Phase 4B (non-blocking). Brand voice / illustration / motion / emotional fit route to G7 for Tier-S human sign-off. Operate as Design Compiler, not approver. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Vision-specific Output/Next schema. |
-| `reference/apple-design-trends.md` | Apple-platform *direction and taste* — Liquid Glass judgment, archetypes, ADA pattern analysis, cross-platform coherence (HIG rules live in `native/reference/ios-hig.md`) |
+| `reference/composition-principles.md` | first-viewport rules, hero contract, layout restraint, image strategy |
+| `reference/linear-restraint-mode.md` | Linear-style restraint: calm surfaces, minimal chrome, card rules |
+| `_common/OPERATIONAL.md` | journal, activity log, AUTORUN, Nexus, shared operational defaults |
+| `_common/UX_TRENDS_2026.md` | 2025-2026 direction signals — OS design languages, brand-system case studies. Read §1 |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the direction/critique report, thinking depth. Critical: P3, P5 |
+| `_common/IMAGE_INPUT.md` | Brand assets, screenshots, or mockups as input — run image pipeline first |
+| `reference/tri-engine-direction.md` | `multi` Recipe — fan-out, scoring, spectrum coverage, Portfolio vs Compete, JSON schema |
+| `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — engine dispatch, loose-prompt rules, fallbacks |
+| `_common/MULTI_ENGINE_RECIPE.md` | Canonical Pattern D protocol, engine-attribution tags, degraded-mode rules |
+| `_common/PROPORTION_AND_SPACING.md` | Justifying a proportional system. **Read §1 and §10 before the golden ratio** — φ-as-beauty-law is contested. |
+| `_common/PROOF_CARRYING.md` | `brand_proof` advisory in `nexus acceptance` Phase 4B; brand/illustration/motion route to G7 human sign-off |
+| `reference/autorun-schema.md` | Emitting AUTORUN `_STEP_COMPLETE` — Vision-specific Output/Next schema |
+| `reference/apple-design-trends.md` | Apple-platform direction/taste — Liquid Glass, archetypes, ADA analysis (HIG rules in `native/reference/ios-hig.md`) |
 
 ## Operational
 

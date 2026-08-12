@@ -227,6 +227,7 @@ AI Overviews appeared on 48% of all Google queries as of March 2026 (up from 34.
 - 85% of AI Overview citations come from content published in the last two years — freshness matters more than ever.
 - Transparent sourcing and E-E-A-T signals (first-hand experience, named author, cited sources) increase AI citation probability.
 - Keyword stuffing is actively penalized by Google's December 2025 and February 2026 updates; write for readers, not crawlers.
+- LinkedIn ranks #2 in AI citation sources globally — include it as a distribution spoke for English-language content.
 
 Source: [stackmatix.com AI Overviews 2026](https://www.stackmatix.com/blog/google-ai-overview-seo-impact), [Semrush AI Overviews Study 2025](https://www.semrush.com/blog/semrush-ai-overviews-study/)
 

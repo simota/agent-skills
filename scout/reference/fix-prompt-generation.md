@@ -18,6 +18,8 @@
 
 ## Scout Action Verbs
 
+Compact reference (SKILL.md keeps only this row set; full "when/receiving" detail below): `FIX`, `FIX-WITH-TEST`, `MITIGATE`, `INVESTIGATE-FURTHER`, `REFACTOR-FIX`.
+
 Each fix prompt declares one verb at the top of `# Your task`.
 
 | Verb | When to use | Receiving agent / LLM |

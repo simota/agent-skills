@@ -23,6 +23,8 @@ Rule of thumb: if the question is "did an AI write this code, and what could go 
 | Organizations that deployed vulnerable AI code | 81% |
 | AI share of production code | 24% (29% in US) |
 | AI-suggested packages with known CVEs | 44-49% |
+| Secret-leak rate: AI commits vs baseline | 2x |
+| Privilege-escalation paths introduced by AI commits | +322% |
 
 Security of AI-generated code has not improved despite functional accuracy improvements through 2025.
 

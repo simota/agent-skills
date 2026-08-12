@@ -49,6 +49,19 @@ Add when available:
 - impact scope
 - workaround
 
+## Recommended Fix Impact Scope Template
+
+```yaml
+RecommendedFixImpactScope:
+  callers:    {affected: [file:line, ...], note: "1-line description or 'none'"}
+  tests:      {affected: [test files], note: "additions/updates needed or 'none'"}
+  types:      {affected: [type/schema files], note: "contract impact or 'none'"}
+  configs:    {affected: [config/env keys], note: "propagation impact or 'none'"}
+  docs:       {affected: [doc paths], note: "update needed or 'none'"}
+  axes_affected: <integer 0-5>
+  recommend_ripple: <true if axes_affected >= 3 OR uncertainty is high>
+```
+
 ## Investigation Toolkit
 
 | Category | Tools |

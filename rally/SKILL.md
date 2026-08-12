@@ -61,14 +61,7 @@ Route elsewhere when:
 
 ### Nexus Agent Spawn Mode
 
-Rally may be spawned by Nexus as an Agent (L3 delegation) when 4+ workers are needed or complex ownership management is required. In this mode:
-
-1. Rally receives the full task context in the Agent prompt
-2. Rally reads its own SKILL.md and operates autonomously
-3. Rally creates and manages teams using Agent Teams API as normal
-4. Rally returns results via `_STEP_COMPLETE` in its response
-
-No behavioral changes are needed — Rally operates identically whether invoked directly by the user, via Nexus hub mode, or spawned as an Agent.
+Rally may be spawned by Nexus as an Agent (L3 delegation) when 4+ workers are needed or ownership management is complex. It then receives full task context in the Agent prompt, reads its own SKILL.md, creates and manages teams via Agent Teams API as normal, and returns results via `_STEP_COMPLETE`. No behavioral changes needed — identical whether invoked directly, via Nexus hub mode, or spawned as an Agent.
 
 ## Core Contract
 
@@ -244,45 +237,7 @@ Routing rules:
 
 ## Codex CLI Subagent Orchestration
 
-When running on Codex CLI, Rally uses `spawn_agent` / `wait_agent` / `send_input` / `close_agent` instead of Agent Teams API.
-
-### API Mapping
-
-| Claude Code Agent Teams | Codex CLI Subagents | Notes |
-|------------------------|---------------------|-------|
-| `TeamCreate` | N/A | No explicit team concept |
-| `TeamDelete` | `close_agent` × N | Close all subagents |
-| Teammate spawn | `spawn_agent(prompt)` | Returns agent ID |
-| `TaskCreate` / `TaskUpdate` | `send_input(id, msg)` | Send task via prompt or input |
-| `TaskList` / `TaskGet` | `wait_agent(id)` | Wait for completion |
-| `SendMessage` (DM) | `send_input(id, msg)` | Direct message to subagent |
-| `SendMessage` (broadcast) | `send_input` × N | Loop over all agents |
-| Plan approval | N/A | No plan mode in Codex subagents |
-
-### Codex Subagent Parallel Pattern
-
-```
-# SPAWN phase - spawn all workers
-worker_a = spawn_agent(prompt: "Following the builder instructions in AGENTS.md, implement email validation...")
-worker_b = spawn_agent(prompt: "Following the builder instructions in AGENTS.md, implement phone-number validation...")
-
-# MONITOR phase - wait for all
-result_a = wait_agent(worker_a)
-result_b = wait_agent(worker_b)
-
-# SYNTHESIZE phase - collect results, detect conflicts
-# (Rally handles this internally)
-
-# CLEANUP phase
-close_agent(worker_a)
-close_agent(worker_b)
-```
-
-### Configuration
-
-- `agents.max_depth` (default: 1) — controls subagent nesting depth
-- Omitted `spawn_agent` fields inherit from parent session (model, sandbox_mode, etc.)
-- `nickname_candidates` — set descriptive names for each worker
+When running on Codex CLI, Rally uses `spawn_agent` / `wait_agent` / `send_input` / `close_agent` instead of Agent Teams API — same 7-phase lifecycle, different primitives. Full API mapping, the parallel-spawn pattern, and `agents.max_depth` configuration → `reference/orchestration-patterns.md`.
 
 ## Reference Map
 

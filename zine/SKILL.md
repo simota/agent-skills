@@ -43,7 +43,7 @@ External-facing tech writing specialist — turns concepts, drafts, and retrospe
 
 ## Trigger Guidance
 
-Use Zine when the task needs: a tech blog article for note / Zenn / Qiita / dev.to from a concept, outline, or rough draft; an opening hook that survives feed skimming; structural editing of a draft (H-tag hierarchy, paragraph rhythm, reader breath); multi-episode series design (index, cross-links, cadence, naming); platform-specific tuning (note 目次, Zenn emoji+topics, Qiita tags, dev.to cover image); a retrospective / migration story / postmortem reshaped for public consumption; a release announcement leading with why-it-matters instead of a changelog dump; one canonical draft converted into platform variants; tightening a draft that reads like ChatGPT output; CTA calibration (subscribe vs try vs share vs next-episode).
+Use Zine when the task needs: a tech blog article for note / Zenn / Qiita / dev.to from a concept, outline, or rough draft; an opening hook that survives feed skimming; structural editing (H-tag hierarchy, paragraph rhythm, reader breath); multi-episode series design (index, cross-links, cadence, naming); platform-specific tuning (note 目次, Zenn emoji+topics, Qiita tags, dev.to cover image); a retrospective / migration story / postmortem for public consumption; a release announcement leading with why-it-matters, not a changelog dump; one canonical draft converted into platform variants; tightening a draft that reads like ChatGPT output; CTA calibration.
 
 Route elsewhere when the task is primarily: internal specs / PRD / SRS (`Scribe`); UX microcopy and in-app strings (`Prose`); product use-case narratives and customer stories (`Saga`); learning docs from git diffs (`Tome`); slide decks and conference talks (`Stage`); SEO strategy and keyword research (`Growth`); engineer personal branding (`Crest`); video scripts and storyboards (`Cue`).
 
@@ -73,7 +73,7 @@ Interaction triggers → `_common/INTERACTION.md`
 - Close with an explicit CTA calibrated to article intent — never `以上です` / `最後までお読みいただきありがとうございました` alone.
 - Platform-appropriate metadata block: note タグ 3-5 / Zenn emoji + topics max 5 / Qiita tags max 5 / dev.to cover image 1000×420 + tags max 4.
 - Check `.agents/PROJECT.md` for series context, tone conventions, and previous episode links; for series articles, update the index in the same pass.
-- Article output language follows the user's request for the target platform; platform defaults: Japanese for note/Qiita, English for dev.to, bilingual-friendly for Zenn. Internal reports/handoffs follow the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`).
+- Article output language: see `## Output Language` below.
 
 ### Ask First
 
@@ -165,7 +165,7 @@ Per-platform audience, length, metadata, and discoverability table -> `reference
 
 Default Output Language: Japanese for note/Qiita, English for dev.to, Japanese with English code comments for Zenn (bilingual acceptable). Cross-post with `canonical_url` pointing to the primary publish location to avoid SEO duplication penalty.
 
-**2025-2026 SEO context**: Google AI Overviews cover 48% of queries (March 2026). Articles that front-load a self-contained 40-60 word answer and demonstrate E-E-A-T (first-hand experience, cited sources, named author) earn higher AI citation rates. Keyword stuffing is penalized by Google's Dec 2025 / Feb 2026 updates — write for readers. LinkedIn ranks #2 in AI citation sources globally; include LinkedIn as a distribution spoke for English content. Delegate deep SEO analysis to Growth.
+**2025-2026 SEO context**: front-load a self-contained 40-60 word answer and demonstrate E-E-A-T to earn AI-citation rates as Google AI Overviews grow; write for readers, not keyword stuffing. Full stats and sourcing -> `reference/platform-optimization.md` § Google AI Overviews. Delegate deep SEO analysis to Growth.
 
 ## Series Management
 
@@ -193,40 +193,11 @@ Every article deliverable must include:
 **Sends:** Growth (SEO/SMO/OGP), Prose (CTA and in-body microcopy), Stage (article-to-slides), Canvas (figures/diagrams), Saga (reshape to customer story), Morph (Markdown export)
 
 
-### Collaboration Patterns
-
-| Pattern | Name | Flow | Purpose |
-|---------|------|------|---------|
-| **A** | Concept-to-Article | User → Zine → Growth | Idea becomes publishable draft, then SEO packaging |
-| **B** | Retrospective-to-Post | User[notes+git log] → Tome → Zine | Learning doc reshaped as public retrospective |
-| **C** | Article-to-Slides | Zine → Stage | Long-form article converted to talk deck |
-| **D** | Draft-Polish | User[rough draft] → Zine → Prose | Restructure + downstream microcopy polish |
-| **E** | Series-Arc | User → Zine[index + #01..#0n] | Multi-episode series with coherent cross-links |
-| **F** | Cross-Platform | Zine[canonical] → Zine[note variant] + Zine[dev.to variant] | One canonical draft, multiple platform outputs |
+Collaboration Patterns A-F (Concept-to-Article, Retrospective-to-Post, Article-to-Slides, Draft-Polish, Series-Arc, Cross-Platform) are defined in the `COLLABORATION_PATTERNS` block of the CAPABILITIES_SUMMARY comment above.
 
 ### Handoff Patterns
 
-Read `reference/handoffs.md` for complete handoff templates.
-
-**From Tome:**
-```
-Receive learning document generated from git diffs + decision history.
-Zine reshapes technical accuracy into reader-narrative with hook + CTA + platform metadata.
-Preserve Tome's technical claims verbatim; only reshape prose and structure.
-```
-
-**To Growth:**
-```
-Deliver canonical article + title candidates (3-5) + meta description draft + H-tag outline + OG text.
-Growth adds keyword research, JSON-LD schema, social card variants, and publishes.
-Zine does NOT do keyword research or ranking strategy — Growth owns that.
-```
-
-**To Stage:**
-```
-Deliver article + key beats list (1 beat = 1 slide) + suggested slide count.
-Stage owns slide pacing (WPM-calibrated), visual design, reveal.js/Marp output.
-```
+Full templates (From Tome/Saga/Harvest, To Growth/Prose/Stage/Canvas/Saga/Morph) -> `reference/handoffs.md`. Core rule: preserve Tome's technical claims verbatim, only reshape prose/structure; deliver Growth title candidates + meta description + H-tag outline (Zine does not own keyword research); deliver Stage a beats list (1 beat = 1 slide), not slide design.
 
 ## Reference Map
 

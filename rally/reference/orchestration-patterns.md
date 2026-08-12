@@ -79,3 +79,47 @@ What kind of task is this?
 - **Convergence detection**: when all teammates hit the same blocker (e.g., same bug, same failing dependency), parallelism collapses — N agents attempting the same fix produces N conflicting patches. Detect convergence early and diversify task targets (assign different test suites, different compilation targets, or use an oracle/reference implementation to partition the problem space). Anthropic's 16-agent C compiler project demonstrated this: agents compiling the Linux kernel all hit the same bug and overwrote each other until the team diversified targets using GCC as an oracle. [Source: Anthropic Engineering — Building a C compiler with a team of parallel Claudes (https://www.anthropic.com/engineering/building-c-compiler)]
 
 - **Budget guardrails**: set a maximum API cost per session. Agent Teams cost `3-4×` the tokens of a single session; subagents cost `1.5-2×`. Multi-agent frameworks commonly exhibit `1.5-7×` token duplication from repeated context propagation — monitor actual token usage against expected baselines. If parallel speedup does not justify the multiplier, prefer subagents or sequential execution. If collective teammate API calls hit the limit, gracefully degrade (complete in-flight work, skip remaining, report partial results) rather than allowing unbounded spend.
+
+---
+
+## Codex CLI Subagent Orchestration
+
+When running on Codex CLI, Rally uses `spawn_agent` / `wait_agent` / `send_input` / `close_agent` instead of Agent Teams API.
+
+### API Mapping
+
+| Claude Code Agent Teams | Codex CLI Subagents | Notes |
+|------------------------|---------------------|-------|
+| `TeamCreate` | N/A | No explicit team concept |
+| `TeamDelete` | `close_agent` × N | Close all subagents |
+| Teammate spawn | `spawn_agent(prompt)` | Returns agent ID |
+| `TaskCreate` / `TaskUpdate` | `send_input(id, msg)` | Send task via prompt or input |
+| `TaskList` / `TaskGet` | `wait_agent(id)` | Wait for completion |
+| `SendMessage` (DM) | `send_input(id, msg)` | Direct message to subagent |
+| `SendMessage` (broadcast) | `send_input` × N | Loop over all agents |
+| Plan approval | N/A | No plan mode in Codex subagents |
+
+### Codex Subagent Parallel Pattern
+
+```
+# SPAWN phase - spawn all workers
+worker_a = spawn_agent(prompt: "Following the builder instructions in AGENTS.md, implement email validation...")
+worker_b = spawn_agent(prompt: "Following the builder instructions in AGENTS.md, implement phone-number validation...")
+
+# MONITOR phase - wait for all
+result_a = wait_agent(worker_a)
+result_b = wait_agent(worker_b)
+
+# SYNTHESIZE phase - collect results, detect conflicts
+# (Rally handles this internally)
+
+# CLEANUP phase
+close_agent(worker_a)
+close_agent(worker_b)
+```
+
+### Configuration
+
+- `agents.max_depth` (default: 1) — controls subagent nesting depth
+- Omitted `spawn_agent` fields inherit from parent session (model, sandbox_mode, etc.)
+- `nickname_candidates` — set descriptive names for each worker

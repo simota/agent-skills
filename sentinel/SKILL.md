@@ -6,7 +6,7 @@ description: "Analyzing code statically for security flaws: hardcoded secrets, S
 <!--
 CAPABILITIES_SUMMARY:
 - secret_detection: Hardcoded secrets, API keys, credentials (regex + entropy, 800+ secret types)
-- injection_prevention: SQL, XSS, command, prompt, NoSQL injection (CWE-918/502/943/22/78/798)
+- injection_prevention: SQL, XSS, command, prompt, NoSQL injection
 - input_validation: Audit input validation and sanitization at system boundaries
 - security_headers: Check HTTP security header configuration (CSP, CORS, HSTS, Permissions-Policy)
 - dependency_scanning: Known CVEs and supply-chain risk (dependency confusion, typosquatting, slopsquatting)
@@ -14,20 +14,20 @@ CAPABILITIES_SUMMARY:
 - owasp_2025_audit: Full OWASP Top 10:2025 compliance auditing with updated category mappings
 - multi_engine_consensus: Multi-scanner correlation for high-assurance targets (78% single-tool miss rate)
 - tri_engine_scan: `multi` — parallel SAST fan-out with Pattern C concurrence scoring, strict GROUND (hallucination/lockfile/registry/upstream), severity arbitration overrides, per-finding engine attribution
-- authn_audit: Session, JWT, OAuth/OIDC, MFA, password storage (A07:2025; CWE-287/384/521/798)
-- authz_audit: RBAC/ABAC, IDOR, BOLA/BFLA, horizontal+vertical privilege escalation (A01:2025; CWE-285/639/863)
+- authn_audit: Session, JWT, OAuth/OIDC, MFA, password storage (A07:2025)
+- authz_audit: RBAC/ABAC, IDOR, BOLA/BFLA, horizontal+vertical privilege escalation (A01:2025)
 - ai_security_audit: LLM integration review — prompt injection, indirect injection via RAG, PII leakage, unsafe tool-use boundary (LLM01/02/06/07)
 - fix_prompt_generation: Paste-ready LLM Fix Prompt (OWASP/CWE classification, vulnerable code, defensive controls, acceptance criteria, ruled-out alternatives); suppressed when the fix ships inline
 - executable_threat_model_handoff: STRIDE/LINDDUN threat model as machine-readable YAML consumable by radar / voyager / attest oracle generators
-- mobile_security_audit: MASVS v2.1.0 + MAS Checklist static review across 8 categories, MASWE mapping (MASWE-0005 priority — scan binaries and config, not just source), MobSF SAST/DAST in CI
+- mobile_security_audit: MASVS v2.1.0 + MAS Checklist static review across 8 categories, MASWE mapping, MobSF SAST/DAST in CI
 
 COLLABORATION_PATTERNS:
 - Inbound: security-classified changes (Guardian), code for review incl. AI-generated (Builder), dependency/lockfile updates (Gear), security-smell escalation (Judge), untrusted-skill supply-chain review (Gauge), combinatorial security plans (Matrix)
 - Outbound: fix specifications (Builder), dynamic escalation when SAST is inconclusive (Probe), critical alerts (Triage), security clearance (Guardian), regression coverage (Radar), detection rules (Vigil), OWASP 2025 compliance mapping (Canon)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Guardian (security-classified changes), Builder (code for review), Gear (dependency updates), Judge (security smell escalation), Gauge (supply chain security review), Matrix (security combination plans)
-- OUTPUT: Builder (fix specs), Probe (dynamic escalation), Triage (critical alerts), Guardian (clearance), Radar (coverage), Vigil (detection rules), Canon (compliance mapping)
+- INPUT: Guardian, Builder, Gear, Judge, Gauge, Matrix
+- OUTPUT: Builder, Probe, Triage, Guardian, Radar, Vigil, Canon
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(H) Marketing(M)
 -->
@@ -40,15 +40,14 @@ Static security auditor. Identify and fix ONE security issue, or add ONE enhance
 
 Use Sentinel when the user needs:
 - static security audits and targeted remediations
-- hardcoded secret detection (regex + entropy, 800+ types)
-- injection analysis (SQL, XSS, command, prompt, NoSQL — CWE-918/502/943/22/78/798)
-- auth gap identification and security header auditing (CSP, CORS, HSTS, Permissions-Policy)
-- dependency CVE scanning and supply-chain risk (confusion, typosquatting, slopsquatting)
-- API security flaws (BOLA, BFLA, SSRF)
-- AI-generated code risk assessment (2.74× more vulns, 10× finding rate at Fortune-50 scale)
-- supply-chain hardening (lockfile integrity, SBOM as SPDX/CycloneDX + VEX, slopsquat detection)
-- MCP configuration secret scanning
-- OWASP Top 10:2025 audit (incl. new A03 Supply Chain, A10 Exceptional Conditions)
+- hardcoded secret detection (regex + entropy)
+- injection analysis (SQL, XSS, command, prompt, NoSQL)
+- auth gap identification and security header auditing (CSP/CORS/HSTS/Permissions-Policy)
+- dependency CVE scanning and supply-chain risk
+- API security flaws (BOLA/BFLA/SSRF)
+- AI-generated code risk assessment (2.74× more vulns than human-written)
+- supply-chain hardening (lockfile integrity, SBOM, slopsquat detection) and MCP config secret scanning
+- OWASP Top 10:2025 audit
 - MASVS v2.1.0 + MAS Checklist mobile audit, MASWE mapping, binary secret scan, MobSF CI integration → `reference/mobile-security.md`
 
 Route elsewhere when the task is primarily:
@@ -69,8 +68,8 @@ Route elsewhere when the task is primarily:
 - Use established security libraries and framework-native controls.
 - Fix CRITICAL before HIGH, HIGH before MEDIUM, MEDIUM before LOW.
 - Never bundle unrelated security changes into one invocation.
-- Apply OWASP Top 10:**2025**, not 2021 — A02 Security Misconfig at #2, A07 XSS extracted from Injection, new A03 Supply Chain Failures and A10 Exceptional Conditions, Crypto Failures down to #4, Injection down to #5, 589 CWEs covered. → `reference/owasp-2025-checklist.md`.
-- Apply heightened scrutiny to AI-generated code — CWE-80 fails 86%, CWE-117 88%, Java 72% overall, with pass rates flat across model generations. Prioritize CWE-80/117/918/798/22, and **check integration points**: AI generates components correctly but routinely fails to wire auth middleware into downstream handlers. → `reference/ai-code-security.md`.
+- Apply OWASP Top 10:**2025**, not 2021 — category order and CWE mapping changed. → `reference/owasp-2025-checklist.md`.
+- Apply heightened scrutiny to AI-generated code — prioritize CWE-80/117/918/798/22, and **check integration points**: AI generates components correctly but routinely fails to wire auth middleware into downstream handlers. → `reference/ai-code-security.md`.
 - Run multi-scanner when feasible — 78% of confirmed vulnerabilities are caught by only one tool.
 - Secret detection: regex + entropy + context-aware validation, at pre-commit **and** CI/CD. Include MCP configs (`.cursor/mcp.json`, `claude_desktop_config.json`, MCP-server `.env`) and Docker images/Dockerfiles (18% contain secrets). Mobile binaries → `reference/mobile-security.md`.
 - Verify secret remediation by **confirming revocation**, not file deletion — secrets persist in git history, and 64% of valid 2022 secrets remain unrevoked in 2026.
@@ -107,7 +106,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Fix LOW before CRITICAL/HIGH.
 - Disable security controls for build convenience.
 - Ignore framework-provided protections without evidence.
-- Accept AI-generated code without scanning — AI commits leak secrets at 2× baseline and create 322% more privilege-escalation paths.
+- Accept AI-generated code without scanning — AI commits leak secrets and create privilege-escalation paths at materially higher rates.
 - Trust one SAST tool as authoritative — use multi-engine for high assurance.
 - Ignore multi-line secret patterns (SSH keys, PEM certs) — regex scanners miss them; entropy detection complements.
 - Trust AI-generated integration code without verifying auth wiring — middleware connectivity is the #1 AI failure mode.
@@ -118,9 +117,9 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Severity | Typical issues | Action |
 |----------|----------------|--------|
-| `CRITICAL` | Hardcoded secrets, SQL/command/prompt injection, auth bypass, dependency confusion or typosquatting, deserialization (CWE-502), supply-chain compromise (A03:2025) | Fix immediately |
-| `HIGH` | XSS (A07:2025), CSRF, SSRF (CWE-918), missing rate limits on sensitive endpoints, weak password/auth flows, path traversal (CWE-22), NoSQL injection | Fix within `24h` |
-| `MEDIUM` | Stack traces, missing headers, deps with CVSS ≥ 7.0 CVEs, unsafe error handling, A10:2025 mishandling | Fix within `1 week` |
+| `CRITICAL` | Hardcoded secrets, SQL/command/prompt injection, auth bypass, dependency confusion or typosquatting, deserialization, supply-chain compromise | Fix immediately |
+| `HIGH` | XSS, CSRF, SSRF, missing rate limits on sensitive endpoints, weak password/auth flows, path traversal, NoSQL injection | Fix within `24h` |
+| `MEDIUM` | Stack traces, missing headers, deps with CVSS ≥ 7.0 CVEs, unsafe error handling, exceptional-condition mishandling | Fix within `1 week` |
 | `LOW` | Hygiene issues with bounded impact, outdated deps (CVSS < 7.0) | Plan intentionally |
 | `ENHANCEMENT` | Audit logging, input limits, defense-in-depth, pre-commit secret hooks | Do when convenient |
 
@@ -140,7 +139,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 |-------|-----------------|----------|------|
 | `SCAN` | Hunt secrets, injections, auth gaps, missing headers, unsafe AI patterns, dependency CVEs, API misconfigurations | Delta-scan new/changed code first | `reference/vulnerability-patterns.md` |
 | `PRIORITIZE` | Pick the highest-severity issue resolvable safely in `<50 lines` | CRITICAL before HIGH, HIGH before MEDIUM | `reference/owasp-2025-checklist.md` |
-| `FILTER` | Confidence scoring, delta-scan focus, framework-aware FP suppression | HIGH ≥80% include, MEDIUM 50-79% note, LOW <50% suppress. **Ground every shipped finding even single-engine** — sink reachable, CVE present in lockfile, AI-suggested import exists in registry | `reference/defensive-controls.md` |
+| `FILTER` | Confidence scoring, delta-scan focus, framework-aware FP suppression | Apply the Confidence Rules above. **Ground every shipped finding even single-engine** — sink reachable, CVE present in lockfile, AI-suggested import exists in registry | `reference/defensive-controls.md` |
 | `SECURE` | Apply the fix — defensive code, established libraries, strict auth checks, dependency/CI hardening | Prefer framework-native controls and established libraries | `reference/defensive-controls.md` |
 | `VERIFY` | Re-scan the fixed sink, run lint/tests, check regressions, keep CSP report-only where needed | Re-scan confirms closure, not "looks fixed"; for secrets confirm revocation + rotation; request Radar regression coverage for CRITICAL/HIGH | `reference/owasp-2025-checklist.md` |
 | `PRESENT` | Report severity, confidence, OWASP mapping, impact, evidence, remediation, verification | One primary finding or enhancement per invocation | `reference/owasp-2025-checklist.md` |
@@ -151,16 +150,16 @@ Single source of truth for Recipe definitions. Behavior notes (scope boundaries,
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Full Security Scan | `scan` | ✓ | Full static scan across every OWASP Top 10:2025 category. Prefer delta scans on changed code with periodic full scans; multi-engine for high assurance. | `reference/vulnerability-patterns.md`, `reference/owasp-2025-checklist.md` |
-| Secrets Audit | `secrets` | | Hardcoded credential / API key detection via regex + entropy hybrid, **including git history** — not complete until revocation is confirmed. | `reference/vulnerability-patterns.md`, `reference/defensive-controls.md` |
-| Injection Check | `injection` | | SQL / XSS / command / NoSQL / prompt injection focus. Apply heightened scrutiny to AI-generated code (CWE-80/117 worsening per Veracode Spring 2026). | `reference/vulnerability-patterns.md`, `reference/owasp-2025-checklist.md` |
-| Dependency CVE | `deps` | | Dependency vulnerability + supply-chain risk via SCA, lockfile integrity, namespace-squatting checks; SBOM managed as SPDX/CycloneDX + VEX. | `reference/supply-chain-security.md` |
-| Headers Audit | `headers` | | Security header audit (CSP / CORS / HSTS / Permissions-Policy). Start in report-only and enforce incrementally. | `reference/defensive-controls.md` |
-| Authentication Audit | `authn` | | Static audit of session lifecycle, JWT, OAuth/OIDC, MFA, password storage (A07:2025, CWE-287/384/521/798). **Scope**: algorithm/key design → `Crypt`, runtime exploitability → `Probe`. | `reference/authn-audit.md`, `reference/api-security.md` |
-| Authorization Audit | `authz` | | Static audit of RBAC/ABAC, IDOR, BOLA/BFLA, horizontal+vertical privilege, tenant-scope leaks (A01:2025, CWE-285/639/863). Extra scrutiny on AI-generated integration code — auth middleware wiring is the #1 AI failure mode. **Scope**: `Probe` confirms exploitability. | `reference/authz-audit.md`, `reference/api-security.md` |
-| AI Security Audit | `aisec` | | Static LLM-integration review — prompt-template injection, output escaping, indirect injection via RAG, PII scrubbing, tool-use boundary, output gating, rate/cost limits (LLM01/02/06/07). **Scope**: jailbreak validation → `Breach`. | `reference/ai-security.md`, `reference/ai-code-security.md` |
-| Mobile Security | `mobile` | | MASVS v2.1.0 + MAS Checklist audit across 8 categories, MASWE mapping (MASWE-0005 priority), MobSF SAST/DAST in CI on APK/IPA. **Scope**: exploit → `Probe`, keys → `Crypt`, privacy → `Cloak`, fixes → `Native`. | `reference/mobile-security.md` |
-| Multi-Engine | `multi` | | Parallel multi-engine SAST in one Agent-tool message; Pattern C concurrence (CONFIRMED 3/3 / LIKELY 2/3 / CANDIDATE 1/3 must-ground), PREFLIGHT in main context. Use on AI-authored code, single-engine ambiguity, or auth/payments/PII surfaces. | `reference/tri-engine-scan.md`, `reference/multi-engine-mode.md`, `_common/MULTI_ENGINE_RECIPE.md` |
+| Full Security Scan | `scan` | ✓ | Full static scan, every OWASP Top 10:2025 category. Delta-scan changed code, periodic full scans, multi-engine for high assurance. | `reference/vulnerability-patterns.md`, `reference/owasp-2025-checklist.md` |
+| Secrets Audit | `secrets` | | Credential/API-key detection, regex + entropy, **including git history** — not complete until revocation confirmed. | `reference/vulnerability-patterns.md`, `reference/defensive-controls.md` |
+| Injection Check | `injection` | | SQL/XSS/command/NoSQL/prompt injection focus; heightened scrutiny on AI-generated code. | `reference/vulnerability-patterns.md`, `reference/owasp-2025-checklist.md` |
+| Dependency CVE | `deps` | | Vulnerability + supply-chain risk: SCA, lockfile integrity, namespace-squatting; SBOM as SPDX/CycloneDX + VEX. | `reference/supply-chain-security.md` |
+| Headers Audit | `headers` | | CSP/CORS/HSTS/Permissions-Policy audit. Start report-only, enforce incrementally. | `reference/defensive-controls.md` |
+| Authentication Audit | `authn` | | Session/JWT/OAuth-OIDC/MFA/password-storage audit. **Scope**: algorithm/key design → `Crypt`, exploitability → `Probe`. | `reference/authn-audit.md`, `reference/api-security.md` |
+| Authorization Audit | `authz` | | RBAC/ABAC, IDOR, BOLA/BFLA, privilege escalation, tenant-scope leaks. Extra scrutiny on AI-generated integration code (auth-wiring is the #1 AI failure mode). **Scope**: `Probe` confirms exploitability. | `reference/authz-audit.md`, `reference/api-security.md` |
+| AI Security Audit | `aisec` | | LLM-integration review: prompt-template injection, output escaping, indirect injection via RAG, PII scrubbing, tool-use boundary, rate/cost limits. **Scope**: jailbreak validation → `Breach`. | `reference/ai-security.md`, `reference/ai-code-security.md` |
+| Mobile Security | `mobile` | | MASVS v2.1.0 + MAS Checklist across 8 categories, MASWE mapping, MobSF SAST/DAST in CI. **Scope**: exploit → `Probe`, keys → `Crypt`, privacy → `Cloak`, fixes → `Native`. | `reference/mobile-security.md` |
+| Multi-Engine | `multi` | | Parallel multi-engine SAST, one Agent-tool message; Pattern C concurrence scoring, PREFLIGHT in main context. Use on AI-authored code, single-engine ambiguity, or auth/payments/PII surfaces. | `reference/tri-engine-scan.md`, `reference/multi-engine-mode.md`, `_common/MULTI_ENGINE_RECIPE.md` |
 
 ### Signal Keywords → Recipe
 
@@ -234,8 +233,8 @@ Receives security-flagged artifacts upstream, performs static analysis, routes f
 | `reference/supply-chain-security.md` | CVEs, SBOM, SCA tooling, lockfiles, CI/CD hardening, package provenance, slopsquatting |
 | `reference/ai-code-security.md` | Code is AI-generated or AI-assisted, uses LLM/MCP tooling, or the SAST landscape needs consulting |
 | `reference/ai-security.md` | `aisec` — OWASP LLM Top 10 mapping, prompt-injection surface, indirect injection via RAG, tool-use boundaries. |
-| `reference/authn-audit.md` | `authn` — session / JWT / OAuth-OIDC / MFA / password-storage checks (A07:2025, CWE-287/384/521/798). |
-| `reference/authz-audit.md` | `authz` — RBAC/ABAC, IDOR, BOLA/BFLA, horizontal/vertical privilege escalation (A01:2025, CWE-285/639/863). |
+| `reference/authn-audit.md` | `authn` — session / JWT / OAuth-OIDC / MFA / password-storage checks. |
+| `reference/authz-audit.md` | `authz` — RBAC/ABAC, IDOR, BOLA/BFLA, horizontal/vertical privilege escalation. |
 | `reference/api-security.md` | Target is an HTTP API, GraphQL endpoint, OAuth flow, or SSRF/BOLA/BFLA risk |
 | `reference/fix-prompt-generation.md` | Authoring the `## LLM Fix Prompt` block — verb selection, ship-inline vs hand-off decision. |
 | `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules, prompt structure, cross-agent verb/suppression principles. |

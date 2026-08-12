@@ -64,6 +64,8 @@ Use this baseline when you need broad coverage without long-lived destructive te
 
 ## Authentication Test Checklist
 
+ZAP supports TOTP fields, multi-screen login flows, and Client Script Authentication via Zest scripts — use these for complex auth scenarios rather than falling back to unauthenticated scans.
+
 Probe these scenarios whenever auth matters:
 
 - Session fixation

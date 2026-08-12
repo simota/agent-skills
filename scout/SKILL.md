@@ -99,7 +99,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ### Always
 - Reproduce or identify reproduction conditions. Build a minimal repro.
-- Trace execution from symptom to cause. Identify specific file, line, function, or condition when possible.
+- Trace execution from symptom to cause, identifying file/line/function/condition when possible.
 - Assess impact and workaround.
 - Quantify recommended-fix impact scope across 5 axes (callers / tests / types / configs / docs) and include the block in every report when a fix is proposed.
 - Document findings in a structured report.
@@ -116,12 +116,14 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Dismiss issues as user error without evidence.
 - Investigate multiple unrelated bugs in one pass.
 - Share sensitive data (credentials, PII, secrets).
-- Accept the first plausible explanation without testing alternatives — premature closure is the #1 RCA anti-pattern.
-- Change multiple variables simultaneously — isolate one at a time to avoid confounding causes.
-- Confuse correlation with causation — temporal co-occurrence is not a causal chain.
-- Anchor on first evidence — actively seek disconfirming evidence before declaring a hypothesis confirmed.
-- Treat surface-level errors (timeout, HTTP 5xx, connection failure) as root causes — trace upstream first.
-- Accept "human error" as root cause — it is a symptom of systemic weakness (missing validation, unclear API, inadequate tooling).
+- Accept the first plausible explanation without testing alternatives (premature closure).
+- Change multiple variables simultaneously.
+- Confuse correlation with causation.
+- Anchor on first evidence without seeking disconfirmation.
+- Treat surface-level errors (timeout, HTTP 5xx, connection failure) as root causes.
+- Accept "human error" as root cause — it is a symptom of systemic weakness.
+
+Rationale and countermeasures for each: `reference/debugging-anti-patterns.md`.
 
 ## Workflow
 
@@ -143,30 +145,15 @@ TRIAGE guardrails, stall protocol, and RCA methodology selection (5 Whys / Fishb
 
 ### Base Severity
 
-| Severity | Condition |
-|----------|-----------|
-| `Critical` | data loss, security breach, or complete failure |
-| `High` | major feature broken and no workaround |
-| `Medium` | degraded behavior and a workaround exists |
-| `Low` | minor issue, edge case, or limited user impact |
+`Critical` data loss, security breach, or complete failure; `High` major feature broken, no workaround; `Medium` degraded behavior, workaround exists; `Low` minor issue, edge case, or limited user impact.
 
 ### Extended Triage
 
-Use [advanced-reproduction-triage.md](reference/advanced-reproduction-triage.md) when formal prioritization is needed.
-
-| Item | Values |
-|------|--------|
-| Severity classes | `Blocker`, `Critical`, `Major`, `Minor`, `Trivial` |
-| Priority classes | `P0`, `P1`, `P2`, `P3` |
-| SLA anchors | `Critical -> 4 hours`, `Major -> 24 hours` (MTTD target: < 5 min for critical; alert ack: Critical < 20 min, High < 1 hour) |
+Use [advanced-reproduction-triage.md](reference/advanced-reproduction-triage.md) when formal prioritization is needed. Severity classes: `Blocker`/`Critical`/`Major`/`Minor`/`Trivial`. Priority classes: `P0`-`P3`. SLA anchors: `Critical` -> 4 hours, `Major` -> 24 hours (MTTD target < 5 min for critical; alert ack Critical < 20 min, High < 1 hour).
 
 ### Confidence
 
-| Level | Condition | Reporting Rule |
-|------|-----------|----------------|
-| `HIGH` | Reproduction succeeds and root-cause code is identified (score ≥ 0.8, 3+ independent evidence) | Report as confirmed. |
-| `MEDIUM` | Reproduction succeeds and cause is estimated (score 0.5–0.79, 2 independent evidence) | Report as estimated and add verification steps. |
-| `LOW` | Reproduction fails and only hypotheses remain (score < 0.5, ≤1 evidence) | Report as hypothesis and list missing information. |
+Thresholds are the unified confidence scale from Core Contract (HIGH ≥0.8/3+ evidence, MEDIUM 0.5-0.79/2 evidence, LOW <0.5/≤1 evidence). Reporting rule: `HIGH` → report as confirmed; `MEDIUM` → report as estimated, add verification steps; `LOW` → report as hypothesis, list missing information.
 
 ## Recipes
 
@@ -189,24 +176,7 @@ Full phase contracts live in the "Read First" references.
 
 ### Signal Keywords → Recipe
 
-Natural-language input without a subcommand; explicit subcommand wins.
-
-| Keywords | Recipe |
-|----------|--------|
-| `bug`, `error`, error symptom | `bug` |
-| `regression`, recent deploy, version bump | `regression` |
-| `prod`, production anomaly, metrics alert | `prod` |
-| `multi-engine`, cross-engine/consensus RCA, hypothesis lock-in | `multi` |
-| `cascade`, downstream errors from one origin | `cascade` |
-| `perf`, latency regression, CPU hotspot, throughput drop | `perf` |
-| `memory`, OOM, heap bloat, GC pressure | `memory` |
-| `flake`, intermittent, flaky tests | `flake` |
-| `5whys` | `5whys` |
-| `fishbone`, Ishikawa | `fishbone` |
-| `timeline`, incident timeline, post-mortem | `timeline` |
-| `video`, screen recording, 動画報告 | `video` |
-| vague or incomplete report | `bug` + TRIAGE vague-report handling |
-| complex multi-agent task via Nexus | Nexus-routed execution (`_common/HANDOFF.md`) |
+Natural-language input without a subcommand; explicit subcommand wins: `bug`/error symptom → `bug`; `regression`/recent deploy/version bump → `regression`; `prod`/production anomaly/metrics alert → `prod`; `multi-engine`/cross-engine consensus/hypothesis lock-in → `multi`; `cascade`/downstream errors from one origin → `cascade`; `perf`/latency regression/CPU hotspot/throughput drop → `perf`; `memory`/OOM/heap bloat/GC pressure → `memory`; `flake`/intermittent/flaky tests → `flake`; `5whys` → `5whys`; `fishbone`/Ishikawa → `fishbone`; `timeline`/incident timeline/post-mortem → `timeline`; `video`/screen recording/動画報告 → `video`; vague or incomplete report → `bug` + TRIAGE vague-report handling; complex multi-agent task via Nexus → Nexus-routed execution (`_common/HANDOFF.md`).
 
 ## Subcommand Dispatch
 
@@ -238,36 +208,17 @@ Add when available:
 - workaround
 - ruled-out hypotheses (what was checked and eliminated, with evidence)
 
-### Recommended Fix Impact Scope Template
-
-```yaml
-RecommendedFixImpactScope:
-  callers:    {affected: [file:line, ...], note: "1-line description or 'none'"}
-  tests:      {affected: [test files], note: "additions/updates needed or 'none'"}
-  types:      {affected: [type/schema files], note: "contract impact or 'none'"}
-  configs:    {affected: [config/env keys], note: "propagation impact or 'none'"}
-  docs:       {affected: [doc paths], note: "update needed or 'none'"}
-  axes_affected: <integer 0-5>
-  recommend_ripple: <true if axes_affected >= 3 OR uncertainty is high>
-```
+Recommended Fix Impact Scope YAML template (`callers`/`tests`/`types`/`configs`/`docs`, `axes_affected`, `recommend_ripple`): `reference/output-format.md`.
 
 ## LLM Fix Prompt Generation
 
-Every Scout report for a confirmed root cause ends with a paste-ready `## LLM Fix Prompt` block. Universal authoring rules: `_common/LLM_PROMPT_GENERATION.md`. Scout-specific authoring rules, full suppression cases, template fields, and worked examples: `reference/fix-prompt-generation.md`.
+Every Scout report for a confirmed root cause ends with a paste-ready `## LLM Fix Prompt` block. Universal authoring rules: `_common/LLM_PROMPT_GENERATION.md`. Scout-specific authoring rules, verb table, suppression cases, template fields, and worked examples: `reference/fix-prompt-generation.md`.
 
-| Verb | Use when | Receiving |
-|------|----------|-----------|
-| `FIX` | HIGH confidence, scoped, no security/concurrency concern | Builder / Claude / Codex |
-| `FIX-WITH-TEST` | HIGH confidence + Radar-quality regression specs bundled | Builder + Radar |
-| `MITIGATE` | Workaround only — root cause out of scope or blocked | Builder |
-| `INVESTIGATE-FURTHER` | LOW/MEDIUM confidence — receiver must reproduce before changing code | Claude / Codex |
-| `REFACTOR-FIX` | Fix requires structural change beyond one function | Atlas → Builder |
-
-Suppress (and write a one-line note explaining why) when: escalating to Sentinel, reporter requested investigation only, evidence too weak even for `INVESTIGATE-FURTHER`, or bug is `WONTFIX` / works-as-designed.
+Verbs: `FIX` (HIGH confidence, scoped, no security/concurrency concern → Builder/Claude/Codex), `FIX-WITH-TEST` (HIGH + Radar-quality regression specs bundled → Builder+Radar), `MITIGATE` (workaround only, root cause blocked/out of scope → Builder), `INVESTIGATE-FURTHER` (LOW/MEDIUM confidence, receiver must reproduce first → Claude/Codex), `REFACTOR-FIX` (structural change beyond one function → Atlas → Builder). Suppress (with a one-line note why) when escalating to Sentinel, investigation-only was requested, evidence is too weak even for `INVESTIGATE-FURTHER`, or the bug is `WONTFIX`.
 
 ## Handoff Formats
 
-Outbound handoffs: `SCOUT_TO_BUILDER`, `SCOUT_TO_RADAR`, `SCOUT_TO_TRIAGE`, `SCOUT_TO_SENTINEL`, `SCOUT_TO_TRAIL`. Canonical YAML schemas: `reference/handoff-formats.md`.
+Outbound: `SCOUT_TO_BUILDER`, `SCOUT_TO_RADAR`, `SCOUT_TO_TRIAGE`, `SCOUT_TO_SENTINEL`, `SCOUT_TO_TRAIL`. Canonical YAML: `reference/handoff-formats.md`.
 
 Cross-cluster escalation (LENS↔SCOUT, unified confidence scale): `_common/INVESTIGATION_ESCALATION.md`. Universal handoff conventions: `_common/HANDOFF.md`.
 
@@ -276,15 +227,15 @@ Cross-cluster escalation (LENS↔SCOUT, unified confidence scale): `_common/INVE
 **Receives:** Triage (incident reports), Builder (implementation context), Radar (test failures), Pulse (metrics anomalies), Trail (regression confirmation), Sentinel (security findings needing reproduction), Beacon (observability alerts with traces/metrics context for production debugging)
 **Sends:** Builder (fix specifications), Radar (regression test specs), Guardian (PR recommendations), Triage (severity updates), Sentinel (security suspicion), Trail (history-led delegation), Beacon (SLO-impacting root causes for alert tuning and dashboard updates)
 
-**Cross-cluster escalation:** See `_common/INVESTIGATION_ESCALATION.md` for Lens↔Scout handoff formats and stall protocol.
+**Cross-cluster escalation:** `_common/INVESTIGATION_ESCALATION.md` (Lens↔Scout handoff formats, stall protocol).
 
 **Overlap boundaries:**
-- **vs Triage**: Triage = incident coordination, severity classification, recovery planning. Scout = root cause analysis and reproduction. Escalate back to Triage when impact scope changes during investigation.
-- **vs Builder**: Builder = code implementation. Scout = investigation only. Hand off when root cause is confirmed with fix direction.
-- **vs Radar**: Radar = test implementation. Scout = identifies what to test. Hand off regression test specs after investigation.
-- **vs Sentinel**: Sentinel = security vulnerability analysis and remediation. Scout = runtime bug reproduction. Escalate to Sentinel when investigation reveals potential security impact.
-- **vs Trail**: Trail = git history investigation and regression pinpointing. Scout = runtime symptom investigation. Delegate to Trail when the primary investigation method is `git log`/bisect/blame without runtime symptoms. Bond ownership when runtime reproduction is needed even if regression is suspected.
-- **vs Lens**: Lens = codebase understanding and exploration. Scout = bug-focused investigation. Use Lens output as input when codebase context is needed, but do not delegate the investigation itself.
+- **vs Triage**: Triage owns incident coordination, severity classification, recovery planning; Scout owns RCA and reproduction. Escalate back when impact scope changes mid-investigation.
+- **vs Builder**: Builder implements code; Scout investigates only. Hand off once root cause is confirmed with fix direction.
+- **vs Radar**: Radar implements tests; Scout identifies what to test. Hand off regression test specs after investigation.
+- **vs Sentinel**: Sentinel owns security analysis/remediation; Scout owns runtime reproduction. Escalate when investigation reveals potential security impact.
+- **vs Trail**: Trail owns git-history investigation and regression pinpointing; Scout owns runtime symptom investigation. Delegate to Trail when `git log`/bisect/blame alone suffices; retain ownership when runtime reproduction is needed even if regression is suspected.
+- **vs Lens**: Lens owns codebase understanding/exploration; Scout is bug-focused. Use Lens output as input when context is needed, but do not delegate the investigation.
 
 ## Reference Map
 
@@ -328,7 +279,7 @@ Full mechanics, GROUND protocol, SYNTHESIZE merge, engine-attribution tags, and 
 
 ## Operational
 
-- Journal only recurring investigation patterns in `.agents/scout.md`.
+- Journal only recurring patterns in `.agents/scout.md`.
 - Add an activity row to `.agents/PROJECT.md` after task completion: `| YYYY-MM-DD | Scout | (action) | (files) | (outcome) |`.
 - Follow shared operational rules in `_common/OPERATIONAL.md` and `_common/GIT_GUIDELINES.md`.
 

@@ -142,39 +142,15 @@ Natural-language input without a subcommand; an explicit subcommand wins. `cron`
 
 ## Cron Patterns
 
-Read `reference/cron-patterns.md` for the complete reference. Core concepts:
+Field-format table (5-field Unix vs 6-7 field Quartz/Spring vs 6-field EventBridge), full anti-pattern catalog, and platform matrix -> `reference/cron-patterns.md`.
 
-### 5-field Unix vs 6-field Quartz/Spring
-
-| System | Fields | Example `every 15s` | Notes |
-|--------|--------|--------------------|-------|
-| Unix cron (Linux crontab, K8s CronJob, GHA, Cloud Scheduler) | `min hour dom mon dow` (5) | N/A — min granularity is 1 minute | Sunday = 0 OR 7 (platform-dependent) |
-| Quartz / Spring | `sec min hour dom mon dow [year]` (6-7) | `*/15 * * * * ?` | Seconds field is first; `?` = "no specific value" for dom/dow |
-| AWS EventBridge | `min hour dom mon dow year` (6) | N/A — min granularity is 1 minute | **No `?` wildcard mixing** — dom OR dow must be `?`; UTC only |
-
-### Common Anti-patterns
-
-`* * * * *` with a task over 60s overlaps — add a distributed lock, widen the interval, or set overlap policy `skip`. `0 0 * * *` in a DST-observing zone skips or duplicates once per transition — run in UTC or set an explicit DST policy. `0 0 31 * *` fires only in 31-day months — use `L` (Quartz) or application logic. `0 0 * * 0,7` is ambiguous — use `0` only and verify platform docs. Full table -> `reference/cron-patterns.md`.
+Core split: Unix cron (Linux crontab, K8s CronJob, GHA, Cloud Scheduler) is `min hour dom mon dow`, minute granularity, Sunday = 0 OR 7 depending on platform. Quartz/Spring is 6-7 fields with seconds first and `?` disambiguating dom/dow. EventBridge is 6 fields, UTC only, dom OR dow must be `?`. Watch for: `* * * * *` with a task over 60s (overlap), `0 0 * * *` in a DST zone (skips/duplicates yearly), `0 0 31 * *` (misses short months), and ambiguous `0 0 * * 0,7`.
 
 ## Timezone & DST
 
-Read `reference/timezone-safety.md` for the full discipline.
+Full discipline, library matrix, and DST-pitfall walkthroughs -> `reference/timezone-safety.md`.
 
-### The UTC discipline
-
-- **Store** UTC instants (`timestamptz`, `Instant`, `datetime` with `tzinfo=UTC`). **Transport** ISO 8601 with explicit offset or `Z`. **Render** in user TZ only at the edge, from a stored preference or `Intl.DateTimeFormat().resolvedOptions().timeZone`.
-
-### Library choice matrix
-
-**Temporal API** (ES2026 Stage 4; native Node 26+, polyfill `@js-temporal/polyfill`) for new TS/JS. **Luxon** for current production JS/TS. **date-fns v4 + `@date-fns/tz`** for date-fns codebases (`date-fns-tz` is legacy — migrate on v4+). **Python `zoneinfo`** over `pytz`. **Never Moment.js** in new code. Full matrix with state notes -> `reference/timezone-safety.md`.
-
-Citations and migration notes → `reference/timezone-safety.md`.
-
-### DST pitfalls
-
-- **Spring-forward (2:00 → 3:00)**: The interval 02:00-02:59 does NOT exist. A schedule at 02:30 must have an explicit policy.
-- **Fall-back (2:00 → 1:00)**: The interval 01:00-01:59 happens TWICE. A schedule at 01:30 runs twice unless guarded.
-- **Resolution**: Python `fold` parameter; Temporal `disambiguation: 'earlier' | 'later' | 'compatible' | 'reject'`; Luxon zone options.
+Store UTC instants (`timestamptz` / `Instant` / `tzinfo=UTC`), transport ISO 8601 with an explicit offset or `Z`, render in user TZ only at the edge. Library defaults: Temporal API (ES2026 Stage 4) or Luxon for new JS/TS, `@date-fns/tz` over legacy `date-fns-tz`, Python `zoneinfo` over `pytz`, never Moment.js. Spring-forward (02:00-02:59 does not exist) and fall-back (01:00-01:59 happens twice) both require the explicit `skip`/`defer`/`run-both` policy from Core Contract; resolve via Python `fold`, Temporal `disambiguation`, or Luxon zone options.
 
 ## Business Calendar
 
@@ -182,34 +158,15 @@ JP holidays (内閣府 CSV as the authoritative source), 振替休日 and 国民
 
 ## Retry / Backoff / Dead Letter
 
-Read `reference/retry-strategies.md` for complete formulas and platform mappings.
+Complete formula table, platform mappings, and DLQ design -> `reference/retry-strategies.md`.
 
-### Backoff formulas
-
-| Formula | Expression | Use when |
-|---------|------------|----------|
-| Fixed | `base` | Almost never — thundering herd risk |
-| Exponential | `base × 2^attempt` | Simple external API calls with capped retries |
-| Exponential + full jitter | `random(0, base × 2^attempt)` | Recommended default; spreads load cleanly |
-| Exponential + equal jitter | `base × 2^attempt / 2 + random(0, base × 2^attempt / 2)` | When you want a lower bound |
-| Decorrelated jitter | `min(cap, random(base, prev × 3))` | AWS Builders' Library recommendation; best for retry storms |
-
-### Circuit breaker
-
-States: `closed` (normal) → `open` (failing, reject fast) → `half-open` (probe). Trip threshold: consecutive-failure count OR failure-rate over a rolling window. Half-open probe count: 1-3 requests; success → closed, failure → open.
+Default formula: exponential + full jitter (`random(0, base × 2^attempt)`) — spreads load cleanest; decorrelated jitter (`min(cap, random(base, prev × 3))`) for retry storms. Never fixed-interval (thundering herd). Circuit breaker: `closed` → `open` (reject fast) → `half-open` (1-3 probes) → back to `closed` on success or `open` on failure, tripped by consecutive-failure count or rolling failure-rate.
 
 ## Backfill & Idempotency
 
-### Idempotency key design
+Full key-formula and storage-pattern reference -> `reference/idempotent-keys.md`.
 
-- **Deterministic**: Same logical input → same key. Example: `SHA256("payment:" + user_id + ":" + invoice_id)`.
-- **Bounded lifetime**: TTL matches retry window + clock skew margin (e.g., `max_retry_duration + 1h`).
-- **Storage**: Redis `SETEX key ttl 1` with `NX` flag (atomic check-and-set) OR DB unique constraint on `(idempotency_key, operation)`.
-- **Dedup window**: Explicitly documented. Anything outside the window is treated as a new request.
-
-### Watermark pattern
-
-For streaming/backfill: persist the latest successfully-processed timestamp (the "watermark") atomically with the result. On restart or catchup, resume from `watermark + 1`. Late-arriving data arriving before the current watermark is a policy choice (drop, separate-lane, or trigger full re-aggregation).
+Idempotency key: deterministic (same logical input → same key, e.g. `SHA256("payment:"+user_id+":"+invoice_id)`), bounded TTL (retry window + clock-skew margin), stored via Redis `SETEX ... NX` or a DB unique constraint on `(key, operation)`, with an explicitly documented dedup window. Watermark pattern: persist the latest successfully-processed timestamp atomically with the result; resume from `watermark + 1` on restart; late-arriving data before the watermark is a policy choice (drop / separate-lane / re-aggregate).
 
 ## Platform Implementation
 

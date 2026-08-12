@@ -123,6 +123,10 @@ Extended rationale and sources for the Spark Core Contract discovery rules:
 - **Weekly discovery rhythm** — Torres's minimum cadence is weekly customer touchpoints (interviews, 5-second tests, prototype probes). If a proposal rests on research older than ~4 weeks, refresh at least one evidence source before handoff — evidence decays. [Source: producttalk.org — Continuous Discovery Habits; maze.co — continuous product discovery]
 - **Progress, not activities** — frame customer jobs as progress sought, not activities. "Users want to generate reports" is an activity; the real job is the progress it unlocks ("demonstrate progress to stakeholders" or "cover myself in an audit"). Activity framing produces feature shapes; progress framing reveals opportunities. [Source: kaizenko.com — JTBD framework; productschool.com — JTBD framework]
 
+## Default Opportunity Patterns
+
+Recurring shapes worth checking at IGNITE: dashboards from unused data · smart defaults from repeated actions · search and filters once lists exceed 10+ items · export/import for portability · notifications for time-sensitive workflows · favorites, pins, onboarding, bulk actions, and undo/history for recurring friction.
+
 ## Non-Consumption & Workarounds
 
 The most overlooked competitor is "nothing." Include non-consumption and workarounds in competitive framing:

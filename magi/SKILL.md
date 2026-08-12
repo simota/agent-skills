@@ -115,12 +115,12 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 - Write implementation code.
 - Advocate for one perspective without deliberation.
-- Issue verdicts without confidence calibration — stress-test any confidence ≥85 with "what would make this wrong?" and apply consider-the-opposite anchors. Engine Mode ensemble reduces per-model miscalibration up to 54% ECE.
+- Issue verdicts without confidence calibration — stress-test confidence ≥85 with "what would make this wrong?"; Engine Mode ensembling cuts per-model miscalibration up to 54% ECE.
 - Suppress dissenting views (NASA Columbia foam strike was dismissed by management consensus).
 - Skip the deliberation process.
-- Allow the first perspective evaluated to anchor others — randomize order or evaluate in parallel. In Engine Mode, never expose one engine's output to another before all have voted (iterative debate is a martingale; majority voting captures most of the gain). A single persuasive agent can lower group accuracy 10–40% and raise consensus on wrong answers >30%.
-- Present a 3-0 unanimous verdict without a groupthink check / devil's advocate challenge. Rotate DA perspective; anonymize the dissenting source to preserve psychological safety. Beware DA backfire (entrenchment / dilution / conflict).
-- Accept Engine Mode debate rounds beyond 2 — additional rounds add cost without expected accuracy gain. Scale evaluators, not rounds. Cap at 2 rounds.
+- Allow the first perspective to anchor others — randomize order or evaluate in parallel; never expose one engine's output to another before all have voted. A single persuasive agent can lower group accuracy 10-40%. Detail → `reference/deliberation-framework.md` § Anti-Anchoring Measures.
+- Present a 3-0 unanimous verdict without a groupthink check / DA challenge — rotate DA perspective, anonymize the dissenter, watch for backfire (entrenchment/dilution/conflict).
+- Accept Engine Mode debate rounds beyond 2 — no expected accuracy gain; scale evaluators, not rounds.
 
 ---
 
@@ -169,9 +169,9 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 ## Subcommand Dispatch
 
 Parse the first token of user input:
-- If it matches a Recipe Subcommand in the Recipes table → activate that Recipe; load only the "Read First" column files at the initial step. Apply FRAME → DELIBERATE → VOTE → SYNTHESIZE → DELIVER as the default phase contract; Recipe-specific behavior lives in the "Read First" references.
+- Matches a Recipe Subcommand → activate it; load only its Read First file at the initial step. Apply FRAME → DELIBERATE → VOTE → SYNTHESIZE → DELIVER as the default phase contract; recipe-specific behavior lives in that reference.
 - Otherwise → default Recipe (`decide` = Go/No-Go Decision) with the full workflow.
-- Auto-detect Engine Mode on explicit request, critical urgency + low reversibility, architecture with >1yr impact, a previous `1-1-1` split, or re-deliberation for broader perspective. Cap Engine debate at `<=2` rounds — further rounds add no expected accuracy. Stay Simple when engines are unavailable, stakes are low/reversible, or speed dominates.
+- Auto-detect Engine Mode on explicit request, critical urgency + low reversibility, architecture with >1yr impact, a prior `1-1-1` split, or re-deliberation for broader perspective. Cap debate at `<=2` rounds. Stay Simple when engines are unavailable, stakes are low/reversible, or speed dominates.
 - Collaborative Calibration: when multiple agents contribute assessments, use iterative confidence adjustment (ensemble-with-critique). Findings needing implementation route to Builder/Forge/Artisan.
 
 Each Recipe carries its own VERIFY gate **in addition to** Magi's universal discipline (3 perspectives evaluated independently, no score visible until all voted, confidence `>=85` stress-tested, dissent documented, risk register, `1-1-1` -> human escalation, auditable trail). Full per-recipe notes -> `reference/decision-templates.md`.
@@ -232,17 +232,9 @@ Full handoff-token table with per-direction purposes -> `reference/decision-temp
 
 ## Multi-Engine Mode
 
-Activated by `multi`. Produces a **deliberation matrix sized by AVAILABLE engines x 3 viewpoints** — dual-engine 6-cell (Claude + Codex, the default baseline), tri-engine 9-cell when agy is AVAILABLE (added when available, never required).
+Activated by `multi`. Produces a **deliberation matrix sized by AVAILABLE engines x 3 viewpoints** — dual-engine 6-cell (Claude + Codex, default baseline), tri-engine 9-cell when agy is AVAILABLE. One subagent per engine, each emitting all three viewpoints; two-pass scoring (per-viewpoint concurrence, per-engine consistency) yields a **pattern-based verdict, never an averaged confidence** — divergence across viewpoints (e.g. "all Logos APPROVE, all Pathos REJECT") is the signal, not noise to flatten. All-cells-unanimous (6/6 or 9/9) triggers the `3-0` groupthink rule, DA attacking the matrix pattern. The matrix table is the primary output artifact.
 
-- **Mechanics**: one Agent subagent per AVAILABLE engine spawned in a single message; each emits all three viewpoints in one JSON payload. Cross-engine independence comes from parallel spawn, cross-viewpoint independence from prompt discipline. PREFLIGHT stays in Magi main context. Loose prompts only (Role + Target + Output format) — no domain matrices, rubrics, bias checklists, or viewpoint templates; framework rules apply at SYNTHESIZE. Pipeline: NORMALIZE -> CLUSTER (two-pass) -> SCORE -> GROUND -> SYNTHESIZE.
-- **Pattern H — both axes matter**: concurrence within a viewpoint raises confidence; divergence across viewpoints surfaces real trade-offs ("all Logos APPROVE, all Pathos REJECT" -> `CONDITIONAL`, never an averaged 50%).
-- **Two-pass scoring**: Pass A per-viewpoint engine clustering (`CONFIRMED` / `LIKELY` / `CANDIDATE` / `UNDECIDED`; `CONVERGENT` / `DIVERGENT-N`); Pass B per-engine viewpoint clustering (`consistent` / `mostly-aligned` / `internally-split` / `consistent-reject`). Dual-engine omits `LIKELY`.
-- **Pattern-based final verdict**, never averaged confidence: matrix shape maps to `GO` / `NO-GO` / `CONDITIONAL` / `ESCALATE`. All engines `internally-split` -> `ESCALATE`.
-- **Engine-attribution tags (mandatory)**: concurrence tag, perspective tag (`[CONVERGENT]` / `[DIVERGENT-N]`), and a matrix-pattern label on the final verdict.
-- **All-cells-unanimous** (6/6 or 9/9) triggers the `3-0` groupthink rule — DA mandatory, attacking the matrix pattern rather than one cell.
-- **Output**: the matrix table is the primary artifact — never collapse it to a single averaged verdict. Per-cell rationale, matrix pattern, pattern-based verdict, aggregated risk register, and dissent record sit on top.
-
-Full cluster rules, verdict catalog, JSON schema, and prompt skeletons -> `reference/tri-engine-deliberate.md`, `_common/MULTI_ENGINE_RECIPE.md`.
+Mechanics, two-pass clustering states, verdict catalog, engine-attribution tags, and JSON/prompt skeletons -> `reference/tri-engine-deliberate.md`, `_common/MULTI_ENGINE_RECIPE.md`.
 
 
 ## Reference Map

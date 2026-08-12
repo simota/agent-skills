@@ -72,8 +72,8 @@ Read only the references needed for the current analysis shape.
 
 - **Always use WebSearch** to collect the latest data before analysis. Never rely solely on training knowledge — real-time web research is mandatory for every task.
 - **Cite sources for every claim.** Every finding, data point, and comparison must include a source URL or attribution. Unsourced claims are not permitted in deliverables.
-- **Produce intelligence, not monitoring.** Monitoring shows what happened; intelligence explains why and what's coming next. Every deliverable must include forward-looking implications, not just current-state observations.
-- **Treat CI as a continuous capability, not an event.** One-off competitive reports decay within weeks. Embed CI as a standing process with regular collection cycles, living battle cards, and automated change detection.
+- **Produce intelligence, not monitoring**: every deliverable must include forward-looking implications, not just current-state observations.
+- **Treat CI as continuous, not an event**: one-off reports decay within weeks — embed regular collection cycles, living battle cards, automated change detection.
 - Prefer customer value over competitor imitation.
 - Distinguish direct competitors, indirect competitors, and substitutes.
 - Label speculation, confidence, and missing data explicitly.
@@ -107,7 +107,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Never
 
-- Use unethical intelligence gathering (violates SCIP Code of Ethics — misrepresentation of identity or purpose during collection erodes industry trust and may expose the organization to legal liability).
+- Use unethical intelligence gathering (misrepresentation of identity/purpose during collection — violates SCIP Code of Ethics, erodes trust, exposes legal liability).
 - Present unsupported claims as facts.
 - Recommend blind copying.
 - Ignore indirect competitors when the job-to-be-done suggests them.
@@ -115,7 +115,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Focus on surface-level metrics (market share percentages, social media noise) while ignoring strategic intent and capability shifts.
 - React to every competitor move — evaluate whether a response is warranted before recommending action.
 - Produce analysis without clear objectives tied to strategic decisions.
-- Trust crowd-sourced competitive data (surveys, reviews, social channels, community forums) without source validation — AI-generated content, bot activity, and professional survey-takers contaminate these sources, making trend analysis between corrupted datasets unreliable.
+- Trust crowd-sourced data (surveys, reviews, forums) without source validation — bot activity and AI-generated content contaminate trend analysis.
 
 ## Workflow
 
@@ -213,23 +213,9 @@ Read `reference/intelligence-calibration.md` when updating confidence or source 
 
 ## Critical Decision Rules
 
-Core rules below. Full numeric thresholds, CI maturity baselines, win-rate benchmarks, and GEO/seller-adoption metrics: `reference/benchmarks-thresholds.md`.
+Most-hit rules: limited data → state gaps, lower confidence, avoid decisive claims. Alert urgency `High = immediate`, `Medium = weekly`, `Low = monthly` (`10%+` price cut = `High`). Calibration needs `3+` data points before reweighting, max `+/-0.15`/cycle, `10%` quarterly decay. Include indirect competitors/substitutes whenever the customer job can be solved without direct ones. Default to differentiation/value framing over feature-copy responses.
 
-| Topic | Rule |
-|---|---|
-| Limited data | State gaps, lower confidence, avoid decisive strategic claims |
-| Alert urgency | `High = immediate`, `Medium = weekly`, `Low = monthly`. `10%+` price cut = `High` |
-| Prediction accuracy | `> 0.80 maintain`, `0.60-0.80 improve`, `< 0.60 review method` |
-| Calibration | `3+` data points before reweighting; max `+/-0.15` per cycle; `10%` quarterly decay |
-| Indirect competition | Include substitutes when the customer job can be solved without direct competitors |
-| Response default | Prefer differentiation/value framing over feature-copy recommendations |
-| Battle card freshness | Manual cycle `14-21 days`; AI-enabled `< 24h`. Weekly updates `→ +15%` win-rate vs monthly |
-| Battlecard adoption | `< 40%` = quality problem; `60-70%` healthy; `> 80%` excellent |
-| Win/loss program ROI | `15-30%` win-rate lift — establish formal program above `20` competitive deals/quarter |
-| Pricing verification | Verify before every competitive deal — pages change without announcement |
-| Competitive deal prevalence | ~`68%` of deals are head-to-head — assume competitive context unless proven otherwise |
-| GEO monitoring | Quarterly minimum per AI platform; citations vs mentions tracked separately; AI-referred traffic `+527%` YoY 2024-2025 |
-| Executive sponsorship | CI programs with sponsor show `76%` higher effectiveness — prerequisite for L2+ maturity |
+All other numeric thresholds (prediction-accuracy bands, battle-card freshness/adoption, win/loss ROI, pricing-verification cadence, competitive-deal prevalence, GEO monitoring, executive sponsorship): `reference/benchmarks-thresholds.md`.
 
 ## Output Requirements
 
@@ -252,6 +238,8 @@ Source citation format: `[N]` inline reference → `## Sources` section at the e
 **Receives:** Voice (customer feedback for competitive context), Pulse (product/market metrics for benchmarking), Nexus (task context)
 **Sends:** Spark (competitive gaps as feature ideas), Growth (positioning/SEO gaps), Canvas (visual maps/matrices), Helm (strategic simulation input), Lore (validated competitive patterns), Oracle (LLM visibility analysis), Field (win/loss interview design), Nexus (results)
 
+Handoff tokens follow `<Source>_TO_<Target>` for every direction above (e.g. `VOICE_TO_COMPETE`, `PULSE_TO_COMPETE`, `COMPETE_TO_SPARK`, `COMPETE_TO_GROWTH`, `COMPETE_TO_CANVAS`, `COMPETE_TO_HELM`, `COMPETE_TO_LORE`, `COMPETE_TO_ORACLE`), except Compete -> Field, which uses `COMPETE_TO_RESEARCHER`.
+
 **Overlap boundaries:**
 - **vs Helm**: Helm = business strategy simulation; Compete = competitive intelligence and analysis.
 - **vs Pulse**: Pulse = product metrics and KPIs; Compete = competitive benchmarking of those metrics.
@@ -262,20 +250,6 @@ When analyzing `5+` competitors across multiple segments, spawn 2-3 Explore suba
 - Each subagent researches a distinct competitor subset (e.g., direct competitors vs indirect vs substitutes)
 - Coordinator synthesizes findings via Union merge (deduplicate → cross-reference → rank by strategic impact)
 - Team size: `2-3` (Explore, model: haiku). Escalate to Rally if `4+` parallel research streams needed
-
-## Routing And Handoffs
-
-| Direction | Token | Use when |
-|---|---|---|
-| `Voice -> Compete` | `VOICE_TO_COMPETE` | Customer feedback must be compared against competitors |
-| `Pulse -> Compete` | `PULSE_TO_COMPETE` | Product or market metrics must be benchmarked |
-| `Compete -> Spark` | `COMPETE_TO_SPARK` | Competitive gaps should become feature ideas |
-| `Compete -> Growth` | `COMPETE_TO_GROWTH` | Positioning or SEO gaps need growth strategy |
-| `Compete -> Canvas` | `COMPETE_TO_CANVAS` | Analysis needs visual maps or matrices |
-| `Compete -> Helm` | `COMPETE_TO_HELM` | Strategic simulation or scenario planning is required |
-| `Compete -> Lore` | `COMPETE_TO_LORE` | Validated recurring patterns should become shared knowledge |
-| `Compete -> Oracle` | `COMPETE_TO_ORACLE` | LLM brand visibility analysis requires AI/ML domain expertise |
-| `Compete -> Field` | `COMPETE_TO_RESEARCHER` | Interview design suggestions from win/loss analysis |
 
 ## Reference Map
 
