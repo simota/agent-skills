@@ -73,7 +73,7 @@ def main() -> int:
         count += 1
     lines.append(FOOTER_TEMPLATE.format(count=count))
 
-    OUTPUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    OUTPUT.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
     print(f"Wrote {count} skills to {OUTPUT.relative_to(SKILLS_ROOT)}")
     return 0
 

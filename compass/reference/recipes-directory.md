@@ -131,12 +131,12 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **void**: prune★ / cut / question / simplify
 - **voyager**: playwright★ / page-object / auth / a11y / visual / api / mobile / component
 - **weave**: design★ / saga / approval / detect / retry / timeout / compensation / design / approval / retry / compensation
+- **xquik**: read★ / monitor / integrate / act
 - **zen**: refactor★ / naming / extract / constants / dead / simplify / split / guard / naming / constants / simplify
 - **zine**: note★ / zenn / qiita / devto / series / headline / repurpose / interview / note / qiita / series / repurpose
 
 ---
 
-**Total**: 123 skills with Recipes.
+**Total**: 124 skills with Recipes.
 
 Auto-generated from SKILL.md `## Recipes` tables by `_common/scripts/generate-recipes-directory.py`. Do not edit by hand.
-

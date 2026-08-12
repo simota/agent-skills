@@ -166,7 +166,7 @@
 | 700-1000 | 10000-15000 | **P2** (refactor candidate) |
 | 500-700 | 7000-10000 | **P3** (over Anthropic recommendation, informational) |
 
-**Rationale:** Anthropic guidance is "Keep SKILL.md body under 500 lines for optimal performance" but the existing corpus runs higher (123 skills as of 2026-08-17). Generation-3 audit tiers the thresholds so P0/P1 fire only on truly egregious sizes; refactor work is queued at P2/P3. As skills migrate detail to `reference/`, raise the floors over time.
+**Rationale:** Anthropic guidance is "Keep SKILL.md body under 500 lines for optimal performance" but the existing corpus runs higher (125 skills as of 2026-08-18). Generation-3 audit tiers the thresholds so P0/P1 fire only on truly egregious sizes; refactor work is queued at P2/P3. As skills migrate detail to `reference/`, raise the floors over time.
 
 **Source:** [platform.claude.com — Agent Skills Best Practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices), [The Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf).
 

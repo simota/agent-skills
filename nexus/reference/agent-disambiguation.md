@@ -290,6 +290,20 @@ upside ("how much can this feature earn", "opportunity upper bound") → Spark (
 
 ---
 
+### Xquik vs Vector vs Trawl vs Relay vs Stream
+
+| Signal | Route to | Rationale |
+|--------|----------|-----------|
+| "read or search X/Twitter", "pay for an X read", "monitor an X account or keyword", "act through Xquik" | **Xquik** | Owns documented Xquik operations, payment boundaries, authority, pagination, and action verification |
+| "automate this browser session" | **Vector** | Owns generic single-session browser execution |
+| "design a distributed crawler" | **Trawl** | Owns crawl topology, frontier, and politeness architecture |
+| "implement the webhook receiver" | **Relay** | Owns downstream event delivery and receiver behavior |
+| "load these events into a warehouse" | **Stream** | Owns downstream pipelines, transformation, and retention |
+
+**Rule of thumb**: Xquik collects or acts on X. Relay delivers events. Stream processes them. Vector and Trawl own generic browser and crawl work.
+
+---
+
 ## Low Priority — Rarely Confused
 
 ### Attest vs Judge

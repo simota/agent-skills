@@ -117,7 +117,7 @@ Concretely, leave delegated: approach selection on an unsolved problem, naming, 
 
 **Ordering vs `Ask First` — `SPECIFY` runs last.** When any `Ask First` gate applies to the chain (10+ files, L4, destructive, 5+ agents, …), **every such gate resolves before `SPECIFY` runs**. Two reasons, and the second is the load-bearing one:
 1. Hardening a brief for work the user may cancel spends a spawn on nothing.
-2. **The user's answer routinely changes the scope the brief was written against** — "all 123 files or a subset?", "auto-apply or report back first?" — and a brief written before that answer is not merely stale, it is confidently wrong in the specific way this phase exists to prevent. Re-running Chisel afterwards means the first pass was pure waste.
+2. **The user's answer routinely changes the scope the brief was written against** — "all 125 files or a subset?", "auto-apply or report back first?" — and a brief written before that answer is not merely stale, it is confidently wrong in the specific way this phase exists to prevent. Re-running Chisel afterwards means the first pass was pure waste.
 
 A gate whose answer cannot change scope (a pure go/no-go) may be resolved in either order; when in doubt, ask first and specify second.
 

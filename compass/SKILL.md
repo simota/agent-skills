@@ -101,7 +101,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Recommend Skill | `recommend` | ✓ | Recommend best-fit skill for the task (cache-first; falls back to full catalog) | `.claude/compass-cache.md` (if present) OR `reference/catalog.md`, `reference/patterns.md`, `reference/recipes-directory.md` |
 | Catalog Listing | `catalog` | | Full catalog of all skills (cache bypassed) | `reference/catalog.md`, `reference/recipes-directory.md` |
 | Onboarding Guide | `onboard` | | Orientation for new users | `reference/examples.md`, `reference/recipes-directory.md` |
-| Recipe Directory | `recipes` | | Per-skill Recipe (Subcommand) listing. `/compass recipes <skill>` lists all Recipes for a specific skill; without arguments, shows all 123 skills | `reference/recipes-directory.md` |
+| Recipe Directory | `recipes` | | Per-skill Recipe (Subcommand) listing. `/compass recipes <skill>` lists all Recipes for a specific skill; without arguments, shows the 124 skills with standard Recipes | `reference/recipes-directory.md` |
 | Init Cache | `init` | | Generate `.claude/compass-cache.md` for the current repository — scan signals (manifests, file mix, conventions), score skills, write Top-N slim cache. Reduces recommend-time context ~95%. | `reference/cache-recipes.md`, `reference/cache-format.md`, `reference/catalog.md` |
 | Refresh Cache | `refresh` | | Force-regenerate `.claude/compass-cache.md` with before/after diff (added / removed / affinity-changed skills). Use after catalog upgrades, framework changes, or TTL expiry. | `reference/cache-recipes.md`, `reference/cache-format.md`, `reference/catalog.md` |
 
@@ -144,7 +144,7 @@ For beginners, present the ecosystem as 5 intuitive domains:
 | **Design** | Atlas, Schema, Gateway | `/atlas 依存関係を分析して` |
 | **Operate** | Pipe, Scaffold, Beacon | `/pipe GitHub Actionsワークフロー作って` |
 
-Full 24-category, 123-agent catalog: `reference/catalog.md`.
+Full 24-category, 125-agent catalog: `reference/catalog.md`.
 Recommendation and comparison output formats: `reference/patterns.md` Output Formats section.
 
 ## Output Requirements
@@ -211,4 +211,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

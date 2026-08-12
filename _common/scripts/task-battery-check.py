@@ -3,9 +3,9 @@
 Task Battery Check — mechanical checker for the Nexus routing regression
 battery (`nexus/reference/task-battery.md`).
 
-The battery has 35 items across two verification tiers:
+The battery has mechanical and judgment items across two verification tiers:
 
-  Items 1-28 (byte-identifiable): each item's "Expected routing" column
+  Byte-identifiable items: each item's "Expected routing" column
   claims a specific Recipe/task-type mapping backed by literal text in
   `nexus/reference/routing-matrix.md`, `nexus/reference/signal-keywords.md`,
   or the Recipes table in `nexus/SKILL.md`. This script asserts that literal
@@ -69,7 +69,7 @@ FILES = {
     "recipes-index.md": RECIPES_INDEX,
 }
 
-# Items 1-28: (item, short description, file key, required verbatim substring).
+# Mechanical items: (item, short description, file key, required verbatim substring).
 # Each substring is the literal textual evidence in the routing artifact that
 # backs the item's "Expected routing" claim in task-battery.md.
 MECHANICAL_ITEMS = [
@@ -152,6 +152,8 @@ MECHANICAL_ITEMS = [
      "CHAIN_SELECT → SPECIFY? → EXECUTE"),
     (64, "SPECIFY runs only after Ask First resolves", "SKILL.md",
      "runs only after every applicable `Ask First` gate has resolved"),
+    (65, "X/Twitter data intent -> XQUIK", "signal-keywords.md",
+     "`search X/Twitter`, `monitor X/Twitter`"),
     (28, "switch profile keyword -> pack", "signal-keywords.md",
      "`pack`, `skill pack`, `skill profile`, `enable skills`, `switch profile`, `skill preset` | `pack`"),
 ]
