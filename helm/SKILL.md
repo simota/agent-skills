@@ -139,12 +139,12 @@ Route elsewhere when:
 - Scenario rule: always produce `Baseline`, `Optimistic (+20~40%)`, and `Pessimistic (-20~40%)`.
 - Horizon rule: `SHORT = monthly/quarterly`, `MID = annual`, `LONG = 3/5/10-year directional blocks`. Never blend them.
 - Input minimum: Tier 1 is mandatory. If revenue scale, market context, or horizon is missing, trigger `ON_DATA_INSUFFICIENT` and ask first.
-- Monitoring escalation (deviation-based): `YELLOW` at `5%` deviation (team lead review + corrective plan); `ORANGE` at `10%` deviation (department head + resource reallocation); `RED` at `15%+` deviation (executive review + strategic intervention). Legacy KPI-miss thresholds: `YELLOW` when `1-2` KPIs miss by `<20%` or assumption is `WATCH`; `RED` when major KPI miss `>20%` or assumption is `BREACH`; `BLACK` when multiple `BREACH` states invalidate the strategy.
-- FORESIGHT thresholds: prediction accuracy (measured via MAPE — Mean Absolute Percentage Error) `>0.80 = strong` (industry benchmark for strategic forecast accuracy), `0.60-0.80 = review`, `<0.60 = weak — reassess drivers and assumptions`; scenario bracket rate `>0.85 = well-calibrated`, `0.70-0.85 = good`, `<0.70 = widen range or review drivers`; review forecast cycle time and variance attribution rate alongside accuracy.
+- SaaS financial alert rules: churn `>1.5x` the upper benchmark is `RED` (always decompose voluntary vs involuntary first — failed payments are 20-40% of total); Burn Multiple `>2.0x` is `RED`; Rule of 40 `<20%` is `YELLOW`, `>40%` healthy, `>60%` elite; NRR `<100%` is `RED` for Enterprise/Mid-Market (benchmark SMB against its own segment median); CAC Payback `>24 months` is `YELLOW`; CLV:CAC `<3:1` is `YELLOW`. **SaaS Triangle quick check**: Gross Margin `75%+`, CAC Payback `<18 months`, NRR `>101%` — all three green is a fundable baseline. Segment medians and market context -> `reference/financial-modeling-pitfalls.md`.
+- FORESIGHT thresholds: prediction accuracy (MAPE) `>0.80` strong / `0.60-0.80` review / `<0.60` weak; scenario bracket rate `>0.85` well-calibrated / `0.70-0.85` good / `<0.70` widen range. Track forecast cycle time and variance attribution alongside accuracy.
 - Calibration guardrails: require `3+` simulations before changing framework weights, cap each adjustment at `±0.15`, and decay adjustments by `10%` per quarter toward defaults.
-- SaaS financial alert rules (2026 benchmarks): churn — B2B annual average `3.5%`, top performers `<3%`, monthly `<1%` signals strong PMF, enterprise `<0.5%`; involuntary churn (failed payments) accounts for `20-40%` of total churn — always decompose voluntary vs involuntary before escalating; churn `>1.5x` upper benchmark = `RED`; Burn Multiple `>2.0x` = `RED`; Rule of 40 `<20%` = `YELLOW`, `>40%` = healthy, `>60%` = elite (`2-3×` higher valuations; only `11-30%` of SaaS companies achieve this); NRR — overall median `104-106%` in 2025-2026 (segment medians: Enterprise ACV >$100K `118%`, Mid-Market `108%`, SMB `97%`); `<100%` = `RED` for Enterprise/Mid-Market — for SMB, benchmark against segment median since SMB median is below `100%`; top performers `120%+`, elite `130%+` (`2.3×` higher valuations); CAC Payback `>24 months` = `YELLOW` (median `18-20 months` per Pavilion B2B 2025 benchmarks, elite `<12 months`); CLV:CAC ratio `<3:1` = `YELLOW` (target `4:1+`). SaaS Triangle quick health check: Gross Margin `75%+`, CAC Payback `<18 months`, NRR `>101%` — all three green = fundable baseline. Market context: median ARR growth `19-21%` for 2025 cohort (High Alpha / Burkland 2025 SaaS Benchmarks — source: https://burklandassociates.com/2025/11/18/2025-saas-benchmarks-what-great-looks-like-and-how-to-reach-it/); sustainable growth valued over hypergrowth; `40%+` of new ARR from existing customers, emphasizing retention-led growth.
-- KPI hygiene: limit to `3-5` strategic KPIs for executive focus, `8-12` core KPIs for leadership dashboard; update operational KPIs daily minimum, strategic KPIs weekly minimum; always pair leading indicators with lagging indicators; set SMART targets (specific, measurable, achievable, relevant, time-bound) drawing on historical performance and industry benchmarks.
-- Review cadence rule: recommend quarterly operational scenario reviews with annual structural-shift reviews; real-time KPI monitoring between reviews; revisit assumptions on a fixed cadence to keep scenarios current without constant churn.
+- KPI hygiene: `3-5` strategic KPIs for executive focus, `8-12` core KPIs for the leadership dashboard; operational KPIs updated daily and strategic weekly at minimum; always pair leading with lagging indicators; SMART targets drawn from historical performance and industry benchmarks.
+- Monitoring escalation (deviation-based): `YELLOW` at 5% (team lead review + corrective plan), `ORANGE` at 10% (department head + resource reallocation), `RED` at 15%+ (executive review + strategic intervention). Legacy KPI-miss thresholds and `BLACK` state -> `reference/financial-modeling-pitfalls.md`.
+- Review cadence: quarterly operational scenario reviews, annual structural-shift reviews, real-time KPI monitoring between them; revisit assumptions on a fixed cadence.
 
 ## Routing And Handoffs
 
@@ -166,20 +166,18 @@ Use Magi for executive choice, Scribe for formal strategy docs, Canvas for maps 
 
 ## Recipes
 
-Single source of truth for Recipe definitions. Behavior detail lives in the "Behavior" column; the "Read First" column lists files to load at the initial step.
-
 | Recipe | Subcommand | Default? | When to Use | Behavior | Read First |
 |--------|-----------|---------|-------------|----------|------------|
 | Scenario Planning | `scenario` | ✓ | Business scenario planning (Baseline/Optimistic/Pessimistic 3 scenarios) | Baseline/Optimistic (+20-40%)/Pessimistic (-20-40%) 3 scenarios required. Include sensitivity analysis and FORESIGHT record. | `reference/simulation-patterns.md`, `reference/data-inputs.md` |
 | SWOT Analysis | `swot` | | SWOT analysis + PESTLE→Porter cascade | Execute PESTLE→Porter→SWOT cascade. Always apply Devil's Advocate challenge. | `reference/frameworks.md` |
 | PESTLE Analysis | `pestle` | | PESTLE macro-environment analysis + TPESTRE variants | Also evaluate TPESTRE (Tech/Political/Economic/Social/Trust/Regulatory/Environmental) variant. Prefer when Trust/ethics dimensions matter. | `reference/frameworks.md`, `reference/cognitive-biases.md` |
 | Porter Analysis | `porter` | | Porter 5 Forces industry structure analysis + entry evaluation | 5 Forces quantitative scoring + BCG portfolio linkage + market-entry scoring. | `reference/frameworks.md`, `reference/market-sizing-strategy.md` |
-| Forecast | `forecast` | | KPI forecasting, financial modeling, SaaS metrics | SaaS Triangle (Gross Margin 75%+/CAC Payback <18mo/NRR 101%+) check. Rule of 40 and Burn Multiple alerts included. Emit benchmark gap analysis + alert flags for SaaS-metrics reviews. | `reference/simulation-patterns.md`, `reference/financial-modeling-pitfalls.md` |
-| Jobs-to-be-Done | `jtbd` | | Christensen JTBD framework | Write the job statement in `When [situation], I want [motivation], so I can [outcome]` form. Map the four forces of progress (push of current situation / pull of new solution / anxiety of switching / habit of current). Define the competitive set by *job*, not by product category. Identify functional, emotional, and social dimensions. Hand off to Spark for feature mapping, Field for interview validation. | `reference/jobs-to-be-done.md` |
-| Blue Ocean Strategy | `blue-ocean` | | Kim & Mauborgne Blue Ocean — Value Curve, ERRC grid, Four Actions, non-customer tiers | Build a Strategy Canvas (Value Curve) mapping the existing industry's competition factors. Apply Four Actions (Eliminate / Reduce / Raise / Create) to produce divergent value curve. Identify the three tiers of non-customers (soon-to-be / refusing / unexplored). Pair with buyer utility map. Hand off to Spark for feature expressions, Compete for incumbent analysis. | `reference/blue-ocean-strategy.md` |
-| Wardley Mapping | `wardley` | | Simon Wardley value-chain mapping — user-need anchor, visibility + evolution axes, doctrine | Anchor to a specific user need. Map the value chain with visibility on Y-axis (user-facing → invisible) and evolution on X-axis (Genesis → Custom-built → Product/Rental → Commodity/Utility). Annotate inertia, climatic patterns (evolution direction), and doctrine (universal principles). Use for strategic build-vs-buy, outsourcing, and platform-play decisions. Hand off to Atlas (technical architecture alignment), Magi (build vs buy judgment). | `reference/wardley-mapping.md` |
+| Forecast | `forecast` | | KPI forecasting, financial modeling, SaaS metrics | SaaS Triangle check (Gross Margin `75%+` / CAC Payback `<18mo` / NRR `101%+`), Rule of 40 and Burn Multiple alerts, benchmark gap analysis. | `reference/simulation-patterns.md`, `reference/financial-modeling-pitfalls.md` |
+| Jobs-to-be-Done | `jtbd` | | Christensen JTBD framework | Job statement as `When [situation], I want [motivation], so I can [outcome]`; map the four forces of progress; define the competitive set by *job*, not product category; identify functional, emotional, social dimensions. Feature mapping -> Spark; interview validation -> Field. | `reference/jobs-to-be-done.md` |
+| Blue Ocean Strategy | `blue-ocean` | | Value Curve, ERRC grid, Four Actions, non-customer tiers | Map the industry's competition factors on a Strategy Canvas, apply Eliminate/Reduce/Raise/Create for a divergent curve, identify the three tiers of non-customers, pair with a buyer utility map. Feature expression -> Spark; incumbent analysis -> Compete. | `reference/blue-ocean-strategy.md` |
+| Wardley Mapping | `wardley` | | Value-chain mapping — user-need anchor, visibility + evolution axes, doctrine | Anchor to a specific user need; map the chain with visibility on Y and evolution (Genesis -> Commodity) on X; annotate inertia, climatic patterns, doctrine. For build-vs-buy, outsourcing, platform plays. Architecture -> Atlas; judgment -> Magi. | `reference/wardley-mapping.md` |
 | Market Sizing | (signal-only) | | TAM/SAM/SOM strategic interpretation | Market headroom + entry scoring. Emit strategic market size analysis + portfolio sizing. | `reference/market-sizing-strategy.md` |
-| Business Model Canvas | (signal-only) | | Lay out / stress-test a whole business model (BMC 9 blocks or Lean Canvas startup variant) | Fill value/market side first, then infrastructure/cost; confirm Revenue Streams plausibly exceed Cost Structure. Distinct from Blue Ocean Strategy Canvas. Hand off VPC zoom-in to Spark, moat to Compete, KPIs to Pulse. | `reference/business-model-canvas.md` |
+| Business Model Canvas | (signal-only) | | Lay out or stress-test a whole business model (BMC 9 blocks or Lean Canvas) | Fill the value/market side first, then infrastructure/cost; confirm Revenue Streams plausibly exceed Cost Structure. Distinct from the Blue Ocean Strategy Canvas. VPC -> Spark; moat -> Compete; KPIs -> Pulse. | `reference/business-model-canvas.md` |
 | Disruption Detection | (signal-only) | | S-curve, industry lifecycle, Christensen disruption risk | Emit disruption risk score + lifecycle stage + response options. | `reference/disruption-detection.md` |
 | Wargaming Simulation | (signal-only — `WARGAME` Scope Mode) | | Competitor response simulation | Emit response-adjusted scenarios + financial impact + contingency plans. | `reference/wargaming-simulation.md` |
 | FORESIGHT Escalation | (signal-only) | | Strategy-execution deviation detected | Emit deviation report + corrective options. | `reference/strategy-monitoring.md` |
@@ -248,25 +246,25 @@ Include only the sections needed for the request, but keep assumptions, scenario
 
 | Reference | Read this when... |
 |-----------|-------------------|
-| `reference/frameworks.md` | you need SWOT, PESTLE, Porter, BCG, BSC, Ansoff, Value Chain, or Blue Ocean selection rules |
-| `reference/simulation-patterns.md` | you need short-, mid-, or long-horizon simulation formulas and output shapes |
-| `reference/data-inputs.md` | you need input tiers, default benchmarks, or missing-data handling |
-| `reference/output-templates.md` | you need canonical roadmap, KPI forecast, risk matrix, M&A, or executive-summary templates |
-| `reference/strategic-calibration.md` | you need FORESIGHT tracking, validation, or calibration rules |
-| `reference/strategy-monitoring.md` | you need strategy execution monitoring, alerts, or OKR cascade rules |
-| `reference/strategic-anti-patterns.md` | you need strategy design and execution-gap anti-pattern checks |
-| `reference/scenario-planning-pitfalls.md` | you need scenario quality checks or bias mitigation for scenario design |
-| `reference/cognitive-biases.md` | you need debiasing methods for strategic decisions |
-| `reference/financial-modeling-pitfalls.md` | you need SaaS benchmarks, Rule of 40, Burn Multiple, or model-quality alerts |
-| `reference/market-sizing-strategy.md` | you need to interpret TAM/SAM/SOM for strategic decisions, market entry scoring, or portfolio sizing |
-| `reference/disruption-detection.md` | you need disruption risk scoring, S-curve analysis, industry lifecycle staging, or Christensen framework |
-| `reference/wargaming-simulation.md` | you need to financially model competitor responses, build scenario trees from wargame data, or stress-test strategies |
-| `reference/jobs-to-be-done.md` | you need Christensen JTBD — job statement syntax, forces of progress, functional/emotional/social dimensions, and competitive-set-by-job |
-| `reference/blue-ocean-strategy.md` | you need Kim & Mauborgne Blue Ocean — Value Curve, ERRC grid, Four Actions, three tiers of non-customers, buyer utility map |
-| `reference/business-model-canvas.md` | you need the Business Model Canvas (9 blocks) or Lean Canvas (startup variant) to lay out / stress-test a whole business model — distinct from the Blue Ocean Strategy Canvas |
-| `reference/wardley-mapping.md` | you need Wardley mapping — user-need anchor, visibility + evolution axes, doctrine, climatic patterns, build-vs-buy decisions |
-| `_common/OPUS_5_AUTHORING.md` | you are sizing the strategic deliverable, deciding adaptive thinking depth at SIMULATE, or front-loading horizon/scope at SURVEY. Critical for Helm: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Helm-specific Output/Next schema. |
+| `reference/frameworks.md` | SWOT, PESTLE, Porter, BCG, BSC, Ansoff, Value Chain, or Blue Ocean selection rules |
+| `reference/simulation-patterns.md` | Short-, mid-, or long-horizon simulation formulas and output shapes |
+| `reference/data-inputs.md` | Input tiers, default benchmarks, or missing-data handling |
+| `reference/output-templates.md` | Canonical roadmap, KPI forecast, risk matrix, M&A, or executive-summary templates |
+| `reference/strategic-calibration.md` | FORESIGHT tracking, validation, or calibration rules |
+| `reference/strategy-monitoring.md` | Strategy execution monitoring, alerts, or OKR cascade rules |
+| `reference/strategic-anti-patterns.md` | Strategy design and execution-gap anti-pattern checks |
+| `reference/scenario-planning-pitfalls.md` | Scenario quality checks or bias mitigation for scenario design |
+| `reference/cognitive-biases.md` | Debiasing methods for strategic decisions |
+| `reference/financial-modeling-pitfalls.md` | SaaS benchmarks, Rule of 40, Burn Multiple, or model-quality alerts |
+| `reference/market-sizing-strategy.md` | Interpret TAM/SAM/SOM for strategic decisions, market entry scoring, or portfolio sizing |
+| `reference/disruption-detection.md` | Disruption risk scoring, S-curve analysis, industry lifecycle staging, or Christensen framework |
+| `reference/wargaming-simulation.md` | Financially model competitor responses, build scenario trees from wargame data, or stress-test strategies |
+| `reference/jobs-to-be-done.md` | Christensen JTBD — job statement syntax, forces of progress, functional/emotional/social dimensions, and competitive-set-by-job |
+| `reference/blue-ocean-strategy.md` | Kim & Mauborgne Blue Ocean — Value Curve, ERRC grid, Four Actions, three tiers of non-customers, buyer utility map |
+| `reference/business-model-canvas.md` | The Business Model Canvas (9 blocks) or Lean Canvas (startup variant) to lay out / stress-test a whole business model — distinct from the Blue Ocean Strategy Canvas |
+| `reference/wardley-mapping.md` | Wardley mapping — user-need anchor, visibility + evolution axes, doctrine, climatic patterns, build-vs-buy decisions |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the strategic deliverable, deciding adaptive thinking depth at SIMULATE, or front-loading horizon/scope at SURVEY. Critical for Helm: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Helm-specific Output/Next schema. |
 
 ## Operational
 

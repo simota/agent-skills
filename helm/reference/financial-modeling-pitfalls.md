@@ -118,3 +118,16 @@ Bar in 2026:
 - Disclosed plan to reach >75% gross margin within 24 months *or* defensible reason why 60-65% is structural
 
 Companies missing all three are dropping out of the Series B-fundable pool that would have been raised in 2021 ([Aventis Advisors 2026](https://aventis-advisors.com/rule-of-40-in-saas-2026/), [High Alpha 2026](https://www.highalpha.com/blog/mastering-the-saas-tightrope-between-growth-efficiency-and-ai-costs-in-2026)).
+
+
+---
+
+## Threshold Long Form (SKILL.md excerpt)
+
+- Monitoring escalation (deviation-based): `YELLOW` at `5%` deviation (team lead review + corrective plan); `ORANGE` at `10%` deviation (department head + resource reallocation); `RED` at `15%+` deviation (executive review + strategic intervention). Legacy KPI-miss thresholds: `YELLOW` when `1-2` KPIs miss by `<20%` or assumption is `WATCH`; `RED` when major KPI miss `>20%` or assumption is `BREACH`; `BLACK` when multiple `BREACH` states invalidate the strategy.
+
+- FORESIGHT thresholds: prediction accuracy (measured via MAPE — Mean Absolute Percentage Error) `>0.80 = strong` (industry benchmark for strategic forecast accuracy), `0.60-0.80 = review`, `<0.60 = weak — reassess drivers and assumptions`; scenario bracket rate `>0.85 = well-calibrated`, `0.70-0.85 = good`, `<0.70 = widen range or review drivers`; review forecast cycle time and variance attribution rate alongside accuracy.
+
+- SaaS financial alert rules (2026 benchmarks): churn — B2B annual average `3.5%`, top performers `<3%`, monthly `<1%` signals strong PMF, enterprise `<0.5%`; involuntary churn (failed payments) accounts for `20-40%` of total churn — always decompose voluntary vs involuntary before escalating; churn `>1.5x` upper benchmark = `RED`; Burn Multiple `>2.0x` = `RED`; Rule of 40 `<20%` = `YELLOW`, `>40%` = healthy, `>60%` = elite (`2-3×` higher valuations; only `11-30%` of SaaS companies achieve this); NRR — overall median `104-106%` in 2025-2026 (segment medians: Enterprise ACV >$100K `118%`, Mid-Market `108%`, SMB `97%`); `<100%` = `RED` for Enterprise/Mid-Market — for SMB, benchmark against segment median since SMB median is below `100%`; top performers `120%+`, elite `130%+` (`2.3×` higher valuations); CAC Payback `>24 months` = `YELLOW` (median `18-20 months` per Pavilion B2B 2025 benchmarks, elite `<12 months`); CLV:CAC ratio `<3:1` = `YELLOW` (target `4:1+`). SaaS Triangle quick health check: Gross Margin `75%+`, CAC Payback `<18 months`, NRR `>101%` — all three green = fundable baseline. Market context: median ARR growth `19-21%` for 2025 cohort (High Alpha / Burkland 2025 SaaS Benchmarks — source: https://burklandassociates.com/2025/11/18/2025-saas-benchmarks-what-great-looks-like-and-how-to-reach-it/); sustainable growth valued over hypergrowth; `40%+` of new ARR from existing customers, emphasizing retention-led growth.
+
+- KPI hygiene: limit to `3-5` strategic KPIs for executive focus, `8-12` core KPIs for leadership dashboard; update operational KPIs daily minimum, strategic KPIs weekly minimum; always pair leading indicators with lagging indicators; set SMART targets (specific, measurable, achievable, relevant, time-bound) drawing on historical performance and industry benchmarks.

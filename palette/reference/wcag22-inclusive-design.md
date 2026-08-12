@@ -140,3 +140,19 @@ Evaluate interfaces for cognitive clarity using these axes:
 | Animation Load | Simultaneous motion elements | ≤2 per viewport |
 
 **Red flags**: Auto-playing carousels, notification badges on >3 items, competing urgency signals, decorative parallax on mobile.
+
+
+---
+
+## WCAG 3.0 Preview (SKILL.md excerpt)
+
+- wcag3_preview: WCAG 3.0 awareness (0-4 scoring system, Bronze/Silver/Gold tiers, cognitive disability expansion — finalization 2028+, not yet a compliance target but informs design decisions; APCA contrast was removed from the WCAG 3.0 draft in July 2023 — continue to use WCAG 2.2 AA contrast targets)
+
+
+## Trigger Detail (SKILL.md excerpt)
+
+- Use Palette for EAA / ADA Title II compliance readiness — audit against EN 301 549 (EU) or WCAG 2.1 AA (US federal) and identify gaps before enforcement deadlines. eCommerce faces highest litigation risk (70% of 2025 ADA lawsuits targeted e-commerce; UsableNet 2025).
+
+- Use Palette for agentic AI interface review — evaluate Intent Preview (pre-action consent), Explainable Rationale, Confidence Signals, Action Audit & Undo, and Escalation Pathways for autonomous agent UIs (Smashing Magazine 2026).
+
+- Use Palette for WCAG 3.0 readiness assessment — evaluate current conformance against the Bronze/Silver/Gold tiered scoring model in the WCAG 3.0 Working Draft (substantially complete draft early 2026; final Recommendation expected 2028–2030). Note: APCA contrast was removed from the WCAG 3.0 draft as of July 2023 and is not present in subsequent drafts; continue to use WCAG 2.2 AA contrast ratios (4.5:1 normal text / 3:1 large text or UI components) as the actionable target. [Source: W3C — W3C Accessibility Guidelines (WCAG) 3.0, Working Draft (https://www.w3.org/TR/wcag-3.0/)]

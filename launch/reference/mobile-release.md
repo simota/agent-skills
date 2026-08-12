@@ -201,3 +201,26 @@ Schedule submission Mon-Wed to leave hotfix room before weekend. Avoid Fri / pre
 - [Fastlane Match — Apple API removal discussion](https://github.com/fastlane/fastlane/issues/29469)
 - [App Store Connect API — Phased Release](https://developer.apple.com/documentation/appstoreconnectapi/appstoreversionphasedreleases)
 - [Android Publisher API — Tracks](https://developers.google.com/android-publisher/tracks)
+
+
+---
+
+## NATIVE_TO_LAUNCH_HANDOFF Schema (SKILL.md excerpt)
+
+### Incoming: `NATIVE_TO_LAUNCH_HANDOFF`
+
+```yaml
+NATIVE_TO_LAUNCH_HANDOFF:
+  app_version: "[semver]"
+  platforms: ["iOS", "Android"]
+  store_compliance_notes: ["[Compliance items verified]"]
+  privacy_manifest_complete: true | false
+  data_safety_complete: true | false
+  build_artifacts: ["[IPA/AAB paths]"]
+  release_notes: "[User-facing changelog]"
+  rollout_plan:
+    ios: "TestFlight Internal → External → App Review → Phased Release"
+    android: "Play Internal → Closed → Open → Production Staged Rollout"
+  feature_flags: ["[server-driven flags wired for kill-switch]"]
+```
+

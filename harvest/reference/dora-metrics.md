@@ -126,3 +126,22 @@ For Lead Time, prefer "merge → deploy" over "first-commit → deploy" to avoid
 - DORA 2025 / Accelerate State of DevOps Report 2025 — Google Cloud blog (2025-10), `cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report`.
 - "The DORA 4 key metrics become 5" — CD Foundation (2025-10-16), `cd.foundation/blog/2025/10/16/dora-5-metrics/`.
 - DORA Metrics Best Practices (2025), oobeya, multitudes — confirm Top-15% Lead Time = "< 1 day" in 2025 reporting.
+
+
+---
+
+## AI Metrics Caveat and Team Archetypes (SKILL.md excerpt)
+
+- AI-inflated metrics caveat (DORA 2025 update): Unlike DORA 2024 which reported AI negatively correlated with throughput, DORA 2025 reports AI adoption now positively correlates with software delivery throughput and product performance — but continues to correlate negatively with delivery stability (more change failures, increased rework, longer cycle times to resolve issues). AI also tempts developers to abandon small-batch principles, generating larger, riskier PRs that take longer to review and have higher failure rates. Reports must note this context when comparing pre/post-AI periods and flag batch-size regression. Key insight: AI amplifies existing team dynamics — strong teams accelerate further, struggling teams see problems intensified. Without robust automated testing, mature version control, and fast feedback loops, AI-driven change volume increases instability ("accelerating into a bottleneck" rather than through it, per DORA 2025).
+
+- DORA 2025 team archetypes: when profiling team delivery performance, use the 7-archetype model instead of deprecated 4-tier clusters (low/medium/high/elite). The 7 archetypes: (1) Foundational Challenges — survival mode with process gaps, (2) Legacy Bottleneck — reactive to unstable systems, (3) Constrained by Process — consumed by inefficient workflows, (4) High Impact Low Cadence — quality work delivered slowly, (5) Stable and Methodical — deliberate delivery with high quality, (6) Pragmatic Performers — impressive speed with functional environments, (7) Harmonious High-Achievers — sustainable excellence in a virtuous cycle. Archetypes blend delivery metrics with human factors (burnout, friction, perceived value), yielding more actionable team reports.
+
+
+## Decision Rule Long Form (SKILL.md excerpt)
+
+| Decision | Rule |
+|---|---|
+| Large queries | Gate defined in **Boundaries → Ask First** (`>100` PRs). Rationale: GitHub REST API allows 5,000 req/hr authenticated; a 500-PR fetch with `per_page=100` and `--paginate` costs only 5 requests — the ask-first gate is about scope confirmation and report shape, not raw rate-limit headroom |
+| Cycle time measurement | Use "ready for review" timestamp as start, not PR creation. Draft PRs distort cycle time if measured from creation. Report 4-phase breakdown (Coding→Pickup→Review→Merge) to expose where time is lost |
+| Stacked PRs recommendation | When >30% of PRs exceed 400 LOC consistently, recommend stacked PRs as mitigation — teams using stacked PRs show ~20% more throughput with ~8% smaller median PR size, reducing review burden and merge queue wait |
+| Quality metrics | Include context and actions; avoid vanity metrics and rankings. Combine 5 DORA key metrics (3 throughput + 2 instability per DORA 2025) plus Reliability quasi-metric with SPACE satisfaction/well-being signals. Use per-metric percentile bands and 7 team archetypes (not deprecated 4-tier clusters) for performance profiling |

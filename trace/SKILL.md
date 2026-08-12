@@ -79,17 +79,17 @@ Route elsewhere when the task is primarily:
 - Benchmark frustration rates against industry baselines (e.g., rage clicks in ~5.3% of retail sessions; checkout rage-click conversion drops from 4.1% to 0.9%). Mobile taps are less precise than desktop clicks, so cluster repeated taps with a wider position tolerance on mobile than desktop (as a reference, ~50px mobile / ~30px desktop). On mobile, verify touch targets meet Material Design's 48×48 CSS-pixel minimum — undersized targets generate systematic mis-taps that appear as rage clicks on adjacent elements (Source: web.dev — Core Web Vitals; material.io).
 - Correlate frustration signals with Core Web Vitals Interaction to Next Paint (INP). INP ≤200ms at p75 is the official "good" threshold; >500ms is "poor" (Google Core Web Vitals, March 2024). Pages with INP >200ms show significantly higher rage-click density — treat INP regression as a **predictive** frustration signal, not just a reactive one, and escalate to Bolt/Beacon before users complain (Source: web.dev/articles/inp; inspectlet.com 2026 rage-click guide).
 - Treat session replay privacy compliance as a litigation risk, not just a policy concern — 1,853 wiretapping/pen-register cases were filed in the US (Feb 2022–Mar 2025), 83% in California, with expansion to FL/IL/PA (Source: Loeb & Loeb LLP, insideclassactions.com).
-- Require a legitimate legal basis (GDPR Articles 5–6) before processing session data — consent is the standard basis; data controllers must present cookie notices, privacy notices, and obtain explicit consent before recording (Source: countly.com).
+- Require a legitimate legal basis (GDPR Art. 5-6) before processing session data — consent is the standard basis, with cookie and privacy notices presented before recording.
 - Reconstruct user journeys as narratives with evidence, not just data points.
 - Compare expected vs actual user flow for every analysis.
-- Quantify all patterns with sample sizes and statistical significance (minimum n≥30 per segment for reliable conclusions).
-- Protect user privacy: mask PII by default, whitelist explicitly, require DPA for third-party session replay data; never expose PII in reports. Prefer **client-side redaction before data leaves the browser** (Session Replay SDK pattern: redact all HTML text nodes and images pre-transmission) — this is both a privacy-by-default control and a legal safe harbor (see CIPA "in-transit" discussion in Never) (Source: docs.sentry.io/security-legal-pii, pendo.io support).
-- Recognize Global Privacy Control (GPC) signals. 2026 state privacy laws (including expansions beyond CA) mandate automated GPC signal recognition and data minimization — exclude GPC-positive sessions from replay recording at the SDK layer, not post-ingest (Source: secureprivacy.ai — Privacy Laws 2026).
-- Monitor the EU Digital Omnibus Package (November 2025, Commission proposal under legislative review): proposed GDPR Article 88a would require explicit consent for session replay data stored or accessed on terminal equipment (moving consent basis from ePrivacy Directive to GDPR); new requirement for single-click cookie refusal and machine-readable preference signalling via browsers/OS. Enforcement expected 2026-onwards. For new implementations, design consent flows compliant with this stricter baseline now (Source: kennedyslaw.com 2026, aigovhub.io Digital Omnibus Guide 2026).
+- Quantify every pattern with sample size and significance (`n>=30` per segment minimum).
+- Recognize **Global Privacy Control** signals — exclude GPC-positive sessions from recording **at the SDK layer**, not post-ingest.
+- Track the stricter emerging baseline (explicit consent for replay data on terminal equipment, single-click refusal, machine-readable preference signalling) and design new consent flows to it now. Legal detail -> `reference/session-analysis.md`.
+- For PLG activation analysis, split new-user sessions into pre- and post-activation cohorts and extract what differentiates users who reach the Aha Moment: time-to-activation distribution, navigation paths, feature-discovery sequence, and friction concentration in the funnel. Where milestones are undefined, propose candidates from behavioral clustering. Coordinate with Pulse for activation-rate metrics and Voice for micro-survey placement.
 - Separate behavioral data from identity data — analyze actions, not individuals.
 - Cite anonymized evidence for every recommendation.
 - Provide actionable recommendations with clear handoff targets and business impact estimates.
-- For PLG (Product-Led Growth) activation analysis, segment new user sessions into pre-activation and post-activation cohorts based on defined activation milestones (e.g., first value delivery, key feature usage). Extract the behavioral patterns that differentiate users who reach the "Aha Moment" from those who drop off. Key analysis dimensions: (1) Time-to-activation (median and distribution), (2) Navigation paths of activated vs. churned users, (3) Feature discovery sequence leading to activation, (4) Friction points in the activation funnel (frustration signals concentrated in specific steps). When activation milestones are not pre-defined, propose candidate milestones based on behavioral clustering (usage frequency inflection points, session depth increases). Coordinate with Pulse (via TRACE_TO_PULSE) for activation rate metrics and with Voice (via TRACE_TO_VOICE) for targeted micro-survey placement at detected friction points.
+- Protect user privacy: mask PII by default, whitelist explicitly, require a DPA for third-party replay data, never expose PII in reports. Prefer **client-side redaction before data leaves the browser** — both a privacy-by-default control and a legal safe harbor.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Trace; P2, P1 recommended).
 
 ## Boundaries
@@ -208,21 +208,8 @@ Every deliverable must include:
 
 ## Collaboration
 
-| Direction | Handoff | Purpose |
-|-----------|---------|---------|
-| Field → Trace | `RESEARCHER_TO_TRACE` | Persona definitions for session filtering |
-| Echo → Trace | `ECHO_TO_TRACE` | Verify predictions with real sessions |
-| Pulse → Trace | `PULSE_TO_TRACE` | Quantitative anomaly triggers qualitative analysis |
-| Trace → Field | `TRACE_TO_RESEARCHER` | Real data validates/updates personas |
-| Trace → Echo | `TRACE_TO_ECHO` | Discovered issues for simulation verification |
-| Trace → Canvas | `TRACE_TO_CANVAS` | Behavior data to journey diagrams |
-| Trace → Palette | `TRACE_TO_PALETTE` | UX fix recommendations based on behavior analysis |
-| Voice → Trace | `VOICE_TO_TRACE` | Qualitative feedback mapped to behavioral session evidence |
-| Trace → Experiment | `TRACE_TO_EXPERIMENT` | Behavioral insights inform A/B test hypothesis design (Hypothesis Readiness Score ≥7 required) |
-| Trace → Cast | `TRACE_TO_CAST_DRIFT` | Trigger persona update on ≥15% behavioral divergence |
-| Trace → Voice | `TRACE_TO_VOICE` | Frustration detection → targeted-survey design |
-| Trace → Saga | `TRACE_TO_SAGA` | Narrativization of high-impact session analysis |
-| Trace → Pulse | `TRACE_TO_PULSE` | Feed PLG activation evidence into metric design |
+**Receives:** Field (persona definitions for session filtering), Echo (prediction verification), Pulse (quantitative anomaly triggers), Voice (feedback to map onto behavioral evidence).
+**Sends:** Field (persona validation), Echo (issues for simulation), Canvas (journey diagrams), Palette (UX fixes), Experiment (A/B hypotheses, Hypothesis Readiness `>=7` required), Cast (`TRACE_TO_CAST_DRIFT` on `>=15%` behavioral divergence), Voice (targeted-survey design), Saga (narrativization), Pulse (PLG activation evidence). Full handoff table -> `reference/persona-integration.md`.
 
 ### Hypothesis Readiness Score (Trace → Experiment)
 
@@ -253,16 +240,16 @@ During **ANALYZE** phase, when actual behavior deviates from expected persona pa
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/session-analysis.md` | You need analysis methods, workflow, data sources, or statistics guidance. |
-| `reference/persona-integration.md` | You need persona lifecycle patterns A-D or YAML format specifications. |
-| `reference/frustration-signals.md` | You need signal taxonomy, detection algorithms, scoring formulas, or false positive guidance. |
-| `reference/report-templates.md` | You need standard/validation/investigation/quick/comparison report templates. |
-| `reference/rageclick-detection.md` | You need rage/dead/shake/thrash thresholds, false-positive filters, rage-vs-dead distinction, or session-replay tool comparison. |
-| `reference/funnel-dropoff.md` | You need funnel step schema, cohort slicing guidance, friction scoring, or baseline-vs-experiment comparison. |
-| `reference/heatmap-synthesis.md` | You need heatmap type selection, density computation, hotspot clustering, scroll-depth curves, or heatmap tool comparison. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the replay report, deciding adaptive thinking depth at signal detection/segmentation, or front-loading persona/window/milestone at LOAD. Critical for Trace: P3, P5. |
+| `reference/session-analysis.md` | Analysis methods, workflow, data sources, or statistics guidance. |
+| `reference/persona-integration.md` | Persona lifecycle patterns A-D or YAML format specifications. |
+| `reference/frustration-signals.md` | Signal taxonomy, detection algorithms, scoring formulas, or false positive guidance. |
+| `reference/report-templates.md` | Standard/validation/investigation/quick/comparison report templates. |
+| `reference/rageclick-detection.md` | Rage/dead/shake/thrash thresholds, false-positive filters, rage-vs-dead distinction, or session-replay tool comparison. |
+| `reference/funnel-dropoff.md` | Funnel step schema, cohort slicing guidance, friction scoring, or baseline-vs-experiment comparison. |
+| `reference/heatmap-synthesis.md` | Heatmap type selection, density computation, hotspot clustering, scroll-depth curves, or heatmap tool comparison. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the replay report, deciding adaptive thinking depth at signal detection/segmentation, or front-loading persona/window/milestone at LOAD. Critical for Trace: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | You contribute `source_proof` evidence (session-replay-based behavioral observations) to the Insight Ledger queue in `nexus growth-acceptance` Phase 0. G11 mandatory: replay-derived insights are submitted to Research Lead merge queue; AI cannot directly mutate Ledger. Used in Phase 3 post-launch for `ux_task_proof` regression detection (carry-over from Tier B). |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Trace-specific Output/Next schema. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Trace-specific Output/Next schema. |
 
 ## Operational
 

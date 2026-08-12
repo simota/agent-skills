@@ -135,3 +135,12 @@ Apply bitemporal design when any of the following are true:
 - The system must support **retroactive corrections** to historical records.
 - Regulatory or audit requirements demand knowing what the database believed at a given time.
 - Temporal queries like "what did the system show on 2023-06-01 for events in Q1 2023?" are required.
+
+
+---
+
+## pgvector Tuning and DDL Replication (SKILL.md excerpt)
+
+- For vector/AI workloads, prefer pgvector within PostgreSQL for ACID compliance and hybrid search (benchmarked at 50 M+ vectors with pgvectorscale). Use HNSW index (`m=16`, `ef_construction=64`; raise `ef_construction` to 256 for recall-critical workloads) for recall-performance balance; use IVFFlat only when index build time is the bottleneck. Use `halfvec` (float16) to halve memory with near-identical accuracy. Combine vector KNN with structured prefilters (e.g., `tenant_id`, `language`) for order-of-magnitude speedups over vector-only scans. On pgvector 0.8+, enable `SET hnsw.iterative_scan = relaxed_order` for filtered queries to prevent under-fetching when prefilters are selective — this iteratively widens the search until enough post-filter results are found. Tune `hnsw.scan_mem_multiplier` (multiple of `work_mem`) to improve recall on high-selectivity filtered queries by allowing larger in-memory candidate sets. Monitor P99 search latency; alert on > 2× baseline.
+
+- On PostgreSQL 18, leverage DDL replication in logical replication to automatically propagate schema changes (`CREATE`/`ALTER`/`DROP TABLE`) to subscribers — eliminates manual schema sync across environments and reduces drift between staging and production.

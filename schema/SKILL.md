@@ -140,16 +140,11 @@ Route elsewhere when the task is primarily:
 
 - Use `CREATE INDEX CONCURRENTLY` on PostgreSQL for production index creation.
 - Treat `DROP COLUMN` and `DROP TABLE` as backup-required.
-- Use expand-contract for risky rename/type-change flows, populated `NOT NULL`, and phased deprecation. Consider pgroll for automated expand-contract with versioned schemas and data backfills. On PostgreSQL 18, use `RETURNING OLD.*` / `RETURNING NEW.*` in UPDATE/DELETE statements to verify data correctness during dual-write and backfill phases without separate SELECT queries.
-- On PostgreSQL 18, use `NOT VALID` when adding CHECK, FK, or NOT NULL constraints to skip immediate validation of existing rows — validate separately with `VALIDATE CONSTRAINT` after the transaction commits to avoid long-held `ACCESS EXCLUSIVE` locks during migrations.
-- On PostgreSQL 18, use virtual generated columns (now the default) for derived values — they compute on read without storing, avoiding table rewrites during schema evolution.
-- On PostgreSQL 18, use temporal constraints (`PRIMARY KEY ... WITHOUT OVERLAPS`, `FOREIGN KEY ... PERIOD`) for scheduling, booking, and bitemporal schemas instead of application-level overlap checks.
-- Use `UNIQUE NULLS DISTINCT` (PostgreSQL 15+) for unique constraints on nullable columns — treats each NULL as a distinct value, eliminating partial-index workarounds for optional-but-unique fields (e.g., email, external_id).
+- **PostgreSQL 18 migration rules**: `NOT VALID` when adding CHECK/FK/NOT NULL constraints, validated separately with `VALIDATE CONSTRAINT` to avoid long `ACCESS EXCLUSIVE` locks; virtual generated columns (now default) for derived values, avoiding table rewrites; temporal constraints (`PRIMARY KEY ... WITHOUT OVERLAPS`, `FOREIGN KEY ... PERIOD`) instead of application-level overlap checks; `RETURNING OLD.*` / `NEW.*` to verify correctness during dual-write and backfill. Use `UNIQUE NULLS DISTINCT` (PG15+) for nullable unique columns instead of partial-index workarounds. Expand-contract for risky rename/type-change flows, populated `NOT NULL`, and phased deprecation. Detail -> `reference/postgresql18-features.md`.
 - Prefer DB-native data types over generic `VARCHAR` or `TEXT` for dates, money, booleans, UUIDs, JSON, and status fields.
 - Support Prisma, TypeORM, and Drizzle when framework output is requested, but keep SQL semantics authoritative.
-- On PostgreSQL 18, leverage DDL replication in logical replication to automatically propagate schema changes (`CREATE`/`ALTER`/`DROP TABLE`) to subscribers — eliminates manual schema sync across environments and reduces drift between staging and production.
-- For vector/AI workloads, prefer pgvector within PostgreSQL for ACID compliance and hybrid search (benchmarked at 50 M+ vectors with pgvectorscale). Use HNSW index (`m=16`, `ef_construction=64`; raise `ef_construction` to 256 for recall-critical workloads) for recall-performance balance; use IVFFlat only when index build time is the bottleneck. Use `halfvec` (float16) to halve memory with near-identical accuracy. Combine vector KNN with structured prefilters (e.g., `tenant_id`, `language`) for order-of-magnitude speedups over vector-only scans. On pgvector 0.8+, enable `SET hnsw.iterative_scan = relaxed_order` for filtered queries to prevent under-fetching when prefilters are selective — this iteratively widens the search until enough post-filter results are found. Tune `hnsw.scan_mem_multiplier` (multiple of `work_mem`) to improve recall on high-selectivity filtered queries by allowing larger in-memory candidate sets. Monitor P99 search latency; alert on > 2× baseline.
-- For multi-tenant schemas, place `tenant_id` as the leading column in composite primary keys and create a B-tree index on `tenant_id`. Use PostgreSQL RLS as a safety net alongside application-level filtering. For large tenants, consider declarative list or hash partitioning by `tenant_id`.
+- For vector/AI workloads prefer **pgvector** inside PostgreSQL for ACID and hybrid search. HNSW (`m=16`, `ef_construction=64`; 256 when recall-critical) balances recall and performance; IVFFlat only when build time is the bottleneck. `halfvec` halves memory at near-identical accuracy. Combine KNN with structured prefilters for order-of-magnitude speedups, and on pgvector 0.8+ set `hnsw.iterative_scan = relaxed_order` for selective filters. Monitor P99 search latency, alerting above 2x baseline. Tuning detail -> `reference/advanced-patterns.md`.
+- Multi-tenant schemas put `tenant_id` first in composite primary keys with a B-tree index on it; RLS is a safety net alongside application-level filtering, and large tenants may warrant list or hash partitioning by `tenant_id`.
 
 ## Routing And Handoffs
 
@@ -204,19 +199,8 @@ Routing rules:
 | Event Sourcing | `event-sourcing` | | Event store schema — events / projections / snapshots / outbox, aggregate boundaries | `reference/event-sourcing-schema.md` |
 | Soft Delete | `soft-delete` | | Logical deletion patterns (deleted_at / status / tombstone) with GDPR right-to-erasure interaction | `reference/soft-delete-patterns.md` |
 
-Behavior notes:
-- **design** (default): SURVEY → MODEL → VALIDATE → PRESENT; load `schema-examples.md` + `schema-design-anti-patterns.md`.
-- **migration**: Draft step-by-step migration DDL with rollback; load `migration-patterns.md`; flag zero-downtime risks.
-- **er**: Generate Mermaid ER diagram from schema description or codebase; load `schema-examples.md`.
-- **normalize**: Assess NF level and propose de-normalization trade-offs; load `normalization-guide.md`.
-- **index**: Analyze query patterns and propose covering/partial indexes; load `index-strategies.md` + `index-performance-anti-patterns.md`.
-- **rollback**: Provide reverse migration DDL, dual-write windows, backfill scripts, and safe alternatives for destructive changes (DROP COLUMN / data conversion). Ask First: destructive change without rollback path.
-- **tenant**: Compare the 4 strategies (shared-DB / schema-per-tenant / DB-per-tenant / shard-based) against tenant count, isolation requirements, and cost constraints. Includes RLS / connection routing / per-tenant backup strategies. Coordinates with the Shard agent.
-- **index**: Query patterns → covering / partial / expression index design. Existing `index-strategies.md`.
-- **partition**: Select range / list / hash / time-based. Present pruning impact, partition maintenance (auto-creation, old-partition deletion), and staged migration from existing tables.
-- **audit-log**: Load `audit-log-schema.md`. Append-only audit table design — actor / action / target / before-image / after-image / timestamp / correlation-id. Choose Postgres temporal tables vs trigger-based vs CDC (Debezium). Define retention + WORM compliance + tamper-evidence (HMAC chain). Never UPDATE / DELETE on audit rows.
-- **event-sourcing**: Load `event-sourcing-schema.md`. Event store table (event_id / aggregate_id / aggregate_version / event_type / payload / metadata) with optimistic concurrency, projections (read models), snapshots, outbox pattern for transactional event publishing. Map aggregate boundaries; CQRS-friendly.
-- **soft-delete**: Load `soft-delete-patterns.md`. Compare deleted_at timestamp vs status enum vs tombstone row. Design partial unique indexes. Address FK cascade behavior, query default-filter risk (visible vs deleted set), GDPR right-to-erasure pathway (soft → hard delete + audit-log).
+Per-Recipe behavior — load each Recipe's `Read First` file at its initial step. Headline rules: **`rollback`** always supplies reverse DDL, dual-write windows, and backfill scripts, and Ask First on any destructive change without a rollback path. **`tenant`** compares all four isolation strategies against tenant count, isolation requirements, and cost, covering RLS, connection routing, and per-tenant backup. **`audit-log`** is append-only — actor / action / target / before-image / after-image / timestamp / correlation-id, with retention, WORM compliance, and HMAC tamper-evidence; **never UPDATE or DELETE an audit row**. **`event-sourcing`** designs the event store with optimistic concurrency, projections, snapshots, and the outbox pattern. **`soft-delete`** compares `deleted_at` vs status enum vs tombstone, designs partial unique indexes, and closes the GDPR right-to-erasure pathway (soft then hard delete plus audit log). Full notes -> `reference/schema-examples.md`.
+
 
 ## Subcommand Dispatch
 
@@ -277,26 +261,26 @@ Schema receives data requirements and architectural context from upstream agents
 
 | File | Read this when... |
 |------|-------------------|
-| `reference/normalization-guide.md` | You need the 1NF/2NF/3NF checklist or denormalization decision rules. |
-| `reference/index-strategies.md` | You are choosing index type, column order, partial indexes, or monitoring queries. |
-| `reference/migration-patterns.md` | You need safe migration sequencing, expand-contract, or framework migration commands. |
-| `reference/schema-examples.md` | You need concrete schema, migration, ORM, or ER diagram examples. |
-| `reference/schema-design-anti-patterns.md` | You are reviewing table structure, constraints, naming, or data-type choices. |
-| `reference/data-modeling-anti-patterns.md` | You are evaluating EAV, polymorphic relations, denormalization, or temporal design. |
-| `reference/migration-deployment-anti-patterns.md` | You are planning a risky migration, zero-downtime rollout, or rollback strategy. |
-| `reference/index-performance-anti-patterns.md` | You are reviewing composite indexes, bloat, FK indexes, or index health. |
-| `reference/postgresql18-features.md` | You are on PostgreSQL 18 (GA 2025-09-25) and need UUIDv7, virtual generated columns (default), temporal `WITHOUT OVERLAPS` / `PERIOD`, `RETURNING OLD.*`/`NEW.*`, B-tree skip scan, async I/O, OAuth, or DDL replication. |
-| `reference/postgresql17-features.md` | You are on PostgreSQL 17 and need SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, `JSON_QUERY`, `JSON_EXISTS`), `SPLIT`/`MERGE PARTITION`, logical-replication failover, or `pg_createsubscriber`. Legacy reference — see `postgresql18-features.md` for current release. |
-| `reference/multi-tenant-patterns.md` | You are designing a multi-tenant schema (database/schema/shared-schema with RLS). |
-| `reference/advanced-patterns.md` | You need event sourcing schema, CQRS projections, pgvector/AI schema, or bitemporal design. |
-| `reference/migration-rollback.md` | You are designing reverse-operation DDL, dual-write windows, backfill scripts, or destructive-change alternatives (`rollback` recipe). |
-| `reference/partition-strategies.md` | You are designing range/list/hash/time-based partitioning, pruning, maintenance, or staged migration from existing tables (`partition` recipe). |
-| `reference/audit-log-schema.md` | You are designing append-only audit-log tables — actor/action/before-after image, retention, WORM, HMAC chain (`audit-log` recipe). |
-| `reference/event-sourcing-schema.md` | You are designing event store, projections, snapshots, outbox pattern, or aggregate boundaries (`event-sourcing` recipe). |
-| `reference/soft-delete-patterns.md` | You are designing logical deletion (deleted_at / status / tombstone), partial unique indexes, FK cascade, or GDPR right-to-erasure pathway (`soft-delete` recipe). |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the schema/migration spec, deciding adaptive thinking depth at PLAN, or front-loading DB version/multi-tenant flag at AUDIT. Critical for Schema: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Schema-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `reference/normalization-guide.md` | The 1NF/2NF/3NF checklist or denormalization decision rules. |
+| `reference/index-strategies.md` | Choosing index type, column order, partial indexes, or monitoring queries. |
+| `reference/migration-patterns.md` | Safe migration sequencing, expand-contract, or framework migration commands. |
+| `reference/schema-examples.md` | Concrete schema, migration, ORM, or ER diagram examples. |
+| `reference/schema-design-anti-patterns.md` | Reviewing table structure, constraints, naming, or data-type choices. |
+| `reference/data-modeling-anti-patterns.md` | Evaluating EAV, polymorphic relations, denormalization, or temporal design. |
+| `reference/migration-deployment-anti-patterns.md` | Planning a risky migration, zero-downtime rollout, or rollback strategy. |
+| `reference/index-performance-anti-patterns.md` | Reviewing composite indexes, bloat, FK indexes, or index health. |
+| `reference/postgresql18-features.md` | On PostgreSQL 18 (GA 2025-09-25) and need UUIDv7, virtual generated columns (default), temporal `WITHOUT OVERLAPS` / `PERIOD`, `RETURNING OLD.*`/`NEW.*`, B-tree skip scan, async I/O, OAuth, or DDL replication. |
+| `reference/postgresql17-features.md` | On PostgreSQL 17 and need SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, `JSON_QUERY`, `JSON_EXISTS`), `SPLIT`/`MERGE PARTITION`, logical-replication failover, or `pg_createsubscriber`. Legacy reference — see `postgresql18-features.md` for current release. |
+| `reference/multi-tenant-patterns.md` | Designing a multi-tenant schema (database/schema/shared-schema with RLS). |
+| `reference/advanced-patterns.md` | Event sourcing schema, CQRS projections, pgvector/AI schema, or bitemporal design. |
+| `reference/migration-rollback.md` | Designing reverse-operation DDL, dual-write windows, backfill scripts, or destructive-change alternatives (`rollback` recipe). |
+| `reference/partition-strategies.md` | Designing range/list/hash/time-based partitioning, pruning, maintenance, or staged migration from existing tables (`partition` recipe). |
+| `reference/audit-log-schema.md` | Designing append-only audit-log tables — actor/action/before-after image, retention, WORM, HMAC chain (`audit-log` recipe). |
+| `reference/event-sourcing-schema.md` | Designing event store, projections, snapshots, outbox pattern, or aggregate boundaries (`event-sourcing` recipe). |
+| `reference/soft-delete-patterns.md` | Designing logical deletion (deleted_at / status / tombstone), partial unique indexes, FK cascade, or GDPR right-to-erasure pathway (`soft-delete` recipe). |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the schema/migration spec, deciding adaptive thinking depth at PLAN, or front-loading DB version/multi-tenant flag at AUDIT. Critical for Schema: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Schema-specific Output/Next schema. |
+| `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
 ## AUTORUN Support
 

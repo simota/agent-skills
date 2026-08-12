@@ -295,3 +295,18 @@ DEAD_END_ANALYSIS:
   hypothesis: "FAQ doesn't answer user questions"
   evidence: "82% scroll to bottom, 45% use search on FAQ page"
 ```
+
+
+---
+
+## Privacy Basis and PLG Activation Detail (SKILL.md excerpt)
+
+- Require a legitimate legal basis (GDPR Articles 5–6) before processing session data — consent is the standard basis; data controllers must present cookie notices, privacy notices, and obtain explicit consent before recording (Source: countly.com).
+
+- Protect user privacy: mask PII by default, whitelist explicitly, require DPA for third-party session replay data; never expose PII in reports. Prefer **client-side redaction before data leaves the browser** (Session Replay SDK pattern: redact all HTML text nodes and images pre-transmission) — this is both a privacy-by-default control and a legal safe harbor (see CIPA "in-transit" discussion in Never) (Source: docs.sentry.io/security-legal-pii, pendo.io support).
+
+- Recognize Global Privacy Control (GPC) signals. 2026 state privacy laws (including expansions beyond CA) mandate automated GPC signal recognition and data minimization — exclude GPC-positive sessions from replay recording at the SDK layer, not post-ingest (Source: secureprivacy.ai — Privacy Laws 2026).
+
+- Monitor the EU Digital Omnibus Package (November 2025, Commission proposal under legislative review): proposed GDPR Article 88a would require explicit consent for session replay data stored or accessed on terminal equipment (moving consent basis from ePrivacy Directive to GDPR); new requirement for single-click cookie refusal and machine-readable preference signalling via browsers/OS. Enforcement expected 2026-onwards. For new implementations, design consent flows compliant with this stricter baseline now (Source: kennedyslaw.com 2026, aigovhub.io Digital Omnibus Guide 2026).
+
+- For PLG (Product-Led Growth) activation analysis, segment new user sessions into pre-activation and post-activation cohorts based on defined activation milestones (e.g., first value delivery, key feature usage). Extract the behavioral patterns that differentiate users who reach the "Aha Moment" from those who drop off. Key analysis dimensions: (1) Time-to-activation (median and distribution), (2) Navigation paths of activated vs. churned users, (3) Feature discovery sequence leading to activation, (4) Friction points in the activation funnel (frustration signals concentrated in specific steps). When activation milestones are not pre-defined, propose candidate milestones based on behavioral clustering (usage frequency inflection points, session depth increases). Coordinate with Pulse (via TRACE_TO_PULSE) for activation rate metrics and with Voice (via TRACE_TO_VOICE) for targeted micro-survey placement at detected friction points.

@@ -284,3 +284,24 @@ CUSTOM_SEGMENT:
     pages_per_session: "[operator] [value]"
 # ...
 ```
+
+
+---
+
+## Collaboration Handoff Table (SKILL.md excerpt)
+
+| Direction | Handoff | Purpose |
+|-----------|---------|---------|
+| Field → Trace | `RESEARCHER_TO_TRACE` | Persona definitions for session filtering |
+| Echo → Trace | `ECHO_TO_TRACE` | Verify predictions with real sessions |
+| Pulse → Trace | `PULSE_TO_TRACE` | Quantitative anomaly triggers qualitative analysis |
+| Trace → Field | `TRACE_TO_RESEARCHER` | Real data validates/updates personas |
+| Trace → Echo | `TRACE_TO_ECHO` | Discovered issues for simulation verification |
+| Trace → Canvas | `TRACE_TO_CANVAS` | Behavior data to journey diagrams |
+| Trace → Palette | `TRACE_TO_PALETTE` | UX fix recommendations based on behavior analysis |
+| Voice → Trace | `VOICE_TO_TRACE` | Qualitative feedback mapped to behavioral session evidence |
+| Trace → Experiment | `TRACE_TO_EXPERIMENT` | Behavioral insights inform A/B test hypothesis design (Hypothesis Readiness Score ≥7 required) |
+| Trace → Cast | `TRACE_TO_CAST_DRIFT` | Trigger persona update on ≥15% behavioral divergence |
+| Trace → Voice | `TRACE_TO_VOICE` | Frustration detection → targeted-survey design |
+| Trace → Saga | `TRACE_TO_SAGA` | Narrativization of high-impact session analysis |
+| Trace → Pulse | `TRACE_TO_PULSE` | Feed PLG activation evidence into metric design |

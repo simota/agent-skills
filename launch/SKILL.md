@@ -127,14 +127,14 @@ Route elsewhere when the task is primarily:
 
 | Area | Rule |
 |------|------|
-| Versioning | Use SemVer by default: breaking → `MAJOR`, backwards-compatible feature → `MINOR`, fix/security → `PATCH`. Recommend `CalVer` or automated numbering when CD makes strict SemVer low-signal. Enforce via Conventional Commits + commitlint/Husky. |
+| Versioning | SemVer by default: breaking -> `MAJOR`, compatible feature -> `MINOR`, fix/security -> `PATCH`. Recommend `CalVer` or automated numbering when CD makes strict SemVer low-signal. Enforce via Conventional Commits + commitlint. |
 | Stability window | If `0.x.y` lasts more than `6 months`, recommend `1.0.0`. If `alpha` or `beta` lasts more than `1 month`, recommend stabilize or cancel. Keep `rc` windows under `2 weeks`. |
-| Go/No-Go | Use a scored checklist (each criterion 1.0 = met, 0.5 = partial, 0 = unmet; threshold ≥ 80%). Required criteria: tests green, security scan clean (`Sentinel`), staging verification, rollback plan tested, failover mechanisms verified (fewer than 1 in 3 organizations test failover regularly — State of Resilience 2025), CHANGELOG generated, load test at ≥ 2× expected peak with < 5% error rate, SLO baselines captured (`Beacon`), and stakeholder approval when needed. For AI-agent-facing services, include correlated-burst load tests — traditional load tests miss AI-era traffic patterns where thousands of agents simultaneously hammer the same endpoints. Code coverage above `80%` unless the project has a stronger local standard. Track DORA metrics (5 core + Reliability) as release health indicators: target Change Failure Rate < 15% (elite benchmark per DORA 2025: 0-2%, achieved by ~8.5% of teams), Failed Deployment Recovery Time (FDRT) < 1 hour, and Rework Rate (unplanned fix deployments / total deployments) < 15%. When a release includes significant AI-generated code, add explicit verification gates — DORA 2025 research shows AI adoption improves throughput 30-40% but increases change failure rate 15-25%. |
-| Rollback | Define automated rollback triggers before deploy — manual undoing is an anti-pattern. Baseline trigger: `error_rate > 5% for 5 min` OR `P99 latency > baseline + 50% for 5 min`. Preferred methods: flag disable `< 1 min`, deployment rollback `2-5 min`, DB rollback `5-15 min`, data restore `15-60 min`. Always include DB rollback scripts or forward-compatible migration patterns. For Kubernetes, use Flagger (wraps standard Deployments with zero manifest changes, fully automated canary lifecycle) or Argo Rollouts (requires Rollout kind replacing Deployment, provides explicit control with UI dashboard) for automated progressive delivery with metric-driven rollback; prefer Gateway API for traffic splitting (SMI project merged into Gateway API subproject). Conduct rollback drills quarterly or before major releases. |
-| Feature flags | Ring-based rollout: Internal team (5-20 people, 24-48h) → Canary `1-5%` (error rate < 0.1%) → Beta `10-25%` (user feedback) → GA `100%` (7-day stability). Minimum canary duration `24 hours`. Nesting depth `1`. Approval if active flags exceed `50`. Stale release flag cleanup after `60 days`. Create a cleanup ticket when creating the flag — removal as part of definition of done prevents flag debt accumulation. Define success metrics before enabling each flag. Use sticky sessions during progressive delivery so users consistently see either the stable or canary version — session switching causes confusing UX and corrupts canary metrics. For AI-driven canary analysis, tools like Argo Rollouts and Harness can dynamically adjust rollout pace based on real-time error/latency signals. |
+| Go/No-Go | Scored checklist (1.0 met / 0.5 partial / 0 unmet; threshold `>=80%`). Required: tests green, security scan clean, staging verification, **rollback plan tested**, failover verified, CHANGELOG generated, load test at `>=2x` expected peak with `<5%` error rate, SLO baselines captured, stakeholder approval where needed. Coverage above `80%` unless a stronger local standard exists. Track DORA metrics — Change Failure Rate `<15%`, Failed Deployment Recovery `<1h`, Rework Rate `<15%`. Significant AI-generated code adds explicit verification gates. Detail -> `reference/strategies.md`. |
+| Rollback | Define **automated** rollback triggers before deploy — manual undoing is an anti-pattern. Baseline: `error_rate > 5%` for 5 min OR `P99 latency > baseline + 50%` for 5 min. Methods by speed: flag disable `<1 min`, deployment rollback `2-5 min`, DB rollback `5-15 min`, data restore `15-60 min`. Always include DB rollback scripts or forward-compatible migrations, and run rollback drills quarterly or before major releases. Progressive-delivery tooling -> `reference/strategies.md`. |
+| Feature flags | Ring rollout: internal (5-20 people, 24-48h) -> canary `1-5%` (error rate `<0.1%`) -> beta `10-25%` -> GA `100%` (7-day stability). Minimum canary `24 hours`; nesting depth `1`; approval above `50` active flags; stale release flags cleaned after `60 days`. Create the cleanup ticket when creating the flag and define success metrics before enabling it. Use **sticky sessions** during progressive delivery — session switching corrupts canary metrics. |
 | Release timing | Prefer Tuesday to Thursday. Avoid Friday or low-staff windows unless approved. Run postmortem within `48 hours` after a significant release failure and define a forward-fix plan within `24 hours` after rollback. |
-| Database safety | Prefer `Expand-Contract`. Delay destructive column removal by `≥ 2 releases`. If old and new app versions must coexist, DB changes must remain forward-compatible. Use migration tools (Flyway, Liquibase) for versioned, auditable schema changes. |
-| CHANGELOG | Automate generation from Conventional Commits. Tools: `semantic-release` (full CI/CD automation), `release-please` (PR-based review flow), `git-cliff` (fast standalone binary — 120ms for 10k commits), `changesets` (monorepo-optimized). Validate commit format on PR via commitlint. Keep entries user-focused, not developer-focused. |
+| Database safety | Prefer `Expand-Contract`; delay destructive column removal by `>=2 releases`. Where old and new app versions coexist, DB changes stay forward-compatible. Use versioned, auditable migration tooling. |
+| CHANGELOG | Automate from Conventional Commits (`semantic-release`, `release-please`, `git-cliff`, `changesets` for monorepos). Validate commit format on PR. Keep entries user-focused, not developer-focused. |
 
 ## Routing And Handoffs
 
@@ -251,20 +251,7 @@ When pure-native iOS or Android releases flow from `Native`, Launch operates as 
 
 ### Incoming: `NATIVE_TO_LAUNCH_HANDOFF`
 
-```yaml
-NATIVE_TO_LAUNCH_HANDOFF:
-  app_version: "[semver]"
-  platforms: ["iOS", "Android"]
-  store_compliance_notes: ["[Compliance items verified]"]
-  privacy_manifest_complete: true | false
-  data_safety_complete: true | false
-  build_artifacts: ["[IPA/AAB paths]"]
-  release_notes: "[User-facing changelog]"
-  rollout_plan:
-    ios: "TestFlight Internal → External → App Review → Phased Release"
-    android: "Play Internal → Closed → Open → Production Staged Rollout"
-  feature_flags: ["[server-driven flags wired for kill-switch]"]
-```
+Carries `app_version`, `platforms`, `store_compliance_notes`, `privacy_manifest_complete`, `data_safety_complete`, `build_artifacts`, `release_notes`, and `rollout_plan`. Full YAML schema -> `reference/mobile-release.md`.
 
 Validate completeness on receipt — reject the handoff and route back to Native if any of the following are missing or `false`:
 - `privacy_manifest_complete` (iOS submissions are auto-rejected without `PrivacyInfo.xcprivacy` Required Reasons API declarations)
@@ -312,15 +299,15 @@ Mobile-specific Go/No-Go items beyond the standard scored checklist:
 
 | File | Read this when |
 |------|----------------|
-| `reference/strategies.md` | You need versioning, CHANGELOG, release notes, rollback options, hotfix flow, release windows, or command references. |
-| `reference/patterns.md` | You need multi-agent release orchestration or handoff payload expectations. |
-| `reference/examples.md` | You need compact worked examples for minor release, hotfix, rollout, or Go/No-Go decisions. |
-| `reference/release-anti-patterns.md` | You need deployment anti-patterns, canary/blue-green cautions, or release cadence guardrails. |
-| `reference/feature-flag-pitfalls.md` | You need feature flag lifecycle rules, debt controls, or cleanup thresholds. |
-| `reference/versioning-pitfalls.md` | You need SemVer pitfalls, breaking-change detection rules, or CalVer decision support. |
-| `reference/rollback-anti-patterns.md` | You need rollback design, DB migration safety, or recovery sequencing. |
-| `reference/hotfix-workflow.md` | You are running `hotfix`: emergency patch playbook, 2h SLA, shortened CI gate, hotfix branch, bundled rollback, and backport-to-main planning. |
-| `reference/canary-rollout.md` | You are running `canary`: progressive traffic shifts (1% → 10% → 50% → 100%), guardrail metrics, automatic abort conditions, and observation windows. |
-| `reference/mobile-release.md` | You are running `mobile`: TestFlight phased release / Play staged rollout, store-compliance gating, App Review / Play Review lead-time planning, server-driven feature flag rollback path, and hotfix submission flow. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the release plan, deciding adaptive thinking depth at rollout staging, or front-loading release type/scope/risk at PLAN. Critical for Launch: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Launch-specific Output/Next schema. |
+| `reference/strategies.md` | Versioning, CHANGELOG, release notes, rollback options, hotfix flow, release windows, or command references. |
+| `reference/patterns.md` | Multi-agent release orchestration or handoff payload expectations. |
+| `reference/examples.md` | Compact worked examples for minor release, hotfix, rollout, or Go/No-Go decisions. |
+| `reference/release-anti-patterns.md` | Deployment anti-patterns, canary/blue-green cautions, or release cadence guardrails. |
+| `reference/feature-flag-pitfalls.md` | Feature flag lifecycle rules, debt controls, or cleanup thresholds. |
+| `reference/versioning-pitfalls.md` | SemVer pitfalls, breaking-change detection rules, or CalVer decision support. |
+| `reference/rollback-anti-patterns.md` | Rollback design, DB migration safety, or recovery sequencing. |
+| `reference/hotfix-workflow.md` | `hotfix`: emergency patch playbook, 2h SLA, shortened CI gate, hotfix branch, bundled rollback, and backport-to-main planning. |
+| `reference/canary-rollout.md` | `canary`: progressive traffic shifts (1% → 10% → 50% → 100%), guardrail metrics, automatic abort conditions, and observation windows. |
+| `reference/mobile-release.md` | `mobile`: TestFlight phased release / Play staged rollout, store-compliance gating, App Review / Play Review lead-time planning, server-driven feature flag rollback path, and hotfix submission flow. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the release plan, deciding adaptive thinking depth at rollout staging, or front-loading release type/scope/risk at PLAN. Critical for Launch: P3, P5. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Launch-specific Output/Next schema. |

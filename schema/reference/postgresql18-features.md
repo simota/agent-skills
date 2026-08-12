@@ -147,3 +147,18 @@ PG 18 retains and refines the building blocks:
 - Bytebase — What's New in PostgreSQL 18
 - Xata — Postgres 18 features
 - RFC 9562 (Universally Unique IDentifiers) — 2024-05
+
+
+---
+
+## Migration and Constraint Rules (SKILL.md excerpt)
+
+- Use expand-contract for risky rename/type-change flows, populated `NOT NULL`, and phased deprecation. Consider pgroll for automated expand-contract with versioned schemas and data backfills. On PostgreSQL 18, use `RETURNING OLD.*` / `RETURNING NEW.*` in UPDATE/DELETE statements to verify data correctness during dual-write and backfill phases without separate SELECT queries.
+
+- On PostgreSQL 18, use `NOT VALID` when adding CHECK, FK, or NOT NULL constraints to skip immediate validation of existing rows — validate separately with `VALIDATE CONSTRAINT` after the transaction commits to avoid long-held `ACCESS EXCLUSIVE` locks during migrations.
+
+- On PostgreSQL 18, use virtual generated columns (now the default) for derived values — they compute on read without storing, avoiding table rewrites during schema evolution.
+
+- On PostgreSQL 18, use temporal constraints (`PRIMARY KEY ... WITHOUT OVERLAPS`, `FOREIGN KEY ... PERIOD`) for scheduling, booking, and bitemporal schemas instead of application-level overlap checks.
+
+- Use `UNIQUE NULLS DISTINCT` (PostgreSQL 15+) for unique constraints on nullable columns — treats each NULL as a distinct value, eliminating partial-index workarounds for optional-but-unique fields (e.g., email, external_id).
