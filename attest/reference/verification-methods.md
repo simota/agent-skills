@@ -148,3 +148,24 @@ Rule: when confidence `< 0.5`, mark the result as `NOT_TESTED` with a runtime re
 | `LOW` | `10%` | Inspection only |
 
 When scope must be reduced, finish all `CRITICAL` criteria first, then `HIGH`, then sampled `MEDIUM`. Defer `LOW` to `AUDIT` mode before reducing higher priorities.
+
+
+## Static Methods + Runtime-Only Areas (SKILL.md excerpt)
+
+| Method | Purpose |
+|--------|---------|
+| `CODE_SEARCH` | Confirm implementation artifacts exist |
+| `LOGIC_TRACE` | Follow data and business-rule flow |
+| `STATE_CHECK` | Verify state transitions match the spec |
+| `ERROR_PATH` | Verify specified failure behavior |
+| `ABSENCE_CHECK` | Confirm a criterion has no implementation evidence |
+
+### Runtime-Only Areas
+
+Route these to `NOT_TESTED` with a runtime plan:
+- Performance thresholds
+- Concurrency behavior
+- Visual rendering
+- External API integration
+- UX quality
+

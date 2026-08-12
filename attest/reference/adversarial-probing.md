@@ -229,3 +229,29 @@ ADVERSARIAL_PROBES:
 - Treat unresolved `CTR` probes as release-blocking until clarified.
 - Prefer one precise probe over several overlapping weak probes.
 - Keep probes measurable so they can become criteria or tests immediately.
+
+
+## Categories + Minimums (SKILL.md excerpt)
+
+Probe ID convention: `PRB-{category_code}-{NNN}`
+
+| Category | Code | Focus |
+|----------|------|-------|
+| `Boundary` | `BND` | Limits, thresholds, extremes |
+| `Omission` | `OMS` | Missing required behavior |
+| `Contradiction` | `CTR` | Conflicting requirements |
+| `Implicit` | `IMP` | Hidden assumptions |
+| `Negative` | `NEG` | Forbidden or invalid paths |
+| `Concurrency` | `CNC` | Parallel or ordering issues |
+
+### Minimum Probes per Mode
+
+| Mode | Minimum probes | Coverage |
+|------|----------------|----------|
+| `FULL` | `12` | All 6 categories |
+| `ADVERSARIAL` | `24` | All 6 categories with deeper coverage |
+| `AUDIT` | `6` | Focus on `Omission` + `Contradiction` |
+| `EXTRACT` | `0` | No probing |
+
+Every probe output carries `Probe ID`, `Category`, `Description`, `Spec Gap`, `Risk`, `Suggested Criterion`.
+

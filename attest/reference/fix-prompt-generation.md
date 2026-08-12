@@ -293,3 +293,15 @@ Constraints:
 ````
 
 This prompt is self-contained: Builder can act on it without seeing the rest of the Attest compliance report.
+
+
+## Verb Table (SKILL.md excerpt)
+
+| Verb | Use when | Receiving agent |
+|------|----------|----------------|
+| `CLOSE-GAP` | Implementation missing an AC | Builder |
+| `RECONCILE-SPEC` | Implementation correct, spec wrong/outdated | Scribe / Accord |
+| `BREAKING-CLOSE` | Fix requires a breaking change | Builder + Guardian + Launch |
+| `INVESTIGATE-FURTHER` | AC interpretation ambiguous | Spec author / Attest re-entry |
+| `WAIVE` | AC not applicable; document waiver | Builder + Scribe |
+

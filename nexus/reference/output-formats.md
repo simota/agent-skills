@@ -273,3 +273,35 @@ _STEP_COMPLETE:
   Next: [NextAgent] | VERIFY | DONE
   Reason: [Why this next step]
 ```
+
+
+## Handoff Directions (SKILL.md excerpt)
+
+| Direction | Handoff | Purpose |
+|-----------|---------|---------|
+| Any agent → Nexus | `NEXUS_ROUTING` | Task routing request |
+| Nexus → Any agent | `_AGENT_CONTEXT` | Delegation with context |
+| Agent → Nexus | `_STEP_COMPLETE` | Step completion report |
+| Nexus → User | `NEXUS_COMPLETE` | Final delivery |
+| Architect → Nexus | `ARCHITECT_TO_NEXUS_HANDOFF` | New agent notification and routing updates |
+| Nexus → Lore | `NEXUS_TO_LORE_HANDOFF` | Routing patterns and chain-effectiveness data |
+| Judge → Nexus | `QUALITY_FEEDBACK` | Chain quality assessment |
+| Nexus → Nexus | `ROUTING_ADAPTATION_LOG` | Self-improvement log |
+
+External feedback sources: Titan (epic-chain results), Judge (quality), Architect (new agents), Lore (validated routing knowledge), Darwin (ecosystem evolution signals).
+
+
+
+## NEXUS_COMPLETE Required Elements (SKILL.md excerpt)
+
+- `## NEXUS_COMPLETE` header (canonical template: `reference/output-formats.md`)
+- Task description and acceptance criteria
+- Chain selected and mode used
+- Per-step results with agent, status, and output summary
+- Verification results (tests, build, security) — evidence-bound; unexercised paths labeled `UNVERIFIED` (Q10)
+- **Acceptance Provenance** — every intent-contract criterion classified `verified`/`partial`/`missed`/`dropped(DEC-n)`, none silent (Q15)
+- **Decision Ledger** — `DEC-n` judgment calls made without the user, interpretation entries first; omit only when empty (Q4-Q6)
+- `## Prompt Tuning` trace when any spawn's directives were adapted (`field, old→new, trigger, reward_basis`), delta-only — omit entirely when no spawn was tuned
+- Summary with overall status
+- **Residual Ledger** — each leftover as `RES-n` (class, blocker/owner, marker location, route), bound bidirectionally to any `#TODO(agent):` left behind, plus the completion-sweep line (`scanned, 0 hits` when clean — never omitted)
+

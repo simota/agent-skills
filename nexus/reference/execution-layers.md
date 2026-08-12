@@ -74,3 +74,13 @@ max_depth = 3
 Canonical spawn block, verification chain, transcript/log fallbacks, and the typed-retry rule: **`_common/CLI_COMPATIBILITY.md §9.2`** — copy it, do not re-derive. Per-pitfall mechanisms (#76/#115 flush, 60s subagent cap, `--print-timeout` default, inconsistent `--output-format json`, quota/OAuth) are tabled in `_common/CLI_COMPATIBILITY.md §9`; failure-detection contract in `_common/MULTI_ENGINE_RECIPE.md §3.5`.
 
 **Cross-CLI mapping:** see `_common/CLI_COMPATIBILITY.md`.
+
+
+## Per-CLI Spawn API + Key Rules (SKILL.md excerpt)
+
+Per-CLI spawn API at a glance — Claude Code `Agent` (L1 fg / L2 background / L3 Rally); Codex `spawn_agent`→`wait_agent` (prereq `multi_agent=true` + `max_depth>=2`); agy `/agent` TUI or `agy -p --dangerously-skip-permissions` headless (prereq TUI main session or OS-level isolation). Full per-CLI prereqs, runtime notes, silent-failure mitigations, and the verified headless template → `reference/execution-layers.md`. Cross-CLI mapping → `_common/CLI_COMPATIBILITY.md`.
+
+**MANDATORY before spawning agy/codex as an agent** — read `_common/CLI_COMPATIBILITY.md §9.2` (agy headless MUST allocate a real pty (`python3 pty.spawn`) — bare `agy -p` and `script -q /dev/null` fail silently; artifact/sentinel capture, never stdout) and §9.3 (codex `-o <abs path>` artifact is authoritative). Silent-output regressions, not edge cases.
+
+Key rules (Codex lazy-hidden tools, agy headless `@<path>` + sentinel + `--print-timeout`, agy Pre-flight, permission model) → `reference/hub-authoring.md` § Execution-Layer Key Rules.
+

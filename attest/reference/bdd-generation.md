@@ -200,3 +200,22 @@ BDD_SCENARIOS:
 - [ ] Titles describe the business purpose clearly
 - [ ] Negative and boundary coverage is present where required
 - [ ] Scenario count satisfies priority-based minimums
+
+
+## Scenario Quality Validation (SKILL.md excerpt)
+
+Before finalizing generated scenarios, validate each against these attributes:
+
+| Attribute | Check |
+|-----------|-------|
+| Singularity | Tests exactly one behavior — no conjunctions splitting outcomes |
+| Clarity | Business language only — no implementation details, CSS selectors, or API paths |
+| Completeness | Given establishes all preconditions; When has a single action; Then asserts observable outcomes |
+| Precondition-action separation | Given states only context; When states only the trigger action |
+| Uniqueness | No duplicate coverage with other scenarios for the same criterion |
+| Declarative | Describes behavior and outcomes, not procedural UI steps |
+| Independence | Executable in any order — no shared mutable state |
+| Grounded | Every asserted behavior traces to explicit spec content. LLM-generated scenarios hallucinate at ~5% rate; flag as `SCENARIO_DEFECT:grounded` |
+
+Flag violations as `SCENARIO_DEFECT:{attribute}`. Rewrite before including in deliverable. Source citations in `reference/modern-tooling.md`.
+

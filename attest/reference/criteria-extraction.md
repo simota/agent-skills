@@ -247,3 +247,87 @@ EXTRACTED_CRITERIA:
       type: UNMEASURABLE
       suggestion: "Define latency threshold"
 ```
+
+
+## ISO/IEC/IEEE 29148 Quality Gate (SKILL.md excerpt)
+
+Before extraction is complete, validate each criterion against these attributes:
+
+| Attribute | Check |
+|-----------|-------|
+| Necessary | Traces to a real stakeholder need; prevents scope creep and gold-plating |
+| Verifiable | Can be confirmed by inspection, analysis, demonstration, or test |
+| Unambiguous | Single interpretation only; no subjective adjectives ("fast", "user-friendly") |
+| Consistent | Does not contradict other criteria in the same spec |
+| Singular | Addresses one requirement (no conjunctions splitting behavior) |
+| Complete | Self-contained — verifiable without chasing cross-references |
+| Feasible | Achievable within known technical and resource constraints |
+| Traceable | Links to a source requirement and can link forward to implementation |
+| Implementation-free | Describes what, not how |
+
+Flag violations as `QUALITY_DEFECT:{attribute}` and report in Specification Quality Feedback.
+
+
+
+## INTERACTION_TRIGGERS Question Templates (SKILL.md excerpt)
+
+```yaml
+questions:
+  - question: "No specification found. How would you like to proceed?"
+    header: "Spec Source"
+    options:
+      - label: "Delegate spec creation to Scribe/Accord"
+        description: "Create the specification first, then run verification"
+      - label: "Reverse-extract spec from code (EXTRACT)"
+        description: "Infer implicit specifications from existing implementation and report"
+      - label: "Specify the spec file path manually"
+        description: "Provide the specification file location manually"
+    multiSelect: false
+```
+
+```yaml
+questions:
+  - question: "The specification contains 20+ acceptance criteria. Select the verification scope."
+    header: "Scope"
+    options:
+      - label: "Verify all criteria (recommended)"
+        description: "Exhaustively verify every acceptance criterion"
+      - label: "CRITICAL/HIGH only"
+        description: "Limit verification to high-priority criteria"
+      - label: "Diff-related criteria only"
+        description: "Auto-select criteria affected by recent changes"
+    multiSelect: false
+```
+
+
+
+## Signal Keywords → Recipe (SKILL.md excerpt)
+
+For natural-language input without a subcommand; a subcommand match wins. Mode auto-detect runs in parallel — explicit Recipe selection overrides it.
+
+| Keywords | Recipe |
+|----------|--------|
+| `verify`, `compliance`, `spec check` | `verify` |
+| `extract criteria`, `acceptance criteria` | `bdd` (with `EXTRACT` mode) |
+| `audit`, `traceability`, `coverage gap` | `trace` |
+| `adversarial`, `probe`, `edge cases` | `verify` (with `ADVERSARIAL` mode) |
+| `bdd`, `scenarios`, `given when then` | `bdd` |
+| `gherkin`, `feature file`, `step definitions`, `cucumber`, `specflow`, `behave` | `gherkin` |
+| `property-based`, `invariant`, `hypothesis`, `fast-check`, `jqwik`, `proptest` | `property` |
+| `oracle`, `golden master`, `metamorphic`, `differential testing`, `model-based test` | `oracle` |
+| unclear spec verification request | `verify` |
+
+
+
+## Required Criterion Fields (SKILL.md excerpt)
+
+| Field | Rule |
+|-------|------|
+| `ID` | `AC-{FEATURE}-{NNN}` (append `_v{N}` when spec revisions change the criterion) |
+| `Priority` | `CRITICAL` / `HIGH` / `MEDIUM` / `LOW` |
+| `Testability` | `TESTABLE` / `PARTIALLY_TESTABLE` / `AMBIGUOUS` |
+| `Source` | Spec document plus section or line reference |
+| `V&V Method` | `INSPECTION` / `ANALYSIS` / `DEMONSTRATION` / `TEST` (per IEEE 1012) |
+
+Set `AMBIGUOUS_FLAG` whenever the spec is subjective, incomplete, contradictory, or unmeasurable.
+

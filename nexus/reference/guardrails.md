@@ -324,3 +324,15 @@ _PARALLEL_CONTEXT:
       context_delta: {...}
   merge_strategy: [CONCAT|OVERRIDE|MANUAL]
 ```
+
+
+## Safety Contract (SKILL.md excerpt)
+
+- **Guardrails:** `L1` monitor/log → `L2` auto-verify/checkpoint → `L3` pause + auto-recovery → `L4` abort + rollback.
+- **Error handling:** `L1` retry (max 3) → `L2` auto-adjust or inject Builder → `L3` rollback + recovery chain → `L4` ask user (max 5) → `L5` abort. **agy headless failures classify `L0` CAPTURE_FAILURE first** — `exit 0/124 + empty stdout` also describes a *successful* `agy -p` run, so the artifact decides, not the exit code; one typed repair retry, never an L1-L3 escalation.
+- **Circuit breaker:** an agent failing 3 consecutive tasks is marked DEGRADED and routed around until a probe succeeds. "Agent Tennis" (two agents disagreeing 3+ turns without progress) trips the breaker and escalates.
+- **Checkpoint-resume:** Chains with 4+ steps persist step outputs at each boundary so interrupted runs resume from the last checkpoint.
+- **Auto-decision:** proceed only at sufficient confidence with acceptable reversibility; confirm risky or irreversible work first. Confirmation depth follows the per-task-type Autonomy Ledger and never relaxes an Ask First gate.
+- **Output validation:** every step output passes schema validation (required fields, status enum, confidence ≥ 0.6) before flowing onward; semantic failures (right schema, wrong meaning) need domain checks.
+- **Always confirm:** the triggers enumerated in **Boundaries → Ask First**.
+
