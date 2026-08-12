@@ -297,7 +297,7 @@ Nexus → Aggregate EVALUATION_FEEDBACK
 
 ### Spawn Template (shared body)
 
-For per-CLI spawn syntax, see `nexus/SKILL.md` § **Execution Layers**. The Evaluator prompt body differs from a normal agent in just two lines:
+For per-CLI spawn syntax, see `nexus/reference/execution-layers.md`. The Evaluator prompt body differs from a normal agent in just two lines:
 
 ```
 Mode: EVALUATOR (read-only — do not modify code; return EVALUATION_FEEDBACK only)

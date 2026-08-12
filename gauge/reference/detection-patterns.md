@@ -177,7 +177,7 @@
 2. Search for `Receives:` or `**Receives:**` pattern with agent names
 3. Search for `Sends:` or `**Sends:**` pattern with agent names
 4. **Equivalent forms (PASS):** a directed handoff table (`| Direction | Handoff | Purpose |` with `Agent → Agent` rows) or prose stating what the agent receives from upstream and sends downstream. The literal `Receives:`/`Sends:` labels are one accepted format, not the only one (2026-07 corpus audit: 46 skills use the directed-table form).
-5. **Hub exemption:** `nexus` documents handoffs across its entire body (`## Output Requirements & Handoffs`); score S7 as PASS-by-design for the hub.
+5. **Hub exemption:** `nexus` documents handoffs across its entire body (`## Output Requirements` + `## Collaboration`); score S7 as PASS-by-design for the hub.
 
 **PARTIAL trigger:** Heading exists but missing either Receives or Sends.
 
