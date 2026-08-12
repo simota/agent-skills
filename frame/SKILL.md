@@ -76,14 +76,14 @@ Route elsewhere when the task is primarily:
 - Verify MCP connectivity (`whoami`) before any extraction work; use Remote MCP server (recommended by Figma) for broadest feature coverage.
 - Track rate-limit budget per plan (Starter: 6/month, Pro: 200/day, Org: 200/day, Enterprise: 600/day) and stop gracefully at the 10% reserve threshold.
 - Include source URL, file version, and extraction timestamp in every handoff.
-- Prefer Figma Variables over raw color/spacing values; align token exports with W3C DTCG 2025.10 stable specification (`.tokens` or `.tokens.json` file extension, `application/design-tokens+json` media type) for cross-tool interoperability. DTCG 2025.10 adds theming/multi-brand support, `$extends` for theme inheritance, and Display P3/Oklch/CSS Color Module 4 color spaces.
-- Use `use_figma` for write-to-canvas workflows (creating/modifying frames, components, variables, auto layout); all write tools are rate-exempt but require explicit user confirmation. Write-to-canvas is currently free during beta; plan for usage-based pricing.
-- `use_figma` operational rules: always pass `skillNames: ["figma-use"]` when calling `use_figma` (required tracking parameter per official guide). Work incrementally in small steps — break large operations into multiple calls and validate after each one. Inspect first — run a read-only `use_figma` call to discover existing pages, components, variables, and naming conventions before creating anything. Always return all created/mutated node IDs (e.g., `return { createdNodeIds: [...], mutatedNodeIds: [...] }`). Failed scripts are atomic — on error, stop, read the error, fix the script, then retry. Page context resets between calls — use `await figma.setCurrentPageAsync(page)` when targeting non-first pages. Never leave a Promise unawaited — every `figma.*Async()` call (`loadFontAsync`, `setCurrentPageAsync`, etc.) must be awaited; unawaited calls fire-and-forget causing silent failures. Set variable scopes explicitly (e.g., `["FRAME_FILL", "SHAPE_FILL"]`) — never use ALL_SCOPES.
-- Capture screenshots only when visual context supplements structural data — `get_design_context` is the primary structural source.
-- Check existing Code Connect mappings before handing off reusable components — Code Connect elevates MCP output from useful to essential by providing actual component imports and prop interfaces.
-- Flag incomplete extractions explicitly — never present partial data as complete; downstream agents generate incorrect code from partial context.
+- Prefer Figma Variables over raw color/spacing values; export tokens per W3C DTCG 2025.10 (`.tokens` / `.tokens.json`, `application/design-tokens+json`) — it adds theming/multi-brand, `$extends` inheritance, and Display P3 / Oklch / CSS Color 4 spaces.
+- Use `use_figma` for write-to-canvas work (frames, components, variables, auto layout); write tools are rate-exempt but require explicit user confirmation. Free during beta — plan for usage-based pricing.
+- `use_figma` operational rules (all mandatory): pass `skillNames: ["figma-use"]` on every call; inspect first with a read-only call before creating anything; work in small incremental steps and validate after each; return all created/mutated node IDs; treat failed scripts as atomic — stop, read the error, fix, retry; call `await figma.setCurrentPageAsync(page)` for non-first pages (page context resets between calls); **await every** `figma.*Async()` call — unawaited Promises fail silently; set variable scopes explicitly, never `ALL_SCOPES`.
+- Capture screenshots only to supplement structure — `get_design_context` is the primary structural source.
+- Check existing Code Connect mappings before handing off reusable components — they supply the actual component imports and prop interfaces.
+- Flag incomplete extractions explicitly — downstream agents generate incorrect code from partial context presented as complete.
 - Scope extraction to the smallest unit that satisfies the downstream consumer; for large files, use `get_metadata` first and extract incrementally by page or node.
-- Use `search_design_system` to discover existing library components and variables before extraction — search broadly with synonyms (e.g., "pill", "nav", "tab" for navigation elements). This tool is rate-exempt.
+- Discover existing library components and variables with `search_design_system` before extracting — search broadly with synonyms ("pill", "nav", "tab"). Rate-exempt.
 - Validate naming consistency, token coverage, and Code Connect inclusion before delivery.
 - When Code Connect mappings are older than 30 days, flag them as stale — design-code drift can accumulate 280+ differences silently.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Frame; P2, P1 recommended).
@@ -167,14 +167,7 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`extract` = Extract Context). Apply normal CONNECT → SURVEY → EXTRACT → PACKAGE → DELIVER workflow.
 
-Behavior notes per Recipe:
-- `extract`: After verifying the MCP connection, extract the design context of the target frame/component and generate a handoff package.
-- `code-connect`: Audit existing Code Connect mappings and fix or add any missing or stale mappings.
-- `rules`: Extract design system conventions from a Figma file and generate token rules and naming convention documentation.
-- `inspect`: Investigate the pages, frames, and component sets of a Figma file at the metadata level and build an extraction plan.
-- `variants`: Read `reference/variant-extraction.md` first. Discover the Component Set via `search_design_system`, get the variant property + value matrix via `get_design_context`. Distinguish boolean props (`disabled` / `loading`) from enum props (`size: sm | md | lg`), identify the default variant, and detect missing states in prop combinations (size × variant × state). Name in kebab-case `property=value` form (Figma convention); convert TS output to a PascalCase prop interface.
-- `tokens`: Read `reference/token-mapping.md` first. Get all Variable Collections via `search_design_system --includeVariables` → `get_variable_defs`. Classify into 3 layers — primitive (`--neutral-500`), semantic (`--color-bg`), component (`--button-bg`) — and output the mode (Light/Dark) and theme (Brand A/B) dimensions in W3C DTCG `$value` `{mode}` syntax. For an alias chain (`{semantic.color.brand}` → `{primitive.indigo.500}`), also include the fully-expanded resolved value. Output Display P3 / Oklch as CSS `color()` / `oklch()`.
-- `breakpoint`: Read `reference/breakpoint-extraction.md` first. Compare the mobile/tablet/desktop frames to extract responsive derivations. Convert the Figma Layout Grid (column count + gutter + margin) to CSS Grid, infer flex behavior from the `Constraints` properties (Left/Right/Center/Scale), and back-calculate breakpoint values from parent-frame-size deltas (320/768/1024/1440 are standard). Container-query candidates are components that appear at multiple widths. Each derived value is LOW confidence — designer confirmation recommended.
+Per-Recipe behavior notes -> `reference/execution-templates.md` § Per-Recipe Behavior; each Recipe's `Read First` file carries the technique detail. Load-bearing rules that hold regardless of Recipe: `variants` names in kebab-case `property=value` (Figma convention) and converts to a PascalCase prop interface; `tokens` classifies into the three layers (primitive / semantic / component) and emits both alias chain and fully-resolved value; `breakpoint` derivations are all **LOW confidence** and need designer confirmation.
 
 ## Output Routing
 
@@ -192,12 +185,7 @@ Behavior notes per Recipe:
 | `handoff`, `implement`, `build this` | Full handoff package for implementation | Consumer-specific handoff | `reference/handoff-formats.md` |
 | unclear Figma-related request | Component/frame extraction | Design context handoff | `reference/execution-templates.md` |
 
-Routing rules:
-
-- If the request mentions tokens or variables, read `reference/handoff-formats.md` and `reference/design-to-code-anti-patterns.md`.
-- If the request involves Code Connect, read `reference/code-connect-guide.md`.
-- If the request targets a specific downstream agent, select the matching handoff format from `reference/handoff-formats.md`.
-- Always read `reference/infrastructure-constraints.md` to verify rate budget before extraction.
+Always read `reference/infrastructure-constraints.md` to verify rate budget before extraction, and pick the target-agent schema from `reference/handoff-formats.md` when a downstream consumer is named.
 
 ## Output Requirements
 
@@ -222,11 +210,11 @@ Every deliverable must include:
 |------|---------------|-------|------|
 | Component or frame extraction | `whoami` -> `get_metadata` -> `search_design_system` -> `get_design_context` -> `get_screenshot` | discover library components first; screenshots supplement structure, not replace it | `reference/prompt-strategy.md`, `reference/execution-templates.md` |
 | Variable or token extraction | `whoami` -> `search_design_system` (includeVariables) -> `get_variable_defs` | discover library variables first; map raw values to variables where available | `reference/handoff-formats.md`, `reference/design-to-code-anti-patterns.md` |
-| Code Connect audit/update | `get_code_connect_map` -> `get_code_connect_suggestions` -> `add_code_connect_map` -> `send_code_connect_mappings` | audit before map; confirm bulk syncs; recommend CLI with co-located files for deep integration, UI for quick language-agnostic linking | `reference/code-connect-guide.md` |
+| Code Connect audit/update | `get_code_connect_map` -> `get_code_connect_suggestions` -> `add_code_connect_map` -> `send_code_connect_mappings` | audit before map; confirm bulk syncs; CLI for deep integration, UI for quick linking | `reference/code-connect-guide.md` |
 | Design system rules | `create_design_system_rules` | validate results against file evidence | `reference/prompt-strategy.md`, `reference/figma-mcp-server-ga.md` |
 | FigJam extraction or diagram packaging | `get_figjam`, `generate_diagram` | preserve relationships, sections, and connectors | `reference/handoff-formats.md` |
 | Design generation | `generate_figma_design` | ask first; generation is rate-exempt but still explicit-change work | `reference/figma-mcp-server-ga.md` |
-| Canvas write (code-to-Figma) | `use_figma` | ask first; work incrementally in small steps; return all node IDs; reads design system first, builds with existing components and variables; rate-exempt | `reference/figma-mcp-server-ga.md` |
+| Canvas write (code-to-Figma) | `use_figma` | ask first; small incremental steps; return all node IDs; design system read first; rate-exempt | `reference/figma-mcp-server-ga.md` |
 | New file creation | `create_new_file` | creates blank Figma Design or FigJam file; rate-exempt | `reference/figma-mcp-server-ga.md` |
 
 ## Critical Limits and Exceptions
@@ -253,20 +241,17 @@ Rules:
 - `generate_figma_design` is ask-first work even though it is rate-exempt.
 - `whoami` and `generate_figma_design` are remote-only in GA.
 - Desktop plugin mode may require an alternative connection check when `whoami` is unavailable.
-- `use_figma` creates and modifies native Figma content (frames, components, variables, auto layout). It reads the design library first and builds with existing assets. Currently free during beta; will become usage-based paid. Full and Dev seats on paid plans only (Dev seats: read-only outside drafts).
-- For write-to-Figma workflows, ensure the MCP client has Figma's official skills installed (especially `/figma-use`) — these skills guide tool sequencing and improve write reliability.
+- `use_figma` writes native Figma content and builds from existing library assets. Free during beta, later usage-based. Full and Dev seats on paid plans only (Dev seats read-only outside drafts).
+- Write-to-Figma requires Figma's official skills installed in the MCP client (especially `/figma-use`) for correct tool sequencing.
 - Claude Code may fail above `25,000` tokens; use `MAX_MCP_OUTPUT_TOKENS=50000` or higher when needed.
 
 ## Quality Guardrails
 
-- Use `get_design_context` as the primary structural source; screenshots are supplementary.
-- Run `search_design_system` early in the workflow to discover reusable library components and variables — search with synonyms and partial terms, as naming varies across libraries.
-- Check existing Code Connect mappings before handing off reusable components.
-- Prefer Figma Variables over raw values.
-- For Code Connect CLI, co-locate mapping files alongside components (e.g., `Button.connect.ts` next to `Button.tsx`) to prevent drift. Use Code Connect UI for language-agnostic quick setup without repo changes — UI supports one-to-many connections (single design component → multiple framework implementations: React, SwiftUI, Compose, Vue). Code Connect UI is GA on Organization and Enterprise plans with GitHub integration (component mapping suggestions, AI-generated snippets).
-- For `use_figma` canvas writes: always inspect the target file first to match existing naming conventions and variable structures. Page context resets between calls — explicitly set the page. Return all created/mutated node IDs for validation and cleanup.
+Core Contract already binds: `get_design_context` as the primary source, early `search_design_system`, existing Code Connect check, Figma Variables over raw values, and `use_figma` inspect-first / page-context / node-ID rules. In addition:
+
+- Code Connect CLI: co-locate mapping files with components (`Button.connect.ts` next to `Button.tsx`) to prevent drift. The UI is the language-agnostic quick path with one-to-many connections (one design component → React / SwiftUI / Compose / Vue); GA on Organization and Enterprise with GitHub integration.
 - Scope extraction to the named page, frame, or component set.
-- Document the design-to-code gap instead of implying pixel-perfect implementation completeness.
+- Document the design-to-code gap rather than implying pixel-perfect completeness.
 - Validate naming consistency, token coverage, completeness, Code Connect inclusion, and rate reporting before delivery.
 
 ## AUTORUN Support
@@ -286,20 +271,20 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/execution-templates.md` | Phase-by-phase reports, validation checkpoints, delivery report format, or package templates. |
+| `reference/execution-templates.md` | Phase reports, validation checkpoints, delivery format, package templates, per-Recipe behavior. |
 | `reference/infrastructure-constraints.md` | Connection setup, plan limits, budget strategy, error handling, or security rules. |
 | `reference/handoff-formats.md` | Target-agent handoff schemas for Muse, Forge, Artisan, Builder, Schema, Vision, Vitrine, or Canvas. |
 | `reference/code-connect-guide.md` | Auditing, creating, syncing, or maintaining Code Connect mappings. |
 | `reference/prompt-strategy.md` | Tool-specific prompt patterns or chaining strategies. |
 | `reference/figma-mcp-server-ga.md` | The GA tool inventory, Schema 2025 features, prop mapping types, or client-specific known issues. |
-| `reference/design-to-code-anti-patterns.md` | Quality guardrails, gap framing, anti-pattern detection, or W3C token export guidance. |
-| `reference/variant-extraction.md` | `variants` recipe — Component Set discovery, prop/state matrix flattening, default-variant identification, missing-state detection. |
-| `reference/token-mapping.md` | `tokens` recipe — Figma Variables → W3C DTCG (2025.10) format, primitive/semantic/component layer mapping, mode/theme support, alias chain resolution. |
-| `reference/breakpoint-extraction.md` | `breakpoint` recipe — multi-frame variant analysis, layout-grid extraction, constraint inheritance, container-query candidate identification. |
-| `_common/UX_TRENDS_2026.md` | Cross-vendor token / design-system context — DTCG 2025.10 stable spec, OKLCH/P3 colour pipelines, Schema 2025 / Code Connect lineage, Polaris Unified case. Read §1 Design. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the handoff packet, deciding adaptive thinking depth at SCOPE, or front-loading target consumer/file scope at SCAN. Critical for Frame: P3, P5. |
-| `_common/IMAGE_INPUT.md` | Reading a Figma screenshot (`get_screenshot`) or any raw image as input — apply the RECOGNIZE→PARSE accuracy techniques (describe-first, region enumeration, observed-vs-inferred) before relaying a structured reading downstream. |
-| `_common/PROOF_CARRYING.md` | You own Design-Code Contract enforcement in `nexus acceptance` Phase 2B / 4B. Coordinate the G9 Swiss-Cheese 4-layer detection (Layer 1 AST + Layer 2 Storybook + Layer 3 Runtime DOM + Layer 4 Code Connect). All 4 required before `component_proof` becomes Gate-blocking. Contract Meta-Oracle: Contract changes themselves are Proof-Carrying. Contract versioning: v1/v2 coexistence ≤6 months with tracked sunset. |
+| `reference/design-to-code-anti-patterns.md` | Gap framing, anti-pattern detection, W3C token export guidance. |
+| `reference/variant-extraction.md` | `variants` — Component Set discovery, prop/state matrix flattening, default variant, missing states. |
+| `reference/token-mapping.md` | `tokens` — Figma Variables → W3C DTCG 2025.10, 3-layer mapping, mode/theme, alias chain resolution. |
+| `reference/breakpoint-extraction.md` | `breakpoint` — multi-frame analysis, layout-grid extraction, constraint inheritance, container-query candidates. |
+| `_common/UX_TRENDS_2026.md` | Cross-vendor token context — DTCG 2025.10, OKLCH/P3 pipelines, Schema 2025 / Code Connect lineage. Read §1 Design. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the handoff packet, adaptive thinking depth at SCOPE, front-loading consumer/file scope at SCAN. Critical: P3, P5. |
+| `_common/IMAGE_INPUT.md` | Reading a screenshot or raw image as input — apply RECOGNIZE→PARSE (describe-first, region enumeration, observed-vs-inferred) before relaying downstream. |
+| `_common/PROOF_CARRYING.md` | You own Design-Code Contract enforcement in `nexus acceptance` Phase 2B / 4B — G9 Swiss-Cheese 4-layer detection (AST + Storybook + Runtime DOM + Code Connect), all 4 required before `component_proof` is Gate-blocking; contract changes are themselves Proof-Carrying; v1/v2 coexistence ≤6 months. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Frame-specific Output/Next schema. |
 
 ## Operational

@@ -336,3 +336,16 @@ Detailed handoff templates → `handoff-formats.md`
 | `prompt-strategy.md` | Effective prompts per MCP tool |
 | `figma-mcp-server-ga.md` | MCP Server GA tools, features, known issues |
 | `design-to-code-anti-patterns.md` | Quality guardrails and failure modes |
+
+
+## Per-Recipe Behavior (SKILL.md excerpt)
+
+Behavior notes per Recipe:
+- `extract`: After verifying the MCP connection, extract the design context of the target frame/component and generate a handoff package.
+- `code-connect`: Audit existing Code Connect mappings and fix or add any missing or stale mappings.
+- `rules`: Extract design system conventions from a Figma file and generate token rules and naming convention documentation.
+- `inspect`: Investigate the pages, frames, and component sets of a Figma file at the metadata level and build an extraction plan.
+- `variants`: Read `reference/variant-extraction.md` first. Discover the Component Set via `search_design_system`, get the variant property + value matrix via `get_design_context`. Distinguish boolean props (`disabled` / `loading`) from enum props (`size: sm | md | lg`), identify the default variant, and detect missing states in prop combinations (size × variant × state). Name in kebab-case `property=value` form (Figma convention); convert TS output to a PascalCase prop interface.
+- `tokens`: Read `reference/token-mapping.md` first. Get all Variable Collections via `search_design_system --includeVariables` → `get_variable_defs`. Classify into 3 layers — primitive (`--neutral-500`), semantic (`--color-bg`), component (`--button-bg`) — and output the mode (Light/Dark) and theme (Brand A/B) dimensions in W3C DTCG `$value` `{mode}` syntax. For an alias chain (`{semantic.color.brand}` → `{primitive.indigo.500}`), also include the fully-expanded resolved value. Output Display P3 / Oklch as CSS `color()` / `oklch()`.
+- `breakpoint`: Read `reference/breakpoint-extraction.md` first. Compare the mobile/tablet/desktop frames to extract responsive derivations. Convert the Figma Layout Grid (column count + gutter + margin) to CSS Grid, infer flex behavior from the `Constraints` properties (Left/Right/Center/Scale), and back-calculate breakpoint values from parent-frame-size deltas (320/768/1024/1440 are standard). Container-query candidates are components that appear at multiple widths. Each derived value is LOW confidence — designer confirmation recommended.
+

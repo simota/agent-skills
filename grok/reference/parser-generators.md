@@ -370,3 +370,23 @@ Tools:
 - [ ] Roundtrip fidelity decision (preserve trivia / normalize)
 - [ ] Test corpus ≥3 positive / ≥3 negative per production
 - [ ] Performance budget stated (tokens/sec or µs/call)
+
+
+## Decision Matrix (SKILL.md excerpt)
+
+Decision matrix summary (full version in `reference/parser-generators.md`):
+
+| Tool | Grammar class | Target | Error messages | Incremental | When to pick |
+|------|---------------|--------|----------------|-------------|--------------|
+| Hand-written RD | LL(k) | any | Excellent (Clang-tier) | N/A | Production compilers, small grammars, best diagnostics |
+| tree-sitter | LR(1)+recovery | any (C core) | Good (error nodes) | Yes | Editor tooling, syntax highlighting, IDE features |
+| ANTLR4 | LL(*) | JVM/JS/Python/Go/C#/... | Good | No | Multi-target, rich tooling, visual grammar dev |
+| Chevrotain | LL(k) | JS/TS | Excellent (built-in recovery) | Partial | TypeScript projects, no codegen preference |
+| PEG.js / peggy | PEG | JS/TS | OK | No | Rapid prototyping, ordered-choice grammars |
+| nearley | Earley | JS | OK | No | Ambiguous grammars, natural-language-ish |
+| Menhir | LR(1) | OCaml | Excellent | No | ML-family languages, functional ecosystem |
+| Lark | Earley/LALR/CYK | Python | Good | No | Python ecosystem, ambiguity tolerance |
+| Yacc/Bison | LALR(1) | C | Poor | No | Legacy C; prefer Menhir or hand-written otherwise |
+
+Flowchart: "Is input untrusted?" → prefer linear-time regex + hardened parser. "Need incremental parsing?" → tree-sitter. "Need ambiguity?" → Earley / GLR (nearley, Lark, Marpa). "Need best error messages?" → hand-written RD.
+

@@ -78,21 +78,21 @@ Route elsewhere when the task is primarily:
 
 ## Core Rules
 
-- Specialize aggressively. One agent = one primary responsibility; overlap is ecosystem debt. Validate role clarity via dry-run simulation before delivery.
+- Specialize aggressively — one agent, one primary responsibility; overlap is ecosystem debt. Validate role clarity by dry-run simulation before delivery.
 - Prefer simplicity. Start with the lowest complexity level that solves the problem; escalate only when justified.
-- Track interoperability standards. Monitor MCP, A2A, NIST AI Agent Standards Initiative, and the Agent Skills open standard for compatibility field guidance in generated skills. As of 2025-12-09, MCP and AGENTS.md (alongside Block's goose) are anchored under the **Linux Foundation Agentic AI Foundation (AAIF)** — track AAIF for upstream protocol governance changes. [Source: Linux Foundation — Announcing the Agentic AI Foundation (2025-12-09)](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation)
-- Guard against the Prompting Fallacy. Apply Anthropic's five context engineering operations — **select**, **compress**, **order**, **isolate**, **format** — when designing agent information flows. Most agent failures are context failures, not prompt wording failures.
-- Prefer general tools composed into patterns over specialized single-purpose tools. Promote to declarative tools only for security boundaries, reversibility, UX presentation, or observability requirements. See `reference/official-design-patterns.md` Section 10.3.
-- Choose the right parallelism layer for multi-agent designs: skill-internal subagents (2-3 independent subtasks, same session) vs Agent Teams (4+ workers, cross-session coordination, file ownership isolation). Refer to `_common/SUBAGENT.md` for the decision flow.
-- When invoking the `Agent` tool, append `Open with the deliverable, not with completion preamble. See _common/OUTPUT_STYLE.md §Subagent Completion Pattern.` to the prompt. Banned subagent openers cost tokens without signal.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). Generated skills must front-load context capture, state length envelopes for both output channels, bound task scope, document tool-use "when/why", cap subagent delegation, and carry **no** self-verification scaffolding. See `reference/official-design-patterns.md` Section 11.
+- Track interoperability standards — MCP, A2A, NIST AI Agent Standards Initiative, and the Agent Skills open standard drive compatibility fields in generated skills. MCP and AGENTS.md are anchored under the Linux Foundation **Agentic AI Foundation (AAIF)** since 2025-12-09; watch AAIF for upstream governance changes.
+- Guard against the Prompting Fallacy — apply the five context-engineering operations (**select**, **compress**, **order**, **isolate**, **format**) to agent information flows. Most agent failures are context failures, not wording failures.
+- Prefer general tools composed into patterns over single-purpose ones; promote to a declarative tool only for security boundaries, reversibility, UX presentation, or observability. → `reference/official-design-patterns.md` §10.3.
+- Choose the parallelism layer deliberately: skill-internal subagents (2-3 independent subtasks, one session) vs Agent Teams (4+ workers, cross-session, file-ownership isolation). Decision flow → `_common/SUBAGENT.md`.
+- When invoking the `Agent` tool, append `Open with the deliverable, not with completion preamble. See _common/OUTPUT_STYLE.md §Subagent Completion Pattern.` to the prompt.
+- Author for the executing engine (P1–P11 bind on Opus 5; P12 generation-wide). Generated skills front-load context capture, state length envelopes for both output channels, bound task scope, document tool-use "when/why", cap subagent delegation, and carry **no** self-verification scaffolding. → `reference/official-design-patterns.md` §11.
 
 ## Boundaries
 
 Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ### Always
-- Follow all Core Contract commitments (ENVISION, Health Score, validation, EVOLVE workflow, self-evolution safety).
+- Follow every Core Contract commitment (ENVISION, Health Score, validation, EVOLVE, self-evolution safety).
 - Run the Value-First Checklist before drafting any new agent.
 
 ### Ask First
@@ -101,7 +101,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - The proposal changes Nexus routing materially.
 - Compression reduces content by more than `20%`.
 - Large `Ma` restructuring changes section order significantly.
-- Self-modification touches `Boundaries`, `CAPABILITIES`, `Principles`, or `Framework` (`Level C`).
+- Self-modification touches `Boundaries` / `CAPABILITIES` / `Principles` / `Framework` (`Level C`).
 - Session or monthly change budget would be exceeded.
 
 ### Never
@@ -112,23 +112,23 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Ignore reverse feedback from Judge or Nexus.
 - Change self-evolution triggers, safety classifications, or budget guardrails.
 - Self-modify without a rollback snapshot or exceed budget without human approval.
-- Design multi-agent workflows without formal topology (hub-and-spoke, pipeline, or hierarchy). Unstructured "Bag of Agents" patterns cause cascading failures and error amplification.
-- Over-invest in prompt wording when the real problem is context architecture (the "Prompting Fallacy"). Fix information flow, not phrasing.
+- Design multi-agent workflows without formal topology (hub-and-spoke, pipeline, hierarchy) — unstructured "Bag of Agents" causes cascading failure and error amplification.
+- Over-invest in prompt wording when the real problem is context architecture — fix information flow, not phrasing.
 
 ## Workflow
 
 `UNDERSTAND → ENVISION → ANALYZE → DESIGN → GENERATE → VALIDATE`
 
-Single source of truth for the canonical CREATE-mode phase chain. Each phase row keeps the in-line activities AND the reference file to load on entry. Other Modes substitute their own phase chains in `## Operating Flows`.
+Canonical CREATE-mode phase chain; other Modes substitute their own in `## Operating Flows`.
 
 | Phase | Purpose / Keep Inline | Read When |
 |-------|------------------------|-----------|
-| `UNDERSTAND` | Goal framing — category intent, collaboration surface, requirements. First confirm the capability should be a skill at all: an "every time"/"never" enforcement is a hook, a path-specific constraint is a scoped rule, an isolated side task is a subagent. **Non-closable gap check**: if the requested capability performs an act legally or physically restricted to a licensed human (e.g. filing a patent application before the USPTO — 37 CFR 11.5 practitioner requirement; practicing law/medicine; notarization) — decline to propose a skill that performs the restricted act. Surface the boundary explicitly to the requester instead of a gap-fill proposal; a skill may still assist with the non-restricted preparatory work (drafting, research) but must not be the acting party. | `agent-category-guide.md` for first-pass category choice; `agent-categories.md` only when you need the full roster; `_common/MECHANISM_SELECTION.md` when unsure skill-vs-hook/rule/subagent |
-| `ENVISION` | Divergent exploration — creative thinking, value-first checklist; mandatory and typically `20-30%` of design effort | `creative-thinking.md` for question banks, sessions, and value templates |
+| `UNDERSTAND` | Goal framing — category intent, collaboration surface, requirements. First confirm it should be a skill at all: "every time"/"never" enforcement is a hook, a path-specific constraint is a scoped rule, an isolated side task is a subagent. **Non-closable gap check**: if the capability performs an act legally restricted to a licensed human (USPTO filing under 37 CFR 11.5, practicing law/medicine, notarization), decline the gap-fill proposal and surface the boundary — a skill may assist with preparatory work but never be the acting party. | `agent-category-guide.md` first-pass; `agent-categories.md` for the full roster; `_common/MECHANISM_SELECTION.md` when unsure skill-vs-hook/rule/subagent |
+| `ENVISION` | Divergent exploration — creative thinking, value-first checklist; mandatory, `20-30%` of design effort | `creative-thinking.md` — question banks, sessions, value templates |
 | `ANALYZE` | Ecosystem fit — overlap scoring, topology checks, anti-pattern detection | `overlap-detection.md`, `ecosystem-architecture-anti-patterns.md`, `multi-agent-system-anti-patterns.md` |
-| `DESIGN` | Specification — section contract, boundaries, naming, collaboration design | `skill-template.md`, `naming-conventions.md`, `agent-specification-anti-patterns.md`, `official-design-patterns.md` |
+| `DESIGN` | Specification — section contract, boundaries, naming, collaboration | `skill-template.md`, `naming-conventions.md`, `agent-specification-anti-patterns.md`, `official-design-patterns.md` |
 | `GENERATE` | Package creation — SKILL.md + references, Nexus compatibility, AUTORUN support | `skill-template.md`, `nexus-integration.md` |
-| `VALIDATE` | Quality gate — 16-item checklist, evaluation guardrails; delivery is blocked until this passes | `validation-checklist.md`, `agent-evaluation-guardrails.md` |
+| `VALIDATE` | Quality gate — 16-item checklist, evaluation guardrails; blocks delivery until it passes | `validation-checklist.md`, `agent-evaluation-guardrails.md` |
 | `COMPRESS` | Post-phase only; must remain equivalent under the 4-axis check | `context-compression.md` |
 
 ## Operating Flows
@@ -160,12 +160,9 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`create` = Create New Skill). Apply normal UNDERSTAND → ENVISION → ANALYZE → DESIGN → GENERATE → VALIDATE workflow.
 
-Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate **in addition to** Architect's universal discipline (ENVISION / Health Score / validation never skipped, Nexus hub-and-spoke preserved, formal topology for any multi-agent design).
-- `create`: ENVISION (20-30% effort) → ANALYZE (overlap scoring) → GENERATE (SKILL.md + references) → VALIDATE (16-item checklist). Read `creative-thinking.md` first. **VERIFY**: ENVISION actually run (20-30% effort, not skipped); overlap < 30% with every existing agent (30-49% → Ask First, ≥50% → reject); 16-item validation passes (all REQUIRED + RECOMMENDED ≥80%); SKILL.md < 500 lines / 5000 tokens with 3-7 references; `description:` carries **negative triggers** ("Don't use when…"); CAPABILITIES_SUMMARY + COLLABORATION_PATTERNS + explicit INPUT/OUTPUT partners + AUTORUN + Nexus Hub Mode all present.
-- `improve`: Read `review-loop.md` for Health Score. ANALYZE → SCORE → PRIORITIZE → VALIDATE workflow. **VERIFY**: Health Score computed **before and after**; validation re-passes post-change; changes to Boundaries / CAPABILITIES / Principles / Framework (Level C) gated on human approval; no new overlap introduced; the improved skill stays under the size ceiling.
-- `compress`: Token-budget analysis before changes. Verify 4-axis equivalence (Behavioral/Structural/Integration/Routing). Confirm if reduction > 20%. **VERIFY**: token-budget analysis done before any edit; 4-axis equivalence verified (Behavioral + Structural + Integration + Routing all preserved); section-by-section analysis (no uniform or lossy compression); > 20% reduction confirmed with the user; reversible compression preferred over speculative.
-- `audit-verbosity`: COLLECT samples → MEASURE 5 metrics (filler/tier/format/header/tautology) → PROPOSE diff to Output Contract → emit `OUTPUT_AUDIT_REPORT`. Refuse if zero samples; never grade on speculation. **VERIFY**: refuses outright if zero real runtime samples (never grades on speculation); all 5 metrics measured (filler / tier / format / header / tautology); a concrete diff to the Output Contract proposed; `OUTPUT_AUDIT_REPORT` emitted.
-- `evolve`: Architect self-modification only. Strictly enforce Safety Level A/B/C/D. Rollback snapshot is mandatory. **VERIFY**: scope is Architect self-modification only; a rollback snapshot is taken **before** any mutation (auto-rollback on VERIFY failure); Safety Level A/B/C/D enforced (Level C → human approval, Level D → forbidden); change budget (20 lines/session, 50/month) not exceeded without approval; outcome persisted to `.agents/architect.md`.
+Per-Recipe behavior notes and each Recipe's `VERIFY` gate -> `reference/review-loop.md` § Per-Recipe Behavior. Read once a subcommand matches. Every gate applies **in addition to** Architect's universal discipline: ENVISION / Health Score / validation never skipped, Nexus hub-and-spoke preserved, formal topology for any multi-agent design.
+
+Non-negotiables regardless of Recipe: `create` runs ENVISION at 20-30% effort and rejects ≥50% overlap; `improve` computes the Health Score **before and after**; `compress` verifies 4-axis equivalence (Behavioral / Structural / Integration / Routing) and confirms any >20% reduction with the user; `audit-verbosity` refuses outright on zero real runtime samples; `evolve` takes a rollback snapshot **before** any mutation and holds the change budget (20 lines/session, 50/month).
 
 ### Critical Thresholds
 
@@ -174,22 +171,22 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate **in a
 | Overlap handling | `0-10%` proceed, `10-20%` note, `20-30%` review, `30-49%` ask first, `50%+` reject by default | Use `overlap-detection.md` for scoring, report template, and exception cases |
 | Naming | `1-2` syllables ideal, `3` acceptable, `4+` avoid | Use `naming-conventions.md` for scoring and conflict checks |
 | Validation | All `REQUIRED` items pass; `RECOMMENDED` items pass at `80%+` | Use `validation-checklist.md` |
-| New-skill size | `SKILL.md` under `500` lines / `5000` tokens; `3-7` references | Agent Skills spec ceiling. Keep detail in references; context rot degrades performance as input grows. **"Minimal does not necessarily mean short"** (Anthropic, *Effective context engineering*) — the target is the smallest set of *high-signal* tokens, not the smallest token count. Cut obvious, restated, and decorative content; do **not** cut a threshold, a safety rule, or a routing surface to hit a number. Write at the **right altitude**: specific enough to steer behavior, general enough to remain a heuristic — over-specified step-by-step prescription and vague principle both fail, and an over-long skill is usually a symptom of the former, fixed by raising altitude rather than by deletion. Start minimal and add on observed failure modes |
-| Multi-agent justification | Single-agent performance `<45%` on task | Below 45% saturation, multi-agent coordination yields highest marginal returns. Above 45%, improve the single agent first |
-| Agent count scaling | Beyond `4` agents, coordination tax outweighs gains without structured topology | Use hierarchy, fan-out/gather, or pipeline; avoid flat peer networks. See `multi-agent-system-anti-patterns.md` |
+| New-skill size | `SKILL.md` under `500` lines / `5000` tokens; `3-7` references | Agent Skills spec ceiling; keep detail in references. **"Minimal does not necessarily mean short"** — target the smallest set of *high-signal* tokens. Cut obvious/restated/decorative content; never cut a threshold, safety rule, or routing surface to hit a number. Write at the **right altitude** — an over-long skill usually means over-specified prescription, fixed by raising altitude, not deletion. Rationale → `reference/official-design-patterns.md` |
+| Multi-agent justification | Single-agent performance `<45%` on task | Below 45%, multi-agent coordination has the highest marginal return; above it, improve the single agent first |
+| Agent count scaling | Beyond `4` agents, coordination tax outweighs gains without topology | Hierarchy, fan-out/gather, or pipeline; never flat peer networks. `multi-agent-system-anti-patterns.md` |
 | Hub-spoke scaling | ≤`7` specialists per orchestrator | Beyond 7, hub becomes coordination bottleneck; split into two-level hierarchy with sub-orchestrators |
-| Workflow step count | `85%` per-step accuracy × `10` steps ≈ `20%` end-to-end success | Design ≤`5` sequential phases; add verification checkpoints between stages to reset accuracy baseline |
-| Context utilization | Agent at >`60%` context utilization before user input | Trigger compression pipeline: summarize history → filter retrieval → route tools dynamically → compress step results |
+| Workflow step count | `85%` per-step × `10` steps ≈ `20%` end-to-end | Design ≤`5` sequential phases; add checkpoints between stages to reset the accuracy baseline |
+| Context utilization | >`60%` utilized before user input | Compress: summarize history → filter retrieval → route tools dynamically → compress step results |
 | Compression approval | `>20%` reduction is confirmation-worthy | Keep 4-axis equivalence intact |
 
 ### New-Agent Output Contract
 
-- Every generated agent must include `CAPABILITIES_SUMMARY`, `COLLABORATION_PATTERNS`, `Activity Logging`, `AUTORUN Support`, and explicit INPUT / OUTPUT partners.
-- Generated skill `description:` must include negative triggers ("Don't use when…") alongside positive triggers. The description is the only field the model sees before firing — omitting negative triggers causes misfires.
-- Design skills for three-level progressive disclosure: L1 (frontmatter ~100 tokens, loaded every call), L2 (SKILL.md instructions, loaded on activation), L3 (reference/, loaded on demand). Keep L1 lean and triggerable; move methodology and examples to L3.
-- Generated skills must remain Nexus-compatible and preserve hub-and-spoke routing.
-- Use references for detailed methodology, examples, and templates; keep `SKILL.md` procedural and routable.
-- Tune for Opus 5 defaults: front-load required inputs in Trigger Guidance, calibrate response length envelopes (line/bullet counts), document tool-use "when/why", spell out parallel subagent fan-out instructions, and add adaptive thinking nudges at high-stakes decision points. See `reference/official-design-patterns.md` Section 11.
+- Every generated agent includes `CAPABILITIES_SUMMARY`, `COLLABORATION_PATTERNS`, `Activity Logging`, `AUTORUN Support`, and explicit INPUT / OUTPUT partners.
+- Generated `description:` carries negative triggers ("Don't use when…") alongside positive ones — it is the only field the model sees before firing, and omitting them causes misfires.
+- Design for three-level progressive disclosure: L1 frontmatter (~100 tokens, every call), L2 SKILL.md (on activation), L3 `reference/` (on demand). Keep L1 lean and triggerable; methodology and examples belong in L3.
+- Generated skills stay Nexus-compatible and preserve hub-and-spoke routing.
+- Detailed methodology, examples, and templates go in references; `SKILL.md` stays procedural and routable.
+- Tune for Opus 5 defaults: front-load required inputs in Trigger Guidance, calibrate length envelopes, document tool-use "when/why", spell out fan-out instructions, add adaptive-thinking nudges at high-stakes decisions. → `reference/official-design-patterns.md` §11.
 
 ### Compression Contract
 
@@ -204,7 +201,7 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate **in a
 Compression rules:
 - Analyze section by section before changing anything.
 - Preserve `Behavioral`, `Structural`, `Integration`, and `Routing` equivalence.
-- Keep high-priority identity and boundaries early, actionable templates late, and structured detail in the middle.
+- Keep identity and boundaries early, templates late, structured detail in between.
 - Prefer reversible compression before speculative compression.
 
 ## Output Routing
@@ -214,23 +211,18 @@ Compression rules:
 | `new agent`, `create agent`, `design skill` | CREATE flow | Skill package (SKILL.md + references) | `reference/skill-template.md`, `reference/creative-thinking.md` |
 | `improve`, `enhance`, `upgrade skill` | IMPROVE flow | Enhancement proposal + updated SKILL.md | `reference/review-loop.md`, `reference/enhancement-framework.md` |
 | `compress`, `reduce tokens`, `optimize context` | COMPRESS flow | Compressed SKILL.md with equivalence report | `reference/context-compression.md` |
-| `audit-verbosity`, `output too verbose`, `response too long` | audit-verbosity recipe | OUTPUT_AUDIT_REPORT + Output Contract diff | `reference/output-audit.md`, `_common/OUTPUT_STYLE.md` |
+| `audit-verbosity`, `output too verbose` | audit-verbosity recipe | OUTPUT_AUDIT_REPORT + Output Contract diff | `reference/output-audit.md`, `_common/OUTPUT_STYLE.md` |
 | `evolve`, `self-improve` | EVOLVE flow | Self-evolution report | `reference/self-evolution.md` |
 | `overlap`, `duplicate agent` | ANALYZE phase | Overlap detection report | `reference/overlap-detection.md` |
 | `validate`, `check skill` | VALIDATE phase | Validation checklist results | `reference/validation-checklist.md` |
 | `name`, `naming` | Naming evaluation | Name scoring and alternatives | `reference/naming-conventions.md` |
 | unclear agent design request | CREATE flow | Skill package | `reference/skill-template.md` |
 
-Routing rules:
-
-- If the request mentions a new agent, start with CREATE flow and read `reference/creative-thinking.md`.
-- If the request mentions an existing agent, start with IMPROVE flow and read `reference/review-loop.md`.
-- If the request mentions compression or token cost, start with COMPRESS flow.
-- Always read `reference/validation-checklist.md` before delivery.
+Always read `reference/validation-checklist.md` before delivery, whichever flow ran.
 
 ## Improvement and Self-Evolution
 
-Use `review-loop.md` and `enhancement-framework.md` for existing-skill scoring, prioritization, and proposal structure.
+Existing-skill scoring, prioritization, and proposal structure → `review-loop.md`, `enhancement-framework.md`.
 
 | Trigger | Condition | Scope |
 |---------|-----------|-------|
@@ -265,12 +257,12 @@ Every deliverable should include:
 
 ## Collaboration
 
-Architect receives requirements and feedback from User, Atlas, Nexus, Compass, Judge, Lore, and Darwin. Architect returns new-skill designs, routing changes, compression notifications, documentation follow-ups, review requests, and self-evolution reports.
+Receives requirements and feedback from User, Atlas, Nexus, Compass, Judge, Lore, and Darwin; returns new-skill designs, routing changes, compression notifications, documentation follow-ups, review requests, and self-evolution reports.
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
 | Nexus → Architect | `NEXUS_TO_ARCHITECT_HANDOFF` | Gap signals and new-agent requests |
-| Compass → Architect | `COMPASS_TO_ARCHITECT` | Gap signal from the LADDER fallback (no skill fits a user request) |
+| Compass → Architect | `COMPASS_TO_ARCHITECT` | LADDER gap signal — no skill fits the request |
 | Atlas → Architect | `ATLAS_TO_ARCHITECT_HANDOFF` | Ecosystem analysis and dependency maps |
 | Judge → Architect | `JUDGE_TO_ARCHITECT_FEEDBACK` | Quality feedback on skill files |
 | Architect → Nexus | `ARCHITECT_TO_NEXUS_HANDOFF` | New-agent notification and routing updates |
@@ -296,25 +288,25 @@ Read only the files required for the current decision.
 | File | Read This When |
 |------|----------------|
 | `reference/agent-category-guide.md` | First-pass category selection or category-boundary guidance |
-| `reference/agent-categories.md` | The exact current roster, per-category agent summaries, or full catalog lookup |
+| `reference/agent-categories.md` | Current roster, per-category summaries, full catalog lookup |
 | `reference/creative-thinking.md` | Still deciding what should exist, not yet specifying it |
 | `reference/naming-conventions.md` | Naming a new or revised agent |
 | `reference/overlap-detection.md` | Overlap scoring, threshold handling, or differentiation logic |
 | `reference/skill-template.md` | Drafting or checking the canonical generated-skill structure |
 | `reference/validation-checklist.md` | Validating a generated or improved skill |
-| `reference/context-compression.md` | Planning or reviewing compression and need token-budget or equivalence rules |
-| `reference/output-audit.md` | Scoring runtime output verbosity for an agent and proposing Output Contract corrections (audit-verbosity recipe) |
-| `_common/OUTPUT_STYLE.md` | The canonical runtime output style (tiers, banned patterns, format priority) for the Output Density Protocol |
+| `reference/context-compression.md` | Compression planning/review — token budget, equivalence rules |
+| `reference/output-audit.md` | `audit-verbosity` — verbosity scoring, Output Contract corrections |
+| `_common/OUTPUT_STYLE.md` | Canonical runtime output style — tiers, banned patterns, format priority |
 | `reference/review-loop.md` | `Health Score`, review cadence, or degradation triggers |
-| `reference/enhancement-framework.md` | Improving an existing skill and need prioritization or proposal structure |
+| `reference/enhancement-framework.md` | Improving a skill — prioritization, proposal structure |
 | `reference/nexus-integration.md` | Exact AUTORUN or hub-mode compatibility details |
 | `reference/self-evolution.md` | Evaluating or performing self-modification |
-| `reference/multi-agent-system-anti-patterns.md` | The proposal may be overbuilt, poorly coordinated, or topologically mismatched |
-| `reference/agent-specification-anti-patterns.md` | The spec, prompt structure, tool design, or role definition looks weak |
+| `reference/multi-agent-system-anti-patterns.md` | Proposal may be overbuilt, poorly coordinated, or topologically mismatched |
+| `reference/agent-specification-anti-patterns.md` | Spec, prompt structure, tool design, or role definition looks weak |
 | `reference/ecosystem-architecture-anti-patterns.md` | Ecosystem fit, modularity, governance, or discoverability looks risky |
 | `reference/agent-evaluation-guardrails.md` | Production-grade evaluation, guardrails, or validation design |
-| `reference/official-design-patterns.md` | Official use case categories, skill patterns, agentic composable patterns, simplicity-first design, intelligence harnessing principles, interoperability guidance, success criteria, or Opus 5 authoring principles (Section 11). |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the skill package, deciding adaptive thinking depth at topology/category selection, or front-loading intent/category/collaboration at UNDERSTAND. Critical for Architect: P3, P5. |
+| `reference/official-design-patterns.md` | Official use-case categories, skill/composable patterns, simplicity-first design, interoperability, success criteria, Opus 5 authoring (§11). |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the package, adaptive thinking depth at topology selection, front-loading intent at UNDERSTAND. Critical: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Architect-specific Output/Next schema. |
 
 ## Operational

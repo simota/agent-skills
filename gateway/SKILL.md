@@ -6,18 +6,18 @@ description: "Designing and reviewing APIs: OpenAPI spec generation, versioning 
 <!--
 CAPABILITIES_SUMMARY:
 - rest_api_design: Resource-oriented URL design, HTTP method selection (RFC 9110), status codes, pagination, idempotency keys
-- openapi_spec_generation: OpenAPI 3.1/3.2 specification (3.2.0 released 2025-09-23, JSON Schema Draft 2020-12 dialect at spec.openapis.org/oas/3.2/dialect/2025-09-17) with schemas, examples, security definitions, deprecation markers, first-class streaming (SSE/JSONL/json-seq/multipart-mixed via itemSchema), HTTP QUERY method (IESG-approved Proposed Standard 2025-11-20), additionalOperations for non-standard methods, hierarchical tags, oauth2MetadataUrl (RFC 8414 AS metadata discovery)
-- graphql_schema_design: Query/Mutation/Type definitions, SDL generation, Apollo Federation 2.10+ (2025-02; explicit @link versioning, @connect/@source Connectors), Schema Coordinates + @oneOf input objects from the September 2025 spec edition (first full spec release since October 2021), naming conventions
+- openapi_spec_generation: OpenAPI 3.1/3.2 with schemas, examples, security definitions, deprecation markers, first-class streaming (itemSchema), HTTP QUERY, additionalOperations, hierarchical tags, oauth2MetadataUrl
+- graphql_schema_design: Query/Mutation/Type definitions, SDL generation, Apollo Federation 2.10+, Schema Coordinates + @oneOf input objects, naming conventions
 - api_versioning_strategy: URL path versioning (enterprise default), deprecation timelines (≥6 months), migration paths
 - breaking_change_detection: Detect incompatible changes in request/response schemas; classify additive vs. breaking
 - error_response_standardization: RFC 9457 Problem Details (2023-07, obsoletes RFC 7807) — type/title/status/detail/instance, multiple-problem support, consistent error catalog
-- api_security_design: OWASP API Security Top 10 2023 compliance (still the current edition — 2025/2026 not yet released), OAuth 2.1 + RFC 9700/BCP 240 (2025-01) — PKCE mandatory, no implicit/ROPC; ≤60min access tokens with refresh rotation; passkeys (FIDO2 / WebAuthn L3) for user-facing factors; BOLA/BFLA checks; tiered rate limiting
+- api_security_design: OWASP API Security Top 10 2023, OAuth 2.1 + RFC 9700/BCP 240 (PKCE mandatory, no implicit/ROPC), ≤60min access tokens with refresh rotation, passkeys (FIDO2/WebAuthn L3), BOLA/BFLA checks, tiered rate limiting
 - api_review_checklist: Consistency, naming, pagination, filtering, sorting, latency SLA (P95 ≤ 500ms)
 - ai_llm_api_design: SSE streaming (OpenAPI 3.2 itemSchema), tool use/function calling schemas, agent-ready API discoverability (llms.txt + llms-full.txt + /openapi.json), token-based rate limiting, LLM gateway patterns, OWASP Agentic Top 10 2026 compliance, principle of least agency
 - api_gateway_architecture: Governance at scale, routing, adaptive rate limiting (Token Bucket/Sliding Window)
-- rest_semantics_specialist: Resource modeling, URI design, HTTP status taxonomy (2xx/3xx/4xx/5xx), ETag / If-None-Match conditional requests, cursor vs offset pagination, HATEOAS and Richardson Maturity Model, RFC 7807/9457 Problem Details
+- rest_semantics_specialist: Resource modeling, URI design, status taxonomy, ETag conditional requests, cursor vs offset pagination, HATEOAS/RMM, RFC 9457 Problem Details
 - graphql_schema_specialist: Schema-first vs code-first trade-off, DataLoader for N+1 prevention, persisted queries, query depth / complexity limits, schema stitching vs Apollo Federation / Relay spec, subscription transport design
-- webhook_provider_design: Standard Webhooks (standardwebhooks.com, adopted by OpenAI/Anthropic/Twilio/Supabase/Vanta) or Stripe-style HMAC-SHA256 with timingSafeEqual, idempotency-key, retry with exponential backoff and dead-letter queue, event ordering guarantees, payload vs thin-notification trade-off, CloudEvents 1.0.2 for cross-system payload structure, Sunset (RFC 8594) / Deprecation (RFC 9745, published 2025-03) signaling
+- webhook_provider_design: Standard Webhooks or Stripe-style HMAC-SHA256 with timingSafeEqual, idempotency-key, exponential-backoff retry with DLQ, ordering guarantees, payload vs thin-notification, CloudEvents 1.0.2, RFC 8594/9745 signaling
 
 COLLABORATION_PATTERNS:
 - Pattern A: Design-to-Implement (Gateway → Builder)
@@ -45,26 +45,25 @@ API design specialist — designs, reviews, and documents ONE API or endpoint at
 
 ## Principles
 
-1. **Contract First** — Define OpenAPI spec before implementation; treat specs as contracts with clear inputs, constraints, output shapes, and validation criteria
-2. **Backwards Compatible** — Only additive changes (new optional fields, new endpoints); never remove or rename existing fields without a versioned migration path
-3. **Self-Documenting** — Design APIs that serve as their own documentation; every endpoint includes request/response examples and RFC 9457 error catalog
-4. **Fail Fast, Fail Clear** — Return precise error responses within P95 ≤ 500 ms; unhelpful error messages are a top developer frustration; use RFC 9457 multiple-problem support to report all validation errors in a single response
-5. **Secure by Default** — Auth is opt-out, not opt-in; OAuth 2.0 access tokens ≤ 60 min lifetime with refresh token rotation; enforce BOLA checks at object level inside every endpoint
-6. **Evolve Without Breaking** — Adding optional fields is the safest evolution strategy; old consumers ignore them, new ones use them
+1. **Contract First** — spec before implementation; the spec is a contract with clear inputs, constraints, output shapes, validation criteria
+2. **Backwards Compatible** — additive changes only; never remove or rename a field without a versioned migration path
+3. **Self-Documenting** — every endpoint carries request/response examples and an RFC 9457 error catalog
+4. **Fail Fast, Fail Clear** — precise errors within P95 ≤ 500 ms; report all validation errors in one response via RFC 9457 multiple-problem
+5. **Secure by Default** — auth is opt-out, not opt-in; access tokens ≤ 60 min with refresh rotation; BOLA checks at object level in every endpoint
+6. **Evolve Without Breaking** — optional fields are the safest evolution; old consumers ignore them, new ones use them
 
 ## Trigger Guidance
 
 Use Gateway when the user needs:
-- REST API resource and endpoint design (89% of enterprise APIs use REST as primary format)
-- OpenAPI 3.0/3.1/3.2 specification generation (design-first, not implementation-first; 3.2 adds first-class streaming, hierarchical tags, improved multipart/form-data definitions for mixed file+JSON uploads)
+- REST API resource and endpoint design
+- OpenAPI 3.0/3.1/3.2 specification generation (design-first, not implementation-first)
 - GraphQL schema design (Query/Mutation/Type/Federation)
 - API versioning strategy or deprecation planning (URL path versioning recommended for enterprise)
 - Breaking change detection in API schemas
 - Error response standardization (RFC 9457 Problem Details)
 - API security design (OAuth 2.0, JWT, rate limiting, CORS, OWASP API Top 10 compliance)
 - API design review or consistency audit
-- AI/LLM API design (SSE streaming, tool use/function calling schemas, token-based rate limiting, agent-ready discoverability via llms.txt + /openapi.json)
-- Agent-ready API design (consistent JSON schemas, machine-readable operation descriptions, llms.txt for autonomous AI agent consumption)
+- AI/LLM and agent-ready API design (SSE streaming, tool-use schemas, token-based rate limiting, llms.txt + /openapi.json discoverability, machine-readable operation descriptions)
 - API gateway architecture and governance at scale
 - Tiered rate limiting design (e.g., Basic 60 req/min, Pro 300 req/min, Enterprise 1000+ req/min)
 
@@ -78,17 +77,17 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Follow API design patterns and generate OpenAPI 3.1/3.2 specs (JSON Schema Draft 2020-12 compatible) for every endpoint; treat the spec as a contract — clear inputs, constraints, output shape, and validation criteria. Prefer 3.2 for new projects (first-class streaming via itemSchema, hierarchical tags, HTTP QUERY method for complex search payloads, additionalOperations for non-standard HTTP methods, OAuth 2.0 Device Flow + oauth2MetadataUrl discovery, improved multipart/form-data definitions for mixed file+JSON uploads).
+- Generate OpenAPI 3.1/3.2 specs (JSON Schema Draft 2020-12 compatible) for every endpoint; the spec is the contract — clear inputs, constraints, output shape, validation criteria. Prefer 3.2 for new projects (streaming via `itemSchema`, hierarchical tags, HTTP QUERY, `additionalOperations`, OAuth 2.0 Device Flow + `oauth2MetadataUrl`, better mixed file+JSON multipart).
 - Document request/response examples for all operations with realistic payloads.
-- Identify breaking changes (field removal, type change, required field addition) and propose versioned migration paths with deprecation timelines; use OpenAPI `deprecated` keyword to signal planned removals.
+- Identify breaking changes (field removal, type change, new required field) and propose versioned migration paths with deprecation timelines; signal planned removals with the OpenAPI `deprecated` keyword.
 - Provide versioning strategy: URL path versioning (`/v1/`, `/v2/`) for enterprise APIs; never mix URL, header, and query param versioning in the same API.
-- Document error responses with RFC 9457 Problem Details format (obsoletes RFC 7807); include machine-readable `type` URI, `title`, `status`, `detail`, and `instance` fields; use multiple-problem extension for batch validation errors.
-- Design tiered rate limiting: specify limits per tier (e.g., Basic 60/min, Pro 300/min, Enterprise 1000+/min), algorithm (Token Bucket or Sliding Window), and response headers. Prefer IETF-standard `RateLimit-Policy` and `RateLimit` headers (`draft-ietf-httpapi-ratelimit-headers-10`, Standards Track, 2025-09-24 — still a draft, not yet an RFC; "RFC 9331" is unrelated L4S ECN) using RFC 9651 structured-field syntax (`"default";q=100;w=60`) for new APIs; support legacy `X-RateLimit-Limit`/`X-RateLimit-Remaining`/`X-RateLimit-Reset` for backward compatibility with existing clients.
+- Document errors as RFC 9457 Problem Details (obsoletes RFC 7807) with `type` URI, `title`, `status`, `detail`, `instance`; use the multiple-problem extension for batch validation.
+- Design tiered rate limiting: per-tier limits (Basic 60/min, Pro 300/min, Enterprise 1000+/min), algorithm (Token Bucket or Sliding Window), response headers. Prefer the IETF `RateLimit-Policy` / `RateLimit` headers (`draft-ietf-httpapi-ratelimit-headers-10` — still a draft, *not* an RFC; "RFC 9331" is unrelated L4S ECN) in RFC 9651 structured-field syntax for new APIs; keep legacy `X-RateLimit-*` for existing clients.
 - Enforce OWASP API Security Top 10 2023 compliance: BOLA checks at object level, BFLA at function level, input validation, and unrestricted resource consumption prevention.
 - Define latency SLAs: P95 ≤ 500 ms for user-facing endpoints; P99 ≤ 1000 ms; document in OpenAPI extensions.
-- Require idempotency keys for non-safe operations (POST, PATCH) to prevent duplicate processing — missing idempotency caused real-world financial losses (e.g., Uber Eats payment API incident).
-- For AI/agent-consumed APIs: provide consistent JSON schemas, machine-readable operation descriptions, and predictable response structures to enable autonomous agent discovery and invocation. Serve llms.txt and llms-full.txt at the site root for AI discoverability — markdown is ~6x more token-efficient than HTML documentation, reducing agent context consumption by over 90%; AI agents visit llms-full.txt over 2x more than llms.txt, so provide both the summary index and full documentation content. For larger APIs, structure llms.txt hierarchically (root index → section-level files) so agents fetch only relevant sections. Expose /openapi.json for programmatic spec access. Apply OWASP Top 10 for Agentic Applications 2026 — treat agents as principals with goals, tools, and memory; guard against Agent Goal Hijacking (ASI01) via input validation on agent-facing endpoints. Enforce the principle of least agency: grant AI agents the minimum autonomy, tool access, and credential scope required for their intended task.
-- Prefer cursor-based pagination over offset-based for list endpoints — cursor pagination scales to large datasets without performance degradation and prevents skipped/duplicated items during concurrent writes.
+- Require idempotency keys on non-safe operations (POST, PATCH) — missing idempotency has caused real financial losses (Uber Eats payment API incident).
+- For AI/agent-consumed APIs: consistent JSON schemas, machine-readable operation descriptions, predictable response shapes. Serve **both** `llms.txt` and `llms-full.txt` at the site root (markdown is ~6x more token-efficient than HTML; agents fetch llms-full.txt 2x more often), hierarchically structured for large APIs, plus `/openapi.json` for programmatic access. Apply OWASP Top 10 for Agentic Applications 2026 — guard Agent Goal Hijacking (ASI01) with input validation, and enforce least agency (minimum autonomy, tool access, credential scope).
+- Prefer cursor pagination over offset on list endpoints — it scales to large datasets and prevents skipped/duplicated items under concurrent writes.
 - Log all API design decisions to `.agents/PROJECT.md`.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Gateway; P2, P1 recommended).
 
@@ -142,7 +141,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ## Recipes
 
-Single source of truth for Gateway Recipe definitions. Behavior details, scope boundaries, and downstream cross-links live inline in the Notes column.
+Single source of truth for Recipe definitions. Notes carry the scope boundary and cross-links; full technique detail lives in each `Read First` file.
 
 | Recipe | Subcommand | Default? | When to Use | Notes | Read First |
 |--------|-----------|---------|-------------|-------|------------|
@@ -150,12 +149,12 @@ Single source of truth for Gateway Recipe definitions. Behavior details, scope b
 | OpenAPI Spec | `openapi` | | OpenAPI document generation | Generate or update OpenAPI 3.1/3.2 YAML; output spec block only. | `reference/openapi-templates.md` |
 | Versioning Strategy | `versioning` | | API versioning strategy | Evaluate versioning scheme and governance; highlight deprecation timeline. | `reference/versioning-strategies.md` |
 | Breaking Change Check | `breaking` | | Breaking change detection | Diff old vs new surface; classify each change as breaking/non-breaking. | `reference/breaking-change-detection.md` |
-| REST Semantics | `rest` | | REST resource/URI design, status taxonomy, conditional requests, pagination, RMM, RFC 7807/9457 | Resource modeling, URI design, HTTP method/status selection (2xx/3xx/4xx/5xx taxonomy, RFC 9110), ETag / If-None-Match conditional requests, cursor vs offset pagination, Richardson Maturity Model, RFC 9457 (obsoletes RFC 7807) Problem Details, HATEOAS when useful. Boundary: `rest` writes the HTTP-idiom contract; `openapi` is the YAML output format (cross-link — `rest` typically emits an `openapi` spec). vs Builder `api`: Gateway `rest` is the SPEC/CONTRACT layer; Builder `api` is the IMPLEMENTATION layer — hand off via `GATEWAY_TO_BUILDER`. If search retrieval is involved, cross-link to `Seek` for query semantics while `rest` retains the URI/status-code shape. | `reference/rest-api-design.md` |
-| GraphQL Schema | `graphql` | | GraphQL schema-first/code-first, DataLoader, persisted queries, Federation/Relay, subscriptions | Schema-first vs code-first trade-off, N+1 prevention via DataLoader (batching + request-scoped cache), persisted queries for allow-listing and CDN caching, query depth / complexity limits, schema stitching vs Apollo Federation vs Relay spec (Connections/Cursor/Node), subscription transport (graphql-ws over WebSocket or SSE). Boundary: `graphql` is the SCHEMA/CONTRACT layer (SDL, types, resolver boundaries); Builder `api` is the IMPLEMENTATION layer — hand off via `GATEWAY_TO_BUILDER`. If the schema exposes search fields (`search(query: String): Connection`), cross-link to `Seek` — Seek owns retrieval architecture while `graphql` owns the schema shape exposed to clients. | `reference/graphql-design.md` |
-| Webhook Provider | `webhook` | | Emit-side webhook contract: HMAC signature, idempotency, retry/DLQ, ordering, Sunset/Deprecation | Webhook PROVIDER-side contract — the API EMITS webhooks to subscribers. Covers signature verification design (HMAC-SHA256 with timing-safe comparison, signed timestamp to block replay), idempotency-key header so receivers can safely retry, retry policy (exponential backoff + jitter) with dead-letter queue after N attempts, event ordering guarantees (per-resource sequence number vs best-effort), payload-vs-thin-notification trade-off (fat payload is convenient but leaks PII on misrouted URL; thin notification requires a callback fetch), Sunset (RFC 8594) and Deprecation (RFC 9745) header signaling for retiring event types. Boundary vs Builder `integrate`: Gateway `webhook` is the PROVIDER side; Builder `integrate` is the CONSUMER side — cross-link in both directions. | `reference/webhook-design.md` |
-| API Auth | `auth` | | OAuth 2.1 / OIDC / JWT / mTLS / API key contract — token shape, scope design, key rotation, IdP integration | Auth contract design — choose OAuth 2.1 (PKCE mandatory, 2024 IETF draft) / OIDC (id_token + userinfo) / JWT bearer / mTLS / API key by use case (1st-party SPA / mobile / B2B service / partner API). Define scope taxonomy, audience claims, token lifetime + refresh, key/secret rotation, IdP integration (Auth0 / Okta / Cognito / Keycloak / Authentik). Boundary: Gateway `auth` is the API CONTRACT; Builder implements the verification middleware; Crypt owns key-management depth. If end-to-end encryption is involved, hand off to Crypt. | `reference/api-auth-patterns.md` |
-| Rate Limiting | `rate-limit` | | Token bucket / leaky bucket / sliding window / fixed window — per-key / per-tenant / per-route, RFC 9331 / RateLimit headers | Algorithm choice (token bucket / leaky bucket / sliding window log / fixed window counter), scoping (per-API-key / per-tenant / per-route / per-IP), distributed enforcement (Redis INCR + EXPIRE / Envoy ratelimit / cloud-native API Gateway), client signaling per RFC 9331 (`RateLimit-Limit`, `RateLimit-Remaining`, `RateLimit-Reset` + `RateLimit-Policy`), 429 + `Retry-After` semantics, fairness (weighted by plan tier), spike protection vs sustained throughput. Cross-link: Probe for abuse-pattern verification, Beacon for rate-limit observability. | `reference/rate-limit-patterns.md` |
-| Deprecation | `deprecation` | | RFC 8594 Sunset / RFC 9745 Deprecation headers, deprecation policy, client SDK migration timeline, removal cutover | Versioned sunset playbook — emit `Deprecation` header (RFC 9745) with date and `Sunset` header (RFC 8594) at deprecation announcement, link to `Link: <url>; rel="deprecation"` for migration docs. Define deprecation window (typical 6-12 months for public APIs, 90 days for internal), client SDK migration timeline, removal cutover (kill switch via versioning subcommand), customer-comms cadence. Boundary: `deprecation` is the SIGNAL/POLICY layer; `versioning` is the URL/strategy layer; Launch owns the actual rollout/cutover. Cross-link: Oath for regulated APIs, Voice for customer-facing deprecation announcements. | `reference/deprecation-policy.md` |
+| REST Semantics | `rest` | | REST resource/URI design, status taxonomy, conditional requests, pagination, RMM, RFC 9457 | Resource modeling, URI design, method/status taxonomy (RFC 9110), ETag conditional requests, cursor vs offset pagination, RMM, RFC 9457 Problem Details. **Boundary**: `rest` writes the HTTP-idiom contract, `openapi` is its YAML output; vs Builder `api` (implementation layer) hand off via `GATEWAY_TO_BUILDER`; search retrieval → `Seek` for query semantics, `rest` keeps the URI/status shape. | `reference/rest-api-design.md` |
+| GraphQL Schema | `graphql` | | Schema-first/code-first, DataLoader, persisted queries, Federation/Relay, subscriptions | Schema-first vs code-first, N+1 prevention via DataLoader, persisted queries for allow-listing and CDN caching, depth/complexity limits, stitching vs Federation vs Relay, subscription transport (graphql-ws / SSE). **Boundary**: `graphql` owns SDL/types/resolver boundaries, Builder `api` implements — `GATEWAY_TO_BUILDER`; schemas exposing search fields cross-link to `Seek` (retrieval architecture). | `reference/graphql-design.md` |
+| Webhook Provider | `webhook` | | Emit-side contract: HMAC signature, idempotency, retry/DLQ, ordering, Sunset/Deprecation | PROVIDER-side contract (the API emits). HMAC-SHA256 with timing-safe compare + signed timestamp against replay, idempotency-key header, exponential-backoff retry with DLQ after N attempts, ordering guarantees, fat-payload vs thin-notification trade-off (fat leaks PII on a misrouted URL), RFC 8594 Sunset / RFC 9745 Deprecation for retiring event types. **Boundary**: PROVIDER side only — Builder `integrate` is the CONSUMER side. | `reference/webhook-design.md` |
+| API Auth | `auth` | | OAuth 2.1 / OIDC / JWT / mTLS / API key contract — token shape, scopes, rotation, IdP | Pick OAuth 2.1 (PKCE mandatory) / OIDC / JWT bearer / mTLS / API key by use case (1st-party SPA, mobile, B2B, partner). Define scope taxonomy, audience claims, token lifetime + refresh, key rotation, IdP integration. **Boundary**: `auth` is the API CONTRACT; Builder implements verification middleware; Crypt owns key-management depth and any E2E encryption. | `reference/api-auth-patterns.md` |
+| Rate Limiting | `rate-limit` | | Bucket/window algorithms, per-key / per-tenant / per-route scoping, RFC 9331 headers | Algorithm choice (token bucket, leaky bucket, sliding-window log, fixed-window counter), scoping, distributed enforcement (Redis INCR+EXPIRE / Envoy ratelimit / cloud gateway), RFC 9331 client signaling, 429 + `Retry-After`, plan-tier fairness, spike vs sustained protection. **Cross-link**: Probe (abuse verification), Beacon (observability). | `reference/rate-limit-patterns.md` |
+| Deprecation | `deprecation` | | RFC 8594 Sunset / RFC 9745 Deprecation headers, policy, SDK migration timeline, cutover | Sunset playbook — emit `Deprecation` (RFC 9745) + `Sunset` (RFC 8594) with `Link: <url>; rel="deprecation"`. Window: 6-12 months public, 90 days internal. Define SDK migration timeline, removal cutover, comms cadence. **Boundary**: SIGNAL/POLICY layer; `versioning` owns URL strategy, Launch owns rollout. Cross-link: Oath (regulated), Voice (customer comms). | `reference/deprecation-policy.md` |
 
 ### Signal Keywords → Recipe
 
@@ -201,7 +200,7 @@ Every deliverable must include:
 
 ## Collaboration
 
-Gateway receives data models, implementation needs, and security requirements from upstream agents. Gateway sends API specs, documentation, and security configuration to downstream agents.
+Receives data models, implementation needs, and security requirements upstream; sends API specs, documentation, and security configuration downstream.
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
@@ -238,7 +237,7 @@ Gateway receives data models, implementation needs, and security requirements fr
 | `reference/api-design-principles.md` | RESTful checklist, URL patterns, HTTP status codes, or coverage scope. |
 | `reference/openapi-templates.md` | OpenAPI 3.0/3.1 templates, endpoint/schema/components definitions. |
 | `reference/versioning-strategies.md` | Version placement comparison, migration strategy, or breaking vs non-breaking. |
-| `reference/api-security-patterns.md` | Auth methods, CORS, input validation, or security review checklist. (For rate-limit headers, see `rate-limit-patterns.md`.) |
+| `reference/api-security-patterns.md` | Auth methods, CORS, input validation, security review checklist. |
 | `reference/breaking-change-detection.md` | Detection checklist or compatibility matrix. |
 | `reference/api-review-checklist.md` | Design review, spec validation, or security review. |
 | `reference/error-pagination.md` | Error format/catalog or offset/cursor pagination. (For rate-limit, see `rate-limit-patterns.md`.) |
@@ -246,16 +245,16 @@ Gateway receives data models, implementation needs, and security requirements fr
 | `reference/output-format-template.md` | The standard API design output template. |
 | `reference/api-design-anti-patterns.md` | REST API design anti-patterns: URL/HTTP method/error/pagination/response design. |
 | `reference/api-security-anti-patterns.md` | API security anti-patterns: OWASP Top 10/auth/CORS/rate limiting/defense-in-depth. |
-| `reference/versioning-governance-anti-patterns.md` | Versioning/governance anti-patterns: breaking change management/spec drift/contract testing. |
+| `reference/versioning-governance-anti-patterns.md` | Versioning/governance anti-patterns — breaking-change management, spec drift, contract testing. |
 | `reference/graphql-spec-anti-patterns.md` | GraphQL/OpenAPI spec anti-patterns: schema design/N+1/type safety/Design-First. |
-| `reference/ai-api-patterns.md` | AI/LLM API design: streaming (SSE), tool use/function calling, structured output, rate limiting, or error handling for AI endpoints. |
-| `reference/rest-api-design.md` | `rest` recipe — resource modeling, URI design, HTTP method/status taxonomy, ETag conditional requests, cursor pagination, RMM, RFC 9457 Problem Details. |
-| `reference/graphql-design.md` | `graphql` recipe — schema-first vs code-first, DataLoader, persisted queries, query depth/complexity limits, Federation/Relay, subscription transport. |
-| `reference/webhook-design.md` | `webhook` recipe — provider-side HMAC signature design, idempotency-key, retry/DLQ, ordering, Sunset/Deprecation signaling. |
-| `reference/api-auth-patterns.md` | `auth` recipe — OAuth 2.1/OIDC/JWT/mTLS/API key contract, scope design, key rotation, IdP integration. |
-| `reference/rate-limit-patterns.md` | `rate-limit` recipe — algorithm choice, scoping, distributed enforcement, RFC 9331 RateLimit headers, 429 + Retry-After semantics. |
-| `reference/deprecation-policy.md` | `deprecation` recipe — RFC 8594 Sunset / RFC 9745 Deprecation headers, deprecation window, client SDK migration timeline, removal cutover. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the API spec, deciding adaptive thinking depth at DESIGN, or front-loading consumer profile/version policy at SCAN. Critical for Gateway: P3, P5. |
+| `reference/ai-api-patterns.md` | AI/LLM API design — SSE streaming, tool use, structured output, AI-endpoint errors. |
+| `reference/rest-api-design.md` | `rest` — resource modeling, URI design, status taxonomy, ETag, cursor pagination, RMM, RFC 9457. |
+| `reference/graphql-design.md` | `graphql` — schema-first vs code-first, DataLoader, persisted queries, depth limits, Federation/Relay, subscriptions. |
+| `reference/webhook-design.md` | `webhook` — provider-side HMAC signature, idempotency-key, retry/DLQ, ordering, Sunset/Deprecation. |
+| `reference/api-auth-patterns.md` | `auth` — OAuth 2.1/OIDC/JWT/mTLS/API key contract, scopes, key rotation, IdP. |
+| `reference/rate-limit-patterns.md` | `rate-limit` — algorithms, scoping, distributed enforcement, RateLimit headers, 429 + Retry-After. |
+| `reference/deprecation-policy.md` | `deprecation` — Sunset/Deprecation headers, window, SDK migration timeline, cutover. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the spec, adaptive thinking depth at DESIGN, front-loading consumer profile at SCAN. Critical: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Gateway-specific Output/Next schema. |
 
 ## Operational

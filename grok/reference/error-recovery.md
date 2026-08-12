@@ -102,3 +102,19 @@ Deliver:
 - Test corpus: ≥ 5 malformed inputs per error production, asserting the expected diagnostic code and span.
 
 Builder implements the parser's error paths against this spec; it does not re-decide recovery strategy or message wording.
+
+
+## Benchmark Styles + Recovery Strategies (SKILL.md excerpt)
+
+Diagnostic quality is a design goal, not an afterthought. Three benchmark styles:
+
+- **Elm-style** — "I found an error in this expression: ... I was expecting ... Did you mean ...?" — conversational, suggestion-heavy, example-rich.
+- **rust-analyzer / rustc** — source-spanned pointers with caret `^^^^`, structured suggestions as applicable fixes, macro-aware.
+- **Clang** — multi-line caret diagnostics, fix-it hints, colorized output, template backtrace trimming.
+
+Recovery strategies:
+- **Panic mode** — skip tokens until a synchronizing terminal (`;`, `}`); simple, loses context.
+- **Phrase-level recovery** — insert/delete/replace a token to continue (tree-sitter, Chevrotain).
+- **Error productions** — grammar rules that match common mistakes and emit targeted diagnostics.
+- **Incremental re-parse** — tree-sitter's model: damaged regions are local, rest of tree remains valid.
+

@@ -402,3 +402,19 @@ Parsing each file separately misses cross-file type info. Use ts-morph's Project
 - [ ] Source-map chain verified if part of a pipeline
 - [ ] Anti-pattern check (no regex-based modification, no comment stripping, no hand-rolled visitor)
 - [ ] Handoff to Shift for migration orchestration if codemod spans many files
+
+
+## Visitor Implementations (SKILL.md excerpt)
+
+AST design fundamentals: tagged union nodes, parent/child pointers, source-position tracking (source map compatible), immutable vs mutable trees (path-based updates via Ramda lenses, Immer).
+
+Visitor pattern implementations:
+- **ESLint rules** — enter/exit callbacks per node type
+- **Babel plugin** — visitor object with `Identifier`, `CallExpression`, etc.
+- **jscodeshift** — collection-based query API (`.find(j.Identifier)`)
+- **ts-morph** — Project/SourceFile/Node API for TypeScript
+- **tree-sitter query** — Scheme-like pattern matching (`(call_expression function: (identifier) @fn)`)
+- **JetBrains MPS** — projectional editing, structural transforms
+
+Anti-pattern: regex-based code modification when an AST is available. Regex codemods break on any syntactic variation (newlines, comments, whitespace, alternate member access). Read `reference/ast-transforms.md` for roundtrip-safe transform patterns (recast, jscodeshift with full-fidelity nodes) and codemod catalogs.
+

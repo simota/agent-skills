@@ -350,3 +350,14 @@ HEALTH_SCORE = Structure(30%) + Content(25%) + Integration(20%) + Activity(15%) 
 - P2: Medium - < 2 weeks
 - P3: Low - < 1 month
 ```
+
+
+## Per-Recipe Behavior + VERIFY Gates (SKILL.md excerpt)
+
+Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate **in addition to** Architect's universal discipline (ENVISION / Health Score / validation never skipped, Nexus hub-and-spoke preserved, formal topology for any multi-agent design).
+- `create`: ENVISION (20-30% effort) → ANALYZE (overlap scoring) → GENERATE (SKILL.md + references) → VALIDATE (16-item checklist). Read `creative-thinking.md` first. **VERIFY**: ENVISION actually run (20-30% effort, not skipped); overlap < 30% with every existing agent (30-49% → Ask First, ≥50% → reject); 16-item validation passes (all REQUIRED + RECOMMENDED ≥80%); SKILL.md < 500 lines / 5000 tokens with 3-7 references; `description:` carries **negative triggers** ("Don't use when…"); CAPABILITIES_SUMMARY + COLLABORATION_PATTERNS + explicit INPUT/OUTPUT partners + AUTORUN + Nexus Hub Mode all present.
+- `improve`: Read `review-loop.md` for Health Score. ANALYZE → SCORE → PRIORITIZE → VALIDATE workflow. **VERIFY**: Health Score computed **before and after**; validation re-passes post-change; changes to Boundaries / CAPABILITIES / Principles / Framework (Level C) gated on human approval; no new overlap introduced; the improved skill stays under the size ceiling.
+- `compress`: Token-budget analysis before changes. Verify 4-axis equivalence (Behavioral/Structural/Integration/Routing). Confirm if reduction > 20%. **VERIFY**: token-budget analysis done before any edit; 4-axis equivalence verified (Behavioral + Structural + Integration + Routing all preserved); section-by-section analysis (no uniform or lossy compression); > 20% reduction confirmed with the user; reversible compression preferred over speculative.
+- `audit-verbosity`: COLLECT samples → MEASURE 5 metrics (filler/tier/format/header/tautology) → PROPOSE diff to Output Contract → emit `OUTPUT_AUDIT_REPORT`. Refuse if zero samples; never grade on speculation. **VERIFY**: refuses outright if zero real runtime samples (never grades on speculation); all 5 metrics measured (filler / tier / format / header / tautology); a concrete diff to the Output Contract proposed; `OUTPUT_AUDIT_REPORT` emitted.
+- `evolve`: Architect self-modification only. Strictly enforce Safety Level A/B/C/D. Rollback snapshot is mandatory. **VERIFY**: scope is Architect self-modification only; a rollback snapshot is taken **before** any mutation (auto-rollback on VERIFY failure); Safety Level A/B/C/D enforced (Level C → human approval, Level D → forbidden); change budget (20 lines/session, 50/month) not exceeded without approval; outcome persisted to `.agents/architect.md`.
+

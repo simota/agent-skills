@@ -424,3 +424,18 @@ Shipping an external DSL in 2026 without a language server or formatter is a non
 - [ ] For external DSL: formatter + LSP + syntax highlighter budgeted
 - [ ] Anti-pattern check (not Turing-complete, not stringly-typed, no host-stack leakage)
 - [ ] Three realistic example programs exist and read naturally
+
+
+## Six Architectures (SKILL.md excerpt)
+
+Six architectures (full catalogue in `reference/dsl-design.md`):
+
+1. **Fluent API (builder pattern)** — SQL query builders (Kysely, Drizzle), test DSLs (Jest `expect().toBe()`). Discoverable via IDE; method-chain types can get deep.
+2. **Template literal DSL** — `styled-components`, `gql` (graphql-tag), GROQ, Prisma — tagged-template parsing; host-language syntax highlighting support varies.
+3. **S-expression embedded** — Lisp/Clojure/Racket/hy — homoiconic; macros are first-class; steep onboarding.
+4. **YAML/JSON-based** — Kubernetes, CircleCI, GitHub Actions — schema-validated, tool-friendly; logic is awkward (ternaries, templates).
+5. **Ruby-style internal DSL** — blocks + `method_missing` — Sinatra routes, RSpec `describe`/`it`; magical.
+6. **Kotlin DSL** — trailing-lambda, infix functions, type-safe builders — Gradle Kotlin DSL, Jetpack Compose.
+
+Design principles: closed vocabulary, composition over primitives, errors reference DSL lexicon (not host-language stack traces), explicit version field for evolution.
+
