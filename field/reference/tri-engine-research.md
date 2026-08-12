@@ -257,3 +257,19 @@ The three subagents return JSON; Field main context handles NORMALIZE through PR
 - `field/reference/survey-quantitative-design.md` — applied at SYNTHESIZE for survey-method clusters
 - `field/reference/continuous-discovery-mixed-methods.md` — applied at SYNTHESIZE for Combined-Plan triangulation logic
 - `_common/OPUS_5_AUTHORING.md` — spawn prompt sizing, parallel-fan-out triggers
+
+
+## Field-Specific Contracts (SKILL.md excerpt)
+
+**Field-specific contracts** (full algorithm, JSON schema, coverage matrix, GROUND checklist, subagent prompts → `reference/tri-engine-research.md`):
+
+- Spawn subagents `research-codex`, `research-agy`, `research-claude` in a single message. Run PREFLIGHT in main context only (subagent PATH is narrower).
+- Loose prompts only (Role + Target + Output format). Do NOT pass methodology templates, sample-size formulas, SUS/UEQ rubrics, screener archetypes, or JTBD scaffolds — framework rules apply at SYNTHESIZE, not FAN-OUT.
+- CLUSTER rule: same research question + different methodology = separate clusters. Merging methodologies destroys divergence signal.
+- Scoring: `UNIVERSAL` (3/3, standard/defensible), `LIKELY` (2/3, often triangulation partner), `VERIFIED-DIVERGENT` (1/3 after ethics/IRB/feasibility/inclusion/hallucination grounding — not auto-low-value).
+- Coverage matrix: plot survivors on qual/quant × generative/evaluative grid. Heavy skew is a finding, reported in PRESENT.
+- GROUND checks (mandatory pre-ship): sample-size feasibility vs timeline/budget, ethics coverage for sensitive populations, inclusion floor (no WEIRD-only without justification), hallucinated personas/prior-studies, BEST-framework AI-moderation/synthetic disclosure, statistical power (qual <5 or quant <30 → under-powered flag).
+- Merge: `Combined Plan` (default; triangulation graph dense — clusters cover ≥2 matrix cells with shared question) → `docs/research/PLAN-[topic]-[date].md` sequencing generative → evaluative → confirmatory. `Portfolio` (when stances/questions diverge) → `docs/research/PORTFOLIO-[topic]-[date].md` ordered UNIVERSAL → LIKELY → VERIFIED-DIVERGENT with "run first" recommendation.
+- Mandatory engine-attribution tag on every shipped design: `[codex+agy+claude]` / `[codex+claude]` etc. Append `[NEEDS-IRB]` or `[NEEDS-INFO:<dim>]` when grounding passes with caveats.
+- Degraded modes: 1 engine down → continue with 2; 2 down → single-engine + stricter grounding; all down → standard Recipe fallback.
+

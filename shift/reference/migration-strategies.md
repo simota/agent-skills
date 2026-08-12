@@ -227,3 +227,17 @@ Replace everything at once. Use only when scope is small and well-understood.
 5. Cut over reads to new service
 6. Cut over writes to new service
 7. Remove monolith code + old DB tables
+
+
+## Agent Teams Aptitude (SKILL.md excerpt)
+
+Shift meets all three subagent criteria — use **Pattern D: Specialist Team** (2-3 workers) for large migrations:
+
+| Worker | Ownership | Task |
+|--------|-----------|------|
+| `codemod-writer` | `codemods/**`, `transforms/**` | Generate and test codemod scripts |
+| `migration-verifier` | `tests/migration/**` | Write before/after behavioral equivalence tests |
+| `db-migrator` (optional) | `migrations/**` | Schema expand-contract scripts when DB migration is in scope |
+
+Spawn when: migration touches ≥3 independent subsystems (e.g., API + DB + frontend) and codemod generation, test creation, and schema work can proceed in parallel. Do not spawn for single-module upgrades (<50 files).
+

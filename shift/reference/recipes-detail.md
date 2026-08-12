@@ -48,3 +48,19 @@ Swap library with modern native API (Temporal > moment/date-fns, structuredClone
 ## `radar` (absorbed from horizon)
 
 Evaluate emerging technologies against maturity matrix before any recommendation — require ≥ 6 months post-stable-release, ≥ 1K GitHub stars or equivalent ecosystem signal, active maintenance (commits within last 90 days), and team learning-curve realism. Produce technology radar (adopt / trial / assess / hold rings) with browser/runtime compatibility matrix and supply-chain provenance check (npm provenance attestations, `npm audit signatures`, pnpm `trustPolicy: no-downgrade`, OIDC Trusted Publishing posture, release cooldown ≥ 72h for new versions / ≥ 60d for new packages per CIS Supply Chain Security Benchmark). Output is advisory — Magi makes the organizational decision; deep supply-chain forensics (worm campaigns, IoC matching) belong to cull/chain.
+
+
+## Per-Recipe Behavior (SKILL.md excerpt)
+
+Behavior notes per Recipe (full detail → `reference/recipes-detail.md`):
+- `plan`: Default. Strategy selection + scope + risk matrix when migration type is undecided or architectural.
+- `codemod`: AST transform authoring (ast-grep/jssg cross-language, jscodeshift/ts-morph JS/TS, LibCST Python); always dry-run; semantic verification belongs to `verify`.
+- `strangler`: Strangler Fig design — façade routing, coexistence boundaries, sequence; guard against façade-bottleneck and technical-layer decomposition.
+- `verify`: Before/after behavioral-equivalence proof (golden fixtures, replay, diff classification); gate before removing compat layers in `COMPLETE`.
+- `framework`: Framework major-version migration with feature-parity checklist, compat shim, dual-run, deprecation triage; consumes `detect` findings. Per-framework codemod commands (React 19, Next.js 16, Svelte 5, Spring Boot 4) in reference.
+- `lang`: Language/runtime migration with incremental type-inference and runtime-behavior-diff; hand off crypto/TLS diffs to Sentinel.
+- `deprecate`: API sunset orchestration; Void decides *whether*, `deprecate` runs *how*; Launch owns release/CHANGELOG. Use when removed surface has external/cross-team callers.
+- `detect` (absorbed from horizon): Identify deprecated/outdated/unmaintained libraries + replacement report + migration path; discovers only, downstream Recipes execute.
+- `modernize` (absorbed from horizon): Swap library with native API; quantify bundle/caniuse/P99 gates; isolated PoC, not core rewrite; hand off deep version diffs to `lang`.
+- `radar` (absorbed from horizon): Evaluate emerging tech against maturity matrix + provenance check; advisory only, Magi decides, forensics to cull/chain.
+

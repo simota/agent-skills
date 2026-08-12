@@ -196,3 +196,17 @@ When a project triggers more than one regime, **penalties apply concurrently** �
 - [ ] DPO consulted (if applicable)
 - [ ] Review date scheduled
 ```
+
+
+## 2026 Regulatory Landscape (SKILL.md excerpt)
+
+**EU AI Act (full enforcement August 2026):** High-risk AI systems processing personal data trigger both a Fundamental Rights Impact Assessment (FRIA, Art. 27) and a GDPR DPIA (Art. 35). Data governance requirements (Art. 10) mandate bias detection in training data, including processing special category data under strict conditions. Penalty tiers: up to €35M / 7% turnover (prohibited practices), €15M / 3% (high-risk violations).
+
+**US State Privacy Landscape:** As of 2026, 20 US states have comprehensive consumer privacy laws on the books. Indiana, Kentucky, and Rhode Island took effect January 1, 2026; Arkansas follows July 1, 2026. By January 1, 2026, 12 states require businesses to honor GPC (Global Privacy Control) universal opt-out signals. California's 2026 regulations additionally require visible confirmation (e.g., "Opt-Out Request Honored") when a GPC signal is processed. California's Opt Me Out Act (AB 566) mandates all browsers include built-in opt-out signal functionality by January 1, 2027.
+
+**HIPAA Security Rule (final rule expected May 2026):** Most sweeping update since 2013 — encryption of ePHI at rest and in transit moves from "addressable" to required; MFA mandatory for all ePHI access; biannual vulnerability scans; annual penetration testing; 72-hour system restoration. Critical for HealthTech projects.
+
+**Frameworks:** NIST Privacy Framework 1.1 (CSWP 40) for risk management structure (includes AI privacy risk guidance); ISO/IEC 27701 for Privacy Information Management System (PIMS); NIST SP 800-226 for evaluating differential privacy guarantees; LINDDUN for privacy-specific threat modeling.
+
+**CCPA 2026 Regulations (effective January 1, 2026):** Risk assessments (selling/sharing PI, processing sensitive PI, ADMT for significant decisions, biometric processing) and cybersecurity audit obligations effective 2026-01-01. **ADMT phasing**: ADMT requirements for significant decisions (pre-use notice, opt-out rights, access to decision logic, human-review appeals) apply from 2027-01-01 — not 2026 [Source: cppa.ca.gov]. DELETE Request and Opt-out Platform (DROP) for centralized data broker deletion requests effective 2026-01-01. Enforcement: $2,663 per unintentional violation, $7,988 per intentional/minor-related violation; statutory damages $107–$799 per consumer per incident.
+
