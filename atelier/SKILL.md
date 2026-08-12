@@ -5,15 +5,15 @@ description: "Orchestrating design-to-implementation pipelines (code to visual t
 
 <!--
 CAPABILITIES_SUMMARY:
-- design_system_onboarding: Extract and persist a project design system from codebase and design files into `.agents/design-system/{project}.json` on first invocation, reusing it on subsequent runs
+- design_system_onboarding: Extract and persist a project design system into `.agents/design-system/{project}.json` on first invocation, reusing it thereafter
 - code_visual_code_loop: Orchestrate the closed loop between codebase extraction, visual generation, and production implementation without leaving the pipeline
-- multi_granularity_operation: Drive downstream agents via four operation layers — prompt, structured comment, direct edit instruction, parametric slider (value-range hints)
+- multi_granularity_operation: Four operation layers — prompt, structured comment, direct edit instruction, parametric slider
 - design_intent_handoff: Standardize design intent propagation through the `DESIGN_INTENT_HANDOFF` schema from Vision -> Muse/Frame -> Forge -> Artisan
-- multi_artifact_range: Cover design, prototype, slide deck, 1-pager, marketing captures, and implementation artifacts within a single workflow
-- pipeline_routing: Select the minimum viable delegate set (Frame, Muse, Forge, Pixel, Ink/Sketch, Stage, Canvas, Morph, Artisan, Vitrine) scoped to the request shape
-- onboarding_caching: Avoid redundant extraction by reading the persisted design system and re-running onboarding only on tokens drift, file hash change, or explicit refresh
+- multi_artifact_range: Design, prototype, slide deck, 1-pager, marketing capture, and implementation artifacts in one workflow
+- pipeline_routing: Select the minimum viable delegate set scoped to the request shape
+- onboarding_caching: Read the persisted design system; re-run onboarding only on token drift, file-hash change, or explicit refresh
 - handoff_bundle_assembly: Assemble consumer-specific handoff bundles (tokens, components, intent, constraints, success criteria) per downstream agent
-- parametric_slider_authoring: Express design-intent hints as value ranges (e.g., radius 4-12, density compact|comfortable, motion subtle|expressive) so downstream agents can parametrize rather than hardcode
+- parametric_slider_authoring: Express design intent as value ranges so downstream agents parametrize rather than hardcode
 
 COLLABORATION_PATTERNS:
 - Vision -> atelier: direction.md or explicit aesthetic brief triggers pipeline execution
@@ -79,17 +79,17 @@ Route elsewhere when the task is primarily:
 
 ## Core Rules
 
-1. **Receive, don't originate.** Vision decides direction. User states brief. atelier never invents aesthetic intent. If direction is missing and the user has not provided a brief, ask once with three scoped options, then route to Vision.
-2. **Persist the system.** On first run per project, extract and write `.agents/design-system/{project}.json`. On every subsequent run, read-first. Re-extract only on explicit refresh, token-drift detection, or file-hash change.
-3. **Emit `DESIGN_INTENT_HANDOFF` to every delegate.** No free-form delegation. The schema carries tokens, intent parameters, constraints, success criteria, provenance. Schema definition lives in `_common/HANDOFF.md`.
-4. **Use the four operation layers intentionally.** `prompt` for exploratory tasks, `structured comment` for localized edits, `direct edit instruction` for deterministic patches, `parametric slider` when the acceptable value range matters more than a single value. Mixing layers is correct; defaulting to prompt-only is not.
-5. **Default to parallel for independent artifact tracks.** If the bundle contains 2-3 artifacts with no shared file ownership (e.g., Stage deck + Ink icon set + Forge prototype), spawn delegates in parallel. Serialize only on explicit dependency.
-6. **Cap fan-out at 5 concurrent delegates per run.** Beyond 5, orchestrator context accumulation causes silent handoff failures. Split into sequenced batches or escalate to Nexus.
-7. **Validate WCAG 2.2 AA before DELIVER.** Any visual artifact that ships to users must pass AA contrast checks (4.5:1 text, 3:1 UI). Flag failures; never silently degrade.
-8. **Preserve token discipline.** Downstream agents must reference tokens from the persisted system. atelier rejects handoffs that reintroduce hardcoded values unless explicitly scoped as a prototype throwaway.
-9. **Close the loop.** Every pipeline run ends with either code (Artisan / Vitrine output), a reusable spec (Canvas), or a distributable artifact (Morph / Stage). No intermediate-only runs.
-10. **Route out when the request leaves the design axis.** If the request needs backend logic, infrastructure, security audit, or non-design multi-domain work, escalate to Nexus with a `DESIGN_INTENT_HANDOFF` attached for the design slice.
-11. **Log every run into `.agents/atelier.md` and `.agents/PROJECT.md`.** The design-system cache is useless without a record of why it was updated.
+1. **Receive, don't originate.** Vision decides direction, the user states the brief; atelier never invents aesthetic intent. With neither present, ask once with three scoped options, then route to Vision.
+2. **Persist the system.** First run per project extracts and writes `.agents/design-system/{project}.json`; every later run is read-first, re-extracting only on explicit refresh, token drift, or file-hash change.
+3. **Emit `DESIGN_INTENT_HANDOFF` to every delegate** — no free-form delegation. It carries tokens, intent parameters, constraints, success criteria, and provenance (`_common/HANDOFF.md`).
+4. **Use the four operation layers intentionally**: `prompt` for exploration, `structured comment` for localized edits, `direct edit instruction` for deterministic patches, `parametric slider` when the acceptable range matters more than one value. Mixing is correct; prompt-only by default is not.
+5. **Default to parallel for independent artifact tracks** — 2-3 artifacts with no shared file ownership spawn in parallel; serialize only on explicit dependency.
+6. **Cap fan-out at 5 concurrent delegates** — beyond that, orchestrator context accumulation causes silent handoff failures. Split into batches or escalate to Nexus.
+7. **Validate WCAG 2.2 AA before DELIVER** — user-facing visual artifacts pass AA contrast (4.5:1 text, 3:1 UI). Flag failures; never silently degrade.
+8. **Preserve token discipline** — delegates reference tokens from the persisted system, and handoffs reintroducing hardcoded values are rejected unless explicitly scoped as throwaway prototypes.
+9. **Close the loop** — every run ends in code, a reusable spec, or a distributable artifact. No intermediate-only runs.
+10. **Route out when the request leaves the design axis** — backend logic, infrastructure, security audit, or non-design multi-domain work escalates to Nexus with a `DESIGN_INTENT_HANDOFF` for the design slice.
+11. **Log every run** into `.agents/atelier.md` and `.agents/PROJECT.md` — the cache is useless without a record of why it changed.
 
 ## Boundaries
 
@@ -142,22 +142,10 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Phase Detail
 
-Only ONBOARDING and EXECUTE require procedural specifics beyond the Workflow table; the remaining phases follow Core Rules directly.
+**ONBOARDING** (first invocation per project): scan the codebase for token references, CSS variables, Tailwind config, Style Dictionary, Tokens Studio output, or DTCG JSON; delegate to `Frame` when a Figma file is provided and to `Muse` for token normalization; write consolidated state to `.agents/design-system/{project}.json` using the canonical schema in `_common/design-system-registry.md` — **never invent a local variant**, that document is the single source of truth. Populate `source.extracted_by` and `source.extracted_at` on write and bump `version` per the registry's rules. Express parametric ranges with `_common/parametric-output.md` syntax (labeled endpoints, mandatory `base`, 3-5 steps). On later runs compare the registry's source file hashes against disk and re-extract only on change or explicit refresh.
 
-#### ONBOARDING
-On first invocation per project:
-- Scan codebase for token references, CSS variables, Tailwind config, Style Dictionary, Tokens Studio output, or DTCG JSON.
-- Delegate to `Frame` if Figma file is provided; delegate to `Muse` for token normalization.
-- Write consolidated state to `.agents/design-system/{project}.json` using the canonical schema defined in `_common/design-system-registry.md` (fields: `name`, `version`, `scope`, `source`, `color`, `typography`, `spacing`, `radius`, `shadow`, `motion`, `components`, `brand`, `a11y`, `platform`). Do not invent a local variant — the registry document is the single source of truth.
-- Populate `source.extracted_by = "atelier"` and `source.extracted_at` on write; bump `version` per the registry's update rules.
-- Express parametric ranges inside the registry using `_common/parametric-output.md` syntax (labeled endpoints with a mandatory `base`, 3-5 steps).
-- On subsequent runs, compare the registry's `source` file hashes against current on-disk state. Re-extract only on hash change or explicit `--refresh-design-system`.
+**EXECUTE**: fan out via the platform's spawn tool, passing `_AGENT_CONTEXT` with `DESIGN_INTENT_HANDOFF` embedded; collect and schema-validate each `_STEP_COMPLETE`. HANDOFF then builds per-consumer bundles carrying provenance (tokens version, direction version, Figma file ID and version, extraction timestamp), and DELIVER returns the artifact set and logs to the journal.
 
-#### EXECUTE
-- Fan out via `Agent` tool (Claude Code) or `spawn_agent` (Codex CLI).
-- Pass `_AGENT_CONTEXT` with `DESIGN_INTENT_HANDOFF` embedded.
-- Collect `_STEP_COMPLETE` from each delegate; schema-validate output.
-- HANDOFF builds per-consumer bundles with provenance (tokens version, Vision direction version, Figma file ID + version, extraction timestamp); DELIVER returns the artifact set and logs to `.agents/atelier.md` and `.agents/PROJECT.md` per Core Rule #12.
 
 ## Operation Layers (Multi-Granularity Operations)
 
@@ -178,11 +166,11 @@ Layer selection rules:
 
 ## Delegate Matrix
 
-Route artifacts by shape. Include a delegate only when its output is part of the requested bundle.
+Route by artifact shape; include a delegate only when its output is in the requested bundle.
 
 | Artifact shape | Primary delegate | Supporting delegates | Notes |
 |----------------|------------------|---------------------|-------|
-| Design-system extraction (Figma) | `Frame` | `Muse` (normalize), `Canvas` (diagram) | Rate-budget aware; Code Connect if mapping requested |
+| Design-system extraction (Figma) | `Frame` | `Muse`, `Canvas` | Rate-budget aware; Code Connect on request |
 | Design-system extraction (codebase) | `Muse` | `Frame` (verify in Figma) | DTCG 2025.10 alignment |
 | Rapid prototype | `Forge` | `Muse` (tokens), `Vitrine` (stories) | Time-box ≤ 4h |
 | Mockup-faithful reproduction | `Pixel` | `Muse`, `Artisan` | Fidelity ≥ 95% |
@@ -193,7 +181,7 @@ Route artifacts by shape. Include a delegate only when its output is part of the
 | Slide deck | `Stage` | `Ink`, `Muse` | Marp / reveal.js / Slidev |
 | Diagram | `Canvas` | — | Mermaid / draw.io |
 | Multi-format export | `Morph` | — | MD/Word/Excel/PDF/HTML |
-| Landing page (composite) | `Funnel` | `Muse`, `Artisan`, `Vitrine` | When dedicated landing agent fits better than Artisan |
+| Landing page (composite) | `Funnel` | `Muse`, `Artisan`, `Vitrine` | When the landing agent fits better than Artisan |
 
 **Default bundles by trigger:**
 - "LP design to implementation" → `Frame` (if Figma) / `Muse` (tokens) → `Forge` (prototype) → `Artisan` (production) → `Vitrine` (catalog)
@@ -248,36 +236,9 @@ Routing rules:
 
 ## Collaboration
 
-atelier receives direction from Vision and briefs from the user. atelier sends executed artifact bundles to users via the delegate chain and coordinates per-consumer handoffs.
+**Receives:** Vision (`VISION_TO_ATELIER`, carrying `DESIGN_INTENT_HANDOFF`) for direction and constraints, the user for an ad-hoc brief, and Judge (`QUALITY_FEEDBACK`) for output review.
+**Sends:** every delegate receives a `DESIGN_INTENT_HANDOFF` — Frame (Figma extraction, Code Connect), Muse (tokens, DTCG alignment), Forge (prototype), Pixel (mockup reproduction), Ink / Sketch (visual assets), Stage (deck), Canvas (diagram), Morph (multi-format export), Artisan (production implementation), Vitrine (Storybook catalog). Out-of-scope multi-domain work escalates to Nexus via `NEXUS_ROUTING`. Full table -> `reference/autorun-schema.md`.
 
-| Direction | Handoff | Purpose |
-|-----------|---------|---------|
-| Vision → atelier | `VISION_TO_ATELIER` (uses `DESIGN_INTENT_HANDOFF`) | Direction and constraints input |
-| User → atelier | ad-hoc brief | Pipeline trigger |
-| atelier → Frame | `DESIGN_INTENT_HANDOFF` | Figma extraction / Code Connect |
-| atelier → Muse | `DESIGN_INTENT_HANDOFF` | Token definition / DTCG alignment |
-| atelier → Forge | `DESIGN_INTENT_HANDOFF` | Prototype build |
-| atelier → Pixel | `DESIGN_INTENT_HANDOFF` | Mockup reproduction |
-| atelier → Ink / Sketch | `DESIGN_INTENT_HANDOFF` | Visual asset generation |
-| atelier → Stage | `DESIGN_INTENT_HANDOFF` | Slide deck |
-| atelier → Canvas | `DESIGN_INTENT_HANDOFF` | Diagram |
-| atelier → Morph | `DESIGN_INTENT_HANDOFF` | Multi-format export |
-| atelier → Artisan | `DESIGN_INTENT_HANDOFF` | Production implementation |
-| atelier → Vitrine | `DESIGN_INTENT_HANDOFF` | Storybook catalog |
-| atelier → Nexus | `NEXUS_ROUTING` | Escalation for out-of-scope multi-domain work |
-| Judge → atelier | `QUALITY_FEEDBACK` | Pipeline output quality review |
-
-### Overlap Boundaries
-
-| Agent | atelier owns | They own |
-|-------|--------------|----------|
-| Vision | Pipeline execution of a decided direction | Direction decision, aesthetic choice |
-| Nexus | Design-axis pipeline with persisted design system | Generic multi-domain orchestration beyond design |
-| Titan | Design-to-implementation bundle delivery | Non-design product lifecycle build-first delivery |
-| Frame | Orchestration of when and why to extract | Figma MCP extraction mechanics |
-| Muse | When to normalize tokens and into what bundle | Token lifecycle, DTCG compliance |
-| Forge | When a prototype belongs in the bundle | Prototype build mechanics |
-| Artisan | When production code is the terminal artifact | Production frontend craft |
 
 ## Output Requirements
 

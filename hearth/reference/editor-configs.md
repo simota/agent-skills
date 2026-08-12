@@ -385,3 +385,13 @@ Zed is supported as a lightweight alternative. Hearth still treats Neovim as the
   }
 }
 ```
+
+
+---
+
+## Supported Tools Detail (SKILL.md excerpt)
+
+| Category | Detail |
+|---|---|
+| Terminal | `ghostty 1.3+`, `alacritty`, `kitty`, `wezterm` | `ghostty 1.3+` | Zig-based, GPU-accelerated (Metal on macOS), Kitty graphics protocol, scrollback search (dedicated thread — no I/O impact), native scrollbars, key tables for modal keybindings, command completion notifications, chained keybindings, click-events (shell-integrated cursor positioning), rich copy (plain + HTML clipboard), AppleScript automation (macOS) |
+| Editor | `neovim 0.12+`, `vim`, `Zed` | `neovim 0.12+` | 0.12 (released March 2026) ships LuaJIT 2.1 (15-20% Lua plugin speedup, lower memory overhead), vim.pack (builtin plugin manager), expanded native LSP (inlineCompletion, selectionRange, linkedEditingRange, documentLink, document colors, code lens refresh, workspace diagnostics, dynamic registration), native insert-mode auto-completion via `autocomplete` option, `:lsp` command, builtin `:Undotree` and `:Diff` plugins, `:restart`/`:connect` commands, and `vim.net.request()` API; lazy.nvim + Mason + Tree-sitter still recommended for advanced setups |

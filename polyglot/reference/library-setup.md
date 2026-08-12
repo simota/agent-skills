@@ -442,3 +442,33 @@ declare module 'next-intl' {
 | i18next + react-i18next | Large ecosystem, plugins | Pages Router / Vite React |
 | react-intl (FormatJS) | ICU-heavy, strong standards | ICU-centric projects |
 | vue-i18n | Composition API, SFC i18n blocks | Vue 3 projects |
+
+
+---
+
+## Library Selection Table (SKILL.md excerpt)
+
+| Library | Framework | Best For |
+|---------|-----------|----------|
+| i18next + react-i18next | React | Large React apps, rich ecosystem, plugin extensibility |
+| next-intl | Next.js App Router | RSC-native, locale routing, server-side translations without prop drilling |
+| next-i18next v16 | Next.js (App + Pages) | Unified App/Pages Router support; `getT()` for Server Components, `useT()` for Client Components |
+| react-intl (FormatJS) | React | ICU-heavy projects, MF2-ready via `@formatjs/intl` |
+| vue-i18n v11 | Vue 3 | Vue Composition API (requires `@intlify/unplugin-vue-i18n` with `icu: true` for ICU parsing). v11 removed Legacy API `tc`/`$tc`/`v-t` deprecation — Composition API only for new projects |
+| LinguiJS v4.10+ | React (incl. RSC) | Lightweight, macro-based extraction, small bundle (~5 kB); RSC support via per-request cache |
+| iOS String Catalogs (`.xcstrings`) | Swift / SwiftUI (Xcode 15+) | Default for new iOS 17+ projects; JSON-backed, supports CLDR plural categories natively, auto-extracted from `String(localized:)` / `LocalizedStringKey`; replaces legacy `Localizable.strings` + `.stringsdict` pairs |
+| Android `strings.xml` + `plurals.xml` + `LocaleConfig` | Kotlin / Jetpack Compose | Resource-based localization with `stringResource()` / `pluralStringResource()`; `LocaleConfig` (`res/xml/locales_config.xml`) enables per-app language preferences in system Settings (Android 13+ / API 33+) |
+| `xliff` / `xlf` exchange | iOS / Android cross-TMS | Standard interchange via `xcodebuild -exportLocalizations` (iOS) and Android Studio Translations Editor export; route into Lokalise / Crowdin / Phrase / Smartling |
+
+
+## Per-Recipe Behavior Notes (SKILL.md excerpt)
+
+- **extract** (default): SCAN → EXTRACT → VERIFY → PRESENT; hardcoded strings become `t()` calls with semantic nested keys; load `library-setup.md`.
+- **intl**: Intl API integration for dates, currencies, numbers, relative time, durations, and segmentation; load `intl-api-patterns.md`.
+- **keys**: Namespace design and key naming; load `icu-message-format.md`.
+- **rtl**: CSS logical properties, bidi isolation, `dir` attribute wiring; load `rtl-support.md`.
+- **pluralize**: CLDR plural-rule implementation, ICU `plural` / `selectordinal` branch authoring per locale (Arabic 6 / Polish 4 / English 2 / Japanese 1 forms), fallback strategy, and branch-coverage testing; load `pluralize-cldr-rules.md`. For source-language copy authoring use Prose; for framework-specific translation hooks (`t()` call sites, `<Plural>` components) use Artisan; for spec-level L10n requirements use Accord.
+- **locale**: BCP 47 parsing and canonicalization, `Accept-Language` negotiation, fallback chain design (`zh-Hant-HK → zh-Hant → zh → default`), user-override persistence (cookie / user record), geolocation-inferred defaults vs explicit user choice; load `locale-negotiation.md`. For source-language copy use Prose; for framework middleware / RSC locale wiring use Artisan; for supported-locale SLA and spec requirements use Accord.
+- **translate**: TMS integration (Lokalise / Crowdin / Phrase / Smartling), translation-memory reuse strategy, source-string change detection, translator briefing (description / max length / screenshots), QA gates (placeholder parity, HTML tag integrity, ICU syntax, coverage), and release workflow; load `translate-tms-workflow.md`. For source copy authoring use Prose; for extractor output format wiring use Artisan; for locale-coverage SLA use Accord.
+- **mobile**: iOS / Android native i18n. iOS: extract Swift `String(localized:)` / `LocalizedStringKey` / `Text("...")` into `.xcstrings` (Xcode 15+ default for new iOS 17+ projects, supports CLDR plural categories natively); migrate legacy `Localizable.strings` + `.stringsdict` to a single String Catalog. Android: extract Kotlin / Compose `stringResource(R.string.*)` and `pluralStringResource()` into `res/values/strings.xml` + `res/values/plurals.xml` + `res/values/arrays.xml`; wire `LocaleConfig` (`res/xml/locales_config.xml`, Android 13+ / API 33+) for per-app language preferences in system Settings. Use xliff exchange (`xcodebuild -exportLocalizations` on iOS; Android Studio Translations Editor / `xliff-tools` on Android) to feed Lokalise / Crowdin / Phrase / Smartling. Return translated resources to `Native` for build integration via `NATIVE_TO_POLYGLOT_HANDOFF` / `POLYGLOT_TO_NATIVE_HANDOFF`. For React Native / Flutter / Kotlin Multiplatform / Compose Multiplatform: out of scope for this skill (per Native's contract); use the relevant cross-platform i18n library through `Builder` / `Artisan` instead.
+

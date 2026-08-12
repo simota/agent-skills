@@ -274,3 +274,32 @@ Need machine-specific configs?
     ├── Yes -> GNU Stow
     └── No -> Manual symlinks or bare Git
 ```
+
+
+---
+
+## Output Routing Table (SKILL.md excerpt)
+
+| Signal | Approach | Primary output | Read next |
+|--------|----------|----------------|-----------|
+| `zsh`, `bash`, `fish`, `shell`, `aliases` | Shell configuration | Shell config files | `reference/shell-configs.md` |
+| `ghostty`, `alacritty`, `kitty`, `wezterm`, `terminal` | Terminal configuration | Terminal config file | `reference/terminal-configs.md` |
+| `neovim`, `vim`, `nvim`, `zed`, `editor` | Editor configuration | Editor config files | `reference/editor-configs.md` |
+| `tmux`, `starship`, `powerlevel10k`, `prompt` | Multiplexer/prompt setup | tmux.conf or starship.toml | `reference/tmux-starship.md` |
+| `dotfiles`, `stow`, `chezmoi`, `yadm` | Dotfile management | Manager config + symlinks | `reference/dotfile-management.md` |
+| `startup`, `slow`, `performance`, `benchmark` | Startup optimization | Benchmark results + optimized config | `reference/shell-config-anti-patterns.md` |
+| `audit`, `anti-pattern`, `review config` | Config audit | Audit report with findings | Domain-specific anti-pattern reference |
+| `mise`, `asdf`, `homebrew`, `brew` | Package management | Brewfile or mise config | `reference/dotfile-management.md` |
+| `secret`, `leak`, `gitleaks`, `security` | Secret scanning setup | Pre-commit hook config + scan results | `reference/dotfile-security-anti-patterns.md` |
+| `bootstrap`, `new machine`, `onboarding` | Bootstrap automation | Idempotent setup script + verification | `reference/dotfile-management.md` |
+| `applescript`, `jxa`, `osascript`, `apple events`, `mac automation`, `finder`, `system events` | macOS app automation | Runnable script + TCC permission setup | `reference/applescript-patterns.md` |
+| `ui scripting`, `gui scripting`, `accessibility`, `no dictionary` | UI scripting fallback | System Events-based script | `reference/ui-scripting.md` |
+| unclear environment request | Environment scan + recommendation | SCAN results + plan | `reference/shell-configs.md` |
+
+Routing rules:
+
+- If the request mentions shell or startup time, read `reference/shell-configs.md`.
+- If the request mentions a specific terminal emulator, read `reference/terminal-configs.md`.
+- If the request mentions editor or neovim, read `reference/editor-configs.md`.
+- If the request mentions audit or anti-patterns, read the relevant anti-pattern reference.
+- Always run SCAN phase before making changes.
