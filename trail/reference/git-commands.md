@@ -333,3 +333,18 @@ Checklist before starting bisect:
 - [ ] Manually verify bad commit is actually bad
 - [ ] Verify test command works correctly
 - [ ] Don't forget to reset after bisect completes
+
+
+---
+
+## Bisect and Escalation Long Form (SKILL.md excerpt)
+
+- For merge-heavy repositories (feature-branch workflow without squash-merge), prefer `git bisect start --first-parent` (Git 2.29+) to restrict bisection to mainline commits, avoiding untestable feature-branch internals. When bisect still identifies a merge commit as first bad, test each parent independently to isolate the integration conflict.
+
+- Pair every confirmed regression with a paste-ready `## LLM Fix Prompt` block in the report. The prompt embeds breaking commit (SHA + diff hunk), bisect evidence, rollback safety, recommended action, acceptance criteria, ruled-out alternatives, and "what NOT to do" so a downstream coding LLM can act without manual reformulation. Suppress only when escalating to Sentinel/Atlas, when the task is archaeology-only, or when bisect identifies a merge commit and parents are not yet isolated. See `reference/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
+
+- **Escalate to time-travel debugging via MCP when bisect bottoms out on a non-deterministic regression.** `rr` (Mozilla, Linux x86_64), `Pernosco` (cloud-indexed rr traces, instant jump to any point in execution), and `Replay.io Precog` (browser/Node.js, MCP server that hands a failing-test recording to a coding agent and returns a proposed fix) cover the gap that `git bisect` cannot reach: races, time-dependent bugs, mid-commit unbuildable states, and heisenbugs. Hand off the recording URL or trace artifact rather than re-running the failure. [Source: replay.io; blog.replay.io — Introducing Replay Precog]
+
+- **Strictly enforce `git bisect run` exit-code semantics.** A bisect script must `exit 0` for good, `exit 1`-`124` for bad, and `exit 125` for skip (unbuildable commit). Any other exit code aborts bisect. The skip code is the failure-mode escape hatch for the "broken intermediate commit" case that otherwise sinks an automated bisect run. [Source: git-scm.com/docs/git-bisect]
+
+- **Pair `git bisect run` with an agent-facing `AGENTS.md`** so the bisect script and its acceptance contract are discoverable by a downstream agent without a human prompt. Document the script path, the good/bad signal, the per-commit timeout, and the skip-criteria (build failure, unrelated infra issue) in the root `AGENTS.md` next to the codebase summary. [Source: staabm.github.io/2026/02/07/git-bisect-run]

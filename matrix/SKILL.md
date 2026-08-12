@@ -65,20 +65,17 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Parse axes, values, constraints, priorities, and budget.
-- Expand the full space before optimizing it.
-- Select the smallest set that preserves the requested coverage guarantee.
-- Apply the NIST interaction rule: 93% of real-world faults are triggered by ≤ 2-way interactions, 98% by ≤ 3-way, nearly 100% by ≤ 6-way (Kuhn, Wallace & Gallo 2004; NASA/NIST empirical data across distributed systems, medical devices, browser, and server applications). Use this to justify strength selection.
-- Target 20x–700x test suite reduction vs. exhaustive while maintaining t-way 100% coverage (NIST benchmark range).
-- Explain the chosen method and any uncovered tuples caused by budget or constraints.
-- Warn when constraint exclusion rate exceeds 30% of the parameter space — over-constraining eliminates valuable test combinations and creates hidden coverage gaps.
-- For mixed-strength plans, apply risk-based strength assignment: safety/security-critical parameter subsets at 3-way+, business logic at 2-way, UI/cosmetic at 1-way.
-- For AI/ML dataset coverage, use data frequency coverage — not just tuple presence — to detect training data skew. Simple combinatorial coverage misses imbalanced feature interaction frequencies that degrade model performance (Kuhn, Raunak & Kacker, IEEE Computer Mar 2025, "Measuring and Visualizing Dataset Coverage for Machine Learning"; NIST CSRC Apr 2025, "Data Frequency Coverage Impact on AI Performance").
-- For highly configurable systems requiring 3-way+ coverage, apply scalable CCAG algorithms (e.g., ScalableCA from ISSTA 2024) that deliver 3-wise arrays 38.9% smaller than prior SOTA with 1–2 orders of magnitude faster construction — making high-strength CIT practical for large parameter models (ICSE 2025: "Towards High-Strength CIT for Highly Configurable Software Systems").
-- When applying combinatorial security testing, reference the decade of field evidence: CST has expanded from input validation to cloud, IoT, and firmware surfaces; the 2026 "Combinatorial Security Testing—10 Years Later" review (Simos et al., IEEE Security & Privacy) updates deployment guidance.
-- When parameter modeling is expensive or incomplete, AI-assisted parameter extraction (e.g., Hexawise AI Guidance / Sembi iQ, 2025) can draft parameter/value models from specification documents, accelerating the PARSE phase without replacing engineer review. Treat AI-generated models as first-draft; validate constraints before optimizing.
-- Hand off a plan another agent can execute immediately.
-- Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`). Keep code, IDs, YAML, JSON, and agent names in English.
+- Parse axes, values, constraints, priorities, and budget; expand the full space before optimizing it, then select the smallest set preserving the requested coverage guarantee.
+- Apply the **interaction rule** to justify strength: roughly 93% of real-world faults are triggered by `<=2`-way interactions, 98% by `<=3`-way, and nearly 100% by `<=6`-way.
+- Target a 20x-700x suite reduction versus exhaustive while holding 100% t-way coverage.
+- Explain the chosen method and any tuples left uncovered by budget or constraints.
+- Warn when constraint exclusion exceeds 30% of the parameter space — over-constraining creates hidden coverage gaps.
+- Mixed-strength plans assign strength by risk: safety/security-critical subsets at `3`-way+, business logic at `2`-way, UI/cosmetic at `1`-way.
+- For AI/ML dataset coverage use **data frequency coverage**, not just tuple presence — simple combinatorial coverage misses imbalanced feature-interaction frequencies that degrade model performance.
+- For highly configurable systems needing `3`-way+, use scalable CCAG algorithms — they make high-strength CIT practical on large parameter models.
+- AI-assisted parameter extraction can draft parameter/value models from specifications to accelerate PARSE, but treat output as a first draft and validate constraints before optimizing. Sources -> `reference/fault-interaction-statistics.md`.
+- Hand off a plan directly executable by another agent.
+- Output language follows the CLI global config; code, IDs, YAML, JSON, and agent names stay English.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Matrix; P2, P1 recommended).
 
 ## Boundaries
@@ -194,15 +191,18 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`combine` = Combination Control). Apply normal PARSE → EXPAND → OPTIMIZE → PLAN workflow.
 
-Behavior notes per Recipe:
-- `combine`: End-to-end combination explosion control workflow. Parse axes/values/constraints and generate the minimum coverage set.
-- `cover`: Focus on selecting the optimization algorithm (pairwise / OA / high-strength 3-way+).
-- `plan`: Generate an execution plan (priority, assigned agents) from the coverage set. Emphasize PLAN phase.
-- `prioritize`: Focus on Critical/High/Medium/Low prioritization and bias detection.
-- `pairwise`: Apply IPOG / IPOG-F algorithm (NIST ACTS) or Orthogonal Array Testing (OATS) to produce the smallest 2-way 100%-covering test set. Output: test-case table + uncovered 3-way tuple list + reduction ratio. Hand off to Radar (unit/integration), Voyager (E2E), or Siege (load). Use `cover` instead when the user wants a general n-wise selection without the IPOG-specific method rationale.
-- `equiv-class`: Partition input domain into equivalence classes (valid/invalid), derive representative test cases, and add boundary value analysis (BVA) with ON/OFF/IN/OUT points for each class boundary. Emit one-defect-per-case negative test rule (never mask defects by combining invalid values). Use when axes are primarily *input ranges* rather than enumerated values. Hand off to Radar (unit), Builder (input validator), Probe (negative security cases).
-- `qa-scenario`: Manual QA scenario authoring for human testers and regulated-domain audits. Compose techniques: BVA (boundaries), equivalence class (input domain), decision table (rule combinations), state transition (workflow), exploratory charter (time-boxed discovery). Output: numbered procedures (Preconditions → Steps → Expected Results → Postconditions) + traceability matrix (test ID ↔ AC/PRD ID) + regression suite seed. Hand off to Voyager (E2E automation) and Radar (unit coverage) for the automated layers.
-- `risk-cover`: Compute Risk Priority Number (RPN = Severity × Occurrence × Detection) per combination, weight coverage priority by RPN, and align with FMEA findings. Classify into Action Priority (AP) H/M/L per AIAG-VDA. Emit risk-sorted coverage set plus a residual-risk report for uncovered combinations. Consumes omen FMEA output when available. Hand off to omen (depth analysis), Sentinel (security RPN), Siege (load-risk combinations).
+Per-Recipe behavior — full technique lists and handoffs -> `reference/domain-patterns.md`.
+
+| Subcommand | Behavior |
+|-----------|----------|
+| `combine` | End-to-end explosion control — parse axes/values/constraints, generate the minimum coverage set |
+| `cover` | Select the optimization algorithm (pairwise / OA / high-strength `3`-way+) |
+| `plan` | Turn the coverage set into an execution plan with priority and assigned agents |
+| `prioritize` | Critical/High/Medium/Low prioritization with bias detection |
+| `pairwise` | IPOG / IPOG-F or Orthogonal Array Testing for the smallest 2-way 100%-covering set. Output: test table + uncovered 3-way tuples + reduction ratio. Use `cover` instead for general n-wise selection without the IPOG rationale |
+| `equiv-class` | Partition the input domain into valid/invalid classes with BVA ON/OFF/IN/OUT points. **One defect per negative case** — never mask defects by combining invalid values. Use when axes are input ranges rather than enumerations |
+| `qa-scenario` | Manual QA scenarios for human testers and regulated audits — BVA, equivalence class, decision table, state transition, exploratory charter. Output: numbered procedures, traceability matrix, regression suite seed |
+
 
 ## Output Routing
 
@@ -253,22 +253,25 @@ When results are already available (Remap mode), also include:
 
 ## Reference Map
 
-- Read [quickstart.md](~/.claude/skills/matrix/reference/quickstart.md) when you need a fast starter template for test, deploy, or risk planning.
-- Read [input-schema.md](~/.claude/skills/matrix/reference/input-schema.md) when the input arrives as natural language, YAML, JSON, or a table.
-- Read [combination-methods.md](~/.claude/skills/matrix/reference/combination-methods.md) when you need the method definitions, formulas, or default reduction guidance.
-- Read [optimization-algorithms.md](~/.claude/skills/matrix/reference/optimization-algorithms.md) when you must choose between pairwise, OA, higher-strength, or budgeted optimization.
-- Read [domain-patterns.md](~/.claude/skills/matrix/reference/domain-patterns.md) when you need domain-specific axes, constraints, scoring, or downstream routing.
-- Read [output-templates.md](~/.claude/skills/matrix/reference/output-templates.md) when you need the canonical plan or coverage-report shapes.
-- Read [combinatorial-anti-patterns.md](~/.claude/skills/matrix/reference/combinatorial-anti-patterns.md) when parameter modeling or constraints look suspicious.
-- Read [fault-interaction-statistics.md](~/.claude/skills/matrix/reference/fault-interaction-statistics.md) when choosing `2-way` vs `3-way+` or mixed strength.
-- Read [prioritization-pitfalls.md](~/.claude/skills/matrix/reference/prioritization-pitfalls.md) when the ranking looks biased or everything is becoming critical.
-- Read [coverage-measurement.md](~/.claude/skills/matrix/reference/coverage-measurement.md) when mapping execution results back into coverage gaps.
-- Read [autorun-schema.md](~/.claude/skills/matrix/reference/autorun-schema.md) when you are emitting the AUTORUN `_STEP_COMPLETE` block — Matrix-specific Output/Next schema.
-- Read [pairwise-ipog.md](~/.claude/skills/matrix/reference/pairwise-ipog.md) when you need the IPOG/IPOG-F algorithm walk-through, OATS selection rubric, or pairwise vs n-wise trade-offs.
-- Read [equiv-class-bva.md](~/.claude/skills/matrix/reference/equiv-class-bva.md) when axes are input ranges (integers, strings, continuous values) and you need equivalence partitioning + BVA + one-defect-per-negative-case discipline.
-- Read [risk-weighted-coverage.md](~/.claude/skills/matrix/reference/risk-weighted-coverage.md) when prioritizing combinations by RPN / Action Priority or integrating with FMEA output from omen.
-- Read [\_common/OPUS_5_AUTHORING.md](~/.claude/skills/_common/OPUS_5_AUTHORING.md) when you are sizing the combinatorial plan, deciding adaptive thinking depth at t-way strength, or front-loading domain/axes/target at SCAN. Critical for Matrix: P3, P5.
-- Read [\_common/PROOF_CARRYING.md](~/.claude/skills/_common/PROOF_CARRYING.md) when generating pairwise / orthogonal-array story sets for `vrt_proof` in `nexus acceptance` Phase 2B per PD-2 Matrix Sampling Policy. Default to 2-way coverage; full N-way reserved for Tier-S critical paths. Target story count ≤ 5,000 per build; "Approve all" actions on >10 diffs forbidden at tool level (G5).
+| Reference | Read this when |
+|-----------|----------------|
+| `reference/quickstart.md` | A fast starter template for test, deploy, or risk planning. |
+| `reference/input-schema.md` | Input arrives as natural language, YAML, JSON, or a table. |
+| `reference/combination-methods.md` | Method definitions, formulas, default reduction guidance. |
+| `reference/optimization-algorithms.md` | Choosing between pairwise, OA, higher-strength, or budgeted optimization. |
+| `reference/domain-patterns.md` | Domain-specific axes, constraints, scoring, downstream routing. |
+| `reference/output-templates.md` | Canonical plan or coverage-report shapes. |
+| `reference/combinatorial-anti-patterns.md` | Parameter modeling or constraints look suspicious. |
+| `reference/fault-interaction-statistics.md` | Choosing `2-way` vs `3-way+` or mixed strength. |
+| `reference/prioritization-pitfalls.md` | Ranking looks biased, or everything is becoming critical. |
+| `reference/coverage-measurement.md` | Mapping execution results back into coverage gaps. |
+| `reference/pairwise-ipog.md` | IPOG/IPOG-F walk-through, OATS selection rubric, pairwise vs n-wise trade-offs. |
+| `reference/equiv-class-bva.md` | Axes are input ranges — equivalence partitioning, BVA, one-defect-per-negative-case discipline. |
+| `reference/risk-weighted-coverage.md` | Prioritizing by RPN / Action Priority or integrating FMEA output from omen. |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Matrix-specific Output/Next schema. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the plan, thinking depth at t-way strength, front-loading domain/axes at SCAN. Critical: P3, P5. |
+| `_common/PROOF_CARRYING.md` | Generating pairwise / orthogonal-array story sets for `vrt_proof` in `acceptance` Phase 2B. Default 2-way; full N-way only for Tier-S paths; story count `<=5,000` per build; bulk-approve over 10 diffs forbidden. |
+
 
 ## Operational
 

@@ -196,3 +196,18 @@ Use `custom` when none of the built-in domains fit. In that case:
 - preserve the generic matrix model
 - do not invent a downstream specialist
 - ask only if domain ambiguity changes the outcome materially
+
+
+---
+
+## Per-Recipe Behavior Notes (SKILL.md excerpt)
+
+- `combine`: End-to-end combination explosion control workflow. Parse axes/values/constraints and generate the minimum coverage set.
+- `cover`: Focus on selecting the optimization algorithm (pairwise / OA / high-strength 3-way+).
+- `plan`: Generate an execution plan (priority, assigned agents) from the coverage set. Emphasize PLAN phase.
+- `prioritize`: Focus on Critical/High/Medium/Low prioritization and bias detection.
+- `pairwise`: Apply IPOG / IPOG-F algorithm (NIST ACTS) or Orthogonal Array Testing (OATS) to produce the smallest 2-way 100%-covering test set. Output: test-case table + uncovered 3-way tuple list + reduction ratio. Hand off to Radar (unit/integration), Voyager (E2E), or Siege (load). Use `cover` instead when the user wants a general n-wise selection without the IPOG-specific method rationale.
+- `equiv-class`: Partition input domain into equivalence classes (valid/invalid), derive representative test cases, and add boundary value analysis (BVA) with ON/OFF/IN/OUT points for each class boundary. Emit one-defect-per-case negative test rule (never mask defects by combining invalid values). Use when axes are primarily *input ranges* rather than enumerated values. Hand off to Radar (unit), Builder (input validator), Probe (negative security cases).
+- `qa-scenario`: Manual QA scenario authoring for human testers and regulated-domain audits. Compose techniques: BVA (boundaries), equivalence class (input domain), decision table (rule combinations), state transition (workflow), exploratory charter (time-boxed discovery). Output: numbered procedures (Preconditions → Steps → Expected Results → Postconditions) + traceability matrix (test ID ↔ AC/PRD ID) + regression suite seed. Hand off to Voyager (E2E automation) and Radar (unit coverage) for the automated layers.
+- `risk-cover`: Compute Risk Priority Number (RPN = Severity × Occurrence × Detection) per combination, weight coverage priority by RPN, and align with FMEA findings. Classify into Action Priority (AP) H/M/L per AIAG-VDA. Emit risk-sorted coverage set plus a residual-risk report for uncovered combinations. Consumes omen FMEA output when available. Hand off to omen (depth analysis), Sentinel (security RPN), Siege (load-risk combinations).
+

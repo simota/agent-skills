@@ -59,24 +59,17 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Start with explicit success criteria and an environment scope.
-- Tie every finding to metrics, thresholds, contracts, or observed failure behavior.
-- Prefer the project's existing test stack unless a new framework is clearly justified — k6 v1.0+ (native TypeScript, extension framework) is the default recommendation for load testing new projects. When an OpenAPI spec exists, use k6's built-in OpenAPI converter to auto-generate typed test scaffolding before manual scenario authoring.
-- For contract testing, prefer Pact (v4+ supports GraphQL contracts, improved async messaging, bi-directional verification via PactFlow); use Specmatic for OpenAPI-first provider-driven contracts.
-- Keep blast radius minimal and cleanup explicit.
-- Automate chaos experiments in CI for continuous validation — manual one-off experiments decay; automated continuous chaos catches regressions before production (principlesofchaos.org).
-- Deliver reports, scripts, plans, and thresholds. Do not leave injected failure active.
-- Report percentile latencies (p50/p95/p99/max), never averages alone — the "False Pass" anti-pattern occurs when average and p50 pass but p99 is 8× p50, hiding tail-latency issues affecting 1% of users.
-- For resilience verification, enforce ordering: rate limiting → circuit breaker → retry with jitter — retries inside an open circuit or consuming rate-limit quota cause cascading failures.
+- Start with explicit success criteria and an environment scope; tie every finding to metrics, thresholds, contracts, or observed failure behavior.
+- Prefer the project's existing test stack unless a new framework is clearly justified. Where an OpenAPI spec exists, auto-generate typed scaffolding from it before authoring scenarios by hand.
+- For contract testing prefer Pact (GraphQL contracts, async messaging, bi-directional verification); use a spec-first tool for OpenAPI provider-driven contracts.
+- Keep blast radius minimal, cleanup explicit.
+- Automate chaos experiments in CI — manual one-off experiments decay, while continuous chaos catches regressions before production.
+- Deliver reports, scripts, plans, and thresholds; never leave injected failure active.
+- Report percentile latencies (p50/p95/p99/max), **never averages alone** — the False Pass anti-pattern is a passing average and p50 hiding a p99 many times worse.
+- Enforce resilience ordering: rate limiting -> circuit breaker -> retry with jitter. Retries inside an open circuit, or consuming rate-limit quota, cause cascading failures.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Siege; P2, P1 recommended).
-- **Default to k6 v1.0 with TypeScript-native execution** for new load tests. v1.0 GA removed the `xk6-ts` requirement, executes `.ts` scripts directly, integrated browser load testing, and reports ~70% lower CPU vs v0.x. Recommend k6 v1.0 over Gatling / Artillery for greenfield unless a specific feature is missing (e.g. Gatling Java DSL). [Source: grafana.com/docs/k6/latest/using-k6/javascript-typescript-compatibility-mode/; infoq.com — Grafana k6 Releases]
-- **Use Schemathesis for stateful API fuzz** driven by OpenAPI/GraphQL specs. Property-based generation explores state transitions automatically; published benchmarks show 1.4-4.5× more defects than peer tools. Pair with Pact-style consumer-driven contract tests — Schemathesis covers spec-vs-implementation, Pact covers consumer-vs-provider. [Source: schemathesis.io; apideck.com/blog/openapi-testing]
-- **Adopt trace-based testing (Tracetest) for distributed assertions.** Tracetest asserts on individual OpenTelemetry spans, not just the HTTP response — proving that the auth service was called once, the cache was hit, the DB query took under N ms. Combine with Playwright for UI→trace assertions. The right tool when "the response was 200" hides a broken internal call. [Source: tracetest.io; oneuptime.com/blog/post/2026-02-06-tracetest-playwright-browser-testing/view]
-- **Production traffic replay (GoReplay, Speedscale) as a load source.** Passively record production HTTP/gRPC, replay against staging with PII auto-scrubbing (Speedscale, Gartner-listed). Replay-derived load profiles capture edge cases and skew that synthetic generators miss; recommend for any service whose load shape is hard to model. [Source: goreplay.org/shadow-testing; speedscale.com/blog/definitive-guide-to-traffic-replay]
-- **LitmusChaos MCP Server for chaos via natural language.** A Claude-compatible MCP client can launch and observe chaos experiments by name. Add to the chaos-tool selection table alongside AWS FIS / Gremlin / Steadybit when the host is an MCP-capable agent. [Source: litmuschaos.io/blog — Making Chaos Engineering Accessible: Introducing the LitmusChaos MCP Server; cncf.io/blog/2026/01/22 — LitmusChaos Q4 2025 Update]
-- **PactFlow HaloAI / AI-augmented contract test maintenance.** Generates and maintains Pact contracts from OpenAPI specs and observed traffic; reports ~60% time reduction for contract upkeep vs hand-written. Recommend on consumer-driven contract programmes where the maintenance burden is the bottleneck. [Source: pactflow.io/ai/]
-- **MSW v2 as the contract-mock standard for frontend.** Standard Fetch API handlers (`http.get` / `http.post` returning `Response`) make the mock the same shape as the contract under test; lets the same handler power Vitest unit tests, Cypress CT, and Storybook visual regression. Replace legacy `nock`/`fetch-mock` references with MSW v2 when the codebase already targets the Fetch API. [Source: mswjs.io/blog/introducing-msw-2.0/]
-- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
+- **Tooling defaults**: k6 v1.0 with TypeScript-native execution for new load tests (no `xk6-ts`, integrated browser load testing). **Schemathesis** for stateful API fuzz driven by OpenAPI/GraphQL specs — it covers spec-vs-implementation while Pact covers consumer-vs-provider. **Trace-based testing** to assert on individual OpenTelemetry spans, not just the HTTP response, when "200 OK" hides a broken internal call. **Production traffic replay** (with PII scrubbing) as a load source whenever the load shape is hard to model synthetically. **MCP-driven chaos** alongside the managed fault-injection services when the host is an MCP-capable agent. **AI-augmented contract maintenance** where Pact upkeep is the bottleneck. **MSW v2** as the frontend contract-mock standard, so one handler powers unit tests, component tests, and visual regression. Rationale and sources -> `reference/test-strategy-2026.md`.
+- Apply `_common/CODE_QUALITY.md` to every code change — seven axes (SLD/SEC/RDB/MNT/TST/PRF/SCL), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ## Boundaries
 
@@ -173,15 +166,19 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`load` = Load Test). Apply normal DEFINE → PREPARE → EXECUTE → ANALYZE → REPORT workflow.
 
-Behavior notes per Recipe:
-- `load`: Select LOAD mode. Verify throughput, latency, capacity, spike, and soak with k6/Locust/Artillery. Always report p50/p95/p99/max.
-- `contract`: Select CONTRACT mode. Verify consumer/provider contracts with Pact v4+ or Specmatic. Integrate into the CI gate.
-- `chaos`: Select CHAOS mode. Define steady state first, minimize blast radius, then inject faults. Always prepare a kill switch.
-- `mutation`: Select MUTATE mode. Generate mutants → classify survivors → evaluate coverage thresholds (60% project-wide / 75%+ recommended).
-- `fuzz`: Coverage-guided fuzzing of parsers, decoders, and security-sensitive surfaces with AFL++/libFuzzer/go-fuzz/cargo-fuzz/Jazzer. Always pair with a sanitizer (ASan+UBSan default), seed from a real corpus, and minimize+dedupe crashes before reporting. For unit-test coverage gaps use Radar; for test-data factory shapes use Mint; for deeper DAST on security-critical crashes hand off to Probe/Sentinel.
-- `property`: Property-based testing of invariants (round-trip, idempotent, monotonic, model-based) with fast-check/Hypothesis/jqwik/PropEr/proptest. Compose generators from primitives (no filter-heavy strategies), cap 100-1000 runs at PR tier, commit shrunk counter-examples as regression tests. For example-based unit tests use Radar; for realistic factory data use Mint; for AC-level conformance use Attest; for byte-level parser crashes use `fuzz`.
-- `concurrency`: Hunt invisible defects — race conditions (TSan/Helgrind), memory leaks (ASan/Valgrind/MSan/heap-diff), resource leaks (file/connection/goroutine), deadlocks (lock-order analysis), atomic-ordering bugs (Rust `loom` exhaustive interleavings, Java jcstress, C++ atomics). Pair with `chaos` to induce exhaustion conditions and `property` for ordering invariants. Output: defect class + reproduction trace + minimal repro + fix recommendation to Builder. Use when symptoms are flaky-only-under-load, "works on my machine", or sporadic CI failures.
-- `smoke`: Minimum viable post-deploy gate, 8-15 checks, ≤3 min budget, serial by default, synthetic-check-capable. Emits PROMOTE/HOLD/ROLLBACK verdict tied to deploy SHA. For full user-journey E2E use Voyager; for unit coverage use Radar; for AC compliance use Attest; for SLO ownership and long-term synthetic monitoring topology use Beacon.
+Per-Recipe behavior — full tool lists and handoff detail -> `reference/test-strategy-2026.md`.
+
+| Subcommand | Behavior |
+|-----------|----------|
+| `load` | LOAD mode — throughput, latency, capacity, spike, soak. **Always report p50/p95/p99/max** |
+| `contract` | CONTRACT mode — consumer/provider contracts wired into the CI gate |
+| `chaos` | CHAOS mode — define steady state **first**, minimize blast radius, then inject faults. Always prepare a kill switch |
+| `mutation` | MUTATE mode — generate mutants, classify survivors, evaluate against coverage thresholds (60% project-wide, 75%+ recommended) |
+| `fuzz` | Coverage-guided fuzzing of parsers, decoders, security-sensitive surfaces. Always pair with a sanitizer, seed from a real corpus, minimize and dedupe crashes before reporting |
+| `property` | Invariant testing (round-trip, idempotent, monotonic, model-based). Compose generators from primitives, cap 100-1000 runs at PR tier, commit shrunk counter-examples as regression tests |
+| `concurrency` | Hunt invisible defects — races, memory and resource leaks, deadlocks, atomic-ordering bugs. Use when symptoms are flaky-only-under-load or sporadic CI failures. Output: defect class + reproduction trace + minimal repro + fix recommendation |
+| `smoke` | Minimum viable post-deploy gate — 8-15 checks, `<=3 min` budget, serial by default. Emits a PROMOTE / HOLD / ROLLBACK verdict tied to the deploy SHA |
+
 
 ## Output Routing
 

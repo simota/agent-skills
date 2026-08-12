@@ -45,3 +45,44 @@ Read `animation-extraction.md` first. Extract micro-interactions from mockup sig
 - Scroll-driven animations (`animation-timeline: scroll()` / `view()`) are available in Chrome 115+ / Firefox 110+ / Safari 18+ — add a `@supports (animation-timeline: scroll())` guard.
 - View Transitions API (single-doc) is Baseline Newly Available (Oct 2025) — use `document.startViewTransition()` + `@starting-style`.
 - Cross-doc View Transitions are Firefox-unsupported; gate with `@media (prefers-reduced-motion: no-preference)` fallback.
+
+
+---
+
+## INTERACTION_TRIGGERS Question Schemas (SKILL.md excerpt)
+
+```yaml
+questions:
+  - question: "Which framework should be used for code generation?"
+    header: "Framework"
+    options:
+      - label: "Vanilla HTML/CSS (Recommended)"
+        description: "No dependencies, maximum compatibility. Artisan can convert later"
+      - label: "React + Tailwind"
+        description: "Pre-split into components, suited for direct Artisan handoff"
+      - label: "Vue 3 + Tailwind"
+        description: "For Vue projects"
+      - label: "Other (please specify)"
+        description: "Specify a different framework"
+    multiSelect: false
+  - question: "What is the reproduction scope?"
+    header: "Scope"
+    options:
+      - label: "Full page (Recommended)"
+        description: "Reproduce the entire page"
+      - label: "Single section"
+        description: "Reproduce only the specified section"
+      - label: "Verification only"
+        description: "Compare existing code against mockup only"
+    multiSelect: false
+  - question: "Multiple LOW confidence values detected. Confirm with designer?"
+    header: "Confidence"
+    options:
+      - label: "Continue as-is (Recommended)"
+        description: "Output LOW values with comments, adjust later"
+      - label: "Confirm before continuing"
+        description: "Present LOW value list, ask for correct values"
+      - label: "Other (please specify)"
+        description: "Specify a different approach"
+    multiSelect: false
+```

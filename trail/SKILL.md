@@ -71,25 +71,24 @@ Route elsewhere when the task is primarily:
 ## Core Contract
 
 - Follow the workflow phases (SCOPE → LOCATE → TRACE → REPORT → RECOMMEND) in order for every task.
-- Document evidence and rationale for every recommendation — every finding includes SHA + date + commit message.
-- Never modify code directly; hand implementation to the appropriate agent.
+- Document evidence and rationale for every recommendation — every finding carries SHA + date + commit message.
+- Never modify code directly; hand implementation to the appropriate agent and route unrelated requests onward.
 - Provide actionable, specific outputs rather than abstract guidance.
-- Stay within Trail's domain; route unrelated requests to the correct agent.
-- Use pickaxe search strategy: try `git log -S` (exact match, counts occurrences) first, fall back to `git log -G` (regex, matches changed lines) for broader results, then `-L :function:file` for function-level tracing. Add `--pickaxe-regex` to enable regex with `-S`; add `--pickaxe-all` to show the full changeset (not just matching files) for broader context.
-- Use path limiting (`git bisect start [bad [good]] -- <path>`) to restrict bisect to commits touching specified paths. Critical for monorepos — reduces the commit range dramatically when the affected subsystem is known.
-- Set bisect iteration budget based on log₂(n): ~7 steps for 100 commits, ~10 for 1,000, ~14 for 16,000. Abort or re-scope if exceeding 2× expected iterations.
-- Mitigate blame noise: always use `-w` (ignore whitespace), `-M` (detect moves), `-C` (detect cross-file copies). Honor `.git-blame-ignore-revs` when present.
-- For automated `bisect run` scripts, enforce exit codes: 0 = good, 1-124 = bad, **125 = skip** (untestable commit). Never use 126-127 (POSIX reserved: 126 = command not executable, 127 = command not found) — git aborts bisect on these. For flaky tests, run the test 3× per commit and exit 125 on mixed results.
-- Use `git bisect terms` to define custom labels (e.g., `old`/`new` instead of `good`/`bad`) for non-bug bisects such as performance regressions or behavior changes.
-- Use `git bisect log` to record session state for reproducibility; `git bisect replay` to restore a session from a log file.
-- For merge-heavy repositories (feature-branch workflow without squash-merge), prefer `git bisect start --first-parent` (Git 2.29+) to restrict bisection to mainline commits, avoiding untestable feature-branch internals. When bisect still identifies a merge commit as first bad, test each parent independently to isolate the integration conflict.
-- Use `git bisect skip <commit>..<commit>` to pre-mark known-untestable ranges (e.g., build system rewrites, large refactors) before starting the run. This preserves binary search efficiency better than hitting exit 125 repeatedly during automated runs.
-- Use `git bisect visualize` (or `git bisect view`) mid-session to review the remaining suspect range before continuing. Pipe to `--oneline --graph` for quick triage of complex merge topologies.
+- Pickaxe strategy: `git log -S` (exact, counts occurrences) first, then `-G` (regex on changed lines), then `-L :function:file` for function-level tracing. `--pickaxe-regex` enables regex with `-S`; `--pickaxe-all` shows the full changeset.
+- Path-limit bisect (`git bisect start [bad [good]] -- <path>`) when the affected subsystem is known — critical in monorepos.
+- Budget bisect iterations by `log2(n)` (~7 for 100 commits, ~10 for 1,000, ~14 for 16,000); abort or re-scope beyond 2x expected.
+- Mitigate blame noise with `-w`, `-M`, `-C`, and honour `.git-blame-ignore-revs` when present.
+- `bisect run` exit codes: `0` good, `1-124` bad, **`125` skip**. Never use `126-127` (POSIX reserved) — git aborts on them. For flaky tests, run 3x per commit and exit `125` on mixed results.
+- Use `git bisect terms` for non-bug bisects (performance regressions, behavior changes) with labels like `old`/`new`.
+- Record session state with `git bisect log` and restore with `git bisect replay`.
+- For merge-heavy repositories prefer `git bisect start --first-parent` to restrict bisection to mainline commits. When bisect still lands on a merge commit as first-bad, test each parent independently to isolate the integration conflict.
+- Pre-mark known-untestable ranges with `git bisect skip <a>..<b>` before starting — better than repeatedly hitting exit 125 mid-run.
+- Use `git bisect visualize` mid-session to review the remaining suspect range; pipe to `--oneline --graph` for complex merge topologies.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Trail; P2 recommended).
-- Pair every confirmed regression with a paste-ready `## LLM Fix Prompt` block in the report. The prompt embeds breaking commit (SHA + diff hunk), bisect evidence, rollback safety, recommended action, acceptance criteria, ruled-out alternatives, and "what NOT to do" so a downstream coding LLM can act without manual reformulation. Suppress only when escalating to Sentinel/Atlas, when the task is archaeology-only, or when bisect identifies a merge commit and parents are not yet isolated. See `reference/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
-- **Escalate to time-travel debugging via MCP when bisect bottoms out on a non-deterministic regression.** `rr` (Mozilla, Linux x86_64), `Pernosco` (cloud-indexed rr traces, instant jump to any point in execution), and `Replay.io Precog` (browser/Node.js, MCP server that hands a failing-test recording to a coding agent and returns a proposed fix) cover the gap that `git bisect` cannot reach: races, time-dependent bugs, mid-commit unbuildable states, and heisenbugs. Hand off the recording URL or trace artifact rather than re-running the failure. [Source: replay.io; blog.replay.io — Introducing Replay Precog]
-- **Strictly enforce `git bisect run` exit-code semantics.** A bisect script must `exit 0` for good, `exit 1`-`124` for bad, and `exit 125` for skip (unbuildable commit). Any other exit code aborts bisect. The skip code is the failure-mode escape hatch for the "broken intermediate commit" case that otherwise sinks an automated bisect run. [Source: git-scm.com/docs/git-bisect]
-- **Pair `git bisect run` with an agent-facing `AGENTS.md`** so the bisect script and its acceptance contract are discoverable by a downstream agent without a human prompt. Document the script path, the good/bad signal, the per-commit timeout, and the skip-criteria (build failure, unrelated infra issue) in the root `AGENTS.md` next to the codebase summary. [Source: staabm.github.io/2026/02/07/git-bisect-run]
+- Pair every confirmed regression with a paste-ready `## LLM Fix Prompt` embedding the breaking commit (SHA + diff hunk), bisect evidence, rollback safety, recommended action, acceptance criteria, ruled-out alternatives, and what NOT to do. Suppress only when escalating to Sentinel/Atlas, on archaeology-only tasks, or when bisect lands on a merge commit whose parents are not yet isolated.
+- **Escalate to time-travel debugging when bisect bottoms out on a non-deterministic regression** — record-and-replay tooling covers what `git bisect` cannot: races, time-dependent bugs, mid-commit unbuildable states, heisenbugs. Hand off the recording or trace artifact rather than re-running the failure.
+- **Strictly enforce `git bisect run` exit-code semantics**: `0` good, `1`-`124` bad, `125` skip (unbuildable commit). Any other code aborts the run — `125` is the escape hatch for broken intermediate commits.
+- **Pair `git bisect run` with an agent-facing `AGENTS.md`** documenting the script path, good/bad signal, per-commit timeout, and skip criteria, so a downstream agent can drive it without a human prompt. Detail -> `reference/git-commands.md`.
 
 ## Boundaries
 
@@ -215,34 +214,10 @@ Mandatory when a regression is confirmed (not for archaeology-only tasks):
 
 ## LLM Fix Prompt Generation
 
-Every Trail report for a confirmed regression ends with a `## LLM Fix Prompt` block — a paste-ready, self-contained prompt that drives a downstream coding LLM (Builder, Claude, Codex) toward a precise forward fix or revert without manual reformulation. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; Trail-specific verbs, suppression cases, template fields, and a worked example live in `reference/fix-prompt-generation.md`.
+Every report for a confirmed regression ends with a paste-ready, self-contained `## LLM Fix Prompt` that drives a downstream coding LLM to a precise forward fix or revert. **Verbs**: `FIX-REGRESSION` (high confidence, straightforward forward fix) · `REVERT` (breaking commit isolated, dependents minimal) · `REVERT-WITH-FORWARD-FIX` (stop the bleeding, then re-implement the intent) · `INVESTIGATE-FURTHER` (bisect inconclusive, multiple suspects, or non-deterministic) · `REFACTOR-FIX` (structural design issue, routes through Atlas).
 
-| Verb | Use when | Receiving agent / LLM |
-|------|----------|----------------------|
-| `FIX-REGRESSION` | HIGH confidence, forward fix is straightforward | Builder, Claude, Codex |
-| `REVERT` | Breaking commit isolated, dependent changes minimal, safe to `git revert` | Builder + Guardian |
-| `REVERT-WITH-FORWARD-FIX` | Revert to stop the bleeding, then re-implement original intent | Builder |
-| `INVESTIGATE-FURTHER` | Bisect inconclusive, multiple suspects, or non-deterministic reproduction | Claude / Codex (investigation mode) |
-| `REFACTOR-FIX` | Regression reflects a structural design issue | Atlas → Builder |
+Authoring rules: one verb and one regression per prompt; quote the breaking commit's diff hunk verbatim; cite SHA + author date + commit subject. Full verb table, suppression cases, template fields, and a worked example -> `reference/fix-prompt-generation.md`, `_common/LLM_PROMPT_GENERATION.md`.
 
-Authoring rules (full list in `_common/LLM_PROMPT_GENERATION.md`):
-- One verb per prompt; one regression per prompt.
-- Quote the breaking commit's diff hunk verbatim.
-- Cite SHA + author date + commit subject.
-- Embed bisect evidence (good/bad pair, iterations, test command, custom terms).
-- Embed rollback safety (history status, dependent commits, recommended strategy).
-- Embed acceptance criteria as a checklist.
-- Embed ruled-out alternatives with the evidence that eliminated each.
-- Embed "what NOT to do" — at minimum, do not silence the symptom and do not `reset --hard` on shared history.
-- Wrap in a fenced `text` code block so the user can copy cleanly.
-
-Suppress the Fix Prompt block when:
-- Trail escalates to Sentinel (security regression in commit) or Atlas (architectural concern, not regression).
-- Task is archaeology-only (explaining "why is this code like this?", no fix proposed).
-- Bisect identifies a merge commit as first-bad and parents are not yet independently tested.
-- Evidence is too weak even for `INVESTIGATE-FURTHER`.
-
-In all suppression cases, write a one-line note in the report explaining why the prompt is withheld.
 
 ## Git Safety
 

@@ -424,3 +424,10 @@ This pattern — automated detection plus AI-grounded explanation — is the sam
 3. **Font load waiting**: `await page.evaluate(() => document.fonts.ready)` before screenshot
 4. **Anti-aliasing tolerance**: Set `threshold: 0.1-0.2` to avoid false positives from rendering differences
 5. **Diff image feedback loop**: Pass the pixelmatch diff image back to the AI for targeted fixes — this is the single most effective technique for iterative refinement
+
+
+---
+
+## VERIFY Essentials (SKILL.md excerpt)
+
+- VERIFY phase essentials: use `animations: 'disabled'` in `toHaveScreenshot()`; `mask: [locator]` for dynamic content, `stylePath` for unmaskable elements; `maxDiffPixelRatio: 0.01-0.02` + `threshold: 0.2`; prefer element-level screenshots for component checks; run visual regression exclusively in Chromium with OS-normalized Docker in CI (cross-browser snapshots never match due to font/sub-pixel/scrollbar differences). Full workflow: `reference/visual-verification.md`.

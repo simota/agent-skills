@@ -585,3 +585,17 @@ EXTRACT完了時に以下を必ず生成:
 1. **Design Spec Sheet** (YAML形式)
 2. **CSS Variables file** (`:root { ... }`)
 3. **Extraction confidence summary** (HIGH: N個, MEDIUM: N個, LOW: N個)
+
+
+---
+
+## System Summary (SKILL.md excerpt)
+
+Read `reference/precision-spec.md` for the complete system. Core concept:
+
+1. **Design Spec Sheet**: YAML catalog of every extracted value (colors, typography, spacing, borders, shadows, layout)
+2. **7 Properties per element**: font-size, font-weight, color, line-height, margin, padding, background
+3. **CSS Variable System**: All values become CSS custom properties (primitive → semantic → component layers) — zero magic numbers in code
+4. **Per-Property Verification**: Each value is individually checked against mockup during VERIFY
+5. **Variable-Only Fixes**: REFINE phase modifies `:root` variables only — one fix propagates everywhere
+

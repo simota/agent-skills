@@ -229,3 +229,38 @@ Constraints:
 ````
 
 This prompt is self-contained: a coding LLM can act on it without seeing the rest of the Trail report.
+
+
+---
+
+## SKILL.md Excerpt
+
+Every Trail report for a confirmed regression ends with a `## LLM Fix Prompt` block — a paste-ready, self-contained prompt that drives a downstream coding LLM (Builder, Claude, Codex) toward a precise forward fix or revert without manual reformulation. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; Trail-specific verbs, suppression cases, template fields, and a worked example live in `reference/fix-prompt-generation.md`.
+
+| Verb | Use when | Receiving agent / LLM |
+|------|----------|----------------------|
+| `FIX-REGRESSION` | HIGH confidence, forward fix is straightforward | Builder, Claude, Codex |
+| `REVERT` | Breaking commit isolated, dependent changes minimal, safe to `git revert` | Builder + Guardian |
+| `REVERT-WITH-FORWARD-FIX` | Revert to stop the bleeding, then re-implement original intent | Builder |
+| `INVESTIGATE-FURTHER` | Bisect inconclusive, multiple suspects, or non-deterministic reproduction | Claude / Codex (investigation mode) |
+| `REFACTOR-FIX` | Regression reflects a structural design issue | Atlas → Builder |
+
+Authoring rules (full list in `_common/LLM_PROMPT_GENERATION.md`):
+- One verb per prompt; one regression per prompt.
+- Quote the breaking commit's diff hunk verbatim.
+- Cite SHA + author date + commit subject.
+- Embed bisect evidence (good/bad pair, iterations, test command, custom terms).
+- Embed rollback safety (history status, dependent commits, recommended strategy).
+- Embed acceptance criteria as a checklist.
+- Embed ruled-out alternatives with the evidence that eliminated each.
+- Embed "what NOT to do" — at minimum, do not silence the symptom and do not `reset --hard` on shared history.
+- Wrap in a fenced `text` code block so the user can copy cleanly.
+
+Suppress the Fix Prompt block when:
+- Trail escalates to Sentinel (security regression in commit) or Atlas (architectural concern, not regression).
+- Task is archaeology-only (explaining "why is this code like this?", no fix proposed).
+- Bisect identifies a merge commit as first-bad and parents are not yet independently tested.
+- Evidence is too weak even for `INVESTIGATE-FURTHER`.
+
+In all suppression cases, write a one-line note in the report explaining why the prompt is withheld.
+

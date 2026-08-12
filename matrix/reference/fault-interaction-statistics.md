@@ -98,3 +98,18 @@ Source: https://www.nist.gov/publications/combinatorial-testing-metrics-machine-
 
 NIST CSRC Apr 2025, *"Data Frequency Coverage Impact on AI Performance"* — pilot study shows: (1) performance may increase or decrease with data skew; (2) feature importance methods do not predict skew impact; (3) adding more data does not reliably mitigate skew effects. Use combinatorial frequency coverage, not raw dataset size, as the quality gate for ML training sets.
 Source: https://csrc.nist.gov/pubs/conference/2025/04/15/data-frequency-coverage-impact-on-ai-performance/final
+
+
+---
+
+## Core Contract Long Form (SKILL.md excerpt)
+
+- Apply the NIST interaction rule: 93% of real-world faults are triggered by ≤ 2-way interactions, 98% by ≤ 3-way, nearly 100% by ≤ 6-way (Kuhn, Wallace & Gallo 2004; NASA/NIST empirical data across distributed systems, medical devices, browser, and server applications). Use this to justify strength selection.
+
+- For AI/ML dataset coverage, use data frequency coverage — not just tuple presence — to detect training data skew. Simple combinatorial coverage misses imbalanced feature interaction frequencies that degrade model performance (Kuhn, Raunak & Kacker, IEEE Computer Mar 2025, "Measuring and Visualizing Dataset Coverage for Machine Learning"; NIST CSRC Apr 2025, "Data Frequency Coverage Impact on AI Performance").
+
+- For highly configurable systems requiring 3-way+ coverage, apply scalable CCAG algorithms (e.g., ScalableCA from ISSTA 2024) that deliver 3-wise arrays 38.9% smaller than prior SOTA with 1–2 orders of magnitude faster construction — making high-strength CIT practical for large parameter models (ICSE 2025: "Towards High-Strength CIT for Highly Configurable Software Systems").
+
+- When applying combinatorial security testing, reference the decade of field evidence: CST has expanded from input validation to cloud, IoT, and firmware surfaces; the 2026 "Combinatorial Security Testing—10 Years Later" review (Simos et al., IEEE Security & Privacy) updates deployment guidance.
+
+- When parameter modeling is expensive or incomplete, AI-assisted parameter extraction (e.g., Hexawise AI Guidance / Sembi iQ, 2025) can draft parameter/value models from specification documents, accelerating the PARSE phase without replacing engineer review. Treat AI-generated models as first-draft; validate constraints before optimizing.

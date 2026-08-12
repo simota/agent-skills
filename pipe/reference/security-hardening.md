@@ -178,3 +178,14 @@ Operational guidance:
 - OIDC is preferred over long-lived cloud secrets; `audience` is pinned to a target-specific value
 - artifact attestations are generated for release artifacts and verified at consumption (`gh attestation verify`)
 - Scorecard, secret scanning, and provenance are enabled where appropriate
+
+
+---
+
+## Supply-Chain Rules Long Form (SKILL.md excerpt)
+
+- **OIDC audience pinning**: restrict `id-token` audience to the deployment target's expected value (`audience: <cloud-or-registry-specific>`), and verify the audience server-side. Generic audiences are the foothold repeatedly exploited by Mini Shai-Hulud-class attacks (e.g. the SAP CAP npm compromise, April 2026) — full incident/IOC detail in `reference/security-hardening.md`.
+
+- **Shai-Hulud 3.0 "The Golden Path"** now invokes Bun via `bun_installer.js` during `npm install`. Treat any unexpected `bun` runtime invocation during install as a high-signal IOC; gate self-hosted runners' egress and audit `npm pkg get scripts.preinstall scripts.postinstall` for every direct dep on bootstrap — full incident detail in `reference/security-hardening.md`.
+
+- **Forbid preinstall/postinstall in CI installs** by default: pin `npm config set ignore-scripts true` (or `pnpm install --ignore-scripts` / `yarn install --ignore-scripts`) for the install step; allowlist trusted packages explicitly via pnpm's `pnpm.allowBuilds` or equivalent. This blocks Remote Dynamic Dependencies (RDD) attacks (PhantomRaven waves — see `reference/security-hardening.md`), where an HTTP URL outside the registry is declared as a dependency and fetched/executed at install.

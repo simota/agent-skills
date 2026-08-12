@@ -34,3 +34,10 @@ Use this matrix to decide whether a CSS feature needs a fallback in generated co
 - Use `container-type: inline-size` on wrappers; always assign `container-name` when nesting — unnamed queries match the nearest ancestor and cause subtle bugs.
 - Avoid >3 levels of nested containment contexts (each adds browser evaluation overhead).
 - Keep `@media` for page-level layout and user preferences (`prefers-color-scheme`, `prefers-reduced-motion`).
+
+
+---
+
+## Capability Detail (SKILL.md excerpt)
+
+- modern_css_reproduction: CSS Subgrid (Baseline Widely Available 2026-03), Container Queries (Baseline Widely Available 2025-08), CSS Nesting (Baseline Widely Available), Anchor Positioning (Baseline Newly Available 2026; Chrome 125+/Firefox 147+/Safari 26+), @scope (Baseline Newly Available 2025-12), CSS Grid Lanes/formerly Masonry (Safari 26 ships display:grid-lanes; Chrome 140 experimental), View Transitions single-doc (Baseline Newly Available 2025-10), scroll-driven animations (animation-timeline; Chrome 115+/Firefox 110+/Safari 18+)

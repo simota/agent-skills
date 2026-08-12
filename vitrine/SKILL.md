@@ -80,22 +80,20 @@ Route elsewhere when the task is primarily:
 - Never modify code directly; hand implementation to the appropriate agent.
 - Provide actionable, specific outputs rather than abstract guidance.
 - Stay within Vitrine's domain; route unrelated requests to the correct agent.
-- Target ≥80% component story coverage (variants × states × interactions); 100% coverage is an anti-goal — focus on high-signal states over exhaustive enumeration.
+- Target `>=80%` component story coverage (variants x states x interactions); 100% is an anti-goal — prefer high-signal states over exhaustive enumeration.
 - Every interactive component must have ≥1 play function covering primary user flow.
 - Accessibility pass rate target: ≥95% of stories pass axe-core WCAG 2.2 AA rules.
 - Prefer addon-vitest over legacy test-runner for Vite-based projects (React/Vue/Svelte) — addon-vitest is faster and supersedes test-runner as of Storybook 9.
 - Design-code alignment: flag components existing in Figma/design but missing stories (target ≥90% alignment).
-- For module mocking, prefer `sb.mock` Automocking API (Storybook 9.1+) over manual MSW setup for internal module dependencies — register mocks only in `.storybook/preview.ts` (build-time resolution); `sb.mock()` does not accept a factory function as its second argument.
+- For module mocking prefer the `sb.mock` automocking API over manual MSW setup for internal dependencies — register mocks only in `.storybook/preview.ts` (build-time resolution); it takes no factory function as a second argument.
 - Leverage Storybook's built-in test coverage reports to identify untested components before manual audit.
-- For Storybook 10 projects: enforce ESM-only (no CommonJS); require Node 20.16+, 22.19+, or 24+. CSF Factories are Preview-tier for React; Vue/Angular/Web Components support expected in 10.x. CSF Factories are expected to become the default format in Storybook 11.
+- Storybook 10 projects enforce ESM-only (no CommonJS) on a modern Node baseline. CSF Factories are Preview-tier for React and expected to become the default format in the next major.
 - With CSF Factories, stories can be reused directly in test files without `composeStories` — prefer direct import over `composeStories` when the project uses CSF Factories.
 - Use the CSF Factories `.test` method to attach interaction/assertion tests inline with stories; combine with tag exclusion filtering to keep test-only stories out of the sidebar for non-technical collaborators.
-- In play functions, prefer accessible queries (`getByRole`, `getByLabelText`, `getByText`) over `data-testid` — accessible queries validate the component's accessibility contract simultaneously and align with Testing Library best practices; fall back to `data-testid` only when no semantic query is viable.
-- For AI agent integration, recommend @storybook/addon-mcp to expose component manifests via MCP server; guide manifest optimization by excluding irrelevant stories/docs via tag removal to reduce token overhead and improve agent accuracy.
+- In play functions prefer accessible queries (`getByRole`, `getByLabelText`, `getByText`) over `data-testid` — they validate the accessibility contract at the same time; fall back only when no semantic query is viable.
+- For AI agent integration, expose component manifests via the MCP addon and trim the manifest by tag-excluding irrelevant stories and docs to cut token overhead.
 - RSC stories require module mocking (`sb.mock`) to replace async server-side data fetching with controlled client-side mocks; treat RSC story support as experimental and document mock boundaries clearly.
-- For `interaction` recipe: import test utilities exclusively from `@storybook/test` (Storybook 8+ unified package) — never from deprecated `@storybook/jest` or `@storybook/testing-library`. Always `await` `userEvent` calls (v14+ is async), scope queries via `within(canvasElement)`, and prefer `findBy*`/`waitFor` over `waitForTimeout`. Use `step()` to group multi-stage flows for the Interactions panel. Stop play functions at the component boundary; cross-page flows hand off to Voyager.
-- For `mdx` recipe: start every component with Autodocs (`tags: ['autodocs']`); promote to hand-authored MDX only when narrative, multi-page guides, or custom JSX is required. Always bind via `<Meta of={meta} />`, embed stories with `<Canvas of={Story} />` (never re-define stories inline — Storybook 7+ deprecates `<Story name="...">` with JSX children), and register `'../src/**/*.mdx'` in `.storybook/main.ts`. Generate prop tables with `<ArgTypes>` rather than hand-written Markdown.
-- For `cosmos` recipe: recommend React Cosmos only for React-only projects valuing minimal config and fastest hot reload, where Chromatic / MCP / MDX / multi-framework support are not required. Coexistence with Storybook is permitted short-term but designate one tool as primary to avoid maintenance drift. Cosmos has no native play-function or VRT — wire Vitest browser-mode for interactions and Playwright VRT/Lost Pixel/Loki for visual diff.
+- **Per-recipe authoring rules** (full text -> `reference/storybook-patterns.md`): `interaction` imports test utilities exclusively from the unified `@storybook/test` package, always `await`s `userEvent`, scopes queries via `within(canvasElement)`, prefers `findBy*`/`waitFor` over timeouts, and stops play functions at the component boundary (cross-page flows go to Voyager). `mdx` starts every component on Autodocs and promotes to hand-authored MDX only for narrative or custom JSX, binding via `<Meta of={meta} />` and embedding with `<Canvas of={Story} />` — never re-defining stories inline. `cosmos` suits React-only projects wanting minimal config and fastest hot reload where Chromatic/MCP/MDX/multi-framework support are not required; designate one tool as primary to avoid drift, and wire external interaction and VRT tooling since Cosmos has neither.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Vitrine; P2, P1 recommended).
 ## Boundaries
 
@@ -192,28 +190,7 @@ See `reference/visual-regression.md` for setup, test runner config, and CI workf
 | `PRESENT` | Deliver story files, coverage report, migration notes, and next actions | Include evidence and rationale | `reference/storybook-patterns.md` |
 ## Output Routing
 
-| Signal | Approach | Primary output | Read next |
-|--------|----------|----------------|-----------|
-| `story`, `storybook`, `CSF`, `stories.tsx` | Story creation (CSF 3.0) | Story files + autodocs | `reference/storybook-patterns.md` |
-| `fixture`, `cosmos`, `fixture.tsx` | Cosmos fixture creation | Fixture files + decorators | `reference/react-cosmos-guide.md` |
-| `audit`, `coverage`, `missing stories` | Story coverage audit | Health report (reuse rate, a11y pass rate, design-code alignment) + action items | `reference/storybook-patterns.md` |
-| `visual regression`, `VRT`, `chromatic`, `screenshot`, `applitools` | Visual regression setup | Test config + CI workflow | `reference/visual-regression.md` |
-| `migrate`, `CSF 2`, `upgrade storybook`, `storybook 9`, `storybook 10`, `ESM migration` | CSF / Storybook version migration (8→9, 9→10 ESM-only) | Updated story files + addon-vitest config + ESM conversion + report | `reference/storybook-patterns.md` |
-| `metrics`, `design system health`, `reuse rate` | Design system metrics | Metrics dashboard spec (reuse rate, a11y pass, alignment) | `reference/storybook-patterns.md` |
-| `histoire`, `ladle`, `alternative` | Alternative tool setup | Tool config + story files | `reference/framework-alternatives.md` |
-| `play function`, `interaction test` | Interaction testing | Play functions + test setup | `reference/storybook-patterns.md` |
-| `portable stories`, `composeStories` | Story reuse in tests | Test files with composed stories | `reference/storybook-patterns.md` |
-| `design token`, `token docs` | Token documentation | MDX docs + token config | `reference/storybook-patterns.md` |
-| `test codegen`, `record test`, `no-code test` | Test Codegen setup | Test Codegen addon config + recorded play functions | `reference/storybook-patterns.md` |
-| `sb.mock`, `automock`, `module mock` | Module mocking with sb.mock | Mock config + story files | `reference/storybook-patterns.md` |
-| `story generation`, `generate stories from UI` | Story Generation from UI | Generated story files | `reference/storybook-patterns.md` |
-| `CSF factories`, `type-safe stories` | CSF factories migration (9.1+) | Updated story files with factories API | `reference/storybook-patterns.md` |
-| `.test method`, `inline test`, `story test` | CSF Factories `.test` attachment | Stories with `.test` + tag exclusion config | `reference/storybook-patterns.md` |
-| `tag filter`, `hide stories`, `sidebar filter` | Tag exclusion filtering | Storybook config with tag-based inclusion/exclusion | `reference/storybook-patterns.md` |
-| `mcp`, `addon-mcp`, `AI manifest`, `agent context` | MCP addon setup for AI agent integration | addon-mcp config + manifest optimization | `reference/storybook-patterns.md` |
-| `RSC`, `server component`, `react server` | RSC story creation (experimental) | Story files with module mocking for async server components | `reference/storybook-patterns.md` |
-| `git change`, `change detection`, `modified stories` | Git change detection filtering (10.3+) | Storybook config with status-value filtering | `reference/storybook-patterns.md` |
-| unclear story request | Story creation (default) | Story files + autodocs | `reference/storybook-patterns.md` |
+Map the signal to an approach — most route to `reference/storybook-patterns.md`: `story`/`storybook`/`CSF` -> story creation · `fixture`/`cosmos` -> Cosmos fixtures (`reference/react-cosmos-guide.md`) · `audit`/`coverage`/`missing stories` -> coverage health report · `visual regression`/`VRT`/`chromatic` -> VRT setup (`reference/visual-regression.md`) · `migrate`/`CSF 2`/`upgrade storybook`/`ESM migration` -> version migration · `metrics`/`design system health` -> metrics dashboard spec · `histoire`/`ladle`/`alternative` -> alternative tool setup (`reference/framework-alternatives.md`) · `play function`/`interaction test` -> play functions · `portable stories`/`composeStories` -> story reuse in tests · `design token` -> token docs · `test codegen`/`record test` -> Test Codegen · `sb.mock`/`automock` -> module mocking · `story generation` -> generated stories · `CSF factories` -> factories migration. Full table -> `reference/storybook-patterns.md`.
 
 Routing rules:
 
