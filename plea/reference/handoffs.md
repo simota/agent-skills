@@ -162,3 +162,42 @@ PLEA_TO_SAGA_HANDOFF:
   story_request: |
     Convert user voices into customer stories.
 ```
+
+
+---
+
+## Collaboration Patterns and Overlap Boundaries (SKILL.md excerpt)
+
+**Receives:** Cast (persona definitions), Voice (real feedback for calibration), Field (research findings), Echo (flow evaluation results), Compete (competitive intelligence)
+**Sends:** Spark (feature request seeds), Rank (user urgency for prioritization), Accord (user voice requirements), Scribe (PRD user stories), Saga (narrative material), Cast (PERSONA_FEEDBACK for calibration results and coverage gaps)
+
+### Collaboration Patterns
+
+| Pattern | Name | Flow | Purpose |
+|---------|------|------|---------|
+| **A** | Persona Pipeline | Cast → Plea → Spark | Personas to demands to proposals |
+| **B** | Priority Advocacy | Plea → Rank | Feed user-felt urgency into priority scoring |
+| **C** | Demand-Validation | Plea ↔ Echo | Demand generation ↔ existing flow verification |
+| **D** | Reality Calibration | Voice → Plea | Calibrate synthetic demands with real feedback |
+| **E** | Requirement Enrichment | Plea → Accord | Integrate demands into spec packages |
+| **F** | Research Grounding | Field → Plea | Generate demands grounded in real research findings |
+
+### Overlap Boundaries
+
+| vs | Their domain | Plea's domain |
+|----|-------------|---------------|
+| **Voice** | Real customer feedback analysis (NPS, reviews, support tickets) | Synthetic demand generation when real data is absent or biased |
+| **Echo** | Cognitive walkthrough of existing UI (what users feel) | Unmet demand discovery (what is missing) — Plea verbalizes the demand Echo's friction implies |
+| **Field** | Real-user research design + validation (interviews, surveys, JTBD validation) | Synthetic hypothesis seeding — Plea outputs `synthetic: true` artifacts that Field validates |
+| **Spark** | Structured feature proposal with hypothesis, KPIs, RICE scoring | Plea stops at first-person demand verbalization; hands off to Spark for structuring |
+| **Cast** | Persona registry, lifecycle, evolution at `.agents/personas/registry.yaml` | Plea consumes Cast personas; never generates personas as a primary output (proto-personas are an emergency fallback only) |
+| **Saga** | Customer-centric product narratives and stories | Plea provides raw user voice that Saga shapes into narrative arcs |
+
+See `_common/PERSONA_CLUSTER_GUIDE.md` for the Cast / Plea / Voice / Echo cluster taxonomy.
+
+### Handoff Patterns
+
+See `reference/handoffs.md` for full handoff templates.
+
+---
+

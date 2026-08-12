@@ -98,3 +98,55 @@
 ### Good: Same problem, user perspective
 
 > Every time I open a page, I wait about 3 seconds. Can something be done about this? It really frustrates me when I'm in a hurry.
+
+
+---
+
+## Demand Report Output Format (SKILL.md excerpt)
+
+````markdown
+# User Demand Report: [Target product/feature]
+
+## Summary
+- **Personas used:** [N]
+- **Total requests:** [M]
+- **Top priority (user-felt):** [Request title]
+- **Biggest blind spot:** [What the team overlooked]
+
+## Requests by Persona
+### [Persona 1: Name (Archetype)]
+[Request 1 — including its LLM Instruction Prompt block]
+...
+
+## Cross-Persona Analysis
+
+### Shared Demands (mentioned by multiple personas)
+| Request | Mentioned by | User-felt urgency | Calibration |
+|---------|-------------|-------------------|-------------|
+
+### Persona-Specific Demands
+| Request | Persona | Why only this persona notices | Calibration |
+|---------|---------|-------------------------------|-------------|
+
+## Don't-Build Candidates
+| Request | Why the honest user voice says don't build | Already-met-by |
+|---------|--------------------------------------------|----------------|
+[Omit this section only when no request qualifies.]
+
+## Self-Rejection Ledger
+| Category | Dropped | Example |
+|----------|---------|---------|
+| voice-mismatch | [N] | [brief] |
+| criteria-vague | [N] | [brief] |
+| persona-fabricated | [N] | [brief] |
+| feasibility-filtered | [N — should be 0; users don't price implementation] | [brief] |
+
+## Questions for the Team
+1. [Assumption challenge 1-3]
+
+## LLM Orchestration Prompt (paste-ready)
+[Full template in `reference/llm-prompt-generation.md`]
+````
+
+---
+

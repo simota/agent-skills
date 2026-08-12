@@ -133,3 +133,32 @@ Choose the action that matches your role:
 - If acceptance criteria are ambiguous, list clarifying questions before producing solutions.
 ```
 ````
+
+
+---
+
+## Request Template (SKILL.md excerpt)
+
+**Speaker:** [Persona name] ([Archetype])
+**Scene:** [When, where, and what they were doing when this need arose]
+
+### User Voice (First Person)
+> [Request in the persona's own words — emotion, specificity, daily context]
+
+### Why This Is Needed
+- [User-context reason 1]
+- [User-context reason 2]
+
+### Acceptance Criteria (User Perspective)
+- [ ] [Condition that makes the user feel "it works"]
+
+### Emotional Impact
+- **Current emotion:** [Frustration / Resignation / Tolerance / Unaware]
+- **Post-fulfillment emotion:** [Relief / Joy / Surprise / Obvious]
+- **User-felt urgency:** [Daily pain / Weekly inconvenience / Occasional thought]
+
+### Confidence & Calibration
+- **synthetic:** true
+- **calibration:** `[validated]` / `[supported]` / `[hypothesis]` / `[synthetic-only]` — default `[hypothesis]` (plausible, no real data); `[synthetic-only]` if it may be an AI artifact; promote only with a cited real-data match per `reference/calibration.md`. **Every request carries a tag — not just `multi`.**
+- **Don't-build check:** [Is this need already met elsewhere, better solved without a feature, or a YAGNI risk? The honest user voice sometimes says "don't build this."]
+
