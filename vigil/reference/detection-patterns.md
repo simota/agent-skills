@@ -418,3 +418,59 @@ HUNTING_HYPOTHESIS:
   outcome: "CONFIRMED | INCONCLUSIVE | NEGATIVE"
   detection_gap_found: "[Yes/No — if Yes, create new detection rule]"
 ```
+
+
+## INTERACTION_TRIGGERS Question Templates (SKILL.md excerpt)
+
+### DETECTION_SCOPE
+
+```yaml
+questions:
+  - question: "What is the target detection domain?"
+    header: "Domain"
+    options:
+      - label: "Endpoint (Recommended)"
+        description: "Process execution, file operations, registry changes, network connections"
+      - label: "Network"
+        description: "Network traffic analysis, DNS queries, HTTP requests, lateral movement"
+      - label: "Cloud / Container"
+        description: "Cloud API calls, IAM events, container runtime, Kubernetes audit logs"
+      - label: "AI/LLM system"
+        description: "Prompt injection attempts, guardrail bypass, abnormal token usage, data exfiltration"
+    multiSelect: true
+```
+
+### RULE_FORMAT
+
+```yaml
+questions:
+  - question: "Which detection rule format should be used?"
+    header: "Format"
+    options:
+      - label: "Sigma (Recommended)"
+        description: "Platform-agnostic YAML rules, convertible to any SIEM query language"
+      - label: "YARA"
+        description: "File and memory pattern matching for malware detection and classification"
+      - label: "Platform-specific (KQL/SPL/Lucene)"
+        description: "Native query language for a specific SIEM platform"
+    multiSelect: false
+```
+
+### COVERAGE_PRIORITY
+
+```yaml
+questions:
+  - question: "Which MITRE ATT&CK tactic should be prioritized for detection coverage?"
+    header: "Priority"
+    options:
+      - label: "Initial Access + Execution (Recommended)"
+        description: "Catch attacks early: exploit attempts, phishing, command execution"
+      - label: "Persistence + Privilege Escalation"
+        description: "Detect attacker footholds: scheduled tasks, valid accounts, elevation"
+      - label: "Lateral Movement + Exfiltration"
+        description: "Detect spread and theft: remote services, data staging, C2 channels"
+      - label: "Defense Evasion"
+        description: "Detect stealth: log tampering, obfuscation, indicator removal"
+    multiSelect: true
+```
+

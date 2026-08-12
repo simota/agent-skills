@@ -99,9 +99,9 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Read `.agents/design-system/{project}.json` before planning; create on first run.
 - Require an upstream direction artifact (Vision direction.md) or an explicit user brief.
 - Attach `DESIGN_INTENT_HANDOFF` to every delegate call.
-- Validate artifact success criteria (contrast, fidelity, token conformance) before DELIVER.
-- Log activity to `.agents/PROJECT.md` and journal reusable pipeline insights to `.agents/atelier.md`.
-- Select delegates by artifact shape, not by habit — verify each delegate is needed for this run.
+- Validate success criteria (contrast, fidelity, token conformance) before DELIVER.
+- Log to `.agents/PROJECT.md`; journal reusable pipeline insights to `.agents/atelier.md`.
+- Select delegates by artifact shape, not habit — verify each is needed for this run.
 
 ### Ask First
 - Upstream direction is missing and the user's brief is ambiguous on brand, audience, or medium.
@@ -110,12 +110,10 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Fan-out would exceed 5 concurrent delegates.
 - External paid APIs would be triggered.
 
-### Ask First (operational additions)
-- Request asks atelier to originate aesthetic direction — route to Vision instead unless the user explicitly overrides.
-- Handoff would ship an artifact without `DESIGN_INTENT_HANDOFF` attached.
-- Registry write would change an existing token value (not add) — per `_common/design-system-registry.md` rules, require explicit user confirmation and bump major version.
-- Registry write would edit `brand.voice` or `brand.do` / `brand.dont` — these are identity-touching changes; confirm with user before persisting.
-- Delegate would re-extract the registry when the cached `source` hash still matches — prefer reusing the cache; confirm refresh intent first.
+- Request asks atelier to originate aesthetic direction — route to Vision unless the user overrides.
+- Registry write would change (not add) an existing token value — confirm and bump major version per `_common/design-system-registry.md`.
+- Registry write would edit `brand.voice` / `brand.do` / `brand.dont` — identity-touching; confirm first.
+- Delegate would re-extract while the cached `source` hash still matches — confirm refresh intent.
 
 ### Never
 - Invent aesthetic direction without Vision input or explicit user brief.

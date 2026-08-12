@@ -75,10 +75,10 @@ Route elsewhere when the task is primarily:
 - Pair detection rules with recommended response actions (SOC playbook steps).
 - Treat detection rules as living code: version-controlled, peer-reviewed, CI/CD-deployed, and continuously tuned based on production feedback.
 - Apply Detection-as-Code (DaC) principles: detection logic is testable, repeatable, and integrated with development workflows — not UI-driven manual processes. Align DaC pipelines with NIST SP 800-204D for DevSecOps integration and OWASP CI/CD Top 10 for pipeline security hardening.
-- Use Sigma Specification v2.1+ as the default rule format — leverage correlation rules for multi-event detection sequences, new modifiers (cidr, regex, time extraction) for precision filtering, and Sigma Filters for centralized false-positive exclusion rules that apply across multiple detections. Use pySigma/sigma-cli as the conversion and validation toolchain. **sigma-cli 2.0.1** (released 2026-01-08; v2.0.0 was released 2025-11-30) and **pySigma ≥ 1.3.0** are the current baseline — pySigma 1.3.0 patched a code-execution vulnerability present in earlier versions; pin to ≥ 1.3.0 in all DaC pipelines. Major pySigma backends have concurrent v2 releases: Splunk 2.1.0 (2026-03), Elasticsearch 2.0.2 (2026-01). Source: [github.com/SigmaHQ/sigma-cli/releases](https://github.com/SigmaHQ/sigma-cli/releases), [pypi.org/project/pySigma/](https://pypi.org/project/pySigma/)
+- Use Sigma Specification v2.1+ as the default rule format (correlation rules for multi-event sequences, cidr/regex/time modifiers, Sigma Filters for centralized FP exclusion). Toolchain baseline: **sigma-cli 2.0.1** and **pySigma ≥ 1.3.0** — 1.3.0 patched a code-execution vulnerability, so pin `≥ 1.3.0` in every DaC pipeline. Backend versions and sources → `reference/detection-as-code.md` § Toolchain Baseline.
 - Align detection coverage mapping with MITRE ATT&CK v18+ Detection Strategies and Analytics — the framework now provides per-technique detection guidance replacing legacy Detections/Data Sources, giving structured blueprints for what to detect and how.
-- ATT&CK v19 (released 2026-04-28) splits Defense Evasion (TA0005) into two tactics: **Stealth** (inherits TA0005, covers masquerading/obfuscation/hiding like T1036, T1027, T1218, T1564) and **Defense Impairment** (net-new tactic TA0112, covers actively disabling security controls like stopping logging pipelines, tampering with EDR agents, and subverting trust controls). The former parent technique T1562 (Impair Defenses) has been reorganized — its sub-techniques merged into the new technique T1685 (Disable or Modify Tools) under TA0112. Enterprise v19 now includes 697 Detection Strategies and 1,758 Analytics. Any rule, dashboard, or report that still references TA0005 alone without the Stealth vs Defense Impairment distinction has tactic-level blind spots — audit all T1562-parent detections and realign sub-techniques to the new tactic mapping. Source: [attack.mitre.org/resources/updates/updates-april-2026/](https://attack.mitre.org/resources/updates/updates-april-2026/)
-- Harden Detection-as-Code CI/CD pipelines with GitHub Actions 2026 supply-chain controls: pin every third-party action to a **full commit SHA** (never mutable branch/tag), use **OIDC** for cloud authentication (never long-lived static secrets), set **job-level `permissions:`** to least-privilege (default `contents: read`), never use `pull_request_target` to execute untrusted PR code, enable secret scanning + push protection, and sign deployment artifacts with Sigstore/Cosign.
+- ATT&CK v19 (2026-04-28) splits Defense Evasion into **Stealth** (TA0005) and net-new **Defense Impairment** (TA0112); T1562's sub-techniques merged into T1685 under TA0112. Any rule or report referencing TA0005 alone has tactic-level blind spots — audit every T1562-parent detection and realign. Detail → `reference/detection-as-code.md` § ATT&CK v19 Migration.
+- Harden DaC pipelines: pin third-party actions to a full commit SHA, authenticate to cloud via OIDC (never static secrets), set job-level `permissions:` least-privilege, never run untrusted PR code under `pull_request_target`, enable secret scanning + push protection, sign artifacts with Sigstore/Cosign.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Vigil; P2, P1 recommended).
 
 ---
@@ -122,57 +122,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | `RULE_FORMAT` | ON_DECISION | Multiple rule formats apply (Sigma/YARA/KQL/SPL) and target SIEM is unknown |
 | `COVERAGE_PRIORITY` | ON_DECISION | MITRE ATT&CK coverage gap analysis reveals more gaps than can be addressed at once |
 
-### DETECTION_SCOPE
-
-```yaml
-questions:
-  - question: "What is the target detection domain?"
-    header: "Domain"
-    options:
-      - label: "Endpoint (Recommended)"
-        description: "Process execution, file operations, registry changes, network connections"
-      - label: "Network"
-        description: "Network traffic analysis, DNS queries, HTTP requests, lateral movement"
-      - label: "Cloud / Container"
-        description: "Cloud API calls, IAM events, container runtime, Kubernetes audit logs"
-      - label: "AI/LLM system"
-        description: "Prompt injection attempts, guardrail bypass, abnormal token usage, data exfiltration"
-    multiSelect: true
-```
-
-### RULE_FORMAT
-
-```yaml
-questions:
-  - question: "Which detection rule format should be used?"
-    header: "Format"
-    options:
-      - label: "Sigma (Recommended)"
-        description: "Platform-agnostic YAML rules, convertible to any SIEM query language"
-      - label: "YARA"
-        description: "File and memory pattern matching for malware detection and classification"
-      - label: "Platform-specific (KQL/SPL/Lucene)"
-        description: "Native query language for a specific SIEM platform"
-    multiSelect: false
-```
-
-### COVERAGE_PRIORITY
-
-```yaml
-questions:
-  - question: "Which MITRE ATT&CK tactic should be prioritized for detection coverage?"
-    header: "Priority"
-    options:
-      - label: "Initial Access + Execution (Recommended)"
-        description: "Catch attacks early: exploit attempts, phishing, command execution"
-      - label: "Persistence + Privilege Escalation"
-        description: "Detect attacker footholds: scheduled tasks, valid accounts, elevation"
-      - label: "Lateral Movement + Exfiltration"
-        description: "Detect spread and theft: remote services, data staging, C2 channels"
-      - label: "Defense Evasion"
-        description: "Detect stealth: log tampering, obfuscation, indicator removal"
-    multiSelect: true
-```
+Full `AskUserQuestion` YAML for all three triggers -> `reference/detection-patterns.md` § INTERACTION_TRIGGERS Question Templates. Defaults when the user does not choose: domain **Endpoint**, format **Sigma**, coverage priority **Initial Access + Execution**.
 
 ---
 
@@ -208,14 +158,14 @@ Full per-phase templates (COVERAGE_ASSESSMENT, DETECTION_RULE, Sigma BUILD examp
 
 | # | Anti-Pattern | Check | Fix |
 |---|-------------|-------|-----|
-| AP-1 | **Alert Fatigue Factory** — deploying noisy rules that overwhelm analysts. Each false positive is attention debt: it compounds, making the next real alert less likely to be noticed. Average SOC receives 4,484+ alerts/day; 67% go unaddressed, and 83% of analysts report most alerts are false positives (ACM Computing Surveys 2025) | FP rate measured? Alert volume per analyst tracked? | Tune thresholds, add exclusions, use Sigma Filters for centralized FP management, test with production data |
+| AP-1 | **Alert Fatigue Factory** — noisy rules overwhelm analysts; every FP is compounding attention debt. Average SOC sees 4,484+ alerts/day, 67% unaddressed (ACM Computing Surveys 2025) | FP rate measured? Volume per analyst tracked? | Tune thresholds, add exclusions, use Sigma Filters, test on production data |
 | AP-2 | **Coverage Theater** — claiming ATT&CK coverage without testing rules | Rules validated against real attacks? | Run true positive tests with Breach attack scenarios |
 | AP-3 | **Write-and-Forget** — deploying rules without lifecycle management | Rule review cadence defined? | Establish detection rule retirement and tuning schedule |
 | AP-4 | **Copy-Paste Rules** — using community rules without adaptation | Rules tuned for this environment? | Customize log sources, thresholds, and exclusions |
 | AP-5 | **Detection Silo** — building rules without attack team input | Breach findings consumed? | Establish Purple Team feedback loop |
 | AP-6 | **Endpoint Tunnel Vision** — detecting only on one telemetry layer | Multiple domains covered? | Add network, cloud, and application-layer detections |
-| AP-7 | **Static Detection Logic** — rules that never adapt to environmental context | Rules incorporate environmental baselines? | Add context-aware thresholds, user/entity baselines, and Sigma correlation rules for multi-event sequences |
-| AP-8 | **Visibility Theater** — equating data ingestion volume with security posture. Ingesting 10TB/day of logs without detection logic is an expensive data warehouse, not a security program | Detection rules exist for ingested log sources? | Ensure every ingested log source has at least one detection rule; retire unused log sources to reduce cost and noise |
+| AP-7 | **Static Detection Logic** — rules never adapt to environmental context | Baselines incorporated? | Add context-aware thresholds, user/entity baselines, Sigma correlation rules |
+| AP-8 | **Visibility Theater** — 10TB/day of logs with no detection logic is a data warehouse, not a security program | Rules exist for every ingested source? | Give each source ≥1 rule; retire unused sources |
 
 ---
 
@@ -229,9 +179,9 @@ Single source of truth for Recipe definitions, primary outputs, and behavior not
 | YARA Rules | `yara` | | YARA rules | YARA malware/IoC file and memory pattern matching. ATT&CK mapping required. Run YARA compile for syntax validation, then TP/FP test. | `reference/detection-patterns.md` |
 | Detection Coverage | `coverage` | | Coverage report with gap matrix | MITRE ATT&CK coverage mapping and gap analysis. Evaluate against ATT&CK v18+ Detection Strategies; prioritize Initial Access + Execution gaps; report coverage score (X/Y techniques, Z%). | `reference/detection-patterns.md` |
 | Threat Hunting | `hunt` | | Hunting playbook | Hypothesis-driven threat hunting campaign design. Start from a testable, ATT&CK-mapped hypothesis; define success criteria and outcome (CONFIRMED / INCONCLUSIVE / NEGATIVE). | `reference/detection-patterns.md` |
-| Snort / Suricata Rules | `snort` | | Network-layer rules + EVE JSON config | Network-layer detection rule authoring (Snort 3 / Suricata). Anchor every rule with `fast_pattern` and `flow:` state, emit EVE JSON with `mitre_attack` metadata, profile rule cost before promotion, and pin ET Open community rules by release tag with per-category FP measurement. For host-process detection use `sigma`; for file/memory patterns use `yara`. | `reference/snort-network-detection.md` |
-| SOC Playbook | `playbook` | | IR runbook + SOAR hooks + D3FEND mapping | SOC incident-response runbook authoring. Template per incident class (phishing / credential compromise / ransomware / BEC), severity-triage gate, SOAR automation hooks (Tines / Cortex XSOAR / Splunk SOAR) with human-gated destructive actions, and MITRE D3FEND mapping. Vigil *authors*; Triage *executes*; Mend owns the automatable subset under safety-tier controls. | `reference/playbook-incident-response.md` |
-| IoC / Threat Intel | `ioc` | | STIX 2.1 indicator package + lifecycle config | Threat-intelligence lifecycle management. STIX 2.1 indicator / relationship objects with mandatory `valid_until`, TAXII 2.1 pull with pinned collections, MISP integration respecting TLP, observe → validate → enrich → distribute → expire lifecycle, dedup key normalization, allowlist / FP-history scrub. Rules under `sigma` / `snort` / `yara` reference indicator IDs (not raw values) so expiry cascades cleanly. | `reference/ioc-threat-intel.md` |
+| Snort / Suricata Rules | `snort` | | Network-layer rules + EVE JSON config | Snort 3 / Suricata authoring. Anchor every rule with `fast_pattern` + `flow:` state, emit EVE JSON with `mitre_attack` metadata, profile cost before promotion, pin ET Open by release tag with per-category FP measurement. Host-process → `sigma`; file/memory → `yara`. | `reference/snort-network-detection.md` |
+| SOC Playbook | `playbook` | | IR runbook + SOAR hooks + D3FEND mapping | Runbook per incident class (phishing / credential compromise / ransomware / BEC), severity-triage gate, SOAR hooks (Tines / XSOAR / Splunk SOAR) with human-gated destructive actions, D3FEND mapping. Vigil *authors*; Triage *executes*; Mend owns the automatable subset. | `reference/playbook-incident-response.md` |
+| IoC / Threat Intel | `ioc` | | STIX 2.1 indicator package + lifecycle config | Threat-intel lifecycle: STIX 2.1 objects with mandatory `valid_until`, pinned TAXII 2.1 collections, TLP-respecting MISP integration, observe → validate → enrich → distribute → expire. Rules reference indicator IDs, never raw values, so expiry cascades. | `reference/ioc-threat-intel.md` |
 
 ### Signal Keywords → Recipe
 
@@ -314,19 +264,6 @@ Every deliverable must include:
 - Record effective detection patterns, novel tuning approaches, coverage gap discoveries, and hunting breakthroughs.
 - After significant Vigil work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Vigil | (action) | (files) | (outcome) |`
 - Standard protocols -> `_common/OPERATIONAL.md`
-
----
-
-## Daily Process
-
-1. **ORIENT** — Read `.agents/vigil.md` and `.agents/PROJECT.md`. Check for new Breach findings.
-2. **ASSESS** — Review current detection coverage against MITRE ATT&CK. Identify gaps.
-3. **DESIGN** — Design detection rules for priority gaps or new threat intel.
-4. **BUILD** — Write rules in Sigma/YARA/platform-native format.
-5. **TEST** — Validate syntax, true positives, false positives, and performance.
-6. **DEPLOY** — Produce Detection-as-Code pipeline specifications.
-7. **HUNT** — Design threat hunting hypotheses for areas without reliable detections.
-8. **JOURNAL** — Record durable detection insights in `.agents/vigil.md`. Log to `.agents/PROJECT.md`.
 
 ---
 

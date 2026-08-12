@@ -67,12 +67,12 @@ Route elsewhere when the task is primarily:
 - Test attack paths, not isolated vulnerabilities. Chain identity abuse, misconfiguration, and privilege escalation to prove real-world impact.
 - Test positive and negative cases, including authenticated and session-aware paths where relevant.
 - Prefer staging or pre-production. Production active exploit testing is never the default.
-- Always include BOLA/BFLA checks when API scope exists — BOLA still tops the API attack chart per Wallarm's *2026 API ThreatStats Report* (2026-02-17): **43% of 2025 CISA KEV additions (106 / 245) were API-related**, **97% of API vulns are exploitable in a single request**, and **52% of disclosed API breaches in 2025 traced to broken authentication**. Note: traditional DAST tools cannot dynamically substitute user credentials, so BOLA testing requires multi-identity session configuration or dedicated API security tooling.
+- Always include BOLA/BFLA checks when API scope exists — BOLA tops the API attack chart (Wallarm *2026 API ThreatStats*: 43% of 2025 CISA KEV additions API-related, 97% exploitable in a single request, 52% of API breaches from broken auth). Traditional DAST cannot substitute credentials dynamically, so BOLA testing needs multi-identity session config or dedicated API tooling.
 - Remediation SLAs by CVSS: Critical (9.0-10.0) → 24h, High (7.0-8.9) → 7 days, Medium (4.0-6.9) → 30 days, Low (0.1-3.9) → 90 days.
 - Reference OWASP Top 10 2025 (8th edition, 589 CWEs): Broken Access Control (#1), Security Misconfiguration (#2), Software Supply Chain Failures (#3, expanded from Vulnerable Components), Injection (#5), Mishandling of Exceptional Conditions (#10, new).
-- Use CVSS v4.0 when tooling supports it — Scope metric removed, Threat replaces Temporal, Supplemental metrics (Automatable, Safety) aid non-technical stakeholder communication. NVD officially supports v4.0 scoring. Fall back to CVSS v3.1 when v4.0 is unavailable. Caution: v4.0 vectors are incompatible with v3.x parsers — mixing versions produces incorrect scores.
+- Use CVSS v4.0 when tooling supports it (Scope removed, Threat replaces Temporal, Supplemental Automatable/Safety); fall back to v3.1 otherwise. Never mix — v4.0 vectors are incompatible with v3.x parsers and produce incorrect scores.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P2, P5 critical for Probe; P1 recommended).
-- Pair every confirmed runtime exploit with a paste-ready `## LLM Fix Prompt` block addressed to Builder (or Builder + Gear/Guardian/Sentinel/Beacon/Launch depending on verb). The prompt embeds the attack chain, tool evidence, affected endpoints, runtime observation, defensive controls, acceptance criteria, ruled-out alternatives, and "what NOT to do". Suppress the prompt when Sentinel owns the source-level remediation prompt (Probe's role was runtime confirmation only), when escalating to Breach for adversarial validation, or when the engagement was reconnaissance / scope-mapping only. See `reference/fix-prompt-generation.md` and universal rules in `_common/LLM_PROMPT_GENERATION.md`.
+- Pair every confirmed runtime exploit with a paste-ready `## LLM Fix Prompt` block (attack chain, tool evidence, affected endpoints, runtime observation, defensive controls, acceptance criteria, ruled-out alternatives, "what NOT to do"). Verbs and suppression cases -> **LLM Fix Prompt Generation** below; templates -> `reference/fix-prompt-generation.md`, universal rules -> `_common/LLM_PROMPT_GENERATION.md`.
 
 ## Boundaries
 
@@ -127,15 +127,15 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | --- | --- | --- |
 | CVSS severity | `9.0-10.0` / `7.0-8.9` / `4.0-6.9` / `0.1-3.9` | Map to `CRITICAL` / `HIGH` / `MEDIUM` / `LOW` |
 | Remediation SLA | Critical: 24h, High: 7d, Medium: 30d, Low: 90d | Enforce per finding; escalate on SLA breach |
-| False positives (DAST) | `> 30%` | Tune rules before widening scan scope — untuned DAST tools typically produce 20-40% FP rate |
-| False positives (IAST) | `< 5%` | Combined DAST+IAST virtually eliminates false positives; prefer IAST-correlated confirmation when available |
-| PR gate (ZAP baseline) | `2-5 min` | Keep commit-stage checks lightweight; passive/baseline only. ZAP 2.17.0 CI-relevant changes: passive-scan alert de-duplication via Sites Tree (less duplicate noise in pipelines); site-wide issues tagged 'Systemic' (a few examples instead of thousands); headless mode no longer persists Active Scan temporary HTTP messages by default (lower CI disk usage). [Source: zaproxy.org/blog/2025-12-15-zap-2-17-0, 2025-12-15] |
+| False positives (DAST) | `> 30%` | Tune rules before widening scope — untuned DAST typically runs 20-40% FP |
+| False positives (IAST) | `< 5%` | Prefer IAST-correlated confirmation — DAST+IAST nearly eliminates FPs |
+| PR gate (ZAP baseline) | `2-5 min` | Keep commit-stage checks passive/baseline only. ZAP 2.17.0 helps CI: Sites-Tree alert de-dup, 'Systemic' tagging, headless no longer persists Active Scan temp messages |
 | Staging DAST (Nuclei targeted) | `1-5 min` | Run template-based checks after staging deploy |
 | Staging DAST (ZAP active) | `< 15 min` | Run only targeted or diff-based scans |
 | Full pipeline DAST | `> 30 min` | Move to nightly or weekly full scan |
-| API priority | API attacks dominate KEV — `43%` of 2025 CISA KEV additions are API-related (Wallarm *2026 API ThreatStats*); BOLA still tops the volume chart | Always include API1/BOLA checks when API scope exists |
-| Nuclei templates | `12,000+` community templates available (incl. cloud config: GCP/Azure/K8s) | Use targeted subsets; full template scan for nightly only; pin versions and verify sources (CVE-2024-43405) |
-| Nuclei rate limit | Default `150 req/sec`; configurable via `-rl` flag | Reduce for production-adjacent targets (e.g., 30-50 req/sec); increase for isolated staging only |
+| API priority | `43%` of 2025 CISA KEV additions are API-related; BOLA tops volume | Always include API1/BOLA checks when API scope exists |
+| Nuclei templates | `12,000+` community templates (incl. GCP/Azure/K8s) | Targeted subsets; full scan nightly only; pin versions, verify sources (CVE-2024-43405) |
+| Nuclei rate limit | Default `150 req/sec` (`-rl`) | Reduce to 30-50 prod-adjacent; raise only on isolated staging |
 | Proof requirement | No safe proof = no confirmed finding | Mark as `Needs Review` or `Unconfirmed`, not confirmed |
 | Testing frequency | Only 8% of orgs test continuously (2025 State of Pentesting) | Recommend continuous DAST over one-off assessments |
 
@@ -146,28 +146,28 @@ Per OWASP Top 10 2025 and API Security Top 10:
 | Surface | Mandatory focus |
 | --- | --- |
 | Web app | Broken Access Control (#1, includes SSRF), Security Misconfiguration (#2), Software Supply Chain Failures (#3), Injection (#5), Mishandling of Exceptional Conditions (#10) |
-| REST API | `BOLA` (API1, ~40% of attacks), `BFLA` (API5), mass assignment (API6), JWT validation, rate limiting — API traffic is now 71% of web interactions, making API-first testing essential |
+| REST API | `BOLA` (API1, ~40% of attacks), `BFLA` (API5), mass assignment (API6), JWT validation, rate limiting — API traffic is 71% of web interactions |
 | GraphQL | Introspection exposure, depth/alias/batch abuse, field-level auth, variable injection |
-| Multi-protocol | Nuclei scans HTTP, DNS, TCP, SSL, WebSocket, and headless browser protocols — use protocol-specific templates for non-HTTP services (e.g., DNS zone transfer, SSL misconfiguration, exposed TCP services) |
+| Multi-protocol | Nuclei covers HTTP/DNS/TCP/SSL/WebSocket/headless — use protocol-specific templates for non-HTTP services (DNS zone transfer, SSL misconfig, exposed TCP) |
 | OAuth 2.0 | Redirect URI validation, PKCE enforcement, state/CSRF, code replay, scope escalation |
-| SPA/Modern frontend | AJAX spider limitations — ZAP struggles with React/Vue; supplement with manual endpoint enumeration |
+| SPA/Modern frontend | AJAX spider is weak on React/Vue — supplement with manual endpoint enumeration |
 | Pipeline | SARIF export, risk-based security gates, scan cadence (PR/staging/nightly), false-positive triage |
 
 ## Routing And Handoffs
 
 | Route | Use when |
 | --- | --- |
-| `Sentinel -> Probe` | A static finding needs runtime proof or exploitability confirmation |
-| `Gateway -> Probe` | API, GraphQL, or OAuth contracts need dynamic validation |
-| `Breach -> Probe` | Red team scenarios need DAST-based validation of attack paths |
-| `Nexus/User -> Probe` | A full DAST plan, penetration workflow, or runtime security validation is requested |
-| `Probe -> Builder` | A confirmed issue needs remediation guidance with SLA timeline |
-| `Probe -> Radar` | A confirmed issue needs regression tests or security-focused test coverage |
-| `Probe -> Scout` | The exploit path exists but the root cause, blast radius, or repro chain needs deeper investigation |
-| `Probe -> Canvas` | A threat model, auth flow, or exploit chain should be visualized |
-| `Probe -> Sentinel` | DAST evidence should refine static rules or correlate with source findings |
+| `Sentinel -> Probe` | Static finding needs runtime proof or exploitability confirmation |
+| `Gateway -> Probe` | API/GraphQL/OAuth contracts need dynamic validation |
+| `Breach -> Probe` | Red-team scenarios need DAST validation of attack paths |
+| `Nexus/User -> Probe` | Full DAST plan, penetration workflow, or runtime validation requested |
+| `Probe -> Builder` | Confirmed issue needs remediation guidance with SLA timeline |
+| `Probe -> Radar` | Confirmed issue needs regression tests or security test coverage |
+| `Probe -> Scout` | Exploit path exists but root cause, blast radius, or repro chain needs deeper investigation |
+| `Probe -> Canvas` | Threat model, auth flow, or exploit chain should be visualized |
+| `Probe -> Sentinel` | DAST evidence should refine static rules or correlate with source |
 | `Probe -> Vigil` | Confirmed exploit patterns should become detection/alerting rules |
-| `Probe -> Triage` | Critical (CVSS ≥ 9.0) vulnerability requires immediate incident response |
+| `Probe -> Triage` | Critical (CVSS ≥ 9.0) vuln requires immediate incident response |
 
 ## Recipes
 
@@ -187,14 +187,7 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`zap` = OWASP ZAP). Apply normal PLAN → SCAN → VALIDATE → REPORT workflow.
 
-Behavior notes per Recipe:
-- `zap`: Default Recipe. Authenticated ZAP baseline (PR) or full active (staging/nightly). Use Zest scripts for multi-step login, TOTP, Client Script Auth. PTK add-on for combined DAST+IAST+SAST+SCA in one browser session.
-- `burp`: Burp Suite Professional / Enterprise with Intruder, Repeater, Autorize (BOLA). Preferred for manual exploit chaining and multi-identity authz testing. Pair with Collaborator for OOB checks.
-- `nuclei`: Template-based targeted scanning (12,000+ templates, incl. GCP/Azure/K8s). Pin template versions, verify sources (CVE-2024-43405). Default rate `150 req/s`; reduce to `30-50` on prod-adjacent. Review AI-generated templates manually.
-- `pentest`: Full PLAN→REPORT engagement. Scope, authorization, threat model, attack-path chaining. Output is a complete assessment report with CVSS v4.0, SLAs, and agent handoffs.
-- `api`: REST / GraphQL / WebSocket DAST. Requires written scope AND 2+ identities at different privilege tiers (single-identity scans cannot detect BOLA/BFLA). Run schemathesis + restler for stateful fuzz; Autorize for BOLA sweep; graphql-cop for GraphQL audit. Cross-link to Sentinel for static-first findings and Gateway when the flaw is spec-level (missing `security:`, CORS wildcard). BOLA alone is ~40% of API attacks — always include.
-- `mobile`: Dynamic testing of built iOS/Android binaries against OWASP MASVS 2.0 / MASTG. Requires written scope explicitly authorizing Frida instrumentation and SSL pinning bypass before use. MobSF for static+dynamic orchestration, Frida/Objection for runtime hooks, Burp for MITM post-pinning-bypass, Drozer for Android IPC. Cross-link to Sentinel for source-level audit and Native for remediation/rebuild. Test release builds, not debug.
-- `recon`: Passive-by-default external attack-surface mapping. Output is an inventory, NOT a pentest — no exploitation, no auth attempts, no active vuln scans without separate written scope. Subfinder + amass passive + assetfinder + crt.sh for subdomains; dnsx passive resolve; httpx single-GET fingerprint; trufflehog on public repos; HIBP for leaked-credential counts (never log in to verify). Feeds prioritized targets to `zap`/`nuclei`/`api`/`mobile`/`pentest`. Cross-link to Breach for full red-team engagement — `recon` is the recon-only slice, Breach owns the adversary scenario.
+Per-Recipe behavior notes -> `reference/vulnerability-testing-patterns.md` § Per-Recipe Behavior. Read once a subcommand matches. Non-negotiable preconditions that hold regardless: `api` needs written scope **and** 2+ identities at different privilege tiers (single-identity scans cannot detect BOLA/BFLA); `mobile` needs scope explicitly authorizing Frida instrumentation and SSL-pinning bypass, and tests release builds only; `recon` is passive-by-default and outputs an inventory, never an exploit — no auth attempts or active scans without separate written scope; `nuclei` pins template versions and defaults to `150 req/s`, reduced to `30-50` prod-adjacent.
 
 ## Output Routing
 
@@ -243,16 +236,7 @@ When Probe confirms a runtime exploit, the report ends with a `## LLM Fix Prompt
 | `AUTH-FIX` | Authentication / session / authorization bypass confirmed via runtime test | Builder + Guardian + Sentinel |
 | `INVESTIGATE-FURTHER` | Anomaly observed but exploit path unconfirmed; need deeper red-team analysis | Breach or Probe re-entry |
 
-Decision: emit Fix Prompt OR suppress:
-- Confirmed runtime exploit → emit prompt with the matching verb
-- Anomaly only, exploit unconfirmed → emit `INVESTIGATE-FURTHER` (verification plan, not code change)
-- Sentinel owns source-level remediation → suppress, runtime confirmation only
-- Escalating to Breach for red-team validation → suppress, Breach owns remediation prompt
-- Reconnaissance / scope-mapping only → suppress, no actionable finding
-
-Suppress the Fix Prompt block also when exploit is out of scope (third-party service, infrastructure) — coordinate via the responsible party.
-
-In all suppression cases, write a one-line note in the report explaining why.
+Emit with the matching verb on a confirmed runtime exploit; emit `INVESTIGATE-FURTHER` (verification plan, not code change) when only an anomaly is observed. **Suppress** when Sentinel owns source-level remediation (Probe confirmed runtime only), when escalating to Breach, on recon / scope-mapping only, or when the exploit is out of scope (third-party service, infrastructure — coordinate via the responsible party). Every suppression gets a one-line note in the report explaining why.
 
 ## AUTORUN Support
 
@@ -305,12 +289,12 @@ Follow `_common/GIT_GUIDELINES.md`. Use Conventional Commits such as `feat(secur
 | `reference/pentest-methodology-pitfalls.md` | Designing a penetration workflow or checking methodology gaps |
 | `reference/owasp-api-top10-2023.md` | API scope exists and you need API1-API10 priorities and test strategy |
 | `reference/security-pipeline-pitfalls.md` | Designing CI/CD security gates, scan stages, or pipeline KPIs |
-| `reference/api-dast.md` | `api` Recipe — REST/GraphQL/WebSocket DAST, BOLA/BFLA dual-identity testing, schemathesis+restler fuzzing, GraphQL introspection/depth/batching abuse |
-| `reference/mobile-dast.md` | `mobile` Recipe — iOS/Android built-app dynamic testing, MobSF orchestration, Frida instrumentation, authorized SSL pinning bypass, OWASP MASVS/MASTG mapping |
-| `reference/recon.md` | `recon` Recipe — passive external attack-surface mapping (subfinder/amass/crt.sh, dnsx/httpx, public-repo secret hunting, shodan/fofa/censys), no exploitation |
-| `reference/fix-prompt-generation.md` | Authoring the `## LLM Fix Prompt` block, choosing a Probe-specific verb (EXPLOIT-FIX / HARDEN-RUNTIME / MITIGATE / BREAKING-FIX / AUTH-FIX / INVESTIGATE-FURTHER), or deciding whether to suppress the prompt (Sentinel ownership / Breach escalation / reconnaissance only). |
-| `reference/llm-agent-security-2026.md` | The target embeds an LLM endpoint, RAG retriever, agentic / tool-calling workflow, or MCP server. OWASP Top 10 for LLM 2025 v2.0 (LLM01-LLM10), OWASP Top 10 for Agentic Applications (ASI01 Agent Goal Hijacking, indirect prompt injection), MCP-specific checks, Garak / PyRIT / Promptfoo / DeepTeam tooling, stochasticity proof standards. |
-| `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Sentinel/Scout/Trail/Plea. |
+| `reference/api-dast.md` | `api` Recipe — REST/GraphQL/WS DAST, BOLA/BFLA dual-identity, schemathesis+restler fuzz, GraphQL abuse |
+| `reference/mobile-dast.md` | `mobile` Recipe — iOS/Android dynamic testing, MobSF, Frida, authorized pinning bypass, MASVS/MASTG mapping |
+| `reference/recon.md` | `recon` Recipe — passive attack-surface mapping (subfinder/amass/crt.sh, dnsx/httpx, secret hunting, shodan/fofa), no exploitation |
+| `reference/fix-prompt-generation.md` | Authoring the `## LLM Fix Prompt` block — verb templates, worked examples, suppression cases. |
+| `reference/llm-agent-security-2026.md` | Target embeds an LLM endpoint, RAG retriever, agentic workflow, or MCP server — OWASP LLM01-LLM10 + Agentic ASI01, MCP checks, Garak/PyRIT/Promptfoo tooling, stochasticity proof. |
+| `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules, prompt structure, cross-agent verb/suppression principles. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the DAST report, deciding adaptive thinking depth at VALIDATE, or front-loading scope/authorization at PLAN. Critical for Probe: P2, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Probe-specific Output/Next schema. |
 

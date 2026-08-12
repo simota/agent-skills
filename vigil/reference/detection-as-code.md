@@ -215,3 +215,33 @@ DRAFT → REVIEW → TEST → STAGE → PRODUCTION → TUNE → RETIRE
 | Mean time to detect (MTTD) | <1 hour for critical | Time from attack to alert |
 | Rule deployment time | <24 hours from merge | Git to SIEM lag |
 | Rule test coverage | 100% of production rules | Rules with TP/FP tests |
+
+
+## SKILL.md Excerpts (moved detail)
+
+- Use Sigma Specification v2.1+ as the default rule format — leverage correlation rules for multi-event detection sequences, new modifiers (cidr, regex, time extraction) for precision filtering, and Sigma Filters for centralized false-positive exclusion rules that apply across multiple detections. Use pySigma/sigma-cli as the conversion and validation toolchain. **sigma-cli 2.0.1** (released 2026-01-08; v2.0.0 was released 2025-11-30) and **pySigma ≥ 1.3.0** are the current baseline — pySigma 1.3.0 patched a code-execution vulnerability present in earlier versions; pin to ≥ 1.3.0 in all DaC pipelines. Major pySigma backends have concurrent v2 releases: Splunk 2.1.0 (2026-03), Elasticsearch 2.0.2 (2026-01). Source: [github.com/SigmaHQ/sigma-cli/releases](https://github.com/SigmaHQ/sigma-cli/releases), [pypi.org/project/pySigma/](https://pypi.org/project/pySigma/)
+
+- ATT&CK v19 (released 2026-04-28) splits Defense Evasion (TA0005) into two tactics: **Stealth** (inherits TA0005, covers masquerading/obfuscation/hiding like T1036, T1027, T1218, T1564) and **Defense Impairment** (net-new tactic TA0112, covers actively disabling security controls like stopping logging pipelines, tampering with EDR agents, and subverting trust controls). The former parent technique T1562 (Impair Defenses) has been reorganized — its sub-techniques merged into the new technique T1685 (Disable or Modify Tools) under TA0112. Enterprise v19 now includes 697 Detection Strategies and 1,758 Analytics. Any rule, dashboard, or report that still references TA0005 alone without the Stealth vs Defense Impairment distinction has tactic-level blind spots — audit all T1562-parent detections and realign sub-techniques to the new tactic mapping. Source: [attack.mitre.org/resources/updates/updates-april-2026/](https://attack.mitre.org/resources/updates/updates-april-2026/)
+
+- Harden Detection-as-Code CI/CD pipelines with GitHub Actions 2026 supply-chain controls: pin every third-party action to a **full commit SHA** (never mutable branch/tag), use **OIDC** for cloud authentication (never long-lived static secrets), set **job-level `permissions:`** to least-privilege (default `contents: read`), never use `pull_request_target` to execute untrusted PR code, enable secret scanning + push protection, and sign deployment artifacts with Sigstore/Cosign.
+
+## Daily Process
+
+1. **ORIENT** — Read `.agents/vigil.md` and `.agents/PROJECT.md`. Check for new Breach findings.
+2. **ASSESS** — Review current detection coverage against MITRE ATT&CK. Identify gaps.
+3. **DESIGN** — Design detection rules for priority gaps or new threat intel.
+4. **BUILD** — Write rules in Sigma/YARA/platform-native format.
+5. **TEST** — Validate syntax, true positives, false positives, and performance.
+6. **DEPLOY** — Produce Detection-as-Code pipeline specifications.
+7. **HUNT** — Design threat hunting hypotheses for areas without reliable detections.
+8. **JOURNAL** — Record durable detection insights in `.agents/vigil.md`. Log to `.agents/PROJECT.md`.
+
+---
+
+
+
+| Snort / Suricata Rules | `snort` | | Network-layer rules + EVE JSON config | Network-layer detection rule authoring (Snort 3 / Suricata). Anchor every rule with `fast_pattern` and `flow:` state, emit EVE JSON with `mitre_attack` metadata, profile rule cost before promotion, and pin ET Open community rules by release tag with per-category FP measurement. For host-process detection use `sigma`; for file/memory patterns use `yara`. | `reference/snort-network-detection.md` |
+
+| IoC / Threat Intel | `ioc` | | STIX 2.1 indicator package + lifecycle config | Threat-intelligence lifecycle management. STIX 2.1 indicator / relationship objects with mandatory `valid_until`, TAXII 2.1 pull with pinned collections, MISP integration respecting TLP, observe → validate → enrich → distribute → expire lifecycle, dedup key normalization, allowlist / FP-history scrub. Rules under `sigma` / `snort` / `yara` reference indicator IDs (not raw values) so expiry cascades cleanly. | `reference/ioc-threat-intel.md` |
+
+| SOC Playbook | `playbook` | | IR runbook + SOAR hooks + D3FEND mapping | SOC incident-response runbook authoring. Template per incident class (phishing / credential compromise / ransomware / BEC), severity-triage gate, SOAR automation hooks (Tines / Cortex XSOAR / Splunk SOAR) with human-gated destructive actions, and MITRE D3FEND mapping. Vigil *authors*; Triage *executes*; Mend owns the automatable subset under safety-tier controls. | `reference/playbook-incident-response.md` |

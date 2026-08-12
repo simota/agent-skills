@@ -200,14 +200,12 @@ Full system -> `reference/precision-spec.md`. Core concept: a YAML **Design Spec
 
 ### Extraction Strategy
 
-Read `reference/design-extraction.md` for Claude Vision prompt strategies.
-Read `reference/precision-spec.md` for the structured extraction protocol and precision prompts.
+Vision prompt strategies -> `reference/design-extraction.md`; structured protocol -> `reference/precision-spec.md`.
 
-Key principles:
-1. **Colors**: Extract ALL distinct colors — heading, body, muted text colors are often different HEX values.
-2. **Typography**: Extract font-size, font-weight, color, line-height, letter-spacing for EVERY text element.
-3. **Spacing**: Measure element-to-element distances (margin-top/bottom between each pair). Snap to 4px grid.
-4. **Layout**: Identify grid/flex patterns from alignment. Count columns at each breakpoint.
+1. **Colors**: extract ALL distinct colors — heading / body / muted are often different HEX values.
+2. **Typography**: font-size, font-weight, color, line-height, letter-spacing for EVERY text element.
+3. **Spacing**: measure element-to-element margins for each pair; snap to a 4px grid.
+4. **Layout**: infer grid/flex from alignment; count columns at each breakpoint.
 
 ## LP Section Patterns
 
