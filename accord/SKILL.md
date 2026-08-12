@@ -219,65 +219,14 @@ Parse the first token of user input.
 
 ### L4 — Reversibility / Learning / Disqualification (v4 extension)
 
-These three fields convert acceptance criteria from "what passes" into "how we know it failed and what we recover/learn from it". Phase 1 recommended (advisory if missing), Phase 2 mandatory gate (block merge if missing). Per Magi v4 C6.
+These three fields turn acceptance criteria from "what passes" into "how we know it failed, and what we recover and learn from it". Phase 1 advisory if missing; Phase 2 a mandatory merge gate.
 
-**Schema**:
+- **`reversibility`** — `classification` (`HIGH` single flag / single-commit revert, no data migration · `MEDIUM` coordinated rollback + migration window · `LOW` effectively a new project), plus `revert_procedure`, `revert_time_estimate`, and `revert_blast_radius`.
+- **`learning`** — an explicit one-sentence `hypothesis`, a `success_threshold` and a `fail_threshold` (each metric + value + observation window), and a `learning_capture_plan` naming win capture (feeds the Insight Ledger via tome), loss capture (feeds the Friction Ledger via trace/voice), and the `decision_horizon` for Go-deeper / Modify / Sunset.
+- **`disqualification`** — machine-readable failure conditions per Magi v4 DA-1.
 
-```yaml
-L4:
-  reversibility:
-    classification: HIGH | MEDIUM | LOW
-    # HIGH = revert via single config flag / single-commit revert / no data migration
-    # MEDIUM = revert requires coordinated rollback + data migration window
-    # LOW = revert is essentially a new project (schema change, public API change, data loss)
-    revert_procedure: <single-paragraph or pointer to runbook>
-    revert_time_estimate: <minutes | hours | days>
-    revert_blast_radius: <users / services / data affected>
+Full YAML schema with field comments -> `reference/unified-template.md` § L4.
 
-  learning:
-    hypothesis: <one-sentence explicit hypothesis the feature tests>
-    success_threshold:
-      metric: <metric name>
-      value: <numeric threshold>
-      window: <observation window, e.g. "+30 days post-launch">
-    fail_threshold:
-      metric: <same or different metric>
-      value: <numeric threshold below which feature is failing>
-      window: <observation window>
-    learning_capture_plan:
-      win_capture: <what we record / who, on success — feeds Insight Ledger via tome>
-      loss_capture: <what we record / who, on failure — feeds Friction Ledger via trace/voice>
-      decision_horizon: <date by which Go-deeper / Modify / Sunset decision is made>
-
-  disqualification:
-    # Magi v4 DA-1 finding: "失格条件" (disqualification criteria) machine-readable enforce
-    # If ANY disqualification condition triggers, the AC is automatically FAIL (not advisory)
-    conditions:
-      - id: DISQ-001
-        description: <one-sentence machine-checkable condition>
-        check: <reference to test / metric / probe>
-        on_trigger: REJECT  # mandatory; no override path except Hot-Fix Fast-Path
-      - id: DISQ-002
-        ...
-```
-
-**Rules**:
-- `reversibility` MUST be present for any L0 Vision change. Missing field = Phase 2 merge block.
-- `learning.hypothesis` MUST be testable (state a specific metric and direction). Vague hypotheses ("improve UX") are rejected.
-- `learning.fail_threshold` is mandatory — accord without explicit failure condition becomes Insight Ledger pollution (Magi v4 Sophia S-4).
-- `disqualification.conditions[]` lists hard-fail conditions. An accord with empty disqualification list is allowed but generates a `WARNING: no machine-checkable failure path` advisory.
-- All three fields feed Phase 3 post-launch Measurement Loop in `nexus growth-acceptance` recipe (when Org Tier = Enterprise + Step 1+ adopted).
-
-Canonical package shape:
-
-```
-Unified Specification Package: [Feature Name]
-  L0: Vision
-  L1: Requirements
-  L2-Biz / L2-Dev / L2-Design
-  L3: Acceptance Criteria
-  Meta
-```
 
 ## Collaboration
 

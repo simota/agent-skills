@@ -192,3 +192,41 @@ Beyond primary/secondary metrics, EwL metrics capture *what we learned* — not 
 | **Experiment Velocity** | Experiments shipped per month per team | Tracks learning throughput |
 | **Time to Decision** | Days from launch to ship/iterate/abandon decision | Identifies bottlenecks in analysis |
 | **Learning Reuse Rate** | % of experiments that reference prior learnings | Measures institutional memory |
+
+
+---
+
+## Per-Recipe Behavior Notes (SKILL.md excerpt)
+
+- `ab`: Full A/B experiment design — PICOT hypothesis, power analysis, randomization unit, SRM monitoring plan.
+- `cuped`: Apply CUPED/CUPAC variance reduction with a 7-day pre-exposure window. Combine with Winsorization for heavy-tailed metrics unless whales drive majority of revenue.
+- `switchback`: Measurement design under interference (marketplaces, logistics, pricing). Declare rotation window against treatment response horizon, block randomization (day-of-week × hour-of-day), washout/burn-in, and carryover-aware variance (block bootstrap or Bojinov HAC). Follow DoorDash 30-min / Uber 1-h / Lyft hourly / Airbnb daily precedent. Route to `cluster` randomization when response horizon > 24 h. Do not confuse with Mend `canary` — that is rollout risk-control, not measurement under interference.
+- `analyze`: Post-experiment statistical analysis — SRM check first, then effect sizes, CIs, and recommendations.
+- `guardrail`: Per-experiment metric portfolio — declare the 4-layer taxonomy (primary/secondary/counter/guardrail), pre-register non-inferiority margins, estimate power-for-margin per guardrail, apply Benjamini-Hochberg across 5–10 guardrails, and produce the stop/ship trigger matrix before launch. Distinct from Pulse: Pulse defines product-wide KPIs; `guardrail` defines the measurement contract for this specific test and its gaming modes. Cite Kohavi/Tang/Xu (*Trustworthy Online Controlled Experiments*) and the Netflix/Microsoft ExP/Airbnb/Booking portfolio patterns.
+- `ff`: Flag-driven assignment and ramp lifecycle. Separate the release flag (Launch owns) from the experiment flag (Experiment owns). Use the 1/5/25/50/100 % ramp with sequential-test α budget (mSPRT / confidence sequences) across stages; measure primary at ≥ 25 %, use 1 % / 5 % stages for crash/SRM/latency only. Pre-register kill-switch triggers and rehearse activation in staging. On conclusion, hand off to `Launch` via `EXPERIMENT_TO_LAUNCH` with flag key, final state, and decommission deadline. Platform landscape (2026-05): Statsig acq. by OpenAI (2025-09); Eppo acq. by Datadog (2025-05), rebranded Datadog Experiments GA (2026-04); GrowthBook 4.2 adds product analytics GA + Safe Rollouts (one-sided sequential testing on guardrails); Spotify Confidence SaaS GA (2025). (Sources: datadoghq.com/blog/datadog-acquires-eppo, blog.growthbook.io/release-4-2-product-analytics, confidence.spotify.com)
+- `srm`: Load `reference/srm-detection.md`. Dedicated SRM diagnosis — chi-squared test, p < 0.001 threshold, segment-level decomposition (device / region / tenure / traffic source), bucket-mismatch and assignment-bug root causes. SRM invalidates the test; trust > ship.
+- `sequential`: Load `reference/sequential-testing.md`. Anytime-valid sequential testing — mSPRT, confidence sequences, group sequential (Pocock / O'Brien-Fleming / Lan-DeMets α-spending). Controls Type I error under peeking; mSPRT preferred for continuous monitoring.
+- `bayesian`: Load `reference/bayesian-ab.md`. Bayesian A/B — prior specification (Beta for proportions, Normal for means), posterior updating, credible intervals, probability-to-beat, ROPE (Region of Practical Equivalence), expected loss decision rule. Contrast with frequentist; Bayesian better for decision communication and continuous monitoring without p-hacking guilt.
+
+
+
+---
+
+## Output Routing Table (SKILL.md excerpt)
+
+| Signal | Approach | Primary output | Read next |
+|--------|----------|----------------|-----------|
+| `hypothesis`, `what to test` | Hypothesis document creation | Hypothesis doc | `reference/experiment-templates.md` |
+| `A/B test`, `experiment design` | Full experiment design | Experiment plan | `reference/sample-size-calculator.md` |
+| `sample size`, `power analysis` | Sample size calculation | Power analysis report | `reference/sample-size-calculator.md` |
+| `feature flag`, `rollout`, `toggle` | Feature flag implementation | Flag setup guide | `reference/feature-flag-patterns.md` |
+| `results`, `significance`, `analyze` | Statistical analysis | Experiment report | `reference/statistical-methods.md` |
+| `sequential`, `early stopping` | Sequential testing design | Alpha spending plan | `reference/statistical-methods.md` |
+| `multivariate`, `factorial` | Multivariate test design | Factorial design doc | `reference/statistical-methods.md` |
+| `bandit`, `MAB`, `adaptive` | Adaptive experimentation design | MAB/Thompson Sampling plan | `reference/adaptive-experimentation.md` |
+| `interleaving`, `ranking test` | Interleaving test design | Interleaving test plan | `reference/interleaving-tests.md` |
+| `CUPED`, `variance reduction`, `sensitivity`, `winsorization`, `outlier capping` | CUPED/CUPAC/Winsorization variance reduction design | Variance reduction plan | `reference/statistical-methods.md` |
+| `SRM`, `sample ratio`, `broken split` | SRM diagnosis and root cause analysis | SRM diagnosis report | `reference/srm-detection.md` |
+| `switchback`, `marketplace test`, `network effect` | Switchback experiment design | Switchback test plan | `reference/switchback-design.md` |
+| `cluster`, `interference`, `marketplace randomization` | Cluster randomization design | Cluster experiment plan | `reference/common-pitfalls.md` |
+| `canary`, `observability`, `experiment diagnostics` | Observability-native experiment diagnostics | Canary test plan with guardrail integration | `reference/feature-flag-patterns.md` |

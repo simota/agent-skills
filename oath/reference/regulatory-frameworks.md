@@ -188,3 +188,18 @@ Source: [NIST SP 800-171r3 Final](https://csrc.nist.gov/pubs/sp/800/171/r3/final
 - 17 security requirement families (consistent with SP 800-53r5)
 - New tailoring criteria reduce redundancy
 - SP 800-171r2 withdrawn; do not assess against it
+
+
+---
+
+## Per-Recipe Behavior Notes (SKILL.md excerpt)
+
+- `soc2`: SOC2 Type I (design effectiveness) / Type II (operating effectiveness) assessment. Map all 5 Trust Service Criteria (Security, Availability, Processing Integrity, Confidentiality, Privacy) to every CC control.
+- `pci`: PCI-DSS v4.0.1 all 12 requirements, CDE scope definition, SAQ/ROC preparation support. Assess against the latest version, including the 51 future-dated requirements (mandatory since March 2025).
+- `hipaa`: Technical/administrative/physical safeguard assessment + ePHI handling patterns + BAA requirement check. Factor in NPRM readiness (all safeguards mandatory, encryption required, 24h reporting) — treat NPRM as planning baseline; final rule NOT yet published as of June 2026.
+- `iso`: ISO 27001:2022 Annex A 93 controls (4 themes) mapping + SoA draft generation. Always assess against the 2022 version since the 2013 version is invalid (since October 2025).
+- `policy`: OPA/Rego policy authoring, Kyverno YAML policies, CI/CD compliance gate integration. All implementation is delegated to Builder.
+- `gdpr`: GDPR + EU AI Act regulatory mapping at article level (Art. 5/6/7/13/14/15-22/25/32/33/34), DPIA triggers, ROPA template, lawful-basis selection, SCC/BCR transfer decision, DSAR workflow, and AI Act risk tiering (prohibited / high-risk / limited / minimal). For privacy-engineering implementation (consent SDK, PII scanner, pseudonymization code) use Cloak; for cryptographic key management under Art. 32 use Crypt; for breach detection rule authoring use Vigil.
+- `audit`: Audit readiness orchestration — evidence tiering, evidence-room structure with chain-of-custody, AICPA-aligned sampling strategy, auditor interview prep, findings remediation tracking, and 48-hour drift flagging for continuous audit. For detection rule coverage that feeds CC7.2 / PCI Req 10 evidence use Vigil; for cryptographic evidence artifacts (KMS rotation logs, HSM attestations) use Crypt.
+- `vendor`: Third-party vendor risk program — inventory sweep, critical/high/medium/low tier classification, DPA/BAA/SCC contract gating, SIG/CAIQ questionnaire handling, SOC 2 report review (scope, period, CUECs, exceptions, subservice organizations), tier-driven monitoring cadence, and subprocessor chain visibility. For processor/sub-processor privacy analysis under GDPR Art. 28 pair with Cloak; for validating vendor cryptographic claims use Crypt; for vendor SDK CVE scanning use Sentinel.
+

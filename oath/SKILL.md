@@ -16,7 +16,7 @@ CAPABILITIES_SUMMARY:
 - continuous_monitoring: Compliance drift detection within 48h (SOC 2 CC4.1-CC4.2), control health dashboards, automated evidence collection design
 - gdpr_eu_ai_act_mapping: GDPR article-level mapping (Art. 5/6/7/13/14/15-22/25/32/33/34), DPIA triggers, ROPA template, lawful-basis selection, SCC/BCR cross-border transfer, DSAR workflow, EU AI Act risk tiering (prohibited/high-risk/limited/minimal)
 - audit_readiness: Evidence tier model, evidence-room structure with chain-of-custody, AICPA-aligned sampling strategy, auditor interview prep, findings remediation tracking, 48-hour drift flagging for continuous audit
-- vendor_risk_assessment: Vendor inventory and tier classification, DPA/BAA/SCC contract gating, SIG/CAIQ questionnaire handling, SOC 2 report review (scope/period/CUECs/exceptions/subservice orgs), tier-driven monitoring cadence, subprocessor chain visibility, **vendor_lock_in_scoring (data portability / API openness / migration cost estimate / contractual exit clause review)**, **exit_playbook (per-vendor documented migration path with effort estimate + fallback alternatives + data-export contract terms)**, **sla_machine_readable_ref (link to vendor-published SLA in parsed form when available; advisory-only when vendor publishes only PDF)**, **deprecation_calendar_ref (link to vendor deprecation announcement feed when available)**. v8 fold-in: lock-in/exit fields are advisory only — never block adoption since most vendors do not publish machine-readable SLA / deprecation calendars (omen v8 FM-V8-12 RPN 280 vendor prerequisite tyranny).
+- vendor_risk_assessment: Vendor inventory and tier classification, DPA/BAA/SCC contract gating, SIG/CAIQ questionnaires, SOC 2 report review (scope/period/CUECs/exceptions/subservice orgs), tier-driven monitoring cadence, subprocessor visibility, plus **advisory-only** lock-in scoring, exit playbook, machine-readable SLA reference, and deprecation calendar reference — never blocking adoption, since most vendors publish neither
 
 COLLABORATION_PATTERNS:
 - Sentinel -> Oath: Security control findings for compliance mapping
@@ -203,15 +203,19 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`soc2` = SOC2 Assessment). Apply normal SCOPE → MAP → ASSESS → EVIDENCE → REMEDIATE → REPORT workflow.
 
-Behavior notes per Recipe:
-- `soc2`: SOC2 Type I (design effectiveness) / Type II (operating effectiveness) assessment. Map all 5 Trust Service Criteria (Security, Availability, Processing Integrity, Confidentiality, Privacy) to every CC control.
-- `pci`: PCI-DSS v4.0.1 all 12 requirements, CDE scope definition, SAQ/ROC preparation support. Assess against the latest version, including the 51 future-dated requirements (mandatory since March 2025).
-- `hipaa`: Technical/administrative/physical safeguard assessment + ePHI handling patterns + BAA requirement check. Factor in NPRM readiness (all safeguards mandatory, encryption required, 24h reporting) — treat NPRM as planning baseline; final rule NOT yet published as of June 2026.
-- `iso`: ISO 27001:2022 Annex A 93 controls (4 themes) mapping + SoA draft generation. Always assess against the 2022 version since the 2013 version is invalid (since October 2025).
-- `policy`: OPA/Rego policy authoring, Kyverno YAML policies, CI/CD compliance gate integration. All implementation is delegated to Builder.
-- `gdpr`: GDPR + EU AI Act regulatory mapping at article level (Art. 5/6/7/13/14/15-22/25/32/33/34), DPIA triggers, ROPA template, lawful-basis selection, SCC/BCR transfer decision, DSAR workflow, and AI Act risk tiering (prohibited / high-risk / limited / minimal). For privacy-engineering implementation (consent SDK, PII scanner, pseudonymization code) use Cloak; for cryptographic key management under Art. 32 use Crypt; for breach detection rule authoring use Vigil.
-- `audit`: Audit readiness orchestration — evidence tiering, evidence-room structure with chain-of-custody, AICPA-aligned sampling strategy, auditor interview prep, findings remediation tracking, and 48-hour drift flagging for continuous audit. For detection rule coverage that feeds CC7.2 / PCI Req 10 evidence use Vigil; for cryptographic evidence artifacts (KMS rotation logs, HSM attestations) use Crypt.
-- `vendor`: Third-party vendor risk program — inventory sweep, critical/high/medium/low tier classification, DPA/BAA/SCC contract gating, SIG/CAIQ questionnaire handling, SOC 2 report review (scope, period, CUECs, exceptions, subservice organizations), tier-driven monitoring cadence, and subprocessor chain visibility. For processor/sub-processor privacy analysis under GDPR Art. 28 pair with Cloak; for validating vendor cryptographic claims use Crypt; for vendor SDK CVE scanning use Sentinel.
+Per-Recipe behavior — full notes and cross-skill pairings -> `reference/regulatory-frameworks.md`.
+
+| Subcommand | Behavior |
+|-----------|----------|
+| `soc2` | Type I (design) / Type II (operating) effectiveness; map all 5 Trust Service Criteria to every CC control |
+| `pci` | PCI-DSS v4.0.1 all 12 requirements, CDE scope, SAQ/ROC prep — **including the 51 future-dated requirements, mandatory since March 2025** |
+| `hipaa` | Technical/administrative/physical safeguards, ePHI handling, BAA check. Treat the NPRM (all safeguards mandatory, encryption required, 24h reporting) as a planning baseline — the final rule is not yet published |
+| `iso` | ISO 27001:2022 Annex A, 93 controls in 4 themes, SoA draft. **Always the 2022 version — 2013 is invalid since October 2025** |
+| `policy` | OPA/Rego and Kyverno authoring, CI/CD compliance gates. Implementation delegates to Builder |
+| `gdpr` | Article-level GDPR mapping, DPIA triggers, ROPA, lawful basis, SCC/BCR transfers, DSAR workflow, EU AI Act risk tiering. Privacy-engineering implementation -> Cloak; Art. 32 key management -> Crypt; breach detection rules -> Vigil |
+| `audit` | Evidence tiering, evidence room with chain-of-custody, AICPA-aligned sampling, interview prep, remediation tracking, 48-hour drift flagging. Detection coverage -> Vigil; cryptographic artifacts -> Crypt |
+| `vendor` | Inventory sweep, tier classification, DPA/BAA/SCC gating, SIG/CAIQ, SOC 2 report review, monitoring cadence, subprocessor visibility. Art. 28 processor analysis -> Cloak; crypto claims -> Crypt; SDK CVEs -> Sentinel |
+
 
 ## Output Routing
 

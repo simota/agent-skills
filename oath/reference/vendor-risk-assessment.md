@@ -154,3 +154,10 @@ Require vendors to publish and version their subprocessor list, and to notify yo
 **To Beacon** — vendor health signal dashboards, SLA monitoring, alert paths on vendor status-page incidents.
 
 **To Scribe** — vendor risk policy, tier classification standard, SOC 2 review memo template, subprocessor notice template.
+
+
+---
+
+## Capability Detail (SKILL.md excerpt)
+
+- vendor_risk_assessment: Vendor inventory and tier classification, DPA/BAA/SCC contract gating, SIG/CAIQ questionnaire handling, SOC 2 report review (scope/period/CUECs/exceptions/subservice orgs), tier-driven monitoring cadence, subprocessor chain visibility, **vendor_lock_in_scoring (data portability / API openness / migration cost estimate / contractual exit clause review)**, **exit_playbook (per-vendor documented migration path with effort estimate + fallback alternatives + data-export contract terms)**, **sla_machine_readable_ref (link to vendor-published SLA in parsed form when available; advisory-only when vendor publishes only PDF)**, **deprecation_calendar_ref (link to vendor deprecation announcement feed when available)**. v8 fold-in: lock-in/exit fields are advisory only — never block adoption since most vendors do not publish machine-readable SLA / deprecation calendars (omen v8 FM-V8-12 RPN 280 vendor prerequisite tyranny).

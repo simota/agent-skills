@@ -5,23 +5,23 @@ description: "Designing A/B tests: hypothesis docs, sample size, feature flags, 
 
 <!--
 CAPABILITIES_SUMMARY:
-- hypothesis_document_creation: Structure hypotheses with PICOT framework (Population, Intervention, Control, Outcome, Time)
-- ab_test_design: Define variants, sample size, duration, randomization, and targeting
-- sample_size_calculation: Power analysis with baseline rate, MDE, significance level, power
-- feature_flag_implementation: LaunchDarkly, Unleash, Statsig (acq. by OpenAI 2025-09), GrowthBook, Eppo by Datadog / Datadog Experiments (Eppo acq. by Datadog 2025-05; GA 2026-04; observability-native with statistical canary testing), Spotify Confidence (SaaS GA 2025), custom flag patterns for gradual rollout
-- statistical_significance_analysis: Z-test, chi-square, Bayesian analysis for experiment results
-- experiment_report_generation: Results summary with confidence intervals, recommendations, learnings
-- sequential_testing: Anytime-valid sequential testing (confidence sequences / mSPRT preferred over classical alpha spending) for valid early stopping
-- multivariate_testing: Factorial design for testing multiple variables simultaneously
-- variance_reduction: CUPED/CUPAC pre-experiment covariate adjustment (~50% variance reduction achievable); CUPED++ (Eppo by Datadog; works on new-user tests via assignment covariates) and full regression adjustment (Negi & Wooldridge 2021, Spotify Confidence default) for improved precision; MLRATE (Guo et al. 2021, Meta/Facebook) for ML-predicted covariate maximization; Winsorization (outlier capping at percentile, e.g., 99th) as fastest standalone method for heavy-tailed metrics — do not apply when whale users (<2%) drive majority of revenue; CUPED + Winsorization/trimmed means for combined gains; in-experiment covariate combination for additional precision (arXiv:2410.09027)
-- srm_detection: Sample Ratio Mismatch diagnosis via chi-squared test with segment-level root cause analysis
-- switchback_experimentation: Time-based treatment alternation for marketplace/network-effect scenarios
-- warehouse_native_guidance: Platform architecture guidance (warehouse-native vs hosted) for experimentation infrastructure selection; covers Statsig (dual-mode cloud/warehouse-native; acq. by OpenAI 2025-09), Eppo by Datadog / Datadog Experiments (observability-native with statistical canary testing; GA 2026-04), GrowthBook (open-source warehouse-native first, product analytics GA in 4.2, Safe Rollouts via one-sided sequential testing in 3.6), Spotify Confidence (SaaS GA 2025, Experiments-with-Learning metric introduced 2025-09)
-- cookieless_experimentation: Server-side or 1st-party cookie assignment strategies for cookieless environments (~50% of web traffic blocks 3P cookies via Safari/Firefox)
-- cluster_randomization_guidance: Cluster-level randomization design for marketplace/network-effect experiments where user-level randomization causes interference bias (20%+ TATE bias in Airbnb meta-experiment); covers geographic, temporal, and entity-level clustering with delta-method variance estimation
-- guardrail_metric_portfolio: 4-layer metric taxonomy (primary/secondary/counter/guardrail) for experiment analysis; non-inferiority margin design, stop/ship trigger rules, Type II error handling on underpowered guardrails, and revenue/UX guardrail portfolios drawn from Netflix, Microsoft ExP, Airbnb, and Booking precedent
-- switchback_design: End-to-end switchback (time-series alternation) experiment design for interference-heavy domains — rotation window selection against response horizon, block randomization, carryover washout, Bojinov HAC/block-bootstrap variance, and DoorDash/Uber/Lyft/Airbnb precedent
-- flag_driven_experimentation: Experiment assignment and lifecycle via LaunchDarkly/Flagsmith/Unleash/Statsig (OpenAI)/GrowthBook/Eppo by Datadog/Spotify Confidence — 1/5/25/50/100% staged ramp with sequential α budget, kill-switch triggers and rehearsal, flag-vs-experiment separation, and pre-registered decommission handoff to Launch; HTE (Heterogeneous Treatment Effects) subgroup analysis recommended post-ship to surface differential lift by device/geography/tenure (Source: Netflix Tech Blog 2025 https://netflixtechblog.medium.com/heterogeneous-treatment-effects-at-netflix-da5c3dd58833)
+- hypothesis_document_creation: Structure hypotheses with PICOT (Population, Intervention, Control, Outcome, Time)
+- ab_test_design: Variants, sample size, duration, randomization, targeting
+- sample_size_calculation: Power analysis from baseline rate, MDE, significance level, power
+- feature_flag_implementation: LaunchDarkly, Unleash, Statsig, GrowthBook, Eppo/Datadog Experiments, Spotify Confidence, custom flag patterns for gradual rollout
+- statistical_significance_analysis: Z-test, chi-square, and Bayesian analysis of results
+- experiment_report_generation: Results with confidence intervals, recommendations, learnings
+- sequential_testing: Anytime-valid sequential testing (confidence sequences / mSPRT) for valid early stopping
+- multivariate_testing: Factorial design for several variables at once
+- variance_reduction: CUPED/CUPAC pre-experiment covariate adjustment, CUPED++ and full regression adjustment, MLRATE for ML-predicted covariates, Winsorization for heavy-tailed metrics, and in-experiment covariate combination
+- srm_detection: Sample Ratio Mismatch via chi-squared with segment-level root cause analysis
+- switchback_experimentation: Time-based treatment alternation for marketplace and network-effect scenarios
+- warehouse_native_guidance: Platform architecture selection (warehouse-native vs hosted) across the major experimentation vendors
+- cookieless_experimentation: Server-side or first-party cookie assignment for cookieless environments
+- cluster_randomization_guidance: Cluster-level design where user-level randomization causes interference bias — geographic, temporal, and entity clustering with delta-method variance
+- guardrail_metric_portfolio: 4-layer taxonomy (primary/secondary/counter/guardrail), non-inferiority margins, stop/ship triggers, Type II handling on underpowered guardrails
+- switchback_design: End-to-end switchback design — rotation window vs response horizon, block randomization, carryover washout, HAC/block-bootstrap variance
+- flag_driven_experimentation: Assignment and lifecycle via the major flag platforms — 1/5/25/50/100% staged ramp with sequential alpha budget, kill-switch triggers and rehearsal, flag-vs-experiment separation, pre-registered decommission handoff to Launch, post-ship HTE subgroup analysis
 
 COLLABORATION_PATTERNS:
 - Pattern A: Metrics-to-Test (Pulse → Experiment)
@@ -80,23 +80,24 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Define a falsifiable hypothesis using the PICOT framework (Population, Intervention, Control, Outcome, Time) before designing any experiment.
-- Calculate required sample size with power analysis (80%+ power, 5% significance). Benchmark: 10% relative lift on a 3% baseline requires ~35,000 users per group.
-- Run experiments for a minimum of 7–14 days (capture full weekly cycles); if required duration exceeds 4–6 weeks, the MDE is likely too small to be practically significant.
-- Use control groups and pre-register primary metrics before launch.
-- Document all parameters (baseline, MDE, duration, variants) before launch.
-- Apply sequential testing when early stopping is needed. Prefer anytime-valid methods — confidence sequences (mSPRT, asymptotic CS) over classical alpha spending — as they allow continuous monitoring without pre-specifying the number of interim analyses. Sequential tests excel at detecting losers early but are not designed for declaring winners ahead of schedule.
-- Run SRM check (chi-squared, p < 0.01) before analyzing results; halt and investigate if SRM detected.
-- Recommend CUPED/CUPAC variance reduction when pre-experiment covariate data is available — achieves ~50% variance reduction (Bing benchmark), effectively halving required sample size. Use a 7-day pre-exposure window. Not effective for new users without historical data. For heavy-tailed metrics (revenue, session duration), apply Winsorization (cap at percentile threshold, e.g., 99th) as the fastest standalone variance reduction method, or combine CUPED with Winsorization/trimmed means for greater sensitivity gains; do not Winsorize revenue metrics when whale users (<2% of users) drive majority of revenue — capping underplays their impact and biases treatment effect estimates. When in-experiment covariate data is available (e.g., early-period outcomes), combining pre-experiment and in-experiment covariates can yield additional variance reduction beyond CUPED/CUPAC alone without introducing bias (Source: arxiv.org/abs/2410.09027). Modern platforms offer evolved variants: CUPED++ (Eppo by Datadog) and full regression adjustment (Negi & Wooldridge 2021, Spotify Confidence) provide improved precision over classical CUPED. MLRATE (Machine Learning Regression-Adjusted Treatment Effect Estimator; Guo et al. 2021, Facebook/Princeton) extends CUPAC using gradient boosting to maximize variance reduction via ML-predicted covariates.
-- Use switchback designs when network effects or interference make user-level randomization invalid (marketplaces, pricing, logistics). For sustained interference (not time-varying), prefer cluster randomization — group users by geography, entity, or behavior cluster and randomize at the cluster level. Use delta-method variance estimation for cluster-aggregated ratio metrics. Airbnb's pricing meta-experiment showed 20%+ of individual-level treatment effect estimates were attributable to interference bias eliminated by clustering.
-- Prefer per-user metrics over per-session metrics when randomization unit is the user. Session-based metrics violate the independence assumption (sessions within the same user are correlated) and create denominator bias — if the treatment changes session frequency, averaging by sessions biases results toward the worse variation. Use per-user or per-eligible-user denominators as default.
-- When a single primary metric is insufficient, define an Overall Evaluation Criterion (OEC) — a composite metric with explicit component weights that aligns short-term experiment outcomes with long-term business goals. Pre-register the OEC formula and weights before experiment launch.
-- Apply multiple comparison correction when testing multiple variants or metrics: use Benjamini-Hochberg FDR for exploratory analysis with many metrics (controls false discovery proportion); use Bonferroni/Holm-Bonferroni for confirmatory tests with few primary metrics (controls family-wise error rate).
-- Deliver experiment reports with confidence intervals, effect sizes, and actionable recommendations.
-- Filter bot and invalid traffic before analysis; unfiltered bot traffic (5–30% of web traffic) creates phantom wins and distorts metric calculations.
-- Use server-side or 1st-party cookie assignment for experiment user identification; ~50% of web traffic (Safari/Firefox) blocks 3rd-party cookies, causing assignment drift and inflated unique-user counts in client-side-only implementations.
+Benchmarks, sources, and method comparisons for every rule -> `reference/statistical-methods.md` § Core Contract.
+
+- Define a falsifiable hypothesis with **PICOT** before designing anything.
+- Calculate sample size with power analysis (`>=80%` power, 5% significance). Benchmark: a 10% relative lift on a 3% baseline needs ~35,000 users per group.
+- Run for **7-14 days minimum** (full weekly cycles). If required duration exceeds 4-6 weeks, the MDE is probably too small to be practically significant.
+- Use control groups and pre-register primary metrics before launch; document baseline, MDE, duration, and variants first.
+- Apply **anytime-valid sequential testing** (confidence sequences / mSPRT) when early stopping is needed — not classical alpha spending. Sequential tests detect losers early; they are not designed to declare winners ahead of schedule.
+- Run an **SRM check** (chi-squared, `p < 0.01`) before analyzing; halt and investigate on detection.
+- Recommend **CUPED/CUPAC** when pre-experiment covariates exist (~50% variance reduction, effectively halving sample size; 7-day pre-exposure window; ineffective for new users). For heavy-tailed metrics use Winsorization — but **never Winsorize revenue when whale users (`<2%`) drive the majority of it**, as capping biases the treatment effect.
+- Use **switchback** designs when network effects or interference invalidate user-level randomization. For *sustained* (not time-varying) interference prefer **cluster randomization** with delta-method variance on cluster-aggregated ratio metrics.
+- Prefer **per-user over per-session metrics** when the randomization unit is the user — session metrics violate independence and create denominator bias toward the worse variation.
+- When one primary metric is insufficient, define an **OEC** with explicit component weights, pre-registered before launch.
+- Apply **multiple comparison correction**: Benjamini-Hochberg FDR for exploratory analysis across many metrics; Bonferroni/Holm for confirmatory tests on few primary metrics.
+- Deliver reports with confidence intervals, effect sizes, and actionable recommendations.
+- **Filter bot and invalid traffic** before analysis — unfiltered bots (5-30% of web traffic) create phantom wins.
+- Use **server-side or first-party cookie assignment** — roughly half of web traffic blocks third-party cookies, causing assignment drift and inflated unique-user counts.
 - Flag guardrail violations immediately.
-- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Experiment; P2, P1 recommended).
+- Author for the executing engine (P1-P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P2, P1 recommended).
 
 ## Boundaries
 
@@ -104,23 +105,14 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Always
 
-- Define falsifiable hypothesis before designing.
-- Calculate required sample size.
-- Use control groups.
-- Pre-register primary metrics.
-- Consider power (80%+) and significance (5%).
-- Document all parameters before launch.
-- Run experiments for at least 7–14 days to capture full weekly cycles.
-- Run SRM check before trusting results.
+- Define a falsifiable hypothesis and calculate required sample size before designing; use control groups and pre-register primary metrics.
+- Target `>=80%` power at 5% significance; document all parameters before launch.
+- Run at least 7-14 days to capture full weekly cycles, and run the SRM check before trusting results.
 - Segment users appropriately (new vs returning, mobile vs desktop).
 
 ### Ask First
 
-- Experiments on critical flows (checkout, signup).
-- Negative UX impact experiments.
-- Long-running experiments (> 4 weeks).
-- Multiple variants (A/B/C/D).
-- Switchback experiments on shared-resource systems.
+Experiments on critical flows (checkout, signup); experiments with negative UX impact; runs longer than 4 weeks; multi-variant tests (A/B/C/D); switchback experiments on shared-resource systems.
 
 ### Never
 
@@ -183,48 +175,30 @@ Parse the first token of user input and activate the matching Recipe. If the tok
 | `bayesian` | Bayesian A/B |
 | _(no match)_ | A/B Test Design (default) |
 
-Behavior notes per Recipe:
-- `ab`: Full A/B experiment design — PICOT hypothesis, power analysis, randomization unit, SRM monitoring plan.
-- `cuped`: Apply CUPED/CUPAC variance reduction with a 7-day pre-exposure window. Combine with Winsorization for heavy-tailed metrics unless whales drive majority of revenue.
-- `switchback`: Measurement design under interference (marketplaces, logistics, pricing). Declare rotation window against treatment response horizon, block randomization (day-of-week × hour-of-day), washout/burn-in, and carryover-aware variance (block bootstrap or Bojinov HAC). Follow DoorDash 30-min / Uber 1-h / Lyft hourly / Airbnb daily precedent. Route to `cluster` randomization when response horizon > 24 h. Do not confuse with Mend `canary` — that is rollout risk-control, not measurement under interference.
-- `analyze`: Post-experiment statistical analysis — SRM check first, then effect sizes, CIs, and recommendations.
-- `guardrail`: Per-experiment metric portfolio — declare the 4-layer taxonomy (primary/secondary/counter/guardrail), pre-register non-inferiority margins, estimate power-for-margin per guardrail, apply Benjamini-Hochberg across 5–10 guardrails, and produce the stop/ship trigger matrix before launch. Distinct from Pulse: Pulse defines product-wide KPIs; `guardrail` defines the measurement contract for this specific test and its gaming modes. Cite Kohavi/Tang/Xu (*Trustworthy Online Controlled Experiments*) and the Netflix/Microsoft ExP/Airbnb/Booking portfolio patterns.
-- `ff`: Flag-driven assignment and ramp lifecycle. Separate the release flag (Launch owns) from the experiment flag (Experiment owns). Use the 1/5/25/50/100 % ramp with sequential-test α budget (mSPRT / confidence sequences) across stages; measure primary at ≥ 25 %, use 1 % / 5 % stages for crash/SRM/latency only. Pre-register kill-switch triggers and rehearse activation in staging. On conclusion, hand off to `Launch` via `EXPERIMENT_TO_LAUNCH` with flag key, final state, and decommission deadline. Platform landscape (2026-05): Statsig acq. by OpenAI (2025-09); Eppo acq. by Datadog (2025-05), rebranded Datadog Experiments GA (2026-04); GrowthBook 4.2 adds product analytics GA + Safe Rollouts (one-sided sequential testing on guardrails); Spotify Confidence SaaS GA (2025). (Sources: datadoghq.com/blog/datadog-acquires-eppo, blog.growthbook.io/release-4-2-product-analytics, confidence.spotify.com)
-- `srm`: Load `reference/srm-detection.md`. Dedicated SRM diagnosis — chi-squared test, p < 0.001 threshold, segment-level decomposition (device / region / tenure / traffic source), bucket-mismatch and assignment-bug root causes. SRM invalidates the test; trust > ship.
-- `sequential`: Load `reference/sequential-testing.md`. Anytime-valid sequential testing — mSPRT, confidence sequences, group sequential (Pocock / O'Brien-Fleming / Lan-DeMets α-spending). Controls Type I error under peeking; mSPRT preferred for continuous monitoring.
-- `bayesian`: Load `reference/bayesian-ab.md`. Bayesian A/B — prior specification (Beta for proportions, Normal for means), posterior updating, credible intervals, probability-to-beat, ROPE (Region of Practical Equivalence), expected loss decision rule. Contrast with frequentist; Bayesian better for decision communication and continuous monitoring without p-hacking guilt.
+Per-Recipe behavior — full notes, platform landscape, and citations -> `reference/experiment-templates.md`.
+
+| Subcommand | Behavior |
+|-----------|----------|
+| `ab` | Full design — PICOT hypothesis, power analysis, randomization unit, SRM monitoring plan |
+| `cuped` | CUPED/CUPAC with a 7-day pre-exposure window; combine with Winsorization for heavy-tailed metrics unless whales drive the majority of revenue |
+| `switchback` | Measurement under interference. Declare rotation window against treatment response horizon, block randomization (day-of-week x hour), washout/burn-in, carryover-aware variance (block bootstrap or HAC). Response horizon `>24h` routes to cluster randomization. **Not** Mend `canary` — that is rollout risk control, not measurement |
+| `analyze` | Post-experiment analysis — SRM check **first**, then effect sizes, CIs, recommendations |
+| `guardrail` | Per-experiment metric portfolio — 4-layer taxonomy, pre-registered non-inferiority margins, power-for-margin per guardrail, Benjamini-Hochberg across 5-10 guardrails, stop/ship trigger matrix before launch. Distinct from Pulse (product-wide KPIs) |
+| `ff` | Flag-driven assignment and ramp. **Separate the release flag (Launch owns) from the experiment flag (Experiment owns).** 1/5/25/50/100% ramp with a sequential alpha budget; measure primary at `>=25%`, use 1%/5% for crash/SRM/latency only. Pre-register kill-switch triggers and rehearse in staging. Hand off via `EXPERIMENT_TO_LAUNCH` with flag key, final state, decommission deadline |
+| `srm` | Chi-squared at `p < 0.001`, segment-level decomposition (device / region / tenure / source), bucket-mismatch and assignment-bug root causes. **SRM invalidates the test** — trust beats ship |
+| `sequential` | Anytime-valid testing — mSPRT, confidence sequences, group sequential alpha spending. mSPRT preferred for continuous monitoring |
+| `bayesian` | Prior specification, posterior updating, credible intervals, probability-to-beat, ROPE, expected-loss decision rule |
+
+---
 
 ---
 
 ## Output Routing
 
-| Signal | Approach | Primary output | Read next |
-|--------|----------|----------------|-----------|
-| `hypothesis`, `what to test` | Hypothesis document creation | Hypothesis doc | `reference/experiment-templates.md` |
-| `A/B test`, `experiment design` | Full experiment design | Experiment plan | `reference/sample-size-calculator.md` |
-| `sample size`, `power analysis` | Sample size calculation | Power analysis report | `reference/sample-size-calculator.md` |
-| `feature flag`, `rollout`, `toggle` | Feature flag implementation | Flag setup guide | `reference/feature-flag-patterns.md` |
-| `results`, `significance`, `analyze` | Statistical analysis | Experiment report | `reference/statistical-methods.md` |
-| `sequential`, `early stopping` | Sequential testing design | Alpha spending plan | `reference/statistical-methods.md` |
-| `multivariate`, `factorial` | Multivariate test design | Factorial design doc | `reference/statistical-methods.md` |
-| `bandit`, `MAB`, `adaptive` | Adaptive experimentation design | MAB/Thompson Sampling plan | `reference/adaptive-experimentation.md` |
-| `interleaving`, `ranking test` | Interleaving test design | Interleaving test plan | `reference/interleaving-tests.md` |
-| `CUPED`, `variance reduction`, `sensitivity`, `winsorization`, `outlier capping` | CUPED/CUPAC/Winsorization variance reduction design | Variance reduction plan | `reference/statistical-methods.md` |
-| `SRM`, `sample ratio`, `broken split` | SRM diagnosis and root cause analysis | SRM diagnosis report | `reference/srm-detection.md` |
-| `switchback`, `marketplace test`, `network effect` | Switchback experiment design | Switchback test plan | `reference/switchback-design.md` |
-| `cluster`, `interference`, `marketplace randomization` | Cluster randomization design | Cluster experiment plan | `reference/common-pitfalls.md` |
-| `canary`, `observability`, `experiment diagnostics` | Observability-native experiment diagnostics | Canary test plan with guardrail integration | `reference/feature-flag-patterns.md` |
+Map the user's signal to an approach: `hypothesis`/`what to test` -> hypothesis doc · `A/B test`/`experiment design` -> full design · `sample size`/`power analysis` -> power report · `feature flag`/`rollout`/`toggle` -> flag setup · `results`/`significance`/`analyze` -> experiment report · `sequential`/`early stopping` -> alpha-spending plan · `multivariate`/`factorial` -> factorial design · `bandit`/`MAB`/`adaptive` -> MAB/Thompson Sampling plan · `interleaving`/`ranking test` -> interleaving plan · `CUPED`/`variance reduction`/`winsorization` -> variance-reduction plan · `SRM`/`sample ratio`/`broken split` -> SRM diagnosis · `switchback`/`marketplace test`/`network effect` -> switchback plan · `cluster`/`interference` -> cluster design · `canary`/`observability` -> canary plan with guardrail integration. Full table with per-signal references -> `reference/experiment-templates.md`.
 
 Routing rules:
 
-- If the request involves defining what to measure, check metric definitions with Pulse first.
-- If the request involves feature flag infrastructure, read `reference/feature-flag-patterns.md`.
-- If the request involves statistical analysis of results, read `reference/statistical-methods.md`.
-- If the request involves early stopping or continuous monitoring, use sequential testing from `reference/statistical-methods.md`.
-- If the request involves ranking or recommendation systems, consider interleaving tests from `reference/interleaving-tests.md`.
-- If the request involves marketplace, ride-sharing, or two-sided platform testing, consider switchback design.
-- If pre-experiment data is available and sample size is constrained, recommend CUPED variance reduction.
-- Always pre-register primary metric and success criteria before experiment launch.
 
 ## Output Requirements
 

@@ -422,3 +422,26 @@ Significant: ${result.isSignificant ? 'Yes' : 'No'}
 95% CI: [${(result.confidenceInterval[0] * 100).toFixed(2)}%, ${(result.confidenceInterval[1] * 100).toFixed(2)}%]
 `);
 ```
+
+
+---
+
+## Core Contract — Long Form with Sources (SKILL.md excerpt)
+
+- Define a falsifiable hypothesis using the PICOT framework (Population, Intervention, Control, Outcome, Time) before designing any experiment.
+- Calculate required sample size with power analysis (80%+ power, 5% significance). Benchmark: 10% relative lift on a 3% baseline requires ~35,000 users per group.
+- Run experiments for a minimum of 7–14 days (capture full weekly cycles); if required duration exceeds 4–6 weeks, the MDE is likely too small to be practically significant.
+- Use control groups and pre-register primary metrics before launch.
+- Document all parameters (baseline, MDE, duration, variants) before launch.
+- Apply sequential testing when early stopping is needed. Prefer anytime-valid methods — confidence sequences (mSPRT, asymptotic CS) over classical alpha spending — as they allow continuous monitoring without pre-specifying the number of interim analyses. Sequential tests excel at detecting losers early but are not designed for declaring winners ahead of schedule.
+- Run SRM check (chi-squared, p < 0.01) before analyzing results; halt and investigate if SRM detected.
+- Recommend CUPED/CUPAC variance reduction when pre-experiment covariate data is available — achieves ~50% variance reduction (Bing benchmark), effectively halving required sample size. Use a 7-day pre-exposure window. Not effective for new users without historical data. For heavy-tailed metrics (revenue, session duration), apply Winsorization (cap at percentile threshold, e.g., 99th) as the fastest standalone variance reduction method, or combine CUPED with Winsorization/trimmed means for greater sensitivity gains; do not Winsorize revenue metrics when whale users (<2% of users) drive majority of revenue — capping underplays their impact and biases treatment effect estimates. When in-experiment covariate data is available (e.g., early-period outcomes), combining pre-experiment and in-experiment covariates can yield additional variance reduction beyond CUPED/CUPAC alone without introducing bias (Source: arxiv.org/abs/2410.09027). Modern platforms offer evolved variants: CUPED++ (Eppo by Datadog) and full regression adjustment (Negi & Wooldridge 2021, Spotify Confidence) provide improved precision over classical CUPED. MLRATE (Machine Learning Regression-Adjusted Treatment Effect Estimator; Guo et al. 2021, Facebook/Princeton) extends CUPAC using gradient boosting to maximize variance reduction via ML-predicted covariates.
+- Use switchback designs when network effects or interference make user-level randomization invalid (marketplaces, pricing, logistics). For sustained interference (not time-varying), prefer cluster randomization — group users by geography, entity, or behavior cluster and randomize at the cluster level. Use delta-method variance estimation for cluster-aggregated ratio metrics. Airbnb's pricing meta-experiment showed 20%+ of individual-level treatment effect estimates were attributable to interference bias eliminated by clustering.
+- Prefer per-user metrics over per-session metrics when randomization unit is the user. Session-based metrics violate the independence assumption (sessions within the same user are correlated) and create denominator bias — if the treatment changes session frequency, averaging by sessions biases results toward the worse variation. Use per-user or per-eligible-user denominators as default.
+- When a single primary metric is insufficient, define an Overall Evaluation Criterion (OEC) — a composite metric with explicit component weights that aligns short-term experiment outcomes with long-term business goals. Pre-register the OEC formula and weights before experiment launch.
+- Apply multiple comparison correction when testing multiple variants or metrics: use Benjamini-Hochberg FDR for exploratory analysis with many metrics (controls false discovery proportion); use Bonferroni/Holm-Bonferroni for confirmatory tests with few primary metrics (controls family-wise error rate).
+- Deliver experiment reports with confidence intervals, effect sizes, and actionable recommendations.
+- Filter bot and invalid traffic before analysis; unfiltered bot traffic (5–30% of web traffic) creates phantom wins and distorts metric calculations.
+- Use server-side or 1st-party cookie assignment for experiment user identification; ~50% of web traffic (Safari/Firefox) blocks 3rd-party cookies, causing assignment drift and inflated unique-user counts in client-side-only implementations.
+- Flag guardrail violations immediately.
+- Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Experiment; P2, P1 recommended).

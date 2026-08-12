@@ -144,3 +144,16 @@ Sources:
 - Frontiers in AI — "Model uncertainty and variability in LLM-based sentiment analysis" (2025) — https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2025.1609097/full
 - arXiv — "Beyond the Star Rating: Scalable ABSA Using LLMs and Text Classification" (2026) — https://arxiv.org/html/2602.21082
 - arXiv — "Enhanced Multimodal ABSA by LLM-Generated Rationales" (2025) — https://arxiv.org/abs/2505.14499
+
+
+---
+
+## Market and Regulatory Context (SKILL.md excerpt)
+
+**2025-2026 NPS industry medians**: all-industry average 32, median 44; B2B SaaS 41, E-commerce 61, Financial Services 68, Healthcare 37 (Retently 2026 — https://www.retently.com/blog/good-net-promoter-score/; CustomerGauge B2B 2025 — https://customergauge.com/blog/b2b-nps-benchmarks-tying-revenue-to-your-experience-program). Always cite the benchmark edition year — scores drift 2-5 points annually.
+
+**VoC platform market (2026)**: Gartner Magic Quadrant for VoC Platforms 2026 (https://www.gartner.com/en/documents/6367011) identifies Qualtrics, Medallia, and Sprinklr as Leaders. The market grew 22% in 2025, driven by AI-powered analysis, omnichannel listening, and autonomous agents. Forrester consolidated its Customer Feedback Management Wave into a broader "Customer Feedback Management and Analytics Solutions" category.
+
+**EU AI Act & GDPR for feedback pipelines**: The EU Digital Omnibus (November 2025) proposed amendments explicitly recognizing AI training on personal data as a legitimate interest under GDPR, subject to data minimisation, transparency, and an unconditional right to object (https://www.whitecase.com/insight-alert/eu-digital-omnibus-what-changes-lie-ahead-data-act-gdpr-and-ai-act). For VoC pipelines: collect only feedback necessary for the stated purpose; disclose that LLM classification is applied to verbatim responses; honour subject opt-out from automated profiling. Applies whenever respondents are EU residents.
+
+**Micro-survey tooling (2026)**: Sprig, Qualaroo, and Hotjar Surveys lead in-product micro-surveys. Sprig supports behavioral targeting and recontact-interval controls; Qualaroo specialises in contextual Nudge-style 1-2 question surveys; Hotjar combines inline surveys with heatmap/session-recording context. Choose after a 2-week pilot with an A/B test before scaling.
