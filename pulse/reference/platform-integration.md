@@ -203,3 +203,12 @@ function CheckoutButton() {
   return <button onClick={handleClick}>Checkout</button>;
 }
 ```
+
+
+---
+
+## Capability Detail (SKILL.md excerpt)
+
+- analytics_platform_integration: GA4 (incl. Analytics Advisor AI, cross-channel budgeting, 2026-06-15 consent split), Amplitude (Ask Amplitude AI, session replay, heatmaps, $49 Plus tier; AMPL on NASDAQ since 2021-09-28), Mixpanel (2025-02 pricing rebuild — 1M events/mo free, Spark AI + MCP Server, re-launched experimentation/feature flags late 2025), PostHog (all-in-one + PostHog AI agent), Heap (now Contentsquare since 2023-12-07), Statsig (under OpenAI since 2025-09-02, $1.1B), Snowplow (SLULA license since 2024-01-08 — not Apache 2.0); server-side GTM v3.2.0+ and Consent Mode v2; auto-capture vs manual instrumentation tradeoff
+
+- semantic_metric_schema: Machine-readable KPI definition contract — every named metric (e.g. `active_user`, `activation_rate`, `retention`, `engagement`) MUST declare `formal_definition`, `event_source` (specific event names + identity source), `exclusion_rules` (internal_user / test_account / bot / deleted_account / preview_session), `bot_filter_method` (UA + behavior heuristic + IP allowlist), `dupe_detection` (idempotency key / dedup window / event-source hash), `polysemy_caveats` (legitimate cross-team variants per `lore.concept_consistency_audit` rule — e.g. Marketing-MAU vs Product-engaged-30d are recorded as parallel definitions, never forced into single canonical form). Anchors the Data Reality / Semantic Metrics Layer (Round 8 proposal intent) to existing pulse capability; consumes Insight Ledger `category: metric_definition` (v8 schema extension). v8 fold-in.

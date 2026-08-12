@@ -182,3 +182,19 @@ async function getPerformanceMetrics(client: CDPSession) {
 | `execution-templates.md` | Execution phase templates, wait strategies, error handling |
 | `data-extraction.md` | Data extraction patterns, form operations, authentication |
 | `video-recording.md` | Recording configuration, best practices, file management |
+
+
+---
+
+## Playwright MCP Server — Long Form (SKILL.md excerpt)
+
+Playwright MCP operates on **structured accessibility snapshots** (not pixel-based screenshots), enabling deterministic element identification via refs. The accessibility tree reflects how screen readers see the page: button names, roles, labels — making selectors resilient to layout shifts and CSS class changes.
+
+**Snapshot mode** (default) handles ~95% of web automation. **Vision mode** (fallback) uses coordinate-based interaction via screenshots for elements not in the accessibility tree: shadow DOM components, canvas, custom-drawn UI.
+
+**Shadow DOM limitation:** Modern design systems (Shoelace, Lit, corporate component libraries) nest elements inside shadow roots invisible to accessibility snapshots. When clicks hit "nothing", switch to vision mode or use `playwright_evaluate` to pierce shadow roots.
+
+**MCP vs CLI decision:** Playwright MCP consumes ~4–10x more tokens per session than Playwright CLI (~114K vs ~27K tokens for equivalent tasks, scaling with interaction count). Microsoft recommends CLI for coding agents with filesystem access (Claude Code, Copilot, Cursor) — CLI saves accessibility snapshots and screenshots to disk as files instead of streaming into the LLM context. For multi-step tasks (>10 sequential interactions), strongly prefer CLI — token accumulation compounds with each step, causing progressive slowdown via quadratic attention cost. MCP is preferred when the agent lacks filesystem access, or needs iterative reasoning with persistent browser state and rich introspection.
+
+**Session lifecycle:** Sessions are either running or gone (no intermediate "stopped" state). Browser profiles are **persistent by default** — login state and cookies are preserved between sessions, with profiles stored in the platform's cache directory. Use `--no-persistent` for ephemeral sessions when you need a clean slate (e.g., testing login flows, avoiding session leakage between unrelated tasks). Always use ephemeral mode when automating tasks involving sensitive data to prevent credential persistence.
+

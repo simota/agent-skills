@@ -77,8 +77,8 @@ Route elsewhere when the task is primarily:
 ## Core Contract
 
 - Verify Playwright MCP server availability before any browser operation.
-- Prefer accessibility snapshots (snapshot mode) over pixel-based screenshots for element identification — operate on structured accessibility tree data with deterministic element refs, not vision models.
-- Fall back to vision mode (coordinate-based interaction via screenshots) when snapshot mode fails: shadow DOM-heavy components (Shoelace, Lit, Web Components), canvas elements, or custom-drawn UI where the accessibility tree lacks element representation.
+- Prefer accessibility snapshots over pixel-based screenshots — operate on structured accessibility-tree data with deterministic element refs, not vision models.
+- Fall back to vision mode when snapshot mode fails: shadow-DOM-heavy components, canvas elements, or custom-drawn UI absent from the accessibility tree.
 - Use role-based selectors (`getByRole`, `getByLabel`, `getByPlaceholder`) or `data-testid` attributes; avoid deeply chained CSS selectors that break when intermediate containers change.
 - Wait for page load and use explicit waits (not arbitrary timeouts) before every interaction. Default navigation timeout: 30s; element wait timeout: 10s; maximum page load timeout: 90s.
 - Screenshot after every significant operation for evidence and audit trail.
@@ -89,12 +89,12 @@ Route elsewhere when the task is primarily:
 - Document each step of the execution for reproducibility.
 - Respect rate limits: insert jittered delays (base + random 20-50%) between requests; pure exponential backoff is detectable by sophisticated anti-bot systems.
 - Check for public API availability before resorting to scraping — API access is always more reliable and maintainable.
-- Respect robots.txt and all opt-out signals (machine-readable and plain-text ToS) — EU AI Act (full enforcement August 2026) requires respecting content owner signals for AI data usage; German courts have ruled that plain-text ToS opt-out constitutes valid reservation of rights, not only machine-readable signals.
-- Choose MCP vs CLI by agent capability: use Playwright CLI (4–10x fewer tokens — ~27K vs ~114K per session, scaling with step count) when the agent has filesystem access (Claude Code, Copilot, Cursor); for multi-step tasks (>10 sequential interactions), strongly prefer CLI — token accumulation compounds per step causing progressive slowdown; use MCP when the agent lacks filesystem access or needs iterative reasoning with persistent browser state.
-- When using MCP, focus on the core 8 tools that handle ~80% of tasks (navigate, snapshot, click, fill, select_option, press_key, wait, screenshot) — exposing all 26+ MCP tools inflates context and slows agent reasoning; load additional tools only when the core set is insufficient.
-- When the active path is Vision Mode (screenshot-driven) or the official `computer_20251124` tool, apply the resolution / thinking-level / context-management rules in `reference/computer-use-optimization.md` — pre-downscaling screenshots to model-preferred resolution (Sonnet 5 → 1280×720, Opus 5 → 1080p) is the single highest-impact optimization, and placing the text instruction **before** the screenshot measurably improves click precision. These rules do **not** apply to default accessibility-snapshot mode.
+- Respect robots.txt and all opt-out signals, **including plain-text ToS** — courts have held that a plain-text opt-out is a valid reservation of rights, not only machine-readable signals.
+- **Choose MCP vs CLI by agent capability**: prefer the Playwright **CLI** when the agent has filesystem access (4-10x fewer tokens) and especially for multi-step tasks (`>10` interactions, where token accumulation compounds per step); use **MCP** when the agent lacks filesystem access or needs iterative reasoning with persistent browser state.
+- Under MCP, expose only the **core 8 tools** (navigate, snapshot, click, fill, select_option, press_key, wait, screenshot) that cover ~80% of tasks — exposing all 26+ inflates context and slows reasoning.
+- In **Vision Mode** or with the official computer-use tool, apply `reference/computer-use-optimization.md`: pre-downscaling screenshots to the model-preferred resolution is the highest-impact optimization, and placing the text instruction **before** the screenshot measurably improves click precision. These rules do **not** apply to default accessibility-snapshot mode.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P6 critical for Vector; P2, P1 recommended).
-- Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
+- Apply `_common/CODE_QUALITY.md` to every code change — seven axes (SLD/SEC/RDB/MNT/TST/PRF/SCL), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
 ---
 
@@ -225,15 +225,16 @@ Every deliverable must include:
 
 ### Playwright MCP Server (Preferred)
 
-Playwright MCP operates on **structured accessibility snapshots** (not pixel-based screenshots), enabling deterministic element identification via refs. The accessibility tree reflects how screen readers see the page: button names, roles, labels — making selectors resilient to layout shifts and CSS class changes.
+Playwright MCP operates on **structured accessibility snapshots**, giving deterministic element refs that survive layout shifts and CSS class changes. **Snapshot mode** (default) handles ~95% of web automation; **vision mode** is the coordinate-based fallback for elements absent from the accessibility tree.
 
-**Snapshot mode** (default) handles ~95% of web automation. **Vision mode** (fallback) uses coordinate-based interaction via screenshots for elements not in the accessibility tree: shadow DOM components, canvas, custom-drawn UI.
+**Shadow DOM limitation** — modern design systems nest elements inside shadow roots invisible to snapshots. When clicks hit nothing, switch to vision mode or pierce shadow roots with `playwright_evaluate`.
 
-**Shadow DOM limitation:** Modern design systems (Shoelace, Lit, corporate component libraries) nest elements inside shadow roots invisible to accessibility snapshots. When clicks hit "nothing", switch to vision mode or use `playwright_evaluate` to pierce shadow roots.
+**MCP vs CLI** — MCP costs roughly 4-10x more tokens per session than the CLI, which writes snapshots and screenshots to disk instead of streaming them into context. Prefer the CLI for coding agents with filesystem access, and strongly prefer it beyond ~10 sequential interactions where token accumulation compounds. Prefer MCP when the agent lacks filesystem access or needs persistent browser state and rich introspection.
 
-**MCP vs CLI decision:** Playwright MCP consumes ~4–10x more tokens per session than Playwright CLI (~114K vs ~27K tokens for equivalent tasks, scaling with interaction count). Microsoft recommends CLI for coding agents with filesystem access (Claude Code, Copilot, Cursor) — CLI saves accessibility snapshots and screenshots to disk as files instead of streaming into the LLM context. For multi-step tasks (>10 sequential interactions), strongly prefer CLI — token accumulation compounds with each step, causing progressive slowdown via quadratic attention cost. MCP is preferred when the agent lacks filesystem access, or needs iterative reasoning with persistent browser state and rich introspection.
+**Session lifecycle** — sessions are running or gone; there is no stopped state. Browser profiles are **persistent by default**, preserving login state and cookies. Use `--no-persistent` for a clean slate, and **always** for tasks involving sensitive data, to prevent credential persistence.
 
-**Session lifecycle:** Sessions are either running or gone (no intermediate "stopped" state). Browser profiles are **persistent by default** — login state and cookies are preserved between sessions, with profiles stored in the platform's cache directory. Use `--no-persistent` for ephemeral sessions when you need a clean slate (e.g., testing login flows, avoiding session leakage between unrelated tasks). Always use ephemeral mode when automating tasks involving sensitive data to prevent credential persistence.
+Full rationale, token measurements, and profile paths -> `reference/playwright-cdp.md`.
+
 
 | Operation | MCP Tool | Description |
 |-----------|----------|-------------|

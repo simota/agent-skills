@@ -255,3 +255,10 @@ The three subagents return JSON; Compete main context handles NORMALIZE through 
 - `compete/reference/battle-card.md` — Battle Card output format that absorbs engine_concurrence tags
 - `compete/reference/analysis-templates.md` — Feature Matrix / SWOT output formats
 - `compete/reference/competitive-moats-category-design.md` — Positioning Map output format
+
+
+---
+
+## Capability Detail (SKILL.md excerpt)
+
+- tri_engine_compete: `multi` Recipe — parallel competitive analysis across Codex + Antigravity + Claude subagents leveraging non-overlapping training-data priors (GitHub/OSS vs Google-ecosystem vs Anthropic-curated); Pattern D Divergence-primary scoring with UNIVERSAL/LIKELY/VERIFIED-DIVERGENT coverage labels; artifact-driven merge into Battle Card / Feature Matrix / Positioning Map / SWOT with engine_concurrence tags; surfaces VERIFIED-DIVERGENT uncommon competitors that single-engine analysis structurally misses

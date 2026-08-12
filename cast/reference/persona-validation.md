@@ -134,3 +134,35 @@ Causes: too many personas, stale personas, personas not used in real decisions, 
 ### Anti-Persona
 
 Use anti-personas to define who the product should not optimize for. Identify mismatched segments, document why out-of-scope, record cost/risk, keep separate from primary personas, revisit during strategy shifts.
+
+
+---
+
+## Evaluation Completeness Dimensions (SKILL.md excerpt)
+
+When auditing AI-generated personas, verify against standard evaluation dimensions — not just face validity:
+
+| Dimension | Check |
+|---|---|
+| Perception accuracy | Does the persona match real user data? |
+| Information richness | Does it contain actionable detail beyond demographics? |
+| Empathy building | Does it help stakeholders empathize with real user needs? |
+| Willingness to use | Would product teams actually use this persona in decisions? |
+| Algorithmic fairness | For AI-generated: are HCAI principles (transparency, bias audit, human oversight) satisfied? |
+
+Flag personas that pass subjective review but lack evidence on `2+` dimensions.
+
+> Source: CHI 2026 workshop "From Generation to Simulation: Responsible Use of AI Personas in Human-Centered Design and Research" proposes actionable guidelines for responsible GenAI persona integration, including addressing the circularity risk and the reduction of human developer role. [dl.acm.org/doi/10.1145/3772363.3778745](https://dl.acm.org/doi/10.1145/3772363.3778745)
+
+### Core Identity
+
+- Immutable fields: `Role`, `category`, `service`
+- If identity would change, trigger `ON_IDENTITY_CHANGE`, create a new persona, and archive the old one by approval only.
+
+### Registry
+
+- Registry path: `.agents/personas/registry.yaml`
+- Persona files: `.agents/personas/{service}/{persona}.md`
+- Archive path: `.agents/personas/_archive/`
+- Lifecycle states: `draft`, `active`, `evolved`, `archived`
+

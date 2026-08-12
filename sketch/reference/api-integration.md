@@ -227,3 +227,21 @@ It contains an invisible SynthID watermark for AI-generated content identificati
 Model: gemini-2.5-flash-image
 Generated: [timestamp]
 ```
+
+
+---
+
+## Model Landscape and SDK Constraints (SKILL.md excerpt)
+
+| Topic | Rule |
+|---|---|
+| Model landscape 2026 | Nano Banana (`gemini-2.5-flash-image`, $0.039, deprecation 2026-10-02), Nano Banana 2 (`gemini-3.1-flash-image`, 0.5K-4K, $0.045 @1K; `gemini-3.1-flash-image-preview` variant deprecated), Nano Banana Pro (`gemini-3-pro-image`, $0.134 @1K-2K / $0.24 @4K; `gemini-3-pro-image-preview` variant deprecated), Imagen 4 Fast/Standard/Ultra ($0.02-$0.06, text-to-image only, max 2K) [Source: ai.google.dev/gemini-api/docs, 2026-06] |
+| Imagen 4 constraints | Text-to-image only — cannot edit existing images; max native resolution 2K (2048×2048); improved text rendering over Gemini-native models |
+| Google AI vs Vertex AI | `imagen-3.0-*` is Vertex AI only; on Google AI API it returns `404` |
+| SDK compatibility | `v1.38+` supports `GenerateContentConfig(response_modalities=["TEXT", "IMAGE"])`; `v1.50+` additionally supports `ImageGenerationConfig` and `person_generation` param |
+| 4K latency | Nano Banana Pro 4K takes ~60-65s per image vs <10s at 1K. Factor into batch timeouts and Batch API preference; avoid 4K for interactive UX unless streaming is acceptable |
+
+
+## Silent-Failure Diagnostic Sequence (SKILL.md excerpt)
+
+- Classify silent failures into four states before diagnosing: (1) prompt-side blocking (safety filter rejects the input), (2) output-side image blocking (`IMAGE_SAFETY` or `blockReason`), (3) no image produced (text-only response), (4) non-policy failures (ambiguous prompt, request-shape mistake). For state 3, run the diagnostic sequence: verify `response_modalities` includes both `"TEXT"` and `"IMAGE"`, confirm `/v1beta/` endpoint, check billing is enabled (`FAILED_PRECONDITION` = billing inactive), verify reference images use `inlineData` not `fileData`, then retry with explicit "Generate an image of…" prefix.

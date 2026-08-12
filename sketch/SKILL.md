@@ -84,13 +84,13 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 ### Always
 
 - Read the API key from `os.environ["GEMINI_API_KEY"]`; never inline credentials.
-- Include comprehensive error handling for network failures, quota (429), content-policy blocks (`IMAGE_SAFETY`, `blockReason: OTHER`), silent failures (model returns text instead of image), and 503 service errors.
-- Classify silent failures into four states before diagnosing: (1) prompt-side blocking (safety filter rejects the input), (2) output-side image blocking (`IMAGE_SAFETY` or `blockReason`), (3) no image produced (text-only response), (4) non-policy failures (ambiguous prompt, request-shape mistake). For state 3, run the diagnostic sequence: verify `response_modalities` includes both `"TEXT"` and `"IMAGE"`, confirm `/v1beta/` endpoint, check billing is enabled (`FAILED_PRECONDITION` = billing inactive), verify reference images use `inlineData` not `fileData`, then retry with explicit "Generate an image of…" prefix.
+- Handle network failures, quota (429), content-policy blocks (`IMAGE_SAFETY`, `blockReason`), silent failures (text instead of image), and 503 errors.
+- Classify silent failures into four states before diagnosing: prompt-side blocking, output-side image blocking, no image produced (text-only response), and non-policy failures. The state-3 diagnostic sequence (response_modalities, endpoint, billing, reference-image encoding, explicit prefix retry) -> `reference/api-integration.md`.
 - Document SynthID watermarking (invisible, non-removable, embedded via Tournament Sampling during generation).
 - Add `.env` and `.gitignore` guidance to protect API keys.
 - Add `# Content policy:` comments when the prompt is policy-sensitive.
 - Set `person_generation: DONT_ALLOW` by default (SDK `v1.50+`).
-- Parse response by iterating over `candidate.content.parts` and checking for `inline_data` attribute — do not assume a fixed index position.
+- Parse responses by iterating `candidate.content.parts` and checking for `inline_data` — never assume a fixed index.
 - Generate `metadata.json` with seed, model, prompt, parameters, cost estimate, and timestamp.
 
 ### Ask First
@@ -104,9 +104,9 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ### Never
 
-- Hardcode API keys, tokens, or credentials — leaked keys can incur unbounded billing; Google AI API keys are project-scoped and cannot be revoked per-key.
-- Bypass or suppress content safety filters — Google enforces policy server-side; circumvention attempts result in account suspension.
-- Omit API error handling — silent failures are common; unhandled 429 errors cause cascading retries that exhaust quotas.
+- Hardcode API keys or credentials — leaked keys incur unbounded billing and are project-scoped, not revocable per key.
+- Bypass or suppress content safety filters — policy is enforced server-side and circumvention risks account suspension.
+- Omit API error handling — silent failures are common and unhandled 429s cascade into quota exhaustion.
 - Execute the API request directly — Sketch delivers code only.
 - Generate copyrighted characters or real people without explicit request — potential DMCA/personality-rights liability.
 - Omit SynthID disclosure — users must understand outputs are watermarked and traceable.
@@ -124,12 +124,8 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Topic | Rule |
 | --- | --- |
 | Default model | Use `gemini-2.5-flash-image` (~$0.039/image) unless the user explicitly requires another supported path. Note: `gemini-2.5-flash-image` is scheduled for deprecation 2026-10-02 [Source: ai.google.dev/gemini-api/docs, 2026-06] |
-| Model landscape 2026 | Nano Banana (`gemini-2.5-flash-image`, $0.039, deprecation 2026-10-02), Nano Banana 2 (`gemini-3.1-flash-image`, 0.5K-4K, $0.045 @1K; `gemini-3.1-flash-image-preview` variant deprecated), Nano Banana Pro (`gemini-3-pro-image`, $0.134 @1K-2K / $0.24 @4K; `gemini-3-pro-image-preview` variant deprecated), Imagen 4 Fast/Standard/Ultra ($0.02-$0.06, text-to-image only, max 2K) [Source: ai.google.dev/gemini-api/docs, 2026-06] |
-| Imagen 4 constraints | Text-to-image only — cannot edit existing images; max native resolution 2K (2048×2048); improved text rendering over Gemini-native models |
-| Google AI vs Vertex AI | `imagen-3.0-*` is Vertex AI only; on Google AI API it returns `404` |
-| SDK compatibility | `v1.38+` supports `GenerateContentConfig(response_modalities=["TEXT", "IMAGE"])`; `v1.50+` additionally supports `ImageGenerationConfig` and `person_generation` param |
+| Model landscape 2026 | Nano Banana / Nano Banana 2 / Nano Banana Pro / Imagen 4 tiers with per-model pricing, resolution ceilings, and deprecation dates -> `reference/api-integration.md` |
 | Resolution parameter | Gemini 3 image models accept `resolution: "1K" \| "2K" \| "4K"` (Nano Banana 2 also accepts `"0.5K"`). Default is `1K`. Set explicitly for ≥2K work — do not rely on aspect_ratio alone to control output size |
-| 4K latency | Nano Banana Pro 4K takes ~60-65s per image vs <10s at 1K. Factor into batch timeouts and Batch API preference; avoid 4K for interactive UX unless streaming is acceptable |
 | responseModalities | Must be `["TEXT", "IMAGE"]` — using `["IMAGE"]` alone returns HTTP 200 with empty `parts` (silent failure) |
 | Endpoint | Must use `/v1beta/` — image generation is not available on `/v1` |
 | Prompt architecture | Use `Subject + Style + Composition + Technical`; use photographic/cinematic language (lens type, camera angle, lighting setup) for realism |
