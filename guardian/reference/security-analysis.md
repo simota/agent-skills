@@ -122,3 +122,11 @@ Code-based categories:
 - `Human`
 
 Use AI-code status to raise caution, not to replace direct security evidence.
+
+### AI-Generated Code Risk Stats
+
+- AI code introduces 2.74x more security vulnerabilities, 1.75x more logic errors, and 322% more privilege-escalation paths than human-written code (Veracode 2025: 45% of LLM samples failed OWASP Top 10).
+- AI-generated CVEs rose from 6 (Jan 2026) to 35 (Mar 2026); estimated real count 5-10x higher given underreporting.
+- 42% of all code is now AI-generated, making it the majority threat vector.
+- DORA 2025: 31% more PRs merge unreviewed under AI adoption — automated AI-review-tool approval alone is insufficient for merge.
+- AI co-authored commits leak secrets at ~2x baseline rate; 64% of leaked secrets from 2022 remain unrevoked in 2026 due to governance gaps (GitGuardian 2026).

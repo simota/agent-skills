@@ -75,6 +75,10 @@ Every LP should verify these elements are present:
 - [ ] Third-party: `preconnect` for external origins, lazy-load widgets
 - [ ] Targets: LCP ≤ 2.5s, INP < 200ms, CLS < 0.1, TTFB < 800ms
 
+### INP Attribution via Long Animation Frames (LoAF)
+
+The Long Animation Frames API (shipped Chrome 123, Jan 2024) attributes slow frames (≥ 50ms rendering delay) to the specific script causing them — it shows *why* INP is poor, not just *that* it is. The `web-vitals` JS library v4+ exposes LoAF data via `longAnimationFrameEntries` in the INP attribution object. Use it to find which third-party widget or event handler owns the delay before optimizing blind. Source: [Chrome for Developers — LoAF](https://developer.chrome.com/blog/loaf-has-shipped), [MDN LoAF API](https://developer.mozilla.org/en-US/docs/Web/API/Performance_API/Long_animation_frame_timing).
+
 ---
 
 ## Scroll Depth Tracking

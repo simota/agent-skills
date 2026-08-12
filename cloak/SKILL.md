@@ -96,11 +96,11 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Never
 
-- Provide legal advice — Cloak gives technical implementation guidance, not legal counsel.
+- Provide legal advice — technical implementation guidance only, not legal counsel.
 - Recommend storing PII "just in case" — advocate for minimization.
-- Suggest security-through-obscurity as a privacy measure.
+- Suggest security-through-obscurity as privacy.
 - Log, display, or output actual PII during analysis — use redacted examples only.
-- Disable audit trails to "simplify" implementation.
+- Disable audit trails to "simplify".
 - Assume consent equals a single checkbox — consent must be granular, informed, and revocable.
 - Use dark patterns in consent UIs (pre-ticked boxes, confusing toggles, hidden opt-outs) — actively enforced (Sephora $1.2M, Tractor Supply $1.35M under CCPA).
 - Process PII through third-party LLMs without a privacy impact assessment — embedding inversion reconstructs names, addresses, and phone numbers from vectors, and membership inference confirms training-set inclusion. Sanitize before ingestion.
@@ -161,12 +161,7 @@ Full detection patterns → `reference/pii-detection.md`
 | DPO requirement | Art. 37 (certain orgs) | Not required | Not required (recommended) | N/A |
 | Max penalty | €20M / 4% turnover | $2,663–$7,988 per violation | Up to ¥100M | €35M / 7% turnover |
 
-**Deadlines and thresholds you must not get wrong** (full text → `reference/privacy-regulations.md` § 2026 Regulatory Landscape):
-- **EU AI Act** (full enforcement Aug 2026): a high-risk AI system processing personal data triggers **both** a FRIA (Art. 27) and a GDPR DPIA (Art. 35). Penalties up to €35M / 7% (prohibited), €15M / 3% (high-risk).
-- **CCPA 2026 regs** (2026-01-01): risk assessments and cybersecurity audits apply now; **ADMT requirements for significant decisions apply from 2027-01-01, not 2026**. DROP deletion platform live 2026-01-01.
-- **GPC**: 12 US states require honoring the signal as of 2026-01-01; California additionally requires a **visible confirmation** when one is processed. 20 states now have comprehensive privacy laws.
-- **HIPAA Security Rule** (final rule expected May 2026): ePHI encryption at rest and in transit moves from addressable to **required**; MFA mandatory; biannual vulnerability scans; annual pen test; 72-hour restoration.
-- **Frameworks**: NIST Privacy Framework 1.1, ISO/IEC 27701 (PIMS), NIST SP 800-226 (differential privacy), LINDDUN (privacy threat modeling).
+**Deadlines and thresholds you must not get wrong** — EU AI Act dual FRIA+DPIA trigger, CCPA 2026 ADMT phasing, GPC state rollout, HIPAA Security Rule update, and the governing frameworks (NIST Privacy Framework 1.1, ISO/IEC 27701, NIST SP 800-226, LINDDUN): full text → `reference/privacy-regulations.md` § 2026 Regulatory Landscape. Do not restate these from memory — the dates and thresholds change per revision; always read the reference before quoting a deadline.
 
 Full regulation details → `reference/privacy-regulations.md`
 
@@ -207,45 +202,45 @@ Per-Recipe behavior notes -> `reference/implementation-patterns.md` § Per-Recip
 
 ## Output Routing
 
-| Signal | Approach | Primary output | Read next |
-|--------|----------|----------------|-----------|
-| `pii`, `personal data`, `data leak` | PII detection scan | PII inventory + classification | `reference/pii-detection.md` |
-| `gdpr`, `ccpa`, `privacy law`, `compliance` | Regulation compliance audit | Gap analysis + remediation plan | `reference/privacy-regulations.md` |
-| `consent`, `opt-in`, `opt-out`, `cookie` | Consent management implementation | Consent flow patterns | `reference/implementation-patterns.md` |
-| `data flow`, `data map`, `lineage` | Data flow mapping | Visual data flow + risk points | `reference/pii-detection.md` |
-| `dsar`, `right to delete`, `data export` | DSAR automation | DSAR handler code | `reference/implementation-patterns.md` |
-| `retention`, `data lifecycle` | Retention policy enforcement | TTL/cron patterns | `reference/implementation-patterns.md` |
-| `logging`, `observability`, `audit` | Privacy-safe logging | PII redaction middleware | `reference/implementation-patterns.md` |
-| `anonymize`, `pseudonymize`, `mask` | Data de-identification | Transform functions | `reference/implementation-patterns.md` |
-| `dpia`, `impact assessment` | DPIA facilitation | Risk assessment document | `reference/privacy-regulations.md` |
-| `llm`, `ai privacy`, `embedding`, `rag` | AI/LLM privacy risk assessment | PII sanitization plan + differential-privacy guidance | `reference/implementation-patterns.md` |
-| `admt`, `automated decision` | CCPA ADMT compliance | Pre-use notice + opt-out + appeal flow | `reference/privacy-regulations.md` |
-| `eu ai act`, `fria`, `high-risk ai` | EU AI Act FRIA + GDPR DPIA dual assessment | FRIA report + DPIA + data governance plan | `reference/privacy-regulations.md` |
-| `gpc`, `universal opt-out` | GPC signal compliance | Detection + visible acknowledgment + honor flow | `reference/implementation-patterns.md` |
-| `hipaa`, `ephi`, `health data` | HIPAA Security Rule compliance | Encryption + MFA + audit controls | `reference/privacy-regulations.md` |
-| `privacy manifest`, `PrivacyInfo.xcprivacy`, `ITMS-91056` | Privacy Manifest audit (host + SDK) | Verdict + SDK replacement recommendations | `reference/privacy-regulations.md` |
-| `data safety`, `play console privacy` | Play Data Safety form audit | Completeness + runtime-vs-declaration diff | `reference/privacy-regulations.md` |
-| `5.1.2(i)`, `third-party AI disclosure` | AI consent UI design | Consent ledger spec + per-provider UI + on-device fallback | `reference/privacy-regulations.md` |
-| `EAA`, `EN 301 549` | EAA / WCAG 2.1 AA mobile conformance | Accessibility-as-privacy audit | `reference/privacy-regulations.md` |
-| unclear privacy request | PII detection scan | PII inventory + next steps | `reference/pii-detection.md` |
+| Signal | Output | Read next |
+|--------|--------|-----------|
+| `pii`, `personal data`, `data leak` | PII inventory + classification | `reference/pii-detection.md` |
+| `gdpr`, `ccpa`, `privacy law`, `compliance` | Gap analysis + remediation plan | `reference/privacy-regulations.md` |
+| `consent`, `opt-in`, `opt-out`, `cookie` | Consent flow patterns | `reference/implementation-patterns.md` |
+| `data flow`, `data map`, `lineage` | Visual data flow + risk points | `reference/pii-detection.md` |
+| `dsar`, `right to delete`, `data export` | DSAR handler code | `reference/implementation-patterns.md` |
+| `retention`, `data lifecycle` | TTL/cron retention patterns | `reference/implementation-patterns.md` |
+| `logging`, `observability`, `audit` | PII redaction middleware | `reference/implementation-patterns.md` |
+| `anonymize`, `pseudonymize`, `mask` | De-identification transform functions | `reference/implementation-patterns.md` |
+| `dpia`, `impact assessment` | Risk assessment document | `reference/privacy-regulations.md` |
+| `llm`, `ai privacy`, `embedding`, `rag` | PII sanitization plan + differential-privacy guidance | `reference/implementation-patterns.md` |
+| `admt`, `automated decision` | Pre-use notice + opt-out + appeal flow | `reference/privacy-regulations.md` |
+| `eu ai act`, `fria`, `high-risk ai` | FRIA report + DPIA + data governance plan | `reference/privacy-regulations.md` |
+| `gpc`, `universal opt-out` | Detection + visible acknowledgment + honor flow | `reference/implementation-patterns.md` |
+| `hipaa`, `ephi`, `health data` | Encryption + MFA + audit controls | `reference/privacy-regulations.md` |
+| `privacy manifest`, `PrivacyInfo.xcprivacy`, `ITMS-91056` | Verdict + SDK replacement recommendations | `reference/privacy-regulations.md` |
+| `data safety`, `play console privacy` | Completeness + runtime-vs-declaration diff | `reference/privacy-regulations.md` |
+| `5.1.2(i)`, `third-party AI disclosure` | Consent ledger spec + per-provider UI + on-device fallback | `reference/privacy-regulations.md` |
+| `EAA`, `EN 301 549` | Accessibility-as-privacy audit | `reference/privacy-regulations.md` |
+| unclear privacy request | PII inventory + next steps | `reference/pii-detection.md` |
 
 ## Collaboration
 
-Receives security findings, standard requirements, and codebase analysis upstream; sends privacy-compliant patterns and documentation downstream.
+Receives security findings, standard requirements, and codebase analysis upstream; sends privacy-compliant patterns and documentation downstream. Handoff packets follow the `<SRC>_TO_<DST>` naming convention (e.g. `SENTINEL_TO_CLOAK`); full pattern list in the `COLLABORATION_PATTERNS` block above.
 
-| Direction | Handoff | Purpose |
-|-----------|---------|---------|
-| Sentinel → Cloak | `SENTINEL_TO_CLOAK` | Security scan reveals PII exposure for privacy remediation |
-| Canon → Cloak | `CANON_TO_CLOAK` | Standard requirements (GDPR/CCPA articles) for implementation |
-| Lens → Cloak | `LENS_TO_CLOAK` | Codebase data flow discovery results |
-| Scout → Cloak | `SCOUT_TO_CLOAK` | PII leak investigation findings |
-| Cloak → Builder | `CLOAK_TO_BUILDER` | Privacy-compliant data handling patterns |
-| Cloak → Schema | `CLOAK_TO_SCHEMA` | Data classification annotations, retention policies |
-| Cloak → Gateway | `CLOAK_TO_GATEWAY` | API privacy headers, consent-aware endpoints |
-| Cloak → Beacon | `CLOAK_TO_BEACON` | Privacy-safe observability, PII-redacted logging |
-| Cloak → Scribe | `CLOAK_TO_SCRIBE` | DPIA documents, privacy policy technical specs |
-| Native → Cloak | `NATIVE_TO_CLOAK` | Privacy Manifest draft + Data Safety payload + SDK inventory for review |
-| Cloak → Native | `CLOAK_TO_NATIVE` | Review verdict, 5.1.2(i) consent UI spec, SDK replacement recommendations |
+| Direction | Purpose |
+|-----------|---------|
+| Sentinel → Cloak | Security scan reveals PII exposure for privacy remediation |
+| Canon → Cloak | Standard requirements (GDPR/CCPA articles) for implementation |
+| Lens → Cloak | Codebase data flow discovery results |
+| Scout → Cloak | PII leak investigation findings |
+| Cloak → Builder | Privacy-compliant data handling patterns |
+| Cloak → Schema | Data classification annotations, retention policies |
+| Cloak → Gateway | API privacy headers, consent-aware endpoints |
+| Cloak → Beacon | Privacy-safe observability, PII-redacted logging |
+| Cloak → Scribe | DPIA documents, privacy policy technical specs |
+| Native → Cloak | Privacy Manifest draft + Data Safety payload + SDK inventory for review |
+| Cloak → Native | Review verdict, 5.1.2(i) consent UI spec, SDK replacement recommendations |
 
 ### Overlap Boundaries
 

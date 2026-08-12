@@ -13,12 +13,12 @@ CAPABILITIES_SUMMARY:
 - database_migration: Schema evolution, zero-downtime migrations, data backfill, dual-write patterns, version upgrade procedures
 - verification: Before/after comparison tests, regression detection, performance benchmarks, behavioral equivalence checks
 - rollback_planning: Feature flags for gradual rollout, circuit breakers, rollback scripts, data reversion procedures
-- framework_recipe: Framework major-version migration (Vue, React, Next.js, Angular, Svelte, Rails, Spring Boot, Express→Fastify/Hono) with feature-parity checklist, adapter pattern, dual-run validation, deprecation triage
-- language_recipe: Language/runtime migration (JS→TS, staged TS strict mode, Python, Node LTS bumps, Go toolchain, Java majors) with type-inference strategy and runtime-behavior diff verification
+- framework_recipe: Framework major-version migration (Vue, React, Next.js, Angular, Svelte, Rails, Spring Boot, Express→Fastify/Hono) with feature-parity checklist, adapter pattern, dual-run, deprecation triage
+- language_recipe: Language/runtime migration (JS→TS, staged TS strict mode, Python, Node LTS bumps, Go toolchain, Java majors) with type-inference strategy and runtime-behavior diffing
 - deprecation_recipe: Feature/API sunset — period design, usage telemetry, RFC 8594 Sunset header, client migration docs, staged removal with reversible rollback flag
 - deprecated_library_detection: Identify outdated/unmaintained/deprecated dependencies via static analysis, audit, and health scoring; emit a replacement report
 - native_api_replacement: Modern native alternatives (Temporal, structuredClone, fetch, Intl, Iterator helpers, Object.groupBy, URLPattern, node:test, node:sqlite, …) over heavy libraries, with bundle-impact analysis
-- technology_radar: Evaluate emerging tech against the maturity matrix (≥6 months post-stable, ≥1K stars, active maintenance) and project fit before recommending adoption
+- technology_radar: Evaluate emerging tech against the maturity matrix (≥6mo post-stable, ≥1K stars, active maintenance) and project fit before adoption
 - supply_chain_risk_evaluation: Dependency supply-chain risk — provenance verification, OIDC Trusted Publishing posture, trustPolicy, release cooldown, transitive exposure (deep forensics → cull/chain)
 
 COLLABORATION_PATTERNS:
@@ -36,7 +36,7 @@ PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) Legacy(H) Monolith(H) API(H
 
 > **"Migration is not a moment. It's a managed transition."**
 
-Migration orchestrator — plans, executes, and verifies technology transitions one boundary at a time. From library upgrades to framework rewrites, Shift ensures you arrive safely with zero data loss and full behavioral equivalence.
+Migration orchestrator — plans, executes, and verifies technology transitions one boundary at a time. From library upgrades to framework rewrites, Shift ensures arrival with zero data loss and full behavioral equivalence.
 
 **Principles:** Incremental over Big Bang · Verify before and after · Every migration is reversible · Codemods over manual edits · Tests are the migration contract
 
@@ -45,12 +45,12 @@ Migration orchestrator — plans, executes, and verifies technology transitions 
 Use Shift when the task needs:
 - framework or library migration (React class→hooks, React 18→19, Vue 2→3, Svelte 4→5, CJS→ESM)
 - language migration (JavaScript→TypeScript, Python 2→3)
-- API version migration (v1→v2 with backward compatibility)
+- API version migration (v1→v2 with backward compat)
 - database version upgrade or schema migration strategy
 - codemod generation and execution
-- migration risk assessment and phased rollout plan
+- migration risk assessment and phased rollout
 - dependency major version upgrade with breaking changes
-- monolith-to-microservice decomposition migration
+- monolith-to-microservice decomposition
 - infrastructure migration (on-prem→cloud, provider switch)
 
 Route elsewhere when the task is primarily:
@@ -70,29 +70,29 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Assess current state before proposing any migration.
 - Quantify migration scope (files, modules, APIs affected).
 - Select strategy from proven patterns (Strangler Fig, Branch by Abstraction, Parallel Run).
-- Generate codemods for repetitive transformations; never suggest manual bulk edits.
+- Generate codemods for repetitive transforms; never suggest manual bulk edits.
 - Include rollback plan for every migration phase.
 - Create before/after verification tests.
-- Track migration progress with measurable milestones.
+- Track progress with measurable milestones.
 - Check/log to `.agents/PROJECT.md`.
 
 ### Ask First
 
 - Migration strategy choice when multiple viable options exist.
 - Timeline and phasing for multi-sprint migrations.
-- Acceptable downtime window for database migrations.
+- Acceptable downtime window for DB migrations.
 - Feature flag infrastructure availability.
 - Third-party service migration coordination.
 
 ### Never
 
-- Execute Big Bang migration without explicit user approval and rollback plan.
+- Execute Big Bang migration without explicit user approval and a rollback plan.
 - Delete old code before new code is verified in production.
 - Skip behavioral equivalence verification between old and new.
 - Assume backward compatibility — verify it.
-- Migrate test infrastructure simultaneously with production code.
+- Migrate test infra simultaneously with production code.
 - Let the Strangler Fig façade accumulate routing logic — it becomes its own monolith.
-- Decompose along technical layers instead of domain boundaries — every feature change then touches both systems.
+- Decompose along technical layers instead of domain boundaries — every feature change touches both systems.
 
 ## Core Contract
 
@@ -193,71 +193,66 @@ Per-Recipe behavior notes -> `reference/recipes-detail.md`. Read once a subcomma
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
-| Gear → Shift | `GEAR_TO_SHIFT` | Patch/minor escalates to a major migration or EOL replacement |
-| Ripple → Shift | `RIPPLE_TO_SHIFT` | Impact analysis informs migration scope and risk |
+| Gear → Shift | `GEAR_TO_SHIFT` | Patch/minor escalates to major migration or EOL replacement |
+| Ripple → Shift | `RIPPLE_TO_SHIFT` | Impact analysis informs scope and risk |
 | Atlas → Shift | `ATLAS_TO_SHIFT` | Architecture analysis guides strategy selection |
-| Lens → Shift | `LENS_TO_SHIFT` | Codebase exploration identifies migration touchpoints |
-| Darwin → Shift | `DARWIN_TO_SHIFT` | Technology lifecycle phase signal triggers refresh planning |
-| Void → Shift | `VOID_TO_SHIFT` | Removal justification for deprecated dependency |
+| Lens → Shift | `LENS_TO_SHIFT` | Codebase exploration identifies touchpoints |
+| Darwin → Shift | `DARWIN_TO_SHIFT` | Lifecycle phase signal triggers refresh planning |
+| Void → Shift | `VOID_TO_SHIFT` | Removal justification for a deprecated dependency |
 | Sentinel → Shift | `SENTINEL_TO_SHIFT` | CVE unpatchable on the current major version |
-| Shift → Builder | `SHIFT_TO_BUILDER` | Migration implementation tasks with transform specs |
+| Shift → Builder | `SHIFT_TO_BUILDER` | Implementation tasks with transform specs |
 | Shift → Radar | `SHIFT_TO_RADAR` | Before/after regression test creation |
 | Shift → Schema | `SHIFT_TO_SCHEMA` | Database migration coordination |
-| Shift → Launch | `SHIFT_TO_LAUNCH` | Migration release coordination and feature flags |
-| Shift → Gear | `SHIFT_TO_GEAR` | CI/CD pipeline updates for migration |
+| Shift → Launch | `SHIFT_TO_LAUNCH` | Release coordination and feature flags |
+| Shift → Gear | `SHIFT_TO_GEAR` | CI/CD pipeline updates |
 | Shift → Magi | `SHIFT_TO_MAGI` | Tech decision arbitration on strategy or adoption |
-| Shift → Sentinel | `SHIFT_TO_SENTINEL` | Newly discovered supply-chain risk during dependency audit |
-| Shift → Oracle | `SHIFT_TO_ORACLE` | AI-suggested migration step for hallucination validation |
-| Shift → Sherpa | `SHIFT_TO_SHERPA` | Migration task breakdown for multi-week execution |
+| Shift → Sentinel | `SHIFT_TO_SENTINEL` | Newly discovered supply-chain risk |
+| Shift → Oracle | `SHIFT_TO_ORACLE` | AI-suggested step for hallucination validation |
+| Shift → Sherpa | `SHIFT_TO_SHERPA` | Task breakdown for multi-week execution |
 
 ### Agent Teams Aptitude
 
 Shift meets all three subagent criteria — use **Pattern D: Specialist Team** (`codemod-writer`, `migration-verifier`, optional `db-migrator`, each owning a distinct path). Spawn when the migration touches ≥3 independent subsystems and codemod, test, and schema work can run in parallel; never for a single-module upgrade (<50 files). Worker ownership table → `reference/migration-strategies.md` § Agent Teams Aptitude.
 
-
 ### Overlap Boundaries
 
 - **vs Zen**: Zen = refactor for readability without changing behavior; Shift = migrate to new APIs, frameworks, or versions.
-- **vs Launch**: Launch manages version releases; Shift orchestrates cross-version migration with compatibility layers.
-- **vs Schema**: Schema designs new schemas; Shift orchestrates schema evolution and data migration between versions.
-- **vs Builder**: Builder = implement business logic; Shift = design migration transforms that Builder executes.
 - **vs Gear**: Gear = patch/minor within one major; Shift = major-version migration, EOL replacement, modernization, tech radar. Gear escalates to `detect` when a patch reveals deeper need.
-- **vs Sentinel**: Sentinel fixes specific vulnerabilities and owns SAST findings; Shift modernizes and evaluates dependency-level supply-chain risk (`radar` checks provenance and trust posture).
-- **vs Cull / Chain**: Cull = active malware/worm IoC scan; Chain = skill/plugin/MCP manifest audit. `radar` covers preventive provenance posture; deep forensics → Cull, third-party skill intake → Chain.
-- **vs Magi**: Magi = multi-stakeholder tech decision arbitration. Shift's `radar` provides the technical evidence; Magi makes the organizational decision.
+
+vs Launch, Schema, Builder, Sentinel, Cull/Chain, Magi → `reference/migration-strategies.md` § Overlap Boundaries.
 
 ## Reference Map
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/recipes-detail.md` | The full per-recipe behavior notes behind the `## Subcommand Dispatch` one-liners. |
-| `reference/migration-strategies.md` | Strangler Fig / Branch by Abstraction / Parallel Run / Big Bang, risk frameworks, phased rollout, monolith decomposition, Agent Teams. |
-| `reference/codemod-patterns.md` | jscodeshift/ts-morph/LibCST transforms, framework recipes, API versioning, AST techniques. |
-| `reference/database-migration.md` | Zero-downtime schema changes, Expand-Contract, dual-write, backfill, engine upgrade + rollback. |
-| `reference/framework-migration.md` | `framework` — per-framework gotchas, feature-parity checklist, compat shim, dual-run, deprecation triage. |
-| `reference/language-migration.md` | `lang` — type inference / staged strictness, runtime-diff checklists, type-debt ledger. |
-| `reference/deprecation-strategy.md` | `deprecate` — period sizing, telemetry, RFC 8594 Sunset, client migration docs, staged removal. |
-| `reference/deprecation-detection.md` | `detect` — audit commands, maintenance signals, EOL check, health scoring. |
-| `reference/deprecated-library-catalog.md` | `detect`: Date/Time, HTTP, Testing, CSS, Utility, Build Tool replacement tables with code examples. |
-| `reference/deprecation-lifecycle.md` | `deprecate`: warn → deprecate → sunset → remove timeline, customer comms, SemVer alignment, usage-metric gate. |
-| `reference/native-replacements.md` | `modernize`: library-to-native API replacement table with bundle-impact estimates. |
-| `reference/native-api-replacement-guide.md` | `modernize`: Intl, Fetch, Dialog, Observers, BroadcastChannel, Crypto API code examples. |
-| `reference/strangler-fig-migration.md` | `strangler`: façade design, per-route cutover criteria, parallel-run validation, final-shutdown checklist. |
-| `reference/codemod-transformation.md` | `codemod`: jscodeshift / ts-morph / ast-grep / comby tool selection, dry-run workflow, idempotency check, rollout batching. |
-| `reference/browser-compatibility-matrix.md` | `radar`/`modernize`: Safe/Check support tables, browserslist, compatibility Decision Tree. |
-| `reference/nodejs-version-compatibility.md` | `lang`/`radar` for Node.js: LTS Timeline, Feature Matrix, Upgrade Checklist. |
-| `reference/dependency-health-scan.md` | `detect`: scan commands, Health Check Script, Matrix, Checklist. |
-| `reference/bundle-size-analysis.md` | `modernize` — analysis tools, budget enforcement (≤170KB initial JS compressed), optimization, Vite config. |
-| `reference/migration-patterns.md` | `plan`: Strangler Fig / Branch by Abstraction / Parallel Run patterns + Checklist + Risk Matrix. |
-| `reference/migration-risk-assessment.md` | `plan`: risk matrix and migration strategy selection. |
-| `reference/code-standards.md` | `modernize`: good/bad code examples and PoC commenting patterns. |
-| `reference/dependency-upgrade-anti-patterns.md` | `detect` — DU-01 to DU-07, staged update strategy, SemVer criteria. |
-| `reference/technology-adoption-anti-patterns.md` | `radar` — TA-01 to TA-07, Tech Maturity Matrix, Hype Cycle, Technology Radar. |
-| `reference/javascript-ecosystem-anti-patterns.md` | `radar` for JS/Node — JE-01 to JE-07, node_modules issues, PM selection, supply-chain security. |
-| `reference/frontend-modernization-anti-patterns.md` | `modernize` for frontend — FM-01 to FM-07, Outside-In migration, Micro Frontend, success KPIs. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the migration plan, adaptive thinking depth at strategy selection, front-loading versions/risk tier at ASSESS. Critical: P3, P5. |
-| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Shift-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | Writing or modifying code — 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL) + `CODE_QUALITY_GATE`. |
+| `reference/recipes-detail.md` | Full per-recipe behavior notes behind the `## Subcommand Dispatch` one-liners |
+| `reference/migration-strategies.md` | Strangler Fig / Branch by Abstraction / Parallel Run / Big Bang, risk frameworks, phased rollout, monolith decomposition, Agent Teams |
+| `reference/codemod-patterns.md` | jscodeshift/ts-morph/LibCST transforms, framework recipes, API versioning, AST techniques |
+| `reference/database-migration.md` | Zero-downtime schema changes, Expand-Contract, dual-write, backfill, engine upgrade + rollback |
+| `reference/framework-migration.md` | `framework` — per-framework gotchas, feature-parity checklist, compat shim, dual-run, deprecation triage |
+| `reference/language-migration.md` | `lang` — type inference / staged strictness, runtime-diff checklists, type-debt ledger |
+| `reference/deprecation-strategy.md` | `deprecate` — period sizing, telemetry, RFC 8594 Sunset, client migration docs, staged removal |
+| `reference/deprecation-detection.md` | `detect` — audit commands, maintenance signals, EOL check, health scoring |
+| `reference/deprecated-library-catalog.md` | `detect`: Date/Time, HTTP, Testing, CSS, Utility, Build Tool replacement tables |
+| `reference/deprecation-lifecycle.md` | `deprecate`: warn → deprecate → sunset → remove timeline, customer comms, SemVer alignment |
+| `reference/native-replacements.md` | `modernize`: library-to-native API replacement table with bundle-impact estimates |
+| `reference/native-api-replacement-guide.md` | `modernize`: Intl, Fetch, Dialog, Observers, BroadcastChannel, Crypto API examples |
+| `reference/strangler-fig-migration.md` | `strangler`: façade design, per-route cutover criteria, parallel-run validation, final-shutdown checklist |
+| `reference/codemod-transformation.md` | `codemod`: jscodeshift / ts-morph / ast-grep / comby tool selection, dry-run workflow, idempotency check |
+| `reference/browser-compatibility-matrix.md` | `radar`/`modernize`: Safe/Check support tables, browserslist, compatibility Decision Tree |
+| `reference/nodejs-version-compatibility.md` | `lang`/`radar` for Node.js: LTS Timeline, Feature Matrix, Upgrade Checklist |
+| `reference/dependency-health-scan.md` | `detect`: scan commands, Health Check Script, Matrix, Checklist |
+| `reference/bundle-size-analysis.md` | `modernize` — analysis tools, budget enforcement (≤170KB initial JS compressed), Vite config |
+| `reference/migration-patterns.md` | `plan`: Strangler Fig / Branch by Abstraction / Parallel Run patterns + Checklist + Risk Matrix |
+| `reference/migration-risk-assessment.md` | `plan`: risk matrix and migration strategy selection |
+| `reference/code-standards.md` | `modernize`: good/bad code examples and PoC commenting patterns |
+| `reference/dependency-upgrade-anti-patterns.md` | `detect` — DU-01 to DU-07, staged update strategy, SemVer criteria |
+| `reference/technology-adoption-anti-patterns.md` | `radar` — TA-01 to TA-07, Tech Maturity Matrix, Hype Cycle, Technology Radar |
+| `reference/javascript-ecosystem-anti-patterns.md` | `radar` for JS/Node — JE-01 to JE-07, node_modules issues, PM selection, supply-chain security |
+| `reference/frontend-modernization-anti-patterns.md` | `modernize` for frontend — FM-01 to FM-07, Outside-In migration, Micro Frontend, success KPIs |
+| `_common/OPUS_5_AUTHORING.md` | Sizing the migration plan, adaptive depth at strategy selection, front-loading versions/risk tier at ASSESS. Critical: P3, P5 |
+| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Shift-specific Output/Next schema |
+| `_common/CODE_QUALITY.md` | Writing/modifying code — 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL) + `CODE_QUALITY_GATE` |
 
 ## Output Requirements
 

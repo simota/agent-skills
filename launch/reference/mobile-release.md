@@ -224,3 +224,32 @@ NATIVE_TO_LAUNCH_HANDOFF:
   feature_flags: ["[server-driven flags wired for kill-switch]"]
 ```
 
+### Outgoing: `LAUNCH_TO_NATIVE_HANDOFF`
+
+```yaml
+LAUNCH_TO_NATIVE_HANDOFF:
+  release_decision: "GO | NO_GO | CONDITIONAL"
+  rollout_schedule:
+    ios:
+      testflight_internal: "[YYYY-MM-DD]"
+      testflight_external: "[YYYY-MM-DD]"
+      app_review_submit: "[YYYY-MM-DD]"
+      phased_release: "1%/10%/50%/100% over 7d starting [YYYY-MM-DD]"
+    android:
+      play_internal: "[YYYY-MM-DD]"
+      play_closed: "[YYYY-MM-DD]"
+      play_open: "[YYYY-MM-DD]"
+      production_staged: "5%/20%/50%/100% over [N]d starting [YYYY-MM-DD]"
+  halt_triggers:
+    - "crash_free_sessions < 99.85% for 1h"
+    - "App Review rejection or Play policy strike"
+    - "P0 store-policy regression (Privacy Manifest / Data Safety / IAP)"
+    - "[domain-specific KPI threshold]"
+  flag_disable_signals:
+    - flag: "[server-driven flag name]"
+      condition: "[when to disable]"
+      action: "[what Native should wire as fallback]"
+  rollback_path: "flag_disable (< 1 min) → halt phased release / pause staged rollout → hotfix submission"
+  next_owner: "Native"
+```
+

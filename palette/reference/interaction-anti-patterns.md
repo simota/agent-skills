@@ -39,3 +39,7 @@ Purpose: Catch high-friction interaction mistakes before they become silent fail
 | `300ms-1s` | clear loading indicator |
 | `1s-10s` | progress plus cancel when possible |
 | `10s+` | background processing plus completion notification |
+
+## Full-Redesign Risk (SKILL.md excerpt)
+
+- Never perform a full redesign — Snapchat's 2018 redesign drew 83% negative App Store reviews and measurable user loss (Eleken 2024).

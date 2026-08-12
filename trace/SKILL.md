@@ -15,9 +15,9 @@ CAPABILITIES_SUMMARY:
 - ux_storytelling: Create narrative reports that explain WHY users struggle, not just WHAT happened
 - persona_validation: Validate persona hypotheses against real behavioral data with statistical significance
 - ab_behavior_analysis: Analyze A/B test variant behavior beyond quantitative metrics
-- ai_session_summarization: Leverage AI-powered session summaries for scalable analysis, including group summaries (up to 100 sessions) for cross-session pattern detection. Key AI engines: FullStory StoryAI (agentic, proactively surfaces friction/conversion signals, April 2025); LogRocket Ask Galileo (natural-language chat over sessions + support tickets + CRMs, MCP integration, March 2026); PostHog AI (per-session summaries, A/B variant comparison summaries, Session Group API `/session_group_summaries`, 2025-2026). Treat AI summaries as first-pass filter; audit all findings against raw session data before reporting
+- ai_session_summarization: Leverage AI-powered session summaries for scalable analysis, including group summaries (up to 100 sessions) for cross-session pattern detection. Key engines (FullStory StoryAI, LogRocket Ask Galileo, PostHog AI) and their capabilities/dates → `reference/session-analysis.md`. Treat AI summaries as first-pass filter; audit all findings against raw session data before reporting
 - plg_activation_analysis: Segment new user sessions by activation milestone (pre/post "Aha Moment"), extract activation behavior patterns, and identify drop-off points in PLG onboarding funnels
-- mobile_session_replay: Analyze mobile session replays across iOS, Android, React Native, and Flutter platforms. As of 2025-2026, major platforms ship native mobile replay SDKs: Sentry mobile session replay (open beta, iOS/Android/React Native/Flutter); New Relic mobile agents (iOS v7.5.10 Sept 2025, React Native v1.5.10 Sept 2025); Microsoft Clarity (React Native + Flutter v3.19.0+); UXCam, Smartlook (wireframe rendering for reduced CPU/battery). Apply larger touch-target pixel radius (50px) than desktop (30px) and verify 48×48 CSS-pixel minimum touch targets (Material Design) to avoid mis-tap false positives
+- mobile_session_replay: Analyze mobile session replays across iOS, Android, React Native, and Flutter. Native mobile replay SDKs (Sentry, New Relic, Microsoft Clarity, UXCam, Smartlook) are mainstream as of 2025-2026 — versions and sources in `reference/session-analysis.md`. Apply a larger touch-target pixel radius (50px) than desktop (30px) and verify 48×48 CSS-pixel minimum touch targets (Material Design) to avoid mis-tap false positives
 
 COLLABORATION_PATTERNS:
 - Field -> Trace: Persona definitions for session filtering
@@ -59,7 +59,7 @@ Use Trace when the user needs:
 - UX problem storytelling with evidence-based narratives explaining WHY users struggle
 - persona validation with real behavioral data and statistical significance
 - A/B test behavior analysis beyond quantitative metrics (how variants change user flow)
-- AI-powered session summarization at scale, including group summaries across up to 100 sessions for recurring friction detection. Current AI engines: **FullStory StoryAI** (agentic AI agents proactively surfacing friction/conversion signals, April 2025, Source: globenewswire.com 2025-04-02); **LogRocket Ask Galileo** (natural-language chat synthesizing sessions + Zendesk tickets + Zoom calls + Jira, MCP integration for Claude/ChatGPT/Cursor, March 2026, Source: globenewswire.com 2026-03-05); **PostHog AI** (per-session summaries, A/B variant behavior comparison, Session Group API, 2025-2026, Source: posthog.com/docs/posthog-ai)
+- AI-powered session summarization at scale, including group summaries across up to 100 sessions for recurring friction detection (engine details: FullStory StoryAI, LogRocket Ask Galileo, PostHog AI → `reference/session-analysis.md`)
 - mapping qualitative feedback (Voice) to behavioral session evidence
 - PLG activation behavior analysis (new user onboarding patterns, "Aha Moment" identification, activation funnel drop-off analysis)
 
@@ -141,7 +141,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | **ANALYZE** | Extract frustration signals, flow breakdowns, anomalies | Evidence-backed findings | `reference/frustration-signals.md` |
 | **NARRATE** | Tell the story with UX problem reports and recommendations | Actionable, not exhaustive | `reference/report-templates.md` |
 
-**AI group summarization**: When analyzing recurring friction across many sessions, use AI group summaries (up to 100 sessions) to detect shared patterns before deep-diving into individual replays. This inverts the traditional workflow from "watch then summarize" to "summarize then investigate." As of 2025-2026, all major platforms provide AI-first summarization: FullStory StoryAI agents surface patterns proactively; LogRocket Ask Galileo synthesizes sessions across the entire product data stack via MCP; PostHog AI offers Session Group API for programmatic cross-session pattern detection. Treat all AI summaries as first-pass filters — validate every finding against raw session evidence before including in a report (Source: fullstory.com/platform/storyai, blog.logrocket.com/introducing-ask-galileo, posthog.com/docs/posthog-ai/session-summaries).
+**AI group summarization**: When analyzing recurring friction across many sessions, use AI group summaries (up to 100 sessions) to detect shared patterns before deep-diving into individual replays — this inverts the workflow from "watch then summarize" to "summarize then investigate." Treat all AI summaries as first-pass filters — validate every finding against raw session evidence before including in a report. Platform-by-platform capabilities and sources → `reference/session-analysis.md`.
 
 **Pulse tells you WHAT happened. Trace tells you WHY it happened.**
 

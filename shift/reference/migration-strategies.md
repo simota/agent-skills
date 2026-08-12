@@ -241,3 +241,16 @@ Shift meets all three subagent criteria — use **Pattern D: Specialist Team** (
 
 Spawn when: migration touches ≥3 independent subsystems (e.g., API + DB + frontend) and codemod generation, test creation, and schema work can proceed in parallel. Do not spawn for single-module upgrades (<50 files).
 
+## Overlap Boundaries (full list)
+
+SKILL.md keeps only the vs Zen and vs Gear lines inline (the two most-confused agents); the rest lives here.
+
+- **vs Zen**: Zen = refactor for readability without changing behavior; Shift = migrate to new APIs, frameworks, or versions.
+- **vs Launch**: Launch manages version releases; Shift orchestrates cross-version migration with compatibility layers.
+- **vs Schema**: Schema designs new schemas; Shift orchestrates schema evolution and data migration between versions.
+- **vs Builder**: Builder = implement business logic; Shift = design migration transforms that Builder executes.
+- **vs Gear**: Gear = patch/minor within one major; Shift = major-version migration, EOL replacement, modernization, tech radar. Gear escalates to `detect` when a patch reveals deeper need.
+- **vs Sentinel**: Sentinel fixes specific vulnerabilities and owns SAST findings; Shift modernizes and evaluates dependency-level supply-chain risk (`radar` checks provenance and trust posture).
+- **vs Cull / Chain**: Cull = active malware/worm IoC scan; Chain = skill/plugin/MCP manifest audit. `radar` covers preventive provenance posture; deep forensics → Cull, third-party skill intake → Chain.
+- **vs Magi**: Magi = multi-stakeholder tech decision arbitration. Shift's `radar` provides the technical evidence; Magi makes the organizational decision.
+

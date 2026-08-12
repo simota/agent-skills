@@ -108,23 +108,23 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 - Extraction scopes exceeding 50 components or spanning multiple files.
 - Bulk Code Connect updates affecting 10+ mappings.
-- `generate_figma_design` and `use_figma` write invocations (rate-exempt but create/modify design artifacts).
+- `generate_figma_design` and `use_figma` write invocations (rate-exempt but create/modify artifacts).
 - Cross-file extraction requiring multiple file access tokens.
-- Token output format changes (e.g., switching from legacy to W3C DTCG 2025.10 JSON).
+- Token output format changes (e.g., legacy to W3C DTCG 2025.10 JSON).
 
 ### Never
 
 - Modify Figma designs without explicit user request — Dev Mode extraction is read-only; writes require explicit confirmation.
-- Interpret design intent beyond structural evidence — extract, do not interpret.
+- Interpret design intent beyond structural evidence.
 - Write implementation code — hand off to Forge, Artisan, or Builder.
-- Ignore rate-limit warnings — exceeding budget causes 429 errors and blocks the entire team's MCP access.
-- Present incomplete extraction packages as complete — downstream agents will generate wrong code from partial data.
+- Ignore rate-limit warnings — exceeding budget causes 429 errors and blocks the team's MCP access.
+- Present incomplete extraction packages as complete — downstream agents generate wrong code from partial data.
 - Run multiple MCP server instances simultaneously — concurrent access produces inconsistent outputs and confuses AI agents.
 - Hardcode raw color/spacing values when Figma Variable bindings exist — this breaks theme support and design token consistency.
-- Retry `use_figma` immediately after an error — failed scripts are atomic (no partial changes applied), so read the error, fix the script logic, then retry. Blind retry repeats the same failure.
-- Leave Promises unawaited in `use_figma` scripts (e.g., `figma.loadFontAsync(...)` without `await`) — unawaited async calls fire-and-forget, causing silent failures or race conditions.
-- Use `ALL_SCOPES` when creating Figma Variables via `use_figma` — it pollutes every property picker. Always set explicit scopes (e.g., `["FRAME_FILL"]` for backgrounds, `["TEXT_FILL"]` for text colors, `["GAP"]` for spacing).
-- Attempt too much in a single `use_figma` call — this is the most common cause of bugs. Break large operations into small incremental steps.
+- Blind-retry `use_figma` after an error — scripts are atomic, so read the error and fix the logic first (Core Contract).
+- Leave `figma.*Async()` Promises unawaited (e.g., `loadFontAsync` without `await`) — causes silent failures or race conditions.
+- Use `ALL_SCOPES` on Figma Variables — it pollutes every property picker; set explicit scopes (e.g., `["FRAME_FILL"]`, `["TEXT_FILL"]`, `["GAP"]`) per Core Contract.
+- Attempt too much in one `use_figma` call — the most common bug source; break into small incremental steps.
 
 ## Delivery Modes
 
@@ -167,7 +167,7 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`extract` = Extract Context). Apply normal CONNECT → SURVEY → EXTRACT → PACKAGE → DELIVER workflow.
 
-Per-Recipe behavior notes -> `reference/execution-templates.md` § Per-Recipe Behavior; each Recipe's `Read First` file carries the technique detail. Load-bearing rules that hold regardless of Recipe: `variants` names in kebab-case `property=value` (Figma convention) and converts to a PascalCase prop interface; `tokens` classifies into the three layers (primitive / semantic / component) and emits both alias chain and fully-resolved value; `breakpoint` derivations are all **LOW confidence** and need designer confirmation.
+Per-Recipe behavior notes (naming conventions, layer classification, confidence flags) -> `reference/execution-templates.md` § Per-Recipe Behavior; each Recipe's `Read First` file carries the technique detail.
 
 ## Output Routing
 
@@ -191,16 +191,14 @@ Always read `reference/infrastructure-constraints.md` to verify rate budget befo
 
 Every deliverable must include:
 
-- Source URL and file version of the Figma file.
-- Extraction timestamp.
+- Source URL, file version, and extraction timestamp.
 - Scope description (page, frame, component set, or node path).
 - Context summary with structural findings.
 - Design data (layout, styles, tokens, or component hierarchy as applicable).
 - Visual reference (screenshot) when visual context supplements structure.
 - Figma Variable mappings where raw values have variable bindings.
 - Code Connect status for reusable components (existing, missing, or stale).
-- Assumptions made during extraction.
-- Gaps or incomplete areas flagged explicitly.
+- Assumptions made, and gaps or incomplete areas flagged explicitly.
 - Rate-limit budget consumed and remaining.
 - Recommended next agent for handoff.
 
@@ -219,39 +217,21 @@ Every deliverable must include:
 
 ## Critical Limits and Exceptions
 
-| Plan | Requests/min | Daily or monthly limit | Default extraction stance |
-|------|-------------:|------------------------|---------------------------|
-| `Starter` | `10` | `6/month` | single component only; unusable for real workflows |
-| `Professional` | `15` | `200/day` | selective, page-batched extraction; realistic entry point |
-| `Organization` | `20` | `200/day` | same daily limit, higher burst |
-| `Enterprise` | `20` | `600/day` | full-file extraction is feasible |
+Plan limits already in Core Contract (Starter 6/mo, Pro/Org 200/day, Enterprise 600/day); per-minute caps and error handling -> `reference/infrastructure-constraints.md`; full GA tool inventory -> `reference/figma-mcp-server-ga.md`.
 
-Per-minute limits for paid plans (Dev/Full seat) follow Figma REST API Tier 1.
-
-Rate-exempt tools: `whoami`, `add_code_connect_map`, `send_code_connect_mappings`, `generate_figma_design`, `use_figma`, `search_design_system` (all write tools are rate-exempt)
-
-Rules:
-
-- Reserve a `10%` budget buffer for retries and follow-ups.
-- Stop gracefully when remaining budget drops below `10%`.
-- For large files, use `get_metadata` first and extract incrementally by page or node.
-- If Code Connect mappings are older than `30` days, flag them as stale.
-- Low-budget plans may skip screenshots when structural extraction already covers the handoff need.
-
-- `generate_figma_design` is ask-first work even though it is rate-exempt.
-- `whoami` and `generate_figma_design` are remote-only in GA.
-- Desktop plugin mode may require an alternative connection check when `whoami` is unavailable.
-- `use_figma` writes native Figma content and builds from existing library assets. Free during beta, later usage-based. Full and Dev seats on paid plans only (Dev seats read-only outside drafts).
-- Write-to-Figma requires Figma's official skills installed in the MCP client (especially `/figma-use`) for correct tool sequencing.
-- Claude Code may fail above `25,000` tokens; use `MAX_MCP_OUTPUT_TOKENS=50000` or higher when needed.
+- Reserve a `10%` budget buffer; stop gracefully below it. Large files: `get_metadata` first, then extract incrementally by page/node. Low-budget plans may skip screenshots when structure already covers the need.
+- Code Connect mappings older than `30` days are stale — flag them.
+- Rate-exempt: `whoami`, `add_code_connect_map`, `send_code_connect_mappings`, `generate_figma_design`, `use_figma`, `search_design_system`, `create_new_file` (all write tools). `generate_figma_design` is still ask-first despite being rate-exempt.
+- `whoami` and `generate_figma_design` are remote-only in GA; desktop plugin mode may need an alternative connection check.
+- `use_figma` requires Figma's official skills (`/figma-use`) for correct sequencing; Full and Dev seats only outside drafts (Dev seats read-only outside drafts).
+- Claude Code may fail above `25,000` tokens; set `MAX_MCP_OUTPUT_TOKENS=50000`+ when needed.
 
 ## Quality Guardrails
 
-Core Contract already binds: `get_design_context` as the primary source, early `search_design_system`, existing Code Connect check, Figma Variables over raw values, and `use_figma` inspect-first / page-context / node-ID rules. In addition:
+Beyond what Core Contract already binds (`get_design_context` as primary source, early `search_design_system`, existing Code Connect check, Variables over raw values, `use_figma` inspect-first/page-context/node-ID):
 
-- Code Connect CLI: co-locate mapping files with components (`Button.connect.ts` next to `Button.tsx`) to prevent drift. The UI is the language-agnostic quick path with one-to-many connections (one design component → React / SwiftUI / Compose / Vue); GA on Organization and Enterprise with GitHub integration.
-- Scope extraction to the named page, frame, or component set.
-- Document the design-to-code gap rather than implying pixel-perfect completeness.
+- Code Connect CLI: co-locate mapping files with components (`Button.connect.ts` next to `Button.tsx`) to prevent drift. UI is the language-agnostic quick path, one-to-many (one design component → React/SwiftUI/Compose/Vue); GA on Organization/Enterprise with GitHub integration.
+- Scope extraction to the named page, frame, or component set; document the design-to-code gap rather than implying pixel-perfect completeness.
 - Validate naming consistency, token coverage, completeness, Code Connect inclusion, and rate reporting before delivery.
 
 ## AUTORUN Support

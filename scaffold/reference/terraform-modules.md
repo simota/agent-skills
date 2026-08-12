@@ -20,6 +20,8 @@ Both engines speak HCL and consume the same modules; the choice is primarily **l
 
 Adoption signal (April 2026): OpenTofu sits at `~12%` of IaC practitioners with `~27%` planning to evaluate. New projects in 2026 default to **OpenTofu** unless the team is already committed to HCP/Terraform Cloud features that have no OpenTofu equivalent. Existing Terraform `~> 1.5` projects migrate when state encryption or BSL avoidance becomes load-bearing — both engines remain backwards-compatible with HCL written for the other.
 
+Background: IBM completed its $6.4B acquisition of HashiCorp in February 2025; OpenTofu reached CNCF graduated status in April 2025 and maintains compatibility with the 3,900+ provider ecosystem. ~50% of Spacelift deployments now run on OpenTofu (2026). OpenTofu 1.12+ adds Azure DevOps workload identity federation, dynamic `prevent_destroy` with input variables, and resource identity for imports — on top of the 1.11+ ephemeral values/resources and 1.12+ provider-defined functions, `destroy` lifecycle meta-argument, `language` block, `const` input variables, and concurrent provider installation already summarized in this skill's capability list.
+
 ### Picking The Version Constraint
 
 ```hcl

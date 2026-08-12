@@ -145,25 +145,7 @@ First view is the most critical section. Answer "What is this?" and "Is it relev
 
 ### Hero Layout Patterns
 
-```
-Pattern A: Left Text + Right Image      Pattern B: Center Text + BG Image
-┌──────────┬──────────┐                 ┌─────────────────────┐
-│ Headline │          │                 │    ░░░░░░░░░░░░░    │
-│ Sub      │  Hero    │                 │    Headline         │
-│ CTA [█]  │  Image   │                 │    Sub              │
-│          │          │                 │    CTA [█]          │
-└──────────┴──────────┘                 └─────────────────────┘
-
-Pattern D: Split with Form
-┌──────────┬──────────┐
-│ Headline │ [Form]   │
-│ Sub      │ Name     │
-│ Bullets  │ Email    │
-│          │ [Submit] │
-└──────────┴──────────┘
-```
-
-Note: Video background hero (formerly Pattern C) is not recommended — conflicts with LCP ≤ 2.5s target.
+Three structural patterns — A (left text + right image), B (center text + BG image), D (split with form). Video background (formerly Pattern C) is not recommended — conflicts with LCP ≤ 2.5s target. ASCII diagrams → `reference/patterns.md`.
 
 ## CTA Strategy
 
@@ -212,13 +194,7 @@ Detailed SEO implementation → delegate to Growth. LP-specific concerns:
 
 ### Consent Mode v2 & Analytics (2025 Mandatory)
 
-Google Consent Mode v2 is mandatory since March 2024 for EEA/UK traffic. From July 21, 2025, Google began disabling advertising features (remarketing, conversion tracking, demographic reporting) for accounts without compliant implementation. LP analytics specs must include:
-
-- **CMP integration** with `ad_user_data` and `ad_personalization` signals (two parameters added in v2).
-- **Advanced mode** (behavioral modeling): recovers up to 70% of lost attribution data from non-consenting users — specify this in analytics requirements handed off to Growth.
-- **GA4 + GTM Server-Side**: for high-traffic LPs, server-side tagging reduces client-side script load and improves INP.
-
-Source: [Secure Privacy — Consent Mode GA4 2025](https://secureprivacy.ai/blog/google-consent-mode-ga4-cmp-requirements-2025), [Google Tag Platform — Consent setup](https://developers.google.com/tag-platform/security/guides/consent).
+Google Consent Mode v2 is mandatory since March 2024 for EEA/UK traffic; since July 21, 2025 Google disables advertising features (remarketing, conversion tracking, demographic reporting) for non-compliant accounts. LP analytics specs must include CMP integration (`ad_user_data`/`ad_personalization` signals), advanced-mode behavioral modeling, and GA4 + GTM Server-Side for high-traffic LPs. Signal details, recovery rate, sources → `reference/patterns.md`.
 
 ## Copy & Conversion
 
@@ -238,7 +214,7 @@ Detailed form optimization → delegate to Growth. LP-specific constraints:
 - `autocomplete`, `inputmode`, `aria-invalid` required on all fields.
 - Submit button text = value proposition, not "Submit".
 - Privacy assurance text next to form (+11% trust, Unbounce data).
-- **Passkey integration (2025–2026):** For signup/login CTAs on LPs, offer passkey-first authentication alongside email+password. FIDO Alliance's Passkey Index (2025) reports 30% conversion lift and 93% login success vs 63% for passwords. Average auth time drops from 31.2s (password) to 8.5s (passkey). Use WebAuthn Conditional UI ("passkey autofill") to surface passkeys without interrupting form flow. Source: [FIDO Alliance Passkey Index](https://idtechwire.com/fido-alliance-launches-passkey-index-proving-30-conversion-lift-over-passwords/).
+- **Passkey integration (2025–2026):** For signup/login CTAs on LPs, offer passkey-first authentication alongside email+password (30% conversion lift, 93% login success vs 63% for passwords — details → `reference/form-lp-optimization.md`).
 - Thank-you page design: confirm success, set next expectation, offer secondary CTA.
 
 ## Performance
@@ -250,7 +226,7 @@ Detailed performance optimization → delegate to Growth / Bolt. LP-specific pri
 - Fonts: max 2 families, `font-display: swap`, preload critical weights only.
 - Critical CSS: inline above-fold styles; defer non-critical.
 - Third-party scripts: defer or load after `onload`; `preconnect` for external origins.
-- INP: debounce event handlers, lazy-load third-party widgets. Use the Long Animation Frames (LoAF) API (shipped Chrome 123, Jan 2024) to attribute slow frames (≥ 50ms rendering delay) to specific scripts — LoAF shows *why* INP is poor, not just *that* it is. The `web-vitals` JS library v4+ exposes LoAF data via `longAnimationFrameEntries` in the INP attribution object. Source: [Chrome for Developers — LoAF](https://developer.chrome.com/blog/loaf-has-shipped), [MDN LoAF API](https://developer.mozilla.org/en-US/docs/Web/API/Performance_API/Long_animation_frame_timing).
+- INP: debounce event handlers, lazy-load third-party widgets. Attribute slow frames to specific scripts via the Long Animation Frames (LoAF) API → `reference/examples.md`.
 - Targets: LCP ≤ 2.5s, INP < 200ms, CLS < 0.1, TTFB < 800ms. Top-quartile aspirations: LCP ≤ 1.5s, INP < 100ms, CLS < 0.05, TTFB < 300ms.
 - Each 1-second delay beyond 2.5s LCP reduces conversions by ~7%.
 

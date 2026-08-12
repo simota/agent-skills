@@ -65,7 +65,7 @@ Use Gateway when the user needs:
 - API design review or consistency audit
 - AI/LLM and agent-ready API design (SSE streaming, tool-use schemas, token-based rate limiting, llms.txt + /openapi.json discoverability, machine-readable operation descriptions)
 - API gateway architecture and governance at scale
-- Tiered rate limiting design (e.g., Basic 60 req/min, Pro 300 req/min, Enterprise 1000+ req/min)
+- Tiered rate limiting design (see Core Contract for tier examples)
 
 Route elsewhere when the task is primarily:
 - Database schema design: `Schema`
@@ -97,14 +97,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Always
 
-- Follow API design patterns and best practices.
-- Generate OpenAPI specification.
-- Document request/response examples.
-- Identify breaking changes.
-- Propose versioning strategy.
-- Document error responses.
-- Recommend rate limiting.
-- Log to `.agents/PROJECT.md`.
+- Follow every Core Contract commitment (OpenAPI spec, examples, breaking-change detection, versioning, error docs, rate limiting, logging to `.agents/PROJECT.md`).
 
 ### Ask First
 
@@ -149,12 +142,12 @@ Single source of truth for Recipe definitions. Notes carry the scope boundary an
 | OpenAPI Spec | `openapi` | | OpenAPI document generation | Generate or update OpenAPI 3.1/3.2 YAML; output spec block only. | `reference/openapi-templates.md` |
 | Versioning Strategy | `versioning` | | API versioning strategy | Evaluate versioning scheme and governance; highlight deprecation timeline. | `reference/versioning-strategies.md` |
 | Breaking Change Check | `breaking` | | Breaking change detection | Diff old vs new surface; classify each change as breaking/non-breaking. | `reference/breaking-change-detection.md` |
-| REST Semantics | `rest` | | REST resource/URI design, status taxonomy, conditional requests, pagination, RMM, RFC 9457 | Resource modeling, URI design, method/status taxonomy (RFC 9110), ETag conditional requests, cursor vs offset pagination, RMM, RFC 9457 Problem Details. **Boundary**: `rest` writes the HTTP-idiom contract, `openapi` is its YAML output; vs Builder `api` (implementation layer) hand off via `GATEWAY_TO_BUILDER`; search retrieval → `Seek` for query semantics, `rest` keeps the URI/status shape. | `reference/rest-api-design.md` |
-| GraphQL Schema | `graphql` | | Schema-first/code-first, DataLoader, persisted queries, Federation/Relay, subscriptions | Schema-first vs code-first, N+1 prevention via DataLoader, persisted queries for allow-listing and CDN caching, depth/complexity limits, stitching vs Federation vs Relay, subscription transport (graphql-ws / SSE). **Boundary**: `graphql` owns SDL/types/resolver boundaries, Builder `api` implements — `GATEWAY_TO_BUILDER`; schemas exposing search fields cross-link to `Seek` (retrieval architecture). | `reference/graphql-design.md` |
-| Webhook Provider | `webhook` | | Emit-side contract: HMAC signature, idempotency, retry/DLQ, ordering, Sunset/Deprecation | PROVIDER-side contract (the API emits). HMAC-SHA256 with timing-safe compare + signed timestamp against replay, idempotency-key header, exponential-backoff retry with DLQ after N attempts, ordering guarantees, fat-payload vs thin-notification trade-off (fat leaks PII on a misrouted URL), RFC 8594 Sunset / RFC 9745 Deprecation for retiring event types. **Boundary**: PROVIDER side only — Builder `integrate` is the CONSUMER side. | `reference/webhook-design.md` |
-| API Auth | `auth` | | OAuth 2.1 / OIDC / JWT / mTLS / API key contract — token shape, scopes, rotation, IdP | Pick OAuth 2.1 (PKCE mandatory) / OIDC / JWT bearer / mTLS / API key by use case (1st-party SPA, mobile, B2B, partner). Define scope taxonomy, audience claims, token lifetime + refresh, key rotation, IdP integration. **Boundary**: `auth` is the API CONTRACT; Builder implements verification middleware; Crypt owns key-management depth and any E2E encryption. | `reference/api-auth-patterns.md` |
-| Rate Limiting | `rate-limit` | | Bucket/window algorithms, per-key / per-tenant / per-route scoping, RFC 9331 headers | Algorithm choice (token bucket, leaky bucket, sliding-window log, fixed-window counter), scoping, distributed enforcement (Redis INCR+EXPIRE / Envoy ratelimit / cloud gateway), RFC 9331 client signaling, 429 + `Retry-After`, plan-tier fairness, spike vs sustained protection. **Cross-link**: Probe (abuse verification), Beacon (observability). | `reference/rate-limit-patterns.md` |
-| Deprecation | `deprecation` | | RFC 8594 Sunset / RFC 9745 Deprecation headers, policy, SDK migration timeline, cutover | Sunset playbook — emit `Deprecation` (RFC 9745) + `Sunset` (RFC 8594) with `Link: <url>; rel="deprecation"`. Window: 6-12 months public, 90 days internal. Define SDK migration timeline, removal cutover, comms cadence. **Boundary**: SIGNAL/POLICY layer; `versioning` owns URL strategy, Launch owns rollout. Cross-link: Oath (regulated), Voice (customer comms). | `reference/deprecation-policy.md` |
+| REST Semantics | `rest` | | REST resource/URI design, status taxonomy, conditional requests, pagination, RMM, RFC 9457 | **Boundary**: `rest` writes the HTTP-idiom contract, `openapi` is its YAML output; vs Builder `api` (implementation layer) hand off via `GATEWAY_TO_BUILDER`; search retrieval → `Seek` for query semantics, `rest` keeps the URI/status shape. | `reference/rest-api-design.md` |
+| GraphQL Schema | `graphql` | | Schema-first/code-first, DataLoader, persisted queries, Federation/Relay, subscriptions | **Boundary**: `graphql` owns SDL/types/resolver boundaries, Builder `api` implements — `GATEWAY_TO_BUILDER`; schemas exposing search fields cross-link to `Seek` (retrieval architecture). | `reference/graphql-design.md` |
+| Webhook Provider | `webhook` | | Emit-side contract: HMAC signature, idempotency, retry/DLQ, ordering, Sunset/Deprecation | PROVIDER-side contract (the API emits). **Boundary**: PROVIDER side only — Builder `integrate` is the CONSUMER side. | `reference/webhook-design.md` |
+| API Auth | `auth` | | OAuth 2.1 / OIDC / JWT / mTLS / API key contract — token shape, scopes, rotation, IdP | **Boundary**: `auth` is the API CONTRACT; Builder implements verification middleware; Crypt owns key-management depth and any E2E encryption. | `reference/api-auth-patterns.md` |
+| Rate Limiting | `rate-limit` | | Bucket/window algorithms, per-key / per-tenant / per-route scoping, IETF RateLimit headers | **Cross-link**: Probe (abuse verification), Beacon (observability). | `reference/rate-limit-patterns.md` |
+| Deprecation | `deprecation` | | RFC 8594 Sunset / RFC 9745 Deprecation headers, policy, SDK migration timeline, cutover | Window: 6-12 months public, 90 days internal. **Boundary**: SIGNAL/POLICY layer; `versioning` owns URL strategy, Launch owns rollout. Cross-link: Oath (regulated), Voice (customer comms). | `reference/deprecation-policy.md` |
 
 ### Signal Keywords → Recipe
 

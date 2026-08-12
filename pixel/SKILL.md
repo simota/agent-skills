@@ -63,9 +63,8 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Follow SCAN -> EXTRACT -> COMPOSE -> VERIFY -> REFINE for every task, attaching confidence levels (HIGH/MEDIUM/LOW) to all extracted values.
+- Follow SCAN -> EXTRACT -> COMPOSE -> VERIFY -> REFINE for every task; attach confidence levels per the thresholds in Design Value Extraction to every extracted value.
 - Never ship code without at least one visual verification pass, and provide the mockup-vs-implementation comparison report with every deliverable.
-- Stay within Pixel's domain; route unrelated requests onward.
 - Generate semantic HTML5 that passes W3C validation — CSS Grid for page layout, Flexbox for inline/nav, `gap` over margin hacks.
 - Use `rem` for scalable spacing snapped to a 4px/8px grid. **Zero magic numbers** — every value flows through CSS custom properties.
 - Prefer `@container` over `@media` for reusable components (`container-type: inline-size`, named containers when nesting); keep `@media` for page-level layout. Feature matrix -> `reference/modern-css-baseline.md`.
@@ -85,9 +84,8 @@ Interaction triggers → `_common/INTERACTION.md`
 ### Always
 
 - Read the mockup image before writing code; extract values (color/font/spacing/layout) before composing.
-- Attach confidence levels (HIGH ≥90%, MEDIUM 70-89%, LOW <70%) to estimated values.
 - Use semantic HTML with accessibility attributes; generate mobile-first responsive code.
-- Verify with Playwright (`animations: 'disabled'` + `mask`/`stylePath` for dynamic content + `maxDiffPixelRatio: 0.01-0.02`).
+- Verify with Playwright per the VERIFY essentials in Core Contract.
 - Keep changes <50 lines per modification pass; log to `.agents/PROJECT.md`.
 
 ### Ask First
@@ -151,9 +149,9 @@ VERIFY and REFINE form a loop, capped at 3 iterations.
 | Visual Verify | `verify` | | Execute visual verification | `reference/visual-verification.md` |
 | Gap Report | `gap` | | Gap analysis report generation | `reference/gap-analysis-report.md` |
 | Design Audit | `audit` | | Fidelity audit | `reference/gap-analysis-report.md`, `reference/visual-verification.md` |
-| Responsive | `responsive` | | Derive responsive breakpoints from a single-viewport mockup — fluid typography (clamp), container queries vs media queries, mobile-first reflow, Tailwind-aligned breakpoints (640/768/1024/1280/1536), aspect-ratio handling | `reference/responsive-design.md` |
-| Dark Mode | `dark` | | Derive a dark-mode variant from a light-mode mockup — semantic token mapping, contrast preservation (WCAG AA/AAA), elevation/depth via brightness (not solid black), `prefers-color-scheme`, system-mode toggle pattern | `reference/dark-mode-derivation.md` |
-| Animation | `animation` | | Extract micro-interactions from mockup signals (motion blur, ghost frames, multiple keyframes) — hover/focus/active states, transition tokens, easing curves, reduced-motion fallback, performance budget (transform/opacity only) | `reference/animation-extraction.md` |
+| Responsive | `responsive` | | Derive responsive breakpoints from a single-viewport mockup | `reference/responsive-design.md` |
+| Dark Mode | `dark` | | Derive a dark-mode variant from a light-mode mockup | `reference/dark-mode-derivation.md` |
+| Animation | `animation` | | Extract micro-interactions from mockup signals | `reference/animation-extraction.md` |
 
 ## Subcommand Dispatch
 
@@ -161,14 +159,14 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`reproduce` = Faithful Reproduction). Apply normal SCAN → EXTRACT → COMPOSE → VERIFY → REFINE workflow.
 
-Behavior notes per Recipe (concise — full expansion in `reference/recipe-dispatch.md`):
-- `reproduce`: Default full flow. Extract values with confidence levels, generate HTML/CSS, verify, iterate.
-- `verify`: VERIFY-only. Compare existing implementation against mockup; emit comparison report.
+Behavior notes per Recipe (one-liners — full technical detail, incl. breakpoints/tokens/contrast ratios, in `reference/recipe-dispatch.md`):
+- `reproduce`: Default full flow — extract with confidence levels, generate HTML/CSS, verify, iterate.
+- `verify`: VERIFY-only — compare existing implementation against mockup; emit comparison report.
 - `gap`: Produce 8-dim × 5-severity × 9-RC report (Markdown + JSON) per `gap-analysis-report.md`.
 - `audit`: Fidelity scoring + audit report formatted for Canon/Judge handoff.
-- `responsive`: Single-viewport → responsive derivation. Fluid typography (`clamp`), `@container` for components, `@media` for page layout, Tailwind breakpoints (640/768/1024/1280/1536). Mark derived values LOW confidence.
-- `dark`: Light → dark derivation via semantic tokens. Support `prefers-color-scheme` + `[data-theme]`, re-verify WCAG AA contrast, never use pure `#000`.
-- `animation`: Extract micro-interactions. Token transitions (`--motion-fast/base/slow`), composite-only (transform/opacity), `prefers-reduced-motion` fallback, `@supports` guards for scroll-driven animations and View Transitions.
+- `responsive`: Single-viewport → responsive derivation; mark derived values LOW confidence.
+- `dark`: Light → dark derivation via semantic tokens; re-verify contrast, never pure `#000`.
+- `animation`: Extract micro-interactions into motion tokens; composite-only, reduced-motion fallback.
 
 ## Output Routing
 
@@ -209,20 +207,7 @@ Vision prompt strategies -> `reference/design-extraction.md`; structured protoco
 
 ## LP Section Patterns
 
-Read `reference/lp-section-patterns.md` for complete templates.
-
-### Section Identification Heuristics
-
-| Section | Visual cues |
-|---------|-------------|
-| Hero | Full-width, large text, prominent CTA, above fold |
-| Navigation | Top-fixed bar, logo + links, hamburger on mobile |
-| Features | Grid/list of items with icons/images + descriptions |
-| Pricing | Comparison cards, price numbers, plan names, CTA buttons |
-| Testimonials | Quotes, avatars, company logos, star ratings |
-| FAQ | Question-answer pairs, expandable/accordion pattern |
-| CTA | Centered heading + button, contrasting background |
-| Footer | Multi-column links, copyright, social icons |
+Section identification heuristics (Hero/Navigation/Features/Pricing/Testimonials/FAQ/CTA/Footer visual cues) and complete templates → `reference/lp-section-patterns.md`.
 
 ## Output Requirements
 

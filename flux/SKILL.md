@@ -83,7 +83,7 @@ Route elsewhere when the task is primarily:
 - Never output a single framework mechanically — compose dynamically from Cynefin (Clear / Complicated / Complex / Chaotic / Disorder). In Disorder, apply the **aporetic turn**: create enough structure to categorize into Complex or an ordered domain before selecting frameworks.
 - Quality gate: every reframing passes the ASN test — **A**ctionability (concrete next step), **S**pecificity (THIS problem, not any problem), **N**ovelty (not a synonym of the original framing).
 - Vertical reasoning reinforces existing thought structures rather than breaking them — Serendipity Injection is not decoration, it is the primary escape from pattern-reinforcing loops.
-- With TRIZ, identify the specific contradiction before selecting inventive principles; pick the matrix version by domain (classical Altshuller 39-param, Matrix 2003 48-param, Matrix 2022). LLM-assisted tools automate detection while deterministic matrix lookup prevents hallucination. Detail: `reference/thinking-frameworks.md`.
+- With TRIZ, identify the contradiction before selecting inventive principles; matrix version, domain fit, and hallucination-prevention detail -> `reference/thinking-frameworks.md`.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Flux; P1, P2 recommended).
 
 ## Boundaries
@@ -155,7 +155,7 @@ Default: **DEEP** unless the user specifies otherwise or the problem is clearly 
 
 ## Bias Audit Mode
 
-Dedicated mode for detecting cognitive biases in decision-making, independent of reframing. Covers 15+ patterns across decision-making, group, estimation, and meta-cognitive categories (anchoring, confirmation, sunk cost, groupthink, IKEA effect, survivorship, planning fallacy, status quo, availability, Dunning-Kruger, etc.).
+Dedicated mode for detecting cognitive biases in decision-making, independent of reframing. Covers 15+ patterns across decision-making, group, estimation, and meta-cognitive categories — full taxonomy in `reference/bias-catalog.md`.
 
 **Workflow:** CLASSIFY → BIAS_SCAN (systematic checklist) → DEBIASING (apply three evidence-based strategy categories: group composition/structure, information design, procedural debiasing) → CRYSTALLIZE (Bias Audit Report).
 
@@ -179,16 +179,18 @@ Dedicated mode for detecting cognitive biases in decision-making, independent of
 
 > Recipes are reframing *shape*; `## Work Modes` are pipeline *depth*. They combine independently — each Recipe pins a default mode, overridable by the user.
 
-| Recipe | Subcommand | Default? | Mode | When to Use | Notes | Read First |
+Numeric thresholds, prompt banks, and worked mechanics for each Recipe live in its "Read First" reference — not restated here.
+
+| Recipe | Subcommand | Default? | Mode | When to Use | Phase Chain | Read First |
 |--------|-----------|---------|------|-------------|-------|------------|
-| Reframe | `reframe` | ✓ | DEEP | Assumption reframing, full pipeline | All 5 phases: Cynefin -> assumption surfacing -> Serendipity Injection -> CRYSTALLIZE. | `reference/thinking-frameworks.md` |
-| Perspective Shift | `shift` | | RAPID | Perspective shift, unblocking | CLASSIFY -> SHIFT -> CRYSTALLIZE. Perspective rotation and Oblique Strategies. | `reference/thinking-frameworks.md` |
-| Cross-Domain | `cross` | | LENS | Cross-domain knowledge fusion | CLASSIFY -> COMBINE -> CRYSTALLIZE. Bisociation and SCAMPER. | `reference/combination-engine.md` |
-| Challenge Assumption | `challenge` | | LENS | Challenge preconceptions | CLASSIFY -> CHALLENGE -> CRYSTALLIZE. First Principles and Assumption Reversal. | `reference/thinking-frameworks.md` |
-| SCAMPER | `scamper` | | LENS | 7-lens artifact transformation | CLASSIFY -> SCAMPER probe -> CRYSTALLIZE. 7 lenses with prompt banks; >=3 ideas per lens, ASN filter, 7-lens x N matrix. Pair with `challenge`/`shift` upstream — alone it yields incremental ideas. | `reference/scamper-technique.md` |
-| Analogy | `analogy` | | LENS | Structural mapping from a source domain | CLASSIFY -> ANALOGY map -> CRYSTALLIZE. Align relations, not objects; budget near vs far; mark breakdown points; rate transferability. Generate >=5 candidates, kill 4. | `reference/analogical-thinking.md` |
-| Inversion | `inversion` | | LENS | Munger inversion — invert the goal, derive an avoid-list | CLASSIFY -> INVERT -> ENUMERATE -> AVOID -> CRYSTALLIZE. >=10 failure-guarantees across 6 categories, avoid-list with owners. Hand failure paths to Omen for RPN/AP scoring. | `reference/inversion-method.md` |
-| Multi-Engine | `multi` | | DEEP (multi) | Tri-engine reframe generation with Pattern D Divergence-primary scoring — use when stuck thinking may share one training-data prior | Spawn engine subagents in one message with loose prompts (no framework names, no Cynefin, no ASN). Two-axis scoring: Concurrence x Novelty; `VERIFIED-DIVERGENT x HIGH` top-billed ahead of UNIVERSAL. Portfolio merge default; CLUSTER keeps same-assumption different-inversion separate under a shared `assumption_root`. | `reference/multi-engine-mode.md`, `reference/tri-engine-reframe.md`, `_common/MULTI_ENGINE_RECIPE.md` |
+| Reframe | `reframe` | ✓ | DEEP | Assumption reframing, full pipeline | CLASSIFY -> CHALLENGE -> COMBINE -> SHIFT -> CRYSTALLIZE | `reference/thinking-frameworks.md` |
+| Perspective Shift | `shift` | | RAPID | Perspective shift, unblocking | CLASSIFY -> SHIFT -> CRYSTALLIZE | `reference/thinking-frameworks.md` |
+| Cross-Domain | `cross` | | LENS | Cross-domain knowledge fusion | CLASSIFY -> COMBINE -> CRYSTALLIZE | `reference/combination-engine.md` |
+| Challenge Assumption | `challenge` | | LENS | Challenge preconceptions | CLASSIFY -> CHALLENGE -> CRYSTALLIZE | `reference/thinking-frameworks.md` |
+| SCAMPER | `scamper` | | LENS | 7-lens artifact transformation; pair with `challenge`/`shift` upstream — alone it yields incremental ideas | CLASSIFY -> SCAMPER probe -> CRYSTALLIZE | `reference/scamper-technique.md` |
+| Analogy | `analogy` | | LENS | Structural mapping from a source domain | CLASSIFY -> ANALOGY map -> CRYSTALLIZE | `reference/analogical-thinking.md` |
+| Inversion | `inversion` | | LENS | Munger inversion — invert the goal, derive an avoid-list; hand failure paths to Omen for RPN/AP scoring | CLASSIFY -> INVERT -> ENUMERATE -> AVOID -> CRYSTALLIZE | `reference/inversion-method.md` |
+| Multi-Engine | `multi` | | DEEP (multi) | Tri-engine reframe generation with Pattern D Divergence-primary scoring — use when stuck thinking may share one training-data prior | SCOPE -> PREFLIGHT -> FAN-OUT -> NORMALIZE -> CLUSTER -> SCORE -> GROUND -> SYNTHESIZE | `reference/multi-engine-mode.md`, `reference/tri-engine-reframe.md`, `_common/MULTI_ENGINE_RECIPE.md` |
 
 ## Subcommand Dispatch
 
@@ -200,7 +202,7 @@ Work Mode (DEEP / RAPID / LENS / AUDIT) follows each Recipe's pinned default but
 
 ## Output Routing
 
-Routes on **user-signal keywords** (natural language, no explicit subcommand); a subcommand match wins if both apply.
+Routes on user-signal keywords (natural language); a subcommand match wins if both apply.
 
 | Signal | Mode | Primary Output | Next |
 |--------|------|----------------|------|
@@ -213,7 +215,7 @@ Routes on **user-signal keywords** (natural language, no explicit subcommand); a
 | `pre-mortem`, `what could go wrong`, `blind spots` | RAPID | Assumption vulnerability + Blind Spot Report | Magi/User |
 | `complexity paralysis`, `too many options` | DEEP | Cynefin classification + prioritized reframing set | Sherpa or User |
 | `bias check`, `are we biased`, `decision audit` | AUDIT | Bias Audit Report + debiased framing | Magi/User |
-| `multi`, `parallel reframe`, `cross-engine assumption inversion`, `escape my own prior` | DEEP (multi) | Portfolio of divergent reframes (VERIFIED-DIVERGENT x HIGH top-billed) + Assumption Map + Blind Spot Report | Magi, Spark, Atlas, or User |
+| `multi`, `parallel reframe`, `cross-engine inversion`, `escape my own prior` | DEEP (multi) | Divergent-reframe Portfolio (VERIFIED-DIVERGENT x HIGH top-billed) + Assumption Map + Blind Spot Report | Magi, Spark, Atlas, or User |
 
 ---
 
@@ -262,22 +264,22 @@ Activated by `multi`. Pattern D (Divergence-primary) per `_common/MULTI_ENGINE_R
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/thinking-frameworks.md` | Framework definitions, procedures, application examples, favorite-tactic rationale. |
-| `reference/domain-classifier.md` | Cynefin classification criteria and framework selection rules. |
-| `reference/combination-engine.md` | Framework compatibility matrix, combination rules, Serendipity Injection mechanics. |
+| `reference/thinking-frameworks.md` | Framework definitions, procedures, examples, favorite-tactic rationale. |
+| `reference/domain-classifier.md` | Cynefin classification criteria and framework selection. |
+| `reference/combination-engine.md` | Framework compatibility matrix, combination rules, Serendipity Injection. |
 | `reference/output-formats.md` | Output templates — Assumption Map, Insight Matrix, Blind Spot Report. |
 | `reference/anti-patterns.md` | Guarding against superficial reframing, framework abuse, false insights. |
 | `reference/collaboration-packets.md` | Handoff formats for partner agents. |
-| `reference/bias-catalog.md` | AUDIT mode — full bias taxonomy, detection signals, debiasing techniques. |
-| `reference/scamper-technique.md` | `scamper` — 7-lens prompt banks, lens-selection heuristics, anti-patterns, handoff. |
-| `reference/analogical-thinking.md` | `analogy` — Gentner structural mapping, near/far budget, biomimicry catalog, breakdown-point testing. |
-| `reference/inversion-method.md` | `inversion` — Munger goal-flip prompts, via negativa, 6-category failure scaffold, avoid-list, Omen handoff. |
-| `reference/multi-engine-mode.md` | Full Multi-Engine rationale, base engine policy, two-axis scoring, GROUND rejection categories, degraded modes. |
-| `reference/tri-engine-reframe.md` | `multi` Recipe — fan-out, Pattern D scoring, Portfolio merge, assumption_root clustering, JSON schema, prompt skeletons. |
-| `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — engine dispatch, loose-prompt rules, fan-out mechanics, fallbacks. |
-| `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill `multi` protocol — Pattern D/C/H selection, canonical flow, attribution conventions, degraded-mode matrix. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the reframing output, thinking depth at contradiction/ASN gating, front-loading at ENTER. Critical: P3, P5. |
-| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Flux-specific Output/Next schema. |
+| `reference/bias-catalog.md` | AUDIT mode — bias taxonomy, detection signals, debiasing techniques. |
+| `reference/scamper-technique.md` | `scamper` — 7-lens prompt banks, selection heuristics, anti-patterns, handoff. |
+| `reference/analogical-thinking.md` | `analogy` — Gentner mapping, near/far budget, biomimicry catalog, breakdown testing. |
+| `reference/inversion-method.md` | `inversion` — Munger goal-flip, via negativa, 6-category scaffold, avoid-list, Omen handoff. |
+| `reference/multi-engine-mode.md` | Full Multi-Engine rationale, engine policy, two-axis scoring, GROUND categories, degraded modes. |
+| `reference/tri-engine-reframe.md` | `multi` — fan-out, Pattern D scoring, Portfolio merge, assumption_root clustering, schema, prompts. |
+| `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — dispatch, loose-prompt rules, fan-out, fallbacks. |
+| `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill `multi` protocol — Pattern D/C/H selection, flow, attribution, degraded-mode matrix. |
+| `_common/OPUS_5_AUTHORING.md` | Sizing output, thinking depth at contradiction/ASN gating, front-loading at ENTER. Critical: P3, P5. |
+| `reference/autorun-schema.md` | Emitting AUTORUN `_STEP_COMPLETE` — Flux-specific Output/Next schema. |
 
 ---
 
@@ -289,9 +291,9 @@ Around the Workflow pipeline: **RECEIVE** (read the problem, check `.agents/flux
 
 ## Favorite Tactics
 
-Reverse the **highest-confidence assumption first** — it produces the most disruptive insights. Open COMBINE with a **randomly selected unrelated domain** to break fixation early. Dig to the mental-model level (**Iceberg**) before rotating frames. **Preserve contradictions** when two frameworks disagree — the tension itself is the most valuable output. Before reframing, run **Three-Bucket Separation** (known facts / assumed / unknown) and drill **Five Whys** into the highest-confidence assumptions before reversing them. Convert constraints into **"How Might We ___?"** statements. At CRYSTALLIZE ask the **3 convergence questions**: what action does this suggest, who would disagree, is this specific to THIS problem. Finally, run a **Bias Blind Spot Audit** — apply the bias checklist to your own output, the most common meta-failure in reframing work.
+Reverse the highest-confidence assumption first; open COMBINE with a random unrelated domain; dig to the Iceberg mental-model level before rotating frames; preserve cross-framework contradictions as signal, not noise; run Three-Bucket Separation (known / assumed / unknown) before reframing, then drill Five Whys into the top assumptions; convert constraints into "How Might We ___?" statements; at CRYSTALLIZE ask the 3 convergence questions (what action, who'd disagree, is this THIS-problem-specific); finally run a Bias Blind Spot Audit on your own output.
 
-Worked rationale and sourced evidence for each tactic -> `reference/thinking-frameworks.md` § Favorite Tactics.
+Worked rationale and sourced evidence (incl. Montgomery Ward case, 34% cross-domain lift stat) -> `reference/thinking-frameworks.md` § Favorite Tactics.
 
 ## Operational
 

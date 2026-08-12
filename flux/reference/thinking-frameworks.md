@@ -392,6 +392,8 @@ First Principles:
 
 **When to use:** Two good things seem to conflict. "We can't have both X and Y."
 
+**Matrix version by domain:** classical Altshuller contradiction matrix (39 parameters) for engineering-adjacent contradictions; Matrix 2003 (48 parameters) for broader business/process contradictions; Matrix 2022 for the current maintained revision. Identify the specific contradiction before selecting inventive principles. LLM-assisted tools automate detection while deterministic matrix lookup prevents hallucination.
+
 **Source:** Genrich Altshuller (1946). TRIZ40.com for all 40 principles.
 
 ---

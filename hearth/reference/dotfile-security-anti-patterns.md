@@ -34,6 +34,10 @@ Purpose: Read this when auditing dotfile repositories, secret handling, bootstra
 | Delete-only remediation | The secret stays in prior commits | Use `git filter-repo` or equivalent after revocation |
 | Credentials in `.gitconfig` | Auth data spreads with dotfile sync | Use credential helpers or `[include]` / `[includeIf]` for local separation |
 
+### Leak Statistics (2026)
+
+GitHub reported 39M leaked secrets in 2024; GitGuardian's 2026 report found 29M new secrets on public GitHub in 2025 (34% YoY increase). AI-assisted commits leak secrets at 3.2% vs. 1.6% baseline (roughly 2x). 24,000+ secrets were found exposed in MCP configuration files, making AI-agent configs a new attack surface. Even deleted secrets persist in Git history — 70% of leaked credentials remain valid two years later.
+
 ### Leak-Response Order
 
 ```text

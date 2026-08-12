@@ -4,7 +4,7 @@ Purpose: Design LP-context forms that maximize completion without eroding lead q
 
 > **2026 traffic mix: passkey + AI agent flows are baseline.** Two shifts to factor into form design:
 >
-> 1. **Passkey-first signup** is now table-stakes for consumer LPs. Offer "Sign in with passkey" alongside email + password, prefer it for first-time creation when the platform supports it (`navigator.credentials` WebAuthn). Email-only fallback remains for cross-device portability.
+> 1. **Passkey-first signup** is now table-stakes for consumer LPs. Offer "Sign in with passkey" alongside email + password, prefer it for first-time creation when the platform supports it (`navigator.credentials` WebAuthn). Email-only fallback remains for cross-device portability. FIDO Alliance's Passkey Index (2025) reports a 30% conversion lift and 93% login success vs 63% for passwords; average auth time drops from 31.2s (password) to 8.5s (passkey). Use WebAuthn Conditional UI ("passkey autofill") to surface passkeys without interrupting form flow. Source: [FIDO Alliance Passkey Index](https://idtechwire.com/fido-alliance-launches-passkey-index-proving-30-conversion-lift-over-passwords/).
 > 2. **AI shopping / agent-driven flows** convert at higher rates than non-branded organic (ChatGPT referrals `~31%` higher in 2025–2026 retail data). Forms reached by an AI agent on the user's behalf must auto-fill cleanly from structured data the agent already has — that means the same machine-readable `autocomplete` + ARIA discipline as in the autofill section below, applied as a hard requirement rather than a nice-to-have.
 
 ## Scope Boundary

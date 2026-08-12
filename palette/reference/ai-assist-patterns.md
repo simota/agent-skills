@@ -122,6 +122,8 @@ Rules:
 
 Trust calibration: users arrive with skepticism from consumer AI failures (NN/g 2026). Earn trust incrementally — start with low-stakes actions, demonstrate reliability, then offer higher autonomy levels.
 
+Never add undifferentiated AI features without clear user value — users are fatigued by "AI slop" where every product gets an AI sparkle that becomes noise, not novelty (NN/g State of UX 2026). Every AI-powered element must solve a specific user problem; decorative AI degrades trust and clutters the interface.
+
 ## Core Principles
 
 1. **Transparency**: always make AI involvement visible to the user.

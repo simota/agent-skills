@@ -140,9 +140,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Phase Detail
 
-**ONBOARDING** (first invocation per project): scan the codebase for token references, CSS variables, Tailwind config, Style Dictionary, Tokens Studio output, or DTCG JSON; delegate to `Frame` when a Figma file is provided and to `Muse` for token normalization; write consolidated state to `.agents/design-system/{project}.json` using the canonical schema in `_common/design-system-registry.md` — **never invent a local variant**, that document is the single source of truth. Populate `source.extracted_by` and `source.extracted_at` on write and bump `version` per the registry's rules. Express parametric ranges with `_common/parametric-output.md` syntax (labeled endpoints, mandatory `base`, 3-5 steps). On later runs compare the registry's source file hashes against disk and re-extract only on change or explicit refresh.
-
-**EXECUTE**: fan out via the platform's spawn tool, passing `_AGENT_CONTEXT` with `DESIGN_INTENT_HANDOFF` embedded; collect and schema-validate each `_STEP_COMPLETE`. HANDOFF then builds per-consumer bundles carrying provenance (tokens version, direction version, Figma file ID and version, extraction timestamp), and DELIVER returns the artifact set and logs to the journal.
+ONBOARDING (scan/delegate/write/hash-compare rules) and EXECUTE (fan-out/collect/provenance rules) procedural specifics -> `reference/autorun-schema.md` § Phase Detail. Never invent a local design-system schema variant — `_common/design-system-registry.md` is the single source of truth.
 
 
 ## Operation Layers (Multi-Granularity Operations)
@@ -157,10 +155,10 @@ atelier drives downstream agents through four deliberately chosen operation laye
 | `parametric slider` | Range matters more than a value; downstream decides within range | `hero.padding: [tight=48px / base=64px / airy=96px]; motion: [subtle=150ms / base=250ms / expressive=400ms]; density: [compact=3 / base=4 / relaxed=6]` |
 
 Layer selection rules:
-- Prompt is the default only for creative divergence.
 - Structured comments go to agents that edit files in place (Artisan, Muse, Forge) and need semantic framing.
 - Direct edit instructions go to deterministic agents with a single correct answer (Muse token update, Vitrine story scaffold).
-- Parametric sliders go downstream when Vision provided a range rather than a point (e.g., restraint band rather than exact radius).
+- Parametric sliders go downstream when Vision gave a range, not a point (e.g., restraint band, not exact radius).
+- Prompt is the default only for creative divergence.
 
 ## Delegate Matrix
 
@@ -181,11 +179,7 @@ Route by artifact shape; include a delegate only when its output is in the reque
 | Multi-format export | `Morph` | — | MD/Word/Excel/PDF/HTML |
 | Landing page (composite) | `Funnel` | `Muse`, `Artisan`, `Vitrine` | When the landing agent fits better than Artisan |
 
-**Default bundles by trigger:**
-- "LP design to implementation" → `Frame` (if Figma) / `Muse` (tokens) → `Forge` (prototype) → `Artisan` (production) → `Vitrine` (catalog)
-- "codebase tokens → new screen prototype" → `Muse` (extract) → `Forge` (prototype) → `Vitrine` (story)
-- "pitch deck + marketing assets + 1-pager" → parallel: `Stage` (deck) + `Ink` (assets) + `Morph` (1-pager export), anchored by `Muse` token reference
-- "Figma → implementation code" → `Frame` (extract) → `Muse` (align tokens) → `Artisan` (implement) → `Vitrine` (stories)
+Default bundles by trigger -> Output Routing table below.
 
 ## `DESIGN_INTENT_HANDOFF` Schema Usage
 
@@ -220,7 +214,8 @@ Behavior notes per Recipe:
 |--------|----------|----------------|-----------|
 | `landing page`, `LP`, `one page site` | LP pipeline (Frame/Muse → Forge → Artisan → Vitrine) | Production LP code + stories + tokens | — |
 | `extract tokens`, `codebase design system` | ONBOARDING + Muse normalization | Persisted design system + token report | — |
-| `pitch deck + assets + 1-pager` | Parallel Stage/Ink/Morph bundle | Deck + assets + 1-pager export | — |
+| `codebase tokens`, `new screen prototype` | Muse (extract) → Forge (prototype) → Vitrine (story) | Prototype + story + token report | — |
+| `pitch deck + assets + 1-pager` | Parallel Stage/Ink/Morph, anchored by Muse token reference | Deck + assets + 1-pager export | — |
 | `Figma to code`, `design to implementation` | Frame → Muse → Artisan → Vitrine | Production code + catalog | — |
 | `prototype from design` | Forge-anchored chain | Runnable prototype + story | — |
 | `refresh design system`, `tokens changed` | Re-run ONBOARDING with `--refresh-design-system` | Updated cache + drift report | — |

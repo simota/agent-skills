@@ -9,6 +9,7 @@ Purpose: Scaffold raw Kubernetes manifests (Deployment, Service, Ingress, Config
 - **Scaffold `terraform`**: cluster-level provisioning (EKS / GKE / AKS control plane, node groups, IRSA). Manifests live in `k8s`; the cluster that runs them lives in `terraform`.
 - **Pipe (elsewhere)**: CI/CD wiring — `kubectl apply -k`, `kustomize build`, ArgoCD / Flux sync. `k8s` produces the manifests; `Pipe` wires the rollout.
 - **Gateway (elsewhere)**: public API contract, versioning, breaking-change review. Ingress *routing* lives in `k8s`; API *rules* (auth, rate limit, schema) live in `Gateway`.
+- **Native (elsewhere)**: mobile build/release concerns are out of scope for `k8s` — route those to `Native`.
 
 If the request is "package this workload for reuse" → `helm`. If it is "ship this single workload to one cluster" → `k8s`.
 

@@ -53,11 +53,11 @@ Use Guardian when:
 - Detecting noise or security-sensitive diffs in staged changes
 - Choosing branching strategy (GitHub Flow / Git Flow / Trunk-Based)
 - Preparing reviewer assignment, release-note context, or merge guidance
-- Evaluating PR size against thresholds (Google recommends <200 LoC; quality drops 70% above 1,000 LoC)
-- Recommending stacked PR workflows for large features (each PR reviewable in 10-15 min)
-- Evaluating merge queue adoption for trunk-based teams (parallel, optimistic, and batched modes now table stakes)
-- Assessing whether AI-generated code has adequate human review coverage and mandatory secret scanning — AI-generated CVEs are accelerating (35 in March 2026 alone)
-- Evaluating whether review processes maximize knowledge transfer (primary ROI per Google's 9M-review study) alongside defect detection
+- Evaluating PR size against split/review thresholds (detail: Core Contract PR size principle)
+- Recommending stacked PR workflows for large features
+- Evaluating merge queue adoption for trunk-based teams
+- Assessing AI-generated code review coverage and secret-scanning adequacy
+- Evaluating whether review processes maximize knowledge transfer alongside defect detection
 
 Route elsewhere when:
 - **Writing or modifying code** → Builder, Artisan
@@ -76,15 +76,15 @@ Route elsewhere when:
 - Delivery loop: `SURVEY -> PLAN -> VERIFY -> PRESENT`.
 - Read-only by default; preserve essential changes; follow `_common/GIT_GUIDELINES.md`, `_common/BOUNDARIES.md`, and `.agents/guardian.md`.
 - **PR size principle**: optimize for <200 LoC; each extra 100 lines adds ~25 min review time and defect detection drops 70% above 1,000 LoC. Under 300 lines gets 60% more thorough review; size warnings at 400 lines cut post-merge defects 35%.
-- **PR body essence principle**: The PR body Guardian composes states only the essence — **why** the change exists, **what** changed, **how** it was verified — and scales to the change (`XS`/`S` → Summary + Test plan only). Omit empty or restating sections; no boilerplate checklists in the body (self-review is author pre-flight). The analysis report (Change Classification Table, Quality Score, full Risk breakdown) is review-prep, distinct from the PR body — distill it to a line, never paste it in. Canonical template + conditional sections: `reference/pr-workflow-patterns.md` § PR Description Template (single source of truth; `output-templates.md` §14 and `pr-ship-flow.md` CREATE follow it).
+- **PR body essence principle**: the PR body states only the essence — **why**, **what**, **how verified** — scaled to change size (`XS`/`S` → Summary + Test plan only); omit empty/restating sections and boilerplate checklists (self-review is author pre-flight). The analysis report (Classification Table, Quality Score, Risk breakdown) is separate review-prep — distill it to a line, never paste it in. Canonical template: `reference/pr-workflow-patterns.md` § PR Description Template (single source of truth for `output-templates.md` §14 and `pr-ship-flow.md` CREATE).
 - **Review cycle target**: first review within 6 h; review cycles ≤ 1.2, investigate above 1.5. Track P75 "Time in Review" — the slowest 25% surface systemic friction better than any average.
-- **AI-generated code awareness** — the default posture, not an option (42% of code is now AI-assisted). AI code carries 2.74x more security vulnerabilities, 1.75x more logic errors, 322% more privilege-escalation paths, and leaks secrets at ~2x baseline. Flag high-AI-ratio PRs for enhanced human review of intent, tradeoffs, and security; recommend explicit AI-code labeling, mandatory secret scanning (gitleaks / detect-secrets pre-commit), and GitHub Advanced Security auto-revocation. Sources and figures → `reference/security-analysis.md`.
+- **AI-generated code awareness** — the default posture, not an option (42% of code is now AI-assisted, and it carries materially more vulnerabilities, logic errors, and privilege-escalation paths). Flag high-AI-ratio PRs for enhanced human review of intent, tradeoffs, and security; recommend explicit AI-code labeling, mandatory secret scanning (gitleaks / detect-secrets pre-commit), and GitHub Advanced Security auto-revocation. Figures → `reference/security-analysis.md` § AI-Generated Code Risk Stats.
 - **Stacked PRs principle**: above M-size (200+ LoC), recommend stacked PRs — each reviewable in 10-15 min, touching distinct files. Tools: Graphite, ghstack, git-town, Aviator, stack-pr, spr, git-branchless, Jujutsu/jj; Git `--update-refs` (2.38+) cuts manual-stacking rebase overhead.
 - **Knowledge transfer principle**: knowledge transfer, not defect detection, drives most code-review ROI (Google, 9M reviews, ICSE 2018). Frame recommendations around learning and shared ownership — full automation forfeits that benefit.
 - **AI instability trade-off**: AI adoption raises throughput but also delivery instability (higher change-failure rate, more rework). Faster velocity is not safer velocity — weight AI-heavy PRs accordingly.
 - **AI review coverage crisis**: under AI adoption 31% more PRs merge with no human review while median review time rose 441%. Enforce explicit human-review-required gates — AI reviewers are good first-pass filters but replace neither knowledge transfer nor security judgment.
-- **Merge queue operations**: table stakes for trunk-based teams. `Throughput = Batch Size × Success Rate ÷ Duration`; configure auto-bisection so a failing batch isolates the bad PR without blocking the queue (GitHub merge queue, GitLab merge trains, Graphite).
-- **Self-review gate**: Recommend PR authors self-review before requesting team review to reduce reviewer burden.
+- **Merge queue operations**: table stakes for trunk-based teams. `Throughput = Batch Size × Success Rate ÷ Duration`; configure auto-bisection so a failing batch isolates the bad PR (GitHub merge queue, GitLab merge trains, Graphite).
+- **Self-review gate**: recommend authors self-review before requesting team review.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Guardian; P2, P1 recommended).
 
 ## Boundaries
@@ -115,8 +115,8 @@ Route elsewhere when:
 - crossing the `CRITICAL`-security or quality-score stop conditions in Hard gates below without resolving them — unreviewed security-sensitive diffs have caused real CVE exposures, and F-grade PRs have unacceptable defect escape rates
 - overriding learned patterns without feedback loop calibration
 - approving PRs > 1,000 LoC without split recommendation — 70% lower defect detection rate at this threshold
-- rubber-stamping AI-generated PRs without security-focused human review — AI code introduces 2.74x more vulnerabilities (Veracode 2025: 45% of LLM samples failed OWASP Top 10); AI-generated CVEs rose from 6 (Jan 2026) to 35 (Mar 2026); estimated real count 5-10x higher; 42% of all code is now AI-generated, making this the majority threat vector; DORA 2025: 31% more PRs merge unreviewed under AI adoption — automated AI review tool approval alone is insufficient for merge
-- committing sensitive data (API keys, passwords, tokens) — repository history is permanent; secret rotation costs compound per exposed credential; AI co-authored commits leak secrets at ~2x baseline rate; 64% of leaked secrets from 2022 remain unrevoked in 2026 due to governance gaps (GitGuardian 2026) — enforce pre-commit secret scanning hooks (gitleaks, detect-secrets).
+- rubber-stamping AI-generated PRs without security-focused human review — AI code carries 2.74x more vulnerabilities and is now the majority threat vector (42% of all code); automated AI-review-tool approval alone is insufficient for merge. Stats and sources → `reference/security-analysis.md` § AI-Generated Code Risk Stats.
+- committing sensitive data (API keys, passwords, tokens) — repository history is permanent; secret rotation costs compound per exposed credential; enforce pre-commit secret scanning hooks (gitleaks, detect-secrets). Leak-rate figures → `reference/security-analysis.md` § AI-Generated Code Risk Stats.
 
 ## Workflow
 
@@ -238,16 +238,7 @@ Every deliverable MUST include:
 4. **Risk Assessment** — Risk band (Critical / High / Medium / Low) with contributing factors
 5. **Actionable Recommendation** — Concrete next step: merge, split, cleanup, or handoff with blocking status
 
-Additional sections as needed (use canonical headings from `reference/output-templates.md`):
-- `## Guardian Change Analysis` — Full change breakdown
-- `## PR Quality Score: {score}/100 ({grade})` — Detailed quality scoring
-- `## Commit Message Analysis` — Message quality, atomicity, conventional commit compliance
-- `## Change Risk Assessment` — Risk factors with hotspot amplification
-- `## Hotspot Analysis` — Files with high churn × complexity
-- `## Reviewer Recommendations` — Suggested reviewers based on CODEOWNERS and expertise; include review priority (hotfix: 2h, feature: 24h, refactor: 48h)
-- `## Branch Health Report` — Stale branches, conflict risk, divergence metrics
-- `## Pre-Merge Checklist` — CI status, coverage, approval count, security scan
-- `## Squash Optimization Report` — Grouping and synthesis plan
+Additional sections as needed — canonical headings, skeletons, and full field lists in `reference/output-templates.md`: Guardian Change Analysis, PR Quality Score, Commit Message Analysis, Change Risk Assessment, Hotspot Analysis, Reviewer Recommendations (include review priority per Hard gates SLAs), Branch Health Report, Pre-Merge Checklist, Squash Optimization Report.
 
 ## Collaboration
 

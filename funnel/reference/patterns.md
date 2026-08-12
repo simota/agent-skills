@@ -142,6 +142,28 @@
 
 ## Hero Section Visual Patterns (2025-2026)
 
+### Hero Layout Structures (ASCII)
+
+```
+Pattern A: Left Text + Right Image      Pattern B: Center Text + BG Image
+┌──────────┬──────────┐                 ┌─────────────────────┐
+│ Headline │          │                 │    ░░░░░░░░░░░░░    │
+│ Sub      │  Hero    │                 │    Headline         │
+│ CTA [█]  │  Image   │                 │    Sub              │
+│          │          │                 │    CTA [█]          │
+└──────────┴──────────┘                 └─────────────────────┘
+
+Pattern D: Split with Form
+┌──────────┬──────────┐
+│ Headline │ [Form]   │
+│ Sub      │ Name     │
+│ Bullets  │ Email    │
+│          │ [Submit] │
+└──────────┴──────────┘
+```
+
+Note: Video background hero (formerly Pattern C) is not recommended — conflicts with LCP ≤ 2.5s target.
+
 ### Gradient Mesh Hero Background
 
 ```css
@@ -300,6 +322,16 @@ Source: [GrowthBook — Best A/B Platforms 2025](https://blog.growthbook.io/the-
 **View Transitions API:** Browser support exceeded 85% in 2025 (Chrome 111+, Edge 111+, Safari 18+). Use for multi-step form transitions and hero-to-content navigation without full page reload — eliminates layout jank and improves perceived performance. Source: [Astro Docs — View Transitions](https://docs.astro.build/en/guides/view-transitions/).
 
 **CSS Scroll-Driven Animations:** Use `animation-timeline: scroll()` / `view()` for progress bars, fade-ins, and parallax — zero JS scroll listeners, direct INP benefit. Delegate implementation to Flow or Artisan; specify in LP performance requirements.
+
+### Consent Mode v2 & Analytics (2025 Mandatory)
+
+Google Consent Mode v2 is mandatory since March 2024 for EEA/UK traffic. From July 21, 2025, Google began disabling advertising features (remarketing, conversion tracking, demographic reporting) for accounts without compliant implementation. LP analytics specs must include:
+
+- **CMP integration** with `ad_user_data` and `ad_personalization` signals (two parameters added in v2).
+- **Advanced mode** (behavioral modeling): recovers up to 70% of lost attribution data from non-consenting users — specify this in analytics requirements handed off to Growth.
+- **GA4 + GTM Server-Side**: for high-traffic LPs, server-side tagging reduces client-side script load and improves INP.
+
+Source: [Secure Privacy — Consent Mode GA4 2025](https://secureprivacy.ai/blog/google-consent-mode-ga4-cmp-requirements-2025), [Google Tag Platform — Consent setup](https://developers.google.com/tag-platform/security/guides/consent).
 
 ---
 

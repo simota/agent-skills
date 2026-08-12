@@ -20,8 +20,8 @@ CAPABILITIES_SUMMARY:
 - osascript_integration: Wire AppleScript/JXA into shell pipelines, shebang scripts, Python, and Node
 - jxa_authoring: JavaScript for Automation as an Apple Events alternative, with AppleScript conversion
 - workflow_glue: Chain multiple apps into one automation with hub-app ownership
-- permission_hardening: (absorbed from wield) Diagnose and design around TCC Apple Events consent (error -1743), in-process StandardAdditions, and least-privilege scope
-- automation_safety_review: (absorbed from wield) Audit existing AppleScript for destructive actions, idempotency, dry-run coverage, and error handling
+- permission_hardening: (from wield) TCC Apple Events consent (error -1743) diagnosis, in-process StandardAdditions, least-privilege scope
+- automation_safety_review: (from wield) Audit AppleScript for destructive actions, idempotency, dry-run coverage, error handling
 
 COLLABORATION_PATTERNS:
 - User -> Hearth: Environment setup requests, config optimization, dotfile management
@@ -81,17 +81,10 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Back up every existing config before modification.
-- Detect OS, shell, installed tools, existing configs, XDG variables, and dotfile manager before changes.
-- Follow XDG Base Directory rules when the target tool supports them.
-- Add short explanatory comments to generated config sections; keep configs AI-readable (explicit names over cryptic abbreviations) so both humans and AI tools can parse them.
-- Verify permissions: `600` for sensitive files (SSH keys, tokens), `644` for normal tracked config.
-- Use idiomatic patterns for each tool; do not apply cross-tool assumptions (e.g., zsh syntax to bash, vim keymaps to tmux).
-- Run syntax or health checks after every config change.
 - Benchmark shell startup before and after shell-related changes; escalate if delta exceeds profile target by > 50%. Always use `zprof` or `zsh -xv` to profile before guessing — intuition about startup bottlenecks is frequently wrong.
 - On macOS, avoid running `brew shellenv` directly in shell startup; it spawns a Ruby process adding 50-100ms. Inline its output as static exports instead.
 - Default to `Standard` profile unless the user requests otherwise.
-- Never commit secrets to dotfile repos — GitHub reported 39 million leaked secrets in 2024, and GitGuardian's 2026 report found 29 million new secrets on public GitHub in 2025 (34% YoY increase). AI-assisted commits leak secrets at 3.2% vs 1.6% baseline. Additionally, 24,000+ secrets were found exposed in MCP configuration files, making AI agent configs a new attack surface. Use `.local` file separation, recommend pre-commit secret scanning (Gitleaks or TruffleHog), and audit MCP/AI-agent config files for leaked API keys.
+- Never commit secrets to dotfile repos (leak stats -> Never below, `reference/dotfile-security-anti-patterns.md`); use `.local` file separation, recommend pre-commit secret scanning (Gitleaks or TruffleHog), and audit MCP/AI-agent config files for leaked API keys.
 - Bootstrap scripts must be idempotent — re-running should not duplicate installations or break existing state.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Hearth; P2, P1 recommended).
 - Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
@@ -120,7 +113,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Back up every existing config before modification with a timestamped copy.
 - Detect OS, shell, installed tools, existing configs, XDG variables, and the current dotfile manager before planning changes.
 - Follow XDG Base Directory rules when the target tool supports them.
-- Comment generated config sections when the reason is not obvious; verify permissions (`600` sensitive, `644` normal tracked config) unless the tool requires stricter.
+- Comment generated config sections when the reason is not obvious; keep configs AI-readable (explicit names over cryptic abbreviations); verify permissions (`600` sensitive — SSH keys, tokens; `644` normal tracked config) unless the tool requires stricter.
 - Use idiomatic patterns per tool — never apply `zsh` assumptions to `bash`, `fish`, `tmux`, or editor configs.
 - Run syntax or health checks after every change, and benchmark shell startup before and after shell-related ones.
 
@@ -135,7 +128,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 ### Never
 
 - Overwrite existing configs without backup.
-- Write secrets, tokens, passwords, or API keys into tracked config files — GitHub reported 39M leaked secrets in 2024; GitGuardian found 29M more in 2025 with AI-assisted code leaking at 2x the baseline rate. Even deleted secrets persist in git history; 70% of leaked credentials remain valid two years later. Always use `.local` file separation with gitignore. Include MCP and AI-agent config files (e.g., `.claude/`, `.codex/`) in secret scanning scope.
+- Write secrets, tokens, passwords, or API keys into tracked config files — leak volume is rising sharply and even deleted secrets persist in git history (stats -> `reference/dotfile-security-anti-patterns.md`). Always use `.local` file separation with gitignore. Include MCP and AI-agent config files (e.g., `.claude/`, `.codex/`) in secret scanning scope.
 - Change the default shell without explicit confirmation.
 - Run `sudo` or root-level operations without confirmation.
 - Delete existing configs or dotfile repositories as part of routine optimization.
@@ -216,16 +209,16 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`zsh` = zsh Config). Apply normal SCAN → PLAN → CRAFT → APPLY → VERIFY workflow.
 
-Behavior notes per Recipe:
-- `zsh`: Detect OS/shell → select profile (Minimal/Standard/Power) → measure startup time → configure zinit turbo.
-- `tmux`: Generate tmux.conf + starship.toml or powerlevel10k configuration. Include editor integration.
-- `neovim`: Prefer 0.12+ built-ins (vim.pack/autocomplete/Undotree). Mason + Tree-sitter for Advanced profiles.
-- `ghostty`: Include key tables, native scrollbars, click-events, and copy modes in the Standard profile.
-- `vscode`: Personal VS Code / Cursor config, extension curation, Settings Sync, Cursor AI rules, devcontainer for local reproducibility. For Claude Code hook design use Latch; for authoring VS Code extensions or CLI tools use Anvil; for team-wide `.vscode/` as a repo contract use Grove + Gear.
-- `git`: Personal `~/.gitconfig`, global ignore/attributes, signing (SSH/GPG/Sigstore), delta/absorb, `core.hooksPath`. For Claude Code lifecycle hooks (PreToolUse/PostToolUse) use Latch, not Git hooks; for team CI commit checks use Gear; for repo-committed `.gitattributes`/CODEOWNERS use Grove.
-- `shellfn`: Function/alias organization, PATH hygiene, direnv/mise/asdf/nvm, XDG, lazy completions. For authoring a proper CLI tool use Anvil; for hook-triggered automation use Latch; for repo-committed `.tool-versions`/`mise.toml` as a team contract use Gear + Grove.
+Behavior notes per Recipe (full detail lives in each recipe's reference file):
+- `zsh`: Detect OS/shell → profile (Minimal/Standard/Power) → measure startup → configure zinit turbo.
+- `tmux`: tmux.conf + starship/powerlevel10k configuration; include editor integration.
+- `neovim`: Prefer 0.12+ built-ins (vim.pack/autocomplete/Undotree); Mason + Tree-sitter for Advanced profiles.
+- `ghostty`: Key tables, native scrollbars, click-events, and copy modes in the Standard profile.
+- `vscode`: Personal settings/keybindings/extensions, Settings Sync, Cursor AI rules, devcontainer -> `reference/vscode-editor-config.md`; team `.vscode/` policy is Grove + Gear, hook design is Latch, CLI authoring is Anvil.
+- `git`: `~/.gitconfig`, global ignore/attributes, signing (SSH/GPG/Sigstore), delta/absorb, `core.hooksPath` -> `reference/git-personal-config.md`; Claude Code lifecycle hooks are Latch not Git hooks, team CI is Gear, repo-committed CODEOWNERS is Grove.
+- `shellfn`: Function/alias organization, PATH hygiene, direnv/mise/asdf/nvm, XDG, lazy completions -> `reference/shellfn-functions-env.md`; CLI packaging is Anvil, hook automation is Latch, team version-manifests are Gear + Grove.
 - `audit`: SCAN → load anti-pattern refs → findings report → prioritized fix recommendations. No actual changes.
-- `automate`: Dictionary over UI scripting · least privilege (TCC-aware) · dry-run before destructive · idempotent by default. Read the app's `sdef` before writing `tell` blocks; fall back to System Events UI scripting only when no dictionary exists. Deliver a runnable script plus its permission setup. For scheduling the result use Tempo; to graduate it into a packaged CLI use Anvil; for security screening of `do shell script`/secret handling use Sentinel.
+- `automate`: Dictionary over UI scripting · least privilege (TCC-aware) · dry-run before destructive · idempotent by default -> `reference/applescript-patterns.md`. Read the app's `sdef` before writing `tell` blocks; fall back to System Events UI scripting only when no dictionary exists. Scheduling is Tempo, CLI graduation is Anvil, `do shell script`/secret screening is Sentinel.
 
 ## Output Routing
 

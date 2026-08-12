@@ -62,7 +62,7 @@ Route elsewhere when the task is primarily:
 - Default to reproducible, tagged, remote-state-backed infrastructure with state encryption enabled (OpenTofu native or backend-level).
 - Prefer least privilege, private networking, encryption, and environment separation. A single over-permissive role or stale token has cascaded into nine-figure financial losses (e.g., Bybit $1.5B, 2025).
 - Keep local environments close enough to production to catch integration issues without copying production risk blindly.
-- Support OpenTofu as a first-class alternative to Terraform. Since Terraform moved to the Business Source License (BSL 1.1, August 2023) and IBM acquired HashiCorp ($6.4B, completed February 2025), OpenTofu is the CNCF-graduated (April 2025) open-source path. Evaluate licensing implications when recommending Terraform vs OpenTofu — BSL restricts embedding, managed-service offering, and resale without a commercial license. OpenTofu offers client-side state encryption (PBKDF2, AWS KMS, GCP KMS, OpenBao), ephemeral values/resources (1.11+) for transient secrets that never persist to state, provider-defined functions in dynamic blocks (1.12+), Azure DevOps workload identity federation (1.12+), dynamic `prevent_destroy` with input variables (1.12+), resource identity for imports (1.12+), `destroy` lifecycle meta-argument (1.12+) for removing objects from state without provider destruction (critical for zero-downtime migrations), `language` block (1.12+) for tool-specific version constraints separating OpenTofu from other software requirements, `const` input variables (1.12+) for static evaluation guarantees, and concurrent provider installation (1.12+) for faster `tofu init`. Maintains provider/module compatibility with the 3,900+ provider ecosystem; 50% of Spacelift deployments now run on OpenTofu (2026).
+- Support OpenTofu as a first-class alternative to Terraform (BSL 1.1 vs CNCF-graduated open-source — licensing/version/feature detail and adoption stats in `reference/terraform-modules.md` § Engine Selection). Evaluate licensing implications before recommending one over the other — BSL restricts embedding, managed-service offering, and resale without a commercial license.
 - Prefer ephemeral values/resources for short-lived credentials (tokens, temporary keys). Use state encryption for data that must persist. Combine both strategies: ephemeral prevents storage, encryption protects what must be stored.
 - Keep modules focused with single responsibility. Flag modules exceeding ~200 HCL lines or managing resources across multiple concern domains for split review.
 - Avoid monolithic state files ("terralith"). Split state by environment, service boundary, or blast-radius domain. A single state file managing an entire environment slows plan/apply, increases lock contention, and amplifies the blast radius of any change. Prefer one state per deployable unit.
@@ -149,15 +149,15 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`terraform` = Terraform / OpenTofu). Apply normal ASSESS → DESIGN → IMPLEMENT → VERIFY → HANDOFF workflow.
 
-Behavior notes per Recipe:
-- `terraform`: Default generic IaC path. Use for provider-agnostic Terraform / OpenTofu module design, state layout, and backend configuration.
-- `cloudformation`: AWS-only native IaC. Prefer when the team is already CloudFormation-centric or when SAM / nested stacks are in play. For new AWS-native TypeScript/Python work, prefer `cdk`.
-- `pulumi`: General-purpose imperative IaC in TypeScript/Python/Go. Use when real language constructs (loops, conditionals, shared libs) outweigh HCL simplicity.
-- `compose`: Local developer environment only. Not for production orchestration — escalate to `k8s` / `helm` / managed container services instead.
-- `env`: Environment variable design and `.env` schema. Pair with any recipe that needs runtime configuration; never store secrets in `.env` committed to the repo.
-- `k8s`: Raw Kubernetes manifest authoring (Deployment, Service, Ingress, ConfigMap, Secret, kustomize overlays, namespace + label conventions, resource requests/limits). For wiring these manifests into a deploy pipeline use `Pipe`; for ingress / API-gateway rules that front the app layer use `Gateway`; for mobile build / release concerns use `Native`. If the chart is reusable and versioned, prefer `helm` over raw manifests.
-- `helm`: Helm chart authoring — `Chart.yaml`, `values.yaml` schema, template best practices, subchart strategy, release lifecycle, rendered-manifest testing. Use when the workload must be packaged, versioned, and installed in multiple environments/tenants. For one-off cluster manifests use `k8s`; for CI wiring of `helm upgrade --install` delegate to `Pipe`.
-- `cdk`: AWS CDK scaffolding in TypeScript or Python — construct selection (L1/L2/L3), stack layout, multi-env (ephemeral / staging / prod) pattern, cross-stack references, CDK Nag integration. Use when AWS is fixed and the team wants real code over HCL. For provider-agnostic or multi-cloud IaC use `terraform` or `pulumi`; for raw CloudFormation templates use `cloudformation`.
+Behavior notes per Recipe (full routing detail in each Recipe's "Read First" reference):
+- `terraform`: Default generic IaC path — provider-agnostic module design, state layout, backend configuration.
+- `cloudformation`: AWS-only native IaC; prefer `cdk` for new AWS-native TypeScript/Python work.
+- `pulumi`: Imperative IaC in TypeScript/Python/Go — use when loops/conditionals/shared libs outweigh HCL simplicity.
+- `compose`: Local development only — not for production orchestration (`k8s` / `helm` / managed services instead).
+- `env`: Environment variable design and `.env` schema; pairs with any recipe needing runtime configuration.
+- `k8s`: Raw manifest authoring (Deployment/Service/Ingress/ConfigMap/Secret, kustomize). Escalate to `helm` once the chart is reusable/versioned.
+- `helm`: Chart authoring (`Chart.yaml`, values schema, templates, subchart strategy, release lifecycle) for multi-environment/multi-tenant packaging.
+- `cdk`: AWS CDK in TypeScript/Python — construct selection (L1/L2/L3), stack layout, multi-env pattern, CDK Nag. Use when AWS is fixed and real code beats HCL.
 
 ## Critical Constraints
 

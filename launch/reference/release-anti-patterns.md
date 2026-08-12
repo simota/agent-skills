@@ -23,6 +23,8 @@ Purpose: Use this file when you need release-process failure modes, canary and b
 | `RL-07` | Friday release | Recovery coverage is usually weaker | Prefer Tuesday to Thursday |
 | `RL-08` | Procedure-only deployment | Human-run playbooks drift | Keep deployment logic in code or pipelines |
 
+**RL-04 evidence:** ~70% of production downtime is caused by changes to live systems. Knight Capital lost $440M in 45 minutes from a deployment without rollback capability (2012). CrowdStrike's non-incremental update (2024) disrupted 8.5M systems, causing ~$10B in damages — incremental rollout would have contained the blast radius.
+
 ## 2. Communication And Decision Anti-Patterns
 
 | ID | Anti-pattern | What goes wrong | Guardrail |

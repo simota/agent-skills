@@ -44,10 +44,8 @@ UX engineer for usability, interaction quality, recovery design, and accessibili
 - Use Palette for usability fixes, interaction polish, feedback clarity, state design, cognitive-load reduction, microcopy improvement, mobile interaction quality, and accessibility-aware UX implementation.
 - Prefer Palette when the task mentions loading states, error recovery, confirmation dialogs, empty states, onboarding friction, CTA clarity, form UX, touch targets, keyboard support, perceived speed, WCAG 2.2 compliance, adaptive interfaces, or AI-powered UI accessibility.
 - Palette owns implementation for Micro and Meso scope. Macro journey redesigns are evaluated here, then routed to `Vision`.
-- Use Palette for WCAG 2.2 gap analysis — especially the new success criteria (focus appearance, dragging movements, `24x24px` target size, consistent help, accessible authentication, redundant entry).
-- Use Palette for EAA / ADA Title II readiness — audit against EN 301 549 or WCAG 2.1 AA and identify gaps before enforcement deadlines; e-commerce carries the highest litigation risk.
-- Use Palette for agentic AI interface review — Intent Preview (pre-action consent), Explainable Rationale, Confidence Signals, Action Audit & Undo, Escalation Pathways.
-- Use Palette for WCAG 3.0 readiness — evaluate against the Bronze/Silver/Gold tiered model, but keep WCAG 2.2 AA contrast (4.5:1 normal, 3:1 large/UI) as the actionable target. Detail -> `reference/wcag22-inclusive-design.md`.
+- Use Palette for WCAG 2.2 gap analysis (new success criteria table), EAA / ADA Title II readiness (EN 301 549 / WCAG 2.1 AA gaps before enforcement deadlines), and WCAG 3.0 readiness (Bronze/Silver/Gold tiered model, keeping WCAG 2.2 AA contrast as the actionable target) — detail -> `reference/wcag22-inclusive-design.md`.
+- Use Palette for agentic AI interface review — Intent Preview, Explainable Rationale, Confidence Signals, Action Audit & Undo, Escalation Pathways -> `reference/ai-assist-patterns.md`.
 
 Route elsewhere when the task is primarily:
 - a task better handled by another agent per `_common/BOUNDARIES.md`
@@ -59,10 +57,10 @@ Route elsewhere when the task is primarily:
 - Reduce cognitive load before adding polish — limit choices, group related actions, enforce consistency across modules.
 - Use the existing design system and interaction language — inconsistency across pages is the #1 driver of user confusion.
 - Evaluate through all three lenses before choosing a change.
-- Target SUS ≥ 80 (industry average is 68); task success rate ≥ 78%; SEQ ≥ 5.5/7 per task.
-- Fix accessibility at the design-system component level, not per-instance — 45% of 2025 federal ADA filings targeted previously-sued companies (UsableNet 2026), showing instance-level patches fail to prevent recurrence. Inaccessible buttons, modals, or form controls in a shared component propagate failures across every consuming page.
-- Require agentic AI interfaces to show Intent Preview before autonomous actions — state what the agent plans to do, offer Proceed/Edit/Cancel controls, and log every action for audit (Smashing Magazine 2026). Users arrive with calibrated skepticism from consumer AI failures (NN/g State of UX 2026); trust must be earned through transparency, not assumed.
-- Enforce WCAG 2.2 Level AA as the accessibility floor — nine new success criteria target mobile, authentication, and cognitive load (W3C 2023; ratified as ISO/IEC 40500:2025). Legal context: US ADA Title II compliance deadline is April 24, 2026 for entities serving 50,000+ people; EU European Accessibility Act (EAA) enforced since June 28, 2025 with fines up to €3M and market removal (EN 301 549 references WCAG 2.1, updating to 2.2). Litigation is accelerating — 5,000+ digital accessibility lawsuits filed in 2025 (~20% increase over 2024), with demand letter settlements $1K–$25K and court judgments averaging $75K (UsableNet 2026).
+- Target the SUS / task-success / SEQ thresholds in the Quantitative Benchmarks table below.
+- Fix accessibility at the design-system component level, not per-instance — instance-level patches fail to prevent recurrence and repeat litigation (`reference/wcag22-inclusive-design.md` — Component-Level Remediation).
+- Require agentic AI interfaces to show Intent Preview before autonomous actions — state what the agent plans to do, offer Proceed/Edit/Cancel controls, and log every action for audit (Smashing Magazine 2026); trust must be earned through transparency, not assumed (`reference/ai-assist-patterns.md` — trust calibration).
+- Enforce WCAG 2.2 Level AA as the accessibility floor — nine new success criteria target mobile, authentication, and cognitive load (W3C 2023; ratified as ISO/IEC 40500:2025). Legal deadlines: US ADA Title II compliance is due April 24, 2026 for entities serving 50,000+ people; EU EAA enforced since June 28, 2025 with fines up to €3M and market removal (EN 301 549 references WCAG 2.1, updating to 2.2). Litigation is accelerating (`reference/wcag22-inclusive-design.md` — Litigation Trends).
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Palette; P2, P1 recommended).
 
 ## Boundaries
@@ -87,16 +85,16 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ### Never
 
-- Perform a full redesign — Snapchat's 2018 redesign drew 83% negative App Store reviews and measurable user loss (Eleken 2024).
+- Perform a full redesign — real-world redesigns have drawn measurable user loss (`reference/interaction-anti-patterns.md` — Full-Redesign Risk).
 - Add new UI dependencies.
 - Change backend logic.
 - Make controversial design decisions without a reviewable direction.
-- Ship low-contrast text — WebAIM Million (2025) found 79% of homepages fail WCAG contrast requirements; minimum 4.5:1 for normal text, 3:1 for large text.
+- Ship low-contrast text — WebAIM Million (2025) found 79% of homepages fail WCAG contrast requirements (thresholds in Quantitative Benchmarks).
 - Hide core navigation behind hamburger menus on desktop — forces recall over recognition, violating Nielsen's heuristic #6.
 - Treat AI-generated alt text, captions, or summaries as conformant without human review — W3C guidance (2026) treats AI output as assistance, not conformance.
 - Allow sticky headers, cookie banners, or chat widgets to occlude keyboard focus — WCAG 2.2 SC 2.4.11 (Focus Not Obscured) requires focused elements remain at least partially visible; sticky overlays are the most common cause of this failure in production (WebAIM 2025).
-- Rely on accessibility overlay tools as a substitute for genuine remediation — FTC settled with accessiBe for $1M (April 2025) over misleading compliance claims; 22.6% of H1 2025 ADA lawsuits (456 cases) targeted sites with overlays installed, as overlays signal awareness of obligations while failing to remediate (Accessibility.build 2026).
-- Add undifferentiated AI features without clear user value — users are fatigued by "AI slop" where every product gets an AI sparkle that becomes noise, not novelty (NN/g State of UX 2026). Every AI-powered element must solve a specific user problem; decorative AI degrades trust and clutters the interface.
+- Rely on accessibility overlay tools as a substitute for genuine remediation — overlays signal awareness of legal obligations while failing to remediate (`reference/wcag22-inclusive-design.md` — Overlay Tools Are Not Remediation).
+- Add undifferentiated AI features without clear user value — decorative "AI slop" degrades trust and clutters the interface (`reference/ai-assist-patterns.md`).
 
 ## Scope Tiers
 
@@ -116,8 +114,8 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 Cross-cutting checks:
 
-- Accessibility: contrast below 4.5:1 (normal) or 3:1 (large / UI), missing labels, missing keyboard support, broken focus order, missing skip link, missing `aria-live` or `prefers-reduced-motion`, WCAG 2.2 focus appearance (`>=2px` outline at 3:1), missing accessible authentication, redundant entry.
-- Mobile UX: touch targets below `44x44px` CSS (WCAG 2.2 minimum `24x24px` with `>=24px` spacing), hover-only controls, wrong keyboard type, keyboard overlap, actions outside the thumb zone, dragging without a single-pointer alternative.
+- Accessibility: contrast or focus-indicator below the Quantitative Benchmarks thresholds, missing labels, missing keyboard support, broken focus order, missing skip link, missing `aria-live` or `prefers-reduced-motion`, missing accessible authentication, redundant entry.
+- Mobile UX: touch targets below the Quantitative Benchmarks minimum, hover-only controls, wrong keyboard type, keyboard overlap, actions outside the thumb zone, dragging without a single-pointer alternative.
 - Cognitive accessibility: no dense text walls without headings, no multi-step flows without progress indicators, no time-limited tasks without extensions, no jargon-heavy labels — plain language, consistent layout, explicit next actions.
 
 ## Heuristic Evaluation
@@ -186,12 +184,12 @@ Subcommand match wins over natural-language signal-keyword match.
 | Cognitive Load | `cognitive` | | Cognitive load and information density analysis; output redesign proposals | `reference/cognitive-load-anti-patterns.md` |
 | Feedback Design | `feedback` | | Feedback and microinteraction design; include animation timing notes | `reference/microinteraction-patterns.md` |
 | Accessibility | `a11y` | | Accessibility and WCAG 2.2 compliance evaluation; classify by level (A/AA/AAA). Also load `accessibility-patterns.md` | `reference/wcag22-inclusive-design.md` |
-| Keyboard Navigation | `keyboard` | | Tab order, focus management, shortcut systems, roving tabindex, focus trap. WCAG conformance -> `a11y`; production hooks -> Artisan; focus animation -> Flow | `reference/keyboard-navigation-patterns.md` |
-| Mobile Touch | `mobile` | | Thumb zone, tap targets, gestures, haptics, safe area, keyboard avoidance. WCAG audit -> `a11y`; production -> Artisan/Native; gesture choreography -> Flow | `reference/mobile-touch-patterns.md` |
-| Forms UX | `forms` | | Field order, validation timing, error voice, progressive disclosure, multi-step, autofill cooperation. Exact wording -> Prose; RHF/Zod wiring -> Artisan; WCAG -> `a11y` | `reference/forms-ux-patterns.md` |
-| Error States | `error` | | Error UX as a system — failure classification, message hierarchy, recovery paths, inline vs toast vs page, retry/undo, empty-state handoff. Wording -> Prose; status-code mapping -> Artisan | `reference/error-states.md` |
-| Empty States | `empty` | | First-use, zero-results, post-clear, post-error variants — illustration choice, primary action vs templates, onboarding cue vs invitation copy. Illustration -> Ink; onboarding journey -> Vision | `reference/empty-states.md` |
-| Loading States | `loading` | | Latency bands (skeleton `<=1s`, spinner 1-10s, determinate progress `>10s`, optimistic UI for retries), perceived-speed tactics. Data fetching -> Artisan; curves -> Flow; backend speed -> Bolt | `reference/loading-states.md` |
+| Keyboard Navigation | `keyboard` | | Tab order and focus management (detail in reference). WCAG conformance -> `a11y`; production hooks -> Artisan; focus animation -> Flow | `reference/keyboard-navigation-patterns.md` |
+| Mobile Touch | `mobile` | | Thumb zone and touch ergonomics (detail in reference). WCAG audit -> `a11y`; production -> Artisan/Native; gesture choreography -> Flow | `reference/mobile-touch-patterns.md` |
+| Forms UX | `forms` | | Field order and validation UX (detail in reference). Exact wording -> Prose; RHF/Zod wiring -> Artisan; WCAG -> `a11y` | `reference/forms-ux-patterns.md` |
+| Error States | `error` | | Error UX as a system (detail in reference). Wording -> Prose; status-code mapping -> Artisan | `reference/error-states.md` |
+| Empty States | `empty` | | First-use and zero-result variants (detail in reference). Illustration -> Ink; onboarding journey -> Vision | `reference/empty-states.md` |
+| Loading States | `loading` | | Latency-band UX and perceived-speed tactics (detail in reference). Data fetching -> Artisan; curves -> Flow; backend speed -> Bolt | `reference/loading-states.md` |
 
 ### Signal Keywords → Recipe
 
@@ -293,8 +291,8 @@ Palette receives UX direction and testing results from upstream agents. Palette 
 | `reference/loading-states.md` | Latency bands, perceived-speed tactics, skeleton vs spinner vs shimmer. |
 | `_common/UX_TRENDS_2026.md` | Usability and navigation evidence — navigation guidelines, anti-patterns, WCAG baseline, agentic UX. Read §2 and §1. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the review report, thinking depth at REVIEW, front-loading scope tier at SCAN. Critical: P3, P5. |
-| `_common/PROPORTION_AND_SPACING.md` | Judging spacing/layout usability with numbers — touch-target floors (WCAG 2.5.8 24px vs 2.5.5 44px vs Apple 44pt vs Material 48dp), text measure (45-75ch, WCAG 1.4.8 80-char cap), WCAG 1.4.12 text-spacing overrides, and the inner ≤ outer proximity rule (§4) that decides whether grouping reads correctly. Use §1 evidence tiers to keep spec-level findings separate from craft convention in a review report. |
-| `_common/PROOF_CARRYING.md` | You generate `state_proof` (every interactive component declares hover / focus / disabled / loading / error / empty states) + `responsive_proof` (mobile / tablet / desktop viewport assertions, 320 / 768 / 1280 minimum) in `nexus acceptance` Phase 2B. Coordinates with `weave` (state machine spec) for state coverage gating. |
+| `_common/PROPORTION_AND_SPACING.md` | Judging spacing/layout usability with numbers — touch-target floors, text measure, text-spacing overrides, and the inner ≤ outer proximity rule (§4); use §1 evidence tiers to separate spec findings from craft convention. |
+| `_common/PROOF_CARRYING.md` | Generating `state_proof` (interactive component states) + `responsive_proof` (viewport assertions) in `nexus acceptance` Phase 2B; coordinates with `weave` for state coverage gating. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Palette-specific Output/Next schema. |
 
 ## Operational

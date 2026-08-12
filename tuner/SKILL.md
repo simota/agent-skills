@@ -16,7 +16,7 @@ CAPABILITIES_SUMMARY:
 - pgvector_iterative_scan: Diagnose and fix filtered vector search using pgvector 0.8+ hnsw.iterative_scan and halfvec storage optimization
 - percona_toolkit_integration: Use pt-query-digest (Percona Toolkit 3.7.1) for MySQL slow-log aggregation; pg_qualstats+hypopg for PostgreSQL index advising
 - ai_assisted_analysis: AI-driven execution plan interpretation and index recommendation from query patterns
-- fix_prompt_generation: Pair every actionable performance finding with a paste-ready LLM Fix Prompt embedding the slow query, current/predicted EXPLAIN ANALYZE plan, workload context, recommended action, acceptance criteria (including row-estimate sanity check and write-overhead budget), ruled-out alternatives, and "what NOT to do" so a downstream agent (Builder, Schema for migrations, Bolt for caching) can act without manual reformulation
+- fix_prompt_generation: Pair every actionable finding with a paste-ready LLM Fix Prompt (query, plan, workload context, acceptance criteria, ruled-out alternatives) so a downstream agent (Builder/Schema/Bolt) can act without manual reformulation — see § LLM Fix Prompt Generation
 
 COLLABORATION_PATTERNS:
 - Bolt -> Tuner: Application performance issues
@@ -136,7 +136,7 @@ Full table with per-signal meaning, version-specific tuning, and sources -> `ref
 | pgvector overfiltering risk | any WHERE filter on a vector query -> `hnsw.iterative_scan = 'relaxed_order'` (0.8+) |
 | MySQL Hypergraph optimizer | MySQL 9.7+ with complex multi-table joins -> `optimizer_switch='hypergraph_optimizer=on'` |
 
-**Production-safety rules** — PostgreSQL production index creation always uses `CREATE INDEX CONCURRENTLY`. Materialized views suit repeated aggregates and dashboards, never truly real-time data. On **PostgreSQL 18+**: AIO gives up to 3x I/O throughput on sequential and bitmap heap scans; skip scan helps multicolumn B-trees with a low-cardinality leading column; parallel GIN builds speed full-text and JSONB indexes; `uuidv7()` primary keys eliminate B-tree fragmentation; prefer virtual over stored generated columns for read-only derived values. `pg_upgrade` preserves planner statistics from PG14+ sources **by default**, but **extended statistics from `CREATE STATISTICS` are NOT preserved** — rebuild them and run `vacuumdb --all --analyze-in-stages --missing-stats-only` then `vacuumdb --all --analyze-only`. Do not blame missing stats for post-upgrade regressions on PG18+ unless extended/multivariate stats are involved.
+**Production-safety pointers**: `CREATE INDEX CONCURRENTLY` in production, always (see Never, above). MVs suit repeated aggregates/dashboards, never real-time data (`reference/materialized-views-partitioning.md`). PostgreSQL 18+ specifics — AIO (up to 3× I/O throughput on sequential/bitmap heap scans), skip scan, parallel GIN builds, `uuidv7()`, virtual generated columns, and the `pg_upgrade` statistics-preservation sequence — live in `reference/postgresql-18-performance.md` and `reference/slow-query-benchmarks.md`. Extended statistics from `CREATE STATISTICS` are **NOT** preserved by `pg_upgrade` — rebuild them before blaming stats for PG18+ regressions.
 
 
 ## Collaboration
@@ -217,36 +217,11 @@ Mandatory when an actionable finding is identified (suppress for analysis-only /
 
 ## LLM Fix Prompt Generation
 
-Every Tuner performance report for an actionable finding ends with a `## LLM Fix Prompt` block — a paste-ready, self-contained prompt that drives the receiving agent (Builder for query rewrites, Schema for migration coordination on `ADD-INDEX`, Bolt for caching layer on `MITIGATE`) toward a precise, plan-evidence-backed change without manual reformulation. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; Tuner-specific verbs, suppression cases, template fields, and a worked example live in `reference/fix-prompt-generation.md`.
+Every Tuner performance report for an actionable finding ends with a `## LLM Fix Prompt` block — a paste-ready, self-contained prompt that drives the receiving agent (Builder for query rewrites, Schema for migration coordination on `ADD-INDEX`, Bolt for caching layer on `MITIGATE`) toward a precise, plan-evidence-backed change without manual reformulation. Universal authoring rules and prompt structure live in `_common/LLM_PROMPT_GENERATION.md`; the full verb table, authoring-rule checklist (one verb/finding per prompt, verbatim query + file:line, current/predicted `EXPLAIN (ANALYZE, BUFFERS)`, workload context, `CREATE INDEX CONCURRENTLY` DDL, acceptance criteria, ruled-out alternatives, "what NOT to do"), suppression cases, template fields, and a worked example live in `reference/fix-prompt-generation.md`.
 
-| Verb | Use when | Receiving agent |
-|------|----------|----------------|
-| `OPTIMIZE-QUERY` | Query plan fix (rewrite, hint, parameterization, JOIN order, predicate pushdown) | Builder |
-| `ADD-INDEX` | Schema-level index addition (single/composite/partial/covering) | Schema → Builder |
-| `BREAKING-OPTIMIZE` | Query/schema change with API or contract impact | Builder + Guardian + Launch |
-| `MIGRATE-WORKLOAD` | Structural — different query pattern needed (batched fetch, MV, denormalization) | Atlas + Builder + Schema |
-| `INVESTIGATE-FURTHER` | EXPLAIN ANALYZE inconclusive; need production trace before deciding | Beacon (data collection) or Tuner re-entry |
-| `MITIGATE` | Cache layer / MV / read replica routing while query is fixed | Builder + Bolt |
+Verbs at a glance: `OPTIMIZE-QUERY` (query rewrite → Builder), `ADD-INDEX` (index DDL → Schema → Builder), `BREAKING-OPTIMIZE` (contract-impacting change → Builder + Guardian + Launch), `MIGRATE-WORKLOAD` (structural redesign → Atlas + Builder + Schema), `INVESTIGATE-FURTHER` (plan evidence inconclusive → Beacon or Tuner re-entry), `MITIGATE` (cache/MV/replica while fix pends → Builder + Bolt).
 
-Authoring rules (full list in `_common/LLM_PROMPT_GENERATION.md`):
-- One verb per prompt; one finding per prompt.
-- Quote the slow query verbatim; cite the file:line where the query is constructed.
-- Embed the current `EXPLAIN (ANALYZE, BUFFERS)` snippet showing the bottleneck node.
-- Embed the predicted plan after the fix with estimated execution time delta.
-- Embed workload context: table size, selectivity, buffer hits/reads, row-estimate ratio, frequency, P99 latency.
-- For `ADD-INDEX`, include the DDL with `CREATE INDEX CONCURRENTLY` for any table > 1M rows on PostgreSQL production.
-- Embed acceptance criteria as a checklist — including row-estimate sanity check, write-overhead budget, and adjacent-query non-regression.
-- Embed ruled-out alternatives with the evidence that eliminated each.
-- Embed "what NOT to do" — at minimum, do not silence the symptom by raising thresholds, do not drop indexes without usage verification, do not wrap indexed columns in functions.
-- Wrap in a fenced `text` code block so the user can copy cleanly.
-
-Suppress the Fix Prompt block when:
-- Tuner hands off to Schema for migration ownership (Schema owns the migration prompt).
-- Tuner hands off to Bolt for app-level caching (Bolt owns the caching remediation prompt).
-- Engagement is analysis-only (slow query inventory without remediation scope).
-- Query is owned by a 3rd-party ORM/library where Tuner cannot rewrite.
-
-In all suppression cases, write a one-line note in the report explaining why the prompt is withheld.
+Suppress the block — with a one-line reason in the report — when Schema owns the migration, Bolt owns the caching remediation, the engagement is analysis-only, or the query is owned by a 3rd-party ORM/library Tuner cannot rewrite.
 
 ## Reference Map
 

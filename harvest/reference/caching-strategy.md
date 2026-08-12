@@ -100,5 +100,5 @@ Cleanup rules:
 GitHub's published limits make caching mandatory for any non-trivial report (`docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api`, `docs.github.com/en/graphql/overview/rate-limits-and-query-limits-for-the-graphql-api`):
 - 5,000 REST req/hr primary; 900 REST points/min secondary; 100 concurrent (shared with GraphQL); 2,000 GraphQL points/min.
 - A monthly report covering 500 merged PRs costs ~5 paginated REST requests when `per_page=100` is honored — but adding per-PR review timelines balloons quickly. Cache review timelines (15 min TTL) before fanning out.
-- Use ETag / `If-Modified-Since` conditional requests where available; conditional 304 responses do not count against most secondary limits per GitHub's published guidance.
+- Use ETag / `If-Modified-Since` conditional requests where available; conditional 304 responses do not count against most secondary limits per GitHub's published guidance. Store ETags per page, not per collection — a collection-level ETag invalidates on any single-page change and defeats the point of pagination-level caching.
 - Webhooks beat polling for live data — for any near-real-time report, route through Pulse rather than tightening the Harvest cache TTL.

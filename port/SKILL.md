@@ -84,7 +84,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Specify offline tier (T0–T3) per data domain (auth, user data, content, writes) and choose CRDT vs LWW vs server-reconciliation when T2/T3.
 - Translate auth: cookies/JWT/OAuth → Passkeys first-class (ASAuthorizationController + Secure Enclave on iOS, Credential Manager on Android), AppAuth + Custom Tabs as OAuth/OIDC fallback. Never reuse cookies on mobile.
 - Map every web third-party SDK to a native equivalent; verify Privacy Manifest (iOS) and 16KB / Privacy Sandbox SDK Runtime status (Android); absence is a flagged risk.
-- Draft store compliance at blueprint stage: Privacy Manifest + Required Reasons API, Data Safety, 5-tier Age Rating, IAP scope, AI disclosure, plus DMA / EAA / Children / Fintech where applicable. Citations and deadlines → `reference/regulatory-checklist-2026.md`.
+- Draft store compliance at blueprint stage: Privacy Manifest + Required Reasons API, Data Safety, 5-tier Age Rating, IAP scope, AI disclosure, plus DMA / EAA / Children / Fintech where applicable. Citations/deadlines → `reference/regulatory-checklist-2026.md`.
 - Define a Strangler-Fig roadmap (Foundations → MVP → Parity → Enhancement → Sunset) with per-phase policy gate, milestones, web-shutdown gating, and rollback.
 - SSR/RSC or chatty REST → design a mobile BFF with GraphQL Persisted Queries (or REST shrink) and hand off to `Gateway`.
 - Produce structured handoffs (`reference/handoffs.md`) for every downstream agent the blueprint requires.
@@ -107,12 +107,12 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Treat SPA routing as native navigation — history-stack ≠ NavigationStack ≠ Compose Navigation; each is re-modeled. (Compose: Navigation 2.8+ type-safe `@Serializable` routes, never hand-rolled strings.)
 - Port `localStorage`/cookies to UserDefaults/SharedPreferences for tokens or sensitive data — those go to Keychain (`kSecAttrAccessControl`) / EncryptedSharedPreferences, with token-based auth designed from day 1.
 - Reuse web SDK assumptions without verifying iOS/Android availability, Privacy Manifest support, 16KB compatibility, and Privacy Sandbox SDK Runtime status (`reference/native-stack-defaults.md`).
-- Skip offline design. Mobile networks are unreliable; an online-only port will fail real-world use.
-- Hide platform divergence — the same UI on both with only color tokens swapped is an anti-pattern; call divergence out explicitly.
+- Skip offline design — mobile networks are unreliable; an online-only port fails real-world use.
+- Hide platform divergence — the same UI on both with only color tokens swapped is an anti-pattern; call it out explicitly.
 - Promise a **Big Bang** web shutdown — always Strangler Fig with per-phase rollback; the record is full of abandoned 3-year rewrites.
-- Hard-code web URLs into the mobile API client. Negotiate mobile contracts through a BFF (Persisted Queries for GraphQL, shrunk REST endpoints).
-- Output implementation code. Port is a design agent — implementation routes to `Native`/`Builder`/`Scaffold`.
-- Skip the regulatory compliance plan. Privacy Manifest, Data Safety, AI disclosure, 5-tier Age Rating, DMA, and EU Accessibility Act are blueprint-time decisions, not pre-submission afterthoughts.
+- Hard-code web URLs into the mobile API client — negotiate mobile contracts through a BFF (Persisted Queries for GraphQL, shrunk REST endpoints).
+- Output implementation code — Port is a design agent; implementation routes to `Native`/`Builder`/`Scaffold`.
+- Skip the regulatory compliance plan — Privacy Manifest, Data Safety, AI disclosure, 5-tier Age Rating, DMA, and EU Accessibility Act are blueprint-time decisions, not pre-submission afterthoughts.
 - Default to RN / Flutter / Compose-Multiplatform UI when **pure-native iOS + Android** was asked for; note alternatives once in `cross-platform-decision-tree.md` and drop them. Exception: KMP-shared-logic + native UI when survey shows ≥60% pure-logic reuse and a Kotlin-fluent team — confirm at SURVEY.
 
 ## Workflow
@@ -150,7 +150,7 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`blueprint` = Full Blueprint). Apply normal SURVEY → MAP → BLUEPRINT → ROADMAP → HANDOFF workflow.
 
-Per-Recipe scope: `blueprint` = full pipeline. `survey` = SURVEY only, for deciding **whether** to port. `parity` = matrix only (scope-cut input). `map` = per-screen translation. `roadmap` = 5-phase plan with policy gates. `risk` = technical risk sweep. `regulatory` = compliance-only sweep (complements `Cloak` / `Oath`). `xplat` = platform recommendation; run **before** committing to pure-native.
+Per-Recipe nuance beyond the table above: `survey` decides **whether** to port; `parity` is scope-cut input; `regulatory` complements `Cloak` / `Oath`; `xplat` runs **before** committing to pure-native.
 
 ## Output Routing
 
@@ -171,8 +171,8 @@ Map natural-language signals to a Recipe + primary reference:
 
 Full per-layer iOS / Android stack table → `reference/native-stack-defaults.md`. Highlights:
 
-- iOS: Swift 6.3 + SwiftUI (Liquid Glass on iOS 26 SDK), MV/MVVM/MVVM-C/TCA per scope, `@Observable`, Approachable Concurrency, NavigationStack + Coordinator, SwiftData / Core Data, Keychain, Passkeys via `ASAuthorizationController`, APNs + Live Activities, Universal Links, WidgetKit, on-device Foundation Models.
-- Android: Kotlin 2.4+ (K2) + Compose + Material 3 Expressive, Strong Skipping default, MVVM/MVI, Navigation Compose 2.8+ type-safe routes, Ktor / Retrofit, Room + DataStore, Credential Manager (Passkey-first), FCM + Notification Channels, App Links, Glance, Gemini Nano via ML Kit GenAI.
+- iOS: Swift 6.3 + SwiftUI (Liquid Glass), MV/MVVM/MVVM-C/TCA, `@Observable`, Approachable Concurrency, SwiftData/Keychain, Passkeys, APNs, WidgetKit, on-device Foundation Models.
+- Android: Kotlin 2.4+ (K2) + Compose + Material 3 Expressive, Strong Skipping, MVVM/MVI, Navigation Compose 2.8+, Ktor/Retrofit, Room + DataStore, Credential Manager, FCM, Glance, Gemini Nano.
 - Build floors: Xcode 26 + iOS 26 SDK for App Store uploads from **2026-04-28**; Android 16KB native-lib support since **2025-11-01**; targetSdk **36 mandatory from 2026-08-31**.
 - Min-OS defaults: iOS 17+ recommended (16 acceptable); Android API 28+ default (API 31+ if Material You / SplashScreen / Photo Picker mandatory).
 
@@ -191,7 +191,7 @@ Every Port deliverable must include:
 - **API client redesign** — per-platform REST/GraphQL/WebSocket client, mobile-friendly endpoint changes (pagination, payload shrink, retry/backoff).
 - **Native capabilities plan** — push, deep links, biometrics, camera, share, IAP, in-app review, file pickers, location.
 - **Phased roadmap** — MVP → parity → enhancement, with milestones, store-submission timeline, web-shutdown gating, rollback plan.
-- **Regulatory & Privacy compliance plan** — Privacy Manifest + Required Reasons API, Data Safety form, 5-tier Age Rating, AI disclosure UI flow, plus DMA / EAA / Children / Fintech-Crypto as applicable.
+- **Regulatory & Privacy compliance plan** — Privacy Manifest + Required Reasons API, Data Safety form, 5-tier Age Rating, AI disclosure flow, plus DMA / EAA / Children / Fintech-Crypto as applicable.
 - **Risk matrix** — probability × impact for every identified risk with mitigation; Red entries (≥12) phase-pinned.
 - **Cross-platform decision note** (once, at SURVEY) — confirm pure-native (or KMP-shared-logic hybrid) and record why RN/Flutter/CMP were not chosen.
 - **Handoff bundle** — structured handoffs for each downstream agent the blueprint requires.
@@ -199,7 +199,7 @@ Every Port deliverable must include:
 
 ## Collaboration
 
-Receives porting requests, web architecture analyses, codebase comprehension, legacy business rules, mobile user research, and design direction; sends per-platform implementation specs, project skeletons, mobile API contracts, local DB schemas, shared-logic candidates, i18n strategy, E2E specs, and rollout plans downstream.
+Per-agent payload detail -> `COLLABORATION_PATTERNS` / `BIDIRECTIONAL_PARTNERS` header.
 
 Upstream: `USER_TO_PORT_REQUEST`, `ATLAS_TO_PORT_HANDOFF`, `LENS_TO_PORT_HANDOFF`, `TRAIL_TO_PORT_HANDOFF`, `RESEARCHER_TO_PORT_HANDOFF`, `VISION_TO_PORT_HANDOFF`, `FRAME_TO_PORT_HANDOFF`.
 
@@ -211,19 +211,12 @@ Downstream: `PORT_TO_{NATIVE,SCAFFOLD,GATEWAY,SCHEMA,BUILDER,POLYGLOT,CLOAK,CRYP
 |-------|-----------|----------|
 | Native | Porting **design** — parity matrix, architecture mapping, roadmap, decision docs | Mobile **implementation** — SwiftUI/Compose code, navigation wiring, offline data layer, store artifacts |
 | Shift | Web→native **cross-platform** porting (different language family, needs re-conception) | Same-language migration (React class→hooks, Vue 2→3, JS→TS), codemods, `detect` / `modernize` / `radar` |
-| Trail | — | Legacy code archaeology and implicit-rule extraction (`static-rules`) — input to Port |
-| Lens | — | Codebase comprehension (input to Port) |
-| Atlas | — | Application architecture analysis (input to Port) |
-| Vision | — | Mobile design direction and design system creation (input to Port) |
-| Frame | — | Figma → mobile design context extraction (input to Port) |
-| Gateway | Mobile API redesign **specification** within porting | API design and OpenAPI spec authoring |
-| Scribe | — | Generic technical documentation — Port produces a domain-specific blueprint |
-| Accord | — | Cross-team spec packaging — Port output feeds it when an L0-L3 doc set is needed |
+
+Trail, Lens, Atlas, Vision, Frame, Gateway, Scribe, Accord rows -> `reference/handoffs.md` § Overlap Boundaries.
 
 ### Agent Teams Aptitude
 
 Port supports **Pattern D: Specialist Team** (2-3 workers: `web-surveyor`, `ios-mapper`, `android-mapper`, each owning one `_audit/*.md` file) for large blueprints. Spawn only when the web app has ≥30 routes/screens **and** the parity goal is ≥80% — below that, single-session is faster. Worker ownership table → `reference/handoffs.md` § Agent Teams Aptitude.
-
 
 ## Reference Map
 
@@ -233,13 +226,13 @@ Port supports **Pattern D: Specialist Team** (2-3 workers: `web-surveyor`, `ios-
 | `reference/native-architecture-mapping.md` | In `MAP` — SPA/SSR → SwiftUI MVVM-C and Compose MVVM/MVI per-screen mapping |
 | `reference/feature-parity-matrix.md` | Scoring `Full / Adapted / Deferred / Dropped` — matrix template, rubric, verdict-to-action mapping |
 | `reference/platform-ux-adaptation.md` | Translating web UX → HIG and Material 3 — navigation, gestures, typography, motion, dark mode, a11y, OS baselines |
-| `reference/ui-terminology-matrix.md` | Naming UI components — Web ↔ HIG ↔ Material 3 conversion matrix incl. trap terms (Navigation bar, Tabs, Modal, FAB, Checkbox/Radio) |
+| `reference/ui-terminology-matrix.md` | Naming UI components — Web↔HIG↔Material 3 matrix incl. trap terms (Navigation bar, Tabs, Modal, FAB, Checkbox/Radio) |
 | `reference/data-and-auth-porting.md` | Storage, offline tiers, sync, auth flows, token handling, biometric gating, API client redesign |
 | `reference/migration-roadmap.md` | In `ROADMAP` — phases, milestones, store submissions, web-shutdown gating, rollback |
 | `reference/risk-assessment.md` | `risk` Recipe or completing the risk-matrix section of a blueprint |
 | `reference/regulatory-checklist-2026.md` | `regulatory` Recipe, the compliance plan, or submission pre-flight — Privacy Manifest, Data Safety, DMA, EAA, AI disclosure, Children, Fintech-Crypto |
 | `reference/cross-platform-decision-tree.md` | `xplat` Recipe, or confirming pure-native vs KMP vs CMP vs RN vs Flutter at SURVEY |
-| `reference/native-stack-defaults.md` | Full Native Stack Defaults matrix per layer, or the Critical Thresholds table (parity mix, offline tier, OS/targetSdk baselines, 16KB, AI disclosure, EU/Children/Fintech) |
+| `reference/native-stack-defaults.md` | Full Native Stack Defaults matrix, or the Critical Thresholds table (parity mix, offline tier, OS/targetSdk baselines, 16KB, AI disclosure, EU/Children/Fintech) |
 | `reference/handoffs.md` | In `HANDOFF` — generating structured handoff blocks for downstream agents |
 | [`_common/BOUNDARIES.md`](../_common/BOUNDARIES.md) | Role boundaries are ambiguous (esp. vs Native, Shift, Atlas, Lens) |
 | [`_common/OPERATIONAL.md`](../_common/OPERATIONAL.md) | Journal, activity log, AUTORUN, Nexus, Git, shared operational defaults |

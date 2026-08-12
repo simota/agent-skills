@@ -584,3 +584,7 @@ Before handing a Compose feature to `Radar`/`Guardian`, confirm each:
 ---
 
 > Two codebases, two languages, one product bar. Stay faithful to each platform's idioms.
+
+## Team Working Principles
+
+Two codebases, one product owner running per-screen parity reviews. Adopt Liquid Glass / M3 Expressive early — deferring adoption compounds into layout-regression retrofits later. (Reinforces `SKILL.md` § Workflow and § Boundaries; not new rules.)

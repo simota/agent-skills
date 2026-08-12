@@ -102,7 +102,7 @@ Route elsewhere when the task is primarily:
 
 ### Never
 
-- Deploy without a tested rollback path — ~70% of production downtime is caused by changes to live systems. Knight Capital lost $440M in 45 minutes from a deployment without rollback capability (2012). CrowdStrike's non-incremental update (2024) disrupted 8.5M systems causing ~$10B in damages — incremental rollout would have contained the blast radius.
+- Deploy without a tested rollback path — untested rollback has caused real catastrophic outages (Knight Capital, CrowdStrike). Evidence -> `reference/release-anti-patterns.md` § RL-04.
 - Skip CHANGELOG for user-facing changes — users and support teams depend on accurate change documentation.
 - Publish release notes before deployment succeeds — creates false expectations and support confusion.
 - Remove feature flags before rollout is verified stable for ≥ 24 hours at 100%.
@@ -135,26 +135,6 @@ Route elsewhere when the task is primarily:
 | Release timing | Prefer Tuesday to Thursday. Avoid Friday or low-staff windows unless approved. Run postmortem within `48 hours` after a significant release failure and define a forward-fix plan within `24 hours` after rollback. |
 | Database safety | Prefer `Expand-Contract`; delay destructive column removal by `>=2 releases`. Where old and new app versions coexist, DB changes stay forward-compatible. Use versioned, auditable migration tooling. |
 | CHANGELOG | Automate from Conventional Commits (`semantic-release`, `release-please`, `git-cliff`, `changesets` for monorepos). Validate commit format on PR. Keep entries user-focused, not developer-focused. |
-
-## Routing And Handoffs
-
-| Direction | Agent | Use when |
-|-----------|-------|----------|
-| Input | `Plan` | Release scope, target date, and scope changes originate from planning. |
-| Input | `Guardian` | Release commit, tag, branch, or PR strategy is needed. |
-| Input | `Builder` | Feature completion or flag integration status must be confirmed. |
-| Input | `Gear` | Deployment readiness, pipeline status, and runtime constraints matter. |
-| Input | `Harvest` | CHANGELOG or notes need PR / commit history context. |
-| Input | `Beacon` | SLO/SLI baselines and observability readiness for Go/No-Go gates. |
-| Input | `Sentinel` | Security scan results needed for release criteria validation. |
-| Input | `Native` | Mobile store-submission artifacts, Privacy Manifest / Data Safety completeness, per-store staged-rollout plan. |
-| Output | `Guardian` | Tagging, release commit shaping, branch naming, or cherry-pick flow is needed. |
-| Output | `Gear` | Deployment execution, rollout automation, or environment action is required. |
-| Output | `Triage` | Incident playbook, rollback triggers, or hotfix response is needed. |
-| Output | `Canvas` | Timeline, release calendar, or rollout visualization is useful. |
-| Output | `Quill` | CHANGELOG, README, or docs need downstream publication. |
-| Output | `Experiment` | Feature flag metric evaluation or A/B test integration during rollout. |
-| Output | `Native` | Store-compliance feedback, phased-release halt triggers, server-driven flag-disable signals during mobile rollout. |
 
 ## Recipes
 
@@ -235,8 +215,8 @@ When input contains `## NEXUS_ROUTING`, do not call other agents directly. Retur
 
 ## Collaboration
 
-**Receives:** Guardian (release commit/tag strategy), Builder (feature completion), Gear (deployment readiness), Harvest (PR history for CHANGELOG), Beacon (SLO/SLI baselines for Go/No-Go), Sentinel (security scan results), Native (mobile store-submission artifacts and per-store rollout plan)
-**Sends:** Guardian (tagging/branch), Gear (deployment execution), Triage (incident playbook), Canvas (timeline visualization), Quill (documentation), Experiment (feature flag metric evaluation), Native (store-compliance feedback, phased-release halt triggers, server-driven flag activation)
+**Receives:** Plan (release scope, target date, scope changes), Guardian (release commit/tag strategy), Builder (feature completion, flag integration status), Gear (deployment readiness), Harvest (PR history for CHANGELOG), Beacon (SLO/SLI baselines for Go/No-Go), Sentinel (security scan results), Native (mobile store-submission artifacts, Privacy Manifest / Data Safety completeness, per-store rollout plan)
+**Sends:** Guardian (tagging/branch), Gear (deployment execution), Triage (incident playbook, rollback triggers), Canvas (timeline/rollout visualization), Quill (CHANGELOG/docs), Experiment (feature flag metric evaluation), Native (store-compliance feedback, phased-release halt triggers, server-driven flag activation)
 
 **Agent Teams Pattern (Specialist Team, 2-3 workers):**
 When a release involves parallel-ready phases (e.g., CHANGELOG generation + deployment preparation + monitoring setup), spawn specialists via Agent tool:
@@ -261,39 +241,9 @@ Validate completeness on receipt — reject the handoff and route back to Native
 
 ### Outgoing: `LAUNCH_TO_NATIVE_HANDOFF`
 
-```yaml
-LAUNCH_TO_NATIVE_HANDOFF:
-  release_decision: "GO | NO_GO | CONDITIONAL"
-  rollout_schedule:
-    ios:
-      testflight_internal: "[YYYY-MM-DD]"
-      testflight_external: "[YYYY-MM-DD]"
-      app_review_submit: "[YYYY-MM-DD]"
-      phased_release: "1%/10%/50%/100% over 7d starting [YYYY-MM-DD]"
-    android:
-      play_internal: "[YYYY-MM-DD]"
-      play_closed: "[YYYY-MM-DD]"
-      play_open: "[YYYY-MM-DD]"
-      production_staged: "5%/20%/50%/100% over [N]d starting [YYYY-MM-DD]"
-  halt_triggers:
-    - "crash_free_sessions < 99.85% for 1h"
-    - "App Review rejection or Play policy strike"
-    - "P0 store-policy regression (Privacy Manifest / Data Safety / IAP)"
-    - "[domain-specific KPI threshold]"
-  flag_disable_signals:
-    - flag: "[server-driven flag name]"
-      condition: "[when to disable]"
-      action: "[what Native should wire as fallback]"
-  rollback_path: "flag_disable (< 1 min) → halt phased release / pause staged rollout → hotfix submission"
-  next_owner: "Native"
-```
+Carries `release_decision` (GO/NO_GO/CONDITIONAL), per-store `rollout_schedule` (iOS: TestFlight Internal/External → App Review → Phased Release dates; Android: Play Internal → Closed → Open → Production Staged dates), `halt_triggers` (crash-free < 99.85%/1h, App Review rejection, P0 store-policy regression, domain KPI), `flag_disable_signals` (flag/condition/action), `rollback_path` (flag_disable < 1 min → halt rollout → hotfix submission), and `next_owner`. Full YAML schema -> `reference/mobile-release.md`.
 
-Mobile-specific Go/No-Go items beyond the standard scored checklist:
-- App Review / Play Review lead time included in the schedule (typically 24-72h; never assumed faster)
-- Phased Release / Staged Rollout configured per-store with halt automation, not manual checking
-- Server-driven feature flags verified live in production before submission (flags ship dark)
-- Crash-free sessions baseline captured from prior version (≥ 99.85% target)
-- Hotfix submission path tested (TestFlight expedited review request or Play Internal → Production fast-track)
+Mobile-specific Go/No-Go items beyond the standard scored checklist: App Review / Play Review lead time included in the schedule (typically 24-72h; never assumed faster), and Phased Release / Staged Rollout configured per-store with halt automation, not manual checking. Remaining checklist items (crash-free baseline, hotfix path tested, flags verified live) -> `reference/mobile-release.md` § TL;DR Checklist.
 
 ## Reference Map
 

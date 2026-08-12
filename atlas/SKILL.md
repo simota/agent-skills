@@ -15,7 +15,7 @@ CAPABILITIES_SUMMARY:
 - circular_dependency_remediation: Targeted SCC detection and break strategies (dependency inversion, interface extraction, module re-layering) for cyclic import graphs
 - coupling_metric_assessment: Afferent/efferent coupling, instability (I), abstractness (A), distance-from-main-sequence (D) scoring per module with actionable targets
 - module_boundary_evaluation: Bounded-context fit analysis, cross-boundary leak detection, and anti-corruption layer recommendations
-- tri_engine_architect: `multi` Recipe — parallel architecture assessment and ADR drafting across Codex + Antigravity + Claude subagents with Pattern H (hybrid) scoring; concurrence on smells calibrates the ADR Context section while divergence on architectural styles populates the Options section; emits one Consensus + Dissenting Options ADR with a load-bearing trade-off matrix; preserves single-engine architectural-style insights as named alternatives instead of strawmen
+- tri_engine_architect: `multi` Recipe — parallel architecture assessment and ADR drafting across Codex + Antigravity + Claude subagents with Pattern H (hybrid) scoring; emits one Consensus + Dissenting Options ADR (full mechanics in ## Multi-Engine Mode below)
 - c4_model_authoring: C4 model 4-level decomposition (System Context → Container → Component → Code), Structurizr DSL generation, ATAM-style scenario evaluation; pairs with `adr` for decision capture (absorbed from stratum)
 - architecture_quality_attributes: Quality-attribute scenarios (performance / availability / modifiability / security / testability) per ISO/IEC 25010, tradeoff analysis via ATAM utility tree (absorbed from stratum)
 
@@ -107,10 +107,10 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - **Fairy Tale ADR**: Listing only pros with no cons or trade-offs — tautological justifications ("We chose X because X is good") produce zero decision value.
 - **Sprint ADR**: Considering only one option with only short-term (next 2-3 sprints) effects — architecture decisions must evaluate ≥ 2 alternatives with long-term consequences.
 - **Mega-ADR**: Cramming component specs, multiple diagrams, and implementation details into a single ADR — keep ADRs focused on the decision; put details in separate docs.
-- **Tunnel Vision ADR**: Considering only local/isolated context (e.g., API provider benefits without client experience) — operations and maintenance consequences neglected. Architecture decisions must evaluate cross-cutting concerns including downstream consumers, operational burden, and long-term maintainability.
+- **Tunnel Vision ADR**: Considering only local/isolated context (e.g., API provider benefits without client experience), neglecting operations and maintenance — evaluate cross-cutting concerns: downstream consumers, operational burden, long-term maintainability.
 - **Class-level-only analysis**: Assessing modularity only at class level in large systems — use module-level metrics (coupling index, cyclic dependency index, testability index) for systems with 50+ classes.
-- **Hidden cross-domain circular dependency**: Dependencies between independently-managed domains (e.g., DNS ↔ routing, auth ↔ config) that only surface during cascading failures — map cross-domain dependencies explicitly during SURVEY phase; Facebook's 2021 global outage stemmed from an undetected DNS ↔ BGP circular dependency.
-- **AI-Accelerated Drift**: Trusting AI-generated code to respect architectural boundaries — AI coding agents can systematically violate architecture decisions across dozens of files in a single session because they lack project-specific architectural context. Require fitness function checks on every AI-generated PR; tools like Drift (GitHub Action) or SonarQube Code Architecture Management can detect pattern fragmentation and layer violations introduced by AI.
+- **Hidden cross-domain circular dependency**: Dependencies between independently-managed domains (e.g., DNS ↔ routing, auth ↔ config) that only surface during cascading failures — map cross-domain dependencies explicitly during SURVEY; Facebook's 2021 global outage stemmed from an undetected DNS ↔ BGP circular dependency.
+- **AI-Accelerated Drift**: Trusting AI-generated code to respect architectural boundaries — AI agents can violate architecture decisions across dozens of files in one session, lacking project-specific context. Require fitness-function checks on every AI-generated PR; Drift (GitHub Action) or SonarQube Code Architecture Management detect the resulting pattern fragmentation and layer violations.
 
 ## Workflow
 
@@ -191,7 +191,7 @@ Every deliverable must include:
 - **vs Bolt**: Bolt = performance optimization; Atlas = structural and dependency optimization.
 - **vs Scaffold**: Scaffold = infrastructure config; Atlas = application architecture.
 
-**Subagent parallelism (SURVEY phase)**: For large-scale analysis spanning 3+ distinct code domains (e.g., frontend/backend/data), use RESEARCH_FAN_OUT with 2–3 Explore subagents — each scans a separate domain for dependency and coupling issues. Merge: Union (collect all dependency graphs → deduplicate → consolidate into unified report). For 4+ domains, delegate to Rally with Pattern D (Specialist Team, `db-specialist` / `api-specialist` / `frontend-specialist`).
+**Subagent parallelism (SURVEY phase)**: for analysis spanning 3+ distinct code domains (e.g., frontend/backend/data), use RESEARCH_FAN_OUT with 2–3 Explore subagents, one per domain; merge via Union (collect all dependency graphs → deduplicate → consolidate). For 4+ domains, delegate to Rally Pattern D (Specialist Team: `db-specialist` / `api-specialist` / `frontend-specialist`).
 
 ## Multi-Engine Mode
 
@@ -199,20 +199,13 @@ Activated by the `multi` Recipe or an explicit request for parallel ADR / cross-
 
 > **Base engine policy**: baseline = Claude + Codex (2 spawns); agy adds a third axis when available at PREFLIGHT. Dual-engine already covers OSS architectural patterns (Codex) plus broader curated style coverage (Claude). Under dual-engine, `CONFIRMED`=2/2 and `CANDIDATE`=1/2 (must ground) — `LIKELY` is unreachable. → `_common/MULTI_ENGINE_RECIPE.md`.
 
-**Core mechanics:**
-- Spawn one subagent per available engine in a single message: `architect-codex` + `architect-claude`, adding `architect-agy` when available.
-- Run engine-availability PREFLIGHT in main context — never delegate detection to subagents (their PATH is narrower).
-- Use loose prompts (Role + Target + Output format only). **Never** pass MADR templates, 42010 framing, the Modular-Monolith default, Vertical-Slice guidance, or fitness-function catalogs to subagents — those apply at SYNTHESIZE. Each engine's training prior is what drives architectural-style divergence.
-- Subagents return structured JSON with two streams, `architectural_smells` and `adr_options`, each carrying an `architectural_style` label.
+**Core mechanics:** spawn one subagent per available engine in a single message, loose prompts only (Role + Target + Output format); PREFLIGHT engine-availability probe runs in main context only, never delegated to subagents. **Never** pass MADR templates, 42010 framing, the Modular-Monolith default, Vertical-Slice guidance, or fitness-function catalogs to subagents — those apply at SYNTHESIZE, since each engine's own training prior is what drives architectural-style divergence. Subagent names and the two-stream JSON schema (`architectural_smells` + `adr_options`, each carrying `architectural_style`) → `reference/tri-engine-architect.md`.
 
 **Two-axis scoring (Pattern H)** — smells on a confidence axis (`CONFIRMED` 3/3 → ship, `LIKELY` 2/3 → ship with dissenter noted, `CANDIDATE` 1/3 → must pass strict grounding); options on a perspective axis (`CONVERGENT` 3/3 → Recommended Option, `CONVERGENT-PARTIAL` 2/3 → chosen with dissent, `DIVERGENT-{style}` 1/3 grounded → preserved as a named Option, **never auto-low-value** — that divergent perspective is the value of running `multi`).
 
 **Critical Atlas rule:** options targeting the same smell with **different architectural styles** are NOT merged at CLUSTER. They ride into the ADR's Considered Options as separate entries, replacing single-engine strawmen with genuinely cross-style trade-offs — which makes the trade-off matrix the load-bearing artifact.
 
-Synthesis produces one Consensus + Dissenting Options ADR in extended MADR 4.0 structure at `docs/architecture/decisions/ADR-NNNN-{slug}.md`, with `tri_engine` front matter. Every shipped smell and option carries an engine-attribution tag. Degraded modes: 1 engine down → continue with 2 and flag reduced style diversity in front matter; 2 down → single-Option ADR with an explicit degradation note; all down → standard `adr` Recipe.
-
-
-Full algorithm, JSON schema, prompt skeletons, clustering rules, and grounding/anti-pattern checks: `reference/tri-engine-architect.md`.
+Synthesis produces one Consensus + Dissenting Options ADR (extended MADR 4.0, `tri_engine` front matter, engine-attribution tags per finding); degraded-mode fallbacks (1/2/all engines down) and the output path convention → `reference/tri-engine-architect.md`.
 
 ## Reference Map
 
@@ -226,21 +219,19 @@ Full algorithm, JSON schema, prompt skeletons, clustering rules, and grounding/a
 | `reference/canvas-integration.md` | CANVAS_REQUEST templates (4 diagram types) + Mermaid examples. |
 | `reference/zen-integration.md` | ZEN_HANDOFF templates (God Class split, separation, coupling). |
 | `reference/daily-process-checklists.md` | SURVEY/PLAN/VERIFY/PRESENT detailed checklists. |
-| `reference/architecture-decision-anti-patterns.md` | ADR/RFC decision anti-patterns (AD-01–07), document quality traps, or decision DoD. |
-| `reference/technical-debt-management-anti-patterns.md` | Technical debt management anti-patterns (TM-01–07), 4-quadrant classification, 5-stage management, or AI-era debt. |
-| `reference/dependency-modularization-anti-patterns.md` | Dependency/modularization anti-patterns (DM-01–07), distributed monolith detection, or Modular Monolith reassessment. |
-| `reference/architecture-modernization-anti-patterns.md` | Modernization anti-patterns (AM-01–07), Strangler Fig implementation, or migration judgment framework. |
+| `reference/architecture-decision-anti-patterns.md` | AD-01–07 anti-patterns, document quality traps, decision DoD. |
+| `reference/technical-debt-management-anti-patterns.md` | TM-01–07 anti-patterns, 4-quadrant classification, 5-stage management, AI-era debt. |
+| `reference/dependency-modularization-anti-patterns.md` | DM-01–07 anti-patterns, distributed monolith detection, Modular Monolith reassessment. |
+| `reference/architecture-modernization-anti-patterns.md` | AM-01–07 anti-patterns, Strangler Fig implementation, migration judgment framework. |
 | `reference/circular-dependency-remediation.md` | `cycle` recipe — SCC detection and removal strategies (dependency inversion, interface extraction, re-layering, merge). |
 | `reference/coupling-metrics.md` | `coupling` recipe — Martin metrics (Ca/Ce/Instability/Abstractness/Distance) and Main Sequence assessment. |
 | `reference/module-boundary-evaluation.md` | `boundary` recipe — bounded-context fit, cross-boundary leak detection, and anti-corruption layer recommendations. |
-| `reference/tri-engine-architect.md` | `multi` Recipe — tri-engine fan-out (Codex + Antigravity + Claude subagents), Pattern H two-axis scoring, Consensus + Dissenting Options ADR structure, JSON schema, subagent prompt skeleton, and degraded-mode behavior. |
-| `_common/SUBAGENT.md` | The base MULTI_ENGINE protocol — engine dispatch table, loose prompt rules, Agent tool fan-out mechanics, fallback rules. Read before authoring `multi` Recipe subagent prompts. |
-| `_common/MULTI_ENGINE_RECIPE.md` | The cross-skill multi-engine protocol — Pattern H definition, canonical PREFLIGHT probe, CLUSTER/SCORE/GROUND/SYNTHESIZE flow, engine-attribution tag conventions, and degraded modes. |
+| `reference/tri-engine-architect.md` | Full `multi` Recipe algorithm — fan-out, JSON schema, prompt skeleton, degraded-mode behavior. See ## Multi-Engine Mode. |
+| `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — engine dispatch, loose prompt rules, fan-out mechanics. Read before authoring `multi` subagent prompts. |
+| `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill multi-engine protocol — Pattern H, PREFLIGHT probe, CLUSTER/SCORE/GROUND/SYNTHESIZE flow, degraded modes. |
 | `_common/OPUS_5_AUTHORING.md` | Scoping SURVEY breadth, deciding adaptive thinking depth at PLAN, or sizing ADR/RFC outputs. Critical for Atlas: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Atlas-specific Output/Next schema. |
-| `reference/kotlin-cheatsheet.md` | Reviewing Kotlin code. |
-| `reference/rust-cheatsheet.md` | Reviewing Rust code. |
-| `reference/swift-cheatsheet.md` | Reviewing Swift code. |
+| `reference/kotlin-cheatsheet.md`, `reference/rust-cheatsheet.md`, `reference/swift-cheatsheet.md` | Reviewing Kotlin, Rust, or Swift code respectively. |
 
 ## Operational
 

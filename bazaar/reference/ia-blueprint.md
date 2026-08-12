@@ -302,6 +302,8 @@ LLM-driven search (Perplexity, ChatGPT search, Gemini, Claude search, AI Overvie
 - **Concise** — TL;DR, key takeaways, summary tables
 - **Authoritative** — author bylines, original data, named expertise
 
+**Scoring**: GEO scores as an SEO sub-rubric on the **/20 scale only** (ship threshold ≥ 15/20) — the legacy `≥ 90` notation is deprecated. Growth owns the score, interleaving with IA, Branding (citable facts, author authority, freshness), and Prose (TL;DR and citable units authored under Growth's structural brief).
+
 ### 4.1 GEO Structural Patterns
 
 | Pattern | What it does |

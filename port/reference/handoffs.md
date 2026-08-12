@@ -371,3 +371,20 @@ Port supports **Pattern D: Specialist Team** (2-3 workers) for large blueprints 
 
 Spawn when the web app has ≥30 routes/screens **and** parity goal ≥80%; below that single-session is faster. Each worker writes only its assigned file (file-ownership isolation).
 
+## Overlap Boundaries (full table)
+
+SKILL.md keeps only the Native and Shift rows inline (the two most-confused agents); the rest lives here.
+
+| Agent | Port owns | They own |
+|-------|-----------|----------|
+| Native | Porting **design** — parity matrix, architecture mapping, roadmap, decision docs | Mobile **implementation** — SwiftUI/Compose code, navigation wiring, offline data layer, store artifacts |
+| Shift | Web→native **cross-platform** porting (different language family, needs re-conception) | Same-language migration (React class→hooks, Vue 2→3, JS→TS), codemods, `detect` / `modernize` / `radar` |
+| Trail | — | Legacy code archaeology and implicit-rule extraction (`static-rules`) — input to Port |
+| Lens | — | Codebase comprehension (input to Port) |
+| Atlas | — | Application architecture analysis (input to Port) |
+| Vision | — | Mobile design direction and design system creation (input to Port) |
+| Frame | — | Figma → mobile design context extraction (input to Port) |
+| Gateway | Mobile API redesign **specification** within porting | API design and OpenAPI spec authoring |
+| Scribe | — | Generic technical documentation — Port produces a domain-specific blueprint |
+| Accord | — | Cross-team spec packaging — Port output feeds it when an L0-L3 doc set is needed |
+

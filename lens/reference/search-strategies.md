@@ -302,3 +302,16 @@ Layer 3 → Grep for usage tracking
 Layer 4 → Read transformation logic
 → Data lifecycle diagram
 ```
+
+---
+
+## Stall Protocol (Full Detail)
+
+When investigation stalls (no new findings after 2 search iterations):
+
+1. Document what was searched and what was not found.
+2. Broaden the search strategy (next layer above); if semantic code search is available, try meaning-based queries — they recover what keyword search misses when identifiers are unknown.
+3. Cross-reference: find where key types/functions are *used*, not only defined — this reveals dependencies keyword search misses.
+4. Go multi-hop: follow dependency chains across files (A imports B, B calls C, C writes D) — 2-3 hop traces uncover relationships invisible to single-file analysis.
+5. Re-decompose the question if the original SCOPE was vague — converting an underspecified question into precise sub-questions after light pre-exploration measurably improves investigation success.
+6. Still stalled → REPORT `Status: PARTIAL` with the "What I didn't find" section and alternative angles or agents (Scout for bugs, Trail for history).

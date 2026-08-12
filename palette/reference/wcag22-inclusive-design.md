@@ -149,6 +149,18 @@ Evaluate interfaces for cognitive clarity using these axes:
 - wcag3_preview: WCAG 3.0 awareness (0-4 scoring system, Bronze/Silver/Gold tiers, cognitive disability expansion — finalization 2028+, not yet a compliance target but informs design decisions; APCA contrast was removed from the WCAG 3.0 draft in July 2023 — continue to use WCAG 2.2 AA contrast targets)
 
 
+## Litigation Trends (SKILL.md excerpt)
+
+- Digital accessibility litigation is accelerating — 5,000+ lawsuits filed in 2025 (~20% increase over 2024), with demand letter settlements $1K–$25K and court judgments averaging $75K (UsableNet 2026).
+
+## Component-Level Remediation (SKILL.md excerpt)
+
+- Fix accessibility at the design-system component level, not per-instance — 45% of 2025 federal ADA filings targeted previously-sued companies (UsableNet 2026), showing instance-level patches fail to prevent recurrence. Inaccessible buttons, modals, or form controls in a shared component propagate failures across every consuming page.
+
+## Overlay Tools Are Not Remediation (SKILL.md excerpt)
+
+- Never rely on accessibility overlay tools as a substitute for genuine remediation — FTC settled with accessiBe for $1M (April 2025) over misleading compliance claims; 22.6% of H1 2025 ADA lawsuits (456 cases) targeted sites with overlays installed, as overlays signal awareness of obligations while failing to remediate (Accessibility.build 2026).
+
 ## Trigger Detail (SKILL.md excerpt)
 
 - Use Palette for EAA / ADA Title II compliance readiness — audit against EN 301 549 (EU) or WCAG 2.1 AA (US federal) and identify gaps before enforcement deadlines. eCommerce faces highest litigation risk (70% of 2025 ADA lawsuits targeted e-commerce; UsableNet 2025).

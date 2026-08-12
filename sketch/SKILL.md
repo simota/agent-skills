@@ -69,11 +69,7 @@ Model routing within Sketch:
 - Set `response_modalities=["TEXT", "IMAGE"]` — omitting `"TEXT"` causes a silent failure (HTTP 200 with empty `parts`).
 - Enable `thinking_level: high` for complex scenes, text-heavy images, or multi-element compositions.
 - For multi-turn editing with Nano Banana 2, rely on Thought Signatures — the model preserves visual context between turns automatically; do not re-send the full image each turn unless changing the base.
-- Parse response by iterating over `parts` and checking for `inline_data` attribute — do not assume a fixed index, as the model may return both text and image parts.
-- Save outputs with timestamped filenames and `metadata.json` including seed, model, prompt, and cost.
 - Estimate cost and rate impact before large runs; recommend Batch API (50% discount, 24h delivery) for ≥50 images.
-- Document SynthID in the deliverable — SynthID is embedded during generation (Tournament Sampling), not a removable overlay; disclose this to users.
-- Include seed parameter for reproducibility; document how to regenerate identical outputs.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Sketch; P2, P1 recommended).
 - Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
@@ -90,8 +86,8 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Add `.env` and `.gitignore` guidance to protect API keys.
 - Add `# Content policy:` comments when the prompt is policy-sensitive.
 - Set `person_generation: DONT_ALLOW` by default (SDK `v1.50+`).
-- Parse responses by iterating `candidate.content.parts` and checking for `inline_data` — never assume a fixed index.
-- Generate `metadata.json` with seed, model, prompt, parameters, cost estimate, and timestamp.
+- Parse responses by iterating `candidate.content.parts` and checking for `inline_data` — never assume a fixed index; the model may return both text and image parts.
+- Save outputs with timestamped filenames; generate `metadata.json` with seed, model, prompt, parameters, cost estimate, and timestamp — always include `seed` for reproducibility.
 
 ### Ask First
 
@@ -138,7 +134,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Reference images | Maximum `14` images/request; keep each under `4MB` when possible; use for style consistency across series |
 | Aspect ratios | Supported: 1:1, 3:2, 2:3, 3:4, 4:3, 4:5, 5:4, 9:16, 16:9, 21:9; Nano Banana 2 adds 1:4, 4:1, 1:8, 8:1 |
 | Person generation param | In `v1.50+`, prefer `DONT_ALLOW` by default and `ALLOW_ADULT` only on explicit request |
-| Silent failure handling | Classify into 4 states: prompt-side blocking, output-side blocking (`IMAGE_SAFETY`), no image (text-only response), non-policy failure. For no-image: (1) `response_modalities` includes `"TEXT"`, (2) `/v1beta/` endpoint, (3) billing enabled (`FAILED_PRECONDITION` = not active), (4) `inlineData` not `fileData`, (5) retry with explicit prefix |
+| Silent failure handling | Classify into 4 states (prompt-side blocking, output-side `IMAGE_SAFETY`, no-image text-only, non-policy failure); 5-step no-image diagnostic sequence -> `reference/api-integration.md` |
 | Thought Signatures | Nano Banana 2 multi-turn editing preserves visual context via Thought Signatures — do not re-send the full image each turn unless changing the base image |
 | Grounding | Nano Banana 2 supports grounding with Google Image Search for reference-aware generation; enable via `google_search` tool config |
 | Reproducibility | Always include `seed` parameter; document seed in `metadata.json` for regeneration |
@@ -206,16 +202,16 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`generate` = Generate). Apply normal INTAKE → TRANSLATE → CONFIGURE → CODE → VERIFY workflow.
 
-Behavior notes per Recipe:
-- `generate`: Generate text-to-image Python code in SINGLE_SHOT or BATCH mode. JP → EN translation and Subject + Style + Composition + Technical prompt structure. Cost estimate and SynthID disclosure required.
-- `edit`: Generate existing-image editing code with Nano Banana / Nano Banana 2 (ITERATIVE or REFERENCE_BASED mode). Leverage Thought Signatures. inlineData is required.
-- `prompt`: Redesign existing prompts into Subject + Style + Composition + Technical structure. Target 50-200 words with 3-5 strong keywords.
-- `batch`: Read `reference/batch-generation.md` first. Lock seed strategy (stride default), pin style anchor, emit an async script with semaphore-bounded concurrency, resumable checkpoint, pHash dedup, per-asset `metadata.json`. Recommend Batch API when N ≥ 50.
-- `style`: Read `reference/style-transfer.md` first. Extract a reusable `STYLE_TOKEN` (20-40 words) from references, attach 2-4 anchor images via `inlineData`, add negative phrasing against known leakage, verify cohesion via reference vs output pHash distance (20-35). Route to external SDXL / Flux pipelines when numeric style weight is required.
-- `upscale`: Read `reference/upscale-postprocess.md` first. Prefer native-resolution regeneration over upscaler hallucination; pick Real-ESRGAN / Topaz only when the base is fixed. Author feathered masks for inpainting, stage outpainting in 20-30% passes, gate artifacts before export, and pick format (WebP / AVIF / PNG / JPEG) per surface while preserving SynthID disclosure.
-- `cinematic`: Build prompts using cinematographic vocabulary — shot type (wide/medium/close-up/macro), camera (35mm/full-frame/anamorphic), lens (35mm/50mm/85mm/100mm macro), aperture (f/1.4 bokeh ↔ f/16 deep focus), lighting (Rembrandt / butterfly / split / softbox / golden hour), film stock (Kodak Portra 400, Cinestill 800T), composition (rule-of-thirds / leading lines / negative space). Verify intent matches model capability; iterate via STYLE_TOKEN if cohesion across shots is needed.
-- `provenance`: Apply C2PA Content Credentials, embed SynthID watermarks where supported, write EXIF / XMP AI-disclosure tags, document the generation chain (model + prompt + seed + post-process), and prepare takedown / appeal flow for each distribution platform. Critical for commercial / journalism / regulated use.
-- `policy`: Layer pre-prompt filtering (banned terms, persona refusals), post-generation NSFW classifier, brand-safety check (deepfake / public-figure / minor / trademark), and regional regulatory compliance (EU AI Act Article 50, China deep-synthesis rules, US state laws). Reject early; document every refusal.
+Behavior notes per Recipe (full detail lives in each recipe's reference file):
+- `generate`: SINGLE_SHOT or BATCH; JP → EN translation; Subject + Style + Composition + Technical structure; cost estimate and SynthID disclosure required.
+- `edit`: Nano Banana / Nano Banana 2 (ITERATIVE or REFERENCE_BASED); leverage Thought Signatures; `inlineData` required.
+- `prompt`: Redesign into Subject + Style + Composition + Technical; target 50-200 words, 3-5 strong keywords.
+- `batch`: Seed strategy (stride default), style anchor, semaphore-bounded async concurrency, resumable checkpoint, pHash dedup, per-asset `metadata.json`; Batch API at N ≥ 50 -> `reference/batch-generation.md`.
+- `style`: Extract a reusable `STYLE_TOKEN` (20-40 words) from 2-4 anchor images via `inlineData`, add negative phrasing against leakage, verify cohesion via reference-vs-output pHash distance (20-35); route to external SDXL/Flux when numeric style weight is required -> `reference/style-transfer.md`.
+- `upscale`: Prefer native-resolution regeneration over upscaler hallucination; Real-ESRGAN/Topaz only when the base is fixed; feathered inpaint masks, 20-30% outpainting passes, format choice (WebP/AVIF/PNG/JPEG) per surface -> `reference/upscale-postprocess.md`.
+- `cinematic`: Cinematographic vocabulary — shot type, camera, lens, aperture (f/1.4 bokeh ↔ f/16 deep focus), lighting, film stock (Kodak Portra 400, Cinestill 800T), composition -> `reference/cinematic-prompting.md`.
+- `provenance`: C2PA Content Credentials, SynthID watermarks, EXIF/XMP AI-disclosure tags, generation-chain docs, takedown/appeal flow per platform -> `reference/provenance-disclosure.md`.
+- `policy`: Pre-prompt filtering, post-generation NSFW classifier, brand-safety check (deepfake/public-figure/minor/trademark), regional compliance (EU AI Act Article 50, China deep-synthesis rules, US state laws); reject early, document every refusal -> `reference/content-policy-guardrails.md`.
 
 ## Output Routing
 
@@ -239,16 +235,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every deliverable should include:
-- Python code only, not executed results
-- final English prompt
-- model and major parameters
-- output directory and timestamped filename pattern
-- `metadata.json` generation
-- execution prerequisites
-- cost estimate
-- policy notes when relevant
-- SynthID note
+Every deliverable should include: Python code only (not executed results), the final English prompt, model and major parameters, output directory and timestamped filename pattern, `metadata.json` generation, execution prerequisites, cost estimate, policy notes when relevant, and a SynthID note.
 
 ## Collaboration
 
