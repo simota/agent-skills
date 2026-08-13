@@ -25,7 +25,7 @@
 
 Summit is a **quality-maximization recipe** that mobilizes multiple execution engines across five functional teams (Analysis / Design / Execution / Verification / Improvement). It produces engine-attributed, multi-perspective deliverables for strategic decisions and high-stakes outputs where the cost of failure dramatically exceeds the cost of triangulation.
 
-**Default baseline: Claude + Codex (dual-engine).** agy / Antigravity CLI is added as an **optional third axis** when AVAILABLE at PREFLIGHT — it contributes long-context (1M window), multimodal, High-effort-tier reasoning, and Search-grounding capabilities to Phase 1 / 3 / 4 / 5 when reachable, and is gracefully skipped when not (agy is mandated to Gemini 3.6 Flash (High) — `_common/CLI_COMPATIBILITY.md §4 ‡`; no Deep Think — its divergence value is Gemini model-priors at the High effort tier). Dual-engine mode (Claude + Codex) is the recipe's normal operating state, NOT a degraded mode. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
+**Default baseline: Claude + Codex (dual-engine).** agy / Antigravity CLI is added as an **optional third axis** when AVAILABLE at PREFLIGHT — it contributes long-context (1M window), multimodal, High-effort-tier reasoning, and Search-grounding capabilities to Phase 1 / 3 / 4 / 5 when reachable, and is gracefully skipped when not (agy is mandated to Gemini 3.7 Flash (High) — `_common/CLI_COMPATIBILITY.md §4 ‡`; no Deep Think — its divergence value is Gemini model-priors at the High effort tier). Dual-engine mode (Claude + Codex) is the recipe's normal operating state, NOT a degraded mode. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
 
 **Design Team conditional inclusion**: The Design team is included by default but skipped when Phase 0's `mission_charter.yaml` sets `ui_dimension: none` (pure backend / infrastructure tasks with no user-facing surface). When skipped, Design sub-tracks across all phases are bypassed and the recipe operates as a four-team workflow with proportionally reduced cost.
 
@@ -161,7 +161,7 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 
 > **This matrix is the sole owner of agent → engine assignments.** Per-phase contracts below (Phase 0-6) list only phase-specific deltas (gates, inputs, branch names) — for which agent runs on which engine, consult this matrix.
 
-**Engine routing principle:** route each agent to the engine whose distinctive strength best fits the agent's job — Claude is reserved for judgment, orchestration, and ethics; Codex owns code generation, sandbox execution, and test running (Terminal-Bench 77.3% leader); agy owns long-context analysis (1M window), multimodal asset work, High-effort-tier creative alternatives (Gemini 3.6 Flash (High), High tier — no Deep Think), and Search grounding. Each cell below lists the agents spawned on that engine for that team.
+**Engine routing principle:** route each agent to the engine whose distinctive strength best fits the agent's job — Claude is reserved for judgment, orchestration, and ethics; Codex owns code generation, sandbox execution, and test running (Terminal-Bench 77.3% leader); agy owns long-context analysis (1M window), multimodal asset work, High-effort-tier creative alternatives (Gemini 3.7 Flash (High), High tier — no Deep Think), and Search grounding. Each cell below lists the agents spawned on that engine for that team.
 
 | | Claude (hub — judgment & orchestration) | Codex (sandbox & code generation) | Antigravity / agy (long-context & multimodal) |
 |---|---|---|---|
@@ -179,7 +179,7 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 | Test writing and test execution | **Codex** | Sandbox-first, fast iteration |
 | Holding > 200K tokens of context — large-codebase analysis, full doc set, long-context spec/doc generation (Scribe/Tome) | **agy** | 1M context window |
 | Images, mockups, screenshots, diagrams; cross-format conversion (Morph) | **agy** | Native multimodal support |
-| Creative divergence / alternative exploration | **agy** (Gemini 3.6 Flash, High tier) or rally[agy, COMPETE] | Different (Gemini) reasoning priors |
+| Creative divergence / alternative exploration | **agy** (Gemini 3.7 Flash, High tier) or rally[agy, COMPETE] | Different (Gemini) reasoning priors |
 | Architecture decisions, design judgment, arbitration between perspectives, Go/No-Go calls (Atlas, Vision, magi) | **Claude** | Strongest at trade-off reasoning |
 | Security, ethics, privacy/crypto, regulatory review (Sentinel/Cloak/Crypt/Oath) | **Claude** | Deepest reasoning, OWASP knowledge baseline |
 | Spec gatekeeping between phases (Accord) | **Claude** | Judgment-critical |

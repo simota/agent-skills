@@ -29,7 +29,7 @@ Route to `Ledger` when the question is "is our vector DB oversized?" or "should 
 | Claude Haiku 4.5 | `$1.00` | `$5.00` | Fastest | Good | Classification, extraction, tier-1 routing |
 | GPT-5.6 | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Medium | High | Cross-vendor fallback |
 | GPT-4o-mini | `$0.15` | `$0.60` | Fast | Good | High-volume extraction |
-| Gemini 3.6 Flash (High) | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Fast | Good | High-volume extraction (Gemini) |
+| Gemini 3.7 Flash (High) | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Fast | Good | High-volume extraction (Gemini) |
 
 Claude cost modifiers (multiply the base rates above):
 

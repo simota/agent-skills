@@ -116,7 +116,7 @@ Verification: most matches will be valid historical references (XZ Utils CVE-202
 
 ```bash
 # Pre-current-generation model IDs (update the "current" side whenever canon changes:
-# current is claude-fable-5 / claude-opus-5 / claude-sonnet-5 / claude-haiku-4-5-20251001 / gpt-5.6 / Gemini 3.6 Flash).
+# current is claude-fable-5 / claude-opus-5 / claude-sonnet-5 / claude-haiku-4-5-20251001 / gpt-5.6 / Gemini 3.7 Flash).
 grep -rln -E 'claude-3-5-sonnet|claude-3-opus|claude-instant|gpt-4-turbo|text-davinci-00[0-9]|claude-opus-4-[0-8]\b|claude-sonnet-4-[0-7]\b|claude-haiku-3(-[0-9]+)?\b|claude-haiku-4-[0-4]\b|gemini-1\.[0-9]|gemini-2\.[0-9]' SKILL_GLOBS
 
 # gpt-4o as a bare/chat-model reference is stale, but real gpt-4o-* product names
@@ -125,7 +125,7 @@ grep -rEn 'gpt-4o\b' SKILL_GLOBS \
   | grep -vE 'gpt-4o-transcribe|gpt-4o-mini-transcribe|gpt-4o-audio|gpt-4o-mini-audio|gpt-4o-realtime|gpt-4o-mini-realtime|gpt-4o-search|gpt-4o-mini-search|gpt-4o-mini-tts'
 ```
 
-Verification: vendor-managed model identifiers move fast. Flag any bare pre-current-generation model-id reference — including `claude-sonnet-4-*`, `claude-opus-4-4` through `4-8`, `claude-haiku-3-*` / `claude-haiku-4-0` through `4-4`, a bare `gpt-4o` chat-model mention, and `gemini-1.*` / `gemini-2.*`; the fix is to either annotate as historical or replace with the current family reference (e.g. `claude-opus-5`, `claude-sonnet-5`, `claude-haiku-4-5-20251001`, `gpt-5.6`, `Gemini 3.6 Flash (High)`). Do NOT flag `gpt-4o-transcribe`, `gpt-4o-mini-transcribe`, `gpt-4o-audio-*`, `gpt-4o-realtime-*`, `gpt-4o-search-*`, or `gpt-4o-mini-tts` — those are standing product names, not a superseded chat-model version. Current generation itself (`claude-opus-5`, `claude-sonnet-5`, `claude-haiku-4-5-20251001`) must never be flagged.
+Verification: vendor-managed model identifiers move fast. Flag any bare pre-current-generation model-id reference — including `claude-sonnet-4-*`, `claude-opus-4-4` through `4-8`, `claude-haiku-3-*` / `claude-haiku-4-0` through `4-4`, a bare `gpt-4o` chat-model mention, and `gemini-1.*` / `gemini-2.*`; the fix is to either annotate as historical or replace with the current family reference (e.g. `claude-opus-5`, `claude-sonnet-5`, `claude-haiku-4-5-20251001`, `gpt-5.6`, `Gemini 3.7 Flash (High)`). Do NOT flag `gpt-4o-transcribe`, `gpt-4o-mini-transcribe`, `gpt-4o-audio-*`, `gpt-4o-realtime-*`, `gpt-4o-search-*`, or `gpt-4o-mini-tts` — those are standing product names, not a superseded chat-model version. Current generation itself (`claude-opus-5`, `claude-sonnet-5`, `claude-haiku-4-5-20251001`) must never be flagged.
 
 ### SD-9 Drift Across Skills
 

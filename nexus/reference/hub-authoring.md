@@ -10,7 +10,7 @@ Before the first spawn, detect which CLI drives **this hub session** (implicit i
 |--------|-----------|-----------|--------------------|-----------|
 | `Agent` tool present | **Claude Code** | `Agent(...)` (L1 fg / L2 background) | `_common/OPUS_5_AUTHORING.md` (P); Fable 5 hub → +§ Claude Code hub — Fable 5 (F) | Sonnet 5 default / opus / haiku / fable-5 (§ Model Selection) |
 | `spawn_agent` callable (C1 holds) | **Codex CLI** | `spawn_agent`→`wait_agent` (N spawn → join all) | `_common/CODEX_ORCHESTRATION.md` (C) | `gpt-5.6` sol/terra/luna by role (`CLI_COMPATIBILITY.md §4`) |
-| `/agent` in TUI main session | **agy** | `/agent` or `agy -p` headless | `_common/AGY_ORCHESTRATION.md` (A1–A9) | Gemini 3.6 Flash (High) mandated ‡, tier via `/model` |
+| `/agent` in TUI main session | **agy** | `/agent` or `agy -p` headless | `_common/AGY_ORCHESTRATION.md` (A1–A9) | Gemini 3.7 Flash (High) mandated ‡, tier via `/model` |
 
 Codex-hub prereqs (C1): `multi_agent = true` + `[agents] max_depth >= 2`; unmet → internal per SKILL.md Core Rule #3 (`spawn_agent` may be lazily hidden — attempt when prereqs hold, C5). Details → `_common/CLI_COMPATIBILITY.md`, `reference/execution-layers.md`. Unknown Claude Code model → author for Opus 5, safe on both.
 
@@ -120,7 +120,7 @@ Model names are hub-engine-specific. The role → tier mapping is stable; the co
 
 > **† Codex latest-generation mandate + variant tiering (user policy, `CODEX_ORCHESTRATION.md` C3.0):** the Codex column is always the **latest generation — currently the `gpt-5.6` family**; never a previous generation. Within the family, the variant follows the role (hub/plan/design = sol, standard implementation = terra, rote/high-volume = luna, per official guidance). Differentiate further via `model_reasoning_effort`. (Claude Code tiering is unaffected.)
 >
-> **‡ agy model mandate (user policy, 2026-06-23):** when **agy** drives the hub, every step and every spawned subagent uses **Gemini 3.6 Flash (High)** — never tier-switched to Gemini 3.1 Pro / Claude / GPT-OSS. Pin with `agy --model "Gemini 3.6 Flash (High)"` / `/model`. Stricter than the Codex mandate (which tiers by variant within the latest generation): agy is one fixed fast model with no tiering. Detail: `_common/CLI_COMPATIBILITY.md §4 ‡`.
+> **‡ agy model mandate (user policy, 2026-06-23):** when **agy** drives the hub, every step and every spawned subagent uses **Gemini 3.7 Flash (High)** — never tier-switched to Gemini 3.1 Pro / Claude / GPT-OSS. Pin with `agy --model "Gemini 3.7 Flash (High)"` / `/model`. Stricter than the Codex mandate (which tiers by variant within the latest generation): agy is one fixed fast model with no tiering. Detail: `_common/CLI_COMPATIBILITY.md §4 ‡`.
 >
 > **¶ Claude Code subagent default (user policy, 2026-07-02):** when **Claude Code** drives the hub, spawned subagents use **Sonnet 5 (`claude-sonnet-5`)** by default, selected **task-appropriately** — Sonnet 5 for the balanced/execution tier (investigation, read-only, standard implementation), escalating to **opus / fable-5** only for the high-reasoning tier (planning, high-complexity design/verify) and dropping to **haiku** only for trivial/lightweight steps. Unlike the Codex `†` and agy `‡` mandates (one fixed model regardless of tier), this is a **task-aware default, not a blanket lock** — the Plan-and-Execute split still governs (capable model plans, Sonnet 5 executes). Pin a spawn with `model: claude-sonnet-5` in the Agent Spawn Template.
 >

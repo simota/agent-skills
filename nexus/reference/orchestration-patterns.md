@@ -284,7 +284,7 @@ score delta < 0.2, or max reached.
 
 Per-CLI API detail (tool names, prereqs, flags) → `reference/execution-layers.md`.
 
-**agy-specific loop rules:** every step pins the mandated Gemini 3.6 Flash (High) tier with the Deep
+**agy-specific loop rules:** every step pins the mandated Gemini 3.7 Flash (High) tier with the Deep
 Reasoning Directive appended (`_common/AGY_ORCHESTRATION.md` A1-R/A9-D), captures via the
 prompt-mandated artifact + sentinel (`_common/CLI_COMPATIBILITY.md §9.2`), and injects the upstream
 artifact with `@<path>` — never a bare path (A5). Maker ≠ checker still holds (separate processes,

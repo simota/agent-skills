@@ -100,7 +100,7 @@ cost = (input_tokens / 1000) × input_price_per_1k
 | Anthropic | claude-haiku-4-5 | $0.001 | $0.005 |
 | OpenAI | gpt-5.6 | TBD (verify) | TBD (verify) |
 | OpenAI | gpt-4o-mini | $0.00015 | $0.0006 |
-| Google | gemini-3.6-flash | TBD (verify) | TBD (verify) |
+| Google | gemini-3.7-flash | TBD (verify) | TBD (verify) |
 
 > Note: Prices change frequently. Always verify from official provider documentation. Anthropic rows verified 2026-07-25 against `platform.claude.com/docs/en/about-claude/pricing`; OpenAI and Google rows are unconfirmed — do not treat `TBD` rows as billing-accurate. Cost dashboards must also model the Batch (0.5×), cache-read (0.1×), cache-write (1.25× / 2×), and fast-mode (2×) multipliers, or per-request cost attribution will be wrong.
 
