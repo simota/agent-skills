@@ -127,6 +127,8 @@ MECHANICAL_ITEMS = [
     (50, "whet subcommand registered", "recipes-index.md", "| Whet | `whet` |"),
     (51, "scanner sweep -> security mode=to-zero", "signal-keywords.md",
      "`drive vulnerabilities to zero`"),
+    (52, "budget sweep -> optimize mode=to-zero", "signal-keywords.md",
+     "`clear the performance budget violations`"),
     (28, "switch profile keyword -> pack", "signal-keywords.md",
      "`pack`, `skill pack`, `skill profile`, `enable skills`, `switch profile`, `skill preset` | `pack`"),
 ]

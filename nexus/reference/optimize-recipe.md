@@ -100,6 +100,32 @@ PR carrying the named **Speedup Report** (§ Output report).
 
 ---
 
+## 3a. `optimize mode=to-zero` — the budget sweep
+
+The phases above drive **one target to one number**. `mode=to-zero` drives a **set of budget violations to zero** across many targets: every route against its Core Web Vitals budget, every entrypoint against its bundle budget, every endpoint against its p95 SLO, every query against its plan-cost ceiling. It is a member of `_common/FINDING_LEDGER.md` — **read that file before running this mode** — and **inherits every discipline above rather than restating it**: the baseline is still a distribution, PROFILE-VALIDITY still gates each measurement, the Amdahl gate still applies per target, and no-regression across the explicit metric set still holds.
+
+| Slot | `optimize mode=to-zero` |
+|------|-------------------------|
+| **(a) Evaluator** | the measurement harness — Lighthouse CI · bundle-size checker · `EXPLAIN ANALYZE` · k6/Siege thresholds · profiler — run by `Radar`/`Beacon`, **independent of the optimizer**. This mode does **not** inherit `AUTO_TUNING`'s reviewed self-measurement exception: a sweep over dozens of noisy targets is exactly where self-measurement fails |
+| **(b) Frozen scope** | the **budget set**: `target × budget × metric`, frozen at BASELINE with the measurement conditions (build, dataset, concurrency, device/network profile, sample count) |
+| **(c) Identity** | **derived** — `sha1(budget_id ⊕ target_id ⊕ metric)`. **The measured value and the run timestamp are excluded**: the number changes on every run by construction, so a value-keyed ledger reports the entire budget set as new every cycle |
+| **(d) Validity gate** | **Measurement-Integrity Gate**, every cycle: identical declared conditions · measured variance within the declared band · the correctness suite green · **no cross-budget regression** (fixing route A's bundle must not blow route B's) |
+| **(e) Invariant** | correctness preserved, and the *user-perceptible* behavior actually improved — not just the number. No profiles |
+
+**Floor** is the budget itself, per target — the same per-partition shape as `whet`'s threshold contract. A target already inside its budget records overruns as `BELOW-FLOOR`.
+
+### Three dishonest ways to reach zero violations
+
+1. **`BUDGET-RAISED` — the self-dismissal analogue.** The cheapest path to zero violations is to move the budget. `TARGET-GATE` already requires a target to trace to a real budget, but that binds at *launch*; in a sweep the temptation is mid-loop. So **budgets are frozen at BASELINE**, and raising one inside the loop is a blocking finding that only the adjudicator may ratify, recording the SLO or user-perceptible threshold that justifies the new number. A budget nobody can trace is not a budget.
+2. **`METRIC-GAMED`.** Work deferred past the measured window improves the metric and nothing else — lazy-loading past the LCP mark, moving work off the sampled path, warming the cache before measuring. `VERIFY`'s cache-honesty rule is one instance of this; in a sweep it is a blocking class at any severity, because it falsifies the mode's invariant rather than lowering its quality.
+3. **`FLAKE-CLOSED`.** Across dozens of noisy targets, some cross their budget by luck on any given run. A close therefore requires re-measurement over the declared sample count under the declared conditions — never one favorable run. A violation that re-emerges is **not** a new finding: it is evidence the earlier close was noise, and `_common/FINDING_LEDGER.md` §7's oscillation rule freezes it on the second recurrence rather than letting the sweep chase it forever.
+
+`DEFERRED (infrastructure)` covers a violation whose only fix is scale or platform work that cannot close in-session (`FINDING_LEDGER.md` §1a C6), routed out with its owner rather than looped over.
+
+**Not this mode** — one slow endpoint, one target, one number → the single-pass phases above. Continuous parameter self-tuning → `AUTO_TUNING`. A slowdown caused by a defect → `bug`.
+
+---
+
 ## 4. Termination Bound
 
 **`loop ≤ N cycles (default N=3)`.** If the target is unmet and the last pass still yielded meaningful gain, **re-profile** (the hotspot moves after each fix) and optimize the new top hotspot; the quantified baseline persists across cycles as the loop's comparison anchor, and each new hotspot re-clears the Amdahl gate.

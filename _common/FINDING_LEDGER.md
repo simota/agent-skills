@@ -20,6 +20,8 @@ A domain is finding-loop-shaped only if all five hold. Check before authoring; a
 | **C4** | The finding space **converges** at the declared floor | still viable, but the member **must** declare a split oracle (§9) |
 | **C5** | A dismissal can be **honestly checked** (refute polarity has something to bite on) | integrity (§6) is unenforceable — do not build the loop |
 
+**A domain is rarely all one shape — split it by axis before answering C1.** Twice now the first answer was wrong because the domain was treated as a unit. Documents: the *claim* axis is a finding set (`newsroom`), the *craft* axis is unbounded judgment (a gate). Performance: a *metric target* is not a finding set — that is `optimize`'s single-pass job — but a set of **budget violations** across many targets is one (`optimize mode=to-zero`). The question is never "is performance finding-shaped"; it is "which axis of it is". Ask C1 per axis, and expect the answer to differ.
+
 ## 1a. When a finding loop is the wrong shape — even though C1-C5 pass
 
 Five conditions decide whether a domain *can* be looped. One more decides whether it *should*:
@@ -87,7 +89,7 @@ Every finding carries **exactly one** disposition. Nothing is silently dropped.
 | `BELOW-FLOOR` | severity < the declared floor | recorded, does not block |
 | `FROZEN` | oscillating (§7) — excluded from further fix cycles, escalated | does not block; reported as a `BLOCK`-class residual |
 
-**Extension rule:** a member may add a disposition only when its domain has a genuinely distinct *closure reason*, and must state whether it blocks. Existing extensions: `DEFERRED (behavior-changing)` (`quell profile=refactor`), `DEFERRED (identity-changing)` and `OUT-OF-CHARTER` (`burnish`), `EQUIVALENT-RATIFIED` and `CLOSED-BY-REMOVAL` (`whet` — a mutant no test can distinguish, and one whose host code was deleted as genuinely dead; neither counts as a kill), `DOWNGRADED` and `DELETED (logged)` (`newsroom` — a claim closed by weakening it to labeled opinion or by removing it, both logged and re-audited, never silent). A member may **not** redefine a disposition above.
+**Extension rule:** a member may add a disposition only when its domain has a genuinely distinct *closure reason*, and must state whether it blocks. Existing extensions: `DEFERRED (behavior-changing)` (`quell profile=refactor`), `DEFERRED (identity-changing)` and `OUT-OF-CHARTER` (`burnish`), `EQUIVALENT-RATIFIED` and `CLOSED-BY-REMOVAL` (`whet` — a mutant no test can distinguish, and one whose host code was deleted as genuinely dead; neither counts as a kill), `DOWNGRADED` and `DELETED (logged)` (`newsroom` — a claim closed by weakening it to labeled opinion or by removing it, both logged and re-audited, never silent), `RISK-ACCEPTED (owner, expiry)` (`security mode=to-zero` — invalid without both, and re-opens when the expiry lapses), `DEFERRED (infrastructure)` (`optimize mode=to-zero` — the fix is scale or platform work that cannot close in-session, per §1a C6). A member may **not** redefine a disposition above.
 
 **Domain vocabularies map onto this table; they do not replace it.** A member whose evaluator emits its own verdict names (`newsroom`'s `grounded` / `miscited` / `unsupported` / `contradicted` / `stale` / `mislabeled`) states the mapping in its own contract. Verdict and disposition are different levels: a verdict is *what the evaluation found*, a disposition is *why the item is closed*.
 
@@ -100,7 +102,7 @@ The cheapest path to zero is to dismiss everything. Four rules make that impossi
 3. **`WONTFIX` is a written argument, not a shrug.** It records why the current behavior is intended, what invariant makes the finding inapplicable, and the blast radius of fixing it anyway. `WONTFIX` on a CRITICAL/HIGH finding is **Ask First**, never auto-ratified.
 4. **`FIXED-VERIFIED` is never self-declared.** It requires the finding's *absence* from a fresh evaluation of the same frozen scope. A fix with no confirming re-evaluation is `OPEN`.
 
-**The self-dismissal analogue.** Every domain has a second cheap exit that looks like work: editing the test that would have failed (`quell profile=refactor`'s `TEST-EDITED`), "improving on" the reference instead of matching it (`burnish profile=faithful`'s `REFERENCE-DRIFT`), killing a mutant by asserting on the mutated expression itself (`whet`'s `TAUTOLOGICAL-KILL`), weakening a claim into vacuity or deleting the inconvenient paragraph (`newsroom`'s `DOWNGRADED` / `DELETED (logged)`). All four are the same move — *close the finding by shifting the standard rather than meeting it* — so a member whose domain has one **must name it as a blocking class only the adjudicator can ratify**. It is rule 1 applied to the artifact instead of to the ledger.
+**The self-dismissal analogue.** Every domain has a second cheap exit that looks like work: editing the test that would have failed (`quell profile=refactor`'s `TEST-EDITED`), "improving on" the reference instead of matching it (`burnish profile=faithful`'s `REFERENCE-DRIFT`), killing a mutant by asserting on the mutated expression itself (`whet`'s `TAUTOLOGICAL-KILL`), weakening a claim into vacuity or deleting the inconvenient paragraph (`newsroom`'s `DOWNGRADED` / `DELETED (logged)`), accepting every risk without an owner (`security mode=to-zero`'s `RISK-ACCEPTED`), **raising the budget the run is measured against** (`optimize mode=to-zero`'s `BUDGET-RAISED`). All of them are the same move — *close the finding by shifting the standard rather than meeting it* — so a member whose domain has one **must name it as a blocking class only the adjudicator can ratify**. It is rule 1 applied to the artifact instead of to the ledger.
 
 **Watch for the arithmetically-rewarded variant.** In most domains a dishonest dismissal merely removes a blocker. In some it *improves the reported number*: `whet`'s corrected mutation score is `Killed / (Total − Equivalent)`, so declaring a survivor equivalent raises the score with no test written. Where a dismissal moves the denominator, the member must report the dismissal count alongside the metric, so a number that rose by shrinking its base is visible rather than flattering.
 
@@ -159,6 +161,13 @@ Every member runs a per-cycle gate proving the artifact is still valid under its
 | `nexus burnish` | rendered UI surface | derived | **yes** (hard → 0, soft → `≥ 2`) | `nexus/reference/burnish-recipe.md` |
 | `nexus whet` | a mutation engine's surviving mutants | derived | no (C4 holds — the mutant set is finite and each has a right answer; the floor is a per-partition threshold contract) | `nexus/reference/whet-recipe.md` |
 | `nexus newsroom` | an article's factual claims | **assigned** (`claim_id`) | no (C4 holds — the claim set is the article's own assertions, and each has a right answer) | `nexus/reference/newsroom-recipe.md` |
+
+**Mode members** — an existing recipe's single-pass phases wrapped in a sweep, rather than a new recipe. Reach for this shape when the domain already owns its triage and verification discipline and duplicating it would be the defect:
+
+| Mode | Object | Floor | Contract |
+|------|--------|-------|----------|
+| `security mode=to-zero` | a scanner's findings over a repo | CVSS level | `nexus/reference/routing-matrix.md` § SECURITY |
+| `optimize mode=to-zero` | budget violations across a target set | the budget itself, per target | `nexus/reference/optimize-recipe.md` §3a |
 
 `newsroom` was authored independently and **arrived at this machinery on its own** — an audit table where no claim may be absent, citation-support-over-citation-existence as refute polarity, producer ≠ verifier, and a `BLOCK` exit for an article corrected into meaninglessness. It joined the registry by declaring its slots, not by being rewritten. Two of this file's rules exist because registering it surfaced them: the assigned-identity mechanism (§4) and the "external means external to the producer" clarification (§2).
 
