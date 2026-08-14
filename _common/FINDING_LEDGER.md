@@ -24,13 +24,15 @@ A domain is finding-loop-shaped only if all five hold. Check before authoring; a
 
 A member recipe declares exactly these and inherits everything else. Anything a member states beyond its slots is either a genuine specialization or drift.
 
-| Slot | `quell` | `burnish` |
-|------|---------|-----------|
-| **(a) Oracle source** | `codex review` (via `Judge`) over a code diff | multimodal review engine (`codex`/`agy` via `Judge`) + deterministic scanners over rendered captures |
-| **(b) Frozen scope unit** | the reviewed file diff | `surface × breakpoint × state` matrix |
-| **(c) Fingerprint basis** | path ⊕ symbol ⊕ class ⊕ message — **excludes line numbers** | surface ⊕ breakpoint ⊕ state ⊕ component ⊕ class ⊕ message — **excludes pixel coordinates, screenshot hashes, DOM indices** |
-| **(d) Validity gate** | Green Gate (tests / build / typecheck) | Appearance Gate (render / a11y non-regression / behavior non-regression / `SPILL`) |
-| **(e) Invariant + profiles** | `general` · `refactor` (behavior-preserving: Equivalence Gate, frozen tests, `TEST-EDITED`) | identity-preserving always · `general` · `faithful` (`REFERENCE-DRIFT`) |
+| Slot | `quell` | `burnish` | `newsroom` |
+|------|---------|-----------|------------|
+| **(a) Evaluator** | `codex review` (via `Judge`) over a code diff | multimodal review engine (`codex`/`agy` via `Judge`) + deterministic scanners over rendered captures | separately spawned claim auditor + skeptic panel, never the writer |
+| **(b) Frozen scope unit** | the reviewed file diff | `surface × breakpoint × state` matrix + Finding Charter | `newsroom_charter.yaml` — article ref + **claim-tolerance contract** (the floor) + load-bearing thesis |
+| **(c) Identity mechanism** | **derived** — path ⊕ symbol ⊕ class ⊕ message, excludes line numbers | **derived** — surface ⊕ breakpoint ⊕ state ⊕ component ⊕ class ⊕ message, excludes pixel coordinates, screenshot hashes, DOM indices | **assigned** — `claim_id` fixed at first decomposition and carried through rewrites |
+| **(d) Validity gate** | Green Gate (tests / build / typecheck) | Appearance Gate (render / a11y non-regression / behavior non-regression / `SPILL`) | Thesis-Integrity gate (the load-bearing thesis still stands and is still stated) |
+| **(e) Invariant + profiles** | behavior · `general` · `refactor` (Equivalence Gate, frozen tests, `TEST-EDITED`) | identity-preserving always · `general` · `faithful` (`REFERENCE-DRIFT`) | the article still makes its point · no profiles (`risk_tier` is a floor preset, `compose`/`audit` are input modes) |
+
+**"External" means external to the producer, not to the vendor.** The load-bearing property is maker ≠ checker (`_common/LOOP_PRECONDITIONS.md` #3). A different *engine* (quell, burnish) buys it most strongly — an independent model cannot inherit the fixer's blind spots — but a separately spawned adjudicator plus adversarial refutation (newsroom) also satisfies it. What is never acceptable is the producing agent evaluating its own output.
 
 ## 3. Scope freeze
 
@@ -38,13 +40,21 @@ The scope is frozen at BASELINE and **never widened by the loop**. A fix that re
 
 Members whose finding space does not converge on its own (C4) additionally freeze a **charter** — the finding classes and scored axes admitted this run — so that a class invented after seeing the artifact cannot consume a fix cycle. `burnish` §3 is the reference implementation; `quell` does not need one because a code reviewer's classes are already bounded by the diff.
 
-## 4. Fingerprint — identity across cycles
+## 4. Identity across cycles
+
+A finding must keep the same identity from the cycle that opens it to the cycle that closes it. **Two mechanisms are legitimate; a member declares which one it uses in slot (c).**
+
+**Derived (fingerprint)** — when a stateless evaluator re-emits the whole finding set each cycle and nothing carries an ID:
 
 `fingerprint = sha1(<stable locators> ⊕ <finding class> ⊕ <normalized message>)`
 
-**The rule that matters is the exclusion.** Every locator that *moves when a fix lands* is excluded: line numbers, pixel coordinates, screenshot hashes, DOM indices, byte offsets. A ledger keyed on a volatile locator reports the same finding as new forever, and the loop can never close anything. Members declare their exclusion set in slot (c).
+**The rule that matters is the exclusion.** Every locator that *moves when a fix lands* is excluded: line numbers, pixel coordinates, screenshot hashes, DOM indices, byte offsets. A ledger keyed on a volatile locator reports the same finding as new forever, and the loop can never close anything.
 
-**Per-finding record:** `fingerprint · location · class · severity · engine(s) + concurrence · first_seen_cycle · disposition · disposition_evidence · closed_in_cycle`. Members extend the record with domain fields (`burnish` adds `locus` and `expected/observed`); they never drop one.
+**Assigned (carried ID)** — when the fix **rewrites the artifact** and the evaluator re-derives its findings from the rewritten text, no locator survives and no message normalization is reliable. Then the ID is assigned at first evaluation and the **fixer states which ID it acted on**, so the re-evaluation re-attaches the verdict history instead of re-discovering the item as new. `newsroom`'s `claim_id` is the reference case: remediation legitimately rewrites the sentence a claim lives in, so a derived key would lose the claim on the first fix.
+
+**Choosing:** if a fix moves a finding, derive and exclude the mover. If a fix *replaces the thing the finding is about*, assign. Getting this wrong is silent — it looks like a loop that keeps finding new work.
+
+**Per-finding record:** `id · location · class · severity · engine(s) + concurrence · first_seen_cycle · disposition · disposition_evidence · closed_in_cycle`. Members extend the record with domain fields (`burnish` adds `locus` and `expected/observed`); they never drop one.
 
 ## 5. Disposition vocabulary
 
@@ -60,7 +70,9 @@ Every finding carries **exactly one** disposition. Nothing is silently dropped.
 | `BELOW-FLOOR` | severity < the declared floor | recorded, does not block |
 | `FROZEN` | oscillating (§7) — excluded from further fix cycles, escalated | does not block; reported as a `BLOCK`-class residual |
 
-**Extension rule:** a member may add a disposition only when its domain has a genuinely distinct *closure reason*, and must state whether it blocks. Existing extensions: `DEFERRED (behavior-changing)` (`quell profile=refactor`), `DEFERRED (identity-changing)` and `OUT-OF-CHARTER` (`burnish`). A member may **not** redefine a disposition above.
+**Extension rule:** a member may add a disposition only when its domain has a genuinely distinct *closure reason*, and must state whether it blocks. Existing extensions: `DEFERRED (behavior-changing)` (`quell profile=refactor`), `DEFERRED (identity-changing)` and `OUT-OF-CHARTER` (`burnish`), `DOWNGRADED` and `DELETED (logged)` (`newsroom` — a claim closed by weakening it to labeled opinion or by removing it, both of which must be logged and re-audited, never silent). A member may **not** redefine a disposition above.
+
+**Domain vocabularies map onto this table; they do not replace it.** A member whose evaluator emits its own verdict names (`newsroom`'s `grounded` / `miscited` / `unsupported` / `contradicted` / `stale` / `mislabeled`) states the mapping in its own contract. Verdict and disposition are different levels: a verdict is *what the evaluation found*, a disposition is *why the item is closed*.
 
 ## 6. Disposition integrity — the rules that keep zero honest
 
@@ -111,7 +123,7 @@ Every member runs a per-cycle gate proving the artifact is still valid under its
 | **Dishonest zero** (everything dismissed) | Disposition integrity (§6): fixer ≠ adjudicator, refute polarity, `WONTFIX` on CRITICAL/HIGH is Ask First |
 | **The self-dismissal analogue** (editing the test / drifting from the reference to make the gate green) | §6's closing rule — a blocking class only the adjudicator can ratify |
 | **Phantom progress** (fix declared done, never re-evaluated) | `FIXED-VERIFIED` requires absence from a fresh evaluation (§6.4) |
-| **Every finding reported as new after a trivial edit** | Fingerprint excludes volatile locators (§4) |
+| **Every finding reported as new after a trivial edit** | Derived identity excludes volatile locators; a domain whose fixes *rewrite* the artifact uses assigned identity instead (§4) |
 | **Oscillation** (fix A re-opens B) | Re-emergence → `FROZEN` + `BLOCK` on the second recurrence (§7) |
 | **Infinite churn with no net gain** | Diminishing-returns computed on the ledger diff, not on cycles attempted (§8) |
 | **Zero findings on a broken artifact** | Validity gate injects a blocking finding rather than warning (§10) |
@@ -122,9 +134,14 @@ Every member runs a per-cycle gate proving the artifact is still valid under its
 
 ## 13. Member registry
 
-| Member | Object | Split oracle | Contract |
-|--------|--------|--------------|----------|
-| `nexus quell` | code diff | no (C4 holds at `floor=medium`) | `nexus/reference/quell-recipe.md` |
-| `nexus burnish` | rendered UI surface | **yes** (hard → 0, soft → `≥ 2`) | `nexus/reference/burnish-recipe.md` |
+| Member | Object | Identity | Split oracle | Contract |
+|--------|--------|----------|--------------|----------|
+| `nexus quell` | code diff | derived | no (C4 holds at `floor=medium`) | `nexus/reference/quell-recipe.md` |
+| `nexus burnish` | rendered UI surface | derived | **yes** (hard → 0, soft → `≥ 2`) | `nexus/reference/burnish-recipe.md` |
+| `nexus newsroom` | an article's factual claims | **assigned** (`claim_id`) | no (C4 holds — the claim set is the article's own assertions, and each has a right answer) | `nexus/reference/newsroom-recipe.md` |
 
-A new member fills §2's five slots, declares whether C4 holds, and adds nothing else that this file already owns.
+`newsroom` was authored independently and **arrived at this machinery on its own** — an audit table where no claim may be absent, citation-support-over-citation-existence as refute polarity, producer ≠ verifier, and a `BLOCK` exit for an article corrected into meaninglessness. It joined the registry by declaring its slots, not by being rewritten. Two of this file's rules exist because registering it surfaced them: the assigned-identity mechanism (§4) and the "external means external to the producer" clarification (§2).
+
+**The craft axis of a document is *not* covered by `newsroom`** — structure, altitude, register, and redundancy fail C4 the way taste does, so a document-craft member would need `burnish`'s split oracle and Charter. `reference/doc-quality-protocol.md` currently covers that axis as a single-pass gate; whether it needs a loop at all is an open question, not a gap.
+
+A new member fills §2's five slots, declares its identity mechanism and whether C4 holds, and adds nothing else that this file already owns.
