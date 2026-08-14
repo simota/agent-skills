@@ -125,7 +125,7 @@ Agent boundaries → `_common/BOUNDARIES.md` · disambiguation → `reference/ag
 
 Families group the flat registry by the axis that separates confusable siblings. **When an input fits a family but not a specific recipe, pick by the axis — or, for an overloaded anchor (`improve`/`polish`/`enhance`, `evolve a feature`), run the one-question REDIRECT (`reference/intent-clarification.md`).**
 
-Four families hold confusable siblings, disambiguated by an explicit axis: **Improve** (`refactor`/`optimize`/`kaizen`/`anneal`/`restyle`), **Loop** (`goal`/`converge`/`quell`/`burnish` — the axis is *what the completion oracle is*; `quell` and `burnish` share one machinery split by object: code diff vs rendered UI surface; every loop passes `_common/LOOP_PRECONDITIONS.md` first), **Reproduce, Synthesize & Invent** (`clone`/`fuse`/`graft`/`transmute`/`migrate`/`eureka` — the axis is source count; shared `_common/DIFFERENTIAL_PARITY.md`), and **Quality-Max** (expensive, confirm — one question each). Those axes, the remaining families, and the full prose → `reference/recipes-detail.md` § Recipe Families.
+Four families hold confusable siblings, disambiguated by an explicit axis: **Improve** (`refactor`/`optimize`/`kaizen`/`anneal`/`restyle`), **Loop** (`goal`/`converge`/`quell`/`burnish`/`whet` — the axis is *what the completion oracle is*; the last three share one machinery (`_common/FINDING_LEDGER.md`) split by **object**: code diff · rendered UI surface · surviving mutants — `newsroom` is a fourth member on the claim axis, registered under its own family; every loop passes `_common/LOOP_PRECONDITIONS.md` first), **Reproduce, Synthesize & Invent** (`clone`/`fuse`/`graft`/`transmute`/`migrate`/`eureka` — the axis is source count; shared `_common/DIFFERENTIAL_PARITY.md`), and **Quality-Max** (expensive, confirm — one question each). Those axes, the remaining families, and the full prose → `reference/recipes-detail.md` § Recipe Families.
 
 ### Recipe Registry
 
@@ -135,7 +135,7 @@ Four families hold confusable siblings, disambiguated by an explicit axis: **Imp
 classify* · bug · feature · security · refactor · optimize · kaizen · anneal · restyle · converge · proactive · apex
 charter · enact · layer · goal · gedanken · delve · cartograph · chronicle · spec · essential · killer · trim
 acceptance · summit · podium · newsroom · wish · eureka · runway · hallmark · rebrand · crucible · silhouette
-lattice · chorus · assay · migrate · transmute · clone · fuse · graft · package · pack · quell · burnish
+lattice · chorus · assay · migrate · transmute · clone · fuse · graft · package · pack · quell · burnish · whet
 ```
 
 `*` = default when no subcommand is given. Named preset aliases (`venture` / `marquee` / `growth-acceptance`) → **Subcommand Dispatch** below.
@@ -223,7 +223,7 @@ Read only files matching the current decision point. Anything indexed by the Wor
 | `reference/recipes-detail.md` · `reference/inline-recipes.md` | Recipe Families axis prose · contracts for `kaizen`/`essential`/`killer`/`trim` |
 | `reference/hub-authoring.md` · `reference/execution-layers.md` | Per-engine authoring, orchestrator detection, spawn templates, model selection, Fable 5 F-principles · per-CLI spawn prereqs, runtime notes, agy headless mitigations |
 | `_common/LOOP_PRECONDITIONS.md` | Before **any** agent loop — five-point gate (completion oracle · hard-stop bound · maker ≠ checker · persistent memory · drift awareness) |
-| `_common/FINDING_LEDGER.md` | Before **any external-reviewer-to-zero loop** (`quell`, `burnish`, `newsroom`) — the shared ledger machinery: five declaration slots, identity across cycles, disposition vocabulary + integrity, split-oracle rule |
+| `_common/FINDING_LEDGER.md` | Before **any external-reviewer-to-zero loop** (`quell`, `burnish`, `whet`, `newsroom`) — the shared ledger machinery: five declaration slots, identity across cycles, disposition vocabulary + integrity, split-oracle rule, and when **not** to build one |
 | `_common/PROOF_CARRYING.md` | `/nexus acceptance` Tier policy + G1-G10. **Mandatory before `acceptance`.** |
 | `_common/PARALLEL.md` · `reference/signal-keywords.md` | Parallel branch definitions, file ownership, merge, rollback · canonical Signal Keywords → Recipe table |
 

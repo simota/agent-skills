@@ -122,6 +122,11 @@ MECHANICAL_ITEMS = [
     (47, "design review-to-zero keyword -> burnish", "signal-keywords.md",
      "`loop until zero design findings`"),
     (48, "burnish subcommand registered", "recipes-index.md", "| Burnish | `burnish` |"),
+    (49, "mutation-survivor keyword -> whet", "signal-keywords.md",
+     "`kill the surviving mutants`"),
+    (50, "whet subcommand registered", "recipes-index.md", "| Whet | `whet` |"),
+    (51, "scanner sweep -> security mode=to-zero", "signal-keywords.md",
+     "`drive vulnerabilities to zero`"),
     (28, "switch profile keyword -> pack", "signal-keywords.md",
      "`pack`, `skill pack`, `skill profile`, `enable skills`, `switch profile`, `skill preset` | `pack`"),
 ]

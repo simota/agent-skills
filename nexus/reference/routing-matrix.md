@@ -169,6 +169,22 @@ A security fix is only real when the exploit is **confirmed closed** — static 
 - **DETECT (Vigil, conditional)** — add a detection rule (Sigma / Detection-as-Code) so reintroduction or in-the-wild exploitation is caught. Recommended for high-severity or recurring vuln classes.
 - **SHIP (Guardian)** — **security-aware PR**: do NOT disclose exploit details in a public commit before the patch is deployed; link to the advisory/CVE; coordinate disclosure timing.
 
+#### `security mode=to-zero` — the scanner-finding sweep
+
+The phases above handle **a** vulnerability (or a triaged set) once. `mode=to-zero` wraps them in a loop whose completion oracle is a **scanner's finding set over a frozen scope** driven to zero at a CVSS floor. It is a member of `_common/FINDING_LEDGER.md` — **read that file before running this mode** — and declares its five slots there rather than restating the machinery:
+
+| Slot | `security mode=to-zero` |
+|------|-------------------------|
+| **(a) Evaluator** | SAST / SCA / DAST scanners run by `Sentinel` (static) and `Probe` (dynamic) — deterministic tools, independent of the fixer by construction |
+| **(b) Frozen scope** | the scan scope × the scanner set × the CVSS floor (default `floor=high`) |
+| **(c) Identity** | **derived** — code findings `sha1(rule_id ⊕ normalized_path ⊕ enclosing_symbol)`, dependency findings `sha1(advisory_id ⊕ package ⊕ manifest)`. **Line numbers excluded** |
+| **(d) Validity gate** | the existing **VERIFY-CLOSED** discipline, per cycle: the exploit no longer reproduces, the suite is green, and the service still starts and serves — a fix that closes a vuln by breaking availability fails the gate |
+| **(e) Invariant** | behavior and availability preserved. No profiles |
+
+**Disposition added:** `RISK-ACCEPTED (owner, expiry)`. Risk acceptance is this domain's `WONTFIX`, and it is also its **self-dismissal analogue** (`FINDING_LEDGER.md` §6): a scan reaches zero fastest by accepting everything. So an acceptance without a **named owner and an explicit expiry date** is invalid; acceptance of a CRITICAL/HIGH finding is **Ask First**; and an acceptance whose expiry has passed **re-opens as `OPEN`** on the next run rather than persisting silently. `FALSE-POSITIVE-RATIFIED` keeps CONFIRM-EXPLOIT as its refute-polarity mechanism — the attempt to *prove* exploitability is what a dismissal must fail at.
+
+Scope stays frozen: a fix requiring changes outside the scan scope is `DEFERRED` with a route, and a dependency CVE still routes to `Shift` for the upgrade path rather than being patched in place.
+
 **Recurrence-prevention note**: "make sure it never happens again" is a distinct ask from DETECT — Vigil's detection rule catches this vuln *class* recurring or being exploited in the wild (reactive, after-the-fact). A recurrence-prevention request additionally adds `+Latch` (HOOKS — e.g. a pre-commit/CI hook that blocks the specific pattern from being reintroduced, proactive/mechanical). Both can apply together; neither substitutes for the other.
 
 **Add-ons**: `+Crypt` (cryptographic design fix), `+Shift` (dependency CVE → upgrade), `+Cloak`/`+Oath` (privacy/compliance dimension), `+Sentinel` re-scan after fix, `+Latch` (recurrence-prevention hook, distinct from Vigil detection — see note above).

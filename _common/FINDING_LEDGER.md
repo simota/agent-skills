@@ -20,17 +20,34 @@ A domain is finding-loop-shaped only if all five hold. Check before authoring; a
 | **C4** | The finding space **converges** at the declared floor | still viable, but the member **must** declare a split oracle (§9) |
 | **C5** | A dismissal can be **honestly checked** (refute polarity has something to bite on) | integrity (§6) is unenforceable — do not build the loop |
 
+## 1a. When a finding loop is the wrong shape — even though C1-C5 pass
+
+Five conditions decide whether a domain *can* be looped. One more decides whether it *should*:
+
+**C6 — the fix must close inside the loop.** If closing a finding needs an actor the loop cannot invoke — a human signing a contract, a vendor replying, a 30-day observation window, a deploy waiting on a release train — then iterating is not what the work needs. What it needs is a **tracker**: a durable ledger, owners, due dates, and a scheduled re-check. A loop built over out-of-session closure burns cycles re-reading the same open items and reports `diminishing-returns` on work that was never stalled.
+
+Recorded non-members, so the question is not re-litigated:
+
+| Domain | C1-C5 | Why not a member |
+|--------|-------|------------------|
+| **Compliance / audit findings** (`oath`) | all pass — control IDs are natural identities, the control set is finite, evidence is checkable | **Fails C6.** Closing a SOC2 / PCI / HIPAA gap runs on days-to-months with human owners and external attestation; `oath` already produces a remediation roadmap with severity-tied timelines and continuous-audit drift flagging. That is the tracker shape, and it is the right one. An in-session loop over it would iterate over items nobody could have closed since the last cycle. |
+| **Document craft** (structure, altitude, register, redundancy) | C4 fails (prose critique is unbounded, like taste), so it would need `burnish`'s split oracle and a Charter | Buildable, deliberately not built. `reference/doc-quality-protocol.md` W7-W11 already covers the axis as a **single-pass gate inside every doc-producing recipe**, and `podium` owns package polish. The *claim* axis of documents is a member (`newsroom`); the craft axis stays a gate. **What would flip this:** repeated evidence that a single W7-W11 pass leaves craft defects that only iteration finds — not a preference for symmetry with the other members. |
+
+Symmetry is not a reason to add a member. Each one costs a subcommand, a routing anchor, and a permanent disambiguation burden on its neighbors.
+
 ## 2. The five declaration slots
 
 A member recipe declares exactly these and inherits everything else. Anything a member states beyond its slots is either a genuine specialization or drift.
 
-| Slot | `quell` | `burnish` | `newsroom` |
-|------|---------|-----------|------------|
-| **(a) Evaluator** | `codex review` (via `Judge`) over a code diff | multimodal review engine (`codex`/`agy` via `Judge`) + deterministic scanners over rendered captures | separately spawned claim auditor + skeptic panel, never the writer |
-| **(b) Frozen scope unit** | the reviewed file diff | `surface × breakpoint × state` matrix + Finding Charter | `newsroom_charter.yaml` — article ref + **claim-tolerance contract** (the floor) + load-bearing thesis |
-| **(c) Identity mechanism** | **derived** — path ⊕ symbol ⊕ class ⊕ message, excludes line numbers | **derived** — surface ⊕ breakpoint ⊕ state ⊕ component ⊕ class ⊕ message, excludes pixel coordinates, screenshot hashes, DOM indices | **assigned** — `claim_id` fixed at first decomposition and carried through rewrites |
-| **(d) Validity gate** | Green Gate (tests / build / typecheck) | Appearance Gate (render / a11y non-regression / behavior non-regression / `SPILL`) | Thesis-Integrity gate (the load-bearing thesis still stands and is still stated) |
-| **(e) Invariant + profiles** | behavior · `general` · `refactor` (Equivalence Gate, frozen tests, `TEST-EDITED`) | identity-preserving always · `general` · `faithful` (`REFERENCE-DRIFT`) | the article still makes its point · no profiles (`risk_tier` is a floor preset, `compose`/`audit` are input modes) |
+| Slot | `quell` | `burnish` | `whet` | `newsroom` |
+|------|---------|-----------|--------|------------|
+| **(a) Evaluator** | `codex review` (via `Judge`) over a code diff | multimodal review engine + deterministic scanners over rendered captures | the **mutation engine**, run and classified by `Siege` | separately spawned claim auditor + skeptic panel, never the writer |
+| **(b) Frozen scope unit** | the reviewed file diff | `surface × breakpoint × state` matrix + Finding Charter | mutation scope × operator set × **threshold contract** | `newsroom_charter.yaml` — article ref + **claim-tolerance contract** + load-bearing thesis |
+| **(c) Identity mechanism** | **derived** — excludes line numbers | **derived** — excludes pixel coordinates, screenshot hashes, DOM indices | **derived** — excludes line/column and the engine's ordinal mutant index | **assigned** — `claim_id` carried through rewrites |
+| **(d) Validity gate** | Green Gate (tests / build / typecheck) | Appearance Gate (render / a11y / behavior / `SPILL`) | Suite-Integrity Gate (green · no flake · runtime budget · coverage) | Thesis-Integrity gate |
+| **(e) Invariant + profiles** | behavior · `general` · `refactor` | identity-preserving always · `general` · `faithful` | tests assert behavior, not implementation · no profiles | the article still makes its point · no profiles |
+
+**The floor need not be a scalar severity.** It is whatever partitions the finding set into blocking and non-blocking. `quell`/`burnish` use a severity level; `newsroom` uses a claim-tolerance contract keyed to `risk_tier`; `whet` uses a **per-partition threshold contract** (some modules must kill every mutant, others need only a score). All three are the same slot.
 
 **"External" means external to the producer, not to the vendor.** The load-bearing property is maker ≠ checker (`_common/LOOP_PRECONDITIONS.md` #3). A different *engine* (quell, burnish) buys it most strongly — an independent model cannot inherit the fixer's blind spots — but a separately spawned adjudicator plus adversarial refutation (newsroom) also satisfies it. What is never acceptable is the producing agent evaluating its own output.
 
@@ -70,7 +87,7 @@ Every finding carries **exactly one** disposition. Nothing is silently dropped.
 | `BELOW-FLOOR` | severity < the declared floor | recorded, does not block |
 | `FROZEN` | oscillating (§7) — excluded from further fix cycles, escalated | does not block; reported as a `BLOCK`-class residual |
 
-**Extension rule:** a member may add a disposition only when its domain has a genuinely distinct *closure reason*, and must state whether it blocks. Existing extensions: `DEFERRED (behavior-changing)` (`quell profile=refactor`), `DEFERRED (identity-changing)` and `OUT-OF-CHARTER` (`burnish`), `DOWNGRADED` and `DELETED (logged)` (`newsroom` — a claim closed by weakening it to labeled opinion or by removing it, both of which must be logged and re-audited, never silent). A member may **not** redefine a disposition above.
+**Extension rule:** a member may add a disposition only when its domain has a genuinely distinct *closure reason*, and must state whether it blocks. Existing extensions: `DEFERRED (behavior-changing)` (`quell profile=refactor`), `DEFERRED (identity-changing)` and `OUT-OF-CHARTER` (`burnish`), `EQUIVALENT-RATIFIED` and `CLOSED-BY-REMOVAL` (`whet` — a mutant no test can distinguish, and one whose host code was deleted as genuinely dead; neither counts as a kill), `DOWNGRADED` and `DELETED (logged)` (`newsroom` — a claim closed by weakening it to labeled opinion or by removing it, both logged and re-audited, never silent). A member may **not** redefine a disposition above.
 
 **Domain vocabularies map onto this table; they do not replace it.** A member whose evaluator emits its own verdict names (`newsroom`'s `grounded` / `miscited` / `unsupported` / `contradicted` / `stale` / `mislabeled`) states the mapping in its own contract. Verdict and disposition are different levels: a verdict is *what the evaluation found*, a disposition is *why the item is closed*.
 
@@ -83,7 +100,9 @@ The cheapest path to zero is to dismiss everything. Four rules make that impossi
 3. **`WONTFIX` is a written argument, not a shrug.** It records why the current behavior is intended, what invariant makes the finding inapplicable, and the blast radius of fixing it anyway. `WONTFIX` on a CRITICAL/HIGH finding is **Ask First**, never auto-ratified.
 4. **`FIXED-VERIFIED` is never self-declared.** It requires the finding's *absence* from a fresh evaluation of the same frozen scope. A fix with no confirming re-evaluation is `OPEN`.
 
-**The self-dismissal analogue.** Every domain has a second cheap exit that looks like work: editing the test that would have failed (`quell profile=refactor`'s `TEST-EDITED`), "improving on" the reference instead of matching it (`burnish profile=faithful`'s `REFERENCE-DRIFT`). A member whose domain has one **must name it as a blocking class only the adjudicator can ratify** — it is rule 1 applied to the artifact instead of to the ledger.
+**The self-dismissal analogue.** Every domain has a second cheap exit that looks like work: editing the test that would have failed (`quell profile=refactor`'s `TEST-EDITED`), "improving on" the reference instead of matching it (`burnish profile=faithful`'s `REFERENCE-DRIFT`), killing a mutant by asserting on the mutated expression itself (`whet`'s `TAUTOLOGICAL-KILL`), weakening a claim into vacuity or deleting the inconvenient paragraph (`newsroom`'s `DOWNGRADED` / `DELETED (logged)`). All four are the same move — *close the finding by shifting the standard rather than meeting it* — so a member whose domain has one **must name it as a blocking class only the adjudicator can ratify**. It is rule 1 applied to the artifact instead of to the ledger.
+
+**Watch for the arithmetically-rewarded variant.** In most domains a dishonest dismissal merely removes a blocker. In some it *improves the reported number*: `whet`'s corrected mutation score is `Killed / (Total − Equivalent)`, so declaring a survivor equivalent raises the score with no test written. Where a dismissal moves the denominator, the member must report the dismissal count alongside the metric, so a number that rose by shrinking its base is visible rather than flattering.
 
 ## 7. Oscillation → `FROZEN`
 
@@ -138,10 +157,13 @@ Every member runs a per-cycle gate proving the artifact is still valid under its
 |--------|--------|----------|--------------|----------|
 | `nexus quell` | code diff | derived | no (C4 holds at `floor=medium`) | `nexus/reference/quell-recipe.md` |
 | `nexus burnish` | rendered UI surface | derived | **yes** (hard → 0, soft → `≥ 2`) | `nexus/reference/burnish-recipe.md` |
+| `nexus whet` | a mutation engine's surviving mutants | derived | no (C4 holds — the mutant set is finite and each has a right answer; the floor is a per-partition threshold contract) | `nexus/reference/whet-recipe.md` |
 | `nexus newsroom` | an article's factual claims | **assigned** (`claim_id`) | no (C4 holds — the claim set is the article's own assertions, and each has a right answer) | `nexus/reference/newsroom-recipe.md` |
 
 `newsroom` was authored independently and **arrived at this machinery on its own** — an audit table where no claim may be absent, citation-support-over-citation-existence as refute polarity, producer ≠ verifier, and a `BLOCK` exit for an article corrected into meaninglessness. It joined the registry by declaring its slots, not by being rewritten. Two of this file's rules exist because registering it surfaced them: the assigned-identity mechanism (§4) and the "external means external to the producer" clarification (§2).
 
-**The craft axis of a document is *not* covered by `newsroom`** — structure, altitude, register, and redundancy fail C4 the way taste does, so a document-craft member would need `burnish`'s split oracle and Charter. `reference/doc-quality-protocol.md` currently covers that axis as a single-pass gate; whether it needs a loop at all is an open question, not a gap.
+`whet` contributed the two rules about metrics: the floor may be a per-partition contract rather than a scalar (§2), and a dismissal that moves a metric's denominator must be reported alongside the metric (§6).
 
-A new member fills §2's five slots, declares its identity mechanism and whether C4 holds, and adds nothing else that this file already owns.
+**Non-members are recorded in §1a**, not left as open questions — compliance findings (fails C6) and document craft (a deliberate single-pass gate).
+
+A new member fills §2's five slots, declares its identity mechanism and whether C4 holds, passes C6, and adds nothing else that this file already owns.

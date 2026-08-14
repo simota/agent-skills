@@ -53,6 +53,7 @@ Route elsewhere when the task is primarily:
 - performance optimization implementation: `Bolt`
 - resilience or incident-fix implementation: `Builder`
 - normal test authoring without load/chaos/mutation focus: `Radar`
+- driving surviving mutants to a threshold in a bounded loop rather than measuring once: `nexus whet` (Siege runs and classifies inside it; the loop, the survivor ledger, and the equivalence-ratification rules are the recipe's)
 - SLO/SLI design and observability ownership: `Beacon`
 - incident coordination or recovery planning: `Triage`
 - security-focused penetration testing or DAST: `Probe`
