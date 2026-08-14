@@ -33,6 +33,7 @@ The gate belongs to whoever is closest to launching the loop. Each owner runs it
 |-------|------------------|-------|
 | `nexus goal` | before emitting a launch command | #1 and #2 are already `goal`'s own delivery gate — it **rejects unverifiable goals and unbounded launches** outright. Running this file's gate is the same check, stated once. |
 | `nexus converge` | before cycle 1 | #3 is structural (Generator-Evaluator separation); #2 is `max_cycles`. |
+| `nexus quell` / `nexus burnish` | before cycle 1 | #3 is structural (external review engine + disposition integrity); #4 is the Finding Ledger file. `burnish` reports #1 as **converted** — its split oracle is what makes an unverifiable "improve the design" machine-checkable. |
 | `nexus apex` | before the implementation loop | #2 is the declared per-loop cap. |
 | `orbit` (skill) | before generating a runner | #4 is structural (state files); #5 is the audit discipline. |
 | Any other loop-building step | before launch | If no owner above applies, the orchestrating agent runs it inline. |
@@ -43,6 +44,7 @@ The gate belongs to whoever is closest to launching the loop. Each owner runs it
 |-------|--------|-------|
 | native single-session goal | "set up `/goal`", unattended single session | `nexus goal` |
 | in-session rubric quality loop | attended; iterate one deliverable to a bar *now* | `nexus converge` |
+| external-reviewer-to-zero loop | attended; drive a code diff (`quell`) or a rendered UI surface (`burnish`) to a clean external review | `nexus quell` / `nexus burnish` |
 | unattended runner | long-running, needs scripts / contracts / recovery | `orbit` (skill) |
 | discovery → ship one-shot | full feature lifecycle | `nexus apex` |
 

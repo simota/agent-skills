@@ -32,6 +32,7 @@ Use `quell` when: a change set must be driven to a clean review before merge · 
 | Walk findings **conversationally**, human decides each | `judge pair` | quell is autonomous and batch; pair mode is one finding at a time |
 | One known defect, root cause unknown | `bug` | quell consumes a reviewer's list, it does not do RCA on a single symptom |
 | Discover **design** weaknesses by internal audit | `anneal` | anneal generates its own slate from six design dimensions; quell's slate comes from an external reviewer on a diff |
+| Drive a **rendered UI surface** to a clean external review | `burnish` | same machinery, different object — burnish reviews screenshots of the running UI and splits its oracle (hard findings to zero, soft axes to `≥ 2`) because taste never reaches zero |
 | A *known* restructure, shipped once, no reviewer loop | `refactor` | quell adds a loop and an external oracle; a single rename/extract does not need either. Drive an already-made refactor to a clean review → `quell profile=refactor` (§5a) |
 | Loop must survive session end / run for hours | `orbit` skill | quell is attended-but-uninterrupted, in-session; orbit owns unattended runners (worktree + state files + external cap) |
 | Just want one review, no fixing | `judge` direct | minimum viable chain |
@@ -221,6 +222,7 @@ DELIVER ── Quell Ledger (§8) + handoff: Guardian[commit/PR] ; acceptance? [
 ```
 Driving code to a clean state?
   Oracle is an EXTERNAL REVIEWER's finding list → quell
+    └ the object is a RENDERED UI SURFACE, not a diff → burnish
     └ the diff must preserve behavior (a refactor) → quell profile=refactor
     └ must survive session end / run unattended for hours → orbit skill
     └ want to decide each finding yourself, conversationally → judge pair

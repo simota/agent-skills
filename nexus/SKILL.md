@@ -125,7 +125,7 @@ Agent boundaries → `_common/BOUNDARIES.md` · disambiguation → `reference/ag
 
 Families group the flat registry by the axis that separates confusable siblings. **When an input fits a family but not a specific recipe, pick by the axis — or, for an overloaded anchor (`improve`/`polish`/`enhance`, `evolve a feature`), run the one-question REDIRECT (`reference/intent-clarification.md`).**
 
-Four families hold confusable siblings, disambiguated by an explicit axis: **Improve** (`refactor`/`optimize`/`kaizen`/`anneal`/`restyle`), **Loop** (`goal`/`converge`/`quell` — the axis is *what the completion oracle is*; every loop passes `_common/LOOP_PRECONDITIONS.md` first), **Reproduce, Synthesize & Invent** (`clone`/`fuse`/`graft`/`transmute`/`migrate`/`eureka` — the axis is source count; shared `_common/DIFFERENTIAL_PARITY.md`), and **Quality-Max** (expensive, confirm — one question each). Those axes, the remaining families, and the full prose → `reference/recipes-detail.md` § Recipe Families.
+Four families hold confusable siblings, disambiguated by an explicit axis: **Improve** (`refactor`/`optimize`/`kaizen`/`anneal`/`restyle`), **Loop** (`goal`/`converge`/`quell`/`burnish` — the axis is *what the completion oracle is*; `quell` and `burnish` share one machinery split by object: code diff vs rendered UI surface; every loop passes `_common/LOOP_PRECONDITIONS.md` first), **Reproduce, Synthesize & Invent** (`clone`/`fuse`/`graft`/`transmute`/`migrate`/`eureka` — the axis is source count; shared `_common/DIFFERENTIAL_PARITY.md`), and **Quality-Max** (expensive, confirm — one question each). Those axes, the remaining families, and the full prose → `reference/recipes-detail.md` § Recipe Families.
 
 ### Recipe Registry
 
@@ -135,7 +135,7 @@ Four families hold confusable siblings, disambiguated by an explicit axis: **Imp
 classify* · bug · feature · security · refactor · optimize · kaizen · anneal · restyle · converge · proactive · apex
 charter · enact · layer · goal · gedanken · delve · cartograph · chronicle · spec · essential · killer · trim
 acceptance · summit · podium · newsroom · wish · eureka · runway · hallmark · rebrand · crucible · silhouette
-lattice · chorus · assay · migrate · transmute · clone · fuse · graft · package · pack · quell
+lattice · chorus · assay · migrate · transmute · clone · fuse · graft · package · pack · quell · burnish
 ```
 
 `*` = default when no subcommand is given. Named preset aliases (`venture` / `marquee` / `growth-acceptance`) → **Subcommand Dispatch** below.
