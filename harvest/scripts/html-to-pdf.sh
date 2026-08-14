@@ -2,8 +2,8 @@
 # html-to-pdf.sh - HTMLレポートをA4 PDFに変換
 #
 # 使用方法:
-#   ./html-to-pdf.sh client-report-2026-01-31.html
-#   ./html-to-pdf.sh client-report-2026-01-31.html output.pdf
+#   ./html-to-pdf.sh report.html
+#   ./html-to-pdf.sh report.html output.pdf
 #   ./html-to-pdf.sh --method chrome input.html output.pdf
 #
 # オプション:

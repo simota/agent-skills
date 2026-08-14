@@ -1,9 +1,0 @@
-# Runtime artifacts produced by the loop — never commit.
-state/
-batches/
-reports/
-runner.log*
-runner.jsonl*
-progress.md
-.run-loop.lock/
-archive-*/

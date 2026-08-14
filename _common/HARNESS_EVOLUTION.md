@@ -80,7 +80,7 @@ Orchestrators (Nexus, Rally) should be stateless and replaceable. Session state 
 1. `python3 _common/scripts/lint-frontmatter.py --severity warning` and `python3 _common/scripts/validate-recipes.py --severity warning` — full-corpus health snapshot, reusing the exact scripts already wired into `.github/workflows/skill-lint.yml` (no new checker code).
 2. `python3 _common/scripts/routing-oracle.py --severity warning` and `python3 _common/scripts/task-battery-check.py --severity warning` — routing-machinery snapshot (dead-refs, ladder order, producer/verifier, roster completeness, task-battery mechanical assertions).
 3. Invoke `darwin`'s EFS scoring recipe against that snapshot.
-4. If EFS or compliance drift crosses `gauge`'s stability-index thresholds (<10% stable / 10-20% investigate / >20% intervene — `gauge/SKILL.md` CAPABILITIES_SUMMARY), kick a `_loops/skill-evolve` run bounded by its existing `MAX_ITERATIONS`/`CIRCUIT_BREAKER` guards (already present in `run-loop.sh`) rather than an unbounded new loop.
+4. If EFS or compliance drift crosses `gauge`'s stability-index thresholds (<10% stable / 10-20% investigate / >20% intervene — `gauge/SKILL.md` CAPABILITIES_SUMMARY), kick a skill-evolve run bounded by explicit `MAX_ITERATIONS`/`CIRCUIT_BREAKER` guards rather than an unbounded new loop.
 5. Journal the outcome to `.agents/PROJECT.md`.
 
 This is additive scheduling only (no new script, no new loop, no new agent) — a `schedule`-registered routine pointed at machinery that already exists and is already tested, closing the "prescribed vs. wired" gap between this document's prose cadence and an actually-firing trigger.

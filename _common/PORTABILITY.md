@@ -186,10 +186,10 @@ Note: Many occurrences are intentional uses inside the `sha256_hash` or `run_wit
 
 ## Integrating with Existing Scripts
 
-The `.loops/` and `_loops/` scripts already implement `run_with_timeout()` (BSD/GNU/perl fallback). Follow the same pattern for new helpers:
+Use the following `run_with_timeout()` (BSD/GNU/perl fallback) as the canonical pattern for new helpers:
 
 ```bash
-# Pattern used in .loops/skill-update/run-loop.sh (reference implementation)
+# Canonical run_with_timeout pattern
 run_with_timeout() {
   local sec="$1"; shift
   if command -v timeout >/dev/null 2>&1; then
@@ -209,6 +209,3 @@ Apply the same `command -v` probe pattern for every platform-sensitive command.
 ## Related Files
 
 - `_common/OPERATIONAL.md` — Shell command rules (BSD-default, portability guidance)
-- `.loops/skill-update/run-loop.sh` — Reference implementation of `run_with_timeout`
-- `.loops/skill-citations/run-loop.sh` — Reference implementation (citations loop)
-- `_loops/skill-evolve/run-loop.sh` — Reference implementation (evolve loop)
