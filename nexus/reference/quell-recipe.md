@@ -2,7 +2,7 @@
 
 > `/nexus quell [<scope>]` — fix code, run an **external review engine** (Codex by default) over the same scope, and repeat until the reviewer returns **zero open findings at or above the severity floor**. The loop runs **uninterrupted** — no per-cycle confirmation — and is bounded externally, never by the fixer's own judgment.
 
-Read this file before executing the `quell` Recipe. The termination contract (§2), the Finding Ledger (§3), and the disposition-integrity rules (§4) are what make "until zero" a reachable, honest state instead of an unbounded burn.
+Read this file **and `_common/FINDING_LEDGER.md`** before executing the `quell` Recipe. The ledger machinery that makes "until zero" reachable and honest lives in that shared protocol; this file declares quell's five slots against it (§3-§4), plus the termination contract (§2) and the `refactor` profile (§5a).
 
 **Named report:** **Quell Ledger**. **Resume:** checkpoint-resume (`quell resume`). **Confirm tier:** announce-and-proceed (no objection window) after a single launch-time blast-radius acknowledgement (§5).
 
@@ -58,52 +58,41 @@ Use `quell` when: a change set must be driven to a clean review before merge · 
 
 ---
 
-## 3. The Finding Ledger — why zero is reachable
+## 3. The Finding Ledger — quell's declaration slots
 
-A raw reviewer is stochastic and adversarial: it re-words findings, surfaces new ones after every fix, and never runs out of nits. Without a ledger, "until zero" is an infinite loop by construction. The Ledger is the loop's persistent memory (`_common/LOOP_PRECONDITIONS.md` #4) and the state a resume restores.
+The Ledger machinery — scope freeze, fingerprint discipline, the disposition vocabulary, oscillation → `FROZEN`, the per-cycle ledger diff, the ZERO predicate, and the confirm/resume posture — is **`_common/FINDING_LEDGER.md`. Read it before executing this recipe.** Quell fills its five declaration slots (§2 there) and adds nothing else:
 
-**Fingerprint** (identity across cycles): `sha1(normalized_path ⊕ enclosing_symbol ⊕ finding_class ⊕ normalized_message)`. **Line numbers are excluded** — they shift with every fix, and a line-keyed ledger reports the same finding as new forever.
+| Slot | quell |
+|------|-------|
+| **(a) Oracle source** | `codex review` via `Judge`; `engines=codex \| codex+claude \| tri` |
+| **(b) Frozen scope unit** | the reviewed file diff (`--uncommitted` \| `base=<branch>` \| `commit=<sha>`) |
+| **(c) Fingerprint basis** | `sha1(normalized_path ⊕ enclosing_symbol ⊕ finding_class ⊕ normalized_message)` — **line numbers excluded**, they shift with every fix |
+| **(d) Validity gate** | **Green Gate** — tests + build + typecheck, every cycle (`profile=refactor` swaps it, §5a) |
+| **(e) Invariant + profiles** | `general` (scope only) · `refactor` (behavior preservation, §5a) |
 
-**Per-finding record:** `fingerprint · path · symbol · severity · class · engine(s) + concurrence · first_seen_cycle · disposition · disposition_evidence · closed_in_cycle`.
+**C4 holds** (`FINDING_LEDGER.md` §1): a code reviewer's finding space is bounded by the diff, so quell needs **no split oracle and no charter**. `floor=info` means literal zero findings — expensive, and nit-storms rarely converge.
 
-**Disposition vocabulary** (every finding carries exactly one; nothing is silently dropped):
-
-| Disposition | Meaning | Counts toward ZERO? |
-|-------------|---------|---------------------|
-| `OPEN` | actionable, not yet fixed | **blocks** (if severity ≥ floor) |
-| `FIXED-VERIFIED` | fix landed **and** the finding is absent from a subsequent review of the same scope | closed |
-| `FALSE-POSITIVE-RATIFIED` | independently checked against the actual code and refuted | closed |
-| `WONTFIX-RATIFIED` | real but deliberately not fixed; justification recorded | closed |
-| `DEFERRED` | real, fix is outside the frozen scope | closed **for this run**, reported as residual + follow-up |
-| `BELOW-FLOOR` | severity < `floor` | recorded, does not block |
-| `FROZEN` | oscillating (§ below) — excluded from further fix cycles, escalated | does not block; reported as a `BLOCK`-class residual |
-
-**ZERO** ⟺ no record is `OPEN` at severity ≥ `floor`, **and** the Green Gate is green, **and** the last review output is attached verbatim as evidence.
-
-**Oscillation detection:** a fingerprint that returns to `OPEN` after having been `FIXED-VERIFIED` is `re-emerged`. First re-emergence → one more fix attempt with the prior fix diff attached as context. Second re-emergence → `FROZEN` + `BLOCK` escalation with both attempted fixes shown. A ledger diff per cycle (`closed / persisting / net-new / re-emerged`) is the loop's progress signal and the input to the diminishing-returns bound.
+**Disposition added by this recipe:** `DEFERRED (behavior-changing)` under `profile=refactor` (§5a.3) — real, but the fix changes external behavior, so it routes to `bug`/`feature`/`security` rather than being applied.
 
 ---
 
-## 4. Disposition Integrity — the rule that keeps zero honest
+## 4. Disposition Integrity — what quell binds to agents
 
-The cheapest path to zero findings is to declare every finding a false positive. Three rules make that impossible:
+The four integrity rules are `_common/FINDING_LEDGER.md` §6 (the fixer never disposes · refute-polarity dismissal · `WONTFIX` is a written argument and is **Ask First** on CRITICAL/HIGH · `FIXED-VERIFIED` requires absence from a fresh review). Quell binds them to concrete agents:
 
-1. **The fixer never disposes.** An agent that produced a fix in cycle N cannot set `FALSE-POSITIVE-RATIFIED` or `WONTFIX-RATIFIED` for any finding in cycle N. Dispositions are set by an independent adjudicator (`Judge` grounding; `Magi` on dispute) — the Generator-Evaluator separation of `reference/evaluator-loop-protocol.md`, applied to triage rather than scoring.
-2. **Refute-polarity dismissal.** To mark a finding `FALSE-POSITIVE-RATIFIED`, the adjudicator must attempt to **confirm** it against the actual code and fail, recording the evidence (`_common/ADVERSARIAL_REFUTATION.md` polarity rule). Judge's grounding verdicts (VERIFIED / REJECTED / NEEDS-INFO, `judge/reference/tri-engine-review.md`) are the mechanism; `NEEDS-INFO` stays `OPEN`.
-3. **`WONTFIX` is a written argument, not a shrug.** It records: why the behavior is intended, what invariant makes the finding inapplicable, and the blast radius of fixing it anyway. `WONTFIX` on a CRITICAL/HIGH severity finding is **Ask First**, never auto-ratified.
-
-`FIXED-VERIFIED` is likewise never self-declared: it requires the finding's *absence* from a fresh review of the same scope. A fix with no confirming review is `OPEN`.
+- Dispositions are set by **`Judge` grounding** — verdicts VERIFIED / REJECTED / NEEDS-INFO per `judge/reference/tri-engine-review.md` — with `Magi` on dispute. `NEEDS-INFO` stays `OPEN`.
+- The confirmation attempt behind a `FALSE-POSITIVE-RATIFIED` is a read of the **actual code**, not of the review text.
+- **The self-dismissal analogue** (`FINDING_LEDGER.md` §6 closing rule) is `TEST-EDITED` under `profile=refactor`: editing a test to make the gate green is this loop's version of dismissing a finding, and only the adjudicator can ratify it (§5a.2).
 
 ---
 
 ## 5. Confirm Gate — one acknowledgement, then uninterrupted
 
-**announce-and-proceed (no objection window)** for the loop body. The SKILL.md Ask First red lines are contract-level and cannot be waived by a recipe, so quell **front-loads them into a single launch-time acknowledgement** at BASELINE instead of letting them fire per cycle:
+**announce-and-proceed (no objection window)** for the loop body, per the front-loading rule in `_common/FINDING_LEDGER.md` §11. What quell announces and what re-opens the gate:
 
 - BASELINE announces the frozen scope: the file set, the finding count by severity, and the declared bounds.
 - If that blast radius trips an Ask First line (10+ files, `PUBLIC_API`/`DATA` reach, an L4 security finding), that is the **one** confirmation for the whole run — `Confirm-before-launch`. Approving it approves the loop, not one cycle.
-- After launch, the loop never stops for confirmation. It stops only on §2's bounds, or if a *new* L4 security finding appears that the launch acknowledgement did not cover.
-- Scope is frozen: fixes stay inside the announced file set. A fix that requires touching outside it becomes `DEFERRED`, not a silent widening.
+- After launch the loop stops only on §2's bounds, or if a *new* L4 security finding appears that the launch acknowledgement did not cover.
 
 ---
 
@@ -181,19 +170,12 @@ DELIVER ── Quell Ledger (§8) + handoff: Guardian[commit/PR] ; acceptance? [
 
 ## 7. Failure Modes Prevented
 
+Generic finding-loop failures — unreachable zero, dishonest zero, phantom progress, oscillation, churn with no net gain, volatile-locator fingerprints, scope creep, confirmation storm, unbounded spend — and their mitigations are **`_common/FINDING_LEDGER.md` §12**. Below: what `quell` adds on top.
+
 | Failure | Mitigation |
 |---------|-----------|
-| **Unreachable zero** (reviewer always finds something new) | Finding Ledger + dispositions (§3): ZERO is "no OPEN ≥ floor", not "the reviewer said nothing" |
-| **Dishonest zero** (fixer dismisses everything as false positive) | Disposition integrity (§4): fixer ≠ adjudicator, refute-polarity dismissal, WONTFIX on CRITICAL/HIGH is Ask First |
-| **Phantom progress** (fix declared done, never re-reviewed) | `FIXED-VERIFIED` requires absence from a fresh review of the same scope |
-| **Oscillation** (fix A opens B, fix B re-opens A) | Fingerprint re-emergence tracking → FROZEN + BLOCK on second recurrence (§3) |
-| **Infinite churn with no net gain** | diminishing-returns bound on *net* open count, not on cycles attempted (§2) |
-| **Zero findings on broken code** | Green Gate every cycle; red build injects a blocking finding rather than passing |
-| **Line-keyed ledger reports every finding as new** | Fingerprint excludes line numbers (§3) |
-| **Scope creep** (fixes wander outside the reviewed diff) | Scope frozen at BASELINE; out-of-scope fixes become `DEFERRED` (§5) |
-| **Confirmation storm** (Ask First fires every cycle on a wide diff) | Blast radius front-loaded into one launch-time acknowledgement (§5) |
-| **Unbounded spend under "don't stop"** | §2 bounds are contract-level; "don't stop" means no confirmation pauses, never no ceiling |
-| **Nit-storm never converges** | `floor=medium` default; below-floor findings recorded, not blocking |
+| **Zero findings on broken code** | Green Gate every cycle (slot (d), §3); a red build injects a blocking finding rather than passing |
+| **Nit-storm never converges** | `floor=medium` default; below-floor findings recorded, not blocking. C4 holds, so no split oracle is needed (§3) |
 | **Structural erosion masked by a falling finding count** | Precondition #5 reported as a run risk + sampled diff read at DELIVER (§6) |
 | **`refactor`: green reached by editing the tests** | Test files frozen; a test edit is a `TEST-EDITED` blocker only the adjudicator can ratify (§5a.2) |
 | **`refactor`: silent behavior change reaching zero findings** | Equivalence Gate (same suite, identical results) + behavior-drift findings block at any severity (§5a.1, §5a.4) |
@@ -242,6 +224,7 @@ Driving code to a clean state?
 
 | Protocol | What quell takes from it |
 |----------|--------------------------|
+| **`_common/FINDING_LEDGER.md`** | **The entire ledger machinery** — scope freeze, fingerprint discipline, disposition vocabulary + integrity, oscillation, ledger diff, ZERO predicate, bounds/confirm/resume posture, generic failure modes. quell fills its five declaration slots (§3) and adds only `profile=refactor`'s specializations |
 | `_common/LOOP_PRECONDITIONS.md` | The five-point gate; run before cycle 1, verdict reported in §8 |
 | `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation, single termination oracle, flatten rule (`converge quell` is **redundant** — quell already owns a loop and an oracle; wrap only by flattening to quell's fix agents) |
 | `judge/reference/codex-review-usage.md` | How to invoke `codex review` — scope flags, robust binary detection, **never** `-m`/`--model`/`OPENAI_API_KEY` |

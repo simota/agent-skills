@@ -223,6 +223,7 @@ Read only files matching the current decision point. Anything indexed by the Wor
 | `reference/recipes-detail.md` · `reference/inline-recipes.md` | Recipe Families axis prose · contracts for `kaizen`/`essential`/`killer`/`trim` |
 | `reference/hub-authoring.md` · `reference/execution-layers.md` | Per-engine authoring, orchestrator detection, spawn templates, model selection, Fable 5 F-principles · per-CLI spawn prereqs, runtime notes, agy headless mitigations |
 | `_common/LOOP_PRECONDITIONS.md` | Before **any** agent loop — five-point gate (completion oracle · hard-stop bound · maker ≠ checker · persistent memory · drift awareness) |
+| `_common/FINDING_LEDGER.md` | Before **any external-reviewer-to-zero loop** (`quell`, `burnish`) — the shared ledger machinery: five declaration slots, fingerprint discipline, disposition vocabulary + integrity, split-oracle rule |
 | `_common/PROOF_CARRYING.md` | `/nexus acceptance` Tier policy + G1-G10. **Mandatory before `acceptance`.** |
 | `_common/PARALLEL.md` · `reference/signal-keywords.md` | Parallel branch definitions, file ownership, merge, rollback · canonical Signal Keywords → Recipe table |
 

@@ -87,6 +87,7 @@ Every recipe emits `NEXUS_COMPLETE` with the base `## Nexus Execution Report` (`
 | `reference/research-grounding.md` | tiered sources, per-claim verification, cited Evidence Ledger | clone, fuse, graft (Phase 0.5), eureka (Phase 1.5, inverted polarity), wish/marquee (Phase 1.5 exemplar anchoring), newsroom (ledger schema + trust tiers) |
 | `_common/ADVERSARIAL_REFUTATION.md` | skeptic panel, evidence-vs-novelty, polarity, exclusions | killer, trim, graft, wish, newsroom, eureka |
 | `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation, single termination oracle, flatten rule | converge, kaizen, apex, summit, podium, wish, newsroom, eureka |
+| `_common/FINDING_LEDGER.md` | scope freeze, fingerprint discipline, disposition vocabulary + integrity, oscillation → `FROZEN`, ledger diff, ZERO predicate, split-oracle rule, validity-gate requirement — everything an external-reviewer-to-zero loop needs. Members fill its **five declaration slots** and add nothing else | quell, burnish, and any future finding-loop member |
 | `_common/TRACEABILITY.md` | canonical AC/REQ IDs | spec, accord-driven recipes, attest gates |
 | `reference/dialogue-protocol.md` | question craft, answer processing, Assumption Ledger, checkpoint presentation, Provenance Gate for contract-level dialogue | spec, delve, wish Crystallization, eureka Phase 1 Contradiction Crystallization (mandatory); gedanken INTERACTIVE, clone Stack Dialogue, verdict cards (D1–D4/D10–D11 only) |
 | `reference/autonomy-quality-protocol.md` | intent contract, Decision Ledger, drift control, producer≠verifier, evidence-bound claims, Acceptance Provenance, **completion integrity (Q16–Q19: artifact-level Done, typed deferral, Residual Ledger, completion sweep) + persistence (Q20–Q22: frozen bar, earned `BLOCKED`, hard-core-first)** | all autonomous (non-dialogue) recipes + ad-hoc chains; recipes cite it and add only specializations (parity oracles satisfy Q3/Q10; acceptance G1–G10 subsume Q11) |
@@ -107,7 +108,7 @@ Every recipe finishes what its contract covers, and finishes it at the bar it se
 
 A recipe whose report has a free-text "Recommended follow-ups" list instead of a typed Residual Ledger is out of contract — that list is where unfinished in-scope work hides.
 
-`quell` is the reference implementation: its disposition vocabulary (`reference/quell-recipe.md` §3) and disposition integrity (§4, the fixer never disposes) are Q17–Q18 specialized to a review loop, and other recipes should follow its shape rather than invent a parallel one.
+`_common/FINDING_LEDGER.md` is the reference implementation: its disposition vocabulary (§5) and disposition integrity (§6, the fixer never disposes) are Q17–Q18 specialized to a review loop, and other recipes should follow that shape rather than invent a parallel one. `quell` and `burnish` are its two members.
 
 ## 7. Authoring checklist
 

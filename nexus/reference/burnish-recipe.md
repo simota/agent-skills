@@ -2,7 +2,7 @@
 
 > `/nexus burnish [<surface>]` — capture the **rendered** UI, run an **external multimodal review engine** over the same frozen surface set, fix, re-capture, and repeat until the reviewer returns **zero open hard findings at or above the severity floor** and every declared soft axis reaches its bar. The loop runs **uninterrupted** — no per-cycle confirmation — and is bounded externally, never by the fixer's own taste.
 
-Read this file before executing the `burnish` Recipe. The **split oracle** (§2), the **Finding Charter** (§3), the **Design Finding Ledger** (§4), and the disposition-integrity rules (§5) are what make "until zero" a reachable, honest state for design work instead of an unbounded taste argument.
+Read this file **and `_common/FINDING_LEDGER.md`** before executing the `burnish` Recipe. The ledger machinery lives in that shared protocol; what the design domain *forces on top of it* — the **split oracle** (§2) and the **Finding Charter** (§3) — is what makes "until zero" a reachable, honest state for design work instead of an unbounded taste argument. §4-§5 declare burnish's five slots and its agent bindings.
 
 **Named report:** **Burnish Ledger**. **Resume:** checkpoint-resume (`burnish resume`). **Confirm tier:** announce-and-proceed (no objection window) after a single launch-time blast-radius acknowledgement (§6).
 
@@ -70,42 +70,36 @@ A finding that lands outside the Charter is `OUT-OF-CHARTER`: recorded with its 
 
 ---
 
-## 4. The Design Finding Ledger — why zero is reachable
+## 4. The Design Finding Ledger — burnish's declaration slots
 
-The Ledger is the loop's persistent memory (`_common/LOOP_PRECONDITIONS.md` #4) and the state a resume restores.
+The Ledger machinery — scope freeze, fingerprint discipline, the disposition vocabulary, oscillation → `FROZEN`, the per-cycle ledger diff, the ZERO predicate, and the confirm/resume posture — is **`_common/FINDING_LEDGER.md`. Read it before executing this recipe.** Burnish fills its five declaration slots (§2 there):
 
-**Fingerprint** (identity across cycles): `sha1(surface_id ⊕ breakpoint ⊕ state ⊕ component_or_role ⊕ finding_class ⊕ normalized_message)`. **Pixel coordinates, screenshot hashes, and DOM indices are excluded** — they change on every fix, and a coordinate-keyed ledger reports every finding as new forever. This is `quell`'s line-number exclusion, transposed.
+| Slot | burnish |
+|------|---------|
+| **(a) Oracle source** | multimodal review engine (`codex` / `agy` via `Judge`) over rendered captures + deterministic scanners for the hard classes |
+| **(b) Frozen scope unit** | the `surface × breakpoint × state` matrix, **plus a frozen Finding Charter** (§3) — required because C4 fails |
+| **(c) Fingerprint basis** | `sha1(surface_id ⊕ breakpoint ⊕ state ⊕ component_or_role ⊕ finding_class ⊕ normalized_message)` — **pixel coordinates, screenshot hashes, and DOM indices excluded**; they change on every fix. This is quell's line-number exclusion, transposed |
+| **(d) Validity gate** | **Appearance Gate** — render · a11y non-regression · behavior non-regression · `SPILL` (§6) |
+| **(e) Invariant + profiles** | identity-preserving **always** (§5.3) · `general` · `faithful` (reference conformance, §7) |
 
-**Per-finding record:** `fingerprint · surface@breakpoint@state · component · class (HARD/SOFT) · severity · locus · expected/observed · engine(s) + concurrence · first_seen_cycle · disposition · disposition_evidence · closed_in_cycle`.
+**C4 fails** (`FINDING_LEDGER.md` §1) — taste generates findings without bound — so burnish declares the **split oracle of §2** and the **Charter of §3**. These are the two additions the domain forces; everything else is inherited.
 
-**Disposition vocabulary** (every finding carries exactly one; nothing is silently dropped):
+**Record extension:** each finding additionally carries `class (HARD/SOFT)`, `locus`, and `expected/observed` (§3).
 
-| Disposition | Meaning | Counts toward ZERO? |
-|-------------|---------|---------------------|
-| `OPEN` | actionable, not yet fixed | **blocks** (hard, if severity ≥ floor) |
-| `FIXED-VERIFIED` | fix landed **and** the finding is absent from a subsequent review of the same frozen matrix | closed |
-| `FALSE-POSITIVE-RATIFIED` | independently checked against the rendered artifact and refuted | closed |
-| `WONTFIX-RATIFIED` | real but deliberately not fixed; justification recorded | closed |
-| `DEFERRED` | real, fix is outside the frozen surface set | closed **for this run**, reported as residual + follow-up |
-| `DEFERRED (identity-changing)` | fix would change IA, copy meaning, or brand-level tokens (§5.3) | closed **for this run**, routed out |
-| `OUT-OF-CHARTER` | outside the frozen Charter (§3) | recorded, does not block |
-| `BELOW-FLOOR` | hard finding below `floor` | recorded, does not block |
-| `FROZEN` | oscillating (§ below) — excluded from further fix cycles, escalated | does not block; reported as a `BLOCK`-class residual |
+**Dispositions added by this recipe:** `DEFERRED (identity-changing)` (§5.3) and `OUT-OF-CHARTER` (§3, recorded and non-blocking).
 
-**Oscillation detection:** a fingerprint that returns to `OPEN` after having been `FIXED-VERIFIED` is `re-emerged`. First re-emergence → one more fix attempt with the prior fix diff and the prior/current screenshots attached as context. Second re-emergence → `FROZEN` + `BLOCK` escalation showing both attempts. A ledger diff per cycle (`closed / persisting / net-new / re-emerged`) plus the soft-axis score delta is the loop's progress signal and the input to the diminishing-returns bound.
+**Progress signal:** the standard ledger diff (`closed / persisting / net-new / re-emerged`) **paired with the soft-axis score delta** — both feed the diminishing-returns bound (§8). On re-emergence, the prior fix diff *and* the prior/current captures are attached as context for the second attempt.
 
 ---
 
-## 5. Disposition Integrity — the rule that keeps zero honest
+## 5. Disposition Integrity — what burnish binds to agents
 
-The cheapest path to zero design findings is to call every one of them a matter of taste. Four rules make that impossible:
+The four integrity rules are `_common/FINDING_LEDGER.md` §6 (the fixer never disposes · refute-polarity dismissal · `WONTFIX` is a written argument and is **Ask First** on CRITICAL/HIGH · `FIXED-VERIFIED` requires absence from a fresh evaluation). Burnish binds them to concrete agents and adds one hard boundary:
 
-1. **The fixer never disposes.** An agent that produced a style change in cycle N cannot set `FALSE-POSITIVE-RATIFIED`, `WONTFIX-RATIFIED`, or `OUT-OF-CHARTER` for any finding in cycle N. Dispositions are set by an independent adjudicator (`Palette` for heuristic/a11y grounding, `Echo` for persona relevance; `Magi` on dispute) — the Generator-Evaluator separation of `reference/evaluator-loop-protocol.md`, applied to triage.
-2. **Refute-polarity dismissal.** To mark a finding `FALSE-POSITIVE-RATIFIED`, the adjudicator must attempt to **confirm** it against the rendered artifact and fail, recording the evidence (`_common/ADVERSARIAL_REFUTATION.md` polarity rule). For hard classes the confirmation attempt is the deterministic scanner's own output, not an opinion. `NEEDS-INFO` stays `OPEN`.
-3. **Identity is out of bounds, always.** A fix that changes information architecture, the *meaning* of copy, or a brand-level token is `DEFERRED (identity-changing)` with an explicit route (`restyle direction=` / `rebrand` / `hallmark` / `prose`), never applied inside the loop. This holds in **both** profiles: `Vision` is deliberately absent from every roster, because a polish loop that can re-direct the design is no longer bounded by anything.
-4. **`WONTFIX` is a written argument, not a shrug.** It records why the current behavior is intended, what constraint makes the finding inapplicable, and the blast radius of fixing it anyway. `WONTFIX` on a CRITICAL/HIGH **hard** finding is **Ask First**, never auto-ratified — an a11y violation is not a taste call.
-
-`FIXED-VERIFIED` is likewise never self-declared: it requires the finding's *absence* from a fresh review of the same frozen matrix. A fix with no confirming re-capture and re-review is `OPEN`.
+1. **Adjudicators.** `Palette` grounds heuristic/a11y findings, `Echo` judges persona relevance, `Magi` arbitrates disputes. A cycle-N fixer (`Artisan`/`Flow`/`Muse`/`Prose`/`Ink`) may set no disposition, `OUT-OF-CHARTER` included.
+2. **What the confirmation attempt is.** For hard classes it is the **deterministic scanner's own output**, not an opinion — an a11y violation is not a taste call, so `WONTFIX` on a CRITICAL/HIGH hard finding is Ask First. For soft classes it is a re-read of the capture against the finding's locus. `NEEDS-INFO` stays `OPEN`.
+3. **Identity is out of bounds, always** *(burnish-specific)*. A fix that changes information architecture, the *meaning* of copy, or a brand-level token is `DEFERRED (identity-changing)` with an explicit route (`restyle direction=` / `rebrand` / `hallmark` / `prose`), never applied inside the loop. This holds in **both** profiles, and `Vision` is deliberately absent from every roster: a polish loop that can re-direct the design is bounded by nothing.
+4. **The self-dismissal analogue** (`FINDING_LEDGER.md` §6 closing rule) is `REFERENCE-DRIFT` under `profile=faithful` — "improving on" the reference instead of matching it is this loop's version of dismissing a finding, and it blocks at any severity (§7).
 
 ---
 
@@ -118,7 +112,7 @@ Runs every cycle. A red gate injects a synthetic **blocking** finding into the L
 3. **Behavior non-regression** — `Radar`: same suite, same result.
 4. **SPILL** — any visual diff on a surface **outside** the frozen set is a `SPILL` finding and **blocks at any severity**, because it falsifies the recipe's scope invariant rather than lowering its quality. Appearance parity is judged per `_common/DIFFERENTIAL_PARITY.md` (oracle origin: the run's own BASELINE capture, one forward baseline).
 
-**Confirm gate — one acknowledgement, then uninterrupted.** BASELINE announces the frozen surface set, the Charter, the finding counts by class and severity, and the declared bounds. If that blast radius trips an Ask First line (10+ files, brand-token reach, an L4 finding), that is the **one** confirmation for the whole run — `Confirm-before-launch`. Approving it approves the loop, not one cycle. After launch the loop stops only on §8's bounds, or on a new Ask First trigger the acknowledgement did not cover.
+**Confirm gate — one acknowledgement, then uninterrupted**, per the front-loading rule in `_common/FINDING_LEDGER.md` §11. BASELINE announces the frozen surface set, the Charter, the finding counts by class and severity, and the declared bounds. If that blast radius trips an Ask First line (10+ files, brand-token reach, an L4 finding), that is the **one** confirmation for the whole run — `Confirm-before-launch`.
 
 ---
 
@@ -204,22 +198,17 @@ DELIVER ── Burnish Ledger (§11) + handoff: Guardian[commit/PR] ;
 
 ## 10. Failure Modes Prevented
 
+Generic finding-loop failures — unreachable zero, dishonest zero, phantom progress, oscillation, churn with no net gain, volatile-locator fingerprints, scope creep, confirmation storm, unbounded spend — and their mitigations are **`_common/FINDING_LEDGER.md` §12**. Below: what the design domain adds on top.
+
 | Failure | Mitigation |
 |---------|-----------|
 | **Nit-storm never converges** (taste generates findings forever) | Split oracle (§2): the soft half targets `≥ 2` per axis, never zero; `floor=medium` on the hard half |
 | **Charter creep** (new "issues" invented after seeing the surface) | Finding Charter frozen at BASELINE (§3); anything outside is `OUT-OF-CHARTER`, non-blocking |
 | **Ungrounded findings** ("feels cluttered") | Locus + expected/observed mandatory (§3); no locus ⇒ `NEEDS-INFO`, stays `OPEN` |
-| **Every finding reported as new after a 1px change** | Fingerprint excludes coordinates, screenshot hashes, and DOM indices (§4) |
-| **Dishonest zero** (fixer dismisses everything as taste) | Disposition integrity (§5): fixer ≠ adjudicator, refute polarity, `WONTFIX` on a CRITICAL/HIGH hard finding is Ask First |
-| **Phantom progress** (fix declared done, never re-captured) | `FIXED-VERIFIED` requires absence from a fresh review of the same frozen matrix (§5) |
 | **Prettier but less usable** | A11y non-regression is a gate condition, not a finding class (§6.2) |
 | **The polish loop becomes a redesign** | Identity changes are always `DEFERRED` with a route; `Vision` is on no roster (§5.3) |
 | **Fixing one screen breaks another** | `SPILL` — visual diff outside the frozen set blocks at any severity (§6.4) |
 | **Zero findings on a surface that does not render** | Render gate: a capture failure injects a blocking finding (§6.1) |
-| **Oscillation** (fix A re-opens B) | Fingerprint re-emergence → `FROZEN` + `BLOCK` on the second recurrence (§4) |
-| **Infinite churn with no net gain** | diminishing-returns on *both* halves of the oracle (§8) |
-| **Unbounded spend under "don't stop"** | §8 bounds are contract-level; "don't stop" means no confirmation pauses, never no ceiling |
-| **Confirmation storm** (Ask First fires every cycle on a wide surface set) | Blast radius front-loaded into one launch-time acknowledgement (§6) |
 | **Coherence erosion masked by a falling finding count** | Precondition #5 as a run risk + BASELINE-vs-final side-by-side at DELIVER (§9) |
 | **`faithful`: "improving on" the reference instead of matching it** | `REFERENCE-DRIFT` blocks at any severity; divergent fixes are `DEFERRED` (§7) |
 
@@ -270,9 +259,10 @@ Natural sequence: `restyle` (decide and implement the direction) → `burnish` (
 
 | Protocol | What burnish takes from it |
 |----------|----------------------------|
+| **`_common/FINDING_LEDGER.md`** | **The entire ledger machinery** — scope freeze, fingerprint discipline, disposition vocabulary + integrity, oscillation, ledger diff, ZERO predicate, bounds/confirm/resume posture, generic failure modes. burnish fills its five declaration slots (§4) and adds only what C4's failure forces: the split oracle (§2) and the Charter (§3) |
 | `_common/LOOP_PRECONDITIONS.md` | The five-point gate; run before cycle 1, verdict reported in §11 |
 | `reference/evaluator-loop-protocol.md` | Generator-Evaluator separation, the 0-3 soft scale and its `≥ 2` bar, single termination oracle, flatten rule (`converge burnish` is **redundant** — burnish already owns a loop and an oracle) |
-| `reference/quell-recipe.md` | The Ledger/disposition/oscillation machinery this recipe transposes; the code-diff sibling |
+| `reference/quell-recipe.md` | The code-diff sibling — the same five slots filled for a different object |
 | `reference/restyle-recipe.md` | The design direction and Design Brief burnish executes against; the a11y-non-regression gate condition |
 | `_common/ADVERSARIAL_REFUTATION.md` | Refute-polarity discipline for dismissals (§5.2) |
 | `_common/DIFFERENTIAL_PARITY.md` | Appearance-parity posture for `SPILL`: oracle origin = the run's own BASELINE capture, one forward baseline |
