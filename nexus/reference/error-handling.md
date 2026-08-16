@@ -7,6 +7,7 @@
 
 ## Contents
 - Error Levels (incl. Tool Error Classes — the orthogonal *what kind* axis)
+- Context Failure Classes (what was wrong *before* the call) + the Context Diff
 - Recovery Flow
 - Error Event Format
 - Recovery Chain Integration
@@ -72,6 +73,52 @@ class, not its severity, decides whether retrying is even meaningful. Classify f
   `unknown_outcome` with the resource to check, and confirm actual state before retrying. `L0 CAPTURE_FAILURE`
   (above) is the agy-specific instance of exactly this class: `exit 0` + empty stdout describes both a success
   and a failure, so the artifact decides, not the exit code.
+
+### Context Failure Classes (orthogonal to both severity and Tool Error Classes)
+
+Tool Error Classes above classify **how a call went wrong**. This axis classifies **what was already wrong in
+the information the agent was given** — a failure that has usually completed before any tool is invoked, and
+that a correct-looking tool call will faithfully execute. A step that "succeeded" while acting on a superseded
+ADR belongs here, not above.
+
+| Class | Mechanism | Detection | Permanent fix |
+|-------|-----------|-----------|---------------|
+| `omission` | A required fact was never composed in | The agent's rationale never cites the constraint it violated | Add the source to the step's required set |
+| `overload` | Required fact present but drowned | Correct fact is quotable from context yet unused | Cut volume, not sources — see the Preserve Set |
+| `conflict` | Two composed sources disagree, unflagged | Two retrieved items assert incompatible values | Surface the conflict; resolve by authority, not by order |
+| `staleness` | Composed fact was true, no longer is | Source revision ≠ the revision the claim was made against | Freshness typing + `invalidate_on` (`_common/HANDOFF.md`) |
+| `misrouting` | Right context, wrong consumer | A step acts outside the scope it was briefed on | Fix the routing/scoping, not the agent |
+| `wrong_authority` | A non-authoritative source drove a decision | Decision traced to chat/issue/draft over spec/ADR/policy | Per-question authority (`_common/CONTEXT_SUFFICIENCY.md`) |
+| `retrieval_failure` | The item never entered the candidate set | Item exists and is authorized but was never a candidate | Ingestion / index / query — **not the reranker** |
+| `ranking_failure` | It was a candidate and lost | Item in candidates, below the cut | Reranking / budget — **not ingestion**. Kept separate from the row above because the fix location differs |
+| `summary_drift` | Compaction changed the claim's meaning | Hedged statement returns as a flat assertion | Category-count compression check (`context-strategy.md`) |
+| `memory_pollution` | A stale/unverified belief persisted forward | A carried claim has no live source or contradicts current state | Memory write/forget governance (`oracle/reference/agent-design.md`) |
+| `instruction_collision` | Two layers give incompatible directives | Two applicable rules cannot both hold | Declared precedence; unresolvable ⇒ stop, do not guess |
+| `context_poisoning` | Untrusted content was read as instruction | Retrieved text steers behavior | `_common/WEB_FETCH_SAFETY.md` instruction-eligibility gate |
+| `secret_leakage` | A credential entered the window | Secret value appears in prompt/args/logs | Tool-gateway pattern — resolve credentials inside the tool |
+| `scope_leakage` | Data crossed a tenant/classification line | Composed set includes out-of-scope records | Gate before rank, not after |
+| `hidden_dependency` | A load-bearing fact lived only outside the sources | Behavior depends on a flag/env/runtime state never composed | Add the runtime source to the inventory |
+| `tool_context_mismatch` | Tool schema/permissions ≠ what the agent assumed | Call is well-formed but semantically wrong for this environment | Refresh tool context per phase |
+
+**Trigger is not root cause.** A document update that invalidated an index is the *trigger*; the *root cause*
+is that nothing rebuilt the index. Recording the trigger as the cause produces a fix that prevents nothing.
+
+#### The Context Diff — localize the stage before changing anything
+
+Run the subtraction top-down. Each line names one stage and one owner; the first non-empty line is where the
+failure lives.
+
+```
+required   − retrieved  = retrieval omission      → ingestion / index / query
+retrieved  − eligible   = policy/authority filter → permissions, scope, classification
+eligible   − composed   = budget/composition drop → budget order, degradation step
+composed   − consumed   = attention/utilization   → volume, position, format
+consumed   − current    = staleness / wrong authority → freshness typing, authority
+```
+
+**Do not change the model, the prompt, or the reranker first.** Any of those alters the sets being subtracted
+and the diff stops meaning anything. Localize, then fix the one stage. This is the context-side counterpart of
+the Failure Signature rule above: an unlocalized change is not an attempt.
 
 ### Reset vs Retry vs Rollback (do not substitute one for another)
 
