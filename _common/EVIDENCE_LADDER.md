@@ -24,6 +24,22 @@ Seven levels. What rises as you climb is not effort — it is **distance from th
 | `E5` | **Integration Evidence** | preview env, policy check, attestation, canary | Yes — the real integration surface rejects what local mocks accepted. |
 | `E6` | **Production Observation** | SLO, trace, incident, user outcome, reconciliation | Yes — the only rung measuring the real input distribution. |
 
+**A human saying so is not a rung.** `E0` covers the *model's* unverified assertion; an unverified *human*
+assertion sits at the same height and is far more likely to be waved through, because it arrives with a name
+attached. Human authority is scoped per domain exactly like an agent's: a product owner is authoritative for
+intent and not for runtime traffic; an on-call engineer is authoritative for what production did and not for
+what the contract guarantees. Treat the statement as a claim with a stated scope —
+
+```
+speaker_role: product_owner
+authority_for: [product intent, priority]
+not_authority_for: [runtime traffic, contractual guarantee]
+verification: required before irreversible action
+```
+
+— and verify before acting irreversibly on it. "This endpoint is probably unused" is a hypothesis worth
+testing against traffic data, never a licence to delete.
+
 **Not every change climbs to E6.** A README typo does not get a canary. The ladder is a selection device, not a checklist to exhaust: pick the levels whose *failure mechanism* matches the change's *risk mechanism*, that detect **different** failures, and that land **before** the decision is made.
 
 ### Choosing the required floor
