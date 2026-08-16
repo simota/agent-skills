@@ -14,6 +14,7 @@ CAPABILITIES_SUMMARY:
 - cost_optimization: Optimize LLM usage costs (model selection, caching, batching)
 - agent_system_design: Design application-level LLM agents (tool-use loops, tool-call schemas, context/memory, subagent delegation, termination conditions, failure modes)
 - llm_cost_optimization: LLM-API cost tuning (token budget per request, prompt caching TTL, model tier routing haiku/sonnet/opus, batch API vs streaming, context compression, per-feature SLO/cost budget)
+- ai_architecture_review: Design review of AI-embedding systems (12 lenses, risk tiers R0-R3, conditional approval with exit criteria, re-review triggers, four-owner responsibility split)
 - embedding_strategy: RAG embedding pipeline design (text chunking fixed/semantic/recursive, embedding model selection, vector index choice, cross-encoder re-ranking, hybrid BM25+vector retrieval)
 
 COLLABORATION_PATTERNS:
@@ -51,6 +52,7 @@ AI/ML design and evaluation specialist. Oracle designs prompt systems, RAG pipel
 - Planning LLM safety (guardrails, prompt injection defense, OWASP LLM Top 10 compliance, PII handling, bias mitigation)
 - Building evaluation frameworks (LLM-as-judge, Agent-as-a-Judge, regression suites, golden test sets, human-in-the-loop calibration)
 - Optimizing cost/latency (model routing, semantic caching, prompt caching, batching, token budget management)
+- Reviewing an AI-embedding design before build, or before a feature moves from proposal to command (authority envelope, degradation plan, risk tier)
 - The request mentions hallucination, embeddings, vector databases, benchmark design, canary rollout for AI features, or AI observability
 
 **Route elsewhere when:**
@@ -71,6 +73,7 @@ AI/ML design and evaluation specialist. Oracle designs prompt systems, RAG pipel
 - Include cost, latency, and validation in every design — budget alert at `> 120%` forecast; semantic cache hit rate target `>= 60%`; p95 latency alert at `> 2× baseline`.
 - Hybrid evaluation is non-negotiable — automated scoring (LLM-as-judge, trace analysis) for scale; human judgment for tone, trust, and contextual appropriateness.
 - **Keep the deterministic control plane out of Eval.** Schema, authorization, state transitions, tool arguments, and timeout/retry/budget are ordinary software and stay in deterministic tests; only open-ended quality goes to Eval. "We have evals, so we don't need tests" surrenders boundaries that were enforceable. → `reference/evaluation-observability.md`.
+- **Write the Evaluation Contract with the architecture decision, not after it** — one versioned artifact: thresholds, prohibited behavior, latency/cost budget, dataset identity, human-review policy, online signals, rollback condition, owner. Cannot build the dataset, adjudicate a prohibited behavior, or state a rollback condition ⇒ the feature does not get raised production authority; it ships one action tier lower. → `reference/evaluation-observability.md`.
 - **Gate releases on a conjunction, never a composite score** — `deterministic PASS ∧ critical failures = 0 ∧ no-regression slices PASS ∧ latency/cost in budget ∧ human calibration done`. Declare `hard_failures` (unauthorized action, unsupported claim, personal-data exposure) that block regardless of mean score, and stratify the dataset into Representative / Critical / Counterexample / Regression / Adversarial so rare-but-severe failure is never averaged away.
 - Account for compounding failure — a 5-layer pipeline at 95% per layer yields only 77% end-to-end reliability; measure each layer independently.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Oracle; P2, P1 recommended).
@@ -84,7 +87,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Version every prompt change with a tag and changelog entry
 - Define success metrics and evaluation criteria before implementation begins
 - Include cost implications and token budget estimates in every design
-- Design graceful degradation paths (fallback models, cached responses, human escalation)
+- Design degradation as a leveled ladder — per level: allowed/disallowed actions, user-visible state, exit criterion. A quality drop that does not also drop authority is the failure mode (`reference/llm-production-anti-patterns.md`)
 - Add guardrails to every LLM interaction (input validation, output filtering, context isolation)
 - Document assumptions, limitations, and known failure modes
 - Validate LLM-as-judge outputs against human labels (calibrate for agreeableness bias, length bias, position bias, and self-enhancement bias)
@@ -116,6 +119,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Agent System Design | `agent` | | Application-level LLM agent design (tool-use loops, tool schemas, memory, subagent delegation, termination) | `reference/agent-design.md` |
 | LLM Cost Optimization | `cost` | | LLM-API cost tuning (token budget, prompt caching, model tier routing, batch vs streaming, context compression) | `reference/cost-optimization.md` |
 | Embedding Strategy | `embed` | | RAG embedding pipeline deep dive (chunking, embedding model, vector index, re-ranking, hybrid BM25+vector) | `reference/embedding-strategy.md` |
+| AI Architecture Review | `review` | | Reviewing a design that embeds AI before build or before raising its authority: 12 lenses, risk tiers R0–R3, conditional approval, re-review triggers | `reference/architecture-review.md` |
 | Advanced Tool Use | `tooling` | | Scaling an Anthropic-API tool catalog: tool search + `defer_loading`, programmatic tool calling, advisor tool (server-side Plan-and-Execute), per-tool/per-version model support | `reference/advanced-tool-use.md` |
 
 ## Subcommand Dispatch
@@ -132,6 +136,7 @@ Behavior notes per Recipe:
 - `mlops`: MLOps pipeline design. Includes model routing, canary rollout, and cost optimization.
 - `agent`: Application-level LLM agent design — tool-use loops, schemas, memory, delegation, termination, failure modes. Scope: agents INSIDE the user's product, not the skill ecosystem itself (→ `Architect`). Details, compounding-failure math → `reference/agent-design.md`.
 - `cost`: LLM-API spend tuning — token budget, prompt caching TTL choice, model tier routing, batch vs streaming, context compression. Scope ends at the LLM provider bill; cloud infra FinOps → `Ledger`. Details → `reference/cost-optimization.md`.
+- `review`: Design review of an AI-embedding system — 12 lenses, risk tiers R0–R3 setting depth, conditional approval with exit criteria, re-review triggers (notably proposal → command). Reviews the architecture, never the model choice; code review → `Judge`, standards conformance → `Canon`. Details → `reference/architecture-review.md`.
 - `embed`: RAG embedding pipeline deep dive — chunking, embedding model, vector index, re-ranking, hybrid retrieval. Zooms into the layer `rag` assembles end-to-end; full-system search architecture → `Seek`. Details → `reference/embedding-strategy.md`.
 
 ## Operating Modes

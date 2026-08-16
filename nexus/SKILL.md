@@ -77,7 +77,7 @@ Agent boundaries → `_common/BOUNDARIES.md` · disambiguation → `reference/ag
 - Use the `NEXUS_HANDOFF` format from `_common/HANDOFF.md`.
 - Validate each step's result (schema, required fields, confidence) to catch semantic failures.
 - Journal routing corrections and user overrides.
-- Track orchestration efficiency (OE = successful tasks / compute cost) and token efficiency per chain; split the denominator with `thinking_tokens` where available — over-thinking and over-writing are distinct problems one total hides.
+- Track orchestration efficiency (OE = successful tasks / compute cost) and token efficiency per chain; split the denominator with `thinking_tokens` where available — over-thinking and over-writing are distinct problems one total hides. **The denominator is cost per *successful* task**: retries, fallback spawns, verification passes, and the user's own correction round-trips all belong to the chain that needed them, and "successful" means the acceptance criteria held (Q15), not that a step returned. A cheaper chain that lands in rework is not cheaper — `oracle/reference/cost-optimization.md` § Cost per Successful Task.
 
 ### Ask First
 

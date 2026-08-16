@@ -85,6 +85,30 @@ orchestrator ──► subagent(retriever)     tools: vector_search, bm25_search
 
 Each subagent needs its own `max_turns`, eval, and termination signal. Measure per-subagent failure rate — compounding kicks in at every boundary.
 
+## Authority Envelope
+
+Autonomy is not a capability level — it is an **effect** level. The same model reading documents and the same model merging code, sending mail, and issuing refunds are different systems at identical reasoning quality. Design the envelope before the model, and review it before the model: `Authority Envelope → worst single action → worst hour → worst tenant`, then pick a model.
+
+A per-tool allow/deny list is too coarse, because the same tool at different arguments carries different effect (`send_email` to an internal draft vs an external recipient with attachments). Grant on seven axes; an axis you do not name is denied, not unlimited.
+
+| Axis | Grants |
+|------|--------|
+| `resource` | tenant, repository, project, folder, record |
+| `action` | read · draft · create · update · delete · send · execute |
+| `quantity` | item count, amount, tokens, API calls, changed lines |
+| `time` | validity window, maintenance window, execution deadline |
+| `destination` | recipient domain, channel, internal vs external |
+| `approval` | before-effect · above-threshold · exception-only · post-audit |
+| `reversibility` | undo · version · backup · compensation · manual recovery only |
+
+**Budget is a security control.** Caps on tokens, tool calls, wall-clock, and spend bound runaway loops, tool abuse, prompt-injection blast radius, and cascading failure — not just the bill. Tier them: per step · per job · per user/tenant · per tool · per day/month · emergency global cap. On exhaustion return partial results, the unfinished steps, and the resume condition — never a bare failure.
+
+**Agent identity is not user identity.** Running an agent on the end user's credential inherits the user's full permission set, which is always wider than the task. Use a dedicated identity, delegated short-lived tokens, audience restriction, and resource scoping; carry `actor_user · actor_agent · purpose · session · policy` in the token claims or policy context so the audit trail separates the three parties (user, agent, platform).
+
+**Shrink the tool, not just the grant.** `execute_sql(query)` and `http_request(url, method, body)` push authorization, input range, audit, rate, and idempotency into the prompt — where they are requests, not controls. `get_open_invoices(customer_id, limit)` and `create_refund_draft(payment_id, amount, reason)` enforce them at the tool boundary.
+
+**Read-only is not safe by construction.** Cross-source reads aggregate individually-permitted facts into sensitive relationships, and anything pulled into context lives in the trace, the summary, and every downstream call. Read grants carry purpose, field, row, tenant, retention, and output destination like any other.
+
 ## Termination Conditions
 
 Explicitly declare all three:

@@ -88,6 +88,23 @@ Disposal: split the suite into **Core** (every run), **Extended** (per review cy
 
 ---
 
+## 3b. Complexity Budget — the prevention side of `HD-ENTROPY`
+
+Sweeps find debt after it accrues. A Complexity Budget stops the accrual at the point of addition: **every new control must state what it costs and when it leaves.** Each added guardrail, gate, routing branch, protocol file, or validation layer declares four fields before it lands:
+
+| Field | Question |
+|-------|----------|
+| `failure` | Which specific failure does this control catch? Name it, not a category |
+| `effect` | What evidence shows it catches it — and what it does *not* catch |
+| `owner` | Who maintains it when the surrounding harness moves |
+| `removal` | The condition under which it should be deleted |
+
+A control with no `removal` condition is permanent by default, and permanence is how a harness accumulates layers no one can justify or safely remove. The most common miss is `effect`: a control added on intuition, never measured, and then defended by the effort it took to build.
+
+**Centralization has the same asymmetry.** Shared control reduces duplication and *widens the failure domain* — a routing rule, a common gate, a `_common/` protocol becomes a single blast radius for every skill downstream. Apply the same discipline to the shared layer that the shared layer imposes: canary it, budget it, own it, and be able to roll it back. Consolidate only when three or more skills hit the same cross-cutting problem and a common owner exists; where consolidation raises coordination cost instead of lowering it, move the boundary back.
+
+---
+
 ## 4. Ownership and cadence
 
 | Sweep | Owner | Cadence |

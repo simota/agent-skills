@@ -16,6 +16,41 @@ Route to `Ledger` when the question is "is our vector DB oversized?" or "should 
 - Cheapest viable model first, escalate only on validation failure. Premium models (Opus) should handle `~10%` of queries.
 - Stable prompt prefixes come FIRST so prompt caching works; variables go LAST.
 - Combined techniques (model routing + prompt cache + semantic cache + batch) land at `70-90%` total savings.
+- **Optimize cost per *successful task*, never cost per request** — a cheap call that gets retried, escalated, and hand-corrected is not cheap.
+
+## Cost per Successful Task
+
+Per-request price is the denominator of the wrong ratio. The unit that decides architecture is:
+
+```
+Cost per Successful Task =
+    model calls
+  + retrieval / tool calls
+  + retry & fallback
+  + validation & eval
+  + human review / correction
+  + failed-task rework
+  + allocated platform & operations
+```
+
+Define "successful" identically to the eval gate (`reference/evaluation-observability.md`) — a returned response is not a completed task.
+
+The six cost centers a token-price comparison omits:
+
+| Center | What accrues | Watch |
+|--------|--------------|-------|
+| Inference | input/output tokens, images, audio | history, retrieved docs, tool results, agent reflection |
+| Retrieval | index, storage, embedding, re-index, reranker | update frequency drives re-index; per-tenant indexes multiply storage |
+| Platform | gateway, tracing, secrets, policy | shared control that also widens the failure domain |
+| Evaluation | dataset upkeep, judge calls, human samples, adversarial runs | scale the gate to change risk — light for wording, heavy for new tool authority |
+| Operations | on-call, incident, audit, correction of wrong answers | low-probability × high-blast-radius still justifies prevention spend |
+| Change | migration, vendor switch, prompt re-tuning, regression re-baselining | the recurring price of not being locked in |
+
+**Human review is not `count × minutes`.** It carries expert opportunity cost, training, approval fatigue, queue delay, reviewer variance, and exposure to unpleasant content. Automation that emits many low-quality candidates *raises* total cost; track adoption rate, edit distance, rejection rate, review time, and misses. When verifying generated output takes longer than writing it, the feature is cost-negative regardless of token price.
+
+**Counter-example worth remembering.** A support-classification feature moved to a small model: token spend fell ~60%, mean accuracy held, but ambiguous cases mis-routed, adding reprocessing, human escalation, and customer wait — **cost per successful task rose 18%**. Mean-preserving tier changes still shift the tail; evaluate value, reliability, cost, and latency per task, not per token.
+
+**Cross-boundary note.** Everything below `platform` in the table above leaves the LLM-provider bill and therefore the `cost` recipe's Scope Boundary. Oracle still *counts* it when comparing designs — routing an option to `Ledger` for infra pricing does not license comparing designs on inference price alone.
 
 ## Token Economics
 
@@ -142,6 +177,7 @@ Never put Batch in a user-facing synchronous path. Always put Batch behind an ex
 - Shipping `max_tokens: 4096` everywhere — output tokens are the expensive axis.
 - Treating semantic cache like an exact cache without a freshness key.
 - Measuring only global monthly spend — you cannot optimize what you cannot attribute.
+- Making token spend a team KPI — it drives context-trimming that raises retries, human correction, and total cost.
 - Moving user-facing requests into Batch API to "save money" — it breaks UX SLA.
 
 ## Oracle Gates

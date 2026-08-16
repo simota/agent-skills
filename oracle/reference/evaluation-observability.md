@@ -2,6 +2,7 @@ Purpose: Use this file when you are designing evaluation suites, CI gates, rollo
 
 ## Contents
 - Test / Eval layer separation
+- Evaluation Contract (the versioned artifact)
 - Eval dataset stratification and slices
 - Release gate as conjunction
 - Two-layer evaluation model
@@ -40,6 +41,46 @@ Deterministic control plane      Probabilistic component
 **"We have evals, so we don't need tests" is the expensive version of this mistake.** In an AI product, authn, billing, permissions, schema, tool arguments, state transitions, timeout, retry, and audit are ordinary software and stay deterministic. Conversely, HTTP 200 + schema validity says nothing about answer quality. They are layers, not alternatives.
 
 Concrete deterministic checks for a RAG/tool answer path: output satisfies the JSON schema · every citation ID is a member of the retrieved source set · no personal-data field is emitted without authorization · tool calls satisfy allowlist and argument schema · cost / timeout / retry ceilings hold · actions requiring human approval never auto-execute.
+
+## Evaluation Contract
+
+Evaluation is not a scoreboard for comparing models — it is the architecture element that decides what may ship, what must roll back, and which authority a feature is allowed to hold. "As accurate as possible" and "human-level" are goals; neither can stop a release. Write the contract **at design time, alongside the architecture decision**, and version it with the feature.
+
+```yaml
+feature: contract_clause_assistant
+business_goal: cut first-pass review time without increasing missed critical clauses
+input_domain: JP/EN master service agreements, listed template families
+expected_behavior:
+  - list candidate deviations from the standard clause set
+  - attach an evidence span from the source for each candidate
+prohibited_behavior:
+  - state a legal conclusion as settled
+  - reference a contract outside the caller's permissions
+success_metric: [critical_clause_recall, evidence_support_rate]
+quality_threshold:
+  critical_clause_recall: ">= 0.97 on critical slice"
+  evidence_support_rate: ">= 0.95"
+latency_budget: "p95 <= 8s to verified result"
+cost_budget: "<= 0.18 USD per document (internal budget, at time of writing)"
+safety_constraint:
+  - cross_tenant_leakage == 0 in adversarial suite
+  - external_send == disabled
+evaluation_dataset: contract-eval-v12
+human_review_policy: reviewer confirms every result; high-risk clauses surfaced first
+online_monitoring: [override_rate, missed_clause_reports, no_evidence_rate]
+rollback_condition:
+  - critical_clause_recall < 0.95
+  - cross_tenant_leakage > 0
+owner: Legal Engineering / Contract Platform
+```
+
+Numbers are illustrative — derive them from the feature's risk, base rate, and reviewer capacity. What is not optional is the *shape*: quality, **prohibited behavior**, latency, cost, dataset identity, human policy, online signals, rollback condition, and a named owner in one versioned artifact. Thresholds scattered across a dashboard, a PR comment, and someone's memory are not a contract.
+
+**Promotion gate.** If the team cannot build the evaluation dataset, cannot decide whether a prohibited behavior occurred, or cannot state a rollback condition — do not raise the feature's production authority. Ship it one action tier lower (read → propose → prepare → execute) until those three exist.
+
+**Do not wire the business goal straight to one metric.** Split it: `Outcome` (task completion time, misses, rework, user trust) → `System Behavior` (evidence-backed candidates, ordered by importance, explicit unknowns, permission compliance) → `Component Metric` (retrieval recall, extraction recall, citation support, latency, cost). Component metrics are diagnostic; they are never a substitute for the outcome, and their correlation to it is confirmed in production, not assumed.
+
+**Evaluate at the right unit.** A single mean over instances hides most agent and RAG failures. Score per `instance` · `turn/step` · `trajectory` · `task` · `session/workflow` · `population slice`. Final task success alone conceals wasted loops, dangerous tool calls, and cost blowouts; final answer quality alone conceals retrieval failure.
 
 ## Eval Dataset Stratification
 

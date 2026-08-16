@@ -146,7 +146,25 @@ Q1–Q22 govern what the run produces. Q23–Q24 govern what it is allowed to *c
 | Q23 | **Authority is granted, never inferred** | *Capability* is what the tools can do; *authority* is what this step may do with them. A step's authority comes from the hub's explicit grant — never from the breadth of its task description, never from "it would be helpful", never from what the platform happens to permit. Three corollaries: (a) the grant is the **narrowest effect set the step's acceptance criteria need**, stated in the spawn prompt's `Authority` field (`reference/hub-authoring.md`); (b) **delegation cannot widen** — a spawned agent may not exceed the grant it received, and may not re-delegate unless re-delegation was granted, so authority is traceable back to the hub at every hop; (c) a step that finds it needs a wider effect set **requests it and returns** — it does not take it. An **Ask First** trigger is unchanged by any grant: authority narrows what a step may do, it never pre-authorizes what the user must confirm. |
 | Q24 | **Under unresolved uncertainty, lower the action tier — don't auto-promote** | Effects are tiered (`reference/guardrails.md` § Action Tier Ladder: answer → propose → prepare → execute-reversibly → execute-consequentially). An ambiguous or under-evidenced request is executed at a **lower** tier — deliver the candidate list, the diff, the draft, the dry-run — rather than being either blocked outright or resolved by guessing at the top tier. Promotion to a higher tier requires the uncertainty that blocked it to be *resolved* (evidence found, or the user answered), never merely re-read. This is the graceful middle the binary ask/proceed gate lacks: a run that cannot safely commit can almost always still deliver something reversible. |
 
-**Delegation record.** On chains that fan out ≥ 3 spawns or nest a feature-lead layer (Core Rule #9), the grant per spawn is journaled with the step: `from · to · allowed · denied · redelegation · expires_with`. It costs one line and is the only way an aggregated `SUCCESS` can be audited back to who was allowed to do what.
+**Grant dimensions.** "Narrowest grant" (Q23a) is unenforceable until the grant has axes; a per-tool allow/deny list is too coarse, because the *same* tool at different arguments carries different effect. State a grant on the seven axes below, naming only the ones the step's criteria actually need — an unnamed axis is denied, not unlimited.
+
+| Axis | Grants | Typical over-grant |
+|------|--------|--------------------|
+| `resource` | which repo, path, tenant, record, branch | the whole working tree when three files were needed |
+| `action` | read · draft · create · update · delete · send · execute | `update` where `draft` would have sufficed |
+| `quantity` | file count, line count, spend, tokens, API calls | unbounded — the step that edits 40 files instead of 4 |
+| `time` | validity window, wall-clock bound, max turns | a grant with no expiry outliving the step that earned it |
+| `destination` | where output may go: internal · external · published | the outward-facing publish inheriting an internal-edit grant |
+| `approval` | before-effect · above-threshold · exception-only · post-audit | an **Ask First** trigger silently absorbed into a broad grant |
+| `reversibility` | undo · version · backup · compensation · manual recovery only | irreversible effect granted with no stated recovery route |
+
+Three consequences worth stating explicitly:
+
+- **Budget is a safety control, not a cost control.** Per-step, per-run, per-tool, and per-session caps on turns, tokens, spend, and wall-clock bound loops, tool abuse, injected instructions, and cascading failure — the same caps that bound cost. On exhaustion, return partial output, the unfinished steps, and the resume condition (Q17 typed residual) rather than failing bare.
+- **Shrink the tool, not just the grant.** A narrow capability (`get_open_invoices(customer_id, limit)`) enforces authorization, range, audit, and idempotency at the tool boundary; a general one (`execute_sql`, `http_request`, bare shell) pushes all of that into a prompt, where it is a request rather than a control. Prefer granting a narrow tool over constraining a broad one.
+- **Read-only is not automatically safe.** Read grants still aggregate, infer, and exfiltrate across sources. A read grant carries `destination` and `quantity` like any other — and secrets pulled into context are in the trace, the summary, and any downstream spawn.
+
+**Delegation record.** On chains that fan out ≥ 3 spawns or nest a feature-lead layer (Core Rule #9), the grant per spawn is journaled with the step: `from · to · allowed · denied · redelegation · expires_with`. It costs one line and is the only way an aggregated `SUCCESS` can be audited back to who was allowed to do what. Where the platform distinguishes them, record the acting identities separately — `actor_user · actor_agent · purpose · session` — so an audit can tell *who* an effect was caused for from *what* caused it; an agent running on the user's own credential inherits the user's full permission set, which is the widest grant in the system and never the intended one.
 
 ## Failure Modes Prevented
 
