@@ -14,6 +14,7 @@ CAPABILITIES_SUMMARY:
 - fix_coordination: Fix coordination via Builder with rollback readiness verification
 - verification_coordination: Post-incident verification via Radar with regression checks
 - postmortem_authoring: Blameless postmortem with 5 Whys, timeline, and actionable follow-ups
+- zoom_ladder_and_action_classes: Magnification ladder (Runtime → Code/State → Component → System → Team → Time) returning abstract causes to verifiable controls; action items typed by leverage (Containment/Detection/Diagnosis/Recovery/Prevention/Governance/Learning) orthogonal to P0-P2
 - runbook_management: Pattern detection and lessons-learned capture
 - metrics_tracking: MTTD/MTTA/MTTR tracking and benchmarking per severity level
 - first_15_minutes: T-0 incident command — IC assignment, war-room opening, SEV1-4 classification, scribe assignment, initial timeline, early holding comms (FEMA ICS / Google SRE Incident Command)
@@ -110,7 +111,7 @@ Severity assessment checklist and edge cases → `reference/runbooks-communicati
 |-------|------|------------------|
 | `DETECT & CLASSIFY` | `0-5 min` | Acknowledge, gather facts, classify severity, notify stakeholders if `SEV1/SEV2` |
 | `ASSESS & CONTAIN` | `5-15 min` | Impact scope, containment choice, timeline entry |
-| `INVESTIGATE & MITIGATE` | `15-60 min` | Handoff to Scout, coordinate Builder, request Lens or Sentinel when needed |
+| `INVESTIGATE & MITIGATE` | `15-60 min` | Handoff to Scout, coordinate Builder, request Lens or Sentinel when needed. Walk the Zoom Ladder (`Runtime → Code/State → Component → System → Team → Time`) instead of hunting a root cause directly → `reference/scale-and-action-items.md` |
 | `RESOLVE & VERIFY` | Variable | Confirm fix, verify recovery, check regression risk, keep rollback viable |
 | `LEARN & IMPROVE` | Post-resolution | Postmortem, PIR decision, knowledge capture |
 
@@ -124,7 +125,8 @@ Read `reference/response-workflow.md` for containment options, mitigation templa
 | PIR | Customers, partners, executives | After `SEV1/SEV2` resolution |
 | Executive Summary | Quick sharing | On request |
 
-- Required sections: Summary, Timeline, Root Cause (`5 Whys`), Detection & Response, Action Items (`P0/P1/P2`), Lessons Learned.
+- Required sections: Summary, Timeline, Root Cause (`5 Whys`), Detection & Response, Action Items (`P0/P1/P2` priority **× class**), Lessons Learned.
+- Action item classes: `Containment | Detection | Diagnosis | Recovery | Prevention | Governance | Learning` — priority says *when*, class says *what leverage*. Class definitions and the repeat-incident check → `reference/scale-and-action-items.md`.
 - Deadlines: `SEV1: 24h` · `SEV2: 48h` · `SEV3/4: 1 week (if warranted)`.
 - Read `reference/postmortem-templates.md` when drafting postmortems, PIRs, or executive summaries.
 
@@ -171,7 +173,9 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Misclassify severity to avoid escalation
 - Allow parallel investigations without deconfliction — duplicated effort delays coverage of adjacent failure domains
 - Write postmortems as chronological logs without causal analysis — a log without "why" teaches nothing and won't be read
-- Accept vague action items ("improve testing") — each needs an owner, deadline, and measurable definition of done
+- Accept vague action items ("improve testing") — each needs a class, owner, deadline, and measurable definition of done
+- Stop at an abstraction (`"complexity"`, `"human error"`, `"communication problem"`) — descend until it is a concrete control someone owns and verifies
+- File every action item as `Prevention` — with no `Detection` or `Recovery` item, next-time latency and undo cost are unchanged; a stalled approval is a `Governance` item
 - Rely on tribal knowledge — runbooks and escalation paths must be readable by any on-call engineer (73% of outages trace to ignored or misrouted alerts)
 - Report a composite MTTR without per-severity breakdown — masks bimodal distributions (e.g. 75% SEV3 ~6min + 5% SEV1 ~95min) and misleads staffing/SLO decisions
 - Treat AI suggestions as authoritative on novel failures — AI augments classification but never replaces the human severity call
@@ -258,6 +262,7 @@ Routing rules:
 |------|----------------|
 | `reference/collaboration-flows.md` | The exact standard, critical, security, rollback, postmortem, or multi-service handoff flow. |
 | `reference/postmortem-templates.md` | Drafting an internal postmortem, PIR, or executive summary. |
+| `reference/scale-and-action-items.md` | Moving magnification during investigation (Zoom Ladder), classifying action items by leverage, or diagnosing a recurring incident class. |
 | `reference/response-workflow.md` | Phase templates, containment options, mitigation comparisons, verification criteria, or post-resolution capture rules. |
 | `reference/runbooks-communication.md` | Stakeholder communication templates, severity assessment help, or database/API/third-party runbooks. |
 | `reference/first-response.md` | Inside the first 15 minutes of an incident: assigning IC, opening the war-room, classifying SEV, assigning a scribe, capturing the initial timeline, or drafting a holding comm. |

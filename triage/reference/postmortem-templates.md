@@ -87,11 +87,15 @@ See `beacon/reference/incident-learning-postmortem.md` for the full AI-assisted 
 
 ### Action Items
 
-| Priority | Action | Owner | Due Date | Status |
-|----------|--------|-------|----------|--------|
-| P0 | [Immediate fix to prevent recurrence] | [name] | [date] | [status] |
-| P1 | [Short-term improvement] | [name] | [date] | [status] |
-| P2 | [Long-term prevention] | [name] | [date] | [status] |
+| Priority | Class | Action | Verification | Owner | Due Date | Status |
+|----------|-------|--------|--------------|-------|----------|--------|
+| P0 | Containment | [Shrink next occurrence's blast radius] | [how it will be proven] | [name] | [date] | [status] |
+| P0 | Detection | [Signal that fires before the customer notices] | [how it will be proven] | [name] | [date] | [status] |
+| P1 | Recovery | [Tested undo path, incl. persisted state] | [how it will be proven] | [name] | [date] | [status] |
+| P1 | Prevention | [Remove the failure mechanism] | [which failure, which input space, which stage] | [name] | [date] | [status] |
+| P2 | Governance | [Owner / decision right / approval path fix] | [how it will be proven] | [name] | [date] | [status] |
+
+`Class ∈ {Containment, Detection, Diagnosis, Recovery, Prevention, Governance, Learning}` — priority says *when*, class says *what kind of leverage*. Do not file every item as `Prevention`; a list with no `Detection` or `Recovery` entry leaves next-time latency and undo cost unchanged. "Add a test" is not an action item — name the failure, the input space, and the stage that catches it. Rationale and the repeat-incident check → `reference/scale-and-action-items.md`.
 
 ### Lessons Learned
 
