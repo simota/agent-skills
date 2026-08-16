@@ -70,6 +70,7 @@ Route elsewhere when the task is primarily:
 - Quality gates block progression — a stage failing its gate (or an axis sub-gate) repairs in place (≤1 retry) or escalates to the user.
 - Persist run state to `.agents/bazaar/{project}.json` — recipe, stage status, gate outcomes, rubric scores, delegate outputs, CVR target, perf budget, brand-system ref, decisions log.
 - Quantify success criteria up front: CVR target by industry, Lighthouse ≥ 90 across all categories, CWV all Green, WCAG 2.2 AA (AAA where feasible), plus the 6-axis rubric thresholds in **Quality Disciplines** below (that table is the authority for every axis number).
+- Candidate narrowing (hero directions, structure options) follows `_common/CANDIDATE_SELECTION.md`; hero/generated asset rights and state follow `_common/ASSET_PROVENANCE.md` — both gate before DESIGN/BUILD exit.
 - Cap fan-out at 5 concurrent delegates per stage, **including cross-stage specialists**; beyond 5, split into sequenced batches.
 - **Single-writer state rule**: only `bazaar` writes `.agents/bazaar/{project}.json`; delegates return values via `_STEP_COMPLETE` and never write state. Commit each update by atomic temp-file rename; `decisions_log` is append-only.
 - **AUTORUN Ask-First enforcement**: in `AUTORUN`/`AUTORUN_FULL`, every Ask First item emits `_STEP_COMPLETE.Status = NEED_INFO` and pauses — silent proceed is forbidden. Trigger set → `reference/handoff-protocols.md` § AUTORUN-Gate Matrix.
@@ -273,6 +274,8 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 | `reference/handoff-protocols.md` | Emitting `LURE_STAGE_BUNDLE` or coordinating across delegates |
 | `reference/conversion-playbook.md` | Industry CVR baselines, copy framework, messaging hierarchy, CTA strategy per LP type |
 | `reference/craft-standards.md` | Scoring Design / Animation / Branding — rubrics, axis ownership, motion tokens, brand-system anatomy, detail-craft checklist |
+| `_common/CANDIDATE_SELECTION.md` | Narrowing hero directions, structure options, or design candidates to one — distinct from `craft-standards.md`'s single-artifact rubric gate; this governs multi-candidate stage funnels and selection records |
+| `_common/ASSET_PROVENANCE.md` | Hero images, generated illustrations, or stock assets enter DESIGN/BUILD — rights, source, and state-transition discipline before Launch |
 | `reference/ia-blueprint.md` | Designing IA (hierarchy, scan pattern, scroll narrative, heading tree), technical or content SEO, GEO citation-readiness |
 | `_common/GROWTH_BRAND_PROOF.md` | Orchestrating the LP pipeline in `nexus growth-acceptance` Phase 2 — Brand Compiler 3-layer blocking, Brand Proof field alignment with the 6-axis gates, and the G12 Distinctiveness Floor embedding-distance check |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Bazaar-specific Output/Next schema. |

@@ -92,7 +92,7 @@ Interaction triggers → `_common/INTERACTION.md`
 
 - Framework choice (vanilla HTML/CSS vs React/Vue/Svelte).
 - Whether to include interactivity (JS behavior, animations).
-- Using placeholder images vs attempting to match original assets.
+- Using placeholder images vs attempting to match original assets (→ `_common/ASSET_PROVENANCE.md`).
 - Scope: full page vs single section reproduction.
 
 ### INTERACTION_TRIGGERS
@@ -267,6 +267,8 @@ Templates: `reference/handoffs.md`. Key flows — **From Frame:** merge Figma da
 | `reference/examples.md` | Reference reproduction examples |
 | `_common/OPUS_5_AUTHORING.md` | Reproduction report sizing + adaptive depth (critical: P3, P5) |
 | `_common/IMAGE_INPUT.md` | Mockup/screenshot input pipeline (pre-crop, describe-first, observed-vs-inferred) before EXTRACT |
+| `_common/CANDIDATE_SELECTION.md` | Comparing multiple viable interpretations of an ambiguous mockup region — Gate/Trade-off/Preference separation, pairwise comparison, stop conditions |
+| `_common/ASSET_PROVENANCE.md` | Tracking the origin and rights of an input mockup or a generated/placeholder asset before it ships in the reproduction |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Pixel-specific Output/Next schema. |
 | `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 

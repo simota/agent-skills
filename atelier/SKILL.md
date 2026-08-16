@@ -70,6 +70,7 @@ Route elsewhere when the task is primarily:
 - Run `ONBOARDING` on first invocation per project; on subsequent runs reuse the persisted design system at `.agents/design-system/{project}.json` unless drift is detected or refresh is explicitly requested.
 - Require upstream direction from Vision (`direction.md` or handoff) or an explicit aesthetic brief from the user. atelier does not originate aesthetic decisions.
 - Emit `DESIGN_INTENT_HANDOFF` to every downstream agent: tokens reference, component priorities, intent parameters (sliders), constraints, success criteria, source provenance.
+- Delegate-returned candidates narrow per `_common/CANDIDATE_SELECTION.md`; delegate-sourced assets carry rights/state per `_common/ASSET_PROVENANCE.md` before entering the handoff's `Assets` field.
 - Keep the fan-out minimum viable. Each added delegate multiplies coordination cost; include a delegate only when the request shape demands its artifact type.
 - Preserve the closed loop: code extraction (Frame / repo scan) → visual generation (Forge / Pixel / Ink / Stage) → code materialization (Artisan / Vitrine). Every run must be able to return to code.
 - Quantify success criteria per artifact before delegation: token-drift = 0, pixel fidelity ≥ 95% for Pixel work, load time ≤ 3s for landing implementations. A11y baseline per Core Rule #7.
@@ -254,6 +255,8 @@ Every atelier deliverable must include:
 | `_common/OPERATIONAL.md` | Journal, activity log, AUTORUN, Nexus hub, or shared operational defaults |
 | `_common/design-system-registry.md` | The registry contract for `.agents/design-system/{project}.json` persistence |
 | `_common/parametric-output.md` | The parametric-slider output convention downstream agents parse |
+| `_common/CANDIDATE_SELECTION.md` | A delegate (Vision / Forge / Ink / Muse) returns multiple candidates — stage funnel, Gate/Trade-off/Preference classification, and the selection record before HANDOFF |
+| `_common/ASSET_PROVENANCE.md` | A delegate (Ink / Sketch / Frame) produces or sources a generated/reference-derived asset — rights, state, and generation-log discipline before it enters `Assets` in `DESIGN_INTENT_HANDOFF` |
 | `_common/GIT_GUIDELINES.md` | Authoring commits or PRs touching atelier pipeline artifacts |
 | `_common/UX_TRENDS_2026.md` | Cross-domain 2025-2026 evidence to orchestrate Vision / Muse / Frame / Forge / Artisan / Vitrine / Echo handoffs. Covers tokens (DTCG, OKLCH/P3), motion (`linear()`, View Transitions), IA (agentic UX, NN/g), and frontend (RSC, Tailwind v4, INP) in one file. Read all three sections. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing delegate prompts, deciding per-delegate model effort, or front-loading acceptance criteria |

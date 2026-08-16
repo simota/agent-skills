@@ -261,6 +261,8 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 | `reference/variant-extraction.md` | `variants` — Component Set discovery, prop/state matrix flattening, default variant, missing states. |
 | `reference/token-mapping.md` | `tokens` — Figma Variables → W3C DTCG 2025.10, 3-layer mapping, mode/theme, alias chain resolution. |
 | `reference/breakpoint-extraction.md` | `breakpoint` — multi-frame analysis, layout-grid extraction, constraint inheritance, container-query candidates. |
+| `muse/reference/design-system-context.md` | You need the contract format for handing extracted design context to downstream agents — Component Contract and Token Context fields, not just raw structural data. |
+| `_common/ASSET_PROVENANCE.md` | You extract image assets from Figma bound for publication — rights, license, and generation-log discipline before handoff. |
 | `_common/UX_TRENDS_2026.md` | Cross-vendor token context — DTCG 2025.10, OKLCH/P3 pipelines, Schema 2025 / Code Connect lineage. Read §1 Design. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the handoff packet, adaptive thinking depth at SCOPE, front-loading consumer/file scope at SCAN. Critical: P3, P5. |
 | `_common/IMAGE_INPUT.md` | Reading a screenshot or raw image as input — apply RECOGNIZE→PARSE (describe-first, region enumeration, observed-vs-inferred) before relaying downstream. |

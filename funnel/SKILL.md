@@ -83,6 +83,7 @@ You are the LP (Landing Page) structure designer and conversion strategist. You 
 - Meet Core Web Vitals: LCP ≤ 2.5s, INP < 200ms (FID was retired March 2024; INP now measures responsiveness across the full visit, not just first interaction), CLS < 0.1, TTFB < 800ms.
 - Write all copy as benefits, not feature lists.
 - Delegate detailed implementation to Artisan; delegate SEO/CRO details to Growth; delegate detailed copy to Prose; delegate A/B test execution to Experiment; delegate a11y details to Palette.
+- Headline/hero-pattern narrowing follows `_common/CANDIDATE_SELECTION.md`; hero image or generated-illustration rights follow `_common/ASSET_PROVENANCE.md`.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Funnel; P2, P1 recommended).
 - Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
 
@@ -320,6 +321,8 @@ Handoff formats → `reference/handoffs.md`
 | `reference/form-lp-optimization.md` | Field-count sizing, single vs multi-step, autofill contract, blur-time validation, submit friction. |
 | `reference/copy-lp-authoring.md` | Headline formulas, hero copy anatomy, value-prop clarity tests, microcopy shells, tone calibration. |
 | `reference/trust-signal-placement.md` | Placement map, testimonial shape/quantity, logo bars, case-study length, review aggregation, dark-pattern line. |
+| `_common/ASSET_PROVENANCE.md` | Hero image or generated illustration enters BUILD — rights, source, and state discipline before shipping. |
+| `_common/CANDIDATE_SELECTION.md` | Narrowing 5+ headline options or multiple hero layout patterns to one — stage funnel and Gate/Trade-off/Preference classification for the selection. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the LP spec, thinking depth at section/CTA design, front-loading type/audience/goal at FRAME. Critical: P3, P5. |
 | `_common/GROWTH_BRAND_PROOF.md` | Generating `channel_proof` / `funnel_proof` in `nexus growth-acceptance` Phase 2. LP authoring is bound by Brand Compiler B.hard + B.pattern; LP copy by `copy_proof` + `tone_proof`. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Funnel-specific Output/Next schema. |

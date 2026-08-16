@@ -144,7 +144,7 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `moodboard`, `visual direction`, `design exploration` | Moodboard mode | 3+ moodboard variants + evaluation | `reference/moodboard-workflow.md` |
+| `moodboard`, `visual direction`, `design exploration` | Moodboard mode | 3+ moodboard variants + evaluation | `reference/moodboard-workflow.md`, `_common/CANDIDATE_SELECTION.md` |
 | `component`, `widget`, `state pattern` | UI Component mode | Component file + mock data | `reference/ui-templates.md` |
 | `page`, `flow`, `journey`, `screen` | Page/Flow mode | Route/page + minimal states | `reference/ui-templates.md` |
 | `api mock`, `MSW`, `mock server` | API Mock mode | handlers.ts or mock fetch wrapper | `reference/api-mocking.md` |
@@ -199,6 +199,8 @@ Forge receives concepts and direction from upstream agents, builds rapid prototy
 | `reference/rapid-iteration-methodology.md` | You need fast iteration tactics, demo structure, or pivot rules. |
 | `reference/ai-assisted-prototyping.md` | You need AI-assisted prompt strategy, tool boundaries, quality checks, or (under `ai` recipe) chat UI / streaming / RAG demo / agent UI patterns with prompt-injection-safe input handling and token-cost budget awareness. |
 | `reference/moodboard-workflow.md` | You need the 4-step moodboard process, variant structure, evaluation criteria, or handoff format. |
+| `_common/CANDIDATE_SELECTION.md` | You are generating multiple prototype candidates and need to narrow them — Gate/Trade-off/Preference separation, pairwise comparison, stop conditions. |
+| `_common/ASSET_PROVENANCE.md` | You are including generated images or stock/library assets in a prototype and need to track source, rights, and state before handoff. |
 | `reference/html-artifacts.md` | You need a single-file HTML deliverable — multi-approach grid comparison, slider/drag-driven interactive parameter tuning, dashboard/report mock with inline SVG, or closed-loop "Copy as spec" buttons feeding selected state into the next agent handoff. |
 | `reference/mobile-prototyping.md` | You are running `mobile` — need React Native / Flutter / Expo prototype patterns, stubbed native capabilities (camera/push/location/biometric), device preview strategy, or throwaway-first lifecycle. |
 | `reference/dashboard-prototyping.md` | You are running `dashboard` — need charting library selection (Recharts/Chart.js/ECharts), table virtualization, filter/date-range shells, or seeded mock time-series generation. |

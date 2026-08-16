@@ -131,7 +131,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Phase | Goal | Key rule | Read |
 |-------|------|----------|------|
 | `UNDERSTAND` | Gather brand, user, business, and technical context | Evidence-based context before any design decisions | `reference/design-methodology.md` |
-| `ENVISION` | Define principles and 3+ directions | Always present multiple options with trade-offs | `reference/design-methodology.md` |
+| `ENVISION` | Define principles and 3+ directions | Always present multiple options with trade-offs → `_common/CANDIDATE_SELECTION.md` | `reference/design-methodology.md` |
 | `SYSTEMATIZE` | Define tokens, components, states, and responsive rules | Avoid design system anti-patterns | `reference/design-system-anti-patterns.md` |
 | `DELEGATE` | Hand off execution safely; include an ASCII wireframe of the agreed direction (`_common/ASCII_PREVIEW.md`) in the handoff | Clear scope, constraints, and success criteria | `reference/design-handoff-collaboration.md`, `_common/ASCII_PREVIEW.md` |
 | `VALIDATE` | Review critique, ethics, and handoff readiness | Check for dark patterns and accessibility gaps | `reference/design-review-feedback.md`, `reference/ux-anti-patterns-ethics.md` |
@@ -252,6 +252,7 @@ Full algorithm, JSON schema, subagent prompt skeletons, GROUND rules, handoff st
 | `reference/design-review-feedback.md` | critique structure, review cadence, feedback quality rules |
 | `reference/brand-strategy.md` | brand identity strategy, voice keywords, multi-brand orchestration, brand-fit scoring |
 | `reference/moodboard-curation.md` | ENVISION moodboard: directional axes, candidate-to-finalist narrowing, anti-keywords |
+| `_common/CANDIDATE_SELECTION.md` | Narrowing ENVISION's 3+ directions to one — Gate/Trade-off/Preference separation, pairwise comparison, declared stop conditions (distinct from moodboard-curation's axes/anti-keywords procedure) |
 | `reference/design-audit-checklist.md` | REVIEW-mode audit: Nielsen heuristics, WCAG 2.2 AA grid, token-drift, backlog |
 | `reference/co-design-pair.md` | `pair` recipe — driver/navigator roles, SETUP -> LOOP -> CLOSE, evidence bar, termination bounds |
 | `_common/BOUNDARIES.md` | role boundaries are ambiguous |

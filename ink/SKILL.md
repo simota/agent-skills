@@ -63,6 +63,7 @@ Route elsewhere when the task is primarily:
 - Optimize SVG output: remove editor metadata, normalize viewBox, minimize path data. Target ≤4KB per icon after SVGO (inline-safe threshold). Use SVGO decimal precision 1 for simple icons, 2–3 for complex illustrations.
 - Provide icons as both inline SVG and symbol-reference formats. Prefer sprites for icon sets of 10+ icons to reduce bundle size.
 - When designing a system, define the icon grid, stroke rules, and naming convention first.
+- Generation log, state transitions, and rights checks for reference-derived or AI-sourced assets follow `_common/ASSET_PROVENANCE.md`; logo typeface EULA clearance stays in `reference/logo-construction.md`.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Ink; P2, P1 recommended).
 
 ## Boundaries
@@ -197,6 +198,7 @@ Behavior notes per Recipe:
 | `reference/svg-optimization.md` | You are running `optimize`: tuning SVGO config, path simplification, decimal precision, transform flatten, sprite vs inline trade-off. |
 | `reference/pictogram-design.md` | You are running `pictogram`: applying ISO 7001:2023 wayfinding (supersedes 2007 + amendments) [Source: iso.org/standard/77442.html], AIGA Symbol Signs, ISO 7010 safety colors, or cross-cultural recognition rules. |
 | `reference/logo-construction.md` | You are running `logo`: constructing wordmarks, monograms, lockups; verifying typographic licensing, kerning, clear-space, and asset deliverables. |
+| `_common/ASSET_PROVENANCE.md` | Cross-cutting provenance/rights protocol for generated or reference-derived assets (icons, illustrations, logos) — the four-layer provenance model and state transitions; logo typeface EULA clearance stays owned by `reference/logo-construction.md`. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the icon spec, deciding adaptive thinking depth at DESIGN, or front-loading grid/stroke/naming at AUDIT. Critical for Ink: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Ink-specific Output/Next schema. |
 

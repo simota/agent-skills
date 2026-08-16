@@ -130,6 +130,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Lifecycle gates    | `ADOPT -> STABLE` after usage in `3+ components`. `DEPRECATE` stays active for `2 sprints` with a migration guide.                                                                        |
 | Dark mode contrast | Text `4.5:1`. Large text `3:1`. Provide `System / Light / Dark` selection. Avoid pure `#000000`; prefer `#121212+`. Reduce accent saturation by `10-20%` in dark mode when glare appears. |
 | Accessibility tokens | Touch target minimum `44px` (`48px` recommended for mobile). Focus ring width `>= 3px`. Reduced-motion tokens for `prefers-reduced-motion` media query. |
+| Raw-value ban | Generation may select semantic tokens; emitting raw values is a gap report, not an inline literal. See `reference/design-system-context.md` §2. |
 | Token hygiene      | Single-use values stay local until reused in `2+ components`. Consolidate `3+` tokens with the same value. Keep token names within `3-4` meaningful segments.                             |
 | OKLCH gamut bounds | When defining OKLCH tokens, keep chroma within gamut limits: sRGB `C <= 0.37`, Display P3 `C <= 0.5`. Out-of-gamut values clip unpredictably on narrow-gamut displays. Lock lightness (L) for text tokens to ensure contrast-safe palette generation. Browser support: Chrome 111+, Safari 15.4+, Firefox 113+. |
 | CSS architecture   | Keep `var()` nesting to `<= 2` steps. If `:root` token count exceeds `100`, move component tokens into local scope.                                                                       |
@@ -148,6 +149,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | `lifecycle`, `deprecate`, `adopt`, `stable` | Token lifecycle management | Lifecycle state changes + migration guide | `reference/token-lifecycle.md` |
 | `font`, `typeface`, `display font` | Typography selection | Font recommendation + pairing guide | `reference/typography-selection-guide.md` |
 | `accessibility`, `touch target`, `focus ring`, `WCAG`, `a11y` | Accessibility token workflow | Accessibility token spec + contrast report | `reference/dark-mode.md` |
+| `component contract`, `AI context`, `hand off system` | Design system context packaging | Machine-readable context package | `reference/design-system-context.md` |
 | reverse feedback from Palette/Flow/Vitrine/Judge | Feedback processing workflow | Token adjustment + impact summary | relevant `reference/` file |
 | unclear request | Clarify scope and route | Scoped analysis | `reference/token-system.md` |
 
@@ -245,6 +247,8 @@ Muse receives design direction and token extraction from upstream agents. Muse s
 | `reference/motion-tokens.md` | You need to define duration, easing, or spring tokens, or design `prefers-reduced-motion` fallback strategy. |
 | `reference/elevation-tokens.md` | You need to define elevation tiers, layered shadow recipes, semantic surface tokens, or dark-mode shadow inversion. |
 | `reference/radius-tokens.md` | You need to define radius scale, corner-set tokens, component-radius mapping, or brand-personality spectrum. |
+| `reference/design-system-context.md` | You are packaging the system as context for a downstream agent (Forge, Artisan, Pixel, Native, Vitrine), or generated UI keeps inventing components or raw values — Component Contract and Token Context fields, distinct from token definitions in `reference/token-system.md`. |
+| `_common/ASSET_PROVENANCE.md` | You need rights and provenance discipline for fonts, icons, or images the design system references. |
 | `_common/PROPORTION_AND_SPACING.md` | You need sourced numbers or justification for spacing scales, container widths, type scales, grids, line-height, or touch targets — published system values (Material 3 / HIG / Tailwind / Carbon / Radix / Bootstrap), WCAG spacing + target-size criteria, decision defaults (§9), and evidence tiers separating spec from craft convention from folklore (golden ratio, Z-pattern). Cite §1 tier when justifying a token value to a reviewer. |
 | `_common/UX_TRENDS_2026.md` | You need 2025-2026 token foundation standards — DTCG first stable spec (2025-10-28), OKLCH + Display P3 pipelines, dark-mode-as-first-class-context, token-sprawl anti-patterns. Read §1 Design. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the token spec, deciding adaptive thinking depth at STRUCTURE, or front-loading token category/scope at AUDIT. Critical for Muse: P3, P5. |
