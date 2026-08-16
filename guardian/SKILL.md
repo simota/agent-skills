@@ -17,6 +17,7 @@ CAPABILITIES_SUMMARY:
 - history_audit: Read-only audit of commit history quality (WIP/fixup residue, Conventional Commits violations, atomicity, size excess)
 - pr_split_planning: Decompose oversized branches into stacked PRs with dependency order and per-PR review time estimates
 - branch_health_diagnosis: Repository-wide branch inventory — stale, diverged, merged-but-undeleted, high-conflict-risk
+- review_focus_declaration: For boundary-crossing PRs, declare change_scope / blast_radius / reversibility (code vs persisted state) / review_needed / not_in_scope so reviewers read at a shared magnification and depth follows consequence, not diff size
 
 COLLABORATION_PATTERNS:
 - Judge -> Guardian: Review feedback and AI-assisted defect findings
@@ -96,6 +97,7 @@ Route elsewhere when:
 - score quality, risk, and predictive findings
 - identify hotspots
 - auto-route `CRITICAL` security to Sentinel, `noise_ratio > 0.30` to Zen, and `coverage_gap > 0.40` to Radar.
+- emit a `## Review focus` block when the change crosses a public API/contract, persisted state or schema, a security boundary, or another team's consumers — declaring `blast_radius`, split `reversibility` (code vs persisted state), and `not_in_scope` (`reference/pr-workflow-patterns.md`). Omit it on every other PR; it is a boundary marker, not boilerplate.
 
 ### Ask First
 

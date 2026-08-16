@@ -100,7 +100,7 @@ EOF
   --label "<inferred from change classification>"
 ```
 
-Add `## Changes` (one bullet per distinct essential change) only when the Summary cannot carry them, and `## Risk` only when the risk band is Medium+ — both distilled from the `pr` Recipe output, not pasted verbatim.
+Add `## Changes` (one bullet per distinct essential change) only when the Summary cannot carry them, and `## Risk` only when the risk band is Medium+ — both distilled from the `pr` Recipe output, not pasted verbatim. Add `## Review focus` only when the change crosses a public contract, persisted state, a security boundary, or another team's consumers (block spec → `pr-workflow-patterns.md`).
 
 For low quality_score (B band 65-74) or first-pass validation, propose `--draft`:
 
