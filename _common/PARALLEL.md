@@ -110,6 +110,7 @@ _PARALLEL_BRANCHES:
   fork_point:
     snapshot_id: [context snapshot ID]
     step: [X/Y]
+    base_revision: [git SHA all branches fork from]   # REQUIRED — see § Base Revision
     shared_constraints: []     # typed, hub-owned — see § Cross-Branch Constraints
 
   branches:
@@ -117,6 +118,7 @@ _PARALLEL_BRANCHES:
       description: [What this branch does]
       chain: [Agent1, Agent2]
       files_owned: [file1.ts, file2.ts]
+      base_revision: [git SHA this branch actually started from]
       estimated_steps: [N]
       guardrail_level: [L1|L2|L3]
 
@@ -124,12 +126,14 @@ _PARALLEL_BRANCHES:
       description: [What this branch does]
       chain: [Agent3]
       files_owned: [file3.ts]
+      base_revision: [git SHA this branch actually started from]
       estimated_steps: [N]
       guardrail_level: [L1|L2|L3]
 
   merge_point:
     agent: [Agent name for merge verification]
     strategy: [CONCAT|RESOLVE|MANUAL]
+    first_check: base_revision_match      # before any patch application
 
   conflict_resolution:
     on_file_conflict: [FAIL|RESOLVE|ESCALATE]
@@ -162,6 +166,26 @@ file_ownership:
     - src/types/*.ts
     - src/utils/*.ts
 ```
+
+### Base Revision (the divergence file ownership cannot see)
+
+Exclusive file ownership guarantees branches never overwrite each other. It guarantees nothing about whether
+they were reading **the same repository**. A branch that forked before a merge landed builds against
+assumptions that no longer hold — and because it touches only files it owns, `git merge` reports no conflict.
+The failure surfaces at runtime, after both branches reported `SUCCESS`.
+
+**Rules.**
+
+1. **Record `base_revision` at the fork point and per branch.** A branch that re-based, resumed after an
+   interruption, or started late records what it *actually* forked from — not what the fork point declared.
+2. **Base revision match is the merge's first check**, before patch application. Branches on different bases
+   are reconciled — re-based or re-verified against the merge target — never merged on the strength of a clean
+   textual diff.
+3. **A clean `git merge` is not evidence of semantic compatibility.** One branch changing a signature, a
+   constraint, or a shared contract while another codes against the old one produces zero text conflicts. Type
+   checks, contract tests, and the `sequence` / `invariant` constraints below are what catch it.
+4. **Carry `base_revision` into every branch handoff.** Without it, a divergence is undetectable after the
+   fact, and `_common/HANDOFF.md` § *Completed vs Verified* has no `head` to bind evidence to.
 
 ### Cross-Branch Constraints (what file ownership does not protect)
 
