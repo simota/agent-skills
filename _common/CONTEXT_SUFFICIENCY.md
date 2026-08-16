@@ -52,6 +52,43 @@ the action.
 Reversibility rule (aligns with the Autonomy contract): *ambiguous + reversible → safe default + note;
 ambiguous + irreversible → ask*. A missing `RISK`/destructive-scope dimension is blocking by default.
 
+### `KNOWN` from conflicting sources — resolve by authority, not by recency
+
+A dimension can be `KNOWN` twice over and still be unusable, because two sources disagree. This is a distinct
+state from `MISSING`, and the fix is not more retrieval.
+
+**Authority is assigned per question, not per document.** The same file can be authoritative for one question
+and a hint for the next: an OpenAPI spec settles the public contract but not what production actually returns;
+a trace settles what happened once but not what is guaranteed.
+
+| Question | Primary authority | Supporting evidence | Hint only |
+|----------|-------------------|---------------------|-----------|
+| Public API contract | Approved spec | Contract tests | Issue discussion |
+| Current runtime behavior | Telemetry / logs | Reproduction run | Design doc |
+| Security prohibition | Enforced policy | Security review | Chat, precedent |
+| Why a design is this way | Accepted ADR | Commit history | Code comment |
+
+Three substitutions to reject explicitly:
+
+1. **Code exists, so code wins.** Implemented ≠ intended. Code is authoritative for *what runs*, never for
+   *what was decided* — that is exactly how an intentional exception gets refactored away as dead complexity.
+2. **Newest timestamp beats an accepted ADR.** Recency is a signal about freshness, never about authority. A
+   wiki page edited yesterday does not supersede a decision record.
+3. **One runtime observation is a guarantee.** A single trace shows what happened once, not what holds.
+
+Declare the resolution rather than resolving it silently:
+
+```yaml
+conflict:
+  when: security_policy_conflicts_with_task_instruction
+  resolution: security_policy_wins
+  action: stop_and_report        # never: pick one and proceed quietly
+```
+
+When the conflict is unresolvable from the sources at hand, that is a **blocking** state — surface both
+sources and what each would imply. Guessing here is `wrong_authority`, and it is invisible downstream because
+the output looks well-sourced (`nexus/reference/error-handling.md` § Context Failure Classes).
+
 ---
 
 ## 3. Retrieve Before Asking (Context-Engineering core)
