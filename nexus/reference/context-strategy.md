@@ -22,6 +22,36 @@ Three implications that decide between the strategies below:
 - **Handoffs are distillations, not transcripts.** A step passes forward the decision-relevant residue, not its trace (see `_common/SUBAGENT.md` — the reference figure for a subagent's condensed return is **1,000–2,000 tokens**).
 - **Compaction: maximize recall first, then precision.** When summarizing a long trace, start with a compaction prompt that captures *everything* relevant (architectural decisions, unresolved constraints, why a path was abandoned) and only then iterate to tighten it. Dropping a load-bearing detail is unrecoverable; a slightly verbose summary is not. **Tool-result clearing** is the lightweight alternative when stale tool output — not reasoning — is what is consuming the window.
 
+### The Preserve Set (what compaction may never drop)
+
+Recall-first is the *method*; this is the *floor*. Compaction is a lossy transform, and fluent summaries hide
+their losses — the characteristic damage is not lost prose but **collapsed state**:
+
+| Before | After | What broke |
+|--------|-------|-----------|
+| "retry code is 409 or 429, undecided" | "retry code is 409" | An open decision became a settled one |
+| "test A passed, full suite not run" | "tests passed" | Verification scope silently widened |
+| "process mutex works single-process, not in prod" | "considered a mutex" | The failure *condition* — the reusable part — vanished |
+
+Fix the fields before writing the summary:
+
+```
+goal · definition_of_done · current_phase · authoritative_sources · active_constraints
+decisions · open_questions · known_failures · failed_attempts · changed_files
+execution_state · verification_evidence · next_action · raw_evidence_locators
+```
+
+- **`open_questions`, `known_failures`, and `failed_attempts` are the first casualties.** Narrative summaries
+  are drawn to what succeeded. Structure what has *not* succeeded, or the next session re-runs it.
+- **Never promote an assumption to a fact.** "Started the test" must not compact to "tested". If a field's
+  status is unknown, carry `unknown` — an honest gap is recoverable, a confident error is not.
+- **A summary is an explanation; a checkpoint is a state contract.** Both may live in one document, but a
+  checkpoint is only valid if a fresh session could re-derive sources, compare `HEAD` and changed files,
+  confirm what was verified, recover open items, and start the next action from it alone.
+- **Recursive compaction drifts.** Compacting a compaction increases distance from the evidence and hardens
+  claims. Recompact from raw evidence + current sources, not from the previous summary; when that is no longer
+  possible, reset instead (`reference/error-handling.md` § Reset triggers).
+
 ---
 
 ## Strategies

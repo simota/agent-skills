@@ -6,7 +6,7 @@
 **Boundary vs `guardrails.md`:** This file owns the **error-severity axis** (L1 AUTO_RETRY / L2 AUTO_ADJUST / L3 ROLLBACK / L4 ESCALATE / L5 ABORT). `guardrails.md` owns the **execution-state axis** (L1 MONITORING / L2 CHECKPOINT / L3 PAUSE / L4 ABORT) and defines the Recovery Chains (A/B/C) that L3 here invokes. Both files use L1-L4 numbering along different axes — do not conflate them.
 
 ## Contents
-- Error Levels
+- Error Levels (incl. Tool Error Classes — the orthogonal *what kind* axis)
 - Recovery Flow
 - Error Event Format
 - Recovery Chain Integration
@@ -47,6 +47,31 @@ Failure Signature = stage + error_code + normalized_location + relevant_state_ha
 - `relevant_state_hash` — digest of the inputs the step actually consumed
 
 **Rule:** a retry is only legitimate when the **action or the evidence changed**. Two runs producing the same signature are not two attempts — they are one attempt counted twice, and the second one is Q20 thrash (`autonomy-quality-protocol.md` §0: *two identical failures ⇒ stop and diagnose*). Count identical signatures toward the circuit breaker, not toward the retry budget.
+
+### Tool Error Classes (orthogonal to L0-L5 severity)
+
+Severity answers *how hard to escalate*. It does not answer *what kind of wrong this is* — and a tool failure's
+class, not its severity, decides whether retrying is even meaningful. Classify first, then pick the level.
+
+| Class | Signature | Correct response |
+|-------|-----------|------------------|
+| `invocation` | Schema mismatch, missing required argument, malformed call | Fix the call. Retrying it unchanged is a Failure Signature repeat, not an attempt |
+| `transport` | Network error, timeout **with no side effect possible** | L1 retry with backoff — the only class where a bare retry is legitimate |
+| `execution` | The command ran and genuinely failed (test red, build broken) | Not a tool problem. Diagnose the work, not the call |
+| `partial_success` | Some units succeeded, others did not | Re-scope to the failed subset. Re-running the whole thing repeats side effects |
+| `state_conflict` | Revision / resource-version mismatch, stale precondition | Re-read current state, **update the plan**, then act. Never force |
+| `policy_denial` | Permission, safety, or guardrail rejection | Stop and escalate. **Never rephrase the prompt or reshape the call to get past it** — that is bypassing a control, not recovering from an error |
+| `unknown_outcome` | Timeout or crash where a side effect **may** have landed | Query the external state before anything else. Do not retry, and do not summarize as "failed" |
+
+**Two classes are load-bearing:**
+
+- **`policy_denial` is terminal for the agent.** Working around a denial is the failure mode the denial exists
+  to prevent (`_common/BOUNDARIES.md`). Report it; do not route around it.
+- **`unknown_outcome` must not collapse into "failed".** Compressing it loses the fact that the effect may
+  already exist — the next session then repeats a non-idempotent action. Carry it forward verbatim as
+  `unknown_outcome` with the resource to check, and confirm actual state before retrying. `L0 CAPTURE_FAILURE`
+  (above) is the agy-specific instance of exactly this class: `exit 0` + empty stdout describes both a success
+  and a failure, so the artifact decides, not the exit code.
 
 ### Reset vs Retry vs Rollback (do not substitute one for another)
 
