@@ -52,6 +52,33 @@ execution_state · verification_evidence · next_action · raw_evidence_locators
   claims. Recompact from raw evidence + current sources, not from the previous summary; when that is no longer
   possible, reset instead (`reference/error-handling.md` § Reset triggers).
 
+#### Verify the Preserve Set actually survived
+
+The field list says what to keep. It does not prove anything was kept, and a compaction that dropped an
+exception reads as clean prose. **Do not check this with semantic similarity** — similarity is dominated by
+the bulk of the text and is near-blind to exactly what matters here: negations, exceptions, and limits.
+
+Count elements by category, before and after:
+
+| Category | Example |
+|----------|---------|
+| Conditions | "only when the tenant is on the legacy plan" |
+| **Exceptions** | "except for refunds issued before cutover" |
+| **Prohibitions** | "never retry a non-idempotent write" |
+| Numeric limits | "max 3 retries", "p95 < 200ms" |
+
+Any loss in a category is a **blocking** failure of the compaction, regardless of how high overall overlap is:
+
+```
+source:    conditions 12 · exceptions 4 · prohibitions 3 · limits 5
+compacted: conditions 10 · exceptions 2 · prohibitions 3 · limits 5
+→ critical_loss: exceptions (-2)   acceptable: false
+```
+
+Losing two conditions may be tolerable restatement. Losing two exceptions removes the cases the rule was
+written for. Re-compact from source rather than patching the summary — a repaired summary is a compaction of
+a compaction, which is the drift failure above.
+
 ---
 
 ## Strategies
