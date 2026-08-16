@@ -27,6 +27,18 @@ Where a rule and this disposition point the same way, follow the rule; where the
 | Q2 | **Non-goals are load-bearing** | State what the run will NOT do. Scope creep is the autonomous analog of dialogue circling: without explicit non-goals, every "while I'm here" improvement dilutes the chain and multiplies unreviewed decisions. |
 | Q3 | **The contract is the single termination oracle** | VERIFY checks against the intent contract — never against "looks done" or the generator's own summary. One oracle per run (`reference/evaluator-loop-protocol.md` — Sprint Contract discipline, applied even outside loops). |
 
+**Contract Lint — run before EXECUTE, not after.** Q1 says what the contract must contain; this is the mechanical check that it does. Seven conditions, all cheap:
+
+1. The goal is non-empty and names an outcome, not an internal action ("expired sessions cannot be reused", not "fix the auth module").
+2. Every acceptance criterion has an **oracle** — a command, a file check, a rubric, or a named human reviewer. A criterion with no oracle cannot be auto-verified; either decompose it until it can be, or route it to human review explicitly.
+3. Non-goals are stated (Q2).
+4. Any high-risk or irreversible step names its rollback, or declares the irreversibility explicitly.
+5. Required evidence matches what VERIFY will actually check — no criterion demanding evidence the chain never produces.
+6. A budget and a termination condition exist, covering **success, escalate, and abort** — not success alone.
+7. In-scope paths and the chain's authorized side effects do not contradict each other.
+
+Lint does not certify that the contract is *right* — only that it is not missing a part. It is the cheapest gate in the protocol; skipping it moves the same failures to DELIVER.
+
 ## 2. Decision Ledger (Q4–Q6) — the autonomous Assumption Ledger
 
 Every **load-bearing decision made without the user** — library/API/design picks, trade-off calls, and especially **interpretation decisions** (an ambiguity in the request resolved by choice) — is recorded:
@@ -41,7 +53,7 @@ Every **load-bearing decision made without the user** — library/API/design pic
 | # | Rule | Discipline |
 |---|------|-----------|
 | Q4 | **Record, don't remember** | `DEC-n` entries are written when the decision is made (chains ≥ 4 steps persist them with the checkpoint state), not reconstructed at DELIVER. Ask First tiers are unchanged — the Ledger covers decisions *below* the confirmation threshold; it never substitutes for a required confirmation. |
-| Q5 | **Interpretation decisions are flagged** | `class: interpretation` entries are the ones the user is most likely to have wanted differently — they lead the Ledger in the final report and get first claim on any confirmation opportunity. |
+| Q5 | **Interpretation decisions are flagged** | `class: interpretation` entries are the ones the user is most likely to have wanted differently — they lead the Ledger in the final report and get first claim on any confirmation opportunity. **`class: interpretation` entries additionally carry `invalidation_impact` (what breaks if the reading was wrong) and `validate_before` (the point past which the assumption must be confirmed — typically `merge` or `deliver`).** High impact + low confidence is validated *during* the run, not reported at the end: an assumption surfaced only at DELIVER has already been built on. |
 | Q6 | **Irreversible + uncertain → escalate** | A decision that is hard to reverse AND low-confidence is not a Ledger entry — it is a pause point (guardrail L3 posture / `pending_confirmations`). The Ledger is for judgment calls, not for gambling with irreversibility. |
 
 ## 3. Drift control (Q7–Q8) — quality guarded mid-run

@@ -198,6 +198,7 @@ Ownership: all workers are read-only (`Explore` subagent_type); Darwin aggregate
 | `reference/subsystems.md` | You need detail on the 7 internal subsystems. |
 | `reference/official-fitness-criteria.md` | You need Official Spec Conformance (OSC) scoring, lifecycle-phase minimum thresholds, RS enhancement from official metrics, or use-case coverage analysis during ASSESS or EVOLVE. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the evolution proposal, deciding adaptive thinking depth at fitness/action ranking, or front-loading scope/phase/goal at ASSESS. Critical for Darwin: P3, P5. |
+| `_common/HARNESS_DEBT.md` | ASSESS finds decay rather than duplication or disuse — stale references, flaky fixtures, drifted routing. Owns the Debt Catalog, Register schema, and Eval Gardening (Darwin's sweep). |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Darwin-specific Output/Next schema. |
 
 ## Operational

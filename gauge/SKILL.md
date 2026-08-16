@@ -244,6 +244,7 @@ Every deliverable must include:
 | `reference/staleness-detection.md` | You are running `gauge staleness` and need the 10-category detection catalog, grep commands, false-positive guard rules, severity matrix, output YAML envelope, or the 90-day catalog self-update protocol. |
 | `reference/content-quality-audit.md` | You are scoring CQ1 (obviousness density) or CQ2 (description trigger-word presence) — content-level checks derived from Anthropic "Lessons from Building Claude Code". |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the compliance report, deciding adaptive thinking depth at CLASSIFY, or front-loading scan scope at SCAN. Critical for Gauge: P2, P5. |
+| `_common/HARNESS_DEBT.md` | A violation is decay rather than a format miss — stale docs, missing oracle, drifted `description`. Owns Documentation Gardening (Gauge's sweep) and its disposal rule: update, archive, or delete. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Gauge-specific Output/Next schema. |
 
 ## Operational

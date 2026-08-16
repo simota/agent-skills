@@ -33,6 +33,44 @@ Classify a missing/empty artifact **before** assigning an error level:
 
 **Rule:** an agy step is never escalated past L0 on the strength of empty stdout alone, and the exit code is never the deciding signal — the artifact is. Capture failure is also **not** a REVISE signal in an evaluator loop (`orchestration-patterns.md` § Pattern H → agy Implementation).
 
+### Failure Signature (identity of a repeated failure)
+
+Retry budgets are meaningless without a definition of "the same failure". Before counting a retry, compute the signature:
+
+```
+Failure Signature = stage + error_code + normalized_location + relevant_state_hash
+```
+
+- `stage` — which phase produced it (EXECUTE step n, VERIFY, AGGREGATE)
+- `error_code` — the machine-readable code, not the prose message
+- `normalized_location` — file/symbol with line numbers and run-specific paths stripped
+- `relevant_state_hash` — digest of the inputs the step actually consumed
+
+**Rule:** a retry is only legitimate when the **action or the evidence changed**. Two runs producing the same signature are not two attempts — they are one attempt counted twice, and the second one is Q20 thrash (`autonomy-quality-protocol.md` §0: *two identical failures ⇒ stop and diagnose*). Count identical signatures toward the circuit breaker, not toward the retry budget.
+
+### Reset vs Retry vs Rollback (do not substitute one for another)
+
+| Operation | Purpose | Preserves | Discards |
+|-----------|---------|-----------|----------|
+| **Compaction** | Free context, keep going | Verified facts, decisions, current state, next action | Superseded detail, duplicated text |
+| **Reset** | Remove a contaminated context | Durable checkpoint + artifacts only | The entire working context |
+| **Checkpoint** | Make the run resumable | Task state, artifacts, verification result, environment fingerprint | Nothing |
+| **Rollback** | Return to a known-safe state | The checkpoint being restored to | Work since that checkpoint |
+
+Summarizing is **not** checkpointing: a compaction that loses the resume contract has produced an unresumable run that still looks healthy.
+
+**Reset triggers** — reset the context rather than retrying when any of these holds:
+
+1. The same Failure Signature has occurred `≥ 2` times
+2. The plan and the actual workspace state disagree
+3. The context contains directly conflicting instructions
+4. The agent referenced a file, tool, or symbol that does not exist
+5. Remaining token budget is below what one full step needs
+6. Untrusted content is suspected of steering the run
+7. Checkpoint integrity check failed
+
+Triggers 6 and 7 escalate rather than reset silently — see L4/L5.
+
 ### Level 1 - AUTO_RETRY (Transient Errors)
 - Syntax error → Re-execute with the same agent (max 3 retries)
 - Test failure (1st time) → Fix with Builder and retest

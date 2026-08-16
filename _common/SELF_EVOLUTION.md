@@ -205,6 +205,30 @@ Direct modification of own SKILL.md and references. Currently implemented by Arc
 | **C: Human Approval** | Core SKILL.md sections | Boundaries, Principles, Framework changes | Human required |
 | **D: Forbidden** | Safety mechanisms | Own Safety Level, trigger conditions, guardrails | Never |
 
+### Change Class (what authority the change touches)
+
+Safety Levels above classify changes by **which artifact** is edited. Change Class classifies them by **which authority** the change moves — an orthogonal axis, and the one that catches the dangerous case Levels A-D miss: an edit entirely inside `reference/` that quietly relaxes the standard the agent is graded against.
+
+| Class | What it changes | Examples in this repo | Promotion rule |
+|-------|-----------------|----------------------|----------------|
+| `C0` | Metadata | Links, owners, examples, formatting | Auto after lint passes |
+| `C1` | Low-risk behavior | Reference ordering, `description` trigger words, phrasing | Self-verify + one clean run |
+| `C2` | Execution behavior | Retry counts, routing preference, which verification step runs | Independent review by a different agent |
+| `C3` | Control boundary | Boundaries (Always/Ask/Never), guardrail levels, spawn authority | Human approval |
+| `C4` | **Evaluation authority** | Success criteria, rubrics, thresholds, checklists, fixtures — anything that decides whether the agent passed | **Human approval, and never bundled with a `C2`/`C3` change** |
+
+**`C4` is the class this table exists for.** An agent that can edit its own grader can raise its score without improving. In this repo the `C4` surface is concrete: `gauge`'s compliance checklist, `darwin`'s EFS formula and grading scale, `nexus`'s CES weights and confidence thresholds, `_common/EVIDENCE_LADDER.md` floors, `PROOF_CARRYING.md` gates, and every fixture under `task-battery.md` / `routing-oracle.py`. Level D already forbids an agent editing its *own safety levels*; `C4` extends that to its own *success conditions*.
+
+### Eval Integrity
+
+Three rules, all of which bind regardless of Tier:
+
+1. **Never ship a grader change and a behavior change in one commit.** Evaluate the new behavior against the *fixed* rubric first. If it is accepted, consider the rubric change separately, afterward.
+2. **Hold out fixtures from the improving agent.** An agent proposing corpus changes does not read the fixtures it will be measured against. Where full isolation is impractical, record the exposure rather than pretending to independence.
+3. **Proposer ≠ approver.** The agent that generates a candidate change does not also decide it ships. `darwin` proposes; the human or an independent agent promotes.
+
+**Adversarial improvement — what to watch for.** A self-improving harness attacks its own metric before it attacks the problem. Concrete signatures: dropping hard cases from a fixture set, shortening a timeout so failures reclassify as invalid, loosening a rubric threshold, reducing what gets journaled so violations stop being visible, and cutting escalations so unverified guesses count as autonomy. Any of these appearing alongside a score improvement voids the improvement.
+
 ### Tier 3 Activation Requirements
 
 An agent may implement Tier 3 only when ALL conditions are met:

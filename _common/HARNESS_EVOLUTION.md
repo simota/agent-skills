@@ -107,6 +107,35 @@ This is additive scheduling only (no new script, no new loop, no new agent) — 
 
 ---
 
+## Harness Regression Checklist
+
+The Evaluation Cycle above measures whether the harness still *scores* well. This checklist measures whether it still *fails safely* — the part a green dashboard never shows. Run it before promoting any change to `_common/`, the routing matrix, or a hub skill.
+
+Coverage:
+
+- [ ] The golden fixture set and the adversarial fixture set are **kept separate** — passing the easy set is not evidence about the hard one.
+- [ ] Engine, harness, corpus, and protocol versions are recorded with the result. A score without a version binding cannot be compared to anything.
+- [ ] Deterministic checks (`lint-frontmatter`, `validate-recipes`, `routing-oracle`, `task-battery-check`) re-run from a clean checkout, not an incrementally-mutated one.
+- [ ] Trial count and any randomization policy are fixed in advance, not chosen after seeing the spread.
+
+Fault injection — each of these is a *deliberate* test, not something to wait for:
+
+- [ ] Step failure, timeout, and partial completion injected mid-chain.
+- [ ] **Context starvation** (a required reference withheld) and **context flooding** (irrelevant references forced in) exercised.
+- [ ] **Stale instruction** exercised — a reference deliberately left describing an outdated workflow, to confirm the drift is detected rather than obeyed.
+- [ ] A denied confirmation and an expired authorization exercised.
+- [ ] Checkpoint corruption and resume failure exercised.
+
+Governance:
+
+- [ ] Cost, latency, and human-intervention rate checked for regression alongside quality — a change that improves quality by burning 3× the budget is a regression that scores as an improvement.
+- [ ] **Holdout fixtures were isolated from the agent proposing the change** (`_common/SELF_EVOLUTION.md` § Eval Integrity). Where isolation was impractical, the exposure is recorded rather than assumed away.
+- [ ] Rollback was rehearsed, not merely documented.
+
+**Rule:** a checklist item that has never once failed is not proof of robustness — it is a candidate for `HD-GAME` (`_common/HARNESS_DEBT.md`). Injection tests are supposed to fail before the fix lands.
+
+---
+
 ## Safety Guards
 
 ### Hard Constraints

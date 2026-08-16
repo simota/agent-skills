@@ -210,6 +210,7 @@ Every deliverable must include:
 | `reference/pack-impact.md` | Analyzing SKILL_PACKS.md and profile impact before removal |
 | `_common/SKILL_PACKS.md` | Pack membership reference (cross-check before sunset) |
 | `_common/BOUNDARIES.md` | Universal agent boundaries |
+| `_common/HARNESS_DEBT.md` | A skill is unique and active yet still costly — duplicate capability, low selection with high correction rate, authority beyond contract. Owns Skill Gardening (Prune's sweep). |
 | `_common/OPUS_5_AUTHORING.md` | Adaptive thinking at canonical-owner selection and sunset risk |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Prune-specific Output/Next schema. |
 

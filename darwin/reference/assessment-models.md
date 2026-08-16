@@ -152,6 +152,83 @@ Where:
 
 ---
 
+## Harness Maturity (HE-M0 – HE-M5)
+
+**What it answers, and how it differs from EFS.** EFS scores ecosystem *health* — is the roster covering, cohering, active, good, adaptable. Harness Maturity scores *how much autonomy the harness has earned* — how much risk it can absorb with the evidence and recovery it actually has. A perfectly healthy ecosystem can still be M1: nothing is wrong, and nothing is provable. Report both; never average them.
+
+| Level | Name | Required evidence (continuously satisfied, not once) |
+|-------|------|------------------------------------------------------|
+| `HE-M0` | Prompt-centric | Human verifies every outcome. No automated boundary. |
+| `HE-M1` | Tool-enabled | Versioned capabilities, repository-level instructions, basic checks. |
+| `HE-M2` | Contract-enforced | Intent contract with acceptance criteria, isolated workspace, schema-validated handoffs, deterministic gate. |
+| `HE-M3` | Observable and Recoverable | Journal/trace completeness, checkpoint + resume, failure attribution with confidence, incident-derived regression cases. |
+| `HE-M4` | Orchestrated | Queue and file-ownership leases, parallel partitioning, independent evaluator, integration gate. |
+| `HE-M5` | Governed Adaptive | Policy governance, engine substitution testing, harness regression suite, controlled self-improvement, audit trail. |
+
+`HE-M5` does not mean full autonomy. It means the harness can change *itself* under control while human approval remains on the high-risk surface.
+
+### Assessment Dimensions
+
+Score each 0–4. Ten dimensions:
+
+`1` Intent / Contract · `2` Context / Legibility · `3` State / Recovery · `4` Capability surface / Errors · `5` Environment / Reproducibility · `6` Verification / Eval · `7` Observability / Attribution · `8` Permission / Security · `9` Orchestration / Flow · `10` Improvement / Governance
+
+**Never average the dimensions.** The level is set by the *lowest critical dimension*, not the mean — a harness that is excellent at nine things and blind at the tenth fails at the tenth.
+
+### Hard Ceilings
+
+A ceiling overrides any claimed level:
+
+| Condition | Ceiling |
+|-----------|---------|
+| Broad write or external-publish authority with no audit trail | `M1` |
+| Long-running or resumable work with no rehearsed resume | `M2` |
+| Parallel agents with no file-ownership or merge gate | `M2` |
+| Self-improvement with no fixed eval and no independent approval | `M3` |
+| An unresolved critical policy violation | Autonomy suspended |
+
+### Per-Task-Family Assessment
+
+Assess by task family, never as one organizational number. A representative shape:
+
+```
+Documentation maintenance: M4
+Reference/link upkeep:     M3
+New skill authoring:       M2
+Corpus-wide refactor:      M1
+Protocol (_common/) change: M0/M1
+```
+
+Never justify a high-risk task family with a low-risk family's maturity.
+
+### Progression
+
+Levels rise by removing the failures you actually have, not by adding features:
+
+- `M1→M2`: intent contract, handoff schema, outcome gate
+- `M2→M3`: journaling/trace, checkpoint, failure attribution
+- `M3→M4`: task graph, WIP limits, independent integration
+- `M4→M5`: harness regression suite, engine substitution, governance
+
+Not every family needs `M5`. Pick a target level justified by cost and risk.
+
+### Regression
+
+Maturity falls. Reassess on any of: engine or CLI update · ownership change · documentation drift · fixture flakiness · newly granted authority · an incident · vendor or protocol change.
+
+### Anti-patterns
+
+- Treating skill count as maturity.
+- Treating agent count as orchestration maturity.
+- Treating journal retention as observability maturity.
+- Treating number of confirmations as governance maturity.
+- Treating a fixture pass rate as production readiness.
+- Using the level as a scoreboard rather than a decision input.
+
+**Decision rule:** maturity is not *how much is automated*. It is *which risks can be accepted, given the evidence and recovery available*.
+
+---
+
 ## Relevance Score (RS)
 
 ### Formula

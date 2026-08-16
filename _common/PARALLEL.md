@@ -38,6 +38,33 @@ See `_common/AUTORUN.md` for full execution layer details.
 - Tasks share mutable state
 - One task must validate another's output
 
+### Net Parallel Benefit (decide before fanning out)
+
+The criteria above are necessary, not sufficient: work can be perfectly independent and still lose money in parallel. Estimate the balance before spawning:
+
+```
+Net Parallel Benefit
+  = Saved cycle time
+  + Coverage gain (perspectives a single pass would not have produced)
+  − Duplicated work
+  − Coordination overhead (context handed to each branch, results merged back)
+  − Merge and review cost
+  − Conflict rework
+```
+
+**Worker count is bounded by the tightest of four limits, not by the number of tasks:**
+
+```
+workers = min(ready independent tasks, execution capacity, review capacity, budget)
+```
+
+Review capacity is the one most often forgotten and the one that actually binds — parallelism that outruns the ability to check its output converts throughput into an unreviewed backlog.
+
+**Rules:**
+- **Parallelism is set by the critical path and the dependency graph, not by agent count.** Adding a branch that waits on another branch adds coordination cost and no wall-clock.
+- **Compare against the single-agent baseline.** A parallel run that is not measured against doing it sequentially has not been shown to be worth it. This is the pre-flight counterpart to the post-hoc amplification figures in Nexus Core Rule #1 (`4.4×` centrally orchestrated vs `17.2×` uncoordinated) — those describe what goes wrong *after* fan-out; this decides whether to fan out at all.
+- **Never spawn a sibling to check another sibling's output.** Verification is a sequential step, not a parallel branch.
+
 ---
 
 ## Parallel Execution Architecture

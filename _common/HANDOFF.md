@@ -32,6 +32,7 @@ Standard format for `## NEXUS_HANDOFF` output. Designed for flexibility: include
 | **Pending Confirmations** | Decisions awaiting user input |
 | **User Confirmations** | Decisions already confirmed by user |
 | **Suggested alternatives** | Alternative approaches considered |
+| **Do not repeat** | Approaches already **tried and ruled out**, each with the evidence that ruled it out. Distinct from *Suggested alternatives* (untried options worth considering) — this field exists to stop the next agent from re-running a dead end. Required whenever a handoff follows a failed attempt or a resumed long-running task. |
 | **Guardrail Events** | Safety events triggered during execution |
 
 ---
