@@ -12,6 +12,7 @@ Standard format for `## NEXUS_HANDOFF` output. Designed for flexibility: include
 |-------|-------------|
 | **Summary** | What was accomplished (1-3 sentences) |
 | **Next** | Recommended next agent or action |
+| **Verified** | Required **whenever the handoff claims something passes, builds, or is done**. One entry per claim, each an evidence object — never a bare `true`. See *Completed vs Verified* below. Omit only when the step made no such claim. |
 
 ### Recommended Fields (include for complex tasks)
 
@@ -37,6 +38,59 @@ Standard format for `## NEXUS_HANDOFF` output. Designed for flexibility: include
 
 ---
 
+## Completed vs Verified
+
+**"I changed the code" and "the acceptance criteria hold" are different claims.** Collapsing them is how a
+chain inherits a false completion: the next step reads `tests passed`, skips its own check, and builds on a
+state that was never confirmed. `_common/HARNESS_DEBT.md` names this `HD-STATE`; this section is how it is paid down.
+
+- **Summary / Artifacts** carry what was *done* — edits made, files touched, analysis produced.
+- **Verified** carries what was *confirmed*, and only that. A claim with no evidence object does not belong here.
+
+### Evidence object
+
+Each `Verified` entry is a claim plus the observation that supports it:
+
+```yaml
+Verified:
+  - claim: "auth unit tests pass"
+    command: "pytest tests/auth -q"
+    exit_code: 0
+    verified_at: 2026-08-17T10:31:12Z
+    head: 4d2f9c1              # revision the check actually ran against
+    log: artifacts/test-auth-447.log
+  - claim: "public schema unchanged"
+    command: "npm run contract:test"
+    result: not_run             # explicit — distinguishes "unverified" from "forgotten"
+```
+
+`result: not_run` is a required distinction, not a formality: an absent row and an unrun check look identical
+downstream, and only one of them is safe to re-derive. For non-executable work (design, spec, research),
+`command` is replaced by the observation that stands in for it — a reviewer, a cited source locator, a
+rendered artifact — but the claim/evidence pairing does not change.
+
+### Validator rules (relations, not field presence)
+
+A handoff that has all its fields can still be wrong. Check the relations:
+
+| # | Rule | Fails when |
+|---|------|-----------|
+| V1 | `head` matches the repository HEAD the handoff reports | The check ran against a different revision than the work |
+| V2 | `verified_at` is later than the last change to the files the claim covers | Evidence predates the edit it supposedly covers |
+| V3 | `Artifacts` / changed files agree with `git diff --name-only` | The handoff describes work the tree does not contain |
+| V4 | Every load-bearing claim in `Summary` appears in `Verified` or is labeled `UNVERIFIED` | Prose asserts more than the evidence supports |
+| V5 | `Do not repeat` survived any compaction between attempt and handoff | The next agent re-runs a known dead end |
+
+**Staleness rule:** if HEAD moves after the handoff is written, the handoff is `STALE` — regardless of how
+complete it looks. The receiver re-derives rather than trusting it (`_common/OPERATIONAL.md` §
+*Post-Handoff Rehydration*).
+
+**Status ceiling:** a step whose claims carry no evidence reports `PARTIAL`, never `SUCCESS`. Producing the
+work and verifying it are separate roles — an agent's own assertion is `E0` on `_common/EVIDENCE_LADDER.md`
+and never ships on its own.
+
+---
+
 ## Examples
 
 ### Minimal (simple task)
@@ -56,6 +110,11 @@ Standard format for `## NEXUS_HANDOFF` output. Designed for flexibility: include
 - Summary: Investigated login failure. Root cause: token refresh race condition in `auth/refresh.ts:87`
 - Findings: Two concurrent refresh calls invalidate each other's tokens
 - Artifacts: Investigation notes in `.agents/scout.md`
+- Verified:
+    - claim: "race reproduces"
+      command: "pytest tests/auth/test_refresh_race.py -q"
+      exit_code: 1
+      head: 9f6c2a1
 - Risks: Fix may affect session handling in other flows
 - Next: Builder (implement mutex-based refresh)
 ```
@@ -83,11 +142,13 @@ Standard format for `## NEXUS_HANDOFF` output. Designed for flexibility: include
 ## Rules
 
 1. **Always include Summary + Next** — these are the minimum for any handoff
-2. **Add detail proportional to complexity** — simple tasks need minimal handoff
-3. **Be specific in Next** — include what the next agent should do, not just who
-4. **Findings should be actionable** — include file paths, line numbers, evidence
-5. **Risks should be concrete** — "might break X" is better than "there are risks"
-6. **Journal what's worth keeping** — when a step produces a reusable insight, a notable decision, or state needed for recovery/learning, record it in `.agents/{agent}.md` / `.agents/PROJECT.md` per `_common/OPERATIONAL.md` and reference the paths in `Artifacts`. Routine or trivial steps don't need an entry.
+2. **Never state a pass/build/done claim outside `Verified`** — a claim in prose with no evidence object is
+   `UNVERIFIED`, and the step's status is capped at `PARTIAL`
+3. **Add detail proportional to complexity** — simple tasks need minimal handoff
+4. **Be specific in Next** — include what the next agent should do, not just who
+5. **Findings should be actionable** — include file paths, line numbers, evidence
+6. **Risks should be concrete** — "might break X" is better than "there are risks"
+7. **Journal what's worth keeping** — when a step produces a reusable insight, a notable decision, or state needed for recovery/learning, record it in `.agents/{agent}.md` / `.agents/PROJECT.md` per `_common/OPERATIONAL.md` and reference the paths in `Artifacts`. Routine or trivial steps don't need an entry.
 
 ---
 

@@ -55,6 +55,50 @@ Before emitting `## NEXUS_HANDOFF`, `_STEP_COMPLETE`, or `## NEXUS_COMPLETE`, ca
 
 ---
 
+## Post-Handoff Rehydration
+
+The receiving side of a handoff. **A handoff is a claim about reality, not reality** — it can be honest and
+still be stale, because a human, another agent, or CI can move the tree after it was written. Checking it is
+part of the protocol, not distrust of the sender.
+
+**When:** resuming a chain step, picking up a `NEXUS_HANDOFF` / `_STEP_COMPLETE`, or starting any session that
+inherits prior state. Skip for a fresh single-step task with no inherited state.
+
+**Rehydrate before reasoning.** Do not open with a plan or a fix — re-derive the state first:
+
+1. Repository root, current branch, `HEAD`, and whether the tree is dirty.
+2. Changed / untracked files, compared against what the handoff reports.
+3. The authoritative sources the handoff names — read them, do not assume the quoted version still holds.
+4. Open questions, `Do not repeat` entries, and known failures.
+5. Whether each `Verified` entry still binds: same `head`, `verified_at` after the change it covers.
+
+Emit the result as a short **state reconstruction**, and make conflicts explicit rather than averaging them away:
+
+```yaml
+reconstructed:
+  branch: main                       # handoff said feature/auth-v3
+  head: a91c0de
+  dirty: true
+  verified:   ["auth unit tests @ 4d2f9c1"]
+  unverified: ["contract compatibility"]
+conflicts:
+  - "handoff head 4d2f9c1 != actual a91c0de → every Verified entry is stale"
+action: "re-run auth tests at a91c0de before any edit"
+```
+
+**Rules.**
+
+- **Resolve conflicts before planning, not after.** A conflict found mid-implementation has already been built on.
+- **Do not write while a conflict is open.** Reads and diagnosis may proceed; edits, commits, and external
+  calls wait. This is the receiver-side counterpart to `_common/HANDOFF.md` § *Completed vs Verified*.
+- **Reality wins over the packet.** When they disagree, correct the handoff — never adjust the observation to match it.
+- **Re-run the smallest check yourself** when a `Verified` claim is load-bearing for what you are about to do.
+  Inheriting a green check you did not observe at the current `HEAD` is how false completions propagate.
+- A packet that cannot be reconciled is `STALE`: reconstruct from the authoritative sources and say so in the
+  next handoff, rather than proceeding on a best guess.
+
+---
+
 ## Pre-Execution Planning
 
 Plan **proportional to task complexity** — not maximally. Over-planning a trivial task is itself an anti-pattern: it burns tokens, adds latency, and (on instruction-literal models like Opus 5) inflates output. Under-planning a complex task causes rework and silent drift. Calibrate.
