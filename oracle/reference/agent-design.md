@@ -136,6 +136,13 @@ A per-tool allow/deny list is too coarse, because the same tool at different arg
 
 **Shrink the tool, not just the grant.** `execute_sql(query)` and `http_request(url, method, body)` push authorization, input range, audit, rate, and idempotency into the prompt — where they are requests, not controls. `get_open_invoices(customer_id, limit)` and `create_refund_draft(payment_id, amount, reason)` enforce them at the tool boundary.
 
+**A secret is a credential the task needs, not knowledge the model should see.** The failing path is
+`secret value → prompt → model → tool argument → log`, and every hop after the first is permanent: traces,
+summaries, and downstream calls all retain it. The tool resolves the credential internally and the model only
+ever holds an opaque reference — `charge_card(payment_method_id)`, never `charge_card(card_number, cvv)`.
+Secrets already leaked into code, issues, CI logs, or chat must be caught at ingestion, before composition;
+and a redaction placeholder must not be reversible to the original value.
+
 **Read-only is not safe by construction.** Cross-source reads aggregate individually-permitted facts into sensitive relationships, and anything pulled into context lives in the trace, the summary, and every downstream call. Read grants carry purpose, field, row, tenant, retention, and output destination like any other.
 
 ## Termination Conditions
