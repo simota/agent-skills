@@ -85,6 +85,38 @@ A handoff that has all its fields can still be wrong. Check the relations:
 complete it looks. The receiver re-derives rather than trusting it (`_common/OPERATIONAL.md` §
 *Post-Handoff Rehydration*).
 
+### Freshness is four clocks, not one
+
+HEAD movement is one trigger of one kind. A handoff can be stale with HEAD untouched, and current with HEAD
+moved. Check each clock that applies to the claim:
+
+| Clock | Stale when | Typical trigger |
+|-------|-----------|-----------------|
+| **Time** | Elapsed since observation exceeds what the claim's impact tolerates | Wall clock |
+| **Version** | The claim was made against a different code / spec / API version | `head` mismatch (V1), dependency bump |
+| **Event** | A qualifying event occurred and nothing re-verified after it | `deployment_completed`, `feature_flag_changed`, `incident_declared`, `permission_changed` |
+| **Authority** | The source that backed the claim no longer holds decision authority | ADR superseded, policy replaced, owner changed |
+
+Declare the triggers a handoff is sensitive to rather than assuming git alone:
+
+```yaml
+invalidate_on: [deployment_completed, permission_changed]
+max_age: PT1H          # scale to impact: PT24H low · PT1H medium · PT5M high · live-query critical
+```
+
+**Staleness is not one verdict.** Pick the response the claim's role warrants, and say which one was taken:
+
+| Behavior | Use when |
+|----------|----------|
+| `re_fetch` | The source is cheap to re-read and authoritative — default |
+| `fallback` | A last-known-good value is usable **and is labeled as such** in the handoff |
+| `block` | The claim is load-bearing for an irreversible action |
+| `escalate` | Staleness is caused by an authority change, not a clock |
+| `degrade_scope` | Proceed read-only / analysis-only until re-verified |
+
+A blanket reject on every stale field costs more than it saves; an unlabeled `fallback` is how a stale value
+becomes a fact. Both failures are avoided by naming the behavior, not by picking a stricter default.
+
 **Status ceiling:** a step whose claims carry no evidence reports `PARTIAL`, never `SUCCESS`. Producing the
 work and verifying it are separate roles — an agent's own assertion is `E0` on `_common/EVIDENCE_LADDER.md`
 and never ships on its own.
