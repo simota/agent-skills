@@ -259,6 +259,7 @@ Full mechanics, scoring, JSON schema, prompt skeletons, and degraded modes -> `r
 | `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the pre-mortem report, deciding adaptive thinking depth at scoring/severity, or front-loading scope/stakeholders/horizon at FRAME. Critical for Omen: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Omen-specific Output/Next schema. |
+| `reference/ai-production-failure-atlas.md` | Pre-mortem scope includes an AI-generation or agentic-write step — 22-mode catalog (F-01–F-22) pre-tagged by Context/Workflow/Evaluation/System/Governance layer, cross-referenced to `_common/CANDIDATE_SELECTION.md` §9 and `_common/ASSET_PROVENANCE.md` §8 for mitigation detail. |
 
 ## Operational
 
