@@ -73,6 +73,35 @@ SPECIFY   →  hand off to Builder with schemas, max_turns, eval gates, rollback
 
 Compact aggressively: summarize prior turns when the scratchpad approaches `60%` of the context window. Claude reasoning degrades around `3k` tokens of instructions — do not let accumulated scratchpad crowd the instruction budget.
 
+### Memory governance — what may enter, what must leave
+
+The shapes above say where memory lives, not what is allowed into it. Without an admission rule, a store fills
+with the agent's own guesses and then returns them as facts to a later session that has no way to tell them
+apart from observations. Classify every write:
+
+| Class | Content |
+|-------|---------|
+| `allow` | Explicit user preference · reviewed convention · reusable debugging fact **with its source** · reference to an accepted decision |
+| `deny` | Secrets · raw personal data · **unverified model inference** · transient runtime state · third-party instructions |
+| `require_review` | Security exceptions · legal interpretation · anything crossing a tenant or policy boundary |
+
+`unverified model inference` is the load-bearing denial: it is the only entry that looks identical to a fact
+once written, and it is what turns a memory store into a citation-free authority.
+
+**Retirement is part of the contract.** Eight triggers, any one of which retires an entry — TTL reached ·
+source deleted · source updated · user deletion request · project ended · scope changed · contradiction
+detected · reclassified as sensitive. A ninth, weaker one: unused and expensive to keep current.
+
+Distinguish the three exits, because they mean different things to a reader: **hard-delete** (must not
+survive — secrets, personal data), **tombstone** (retained as "this was retracted", so a later session does
+not re-derive it), **archive** (out of the live path, still auditable).
+
+**Before trusting a claim carried across a session boundary, ask four questions:** does a source reference
+exist · is that source version still current · is its authority sufficient for this decision · does it
+contradict the current authoritative contract. Any "no" quarantines the claim — it does not inform the
+current decision, the entry is corrected or removed, and the contradiction is recorded. This is a different
+boundary from untrusted external input (`_common/WEB_FETCH_SAFETY.md`): here the stale belief is *your own*.
+
 ## Subagent Delegation
 
 Delegate when a subtask has a crisp input-output contract, different tools, or a different quality bar. Do NOT delegate when the orchestrator already has context that would be expensive to rehydrate.
