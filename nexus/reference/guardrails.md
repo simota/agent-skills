@@ -16,6 +16,7 @@
 - Context Hierarchy
 - State Record Format
 - Parallel Branch Context
+- Verification Debt Guardrail
 
 Guardrails, context management, and state tracking for AUTORUN_FULL.
 
@@ -335,4 +336,22 @@ _PARALLEL_CONTEXT:
 - **Auto-decision:** proceed only at sufficient confidence with acceptable reversibility; confirm risky or irreversible work first. Confirmation depth follows the per-task-type Autonomy Ledger and never relaxes an Ask First gate.
 - **Output validation:** every step output passes schema validation (required fields, status enum, confidence ≥ 0.6) before flowing onward; semantic failures (right schema, wrong meaning) need domain checks.
 - **Always confirm:** the triggers enumerated in **Boundaries → Ask First**.
+
+## Verification Debt Guardrail
+
+Generation is instant; verification is not. A chain that spawns faster than it can verify accumulates unverified state until it stops being knowable which steps are safe — the orchestration-layer form of the same failure `_common/EVIDENCE_LADDER.md` §5 describes.
+
+**Bound agent WIP, not just agent count.** Agent count caps concurrency; WIP caps *unverified output in flight*. Two agents producing changes nobody has validated is worse than four whose output is being consumed.
+
+| Signal | Read as |
+|--------|---------|
+| generated-vs-verified gap widening across steps | stop spawning; drain before adding |
+| step results accepted on schema validity alone, no semantic check | E0 evidence flowing as E3 — see EVIDENCE_LADDER §2 |
+| open `not_verified` / `RES-n` items with no risk class or deadline | debt has become permanent, not temporary |
+| a verifier agent whose only input is the producer's own summary | Circular Verification at the chain layer |
+| rework rate rising while throughput looks flat | the chain is re-doing, not progressing |
+
+**Response, in order:** pause dispatch → drain highest-risk and oldest first → delete branches/artifacts no longer wanted rather than carrying them → repair the test signal itself before adding verification steps (a suite nobody trusts adds no evidence however often it runs).
+
+**Reporting:** a chain that produced more than it verified reports `PARTIAL` with the unverified surface named, never `SUCCESS`. A temporary gap is normal; a gap with no owner and no deadline is the defect.
 

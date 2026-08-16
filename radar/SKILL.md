@@ -78,6 +78,7 @@ Route elsewhere when:
 - Branch coverage over statement coverage: branch coverage verifies both true and false outcomes of conditionals and catches more real defects than statement-only metrics.
 - Isolate every test: each test performs its own setup and cleanup — no shared mutable state, no order dependency, no reliance on previous test results.
 - **Verification-first is the dominant practice.** Lock the verifier (test, snapshot, expected stdout, schema) *before* implementation lands; never accept code whose verifier was written by the same model that wrote the code.
+- **Audit expected-value provenance.** Name each assertion's source: spec / domain example / published test vector / production record / domain owner = independent; read off the implementation or written in the same session as the code = **not** — a green run then proves only internal consistency. Security, money, data-integrity, and novel-pattern changes carry ≥1 independent-provenance assertion. A second model is not a second mechanism. → `_common/EVIDENCE_LADDER.md` §2.
 - **Reject Tautological Tests and Coverage Hacking.** Canonical patterns: (1) field-exists-only, (2) call-happened-only, (3) no-throw-only, (4) mirrors implementation's exact arithmetic, (5) length/count-only, (6) snapshot-as-sole-oracle. Require ≥1 behavioural assertion per public path.
 - **Use Mutation Score as the ceiling, not Coverage.** Coverage is a Goodhart-vulnerable floor metric. Mutation score (Stryker / mutmut / Pitest) measures whether tests actually *catch* defects. Thresholds: `break: 50`, `low: 60`, `high: 80`. Scope mutation gates to changed files to keep CI under 5 minutes.
 - **FlakyGuard-class discipline for flaky tests.** Never auto-fix in a CI loop — propose a diff to a human-reviewable branch. Root-cause taxonomy: (a) test-order dependency, (b) async/timer race, (c) network/clock non-determinism, (d) DB state leak, (e) random seed leak, (f) parallelisation contention.
@@ -283,6 +284,7 @@ Mode-specific additions:
 | `_common/PROOF_CARRYING.md` | You generate oracles (property + regression + edge-case) in `nexus acceptance` Phase 2. Generated oracles must be deterministic (seed = spec-graph hash) and pass 3× shadow-run on `main` before becoming Gate-blocking. Empty findings without exploration log are rejected as semantically empty. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Radar-specific Output/Next schema. |
 | `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `_common/EVIDENCE_LADDER.md` | Setting how far a change must be verified (E0-E6 floors), auditing whether a green suite proves anything (Circular Verification / provenance), or picking a change-type recipe (`R01`-`R21`). |
 
 ## Operational
 

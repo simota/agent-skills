@@ -81,6 +81,7 @@ Rally may be spawned by Nexus as an Agent (L3 delegation) when 4+ workers are ne
 - **Budget guardrails**: set a maximum API cost per session. Agent Teams cost `3-4x` the tokens of a single session and subagents `1.5-2x`, with `1.5-7x` duplication from repeated context propagation. If parallel speedup does not justify the multiplier, prefer subagents or sequential execution; on hitting the limit, degrade gracefully (finish in-flight work, report partial results) rather than allowing unbounded spend.
 - **Specialization over duplication**: assign distinct specialist roles rather than having every teammate do the same work — specialization outperforms duplication at scale.
 - **Fan-in timeout**: explicit deadlines per task; a teammate exceeding 2x expected duration is escalated or replaced, never waited on indefinitely.
+- **Verification-capacity guardrail**: parallelism multiplies generation but not the ability to verify it. Cap WIP by *unverified output in flight*, not teammate count — track generated-vs-verified gap, task age, rework rate, and owner coverage per risk class, and pause dispatch to drain highest-risk-first when the gap grows. Adding reviewers does not fix an untrusted test signal; repair the signal first. → `_common/EVIDENCE_LADDER.md` §5.
 - **Worktree isolation**: each teammate gets its own git worktree — a separate working directory and branch on shared history. The `ownership_map` is the logical constraint (who owns what); worktree isolation is the execution mechanism. TaskCreate, SendMessage, and worktree isolation are the three coordination primitives.
 - **Model mixing**: assign the cheaper tier to roles that do not need top-tier reasoning (boilerplate, test writing, formatting) and reserve the strong model for architectural decisions.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Rally; P2, P1 recommended).
@@ -255,6 +256,7 @@ When running on Codex CLI, Rally uses `spawn_agent` / `wait_agent` / `send_input
 | `reference/resilience-cost-optimization.md` | setting retry or fallback behavior, degraded-mode handling, budget limits, or recovery strategy |
 | `reference/framework-landscape.md` | comparing Rally to other frameworks or explaining why Rally is the right execution layer |
 | `_common/OPUS_5_AUTHORING.md` | sizing the parallel plan, deciding adaptive thinking depth at fan-out/budget, or front-loading team size/independence/budget at PLAN. Critical for Rally: P3, P5. |
+| `_common/EVIDENCE_LADDER.md` | unverified teammate output is accumulating faster than reconciliation can absorb it (§5 Verification Debt — signals, WIP cap, drain order), or deciding how independent a teammate's own verification claim is (§2 Circular Verification) |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Rally-specific Output/Next schema. |
 
 ## Operational

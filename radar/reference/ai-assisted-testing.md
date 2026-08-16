@@ -71,6 +71,29 @@ When the underlying code is AI-generated:
 3. add contract tests for generated clients or API layers
 4. apply security scanning as a non-optional companion
 
+## Breaking the Implementation-Test Loop
+
+The failure this section prevents: one agent writes the code, the tests, and the explanation from one reading of the spec, every test passes, and the behavior is wrong — because the same misunderstanding produced both sides. The suite is now *pinning* the bug, so the correct fix arrives as "a change that breaks tests". Full mechanism, provenance table, and independence calibration → `_common/EVIDENCE_LADDER.md` §2.
+
+Authoring procedure, cheapest step first — stop when the change's evidence floor is met:
+
+| Step | Action | What it buys |
+|------|--------|--------------|
+| 1 | Before generating anything, put **invariants, worked examples, counterexamples, and non-goals** in the task text | the expectation now has a source outside the code |
+| 2 | Write the oracle in a context that has **not seen the implementation** — before it exists, or in a separate session | removes the shared-context correlation |
+| 3 | Add one **E4 mechanism** on the changed surface: a property, a mutation run scoped to the diff, or a differential against the pre-change path | detects a class of failure E3 structurally cannot |
+| 4 | Record in the PR **what the tests prove and what they do not** | makes the residual visible instead of implied |
+
+Provenance question to ask of every assertion under review: *where did this expected value come from?* If the answer is "from reading the implementation" or "the same session that wrote the code", the assertion documents current behavior and cannot detect that the behavior is wrong. Rewrite it from the spec, a domain example, a published test vector, a production record, or a domain owner's confirmation.
+
+Prompt shapes that cause this failure:
+
+- `"add tests for this file"` — no intent given, so the model asserts whatever it can observe; produces brittle implementation-detail tests
+- `"make the tests pass"` — makes the test the variable and the code the constant, exactly backwards for a regression
+- asking the same session that just wrote the feature to "verify it works" — E0 evidence formatted as E3
+
+Prompt shape that avoids it: state the behavioral contract, the boundaries, the failure paths, and the invariants **first**, and ask for tests against that contract — never against the file.
+
 ## Radar Integration
 
 | Radar Phase | AI Helps With | Human Must Still Decide |

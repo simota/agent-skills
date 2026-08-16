@@ -1,6 +1,9 @@
 Purpose: Use this file when you are designing evaluation suites, CI gates, rollout checks, tracing, or production monitoring for AI systems.
 
 ## Contents
+- Test / Eval layer separation
+- Eval dataset stratification and slices
+- Release gate as conjunction
 - Two-layer evaluation model
 - LLM-as-judge anti-patterns
 - Task metrics
@@ -10,6 +13,77 @@ Purpose: Use this file when you are designing evaluation suites, CI gates, rollo
 - Oracle gates
 
 # Evaluation And Observability
+
+## Test / Eval Layer Separation
+
+Decide this before designing any eval. Two failure modes sit on either side of the line: pinning everything with exact-match assertions (brittle, breaks on every acceptable rewording), or handing everything to a model judge (loses the boundaries that were deterministically enforceable).
+
+| | Deterministic Test | Probabilistic Eval |
+|---|---|---|
+| Input → | expected value | dataset + rubric |
+| Output | pass / fail | score / distribution |
+| Subject | types, contracts, state transitions | quality of open-ended output |
+| Grader | code | human and/or model, calibrated |
+| Regression | reproducible | sampling with confidence intervals |
+
+Split the system, not the test suite:
+
+```
+Deterministic control plane      Probabilistic component
+├─ type / schema / contract      ├─ relevance
+├─ authorization / policy        ├─ groundedness
+├─ state transition              ├─ completeness
+├─ tool argument validation      ├─ style / usefulness
+└─ timeout / retry / budget      └─ unsafe or misleading behavior
+```
+
+**"We have evals, so we don't need tests" is the expensive version of this mistake.** In an AI product, authn, billing, permissions, schema, tool arguments, state transitions, timeout, retry, and audit are ordinary software and stay deterministic. Conversely, HTTP 200 + schema validity says nothing about answer quality. They are layers, not alternatives.
+
+Concrete deterministic checks for a RAG/tool answer path: output satisfies the JSON schema · every citation ID is a member of the retrieved source set · no personal-data field is emitted without authorization · tool calls satisfy allowlist and argument schema · cost / timeout / retry ceilings hold · actions requiring human approval never auto-execute.
+
+## Eval Dataset Stratification
+
+Random sampling of past logs under-represents rare-but-severe failure. Build and version five distinct sets:
+
+| Set | Contents | Purpose |
+|-----|----------|---------|
+| Representative | approximates normal traffic | detects average regression |
+| Critical | low-frequency, high-damage tasks | never averaged into the headline score |
+| Counterexample | error-prone boundaries, contradictory context, stale documents, out-of-permission requests | catches confident wrongness |
+| Regression | past incidents and known failures, frozen | prevents recurrence |
+| Adversarial | prompt injection, tool misuse, data-exfiltration probes | security surface |
+
+Record per case: input, **expected evidence**, tolerance, prohibited outcomes, slice labels, reason for inclusion, last-updated, rights, and personal-data handling. A dataset built only from successful demo runs overstates quality by construction.
+
+Sourcing from production logs is a privacy decision, not just a data decision — confirm consent, purpose, retention, and redaction, and treat "anonymized" as an assertion to verify, since re-identification risk survives naive scrubbing.
+
+**Slices to analyze separately** (overall score can improve while a slice degrades): use case / intent · risk level · tenant or plan · language · input length and context size · retrieval hit vs miss · tool success / partial failure / timeout · model, prompt, and index version · whether a human escalation occurred. Choose slices by business impact and known failures; display uncertainty where a slice is under-sampled rather than reporting a point estimate.
+
+## Release Gate: Conjunction, Not Average
+
+A single composite score hides the failures that matter — a mean groundedness of `0.92` is not a release signal if one case exposed personal data. Gate on a conjunction:
+
+```
+Release = deterministic tests PASS
+      AND critical failures = 0
+      AND no-regression slices PASS
+      AND latency / cost within budget
+      AND human calibration completed
+```
+
+Declare `hard_failures` explicitly (unauthorized action, unsupported policy claim, personal-data exposure); a hard failure blocks release regardless of aggregate score. Routing:
+
+```
+if deterministic_fail:            reject
+elif safety_score == fail:        reject
+elif judge_confidence < threshold: human_review
+elif score_regression > budget:   block_release
+else:                             accept_for_canary
+```
+
+**Statistical discipline:** 80/100 vs 84/100 is not "4 points better". Compare pre/post on the *same frozen dataset*, separate critical failures from the mean, do not over-read small-sample differences, distinguish tasks needing multiple samples per input, and calibrate offline eval against production outcome. `temperature=0` does not guarantee reproducibility — provider-side implementation, model updates, and distributed execution still vary.
+
+**Change one variable at a time.** Model, prompt, and retrieval index moved together cannot be attributed when quality shifts.
 
 ## Two-Layer Safety Net
 

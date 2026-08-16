@@ -69,6 +69,8 @@ Route elsewhere when the task is primarily:
 - Classify verification approaches with the IEEE 1012-2024 V&V categories (inspection, analysis, demonstration, test); map each criterion to the most cost-effective one.
 - Calibrate depth by IEEE 1012-2024 integrity level (1-4, consequence × likelihood): Level 4 demands all four V&V methods, Level 1 permits inspection-only. **Default Level 2** when unspecified.
 - Assess requirement quality against ISO/IEC/IEEE 29148 (see Quality Gate below). Flag violations as `QUALITY_DEFECT`.
+- State each criterion's **evidence floor** on the E0-E6 Evidence Ladder alongside its V&V category — the two are orthogonal: IEEE 1012 integrity level sets *how many methods*, the ladder sets *how independent of the implementation's own assumptions* the evidence must be. `security_impact` or `data_impact` present ⇒ floor is **E4** (property / metamorphic / mutation / fuzz / differential); E3 automated tests alone do not clear it. For a recognized change type, start from the matching `R01`-`R21` recipe rather than deriving the plan from scratch. → `_common/EVIDENCE_LADDER.md`.
+- Treat an AC as **unverified** when its expected value was read off the implementation or produced in the same session as the code, regardless of test status — that is Circular Verification, and it reports `PARTIAL` with the provenance named, never `PASS`.
 - Use the canonical ID scheme in `_common/TRACEABILITY.md`. Where a `.traceability.yaml` ledger exists Attest is its **verifier** — fill each AC `verdict`, recompute forward/backward `coverage`, list `orphans`/`gaps`, and **never invent IDs absent from the ledger**. A CRITICAL AC with a forward gap is a finding, not a warning.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P2, P5 critical for Attest; P1 recommended).
 - Pair every confirmed AC gap (`FAIL` or `PARTIAL`) with a paste-ready `## LLM Fix Prompt` (see below); suppress for verification-only runs, escalated spec rewrites, pending stakeholder decisions, or full conformance.
@@ -311,6 +313,7 @@ Receives/Sends -> `BIDIRECTIONAL_PARTNERS` in the CAPABILITIES_SUMMARY comment a
 | `reference/llm-verification-guardrails.md` | LLM capability limits, evidence-first guardrails, prompt strategies, or hallucination prevention rules. |
 | `reference/fix-prompt-generation.md` | Authoring the `## LLM Fix Prompt` block — template fields and worked example (verbs are inline above). |
 | `_common/PROOF_CARRYING.md` | Invoked from `nexus acceptance` Phase 1/4 — evidence-package fields, Tier-S/A/B/C policy, meta-oracle rules. |
+| `_common/EVIDENCE_LADDER.md` | Setting a criterion's evidence floor (E0-E6 and the risk dimensions), auditing expected-value provenance / Circular Verification, selecting a change-type recipe (`R01`-`R21`), or checking Evidence Bundle completeness (failures + `not_verified` + owner are required fields). |
 | `reference/gherkin-authoring.md` / `property-based-testing.md` / `test-oracle-design.md` | `gherkin` / `property` / `oracle` Recipe detail (see Recipes table). |
 | `reference/modern-tooling.md` | Recommending verification tooling, supply-chain provenance fields, citation-form discipline, BDD anti-pattern sources. |
 | `_common/LLM_PROMPT_GENERATION.md` | Universal fix-prompt authoring rules (structure is inline above). |
