@@ -52,6 +52,48 @@ The six cost centers a token-price comparison omits:
 
 **Cross-boundary note.** Everything below `platform` in the table above leaves the LLM-provider bill and therefore the `cost` recipe's Scope Boundary. Oracle still *counts* it when comparing designs — routing an option to `Ledger` for infra pricing does not license comparing designs on inference price alone.
 
+### Cognitive Budget — what the reviewer can actually audit
+
+Tokens, latency, and money all bound the machine. None bounds the human who has to accept the output, and on
+review-heavy work that is the binding constraint long before the context window is. Budget it explicitly:
+
+| Dimension | Bounds |
+|-----------|--------|
+| `primary_source_count` | How many distinct sources a reviewer must open to check the claim |
+| `citation_length` | How much of each must be read |
+| `decision_count` | Judgment calls the reviewer is being asked to ratify at once |
+| `unresolved_question_count` | Open items they must hold in mind |
+| `diff_size` | Change surface per review unit |
+| `tool_switches` | Context switches required to verify |
+| `evidence_reproduction_time` | Wall-clock to re-run the evidence themselves |
+
+More output that does not reduce time-to-first-judgment is not higher quality — it is cost moved from the
+model's bill to the reviewer's. A `Maintenance Budget` applies the same logic to metadata: any field an owner
+cannot realistically keep current is a future staleness incident, not a control.
+
+### Hard gates apply before optimization, never against it
+
+Split the budget in two and keep the order:
+
+```yaml
+hard_gates:            # pass/fail — never traded for tokens, latency, or price
+  security: {max_sensitivity, forbidden_categories}
+  authority: {minimum_for_decision}
+  freshness: {runtime_max_age}
+  scope: {...}
+optimization:          # targets — tuned freely, only after the gates pass
+  {token, latency, monetary, cognitive, maintenance}
+```
+
+When the composed context overflows, degrade in this order — each step preserves more meaning than the next:
+
+1. Drop exact duplicates → 2. drop superseded / expired → 3. convert to pointer → 4. source-preserving extract
+→ 5. make low-impact evidence on-demand → 6. split by phase → 7. re-route model/tool → 8. shrink scope and
+flag the owner.
+
+Naive summarization is not on this list. It is the step that silently drops the counter-evidence and the one
+critical exception, and it is indistinguishable from success until the decision is already wrong.
+
 ## Token Economics
 
 > Claude rows verified against `platform.claude.com/docs/en/about-claude/pricing` on **2026-07-25**. Non-Anthropic rows still need verification — check each vendor's official page before quoting.
