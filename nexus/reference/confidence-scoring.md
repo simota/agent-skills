@@ -139,6 +139,15 @@ A higher-stakes decision needs a higher confidence floor. The same final score m
 
 `MEDIUM+` = MEDIUM with no blocking open questions. With open questions, downgrade to LOW.
 
+## What the Scalar Does Not Say
+
+The score measures **evidence availability** — how much context the four sources gave you. It does not identify **which part of the request is unresolved**, and the two do not correlate: a 0.85 run blind on who authorized a deletion is more dangerous than a 0.55 run that merely needs a target named.
+
+So the scalar decides *whether* to ask; `intent-clarification.md` § Uncertainty Typing decides *what* to ask. Two consequences bind here:
+
+- **Never present the scalar as a per-dimension verdict.** `confidence: 0.83` is an average over context sources, not a claim that referent, scope, goal, constraints, authority, and outcome are each 83% settled.
+- **Unresolved Authority overrides the table below.** If it is unclear whether an effect may be caused at all (push, delete, publish, spend, external send), no aggregate score authorizes it — confirm (Q23). The `any_blocking` list below is the enumerated form of this; the rule is the general case, and a novel effect not on the list still stops.
+
 ## Auto-Proceed Conditions
 
 ```yaml

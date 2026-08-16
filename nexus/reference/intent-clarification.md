@@ -71,6 +71,30 @@ allowed question *comprehensive and targeted* ("give me X, Y, Z") rather than a 
 
 ---
 
+## Uncertainty Typing — deciding *which* question the one question is
+
+The confidence scalar (`confidence-scoring.md`) answers **how much context I have**. It does not answer **what is still unresolved** — and those are different questions with different remedies. Two requests can both score 0.55 and need opposite treatment: one needs a target named, the other needs a priority chosen. Since Law 2 allows only one question, typing the uncertainty first is what makes that question land.
+
+Type the gap on these six dimensions before asking. Each maps to a distinct remedy, and each has a characteristic way of being asked badly:
+
+| Dimension | Unresolved when | Remedy | Asked badly |
+|-----------|-----------------|--------|-------------|
+| **Referent** | the object is ambiguous — "it", "the old one", "the tests" | name the candidates and let the user pick | asking *what to do* before *to what* |
+| **Scope** | the boundary is missing — how many files, which environments, how far back | offer bounded options (this module / this package / repo-wide) | proceeding on the narrowest reading silently |
+| **Goal** | two readings imply different outcomes, or the user is still forming the goal | ask for the **deciding axis** (what to prioritize, what to avoid), not for a label | forcing an A-or-B when the real answer is C |
+| **Constraint** | a limit is implied but unstated — budget, compatibility, deadline, style | surface the constraint you would otherwise assume, as a `DEC-n` candidate | recording it as a preference and trading it away |
+| **Authority** | it is unclear whether this effect may be caused at all — push, delete, publish, spend | **stop and confirm** — never resolve by inference (Q23) | reading a broad request as a broad grant |
+| **Outcome** | success cannot be observed with what the run can see | agree on the observable, or label the criterion `UNVERIFIED` up front | accepting a proxy as the criterion |
+
+**Rules.**
+
+1. **Do not average the six into one number.** A run that is certain about five dimensions and blind on one is not "83% certain" — it is blocked on one dimension, and the aggregate hides which. The scalar gates *whether* to ask; the type decides *what* to ask.
+2. **Authority is not a scored dimension.** Unresolved Authority never auto-proceeds regardless of aggregate confidence, and never resolves by inference from a broad request. It is the one type where the answer must come from the user (Q23, and the SKILL.md **Ask First** triggers it feeds).
+3. **A forming Goal is not a defect.** When the user is still deciding, an early binary question freezes the intent prematurely — offer the axis and let them explore. This is the one case where "proceed with a reversible draft" (Q24 tier degradation) usually beats asking at all.
+4. **Type before batching.** The Context Sufficiency Gate batches up to 4 missing dimensions into one question; typing tells you which 4 are worth the user's attention.
+
+---
+
 ## Overloaded-Anchor REDIRECT (recipe ambiguity)
 
 Some English anchors map cleanly to one recipe; these do **not** — the same word fits 2+ recipes, so a bare keyword match would mis-route. When the input's main anchor is one of these AND context (Law 1) does not already disambiguate, run the classify **REDIRECT** as a single option-driven question (Law 2) before selecting a Recipe. Pick the option from the family axis in SKILL.md `### Recipe Families`.

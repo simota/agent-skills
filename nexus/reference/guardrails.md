@@ -8,6 +8,7 @@
 ## Contents
 - Guardrail Levels
 - Guardrail Configuration by Task Type
+- Action Tier Ladder
 - Auto-Recovery Actions
 - L3 Auto-Recovery Chains
 - Recovery Confidence Calculation
@@ -43,6 +44,27 @@ Guardrails, context management, and state tracking for AUTORUN_FULL.
 | API (breaking) | L3 | Atlas impact | All consumers updated |
 | INCIDENT | L3 | - | Service restored |
 | INFRA | L3 | - | Health checks pass |
+
+---
+
+## Action Tier Ladder
+
+Guardrail levels grade *how closely a step is watched*. Tiers grade *how much a step is allowed to change*. They are orthogonal: an L2 step can run at any tier, and lowering the tier is often cheaper than raising the level.
+
+| Tier | Effect | Reversal cost | Typical form |
+|------|--------|---------------|--------------|
+| T0 `answer` | none — information only | zero | analysis, explanation, a located file |
+| T1 `propose` | none — candidates only | zero | a plan, options with trade-offs, a chain design |
+| T2 `prepare` | local, uncommitted | trivial | a diff, a draft, a branch, a dry-run report, a candidate list |
+| T3 `execute-reversibly` | committed but recoverable | bounded | a local commit, a migration with a tested rollback, a feature flag off |
+| T4 `execute-consequentially` | external or hard to undo | high or none | push, publish, delete, deploy, send, spend, credential or permission change |
+
+**Rules.**
+
+1. **Uncertainty lowers the tier; it does not have to stop the run.** When confidence is below the floor or a dimension is untyped (`intent-clarification.md` § Uncertainty Typing), execute the same task **one or more tiers down** and deliver that. "I could not safely commit, so here is the diff and the two questions it raises" is a completed T2 run, not a blocked T4 one. The binary ask/proceed gate is the exception path; tier degradation is the default one.
+2. **Never auto-promote.** A step may descend tiers freely, ascend only when the uncertainty that capped it is *resolved* — evidence found or the user answered. Re-reading the same request more confidently is not resolution, and neither is a T2 result "looking fine".
+3. **T4 is gated by grant, not by confidence.** Reaching T4 requires the step's `Authority` field to allow that effect (Q23) *and* any **Ask First** trigger to be satisfied. High confidence never substitutes for either.
+4. **Report the tier you executed at.** A run that delivered at T2 when the request implied T4 states so — that is a `partial` acceptance class with a named blocker, never a silent substitution.
 
 ---
 

@@ -110,6 +110,7 @@ _PARALLEL_BRANCHES:
   fork_point:
     snapshot_id: [context snapshot ID]
     step: [X/Y]
+    shared_constraints: []     # typed, hub-owned — see § Cross-Branch Constraints
 
   branches:
     - branch_id: A
@@ -160,6 +161,44 @@ file_ownership:
   shared_read:
     - src/types/*.ts
     - src/utils/*.ts
+```
+
+### Cross-Branch Constraints (what file ownership does not protect)
+
+File ownership prevents branches from **writing over each other**. It does nothing about constraints whose satisfaction is a property of the *whole* fan-out — and those are the ones a locally-successful branch breaks. Every branch can meet its own acceptance criteria and the run can still blow a total budget, invert a required order, or violate an invariant no single branch could see.
+
+Type each inherited constraint, because the type decides **who can check it**:
+
+| Type | Example | Checked by | Fails as |
+|------|---------|-----------|----------|
+| `per-action` | no single file rewritten wholesale | the branch, per step | local — branch catches it |
+| `per-object` | every touched endpoint keeps its contract | the branch, per object | local — branch catches it |
+| `aggregate` | total new dependencies ≤ 2 · total diff ≤ N lines · one migration per run | **hub only** | each branch "compliant", sum over budget |
+| `temporal` | nothing merged during the release freeze | **hub only** | branch has no clock context |
+| `sequence` | schema migration lands before the code that reads it | **hub only** | both branches SUCCESS, integration broken |
+| `invariant` | no secret in a committed file, ever, in any branch | hub + every branch | holds in each branch, violated in the merge |
+
+**Rules.**
+
+1. **Declare typed constraints at the fork point**, not per branch — a constraint that exists only inside branch definitions cannot be aggregate-checked.
+2. **`aggregate` / `temporal` / `sequence` are hub-owned.** Never delegate them into a branch prompt as if the branch could verify them; a branch reporting "constraint satisfied" for an aggregate is reporting on evidence it does not have.
+3. **`sequence` constraints bound the fan-out itself.** Work whose correctness depends on ordering is not parallelizable across branches — either serialize it or make the dependent branch block on the producer's completion, and say which.
+4. **Verify at the merge point, not only at branch exit.** The merge agent re-checks every `aggregate` / `sequence` / `invariant` entry before CONCAT; a clean per-branch record is not evidence for any of them.
+
+```yaml
+shared_constraints:            # declared at fork_point, inherited by all branches
+  - id: C1
+    type: aggregate
+    rule: "total new runtime dependencies across all branches <= 2"
+    owner: hub
+  - id: C2
+    type: sequence
+    rule: "branch_A migration merges before branch_B reader"
+    owner: hub
+  - id: C3
+    type: invariant
+    rule: "no credential literal in any committed file"
+    owner: hub + every branch
 ```
 
 ### Dynamic Claim (upfront declaration impossible)

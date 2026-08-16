@@ -2,7 +2,7 @@
 
 **Purpose:** The shared discipline for maximizing deliverable quality when Nexus executes **without a human in the loop** — the autonomous counterpart of `reference/dialogue-protocol.md`. Dialogue recipes elicit intent from the user; autonomous runs must **derive** intent from artifacts, **track** every decision made in the user's absence, **prove** the deliverable against the derived contract with evidence, and **finish** it — every criterion the contract claims is carried to done or accounted for as a typed residual. Quality here is not a final check — it is contracted before execution, guarded during it, and independently verified at the end.
 
-**Read when:** any `AUTORUN`/`AUTORUN_FULL` chain at CLASSIFY (Q1–Q3), AGGREGATE (Q7–Q8), and VERIFY/DELIVER (Q9–Q19); §0 and Q20–Q22 apply throughout. Applies to all non-dialogue recipes (`apex`, `enact`, `converge`, `kaizen`, `feature`, `bug`, reproduction family, quality-max family, …) and to the autonomous phases of dialogue recipes (`spec`'s spawned agents, `delve`'s EXCAVATE). Cites — never re-derives — `reference/evaluator-loop-protocol.md`, `reference/handoff-validation.md`, `reference/guardrails.md`, `reference/quality-iteration.md`, `reference/recipe-contract.md` §2.
+**Read when:** any `AUTORUN`/`AUTORUN_FULL` chain at CLASSIFY (Q1–Q3), AGGREGATE (Q7–Q8), and VERIFY/DELIVER (Q9–Q19); §0 and Q20–Q22 apply throughout; §8 (Q23–Q24) before every spawn and every side-effecting step. Applies to all non-dialogue recipes (`apex`, `enact`, `converge`, `kaizen`, `feature`, `bug`, reproduction family, quality-max family, …) and to the autonomous phases of dialogue recipes (`spec`'s spawned agents, `delve`'s EXCAVATE). Cites — never re-derives — `reference/evaluator-loop-protocol.md`, `reference/handoff-validation.md`, `reference/guardrails.md`, `reference/quality-iteration.md`, `reference/recipe-contract.md` §2.
 
 ---
 
@@ -23,15 +23,15 @@ Where a rule and this disposition point the same way, follow the rule; where the
 
 | # | Rule | Discipline |
 |---|------|-----------|
-| Q1 | **No execution without a contract** | Before EXECUTE, crystallize the intent into: goal (1–3 lines) · acceptance criteria (machine-checkable where possible) · **non-goals**. Sources in priority order: a locked spec's L3 ACs → the user's explicit words → derivation from request + repo state. A derived (not user-stated) criterion is itself a `DEC-n` entry (§2). If the request is too vague to derive testable criteria, ask ONE focused question (`reference/intent-clarification.md`) — a wrong contract executed flawlessly is the most expensive failure an autonomous run can produce. |
-| Q2 | **Non-goals are load-bearing** | State what the run will NOT do. Scope creep is the autonomous analog of dialogue circling: without explicit non-goals, every "while I'm here" improvement dilutes the chain and multiplies unreviewed decisions. |
+| Q1 | **No execution without a contract** | Before EXECUTE, crystallize the intent into: goal (1–3 lines) · acceptance criteria (machine-checkable where possible) · **non-goals** · **prohibited outcomes**. Sources in priority order: a locked spec's L3 ACs → the user's explicit words → derivation from request + repo state. A derived (not user-stated) criterion is itself a `DEC-n` entry (§2). If the request is too vague to derive testable criteria, ask ONE focused question (`reference/intent-clarification.md`) — a wrong contract executed flawlessly is the most expensive failure an autonomous run can produce. |
+| Q2 | **Non-goals and prohibited outcomes are load-bearing — and are not the same field** | **Non-goals** bound the *work*: what the run will NOT do. Scope creep is the autonomous analog of dialogue circling — without them, every "while I'm here" improvement dilutes the chain and multiplies unreviewed decisions. **Prohibited outcomes** bound the *consequences*: results that must not occur however the work is done ("no data loss", "no public artifact", "no schema change reaching prod", "no credential in a log"). A run can honor every non-goal, meet every acceptance criterion, and still cause a forbidden result — which is why they are verified on their own axis (§6) and never folded into the AC list. State them explicitly or declare `none`; a blank field is not a declaration. |
 | Q3 | **The contract is the single termination oracle** | VERIFY checks against the intent contract — never against "looks done" or the generator's own summary. One oracle per run (`reference/evaluator-loop-protocol.md` — Sprint Contract discipline, applied even outside loops). |
 
 **Contract Lint — run before EXECUTE, not after.** Q1 says what the contract must contain; this is the mechanical check that it does. Seven conditions, all cheap:
 
 1. The goal is non-empty and names an outcome, not an internal action ("expired sessions cannot be reused", not "fix the auth module").
 2. Every acceptance criterion has an **oracle** — a command, a file check, a rubric, or a named human reviewer. A criterion with no oracle cannot be auto-verified; either decompose it until it can be, or route it to human review explicitly.
-3. Non-goals are stated (Q2).
+3. Non-goals are stated (Q2), and prohibited outcomes are stated or explicitly `none`.
 4. Any high-risk or irreversible step names its rollback, or declares the irreversibility explicitly.
 5. Required evidence matches what VERIFY will actually check — no criterion demanding evidence the chain never produces.
 6. A budget and a termination condition exist, covering **success, escalate, and abort** — not success alone.
@@ -94,6 +94,16 @@ At DELIVER, classify **every intent-contract criterion**:
 
 A criterion that vanishes between the intent contract and the final report is the autonomous equivalent of a `silent` assumption — the report must account for all of them, and `dropped` without a Ledger entry is scope creep in reverse.
 
+**Prohibited outcomes are classified on their own axis, in the same section.** Success criteria and prohibited outcomes fail differently and cannot share a verdict: an AC is met by producing something, a prohibition is held by *nothing having happened*, which no amount of AC evidence demonstrates.
+
+| Class | Meaning | Allowed? |
+|-------|---------|----------|
+| `held` | checked, with Q10 evidence that the forbidden result did not occur | yes |
+| `violated` | it happened — with blast radius, the rollback attempted, and residual state | status `FAILED`; escalate, never deliver over it |
+| `unverified` | no evidence either way — the run had no way to observe it | yes, only as a named Risk; never reported as `held` |
+
+A prohibited outcome may never be `dropped`: descoping work is a `DEC-n` (Q4), but descoping a *prohibition* is the user's call, not the run's. `none` declared at Q1 is a valid whole section — an empty one is an incomplete report.
+
 ## 7. Completion Integrity (Q16–Q22) — "done" means nothing was quietly left behind
 
 Q13's best-so-far exit and Q11's deferral branch are honest **only** when the deferral itself is disciplined. Without that discipline the Follow-ups section becomes the run's disposal chute: in-scope work reclassified as "future work", artifacts shipped with `TODO` markers and stub bodies, and a `SUCCESS` status over a skeleton. `quell` already solves this for one recipe with its disposition ledger (`reference/quell-recipe.md` §3–§4, "nothing is silently dropped"); Q16–Q19 generalize that mechanism to **every** autonomous run and every recipe.
@@ -127,6 +137,17 @@ Q16–Q19 catch work that was left *visibly* undone. Q20–Q22 catch the quieter
 | Q21 | **`BLOCKED` is earned, not declared** | Before a step returns `BLOCKED` — or a residual is classed `blocked-external` (Q17) — at least one *materially different* approach must have been attempted and **named in the report** ("tried X, failed because Y"). "This is difficult", "the API is unclear", "no obvious way" are not blockers; they are the point where the work starts. Bounded by §0: the alternative must be genuinely different, and after two identical failures the step diagnoses instead of retrying. A `BLOCKED` with no named attempt is a defect, and the hub routes it back rather than aggregating it. |
 | Q22 | **Hard core before easy polish** | Order the work so the load-bearing, uncertain, or unpleasant part is done **first**, and the cosmetic pass last. Two payoffs: a `budget-exhausted` exit then leaves a working core rather than a polished shell around a hole, and difficulty is discovered while there is still budget to route around it. Where a plan defers the hardest step to the end without a stated reason (a genuine dependency), that ordering is itself the compromise — fix the order, not the report. |
 
+## 8. Authority & effect discipline (Q23–Q24) — what a step may *do* is granted, not derived
+
+Q1–Q22 govern what the run produces. Q23–Q24 govern what it is allowed to *cause*. The distinction matters because a chain widens its effect surface far more quietly than it widens its scope: the platform hands every spawned agent the hub's own tool permissions, so a step that only needed to read three files runs with the authority to write, delete, publish, and spawn.
+
+| # | Rule | Discipline |
+|---|------|-----------|
+| Q23 | **Authority is granted, never inferred** | *Capability* is what the tools can do; *authority* is what this step may do with them. A step's authority comes from the hub's explicit grant — never from the breadth of its task description, never from "it would be helpful", never from what the platform happens to permit. Three corollaries: (a) the grant is the **narrowest effect set the step's acceptance criteria need**, stated in the spawn prompt's `Authority` field (`reference/hub-authoring.md`); (b) **delegation cannot widen** — a spawned agent may not exceed the grant it received, and may not re-delegate unless re-delegation was granted, so authority is traceable back to the hub at every hop; (c) a step that finds it needs a wider effect set **requests it and returns** — it does not take it. An **Ask First** trigger is unchanged by any grant: authority narrows what a step may do, it never pre-authorizes what the user must confirm. |
+| Q24 | **Under unresolved uncertainty, lower the action tier — don't auto-promote** | Effects are tiered (`reference/guardrails.md` § Action Tier Ladder: answer → propose → prepare → execute-reversibly → execute-consequentially). An ambiguous or under-evidenced request is executed at a **lower** tier — deliver the candidate list, the diff, the draft, the dry-run — rather than being either blocked outright or resolved by guessing at the top tier. Promotion to a higher tier requires the uncertainty that blocked it to be *resolved* (evidence found, or the user answered), never merely re-read. This is the graceful middle the binary ask/proceed gate lacks: a run that cannot safely commit can almost always still deliver something reversible. |
+
+**Delegation record.** On chains that fan out ≥ 3 spawns or nest a feature-lead layer (Core Rule #9), the grant per spawn is journaled with the step: `from · to · allowed · denied · redelegation · expires_with`. It costs one line and is the only way an aggregated `SUCCESS` can be audited back to who was allowed to do what.
+
 ## Failure Modes Prevented
 
 | Failure | Mitigation |
@@ -152,12 +173,15 @@ Q16–Q19 catch work that was left *visibly* undone. Q20–Q22 catch the quieter
 | `BLOCKED` / `blocked-external` used as a synonym for "hard" | Q21 — at least one materially different attempt, named in the report, or the hub routes it back |
 | Budget exit leaving a polished shell around an unbuilt core | Q22 hard-core-first ordering |
 | "Never give up" degenerating into thrash or budget burn | §0 — two identical failures ⇒ diagnose; `diminishing-returns` exit is finishing, not quitting |
+| **Every AC met and a forbidden result caused anyway** (data lost, artifact published, credential logged) | Q2 prohibited outcomes as a separate field + §6 `held`/`violated`/`unverified` on its own axis |
+| A step causing side effects far beyond what its task needed, because the platform allowed it | Q23 narrowest-grant authority, stated per spawn and non-wideable through delegation |
+| An ambiguous request resolved by guessing at full effect, or blocked with nothing delivered | Q24 tier degradation — deliver the reversible form instead |
 
 ## Wiring
 
-- **All autonomous chains** (recipe or ad-hoc `classify` output): §0 for the whole run, Q1–Q3 at CLASSIFY/PLAN, Q4–Q6 + Q21–Q22 during EXECUTE, Q7–Q8 + Q20 at AGGREGATE, Q9–Q19 at VERIFY/DELIVER. Enforced at the Workflow level — individual recipe references cite this protocol instead of re-deriving it, adding only recipe-specific specializations (e.g. reproduction recipes' parity oracles already satisfy Q3/Q10 via `_common/DIFFERENTIAL_PARITY.md`; `acceptance`'s G1–G10 subsume Q11).
+- **All autonomous chains** (recipe or ad-hoc `classify` output): §0 for the whole run, Q1–Q3 at CLASSIFY/PLAN, Q4–Q6 + Q21–Q24 during EXECUTE, Q7–Q8 + Q20 at AGGREGATE, Q9–Q19 at VERIFY/DELIVER. Enforced at the Workflow level — individual recipe references cite this protocol instead of re-deriving it, adding only recipe-specific specializations (e.g. reproduction recipes' parity oracles already satisfy Q3/Q10 via `_common/DIFFERENTIAL_PARITY.md`; `acceptance`'s G1–G10 subsume Q11).
 - **`NEXUS_COMPLETE` / `NEXUS_COMPLETE_FULL`** (`reference/output-formats.md`): the Decision Ledger (interpretation entries first), the per-criterion Acceptance Provenance table, and the **Residual Ledger** (Q18, with the Q19 sweep line) are part of the final report — omit each section only when genuinely empty, and an empty Residual Ledger still reports the sweep as `scanned, 0 hits`.
-- **Spawn prompts** inherit Q16–Q17 as the `Completion bound` field of the Agent Spawn Template (`reference/hub-authoring.md`): a spawned agent finishes its slice or returns `PARTIAL` with a typed residual — it never returns a stub as `SUCCESS`. The hub owns Q18–Q19; a step never self-certifies its own completion sweep (Q9).
+- **Spawn prompts** inherit Q16–Q17 as the `Completion bound` field of the Agent Spawn Template (`reference/hub-authoring.md`): a spawned agent finishes its slice or returns `PARTIAL` with a typed residual — it never returns a stub as `SUCCESS`. Q23 rides the same template as the `Authority` field (narrowest grant, `redelegation: false` by default) and Q1's prohibited outcomes as `Prohibited outcomes`. The hub owns Q18–Q19; a step never self-certifies its own completion sweep (Q9).
 - **Dialogue recipes** (`spec`, `delve`): the dialogue itself follows `reference/dialogue-protocol.md`; their spawned autonomous work (EXPAND fan-outs, EXCAVATE lenses, Quality-Gate reviews) follows this protocol. The two ledgers are siblings: ASSUME-n tracks what the *user* didn't decide; DEC-n tracks what the *run* decided alone.
 
 This protocol governs the **hub's conduct of the run** — spawn prompts inherit only the pieces a step needs (its slice of the contract, Q10 evidence duty in the output envelope), never the whole protocol.

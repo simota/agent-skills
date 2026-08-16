@@ -69,6 +69,10 @@ Agent(
     Acceptance criteria: [acceptance_criteria]   # P1 — always
     Output length envelope: [length_envelope]    # P2 — always
     Scope bound: [in_scope / out_of_scope]       # P8 — always
+    Prohibited outcomes: [must_not_happen | none]           # Q2 — always
+    Authority: allowed=[effects this step may cause]
+               denied=[effects it may not]
+               redelegation: false               # Q23 — always
     Completion bound: finish every in-scope item; no TODO/FIXME/placeholder/
       stub bodies in what you produce. Do not relax the acceptance criteria
       to make your output pass, and do the hard part before the polish.
@@ -90,6 +94,8 @@ Agent(
 ```
 
 **The `Completion bound` field is not optional.** A spawned agent that trims the hard 20% into a "future work" note is the single largest source of unfinished chains: the hub aggregates a `SUCCESS`, the residue never reaches the Residual Ledger, and DELIVER reports a skeleton as done. The field is a *scope-honesty* control, not a quality exhortation — it tells the agent that `PARTIAL` + a typed residual is the **preferred** answer when it genuinely cannot finish, which is why it does not read as "try harder" filler. It never widens the task: `Scope bound` (P8) still decides what is in scope; `Completion bound` only decides that whatever is in scope is carried to done. Full contract: `reference/autonomy-quality-protocol.md` §0 + §7 (Q16–Q22); the hub owns the Q18 ledger and the Q19 sweep — never delegate a step's completion sweep to that same step (Q9). The Q20–Q22 half of the field is deliberately phrased as three concrete behaviors, not as encouragement: "do your best" / "never give up" wording is P12 filler that costs tokens and changes nothing, while "do not relax the criteria" and "name the alternative you tried" are checkable at AGGREGATE.
+
+**The `Authority` and `Prohibited outcomes` fields are the effect-side counterpart of `Scope bound`.** Scope says which files and questions are the step's; Authority says which *effects* are the step's, and prohibited outcomes say which results must not occur however the step works. They are load-bearing because the platform grants a spawned agent the hub's own permissions: `mode: bypassPermissions` is a *capability*, never an authorization, so an unstated grant reads as "everything the tools can reach". Write the narrowest set the acceptance criteria actually need — `allowed=read + edit under src/auth/**`, `denied=git push, dependency installs, external requests, further spawns` — and keep `redelegation: false` unless the step is a feature-lead that genuinely coordinates sub-agents (Core Rule #9), in which case name the sub-grant, which can only narrow. A step that finds it needs a wider effect set **returns and asks**; a step that takes it is the failure Q23 exists to catch. Effects the hub itself is not authorized to cause cannot be granted at all — a grant never satisfies an **Ask First** trigger. Full contract: `reference/autonomy-quality-protocol.md` §8.
 
 **Never include self-verification wording** ("verify your work", "double-check", "re-verify before responding") — Opus 5 self-verifies and these cause over-verification (P9); independent verification lives in the *chain* as a separate agent, never in a producer's own prompt. Fable 5 hub directives are lighter, not heavier, and must never request reasoning reproduction (`reasoning_extraction` refusal). Detailed flows → `reference/execution-phases.md`, `reference/orchestration-patterns.md`.
 
@@ -162,7 +168,7 @@ Before each spawn, tailor the prompt to the current **project + session** contex
 
 ### Agent Spawn Template
 
-Every spawn prompt MUST front-load acceptance criteria (P1), an output length envelope (P2), a scope bound (P8), and a **completion bound** (Q16–Q17: finish every in-scope item, or return `PARTIAL` + a typed residual — never `SUCCESS` over a stub) — Opus 5's default output runs long in both channels and can widen a task on its own. **Never include self-verification wording** ("verify your work", "double-check", "re-verify before responding") — independent verification is a separate chain agent, never the producer's own prompt; on a Fable 5 hub, directives are lighter still and must never request reasoning reproduction (`reasoning_extraction` refusal). Canonical prompt structure, `_STEP_COMPLETE` schema, and per-engine variants → `reference/hub-authoring.md` § Agent Spawn Template.
+Every spawn prompt MUST front-load acceptance criteria (P1), an output length envelope (P2), a scope bound (P8), a **completion bound** (Q16–Q17: finish every in-scope item, or return `PARTIAL` + a typed residual — never `SUCCESS` over a stub), and the effect-side pair **`Prohibited outcomes` + `Authority`** (Q2/Q23 — narrowest grant, `redelegation: false`) — Opus 5's default output runs long in both channels and can widen a task on its own. **Never include self-verification wording** ("verify your work", "double-check", "re-verify before responding") — independent verification is a separate chain agent, never the producer's own prompt; on a Fable 5 hub, directives are lighter still and must never request reasoning reproduction (`reasoning_extraction` refusal). Canonical prompt structure, `_STEP_COMPLETE` schema, and per-engine variants → `reference/hub-authoring.md` § Agent Spawn Template.
 
 
 
@@ -180,7 +186,7 @@ Every spawn prompt MUST front-load acceptance criteria (P1), an output length en
 
 **Adaptive prompt policy** — tailor each spawn prompt to the current project + session context (ephemeral, reversible, no confirmation gate); skip for single-spawn or trivial runs, apply at ≥3 spawns, loop recipes, or a repeated agent. `spawn_prompt = base ⊕ Project Profile ⊕ Session Ledger` → `reference/adaptive-prompt-policy.md`.
 
-**Agent spawn template** — every spawn prompt MUST front-load acceptance criteria (P1), an output length envelope (P2), a scope bound (P8), and a **completion bound** (Q16-Q17: finish every in-scope item or return `PARTIAL` + a typed residual, never `SUCCESS` over a stub). **Never include self-verification wording** — independent verification is a separate chain agent, never the producer's own prompt; a Fable 5 hub takes lighter directives still and must never request reasoning reproduction. Canonical structure, `_STEP_COMPLETE` schema, per-engine variants → `reference/hub-authoring.md`.
+**Agent spawn template** — every spawn prompt MUST front-load acceptance criteria (P1), an output length envelope (P2), a scope bound (P8), a **completion bound** (Q16-Q17: finish every in-scope item or return `PARTIAL` + a typed residual, never `SUCCESS` over a stub), and the effect-side pair **`Prohibited outcomes` + `Authority`** (Q2/Q23 — narrowest grant, `redelegation: false`). **Never include self-verification wording** — independent verification is a separate chain agent, never the producer's own prompt; a Fable 5 hub takes lighter directives still and must never request reasoning reproduction. Canonical structure, `_STEP_COMPLETE` schema, per-engine variants → `reference/hub-authoring.md`.
 
 
 

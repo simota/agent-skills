@@ -49,6 +49,7 @@ COLLECT → EVALUATE → EXTRACT → ADAPT → VERIFY → RECORD
 - Step count (actual vs expected)
 - Error events with L-level classification
 - Whether user manually corrected the chain or re-executed
+- **Near misses** (LT-07): defenses that fired without an incident following — see below
 
 **EVALUATE** — Computes CES (see below). Compares against:
 - Historical average for the same task type
@@ -88,6 +89,7 @@ COLLECT → EVALUATE → EXTRACT → ADAPT → VERIFY → RECORD
 | LT-04 | Quality feedback from Judge arrives | Medium | COLLECT → EVALUATE → EXTRACT |
 | LT-05 | New agent notification from Architect | Medium | Routing matrix update consideration |
 | LT-06 | 30+ days since last routing learning review | Full cycle | All 6 phases |
+| LT-07 | **Near miss** — a defense fired and no damage followed | Lightweight | COLLECT only; EXTRACT at 3+ near misses on the same point |
 
 ### Trigger Priority
 
@@ -96,8 +98,26 @@ When multiple triggers fire simultaneously:
 2. LT-02 (repeated failures — urgent)
 3. LT-04 (quality feedback — actionable)
 4. LT-05 (new agent — opportunity)
-5. LT-06 (scheduled review — lowest urgency)
-6. LT-01 (routine collection — always runs)
+5. LT-07 (near miss — cheap signal, accumulate before acting)
+6. LT-06 (scheduled review — lowest urgency)
+7. LT-01 (routine collection — always runs)
+
+### Near-Miss Signals (LT-07)
+
+Incidents are expensive and rare; near misses are free and frequent. Every one is a case where the chain was heading somewhere wrong and something stopped it — the same evidence an incident would have produced, minus the damage. Capturing only failures means learning exclusively from the cases where the defenses did *not* work.
+
+What counts:
+
+| Signal | What it says |
+|--------|--------------|
+| An **Ask First** gate fired and the user said no | the chain's default reading was wrong |
+| The user corrected the target at a preview/confirm step | Referent or Scope uncertainty went untyped (`intent-clarification.md`) |
+| A step requested an effect its `Authority` grant denied (Q23) | the chain design and the grant disagree about what the step needs |
+| AGGREGATE rejected a step output on a semantic check (Q7) | schema-valid, meaning-wrong — the handoff contract is under-specified |
+| A guardrail auto-recovery succeeded on the first attempt | the failure was predictable enough to be prevented instead |
+| A `PARTIAL` caught residue the Q19 sweep would have shipped | the completion bound was doing work the plan should have |
+
+**The rule that makes this useful: a high near-miss rate at one point is an upstream defect, not a healthy defense.** If the same gate keeps firing, the chain design, the routing entry, or the spawn prompt is wrong — fix the cause. Never loosen a defense because it keeps catching things; that reads the evidence exactly backwards. Record as `near_miss: {point, signal, would_have_caused, upstream_suspect}` in `.agents/nexus.md` alongside the routing decision log.
 
 ## Chain Effectiveness Score (CES)
 

@@ -36,6 +36,7 @@ Fallback: [fallback_taken: compass-invoked | architect-invoked | neither — rea
 | Criterion | Class | Evidence / gap |
 |-----------|-------|----------------|
 | [AC or derived criterion] | verified \| partial \| missed \| dropped(DEC-n) | [observed evidence, or the precise gap] |
+| [prohibited outcome] | held \| violated \| unverified | [evidence it did not occur, or why unobservable] |
 
 ### Decision Ledger
 - [DEC-n (class)]: [decision] — [why] ([interpretation entries first; omit section if empty])
@@ -54,7 +55,7 @@ Fallback: [fallback_taken: compass-invoked | architect-invoked | neither — rea
 Completion sweep: [command run] — [N hits: each mapped to a RES-n, or `pre-existing`] (`scanned, 0 hits` when clean)
 ```
 
-Acceptance Provenance covers **every** intent-contract criterion (none silent); Decision Ledger and evidence rules per `reference/autonomy-quality-protocol.md` (Q4–Q6, Q10, Q15).
+Acceptance Provenance covers **every** intent-contract criterion (none silent) **and every prohibited outcome on its own axis** — a prohibition is `held` only with evidence that the forbidden result did not occur; `unverified` is honest, `held` by assumption is not, and `violated` caps the run at `FAILED`. Decision Ledger and evidence rules per `reference/autonomy-quality-protocol.md` (Q2, Q4–Q6, Q10, Q15).
 
 The **Residual Ledger** replaces free-text "Recommended follow-ups": every leftover carries a Q17 class, and an untyped residual is a defect that caps status at `PARTIAL` (Q16–Q19). Rows and in-artifact `#TODO(agent):` markers bind bidirectionally — no orphan markers, no orphan rows. Omit the table only when the sweep is clean, and keep the sweep line either way.
 
@@ -105,6 +106,7 @@ Parallel (if any):
 | Criterion | Class | Evidence / gap |
 |-----------|-------|----------------|
 | [AC or derived criterion] | verified \| partial \| missed \| dropped(DEC-n) | [observed evidence, or the precise gap] |
+| [prohibited outcome] | held \| violated \| unverified | [evidence it did not occur, or why unobservable] |
 
 ### How to Verify
 1. [Verification step 1]
