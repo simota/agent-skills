@@ -30,6 +30,13 @@ One bug = one leader skill. Others serve as support roles. The leader is the ski
 | `MEDIUM` | 0.5–0.79 | 2 independent evidence | Report as estimated; add verification steps |
 | `LOW` | < 0.5 | ≤1 evidence | Report as hypothesis; list missing information |
 
+**Count sources, not mentions.** Before applying the thresholds above, cluster the evidence by origin and
+count each cluster **once**. Three pages quoting one announcement, three agents that read the same file, a
+document and the summary derived from it, an original and its translation — each is `n=1`. Independence comes
+from a different observation *mechanism*, not a different retrieval hit, so a claim reaching `HIGH` on three
+items that share an upstream is `LOW` wearing a higher label. When the provenance chain cannot be resolved,
+count conservatively and say so.
+
 ## Cross-Cluster Handoff Formats
 
 ### LENS_TO_SCOUT_HANDOFF
