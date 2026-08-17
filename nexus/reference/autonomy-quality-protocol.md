@@ -166,6 +166,23 @@ Three consequences worth stating explicitly:
 
 **Delegation record.** On chains that fan out ≥ 3 spawns or nest a feature-lead layer (Core Rule #9), the grant per spawn is journaled with the step: `from · to · allowed · denied · redelegation · expires_with`. It costs one line and is the only way an aggregated `SUCCESS` can be audited back to who was allowed to do what. Where the platform distinguishes them, record the acting identities separately — `actor_user · actor_agent · purpose · session` — so an audit can tell *who* an effect was caused for from *what* caused it; an agent running on the user's own credential inherits the user's full permission set, which is the widest grant in the system and never the intended one.
 
+**Budget is divided, not lent.** A parent that spawns three children and passes each the *same* ceiling has
+authorized three times its own limit, and a feature-lead layer multiplies it again per level. Allocate a
+share to each child, keep a reserve at the parent, and record the split alongside the grant. State the
+ceiling on every dimension that can run away, not just tokens: `wall_time · model_calls · tool_calls ·
+side_effects · monetary · human_interrupts` — a run bounded on tokens alone can still burn an hour, fire
+forty tool calls, or interrupt the user six times.
+
+**Three properties travel with a delegation.**
+
+1. **Capability does not inherit.** A child receives what it was explicitly granted, never what the parent
+   holds. `redelegation: false` is the default, and a child cannot grant onward what it was not given.
+2. **Cancellation propagates downward.** Cancelling or aborting a parent cancels its children; a child that
+   keeps running after its parent stopped is producing effects nobody is waiting for and nobody will check.
+3. **Ownership transfers explicitly.** After a handoff, exactly one party owns the final answer, the
+   cancellation, and the approval. Record the transfer — an unowned in-flight task is the state where every
+   party assumes another is watching it.
+
 ## Failure Modes Prevented
 
 | Failure | Mitigation |
