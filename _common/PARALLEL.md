@@ -99,6 +99,33 @@ Review capacity is the one most often forgotten and the one that actually binds 
                     └─────────────┘
 ```
 
+### Fan-out kinds (what decides the branch count)
+
+| Kind | Branch set comes from | Extra requirement |
+|------|----------------------|-------------------|
+| `static` | declared in the chain | none |
+| `data-driven` | one per item in a known collection | bound the collection first; an unbounded input is an unbounded fan-out |
+| `model-driven` | the model proposes the split | **dedupe near-identical branches and estimate cost before spawning** — an unreviewed proposal is how a 3-branch task becomes 30 |
+
+### Fan-in: declare the join policy
+
+"Wait for everything" is one policy, not the only one, and choosing it by default converts one slow branch
+into a stalled run. State the policy with the branch set:
+
+| Policy | Completes when | Use when |
+|--------|----------------|----------|
+| `all` | every branch returns | each branch owns a distinct required part |
+| `quorum(k)` | k branches agree | branches are redundant attempts at the same question |
+| `first-valid` | the first branch passing a validity check | any correct answer ends the search |
+| `deadline` | the deadline passes; partial set is used | latency is the binding constraint; state what a partial merge means |
+| `evidence-threshold` | accumulated evidence clears a bar | the goal is confidence, not coverage |
+
+**Agreement between branches is not independent confirmation when the branches share an ancestor.**
+Two agents that read the same document, inherited the same briefing, or ran the same query return one piece
+of evidence twice. Before counting a quorum, cluster by provenance and **count each source once** — with a
+common upstream, `quorum(3)` can be `n=1`. Independence comes from a different evidence *mechanism*, not a
+different branch id (`_common/EVIDENCE_LADDER.md` §2).
+
 ---
 
 ## Branch Definition
@@ -166,6 +193,51 @@ file_ownership:
     - src/types/*.ts
     - src/utils/*.ts
 ```
+
+### Shared State Keys (ownership below file granularity)
+
+File ownership is the right unit when branches write files. When they write into a shared structure — a
+findings ledger, a run state object, a counters map — the file is one object and ownership has to be declared
+per **key**:
+
+```yaml
+state_keys:
+  findings:        { writer: all,        merge: set_union_by_id }
+  max_severity:    { writer: all,        merge: max }
+  plan_version:    { writer: hub_only,   merge: none }
+  budget_spent:    { writer: all,        merge: sum }
+  conclusion:      { writer: hub_only,   merge: none }
+```
+
+**Rules.**
+
+1. **A merge function must be associative, commutative, and idempotent.** Branches finish in an arbitrary
+   order and a branch may be retried, so `set_union` / `max` / `sum-of-distinct-ids` are safe while
+   "average the two" and "append then dedupe by position" are not — the same inputs produce different results
+   depending on arrival order, and nothing reports the discrepancy.
+2. **Anything that cannot be merged gets a single writer.** Plans, conclusions, and version counters are
+   hub-owned; a branch proposes, the hub writes.
+3. **Blind writes lose updates.** A branch updating shared state carries the version it read and the write
+   fails if the version moved (`expected_version` / compare-and-swap). A silent last-write-wins is a lost
+   update that surfaces later as an unexplained missing finding.
+4. **Declare keys with the branch set, not at merge time.** A key discovered during AGGREGATE has already
+   been written by two branches under two assumptions.
+
+### Trust Zones (when branches share a findings surface)
+
+When branches append to one shared artifact, an unvalidated claim from one branch is instantly visible to
+every other as if it were established. Separate by stage, not by author:
+
+| Zone | Who may write | Meaning |
+|------|--------------|---------|
+| `candidate` | any authorized branch | proposed; not usable as a premise |
+| `validated` | the validator only | independently checked |
+| `approved` | human or policy | cleared for effects |
+| `execution` | nobody — read-only | what the run is allowed to act on |
+
+**A branch may never promote its own claim out of `candidate`.** That is the separation of duties the zones
+exist for; without it the shared surface is just a faster path for one branch's error to reach every other
+(`_common/FINDING_LEDGER.md` governs the disposition vocabulary within a zone).
 
 ### Runtime Slot (the state file ownership cannot see)
 
