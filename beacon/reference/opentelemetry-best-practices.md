@@ -352,6 +352,48 @@ Instrumentation approaches:
     - Fragmentation risk if incompatible packages
 ```
 
+### Domain causality — spans alone cannot reconstruct an agent run
+
+`parent_span_id` reconstructs *who called whom*. It does not answer the questions an agent incident actually
+asks: which retrieved evidence produced this claim, which state version this tool call mutated, which
+approval authorized this effect, and which earlier attempt this is a retry of. Time ordering is not causality
+— two spans adjacent in the timeline may be unrelated, and the causal parent may be minutes earlier.
+
+Carry domain IDs on the span alongside the span IDs:
+
+```
+state_before / state_after      # state version the call read and wrote
+produced_evidence               # evidence IDs this step created
+caused_state_mutation           # mutation identity, not a boolean
+capability_decision_id          # which authorization decision allowed this
+approval_ref                    # the approval this effect was bound to
+retry_of                        # the prior attempt this supersedes
+delegated_to                    # the child run this step handed off to
+effect_id                       # external side-effect identity (see idempotency)
+```
+
+The test: from a landed external effect, can you walk back to the approval, the plan, the state, the
+evidence, and the source? If any hop is missing, the trace records that something happened, not why.
+
+**Trace completeness is a measurable property**, and worth a dashboard row each:
+`parentage_coverage` (spans with a resolvable parent) · `evidence_link_coverage` (claims with an evidence ID)
+· `approval_binding_coverage` (effects bound to an approval).
+
+**What not to record.** Do not persist private chain-of-thought. Record instead: input/output hash and size,
+model + config, the structured route decision with its reason code, retrieval query template + parameters
+(not the full corpus), evidence IDs, tool name + schema version + status + effect identity, state version and
+mutation summary, approval decision ID, error class and retry relation, latency/token/cost. Storing full
+prompts and outputs requires a stated purpose, access rule, retention, and redaction — never as a debug
+default.
+
+**Sampling is a correctness concern here, not only a cost one.** Dropping high-latency runs or keeping only
+successful traces produces a corpus in which the failures being investigated do not exist. Always retain
+error and side-effecting runs; sample the uneventful ones.
+
+**GenAI semantic conventions are still moving** — the GenAI agent-span conventions are pre-stable. Keep a
+canonical internal event schema and map it to OTel at the exporter, recording the mapping version on the
+trace, so a convention change edits the exporter rather than the history.
+
 ---
 
 ## 12. Beacon Integration
