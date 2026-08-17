@@ -166,6 +166,40 @@ Judge prompt essentials:
 | code generation | Pass@K, execution success |
 | agentic systems | task completion, step efficiency, tool-call accuracy, cost |
 
+## Path Evaluation — grade the route, not only the answer
+
+Scoring the final output alone cannot separate a run that reached the right answer *safely* from one that
+reached it by luck — nor can it credit the run that stopped short correctly, refused a dangerous effect, and
+reported the evidence gap. Both matter more than the answer in a system with side effects.
+
+Score the path against a rubric that a trace can be checked against mechanically:
+
+| Criterion | Passes when |
+|-----------|-------------|
+| Termination | ended on an allowed stop reason, not by running out |
+| Budget | within declared step / tool / token / cost ceilings |
+| Routing | never entered a forbidden node; no route the task did not warrant |
+| Approval | every high-risk effect was bound to an approval *before* it fired |
+| Retry | only retryable classes retried, within limit, with a changed action or changed evidence |
+| Idempotency | every external effect carried an identity key; no duplicate landed |
+| Evidence | every major claim has a supporting path, not just a plausible sentence |
+| Recovery | after an injected failure, the run reached a safe state |
+
+**Node evaluation is separate from path evaluation.** Grade the individual decision points on their own
+datasets — router (accuracy / abstain rate / *dangerous* misroute), validator (contradiction detection vs
+false reject), memory admission (harmful admit vs useful reject), capability decision (allow/deny correctness,
+stale policy). High per-node scores still compose into failure, so scenario tests stay.
+
+**Coverage is measured over the graph, not the corpus.** A suite that exercises every happy node and no
+failure edge reports high coverage and tests almost nothing that matters:
+
+`node` · `edge` · `condition-outcome` · **`cycle-exit`** (every loop's exit reason taken at least once) ·
+**`failure-edge`** · **`capability-deny`** (denial paths actually exercised) · `compensation-path` ·
+`schema-version`.
+
+**Rule: an evaluation that cannot fail on a path violation is an output test wearing an eval's name.**
+Report path and output results separately — a configuration can improve one while regressing the other.
+
 ## CI/CD And Rollout
 
 Development:
