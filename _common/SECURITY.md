@@ -93,6 +93,34 @@ Verify with `chain audit`. Mismatch → `chain recover`.
 
 ---
 
+## Allowlist and Exclusion Limits
+
+Two controls are routinely trusted past what they can enforce.
+
+**A command allowlist matches strings; it does not bound effects.** `npm test` on the allowlist authorizes
+whatever `package.json` currently makes that script do — and the same prefix admits redirects, subshells,
+chained commands, shell expansion, aliases, and edits to the script the command invokes. The pattern
+constrains the *typing*, not the process tree.
+
+| Rule | Why |
+|------|-----|
+| Allow narrow wrappers, never general interpreters | `make test` is a fixed entry point; `bash -c <anything>` is the shell |
+| Treat the allowlisted target's contents as part of the grant | changing what a script does is changing what was approved, with no policy event |
+| Deny by effect where the effect is what matters | push, publish, deploy, delete, and spend stay denied regardless of how the command is spelled |
+| Test the bypasses, not the happy path | an allowlist is verified by confirming that redirect, subshell, and script-edit variants are **denied** |
+
+**Exclusion lists do not create isolation.** `.gitignore`, a settings deny-glob, or a "do not read" instruction
+each stop one path to a file; none of them stop the others. A secret excluded from the repo is still reachable
+via the environment, a mounted directory, a shell command, a tool result, or an artifact.
+
+Layer instead, outermost first: **keep it out of the workspace** → **do not mount it** → **do not put it in
+the environment** → **filesystem deny rules** → **context/tool exclusion**. Only the first three survive an
+agent that composes tools in an unforeseen order. Where the task genuinely needs a credential, the tool
+resolves it internally and the model holds an opaque reference — issued short-lived, scoped to the task, and
+revocable — never the value (`oracle/reference/agent-design.md`).
+
+---
+
 ## Hooks and Settings Hardening
 
 | File | Rule |
