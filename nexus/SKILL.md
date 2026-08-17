@@ -133,7 +133,7 @@ Four families hold confusable siblings, disambiguated by an explicit axis: **Imp
 
 ```
 classify* · bug · feature · security · refactor · optimize · kaizen · anneal · restyle · converge · proactive · apex
-charter · enact · layer · goal · gedanken · delve · cartograph · chronicle · spec · essential · killer · trim
+charter · enact · layer · goal · gedanken · delve · cartograph · chronicle · verity · spec · essential · killer · trim
 acceptance · summit · podium · newsroom · wish · eureka · runway · hallmark · rebrand · crucible · silhouette
 lattice · chorus · assay · migrate · transmute · clone · fuse · graft · package · pack · quell · burnish · whet
 ```

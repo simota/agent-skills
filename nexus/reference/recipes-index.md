@@ -35,6 +35,7 @@
 | Delve | `delve` | | Existing-feature deep-dive → evolution-direction dialogue; no code — stops at a named Evolution Map. | See `reference/delve-recipe.md` | `reference/delve-recipe.md` |
 | Cartograph | `cartograph` | | Multi-repo reverse-engineering → bird's-eye architecture diagrams + design document; no code — stops at a named Cartography Map. | See `reference/cartograph-recipe.md` | `reference/cartograph-recipe.md` |
 | Chronicle | `chronicle` | | Commit-history reverse-engineering → era timeline + storylines + decision log + inferred ethos; no code. | See `reference/chronicle-recipe.md` | `reference/chronicle-recipe.md` |
+| Verity | `verity` | | Codebase × documentation coherence audit → a triaged register of contradictions, stale record, and unexplained artifacts; **report-only** — no code, no doc edits, every finding routed. | See `reference/verity-recipe.md` | `reference/verity-recipe.md` |
 | Spec | `spec` |  | Interactive feature-proposal → locked specification through deep human-in-the-loop dialogue. | See `reference/spec-recipe.md` | `reference/spec-recipe.md` |
 | Essential | `essential` |  | Must-have feature **verdict + conditional implementation**. | See `reference/inline-recipes.md` | `reference/inline-recipes.md` |
 | Killer | `killer` |  | Killer-feature **verdict + conditional implementation with feature flag**. | See `reference/inline-recipes.md` | `reference/inline-recipes.md` |

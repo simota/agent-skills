@@ -129,6 +129,13 @@ MECHANICAL_ITEMS = [
      "`drive vulnerabilities to zero`"),
     (52, "budget sweep -> optimize mode=to-zero", "signal-keywords.md",
      "`clear the performance budget violations`"),
+    (53, "docs-contradict-code keyword -> verity", "signal-keywords.md",
+     "`the docs contradict the code`"),
+    (54, "verity subcommand registered", "recipes-index.md", "| Verity | `verity` |"),
+    (55, "spec-code drift splits register-vs-fix (anneal guard)", "signal-keywords.md",
+     "**`spec-code drift` splits on register-vs-fix**"),
+    (56, "docs-vs-code drift splits scope-vs-record (pdm guard)", "signal-keywords.md",
+     "**`docs-vs-code drift` splits on the question asked:**"),
     (28, "switch profile keyword -> pack", "signal-keywords.md",
      "`pack`, `skill pack`, `skill profile`, `enable skills`, `switch profile`, `skill preset` | `pack`"),
 ]
