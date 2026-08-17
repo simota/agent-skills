@@ -217,7 +217,7 @@ Routing rules:
 
 | File | Read this when |
 |------|----------------|
-| `reference/prompt-engineering.md`                     | Designing prompts, structured outputs, Claude-specific behavior, or prompt tests. |
+| `reference/prompt-engineering.md`                     | Designing prompts, deciding what a prompt cannot guarantee, triaging bad output by layer, structured outputs, Claude-specific behavior, or prompt tests. |
 | `reference/rag-design-anti-patterns.md`         | Retrieval architecture, chunking, Hybrid Search defaults, or RAG anti-pattern checks. |
 | `reference/llm-application-patterns.md`         | Choosing agent patterns, MCP design, tool-use contracts, or caching strategy. |
 | `reference/ai-safety-guardrails.md`                 | OWASP LLM coverage, guardrail layers, hallucination controls, or PII handling. |

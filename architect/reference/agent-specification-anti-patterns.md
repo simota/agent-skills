@@ -4,14 +4,14 @@
 **Read when:** A proposed skill looks vague, overloaded, unsafe, or poorly tooled.
 
 ## Contents
-- 1. The Eight Core Specification Anti-Patterns
+- 1. The Nine Core Specification Anti-Patterns
 - 2. System Prompt Design Best Practices
 - 3. Tool Design Principles
 - 4. Role-Definition Patterns
 - 5. Separating Planning and Execution
 - 6. Architect Integration
 
-## 1. The Eight Core Specification Anti-Patterns
+## 1. The Nine Core Specification Anti-Patterns
 
 | # | Anti-Pattern | Problem | Symptoms | Mitigation |
 |---|-------------|---------|----------|------------|
@@ -23,6 +23,7 @@
 | **AS-06** | **Verbose Prompting** | The prompt is overloaded with 2000+ words of detail | Slower execution, diffused attention, worse compliance | Keep only essential instructions inline and move detail to `reference/` |
 | **AS-07** | **Missing Context** | The model is expected to infer background knowledge | Wrong assumptions and domain errors | Provide all required context explicitly |
 | **AS-08** | **Static Prompt Lock-In** | The first prompt is kept forever without a feedback loop | The same mistakes repeat and improvement stalls | Use iterative improvement and feed back observed failure patterns |
+| **AS-09** | **Over-Specified Process** | The spec fixes an internal route the author happened to think of, where only the outcome was required | Caps quality at the author's first idea; the model cannot pick a decomposition that fits the case; the route outlives the model generation that needed it | Tier the procedure (§2) — fix order only where it carries correctness, safety, or auditability; otherwise state outcome conditions and leave the route free |
 
 ---
 
@@ -61,6 +62,28 @@ Structure of an effective system prompt:
     - Recency (last 15%): memorable operating guidance
     - Middle Sag (middle 70%): use structure to offset attention drop
 ```
+
+### Process Constraint Tiers — Fixing Route vs Fixing Outcome
+
+Item 4 above ("define a staged workflow") is not a licence to script every step. `AS-02` (ambiguous)
+and `AS-09` (over-specified) fail in opposite directions, and the tier decides which risk applies.
+
+| Tier | Classification | Fix it when | Examples |
+|------|---------------|-------------|----------|
+| `Required Process` | MUST | the order itself carries correctness, safety, or auditability, so a different route is wrong even with a good result | backup → integrity check → dry-run → approval → apply → rollback verification; draft → recipient check → preview → human approval → send; minimal reproduction before a fix |
+| `Suggested Scaffold` | CONDITIONAL | the task is hard to decompose and the split earns its cost; the agent may deviate with a stated reason | "enumerate candidates before comparing", "extract requirements before designing" |
+| `Internal Method` | DELEGATE | several routes satisfy the outcome and the result is checkable afterwards | search order, hypothesis order, section structure, naming, which candidate to explore first |
+
+Two rules when writing a phase contract:
+
+1. **Separate the audit trail from the internal route.** What a reviewer needs is assumptions used,
+   evidence and sources, options compared, conditions that would change the conclusion, and
+   verification performed — not a transcript of the model's reasoning (`_common/OPUS_5_AUTHORING.md`
+   P9, `gauge` RR-1). Fixing the *output* of a stage is cheap and checkable; fixing the *thinking*
+   inside it is neither.
+2. **A `Required Process` step needs a stated failure.** If no one can name what goes wrong when the
+   order changes, it is a `Suggested Scaffold` wearing MUST clothing, and it will still be in the
+   spec two model generations after it stopped helping.
 
 ---
 
@@ -191,7 +214,7 @@ Recommended dual-mode architecture:
 
 ```
 How Architect uses this reference:
-  1. Screen for AS-01 through AS-08 during `DESIGN`
+  1. Screen for AS-01 through AS-09 during `DESIGN`
   2. Validate system-prompt structure during skill generation
   3. Apply ACI principles when the agent includes tools
   4. Check for God / Phantom / Clone / Orphan patterns in role design

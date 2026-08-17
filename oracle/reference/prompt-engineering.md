@@ -1,6 +1,8 @@
 Purpose: Use this file when you are designing prompts, choosing Claude-specific prompting techniques, or defining prompt tests and versioning rules.
 
 ## Contents
+- Instruction boundary — what belongs in a prompt
+- Triage before rewriting a prompt
 - Core design patterns
 - Claude 4.x techniques
 - Prompt versioning
@@ -10,40 +12,136 @@ Purpose: Use this file when you are designing prompts, choosing Claude-specific 
 
 # Prompt Engineering Patterns
 
+## Instruction Boundary — What Belongs In A Prompt
+
+A prompt carries intent; it does not carry guarantees. Strong wording ("absolutely", "100%
+accurate", "never leak") adds no detection ability, no capability, and no permission — and it
+pushes the model toward confident phrasing that hides uncertainty. Classify each requirement
+before writing it.
+
+| Class | Test | Examples |
+|-------|------|----------|
+| `MUST SPECIFY` | only a human holds it, and a wrong guess makes the output a different artifact | goal, deliverable + use condition, audience, case facts, hard constraints, conflict priority, source of truth, acceptance criteria, how to treat unverified items |
+| `SHOULD SPECIFY` | the model can guess, but stating it cuts variance | prior knowledge, depth, locale/jurisdiction, information freeze date, glossary, compat constraints, citation rules |
+| `CONDITIONAL` | value depends on task and model — decide per case, never as a blanket rule | few-shot, persona, output schema, tables, length, self-review, search, code execution, clarifying questions |
+| `DELEGATE` | reversible exploration where the model beats an up-front guess | section order, naming, wording, candidate designs, search order, implementation shape |
+| `DO NOT RELY ON PROMPT` | must hold under ambiguity, long sessions, and injection | access scope, spend caps, type validity, sandboxing, secret isolation, audit logging, irreversible-action approval |
+
+Classification is per case, not per item name: length is usually `CONDITIONAL`, becomes `MUST` at a
+hard ad slot, and moves to `DO NOT RELY ON PROMPT` when the API truncates mechanically.
+
+Requirement → the layer that actually enforces it:
+
+| Requirement | Prompt-only failure mode | Enforcing layer |
+|-------------|--------------------------|-----------------|
+| always valid JSON | stray prose, missing key, wrong type | Structured Outputs + schema validator + retry |
+| never exceed a spend cap | misread, off-by-a-digit, injected override | code-side check before the call |
+| never touch secrets | complies in wording, reads anyway | tool permission + secret isolation |
+| facts are current | training cutoff, missed retrieval | retrieval + source-date check |
+| confirm before a destructive act | conversation state or attacker text drifts it | confirmation gate in the application |
+| output is correct | self-assertion ≠ measured quality | eval set + independent verification + human review |
+
+`Prompt · Retrieval · Schema · Code/Validator · Tool Permission · Eval · Human Review` are
+different guarantees, and a system message is influential rather than binding — Microsoft's current
+guidance states it does not ensure compliance and must be paired with filtering and evaluation.
+When a requirement wants "absolutely", move it down this list instead of intensifying the wording.
+
+Repo counterpart: `_common/MECHANISM_SELECTION.md` answers the same question one level up — which
+Claude Code mechanism holds an instruction. This table answers it inside an LLM application.
+
+## Triage Before Rewriting A Prompt
+
+Bad output is not evidence of a bad prompt. Rewriting instructions when the fault is elsewhere
+delays the diagnosis and grows the prompt permanently.
+
+| Layer | Owns | Fault looks like | What rewording cannot fix |
+|-------|------|------------------|---------------------------|
+| Instruction | task, constraints, priority | ignores a stated constraint, wrong shape | — |
+| Context | facts, case specifics, history | generic answer; treats a stale draft as truth | supply and label the authoritative source |
+| Capability | what the model can do at all | consistently wrong on this task class | change model or decompose the task |
+| Tool | search, execution, data access | stale facts, arithmetic errors | add the tool, not the adjective |
+| Evaluation | what counts as success, and how measured | passes review, fails downstream | define observable criteria and measure |
+
+Order: goal and success criteria → is the needed fact in context → is the model capable → is a tool
+missing → does the eval measure what you actually want → only then reword. The recurring
+misdiagnosis is judging a RAG answer's wording when retrieval never returned the passage
+(`reference/evaluation-observability.md` scores retrieval separately for this reason).
+
 ## Core Design Patterns
 
 | Pattern | Best for | Note |
 |---------|----------|------|
-| Role-based | domain-specific tasks | assign explicit expertise in the system prompt |
+| Role-based | fixing what the model looks at | define responsibility and review focus — a persona does not add knowledge, credentials, or accuracy, and authority framing ("world-class", "20 years") is unverifiable |
 | Chain-of-Thought / extended thinking | complex reasoning | prefer model-native thinking over micromanaged step scripts |
-| Few-shot | format consistency, tone | start with `3-5` examples only |
+| Few-shot | format consistency, tone | pick by role (below), not by count; `3-5` is a ceiling, not a target |
 | Self-consistency | high-stakes reasoning | multiple paths, then compare |
 | ReAct | tool-using agents | use for dynamic sub-tasks |
 | Plan-and-Execute | long multi-step workflows | default for auditable agent plans |
 
+### Few-Shot Composition
+
+Examples are specification, not illustration: label space, input distribution, and format carry
+much of the effect, example order alone moves results measurably, and the model follows examples
+over stated rules when the two disagree. Select by role, not by count.
+
+| Role | Purpose |
+|------|---------|
+| typical | the ordinary case |
+| boundary | near-identical input, different label |
+| insufficient-info | the case that must return "needs confirmation" instead of an answer |
+| format | the shortest example that pins output shape |
+
+If you cannot name a given example's role, it is duplicate rent. Evaluate on inputs *unlike* the
+examples — scoring only on look-alikes hides overfitting. Skip few-shot when the output spec is
+already clear, when examples would crowd out source documents, or when they encode a superseded
+rule.
+
+State precedence explicitly where examples and rules can drift apart — `current glossary > hard
+constraint > example` — and instruct the model to report the conflict rather than imitate a stale
+example. Version examples with the rules and re-run the regression set when either changes.
+
 ## Prompt Structure Template
 
 ```markdown
-## Role
-You are [role] with expertise in [domain].
+## Goal
+[What the reader can decide or do after using the output — not the task name]
+
+## Deliverable
+[Noun + use condition: "a memo an exec can approve funding from", not "a report"]
+
+## Audience
+[Who reads it, and what they already know]
+
+## Focus
+[Responsibility and what to prioritize looking at — not authority or years of experience]
 
 ## Context
-[Background relevant to the task]
-
-## Instructions
-1. [Step 1]
-2. [Step 2]
-
-## Output Format
-[Exact format with example]
+[Case facts; which source is authoritative; what is background vs instruction]
 
 ## Constraints
-- [Constraint 1]
-- [Constraint 2]
+- Hard: [violating it fails the deliverable]
+- Priority on conflict: [1 … 2 … 3 …]
+
+## Acceptance criteria
+- [observable check 1]
+- [observable check 2]
+
+## Unknowns
+[Stop and ask only when the answer changes the goal, a legal/safety boundary, or an irreversible
+decision. Otherwise assume, and list assumptions separately from the deliverable.]
+
+## Output Format
+[Only the contract the next consumer needs]
 
 ## Examples
 <examples>...</examples>
 ```
+
+Two rules for using it: **slots are drop-if-unused** — a slot with nothing case-specific in it is
+rent, not structure; and **specify process only where order carries correctness** (`Required
+Process` in `architect/reference/agent-specification-anti-patterns.md` § 2). A numbered step list
+as a default slot caps the answer at the requester's first idea, so state outcome conditions and
+leave the route free unless the sequence is itself the requirement.
 
 ## Claude 4.x Techniques (Opus 5 / Sonnet 5 baseline, 2026-05)
 
@@ -83,7 +181,10 @@ These match `_common/OPUS_5_AUTHORING.md` principles P2 / P3 / P9 / P8 / P10 / P
 
 - prefer tool-based schemas or `output_format` JSON mode over plain-text JSON prompting;
 - validate every output with a schema before downstream use;
-- use enums and defaults to reduce output drift.
+- use enums and defaults to reduce output drift;
+- **do not lock a schema during exploration** — required fields pull the model into filling slots and drop findings the schema never anticipated. Explore free-form, let a human or evaluator choose the fields, then freeze the schema and validate. Applies to planning, research, hypothesis generation, and long-form drafting;
+- keep the schema small and stable, and separate machine-consumed fields from human-facing prose — optional commentary fields grow downstream parsing code;
+- fix the format only for what the next consumer contractually needs; a human reader is not a consumer that needs a schema.
 
 ### XML Tags
 
