@@ -47,6 +47,30 @@ Guardrails, context management, and state tracking for AUTORUN_FULL.
 
 ---
 
+## Edge Types — who decides the next step
+
+Before grading how much a step may change, decide **what kind of thing chooses it**. Three kinds, and
+collapsing them is how a safety rule ends up depending on a model's mood:
+
+| Edge | Decided by | Correct use |
+|------|-----------|-------------|
+| `deterministic` | code / config | schema validation, budget exhaustion, error class, retry limits, required gates — anything whose answer must not vary run to run |
+| `model-decided` | the model's judgment | semantic classification, hypothesis selection, which specialist fits, what to try next |
+| `policy-decided` | a rule or a human | permission grants, approvals, forbidden transitions, escalation |
+
+**Rules.**
+
+1. **Safety, budget, schema, and error class are never model-decided.** A model may *propose* the next step;
+   whether that step is reachable is decided elsewhere. Model output generates candidates; policy and
+   deterministic edges control arrival.
+2. **A model-decided edge returns a closed set, a confidence, and a fallback** — a label from a declared enum
+   (never free text), the confidence that produced it, and where the step goes when confidence is below the
+   floor or the label is unrecognized. An unknown label routes to the fallback, never to "best guess".
+3. **Never delete a deterministic edge to unblock a model-decided one.** If a route the model wants is
+   forbidden, that is the rule working. Route around it or escalate — do not soften the gate.
+4. **A missing exit is a schema error, not a prompting problem.** A cycle with no exit edge, or a state
+   reachable from nothing, is fixed in the chain definition — never by adding "remember to stop" to a prompt.
+
 ## Action Tier Ladder
 
 Guardrail levels grade *how closely a step is watched*. Tiers grade *how much a step is allowed to change*. They are orthogonal: an L2 step can run at any tier, and lowering the tier is often cheaper than raising the level.
@@ -320,6 +344,18 @@ approval for a **T3/T4 effect** (§ Action Tier Ladder) carries these four field
    transfer authority.
 4. **`Alternative: none` is a claim that gets checked.** Most T4 requests have a T2 form (produce the artifact,
    let a human ship it). Recording that it was considered is what keeps T4 rare.
+5. **A denial is a result, not an absence.** Return it structured — `decision: deny` plus a reason code
+   (`out_of_grant` · `unapproved_destination` · `data_class_too_high` · `irreversible_without_approval` ·
+   `budget_exhausted` · `stale_policy`) — so the run can route on it. A denial with no reason code is
+   indistinguishable from a crash, and the step will simply be retried.
+6. **Reaching the same effect through a different tool is escalation, not a workaround.** After a denial,
+   trying a second tool, a broader command, or a differently-shaped call that lands the same effect
+   ("tool shopping") is the denial being bypassed. Treat it as a `policy_denial` repeat
+   (`error-handling.md` § Tool Error Classes — terminal, never rephrased past).
+7. **Grants are evaluated at use, not at discovery.** What a tool *offers* is discovered once; whether this
+   call may use it is decided per call. A revoked or expired grant that still sits in a cached capability list
+   is `stale_policy` — check at request time, keep the cache TTL short, and treat a revocation as an event
+   that invalidates, not as something the next lookup will notice eventually.
 
 ---
 
