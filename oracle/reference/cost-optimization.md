@@ -77,6 +77,7 @@ Split the budget in two and keep the order:
 
 ```yaml
 hard_gates:            # pass/fail — never traded for tokens, latency, or price
+  quality_floor: {overall_acceptance, critical_slice_floor, schema_validity, unauthorized_action: 0}
   security: {max_sensitivity, forbidden_categories}
   authority: {minimum_for_decision}
   freshness: {runtime_max_age}
@@ -84,6 +85,28 @@ hard_gates:            # pass/fail — never traded for tokens, latency, or pric
 optimization:          # targets — tuned freely, only after the gates pass
   {token, latency, monetary, cognitive, maintenance}
 ```
+
+**Fix the Quality Floor before the optimization starts, and version it.** The floor is the minimum quality the
+system may not fall below *after* the change — a set, not a single score: overall acceptance, an independent
+floor per critical slice, schema validity, and the counts that must stay at zero (unauthorized tool action,
+unsupported policy claim). A candidate that misses the floor leaves the feasible set; it is not scored lower
+and then rescued by a cheaper price. Compare on cost, latency, and tail *only within* the set that already
+passes.
+
+Two failure modes bracket this. A vague floor lets a quality loss be reclassified after the fact as an
+acceptable trade-off — the release already shipped, so the bar moves to meet it. A floor higher than the risk
+justifies is just as expensive: it pins every request to the largest model and adds human review that catches
+nothing. Derive it from use case and risk, and have Product, domain expert, Security, and the on-call owner
+agree to it.
+
+Two procedural consequences:
+
+- **Every optimization experiment records `workload_version` and `quality_floor_version`.** A result measured
+  against a different workload mix or a different floor is not comparable to the baseline — "we tested that
+  last quarter" is how a regression re-enters.
+- **Lowering the floor is a requirements change with its own approval, never a performance result.** A change
+  that passes only after the bar moves has not improved anything; it has renegotiated what counts as working.
+  Route it back as a scope decision with a named approver, and re-baseline before the next comparison.
 
 When the composed context overflows, degrade in this order — each step preserves more meaning than the next:
 

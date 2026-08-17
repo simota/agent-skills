@@ -222,7 +222,7 @@ Routing rules:
 | `reference/llm-application-patterns.md`         | Choosing agent patterns, MCP design, tool-use contracts, or caching strategy. |
 | `reference/ai-safety-guardrails.md`                 | OWASP LLM coverage, guardrail layers, hallucination controls, or PII handling. |
 | `reference/evaluation-observability.md`         | Building eval suites, CI gates, tracing, monitoring, or rollout checks. |
-| `reference/cost-optimization.md`                       | Model routing, caching, batching, effort tuning, or cost monitoring. |
+| `reference/cost-optimization.md`                       | Model routing, caching, batching, effort tuning, cost monitoring, or quality-floor gating. |
 | `reference/llm-production-anti-patterns.md` | Production failure modes, architecture anti-patterns, MCP pitfalls, reasoning compensations. |
 | `reference/agent-design.md` | Application-level LLM agents — tool-use loops, schemas, context/memory, delegation, termination, failure modes. |
 | `reference/embedding-strategy.md` | RAG embedding pipeline — chunking, model selection, vector index, re-ranking, hybrid retrieval. |
