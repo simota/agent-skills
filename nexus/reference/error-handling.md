@@ -49,6 +49,28 @@ Failure Signature = stage + error_code + normalized_location + relevant_state_ha
 
 **Rule:** a retry is only legitimate when the **action or the evidence changed**. Two runs producing the same signature are not two attempts — they are one attempt counted twice, and the second one is Q20 thrash (`autonomy-quality-protocol.md` §0: *two identical failures ⇒ stop and diagnose*). Count identical signatures toward the circuit breaker, not toward the retry budget.
 
+### Delegation Cycles and Waits (the failures that look like "still running")
+
+Hop limits stop a task bouncing between the same two agents. They do not stop a task travelling a longer
+loop, and they do not stop a run where nothing is looping at all — everyone is simply waiting.
+
+**Circulating task.** Carry `task_id`, `hop_count`, and the set of agents already visited *in the delegation
+message itself*. A task arriving at an agent that has already handled this `task_id` is denied at receipt —
+the check is on task identity, not on pair frequency, because `A → B → C → A` never trips a per-pair budget.
+
+**Mutual wait.** A waits on B's artifact while B waits on A's approval; both are healthy, neither progresses,
+and no error is ever raised. Track the wait edges — who is blocked on whom — and treat a cycle among them as a
+failure, not as latency. Each wait carries a deadline; when the cycle is detected or a deadline expires, one
+side is chosen to proceed or abort by a fixed rule, never by whoever times out first.
+
+**Shared retry budget.** One specialist timing out can trigger a supervisor retry, a sibling's fallback, and
+a fresh tool storm — each locally reasonable, together an amplification. Retry budget is held by the *run*,
+not by each participant, and the circuit breaker trips on the run's total, not per agent.
+
+**Ownership.** Every in-flight task has exactly one owner for its final answer and its cancellation. An
+unowned task is the state in which each party assumes another is watching it — and it is indistinguishable
+from progress until the deadline.
+
 ### Observation Point ≠ Origin (locate before you fix)
 
 The stage that *reported* a failure is rarely the stage that *produced* it. A gate failing at VERIFY often
