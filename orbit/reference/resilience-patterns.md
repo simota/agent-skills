@@ -39,6 +39,27 @@ Purpose: source-of-truth for the resilience principles cited in `SKILL.md` Core 
 - Every effectful tool invocation needs an **idempotency key**; retry without idempotency risks double-execution of side effects. [Source: fast.io — AI Agent State Checkpointing]
 - **Separate task state** (workflow checkpoints, artifacts) from **system state** (policies, budgets, permissions). Mixing them makes agents "remember" the wrong things. Long-running agent tasks fail 15-30% of the time (API timeouts, rate limits, network blips); proper checkpointing cuts wasted reprocessing by ≥ 60%. [Source: fast.io — AI Agent State Checkpointing]
 
+## Checkpoint contents and resume-time revalidation
+
+- **A checkpoint that stores only progress cannot be safely resumed.** Record what the run was executing
+  *against*: source revision, schema version, tool versions and their argument schemas, model + config,
+  active policy/permission version, and the identity of any external effect already committed. Resuming with
+  the position but not the premises replays old assumptions against a changed world.
+- **Revalidate before continuing, do not trust the checkpoint's age.** On resume, re-check each class and
+  react differently — the correct response is not uniform:
+
+  | Checkpoint element | On resume |
+  |---|---|
+  | source revision | changed → re-verify or re-plan; a diff built on the old base is stale, not mergeable |
+  | permissions / approvals | re-evaluate at use; an approval captured before the pause may be revoked or scoped to a state that moved |
+  | tool schema / version | changed → re-read the contract; a stored call shape may no longer be valid |
+  | model / config | changed → prior calibration and thresholds are not transferable |
+  | committed effects | query the external system; **never infer from the checkpoint that an effect did or did not land** |
+
+- **The first resume question is "what already happened", not "where was I".** Pair the effect ledger with
+  the idempotency key above: reconcile committed effects against external state *before* replaying any step.
+  A resume that re-executes a committed effect is indistinguishable from a duplicate request at the far end.
+
 ## Context-overflow controls
 
 - **Memory pointer pattern**: tool outputs > `1KB` MUST be stored externally and passed as short references. Reduces per-call payload from 200KB+ to under 100 bytes; context-window overflow is the most common agent failure mode. [Source: arxiv.org/abs/2511.22729 — Solving Context Window Overflow in AI Agents; dev.to/aws — Why AI Agents Fail: 3 Failure Modes]
