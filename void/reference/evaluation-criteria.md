@@ -184,6 +184,40 @@ hidden_costs:
    -> Low: REMOVE and recreate only if the need becomes real
 ```
 
+## Admission Gate — the same questions, asked before it exists
+
+The 5 Existence Questions interrogate something already built, where the sunk cost, the incumbency, and
+"someone might be using it" all argue for keeping it. The cheapest removal is the one that never gets
+proposed, so run this gate on **additions**: a new abstraction, layer, protocol document, registry entry,
+config surface, or dependency.
+
+**Six conditions under which the structure is not worth adding.** Any one is sufficient to decline.
+
+| Condition | Signal | Use instead |
+|-----------|--------|-------------|
+| The relation is simple | one key maps to one value | a map / a field |
+| The access pattern is fixed | a small stable set of queries, no exploration | a view / a direct lookup |
+| The update path is single | one writer, one transaction, no traversal | keep the existing source of truth |
+| Correctness lives in a transaction | balances, counts, effect identity, approval state | the transactional store; the new structure is at most a projection |
+| Topology buys nothing | modeling it as nodes and edges improves no selection, no constraint, and no diagnosis | a list / a table |
+| No owner for the operating cost | nobody owns schema, resolution, migration, tuning, or freshness | do not adopt at any scale |
+
+Privacy is a seventh, asymmetric condition: if linking the entities enables inference or re-identification
+that the separate pieces did not, the partitioned model wins even when the linked one is more useful.
+
+**The load-bearing test — is the relation *used*?** An edge that no query traverses, no constraint checks, no
+recovery path follows, and no audit reads is not neutral. It costs schema surface, update work, and one more
+thing that can be wrong. **Relations do not become more valuable by being more numerous.** The same holds for
+a rule nothing enforces, a reference nothing loads, and a field nothing reads.
+
+**Name the tax before adopting.** Schema complexity · identity resolution · migration · indexing · query
+tuning · visualization · operational skill · data quality · edge explosion · provenance upkeep. Write it on
+the same page as the benefit; a benefit stated alone is not a comparison.
+
+**Adopt at the smallest scope that can be evaluated**, and state up front what would make it unnecessary
+(the removal condition — `prune/reference/retention-criteria.md` § Registry Drag). Expand only after the
+current scope demonstrably paid.
+
 ## Evaluation Summary Template
 
 ```yaml
