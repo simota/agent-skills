@@ -156,9 +156,47 @@ stays put (`_common/HARNESS_DEBT.md` `HD-GAME`).
 | Named limits | Record what was *not* controlled — sample size, single environment, one task class, vendor-side model updates between runs. |
 
 **Recorded with every calibration that claims an improvement:** baseline id · variant id · the single changed
-variable · corpus revision · run count · median + range per configuration · failure classes · limitations.
+variable · corpus revision · run count · median + range per configuration · failure classes · limitations ·
+agent + version + model · start cwd · prompt id · condition label.
 A calibration missing the changed variable or the failure classes is logged as an observation (`Lightweight`),
 never as evidence for ADAPT.
+
+**Case Calibration.** A run series that satisfies the controls but is too small to separate signal
+from variance is recorded as a `Case Calibration`: what changed, what was observed, and what it does
+*not* establish. It is a legitimate result and often the only affordable one — but it names a
+hypothesis, never a rule. Promoting one to a general finding is the failure this section exists to
+prevent. Label it explicitly; an unlabeled small series gets read later as settled.
+
+### When the changed variable is instruction text
+
+Task outcome alone cannot tell "the agent followed the rule and the rule was wrong" from "the rule
+was fine and the agent ignored it" — and those need opposite fixes. When a calibration changes
+instruction text, split the verdict further:
+
+| Measure | Definition | Reads on |
+|---------|-----------|----------|
+| `adherence` | required actions observed ÷ required actions **applicable to this task** | whether the instruction landed |
+| `violation_rate` | forbidden actions attempted ÷ opportunities to attempt one | whether prohibitions hold |
+| `check_recall` | required checks selected ÷ required checks | whether verification is complete |
+| `check_precision` | required checks selected ÷ all checks selected | whether it is affordable |
+
+Four rules make these honest:
+
+- **Fix the applicable set before scoring.** A rule that does not apply to the task is not in the
+  denominator. Deciding applicability after seeing the run turns the metric into a narrative.
+- **Read `adherence` against outcome, as a pair.** High adherence with a failed outcome means the
+  instruction is wrong; low adherence with a passing outcome means the run got lucky and the
+  process risk is still there. Neither shows up in a single number.
+- **A guard block is not compliance.** An action stopped by a hook or permission rule says the
+  guard worked, not that the model would have complied without it. Count the two separately, and
+  never let a deterministic block inflate an adherence figure.
+- **Running every check is not a win.** It maximizes `check_recall` while destroying
+  `check_precision` and cost. Report both, or the cheap degenerate strategy scores best.
+
+**`NOT_VERIFIED` is a third value.** A check that did not run is neither pass nor fail. Scoring it
+`0` understates the configuration; dropping it silently shrinks the denominator and overstates it.
+Carry the count alongside the percentages (`_common/FINDING_LEDGER.md` — where a dismissal moves the
+denominator, the dismissal count is reported with the metric).
 
 ---
 
