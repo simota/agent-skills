@@ -126,6 +126,39 @@ Use GraphRAG when:
 - the question requires multi-hop reasoning,
 - global themes matter more than passage lookup.
 
+**"GraphRAG" is a family, not a technique.** They differ in what they cost to build and what they can prove:
+
+| Variant | Retrieval shape | Build cost | Best for |
+|---------|----------------|-----------|----------|
+| Existing knowledge graph | traverse a curated graph | low (already built) | domains with a maintained ontology |
+| Text-to-KG extraction | LLM builds the graph from the corpus | **high, and recurring on every corpus update** | stable corpora worth the extraction pass |
+| Text-centric, graph-guided | passages retrieved, graph only steers expansion | low | multi-hop where the answer text still lives in passages |
+| Community-based global | summarize clusters, answer from summaries | high build, cheap query | "what are the themes across everything" |
+| Hierarchical summary | multi-level rollups | medium | corpus too large to read, questions at varying altitude |
+| Memory-graph retrieval | entities/episodes accumulated across sessions | ongoing | recall about *this* user or system, not about a corpus |
+
+**Decision rule: never adopt "GraphRAG" by name.** Choose on three axes — the **question type** (passage
+lookup vs multi-hop vs global synthesis), the **construction and update cost** (extraction reruns on every
+corpus change are the dominant lifetime cost, not query time), and whether the answer must **backtrace to a
+source** (a community summary usually cannot; a passage can). If the question type is passage lookup, vector
+retrieval wins and the graph is pure tax.
+
+**Construction quality is the hidden failure surface.** Extraction precision/recall on entities and
+relations, entity collision (two things merged) vs fragmentation (one thing split), edge audit sampling, and
+community stability across rebuilds — a graph nobody measured is a confident-looking source of false
+relations. Collision and fragmentation are **not symmetric**: for anything feeding a permission or safety
+decision, bias resolution toward fragmentation (deny/miss) over collision (merge/over-permit).
+
+**Graph retrieval has its own bias.** Vector retrieval skews to whatever embeds near the query; graph
+retrieval skews to **high-degree hubs and short paths** — popular nodes appear in every answer regardless of
+relevance. Normalize by degree, require path diversity, and run counterevidence queries; this is a different
+axis from result-position bias and is not fixed by the same debiasing.
+
+**Selection beats integration when the margin is small.** Running every route in parallel and fusing is the
+expensive default. Compare on a Pareto frontier — quality, p95 latency, cost per query — and if hybrid buys
+half a point for ten times the cost, route to one engine instead. Falling back (graph timeout → vector or
+lexical) is fine, but record `graph_unavailable` in the answer's limitations rather than silently degrading.
+
 ## Oracle Gates
 
 - no Retrieval SLO -> block at `DESIGN`
