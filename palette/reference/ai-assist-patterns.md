@@ -106,10 +106,10 @@ When AI acts autonomously on behalf of the user (booking, purchasing, filing, ed
 | Pattern | Purpose | Implementation |
 |---------|---------|----------------|
 | Intent Preview | Pre-action consent — show what the agent plans to do | "I'm about to [action]. Proceed / Edit / Handle it myself" |
-| Explainable Rationale | Transparency during action | Show why the agent chose this path, with source references |
+| Explainable Rationale | Transparency during action | Show why the agent chose this path, with source references. **Pick the purpose first** — basis / error-finding / learning / contesting / audit each want a different artifact (`oracle/reference/human-ai-trust.md` §1) |
 | Confidence Signal | Calibrated uncertainty display | High/Medium/Low tiers; never false precision |
 | Action Audit & Undo | Post-action safety net | Timestamped log of all agent actions; one-click undo within window |
-| Escalation Pathway | Human fallback | Clear route to human support when agent confidence is low or stakes are high |
+| Escalation Pathway | Human fallback | Clear route to human support when agent confidence is low or stakes are high. Specify the handoff against the 9-field contract in `oracle/reference/human-ai-trust.md` §4 — especially `context_excluded` (what is withheld for privacy), `expected_wait`, `user_visible_state`, and `return_path` |
 
 Rules:
 
@@ -121,6 +121,8 @@ Rules:
 - When confidence is below threshold, escalate to user rather than proceeding
 
 Trust calibration: users arrive with skepticism from consumer AI failures (NN/g 2026). Earn trust incrementally — start with low-stakes actions, demonstrate reliability, then offer higher autonomy levels.
+
+Calibration is two-sided, and a UX review that only guards against overtrust will miss half of it. **Underreliance** — the user re-doing work the system got right, or verifying past the point of value — reads as flat adoption and gets mistaken for a discoverability problem, so more confidence signals and more friction get added and it worsens. Judge an AI element by whether correct output is accepted *and* incorrect output is caught, never by acceptance alone. Metric set and the risk-class verification affordances: `oracle/reference/human-ai-trust.md` §2-§3.
 
 Never add undifferentiated AI features without clear user value — users are fatigued by "AI slop" where every product gets an AI sparkle that becomes noise, not novelty (NN/g State of UX 2026). Every AI-powered element must solve a specific user problem; decorative AI degrades trust and clutters the interface.
 

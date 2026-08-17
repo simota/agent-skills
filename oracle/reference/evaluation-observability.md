@@ -166,6 +166,12 @@ Judge prompt essentials:
 | code generation | Pass@K, execution success |
 | agentic systems | task completion, step efficiency, tool-call accuracy, cost |
 
+**When a human decides whether to accept the output, these metrics are incomplete on their own.** A
+model that scores well and is systematically over-accepted has a worse net outcome than a weaker
+one that is checked. Pair the task metrics with the calibration set in `reference/human-ai-trust.md`
+§2 — `correct_acceptance` / `correct_rejection` / `overreliance` / `underreliance` — sliced by task
+consequence and user population. Acceptance rate alone is not a calibration measurement.
+
 ## Path Evaluation — grade the route, not only the answer
 
 Scoring the final output alone cannot separate a run that reached the right answer *safely* from one that

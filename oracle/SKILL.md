@@ -227,6 +227,7 @@ Routing rules:
 | `reference/agent-design.md` | Application-level LLM agents — tool-use loops, schemas, context/memory, delegation, termination, failure modes. |
 | `reference/embedding-strategy.md` | RAG embedding pipeline — chunking, model selection, vector index, re-ranking, hybrid retrieval. |
 | `reference/advanced-tool-use.md` | The tool catalog is the bottleneck (`>=10` tools or `>10k` tokens of definitions, falling selection accuracy, aggregated MCP servers). Covers tool search, `defer_loading`, programmatic calling, the advisor tool. |
+| `reference/human-ai-trust.md` | A human decides whether to accept the output — explanation design, over/underreliance metrics, verification affordances by risk class, and the escalation-to-human contract. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the design, thinking depth at DESIGN, front-loading use case/budget/tier at PROFILE. Critical: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Oracle-specific Output/Next schema. |
 
