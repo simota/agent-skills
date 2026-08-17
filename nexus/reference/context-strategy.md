@@ -22,6 +22,32 @@ Three implications that decide between the strategies below:
 - **Handoffs are distillations, not transcripts.** A step passes forward the decision-relevant residue, not its trace (see `_common/SUBAGENT.md` — the reference figure for a subagent's condensed return is **1,000–2,000 tokens**).
 - **Compaction: maximize recall first, then precision.** When summarizing a long trace, start with a compaction prompt that captures *everything* relevant (architectural decisions, unresolved constraints, why a path was abandoned) and only then iterate to tighten it. Dropping a load-bearing detail is unrecoverable; a slightly verbose summary is not. **Tool-result clearing** is the lightweight alternative when stale tool output — not reasoning — is what is consuming the window.
 
+### Lifetime classes (what to keep is decided before how much)
+
+Compaction decides *how much* survives. Lifetime decides *what should have been persistent in the first place* —
+and the recurring failure is treating everything loaded as one substance, so ephemeral debugging state gets
+carried into a durable summary while a standing constraint gets dropped.
+
+| Class | Examples | Correct home | Fails as |
+|-------|----------|--------------|----------|
+| `stable` | architecture constraints, security prohibitions, DoD | instruction file / policy — reloaded, never summarized away | quietly dropped mid-run, then violated |
+| `scoped` | directory or component conventions | the scoped instruction near what it governs | applied outside its scope |
+| `dynamic` | this task's issue, diff, current plan, latest failure | working context; refreshed, never retained past the task | a later task inherits a finished task's state |
+| `retrieved` | API docs, external references, search results | fetched on demand with source + version recorded | goes stale silently; the copy outlives its source |
+| `ephemeral` | debugging hypotheses, discarded approaches, scratch reasoning | discarded at task end | a rejected hypothesis resurfaces as an accepted fact |
+
+**Rules.**
+
+1. **Persistence is a decision, not a default.** Anything retained past the task carries a source, a scope, and
+   what would invalidate it — otherwise it is not retained (`_common/OPERATIONAL.md` § Where a learning goes).
+2. **A `stable` item is not protected by being summarized well.** It is protected by living in a file that gets
+   reloaded — the Preserve Set below is the fallback for when compaction happens anyway, not the primary
+   mechanism.
+3. **`retrieved` never gets promoted by being restated.** Restating a fetched claim in your own words does not
+   make it project truth; it only removes the version that made it checkable.
+4. **Mixed classes in one artifact is the bug.** A single note holding a standing constraint *and* today's
+   failing test guarantees one of them is handled wrong — either the constraint expires or the debris persists.
+
 ### The Preserve Set (what compaction may never drop)
 
 Recall-first is the *method*; this is the *floor*. Compaction is a lossy transform, and fluent summaries hide
