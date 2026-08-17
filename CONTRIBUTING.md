@@ -22,58 +22,88 @@ AI Agent Skills へのコントリビューションを歓迎します！
 
 ```bash
 # フォーク後
-git clone https://github.com/YOUR_USERNAME/ai-agent-skills.git
-cd ai-agent-skills
+git clone https://github.com/YOUR_USERNAME/agent-skills.git
+cd agent-skills
 ```
 
 ### 新しいエージェントの追加
 
 1. `[AgentName]/SKILL.md` を作成
-2. 以下の構造に従う:
+2. `description` は英語で1行（全123エージェントが英語で統一）。frontmatter とセクション構成は `_templates/SKILL_TEMPLATE.md` を正とする — 以下は骨格の抜粋:
 
 ```markdown
 ---
 name: AgentName
-description: 日本語での説明（1行）
+description: "One-line description. What this agent does and when to use it. Don't use for X (Agent), Y (Agent)."
 ---
 
-You are "AgentName" - [English description of the agent's role].
+# AgentName
 
-## Philosophy
-[Core principles]
+> **"Motto — one line that captures the agent's philosophy."**
+
+Identity statement (1-2 lines). What you do, what you deliver, scope per invocation.
+
+## Trigger Guidance
+
+Use AgentName when the task needs:
+- [specific task or signal]
+
+Route elsewhere when the task is primarily:
+- [adjacent concern]: `AlternativeAgent`
+
+## Core Contract
+
+- [Non-negotiable commitments this agent makes]
 
 ## Boundaries
 
-### Always do:
+### Always
 - [Required behaviors]
 
-### Ask first:
+### Ask First
 - [Actions requiring confirmation]
 
-### Never do:
+### Never
 - [Prohibited actions]
 
-## INTERACTION_TRIGGERS
-[Decision point definitions]
+## Workflow
+[Phases and what each produces]
 
-## [Domain-specific sections]
-[Templates, patterns, examples]
+## Recipes / ## Subcommand Dispatch
+[Only if the agent defines Recipes — see `_common/RECIPES.md`]
+
+## Output Requirements
+[What every deliverable must carry]
+
+## Collaboration
+[Inbound / outbound handoffs]
+
+## Reference Map
+[Which `reference/*.md` to read at which decision point]
+
+## Operational
+[Journal, logging, git conventions]
 
 ## AUTORUN Support
 [Nexus integration format]
 
 ## Nexus Hub Mode
 [Hub mode handoff format]
-
-## Output Language
-All final outputs must be written in Japanese.
-
-## Git Commit & PR Guidelines
-[Commit message conventions]
 ```
 
-3. `README.md` のエージェント一覧に追加
-4. 使用例セクションにサンプルを追加
+上の見出しは `_common/scripts/lint-frontmatter.py` の `ST1`（必須見出し）が実際に検査する集合。省略すると lint が指摘する。
+
+`## INTERACTION_TRIGGERS`（ユーザー確認が必要な決定ポイントの定義）は、それが必要なエージェントでは今も使用される（現状12スキル）。省略可能なセクションであり、必須ではない。
+
+3. 完全なセクション一覧・順序・記法は `_templates/SKILL_TEMPLATE.md` を参照し、それに沿って作成する
+4. **ロスターを更新する（手作業のレジストリは自動同期されない）**:
+   - `README.md` / `README_ja.md` のエージェント一覧とエージェント数
+   - `index.html`（`const AGENTS` 配列・カテゴリ件数・件数を記載した全テキスト）
+   - `compass/reference/catalog.md`（カテゴリ節とその件数）
+   - `_common/SKILL_PACKS.md`（最低1つの pack に所属させる）
+   - `AGENTS.md` / `CLAUDE.md` のスキル数
+5. 使用例セクションにサンプルを追加
+6. lint を通す: `python3 _common/scripts/lint-frontmatter.py --severity error --changed-only` と `python3 _common/scripts/lint-instructions.py --severity error`
 
 ### コーディング規約
 
@@ -108,7 +138,9 @@ Examples:
 - [ ] SKILL.md が規定フォーマットに従っている
 - [ ] Boundaries（Always/Ask/Never）が明確
 - [ ] AUTORUN Support セクションがある
-- [ ] README.md を更新した
+- [ ] README.md / README_ja.md を更新した
+- [ ] ロスター系レジストリ（`index.html`, `compass/reference/catalog.md`, `_common/SKILL_PACKS.md`, `AGENTS.md`, `CLAUDE.md`）を更新した
+- [ ] `lint-frontmatter.py` と `lint-instructions.py` が通る
 - [ ] 使用例を追加した
 
 ## 📝 ドキュメント改善

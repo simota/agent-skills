@@ -3,6 +3,8 @@
 > Cross-domain best practices, anti-patterns, and case studies collected from primary web sources (2025-2026).
 > Reference this file when applying current standards across design, information architecture, or frontend implementation.
 > All URLs verified by source research; cite them when recommending a pattern so reviewers can trace the claim.
+>
+> **as-of:** 2026-08-17 · **owner:** unassigned · **review trigger:** re-verify when a cited standard ships a new version, or every 6 months. Content below states what was current at the as-of date; treat undated claims as of that date.
 
 ## How to use
 
