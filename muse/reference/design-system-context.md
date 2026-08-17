@@ -71,7 +71,7 @@ A system handed to agents is a directory, not a document:
 /governance  owners.md, version-policy.md, proposal-template.md, decision-history.md
 ```
 
-`decision-priority.md` earns its place: it states what wins when principles collide (accessibility floor vs. brand expression vs. platform convention). Without it, an agent facing a conflict picks silently.
+`decision-priority.md` earns its place: it states what wins when principles collide (accessibility floor vs. brand expression vs. platform convention). Without it, an agent facing a conflict picks silently. Author it from `_common/UX_PRINCIPLE_CONFLICTS.md` — the conflict matrix supplies the pairs and the failure each one-sided win produces, and the resolution sheet supplies the fields an allocation must record. Two constraints carry over: the accessibility floor is a **Gate**, not a conflict entry, and every allocation names the alternative it rejected.
 
 `anti-patterns/` entries describe **failure conditions**, not verdicts — "this breaks when the label wraps to two lines," not "this is bad."
 

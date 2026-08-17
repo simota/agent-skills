@@ -266,6 +266,7 @@ Full algorithm, JSON schema, subagent prompt skeletons, GROUND rules, handoff st
 | `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — engine dispatch, loose-prompt rules, fallbacks |
 | `_common/MULTI_ENGINE_RECIPE.md` | Canonical Pattern D protocol, engine-attribution tags, degraded-mode rules |
 | `_common/PROPORTION_AND_SPACING.md` | Justifying a proportional system. **Read §1 and §10 before the golden ratio** — φ-as-beauty-law is contested. |
+| `_common/UX_PRINCIPLE_CONFLICTS.md` | Justifying a direction that trades one principle for another — consistency vs. context, delight vs. clarity, business outcome vs. user benefit. Accessibility stays a Gate, never a matrix entry. |
 | `_common/PROOF_CARRYING.md` | `brand_proof` advisory in `nexus acceptance` Phase 4B; brand/illustration/motion route to G7 human sign-off |
 | `reference/autorun-schema.md` | Emitting AUTORUN `_STEP_COMPLETE` — Vision-specific Output/Next schema |
 | `reference/apple-design-trends.md` | Apple-platform direction/taste — Liquid Glass, archetypes, ADA analysis (HIG rules in `native/reference/ios-hig.md`) |

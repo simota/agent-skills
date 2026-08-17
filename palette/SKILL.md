@@ -292,6 +292,7 @@ Palette receives UX direction and testing results from upstream agents. Palette 
 | `_common/UX_TRENDS_2026.md` | Usability and navigation evidence — navigation guidelines, anti-patterns, WCAG baseline, agentic UX. Read §2 and §1. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the review report, thinking depth at REVIEW, front-loading scope tier at SCAN. Critical: P3, P5. |
 | `_common/PROPORTION_AND_SPACING.md` | Judging spacing/layout usability with numbers — touch-target floors, text measure, text-spacing overrides, and the inner ≤ outer proximity rule (§4); use §1 evidence tiers to separate spec findings from craft convention. |
+| `_common/UX_PRINCIPLE_CONFLICTS.md` | A finding pits one principle against another (safety vs. speed, density vs. scannability, automation vs. control). Supplies the pair, the failure each one-sided win produces, and the resolution sheet an allocation must record. |
 | `_common/PROOF_CARRYING.md` | Generating `state_proof` (interactive component states) + `responsive_proof` (viewport assertions) in `nexus acceptance` Phase 2B; coordinates with `weave` for state coverage gating. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Palette-specific Output/Next schema. |
 

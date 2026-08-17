@@ -251,6 +251,7 @@ Mechanics, two-pass clustering states, verdict catalog, engine-attribution tags,
 | `reference/devils-advocate.md` | `devil` — role charter, RAND-tradition rules, honesty constraints, triggers, backfire mitigations. |
 | `reference/delphi-method.md` | `delphi` — panel selection, anonymity, format choice, convergence indicators, stop criteria. |
 | `reference/tri-engine-deliberate.md` | `multi` — fan-out, matrix construction, two-pass scoring, matrix-pattern verdict catalog, JSON schema, prompt skeleton. |
+| `_common/UX_PRINCIPLE_CONFLICTS.md` | The decision is a UX/design trade-off — supplies the named pair and the cost of a one-sided win before the lenses score it. |
 | `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill Pattern H protocol — dual-axis scoring, attribution tags, fallbacks, canonical skeleton. |
 | `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — engine dispatch, loose-prompt rules, fan-out mechanics, fallbacks. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the deliberation report, thinking depth at independent evaluation, front-loading at FRAME. Critical: P3, P5. |
