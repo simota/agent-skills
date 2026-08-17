@@ -133,6 +133,33 @@ ES = (Primary_Outcome × 0.35) + (Efficiency × 0.20) + (Quality × 0.20) + (Ada
 - Below 3 data points: record observations only (OBSERVE + PERSIST), skip MEASURE–ADAPT
 - Agents with existing scoring (CES/TES/AES/etc.) should map their scores to this scale
 
+### Comparison Discipline (before a score is allowed to justify a change)
+
+"3+ data points" bounds sample size. It does not make the points **comparable** — and a MEASURE→ADAPT
+cycle run on incomparable points adapts to noise, which is exactly how a metric moves while the property
+stays put (`_common/HARNESS_DEBT.md` `HD-GAME`).
+
+**A score compares two configurations only when all of these hold.**
+
+| Control | Rule |
+|---------|------|
+| Fixed corpus | Same repository revision / fixture set across baseline and variant. Record it. |
+| One variable | Change **one** of instruction text, model, tool set, or permission per comparison. Two at once yields no attribution. Safety fixes are the exception and are not comparisons. |
+| No carryover | Variant runs start without the baseline run's memory, journal state, or conversation. Persistent state is measured only when persistence *is* the variable. |
+| Criteria first | Success criteria written before the runs, not selected after seeing them. |
+| Repeat | Multiple runs per configuration. Non-determinism makes a single success uninformative. |
+| Keep failures | Failed and aborted runs stay in the denominator, classified by failure reason. Excluding them is the most common way a comparison lies. |
+| Stable prompt | The prompt is not edited between runs of the same configuration. Tuning mid-series turns a comparison into a demonstration. |
+| Blind where possible | When a human grades output, the grader does not know which configuration produced it. |
+| Median + range | Report median and range, never the mean alone — the mean hides the long tail, and the long tail is the failure mode users feel. |
+| Split the verdict | Report mechanical pass (tests/build/schema) separately from acceptance (criteria met, no rework). A configuration can raise one and lower the other. |
+| Named limits | Record what was *not* controlled — sample size, single environment, one task class, vendor-side model updates between runs. |
+
+**Recorded with every calibration that claims an improvement:** baseline id · variant id · the single changed
+variable · corpus revision · run count · median + range per configuration · failure classes · limitations.
+A calibration missing the changed variable or the failure classes is logged as an observation (`Lightweight`),
+never as evidence for ADAPT.
+
 ---
 
 ## Calibration Triggers
