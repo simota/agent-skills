@@ -282,9 +282,39 @@ DIAGNOSTIC_CHECKLIST:
 
 ---
 
+## Router Evaluation (multi-engine retrieval)
+
+When retrieval has more than one engine — lexical, vector, graph-local, graph-global, hybrid — ranking
+quality no longer explains failures on its own. A perfect ranker on the wrong engine still returns nothing
+useful, and the aggregate metric charges the loss to the ranker.
+
+Evaluate the **route choice** separately, as a classification problem:
+
+- **Confusion matrix**: actual best route × predicted route, over a labeled query set. Off-diagonal cells
+  name the confusable pairs; a diagonal-heavy matrix with one bad cell is a targeted fix, an even spread is a
+  router that has not learned the distinction.
+- **Cost-weighted error**: routing a lookup to global-synthesis wastes money; routing a multi-hop question to
+  lexical returns a confident wrong answer. Weight the errors — they are not equally bad.
+- **Abstain / fallback rate**: how often the router declines or defaults, and whether the fallback recovered.
+- **Reason codes**: every routing decision records why. Without them a misroute cannot be attributed to the
+  features, the threshold, or the label set.
+
+**Negative cases belong in the golden set.** A suite of answerable queries cannot detect a router that never
+abstains. Include: questions with no answer in the corpus, questions needing a route that is currently
+unavailable, ambiguous questions that should trigger clarification, and questions just below the confidence
+threshold.
+
+**Retrieval drift is a release event.** A corpus reindex, an embedding-model change, a graph rebuild, or a
+reranker update all change the answer to an unchanged query. Version the retrieval stack and re-run the
+regression set on every such change — otherwise the drift surfaces as an unexplained quality complaint weeks
+later.
+
+---
+
 ## Anti-Patterns
 
 - Single aggregate nDCG with no per-segment breakdown — hides category-level regressions.
+- Scoring the ranker while ignoring the route — a wrong-engine answer is charged to ranking quality.
 - Training the ranker on the same queries used for evaluation (leakage).
 - Ignoring position bias and declaring CTR uplift a win.
 - No zero-result monitoring — a "better" ranker that also increases null-rate is a loss.
