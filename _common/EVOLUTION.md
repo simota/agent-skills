@@ -87,8 +87,9 @@ When routing a task:
 
 ### Override Expiry
 
-- Overrides expire 90 days after their `Date` field
-- Expired overrides are ignored (treated as if not present)
+- Overrides carry a **removal condition**, not only a date: the state of the world that made the override necessary, and what would make it unnecessary.
+- Overrides are reviewed 90 days after their `Date` field. Review means re-checking the condition — an override whose condition still holds is renewed with a new `Date`, not dropped.
+- Only an override whose condition no longer holds, or which carries no condition at all, is retired. Expiring on the date alone would silently drop a control that is still load-bearing (`_common/HARNESS_DEBT.md` § Complexity Budget).
 - Darwin refreshes overrides on ET-01 (phase transition) and periodic checks
 
 ---

@@ -12,8 +12,8 @@ Checks (all derived from official Anthropic Agent Skills spec + repository conve
   N2  Skill folder name is kebab-case (no spaces, no underscores, no capitals)
   C1  Filename is exactly "SKILL.md" (case-sensitive, official spec)
   C2  No README.md inside the skill folder (forbidden by Anthropic Complete Guide)
-  S1  SKILL.md body <= 500 lines (Anthropic recommendation; warn at 500, error at 700)
-  S2  SKILL.md body <= 5000 tokens approx (char_count / 3.5; warn at 5000, error at 7000)
+  S1  SKILL.md body line count. Tiers: >500 P3 (Anthropic recommendation), >700 P2, >1000 P1
+  S2  SKILL.md body token estimate (char_count / 3.5). Tiers: >7000 P3, >10000 P2, >15000 P1
   H1  CAPABILITIES_SUMMARY HTML comment block present (presence only; rule ID aligned
       with gauge's 19-item checklist H1)
   H2  COLLABORATION_PATTERNS marker present inside the CAPABILITIES_SUMMARY block (H2)

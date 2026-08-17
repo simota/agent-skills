@@ -97,14 +97,14 @@ Every SKILL.md should:
 4. **Inlining `_common/` text into SKILL.md** — duplicate bytes occupy two cache slots; updating one location desyncs both.
 5. **Loading reference/ on demand but appending below the recipe block** — the next turn re-orders content, invalidating cache.
 6. **Recipe-specific date in the static recipe block** — move dates to `reference/` with explicit revision metadata.
-7. **MCP tool list churn** — adding/removing MCP servers per task changes the `tools` layer; consolidate MCP enablement at session start.
+7. **MCP tool list churn** — adding/removing MCP servers per task changes the `tools` layer; consolidate MCP enablement at session start. Exception: tools marked `defer_loading: true` are cache-safe to add mid-session — see #11.
 8. **Mixing T-static and T-dynamic in a single message** — split into a cached system addendum + a fresh user/tool message.
 9. **Cache write on a tiny prefix** — 5-minute TTL writes cost 1.25×, so break-even is one read (2 reads on the 1-hour tier at 2×). Opus 5 lowered the **minimum cacheable prompt to 512 tokens** (from 1,024), so short prefixes now create entries — but a prefix that is rarely re-read still loses. Group small skills under one breakpoint.
 
 10. **Effort changes invalidate the cache — steer per-message instead.** `effort` renders into the prompt, so varying it between requests drops the cached prefix (measured: a cache-read turn of 3,546 tokens becomes a 3,546-token cache *write* on the turn effort changes). Pick a level per conversation and hold it. When a step genuinely needs different depth, append the nudge to the **newest user message** ("Please think hard before responding." / "Answer directly without deliberating.") — guidance in the newest turn leaves earlier breakpoints intact where a parameter change does not. Setting `effort` explicitly to the model's default equals omitting it and is cache-neutral.
 
 11. **Tool-list churn invalidates the cache — unless deferred.** Changing the `tools` array drops the cached prefix (Opus 5 lifts this with the `mid-conversation-tool-changes-2026-07-01` beta). Tools marked `defer_loading: true` are stripped from the prefix *before* the cache key is computed and expand inline in the conversation body when discovered, so **adding deferred tools is cache-safe** and the cache survives both the discovery turn and the call turn. Trade-off: a deferred tool cannot carry `cache_control` (400) — keep the breakpoint on a non-deferred tool. Detail → `oracle/reference/advanced-tool-use.md` §2.
-10. **Forgetting the 1-hour TTL extended cache** for long sessions — pay 2× once, save 90% on every subsequent hour of work.
+12. **Forgetting the 1-hour TTL extended cache** for long sessions — pay 2× once, save 90% on every subsequent hour of work.
 
 ---
 
