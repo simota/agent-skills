@@ -2,7 +2,7 @@
 
 **Purpose:** Track and pay down the *degradation* of the control system agents work through — instructions, references, routing, verification — as distinct from duplication (`prune`) and inactivity (`darwin` Activity). A skill can be unique, actively used, and still be debt: if its Architecture Map is stale, every invocation pays interest in retries and human corrections.
 
-**Read when:** running a `darwin` ecosystem review, a `prune` roster audit, a `gauge` compliance sweep, or whenever a skill fails the same way twice and the cause is not the model.
+**Read when:** running a `darwin` ecosystem review, a `prune` roster audit, a `gauge` compliance sweep, whenever a skill fails the same way twice and the cause is not the model, or when a restated fact (a count, a list, a summary) disagrees with the source it came from (§2b).
 
 **Boundary.** Technical Debt is the future cost of *code*. Harness Debt is the future cost of *the system agents reason and act through*. They overlap and are not the same: a tangled legacy module is technical debt; an architecture map that makes every agent pick the wrong entry point is harness debt. Adapted for this repository, where the harness is the SKILL.md corpus, `_common/` protocols, routing matrix, and lint scripts.
 
@@ -64,6 +64,46 @@ review_by: 2026-09-30
 
 ---
 
+## 2b. Derived Register — freshness for the assets nobody authors
+
+`HD-DRIFT` and `HD-DOC` are found by *reading* a file. A **derived** asset — one restated or generated from a source elsewhere in the corpus — decays without anyone touching it: the source moves, the restatement does not. Nobody is editing the wrong file, so no sweep that looks for bad edits will find it. The fix is to name the derivation, not to read harder.
+
+**Four staleness classes, four different repairs.** Collapsing them into "it's out of date" is why regenerating more often does not help.
+
+| Class | What happened | Repair |
+|-------|---------------|--------|
+| **Source stale** | The derivation ran, but against an already-outdated source | Fix the source; the derived asset was never the problem |
+| **Generation stale** | Source changed; the derived asset was never re-derived | Bind a regeneration trigger to the source change |
+| **Publication stale** | Re-derived, but the new value never reached the file that states it | Include every consumer in the same change, not a follow-up |
+| **Consumption stale** | Corpus is correct; an agent or session is running on a cached or remembered older value | Invalidate the cache and re-read the source; a stored memory entry restating a count is itself a derived asset |
+
+**Register entry.** One per derived asset. `source` and `check` are required — a derivation whose freshness cannot be tested is `HD-ORACLE`, not a derived asset.
+
+```yaml
+derived: compass/reference/recipes-directory.md
+source: every <skill>/SKILL.md `## Recipes` table
+rule: _common/scripts/generate-recipes-directory.py   # or "manual restatement"
+check: re-run the generator; a non-empty diff is generation-stale
+trigger: any Recipe/Subcommand change
+consumers: [compass]
+```
+
+**Standing register for this corpus.** Anything listed here is not hand-maintained truth; the `source` column is.
+
+| Derived asset | Source (authoritative) | Rule | Freshness check |
+|---------------|------------------------|------|-----------------|
+| `compass/reference/recipes-directory.md` | each `SKILL.md` `## Recipes` table | `_common/scripts/generate-recipes-directory.py` | re-run; diff must be empty |
+| Every skill-count claim (`README.md`, `CLAUDE.md`, `AGENTS.md`, `_common/SKILL_PACKS.md`, `_common/RECIPES.md`, `compass/SKILL.md`, `compass/reference/cache-format.md`, `nexus/reference/task-battery.md`) | the skill directory listing | manual restatement | `ls -d */ \| grep -v '^_' \| wc -l` equals every stated number |
+| `nexus/SKILL.md` Recipe Registry allowlist | `nexus/reference/recipes-index.md` Subcommand column | manual restatement | the two token sets are equal |
+| `CAPABILITIES_SUMMARY` block in each `SKILL.md` | that skill's own body | manual restatement | every summarized capability is still claimed in the body |
+| `.claude/compass-cache.md` | `compass/reference/catalog.md` | `/compass refresh` | regenerate rather than hand-edit |
+
+**A Record is not a derived asset.** `CHANGELOG.md` entries, calibration notes ("calibrated against a 132-skill corpus"), and journal history state what was true at a past moment. They are not stale and must not be "corrected" to today's value — rewriting them destroys the only evidence of when the corpus changed.
+
+**Manual edits to a derived asset.** Permitted only as an **overlay**: a section the rule does not generate, preserved across regeneration and marked as such. A hand-edit inside generated territory is repaid by fixing the source and re-deriving — patching the output leaves the rule that produced the wrong value in place, so the next regeneration reintroduces it.
+
+---
+
 ## 3. Gardening — the three recurring sweeps
 
 Debt is found by sweeps, not by inspiration. Each sweep has a trigger and a disposal rule.
@@ -112,6 +152,7 @@ A control with no `removal` condition is permanent by default, and permanence is
 | Documentation Gardening | `gauge` | 30-day review cycle |
 | Skill Gardening | `prune` | 30-day review cycle |
 | Eval Gardening | `darwin` | 30-day review cycle, plus after any harness regression |
+| Derived Register freshness (§2b) | `gauge` | same cycle, plus before any release-shaped change — run every `check` column; a failure names its staleness class |
 | Register triage | `darwin` | same cycle — the register is an input to the ecosystem review, not a separate ritual |
 
 Register location: `.agents/HARNESS_DEBT.md` (journal-side, gitignored). Confirmed structural debt that requires a corpus change is promoted to an `EVOLUTION_SIGNAL` (`_common/EVOLUTION.md`).
@@ -122,5 +163,6 @@ Register location: `.agents/HARNESS_DEBT.md` (journal-side, gitignored). Confirm
 
 - **Cataloguing without interest.** A list of every imperfection is not a register; it is a second `HD-DOC`.
 - **Paying the cheap debt first.** Order by interest × risk, not by how easy the fix looks.
+- **One repair for all staleness.** Re-deriving fixes generation-stale only. A value that is right in the corpus and wrong in a session's memory is consumption-stale, and regenerating it a third time changes nothing.
 - **Counting files as coverage.** More references is not less debt — `HD-ENTROPY` is measured by near-duplication and branch count, not volume.
 - **Letting the debtor grade the debt.** The skill that owns an asset does not decide alone whether its own debt is `accepted` (see `_common/SELF_EVOLUTION.md` § Change Class — this is a `C4` judgment).

@@ -1,7 +1,8 @@
 # Traceability — Canonical ID Scheme & `.traceability.yaml`
 
-Shared source of truth for requirement/acceptance/test identifiers and the machine-readable
-traceability ledger. Spec-authoring (`accord`, `scribe`) and spec-verification (`attest`) skills,
+Shared source of truth for requirement/acceptance/test identifiers, the machine-readable
+traceability ledger, the relation vocabulary links are typed with (§3), and the classes a
+broken trace is diagnosed into (§4). Spec-authoring (`accord`, `scribe`) and spec-verification (`attest`) skills,
 plus the review gate (`judge`, `guardian`), MUST use this scheme so links survive across skills
 instead of each skill minting its own incompatible IDs.
 
@@ -75,6 +76,7 @@ coverage:
   backward: <0.0-1.0>  # tests+impl citing a valid AC / total tests+impl
   orphans: [<ids citing no AC>]
   gaps: [<REQ/AC with no downstream>]
+  broken: []           # confirmed broken traces, classified per §4: {id, class, target}
 ```
 
 ### Read/write protocol
@@ -93,10 +95,50 @@ matrix.
 
 ---
 
-## 3. Adoption checklist
+## 3. Relation types — what a link actually asserts
+
+§1's chain assumes a single relation ("is realized/proven by"). Real packages carry several, and an untyped link cannot say which one it is — so a reader supplies the assumption that suits them. Name the relation whenever a link crosses artifact kinds.
+
+| Relation | Asserts | Example |
+|----------|---------|---------|
+| `contains` | The parent aggregates the child as a part of itself | `REQ-001` contains `AC-LOGIN-001` |
+| `uses` | A consumer depends on a *specific version* of the target | `IMPL-004` uses the shared auth module |
+| `defines` | This artifact is where the meaning is fixed — change requests return here | the spec defines `AC-LOGIN-001` |
+| `derived-from` | Generated from a source by a stated rule, not authored | `compass/reference/recipes-directory.md` derived-from each `## Recipes` table |
+| `verified-by` | The evidence for this claim lives at the target | `AC-LOGIN-001` verified-by `TEST-001` |
+| `applicable-to` | The link holds only within a named scope | `CFR-003` applicable-to the mobile build only |
+| `supersedes` | Replaces a prior version; the prior may still hold for older scopes | `REQ-004_v2` supersedes `REQ-004` |
+
+**Authority follows `defines`, not authorship.** The artifact that holds a claim's authority is the one a *change* must return to — not the one where the text happens to have been typed first. When two artifacts state the same value and neither `defines` it, one of them is `derived-from` the other and is not yet labeled.
+
+**Before deleting one of two identical-looking values, check whether they are the same value.** Two artifacts naming "the timeout" may mean the client deadline and the server budget. Merging them destroys a distinction; the repair is to split the name, not to pick a winner.
+
+---
+
+## 4. Broken trace — seven classes, one checker
+
+A link that resolves is not a link that holds. §1's forward/backward gaps detect *missing* links only. Classify a challenged trace before repairing it:
+
+| Class | Symptom | Repair |
+|-------|---------|--------|
+| `missing-target` | The cited ID resolves to nothing | Restore the target or retire the citation |
+| `wrong-version` | Resolves, but to a revision whose meaning has since changed | Re-point at the version in force, or record `supersedes` |
+| `untyped-relation` | The link exists with no relation type, so consumers assume the wrong one | Assign a type from §3 |
+| `applicability-mismatch` | Valid link, wrong scope — cited outside the variant/platform it holds for | Scope it with `applicable-to` |
+| `lifecycle-mismatch` | An approved artifact cites a draft, or a released one cites a retired target | Block: a released claim may not rest on unreleased evidence |
+| `stale-derived` | The target is a derived asset that has not been re-derived since its source moved | Repair by staleness class — `_common/HARNESS_DEBT.md` §2b |
+| `unauthorized-remap` | A link was re-pointed without going through the artifact that `defines` the claim | Revert and re-point via the defining artifact |
+
+**Only `missing-target` is visible to a link checker.** The other six resolve cleanly and still mislead — which is why the relation type and the target version have to be recorded at link time, not reconstructed during an audit. Record confirmed breaks alongside `orphans`/`gaps` in `.traceability.yaml` as `broken: [{id, class, target}]`; `attest` classifies, `guardian`/`judge` gate on `lifecycle-mismatch` and `wrong-version` against a CRITICAL requirement.
+
+---
+
+## 5. Adoption checklist
 
 - New AC → use `AC-{FEATURE}-{NNN}`, never a bare number.
 - Authoring a durable package → emit `.traceability.yaml`; initial verdicts `NOT_TESTED`.
 - Writing a test → cite the `AC`/`SC` ID it proves in a header comment.
 - Verifying → `attest` updates verdicts + coverage; never invents IDs not in the ledger.
-- Gating → `guardian`/`judge` treat a CRITICAL forward gap as a blocking finding.
+- Linking across artifact kinds → name the relation type (§3); an untyped cross-kind link is `untyped-relation`.
+- Diagnosing a suspect trace → classify with §4 before repairing; "the link is broken" is not a class.
+- Gating → `guardian`/`judge` treat a CRITICAL forward gap as a blocking finding, and block on `lifecycle-mismatch` at any priority.
