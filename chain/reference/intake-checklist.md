@@ -192,7 +192,20 @@ verification_status:        # executed | documentation-verified | not-executed
 `APPROVED_WITH_FLAG` under §9, and `R3` never reaches even that without human approval on record.
 Removal is part of intake: a server whose removal has never been tested is a dependency, not an integration.
 
-Failures map to §9 as: undeclared network destination or credential scope → `P0` · unpinned version or
+### Token handling (check explicitly — passing tests do not surface these)
+
+- **No token passthrough.** The host's own token is never forwarded to the server, and the server's token is
+  never forwarded to a downstream API unchanged. Each hop issues its own credential; a passed-through token
+  carries the *caller's* full permission set, which is always wider than the call.
+- **Audience is bound and verified.** The token names the tool/API it is for, and the receiver checks that it
+  is the intended audience. A token accepted without an audience check is usable anywhere it is replayed.
+- **No confused deputy.** The server must not perform privileged actions on behalf of a caller purely because
+  *it* is authorized — the caller's authority is what decides, and the server holding a broad credential is
+  not the caller's authority. Servers that act with their own standing credential on unauthenticated or
+  weakly-scoped requests are `P0`.
+
+Failures map to §9 as: undeclared network destination or credential scope → `P0` · token passthrough,
+missing audience binding, or confused-deputy exposure → `P0` · unpinned version or
 auto-update → `P1` · missing owner, logging, or removal test → `P2` · tool schema changed since the card was
 written → re-run intake, do not amend the card in place.
 
