@@ -38,6 +38,13 @@ Every loop states its **exit reason** from this fixed vocabulary:
 | `cap-reached` | hit `N` cycles without acceptance |
 | `budget-reached` | a declared budget envelope's ceiling was hit mid-run (budget-enveloped recipes: wish/marquee, eureka) |
 | `BLOCK` | a hard blocker needs escalation |
+| `denied` | a required approval was refused — **no side effect landed**; return the request and the refusal reason, not a partial attempt |
+| `invalid-state` | an invariant broke mid-run — return the last valid checkpoint **plus a corruption report**; never continue from the violating state |
+| `cancelled` | the user or the system stopped the run — return a safe-stop confirmation: what landed, what was rolled back, what is still in flight |
+
+The last three used to be reported as `BLOCK`, and they are not interchangeable: `denied` leaves the world
+untouched, `invalid-state` leaves it *suspect*, and `cancelled` leaves it partially changed. What the caller
+must do next differs in each case, so the exit reason has to say which one it was.
 
 On any non-`ACCEPT` exit the recipe **reports best-so-far + the residual gap** — never silently stops, never burns cycles past marginal value. The rich loop machinery (Generator-Evaluator separation, single termination oracle, flatten rule) lives in `reference/evaluator-loop-protocol.md`; loop recipes reference it rather than re-specifying it.
 
