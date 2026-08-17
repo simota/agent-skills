@@ -8,6 +8,7 @@
 - 共通プロトコル: `_common/` (BOUNDARIES.md, HANDOFF.md 等)
 - テンプレート: `_templates/SKILL_TEMPLATE.md`
 - エージェントジャーナル: `.agents/` (gitignore対象)
+- 監査成果物: `docs/audit/` (gitignore対象) — 本 repo は監査/レビューの成果物をコミットしない。`verity` / `abide` など report-only レシピの書き込み先はここに限り、結果はコミットメッセージと会話で伝える。
 
 ## ルーティング（単一入口）
 - 非自明な依頼（複数ステップ・複数領域・スキル選択が自明でないもの）は `nexus` を単一入口とする — 分類 → レシピ/チェーン選択 → 実行までを nexus が担う。

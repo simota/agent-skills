@@ -35,6 +35,7 @@ Cross-tool agent instructions for this repository. Read by **Antigravity CLI (`a
 | `_common/CODE_QUALITY.md` | 7-axis quality bar for code-writing skills (solid / secure / readable / maintainable / testable / performant / scalable) + `CODE_QUALITY_GATE` |
 | `_templates/SKILL_TEMPLATE.md` | Starting template for new skills |
 | `.agents/` | Per-skill journals + project log (gitignored) |
+| `docs/audit/` | The only write target for report-only recipes (`verity`, `abide`) — **gitignored; audit output is never committed**, results go to the commit message and the conversation |
 
 ---
 
