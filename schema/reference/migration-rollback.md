@@ -21,8 +21,33 @@ Before approving any migration:
 - [ ] Tested on staging clone of production data volume
 - [ ] Rollback SLO defined (e.g., ≤ 15 min for P0, ≤ 1 h for P1)
 - [ ] Downstream systems (replicas, analytics, caches) handled
+- [ ] **Agent-facing impact assessed** (see below) when any AI agent reads this schema, its docs, or a
+      derived index
 
 If any item fails, **Ask First** before deploy.
+
+### When an agent consumes the schema, migrating the data is not the release
+
+A migration that preserves every row can still change what an agent *does* — because it changes what the
+agent retrieves, how it names things, and which tool it picks. The dangerous class is the one no rollback
+script catches: **the name stays, the meaning moves**. `status` gaining a value, a column's unit changing,
+a field becoming nullable — the query still parses, the agent still answers, and the answer is now wrong.
+Renames announce themselves; redefinitions do not.
+
+Treat it as a behavior release: run a **golden query set** before and after, and diff the *decisions*, not
+just the rows.
+
+| Compare | Regression signal |
+|---------|-------------------|
+| Retrieved evidence IDs | previously-found records no longer surface |
+| Route / tool selection | the same question now takes a different path |
+| Claims and their support | a claim survives while its supporting evidence does not |
+| Refusals and escalations | the agent stops asking for confirmation it used to ask for |
+
+**Also migrate what points at the schema**, or the code moves and the agent's map does not: cached
+embeddings and indexes built on the old field, retrieval templates and saved queries, tool descriptions and
+argument schemas, and the instruction files that name columns. A stale derived artifact is
+`_common/HARNESS_DEBT.md` §2b `generation-stale` — invisible until an answer is wrong.
 
 ## Reversible vs Destructive
 
