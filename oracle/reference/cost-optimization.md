@@ -50,6 +50,35 @@ The six cost centers a token-price comparison omits:
 
 **Counter-example worth remembering.** A support-classification feature moved to a small model: token spend fell ~60%, mean accuracy held, but ambiguous cases mis-routed, adding reprocessing, human escalation, and customer wait — **cost per successful task rose 18%**. Mean-preserving tier changes still shift the tail; evaluate value, reliability, cost, and latency per task, not per token.
 
+### Segment the lead time, or you cannot spend the budget
+
+Cost per Successful Task tells you the ratio is bad. It never tells you **where** — and the reflex answer
+("the model is too slow / too weak") is wrong often enough to be expensive. Measure the elapsed path from
+*task ready* to *accepted* as segments, not as one number:
+
+| Segment | Ends when | A long segment usually means |
+|---------|-----------|------------------------------|
+| `context_discovery` | the agent has the files/facts it needs | poor discoverability, no repo map, authority unclear across sources |
+| `first_useful_diff` | a candidate change exists | ambiguous intent, missing acceptance criteria, over-broad scope |
+| `targeted_verification` | the narrow check runs and reports | no fast targeted check, or the agent cannot discover the command |
+| `full_gate` | the complete local/CI gate passes | serial gate, cold environment, unrelated failures mixed in |
+| `review` | a human accepts | diff too large, several concerns bundled, evidence missing from the handoff |
+
+Record per segment: **wall-clock** and **human attention** as separate quantities, plus intervention count and
+rework count. They move independently — a change can cut wall-clock while raising the attention a human must
+spend, which is a regression the total conceals.
+
+**Rules.**
+
+1. **Improve the dominant segment.** Optimizing a non-dominant one converts spend into no change — the classic
+   version is making generation faster when verification and review own most of the elapsed time.
+2. **Local speedups can be pure push-down.** Faster output that enlarges diffs raises review and rework;
+   parallelism that multiplies merge conflicts raises integration. Re-measure the *whole* path after a change,
+   not the segment you touched.
+3. **Pair the primary metric with guardrails.** Optimizing time-to-green alone rewards narrowing what gets
+   checked; optimizing acceptance rate alone rewards sending only easy tasks. Carry regression escape, rework,
+   human attention, and cost alongside — a faster path that leaks defects is not adopted.
+
 **Cross-boundary note.** Everything below `platform` in the table above leaves the LLM-provider bill and therefore the `cost` recipe's Scope Boundary. Oracle still *counts* it when comparing designs — routing an option to `Ledger` for infra pricing does not license comparing designs on inference price alone.
 
 ### Cognitive Budget — what the reviewer can actually audit
