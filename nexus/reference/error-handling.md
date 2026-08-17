@@ -49,6 +49,40 @@ Failure Signature = stage + error_code + normalized_location + relevant_state_ha
 
 **Rule:** a retry is only legitimate when the **action or the evidence changed**. Two runs producing the same signature are not two attempts — they are one attempt counted twice, and the second one is Q20 thrash (`autonomy-quality-protocol.md` §0: *two identical failures ⇒ stop and diagnose*). Count identical signatures toward the circuit breaker, not toward the retry budget.
 
+### Observation Point ≠ Origin (locate before you fix)
+
+The stage that *reported* a failure is rarely the stage that *produced* it. A gate failing at VERIFY often
+means the intent was never bounded at CLASSIFY; a wrong-file edit reported at AGGREGATE usually means scope
+was never declared. Fixing where the symptom surfaced adds a check that catches the same failure one step
+later, forever.
+
+Split every diagnosis into two named answers before proposing a fix:
+
+```
+observed_at:  <phase / step where it became visible>
+originated_at: <phase / artifact that produced the condition>
+```
+
+Common misattributions, and where the fix actually belongs:
+
+| Symptom | Reported at | Usually originates in |
+|---------|-------------|----------------------|
+| agent repeats a superseded command or API | EXECUTE | stale instruction or memory — retained context, not the step |
+| edits land outside the intended area | AGGREGATE / review | scope never declared in the spawn prompt |
+| the same correction is needed run after run | VERIFY | acceptance criteria absent or unmeasurable at CLASSIFY |
+| diff far larger than the task | review | non-goals unstated; write scope unbounded |
+| a step "passes" but the result is wrong | VERIFY | the check is not independent of the producer (`_common/EVIDENCE_LADDER.md` §2) |
+| only the delegated/background run fails | EXECUTE | environment or context parity between surfaces, not the agent |
+
+**Rules.**
+
+1. **A fix at the observation point is provisional.** It may stop the bleeding; it does not close the failure.
+   Record which one you applied.
+2. **Prevention names a layer, not a paragraph.** "Be more careful" and "add this to the prompt" are the null
+   fixes — the durable ones change the instruction file, the tool contract, the permission grant, or the gate.
+3. **Two identical signatures ⇒ locate, do not retune.** Repetition means the origin was never found; another
+   parameter tweak is Q20 thrash.
+
 ### Tool Error Classes (orthogonal to L0-L5 severity)
 
 Severity answers *how hard to escalate*. It does not answer *what kind of wrong this is* — and a tool failure's
