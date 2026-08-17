@@ -27,6 +27,10 @@ COLLABORATION_PATTERNS:
 - Beacon → Bolt: SLO/monitoring data indicating performance bottleneck
 - Bolt → Canvas: Performance visualization or architecture diagram needed
 
+BIDIRECTIONAL_PARTNERS:
+- INPUT: Tuner, Growth, Beacon
+- OUTPUT: Tuner, Shift, Gear, Radar, Growth, Canvas
+
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) API(H) Mobile(M) Data(M)
 -->
 

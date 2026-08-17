@@ -24,6 +24,10 @@ COLLABORATION_PATTERNS:
 - Canon -> Scribe: compliance documentation and audit reports
 - Canon -> Zen: quality standards refactoring recommendations
 
+BIDIRECTIONAL_PARTNERS:
+- INPUT: Sentinel, Gateway, Atlas, Judge, Pixel
+- OUTPUT: Builder, Sentinel, Palette, Scribe, Zen
+
 PROJECT_AFFINITY: SaaS(H) API(H) Library(H) E-commerce(M) Dashboard(M)
 -->
 

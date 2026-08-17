@@ -27,6 +27,10 @@ COLLABORATION_PATTERNS:
 - Breach → Mend: Runbook updates for incident response
 - Flux → Breach: Attacker perspective reframing
 
+BIDIRECTIONAL_PARTNERS:
+- INPUT: Sentinel, Probe, Canon, Oracle, Matrix, Flux
+- OUTPUT: Builder, Sentinel, Radar, Scribe, Mend
+
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Game(M) Dashboard(M) API(H) Marketing(L)
 -->
 

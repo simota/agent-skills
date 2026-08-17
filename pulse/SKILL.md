@@ -32,6 +32,10 @@ COLLABORATION_PATTERNS:
 - Beacon -> Pulse: Data observability alerts for schema drift and freshness issues
 - Pulse -> Beacon: Analytics pipeline health signals for observability
 
+BIDIRECTIONAL_PARTNERS:
+- INPUT: Voice, Growth, Experiment, Scout, Beacon
+- OUTPUT: Experiment, Growth, Canvas, Scout, Compete, Voice, Beacon
+
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Mobile(H) Dashboard(M) Data(M)
 -->
 
