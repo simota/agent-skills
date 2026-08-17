@@ -69,6 +69,23 @@ See `beacon/reference/incident-learning-postmortem.md` for the full AI-assisted 
 4. Why? [Fourth level]
 5. Why? [Root cause]
 
+**Contributing factors (agent-involved incidents — check every row, "n/a" is an answer):**
+
+| Dimension | Question |
+|-----------|----------|
+| Data | was an input wrong, stale, or from an unexpected source? |
+| Retrieval | did the wrong context get selected, or the right context get missed? |
+| Control | did routing, looping, or termination behave as designed? |
+| Approval | was a gate absent, too broad, or reused from an earlier decision? |
+| Tool | was the tool's contract, schema, or failure semantics part of it? |
+| Reliability | did retry, timeout, fallback, or resume make it worse? |
+| Observability | why was the evidence needed to diagnose this missing? |
+| Governance | was the grant, budget, or ownership unclear beforehand? |
+
+A single-attribution root cause of the form "the model got it wrong" is not a finished analysis — the model
+producing a bad candidate is the *ordinary* case, and the incident is that nothing downstream stopped it.
+Name the failure that let it through.
+
 ### Detection
 
 **How was it detected?** [Monitoring alert / User report / Automated check]
