@@ -12,6 +12,7 @@ The authoritative checklist policy lives in `_common/SECURITY.md`. This file is 
 4. Bundled artifact scan
 5. Settings / config mutation scan
 6. Network and credential scan
+6b. MCP server intake (risk tier + evaluation card)
 7. Manifest generation
 8. First-use sandboxed verification
 9. Verdict matrix
@@ -134,6 +135,66 @@ Credential paths to flag:
 - environment variables matching `*_TOKEN`, `*_KEY`, `*_SECRET`, `*_PASSWORD`, `AWS_*`, `GITHUB_TOKEN`, `NPM_TOKEN`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`
 
 Any read of these without explicit declaration → `P0 REJECT`.
+
+## 6b. MCP Server Intake (in addition to §1-6)
+
+§1-6 detect a *tampered* artifact. They say nothing about whether a **well-behaved** server should be
+connected at all — an honestly-built server with a production database token is a production-mutation grant
+no checksum will flag. Run this section for every MCP server, including ones that pass §1-6 cleanly.
+
+**Host sandbox does not extend to the server.** A host running `workspace-write` connected to a server
+holding a production API token has a production blast radius. Track the control plane per tool, not per host.
+
+### Risk tier (assign before connecting)
+
+| Tier | Capability | Typical | Required controls |
+|------|-----------|---------|-------------------|
+| `R0` | local read-only, static data, no network | public docs read | declaration only |
+| `R1` | authenticated read | issues, observability, internal docs | credential scope review; may surface confidential data |
+| `R2` | limited write | issue/comment create, branch ops | approval per side-effecting call; external state changes and notifications are not undoable |
+| `R3` | infrastructure / production mutation | cloud resources, deploy, database write | explicit human approval, dedicated credential, audit log, environment isolation — never auto-approved |
+
+Tier is set by the **widest tool the server exposes**, not by the tool the task intends to call. A server
+whose read tools are needed and whose write tools are merely present is `R2`, not `R1` — unless the write
+tools are removed or denied server-side.
+
+### When not to connect
+
+Reject when a single CLI command suffices · a repository file read suffices · write scope cannot be narrowed ·
+server owner or update policy unknown · secret storage unknown · tool results cannot be verified · a native
+integration offers clearer permission and audit · the team cannot maintain it.
+
+### Evaluation Card (required; store alongside `.chain-manifest.json`)
+
+```yaml
+server_id:
+purpose:
+owner:                      # a person, not a team alias with no on-call
+source_repository:
+package_and_version:        # pinned; digest where the transport supports it
+transport:                  # stdio | remote-http — record the boundary each implies
+tools:
+  read: []
+  write: []                 # empty is a meaningful answer; state it explicitly
+credentials:                # scope, not the value
+network_destinations: []    # allowlisted; "any" is a rejection
+data_classification:        # highest class reachable through any tool
+host_sandbox_relation:      # inside | outside the host sandbox
+risk_tier:                  # R0-R3 from the table above
+approval_policy:
+logging:                    # audit log + side-effect ID availability
+update_policy:              # who updates, on what trigger; auto-update = P1
+rollback_and_removal:
+verification_status:        # executed | documentation-verified | not-executed
+```
+
+**A card with `verification_status: not-executed` cannot yield `APPROVED`** — it caps at
+`APPROVED_WITH_FLAG` under §9, and `R3` never reaches even that without human approval on record.
+Removal is part of intake: a server whose removal has never been tested is a dependency, not an integration.
+
+Failures map to §9 as: undeclared network destination or credential scope → `P0` · unpinned version or
+auto-update → `P1` · missing owner, logging, or removal test → `P2` · tool schema changed since the card was
+written → re-run intake, do not amend the card in place.
 
 ## 7. Manifest Generation
 
