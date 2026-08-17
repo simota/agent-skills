@@ -75,6 +75,30 @@ evidence_plan:
 
 `not_verified` is a required field, not an optional one. An evidence plan that lists only what passed is a marketing document.
 
+### Execution status — orthogonal to the E-level
+
+E0-E6 grade **how independent** a check is. They say nothing about whether it was *run here*. A claim can sit
+at E3 and still be something nobody executed on this change — the level came from the check's design, not from
+an observation. Label every entry with one of three, and never let the label be inferred:
+
+| Status | Meaning | Reportable as |
+|--------|---------|---------------|
+| `executed` | run in this environment on this revision; exit code and output captured | verified |
+| `documentation-verified` | the behavior is asserted by an authoritative source (spec, official docs, vendor release notes) but was not run here | `UNVERIFIED` with the source named |
+| `not-executed` | applicable and planned, but not run — no environment, no fixture, out of time | `UNVERIFIED`, and it belongs in `not_verified` |
+
+**Rules.**
+
+1. **Documentation-verified is not a weaker execution; it is a different kind of claim.** It carries the
+   source's authority, not yours, and it goes stale when the source's version moves — while an executed result
+   goes stale when the *code* moves.
+2. **Status never upgrades without a new observation.** Re-reading the doc more carefully, or a reviewer
+   agreeing, does not promote `documentation-verified` to `executed`.
+3. **A plan whose load-bearing checks are all `documentation-verified` caps the delivery at `PARTIAL`.**
+   State which check would have to run to lift it.
+4. **`executed` binds to a revision.** If HEAD moved after the run, the status is stale, not passing
+   (`_common/HANDOFF.md` § Completed vs Verified).
+
 ---
 
 ## 2. Circular Verification — the failure this protocol exists to prevent
