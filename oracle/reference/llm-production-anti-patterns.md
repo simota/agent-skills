@@ -59,6 +59,8 @@ Purpose: Use this file when you are auditing production failure modes, architect
 | `AA-04` | distributed decisions | orchestration layer |
 | `AA-05` | infinite loops | max steps, breaker, ceiling |
 | `AA-06` | heavy custom agents | keep agents `<3k` tokens where possible |
+| `AA-07` | **cost cascade** — a slow primary is not cancelled when the fallback starts, so both run; a retry above a fallback above a retry multiplies the same request | share one budget across primary *and* fallback, **cancel the superseded attempt**, and count a fallback against the original request's ceiling — not as a fresh one |
+| `AA-08` | **tool shopping after a denial** — a refused effect is retried through a broader tool or a differently-shaped call | treat the second attempt as the same denial, not a new request (`nexus/reference/guardrails.md` § Permission Request Envelope) |
 
 ## Reasoning Limit Compensations
 
