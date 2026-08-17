@@ -69,6 +69,37 @@ SKILL.md size, reference count, journal freshness.
 | 1 | > 15k tokens OR > 15 references OR very stale (180-365 days) |
 | 0 | Unmaintained: > 15k tokens, > 15 references, journal > 365 days |
 
+### Registry Drag (applied after the 5 axes, not as a sixth score)
+
+The five axes measure a skill largely on its own terms — how used, how distinct, how costly to keep. They
+miss the cost a skill imposes on **every other routing decision**, which is paid whether or not the skill is
+ever invoked. A roster's marginal value is:
+
+```
+value = coverage gained + verification gained + human attention saved
+      − selection ambiguity  − failure/latency cost  − permission surface  − maintenance
+```
+
+Only the last term is scored above. Check the other three explicitly on any skill scoring below KEEP, and on
+every new-skill proposal:
+
+| Drag | Signal | Consequence |
+|------|--------|-------------|
+| Selection ambiguity | a near-synonym name or description that does not tell the router *when not to* use it; the router mis-picks between it and a sibling | the cost lands on tasks that never call it (`HD-OPAQUE`) |
+| Failure / latency | it fans out, spawns, or calls externally where a narrower skill returns directly | retries and rework accrue to the chain that selected it |
+| Permission surface | it is authorized for effects broader than its contract needs | widens blast radius across every recipe that can reach it (`HD-PERM`) |
+
+**Rules.**
+
+1. **Three near-synonyms are one skill with an identity problem.** When several entries answer the same
+   request from different angles, the fix is one owner and explicit non-use conditions — not better
+   descriptions on all three.
+2. **Drag is a MERGE argument, not an extra SUNSET path.** It sharpens a borderline verdict; the 3-condition
+   gate below still governs sunset.
+3. **Every addition declares its removal condition.** A proposal that cannot state what would make this skill
+   unnecessary has not been scoped — record it at registration so a later audit has something to test rather
+   than a judgment call to re-litigate.
+
 ## Classification Thresholds
 
 Sum the 5 axes (max 25):
