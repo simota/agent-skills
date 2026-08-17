@@ -260,3 +260,28 @@ All agents load prior context before starting work (Tier 1). Agents with learnin
 
 **Protocol:** → `_common/SELF_EVOLUTION.md`
 **Outward signals:** → `_common/EVOLUTION.md`
+
+### Where a learning goes
+
+Writing every lesson into the journal — or into the prompt — is why the same failure recurs under a new
+description. Route by what the learning *is*, before writing it anywhere:
+
+| Learning | Destination | Why not the journal |
+|----------|-------------|---------------------|
+| One-off observation about this task | the task record / activity log | it will not generalize; carrying it forward is noise |
+| A debugging tip that reproduced | the relevant skill `reference/` | the next agent needs it without reading someone's diary |
+| A command, path, or convention everyone needs | the repo's instruction files (`CLAUDE.md` / `AGENTS.md`) | a personal note does not reach CI, teammates, or a fresh session |
+| A safety or permission boundary | the policy that enforces it (`_common/SECURITY.md`, hooks, settings) | an instruction is advisory; a boundary must be enforced |
+| A personal working preference | personal config | it is not a project fact |
+| An unverified hypothesis | nowhere | stored guesses come back indistinguishable from findings |
+
+**Rules.**
+
+1. **Second occurrence changes the destination, not the wording.** When the same failure happens twice, the
+   fix moves *up* a row — from journal to reference, from reference to instruction file, from instruction file
+   to enforced policy. Lengthening the existing note is the null action.
+2. **Promote only what survives its source.** A lesson that depends on this branch, this session, or one
+   observation stays where it is until it reproduces.
+3. **Anything retained carries source, scope, and an expiry trigger.** A retained item that cannot say where
+   it came from and what would invalidate it is a future stale-context incident
+   (`triage/reference/response-workflow.md` `A6`).
