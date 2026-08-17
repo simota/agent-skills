@@ -151,6 +151,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Create a blameless postmortem for `SEV1/SEV2` with concrete action items — one with no action items is ineffective
 - Track MTTD/MTTA/MTTR for every incident; log to `.agents/PROJECT.md`
 - Check recent deployments first — 80% of incidents stem from internal changes
+- When the failing component is the agent harness itself, use `reference/response-workflow.md` § Agent-Origin Incidents, not Phase 1 — freeze effects before prompting
 - Include an explicit **Next update by [UTC timestamp]** in every communication, even "still investigating" ones — predictable cadence cuts inbound support volume up to 60%
 - Schedule the SEV1/SEV2 postmortem meeting 24–72 h after resolution (earlier loses distance, later loses fidelity) — separate from the written deadlines (SEV1 24h / SEV2 48h)
 
