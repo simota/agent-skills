@@ -167,6 +167,51 @@ file_ownership:
     - src/utils/*.ts
 ```
 
+### Runtime Slot (the state file ownership cannot see)
+
+File ownership partitions the **repository**. It partitions nothing outside it. Branches that own disjoint
+paths still share one port space, one local database, one build/test cache, one browser profile, and one
+temp directory — so the second branch to bind port 3000 fails with an error that has nothing to do with its
+task, and two branches writing the same cache produce results neither one can reproduce alone.
+
+**Rule: every parallel branch that starts a process, a server, a database, or a browser declares a runtime
+slot, derived from the branch identity — never a fixed default.**
+
+```yaml
+runtime_slots:
+  branch_A:
+    slot: 152                       # derived from branch id, not hand-picked
+    port_base: 18152                # every port the branch binds = port_base + offset
+    database_schema: agent_152
+    cache_dir: .cache/152
+    temp_dir: .tmp/152
+    browser_profile: .browser/152
+    artifact_prefix: branch_A-      # keeps report/screenshot names from colliding
+```
+
+**Rules.**
+
+1. **Derive, don't default.** A slot computed from the branch identity collides only if two branches share an
+   identity. A hardcoded `3000` collides always. Two branches assigned the same slot is a fan-out bug — fail
+   at declaration, not at bind time.
+2. **A slot is only real if the branch's tooling honors it.** Declaring `port_base` while the dev server reads
+   a checked-in config file changes nothing. The slot must reach the process — env var, CLI flag, or config
+   override — or the declaration is decoration.
+3. **Unshareable resources cap the fan-out.** A single Docker daemon, one cloud credential, one external
+   sandbox account, or a service that only supports one session are not sliceable by slot. Either serialize
+   the branches that need them (`sequence` constraint below) or lower the branch count — do not fan out and
+   hope.
+4. **Release on branch termination, including failure.** A branch that aborts without freeing its slot leaves
+   a stale schema or a held port that the next run inherits as a phantom failure. Slot cleanup belongs to the
+   rollback path, not only the success path.
+5. **A worktree is isolation of files, not of trust.** Separate worktrees do not sandbox execution: a branch
+   running untrusted code still reaches the host. Isolation strength is a separate decision from slot
+   allocation.
+
+**Verification before a fan-out that allocates slots:** start every branch at once, confirm no two bind the
+same port / schema / cache / profile, then run each branch's targeted checks concurrently. A fan-out verified
+only one-branch-at-a-time has not been verified.
+
 ### Base Revision (the divergence file ownership cannot see)
 
 Exclusive file ownership guarantees branches never overwrite each other. It guarantees nothing about whether
