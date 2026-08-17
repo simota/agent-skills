@@ -225,7 +225,7 @@
 
 **Tooling:** `python3 _common/scripts/lint-frontmatter.py --severity warning` emits findings as `S1` (line count) and `S2` (token estimate) — one finding per dimension. Treat both as inputs to S10.
 
-**Rationale:** Anthropic explicit guidance: "Keep SKILL.md body under 500 lines for optimal performance". Tiering exists because the existing 148-skill corpus runs higher; FAIL only fires on truly oversized files so CI doesn't choke on legacy violations.
+**Rationale:** Anthropic explicit guidance: "Keep SKILL.md body under 500 lines for optimal performance". Tiering exists because the existing corpus runs higher (123 skills as of 2026-08-17); FAIL only fires on truly oversized files so CI doesn't choke on legacy violations.
 
 **Fix hints:**
 - Move detail sections (e.g. long `## Boundaries`, oversized recipe descriptions, full `## Workflow` phase notes) to `reference/<topic>.md`.

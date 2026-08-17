@@ -191,7 +191,7 @@ Seven triggers (`LT-01` → `LT-07`, incl. near misses) and the Chain Effectiven
 
 ## Routing Quick Start
 
-**Chain source of truth:** `routing-matrix.md` = which agents fire for task X (**93 task types** → default chain, classify/LADDER flow, per-type phase contracts, Sherpa-skip and chain-adjustment rules); the Registry exposes the most-used types as subcommands, the rest reach via `classify`. `agent-chains.md` = how to adjust a chain (parallel variants, Rally escalation, addition/skip triggers). `recipes-detail.md` holds Recipe Families axis prose; per-recipe phase contracts live in each `<recipe>-recipe.md`.
+**Chain source of truth:** `routing-matrix.md` = which agents fire for task X (**94 task types** → default chain, classify/LADDER flow, per-type phase contracts, Sherpa-skip and chain-adjustment rules); the Registry exposes the most-used types as subcommands, the rest reach via `classify`. `agent-chains.md` = how to adjust a chain (parallel variants, Rally escalation, addition/skip triggers). `recipes-detail.md` holds Recipe Families axis prose; per-recipe phase contracts live in each `<recipe>-recipe.md`.
 
 If context is unclear, inspect git state and `.agents/PROJECT.md`; if confidence stays low, ask one focused question.
 

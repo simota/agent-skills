@@ -25,7 +25,7 @@ Decomposes, coordinates, and parallelizes tasks.
 | **Rally** | Parallel orchestrator | Multi-session parallel execution | No |
 | **Atelier** | Design → implementation pipeline | Integrates Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas | No |
 
-## Investigation (7)
+## Investigation (8)
 
 Investigation, analysis, and root-cause identification. Does not write code.
 
@@ -38,6 +38,7 @@ Investigation, analysis, and root-cause identification. Does not write code.
 | **Sweep** | Dead-code detection | Unused files, dead code, orphaned files | No |
 | **Spark** | New feature proposals | Feature ideas leveraging existing data/logic | No |
 | **Void** | YAGNI verification | Scope cuts, complexity reduction proposals | No |
+| **PDM** | Delivery-status navigator | Planned-vs-implemented reconciliation, feature inventory, roadmap rollup | No |
 
 ## Implementation (6)
 
@@ -52,7 +53,7 @@ Code implementation.
 | **Native** | Pure-native mobile implementation | iOS Swift 6.3 + SwiftUI / Android Kotlin 2.4+ + Jetpack Compose (RN/Flutter/KMP/CMP out of scope) | Yes |
 | **Pixel** | Mockup → code | Pixel-accurate HTML/CSS from images | Yes |
 
-## Testing (5)
+## Testing (6)
 
 Test authoring and verification.
 
@@ -63,6 +64,7 @@ Test authoring and verification.
 | **Siege** | Load and resilience testing | Load tests, contract tests, chaos engineering | Yes |
 | **Matrix** | Manual QA test-case authoring | Systematic QA procedures (BVA, equivalence class, decision table) for TestRail/Zephyr/Xray/Qase — `qa-scenario` recipe (absorbed from drill) | No |
 | **Canvas** | Test intelligence visualization | Coverage heatmaps, test-shape views, mutation overlays from junit/lcov/allure/playwright artifacts (absorbed from vista; live dashboards → Pulse) | Mixed |
+| **Snap** | iOS UI automation | XCUITest authoring, fastlane App Store screenshot pipelines | Yes |
 
 ## Security (6)
 
@@ -144,7 +146,7 @@ UI/UX design and improvement.
 | **Funnel** | Landing-page construction | LP design and optimization | Mixed |
 | **Voice** | User-feedback analysis | NPS design, review analysis, sentiment analysis | No |
 
-## DevOps (8)
+## DevOps (7)
 
 Infrastructure, CI/CD, and operations.
 
@@ -158,7 +160,7 @@ Infrastructure, CI/CD, and operations.
 | **Oath** | Compliance | SOC2 / PCI-DSS / HIPAA conformance checks | Mixed |
 | **Ledger** | FinOps | Cloud cost optimization, RI / SP recommendations | No |
 
-## Modernization (3)
+## Modernization (2)
 
 Migration and modernization.
 
@@ -243,7 +245,7 @@ Coordination and communication.
 | **Relay** | Messaging integration | Bot development, webhooks, WebSocket | Mixed |
 | **Accord** | Spec alignment | Cross-team Business / Dev / Design specifications | No |
 
-## Meta / Tooling (7)
+## Meta / Tooling (9)
 
 Manages and evolves the ecosystem itself.
 
@@ -256,8 +258,10 @@ Manages and evolves the ecosystem itself.
 | **Hone** | AI CLI configuration optimization | Claude Code / Antigravity CLI configuration audit | No |
 | **Compass** | Skill navigator | Skill guidance, onboarding | No |
 | **Latch** | Claude Code Hooks design | PreToolUse / PostToolUse / Stop and other lifecycle hooks | Mixed |
+| **Loom** | Project operating-layer design | Project-local skill / recipe / workflow suite design, task-topology mapping | No |
+| **Prune** | Skill ecosystem cleanup | Overlap audit, merge-candidate detection, sunset proposals | No |
 
-## Creative / Media (3)
+## Creative / Media (2)
 
 Media and creative generation.
 

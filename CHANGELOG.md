@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added — Apple platform coverage: `dock` skill + perf/design-trend references (2026-07-25)
 
+> **Superseded 2026-07-29 (`a9510248`).** `dock` was absorbed into `native` as the `macos`/`macdist` recipes and no longer exists as a standalone skill; `wield`, referenced below, was absorbed into `hearth` as `automate`. The `MACOS_NATIVE` routing chain no longer starts at `Dock`. The entry is kept verbatim as a record of what shipped on 2026-07-25 — see `_common/HARNESS_DEBT.md` § *A Record is not a derived asset*. Roster as of 2026-08-17: **123 skills**.
+
 Closes three verified gaps in Apple-platform knowledge. Agent count 132 → 133.
 
 - **New skill `dock`** (macOS native application development, 277-line SKILL.md + 15 references, ~3.9k lines total): SwiftUI for macOS + AppKit interop, scene/window architecture, menu bar Commands, document-based apps, NavigationSplitView layout, drag & drop / pasteboard / Services, App Sandbox + entitlements, distribution (App Store vs Developer ID, notarization, Sparkle), XPC / SMAppService helpers, Mac HIG + Liquid Glass on macOS Tahoe 26, and the Catalyst-vs-native decision. Boundary: `dock` **builds** Mac apps; `wield` **automates existing** Mac apps via AppleScript/JXA — zero functional overlap.
