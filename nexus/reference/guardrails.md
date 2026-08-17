@@ -290,6 +290,37 @@ _GUARDRAIL_EVENT:
   Recovery: [Recovery action if applicable]
 ```
 
+### Permission Request Envelope (when the event asks a human to approve an effect)
+
+`Level` + `Trigger` + `Action` describe *what the harness noticed*. They do not describe what the approver is
+being asked to accept. An approval prompt that names only the operation ("run `deploy.sh`?", "allow network?")
+makes the human the rubber stamp on a decision they were not given the inputs for. Any `PAUSE` that requests
+approval for a **T3/T4 effect** (§ Action Tier Ladder) carries these four fields in addition to the event:
+
+```
+  Destination: [where the effect lands — host, repo, branch, recipient, tenant, environment]
+  Data_classes: [what leaves or is written — public | internal | confidential | secret]
+  Blast_radius: [file | repository | machine | account | external system | production]
+  Reversibility: [undo | version/backup | compensating action | manual recovery | none]
+  Alternative:  [the narrower action considered and why it is insufficient — or "none"]
+```
+
+**Rules.**
+
+1. **Missing fields cap the tier, not the flow.** An envelope that cannot state destination and reversibility
+   executes one tier down (deliver the diff, the plan, the dry-run) — it does not proceed on an incomplete
+   approval, and it does not simply stop.
+2. **Approval is scoped to this request.** A granted approval covers the stated destination and payload, once.
+   Widening it to the session, the command family, or "similar calls" is escalation without a decision — the
+   next call raises its own envelope. Watch for the failure directly: a wrapper approved once, then reused for
+   redirect, subshell, or edited-script variants of the same command.
+3. **A reviewing agent never fills the approver's seat.** A second agent may assemble the envelope and
+   critique it; the grant itself belongs to a human or a policy engine outside the producing agent's trust
+   domain. Evaluation independence (`_common/LOOP_PRECONDITIONS.md` #3) is about grading output — it does not
+   transfer authority.
+4. **`Alternative: none` is a claim that gets checked.** Most T4 requests have a T2 form (produce the artifact,
+   let a human ship it). Recording that it was considered is what keeps T4 rare.
+
 ---
 
 ## Context Hierarchy
