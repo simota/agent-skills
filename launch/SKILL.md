@@ -255,7 +255,7 @@ Mobile-specific Go/No-Go items beyond the standard scored checklist: App Review 
 | `reference/release-anti-patterns.md` | Deployment anti-patterns, canary/blue-green cautions, or release cadence guardrails. |
 | `reference/feature-flag-pitfalls.md` | Feature flag lifecycle rules, debt controls, or cleanup thresholds. |
 | `reference/versioning-pitfalls.md` | SemVer pitfalls, breaking-change detection rules, or CalVer decision support. |
-| `reference/rollback-anti-patterns.md` | Rollback design, DB migration safety, or recovery sequencing. |
+| `reference/rollback-anti-patterns.md` | Rollback design, DB migration safety, recovery sequencing, or rolling back an AI feature (prompt / model revision / index / embeddings / adapter / runtime / tool schema). |
 | `reference/hotfix-workflow.md` | `hotfix`: emergency patch playbook, 2h SLA, shortened CI gate, hotfix branch, bundled rollback, and backport-to-main planning. |
 | `reference/canary-rollout.md` | `canary`: progressive traffic shifts (1% → 10% → 50% → 100%), guardrail metrics, automatic abort conditions, and observation windows. |
 | `reference/mobile-release.md` | `mobile`: TestFlight phased release / Play staged rollout, store-compliance gating, App Review / Play Review lead-time planning, server-driven feature flag rollback path, and hotfix submission flow. |

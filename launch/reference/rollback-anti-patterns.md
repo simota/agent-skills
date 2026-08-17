@@ -8,8 +8,9 @@ Purpose: Use this file when you need rollback design, database migration safety,
 2. Why DB rollback is hard
 3. Forward-compatible migration pattern
 4. Layered rollback model
-5. Post-rollback process
-6. Launch enforcement points
+5. AI asset rollback
+6. Post-rollback process
+7. Launch enforcement points
 
 ## 1. Rollback Anti-Patterns
 
@@ -22,6 +23,7 @@ Purpose: Use this file when you need rollback design, database migration safety,
 | `RB-05` | Single rollback method | One failed method leaves no safe fallback | Keep multiple rollback options ready |
 | `RB-06` | No forward plan after rollback | Teams stop at recovery and delay the real fix | Create the next-step plan within `24 hours` |
 | `RB-07` | Ignoring stateful resources | App rollback leaves DB, cache, or queue inconsistent | Include all stateful resources in rollback planning |
+| `RB-08` | Code-only rollback on an AI feature | Reverting the deploy leaves the new prompt, model revision, or index live — the regression survives | Version every AI asset and roll back the whole set (section 5) |
 
 ## 2. Why DB Rollback Is Hard
 
@@ -73,7 +75,38 @@ Escalation rule:
 
 - if only `L4` is viable, require stakeholder approval
 
-## 5. Post-Rollback Process
+## 5. AI Asset Rollback
+
+For an AI or LLM feature, the deployed container is only one of the things that changed. Behavior is the
+product of several independently-versioned assets, and reverting the app while a new prompt or index stays
+live restores the old code with the new regression.
+
+Version every asset below, and treat "which combination served this request" as a lookup that must work in
+reverse — from a production request or trace back to the exact versions in play.
+
+| Asset | Rollback method | Trap |
+|-------|-----------------|------|
+| Prompt / template | registry pin + flag | edited in place with no version history |
+| Model revision | logical alias → pinned revision | the provider deprecated the old revision; the alias has nowhere to point |
+| Routing / policy config | config revert | routes cached per-process; revert does not take effect until restart |
+| Retrieval index | atomic generation switch | partial re-index exposed; no previous generation retained |
+| Embeddings | keep prior index generation | new vectors are a different space — cannot be mixed with old ones |
+| Adapter / fine-tune | adapter unload or pin | base model moved underneath the adapter |
+| Runtime / serving engine | image pin | a runtime bump silently carries both a security fix and a behavior change |
+| Tool schema | schema version + gateway pin | in-flight agent runs hold the old schema |
+
+Rules:
+
+- **Make rollback time an SLO, per asset.** If restoring model weights takes `30 minutes`, the real recovery
+  path is a feature flag to the previous endpoint — not the weight transfer.
+- **A logical model alias does not guarantee a route home.** Track provider deprecation dates; an alias whose
+  target has been retired is a rollback that fails at the worst moment.
+- **Do not ship a destructive index or embedding migration alongside a behavior change.** Keep the previous
+  generation until the new one has held through the canary window.
+- **Re-verify freshness and authorization on resume.** A long-running job restarted after a rollback must not
+  replay a stale plan against a permission set that has since changed.
+
+## 6. Post-Rollback Process
 
 ### Immediate
 
@@ -93,10 +126,11 @@ Escalation rule:
 - run postmortem
 - update tests, release gates, and rollback plan
 
-## 6. Launch Enforcement Points
+## 7. Launch Enforcement Points
 
 - Block release if rollback test is missing (`RB-01`).
 - Recommend `Expand-Contract` for DB changes that would otherwise rely on unsafe down migrations (`RB-02`).
 - Delay destructive schema cleanup by `2 releases` where possible (`RB-03`).
 - Require multiple rollback methods (`RB-05`).
 - Require stakeholder approval for `L4` rollback scenarios.
+- For AI features, require every asset in section 5 to be versioned and reverse-lookupable before release (`RB-08`).
