@@ -75,8 +75,8 @@ Verification: matches inside migration-guide context (`shift`, `port`, `quill`, 
 ### SD-4 Broken Internal Links
 
 ```bash
-for f in */SKILL.md; do
-  skill=$(dirname "$f")
+for f in */SKILL.md */reference/*.md; do
+  skill=${f%%/*}   # skill root, not the containing dir — reference/*.md must not double the prefix
   grep -Eho '`reference/[a-zA-Z0-9_-]+\.md`' "$f" | sed 's/`//g' | sort -u | while read ref; do
     if [ ! -f "$skill/$ref" ]; then
       echo "P0 SD-4 $f: missing $ref"
@@ -85,7 +85,12 @@ for f in */SKILL.md; do
 done
 ```
 
-Verification: zero false positives by construction — the file either exists or it does not. P0 because broken links degrade downstream agent navigation.
+Scope note: scanning `reference/*.md` as well as `SKILL.md` is deliberate — a dangling pointer inside a reference file breaks navigation exactly as badly, and `S11` already expects both. Two consequences follow:
+
+- **The check is no longer false-positive-free.** Reference files legitimately contain *example* paths (`reference/x.md`, placeholder names in templates and checklists). Exclude paths inside fenced example blocks, or allowlist them per file; do not silence the rule.
+- **Bare `reference/<name>.md` that resolves in another skill is its own finding.** Prose like "see Nexus `reference/hub-authoring.md`" reads as this skill's own reference. Qualify cross-skill pointers as `<skill>/reference/<name>.md`.
+
+P0 because broken links degrade downstream agent navigation.
 
 ### SD-5 Single-Year Benchmarks
 

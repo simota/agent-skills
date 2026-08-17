@@ -147,16 +147,29 @@ description: "Does things
 
 **Symptom**: Skill loads but Claude doesn't follow instructions
 
-**Common Causes & Solutions**:
+**Diagnose the layer before rewording.** "It was ignored" is a symptom, not a cause, and the
+reflex fix — adding emphasis — is the one intervention that reliably makes things worse. Work down
+this list in order and stop at the first layer that explains the behavior:
 
-| Cause | Solution |
-|-------|----------|
-| Instructions too verbose | Concise bullet points, detailed docs to `reference/` |
-| Critical instructions buried | Put key rules at top, use `## Important` / `## Critical` |
-| Ambiguous language | `"CRITICAL: Before calling create_project, verify: ..."` |
-| Model laziness | Add `"Take your time to do this thoroughly"` (more effective when added to the user prompt) |
+| # | Layer | Check |
+|---|-------|-------|
+| 1 | **Loading** | Did the file actually enter context? Wrong cwd, unmatched filename, empty file, truncation, or a post-compaction reload that never happened. Verify before anything else. |
+| 2 | **Scope** | It loaded, but does it apply to this task? Test the negative case too — a scoped rule leaking into unrelated work is the same defect inverted. |
+| 3 | **Ambiguity** | Can the line be read two ways? Rewrite as Condition + Directive + Verification + Boundary: not "run relevant tests" but "on `src/api/**` changes run `make test-api`; add `make test-contract` for public schema changes." |
+| 4 | **Conflict** | List *every* source touching this action — root, package, local, managed, task prompt, hook/CI — before editing any one of them. |
+| 5 | **Context overload** | The rule is clear but buried. Remove duplicates, scope the loading, move procedures to `reference/`. |
+| 6 | **Capability** | Does the session have the tool the rule assumes? If not, the rule needs a stated fallback, not stronger wording. |
+| 7 | **Enforceability** | A constraint that must hold even under pressure belongs in a hook or permission rule — see `_common/MECHANISM_SELECTION.md`. |
+| 8 | **Variability** | Adherence is never 100%. Do not conclude from one run; reproduce before rewriting. |
 
-**Advanced**: Bundle a script for deterministic validation
+> **Do not add emphasis as a first move.** More `IMPORTANT` / `CRITICAL` markers inflate priority
+> across the whole file: when everything is critical, nothing is, and the markers stop carrying
+> signal. Anthropic measured a **3% intelligence drop** from this class of pressure wording, and it
+> does not surface in task-level evals — `_common/OPUS_5_AUTHORING.md`. Reserve emphasis for the
+> few constraints that genuinely outrank the rest, after layers 1-4 are ruled out.
+
+**Then** apply the ordinary fixes: concise bullets with detail moved to `reference/`, key rules
+placed early, and a bundled script wherever the check can be made deterministic.
 
 ### Category 5: MCP Connection Issues
 

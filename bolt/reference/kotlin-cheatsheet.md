@@ -372,7 +372,7 @@ What Bolt watches for at a high level:
 - `@Stable` / `@Immutable` annotations control re-composition skipping — wrong annotation = perf regression.
 - `remember { }` with capturing lambda → equality issue → recomposition loop.
 
-For Compose-specific guidance, route to native (`reference/compose-perf.md`). Bolt's role is profiler interpretation, not Compose architecture.
+For Compose-specific guidance, route to native (`native/reference/compose-perf.md`). Bolt's role is profiler interpretation, not Compose architecture.
 
 ---
 

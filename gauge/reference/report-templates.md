@@ -1,6 +1,6 @@
 # Report Templates
 
-**Purpose:** Standard formats for compliance dashboards, per-skill reports, and ecosystem health scores.
+**Purpose:** Standard formats for compliance dashboards, per-skill reports, and ecosystem coverage figures.
 **Read when:** Executing the REPORT phase of the audit workflow.
 
 ---
@@ -12,7 +12,8 @@
 
 **Date:** YYYY-MM-DD
 **Auditor:** Gauge
-**Health Score:** {score}% ({grade})
+**Coverage:** PASS {n} · PARTIAL {n} · FAIL {n} (P0 {n} · P1 {n} · P2 {n} · P3 {n}) · NOT_RUN {n} — of 21
+**Blocking:** {yes/no} (any open P0)
 
 ### Item Status
 
@@ -66,28 +67,44 @@
 
 **Date:** YYYY-MM-DD
 **Skills audited:** {count}
-**Ecosystem Health Score:** {score}%
+**Blocked skills (open P0):** {count}
 
-### Health Score Formula
+### Coverage figures — report per severity, never as one grade
 
-`Health Score = (total_pass / (total_skills × 21)) × 100` (19 structural + 2 content items — CQ1, CQ2)
+There is **no single ecosystem health score.** 21 heterogeneous checks do not share a unit, and
+averaging them lets a P0 routing defect be offset by cosmetic passes elsewhere. Report the
+distribution instead:
 
-### Grade Scale
+```
+Items checked:  total_skills × 21 = {n}
+PASS     {n} ({pct}%)
+PARTIAL  {n} ({pct}%)   ← counted on its own axis, never folded into PASS or into 0
+FAIL     {n} ({pct}%)   broken out by severity: P0 {n} · P1 {n} · P2 {n} · P3 {n}
+NOT_RUN  {n}            ← a check that did not execute; excluded from the percentages,
+                          reported as its own count
+```
 
-| Grade | Score | Description |
-|-------|-------|-------------|
-| A+ | 95-100% | Exemplary compliance |
-| A  | 90-94% | Strong compliance |
-| B  | 80-89% | Good compliance with minor gaps |
-| C  | 70-79% | Moderate compliance, action needed |
-| D  | 60-69% | Significant gaps |
-| F  | <60% | Critical non-compliance |
+Three rules make the numbers honest:
+
+- **`PARTIAL` is a third state, not a zero.** A formula whose numerator is `total_pass` alone
+  silently scores every partial as a total failure, which understates progress and rewards
+  reclassifying borderline items downward.
+- **`NOT_RUN` is never counted as `0` or dropped.** A check that did not execute is unknown, not
+  failed and not passed. Folding it either way turns missing coverage into a quality claim.
+- **P0 is a gate, not a weight.** Any skill with an open P0 is reported as blocked regardless of
+  its other 20 results. `F2` (description) and `S11` (dangling references) are routing-critical:
+  they break agent navigation, so they never average away.
+
+This mirrors `_common/EVIDENCE_LADDER.md` ("read per risk class, never as a single average"),
+`darwin/reference/assessment-models.md` ("Report both; never average them"), and
+`harvest/reference/engineering-metrics-pitfalls.md` ("treat SPACE as a checklist, not a single
+composite score"). A composite grade here would have Gauge violate the standard it audits against.
 
 ### Compliance Matrix
 
-| Skill | F1 | F2 | L1 | H1 | H2 | H3 | S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | S9 | S10 | S11 | A1 | A2 | CQ1 | CQ2 | Score |
-|-------|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|-----|-----|----|----|-----|-----|-------|
-| accord | ✓/△/✗ | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | X/21 |
+| Skill | F1 | F2 | L1 | H1 | H2 | H3 | S1 | S2 | S3 | S4 | S5 | S6 | S7 | S8 | S9 | S10 | S11 | A1 | A2 | CQ1 | CQ2 | P/△/F | Blocked |
+|-------|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|-----|-----|----|----|-----|-----|--------|---------|
+| accord | ✓/△/✗ | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | 18/2/1 | yes/no |
 ...
 
 **Legend:** ✓ = PASS, △ = PARTIAL, ✗ = FAIL
@@ -117,8 +134,8 @@
 ## Fix Plan: {AGENT_NAME}
 
 **Date:** YYYY-MM-DD
-**Current score:** {score}/21 ({pct}%)
-**Target score:** 21/21 (100%)
+**Current:** PASS {n} · PARTIAL {n} · FAIL {n} · NOT_RUN {n} — of 21 · blocked: {yes/no}
+**Target:** no open P0, no FAIL
 **Violations:** {count} ({p0_count} P0, {p1_count} P1, {p2_count} P2, {p3_count} P3)
 
 ### Fixes (priority order)
@@ -190,13 +207,13 @@ Use this format when auditing multiple skills in a single session.
 
 **Date:** YYYY-MM-DD
 **Skills audited:** {count}
-**Average score:** {score}/21 ({pct}%)
+**Blocked (open P0):** {count} of {total}
 
 ### Quick Results
 
-| Skill | Score | Grade | P0 | P1 | P2 | P3 | Top violation |
-|-------|-------|-------|----|----|----|----|---------------|
-| {name} | X/21 | {grade} | {count} | {count} | {count} | {count} | {item} |
+| Skill | P/△/F | Blocked | P0 | P1 | P2 | P3 | Top violation |
+|-------|--------|---------|----|----|----|----|---------------|
+| {name} | 18/2/1 | yes/no | {count} | {count} | {count} | {count} | {item} |
 ...
 
 ### Action Items
