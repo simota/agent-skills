@@ -13,7 +13,8 @@ criteria** for condition cells — reflow, target size) · `nexus chorus` (Idiom
 against Apple HIG / Material 3) · `nexus lattice` (defensible values when a system `gap` is
 filled) · `nexus silhouette` (§1 tiers bound what may justify a distinctive move — Tier 4
 folklore may not) · `funnel` / `bazaar` (LP layout) · `native`
-(platform margin conventions) · `forge` / `artisan` / `pixel` (implementation defaults).
+(platform margin conventions) · `forge` / `artisan` / `pixel` (implementation defaults) ·
+`canvas` (diagram element counts — §6 "Cognitive-capacity numbers").
 
 Read this when deciding spacing scales, container widths, type scales, or when justifying a
 layout decision to a reviewer.
@@ -354,6 +355,49 @@ slightly above dead center to read as centered.
 **Rule of thirds in hero sections** — `UNVERIFIED (folklore)` for web UX specifically;
 well-established in visual-art composition, imported without dedicated web research.
 
+### Cognitive-capacity numbers — misapplied research
+
+Two findings are routinely promoted from "research about X" to "UI limit on Y". Both promotions
+are invalid, and both circulate inside this repo. Cite this subsection instead of the bare number.
+
+**"7±2 items" — does not bound on-screen item counts.**
+Miller measured *immediate memory span* — how many chunks a person can hold and reproduce from
+memory — and explicitly treated the recurrence of the number as a coincidence worth suspecting,
+not a design constant. Cowan's reconsideration puts the pure-capacity estimate nearer **4**, which
+is *lower* than 7±2 and still says nothing about menus. The mismatch is the task type: a visible
+menu, nav bar, or diagram is a **recognition** task with every option on screen, so nothing has to
+be retained. Retention capacity does not cap what may be displayed.
+
+- Miller, G. A. (1956). *The magical number seven, plus or minus two.* Psychological Review 63(2), 81-97.
+- Cowan, N. (2001). *The magical number 4 in short-term memory.* Behavioral and Brain Sciences 24(1), 87-114.
+
+> **Rule:** never justify an item-count cap by citing 7±2, Miller, or Cowan. What actually drives
+> the cost is scanning effort, label distinctiveness, grouping, information scent, and whether
+> search is available. A count cap may still be a reasonable **craft default** (Tier 3) — state it
+> as one, with its own reason, and never attribute it to the memory literature.
+
+**Fitts's Law — ranks alternatives, does not emit a pixel minimum.**
+Fitts's Law models movement time as a function of *distance to* and *width of* a target
+(`MT = a + b·log₂(2D/W)`). It is comparative: it tells you a bigger or nearer target is faster,
+and by roughly how much. It contains no absolute constant, so it cannot produce "44×44px". The
+44pt and 48dp figures are **Apple HIG and Material vendor numbers (Tier 2)**; WCAG 2.5.8's 24×24
+is **Tier 1**. Writing "Fitts's Law: 44×44px" launders a vendor default into a law and makes the
+number unfalsifiable in review.
+
+- Fitts, P. M. (1954). *The information capacity of the human motor system…* J. Experimental Psychology 47(6), 381-391.
+- MacKenzie, I. S. (1992). *Fitts' law as a research and design tool in HCI.* Human-Computer Interaction 7(1), 91-139.
+
+> **Rule:** cite the platform (Apple/Material) or the spec (WCAG) for any absolute size, and cite
+> Fitts only for a *relative* claim — that enlarging a target or moving it closer to the pointer's
+> resting position reduces acquisition time, or that adjacent-target spacing trades off against
+> mis-tap rate. See §3 "Touch targets" for the numbers themselves.
+
+**The general failure both share.** A study establishes a relationship under stated conditions; a
+guideline needs a number. Substituting the study's incidental constant for the missing number
+gives the guideline borrowed authority it did not earn. When you catch yourself attaching a
+researcher's name to a fixed dimension, screen count, or item count, the citation is almost
+certainly doing that.
+
 ### Density modes
 
 Material comfortable/compact, Carbon and Spectrum size tokens — these change **component padding
@@ -472,6 +516,10 @@ the underlying idea is well attested. <https://www.learnui.design/blog/7-rules-f
    shipped product system audited.
 10. **Sub-4px tokens**: Carbon ships a 2px mini-unit; most systems treat anything finer than 4px
     as a border-width concern.
+11. **7±2 as an item cap**: Miller measured recall span, Cowan revised it *down* to ~4, and
+    neither studied on-screen options. Item-count caps are craft defaults, never memory findings.
+12. **Fitts's Law vs 44/48px**: the law is comparative and yields no absolute size. The pixel
+    minimums are Apple/Material (Tier 2) and WCAG (Tier 1). Do not attribute them to Fitts.
 
 ---
 

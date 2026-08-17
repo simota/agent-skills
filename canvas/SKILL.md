@@ -190,7 +190,7 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific REVIEW gate
 |------|-------------|
 | Diagram count | Keep each delivered diagram at `<=20` nodes; split at `>30` nodes unconditionally. For dense graphs (edge/node ratio >0.3), lower the split threshold to `<=15` nodes |
 | Subgraph structure | 20 nodes in 4 clear subgroups > 7 unstructured nodes — always organize with subgraphs before reducing node count |
-| Primary elements | Limit primary focal elements to `7±2` per diagram (Miller's Law) |
+| Primary elements | Keep primary focal elements at `5-9` per diagram — a craft default from scanning cost, **not** Miller's Law (which measured recall, not display; see `_common/PROPORTION_AND_SPACING.md` § Cognitive-capacity numbers). Exceed it when the diagram's job is comparison and elements are grouped into subgraphs |
 | Sequence density | Keep one sequence diagram at `<=15-20` messages |
 | DFD density | Keep one DFD at `3-9` processes |
 | Tree branching | Keep parallel branches at `<=8` per level |

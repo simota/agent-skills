@@ -133,13 +133,21 @@ Evaluate interfaces for cognitive clarity using these axes:
 
 | Axis | Metric | Target |
 |------|--------|--------|
-| Information Density | Content elements per viewport | ≤7 primary items (Miller's Law) |
+| Information Density | Content elements per viewport | ≤7 primary items (craft default, not Miller's Law — see note) |
 | Visual Noise | Decorative vs functional elements ratio | ≥80% functional |
 | Operation Steps | Clicks/taps to complete primary task | ≤3 for core flows |
 | Attention Load | Competing CTAs per viewport | 1 primary, ≤1 secondary |
 | Animation Load | Simultaneous motion elements | ≤2 per viewport |
 
 **Red flags**: Auto-playing carousels, notification badges on >3 items, competing urgency signals, decorative parallax on mobile.
+
+> **Density target caveat.** The ≤7 figure is a craft default, not a research finding. Miller
+> measured recall span and Cowan revised it down to ~4; neither bounds how many options may be
+> visible on screen, because a visible list is recognition, not recall
+> (`_common/PROPORTION_AND_SPACING.md` § Cognitive-capacity numbers). Density is legitimately
+> higher for expert monitoring and comparison surfaces when columns, units, freshness, and a
+> keyboard path are stable. Never fail a dense dashboard on the count alone — fail it on scanning
+> cost, unstable ordering, or missing hierarchy.
 
 
 ---

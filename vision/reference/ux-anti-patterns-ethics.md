@@ -25,7 +25,7 @@ Contents:
 | ID | Pattern | Response |
 |----|---------|----------|
 | `CO-01` | feature overload | progressive disclosure |
-| `CO-02` | too many choices | keep primary choices around `5-7` |
+| `CO-02` | too many choices | group and rank choices; `5-7` primary is a craft default, not a memory limit (`_common/PROPORTION_AND_SPACING.md` § Cognitive-capacity numbers) |
 | `CO-03` | visual noise | content-first reduction |
 | `CO-04` | inconsistent UI patterns | unify through the design system |
 | `CO-05` | dense information blocks | hierarchy and whitespace |

@@ -42,12 +42,18 @@ Mirror the layout for left-handed users via system detection when possible. Don'
 | WCAG 2.2 SC 2.5.8 | 24×24px CSS | — | W3C 2023 |
 | Apple HIG | 44×44pt | 44×44pt | Apple 2025 |
 | Material Design | 48×48dp | 48×48dp | Google 2025 |
-| Fitts's Law practical | 44×44px | 48×48+ | Hoober 2024 |
+| Practitioner consensus | 44×44px | 48×48+ | Hoober 2024 |
+
+> **Do not attribute the pixel minimums to Fitts's Law.** Fitts's Law is comparative — movement
+> time as a function of distance and target width — and yields no absolute size. 44pt/48dp are
+> Apple/Material vendor numbers, 24×24 is WCAG. Cite Fitts only for relative claims: a larger or
+> nearer target is faster to acquire. See `_common/PROPORTION_AND_SPACING.md` § Cognitive-capacity
+> numbers.
 
 Rules:
 - Treat 44×44 CSS px as the **baseline**, 48×48 as the comfortable target. The 24×24 WCAG floor exists only because some controls (inline links in prose) cannot expand.
 - When visual size is constrained, expand the hit area via padding or `::before` pseudo-element. Visual 16×16 icon with 44×44 hit area is correct; 16×16 hit area is never correct.
-- Minimum spacing between adjacent targets: 8px (ideally matches target-size value, per Fitts).
+- Minimum spacing between adjacent targets: 8px (ideally matches the target-size value). Spacing trades mis-tap rate against reachable density — that trade-off is what Fitts models; the 8px figure itself is platform convention.
 - Inline text links are the most common target-size exemption. When possible, use a button style for important inline actions.
 
 ```css

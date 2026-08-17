@@ -87,7 +87,7 @@
   - https://www.nngroup.com/articles/mega-menus-work-well/
 - **Breadcrumbs as a supplement** to global/local navigation, not as a replacement. Mobile adoption is increasing (NN/g, 11 guidelines).
   - https://www.nngroup.com/articles/breadcrumbs/
-- **NN/g menu-design 17-item checklist.** 7±2 limit, label specificity, state representation, sub-nav depth, visibility.
+- **NN/g menu-design 17-item checklist.** Label specificity, state representation, sub-nav depth, visibility. Do **not** carry a "7±2 limit" out of this checklist as a memory finding — menu item counts are a scanning/scent concern, not a recall-span one (`_common/PROPORTION_AND_SPACING.md` § Cognitive-capacity numbers).
   - https://www.nngroup.com/articles/menu-design/
 - **Command Palette (⌘K) as IA-skip.** Standard in Linear / Notion / Figma / Vercel / Raycast. Improves keyboard-first navigation and feature discovery during onboarding.
   - https://solomon.io/designing-command-palettes/

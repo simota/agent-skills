@@ -70,7 +70,10 @@ Adjust order by Recipe (e-com pulls reviews higher; B2B pulls case study higher;
 - **One idea per section.** If a section needs two H2s, split.
 - **Scan-readable.** Every section answers in 5 seconds: what it claims + what proves it.
 - **Progressive disclosure**: long copy → expandable cards. Form fields > 3 → multi-step. Detail dumps → tabs or accordions.
-- **Cognitive load budget**: max 7±2 distinct elements above fold. Reduce to 5 on mobile.
+- **Cognitive load budget**: keep distinct elements above the fold to `5-9`, reduced to 5 on
+  mobile. Craft default from scanning cost on a first-visit page — **not** a memory limit
+  (`_common/PROPORTION_AND_SPACING.md` § Cognitive-capacity numbers). What actually blows the
+  budget is competing CTAs and undifferentiated labels, so fix those before cutting the count.
 
 ### 1.5 Heading Hierarchy
 
