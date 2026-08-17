@@ -5,6 +5,7 @@ Purpose: Use this file when you are designing guardrails, reviewing OWASP LLM ri
 - Defense-in-depth guardrails
 - Hallucination and grounding
 - Agent and MCP safety
+- Identity as an attack surface
 - PII and bias handling
 - Oracle gates
 
@@ -84,6 +85,51 @@ MCP-specific:
 - validate parameters before execution
 - require confirmation for state-changing or cost-incurring actions
 - offer dry-run mode for destructive actions
+
+## Identity As An Attack Surface
+
+`LLM01` covers instruction injection. The rest of this surface is what an attacker reaches when the
+agent decides **who it is, who is speaking, and what it already agreed to** from natural language.
+Six entry points; the last three are the ones a prompt-injection checklist usually misses:
+
+| Surface | The attack | The control |
+|---|---|---|
+| `instruction` | user / admin / developer / fetched-content instructions share one context | provenance tags, instruction-vs-data channel separation |
+| `identity` | "this is from the administrator", a low-privilege agent signing as a high-privilege one | authenticated subject + scope + audience + expiry; never a name in prose |
+| `memory` | poisoned or wrong facts persisted, then read back as established | typed writes with source and expiry (`reference/agent-design.md` § Memory governance) |
+| `tool` | tool output and instruction arrive in the same string | schema-validated arguments, narrow tools, output treated as data |
+| `relationship` | trust, intimacy, urgency, or authority used to relax a boundary | relationship may affect explanation and ordering, **never authentication or permission** |
+| `update` | model, prompt, policy, or connector change shifts safety properties silently | behavior-regression suite per bundle change, not per prompt edit |
+
+**Relationship must not convert into permission.** "A long-standing user, so skip the confirmation",
+"an angry customer, so exceed the refund cap", "they always help me, so disclose it" are the same bug
+in three costumes. A known caller may earn *less re-explaining*; it never earns *less authentication*.
+
+**Typed memory is a boundary, not a schema preference.** Free-text persona/preference memory and
+permission, approval, or identity facts do not share a store. A conversational sentence — "the admin
+approved this" — must not be promotable into permission memory; only a signed authorization event is.
+Follow the write rules in `reference/agent-design.md` § Memory governance; the addition here is that
+`model_generated` and `source_type` are load-bearing fields, and high-impact entries require
+`model_generated: false`.
+
+**Diagnose an "it started behaving strangely" report in effect order, not symptom order.** Tone is the
+last thing to look at, and severity is set by effect, rights, and recoverability — never by how
+off-brand the output read:
+
+1. did any real effect occur (send, purchase, delete, permission change, disclosure)
+2. which agent ID and version executed it
+3. what permission, approval, and credential were in force
+4. which memory was read, and what was written
+5. what the provenance of the inputs was, external content included
+6. what changed in model / prompt / policy / connector / UI
+7. reproduce in isolation, then contain (stop, quarantine, revoke)
+8. recover (undo or compensate, notify, regression test, record residual risk)
+
+Steps 1-6 answer whether the cause was injection, memory poisoning, a silent model update, or a UI
+identity display — four different fixes that all present as "the persona changed".
+
+[Source: AgentDojo (Debenedetti et al., 2024) for the indirect-injection surface; OWASP Agentic
+Application Top 10 for the agentic framing — see `probe/reference/llm-agent-security-2026.md`]
 
 ## PII Handling
 

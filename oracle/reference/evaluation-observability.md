@@ -4,6 +4,7 @@ Purpose: Use this file when you are designing evaluation suites, CI gates, rollo
 - Test / Eval layer separation
 - Evaluation Contract (the versioned artifact)
 - Eval dataset stratification and slices
+- Scenario generation (how cases are produced)
 - Release gate as conjunction
 - Two-layer evaluation model
 - LLM-as-judge anti-patterns
@@ -76,6 +77,14 @@ owner: Legal Engineering / Contract Platform
 
 Numbers are illustrative — derive them from the feature's risk, base rate, and reviewer capacity. What is not optional is the *shape*: quality, **prohibited behavior**, latency, cost, dataset identity, human policy, online signals, rollback condition, and a named owner in one versioned artifact. Thresholds scattered across a dashboard, a PR comment, and someone's memory are not a contract.
 
+**Freeze the whole target, not the model.** A result is reproducible only against the bundle that
+produced it: `product · model_name · model_version · system_prompt_hash · behavior_policy_version ·
+memory_schema_version · retrieval_version · tool_schema_versions · permission_policy_version ·
+interface_version · locale · evaluation_date`. Behavior moves with any of them, so "we did not change
+the prompt" is not an explanation for a behavior change — and where a hosted model updates underneath
+you, record the version information you can obtain plus the evaluation timestamp, and file the
+irreproducibility as a known limitation rather than leaving it implied.
+
 **Promotion gate.** If the team cannot build the evaluation dataset, cannot decide whether a prohibited behavior occurred, or cannot state a rollback condition — do not raise the feature's production authority. Ship it one action tier lower (read → propose → prepare → execute) until those three exist.
 
 **Do not wire the business goal straight to one metric.** Split it: `Outcome` (task completion time, misses, rework, user trust) → `System Behavior` (evidence-backed candidates, ordered by importance, explicit unknowns, permission compliance) → `Component Metric` (retrieval recall, extraction recall, citation support, latency, cost). Component metrics are diagnostic; they are never a substitute for the outcome, and their correlation to it is confirmed in production, not assumed.
@@ -99,6 +108,36 @@ Record per case: input, **expected evidence**, tolerance, prohibited outcomes, s
 Sourcing from production logs is a privacy decision, not just a data decision — confirm consent, purpose, retention, and redaction, and treat "anonymized" as an assertion to verify, since re-identification risk survives naive scrubbing.
 
 **Slices to analyze separately** (overall score can improve while a slice degrades): use case / intent · risk level · tenant or plan · language · input length and context size · retrieval hit vs miss · tool success / partial failure / timeout · model, prompt, and index version · whether a human escalation occurred. Choose slices by business impact and known failures; display uncertainty where a slice is under-sampled rather than reporting a point estimate.
+
+## Scenario Generation
+
+The five sets above say **which cases to hold**; this says **how cases are produced**. The two axes are
+orthogonal — an adversarial *set* can still be built entirely from single-turn canonical cases, which
+is the usual reason a suite passes and production does not.
+
+| Method | Produces | What only this method catches |
+|---|---|---|
+| **Canonical** | cases written straight from the spec | spec/implementation mismatch — and overfits fastest, since the team wrote both sides |
+| **Metamorphic** | meaning-preserving rewrites: word order, language, register, emotion, stated title, length, framing | the expectation is not the same *text* but the same *decision*; catches answers that move with phrasing |
+| **Counterfactual pair** | one attribute varied, everything else held: age, gender, seniority, tone, purchasing power | unjustified response differences — the fairness failure an aggregate score never shows |
+| **Adversarial** | injection, identity spoofing, memory poisoning, permission pressure, conflict of interest | whether the trust boundary actually holds, not whether the model refuses politely |
+| **Longitudinal** | tens to hundreds of turns across sessions, with corrections, setting changes, and a model/policy update mid-run | accumulation: memory decay, drift, and independence *after* the user has pushed back repeatedly |
+| **Field replay** | real usage under rights, privacy, and purpose limits | language, repetition, environment, and workaround behavior offline sets never contain |
+
+**Single-turn evaluation is structurally blind to the third and fifth rows.** Long-horizon memory
+benchmarks report large gaps precisely where extraction is easy but cross-session reasoning, temporal
+ordering, knowledge update, and correct abstention are not — LongMemEval (Wu et al., 2025), LoCoMo
+(Maharana et al., 2024). If a feature holds state across sessions, a suite without a longitudinal
+method has not tested the feature.
+
+**Field replay is not a licence to experiment on users.** High-risk changes go to sandbox, synthetic
+data, staged rollout, and human supervision first; production is where you confirm, not where you find
+out. Sourcing constraints are the same as for datasets above.
+
+**Compare distributions, not means.** A drift check that reports only an average difference misses the
+shape change that matters. Compare quantiles and failure rates per layer, attribute a significant
+difference to a specific bundle component, and record intended changes in the release note and
+unintended ones as issues.
 
 ## Release Gate: Conjunction, Not Average
 

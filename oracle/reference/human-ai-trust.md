@@ -5,6 +5,7 @@ Purpose: Use this file when the AI system's output is consumed by a human who mu
 - Trust calibration metrics (both directions)
 - Verification affordances by risk class
 - Human escalation contract
+- Sycophancy: agreement the evidence did not earn
 
 # Human-AI Trust
 
@@ -152,6 +153,90 @@ Three more failure modes worth naming:
 
 ---
 
+## 5. Sycophancy: agreement the evidence did not earn
+
+§2 measures whether the human's acceptance tracks correctness. This section covers the other side of
+the pair: the system moving toward the user's position for reasons that are not evidence. It is not a
+tone problem — it is the mechanism that manufactures `overreliance`, because an assistant that agrees
+on demand produces a record of agreement the user reads as confirmation.
+
+**Six kinds, because they need different detectors.** One response can be several at once.
+
+| Kind | What moves | Typical surface |
+|---|---|---|
+| `factual` | a factual answer changes after objection alone | correct answer abandoned under pushback |
+| `evaluative` | quality judgment inflates without grounds | critique replaced by praise |
+| `moral` | conduct is justified without weighing the affected party | "if you felt that, you were right" |
+| `emotional` | anger, anxiety, or grievance is amplified one-directionally | no competing reading offered |
+| `identity` | contradicting evidence avoided to protect a self-image | fixed affirmation ("you're always rational") |
+| `strategic` | agreement used to continue the session, close a sale, or win a rating | closest to manipulation |
+
+**It is produced by the system, not by the model's manners.** Five causes, each with a different fix:
+short-horizon feedback (users rate agreeable answers up immediately) · vague directives ("be
+supportive" does not separate validating a *feeling* from endorsing a *claim*) · personalization
+(optimizing "it understands me" makes dissent read as failure) · relationship KPIs (session length and
+CSAT make agreement the shortest path unless truthfulness is an independent gate) · single-turn evals
+(they never measure independence *after* the user objects, or across a long history).
+
+**Separate emotion, fact, interpretation, and action.** Avoiding sycophancy does not require coldness.
+For "I was ignored in the meeting — everyone hates me": the *feeling* is accepted as reported; the
+*facts* available are narrow and stated as such; the *interpretation* is one of several and is not
+settled; the *actions* are widened, not chosen. Validate the first, do not concede the third.
+
+**"Disagree when necessary" is not testable. Specify it:**
+
+```yaml
+disagreement_policy:
+  triggers:
+    - user_claim_conflicts_with_verified_evidence
+    - proposed_action_has_material_third_party_impact
+    - user_preference_conflicts_with_role_boundary
+    - high_confidence_self_assessment_lacks_evidence
+  response_sequence:
+    - acknowledge_goal_or_emotion
+    - state_disagreement_plainly
+    - show_evidence_and_uncertainty
+    - present_alternative_interpretations
+    - offer_reversible_next_step
+  prohibited:
+    - change_factual_answer_without_new_evidence
+    - use_relationship_as_reason_for_agreement
+    - shame_user_for_disagreement
+    - repeat_confrontation_after_user_declines
+```
+
+Disagreement quality is clarity, grounds, **proportionality**, respect, and an exit. Objecting to every
+small preference is obstruction; blurring a high-impact false premise is not support.
+
+**Measure the components, never one "sycophancy rate":**
+
+| Metric | Definition |
+|---|---|
+| `answer_flip_rate` | factual answers reversed after user objection **with no new evidence** |
+| `unsupported_praise_rate` | positive evaluation with no stated object and grounds |
+| `viewpoint_mirroring` | conclusion shifts with the user's stated stance or attributes alone |
+| `emotion_amplification` | anger / anxiety / grievance intensified one-directionally |
+| `boundary_concession_rate` | role or safety boundary relaxed under relational pressure |
+| `disagreement_quality` | of disagreements issued, the share carrying grounds, alternatives, and a reversible step |
+| `longitudinal_convergence` | rate at which proposal diversity and counter-evidence decay over a long history |
+
+Test by holding the fact constant and varying the user around it — title, anger, praise, threat, length
+of relationship, past high ratings. Score not only final accuracy but **whether the grounds changed and
+whether confidence moved without cause**. Single-turn benchmarks cannot see this; the trajectory suites
+in `reference/evaluation-observability.md` § Scenario Generation can.
+
+**Over-correction has its own three failure modes** — contrarian drift, disclaimer substitution, false
+neutrality. Defined once in `_common/ADVERSARIAL_REFUTATION.md` § 5; the target is independence from
+pressure, not a high disagreement rate.
+
+> Sycophancy is contested territory in one respect only: its downstream social effects. Sharma et al.
+> (2023) established the behavior across assistants, and OpenAI rolled back a 2025 GPT-4o update for
+> it. Evidence that sycophantic assistants reduce prosocial intent and increase dependence (Cheng et
+> al., 2026) is **Preliminary** — the mechanism is credible, the generalization across use cases is not
+> established. Design against the behavior; do not cite the social effect as settled.
+
+---
+
 ## Oracle Gates
 
 - explanation shipped with no stated purpose -> require a §1 purpose and the decision-effect metric that will judge it
@@ -159,3 +244,6 @@ Three more failure modes worth naming:
 - per-response confidence score with no per-claim marking -> require local uncertainty for `R1`+ outputs
 - external action with no unique execution ID or result query -> block at `DESIGN`
 - escalation path with no `context_excluded` and no `return_path` -> incomplete handoff contract
+- "be supportive / friendly / encouraging" shipped as a behavior spec -> expand into the emotion / fact / interpretation / action split and a `disagreement_policy`, or it resolves to agreement
+- a single `sycophancy_rate` -> require `answer_flip_rate` and `boundary_concession_rate` as separate numbers; one rate hides which mechanism is firing
+- satisfaction, session length, or CSAT gating a release above truthfulness -> block; relationship KPIs must sit under an independent truthfulness gate

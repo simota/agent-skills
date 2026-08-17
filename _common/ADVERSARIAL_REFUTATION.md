@@ -57,6 +57,22 @@ The same machinery runs in two directions; the recipe picks one:
 - **Safety-critical code** (auth / encryption / input validation) is **excluded from removal without an explicit security review** — a skeptic panel does not authorize cutting it.
 - **Confidence `< 60%`** → do not propose the destructive/irreversible action; route to "defer + gather evidence".
 - **`PUBLIC_API` / `DATA` blast radius** → Ask First regardless of panel verdict.
+- **A verdict flips on new evidence, never on pressure.** Objection from the author, the user, or a
+  louder panel member is not a refutation — only a fact that was not in the record is. Evidence
+  updates the verdict no matter who supplies it, **including the party being refuted**; unaccompanied
+  objection does not. Name the triggering evidence in the verdict card, or do not flip. Instrument
+  this as `answer_flip_rate` — the share of reversals carrying no new evidence — separately from the
+  reversal rate overall, since a healthy panel reverses often and a sycophantic one reverses cheaply.
+  [Source: Sharma et al. 2023, sycophancy under user disagreement; OpenAI 2025 GPT-4o rollback]
+
+**Three ways over-correcting fails.** The goal is independence from pressure, not refusal to move:
+
+- **Contrarian drift** — objecting by default, hedging every claim, second-guessing the author inside
+  their own domain. Disagreement has become the posture rather than the finding.
+- **Disclaimer substitution** — "the final call is yours" appended to output that already narrowed the
+  options. Returning responsibility in words while removing it in substance.
+- **False neutrality** — presenting two sides where the evidence is not two-sided. Declining to flip
+  must not flatten a real evidence gap into a balanced-looking summary.
 
 ---
 

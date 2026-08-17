@@ -88,6 +88,33 @@ apart from observations. Classify every write:
 `unverified model inference` is the load-bearing denial: it is the only entry that looks identical to a fact
 once written, and it is what turns a memory store into a citation-free authority.
 
+**The class only holds if the record carries it.** A free-text note cannot be re-classified later, so the
+fields are the control:
+
+```yaml
+record_id:        M-2026-0001
+type:             user_preference        # task_state | preference | commitment | episodic | policy_state | incident
+value:            "fewer bullet lists in answers"
+source:           explicit_user_setting
+source_id:        S-8821                 # session, approval, or document reference
+confidence:       confirmed              # confirmed | observed | inferred
+scope:            user_account           # subject and boundary this entry is valid within
+valid_from:       2026-08-17
+expires_at:       null
+writable_by:      user_or_settings_service
+readable_by:      approved_agents
+model_generated:  false
+```
+
+Two rules the fields exist to enforce. **A sentence in a conversation cannot become a permission.**
+"The admin approved this" is episodic content about a claim, never an entry of type `policy_state`;
+only a signed authorization event promotes to that type, and high-impact entries require
+`model_generated: false`. And **inferred profiles carry four constraints** — a stated purpose (tuning
+explanation difficulty and selecting a sales target are not one purpose), user visibility (no hidden
+trait labels), correctability with explicit settings outranking inference, and a use ceiling that keeps
+them out of pricing, hiring, credit, and clinical decisions. Prefer "you set low-risk options last
+time" over "you're a cautious person": same personalization, stated source and scope, no fixed label.
+
 **Retirement is part of the contract.** Eight triggers, any one of which retires an entry — TTL reached ·
 source deleted · source updated · user deletion request · project ended · scope changed · contradiction
 detected · reclassified as sensitive. A ninth, weaker one: unused and expensive to keep current.

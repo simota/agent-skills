@@ -16,6 +16,7 @@ CAPABILITIES_SUMMARY:
 - llm_cost_optimization: LLM-API cost tuning (token budget per request, prompt caching TTL, model tier routing haiku/sonnet/opus, batch API vs streaming, context compression, per-feature SLO/cost budget)
 - ai_architecture_review: Design review of AI-embedding systems (12 lenses, risk tiers R0-R3, conditional approval with exit criteria, re-review triggers, four-owner responsibility split)
 - embedding_strategy: RAG embedding pipeline design (text chunking fixed/semantic/recursive, embedding model selection, vector index choice, cross-encoder re-ranking, hybrid BM25+vector retrieval)
+- agent_behavior_contract: Set an agent's role/policy/memory/relationship/expression budget (six necessity axes, invariant-parameter-state split, spec vs compiled prompt vs runtime enforcement, six-layer drift diagnosis, sycophancy metrics + disagreement policy)
 
 COLLABORATION_PATTERNS:
 - Builder -> Oracle: AI feature requirements, model selection questions
@@ -227,7 +228,8 @@ Routing rules:
 | `reference/agent-design.md` | Application-level LLM agents — tool-use loops, schemas, context/memory, delegation, termination, failure modes. |
 | `reference/embedding-strategy.md` | RAG embedding pipeline — chunking, model selection, vector index, re-ranking, hybrid retrieval. |
 | `reference/advanced-tool-use.md` | The tool catalog is the bottleneck (`>=10` tools or `>10k` tokens of definitions, falling selection accuracy, aggregated MCP servers). Covers tool search, `defer_loading`, programmatic calling, the advisor tool. |
-| `reference/human-ai-trust.md` | A human decides whether to accept the output — explanation design, over/underreliance metrics, verification affordances by risk class, and the escalation-to-human contract. |
+| `reference/human-ai-trust.md` | A human decides whether to accept the output — explanation design, over/underreliance and sycophancy metrics, the disagreement policy, verification affordances by risk class, escalation-to-human. |
+| `reference/agent-behavior-contract.md` | How much role, policy, memory, relationship, and character an agent needs — necessity axes, budgets, invariant/parameter/state, spec vs prompt vs enforcement, drift. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the design, thinking depth at DESIGN, front-loading use case/budget/tier at PROFILE. Critical: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Oracle-specific Output/Next schema. |
 

@@ -71,7 +71,7 @@ misdiagnosis is judging a RAG answer's wording when retrieval never returned the
 
 | Pattern | Best for | Note |
 |---------|----------|------|
-| Role-based | fixing what the model looks at | define responsibility and review focus — a persona does not add knowledge, credentials, or accuracy, and authority framing ("world-class", "20 years") is unverifiable |
+| Role-based | fixing what the model looks at | define responsibility and review focus — a persona does not add knowledge, credentials, or accuracy, and authority framing ("world-class", "20 years") is unverifiable. Measured: 162 personas × 4 model families × 2,410 factual questions produced no general gain, with effects varying unpredictably and no reliable way to pick the best persona (Zheng et al., 2024). Role, refusal conditions, and policy are still required — for consistency and safety, not accuracy |
 | Chain-of-Thought / extended thinking | complex reasoning | prefer model-native thinking over micromanaged step scripts |
 | Few-shot | format consistency, tone | pick by role (below), not by count; `3-5` is a ceiling, not a target |
 | Self-consistency | high-stakes reasoning | multiple paths, then compare |

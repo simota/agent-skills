@@ -83,6 +83,14 @@ Halt is a **decision point**, not a final state. Within 15 min, oncall must choo
 
 Rollback SLO: ≤ 3 minutes from decision to traffic fully routed.
 
+**The rollback target is the last known-safe version, not the previous one.** Where the release being
+reverted also carried a security or safety fix, "stable" and "one release back" are different
+artifacts, and reverting to the latter reintroduces the fix's vulnerability under the cover of an
+incident response. Name the target release explicitly in the plan, and confirm which fixes it
+contains before routing traffic. Where the rollback crosses a schema or permission change, also
+verify: the old version can read records the new one wrote, permissions granted by the new version
+are revoked, and commitments already made to users are handled rather than silently dropped.
+
 ## Decision Matrix
 
 For each stage transition:
