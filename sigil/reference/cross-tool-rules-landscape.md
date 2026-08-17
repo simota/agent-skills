@@ -83,7 +83,7 @@ When running `SCAN`, detect convention sources by matching these glob patterns. 
 |------------|-------------|------------------------------------|------------------|-------------|-----------------------------------|
 | Primary tool | Claude Code | Cursor | Windsurf | Cline / Roo | GitHub Copilot |
 | Scoped by directory | Yes | partial / file-pattern based | No | Yes | No |
-| `@import` support | Yes | No | No | No | No |
+| `@path` import support | Yes (load-time, not deferred) | No | No | No | No |
 | Dynamic context | Yes (`!`command``) | No | No | No | No |
 | Hook integration | Yes | No | No | No | No |
 | Skill system | Yes | No | No | No | No |

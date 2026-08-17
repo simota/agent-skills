@@ -171,7 +171,7 @@ When a skill consumes an MCP server, declare the server name + required tool set
 2. Keep tool-specific overrides minimal:
    - `CLAUDE.md` → only what's unique to Claude Code (hooks, agent SDK, slash commands).
    - `GEMINI.md` → only what's unique to agy (`/agent`, `/goal` modes, `serverUrl` MCP).
-3. Use `@file.md` imports inside `GEMINI.md` to reference shared sections for progressive disclosure (≤200 lines recommended, ≤300 absolute ceiling).
+3. Use `@file.md` imports inside `GEMINI.md` to keep shared sections in one place. This is deduplication, **not** progressive disclosure — imports resolve at load time, so the size ceiling applies to the resolved total (≤200 lines recommended, ≤300 absolute ceiling), not to the host file alone.
 
 ---
 

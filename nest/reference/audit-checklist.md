@@ -118,6 +118,6 @@ AUDIT_REPORT:
 | **Deep nesting** | `src/modules/user/services/internal/helpers/` | Flatten to ≤4 levels, co-locate by domain |
 | **Type-first grouping** | `models/`, `controllers/`, `views/` separated | Move to domain-first: `user/{model,controller,view}` |
 | **Orphan docs** | READMEs scattered without hierarchy | Centralize in `docs/` with topic organization |
-| **Monolithic CLAUDE.md** | 500+ line CLAUDE.md | Split via `@import` into `.claude/rules/*.md` |
+| **Monolithic CLAUDE.md** | > 300-line resolved total | Move rules to `paths:`-scoped `.claude/rules/*.md`; a `@path` import alone reorganizes without shrinking startup context |
 | **Hidden context** | Rules in non-standard locations | Move to `.claude/rules/` or `CLAUDE.md` |
 | **Stale context files** | CLAUDE.md references deleted files | Audit and prune references |

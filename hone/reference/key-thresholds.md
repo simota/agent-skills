@@ -112,9 +112,18 @@ Four types: `command`, `http`, `prompt`, `agent`. Each has distinct audit scope:
 
 For every CLAUDE.md / AGENTS.md line, ask Anthropic's question: **"would Claude actually do this wrong without it?"**
 
-- Lines failing the test belong in a hook, in a skill on-demand reference, or in progressive disclosure (split into a separate small file imported only when needed).
+- Lines failing the test belong in a hook, in a skill's on-demand reference, or in a `paths:`-scoped rule.
 - **P0 finding**: file > 400 lines OR hard-rule content (lint/formatter) duplicated as English.
 - **P1 finding**: file > 200 lines OR any rule expressible as a hook still living in CLAUDE.md.
+
+> **`@path` imports are not progressive disclosure.** A CLAUDE.md `@path` import is resolved when
+> CLAUDE.md loads, so the imported bytes enter the session prefix exactly as if they had been
+> pasted inline. Splitting a 600-line CLAUDE.md into six 100-line imports improves *organization*
+> and nothing else — startup context is unchanged. Only mechanisms whose body loads on demand
+> (skill bodies, `paths:`-scoped rules, subagents) or not at all (hooks, permissions) actually cut
+> the recurring cost. Audit the **sum after splitting**, never the per-file line counts
+> (`nest/reference/sharding-strategy.md` § pitfalls). Treating an import split as a size fix is the
+> most common way a bloat finding gets closed without being fixed.
 
 ---
 

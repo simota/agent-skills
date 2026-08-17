@@ -4,7 +4,7 @@ Purpose: full rationale, mechanism, and source citations behind the compressed C
 
 ## CLAUDE.md / AGENTS.md anti-bloat audit
 
-Apply Anthropic's official rule for every line: "would Claude actually do this wrong without it?". Lines failing that test belong in a hook, in a skill on-demand reference, or in progressive disclosure (split into a separate small file imported only when needed). P0 finding: file > 400 lines or hard-rule content (lint/formatter) duplicated as English; P1 finding: file > 200 lines or any rule expressible as a hook still living in CLAUDE.md. Route each failing line to its correct mechanism via `_common/MECHANISM_SELECTION.md` ("every time"/"never" → hook; runbook → skill; path-specific → `paths:`-scoped rule). [Source: code.claude.com/docs/en/best-practices; alexop.dev — Stop Bloating Your CLAUDE.md; claude.com — Steering Claude Code]
+Apply Anthropic's official rule for every line: "would Claude actually do this wrong without it?". Lines failing that test belong in a hook, in a skill's on-demand reference, or in a `paths:`-scoped rule — **not** in a `@path` import, which loads with CLAUDE.md and leaves startup context unchanged (see `reference/key-thresholds.md` § Anti-bloat audit). P0 finding: file > 400 lines or hard-rule content (lint/formatter) duplicated as English; P1 finding: file > 200 lines or any rule expressible as a hook still living in CLAUDE.md. Route each failing line to its correct mechanism via `_common/MECHANISM_SELECTION.md` ("every time"/"never" → hook; runbook → skill; path-specific → `paths:`-scoped rule). [Source: code.claude.com/docs/en/best-practices; alexop.dev — Stop Bloating Your CLAUDE.md; claude.com — Steering Claude Code]
 
 ## AGENTS.md / CLAUDE.md coexistence drift
 

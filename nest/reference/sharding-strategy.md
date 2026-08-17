@@ -4,6 +4,8 @@ Reference for Nest's `sharding` recipe. Split large CLAUDE.md / reference docs v
 
 > Complements Hone (density audit). Hone identifies *what* to extract; Nest decides *where to put it* and *in what order*.
 
+> **`@import` below is shorthand for Claude Code's bare `@path` directive** — `@.claude/rules/x.md`, never `@import <path>`, which is not syntax and silently fails to load. These imports also resolve at load time: sharding buys deduplication, ownership, and cache-prefix stability, **not** a smaller startup context. Only `paths:`-scoped rules, skill bodies, and hooks defer or eliminate the recurring cost — hence the rule to measure the post-shard **total**, not per-file counts.
+
 ---
 
 ## 1. When to Shard
