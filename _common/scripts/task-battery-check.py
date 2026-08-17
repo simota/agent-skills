@@ -136,6 +136,11 @@ MECHANICAL_ITEMS = [
      "**`spec-code drift` splits on register-vs-fix**"),
     (56, "docs-vs-code drift splits scope-vs-record (pdm guard)", "signal-keywords.md",
      "**`docs-vs-code drift` splits on the question asked:**"),
+    (57, "ADR-drift keyword -> abide", "signal-keywords.md",
+     "`audit the recent changes against the docs`"),
+    (58, "abide subcommand registered", "recipes-index.md", "| Abide | `abide` |"),
+    (59, "verity-vs-abide splits on the change anchor", "signal-keywords.md",
+     "the split from `verity` is the anchor, not the subject"),
     (28, "switch profile keyword -> pack", "signal-keywords.md",
      "`pack`, `skill pack`, `skill profile`, `enable skills`, `switch profile`, `skill preset` | `pack`"),
 ]
