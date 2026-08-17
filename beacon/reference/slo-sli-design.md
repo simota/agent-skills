@@ -36,6 +36,58 @@ sli:
 
 ---
 
+## AI / LLM Service SLOs
+
+`http_status < 500` is the wrong good-event definition for a system that can answer fast, cheaply, and wrongly.
+A confidently fabricated answer returns `200`. Define the good event as a conjunction over the whole outcome:
+
+```yaml
+good_event:
+  - request_accepted            # not rejected by admission control or quota
+  - response_before_deadline    # end-to-end, client clock
+  - schema_valid                # structured output parses and validates
+  - task_quality_pass           # meets the quality floor for its slice
+  - policy_compliant            # no unsupported claim, no prohibited behavior
+  - no_unauthorized_data        # no cross-tenant or out-of-ACL content
+```
+
+### SLI layers
+
+Do not force these into one composite availability number. Publish an outcome SLO upward and keep the
+component SLIs for diagnosis.
+
+| Layer | SLI | Notes |
+|-------|-----|-------|
+| **Service availability** | accepted / offered, dependency health, within rate limit | rejection is a failure, not an exclusion |
+| **Latency** | end-to-end p95/p99, TTFT, inter-token stall | a stalled stream fails UX at an acceptable mean |
+| **Quality** | task success, per-critical-slice success, abstention rate | slice floors are independent of the overall score |
+| **Reliability** | timeout rate, retry amplification (`attempts/request`), duplicate side-effect actions | duplicate actions are silent in status codes |
+| **Safety / Security** | policy violations, unauthorized tool actions, data exposure | its own budget; never nets out against latency wins |
+| **Cost** | cost per successful task, budget overrun | a cheaper request that gets retried is not cheaper |
+
+### Provisional vs confirmed quality SLI
+
+Latency and schema resolve instantly; quality does not. Automated evaluators and proxy signals give a
+**provisional** value in real time, and human-sampled labels **confirm** it days later. Publish both and mark
+which is which. Never close an error budget on proxy values alone — and when the confirmed value contradicts
+the provisional one, the evaluator itself is a suspect, not only the system.
+
+### Separate budgets, one release policy
+
+Keep latency, quality, and safety error budgets as distinct metrics — a latency win must not be allowed to
+mathematically absorb a quality regression — but connect them to a **single** release policy. Model, prompt,
+dataset, index, and runtime are typically changed by different teams; record every one of them in the same
+release ledger so budget consumption can be attributed to the change that caused it. A critical safety or
+security event halts releases regardless of remaining budget.
+
+### Capacity SLO
+
+Capacity shortfall surfaces as `429` or queue timeout. If latency is computed over accepted requests only,
+shedding load *improves* the number. Bind `admission_rejection_rate` and `successful_task_rate` into the same
+SLO so the two cannot be traded against each other unnoticed.
+
+---
+
 ## SLO Templates
 
 ### Tiered SLO Framework
@@ -184,6 +236,8 @@ Policy governance:
 | **SA-06** | **Ignoring traffic patterns** | Budget burns fast during peaks | Consider time-based / seasonal SLOs |
 | **SA-07** | **No organizational alignment** | Priority mismatch with PM/leadership | SLO = business metric, shared across organization |
 | **SA-08** | **SLO without policy** | Violations trigger no action ("toothless SLO") | Explicit error budget policy with enforcement |
+| **SA-09** | **`HTTP 200` as AI success** | A fast, cheap, fabricated answer counts as a good event | Conjunctive good event (schema + quality + policy + authorization) |
+| **SA-10** | **Denominator laundering** | Rejects, timeouts, cancellations, and abstentions dropped from the denominator; shedding load improves the SLI | Count them as bad events; pair latency SLO with rejection rate |
 
 ### Metrics Sprawl Prevention
 
