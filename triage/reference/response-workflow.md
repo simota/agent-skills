@@ -224,6 +224,17 @@ evidence.
 | `A7` | **Dependency added without review** | a lockfile or manifest changed outside an approved task | stop the install → preserve the lockfile/manifest diff → verify package identity, source, maintainer, version → inspect lifecycle scripts and network use → reproduce behavior in a clean sandbox → revert and purge caches if unneeded → check for credential exposure | → `gear` dependency policy, `cull` if worm-class indicators appear |
 | `A8` | **Auto-approval scope too broad** | an unknown command, network call, or external write executed with no confirmation | disable auto-approval → revoke session tokens and credentials → extract executed commands, child processes, network destinations → reconcile side effects → decompose the policy into capabilities → allow only safe wrappers | **post-incident test, all four must deny:** the same command outside the wrapper · redirect / subshell / script variants · a destination outside the allowlist · session-wide escalation persisting into a new session |
 
+**Two fields the table above deliberately separates from "recovery".**
+
+- **Containment** — the action that stops the blast radius growing, taken *before* diagnosis and *before*
+  recovery. Cutting egress, disabling a server, revoking a token, and freezing writes are containment; they
+  do not fix anything and are not supposed to. An incident where the first action was diagnostic is one where
+  the damage kept accruing while it was being understood.
+- **Residual risk** — what remains after recovery, stated explicitly at close: effects that could not be
+  reconciled, data whose exposure cannot be ruled out, a workaround still in place, a detection gap not yet
+  covered. **Prevention alone is not a closure**; an incident closed with prevention and no residual-risk line
+  claims a completeness nobody verified.
+
 **Recurrence check.** An agent-origin incident closes only when the fix landed in the layer that produced it —
 instruction file, tool contract, permission policy, or verification gate. A fix that lives only in a prompt or
 a personal memory has not closed the incident; it has moved it. → `_common/HARNESS_DEBT.md` `HD-LOOP`.
