@@ -78,10 +78,11 @@ Orchestrators (Nexus, Rally) should be stateless and replaceable. Session state 
 
 **Trigger (mechanical, not prose):** This 30-day cadence, Darwin's LT-06/ET-06, and Architect's ST-06 all cite "30+ days since last review" but historically depended on someone remembering to run it. Wire the tick itself: register a recurring routine via the **`schedule`** skill (Claude Code's built-in scheduled-cloud-agent mechanism — prefer it over a raw `CronCreate` call so the schedule is visible/manageable through the same interface a user would use to inspect or cancel it) with a 30-day interval that runs, in order:
 1. `python3 _common/scripts/lint-frontmatter.py --severity warning` and `python3 _common/scripts/validate-recipes.py --severity warning` — full-corpus health snapshot, reusing the exact scripts already wired into `.github/workflows/skill-lint.yml` (no new checker code).
-2. `python3 _common/scripts/routing-oracle.py --severity warning` and `python3 _common/scripts/task-battery-check.py --severity warning` — routing-machinery snapshot (dead-refs, ladder order, producer/verifier, roster completeness, task-battery mechanical assertions).
-3. Invoke `darwin`'s EFS scoring recipe against that snapshot.
-4. If EFS or compliance drift crosses `gauge`'s stability-index thresholds (<10% stable / 10-20% investigate / >20% intervene — `gauge/SKILL.md` CAPABILITIES_SUMMARY), kick a skill-evolve run bounded by explicit `MAX_ITERATIONS`/`CIRCUIT_BREAKER` guards rather than an unbounded new loop.
-5. Journal the outcome to `.agents/PROJECT.md`.
+2. `python3 _common/scripts/lint-instructions.py --severity warning` — instruction-file drift snapshot (skill-count drift in `AGENTS.md`/`CLAUDE.md`, dead path references, rule duplication).
+3. `python3 _common/scripts/routing-oracle.py --severity warning` and `python3 _common/scripts/task-battery-check.py --severity warning` — routing-machinery snapshot (dead-refs, ladder order, producer/verifier, roster completeness, task-battery mechanical assertions).
+4. Invoke `darwin`'s EFS scoring recipe against that snapshot.
+5. If EFS or compliance drift crosses `gauge`'s stability-index thresholds (<10% stable / 10-20% investigate / >20% intervene — `gauge/SKILL.md` CAPABILITIES_SUMMARY), kick a skill-evolve run bounded by explicit `MAX_ITERATIONS`/`CIRCUIT_BREAKER` guards rather than an unbounded new loop.
+6. Journal the outcome to `.agents/PROJECT.md`.
 
 This is additive scheduling only (no new script, no new loop, no new agent) — a `schedule`-registered routine pointed at machinery that already exists and is already tested, closing the "prescribed vs. wired" gap between this document's prose cadence and an actually-firing trigger.
 
@@ -115,7 +116,7 @@ Coverage:
 
 - [ ] The golden fixture set and the adversarial fixture set are **kept separate** — passing the easy set is not evidence about the hard one.
 - [ ] Engine, harness, corpus, and protocol versions are recorded with the result. A score without a version binding cannot be compared to anything.
-- [ ] Deterministic checks (`lint-frontmatter`, `validate-recipes`, `routing-oracle`, `task-battery-check`) re-run from a clean checkout, not an incrementally-mutated one.
+- [ ] Deterministic checks (`lint-frontmatter`, `validate-recipes`, `lint-instructions`, `routing-oracle`, `task-battery-check`) re-run from a clean checkout, not an incrementally-mutated one.
 - [ ] Trial count and any randomization policy are fixed in advance, not chosen after seeing the spread.
 
 Fault injection — each of these is a *deliberate* test, not something to wait for:
@@ -227,4 +228,4 @@ Integration with Darwin: Harness evolution findings are reported as `EVOLUTION_S
 
 ## Open Follow-ups
 
-#TODO(agent): Fold the most recent Scaffold Audit cycle results back into `nexus/SKILL.md` and `_common/AUTORUN.md`. (The 2026-07 audit corrected cross-model retirement scaffolding and version drift in `_common/`; the next cycle should re-verify HE-01 L1-L4 checkpoint trigger frequency against the current model generation and simplify per the Evaluation Cycle if the condition is met.)
+#TODO(agent) — opened 2026-07 · owner: `darwin` · expires: next 30-day audit cycle after 2026-08-17 (if unclaimed by then, retire this marker rather than carrying it further): Fold the most recent Scaffold Audit cycle results back into `nexus/SKILL.md` and `_common/AUTORUN.md`. (The 2026-07 audit corrected cross-model retirement scaffolding and version drift in `_common/`; the next cycle should re-verify HE-01 L1-L4 checkpoint trigger frequency against the current model generation and simplify per the Evaluation Cycle if the condition is met.)

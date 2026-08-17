@@ -18,6 +18,9 @@ Checks (all derived from official Anthropic Agent Skills spec + repository conve
       with gauge's 19-item checklist H1)
   H2  COLLABORATION_PATTERNS marker present inside the CAPABILITIES_SUMMARY block (H2)
   H3  PROJECT_AFFINITY marker present inside the CAPABILITIES_SUMMARY block (H3)
+  H4  BIDIRECTIONAL_PARTNERS marker present inside the CAPABILITIES_SUMMARY block.
+      Declared by _templates/SKILL_TEMPLATE.md and read by nexus/compass for routing;
+      went unchecked until 2026-08-17, by which point 4 skills had silently dropped it.
   ST1 Required section headings present (see REQUIRED_HEADINGS below) — headings
       standardized empirically at >=90% frequency across the corpus, not hardcoded
       by convention alone
@@ -299,7 +302,7 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
 
     # S1/S2: size constraints (body only, excluding frontmatter)
     # Tiered against the actual repository floor — official Anthropic guidance is
-    # "<5000 tokens / <500 lines" but the existing 148-skill corpus runs higher,
+    # "<5000 tokens / <500 lines" but the existing corpus runs higher (123 skills as of 2026-08-17),
     # so P0/P1 fire only at egregious sizes. Refactor targets are P2/P3.
     body_lines = lines[body_start:]
     line_count = len(body_lines)
@@ -355,6 +358,10 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
         if "PROJECT_AFFINITY:" not in block:
             report.add(Finding(name, "H3", "P2",
                                "PROJECT_AFFINITY marker missing inside "
+                               "CAPABILITIES_SUMMARY block", rel, 1))
+        if "BIDIRECTIONAL_PARTNERS:" not in block:
+            report.add(Finding(name, "H4", "P2",
+                               "BIDIRECTIONAL_PARTNERS marker missing inside "
                                "CAPABILITIES_SUMMARY block", rel, 1))
 
     # ST1: required section headings (>=90% corpus frequency, see REQUIRED_HEADINGS)

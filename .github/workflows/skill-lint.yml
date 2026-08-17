@@ -7,6 +7,9 @@ on:
       - '_common/scripts/lint-frontmatter.py'
       - '_common/scripts/validate-recipes.py'
       - '_common/scripts/routing-oracle.py'
+      - '_common/scripts/lint-instructions.py'
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
       - '.github/workflows/skill-lint.yml'
   push:
     branches: [main]
@@ -52,3 +55,9 @@ jobs:
         # unrelated PR. Full-repo scan every run: routing structural invariants
         # are global (nexus/ classify flow + chain tables), not per-changed-file.
         run: python3 _common/scripts/routing-oracle.py --severity error
+
+      - name: Lint instruction files (skill-count drift, dead paths, rule duplication)
+        # AGENTS.md / CLAUDE.md drift is invisible to the SKILL.md-scoped checks above:
+        # a roster change updates skills but leaves the instruction files asserting the
+        # old count. Full-repo scan every run — the roster is a global invariant.
+        run: python3 _common/scripts/lint-instructions.py --severity error
