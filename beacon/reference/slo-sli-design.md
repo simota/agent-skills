@@ -237,7 +237,46 @@ Policy governance:
 | **SA-07** | **No organizational alignment** | Priority mismatch with PM/leadership | SLO = business metric, shared across organization |
 | **SA-08** | **SLO without policy** | Violations trigger no action ("toothless SLO") | Explicit error budget policy with enforcement |
 | **SA-09** | **`HTTP 200` as AI success** | A fast, cheap, fabricated answer counts as a good event | Conjunctive good event (schema + quality + policy + authorization) |
-| **SA-10** | **Denominator laundering** | Rejects, timeouts, cancellations, and abstentions dropped from the denominator; shedding load improves the SLI | Count them as bad events; pair latency SLO with rejection rate |
+| **SA-10** | **Denominator laundering** | Rejects, timeouts, cancellations, and abstentions dropped from the denominator; shedding load improves the SLI | Keep them in the denominator; pair latency SLO with rejection rate. Classify each as good or bad on its own merits (SA-11) — never drop it |
+| **SA-11** | **Scoring a justified abstention as a failure** | "No answer" counted as unavailability, so the cheapest way to raise the SLI is to answer anyway | Split abstention by justification: no supporting evidence, unresolvable conflict, or insufficient authorization → **good event**; declining when the evidence was retrievable → bad event. See below |
+
+### Abstention is an outcome class, not a failure class
+
+`SA-10` and `SA-11` pull in opposite directions unless the two questions are kept apart. **Membership in the
+denominator and classification as a bad event are separate decisions.** Laundering is removing the event;
+mis-scoring is keeping it and grading it wrong. Both are defects, and fixing one by committing the other is
+the common mistake.
+
+An abstention is a **good event** when the supply chain correctly reported its own limit:
+
+- no evidence supports the claim,
+- two sources of equal authority conflict within the same scope,
+- the requester is not authorized for the evidence that would answer it,
+- the action requires a confirmation that has not been given.
+
+It is a **bad event** when the evidence was retrievable and the system declined anyway — that is a retrieval
+or ranking defect wearing an abstention's clothes, and it is invisible if every abstention is counted the
+same way. Track `unjustified_abstention_rate` separately from the overall abstention rate; only the former
+belongs in the error budget.
+
+Scoring all abstentions as failures makes fabricating an answer the cheapest way to raise the SLI. The
+evaluation set must therefore carry unanswerable, conflicting-source, and insufficient-permission cases with
+abstention as the expected output — otherwise the metric rewards exactly the behavior the quality SLO exists
+to prevent.
+
+### Missing data is not a passing window
+
+Excluding periods when the SLI could not be measured makes an SLO improve on paper as instrumentation
+degrades. Declare a **missing-data policy** before the first measurement window closes: state whether an
+unmeasured interval counts as good, bad, or excluded, and cap how much of a window may be excluded before
+the window itself is void. For safety and authorization SLIs the default is **bad, not excluded** — losing
+the ability to observe a control is not evidence the control held.
+
+### Freshness targets are segmented by risk, not uniform
+
+One freshness target across a whole corpus either overpays for static content or under-protects the volatile
+kind. Segment by risk class (security advisory · policy · runbook · reference · FAQ) and set a target per
+class. Report p50/p95/max and the breach count per class; a mean across classes hides the one that matters.
 
 ### Metrics Sprawl Prevention
 

@@ -252,7 +252,7 @@ When auditing observability for 4+ services, spawn 2–3 Explore subagents to sc
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/slo-sli-design.md` | You need SLO/SLI definitions, error budgets, burn rates, anti-patterns (SA-01-10), error budget policies, SLO governance & maturity model, or AI/LLM good-event definitions and quality/latency/safety budget separation. |
+| `reference/slo-sli-design.md` | You need SLO/SLI definitions, error budgets, burn rates, anti-patterns (SA-01-11), error budget policies, SLO governance & maturity model, AI/LLM good-event definitions and quality/latency/safety budget separation, abstention classification, or the missing-data policy. |
 | `reference/opentelemetry-best-practices.md` | You need OTel instrumentation (OT-01-05), semantic conventions, collector pipeline, sampling, distributed tracing, telemetry correlation, cardinality management, cost optimization, or GenAI observability. |
 | `reference/alerting-strategy.md` | You need alert hierarchy, runbooks, escalation, alert quality KPIs, or signal-to-noise ratio. |
 | `reference/dashboard-design.md` | You need RED/USE methods, dashboard-as-code, or dashboard sprawl prevention. |
