@@ -65,8 +65,39 @@ The skill is **archived, not deleted**. 90-day minimum retention window for reve
 | Remove from `_common/SKILL_PACKS.md` Pack entries | User (manual) | Note in commit message: "(archived; see .archive/<skill>)" |
 | Remove from `~/.claude/profiles/*.json` `skills` arrays | User (manual) | Across all profile files |
 | Remove from `nexus/reference/signal-keywords.md` | User (manual) | Route keywords to alternative skill |
-| Update CLAUDE.md / `_common/*.md` mentions | User (manual) | Replace with alternative skill name |
+| Remove from `nexus/reference/routing-matrix.md` | User (manual) | Re-point every task type whose default chain named it |
+| Remove from `nexus/reference/recipes-index.md` + the `nexus/SKILL.md` Recipe Registry allowlist | User (manual) | Both, in the same change — the allowlist is derived from the index |
+| Remove from `nexus/reference/agent-disambiguation.md` and `_common/BOUNDARIES.md` | User (manual) | A boundary against a skill that no longer exists misroutes rather than disambiguates |
+| Remove from other skills' `COLLABORATION_PATTERNS` / `BIDIRECTIONAL_PARTNERS` blocks | User (manual) | Every partner named in step 3's downstream-impact list, both directions |
+| Update CLAUDE.md / `AGENTS.md` / `_common/*.md` mentions **and any stated skill count** | User (manual) | Replace with alternative skill name; the count is a derived asset (`_common/HARNESS_DEBT.md` §2b) |
 | Append archive entry to `.agents/PROJECT.md` | User (manual) | Date + reason + alternative |
+
+This list is the skill's **delete route** in the sense of `_common/HARNESS_DEBT.md` §2b. It is the consumer
+set enumerated in step 3's downstream impact; if step 3 found a consumer not listed here, the consumer wins
+and this table is short.
+
+### 3b. Verify removal by absence
+
+Performing the steps is not evidence they worked. After the archive move, run a repo-wide search for the
+skill name and confirm the only surviving hits are permitted:
+
+```
+grep -ril '<skill>' --include='*.md' . | grep -v '^\./\.archive/'
+```
+
+| Surviving hit | Verdict |
+|---|---|
+| `.archive/<skill>/**` | expected — the archive is the point |
+| `.agents/PROJECT.md` archive entry, `CHANGELOG.md`, journal history | expected — records state what was true then and are never rewritten (`_common/HARNESS_DEBT.md` §2b) |
+| Any other file | **not removed** — the sunset is incomplete, not done |
+
+Report the command run and its result. `SUNSET_VERIFIED: <N> residual hits, all in archive/records` is the
+completion claim; "references updated" is not. A non-empty result outside the permitted set means the
+sunset stays open — a retired skill still named in `routing-matrix.md` is a fresh `HD-DRIFT` created by the
+cleanup itself.
+
+**Verify before the archive move, too.** Run the same search while the skill is still in place to enumerate
+the consumer set; a consumer discovered only after the move is one the proposal under-scoped.
 
 ### 4. Proposal output format
 
@@ -91,7 +122,12 @@ The skill is **archived, not deleted**. 90-day minimum retention window for reve
 - Pack memberships: [<list>] — remove all
 - COLLABORATION partners: [<in/out list>] — redirect to <alt-skill> or remove
 - Nexus signal keywords: [<list>] — redirect to <alt-skill>
+- Nexus routing-matrix task types: [<list>] — re-point default chains
+- Nexus recipes-index rows + SKILL.md Registry allowlist tokens: [<list>] — both, same change
+- Disambiguation / boundary entries (`agent-disambiguation.md`, `_common/BOUNDARIES.md`): [<list>]
+- Stated skill counts to re-derive: [<file list>]
 - Profile coverage: [<profile-list>] — remove from each
+- **Pre-move residual search**: `<N>` hits across `<M>` files — this is the consumer set the steps above must empty
 
 ### Reversibility (90-day window minimum)
 - Archive location: `.archive/<skill>/`
@@ -100,7 +136,14 @@ The skill is **archived, not deleted**. 90-day minimum retention window for reve
   2. Re-add to `_common/SKILL_PACKS.md` Pack entries [<list>]
   3. Re-add to profiles [<list>]
   4. Re-add signal keywords to `nexus/reference/signal-keywords.md`
-  5. Notify Nexus via `PRUNE_TO_NEXUS_ROUTING_UPDATE`
+  5. Restore routing-matrix task types, recipes-index rows + Registry allowlist tokens, and
+     disambiguation/boundary entries [<list>]
+  6. Restore partner entries in the `COLLABORATION_PATTERNS` blocks recorded above [<list>]
+  7. Re-derive every stated skill count
+  8. Notify Nexus via `PRUNE_TO_NEXUS_ROUTING_UPDATE`
+
+### Removal verification
+`SUNSET_VERIFIED`: `<N>` residual hits, all in `.archive/` or records — command run: `<the grep>`
 
 ### Handoff
 → User (`PRUNE_TO_USER_SUNSET_APPROVAL`) — explicit approval gate before any file move
@@ -120,6 +163,7 @@ The skill is **archived, not deleted**. 90-day minimum retention window for reve
 - Sunset a `core` Pack member (`nexus`, `sherpa`, `scout`, `builder`, `radar`, `zen`, `guardian`, `compass`, `architect`, `gauge`).
 - Skip archive — direct deletion is never acceptable.
 - Bypass user approval gate.
+- Report a sunset complete on the steps performed rather than on a residual search that came back clean.
 
 ## DEPRECATE-WATCH ledger
 

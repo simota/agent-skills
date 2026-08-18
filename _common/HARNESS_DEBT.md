@@ -77,7 +77,7 @@ review_by: 2026-09-30
 | **Publication stale** | Re-derived, but the new value never reached the file that states it | Include every consumer in the same change, not a follow-up |
 | **Consumption stale** | Corpus is correct; an agent or session is running on a cached or remembered older value | Invalidate the cache and re-read the source; a stored memory entry restating a count is itself a derived asset |
 
-**Register entry.** One per derived asset. `source` and `check` are required — a derivation whose freshness cannot be tested is `HD-ORACLE`, not a derived asset.
+**Register entry.** One per derived asset. `source`, `check`, and `delete_route` are required — a derivation whose freshness cannot be tested is `HD-ORACLE`, not a derived asset, and one whose *removal* cannot be tested is the same defect on the other axis.
 
 ```yaml
 derived: compass/reference/recipes-directory.md
@@ -86,7 +86,39 @@ rule: _common/scripts/generate-recipes-directory.py   # or "manual restatement"
 check: re-run the generator; a non-empty diff is generation-stale
 trigger: any Recipe/Subcommand change
 consumers: [compass]
+delete_route: re-run the generator after the source row is gone; the entry must not reappear
 ```
+
+### `delete_route` — a derived asset that cannot be removed must not be created
+
+Freshness answers "did the new value arrive". It does not answer "did the old value leave". Those fail
+separately: a register that only tests regeneration will pass a corpus where a retired skill still appears
+in half its consumers, because every one of them was regenerated — from a source list that still named it.
+
+**Admission rule.** Adding a derived asset requires stating how it is removed, not only how it is refreshed.
+A derivation with no `delete_route` is not registered and not created; if it already exists, it is an
+`HD-DRIFT` entry with an owner, not an accepted state.
+
+**`delete_route` states the removal path and its test**, in the same form `check` uses: the action that
+removes the derived value when the source row disappears, and the observation that proves it is gone. For a
+generated file that is "re-run the rule and confirm the entry is absent"; for a manual restatement it is the
+grep that must return zero hits.
+
+**Removal is verified by absence, not by intent.** A removal is complete when a search for the retired
+identifier returns nothing across every consumer named in the register — not when the removal steps were
+performed. Report the search that was run and its result; "updated the references" is not the same claim as
+"zero references remain", and only the second one is checkable.
+
+**Scope creeps downstream, so enumerate before removing.** The consumers of a derived asset are the reach of
+its deletion. For a retired skill that set is larger than the skill's own directory: pack membership,
+profile lists, routing and recipe tables, signal keywords, disambiguation entries, boundary definitions, the
+`COLLABORATION_PATTERNS` and `BIDIRECTIONAL_PARTNERS` blocks of every skill that names it, and any memory
+entry restating a count that included it. Missing one leaves a reference to something that no longer exists
+— the same `HD-DRIFT` the register exists to prevent, created by the cleanup itself.
+
+**Records are exempt** (see "A Record is not a derived asset" below). Changelog entries, archive notes, and journal history are supposed to
+name things that no longer exist. Removal applies to assets that assert a *current* state, never to records
+of a past one.
 
 **Standing register for this corpus.** Anything listed here is not hand-maintained truth; the `source` column is.
 
@@ -98,6 +130,19 @@ consumers: [compass]
 | `CAPABILITIES_SUMMARY` block in each `SKILL.md` | that skill's own body | manual restatement | every summarized capability is still claimed in the body |
 | `.claude/compass-cache.md` | `compass/reference/catalog.md` | `/compass refresh` | regenerate rather than hand-edit |
 | Per-spawn grants in the Delegation record (`nexus/reference/autonomy-quality-protocol.md` §8) | that task type's current Autonomy Ledger tier (`nexus/reference/routing-learning.md` § Autonomy Ledger) | manual restatement | no spawn's grant exceeds what its task type's tier allows; a **demotion invalidates grants issued under the old tier**, so grants outliving a demotion are generation-stale |
+
+**Delete routes for the rows above**, in the same order, plus whole-skill removal — which is not a row in the
+register because it retires every row at once. Each states what removes the value and what proves it left.
+
+| Derived asset | Delete route (action → proof) |
+|---------------|------------------------------|
+| `compass/reference/recipes-directory.md` | re-run the generator after the `## Recipes` row is gone → the recipe token is absent from the output |
+| Every skill-count claim | re-count and restate in the same change → `ls -d */ \| grep -v '^_' \| wc -l` equals every stated number again |
+| `nexus/SKILL.md` Recipe Registry allowlist | drop the token from `recipes-index.md` first, then the allowlist → the two token sets are equal and neither contains it |
+| `CAPABILITIES_SUMMARY` block | remove the entry when the body stops claiming it → no summarized capability lacks a body claim |
+| `.claude/compass-cache.md` | `/compass refresh` after the catalog entry is gone → regenerated cache does not name it |
+| Per-spawn grants in the Delegation record | revoke on tier demotion → no live grant exceeds its task type's current tier |
+| **A retired skill's name** (whole-skill removal) | `prune`'s sunset protocol across every consumer above → a repo-wide search for the skill name returns zero hits outside `.archive/` and records |
 
 **Authority registers drift against each other, not against a file.** The row above is the one derivation in
 this register whose staleness is a *safety* property rather than a documentation one: three authority records
