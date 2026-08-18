@@ -235,6 +235,29 @@ evidence.
   covered. **Prevention alone is not a closure**; an incident closed with prevention and no residual-risk line
   claims a completeness nobody verified.
 
+### Remedy selection — undo is one option, not the category
+
+Once an effect has left the harness, "roll it back" is a single choice among four, and picking it reflexively
+destroys value in the cases where the effect was wrong in *authority* but right in *substance*. Reconcile each
+reached effect individually and name which of the four applies:
+
+| Remedy | Use when | What it must record |
+|--------|----------|---------------------|
+| **Ratify** | the effect is acceptable on its merits and a party with the standing to authorize it now does so | who ratified, on what basis, and that the effect was **unauthorized when it happened** — ratification approves the effect, never retroactively widens the grant |
+| **Cancel** | the reversibility window is still open and nothing downstream depends on the effect yet | the deadline relied on, and confirmation the reversal actually landed |
+| **Correct** | the effect stands but part of it is wrong, and a follow-up effect can amend it | both effects as one linked pair, so the record is not a correct-looking second state with an unexplained first |
+| **Re-perform** | the effect must be withdrawn and redone under a valid grant | that the withdrawal completed *before* the redo, and a new idempotency key — a re-performance sharing the old key is a duplicate |
+
+**Choosing between them is a factual question, not a preference.** Ask, in order: is the reversibility window
+still open · has an external party or a third party already relied on the effect · is any part of it correct ·
+who has standing to authorize it now. An answer of "unknown" to the first two selects the most conservative
+remedy available, never the cheapest.
+
+**Ratify is not a lowered bar.** `nexus` Q20 forbids moving the goalpost so a run can pass; ratification moves
+nothing — it leaves the authority violation on the record as a finding and disposes of the *effect* separately.
+An incident that closes with a ratified effect and no `HD-LOOP` fix in the layer that permitted it has used
+ratification as the goalpost move Q20 names.
+
 **Recurrence check.** An agent-origin incident closes only when the fix landed in the layer that produced it —
 instruction file, tool contract, permission policy, or verification gate. A fix that lives only in a prompt or
 a personal memory has not closed the incident; it has moved it. → `_common/HARNESS_DEBT.md` `HD-LOOP`.

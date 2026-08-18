@@ -56,6 +56,30 @@ Score the change, then take the highest floor any dimension demands:
 
 Weight `security_impact` and `data_impact` heavily — they are the two where a silent pass is unrecoverable. The score is not a substitute for judgment; its job is to **force the argument to happen before implementation**, not after.
 
+### The second entrance — work backward from the remedy, not only from the risk
+
+The table above selects evidence from what could *go wrong*. It does not tell you what to **keep**, and a
+ladder read only forward produces the familiar outcome: retention grows, storage and privacy cost grow, and
+the one fact needed to decide what to do about a failure was never captured. Run the selection a second time
+from the other end.
+
+For each failure the risk score flagged as serious, name the remedy that would be chosen if it happened —
+ratify, cancel, correct, or re-perform (`triage/reference/response-workflow.md` § Remedy selection) — then ask
+**which facts that choice depends on**, and make exactly those facts the retained evidence. Typically: what
+the authority was at the moment of the effect, which version produced it, what the approver saw, what the
+external system acknowledged, and when the reversibility window closed.
+
+Two consequences:
+
+- **Evidence with no remedy that consumes it is filler**, and is the first thing dropped when retention is
+  trimmed — the same rule §4 applies to a bundle's contents, applied earlier, at selection.
+- **A remedy whose deciding fact is not retained is not available**, however clearly the runbook names it.
+  "We could have cancelled, but could not establish who approved the change" is an evidence defect discovered
+  at the worst possible moment; it is found in advance only by running this direction.
+
+Forward selection alone answers "did we look hard enough?". This direction answers "when this fails, can we
+still act?" — and only the second one binds what survives past the run.
+
 ### Write the plan before the code
 
 ```yaml

@@ -97,6 +97,15 @@ consumers: [compass]
 | `nexus/SKILL.md` Recipe Registry allowlist | `nexus/reference/recipes-index.md` Subcommand column | manual restatement | the two token sets are equal |
 | `CAPABILITIES_SUMMARY` block in each `SKILL.md` | that skill's own body | manual restatement | every summarized capability is still claimed in the body |
 | `.claude/compass-cache.md` | `compass/reference/catalog.md` | `/compass refresh` | regenerate rather than hand-edit |
+| Per-spawn grants in the Delegation record (`nexus/reference/autonomy-quality-protocol.md` §8) | that task type's current Autonomy Ledger tier (`nexus/reference/routing-learning.md` § Autonomy Ledger) | manual restatement | no spawn's grant exceeds what its task type's tier allows; a **demotion invalidates grants issued under the old tier**, so grants outliving a demotion are generation-stale |
+
+**Authority registers drift against each other, not against a file.** The row above is the one derivation in
+this register whose staleness is a *safety* property rather than a documentation one: three authority records
+exist (the Autonomy Ledger, the per-spawn Delegation record, and any grant a running chain still holds), and
+nothing re-reads the first when the second was written. Demotion is automatic and instant; a grant issued
+minutes earlier is not withdrawn by it. Treat the tier as the `source` and every live grant as derived from
+it — an unrevoked grant under a demoted tier is the same class of defect as a regenerated file nobody
+republished, and it is found the same way: by testing the derivation, never by reading either record alone.
 
 **A Record is not a derived asset.** `CHANGELOG.md` entries, calibration notes ("calibrated against a 132-skill corpus"), and journal history state what was true at a past moment. They are not stale and must not be "corrected" to today's value — rewriting them destroys the only evidence of when the corpus changed.
 
