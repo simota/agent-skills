@@ -197,7 +197,7 @@ Nexus maintains continuous context; spawned agents use file-based reset.
    the profile UI, tests, and a security scan are also needed.
    ```
 
-2. **Context budget monitoring** — When Nexus context usage exceeds 70%, switch from `continuous` to `reset` for remaining steps
+2. **Context budget monitoring** — Switch from `continuous` to `reset` for remaining steps at or before session-local turn ~50, per `_common/TOKEN_ECONOMY.md` §2's measured turn-count rule (a turn count in the transcript is checkable via `token-economy.py`; a "70% of context" figure has no counting mechanism behind it and is not used)
 
 3. **Selective context injection** — Pass only relevant prior results, not full chain history
    ```
@@ -218,7 +218,7 @@ Nexus maintains continuous context; spawned agents use file-based reset.
 | `continuous` handoff | Prior Agent results in Nexus context | Prior `wait_agent()` results in orchestrator context | **Not natively available** — subagent contexts are isolated; approximate with `-c`/`--conversation <id>` resume, or pass prior artifacts by `@<path>` |
 | `hybrid` default | Nexus context + Agent(fresh) | Orchestrator context + `spawn_agent(fresh)` | Hub context + fresh `agy -p` one-shot; **filesystem artifacts are the handoff bus** |
 | Context budget check | Monitor via conversation length | Monitor via `agents.max_depth` and prompt size | Monitor injected size against the **~128k effective** band, not the 1M window |
-| Fallback trigger | Context usage > 70% | Prompt token count approaches model limit | Handoff approaching ~128k → summarize/segment before the next spawn |
+| Fallback trigger | Turn ~50 (session-local), per `_common/TOKEN_ECONOMY.md` §2 — past 100 is already late | Prompt token count approaches model limit | Handoff approaching ~128k → summarize/segment before the next spawn |
 
 **Codex-specific notes:**
 - `agents.max_depth` (default: 1) limits nesting — factor this into strategy selection
