@@ -228,7 +228,7 @@ Nexus maintains continuous context; spawned agents use file-based reset.
 **agy-specific notes** (`_common/AGY_ORCHESTRATION.md` A2/A4/A5/A9):
 - **Isolated by default.** agy subagents get their own context window and inherit none of the hub's history, so `continuous` cannot be assumed — write the state delta into an artifact and hand it over by path. This makes `reset`/`hybrid` the practical defaults on agy.
 - **Inject files with `@<path>`, never a bare path** — a bare path is delegated to an internal subagent that dies at the 60s cap, producing a silent empty result.
-- **Window ≠ usable window.** Gemini 3.7 Flash (High) offers 1,048,576 input tokens, but effective accuracy degrades past ~128k ("lost in the middle"). Summarize or segment a handoff before it crosses that band rather than trusting the nominal window; label multiple sources with numbered headers ("Document 1", "Document 2").
+- **Window ≠ usable window.** Gemini 3.7 Flash (High) offers 1,048,576 input tokens, but effective accuracy degrades past ~128k. This is a *length* claim; keep it separate from **position** dependence (*lost in the middle*, Liu et al., TACL 2024), which applies at any length — mid-context material is used less reliably than material at either end, and the remedy is not simply "put it first and last". Summarize or segment a handoff before it crosses that band rather than trusting the nominal window; label multiple sources with numbered headers ("Document 1", "Document 2").
 - **Instruction placement flips for large injections.** With a big data/context block, put the instructions *after* the data and anchor with "Based on the preceding information…"; top-load only in normal-size prompts.
 
 ---

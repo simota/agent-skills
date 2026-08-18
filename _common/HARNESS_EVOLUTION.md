@@ -53,9 +53,9 @@ Orchestrators (Nexus, Rally) should be stateless and replaceable. Session state 
 |--------|-----------|---------|---------|
 | **CES** | Chain Effectiveness Score | `Success_Rate(0.35) + Recovery_Efficiency(0.20) + Step_Economy(0.20) + User_Satisfaction(0.25)` | Overall chain quality (defined in Nexus SKILL.md) |
 | **TES** | Token Efficiency Score | `output_information_tokens / total_tokens_consumed` | Cost efficiency — detects context bloat and unnecessary verbosity |
-| **UQS** | User Quality Score | User satisfaction rating (1-5) averaged over chain deliverables | Subjective quality — captures what metrics miss |
+| **UQS** | Unified Quality Score | `Σ (normalized_agent_score × weight)` → 0-100. Canonical definition and weights: `nexus/reference/quality-iteration.md` § Unified Quality Score | Evaluator-derived deliverable quality. **Not** a human satisfaction rating — user satisfaction enters the ecosystem through the `User_Satisfaction` term of CES, and the two must never be substituted for one another |
 
-**Grading:** A (>= 0.85), B (>= 0.70), C (>= 0.55), D (< 0.55)
+**Grading (CES and TES — 0-1 scale):** A (>= 0.85), B (>= 0.70), C (>= 0.55), D (< 0.55). UQS is on a 0-100 scale and uses its own bands (90-100 Excellent · 80-89 Good · 70-79 Acceptable · 60-69 Fair · <60 Poor); do not read it against this table.
 
 ---
 

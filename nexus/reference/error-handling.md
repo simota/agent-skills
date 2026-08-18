@@ -200,10 +200,12 @@ Summarizing is **not** checkpointing: a compaction that loses the resume contrac
 Triggers 6 and 7 escalate rather than reset silently — see L4/L5.
 
 ### Level 1 - AUTO_RETRY (Transient Errors)
-- Syntax error → Re-execute with the same agent (max 3 retries)
+- Tool-call error → classify against **§ Tool Error Classes** *before* retrying. Only `transport` is bare-retryable; `invocation` (schema mismatch, malformed call, missing argument) must have the call **changed** before re-running, and `execution` is diagnosed, not retried
+- Network timeout → Retry with backoff (max 3)
 - Test failure (1st time) → Fix with Builder and retest
 - Lint error → Auto-fix
-- Network timeout → Retry with backoff
+
+> Re-issuing an `invocation` failure unchanged is a Failure Signature repeat, not an attempt, and does not consume a legitimate retry — it consumes the budget without changing anything.
 
 ### Level 2 - AUTO_ADJUST (Recoverable Issues)
 - test_failure<50% → Inject recovery agent (Builder for fixes)

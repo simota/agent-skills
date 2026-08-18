@@ -44,7 +44,7 @@ When Triage publishes a postmortem, Mend analyzes using a 4-stage pipeline. Sing
 | **3. Analyze** | Produce root cause digest | 3-5 sentence summary capturing root causes and technological roles |
 | **4. Synthesize** | Cross-reference with existing patterns | New pattern candidate, existing pattern update, or no actionable pattern |
 
-Each stage processes independently, then results are aggregated ("map-fold" approach). This avoids the "lost in the middle" effect of large-context processing.
+Each stage processes independently, then results are aggregated ("map-fold" approach). This keeps every input near the edge of a small context instead of buried mid-prompt in a large one — the *lost in the middle* position effect (Liu et al., TACL 2024), which is about where material sits in the context, not merely how much of it there is.
 
 #### Extraction Fields
 

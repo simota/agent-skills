@@ -268,7 +268,7 @@ Production:
 | Pillar | Required fields |
 |--------|-----------------|
 | semantic instrumentation | `trace_id`, `span_id`, `session_id` |
-| full request/response capture | query, response, tool calls, retrieved docs |
+| request/response capture | query, response, tool calls, retrieved docs — **structured metadata always; raw content opt-in, sampled, and redacted** (`beacon/reference/llm-observability.md`) |
 | continuous metrics | tokens, cost, `latency_p95`, eval score |
 | integrated evaluation | auto score, human score, agreement rate |
 | real-time alerting | threshold and incident count |
@@ -284,6 +284,7 @@ Production:
 | `OB-03` | engineer-only evaluation | expose eval workflows to PM/QA/domain experts |
 | `OB-04` | black-box inference | log rationale, tool calls, and checkpoints |
 | `OB-05` | no multi-step tracing | trace Retrieval, Reranking, Generation, Tool Call separately |
+| `OB-06` | monitoring platform becomes the largest uncontrolled PII store | prompt/response content is never a default span attribute — capture it as opt-in sampled span events with a stated purpose, retention window, and role-scoped access |
 
 ## Monitoring Dashboard
 

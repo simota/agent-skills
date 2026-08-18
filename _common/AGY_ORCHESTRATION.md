@@ -136,7 +136,7 @@ Gemini 3.7 Flash (High) is a *fast* model running reasoning-heavy orchestration 
   - **DON'T set `temperature` / `top_p` / `top_k`.** Gemini 3.x degrades (looping) when these are moved off default; leave them unset.
   - **DO cap tool use** with an explicit budget line — "You have a limited action budget of N tool calls; use them efficiently." Active tool sets work best at ≤ 10–20 tools.
   - **DO check `finishReason` / validate every tool call** — Gemini agentic tool-calling misfires a non-trivial fraction of the time; build retry+validate into the harness, never ignore a failed call.
-- **Long-context discipline.** Gemini 3.7 Flash (High) = 1,048,576-token input / 65,536 output, but effective accuracy degrades past ~128k ("lost in the middle"). For handoffs > ~128k, **summarize or segment before the next spawn** rather than dumping the full context; label multiple sources with numbered headers ("Document 1", "Document 2"). Do not design single-shot processing that assumes the full 1M window is reliably usable.
+- **Long-context discipline.** Gemini 3.7 Flash (High) = 1,048,576-token input / 65,536 output, but effective accuracy degrades past ~128k. (Distinct from *lost in the middle* — Liu et al., TACL 2024 — which is **position** dependence at any length: material placed mid-context is used less reliably than material at either end, and it does not reduce to "put it first and last".) For handoffs > ~128k, **summarize or segment before the next spawn** rather than dumping the full context; label multiple sources with numbered headers ("Document 1", "Document 2"). Do not design single-shot processing that assumes the full 1M window is reliably usable.
 
 ---
 

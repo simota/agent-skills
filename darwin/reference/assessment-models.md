@@ -92,13 +92,19 @@ Where:
 Measures whether agent outputs are improving over time.
 
 ```
+Hard gate (evaluated BEFORE the weighted score):
+  if uqs_trend == declining, or gauge reports any open P0 finding
+  → Quality is capped at 40 and the triggering condition is reported on its own line
+
 Quality = uqs_trend × 0.4 + feedback_ratio × 0.3 + health_score × 0.3
 
 Where:
-  uqs_trend = direction of UQS over last 3 cycles (improving=100, stable=60, declining=20)
+  uqs_trend    = direction of UQS over last 3 cycles (improving=100, stable=60, declining=20)
   feedback_ratio = positive Reverse Feedback / total Reverse Feedback × 100
   health_score = latest Architect Health Score (if available, else 50)
 ```
+
+**Why the gate precedes the average.** A weighted mean lets a rising `feedback_ratio` offset declining output quality, and it lets an open P0 compliance finding disappear into a 70. Evaluate the gate first, report the triggering condition on its own line, and carry gauge's per-severity PASS/PARTIAL/FAIL counts next to the score rather than folding them in — `gauge` deliberately reports per severity and never one composite grade (`gauge/SKILL.md`).
 
 **Scoring guide:**
 - 100: UQS improving, positive feedback dominant, high health score

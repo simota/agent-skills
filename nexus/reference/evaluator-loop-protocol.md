@@ -186,11 +186,13 @@ RUBRIC_EVALUATION:
   Feedback: "[actionable summary for Generator]"
 ```
 
-### UQS Conversion (long-term tracking)
+### Rubric → Quality Band Conversion (long-term tracking)
 
-`UQS = (weighted_rubric_score / 3.0) × 100`
+`evaluator_normalized_score = (weighted_rubric_score / 3.0) × 100`
 
-| Rubric Weighted | UQS Equivalent | Band |
+This yields **this evaluator's normalized 0-100 contribution**, not UQS itself. UQS is the weighted composite across agents defined in `quality-iteration.md` § Unified Quality Score; the value above enters it as one term.
+
+| Rubric Weighted | Normalized Score | Band |
 |-----------------|----------------|------|
 | 2.70 – 3.00 | 90 – 100 | Excellent |
 | 2.40 – 2.69 | 80 – 89 | Good |
@@ -199,6 +201,8 @@ RUBRIC_EVALUATION:
 | < 1.80 | < 60 | Poor |
 
 Rubrics drive per-Sprint evaluation; UQS tracks long-term trends via PDCA (`quality-iteration.md`).
+
+**Comparability guard.** A normalized score is only comparable across cycles when the rubric text, the evaluator prompt, and the evaluator model are all unchanged. Record `rubric_version`, `evaluator_prompt_version`, and `evaluator_model` alongside every `RUBRIC_EVALUATION`; when any of the three changes, re-score the retained cases before comparing, and never read a trend across the boundary.
 
 ---
 
