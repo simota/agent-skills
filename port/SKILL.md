@@ -180,7 +180,7 @@ Deviate only when the survey reveals a constraint (existing native code, regulat
 
 ## Output Requirements
 
-Every Port deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - **Web survey summary** — stack, routing, state, data, storage, auth, third-party SDKs, bundle, platform-feature dependencies (`navigator.*`, service workers, web-only APIs).
 - **Two native architectures** — iOS (Swift + SwiftUI) and Android (Kotlin + Compose), with module decomposition and per-screen mapping.

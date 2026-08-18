@@ -256,7 +256,7 @@ vs Launch, Schema, Builder, Sentinel, Cull/Chain, Magi → `reference/migration-
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Migration scope assessment (files, modules, APIs affected).
 - Selected strategy with rationale.

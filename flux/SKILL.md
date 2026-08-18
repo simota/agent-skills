@@ -221,7 +221,7 @@ Routes on user-signal keywords (natural language); a subcommand match wins if bo
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - **Cynefin Classification** of the problem domain.
 - **Assumption Map** (assumption × confidence × reversal × insight).

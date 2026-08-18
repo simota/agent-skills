@@ -204,7 +204,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Copy text with UI context (where it appears, what triggers it).
 - Voice/tone alignment notes (how this copy follows the framework).

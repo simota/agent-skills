@@ -166,6 +166,18 @@ All agents operate in hub-and-spoke mode through Nexus.
 
 ---
 
+## Output Density
+
+Every skill inherits the Output Density Protocol — **`_common/OUTPUT_STYLE.md`**. The three rules that bind without reading it:
+
+- **Default tier is `M`** (5–15 lines) unless the SKILL.md declares an `## Output Contract` that says otherwise. There is no undeclared tier.
+- **`## Output Requirements` is a ceiling, not a floor.** Emit only the items the task exercised; never pad with `N/A`, "none identified", or empty table shells (§ Conditional Requirements).
+- **Answer first, then stop.** No preamble, no request restatement, no closing summary of what the diff already shows (§ Banned Patterns).
+
+`_STEP_COMPLETE` / `NEXUS_HANDOFF` envelopes are exempt from tier limits but not from the padding ban.
+
+---
+
 ## Output Language
 
 - Explanations, reports, questions: follow the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`)

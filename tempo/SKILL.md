@@ -174,7 +174,7 @@ Per-platform cron format, timezone support, retry, DLQ, and idempotency matrix -
 
 ## Output Requirements
 
-Every Tempo deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - **Schedule specification**: cron expression + platform + IANA timezone + DST policy
 - **Next-fire simulation**: at least 5 upcoming fires, with at least one across a DST boundary

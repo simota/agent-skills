@@ -4,7 +4,9 @@
 **Read when:** You need exact `NEXUS_COMPLETE`, handoff, or report formatting.
 
 ## Contents
+- Envelope Sizing (read first)
 - NEXUS_COMPLETE (AUTORUN)
+- Compact Form (SIMPLE runs)
 - NEXUS_COMPLETE_FULL (AUTORUN_FULL)
 - NEXUS_HANDOFF_V2 (Standard - Required)
 - NEXUS_HANDOFF (Legacy - Deprecated)
@@ -12,6 +14,26 @@
 - _STEP_COMPLETE Format
 
 Final output formats and handoff protocols.
+
+---
+
+## Envelope Sizing
+
+The templates below are the **largest** form of each envelope, not a per-run floor (`_common/OUTPUT_STYLE.md` § Conditional Requirements). Pick the form the run actually filled.
+
+| Run shape | Form |
+|-----------|------|
+| SIMPLE — one agent, one step, no branches, no guardrail events | **Compact Form** below |
+| MEDIUM — 2–3 steps, sequential | `NEXUS_COMPLETE`, empty ledgers collapsed to one line |
+| COMPLEX — 4+ steps, parallel branches, or any guardrail event | `NEXUS_COMPLETE_FULL` |
+
+Collapse rules, binding on every form:
+
+- **A ledger with no entries is one line**, not a header plus a column-header-only table: `Decisions: none` · `Residuals: none` · `Guardrail events: none`.
+- **Acceptance Provenance stays a table** whenever there is ≥1 criterion — this is the one ledger that must not collapse, because a criterion silently absent is the defect it exists to catch. With a single criterion, one row is the whole table.
+- **`### Changes` lists files, not narration.** One line per file; no restatement of what the diff shows.
+- **Never emit `N/A`, "none identified", or placeholder rows** to satisfy a template.
+- **The completion sweep line is never dropped**, in any form, including Compact.
 
 ---
 
@@ -58,6 +80,31 @@ Completion sweep: [command run] — [N hits: each mapped to a RES-n, or `pre-exi
 Acceptance Provenance covers **every** intent-contract criterion (none silent) **and every prohibited outcome on its own axis** — a prohibition is `held` only with evidence that the forbidden result did not occur; `unverified` is honest, `held` by assumption is not, and `violated` caps the run at `FAILED`. Decision Ledger and evidence rules per `reference/autonomy-quality-protocol.md` (Q2, Q4–Q6, Q10, Q15).
 
 The **Residual Ledger** replaces free-text "Recommended follow-ups": every leftover carries a Q17 class, and an untyped residual is a defect that caps status at `PARTIAL` (Q16–Q19). Rows and in-artifact `#TODO(agent):` markers bind bidirectionally — no orphan markers, no orphan rows. Omit the table only when the sweep is clean, and keep the sweep line either way.
+
+---
+
+## Compact Form (SIMPLE runs)
+
+```
+## NEXUS_COMPLETE
+Task: [Task name] · Type: [TYPE] · Chain: [Agent]
+
+### Changes
+- [file]: [change]
+
+### Verification
+- [Tests / build / check]: [result, or `UNVERIFIED — <why>`]
+
+### Acceptance
+| Criterion | Class | Evidence / gap |
+|-----------|-------|----------------|
+| [AC] | verified \| partial \| missed | [evidence] |
+
+Decisions: none | Residuals: none
+Completion sweep: [command] — scanned, 0 hits
+```
+
+Escalate out of Compact the moment any of these is true: a `DEC-n` was taken, a residual exists, a guardrail fired, a criterion is `partial`/`missed`, or a prohibited outcome is `unverified`. Those are the cases the long form exists for — everything else is scaffolding.
 
 ---
 

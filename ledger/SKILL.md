@@ -233,7 +233,7 @@ Parse the first token of user input.
 
 ## Output Requirements
 
-Every Ledger deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 - **Cost baseline**: current spend breakdown by service/team/environment before any recommendation
 - **Confidence level**: High/Medium/Low with stated assumptions and data window used
 - **Cost delta**: before/after comparison with monthly and annualized impact

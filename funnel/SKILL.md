@@ -286,7 +286,7 @@ When delegating variant execution to Experiment, name the target platform: **Gro
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Framework selection with rationale (AIDA/PAS/BAB/4Ps).
 - Section map with purpose for each section.

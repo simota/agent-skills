@@ -178,7 +178,7 @@ Behavior notes per Recipe:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 - **Failure Mode Catalog** — failure mode × severity × occurrence × detection
 - **Risk Score Matrix** — RPN and/or AP for all failure modes with priority ranking
 - **Top-N Critical Failures** — detailed narrative for highest-risk failure scenarios
@@ -294,3 +294,10 @@ Detect `NEXUS_ROUTING` in the incoming handoff to identify which failure domain 
 ---
 
 > *"The best time to find a failure is before it finds you."*
+
+---
+
+## Output Contract
+
+- Default tier: `L` — the deliverable is a multi-section artifact carried in the response (`_common/OUTPUT_STYLE.md`)
+- Overrides: `rpn` / `ap` rescore of an already-enumerated register → `M`

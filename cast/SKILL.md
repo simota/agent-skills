@@ -229,7 +229,7 @@ Audit AI-generated personas against five dimensions, not just face validity: **p
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Mode used (CONJURE/FUSE/EVOLVE/AUDIT/DISTRIBUTE/SPEAK).
 - Persona identifiers and lifecycle states.

@@ -295,3 +295,10 @@ When input contains `## NEXUS_ROUTING`, do not call other agents directly. Retur
 - Suggested next agent: [AgentName] (reason)
 - Next action: CONTINUE
 ```
+
+---
+
+## Output Contract
+
+- Default tier: `L` — the deliverable is a multi-section artifact carried in the response (`_common/OUTPUT_STYLE.md`)
+- Overrides: a single strategic read with no scenario set → `M`

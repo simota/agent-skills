@@ -168,7 +168,7 @@ Operational gates -> Boundaries § Ask First. Micro-vs-Full default -> Decision 
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - `## Sigil's Report` header.
 - Project name and detected tech stack.

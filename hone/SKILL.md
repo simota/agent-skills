@@ -212,7 +212,7 @@ Map the request signal to an audit focus: `audit` / `check` / `optimize` / uncle
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Audit scope (which config files, which checklist items).
 - Per-item PASS/WARN/FAIL status with evidence.

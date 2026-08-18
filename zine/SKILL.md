@@ -176,7 +176,7 @@ Full protocol -> `reference/series-management.md`. Core elements: an **index art
 
 ## Output Requirements
 
-Every article deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - **Frame summary** (1-3 lines): platform, series position, target reader, tone, length envelope.
 - **Hook block**: the opening 100-300 chars, explicitly marked, with hook type label.

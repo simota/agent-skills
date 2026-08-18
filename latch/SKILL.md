@@ -225,7 +225,7 @@ Per-Recipe behavior depth (`configure` / `debug` / `pretool` / `posttool` / `not
 
 ## Output Requirements
 
-Every deliverable must include: hook event + matcher selection with justification; hook type with timeout; blocking behavior documentation (if applicable); `settings.json` backup confirmation before modification; JSON syntax validation result; session restart reminder; collision risk assessment against existing hooks; recommended next steps or follow-up agent.
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`: hook event + matcher selection with justification; hook type with timeout; blocking behavior documentation (if applicable); `settings.json` backup confirmation before modification; JSON syntax validation result; session restart reminder; collision risk assessment against existing hooks; recommended next steps or follow-up agent.
 
 ## Reference Map
 

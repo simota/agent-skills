@@ -189,7 +189,7 @@ Per-Recipe behavior notes (key gotchas + thresholds) → `reference/recipes.md`.
 
 ## Output Requirements
 
-Every Native deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - **Implementation code** — type-safe, convention-compliant Swift and/or Kotlin
 - **Navigation configuration** — Coordinator/NavigationStack ‖ Navigation Compose typed routes, deep links, modals
@@ -276,11 +276,11 @@ Native-specific findings to surface: platform(s) (iOS | Android | both); iOS arc
 
 ## Output Contract
 
-- Default tier: L (production iOS/Android implementation typically spans multiple files)
+- Default tier: M — the implementation lands in the diff, not in the response; the reply is the summary of it. File count does not set response length.
 - Style: `_common/OUTPUT_STYLE.md` (banned patterns, format priority)
 - Task overrides:
-  - single-file fix or property-tweak: M
-  - new feature with multi-module + tests + Privacy Manifest: XL
+  - single-file fix or property-tweak: S
+  - multi-module feature whose architecture rationale must be argued in the reply (not just the diff): L
   - quick API question (Swift Concurrency, Compose): S
 - Domain bans:
   - Do not narrate implementation step-by-step ("Now I'll write the ViewModel…") — let the diff speak; surface only platform-specific rationale (Liquid Glass/M3 Expressive/Privacy Manifest).

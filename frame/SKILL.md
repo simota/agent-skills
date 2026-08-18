@@ -189,7 +189,7 @@ Always read `reference/infrastructure-constraints.md` to verify rate budget befo
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Source URL, file version, and extraction timestamp.
 - Scope description (page, frame, component set, or node path).

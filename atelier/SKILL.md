@@ -236,7 +236,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every atelier deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - **Run summary**: project slug, direction source, artifact bundle, delegates used.
 - **Design-system reference**: path to `.agents/design-system/{project}.json` and whether it was reused or refreshed this run.

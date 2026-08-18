@@ -215,7 +215,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every deliverable should include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 - mode and environment scope
 - workload, contract, mutation, or fault model
 - explicit thresholds or hypotheses

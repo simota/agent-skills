@@ -484,27 +484,30 @@ Validate that generated skills align with Opus 5 default behaviors. See `referen
 
 Validate that generated skills declare runtime output style. See `_common/OUTPUT_STYLE.md` for the canonical rules.
 
-- [ ] **R8.1** Output Contract section exists in SKILL.md
+- [ ] **R8.1** Output Contract section exists in SKILL.md, **or** the skill correctly inherits the `M` default
+  - Absent contract = declared `M` (`OUTPUT_STYLE.md` § Inherited default). Inheritance is the expected state for most skills, not a gap.
+  - Declare a contract only to say something inheritance does not: different default tier, per-task overrides, or domain bans.
   - Located near `Output Language` section
   - Distinct from `_STEP_COMPLETE` / `NEXUS_HANDOFF` envelopes (those have their own limits)
 
-- [ ] **R8.2** Default tier declared
+- [ ] **R8.2** Default tier declared when a contract is present
   - One of `S` / `M` / `L` / `XL`
-  - Tier choice consistent with the skill's typical output (e.g., investigators → M, designers → L)
+  - `L`/`XL` only when the deliverable is a long structured document delivered *in the response*. A skill that writes its deliverable to a file stays `M` and summarizes.
 
 - [ ] **R8.3** OUTPUT_STYLE.md is referenced, not duplicated
-  - SKILL.md does NOT inline the banned-pattern list, format priority, or density rules
+  - SKILL.md does NOT inline the banned-pattern list, format priority, density rules, or § Conditional Requirements
   - References `_common/OUTPUT_STYLE.md` instead
 
 - [ ] **R8.4** Task overrides declared when applicable
-  - Skills with ≥2 distinct task types list per-task tier overrides
+  - Skills with ≥2 distinct task types **that differ in tier** list per-task overrides
   - Overrides justify deviation from default tier (typically smaller for status/lookup, larger for deliverables)
 
 Failure modes (any of these → R8 fails):
-- No Output Contract section.
-- Default tier missing or invalid.
+- Contract present but default tier missing or invalid.
+- Contract present that only restates the inherited `M` with no overrides and no domain bans — pure redundancy, delete it.
+- `L`/`XL` declared by a skill whose deliverable is a written file.
 - Banned-pattern list copied inline instead of referenced.
-- Multi-task skill with no override table.
+- Multi-task skill whose task types differ in tier with no override table.
 
 ---
 

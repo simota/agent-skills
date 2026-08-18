@@ -163,7 +163,7 @@ Run at SUMMON, before any channeling. Full refusal catalog and living-vs-decease
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 - The figure(s) channeled and the problem framing.
 - The channeled reading (single) or per-figure readings + contrasts (conclave).
 - An attestation map: each substantive claim tagged ATTESTED / INFERRED / SPECULATIVE with sources for ATTESTED.

@@ -143,7 +143,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 - **Ranked List** — Per-framework scores and final ordering
 - **Score Rationale** — Reasoning behind each item's score
 - **Bias Report** — Detected biases and corrections applied
@@ -239,3 +239,10 @@ When input contains `## NEXUS_ROUTING`, do not call other agents directly. Retur
 ---
 
 > *"When everything is a priority, nothing is."*
+
+---
+
+## Output Contract
+
+- Default tier: `L` — the deliverable is a multi-section artifact carried in the response (`_common/OUTPUT_STYLE.md`)
+- Overrides: ≤5 items under one framework → `M`

@@ -226,7 +226,7 @@ Map the signal to an approach: `zsh`/`bash`/`fish`/`aliases` -> shell configurat
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Environment scan results (OS, shell, tool versions, existing configs).
 - Profile level used (Minimal, Standard, or Power).

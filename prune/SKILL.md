@@ -177,7 +177,7 @@ Brief summary; full rubric → `reference/retention-criteria.md`.
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - `## Prune Audit Report` header.
 - Audit scope (full / pack / subset) and skill count audited.

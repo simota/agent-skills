@@ -215,7 +215,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every Weave deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Transition table covering every state × event pair — including explicit rejects, never implicit fallthrough
 - Validation report: reachability, deadlock-free, determinism, completeness, guard consistency — each marked PASS or FAIL with supporting evidence

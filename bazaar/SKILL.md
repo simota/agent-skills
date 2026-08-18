@@ -217,7 +217,7 @@ Per-stage delegates are listed in the Workflow table above; full per-agent role,
 
 ## Output Requirements
 
-Every `bazaar` run produces:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Selected Recipe and locked `Primary_Promise` (Two-Promise Probe outcome).
 - Per-stage `STAGE_REPORT` with `Outcome` (PASS / FAIL_REPAIR / FAIL_ESCALATE / CONDITIONAL_PASS) and per-criterion evidence.

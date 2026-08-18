@@ -24,7 +24,7 @@ This file defines **what to remove** and **what to choose instead**, with measur
 
 ## Output Tiers
 
-Every SKILL.md declares a default tier and per-task overrides. A skill MUST pick the smallest tier that fully answers the task.
+Every skill has a default tier — declared in its `## Output Contract`, or inherited as `M` when it has none (§ Inherited default). A skill MUST pick the smallest tier that fully answers the task.
 
 | Tier | Lines | Use For | Example |
 |------|-------|---------|---------|
@@ -38,6 +38,12 @@ Every SKILL.md declares a default tier and per-task overrides. A skill MUST pick
 - Default to one tier below your first instinct.
 - If the user can ask "more detail please" with one keystroke, the cost of starting smaller is near zero.
 - Tier ceilings are advisory caps; the floor matters more — never pad to fill a tier.
+
+### Inherited default
+
+A skill with no `## Output Contract` section **inherits `M`**. There is no undeclared tier — an absent contract is a declaration of `M`, not a licence for unbounded output.
+
+Declare an explicit contract only to state something the inherited default does not: a different default tier, per-task overrides, or domain bans. Skills whose deliverable is an inherently long structured document delivered *in the response* declare `L`; skills that write the deliverable to a file stay `M` and summarize (the document lives in the file, not in the reply).
 
 ---
 
@@ -93,6 +99,20 @@ If the SKILL.md has sections `Analysis / Proposal / Risks`, do NOT auto-emit tho
 ✗ "As an AI agent specialized in X, I can help with Y..."
 ✓ Just do Y.
 ```
+
+---
+
+## Conditional Requirements
+
+A SKILL.md `## Output Requirements` list describes what a **complete deliverable** carries. It is a ceiling for the largest form of the task, not a floor every turn must reach.
+
+- **Emit only the items the task actually exercised.** A refactor that touched no configs has no config row; a lookup that produced no fix has no fix section.
+- **Never pad to satisfy the list.** `N/A`, "none identified", "not applicable in this case", and empty table shells are filler — deleting them loses no information (Banned Pattern §1 applies).
+- **Collapse empty envelope sections to one line, or drop them.** An empty ledger is `Residuals: none`, never a header plus a header-only table.
+- **Required-in-substance ≠ required-in-shape.** When a protocol says a ledger is non-optional, that binds the *content* when content exists; the scaffolding is not the obligation.
+- **Scale the envelope to the task, not to the schema.** A SIMPLE task reports in the schema's short form; the full form is for the work that filled it.
+
+This rule is inherited by every skill. A SKILL.md may carry the one-line marker at the head of its `## Output Requirements` list — the point where the mandate is read — but must not reproduce the bullets above.
 
 ---
 
@@ -232,9 +252,9 @@ Cite by tier and rule ID (e.g., "Banned Pattern §3"); don't duplicate the rule 
 
 Skills validating against ODP must pass:
 
-- **R8.1** Output Contract section exists in SKILL.md.
-- **R8.2** Default tier declared (S/M/L/XL).
-- **R8.3** OUTPUT_STYLE.md is referenced (not duplicated).
-- **R8.4** Task overrides table present when the skill has ≥2 distinct task types.
+- **R8.1** Output Contract section exists in SKILL.md, **or** the skill inherits the `M` default and needs no override (see § Inherited default). A contract that only restates `M` with no overrides and no domain bans is redundant and fails R8.1 for the opposite reason.
+- **R8.2** Default tier declared (S/M/L/XL) when a contract is present.
+- **R8.3** OUTPUT_STYLE.md is referenced (not duplicated) — including § Conditional Requirements.
+- **R8.4** Task overrides table present when the skill has ≥2 distinct task types **and** they differ in tier.
 
 See `architect/reference/validation-checklist.md` Section 8.

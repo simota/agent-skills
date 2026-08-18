@@ -207,7 +207,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Metric definition with decision context ("what decision does this inform?") and metric tree position (input vs output KPI).
 - Typed event schema (interface or type definition) with 15-25 event target range.

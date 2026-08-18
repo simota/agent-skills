@@ -138,7 +138,7 @@ Behavior notes per Recipe:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Scope: which project, which phases run, which paths analyzed.
 - AUDIT_REPORT YAML block with scores (discovery, token_budget, cache_topology, naming_quality, overall) and grade.

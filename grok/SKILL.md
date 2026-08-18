@@ -232,7 +232,7 @@ Diagnostic quality is a design goal, not an afterthought. Benchmark styles (Elm 
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - **Grammar Specification**: formal grammar (EBNF/ABNF/PEG or generator DSL); rules inferred from samples carry a confidence level.
 - **Engine / Generator Choice**: decision memo citing the matrix (grammar class, runtime, error-message needs, incremental needs, ambiguity tolerance).

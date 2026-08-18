@@ -204,6 +204,8 @@ Every deliverable carries the `## NEXUS_COMPLETE` header, task description and a
 - **Residual Ledger** — each leftover as `RES-n` (class, blocker/owner, marker location, route), bound bidirectionally to any `#TODO(agent):` left behind, plus the completion-sweep line (`scanned, 0 hits` when clean — never omitted).
 - **`## Prompt Tuning`** — delta-only trace when a spawn's directives were adapted; omit entirely when none were.
 
+**Scale the envelope to the run, not to the schema.** A ledger binds in *substance*, never in *scaffolding*: an empty ledger is one line (`Residuals: none`), never a header plus an empty table; a SIMPLE single-agent run uses `output-formats.md` § Compact Form; per-step results are one line each. Only the completion sweep is never dropped.
+
 Verification results are evidence-bound; unexercised paths are labeled `UNVERIFIED` (Q10). Field template → `reference/output-formats.md`.
 
 **Required contract:** `DELIVER` returns `NEXUS_COMPLETE` semantics (`reference/output-formats.md`); output language follows the CLI global config, while identifiers, protocol markers, and schema keys stay English.

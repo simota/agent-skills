@@ -178,7 +178,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every response should include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 - Scope and selected work mode
 - Pattern choice, duration, easing, and animated properties
 - Reduced-motion behavior

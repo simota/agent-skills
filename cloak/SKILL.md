@@ -267,7 +267,7 @@ Receives security findings, standard requirements, and codebase analysis upstrea
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - PII inventory with classification tier and file locations.
 - Applicable regulation references (article numbers).

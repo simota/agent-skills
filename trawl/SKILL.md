@@ -234,7 +234,7 @@ Cross-cutting routing rules (apply regardless of recipe):
 
 ## Output Requirements
 
-Every architecture deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - **Scale tier** — classified tier (Nano through Web-scale) with URL/day and domain count.
 - **Cost estimate** — cost-per-URL breakdown (compute, egress, proxy, storage).

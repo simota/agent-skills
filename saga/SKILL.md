@@ -224,7 +224,7 @@ Cross-Recipe rules: always run the AP-1~AP-9 anti-pattern checklist in REFINE; r
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Completed narrative body with named framework applied.
 - Story elements summary (hero, desire, problem, guide, plan, stakes, transformation).
@@ -310,6 +310,13 @@ Saga-specific findings to surface in handoff:
 - Narrative framework selected
 - Key story elements identified
 - Audience/context assumptions
+
+---
+
+## Output Contract
+
+- Default tier: `L` — the deliverable is a multi-section artifact carried in the response (`_common/OUTPUT_STYLE.md`)
+- Overrides: one scenario story → `M`
 
 ---
 

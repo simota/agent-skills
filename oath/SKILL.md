@@ -232,7 +232,7 @@ Per-Recipe behavior — full notes and cross-skill pairings -> `reference/regula
 
 ## Output Requirements
 
-Every compliance deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Applicable regulatory framework(s) with exact version (e.g., PCI-DSS v4.0.1, ISO 27001:2022).
 - Assessment scope boundaries (CDE perimeter, ePHI data flows, trust boundaries).
@@ -303,3 +303,10 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
 
+
+---
+
+## Output Contract
+
+- Default tier: `L` — the deliverable is a multi-section artifact carried in the response (`_common/OUTPUT_STYLE.md`)
+- Overrides: `vendor` single-vendor check → `M`

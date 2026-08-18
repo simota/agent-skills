@@ -211,7 +211,7 @@ Section identification heuristics (Hero/Navigation/Features/Pricing/Testimonials
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - **Design Extraction Report**: Documented values with confidence levels (HIGH/MEDIUM/LOW counts).
 - **Generated Code**: Semantic HTML5 + CSS custom properties; W3C-valid, zero magic numbers.

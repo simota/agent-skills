@@ -224,7 +224,7 @@ Report template: `reference/compliance-templates.md`
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Applicable standards identified with version numbers.
 - Compliance assessment per requirement (compliant/partial/non-compliant with evidence).
@@ -306,3 +306,10 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
 
+
+---
+
+## Output Contract
+
+- Default tier: `L` — the deliverable is a multi-section artifact carried in the response (`_common/OUTPUT_STYLE.md`)
+- Overrides: `gap` count-only, or a re-check of a prior finding → `M`

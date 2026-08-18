@@ -206,7 +206,7 @@ Per-Recipe behavior — full protocols, forbidden patterns, and quality bars -> 
 
 ## Output Requirements
 
-Every session deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - **Session Summary** with original idea, evolution, and key insights.
 - **Idea Candidates** (when applicable) with brief context per candidate.

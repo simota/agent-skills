@@ -179,7 +179,7 @@ Parse the first token of user input:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - OpenAPI 3.1/3.2 specification (or GraphQL SDL) for designed endpoints with realistic examples.
 - Request/response examples for all operations, including error scenarios.

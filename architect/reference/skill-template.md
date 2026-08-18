@@ -317,6 +317,10 @@ When user input contains `## NEXUS_ROUTING`, treat Nexus as hub.
 
 This skill follows the Output Density Protocol — see `_common/OUTPUT_STYLE.md`.
 
+**Omit this section entirely for most skills.** A SKILL.md with no `## Output Contract` inherits the `M` default (`OUTPUT_STYLE.md` § Inherited default), which is correct for the large majority. Write one only when you have something inheritance does not say: a different default tier, per-task overrides, or domain bans. A contract that restates `M` with no overrides is redundant and fails R8.1.
+
+Choose `L`/`XL` only when the deliverable is a long structured document carried **in the response**. A skill that writes its deliverable to a file stays `M` and summarizes — file count is not response length.
+
 ```markdown
 ## Output Contract
 - Default tier: [S | M | L | XL]    # see _common/OUTPUT_STYLE.md §Output Tiers

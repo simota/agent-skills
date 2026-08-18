@@ -171,7 +171,7 @@ Behavior notes per Recipe. Each `**VERIFY**:` gate is **in addition to** Loom's 
 
 ## Output Requirements
 
-Every deliverable should include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 - **Project layer blueprint**: detected stack + recurring-task list, coverage matrix (task → mechanism), and the proposed suite of skills / recipes / workflows.
 - **Routing map**: which agent or skill owns which repo task domain (Nexus-consumable).
 - **Topology declaration** for every designed workflow (hub-spoke / pipeline / hierarchy) with phase count.

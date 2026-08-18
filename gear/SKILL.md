@@ -171,7 +171,7 @@ Behavior notes per Recipe:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Change type (dependency update, CI fix, config change, etc.).
 - Risk level (low/medium/high).

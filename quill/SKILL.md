@@ -182,7 +182,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Target scope (files, doc_type, scope).
 - Current state analysis (coverage gaps, `any` count, rot indicators).

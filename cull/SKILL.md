@@ -182,7 +182,7 @@ Full pattern / risk-family / first-action table with IoC hashes and sources -> `
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - **Grade**: `CLEAN` / `SUSPECTED` / `CONFIRMED` / `ACTIVELY_BLEEDING`.
 - **Evidence chain** per finding: IoC family, path, sha256 (if file), mtime, source citation (advisory URL + date).

@@ -187,7 +187,7 @@ DISCOVER → POSITION → CRAFT → AMPLIFY → MEASURE
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Positioning alignment (how the output connects to the engineer's identified niche).
 - AP-1~AP-11 anti-pattern check results (all must pass or have documented mitigation).

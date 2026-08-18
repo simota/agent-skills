@@ -202,7 +202,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Story/fixture files in the project's detected format (CSF 3.0 / Cosmos fixture).
 - Coverage summary (variants, states, interactions, a11y).

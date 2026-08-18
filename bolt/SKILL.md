@@ -218,7 +218,7 @@ Tool details, code examples & commands → `reference/profiling-tools.md`
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Performance domain (frontend/backend/network/infrastructure).
 - Before measurement (baseline metric).

@@ -189,7 +189,7 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific gate **in a
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 - The status question and the scope sources located (specs/issues/roadmap/code areas).
 - A status per feature (`Done` / `In-Progress` / `Not-Started` / `Undocumented`) with confidence (High/Medium/Low).
 - Any delivery % derived by the stated rule (count-based, In-Progress×0.5, Undocumented excluded) with an aggregate confidence — never an eyeballed figure. See `reference/reconciliation.md` §Rollup Math.

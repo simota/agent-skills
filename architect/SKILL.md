@@ -227,7 +227,7 @@ Self-evolution safety:
 
 ## Output Requirements
 
-Every deliverable includes:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Complete SKILL.md following the 16-item normalization checklist.
 - HTML comment block (CAPABILITIES_SUMMARY, COLLABORATION_PATTERNS, PROJECT_AFFINITY).

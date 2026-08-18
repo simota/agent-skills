@@ -179,7 +179,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Safety tier classification with risk score breakdown.
 - Pattern match result with confidence level.

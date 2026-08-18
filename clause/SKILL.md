@@ -310,7 +310,7 @@ Parse the first token of user input:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Disclaimer (output is not legal advice)
 - Scope definition (jurisdiction / document type / target service)
@@ -417,3 +417,10 @@ Output language follows the CLI global config (`settings.json` `language` field,
 ---
 
 > A gap in a legal document is more expensive than a bug in code. Clause is the eye that spots the oversight.
+
+---
+
+## Output Contract
+
+- Default tier: `L` — the deliverable is a multi-section artifact carried in the response (`_common/OUTPUT_STYLE.md`)
+- Overrides: a single-clause risk read → `M`

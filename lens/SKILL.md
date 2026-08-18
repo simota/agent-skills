@@ -214,7 +214,7 @@ Full per-recipe how-to (verbatim): `reference/recipes-detail.md`.
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Investigation type and question decomposition.
 - Findings with file:line references for every claim.

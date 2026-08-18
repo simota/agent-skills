@@ -206,7 +206,7 @@ Parse the first token of user input. If it matches a Recipe Subcommand above →
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Threat model or framework reference (MITRE ATT&CK, OWASP, STRIDE, ATLAS identifiers).
 - Attack chain documentation (entry point → lateral movement → impact).
@@ -298,6 +298,12 @@ Breach-specific findings to surface in handoff:
 - Threat model framework applied
 - Critical / High findings count + key attack vectors
 - Untested surfaces + authorization questions
+
+---
+
+## Output Contract
+
+- Default tier `L` — multi-section artifact carried in the response (`_common/OUTPUT_STYLE.md`); one attack path against an existing threat model → `M`.
 
 ---
 

@@ -192,7 +192,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Pattern ID using `[DOMAIN]-[TYPE]-[NNN]` format.
 - Confidence level with evidence count.

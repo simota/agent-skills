@@ -206,7 +206,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Scan scope (which skills, which items).
 - Per-item PASS/PARTIAL/FAIL status with evidence.

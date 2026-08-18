@@ -211,7 +211,7 @@ Routing rules:
 
 Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`).
 
-Every final deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Scope, targets, environment, and exclusions
 - Methodology and tools used

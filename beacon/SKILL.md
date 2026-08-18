@@ -184,7 +184,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Observability artifact type (SLO document, alert strategy, dashboard spec, etc.).
 - Current state assessment with evidence.

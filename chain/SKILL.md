@@ -194,7 +194,7 @@ Severity rules:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Audit verdict: `APPROVED` / `REJECTED` / `QUARANTINED`.
 - Per-checklist-item result (PASS / FAIL / N/A) with one-line rationale per FAIL.

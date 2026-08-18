@@ -231,7 +231,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Search Requirements Profile (data volume, update frequency, languages, query patterns).
 - Engine/strategy recommendation with at least two alternatives and trade-off analysis.

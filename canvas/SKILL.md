@@ -205,7 +205,7 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific REVIEW gate
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - `Title` — diagram name.
 - `Purpose` — what question the diagram answers.

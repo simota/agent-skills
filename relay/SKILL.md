@@ -190,7 +190,7 @@ The Signal column is the routing rule. Regardless of signal, security implicatio
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Integration artifact type (adapter interface, webhook handler, event schema, bot framework, transport architecture).
 - Target platform(s) and protocol constraints.

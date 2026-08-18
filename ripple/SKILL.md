@@ -228,7 +228,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every deliverable should include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Clear scope and context of the analysis or recommendation.
 - Evidence-based findings with specific references.

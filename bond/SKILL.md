@@ -194,7 +194,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 1. **Segment context**: Target segment or cohort with size estimate and churn benchmark (Enterprise <0.8%/mo, SMB <4%/mo)
 2. **Evidence basis**: Triggering signal, behavioral data, or health score that justifies the intervention

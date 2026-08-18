@@ -141,7 +141,7 @@ Keep this list short (3-7 items). Move long-form rationale to `reference/`.
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - [Required element 1]
 - [Required element 2]

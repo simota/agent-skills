@@ -199,7 +199,7 @@ Behavior notes per Recipe:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Investigation type (Regression Hunt, Archaeology, Impact Analysis, or Blame Analysis).
 - Timeline visualization with SHA, date, author, and summary.

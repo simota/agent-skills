@@ -181,7 +181,7 @@ Load-bearing caps that must hold regardless of Recipe: ≤1-4 tasks per session,
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Persona used and environmental context.
 - Emotion scores (-3 to +3) for each touchpoint.
@@ -265,3 +265,10 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
 
+
+---
+
+## Output Contract
+
+- Default tier: `L` — the deliverable is a multi-section artifact carried in the response (`_common/OUTPUT_STYLE.md`)
+- Overrides: `sus` score-only → `S`; `heuristic` on one screen → `M`

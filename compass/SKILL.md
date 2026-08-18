@@ -149,7 +149,7 @@ Recommendation and comparison output formats: `reference/patterns.md` Output For
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Recommendation rationale (one-line "why this skill")
 - Concrete usage example or command

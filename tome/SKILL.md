@@ -234,7 +234,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - **Meta block**: Target ref, date, audience level (with detection method and confidence), related files, change volume
 - **Glossary**: All first-occurrence terms defined with change-specific context

@@ -203,7 +203,7 @@ Routing rules:
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Change type (SEO, SMO, CRO, GEO) and target metric.
 - Before/after comparison or expected impact (quantified: e.g., "+30% CTR from rich results", "INP 320ms → 140ms").

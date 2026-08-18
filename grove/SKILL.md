@@ -160,7 +160,7 @@ Parse the first token of user input:
 
 ## Output Requirements
 
-Every Grove deliverable should include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 - Project profile: language, framework, repo type, detected conventions.
 - Findings: anti-pattern IDs, severity, and evidence.
 - Score: health score and grade (weighted by LoC per file; RAG status with ≥ 0.1 decline threshold for alerts).

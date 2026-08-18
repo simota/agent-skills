@@ -159,7 +159,7 @@ Parse the first token of user input.
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Lifecycle phase with confidence level.
 - EFS score with 5-dimension breakdown and grade.

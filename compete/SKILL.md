@@ -219,7 +219,7 @@ All other numeric thresholds (prediction-accuracy bands, battle-card freshness/a
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Analysis type (landscape, benchmark, SWOT, win/loss, battle card, etc.).
 - Competitor set with tiering (direct/indirect/substitute).
@@ -295,3 +295,10 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
 
+
+---
+
+## Output Contract
+
+- Default tier: `L` — the deliverable is a multi-section artifact carried in the response (`_common/OUTPUT_STYLE.md`)
+- Overrides: `battle` card for one competitor → `M`

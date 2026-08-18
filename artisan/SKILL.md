@@ -207,7 +207,7 @@ Each Recipe carries a `VERIFY` gate **in addition to** Artisan's universal disci
 
 ## Output Requirements
 
-Every deliverable must include:
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:
 
 - Production-quality TypeScript component code.
 - Error boundary and loading/error/empty state handling.
