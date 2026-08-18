@@ -166,6 +166,71 @@ turn-count-based handoff would have avoided entirely. This compounds the same co
 
 ---
 
+## 2b. When you do cut: the removal order, and what is never removed
+
+§1 and §2 decide *whether* to compress. This section governs *how*, and exists because the previous
+headroom campaign lost facts to compression rather than to any measurement error
+(`project_skill_token_headroom`). A budget without a stated removal order does not shrink content — it
+shrinks whatever the compressor noticed last, and what a compressor notices last is the short clause.
+
+**Budget is a partition, not a ceiling.** State the parts before cutting, so a cut is charged to a named
+line rather than taken from wherever it is easiest:
+
+| Line | Holds |
+|---|---|
+| `instruction` | contract, rules, gates — the behavior the file exists to fix |
+| `state` | task, scope, and what has already been decided |
+| `core_evidence` | the claims the instruction depends on |
+| `exception` | prohibitions, negations, carve-outs, units, deadlines, thresholds |
+| `citation` | pointers back to the authority for each claim |
+| `output_reserve` | room for the response itself |
+
+`exception` is a **reserved line, not a residual**. It is the first thing a summarizer drops — it reads as
+detail — and the last thing that can be reconstructed from what remains, because nothing left in the text
+implies it was ever there.
+
+**Removal order.** When the content exceeds the budget, remove in this order and stop as soon as it fits:
+
+1. **Exact duplicates** — the same claim stated twice in the same scope.
+2. **Redundant support for a claim already carried** — a second, weaker source for a point the primary
+   source already settles. Verify it is the *same* claim first (see below).
+3. **Examples** — shrink to one, then to zero. An example is an aid to the rule, never the rule.
+4. **Detail replaced by a pointer** — move the body to `reference/` and leave the load-bearing sentence plus
+   the path. This is a relocation, not a deletion, and only counts if the pointer is actually reachable.
+5. **Split the unit** — one file becomes two, each with its own trigger.
+6. **Decline** — report that the content does not fit under the stated bound, and what was left out. Not
+   fitting is a finding, not a failure to be hidden by cutting into the floor.
+
+**Floors — never cut to make something fit.** Cutting into any of these is a defect regardless of the
+saving:
+
+- **`exception` content**: prohibitions, negations ("never", "do not", "unless"), numeric bounds, units,
+  effective dates, and thresholds. A rule that survives without its exception is a *different rule*, and it
+  reads as correct.
+- **`core_evidence` before `examples`.** Deleting the reason and keeping the illustration is the most common
+  form of this failure.
+- **The authority a claim rests on.** A claim compressed away from its citation becomes unfalsifiable, and
+  the next editor cannot tell whether it was ever verified.
+- **Contract-bearing language** — thresholds, modes, safety rules, handoff contracts, and output
+  requirements stay explicit (`nexus` Core Rule #4).
+
+**Rung 2 requires an identity check, not a similarity check.** Two passages that look like the same claim
+may differ in scope, authority, or applicability — measured on this repo, **2 of 4** proposed
+deduplications were false positives that would have removed distinct content
+(`feedback_dedup_verify_by_merge`). Before removing either, verify the merged result loses no net line and
+no condition; if the two differ in *when* they apply or *who* they bind, they are not duplicates.
+
+**Verify by retention, not by length.** A compression is accepted when the preserved categories survive it,
+not when the file got shorter. Check each `exception` item present before the cut is still present after,
+by reading for it specifically — a diff shows what left, but only a checklist shows whether what left
+mattered.
+
+**Consequence of violating this rule:** the file gets shorter and quietly weaker. The loss is undetectable
+by re-reading the result, because a rule stripped of its exception is fluent, plausible, and wrong only in
+the cases it was written for.
+
+---
+
 ## 3. Measurement hygiene — required of any future token claim in this repo
 
 Any token/cost figure cited in a PR, audit, or `_common/` doc must satisfy all of the
@@ -290,6 +355,7 @@ cost step to a `_common/` commit (§4) — and make a decision on a number nothi
 |---|------|-------------------|--------------------------|
 | 1 | Never argue body size from raw token shares; fix session length first, then re-measure | cache_creation is 1.3% of tokens but 12-19% of cost; a loaded token costs 2.0 + 0.1 x turns-remaining (12x at 100 turns) | A cost claim wrong by ~an order of magnitude, in either direction |
 | 2 | Hand off at or before turn ~50; past 100 is already late | per-turn cost 110,512 (26-50) -> 138,402 (51-100) -> 262,996 (201+); within-session Q3>Q1 in 47/47 sessions; first-20-turn cost equal regardless of eventual length | Every later turn billed at a strictly higher marginal rate; compaction peak (881,738/turn observed) paid instead of avoided |
+| 2b | Cut in the stated order; never cut into `exception`, evidence-before-examples, or a claim's authority; verify by retention, not by length | the prior headroom campaign lost facts to compression, not to mismeasurement; 2 of 4 proposed dedups were false positives | The file gets shorter and quietly weaker — a rule stripped of its exception reads as correct |
 | 3 | 5-point measurement hygiene checklist | dedup, thinking-subset, proxy-labeling, live-corpus findings | Figure inadmissible as cited evidence |
 | 4 | Check CLI version before blaming a repo change | +2,102 step preceded blamed commit by 8-10h | Repeat of an already-made misattribution |
 | 5 | State standing limits, don't re-derive them | isSidechain always false; attributionSkill 65% null; no tokenizer | Wasted re-investigation of known dead ends |
