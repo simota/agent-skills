@@ -387,5 +387,7 @@ recovery_metrics:
     success_rate: X%
     avg_confidence: 0.XX
 
-  escalation_rate: X%  # Target: < 15%
+  escalation_rate: X%  # Acceptable band: 8-30%; both bounds are alerts
 ```
+
+**Escalation is two-sided.** A one-sided `< N%` target rewards suppressing escalation, which buys the number by answering confidently where the chain should have stopped. Too *low* on a risk-bearing workload is the more dangerous reading: it means the system is deciding things it was not equipped to decide. Set the band from the workload's own risk profile rather than reusing these defaults, and alert on both edges.

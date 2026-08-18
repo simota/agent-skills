@@ -253,7 +253,7 @@ Development:
 3. add failure traces to the stable test set
 
 Deployment:
-1. shadow mode `24h` minimum
+1. shadow mode until the observed traffic covers the Critical, Counterexample, and Adversarial strata (§ Eval Dataset Stratification) at the declared case count — `24h` is a floor, not the exit condition. "Three quiet days" can mean zero risky slices were ever observed
 2. canary `5% -> 25% -> 50% -> 100%`
 3. validate quality, latency, cost, and safety at each stage
 

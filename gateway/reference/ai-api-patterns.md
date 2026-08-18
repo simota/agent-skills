@@ -4,7 +4,7 @@
 >
 > **2026-05 baseline**:
 > - **OpenAPI 3.2** (2025-09-23) gives streaming endpoints a first-class contract via `text/event-stream` + `itemSchema`, `application/jsonl`, and `application/json-seq` ([spec](https://spec.openapis.org/oas/v3.2.0.html)). Document SSE chat completions with `itemSchema` instead of prose.
-> - **OpenAI Structured Outputs** with `strict: true` (gpt-4o-2024-08-06+) guarantees exact JSON Schema conformance — 100% on complex schema-following evals vs ~40% pre-strict ([OpenAI announcement](https://openai.com/index/introducing-structured-outputs-in-the-api/)). Strict-mode constraints: `additionalProperties: false`, all properties in `required` (use `null` union for optional). Function-calling supports the same `strict` flag.
+> - **OpenAI Structured Outputs** with `strict: true` (gpt-4o-2024-08-06+) guarantees exact JSON Schema conformance — 100% on complex schema-following evals vs ~40% pre-strict ([OpenAI announcement](https://openai.com/index/introducing-structured-outputs-in-the-api/)). This is a **syntax** guarantee only: a fully conformant object can still carry invented field values. Strict-mode constraints: `additionalProperties: false`, all properties in `required` (use `null` union for optional). Function-calling supports the same `strict` flag.
 > - **Anthropic Prompt Caching** (GA) cuts long-prompt input cost up to 90% and latency up to 85%; cache hits are 0.1× input price, 5-min TTL default (1-hour optional). Anthropic now **automatically identifies cached segments** — manual `cache_control` markers are still supported but no longer required for many cases ([Anthropic docs](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)).
 > - **OWASP Top 10 for Agentic Applications 2026** (released 2025-12, [genai.owasp.org](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)) — ASI01 Agent Goal Hijacking is the #1 risk for agent-facing APIs. Apply principle-of-least-agency on every tool exposed via function-calling.
 
@@ -100,6 +100,8 @@ Tool use allows the model to request structured data from external systems durin
 ## Structured Output
 
 Forces the model to produce JSON that conforms to a specified schema. As of 2024-08, OpenAI's `strict: true` mode (Structured Outputs) guarantees exact schema conformance on gpt-4o-2024-08-06+ and later — the model is constrained at decode time to emit only schema-conformant tokens.
+
+**Schema conformance is not correctness.** Decode-time constraints guarantee shape, never meaning — a schema-valid record can name a price or a brand that appears nowhere in the input. Value correctness, evidence-span existence, and execution authorization are separate validators that run after parsing, not properties the schema buys. See `oracle/reference/evaluation-observability.md` ("schema validity says nothing about answer quality").
 
 ### Strict-Mode Structured Output (OpenAI, gpt-4o-2024-08-06+)
 

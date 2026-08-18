@@ -108,6 +108,17 @@ Every SKILL.md should:
 
 ---
 
+## What the cache may not buy
+
+Every rule above optimizes hit rate. Hit rate is not the only thing a prefix decides, and two of the cheapest ways to raise it are not available:
+
+1. **Never pin a stale policy, threshold, or reference revision to keep a prefix stable.** Prefix stability is a cost property; the currency of a safety rule or a dated claim is a correctness property, and correctness wins. When a `_common/` protocol or a dated `reference/` block changes, take the cache miss.
+2. **Never widen a cached prefix across a boundary that isolates data.** Context belonging to different tenants, projects, customers, or trust levels does not get merged into one shared prefix to earn a hit. A cache key is not an authorization decision.
+
+State the trade-off where it bites: if a stable prefix and a current rule genuinely conflict, the rule is what ships and the cache absorbs the loss.
+
+---
+
 ## Audit hooks for Hone
 
 `hone` should verify (per session, not per request):

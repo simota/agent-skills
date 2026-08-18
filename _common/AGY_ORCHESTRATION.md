@@ -106,9 +106,10 @@ The Gemini API *itself* supports hard structured output (`responseMimeType: "app
 
 **Apply by:**
 - Request structured output **inside the §9.2 artifact file**: "write a single JSON object to `/tmp/agy-<slug>.json`, then the sentinel on its own final line."
-- Use the **schema-first prompt pattern** Gemini rewards: state the exact JSON shape (keys + enum values), give **one example object**, and add the negative constraint **"Return valid JSON only — do not include markdown fences."** One example resolves nearly all output-format ambiguity on Gemini 3.7.
+- Use the **schema-first prompt pattern** Gemini rewards: state the exact JSON shape (keys + enum values), give **one example object**, and add the negative constraint **"Return valid JSON only — do not include markdown fences."** One example removes most output-format ambiguity on Gemini 3.7 (practitioner observation, not a measured rate) — it does not make the output enforced.
 - Keep the schema small and unambiguous (deeply-nested / very large schemas are rejected even at the API level); ambiguous fields are a top cause of malformed output.
-- **Always validate the JSON parses before aggregating** (best-effort, not enforced). For a step that genuinely needs *guaranteed* schema conformance, call the Gemini API directly with `responseSchema` rather than routing through `agy -p`.
+- **Always validate the JSON parses before aggregating** (best-effort, not enforced), and declare the parse-failure branch up front — an unparseable artifact is an `invocation`-class failure (`nexus/reference/error-handling.md` § Tool Error Classes), so **one repair retry that changes the call** (tighter shape restatement, smaller schema, fewer fields), then escalate. Re-running the identical prompt is not an attempt. Never hand a partially-parsed object downstream, and never let the aggregator silently drop a spawn whose artifact failed to parse — count it.
+- For a step that genuinely needs *guaranteed* schema conformance, call the Gemini API directly with `responseSchema` rather than routing through `agy -p`.
 
 ### A9. Fast-Model Autonomy & Compensation
 

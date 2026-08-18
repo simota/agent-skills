@@ -202,11 +202,15 @@ These match `_common/OPUS_5_AUTHORING.md` principles P2 / P3 / P9 / P8 / P10 / P
 
 ## Prompt Versioning
 
+Bump on the contract a consumer relies on, never on where the text changed.
+
 | Change type | Version bump |
 |-------------|--------------|
-| system prompt rewrite | Major |
-| few-shot example changes | Minor |
-| wording tweak | Patch |
+| output schema, label/enum definition, tool contract, or primary objective changes | Major |
+| few-shot examples, added optional guidance, or a system-prompt rewrite that leaves the contract intact | Minor |
+| wording tweak with no behavioral target | Patch |
+
+Redefining an existing label is Major even when it edits three words; rewriting the whole system prompt while preserving schema, labels, tools, and objective is not.
 
 Keep prompts versioned like code:
 - system prompt
@@ -240,7 +244,7 @@ Rules:
 - choose effort intentionally; re-sweep rather than carrying settings across model generations
 - enable prompt caching for stable system prompts (Opus 5 caches from 512 tokens)
 - re-run regression tests after every prompt change
-- remove prior-generation over-prompting patterns, and strip self-verification instructions
+- **on Opus 5 / Sonnet 5 only:** remove prior-generation over-prompting patterns and strip self-verification instructions (§ Claude 4.x Techniques, rule 3). Do not carry this to model families whose own provider guidance does not support it — a provider's local behavior note is not a universal prompting law
 
 ## Agentic Prompt Patterns
 

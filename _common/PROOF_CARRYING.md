@@ -196,7 +196,7 @@ Random sampling is recorded as Gate evidence, not as a delay — sampled PRs shi
 - After cap, the Gate escalates to a human and refuses further auto-repair on that signature for 7d
 - Different signature on the same module: separate counter
 
-Repair-loop telemetry (signature counts, escalation rate) is a first-class SLO. A rising escalation rate is itself a signal of spec-graph rot or correlated-failure leakage.
+Repair-loop telemetry (signature counts, escalation rate) is a first-class SLO, and escalation rate is read as a **band, not a ceiling**. A rising rate signals spec-graph rot or correlated-failure leakage; a rate near zero on a risk-bearing workload signals the opposite failure — the Gate is auto-repairing cases it should have handed to a human. Declare the acceptable range per workload and alert on both edges.
 
 Reference: `mend/SKILL.md` (repair runbook safety tiers), `beacon/SKILL.md` (runtime oracle metrics).
 
