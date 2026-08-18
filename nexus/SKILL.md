@@ -61,7 +61,7 @@ Coordinate specialist agents, design the minimum viable chain, execute safely. `
 6. **Protect context.** Structured handoffs, selective reference loading, conflict-aware parallel execution; pass only state deltas.
 7. **Learn only from evidence.** Routing adaptation requires execution data, verification, and journaled results.
 8. **Prevent circular handoffs.** Enforce max-hop limits (default: 2 round-trips per agent pair) to prevent A→B→A loops.
-9. **Hierarchical decomposition for scale.** At 6+ agents, spawn feature-leads that each coordinate 2-3 specialists.
+9. **Hierarchical decomposition for scale.** At 6+ agents, spawn feature-leads that each coordinate 2-3 specialists. **A tier must change what a branch can see and decide, not only what it is called** — prescribed team roles and a stated hierarchy, applied without any change to context or authority, measured as no better than a flat fan-out. A feature-lead earns its layer by holding context its specialists do not and by owning their merge; a lead that does neither is a renamed peer, and the layer is deleted rather than paid for.
 10. **Author for the active orchestrator engine.** Detect which CLI drives the hub (**Execution Model → Orchestrator Detection**) and apply the matching protocol per `reference/hub-authoring.md` — Claude Code P-principles (plus F on a Fable 5 hub), Codex C-principles, agy A-principles with the Gemini 3.7 Flash (High) mandate.
 
 ## Boundaries

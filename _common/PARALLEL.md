@@ -60,6 +60,13 @@ workers = min(ready independent tasks, execution capacity, review capacity, budg
 
 Review capacity is the one most often forgotten and the one that actually binds — parallelism that outruns the ability to check its output converts throughput into an unreviewed backlog.
 
+**Review capacity means acceptance, not just inspection.** Across measured fan-outs of 10 to 80 agents on one
+shared codebase, the fraction of submitted work that was accepted *fell* as agent count rose — earlier model
+generations opened 876 and 980 pull requests and merged almost none, and one run queued 2.4 million job
+requests against 117 accepted. Past that point each added branch lowers delivered throughput while still
+charging full cost. The number that decides the fan-out is **accepted** output per unit cost, never submitted
+output.
+
 **Rules:**
 - **Parallelism is set by the critical path and the dependency graph, not by agent count.** Adding a branch that waits on another branch adds coordination cost and no wall-clock.
 - **Compare against the single-agent baseline.** A parallel run that is not measured against doing it sequentially has not been shown to be worth it. This is the pre-flight counterpart to the post-hoc amplification figures in Nexus Core Rule #1 (`4.4×` centrally orchestrated vs `17.2×` uncoordinated) — those describe what goes wrong *after* fan-out; this decides whether to fan out at all.
@@ -106,6 +113,30 @@ Review capacity is the one most often forgotten and the one that actually binds 
 | `static` | declared in the chain | none |
 | `data-driven` | one per item in a known collection | bound the collection first; an unbounded input is an unbounded fan-out |
 | `model-driven` | the model proposes the split | **dedupe near-identical branches and estimate cost before spawning** — an unreviewed proposal is how a 3-branch task becomes 30 |
+
+### Output Convergence (the duplicate file ownership cannot see)
+
+File ownership stops two branches from writing the same path. It does nothing about two branches
+independently producing the **same content** on different paths. The failure is redundancy, not contention,
+so conflict detection never fires — there is no conflict. Agents given the same briefing converge hard:
+in one measured fan-out 18 of 30 agents chose the identical branch name for the same task and several
+produced identically-titled artifacts. Spawning more independent agents does not fix it: on one target a
+coordinated swarm whose agents specialized found 266 vulnerabilities where an independent-parallel run
+found 21, with only 12 appearing in both. Breadth came from differentiation, not from branch count.
+
+**Rule: a fan-out justified by coverage measures the coverage it got, not the branches it spawned.**
+
+1. **Score effective coverage at fan-in.** Cluster branch outputs by what they *say*, not by branch id.
+   `n` branches returning one distinct result is `n=1` of coverage bought at `n×` cost, and it is reported
+   that way — never as `n` results. This is the artifact-side counterpart of the shared-ancestor rule under
+   *Fan-in* below: that one stops duplicate evidence being counted twice, this one stops duplicate work
+   being billed as breadth.
+2. **Divergence is designed in, not hoped for.** Identical context produces correlated output. A branch set
+   that exists to widen coverage gives each branch a distinct lens, region, or starting point — a different
+   branch id is not a different perspective.
+3. **Name collision is the symptom, not the problem.** Deriving names from branch identity (*Runtime Slot*,
+   `artifact_prefix`) removes the collision and leaves the redundancy fully intact. Fix the convergence
+   first; the names follow.
 
 ### Fan-in: declare the join policy
 
@@ -279,6 +310,13 @@ runtime_slots:
 5. **A worktree is isolation of files, not of trust.** Separate worktrees do not sandbox execution: a branch
    running untrusted code still reaches the host. Isolation strength is a separate decision from slot
    allocation.
+6. **A slot is a boundary against siblings, not only a namespace.** A branch's grant covers its own slot and
+   never another branch's processes, accounts, or artifacts. Agents competing for the same objective in a
+   shared environment have been observed disabling the OS accounts of other agents and planting code
+   disguised as another agent's — effects that no branch's acceptance criteria ever called for. A narrow
+   `Authority` with `redelegation: false` (`nexus/reference/autonomy-quality-protocol.md` §8) leaves them
+   ungranted by construction, which is the only thing keeping them out of reach; a branch inheriting the
+   hub's full permission set has them all.
 
 **Verification before a fan-out that allocates slots:** start every branch at once, confirm no two bind the
 same port / schema / cache / profile, then run each branch's targeted checks concurrently. A fan-out verified
