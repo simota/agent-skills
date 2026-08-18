@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added — `chisel` skill: prompt → executable specification (2026-08-18)
+
+Closes a gap no existing skill held: taking a **supplied prompt** as the object and converting its vague wording into rules that can be executed and scored. Roster 123 → 124.
+
+- **New skill `chisel`** (SKILL.md + 5 references): seven-class ambiguity detection (quality / quantity / explanation level / style / design / technical / judgment) plus open semantic detection for missing actors, objects, comparisons, and scope; ten dispositions (`QUANTIFY` / `BEHAVIORALIZE` / `CRITERIA` / `DECOMPOSE` / `AUDIENCE` / `CONDITION` / `DATE` / `PARAMETERIZE` / `KEEP` / `DELETE`); the Numeric Licensing Cascade against fabricated precision; role decomposition into six slots so no bare title or credential claim survives; an **ambiguity budget** so terms left open are deliberate and recorded; and an eight-item Exit Checklist that blocks delivery. Recipes: `spec` (default) / `scan` / `role` / `audit`.
+- **Boundary vs `oracle`**: Oracle owns the prompt *system* — few-shot policy, structured output, versioning, eval gates, cost, and the Instruction Boundary / five-layer triage doctrine. Chisel owns the *wording of a supplied prompt* and consumes that doctrine by reference rather than restating it. Measured functional overlap ≈ 24%, under the 30% confirmation threshold.
+- **Consistency with existing repo positions**: role decomposition implements nexus's "never personality adoption" for user-supplied prompts; the ambiguity budget imports `AS-09 Over-Specified Process` and the Process Constraint Tiers so that eliminating every vague term is explicitly *not* the goal; the delete test reuses `_common/MECHANISM_SELECTION.md` § Admission.
+
+**Routing:** new `PROMPT_SPEC` task type (`Chisel`) in `nexus/reference/routing-matrix.md` (95 task types); anchors added under *Specialist Skill Anchors* in `nexus/reference/signal-keywords.md`; a four-way disambiguation entry (Chisel / Oracle / Scribe / Attest) added to `nexus/reference/agent-disambiguation.md`; `_common/BOUNDARIES.md`, `compass/reference/catalog.md`, and `architect/reference/agent-categories.md` updated; added to the `ai-eval` Skill Pack. Registered as a task type rather than a Nexus Recipe — it is a single-agent route with no chain template, like `PRIORITIZE` (Rank) or brainstorming (Riff).
+
 ### Added — Apple platform coverage: `dock` skill + perf/design-trend references (2026-07-25)
 
 > **Superseded 2026-07-29 (`a9510248`).** `dock` was absorbed into `native` as the `macos`/`macdist` recipes and no longer exists as a standalone skill; `wield`, referenced below, was absorbed into `hearth` as `automate`. The `MACOS_NATIVE` routing chain no longer starts at `Dock`. The entry is kept verbatim as a record of what shipped on 2026-07-25 — see `_common/HARNESS_DEBT.md` § *A Record is not a derived asset*. Roster as of 2026-08-17: **123 skills**.

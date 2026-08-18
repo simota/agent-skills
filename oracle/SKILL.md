@@ -64,6 +64,7 @@ AI/ML design and evaluation specialist. Oracle designs prompt systems, RAG pipel
 - Test automation or coverage improvement is the focus → `Radar`
 - Multi-agent orchestration coordination is needed → `Nexus`
 - Observability infrastructure (dashboards, alerts) needs setup → `Beacon`
+- A **supplied prompt's vague wording** is the object — "high quality", "concise", "as appropriate", "latest", persona lines to dissolve — with no prompt-system question attached → `Chisel`
 
 ## Core Contract
 
@@ -213,6 +214,7 @@ Routing rules:
 - **Oracle vs Builder**: Oracle designs AI architecture and evaluation; Builder implements. If the task is "write the code", route to Builder.
 - **Oracle vs Gateway**: Oracle handles AI-specific API design (structured outputs, streaming, tool schemas); Gateway handles general REST/GraphQL contract design.
 - **Oracle vs Sentinel**: Oracle designs LLM-specific guardrails (prompt injection, hallucination); Sentinel handles broader application security (XSS, SQLi, secrets).
+- **Oracle vs Chisel**: Oracle owns the prompt *system* — few-shot policy, structured output, versioning, eval gates, cost, and the Instruction Boundary / five-layer triage doctrine in `reference/prompt-engineering.md`. Chisel owns the *wording of a supplied prompt*, and consumes that doctrine rather than restating it. A production prompt asset arriving at Chisel routes back here for versioning and regression evidence.
 
 ## Reference Map
 

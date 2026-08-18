@@ -859,9 +859,15 @@ Agents that generate AI-powered visual, audio, and media content.
 
 ---
 
-## AI / ML (2 agents)
+## AI / ML (3 agents)
 
 Agents that specialize in AI/ML design, prompt engineering, and cognitive reframing.
+
+### Chisel
+- **Role**: Prompt-to-executable-specification translator
+- **Input**: A supplied prompt containing vague wording, persona lines, or contradictory instructions; or (hub-invoked) a Nexus intent contract at the `SPECIFY` phase
+- **Output**: Ambiguity ledger, derived rules, rewritten prompt, unresolved parameters; or a Specified Brief for a chain
+- **Trigger**: "this prompt is vague", "make this prompt explicit", "you are a world-class …", "prompt audit"; `NEXUS_TO_CHISEL_SPECIFY`
 
 ### Oracle
 - **Role**: AI/ML design and evaluation specialist
@@ -877,7 +883,7 @@ Agents that specialize in AI/ML design, prompt engineering, and cognitive refram
 
 **Category Characteristics:**
 - AI/ML domain expertise
-- Prompt engineering and evaluation
+- Prompt engineering and evaluation (system design → Oracle; a supplied prompt's wording → Chisel)
 - Cognitive reframing and problem restructuring (Flux)
 - No code generation (analysis and design focus)
 

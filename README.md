@@ -1,14 +1,14 @@
 # AI Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Agents](https://img.shields.io/badge/Agents-123-blue.svg)]()
+[![Agents](https://img.shields.io/badge/Agents-124-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 A skill collection that enables collaborative development with a team of specialized AI agents.
 
 ## Features
 
-- **123 Specialized Agents** - Covering bug investigation, testing, security, UI/UX, AI/ML, observability, and more
+- **124 Specialized Agents** - Covering bug investigation, testing, security, UI/UX, AI/ML, observability, and more
 - **Nexus Orchestrator** - Analyzes tasks and automatically designs optimal agent chains
 - **Platform Agnostic** - Works with Claude Code, Codex CLI, Antigravity CLI, and others
 
@@ -35,11 +35,11 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 ## Overview
 
-This repository contains 123 specialized AI agents covering various aspects of software development. Each agent specializes in a specific domain and is coordinated by the **Nexus** orchestrator.
+This repository contains 124 specialized AI agents covering various aspects of software development. Each agent specializes in a specific domain and is coordinated by the **Nexus** orchestrator.
 
 ## Agent Catalog
 
-> Category-by-category catalog for all 123 agents.
+> Category-by-category catalog for all 124 agents.
 
 ### Orchestration
 
@@ -57,7 +57,7 @@ This repository contains 123 specialized AI agents covering various aspects of s
 | **Gauge** | _"What gets measured gets managed. What gets audited gets normalized."_ - SKILL.md normalization auditor and self-evolving compliance agent. Scans all skills against the 19-item checklist, classifies violations with P0-P3 priority, generates concrete fix snippets, and evolves detection patterns via web research. No code written | Compliance reports, fix plans, dashboards |
 | **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - Design-to-implementation pipeline orchestrator for the code-to-visual-to-code closed loop. Coordinates Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas to deliver design extraction, prototypes, visual assets, slides, and production together while persisting a project design system across downstream agents | Design system package, integrated deliverables |
 | **Bazaar** | _"A landing page is one promise, one path, one decision. bazaar runs the studio that delivers all three."_ - Super-premium LP studio chain orchestrator. Composes Field → Cast → Pulse → Funnel → Vision → Saga → Compete → Muse → Flow → Artisan → Growth → Bolt → Judge → Launch into a recipe-selected, stage-gated pipeline (Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch) enforcing 6 craft axes — Design, Animation, Branding, Marketing, SEO, IA — each with explicit rubric and ship threshold | 6-axis-rubric-passed LP package, CVR-tuned production code, brand-coherent visuals, motion on tokens, schema-valid SEO, GEO citation-ready, analytics live |
-| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 123."_ - Skill ecosystem navigator and onboarding guide. Lists agents, recommends best fit for tasks, and helps newcomers discover the right specialist | Recommendations, agent maps |
+| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 124."_ - Skill ecosystem navigator and onboarding guide. Lists agents, recommends best fit for tasks, and helps newcomers discover the right specialist | Recommendations, agent maps |
 | **Loom** | _"Many threads, one fabric — design the operating layer as a system."_ - Project operating-layer designer. Blueprints the coherent set of project-local skills, repo-tailored recipes, and skill-plus-agent workflows a repository needs together as one system, then delegates body authoring to Sigil and runtime routing to Nexus | Operating-layer blueprint, routing map, recipe/workflow specs |
 | **Prune** | _"A garden grows by what you cut, not what you plant."_ - Ecosystem cleanup auditor. Audits the agent roster for overlap, redundancy, and inactivity, then proposes merge candidates and sunset plans with evidence and archive instructions. Propose-only, no execution | Merge/sunset proposals, archive instructions |
 
@@ -149,6 +149,7 @@ This repository contains 123 specialized AI agents covering various aspects of s
 | Agent | Description | Output |
 |-------|-------------|--------|
 | **Oracle** | _"AI is only as good as its architecture. Design it, measure it, trust nothing."_ - AI/ML design and evaluation specialist. Prompt engineering, RAG architecture, LLM application patterns, safety guardrails, evaluation frameworks, MLOps, cost optimization | Design specs, evaluation reports |
+| **Chisel** | _"A vague word is a decision you left to chance. Carve it into something that can be checked."_ - Prompt-to-executable-specification translator. Detects vague quality/quantity/style/design/judgment wording, dissolves persona and title lines into capabilities, reconciles contradictory instructions, and records what was deliberately left open | Ambiguity ledger, specified prompt |
 
 **Oracle > Builder > Radar chain**: Oracle (AI/ML design) > Builder (implementation) > Radar (tests)
 **Oracle > Stream > Builder chain**: Oracle (RAG design) > Stream (data pipeline) > Builder (implementation)
@@ -434,6 +435,7 @@ See `_common/INTERACTION.md` for details.
 | AI/llm-app | LLM application design | Oracle > Builder > Radar |
 | AI/safety | AI safety review | Oracle > Sentinel > Oracle |
 | AI/prompt-ops | Prompt engineering & evaluation | Oracle > Radar |
+| AI/prompt-spec | Turning a vague prompt into an executable spec | Chisel |
 
 #### Observability/SRE
 
@@ -750,7 +752,7 @@ skills/
 
 ### Single Agent Usage
 
-> Category-by-category examples for all 123 agents.
+> Category-by-category examples for all 124 agents.
 
 #### Orchestration
 

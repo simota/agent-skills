@@ -81,13 +81,13 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `ai-eval` (LLM eval + observability + multi-engine review, ~12 skills)
+### `ai-eval` (LLM eval + observability + multi-engine review, ~13 skills)
 
 **Purpose:** LLM/agent evaluation, multi-engine review, observability, reliability eng, failure mode analysis.
 
-**Members:** `judge`, `magi`, `attest`, `oracle`, `beacon`, `mend`, `siege`, `omen`, `ripple`, `void`, `matrix`, `mint`
+**Members:** `judge`, `magi`, `attest`, `oracle`, `chisel`, `beacon`, `mend`, `siege`, `omen`, `ripple`, `void`, `matrix`, `mint`
 
-**Triggers:** `llm`, `rag`, `prompt engineering`, `ai safety`, `evaluation`, `eval`, `slo`, `sli`, `observability`, `tracing`, `incident`, `chaos`, `mutation testing`, `load test`, `pre-mortem`, `race condition`, `memory leak`, `deadlock`, `multi-engine review`, `manual qa`, `testrail`, `zephyr`, `xray`, `qase`, `bva`, `equivalence class`, `combinatorial`, `coverage matrix`, `test data`, `fixture`, `factory pattern`
+**Triggers:** `llm`, `rag`, `prompt engineering`, `prompt specification`, `vague prompt`, `ai safety`, `evaluation`, `eval`, `slo`, `sli`, `observability`, `tracing`, `incident`, `chaos`, `mutation testing`, `load test`, `pre-mortem`, `race condition`, `memory leak`, `deadlock`, `multi-engine review`, `manual qa`, `testrail`, `zephyr`, `xray`, `qase`, `bva`, `equivalence class`, `combinatorial`, `coverage matrix`, `test data`, `fixture`, `factory pattern`
 
 ---
 

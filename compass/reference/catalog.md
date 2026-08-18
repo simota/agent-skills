@@ -277,6 +277,7 @@ AI design and thinking support.
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Oracle** | AI / ML design | Prompt engineering, RAG design, evaluation | No |
+| **Chisel** | Prompt → executable spec | Ambiguity detection, criterion translation, role decomposition; Nexus `SPECIFY` briefs | No |
 | **Flux** | Thinking refraction | Assumption challenges, perspective shifts | No |
 
 ## Other Specialists

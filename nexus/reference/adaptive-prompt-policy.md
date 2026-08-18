@@ -17,6 +17,8 @@
 ③ ADAPTIVE ASSEMBLY — every EXECUTE step: base template ⊕ ① ⊕ ② → the spawn prompt
 ```
 
+> **Boundary vs `specify-phase.md`.** This policy tunes **directive fields** (envelope, effort, tool-use, thinking, which references) and never writes task content. The instruction's **content** — goal, acceptance criteria, prohibited outcomes, what stays delegated — is set once at the gated `SPECIFY` phase and copied verbatim into every `_AGENT_CONTEXT`. Order is fixed: Specified Brief first, directive fields layered on after. They occupy disjoint fields and must never overwrite each other.
+
 Layer ③ is the only thing that touches a spawn; ① and ② are the inputs it reads. Layer ① is built during **Orchestrator Detection** (before the first spawn) and cached; ② updates at each step boundary; ③ runs immediately before each `Agent(...)` spawn.
 
 ### Applicability — when NOT to apply

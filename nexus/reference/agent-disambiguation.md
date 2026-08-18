@@ -220,6 +220,27 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 
 **Rule of thumb**: "Is it necessary?" → Void ("YAGNI", "over-engineering", "do we need this process?" — includes non-code assets). "Is it clean?" → Zen ("make it more readable"). "Is it being used?" → Sweep ("dead code", "unused files"). An outdated document → Void (validate necessity) → Sweep (remove).
 
+### Chisel vs Oracle vs Scribe vs Attest (Prompt Language / Prompt System / Spec / Conformance)
+
+All four make requirements explicit; they differ by **what the object is** and **when in the lifecycle they act**.
+
+| Route to | When the object is | Deliverable |
+|----------|--------------------|-------------|
+| **Chisel** | A **supplied prompt's wording** — "high quality", "concise", "modern", "as appropriate", "latest", "you are a world-class X" | Ambiguity ledger + rewritten prompt as an executable spec |
+| **Oracle** | The **prompt system** around it — few-shot policy, structured output, versioning, eval gates, cost, RAG or agent architecture | AI design + eval/guardrail contracts |
+| **Scribe** | A **document for people** — PRD / SRS / HLD / LLD | Specification document |
+| **Attest** | A **finished artifact vs criteria that already exist** | Conformance verdict + traceability matrix |
+
+**Rule of thumb**: Chisel changes the words of an instruction so a machine can execute and a third party can score it. Oracle decides what the instruction should be part of. Scribe writes for humans. Attest checks afterwards.
+
+**Two traps:**
+- **The user's own request being ambiguous is not a Chisel task.** That is `classify` GATE (`intent-clarification.md`). Chisel needs *supplied prompt text as an object*.
+- **A bad output is not evidence of a vague prompt.** Run Oracle's five-layer triage (Instruction / Context / Capability / Tool / Evaluation) before routing to Chisel — retrieval and evaluator failures are routinely misdiagnosed as prompt failures.
+
+Prompt text inside a `SKILL.md` splits the same way: the file's structure and normalization → `Gauge` / `Sigil` / `Architect`; the vague wording inside its instructions → Chisel.
+
+---
+
 ### Grove vs Nest (Repository Structure / LLM-Optimized Folders)
 
 **Rule of thumb**: Human developer experience → Grove ("directory layout", "monorepo design", "team conventions", CI/CD paths). LLM/AI tool navigation efficiency → Nest ("context cost", "CLAUDE.md hierarchy", "agents can't find files", "token budget too high").

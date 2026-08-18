@@ -255,6 +255,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 | Agent | Primary Role | Focus | Writes Code |
 |-------|-------------|-------|-------------|
 | **Oracle** | AI/ML design & evaluation | Prompts, RAG, LLM patterns, MLOps | Never |
+| **Chisel** | Prompt → executable specification | Ambiguity detection, criterion translation, role decomposition; hub-invoked at Nexus `SPECIFY` to harden an intent contract into a Specified Brief before a chain spawns | Never |
 | **Vector** | Browser automation | Playwright task execution | Yes |
 | **Orbit** | Autonomous loop execution | Loop contracts, script generation | Yes |
 | **Canon** | Standards compliance | OWASP, WCAG, OpenAPI, ISO 25010 | Never |
@@ -274,3 +275,5 @@ Tokens and secrets must never be reachable from the execution environment where 
 - Pre-mortem / failure analysis → Omen. Change impact → Ripple. Incident response → Triage
 - Browser/web automation → Vector. macOS native-app automation (Apple Events) → Hearth `automate`. iOS app UI automation → Snap
 - Runtime macOS app scripting + dotfiles/shell/editor config → Hearth. AI CLI config → Hone
+- A supplied prompt's vague wording → Chisel. The prompt *system* around it (few-shot, schema, versioning, eval, cost) → Oracle. A spec document for people → Scribe. Verifying an artifact against existing criteria → Attest
+- Chisel has two callers: **user-invoked** (a supplied prompt is the object) and **hub-invoked** (Nexus `SPECIFY` — the instruction about to be delegated is the object). It never takes the *user's own live request* as the object; that is Nexus `GATE`
