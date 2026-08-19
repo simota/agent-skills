@@ -3,10 +3,38 @@
 Purpose: Use this file before refactoring to avoid process failures, unsafe scope growth, and misleading abstractions.
 
 ## Contents
+- [Behavior-Preservation Boundary](#behavior-preservation-boundary)
 - [Process Anti-Patterns](#process-anti-patterns)
 - [Technical Anti-Patterns](#technical-anti-patterns)
 - [Cognitive Biases](#cognitive-biases)
 - [Pre-Refactor Checklist](#pre-refactor-checklist)
+
+## Behavior-Preservation Boundary
+
+"Refactoring preserves observable behavior" is only checkable once *observable* is pinned down, and it is pinned down differently by every consumer. An identical HTTP response can accompany a changed exception type, a reordered log stream, a renamed metric label, a different SQL shape, a new evaluation order, or a latency shift — each of which is behavior to someone downstream. Left undeclared, the reviewer approves an impression ("the result looks the same") rather than a claim.
+
+Every refactor PR that asserts behavior preservation declares both halves:
+
+```
+## Behavior-preservation boundary
+Preserved:
+- HTTP status and body
+- database writes
+- event schema and ordering
+- authorization result
+
+May change:
+- internal exception type
+- log message wording
+- p50 latency within ±5%
+```
+
+Rules:
+
+- **Both halves, always.** `Preserved` alone reads as "everything else is fine"; the value is in what was consciously let go.
+- **`May change` is a claim about consumers, not about intent.** If anything downstream depends on an item listed there — a client that switches on the exception type, an alert that greps the log wording, a dashboard keyed to the old metric label — it is a behavioral change wearing a refactor's label. Hand it to Builder and review it as one.
+- **Performance and ordering are behavior** whenever a timeout, a retry, or a consumer's ordering assumption sits downstream. A tolerance (`±5%`) is a boundary; "shouldn't be slower" is not.
+- **The boundary sets the evidence.** Each `Preserved` line needs something that would fail if it broke — a characterization or contract test, a golden master, a schema diff. A `Preserved` item with no test is an intention, not a preservation.
 
 ## Process Anti-Patterns
 

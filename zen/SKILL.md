@@ -112,6 +112,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ### Never
 - Change logic or behavior — even subtle behavioral changes in refactoring cause cascading regressions (60% of refactoring-related bugs come from unintended behavior changes).
+- Claim "behavior unchanged" without declaring **what counted as behavior** — the gap between the author's definition and the consumer's is where the regression lives. Declare both halves (`Preserved:` / `May change:`) → `reference/refactoring-anti-patterns.md` § Behavior-Preservation Boundary.
 - Mix feature work with refactoring — this creates unreviable PRs and masks regressions; separate commits are non-negotiable.
 - Override project formatter or linter rules — formatting changes inflate diffs and hide real changes from reviewers.
 - Refactor code you do not understand — "shotgun surgery" (modifying many files for one change) often results from refactoring without understanding coupling.
