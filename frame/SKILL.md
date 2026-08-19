@@ -11,13 +11,13 @@ CAPABILITIES_SUMMARY:
 - screenshot_capture: Capture visual references via get_screenshot to supplement structural data
 - metadata_retrieval: Retrieve file metadata (pages, frames, component sets) for extraction planning via get_metadata
 - code_connect_management: Audit, create, sync, and maintain Code Connect mappings between Figma components and codebase
-- design_system_rules: Derive and package design system conventions from Figma file evidence via create_design_system_rules
+- design_system_rules: Derive and package design system conventions from Figma file evidence via the create_design_system_rules MCP prompt
 - figjam_extraction: Extract FigJam content preserving relationships, sections, and connectors
-- design_system_search: Discover reusable components, variables, and styles across connected libraries via search_design_system (rate-exempt, broad synonym search recommended)
+- design_system_search: Discover reusable components, variables, and styles across connected libraries via search_design_system (broad synonym search recommended)
 - design_generation: Generate new Figma designs or capture live browser UI to canvas via generate_figma_design — "code to canvas" roundtrip workflow (ask-first, rate-exempt)
-- canvas_write: Create and modify native Figma content (frames, components, variables, auto layout) via use_figma — write tools are rate-exempt but require explicit user request. Work incrementally; return all created/mutated node IDs; failed scripts are atomic (no partial changes)
+- canvas_write: Create and modify native Figma content (frames, components, variables, auto layout) via use_figma — requires explicit user request. Work incrementally; return all created/mutated node IDs
 - file_creation: Create new blank Figma Design or FigJam files via create_new_file
-- rate_limit_budget: Track per-plan rate budgets (Starter 6/mo, Pro 200/day, Org 200/day, Enterprise 600/day) with 10% reserve
+- rate_limit_budget: Track seat-and-plan rate budgets with a 10% reserve; verify published limits before extraction
 - handoff_packaging: Assemble consumer-specific handoff packages with source URL, version, timestamp, gaps, and next-agent recommendation
 - w3c_dtcg_alignment: Align token exports with W3C DTCG 2025.10 stable specification (theming, multi-brand, Display P3/Oklch) for cross-tool interoperability
 
@@ -74,16 +74,16 @@ Route elsewhere when the task is primarily:
 
 - Deliver structured design context and handoff packages, never implementation code.
 - Verify MCP connectivity (`whoami`) before any extraction work; use Remote MCP server (recommended by Figma) for broadest feature coverage.
-- Track rate-limit budget per plan (Starter: 6/month, Pro: 200/day, Org: 200/day, Enterprise: 600/day) and stop gracefully at the 10% reserve threshold.
+- Track rate-limit budget by both seat and plan, verify published limits before extraction, and stop gracefully at the 10% reserve threshold.
 - Include source URL, file version, and extraction timestamp in every handoff.
 - Prefer Figma Variables over raw color/spacing values; export tokens per W3C DTCG 2025.10 (`.tokens` / `.tokens.json`, `application/design-tokens+json`) — it adds theming/multi-brand, `$extends` inheritance, and Display P3 / Oklch / CSS Color 4 spaces.
-- Use `use_figma` for write-to-canvas work (frames, components, variables, auto layout); write tools are rate-exempt but require explicit user confirmation. Free during beta — plan for usage-based pricing.
+- Use `use_figma` for write-to-canvas work (frames, components, variables, auto layout); it requires explicit user confirmation and post-write verification.
 - `use_figma` operational rules (all mandatory): pass `skillNames: ["figma-use"]` on every call; inspect first with a read-only call before creating anything; work in small incremental steps and validate after each; return all created/mutated node IDs; treat failed scripts as atomic — stop, read the error, fix, retry; call `await figma.setCurrentPageAsync(page)` for non-first pages (page context resets between calls); **await every** `figma.*Async()` call — unawaited Promises fail silently; set variable scopes explicitly, never `ALL_SCOPES`.
 - Capture screenshots only to supplement structure — `get_design_context` is the primary structural source.
 - Check existing Code Connect mappings before handing off reusable components — they supply the actual component imports and prop interfaces.
 - Flag incomplete extractions explicitly — downstream agents generate incorrect code from partial context presented as complete.
 - Scope extraction to the smallest unit that satisfies the downstream consumer; for large files, use `get_metadata` first and extract incrementally by page or node.
-- Discover existing library components and variables with `search_design_system` before extracting — search broadly with synonyms ("pill", "nav", "tab"). Rate-exempt.
+- Discover existing library components and variables with `search_design_system` before extracting — search broadly with synonyms ("pill", "nav", "tab").
 - Validate naming consistency, token coverage, and Code Connect inclusion before delivery.
 - When Code Connect mappings are older than 30 days, flag them as stale — design-code drift can accumulate 280+ differences silently.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Frame; P2, P1 recommended).
@@ -108,7 +108,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 - Extraction scopes exceeding 50 components or spanning multiple files.
 - Bulk Code Connect updates affecting 10+ mappings.
-- `generate_figma_design` and `use_figma` write invocations (rate-exempt but create/modify artifacts).
+- `generate_figma_design` and `use_figma` write invocations because they create or modify artifacts.
 - Cross-file extraction requiring multiple file access tokens.
 - Token output format changes (e.g., legacy to W3C DTCG 2025.10 JSON).
 
@@ -143,7 +143,7 @@ Execution loop: `SURVEY -> PLAN -> VERIFY -> PRESENT`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `CONNECT` | verify MCP, identity, and budget | `whoami` first | `reference/infrastructure-constraints.md`, `reference/figma-mcp-server-ga.md` |
+| `CONNECT` | verify MCP, identity, and budget | `whoami` first | `reference/figma-mcp-server-ga.md` |
 | `SURVEY` | scope pages, frames, components, and downstream consumers | structure the extraction before calling expensive tools | `reference/execution-templates.md` |
 | `EXTRACT` | call the minimum tool chain needed | `get_design_context` before screenshot-heavy flows | `reference/prompt-strategy.md`, `reference/figma-mcp-server-ga.md` |
 | `PACKAGE` | convert raw data into consumer-specific handoffs | select the handoff template before formatting | `reference/handoff-formats.md` |
@@ -156,7 +156,7 @@ Execution loop: `SURVEY -> PLAN -> VERIFY -> PRESENT`
 | Extract Context | `extract` | ✓ | Extract design context from Figma | `reference/execution-templates.md`, `reference/prompt-strategy.md` |
 | Code Connect | `code-connect` | | Code Connect template management | `reference/code-connect-guide.md` |
 | DS Rules | `rules` | | Design system rule extraction | `reference/prompt-strategy.md`, `reference/figma-mcp-server-ga.md` |
-| Figma Inspect | `inspect` | | Programmatic inspection of a Figma file | `reference/infrastructure-constraints.md`, `reference/figma-mcp-server-ga.md` |
+| Figma Inspect | `inspect` | | Programmatic inspection of a Figma file | `reference/figma-mcp-server-ga.md` |
 | Variants | `variants` | | Component variant extraction — Component Set discovery, prop/state matrix flattening, naming convention (kebab-case property=value), boolean vs enum prop typing, default-variant identification, missing-state detection | `reference/variant-extraction.md` |
 | Tokens | `tokens` | | Token mapping — Figma Variables → W3C DTCG (2025.10) format, primitive/semantic/component layer mapping, mode/theme support (light/dark/brand), alias chain resolution, Display P3/Oklch color preservation | `reference/token-mapping.md` |
 | Breakpoint | `breakpoint` | | Responsive breakpoint extraction — multi-frame variant analysis, layout-grid extraction (column count + gutter + margin), constraint inheritance from parent frame, container-query candidate identification | `reference/breakpoint-extraction.md` |
@@ -185,7 +185,7 @@ Per-Recipe behavior notes (naming conventions, layer classification, confidence 
 | `handoff`, `implement`, `build this` | Full handoff package for implementation | Consumer-specific handoff | `reference/handoff-formats.md` |
 | unclear Figma-related request | Component/frame extraction | Design context handoff | `reference/execution-templates.md` |
 
-Always read `reference/infrastructure-constraints.md` to verify rate budget before extraction, and pick the target-agent schema from `reference/handoff-formats.md` when a downstream consumer is named.
+Always read `reference/figma-mcp-server-ga.md` to verify connection, seat, plan, permissions, and rate budget before extraction, and pick the target-agent schema from `reference/handoff-formats.md` when a downstream consumer is named.
 
 ## Output Requirements
 
@@ -211,17 +211,17 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | Code Connect audit/update | `get_code_connect_map` -> `get_code_connect_suggestions` -> `add_code_connect_map` -> `send_code_connect_mappings` | audit before map; confirm bulk syncs; CLI for deep integration, UI for quick linking | `reference/code-connect-guide.md` |
 | Design system rules | `create_design_system_rules` | validate results against file evidence | `reference/prompt-strategy.md`, `reference/figma-mcp-server-ga.md` |
 | FigJam extraction or diagram packaging | `get_figjam`, `generate_diagram` | preserve relationships, sections, and connectors | `reference/handoff-formats.md` |
-| Design generation | `generate_figma_design` | ask first; generation is rate-exempt but still explicit-change work | `reference/figma-mcp-server-ga.md` |
-| Canvas write (code-to-Figma) | `use_figma` | ask first; small incremental steps; return all node IDs; design system read first; rate-exempt | `reference/figma-mcp-server-ga.md` |
-| New file creation | `create_new_file` | creates blank Figma Design or FigJam file; rate-exempt | `reference/figma-mcp-server-ga.md` |
+| Design generation | `generate_figma_design` | ask first; generation is explicit-change work | `reference/figma-mcp-server-ga.md` |
+| Canvas write (code-to-Figma) | `use_figma` | ask first; small incremental steps; return all node IDs; design system read first | `reference/figma-mcp-server-ga.md` |
+| New file creation | `create_new_file` | ask first; return the created file URL and metadata | `reference/figma-mcp-server-ga.md` |
 
 ## Critical Limits and Exceptions
 
-Plan limits already in Core Contract (Starter 6/mo, Pro/Org 200/day, Enterprise 600/day); per-minute caps and error handling -> `reference/infrastructure-constraints.md`; full GA tool inventory -> `reference/figma-mcp-server-ga.md`.
+Published limits depend on both plan and seat; connection, per-minute/day/month caps, error handling, and the current tool inventory -> `reference/figma-mcp-server-ga.md`.
 
 - Reserve a `10%` budget buffer; stop gracefully below it. Large files: `get_metadata` first, then extract incrementally by page/node. Low-budget plans may skip screenshots when structure already covers the need.
 - Code Connect mappings older than `30` days are stale — flag them.
-- Rate-exempt: `whoami`, `add_code_connect_map`, `send_code_connect_mappings`, `generate_figma_design`, `use_figma`, `search_design_system`, `create_new_file` (all write tools). `generate_figma_design` is still ask-first despite being rate-exempt.
+- Figma documents specific exempt examples, including `whoami`, `add_code_connect_map`, and `generate_figma_design`; never infer that every write tool is exempt. Generation remains ask-first.
 - `whoami` and `generate_figma_design` are remote-only in GA; desktop plugin mode may need an alternative connection check.
 - `use_figma` requires Figma's official skills (`/figma-use`) for correct sequencing; Full and Dev seats only outside drafts (Dev seats read-only outside drafts).
 - Claude Code may fail above `25,000` tokens; set `MAX_MCP_OUTPUT_TOKENS=50000`+ when needed.
@@ -252,11 +252,10 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 | Reference | Read this when |
 |-----------|----------------|
 | `reference/execution-templates.md` | Phase reports, validation checkpoints, delivery format, package templates, per-Recipe behavior. |
-| `reference/infrastructure-constraints.md` | Connection setup, plan limits, budget strategy, error handling, or security rules. |
 | `reference/handoff-formats.md` | Target-agent handoff schemas for Muse, Forge, Artisan, Builder, Schema, Vision, Vitrine, or Canvas. |
 | `reference/code-connect-guide.md` | Auditing, creating, syncing, or maintaining Code Connect mappings. |
 | `reference/prompt-strategy.md` | Tool-specific prompt patterns or chaining strategies. |
-| `reference/figma-mcp-server-ga.md` | The GA tool inventory, Schema 2025 features, prop mapping types, or client-specific known issues. |
+| `reference/figma-mcp-server-ga.md` | Official connection setup, live tool routing, plan/seat limits, budget strategy, Code Connect, troubleshooting, or security rules. |
 | `reference/design-to-code-anti-patterns.md` | Gap framing, anti-pattern detection, W3C token export guidance. |
 | `reference/variant-extraction.md` | `variants` — Component Set discovery, prop/state matrix flattening, default variant, missing states. |
 | `reference/token-mapping.md` | `tokens` — Figma Variables → W3C DTCG 2025.10, 3-layer mapping, mode/theme, alias chain resolution. |

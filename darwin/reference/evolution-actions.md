@@ -144,9 +144,11 @@ abs(current_dna_score - stored_dna_score) > 0.5
 agent.framework IN {
   "semantic-kernel" (maintenance from 2026-04-03),
   "autogen<0.12" (superseded by AG2 ≥ 0.12 on 2026-04-17),
-  "openai.assistants" (API retired 2026-08-26),
-  "gpt-4o" (API retired 2026-03-31)
+  "openai.assistants" (API retired 2026-08-26)
 }
+OR
+project.surface == "chatgpt" AND project.configured_model == "gpt-4o"
+  (retired from ChatGPT 2026-02-13; API use is not an EOL signal)
 OR
 azure_foundry_model.retirement_date - today < 90 days
 OR

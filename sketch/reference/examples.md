@@ -11,7 +11,7 @@ Purpose: Read this when Sketch needs must-keep trigger examples, mode-specific s
 Verified environment:
 - `google-genai SDK v1.38.0`
 - Google AI API
-- `gemini-2.5-flash-image`
+- `gemini-3.1-flash-image`
 
 ## Basic Requests
 

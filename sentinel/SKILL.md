@@ -159,7 +159,7 @@ Single source of truth for Recipe definitions. Behavior notes (scope boundaries,
 | Authorization Audit | `authz` | | RBAC/ABAC, IDOR, BOLA/BFLA, privilege escalation, tenant-scope leaks. Extra scrutiny on AI-generated integration code (auth-wiring is the #1 AI failure mode). **Scope**: `Probe` confirms exploitability. | `reference/authz-audit.md`, `reference/api-security.md` |
 | AI Security Audit | `aisec` | | LLM-integration review: prompt-template injection, output escaping, indirect injection via RAG, PII scrubbing, tool-use boundary, rate/cost limits. **Scope**: jailbreak validation → `Breach`. | `reference/ai-security.md`, `reference/ai-code-security.md` |
 | Mobile Security | `mobile` | | MASVS v2.1.0 + MAS Checklist across 8 categories, MASWE mapping, MobSF SAST/DAST in CI. **Scope**: exploit → `Probe`, keys → `Crypt`, privacy → `Cloak`, fixes → `Native`. | `reference/mobile-security.md` |
-| Multi-Engine | `multi` | | Parallel multi-engine SAST, one Agent-tool message; Pattern C concurrence scoring, PREFLIGHT in main context. Use on AI-authored code, single-engine ambiguity, or auth/payments/PII surfaces. | `reference/tri-engine-scan.md`, `reference/multi-engine-mode.md`, `_common/MULTI_ENGINE_RECIPE.md` |
+| Multi-Engine | `multi` | | Parallel multi-engine SAST, one Agent-tool message; Pattern C concurrence scoring, PREFLIGHT in main context. Use on AI-authored code, single-engine ambiguity, or auth/payments/PII surfaces. | `reference/tri-engine-scan.md`, `_common/MULTI_ENGINE_RECIPE.md` |
 
 ### Signal Keywords → Recipe
 
@@ -240,8 +240,7 @@ Receives security-flagged artifacts upstream, performs static analysis, routes f
 | `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules, prompt structure, cross-agent verb/suppression principles. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the report, adaptive thinking depth at PRIORITIZE/FILTER, front-loading scope at SCAN. Critical: P2, P5. |
 | `reference/mobile-security.md` | `mobile` — MASVS v2.1.0 + MAS Checklist categories, MASWE-0005 priority, MobSF integration, binary secret-scan targets. |
-| `reference/multi-engine-mode.md` | `multi` detail — triggers, loose-prompt rule, divergence, Plausible Hallucination check, arbitration rubric, degraded modes. |
-| `reference/tri-engine-scan.md` | `multi` — JSON schema, CLUSTER identity rules, SCORE rubric, strict GROUND, ARBITRATE overrides, FILTER rule, prompt skeleton. |
+| `reference/tri-engine-scan.md` | `multi` — triggers, loose prompts, JSON schema, CLUSTER/SCORE, strict GROUND, arbitration, filtering, prompts, and degraded modes. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Output/Validations/Next schema with `tri_engine` sub-block. |
 | `_common/SUBAGENT.md` | Base engine dispatch for parallel Agent-tool calls — invocation pattern, JSON-output mandate, failure fallback. |
 | `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill canonical flow, Pattern C/D/H rubric, PREFLIGHT probe, attribution conventions, degraded-mode matrix. |
@@ -253,9 +252,9 @@ Pattern type: **C — Concurrence-primary**. Engines carry non-overlapping CVE/C
 
 Baseline = Claude + Codex (2 spawns); agy adds a third axis when available at PREFLIGHT. Flow: `SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SCORE → GROUND → ARBITRATE → FILTER → REPORT`.
 
-Operational detail (triggers, loose-prompt rule, divergence map, Plausible Hallucination check, arbitration rubric, severity overrides, degraded modes) → `reference/multi-engine-mode.md`.
+Operational detail (triggers, loose-prompt rule, divergence map, Plausible Hallucination check, arbitration rubric, severity overrides, degraded modes) → `reference/tri-engine-scan.md`.
 
-Required reading before fan-out, in order: `reference/multi-engine-mode.md` → `reference/tri-engine-scan.md` → `_common/MULTI_ENGINE_RECIPE.md` → `_common/SUBAGENT.md` §MULTI_ENGINE.
+Required reading before fan-out, in order: `reference/tri-engine-scan.md` → `_common/MULTI_ENGINE_RECIPE.md` → `_common/SUBAGENT.md` §MULTI_ENGINE.
 
 ## Operational
 
@@ -271,4 +270,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

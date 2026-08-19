@@ -221,7 +221,7 @@ export default defineConfig({
   format: ['cjs', 'esm'],
   dts: true,
   clean: true,
-  target: 'node18',
+  target: 'node22',
   banner: { js: '#!/usr/bin/env node' },
 });
 ```
@@ -260,7 +260,7 @@ Replaces asdf, nvm, pyenv, etc. Also serves as a task runner.
 ```toml
 # .mise.toml
 [tools]
-node = "20"
+node = "24"
 python = "3.12"
 go = "1.22"
 rust = "1.78"
@@ -302,14 +302,12 @@ async function runDoctorChecks(): Promise<CheckResult[]> {
   const majorVersion = parseInt(process.version.slice(1).split('.')[0]);
   checks.push({
     name: 'Node.js',
-    status: majorVersion >= 22 ? 'ok' : majorVersion >= 20 ? 'warn' : 'error',
+    status: majorVersion >= 22 ? 'ok' : 'error',
     message: `Node.js ${process.version}`,
     fix:
-      majorVersion < 20
-        ? 'Upgrade to Node.js 22 LTS (Node 18 reached EOL 2025-04, Node 20 LTS active through 2026-04)'
-        : majorVersion < 22
-          ? 'Node 20 LTS is still supported but Node 22 LTS is recommended for new projects'
-          : undefined,
+      majorVersion < 22
+        ? 'Upgrade to Node.js 24 LTS (Node 18 and Node 20 are EOL)'
+        : undefined,
   });
 
   // Package manager

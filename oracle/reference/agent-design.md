@@ -179,7 +179,7 @@ Always implement the budget + safety terminators; goal-reached alone is how agen
 - **Silent tool failure** — tool returns `null` or `""`, agent hallucinates success. Require tools to return explicit status codes.
 - **Compounding errors** — 5-layer pipeline at `95%` per layer = `77%` end-to-end. Measure and report each layer.
 
-`90%` of agentic-RAG production projects failed in 2024 on this compounding path (retrieve → rerank → generate → tool-call → validate). Budget for it in `max_turns` and shed layers that do not pay for themselves.
+Compounding failures across retrieve → rerank → generate → tool-call → validate can dominate end-to-end reliability even when each layer looks strong in isolation. Budget for this in `max_turns`, measure every transition, and shed layers that do not pay for themselves.
 
 ## Handoff
 

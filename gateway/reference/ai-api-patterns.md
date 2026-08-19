@@ -2,9 +2,9 @@
 
 > Design patterns for APIs that expose AI/LLM capabilities — streaming, tool use, structured output, and safety.
 >
-> **2026-05 baseline**:
-> - **OpenAPI 3.2** (2025-09-23) gives streaming endpoints a first-class contract via `text/event-stream` + `itemSchema`, `application/jsonl`, and `application/json-seq` ([spec](https://spec.openapis.org/oas/v3.2.0.html)). Document SSE chat completions with `itemSchema` instead of prose.
-> - **OpenAI Structured Outputs** with `strict: true` (gpt-4o-2024-08-06+) guarantees exact JSON Schema conformance — 100% on complex schema-following evals vs ~40% pre-strict ([OpenAI announcement](https://openai.com/index/introducing-structured-outputs-in-the-api/)). This is a **syntax** guarantee only: a fully conformant object can still carry invented field values. Strict-mode constraints: `additionalProperties: false`, all properties in `required` (use `null` union for optional). Function-calling supports the same `strict` flag.
+> **2026-08 baseline**:
+> - **OpenAPI 3.2** (2025-09-23) gives streaming endpoints a first-class contract via `text/event-stream` + `itemSchema`, `application/jsonl`, and `application/json-seq` ([spec](https://spec.openapis.org/oas/v3.2.0.html)). Document SSE response events with `itemSchema` instead of prose.
+> - **OpenAI Structured Outputs** with `strict: true` constrains supported models to a JSON Schema ([OpenAI API reference](https://platform.openai.com/docs/api-reference/responses)). This is a **syntax** guarantee only: a fully conformant object can still carry invented field values. Strict-mode constraints include `additionalProperties: false` and all properties in `required` (use a `null` union for optional fields). Function calling supports the same `strict` flag.
 > - **Anthropic Prompt Caching** (GA) cuts long-prompt input cost up to 90% and latency up to 85%; cache hits are 0.1× input price, 5-min TTL default (1-hour optional). Anthropic now **automatically identifies cached segments** — manual `cache_control` markers are still supported but no longer required for many cases ([Anthropic docs](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)).
 > - **OWASP Top 10 for Agentic Applications 2026** (released 2025-12, [genai.owasp.org](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)) — ASI01 Agent Goal Hijacking is the #1 risk for agent-facing APIs. Apply principle-of-least-agency on every tool exposed via function-calling.
 
@@ -15,14 +15,14 @@
 Server-Sent Events (SSE) is the standard for streaming LLM token output to clients.
 
 ```http
-POST /v1/chat/completions
+POST /v1/responses
 Content-Type: application/json
 Accept: text/event-stream
 
 {
-  "model": "claude-opus-5",
+  "model": "gpt-5.6-terra",
   "stream": true,
-  "messages": [{"role": "user", "content": "Hello"}]
+  "input": [{"role": "user", "content": "Hello"}]
 }
 ```
 
@@ -32,13 +32,11 @@ Content-Type: text/event-stream
 Cache-Control: no-cache
 X-Accel-Buffering: no
 
-data: {"id":"msg_01","type":"content_block_delta","delta":{"type":"text_delta","text":"Hello"}}
+data: {"type":"response.output_text.delta","item_id":"msg_01","output_index":0,"content_index":0,"delta":"Hello","sequence_number":1}
 
-data: {"id":"msg_01","type":"content_block_delta","delta":{"type":"text_delta","text":"!"}}
+data: {"type":"response.output_text.delta","item_id":"msg_01","output_index":0,"content_index":0,"delta":"!","sequence_number":2}
 
-data: {"id":"msg_01","type":"message_stop"}
-
-data: [DONE]
+data: {"type":"response.completed","response":{"id":"resp_01","status":"completed"},"sequence_number":3}
 ```
 
 ### Streaming Design Rules
@@ -46,7 +44,7 @@ data: [DONE]
 | Rule | Description |
 |------|-------------|
 | `text/event-stream` content type | Always set `Content-Type: text/event-stream` and `Cache-Control: no-cache` |
-| Terminate with `[DONE]` | Final `data: [DONE]` signals stream completion — clients must handle gracefully |
+| Terminate explicitly | End with the provider's documented completion event (for example `response.completed`); do not infer completion from a closed socket |
 | Include event IDs | `id:` field on each event enables client-side reconnect with `Last-Event-ID` |
 | Heartbeat events | Send `: keep-alive` comment lines every 15s to prevent proxy/load balancer timeouts |
 | Error mid-stream | Send `data: {"type":"error","error":{"type":"server_error","message":"..."}}` then close stream |
@@ -99,18 +97,21 @@ Tool use allows the model to request structured data from external systems durin
 
 ## Structured Output
 
-Forces the model to produce JSON that conforms to a specified schema. As of 2024-08, OpenAI's `strict: true` mode (Structured Outputs) guarantees exact schema conformance on gpt-4o-2024-08-06+ and later — the model is constrained at decode time to emit only schema-conformant tokens.
+Forces the model to produce JSON that conforms to a specified schema. On supported OpenAI models, `strict: true` constrains decoding to the supported JSON Schema subset.
 
 **Schema conformance is not correctness.** Decode-time constraints guarantee shape, never meaning — a schema-valid record can name a price or a brand that appears nowhere in the input. Value correctness, evidence-span existence, and execution authorization are separate validators that run after parsing, not properties the schema buys. See `oracle/reference/evaluation-observability.md` ("schema validity says nothing about answer quality").
 
-### Strict-Mode Structured Output (OpenAI, gpt-4o-2024-08-06+)
+### Strict-Mode Structured Output (OpenAI Responses API)
 
 ```json
 {
-  "model": "gpt-4o-2026-04",
-  "response_format": {
-    "type": "json_schema",
-    "json_schema": {
+  "model": "gpt-5.6-terra",
+  "input": [
+    { "role": "user", "content": "Extract product fields from: ..." }
+  ],
+  "text": {
+    "format": {
+      "type": "json_schema",
       "name": "extract_product",
       "strict": true,
       "schema": {
@@ -124,10 +125,7 @@ Forces the model to produce JSON that conforms to a specified schema. As of 2024
         }
       }
     }
-  },
-  "messages": [
-    { "role": "user", "content": "Extract product fields from: ..." }
-  ]
+  }
 }
 ```
 
@@ -152,10 +150,10 @@ Strict-mode constraints (enforced at request validation):
 
 | Rule | Description |
 |------|-------------|
-| Prefer `strict: true` when available | gpt-4o-2024-08-06+ gives 100% schema-conformance vs <40% for gpt-4-0613. Anthropic tool-use approximates this via tool schemas. |
+| Prefer `strict: true` when available | Use the provider's current structured-output mechanism and verify model support; Anthropic tool use provides analogous schema constraints. |
 | Provide schema in prompt | Even with strict mode, include the target schema in the system prompt — models still hallucinate field semantics without context |
 | Validate server-side | Never trust model output as schema-valid — always parse and validate with Zod/Pydantic before passing downstream (defense in depth, even with strict mode) |
-| Handle partial JSON | Streaming structured output may arrive as partial JSON; buffer and parse only on `[DONE]` |
+| Handle partial JSON | Streaming structured output may arrive as partial JSON; buffer and parse only after the provider's documented completion event |
 | Version your schemas | Include a `schema_version` field in output schemas; models may produce output with old field names after schema changes |
 
 ---
@@ -212,6 +210,6 @@ AI API errors require distinct handling from standard REST errors due to partial
 ### Error Handling Rules
 
 1. **Distinguish error types**: `invalid_request_error` (4xx, fix the request), `authentication_error` (401, check API key), `rate_limit_error` (429, backoff), `api_error` (5xx, retry with exponential backoff).
-2. **Handle stream interruption**: If a streaming response stops without `[DONE]`, treat as `api_error` — do not present partial output as complete to the user.
+2. **Handle stream interruption**: If a stream stops without the documented completion event, treat it as `api_error` — do not present partial output as complete to the user.
 3. **Content filter errors**: `content_policy_violation` errors should be surfaced to users with a user-friendly message; do not silently retry — log for safety review.
 4. **Token budget errors**: Return `context_length_exceeded` with the actual and maximum token counts to help clients truncate inputs correctly.

@@ -2,19 +2,19 @@
 
 Defines the signals Darwin collects to determine project lifecycle phase and ecosystem state.
 
-> **2026-05 framework / model signal additions**
+> **2026-08 framework / model signal additions**
 >
 > When scanning `pyproject.toml`, `package.json`, `requirements*.txt`, and source imports, treat the following as **end-of-life drift signals** (feed into ET-10; ET-09 is reserved for Official Spec Conformance drift — see `official-fitness-criteria.md`):
 >
-> | Detected dependency | Status as of 2026-05 | Successor |
+> | Detected dependency | Status as of 2026-08 | Successor |
 > |---|---|---|
 > | `semantic-kernel` (any version) | Maintenance mode since Microsoft Agent Framework 1.0 GA (2026-04-03) — bug/security only | `agent-framework` (.NET / Python) |
 > | `pyautogen` / `autogen-agentchat` < 0.12 | Superseded by AG2 0.12.0 (2026-04-17), v1.0 line in progress | `ag2` ≥ 0.12, or Microsoft Agent Framework |
 > | OpenAI Assistants API calls | API retirement 2026-08-26 (announced) | OpenAI Responses API / Agents SDK |
-> | `gpt-4o` model literals | API retired 2026-03-31 | gpt-4.1 / gpt-5-class |
+> | ChatGPT configuration or instructions selecting `gpt-4o` | Retired from ChatGPT on 2026-02-13; the API model remains available | A current ChatGPT model; do not flag API literals without an announced API retirement |
 > | `langgraph` < 1.0 | Pre-GA; LangGraph 1.0 shipped 2025-10-22 with no breaking changes | `langgraph` ≥ 1.0 |
 >
-> Sources: `https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/`, `https://github.com/ag2ai/ag2/releases`, `https://changelog.langchain.com/announcements/langgraph-1-0-is-now-generally-available`, `https://www.echostash.app/blog/gpt-4o-retirement-prompt-migration-production`.
+> Sources: `https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/`, `https://github.com/ag2ai/ag2/releases`, `https://changelog.langchain.com/announcements/langgraph-1-0-is-now-generally-available`, `https://help.openai.com/en/articles/20001051`.
 
 ---
 

@@ -190,7 +190,7 @@ Numeric thresholds, prompt banks, and worked mechanics for each Recipe live in i
 | SCAMPER | `scamper` | | LENS | 7-lens artifact transformation; pair with `challenge`/`shift` upstream — alone it yields incremental ideas | CLASSIFY -> SCAMPER probe -> CRYSTALLIZE | `reference/scamper-technique.md` |
 | Analogy | `analogy` | | LENS | Structural mapping from a source domain | CLASSIFY -> ANALOGY map -> CRYSTALLIZE | `reference/analogical-thinking.md` |
 | Inversion | `inversion` | | LENS | Munger inversion — invert the goal, derive an avoid-list; hand failure paths to Omen for RPN/AP scoring | CLASSIFY -> INVERT -> ENUMERATE -> AVOID -> CRYSTALLIZE | `reference/inversion-method.md` |
-| Multi-Engine | `multi` | | DEEP (multi) | Tri-engine reframe generation with Pattern D Divergence-primary scoring — use when stuck thinking may share one training-data prior | SCOPE -> PREFLIGHT -> FAN-OUT -> NORMALIZE -> CLUSTER -> SCORE -> GROUND -> SYNTHESIZE | `reference/multi-engine-mode.md`, `reference/tri-engine-reframe.md`, `_common/MULTI_ENGINE_RECIPE.md` |
+| Multi-Engine | `multi` | | DEEP (multi) | Tri-engine reframe generation with Pattern D Divergence-primary scoring — use when stuck thinking may share one training-data prior | SCOPE -> PREFLIGHT -> FAN-OUT -> NORMALIZE -> CLUSTER -> SCORE -> GROUND -> SYNTHESIZE | `reference/tri-engine-reframe.md`, `_common/MULTI_ENGINE_RECIPE.md` |
 
 ## Subcommand Dispatch
 
@@ -247,7 +247,7 @@ Activated by `multi`. Pattern D (Divergence-primary) per `_common/MULTI_ENGINE_R
 - **Engine-attribution tag** (mandatory): `[codex+agy+claude]` / `[codex+agy]` / `[codex-verified]`; DIVERGENT adds `[divergent: <prior-type>]`.
 - **Degraded**: 2 engines continue; 1 adds stricter grounding and flags reduced divergence-value; 0 falls back to `reframe`.
 
-> Detail: `reference/multi-engine-mode.md` (rationale, mechanics, degraded modes), `reference/tri-engine-reframe.md` (algorithm, JSON schema, prompt skeletons).
+> Detail: `reference/tri-engine-reframe.md` (rationale, mechanics, scoring, degraded modes, algorithm, JSON schema, and prompt skeletons).
 
 ---
 
@@ -274,8 +274,7 @@ Activated by `multi`. Pattern D (Divergence-primary) per `_common/MULTI_ENGINE_R
 | `reference/scamper-technique.md` | `scamper` — 7-lens prompt banks, selection heuristics, anti-patterns, handoff. |
 | `reference/analogical-thinking.md` | `analogy` — Gentner mapping, near/far budget, biomimicry catalog, breakdown testing. |
 | `reference/inversion-method.md` | `inversion` — Munger goal-flip, via negativa, 6-category scaffold, avoid-list, Omen handoff. |
-| `reference/multi-engine-mode.md` | Full Multi-Engine rationale, engine policy, two-axis scoring, GROUND categories, degraded modes. |
-| `reference/tri-engine-reframe.md` | `multi` — fan-out, Pattern D scoring, Portfolio merge, assumption_root clustering, schema, prompts. |
+| `reference/tri-engine-reframe.md` | `multi` — rationale, engine policy, fan-out, Pattern D scoring, GROUND, Portfolio merge, assumption_root clustering, schema, prompts, and degraded modes. |
 | `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — dispatch, loose-prompt rules, fan-out, fallbacks. |
 | `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill `multi` protocol — Pattern D/C/H selection, flow, attribution, degraded-mode matrix. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing output, thinking depth at contradiction/ASN gating, front-loading at ENTER. Critical: P3, P5. |

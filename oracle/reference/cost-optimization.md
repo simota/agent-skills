@@ -148,7 +148,7 @@ critical exception, and it is indistinguishable from success until the decision 
 
 ## Token Economics
 
-> Claude rows verified against `platform.claude.com/docs/en/about-claude/pricing` on **2026-07-25**. Non-Anthropic rows still need verification — check each vendor's official page before quoting.
+> Claude rows verified against `platform.claude.com/docs/en/about-claude/pricing` on **2026-07-25**. OpenAI GPT-5.6 rows verified against `platform.openai.com/pricing` on **2026-08-19** and show standard short-context rates. Check each vendor's official page before quoting because prices and service tiers change.
 
 | Model | Input / 1M | Output / 1M | Speed | Quality | Default use |
 |-------|------------|-------------|-------|---------|-------------|
@@ -156,7 +156,9 @@ critical exception, and it is indistinguishable from success until the decision 
 | Claude Opus 5 | `$5.00` | `$25.00` | Moderate | Highest | Complex agentic coding, `~10%` of traffic |
 | Claude Sonnet 5 | `$2.00` → `$3.00` | `$10.00` → `$15.00` | Fast | High | Production default (intro pricing through 2026-08-31, then standard) |
 | Claude Haiku 4.5 | `$1.00` | `$5.00` | Fastest | Good | Classification, extraction, tier-1 routing |
-| GPT-5.6 | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Medium | High | Cross-vendor fallback |
+| GPT-5.6 Sol | `$5.00` | `$30.00` | Medium | Highest | Frontier cross-vendor fallback |
+| GPT-5.6 Terra | `$2.50` | `$15.00` | Medium | High | General cross-vendor fallback |
+| GPT-5.6 Luna | `$1.00` | `$6.00` | Fast | Good | Lower-cost cross-vendor routing |
 | GPT-4o-mini | `$0.15` | `$0.60` | Fast | Good | High-volume extraction |
 | Gemini 3.7 Flash (High) | `TBD (needs confirmation)` | `TBD (needs confirmation)` | Fast | Good | High-volume extraction (Gemini) |
 

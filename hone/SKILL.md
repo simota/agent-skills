@@ -112,7 +112,7 @@ Route elsewhere when the task is primarily:
 - Verify `.claude/rules/` path-scoped rule files have valid `globs` patterns in YAML frontmatter; flag invalid globs or overly broad patterns (`**/*`).
 - Flag MCP servers with broad PAT scopes as P0 — over-privileged MCP permissions cascade into network access, shell execution, and data exfiltration.
 - Detect settings-hierarchy conflicts when one key appears in user, project, and local settings (scalars: last wins; arrays: concatenated and deduplicated).
-- **Hook audit rules**: PreToolUse hooks return correct exit codes (`0` allow, `2` block) and security-critical hooks use `permissionDecision: "deny"`, which cannot be bypassed even in bypassPermissions mode. Automated/CI pipelines must not rely on PermissionRequest hooks (they do not fire with `-p`) — recommend PreToolUse instead. A hook "allow" is never the sole security gate, since hooks can tighten but never loosen past deny rules. Flag overly broad `allowedHttpHookUrls` and any `httpHookAllowedEnvVars` exposing secrets. MCP OAuth configs must carry RFC 8707 resource indicators — unbound tokens are replayable against unintended services. Detail -> `reference/core-contract-rationale.md`.
+- **Hook audit rules**: PreToolUse hooks return correct exit codes (`0` allow, `2` block) and security-critical hooks use `permissionDecision: "deny"`, which cannot be bypassed even in bypassPermissions mode. Automated/CI pipelines must not rely on PermissionRequest hooks (they do not fire with `-p`) — recommend PreToolUse instead. A hook "allow" is never the sole security gate, since hooks can tighten but never loosen past deny rules. Flag overly broad `allowedHttpHookUrls` and any `httpHookAllowedEnvVars` exposing secrets. MCP OAuth configs must carry RFC 8707 resource indicators — unbound tokens are replayable against unintended services. Detail -> `reference/key-thresholds.md`.
 - Audit plugin source trust, auto-update settings (third-party auto-update is a supply-chain risk), and permission scope.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Hone; P2, P1 recommended).
 - **Run the CLAUDE.md / AGENTS.md anti-bloat audit.** Apply the "would Claude actually do this wrong without it?" test to every line. P0: file > 400 lines or lint/formatter rules duplicated as English. P1: file > 200 lines or any rule expressible as a hook still living in CLAUDE.md. Route failing lines to the correct mechanism via `_common/MECHANISM_SELECTION.md`.
@@ -120,7 +120,7 @@ Route elsewhere when the task is primarily:
 - **Run the prompt cache hierarchy audit** for multi-skill orchestration sessions, large CLAUDE.md/GEMINI.md instructions, or setups loading `_common/` protocols. Apply `_common/PROMPT_CACHE_HIERARCHY.md`'s T-static > T-semi-static > T-dynamic ordering. P0: cache breakpoint on a timestamp / random ID / per-request data line. P1: `_common/` load order varying per task, or MCP tool churn mutating the `tools` layer. Flag session cache hit rate below 70% as P1.
 - **Schedule periodic config re-evaluation every 3-6 months and at every major model release** — instructions written around a prior model's limitations can become inert or harmful on a newer model. Flag audits older than 6 months for re-validation of model-behavior-tied instructions.
 
-Full rationale, mechanism detail, and sources for the four bullets above → `reference/core-contract-rationale.md`.
+Full rationale, mechanism detail, and sources for the bullets above → `reference/key-thresholds.md`.
 
 ## Boundaries
 
@@ -248,7 +248,6 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | `reference/web-sources.md` | Source tier classification, search queries, or freshness rules. |
 | `reference/proposal-templates.md` | Before/After diff templates for proposals. |
 | `reference/handoffs.md` | Handoff templates for Hearth/Judge/Nexus collaboration. |
-| `reference/core-contract-rationale.md` | The full rationale and sources behind the anti-bloat, coexistence-drift, cache-hierarchy, or periodic re-evaluation Core Contract bullets. |
 | `reference/boundaries-rationale.md` | The full rationale and sources behind the `Never` list. |
 | `reference/phase-details.md` | Full FETCH/AUDIT/PROPOSE phase detail and the complete, current audit item-code list per category. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the Before/After proposal, deciding adaptive thinking depth at source-tier/severity classification, or front-loading target CLI/scope/decision at AUDIT. Critical for Hone: P3, P5. |

@@ -95,5 +95,5 @@ Expected outcome:
 ## Usage Notes
 
 1. Start here when the user needs a matrix quickly.
-2. Move to [input-schema.md](~/.claude/skills/matrix/reference/input-schema.md) when constraints, weights, or metadata become more complex.
-3. Move to [output-templates.md](~/.claude/skills/matrix/reference/output-templates.md) when the result must be handed off formally.
+2. Move to [input-schema.md](input-schema.md) when constraints, weights, or metadata become more complex.
+3. Move to [output-templates.md](output-templates.md) when the result must be handed off formally.

@@ -12,7 +12,7 @@ _STEP_COMPLETE:
     deliverable: [Python script path]
     prompt_crafted: "[Final English prompt]"
     parameters:
-      model: "gemini-2.5-flash-image"
+      model: "gemini-3.1-flash-image"
     cost_estimate: "[estimated cost]"
     output_files: ["[file paths]"]
   Validations:

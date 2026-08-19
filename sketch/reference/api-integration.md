@@ -17,7 +17,7 @@ Purpose: Read this when Sketch needs canonical Gemini API integration rules, com
 Verified baseline:
 - `google-genai SDK v1.38.0`
 - Google AI API with API-key auth
-- confirmed model: `gemini-2.5-flash-image`
+- default model: `gemini-3.1-flash-image`
 
 | SDK version | Config pattern | Notes |
 | --- | --- | --- |
@@ -59,19 +59,14 @@ GEMINI_API_KEY=your-api-key-here
 
 | Model | ID | API type | Speed | Cost | Use |
 | --- | --- | --- | --- | --- | --- |
-| Nano Banana (Flash) | `gemini-2.5-flash-image` | Google AI API | fast | ~$0.039/img | default |
-| Nano Banana 2 | `gemini-3.1-flash-image` | Google AI API | fast | ~$0.045/img (1K) | 4K output, improved quality |
-| Nano Banana Pro | `gemini-3-pro-image-preview` | Google AI API | medium | ~$0.134/img | highest Gemini-native quality |
-| Imagen 4 Fast | `imagen-4-fast` | Google AI API | fast | $0.02/img | cheapest text-to-image only |
-| Imagen 4 Standard | `imagen-4-standard` | Google AI API | medium | $0.04/img | better quality text-to-image |
-| Imagen 4 Ultra | `imagen-4-ultra` | Google AI API | slower | $0.06/img | best quality text-to-image, 2K |
-| Imagen 3.0 | `imagen-3.0-*` | Vertex AI only | medium | higher | Vertex-only — returns 404 on Google AI API |
+| Nano Banana 2 | `gemini-3.1-flash-image` | Gemini API | fast | verify current pricing | default generalist; 0.5K-4K output |
+| Nano Banana Pro | `gemini-3-pro-image` | Gemini API | medium | verify current pricing | complex professional asset production |
+| Nano Banana | `gemini-2.5-flash-image` | Gemini API | fast | verify current pricing | legacy; migrate to a Gemini 3 image model |
 
 Rules:
-- on Google AI API, default to `gemini-2.5-flash-image`
-- `imagen-3.0-*` on Google AI API will return `404`
-- Imagen 4 models are text-to-image only — cannot edit existing images
-- for image editing or style transfer, use Gemini-native models (Nano Banana / Nano Banana 2)
+- default to `gemini-3.1-flash-image`; use `gemini-3-pro-image` for the most demanding professional workflows
+- `gemini-2.5-flash-image` is a legacy option, not the default
+- Imagen 4 endpoints were shut down on 2026-08-17; migrate to Gemini 3 image models
 
 ## Request Patterns
 
@@ -79,7 +74,7 @@ Rules:
 
 ```python
 response = client.models.generate_content(
-    model="gemini-2.5-flash-image",
+    model="gemini-3.1-flash-image",
     contents="A modern minimalist workspace, soft natural lighting, widescreen 16:9 composition",
     config=types.GenerateContentConfig(
         response_modalities=["IMAGE"],
@@ -160,7 +155,7 @@ Suggested metadata fields:
 {
   "generated_at": "...",
   "prompt": "...",
-  "model": "gemini-2.5-flash-image",
+  "model": "gemini-3.1-flash-image",
   "files": ["..."],
   "synthid": true
 }
@@ -175,7 +170,7 @@ Keep a comprehensive handler such as `generate_image_safe(...)` with retries.
 | `ResourceExhausted` | quota or rate limit | exponential backoff, quota check |
 | `InvalidArgument` | bad prompt or parameters | fix prompt or params |
 | `PermissionDenied` | invalid API key | verify `GEMINI_API_KEY` |
-| `NotFound` | wrong model for API type | use `gemini-2.5-flash-image` on Google AI API |
+| `NotFound` | wrong or retired model ID | verify the lifecycle page and use `gemini-3.1-flash-image` by default |
 | `ServiceUnavailable` | server issue | retry with backoff |
 | empty response | content-policy block | simplify or adjust prompt |
 | `DeadlineExceeded` | timeout | retry or simplify the request |
@@ -185,20 +180,15 @@ Common pitfalls:
 | Pitfall | Symptom | Fix |
 | --- | --- | --- |
 | `ImageGenerationConfig` missing | `AttributeError` | on `< v1.50`, use simple config |
-| `imagen-3.0-*` on Google AI API | `NotFound` | Vertex AI only |
+| retired Imagen 3/4 model ID | `NotFound` | migrate to `gemini-3.1-flash-image` |
 | wrong Gemini model name | `NotFound` | keep the `-image` suffix |
 | copy-pasted model names from tutorials | `NotFound` or unexpected behavior | Google naming is inconsistent across docs — always verify against Model Rules table. Common wrong names: `gemini-flash-image`, `gemini-3.1-flash-preview-image`, `agy-pro-image` |
 
 ## Rate Limits And Cost
 
-| Tier | RPM (est.) | RPD (est.) | Cost/image (est.) |
-| --- | --- | --- | --- |
-| Free | `~15` | `~1,500` | `$0` |
-| Paid | `~60` | higher | `~$0.02-0.04` |
+Rate limits and image pricing vary by model, project, tier, resolution, and service changes. Read the live project quota and current official pricing page before production use; do not encode a static RPM/RPD table as a durable contract.
 
 Rules:
-- treat all rate and cost figures as estimates
-- tell the user to confirm the latest limits in Google AI Studio before production use
 - preview `1-3` images before large batches
 
 ## Batch Guidance
@@ -224,7 +214,7 @@ Suggested disclosure snippet:
 ```text
 This image was generated using Google Gemini API.
 It contains an invisible SynthID watermark for AI-generated content identification.
-Model: gemini-2.5-flash-image
+Model: gemini-3.1-flash-image
 Generated: [timestamp]
 ```
 
@@ -235,9 +225,8 @@ Generated: [timestamp]
 
 | Topic | Rule |
 |---|---|
-| Model landscape 2026 | Nano Banana (`gemini-2.5-flash-image`, $0.039, deprecation 2026-10-02), Nano Banana 2 (`gemini-3.1-flash-image`, 0.5K-4K, $0.045 @1K; `gemini-3.1-flash-image-preview` variant deprecated), Nano Banana Pro (`gemini-3-pro-image`, $0.134 @1K-2K / $0.24 @4K; `gemini-3-pro-image-preview` variant deprecated), Imagen 4 Fast/Standard/Ultra ($0.02-$0.06, text-to-image only, max 2K) [Source: ai.google.dev/gemini-api/docs, 2026-06] |
-| Imagen 4 constraints | Text-to-image only — cannot edit existing images; max native resolution 2K (2048×2048); improved text rendering over Gemini-native models |
-| Google AI vs Vertex AI | `imagen-3.0-*` is Vertex AI only; on Google AI API it returns `404` |
+| Model landscape 2026 | Nano Banana 2 (`gemini-3.1-flash-image`) is the default generalist; Nano Banana Pro (`gemini-3-pro-image`) is the premium option; `gemini-2.5-flash-image` is legacy. Preview image endpoints from the Gemini 3 launch are retired. [Source: ai.google.dev/gemini-api/docs/image-generation, 2026-08] |
+| Retired Imagen endpoints | Imagen 4 endpoints shut down 2026-08-17; use `gemini-3.1-flash-image`. Imagen 3 endpoints are also retired. |
 | SDK compatibility | `v1.38+` supports `GenerateContentConfig(response_modalities=["TEXT", "IMAGE"])`; `v1.50+` additionally supports `ImageGenerationConfig` and `person_generation` param |
 | 4K latency | Nano Banana Pro 4K takes ~60-65s per image vs <10s at 1K. Factor into batch timeouts and Batch API preference; avoid 4K for interactive UX unless streaming is acceptable |
 

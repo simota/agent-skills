@@ -91,7 +91,7 @@ Rules:
 
 - Keep primitives and semantic tokens globally available.
 - Scope component tokens closer to the component when possible.
-- Use the lifecycle status defined in [token-lifecycle.md](~/.claude/skills/muse/reference/token-lifecycle.md) for unstable or deprecated tokens.
+- Use the lifecycle status defined in [token-lifecycle.md](token-lifecycle.md) for unstable or deprecated tokens.
 
 ## Typography Scale
 
@@ -254,7 +254,7 @@ semanticTokens: {
 
 ## Typography Selection Rules
 
-When defining typography tokens, the display typeface must be intentionally chosen. See [typography-selection-guide.md](~/.claude/skills/muse/reference/typography-selection-guide.md) for the full selection process.
+When defining typography tokens, the display typeface must be intentionally chosen. See [typography-selection-guide.md](typography-selection-guide.md) for the full selection process.
 
 **Banned display fonts:** Inter, Roboto, Arial — these signal "generic AI template" and provide zero brand differentiation. System fonts are acceptable for body text only.
 

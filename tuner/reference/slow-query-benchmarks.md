@@ -119,7 +119,7 @@ sysbench oltp_read_write cleanup
 
 ## Reporting
 
-Use [performance-report-template.md](~/.claude/skills/tuner/reference/performance-report-template.md) for the canonical before/after report format.
+Use [performance-report-template.md](performance-report-template.md) for the canonical before/after report format.
 
 
 ---
@@ -165,4 +165,3 @@ Production-safety rules:
 - For MySQL slow-query analysis, use `pt-query-digest` (Percona Toolkit 3.7.1, released 2026-04-17) to aggregate slow logs by normalized fingerprint and surface P95/P99 latency and rows-examined distributions (`https://docs.percona.com/percona-toolkit/pt-query-digest.html`). For workload profiling and index advising, pair with `pg_qualstats` + `hypopg` on PostgreSQL: `pg_qualstats_index_advisor()` proposes candidates, hypopg validates each via `EXPLAIN` without building the real index, then promote with `CREATE INDEX CONCURRENTLY` (`https://www.percona.com/blog/automatic-index-recommendations-in-postgresql-using-pg_qualstats-and-hypopg/`).
 - pgvector 0.8+ iterative scan: for filtered vector queries with a WHERE clause, set `hnsw.iterative_scan = 'relaxed_order'` (or `strict_order` when exact distance ordering is required) and tune `hnsw.max_scan_tuples`. Without this, `ef_search` candidates are evaluated before the filter, causing result starvation on selective filters. pgvector 0.7+ `halfvec` type halves storage with negligible recall loss — prefer for float32 embeddings when storage cost matters.
 - PostgreSQL 19 (Beta 1 expected 2026-06-04, GA 2026-09): forward-plan only. Notable monitoring additions: `pg_stat_statements.last_exec_time`, per-process-type log verbosity, and enhanced autoanalyze statistics. Do not include PG19 features in production Fix Prompts until GA + first minor release (`https://versionlog.com/blog/postgresql-19-whats-coming-september-2026/`).
-

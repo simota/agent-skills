@@ -54,12 +54,13 @@ Verification: same as SD-1 — flag only if the line does not also reference the
 
 ### SD-3 EOL Runtimes
 
-EOL dates as of 2026-05 (update via Self-Update Protocol):
+EOL dates as of 2026-08 (update via Self-Update Protocol):
 
 | Runtime | EOL date | Action when found alone |
 |---------|----------|--------------------------|
-| Node.js 18 | 2025-04 | Replace with Node 22 LTS or 24 |
-| Node.js 16 | 2023-09 | Hard reject — long past EOL |
+| Node.js 20 | 2026-03 | Replace with Node 24 LTS; keep Node 22 only when the project supports it |
+| Node.js 18 | 2025-03 | Replace with Node 24 LTS |
+| Node.js 16 | 2023-08 | Hard reject — long past EOL |
 | Python 3.9 | 2025-10 | Replace with 3.12 / 3.13 |
 | Python 3.10 | 2026-10 | Annotate as approaching EOL |
 | Go ≤ 1.21 | 2024-08 (1.22 GA, 1.20 EOL) | Replace with current minor |
@@ -67,7 +68,7 @@ EOL dates as of 2026-05 (update via Self-Update Protocol):
 | Java 8 | 2025-12 (Oracle premier) | Replace with 17 / 21 LTS |
 
 ```bash
-grep -rln -E 'Node\.js 18\b|Node 16\b|Python 3\.9\b|Ruby 3\.0\b|Java 8\b' SKILL_GLOBS
+grep -rln -E 'Node(\.js)? (16|18|20)\b|Python 3\.9\b|Ruby 3\.0\b|Java 8\b' SKILL_GLOBS
 ```
 
 Verification: matches inside migration-guide context (`shift`, `port`, `quill`, `trail` static-rules) are PASS — they describe the source side of a migration and SHOULD reference the old version. Matches inside min-version baselines (`iOS X+`, `Node Y+`) with the "+" suffix are PASS. Bare references in bootstrap / setup / recommended-runtime tables are FAILS.
@@ -121,16 +122,12 @@ Verification: most matches will be valid historical references (XZ Utils CVE-202
 
 ```bash
 # Pre-current-generation model IDs (update the "current" side whenever canon changes:
-# current is claude-fable-5 / claude-opus-5 / claude-sonnet-5 / claude-haiku-4-5-20251001 / gpt-5.6 / Gemini 3.7 Flash).
+# current is claude-fable-5 / claude-opus-5 / claude-sonnet-5 / claude-haiku-4-5-20251001 /
+# gpt-5.6-sol|terra|luna / current Gemini 3 families).
 grep -rln -E 'claude-3-5-sonnet|claude-3-opus|claude-instant|gpt-4-turbo|text-davinci-00[0-9]|claude-opus-4-[0-8]\b|claude-sonnet-4-[0-7]\b|claude-haiku-3(-[0-9]+)?\b|claude-haiku-4-[0-4]\b|gemini-1\.[0-9]|gemini-2\.[0-9]' SKILL_GLOBS
-
-# gpt-4o as a bare/chat-model reference is stale, but real gpt-4o-* product names
-# (transcribe/audio/realtime/search/tts) are not — skip lines that also name one of those.
-grep -rEn 'gpt-4o\b' SKILL_GLOBS \
-  | grep -vE 'gpt-4o-transcribe|gpt-4o-mini-transcribe|gpt-4o-audio|gpt-4o-mini-audio|gpt-4o-realtime|gpt-4o-mini-realtime|gpt-4o-search|gpt-4o-mini-search|gpt-4o-mini-tts'
 ```
 
-Verification: vendor-managed model identifiers move fast. Flag any bare pre-current-generation model-id reference — including `claude-sonnet-4-*`, `claude-opus-4-4` through `4-8`, `claude-haiku-3-*` / `claude-haiku-4-0` through `4-4`, a bare `gpt-4o` chat-model mention, and `gemini-1.*` / `gemini-2.*`; the fix is to either annotate as historical or replace with the current family reference (e.g. `claude-opus-5`, `claude-sonnet-5`, `claude-haiku-4-5-20251001`, `gpt-5.6`, `Gemini 3.7 Flash (High)`). Do NOT flag `gpt-4o-transcribe`, `gpt-4o-mini-transcribe`, `gpt-4o-audio-*`, `gpt-4o-realtime-*`, `gpt-4o-search-*`, or `gpt-4o-mini-tts` — those are standing product names, not a superseded chat-model version. Current generation itself (`claude-opus-5`, `claude-sonnet-5`, `claude-haiku-4-5-20251001`) must never be flagged.
+Verification: vendor-managed model identifiers move fast. Flag a pre-current-generation model-id only after checking the vendor lifecycle page. GPT-4o was retired from ChatGPT on 2026-02-13, but OpenAI explicitly states that the API model remains available; therefore ChatGPT configuration or operator instructions that select GPT-4o are stale, while API literals are not findings without an announced API retirement. Historical eval baselines and active modality-specific product names are also not findings. Replace operational defaults with a current, exact model ID (for example `gpt-5.6-sol`, `gpt-5.6-terra`, or `gpt-5.6-luna`) and retain a source URL plus verification date.
 
 ### SD-9 Drift Across Skills
 

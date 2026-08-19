@@ -13,7 +13,7 @@ The difference between a flat AI-generated image and one that feels deliberate i
 
 ### Why Cinematic Vocabulary Helps
 
-Modern image models (Imagen 4, FLUX, SDXL Turbo, Nano Banana 2) have ingested decades of cinema and photography metadata. Calling a "Rembrandt-lit close-up shot on Kodak Portra 400 with shallow depth of field" gives the model a specific historical reference vector vastly stronger than "a portrait that looks nice".
+Modern image models (Gemini 3.1 Flash Image, Gemini 3 Pro Image, FLUX, SDXL Turbo) have ingested decades of cinema and photography metadata. Calling a "Rembrandt-lit close-up shot on Kodak Portra 400 with shallow depth of field" gives the model a specific historical reference vector vastly stronger than "a portrait that looks nice".
 
 | Generic prompt | Cinematic prompt |
 |----------------|------------------|
@@ -335,6 +335,6 @@ A cinematic prompt design is complete when:
 - Ed Lachman, Christopher Doyle, Hoyte van Hoytema — cinematography interviews.
 - *American Cinematographer* magazine — current cinematography techniques.
 - Cinestill, Kodak, Fuji film stock documentation — accurate color science.
-- Imagen 4 / FLUX / SDXL prompt-engineering community guides (2024–2026).
+- Gemini 3 image / FLUX / SDXL prompt-engineering community guides (2024–2026).
 - Ari Folman, "How to Direct an AI" — practical cinematic-prompt tutorials.
 - Karen Cheng (visual essays) — composition / framing breakdowns.

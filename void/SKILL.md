@@ -250,15 +250,15 @@ Rule: necessity -> `Void`; cleanliness -> `Zen`; unused artifacts -> `Sweep`.
 
 | File                                                                                                    | Read this when                                                                                |
 | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| [evaluation-criteria.md](~/.claude/skills/void/reference/evaluation-criteria.md)                       | You need the exact 5-question investigation flow, blast-radius labels, or YAGNI decision path |
-| [cost-analysis.md](~/.claude/skills/void/reference/cost-analysis.md)                                   | You need CoK scoring, removal-risk scoring, or the CoK x risk decision matrix                 |
-| [subtraction-patterns.md](~/.claude/skills/void/reference/subtraction-patterns.md)                     | You need the right reduction pattern after scoring                                            |
-| [proposal-templates.md](~/.claude/skills/void/reference/proposal-templates.md)                         | You need the final report shape or the severity x confidence matrix                           |
-| [over-engineering-anti-patterns.md](~/.claude/skills/void/reference/over-engineering-anti-patterns.md) | You suspect premature abstraction, over-configurability, or pattern misuse                    |
-| [complexity-metrics.md](~/.claude/skills/void/reference/complexity-metrics.md)                         | You need cognitive-complexity thresholds or technical-debt metrics                            |
-| [feature-creep-pitfalls.md](~/.claude/skills/void/reference/feature-creep-pitfalls.md)                 | You are evaluating feature growth, zombie features, or scope creep                            |
-| [organizational-complexity.md](~/.claude/skills/void/reference/organizational-complexity.md)           | You are pruning process, meetings, reporting, approvals, or document sprawl                   |
-| [\_common/OPUS_5_AUTHORING.md](~/.claude/skills/_common/OPUS_5_AUTHORING.md)                          | You are sizing the subtraction proposal, deciding adaptive thinking depth at triage, or front-loading scope/complexity/mode at SCAN. Critical for Void: P3, P5. |
+| [evaluation-criteria.md](reference/evaluation-criteria.md)                       | You need the exact 5-question investigation flow, blast-radius labels, or YAGNI decision path |
+| [cost-analysis.md](reference/cost-analysis.md)                                   | You need CoK scoring, removal-risk scoring, or the CoK x risk decision matrix                 |
+| [subtraction-patterns.md](reference/subtraction-patterns.md)                     | You need the right reduction pattern after scoring                                            |
+| [proposal-templates.md](reference/proposal-templates.md)                         | You need the final report shape or the severity x confidence matrix                           |
+| [over-engineering-anti-patterns.md](reference/over-engineering-anti-patterns.md) | You suspect premature abstraction, over-configurability, or pattern misuse                    |
+| [complexity-metrics.md](reference/complexity-metrics.md)                         | You need cognitive-complexity thresholds or technical-debt metrics                            |
+| [feature-creep-pitfalls.md](reference/feature-creep-pitfalls.md)                 | You are evaluating feature growth, zombie features, or scope creep                            |
+| [organizational-complexity.md](reference/organizational-complexity.md)           | You are pruning process, meetings, reporting, approvals, or document sprawl                   |
+| [\_common/OPUS_5_AUTHORING.md](../_common/OPUS_5_AUTHORING.md)                          | You are sizing the subtraction proposal, deciding adaptive thinking depth at triage, or front-loading scope/complexity/mode at SCAN. Critical for Void: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Void-specific Output/Next schema. |
 
 ## Operational

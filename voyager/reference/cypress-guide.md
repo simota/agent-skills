@@ -23,7 +23,7 @@ Contents:
 | **Iframe / multi-tab / multi-origin** | `cy.origin` (mature in 15.15 stability fixes) | Full multi-origin support, native multi-tab |
 | **Architecture** | In-browser, automation protocols | Out-of-process via CDP / WebDriver BiDi |
 | **AI authoring** | `cy.prompt` (beta, generally available 15.13+), Studio inline edit, UI Coverage Test Generation | Test Agents (Planner / Generator / Healer 1.56+), MCP, `@playwright/cli` Skills mode |
-| **Node.js floor** | Node 20 LTS (15.0 dropped 18 and 23) | Node 18 LTS minimum (1.59+) |
+| **Node.js floor** | Node 20 minimum for Cypress 15 (Node 20 itself is EOL; prefer Node 24 LTS) | Current Playwright docs support latest Node 22.x, 24.x, or 26.x |
 
 **Recommendation**: Playwright is the default for new projects. Choose Cypress when (a) the team already runs a Cypress suite, (b) component testing with the Cypress Cloud dashboard / UI Coverage is in scope, or (c) `cy.prompt` natural-language authoring is desired alongside the existing Cypress workflow.
 

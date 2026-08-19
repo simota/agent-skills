@@ -102,7 +102,7 @@ header: "Hono + Cloudflare Workers 入門"
 ✅ Cloudflare Workers にデプロイする
 ✅ 認証ミドルウェアを追加する
 
-**前提:** Node.js 18+, Cloudflare アカウント
+**前提:** Node.js 24 LTS, Cloudflare アカウント
 
 ---
 

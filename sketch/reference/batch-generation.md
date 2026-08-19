@@ -18,7 +18,7 @@ INTAKE      →  read brief: N assets, naming, ratio, style anchor, deadline
             →  lock seed strategy (fixed / stride / family) — see table below
             →  confirm Batch API eligibility (N ≥ 50 → 50% discount, 24h)
 
-CONFIGURE   →  pick model (default gemini-2.5-flash-image)
+CONFIGURE   →  pick model (default gemini-3.1-flash-image)
             →  set seed, thinking_level, person_generation
             →  define output layout: out/<slug>/<NNN>_<variant>.png + metadata.json
             →  set concurrency ≤ rate-limit ceiling (see "Rate Limits")
@@ -63,11 +63,12 @@ SKELETON = (
 
 Respect per-model rate limits; do not fan out unbounded.
 
-| Model | Free tier RPM | Paid RPM | Suggested concurrency |
-|-------|---------------|----------|-----------------------|
-| gemini-2.5-flash-image | 10 | 1000 | 4 (free) / 20 (paid) |
-| gemini-3.1-flash-image | 5 | 500 | 2 (free) / 10 (paid) |
-| gemini-3-pro-image-preview | 2 | 100 | 1 (free) / 4 (paid) |
+| Model | Role | Conservative starting concurrency |
+|-------|------|-----------------------------------|
+| gemini-3.1-flash-image | default generalist | 2 |
+| gemini-3-pro-image | premium / complex assets | 1 |
+
+Quotas vary by project and tier. Read the live quota response and the current official rate-limit page before increasing concurrency; do not encode a static RPM table as a durable contract.
 
 Pattern: `asyncio.Semaphore(concurrency)` + retry with jitter on 429/503. Checkpoint every asset to `progress.jsonl` so a crash resumes from the last completed slot.
 

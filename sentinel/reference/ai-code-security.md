@@ -48,7 +48,7 @@ Security of AI-generated code has not improved despite functional accuracy impro
 
 ### MCP Tool Security
 
-- 13,000+ MCP servers on GitHub as of 2025
+- The MCP server ecosystem is large and changes continuously; do not use an unversioned GitHub result count as a risk metric
 - **Tool Poisoning:** Hidden malicious instructions in MCP tool descriptions, invisible to user but processed by LLM
 - **Rug Pull:** MCP tool changes its definition after installation (safe Day 1, malicious Day 7)
 - **Tool Redefinition:** Malicious MCP server overwrites legitimate tools in multi-server environments

@@ -83,7 +83,7 @@ Full per-phase required checks: `reference/workflow-detail.md`.
 
 ## Boundaries
 
-Agent role boundaries: [\_common/BOUNDARIES.md](~/.claude/skills/_common/BOUNDARIES.md)
+Agent role boundaries: [\_common/BOUNDARIES.md](../_common/BOUNDARIES.md)
 
 ### Always
 
@@ -248,10 +248,10 @@ Suppress the block — with a one-line reason in the report — when Schema owns
 | [vector-search-query-optimization.md](reference/vector-search-query-optimization.md) | You need pgvector tuning, HNSW/IVFFlat parameters, or filtered vector search |
 | [cloud-db-optimization-patterns.md](reference/cloud-db-optimization-patterns.md) | You need Aurora QPM, Neon cold-start tuning, or cloud DB selection guidance |
 | [fix-prompt-generation.md](reference/fix-prompt-generation.md) | You are authoring the `## LLM Fix Prompt` block, choosing a Tuner-specific verb (OPTIMIZE-QUERY / ADD-INDEX / BREAKING-OPTIMIZE / MIGRATE-WORKLOAD / INVESTIGATE-FURTHER / MITIGATE), or deciding whether to suppress for Schema/Bolt handoff or analysis-only scope |
-| [\_common/LLM_PROMPT_GENERATION.md](~/.claude/skills/_common/LLM_PROMPT_GENERATION.md) | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel |
-| [\_common/BOUNDARIES.md](~/.claude/skills/_common/BOUNDARIES.md) | Role boundaries are ambiguous |
-| [\_common/OPERATIONAL.md](~/.claude/skills/_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
-| [\_common/OPUS_5_AUTHORING.md](~/.claude/skills/_common/OPUS_5_AUTHORING.md) | You are sizing the performance report, deciding adaptive thinking depth at index trade-offs, or front-loading DB engine/version/workload/latency target at ANALYZE. Critical for Tuner: P3, P5. |
+| [\_common/LLM_PROMPT_GENERATION.md](../_common/LLM_PROMPT_GENERATION.md) | You need universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Trail/Sentinel |
+| [\_common/BOUNDARIES.md](../_common/BOUNDARIES.md) | Role boundaries are ambiguous |
+| [\_common/OPERATIONAL.md](../_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
+| [\_common/OPUS_5_AUTHORING.md](../_common/OPUS_5_AUTHORING.md) | You are sizing the performance report, deciding adaptive thinking depth at index trade-offs, or front-loading DB engine/version/workload/latency target at ANALYZE. Critical for Tuner: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Tuner-specific Output/Next schema. |
 | `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 
@@ -262,7 +262,7 @@ Suppress the block — with a one-line reason in the report — when Schema owns
 - Activity log: append `| YYYY-MM-DD | Tuner | (action) | (files) | (outcome) |` to `.agents/PROJECT.md`.
 - Follow `_common/GIT_GUIDELINES.md`.
 
-Shared protocols: [\_common/OPERATIONAL.md](~/.claude/skills/_common/OPERATIONAL.md)
+Shared protocols: [\_common/OPERATIONAL.md](../_common/OPERATIONAL.md)
 
 ## AUTORUN Support
 
@@ -271,4 +271,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

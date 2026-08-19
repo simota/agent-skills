@@ -154,7 +154,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Battle Card | `battle` | | One-pager sales enablement, objection-handling pairs, freshness governance, GTM distribution | `reference/battle-card.md` |
 | Win/Loss Analysis | `winloss` | | Post-decision interviews, segmentation, theme extraction, cadence design, CRM integration | `reference/winloss-analysis.md` |
 | Moat (7 Powers) | `moat` | | Helmer 7 Powers assessment, durability scoring, anti-moat detection | `reference/moat-7-powers.md` |
-| Multi-Engine | `multi` | | Tri-engine coverage (Codex + agy + Claude parallel) leveraging non-overlapping priors. Artifact-driven merge with `engine_concurrence` tags + mandatory "Uncommon Competitors (Verified-Divergent)" callout patching single-engine blind-spots. | `reference/tri-engine-compete.md`, `reference/multi-engine-mode.md` |
+| Multi-Engine | `multi` | | Tri-engine coverage (Codex + agy + Claude parallel) leveraging non-overlapping priors. Artifact-driven merge with `engine_concurrence` tags + mandatory "Uncommon Competitors (Verified-Divergent)" callout patching single-engine blind-spots. | `reference/tri-engine-compete.md` |
 
 ## Subcommand Dispatch
 
@@ -166,7 +166,7 @@ Behavior notes per Recipe:
 - `battle`: One-pager — TL;DR, why-we-win, why-we-lose, 5 objection-handling pairs, landmines, traps, pricing posture, proof points. Source every claim; enforce 90-day max freshness; tag CRM `battle_card_used`. Pull win/lose narratives from `winloss` outputs — never from internal opinion. Distribute via CRM/Slack/deal-room.
 - `winloss`: Post-decision interviews 2-6 weeks after decision; segment by `outcome x deal-size x competitor` min. Require `3+` mentions to elevate a theme; probe past "price". Third-party interviewers for losses. Quarterly cadence; feed CRM and `battle` cards.
 - `moat`: Helmer 7 Powers double-test (Benefit AND Barrier); reject features-as-moats. Score durability via decade test; map industry phase (Origination/Take-Off/Stability). Detect anti-moats (platform dependence, customer concentration, AI commoditization) and net-discount. Hand off to Helm.
-- `multi`: Tri-engine. See **Multi-Engine Mode** section below + `reference/multi-engine-mode.md` for operational detail.
+- `multi`: Multi-engine competitive analysis. See **Multi-Engine Mode** below and `reference/tri-engine-compete.md` for operational detail.
 
 ## Output Routing
 
@@ -198,7 +198,7 @@ Activated by `multi`. Pattern D Divergence-primary — Compete optimizes for *co
 - **Mandatory callout**: "Uncommon Competitors (Verified-Divergent)" section listing name, surfacing engine, bias hypothesis, blind-spot patched, evidence URL, recommended action. Never omit.
 - **Engine-attribution tag**: `[codex+agy+claude]` / `[codex+agy]` / `[codex-verified]` / `[agy-verified]` / `[claude-verified]`.
 
-Engine bias map, degraded-mode matrix, and mechanics -> `reference/multi-engine-mode.md`; algorithm, JSON schema, CLUSTER rules, and prompts -> `reference/tri-engine-compete.md`.
+Engine bias map, degraded-mode matrix, mechanics, algorithm, JSON schema, CLUSTER rules, and prompts -> `reference/tri-engine-compete.md`.
 
 ## SHARPEN Post-Analysis
 
@@ -271,8 +271,7 @@ When analyzing `5+` competitors across multiple segments, spawn 2-3 Explore suba
 | `reference/winloss-analysis.md` | Post-decision interviews, segmentation, theme coding, cadence, CRM |
 | `reference/moat-7-powers.md` | 7 Powers scoring, durability, Counter-Positioning vs differentiation, anti-moats |
 | `reference/brand-equity.md` | Brand strength via the CBBE pyramid, brand-equity metrics, brand-as-moat diagnosis |
-| `reference/multi-engine-mode.md` | `multi` Recipe operational detail — engine-bias rationale, scoring semantics, degraded-mode matrix |
-| `reference/tri-engine-compete.md` | `multi` algorithm, JSON schema, CLUSTER identity rules, SYNTHESIZE patterns, prompts |
+| `reference/tri-engine-compete.md` | `multi` engine-bias rationale, scoring, degraded modes, algorithm, JSON schema, CLUSTER rules, SYNTHESIZE patterns, and prompts |
 | `reference/benchmarks-thresholds.md` | Numeric thresholds — calibration, battlecard adoption, win-rate, GEO, seller adoption |
 | `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — engine dispatch, loose prompts, Agent fan-out, fallbacks |
 | `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill `multi` protocol — Pattern D/C/H, PREFLIGHT, FAN-OUT, attribution tags |

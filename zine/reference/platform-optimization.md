@@ -28,7 +28,7 @@
 - **目次 auto-generation** from H2/H3 headings. A clear hierarchy produces a clear TOC.
 - Paid articles, supporter tips (サポート), and magazine subscriptions are native monetization.
 - **AI学習対価還元プログラム** (started August 1, 2025): note provides creator text to partnered AI companies and returns revenue to creators. Opt-out is available. Covers free/paid articles and membership content (images/audio/video excluded). Source: [help-note.com FAQ](https://www.help-note.com/hc/ja/articles/44723422427417)
-- **AI流入**: note is ranked #2 as a source cited by AI assistants (after Wikipedia) as of 2025, due to its concentration of first-hand experience and primary-source writing. Source: [note.com/info](https://note.com/info/n/n49bbcbdefe1a)
+- **AI流入（2025年時点の自社調査）**: noteは、AIアシスタントに引用されたドメインの調査でWikipediaに次ぐ2位と発表している。現在の順位や普遍的なSEO優位を示すものとして扱わず、一次体験を明示した記事設計の参考情報に限定する。Source: [note.com/info](https://note.com/info/n/n49bbcbdefe1a)
 - Google capital tie-up (January 2025): note raised ~¥489M from Google and announced a partnership to develop features using Gemini.
 
 ### Metadata
