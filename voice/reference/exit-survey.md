@@ -1,114 +1,25 @@
-# Voice Exit Survey (Churn Analysis)
+# Exit Survey Delta
 
-Purpose: Use this file when the task is churn-reason capture, cancellation-flow feedback, save-offer design, or churn analysis.
+Purpose: Voice churn-survey data and handoff contract. Generic question lists are model-known.
 
-Contents:
-- Trigger points and response-rate targets
-- Churn-reason taxonomy and save offers
-- Exit-survey flow and data contract
-- Churn analysis report structure
-- Recommended handoffs
+## Collection Rules
 
-## Trigger Points
+- Trigger after cancellation is confirmed; never block cancellation or require free text.
+- Keep a short product-specific reason taxonomy plus `other` and `prefer_not_to_say`.
+- Randomize reason order when ordering bias matters and version the taxonomy.
+- Separate survey response, save-offer behavior, and marketing-contact consent.
+- Do not infer the primary churn cause from a selected reason alone; combine with behavior, billing, support, and follow-up evidence.
 
-| Trigger | Priority | Response-rate target |
-|---------|----------|----------------------|
-| Cancel button click | Critical | `80%+` (blocking) |
-| Downgrade flow | High | `70%+` |
-| Renewal cancellation | High | `60%+` |
-| Trial end | Medium | `40%+` |
-| Long inactivity | Medium | `30%+` |
+## Minimal Record
 
-## Churn Reason Taxonomy
-
-| Category | Example sub-reasons | Typical save offer |
-|----------|---------------------|--------------------|
-| `Pricing` | too expensive, budget cut, low ROI | discount or downgrade plan |
-| `Features` | missing feature, too complex, competitor advantage | roadmap share or training |
-| `Experience` | hard to use, performance issues, support dissatisfaction | onboarding reset or guided setup |
-| `Situation` | project ended, company decision, temporary pause | account pause |
-| `Competitive` | switching to named competitor | differentiation follow-up |
-
-## Recommended Survey Flow
-
-1. Capture the primary churn reason.
-2. Capture the sub-reason and competitor when relevant.
-3. Ask whether the user would return in the future.
-4. Offer optional open-text feedback.
-5. Trigger a save attempt only when the selected category has a valid save offer.
-
-## Minimal Data Contract
-
-```typescript
-interface ExitSurveyResponse {
-  primaryReason: string;
-  secondaryReasons?: string[];
-  competitor?: string;
-  feedback?: string;
-  wouldReturn: boolean;
-  userId: string;
-  planType: string;
-  tenure: number;
-}
-
-trackEvent('exit_survey_completed', {
-  primary_reason: primaryReason,
-  sub_reason: subReason,
-  has_competitor: Boolean(competitor),
-  would_return: wouldReturn,
-  tenure_days: tenure
-});
+```text
+response_id, account/user pseudonymous key, cancellation timestamp,
+reason_code, optional verbatim, segment/plan/tenure, touchpoint,
+save_offer_shown/accepted, taxonomy_version, consent flags
 ```
 
-## Churn Analysis Report: [Period]
+Apply the product's privacy, retention, and access controls. Avoid storing unnecessary personal text.
 
-```markdown
-## Churn Analysis Report: [Period]
+## Required Output
 
-### Overview
-| Metric | Value | vs Previous | Target |
-|--------|-------|-------------|--------|
-| Churn Rate | [X.X%] | [+/-X%] | <[X%] |
-| Churned Revenue | $[X] | [+/-X%] | - |
-| Survey Response Rate | [X%] | [+/-X%] | >60% |
-
-### Churn Reasons Breakdown
-| Reason | Count | % | Revenue Lost | Trend |
-|--------|-------|---|--------------|-------|
-| Pricing | [N] | [X%] | $[X] | Up/Down/Flat |
-| Features | [N] | [X%] | $[X] | Up/Down/Flat |
-| Experience | [N] | [X%] | $[X] | Up/Down/Flat |
-| Situation | [N] | [X%] | $[X] | Up/Down/Flat |
-| Competitive | [N] | [X%] | $[X] | Up/Down/Flat |
-
-### Competitor Analysis
-| Competitor | Lost Users | % of Churn | Key Differentiator |
-|------------|------------|------------|-------------------|
-| [Comp A] | [N] | [X%] | [What they offer] |
-
-### Save Attempt Effectiveness
-| Offer Type | Attempts | Saved | Rate | Revenue Saved |
-|------------|----------|-------|------|---------------|
-| Discount | [N] | [N] | [X%] | $[X] |
-| Training | [N] | [N] | [X%] | $[X] |
-| Pause | [N] | [N] | [X%] | $[X] |
-
-### Churn by Segment
-| Segment | Churn Rate | Primary Reason | Action |
-|---------|------------|----------------|--------|
-| Enterprise | [X%] | [Reason] | [Action] |
-| Pro | [X%] | [Reason] | [Action] |
-| Starter | [X%] | [Reason] | [Action] |
-
-### Would Return Analysis
-| Response | Count | % | Follow-up Action |
-|----------|-------|---|------------------|
-| Yes | [N] | [X%] | win-back campaign eligible |
-| No | [N] | [X%] | post-mortem interview |
-```
-
-## Handoff Rules
-
-- Repeated competitor-loss patterns -> `/Compete analyze [competitor] advantage`
-- Save-offer and churn-response execution -> `/Bond address churn: [primary reason]`
-- Product gaps with strong evidence -> `Spark`
+Report response rate, reason distribution with sample sizes, segment/tenure differences, verbatim themes, save-offer outcomes, missingness, confidence limits, and the distinction between stated and observed causes. Route product themes to Spark, retention mechanisms to Bond, instrumentation gaps to Pulse, and qualitative follow-up to Field.

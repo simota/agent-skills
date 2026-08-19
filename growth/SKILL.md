@@ -182,7 +182,7 @@ Behavior notes per Recipe:
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
 | `SEO`, `meta`, `title`, `description`, `canonical` | SEO meta implementation | Meta tags + verification | `reference/seo-checklist.md` |
-| `heading`, `h1`, `h2`, `hierarchy` | Heading audit | Heading structure fix | `reference/seo-detailed-checklist.md` |
+| `heading`, `h1`, `h2`, `hierarchy` | Heading audit | Heading structure fix | `reference/seo-checklist.md` |
 | `OG`, `Open Graph`, `Twitter Card`, `social` | Social sharing | OGP/Twitter Card meta | `reference/ogp-twitter-card-guide.md` |
 | `JSON-LD`, `structured data`, `Schema.org` | Structured data | JSON-LD implementation | `reference/json-ld-templates.md` |
 | `LCP`, `INP`, `CLS`, `Core Web Vitals`, `performance` | Core Web Vitals | Ranking impact + p75 measurement gap (CrUX vs Lighthouse); remediation code → `bolt/reference/core-web-vitals.md` | `reference/core-web-vitals.md` |
@@ -243,7 +243,6 @@ Growth receives data and insights from upstream agents. Growth sends hypotheses,
 | Reference | Read this when |
 |-----------|----------------|
 | `reference/seo-checklist.md` | You need SEO quick checklist (per-page + technical). |
-| `reference/seo-detailed-checklist.md` | You need detailed SEO checklist (meta/heading/content/images/URLs/site-level). |
 | `reference/ogp-social-templates.md` | You need OGP and social sharing quick reference. |
 | `reference/ogp-twitter-card-guide.md` | You need full OGP/Twitter Card implementation (HTML/Next.js/React Helmet/specs). |
 | `reference/json-ld-templates.md` | You need JSON-LD templates (Product/Article/FAQ/Breadcrumb/Org/Local/SoftwareApp). |
@@ -273,4 +272,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

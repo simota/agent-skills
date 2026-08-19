@@ -1,107 +1,27 @@
-# Voice NPS Survey Design
+# NPS Survey Delta
 
-Purpose: Use this file when the task is loyalty measurement, NPS implementation, follow-up design, or NPS interpretation.
+Purpose: Voice NPS instrument, consent, and interpretation contract. Static industry benchmark tables are intentionally excluded because they drift.
 
-Contents:
-- Core NPS question and score bands
-- Follow-up prompts by respondent type
-- Formula and benchmark ranges
-- Minimal implementation contract
-- Analysis checklist
+## Instrument
 
-## Core Survey
-
-```markdown
-## NPS Survey
-
-### Core Question
-"How likely are you to recommend [product name] to a friend or colleague?"
-
-| Score | Segment |
-|-------|---------|
-| 0-6 | Detractors |
-| 7-8 | Passives |
-| 9-10 | Promoters |
-```
-
-## Follow-up Prompts
-
-| Segment | Prompt |
-|---------|--------|
-| `Promoters (9-10)` | "What do you value most?" |
-| `Passives (7-8)` | "What would make this a 10?" |
-| `Detractors (0-6)` | "What did not meet your expectations?" |
-
-## Formula and Benchmarks
+Ask the standard `0-10` likelihood-to-recommend question with product/audience wording appropriate to the program. Classify `0-6` detractor, `7-8` passive, `9-10` promoter.
 
 ```text
-NPS = % Promoters - % Detractors
+NPS = percent_promoters - percent_detractors
 ```
 
-| NPS Range | Interpretation |
-|-----------|----------------|
-| `70+` | World-class |
-| `50-69` | Excellent |
-| `30-49` | Good |
-| `0-29` | Needs improvement |
-| `Below 0` | Critical |
+Ask after a meaningful experience. Keep the score response separate from optional verbatim feedback and from consent to contact the respondent.
 
-## Implementation Rules
+## Minimal Record
 
-- Ask only after the user has experienced meaningful value.
-- Keep the score mandatory and the open-text follow-up optional but visible.
-- Store `score`, `feedback`, `userId`, `segment`, `touchpoint`, and `timestamp`.
-- Track the derived category: `promoter`, `passive`, or `detractor`.
-- Separate product outreach consent from the survey response if follow-up is planned.
+Store score, derived category, pseudonymous respondent/account key, survey/touchpoint, segment/plan/tenure, timestamp, optional feedback, instrument version, and consent flags. Apply the product's privacy and retention policy.
 
-## Minimal Data Contract
+## Analysis Contract
 
-```typescript
-interface NPSResponse {
-  score: number;
-  feedback?: string;
-  userId: string;
-  segment?: string;
-  touchpoint?: string;
-  timestamp: string;
-}
+- Always report response count/rate and uncertainty with the score.
+- Segment only when sample size and sampling design support it.
+- Compare like touchpoints, populations, and time windows.
+- Treat open text as qualitative evidence, not a numeric explanation of NPS.
+- Fetch current external benchmarks from dated primary or clearly identified benchmark sources; never reuse an undated “good/excellent/world-class” scale.
 
-trackEvent('nps_submitted', {
-  score,
-  category: score >= 9 ? 'promoter' : score >= 7 ? 'passive' : 'detractor',
-  has_feedback: Boolean(feedback)
-});
-```
-
-## Analysis Checklist
-
-- Report overall NPS and response volume.
-- Break down NPS by plan, segment, tenure, and touchpoint.
-- Extract promoter strengths, passive upgrade opportunities, and detractor pain points.
-- Flag statistically weak samples before recommending broad product changes.
-- Route recurrent feature requests to `Spark`, churn-risk themes to `Bond`, and metric instrumentation gaps to `Pulse`.
-
-## 2026 Calibration
-
-- NPS response rates across most B2B SaaS programs settle at **`5-15%`** — set sample-size expectations against this baseline before declaring a result "non-significant".
-- Open-text follow-up answers median **`4-7` words** — design the prompt to invite *one specific signal* (top reason, missing feature) rather than an open essay. A 4-word answer is the norm, not a failure.
-- For NPS verbatim follow-up, route text into an AI coder using the team-curated codebook and accuracy/review discipline defined in `thematic-coding.md` (2026 LLM-Assisted Coding Stack + Inter-Coder Agreement sections) — do not re-derive accuracy claims here.
-
-## 2025-2026 Industry Benchmarks
-
-| Industry | NPS (median) | Source |
-|----------|-------------|--------|
-| B2B Software & SaaS | 41 | Retently 2025 |
-| E-commerce | 61 | Retently 2026 |
-| Technology & Services | 63 | Retently 2026 |
-| Financial Services | 68 | Retently 2026 |
-| Healthcare | 37 | Retently 2026 |
-| All-industry average | 32 | Retently 2026 |
-| All-industry median | 44 | Retently 2026 |
-
-B2C brands average 49; B2B brands average 38 (11-point structural gap). Benchmarks drift year-to-year — always cite the edition year.
-
-Sources:
-- Retently NPS Benchmark 2025 — https://www.retently.com/blog/good-net-promoter-score/
-- CustomerGauge B2B NPS Benchmarks 2025 — https://customergauge.com/blog/b2b-nps-benchmarks-tying-revenue-to-your-experience-program
-- CustomerGauge SaaS NPS Benchmarks 2025 — https://customergauge.com/benchmarks/blog/nps-saas-net-promoter-score-benchmarks
+Route themes to Spark/Bond, coding to `thematic-coding.md`, and instrumentation gaps to Pulse.

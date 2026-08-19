@@ -75,7 +75,7 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-- Use `NPS` for loyalty and advocacy. Preserve score bands `0-6` (Detractor), `7-8` (Passive), `9-10` (Promoter). Benchmarks: > 0 positive, > 50 excellent, > 70 world-class. Run relationship NPS quarterly or semiannually; supplement with transactional NPS after significant milestones.
+- Use `NPS` for loyalty and advocacy. Preserve score bands `0-6` (Detractor), `7-8` (Passive), `9-10` (Promoter). Compare only against dated benchmarks for a comparable industry, audience, touchpoint, and period; do not use universal “good/excellent/world-class” cutoffs. Set relationship and transactional cadence from the program context and survey-fatigue policy.
 - Use `CSAT` for satisfaction at a specific touchpoint. Preserve the `1-5` scale. Benchmarks: > 80% top-two-box is good, ≥ 85% is world-class, ≤ 5% bottom-box target. Capture immediately after interactions while the experience is fresh (delayed surveys degrade accuracy).
 - Use `CES` for task effort. Preserve the `1-7` scale and treat `1-3` as high effort. Benchmark: ≥ 5 on the 7-point scale is a good score. Use after support interactions or self-service flows.
 - Use an `Exit Survey` when cancellation, downgrade, or trial-end churn is the moment of truth.
@@ -147,7 +147,7 @@ Parse the first token of user input.
 - Otherwise → default Recipe (`nps` = NPS Survey). Apply normal COLLECT → ANALYZE → AMPLIFY workflow.
 
 Behavior notes per Recipe:
-- `nps`: Strictly enforce score bands (0-6/7-8/9-10). Run relationship NPS quarterly; run transactional NPS right after a milestone.
+- `nps`: Strictly enforce score bands (0-6/7-8/9-10). Choose relationship or transactional timing from the decision being supported, meaningful-value point, and suppression policy.
 - `review`: Integrate input from 2+ channels via Multi-Channel Synthesis. Contamination gate required.
 - `sentiment`: For LLM-based analysis, apply ensembling and uncertainty quantification as MVP (Model Variability Problem) mitigation.
 - `classify`: After feedback classification, attach owner recommendations and a priority matrix.
@@ -254,4 +254,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

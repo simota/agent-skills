@@ -121,7 +121,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `UNDERSTAND` | Confirm source type, audience, and the one question the diagram must answer | Scope before drawing | `reference/diagramming-principles.md` |
+| `UNDERSTAND` | Confirm source type, audience, and the one question the diagram must answer | Scope before drawing | — |
 | `ANALYZE` | Extract entities, relationships, flows, states, and constraints | Real names only | `reference/reverse-engineering.md` |
 | `DRAW` | Apply the right template and format (Mermaid / draw.io / ASCII) | Syntax correctness | `reference/diagram-templates.md` |
 | `REVIEW` | Check accuracy, readability, syntax, accessibility, and complexity | ≤20 nodes per diagram | `reference/accessibility.md` |
@@ -177,7 +177,7 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific REVIEW gate
 | `diff`, `before/after`, `delta`, `migration` | Diff visualization | Before/after diagram | `reference/diff-visualization.md` |
 | `journey`, `friction`, `persona`, `echo` | Echo integration | Echo visualization | `reference/echo-integration.md` |
 | `draw.io`, `editable`, `presentation` | draw.io output | .drawio XML file | `reference/drawio-specs.md` |
-| `ASCII`, `plain text`, `terminal` | ASCII art | Plain-text diagram | `reference/ascii-templates.md` |
+| `ASCII`, `plain text`, `terminal` | ASCII art | Plain-text diagram | — |
 | `hand-drawn`, `builder`, `whiteboard`, `neo` | Rendering look | Mermaid with look config | `reference/mermaid-v11-advanced.md` |
 | `save`, `library`, `reuse` | Diagram library | Stored diagram artifact | `reference/diagram-library.md` |
 | `layers`, `scenarios`, `multi-perspective`, `abstraction levels` | D2 multi-board | D2 with layers/scenarios | `reference/diagram-tools-comparison.md` |
@@ -247,7 +247,6 @@ For Echo output, state the visualization type and the scoring or friction legend
 |-----------|----------------|
 | `reference/diagram-templates.md` | You need a Mermaid starter template (17 diagram types including v11). |
 | `reference/drawio-specs.md` | You need draw.io XML, shape, edge, or layout rules. |
-| `reference/ascii-templates.md` | You need a plain-text or comment-safe diagram. |
 | `reference/reverse-engineering.md` | You are deriving a diagram from code or schema. |
 | `reference/c4-model.md` | You need a C4 Context/Container/Component/Code view. |
 | `reference/c4-diagrams.md` | You are rendering Mermaid C4 diagrams (C4Context / C4Container / C4Component) for the `c4` recipe, deriving from a Structurizr DSL or ad-hoc input. |
@@ -259,7 +258,6 @@ For Echo output, state the visualization type and the scoring or friction legend
 | `reference/diagram-library.md` | You need to save, list, update, or regenerate diagrams. |
 | `reference/mermaid-v11-advanced.md` | You need Mermaid v11 features, semantic shapes, or ELK guidance. |
 | `reference/diagram-tools-comparison.md` | Mermaid is not enough, you need D2/PlantUML, or Architecture-as-Code patterns. |
-| `reference/diagramming-principles.md` | You need abstraction, density, or review heuristics. |
 | `reference/ai-reverse-engineering.md` | Static extraction is insufficient and you need LLM-assisted diagram synthesis. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the diagram output, deciding adaptive thinking depth at diagram-type/abstraction selection, or front-loading source/purpose/audience at SCAN. Critical for Canvas: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Canvas-specific Output/Next schema. |
@@ -277,4 +275,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

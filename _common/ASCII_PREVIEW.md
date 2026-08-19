@@ -41,7 +41,7 @@ If uncertain whether a change is structural, default to rendering — the cost o
 - Mark changed regions with a right-margin annotation: `◆ NEW`, `◆ MOVED`, `◆ REMOVED`.
 - Label interactive elements at wireframe fidelity: `[Button]`, `[___input___]`, `(•) radio`, `[x] checkbox`.
 - Keep fidelity at structure and hierarchy — not pixel styling, not color, not exact spacing.
-- For advanced layouts (multi-panel dashboards, nested grids, complex forms), point to `canvas` skill `reference/ascii-templates.md` rather than freehand-drawing an elaborate frame.
+- For advanced layouts (multi-panel dashboards, nested grids, complex forms), route to the `canvas` skill rather than freehand-drawing an elaborate frame.
 
 ---
 

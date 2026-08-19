@@ -1,82 +1,30 @@
-# C4 Model Reference
+# C4 Model Delta
 
-Purpose: Read this when the request is architectural and needs Context, Container, Component, or Code-level views.
+Purpose: Canvas-specific level and clarification contract. General C4 notation is model-known; source names and relationships must come from the repository or supplied architecture.
 
-## Contents
+## Level Contract
 
-- C4 level selection
-- Commands
-- Scope rules
-- Templates
-- Clarification triggers
+| Level | Use | Default audience |
+|---|---|---|
+| Context | System boundary and external actors | Product / leadership |
+| Container | Deployable or runtime units | Engineering / operations |
+| Component | Internals of one container | Implementers / reviewers |
 
-## Level Selection
+- Default to Context or Container and draw exactly one level per diagram.
+- Limit Component scope to one container. Route code-level structure to Canvas `class` rather than inventing a C4 L4 view.
+- If Structurizr DSL exists, derive names and relationships from it.
 
-| Level | Name | Use When | Default Audience |
-|-------|------|----------|------------------|
-| 1 | Context | You need system boundary and external actors | Product, leadership, onboarding |
-| 2 | Container | You need deployable/runtime building blocks | Engineers, architects |
-| 3 | Component | You need internals of one container | Engineers implementing or reviewing |
-| 4 | Code | You need code-level structure for one component | Deep technical review only |
+## Clarification Gates
 
-## Default Rule
+- `ON_C4_LEVEL`: Context / Container / Component.
+- `ON_C4_SCOPE`: whole system / one service / one container.
+- `ON_C4_AUDIENCE`: product / engineering / operations / mixed.
 
-- Stop at Level 1 or 2 unless the request clearly needs deeper detail.
-- Use Level 3 for one container only.
-- Use Level 4 only when the user explicitly needs code-level architecture.
+Ask only when the unresolved choice would materially change the diagram; otherwise use the safest narrow default and state it.
 
-## Commands
+## Verification
 
-```text
-/Canvas c4 context
-/Canvas c4 container
-/Canvas c4 component [container]
-/Canvas c4 code [component]
-/Canvas c4 all
-/Canvas c4 zoom [element-name]
-/Canvas c4 zoom out
-```
-
-## Mermaid Starter
-
-```mermaid
-flowchart LR
-    User((User)) --> Web[Web App]
-    Web --> API[API]
-    API --> DB[(Database)]
-```
-
-## Color Hint
-
-- External actor: neutral
-- Primary system/container: blue
-- Supporting service: teal
-- Storage: gray
-- Risk or external dependency: coral
-
-### ON_C4_LEVEL
-
-Ask when the user wants "architecture" but the audience is unclear:
-
-- Context
-- Container
-- Component
-- Code
-
-### ON_C4_SCOPE
-
-Ask when the system boundary is unclear:
-
-- Whole system
-- One service
-- One container
-- One component
-
-### ON_C4_AUDIENCE
-
-Ask when the same structure could be drawn differently for different readers:
-
-- Leadership / product
-- Engineering
-- Operations
-- Mixed audience
+- One level and one system boundary per diagram.
+- Real actors, containers, components, and relationships only.
+- Scope and audience stated in the title or note.
+- Syntax and accessibility follow `canvas/SKILL.md` REVIEW gates.

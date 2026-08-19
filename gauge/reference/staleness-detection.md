@@ -209,9 +209,9 @@ staleness_audit:
       severity: P0
       file: atelier/SKILL.md
       line: 299
-      excerpt: "`reference/onboarding.md` (if present)"
+      excerpt: "`reference/legacy-guide.md` (if present)"
       pattern: "Dangling (if present) pointer; file does not exist"
-      recommended_fix: "Remove the pointer or create reference/onboarding.md"
+      recommended_fix: "Remove the pointer or create reference/legacy-guide.md"
       verified_missing: true
 ```
 

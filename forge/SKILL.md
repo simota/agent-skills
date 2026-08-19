@@ -109,7 +109,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
 | `SCAFFOLD` | Define hypothesis, isolate slice, pick Throwaway vs Evolutionary, choose mock strategy, set time-box (≤ 4h total); for UI slices, builder the target as an ASCII wireframe (`_common/ASCII_PREVIEW.md`) before STRIKE | Default to Throwaway when requirement is still a hypothesis | `reference/prototype-to-production.md`, `_common/ASCII_PREVIEW.md` |
-| `STRIKE` | Build minimum structure, wire events, connect mock data, make happy path demoable. Leverage AI scaffolding tools (Cursor, v0, Bolt.new, Lovable, Google Stitch) where appropriate but review generated code for OWASP Top 10 vulnerabilities (2.74× higher rate than human code). Hand-code auth/payment/encryption — never delegate these to AI scaffolding | Keep scope to one slice; prefer shadcn/ui CLI (`npx shadcn add`) for rapid component scaffolding — supports both Radix and Base UI primitives | `reference/ui-templates.md`, `reference/api-mocking.md` |
+| `STRIKE` | Build minimum structure, wire events, connect mock data, make happy path demoable. Leverage AI scaffolding tools (Cursor, v0, Bolt.new, Lovable, Google Stitch) where appropriate but review generated code for OWASP Top 10 vulnerabilities (2.74× higher rate than human code). Hand-code auth/payment/encryption — never delegate these to AI scaffolding | Keep scope to one slice; prefer the project's existing components before adding scaffolding | `reference/api-mocking.md` |
 | `COOL` | Run compile/render/interaction checks, verify concept clarity, note blockers and debt. Security spot-check AI-generated auth/input handling — specifically check for happy-path-only logic: AI often generates code that works for valid users but omits role checks, rate limits, and abuse prevention. Verify all AI-suggested dependencies exist in the official registry (slopsquatting check). Scan AI-generated files for hardcoded secrets/API keys/tokens (3.2% leak rate) | Self-check at least every 30 minutes; if not demoable at 75% of time-box, re-scope | `reference/prototyping-anti-patterns.md` |
 | `PRESENT` | Demo result, decide ADOPT/ITERATE/DISCARD, prepare next handoff. Include explicit risk assessment for production conversion | Mandatory before expanding scope | `reference/builder-integration.md` |
 
@@ -117,10 +117,10 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| UI Prototype | `ui` | ✓ | Single screen/component PoC, Throwaway by default | `reference/ui-templates.md`, `reference/prototyping-anti-patterns.md` |
+| UI Prototype | `ui` | ✓ | Single screen/component PoC, Throwaway by default | `reference/prototyping-anti-patterns.md` |
 | API Mock | `api` | | Backend stub, mock server PoC | `reference/api-mocking.md`, `reference/backend-poc.md` |
 | Full Stack PoC | `fullstack` | | Both frontend and backend, thin end-to-end slice | `reference/prototype-to-production.md`, `reference/api-mocking.md` |
-| Landing Page | `landing` | | LP-focused PoC (Funnel supporting role) | `reference/ui-templates.md`, `reference/rapid-iteration-methodology.md` |
+| Landing Page | `landing` | | LP-focused PoC (Funnel supporting role) | `reference/rapid-iteration-methodology.md` |
 | Mobile PoC | `mobile` | | React Native / Flutter / Expo prototype with stubbed native capabilities and device preview | `reference/mobile-prototyping.md` |
 | Dashboard PoC | `dashboard` | | Admin / analytics dashboard with charts, tables, filters, and seeded mock time-series | `reference/dashboard-prototyping.md` |
 | AI Feature PoC | `ai` | | Chat UI / RAG demo / agent UI with streaming response shell and injection-safe input | `reference/ai-assisted-prototyping.md` (see "AI Feature PoC Pattern") |
@@ -145,8 +145,8 @@ Behavior notes per Recipe:
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
 | `moodboard`, `visual direction`, `design exploration` | Moodboard mode | 3+ moodboard variants + evaluation | `reference/moodboard-workflow.md`, `_common/CANDIDATE_SELECTION.md` |
-| `component`, `widget`, `state pattern` | UI Component mode | Component file + mock data | `reference/ui-templates.md` |
-| `page`, `flow`, `journey`, `screen` | Page/Flow mode | Route/page + minimal states | `reference/ui-templates.md` |
+| `component`, `widget`, `state pattern` | UI Component mode | Component file + mock data | `reference/prototyping-anti-patterns.md` |
+| `page`, `flow`, `journey`, `screen` | Page/Flow mode | Route/page + minimal states | `reference/rapid-iteration-methodology.md` |
 | `api mock`, `MSW`, `mock server` | API Mock mode | handlers.ts or mock fetch wrapper | `reference/api-mocking.md` |
 | `backend`, `CRUD`, `webhook`, `socket` | Backend PoC mode | Express/Fastify or in-memory server | `reference/backend-poc.md` |
 | `full stack`, `end to end`, `slice` | Full-Stack Slice mode | UI + mocks/backend + insights | `reference/prototype-to-production.md` |
@@ -187,7 +187,6 @@ Forge receives concepts and direction from upstream agents, builds rapid prototy
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/ui-templates.md` | You need starter UI patterns for forms, lists, modals, cards, or async states. |
 | `reference/api-mocking.md` | You need inline mocks, MSW, json-server, or error simulation. |
 | `reference/data-generation.md` | You need realistic sample data, factories, or fixed fixtures. |
 | `reference/backend-poc.md` | You need a minimal Express/Fastify CRUD server or a socket PoC. |
@@ -223,4 +222,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

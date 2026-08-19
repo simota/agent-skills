@@ -150,9 +150,9 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 |--------|-----------|---------|-------------|------------|
 | Re-engagement | `reengagement` | ✓ | Re-engagement strategy and dormant user recovery | `reference/engagement-triggers.md` |
 | Churn Prevention | `churn` | | Churn prevention and subscription save flows | `reference/retention-analysis.md` |
-| Gamification | `gamification` | | Gamification design: points, badges, and streaks | `reference/gamification.md` |
-| Habit Formation | `habit` | | Habit formation design — Fogg Behavior Model (B=MAP), Hook Model, and streak design | `reference/habit-formation.md` |
-| Loyalty Program | `loyalty` | | Loyalty program design and reward system construction | `reference/gamification.md` |
+| Gamification | `gamification` | | Gamification design: points, badges, and streaks | — |
+| Habit Formation | `habit` | | Habit formation design — Fogg Behavior Model (B=MAP), Hook Model, and streak design | — |
+| Loyalty Program | `loyalty` | | Loyalty program design and reward system construction | — |
 | Win-Back Campaign | `winback` | | Dormant / cancelled-user recovery campaign with recency-weighted offers, multi-touch cadence, and reactivation metric | `reference/winback-campaign.md` |
 | Lifecycle Email Drip | `lifecycle-email` | | 30/60/90 onboarding + lifecycle email drip design: trigger-based, behavior-branched, deliverability and suppression rules | `reference/lifecycle-email-drip.md` |
 | Power User Advocacy | `power-user` | | Power-user identification via L21+ MAU + NPS promoter overlap, advocacy ladder, community/referral program activation | `reference/power-user-advocacy.md` |
@@ -166,9 +166,9 @@ Parse the first token of user input.
 Behavior notes per Recipe:
 - `reengagement`: General dormant-user re-engagement. Default entry point.
 - `churn`: Churn root-cause analysis and prevention tactics.
-- `gamification`: Points/badges/streaks systems.
-- `habit`: Hook Model (Eyal) habit loop design.
-- `loyalty`: Tier-based loyalty reward systems.
+- `gamification`: Use points, badges, or streaks only when the repeated behavior already creates user value. Derive thresholds from observed behavior; never use rewards to conceal weak product value.
+- `habit`: Apply Fogg B=MAP before the Hook loop: reduce effort before adding motivation or prompts. Keep the target action small, voluntary, and recoverable after a missed streak.
+- `loyalty`: Tie tiers and rewards to durable customer value and measured economics. Derive earning, redemption, expiry, and abuse limits from the product rather than universal point tables.
 - `winback`: Recover cancelled / long-dormant users with recency-weighted offer tiers (14d/30d/90d/180d cohorts), multi-touch cadence across email → push → SMS, creative refresh versus A/B-tested copy, and a reactivation-rate metric tied to Pulse. Distinguish voluntary-cancel win-back (value objection) from involuntary (payment failure → route to dunning).
 - `lifecycle-email`: Design the email drip across onboarding (Day 0, 1, 3, 7, 14, 30), activation reminders, milestone celebrations, dormancy triggers, and win-back. Each email has: segment filter, trigger, content goal, CTA, suppression rule. Include deliverability contract (DMARC/SPF/DKIM), unsubscribe compliance (CAN-SPAM / GDPR / CCPA), and send-time optimization. Hand off to Prose (`notification`) for copy, relay for delivery, Pulse for CTR/CVR metrics.
 - `power-user`: Identify the 10-20% of users who drive disproportionate engagement via L21+ MAU bucket overlap with NPS promoters. Build advocacy ladder (active → advocate → referrer → community leader) with activation triggers per tier. Pair with community program, referral mechanics, and early-access beta invites. Co-design with Voice (NPS signals) and Growth (referral loops).
@@ -179,11 +179,11 @@ Behavior notes per Recipe:
 |--------|----------|----------------|-----------|
 | Cohort retention declining | Churn root-cause analysis | Segmented churn report with intervention plan | `reference/retention-analysis.md` |
 | High involuntary churn (>1%) | Dunning & payment recovery audit | Dunning workflow recommendations | `reference/subscription-retention.md` |
-| Onboarding drop-off detected | Activation funnel analysis | Milestone-gated onboarding redesign | `reference/onboarding.md` |
+| Onboarding drop-off detected | Activation funnel analysis | Milestone-gated onboarding redesign | `reference/retention-analysis.md` |
 | Dormant user segment growing | Re-engagement campaign design | Trigger-based win-back flow | `reference/engagement-triggers.md` |
 | Health score portfolio review | Account health triage | Tiered intervention matrix | `reference/health-score.md` |
 | Save flow optimization request | Subscription save audit | Pause/downgrade/discount offer sequence | `reference/subscription-retention.md` |
-| Gamification / habit loop request | Habit formation design | Hook model with safeguards | `reference/habit-formation.md` |
+| Gamification / habit loop request | Habit formation design | Value-linked loop with consent and recovery safeguards | — |
 | Complex multi-agent task | Nexus-routed execution | Structured handoff | `_common/BOUNDARIES.md` |
 
 Routing rules:
@@ -207,9 +207,9 @@ Use the template that matches the task focus:
 - Retention/cohort work → `reference/retention-analysis.md`
 - Health scoring → `reference/health-score.md`
 - Subscription save flow → `reference/subscription-retention.md`
-- Onboarding/activation → `reference/onboarding.md`
-- Habit loops / behavior design (Fogg B=MAP) → `reference/habit-formation.md`
-- Gamification → `reference/gamification.md`
+- Onboarding/activation → `reference/retention-analysis.md`; derive milestones and targets from the observed funnel.
+- Habit loops / behavior design → apply the inline `habit` rules; do not invent universal cadence or streak thresholds.
+- Gamification → apply the inline `gamification` / `loyalty` rules and quantify reward economics.
 
 ## Collaboration
 
@@ -230,14 +230,8 @@ Use the template that matches the task focus:
   Read this when you need account health scoring, trend detection, or portfolio triage.
 - `reference/engagement-triggers.md`
   Read this when you need dormant-user triggers, cadence rules, or re-engagement copy structure.
-- `reference/onboarding.md`
-  Read this when the retention problem starts in activation, TTV, or early milestone completion.
 - `reference/subscription-retention.md`
   Read this when the task is cancellation prevention, pause/downgrade design, or save-offer evaluation.
-- `reference/habit-formation.md`
-  Read this when you need Hook Model design, streak logic, or habit-loop safeguards.
-- `reference/gamification.md`
-  Read this when you need points, badges, levels, or loyalty mechanics tied to retention outcomes.
 - `reference/winback-campaign.md`
   Read this when you need dormant/cancelled-user recovery with recency-weighted offers, multi-touch cadence, and reactivation metrics.
 - `reference/lifecycle-email-drip.md`

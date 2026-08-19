@@ -145,7 +145,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
 | `MAP` | **Define 5-10 Key Intelligence Questions (KIQs)** — the questions whose answers would materially change competitive positioning. **Run WebSearch** for each competitor and market segment. Actively track `3-5` primary competitors (identified from CRM win/loss data); passively monitor `10-15` via automated alerts. Collect pricing pages, changelogs, press releases, and review sites | KIQs before collection; WebSearch first, then source list before analysis | `reference/intelligence-gathering.md` |
-| `ANALYZE` | Extract patterns, gaps, threats, and substitutes | Evidence-backed findings | `reference/analysis-templates.md` |
+| `ANALYZE` | Extract patterns, gaps, threats, and substitutes | Evidence-backed findings | `reference/intelligence-calibration.md` |
 | `DIFFERENTIATE` | Turn findings into strategic choices and downstream actions | Actionable, not exhaustive | `reference/playbooks.md` |
 
 ## Analysis Shapes
@@ -153,7 +153,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Shape | Use when | Default reference |
 |---|---|---|
 | Landscape | Map players, segments, or category boundaries | `reference/intelligence-gathering.md` |
-| Benchmark | Compare features, pricing, UX, performance, SEO, or stack | `reference/analysis-templates.md` |
+| Benchmark | Compare features, pricing, UX, performance, SEO, or stack | `reference/benchmarks-thresholds.md` |
 | Response | React to competitor moves, build battle cards, or set alert actions | `reference/playbooks.md` |
 | Win/Loss | Explain why deals were won or lost | `reference/modern-win-loss-analysis.md` |
 | Strategy | Define moats, positioning, category moves, or pricing posture | `reference/competitive-moats-category-design.md` |
@@ -169,7 +169,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Competitor Matrix | `matrix` | ✓ | Competitor map, feature comparison matrix, tiering | `reference/analysis-templates.md` |
+| Competitor Matrix | `matrix` | ✓ | Competitor map, feature comparison matrix, tiering | — |
 | SWOT Analysis | `swot` | | SWOT, positioning, differentiation strategy | `reference/competitive-moats-category-design.md` |
 | Positioning Map | `positioning` | | Positioning map, category design, moat evaluation | `reference/competitive-moats-category-design.md` |
 | LLM Visibility | `llm-visibility` | | LLM brand presence, AI share of voice measurement | `reference/intelligence-gathering.md` |
@@ -297,7 +297,6 @@ When analyzing `5+` competitors across multiple segments, spawn 2-3 Explore suba
 | Reference | Read when |
 |-----------|-----------|
 | `reference/intelligence-gathering.md` | Public sources, price intel, reviews, stack data, SEO signals |
-| `reference/analysis-templates.md` | Competitor profiles, matrices, SWOTs, positioning maps, benchmarks |
 | `reference/playbooks.md` | Battle cards, alert responses, structured competitive response plans |
 | `reference/intelligence-calibration.md` | Prediction validation, source reliability, `EVOLUTION_SIGNAL` |
 | `reference/ci-anti-patterns-biases.md` | Bias, copycat thinking, weak framing threatening analysis quality |

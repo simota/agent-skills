@@ -1,140 +1,29 @@
-# Mutation Testing Guide
+# Mutation Testing Delta
 
-Purpose: Use this file for baseline mutation workflows, tool setup, survivor analysis, CI wiring, and default score thresholds in `MUTATE` mode.
+Purpose: Siege `mutate` program-level selection, baseline, and CI contract. Mutation operators and tool basics are model-known.
 
-## Contents
+## Program Contract
 
-- Mutation workflow
-- Tool configuration
-- Survivor analysis
-- CI integration
-- Baseline thresholds
-
-## Mutation Workflow
+- Select the tool from the repository language, runner, and installed versions; verify current syntax in primary docs.
+- Establish a baseline on a bounded, behavior-critical module before setting a gate.
+- Exclude generated code, migrations, declarations, and proven equivalent-mutant regions explicitly.
+- Classify survivors as missing test, weak assertion, dead code, uncovered code, timeout, or equivalent mutant.
+- Start with the risk-tier defaults in `siege/SKILL.md` when no local policy exists, then calibrate them from the measured baseline, runtime budget, and module criticality.
 
 ```text
-1. Parse source code
-2. Apply small mutations
-3. Run tests against each mutant
-4. Classify outcomes:
-   - Killed
-   - Survived
-   - Timed out
-   - No coverage
-
-Mutation Score = Killed / (Total - No Coverage) × 100
+mutation_score = killed / (total - no_coverage - accepted_equivalent) × 100
 ```
 
-## Common Mutation Operators
+## CI Strategy
 
-| Category | Mutation | Example |
-| --- | --- | --- |
-| Arithmetic | replace operator | `a + b` -> `a - b` |
-| Conditional | negate condition | `a > b` -> `a <= b` |
-| Boundary | off-by-one | `a > 0` -> `a >= 0` |
-| Return value | change return | `true` -> `false` |
-| Remove call | delete function call | `validate(input)` -> removed |
-| String | empty string | `"error"` -> `""` |
-| Assignment | change value | `x = 1` -> `x = 0` |
+| Tier | Scope |
+|---|---|
+| PR | changed or critical modules within a fixed time budget |
+| Nightly | broader incremental suite |
+| Release | risk-selected full baseline comparison |
 
-## Tool Configuration
+Fail only on a documented regression or risk-tier gate. Report timeouts and no-coverage separately so score improvements cannot hide shrinking scope.
 
-### Stryker
+## Required Output
 
-```json
-{
-  "mutate": ["src/**/*.ts", "!src/**/*.test.ts", "!src/**/*.d.ts"],
-  "testRunner": "jest",
-  "reporters": ["html", "clear-text", "progress"],
-  "coverageAnalysis": "perTest",
-  "thresholds": {
-    "high": 80,
-    "low": 60,
-    "break": 50
-  },
-  "timeoutMS": 10000,
-  "concurrency": 4
-}
-```
-
-```bash
-npx stryker run
-npx stryker run --mutate "src/utils/validation.ts"
-```
-
-### mutmut
-
-```ini
-[mutmut]
-paths_to_mutate=src/
-tests_dir=tests/
-runner=pytest -x --tb=no -q
-```
-
-```bash
-mutmut run
-mutmut run --paths-to-mutate src/validation.py
-mutmut results
-mutmut show 42
-```
-
-### cargo-mutants
-
-```bash
-cargo mutants
-cargo mutants --file src/validation.rs
-cargo mutants -j 4
-cargo mutants --timeout 30
-```
-
-## Survivor Analysis
-
-| Pattern | Why it survives | Fix |
-| --- | --- | --- |
-| Missing boundary test | `>` vs `>=` not exercised | add boundary-value tests |
-| Missing negative test | only happy path exists | add error and edge-case tests |
-| Weak assertion | only presence is checked | assert exact values |
-| Dead code | path is unreachable | remove dead code |
-| Equivalent mutant | behavior is unchanged | mark as ignored or escalate to advanced review |
-
-### Workflow
-
-```markdown
-1. Run mutation testing
-2. Sort survivors by file or module
-3. Classify each survivor:
-   a. equivalent mutant
-   b. dead code
-   c. missing test
-4. Re-run to confirm improvement
-5. Track score over time
-```
-
-## CI Integration
-
-```yaml
-mutation-test:
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-    - run: npm ci
-    - run: npx stryker run
-```
-
-### Incremental Mode
-
-```bash
-CHANGED_FILES=$(git diff --name-only HEAD~1 -- 'src/**/*.ts' | tr '\n' ',')
-npx stryker run --mutate "$CHANGED_FILES"
-```
-
-## Baseline Thresholds
-
-| Context | Minimum | Recommended |
-| --- | --- | --- |
-| Critical business logic | `80%` | `90%+` |
-| Utility functions | `70%` | `80%+` |
-| API handlers | `60%` | `70%+` |
-| UI components | `50%` | `60%+` |
-| Overall project | `60%` | `75%+` |
+Provide tool/version, source/test scope, exclusions, baseline and current scores, survivor classification, runtime cost, new tests or removals, accepted equivalents with rationale, and proposed CI gate. Hand individual assertion fixes to Radar; hand dead code to Sweep/Zen.

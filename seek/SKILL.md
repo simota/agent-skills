@@ -276,7 +276,6 @@ Seek receives search and RAG requirements from upstream agents and sends retriev
 | File | Content |
 |------|---------|
 | `reference/patterns.md` | Full-text, vector, hybrid, and scaling design patterns |
-| `reference/examples.md` | E-commerce, RAG, log search, autocomplete examples |
 | `reference/handoffs.md` | Inbound/outbound handoff YAML templates |
 | `reference/embedding-models.md` | Embedding model comparison, selection tree, benchmarks |
 | `reference/evaluation-methods.md` | Canonical search-quality evaluation: offline metrics (nDCG/MRR/MAP/P@k/R@k), golden-query curation, click models (Cascade/PBM/DBN/UBM), A/B design (interleaving/split/switchback/shadow), reranker evaluation hooks, regression gates, diagnostics |

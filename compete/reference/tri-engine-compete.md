@@ -253,7 +253,7 @@ The three subagents return JSON; Compete main context handles NORMALIZE through 
 - `echo/reference/tri-engine-demand.md` — canonical Pattern D with calibration tags (synthetic demand domain)
 - `compete/reference/intelligence-gathering.md` — WebSearch / WebFetch sources used during GROUND
 - `compete/reference/battle-card.md` — Battle Card output format that absorbs engine_concurrence tags
-- `compete/reference/analysis-templates.md` — Feature Matrix / SWOT output formats
+- `compete/SKILL.md` — Feature Matrix / SWOT output requirements
 - `compete/reference/competitive-moats-category-design.md` — Positioning Map output format
 
 
