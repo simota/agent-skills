@@ -207,14 +207,15 @@ Browser automation and asset acquisition.
 | **Vector** | Browser automation | Task completion via Playwright / DevTools | Yes |
 | **Trawl** | Crawl architecture | Distributed crawler, politeness design | No |
 
-## Data (2)
+## Data (3)
 
-Data pipelines and conversion.
+Data acquisition, pipelines, and conversion.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Stream** | ETL / ELT pipelines | Kafka / Airflow / dbt design | Mixed |
 | **Morph** | Document conversion | Markdown / Word / Excel / PDF / HTML conversion | Mixed |
+| **Xquik** | X/Twitter data and automation | X reads, monitoring, webhooks, agent integrations, approved account actions | Mixed |
 
 ## Strategy (4)
 

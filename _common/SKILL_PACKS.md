@@ -1,12 +1,12 @@
 # Skill Packs
 
-Skill membership matrix for selective enablement across the 123-skill ecosystem.
+Skill membership matrix for selective enablement across the 125-skill ecosystem.
 
 ## Why this exists
 
-Anthropic guidance is **8-12 skills** before "context tax" (token overhead per turn) starts to dominate; routing degradation begins in the **dozens**, and a **15,000-character cap** on the available skills list is a hard ceiling. This repository's 123 skills exceed all three thresholds.
+Anthropic guidance is **8-12 skills** before "context tax" (token overhead per turn) starts to dominate; routing degradation begins in the **dozens**, and a **15,000-character cap** on the available skills list is a hard ceiling. This repository's 125 skills exceed all three thresholds.
 
-This file defines **10 Packs** (overlapping subsets of the ecosystem) so that any single workstream can enable ~20-30 skills instead of the full 123. Selective enablement is driven by the Claude Code `skills` filter in `~/.claude/settings.json` (`"all"` / `[list]` / `[]`); Codex CLI and agy use equivalent allowlist mechanisms when available.
+This file defines **10 Packs** (overlapping subsets of the ecosystem) so that any single workstream can enable ~20-30 skills instead of the full 125. Selective enablement is driven by the Claude Code `skills` filter in `~/.claude/settings.json` (`"all"` / `[list]` / `[]`); Codex CLI and agy use equivalent allowlist mechanisms when available.
 
 **Sources:**
 - claude.com/blog/lessons-from-building-claude-code-how-we-use-skills (8-12 sweet spot, context tax)
@@ -35,7 +35,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 | `infra-ops` | `core + infra` | ~40 |
 | `research` | `core + research` | ~35 |
 | `package-author` | `core + package-gen + design + research` | ~75 |
-| `all` | `"all"` (no filter) | 123 (debugging / discovery only) |
+| `all` | `"all"` (no filter) | 125 (debugging / discovery only) |
 
 ---
 
@@ -51,13 +51,13 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `web` (web frontend + backend, ~23 skills)
+### `web` (web frontend + backend, ~24 skills)
 
 **Purpose:** browser-tier feature work — React/Vue/Svelte/Next.js, API design, perf, E2E.
 
-**Members:** `voyager`, `pixel`, `palette`, `frame`, `forge`, `artisan`, `atelier`, `flow`, `bolt`, `atlas`, `gateway`, `prose`, `funnel`, `bazaar`, `growth`, `ink`, `vector`, `canvas`, `muse`, `vision`, `vitrine`, `polyglot`, `relay`
+**Members:** `voyager`, `pixel`, `palette`, `frame`, `forge`, `artisan`, `atelier`, `flow`, `bolt`, `atlas`, `gateway`, `prose`, `funnel`, `bazaar`, `growth`, `ink`, `vector`, `canvas`, `muse`, `vision`, `vitrine`, `polyglot`, `relay`, `xquik`
 
-**Triggers:** `react`, `vue`, `svelte`, `next.js`, `frontend`, `web`, `landing page`, `e2e`, `playwright`, `cypress`, `webdriver`, `css`, `html`, `tailwind`, `api design`, `openapi`, `rest`, `graphql`, `i18n`, `l10n`, `internationalization`, `localization`, `intl api`, `translation key`, `bot framework`
+**Triggers:** `react`, `vue`, `svelte`, `next.js`, `frontend`, `web`, `landing page`, `e2e`, `playwright`, `cypress`, `webdriver`, `css`, `html`, `tailwind`, `api design`, `openapi`, `rest`, `graphql`, `i18n`, `l10n`, `internationalization`, `localization`, `intl api`, `translation key`, `bot framework`, `xquik`, `twitter api`
 
 ---
 
@@ -91,13 +91,13 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `growth` (product growth + analytics + LP, ~18 skills)
+### `growth` (product growth + analytics + LP, ~20 skills)
 
 **Purpose:** funnel/LP optimization, A/B testing, retention, KPI design, persona-driven UX validation.
 
-**Members:** `pulse`, `experiment`, `funnel`, `bazaar`, `ledger`, `compete`, `voice`, `echo`, `plea`, `cast`, `field`, `trace`, `bond`, `saga`, `spark`, `rank`, `helm`, `sage`, `growth`
+**Members:** `pulse`, `experiment`, `funnel`, `bazaar`, `ledger`, `compete`, `voice`, `echo`, `plea`, `cast`, `field`, `trace`, `bond`, `saga`, `spark`, `rank`, `helm`, `sage`, `growth`, `xquik`
 
-**Triggers:** `kpi`, `a/b test`, `experiment`, `funnel`, `landing page`, `cro`, `seo`, `geo`, `retention`, `churn`, `nps`, `cohort`, `session replay`, `persona`, `cognitive walkthrough`, `user feedback`, `cost optimization`, `finops`, `competitive analysis`, `prioritization`, `ice`, `rice`, `wsjf`, `moscow`
+**Triggers:** `kpi`, `a/b test`, `experiment`, `funnel`, `landing page`, `cro`, `seo`, `geo`, `retention`, `churn`, `nps`, `cohort`, `session replay`, `persona`, `cognitive walkthrough`, `user feedback`, `cost optimization`, `finops`, `competitive analysis`, `prioritization`, `ice`, `rice`, `wsjf`, `moscow`, `x/twitter`, `twitter`, `brand monitoring`, `social monitoring`
 
 ---
 

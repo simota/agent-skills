@@ -302,7 +302,7 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
 
     # S1/S2: size constraints (body only, excluding frontmatter)
     # Tiered against the actual repository floor — official Anthropic guidance is
-    # "<5000 tokens / <500 lines" but the existing corpus runs higher (123 skills as of 2026-08-17),
+        # "<5000 tokens / <500 lines" but the existing corpus runs higher (125 skills as of 2026-08-18),
     # so P0/P1 fire only at egregious sizes. Refactor targets are P2/P3.
     body_lines = lines[body_start:]
     line_count = len(body_lines)

@@ -1,7 +1,7 @@
 # AI Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Agents](https://img.shields.io/badge/Agents-124-blue.svg)]()
+[![Agents](https://img.shields.io/badge/Agents-125-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 🤖 124種類の専門AIエージェントチームによる協調開発を実現するスキルコレクション
@@ -39,7 +39,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 ## エージェント一覧
 
-> 全 124 エージェントのカテゴリ別カタログ。
+> 全 125 エージェントのカテゴリ別カタログ。
 
 ### オーケストレーション
 
@@ -57,7 +57,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Lore** | _"Forgotten lessons are lessons repeated. Institutional memory is the compound interest of experience."_ - エコシステム横断の知識統合・パターン抽出・伝播を担うメモリキュレーター。エージェントjournalから共通パターンを発見し、カタログ化して関連エージェントへ配信。知識の腐敗検出・ベストプラクティス伝播により制度的記憶を維持 | METAPATTERNS.md、知識インサイト |
 | **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - デザインから実装までを閉ループで繋ぐパイプラインオーケストレーター。Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas を統括し、デザイン抽出・プロトタイプ・ビジュアルアセット・スライド・本番実装をプロジェクトデザインシステムを永続化しながら一気通貫で提供 | デザインシステムパッケージ、統合成果物 |
 | **Bazaar** | _"A landing page is one promise, one path, one decision. bazaar runs the studio that delivers all three."_ - 超高品質LP制作スタジオチェーン・オーケストレーター。Field → Cast → Pulse → Funnel → Vision → Saga → Compete → Muse → Flow → Artisan → Growth → Bolt → Judge → Launch を、LP種別レシピと9段階の品質ゲート（Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch）で束ね、6つのクラフト軸（デザイン／アニメーション／ブランディング／マーケティング／SEO／IA）すべてにルーブリックと納品閾値を課したLPを納品 | 6軸ルーブリック通過済みLPパッケージ、CVR最適化された本番コード、ブランド整合性のあるビジュアル、トークン化されたモーション、スキーマ妥当性のあるSEO、AI検索引用対応GEO、計測稼働 |
-| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 124."_ - スキルエコシステムのナビゲーター・オンボーディングガイド。エージェントを一覧化し、タスクに最適な担当を推薦し、初心者が適切なスペシャリストを発見できるよう支援 | レコメンド、エージェントマップ |
+| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 125."_ - スキルエコシステムのナビゲーター・オンボーディングガイド。エージェントを一覧化し、タスクに最適な担当を推薦し、初心者が適切なスペシャリストを発見できるよう支援 | レコメンド、エージェントマップ |
 | **Loom** | _"Many threads, one fabric — design the operating layer as a system."_ - プロジェクトの運用レイヤー設計エージェント。リポジトリに必要なプロジェクト固有スキル・リポジトリ最適化レシピ（タスクプレイブック）・スキル/エージェントオーケストレーションワークフローを一つの整合したシステムとして設計。リポジトリを分析してレイヤーを設計し、スキル本体の記述はSigilへ、ランタイムのルーティングはNexusへ委譲 | 運用レイヤー設計、ルーティングマップ |
 | **Prune** | _"A garden grows by what you cut, not what you plant."_ - スキルエコシステム整理監査エージェント。エージェント編成の重複・冗長・不活性を監査し、統合候補とサンセット計画を根拠・アーカイブ手順付きで提案（提案のみ・実行はしない） | 整理監査レポート、統合/サンセット提案 |
 
@@ -242,8 +242,12 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 |------------|------|------|
 | **Schema** | _"A schema is a contract with the future."_ - DBスキーマ設計・マイグレーション作成・ER図設計 | マイグレーション/スキーマ定義 |
 | **Stream** | _"Data flows like water. My job is to build the pipes."_ - データパイプライン。ETL/ELT設計、Kafka/Airflow/dbt、バッチ/ストリーミング選定、データ品質管理 | パイプライン設計、DAG、dbtモデル |
+| **Xquik** | _"Every X workflow starts with a verified boundary."_ - ドキュメント化されたXquikの機能を使い、X/Twitterの読み取り、監視、Webhook、エージェント統合、明示的に承認されたアカウント操作を扱う | ソースパケット、監視計画、統合パケット、操作記録 |
 
 **Schema → Stream の連携**：Schema（データモデル）→ Stream（パイプライン設計）
+**Xquik → Relay → Stream の連携**：Xquik（Xのソース取得・監視）→ Relay（イベント配信）→ Stream（後続パイプライン）
+
+Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
 
 ### DevOps
 
@@ -728,6 +732,7 @@ skills/
 ├── void/SKILL.md       # YAGNI検証・複雑性削減
 ├── voice/SKILL.md      # ユーザーフィードバック
 ├── voyager/SKILL.md    # E2Eテスト
+├── xquik/SKILL.md      # XquikによるX/Twitterデータ取得・自動化
 └── zen/SKILL.md        # リファクタリング
 ```
 
@@ -1430,6 +1435,18 @@ usersテーブルにプロフィール画像URLを追加するマイグレーシ
 ```
 
 **出力**: Up/Down両方のマイグレーション、ロールバック手順
+
+---
+
+##### Xブランド監視（Xquik）
+
+```
+/Xquik monitor
+ブランド名と製品名を対象に、範囲を限定したX監視を設計してください。
+アカウント操作は行わず、検証済みイベントをWebhookへ送ってください。
+```
+
+**出力**: フィルター、イベント契約、重複排除、検証、保持期間、停止条件を含む監視パケット
 
 ---
 

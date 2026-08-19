@@ -51,6 +51,7 @@ User request
   │   ├─ Git history → Trail
   │   ├─ Legacy code analysis → Trail (`static-rules`)
   │   ├─ Impact analysis → Ripple
+  │   ├─ X/Twitter data or monitoring → Xquik
   │   └─ Competitive research → Compete
   │
   ├─ DevOps / infrastructure
@@ -127,6 +128,16 @@ User request
 | Monitoring / alerting | Beacon | SLO / SLI design |
 | Incident response | Triage → Mend | Investigate, then auto-remediate |
 
+### "Work with X / Twitter"
+
+| Situation | Recommendation | Reason |
+|-----------|----------------|--------|
+| Public X research | Xquik `read` | Uses a bounded documented read and returns source evidence |
+| Paid public X read | Xquik `read` | Selects the documented account-credit, guest-wallet, or MPP boundary and confirms new payments |
+| Brand or keyword monitoring | Xquik `monitor` → Relay / Pulse | Defines the monitor, event contract, delivery, and measurement handoff |
+| Product or agent integration | Xquik `integrate` → Gateway / Builder | Maps current Xquik contracts before implementation |
+| Account action | Prose / Sentinel → Xquik `act` | Requires an exact preview, explicit approval, idempotency, and terminal verification |
+
 ### "Improve UI / UX"
 
 | Situation | Recommendation | Reason |
@@ -191,6 +202,11 @@ Sage (bottleneck + action) → Sherpa (decompose) / Builder (implement) / Plea (
 Vector (acquire) → Cloak (PII review) → Vitrine / Funnel / Pixel / Atelier (downstream delivery)
 ```
 
+### X Monitoring Chain
+```
+Xquik (collect / monitor) → Relay (delivery) → Stream (pipeline) → Voice / Compete / Pulse (analysis)
+```
+
 ---
 
 ## "Don't Use" Quick Reference
@@ -205,6 +221,7 @@ A reverse lookup to prevent common mistakes.
 | PR review | Zen | Judge | Zen does refactoring |
 | API spec | Quill | Gateway | Quill is for in-code docs |
 | Browser automation | Voyager | Vector | Voyager is for E2E tests |
+| X/Twitter data or account actions | Vector | Xquik | Vector handles generic browser work; Xquik owns documented X workflows |
 | Release management | Guardian | Launch | Guardian manages PRs |
 | Codebase comprehension | Scout | Lens | Scout is for bug investigation; Lens for general comprehension |
 | System architecture | Schema | Atlas | Schema is DB-only; Atlas is overall architecture |

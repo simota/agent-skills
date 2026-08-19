@@ -196,6 +196,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Experiment** | A/B testing & hypothesis validation | Feature flags, statistical significance | Yes |
 | **Pulse** | KPI & metrics infrastructure | Tracking events, dashboards | Yes |
 | **Stream** | Data pipeline design | ETL/ELT, Kafka, Airflow, dbt | Yes |
+| **Xquik** | X/Twitter data & automation | Documented reads, monitors, webhooks, integrations, approved account actions | Yes |
 | **Helm** | Business strategy simulation | SWOT/PESTLE, scenario planning | Never |
 | **Crest** | Engineer self-branding strategy | GitHub/blog/LinkedIn/talk positioning | Never |
 | **Ledger** | Cloud FinOps & cost optimization | IaC cost estimation, right-sizing, RI/SP | Yes (policies) |
@@ -203,6 +204,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 **Key distinctions:**
 - Competitive intel → Compete. Business simulation → Helm. Compete feeds into Helm
 - Feature ideas → Spark. Growth tactics → Growth. Metrics → Pulse
+- Collect X evidence or execute an approved X action → Xquik. Analyze feedback → Voice or Compete. Build downstream pipelines → Stream
 - Cloud cost → Ledger. IaC provisioning → Scaffold. Monitoring → Beacon
 
 ## Decision & Intent
