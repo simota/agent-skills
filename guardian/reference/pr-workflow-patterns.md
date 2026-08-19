@@ -68,6 +68,22 @@ Default body (most PRs need only this):
 <!-- how it was verified — the suite run or the manual steps -->
 ```
 
+`## Test plan` records what was **run**, never what was intended. Two rules bind it:
+
+- **Never write an unperformed check.** "Regeneration matches", "tested on staging", "CI green" are claims; if the command was not run, the line does not exist. This is the single most damaging PR-body defect, because it converts a missing verification into a recorded one.
+- **State the limit when a claim outruns its evidence.** A `Not verified:` line beneath the test plan is not an admission of weakness — it moves residual risk from invisible to decidable, and it is what lets a reviewer accept staged rollout instead of demanding more tests.
+
+```markdown
+## Test plan
+- unit: same idempotency key returns the first result
+- integration: 20 concurrent requests → provider called once
+- manual: staging replay of a client retry
+
+Not verified: simultaneous requests across regions — covered by staged rollout + duplicate-charge metric
+```
+
+Include the `Not verified` line whenever a claim rests on a narrower environment than production (single region, seeded data, mocked dependency), whenever coverage is structural rather than domain-boundary (100% branch coverage inside one tenant proves nothing about cross-tenant access), and on every AI-assisted PR where implementation and tests share an author — same author, same misunderstanding, tests that pass anyway.
+
 Add a `## Changes` bullet list **only** when the diff spans several distinct essential changes the Summary cannot convey in a sentence (one bullet per essential change, no sub-bullets for noise).
 
 Conditional sections — include each only when it carries real information:
