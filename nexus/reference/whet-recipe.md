@@ -34,7 +34,7 @@ Use `whet` when: a suite's *coverage* is high but its *strength* is unknown · a
 | Drive a code **review** to zero | `quell` | Same machinery, different evaluator |
 | The suite is flaky, not weak | `radar` (flaky repair) | A flaky suite cannot host a mutation run at all — whet `BLOCK`s on it at BASELINE |
 | Load / chaos / contract resilience | `siege` (skill) | Whet owns only the mutation axis |
-| Loop must survive session end | `orbit` skill | Whet is attended-but-uninterrupted, in-session |
+| Loop must survive session end | project-local `orbit` when available; otherwise `goal` or `apex` | Whet is attended-but-uninterrupted, in-session; apply `_common/PROJECT_LOCAL_SKILLS.md` |
 
 **Scale:** 4-8 agents per cycle × ≤ 3 cycles, plus 2 at BASELINE. Medium-to-high cost — the governor is the **engine runtime**, not the agent count, so `tier=3` on a large repo dominates everything else.
 *Range derivation:* TRIAGE 1-2 (`Siege` + `Magi` on dispute) + FIX 1-3 (`Radar` · `Void`/`Sweep` · `Zen`) + GATE-S 1 (`Radar`) + RE-MUTATE 1 (`Siege`) → floor 1+1+1+1 = **4**, ceiling 2+3+1+1 = **8** (the dispute arbitrator is counted inside TRIAGE). BASELINE adds `Radar` + `Siege` = **2**, once.
@@ -208,7 +208,7 @@ Generic finding-loop failures and their mitigations are **`_common/FINDING_LEDGE
 Driving test quality to a bar?
   Oracle is a MUTATION ENGINE's surviving-mutant set → whet
     └ one measurement, no loop → siege (skill) MUTATE
-    └ must survive session end → orbit skill
+    └ must survive session end → project-local orbit, else goal/apex
   Oracle is line/branch COVERAGE → radar (skill)
   Oracle is an external REVIEWER's finding list → quell (code) / burnish (UI)
   Oracle is load / chaos / contract resilience → siege (skill)

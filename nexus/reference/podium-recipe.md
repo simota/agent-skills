@@ -481,7 +481,7 @@ parallel:
 
 ### Phase 5: Improvement Team (PDCA loop, 2-5 agents per loop, max 2 loops)
 
-**Driver:** orbit (autonomous loop runner) — same as summit but capped at 2 iterations
+**Driver:** project-local Orbit when available; otherwise Nexus drives the bounded loop directly and records `project_local_fallback: true` — same as summit but capped at 2 iterations (`_common/PROJECT_LOCAL_SKILLS.md`).
 
 **Per-loop process:**
 

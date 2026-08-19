@@ -423,7 +423,7 @@ judge keeps its own internal tri-engine fan-out unchanged.
 
 ### Phase 5: Improvement Team (PDCA loop, 3-6 agents per loop, max 3 loops)
 
-**Driver:** orbit (autonomous loop runner)
+**Driver:** project-local Orbit when available; otherwise Nexus drives the bounded loop directly and records `project_local_fallback: true` (`_common/PROJECT_LOCAL_SKILLS.md`).
 
 **Per-loop process.** Rosters per § Engine × Team Matrix (Improvement row); each branch names its cell plus any phase-specific delta:
 

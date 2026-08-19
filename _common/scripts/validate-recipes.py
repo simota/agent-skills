@@ -39,6 +39,7 @@ import sys
 from pathlib import Path
 
 SKILLS_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_LOCAL_ROOT = SKILLS_ROOT / ".claude" / "skills"
 SKIP_DIRS = {"_common", "_templates"}
 RESERVED = {"default", "auto", "help", "list"}
 KEBAB = re.compile(r"^[a-z0-9][a-z0-9-]{1,19}$")
@@ -65,14 +66,20 @@ def changed_skill_names() -> set[str]:
 
 
 def iter_skills(only: set[str] | None = None):
-    for entry in sorted(SKILLS_ROOT.iterdir()):
-        if not entry.is_dir() or entry.name in SKIP_DIRS:
-            continue
-        if only is not None and entry.name not in only:
-            continue
-        skill_md = entry / "SKILL.md"
-        if skill_md.is_file():
-            yield entry.name, skill_md
+    roots = [SKILLS_ROOT]
+    if PROJECT_LOCAL_ROOT.is_dir():
+        roots.append(PROJECT_LOCAL_ROOT)
+    entries = []
+    for root in roots:
+        for entry in root.iterdir():
+            if not entry.is_dir() or entry.name in SKIP_DIRS or entry.name.startswith("."):
+                continue
+            if only is not None and entry.name not in only:
+                continue
+            skill_md = entry / "SKILL.md"
+            if skill_md.is_file():
+                entries.append((entry.name, skill_md))
+    yield from sorted(entries, key=lambda item: item[0])
 
 
 def extract_recipes_block(content: str, skill_dir=None) -> str | None:

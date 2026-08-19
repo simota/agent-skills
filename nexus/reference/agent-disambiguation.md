@@ -49,6 +49,8 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 
 ### Lore vs Darwin (Ecosystem Meta)
 
+Both are project-local extensions. Apply `_common/PROJECT_LOCAL_SKILLS.md` before routing; when unavailable, use `Tome`/`Scribe` for durable knowledge or `Prune` → `Architect` for ecosystem evaluation and improvement.
+
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
 | "What patterns have agents learned?", "cross-agent insights" | **Lore** | Knowledge synthesis and extraction |
@@ -440,6 +442,8 @@ upside ("how much can this feature earn", "opportunity upper bound") → Spark (
 ---
 
 ### Tempo vs Weave vs Launch vs Orbit (Scheduling / Time / Flow)
+
+Orbit is project-local. Apply `_common/PROJECT_LOCAL_SKILLS.md`; when unavailable, use `Nexus[goal/apex]` for bounded execution or `Sherpa` for decomposition.
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|

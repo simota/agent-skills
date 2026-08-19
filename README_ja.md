@@ -1,14 +1,14 @@
 # AI Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Agents](https://img.shields.io/badge/Agents-114-blue.svg)]()
+[![Global Agents](https://img.shields.io/badge/Global_Agents-111-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-🤖 124種類の専門AIエージェントチームによる協調開発を実現するスキルコレクション
+🤖 111のグローバルスキルと3つのproject-local拡張による協調開発を実現するスキルコレクション
 
 ## ✨ Features
 
-- **124種類の専門エージェント** - バグ調査、テスト、セキュリティ、UI/UX、AI/ML、可観測性、インフラまで網羅
+- **111のグローバルエージェント + 3つのproject-local拡張** - バグ調査、テスト、セキュリティ、UI/UX、AI/ML、可観測性、インフラまで網羅
 - **Nexusオーケストレーター** - タスクを分析し最適なエージェントチェーンを自動設計
 - **プラットフォーム非依存** - Claude Code、Codex CLI、Antigravity CLI等で動作
 
@@ -35,11 +35,11 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 ## 📚 概要
 
-このリポジトリには、ソフトウェア開発の様々な側面を専門とする124種類のAIエージェントが含まれています。各エージェントは特定のドメインに特化しており、**Nexus**オーケストレーターによって統括・連携されます。
+このリポジトリには、ソフトウェア開発の様々な側面を専門とする111のグローバルエージェントと、3つのproject-local拡張が含まれています。各エージェントは特定のドメインに特化しており、**Nexus**オーケストレーターによって統括・連携されます。
 
 ## エージェント一覧
 
-> 全 114 エージェントのカテゴリ別カタログ。
+> 111のグローバルエージェントと、明記した3つのproject-local拡張のカテゴリ別カタログ。
 
 ### オーケストレーション
 
@@ -51,11 +51,11 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Rally** | _"One task, many hands. Parallel by design."_ - マルチセッション並列オーケストレーター。Claude Code Agent Teams APIで複数Claudeインスタンスを生成・管理し、並行タスク実行を実現 | チーム管理、並列実行 |
 | **Sigil** | _"Every project has patterns waiting to become power."_ - プロジェクト運用レイヤー設計・生成。スキル、レシピ、ワークフロー、ルーティングマップを作成 | プロジェクト固有スキル |
 | **Gauge** | _"What gets measured gets managed. What gets audited gets normalized."_ - SKILL.md正規化監査・自己進化エージェント。19項目チェックリストに基づくコンプライアンススキャン、修正提案、Webベースのベストプラクティス自動取得 | コンプライアンスレポート、修正プラン |
-| **Orbit** | _"Give me a goal. I'll give you a runner that finishes."_ - Nexus-autoloop完走スペシャリスト。自律ループの完走スクリプト生成・運用契約設計・監査を担当。ゴールを渡せば完走できるランナー一式を生成 | ランナースクリプト、契約 |
-| **Darwin** | _"Ecosystems that cannot sense themselves cannot evolve themselves."_ - エコシステム自己進化オーケストレーター。プロジェクトライフサイクルを検出し、エージェントの関連性を評価し、横断的知識を統合してエコシステム全体を進化させる | エコシステムフィットネススコア、進化提案 |
-| **Lore** | _"Forgotten lessons are lessons repeated. Institutional memory is the compound interest of experience."_ - エコシステム横断の知識統合・パターン抽出・伝播を担うメモリキュレーター。エージェントjournalから共通パターンを発見し、カタログ化して関連エージェントへ配信。知識の腐敗検出・ベストプラクティス伝播により制度的記憶を維持 | METAPATTERNS.md、知識インサイト |
+| **Orbit** *(project-local)* | _"Give me a goal. I'll give you a runner that finishes."_ - このリポジトリのNexus-autoloop完走スクリプト生成・運用契約設計・監査を担当 | ランナースクリプト、契約 |
+| **Darwin** *(project-local)* | _"Ecosystems that cannot sense themselves cannot evolve themselves."_ - `.agents/ECOSYSTEM.md`へ永続化する、このリポジトリ専用のエコシステム進化オーケストレーター | エコシステムフィットネススコア、進化提案 |
+| **Lore** *(project-local)* | _"Forgotten lessons are lessons repeated. Institutional memory is the compound interest of experience."_ - `.agents/*.md`を`METAPATTERNS.md`へ統合する、このリポジトリ専用の知識キュレーター | METAPATTERNS.md、知識インサイト |
 | **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - デザインから実装までを閉ループで繋ぐパイプラインオーケストレーター。Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas を統括し、デザイン抽出・プロトタイプ・ビジュアルアセット・スライド・本番実装をプロジェクトデザインシステムを永続化しながら一気通貫で提供 | デザインシステムパッケージ、統合成果物 |
-| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 114."_ - スキルエコシステムのナビゲーター・オンボーディングガイド。エージェントを一覧化し、タスクに最適な担当を推薦し、初心者が適切なスペシャリストを発見できるよう支援 | レコメンド、エージェントマップ |
+| **Compass** | _"When in doubt, ask Compass. It finds the right skill for the task."_ - 111のグローバルスキルと利用可能なproject-local拡張から、タスクに最適な担当を推薦 | レコメンド、エージェントマップ |
 | **Prune** | _"A garden grows by what you cut, not what you plant."_ - スキルエコシステム整理監査エージェント。エージェント編成の重複・冗長・不活性を監査し、統合候補とサンセット計画を根拠・アーカイブ手順付きで提案（提案のみ・実行はしない） | 整理監査レポート、統合/サンセット提案 |
 
 ### 調査・企画（コードを書かない）
@@ -645,7 +645,7 @@ skills/
 ├── cast/SKILL.md       # ペルソナキャスティング＆レジストリ管理
 ├── compass/SKILL.md    # スキルエコシステムナビゲーター・オンボーディングガイド
 ├── compete/SKILL.md    # 競合調査
-├── darwin/SKILL.md     # エコシステム自己進化オーケストレーター
+├── .claude/skills/darwin/SKILL.md  # project-localエコシステム進化
 ├── director/SKILL.md   # デモ動画撮影
 ├── echo/SKILL.md       # ペルソナ検証
 ├── experiment/SKILL.md # A/Bテスト設計
@@ -667,7 +667,7 @@ skills/
 ├── latch/SKILL.md      # Claude Codeフック管理
 ├── launch/SKILL.md     # リリース管理
 ├── lens/SKILL.md       # コードベース理解・調査
-├── lore/SKILL.md       # エコシステム横断知識キュレーター
+├── .claude/skills/lore/SKILL.md    # project-local知識キュレーター
 ├── magi/SKILL.md       # 多角的意思決定
 ├── matrix/SKILL.md     # ユニバーサル多次元分析
 ├── mend/SKILL.md       # 既知障害パターン自動修復
@@ -676,7 +676,7 @@ skills/
 ├── vector/SKILL.md  # ブラウザ自動化
 ├── nexus/SKILL.md      # オーケストレーター
 ├── oracle/SKILL.md     # AI/ML設計・評価
-├── orbit/SKILL.md      # Nexus-autoloop完走スペシャリスト
+├── .claude/skills/orbit/SKILL.md   # project-local Nexus-autoloop拡張
 ├── palette/SKILL.md    # UX
 ├── polyglot/SKILL.md   # i18n
 ├── probe/SKILL.md      # セキュリティ動的テスト（DAST）
@@ -798,6 +798,8 @@ Zod/Yupによるスキーマ検証、エラーメッセージ生成を担当さ�
 ---
 
 ##### 自律ループ完走スクリプト（Orbit）
+
+> project-local: このリポジトリの`.claude/skills/orbit/`または`.agents/skills/orbit/`でのみ利用できます。
 
 ```
 /Orbit

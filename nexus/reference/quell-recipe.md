@@ -34,7 +34,7 @@ Use `quell` when: a change set must be driven to a clean review before merge · 
 | Discover **design** weaknesses by internal audit | `anneal` | anneal generates its own slate from six design dimensions; quell's slate comes from an external reviewer on a diff |
 | Drive a **rendered UI surface** to a clean external review | `burnish` | same machinery, different object — burnish reviews screenshots of the running UI and splits its oracle (hard findings to zero, soft axes to `≥ 2`) because taste never reaches zero |
 | A *known* restructure, shipped once, no reviewer loop | `refactor` | quell adds a loop and an external oracle; a single rename/extract does not need either. Drive an already-made refactor to a clean review → `quell profile=refactor` (§5a) |
-| Loop must survive session end / run for hours | `orbit` skill | quell is attended-but-uninterrupted, in-session; orbit owns unattended runners (worktree + state files + external cap) |
+| Loop must survive session end / run for hours | project-local `orbit` when available; otherwise `goal` or `apex` | quell is attended-but-uninterrupted, in-session; apply `_common/PROJECT_LOCAL_SKILLS.md` before an unattended-runner handoff |
 | Just want one review, no fixing | `judge` direct | minimum viable chain |
 
 **Scale:** 4-11 agents per cycle × ≤ 6 cycles. Medium-to-high cost (multiplied by cycle count; finding volume is the governor, not repo size).
@@ -206,7 +206,7 @@ Driving code to a clean state?
   Oracle is an EXTERNAL REVIEWER's finding list → quell
     └ the object is a RENDERED UI SURFACE, not a diff → burnish
     └ the diff must preserve behavior (a refactor) → quell profile=refactor
-    └ must survive session end / run unattended for hours → orbit skill
+    └ must survive session end / run unattended for hours → project-local orbit, else goal/apex
     └ want to decide each finding yourself, conversationally → judge pair
   Oracle is a RUBRIC score on a deliverable → converge
   Oracle is a METRIC on one shipped feature → kaizen

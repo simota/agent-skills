@@ -1,12 +1,12 @@
 # Skill Packs
 
-Skill membership matrix for selective enablement across the 114-skill ecosystem.
+Skill membership matrix for selective enablement across the 111-skill global ecosystem. This repository also carries three project-local extensions (`orbit`, `lore`, `darwin`) registered in `_common/PROJECT_LOCAL_SKILLS.md`.
 
 ## Why this exists
 
-Anthropic guidance is **8-12 skills** before "context tax" (token overhead per turn) starts to dominate; routing degradation begins in the **dozens**, and a **15,000-character cap** on the available skills list is a hard ceiling. This repository's 114 skills exceed all three thresholds.
+Anthropic guidance is **8-12 skills** before "context tax" (token overhead per turn) starts to dominate; routing degradation begins in the **dozens**, and a **15,000-character cap** on the available skills list is a hard ceiling. This repository's 114 packages (111 global + 3 project-local) exceed all three thresholds when loaded together.
 
-This file defines **10 Packs** (overlapping subsets of the ecosystem) so that any single workstream can enable ~20-30 skills instead of the full 114. Selective enablement is driven by the Claude Code `skills` filter in `~/.claude/settings.json` (`"all"` / `[list]` / `[]`); Codex CLI and agy use equivalent allowlist mechanisms when available.
+This file defines **11 Packs** (overlapping subsets of the ecosystem) so that any single workstream can enable ~20-30 skills instead of the full 111 global skills. Selective enablement is driven by the Claude Code `skills` filter in `~/.claude/settings.json` (`"all"` / `[list]` / `[]`); Codex CLI and agy use equivalent allowlist mechanisms when available.
 
 **Sources:**
 - claude.com/blog/lessons-from-building-claude-code-how-we-use-skills (8-12 sweet spot, context tax)
@@ -28,26 +28,40 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 | Profile | Packs active | Total skills (approx) |
 |---------|-------------|----------------------|
-| `web-dev` | `core + web + design` | 39 |
-| `mobile-dev` | `core + mobile + design` | 29 |
-| `security` | `core + security` | 23 |
-| `growth` | `core + growth + research` | 35 |
-| `infra-ops` | `core + infra` | 39 |
-| `research` | `core + research` | 37 |
-| `package-author` | `core + package-gen + design + research` | 60 |
-| `all` | `"all"` (no filter) | 114 (debugging / discovery only) |
+| `web-dev` | `core + web + design` | 33 |
+| `mobile-dev` | `core + mobile + design` | 27 |
+| `security` | `core + security` | 17 |
+| `growth` | `core + growth + research` | 34 |
+| `infra-ops` | `core + infra` | 28 |
+| `research` | `core + research` | 28 |
+| `package-author` | `core + package-gen + design + research` | 51 |
+| `skill-meta` | `core + skill-meta` | 12 |
+| `incident-response` | `core + cull` | 9 |
+| `legal-jp` | `core + clause` | 9 |
+| `personal-env` | `core + hearth` | 9 |
+| `ai-cli-admin` | `core + hone + latch` | 10 |
+| `gemini-image` | `core + sketch` | 9 |
+| `all` | `"all"` (no filter) | 111 global; this repository additionally discovers 3 project-local skills |
 
 ---
 
 ## Packs
 
-### `core` (always-on, 12 skills)
+### `core` (always-on, 8 skills)
 
-**Purpose:** orchestration + universal investigation/implementation/review primitives + skill-meta governance required for any workstream.
+**Purpose:** orchestration + universal investigation/implementation/review primitives required for any workstream.
 
-**Members:** `nexus`, `sherpa`, `scout`, `builder`, `radar`, `zen`, `guardian`, `compass`, `architect`, `gauge`, `prune`, `sigil`
+**Members:** `nexus`, `sherpa`, `scout`, `builder`, `radar`, `zen`, `guardian`, `compass`
 
 **Triggers:** loaded unconditionally.
+
+### `skill-meta` (ecosystem authoring and governance, 4 skills)
+
+**Purpose:** explicit maintenance of skill packages, project-local operating layers, format compliance, and portfolio retention. This Pack is not loaded for ordinary product work.
+
+**Members:** `architect`, `gauge`, `prune`, `sigil`
+
+**Triggers:** `create skill`, `design skill`, `skill audit`, `skill compliance`, `skill ecosystem`, `merge skill`, `sunset skill`, `project-local skill`, `skill routing`.
 
 ---
 
@@ -61,23 +75,23 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `mobile` (iOS/Android/macOS native + cross-platform, 6 skills)
+### `mobile` (iOS/Android/macOS native + cross-platform, 5 skills)
 
 **Purpose:** pure-native app development — iOS/Android mobile (Swift/SwiftUI, Kotlin/Compose) **and macOS desktop** (SwiftUI for Mac / AppKit) — plus cross-platform (RN/Flutter/KMP/CMP) and store/direct release. Named `mobile` for backward compatibility with the `mobile-dev` profile; scope is native-app, not mobile-only.
 
-**Members:** `native`, `port`, `voyager`, `forge`, `frame`, `hearth`
+**Members:** `native`, `port`, `voyager`, `forge`, `frame`
 
 **Triggers:** `ios`, `android`, `macos`, `mac app`, `swift`, `swiftui`, `appkit`, `kotlin`, `jetpack compose`, `xcuitest`, `appium`, `detox`, `maestro`, `react native`, `flutter`, `kmp`, `cmp`, `liquid glass`, `material 3`, `app store`, `mac app store`, `play store`, `notarization`, `developer id`, `sparkle`, `menu bar app`, `entitlements`, `xpc`
 
 ---
 
-### `security` (SAST + DAST + crypto + compliance, 11 skills)
+### `security` (SAST + DAST + crypto + compliance, 9 skills)
 
 **Purpose:** static + dynamic security analysis, threat modeling, crypto, privacy, compliance, supply-chain.
 
-**Members:** `sentinel`, `probe`, `attest`, `crypt`, `cloak`, `vigil`, `breach`, `cull`, `chain`, `canon`, `clause`
+**Members:** `sentinel`, `probe`, `attest`, `crypt`, `cloak`, `vigil`, `breach`, `chain`, `canon`
 
-**Triggers:** `security`, `cve`, `owasp`, `sast`, `dast`, `pentest`, `threat model`, `red team`, `purple team`, `mitre`, `sigma`, `yara`, `cryptography`, `tls`, `kms`, `pii`, `gdpr`, `ccpa`, `soc2`, `pci-dss`, `hipaa`, `iso 27001`, `supply chain`, `npm worm`, `malware`
+**Triggers:** `security`, `cve`, `owasp`, `sast`, `dast`, `pentest`, `threat model`, `red team`, `purple team`, `mitre`, `sigma`, `yara`, `cryptography`, `tls`, `kms`, `pii`, `gdpr`, `ccpa`, `soc2`, `pci-dss`, `hipaa`, `iso 27001`, `supply chain audit`
 
 ---
 
@@ -91,53 +105,73 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `growth` (product growth + analytics + LP, 17 skills)
+### `growth` (product growth + analytics + LP, 16 skills)
 
 **Purpose:** funnel/LP optimization, A/B testing, retention, KPI design, persona-driven UX validation.
 
-**Members:** `pulse`, `experiment`, `funnel`, `ledger`, `compete`, `voice`, `echo`, `cast`, `field`, `trace`, `bond`, `saga`, `spark`, `rank`, `helm`, `sage`, `growth`
+**Members:** `pulse`, `experiment`, `funnel`, `ledger`, `compete`, `voice`, `echo`, `cast`, `field`, `trace`, `bond`, `saga`, `spark`, `rank`, `helm`, `growth`
 
 **Triggers:** `kpi`, `a/b test`, `experiment`, `funnel`, `landing page`, `cro`, `seo`, `geo`, `retention`, `churn`, `nps`, `cohort`, `session replay`, `persona`, `cognitive walkthrough`, `user feedback`, `cost optimization`, `finops`, `competitive analysis`, `prioritization`, `ice`, `rice`, `wsjf`, `moscow`
 
 ---
 
-### `infra` (DevOps + DB + scheduling + repo ops, 27 skills)
+### `infra` (DevOps + DB + scheduling + repo ops, 20 skills)
 
 **Purpose:** infrastructure provisioning, CI/CD, observability, DB design, scheduling, repo health.
 
-**Members:** `beacon`, `mend`, `latch`, `gear`, `scaffold`, `triage`, `trail`, `launch`, `hearth`, `tempo`, `schema`, `tuner`, `seek`, `stream`, `weave`, `shift`, `grok`, `grove`, `hone`, `sweep`, `harvest`, `rally`, `darwin`, `lore`, `orbit`, `anvil`, `relay`
+**Members:** `beacon`, `mend`, `gear`, `scaffold`, `triage`, `trail`, `launch`, `tempo`, `schema`, `tuner`, `seek`, `stream`, `weave`, `shift`, `grok`, `grove`, `sweep`, `rally`, `anvil`, `relay`
 
-**Triggers:** `terraform`, `cloudformation`, `pulumi`, `docker`, `kubernetes`, `gha`, `github actions`, `ci/cd`, `pipeline`, `dotfiles`, `zsh`, `tmux`, `neovim`, `cron`, `timezone`, `dst`, `retry`, `backoff`, `db schema`, `migration`, `index`, `slow query`, `etl`, `kafka`, `airflow`, `dbt`, `multi-tenant`, `search engine`, `vector db`, `state machine`, `saga`, `regex`, `dsl`, `parser`, `repo structure`, `dead code`, `cli config`, `cli dev`, `tui`, `linter`, `test runner`, `build tool`, `slack bot`, `discord bot`, `webhook`, `websocket`, `c4 model`, `structurizr`
+**Triggers:** `terraform`, `cloudformation`, `pulumi`, `docker`, `kubernetes`, `gha`, `github actions`, `ci/cd`, `pipeline`, `cron`, `timezone`, `dst`, `retry`, `backoff`, `db schema`, `migration`, `index`, `slow query`, `etl`, `kafka`, `airflow`, `dbt`, `multi-tenant`, `search engine`, `vector db`, `state machine`, `saga`, `regex`, `dsl`, `parser`, `repo structure`, `dead code`, `cli dev`, `tui`, `linter`, `test runner`, `build tool`, `slack bot`, `discord bot`, `webhook`, `websocket`, `c4 model`, `structurizr`
 
 ---
 
-### `design` (design system + visual + media, 18 skills)
+### `design` (design system + visual + media, 16 skills)
 
 **Purpose:** design system construction, visual asset generation, slide/video production, brand work.
 
-**Members:** `muse`, `vision`, `atelier`, `canvas`, `frame`, `vitrine`, `palette`, `prose`, `flow`, `pixel`, `forge`, `artisan`, `ink`, `sketch`, `saga`, `cue`, `director`, `stage`
+**Members:** `muse`, `vision`, `atelier`, `canvas`, `frame`, `vitrine`, `palette`, `prose`, `flow`, `pixel`, `forge`, `artisan`, `ink`, `saga`, `cue`, `stage`
 
 **Triggers:** `design system`, `design tokens`, `figma`, `figjam`, `figma make`, `storybook`, `mermaid`, `draw.io`, `ascii diagram`, `svg`, `icon`, `pixel art`, `3d`, `meshy`, `tripo`, `slide`, `marp`, `reveal.js`, `slidev`, `keynote`, `presentation`, `notebooklm`, `video`, `screencast`, `cli demo`, `vhs`, `terminalizer`, `asciinema`, `audio`, `bgm`, `sfx`, `voice synthesis`, `aituber`, `vtuber`, `game design`, `gdd`
 
 ---
 
-### `research` (user research + discovery + brainstorming + advisory, 25 skills)
+### `research` (user research + discovery + brainstorming + advisory, 20 skills)
 
-**Purpose:** discovery-side work — user research, brainstorming, strategic decisions, named-expert advisory lenses, prose authoring.
+**Purpose:** discovery-side work — user research, brainstorming, strategic decisions, and prose authoring.
 
-**Members:** `field`, `lens`, `cast`, `voice`, `echo`, `trace`, `compete`, `spark`, `riff`, `flux`, `omen`, `magi`, `summon`, `rank`, `crest`, `sage`, `helm`, `harvest`, `tome`, `scribe`, `void`, `quill`, `zine`, `saga`, `pdm`
+**Members:** `field`, `lens`, `cast`, `voice`, `echo`, `trace`, `compete`, `spark`, `riff`, `flux`, `omen`, `magi`, `rank`, `helm`, `tome`, `scribe`, `void`, `quill`, `saga`, `pdm`
 
-**Triggers:** `user research`, `interview`, `usability test`, `persona`, `journey map`, `jtbd`, `brainstorm`, `ideate`, `reframe`, `assumption challenge`, `pre-mortem`, `deliberation`, `prioritization`, `channel a thinker`, `what would <figure> do`, `expert panel`, `conclave`, `mental models`, `side project idea`, `office hours`, `advisory`, `strategy simulation`, `yagni`, `scope cut`, `documentation`, `jsdoc`, `tsdoc`, `tech blog`, `note`, `zenn`, `qiita`, `tome`
+**Triggers:** `user research`, `interview`, `usability test`, `persona`, `journey map`, `jtbd`, `brainstorm`, `ideate`, `reframe`, `assumption challenge`, `pre-mortem`, `deliberation`, `prioritization`, `mental models`, `strategy simulation`, `yagni`, `scope cut`, `documentation`, `jsdoc`, `tsdoc`, `tome`
 
 ---
 
-### `package-gen` (document-package generation, 32 skills)
+### `package-gen` (document-package generation, 31 skills)
 
 **Purpose:** end-to-end document package production via the `package` Recipe (12 domain presets — startup / career / learning / hiring / local-gov / etc.). Heavy union with `research`, `design`, and `core`.
 
-**Members:** `scribe`, `tome`, `quill`, `rank`, `spark`, `magi`, `void`, `morph`, `canon`, `prose`, `saga`, `pulse`, `cast`, `field`, `echo`, `voice`, `compete`, `attest`, `judge`, `clause`, `cloak`, `vigil`, `trawl`, `stage`, `cue`, `vitrine`, `pixel`, `artisan`, `frame`, `muse`, `palette`, `vision`
+**Members:** `scribe`, `tome`, `quill`, `rank`, `spark`, `magi`, `void`, `morph`, `canon`, `prose`, `saga`, `pulse`, `cast`, `field`, `echo`, `voice`, `compete`, `attest`, `judge`, `cloak`, `vigil`, `trawl`, `stage`, `cue`, `vitrine`, `pixel`, `artisan`, `frame`, `muse`, `palette`, `vision`
 
 **Triggers:** `business plan`, `venture`, `mvp dossier`, `pitch package`, `documentation package`, `package`, `startup dossier`, `domain preset`, `traceability matrix`, `feature_id`, `f-001`
+
+## Optional global add-ons
+
+The following skills remain globally installed but are excluded from broad domain Packs. Load their dedicated profile only when the named environment or risk surface is active.
+
+| Profile | Skills | Trigger anchors | Activation boundary |
+|---------|--------|-----------------|---------------------|
+| `incident-response` | `cull` | `npm worm`, `Shai-Hulud`, `S1ngularity`, `malware eradication`, `IoC campaign` | Named supply-chain campaign or confirmed malware-response work |
+| `legal-jp` | `clause` | `Tokushoho`, `特商法`, `APPI legal review`, `Japanese ToS` | Japanese ToS, Privacy Policy, APPI, or Tokushoho review |
+| `personal-env` | `hearth` | `dotfiles`, `zsh`, `tmux`, `neovim`, `AppleScript`, `JXA` | Personal dotfiles or macOS Apple Events automation |
+| `ai-cli-admin` | `hone`, `latch` | `Codex config`, `Claude Code hooks`, `agy config`, `AI CLI audit` | AI CLI configuration audit or Claude Code hook administration |
+| `gemini-image` | `sketch` | `Gemini API image`, `Gemini image generation code` | Gemini API image-generation implementation |
+
+## Explicit-invocation skills
+
+These cross-project skills are intentionally absent from default domain profiles because their style or artifact is unusually narrow. Keep them installed for direct invocation only: `director`, `harvest`, `crest`, `zine`, `sage`, `summon`.
+
+## Project-local extensions
+
+`orbit`, `lore`, and `darwin` are not members of global Packs or profiles. They are available only inside this repository through `.claude/skills/` and `.agents/skills/`; availability and fallback rules live in `_common/PROJECT_LOCAL_SKILLS.md`.
 
 ---
 
@@ -157,7 +191,7 @@ If 0 anchors match → fall through to `all` profile with `skillListingBudgetFra
 
 When a new skill is added (e.g. via `architect`):
 1. Architect updates `CAPABILITIES_SUMMARY` for routing partners.
-2. Architect adds the skill to **at least one** pack here and emits `ARCHITECT_TO_NEXUS_HANDOFF` so Nexus's CLASSIFY can adapt.
+2. Architect adds the skill to **at least one** Pack here, or records a justified optional/explicit/project-local placement, and emits `ARCHITECT_TO_NEXUS_HANDOFF` so Nexus's CLASSIFY can adapt.
 3. If a pack would grow beyond 30 members, split it (e.g. `infra` → `infra-build` + `infra-data` + `infra-ops`).
 
 When a skill is removed or merged:
@@ -168,6 +202,7 @@ When a skill is removed or merged:
 - **Loading `all` as the default.** Negates the entire point of this file. `all` is for discovery sessions only.
 - **Pack-by-feature instead of pack-by-domain.** Packs are domains (web, mobile, security…), not features (auth, payment, search). A feature spans multiple packs by design.
 - **Duplicating description prose across packs.** Each skill's `description:` lives in its `SKILL.md`; this file only records membership.
+- **Treating specialist administration as universal.** Skill authoring, CLI administration, incident campaigns, and project-local extensions are opt-in surfaces, not `core`.
 - **Skipping `core`.** Disabling `nexus` or `sherpa` breaks orchestration. Always include `core`.
 
 ## Status

@@ -158,8 +158,8 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | KNOWLEDGE | research | Field → Scribe |
 | SPEC_VERIFY | quick | Attest → Scribe |
 | SPEC_VERIFY | standard/full | Attest → Scribe → Radar → Builder |
-| LOOP_OPS | simple | Orbit → Builder → Radar |
-| LOOP_OPS | full | Orbit → Builder → Guardian → Radar |
+| LOOP_OPS | simple | Orbit (project-local) / Nexus fallback → Builder → Radar |
+| LOOP_OPS | full | Orbit (project-local) / Nexus fallback → Builder → Guardian → Radar |
 | EVOLUTION | quick | Darwin → Canvas |
 | EVOLUTION | standard | Darwin → Architect → Void → Canvas |
 | EVOLUTION | full | Darwin → Architect → Void → Lore → Canvas |

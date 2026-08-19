@@ -1,6 +1,6 @@
 # Skill Agent Catalog
 
-**Purpose:** Complete catalog of all skill agents with descriptions and triggers.
+**Purpose:** Complete catalog of 111 global skills and 3 repository-local extensions with descriptions and triggers.
 **Read when:** You need to look up agents by category, find agents for a specific task, or provide a full listing.
 
 ---
@@ -13,7 +13,7 @@
 
 ---
 
-## Orchestration (5)
+## Orchestration (4 global)
 
 Decomposes, coordinates, and parallelizes tasks.
 
@@ -75,7 +75,7 @@ Security analysis and testing.
 | **Probe** | Dynamic security testing | OWASP ZAP / Burp Suite, penetration testing | Mixed |
 | **Crypt** | Cryptographic architecture | Algorithm selection, key management, E2EE, TLS configuration | Mixed |
 | **Chain** | Skill/plugin/MCP supply-chain audit | sha256 manifests, Unicode Tag injection scan, credential-exfiltration detection, MCP tool-description rug-pull prevention | Mixed |
-| **Cull** | Supply-chain malware infection scanner | IoC-based local scan for npm/PyPI worm campaigns; eradication and credential rotation runbooks | Mixed |
+| **Cull** *(optional: `incident-response`)* | Supply-chain malware infection scanner | IoC-based local scan for npm/PyPI worm campaigns; eradication and credential rotation runbooks | Mixed |
 
 ## Review (6)
 
@@ -110,7 +110,7 @@ Documentation authoring, visualization, and article writing.
 | **Prose** | UX writing | Microcopy, error messages, voice and tone | No |
 | **Tome** | Learning material | Diff → tutorial conversion, design-decision records | No |
 | **Canvas** | Diagramming and visualization | Mermaid / ASCII / draw.io for flow, sequence, ER diagrams | Mixed |
-| **Zine** | Tech blog series | Articles for note / Zenn / Qiita / dev.to | No |
+| **Zine** *(explicit only)* | Tech blog series | Articles for note / Zenn / Qiita / dev.to | No |
 
 ## Architecture (7)
 
@@ -171,7 +171,7 @@ Growth tactics and branding.
 |-------|------|---------|------|
 | **Growth** | SEO / CRO / GEO | Meta / OGP / JSON-LD, CTA optimization | Mixed |
 | **Bond** | Retention | Re-engagement, churn prevention | Mixed |
-| **Crest** | Engineer branding | GitHub / LinkedIn / blog / conference positioning | No |
+| **Crest** *(explicit only)* | Engineer branding | GitHub / LinkedIn / blog / conference positioning | No |
 
 ## Analytics (3)
 
@@ -190,7 +190,7 @@ Version-control workflow.
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Guardian** | PR management | Change classification, granularity recommendations, strategy | No |
-| **Harvest** | PR data collection / reporting | Weekly / monthly reports, release notes | No |
+| **Harvest** *(explicit only)* | PR data collection / reporting | Weekly / monthly reports, release notes | No |
 
 ## Browser (2)
 
@@ -219,7 +219,7 @@ Business strategy and decision-making. Does not write code.
 | **Helm** | Business strategy | SWOT / PESTLE / Porter analysis | No |
 | **Compete** | Competitive research | Feature matrices, positioning | No |
 | **Rank** | Prioritization | ICE / RICE / WSJF / MoSCoW scoring | No |
-| **Sage** | YC-style office-hours advisory | "Tell me what you're avoiding." Single-bottleneck extraction, founder anti-pattern detection, 1-2 week SMART action extraction | No |
+| **Sage** *(explicit only)* | YC-style office-hours advisory | "Tell me what you're avoiding." Single-bottleneck extraction, founder anti-pattern detection, 1-2 week SMART action extraction | No |
 
 ## Incident (2)
 
@@ -239,20 +239,18 @@ Coordination and communication.
 | **Relay** | Messaging integration | Bot development, webhooks, WebSocket | Mixed |
 | **Scribe** (`cross-team`) | Spec alignment | Cross-team Business / Dev / Design specifications | No |
 
-## Meta / Tooling (9)
+## Meta / Tooling (6 global)
 
 Manages and evolves the ecosystem itself.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Architect** | Skill design | New agent design, gap analysis | No |
-| **Sigil** | Project operating-layer design | Tailored skills plus recipe/workflow/routing-map blueprints (`blueprint`) | No |
-| **Lore** | Knowledge curation | Pattern extraction, knowledge-decay detection | No |
-| **Darwin** | Ecosystem evolution | Lifecycle detection, fitness evaluation | No |
-| **Hone** | AI CLI configuration optimization | Claude Code / Antigravity CLI configuration audit | No |
+| **Architect** *(`skill-meta`)* | Skill design | New agent design, gap analysis | No |
+| **Sigil** *(`skill-meta`)* | Project operating-layer design | Tailored skills plus recipe/workflow/routing-map blueprints (`blueprint`) | No |
+| **Hone** *(optional: `ai-cli-admin`)* | AI CLI configuration optimization | Claude Code / Antigravity CLI configuration audit | No |
 | **Compass** | Skill navigator | Skill guidance, onboarding | No |
-| **Latch** | Claude Code Hooks design | PreToolUse / PostToolUse / Stop and other lifecycle hooks | Mixed |
-| **Prune** | Skill ecosystem cleanup | Overlap audit, merge-candidate detection, sunset proposals | No |
+| **Latch** *(optional: `ai-cli-admin`)* | Claude Code Hooks design | PreToolUse / PostToolUse / Stop and other lifecycle hooks | Mixed |
+| **Prune** *(`skill-meta`)* | Skill ecosystem cleanup | Overlap audit, merge-candidate detection, sunset proposals | No |
 
 ## Creative / Media (2)
 
@@ -261,7 +259,7 @@ Media and creative generation.
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Ink** | SVG icons | Icon systems, sprite construction | Yes |
-| **Sketch** | AI image generation | Text → image via Gemini API | Yes |
+| **Sketch** *(optional: `gemini-image`)* | AI image generation | Text → image via Gemini API | Yes |
 
 ## AI / ML (2)
 
@@ -286,14 +284,23 @@ Specialized skills that don't fit the categories above.
 | **Seek** | Search-engine design | Full-text search, vector search, RAG | Mixed |
 | **Vigil** | Detection engineering | Sigma / YARA rule design | Mixed |
 | **Magi** | Multi-perspective deliberation | Architecture arbitration, Go / No-Go | No |
-| **Summon** | Named-figure thinking lenses | Channel a documented figure's mental models; conclave panel, expert critique; attestation-tagged, advisory only | No |
+| **Summon** *(explicit only)* | Named-figure thinking lenses | Channel a documented figure's mental models; conclave panel, expert critique; attestation-tagged, advisory only | No |
 | **Saga** | Narrative design | Customer-experience storytelling | No |
 | **Cue** | Video script | Product videos, storyboards | No |
-| **Director** | Demo-video production | Demos generated from Playwright E2E | Mixed |
+| **Director** *(explicit only)* | Demo-video production | Demos generated from Playwright E2E | Mixed |
 | **Stage** | Slide generation | Marp / reveal.js / Slidev | Mixed |
 | **Frame** | Figma → code bridge | Design context extraction | No |
-| **Clause** | Legal-document review | Terms of service, privacy policy | No |
-| **Orbit** | Autonomous-loop design | Script generation for nexus-autoloop | Mixed |
-| **Hearth** | Dotfile management | zsh / tmux / neovim / ghostty configuration | Mixed |
+| **Clause** *(optional: `legal-jp`)* | Legal-document review | Terms of service, privacy policy | No |
+| **Hearth** *(optional: `personal-env`)* | Dotfile management | zsh / tmux / neovim / ghostty configuration | Mixed |
 | **Mint** | Test-data generation | Factories, boundary values, seed management | Mixed |
 | **Tempo** | Schedule design | cron, timezone / DST, retry / backoff, business calendars | Mixed |
+
+## Project-local extensions (3)
+
+Available only inside this repository. Check `_common/PROJECT_LOCAL_SKILLS.md` before routing; use its fallback when unavailable.
+
+| Agent | Role | Trigger | Code |
+|-------|------|---------|------|
+| **Orbit** | Autonomous-loop design | Script generation for this repository's `nexus-autoloop` | Mixed |
+| **Lore** | Knowledge curation | `.agents/*.md` synthesis into `METAPATTERNS.md` | No |
+| **Darwin** | Ecosystem evolution | Fitness evaluation persisted to `.agents/ECOSYSTEM.md` | No |

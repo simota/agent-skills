@@ -1,14 +1,14 @@
 # AI Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Agents](https://img.shields.io/badge/Agents-114-blue.svg)]()
+[![Global Agents](https://img.shields.io/badge/Global_Agents-111-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 A skill collection that enables collaborative development with a team of specialized AI agents.
 
 ## Features
 
-- **114 Specialized Agents** - Covering bug investigation, testing, security, UI/UX, AI/ML, observability, and more
+- **111 Global Agents + 3 Project-local Extensions** - Broad reusable coverage without exposing repository-specific operating skills everywhere
 - **Nexus Orchestrator** - Analyzes tasks and automatically designs optimal agent chains
 - **Platform Agnostic** - Works with Claude Code, Codex CLI, Antigravity CLI, and others
 
@@ -35,11 +35,11 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 ## Overview
 
-This repository contains 114 specialized AI agents covering various aspects of software development. Each agent specializes in a specific domain and is coordinated by the **Nexus** orchestrator.
+This repository contains 111 globally reusable AI agents and 3 repository-local operating extensions. Each skill specializes in a specific domain and is coordinated by the **Nexus** orchestrator when available in the active profile.
 
 ## Agent Catalog
 
-> Category-by-category catalog for all 114 agents.
+> Category-by-category catalog for 111 global agents plus the 3 project-local extensions marked below.
 
 ### Orchestration
 
@@ -50,12 +50,12 @@ This repository contains 114 specialized AI agents covering various aspects of s
 | **Architect** | _"Every agent is a possibility. Every SKILL.md is a birth certificate."_ - Meta-designer that creates new skill agents. Ecosystem gap analysis, duplication detection, SKILL.md generation | SKILL.md, references |
 | **Rally** | _"One task, many hands. Parallel by design."_ - Multi-session parallel orchestrator. Spawns and manages multiple Claude instances via Claude Code Agent Teams API for concurrent task execution | Team management, parallel execution |
 | **Sigil** | _"Every project has patterns waiting to become power."_ - Dynamic skill generator. Analyzes project codebases, discovers patterns and conventions, and generates optimized Claude Code skills for the project's `.claude/skills/` directory | Project-specific skills |
-| **Orbit** | _"Give me a goal. I'll give you a runner that finishes."_ - Nexus-autoloop completion specialist. Generates completion scripts, operation contracts, and audits for autonomous loop execution | Runner scripts, contracts |
-| **Darwin** | _"Ecosystems that cannot sense themselves cannot evolve themselves."_ - Ecosystem self-evolution orchestrator. Detects project lifecycle phase, evaluates agent relevance, integrates cross-cutting knowledge, and evolves the entire ecosystem | Ecosystem Fitness Score, evolution proposals |
-| **Lore** | _"Forgotten lessons are lessons repeated. Institutional memory is the compound interest of experience."_ - Memory curator for cross-ecosystem knowledge integration. Discovers common patterns from agent journals, catalogs them, and distributes to relevant agents. Knowledge decay detection and best practice propagation | METAPATTERNS.md, knowledge insights |
+| **Orbit** *(project-local)* | _"Give me a goal. I'll give you a runner that finishes."_ - Nexus-autoloop completion specialist for this repository. Generates completion scripts, operation contracts, and audits for autonomous loop execution | Runner scripts, contracts |
+| **Darwin** *(project-local)* | _"Ecosystems that cannot sense themselves cannot evolve themselves."_ - Repository-local ecosystem evolution orchestrator persisted through `.agents/ECOSYSTEM.md` | Ecosystem Fitness Score, evolution proposals |
+| **Lore** *(project-local)* | _"Forgotten lessons are lessons repeated. Institutional memory is the compound interest of experience."_ - Repository-local curator that synthesizes `.agents/*.md` into `METAPATTERNS.md` | METAPATTERNS.md, knowledge insights |
 | **Gauge** | _"What gets measured gets managed. What gets audited gets normalized."_ - SKILL.md normalization auditor and self-evolving compliance agent. Scans all skills against the 19-item checklist, classifies violations with P0-P3 priority, generates concrete fix snippets, and evolves detection patterns via web research. No code written | Compliance reports, fix plans, dashboards |
 | **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - Design-to-implementation pipeline orchestrator for the code-to-visual-to-code closed loop. Coordinates Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas to deliver design extraction, prototypes, visual assets, slides, and production together while persisting a project design system across downstream agents | Design system package, integrated deliverables |
-| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 114."_ - Skill ecosystem navigator and onboarding guide. Lists agents, recommends best fit for tasks, and helps newcomers discover the right specialist | Recommendations, agent maps |
+| **Compass** | _"When in doubt, ask Compass. It finds the right skill for the task."_ - Skill ecosystem navigator and onboarding guide. Lists global agents and available project-local extensions, recommends best fit, and helps newcomers discover the right specialist | Recommendations, agent maps |
 | **Prune** | _"A garden grows by what you cut, not what you plant."_ - Ecosystem cleanup auditor. Audits the agent roster for overlap, redundancy, and inactivity, then proposes merge candidates and sunset plans with evidence and archive instructions. Propose-only, no execution | Merge/sunset proposals, archive instructions |
 
 ### Investigation & Planning (Non-coding)
@@ -662,7 +662,7 @@ skills/
 ├── cast/SKILL.md       # Persona casting & registry management
 ├── compass/SKILL.md    # Skill ecosystem navigator and onboarding guide
 ├── compete/SKILL.md    # Competitive research
-├── darwin/SKILL.md     # Ecosystem self-evolution orchestrator
+├── .claude/skills/darwin/SKILL.md  # Project-local ecosystem evolution
 ├── director/SKILL.md   # Demo video recording
 ├── echo/SKILL.md       # Persona validation
 ├── experiment/SKILL.md # A/B test design
@@ -684,7 +684,7 @@ skills/
 ├── latch/SKILL.md      # Claude Code hook management
 ├── launch/SKILL.md     # Release management
 ├── lens/SKILL.md       # Codebase comprehension & investigation
-├── lore/SKILL.md       # Cross-ecosystem knowledge curator
+├── .claude/skills/lore/SKILL.md    # Project-local knowledge curator
 ├── magi/SKILL.md       # Multi-perspective decision making
 ├── matrix/SKILL.md     # Universal multi-dimensional analysis
 ├── mend/SKILL.md       # Known failure auto-repair
@@ -692,7 +692,7 @@ skills/
 ├── muse/SKILL.md       # Design
 ├── vector/SKILL.md  # Browser automation
 ├── nexus/SKILL.md      # Orchestrator
-├── orbit/SKILL.md      # Nexus-autoloop completion specialist
+├── .claude/skills/orbit/SKILL.md   # Project-local Nexus-autoloop extension
 ├── oracle/SKILL.md     # AI/ML design & evaluation
 ├── palette/SKILL.md    # UX
 ├── polyglot/SKILL.md   # i18n
@@ -737,7 +737,7 @@ skills/
 
 ### Single Agent Usage
 
-> Category-by-category examples for all 114 agents.
+> Category-by-category examples for 111 global agents and 3 project-local extensions.
 
 #### Orchestration
 
@@ -815,6 +815,8 @@ Generate a skill for creating new API routes in this Express project.
 ---
 
 ##### Autoloop Completion Scripts (Orbit)
+
+> Repository-local: available only inside this repository through `.claude/skills/orbit/` or `.agents/skills/orbit/`.
 
 ```
 /Orbit

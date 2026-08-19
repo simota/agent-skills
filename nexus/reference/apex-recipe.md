@@ -224,13 +224,13 @@ Echo[demand] ↔ Echo loop closure: if echo's actual walkthrough reaction diverg
 
 ### Phase 6: Implementation Loop
 
-Driven by Orbit. Orbit consumes scribe[unified] L3 ACs + omen Mitigations + echo friction signals to author the loop contract, generates the nexus-autoloop script set, and audits convergence.
+Apply `_common/PROJECT_LOCAL_SKILLS.md` before selecting the loop driver. When project-local Orbit is available, it consumes scribe[unified] L3 ACs + omen Mitigations + echo friction signals, authors the loop contract, generates the nexus-autoloop script set, and audits convergence. Otherwise Nexus drives the same bounded implementation loop directly, owns the contract/convergence/circuit-breaker duties, and records `project_local_fallback: true`; no repository-specific runner is generated. For the remainder of this recipe, references to Orbit duties are conditional shorthand for this selected loop driver: Orbit on the local path, Nexus on the fallback path.
 
 **Runner Engine: Codex CLI (fixed for Apex).** Apex pins Orbit's execution layer to **Codex CLI subagents** rather than Claude Code's Agent tool. All in-loop specialists (Builder / Artisan / Vitrine / Judge / Radar / Voyager) are spawned via `spawn_agent` and awaited via `wait_agent`. Phase 0-5 still run on Claude Code (Nexus orchestration); only the implementation loop crosses the engine boundary.
 
 | Agent | Role | Required | Spawn API |
 |-------|------|----------|-----------|
-| `orbit` | Loop contract design + convergence detection + cost-per-task tracking + circuit breaker | Yes | Spawned by Nexus on Claude Code, then writes Codex spawn scripts |
+| `orbit` | Loop contract design + convergence detection + cost-per-task tracking + circuit breaker | Conditional: project-local skill available; otherwise Nexus owns this row | Spawned by Nexus on Claude Code, then writes Codex spawn scripts |
 | `builder` | Business logic / backend implementation | Yes | Codex `spawn_agent` |
 | `artisan` | Production frontend (promotes forge prototype) | Conditional: UI surface | Codex `spawn_agent` |
 | `vitrine` | Storybook stories | Conditional: components added | Codex `spawn_agent` |

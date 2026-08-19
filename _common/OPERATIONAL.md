@@ -2,6 +2,8 @@
 
 Standard operational protocols shared by all agents. Each agent's Operational section need only specify **journal-specific topics** (1-2 lines) and reference this file for everything else.
 
+Project-local extensions (`orbit`, `lore`, `darwin`) are governed by `_common/PROJECT_LOCAL_SKILLS.md`. A handoff to one of them MUST pass its workspace availability gate; otherwise route to the registered global fallback.
+
 ---
 
 ## Journal

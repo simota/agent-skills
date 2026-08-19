@@ -102,9 +102,9 @@ better-supervised larger one.
 | WEBHOOK | Gateway → Relay → Builder | Relay[webhook], Builder[api] | +Radar (tests), +Sentinel (security) |
 | HOOKS | Latch | Latch[configure] | +Gear (Git hooks), +Sentinel (security) |
 | SKILL_GEN | Sigil | Sigil[generate], Architect[create] | +Lens (codebase analysis), +Grove (structure), +Sigil[blueprint] (when the request is a whole project agent/recipe/workflow suite, not one skill) |
-| PROJECT_LAYER | Sigil[blueprint] → Sigil | Sigil[blueprint], Sigil[generate] | Curated recipe: `layer` (`reference/layer-recipe.md`). +Lens (codebase analysis), +Nexus (routing/chain registration), +Orbit (loop runners), +Latch (enforcement hooks), +Grove (placement). Sigil designs the project operating layer and authors its artifacts; runtime stays with Nexus. |
-| EVOLUTION | Darwin | Darwin[health], Architect[evolve], Lore[curate] | +Architect (improvement), +Void (sunset), +Lore (knowledge), +Canvas (viz) |
-| KNOWLEDGE_SYNC | Lore | Lore[curate] | +Darwin (evolution input), +Architect (design insights), +Nexus (routing feedback) |
+| PROJECT_LAYER | Sigil[blueprint] → Sigil | Sigil[blueprint], Sigil[generate] | Curated recipe: `layer` (`reference/layer-recipe.md`). +Lens (codebase analysis), +Nexus (routing/chain registration), +project-local Orbit when available (loop runners; otherwise Nexus[goal/apex]), +Latch (enforcement hooks), +Grove (placement). Sigil designs the project operating layer and authors its artifacts; runtime stays with Nexus. |
+| EVOLUTION | Darwin (project-local) / Prune → Architect (fallback) | Darwin[health] when available; otherwise Prune[audit], Architect[improve] | Apply `_common/PROJECT_LOCAL_SKILLS.md`; +Void (sunset), +Canvas (viz) |
+| KNOWLEDGE_SYNC | Lore (project-local) / Tome or Scribe (fallback) | Lore[curate] when available; otherwise Tome or Scribe | Apply `_common/PROJECT_LOCAL_SKILLS.md`; +Architect (design insights), +Nexus (routing feedback) |
 | QUALITY | Judge → Canvas | Judge[pr], Radar[coverage] | +Zen[naming] (smells), +Radar (coverage), +Sentinel (security), +Atlas[analyze] (arch), +Sweep (dead code), +Matrix (combinatorial) |
 | UX_RESEARCH | Field → Echo → Palette | Field[interview], Echo[walkthrough], Palette[usability], Trace[replay], Trace[persona] | +Cast[generate] (persona), +Trace (session data) |
 | E2E | Voyager → Lens | Voyager[playwright], Radar[edge] | +Gear (CI), +Echo (persona-based), +Matrix (test matrix) |
@@ -128,7 +128,7 @@ better-supervised larger one.
 | YAGNI | Void → Sweep/Zen | Void[prune] | +Magi (approval), +Pulse (usage data) |
 | REMEDIATE | Mend → Radar | Mend[runbook], Radar[regression] | +Beacon[slo] (SLO check), +Gear (infra config), +Triage (escalation) |
 | SPEC_VERIFY | Attest | Attest[verify], Attest[bdd], Attest[trace], Radar[coverage] | +Scribe (spec gaps), +Radar (BDD→tests), +Builder (violation fixes) |
-| LOOP_OPS | Orbit | Orbit[generate] | +Builder (script changes), +Guardian (commit policy), +Radar (verification closure) |
+| LOOP_OPS | Orbit (project-local) / Nexus[goal/apex] (fallback) | Orbit[generate] when available; otherwise Nexus[goal/apex] | Apply `_common/PROJECT_LOCAL_SKILLS.md`; +Builder (script changes), +Guardian (commit policy), +Radar (verification closure) |
 | DESIGN | Frame → Artisan → Radar | Frame[extract], Artisan[component], Radar[edge], Pixel[reproduce] | +Muse[tokens] (tokens), +Vision (direction), +Forge (prototype) |
 | DESIGN_WORKFLOW | Atelier (orchestrator) | Atelier[pipeline], Forge[ui], Forge[fullstack] | Full design→code loop: Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas. Persists design system to `.agents/design-system/`. Use when the task spans design direction + tokens + prototype + implementation + catalog in a single pipeline |
 | ARCHITECTURE | Atlas → Canvas | Atlas[analyze], Canvas[flow] | +Lens[discover] (analysis), +Scribe[hld] (docs), +Ripple[impact] (impact) |
@@ -136,7 +136,7 @@ better-supervised larger one.
 | MOCKUP | Pixel → Radar | Pixel[reproduce], Radar[coverage], Flow[hover] | +Frame (Figma source), +Muse (tokens), +Flow[loading] (loading states), +Flow[transition] (transitions) |
 | DESIGN_AUDIT | Pixel[gap-report] → Canon/Judge | Pixel[gap], Pixel[verify], Pixel[audit] | +Artisan (remediation), +Muse (token regression), +Voyager (VRT baseline). Trigger: "gap analysis", "fidelity audit", "design review". Produces 8-dim × 5-severity × 9-RC Markdown+JSON report with visual artifacts. **Reviewed self-measurement loop** (RO-3 allowlisted): Pixel[gap]→Pixel[verify] is the same specialist re-running its own audit instrument, not a producer grading its own correctness claim — see `routing-oracle.py` `RO3_REVIEWED_EXCEPTIONS` |
 | BRANDING | Crest → Quill | Crest[github], Crest[linkedin], Crest[blog], Crest[conference], Crest[sns] | +Growth (SEO/SMO), +Canvas (viz), +Prose (content), +Harvest (portfolio) |
-| ECOSYSTEM | Darwin → Gauge → Canvas | Darwin[health], Gauge[audit] | +Architect (design), +Void (prune), +Lore (knowledge) |
+| ECOSYSTEM | Darwin (project-local) → Gauge → Canvas / Prune → Architect (fallback) | Darwin[health] when available; otherwise Prune[audit], Architect[improve] | Apply `_common/PROJECT_LOCAL_SKILLS.md`; +Void (prune) |
 | PRIVACY | Cloak → Builder → Radar | Cloak[pii], Builder[fix], Radar[edge] | +Canon[regulatory] (regulatory), +Sentinel (static scan), +Canon (standards) |
 | COMPLIANCE | Canon[regulatory] → Builder → Radar | Canon[soc2], Builder[fix], Radar[coverage] | +Cloak (privacy), +Canon (standards), +Scribe (policy docs) |
 | CRYPTO | Crypt → Builder → Radar | Crypt[algorithm], Builder[fix], Radar[edge] | +Sentinel (security review), +Probe (TLS validation) |

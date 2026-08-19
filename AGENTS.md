@@ -8,7 +8,7 @@ Cross-tool agent instructions for this repository. Read by **Antigravity CLI (`a
 
 ## Repository Purpose
 
-`claude-skills` is a **prompt engineering repository** of 114 specialist skill agents. The deliverables are **`SKILL.md` files** (not application code). Each skill lives at `<skill-name>/SKILL.md` with optional `reference/`.
+`claude-skills` is a **prompt engineering repository** of 111 global specialist skill agents plus 3 repository-local operating extensions. The deliverables are **`SKILL.md` files** (not application code). Global skills live at `<skill-name>/SKILL.md`; project-local skills are mirrored under `.claude/skills/` and `.agents/skills/`.
 
 ---
 
@@ -26,6 +26,7 @@ Cross-tool agent instructions for this repository. Read by **Antigravity CLI (`a
 |------|---------|
 | `<skill-name>/SKILL.md` | Each specialist agent's main definition (frontmatter: `name` + `description` only) |
 | `<skill-name>/reference/` | Optional supporting docs the skill loads on demand |
+| `.claude/skills/`, `.agents/skills/` | Mirrored project-local extensions; registry and fallback contract: `_common/PROJECT_LOCAL_SKILLS.md` |
 | `_common/` | Shared protocols affecting all skills — **modify with care** |
 | `_common/CLI_COMPATIBILITY.md` | Cross-CLI compatibility matrix (Claude Code / Codex CLI / agy) |
 | `_common/BOUNDARIES.md` | Centralized agent-role boundaries |

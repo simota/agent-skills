@@ -1,6 +1,6 @@
 # Loop-Engineering Primitives — Claude Code, Codex & agy
 
-How the **loop engineering** pattern maps onto concrete orchestration primitives in each hub engine. Nexus stays the routing/recipe layer; this file is the reference for *which primitive implements which loop part* when designing a `/goal`-style or apex/summit loop. For the concept, lineage, and applicability limits see `orbit/reference/loop-engineering.md`.
+How the **loop engineering** pattern maps onto concrete orchestration primitives in each hub engine. Nexus stays the routing/recipe layer; this file is the reference for *which primitive implements which loop part* when designing a `/goal`-style or apex/summit loop. For the concept, lineage, and applicability limits see `.claude/skills/orbit/reference/loop-engineering.md`.
 
 > Capability mapping, not a version registry. `_common/CLI_COMPATIBILITY.md` owns current versions, flags, model IDs, and availability. Verify current primary docs before executing a version-sensitive branch; parenthetical versions below are historical provenance only.
 
@@ -59,7 +59,7 @@ The four-part skeleton above is the minimum. The Orange Book (HuaShu IEEE reform
 | **Scheduling** — run round after round | Automation | `/loop`, Cloud Routines, GitHub Actions | Automations tab, cloud (planned) | Manual loop (silently stops) |
 
 - **Discovery sets the ceiling**: surface work via a maintainable skill, not a cron-glued prompt that rots (intent debt). The other four moves done well in service of bad discovery yield nothing.
-- **Verification is the floor and the hardest move**: the generator's level decides what the loop *can* produce; the evaluator's level decides what it *will not*. Tune the evaluator to assume-broken and judge by *acting* (Playwright MCP: click/screenshot/run) not reading — see `orbit/reference/loop-engineering.md` and the `goal` recipe.
+- **Verification is the floor and the hardest move**: the generator's level decides what the loop *can* produce; the evaluator's level decides what it *will not*. Tune the evaluator to assume-broken and judge by *acting* (Playwright MCP: click/screenshot/run) not reading — see `.claude/skills/orbit/reference/loop-engineering.md` and the `goal` recipe.
 - The loop **shape** is engine-agnostic; only the brand of command differs. The design question is "are all six parts present?", not "which toolchain?".
 
 ## `/loop` modes & safety bounds (Claude Code, verified 2026-06-15)
@@ -96,4 +96,4 @@ For OS-reboot-persistent recurrence use Desktop Scheduled tasks (Hourly/Daily/We
 ## Caveats / gaps
 
 - No public, verifiable ROI case study for loop engineering exists yet (esp. solo/consumer-plan). Don't assert efficiency gains as fact.
-- Attribution detail and applicability limits live in `orbit/reference/loop-engineering.md`; this file is primitives-only.
+- Attribution detail and applicability limits live in `.claude/skills/orbit/reference/loop-engineering.md`; this file is primitives-only.

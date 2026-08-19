@@ -1,6 +1,8 @@
 # Recipes Directory
 
-Catalog of every skill's Subcommand (Recipe) list. Default Recipe marked with ★.
+Catalog of every global skill and available project-local extension's Subcommand (Recipe) list. Default Recipe marked with ★.
+
+Project-local entries are sourced from `.claude/skills/`; availability and fallback rules live in `_common/PROJECT_LOCAL_SKILLS.md`.
 
 Canonical protocol: `_common/RECIPES.md`. Per-skill detail lives in each `SKILL.md` `## Recipes` table.
 
@@ -69,6 +71,7 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **morph**: md★ / pdf / docx / xlsx / html / epub / latex / batch
 - **muse**: tokens★ / apply / theme / typography / spacing / motion / elevation / radius
 - **native**: swiftui★ / compose / liquidglass / expressive / offline / push / deeplink / bg / passkey / privacy / rollout / store / cli / visualloop / macos / macdist
+- **nexus**: bug / feature / deliver / security / refactor / optimize / kaizen / anneal / restyle / converge / quell / whet / burnish / apex / charter / enact / layer / goal / gedanken / delve / cartograph / chronicle / verity / abide / spec / essential / killer / trim / acceptance / summit / podium / newsroom / eureka / wish / runway / hallmark / rebrand / crucible / silhouette / lattice / assay / chorus / migrate / transmute / clone / fuse / graft / package / pack
 - **omen**: premortem★ / rpn / ap / mode / faulttree / bowtie / hazop / multi
 - **oracle**: prompt★ / rag / safety / mlops / agent / cost / embed / review / tooling
 - **orbit**: plan / generate★ / contract / audit / recover / ralph
@@ -126,7 +129,7 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 
 ---
 
-**Total**: 113 skills with Recipes.
+**Total**: 114 skills with Recipes (111 global + 3 project-local).
 
 Auto-generated from SKILL.md `## Recipes` tables by `_common/scripts/generate-recipes-directory.py`. Do not edit by hand.
 

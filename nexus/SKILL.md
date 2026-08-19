@@ -16,11 +16,11 @@ CAPABILITIES_SUMMARY:
 - anti_stall_delivery: Preserve momentum through bounded recovery, checkpoints, and explicit exit criteria
 
 COLLABORATION_PATTERNS:
-- Inbound: task requests (User), decomposed steps (Sherpa), parallel session coordination (Rally), new-agent/routing updates (Architect), validated routing knowledge (Lore), quality feedback (Judge), evolution signals (Darwin)
+- Inbound: task requests (User), decomposed steps (Sherpa), parallel session coordination (Rally), new-agent/routing updates (Architect), quality feedback (Judge), and optional project-local knowledge/evolution signals (Lore/Darwin)
 - Outbound: delegation via `_AGENT_CONTEXT`, step completion via `_STEP_COMPLETE`, delivery via `NEXUS_COMPLETE`
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Sherpa, Rally, Architect, Lore, Judge, Darwin, User
+- INPUT: Sherpa, Rally, Architect, Judge, User; optional project-local Lore and Darwin
 - OUTPUT: all specialist agents (delegation), User (NEXUS_COMPLETE)
 
 PROJECT_AFFINITY: Game(H) SaaS(H) E-commerce(H) Dashboard(H) Marketing(H)
@@ -34,7 +34,7 @@ Coordinate specialist agents, design the minimum viable chain, execute safely. `
 
 **Use Nexus for:** a single task that crosses specialist boundaries and needs chain classification, selection, execution, aggregation, and verification; scope-adaptive product delivery (`deliver`); proactive project scan (`/Nexus` no-args); hub-spoke execution across independent tracks.
 
-**Direct-route instead of wrapping in Nexus:** clear single-owner work → that specialist; decomposition only → `Sherpa`; parallel-session management → `Rally`; ecosystem evolution → `Darwin`. Use `deliver` when the request is a product/MVP build whose chain must adapt to scope; use `feature` for one bounded feature and `apex` for a high-investment discovery-to-ship run.
+**Direct-route instead of wrapping in Nexus:** clear single-owner work → that specialist; decomposition only → `Sherpa`; parallel-session management → `Rally`; ecosystem evolution → project-local `Darwin` when available, otherwise `Prune` → `Architect`. Use `deliver` when the request is a product/MVP build whose chain must adapt to scope; use `feature` for one bounded feature and `apex` for a high-investment discovery-to-ship run.
 
 ## Core Contract
 
@@ -44,6 +44,8 @@ Coordinate specialist agents, design the minimum viable chain, execute safely. `
 - Aggregate through hub-spoke ownership with no shared mutable state between concurrent branches; pair quantitative metrics with human evaluation on high-stakes tasks.
 - **Finish what the contract covers** (every recipe): the bar never moves to meet the output, `BLOCKED` is earned by a named failed alternative, hard core precedes easy polish, no artifact ships with `TODO`/stub residue, every deferral carries a class, DELIVER reports a scanned sweep. Finishing raises effort, never scope or permission — two identical failures ⇒ diagnose, not retry. → `reference/autonomy-quality-protocol.md` §0 + §7 (Q16-Q22).
 - Adapt routing from execution evidence under safety constraints; track OE per chain type.
+- Treat `orbit`, `lore`, and `darwin` as project-local extensions. Before selecting one, apply `_common/PROJECT_LOCAL_SKILLS.md` Availability Gate; if unavailable, route to its registered fallback and report `project_local_fallback: true`.
+- Treat `_common/SKILL_PACKS.md` optional add-ons and explicit-invocation skills as gated surfaces. Select an add-on only when its profile is active or after surfacing a pack mismatch; select an explicit-invocation skill only when the request names that skill or unambiguously requests its narrow artifact.
 - Use standardized protocols (MCP, A2A, ACP) and Plan-and-Execute; per-engine planning/execution models → `reference/hub-authoring.md` § Model Selection (**agy is always Gemini 3.7 Flash (High)**).
 - Treat vendor feature names as runtime capabilities, not Nexus contracts. For Claude Code Dynamic Workflows, use the stable pattern mapping in `reference/orchestration-patterns.md` and verify current availability or limits against `_common/CLI_COMPATIBILITY.md` and the official product docs at execution time.
 - Output language follows the CLI global config; identifiers and technical terms stay English.
@@ -72,6 +74,7 @@ Agent boundaries → `_common/BOUNDARIES.md` · disambiguation → `reference/ag
 - Log an immutable record per routing decision (input summary, chain, confidence, rationale).
 - Decompose with Sherpa when a task touches 3+ files, spans components, or hides intermediate steps.
 - Use the `NEXUS_HANDOFF` format from `_common/HANDOFF.md`.
+- Verify workspace availability before every handoff to a project-local extension.
 - Validate each step's result (schema, required fields, confidence) to catch semantic failures.
 - Journal routing corrections and user overrides.
 - Track OE and token efficiency per chain, splitting `thinking_tokens` where available. Cost per *successful* task includes retries, fallback spawns, verification, and user correction; success means ACs held (Q15) → `oracle/reference/cost-optimization.md`.
@@ -94,6 +97,7 @@ Agent boundaries → `_common/BOUNDARIES.md` · disambiguation → `reference/ag
 - Adapt routing on fewer than 3 execution data points.
 - Skip `VERIFY` when changing routing-matrix behavior.
 - Override Lore-validated patterns without human approval.
+- Route to `Orbit`, `Lore`, or `Darwin` when neither project-local installation path exists.
 - Propagate silent failures — validate semantically at each step; right schema with wrong meaning amplifies downstream.
 - Close a run by moving in-scope work into an untyped "recommended follow-up", or report `SUCCESS` over `TODO`/stub residue — deferral needs a Q17 class + `RES-n`; unclassed caps status at `PARTIAL`. Equally forbidden: lowering the bar to meet the output without a `DEC-n`, or returning `BLOCKED` without naming an attempted alternative (Q20-Q21).
 - Skip compass→architect before an ad-hoc chain on a true no-match task-shaped request. Record `compass-invoked` | `architect-invoked` | `neither` in `NEXUS_COMPLETE` (`routing-matrix.md` § LADDER). Only one-line factual/lookup and harness meta-questions bypass it; judgment questions remain task-shaped.
@@ -211,7 +215,7 @@ Verification results are evidence-bound; unexercised paths are labeled `UNVERIFI
 
 ## Collaboration
 
-Handoff directions: agent → Nexus `NEXUS_ROUTING` · Nexus → agent `_AGENT_CONTEXT` · agent → Nexus `_STEP_COMPLETE` · Nexus → user `NEXUS_COMPLETE` · Architect → Nexus `ARCHITECT_TO_NEXUS_HANDOFF` · Nexus → Lore `NEXUS_TO_LORE_HANDOFF` · Judge → Nexus `QUALITY_FEEDBACK` · Nexus → Nexus `ROUTING_ADAPTATION_LOG`. Darwin also feeds back. Schemas → `reference/output-formats.md`.
+Handoff directions: agent → Nexus `NEXUS_ROUTING` · Nexus → agent `_AGENT_CONTEXT` · agent → Nexus `_STEP_COMPLETE` · Nexus → user `NEXUS_COMPLETE` · Architect → Nexus `ARCHITECT_TO_NEXUS_HANDOFF` · Judge → Nexus `QUALITY_FEEDBACK` · Nexus → Nexus `ROUTING_ADAPTATION_LOG`. Project-local Lore/Darwin handoffs require the availability gate. Schemas → `reference/output-formats.md`.
 
 ## Reference Map
 
@@ -228,6 +232,7 @@ Read only files matching the current decision point. Anything indexed by the Wor
 | `reference/specify-phase.md` | `SPECIFY` gates, brief schema, verbatim injection, `delegated` list |
 | `reference/hub-authoring.md` · `reference/execution-layers.md` | Per-engine authoring/detection/models · per-CLI spawn prerequisites/runtime |
 | `_common/LOOP_PRECONDITIONS.md` | Before **any** agent loop — five-point gate (completion oracle · hard-stop bound · maker ≠ checker · persistent memory · drift awareness) |
+| `_common/PROJECT_LOCAL_SKILLS.md` | Before selecting `orbit`, `lore`, or `darwin`; workspace availability check and global fallback |
 | `_common/FINDING_LEDGER.md` | Before **any external-reviewer-to-zero loop** (`quell`, `burnish`, `whet`, `newsroom`) — the shared ledger machinery: five declaration slots, identity across cycles, disposition vocabulary + integrity, split-oracle rule, and when **not** to build one |
 | `_common/PROOF_CARRYING.md` | `/nexus acceptance` Tier policy + G1-G10. **Mandatory before `acceptance`.** |
 | `_common/PARALLEL.md` · `reference/signal-keywords.md` | Parallel branch definitions, file ownership, merge, rollback · canonical Signal Keywords → routing destination table |

@@ -1,4 +1,6 @@
-.agents
+.agents/*
+!.agents/skills/
+!.agents/skills/**
 .nexus-loop/
 .articles/
 _loops/

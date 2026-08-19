@@ -1,6 +1,6 @@
 # Hooks in Loop Engineering — Automation Context
 
-Where Claude Code **hooks** sit inside the **loop engineering** pattern. Hooks are one of the heartbeat/automation primitives a loop is built from — useful framing when a user wants "a hook that runs X on a schedule / at lifecycle points" as part of an autonomous loop. For the loop concept and primitives map see `nexus/reference/loop-engineering-primitives.md` and `orbit/reference/loop-engineering.md`.
+Where Claude Code **hooks** sit inside the **loop engineering** pattern. Hooks are one of the heartbeat/automation primitives a loop is built from — useful framing when a user wants "a hook that runs X on a schedule / at lifecycle points" as part of an autonomous loop. For the loop concept and primitives map see `nexus/reference/loop-engineering-primitives.md` and `.claude/skills/orbit/reference/loop-engineering.md`.
 
 > Snapshot date: 2026-06-11. Fast-moving topic; verify feature versions against `code.claude.com/docs` before quoting.
 
@@ -33,7 +33,7 @@ The Orange Book (*Loop Engineering: The Anthropic Playbook*, HuaShu IEEE reforma
 - **Cap before you ship** (token-blowout guard): a `PreToolUse`/`ConfigChange` hook audits budget-relevant actions so an idle bug can't burn a night's quota — the cap converts open-ended risk into a bounded one.
 - **Keep one door open** (cognitive-surrender guard): a `Notification` hook routes uncertain findings to a human/triage inbox rather than auto-merging — the structural pause that keeps a human able to say "no".
 
-Of the five anti-patterns (one per skipped move — see `orbit/reference/loop-engineering.md`), hooks directly harden three: **Nodding** (verification-gate `Stop` hook), **Token blowout** (cap `PreToolUse` hook), and **Tangled** (a `PreToolUse` deny on cross-worktree writes). Scheduling (the **Manual** anti-pattern) is *not* a hook's job — that's `/loop`/Cloud Routines/GHA.
+Of the five anti-patterns (one per skipped move — see `.claude/skills/orbit/reference/loop-engineering.md`), hooks directly harden three: **Nodding** (verification-gate `Stop` hook), **Token blowout** (cap `PreToolUse` hook), and **Tangled** (a `PreToolUse` deny on cross-worktree writes). Scheduling (the **Manual** anti-pattern) is *not* a hook's job — that's `/loop`/Cloud Routines/GHA.
 
 ## Boundary
 

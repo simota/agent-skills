@@ -105,9 +105,13 @@ RETIRED_NEXUS_REFERENCES = (
     "task-routing-anti-patterns.md",
 )
 
-# Matches backticked or plain relative paths under reference/ or _common/ ending .md,
-# with an optional leading `<skill-name>/` segment (e.g. `port/reference/x.md`).
-REF_PATH_RE = re.compile(r"`?((?:[a-z][a-z0-9_-]*/)?(?:reference|_common)/[A-Za-z0-9_\-{}/.,]+?\.md)`?")
+# Matches backticked or plain repo-relative paths under reference/ or _common/
+# ending .md. Skill references may use either the global `<skill-name>/` form
+# or the canonical project-local `.claude/skills/<skill-name>/` form.
+REF_PATH_RE = re.compile(
+    r"`?((?:(?:\.claude/skills/)?[a-z][a-z0-9_-]*/)?"
+    r"(?:reference|_common)/[A-Za-z0-9_\-{}/.,]+?\.md)`?"
+)
 
 
 class Finding:

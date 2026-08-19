@@ -1,10 +1,11 @@
 # claude-skills
 
-114のスキルエージェントで構成されるプロンプトエンジニアリングリポジトリ。
+111のグローバルスキルと、このリポジトリ専用の3スキル（`orbit` / `lore` / `darwin`）で構成されるプロンプトエンジニアリングリポジトリ。
 成果物はコードではなく SKILL.md ファイル群。
 
 ## 構造
 - 各スキル: `{skill-name}/SKILL.md` + オプションの `reference/`
+- project-localスキル: `.claude/skills/`（正本）+ `.agents/skills/`（同期ミラー）。利用可否とfallbackは `_common/PROJECT_LOCAL_SKILLS.md`
 - 共通プロトコル: `_common/` (BOUNDARIES.md, HANDOFF.md 等)
 - テンプレート: `_templates/SKILL_TEMPLATE.md`
 - エージェントジャーナル: `.agents/` (gitignore対象)

@@ -96,7 +96,7 @@ Three rules make the numbers honest:
   they break agent navigation, so they never average away.
 
 This mirrors `_common/EVIDENCE_LADDER.md` ("read per risk class, never as a single average"),
-`darwin/reference/assessment-models.md` ("Report both; never average them"), and
+`.claude/skills/darwin/reference/assessment-models.md` ("Report both; never average them"), and
 `harvest/reference/engineering-metrics-pitfalls.md` ("treat SPACE as a checklist, not a single
 composite score"). A composite grade here would have Gauge violate the standard it audits against.
 

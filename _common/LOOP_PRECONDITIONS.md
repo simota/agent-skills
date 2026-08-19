@@ -4,7 +4,7 @@
 
 **Read when:** you are about to set up `/goal`, run a `converge` cycle, generate an `orbit` runner, enter an `apex` implementation loop, or wire any other iterate-until-done mechanism.
 
-**Provenance:** derived from the five loop-engineering moves in `orbit/reference/loop-engineering.md` (concept, lineage, five anti-patterns, and "when NOT to loop" live there). The pattern → primitive map is `nexus/reference/loop-engineering-primitives.md`; the maker/checker spec is `nexus/reference/evaluator-loop-protocol.md`. This file **cites** them rather than restating them.
+**Provenance:** derived from the five loop-engineering moves in `.claude/skills/orbit/reference/loop-engineering.md` (concept, lineage, five anti-patterns, and "when NOT to loop" live there). The pattern → primitive map is `nexus/reference/loop-engineering-primitives.md`; the maker/checker spec is `nexus/reference/evaluator-loop-protocol.md`. This file **cites** them rather than restating them.
 
 ---
 

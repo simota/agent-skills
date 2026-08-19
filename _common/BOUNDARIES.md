@@ -13,17 +13,17 @@ For disambiguation of commonly confused agent pairs, see `nexus/reference/agent-
 | **Nexus** | Task-chain orchestration and scope-adaptive product delivery | Single chains through full product/MVP delivery | Never |
 | **Sherpa** | Task decomposition & workflow guidance | Single epic/story → atomic steps | Never |
 | **Rally** | Parallel multi-session execution | Concurrent independent tasks | Never |
-| **Darwin** | Ecosystem self-evolution | Cross-agent, systemic | Never |
+| **Darwin** *(project-local)* | Ecosystem self-evolution | This repository's cross-agent system | Never |
 | **Sigil** | Project operating-layer design and artifact authoring | Project skills, recipes, workflows, routing maps | SKILL.md/specs only |
 | **Architect** | Ecosystem agent design | Permanent agent creation | SKILL.md only |
-| **Lore** | Cross-agent knowledge synthesis | Ecosystem-wide pattern extraction & propagation | Never |
+| **Lore** *(project-local)* | Cross-agent knowledge synthesis | This repository's journal and pattern lifecycle | Never |
 | **Gauge** | SKILL.md normalization audit & self-evolution | Per-skill format compliance | Never |
 
 **Key distinctions:**
 - Nexus `deliver` sizes and executes product-lifecycle chains; Rally parallelizes independent workstreams when needed
 - Sherpa decomposes → Nexus/Rally executes the decomposed steps
 - Architect creates permanent ecosystem agents; Sigil designs and authors project-specific operating layers
-- Darwin evaluates ecosystem fitness; Lore curates cross-agent knowledge patterns
+- Project-local Darwin evaluates this repository's ecosystem fitness; project-local Lore curates its cross-agent knowledge patterns. Availability and fallback: `_common/PROJECT_LOCAL_SKILLS.md`.
 - Gauge audits existing SKILL.md format compliance; Architect creates/improves agent packages
 
 ## Investigation & Analysis
@@ -253,7 +253,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Oracle** | AI/ML design & evaluation | Prompts, RAG, LLM patterns, MLOps | Never |
 | **Chisel** | Prompt → executable specification | Ambiguity detection, criterion translation, role decomposition; hub-invoked at Nexus `SPECIFY` to harden an intent contract into a Specified Brief before a chain spawns | Never |
 | **Vector** | Browser automation | Playwright task execution | Yes |
-| **Orbit** | Autonomous loop execution | Loop contracts, script generation | Yes |
+| **Orbit** *(project-local)* | Autonomous loop execution | This repository's loop contracts and script generation | Yes |
 | **Canon** | Standards and regulatory compliance | OWASP/WCAG/OpenAPI/ISO 25010 plus `regulatory` audit recipes | Policy code only |
 | **Matrix** | Combinatorial analysis | Multi-dimensional coverage optimization | Never |
 | **Void** | YAGNI verification | Scope cutting, complexity reduction | Never |

@@ -37,7 +37,7 @@ Use `burnish` when: a surface has a settled design direction and must be driven 
 | Maximize the **ceiling** of a flagship surface | `runway` | Tournament + rubric ceiling; burnish closes a floor of findings |
 | Design weaknesses in **code** structure | `anneal` | Code design, not the rendered surface |
 | Review a **code diff** to zero | `quell` | Same machinery, different object |
-| Loop must survive session end / run for hours | `orbit` skill | burnish is attended-but-uninterrupted, in-session |
+| Loop must survive session end / run for hours | project-local `orbit` when available; otherwise `goal` or `apex` | burnish is attended-but-uninterrupted, in-session; apply `_common/PROJECT_LOCAL_SKILLS.md` |
 | Just want one design review, no fixing | `palette` / `echo` direct | Minimum viable chain |
 
 **Scale:** 5-13 agents per cycle × ≤ 4 cycles, plus 4 at BASELINE. Medium-to-high cost (multiplied by cycle count; the surface × breakpoint × state matrix and the finding volume are the governors, not repo size).
@@ -240,7 +240,7 @@ Driving a UI surface to a clean state?
   Oracle is an EXTERNAL REVIEWER's finding list over the rendered surface → burnish
     └ the surface must match a design file / system reference → burnish profile=faithful
     └ the direction itself is unsettled → restyle first, then burnish
-    └ must survive session end / run unattended → orbit skill
+    └ must survive session end / run unattended → project-local orbit, else goal/apex
   Oracle is a RUBRIC score set by an internal evaluator      → restyle (or converge)
   Oracle is TASK COMPLETION under degraded conditions        → crucible
   Oracle is BLIND ATTRIBUTION vs competitors                 → silhouette

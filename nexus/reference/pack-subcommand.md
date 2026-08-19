@@ -7,7 +7,7 @@ Companion: `_common/SKILL_PACKS.md` (Pack definitions, profile catalog).
 ## When to Use
 
 - User starts a new workstream and wants to scope skill listing to a domain (web / mobile / security / growth / infra / research / ai-eval / package-author).
-- The full-roster default load (114 skills as of 2026-08-19) causes routing confusion or context tax.
+- The full-roster default load (111 global skills, plus any workspace-local extensions) causes routing confusion or context tax.
 - User explicitly requests `/nexus pack <name>`.
 
 ## Forms
@@ -24,7 +24,7 @@ Companion: `_common/SKILL_PACKS.md` (Pack definitions, profile catalog).
 ## Available `<name>` values
 
 Discovered dynamically from `~/.claude/profiles/*.json`. Default-shipped profiles per `_common/SKILL_PACKS.md`:
-`web` / `mobile` / `security` / `growth` / `infra` / `research` / `ai-eval` / `package-author` / `all`.
+`web` / `mobile` / `security` / `growth` / `infra` / `research` / `ai-eval` / `package-author` / `skill-meta` / `incident-response` / `legal-jp` / `personal-env` / `ai-cli-admin` / `gemini-image` / `all`.
 
 ## Phase Contract
 

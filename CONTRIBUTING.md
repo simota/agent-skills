@@ -100,7 +100,7 @@ Route elsewhere when the task is primarily:
    - `README.md` / `README_ja.md` のエージェント一覧とエージェント数
    - `index.html`（`const AGENTS` 配列・カテゴリ件数・件数を記載した全テキスト）
    - `compass/reference/catalog.md`（カテゴリ節とその件数）
-   - `_common/SKILL_PACKS.md`（最低1つの pack に所属させる）
+   - `_common/SKILL_PACKS.md`（最低1つのPack、またはoptional／explicit-only／project-local配置に登録する）
    - `AGENTS.md` / `CLAUDE.md` のスキル数
 5. 使用例セクションにサンプルを追加
 6. lint を通す: `python3 _common/scripts/lint-frontmatter.py --severity error --changed-only` と `python3 _common/scripts/lint-instructions.py --severity error`
