@@ -15,7 +15,7 @@ An agent that decides and acts over time is read as *someone* whether or not any
 The design question is not "should it have a personality" but **which consistencies it owes, at what
 strength, and what enforces them**. Adding character is the last step and the smallest one.
 
-The counter-intuitive result up front: **capability does not summon personality, and importance does
+The counter-intuitive result up front: **capability does not magi personality, and importance does
 not justify it.** As error cost and trust sensitivity rise, expressed character and relational depth
 get *narrower*, while role, policy, boundary, and identity legibility get stronger.
 

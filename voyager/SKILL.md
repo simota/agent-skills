@@ -40,7 +40,7 @@ COLLABORATION_PATTERNS:
 - Artisan -> Voyager: Component specs
 - Builder -> Voyager: Feature specs
 - Attest -> Voyager: Acceptance criteria
-- Director -> Voyager: Demo flow E2E scenarios
+- Cue -> Voyager: Demo flow E2E scenarios
 - Flow -> Voyager: Animation UX test requests
 - Pixel -> Voyager: Visual regression baseline (screenshots + viewport matrix from gap-report for VRT setup)
 - Native -> Voyager: Mobile E2E test handoff (shipped iOS/Android app — accessibility-id taxonomy, build artifact paths, store-tier device matrix)
@@ -59,7 +59,7 @@ COLLABORATION_PATTERNS:
 - Voyager -> Launch: Verified App Store screenshot bundle and release evidence
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Radar, Artisan, Builder, Attest, Director, Flow, Oracle, Pixel, Native, Vision
+- INPUT: Radar, Artisan, Builder, Attest, Cue, Flow, Oracle, Pixel, Native, Vision
 - OUTPUT: Radar, Scout, Gear, Judge, Builder, Vector, Bolt, Siege, Oracle, Native, Launch
 
 PROJECT_AFFINITY: Game(L) SaaS(H) E-commerce(H) Dashboard(H) Marketing(M)
@@ -166,7 +166,7 @@ Voyager receives test escalations, feature specs, and acceptance criteria from u
 | Artisan → Voyager | `ARTISAN_TO_VOYAGER` | E2E test request based on component specification |
 | Builder → Voyager | `BUILDER_TO_VOYAGER` | E2E test request for new features |
 | Attest → Voyager | `ATTEST_TO_VOYAGER` | E2E verification based on acceptance criteria |
-| Director → Voyager | `DIRECTOR_TO_VOYAGER` | E2E scenarios for demo flows |
+| Cue → Voyager | `CUE_TO_VOYAGER` | E2E scenarios for demo flows |
 | Flow → Voyager | `FLOW_TO_VOYAGER` | UX test requests for animation-related behavior |
 | Native → Voyager | `NATIVE_TO_VOYAGER` | Mobile E2E test handoff for shipped iOS/Android apps (build artifact path, accessibility-id taxonomy, supported OS matrix, store-tier release-gate criteria) |
 | Voyager → Radar | `VOYAGER_TO_RADAR` | Coverage reports and test pyramid delegation |
@@ -187,7 +187,7 @@ Voyager receives test escalations, feature specs, and acceptance criteria from u
 | Radar | E2E browser-level journey tests | Unit, integration, and edge case tests |
 | Vector | Reusable E2E test automation | Ad-hoc browser task execution |
 | Siege | E2E functional validation | Load, chaos, and resilience testing |
-| Director | E2E test scenarios for journeys | Demo video recording and production |
+| Cue | E2E test scenarios for journeys | Demo video recording and production |
 | Attest | E2E test implementation | Specification-level acceptance criteria |
 | Native | Native mobile E2E test harness around the shipped app (Detox/Maestro/Appium/XCUITest/Espresso, accessibility-id locators, device-farm orchestration) | Production native app implementation (SwiftUI/Compose, store compliance, navigation/data layer) |
 | Forge | E2E for shipping `.ipa`/`.apk`/`.aab` (production-bound) | Throwaway mobile PoC (Expo/RN/Flutter, native capabilities stubbed, ≤4h time-box) |

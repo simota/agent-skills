@@ -107,7 +107,7 @@
 | **Parameter naming** | `func add(to user: User)` reads "add to user"; `func add(user: User)` reads "add user" — choose intent | API guidelines §2 |
 | **Use type-suffixed constants for clarity** | `private let TIMEOUT = 30` should be `private let timeoutSeconds: TimeInterval = 30` | Unit + type implicit in name |
 | **`init` signatures consistent with similar types** | `Foo(name:)` vs `Foo(named:)` inconsistent across codebase | Convention |
-| **Generic constraints in `where` clause** | `func foo<T: Hashable & Equatable>(...)` (Hashable implies Equatable, redundant) | Cleanliness |
+| **Generic constraints in `where` canon** | `func foo<T: Hashable & Equatable>(...)` (Hashable implies Equatable, redundant) | Cleanliness |
 | **Document `throws`, `Returns`, `Parameters`** | Public `throws` fn without `/// - Throws:` doc | Documentation discipline |
 ---
 ## 5. Migration smells

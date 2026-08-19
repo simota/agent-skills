@@ -44,7 +44,7 @@ FRAME     →  declare asset in scope (source / Bronze / Silver / Gold / mart)
           →  confirm freshness SLA + baseline volume
 
 LAYOUT    →  write the data contract: schema, PKs, required fields, enum domains, nullability
-          →  map each contract clause to one or more checks across the five families
+          →  map each contract canon to one or more checks across the five families
           →  pick tool per asset class (GX / Soda / Elementary / dbt test)
           →  decide severity: warn (log) vs error (block downstream) vs page (alert on-call)
 

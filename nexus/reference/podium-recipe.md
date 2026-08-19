@@ -27,7 +27,7 @@ Podium is a **content-quality maximization recipe** for documentation and high-q
 
 Where `summit` triangulates strategic code decisions, podium triangulates **prose, narrative arc, visual asset, and format rendering** quality. The recipe is intentionally lighter than summit (16-53 agents vs summit's 20-50) because content artifacts are lower-stakes than production code merges, and most polish iterations are cheap.
 
-**Default baseline: Claude + Codex (dual-engine).** Claude owns prose, narrative judgment, story arc, audience walkthrough, and tone arbitration (irreducibly judgment-heavy). Codex owns code samples, diagram-as-code rendering, slide framework compilation (Marp/reveal.js/Slidev), and format conversion (Morph). agy is added as an optional third axis when AVAILABLE — it contributes long-context source synthesis (1M window for whole-codebase learning docs), multimodal asset reading (existing decks, screenshots, mockups), and AI image generation (Sketch/Ink hero imagery and illustrations).
+**Default baseline: Claude + Codex (dual-engine).** Claude owns prose, narrative judgment, story arc, audience walkthrough, and tone arbitration (irreducibly judgment-heavy). Codex owns code samples, diagram-as-code rendering, slide framework compilation (Marp/reveal.js/Slidev), and format conversion (Morph). agy is added as an optional third axis when AVAILABLE — it contributes long-context source synthesis (1M window for whole-codebase learning docs), multimodal asset reading (existing decks, screenshots, mockups), and AI image generation (Builder/Ink hero imagery and illustrations).
 
 **Key design decisions:**
 - **Doc and Slide are produced in parallel from the same outline** — Phase 2 narrative locks the story arc, Phase 3 forks into Content / Visual / Layout tracks, and the slide deck cross-references the document.
@@ -80,7 +80,7 @@ Where `summit` triangulates strategic code decisions, podium triangulates **pros
 ### Do NOT use Podium for
 
 - Single specification document with no visual / slide need → `scribe` directly
-- Single article with no slide derivative → `zine` directly
+- Single article with no slide derivative → `tome` directly
 - Single slide deck with simple structure → `stage` directly
 - Code-adjacent docs (JSDoc, README) → `quill` directly
 - UX microcopy / error messages → `prose` directly
@@ -120,13 +120,13 @@ Per-track and per-branch engine/agent assignment is the § Engine × Team Matrix
 
 | | Claude (hub — narrative, judgment, audience) | Codex (sandbox — code samples, rendering, compilation) | Antigravity / agy (long-context, multimodal, AI imagery) |
 |---|---|---|---|
-| **Research** | Lens (codebase mapping for technical docs), Harvest (PR-derived material) | Quill (extract from JSDoc / existing API docs) | Field (audience persona + Search-grounded external sources), Tome (1M-context git-diff → learning material), Frame (multimodal extract from existing decks/screenshots) |
-| **Narrative** | Scribe[unified] (L0-L1 staged elaboration), Zine (story arc for articles), Scribe (spec structure), Stage (slide narrative arc), Cue (storyboard for presentation-heavy work), Magi (depth vs breadth arbitration), Void (scope cut) | — | — |
-| **Production: Content** | Scribe (PRD/SRS/HLD/LLD body), Zine (article body + hook), Prose (microcopy, headings, CTAs), Saga (product narrative) | Quill (code samples with proper JSDoc/TSDoc), Vitrine (component usage examples) | Tome (long-ctx learning-doc body), Scribe[long-ctx] (large spec bodies > 200K tokens) |
-| **Production: Visual** | Vision (visual direction), Muse (brand tokens application) | Canvas (Mermaid / draw.io diagram code), Vitrine (Storybook-style examples) | Sketch (Gemini-native hero / cover / illustration imagery), Ink (SVG icon system), Frame (multimodal context extraction from existing visual references) |
+| **Research** | Lens (codebase mapping for technical docs), Launch (PR-derived material) | Quill (extract from JSDoc / existing API docs) | Field (audience persona + Search-grounded external sources), Tome (1M-context git-diff → learning material), Frame (multimodal extract from existing decks/screenshots) |
+| **Narrative** | Scribe[unified] (L0-L1 staged elaboration), Tome (story arc for articles), Scribe (spec structure), Stage (slide narrative arc), Cue (storyboard for presentation-heavy work), Magi (depth vs breadth arbitration), Void (scope cut) | — | — |
+| **Production: Content** | Scribe (PRD/SRS/HLD/LLD body), Tome (article body + hook), Prose (microcopy, headings, CTAs), Saga (product narrative) | Quill (code samples with proper JSDoc/TSDoc), Vitrine (component usage examples) | Tome (long-ctx learning-doc body), Scribe[long-ctx] (large spec bodies > 200K tokens) |
+| **Production: Visual** | Vision (visual direction), Muse (brand tokens application) | Canvas (Mermaid / draw.io diagram code), Vitrine (Storybook-style examples) | Builder (Gemini-native hero / cover / illustration imagery), Ink (SVG icon system), Frame (multimodal context extraction from existing visual references) |
 | **Production: Layout** | — | Stage (Marp / reveal.js / Slidev compilation), Morph (intermediate MD ↔ DOCX/PPTX/PDF/HTML conversion) | `figma:figma-use-slides` (Figma Slides — when target is Figma) |
 | **Verification** | Echo (persona walkthrough on finished artifact), Vision (design direction review), Magi (verdict arbitration), Nexus[claim-grounding scan] (token-level cross-reference between artifact claims and research_brief.source_facts — kept inside Nexus rather than spawned, see Phase 4) | Voyager (slide render-and-screenshot check), Radar?[testable assertions in technical docs] | Canon (style / brand / WCAG-AA / ISO 25010 compliance), Palette (visual a11y from screenshots), Attest (only when the artifact is itself a spec being verified against a separate normative document — otherwise claim-grounding stays in Nexus) |
-| **Improvement** | Prose (microcopy polish), Zine (prose tightening), Scribe (spec body refinement), Vision (design direction refinement), Magi (improvement-selection arbitration) | Canvas (diagram fixes), Stage (slide layout adjustment), Morph (re-render), Quill (code sample cleanup) | Sketch (re-generate imagery if rejected), Tome (re-extract from updated diff) |
+| **Improvement** | Prose (microcopy polish), Tome (prose tightening), Scribe (spec body refinement), Vision (design direction refinement), Magi (improvement-selection arbitration) | Canvas (diagram fixes), Stage (slide layout adjustment), Morph (re-render), Quill (code sample cleanup) | Builder (re-generate imagery if rejected), Tome (re-extract from updated diff) |
 
 **Cross-engine routing rules:**
 - If a task **generates prose, narrative, or judgment** → Claude (irreducibly judgment-heavy)
@@ -179,7 +179,7 @@ constraints:
   page_or_slide_budget: N                # hard cap
   embargo_or_deadline: "<ISO date or null>"
   forbidden_topics: [...]
-materialize_images: true | false         # if true, Phase 6 runs Sketch-authored generation code; if false, ship code only
+materialize_images: true | false         # if true, Phase 6 runs Builder-authored generation code; if false, ship code only
 cost_budget:
   max_agents: 53
   max_wall_time_minutes: 130
@@ -214,7 +214,7 @@ parallel:
     engine: claude | codex
     agents:
       - lens          # if technical doc derived from codebase
-      - harvest       # if release notes / PR-derived
+      - launch        # if release notes / PR-derived
       - quill         # if API docs / JSDoc extraction
     mission: gather and validate primary source material from internal systems
     output: source_brief.json
@@ -256,11 +256,11 @@ gaps_to_address: [...]     # facts requested but not findable — Phase 2 must d
 
 | output_format | Primary agent | Secondary agents |
 |---------------|--------------|-----------------|
-| `doc` (article/blog) | Zine[story arc] | Prose[hook], Scribe[unified: L1 outline], Magi[depth-vs-breadth] |
+| `doc` (article/blog) | Tome[story arc] | Prose[hook], Scribe[unified: L1 outline], Magi[depth-vs-breadth] |
 | `doc` (technical spec) | Scribe[structure] | Scribe[unified: L1 outline], Void[scope cut], Magi |
-| `doc` (learning material) | Tome[narrative] | Scribe[structure], Zine[hook], Magi |
+| `doc` (learning material) | Tome[narrative] | Scribe[structure], Tome[hook], Magi |
 | `slide` | Stage[narrative arc] | Cue[storyboard], Prose[slide titles], Magi |
-| `both` | Stage[arc] ‖ Zine/Scribe/Tome[arc] | Cue, Prose, Magi[arbitrate cross-format alignment] |
+| `both` | Stage[arc] ‖ Tome/Scribe/Tome[arc] | Cue, Prose, Magi[arbitrate cross-format alignment] |
 
 **Process:**
 1. Each primary agent produces a narrative arc skeleton tailored to its format
@@ -308,7 +308,7 @@ content_track:
     - branch: prose_body
       engine: claude
       agents (route by format):
-        - { if: article,         use: [zine] }
+        - { if: article,         use: [tome] }
         - { if: technical_spec,  use: [scribe] }
         - { if: learning,        use: [tome, scribe] }
         - { if: product_story,   use: [saga] }
@@ -354,13 +354,13 @@ visual_track:
 
     - branch: imagery
       engine: agy
-      agents: [sketch, ink]
+      agents: [builder, ink]
       mission: |
-        Sketch authors Gemini-API image-generation CODE (`gen_<anchor_id>.py`/.js, not PNG) for hero/cover/illustration visual_anchors; Ink emits `assets/<icon>.svg` directly for icon anchors, no execution step needed. Materialization (running Sketch's code under GEMINI_API_KEY) happens at Phase 6 PUBLISH, not here — see Phase 6 Agents §1.
+        Builder authors Gemini-API image-generation CODE (`gen_<anchor_id>.py`/.js, not PNG) for hero/cover/illustration visual_anchors; Ink emits `assets/<icon>.svg` directly for icon anchors, no execution step needed. Materialization (running Builder's code under GEMINI_API_KEY) happens at Phase 6 PUBLISH, not here — see Phase 6 Agents §1.
       output: |
-        image_generation_code/  (Python/JS files from Sketch — runnable but not yet run)
+        image_generation_code/  (Python/JS files from Builder — runnable but not yet run)
         assets/icons/           (SVG files from Ink — final form)
-      fallback_if_agy_unavailable: Sketch and Ink skipped — placeholder TODO with image_brief.txt for the user to author manually
+      fallback_if_agy_unavailable: Builder and Ink skipped — placeholder TODO with image_brief.txt for the user to author manually
 ```
 
 **Track C: Layout / Format** (1-4 agents, 5-15 min)
@@ -490,13 +490,13 @@ loop_iteration:
   parallel_improvement_proposals:
     - branch: prose_polish
       engine: claude
-      agents: [prose, zine, scribe]
+      agents: [prose, tome, scribe]
       mission: tighten body, remove ChatGPT-residue, strengthen hook, adjust pacing
       output: prose_diffs.md
 
     - branch: visual_fixes
       engine: codex | agy
-      agents: [canvas, sketch, ink]
+      agents: [canvas, builder, ink]
       mission: redraw diagrams flagged unreadable; regenerate imagery flagged off-brand
       output: visual_diffs.json
 
@@ -541,7 +541,7 @@ loop_iteration:
 ### Phase 6: Publish (Claude + Codex, 1-4 agents)
 
 **Agents:**
-1. **Image materialization (conditional)** — if `--materialize-images` flag AND `image_generation_code/` exists from Track B Visual: run the Sketch-authored scripts under the user's `GEMINI_API_KEY` to produce final `assets/<anchor>.png`. Owned by Nexus (Bash execution), not a separate spawned agent. If the flag is omitted, the code is kept as-is and a `#TODO(user): execute image_generation_code/*` note is added to the execution report.
+1. **Image materialization (conditional)** — if `--materialize-images` flag AND `image_generation_code/` exists from Track B Visual: run the Builder-authored scripts under the user's `GEMINI_API_KEY` to produce final `assets/<anchor>.png`. Owned by Nexus (Bash execution), not a separate spawned agent. If the flag is omitted, the code is kept as-is and a `#TODO(user): execute image_generation_code/*` note is added to the execution report.
 2. Morph[finalize] — produce all target formats (MD/DOCX/PPTX/PDF/HTML) and bundle. Runs AFTER image materialization so that final imagery is embedded in PPTX/PDF (otherwise placeholders ship).
 3. Guardian[PR-prep] — when artifact is committed to repo: classify changes, commit strategy
 4. Launch[release-plan] — when artifact is a release announcement: versioning, CHANGELOG section, embargo handling
@@ -765,7 +765,7 @@ Phase-triggered failures — release-critical shipped without human sign-off, a 
 
 | Recipe | Agents | Wall Time | Relative $ Cost |
 |--------|--------|-----------|------------------|
-| Single skill (`stage` / `zine` / `scribe`) | 1 | 3-15 min | ~0.5-1× (baseline lite) |
+| Single skill (`stage` / `tome` / `scribe`) | 1 | 3-15 min | ~0.5-1× (baseline lite) |
 | `feature` | 3-5 | 5-15 min | 1× (baseline) |
 | `podium` single-format, no loops | 16-32 | 35-90 min | 3-5× |
 | `podium` both formats, no loops | 21-43 | 39-100 min | 4-6× |
@@ -779,7 +779,7 @@ Phase-triggered failures — release-critical shipped without human sign-off, a 
 
 ## Comparison with Single-Skill / Atelier / Summit
 
-| Dimension | Single skill (Zine/Stage/Scribe) | `atelier` | `podium` | `summit` |
+| Dimension | Single skill (Tome/Stage/Scribe) | `atelier` | `podium` | `summit` |
 |-----------|----------------------------------|-----------|----------|----------|
 | **Purpose** | Narrow content task | UI design pipeline (Vision→Muse→Forge→Artisan→Vitrine→Canvas) | Doc + Slide content artifact (cross-format) | Strategic code decision |
 | **Output** | Single artifact (article OR deck OR spec) | Implemented UI + design system | Doc + Slide + assets package | Working code + verification trail |
@@ -798,7 +798,7 @@ Phase-triggered failures — release-critical shipped without human sign-off, a 
 
 ```
 Is the goal a single narrow content task with no cross-format need?
-  └─ YES → single skill (zine / stage / scribe / quill / tome / morph)
+  └─ YES → single skill (tome / stage / scribe / quill / morph)
   └─ NO ↓
 
 Is the goal a UI design + code pipeline?

@@ -22,7 +22,7 @@ COLLABORATION_PATTERNS:
 - atelier -> Muse: token definition, DTCG alignment, hardcoded-value migration
 - atelier -> Forge: rapid prototype build from design intent
 - atelier -> Pixel: mockup-faithful reproduction
-- atelier -> Ink / Sketch: vector / AI image asset generation
+- atelier -> Ink / Builder: vector / AI image asset generation
 - atelier -> Stage: slide deck authoring
 - atelier -> Canvas: diagram authoring
 - atelier -> Morph: multi-format export (MD/Word/Excel/PDF/HTML)
@@ -33,7 +33,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Vision (direction), User (request), Judge (quality feedback)
-- OUTPUT: Frame, Muse, Forge, Pixel, Ink, Sketch, Stage, Canvas, Morph, Artisan, Vitrine, Nexus
+- OUTPUT: Frame, Muse, Forge, Pixel, Ink, Builder, Stage, Canvas, Morph, Artisan, Vitrine, Nexus
 
 PROJECT_AFFINITY: SaaS(H) Marketing(H) Dashboard(H) E-commerce(H) Mobile(M) Game(M)
 -->
@@ -174,7 +174,7 @@ Route by artifact shape; include a delegate only when its output is in the reque
 | Production frontend | `Artisan` | `Muse`, `Vitrine` | Token-driven only |
 | Storybook catalog | `Vitrine` | `Muse`, `Frame` | CSF 3.0 / Factories |
 | Vector icon / illustration | `Ink` | `Muse` (token align) | SVG symbol sprite |
-| AI raster image | `Sketch` | — | Gemini API backend |
+| AI raster image | `Builder` | — | Gemini API backend |
 | Slide deck | `Stage` | `Ink`, `Muse` | Marp / reveal.js / Slidev |
 | Diagram | `Canvas` | — | Mermaid / draw.io |
 | Multi-format export | `Morph` | — | MD/Word/Excel/PDF/HTML |
@@ -231,7 +231,7 @@ Routing rules:
 ## Collaboration
 
 **Receives:** Vision (`VISION_TO_ATELIER`, carrying `DESIGN_INTENT_HANDOFF`) for direction and constraints, the user for an ad-hoc brief, and Judge (`QUALITY_FEEDBACK`) for output review.
-**Sends:** every delegate receives a `DESIGN_INTENT_HANDOFF` — Frame (Figma extraction, Code Connect), Muse (tokens, DTCG alignment), Forge (prototype), Pixel (mockup reproduction), Ink / Sketch (visual assets), Stage (deck), Canvas (diagram), Morph (multi-format export), Artisan (production implementation), Vitrine (Storybook catalog). Out-of-scope multi-domain work escalates to Nexus via `NEXUS_ROUTING`. Full table -> `reference/autorun-schema.md`.
+**Sends:** every delegate receives a `DESIGN_INTENT_HANDOFF` — Frame (Figma extraction, Code Connect), Muse (tokens, DTCG alignment), Forge (prototype), Pixel (mockup reproduction), Ink / Builder (visual assets), Stage (deck), Canvas (diagram), Morph (multi-format export), Artisan (production implementation), Vitrine (Storybook catalog). Out-of-scope multi-domain work escalates to Nexus via `NEXUS_ROUTING`. Full table -> `reference/autorun-schema.md`.
 
 
 ## Output Requirements
@@ -256,7 +256,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | `_common/design-system-registry.md` | The registry contract for `.agents/design-system/{project}.json` persistence |
 | `_common/parametric-output.md` | The parametric-slider output convention downstream agents parse |
 | `_common/CANDIDATE_SELECTION.md` | A delegate (Vision / Forge / Ink / Muse) returns multiple candidates — stage funnel, Gate/Trade-off/Preference classification, and the selection record before HANDOFF |
-| `_common/ASSET_PROVENANCE.md` | A delegate (Ink / Sketch / Frame) produces or sources a generated/reference-derived asset — rights, state, and generation-log discipline before it enters `Assets` in `DESIGN_INTENT_HANDOFF` |
+| `_common/ASSET_PROVENANCE.md` | A delegate (Ink / Builder / Frame) produces or sources a generated/reference-derived asset — rights, state, and generation-log discipline before it enters `Assets` in `DESIGN_INTENT_HANDOFF` |
 | `_common/GIT_GUIDELINES.md` | Authoring commits or PRs touching atelier pipeline artifacts |
 | `_common/UX_TRENDS_2026.md` | Cross-domain 2025-2026 evidence to orchestrate Vision / Muse / Frame / Forge / Artisan / Vitrine / Echo handoffs. Covers tokens (DTCG, OKLCH/P3), motion (`linear()`, View Transitions), IA (agentic UX, NN/g), and frontend (RSC, Tailwind v4, INP) in one file. Read all three sections. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing delegate prompts, deciding per-delegate model effort, or front-loading acceptance criteria |

@@ -28,7 +28,7 @@ Use `clone` to **reproduce a whole product (or a self-contained product area) fa
 1. **Reproduce from evidence, not memory.** Every reproduced screen, flow, and behavior is grounded in a **captured artifact** (screenshot, recorded interaction, observed API response). "Rebuild what I remember of it" is rejected — capture is the entry condition for the spec (Phase 1 → Phase 2 gate).
 2. **Fidelity over faith.** The copy's match to the original is *proven* by diffing the rebuild against the Phase 2 parity baseline (visual / behavioral / feature / data), not asserted. A clone that "looks done" but was never diffed against the captured baseline is incomplete.
 
-Scale: 9–27 agents (capture-heavy; desktop/robustness branches add capture agents; +1–2 for the Phase 0.5 research sweep, +1–2 for the Phase 0.2 Rights Gate (Clause/Cloak), +1 when Performance parity is declared), mid-to-high cost. **Ask First at the Phase 0.2 Rights Gate** (authorization basis — contract-level, AUTORUN cannot skip). **Confirm before launch when strategy = big-bang full clone** (whole product in one cutover).
+Scale: 9–27 agents (capture-heavy; desktop/robustness branches add capture agents; +1–2 for the Phase 0.5 research sweep, +1–2 for the Phase 0.2 Rights Gate (Canon[legal]/Cloak), +1 when Performance parity is declared), mid-to-high cost. **Ask First at the Phase 0.2 Rights Gate** (authorization basis — contract-level, AUTORUN cannot skip). **Confirm before launch when strategy = big-bang full clone** (whole product in one cutover).
 
 > **Stack-first, then research-grounded capture.** Two front-loaded foundations precede capture. (1) **Stack Dialogue** (Phase 0.1, §3·0) — clone opens with a thorough *interactive* dialogue that locks the **Stack Decision Record** (the target rebuild stack, per layer, with stack-vs-fidelity tradeoffs made explicit) before any capture/build; this is a **contract-level checkpoint AUTORUN cannot skip**. (2) **Research-grounded capture** — a thorough **web evidence sweep** (Phase 0.5, `reference/research-grounding.md`) mines first-party docs, design systems, API references, and changelogs into a cited **Evidence Ledger** that supplies the completeness-gate denominator, exact published values, and version/drift signals. Research raises fidelity **without displacing the oracle** — captured artifacts stay authoritative; a web claim is a lead to confirm, never a substitute (§3a coverage gate, §3b drift). `stack=` pre-supplies the SDR (dialogue confirms rather than explores).
 
@@ -43,9 +43,9 @@ Scale: 9–27 agents (capture-heavy; desktop/robustness branches add capture age
 | **incremental-clone** (screen-by-screen) | Large product, live system | Reproduce one screen/flow at a time, each independently parity-gated | Low — each increment verifiable & shippable |
 | **big-bang full clone** | Small/self-contained product | Whole reproduction, single cutover | High — **requires user confirmation** |
 
-Capture-source bindings by `target_type`: **live web** = Vector/Voyager (crawl, screenshot, network observe) + Frame/Pixel (design extraction); **desktop** = Hearth `automate` (macOS app automation via AppleScript/JXA — drive menus/windows/dialogs, capture per-window screenshots, script non-scriptable apps via System Events) + Pixel (visual diff of captured windows); **has Figma** = Frame (design context); **has source** = Lens (structure map); **mobile** = Voyager[ios]/Voyager (native UI capture); **API-backed** = Schema (infer data model from observed responses).
+Capture-source bindings by `target_type`: **live web** = Vector/Voyager (crawl, screenshot, network observe) + Frame/Pixel (design extraction); **desktop** = Anvil `automate` (macOS app automation via AppleScript/JXA — drive menus/windows/dialogs, capture per-window screenshots, script non-scriptable apps via System Events) + Pixel (visual diff of captured windows); **has Figma** = Frame (design context); **has source** = Lens (structure map); **mobile** = Voyager[ios]/Voyager (native UI capture); **API-backed** = Schema (infer data model from observed responses).
 
-> **Desktop capture coverage.** Hearth `automate` covers **macOS** GUI automation/screenshot natively. **Windows/Linux** desktop GUI automation has no first-class skill in this roster, so those targets are captured through an **external capture adapter** — the contract below makes that path first-class rather than a caveat. Visual/behavioral parity downstream (Pixel/Voyager/Radar/Attest/judge) is platform-independent and unchanged.
+> **Desktop capture coverage.** Anvil `automate` covers **macOS** GUI automation/screenshot natively. **Windows/Linux** desktop GUI automation has no first-class skill in this roster, so those targets are captured through an **external capture adapter** — the contract below makes that path first-class rather than a caveat. Visual/behavioral parity downstream (Pixel/Voyager/Radar/Attest/judge) is platform-independent and unchanged.
 
 #### Capture-adapter contract (any surface with no first-class capture skill)
 
@@ -89,7 +89,7 @@ Phase 0.1 STACK    ⟷   INTERACTIVE, contract-level (AUTORUN cannot skip — §
                        frontend → styling/tokens → state → backend → data/ORM → API → build/test → deploy/infra),
                        surfacing every STACK-vs-FIDELITY tradeoff → lock the STACK DECISION RECORD (SDR).
                        `stack=` arg pre-supplied → confirm-not-explore.
-Phase 0.2 RIGHTS   ⟷   Ask First, contract-level (AUTORUN cannot skip — §3·0b). Declare the AUTHORIZATION BASIS; Clause reads the
+Phase 0.2 RIGHTS   ⟷   Ask First, contract-level (AUTORUN cannot skip — §3·0b). Declare the AUTHORIZATION BASIS; Canon[legal] reads the
    GATE                target's ToS/automation posture; Cloak plans PII handling for the capture corpus; asset rights posture
                        set (recreate-never-reuse for marks); no-circumvention rule bound → lock the RIGHTS RECORD.
                        Undeclared/unsupportable basis → STOP (offer feature/apex, or narrow to owned surfaces).
@@ -100,7 +100,7 @@ Phase 0.5 RESEARCH  →  deep-research[+Compete?][thorough web EVIDENCE SWEEP: T
                        → Version & drift signals sharpen the provenance stamp (§3b)
                        (research-first, capture-authoritative: a web claim is a lead to CONFIRM by capture, never the oracle)
 Phase 1 CAPTURE     ∥  Vector/Voyager[live-web: crawl UI, per-screen screenshots, observe network/API traffic]
-                       Hearth[automate — desktop: drive menus/windows/dialogs, per-window screenshots, script non-scriptable apps]
+                       Anvil[automate — desktop: drive menus/windows/dialogs, per-window screenshots, script non-scriptable apps]
                        Frame/Pixel[extract design system: tokens, layout, components from screenshots/Figma]
                        Lens?[map current structure + public surface]            (if source available)
                        Schema?[infer data model + API contract from observed responses]  (if API-backed)
@@ -173,8 +173,8 @@ Capture is the first irreversible act of a clone run: it pulls a third party's s
 | Check | What must be stated | Agent |
 |-------|---------------------|-------|
 | **Authorization basis** | Which one: *own product* · *licensed / contracted reference* · *legacy system we operate* · *internal app, source lost* · *explicit written authorization from the rights holder*. "It's public, so it's fair" is **not** a basis — a public surface is visible, not licensed. | Nexus (declared by the user) |
-| **Automated-capture posture** | The target's Terms of Service and `robots.txt`/automation policy as they bear on crawling, screenshotting, and API observation; rate limits honored per §2a | `Clause` (+`Compete` for published API terms) |
-| **Asset rights** | Per-asset license posture in the manifest — reuse where licensed, **faithfully recreate otherwise** (`+Ink`); trademarks, logos, and brand marks are **recreate-never-reuse** unless owned or licensed | `Clause` + `Ink` |
+| **Automated-capture posture** | The target's Terms of Service and `robots.txt`/automation policy as they bear on crawling, screenshotting, and API observation; rate limits honored per §2a | `Canon[legal]` (+`Compete` for published API terms) |
+| **Asset rights** | Per-asset license posture in the manifest — reuse where licensed, **faithfully recreate otherwise** (`+Ink`); trademarks, logos, and brand marks are **recreate-never-reuse** unless owned or licensed | `Canon[legal]` + `Ink` |
 | **PII in the capture corpus** | Screenshots and recorded responses of a live product routinely contain real user data. Capture under a **pinned synthetic/seed account** where possible; where not, the corpus is scanned and redacted before it becomes a baseline artifact | `Cloak` |
 | **No-circumvention rule** | Technical protection measures are **not** defeated: no CAPTCHA solving, no auth bypass, no DRM/paywall circumvention. A surface reachable only by circumvention is a **named coverage gap**, never captured (this is the §2a rule stated as a rights constraint, not just a robustness one) | contract-level |
 
@@ -209,12 +209,12 @@ The core knowledge of this recipe. Magi confirms the relevant dimensions in Phas
 
 | Dimension | What "faithful" means | Captured by (Phase 1) | Comparator (Phase 5) | Pass condition (default) |
 |-----------|----------------------|------------------------|------------------------|---------------------------|
-| **Visual** | Layout, spacing, color, typography, component look, responsive breakpoints / window states match per screen/state | Vector/Voyager screenshots (web); Hearth `automate` per-window screenshots (desktop); Frame/Pixel design tokens | Per-screen/state image diff: align → mask declared dynamic regions → normalize fonts/AA → compute SSIM + per-pixel delta against the reference artifact (Pixel/Voyager) | SSIM ≥ declared threshold ∧ pixel-delta ≤ threshold, on the *significant* (unmasked) regions |
-| **Behavioral** | Interactions, navigation, state transitions, validation, edge-case responses behave identically | Echo/Trace flow recordings; Voyager (web) / Hearth `automate` (desktop) interaction traces | Replay each recorded flow against the clone; assert the canonicalized observable result (DOM/UI state, navigation target, validation message) equals the fixture (Radar/Voyager) | 100% of recorded flows green after canonicalization |
+| **Visual** | Layout, spacing, color, typography, component look, responsive breakpoints / window states match per screen/state | Vector/Voyager screenshots (web); Anvil `automate` per-window screenshots (desktop); Frame/Pixel design tokens | Per-screen/state image diff: align → mask declared dynamic regions → normalize fonts/AA → compute SSIM + per-pixel delta against the reference artifact (Pixel/Voyager) | SSIM ≥ declared threshold ∧ pixel-delta ≤ threshold, on the *significant* (unmasked) regions |
+| **Behavioral** | Interactions, navigation, state transitions, validation, edge-case responses behave identically | Echo/Trace flow recordings; Voyager (web) / Anvil `automate` (desktop) interaction traces | Replay each recorded flow against the clone; assert the canonicalized observable result (DOM/UI state, navigation target, validation message) equals the fixture (Radar/Voyager) | 100% of recorded flows green after canonicalization |
 | **Feature** | Every feature in the inventory is present and reachable | PDM/Lens feature inventory | Attest coverage matrix: each inventory feature → present ∧ reachable ∧ exercised in the clone | 100% covered or explicitly deferred (named) |
 | **Data / API** | Data model shape, API contract, and field semantics match the observed surface | Schema inference from observed responses | Structural diff of clone responses vs observed-contract shapes (field set, types, nesting); semantics spot-checked on sampled records (gateway/schema) | shape-equivalent; sampled semantics match |
 | **Asset** | Fonts, icons, images, and other brand assets match — reused where licensed, faithfully recreated otherwise | Ink/Pixel asset extraction → asset manifest (with license posture) | Per-asset diff vs the asset manifest: fonts (family/metrics), icons/images (perceptual hash within tolerance, or confirmed faithful recreation) (Pixel/Frame) | each asset matches within tolerance, or is a declared faithful recreation |
-| **Performance** *(declared per run)* | The copy feels like the original: interaction latency, load/startup, and perceived responsiveness stay within a declared envelope of the captured baseline | Vector/Voyager timing capture during Phase 1 (per-screen load, interaction latency); Hearth window/app launch timings (desktop) | Replay the perf-significant flows against the clone on a like-for-like environment and compare the timing distribution (median + p95) to the Phase 1 captured baseline — never a single run, never across dissimilar hardware/network (Bolt/Siege) | within the declared factor (default p95 ≤ 1.5× original); a flow outside it is a named parity gap, not a rounding difference |
+| **Performance** *(declared per run)* | The copy feels like the original: interaction latency, load/startup, and perceived responsiveness stay within a declared envelope of the captured baseline | Vector/Voyager timing capture during Phase 1 (per-screen load, interaction latency); Anvil window/app launch timings (desktop) | Replay the perf-significant flows against the clone on a like-for-like environment and compare the timing distribution (median + p95) to the Phase 1 captured baseline — never a single run, never across dissimilar hardware/network (Bolt/Siege) | within the declared factor (default p95 ≤ 1.5× original); a flow outside it is a named parity gap, not a rounding difference |
 
 > Reproduce *idiomatically on the target stack* — a faithful copy is faithful in **observable result**, not in internal implementation. Re-expressing the original's UI in the target framework's idioms is correct; transliterating its internal code (when source exists) is not the goal — `judge` Phase 5 distinguishes faithful-result from cargo-cult-internals.
 
@@ -242,7 +242,7 @@ The core knowledge of this recipe. Magi confirms the relevant dimensions in Phas
 ## 6. Add-ons
 
 - `+Voyager[ios]` — native iOS UI capture/verification when the target is a mobile app.
-- `+Hearth[automate]` — macOS desktop-app capture/automation when `target_type = desktop`.
+- `+Anvil[automate]` — macOS desktop-app capture/automation when `target_type = desktop`.
 - `+Ink` — recreate brand assets (icons/illustrations) when the original's assets cannot be licensed for reuse.
 - `+Flow` — when motion/animation fidelity is part of "complete copy".
 - `+Schema` / `+Tuner` — when the data layer and query behavior must be reproduced, not just the UI.
@@ -260,7 +260,7 @@ Reproducing an EXISTING product faithfully (parity-verified)?
   YES → target is mobile-native from a Web app? → PORTING (Port→Native)
         single Figma source, no full rebuild? → frame
         otherwise (whole product, fidelity-verified — web | desktop | mobile | api) → clone
-              target_type = desktop? → Hearth `automate` capture (macOS) / external UI-automation harness (Win/Linux), same Parity Map
+              target_type = desktop? → Anvil `automate` capture (macOS) / external UI-automation harness (Win/Linux), same Parity Map
 ```
 
 ## 7a. Handoff contract (what downstream receives)
@@ -271,7 +271,7 @@ A finished clone is rarely the end — it is the starting point for the product 
 |-------|---------|-------------|
 | `sdr` | the locked Stack Decision Record incl. accepted stack-vs-fidelity tradeoffs **and their parity ceilings** | `feature`/`apex` (every new feature is built on this stack, and a ceiling is a standing constraint, not a bug) |
 | `parity_harness` | the re-runnable comparator suite (screenshot diffs + behavior fixtures + feature matrix + perf flows) | `migrate`/`refactor`/`optimize` — the harness becomes the regression net for any later change to the clone |
-| `rights_record` | authorization basis + asset license posture + PII handling | `launch` (ship-time review), `clause` (any later distribution question) |
+| `rights_record` | authorization basis + asset license posture + PII handling | `launch` (ship-time review), `canon[legal]` (any later distribution question) |
 | `provenance_stamp` | target version/build, capture date, environment, locale, seed | a later re-capture / drift re-check compares against this, not a fresh guess |
 | `coverage_gaps` | deferred, capture-blocked, and `UNVERIFIED` surfaces, each named | `feature` backlog — the honest list of what the clone does **not** yet reproduce |
 | `parity_ceilings` | per-dimension limits imposed by the stack choice | `optimize` (a perf ceiling that is stack-imposed is not an optimization target), `restyle` (a visual ceiling is not a design defect) |

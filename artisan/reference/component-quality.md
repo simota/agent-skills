@@ -281,7 +281,7 @@ const Button = ({ variant = 'primary', size = 'md', className, children }: Butto
 ```
 
 - Replaces CSS Modules / CSS-in-JS for component-level scoping.
-- `to` clause creates a "donut scope" — styles apply within `.card` but stop at `.card__content`.
+- `to` canon creates a "donut scope" — styles apply within `.card` but stop at `.card__content`.
 - **Rule**: Prefer `@scope` for new components when project targets modern browsers.
 
 ### Anchor Positioning

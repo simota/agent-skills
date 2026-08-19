@@ -10,7 +10,7 @@ Purpose: Model human-vector attack scenarios (vishing, smishing, tailgating, pre
 - **Cloak (elsewhere)**: PII handling, consent, and data-minimization controls that reduce OSINT surface. Cloak designs the controls; Breach tests whether they close the pretext.
 - **Canon[regulatory] (elsewhere)**: SOC 2 CC1.4 / HIPAA 164.308(a)(5) / PCI 12.6 awareness-training and insider-threat programs.
 - **Triage (elsewhere)**: post-incident response when a real social engineering attempt lands.
-- **Clause (elsewhere)**: contractual and policy clauses that govern insider access and exit procedures.
+- **Canon (elsewhere)**: contractual and policy clauses that govern insider access and exit procedures.
 
 If the question is "can a human be manipulated into granting access?" → `social`. If it is "can our technical controls catch it when they do?" → hand off to Vigil.
 

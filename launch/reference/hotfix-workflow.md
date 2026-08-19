@@ -162,4 +162,4 @@ v2.4.0 ────────●──────●── main (needs backpo
 - **Builder → Guardian**: fix PR must pass `guardian pr` with hotfix-size allowance
 - **Gear → Beacon**: deploy emits events for oncall dashboard
 - **Launch → Triage**: if rollback triggers, escalate incident commander
-- **Launch → Harvest**: generate abbreviated release note for changelog
+- **Launch reporting**: include an abbreviated hotfix note in the changelog and stakeholder report

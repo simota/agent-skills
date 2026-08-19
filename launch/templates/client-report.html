@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>作業報告書</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* ============================================
+       Base & Print Settings
+       ============================================ */
+    @page {
+      size: A4;
+      margin: 15mm 12mm;
+    }
+
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .page-break { page-break-before: always; }
+      .no-print { display: none; }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif;
+      font-size: 10pt;
+      line-height: 1.6;
+      color: #1a1a2e;
+      background: #fff;
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 15mm 12mm;
+    }
+
+    /* ============================================
+       Typography
+       ============================================ */
+    h1 {
+      font-size: 22pt;
+      font-weight: 700;
+      color: #1a1a2e;
+      text-align: center;
+      margin-bottom: 8px;
+      letter-spacing: 0.1em;
+    }
+
+    h2 {
+      font-size: 12pt;
+      font-weight: 600;
+      color: #1a1a2e;
+      border-bottom: 2px solid #1a1a2e;
+      padding-bottom: 6px;
+      margin: 24px 0 16px;
+    }
+
+    h3 {
+      font-size: 10pt;
+      font-weight: 600;
+      color: #4a4a68;
+      margin: 16px 0 10px;
+    }
+
+    /* ============================================
+       Header
+       ============================================ */
+    .report-header {
+      text-align: center;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+
+    .report-meta {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 12px;
+      font-size: 9pt;
+      color: #666;
+    }
+
+    .report-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .report-meta-label {
+      font-weight: 600;
+      color: #4a4a68;
+    }
+
+    /* ============================================
+       Summary Cards
+       ============================================ */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .summary-card {
+      background: linear-gradient(135deg, #f8f9fc 0%, #eef1f8 100%);
+      border: 1px solid #e0e4ed;
+      border-radius: 6px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .summary-value {
+      font-size: 24pt;
+      font-weight: 700;
+      color: #2c3e50;
+      line-height: 1.2;
+    }
+
+    .summary-label {
+      font-size: 8pt;
+      color: #7f8c9a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+    }
+
+    .summary-card.highlight {
+      background: linear-gradient(135deg, #2c3e50 0%, #3d5a73 100%);
+      border-color: #2c3e50;
+    }
+
+    .summary-card.highlight .summary-value,
+    .summary-card.highlight .summary-label {
+      color: #fff;
+    }
+
+    /* ============================================
+       Charts
+       ============================================ */
+    .chart-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .chart-box {
+      background: #fafbfc;
+      border: 1px solid #e8eaed;
+      border-radius: 6px;
+      padding: 16px;
+    }
+
+    .chart-title {
+      font-size: 9pt;
+      font-weight: 600;
+      color: #4a4a68;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .chart-wrapper {
+      height: 180px;
+      position: relative;
+    }
+
+    /* ============================================
+       Timeline (Gantt-like)
+       ============================================ */
+    .timeline-container {
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+
+    .timeline-header {
+      display: grid;
+      grid-template-columns: 200px repeat(7, 1fr);
+      border-bottom: 2px solid #2c3e50;
+      padding-bottom: 8px;
+      margin-bottom: 4px;
+    }
+
+    .timeline-header-cell {
+      font-size: 8pt;
+      font-weight: 600;
+      color: #4a4a68;
+      text-align: center;
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 200px repeat(7, 1fr);
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .timeline-task {
+      font-size: 9pt;
+      color: #1a1a2e;
+      padding-right: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .timeline-bar-container {
+      grid-column: span 7;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      height: 20px;
+    }
+
+    .timeline-bar {
+      background: linear-gradient(90deg, #3498db 0%, #2980b9 100%);
+      height: 16px;
+      border-radius: 3px;
+      margin: 2px 2px;
+    }
+
+    .timeline-bar.feat { background: linear-gradient(90deg, #27ae60 0%, #219a52 100%); }
+    .timeline-bar.fix { background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%); }
+    .timeline-bar.refactor { background: linear-gradient(90deg, #9b59b6 0%, #8e44ad 100%); }
+    .timeline-bar.docs { background: linear-gradient(90deg, #f39c12 0%, #d68910 100%); }
+
+    /* ============================================
+       Tables
+       ============================================ */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 9pt;
+    }
+
+    thead {
+      background: #2c3e50;
+      color: #fff;
+    }
+
+    th {
+      font-weight: 600;
+      padding: 10px 12px;
+      text-align: left;
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e8eaed;
+      vertical-align: top;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fafbfc;
+    }
+
+    tbody tr:hover {
+      background: #f0f4f8;
+    }
+
+    .text-right { text-align: right; }
+    .text-center { text-align: center; }
+
+    .status-complete {
+      display: inline-block;
+      background: #27ae60;
+      color: #fff;
+      font-size: 7pt;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .status-progress {
+      display: inline-block;
+      background: #3498db;
+      color: #fff;
+      font-size: 7pt;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .category-tag {
+      display: inline-block;
+      font-size: 7pt;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+
+    .category-feat { background: #e8f5e9; color: #2e7d32; }
+    .category-fix { background: #ffebee; color: #c62828; }
+    .category-refactor { background: #f3e5f5; color: #7b1fa2; }
+    .category-docs { background: #fff3e0; color: #ef6c00; }
+    .category-test { background: #e3f2fd; color: #1565c0; }
+
+    /* ============================================
+       Progress Bar
+       ============================================ */
+    .progress-section {
+      margin: 20px 0;
+    }
+
+    .progress-item {
+      margin-bottom: 12px;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+      font-size: 9pt;
+    }
+
+    .progress-label {
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .progress-value {
+      color: #7f8c9a;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: #e8eaed;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #2c3e50 0%, #3d5a73 100%);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+
+    /* ============================================
+       Footer
+       ============================================ */
+    .report-footer {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #e0e0e0;
+      text-align: center;
+      font-size: 8pt;
+      color: #999;
+    }
+
+    /* ============================================
+       Utilities
+       ============================================ */
+    .divider {
+      height: 1px;
+      background: #e8eaed;
+      margin: 24px 0;
+    }
+
+    .flex-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .text-muted {
+      color: #7f8c9a;
+    }
+
+    .font-mono {
+      font-family: "SF Mono", "Monaco", "Menlo", monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="report-header">
+    <h1>作業報告書</h1>
+    <div class="report-meta">
+      <div class="report-meta-item">
+        <span class="report-meta-label">プロジェクト:</span>
+        <span>{{PROJECT_NAME}}</span>
+      </div>
+      <div class="report-meta-item">
+        <span class="report-meta-label">報告期間:</span>
+        <span>{{START_DATE}} — {{END_DATE}}</span>
+      </div>
+      <div class="report-meta-item">
+        <span class="report-meta-label">担当者:</span>
+        <span>{{AUTHOR}}</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Executive Summary -->
+  <section>
+    <h2>Executive Summary</h2>
+    <div class="summary-grid">
+      <div class="summary-card highlight">
+        <div class="summary-value">{{TOTAL_TASKS}}</div>
+        <div class="summary-label">完了タスク</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-value">{{TOTAL_HOURS}}</div>
+        <div class="summary-label">総工数（時間）</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-value">{{TOTAL_ADDITIONS}}</div>
+        <div class="summary-label">追加行数</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-value">{{COMPLETION_RATE}}</div>
+        <div class="summary-label">完了率</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Charts -->
+  <section>
+    <h2>Activity Analysis</h2>
+    <div class="chart-container">
+      <div class="chart-box">
+        <div class="chart-title">日別作業工数</div>
+        <div class="chart-wrapper">
+          <canvas id="dailyChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">カテゴリ別工数配分</div>
+        <div class="chart-wrapper">
+          <canvas id="categoryChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section>
+    <h2>Work Timeline</h2>
+    <div class="timeline-container">
+      <div class="timeline-header">
+        <div class="timeline-header-cell" style="text-align: left;">タスク</div>
+        <div class="timeline-header-cell">01/21</div>
+        <div class="timeline-header-cell">01/22</div>
+        <div class="timeline-header-cell">01/23</div>
+        <div class="timeline-header-cell">01/24</div>
+        <div class="timeline-header-cell">01/25</div>
+        <div class="timeline-header-cell">01/26</div>
+        <div class="timeline-header-cell">01/27</div>
+      </div>
+      <!-- Timeline rows will be generated -->
+      <div class="timeline-row">
+        <div class="timeline-task">Sweep 安全性改善</div>
+        <div class="timeline-bar-container">
+          <div class="timeline-bar docs" style="grid-column: 1;"></div>
+        </div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-task">Guardian 新規作成</div>
+        <div class="timeline-bar-container">
+          <div class="timeline-bar feat" style="grid-column: 1;"></div>
+        </div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-task">エージェント連携強化 (8件)</div>
+        <div class="timeline-bar-container">
+          <div class="timeline-bar feat" style="grid-column: 1;"></div>
+        </div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-task">Arena 並列実装</div>
+        <div class="timeline-bar-container">
+          <div class="timeline-bar feat" style="grid-column: 4;"></div>
+        </div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-task">Guardian セキュリティ強化</div>
+        <div class="timeline-bar-container">
+          <div class="timeline-bar feat" style="grid-column: 7;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- Work Details -->
+  <section>
+    <h2>Work Details</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 40px;">No.</th>
+          <th>タスク名</th>
+          <th style="width: 80px;" class="text-center">カテゴリ</th>
+          <th style="width: 60px;" class="text-right">工数</th>
+          <th style="width: 80px;" class="text-center">完了日</th>
+          <th style="width: 70px;" class="text-center">ステータス</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center">1</td>
+          <td>Sweep スキル安全性・使いやすさ改善</td>
+          <td class="text-center"><span class="category-tag category-docs">DOCS</span></td>
+          <td class="text-right font-mono">15.0h</td>
+          <td class="text-center">01/21</td>
+          <td class="text-center"><span class="status-complete">完了</span></td>
+        </tr>
+        <tr>
+          <td class="text-center">2</td>
+          <td>Guardian Git/PR管理エージェント新規作成</td>
+          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
+          <td class="text-right font-mono">8.0h</td>
+          <td class="text-center">01/21</td>
+          <td class="text-center"><span class="status-complete">完了</span></td>
+        </tr>
+        <tr>
+          <td class="text-center">3</td>
+          <td>Echo 高度な連携パターン追加</td>
+          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
+          <td class="text-right font-mono">10.0h</td>
+          <td class="text-center">01/21</td>
+          <td class="text-center"><span class="status-complete">完了</span></td>
+        </tr>
+        <tr>
+          <td class="text-center">4</td>
+          <td>Compete 高度な連携パターン追加</td>
+          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
+          <td class="text-right font-mono">5.0h</td>
+          <td class="text-center">01/21</td>
+          <td class="text-center"><span class="status-complete">完了</span></td>
+        </tr>
+        <tr>
+          <td class="text-center">5</td>
+          <td>Scout 高度な連携パターン追加</td>
+          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
+          <td class="text-right font-mono">5.0h</td>
+          <td class="text-center">01/21</td>
+          <td class="text-center"><span class="status-complete">完了</span></td>
+        </tr>
+        <tr>
+          <td class="text-center">6</td>
+          <td>Builder 高度な連携パターン追加</td>
+          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
+          <td class="text-right font-mono">6.5h</td>
+          <td class="text-center">01/21</td>
+          <td class="text-center"><span class="status-complete">完了</span></td>
+        </tr>
+        <tr>
+          <td class="text-center">7</td>
+          <td>Judge 高度な連携パターン追加</td>
+          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
+          <td class="text-right font-mono">5.5h</td>
+          <td class="text-center">01/21</td>
+          <td class="text-center"><span class="status-complete">完了</span></td>
+        </tr>
+        <tr>
+          <td class="text-center">8</td>
+          <td>Zen 高度な連携パターン追加</td>
+          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
+          <td class="text-right font-mono">5.0h</td>
+          <td class="text-center">01/21</td>
+          <td class="text-center"><span class="status-complete">完了</span></td>
+        </tr>
+        <tr>
+          <td class="text-center">9</td>
+          <td>Nexus 高度な連携アーキテクチャ追加</td>
+          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
+          <td class="text-right font-mono">3.0h</td>
+          <td class="text-center">01/21</td>
+          <td class="text-center"><span class="status-complete">完了</span></td>
+        </tr>
+        <tr>
+          <td class="text-center">10</td>
+          <td>Triage 高度な連携パターン追加</td>
+          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
+          <td class="text-right font-mono">6.5h</td>
+          <td class="text-center">01/21</td>
+          <td class="text-center"><span class="status-complete">完了</span></td>
+        </tr>
+        <tr>
+          <td class="text-center">11</td>
+          <td>Arena マルチエンジン並列実装エージェント</td>
+          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
+          <td class="text-right font-mono">7.0h</td>
+          <td class="text-center">01/24</td>
+          <td class="text-center"><span class="status-complete">完了</span></td>
+        </tr>
+        <tr>
+          <td class="text-center">12</td>
+          <td>Guardian セキュリティ分析・大規模PR対応</td>
+          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
+          <td class="text-right font-mono">3.0h</td>
+          <td class="text-center">01/27</td>
+          <td class="text-center"><span class="status-complete">完了</span></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr style="background: #f8f9fc; font-weight: 600;">
+          <td colspan="3" class="text-right">合計</td>
+          <td class="text-right font-mono">79.5h</td>
+          <td colspan="2"></td>
+        </tr>
+      </tfoot>
+    </table>
+  </section>
+
+  <!-- Progress Summary -->
+  <section>
+    <h2>Progress Summary</h2>
+    <div class="progress-section">
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">機能開発 (Feature)</span>
+          <span class="progress-value">11 / 11 件完了</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 100%;"></div>
+        </div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">ドキュメント (Documentation)</span>
+          <span class="progress-value">1 / 1 件完了</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Key Achievements</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>成果</th>
+          <th style="width: 150px;">詳細</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>新規エージェント作成</td>
+          <td>Guardian, Arena の2エージェント</td>
+        </tr>
+        <tr>
+          <td>既存エージェント強化</td>
+          <td>10エージェントに連携パターン追加</td>
+        </tr>
+        <tr>
+          <td>アーキテクチャ改善</td>
+          <td>NEXUS_HANDOFF形式の標準化</td>
+        </tr>
+        <tr>
+          <td>コード品質</td>
+          <td>+8,141行 / -748行 の純増</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Footer -->
+  <footer class="report-footer">
+    <p>本報告書は自動生成されました | Generated automatically | {{GENERATED_DATE}}</p>
+  </footer>
+
+  <!-- Chart Scripts -->
+  <script>
+    // Daily Hours Chart
+    const dailyCtx = document.getElementById('dailyChart').getContext('2d');
+    new Chart(dailyCtx, {
+      type: 'bar',
+      data: {
+        labels: ['01/21', '01/22', '01/23', '01/24', '01/25', '01/26', '01/27'],
+        datasets: [{
+          label: '工数（時間）',
+          data: [69.5, 0, 0, 7, 0, 0, 3],
+          backgroundColor: 'rgba(44, 62, 80, 0.85)',
+          borderColor: 'rgba(44, 62, 80, 1)',
+          borderWidth: 1,
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: { color: 'rgba(0,0,0,0.05)' },
+            ticks: { font: { size: 9 } }
+          },
+          x: {
+            grid: { display: false },
+            ticks: { font: { size: 9 } }
+          }
+        }
+      }
+    });
+
+    // Category Distribution Chart
+    const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+    new Chart(categoryCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Feature', 'Documentation'],
+        datasets: [{
+          data: [64.5, 15],
+          backgroundColor: [
+            'rgba(39, 174, 96, 0.85)',
+            'rgba(243, 156, 18, 0.85)'
+          ],
+          borderColor: [
+            'rgba(39, 174, 96, 1)',
+            'rgba(243, 156, 18, 1)'
+          ],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: { size: 9 },
+              padding: 12
+            }
+          }
+        },
+        cutout: '55%'
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -20,7 +20,7 @@ A **breakthrough way of solving a problem, that is not a routine move and does n
 
 Conditions 1-2 make it *new*; condition 3 makes it *real*. Most "breakthroughs" that survive scrutiny for a quarter and then get reverted failed condition 3, not the first two: the cost did not vanish, it moved to a column nobody was reading.
 
-**The frame is engineering, not law.** *Prior art*, *enablement*, and *reduction to practice* are used here in their plain engineering sense: what already exists, whether someone else can build it from the write-up, whether it was actually built and tested. The recipe borrows the *discipline* of examined novelty and nothing else — rights, licensing and patentability are **out of scope at every phase** (route those to `clause`; see the Not-this table).
+**The frame is engineering, not law.** *Prior art*, *enablement*, and *reduction to practice* are used here in their plain engineering sense: what already exists, whether someone else can build it from the write-up, whether it was actually built and tested. The recipe borrows the *discipline* of examined novelty and nothing else — rights, licensing and patentability are **out of scope at every phase** (route those to `canon[legal]`; see the Not-this table).
 
 Eureka's identity is six things no sibling carries together — each is fully specified in the phase named, not repeated here:
 
@@ -52,7 +52,7 @@ Eureka's identity is six things no sibling carries together — each is fully sp
 | Reframe a stuck problem, single pass | `flux` (skill) | One reframing lens; eureka runs six generators and proves the survivor |
 | Maximize the execution quality of a **known** deliverable | `wish` | Execution ceiling, not novelty |
 | Build a thing whose direction is already settled | `spec` → `apex` | No novelty question to answer — the invention gates would be pure overhead |
-| Rights, licensing, patentability, freedom to operate | `clause` (skill) | **Out of scope.** `eureka` judges novelty and non-ordinariness as engineering facts; no phase of it produces or is competent to produce a legal conclusion |
+| Rights, licensing, patentability, freedom to operate | `canon[legal]` (skill) | **Out of scope.** `eureka` judges novelty and non-ordinariness as engineering facts; no phase of it produces or is competent to produce a legal conclusion |
 
 **Build the invention once it is proven** is *not* routed out: it is `eureka ship=true` (§1a), the opt-in continuation that carries the ratified mechanism through `spec` → `apex` in one run.
 
@@ -356,7 +356,7 @@ The evidence bar is symmetric with `COLLISION`: a candidate is never killed on a
 
 **Phase 4 — why the Sacrifice Ledger is a gate and not a fifth axis.** The question it answers is *accounting*, not *quality*: either every axis a real system pays on has been checked and the payment is where the Invention Contract said it may be, or it has not. Scoring that 0-3 would let a partially-accounted candidate average its way past a hole in the ledger — exactly the failure the gate exists to prevent — and would let an evaluator trade "we sacrificed something significant" against a high novelty score. Hence four verdicts, one of which kills (defined in the Phase 4 block above); the two that read as counter-intuitive are deliberate — `DISPLACED-DECLARED` **passes without grudge** because relocating a cost onto a genuinely free axis is generator ③'s own mechanism, and `FREE-LUNCH` **raises** the bar because a candidate that appears to cost nothing anywhere is the likeliest place for an unaccounted axis.
 
-The accounted-axis list contains no rights or freedom-to-operate entry, deliberately: **whether someone else holds rights over a mechanism has no bearing on whether it is an invention**, and an evaluator's guess about third-party rights must never be able to push a candidate to `ACCEPT` or hold it back (§1 Not-this → `clause`).
+The accounted-axis list contains no rights or freedom-to-operate entry, deliberately: **whether someone else holds rights over a mechanism has no bearing on whether it is an invention**, and an evaluator's guess about third-party rights must never be able to push a candidate to `ACCEPT` or hold it back (§1 Not-this → `canon[legal]`).
 
 **Phase 6 — ENABLEMENT scale (0-3).** Scored against the candidate's mechanism statement plus its Phase 5 reduction-to-practice record — *not* against the Phase 7 Disclosure Package, which does not exist yet. Phase 7 formalizes what a 3 already demonstrated; it never rescues a lower score.
 

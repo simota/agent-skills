@@ -61,7 +61,7 @@ atelier receives direction from Vision and briefs from the user. atelier sends e
 | atelier → Muse | `DESIGN_INTENT_HANDOFF` | Token definition / DTCG alignment |
 | atelier → Forge | `DESIGN_INTENT_HANDOFF` | Prototype build |
 | atelier → Pixel | `DESIGN_INTENT_HANDOFF` | Mockup reproduction |
-| atelier → Ink / Sketch | `DESIGN_INTENT_HANDOFF` | Visual asset generation |
+| atelier → Ink / Builder | `DESIGN_INTENT_HANDOFF` | Visual asset generation |
 | atelier → Stage | `DESIGN_INTENT_HANDOFF` | Slide deck |
 | atelier → Canvas | `DESIGN_INTENT_HANDOFF` | Diagram |
 | atelier → Morph | `DESIGN_INTENT_HANDOFF` | Multi-format export |

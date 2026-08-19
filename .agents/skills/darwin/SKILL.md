@@ -171,7 +171,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 ## Collaboration
 
 **Receives:** Architect (Health Score, agent catalog), Judge (quality feedback), Helm (strategy drift), Grove (culture DNA), Lore (cross-agent patterns, knowledge decay signals)
-**Sends:** Architect (improvement proposals, sunset candidates), Nexus (Dynamic AFFINITY overrides), Void (sunset YAGNI verification), Canvas (EFS dashboard), Latch (SessionStart hook config), Lore (evolution insights, fitness trend data)
+**Sends:** Architect (improvement proposals, sunset candidates), Nexus (Dynamic AFFINITY overrides), Void (sunset YAGNI verification), Canvas (EFS dashboard), Hone (SessionStart hook config), Lore (evolution insights, fitness trend data)
 
 **Agent Teams aptitude — SENSE phase parallelization (Pattern D: Specialist Team, 2–3 workers):**
 When the ecosystem has 30+ agents or the project has extensive git/journal history, SENSE signal collection benefits from parallel subagents:

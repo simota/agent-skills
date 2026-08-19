@@ -135,4 +135,4 @@ gantt
 - [ ] Milestones marked with `milestone` and `0d`.
 - [ ] Critical path tasks marked `crit`.
 - [ ] ≤20 tasks; split otherwise.
-- [ ] `Sources` cites Launch plan, tracker export, or "informal sketch — Launch has not formalized."
+- [ ] `Sources` cites Launch plan, tracker export, or "informal builder — Launch has not formalized."

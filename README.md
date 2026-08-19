@@ -1,14 +1,14 @@
 # AI Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Global Agents](https://img.shields.io/badge/Global_Agents-111-blue.svg)]()
+[![Global Agents](https://img.shields.io/badge/Global_Agents-100-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 A skill collection that enables collaborative development with a team of specialized AI agents.
 
 ## Features
 
-- **111 Global Agents + 3 Project-local Extensions** - Broad reusable coverage without exposing repository-specific operating skills everywhere
+- **100 Global Agents + 3 Project-local Extensions** - Broad reusable coverage without exposing repository-specific operating skills everywhere
 - **Nexus Orchestrator** - Analyzes tasks and automatically designs optimal agent chains
 - **Platform Agnostic** - Works with Claude Code, Codex CLI, Antigravity CLI, and others
 
@@ -35,11 +35,11 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 ## Overview
 
-This repository contains 111 globally reusable AI agents and 3 repository-local operating extensions. Each skill specializes in a specific domain and is coordinated by the **Nexus** orchestrator when available in the active profile.
+This repository contains 100 globally reusable AI agents and 3 repository-local operating extensions. Each skill specializes in a specific domain and is coordinated by the **Nexus** orchestrator when available in the active profile.
 
 ## Agent Catalog
 
-> Category-by-category catalog for 111 global agents plus the 3 project-local extensions marked below.
+> Category-by-category catalog for 100 global agents plus the 3 project-local extensions marked below.
 
 ### Orchestration
 
@@ -65,13 +65,13 @@ This repository contains 111 globally reusable AI agents and 3 repository-local 
 | **Scout** | _"Every bug has a story. I read the ending first."_ - Bug investigation and root cause analysis (RCA). Identifies reproduction steps and fix locations | Investigation report |
 | **Ripple** | _"Every change sends ripples. Know where they land before you leap."_ - Pre-change impact analysis. Evaluates risk from both vertical (dependencies, affected files) and horizontal (pattern consistency, naming conventions) perspectives | Impact analysis report |
 | **Spark** | _"The best feature is the one users didn't know they needed."_ - Feature proposals. Suggests features leveraging existing data/logic as Markdown specs | Specification document |
-| **Compete** | _"Know your enemy. Know the market. Know yourself."_ - Competitive research, differentiation, and positioning. SWOT analysis, feature matrices | Competitive analysis report |
+| **Compete** | _"Know your enemy. Know the market. Know yourself."_ - Competitive research, differentiation, positioning, and engineering-professional branding across GitHub, LinkedIn, portfolios, publishing, and conference presence | Competitive analysis, positioning and brand strategy |
 | **Voice** | _"Feedback is a gift. Analysis is unwrapping it."_ - User feedback collection, NPS survey design, sentiment analysis, and insight extraction | Feedback report |
 | **Field** | _"Good research asks the right questions. Great research changes what you thought was the question."_ - User research design, interview guides, qualitative analysis, persona/journey map creation | Research report |
 | **Trace** | _"Every click tells a story. I read between the actions."_ - Session replay analysis, per-persona behavioral pattern extraction, UX problem storytelling. Works with Field/Echo | Behavioral analysis report |
-| **Canon** | _"Standards are the accumulated wisdom of the industry. Apply them, don't reinvent them."_ - Investigates and analyzes using global/industry standards. Evaluates OWASP/WCAG/OpenAPI/ISO 25010 standards and SOC2/PCI-DSS/HIPAA/ISO 27001 regulatory controls, with evidence-backed remediation | Compliance report |
+| **Canon** | _"Standards are the accumulated wisdom of the industry. Apply them, don't reinvent them."_ - Standards, regulatory-control, and legal-document review. Evaluates OWASP/WCAG/OpenAPI/ISO 25010, SOC2/PCI-DSS/HIPAA/ISO 27001, ToS, privacy policies, DPA/EULA, cookie consent, and advertising claims | Compliance and legal-review report |
 | **Lens** | _"See the code, not just search it."_ - Codebase comprehension specialist. Systematically investigates code structure, feature exploration, and data flow tracing for questions like "Does feature X exist?", "How does flow Y work?", "What is this module's responsibility?" | Investigation report |
-| **Magi** | _"Three minds, one verdict. Consensus through diversity."_ - Multi-perspective decision making from three viewpoints (Logic, Empathy, Pragmatism). Architecture selection, tradeoff analysis, Go/No-Go decisions | Decision report |
+| **Magi** | _"Three minds, one verdict. Consensus through diversity."_ - Multi-perspective decisions, founder office hours, bottleneck triage, pitch critique, and advisory lenses grounded in documented notable-figure thinking | Decision and advisory report |
 | **Flux** | _"Bend the light. See what was always there."_ - Thinking refraction engine. Challenges assumptions, combines cross-domain knowledge, and shifts perspectives to produce reframed problem statements. Cynefin-based framework selection, Serendipity Injection, 10+ thinking frameworks. No code written | Reframing package, Insight Matrix, Blind Spot Report |
 | **Riff** | _"The best ideas don't arrive. They evolve — one riff at a time."_ - Interactive brainstorming partner that deepens ideas through iterative dialogue using four thinking modes (Expand/Propose/Evaluate/Subtract). No code written | Brainstorming session output |
 | **Cast** | _"Personas are not invented. They are discovered, born, and evolved."_ - Persona casting agent. Rapid generation, registry management, lifecycle tracking, and cross-agent distribution of personas from diverse inputs | Persona registry |
@@ -80,9 +80,7 @@ This repository contains 111 globally reusable AI agents and 3 repository-local 
 | **Saga** | _"Facts are remembered 5-10% of the time. Stories raise that to 65-70%. The customer is the hero. The product is the guide."_ - Narrative design agent. Structures product and feature use cases as customer-centric stories. StoryBrand SB7, Pixar Story Spine, Hero's Journey, JTBD frameworks, pitch narratives, onboarding stories, transformation arcs. No code written | Narrative document |
 | **Omen** | _"Plan for the worst. Build for the best."_ - Pre-mortem analysis and failure mode enumeration. Systematically identifies failure scenarios, scores with RPN/AP. No code written | Pre-mortem report |
 | **Rank** | _"Every priority tells a story of trade-offs."_ - Priority quantification. Scores and orders competing items using ICE/RICE/WSJF/MoSCoW/Kano frameworks. No code written | Priority report |
-| **Sage** | _"Tell me what you're avoiding."_ - YC-style office hours advisory. Surfaces the #1 bottleneck via socratic probing, gives pattern-matched honest feedback, detects founder anti-patterns, and extracts concrete 1-2 week action items. No code written | Office hours session output (bottleneck + actions) |
 | **PDM** | _"Show where the project stands — planned, built, and the gap between."_ - Project delivery status navigator (PdM-style, read-only). Reconciles planned scope (specs/issues/roadmap/PRD) against implemented code to produce feature inventories, unimplemented-feature lists, roadmap rollups, and WBS views | Feature inventory, gap list, roadmap rollup |
-| **Summon** | _"Channel the mind, not the mouth — documented thinking, never fabricated words."_ - Notable-figure thinking lenses. Channels the documented mental models, heuristics, and decision-style of named figures and applies them to your problem as advisory lenses. No code | Multi-perspective advisory lenses |
 
 **Scout > Ripple > Builder chain**: Scout (bug investigation) > Ripple (fix impact analysis) > Builder (implementation)
 **Ripple > Guardian chain**: Ripple (impact analysis) > Guardian (PR strategy)
@@ -98,8 +96,7 @@ This repository contains 111 globally reusable AI agents and 3 repository-local 
 | Agent | Description | Output |
 |-------|-------------|--------|
 | **Guardian** | _"Every commit tells a story. Make it worth reading."_ - Git/PR gatekeeper. Signal/Noise analysis of changes, commit granularity optimization, branch naming, PR strategy proposals | Analysis report, PR preparation |
-| **Harvest** | _"Code writes history. I harvest its meaning."_ - PR information collection and report generation. Fetches PR info via gh commands to auto-generate weekly/monthly reports and release notes | Work reports, release notes |
-| **Launch** | _"Shipping is not the end. It's the beginning of accountability."_ - Release management. Versioning strategy, CHANGELOG generation, release notes, rollback plans, feature flag design | Release plans, CHANGELOG |
+| **Launch** | _"Shipping is not the end. It's the beginning of accountability."_ - Release management plus read-only GitHub PR collection, weekly/monthly/client reporting, DORA/SPACE metrics, retrospectives, and PDF export | Release plans, CHANGELOG and delivery reports |
 | **Trail** | _"Every bug has a birthday. Every regression has a parent commit. Find them."_ - Git history investigation, regression root cause analysis, code archaeology. Travels back in time to uncover the truth | History investigation report |
 
 **Guardian > Judge > Zen chain**: Guardian (PR preparation) > Judge (review) > Zen (fixes)
@@ -115,7 +112,6 @@ This repository contains 111 globally reusable AI agents and 3 repository-local 
 | **Sentinel** | _"Security is not a feature. It's a responsibility."_ - Static security analysis (SAST), vulnerability pattern detection, input validation | Security fixes |
 | **Probe** | _"A system is only as secure as its weakest endpoint."_ - Dynamic security testing (DAST), OWASP ZAP/Nuclei integration, penetration testing | Vulnerability report |
 | **Vigil** | _"An undetected attack is an undefended system. Vigil ensures nothing passes unseen."_ - Detection Engineering agent. Sigma/YARA rule design, detection coverage mapping (MITRE ATT&CK), threat hunting hypothesis design, Purple Team Blue side execution, Detection-as-Code CI/CD integration | Detection rules, coverage maps |
-| **Cull** | _"The worm leaves a husk. Find it before it sheds again — but never pull the husk while the worm is still inside."_ - Supply-chain malware infection scanner. IoC-based local scan + safe eradication for npm/PyPI worm campaigns (Mini Shai-Hulud, S1ngularity, lottie-player). Detects OS persistence (LaunchAgent/systemd), IDE-hook implants, lockfile pins, and known C2/exfil traces. Persistence-first ordering prevents `rm -rf ~/` retaliation; rotation runbook is gated on eradication-verified | Infection report, eradication runbook |
 | **Judge** | _"Good code needs no defense. Bad code has no excuse."_ - Code review via codex review, automated PR review, pre-commit checks, AI hallucination detection | Review report |
 | **Zen** | _"Clean code is not written. It's rewritten."_ - Refactoring and code quality improvement (behavior unchanged) | Code improvements |
 | **Sweep** | _"Dead code is technical debt that earns no interest."_ - Unused file detection, dead code identification, orphaned file discovery, safe deletion proposals | Cleanup proposals |
@@ -125,13 +121,13 @@ This repository contains 111 globally reusable AI agents and 3 repository-local 
 | **Mint** | _"Good tests deserve great data."_ - Test data and fixture generation specialist. Factory patterns, boundary value generation, synthetic data, seed management | Test data, fixtures |
 | **Breach** | _"Think like an attacker. Defend like an engineer."_ - Red team engineering. Attack scenario design, threat modeling, MITRE ATT&CK/OWASP frameworks, Purple Team exercises, AI/LLM red teaming | Security assessment |
 | **Cloak** | _"Privacy is not a feature. It's a right."_ - Privacy engineering and data governance. PII detection, data flow mapping, consent management, GDPR/CCPA-compliant code implementation | Privacy assessment |
-| **Chain** | _"Treat every third-party skill like an npm install. Audit before invoking."_ - Skill/plugin/MCP supply-chain auditor. Treats SKILL.md, bundled scripts, MCP server defs, hooks, and `.claude/` config as third-party software. Generates sha256 manifests, scans for Unicode Tag injection, detects curl-pipe + credential-exfil patterns, and pins MCP tool descriptions against rug-pulls | Supply-chain audit, sha256 manifest |
+| **Chain** | _"Treat every third-party skill like an npm install. Audit before invoking."_ - Skill/plugin/MCP intake audit plus live npm/PyPI malware investigation. Generates sha256 manifests, scans Unicode and exfiltration patterns, matches campaign IoCs, and produces persistence-first eradication and credential-rotation runbooks | Supply-chain audit, infection report and recovery runbook |
 
 ### Implementation
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Builder** | _"Types are contracts. Code is a promise."_ - Production implementation. Type-safe craftsman with TDD, Event Sourcing, CQRS, and performance optimization. Detects spec ambiguity, supports auto-handoff from Forge | Production code |
+| **Builder** | _"Types are contracts. Code is a promise."_ - Type-safe production implementation plus Gemini image-generation/editing code, prompt design, batch generation, style transfer, post-processing, provenance, and content-policy gates | Production and image-generation code |
 | **Artisan** | _"Prototypes promise. Production delivers."_ - Production frontend implementation craftsman. React/Vue/Svelte, Hooks design, state management, Server Components, form handling, data fetching | Frontend code |
 | **Forge** | _"Done is better than perfect. Ship it, learn, iterate."_ - Prototyping. Prioritizes working software over perfection. Outputs types.ts, errors.ts, forge-insights.md for Builder handoff | MVP/PoC |
 | **Native** | _"Every pixel ships. Every platform matters."_ - Pure-native mobile implementation specialist for iOS (Swift 6.3 + SwiftUI + Liquid Glass) and Android (Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive). Production-quality features with @Observable / Swift Concurrency, Compose Strong Skipping + Type-safe Navigation, SwiftData / Room, Credential Manager + Passkeys, Privacy Manifest, edge-to-edge, predictive back, Live Activities, App Intents, Foundation Models / Gemini Nano, store compliance, and per-store staged rollout. React Native / Flutter / KMP / CMP are out of scope | Code |
@@ -184,25 +180,21 @@ This repository contains 111 globally reusable AI agents and 3 repository-local 
 |-------|-------------|--------|
 | **Scribe** | _"A specification is a contract between vision and reality."_ - Specification author for PRD/SRS/HLD/LLD and cross-team L0-L3 packages, including implementation checklists and test specifications | Specs, design docs |
 | **Quill** | _"Code tells computers what to do. Documentation tells humans why."_ - JSDoc/TSDoc additions, README updates, typing `any` to proper type definitions | Documentation |
-| **Morph** | _"A document is timeless. Its format is temporary."_ - Document format conversion (Markdown <> Word/Excel/PDF/HTML). Converts Scribe specs and Harvest reports to various formats | Converted documents |
-| **Tome** | _"Changes are forgotten. Knowledge endures."_ - Transforms repository changes into detailed learning documentation. Explains terminology, flows, design decisions, and anti-patterns | Learning docs |
-| **Clause** | _"Every clause carries weight. Every omission carries risk."_ - Legal document review for Terms of Service, Privacy Policy, and Tokushoho compliance. Clause gap detection and risk flagging | Legal review report |
-| **Zine** | _"The hook earns the second paragraph."_ - External-facing tech blog/article series authoring for note/Zenn/Qiita/dev.to. Hook design, article structure, platform-specific tuning, multi-episode series management | Published articles, series index |
+| **Morph** | _"A document is timeless. Its format is temporary."_ - Document format conversion (Markdown <> Word/Excel/PDF/HTML). Converts Scribe specs and Launch reports to various formats | Converted documents |
+| **Tome** | _"Changes are forgotten. Knowledge endures."_ - Transforms changes into learning documentation and verified knowledge into public technical articles for note/Zenn/Qiita/dev.to, including article series and repurposing | Learning docs and technical articles |
 
-**Scribe vs Quill vs Morph vs Tome vs Zine responsibilities**:
+**Scribe vs Quill vs Morph vs Tome responsibilities**:
 - **Scribe**: Project documentation (PRD, SRS, design docs, checklists, test specifications)
 - **Quill**: Code documentation (JSDoc/TSDoc, README, type definitions)
 - **Morph**: Format conversion (Markdown > PDF/Word/HTML, etc.)
-- **Tome**: Change-based learning materials (design decisions, terminology, anti-patterns from diffs)
-- **Zine**: External-facing articles for public platforms (note/Zenn/Qiita/dev.to), series management
+- **Tome**: Change-based learning materials and external-facing articles for note/Zenn/Qiita/dev.to, including series management
 
 ### Visualization
 
 | Agent | Description | Output |
 |-------|-------------|--------|
 | **Canvas** | _"A diagram is worth a thousand lines of documentation."_ - Design visualization. Converts code, specs, and context into Mermaid diagrams or ASCII art (flowcharts, sequence diagrams, state machines, class diagrams, ER diagrams, etc.) | Mermaid diagrams / ASCII Art |
-| **Sketch** | _"From words to worlds, prompt to pixel."_ - AI image generation code craftsman. Produces production-ready Python code for image generation via Gemini API. Prompt engineering, batch generation, cost estimation | Python code |
-| **Cue** | _"Every frame tells a story."_ - Video script, storyboard, and narration design for product videos, explainer videos, and onboarding content | Video scripts, storyboards |
+| **Cue** | _"Every frame tells a story."_ - Video scripts, storyboards, narration, and Playwright feature-demo production with multi-aspect recording, captions, quality gates, voiceover, transcript, and thumbnails | Video plans, demos and publication assets |
 | **Stage** | _"Every slide is a stage."_ - Marp/reveal.js/Slidev slide generation, story composition design, conference talk optimization | Slide decks |
 
 
@@ -243,21 +235,18 @@ This repository contains 111 globally reusable AI agents and 3 repository-local 
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Anvil** | _"The terminal is the first interface. Make it unforgettable."_ - Terminal UI construction, CLI development support, dev tool integration (Linter/test runner/build) | CLI/TUI code |
+| **Anvil** | _"The terminal is the first interface. Make it unforgettable."_ - CLI/TUI and dev-tool implementation plus personal shell/editor/terminal/dotfile setup and safe macOS automation with AppleScript/JXA | CLI/TUI code and environment configuration |
 | **Gear** | _"The best CI/CD is the one nobody thinks about."_ - Dependency management, CI/CD and Docker optimization, plus advanced GitHub Actions workflow design | Configuration files |
 | **Scaffold** | _"Infrastructure is the silent foundation of every dream."_ - Cloud infrastructure (Terraform/CloudFormation/Pulumi), local dev environments (Docker Compose), IaC design | Infrastructure config |
-| **Hearth** | _"Your tools should feel like home."_ - Personal dev environment craftsman. Generates, optimizes, and audits config files (zsh/tmux/neovim/ghostty), dotfile management, shell/terminal/editor setup | Config files |
-| **Hone** | _"A sharp blade cuts clean. A sharp config cuts friction."_ - AI CLI configuration auditor (Codex CLI / Antigravity CLI / Claude Code). Collects official best practices via web, audits config.toml/settings.json/CLAUDE.md/GEMINI.md/AGENTS.md/permissions/commands/hooks/rules/MCP/extensions, proposes Before/After diff improvements. Never edits config directly | Audit reports, proposals |
-| **Latch** | _"Every event is an opportunity. Hook it before it slips away."_ - Claude Code hook specialist. Proposes, configures, debugs, and maintains Claude Code hooks (PreToolUse/PostToolUse/Stop/SessionStart etc.) for workflow automation, quality gates, and security validation | Hook configurations |
+| **Hone** | _"A sharp blade cuts clean. A sharp config cuts friction."_ - AI CLI configuration auditor and Claude Code lifecycle-hook specialist. Audits Codex/Antigravity/Claude configuration and designs, configures, or debugs scoped hooks with verification | Audit reports, proposals and hook configurations |
 | **Ledger** | _"Every dollar has a story. Make it a short one."_ - FinOps and cloud cost optimization. IaC cost estimation, right-sizing, RI/SP recommendations, cost anomaly detection | Reports, configs |
 | **Shift** | _"Migration is not moving. It's transforming."_ - Migration and upgrade orchestrator. Framework, library, API, database, and infrastructure migrations end-to-end with codemod generation and incremental strategies | Migration plans |
 
-**Hearth vs Hone vs Gear vs Scaffold vs Latch responsibilities**:
-- **Hearth**: Personal environment (dotfiles, shell, editor, terminal)
-- **Hone**: AI CLI tool config audit (Codex CLI `~/.codex/`, Antigravity CLI `~/.gemini/`, Claude Code `~/.claude/` settings)
+**Anvil vs Hone vs Gear vs Scaffold responsibilities**:
+- **Anvil**: Personal environment (dotfiles, shell, editor, terminal)
+- **Hone**: AI CLI configuration audit and Claude Code event-hook design/configuration/debugging
 - **Gear**: Project-level DevOps (CI/CD, Docker, monitoring, Git hooks); `gha` mode owns advanced GitHub Actions
 - **Scaffold**: Infrastructure provisioning (cloud, Docker Compose, IaC)
-- **Latch**: Claude Code event hooks (settings.json hooks for workflow automation)
 
 ### Internationalization
 
@@ -272,7 +261,6 @@ This repository contains 111 globally reusable AI agents and 3 repository-local 
 | **Growth** | _"Traffic without conversion is just expensive vanity."_ - SEO (meta/OGP/JSON-LD), SMO (social share display), CRO (CTA improvement) | Growth initiatives |
 | **Bond** | _"Acquisition is expensive. Retention is profitable."_ - Retention strategies, re-engagement, churn prevention. Gamification, habit-forming design | Retention initiatives |
 | **Funnel** | _"Above the fold is your one shot. Make every pixel convert."_ - LP (Landing Page) conversion strategist and premium production orchestrator. Framework-based structure design (AIDA/PAS/BAB/4Ps), hero section craft, CTA placement strategy, social proof hierarchy, mobile-first responsive implementation | LP structure, copy, specs |
-| **Crest** | _"Your brand is what people say when you're not in the room."_ - Engineer self-branding strategist. GitHub/LinkedIn/blog/conference/SNS positioning, profile optimization, content strategy | Branding strategy |
 
 ### Analytics
 
@@ -295,10 +283,9 @@ This repository contains 111 globally reusable AI agents and 3 repository-local 
 | Agent | Description | Output |
 |-------|-------------|--------|
 | **Vector** | _"The browser is a stage. Every click is a scene."_ - Browser automation via Playwright/Chrome DevTools. Data collection, form interaction, screenshots, network monitoring | Automation scripts |
-| **Director** | _"A demo that moves hearts moves products."_ - Feature demo video production using Playwright 1.59 `page.screencast`. 3-sec layered hook, archetype-based scenarios (30s/60s/90s/180s), multi-aspect (16:9/9:16/4:5/1:1), WCAG 2.2 + Audio Description, VMAF/PSNR/SSIM quality gate, transcript + VideoObject JSON-LD for AI citation | Demo videos + transcript + JSON-LD + /97 quality report |
 
-**Director vs Vitrine responsibilities**:
-- **Director**: Browser (Web UI) demo videos (Playwright, .webm output)
+**Cue vs Vitrine responsibilities**:
+- **Cue**: Browser (Web UI) demo videos (Playwright, .webm output)
 
 ## Workflows
 
@@ -475,8 +462,8 @@ See `_common/INTERACTION.md` for details.
 |------|-------------|-------|
 | DECISION/arch | Architecture selection | Magi > Builder/Zen |
 | DECISION/strategy | Strategic decisions | Magi > Spark |
-| DECISION/office-hours | Founder office hours advisory | Sage > Builder/Echo[demand]/Sherpa |
-| DECISION/retro | Postmortem on a recent decision/outcome | Sage |
+| DECISION/office-hours | Founder office hours advisory | Magi > Builder/Echo[demand]/Sherpa |
+| DECISION/retro | Postmortem on a recent decision/outcome | Magi |
 
 #### Analysis
 
@@ -506,7 +493,7 @@ See `_common/INTERACTION.md` for details.
 | DOCS/component | Component documentation | Vitrine > Quill |
 | DOCS/architecture | Architecture diagrams | Canvas |
 | DOCS/convert | Format conversion | Morph |
-| DOCS/report | PR report | Harvest > Morph |
+| DOCS/report | PR report | Launch > Morph |
 | DOCS/learning | Change-based learning doc | Tome |
 | DOCS/onboarding | Onboarding material from changes | Trail > Tome |
 
@@ -514,7 +501,7 @@ See `_common/INTERACTION.md` for details.
 
 | Task | Description | Chain |
 |------|-------------|-------|
-| DEMO/prototype | Prototype demo | Forge > Director > Growth |
+| DEMO/prototype | Prototype demo | Forge > Cue > Growth |
 
 #### Infrastructure & DevOps
 
@@ -529,7 +516,7 @@ See `_common/INTERACTION.md` for details.
 | Task | Description | Chain |
 |------|-------------|-------|
 | DEPLOY/release | Release execution | Guardian > Launch |
-| DEPLOY/full | Full pipeline | Radar > Guardian > Launch > Harvest |
+| DEPLOY/full | Full pipeline | Radar > Guardian > Launch |
 
 #### Modernization
 
@@ -663,7 +650,6 @@ skills/
 ├── compass/SKILL.md    # Skill ecosystem navigator and onboarding guide
 ├── compete/SKILL.md    # Competitive research
 ├── .claude/skills/darwin/SKILL.md  # Project-local ecosystem evolution
-├── director/SKILL.md   # Demo video recording
 ├── echo/SKILL.md       # Persona validation
 ├── experiment/SKILL.md # A/B test design
 ├── flow/SKILL.md       # Animation
@@ -676,12 +662,9 @@ skills/
 ├── grove/SKILL.md      # Repository structure design
 ├── growth/SKILL.md     # SEO/CRO
 ├── guardian/SKILL.md   # Git/PR management
-├── harvest/SKILL.md    # PR info collection & report generation
-├── hearth/SKILL.md     # Personal dev environment config
 ├── helm/SKILL.md       # Business strategy simulation
 ├── hone/SKILL.md       # Codex CLI config audit & optimization
 ├── judge/SKILL.md      # Code review (codex review)
-├── latch/SKILL.md      # Claude Code hook management
 ├── launch/SKILL.md     # Release management
 ├── lens/SKILL.md       # Codebase comprehension & investigation
 ├── .claude/skills/lore/SKILL.md    # Project-local knowledge curator
@@ -708,7 +691,6 @@ skills/
 ├── bond/SKILL.md     # Retention
 ├── trail/SKILL.md     # Git history investigation
 ├── riff/SKILL.md       # Interactive brainstorming partner
-├── sage/SKILL.md       # YC-style office hours advisory
 ├── scaffold/SKILL.md   # Infrastructure
 ├── schema/SKILL.md     # DB schema design
 ├── siege/SKILL.md      # Advanced testing (load/contract/chaos/mutation)
@@ -718,7 +700,6 @@ skills/
 ├── sherpa/SKILL.md     # Task decomposition
 ├── sigil/SKILL.md      # Dynamic project-specific skill generation
 ├── vitrine/SKILL.md   # Storybook story management
-├── sketch/SKILL.md     # AI image generation (Gemini API)
 ├── spark/SKILL.md      # Feature proposals
 ├── stream/SKILL.md     # Data pipelines
 ├── sweep/SKILL.md      # Dead code detection
@@ -737,7 +718,7 @@ skills/
 
 ### Single Agent Usage
 
-> Category-by-category examples for 111 global agents and 3 project-local extensions.
+> Category-by-category examples for 100 global agents and 3 project-local extensions.
 
 #### Orchestration
 
@@ -933,10 +914,10 @@ Suggest a branch name for the task "Add OAuth2 to user authentication".
 
 ---
 
-##### Weekly Work Report (Harvest)
+##### Weekly Work Report (Launch)
 
 ```
-/Harvest
+/Launch
 Summarize this week's PR activity into a report.
 ```
 
@@ -944,10 +925,10 @@ Summarize this week's PR activity into a report.
 
 ---
 
-##### Release Notes Generation (Harvest)
+##### Release Notes Generation (Launch)
 
 ```
-/Harvest
+/Launch
 Generate release notes from PRs between v1.1.0 and v1.2.0.
 ```
 
@@ -955,10 +936,10 @@ Generate release notes from PRs between v1.1.0 and v1.2.0.
 
 ---
 
-##### Individual Work Report (Harvest)
+##### Individual Work Report (Launch)
 
 ```
-/Harvest
+/Launch
 Create a monthly work report for @username.
 ```
 
@@ -1352,10 +1333,10 @@ Create an ASCII art diagram of this API's processing flow.
 
 ---
 
-##### AI Image Generation Code (Sketch)
+##### AI Image Generation Code (Builder)
 
 ```
-/Sketch
+/Builder
 Generate Python code to create product thumbnail images using Gemini API.
 Include batch generation for multiple products.
 ```
@@ -1492,10 +1473,10 @@ Audit my Claude Code permissions and MCP server configuration for security best 
 
 ---
 
-##### Personal Dev Environment Setup (Hearth)
+##### Personal Dev Environment Setup (Anvil)
 
 ```
-/Hearth
+/Anvil
 Optimize my zsh configuration. It's slow to start up and I want better completions.
 ```
 
@@ -1503,21 +1484,20 @@ Optimize my zsh configuration. It's slow to start up and I want better completio
 
 ---
 
-##### Dotfile Management (Hearth)
+##### Dotfile Management (Anvil)
 
 ```
-/Hearth
+/Anvil
 Set up my neovim configuration with LSP support and lazy.nvim plugin management.
 ```
 
 **Output**: init.lua structure, lazy.nvim setup, LSP configuration, keybindings
 
-**Hearth vs Hone vs Gear vs Scaffold responsibilities**:
-- **Hearth**: Personal environment (dotfiles, shell, editor, terminal)
-- **Hone**: AI CLI tool config audit (Codex CLI `~/.codex/`, Antigravity CLI `~/.gemini/`, Claude Code `~/.claude/` settings)
+**Anvil vs Hone vs Gear vs Scaffold responsibilities**:
+- **Anvil**: Personal environment (dotfiles, shell, editor, terminal)
+- **Hone**: AI CLI configuration audit and Claude Code event-hook design/configuration/debugging
 - **Gear**: Project-level DevOps (CI/CD, Docker, monitoring, Git hooks)
 - **Scaffold**: Infrastructure provisioning (cloud, Docker Compose, IaC)
-- **Latch**: Claude Code event hooks (settings.json hooks for workflow automation)
 - **Gear[gha]**: GitHub Actions workflow design (triggers, security, performance, PR automation)
 
 ---
@@ -1544,10 +1524,10 @@ Audit our GitHub Actions workflows for security issues. Check permissions, actio
 
 ---
 
-##### Claude Code Hook Setup (Latch)
+##### Claude Code Hook Setup (Hone)
 
 ```
-/Latch
+/Hone
 Add a hook to prevent writing to .env files and run tests before stopping.
 ```
 
@@ -1555,10 +1535,10 @@ Add a hook to prevent writing to .env files and run tests before stopping.
 
 ---
 
-##### Hook Debugging (Latch)
+##### Hook Debugging (Hone)
 
 ```
-/Latch
+/Hone
 My PreToolUse hook isn't firing. Help me debug it.
 ```
 

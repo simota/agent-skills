@@ -9,7 +9,7 @@ Purpose: Apply Joseph Campbell's Monomyth / Christopher Vogler's 12-stage Hero's
 - **saga `narrative` (elsewhere)**: Product positioning (StoryBrand/Promised Land).
 - **saga `bab` (elsewhere)**: Three-part BAB short-form copywriting.
 - **saga `customer` (elsewhere)**: Before→After transformation arc without full 12 stages.
-- **Director (elsewhere)**: Demo video scenarios — Hero's Journey provides the script.
+- **Cue (elsewhere)**: Demo video scenarios — Hero's Journey provides the script.
 
 ## Core Principle
 
@@ -77,7 +77,7 @@ REFINE     →  AP-1~AP-9 anti-pattern check from `saga/SKILL.md`
            →  specifically: AP-4 (no transformation), AP-8 (no failure), AP-2 (product as hero)
 
 DELIVER    →  include: framework stage map, named characters, measurable before/after,
-           →          recommended downstream (Director for video, Prose for pull-quotes)
+           →          recommended downstream (Cue for video, Prose for pull-quotes)
 ```
 
 ## The Three Most Important Beats
@@ -148,7 +148,7 @@ Run the AP-1~AP-9 checklist from `saga/SKILL.md` and report results in the stand
 - [list unverified premises]
 
 ### Handoffs
-- Director: 12-scene demo video script
+- Cue: 12-scene demo video script
 - Prose: pull-quotes and LP hero
 - Growth: LP copy adapted from stages 1-2 (hook) and 11-12 (proof)
 ```
@@ -175,7 +175,7 @@ When `hero-journey` completes, emit:
 - **Three critical beats** (Call, Ordeal, Elixir) emphasized.
 - **Anti-pattern check** (AP-1~AP-9 per `saga/SKILL.md`).
 - **Assumptions** section.
-- **Handoffs**: Director, Prose, Growth.
+- **Handoffs**: Cue, Prose, Growth.
 
 ## References
 

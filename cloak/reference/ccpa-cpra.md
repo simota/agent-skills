@@ -11,7 +11,7 @@ Purpose: Implementation guidance for the California Consumer Privacy Act (CCPA, 
 - **cloak `dpia` (sibling)**: CCPA risk assessments (selling/sharing PI, SPI, ADMT, biometric) are formally documented in `dpia`; `ccpa` only flags when one is required.
 - **canon `gdpr` / standard compliance (elsewhere)**: standard checklists across regulations. `ccpa` produces actionable code, not audit narrative.
 - **crypt (elsewhere)**: encryption primitives backing CCPA's "reasonable security" duty. Cloak references; Crypt designs.
-- **clause (elsewhere)**: legal review of Privacy Policy clauses, MSA addenda, DPA language. Cloak emits the technical surface; Clause approves the prose.
+- **canon (elsewhere)**: legal review of Privacy Policy clauses, MSA addenda, DPA language. Cloak emits the technical surface; Canon approves the prose.
 
 ## Workflow
 
@@ -126,7 +126,7 @@ Notable actions: Sephora $1.2M (2022, sale without opt-out), DoorDash $375K (202
 
 - **To Crypt**: encryption design for SPI at rest/in transit (CCPA "reasonable security" defense). Required for credentials, financial, geolocation, biometric.
 - **To Canon**: CCPA standard checklist cross-validation against ISO/IEC 27701 PIMS controls; gap matrix.
-- **To Clause**: Privacy Policy clause review — disclose categories, purposes, retention, sale/share, SPI, rights. Tokushoho-style equivalents for CA-targeted commerce.
+- **To Canon**: Privacy Policy canon review — disclose categories, purposes, retention, sale/share, SPI, rights. Tokushoho-style equivalents for CA-targeted commerce.
 - **To Canon[regulatory]**: SOC 2 / ISO 27001 mapping for CCPA risk-assessment + cybersecurity-audit controls; evidence package.
 - **To Builder**: Implement opt-out endpoint, GPC parser, SPI limit-use toggle, ADMT pre-use notice, deletion-propagation queue.
 - **To Schema**: tag SPI fields with `spi_category` annotation; persist `gpc_honored_at`, `opt_out_status`, `limit_spi_status` per consumer.

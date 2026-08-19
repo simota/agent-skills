@@ -1,6 +1,6 @@
 # Post-Quantum Cryptography Migration Reference
 
-Purpose: Plan the migration from classical public-key cryptography (RSA, ECDSA, ECDH, X25519) to NIST-standardized post-quantum algorithms. Optimize for the harvest-now-decrypt-later threat and for crypto-agility mandated by NIST IR 8547.
+Purpose: Plan the migration from classical public-key cryptography (RSA, ECDSA, ECDH, X25519) to NIST-standardized post-quantum algorithms. Optimize for the launch-now-decrypt-later threat and for crypto-agility mandated by NIST IR 8547.
 
 ## Scope Boundary
 
@@ -11,7 +11,7 @@ Purpose: Plan the migration from classical public-key cryptography (RSA, ECDSA, 
 
 If the question is "pick an algorithm today" → `algo`. If it is "how do we transition off RSA-2048 over 3 years?" → `pqc`.
 
-## Threat Model: Harvest Now, Decrypt Later (HNDL)
+## Threat Model: Launch Now, Decrypt Later (HNDL)
 
 A sufficiently capable adversary is assumed to record classical-public-key-protected traffic and archive it. When a cryptographically-relevant quantum computer (CRQC) becomes available — NIST's working assumption is 2030–2040 — Shor's algorithm breaks RSA, DH, ECDH, and ECDSA retroactively. Data whose confidentiality must outlast that horizon is already at risk today.
 

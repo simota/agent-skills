@@ -220,7 +220,7 @@ BRAND_SYSTEM:
       Empty_State: "<warm, directive>"
       Legal: "<plain, scannable>"
   Visual_Identity:
-    Archetype: "<Sage | Hero | Outlaw | Magician | Everyman | Lover | Jester | Caregiver | Ruler | Creator | Innocent | Explorer | Oracle/Agent | Operator>"
+    Archetype: "<Magi | Hero | Outlaw | Magician | Everyman | Lover | Jester | Caregiver | Ruler | Creator | Innocent | Explorer | Oracle/Agent | Operator>"
     Secondary_Archetype: { archetype: "<one of above>", mix_ratio: "70:30 | 60:40 | none" }
     Mood: ["<3-5 keywords>"]
     Color_Story: "<warm/cool/neutral + accent strategy>"
@@ -241,7 +241,7 @@ BRAND_SYSTEM:
 
 Two added archetypes for 2026 LPs:
 - **Oracle / Agent** — AI-native brands whose promise is autonomous outcomes; requires explainability affordance ("Why am I seeing this?") in any AI-driven adaptive surface.
-- **Operator** — Linear / Stripe / Vercel cluster: Sage authority + Creator precision with deliberate personality restraint. Distinct from Sage in restraint discipline.
+- **Operator** — Linear / Stripe / Vercel cluster: Magi authority + Creator precision with deliberate personality restraint. Distinct from Magi in restraint discipline.
 
 ### 2. `direction.md` Minimum Payload Contract
 
@@ -339,7 +339,7 @@ A regression on any channel = repair before Launch.
 These rules govern how Design, Animation, and Branding stay aligned:
 
 1. **Brand system precedes design tokens.** Vision + Saga define brand before Muse generates tokens. Tokens must encode brand decisions, not the inverse.
-2. **Motion story comes from brand archetype.** A "Sage" brand uses deliberate, calm motion; a "Jester" brand uses snappy, playful motion. Flow consults Vision's `direction.md` before authoring motion tokens.
+2. **Motion story comes from brand archetype.** A "Magi" brand uses deliberate, calm motion; a "Jester" brand uses snappy, playful motion. Flow consults Vision's `direction.md` before authoring motion tokens.
 3. **Design rubric scoring happens before Build.** No production code on a < 18/24 design or < 15/20 motion or < 14/20 brand score. Repair or escalate.
 4. **Detail craft is the Verify checklist's secret tier.** Judge re-walks for cursor states, focus rings, empty states, loading states, error states, icon consistency, image craft. Anything missing = P2 finding.
 

@@ -39,7 +39,7 @@ canonical_owner.collaboration_partners = union(canonical, merged_in)
 | Task | Owner | Notes |
 |------|-------|-------|
 | Extend canonical SKILL.md CAPABILITIES_SUMMARY | Architect | Add merged-in capabilities; preserve semantic accuracy |
-| Update canonical description WHEN clause | Architect | Add merged-in trigger keywords |
+| Update canonical description WHEN canon | Architect | Add merged-in trigger keywords |
 | Migrate merged-in references that have no equivalent | Architect | Copy unique references; merge equivalent ones |
 | Archive merged-in skill to `.archive/<merged-in-name>/` | User (manual) | Preserve for 90-day re-activation window |
 | Update `_common/SKILL_PACKS.md` Pack memberships | Architect | Remove merged-in from all Packs |

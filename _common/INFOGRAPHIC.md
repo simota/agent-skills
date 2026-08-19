@@ -4,7 +4,7 @@
 
 ## Purpose
 
-Any agent that produces analytical results MAY append an `Infographic_Payload` to its output. The payload is a self-contained, schema-validated description of an infographic that a downstream image-generation agent (typically Sketch) can render directly into a one-glance visual.
+Any agent that produces analytical results MAY append an `Infographic_Payload` to its output. The payload is a self-contained, schema-validated description of an infographic that a downstream image-generation implementation owner (Builder) can render into a one-glance visual.
 
 This spec exists so visualization stays opt-in per agent, the vocabulary stays closed and consistent across the ecosystem, and no orchestration overhead is added.
 
@@ -14,7 +14,7 @@ This spec exists so visualization stays opt-in per agent, the vocabulary stays c
 2. **One visual element = one data point** — every visible element maps to a `data_points` entry with `evidence`.
 3. **Closed vocabulary** — `layout`, `style_pack`, and `icon_hint` use only the values catalogued below. New values require Architect approval.
 4. **Upstream PII scrub** — the source agent owns redaction; downstream consumers re-scan but cannot recover lost context.
-5. **Image generation is delegated** — payload producers never call image APIs. Receivers (Sketch, etc.) execute.
+5. **Image generation is delegated** — payload producers never call image APIs. Builder owns image-generation API integration and execution.
 
 ## Schema
 
@@ -81,9 +81,9 @@ Closed vocabulary (~50). Use the exact tokens below as `icon_hint`:
 
 Unknown icon → use the closest catalog entry; never invent tokens.
 
-## Payload → Sketch Prompt Template
+## Payload → Builder Prompt Template
 
-Receivers (typically Sketch) construct prompts as follows:
+Builder constructs image-generation prompts as follows:
 
 ```
 [Style]: <style_pack visual language keywords>
@@ -153,7 +153,7 @@ Use for chains where Nexus auto-renders visuals downstream.
 | Ledger | `card-grid` | `corporate-clean` | Top-N service costs |
 | Compete | `matrix` | `editorial-magazine` | Competitor × feature matrix |
 | Helm | `timeline` | `corporate-clean` | Strategic roadmap |
-| Harvest | `dashboard` | `corporate-clean` | PR throughput, review time |
+| Launch | `dashboard` | `corporate-clean` | PR throughput, review time |
 | Schema | `matrix` | `minimalist-iso` | Entity-relationship overview |
 | Voyager | `dashboard` | `data-viz-bold` | E2E run summary |
 | Field | `card-grid` | `editorial-magazine` | Persona / insight cards |

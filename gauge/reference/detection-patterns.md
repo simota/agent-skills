@@ -55,8 +55,8 @@
    - Agent names (e.g., `Nexus`, `Architect`)
    - Technical identifiers (e.g., `_STEP_COMPLETE`, `NEXUS_HANDOFF`)
    - Quoted proper nouns
-   - **User-input signal keywords** in routing tables (e.g. compass `一覧` / `おすすめ`, clause `プライバシーポリシー`) — users type Japanese; keyword anchors must match their input
-   - **Domain-content examples** for Japanese-market platforms or law (e.g. zine's note/Qiita opener/closer phrases, clause's Tokushoho terms) — the Japanese text IS the deliverable domain
+   - **User-input signal keywords** in routing tables (e.g. compass `一覧` / `おすすめ`, canon `プライバシーポリシー`) — users type Japanese; keyword anchors must match their input
+   - **Domain-content examples** for Japanese-market platforms or law (e.g. tome's note/Qiita opener/closer phrases, canon's Tokushoho terms) — the Japanese text IS the deliverable domain
 5. Scan `reference/` files for Japanese characters (none allowed, same whitelist applies)
 
 **PARTIAL trigger:** 1-3 Japanese character instances in body after whitelist filtering.
@@ -225,7 +225,7 @@
 
 **Tooling:** `python3 _common/scripts/lint-frontmatter.py --severity warning` emits findings as `S1` (line count) and `S2` (token estimate) — one finding per dimension. Treat both as inputs to S10.
 
-**Rationale:** Anthropic explicit guidance: "Keep SKILL.md body under 500 lines for optimal performance". Tiering exists because the existing corpus runs higher (114 skills as of 2026-08-17); FAIL only fires on truly oversized files so CI doesn't choke on legacy violations.
+**Rationale:** Anthropic explicit guidance: "Keep SKILL.md body under 500 lines for optimal performance". Tiering exists because the existing corpus runs higher (103 skills as of 2026-08-19); FAIL only fires on truly oversized files so CI doesn't choke on legacy violations.
 
 **Fix hints:**
 - Move detail sections (e.g. long `## Boundaries`, oversized recipe descriptions, full `## Workflow` phase notes) to `reference/<topic>.md`.

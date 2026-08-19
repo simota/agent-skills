@@ -1,6 +1,6 @@
 # Learning Feedback Loop Reference
 
-Purpose: Calibrate Guardian from Judge, Zen, Harvest, and squash outcomes without overfitting to too little evidence.
+Purpose: Calibrate Guardian from Judge, Zen, Launch, and squash outcomes without overfitting to too little evidence.
 
 ## Contents
 
@@ -10,14 +10,14 @@ Purpose: Calibrate Guardian from Judge, Zen, Harvest, and squash outcomes withou
 - `.agents/guardian.md` storage
 - Improvement metrics
 - Squash learning
-- AUTORUN and Harvest integration
+- AUTORUN and Launch integration
 
 ## Feedback Sources
 
 Primary sources:
 - `JUDGE_TO_GUARDIAN_FEEDBACK`
 - `ZEN_TO_GUARDIAN_HANDOFF`
-- `HARVEST_TO_GUARDIAN_HANDOFF`
+- `LAUNCH_TO_GUARDIAN_HANDOFF`
 - squash outcome feedback
 
 Use feedback to update:
@@ -123,9 +123,9 @@ AUTORUN must not:
 - override stable heuristics from tiny samples
 - silently change team-wide thresholds without surfacing it
 
-## Harvest Integration
+## Launch Integration
 
-Use Harvest data to learn:
+Use Launch data to learn:
 - merged PR outcomes
 - review turnaround
 - split strategy success

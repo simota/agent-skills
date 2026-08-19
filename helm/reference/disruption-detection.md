@@ -73,7 +73,7 @@ Interpretation:
 | **Growth** | `> 15%` CAGR | Increasing entrants, land-grab | Improving but reinvested | Market capture, scaling |
 | **Shakeout** | Decelerating (`5-15%`) | Consolidation begins, weaker players exit | Pressured | Efficiency, positioning |
 | **Maturity** | `< 5%`, stable | Oligopoly, stable shares | Stable, optimized | Defend share, operational excellence |
-| **Decline** | Negative | Exits accelerating | Declining unless niche | Harvest, exit, or reinvent |
+| **Decline** | Negative | Exits accelerating | Declining unless niche | Launch, exit, or reinvent |
 
 ### Stage Identification Protocol
 

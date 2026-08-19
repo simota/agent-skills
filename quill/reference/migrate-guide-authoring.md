@@ -8,9 +8,9 @@ Purpose: Write the migration / upgrade guide a downstream consumer needs to move
 - **Shift (elsewhere)**: orchestrates the migration itself — writes the codemods, applies Strangler Fig / Branch by Abstraction patterns, runs before/after verification. Shift produces the executable change; Quill produces the human-readable explanation.
 - **Atlas (elsewhere)**: the ADR that says *why* the breaking change was introduced. Link from the migration guide; do not duplicate the reasoning.
 - **Scribe (elsewhere)**: internal spec documents (PRD / SRS). A migration guide targets external consumers, not the team spec-ing the change.
-- **Zine (elsewhere)**: external-audience article series ("What changed in v4") for note / Zenn / Qiita / dev.to — narrative, not reference.
+- **Tome (elsewhere)**: external-audience article series ("What changed in v4") for note / Zenn / Qiita / dev.to — narrative, not reference.
 
-If the reader needs a step-by-step upgrade with rollback → `migrate`. If they need the story of the upgrade → Zine.
+If the reader needs a step-by-step upgrade with rollback → `migrate`. If they need the story of the upgrade → Tome.
 
 ## Guide Archetypes
 
@@ -143,8 +143,8 @@ End every guide with a checklist the reader can run line-by-line. Generic succes
 **From Atlas → Quill (`migrate`):**
 - ADR number that approved the breaking change — guide links back for the "why".
 
-**From Quill (`migrate`) → Zine:**
-- Once the guide is stable and adoption data exists, Zine authors an external-audience article summarizing the upgrade experience (adoption curve, common gotchas observed in the wild).
+**From Quill (`migrate`) → Tome:**
+- Once the guide is stable and adoption data exists, Tome authors an external-audience article summarizing the upgrade experience (adoption curve, common gotchas observed in the wild).
 
 **From Quill (`migrate`) → Gear:**
 - CI gate: fail the release if the migration guide section for this version is missing or still marked `#TODO(agent)`.

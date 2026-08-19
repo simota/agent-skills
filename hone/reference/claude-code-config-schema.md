@@ -291,7 +291,7 @@ StatusLine JSON input fields: `workspace`, `model`, `cost`, `context_window`, `s
 
 ## Hooks Configuration
 
-> **Note:** Detailed hook design and debugging is handled by the **Latch** agent. Hone audits hooks configuration only for structural validity and security concerns.
+> **Note:** This section defines Hone's audit scope. Detailed hook design, configuration, and debugging use Hone's explicit `hook*` recipes and `reference/hooks/`.
 
 | Event | Trigger | Hone audit scope |
 |-------|---------|-----------------|
@@ -318,7 +318,7 @@ StatusLine JSON input fields: `workspace`, `model`, `cost`, `context_window`, `s
 - **Validity**: Hook commands are executable and paths exist
 - **Security**: No plaintext secrets in hook commands or environment
 - **Matcher validity**: Tool matchers reference existing tools
-- **Delegation**: Complex hook logic should be reviewed by Latch
+- **Recipe switch**: Complex hook logic should be reviewed through the matching Hone `hook*` recipe
 
 ---
 

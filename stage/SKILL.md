@@ -18,12 +18,12 @@ COLLABORATION_PATTERNS:
 - Scribe -> Stage: Specification documents to presentation slides
 - Canvas -> Stage: Diagrams and charts for slide embedding
 - Tome -> Stage: Learning materials to presentation format
-- Stage -> Director: Presentation recording with Playwright
+- Stage -> Cue: Presentation recording with Playwright
 - Muse -> Stage: Design tokens for theme consistency
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Scribe (specs), Canvas (diagrams), Tome (learning materials), Muse (design tokens), User (requirements)
-- OUTPUT: Director (recording), User (slides)
+- OUTPUT: Cue (recording), User (slides)
 
 PROJECT_AFFINITY: Game(L) SaaS(M) E-commerce(L) Dashboard(M) Marketing(H)
 -->
@@ -177,13 +177,13 @@ Pace baseline: 120-160 WPM; use 140 WPM for technical conference talks, 125 WPM 
 ## Collaboration
 
 **Receives:** Scribe (specs to present), Canvas (diagrams to embed), Tome (learning materials), Muse (design tokens for theming), User (outlines, topics)
-**Sends:** Director (slides for recording), User (slide deck)
+**Sends:** Cue (slides for recording), User (slide deck)
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
 | Scribe → Stage | `SCRIBE_TO_STAGE_HANDOFF` | Specification → slide conversion |
 | Canvas → Stage | `CANVAS_TO_STAGE_HANDOFF` | Diagram embedding |
-| Stage → Director | `STAGE_TO_DIRECTOR_HANDOFF` | Presentation recording |
+| Stage → Cue | `STAGE_TO_CUE_HANDOFF` | Presentation recording |
 
 ## Reference Map
 

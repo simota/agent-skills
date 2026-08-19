@@ -1,14 +1,14 @@
 # AI Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Global Agents](https://img.shields.io/badge/Global_Agents-111-blue.svg)]()
+[![Global Agents](https://img.shields.io/badge/Global_Agents-100-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-🤖 111のグローバルスキルと3つのproject-local拡張による協調開発を実現するスキルコレクション
+🤖 100のグローバルスキルと3つのproject-local拡張による協調開発を実現するスキルコレクション
 
 ## ✨ Features
 
-- **111のグローバルエージェント + 3つのproject-local拡張** - バグ調査、テスト、セキュリティ、UI/UX、AI/ML、可観測性、インフラまで網羅
+- **100のグローバルエージェント + 3つのproject-local拡張** - バグ調査、テスト、セキュリティ、UI/UX、AI/ML、可観測性、インフラまで網羅
 - **Nexusオーケストレーター** - タスクを分析し最適なエージェントチェーンを自動設計
 - **プラットフォーム非依存** - Claude Code、Codex CLI、Antigravity CLI等で動作
 
@@ -35,11 +35,11 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 ## 📚 概要
 
-このリポジトリには、ソフトウェア開発の様々な側面を専門とする111のグローバルエージェントと、3つのproject-local拡張が含まれています。各エージェントは特定のドメインに特化しており、**Nexus**オーケストレーターによって統括・連携されます。
+このリポジトリには、ソフトウェア開発の様々な側面を専門とする100のグローバルエージェントと、3つのproject-local拡張が含まれています。各エージェントは特定のドメインに特化しており、**Nexus**オーケストレーターによって統括・連携されます。
 
 ## エージェント一覧
 
-> 111のグローバルエージェントと、明記した3つのproject-local拡張のカテゴリ別カタログ。
+> 100のグローバルエージェントと、明記した3つのproject-local拡張のカテゴリ別カタログ。
 
 ### オーケストレーション
 
@@ -55,7 +55,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Darwin** *(project-local)* | _"Ecosystems that cannot sense themselves cannot evolve themselves."_ - `.agents/ECOSYSTEM.md`へ永続化する、このリポジトリ専用のエコシステム進化オーケストレーター | エコシステムフィットネススコア、進化提案 |
 | **Lore** *(project-local)* | _"Forgotten lessons are lessons repeated. Institutional memory is the compound interest of experience."_ - `.agents/*.md`を`METAPATTERNS.md`へ統合する、このリポジトリ専用の知識キュレーター | METAPATTERNS.md、知識インサイト |
 | **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - デザインから実装までを閉ループで繋ぐパイプラインオーケストレーター。Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas を統括し、デザイン抽出・プロトタイプ・ビジュアルアセット・スライド・本番実装をプロジェクトデザインシステムを永続化しながら一気通貫で提供 | デザインシステムパッケージ、統合成果物 |
-| **Compass** | _"When in doubt, ask Compass. It finds the right skill for the task."_ - 111のグローバルスキルと利用可能なproject-local拡張から、タスクに最適な担当を推薦 | レコメンド、エージェントマップ |
+| **Compass** | _"When in doubt, ask Compass. It finds the right skill for the task."_ - 100のグローバルスキルと利用可能なproject-local拡張から、タスクに最適な担当を推薦 | レコメンド、エージェントマップ |
 | **Prune** | _"A garden grows by what you cut, not what you plant."_ - スキルエコシステム整理監査エージェント。エージェント編成の重複・冗長・不活性を監査し、統合候補とサンセット計画を根拠・アーカイブ手順付きで提案（提案のみ・実行はしない） | 整理監査レポート、統合/サンセット提案 |
 
 ### 調査・企画（コードを書かない）
@@ -65,13 +65,13 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Scout** | _"Every bug has a story. I read the ending first."_ - バグ調査・根本原因分析（RCA）。再現手順と修正箇所を特定 | 調査レポート |
 | **Ripple** | _"Every change sends ripples. Know where they land before you leap."_ - 変更前の影響分析。縦（依存関係・影響ファイル）と横（パターン一貫性・命名規則）の両面からリスク評価 | 影響分析レポート |
 | **Spark** | _"The best feature is the one users didn't know they needed."_ - 新機能提案。既存データ/ロジックを活用した機能をMarkdownで提案 | 仕様書 |
-| **Compete** | _"Know your enemy. Know the market. Know yourself."_ - 競合調査・差別化ポイント特定・ポジショニング。SWOT分析、機能マトリクス | 競合分析レポート |
+| **Compete** | _"Know your enemy. Know the market. Know yourself."_ - 競合調査・差別化・ポジショニングに加え、GitHub、LinkedIn、ポートフォリオ、技術発信、登壇を横断するエンジニア個人ブランドを設計 | 競合分析・ポジショニング・ブランド戦略 |
 | **Voice** | _"Feedback is a gift. Analysis is unwrapping it."_ - ユーザーフィードバック収集・NPS調査設計・感情分析・インサイト抽出 | フィードバックレポート |
 | **Field** | _"Good research asks the right questions. Great research changes what you thought was the question."_ - ユーザーリサーチ設計・インタビューガイド作成・定性分析・ペルソナ/ジャーニーマップ作成 | リサーチレポート |
 | **Trace** | _"Every click tells a story. I read between the actions."_ - セッションリプレイ分析・ペルソナ別行動パターン抽出・UX問題の物語化。Field/Echoと連携 | 行動分析レポート |
-| **Canon** | _"Standards are the accumulated wisdom of the industry. Apply them, don't reinvent them."_ - 世界標準・業界標準で物事を解決する調査・分析エージェント。OWASP/WCAG/OpenAPI/ISO 25010の標準準拠に加え、SOC2/PCI-DSS/HIPAA/ISO 27001の規制監査・証拠付き改善提案 | 準拠度レポート |
+| **Canon** | _"Standards are the accumulated wisdom of the industry. Apply them, don't reinvent them."_ - OWASP/WCAG/OpenAPI/ISO 25010、SOC2/PCI-DSS/HIPAA/ISO 27001の準拠評価に加え、利用規約、プライバシーポリシー、DPA/EULA、Cookie同意、広告表現をレビュー | 準拠度・法務文書レビューレポート |
 | **Lens** | _"See the code, not just search it."_ - コードベース理解・調査スペシャリスト。「〇〇機能はあるか」「〇〇のフローはどうか」「このモジュールの責務は何か」をコード構造把握・機能探索・データフロー追跡で体系的に調査 | 調査レポート |
-| **Magi** | _"Three minds, one verdict. Consensus through diversity."_ - 3視点（論理・共感・実利）による多角的意思決定。アーキテクチャ選定、トレードオフ判断、Go/No-Go判定 | 意思決定レポート |
+| **Magi** | _"Three minds, one verdict. Consensus through diversity."_ - 3視点の意思決定に、創業者向けoffice hours、ボトルネック診断、ピッチ批評、著名人の文書化された思考に基づく助言レンズを統合 | 意思決定・助言レポート |
 | **Flux** | _"Bend the light. See what was always there."_ - 思考屈折エンジン。前提を疑い、異分野知識を組み合わせ、視点をずらして問題を再構成。Cynefinベースのフレームワーク選択、Serendipity Injection、10+思考フレームワーク。コードは書かない | リフレーミングパッケージ、Insight Matrix、Blind Spot Report |
 | **Riff** | _"The best ideas don't arrive. They evolve — one riff at a time."_ - 4つの思考モード（拡散/提案/評価/引き算）による反復対話でアイデアを深めるインタラクティブなブレインストーミングパートナー。コードは書かない | ブレインストーミングセッション出力 |
 | **Cast** | _"Personas are not invented. They are discovered, born, and evolved."_ - ペルソナキャスティングエージェント。多種多様な入力からペルソナを迅速生成・永続化・ライフサイクル管理し、下流エージェントに統一フォーマットで配信 | ペルソナレジストリ |
@@ -80,9 +80,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Saga** | _"Facts are remembered 5-10% of the time. Stories raise that to 65-70%. The customer is the hero. The product is the guide."_ - プロダクト・機能のユースケースをストーリーテリングで語るナラティブデザインエージェント。顧客体験の物語化、シナリオストーリー、プロダクトナラティブ。コードは書かない | ナラティブドキュメント |
 | **Omen** | _"Plan for the worst. Build for the best."_ - プリモーテム分析・障害モード列挙。計画・設計・機能のリスクシナリオをRPN/APスコアリングで体系的に特定。コードは書かない | プリモーテムレポート |
 | **Rank** | _"Every priority tells a story of trade-offs."_ - 優先度定量化エージェント。ICE/RICE/WSJF/MoSCoW/Kanoフレームワークで競合アイテムをスコアリング・順序付け。コードは書かない | 優先度レポート |
-| **Sage** | _"Tell me what you're avoiding."_ - YC のオフィスアワー流アドバイザリーエージェント。ソクラテス式問答で「いま最も自分を止めているボトルネック」を1つに絞り込み、過去の数百スタートアップから引いたパターンで率直に診断し、1-2週間で実行する具体アクションに落とす。創業者アンチパターン検出付き。コードは書かない | オフィスアワー出力 (ボトルネック + アクション) |
 | **PDM** | _"Show where the project stands — planned, built, and the gap between."_ - PdMスタイルのリードオンリー・デリバリー状況ナビゲーター。計画スコープ（仕様/Issue/ロードマップ/PRD）と実装済みコードを突き合わせ、機能インベントリ、未実装機能リスト、ロードマップロールアップ、WBSビューを生成。「何ができていて、何が残っていて、今どこか」に回答 | 機能インベントリ、未実装リスト、WBS |
-| **Summon** | _"Channel the mind, not the mouth — documented thinking, never fabricated words."_ - 著名人の記録された思考をレンズとして適用する「イタコ」型エージェント。対象人物のメンタルモデル・ヒューリスティック・意思決定スタイルを問題に当てはめてアドバイザリー視点を提供（発言の捏造はしない） | 思考モデルレンズ、多視点アドバイス |
 
 **Scout → Ripple → Builder の連携**：Scout（バグ調査）→ Ripple（修正の影響分析）→ Builder（実装）
 **Ripple → Guardian の連携**：Ripple（影響分析）→ Guardian（PR戦略）
@@ -98,8 +96,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | エージェント | 説明 | 出力 |
 |------------|------|------|
 | **Guardian** | _"Every commit tells a story. Make it worth reading."_ - Git/PRの番人。変更のSignal/Noise分析、コミット粒度最適化、ブランチ命名、PR戦略提案 | 分析レポート、PR準備 |
-| **Harvest** | _"Code writes history. I harvest its meaning."_ - PR情報収集・レポート生成。ghコマンドでPR情報を取得し、週報・月報・リリースノートを自動生成 | 作業報告書、リリースノート |
-| **Launch** | _"Shipping is not the end. It's the beginning of accountability."_ - リリース管理。バージョニング戦略、CHANGELOG生成、リリースノート作成、ロールバック計画、Feature Flag設計 | リリース計画、CHANGELOG |
+| **Launch** | _"Shipping is not the end. It's the beginning of accountability."_ - リリース管理に、GitHub PRのread-only収集、週次/月次/client report、DORA/SPACE指標、retrospective、PDF出力を統合 | リリース計画、CHANGELOG、デリバリーレポート |
 | **Trail** | _"Every bug has a birthday. Every regression has a parent commit. Find them."_ - Git履歴調査・リグレッション原因分析・コード考古学。時間を遡って真相を解明 | 履歴調査レポート |
 **Guardian → Judge → Zen の連携**：Guardian（PR準備）→ Judge（レビュー）→ Zen（修正）
 **Guardian → Launch の連携**：Guardian（変更分析）→ Launch（リリース計画）
@@ -120,17 +117,16 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Siege** | _"Break it before users do. Fix it before they notice."_ - 高度テストスペシャリスト。負荷テスト（k6/Locust/Artillery）、契約テスト（Pact CDC）、カオスエンジニアリング、ミューテーションテスト、レジリエンスパターン検証 | テスト結果、レジリエンスレポート |
 | **Void** | _"The best code is the code that was never written."_ - YAGNI検証・スコープカット・機能プルーニング・複雑性削減提案。5つの存在検証問とCost-of-Keeping Scoreで不要な複雑性を特定 | 削減提案 |
 | **Vigil** | _"An undetected attack is an undefended system. Vigil ensures nothing passes unseen."_ - Detection Engineeringエージェント。Sigma/YARAルール設計、検出カバレッジマッピング、脅威ハンティング仮説設計、Detection-as-Code CI/CD統合 | 検出ルール、カバレッジマップ |
-| **Cull** | _"The worm leaves a husk. Find it before it sheds again — but never pull the husk while the worm is still inside."_ - サプライチェーンマルウェア感染スキャナ。npm/PyPI ワーム型攻撃（Mini Shai-Hulud、S1ngularity、lottie-player）を IoC ベースでローカル環境スキャン。OS 永続化（LaunchAgent/systemd）、IDE フック実装、lockfile pin、既知 C2/exfil トレースを検出。`rm -rf ~/` リテリエーションを発動させないよう永続化先停止、ローテーションは除染検証後に gate | 感染レポート、除染ランブック |
 | **Mint** | _"Good tests deserve great data."_ - テストデータ＆フィクスチャ生成エージェント。ファクトリパターン設計、境界値データ生成、合成データ生成、シードデータ管理 | コード |
 | **Breach** | _"Think like an attacker. Defend like an engineer."_ - レッドチームエンジニアリング。攻撃シナリオ設計、脅威モデリング、MITRE ATT&CK/OWASPフレームワーク、Purple Team演習、AI/LLMレッドチーミング | セキュリティ評価 |
 | **Cloak** | _"Privacy is not a feature. It's a right."_ - プライバシーエンジニアリング・データガバナンス。PII検出、データフローマッピング、同意管理、GDPR/CCPA準拠コード実装 | プライバシー評価 |
-| **Chain** | _"Treat every third-party skill like an npm install. Audit before invoking."_ - スキル/プラグイン/MCPサプライチェーン監査エージェント。SKILL.md・同梱スクリプト・MCPサーバー定義・フック・`.claude/`設定をサードパーティソフトウェアとして扱い、sha256マニフェスト生成、Unicode Tagインジェクションスキャン、curl-pipe＋認証情報窃取パターン検出、サードパーティ受け入れチェックリスト適用、MCPツール記述のrug-pull防止ピン留めを実施 | サプライチェーン監査レポート、sha256マニフェスト |
+| **Chain** | _"Treat every third-party skill like an npm install. Audit before invoking."_ - スキル/プラグイン/MCPの受け入れ監査と、npm/PyPIマルウェアのlive調査を担当。sha256、Unicode/窃取パターン、campaign IoC、永続化優先の駆除、認証情報ローテーションを扱う | サプライチェーン監査、感染レポート、復旧runbook |
 
 ### 実装
 
 | エージェント | 説明 | 出力 |
 |------------|------|------|
-| **Builder** | _"Types are contracts. Code is a promise."_ - 本番実装。TDD・Event Sourcing・CQRS・パフォーマンス最適化を備えた型安全な実装職人。仕様の曖昧性検出、Forgeからの自動引き継ぎ対応 | プロダクションコード |
+| **Builder** | _"Types are contracts. Code is a promise."_ - 型安全な本番実装に、Gemini画像生成・編集コード、prompt設計、batch生成、style transfer、後処理、provenance、content-policy gateを統合 | プロダクションコード、画像生成コード |
 | **Artisan** | _"Prototypes promise. Production delivers."_ - フロントエンド本番実装の職人。React/Vue/Svelte、Hooks設計、状態管理、Server Components、フォーム処理、データフェッチング | フロントエンドコード |
 | **Forge** | _"Done is better than perfect. Ship it, learn, iterate."_ - プロトタイプ作成。完璧より動くものを優先。Builder連携用にtypes.ts, errors.ts, forge-insights.mdを出力 | MVP/PoC |
 | **Native** | _"Every pixel ships. Every platform matters."_ - Pure-nativeモバイル実装スペシャリスト。iOS（Swift 6.3 + SwiftUI + Liquid Glass）と Android（Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive）。@Observable/Swift Concurrency、Compose Strong Skipping + Type-safe Navigation、SwiftData/Room、Credential Manager + Passkey、Privacy Manifest、edge-to-edge、predictive back、Live Activities、App Intents、Foundation Models / Gemini Nano、ストア準拠、ステージドロールアウト。React Native / Flutter / KMP / CMP は対象外 | コード |
@@ -183,25 +179,21 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 |------------|------|------|
 | **Scribe** | _"A specification is a contract between vision and reality."_ - PRD/SRS/HLD/LLDと部門横断L0-L3仕様、実装チェックリスト、テスト仕様書を作成する仕様エージェント | 仕様書・設計書 |
 | **Quill** | _"Code tells computers what to do. Documentation tells humans why."_ - JSDoc/TSDoc追加・README更新・any型の型定義化 | ドキュメント |
-| **Morph** | _"A document is timeless. Its format is temporary."_ - ドキュメントフォーマット変換（Markdown↔Word/Excel/PDF/HTML）。Scribeの仕様書やHarvestのレポートを各種フォーマットに変換 | 変換済みドキュメント |
-| **Tome** | _"Changes are forgotten. Knowledge endures."_ - リポジトリの変更内容を詳細な学習ドキュメントに変換。用語・フロー・設計判断・アンチパターンを教育的に解説 | 学習ドキュメント |
-| **Clause** | _"Every clause carries weight. Every omission carries risk."_ - 利用規約・プライバシーポリシー・特商法の法的ドキュメントレビュー。条項ギャップ検出・リスクフラグ・規制整合性確認 | 法務レビューレポート |
-| **Zine** | _"The hook earns the second paragraph."_ - 外部公開向けテックブログ・記事連載オーサリングエージェント。note/Zenn/Qiita/dev.to向けフック設計、記事構造、プラットフォーム別チューニング、連載管理 | 公開記事、連載index |
+| **Morph** | _"A document is timeless. Its format is temporary."_ - ドキュメントフォーマット変換（Markdown↔Word/Excel/PDF/HTML）。Scribeの仕様書やLaunchのレポートを各種フォーマットに変換 | 変換済みドキュメント |
+| **Tome** | _"Changes are forgotten. Knowledge endures."_ - 変更を学習ドキュメントへ、検証済み知識をnote/Zenn/Qiita/dev.to向け技術記事へ変換。連載管理とcross-platform再利用にも対応 | 学習ドキュメント、技術記事 |
 
-**Scribe vs Quill vs Morph vs Tome vs Zine の役割分担**:
+**Scribe vs Quill vs Morph vs Tome の役割分担**:
 - **Scribe**: プロジェクトドキュメント（PRD、SRS、設計書、チェックリスト、テスト仕様書）
 - **Quill**: コードドキュメント（JSDoc/TSDoc、README、型定義）
 - **Morph**: フォーマット変換（Markdown→PDF/Word/HTML等）
-- **Tome**: 変更ベース学習教材（diffから設計判断・用語・アンチパターンを教材化）
-- **Zine**: 外部公開記事（note/Zenn/Qiita/dev.to）・連載管理
+- **Tome**: 変更ベース学習教材とnote/Zenn/Qiita/dev.to向け外部公開記事・連載管理
 
 ### 可視化
 
 | エージェント | 説明 | 出力 |
 |------------|------|------|
 | **Canvas** | _"A diagram is worth a thousand lines of documentation."_ - 設計可視化。コード・仕様・コンテキストをMermaid図またはASCIIアート（フローチャート、シーケンス図、状態遷移図、クラス図、ER図等）に変換 | Mermaid図 / ASCII Art |
-| **Sketch** | _"From words to worlds, prompt to pixel."_ - AI画像生成コード職人。Gemini APIを使用した画像生成用Pythonコードの作成。プロンプトエンジニアリング、バッチ生成、コスト見積もり | Pythonコード |
-| **Cue** | _"Every frame tells a story."_ - ビデオスクリプト・ストーリーボード・ナレーション設計。プロダクト動画、解説動画、オンボーディングコンテンツ企画 | 動画台本、ストーリーボード |
+| **Cue** | _"Every frame tells a story."_ - 動画台本・絵コンテ・ナレーションに、Playwrightデモ収録、複数aspect、字幕、品質gate、voiceover、transcript、thumbnail制作を統合 | 動画企画、デモ、公開用assets |
 | **Stage** | _"Every slide is a stage."_ - Marp/reveal.js/Slidevによるスライド生成、ストーリー構成設計、カンファレンストーク最適化 | スライドデッキ |
 ### アーキテクチャ
 
@@ -240,21 +232,18 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 | エージェント | 説明 | 出力 |
 |------------|------|------|
-| **Anvil** | _"The terminal is the first interface. Make it unforgettable."_ - Terminal UI構築・CLI開発支援・開発ツール統合（Linter/テストランナー/ビルド） | CLI/TUIコード |
+| **Anvil** | _"The terminal is the first interface. Make it unforgettable."_ - CLI/TUI・開発ツール実装に、shell/editor/terminal/dotfilesの個人環境整備とAppleScript/JXAによる安全なmacOS自動化を統合 | CLI/TUIコード、環境設定 |
 | **Gear** | _"The best CI/CD is the one nobody thinks about."_ - 依存関係、CI/CD、Docker最適化、高度なGitHub Actions設計 | 設定ファイル |
 | **Scaffold** | _"Infrastructure is the silent foundation of every dream."_ - クラウドインフラ（Terraform/CloudFormation/Pulumi）・ローカル開発環境（Docker Compose）・IaC設計 | インフラ設定 |
-| **Hearth** | _"Your tools should feel like home."_ - 個人開発環境の設定職人。設定ファイル（zsh/tmux/neovim/ghostty等）の生成・最適化・監査、dotfile管理 | 設定ファイル |
-| **Hone** | _"A sharp blade cuts clean. A sharp config cuts friction."_ - AI CLI設定の監査・最適化エージェント（Codex CLI / Antigravity CLI / Claude Code）。公式ベストプラクティスをWeb収集し、config.toml/settings.json/CLAUDE.md/GEMINI.md/AGENTS.md/permissions/commands/hooks/rules/MCP/extensionsを分析、Before/After diff形式で改善提案。設定は直接編集しない | 監査レポート、改善提案 |
-| **Latch** | _"Every event is an opportunity. Hook it before it slips away."_ - Claude Codeフック専門。PreToolUse/PostToolUse/Stop/SessionStart等のイベントフックの提案・設定・デバッグ・保守。ワークフロー自動化、品質ゲート、セキュリティ検証 | フック設定 |
+| **Hone** | _"A sharp blade cuts clean. A sharp config cuts friction."_ - Codex/Antigravity/Claude Code設定の監査と、Claude Code lifecycle hookの設計・設定・デバッグを担当。対象をhooks節と必要scriptに限定し検証する | 監査レポート、改善提案、hook設定 |
 | **Ledger** | _"Every dollar has a story. Make it a short one."_ - FinOps／クラウドコスト最適化エージェント。IaCコードからのコスト推定、right-sizing提案、RI/SP推奨、コスト異常検知 | レポート、設定 |
 | **Shift** | _"Migration is not moving. It's transforming."_ - マイグレーション＆アップグレードオーケストレーター。フレームワーク・ライブラリ・API・DB・インフラの移行をcodemod生成・段階的戦略でエンドツーエンド実行 | マイグレーション計画 |
 
-**Hearth vs Hone vs Gear vs Scaffold vs Latch の役割分担**:
-- **Hearth**: 個人環境（dotfiles、シェル、エディタ、ターミナル）
-- **Hone**: AI CLIツール設定監査（Codex CLI `~/.codex/`、Antigravity CLI `~/.gemini/`、Claude Code `~/.claude/` 設定）
+**Anvil vs Hone vs Gear vs Scaffold の役割分担**:
+- **Anvil**: 個人環境（dotfiles、シェル、エディタ、ターミナル）
+- **Hone**: AI CLI設定監査とClaude Codeイベントフックの設計・設定・デバッグ
 - **Gear**: プロジェクトレベルのDevOps（CI/CD、Docker、監視、Gitフック）。高度なGitHub Actionsは `gha` モード
 - **Scaffold**: インフラプロビジョニング（クラウド、Docker Compose、IaC）
-- **Latch**: Claude Codeイベントフック（settings.jsonフックによるワークフロー自動化）
 
 ### 国際化
 
@@ -269,7 +258,6 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Growth** | _"Traffic without conversion is just expensive vanity."_ - SEO（meta/OGP/JSON-LD）・SMO（SNSシェア表示）・CRO（CTA改善） | 成長施策 |
 | **Bond** | _"Acquisition is expensive. Retention is profitable."_ - リテンション施策・再エンゲージメント・チャーン予防。ゲーミフィケーション、習慣形成デザイン | リテンション施策 |
 | **Funnel** | _"Above the fold is your one shot. Make every pixel convert."_ - LP（ランディングページ）のコンバージョン戦略とプレミアム制作パイプライン。フレームワーク（AIDA/PAS/BAB/4Ps）に基づく構造設計、ヒーローセクション、CTA配置戦略、Social Proof階層、モバイルファーストのレスポンシブ実装 | LP構造、コピー、仕様 |
-| **Crest** | _"Your brand is what people say when you're not in the room."_ - エンジニアセルフブランディング戦略家。GitHub/LinkedIn/ブログ/カンファレンス/SNSのポジショニング・プロフィール最適化・コンテンツ戦略 | ブランディング戦略 |
 
 ### 分析
 
@@ -292,9 +280,8 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | エージェント | 説明 | 出力 |
 |------------|------|------|
 | **Vector** | _"The browser is a stage. Every click is a scene."_ - Playwright/Chrome DevToolsによるブラウザ操作自動化。データ収集、フォーム操作、スクリーンショット取得、ネットワーク監視 | 自動化スクリプト |
-| **Director** | _"A demo that moves hearts moves products."_ - Playwright E2Eテストを活用した機能デモ動画の自動撮影。シナリオ設計、撮影設定、実装パターン、品質チェックリストを提供 | デモ動画(.webm) |
 
-**Director の役割**: ブラウザ（Web UI）のデモ動画（Playwright、.webm出力）
+**Cue の役割**: ブラウザ（Web UI）のデモ動画（Playwright、.webm出力）
 
 ## ワークフロー
 
@@ -500,7 +487,7 @@ questions:
 | DOCS/component | コンポーネント文書化 | Vitrine → Quill |
 | DOCS/architecture | アーキテクチャ図 | Canvas |
 | DOCS/convert | フォーマット変換 | Morph |
-| DOCS/report | PR報告書 | Harvest → Morph |
+| DOCS/report | PR報告書 | Launch → Morph |
 | DOCS/learning | 変更ベース学習資料 | Tome |
 | DOCS/onboarding | オンボーディング教材 | Trail → Tome |
 
@@ -517,7 +504,7 @@ questions:
 | タスク | 説明 | チェーン |
 |--------|------|----------|
 | DEPLOY/release | リリース実行 | Guardian → Launch |
-| DEPLOY/full | 完全パイプライン | Radar → Guardian → Launch → Harvest |
+| DEPLOY/full | 完全パイプライン | Radar → Guardian → Launch |
 
 #### モダナイゼーション
 
@@ -646,7 +633,6 @@ skills/
 ├── compass/SKILL.md    # スキルエコシステムナビゲーター・オンボーディングガイド
 ├── compete/SKILL.md    # 競合調査
 ├── .claude/skills/darwin/SKILL.md  # project-localエコシステム進化
-├── director/SKILL.md   # デモ動画撮影
 ├── echo/SKILL.md       # ペルソナ検証
 ├── experiment/SKILL.md # A/Bテスト設計
 ├── flow/SKILL.md       # アニメーション
@@ -659,12 +645,9 @@ skills/
 ├── grove/SKILL.md      # リポジトリ構造設計
 ├── growth/SKILL.md     # SEO/CRO
 ├── guardian/SKILL.md   # Git/PR管理
-├── harvest/SKILL.md    # PR情報収集・レポート生成
-├── hearth/SKILL.md     # 個人開発環境設定
 ├── helm/SKILL.md       # 経営戦略シミュレーション
 ├── hone/SKILL.md       # Codex CLI設定監査・最適化
 ├── judge/SKILL.md      # コードレビュー（codex review）
-├── latch/SKILL.md      # Claude Codeフック管理
 ├── launch/SKILL.md     # リリース管理
 ├── lens/SKILL.md       # コードベース理解・調査
 ├── .claude/skills/lore/SKILL.md    # project-local知識キュレーター
@@ -691,7 +674,6 @@ skills/
 ├── bond/SKILL.md     # リテンション
 ├── trail/SKILL.md     # Git履歴調査
 ├── riff/SKILL.md       # インタラクティブ・ブレインストーミング
-├── sage/SKILL.md       # YC オフィスアワー流アドバイザリー
 ├── scaffold/SKILL.md   # インフラ
 ├── schema/SKILL.md     # DBスキーマ設計
 ├── scribe/SKILL.md     # プロジェクトドキュメント（PRD/SRS/設計書）
@@ -700,7 +682,6 @@ skills/
 ├── sherpa/SKILL.md     # タスク分解
 ├── sigil/SKILL.md      # 動的プロジェクト固有スキル生成
 ├── vitrine/SKILL.md   # Storybookストーリー管理
-├── sketch/SKILL.md     # AI画像生成（Gemini API）
 ├── spark/SKILL.md      # 機能提案
 ├── siege/SKILL.md      # 高度テスト（負荷/契約/カオス/ミューテーション/並行性）
 ├── stream/SKILL.md     # データパイプライン
@@ -916,10 +897,10 @@ EchoとResearcherで使えるようにペルソナレジストリに登録して
 
 ---
 
-##### 週次作業報告（Harvest）
+##### 週次作業報告（Launch）
 
 ```
-/Harvest
+/Launch
 今週のPR活動をサマリーレポートにまとめてください。
 ```
 
@@ -927,10 +908,10 @@ EchoとResearcherで使えるようにペルソナレジストリに登録して
 
 ---
 
-##### リリースノート生成（Harvest）
+##### リリースノート生成（Launch）
 
 ```
-/Harvest
+/Launch
 v1.1.0からv1.2.0までのPRからリリースノートを生成してください。
 ```
 
@@ -938,10 +919,10 @@ v1.1.0からv1.2.0までのPRからリリースノートを生成してくださ
 
 ---
 
-##### 個人作業報告（Harvest）
+##### 個人作業報告（Launch）
 
 ```
-/Harvest
+/Launch
 @usernameの今月の作業報告書を作成してください。
 ```
 
@@ -1333,10 +1314,10 @@ src/services/payment/ の処理フローを可視化して
 
 ---
 
-##### AI画像生成コード作成（Sketch）
+##### AI画像生成コード作成（Builder）
 
 ```
-/Sketch
+/Builder
 Gemini APIを使って商品サムネイル画像を生成するPythonコードを作成してください。
 複数商品のバッチ生成にも対応してください。
 ```
@@ -1472,10 +1453,10 @@ Claude Codeのpermissionsとmcp server設定をセキュリティベストプラ
 
 ---
 
-##### 個人開発環境設定（Hearth）
+##### 個人開発環境設定（Anvil）
 
 ```
-/Hearth
+/Anvil
 zshの起動が遅いので最適化してください。補完も改善したいです。
 ```
 
@@ -1483,21 +1464,20 @@ zshの起動が遅いので最適化してください。補完も改善した�
 
 ---
 
-##### dotfile管理（Hearth）
+##### dotfile管理（Anvil）
 
 ```
-/Hearth
+/Anvil
 neovimのLSP対応設定をlazy.nvimプラグイン管理で構築してください。
 ```
 
 **出力**: init.lua構成、lazy.nvimセットアップ、LSP設定、キーバインド
 
-**Hearth vs Hone vs Gear vs Scaffold vs Latch の役割分担**:
-- **Hearth**: 個人環境（dotfiles、シェル、エディタ、ターミナル）
-- **Hone**: AI CLIツール設定監査（Codex CLI `~/.codex/`、Antigravity CLI `~/.gemini/`、Claude Code `~/.claude/` 設定）
+**Anvil vs Hone vs Gear vs Scaffold の役割分担**:
+- **Anvil**: 個人環境（dotfiles、シェル、エディタ、ターミナル）
+- **Hone**: AI CLI設定監査とClaude Codeイベントフックの設計・設定・デバッグ
 - **Gear**: プロジェクトレベルのDevOps（CI/CD、Docker、監視、Gitフック）
 - **Scaffold**: インフラプロビジョニング（クラウド、Docker Compose、IaC）
-- **Latch**: Claude Codeイベントフック（settings.jsonフックによるワークフロー自動化）
 - **Gear[gha]**: GitHub Actionsワークフロー設計（トリガー、セキュリティ、パフォーマンス、PR自動化）
 
 ---
@@ -1524,10 +1504,10 @@ GitHub Actionsワークフローのセキュリティ問題を監査してくだ
 
 ---
 
-##### Claude Codeフック設定（Latch）
+##### Claude Codeフック設定（Hone）
 
 ```
-/Latch
+/Hone
 .envファイルへの書き込みを防止し、停止前にテスト実行を強制するフックを追加してください。
 ```
 
@@ -1535,10 +1515,10 @@ GitHub Actionsワークフローのセキュリティ問題を監査してくだ
 
 ---
 
-##### フックデバッグ（Latch）
+##### フックデバッグ（Hone）
 
 ```
-/Latch
+/Hone
 PreToolUseフックが発火しません。デバッグを手伝ってください。
 ```
 

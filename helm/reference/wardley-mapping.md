@@ -172,7 +172,7 @@ DECIDE      →  make strategic choices with the map as evidence
 | C | Commodity | [utility / price competition] |
 | ... | ... | ... |
 
-### Map Sketch (ASCII or image)
+### Map Builder (ASCII or image)
 ```
 [user need]──[A: Custom]──[B: Product]──[C: Commodity]
                           [D: Custom]─────┘
@@ -232,7 +232,7 @@ When `wardley` completes, emit:
 - **Anchor** with user and need.
 - **Value chain** from visible (user-facing) to invisible (supporting).
 - **Evolution positions** for every component with evidence.
-- **Map sketch** (ASCII or image).
+- **Map builder** (ASCII or image).
 - **Climate & inertia findings**.
 - **Strategic moves** chosen with rationale.
 - **Pioneer / Settler / Town Planner** ownership assignments.

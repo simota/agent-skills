@@ -217,7 +217,7 @@ Red (budget remaining < 25%):
 
 Policy governance:
   - Designate freeze authority explicitly
-  - VP/Director escalation path
+  - VP/Cue escalation path
   - If policy feels punitive -> SLO is too tight
   - If degradation occurs before freeze -> SLO is too loose
 ```

@@ -456,7 +456,7 @@ Understanding context inheritance is critical for reliable chain execution:
 
 ## Subagent Lifecycle Hooks
 
-You can monitor subagent lifecycles via `settings.json`. Design and implementation with the Latch agent is recommended.
+You can monitor subagent lifecycles via `settings.json`. Design and implementation with Hone's hooks Recipes is recommended.
 
 ### Chain Execution Monitoring
 

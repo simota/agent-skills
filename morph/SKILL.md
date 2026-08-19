@@ -13,18 +13,17 @@ CAPABILITIES_SUMMARY:
 
 COLLABORATION_PATTERNS:
 - Scribe -> Morph: Specification documents for format conversion
-- Harvest -> Morph: Reports for stakeholder-ready output
+- Launch -> Morph: PR/release reports and release notes for stakeholder-ready output
 - Quill -> Morph: Documentation for archive/publication formats
 - Canvas -> Morph: Diagrams for PDF/PNG/SVG export
-- Launch -> Morph: Release notes for distributable formatting
 - Sherpa -> Morph: Progress reports for stakeholder delivery
 - Morph -> Guardian: Converted deliverables for PR/release attachment
 - Morph -> Lore: Validated conversion patterns as reusable knowledge
 - Morph -> Gear: CI/CD pipeline conversion workflow setup
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Scribe, Harvest, Quill
-- OUTPUT: Scribe, Harvest, Quill
+- INPUT: Scribe, Launch, Quill
+- OUTPUT: Scribe, Launch, Quill
 
 PROJECT_AFFINITY: Game(L) SaaS(M) E-commerce(M) Dashboard(M) Marketing(H)
 -->
@@ -37,7 +36,7 @@ Change the format without changing the document’s intent.
 Use Morph when the task requires any of the following:
 
 - Convert documents between Markdown, Word, PDF, HTML, Excel, Mermaid, or draw.io outputs.
-- Prepare stakeholder-ready deliverables from Scribe, Harvest, Quill, Sherpa, Canvas, or Launch artifacts.
+- Prepare stakeholder-ready deliverables from Scribe, Launch, Quill, Sherpa, or Canvas artifacts.
 - Apply templates, metadata, TOC, or print styling during conversion.
 - Produce accessible, archival, signed, encrypted, merged, or watermarked PDF deliverables.
 - Build a reusable conversion script, batch pipeline, or QA workflow.
@@ -145,7 +144,7 @@ Route elsewhere when the task is primarily:
 | Direction         | Token               | Use it when                                                        |
 | ----------------- | ------------------- | ------------------------------------------------------------------ |
 | Scribe -> Morph   | `SCRIBE_TO_MORPH`   | Specs, PRDs, SRS, HLD/LLD, or test docs need distribution formats. |
-| Harvest -> Morph  | `HARVEST_TO_MORPH`  | Reports need management-ready PDF or Word output.                  |
+| Launch -> Morph  | `LAUNCH_TO_MORPH`   | Reports need management-ready PDF or Word output.                  |
 | Canvas -> Morph   | `CANVAS_TO_MORPH`   | Diagrams need export to PDF, PNG, or SVG.                          |
 | Quill -> Morph    | `QUILL_TO_MORPH`    | Documentation needs archive or publication format conversion.      |
 | Sherpa -> Morph   | `SHERPA_TO_MORPH`   | Progress or execution reports need stakeholder-ready output.       |
@@ -203,7 +202,7 @@ Routing rules:
 
 ## Collaboration
 
-**Receives:** Scribe (specification documents), Harvest (reports), Quill (documentation), Canvas (diagrams for export), Launch (release notes), Sherpa (progress reports)
+**Receives:** Scribe (specification documents), Launch (PR/release reports and release notes), Quill (documentation), Canvas (diagrams for export), Sherpa (progress reports)
 **Sends:** Guardian (converted deliverables for PR/release), Lore (validated conversion patterns), Gear (CI/CD conversion pipeline configs)
 
 ### Overlap Boundaries

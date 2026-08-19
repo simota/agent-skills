@@ -11,7 +11,7 @@ Interactive, decision-by-decision co-design where Vision acts as the **driver** 
 | Stakeholder wants to own each decision | A portfolio of options for a single pick (`multi`) |
 | User explicitly asks to "design together" / "decide as we go" | Standard direction request |
 
-Vision stays a **director**: it writes no code even in pair mode. When a decision needs a produced artifact (tokens, a prototype, motion), Vision delegates to the cluster (Muse/Forge/Flow/Palette/Frame/Prose) via Nexus and brings the result back for confirmation.
+Vision stays a **cue**: it writes no code even in pair mode. When a decision needs a produced artifact (tokens, a prototype, motion), Vision delegates to the cluster (Muse/Forge/Flow/Palette/Frame/Prose) via Nexus and brings the result back for confirmation.
 
 ## Roles: Driver / Navigator Separation
 
@@ -49,7 +49,7 @@ CLOSE:
 
 - **One decision at a time, options-first.** Never dump the full direction then ask for a single approval; offer 2-3 options per decision and let the user steer.
 - **Evidence on every option.** Each option carries rationale + trade-offs + a measurable outcome metric + a WCAG note — Vision's "no aesthetic decision without data" rule holds per increment.
-- **Vision stays a director.** Vision writes no code; when a decision needs an artifact, delegate to the cluster and bring the result back — never self-implement.
+- **Vision stays a cue.** Vision writes no code; when a decision needs an artifact, delegate to the cluster and bring the result back — never self-implement.
 - **Show the increment.** Do not advance until the user has seen the decision (or produced artifact) and confirmed.
 - **User drives pace and taste.** Vision proposes and waits; brand/taste ownership is the user's.
 - **Bounded.** Max decisions (default 12) / user-stop / direction-locked / diminishing-returns. On bound, assemble the decisions so far into a standard direction doc.

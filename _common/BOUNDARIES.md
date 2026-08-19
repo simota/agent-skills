@@ -54,15 +54,13 @@ For disambiguation of commonly confused agent pairs, see `nexus/reference/agent-
 | **Breach** | Red team engineering & threat modeling | STRIDE/PASTA/MITRE ATT&CK, attack simulation | Never |
 | **Vigil** | Detection engineering | Sigma/YARA rules, threat hunting, MITRE coverage | Never |
 | **Cloak** | Privacy engineering | PII detection, GDPR/CCPA, consent, DPIA | Yes (privacy patterns) |
-| **Canon** (`regulatory`) | Regulatory compliance audit | SOC2/PCI-DSS/HIPAA/ISO 27001, policy-as-code | Yes (OPA policies) |
+| **Canon** | Standards, regulatory, and legal-document compliance | OWASP/WCAG/OpenAPI, SOC2/PCI-DSS/HIPAA/ISO 27001, ToS/privacy/Tokushoho review, policy-as-code | Yes (OPA policies) |
 | **Crypt** | Cryptographic architecture | Algorithm selection, key management, E2EE, post-quantum | Never |
-| **Clause** | Legal document review | ToS, privacy policy, tokushoho, clause gap detection | Never |
 
 **Key distinctions:**
 - Static code scan → Sentinel. Running app test → Probe
 - Attack simulation → Breach. Detection rules → Vigil. Purple team → Breach → Vigil
-- PII/privacy → Cloak. Regulatory frameworks → Canon `regulatory`. Crypto design → Crypt
-- Legal document review → Clause. Privacy implementation → Cloak. Regulatory audit → Canon `regulatory`
+- PII/privacy implementation → Cloak. Regulatory frameworks and legal-document review → Canon. Crypto design → Crypt
 
 **Credential Isolation Principle** (Source: Anthropic Managed Agents):
 Tokens and secrets must never be reachable from the execution environment where agent-generated code runs. Two patterns:
@@ -73,11 +71,11 @@ Tokens and secrets must never be reachable from the execution environment where 
 
 | Agent | Primary Role | Focus | Writes Code |
 |-------|-------------|-------|-------------|
-| **Builder** | Production backend/logic implementation | Business logic, API, data models | Yes |
+| **Builder** | Production logic and external API implementation | Business logic, API/data models, vendor image-generation API integration | Yes |
 | **Artisan** | Production frontend implementation | React/Vue/Svelte, hooks, state | Yes |
 | **Forge** | Rapid prototyping (full-stack) | Speed over quality, PoC | Yes |
 | **Schema** | Database and multi-tenant architecture | Data modeling, migrations, tenant isolation/RLS/routing | Yes |
-| **Anvil** | CLI/TUI development | Terminal interfaces, dev tools | Yes |
+| **Anvil** | CLI/TUI and developer-environment tooling | Terminal interfaces, dev tools, dotfiles, shell/editor configuration, macOS automation | Yes |
 | **Pixel** | Mockup-to-code faithful reproduction | Image→HTML/CSS with visual verification | Yes |
 
 **Key distinctions:**
@@ -121,8 +119,8 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Canvas** | Visualization | Mermaid diagrams, ASCII art, draw.io | Yes (diagrams) |
 | **Morph** | Format conversion | Markdown ↔ Word/Excel/PDF/HTML | Yes (scripts) |
 | **Saga** | Narrative design & product storytelling | SB7/Pixar/Hero's Journey/JTBD frameworks | Never |
-| **Cue** | Video script & storyboard design | Demo/explainer/tutorial scripts, narration | Never |
-| **Tome** | Learning document generation from changes | Diffs→teaching materials, decision records | Never |
+| **Cue** | Video script, storyboard, and demo production | Demo/explainer/tutorial scripts, narration, Playwright-based recordings | Yes |
+| **Tome** | Learning and technical-publication generation | Diffs→teaching materials, decision records, note/Zenn/Qiita/dev.to series | Never |
 | **Stage** | Presentation slide generation | Marp/reveal.js/Slidev, speaker notes | Yes (slide markdown) |
 
 **Key distinctions:**
@@ -157,7 +155,6 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Prose** | UX writing | Microcopy, error messages, voice & tone | Yes (text) |
 | **Vitrine** | Storybook catalog management | Component documentation, visual regression | Yes |
 | **Trace** | Session replay analysis | Behavioral patterns from logs | Never |
-| **Director** | Demo video production | Playwright-based recordings | Yes |
 | **Frame** | Figma MCP design context extraction | Figma→code bridge, Code Connect | Never |
 | **Ink** | SVG icon & illustration generation | Grid systems, sprite symbols, a11y | Yes (SVG) |
 | **Funnel** | Landing-page conversion and premium production | AIDA/PAS, CTA/forms, multi-stage craft and quality gates | Yes |
@@ -167,7 +164,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 - Write text → Prose. Test as persona or synthesize demand → Echo. Research → Field
 - Figma data extraction → Frame. Token definition → Muse. Frame extracts, Muse defines
 - Code Connect mapping → Frame + Vitrine. Frame manages Figma side, Vitrine manages code side
-- SVG icons/illustrations → Ink. AI images → Sketch
+- SVG icons/illustrations → Ink. Image-generation API implementation → Builder
 - Landing page design/conversion → Funnel. SEO/CRO tactics → Growth
 
 ## User Research & Personas
@@ -188,13 +185,12 @@ Tokens and secrets must never be reachable from the execution environment where 
 |-------|-------------|-------|-------------|
 | **Spark** | Feature ideation & proposal | New feature specs from existing data | Never |
 | **Growth** | SEO/SMO/CRO optimization | Search ranking, conversion, sharing | Yes |
-| **Compete** | Competitive intelligence | SWOT, positioning, feature matrix | Never |
+| **Compete** | Competitive and personal-brand positioning | SWOT, feature matrix, GitHub/blog/LinkedIn/talk positioning | Never |
 | **Bond** | Retention & engagement | Churn prevention, gamification | Never |
 | **Experiment** | A/B testing & hypothesis validation | Feature flags, statistical significance | Yes |
 | **Pulse** | KPI & metrics infrastructure | Tracking events, dashboards | Yes |
 | **Stream** | Data pipeline design | ETL/ELT, Kafka, Airflow, dbt | Yes |
 | **Helm** | Business strategy simulation | SWOT/PESTLE, scenario planning | Never |
-| **Crest** | Engineer self-branding strategy | GitHub/blog/LinkedIn/talk positioning | Never |
 | **Ledger** | Cloud FinOps & cost optimization | IaC cost estimation, right-sizing, RI/SP | Yes (policies) |
 
 **Key distinctions:**
@@ -206,13 +202,12 @@ Tokens and secrets must never be reachable from the execution environment where 
 
 | Agent | Primary Role | Focus | Writes Code |
 |-------|-------------|-------|-------------|
-| **Magi** | Multi-perspective decision making | Logic/Empathy/Pragmatism triad | Never |
+| **Magi** | Multi-perspective decision making and advisory | Logic/Empathy/Pragmatism triad, founder bottleneck coaching, documented named-figure lenses | Never |
 | **Flux** | Thinking refraction & perspective shift | Cynefin, TRIZ, lateral thinking, assumption surfacing | Never |
-| **Summon** | Channeling named figures' documented thinking | Mental-model lenses, conclave, critique, attestation tiers | Never |
 
 **Key distinctions:**
-- "Which option?" → Magi. "Are we asking the right question?" → Flux. Flux reframes; Magi decides
-- "How would {named figure} think about this?" → Summon. Summon channels real documented minds into advisory readings and feeds Magi; it never decides. Synthetic user personas → Cast; fixed founder-mentor archetype → Sage
+- "Which option?", founder pressure-testing, or "How would {named figure} think about this?" → Magi. "Are we asking the right question?" → Flux. Flux reframes; Magi advises or decides according to the selected Recipe
+- Synthetic user personas → Cast. Named-figure mental-model lenses and founder-mentor advisory → Magi
 
 ## DevOps & Release
 
@@ -220,18 +215,15 @@ Tokens and secrets must never be reachable from the execution environment where 
 |-------|-------------|-------|-------------|
 | **Gear** | CI/CD maintenance and GitHub Actions design | Dependencies, Docker, build optimization, advanced GHA | Yes |
 | **Guardian** | Git/PR governance | Commit strategy, PR quality | Never |
-| **Launch** | Release management | Versioning, CHANGELOG, rollback | Yes |
-| **Harvest** | PR reporting | Weekly/monthly reports from git data | Never |
-| **Latch** | Claude Code hooks | PreToolUse/PostToolUse event system | Yes |
-| **Hearth** | Dev environment setup | dotfiles, shell, editor config | Yes |
-| **Hone** | AI CLI config audit & optimization | config.toml, settings.json, CLAUDE.md, AGENTS.md, GEMINI.md, rules, MCP, permissions, commands, hooks, extensions | Never |
+| **Launch** | Release management and PR reporting | Versioning, CHANGELOG, rollback, weekly/monthly git and PR reports | Yes |
+| **Hone** | AI CLI config, hooks, and lifecycle automation | config.toml, settings.json, CLAUDE.md, AGENTS.md, GEMINI.md, rules, MCP, permissions, commands, hooks, extensions | Yes (hooks/config) |
 | **Mend** | Known-pattern auto-remediation | Runtime fix, runbook execution, staged verification | Yes |
 
 **Key distinctions:**
 - Existing provider-agnostic CI maintenance → Gear `ci`. New GHA design → Gear `gha`
-- PR strategy → Guardian. Release execution → Launch. PR reports → Harvest
+- PR strategy → Guardian. Release execution and PR reports → Launch
 - Operational config → Gear. Runtime remediation → Mend
-- AI CLI config audit (Codex, Antigravity (`agy`), Claude Code) → Hone. Claude Code hooks design → Latch. Personal dev env (dotfiles) → Hearth
+- AI CLI config audit and Claude Code hooks design → Hone. Personal dev environment, dotfiles, and macOS automation → Anvil
 
 ## Communication & Content
 
@@ -257,7 +249,6 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Canon** | Standards and regulatory compliance | OWASP/WCAG/OpenAPI/ISO 25010 plus `regulatory` audit recipes | Policy code only |
 | **Matrix** | Combinatorial analysis | Multi-dimensional coverage optimization | Never |
 | **Void** | YAGNI verification | Scope cutting, complexity reduction | Never |
-| **Sketch** | AI image generation | Gemini API image creation | Yes |
 | **Omen** | Pre-mortem analysis & failure mode enumeration | FMEA, fault tree, Swiss Cheese, Murphy audit | Never |
 | **Seek** | Search & vector DB architecture | Full-text/vector/hybrid search, RAG retrieval | Partial (mappings) |
 | **Weave** | Workflow & state machine design | FSM/Statechart, Saga patterns, approval flows | Partial (YAML/specs) |
@@ -268,7 +259,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 - Mobile app development → Native. Mobile-responsive frontend → Artisan
 - Priority scoring → Rank. Multi-perspective decisions → Magi
 - Pre-mortem / failure analysis → Omen. Change impact → Ripple. Incident response → Triage
-- Browser/web automation → Vector. macOS native-app automation (Apple Events) → Hearth `automate`. iOS app UI automation → Voyager `ios`
-- Runtime macOS app scripting + dotfiles/shell/editor config → Hearth. AI CLI config → Hone
+- Browser/web automation → Vector. macOS native-app automation (Apple Events) → Anvil `automate`. iOS app UI automation → Voyager `ios`
+- Runtime macOS app scripting + dotfiles/shell/editor config → Anvil. AI CLI config and hooks → Hone
 - A supplied prompt's vague wording → Chisel. The prompt *system* around it (few-shot, schema, versioning, eval, cost) → Oracle. A spec document for people → Scribe. Verifying an artifact against existing criteria → Attest
 - Chisel has two callers: **user-invoked** (a supplied prompt is the object) and **hub-invoked** (Nexus `SPECIFY` — the instruction about to be delegated is the object). It never takes the *user's own live request* as the object; that is Nexus `GATE`

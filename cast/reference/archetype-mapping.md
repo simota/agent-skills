@@ -24,7 +24,7 @@ A persona ideally maps to both: **Brand archetype** for tone of voice, **JTBD ar
 | # | Archetype | Core desire | Voice | Example brands |
 |---|-----------|-------------|-------|----------------|
 | 1 | **Innocent** | Safety, simplicity | Optimistic, sincere | Coca-Cola, Dove |
-| 2 | **Sage** | Truth, understanding | Authoritative, thoughtful | Google, BBC |
+| 2 | **Magi** | Truth, understanding | Authoritative, thoughtful | Google, BBC |
 | 3 | **Explorer** | Freedom, discovery | Adventurous, restless | Patagonia, Jeep |
 | 4 | **Outlaw** | Liberation, disruption | Rebellious, blunt | Harley-Davidson, Virgin |
 | 5 | **Magician** | Transformation, vision | Mystical, inspiring | Apple, Tesla, Disney |
@@ -40,7 +40,7 @@ Three motivational families:
 - **Order**: Caregiver, Ruler, Creator (provide structure)
 - **Belonging**: Lover, Jester, Everyman (foster connection)
 - **Change**: Hero, Outlaw, Magician (mastery + transformation)
-- **Meaning**: Innocent, Sage, Explorer (independence + truth)
+- **Meaning**: Innocent, Magi, Explorer (independence + truth)
 
 > **Change-agent personas (Echo[demand] Disposition axis).** Echo[demand]'s transformation-voicing personas — **Entrepreneur**, **Revolutionary**, **Maverick/Heretic**, **Early-adopter visionary** (`echo/reference/demand-persona-embodiment.md` § Challenger Archetypes) — are the registry home for bold, anti-incremental demand sources. Tag them with the **Change** / **Explorer** family: Entrepreneur → Creator/Magician/Hero · Revolutionary → Outlaw/Magician · Maverick → Outlaw/Explorer · Visionary → Explorer/Magician. They still require ≥3 evidence quotes (or `synthetic: true` + confidence ≤ 0.50 when proto-generated) and a Change/Explorer-compatible JTBD (typically emotional/social) — do not assign Outlaw + Functional-only.
 
@@ -70,7 +70,7 @@ persona:
   id: P-042
   name: Aoi Mori
   brand_archetype:
-    primary: Sage
+    primary: Magi
     secondary: Caregiver
     rationale: |
       Wants accurate information first, then to share it with others.
@@ -88,7 +88,7 @@ persona:
 ```
 RAW PERSONA EVIDENCE  →  ARCHETYPE TAG
 ──────────────────────────────────────
-"I research extensively"           → Sage
+"I research extensively"           → Magi
 "I want to feel free / explore"    → Explorer
 "I need to look successful"        → Ruler / Hero (depending on tone)
 "I want simple, no surprises"      → Innocent / Everyman
@@ -108,7 +108,7 @@ For multi-persona sets, validate that the *brand* the personas serve has a coher
 |-----------------|----------------------------|
 | Apple (Magician) | Magician + Creator + Explorer |
 | Patagonia (Explorer) | Explorer + Caregiver |
-| Stripe (Sage) | Sage + Creator |
+| Stripe (Magi) | Magi + Creator |
 
 If the persona set has ≥3 dominant archetypes that don't ladder up to a coherent brand, the segmentation is wrong.
 
@@ -132,7 +132,7 @@ CONSISTENCY  →  brand-level archetype coherence
 
 VALIDATE     →  evidence-cited quotes per archetype
              →  no archetype assigned without ≥3 quotes
-             →  archetype + JTBD compatibility (e.g., Sage+Functional ✓; Outlaw+Innocent ✗)
+             →  archetype + JTBD compatibility (e.g., Magi+Functional ✓; Outlaw+Innocent ✗)
 
 DELIVER      →  registry update with archetype + jtbd fields
              →  tone-of-voice guide per archetype
@@ -153,12 +153,12 @@ HANDOFF      →  Saga: narrative voice
 ### Persona Archetype Table
 | ID | Name | Brand Primary | Brand Secondary | JTBD Dim | Job Statement (compact) |
 |----|------|---------------|-----------------|----------|--------------------------|
-| P-001 | Aoi | Sage | Caregiver | Emotional | feel confident before recommending |
+| P-001 | Aoi | Magi | Caregiver | Emotional | feel confident before recommending |
 | P-002 | Ren | Hero | Ruler | Social | be seen as the high-performer |
 | P-003 | Hana | Caregiver | Innocent | Functional | protect family from financial risk |
 
 ### Evidence per Persona
-- **P-001 / Sage**:
+- **P-001 / Magi**:
   - "I always read 3 reviews before buying" (interview T-12)
   - "I keep a Notion of every decision rationale" (behavior log)
   - "I recommend tools to my team on Slack" (Slack mining)
@@ -169,12 +169,12 @@ HANDOFF      →  Saga: narrative voice
 - P-002: ...
 
 ### Brand-Level Coherence
-- Modal archetype across personas: [Sage]
-- Implied brand archetype: [Sage] — matches stated brand: [yes / no]
+- Modal archetype across personas: [Magi]
+- Implied brand archetype: [Magi] — matches stated brand: [yes / no]
 - Outliers: [persona IDs that don't ladder up + recommendation]
 
 ### Tone-of-Voice Hints
-- Sage: authoritative, thoughtful, evidence-led — avoid casual or playful
+- Magi: authoritative, thoughtful, evidence-led — avoid casual or playful
 - Hero: confident, achievement-framed — quantify impact
 
 ### JTBD-Driven Feature Priority
@@ -199,13 +199,13 @@ HANDOFF      →  Saga: narrative voice
 | Brand archetype != mode of persona archetypes | Re-segment; personas serving different brands shouldn't share a set |
 | JTBD with all three F/E/S equally weighted | Pick the *dominant* dimension; secondary aspects are context |
 | Job statement missing one of the When/Want/So-that clauses | Use full template; partial JTBDs are aspirational, not actionable |
-| Stereotyping (Sage = nerdy male, Lover = young female) | Bias-audit: representation matrix; archetypes are universal |
+| Stereotyping (Magi = nerdy male, Lover = young female) | Bias-audit: representation matrix; archetypes are universal |
 | Archetype + JTBD incompatibility (Outlaw + Functional only) | Outlaw is emotional/social; check archetype × JTBD compatibility |
 | Tagging only personas, never the brand | Brand archetype enables consistency at portfolio level |
-| Reapplying archetype as a persona name (Persona "The Sage") | Archetype is a tag; persona has a real-life-resembling name |
+| Reapplying archetype as a persona name (Persona "The Magi") | Archetype is a tag; persona has a real-life-resembling name |
 | Static archetype with no review cadence | Re-validate during evolve; market shifts drift archetypes |
 | Using archetypes as creative shortcut without behavior | Archetype must trace to evidence; otherwise persona drifts |
-| Forcing Jung 12 onto B2B-only personas | Adapt for B2B: Sage / Ruler / Caregiver / Hero are typically dominant |
+| Forcing Jung 12 onto B2B-only personas | Adapt for B2B: Magi / Ruler / Caregiver / Hero are typically dominant |
 
 ## Deliverable Contract
 

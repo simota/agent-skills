@@ -8,9 +8,9 @@ Purpose: Place trust signals — testimonials, logo bars, case studies, certific
 - **Prose (elsewhere)**: testimonial pull-quote editing, case-study narrative polish, certification/badge alt-text wording.
 - **Growth (elsewhere)**: review-aggregation feed integration (G2 / Capterra / Trustpilot APIs), rich-result schema for stars, ongoing testimonial harvesting playbook.
 - **Muse (elsewhere)**: testimonial card / logo bar / badge design tokens (spacing, border-radius, shadow, grayscale treatment).
-- **Clause (elsewhere)**: legal review of claim substantiation, endorsement disclosure (FTC / consumer-protection compliance), testimonial contractual rights.
+- **Canon (elsewhere)**: legal review of claim substantiation, endorsement disclosure (FTC / consumer-protection compliance), testimonial contractual rights.
 
-If the question is "what kind of proof goes in the hero and what goes after benefits?" → `trust`. If it's "is this testimonial claim substantiated under FTC guidelines?" → Clause. If it's "how do we pull live reviews from Trustpilot?" → Growth.
+If the question is "what kind of proof goes in the hero and what goes after benefits?" → `trust`. If it's "is this testimonial claim substantiated under FTC guidelines?" → Canon. If it's "how do we pull live reviews from Trustpilot?" → Growth.
 
 ## Trust Signal Strength Hierarchy
 
@@ -226,7 +226,7 @@ Scarcity and urgency are legitimate trust tools when honest. They become dark pa
 - Testimonial harvesting playbook cadence.
 - Dark-pattern audit checklist for ongoing scrutiny.
 
-**To Clause** (legal):
+**To Canon** (legal):
 
 - Testimonial claims requiring substantiation (specific metrics, outcomes, named persons).
 - Endorsement disclosure obligations (FTC, EU consumer protection).

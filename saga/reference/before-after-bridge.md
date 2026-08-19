@@ -190,7 +190,7 @@ Run the AP-1~AP-9 checklist from `saga/SKILL.md` and report results in the stand
 - Growth: SMO/SEO copy adapted from BAB
 - Prose: final tone polish + microcopy CTAs
 - Experiment: A/B test variants
-- Director: video script seeded from BAB
+- Cue: video script seeded from BAB
 ```
 
 ## Examples (illustrative, not real)
@@ -234,7 +234,7 @@ When `bab` completes, emit:
 - **Recommended variant** with reason.
 - **Anti-pattern check** (AP-1~AP-9 per `saga/SKILL.md`).
 - **Test plan** (hypothesis, metric, sample size, holdout).
-- **Handoffs**: Funnel, Growth, Prose, Experiment, Director.
+- **Handoffs**: Funnel, Growth, Prose, Experiment, Cue.
 
 ## References
 

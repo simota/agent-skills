@@ -165,12 +165,12 @@ SAGA_TO_SCRIBE_HANDOFF:
     - "[value proposition 2]"
 ```
 
-### SAGA_TO_DIRECTOR_HANDOFF
+### SAGA_TO_CUE_HANDOFF
 
-Pass a demo video scenario to Director, derived from Saga's narrative.
+Pass a demo video scenario to Cue, derived from Saga's narrative.
 
 ```yaml
-SAGA_TO_DIRECTOR_HANDOFF:
+SAGA_TO_CUE_HANDOFF:
   scenario:
     title: "[demo title]"
     duration_target: "[target length: 30s / 60s / 120s]"

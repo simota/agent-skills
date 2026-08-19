@@ -212,7 +212,7 @@ PlanetScale also added **vector data type support** alongside the relational MyS
 PlanetScale uses Vitess under the hood. Key patterns:
 
 ```sql
--- Always use shard key in WHERE clause for cross-shard query avoidance
+-- Always use shard key in WHERE canon for cross-shard query avoidance
 -- Shard key is typically the primary key or a defined vindex
 
 -- Good: hits single shard

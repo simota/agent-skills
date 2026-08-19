@@ -1,12 +1,12 @@
 # Skill Packs
 
-Skill membership matrix for selective enablement across the 111-skill global ecosystem. This repository also carries three project-local extensions (`orbit`, `lore`, `darwin`) registered in `_common/PROJECT_LOCAL_SKILLS.md`.
+Skill membership matrix for selective enablement across the 100-skill global ecosystem. This repository also carries three project-local extensions (`orbit`, `lore`, `darwin`) registered in `_common/PROJECT_LOCAL_SKILLS.md`.
 
 ## Why this exists
 
-Anthropic guidance is **8-12 skills** before "context tax" (token overhead per turn) starts to dominate; routing degradation begins in the **dozens**, and a **15,000-character cap** on the available skills list is a hard ceiling. This repository's 114 packages (111 global + 3 project-local) exceed all three thresholds when loaded together.
+Anthropic guidance is **8-12 skills** before "context tax" (token overhead per turn) starts to dominate; routing degradation begins in the **dozens**, and a **15,000-character cap** on the available skills list is a hard ceiling. This repository's 103 packages (100 global + 3 project-local) exceed all three thresholds when loaded together.
 
-This file defines **11 Packs** (overlapping subsets of the ecosystem) so that any single workstream can enable ~20-30 skills instead of the full 111 global skills. Selective enablement is driven by the Claude Code `skills` filter in `~/.claude/settings.json` (`"all"` / `[list]` / `[]`); Codex CLI and agy use equivalent allowlist mechanisms when available.
+This file defines **11 Packs** (overlapping subsets of the ecosystem) so that any single workstream can enable ~20-30 skills instead of the full 100 global skills. Selective enablement is driven by the Claude Code `skills` filter in `~/.claude/settings.json` (`"all"` / `[list]` / `[]`); Codex CLI and agy use equivalent allowlist mechanisms when available.
 
 **Sources:**
 - claude.com/blog/lessons-from-building-claude-code-how-we-use-skills (8-12 sweet spot, context tax)
@@ -36,12 +36,11 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 | `research` | `core + research` | 28 |
 | `package-author` | `core + package-gen + design + research` | 51 |
 | `skill-meta` | `core + skill-meta` | 12 |
-| `incident-response` | `core + cull` | 9 |
-| `legal-jp` | `core + clause` | 9 |
-| `personal-env` | `core + hearth` | 9 |
-| `ai-cli-admin` | `core + hone + latch` | 10 |
-| `gemini-image` | `core + sketch` | 9 |
-| `all` | `"all"` (no filter) | 111 global; this repository additionally discovers 3 project-local skills |
+| `incident-response` | `core + chain` | 9 |
+| `legal-jp` | `core + canon` | 9 |
+| `personal-env` | `core + anvil` | 9 |
+| `ai-cli-admin` | `core + hone` | 9 |
+| `all` | `"all"` (no filter) | 100 global; this repository additionally discovers 3 project-local skills |
 
 ---
 
@@ -159,15 +158,10 @@ The following skills remain globally installed but are excluded from broad domai
 
 | Profile | Skills | Trigger anchors | Activation boundary |
 |---------|--------|-----------------|---------------------|
-| `incident-response` | `cull` | `npm worm`, `Shai-Hulud`, `S1ngularity`, `malware eradication`, `IoC campaign` | Named supply-chain campaign or confirmed malware-response work |
-| `legal-jp` | `clause` | `Tokushoho`, `特商法`, `APPI legal review`, `Japanese ToS` | Japanese ToS, Privacy Policy, APPI, or Tokushoho review |
-| `personal-env` | `hearth` | `dotfiles`, `zsh`, `tmux`, `neovim`, `AppleScript`, `JXA` | Personal dotfiles or macOS Apple Events automation |
-| `ai-cli-admin` | `hone`, `latch` | `Codex config`, `Claude Code hooks`, `agy config`, `AI CLI audit` | AI CLI configuration audit or Claude Code hook administration |
-| `gemini-image` | `sketch` | `Gemini API image`, `Gemini image generation code` | Gemini API image-generation implementation |
-
-## Explicit-invocation skills
-
-These cross-project skills are intentionally absent from default domain profiles because their style or artifact is unusually narrow. Keep them installed for direct invocation only: `director`, `harvest`, `crest`, `zine`, `sage`, `summon`.
+| `incident-response` | `chain` | `npm worm`, `Shai-Hulud`, `S1ngularity`, `malware eradication`, `IoC campaign` | Named supply-chain campaign or confirmed malware-response work |
+| `legal-jp` | `canon` | `Tokushoho`, `特商法`, `APPI legal review`, `Japanese ToS` | Japanese ToS, Privacy Policy, APPI, or Tokushoho review |
+| `personal-env` | `anvil` | `dotfiles`, `zsh`, `tmux`, `neovim`, `AppleScript`, `JXA` | Personal dotfiles or macOS Apple Events automation |
+| `ai-cli-admin` | `hone` | `Codex config`, `Claude Code hooks`, `agy config`, `AI CLI audit` | AI CLI configuration audit or Claude Code hook administration |
 
 ## Project-local extensions
 

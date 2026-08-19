@@ -73,8 +73,8 @@ GPAI Code of Practice (final 2025-07-10): 26 signatories including OpenAI, Anthr
 | Machine-readable | JPEG Trust core foundation v2 | Image metadata | Honor flag |
 | Machine-readable | TDM.ai protocol (Liccium) | Dedicated parser | Honor directives |
 | Editorial-curation | `llms.txt` (Answer.AI proposal) | Dedicated parser | Treat as content-guidance, NOT opt-out (10.13% adoption Q1 2026; no major AI vendor commits to it in production) |
-| Plain-text | ToS "no scraping" clause | Manual review → domain blocklist | Block domain |
-| Plain-text | ToS "no AI training" clause | Manual review → domain blocklist | Block domain (German courts: plain-text reservation valid under Copyright Directive 2019/790 Art 4) |
+| Plain-text | ToS "no scraping" canon | Manual review → domain blocklist | Block domain |
+| Plain-text | ToS "no AI training" canon | Manual review → domain blocklist | Block domain (German courts: plain-text reservation valid under Copyright Directive 2019/790 Art 4) |
 
 ### Implementation Pattern
 

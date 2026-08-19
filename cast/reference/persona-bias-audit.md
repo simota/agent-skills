@@ -234,7 +234,7 @@ HANDOFF     →  back to cast `generate` for missing personas
 - [item]
 
 ### Recommended Additions
-- New persona: [profile sketch] — fills [intersection]
+- New persona: [profile builder] — fills [intersection]
 
 ### Recommended Rewrites
 - P-002: drop "nurturing by default" → replace with evidence-cited behavior

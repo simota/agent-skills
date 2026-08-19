@@ -10,7 +10,7 @@ under-converts, or planning a brand-building program. Pairs with competitive pos
 (`competitive-moats-category-design.md`) and brand visibility tracking.
 
 > **Scope note.** CBBE measures *product/company brand equity*. For narrative/voice
-> (`saga`), persona archetypes (`cast`), or personal/engineer branding (`crest`), route
+> (`saga`), persona archetypes (`cast`), or personal/engineer branding (`compete brand`), route
 > there instead — this file is the competitive brand-strength lens.
 
 ## The CBBE Pyramid (bottom → top)

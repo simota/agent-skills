@@ -83,7 +83,7 @@ Literal translations break in predictable places. Rewrite, don't translate, for 
 - **Pop culture references**: TV / music / sports references rarely translate; swap or drop.
 - **Politeness register**: JA / KO / DE formal vs informal; corporate content usually formal.
 - **Number formatting**: decimal and thousands separators (`1,234.56` vs `1.234,56`).
-- **Legal / compliance copy**: GDPR vs CCPA wording is locale-specific — consult Clause when in doubt.
+- **Legal / compliance copy**: GDPR vs CCPA wording is locale-specific — consult Canon's legal-document recipes when in doubt.
 
 ## Voice Talent Brief Template
 

@@ -267,7 +267,7 @@ Handoff:
   → Palette (WCAG fixes)
   → Builder (component fixes)
   → Beacon (performance regressions)
-  → Canon[regulatory] / Clause (legal-risk findings)
+  → Canon[regulatory] / Canon (legal-risk findings)
 ```
 
 ---

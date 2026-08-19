@@ -132,9 +132,9 @@ Chain: Rally{Voyager+Radar} → Echo → Trace → Experiment → Vector
 ```
 
 ### LAUNCH (XL additions)
-Add: Canvas (diagrams), Morph (conversion), Rally{Vitrine+Director} (demos)
+Add: Canvas (diagrams), Morph (conversion), Rally{Vitrine+Cue} (demos)
 ```
-Chain: Quill → Canvas → Guardian → Launch → Rally{Vitrine+Director} → Gear
+Chain: Quill → Canvas → Guardian → Launch → Rally{Vitrine+Cue} → Gear
 ```
 
 ### GROW (XL only)
@@ -182,7 +182,7 @@ On `NEXUS_COMPLETE`: SUCCESS → next Epic · PARTIAL → L1 retry · BLOCKED �
 | DEFINE | Pulse, Canon | KPIs and standards optional at L |
 | ARCHITECT | Scaffold, Canvas | Infra and diagrams are XL concerns |
 | VALIDATE | Trace, Experiment | Session analysis/A/B are XL |
-| LAUNCH | Morph, Vitrine, Director | Multiple demo formats are XL |
+| LAUNCH | Morph, Vitrine, Cue | Multiple demo formats are XL |
 
 Full agent × phase deployment map → `reference/agent-deployment-matrix.md`
 Phase exit checklists → `reference/exit-criteria-validation.md`

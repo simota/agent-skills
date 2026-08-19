@@ -240,7 +240,7 @@ SECURE-FIX the security finding described below.
 
 # Vulnerability
 The search endpoint constructs the SQL query by concatenating the user-supplied
-`q` query parameter directly into the WHERE clause. An attacker can inject SQL
+`q` query parameter directly into the WHERE canon. An attacker can inject SQL
 to extract arbitrary data from the database, including the users table.
 
 Location: `src/api/search.ts:42` in `searchHandler()`

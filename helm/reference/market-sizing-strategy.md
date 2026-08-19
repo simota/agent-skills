@@ -28,7 +28,7 @@ Helm does not estimate market size from scratch. Helm consumes market sizing dat
 |---|---|
 | Should we enter this market? | SAM validates sufficient opportunity |
 | How fast can we grow? | SOM vs SAM ratio reveals headroom |
-| Should we invest or harvest? | TAM growth rate drives BCG quadrant |
+| Should we invest or launch? | TAM growth rate drives BCG quadrant |
 | Which segment to prioritize? | Segment-level SAM comparison |
 | Is acquisition justified? | Target's SAM + our SAM = combined opportunity |
 | When do we hit diminishing returns? | SOM approaching SAM ceiling signals pivot need |
@@ -131,7 +131,7 @@ Pessimistic scenario:
 ### Resource Allocation Recommendation
 | Product | BCG quadrant | Recommended investment | Market sizing rationale |
 |---|---|---|---|
-| [Product A] | [quadrant] | [invest/maintain/harvest/divest] | [TAM/SAM/SOM justification] |
+| [Product A] | [quadrant] | [invest/maintain/launch/divest] | [TAM/SAM/SOM justification] |
 ```
 
 ## Templates

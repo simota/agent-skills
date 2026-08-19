@@ -31,7 +31,7 @@ Fallback is owned by the internal `phase:CLASSIFY` Default dispatch in `SKILL.md
 | Charter | `charter` |  | Repo-wide analysis → self-driving Charter, team design included — stops at the document. | See `reference/charter-recipe.md` | `reference/charter-recipe.md` |
 | Enact | `enact` |  | Execute a Charter end-to-end. | See `reference/enact-recipe.md` | `reference/enact-recipe.md` |
 | Operating Layer | `layer` |  | Design + stand up a repo's operating layer — Sigil blueprints and authors, Nexus registers. | See `reference/layer-recipe.md` | `reference/layer-recipe.md` |
-| Goal Setup | `goal` | | `/goal` autonomous long-running execution setup. **Gates on a machine-checkable completion oracle + mandatory hard-stop bound** (rejects unverifiable goals). 1-3 agents, no code execution | `Hone → Latch → Scribe? → DELIVER` | `reference/goal-recipe.md` |
+| Goal Setup | `goal` | | `/goal` autonomous long-running execution setup. **Gates on a machine-checkable completion oracle + mandatory hard-stop bound** (rejects unverifiable goals). 1-2 agents, no code execution | `Hone → Scribe? → DELIVER` | `reference/goal-recipe.md` |
 | Gedanken | `gedanken` |  | Structured thought-experiment reasoning. | See `reference/gedanken-recipe.md` | `reference/gedanken-recipe.md` |
 | Delve | `delve` | | Existing-feature deep-dive → evolution-direction dialogue; no code — stops at a named Evolution Map. | See `reference/delve-recipe.md` | `reference/delve-recipe.md` |
 | Cartograph | `cartograph` | | Multi-repo reverse-engineering → bird's-eye architecture diagrams + design document; no code — stops at a named Cartography Map. | See `reference/cartograph-recipe.md` | `reference/cartograph-recipe.md` |

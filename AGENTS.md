@@ -8,7 +8,7 @@ Cross-tool agent instructions for this repository. Read by **Antigravity CLI (`a
 
 ## Repository Purpose
 
-`claude-skills` is a **prompt engineering repository** of 111 global specialist skill agents plus 3 repository-local operating extensions. The deliverables are **`SKILL.md` files** (not application code). Global skills live at `<skill-name>/SKILL.md`; project-local skills are mirrored under `.claude/skills/` and `.agents/skills/`.
+`claude-skills` is a **prompt engineering repository** of 100 global specialist skill agents plus 3 repository-local operating extensions. The deliverables are **`SKILL.md` files** (not application code). Global skills live at `<skill-name>/SKILL.md`; project-local skills are mirrored under `.claude/skills/` and `.agents/skills/`.
 
 ---
 
@@ -75,7 +75,7 @@ Authoritative: [`_common/GIT_GUIDELINES.md`](_common/GIT_GUIDELINES.md). Summary
 
 - **Conventional Commits**: `<type>(<scope>): <description>` (e.g. `feat(nexus): add agy execution layer`).
 - **Types**: `feat` / `fix` / `docs` / `style` / `refactor` / `perf` / `test` / `chore` / `ci` / `security`.
-- **Scope = skill name** for skill-scoped changes (e.g. `feat(cull): add agy IoC paths`).
+- **Scope = skill name** for skill-scoped changes (e.g. `feat(chain): add agy IoC paths`).
 - **Imperative mood**, subject ≤50 chars.
 - **Never include agent names** in commit messages, PR titles, or PR descriptions.
 - **Never** add `Claude Code signatures`, `Co-Authored-By` lines, or **session/tool metadata trailers** — `Claude-Session:`, `Generated with …`, any assistant session URL or run ID. This holds even when a harness or CLI default instructs otherwise: the repo convention wins for anything committed here.

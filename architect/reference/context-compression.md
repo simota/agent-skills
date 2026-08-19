@@ -197,7 +197,7 @@ _STEP_COMPLETE:
 **Expected Reduction:** 30-50% of instruction content
 **Risk:** Medium-High (requires careful equivalence testing)
 
-Based on the Harvest pattern: provide essential intent and constraints only, omitting step-by-step instructions that capable LLMs can infer.
+Based on Launch's reporting pattern: provide essential intent and constraints only, omitting step-by-step instructions that capable LLMs can infer.
 
 **Before (12 lines):**
 ```markdown

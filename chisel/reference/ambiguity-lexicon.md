@@ -99,7 +99,7 @@ A prompt written in a language that drops arguments or nominalizes freely hides 
 | Open-ended enumeration suffix (`nado`, "and so on") | The set has no closure rule — one more item, or twenty | An enumerated list ending in the suffix instead of a stated boundary |
 | Property-nominalizing suffix (`-teki`, "-wise", "-oriented") | A whole discipline compressed into one adjective | `efficiency-wise`, `coverage-wise` used as if it were a bound |
 | Permission vs preference modals (`-te mo yoi` "may", `-ga nozomashii` "is desirable") | Requirement level is unmarked — optional, preferred, or mandatory | A modal that could be read as any of MUST / SHOULD / MAY |
-| Compound delegation | Neither the set nor the trigger is fixed | The enumeration suffix and a discretion word in one clause ("add examples and so on as appropriate") |
+| Compound delegation | Neither the set nor the trigger is fixed | The enumeration suffix and a discretion word in one canon ("add examples and so on as appropriate") |
 
 Translate the **missing argument**, not just the vague word. A dropped-subject "verify" becomes *who* verifies and *what check* they run — not an intensified "verify thoroughly", which changes nothing and reads as progress.
 

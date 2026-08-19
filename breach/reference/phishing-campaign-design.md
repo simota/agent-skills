@@ -4,7 +4,7 @@ Purpose: Design an authorized phishing campaign that measures real organizationa
 
 ## Scope Boundary
 
-- **Breach `phishing`**: authorized campaign design — pretexts, landing-page clones, credential-harvest vs session-token flows, MFA-fatigue, QR-phishing (quishing), OAuth consent-phishing, SPF/DKIM/DMARC evasion techniques, reporting and feedback loops.
+- **Breach `phishing`**: authorized campaign design — pretexts, landing-page clones, credential-launch vs session-token flows, MFA-fatigue, QR-phishing (quishing), OAuth consent-phishing, SPF/DKIM/DMARC evasion techniques, reporting and feedback loops.
 - **Sentinel (elsewhere)**: static security analysis of code paths that handle inbound email or user submissions. No campaign design.
 - **Probe (elsewhere)**: DAST / penetration testing of the landing-page infrastructure itself. Not the social pretext.
 - **Vigil (elsewhere)**: authoring the Sigma / YARA / email-header detection rules that flag the campaign artifacts. Campaign feeds Vigil — Vigil does not run the campaign.
@@ -17,7 +17,7 @@ If the question is "does our workforce click, report, or escalate?" → `phishin
 
 | Pattern | Pretext shape | Primary goal | Key risk if misused |
 |---------|---------------|--------------|--------------------|
-| Credential harvest | Password-reset / shared-doc / HR portal | Measure click + credential-submit rate | Real creds leaked to test infra — use one-way hash + instant revoke |
+| Credential launch | Password-reset / shared-doc / HR portal | Measure click + credential-submit rate | Real creds leaked to test infra — use one-way hash + instant revoke |
 | Session-token theft | OAuth consent / device-code grant | Validate session-binding, MFA trust | Token persistence beyond test window |
 | MFA fatigue / push-bombing | Repeated push prompts + voice pretext | Measure push-accept rate under pressure | Locking real accounts — rate-limit and pre-notify IT |
 | Quishing (QR) | Printed QR / email-embedded QR | Measure mobile out-of-band susceptibility | QR on shared media — scope to controlled distribution |

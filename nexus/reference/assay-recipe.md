@@ -161,7 +161,7 @@ Phase 5    APPLY ★Confirm-before-launch (apply=true only; preconditions ①-�
            apply ONLY experiment-proven-safe changes (zero-diff removals on adequate elements;
            REWRITE winners that passed the identical suite; ASSERT `constraint-gap` rule
            amendments)
-           → Radar[no-regression] + Guardian → Latch?[Drift Sentinel: the ASSERT fitness
+           → Radar[no-regression] + Guardian → Hone?[Drift Sentinel: the ASSERT fitness
              functions become CI checks so the proof does not decay]
    ▼
 Phase 6    DELIVER — Design Proof + handoff of every REFUTED claim to `anneal` as a
@@ -209,7 +209,7 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 |---------|-----------|
 | **"Good design" asserted from proxy metrics, or an instrument chosen to get the desired answer** | Four instruments that *execute* rather than estimate, oracle counts resolved claims not scores, mechanical claim-type → instrument assignment (§1, Phase 2) |
 | **A zero-diff removal read as "unnecessary"** | Adequacy Gate — zero diff on a BLIND element is `UNTESTED`, a different verdict entirely (§1.3) |
-| Mutation testing skipped because it is slow, or the proof decays the week after delivery | Phase 0.5 is a gate, not an option, checkpointed so resume never re-spends it (§4); ASSERT fitness functions become CI checks via `latch` (Phase 5, §7) |
+| Mutation testing skipped because it is slow, or the proof decays the week after delivery | Phase 0.5 is a gate, not an option, checkpointed so resume never re-spends it (§4); ASSERT fitness functions become CI checks via `hone` (Phase 5, §7) |
 | A rehearsal implementation shipped because it looked good | Rehearsals are discarded by contract, with an attestation in the report (§6, §7) |
 | An unmeasurable claim adjudicated by opinion, or the denominator chosen after seeing results | `instrument-limited` claims stay `UNPROVEN` and Phase 4 forbids closing by argument; the ledger freezes at the contract-level Phase 1 gate (§1, §3) |
 | Refuted claims treated as a failed run, or **a codebase that cannot be reasoned about, reported as fine** | `REFUTED` counts toward `ACCEPT`; `BLOCK (oracle-inadequate)` is a legitimate delivery shipping the blind-spot map (§2) |

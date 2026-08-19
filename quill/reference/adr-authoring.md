@@ -7,10 +7,10 @@ Purpose: Capture an architectural decision with enough context, alternatives, an
 - **Quill `adr`**: code-adjacent ADR file creation (Nygard / MADR template), supersession lifecycle, index maintenance, cross-linking from JSDoc / README.
 - **Atlas (elsewhere)**: the upstream architecture analysis, RFC drafting, dependency / coupling evaluation that *produces* the decision Quill records.
 - **Scribe (elsewhere)**: PRD / SRS / HLD / LLD specification documents that describe the product and design surface, not a single decision point.
-- **Zine (elsewhere)**: external-audience tech-blog article series discussing decisions after the fact, for publication on note / Zenn / Qiita / dev.to.
+- **Tome (elsewhere)**: external-audience tech-blog article series discussing decisions after the fact, for publication on note / Zenn / Qiita / dev.to.
 - **Shift (elsewhere)**: orchestrating the migration that an accepted ADR unlocks.
 
-If the task is "decide between Postgres and DynamoDB" → Atlas. If the decision is already made and must be recorded → `adr`. If the decision needs a narrative blog post for external readers → Zine.
+If the task is "decide between Postgres and DynamoDB" → Atlas. If the decision is already made and must be recorded → `adr`. If the decision needs a narrative blog post for external readers → Tome.
 
 ## Template Selection
 
@@ -126,5 +126,5 @@ If the document is still gathering signatures → it's an RFC, route to Atlas. O
 **From Quill (`adr`) → Canvas:**
 - Request a component / context diagram if the decision shifts system boundaries — ADR references the diagram, not the other way around.
 
-**From Quill (`adr`) → Zine:**
-- Once the ADR is Accepted and the migration has landed, Zine can author an external-audience retrospective article that links back to the ADR as the canonical record.
+**From Quill (`adr`) → Tome:**
+- Once the ADR is Accepted and the migration has landed, Tome can author an external-audience retrospective article that links back to the ADR as the canonical record.

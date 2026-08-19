@@ -62,13 +62,13 @@ Source: numbered functional requirements
 
 ```text
 Primary AC:
-  derive from the "I want" clause
+  derive from the "I want" canon
 
 Additional ACs:
   derive from explicit acceptance bullets
 
 Implicit ACs:
-  infer only when the "so that" clause makes the benefit testable
+  infer only when the "so that" canon makes the benefit testable
 ```
 
 ### Free-Form Text

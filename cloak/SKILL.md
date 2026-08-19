@@ -250,7 +250,7 @@ Receives security findings, standard requirements, and codebase analysis upstrea
 - **vs Gateway**: Gateway = API design quality; Cloak = privacy headers, consent propagation in APIs.
 - **vs Beacon**: Beacon = observability infrastructure; Cloak = ensuring observability doesn't leak PII.
 - **vs Native**: Native drafts `PrivacyInfo.xcprivacy` and Data Safety alongside the feature; Cloak reviews those drafts, designs the 5.1.2(i) consent UI and ledger, and recommends SDK replacements when manifests are missing.
-- **vs Clause**: Clause writes legal-document text; Cloak implements the controls and hands Clause the 5.1.2(i) UI behavior spec for consent wording and the policy paragraph.
+- **vs Canon**: Canon writes legal-document text; Cloak implements the controls and hands Canon the 5.1.2(i) UI behavior spec for consent wording and the policy paragraph.
 
 ## Reference Map
 

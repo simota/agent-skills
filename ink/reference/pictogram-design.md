@@ -161,7 +161,7 @@ Choice matters: the modern "Accessible Icon" depicts agency and motion; the olde
 
 ### Verification Process
 
-1. Sketch in pencil on paper at signage scale.
+1. Builder in pencil on paper at signage scale.
 2. Build at standard grid (100×100 or 24×24).
 3. Test at 4 distances (close, medium, far, screen).
 4. Test at 2 luminance levels (bright, low-light).
@@ -176,7 +176,7 @@ Choice matters: the modern "Accessible Icon" depicts agency and motion; the olde
 2. **Map to standard** — ISO 7001 / 7010 / AIGA / ADA / brand-only.
 3. **Choose color code** — match safety standard if applicable.
 4. **Pick grid** — UI 24×24 or signage 100×100.
-5. **Sketch silhouette** — solid, single concept, bold strokes.
+5. **Builder silhouette** — solid, single concept, bold strokes.
 6. **Design at grid** — viewBox + path.
 7. **Test at viewing distance** — 4 distances minimum.
 8. **Cross-cultural review** — flag hand gestures / animals / religious symbols.

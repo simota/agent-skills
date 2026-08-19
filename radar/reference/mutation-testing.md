@@ -70,7 +70,7 @@ Local (module-scoped) thresholds:
 PR-tier mutation job: scope to git-diff changed files only; keep wall time < 5 min. Full-suite runs belong to nightly — escalate to Siege for the program design.
 
 ```yaml
-# .github/workflows/mutation-pr.yml (sketch)
+# .github/workflows/mutation-pr.yml (builder)
 - run: npx stryker run --mutate "$(git diff --name-only origin/main | grep -E '\\.(ts|tsx)$' | xargs)"
 - run: node scripts/assert-mutation-score.mjs --min 75
 ```

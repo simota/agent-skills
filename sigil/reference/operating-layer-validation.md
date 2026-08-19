@@ -41,7 +41,7 @@
 
 ### Delegation (REQUIRED)
 
-- [ ] **L10** Every blueprint component names exactly one owning agent (Sigil / Nexus / Orbit / Latch / Grove) with the payload it receives.
+- [ ] **L10** Every blueprint component names exactly one owning agent (Sigil / Nexus / Orbit / Hone / Grove) with the payload it receives.
 - [ ] **L11** No authored skill bodies, executed chains, or installed files are present in Sigil[blueprint]'s output — design and handoffs only.
 - [ ] **L12** Loops deferred to Orbit, state machines to Weave, runtime routing to Nexus — none built inline.
 
@@ -62,7 +62,7 @@ In `audit` mode, run the same 14 items against an **existing** project layer (no
 | Workflow has 8 phases | L8 | Sigil[blueprint] redesign → Nexus re-register |
 | Task domain double-owned | L6 | routing-map fix → Nexus |
 | Drift: skill no longer matches stack | L3 | Sigil (Skill Evolution) |
-| Enforcement done as a skill, not a hook | L2 | Latch (convert to hook) |
+| Enforcement done as a skill, not a hook | L2 | Hone (convert to hook) |
 
 ---
 

@@ -7,11 +7,11 @@
 
 - **Anvil `config`**: CLI tool config-file design, precedence chain, discovery path, XDG compliance, schema validation, `config get/set/edit/validate` subcommand UX.
 - **Builder (elsewhere)**: feature/business-logic layer that consumes the loaded config struct (e.g., reads `database.url` and opens a connection).
-- **Hearth (elsewhere)**: personal dotfile authoring for the user's shell/editor/terminal (zsh/tmux/neovim/ghostty) — not CLI app config.
+- **Anvil `env`**: personal dotfile authoring for the user's shell/editor/terminal (zsh/tmux/neovim/ghostty) — not CLI app config.
 - **Gear (elsewhere)**: CI pipeline env var injection, secrets provisioning, Docker config mounting.
 - **Launch (elsewhere)**: breaking-change deprecation policy for config keys across releases.
 
-If the request is "how should my CLI discover and validate its config?" → `config`. If it is "tune my personal `.zshrc`" → Hearth. If it is "inject SECRET into CI runs" → Gear.
+If the request is "how should my CLI discover and validate its config?" → `config`. If it is "tune my personal `.zshrc`" → `env`. If it is "inject SECRET into CI runs" → Gear.
 
 ## Precedence Chain (Canonical Order)
 

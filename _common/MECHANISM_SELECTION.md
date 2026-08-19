@@ -1,8 +1,8 @@
 # Steering-Mechanism Selection — Repository Standard
 
-**Purpose:** Canonical decision guide for placing an instruction at the right Claude Code architectural level — CLAUDE.md, rules, skills, subagents, hooks, output styles, or `append-system-prompt`. Fills the cross-skill gap where mechanism choice was previously fragmented (latch ↔ hone ↔ sigil) and "rule vs hook" was undocumented.
+**Purpose:** Canonical decision guide for placing an instruction at the right Claude Code architectural level — CLAUDE.md, rules, skills, subagents, hooks, output styles, or `append-system-prompt`. Fills the cross-skill gap where mechanism choice was previously fragmented (hone ↔ sigil) and "rule vs hook" was undocumented.
 
-**Read when:** A user asks to "always/never do X", to enforce a convention, to add a runbook/checklist, or when `hone` runs the anti-bloat audit, `latch` triages instruction-vs-hook, `sigil` authors project rules, or `architect` decides skill-vs-other.
+**Read when:** A user asks to "always/never do X", to enforce a convention, to add a runbook/checklist, or when `hone` runs the anti-bloat audit or triages instruction-vs-hook, `sigil` authors project rules, or `architect` decides skill-vs-other.
 
 **Source:** [claude.com — Steering Claude Code: skills, hooks, rules, subagents, and more](https://claude.com/blog/steering-claude-code-skills-hooks-rules-subagents-and-more). Pairs with `PROMPT_CACHE_HIERARCHY.md` (cost dimension) and `hone/reference/key-thresholds.md` (anti-bloat thresholds).
 
@@ -106,7 +106,7 @@ rules keep the figure meaningful:
 
 ## Cross-skill ownership in this repo
 
-- **latch** — owns instruction→hook triage and all hook authoring (the "every time / never" rows above).
+- **hone** — owns instruction→hook triage and all hook authoring (the "every time / never" rows above).
 - **hone** — runs the anti-bloat audit ("would Claude do this wrong without it?") and routes failing lines here.
 - **sigil** — decides skill vs rule vs CLAUDE.md when authoring project skills (`cross-tool-rules-landscape.md`).
 - **architect** — decides whether a new capability is a skill vs hook/rule/subagent at design time.

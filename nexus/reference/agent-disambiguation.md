@@ -138,30 +138,30 @@ Both are project-local extensions. Apply `_common/PROJECT_LOCAL_SKILLS.md` befor
 
 ---
 
-### Flux vs Riff vs Magi vs Summon (Thinking Support Quartet)
+### Flux vs Riff vs Magi (Thinking Support)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
 | "Reframe this", "shift perspective", single-shot analysis | **Flux** | One-time perspective shift |
 | "Bounce ideas", "brainstorm with me", "rubber-duck session", iterative dialogue | **Riff** | Multi-turn interactive exploration |
 | "Which should we pick?", "Go/No-Go", verdict needed | **Magi** | Structured decision with vote |
-| **A real person is named** — "what would Feynman do here?", "critique this as Christensen would", "panel of Buffett + Munger on this" | **Summon** | Named-figure documented thinking as an advisory lens |
+| **A real person is named** — "what would Feynman do here?", "critique this as Christensen would", "panel of Buffett + Munger on this" | **Magi[channel/conclave]** | Named-figure documented thinking as an advisory lens |
 | User wants to explore before knowing what to decide | **Riff** | Open-ended exploration first |
 | User is stuck and needs a new frame, not a conversation | **Flux** | Break the frame, then move on |
 | User has options and needs a verdict, not more ideas | **Magi** | Converge and decide |
-| User wants *a specific documented thinker's* frame, not any new frame | **Summon** | Flux invents a frame; Summon borrows a person's |
+| User wants *a specific documented thinker's* frame, not any new frame | **Magi[advisor]** | Flux invents a frame; Magi applies a documented person's |
 
-**Rule of thumb**: "Help me think about this" → Riff. "Help me see this differently" → Flux. "Help me decide" → Magi. **"Help me see this as _<named person>_" → Summon.**
+**Rule of thumb**: "Help me think about this" → Riff. "Help me see this differently" → Flux. "Help me decide" → Magi[decide]. **"Help me see this as _<named person>_" → Magi[advisor].**
 
-**The Summon boundary is the named individual.** A real, documented, *named* person → Summon. A school/movement/collective, or no person at all → Flux or Riff. A synthetic user persona → Cast. A fixed founder-mentor archetype (no name) → Sage. Summon produces a **reading, never a verdict** — every claim is tagged `ATTESTED` / `INFERRED` / `SPECULATIVE`, fabricated quotes are stripped, and any actual decision hands off to Magi.
+**The named-figure Recipe boundary is a documented individual.** A real, *named* person → Magi[channel/conclave/critique]. A school/movement/collective, or no person at all → Flux or Riff. A synthetic user persona → Cast. A fixed founder-mentor archetype (no name) → Magi[advisor]. Named-figure Recipes produce a **reading, not a verdict** — every claim is tagged `ATTESTED` / `INFERRED` / `SPECULATIVE`; a requested decision continues to Magi[decide].
 
 **Chain patterns**:
 - Flux (reframe) → Riff (explore the new frame) → Magi (decide) → Builder (implement)
 - Riff (brainstorm) → Spark (formalize as spec) → Builder (implement)
 - Riff (brainstorm) → Void (cut scope) → Builder (implement)
-- **Summon (conclave: contrast named experts) → Magi (arbitrate) → Builder** — the canonical "expert lens for a decision" path
-- **Flux (reframe) → Summon (channel a thinker known for that frame)** — reframe first, then borrow the mind that fits it
-- **Summon (channel) → Riff (brainstorm off the expert's frameworks)** — expert mental models as ideation seeds
+- **Magi[advisor] → Magi[decide] → Builder** — the canonical "expert lens for a decision" path
+- **Flux → Magi[advisor]** — reframe first, then borrow the mind that fits it
+- **Magi[advisor] → Riff** — expert mental models as ideation seeds
 
 ---
 
@@ -274,9 +274,9 @@ upside ("how much can this feature earn", "opportunity upper bound") → Spark (
 
 ---
 
-### Cull vs Chain (Malware / Supply-Chain)
+### Chain Modes (Malware / Supply-Chain)
 
-**Rule of thumb**: "Is something already infected right now?" → Cull ("IoC scan", "Shai-Hulud", "eradicate infected lockfile", "is this npm package currently infected/compromised"). "Should we trust this before we let it in?" → Chain ("manifest hashing", "third-party skill/plugin/MCP intake", "should we trust this new MCP server / plugin before installing").
+**Rule of thumb**: "Is something already infected right now?" → Chain's malware-response Recipes. "Should we trust this before we let it in?" → Chain's intake/audit Recipes.
 
 ---
 
@@ -423,21 +423,21 @@ upside ("how much can this feature earn", "opportunity upper bound") → Spark (
 
 ---
 
-### Zine vs Scribe vs Prose vs Saga vs Tome (Writing Agents)
+### Tome vs Scribe vs Prose vs Saga (Writing Agents)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
-| "Tech blog post for note/Zenn/Qiita/dev.to" | **Zine** | External long-form article |
+| "Tech blog post for note/Zenn/Qiita/dev.to" | **Tome** | External long-form article |
 | "PRD, spec, design document, SRS" | **Scribe** | Internal technical documentation |
 | "Error message, button label, UX microcopy" | **Prose** | User-facing short-form text |
 | "Customer story, use-case narrative for marketing" | **Saga** | Product narrative |
 | "Auto-generate learning doc from git diff" | **Tome** | Diff-driven teaching material |
-| "Tutorial / retrospective / announcement article" | **Zine** | External article regardless of topic |
-| "Internal README explaining the module" | **Quill** | Code-adjacent docs (not Zine) |
-| "Multi-episode series with index article" | **Zine** | Series management is first-class in Zine |
-| "Retrospective as a Tome learning doc vs a Zine post" | **Tome** (internal) / **Zine** (external) | Destination audience decides |
+| "Tutorial / retrospective / announcement article" | **Tome** | External article regardless of topic |
+| "Internal README explaining the module" | **Quill** | Code-adjacent docs (not Tome) |
+| "Multi-episode series with index article" | **Tome** | Series management is first-class in Tome |
+| "Retrospective as a learning doc or a public post" | **Tome** | Destination audience selects the Tome Recipe and format |
 
-**Rule of thumb**: External public article → Zine. Internal spec/doc → Scribe. UI text → Prose. Product story → Saga. Diff → learning doc → Tome.
+**Rule of thumb**: External public article → Tome. Internal spec/doc → Scribe. UI text → Prose. Product story → Saga. Diff → learning doc → Tome.
 
 ---
 
@@ -503,22 +503,22 @@ Orbit is project-local. Apply `_common/PROJECT_LOCAL_SKILLS.md`; when unavailabl
 
 ---
 
-### Sage vs Riff vs Magi vs Helm vs Spark vs Flux (Founder Decisions & Ideation)
+### Magi vs Riff vs Helm vs Spark vs Flux (Founder Decisions & Ideation)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
-| "office hours" / "I'm stuck" / "what should I focus on" | **Sage** | YC-style advisory; extract the single bottleneck |
-| "founder advisory" / "creative direction reality check" | **Sage** | Pattern match + founder anti-pattern detection |
-| "review my pitch" / "Demo Day deck" / "investor Q&A practice" | **Sage** (pitch recipe) | STRUCTURE → CLARITY → TENSION → RESONANCE → REVISE |
-| "we just shipped X / hired Y / pivoted Z, postmortem" | **Sage** (retro recipe) | Retrospective on recent decisions and outcomes |
-| "we're stuck right now, need to unblock" | **Sage** (triage recipe) | Emergency unblock within 5 turns |
+| "office hours" / "I'm stuck" / "what should I focus on" | **Magi** | YC-style advisory; extract the single bottleneck |
+| "founder advisory" / "creative direction reality check" | **Magi** | Pattern match + founder anti-pattern detection |
+| "review my pitch" / "Demo Day deck" / "investor Q&A practice" | **Magi** (pitch recipe) | STRUCTURE → CLARITY → TENSION → RESONANCE → REVISE |
+| "we just shipped X / hired Y / pivoted Z, postmortem" | **Magi** (retro recipe) | Retrospective on recent decisions and outcomes |
+| "we're stuck right now, need to unblock" | **Magi** (triage recipe) | Emergency unblock within 5 turns |
 | "I want to generate ideas, diverge" | **Riff** | Iterative divergent ideation (4 modes) |
 | "Propose a new feature as a Markdown spec" | **Spark** | Feature proposals from existing data/logic |
 | "GO / NO-GO decision, pick among multiple options" | **Magi** | Three-perspective deliberation (Logos/Pathos/Sophia) |
 | "Quarterly / annual scenario simulation, KPI forecast" | **Helm** | Long-term strategy simulation |
 | "Question assumptions, shift perspective" | **Flux** | Single-shot reframing |
 
-**Rule of thumb**: One actionable move to make this week → Sage. Diverge → Riff. Three-perspective deliberation → Magi. Long-term scenario → Helm. Feature spec → Spark. Flip assumptions → Flux. Sage does **not** generate ideas — it surfaces what the founder is avoiding.
+**Rule of thumb**: One actionable move to make this week → Magi. Diverge → Riff. Three-perspective deliberation → Magi. Long-term scenario → Helm. Feature spec → Spark. Flip assumptions → Flux. Magi does **not** generate ideas — it surfaces what the founder is avoiding.
 
 ---
 

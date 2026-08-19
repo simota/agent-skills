@@ -133,7 +133,7 @@ adb forward --remove-all              # Reset
 | `adb shell input keyevent KEYCODE_HOME` | Key event (3=HOME, 4=BACK, 82=MENU, 26=POWER, 24=VOL_UP, 25=VOL_DOWN, 187=APP_SWITCH) |
 | `adb shell input keyevent --longpress KEYCODE_POWER` | Long press |
 
-→ Pairs well with `director` skill for automated demo recording.
+→ Pairs well with `cue` skill for automated demo recording.
 
 ---
 

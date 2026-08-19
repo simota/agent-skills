@@ -49,7 +49,7 @@ all three with different jobs.
 | Placement | What it does | Fails at | Use it for |
 |---|---|---|---|
 | **Index-time** | separate index / partition / collection per boundary; excluded content is never in the index queried | fine-grained per-user ACLs — the partition count explodes | strong, stable boundaries: tenant, region/residency, public-vs-internal, highly restricted classes |
-| **Search-time** | mandatory filter clause built from the requester's identity, applied in the engine query | filter omission on any code path; engine filter limitations; approximate-search pre/post-filter semantics; timing side channels | group- and attribute-based access that changes often |
+| **Search-time** | mandatory filter canon built from the requester's identity, applied in the engine query | filter omission on any code path; engine filter limitations; approximate-search pre/post-filter semantics; timing side channels | group- and attribute-based access that changes often |
 | **Post-retrieval** | policy engine authorizes each candidate after the engine returns it | unauthorized documents still entered candidate generation, scoring, reranking, **and logs** before being dropped | final defense and citation-time recheck — never as the only layer |
 
 **Recommended composition:** partition the strong boundaries at index time, constrain candidates at search

@@ -7,11 +7,11 @@
 
 - **Anvil `completion`**: completion-script generation, generator integration, install-path conventions, dynamic completion callbacks, completion testing harness.
 - **Builder (elsewhere)**: feature/business logic the completion suggests values from (e.g., project listing API).
-- **Hearth (elsewhere)**: personal dotfile setup for the user's own shell — sourcing completions in `~/.zshrc`, fpath configuration, completion caching on login.
+- **Anvil `env`**: personal dotfile setup for the user's own shell — sourcing completions in `~/.zshrc`, fpath configuration, completion caching on login.
 - **Gear (elsewhere)**: CI pipeline that regenerates and publishes completion files with the release, dependency updates for the completion generator itself.
 - **Launch (elsewhere)**: versioning, changelog entries, and rollout plan when completion output format changes.
 
-If the request is "emit a completion script for this CLI" → `completion`. If it is "make completions load fast in my `.zshrc`" → Hearth. If it is "publish completions to Homebrew formula on release" → Launch plus Gear.
+If the request is "emit a completion script for this CLI" → `completion`. If it is "make completions load fast in my `.zshrc`" → `env`. If it is "publish completions to Homebrew formula on release" → Launch plus Gear.
 
 ## Static vs Dynamic Completion
 
@@ -99,5 +99,5 @@ When `completion` is done, pass to the next phase:
 
 - **To Launch**: note whether completion output format changed (breaking change for cached completions in package managers).
 - **To Gear**: CI step that regenerates `completion.{bash,zsh,fish,ps1}` and commits / attaches to release.
-- **To Hearth** (for the authoring user): one-liner that sources the freshly generated completion into the user's own shell for local testing.
+- **To Anvil `env`** (for the authoring user): one-liner that sources the freshly generated completion into the user's own shell for local testing.
 - **To `pkg`**: install-path directives for Homebrew / deb / rpm formulae.

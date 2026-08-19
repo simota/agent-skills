@@ -17,7 +17,7 @@ FORGE_TO_NATIVE_MACOS_HANDOFF:
     - navigation: "3-pane NavigationSplitView validated"
     - state: "@Observable ViewModel prototype"
     - data: "Local JSON fixture, no persistence yet"
-  prototype_quality: "L1"  # L0=sketch, L1=functional, L2=polished, L3=near-production
+  prototype_quality: "L1"  # L0=builder, L1=functional, L2=polished, L3=near-production
   known_issues:
     - "No document persistence"
     - "No sandbox entitlements configured"
@@ -153,10 +153,10 @@ NATIVE_MACOS_TO_GEAR_HANDOFF:
     - "release_direct: build + notarize + staple + publish DMG + update appcast (Developer ID channel)"
 ```
 
-### NATIVE_MACOS_TO_HEARTH_HANDOFF
+### NATIVE_MACOS_TO_ANVIL_HANDOFF
 
 ```yaml
-NATIVE_MACOS_TO_HEARTH_HANDOFF:
+NATIVE_MACOS_TO_ANVIL_HANDOFF:
   app_bundle_id: "com.example.myapp"
   automation_surface:
     apple_events: "AppleScript dictionary exported via .sdef"
@@ -168,7 +168,7 @@ NATIVE_MACOS_TO_HEARTH_HANDOFF:
     services_provided:
       - "Add Selection to MyApp"
   sdef_path: "MyApp/MyApp.sdef"
-  notes: "Dictionary covers document CRUD and selection; Hearth `automate` owns end-user automation scripts against this surface"
+  notes: "Dictionary covers document CRUD and selection; Anvil `automate` owns end-user automation scripts against this surface"
 ```
 
 ### NATIVE_MACOS_TO_CLOAK_HANDOFF

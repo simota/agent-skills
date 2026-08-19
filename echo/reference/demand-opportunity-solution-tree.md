@@ -24,7 +24,7 @@ STRIP      →  enumerate opportunities under the outcome. Each is an unmet need
            →  pain, or desire — *not* a solution. Phrased in user voice.
            →  cluster duplicates; split fat opportunities into specific sub-opportunities.
 
-BRANCH     →  for each opportunity, sketch 2-4 candidate solutions.
+BRANCH     →  for each opportunity, builder 2-4 candidate solutions.
            →  resist anchoring on the first solution that comes to mind.
            →  include "do nothing" or "non-product" options when honest.
 

@@ -251,6 +251,5 @@ SKILL.md keeps only the vs Zen and vs Gear lines inline (the two most-confused a
 - **vs Builder**: Builder = implement business logic; Shift = design migration transforms that Builder executes.
 - **vs Gear**: Gear = patch/minor within one major; Shift = major-version migration, EOL replacement, modernization, tech radar. Gear escalates to `detect` when a patch reveals deeper need.
 - **vs Sentinel**: Sentinel fixes specific vulnerabilities and owns SAST findings; Shift modernizes and evaluates dependency-level supply-chain risk (`radar` checks provenance and trust posture).
-- **vs Cull / Chain**: Cull = active malware/worm IoC scan; Chain = skill/plugin/MCP manifest audit. `radar` covers preventive provenance posture; deep forensics → Cull, third-party skill intake → Chain.
+- **vs Chain**: `malware-scan` owns active malware/worm IoC forensics; `intake` owns skill/plugin/MCP manifests. `radar` covers preventive provenance posture.
 - **vs Magi**: Magi = multi-stakeholder tech decision arbitration. Shift's `radar` provides the technical evidence; Magi makes the organizational decision.
-

@@ -7,7 +7,7 @@
 
 - **Anvil `pkg`**: packaging manifests, cross-compile matrix, signing/attestation, install scripts, update-checker design, distribution-channel selection.
 - **Builder (elsewhere)**: the business logic inside the CLI (packaging does not change behaviour).
-- **Hearth (elsewhere)**: user-side install into their own dotfiles environment (`brew install` in `~/.zshrc` bootstrap).
+- **Anvil `env`**: user-side install into their own dotfiles environment (`brew install` in a bootstrap workflow).
 - **Gear (elsewhere)**: CI pipeline that runs goreleaser/cross/napi-rs, uploads artifacts, dependency scans of the packaging toolchain itself.
 - **Launch (elsewhere)**: release versioning strategy (SemVer/CalVer), changelog authoring, rollout plan, feature-flag gating.
 

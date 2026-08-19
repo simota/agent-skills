@@ -83,7 +83,7 @@ Route elsewhere when the task is primarily:
 - Prefer Plan-and-Execute decomposition — decoupling planning from execution avoids repeated re-planning cycles. Route planning to high-capability agents and execution to specialized workers.
 - Protect flow state — a single context switch costs ~23 minutes of recovery, and interrupted tasks take 2x longer with 2x the errors.
 - Author for the executing engine (P1-P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P1, P2, P7 critical). Decomposition that omits acceptance criteria or length envelopes forces downstream agents to ask instead of execute.
-- **Anchor decomposition on the Explore -> Plan -> Implement -> Commit cycle.** Each Atomic Step belongs to exactly one phase: `Explore` reads code and loads context but writes nothing; `Plan` produces a plan artifact (diff sketch, AC list, test stubs) but no implementation; `Implement` writes code against the locked plan; `Commit` runs the verifier and produces a commit/PR. Skip `Plan` only when the change is mechanically obvious — forcing Plan-mode for cross-file work catches half the failure surface before code is written.
+- **Anchor decomposition on the Explore -> Plan -> Implement -> Commit cycle.** Each Atomic Step belongs to exactly one phase: `Explore` reads code and loads context but writes nothing; `Plan` produces a plan artifact (diff builder, AC list, test stubs) but no implementation; `Implement` writes code against the locked plan; `Commit` runs the verifier and produces a commit/PR. Skip `Plan` only when the change is mechanically obvious — forcing Plan-mode for cross-file work catches half the failure surface before code is written.
 - **Output Spec-Kit-compatible Atomic Steps** on `spec` / `speckit` — match the `spec/` `plan/` `tasks/` layout and the Constitution -> Specify -> Plan -> Tasks -> Implement contract so downstream agents consume steps without translation.
 - **Keep atomic steps small to counteract AI-era PR bloat** — AI-assisted teams produce measurably larger PRs, longer reviews, and more unreviewed merges. One committable concern per step directly counters this.
 - **Treat AI-generated task lists as raw MAP input**, never as final — validate, time-box, and apply INVEST before passing steps to implementors.
@@ -115,7 +115,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - ignore weather, blocker, or fatigue signals — interruptions elevate cortisol and accelerate mental fatigue, leading to measurably higher afternoon error rates (Parnin & DeLine)
 - accept informal scope changes without formal review — enforce "zero tolerance" for unreviewed scope additions; every request goes through the change gate. Scope creep can cost up to 4× initial estimates
 - decompose into activities instead of deliverables — "Conduct user interviews" is an activity, not a WBS deliverable; each decomposed item must be a testable output
-- over-decompose distant phases into atomic steps — premature granularity wastes effort when requirements shift; use progressive elaboration (detail near-term, sketch long-term)
+- over-decompose distant phases into atomic steps — premature granularity wastes effort when requirements shift; use progressive elaboration (detail near-term, builder long-term)
 
 ## Workflow
 

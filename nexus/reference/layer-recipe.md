@@ -21,14 +21,14 @@
 
 `layer` is the **project-tooling design** recipe. Where `charter` designs a *team + work plan* to deliver a body of work, `layer` designs the *reusable operating layer* a repository should carry going forward: which project-local skills encode its conventions, which repo-tailored recipes chain them for repeatable tasks, which workflows coordinate agents for project outcomes, and a routing map saying which agent or skill owns which repo task.
 
-`layer` is the Nexus surface over **Sigil `blueprint`**. Its blueprint mode is to the project what Architect is to the ecosystem: it designs the operating system, while Sigil's artifact modes author individual bodies. Nexus registers recipes/workflows/routing, Latch authors enforcement hooks, and Orbit takes autonomous loops.
+`layer` is the Nexus surface over **Sigil `blueprint`**. Its blueprint mode is to the project what Architect is to the ecosystem: it designs the operating system, while Sigil's artifact modes author individual bodies. Nexus registers recipes/workflows/routing, Hone authors enforcement hooks, and Orbit takes autonomous loops.
 
 ## The design → delegate split
 
 | Half | Does | Produces | Owner |
 |------|------|----------|-------|
 | **Design** (Sigil `blueprint`) | Survey the repo, map each recurring task to a mechanism, blueprint the suite + recipes + workflows + routing map under formal topology | **Operating-Layer Blueprint** + delegation specs | Sigil `blueprint` |
-| **Delegate** (Sigil/Nexus/Latch/Orbit) | Author each skill body (9+/12), register recipes/workflows/routing map, author hooks, spec loops | Installed skills + registered routing | Sigil (bodies), Nexus (registration), Latch (hooks), Orbit (loops) |
+| **Delegate** (Sigil/Nexus/Hone/Orbit) | Author each skill body (9+/12), register recipes/workflows/routing map, author hooks, spec loops | Installed skills + registered routing | Sigil (bodies), Nexus (registration), Hone (hooks), Orbit (loops) |
 
 `design-only` mode stops after the blueprint + delegation specs (charter-style inspect-before-commit); the default `full` mode runs the delegation and verifies the standing layer.
 
@@ -60,7 +60,7 @@ Phase 0      Phase 1 (survey)              Phase 2          Phase 3     Phase 4 
 [Frame]      [Survey]                      [Design]         [Confirm]   [Delegate]                          [Verify]
 ┌────────┐   ┌──────────────────────────┐  ┌────────────┐   ┌────────┐  ┌──────────────────────────────┐    ┌─────────┐
 │ detect │   │ sigil blueprint (SURVEY)│  │ sigil      │   │ review │  │ sigil×N (author bodies 9+/12)│    │ sigil   │
-│ repo,  │──▶│  ‖ lens (structure)      │─▶│ blueprint: │──▶│ blue-  │─▶│ ‖ latch (hooks)              │ ──▶│ 14-item │
+│ repo,  │──▶│  ‖ lens (structure)      │─▶│ blueprint: │──▶│ blue-  │─▶│ ‖ hone (hooks)               │ ──▶│ 14-item │
 │ stack, │   │  ‖ atlas? (arch→topology)│  │ suite+rec- │   │ print  │  │ ‖ orbit (loop specs)         │    │ + sigil │
 │ scope, │   │  + read .claude/ layer   │  │ ipes+work- │   │ (Con-  │  │ → nexus registers recipes/   │    │ 9+/12 + │
 │ mode   │   │  + sigil inventory?      │  │ flows+map  │   │ firm)  │  │   workflows/routing map      │    │ single- │
@@ -69,7 +69,7 @@ Phase 0      Phase 1 (survey)              Phase 2          Phase 3     Phase 4 
                  ◀──────────── design-only stops here ──────────┘
 ```
 
-Hub-and-spoke preserved: Nexus is the only orchestrator. Sigil `blueprint` designs; the delegation fan-out spawns Sigil/Latch/Orbit specialists; Nexus registers. No direct agent-to-agent handoffs.
+Hub-and-spoke preserved: Nexus is the only orchestrator. Sigil `blueprint` designs; the delegation fan-out spawns Sigil/Hone/Orbit specialists; Nexus registers. No direct agent-to-agent handoffs.
 
 ## Phases
 
@@ -81,7 +81,7 @@ Hub-and-spoke preserved: Nexus is the only orchestrator. Sigil `blueprint` desig
 
 **Phase 3 — CONFIRM** (**Confirm-before-launch; contract-level — AUTORUN cannot skip**). Present the blueprint. DELEGATE writes files and changes routing, so confirm before authoring; **Ask First** when the blueprint proposes 10+ skills or changes an existing project's established routing/conventions. `design-only` stops here and delivers the blueprint + delegation specs.
 
-**Phase 4 — DELEGATE** (parallel). Separate Sigil artifact tasks author each skill body to its install paths (gate 9+/12; recraft 6-8 once per Sigil's own rule); Latch authors enforcement hooks; Orbit specs autonomous loops; Nexus registers the recipes/workflows/routing map; Grove places docs/recipes (skill install dirs are Sigil's, not Grove's). Exit gate: every blueprint component has executed against its owner.
+**Phase 4 — DELEGATE** (parallel). Separate Sigil artifact tasks author each skill body to its install paths (gate 9+/12; recraft 6-8 once per Sigil's own rule); Hone authors enforcement hooks; Orbit specs autonomous loops; Nexus registers the recipes/workflows/routing map; Grove places docs/recipes (skill install dirs are Sigil's, not Grove's). Exit gate: every blueprint component has executed against its owner.
 
 **Phase 5 — VERIFY**. Sigil's operating-layer validation checklist + each authored skill at 9+/12 + routing-map single-owner + every workflow formal-topology & `≤ 5` phases. On failure, return to the owning phase. Emit the Layer Report and ship.
 
@@ -105,7 +105,7 @@ Hub-and-spoke preserved: Nexus is the only orchestrator. Sigil `blueprint` desig
 | Mode | Phases active | Approx agents | Cost |
 |------|---------------|---------------|------|
 | `design-only` | 0,1,2,(3 stop) | 3-6 (sigil blueprint + lens + atlas? + verify) | Low |
-| `full` | 0-5 | 5-15 (+ sigil×N authoring + latch?/orbit?) | Low-Medium |
+| `full` | 0-5 | 5-15 (+ sigil×N authoring + hone?/orbit?) | Low-Medium |
 
 Checkpoint-resume: with ≥ 4 phases, the blueprint persists at the CONFIRM boundary so an interrupted run resumes from the last checkpoint (`layer resume`).
 

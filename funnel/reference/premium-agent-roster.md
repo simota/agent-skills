@@ -62,10 +62,10 @@ Parallel fan-out: Funnel first, then Prose ↔ Saga in parallel (or Saga skip fo
 | **palette** | Usability and a11y polish (contrast, focus, cognitive load) | A11y baseline + interaction recommendations | Palette also re-walks at Verify stage |
 | **frame** | Figma context extraction or Code Connect mapping if Figma source exists | Design context bundle for Artisan | Skip if no Figma source |
 | **ink** | Vector icons, illustrations, sprite assets | SVG asset bundle | For icon-heavy LPs only |
-| **sketch** | AI image generation (hero, lifestyle, abstract) | Generated images + prompt log | External paid API — Ask First |
+| **builder** | AI image generation (hero, lifestyle, abstract) | Generated images + prompt log | External paid API — Ask First |
 | **atelier** *(optional)* | Whole design pipeline delegation when LP is part of a multi-artifact bundle (LP + slide + 1-pager + marketing captures) | Bundled handoff package | Use ONLY when multi-artifact bundling; single-LP direct delegation is faster |
 
-Parallel fan-out: Vision first (direction is upstream). Then Muse + Palette + Frame + Ink in parallel. Sketch serial (paid API).
+Parallel fan-out: Vision first (direction is upstream). Then Muse + Palette + Frame + Ink in parallel. Builder serial (paid API).
 
 **Decision**: delegate to Atelier if the LP is part of a 3+ artifact design bundle. Otherwise call Vision/Muse/Palette/Frame directly to avoid double-orchestration overhead.
 
@@ -131,17 +131,17 @@ These agents may be invoked at any stage based on signal, not stage:
 | Agent | When `funnel premium` invokes it |
 |-------|------------------------|
 | **canon** | Compliance audit if WCAG 2.2 AA, OpenAPI for embedded forms, or sector-specific standard (HIPAA, PCI) applies |
-| **clause** | If the LP carries Terms / Privacy / Tokushoho text, route to clause before Launch |
+| **canon** | If the LP carries Terms / Privacy / Tokushoho text, route to canon before Launch |
 | **cloak** | If the LP collects PII (forms, cookies, tracking) — privacy review |
 | **canvas** | Journey-map visualization for stakeholder review, ERD-like flow diagrams |
 | **morph** | Format conversion if a 1-pager / PDF / Word artifact is part of the brief |
 | **scribe** | Spec doc for the LP if the team requires PRD / LLD before Build |
 | **omen** | Pre-mortem for high-stakes launches — what could fail in production |
 | **siege** | Load test if the LP is expected to absorb a campaign spike |
-| **director** | Demo video of the LP for sales enablement / onboarding |
+| **cue** | Demo video of the LP for sales enablement / onboarding |
 | **vector** | Quick browser checks during Build (visual sanity, console errors) |
 
-**Fan-out cap discipline**: cross-stage specialists count toward the 5-concurrent cap. If a stage already runs 5 primary delegates (e.g., VERIFY = Judge + Voyager + Attest + Sentinel + Echo) and PII / Tokushoho / a11y compliance requires Cloak + Clause + Canon, sequence those after the primary batch — never run 6–8 concurrently.
+**Fan-out cap discipline**: cross-stage specialists count toward the 5-concurrent cap. If a stage already runs 5 primary delegates (e.g., VERIFY = Judge + Voyager + Attest + Sentinel + Echo) and PII / Tokushoho / a11y compliance requires Cloak + Canon + Canon, sequence those after the primary batch — never run 6–8 concurrently.
 
 ---
 
@@ -171,10 +171,10 @@ Six quality axes mapped to agent clusters. `funnel premium` is the conductor; ea
 | A11y & feel | **Palette** | Contrast (AA/AAA stretch), focus rings, cognitive load, interaction quality |
 | Figma source | **Frame** | Design context extraction, Code Connect mapping |
 | Asset (vector) | **Ink** | Icon system, illustrations, sprites |
-| Asset (raster / AI) | **Sketch** | Hero, lifestyle, atmospheric imagery (paid API — Ask First) |
+| Asset (raster / AI) | **Builder** | Hero, lifestyle, atmospheric imagery (paid API — Ask First) |
 | Fidelity QA | **Pixel** | Mockup-to-code visual diff verification |
 
-Pattern: Vision (decide) → Muse (encode) → Palette (humanize) → Frame/Ink/Sketch (asset) → Pixel (verify). `funnel premium` scores Design Rubric ≥ 18/24 at DESIGN gate.
+Pattern: Vision (decide) → Muse (encode) → Palette (humanize) → Frame/Ink/Builder (asset) → Pixel (verify). `funnel premium` scores Design Rubric ≥ 18/24 at DESIGN gate.
 
 ### Animation Axis
 

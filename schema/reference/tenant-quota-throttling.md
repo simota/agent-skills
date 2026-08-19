@@ -63,7 +63,7 @@ WFQ is the safest default for multi-tenant background workers — it prevents a 
 |------------|---------------------|------|---------|
 | **Soft** | Allow, log, alert ops | `quota.soft.exceeded` | Trends, capacity planning, UX-warning thresholds |
 | **Hard** | Reject (429 / job-rejected) | `quota.hard.exceeded` | Billing limits, abuse prevention, downstream protection |
-| **Overage-billed** | Allow, meter, charge | `quota.overage.consumed` | Plans with metered overage clause |
+| **Overage-billed** | Allow, meter, charge | `quota.overage.consumed` | Plans with metered overage canon |
 | **Throttled** | Slow down (delay, queue) | `quota.throttled` | Background jobs, non-interactive paths |
 
 Pair every hard quota with a soft warning at ~80% of limit so the customer can act before being blocked. Hard-only quotas produce surprise outages and support tickets.

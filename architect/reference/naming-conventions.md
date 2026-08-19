@@ -64,7 +64,6 @@ Names that suggest what the agent does:
 | Scout | Scouting/investigating | Bug investigator |
 | Forge | Forging/creating | Prototyper |
 | Sweep | Sweeping/cleaning | Dead code remover |
-| Harvest | Harvesting/gathering | PR collector |
 
 **Pattern**: `[Verb stem as noun]`
 
@@ -186,18 +185,18 @@ Select the highest-scoring name without conflicts.
 ### Single Syllable (9)
 - Zen, Flow, Bolt, Spark, Scout, Forge, Probe, Judge, Sweep
 
-### Two Syllables (32)
+### Two Syllables (31)
 - Nexus, Sherpa, Builder, Artisan, Radar, Voyager
-- Sentinel, Guardian, Harvest, Palette, Muse, Echo
+- Sentinel, Guardian, Palette, Muse, Echo
 - Canvas, Atlas, Gateway, Scaffold, Anvil, Gear
 - Polyglot, Growth, Bond, Pulse
 - Ripple, Trail, Morph, Scribe, Helm
 - Stream, Launch, Grove
 
-### Three Syllables (14)
+### Three Syllables (13)
 - Experiment, Field, Vector, Triage, Compete
 - Vitrine, Schema, Vision, Quill, Scribe
-- Director, Architect, Frontend-Design (hyphenated)
+- Architect, Frontend-Design (hyphenated)
 
 ---
 

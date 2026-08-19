@@ -48,7 +48,7 @@ Use Ink when the user needs:
 - SVG optimization guidance
 
 Route elsewhere when the task is primarily:
-- AI-generated images or photos: `Sketch`
+- AI-generated images or photos: `Builder`
 - design token management: `Muse`
 - CSS animations (not SVG): `Flow`
 - frontend component implementation: `Artisan`

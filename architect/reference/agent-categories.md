@@ -122,10 +122,10 @@ Agents that research, analyze, and propose without writing code.
 - **Trigger**: "propose", "idea", "new feature"
 
 ### Compete
-- **Role**: Competitive analyst
-- **Input**: Competitor names
-- **Output**: SWOT analysis, feature matrix
-- **Trigger**: "competitor", "differentiation", "compare"
+- **Role**: Competitive and personal-brand positioning analyst
+- **Input**: Competitor names or an engineer's public portfolio
+- **Output**: SWOT analysis, feature matrix, GitHub/blog/LinkedIn/talk positioning
+- **Trigger**: "competitor", "differentiation", "compare", "personal brand", "portfolio"
 
 ### Voice
 - **Role**: Feedback analyst
@@ -176,10 +176,10 @@ Agents that research, analyze, and propose without writing code.
 Agents that write production-quality code.
 
 ### Builder
-- **Role**: Production code craftsman
-- **Input**: Specifications, prototypes
-- **Output**: Type-safe, production-ready code
-- **Trigger**: "implement", "production", "type-safe"
+- **Role**: Production code and external-API craftsman
+- **Input**: Specifications, prototypes, vendor API requirements
+- **Output**: Type-safe production code, including image-generation API integrations
+- **Trigger**: "implement", "production", "type-safe", "image API"
 
 ### Forge
 - **Role**: Rapid prototyper
@@ -309,10 +309,10 @@ Agents that review and improve code quality, enforce standards, and reduce compl
 - **Trigger**: "verify against spec", "acceptance criteria", "spec compliance", "BDD scenarios"
 
 ### Canon
-- **Role**: Standards compliance analyst
-- **Input**: Codebase, target standards (OWASP/WCAG/OpenAPI/ISO 25010)
-- **Output**: Compliance scores, violation reports, remediation proposals
-- **Trigger**: "standards compliance", "WCAG audit", "OWASP check", "ISO 25010"
+- **Role**: Standards, regulatory, and legal-document compliance analyst
+- **Input**: Codebase, target standards, ToS/privacy policy, jurisdiction
+- **Output**: Compliance scores, legal-document gap reports, remediation proposals
+- **Trigger**: "standards compliance", "WCAG audit", "OWASP check", "ToS review", "Tokushoho"
 
 ### Void
 - **Role**: YAGNI verifier and complexity reducer
@@ -515,15 +515,15 @@ Agents that handle user experience, interface design, persona management, and na
 
 ---
 
-## DevOps (7 agents)
+## DevOps (6 agents)
 
 Agents that handle infrastructure, tooling, observability, and developer environment.
 
 ### Anvil
-- **Role**: CLI/TUI builder
-- **Input**: CLI requirements
-- **Output**: CLI tools, terminal UI
-- **Trigger**: "CLI", "terminal", "command line"
+- **Role**: CLI/TUI and developer-environment builder
+- **Input**: CLI requirements, dotfile goals, shell/editor preferences
+- **Output**: CLI tools, terminal UI, zsh/tmux/neovim/ghostty configuration, macOS automation
+- **Trigger**: "CLI", "terminal", "command line", "dotfiles", "AppleScript"
 
 ### Gear
 - **Role**: CI/CD optimizer
@@ -532,10 +532,10 @@ Agents that handle infrastructure, tooling, observability, and developer environ
 - **Trigger**: "CI", "build time", "Docker"
 
 ### Launch
-- **Role**: Release manager
-- **Input**: Release requirements
-- **Output**: Versioning, CHANGELOG, release notes
-- **Trigger**: "release", "version", "CHANGELOG"
+- **Role**: Release manager and PR reporter
+- **Input**: Release requirements or PR history
+- **Output**: Versioning, CHANGELOG, release notes, weekly/monthly engineering reports
+- **Trigger**: "release", "version", "CHANGELOG", "weekly report", "PR metrics"
 
 ### Gear — `gha` mode
 - **Role**: GitHub Actions workflow architect
@@ -554,12 +554,6 @@ Agents that handle infrastructure, tooling, observability, and developer environ
 - **Input**: Service topology, SLO requirements
 - **Output**: SLO/SLI designs, tracing configs, alert strategies, dashboards, capacity plans
 - **Trigger**: "SLO", "observability", "distributed tracing", "alert strategy"
-
-### Hearth
-- **Role**: Personal dev environment configurator
-- **Input**: Dotfile goals, shell/editor preferences
-- **Output**: zsh/tmux/neovim/ghostty configs, optimization reports
-- **Trigger**: "dotfiles", "shell config", "neovim setup", "terminal config"
 
 **Category Characteristics:**
 - Infrastructure code
@@ -643,7 +637,7 @@ Agents that handle metrics, experiments, and combinatorial analysis.
 
 ---
 
-## Git/PR (2 agents)
+## Git/PR (1 agent)
 
 Agents that manage version control workflows.
 
@@ -653,12 +647,6 @@ Agents that manage version control workflows.
 - **Output**: Commit structure, branch strategy
 - **Trigger**: "commit", "branch", "PR preparation"
 
-### Harvest
-- **Role**: PR reporter
-- **Input**: PR history
-- **Output**: Reports, release notes
-- **Trigger**: "weekly report", "release notes", "work report"
-
 **Category Characteristics:**
 - Git workflow management
 - No code changes
@@ -667,7 +655,7 @@ Agents that manage version control workflows.
 
 ---
 
-## Browser (2 agents)
+## Browser (1 agent)
 
 Agents that automate browser interactions.
 
@@ -676,12 +664,6 @@ Agents that automate browser interactions.
 - **Input**: Browser tasks
 - **Output**: Automated actions, screenshots
 - **Trigger**: "browser automation", "scraping", "automate"
-
-### Director
-- **Role**: Demo video creator
-- **Input**: Feature scenarios
-- **Output**: Playwright-based demo recordings
-- **Trigger**: "demo video", "product demo", "feature recording"
 
 **Category Characteristics:**
 - Playwright integration
@@ -726,10 +708,10 @@ Agents that simulate and plan business strategy, provide domain-specific advisor
 - **Trigger**: "business strategy", "business plan", "SWOT", "simulation", "M&A", "mid-term plan"
 
 ### Magi
-- **Role**: Multi-perspective decision advisor
-- **Input**: Decision context, options, constraints
-- **Output**: 3-perspective analysis (Logic/Empathy/Pragmatism), recommendation
-- **Trigger**: "decision", "tradeoff", "Go/No-Go", "which approach"
+- **Role**: Multi-perspective decision and strategy advisor
+- **Input**: Decision context, founder bottleneck, or named figure whose documented thinking should be applied
+- **Output**: Logic/Empathy/Pragmatism analysis, recommendation, pressure test, or attested named-figure lens
+- **Trigger**: "decision", "tradeoff", "Go/No-Go", "what should I focus on", "what would <figure> do"
 
 
 ## Translation (0 agents — absorbed)
@@ -783,7 +765,7 @@ Agents that design messaging integrations, real-time communication, and cross-fu
 
 ---
 
-## Meta / Tooling (8 agents)
+## Meta / Tooling (7 agents)
 
 Agents that generate project-specific tooling, audit ecosystem health, curate knowledge, and provide meta-visualization.
 
@@ -796,7 +778,7 @@ Agents that generate project-specific tooling, audit ecosystem health, curate kn
 ### Sigil — `blueprint` mode
 - **Role**: Project operating-layer designer (project-scoped analogue of Architect)
 - **Input**: Repository (stack, conventions, recurring tasks, existing .claude/ layer)
-- **Output**: Operating-layer blueprint plus separate artifact tasks for Sigil/Nexus/Orbit/Latch/Grove
+- **Output**: Operating-layer blueprint plus separate artifact tasks for Sigil/Nexus/Orbit/Hone/Grove
 - **Trigger**: "design the project's agents/recipes/workflows", "operating layer for this repo", "project skill suite", "repo task playbooks", "project routing map"
 
 ### Darwin
@@ -812,16 +794,10 @@ Agents that generate project-specific tooling, audit ecosystem health, curate kn
 - **Trigger**: "skill audit", "normalize SKILL.md", "compliance scan"
 
 ### Hone
-- **Role**: AI CLI configuration optimizer
+- **Role**: AI CLI configuration and hooks optimizer
 - **Input**: AI CLI configs (~/.codex/, ~/.gemini/, ~/.claude/)
-- **Output**: Before/After diff proposals, best practice reports
-- **Trigger**: "optimize CLI config", "audit claude settings", "codex config"
-
-### Latch
-- **Role**: Claude Code hooks specialist
-- **Input**: Workflow requirements, hook configurations
-- **Output**: Hook proposals (PreToolUse/PostToolUse/Stop), debug reports
-- **Trigger**: "hooks", "PreToolUse", "workflow automation", "quality gate hook"
+- **Output**: Before/After config proposals, hook proposals (PreToolUse/PostToolUse/Stop), debug reports
+- **Trigger**: "optimize CLI config", "audit claude settings", "codex config", "hooks", "PreToolUse"
 
 ### Lore
 - **Role**: Ecosystem knowledge curator
@@ -840,16 +816,10 @@ Agents that generate project-specific tooling, audit ecosystem health, curate kn
 
 ---
 
-## Creative / Media (2 agents)
+## Creative / Media (1 agent)
 
 Agents that generate AI-powered visual, audio, and media content.
 
-
-### Sketch
-- **Role**: AI image generator
-- **Input**: Image prompts, editing instructions
-- **Output**: Gemini API image generation code, prompt optimization
-- **Trigger**: "generate image", "AI image", "Gemini image"
 
 **Category Characteristics:**
 - Generate code that produces creative assets (not assets directly)

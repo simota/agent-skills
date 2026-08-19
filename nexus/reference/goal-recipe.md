@@ -27,7 +27,7 @@ The `goal` recipe is a **lightweight setup helper**. It does not implement featu
 1. Which CLI to target (Claude Code / Codex / both)
 2. Which use case (ci-headless / long-dev / parallel-experiment / safe-bounded)
 3. Audit diff of current config (Hone)
-4. Hook configuration for completion verification and notification (Latch)
+4. Hook configuration for completion verification and notification (Hone)
 5. CLAUDE.md or AGENTS.md additions when missing (Scribe, conditional)
 6. Ready-to-run launch command with verification checklist
 
@@ -44,7 +44,7 @@ Use `goal` when the user:
 Route elsewhere when:
 - User wants to actually run `/goal` for a task — that is just the underlying CLI, not Nexus
 - User wants generic CLI config audit without `/goal` context → `hone` directly
-- User wants generic hook design without `/goal` context → `latch` directly
+- User wants generic hook design without `/goal` context → `hone` directly
 
 ## Invocation Modes
 
@@ -54,7 +54,7 @@ Route elsewhere when:
 | `/nexus goal platform=<claude\|codex\|both>` | Skip platform detection |
 | `/nexus goal use_case=<ci-headless\|long-dev\|parallel-experiment\|safe-bounded>` | Skip use-case classification |
 | `/nexus goal platform=<X> use_case=<Y>` | Skip both, go directly to AUDIT |
-| `/nexus goal minimal` | Skip Latch (hooks) and Scribe (context-md); deliver launch command only |
+| `/nexus goal minimal` | Skip Hone's hooks phase and Scribe (context-md); deliver launch command only |
 
 Default when unspecified: detect platform, ask for use case if ambiguous, default to `safe-bounded`.
 
@@ -120,7 +120,7 @@ An autonomous `/goal` run converges only if "done" is **machine-checkable**. Thi
 
 - **Elicit a verifiable completion oracle** — a command (or small set) that **exits 0 ⟺ the goal is done**: e.g. `npm test && npm run lint`, `pytest tests/contract/`, `cargo build && cargo test`. The oracle is the goal's analogue of a bug's repro test or a feature's acceptance criteria.
 - **Reject unverifiable goals.** A goal with no machine-checkable stop condition ("improve the code", "make it better", "clean things up") causes the loop to **stop prematurely (false done) or never stop (budget runaway)**. If the user's goal is vague, ask one focused question to convert it into a checkable predicate, or stop with that requirement — do not produce a launch command for an unverifiable goal.
-- **Single source of truth.** The SAME oracle command threads into BOTH (a) Latch's completion-verification hook (Phase 4) AND (b) the launch goal statement (the `/goal "<...>"` text). The loop's stop condition and the post-run verification must check the identical thing — otherwise the run can "complete" against a different bar than it's verified against.
+- **Single source of truth.** The SAME oracle command threads into BOTH (a) Hone's completion-verification hook (Phase 4) AND (b) the launch goal statement (the `/goal "<...>"` text). The loop's stop condition and the post-run verification must check the identical thing — otherwise the run can "complete" against a different bar than it's verified against.
 
 Emit `COMPLETION_ORACLE = <command(s)>` and `GOAL_STATEMENT = <observable, oracle-aligned objective>` to chain state.
 
@@ -136,9 +136,9 @@ Emit `COMPLETION_ORACLE = <command(s)>` and `GOAL_STATEMENT = <observable, oracl
 
 Hone never edits files; it produces diff suggestions only.
 
-### Phase 4 — HOOKS (Latch)
+### Phase 4 — HOOKS (Hone)
 
-**Agent:** Latch
+**Agent:** Hone
 **Inputs:** `PLATFORM`, `USE_CASE`, audit findings
 **Outputs:** Hook configuration snippets ready to install:
 
@@ -174,10 +174,10 @@ Aggregate all outputs into the Output Format below. Verify schema (`PLATFORM`, `
 | Agent | Include when | Skip when |
 |---|---|---|
 | Hone (Phase 3) | Default | Brand-new install with no existing config — replace with template diff |
-| Latch (Phase 4) | Default | User passed `minimal` flag, or use case is `parallel-experiment` (hooks would clash across forks) |
+| Hone hooks (Phase 4) | Default | User passed `minimal` flag, or use case is `parallel-experiment` (hooks would clash across forks) |
 | Scribe (Phase 5) | CLAUDE.md / AGENTS.md missing or thin | Existing context doc already declares observable completion criteria and danger zones |
 
-Minimum chain: Hone alone (1 agent). Typical chain: Hone + Latch (2 agents). Maximum chain: Hone + Latch + Scribe (3 agents).
+Minimum and typical chain: Hone alone (1 agent). Maximum chain: Hone + Scribe (2 agents).
 
 ## Hook Templates
 
@@ -374,7 +374,7 @@ steps:
     expected_output: before_after_diff
 
   - phase: HOOKS
-    agent: latch
+    agent: hone
     inputs: [PLATFORM, USE_CASE, audit_findings]
     expected_output: hook_snippets
     skip_when: minimal_flag OR use_case == parallel-experiment
@@ -398,13 +398,13 @@ steps:
 **Task**: `/goal` setup
 **Platform**: <claude-code | codex | both>
 **Use case**: <ci-headless | long-dev | parallel-experiment | safe-bounded>
-**Chain**: Hone → Latch → Scribe?
+**Chain**: Hone → Scribe?
 **Mode**: AUTORUN_FULL
 
 ### Audit (Hone)
 <Before/After diff of settings.json or config.toml, plus CLAUDE.md / AGENTS.md gaps>
 
-### Hooks (Latch)
+### Hooks (Hone)
 <Stop / PostToolUse / PreToolUse snippets to install, with file path and rationale>
 
 ### Context docs (Scribe, if applicable)
@@ -457,13 +457,13 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 | Platform unknown after detection + ask | Stop with install instructions; do not guess |
 | `/goal` version too old (Claude Code < v2.1.139) | Emit upgrade instruction; do not produce launch command |
 | Codex CLI lacks `[features] goals = true` | Include the toggle step in the audit diff; warn it is experimental |
-| Existing hooks conflict with proposed hooks | Surface conflicts in Latch output; ask user to resolve before applying |
+| Existing hooks conflict with proposed hooks | Surface conflicts in Hone output; ask user to resolve before applying |
 | Permission rules would deny the test command | Flag in audit; recommend explicit `allow` entry before launch |
 | `apply_patch` / MCP hook gap (Codex known issue) | Note in hooks output; recommend completion verification on shell tool path only |
 
 ## Cost and Latency Profile
 
-- Spawns: 1-3 agents (Hone, Latch optional, Scribe optional)
+- Spawns: 1-2 agents (Hone, Scribe optional)
 - Typical wall time: 2-4 minutes
 - Token cost: low — read-only audit and template generation
 - Confirm / safety gate: **Ask First** at most once (use-case classification when ambiguous). `goal` writes no code and executes nothing — it delivers a launch command — so **Confirm-before-launch is `N/A`**; the launched run carries its own gates.

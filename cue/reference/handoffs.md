@@ -28,12 +28,12 @@ SCRIBE_TO_CUE_HANDOFF:
 
 ## Sending Handoffs
 
-### To Director (Script → Recording)
+### To Cue Production (Script → Recording)
 
 ```yaml
-CUE_TO_DIRECTOR_HANDOFF:
+CUE_TO_DEMO_HANDOFF:
   source: Cue
-  destination: Director
+  destination: Cue
   content:
     script: "[path to script document]"
     recording_segments:

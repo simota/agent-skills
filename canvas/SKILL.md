@@ -93,7 +93,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Include title and legend.
 - Disclose uncertainty.
 - **Prefer generated diagrams from source where feasible (v5 advisory, fold-in)**: For architecture / dependency / data-flow / API-flow diagrams that have a machine-readable source (code, OpenAPI/AsyncAPI spec, IaC, DB schema, trace data), prefer reverse-generation from that source over hand-drawn output. Generated diagrams stay in sync; hand-drawn ones silently drift. This is an **advisory preference**, not a hard rule.
-- **Respect exploration / sketch / draft carve-out**: Hand-drawn diagrams (whiteboard photos, paper napkin sketches, Excalidraw drafts, brainstorm artifacts) are valuable for thinking and must NOT be rejected as "Proof violations". The Generated Views Only discipline applies to **final CI-gated artifacts only** — exploration phase, design discussion, and pre-decision sketches are explicitly carved out. Suppressing draft diagrams suppresses thinking itself (omen v5 FM-V-2 / FM-GV-1, RPN 504-576).
+- **Respect exploration / builder / draft carve-out**: Hand-drawn diagrams (whiteboard photos, paper napkin sketches, Excalidraw drafts, brainstorm artifacts) are valuable for thinking and must NOT be rejected as "Proof violations". The Generated Views Only discipline applies to **final CI-gated artifacts only** — exploration phase, design discussion, and pre-decision sketches are explicitly carved out. Suppressing draft diagrams suppresses thinking itself (omen v5 FM-V-2 / FM-GV-1, RPN 504-576).
 
 ### Ask First
 
@@ -110,7 +110,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Collapse specific relationships through shared intermediate nodes (fan trap) — the viewer loses which source connects to which target. Split or label edges explicitly.
 - Use generic node IDs (A, B, C, node1, node2) — always use meaningful, domain-specific identifiers that match real code entities. Generic IDs force the viewer to cross-reference the legend, destroying the diagram's self-explanatory property.
 - **Accept hand-drawn diagrams as final CI-gated artifacts for architecture / dependency / data-flow surfaces when a generated equivalent is feasible** (v5 advisory). Hand-drawn finals silently drift from reality. Use them only when (a) no machine-readable source exists or (b) the diagram represents a draft / proposal / exploration (carve-out per Always section).
-- **Suppress draft / sketch / whiteboard diagrams in the name of Generated Views Only**. The discipline applies to final CI-gated artifacts only — exploration is sacred. Rejecting drafts suppresses thinking (omen v5 FM-V-2 / FM-GV-1 prevention).
+- **Suppress draft / builder / whiteboard diagrams in the name of Generated Views Only**. The discipline applies to final CI-gated artifacts only — exploration is sacred. Rejecting drafts suppresses thinking (omen v5 FM-V-2 / FM-GV-1 prevention).
 - Use color as the sole differentiator — always pair with shape, label, or pattern for accessibility.
 - Deliver diagram code without self-validating syntax — LLMs commonly hallucinate non-existent Mermaid keywords, fabricate arrow modifiers, and invent classDef names. Re-check every directive, edge type, and node declaration against the official syntax before delivering.
 - Cross into another agent's implementation domain.
@@ -136,7 +136,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Journey Map | `journey` | | User journey map (Echo integration) | `reference/echo-integration.md` |
 | Class Diagram | `class` | | Class diagram | `reference/diagram-templates.md` |
 | C4 Diagram | `c4` | | C4 model rendering (Context / Container / Component / Code) in Mermaid C4 syntax | `reference/c4-diagrams.md` |
-| Architecture Diagram | `architecture` | | Informal system architecture sketch (layered / hexagonal / microservice / event-driven) with flowchart + subgraph | `reference/architecture-diagrams.md` |
+| Architecture Diagram | `architecture` | | Informal system architecture builder (layered / hexagonal / microservice / event-driven) with flowchart + subgraph | `reference/architecture-diagrams.md` |
 | Gantt / Roadmap | `gantt` | | Gantt, roadmap, or timeline with milestones, dependencies, critical path | `reference/gantt-diagrams.md` |
 
 ## Subcommand Dispatch
@@ -152,7 +152,7 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific REVIEW gate
 - `journey`: Generate a user journey map from Echo data. Visualize emotion scores and friction points. **VERIFY**: data is Echo-sourced (personas/emotion scores NOT fabricated — if no Echo data exists, label the map synthetic and recommend an Echo pass); emotion-score scale + friction legend present; stages map to real touchpoints.
 - `class`: Class diagram. Express inheritance, aggregation, and dependencies. Ensure alignment with L3 Component level. **VERIFY**: class/method names match real code symbols; relationship arrows are semantically correct (inheritance vs aggregation vs dependency not interchanged); consistent with the L3 Component boundary; readable node count held.
 - `c4`: Mermaid C4 rendering (C4Context / C4Container / C4Component). Pick one level per diagram — never mix Context and Component nodes. If a Structurizr DSL exists, derive node names and relationships from the DSL rather than re-authoring. For ad-hoc requests without DSL, keep scope to one level. Code-level (L4) views should fall back to `class` diagrams. **VERIFY**: exactly ONE C4 level per diagram (no Context↔Component mixing); when a Structurizr DSL exists, names/relationships are derived from it (not re-authored); L4/code requests redirected to `class`.
-- `architecture`: Informal architecture sketch in Mermaid flowchart + subgraph. Use subgraphs to separate layers (presentation / application / domain / infrastructure), bounded contexts, or deployment zones. Pick one view per diagram: logical, physical, or deployment — do not fuse them. Unlike `c4`, this recipe is not bound to C4 semantics; use it for layered monolith, hexagonal, microservice topology, or event-driven bus diagrams. **VERIFY**: exactly ONE view (logical / physical / deployment — never fused); layers/contexts/zones separated by subgraphs; real component names (this recipe stays informal).
+- `architecture`: Informal architecture builder in Mermaid flowchart + subgraph. Use subgraphs to separate layers (presentation / application / domain / infrastructure), bounded contexts, or deployment zones. Pick one view per diagram: logical, physical, or deployment — do not fuse them. Unlike `c4`, this recipe is not bound to C4 semantics; use it for layered monolith, hexagonal, microservice topology, or event-driven bus diagrams. **VERIFY**: exactly ONE view (logical / physical / deployment — never fused); layers/contexts/zones separated by subgraphs; real component names (this recipe stays informal).
 - `gantt`: Mermaid gantt syntax for timelines, release roadmaps, and dependency schedules. Use `after` for sequential dependencies, `crit` for critical-path tasks, and `milestone` markers for releases. Derive dates, scope, and release boundaries from `Launch`'s release plan when one exists — Canvas renders the visual only, Launch owns the plan and CHANGELOG. For quarterly roadmap view, group sections by quarter; keep ≤20 tasks per diagram and split by team or quarter when longer. **VERIFY**: dates/scope/release boundaries derived from Launch's plan when one exists (Canvas renders only — never invents a schedule); `after` deps + `crit` critical path + `milestone` markers applied where they belong; ≤20 tasks (split by quarter/team beyond that).
 
 ## Work Modes
@@ -178,7 +178,7 @@ Behavior notes per Recipe. Each `**VERIFY**:` is the recipe-specific REVIEW gate
 | `journey`, `friction`, `persona`, `echo` | Echo integration | Echo visualization | `reference/echo-integration.md` |
 | `draw.io`, `editable`, `presentation` | draw.io output | .drawio XML file | `reference/drawio-specs.md` |
 | `ASCII`, `plain text`, `terminal` | ASCII art | Plain-text diagram | `reference/ascii-templates.md` |
-| `hand-drawn`, `sketch`, `whiteboard`, `neo` | Rendering look | Mermaid with look config | `reference/mermaid-v11-advanced.md` |
+| `hand-drawn`, `builder`, `whiteboard`, `neo` | Rendering look | Mermaid with look config | `reference/mermaid-v11-advanced.md` |
 | `save`, `library`, `reuse` | Diagram library | Stored diagram artifact | `reference/diagram-library.md` |
 | `layers`, `scenarios`, `multi-perspective`, `abstraction levels` | D2 multi-board | D2 with layers/scenarios | `reference/diagram-tools-comparison.md` |
 | `CI`, `validate`, `architecture-as-code` | Architecture-as-Code | .mmd/.d2 in docs/diagrams/ | `reference/diagram-tools-comparison.md` |

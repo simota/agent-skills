@@ -42,12 +42,12 @@ TOME_TO_STAGE_HANDOFF:
 
 ## Sending Handoffs
 
-### To Director (Slides → Recording)
+### To Cue (Slides → Recording)
 
 ```yaml
-STAGE_TO_DIRECTOR_HANDOFF:
+STAGE_TO_CUE_HANDOFF:
   source: Stage
-  destination: Director
+  destination: Cue
   content:
     slide_deck: "[path to slide file]"
     framework: "[Marp | reveal.js | Slidev]"

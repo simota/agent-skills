@@ -2,7 +2,7 @@
 
 Reference for Riff's `crazy8` recipe. A time-boxed rapid-divergence dialogue that produces 8 distinct variations of the same idea under intentional time pressure, each constrained to one sentence and one differentiating axis.
 
-Crazy 8s comes from the Google Ventures Design Sprint, where designers fold a paper into 8 boxes and sketch one variation per box per minute. Riff adapts the protocol to dialogue: the goal isn't sketches, it's 8 *named* variations on a single divergence axis, fast.
+Crazy 8s comes from the Google Ventures Design Sprint, where designers fold a paper into 8 boxes and builder one variation per box per minute. Riff adapts the protocol to dialogue: the goal isn't sketches, it's 8 *named* variations on a single divergence axis, fast.
 
 The constraint is the method. Without the constraint, divergence collapses into the 2-3 most obvious options.
 

@@ -26,8 +26,7 @@ COLLABORATION_PATTERNS:
 - Scout -> Guardian: Bug investigation
 - Atlas -> Guardian: Architecture analysis
 - Ripple -> Guardian: Impact analysis
-- Harvest -> Guardian: Release note context
-- Launch -> Guardian: Release-affecting PR coordination
+- Launch -> Guardian: Release-note context, PR reporting, and release-affecting PR coordination
 - Guardian -> Sentinel: Security escalation
 - Guardian -> Radar: Coverage gaps
 - Guardian -> Zen: Noise cleanup
@@ -38,7 +37,7 @@ COLLABORATION_PATTERNS:
 - Guardian -> Canvas: Change topology visualization
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Judge, Builder, Zen, Scout, Atlas, Ripple, Harvest, Launch
+- INPUT: Judge, Builder, Zen, Scout, Atlas, Ripple, Launch
 - OUTPUT: Sentinel, Radar, Zen, Atlas, Ripple, Judge, Sherpa, Canvas
 
 PROJECT_AFFINITY: Game(L) SaaS(H) E-commerce(H) Dashboard(M) Marketing(L)
@@ -69,7 +68,7 @@ Route elsewhere when:
 - **Architecture-level analysis** → Atlas
 - **Impact/blast-radius analysis** → Ripple
 - **Release execution** → Launch
-- **PR activity reporting** → Harvest
+- **PR activity reporting** → Launch
 
 ## Core Contract
 
@@ -181,13 +180,13 @@ Review priority SLAs: hotfixes ≤ 2h, features ≤ 24h, refactoring ≤ 48h. Ta
 
 ### Inbound
 
-`PLAN_TO_GUARDIAN_HANDOFF`, `BUILDER_TO_GUARDIAN_HANDOFF`, `JUDGE_TO_GUARDIAN_HANDOFF`, `JUDGE_TO_GUARDIAN_FEEDBACK`, `ZEN_TO_GUARDIAN_HANDOFF`, `SCOUT_TO_GUARDIAN_HANDOFF`, `ATLAS_TO_GUARDIAN_HANDOFF`, `HARVEST_TO_GUARDIAN_HANDOFF`, `RIPPLE_TO_GUARDIAN_HANDOFF`
+`PLAN_TO_GUARDIAN_HANDOFF`, `BUILDER_TO_GUARDIAN_HANDOFF`, `JUDGE_TO_GUARDIAN_HANDOFF`, `JUDGE_TO_GUARDIAN_FEEDBACK`, `ZEN_TO_GUARDIAN_HANDOFF`, `SCOUT_TO_GUARDIAN_HANDOFF`, `ATLAS_TO_GUARDIAN_HANDOFF`, `LAUNCH_TO_GUARDIAN_HANDOFF`, `RIPPLE_TO_GUARDIAN_HANDOFF`
 
 ### Outbound
 
 `GUARDIAN_TO_SENTINEL_HANDOFF`, `GUARDIAN_TO_PROBE_HANDOFF`, `GUARDIAN_TO_RADAR_HANDOFF`, `GUARDIAN_TO_ZEN_HANDOFF`, `GUARDIAN_TO_ATLAS_HANDOFF`, `GUARDIAN_TO_RIPPLE_HANDOFF`, `GUARDIAN_TO_JUDGE_HANDOFF`, `GUARDIAN_TO_BUILDER_HANDOFF`, `GUARDIAN_TO_CANVAS_HANDOFF`, `GUARDIAN_TO_SHERPA_HANDOFF`
 
-Use these routes respectively for security, runtime verification, coverage, noise cleanup, architecture, blast radius, review-ready packaging, commit-plan delivery, visualization, and XXL/MEGA decomposition. Use Harvest only as a reporting follow-up, not as a formal new token.
+Use these routes respectively for security, runtime verification, coverage, noise cleanup, architecture, blast radius, review-ready packaging, commit-plan delivery, visualization, and XXL/MEGA decomposition. Use Launch only as a reporting follow-up, not as a formal new token.
 
 ## Output Routing
 
@@ -248,7 +247,7 @@ Additional sections as needed — canonical headings, skeletons, and full field 
 
 ## Collaboration
 
-**Receives:** Judge (review feedback, AI-assisted defect findings), Builder (implementation completion), Zen (refactoring results), Scout (bug investigation), Atlas (architecture analysis), Ripple (impact analysis), Harvest (release note context), Launch (release-affecting PR coordination)
+**Receives:** Judge (review feedback, AI-assisted defect findings), Builder (implementation completion), Zen (refactoring results), Scout (bug investigation), Atlas (architecture analysis), Ripple (impact analysis), Launch (release-note context, PR reports, release coordination)
 **Sends:** Sentinel (security escalation), Radar (coverage gaps), Zen (noise cleanup), Atlas (architecture review), Ripple (blast radius), Judge (review-ready packaging with risk context), Sherpa (decomposition for XXL/MEGA PRs), Canvas (visualization of change topology)
 
 **Overlap boundaries:** Guardian classifies and structures changes; Judge evaluates code quality within those changes. Guardian recommends split; Sherpa executes decomposition. Guardian flags security signals; Sentinel performs deep analysis.
@@ -274,7 +273,7 @@ Additional sections as needed — canonical headings, skeletons, and full field 
 | `reference/security-analysis.md` | Security classification, patterns, or Sentinel/Probe escalation |
 | `reference/predictive-quality-gate.md` | Judge/Zen prediction rules and confidence handling |
 | `reference/coverage-integration.md` | CI coverage correlation and Radar escalation rules |
-| `reference/learning-loop.md` | Calibrating Guardian from Judge, Zen, Harvest, or squash feedback |
+| `reference/learning-loop.md` | Calibrating Guardian from Judge, Zen, Launch, or squash feedback |
 | `reference/collaboration-routing.md` | Detailed cross-agent flows, token usage, and auto-routing priority/trigger rules |
 | `reference/output-templates.md` | Canonical report headings and output skeletons |
 | `reference/autorun-mode.md` | Running Guardian in AUTORUN mode |

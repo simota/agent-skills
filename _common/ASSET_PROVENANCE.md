@@ -4,12 +4,12 @@ Cross-skill discipline for **knowing where a produced asset came from, what may 
 
 **Read when:** an asset is generated rather than authored; a reference or stock source feeds a deliverable; an asset moves from exploration toward publication; someone asks "can we actually use this?"; an asset needs to be reproduced or re-derived months later.
 
-**Audience:** `forge`, `pixel`, `muse`, `ink`, `funnel`, `funnel[premium]`, `atelier`, `frame`, `vision`, `sketch`, `cue`, `director`, `stage`, `nexus`.
+**Audience:** `forge`, `pixel`, `muse`, `ink`, `funnel`, `funnel[premium]`, `atelier`, `frame`, `vision`, `builder`, `cue`, `stage`, `nexus`.
 
 **Prerequisites:** none.
 **Composes with:** `_common/EVIDENCE_LADDER.md` (a rights claim is evidence and has a level), `_common/CANDIDATE_SELECTION.md` (rights is a **Gate**, never a lens), `_common/TRACEABILITY.md` (ID conventions), `_common/SECURITY.md` (what may be sent to an external service).
 
-**Not legal advice.** This file governs *process*: what to record, when to check, and what to stop. Jurisdiction-specific questions (statutory exceptions, license interpretation, contract terms) route to `clause`; standards-conformance audits route to `canon`. When a question is genuinely legal, the correct output is an escalation, not an opinion.
+**Not legal advice.** This file governs *process*: what to record, when to check, and what to stop. Jurisdiction-specific questions (statutory exceptions, license interpretation, contract terms) route to `canon[legal]`; standards-conformance audits route to `canon`. When a question is genuinely legal, the correct output is an escalation, not an opinion.
 
 ---
 

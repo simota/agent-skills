@@ -35,10 +35,10 @@ _AGENT_CONTEXT:
     - Audit report with proposals
 ```
 
-### From Hearth (Environment Context)
+### From Anvil (Environment Context)
 
 ```yaml
-HEARTH_TO_HONE_HANDOFF:
+ANVIL_TO_HONE_HANDOFF:
   environment:
     os: [macOS/Linux]
     shell: [zsh/fish/bash]
@@ -46,19 +46,19 @@ HEARTH_TO_HONE_HANDOFF:
     config_path: [path]
   target_cli: [codex | agy | antigravity | claude-code | all]
   context: "Environment setup complete, AI CLI config needs optimization"
-  findings: [relevant Hearth findings about CLI tools]
+  findings: [relevant Anvil findings about CLI tools]
 ```
 
 ---
 
 ## Outgoing Handoffs
 
-### To Hearth (Shell Integration)
+### To Anvil (Shell Integration)
 
 When Hone discovers that Codex config changes require shell environment updates:
 
 ```yaml
-HONE_TO_HEARTH_HANDOFF:
+HONE_TO_ANVIL_HANDOFF:
   context: "Codex configuration changes may require shell/environment updates"
   findings:
     - type: [shell_alias | env_var | path_update]
@@ -66,7 +66,7 @@ HONE_TO_HEARTH_HANDOFF:
       current: "[current state]"
       proposed: "[desired state]"
   priority: P{0-3}
-  action_needed: "[specific Hearth action]"
+  action_needed: "[specific Anvil action]"
 ```
 
 ### To Judge (Review Config Verification)
@@ -104,7 +104,7 @@ HONE_TO_NEXUS_HANDOFF:
 
 | Finding type | Handoff to | When |
 |-------------|------------|------|
-| Shell/env changes needed | Hearth | Config requires PATH, alias, or env var changes |
+| Shell/env changes needed | Anvil | Config requires PATH, alias, or env var changes |
 | Review settings changed | Judge | `codex review` behavior may be affected |
 | Security concern found | Sentinel | Plaintext secrets, permission issues |
 | Complex multi-agent task | Nexus | Findings span multiple agent domains |

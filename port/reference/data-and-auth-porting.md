@@ -266,7 +266,7 @@ Both support normalized caching that maps well to T1/T2 offline.
 
 ## Sync Strategies (T2 / T3)
 
-| Strategy | When | Implementation sketch |
+| Strategy | When | Implementation builder |
 |----------|------|------------------------|
 | **Last-write-wins** | Single-device, low collision | Server timestamps; latest wins |
 | **Per-field merge** | Forms, profiles | Field-level versioning; merge non-conflicting |

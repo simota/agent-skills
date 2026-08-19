@@ -233,7 +233,7 @@ Estimated Execution Time: ~3 ms (vs current 2387 ms — ~800× improvement)
 ```
 
 # Recommended action
-Approach: Add a composite descending index on `(user_id, created_at DESC)` with an `INCLUDE` clause covering the SELECT columns, eliminating both the Seq Scan and the explicit Sort. The index serves the equality on user_id, the range on created_at, and the ORDER BY in a single backward index scan.
+Approach: Add a composite descending index on `(user_id, created_at DESC)` with an `INCLUDE` canon covering the SELECT columns, eliminating both the Seq Scan and the explicit Sort. The index serves the equality on user_id, the range on created_at, and the ORDER BY in a single backward index scan.
 
 Files / DDL to modify:
 - New migration: `migrations/20260501_orders_user_created_idx.sql`

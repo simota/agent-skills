@@ -9,7 +9,7 @@ Purpose: Apply the FinOps Foundation's Framework (2024 edition) — the industry
 - **ledger `unit-economics` (elsewhere)**: Per-unit cost attribution — a capability within Quantifying Business Value.
 - **ledger `greenops` (elsewhere)**: Sustainability overlay to FinOps.
 - **Canon[regulatory] (elsewhere)**: Compliance-focused cost audit.
-- **Harvest (elsewhere)**: PR work reporting.
+- **Launch (elsewhere)**: PR work reporting.
 
 ## Framework Structure
 

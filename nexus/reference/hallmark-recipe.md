@@ -26,7 +26,7 @@ Read this file before executing the `hallmark` Recipe.
 |----------|----------|-----|
 | Propagate an already-decided brand across all surfaces | `rebrand` | Hallmark *creates*; rebrand *propagates* with a completeness proof — a discover→build pair |
 | Ship-time brand-tone verification on a launch | `growth-acceptance` | Layer C verifies B.tone against an existing identity; hallmark is its upstream |
-| Engineer personal branding (GitHub/LinkedIn/blog) | `crest` skill | Person, not product/org |
+| Engineer personal branding (GitHub/LinkedIn/blog) | `compete[brand]` | Person, not product/org |
 | A document package with no verification gates | `package` | Hallmark's gauntlet + Doc Quality Gate are the point |
 | One design direction or one token set, minimum chain | `vision` / `muse` direct | Single-agent work with clear ownership |
 | The flagship landing page that *uses* the brand | `marquee` | Marquee consumes the Brand Book; hallmark produces it |
@@ -83,7 +83,7 @@ Phase 2  BRAND CORE ★contract-level dialogue (AUTORUN cannot skip; plan-tier m
    ▼
 Phase 3  IDENTITY TOURNAMENT ‖ 3 directions from angles surfaced in the dialogue
          each: Vision[direction] → Muse[tokenize: color/type/spacing] + Ink[icon policy]
-         + Sketch?[key visual] — token-first so every direction is application-ready
+         + Builder[image]?[key visual] — token-first so every direction is application-ready
          → judge panel scores vs the Brand Core Contract → winner + salvage list
    ▼
 Phase 4  GAUNTLET loop ≤ 2 cycles (default 2)
@@ -152,7 +152,7 @@ Does a ratified brand identity already exist, and the ask is applying it everywh
   YES → rebrand (propagation with completeness proof)
   NO ↓
 Is it a person's professional brand (GitHub/LinkedIn/blog/conference)?
-  YES → crest skill
+  YES → compete[brand]
   NO ↓
 Is it one bounded design decision (a direction, a token set) with clear ownership?
   YES → vision / muse direct (minimum viable chain)

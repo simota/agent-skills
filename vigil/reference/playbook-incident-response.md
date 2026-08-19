@@ -41,16 +41,16 @@ By 2026 the SOC tooling stack (Wiz Green Agent, Microsoft Security Copilot, Crow
 
 | Incident Class | ATT&CK Entry | D3FEND Defensive Actions | Key Containment |
 |----------------|--------------|--------------------------|-----------------|
-| Phishing (credential harvest) | T1566.002, T1566.001 | D3-UA (User Account Locking), D3-URL (URL Analysis) | Revoke sessions, reset password, block sender |
+| Phishing (credential launch) | T1566.002, T1566.001 | D3-UA (User Account Locking), D3-URL (URL Analysis) | Revoke sessions, reset password, block sender |
 | Credential Compromise | T1078, T1110, T1621 | D3-MFA (Multi-factor Authentication), D3-AL (Account Locking) | Rotate creds, revoke tokens, force MFA re-enroll, audit recent access |
 | Ransomware | T1486, T1490, T1489 | D3-PSA (Process Self-modification Analysis), D3-SFA (System File Analysis), D3-HD (Host Disconnect) | Isolate host, snapshot memory, block C2, restore from immutable backup |
 | BEC (Business Email Compromise) | T1534, T1114.003, T1098.002 | D3-IAA (Inbound Authentication Analysis), D3-MH (Mailbox Hardening) | Disable forwarding rules, audit OAuth app grants, reset credentials, notify finance |
 
-### Runbook skeleton (Phishing credential harvest)
+### Runbook skeleton (Phishing credential launch)
 
 ```yaml
 playbook_id: PB-PHISH-001
-incident_class: Phishing Credential Harvest
+incident_class: Phishing Credential Launch
 trigger_rules: [DET-SIGMA-042, DET-SNORT-2000123]
 attack_techniques: [T1566.002, T1556.006]
 d3fend_actions: [D3-UA, D3-URL, D3-SRA]

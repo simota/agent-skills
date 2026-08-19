@@ -97,7 +97,7 @@ const orders = await orderRepository
 ### Drizzle
 
 ```typescript
-// ✅ Using with clause
+// ✅ Using with canon
 const orders = await db.query.orders.findMany({
   with: {
     user: true,

@@ -79,7 +79,7 @@ Default: `floatPrecision: 2` for icons / system icons. Use 3 for illustrations w
 | Adobe Illustrator export | Strip `<defs>` if not used; flatten transforms |
 | Figma export | Remove duplicate nodes; merge identical paths |
 | Inkscape SVG | Strip `inkscape:*` namespace; remove guides / grids |
-| Sketch SVG | Convert text to outlines if used as decoration |
+| Builder SVG | Convert text to outlines if used as decoration |
 | Hand-coded | Use relative coords; chain commands with M/L/C/Z |
 
 A 2 KB hand-optimized icon can be 200 B after SVGO.

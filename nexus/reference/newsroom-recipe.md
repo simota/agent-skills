@@ -61,7 +61,7 @@ Mode detection when unstated: an existing article path/URL/pasted text → `audi
 
 ### Do NOT use Newsroom for
 
-- Article authoring with no grounding requirement → `zine` direct
+- Article authoring with no grounding requirement → `tome` direct
 - Doc + slide unified package with polish maximization → `podium` (its Phase 4 claim-grounding branch covers grounding *within* that pipeline)
 - Spec-vs-implementation conformance → `attest` direct
 - Standards compliance (WCAG/OWASP/style) → `canon` direct
@@ -140,7 +140,7 @@ parallel:
     agents: [field]            # WebSearch/WebFetch sweep of T1 (official docs, papers, changelogs) → T3
     mission: exhaust T1 sources for every in-scope topic; cite + tier + date every entry
   - branch: internal_sources        # conditional: article derived from a codebase / releases
-    agents: [lens | harvest]
+    agents: [lens | launch]
     mission: code citations, PR/release facts — internal claims get repo-path/SHA provenance, same ledger schema
   - branch: competitive_claims      # conditional: article compares products/tools
     agents: [compete]
@@ -153,7 +153,7 @@ In `audit` mode the sweep is **claim-driven**: a pre-pass extracts the existing 
 
 ### Phase 2: COMPOSE (compose mode only, 1-2 agents)
 
-`zine` writes the article **ledger-bound**: every `fact` sentence carries an inline ledger reference (`[E12]`); anything not in the ledger is written as labeled opinion/hypothesis or not written. `prose?` for headings/hook. `reference/doc-quality-protocol.md` W1-W6 apply (reader contract + UNKNOWN-over-fabrication).
+`tome` writes the article **ledger-bound**: every `fact` sentence carries an inline ledger reference (`[E12]`); anything not in the ledger is written as labeled opinion/hypothesis or not written. `prose?` for headings/hook. `reference/doc-quality-protocol.md` W1-W6 apply (reader contract + UNKNOWN-over-fabrication).
 
 In `audit` mode this phase is skipped; the existing article is ingested verbatim.
 
@@ -236,8 +236,8 @@ mode: AUTORUN_FULL
 required_confirmation: only risk_tier == release-critical
 phase_chain:
   - { phase: 0_framing,   owner: nexus_internal, gate: release_critical_confirm }
-  - { phase: 1_evidence,  parallel: [field, lens|harvest?, compete?], gate: research_completeness }
-  - { phase: 2_compose,   agents: [zine, prose?], if: mode == compose }   # ledger-bound writing
+  - { phase: 1_evidence,  parallel: [field, lens|launch?, compete?], gate: research_completeness }
+  - { phase: 2_compose,   agents: [tome, prose?], if: mode == compose }   # ledger-bound writing
   - { phase: 3_claim_audit, agents: [auditor(spawned, != writer)], output: claim_audit.json }
   - { phase: 4_adversarial, parallel: [skeptic ×2-3 per _common/ADVERSARIAL_REFUTATION.md, staleness_check] }
   - { phase: 5_remediate, loop: "≤ 2 cycles", gate: thesis_integrity, exit: [ACCEPT, cap-reached, BLOCK] }
@@ -277,7 +277,7 @@ phase_chain:
 ## Boundaries — vs Neighbors
 
 - **vs `podium`** — podium is the *package polish* recipe (doc + slides + visuals, five teams); its claim-grounding is one verification branch. Newsroom inverts the weighting: grounding IS the deliverable's core guarantee, polish is incidental. An article that also needs a slide deck and hero imagery → podium (optionally with newsroom-grade rigor requested); an article whose selling point is "every claim checked" → newsroom.
-- **vs `zine` direct** — zine authors; it does not build an Evidence Ledger, spawn an independent auditor, or run refutation. Article with no grounding requirement → zine direct.
+- **vs `tome` direct** — Tome authors without Newsroom's Evidence Ledger, independent auditor, or refutation loop. Article with no grounding requirement → Tome direct.
 - **vs `attest`** — attest verifies implementation against a *normative spec* (AC conformance). Newsroom verifies prose against *the world* (external sources).
 - **vs `canon`** — canon checks compliance with named standards (WCAG/OWASP/style guides); newsroom checks factual truth provenance.
 - **vs `clone`/`fuse`/`graft` research sweep** — same Evidence Ledger machinery (`reference/research-grounding.md`), different oracle: reproduction recipes stay capture-authoritative; newsroom is primary-source-authoritative because there is no artifact to capture.
@@ -294,7 +294,7 @@ Does it need slides/visuals/multi-format packaging as the main ask?
   └─ NO ↓
 Is "every claim sourced / no speculation / verify correctness" part of the ask
   (or the artifact is external-facing with verifiable claims)?
-  └─ NO  → zine direct
+  └─ NO  → tome direct
   └─ YES → newsroom  (existing draft → newsroom audit; new article → newsroom compose)
 ```
 

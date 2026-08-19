@@ -150,7 +150,7 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 
 | Trigger | Skills (H) | Skills (M) |
 |---------|------------|------------|
-| `.github/workflows/` | gear[gha] | latch |
+| `.github/workflows/` | gear[gha] | hone[hook] |
 | Dockerfile / docker-compose | gear, scaffold | beacon |
 | terraform / pulumi / cdk | scaffold | ledger |
 | k8s manifests / helm | scaffold | beacon |
@@ -181,10 +181,10 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 | i18n (next-intl, i18next, react-intl) | polyglot | prose |
 | Mobile (iOS Swift / SwiftUI, Android Kotlin / Compose) | native | flow, port |
 | Web → Native porting (React / Vue / Svelte / Angular SPA → iOS + Android) | port | native, scaffold |
-| Founder office hours / startup advisory / "what should I focus on" | sage | sherpa, echo[demand] |
-| Game (Phaser, Three.js, Unity, Godot) | forge | sketch |
+| Founder office hours / startup advisory / "what should I focus on" | magi[advisor] | sherpa, echo[demand] |
+| Game (Phaser, Three.js, Unity, Godot) | forge | builder[image] |
 | CMS / Headless CMS | builder | scribe |
-| Payment (Stripe, Square) | crypt, ledger | clause |
+| Payment (Stripe, Square) | crypt, ledger | canon[legal] |
 
 ### Project intent (from CLAUDE.md / repo name)
 

@@ -22,10 +22,10 @@ CAPABILITIES_SUMMARY:
 - React Server Components (RSC) story creation (experimental module-mocking approach, compatible with Storybook addons ecosystem)
 - Git change detection (10.3+, status-value filtering for new/modified/affected stories in sidebar)
 
-COLLABORATION_PATTERNS: Prototype→Docs(Forge→Vitrine→Quill) · Design→Catalog(Vision→Vitrine→Vision) · Story→Test(Vitrine→Radar+Voyager) · TokenAudit(Vitrine→Muse→Vitrine) · Animation(Flow→Vitrine→Flow) · UXReview(Palette→Vitrine→Vision) · Demo→Story(Director→Vitrine→Radar) · ProductionPolish(Artisan→Vitrine→Muse) · PortableStory→UnitTest(Vitrine→Radar via composeStories) · A11yGate(Vitrine→Canon for WCAG compliance)
+COLLABORATION_PATTERNS: Prototype→Docs(Forge→Vitrine→Quill) · Design→Catalog(Vision→Vitrine→Vision) · Story→Test(Vitrine→Radar+Voyager) · TokenAudit(Vitrine→Muse→Vitrine) · Animation(Flow→Vitrine→Flow) · UXReview(Palette→Vitrine→Vision) · Demo→Story(Cue→Vitrine→Radar) · ProductionPolish(Artisan→Vitrine→Muse) · PortableStory→UnitTest(Vitrine→Radar via composeStories) · A11yGate(Vitrine→Canon for WCAG compliance)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Forge (preview stories), Artisan (production components), Flow (animation states), Vision (design direction), Director (demo interactions), Palette (UX review findings)
+- INPUT: Forge (preview stories), Artisan (production components), Flow (animation states), Vision (design direction), Cue (demo interactions), Palette (UX review findings)
 - OUTPUT: Muse (token audit), Radar (test coverage sync via portable stories), Voyager (E2E boundary), Vision (catalog review), Quill (documentation), Flow (animation requests), Canon (WCAG compliance audit)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) Library(H) DesignSystem(H) Mobile(M)
@@ -222,7 +222,7 @@ Vitrine receives components and design context from upstream agents. Vitrine sen
 | Artisan → Vitrine | `ARTISAN_TO_SHOWCASE` | Production components for story creation |
 | Flow → Vitrine | `FLOW_TO_SHOWCASE` | Animation states for visual stories |
 | Vision → Vitrine | `VISION_TO_SHOWCASE` | Design direction for catalog review |
-| Director → Vitrine | `DIRECTOR_TO_SHOWCASE` | Demo interactions for story capture |
+| Cue → Vitrine | `CUE_TO_VITRINE` | Demo interactions for story capture |
 | Palette → Vitrine | `PALETTE_TO_SHOWCASE` | UX review findings for story updates |
 | Vitrine → Muse | `SHOWCASE_TO_MUSE` | Token audit requests from catalog |
 | Vitrine → Radar | `SHOWCASE_TO_RADAR` | Test coverage sync from stories |

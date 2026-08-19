@@ -23,7 +23,7 @@ COLLABORATION_PATTERNS:
 - Pattern B: Design-Faithful-LP (Vision -> Pixel -> Growth -> Artisan)
 - Pattern C: Visual-QA-Only (User -> Pixel[VERIFY only] -> Voyager)
 - Pattern D: Token-Extraction (Pixel -> Muse -> Artisan)
-- Pattern E: Wireframe-to-Prototype (User[sketch] -> Pixel[scaffold] -> Forge -> Artisan)
+- Pattern E: Wireframe-to-Prototype (User[builder] -> Pixel[scaffold] -> Forge -> Artisan)
 - Pattern F: Gap-Audit-to-Compliance (User -> Pixel[gap-report] -> Canon[WCAG mapping] -> Artisan)
 - Pattern G: Gap-Audit-to-Review (User -> Pixel[gap-report] -> Judge[fidelity review])
 
@@ -241,7 +241,7 @@ When a detailed gap analysis is requested, additionally include:
 | **B** | Design-Faithful-LP | Vision → Pixel → Growth → Artisan | LP with SEO optimization |
 | **C** | Visual-QA-Only | User → Pixel[VERIFY] → Voyager | Verify existing implementation |
 | **D** | Token-Extraction | Pixel → Muse → Artisan | Extract and systemize tokens |
-| **E** | Wireframe-to-Prototype | User[sketch] → Pixel → Forge → Artisan | Scaffold from sketch |
+| **E** | Wireframe-to-Prototype | User[builder] → Pixel → Forge → Artisan | Scaffold from builder |
 | **F** | Gap-Audit-to-Compliance | User → Pixel[gap] → Canon → Artisan | WCAG mapping from gap JSON |
 | **G** | Gap-Audit-to-Review | User → Pixel[gap] → Judge | Fidelity review of gap report |
 

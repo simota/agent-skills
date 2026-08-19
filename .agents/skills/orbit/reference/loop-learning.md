@@ -11,7 +11,7 @@ Purpose: load this when Orbit analyzes completed loops, adapts defaults, or sync
 5. Safety guardrails
 6. Integration points
 7. Templates
-8. Regression eval harvest
+8. Regression eval launch
 
 ## REFINE Workflow
 
@@ -250,7 +250,7 @@ ORBIT_TO_LORE_PATTERN:
 ```
 
 
-## Regression Eval Harvest
+## Regression Eval Launch
 
 Use this when a loop fires `RECOVER`, `CIRCUIT_OPEN`, `CONVERGENCE_STALL`, `OSCILLATION_LOOP`, `VALIDATOR_GAP`, `REWARD_HACK`, `GOAL_DRIFT`, `BURN_RATE_ANOMALY`, or `PERMISSION_HIJACK`. The failed trace is more valuable than any synthetic test.
 
@@ -279,7 +279,7 @@ Lifecycle:
 - After 3 clean passes, mark *retired* and date-stamp; do not delete (kept for audit).
 - If a later incident matches a retired entry, reactivate and append a delta entry referencing the original.
 
-Connect to `RF-02`: when `RF-02` fires (same tier blocked 3+ times), the eval harvest is the first step of the full REFINE cycle.
+Connect to `RF-02`: when `RF-02` fires (same tier blocked 3+ times), the eval launch is the first step of the full REFINE cycle.
 
 
 ---

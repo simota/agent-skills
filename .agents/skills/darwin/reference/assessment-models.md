@@ -277,7 +277,7 @@ Where:
 | GENESIS | Nexus, Forge, Spark, Architect | Builder, Radar, Scout | All others |
 | ACTIVE_BUILD | Builder, Forge, Radar, Artisan | Schema, Gateway, Scout | All others |
 | STABILIZATION | Judge, Sentinel, Zen, Nexus | Radar, Sweep, Atlas | All others |
-| PRODUCTION | Guardian, Beacon, Triage, Gear | Sentinel, Launch, Latch | All others |
+| PRODUCTION | Guardian, Beacon, Triage, Gear | Sentinel, Launch, Hone | All others |
 | MAINTENANCE | Shift (`detect`/`modernize`/`radar`), Sweep, Trail | Builder, Radar, Scout | All others |
 | SCALING | Bolt, Tuner, Scaffold | Beacon, Gear, Stream | All others |
 | SUNSET | Sweep, Quill, Morph | Canvas, Trail | All others |

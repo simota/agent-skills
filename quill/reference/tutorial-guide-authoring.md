@@ -7,7 +7,7 @@ Purpose: Produce learning-oriented documentation that lets a reader complete a r
 - **Quill `tutorial`**: code-adjacent, repo-owned learning material — tutorials, how-to guides, runnable code snippets living next to the API they document.
 - **Scribe (elsewhere)**: formal specifications (PRD / SRS / HLD / LLD). A tutorial is not a spec; it is practice.
 - **Atlas (elsewhere)**: ADRs and architecture analysis. A tutorial may link to an ADR for *why*, but does not author it.
-- **Zine (elsewhere)**: external tech-blog articles for note / Zenn / Qiita / dev.to. Zine tells a story; `tutorial` teaches a task.
+- **Tome (elsewhere)**: external tech-blog articles for note / Zenn / Qiita / dev.to. Tome tells a story; `tutorial` teaches a task.
 - **Prose (elsewhere)**: in-product microcopy and UX writing. Tutorials target developers; microcopy targets end users.
 
 If the reader needs to learn the product by doing → tutorial. If they already know it and need to solve one problem → how-to. If they need the list of every option → reference (stays in JSDoc / API docs). If they need conceptual background → explanation (often the job of the README or an Atlas ADR).
@@ -160,8 +160,8 @@ Never use a screenshot for terminal output a reader must copy.
 **From Quill (`tutorial`) → Quill (`readme`):**
 - Link the new tutorial from the README "Learn" section; keep the README short and route to the tutorial.
 
-**From Quill (`tutorial`) → Director:**
-- If the tutorial would benefit from a video walkthrough, hand off to Director (feature demo) with the exact command sequence and the timing budget.
+**From Quill (`tutorial`) → Cue:**
+- If the tutorial would benefit from a video walkthrough, hand off to Cue (feature demo) with the exact command sequence and the timing budget.
 
 **From Quill (`tutorial`) → Prose:**
 - If the tutorial surfaces in-product UI text that is confusing new users, hand off to Prose for microcopy revision — do not patch user-facing strings inside the tutorial.

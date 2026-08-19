@@ -21,7 +21,7 @@ Two operating modes, user-selectable at invocation:
 | Invocation | Mode coverage | Fan-out shape | Use when |
 |------------|---------------|---------------|----------|
 | `multi` (default) | **Single mode × 3 engines** | 3 subagents on one mode (default `expand`) | Drop a 3-engine divergence round into an existing dialogue turn |
-| `multi --all-modes` | **4 modes × 3 engines = 12 cells** | 3 subagents, each producing ideas for all 4 modes | Open a fresh theme; want a full matrix to harvest from |
+| `multi --all-modes` | **4 modes × 3 engines = 12 cells** | 3 subagents, each producing ideas for all 4 modes | Open a fresh theme; want a full matrix to launch from |
 
 The user (or main context interpreting dialogue signals) chooses the active mode:
 

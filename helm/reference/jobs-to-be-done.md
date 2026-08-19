@@ -100,7 +100,7 @@ DESIGN      →  strategy: meet unmet dimensions; reduce anxiety + habit
             →  hand off feature implications to Spark
 ```
 
-## Interview Guide Sketch
+## Interview Guide Builder
 
 When conducting JTBD interviews (hand to Field for full design):
 

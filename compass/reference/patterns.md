@@ -64,7 +64,7 @@ User request
   │   ├─ Multi-agent coordination → Nexus
   │   ├─ Prioritization → Rank
   │   ├─ Release planning → Launch
-  │   └─ Founder office hours → Sage
+  │   └─ Founder office hours → Magi[advisor]
   │
   ├─ Migration / modernization
   │   ├─ Web → Native porting design → Port
@@ -183,7 +183,7 @@ Lens / Atlas (web survey) → Port (blueprint) → Native (iOS / Android impl) �
 
 ### Founder Advisory Chain
 ```
-Sage (bottleneck + action) → Sherpa (decompose) / Builder (implement) / Echo[demand] (validate)
+Magi[advisor] (bottleneck + action) → Sherpa (decompose) / Builder (implement) / Echo[demand] (validate)
 ```
 
 ### Product Image Acquisition Chain
@@ -211,9 +211,9 @@ A reverse lookup to prevent common mistakes.
 | Technical specifications | Quill | Scribe | Quill is for in-code docs |
 | Production implementation | Forge | Builder | Forge produces prototypes |
 | Web → mobile porting | Native | Port | Native implements; Port produces blueprint and parity matrix |
-| Idea ideation (divergent) | Sage | Riff | Sage is advisory (single bottleneck); Riff is divergent brainstorming |
-| Strategic decision | Sage | Magi | Sage is YC-style advisory; Magi is triadic deliberation |
-| Long-term scenarios | Sage | Helm | Sage handles weekly tactics; Helm handles quarterly+ scenarios |
+| Idea ideation (divergent) | Magi | Riff | Magi advises or decides; Riff is divergent brainstorming |
+| Strategic decision | Magi[advisor] | Magi[decide] | Advisory pressure-testing and a binding verdict are separate Magi Recipes |
+| Long-term scenarios | Magi | Helm | Magi handles a bounded decision; Helm handles quarterly+ scenarios |
 
 When in doubt, ask "Does this skill change code?":
 - Changes code: Builder, Zen, Artisan, Bolt

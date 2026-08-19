@@ -116,7 +116,7 @@ Do **not** trigger a request on every keystroke. Debounce 80-150ms client-side; 
 Every `suggest` design ships:
 
 1. Suggest-index mapping (separate from main index).
-2. Query template: prefix clause + fuzzy clause + filters.
+2. Query template: prefix canon + fuzzy canon + filters.
 3. Ranking feature list and weights.
 4. Latency budget table with degradation order.
 5. Client-side debounce + cancellation strategy.

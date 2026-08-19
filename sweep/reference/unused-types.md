@@ -101,7 +101,7 @@ After removing batch N, re-run scan. Newly orphan types appear as previous-itera
 | Pattern | Why ts-prune flags it | Why it's NOT removable |
 |---|---|---|
 | Type used in `.d.ts` ambient declarations | Not in module graph | Required for global typing |
-| Type used as generic constraint elsewhere | Not "imported" | Bound by `extends` clause |
+| Type used as generic constraint elsewhere | Not "imported" | Bound by `extends` canon |
 | Type used in JSDoc `@type {Foo}` in JS file | Not parsed by TS | Used by `--checkJs` |
 | Type re-exported from `index.ts` for public API | No internal consumers | External package consumers |
 | Type in `*.config.ts` consumed by build tooling | Tool-specific resolution | Vite/Webpack plugins read it |

@@ -25,11 +25,11 @@ USER_TO_TOME:
 
 ### From Agent (Generic Handoff)
 
-Used by Trail, Harvest, Lens, Scout, and any other upstream agent.
+Used by Trail, Launch, Lens, Scout, and any other upstream agent.
 
 ```yaml
 AGENT_TO_TOME_HANDOFF:
-  source_agent: "[Trail | Harvest | Lens | Scout | ...]"
+  source_agent: "[Trail | Launch | Lens | Scout | ...]"
   investigation:
     target: "[investigation subject]"
     findings: "[key findings or data]"
@@ -108,10 +108,10 @@ TOME_TO_LORE_HANDOFF:
         applicability: "[applicability scope]"
 ```
 
-### To Director (Demo Narration Scripts)
+### To Cue (Demo Narration Scripts)
 
 ```yaml
-TOME_TO_DIRECTOR_HANDOFF:
+TOME_TO_CUE_HANDOFF:
   source:
     learning_doc: "[path to generated learning document]"
     change_walkthrough: "[step-by-step change flow]"

@@ -10,7 +10,7 @@ Purpose: Manage the lifecycle of deprecating a public API, library feature, CLI 
 - **Launch (elsewhere)**: SemVer versioning and release gating.
 - **Prose (elsewhere)**: User-facing deprecation notice copy.
 - **Pulse (elsewhere)**: Usage metrics that gate safe removal.
-- **Clause (elsewhere)**: Customer-contract review for SLA-affected deprecations.
+- **Canon (elsewhere)**: Customer-contract review for SLA-affected deprecations.
 
 ## Stages
 
@@ -208,7 +208,7 @@ For one-way deprecations, require:
 - Prose: notification copy for each channel (notification-copy reference).
 - Launch: SemVer gating and release cadence.
 - Pulse: usage-metric dashboard and gate alerts.
-- Clause: customer-contract review if SLA-affected.
+- Canon: customer-contract review if SLA-affected.
 - Scribe: migration guide authoring.
 - Beacon: post-removal monitoring.
 ```
@@ -225,7 +225,7 @@ For one-way deprecations, require:
 | One-way deprecation without sign-off | Require approval gate |
 | Removing during support holiday | Schedule REMOVE on a weekday with on-call coverage |
 | Customer emails only at REMOVE | Distribute reminders across SUNSET stage |
-| Ignoring SLA contracts | Clause review for enterprise customers |
+| Ignoring SLA contracts | Canon review for enterprise customers |
 
 ## Deliverable Contract
 
@@ -238,7 +238,7 @@ When `deprecate` completes, emit:
 - **SemVer / versioning strategy**.
 - **Post-removal monitoring plan**.
 - **One-way approval gate** if applicable.
-- **Handoffs**: Prose, Launch, Pulse, Clause, Scribe, Beacon.
+- **Handoffs**: Prose, Launch, Pulse, Canon, Scribe, Beacon.
 
 ## References
 

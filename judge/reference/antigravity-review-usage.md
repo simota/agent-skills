@@ -328,7 +328,7 @@ pty.spawn(["agy","-p",open("/tmp/agy-review.prompt").read(),"--dangerously-skip-
 PY
 
 if ! { [ -s "$OUT" ] && grep -q '<<<END_OF_OUTPUT>>>' "$OUT"; }; then
-  # Fallback: transcript harvest, then log grep (full chain: CLI_COMPATIBILITY §9.2)
+  # Fallback: transcript launch, then log grep (full chain: CLI_COMPATIBILITY §9.2)
   grep -E "RESOURCE_EXHAUSTED|Resets in|error getting token|agent executor error|unexpected end of JSON input" "$LOG" | head -5
   echo "VERDICT: agy produced no verifiable artifact. Treat as RUNTIME-BROKEN (not UNAVAILABLE). Skip this engine for this review and surface the log excerpt in the integration report."
 fi

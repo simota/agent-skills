@@ -10,7 +10,7 @@ Purpose: Design and audit `scripts/` directory layout — language selection (sh
 - **Anvil (elsewhere)**: CLI/TUI implementation. Grove `scripts` decides where a script lives; Anvil owns the CLI command surface and dev-tool wiring once it grows beyond a thin script.
 - **Gear (elsewhere)**: CI/CD pipeline config and `npm run`/`make` task graph. Grove `scripts` decides directory; Gear decides when CI calls them.
 - **Scaffold (elsewhere)**: cloud IaC. `infra/` provisioning scripts (Terraform, Pulumi) belong to Scaffold, not Grove `scripts`.
-- **Hearth (elsewhere)**: personal dotfiles and shell config. Grove `scripts` is repo-shared; Hearth is per-developer.
+- **Anvil (elsewhere)**: personal dotfiles and shell config. Grove `scripts` is repo-shared; Anvil is per-developer.
 - **Grove[llm] (elsewhere)**: LLM-context ordering of `scripts/`. Grove ships layout; Grove[llm] tunes retrieval.
 
 ## Workflow
@@ -123,7 +123,7 @@ Set executable bit: `chmod +x scripts/**/*.sh scripts/**/*.ts`. Commit it: `git 
 - **To Anvil**: when a script grows past 500 lines or spawns subcommands (`scripts/dev/cli.ts <cmd>`), Anvil designs a real CLI on top.
 - **To Gear**: package.json scripts that CI calls (`build`, `test`, `lint`) become Gear's pipeline inputs; CI YAML references `scripts/ci/*` after Grove locks paths.
 - **To Scaffold**: anything in `scripts/` that provisions cloud resources moves to `infra/` and becomes Scaffold's responsibility.
-- **To Hearth**: per-developer environment helpers (shell aliases, prompt configs) go to dotfiles, not repo `scripts/`.
+- **To Anvil**: per-developer environment helpers (shell aliases, prompt configs) go to dotfiles, not repo `scripts/`.
 - **To Grove[llm]**: once layout is stable, Grove[llm] reorders for LLM-context retrieval (README front-loading, category headers).
 - **To Sigil**: Grove publishes the scripts layout; Sigil generates project-tuned skills referencing exact script paths.
 - **To Guardian**: when reorganizing scripts in an existing repo, Guardian slices PRs (≤ 50 files, CI-green per commit) and updates CI references in lockstep.

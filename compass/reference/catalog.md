@@ -1,6 +1,6 @@
 # Skill Agent Catalog
 
-**Purpose:** Complete catalog of 111 global skills and 3 repository-local extensions with descriptions and triggers.
+**Purpose:** Complete catalog of 100 global skills and 3 repository-local extensions with descriptions and triggers.
 **Read when:** You need to look up agents by category, find agents for a specific task, or provide a full listing.
 
 ---
@@ -45,10 +45,10 @@ Code implementation.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Builder** | Business-logic implementation | Robust API integrations, data models | Yes |
+| **Builder** | Business-logic and external-API implementation | Robust API integrations, data models, image-generation APIs | Yes |
 | **Artisan** | Frontend implementation | Production React/Vue/Svelte | Yes |
 | **Forge** | Prototyping | Fast prototypes for both frontend and backend | Yes |
-| **Anvil** | CLI/TUI construction | Terminal UIs and CLI tools | Yes |
+| **Anvil** | CLI/TUI and developer-environment tooling | Terminal UIs, CLI tools, dotfiles, shell/editor configuration, macOS automation | Yes |
 | **Native** | Pure-native mobile implementation | iOS Swift 6.3 + SwiftUI / Android Kotlin 2.4+ + Jetpack Compose (RN/Flutter/KMP/CMP out of scope) | Yes |
 | **Pixel** | Mockup → code | Pixel-accurate HTML/CSS from images | Yes |
 
@@ -64,7 +64,7 @@ Test authoring and verification.
 | **Matrix** | Manual QA test-case authoring | Systematic QA procedures (BVA, equivalence class, decision table) for TestRail/Zephyr/Xray/Qase — `qa-scenario` recipe (absorbed from drill) | No |
 | **Canvas** | Test intelligence visualization | Coverage heatmaps, test-shape views, mutation overlays from junit/lcov/allure/playwright artifacts (absorbed from vista; live dashboards → Pulse) | Mixed |
 
-## Security (6)
+## Security (5)
 
 Security analysis and testing.
 
@@ -74,8 +74,7 @@ Security analysis and testing.
 | **Breach** | Red team | Attack-scenario design, MITRE ATT&CK | No |
 | **Probe** | Dynamic security testing | OWASP ZAP / Burp Suite, penetration testing | Mixed |
 | **Crypt** | Cryptographic architecture | Algorithm selection, key management, E2EE, TLS configuration | Mixed |
-| **Chain** | Skill/plugin/MCP supply-chain audit | sha256 manifests, Unicode Tag injection scan, credential-exfiltration detection, MCP tool-description rug-pull prevention | Mixed |
-| **Cull** *(optional: `incident-response`)* | Supply-chain malware infection scanner | IoC-based local scan for npm/PyPI worm campaigns; eradication and credential rotation runbooks | Mixed |
+| **Chain** *(optional: `incident-response`)* | Skill/plugin/MCP supply-chain audit and malware response | sha256 manifests, Unicode injection, IoC campaign scans, quarantine, eradication, and credential-rotation runbooks | Mixed |
 
 ## Review (6)
 
@@ -85,7 +84,7 @@ Code review and quality checks.
 |-------|------|---------|------|
 | **Judge** | Automated code review | PR review automation, bug detection | Mixed |
 | **Zen** | Refactoring | Variable renaming, function extraction, dead-code removal | Mixed |
-| **Canon** | Standards and regulatory compliance | OWASP/WCAG/OpenAPI plus SOC2/PCI-DSS/HIPAA/ISO 27001 audit recipes | Mixed |
+| **Canon** *(optional: `legal-jp`)* | Standards, regulatory, and legal-document compliance | OWASP/WCAG/OpenAPI, SOC2/PCI-DSS/HIPAA/ISO 27001, ToS/privacy/Tokushoho review | Mixed |
 | **Gauge** | SKILL.md audit | 19-item checklist conformance | No |
 | **Attest** | Spec-compliance verification | Acceptance-criteria extraction, BDD scenario generation | No |
 | **Cloak** | Privacy engineering | PII detection, GDPR / CCPA compliance | Mixed |
@@ -99,7 +98,7 @@ Performance optimization.
 | **Bolt** | Frontend / backend optimization & continuous auto-tuning | Re-render reduction, N+1 fixes, caching; profile→parameter→optimize→verify loops (absorbed from dial) | Yes |
 | **Tuner** | DB optimization | EXPLAIN ANALYZE, index recommendations, slow queries | Yes |
 
-## Documentation (6)
+## Documentation (5)
 
 Documentation authoring, visualization, and article writing.
 
@@ -108,9 +107,8 @@ Documentation authoring, visualization, and article writing.
 | **Scribe** | Technical and cross-team specifications | PRD/SRS/HLD/LLD plus `cross-team` L0-L3 packages | No |
 | **Quill** | Code documentation | JSDoc additions, README updates, fixing `any` types | Mixed |
 | **Prose** | UX writing | Microcopy, error messages, voice and tone | No |
-| **Tome** | Learning material | Diff → tutorial conversion, design-decision records | No |
+| **Tome** | Learning material and technical publications | Diff → tutorial conversion, design-decision records, articles for note / Zenn / Qiita / dev.to | No |
 | **Canvas** | Diagramming and visualization | Mermaid / ASCII / draw.io for flow, sequence, ER diagrams | Mixed |
-| **Zine** *(explicit only)* | Tech blog series | Articles for note / Zenn / Qiita / dev.to | No |
 
 ## Architecture (7)
 
@@ -151,7 +149,7 @@ Infrastructure, CI/CD, and operations.
 | **Gear** | Dependency management / CI/CD / GHA | Build errors, pipelines, advanced GitHub Actions (`gha`) | Yes |
 | **Scaffold** | Infrastructure provisioning | Terraform / Docker Compose design | Yes |
 | **Beacon** | Observability and reliability | SLO / SLI design, alert strategy | Mixed |
-| **Launch** | Release management | Versioning, CHANGELOG, rollback | Mixed |
+| **Launch** | Release management and PR reporting | Versioning, CHANGELOG, rollback, weekly/monthly reports and engineering metrics | Mixed |
 | **Ledger** | FinOps | Cloud cost optimization, RI / SP recommendations | No |
 
 ## Modernization (2)
@@ -163,7 +161,7 @@ Migration and modernization.
 | **Shift** | Migration, upgrade & modernization orchestrator | Framework / library / DB migration; deprecated-library detection (`detect`); native-API replacement (`modernize`); technology radar (`radar`) — absorbed from horizon | Mixed |
 | **Port** | Web → Native porting design | Blueprint from Web SPA / SSR / PWA to iOS Swift/SwiftUI + Android Kotlin/Compose pure-native (parity matrix, phased roadmap) | No |
 
-## Growth (3)
+## Growth (2)
 
 Growth tactics and branding.
 
@@ -171,7 +169,6 @@ Growth tactics and branding.
 |-------|------|---------|------|
 | **Growth** | SEO / CRO / GEO | Meta / OGP / JSON-LD, CTA optimization | Mixed |
 | **Bond** | Retention | Re-engagement, churn prevention | Mixed |
-| **Crest** *(explicit only)* | Engineer branding | GitHub / LinkedIn / blog / conference positioning | No |
 
 ## Analytics (3)
 
@@ -183,14 +180,13 @@ Metrics, experimentation, and combinatorial analysis.
 | **Experiment** | A/B test design | Hypothesis documentation, sample-size calculation | Mixed |
 | **Matrix** | Combinatorial analysis | Combination-explosion control, minimum coverage | No |
 
-## Git/PR (2)
+## Git/PR (1)
 
 Version-control workflow.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Guardian** | PR management | Change classification, granularity recommendations, strategy | No |
-| **Harvest** *(explicit only)* | PR data collection / reporting | Weekly / monthly reports, release notes | No |
 
 ## Browser (2)
 
@@ -210,16 +206,15 @@ Data pipelines and conversion.
 | **Stream** | ETL / ELT pipelines | Kafka / Airflow / dbt design | Mixed |
 | **Morph** | Document conversion | Markdown / Word / Excel / PDF / HTML conversion | Mixed |
 
-## Strategy (4)
+## Strategy (3)
 
 Business strategy and decision-making. Does not write code.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Helm** | Business strategy | SWOT / PESTLE / Porter analysis | No |
-| **Compete** | Competitive research | Feature matrices, positioning | No |
+| **Compete** | Competitive research and personal branding | Feature matrices, product positioning, GitHub / LinkedIn / blog / conference positioning | No |
 | **Rank** | Prioritization | ICE / RICE / WSJF / MoSCoW scoring | No |
-| **Sage** *(explicit only)* | YC-style office-hours advisory | "Tell me what you're avoiding." Single-bottleneck extraction, founder anti-pattern detection, 1-2 week SMART action extraction | No |
 
 ## Incident (2)
 
@@ -239,7 +234,7 @@ Coordination and communication.
 | **Relay** | Messaging integration | Bot development, webhooks, WebSocket | Mixed |
 | **Scribe** (`cross-team`) | Spec alignment | Cross-team Business / Dev / Design specifications | No |
 
-## Meta / Tooling (6 global)
+## Meta / Tooling (5 global)
 
 Manages and evolves the ecosystem itself.
 
@@ -247,19 +242,17 @@ Manages and evolves the ecosystem itself.
 |-------|------|---------|------|
 | **Architect** *(`skill-meta`)* | Skill design | New agent design, gap analysis | No |
 | **Sigil** *(`skill-meta`)* | Project operating-layer design | Tailored skills plus recipe/workflow/routing-map blueprints (`blueprint`) | No |
-| **Hone** *(optional: `ai-cli-admin`)* | AI CLI configuration optimization | Claude Code / Antigravity CLI configuration audit | No |
+| **Hone** *(optional: `ai-cli-admin`)* | AI CLI configuration and hooks | Claude Code / Codex / Antigravity CLI audits plus PreToolUse / PostToolUse / Stop lifecycle hooks | Mixed |
 | **Compass** | Skill navigator | Skill guidance, onboarding | No |
-| **Latch** *(optional: `ai-cli-admin`)* | Claude Code Hooks design | PreToolUse / PostToolUse / Stop and other lifecycle hooks | Mixed |
 | **Prune** *(`skill-meta`)* | Skill ecosystem cleanup | Overlap audit, merge-candidate detection, sunset proposals | No |
 
-## Creative / Media (2)
+## Creative / Media (1)
 
 Media and creative generation.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Ink** | SVG icons | Icon systems, sprite construction | Yes |
-| **Sketch** *(optional: `gemini-image`)* | AI image generation | Text → image via Gemini API | Yes |
 
 ## AI / ML (2)
 
@@ -283,15 +276,11 @@ Specialized skills that don't fit the categories above.
 | **Omen** | Pre-mortem analysis | Failure-scenario enumeration, RPN scoring | No |
 | **Seek** | Search-engine design | Full-text search, vector search, RAG | Mixed |
 | **Vigil** | Detection engineering | Sigma / YARA rule design | Mixed |
-| **Magi** | Multi-perspective deliberation | Architecture arbitration, Go / No-Go | No |
-| **Summon** *(explicit only)* | Named-figure thinking lenses | Channel a documented figure's mental models; conclave panel, expert critique; attestation-tagged, advisory only | No |
+| **Magi** | Multi-perspective deliberation and advisory | Architecture arbitration, Go / No-Go, founder bottleneck coaching, named-figure mental-model lenses | No |
 | **Saga** | Narrative design | Customer-experience storytelling | No |
-| **Cue** | Video script | Product videos, storyboards | No |
-| **Director** *(explicit only)* | Demo-video production | Demos generated from Playwright E2E | Mixed |
+| **Cue** | Video script and demo production | Product videos, storyboards, Playwright-generated demos | Mixed |
 | **Stage** | Slide generation | Marp / reveal.js / Slidev | Mixed |
 | **Frame** | Figma → code bridge | Design context extraction | No |
-| **Clause** *(optional: `legal-jp`)* | Legal-document review | Terms of service, privacy policy | No |
-| **Hearth** *(optional: `personal-env`)* | Dotfile management | zsh / tmux / neovim / ghostty configuration | Mixed |
 | **Mint** | Test-data generation | Factories, boundary values, seed management | Mixed |
 | **Tempo** | Schedule design | cron, timezone / DST, retry / backoff, business calendars | Mixed |
 

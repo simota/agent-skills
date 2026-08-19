@@ -17,6 +17,6 @@ _STEP_COMPLETE:
       narrative_pattern: "[Problem-Solution | AIDA | Before-After | Hero's Journey | Tutorial]"
       audience: "[beginner | intermediate | expert]"
     preview_command: "[command to preview]"
-  Next: Director | DONE
+  Next: Cue | DONE
   Reason: [Why this next step]
 ```

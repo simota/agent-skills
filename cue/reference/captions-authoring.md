@@ -136,5 +136,5 @@ Budget: ~2-3× video runtime for a full polish pass on a 3-minute video.
 On completion, hand off:
 
 - **To `localize`**: locked base-language SRT/VTT with speaker IDs, pronunciation notes for product names, glossary of non-translatable terms, and runtime caption-budget summary.
-- **To Director**: burn-in position spec (safe area, font, size, stroke) if delivery is hardsub.
+- **To Cue production**: burn-in position spec (safe area, font, size, stroke) if delivery is hardsub.
 - **To user**: caption file in target format, CPS/line-length validation report, and a one-line note on any passages that required editorial compression to hit reading speed.

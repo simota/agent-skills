@@ -11,7 +11,7 @@ Purpose: Implementation guidance for Japan's Act on the Protection of Personal I
 - **cloak `dpia` (sibling)**: APPI does not mandate DPIA but PPC strongly recommends for large-scale or special-care processing.
 - **canon (elsewhere)**: standards-level audit. `appi` produces operational compliance code.
 - **crypt (elsewhere)**: encryption design backing the "appropriate safety management" duty (Art. 23 安全管理措置).
-- **clause (elsewhere)**: 個人情報保護方針 (Privacy Policy in Japanese), 利用目的の特定 wording, Tokushoho disclosures for EC.
+- **canon (elsewhere)**: 個人情報保護方針 (Privacy Policy in Japanese), 利用目的の特定 wording, Tokushoho disclosures for EC.
 - **canon[regulatory] (elsewhere)**: ISMS / Pマーク (Privacy Mark) certification mapping; APPI is law, Pマーク is voluntary certification.
 
 ## Workflow
@@ -134,7 +134,7 @@ Reform is staged — track PPC quarterly notices for in-force dates.
 
 - **To Crypt**: encryption + key management for the 仮名加工情報 mapping table; key destruction protocol for 匿名加工情報 transition.
 - **To Canon**: APPI ↔ ISO/IEC 27701 control mapping; Pマーク (JIS Q 15001) gap matrix when seeking certification.
-- **To Clause**: 個人情報保護方針 (Privacy Policy) review in Japanese; 利用目的 specificity check; cross-border disclosure substance per 2022 standard.
+- **To Canon**: 個人情報保護方針 (Privacy Policy) review in Japanese; 利用目的 specificity check; cross-border disclosure substance per 2022 standard.
 - **To Canon[regulatory]**: ISMS scope alignment, Pマーク evidence package, audit trail design for PPC inspection.
 - **To Builder**: PPC reporting endpoint, consent UI for 要配慮 categories, Art. 23 opt-out channel, transfer addendum signing flow.
 - **To Schema**: tier annotations (`appi_tier: 個人 | 仮名 | 匿名`), 要配慮 flags, 利用目的 column-level metadata.

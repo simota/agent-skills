@@ -10,7 +10,7 @@ Lineage: Atlassian Incident Handbook + Google SRE customer comms guidance + regu
 - **Prose**: Product-wide microcopy, voice and tone system, onboarding copy, generic error messages. Prose defines the baseline voice; `comms` overrides it for incident directness.
 - **Triage `first-response`**: Sends only the first holding comm (T+10). `comms` authors the template library and drives the full cadence afterward.
 - **Launch**: Release-related comms (planned maintenance, new-feature announcements). `comms` is reactive incident; Launch is proactive release.
-- **Cloak / Clause**: Data-breach legal disclosure text. `comms` provides the operational comm skeleton; Cloak / Clause / legal counsel fill in regulated language.
+- **Cloak / Canon**: Data-breach legal disclosure text. `comms` provides the operational comm skeleton; Cloak / Canon / legal counsel fill in regulated language.
 
 ## Stakeholder Matrix
 

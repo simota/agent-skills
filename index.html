@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agent Skills — 111のグローバルAIエージェント + 3 project-local拡張</title>
-  <meta name="description" content="Claude Code / Codex CLI / Antigravity CLI で動作するオープンソースのAIエージェントエコシステム。111のグローバルスキルと3つのproject-local拡張。">
-  <meta property="og:title" content="Agent Skills — 111のグローバルAIエージェント + 3 project-local拡張">
-  <meta property="og:description" content="111のグローバルAIエージェントと3つのproject-local拡張。Claude Code / Codex CLI / Antigravity CLI 対応。">
+  <title>Agent Skills — 100のグローバルAIエージェント + 3 project-local拡張</title>
+  <meta name="description" content="Claude Code / Codex CLI / Antigravity CLI で動作するオープンソースのAIエージェントエコシステム。100のグローバルスキルと3つのproject-local拡張。">
+  <meta property="og:title" content="Agent Skills — 100のグローバルAIエージェント + 3 project-local拡張">
+  <meta property="og:description" content="100のグローバルAIエージェントと3つのproject-local拡張。Claude Code / Codex CLI / Antigravity CLI 対応。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://simota.github.io/agent-skills/">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:site_name" content="Agent Skills">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Agent Skills — 111 global + 3 project-local">
+  <meta name="twitter:title" content="Agent Skills — 100 global + 3 project-local">
   <meta name="twitter:description" content="バグ調査、セキュリティ、UI/UX、リリース管理まで。オープンソースのAIエージェントエコシステム。">
   <meta property="og:image" content="https://simota.github.io/agent-skills/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -25,7 +25,7 @@
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
       "name": "Agent Skills",
-      "description": "Open-source AI agent ecosystem for Claude Code, Codex CLI, and Antigravity CLI. 111 global skills plus 3 repository-local extensions.",
+      "description": "Open-source AI agent ecosystem for Claude Code, Codex CLI, and Antigravity CLI. 100 global skills plus 3 repository-local extensions.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "macOS, Linux, Windows",
       "url": "https://simota.github.io/agent-skills/",
@@ -44,8 +44,8 @@
       "@context": "https://schema.org",
       "@type": "ItemList",
       "name": "AI Agent Catalog",
-      "description": "111 global AI skills plus 3 repository-local extensions",
-      "numberOfItems": 114,
+      "description": "100 global AI skills plus 3 repository-local extensions",
+      "numberOfItems": 103,
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Nexus", "description": "Team orchestrator that decomposes requests and auto-designs optimal agent chains" },
         { "@type": "ListItem", "position": 2, "name": "Scout", "description": "Bug investigation, root cause analysis (RCA), and reproduction step identification" },
@@ -910,7 +910,7 @@ a:focus-visible, .btn:focus-visible, .filter-btn:focus-visible, .lang-btn:focus-
       <span class="dot"></span>
       Open Source — MIT License
     </div>
-    <h1 data-i18n="hero.title"><span class="accent">111</span>のグローバルAIエージェント<br><small>+ 3 project-local extensions</small></h1>
+    <h1 data-i18n="hero.title"><span class="accent">100</span>のグローバルAIエージェント<br><small>+ 3 project-local extensions</small></h1>
     <p data-i18n="hero.desc">バグ調査、セキュリティ監査、UI/UX、リリース管理まで — 開発のあらゆる領域を専門エージェントがカバー。Claude Code・Codex CLI・Antigravity CLI で今日から使えるオープンソースエコシステム。</p>
     <div class="hero-copy-cmd">
       <code>git clone https://github.com/simota/agent-skills.git ~/.claude/skills</code>
@@ -1116,15 +1116,13 @@ a:focus-visible, .btn:focus-visible, .filter-btn:focus-visible, .lang-btn:focus-
         </div>
       </div>
       <div class="subcmd-card">
-        <h4 class="subcmd-agent-name">/sketch</h4>
-        <p class="subcmd-agent-desc" data-i18n="subcmd.sketch">AI 画像生成 — 生成から後処理まで</p>
+        <h4 class="subcmd-agent-name">/builder image</h4>
+        <p class="subcmd-agent-desc" data-i18n="subcmd.builder-image">実装と AI 画像生成 — API 統合から後処理まで</p>
         <div class="subcmd-tokens">
-          <span class="subcmd-token-pill default">generate</span>
-          <span class="subcmd-token-pill">edit</span>
-          <span class="subcmd-token-pill">prompt</span>
-          <span class="subcmd-token-pill">batch</span>
-          <span class="subcmd-token-pill">style</span>
-          <span class="subcmd-token-pill">upscale</span>
+          <span class="subcmd-token-pill default">image</span>
+          <span class="subcmd-token-pill">image-edit</span>
+          <span class="subcmd-token-pill">image-prompt</span>
+          <span class="subcmd-token-pill">image-batch</span>
         </div>
       </div>
       <div class="subcmd-card">
@@ -1238,7 +1236,7 @@ a:focus-visible, .btn:focus-visible, .filter-btn:focus-visible, .lang-btn:focus-
       <div class="platform-card">
         <span class="platform-icon" style="font-family:var(--font-mono); font-size:1.2rem; color:var(--c-implementation);">GEMINI</span>
         <h3>Antigravity CLI</h3>
-        <p data-i18n="platforms.gemini.desc">GEMINI.md にスキルパスを設定して統合。Sketch や Dot エージェントと組み合わせれば Gemini API 画像生成も活用できます。</p>
+        <p data-i18n="platforms.gemini.desc">GEMINI.md にスキルパスを設定して統合。Builder の画像レシピを使えば Gemini API 画像生成も活用できます。</p>
       </div>
     </div>
     <div class="platform-note fade-in" data-i18n="platforms.note">
@@ -1365,16 +1363,16 @@ const AGENTS = [
   { name: 'Compass', motto: 'When in doubt, ask Compass. It finds the right skill for you.', description: 'スキルエコシステムナビゲーター。タスクに最適なエージェントを推薦', category: 'orchestration' },
   { name: 'Prune', motto: 'A garden grows by what you cut, not what you plant.', description: 'エコシステム整理監査。エージェント群の重複・冗長・不活性を監査し、統合候補とsunset計画を根拠付きで提案（提案のみ）', category: 'orchestration' },
 
-  // Investigation (22)
+  // Investigation (19)
   { name: 'Scout', motto: 'Every bug has a story. I read the ending first.', description: 'バグ調査・根本原因分析（RCA）・再現手順の特定', category: 'investigation' },
   { name: 'Ripple', motto: 'Every change sends ripples. Know where they land before you leap.', description: '変更前の影響分析。縦横両面からリスク評価', category: 'investigation' },
   { name: 'Spark', motto: "The best feature is the one users didn't know they needed.", description: '新機能提案。既存データ/ロジックを活用した機能をMarkdownで提案', category: 'investigation' },
-  { name: 'Compete', motto: 'Know your enemy. Know the market. Know yourself.', description: '競合調査・差別化ポイント特定・ポジショニング', category: 'investigation' },
+  { name: 'Compete', motto: 'Know your enemy. Know the market. Know yourself.', description: '競合調査・差別化・プロダクトおよびエンジニア個人のポジショニング', category: 'investigation' },
   { name: 'Voice', motto: 'Feedback is a gift. Analysis is unwrapping it.', description: 'ユーザーフィードバック収集・NPS調査設計・感情分析', category: 'investigation' },
   { name: 'Trace', motto: 'Every click tells a story. I read between the actions.', description: 'セッションリプレイ分析・行動パターン抽出・UX問題の物語化', category: 'investigation' },
-  { name: 'Canon', motto: "Standards are the accumulated wisdom of the industry.", description: 'OWASP/WCAG/OpenAPI/ISO標準への準拠度評価', category: 'investigation' },
+  { name: 'Canon', motto: "Standards are the accumulated wisdom of the industry.", description: 'OWASP/WCAG/ISOと法務・規制文書の準拠度評価', category: 'investigation' },
   { name: 'Lens', motto: 'See the code, not just search it.', description: 'コードベース理解・調査スペシャリスト', category: 'investigation' },
-  { name: 'Magi', motto: 'Three minds, one verdict. Consensus through diversity.', description: '3視点（論理・共感・実利）による多角的意思決定', category: 'investigation' },
+  { name: 'Magi', motto: 'Three minds, one verdict. Consensus through diversity.', description: '多角的意思決定、創業者のボトルネック診断、著名人の思考レンズ', category: 'investigation' },
   { name: 'Flux', motto: 'Bend the light. See what was always there.', description: '前提を疑い、異分野を組み合わせ、視点をずらす思考屈折エンジン', category: 'investigation' },
   { name: 'Riff', motto: 'The best ideas don\'t arrive. They evolve — one riff at a time.', description: '4思考モードによる反復対話型ブレインストーミング', category: 'investigation' },
   { name: 'Cast', motto: 'Personas are not invented. They are discovered, born, and evolved.', description: 'ペルソナキャスティング・レジストリ管理・エージェント間同期', category: 'investigation' },
@@ -1385,16 +1383,13 @@ const AGENTS = [
   { name: 'Rank', motto: 'Every priority tells a story of trade-offs.', description: 'ICE/RICE/WSJF/MoSCoW/Kanoで優先度を定量化', category: 'investigation' },
   { name: 'Field', motto: "Good research asks the right questions. Great research changes what you thought was the question.", description: 'ユーザーリサーチ設計・分析。インタビューガイド・ユーザビリティテスト・定性分析・ペルソナ/ジャーニーマップ作成', category: 'investigation' },
   { name: 'PDM', motto: 'Show where the project stands — planned, built, and the gap between.', description: 'プロジェクト進捗ナビゲーター（PdM型・読取専用）。計画スコープと実装コードを照合し、機能インベントリ・未実装リスト・ロードマップを生成', category: 'investigation' },
-  { name: 'Summon', motto: 'Channel the mind, not the mouth — documented thinking, never fabricated words.', description: '著名人の記録された思考を憑依させる助言レンズ。メンタルモデル・ヒューリスティック・意思決定スタイルを課題に適用', category: 'investigation' },
-  { name: 'Sage', motto: "Tell me what you're avoiding.", description: 'YC流ファウンダー助言。ソクラテス式問答で最重要ボトルネックを特定し、率直なフィードバックと1-2週間のアクションを抽出', category: 'investigation' },
 
-  // Git (4)
+  // Git (3)
   { name: 'Guardian', motto: 'Every commit tells a story. Make it worth reading.', description: 'Git/PRの番人。変更分析、コミット粒度最適化、PR戦略', category: 'git' },
-  { name: 'Harvest', motto: 'Code writes history. I harvest its meaning.', description: 'PR情報収集・週報/月報/リリースノート自動生成', category: 'git' },
-  { name: 'Launch', motto: "Shipping is not the end. It's the beginning of accountability.", description: 'リリース管理。バージョニング・CHANGELOG・Feature Flag', category: 'git' },
+  { name: 'Launch', motto: "Shipping is not the end. It's the beginning of accountability.", description: 'リリース管理、PR週報/月報、DORA指標、CHANGELOG・Feature Flag', category: 'git' },
   { name: 'Trail', motto: 'Every bug has a birthday. Every regression has a parent commit.', description: 'Git履歴調査・リグレッション根本原因分析・コード考古学', category: 'git' },
 
-  // Quality (16)
+  // Quality (13)
   { name: 'Radar', motto: 'Untested code is unfinished code.', description: 'ユニット/統合テスト追加・フレーキーテスト修正・カバレッジ向上', category: 'quality' },
   { name: 'Voyager', motto: "E2E tests are the user's advocate in CI/CD.", description: 'Web・モバイル・iOS E2E専門。Playwright/Cypress/XCUITest・スナップショット設計', category: 'quality' },
   { name: 'Sentinel', motto: "Security is not a feature. It's a responsibility.", description: 'セキュリティ静的分析（SAST）・脆弱性パターン検出', category: 'quality' },
@@ -1407,11 +1402,10 @@ const AGENTS = [
   { name: 'Void', motto: 'The best code is the code that was never written.', description: 'YAGNI検証・スコープカット・複雑性削減提案', category: 'quality' },
   { name: 'Mint', motto: 'Good tests need good data. Generate it by design.', description: 'テストデータ＆フィクスチャ生成。ファクトリパターン設計、境界値データ生成、合成データ生成、シードデータ管理', category: 'quality' },
   { name: 'Cloak', motto: "Privacy is not a feature. It's a right.", description: 'プライバシーエンジニアリング。PII検出・GDPR/CCPA準拠', category: 'quality' },
-  { name: 'Chain', motto: 'Treat every third-party skill like an npm install. Audit before invoking.', description: 'スキル/プラグイン/MCPサプライチェーン監査。sha256マニフェスト生成・Unicode Tagインジェクション検出・第三者受入チェック', category: 'quality' },
-  { name: 'Cull', motto: 'The worm leaves a husk. Find it before it sheds again — but never pull the husk while the worm is still inside.', description: 'サプライチェーンマルウェア感染スキャン。IoCベースのローカルスキャンとnpm/PyPIワーム（Shai-Hulud等）の安全な駆除・認証情報ローテーション', category: 'quality' },
+  { name: 'Chain', motto: 'Treat every third-party skill like an npm install. Audit before invoking.', description: 'スキル/MCPとnpm/PyPI供給網の監査、IoC感染スキャン、安全な駆除手順', category: 'quality' },
 
   // Implementation (5)
-  { name: 'Builder', motto: 'Types are contracts. Code is a promise.', description: '型安全かつプロダクションレディな実装職人。TDD・CQRS対応', category: 'implementation' },
+  { name: 'Builder', motto: 'Types are contracts. Code is a promise.', description: '型安全な実装と外部API統合。Gemini画像生成・編集パイプラインを含む', category: 'implementation' },
   { name: 'Artisan', motto: 'Prototypes promise. Production delivers.', description: 'React/Vue/Svelteの本番フロントエンド実装職人', category: 'implementation' },
   { name: 'Forge', motto: 'Done is better than perfect. Ship it, learn, iterate.', description: 'プロトタイプ作成。完璧より動くものを優先', category: 'implementation' },
   { name: 'Native', motto: 'Every pixel ships. Every platform matters.', description: 'iOS（Swift 6.2 + SwiftUI + Liquid Glass）/ Android（Kotlin 2.x + Jetpack Compose + Material 3 Expressive）のピュアネイティブモバイル実装スペシャリスト。RN/Flutter/KMP/CMPは対象外', category: 'implementation' },
@@ -1432,7 +1426,7 @@ const AGENTS = [
   { name: 'Ink', motto: 'Every stroke serves a purpose.', description: 'SVGアイコン/イラスト生成・アイコンシステム設計', category: 'uiux' },
   { name: 'Vitrine', motto: 'Components without stories are components without context.', description: 'Storybookストーリー作成・コンポーネントカタログ管理・Visual Regression統合。CSF 3.0/Factories、Storybook 10対応', category: 'uiux' },
 
-  // Architecture (12)
+  // Architecture (10)
   { name: 'Atlas', motto: 'Dependencies are destiny. Map them before they map you.', description: '依存関係分析・循環参照検出・ADR/RFC作成', category: 'architecture' },
   { name: 'Port', motto: 'From web to native. Translate the experience, not just the code.', description: 'Web→ネイティブ移植設計（2026仕様 — Liquid Glass / Material 3 Expressive / Swift 6.2 / targetSdk 36 / Privacy Manifest / 5.1.2(i) AI開示対応）。React/Vue/Svelte/AngularからiOS Swift・Android Kotlinピュアネイティブへの移植ブループリント、機能パリティマトリクス、Strangler-Fig段階ロードマップを生成', category: 'architecture' },
   { name: 'Gateway', motto: 'APIs are promises to the future. Design them like contracts.', description: 'API設計・OpenAPI仕様生成・バージョニング戦略', category: 'architecture' },
@@ -1444,13 +1438,11 @@ const AGENTS = [
   { name: 'Grok', motto: 'Understand the shape before writing the parser.', description: 'パターン・regex・parser・DSL設計。文法オーサリング、ReDoS-safe regex、AST変換', category: 'architecture' },
   { name: 'Trawl', motto: 'Design the web that catches the web.', description: 'クロール/スクレイピングシステム設計。分散クローラートポロジー・URLフロンティア・ポライトネス・コンプライアンス（設計のみ）', category: 'architecture' },
 
-  // DevOps (11)
-  { name: 'Anvil', motto: 'The terminal is the first interface. Make it unforgettable.', description: 'Terminal UI構築・CLI開発支援・開発ツール統合', category: 'devops' },
+  // DevOps (8)
+  { name: 'Anvil', motto: 'The terminal is the first interface. Make it unforgettable.', description: 'CLI/TUI、dotfiles、シェル・エディタ設定、macOS Apple Events自動化', category: 'devops' },
   { name: 'Gear', motto: "The best CI/CD is the one nobody thinks about.", description: '依存関係・CI/CD・Docker・高度なGitHub Actions設計', category: 'devops' },
   { name: 'Scaffold', motto: 'Infrastructure is the silent foundation of every dream.', description: 'クラウドインフラ（Terraform/Pulumi）・Docker Compose', category: 'devops' },
-  { name: 'Hearth', motto: 'Your tools should feel like home.', description: '個人開発環境の設定職人。zsh/tmux/neovim/ghostty等', category: 'devops' },
-  { name: 'Hone', motto: 'A sharp blade cuts clean. A sharp config cuts friction.', description: 'AI CLI設定の監査・最適化（Claude Code/Codex/Antigravity）', category: 'devops' },
-  { name: 'Latch', motto: 'Every event is an opportunity. Hook it before it slips away.', description: 'Claude Codeフック管理。ワークフロー自動化・品質ゲート', category: 'devops' },
+  { name: 'Hone', motto: 'A sharp blade cuts clean. A sharp config cuts friction.', description: 'AI CLI設定監査とClaude Code hookの設計・設定・デバッグ', category: 'devops' },
   { name: 'Triage', motto: 'In chaos, clarity is the first act of healing.', description: '障害対応・影響範囲特定・復旧手順策定・ポストモーテム', category: 'devops' },
   { name: 'Mend', motto: 'Known failures deserve known fixes.', description: '既知障害パターンの自動修復。runbook実行・段階的検証', category: 'devops' },
   { name: 'Ledger', motto: 'Every dollar in the cloud has a reason. Find it.', description: 'FinOps／クラウドコスト最適化。IaCコスト推定、right-sizing提案、RI/SP推奨', category: 'devops' },
@@ -1460,28 +1452,23 @@ const AGENTS = [
   { name: 'Schema', motto: 'A schema is a contract with the future.', description: 'DBスキーマ・マイグレーション・マルチテナント設計', category: 'data' },
   { name: 'Stream', motto: 'Data flows like water. My job is to build the pipes.', description: 'ETL/ELTパイプライン設計。Kafka/Airflow/dbt対応', category: 'data' },
 
-  // Docs (6)
+  // Docs (4)
   { name: 'Scribe', motto: 'A specification is a contract between vision and reality.', description: 'PRD/SRS/設計書・実装チェックリスト・テスト仕様書を作成', category: 'docs' },
   { name: 'Quill', motto: 'Code tells computers what to do. Documentation tells humans why.', description: 'JSDoc/TSDoc追加・README更新・型定義改善', category: 'docs' },
   { name: 'Morph', motto: 'A document is timeless. Its format is temporary.', description: 'ドキュメントフォーマット変換（Markdown↔Word/PDF/HTML）', category: 'docs' },
-  { name: 'Tome', motto: 'Changes are forgotten. Knowledge endures.', description: '変更内容を学習ドキュメントに変換（用語・設計判断・アンチパターン解説）', category: 'docs' },
-  { name: 'Clause', motto: 'Every clause carries weight. Every omission carries risk.', description: '利用規約・プライバシーポリシー・特商法の法的レビュー', category: 'docs' },
-  { name: 'Zine', motto: 'The hook earns the second paragraph.', description: '外部公開テックブログ・記事連載オーサリング。note/Zenn/Qiita/dev.to、フック設計、連載管理', category: 'docs' },
+  { name: 'Tome', motto: 'Changes are forgotten. Knowledge endures.', description: '変更内容を学習資料やnote/Zenn/Qiita/dev.to向け公開記事へ変換', category: 'docs' },
 
-  // Growth (6)
+  // Growth (5)
   { name: 'Growth', motto: 'Traffic without conversion is just expensive vanity.', description: 'SEO/SMO/CRO。meta/OGP/JSON-LD・CTA改善', category: 'growth' },
   { name: 'Funnel', motto: 'Above the fold is your one shot. Make every pixel convert.', description: 'LP構造・CV戦略・CTA最適化・プレミアム制作パイプライン', category: 'growth' },
   { name: 'Pulse', motto: 'What gets measured gets managed.', description: 'KPI定義・トラッキングイベント設計・ダッシュボード仕様', category: 'growth' },
   { name: 'Experiment', motto: 'Every hypothesis deserves a fair trial.', description: 'A/Bテスト設計・サンプルサイズ計算・フィーチャーフラグ', category: 'growth' },
-  { name: 'Crest', motto: 'Your brand is what people say when you are not in the room.', description: 'エンジニアセルフブランディング。GitHub/LinkedIn/ブログ戦略', category: 'growth' },
   { name: 'Bond', motto: 'Acquisition is expensive. Retention is profitable.', description: 'リテンション戦略・再エンゲージメント・チャーン予防。リテンション分析・トリガー設計・ゲーミフィケーション・習慣化・ロイヤルティ', category: 'growth' },
 
-  // Creative (6)
+  // Creative (4)
   { name: 'Canvas', motto: 'A diagram is worth a thousand lines of documentation.', description: 'Mermaid図/ASCIIアート/draw.ioでコード・設計を可視化', category: 'creative' },
-  { name: 'Sketch', motto: 'From words to worlds, prompt to pixel.', description: 'Gemini APIを使用したAI画像生成コードの作成', category: 'creative' },
-  { name: 'Director', motto: 'A demo that moves hearts moves products.', description: 'Playwright E2Eを活用した機能デモ動画の自動撮影', category: 'creative' },
   { name: 'Saga', motto: 'Every product has a story worth telling.', description: 'ナラティブデザイン。顧客体験の物語化・シナリオストーリー', category: 'creative' },
-  { name: 'Cue', motto: 'Every frame tells a story.', description: 'ビデオスクリプト・ストーリーボード・ナレーション設計', category: 'creative' },
+  { name: 'Cue', motto: 'Every frame tells a story.', description: '動画脚本・ストーリーボードとPlaywrightデモ録画・品質検証', category: 'creative' },
   { name: 'Stage', motto: 'Every slide is a stage.', description: 'Marp/reveal.js/Slidevスライド生成・カンファレンストーク最適化', category: 'creative' },
 
   // Specialized (7)
@@ -1509,15 +1496,12 @@ const SUBCOMMANDS = {
   "Canon": [{n:"owasp",d:"OWASP Top 10 / ASVS security standards assessment"}, {n:"wcag",d:"WCAG 2.2 / WAI-ARIA accessibility assessment"}, {n:"openapi",d:"OpenAPI 3.1 / RFC 9110 API standards compliance check"}, {n:"iso",d:"ISO/IEC 25010:2023 quality characteristics assessment (SOLID/Clean Code)"}, {n:"gap",d:"Multi-standard gap analysis, audit report generation"}, {n:"nist",d:"NIST CSF 2.0 (Govern/Identify/Protect/Detect/Respond/Recover) Tier and Profile assessment"}, {n:"pci",d:"PCI-DSS v4.0.1 12-Requirement compliance, CDE scoping, SAQ/ROC selection"}, {n:"gdpr",d:"GDPR (Reg. (EU) 2016/679) Articles 5/6/7/13/17/25/30/32/33/35 data-protection assessment"}],
   "Canvas": [{n:"flow",d:"Flowchart generation (default Mermaid)"}, {n:"sequence",d:"Sequence diagram"}, {n:"er",d:"ER diagram (Schema integration)"}, {n:"journey",d:"User journey map (Echo integration)"}, {n:"class",d:"Class diagram"}, {n:"c4",d:"C4 model rendering (Context / Container / Component / Code) in Mermaid C4 syntax"}, {n:"architecture",d:"Informal system architecture sketch (layered / hexagonal / microservice / event-driven) with flowchart + subgraph"}, {n:"gantt",d:"Gantt, roadmap, or timeline with milestones, dependencies, critical path"}],
   "Cast": [{n:"generate",d:"Persona generation (CONJURE) — create new personas from sources"}, {n:"registry",d:"Registry management — lifecycle check, audit, archive"}, {n:"evolve",d:"Data-driven evolution — drift updates from Trace/Voice/Pulse"}, {n:"distribute",d:"Packaging for other agents (Echo/Spark/Retain, etc.)"}, {n:"archetype",d:"Map personas to Jung 12 brand archetypes + Jobs-To-Be-Done archetype model"}, {n:"segment",d:"RFM scoring, behavioral cohort, psychographic clustering for evidence-grounded personas"}, {n:"bias-audit",d:"Representation bias detection, intersectionality coverage, ethical-persona checklist"}],
-  "Clause": [{n:"tos",d:"Terms of Service clause coverage check and risk flagging"}, {n:"privacy",d:"Privacy Policy GDPR/APPI alignment check"}, {n:"tokushoho",d:"Tokushoho (Specified Commercial Transactions Act) required-field check"}, {n:"gap",d:"Multi-document consistency check, missing clause detection"}, {n:"dpa",d:"Data Processing Agreement review (GDPR Art"}, {n:"eula",d:"End User License Agreement review (license type, IP, warranty/indemnity, jurisdiction overrides)"}, {n:"cookie",d:"Cookie banner and cookie policy review (ePrivacy, GDPR consent, IAB TCF v2.2, categorization)"}],
   "Cloak": [{n:"pii",d:"PII detection and classification"}, {n:"flow",d:"Data flow visualization"}, {n:"consent",d:"Consent management pattern implementation"}, {n:"dpia",d:"DPIA facilitation"}, {n:"gdpr",d:"Compliance-ready code implementation"}, {n:"ccpa",d:"California consumer rights, GPC, SPI limit-use, service-provider contracts"}, {n:"appi",d:"Japanese APPI implementation: three-tier data taxonomy, Art"}, {n:"pseudonymize",d:"k-anonymity / l-diversity / DP / tokenization / FPE technique selection"}],
   "Compass": [{n:"recommend",d:"Recommend best-fit skill for the task (cache-first; falls back to full catalog)"}, {n:"catalog",d:"Full catalog of all skills (cache bypassed)"}, {n:"onboard",d:"Orientation for new users"}, {n:"recipes",d:"Per-skill Recipe (Subcommand) listing"}, {n:"init",d:"Generate .claude/compass-cache.md for the current repository"}, {n:"refresh",d:"Force-regenerate .claude/compass-cache.md with before/after diff (added / removed / affinity-changed skills)"}],
   "Compete": [{n:"matrix",d:"Competitor map, feature comparison matrix, tiering"}, {n:"swot",d:"SWOT, positioning, differentiation strategy"}, {n:"battle-card",d:"Battle card creation, competitive alert response plan"}, {n:"positioning",d:"Positioning map, category design, moat evaluation"}, {n:"llm-visibility",d:"LLM brand presence analysis, AI share of voice measurement"}, {n:"battle",d:"One-pager sales-enablement design, objection handling pairs, freshness governance, GTM distribution"}, {n:"winloss",d:"Post-decision interviews, segmentation, theme extraction, cadence design, CRM integration"}, {n:"moat",d:"Helmer 7 Powers assessment, durability scoring, anti-moat detection, statics vs dynamics"}],
-  "Crest": [{n:"github",d:"GitHub Profile README optimization, pinned repo design"}, {n:"linkedin",d:"LinkedIn profile optimization, Topic DNA alignment"}, {n:"blog",d:"Blog, Qiita, Zenn content strategy and article planning"}, {n:"conference",d:"Conference CFP authoring, talk theme design"}, {n:"sns",d:"X, Bluesky, LinkedIn SNS publishing strategy, zero-click design"}, {n:"topic-dna",d:"Topic DNA / niche positioning — define what the engineer is known for; tech × domain × perspective triangulation"}, {n:"portfolio",d:"Personal portfolio site / homepage architecture"}, {n:"bio",d:"Multi-platform bio writing — GitHub one-line, LinkedIn About ≤275 chars, X 160-char, conference 50-word, long 200-word variants"}],
   "Crypt": [{n:"algorithm",d:"Crypto algorithm selection, parameter spec, anti-pattern detection"}, {n:"key",d:"General key-management strategy (hierarchy, rotation policy, ceremony, derivation, revocation, destruction)"}, {n:"e2ee",d:"End-to-end encryption architecture design"}, {n:"tls",d:"TLS/mTLS configuration, cipher suite selection, certificate management"}, {n:"signature",d:"Digital signature, JWT/JWE/JWS scheme design"}, {n:"password",d:"Password-hashing scheme design (Argon2id / bcrypt / scrypt selection, OWASP 2024 parameters, pepper, bcrypt→Argon2id migration)"}, {n:"kms",d:"KMS-service integration pattern (AWS KMS / GCP KMS / Azure Key Vault / Vault Transit), envelope encryption, data-key caching, HSM-backed CMK"}, {n:"pqc",d:"Classical-to-post-quantum migration plan, hybrid schemes (X25519+ML-KEM), FIPS 203/204/205 target selection, harvest-now-decrypt-later…"}],
   "Cue": [{n:"script",d:"Full video script authoring"}, {n:"storyboard",d:"Per-scene storyboard, visual design"}, {n:"narration",d:"Narration text with duration and pacing design"}, {n:"explainer",d:"Product explainer and comparison video scripts"}, {n:"shorts",d:"Vertical short-form script for TikTok / Reels / YouTube Shorts"}, {n:"captions",d:"SRT / VTT / ASS subtitle and SDH authoring with timing"}, {n:"localize",d:"Multi-language narration / voice-over adaptation with duration budgeting"}],
   "Darwin": [{n:"health",d:"Ecosystem health assessment"}, {n:"fitness",d:"Agent fitness scoring"}, {n:"evolve",d:"Evolution proposal"}, {n:"sunset",d:"Sunset candidate skill proposal"}],
-  "Director": [{n:"demo",d:"Feature demo video recording and production"}, {n:"scenario",d:"Scenario design, storyboard"}, {n:"record",d:"Playwright recording configuration and execution"}, {n:"onboard",d:"Onboarding and tutorial recording"}, {n:"voiceover",d:"TTS narration design — SSML pacing, voice selection, LUFS normalization, breathing pauses"}, {n:"captions",d:"Caption authoring — SRT / WebVTT, WCAG 1.2.2 timing, forced / closed / open variants"}, {n:"thumbnail",d:"Per-platform thumbnail design (YouTube 1280×720, LinkedIn, X, Product Hunt) + A/B variants"}],
   "Dot": [{n:"svg",d:"SVG pixel art generation"}, {n:"canvas",d:"Canvas drawing"}, {n:"phaser",d:"Phaser 3 sprites"}, {n:"pillow",d:"Image output via Pillow"}, {n:"animation",d:"Sprite animation cycles (idle / walk / run / attack / hit / death) with frame timing"}, {n:"palette",d:"Limited-palette pixel art (NES / Game Boy / PICO-8 / CGA / Pico-Pix) with color-cycling"}, {n:"tilesheet",d:"Tile-based sheet design for Tiled / LDtk / Phaser tilemap (autotiles, terrain, atlas pack)"}],
   "Echo": [{n:"walkthrough",d:"Persona cognitive walkthrough, emotion scoring"}, {n:"confusion",d:"Identify confusion points, cognitive load, mental model gaps"}, {n:"emotion",d:"Emotion map, detailed friction score analysis"}, {n:"persona",d:"Multi-persona comparison, cross-persona analysis"}, {n:"heuristic",d:"Nielsen 10 / domain-specific heuristic expert review with severity scoring and evaluator-panel reconciliation"}, {n:"sus",d:"System Usability Scale authoring, scoring, and benchmark comparison with percentile / grade / adjective mapping"}, {n:"aloud",d:"Concurrent / retrospective think-aloud session moderation, prompt discipline, transcript coding, and finding extraction"}, {n:"demand",d:"Synthetic feature demand, JTBD, 5 Whys, opportunity trees"}],
   "Experiment": [{n:"ab",d:"A/B test design, hypothesis document authoring, sample size calculation"}, {n:"cuped",d:"CUPED/CUPAC variance reduction, sensitivity improvement design"}, {n:"switchback",d:"Marketplace/network-effect switchback experiments with rotation-window, carryover, and block-randomization design"}, {n:"analyze",d:"Experiment result analysis, statistical significance, confidence interval report"}, {n:"guardrail",d:"Per-experiment metric portfolio"}, {n:"ff",d:"Flag-driven experiment assignment, staged ramp (1/5/25/50/100%), kill-switch design, decommission handoff"}, {n:"srm",d:"Sample Ratio Mismatch diagnosis via chi-squared + segment root-cause decomposition"}, {n:"sequential",d:"Anytime-valid sequential testing (mSPRT / confidence sequences / group sequential α-spending)"}, {n:"bayesian",d:"Bayesian A/B with priors, posterior inference, credible intervals, ROPE, probability-to-beat"}],
@@ -1533,13 +1517,10 @@ const SUBCOMMANDS = {
   "Grove": [{n:"audit",d:"Audit existing repo structure, detect anti-patterns"}, {n:"design",d:"Design a new directory structure"}, {n:"docs",d:"docs/ layout (PRD, specs, ADR)"}, {n:"migrate",d:"Migration plan for existing repo structure"}, {n:"monorepo",d:"Monorepo layout, tool selection (Nx/Turborepo/pnpm/Bazel/Lerna), package boundaries, polyrepo→monorepo migration"}, {n:"tests",d:"Tests/ directory layout (unit/integration/e2e split, mirror vs co-locate, fixtures/factories/helpers)"}, {n:"scripts",d:"scripts/ directory layout (language-pick rubric, setup/build/release/dev split, naming, shebangs)"}, {n:"llm",d:"LLM navigation, prompt-cache topology, naming and sharding"}],
   "Growth": [{n:"seo",d:"Meta tags, JSON-LD, heading hierarchy, GEO optimization"}, {n:"smo",d:"OGP / Twitter Card social-share setup"}, {n:"cro",d:"CTA optimization, form improvements, exit intent"}, {n:"geo",d:"AI Overview / ChatGPT / Perplexity citation optimization"}, {n:"keyword",d:"Keyword research methodology — search intent classification, query clustering, SERP feature analysis, AI prompt mining"}, {n:"audit",d:"Full-site SEO audit — crawlability, indexability, content gap, internal linking, log-file analysis"}, {n:"vitals",d:"Core Web Vitals deep optimization"}],
   "Guardian": [{n:"pr",d:"PR preparation (title/body/review angles/risk assessment)"}, {n:"commit",d:"Commit granularity split proposal (atomic commit design)"}, {n:"naming",d:"Branch/commit naming check (Conventional Commits)"}, {n:"strategy",d:"Merge strategy (squash/rebase/merge) selection"}, {n:"reshape",d:"Create a new branch off the base, squash-import the development branch, then recommit at optimal granularity to reshape history"}, {n:"audit",d:"Read-only diagnosis of a branch's commit history (WIP/fixup residue, Conventional Commits violations, atomicity, size deviation)"}, {n:"split",d:"Plan to decompose an M+ branch into stacked PRs (dependency order, file boundaries, estimated review time)"}, {n:"health",d:"Repo-wide branch inventory (stale, diverged, merged-but-undeleted, conflict risk)"}],
-  "Harvest": [{n:"weekly",d:"Weekly work report (PR aggregation and summary)"}, {n:"monthly",d:"Monthly report (includes DORA metrics)"}, {n:"release",d:"Release notes generation (PR aggregation between tags)"}, {n:"retro",d:"Retrospective aggregation and narrative"}, {n:"dora",d:"DORA 4-key metric tier classification with SPACE complement"}, {n:"okr",d:"PR-to-Objective mapping and KR narrative for quarterly review"}, {n:"prstats",d:"Cycle time histogram, P50/P75/P90 latency, Lorenz curve, large-PR risk"}],
-  "Hearth": [{n:"tmux",d:"tmux + starship/powerlevel10k configuration"}, {n:"neovim",d:"Neovim 0.12+ configuration (LSP, vim.pack, DAP)"}, {n:"ghostty",d:"Ghostty 1.3+ configuration (theme, font, keybindings)"}, {n:"vscode",d:"VS Code or Cursor settings, keybindings, extensions, Settings Sync, devcontainer"}, {n:"shellfn",d:"Functions/aliases layout, PATH hygiene, direnv/mise/asdf/nvm, XDG, lazy completions"}, {n:"audit",d:"Audit existing dotfile setup, detect anti-patterns"}],
   "Helm": [{n:"scenario",d:"Business scenario planning (Baseline/Optimistic/Pessimistic 3 scenarios)"}, {n:"swot",d:"SWOT analysis + PESTLE→Porter cascade"}, {n:"pestle",d:"PESTLE macro-environment analysis + TPESTRE variants"}, {n:"porter",d:"Porter 5 Forces industry structure analysis + entry evaluation"}, {n:"forecast",d:"KPI forecasting, financial modeling, SaaS metrics"}, {n:"jtbd",d:"Christensen JTBD framework — job statement, forces of progress (push/pull/anxiety/habit), competitive set by job not product"}, {n:"blue-ocean",d:"Kim & Mauborgne Blue Ocean — Value Curve, ERRC grid (Eliminate/Reduce/Raise/Create), Four Actions, non-customer tiers"}, {n:"wardley",d:"Simon Wardley value-chain mapping"}],
   "Hone": [{n:"audit",d:"Comprehensive audit of target CLI config (FETCH→AUDIT→PROPOSE)"}, {n:"diff",d:"Before/After diff analysis of two config snapshots"}],
   "Ink": [{n:"icon",d:"Single icon generation"}, {n:"illustration",d:"SVG illustration"}, {n:"system",d:"Icon system design"}, {n:"sprite",d:"Build SVG sprite symbols"}, {n:"animate",d:"SMIL/CSS animation authoring for icons and microinteractions"}, {n:"theme",d:"currentColor / CSS custom property theming, dark-mode variants"}, {n:"a11y",d:"ARIA, <title>/<desc>, decorative vs informative annotation"}, {n:"optimize",d:"SVGO config, path simplification, decimal precision, transform flatten, sprite vs inline trade-off"}, {n:"pictogram",d:"ISO 7001 wayfinding, AIGA symbols, safety / accessibility pictograms with cross-cultural recognition"}, {n:"logo",d:"Wordmark / monogram / lockup construction with typographic design and licensing-aware delivery"}],
   "Judge": [{n:"pr",d:"Full diff review of an entire PR (Codex + Antigravity + Claude in parallel)"}, {n:"security",d:"CWE/OWASP focus, stricter checks on AI-generated code"}, {n:"perf",d:"Focus on N+1 / render cost / bundle size"}, {n:"style",d:"Naming and structure only (no bug flagging, Claude single engine)"}, {n:"quick",d:"<50 LOC low-risk, Claude single engine"}, {n:"intent",d:"Focus on alignment between code and PR body"}],
-  "Latch": [{n:"configure",d:"PreToolUse/PostToolUse/Stop hook design, settings.json changes"}, {n:"debug",d:"Debug existing hooks (failure, latency, misfire)"}, {n:"pretool",d:"PreToolUse hook specialization (block, approve, input rewrite)"}, {n:"posttool",d:"PostToolUse hook specialization (logging, automation, quality gate)"}, {n:"notification",d:"Notification event hook — desktop / Slack / Discord push, sound on permission requests, idle/long-running task alerts, mute rules per…"}, {n:"sessionstart",d:"SessionStart event hook — context preloading (CLAUDE.md auto-summary, recent PR list, branch/CI status injection), env validation gates,…"}, {n:"security",d:"PreToolUse security guard — PII / secret regex denial, dangerous Bash command interception (rm -rf /, git push --force to main), env var…"}],
   "Launch": [{n:"plan",d:"Release planning and strategy"}, {n:"changelog",d:"CHANGELOG generation and updates"}, {n:"notes",d:"User-facing release notes"}, {n:"rollback",d:"Rollback planning and runbook"}, {n:"flag",d:"Feature flag management and staged rollout design"}, {n:"hotfix",d:"Emergency patch release (shortened CI / hotfix branch / 2h SLA / rollback bundled / backport to main)"}, {n:"canary",d:"Staged traffic rollout (1%->10%->50%->100%) with automatic guardrails and abort conditions"}],
   "Ledger": [{n:"estimate",d:"IaC cost estimation, pre/post-change cost diff"}, {n:"rightsizing",d:"Instance right-sizing, CPU/memory utilization analysis"}, {n:"anomaly",d:"Cost anomaly detection rule design, spike response playbook"}, {n:"ri-sp",d:"Reserved Instances, Savings Plans, GCP CUD, Azure RI commitment strategy with break-even and ladder design"}, {n:"gpu-cost",d:"AI/ML and GPU workload cost — H100/H200/A100/L40S/T4 SKU economics, training vs inference split, spot strategy, quantization impact"}, {n:"tagging",d:"Mandatory tag taxonomy, AWS/GCP/Azure enforcement (SCP/Org Policy/Azure Policy), showback / chargeback design"}, {n:"finops-framework",d:"FinOps Foundation Framework — Crawl/Walk/Run maturity across 22 capabilities, persona map, phase-appropriate tooling"}, {n:"unit-economics",d:"Per-customer / per-transaction / per-feature cost attribution, COGS decomposition, margin + contribution analysis"}, {n:"greenops",d:"Carbon-aware scheduling, embodied+operational CO2e accounting, SCI (ISO/IEC 21031), region-carbon choice, FinOps×GreenOps trade-off"}],
   "Lens": [{n:"map",d:"Structure mapping (overview, module boundaries and responsibility analysis)"}, {n:"discover",d:"Feature discovery (\"does X exist?\")"}, {n:"trace",d:"Data flow trace (origin → transformation → destination)"}, {n:"responsibility",d:"Module responsibility analysis (cognitive complexity, comprehension debt evaluation)"}, {n:"dependency",d:"Deep dependency graph analysis"}, {n:"hotspot",d:"Change-frequency hotspot identification"}, {n:"evolution",d:"Code evolution tracing via git history"}],
@@ -1582,7 +1563,6 @@ const SUBCOMMANDS = {
   "Shift": [{n:"plan",d:"Migration planning and scope estimation"}, {n:"codemod",d:"AST transform script generation"}, {n:"strangler",d:"Strangler Fig strategy design and implementation"}, {n:"verify",d:"Behavioral equivalence verification before and after migration"}, {n:"framework",d:"Framework major-version jump (Vue 2→3, React CRA→Next.js, Angular major, Rails major, Spring Boot 2→3, Express→Fastify/Hono) with…"}, {n:"lang",d:"Language / runtime migration (JS→TS, TS strict staged enablement, Python 2→3 residual, Node LTS bumps, Go toolchain, Java 8→17/21)"}, {n:"deprecate",d:"Feature / API sunset with telemetry, Sunset header, migration docs, and staged removal playbook"}],
   "Siege": [{n:"load",d:"Load/stress/spike/soak testing and SLO validation"}, {n:"contract",d:"Contract testing (Pact/Specmatic), CDC verification"}, {n:"chaos",d:"Chaos engineering, fault injection, game days"}, {n:"mutation",d:"Mutation testing, test quality measurement, survivor analysis"}, {n:"fuzz",d:"Coverage-guided fuzzing (AFL++/libFuzzer/go-fuzz/cargo-fuzz/Jazzer), corpus management, sanitizer integration"}, {n:"property",d:"Property-based testing (fast-check/Hypothesis/jqwik/PropEr), generator design, stateful/model-based properties"}, {n:"smoke",d:"Post-deploy smoke / sanity gates, synthetic checks, ≤3-min deploy-verification suite"}],
   "Sigil": [{n:"generate",d:"Project-specific skill generation"}, {n:"analyze",d:"Codebase and stack analysis"}, {n:"convention",d:"Convention extraction"}, {n:"migrate",d:"Adapt an existing skill to the project"}, {n:"blueprint",d:"Project operating-layer blueprint and routing map"}],
-  "Sketch": [{n:"generate",d:"Text-to-image generation"}, {n:"edit",d:"Editing existing images"}, {n:"batch",d:"Generate many variants with consistent seed and style (cards, hero sets, character sheets)"}, {n:"style",d:"Match an existing brand or reference style, or anchor cross-asset cohesion"}, {n:"upscale",d:"Post-process: upscale, masked inpaint, or outpaint a base render"}, {n:"cinematic",d:"Photographic / cinematographic prompt construction"}, {n:"provenance",d:"C2PA + SynthID + EXIF AI-disclosure metadata, watermarking, takedown response, and platform compliance"}, {n:"policy",d:"Content-policy + brand-safety guardrails, NSFW filter, deepfake / likeness rules, regulatory compliance"}],
   "Spark": [{n:"propose",d:"New feature proposal (generate one RFC)"}, {n:"plan",d:"Prioritization and backlog scoring"}, {n:"brainstorm",d:"Divergent candidate generation and opportunity mining"}, {n:"refine",d:"Refine existing proposals, add hypotheses and fail conditions"}, {n:"opportunity",d:"Opportunity sizing: TAM/SAM/SOM, reach × impact × confidence, WTP signals, OST mapping"}, {n:"kill",d:"Kill-criteria authoring and sunset decisions (pre-commit thresholds, migration-off, sunset communication)"}, {n:"retro",d:"Post-launch feature retrospective: adopted/iterated/discarded, decision vs outcome quality, feedback into discovery"}],
   "Stage": [{n:"marp",d:"Marp Markdown slide generation"}, {n:"reveal",d:"reveal.js HTML slide generation"}, {n:"slidev",d:"Slidev Vue slide generation"}, {n:"conference",d:"LT / conference talk optimization"}, {n:"timing",d:"WPM-based pacing and speaker notes"}, {n:"narrative",d:"Narrative arc design — Pixar formula, Hero's Journey for talks, Problem-Solution-Benefit, Minto Pyramid"}, {n:"visual",d:"Slide visual design — typography hierarchy, color/contrast (WCAG AA), image use, alignment grid"}, {n:"rehearsal",d:"Rehearsal and delivery — breathing, pacing, pause discipline, eye contact, Q&A handling"}],
   "Stream": [{n:"etl",d:"ETL pipeline design (source → transform → load)"}, {n:"elt",d:"ELT pipeline (warehouse-centric transformation)"}, {n:"stream",d:"Kafka/Flink/Kinesis streaming design"}, {n:"dbt",d:"dbt project design and model structure"}, {n:"cdc",d:"Debezium / logical replication / binlog / SQL Server CDC → Kafka Connect sink with snapshot + incremental handoff"}, {n:"reverse",d:"DWH → operational SaaS (Salesforce / HubSpot / Zendesk) activation via Census / Hightouch / Workato"}, {n:"quality",d:"Great Expectations / Soda / Elementary checks (freshness / completeness / uniqueness / validity / distribution) with OpenLineage and…"}],
@@ -1599,15 +1579,11 @@ const SUBCOMMANDS = {
   "Voyager": [{n:"playwright",d:"Playwright E2E test suite creation"}, {n:"page-object",d:"Page Object Model design and implementation"}, {n:"auth",d:"Authentication flow E2E tests"}, {n:"a11y",d:"Accessibility automated testing"}, {n:"visual",d:"Visual regression testing"}, {n:"api",d:"User-journey E2E through an API-only interface (no UI): HTTP call → backend state → downstream API validation chain"}, {n:"mobile",d:"E2E testing for shipped mobile apps (Detox / Maestro / Appium / device farm)"}, {n:"component",d:"Component tests executed in a real browser (Playwright CT / Cypress CT / Storybook Interactions)"}, {n:"ios",d:"XCUITest, accessibility identifiers and App Store snapshots"}],
   "Weave": [{n:"design",d:"State transition design"}, {n:"saga",d:"Saga pattern distributed transactions"}, {n:"approval",d:"Approval flow design"}, {n:"detect",d:"Invalid transition detection"}, {n:"retry",d:"Exponential backoff, jitter, max-attempt cap, DLQ terminal state, idempotency contract"}, {n:"timeout",d:"TTL state design, deadline propagation, grace-period transitions, stuck-state recovery"}, {n:"compensation",d:"Saga compensation per forward step, idempotency keys, compensation-of-compensation, ordering"}],
   "Zen": [{n:"refactor",d:"General refactoring (composite improvements, code smell fixes)"}, {n:"naming",d:"Variable and function name improvements only"}, {n:"extract",d:"Split and extract long functions"}, {n:"constants",d:"Replace magic numbers with named constants"}, {n:"dead",d:"Unused code removal"}, {n:"simplify",d:"Compress redundant branches, ternaries, and unnecessary conversions into equivalent concise forms"}, {n:"split",d:"Incrementally split overly long functions along responsibility boundaries (enhanced extract)"}, {n:"guard",d:"Convert nested if to early return / guard clauses"}],
-  "Zine": [{n:"note",d:"note long-form Japanese articles, magazine series episode authoring"}, {n:"zenn",d:"Zenn articles for engineers, topic and emoji configuration"}, {n:"qiita",d:"Qiita tech tips, tag strategy, LGTM optimization"}, {n:"devto",d:"dev.to articles for a global English audience, cover image and tag configuration"}, {n:"series",d:"Series design, index articles, cross-links, and episode management"}, {n:"headline",d:"Title and headline patterns — CTR-tested formulas, number/curiosity/promise/contrarian variants, platform-specific length tuning"}, {n:"repurpose",d:"Cross-platform content repurposing"}, {n:"interview",d:"Interview-format article authoring"}],
   "Prune": [{n:"audit",d:"Full ecosystem cleanup audit (default)"}, {n:"merge",d:"Propose merge plan for a specific candidate pair or set"}, {n:"sunset",d:"Propose sunset plan for inactive/superseded skills"}, {n:"pack-impact",d:"Pre-removal SKILL_PACKS / profile impact analysis"}],
   "Ascent": [{n:"direction",d:"Compare stay/job-change/side-business/independence and recommend a route"}, {n:"self",d:"Strengths, values, work-style, achievement inventory"}, {n:"market",d:"Target-role, salary-band, market-trend, company research (cited)"}, {n:"learn",d:"Skill-gap analysis + 90-day weekly roadmap"}, {n:"jobsearch",d:"Target list, application tracker, interview prep, outreach, negotiation"}, {n:"package",d:"End-to-end career strategy document package across all phases"}],
   "PDM": [{n:"status",d:"Reconciled feature-status matrix (planned vs built) + dashboard"}, {n:"features",d:"Implemented-feature catalog extracted from code"}, {n:"gaps",d:"Unimplemented / planned-but-unbuilt features with evidence"}, {n:"roadmap",d:"Roadmap rollup view from milestones/issues/specs"}, {n:"wbs",d:"Work-breakdown tree of project scope from artifacts"}, {n:"ask",d:"Free-form PdM Q&A about project status"}],
-  "Summon": [{n:"channel",d:"One figure applied to one problem → channeled reading"}, {n:"conclave",d:"2-5 figures channeled independently, then contrasted (no forced consensus)"}, {n:"critique",d:"A named figure critiques the user's plan/draft/decision by their standards"}, {n:"roster",d:"Author or refresh reusable figure profiles"}],
   "Field": [{n:"interview",d:"Interview guide and protocol design"}, {n:"usability",d:"Usability test planning and task design"}, {n:"analysis",d:"Qualitative analysis, affinity mapping, and insight synthesis"}, {n:"persona",d:"Persona creation and journey map generation"}, {n:"journey",d:"Journey mapping and JTBD analysis"}, {n:"survey",d:"Quantitative survey design (Likert / MaxDiff / Conjoint), sample-size math, order-bias control"}, {n:"diary",d:"Diary / longitudinal behavioral study design with ESM scheduling"}, {n:"cards",d:"Information architecture validation via card sort, tree test, first-click testing"}, {n:"multi",d:"Multi-engine research-design generation with methodology-coverage matrix scoring"}],
-  "Sage": [{n:"1on1",d:"One founder, one session"}, {n:"group",d:"Simulate multi-founder group office hours"}, {n:"triage",d:"Fast unblock when founder is stuck (≤5 exchanges)"}, {n:"retro",d:"Postmortem on a recent decision or outcome"}, {n:"pitch",d:"Critique elevator / Demo Day / investor Q&A pitch material"}],
   "Chain": [{n:"intake",d:"New third-party skill or plugin requires intake gate"}, {n:"audit",d:"Verify pinned sha256 against current files; detect silent updates"}, {n:"mcp",d:"First install or session-start re-verification of MCP tool descriptions"}, {n:"scan",d:"Standalone scan for Unicode Tag, bidi, or zero-width injection"}, {n:"recover",d:"Quarantine a confirmed-compromised skill and produce remediation diff"}],
-  "Cull": [{n:"scan",d:"Run all IoC families × all surfaces (persistence, droplets, lockfiles, process tree)"}, {n:"shai-hulud",d:"Campaign-specific deep scan (Shai-Hulud waves)"}, {n:"lockfile",d:"Static check of lockfiles against known-bad version pins"}, {n:"eradicate",d:"Produce the ordered removal runbook after CONFIRMED grade"}, {n:"rotate",d:"Produce the credential rotation sequence after eradication is verified"}, {n:"harden",d:"Prevention controls — cooldown, --ignore-scripts, provenance, registry proxy"}, {n:"propagation",d:"Maintainer-side check for unauthorized publishes via your npm token"}],
   "Tick": [{n:"loop",d:"Build/fix the game loop, timestep, frame pacing, interpolation"}, {n:"ecs",d:"Design/implement an Entity Component System"}, {n:"state",d:"Scene/screen stack, game state machine, pause/transition"}, {n:"physics",d:"Collision detection + physics-engine integration"}, {n:"netcode",d:"Multiplayer sync foundations (lockstep/rollback/client-server)"}, {n:"save",d:"Save/load, serialization, versioned save migration"}],
   "Glance": [{n:"hud",d:"Design the in-game HUD or diegetic/in-world UI"}, {n:"menu",d:"Menu & screen IA/flow (pause, inventory, skill tree, settings, shop)"}, {n:"nav",d:"Controller/console focus navigation, button prompts, input remap"}, {n:"a11y",d:"Game accessibility design (colorblind, remap, subtitles, difficulty)"}, {n:"audit",d:"Heuristic/usability review of an existing game UI"}],
   "Vitrine": [{n:"story",d:"Story creation"}, {n:"catalog",d:"Component catalog maintenance"}, {n:"vrt",d:"Visual Regression Test integration"}, {n:"csf3",d:"Conversion to CSF 3.0"}, {n:"interaction",d:"Play function authoring with @storybook/test, addon-vitest integration"}, {n:"mdx",d:"Hand-authored MDX docs with Doc Blocks, Autodocs vs MDX trade-off"}, {n:"cosmos",d:"React Cosmos fixture authoring, Storybook vs Cosmos decision"}, {n:"a11y",d:"Storybook addon-a11y wiring (axe-core), per-story rules, CI thresholds"}, {n:"chromatic",d:"Chromatic-specific visual review, TurboSnap, baseline approval"}, {n:"coverage",d:"Story coverage tracking, gap reporting, CI gate"}],
@@ -1619,6 +1595,23 @@ const SUBCOMMANDS = {
   "Wield": [{n:"automate",d:"Build an automation for a described outcome (auto-detect apps + approach)"}, {n:"control",d:"Generate a control recipe for one specific app"}, {n:"ui-script",d:"GUI scripting for a non/partially-scriptable app"}, {n:"integrate",d:"Wire osascript into shell / shebang / Python / Node"}, {n:"audit",d:"Review/harden an existing AppleScript (permissions, safety, idempotency)"}, {n:"convert",d:"Translate AppleScript ↔ JXA preserving behavior"}],
 };
 
+const ABSORBED_SUBCOMMANDS = {
+  "Anvil": [{n:"env",d:"Personal shell, editor, terminal, Git, and dotfiles workflow"}, {n:"automate",d:"Safe macOS automation with AppleScript, JXA, osascript, and TCC"}],
+  "Builder": [{n:"image",d:"Gemini image-generation code with safe response handling"}, {n:"image-edit",d:"Reference-based image-editing code"}, {n:"image-prompt",d:"Prompt optimization and parameter design"}, {n:"image-batch",d:"Seeded, resumable, rate-limit-aware asset generation"}, {n:"image-style",d:"Reusable style tokens and reference-style anchoring"}, {n:"image-postprocess",d:"Upscale, inpaint, outpaint, artifact checks, and export"}, {n:"image-cinematic",d:"Camera, lens, lighting, and composition prompt design"}, {n:"image-provenance",d:"C2PA, SynthID, and metadata disclosure"}, {n:"image-policy",d:"Content-policy, likeness, and brand-safety gates"}],
+  "Canon": [{n:"tos",d:"Terms of Service clause coverage and risk review"}, {n:"privacy",d:"Privacy Policy coverage and data-practice consistency"}, {n:"tokushoho",d:"Japan Specified Commercial Transactions Act notation check"}, {n:"legal-gap",d:"Multi-document consistency and missing-clause review"}, {n:"dpa",d:"Data Processing Agreement review"}, {n:"eula",d:"End User License Agreement review"}, {n:"cookie",d:"Cookie banner and policy review"}, {n:"appstore",d:"App Store disclosure coverage"}, {n:"claims",d:"Advertising-claim substantiation coverage"}],
+  "Chain": [{n:"malware-scan",d:"Live supply-chain malware sweep"}, {n:"campaign-scan",d:"Named npm/PyPI campaign scan"}, {n:"lockfile",d:"Known-bad version and resolved-URL check"}, {n:"eradicate",d:"Persistence-first eradication runbook"}, {n:"rotate",d:"Dependency-ordered credential rotation"}, {n:"harden",d:"Supply-chain prevention controls"}, {n:"propagation",d:"Unauthorized maintainer-publish audit"}],
+  "Compete": [{n:"github",d:"GitHub profile and pinned-repository positioning"}, {n:"linkedin",d:"LinkedIn profile and Topic DNA alignment"}, {n:"blog",d:"Technical publishing strategy"}, {n:"conference",d:"Conference CFP and talk positioning"}, {n:"sns",d:"Social publishing and zero-click strategy"}, {n:"topic-dna",d:"Engineer niche positioning"}, {n:"portfolio",d:"Personal portfolio architecture"}, {n:"bio",d:"Multi-platform professional bio"}],
+  "Cue": [{n:"demo",d:"End-to-end Playwright feature demo production"}, {n:"scenario",d:"Audience-aware demo scenario and hook design"}, {n:"record",d:"Playwright screencast configuration and execution"}, {n:"onboard",d:"Onboarding screen recording"}, {n:"aspects",d:"Multi-aspect recording variants"}, {n:"vision",d:"Vision-model frame streaming"}, {n:"quality",d:"Perceptual, audio, and accessibility quality verdict"}, {n:"geo",d:"Transcript, chapters, and VideoObject packaging"}, {n:"voiceover",d:"TTS voiceover design and normalization"}, {n:"thumbnail",d:"Platform-specific thumbnail variants"}],
+  "Hone": [{n:"hook",d:"Design or configure a Claude Code lifecycle hook"}, {n:"hook-debug",d:"Diagnose hook failure, latency, or misfire"}],
+  "Launch": [{n:"weekly",d:"Weekly PR aggregation and engineering report"}, {n:"monthly",d:"Monthly delivery report"}, {n:"client-report",d:"Client-facing Markdown, HTML, or PDF report"}, {n:"retro",d:"Evidence-grounded sprint retrospective"}, {n:"dora",d:"DORA and SPACE delivery-metric profile"}, {n:"okr",d:"PR-to-Objective evidence mapping"}, {n:"pr-flow",d:"PR cycle-time and contributor-flow analysis"}],
+  "Magi": [{n:"advisor",d:"Founder office hours, bottleneck triage, pitch critique, or documented expert lens"}],
+  "Tome": [{n:"article",d:"Technical article from repository evidence"}, {n:"note",d:"note long-form article"}, {n:"zenn",d:"Zenn engineering article"}, {n:"qiita",d:"Qiita technical article"}, {n:"devto",d:"dev.to article with canonical URL handling"}, {n:"article-series",d:"Cross-episode technical article series"}, {n:"headline",d:"Headline and hook optimization"}, {n:"repurpose",d:"Cross-platform article repurposing"}, {n:"interview",d:"Interview or transcript to article"}],
+};
+
+for (const [owner, recipes] of Object.entries(ABSORBED_SUBCOMMANDS)) {
+  SUBCOMMANDS[owner] = [...(SUBCOMMANDS[owner] || []), ...recipes];
+}
+
 /* ==========================================
    i18n — Translation System
    ========================================== */
@@ -1626,7 +1619,7 @@ let currentLang = localStorage.getItem('lang') || 'ja';
 
 const TRANSLATIONS = {
   en: {
-    'hero.title': '<span class="accent">111</span> Global AI Agents<br><small>+ 3 project-local extensions</small>',
+    'hero.title': '<span class="accent">100</span> Global AI Agents<br><small>+ 3 project-local extensions</small>',
     'hero.desc': 'From bug investigation and security audits to UI/UX and release management — specialist agents cover every area of development. An open-source ecosystem for Claude Code, Codex CLI, and Antigravity CLI.',
     'hero.cta': 'Get Started',
     'hero.github': 'View on GitHub',
@@ -1652,7 +1645,7 @@ const TRANSLATIONS = {
     'subcmd.examples': 'Representative subcommands',
     'subcmd.skipped': 'Skipped',
     'subcmd.omen': 'Pre-mortem failure analysis — 7 frameworks',
-    'subcmd.sketch': 'AI image generation — from gen to post-processing',
+    'subcmd.builder-image': 'Implementation and AI image generation — from API integration to post-processing',
     'subcmd.cue': 'Video script, storyboard, and narration',
     'subcmd.trace': 'Session replay and UX behavior analysis',
     'subcmd.ink': 'SVG icons, illustrations, and sprites',
@@ -1664,14 +1657,14 @@ const TRANSLATIONS = {
     'subcmd.benefit3.title': 'Progressive Disclosure',
     'subcmd.benefit3.desc': 'Maps naturally to the three-tier hierarchy: L1 frontmatter → L2 SKILL.md → L3 references. Scales cleanly.',
     'catalog.title': 'Find an Agent',
-    'catalog.desc': 'Filter 111 global skills and 3 project-local extensions',
+    'catalog.desc': 'Filter 100 global skills and 3 project-local extensions',
     'catalog.search': 'Search agents... (name, description, motto)',
     'catalog.empty': 'No matching agents found',
     'platforms.title': 'Multi-Platform Support',
     'platforms.desc': 'Markdown-based skill files work with any AI CLI',
     'platforms.claude.desc': 'Clone to ~/.claude/skills/ and you\'re ready. Invoke agents instantly with slash commands like /Scout or /Nexus.',
     'platforms.codex.desc': 'Integrate by adding skill paths to AGENTS.md. Supports parallel execution via codex exec with the Arena agent.',
-    'platforms.gemini.desc': 'Integrate by setting skill paths in GEMINI.md. Combine with Sketch or Dot agents to leverage Gemini API image generation.',
+    'platforms.gemini.desc': 'Integrate by setting skill paths in GEMINI.md. Use Builder image recipes to leverage Gemini API image generation.',
     'platforms.note': 'All skills are written in standard Markdown (SKILL.md) and work with any AI CLI tool',
     'install.title': 'Get Started Now',
     'install.desc': 'Install with a single command',
@@ -1688,7 +1681,7 @@ const TRANSLATIONS = {
     'hero.cta': 'Learn How',
     'social.star': 'GitHub Star',
     'social.platform': 'Works with Claude Code / Codex CLI / Antigravity CLI',
-    'footer.cta': 'Start building with 111 global agents',
+    'footer.cta': 'Start building with 100 global agents',
     'terminal.cmd': '/Nexus Fix the login bug',
     'terminal.analyzing': 'Analyzing task...',
     'terminal.chain': 'Chain designed:',
@@ -1723,7 +1716,6 @@ const AGENT_DESC_EN = {
   'Matrix': 'Universal analysis controlling combinatorial explosion across multiple dimensions',
   'Quest': 'Game design, GDD structuring, balance math, and economy design',
   'Guardian': 'Git/PR guardian. Change analysis, commit granularity optimization, PR strategy',
-  'Harvest': 'PR data collection and auto-generation of weekly/monthly reports and release notes',
   'Launch': 'Release management. Versioning, CHANGELOG, and Feature Flags',
   'Trail': 'Git history investigation, regression root cause analysis, and code archaeology',
   'Radar': 'Unit/integration test creation, flaky test fixes, and coverage improvement',
@@ -1754,9 +1746,7 @@ const AGENT_DESC_EN = {
   'Anvil': 'Terminal UI construction, CLI development support, and dev tool integration',
   'Gear': 'Dependency, CI/CD, Docker, and advanced GitHub Actions design',
   'Scaffold': 'Cloud infrastructure (Terraform/Pulumi) and Docker Compose',
-  'Hearth': 'Personal dev environment craftsman. zsh/tmux/neovim/ghostty config',
   'Hone': 'AI CLI config auditing and optimization (Claude Code/Codex/Antigravity)',
-  'Latch': 'Claude Code hook management. Workflow automation and quality gates',
   'Triage': 'Incident response, impact assessment, recovery procedures, and postmortems',
   'Mend': 'Auto-repair of known failure patterns. Runbook execution and staged verification',
   'Schema': 'Database schema, migration, ER diagram, and multi-tenant architecture design',
@@ -1770,9 +1760,7 @@ const AGENT_DESC_EN = {
   'Pulse': 'KPI definition, tracking event design, and dashboard specs',
   'Experiment': 'A/B test design, sample size calculation, and feature flags',
   'Canvas': 'Code and design visualization with Mermaid diagrams, ASCII art, and draw.io',
-  'Sketch': 'AI image generation code using Gemini API',
   'Dot': 'Pixel art specialist. Generation via SVG/Canvas/Phaser 3/CSS',
-  'Director': 'Automated feature demo video capture using Playwright E2E',
   'Saga': 'Narrative design. Customer experience storytelling and scenario narratives',
   'Oracle': 'AI/ML design and evaluation. Prompt/RAG/LLM apps and safety guardrails',
   'Beacon': 'Observability and SRE. SLO/SLI design, distributed tracing, and alerting',
@@ -1791,10 +1779,8 @@ const AGENT_DESC_EN = {
   'Cloak': 'Privacy engineering. PII detection, data flow mapping, GDPR/CCPA compliance',
   'Pixel': 'Pixel-accurate HTML/CSS generation from image mockups',
   'Ink': 'SVG icon/illustration generation and icon system design',
-  'Clause': 'Legal document review for Terms of Service, Privacy Policy, and Tokushoho compliance',
   'Crypt': 'Cryptographic architecture design. Key management, E2E, KMS, and TLS',
   'Shift': 'Migration and upgrade orchestrator for frameworks, libraries, APIs, and infrastructure',
-  'Crest': 'Engineer self-branding strategy. GitHub/LinkedIn/blog/conference positioning',
   'Cue': 'Video script, storyboard, and narration design',
   'Stage': 'Slide generation with Marp/reveal.js/Slidev. Conference talk optimization',
   'Prune': 'Ecosystem cleanup auditor. Audits the agent roster for overlap and inactivity, proposing merge and sunset plans with evidence',
@@ -1802,10 +1788,7 @@ const AGENT_DESC_EN = {
   'Ascent': 'Career strategy planning for job change, side-business, or independence — self-analysis, market research, and interview prep',
   'Guild': 'Designs hiring processes and team structure — job descriptions, interview rubrics, scorecards, and 30/60/90 onboarding plans',
   'PDM': 'PdM-style read-only delivery navigator. Reconciles planned scope against implemented code into feature inventories and gap lists',
-  'Summon': 'Channels the documented thinking of notable figures — applies their mental models and heuristics as advisory lenses',
-  'Sage': 'YC-style founder advisory. Surfaces the #1 bottleneck via socratic probing and extracts concrete 1-2 week action items',
   'Chain': 'Audits skill/plugin/MCP supply chains — sha256 manifests, Unicode Tag injection scans, and third-party intake checklists',
-  'Cull': 'Scans supply-chain malware infections via IoC-based local scan and safe eradication for npm/PyPI worm campaigns',
   'Tick': 'Engine-agnostic game architecture — game loop, ECS, game state, collision/physics, save/load, and netcode foundations',
   'Glance': 'Game UI/UX design (no code) — HUD & diegetic UI, menu flow, controller navigation, and game accessibility',
   'Vitrine': 'Storybook story authoring, component catalog management, and Visual Regression integration. CSF 3.0, Storybook 10',
@@ -1858,10 +1841,10 @@ function setLanguage(lang) {
   const ogTitleEl = document.querySelector('meta[property="og:title"]');
   const ogDescEl = document.querySelector('meta[property="og:description"]');
   if (lang === 'en') {
-    titleEl.textContent = 'Agent Skills — 111 Global AI Agents + 3 Project-local Extensions';
-    descEl.content = 'An open-source AI agent ecosystem for Claude Code, Codex CLI, and Antigravity CLI. 111 global skills plus 3 repository-local extensions.';
+    titleEl.textContent = 'Agent Skills — 100 Global AI Agents + 3 Project-local Extensions';
+    descEl.content = 'An open-source AI agent ecosystem for Claude Code, Codex CLI, and Antigravity CLI. 100 global skills plus 3 repository-local extensions.';
     ogTitleEl.content = 'Agent Skills — AI Agent Ecosystem';
-    ogDescEl.content = '111 global AI agents plus 3 repository-local extensions.';
+    ogDescEl.content = '100 global AI agents plus 3 repository-local extensions.';
   } else {
     titleEl.textContent = 'Agent Skills — 111のグローバルAIエージェント + 3 project-local拡張';
     descEl.content = 'Claude Code / Codex CLI / Antigravity CLI で動作するオープンソースのAIエージェントエコシステム。111のグローバルスキルと3つのproject-local拡張。';

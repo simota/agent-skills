@@ -59,7 +59,7 @@ Phase 0 FRAMING        Nexus internal: identify the HOST (current product, owned
 Phase 1 GROUND      ∥  HOST branch: Lens/Atlas[map structure + value path + invariants] ‖ PDM/Lens[host feature inventory]
                        ‖ Radar[freeze the existing-behavior baseline = host-integrity regression net]
                        DONOR branch: deep-research[concept-rationale-weighted EVIDENCE SWEEP first — why the mechanism
-                       works/is load-bearing; reference/research-grounding.md] → (Vector/Voyager/Hearth observe as INPUT,
+                       works/is load-bearing; reference/research-grounding.md] → (Vector/Voyager/Anvil observe as INPUT,
                        surface = concept lead NOT parity target) → Flux + Magi[distill to the CONCEPT CATALOG:
                        each important concept abstracted to essence — what / why-load-bearing / mechanism-sans-surface]
                        +host-domain/competitive sweep (deep-research+Compete) → sharpens the Innovation Thesis (§3e)
@@ -200,7 +200,7 @@ Each gate below (§3a Graft Map, §3b Triple-Oracle, §3c Host-Invariant, §3d O
 - `+Sherpa` — decompose a multi-graft transplant into atomic per-graft steps.
 - `+Siege` — when the graft must hold the host's performance/resilience envelope under the new concept.
 - `+experiment` — when the innovation ships behind a flag and its KPI needs an A/B / incrementality design (pairs with §3e).
-- `+Hearth[automate]` / `+Voyager[ios]` — desktop / native-mobile donor observation (the concept source is a non-web app).
+- `+Anvil[automate]` / `+Voyager[ios]` — desktop / native-mobile donor observation (the concept source is a non-web app).
 
 ## 7. Output
 

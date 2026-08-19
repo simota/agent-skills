@@ -54,7 +54,7 @@ Noise evaluation rule: auto-route to Zen if `1 HIGH` trigger fires or `2 MEDIUM`
 | **Sherpa** | XXL or MEGA work decomposition | (size-driven) | no |
 | **Probe** | runtime security verification | (security follow-up) | context-dependent |
 | **Ripple** | dedicated impact analysis | (blast-radius follow-up) | no |
-| **Harvest** | release-note or historical report follow-up | (reporting only) | no |
+| **Launch** | release-note or historical report follow-up | (reporting only) | no |
 | **predictions** | pre-review Judge/Zen issue anticipation | K | no |
 
 ## Trigger Thresholds
@@ -115,7 +115,7 @@ Rule:
 | Zen | `ZEN_TO_GUARDIAN_HANDOFF` | learn accepted or rejected cleanup patterns |
 | Scout | `SCOUT_TO_GUARDIAN_HANDOFF` | add RCA and conflict context |
 | Atlas | `ATLAS_TO_GUARDIAN_HANDOFF` | add architecture impact |
-| Harvest | `HARVEST_TO_GUARDIAN_HANDOFF` | use historical PR/report feedback |
+| Launch | `LAUNCH_TO_GUARDIAN_HANDOFF` | use historical PR/report feedback |
 | Ripple | `RIPPLE_TO_GUARDIAN_HANDOFF` | incorporate blast-radius analysis |
 
 ### Output Partners
@@ -132,7 +132,7 @@ Rule:
 | Radar | `GUARDIAN_TO_RADAR_HANDOFF` | coverage and regression mitigation |
 | Zen | `GUARDIAN_TO_ZEN_HANDOFF` | noise cleanup or hotspot refactor |
 | Ripple | `GUARDIAN_TO_RIPPLE_HANDOFF` | dedicated impact analysis |
-| Harvest | reporting follow-up | use Harvest when release-note or historical report support is needed |
+| Launch | reporting follow-up | use Launch when release-note or historical report support is needed |
 
 Include the squash report in `GUARDIAN_TO_JUDGE_HANDOFF` when squash analysis was performed.
 

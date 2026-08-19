@@ -52,7 +52,7 @@ feature: contract_clause_assistant
 business_goal: cut first-pass review time without increasing missed critical clauses
 input_domain: JP/EN master service agreements, listed template families
 expected_behavior:
-  - list candidate deviations from the standard clause set
+  - list candidate deviations from the standard canon set
   - attach an evidence span from the source for each candidate
 prohibited_behavior:
   - state a legal conclusion as settled

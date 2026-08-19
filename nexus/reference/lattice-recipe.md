@@ -116,7 +116,7 @@ Phase 5   DECOMMISSION ★Ask First (destructive; gated on the Phase 4 proof)
           → Radar[no-regression] + Voyager[visual regression] after the cut
    ▼
 Phase 6   DELIVER — Coherence Proof + Drift Sentinel handoff + Guardian
-          Latch?[a CI/pre-commit check derived from the ledger so the proof does not decay —
+          Hone?[a CI/pre-commit hook derived from the ledger so the proof does not decay —
                  the scan that produced the proof becomes the guard that preserves it]
 ```
 
@@ -161,7 +161,7 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 | Running with no system to conform to | Phase 0 precondition routes to `muse`/`vitrine`; the system is never invented mid-sweep (§3) |
 | Destructive cleanup before the proof | Phase 5 DECOMMISSION gated on the Phase 4 pass, Ask First (§3) |
 | Producer verifying its own sweep | Phase 4 uses fresh scanners with no Phase 3 history (Q9) |
-| The proof decaying the week after it is delivered | Phase 6 Drift Sentinel: the scan becomes a CI/pre-commit check via `latch` |
+| The proof decaying the week after it is delivered | Phase 6 Drift Sentinel: the scan becomes a CI/pre-commit check via `hone` |
 | Confusing this with a brand migration | §1 and the routing table: identity change → `rebrand`; steady-state conformance → `lattice` |
 | Unbounded scope on a large codebase | Batched strategy by default; Ask First at launch names the batch plan and the envelope |
 

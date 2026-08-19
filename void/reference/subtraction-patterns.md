@@ -148,7 +148,7 @@ process_analysis:
   total_steps: X
   step_evaluation:
     - { step: "Team Lead Approval", value: HIGH, rubber_stamp_rate: "10%", action: "KEEP" }
-    - { step: "Director Approval", value: LOW, rubber_stamp_rate: "95%", action: "ELIMINATE" }
+    - { step: "Cue Approval", value: LOW, rubber_stamp_rate: "95%", action: "ELIMINATE" }
   total_wait_time: "3 days"
   after_wait_time: "0.5 day"
 ```

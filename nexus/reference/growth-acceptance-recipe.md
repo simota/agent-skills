@@ -78,7 +78,7 @@ Do **not** invoke when:
 3. **`compete`** — cannibalization estimation
 4. **`funnel` + `funnel[premium]`** — channel-fit rationale and LP coherence
 5. **`vision` + `prose`** — Brand Compiler **B.tone advisory** layer (LLM-as-judge, non-blocking)
-6. **`clause` + `canon[regulatory]` + `cloak` + `vigil`** — G14 Regulatory Envelope Pre-Flight: verify `regulatory_jurisdiction` toggles, brand-safety placement exclusions
+6. **`canon[legal]` + `canon[regulatory]` + `cloak` + `vigil`** — G14 Regulatory Envelope Pre-Flight: verify `regulatory_jurisdiction` toggles, brand-safety placement exclusions
 
 **Gate (G14 mandatory)**:
 - Regulatory jurisdiction declared; per-jurisdiction toggle (auto-scale / auto-generate / holdout test) verified
@@ -111,7 +111,7 @@ A measurement-backed launch is only honest if the success bar is set **before** 
 3. **`ledger`** — CAC / LTV trend update
 4. **`beacon`** — Brand Lift monitoring (if Brand Lift Proof was set up)
 5. **`mend`** — if Stop_Condition triggered: G13 auto-halt sequence
-6. **`harvest`** — aggregate findings into Learning record
+6. **`launch[weekly]`** — aggregate findings into Learning record
 7. **`tome`** — update Insight Ledger with validated findings (queue for Research Lead merge per G11)
 
 **Gate (G13 mandatory)**:
@@ -158,7 +158,7 @@ Phase 2 (Ship-Time, parallel):
   ‖ compete[cannibalization estimation]
   ‖ funnel + funnel[premium: channel-fit + LP coherence]
   ‖ vision + prose[B.tone advisory, non-blocking]
-  ‖ clause + canon[regulatory] + cloak + vigil[G14 Regulatory Pre-Flight]
+  ‖ canon[legal] + canon[regulatory] + cloak + vigil[G14 Regulatory Pre-Flight]
   ‖ experiment[pre-register + control-validity/SRM check, per § Pre-Registration sub-gate]
   → Gate: regulatory toggle verified + statistical power adequate + analysis plan frozen + control valid
   → if FAIL: block ship; route to remediation
@@ -174,7 +174,7 @@ Phase 3 (Post-Launch, scheduled):
   +90d:
     ‖ beacon[Brand Lift]
     ‖ compete[Distinctive Asset audit]
-    ‖ harvest[Learning record]
+    ‖ launch[Learning record]
     ‖ tome[Insight Ledger proposed-edit queue]
   Per-checkpoint Gate (G13) — evaluated against the frozen plan; rules in § Phase 3:
     Stop_Condition fires → notify Stop_Accountable → 24h no-response → mend[auto-halt]

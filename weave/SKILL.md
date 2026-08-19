@@ -304,7 +304,7 @@ APPROVAL_FLOW:
       timeout: "24h"
       escalation: "level:2"
     - level: 2
-      approvers: ["role:director"]
+      approvers: ["role:cue"]
       quorum: 1
       timeout: "48h"
       escalation: "auto_reject"

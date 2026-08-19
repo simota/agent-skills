@@ -103,7 +103,7 @@ Phase 0 runs only in autonomous mode and emits a single goal artifact bound as P
 | Agent | Role |
 |-------|------|
 | `rank` | Score candidates with **ICE / RICE / WSJF** (auto-pick framework based on signal availability). Output ordered list with confidence. |
-| `sage` | (Optional) Socratic sanity check on the #1 candidate — does it pattern-match a known anti-pattern (premature scaling, vanity metric, founder ego project)? |
+| `magi[advisor]` | (Optional) Socratic sanity check on the #1 candidate — does it pattern-match a known anti-pattern (premature scaling, vanity metric, founder ego project)? |
 
 #### 0d. SELECT
 
@@ -390,7 +390,7 @@ Nexus AUTORUN apex goal="<feature description>"
 
 # ── Autonomous mode (no goal supplied) ───────────────
 Nexus AUTORUN apex            # or: apex goal=auto
-  → Phase 0 Bootstrap        0a SCAN [parallel] → 0b spark → 0c rank + sage?
+  → Phase 0 Bootstrap        0a SCAN [parallel] → 0b spark → 0c rank + magi[advisor]?
                              → 0d select → 0e boundary_confirm (per-Mode, § Phase 0)
   → Phase 1-6 + Ship         exactly the goal-supplied chain above, with
                              `auto_selected_goal` bound as Phase 1 input
@@ -407,7 +407,7 @@ Consolidated view of what apex's gates and phases guard against, merging the ope
 | Phase 0 all ICE < threshold | rank (autonomous mode); no clearly worthwhile work | Present top 3 to user for manual selection |
 | Phase 0 split tie-break | magi (autonomous mode) | Escalate top 2 to user with magi rationale |
 | Phase 0 boundary rejected | user (autonomous mode) | Apex aborts; user input within 60s window cancels |
-| Build the wrong thing | No evidence anchor for the feature | Phase 0 discovery (spark + rank + sage) + Phase 1 (echo[demand] + field evidence anchor) + boundary Confirm-before-launch |
+| Build the wrong thing | No evidence anchor for the feature | Phase 0 discovery (spark + rank + magi[advisor]) + Phase 1 (echo[demand] + field evidence anchor) + boundary Confirm-before-launch |
 | Phase 3 split decision | magi | Pause for human verdict; prevents an arbitrarily-resolved deadlock |
 | Weak / unmeasurable spec | "Done" is subjective; scope creeps | Phase 4 scribe[unified] traceability threshold + L3 measurable, orbit-consumable ACs |
 | Phase 4 traceability < threshold | scribe[unified] | Re-run scribe[unified] with scope downgrade or refine inputs |
@@ -437,7 +437,7 @@ Consolidated view of what apex's gates and phases guard against, merging the ope
 | Lite (no UI, scribe[unified]=Lite) | 1, 2, 3, 4, 5-Tech, 5-Gate, 6 | 8-10 | Low |
 | Standard (UI, scribe[unified]=Standard) | All | 14-18 | Medium |
 | Full (greenfield, scribe[unified]=Full) | All + void + scribe + frame + polyglot | 20-25 | High |
-| Autonomous bootstrap (Phase 0 added) | + 4-8 agents (project_scan + spark + rank + voice/pulse/compete/sage/magi as available) | +4-8 over base | + 10-20% over base |
+| Autonomous bootstrap (Phase 0 added) | + 4-8 agents (project_scan + spark + rank + voice/pulse/compete/magi as available) | +4-8 over base | + 10-20% over base |
 
 Apex is not free. Budget guardrails (orbit cost-per-task, Nexus chain confirmation for 5+ agent chains, L4 confirmation gates) are enforced. Autonomous mode adds Phase 0 (~10-15 minutes, 4-8 agents) and one boundary-confirm checkpoint, but downstream cost is identical to goal-supplied mode. For repeated similar requests, propose a Sigil-generated project skill to amortise the chain design cost.
 

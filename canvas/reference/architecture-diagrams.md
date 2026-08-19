@@ -7,7 +7,7 @@ Purpose: Produce informal, ad-hoc system architecture sketches using Mermaid `fl
 - **Canvas `architecture`**: Informal architecture sketches. One view per diagram: logical, physical, or deployment. Topologies include layered monolith, hexagonal / ports-and-adapters, microservice mesh, event-driven bus, BFF + edge.
 - **Canvas `c4`**: Formal C4 rendering with Mermaid C4 syntax (System Context / Container / Component). Use when the conversation already speaks in C4 vocabulary.
 
-If the ask is "sketch how the pieces fit" → `architecture`. If the ask is "give me a C4 Container view" → `c4`.
+If the ask is "builder how the pieces fit" → `architecture`. If the ask is "give me a C4 Container view" → `c4`.
 
 ## View Selection
 
@@ -17,7 +17,7 @@ If the ask is "sketch how the pieces fit" → `architecture`. If the ask is "giv
 | Physical | What runs where (processes, nodes, clusters)? | Hosts, pods, VMs |
 | Deployment | What lives in which environment (region, VPC, zone)? | Regions, VPCs, availability zones |
 
-Pick one per diagram. Combining logical + deployment in the same sketch is the most common readability failure.
+Pick one per diagram. Combining logical + deployment in the same builder is the most common readability failure.
 
 ## Workflow
 
@@ -151,4 +151,4 @@ flowchart LR
 - [ ] Sync vs async edges visually distinct.
 - [ ] External boundaries marked.
 - [ ] ≤20 nodes, split and cross-link otherwise.
-- [ ] Note in `Sources`: "informal sketch; canonical model not authored here."
+- [ ] Note in `Sources`: "informal builder; canonical model not authored here."

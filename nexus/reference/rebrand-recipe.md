@@ -127,4 +127,4 @@ Brand change request?
 
 ## Add-ons
 
-+Growth for OGP/JSON-LD/SEO metadata surfaces and redirect strategy · +Clause when the rename has legal/ToS surface (company name in policies) · +Vector/vitrine for Before/After visual-evidence capture in the Consistency Attestation · +Frame when a Figma library is a brand touchpoint (design-file side of the sweep) · +Launch for the public cutover announcement + rollback plan on big-bang runs.
++Growth for OGP/JSON-LD/SEO metadata surfaces and redirect strategy · +Canon[legal] when the rename has legal/ToS surface (company name in policies) · +Vector/vitrine for Before/After visual-evidence capture in the Consistency Attestation · +Frame when a Figma library is a brand touchpoint (design-file side of the sweep) · +Launch for the public cutover announcement + rollback plan on big-bang runs.

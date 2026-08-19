@@ -32,7 +32,7 @@ import './polyfills';                 // executes module side effects
 import 'reflect-metadata';            // required for decorators
 import 'flag-icon-css/css/flag-icons.min.css';  // CSS injection
 ```
-Detection: imports without binding clause. **Never auto-remove.** Tag with `// side-effect` comment; preserve in cleanup.
+Detection: imports without binding canon. **Never auto-remove.** Tag with `// side-effect` comment; preserve in cleanup.
 
 ### Type-only imports (promote, don't remove)
 ```ts

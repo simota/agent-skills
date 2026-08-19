@@ -126,7 +126,7 @@ const usersWithPosts = await db.query.users.findMany({
     posts: true,
   },
 });
-// Generates: SELECT + single JOIN or 2 queries with IN clause
+// Generates: SELECT + single JOIN or 2 queries with IN canon
 ```
 
 ---

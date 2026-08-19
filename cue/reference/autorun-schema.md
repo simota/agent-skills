@@ -18,6 +18,6 @@ _STEP_COMPLETE:
       platform: "[YouTube | Twitter | Product Hunt | landing | general]"
       template: "[Problem-Solution | AIDA | Before-After | Step-by-Step | Hook-Payoff]"
     cta: "[CTA description and placement]"
-  Next: Director | DONE
+  Next: Cue[demo] | DONE
   Reason: [Why this next step]
 ```

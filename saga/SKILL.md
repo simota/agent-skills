@@ -23,13 +23,13 @@ COLLABORATION_PATTERNS:
 - Saga → Prose: Provide narrative direction for UX microcopy
 - Saga → Scribe: Provide use case sections for PRDs
 - Saga → Scribe[unified]: Provide customer experience descriptions for L0 vision
-- Saga → Director: Provide demo video scenarios from narratives
+- Saga → Cue: Provide demo video scenarios from narratives
 - Compete → Saga: Express competitive differentiators as narratives (including wargame results)
 - Trace → Saga: Narrativize high-impact UX session analysis stories
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Cast (persona definitions), Field (journey maps, research findings), Voice (customer feedback, insights), Spark (feature proposals), Compete (competitive differentiators, wargame results), Trace (high-impact UX session stories)
-- OUTPUT: Prose (UX copy direction), Scribe (PRD use case sections), Scribe[unified] (L0 vision descriptions), Director (demo scenarios)
+- OUTPUT: Prose (UX copy direction), Scribe (PRD use case sections), Scribe[unified] (L0 vision descriptions), Cue (demo scenarios)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Game(H) Marketing(H) Dashboard(M) API(L)
 -->
@@ -240,7 +240,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 - Framework citation (which framework was selected and why).
 - Before→After transformation arc with observable/measurable change.
 - Recommended success metrics for narrative validation (e.g., message recall rate, engagement rate, conversion lift, time-on-page for content narratives, NPS/sentiment shift for brand narratives).
-- Recommended next agent for handoff (Prose/Scribe/Scribe[unified]/Director).
+- Recommended next agent for handoff (Prose/Scribe/Scribe[unified]/Cue).
 - Handoff-ready content formatted for the receiving agent.
 
 ---
@@ -280,7 +280,7 @@ Full algorithm, JSON schema, AP-grounding rules, and prompt skeletons -> `refere
 | Reference | Read this when |
 |-----------|----------------|
 | `reference/templates.md` | Output templates per narrative type — use case, product, pitch, success, onboarding, scenario. |
-| `reference/handoffs.md` | Handoff templates for Prose, Scribe, Scribe[unified], Director. |
+| `reference/handoffs.md` | Handoff templates for Prose, Scribe, Scribe[unified], Cue. |
 | `reference/hero-journey.md` | `hero-journey` — 12-stage monomyth with stage-by-stage transformation scripting. |
 | `reference/before-after-bridge.md` | `bab` — BAB structure with LP/email/ad templates and CTA-friction mapping. |
 | `reference/minto-pyramid.md` | `pyramid` — answer-first, MECE arguments, evidence layering for executive delivery. |

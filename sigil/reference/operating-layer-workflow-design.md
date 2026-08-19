@@ -91,7 +91,7 @@ workflow:
   topology: hub-spoke           # Nexus is the hub at runtime
   parallelism: agent-teams      # parallel per-package collection, isolated
   phases:                       # 4 <= 5
-    - collect:  owner: harvest    # gather merged PRs per package (parallel spokes)
+    - collect:  owner: launch    # gather merged PRs per package (parallel spokes)
     - version:  owner: launch     # compute version bumps; checkpoint: semver valid
     - changelog: owner: launch    # generate changelog + notes; checkpoint: user-confirm
     - verify:   owner: guardian   # tag + final gate; checkpoint: clean tree

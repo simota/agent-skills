@@ -46,7 +46,7 @@ For each recurring task or pain point from SURVEY, pick the cheapest mechanism t
 
 | The task is... | Mechanism | Owner (delegate to) |
 |----------------|-----------|---------------------|
-| An enforcement that must run **every time** / must **never** happen | Hook | `Latch` |
+| An enforcement that must run **every time** / must **never** happen | Hook | `Hone` |
 | A constraint that applies only under a **path/glob** | Scoped rule (CLAUDE.md / settings) | `Sigil` or direct |
 | An **isolated side task** that clutters the main thread | Subagent (`context: fork` skill) | `Sigil` authors |
 | A **reusable methodology** invoked on demand | Project-local skill | `Sigil` authors |
@@ -67,7 +67,7 @@ The MAP deliverable. One row per recurring task.
 |------------------------------|-----------|-------------|---------|-------------------------------|
 | Add a tRPC procedure         | daily     | skill       | Sigil   | mirror @/ alias + Zod loc     |
 | Ship a feature end-to-end    | weekly    | recipe      | Nexus   | chains scaffold→build→test→PR |
-| Block commits to main        | every-time| hook        | Latch   | PreToolUse guard              |
+| Block commits to main        | every-time| hook        | Hone   | PreToolUse guard              |
 | Cut a release                | monthly   | workflow    | Nexus   | hub-spoke, 4 phases           |
 | Security review of a PR      | weekly    | (ecosystem) | Judge   | defer — Judge owns this       |
 ```

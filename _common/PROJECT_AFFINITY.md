@@ -50,8 +50,7 @@ These agents provide value regardless of project type. Nexus should always consi
 | Gear | DevOps/CI/CD + GHA | Every project needs a pipeline; advanced GitHub Actions included |
 | Sweep | Cleanup | Dead code exists everywhere |
 | Ripple | Impact analysis | Change analysis is universal |
-| Magi | Decision making | Multi-perspective judgment |
-| Summon | Named-expert lenses | Documented thinking of named figures, applied advisorily |
+| Magi | Decision making and advisory | Multi-perspective judgment, founder coaching, and named-expert lenses |
 | Atlas | Architecture | Dependency analysis for any project |
 | Trail | Git archaeology | History investigation + legacy business-rule extraction |
 | Rally | Parallel orchestration | Multi-session for any large task |
@@ -97,12 +96,10 @@ These agents provide value regardless of project type. Nexus should always consi
 | Experiment | H | H | M | — | — | — | M | — | — |
 | Field | H | H | M | — | — | — | H | — | — |
 | Spark | H | H | M | — | — | — | M | — | — |
-| Compete | H | H | — | — | — | — | M | — | — |
+| Compete | H | H | — | M | H | — | M | — | — |
 | Trace | H | H | M | — | — | — | H | — | — |
-| Director | H | H | M | — | — | — | M | — | — |
 | Cast | H | H | M | — | — | — | H | — | — |
 | Saga | H | H | M | — | — | — | M | — | — |
-| Crest | M | — | — | M | H | — | — | — | — |
 | Helm | H | M | — | — | — | — | M | — | — |
 
 ### Backend / Infrastructure Agents
@@ -147,9 +144,8 @@ These agents provide value regardless of project type. Nexus should always consi
 | Quill | M | — | M | M | H | H | — | — | — |
 | Scribe | H | M | M | M | H | H | — | — | — |
 | Morph | M | — | M | — | M | — | — | M | — |
-| Harvest | M | — | — | — | M | M | — | — | — |
 | Launch | H | M | — | M | H | H | — | — | — |
-| Tome | H | M | M | — | H | H | — | — | — |
+| Tome | H | M | M | — | H | H | — | H | — |
 | Stage | H | M | M | — | M | — | — | M | — |
 | Cue | H | H | M | — | — | — | M | — | — |
 
@@ -163,9 +159,7 @@ These agents provide value regardless of project type. Nexus should always consi
 
 | Agent | SaaS | E-com | Dash | CLI | Lib | API | Mobile | Static | Data |
 |-------|------|-------|------|-----|-----|-----|--------|--------|------|
-| Latch | H | M | M | M | M | H | — | — | — |
-| Hearth | M | — | M | H | H | M | — | — | M |
-| Hone | M | — | M | H | H | M | — | — | — |
+| Hone | H | M | M | H | H | H | — | — | — |
 | Mend | H | H | M | — | — | H | — | — | M |
 | Beacon | H | H | M | — | — | H | — | — | H |
 | Ledger | H | M | M | — | — | H | — | — | H |
@@ -193,7 +187,6 @@ These agents provide value regardless of project type. Nexus should always consi
 | Oracle | H | M | M | — | M | H | — | — | H |
 | Orbit | H | M | M | — | — | H | — | — | M |
 | Void | H | M | M | M | H | H | — | — | — |
-| Sketch | M | M | M | — | — | — | M | M | — |
 
 ---
 

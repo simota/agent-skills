@@ -20,7 +20,7 @@ FORGE_TO_NATIVE_HANDOFF:
     - navigation: "Stack with 3 screens validated"
     - state: "Cart state with Zustand prototype"
     - data: "REST API mock with MSW"
-  prototype_quality: "L1"  # L0=sketch, L1=functional, L2=polished, L3=near-production
+  prototype_quality: "L1"  # L0=builder, L1=functional, L2=polished, L3=near-production
   known_issues:
     - "Android back button not handled"
     - "Offline state not considered"

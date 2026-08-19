@@ -40,7 +40,7 @@ Choose ONE recipe. Recipe choice is locked at the RECIPE phase and logged to `.a
 | AUDIENCE | Cast, Echo, Echo[demand] | yes (Cast first, then Echo+Echo[demand] parallel) | M |
 | STRATEGY | Pulse, Magi | serial (Pulse → Magi) | S |
 | STRUCTURE | Funnel, Prose, Saga | serial (Funnel → Prose ↔ Saga) | M |
-| DESIGN | Vision → Muse → Palette → Frame → Ink/Sketch | mixed (or delegate whole bundle to Atelier) | L |
+| DESIGN | Vision → Muse → Palette → Frame → Ink/Builder | mixed (or delegate whole bundle to Atelier) | L |
 | BUILD | Forge → Pixel → Artisan → Flow → Polyglot | serial with Polyglot parallelizable | L |
 | OPTIMIZE | Growth, Bolt, Experiment | yes (Growth + Bolt parallel, then Experiment) | M |
 | VERIFY | Judge, Voyager, Attest, Sentinel, Echo | yes (all 5 parallel, cap at 5) | M |
@@ -112,7 +112,7 @@ Choose ONE recipe. Recipe choice is locked at the RECIPE phase and logged to `.a
 | AUDIENCE | Cast (purchase-intent persona), Echo[demand] (unmet need = differentiation), Echo (cart-abandonment walk) |
 | STRATEGY | Pulse (AOV, CVR, return rate), Magi (price-anchoring decision) |
 | STRUCTURE | Funnel (hero image + benefit + trust + reviews + FAQ + sticky CTA), Prose (product copy) |
-| DESIGN | Vision → Muse → Frame; Ink/Sketch heavy (product photography, lifestyle assets) |
+| DESIGN | Vision → Muse → Frame; Ink/Builder heavy (product photography, lifestyle assets) |
 | BUILD | Forge → Pixel (photo fidelity) → Artisan → Flow (image gallery, variant selector); Polyglot for multi-region |
 | OPTIMIZE | Growth (product-schema JSON-LD, GEO for shopping AI), Bolt (image perf budget), Experiment (variant on price display, urgency) |
 | VERIFY | Judge, Voyager (add-to-cart + checkout entry flow), Attest, Sentinel, Echo |
@@ -160,7 +160,7 @@ Choose ONE recipe. Recipe choice is locked at the RECIPE phase and logged to `.a
 | AUDIENCE | Cast (download-intent persona); skip Echo, Echo[demand] |
 | STRATEGY | Pulse (download → email engagement → MQL); skip Magi unless strategic positioning |
 | STRUCTURE | Funnel (above-fold = title + cover + email form), Prose; skip Saga |
-| DESIGN | Reuse brand tokens (Muse only); minimal Vision; Ink/Sketch for cover image only |
+| DESIGN | Reuse brand tokens (Muse only); minimal Vision; Ink/Builder for cover image only |
 | BUILD | Forge → Artisan; skip Pixel, Flow (motion), Polyglot |
 | OPTIMIZE | Growth (organic + GEO citation pickup), Bolt; skip Experiment for first launch |
 | VERIFY | Judge, Voyager (form submission + email confirmation), Sentinel (email validation) |

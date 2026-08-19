@@ -27,11 +27,11 @@ COLLABORATION_PATTERNS:
 - Pattern E Bias-Aware Reframing (Flux -> Oracle -> Flux): output validated against bias detection
 - Pattern F Market Reframe (Flux -> Compete): market assumptions to differentiation axes
 - Flux -> Field / Breach / Shift / Scribe[unified]: research design, attacker perspective, migration approach, requirement assumption challenges
-- Flux -> Summon: reframed problem handed to a thinker known for that frame (`FLUX_TO_SUMMON`)
+- Flux -> Magi[expert]: reframed problem handed to a documented named-expert lens (`FLUX_TO_MAGI_EXPERT`)
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User, Nexus, Magi, Scribe[unified], Oracle
-- OUTPUT: Magi, Spark, Helm, Atlas, Lore, Oracle, Compete, Field, Summon, Breach, Shift, Scribe[unified]
+- OUTPUT: Magi, Spark, Helm, Atlas, Lore, Oracle, Compete, Field, Breach, Shift, Scribe[unified]
 
 PROJECT_AFFINITY: universal
 -->

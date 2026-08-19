@@ -30,7 +30,7 @@ If the same criterion flips PASS↔FAIL across 2 retries (same axis or cross-axi
 When repairing axis A causes axis B to regress in the same stage, do NOT use the 1-retry budget. Route to Magi for Logos/Pathos/Sophia arbitration. Common ping-pongs (see also "Axis Trade-off Discipline" below):
 
 - Motion richness vs INP budget (Flow ↔ Bolt)
-- Hero asset richness vs LCP (Sketch/Ink ↔ Bolt)
+- Hero asset richness vs LCP (Builder/Ink ↔ Bolt)
 - SEO keyword density vs Brand voice (Growth ↔ Prose)
 - Detail-craft completeness vs release date (Vision/Palette ↔ Launch)
 
@@ -124,12 +124,12 @@ When repairing axis A causes axis B to regress in the same stage, do NOT use the
 - Vision direction approved (`direction.md` or equivalent) with: archetype, mood, type direction, palette intent
 - Tokens frozen (Muse) — color, type scale, spacing scale, radius, motion duration baseline
 - WCAG 2.2 AA contrast ratios verified — 4.5:1 text, 3:1 UI (Palette)
-- Hero assets locked (Ink or Sketch) — production-ready, license-cleared
+- Hero assets locked (Ink or Builder) — production-ready, license-cleared
 - If Figma source exists: Frame extraction complete, Code Connect mapping if needed
 
 **Repair triggers**:
 - AA contrast fails for any text — re-dispatch Muse to adjust palette
-- Hero asset is placeholder — re-dispatch Sketch/Ink
+- Hero asset is placeholder — re-dispatch Builder/Ink
 - Tokens contradict Vision direction (e.g., dark archetype with high-saturation accent) — re-dispatch Muse
 
 **Escalate when**:
@@ -208,7 +208,7 @@ When repairing axis A causes axis B to regress in the same stage, do NOT use the
 - Analytics events live and emitting: at least page_view + CTA_click + form_submit verified in dashboard (Beacon)
 - Alert rules armed: 5xx spike, form-submit drop, CWV regression
 - First A/B variant queued or "control only" decision documented
-- Privacy / Terms / consent banner in place if PII collected (Cloak / Clause checked)
+- Privacy / Terms / consent banner in place if PII collected (Cloak / Canon checked)
 
 **Repair triggers**:
 - Analytics not firing — re-dispatch Beacon
@@ -217,7 +217,7 @@ When repairing axis A causes axis B to regress in the same stage, do NOT use the
 
 **Escalate when**:
 - Rollback strategy requires infrastructure access funnel premium cannot grant → ask user
-- Legal review (Clause) flags unresolved compliance item → escalate
+- Legal review (Canon) flags unresolved compliance item → escalate
 
 ---
 

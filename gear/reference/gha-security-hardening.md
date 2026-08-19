@@ -156,7 +156,7 @@ GitHub announced a five-pillar Actions security roadmap in March 2026. Adopt the
 | Actions Data Stream | Roadmap → public preview within 3-6 mo, GA 6-9 mo | Near real-time telemetry to S3 / Azure Event Hub correlated per workflow / job / step |
 
 Operational guidance:
-- Turn on the egress firewall in **monitor mode** first, harvest the allowlist from a 2-week observed-traffic sample, then flip to enforcement.
+- Turn on the egress firewall in **monitor mode** first, launch the allowlist from a 2-week observed-traffic sample, then flip to enforcement.
 - Treat scoped secrets as the end of `secrets: inherit` in reusable workflows. Refactor callees to declare an explicit `secrets:` block now so the migration is non-breaking.
 - Wire Data Stream into the same SIEM that consumes cloud audit logs; correlate OIDC `sub` claims with runner-side step telemetry to catch token theft within minutes.
 

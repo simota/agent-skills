@@ -15,7 +15,7 @@ Purpose: Design the full extraction pipeline for a web-scale crawler — from th
 
 ```
 URL  →  RENDER  →  PARSE  →  STRUCTURE  →  NEAR-DUP  →  SCHEMA  →  WRITE
-        layer     layer    harvest       detection   selection   to sink
+        layer     layer    launch       detection   selection   to sink
 ```
 
 Each stage is independently swappable. Design for a fleet: decisions apply across millions of URLs.
@@ -73,9 +73,9 @@ Request interception (blocking images, fonts, analytics) cuts cost 40-70%.
 | SPA dashboard | Playwright DOM | LLM extraction |
 | PDF-embedded | PyMuPDF / Unstructured | OCR (Tesseract) |
 
-## Stage 3: Structured-Data Harvest
+## Stage 3: Structured-Data Launch
 
-Most modern sites embed machine-readable data. Harvest these first — they are schema-stable.
+Most modern sites embed machine-readable data. Launch these first — they are schema-stable.
 
 | Source | Priority | Notes |
 |--------|----------|-------|
@@ -201,7 +201,7 @@ HANDOFF     →  Stream: ETL spec + schema contract
 |--------------|--------|----------|
 | ... | ... | ... |
 
-### Structured Harvest
+### Structured Launch
 - [ ] JSON-LD (schema.org classes: [list])
 - [ ] Microdata
 - [ ] OpenGraph

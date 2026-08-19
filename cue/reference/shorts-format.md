@@ -8,7 +8,7 @@ Purpose: Author 9:16 short-form scripts (TikTok / Instagram Reels / YouTube Shor
 
 - **cue `shorts`**: hook-first 15-60s vertical script, captions-on-screen spec, loop design, platform length targeting.
 - **cue `script` (default, elsewhere)**: long-form or horizontal product demos, full structure templates.
-- **Director (elsewhere)**: Playwright-driven browser captures for product screen content in the Short.
+- **cue `record` (elsewhere)**: Playwright-driven browser captures for product screen content in the Short.
 
 If the hypothesis is "will a thumb-scroller stop?" → `shorts`. If it's "does the full feature story land?" → default `script`.
 
@@ -120,5 +120,5 @@ Never stack CTAs. "Follow, like, comment, share, and click the link" is zero CTA
 
 On completion, hand off:
 
-- **To Director**: list of segments that need screen capture, with aspect (9:16) and duration per clip.
+- **To Cue production**: list of segments that need screen capture, with aspect (9:16) and duration per clip.
 - **To user**: burn-in caption sheet (timestamp, copy, style), hook rationale (which template and why), and platform-specific export spec (1080×1920, H.264, ≤30Mbps).

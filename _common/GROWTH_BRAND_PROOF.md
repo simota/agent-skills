@@ -9,8 +9,8 @@ Companion protocol to `_common/PROOF_CARRYING.md` (Tier A Foundation + Tier B Pr
 
 **Audience**: Skills participating in pre-design / ship-time / post-launch lifecycle gates.
 - **Research axis (R)**: `field`, `voice`, `trace`, `echo[demand]`, `tome`
-- **Brand axis (B)**: `vision`, `crest`, `prose`, `clause`, `canon[regulatory]`, `muse` (token discipline carry-over from Tier B)
-- **Market axis (M)**: `pulse`, `experiment`, `funnel`, `funnel premium`, `compete`, `ledger` (FinOps), `harvest`, `cloak`, `vigil` (brand safety)
+- **Brand axis (B)**: `vision`, `compete[brand]`, `prose`, `canon[legal]`, `canon[regulatory]`, `muse` (token discipline carry-over from Tier B)
+- **Market axis (M)**: `pulse`, `experiment`, `funnel`, `funnel premium`, `compete`, `ledger` (FinOps), `launch[weekly]`, `cloak`, `vigil` (brand safety)
 - **Orchestration**: `nexus[growth-acceptance]`
 
 **Inspired by**: AAOS (v1) → Code+Design Proof (v2) → Growth+Brand Acceptance OS (v3 source). All three round verdicts (Magi GO-WITH-CONDITIONS at confidence 65 / 67.8 / 54.7 respectively) inform this document.
@@ -52,10 +52,10 @@ Three structural reasons:
 **Components**:
 - Beacon registers KPI baselines pre-launch
 - Pulse + Experiment collect post-launch metrics at +14d / +30d / +90d
-- Harvest aggregates findings into a learning record
+- Launch aggregates findings into a learning record
 - Tome stores findings for future reference
 
-**Skills**: `pulse`, `experiment`, `harvest`, `beacon`, `tome`. No new skill needed.
+**Skills**: `pulse`, `experiment`, `launch[weekly]`, `beacon`, `tome`. No new skill needed.
 
 **Blocking?**: No (advisory loop). Findings inform next iteration; do not block current merge.
 
@@ -97,7 +97,7 @@ Three structural reasons:
 
 **Cross-cutting**: **G15 mandatory** — Brand Constitution split into Core (10y) / Strategic (3-5y) / Operational (12-18mo). **G12 (Diversity Floor) mandatory** — Compiler rejects "minimum viable safe copy" (homogenization counter-pressure).
 
-**Skills**: `vision` (Compiler orchestration), `crest` (brand strategy), `prose` (voice), `muse` (design tokens crossover from Tier B), `clause` (legal), `canon[regulatory]` (regulatory).
+**Skills**: `vision` (Compiler orchestration), `compete[brand]` (brand strategy), `prose` (voice), `muse` (design tokens crossover from Tier B), `canon[legal]` (legal), `canon[regulatory]` (regulatory).
 
 **Blocking?**: B.hard (taboo / legal) + B.pattern (tokens / Code Connect) are blocking. B.tone (LLM-as-judge advisory) is non-blocking + weekly sampling audit.
 
@@ -132,11 +132,11 @@ When any brand-touching content (LP / ad / UI copy / email / SNS / sales / press
 | Field | What | Owner Skill | Blocking Layer |
 |-------|------|-------------|----------------|
 | `tone_proof` | Matches Brand Voice & Tone guide | `prose` | B.tone (advisory) |
-| `message_proof` | Value proposition aligns with Positioning | `vision` / `crest` | B.tone (advisory) |
+| `message_proof` | Value proposition aligns with Positioning | `vision` / `compete[brand]` | B.tone (advisory) |
 | `distinctiveness_proof` | Embedding distance from competitor recent creatives + own past 90d > G12 threshold | `compete` | B.hard (G12 blocking) |
 | `asset_proof` | Distinctive assets (logo, color, type, shape) used per Constitution | `muse` / `vision` | B.pattern (blocking) |
-| `memory_proof` | Cognitive associations match intended Category Entry Points | `vision` / `crest` | B.tone (advisory) |
-| `trust_proof` | No exaggeration / no false claims / no banned coercive language (per `clause` + `canon[regulatory]`) | `clause` / `canon[regulatory]` | B.hard (blocking) |
+| `memory_proof` | Cognitive associations match intended Category Entry Points | `vision` / `compete[brand]` | B.tone (advisory) |
+| `trust_proof` | No exaggeration / no false claims / no banned coercive language (per `canon[legal]` + `canon[regulatory]`) | `canon[legal]` / `canon[regulatory]` | B.hard (blocking) |
 | `consistency_proof` | Does not contradict prior brand statements (G15 lifecycle check) | `vision` / `tome` | B.tone (advisory) |
 | `brand_lift_proof` | Post-launch awareness / recall / favorability / intent unchanged-or-improved | `pulse` / `experiment` | Post-launch measurement (G13 auto-halt if degraded) |
 
@@ -155,7 +155,7 @@ When any campaign / ad / channel-allocation decision is made, the following 9 ev
 | `incrementality_proof` | Measurement method declared per Decision Tree (CL / GeoLift / MMM / Synth); statistical-power-adequate | `experiment` | Post-launch (G13 blocking) |
 | `cac_ltv_proof` | Expected CAC < threshold AND LTV / CAC > 3 (or org-specific threshold) | `ledger` (FinOps) / `pulse` | Ship-time (blocking) |
 | `cannibalization_proof` | Existing-campaign cannibalization estimated (not just incremental) | `compete` / `experiment` | Post-launch (advisory) |
-| `brand_safety_proof` | Brand-safety risk reviewed; placement / context exclusions configured | `clause` / `cloak` / `vigil` | Ship-time (B.hard blocking) |
+| `brand_safety_proof` | Brand-safety risk reviewed; placement / context exclusions configured | `canon[legal]` / `cloak` / `vigil` | Ship-time (B.hard blocking) |
 | `learning_proof` | What we learn if this fails — pre-registered hypothesis | `tome` / `spark` | Post-launch (mandatory) |
 
 **Note**: `incrementality_proof` measurement method follows the Decision Tree below — Privacy regulation aware.
@@ -365,7 +365,7 @@ Rule-based, deterministic, blocking. No LLM judgment.
 | Rule Type | Example | Tooling |
 |-----------|---------|---------|
 | Taboo words | "革命的" / 過剰使用、競合商標誤用 | Banned-word list (per `prose`) |
-| Legal compliance | 薬機法 / 景表法 / 金商法 / 公職選挙法 / GDPR / DMA violations | `clause` + `canon[regulatory]` validators |
+| Legal compliance | 薬機法 / 景表法 / 金商法 / 公職選挙法 / GDPR / DMA violations | `canon[legal]` + `canon[regulatory]` validators |
 | Distinctive asset misuse | Competitor logo / unauthorized celebrity / wrong brand color | `muse` + `vision` AST check |
 | Diversity Floor (G12) | Cosine sim > 0.85 to past 90d own creatives OR top-10 competitor recent creatives | Embedding model + threshold |
 

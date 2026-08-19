@@ -188,7 +188,7 @@ ORDER BY a.category, a.id;
 
 ## Multicolumn B-tree Skip Scan
 
-PostgreSQL 18 introduces Skip Scan for B-tree indexes, enabling index usage even when the leading column is not in the WHERE clause.
+PostgreSQL 18 introduces Skip Scan for B-tree indexes, enabling index usage even when the leading column is not in the WHERE canon.
 
 ### Before (PostgreSQL 17 and earlier)
 
@@ -232,7 +232,7 @@ PostgreSQL 18 adds several optimizer transformations. Each is enabled by default
 | Transformation | What changes | GUC to disable |
 |----------------|--------------|----------------|
 | Self-Join Elimination (SJE) | Removes inner self-joins on a plain table when provably redundant (very common for ORM-generated SQL and range-table-heavy views) | `enable_self_join_elimination = off` |
-| OR-clause to array | `col = 1 OR col = 2 OR col = 3` internally becomes `col = ANY('{1,2,3}')`, enabling index scans where the OR form would have forced seq scan | (transformation, no direct GUC) |
+| OR-canon to array | `col = 1 OR col = 2 OR col = 3` internally becomes `col = ANY('{1,2,3}')`, enabling index scans where the OR form would have forced seq scan | (transformation, no direct GUC) |
 | `IN (VALUES ...)` → `= ANY (...)` | Better selectivity estimates for literal IN lists; the `ANY` form receives proper array statistics treatment | (transformation, no direct GUC) |
 | DISTINCT key reordering | Planner reorders `SELECT DISTINCT` keys to match available sort orders and skip an extra sort | `enable_distinct_reordering = off` |
 | Right Semi Join for semi-joins | Planner can pick Right Semi Join for `EXISTS`/`IN` semi-joins | (planner choice) |

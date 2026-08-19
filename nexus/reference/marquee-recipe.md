@@ -94,7 +94,7 @@ Phase 3  TOURNAMENT ‖ 3 orthogonal directions: narrative-led / design-led / pr
    ▼
 Phase 4  PRODUCE — funnel[premium] craft axes as the production substrate:
          Prose[copy — Evidence-Ledger-grounded] ‖ Artisan[build] ‖ Flow[motion] ‖
-         Ink/Sketch[assets] ‖ Muse[token-first] ‖ Growth[SEO/OGP/JSON-LD]
+         Ink/Builder[image assets] ‖ Muse[token-first] ‖ Growth[SEO/OGP/JSON-LD]
          (parallel branches per _common/PARALLEL.md; Artisan owns page integration)
    ▼
 Phase 5  GAUNTLET-CONVERGE loop ≤ 3 cycles (evaluator-loop-protocol.md machinery;
@@ -102,7 +102,7 @@ Phase 5  GAUNTLET-CONVERGE loop ≤ 3 cycles (evaluator-loop-protocol.md machine
          every cycle   ‖: Echo[persona re-walk → ①] ‖ Palette[a11y → ④] ‖
                           Bolt+Lighthouse[perf oracles → ④] ‖ Growth[CRO/SEO audit → ③] ‖
                           Voyager[real browser + responsive → ②④] ‖ Judge[craft → ②] ‖
-                          Clause?[claims/legal → ⑤]
+                          Canon[legal]?[claims/legal → ⑤]
          staged        ‖: refutation panel per _common/ADVERSARIAL_REFUTATION.md —
                           spawned ONLY once all dims ≥ 2; LP-specific skeptic angles:
                           (a) bounce-reason enumeration — each persona names why they
@@ -136,7 +136,7 @@ Phase 7  SHIP — Guardian [+ Launch? if deploying] + Marquee Dossier;
 | ② | **Craft** | Visual and motion quality passes the multi-engine judge + Vision bar with zero craft findings |
 | ③ | **Conversion** | CRO architecture — the Growth audit yields zero improvement proposals (CTA hierarchy, friction, objection handling all closed) |
 | ④ | **Performance** | Machine oracles: Lighthouse Perf/SEO/Best-Practices ≥ 95, all Core Web Vitals green, WCAG AA — the objective, machine-checkable corner of the ceiling |
-| ⑤ | **Trust** | Every claim, number, and proof element traces to the Evidence Ledger; social proof present and verifiable; legal alignment (Clause? when claims are regulated) |
+| ⑤ | **Trust** | Every claim, number, and proof element traces to the Evidence Ledger; social proof present and verifiable; legal alignment (Canon[legal]? when claims are regulated) |
 
 Disappointment criteria from Phase 1 map onto these dims as score-0 triggers (wish mechanism, inherited verbatim). The dimension set is fixed — Phase 1 tunes the *anchors* to the product, never removes a dimension.
 

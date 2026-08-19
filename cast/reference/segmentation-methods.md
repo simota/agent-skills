@@ -314,7 +314,7 @@ When `segment` completes, emit:
 - Schwartz, "An Overview of the Schwartz Theory of Basic Values" (2012)
 - Costa + McCrae, *NEO-PI-R* / Big Five history
 - Rammstedt + John — BFI-10 (10-item Big Five short form)
-- Aldenderfer + Blashfield — *Cluster Analysis* (Sage)
+- Aldenderfer + Blashfield — *Cluster Analysis* (Magi)
 - scikit-learn KMeans / DBSCAN / AgglomerativeClustering docs
 - "Behavioral Segmentation" — Amplitude / Heap / Mixpanel guides
 - Customer Lifetime Value (CLV) — Fader, Hardie + Lee

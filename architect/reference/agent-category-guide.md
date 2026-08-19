@@ -61,8 +61,8 @@ Use the agent's primary output and responsibility, not secondary capabilities.
 | Modernization | "How do we upgrade or replace old patterns?" | Mixed | Shift (`detect`/`modernize`/`radar` — absorbed from horizon), Sweep |
 | Growth | "How do we increase reach or conversion?" | Mixed | Growth, Bond |
 | Analytics | "How do we measure or experiment?" | Mixed | Pulse, Experiment |
-| Git/PR | "How do we shape the change and review flow?" | Mixed | Guardian, Harvest |
-| Browser | "How do we act inside a browser?" | Mixed | Vector, Director |
+| Git/PR | "How do we shape the change and review flow?" | Mixed | Guardian, Launch |
+| Browser | "How do we act inside a browser?" | Mixed | Vector, Cue |
 | Data | "How do we model, move, or store data?" | Mixed | Schema, Stream |
 | Strategy | "What should the business or product do next?" | No | Compete, Helm |
 | Incident | "How do we stabilize, diagnose, or repair production?" | Mixed | Triage, Mend |

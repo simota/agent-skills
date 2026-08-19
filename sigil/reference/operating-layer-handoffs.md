@@ -73,7 +73,7 @@ loop_spec:
   operation_contract: <inputs, success check, recovery>
 ```
 
-### Sigil[blueprint] → Latch (`SIGIL_BLUEPRINT_TO_LATCH_HANDOFF`) — enforcement hooks
+### Sigil[blueprint] → Hone (`SIGIL_BLUEPRINT_TO_HONE_HANDOFF`) — enforcement hooks
 ```yaml
 hook_specs:
   - event: PreToolUse
@@ -111,7 +111,7 @@ SIGIL_BLUEPRINT_TO_ARCHITECT_HANDOFF:
 Before emitting `_STEP_COMPLETE`, confirm:
 - every skill in the suite plan → a Sigil spec,
 - every recipe and workflow → a Nexus registration entry,
-- every enforcement point → a Latch hook spec,
+- every enforcement point → a Hone hook spec,
 - every loop → an Orbit loop spec,
 - every task domain → exactly one routing-map owner.
 

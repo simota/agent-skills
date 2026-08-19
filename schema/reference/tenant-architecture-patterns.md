@@ -219,7 +219,7 @@ Priority Queue per Tenant:
 
 | Vector | Check | Mitigation |
 |--------|-------|------------|
-| Missing WHERE clause | All queries include tenant_id | RLS at DB level as safety net |
+| Missing WHERE canon | All queries include tenant_id | RLS at DB level as safety net |
 | Join leakage | Cross-table joins respect tenant boundary | RLS on all joined tables |
 | Aggregate leakage | COUNT/SUM don't cross tenants | RLS + application filter |
 | Cache leakage | Cache keys include tenant_id | `cache:{tenant_id}:{key}` pattern |

@@ -274,7 +274,7 @@
 1. Read hooks configuration from project settings.json
 2. Check that hook commands are executable and paths exist (CCH1)
 3. Scan for plaintext secrets in hook commands and environment (CCH2)
-4. Note: Detailed hook design review is delegated to Latch agent
+4. For detailed design or debugging, switch to Hone's explicit `hook*` recipes
 
 ### Claude Code Auth Audit (CCA1-CCA2)
 
@@ -315,7 +315,7 @@
 - codex_audit: Codex CLI config.toml audit — trust levels, feature flags, AGENTS.md/rules/instructions.md, MCP server config, and the wire_api = "chat" hard-error check (deprecated since Feb 2026)
 - antigravity_audit: Antigravity CLI (`agy`) audit — settings.json model/auth/theme, GEMINI.md (progressive disclosure via @file.md imports, line-count thresholds), safety threshold appropriateness, extension/skill/plugin config (accessibility, secrets, version currency)
 - claude_code_config_audit: Claude Code (~/.claude/) audit — settings.json permissions (allow/deny patterns, wildcard detection), instructions (CLAUDE.md quality, line-count density, advisory-vs-hook triage), custom slash commands, model/auth settings, settings hierarchy conflict detection (user/project/local/managed override resolution + managed-settings.d/ drop-in merge order)
-- claude_code_hooks_audit: Structural + security audit of Claude Code hooks — exit code correctness (0/2), permissionDecision: "deny" usage for security-critical gates, non-interactive (-p) mode coverage gaps, HTTP hook URL pattern validation, tighten-only semantic verification (allow cannot bypass deny), 4-handler-type review (command/http/prompt/agent). Design/debugging delegated to Latch
+- claude_code_hooks_audit: Structural + security audit of Claude Code hooks — exit code correctness (0/2), permissionDecision: "deny" usage for security-critical gates, non-interactive (-p) mode coverage gaps, HTTP hook URL pattern validation, tighten-only semantic verification (allow cannot bypass deny), 4-handler-type review (command/http/prompt/agent). Design/debugging uses Hone's explicit `hook*` recipes
 - mcp_security_audit: MCP server security posture — per-server PAT least-privilege, tool poisoning risk on metadata integrity, OAuth 2.1 transport compliance (PKCE/client-credentials), token passthrough detection, version pinning, DCR endpoint validation, OAuth discovery URL validation (CVE-2025-6514 mitigation), RFC 8707 resource indicator binding (MCP spec 2026-03-15)
 - plugin_audit: Plugin source verification (official vs third-party marketplace), auto-update configuration (third-party auto-update = supply-chain risk), marketplace trust review, plugin permission scope
 - rules_and_budget_audit: .claude/rules/ path-scoped rule validation (glob frontmatter syntax + specificity); CLAUDE.md/GEMINI.md instruction-budget waste detection (lint/formatter rule duplication = wasted context)
@@ -334,7 +334,7 @@
 | `agy`, `settings.json`, `Antigravity CLI`, `safety settings`, `safety`, `GEMINI.md`, `agy instructions`, `agy plugin` | Antigravity audit (config + safety + extensions + instructions) | Antigravity proposals | `reference/antigravity-config-schema.md` |
 | `claude code`, `claude`, `.claude/`, `permissions`, `allow`, `deny`, `commands`, `slash commands` | Claude Code config + permissions + commands | Claude Code config proposals | `reference/claude-code-config-schema.md` |
 | `CLAUDE.md`, `claude instructions`, `CLAUDE.md too long`, `instruction count`, `optimize instructions`, `rules`, `agents.md`, `instructions`, `.claude/rules`, `path-scoped`, `globs`, `instruction budget`, `linter duplication`, `context waste` | Instructions + density + path-scoped rules + budget | CLAUDE.md / rules / budget proposals | `reference/claude-code-config-schema.md` (CCI1-CCI7) |
-| `hooks`, `claude hooks`, `hook handler`, `prompt hook`, `agent hook` | Claude Code hooks structural + handler audit | Hooks validity + handler proposals (design → Latch) | `reference/claude-code-config-schema.md` (CCH1-CCH8) |
+| `hooks audit`, `hook handler audit` | Claude Code hooks structural + handler audit | Hooks validity + handler proposals; explicit design/configuration uses Hone `hook*` recipes | `reference/claude-code-config-schema.md` (CCH1-CCH8) |
 | `settings hierarchy`, `override`, `conflict`, `managed settings`, `organization policy`, `MDM` | Settings hierarchy + managed policy | Override conflict + policy compliance proposals | `reference/claude-code-config-schema.md` (CCG1-CCG3) |
 | `plugin`, `marketplace`, `skills install` | Plugin source / trust / auto-update audit | Plugin proposals | `reference/claude-code-config-schema.md` (CCPL1-CCPL4) |
 | `prompt cache`, `cache hit rate`, `cache hierarchy`, `cache-order`, `cache breakpoint`, `_common load order`, `context layout` | Prompt cache hierarchy audit | T-static/dynamic layering + breakpoint + `_common/` load order proposals | `_common/PROMPT_CACHE_HIERARCHY.md` |

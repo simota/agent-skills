@@ -7,7 +7,7 @@ Design a rehearsal protocol and delivery checklist so a speaker arrives at the s
 ## Scope Boundary
 
 - IN scope: rehearsal cadence, breathing and voice technique, pacing, pause discipline, eye-contact routing, Q&A handling, contingency plans.
-- OUT of scope: narrative design (`narrative`), visual design (`visual`), slide-framework syntax (`marp`/`reveal`/`slidev`), live recording (delegate to `director`).
+- OUT of scope: narrative design (`narrative`), visual design (`visual`), slide-framework syntax (`marp`/`reveal`/`slidev`), live recording (delegate to `cue`).
 
 ## Core Concepts
 

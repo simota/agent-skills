@@ -31,11 +31,11 @@ COLLABORATION_PATTERNS:
 - Sigil -> Lore: Reusable skill patterns and activation rate data
 - Sigil -> Hone: Skill configuration optimization recommendations
 - Lens/Atlas -> Sigil: Codebase and architecture maps for operating-layer blueprints
-- Sigil -> Orbit/Latch: Loop and hook specifications discovered during blueprinting
+- Sigil -> Orbit/Hone: Loop and hook specifications discovered during blueprinting
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Lens (codebase analysis), Atlas (architecture topology), Architect (ecosystem patterns), Judge (quality feedback), Canon (standards), Grove (project structure), Gauge (normalization checklist)
-- OUTPUT: Grove (skill structure/placement), Nexus (skill and routing notifications), Judge (review requests), Lore (reusable patterns), Hone (config optimization), Orbit (loop specs), Latch (hook specs)
+- OUTPUT: Grove (skill structure/placement), Nexus (skill and routing notifications), Judge (review requests), Lore (reusable patterns), Hone (config and hook optimization), Orbit (loop specs)
 
 PROJECT_AFFINITY: Game(H) SaaS(H) E-commerce(H) Dashboard(H) Marketing(H)
 -->

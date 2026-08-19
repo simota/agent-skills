@@ -233,4 +233,4 @@ Rule: percentage rollout
 - **Gear → Launch**: implements traffic-splitting config
 - **Guardian → Launch**: PR size + risk classification informs canary aggressiveness
 - **Launch → Triage**: halt / rollback events escalate to incident commander
-- **Launch → Harvest**: rollout summary for weekly report
+- **Launch reporting**: include the rollout summary and guardrail outcome in the weekly report

@@ -95,7 +95,7 @@ Decide what to lose *before* the outage. Graceful degradation is not keeping the
 
 **The failure this prevents:** switching to the fallback model without telling downstream, so a degraded-quality output retains full-authority auto-execution. **Quality degradation must propagate to authority degradation** — every level in the ladder re-states its allowed and disallowed actions, not just its model.
 
-**Safe default ≠ most restrictive default.** Each level offers the user a next action: related documents instead of an answer, a saved draft instead of a send, a diff plus runbook instead of a change, a queue ID and ETA instead of a result. Rehearse the ladder in a game day; a degradation path that has never been executed is a design sketch.
+**Safe default ≠ most restrictive default.** Each level offers the user a next action: related documents instead of an answer, a saved draft instead of a send, a diff plus runbook instead of a change, a queue ID and ETA instead of a result. Rehearse the ladder in a game day; a degradation path that has never been executed is a design builder.
 
 ## Security Threat Matrix
 

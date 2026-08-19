@@ -13,7 +13,7 @@ If the question is "what color value does `--icon-primary` resolve to?" → Muse
 
 ## Token-System Landscape (2026-05)
 
-- **DTCG Design Tokens Format Module 2025.10** — first stable spec, published **2025-10-28** by the W3C Design Tokens Community Group. Vendor-neutral JSON, MIME `application/design-tokens+json`, extensions `.tokens` or `.tokens.json`. Supports color (with modern color spaces), dimension, duration, motion, gradient, border, shadow, typography token types and a new resolver module. Adopted by Figma, Penpot, Sketch, Framer, Knapsack, Supernova, zeroheight; reference impls in Style Dictionary, Tokens Studio, Terrazzo.
+- **DTCG Design Tokens Format Module 2025.10** — first stable spec, published **2025-10-28** by the W3C Design Tokens Community Group. Vendor-neutral JSON, MIME `application/design-tokens+json`, extensions `.tokens` or `.tokens.json`. Supports color (with modern color spaces), dimension, duration, motion, gradient, border, shadow, typography token types and a new resolver module. Adopted by Figma, Penpot, Builder, Framer, Knapsack, Supernova, zeroheight; reference impls in Style Dictionary, Tokens Studio, Terrazzo.
 - **Style Dictionary v5** — DTCG 2025.10 alignment in progress (color/border/shadow done, gradient in progress; dimension token type accepts object value while remaining string-compatible).
 - **Tokens Studio for Figma** — 2025 updates: auto-sync of scoping/syntax to Figma Variables, server-side token resolution for OAuth projects, gradient export as Figma styles.
 - **CSS `color-mix()` + OKLCH** — Chrome 111+, Edge 111+, Firefox 113+, Safari 15.4+; ~95% global support per caniuse (2025-Q3). Safe to use as the default `color-mix` interpolation space in 2026.

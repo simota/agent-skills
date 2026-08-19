@@ -166,7 +166,7 @@ universal_skills: [scout, judge, zen, builder, scribe, sherpa, void, magi, riff,
 
 - **Cache in repo root** (`./compass-cache.md`): pollutes user's workspace. Always `.claude/compass-cache.md`.
 - **Top-N > 50**: defeats the slim cache purpose. Use full catalog instead.
-- **Caching the full catalog**: same as above — just read `catalog.md`; include 111 global skills and only project-local extensions available in the active workspace.
+- **Caching the full catalog**: same as above — just read `catalog.md`; include 100 global skills and only project-local extensions available in the active workspace.
 - **Skipping universal inclusions**: breaks recommendations for common tasks (debug, review, plan).
 - **Hand-editing the cache**: re-run `/compass refresh` instead. Hand edits drift from the catalog and the scanner.
 - **Refreshing on every `recommend`**: defeats the cost saving. Only refresh on user request or invalidation trigger.

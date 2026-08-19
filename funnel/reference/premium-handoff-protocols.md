@@ -59,12 +59,12 @@ When `_AGENT_CONTEXT.mode = AUTORUN` or `AUTORUN_FULL`, the following stage acti
 | Trigger | Action |
 |---------|--------|
 | Brand System triple lock incomplete at STRATEGY exit | NEED_INFO with missing piece (archetype / story / positioning) |
-| External paid API would be called (Sketch image gen, etc.) | NEED_INFO with budget estimate |
+| External paid API would be called (Builder image gen, etc.) | NEED_INFO with budget estimate |
 | Recipe switch mid-pipeline | NEED_INFO with artifact-compatibility list |
 | Fan-out would exceed 5 concurrent delegates (including cross-stage specialists) | NEED_INFO with batching proposal |
 | `Brief carries two unrelated value propositions` detected | NEED_INFO with one-promise question |
 | Stage gate fails twice in a row | NEED_INFO with repair-or-cut choice |
-| External API outage > 2 retries (Frame/Figma MCP, Sketch) | NEED_INFO with fallback options |
+| External API outage > 2 retries (Frame/Figma MCP, Builder) | NEED_INFO with fallback options |
 | Sentinel high-severity finding requires Builder dispatch | NEED_INFO with routing recommendation |
 
 ## Delegate Outage Protocol
@@ -72,7 +72,7 @@ When `_AGENT_CONTEXT.mode = AUTORUN` or `AUTORUN_FULL`, the following stage acti
 | Delegate | Outage Symptom | Fallback Path |
 |---------|---------------|---------------|
 | **Frame** (Figma MCP 5xx) | get_design_context fails | Manual screenshot bundle from user; downgrade Code Connect to handwritten mapping |
-| **Sketch** (image-gen timeout) | hero asset not produced | Ink (vector illustration) |
+| **Builder** (image-gen timeout) | hero asset not produced | Ink (vector illustration) |
 | **Voyager** (BrowserStack/SauceLabs outage) | E2E run fails | Local Playwright run on representative devices; flag risk in Launch dossier |
 
 Triggers OUTAGE recovery: 2 consecutive retries fail with same error class within 5 min.

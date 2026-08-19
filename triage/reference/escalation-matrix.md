@@ -22,7 +22,7 @@ Canonical 4-tier structure. Adjust for org size.
 | 0 | Primary on-call engineer | PagerDuty primary schedule | 5 min (SEV1), 15 min (SEV2) | Diagnose, mitigate, execute runbooks, invoke Mend |
 | 1 | Secondary on-call engineer | PagerDuty secondary schedule | 10 min (SEV1), 30 min (SEV2) | Pair with tier 0, take IC if tier 0 is blocked |
 | 2 | Engineering Manager (EM) / Tech Lead | Phone + SMS + PagerDuty | 15 min (SEV1), 60 min (SEV2) | Resource allocation, cross-team coordination, customer comms authorization |
-| 3 | VP Engineering / CTO / Director | Phone call only | 30 min (SEV1 only) | Public disclosure, legal engagement, major rollback of business-critical systems |
+| 3 | VP Engineering / CTO / Cue | Phone call only | 30 min (SEV1 only) | Public disclosure, legal engagement, major rollback of business-critical systems |
 
 Additional domain-specific tiers as sibling branches:
 - Security path: tier 0 → Security on-call → CISO (bypasses EM for breach-suspected SEV1)

@@ -19,7 +19,7 @@ CAPABILITIES_SUMMARY:
 - deprecated_library_detection: Identify outdated/unmaintained/deprecated dependencies via static analysis, audit, and health scoring; emit a replacement report
 - native_api_replacement: Modern native alternatives (Temporal, structuredClone, fetch, Intl, Iterator helpers, Object.groupBy, URLPattern, node:test, node:sqlite, …) over heavy libraries, with bundle-impact analysis
 - technology_radar: Evaluate emerging tech against the maturity matrix (≥6mo post-stable, ≥1K stars, active maintenance) and project fit before adoption
-- supply_chain_risk_evaluation: Dependency supply-chain risk — provenance verification, OIDC Trusted Publishing posture, trustPolicy, release cooldown, transitive exposure (deep forensics → cull/chain)
+- supply_chain_risk_evaluation: Dependency supply-chain risk — provenance verification, OIDC Trusted Publishing posture, trustPolicy, release cooldown, transitive exposure (deep forensics → `chain[malware-scan]`)
 
 COLLABORATION_PATTERNS:
 - Inbound: patch escalation / dependency audit (Gear), impact analysis (Ripple), architecture (Atlas), codebase exploration (Lens), lifecycle phase (Darwin), removal justification (Void), unpatchable CVE (Sentinel), strategy verdicts (Magi), approach reframing (Flux)
@@ -59,7 +59,7 @@ Route elsewhere when the task is primarily:
 - schema design (not migration): `Schema`
 - performance optimization (not migration): `Bolt`
 - general refactoring (not version migration): `Zen`
-- deep supply-chain compromise forensics (worm/IoC investigation): `Cull` / `Chain`
+- deep supply-chain compromise forensics (worm/IoC investigation): `Chain[malware-scan]`
 
 ## Boundaries
 
@@ -219,7 +219,7 @@ Shift meets all three subagent criteria — use **Pattern D: Specialist Team** (
 - **vs Zen**: Zen = refactor for readability without changing behavior; Shift = migrate to new APIs, frameworks, or versions.
 - **vs Gear**: Gear = patch/minor within one major; Shift = major-version migration, EOL replacement, modernization, tech radar. Gear escalates to `detect` when a patch reveals deeper need.
 
-vs Launch, Schema, Builder, Sentinel, Cull/Chain, Magi → `reference/migration-strategies.md` § Overlap Boundaries.
+vs Launch, Schema, Builder, Sentinel, Chain, Magi → `reference/migration-strategies.md` § Overlap Boundaries.
 
 ## Reference Map
 
@@ -280,4 +280,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-
