@@ -25,7 +25,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Vision (research direction), Spark (feature hypotheses), Voice (feedback data), Trace (behavioral evidence), Flux (assumption challenge), Compete (win/loss interview design)
-- OUTPUT: Cast (persona data), Echo (testing packages), Vision (research insights), Palette (usability findings), Spark (validated needs), Canvas (visualization), Lore (patterns), Plea (underrepresented segment demand)
+- OUTPUT: Cast (persona data), Echo (testing packages), Vision (research insights), Palette (usability findings), Spark (validated needs), Canvas (visualization), Lore (patterns), Echo[demand] (underrepresented segment demand)
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(M) Marketing(H)
 -->
@@ -121,7 +121,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | `DEFINE` | Clarify research questions, constraints, and decision to influence | Research questions first | `reference/interview-guide.md` |
 | `DESIGN` | Choose methods, create guides, build screeners, define consent | Methods serve the question | `reference/participant-screening.md` |
 | `ANALYZE` | Code data, identify patterns, check bias, compare signals | Separate observation from interpretation | `reference/analysis-and-synthesis.md` |
-| `SYNTHESIZE` | Create insights, personas, journey maps, recommendations; if underrepresented segments found → consider delegating to Plea | Evidence strength required | `reference/analysis-and-synthesis.md` |
+| `SYNTHESIZE` | Create insights, personas, journey maps, recommendations; if underrepresented segments found → consider delegating to Echo[demand] | Evidence strength required | `reference/analysis-and-synthesis.md` |
 | `HANDOFF` | Package findings for downstream agents | Include confidence and limitations | `reference/continuous-discovery-mixed-methods.md` |
 | `DISTILL` | Track adoption, calibrate methods, share validated patterns | Improve the research system | `reference/research-calibration.md` |
 
@@ -219,7 +219,7 @@ Receives research direction/data upstream, runs studies and analysis, hands vali
 | Field → Vision | Research insights | Informs design direction |
 | Field → Palette | Usability findings | Drives UX improvement |
 | Field → Voice | Survey input | Informs surveys or feedback loops |
-| Field → Plea | `RESEARCHER_TO_PLEA` | Synthetic demand exploration for unmet segments |
+| Field → Echo[demand] | `RESEARCHER_TO_PLEA` | Synthetic demand exploration for unmet segments |
 | Field → Canvas | Visualization | Journey or systems visualization |
 | Field → Lore | Pattern archive | Reusable patterns enter institutional memory |
 

@@ -47,7 +47,7 @@ Use the agent's primary output and responsibility, not secondary capabilities.
 
 | Category | Core question | Code generation | Typical neighbors |
 |----------|---------------|-----------------|-------------------|
-| Orchestration | "Who should do this next?" | No | Nexus, Sherpa, Titan |
+| Orchestration | "Who should do this next?" | No | Nexus (`deliver` included), Sherpa |
 | Investigation | "What is happening and why?" | No | Scout, Triage, Trail |
 | Implementation | "How do we build it?" | Yes | Builder, Forge, Artisan |
 | Testing | "How do we verify it?" | Yes | Radar, Voyager |
@@ -57,7 +57,7 @@ Use the agent's primary output and responsibility, not secondary capabilities.
 | Documentation | "How do we explain or codify it?" | Mostly text | Quill, Scribe, Lore |
 | Architecture | "How should the system be shaped?" | Mixed | Atlas, Architect, Schema |
 | UX/Design | "How should it look or feel?" | Mixed | Vision, Muse, Palette |
-| DevOps | "How do we run and ship it reliably?" | Yes | Gear, Pipe, Scaffold |
+| DevOps | "How do we run and ship it reliably?" | Yes | Gear (`gha` included), Scaffold |
 | Modernization | "How do we upgrade or replace old patterns?" | Mixed | Shift (`detect`/`modernize`/`radar` — absorbed from horizon), Sweep |
 | Growth | "How do we increase reach or conversion?" | Mixed | Growth, Bond |
 | Analytics | "How do we measure or experiment?" | Mixed | Pulse, Experiment |

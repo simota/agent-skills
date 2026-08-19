@@ -14,7 +14,7 @@ Every verdict recipe converges on **one** outcome and presents it as a card, nev
 ## <Recipe> Verdict
 Recommended <build|differentiator|removal>: <single item, or a removal slate>
 Why: <2-3 lines>
-Source of conviction: <funnel summary, e.g. Plea→Spark→Magi→Rank>
+Source of conviction: <funnel summary, e.g. Echo[demand]→Spark→Magi→Rank>
 Considered but rejected: <2-3 alternatives, one-line reason each>
 Evidence: <recipe-specific — moat class & trajectory (killer) / CoK + usage % + blast radius (trim)>
 Survived refutation: <which attacks it withstood; open risk = refuted-on-evidence vs unproven-because-new>
@@ -58,6 +58,6 @@ See `_common/ADVERSARIAL_REFUTATION.md` §5 for the safety-critical / confidence
 ## 5. What this gate owns vs each recipe
 
 This file owns the card shape, the three branches, the Modify bound, and the flag/KPI/kill structure. Each recipe (`reference/inline-recipes.md`) keeps **only** its funnel + selection criterion:
-- `essential` → necessity funnel (Plea→Spark→Magi→Rank) + the **ambition check** (must-have ≠ timid); single top Must-have.
+- `essential` → necessity funnel (Echo[demand]→Spark→Magi→Rank) + the **ambition check** (must-have ≠ timid); single top Must-have.
 - `killer` → cross-engine triangulation + **moat-class/trajectory gate** + refutation; single boldest *viable* differentiator; always flagged.
 - `trim` → essential×killer 2×2 over the live feature set + defend-polarity refutation; removal slate; phased excision.

@@ -77,7 +77,7 @@ Scan for hardcoded values where tokens should exist:
 | Inline color hex (`color: #FF5722`) | Brand drift | Replace with `var(--color-action-primary)` |
 | Inline px spacing (`padding: 12px`) | Spacing scale drift | Replace with `var(--space-md)` |
 | Inline font-size (`font-size: 17px`) | Type scale drift | Replace with `var(--text-base)` |
-| Magic-number radii (`border-radius: 7px`) | Inconsistent corner language | Snap to scale (`--radius-md`) |
+| Magic-number radii (`border-radius: 7px`) | Inconsistent corner language | Voyager[ios] to scale (`--radius-md`) |
 | Duplicate tokens across themes | "Frankenstein system" | Consolidate; cascade Core → Brand |
 | Token defined but never referenced | Dead token | Remove; reduce noise |
 | Token referenced but undefined | Build break / silent fallback | Define or remove reference |
@@ -101,7 +101,7 @@ drift % = (hardcoded_values / total_style_declarations) × 100
 | Component sprawl (5+ button variants) | Inventory components | Consolidate to ≤ 4 variants |
 | Atomic-rigidity in multi-brand | Tokens shared but behavior diverges | Apply Core → Brand → Product cascade |
 | Mixed paradigm (some BEM, some Tailwind) | grep class patterns | Pick one paradigm |
-| Spacing values not on scale | All px values used | Snap to 4 / 8 / 16 / 24 / 32 / 48 / 64 |
+| Spacing values not on scale | All px values used | Voyager[ios] to 4 / 8 / 16 / 24 / 32 / 48 / 64 |
 | Type ramp > 8 steps | Inventory font-sizes | Reduce to 5-7 steps |
 | Color palette > 12 hues | Inventory hue values | Reduce to 5-7 hues × shades |
 | Shadow palette > 6 levels | Inventory box-shadows | Reduce to 4 levels |

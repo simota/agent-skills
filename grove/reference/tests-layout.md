@@ -10,7 +10,7 @@ Purpose: Design and audit `tests/` (and co-located test) layouts across unit, in
 - **Mint (elsewhere)**: factory and fixture content authoring (boundary-value data, synthetic data). Grove `tests` decides where they live; Mint decides what they generate.
 - **Radar (elsewhere)**: test additions for coverage gaps and edge cases. Grove `tests` decides directory; Radar fills it with cases.
 - **Voyager (elsewhere)**: E2E test implementation (Playwright/Cypress page objects). Grove `tests` decides `e2e/` location; Voyager owns the test code.
-- **Nest (elsewhere)**: LLM-context retrieval ordering of the test tree. Grove `tests` ships the layout; Nest tunes it for context windows.
+- **Grove[llm] (elsewhere)**: LLM-context retrieval ordering of the test tree. Grove `tests` ships the layout; Grove[llm] tunes it for context windows.
 
 ## Workflow
 
@@ -122,7 +122,7 @@ Layout must make this trivial: `vitest tests/unit` vs `vitest tests/integration`
 - **To Mint**: factory file paths defined by Grove become Mint targets — Mint authors `user.factory.ts` content (boundary values, synthetic data).
 - **To Radar**: directory and naming rules become Radar's placement template when adding edge-case tests or fixing flakies.
 - **To Voyager**: `tests/e2e/` location becomes the Voyager working tree for Playwright/Cypress page objects and journey tests.
-- **To Nest**: once layout is stable, Nest can reorder helpers/fixtures for context-cache efficiency (e.g., README ordering, manifest hoisting).
+- **To Grove[llm]**: once layout is stable, Grove[llm] can reorder helpers/fixtures for context-cache efficiency (e.g., README ordering, manifest hoisting).
 - **To Atlas**: if helpers import production code in unwanted directions, Atlas validates the dependency graph.
 - **To Sigil**: Grove publishes the test layout; Sigil generates project-tuned test skills (runner, framework, naming convention).
 - **To Gear**: tier-split CI matrix (unit/integration/e2e selectors, parallelism) wired by Gear after layout is locked.

@@ -83,7 +83,7 @@ Behavior notes per Recipe:
 - `usability`: Test planning and task scenario design. Apply SUS/SEQ/CASTLE benchmark thresholds.
 - `analysis`: Thematic analysis, coding, and affinity mapping. Bias check required.
 - `persona`: Generate personas from research data. Disclose WEIRD bias and prepare Cast handoff.
-- `journey`: Journey mapping + JTBD switch interview analysis. Includes Plea handoff determination.
+- `journey`: Journey mapping + JTBD switch interview analysis. Includes Echo[demand] handoff determination.
 - `survey`: Quantitative survey design — item authoring, scale selection, sample-size calculation, order-bias control, Cronbach's α validation. For usability cognitive walkthrough use Echo; for production KPI tracking events use Pulse; for operational NPS/CSAT feedback pipelines use Voice.
 - `diary`: Longitudinal behavioral study — study length, ESM prompt frequency, self-report bias mitigation, fatigue management, media capture. For passive in-product telemetry use Pulse; for single-session cognitive walkthrough use Echo; for retrospective feedback mining use Voice.
 - `cards`: IA validation — open / closed / hybrid card sort, tree testing, first-click testing, dendrogram and similarity-matrix analysis. For UI comprehension walkthrough use Echo; for post-launch navigation analytics use Pulse; for post-launch findability complaints use Voice.

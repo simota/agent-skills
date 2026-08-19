@@ -200,7 +200,7 @@ Each gate below (§3a Graft Map, §3b Triple-Oracle, §3c Host-Invariant, §3d O
 - `+Sherpa` — decompose a multi-graft transplant into atomic per-graft steps.
 - `+Siege` — when the graft must hold the host's performance/resilience envelope under the new concept.
 - `+experiment` — when the innovation ships behind a flag and its KPI needs an A/B / incrementality design (pairs with §3e).
-- `+Hearth[automate]` / `+Snap` — desktop / native-mobile donor observation (the concept source is a non-web app).
+- `+Hearth[automate]` / `+Voyager[ios]` — desktop / native-mobile donor observation (the concept source is a non-web app).
 
 ## 7. Output
 

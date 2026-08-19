@@ -1,6 +1,6 @@
 # GitHub Actions Templates
 
-> **Note:** For advanced GHA workflow design (trigger strategy, security hardening, performance optimization, PR automation, Reusable/Composite design, monorepo CI, self-hosted runners), see the **Pipe** agent (`pipe/SKILL.md`).
+> **Note:** For advanced GHA workflow design (trigger strategy, security hardening, performance optimization, PR automation, Reusable/Composite design, monorepo CI, self-hosted runners), see the **Gear[gha]** agent (`pipe/SKILL.md`).
 
 CI/CD workflow templates, composite actions, reusable workflows, OIDC authentication, and security scanning.
 

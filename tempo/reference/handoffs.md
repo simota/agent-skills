@@ -152,7 +152,7 @@ If SLA cannot tolerate GHA skew:
 
 ---
 
-## Tempo → Pipe (new GHA workflow with advanced cron)
+## Tempo → Gear[gha] (new GHA workflow with advanced cron)
 
 ```
 TEMPO_TO_PIPE_HANDOFF
@@ -434,7 +434,7 @@ _STEP_COMPLETE:
   Risks:
     - [DST assumption risk]
     - [Platform SLA risk]
-  Next: Builder | Gear | Pipe | Weave | Beacon | Voyager | Judge | DONE
+  Next: Builder | Gear | Gear[gha] | Weave | Beacon | Voyager | Judge | DONE
   Reason: [why next step]
 ```
 
@@ -450,4 +450,4 @@ _STEP_COMPLETE:
 | **C** Timezone-Audit | User → Tempo[audit] → Judge → Builder | Audit existing TZ handling, review, fix |
 | **D** Backfill-Recovery | Triage → Tempo[replay] → Builder → Beacon | Incident recovery with watermark + observability |
 | **E** Schedule-Observability | Tempo → Beacon → Builder | Missed-run alert + execution SLO design |
-| **F** CI-Cron-Optimization | Tempo → Gear/Pipe | Optimize GHA `schedule.cron` across repos |
+| **F** CI-Cron-Optimization | Tempo → Gear/Gear[gha] | Optimize GHA `schedule.cron` across repos |

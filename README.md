@@ -1,14 +1,14 @@
 # AI Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Agents](https://img.shields.io/badge/Agents-122-blue.svg)]()
+[![Agents](https://img.shields.io/badge/Agents-114-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 A skill collection that enables collaborative development with a team of specialized AI agents.
 
 ## Features
 
-- **122 Specialized Agents** - Covering bug investigation, testing, security, UI/UX, AI/ML, observability, and more
+- **114 Specialized Agents** - Covering bug investigation, testing, security, UI/UX, AI/ML, observability, and more
 - **Nexus Orchestrator** - Analyzes tasks and automatically designs optimal agent chains
 - **Platform Agnostic** - Works with Claude Code, Codex CLI, Antigravity CLI, and others
 
@@ -35,30 +35,27 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 ## Overview
 
-This repository contains 122 specialized AI agents covering various aspects of software development. Each agent specializes in a specific domain and is coordinated by the **Nexus** orchestrator.
+This repository contains 114 specialized AI agents covering various aspects of software development. Each agent specializes in a specific domain and is coordinated by the **Nexus** orchestrator.
 
 ## Agent Catalog
 
-> Category-by-category catalog for all 122 agents.
+> Category-by-category catalog for all 114 agents.
 
 ### Orchestration
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Nexus** | _"The right agent at the right time changes everything."_ - Team orchestrator. Decomposes requests and designs optimal agent chains | Prompts, progress management |
+| **Nexus** | _"The right agent at the right time changes everything."_ - Team orchestrator and scope-adaptive product delivery owner. Designs and executes minimum viable agent chains | Prompts, progress management |
 | **Sherpa** | _"The mountain doesn't care about your deadline. Plan accordingly."_ - Task decomposition guide. Breaks complex tasks into atomic steps completable within 15 minutes | Checklists |
 | **Architect** | _"Every agent is a possibility. Every SKILL.md is a birth certificate."_ - Meta-designer that creates new skill agents. Ecosystem gap analysis, duplication detection, SKILL.md generation | SKILL.md, references |
 | **Rally** | _"One task, many hands. Parallel by design."_ - Multi-session parallel orchestrator. Spawns and manages multiple Claude instances via Claude Code Agent Teams API for concurrent task execution | Team management, parallel execution |
-| **Titan** | _"Give me a dream. I'll give you the product."_ - Product lifecycle meta-orchestrator. Coordinates all agents across 9 phases (DISCOVER→BUILD→LAUNCH→EVOLVE) to deliver complete products from ambiguous goals | Product delivery |
 | **Sigil** | _"Every project has patterns waiting to become power."_ - Dynamic skill generator. Analyzes project codebases, discovers patterns and conventions, and generates optimized Claude Code skills for the project's `.claude/skills/` directory | Project-specific skills |
 | **Orbit** | _"Give me a goal. I'll give you a runner that finishes."_ - Nexus-autoloop completion specialist. Generates completion scripts, operation contracts, and audits for autonomous loop execution | Runner scripts, contracts |
 | **Darwin** | _"Ecosystems that cannot sense themselves cannot evolve themselves."_ - Ecosystem self-evolution orchestrator. Detects project lifecycle phase, evaluates agent relevance, integrates cross-cutting knowledge, and evolves the entire ecosystem | Ecosystem Fitness Score, evolution proposals |
 | **Lore** | _"Forgotten lessons are lessons repeated. Institutional memory is the compound interest of experience."_ - Memory curator for cross-ecosystem knowledge integration. Discovers common patterns from agent journals, catalogs them, and distributes to relevant agents. Knowledge decay detection and best practice propagation | METAPATTERNS.md, knowledge insights |
 | **Gauge** | _"What gets measured gets managed. What gets audited gets normalized."_ - SKILL.md normalization auditor and self-evolving compliance agent. Scans all skills against the 19-item checklist, classifies violations with P0-P3 priority, generates concrete fix snippets, and evolves detection patterns via web research. No code written | Compliance reports, fix plans, dashboards |
 | **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - Design-to-implementation pipeline orchestrator for the code-to-visual-to-code closed loop. Coordinates Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas to deliver design extraction, prototypes, visual assets, slides, and production together while persisting a project design system across downstream agents | Design system package, integrated deliverables |
-| **Bazaar** | _"A landing page is one promise, one path, one decision. bazaar runs the studio that delivers all three."_ - Super-premium LP studio chain orchestrator. Composes Field → Cast → Pulse → Funnel → Vision → Saga → Compete → Muse → Flow → Artisan → Growth → Bolt → Judge → Launch into a recipe-selected, stage-gated pipeline (Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch) enforcing 6 craft axes — Design, Animation, Branding, Marketing, SEO, IA — each with explicit rubric and ship threshold | 6-axis-rubric-passed LP package, CVR-tuned production code, brand-coherent visuals, motion on tokens, schema-valid SEO, GEO citation-ready, analytics live |
-| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 122."_ - Skill ecosystem navigator and onboarding guide. Lists agents, recommends best fit for tasks, and helps newcomers discover the right specialist | Recommendations, agent maps |
-| **Loom** | _"Many threads, one fabric — design the operating layer as a system."_ - Project operating-layer designer. Blueprints the coherent set of project-local skills, repo-tailored recipes, and skill-plus-agent workflows a repository needs together as one system, then delegates body authoring to Sigil and runtime routing to Nexus | Operating-layer blueprint, routing map, recipe/workflow specs |
+| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 114."_ - Skill ecosystem navigator and onboarding guide. Lists agents, recommends best fit for tasks, and helps newcomers discover the right specialist | Recommendations, agent maps |
 | **Prune** | _"A garden grows by what you cut, not what you plant."_ - Ecosystem cleanup auditor. Audits the agent roster for overlap, redundancy, and inactivity, then proposes merge candidates and sunset plans with evidence and archive instructions. Propose-only, no execution | Merge/sunset proposals, archive instructions |
 
 ### Investigation & Planning (Non-coding)
@@ -70,7 +67,6 @@ This repository contains 122 specialized AI agents covering various aspects of s
 | **Spark** | _"The best feature is the one users didn't know they needed."_ - Feature proposals. Suggests features leveraging existing data/logic as Markdown specs | Specification document |
 | **Compete** | _"Know your enemy. Know the market. Know yourself."_ - Competitive research, differentiation, and positioning. SWOT analysis, feature matrices | Competitive analysis report |
 | **Voice** | _"Feedback is a gift. Analysis is unwrapping it."_ - User feedback collection, NPS survey design, sentiment analysis, and insight extraction | Feedback report |
-| **Plea** | _"I am your user. I feel every day what you overlook."_ - Synthetic user advocate. Role-plays as diverse end-user personas to generate authentic feature requests, surface unmet needs, and challenge team assumptions | Feature request report |
 | **Field** | _"Good research asks the right questions. Great research changes what you thought was the question."_ - User research design, interview guides, qualitative analysis, persona/journey map creation | Research report |
 | **Trace** | _"Every click tells a story. I read between the actions."_ - Session replay analysis, per-persona behavioral pattern extraction, UX problem storytelling. Works with Field/Echo | Behavioral analysis report |
 | **Canon** | _"Standards are the accumulated wisdom of the industry. Apply them, don't reinvent them."_ - Investigates and analyzes using global/industry standards. Evaluates OWASP/WCAG/OpenAPI/ISO 25010 standards and SOC2/PCI-DSS/HIPAA/ISO 27001 regulatory controls, with evidence-backed remediation | Compliance report |
@@ -115,7 +111,7 @@ This repository contains 122 specialized AI agents covering various aspects of s
 | Agent | Description | Output |
 |-------|-------------|--------|
 | **Radar** | _"Untested code is unfinished code."_ - Unit/integration test addition, flaky test fixing, coverage improvement | Test code |
-| **Voyager** | _"E2E tests are the user's advocate in CI/CD."_ - E2E test specialist. Playwright/Cypress setup, Page Object design, visual regression, CI integration | E2E test code |
+| **Voyager** | _"E2E tests are the user's advocate in CI/CD."_ - Cross-platform and iOS E2E specialist. Playwright/Cypress/Appium/Detox/Maestro plus XCUITest and App Store snapshots | E2E test code |
 | **Sentinel** | _"Security is not a feature. It's a responsibility."_ - Static security analysis (SAST), vulnerability pattern detection, input validation | Security fixes |
 | **Probe** | _"A system is only as secure as its weakest endpoint."_ - Dynamic security testing (DAST), OWASP ZAP/Nuclei integration, penetration testing | Vulnerability report |
 | **Vigil** | _"An undetected attack is an undefended system. Vigil ensures nothing passes unseen."_ - Detection Engineering agent. Sigma/YARA rule design, detection coverage mapping (MITRE ATT&CK), threat hunting hypothesis design, Purple Team Blue side execution, Detection-as-Code CI/CD integration | Detection rules, coverage maps |
@@ -130,7 +126,6 @@ This repository contains 122 specialized AI agents covering various aspects of s
 | **Breach** | _"Think like an attacker. Defend like an engineer."_ - Red team engineering. Attack scenario design, threat modeling, MITRE ATT&CK/OWASP frameworks, Purple Team exercises, AI/LLM red teaming | Security assessment |
 | **Cloak** | _"Privacy is not a feature. It's a right."_ - Privacy engineering and data governance. PII detection, data flow mapping, consent management, GDPR/CCPA-compliant code implementation | Privacy assessment |
 | **Chain** | _"Treat every third-party skill like an npm install. Audit before invoking."_ - Skill/plugin/MCP supply-chain auditor. Treats SKILL.md, bundled scripts, MCP server defs, hooks, and `.claude/` config as third-party software. Generates sha256 manifests, scans for Unicode Tag injection, detects curl-pipe + credential-exfil patterns, and pins MCP tool descriptions against rug-pulls | Supply-chain audit, sha256 manifest |
-| **Snap** | _"Identifier first, snapshot always."_ - iOS UI automation specialist. XCUITest targets, accessibility-identifier-driven queries, programmatic screenshot capture, Swift Page Objects, status-bar-clean sessions, and fastlane snapshot pipelines for App Store assets with xcodebuild+xcresulttool CI | XCUITest code, screenshot pipelines |
 
 ### Implementation
 
@@ -177,7 +172,7 @@ This repository contains 122 specialized AI agents covering various aspects of s
 | **Palette** | _"Usability is invisible when done right, painful when done wrong."_ - Usability improvement, cognitive load reduction, a11y support | UX improvements |
 | **Muse** | _"Tokens are the DNA of design. Mutate them with care."_ - Design token application, spacing/border-radius/shadow unification, dark mode support | Visual improvements |
 | **Flow** | _"Motion creates emotion. Animation breathes life."_ - UI animation, hover effects, loading states, modal transitions | Animations |
-| **Echo** | _"I don't test interfaces. I feel what users feel."_ - Persona validation. Embodies users to report confusion points in UI flows | UX report |
+| **Echo** | _"I don't test interfaces. I feel what users feel."_ - Persona validation and synthetic demand. Reports UI confusion, feature requests, JTBD, and unmet needs | UX report |
 | **Vitrine** | _"Components without stories are components without context."_ - Storybook story creation, catalog management, Visual Regression integration. CSF 3.0 format | Storybook Stories |
 | **Prose** | _"Words are the smallest unit of design. Get them wrong, and nothing else matters."_ - User-facing text specialist. Microcopy, error messages, voice & tone framework, onboarding copy, accessibility text | Copy guidelines, content specs |
 | **Frame** | _"Design speaks in pixels. I translate it to code."_ - Figma MCP Server bridge agent. Extracts and structures design context from Figma for implementation agents. Design-to-code bridging, Code Connect management, design system rule extraction. No code written | Structured design context, design system rules |
@@ -218,12 +213,10 @@ This repository contains 122 specialized AI agents covering various aspects of s
 | **Atlas** | _"Dependencies are destiny. Map them before they map you."_ - Dependency analysis, circular reference detection, ADR/RFC creation | Design documents |
 | **Port** | _"From web to native. Translate the experience, not just the code."_ - Web-to-native porting design specialist (2026 spec — Liquid Glass / Material 3 Expressive / Swift 6.3 / targetSdk 36 / Privacy Manifest / 5.1.2(i) AI disclosure aware). Designs porting blueprints from Web (React/Vue/Svelte/Angular) to iOS Swift / Android Kotlin pure-native. Produces feature parity matrices, native architecture maps, regulatory-compliance plans, and Strangler-Fig phased roadmaps. Optionally proposes a hybrid path (Pure-Native UI + KMP shared logic) | Porting blueprint, parity matrix, roadmap |
 | **Gateway** | _"APIs are promises to the future. Design them like contracts."_ - API design, review, OpenAPI spec generation, versioning strategy, breaking change detection | API specifications |
-| **Grove** | _"A well-structured repository is a well-structured mind."_ - Repository structure design, optimization, and auditing. Directory design, docs/ organization, test structure, anti-pattern detection | Structure design, audit reports |
-| **Nest** | _"Structure what reaches the model, and the model structures the rest."_ - LLM-optimized folder structure design. Audits and restructures project directories for context efficiency, progressive disclosure, and prompt cache performance | Structure reports, layout plans |
+| **Grove** | _"A well-structured repository is a well-structured mind."_ - Human- and LLM-optimized repository structure design, including context efficiency, prompt-cache topology, and sharding | Structure design, audit reports |
 | **Weave** | _"Every state tells a story. Every transition is a contract."_ - Workflow and state machine design specialist. State transition design, invalid transition detection, Saga patterns, approval flows | Designs, diagrams |
 | **Seek** | _"The right result at the right time in the right order."_ - Search engine and vector DB design specialist. Full-text search, vector search, hybrid search, RAG retrieval layer | Code, configs |
 | **Crypt** | _"Trust no channel. Verify every key."_ - Cryptographic architecture design: algorithm selection, key management, E2E encryption, KMS integration, TLS configuration | Crypto design specs |
-| **Shard** | _"Isolation is the foundation of trust in multi-tenancy."_ - Multi-tenant architecture design. Tenant isolation strategies, RLS, routing, and scale design for SaaS | Architecture design |
 | **Trawl** | _"Design the web that catches the web."_ - Crawl system architecture design. Distributed crawler design, URL frontier management, politeness policies, legal compliance | Architecture specs |
 | **Tempo** | _"Time is not a scalar — it's a minefield of conventions."_ - Scheduling and time-aware logic architect. Cron expression design, timezone/DST handling, retry/backoff policies, idempotency keys, backfill strategies, and business-calendar design (JP holidays, fiscal year, banking days) | Schedule specs, cron configs, retry policies |
 | **Grok** | _"Understand the shape before writing the parser."_ - Pattern, regex, parser, and DSL design specialist. Grammar authoring (EBNF/PEG), ReDoS-safe regex, parser-generator selection (ANTLR4/tree-sitter/Chevrotain), internal DSL architecture, AST transformation | Grammar specs, parser designs, DSL specs |
@@ -241,7 +234,7 @@ This repository contains 122 specialized AI agents covering various aspects of s
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Schema** | _"A schema is a contract with the future."_ - DB schema design, migration creation, ER diagram design | Migrations / schema definitions |
+| **Schema** | _"A schema is a contract with the future."_ - DB schema, migration, ER diagram, and multi-tenant isolation/RLS/routing design | Migrations / schema definitions |
 | **Stream** | _"Data flows like water. My job is to build the pipes."_ - Data pipelines. ETL/ELT design, Kafka/Airflow/dbt, batch/streaming selection, data quality management | Pipeline design, DAGs, dbt models |
 
 **Schema > Stream chain**: Schema (data model) > Stream (pipeline design)
@@ -251,22 +244,20 @@ This repository contains 122 specialized AI agents covering various aspects of s
 | Agent | Description | Output |
 |-------|-------------|--------|
 | **Anvil** | _"The terminal is the first interface. Make it unforgettable."_ - Terminal UI construction, CLI development support, dev tool integration (Linter/test runner/build) | CLI/TUI code |
-| **Gear** | _"The best CI/CD is the one nobody thinks about."_ - Dependency management, CI/CD optimization, Docker configuration, operational monitoring | Configuration files |
+| **Gear** | _"The best CI/CD is the one nobody thinks about."_ - Dependency management, CI/CD and Docker optimization, plus advanced GitHub Actions workflow design | Configuration files |
 | **Scaffold** | _"Infrastructure is the silent foundation of every dream."_ - Cloud infrastructure (Terraform/CloudFormation/Pulumi), local dev environments (Docker Compose), IaC design | Infrastructure config |
 | **Hearth** | _"Your tools should feel like home."_ - Personal dev environment craftsman. Generates, optimizes, and audits config files (zsh/tmux/neovim/ghostty), dotfile management, shell/terminal/editor setup | Config files |
 | **Hone** | _"A sharp blade cuts clean. A sharp config cuts friction."_ - AI CLI configuration auditor (Codex CLI / Antigravity CLI / Claude Code). Collects official best practices via web, audits config.toml/settings.json/CLAUDE.md/GEMINI.md/AGENTS.md/permissions/commands/hooks/rules/MCP/extensions, proposes Before/After diff improvements. Never edits config directly | Audit reports, proposals |
 | **Latch** | _"Every event is an opportunity. Hook it before it slips away."_ - Claude Code hook specialist. Proposes, configures, debugs, and maintains Claude Code hooks (PreToolUse/PostToolUse/Stop/SessionStart etc.) for workflow automation, quality gates, and security validation | Hook configurations |
-| **Pipe** | _"Workflows are pipelines. Pipelines are promises."_ - GitHub Actions workflow expert. Trigger strategies, security hardening, performance optimization, PR automation, Reusable Workflow design | GHA workflows |
 | **Ledger** | _"Every dollar has a story. Make it a short one."_ - FinOps and cloud cost optimization. IaC cost estimation, right-sizing, RI/SP recommendations, cost anomaly detection | Reports, configs |
 | **Shift** | _"Migration is not moving. It's transforming."_ - Migration and upgrade orchestrator. Framework, library, API, database, and infrastructure migrations end-to-end with codemod generation and incremental strategies | Migration plans |
 
-**Hearth vs Hone vs Gear vs Scaffold vs Latch vs Pipe responsibilities**:
+**Hearth vs Hone vs Gear vs Scaffold vs Latch responsibilities**:
 - **Hearth**: Personal environment (dotfiles, shell, editor, terminal)
 - **Hone**: AI CLI tool config audit (Codex CLI `~/.codex/`, Antigravity CLI `~/.gemini/`, Claude Code `~/.claude/` settings)
-- **Gear**: Project-level DevOps (CI/CD, Docker, monitoring, Git hooks)
+- **Gear**: Project-level DevOps (CI/CD, Docker, monitoring, Git hooks); `gha` mode owns advanced GitHub Actions
 - **Scaffold**: Infrastructure provisioning (cloud, Docker Compose, IaC)
 - **Latch**: Claude Code event hooks (settings.json hooks for workflow automation)
-- **Pipe**: GitHub Actions workflows (advanced GHA design, reusable workflows, security)
 
 ### Internationalization
 
@@ -280,7 +271,7 @@ This repository contains 122 specialized AI agents covering various aspects of s
 |-------|-------------|--------|
 | **Growth** | _"Traffic without conversion is just expensive vanity."_ - SEO (meta/OGP/JSON-LD), SMO (social share display), CRO (CTA improvement) | Growth initiatives |
 | **Bond** | _"Acquisition is expensive. Retention is profitable."_ - Retention strategies, re-engagement, churn prevention. Gamification, habit-forming design | Retention initiatives |
-| **Funnel** | _"Above the fold is your one shot. Make every pixel convert."_ - LP (Landing Page) structure designer and conversion strategist. Framework-based structure design (AIDA/PAS/BAB/4Ps), hero section craft, CTA placement strategy, social proof hierarchy, mobile-first responsive implementation | LP structure, copy, specs |
+| **Funnel** | _"Above the fold is your one shot. Make every pixel convert."_ - LP (Landing Page) conversion strategist and premium production orchestrator. Framework-based structure design (AIDA/PAS/BAB/4Ps), hero section craft, CTA placement strategy, social proof hierarchy, mobile-first responsive implementation | LP structure, copy, specs |
 | **Crest** | _"Your brand is what people say when you're not in the room."_ - Engineer self-branding strategist. GitHub/LinkedIn/blog/conference/SNS positioning, profile optimization, content strategy | Branding strategy |
 
 ### Analytics
@@ -484,7 +475,7 @@ See `_common/INTERACTION.md` for details.
 |------|-------------|-------|
 | DECISION/arch | Architecture selection | Magi > Builder/Zen |
 | DECISION/strategy | Strategic decisions | Magi > Spark |
-| DECISION/office-hours | Founder office hours advisory | Sage > Builder/Plea/Sherpa |
+| DECISION/office-hours | Founder office hours advisory | Sage > Builder/Echo[demand]/Sherpa |
 | DECISION/retro | Postmortem on a recent decision/outcome | Sage |
 
 #### Analysis
@@ -585,14 +576,14 @@ For large-scale tasks where parallel execution is beneficial, Nexus escalates to
 
 > **Nexus parallel vs Rally**: Nexus's built-in `_PARALLEL_BRANCHES` is for lightweight parallelism (each branch < 50 lines). Rally's multi-session parallelism is used for substantial implementation work.
 
-#### Product Lifecycle (Titan)
+#### Product Lifecycle (`Nexus deliver`)
 
 | Task | Description | Chain |
 |------|-------------|-------|
-| PROJECT/full | Full product from ambiguous goal | Titan (9-phase lifecycle via Nexus) |
-| PROJECT/mvp | MVP-focused delivery | Titan (DISCOVER→BUILD→VALIDATE→LAUNCH) |
+| PROJECT/full | Full product from ambiguous goal | `Nexus deliver` (scope-adaptive lifecycle) |
+| PROJECT/mvp | MVP-focused delivery | `Nexus deliver` (minimum viable specialist chain) |
 
-> **Titan vs Nexus**: Titan = product-level orchestration (what to build, when, and which agents). Nexus = task-level execution (how to chain agents for each task). Titan issues task chains to Nexus.
+> **Nexus build modes**: `feature` handles one bounded capability, `deliver` sizes a product/MVP chain to scope, and `apex` runs a high-investment discovery-to-ship workflow.
 
 #### Other
 
@@ -694,7 +685,6 @@ skills/
 ├── launch/SKILL.md     # Release management
 ├── lens/SKILL.md       # Codebase comprehension & investigation
 ├── lore/SKILL.md       # Cross-ecosystem knowledge curator
-├── bazaar/SKILL.md       # Premium LP studio chain orchestrator
 ├── magi/SKILL.md       # Multi-perspective decision making
 ├── matrix/SKILL.md     # Universal multi-dimensional analysis
 ├── mend/SKILL.md       # Known failure auto-repair
@@ -707,7 +697,6 @@ skills/
 ├── palette/SKILL.md    # UX
 ├── polyglot/SKILL.md   # i18n
 ├── prose/SKILL.md      # UX writing & content strategy
-├── pipe/SKILL.md       # GitHub Actions workflow design
 ├── probe/SKILL.md      # Dynamic security testing (DAST)
 ├── pulse/SKILL.md      # Metrics design
 ├── quill/SKILL.md      # Documentation
@@ -733,7 +722,6 @@ skills/
 ├── spark/SKILL.md      # Feature proposals
 ├── stream/SKILL.md     # Data pipelines
 ├── sweep/SKILL.md      # Dead code detection
-├── titan/SKILL.md      # Product lifecycle meta-orchestrator
 ├── tome/SKILL.md       # Change-to-learning documentation
 ├── trace/SKILL.md      # Session replay analysis
 ├── triage/SKILL.md     # Incident response
@@ -749,7 +737,7 @@ skills/
 
 ### Single Agent Usage
 
-> Category-by-category examples for all 122 agents.
+> Category-by-category examples for all 114 agents.
 
 #### Orchestration
 
@@ -787,14 +775,14 @@ I want it to handle Zod/Yup schema validation and error message generation.
 
 ---
 
-##### Product Delivery (Titan)
+##### Product Delivery (`Nexus deliver`)
 
 ```
-/Titan
+/Nexus deliver
 Build me a task management SaaS with team collaboration features.
 ```
 
-**Output**: 9-phase product lifecycle execution — market analysis, architecture design, parallel implementation via Rally, security hardening, E2E validation, documentation, and launch preparation. All decisions logged autonomously.
+**Output**: Scope-classified product delivery — reuse scan, acceptance criteria, implementation, independent verification, and optional release preparation through the minimum viable chain.
 
 ---
 
@@ -1528,14 +1516,14 @@ Set up my neovim configuration with LSP support and lazy.nvim plugin management.
 - **Gear**: Project-level DevOps (CI/CD, Docker, monitoring, Git hooks)
 - **Scaffold**: Infrastructure provisioning (cloud, Docker Compose, IaC)
 - **Latch**: Claude Code event hooks (settings.json hooks for workflow automation)
-- **Pipe**: GitHub Actions workflow design (triggers, security, performance, PR automation)
+- **Gear[gha]**: GitHub Actions workflow design (triggers, security, performance, PR automation)
 
 ---
 
-##### GitHub Actions Workflow Design (Pipe)
+##### GitHub Actions Workflow Design (Gear[gha])
 
 ```
-/Pipe
+/Gear gha
 Design a CI/CD workflow for this monorepo. We need path-based triggers, parallel jobs for each package, and SHA-pinned actions.
 ```
 
@@ -1543,10 +1531,10 @@ Design a CI/CD workflow for this monorepo. We need path-based triggers, parallel
 
 ---
 
-##### CI Security Hardening (Pipe)
+##### CI Security Hardening (Gear[gha])
 
 ```
-/Pipe
+/Gear gha
 Audit our GitHub Actions workflows for security issues. Check permissions, action pinning, and secret handling.
 ```
 

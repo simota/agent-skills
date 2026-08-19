@@ -21,7 +21,7 @@ Every pattern is tagged along 4 orthogonal dimensions:
 
 | Domain Code | Description | Example Sources |
 |-------------|-------------|-----------------|
-| `INFRA` | Infrastructure, deployment, CI/CD, containers | Gear, Scaffold, Pipe, Mend |
+| `INFRA` | Infrastructure, deployment, CI/CD, containers | Gear, Scaffold, Gear[gha], Mend |
 | `APP` | Application logic, business rules, data models | Builder, Schema, Gateway |
 | `TEST` | Testing strategies, coverage, quality assurance | Radar, Voyager, Siege |
 | `DESIGN` | Architecture, patterns, code structure | Atlas, Zen, Grove, Architect |

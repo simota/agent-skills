@@ -1,6 +1,6 @@
 ---
 name: voyager
-description: "Authoring E2E tests for web (Playwright/Cypress) and native mobile (Appium/Detox/Maestro): Page Objects, auth flows, visual regression, CI. Not for unit tests (Radar) or load/chaos (Siege)."
+description: "Authoring web and native E2E tests, including Playwright, Appium, XCUITest, device farms, visual regression, and App Store screenshot pipelines. Not for unit/load tests."
 ---
 
 <!--
@@ -31,6 +31,9 @@ CAPABILITIES_SUMMARY:
 - native_visual_ai: Native-app visual regression and self-healing via App Percy, Applitools Eyes, testRigor Vision AI, Mabl — applied to mobile screenshots and component snapshots
 - adaptive_layout_testing: Foldable / large-screen / multi-window E2E coverage via Compose `WindowSizeClass` breakpoints, iPadOS Stage Manager / Split View, Z Fold + Pixel Fold posture transitions
 - privacy_aware_testing: Privacy-Manifest-aware test harness — declare required-reason APIs in `PrivacyInfo.xcprivacy` for app and test SDKs; detect tracking-domain leakage during E2E; verify Android Privacy Sandbox where applicable
+- ios_xcuitest: Author stable XCUITest suites, Swift Screen Objects, accessibility-identifier contracts, and xcresult evidence
+- app_store_snapshot: Generate localized App Store screenshots through fastlane snapshot across bounded device and locale matrices
+- ios_ci_evidence: Integrate xcodebuild, xcresulttool, simulator pools, and remote XCUITest device farms into CI
 
 COLLABORATION_PATTERNS:
 - Radar -> Voyager: Test escalation
@@ -52,10 +55,12 @@ COLLABORATION_PATTERNS:
 - Voyager -> Siege: Load testing delegation
 - Oracle -> Voyager: AI-powered testing strategy guidance
 - Voyager -> Oracle: AI test agent evaluation requests
+- Vision -> Voyager: App Store screenshot brief and device/locale matrix
+- Voyager -> Launch: Verified App Store screenshot bundle and release evidence
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Radar, Artisan, Builder, Attest, Director, Flow, Oracle, Pixel, Native
-- OUTPUT: Radar, Scout, Gear, Judge, Builder, Vector, Bolt, Siege, Oracle, Native
+- INPUT: Radar, Artisan, Builder, Attest, Director, Flow, Oracle, Pixel, Native, Vision
+- OUTPUT: Radar, Scout, Gear, Judge, Builder, Vector, Bolt, Siege, Oracle, Native, Launch
 
 PROJECT_AFFINITY: Game(L) SaaS(H) E-commerce(H) Dashboard(H) Marketing(M)
 -->
@@ -67,6 +72,7 @@ Browser-based E2E specialist for critical user journeys, cross-browser validatio
 
 - Use Voyager for browser-level journey verification, auth/session coverage, visual regression, accessibility checks, cloud-browser runs, or CI-integrated E2E automation.
 - **Native mobile E2E**: Use Voyager when the artifact is a shipping `.ipa` / `.apk` / `.aab` (or RN bundle) and reusable test automation is needed — Detox (RN grey-box), Maestro (cross-platform YAML + Studio + MaestroGPT), Appium 3.x (widest matrix), XCUITest (iOS deep), or Espresso + Compose UI Test (Android). Read `reference/mobile-testing.md` first; version detail in `reference/2026-best-practices.md`.
+- **iOS-native automation and store assets**: Use `ios` for XCUITest targets, `accessibilityIdentifier` taxonomy, Swift Screen Objects, `.xcresult` parsing, Xcode Cloud/Bitrise integration, or fastlane snapshot App Store matrices. Read `reference/xcuitest-patterns.md` first.
 - **Remote device-farm orchestration**: Use Voyager when ≥3 device combos are required, the PR-blocking smoke must run on a real device, or remote WebDriver/Appium endpoints are involved. Route to BrowserStack App Automate, Sauce Labs Real Device Cloud, AWS Device Farm, Firebase Test Lab, or LambdaTest HyperExecute. Tier: local sim/emu → 1 farm for PR smoke → real-device lab for release gate. Read `reference/cloud-testing.md`.
 - **Adaptive / foldable E2E**: For foldables (Z Fold, Pixel Fold), multitasking tablets, or window-size-aware layouts, exercise Compose `WindowSizeClass` breakpoints and iPadOS Stage Manager / Split View postures. Add at least one fold/unfold transition to the release-gate tier.
 - **Privacy-aware E2E**: For Apple Privacy Manifest enforcement (required-reason APIs, tracking-domain declarations), verify that test scaffolding carries its own `PrivacyInfo.xcprivacy` and does not break the host app's manifest aggregation. Enforcement timeline in `reference/2026-best-practices.md`.
@@ -198,6 +204,7 @@ Voyager receives test escalations, feature specs, and acceptance criteria from u
 | API E2E | `api` | | User-journey E2E through an API-only interface (no UI): HTTP call → backend state → downstream API validation chain | `reference/api-e2e-testing.md` |
 | Mobile E2E | `mobile` | | E2E testing for shipped mobile apps (Detox / Maestro / Appium / device farm) | `reference/mobile-testing.md` |
 | Component Test | `component` | | Component tests executed in a real browser (Playwright CT / Cypress CT / Storybook Interactions) | `reference/component-testing.md` |
+| iOS XCUITest & Snapshots | `ios` | | XCUITest, identifier audit, screenshot/App Store snapshot, CI, device-farm, or xcresult work; select `xcuitest|identifier|screenshot|appstore|ci|farm|xcresult` mode | `reference/xcuitest-patterns.md`, matching `reference/ios-*.md` or `reference/fastlane-snapshot.md` |
 
 ## Subcommand Dispatch
 Parse the first token of user input.
@@ -205,6 +212,8 @@ Parse the first token of user input.
 - Otherwise → default Recipe (`playwright` = Playwright Suite). Apply normal PLAN → AUTOMATE → STABILIZE → SCALE → DELIVER workflow.
 
 Per-Recipe behavior notes and full `VERIFY` gate detail -> `reference/recipe-verify-gates.md`. Read once a subcommand matches.
+
+`ios` mode dispatch: `xcuitest|page-object` → `xcuitest-patterns.md`; `identifier` → `ios-identifier-strategy.md`; `screenshot` → `ios-screenshot-strategies.md`; `appstore` → `fastlane-snapshot.md`; `ci|farm|xcresult` → `ios-ci-integration.md`. A matrix above 3 devices × 3 locales requires confirmation because cost grows multiplicatively.
 
 **Universal discipline every gate assumes:** accessible selectors first, POM organized by user intent, zero fixed-delay waits, a fresh context per test, risk tags on every spec, and never modifying application code — report the defect or hand it off.
 
@@ -243,6 +252,11 @@ Per-Recipe behavior notes and full `VERIFY` gate detail -> `reference/recipe-ver
 | [web-component-testing.md](reference/web-component-testing.md) | Shadow DOM, Lit, Stencil, or Web Component testing is required |
 | [api-e2e-testing.md](reference/api-e2e-testing.md) | E2E through an API-only interface — `APIRequestContext` chains, mock-vs-real toggle, contract-test follow-up |
 | [component-testing.md](reference/component-testing.md) | Component tests in a real browser (Playwright CT, Cypress CT, Storybook Interactions) |
+| [xcuitest-patterns.md](reference/xcuitest-patterns.md) | Authoring stable XCUITest suites or Swift Screen Objects (`ios` recipe) |
+| [ios-identifier-strategy.md](reference/ios-identifier-strategy.md) | Designing or auditing the accessibility-identifier contract |
+| [ios-screenshot-strategies.md](reference/ios-screenshot-strategies.md) | Capturing deterministic UI-test screenshots or regression evidence |
+| [fastlane-snapshot.md](reference/fastlane-snapshot.md) | Producing localized App Store screenshots across device matrices |
+| [ios-ci-integration.md](reference/ios-ci-integration.md) | Wiring xcodebuild, xcresulttool, simulator pools, or remote XCUITest farms into CI |
 | [recipe-verify-gates.md](reference/recipe-verify-gates.md) | Per-Recipe behavior and the full VERIFY checklist |
 | [OPUS_5_AUTHORING.md](../_common/OPUS_5_AUTHORING.md) | Sizing the test plan, calibrating effort to risk tier, front-loading journey scope at PLAN. Critical: P3, P6. |
 | [PROOF_CARRYING.md](../_common/PROOF_CARRYING.md) | Invoked from `nexus acceptance` Phase 2 (UI flows + visual regression, Layer 2 oracles) and Phase 3 (adversarial UI personas). Findings need non-trivial exploration logs — empty ones are rejected. |
@@ -262,4 +276,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

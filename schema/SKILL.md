@@ -1,6 +1,6 @@
 ---
 name: schema
-description: Designing database schemas, planning migrations, and authoring ER diagrams. Handles normalization, index strategies, and relation definitions. Use when DB schema design is needed.
+description: Designing database schemas, migrations, and multi-tenant architecture: RLS, tenant routing, provisioning, quotas, and isolation. Not for query-plan tuning (Tuner).
 ---
 
 <!--
@@ -15,8 +15,12 @@ CAPABILITIES_SUMMARY:
 - vector_schema: Design pgvector columns and indexes for AI/embedding workloads (HNSW tuning, float16, hybrid retrieval)
 - temporal_schema: Design temporal constraints using WITHOUT OVERLAPS for scheduling and time-series data
 - migration_rollback: Design reverse-migration DDL with dual-write windows, destructive-change alternatives, and data-backfill plans
-- tenant_isolation_strategy: Pick shared-DB/schema-per-tenant/DB-per-tenant/shard-based with RLS and routing considerations (complements Shard)
+- tenant_isolation_strategy: Pick shared-DB/schema-per-tenant/DB-per-tenant/shard-based isolation with RLS and routing considerations
 - partition_strategy: Design range/list/hash/time-based partitioning with pruning, maintenance, and migration tradeoffs
+- tenant_routing: Design tenant resolution through subdomain, header, path, or JWT claims with safe context propagation
+- tenant_lifecycle: Design idempotent provisioning, onboarding, isolation upgrades, rebalancing, and deprovisioning
+- tenant_quota_metering: Design fair-share limits, burst budgets, noisy-neighbor controls, and billing-metering handoffs
+- cross_tenant_security: Assess data-leak paths and define RLS, composite-key, cache-key, and migration guardrails
 
 COLLABORATION_PATTERNS:
 - Builder -> Schema: Data requirements
@@ -29,12 +33,14 @@ COLLABORATION_PATTERNS:
 - Schema -> Canvas: Er diagrams
 - Schema -> Quill: Schema documentation
 - Schema -> Radar: Migration regression test cases
+- Schema -> Scaffold: Tenant-aware infrastructure and provisioning requirements
+- Schema -> Sentinel: Cross-tenant leakage and RLS verification requests
 - Magi -> Schema: Normalization trade-off verdicts
 - Void -> Schema: Over-designed table/column pruning proposals
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Builder, Atlas, Gateway, Lens, Sentinel, Magi (trade-off verdicts), Void (pruning proposals)
-- OUTPUT: Builder, Tuner, Canvas, Quill, Radar
+- OUTPUT: Builder, Tuner, Canvas, Quill, Radar, Scaffold, Sentinel
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(H) Marketing(L)
 -->
@@ -53,6 +59,7 @@ Use Schema when the task needs one or more of the following:
 - ORM schema output for Prisma, TypeORM, or Drizzle
 - Mermaid `erDiagram` output for documentation
 - Multi-tenant schema design (shared-schema with RLS, schema-per-tenant, or database-per-tenant)
+- Tenant routing, lifecycle provisioning, quota/fair-share policy, billing-metering boundaries, or cross-tenant leakage assessment
 - Vector/embedding column design with pgvector (HNSW/IVFFlat index selection, float16 quantization)
 - Temporal constraint design using PostgreSQL 18 `WITHOUT OVERLAPS` for scheduling/time-series
 - Expand-contract migration planning for zero-downtime DDL
@@ -179,7 +186,7 @@ Routing rules:
 - If the request involves migration sequencing or zero-downtime changes, read `reference/migration-patterns.md`.
 - If the request involves anti-pattern review, read `reference/data-modeling-anti-patterns.md` or `reference/schema-design-anti-patterns.md`.
 - If the request involves PostgreSQL 18 features (UUIDv7, virtual generated columns, temporal constraints, skip scan, async I/O, OAuth, DDL replication), read `reference/postgresql18-features.md`. For PG 17-only clusters or SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, `SPLIT`/`MERGE PARTITION`), read `reference/postgresql17-features.md`.
-- If the request involves multi-tenant architecture, read `reference/multi-tenant-patterns.md`.
+- If the request involves multi-tenant architecture, read `reference/multi-tenant-patterns.md` plus the matching `reference/tenant-*.md` specialization.
 - If the request involves event sourcing, CQRS, pgvector, or bitemporal design, read `reference/advanced-patterns.md`.
 - Always read relevant `reference/` files before producing output.
 
@@ -193,13 +200,13 @@ Routing rules:
 | Normalization | `normalize` | | Normalization vs denormalization decisions | `reference/normalization-guide.md` |
 | Index Strategy | `index` | | Index design and optimization | `reference/index-strategies.md` |
 | Migration Rollback | `rollback` | | Reverse-operation design for destructive migrations (reverse DDL / dual-write / backfill / alternatives to destructive changes) | `reference/migration-rollback.md` |
-| Multi-Tenant Design | `tenant` | | Tenant isolation strategy (shared-DB / schema-per-tenant / DB-per-tenant / shard) with RLS and routing design | `reference/multi-tenant-patterns.md` |
+| Multi-Tenant Design | `tenant` | | Tenant isolation, RLS, routing, migration, provisioning, quota, or cross-tenant security; select `isolation|rls|routing|scale|migration|provisioning|quota` mode from the request | `reference/multi-tenant-patterns.md`, matching `reference/tenant-*.md` |
 | Partitioning | `partition` | | range / list / hash / time-based partition design (pruning / maintenance / migration) | `reference/partition-strategies.md` |
 | Audit Log | `audit-log` | | Append-only audit-log schema — temporal tables, logical replication, before/after image, retention | `reference/audit-log-schema.md` |
 | Event Sourcing | `event-sourcing` | | Event store schema — events / projections / snapshots / outbox, aggregate boundaries | `reference/event-sourcing-schema.md` |
 | Soft Delete | `soft-delete` | | Logical deletion patterns (deleted_at / status / tombstone) with GDPR right-to-erasure interaction | `reference/soft-delete-patterns.md` |
 
-Per-Recipe behavior — load each Recipe's `Read First` file at its initial step. Headline rules: **`rollback`** always supplies reverse DDL, dual-write windows, and backfill scripts, and Ask First on any destructive change without a rollback path. **`tenant`** compares all four isolation strategies against tenant count, isolation requirements, and cost, covering RLS, connection routing, and per-tenant backup. **`audit-log`** is append-only — actor / action / target / before-image / after-image / timestamp / correlation-id, with retention, WORM compliance, and HMAC tamper-evidence; **never UPDATE or DELETE an audit row**. **`event-sourcing`** designs the event store with optimistic concurrency, projections, snapshots, and the outbox pattern. **`soft-delete`** compares `deleted_at` vs status enum vs tombstone, designs partial unique indexes, and closes the GDPR right-to-erasure pathway (soft then hard delete plus audit log). Full notes -> `reference/schema-examples.md`.
+Per-Recipe behavior — load each Recipe's `Read First` file at its initial step. Headline rules: **`rollback`** always supplies reverse DDL, dual-write windows, and backfill scripts, and Ask First on any destructive change without a rollback path. **`tenant`** compares all four isolation strategies against tenant count, isolation requirements, and cost; then selects the narrow mode: `isolation|rls|routing|scale` → `tenant-architecture-patterns.md`, `migration` → `tenant-migration.md`, `provisioning` → `tenant-provisioning.md`, `quota` → `tenant-quota-throttling.md`. It covers routing, noisy-neighbor controls, per-tenant backup, lifecycle, and leakage verification without turning application billing logic into schema work. **`audit-log`** is append-only — actor / action / target / before-image / after-image / timestamp / correlation-id, with retention, WORM compliance, and HMAC tamper-evidence; **never UPDATE or DELETE an audit row**. **`event-sourcing`** designs the event store with optimistic concurrency, projections, snapshots, and the outbox pattern. **`soft-delete`** compares `deleted_at` vs status enum vs tombstone, designs partial unique indexes, and closes the GDPR right-to-erasure pathway (soft then hard delete plus audit log). Full notes -> `reference/schema-examples.md`.
 
 
 ## Subcommand Dispatch
@@ -245,6 +252,8 @@ Schema receives data requirements and architectural context from upstream agents
 | Schema → Canvas | `SCHEMA_TO_CANVAS_HANDOFF` | Entities, relationships, cardinality, PK/FK labels |
 | Schema → Judge | `SCHEMA_TO_JUDGE` | Schema review request |
 | Schema → Radar | `SCHEMA_TO_RADAR` | Migration steps, rollback path, high-risk test cases |
+| Schema → Scaffold | `SCHEMA_TO_SCAFFOLD` | Tenant provisioning, routing, and isolation infrastructure requirements |
+| Schema → Sentinel | `SCHEMA_TO_SENTINEL` | RLS and cross-tenant leakage verification scope |
 
 ### Overlap Boundaries
 
@@ -272,6 +281,11 @@ Schema receives data requirements and architectural context from upstream agents
 | `reference/postgresql18-features.md` | On PostgreSQL 18 (GA 2025-09-25) and need UUIDv7, virtual generated columns (default), temporal `WITHOUT OVERLAPS` / `PERIOD`, `RETURNING OLD.*`/`NEW.*`, B-tree skip scan, async I/O, OAuth, or DDL replication. |
 | `reference/postgresql17-features.md` | On PostgreSQL 17 and need SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, `JSON_QUERY`, `JSON_EXISTS`), `SPLIT`/`MERGE PARTITION`, logical-replication failover, or `pg_createsubscriber`. Legacy reference — see `postgresql18-features.md` for current release. |
 | `reference/multi-tenant-patterns.md` | Designing a multi-tenant schema (database/schema/shared-schema with RLS). |
+| `reference/tenant-architecture-patterns.md` | Selecting isolation, RLS, routing, or noisy-neighbor controls for `tenant` mode. |
+| `reference/tenant-migration.md` | Rebalancing tenants or upgrading isolation level with zero-downtime cutover and rollback. |
+| `reference/tenant-provisioning.md` | Designing idempotent onboarding, reprovisioning, and deprovisioning lifecycle. |
+| `reference/tenant-quota-throttling.md` | Designing fair-share quotas, burst budgets, overage signals, and billing handoffs. |
+| `reference/tenant-handoffs.md` | Emitting tenant-specific handoffs to Builder, Scaffold, Sentinel, or Gateway. |
 | `reference/advanced-patterns.md` | Event sourcing schema, CQRS projections, pgvector/AI schema, or bitemporal design. |
 | `reference/migration-rollback.md` | Designing reverse-operation DDL, dual-write windows, backfill scripts, or destructive-change alternatives (`rollback` recipe). |
 | `reference/partition-strategies.md` | Designing range/list/hash/time-based partitioning, pruning, maintenance, or staged migration from existing tables (`partition` recipe). |

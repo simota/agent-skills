@@ -55,7 +55,7 @@ Use Architect when the user needs:
 
 Route elsewhere when the task is primarily:
 - task chain orchestration: `Nexus`
-- product lifecycle delivery: `Titan`
+- product lifecycle delivery: `Nexus[deliver]`
 - project-specific lightweight skills: `Sigil`
 - architecture analysis of application code: `Atlas`
 - ecosystem self-evolution strategy: `Darwin`

@@ -7,7 +7,7 @@ Purpose: Run post-launch reviews that extract durable learning, not blame. A fea
 - **Spark `retro`**: post-launch feature retrospective — outcome review, learning extraction, feeding learnings into discovery.
 - **vs `Rank`**: Rank scores candidate items with ICE/RICE/WSJF; `retro` closes the loop on items that already shipped so Rank's future inputs are calibrated.
 - **vs `Void`**: Void prunes scope; `retro` captures the learning from what was pruned and what was kept.
-- **vs `Plea`**: Plea synthesizes user advocacy; `retro` reviews how actual users responded and corrects synthetic personas.
+- **vs `Echo[demand]`**: Echo[demand] synthesizes user advocacy; `retro` reviews how actual users responded and corrects synthetic personas.
 - **vs `Experiment`**: Experiment runs a single hypothesis test with a verdict matrix; `retro` reviews the feature over its full launch-to-steady-state lifecycle, across multiple experiments and organic usage.
 
 If the question is "what did we learn from this launch?" → `retro`. If it is "did this single A/B test win?" → `Experiment`.
@@ -126,7 +126,7 @@ The retro is worthless if the output sits in a doc. Required feedback paths:
 | Opportunity tree was wrong | Prune / rewire OST in next `brainstorm` session |
 | RICE inputs systematically biased | Update `Rank` scoring rubric with calibration example |
 | Fail condition never triggered despite miss | Tighten `kill` thresholds for similar features |
-| Synthetic user advocacy was off | Re-calibrate `Plea` prompts for this segment |
+| Synthetic user advocacy was off | Re-calibrate `Echo[demand]` prompts for this segment |
 | Anti-pattern observed | Append to `feature-ideation-anti-patterns.md` |
 | Sunset executed well / badly | Append template refinement to `kill-criteria-sunset.md` |
 

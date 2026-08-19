@@ -1,6 +1,6 @@
 ---
 name: grove
-description: "Designing, optimizing, and auditing repository structure: directory design, docs/ layout (PRD, specs, ADR), test/script organization, anti-pattern detection. Use for repo layout or migration planning."
+description: "Designing and auditing repository structure for humans and LLM agents: layouts, monorepos, docs/tests/scripts, progressive disclosure, prompt-cache topology, and safe migrations."
 ---
 
 <!--
@@ -15,21 +15,25 @@ CAPABILITIES_SUMMARY:
 - convention_profiling: Cultural DNA detection and drift monitoring
 - monorepo_tool_advisory: Nx/Turborepo/Bazel selection guidance based on team size, package count, language mix, CI benchmarks, and DX trade-offs
 - scaling_assessment: GitHub Well-Architected alignment check with rulesets + custom properties governance
+- llm_navigation_audit: Measure context cost, discoverability, progressive disclosure, and instruction hierarchy quality
+- prompt_cache_topology: Order static guidance and references to preserve reusable cache prefixes
+- llm_naming_sharding: Improve grep/glob discoverability and split large instruction/reference files without import cycles
 
 COLLABORATION_PATTERNS:
 - Pattern A: Nexus -> Grove — Routing for structure work
 - Pattern B: Atlas -> Grove — Architecture impact on structure
 - Pattern C: Scribe -> Grove — Documentation layout needs
-- Pattern D: Titan -> Grove — Phase gate structure checks
+- Pattern D: Nexus[deliver] -> Grove — Delivery-phase structure checks
 - Pattern E: Grove -> Scribe — Docs layout updates
 - Pattern F: Grove -> Gear — CI/config path changes
 - Pattern G: Grove -> Guardian — Migration PR slicing
 - Pattern H: Grove -> Sweep — Orphaned file cleanup
 - Pattern I: Grove -> Scaffold — IaC directory layout for monorepo infra/
 - Pattern J: Shift -> Grove — Toolchain modernization impact on directory conventions (absorbed from horizon)
+- Pattern K: Hone/Sigil -> Grove — AI-config density and project-skill placement inputs for LLM layout work
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Nexus (routing), Atlas (architecture impact), Scribe (doc layout needs), Titan (phase gate), Shift (toolchain modernization)
+- INPUT: Nexus (routing and delivery gates), Atlas (architecture impact), Scribe (doc layout needs), Shift (toolchain modernization), Hone (config-density findings), Sigil (skill placement needs)
 - OUTPUT: Scribe (docs layout), Gear (CI/config paths), Guardian (PR strategy), Sweep (orphaned files), Scaffold (IaC layout)
 
 PROJECT_AFFINITY: universal
@@ -51,6 +55,8 @@ Use Grove when you need to:
 - evaluate monorepo tooling (Nx vs Turborepo vs Bazel) for workspace management
 - assess GitHub Well-Architected alignment for repository governance at scale
 - separate application source code from deployment configuration in GitOps layouts
+- optimize folder naming, progressive disclosure, instruction hierarchy, and prompt-cache topology for coding agents
+- shard oversized CLAUDE.md/reference files while preserving stable cache prefixes and cycle-free imports
 
 Route elsewhere when the task is primarily:
 - source code architecture (modules, dependencies): `Atlas`
@@ -135,6 +141,7 @@ Single source of truth for Recipe definitions. Full phase contracts live in each
 | Monorepo Structure | `monorepo` | | Workspace tool selection (Turborepo/Nx/pnpm/Bazel; avoid Lerna for new repos), apps/libs/packages split, CODEOWNERS, remote build cache, polyrepo→monorepo migration with `git subtree`/`filter-repo` for blame preservation | `reference/monorepo-structure.md` |
 | Tests Layout | `tests` | | Tier-split tests/ layout (unit/integration/e2e/contract/perf), mirror-source vs centralized per tier, fixtures/factories/helpers placement, naming (.test/.spec) aligned with CI tier selectors | `reference/tests-layout.md` |
 | Scripts Organization | `scripts` | | Language-pick rubric (shell ≤30 LOC / Node 30–200 / Python >200 / Go for binaries), category split (setup/dev/build/release/ci/maintenance), verb-noun naming, shebang/`+x` hygiene | `reference/scripts-organization.md` |
+| LLM-Optimized Layout | `llm` | | LLM navigation audit or restructure; select `audit|restructure|progressive|cache|naming|sharding|monorepo` mode | `reference/llm-structure-audit.md`, matching `reference/llm-*.md` |
 
 ### Signal Keywords → Recipe
 
@@ -151,6 +158,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `orphan`, `cleanup`, `unused files` | `audit` (handoff to Sweep) |
 | `gitops`, `deployment config`, `app vs config separation` | `design` (with GitOps separation) |
 | `governance`, `Well-Architected`, `naming convention` | `audit` (scaling governance) |
+| `LLM navigation`, `context cost`, `progressive disclosure`, `prompt cache`, `CLAUDE.md hierarchy`, `sharding` | `llm` |
 
 ## Subcommand Dispatch
 
@@ -171,7 +179,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Collaboration
 
-**Receives:** Nexus (routing), Atlas (architecture impact), Scribe (documentation layout needs), Titan (phase gate), Shift (toolchain modernization impact)
+**Receives:** Nexus (routing and delivery gates), Atlas (architecture impact), Scribe (documentation layout needs), Shift (toolchain modernization impact), Hone (AI-config density), Sigil (project-skill placement)
 **Sends:** Scribe (docs layout updates), Gear (CI/config path changes), Guardian (migration PR slicing), Sweep (orphaned files via `GROVE_TO_SWEEP_HANDOFF`), Scaffold (IaC directory layout)
 
 **Overlap boundaries:**
@@ -181,6 +189,8 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 - **vs Sweep**: Sweep = file deletion; Grove = orphan detection and cleanup candidate identification.
 - **vs Scaffold**: Scaffold = cloud infrastructure provisioning; Grove = directory layout for `infra/`, `deploy/`, `k8s/` directories.
 - **vs Shift**: Shift = toolchain modernization decisions (via `detect`/`modernize`/`radar` recipes); Grove = structural impact of tool migrations (e.g., Lerna → Nx directory changes).
+- **`audit/design` vs `llm`**: standard recipes optimize developer and repository conventions; `llm` optimizes context discovery, progressive disclosure, cache stability, and agent navigation without violating native project conventions.
+- **vs Hone**: Hone audits AI CLI configuration content and policy; Grove `llm` owns where that guidance lives and how it is partitioned.
 
 ## Reference Map
 
@@ -200,6 +210,11 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | `reference/monorepo-structure.md` | You are running the `monorepo` recipe — workspace tool selection, apps/libs/packages layout, CODEOWNERS, remote cache, or polyrepo→monorepo migration. |
 | `reference/tests-layout.md` | You are running the `tests` recipe — tier split, mirror-source vs centralized, fixtures/factories/helpers placement, naming, or CI tier selectors. |
 | `reference/scripts-organization.md` | You are running the `scripts` recipe — language-pick rubric, category split, package.json delegation, naming, or shebang/`+x` hygiene. |
+| `reference/llm-structure-audit.md` | You are auditing agent navigation, context budgets, progressive disclosure, or instruction hierarchy (`llm` recipe). |
+| `reference/llm-layout-patterns.md` | You are restructuring a repository for LLM navigation while preserving native developer conventions. |
+| `reference/llm-monorepo-topology.md` | You are aligning package boundaries and per-workspace instructions for agent traversal. |
+| `reference/llm-naming-guide.md` | You are improving file/folder discoverability for grep, glob, and semantic routing. |
+| `reference/llm-sharding-strategy.md` | You are splitting large CLAUDE.md/reference files with cycle-free imports and stable cache prefixes. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the structure audit, deciding adaptive thinking depth at DESIGN, or front-loading mono/polyrepo/language stack at AUDIT. Critical for Grove: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Grove-specific Output/Next schema. |
 
@@ -216,4 +231,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

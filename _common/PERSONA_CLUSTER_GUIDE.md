@@ -5,7 +5,7 @@ Five persona agents form a lifecycle. This guide helps route to the right agent 
 ## Persona Lifecycle
 
 ```
-Field → Cast → Echo / Trace / Plea
+Field → Cast → Echo / Trace / Echo[demand]
  (research)   (generate/manage)   (consume/validate/advocate)
 ```
 
@@ -15,9 +15,9 @@ Field → Cast → Echo / Trace / Plea
 | **Cast** | Generate, register, evolve, audit personas | Evidence from any source | Registered personas |
 | **Echo** | Persona-based cognitive walkthrough | Existing UI/flow + persona | Friction report, emotion scores |
 | **Trace** | Session replay behavioral analysis | Real session data + persona | Behavior patterns, validation data |
-| **Plea** | Synthetic user advocate | Product context + persona | Feature requests, unmet needs |
+| **Echo[demand]** | Synthetic user advocate | Product context + persona | Feature requests, unmet needs |
 
-## Echo vs Plea Decision Tree
+## Echo vs Echo[demand] Decision Tree
 
 ```
 What is your goal?
@@ -26,33 +26,33 @@ What is your goal?
 |   -> Echo (cognitive walkthrough, emotion scoring)
 |
 +-- "Discover what users want but haven't been built"
-|   -> Plea (demand generation, blind spot discovery)
+|   -> Echo[demand] (demand generation, blind spot discovery)
 |
 +-- "Detect dark patterns or bias in a UI"
 |   -> Echo
 |
 +-- "Challenge team assumptions or roadmap"
-|   -> Plea (CHALLENGE mode)
+|   -> Echo[demand] (CHALLENGE mode)
 |
 +-- "Understand user emotion during a specific flow"
 |   -> Echo
 |
 +-- "Hear competitive frustration from users"
-|   -> Plea (COMPETE mode)
+|   -> Echo[demand] (COMPETE mode)
 |
 +-- "Generate A/B test hypotheses"
 |   -> Echo (friction -> hypothesis)
 |
 +-- "Write user-voice section for PRD/spec"
-|   -> Plea -> Scribe[unified]/Scribe
+|   -> Echo[demand] -> Scribe[unified]/Scribe
 |
 +-- "Both / Unclear"
-|   -> Plea (explore demands) -> Echo (validate in existing flow)
+|   -> Echo[demand] (explore demands) -> Echo (validate in existing flow)
 ```
 
 ### Core Distinction
 
-| Dimension | Echo | Plea |
+| Dimension | Echo | Echo[demand] |
 |-----------|------|------|
 | Input | Existing UI/flow/screenshots | Product context/roadmap/feature area |
 | Output | Friction points, emotion scores, improvements | Feature requests, unmet needs, assumption challenges |

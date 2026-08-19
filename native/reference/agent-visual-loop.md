@@ -2,7 +2,7 @@
 
 Reference for running an **agent-in-the-loop** workflow on native screens: the agent writes SwiftUI/Compose, builds, renders or captures the result, compares it against a target with a *numeric* oracle, and iterates under a bounded cap.
 
-> Scope: iOS (SwiftUI/UIKit) and Android (Compose/Views) screen implementation, visual debugging, and screenshot capture **driven by a coding agent**. Use when the task is "build/fix this screen and confirm it actually looks right", not when authoring a test suite (→ `Snap` / `Voyager` / `Radar`) or designing the visual direction (→ `Vision` / `Muse`).
+> Scope: iOS (SwiftUI/UIKit) and Android (Compose/Views) screen implementation, visual debugging, and screenshot capture **driven by a coding agent**. Use when the task is "build/fix this screen and confirm it actually looks right", not when authoring a test suite (→ `Voyager[ios]` / `Voyager` / `Radar`) or designing the visual direction (→ `Vision` / `Muse`).
 
 ---
 
@@ -46,7 +46,7 @@ This is the operating principle of [`mobile-next/mobile-mcp`](https://github.com
 
 Why it matters beyond cost: a tree query is deterministic and fails loudly; a coordinate tap derived from a screenshot silently drifts the moment layout shifts. Reserve coordinates for surfaces that expose no usable tree.
 
-Consequence for implementation work: **accessibility identifiers are agent infrastructure, not just test infrastructure.** A screen with a complete identifier taxonomy is drivable by an agent; one without it forces the agent into pixel guessing. Taxonomy and per-framework assignment rules → `snap/reference/identifier-strategy.md`.
+Consequence for implementation work: **accessibility identifiers are agent infrastructure, not just test infrastructure.** A screen with a complete identifier taxonomy is drivable by an agent; one without it forces the agent into pixel guessing. Taxonomy and per-framework assignment rules → `voyager/reference/ios-identifier-strategy.md`.
 
 ---
 
@@ -169,7 +169,7 @@ Observed in practice; treat each as a standing guard, not a hypothetical.
 - `reference/xcrun-cli.md` — full `simctl` / `devicectl` / `xctrace` / `xcresulttool` surface, status-bar override, recording recipes.
 - `reference/adb-cli.md` — full `adb` surface, screencap / screenrecord / input / Perfetto.
 - `reference/patterns.md` — where snapshot tooling sits in the overall per-platform test matrix.
-- `snap/reference/identifier-strategy.md` — accessibility identifier taxonomy (the §1 prerequisite) and per-framework assignment rules.
-- `snap/reference/screenshot-strategies.md` — XCUITest capture APIs, `XCTAttachment` lifetime, App Store screenshot pipelines.
+- `voyager/reference/ios-identifier-strategy.md` — accessibility identifier taxonomy (the §1 prerequisite) and per-framework assignment rules.
+- `voyager/reference/ios-screenshot-strategies.md` — XCUITest capture APIs, `XCTAttachment` lifetime, App Store screenshot pipelines.
 - `voyager/reference/ai-powered-e2e-testing.md` — AI-assisted **test authoring** and self-healing, including the native-mobile tool matrix. This file is about implementation; that file is about the suite.
 - `pixel/reference/visual-verification.md` — the equivalent numeric-verification discipline for web mockup reproduction.

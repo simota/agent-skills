@@ -87,7 +87,7 @@ Phase 3  IDENTITY TOURNAMENT ‖ 3 directions from angles surfaced in the dialog
          → judge panel scores vs the Brand Core Contract → winner + salvage list
    ▼
 Phase 4  GAUNTLET loop ≤ 2 cycles (default 2)
-         ‖ Cast+Plea+Echo persona-resonance panel (each ratified persona reacts: trust,
+         ‖ Cast+Echo[demand]+Echo persona-resonance panel (each ratified persona reacts: trust,
            recall, emotional read — misresonance = attack)
          ‖ refutation panel per _common/ADVERSARIAL_REFUTATION.md — central attack is the
            logo-swap test: "swap in a competitor's logo; does the identity still hold?"
@@ -123,7 +123,7 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 |---------|-----------|
 | Interchangeable-with-competitor identity | Logo-swap refutation is the gauntlet's central attack (Phase 4) |
 | Visual identity built on an unratified core | Phase 2 contract-level dialogue blocks Phase 3 until the core is ratified |
-| Identity the actual audience doesn't resonate with | Cast+Plea+Echo persona panel uses the personas ratified in Phase 2, not invented ones |
+| Identity the actual audience doesn't resonate with | Cast+Echo[demand]+Echo persona panel uses the personas ratified in Phase 2, not invented ones |
 | Inaccessible brand palette shipped as law | Canon WCAG contrast + legibility checks are an ACCEPT precondition (Phase 4) |
 | Brand book that contradicts its own tokens | Doc Quality Gate single-source-of-truth check (Phase 5, W7-W9) |
 | First-idea anchoring on one aesthetic | Tournament: 3 directions from dialogue-derived angles + salvage (Phase 3) |

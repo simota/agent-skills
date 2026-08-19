@@ -131,7 +131,7 @@ JPEG compression alone can shift hues by 5-10 ΔE. When source is lossy, cap col
 | 8-15px | CRITICAL |
 | >15px | BLOCKING (likely layout collapse) |
 
-Snap all targets to 4px/8px grid first; a "3px delta" that resolves by snapping is COSMETIC.
+Voyager[ios] all targets to 4px/8px grid first; a "3px delta" that resolves by snapping is COSMETIC.
 
 ### Typography Delta
 

@@ -10,7 +10,7 @@ Implementation notes for `/riff multi`. Reads as a delta on `_common/MULTI_ENGIN
 
 **Why three engines for brainstorming.** Riff already rotates through four modes (Expand / Propose / Evaluate / Subtract). Multiplying that by three engines gives a **4 × 3 = 12-angle matrix** on a single theme — but each engine's training-data priors push each mode in a different direction (Codex tilts toward GitHub-shaped solutions, Antigravity tilts toward Google-product ergonomics, Claude tilts toward Anthropic-curated framing). The breakthrough idea usually lives in a single cell of the matrix, not at the consensus center.
 
-**Dialogue posture.** Unlike Spark/Plea, Riff is **interactive**. `multi` is positioned as a **single "parallel brainstorm round"** dropped into an ongoing dialogue — the 9 / 12 outputs become **seed ideas for the next dialogue turn**, not a final deliverable. Riff never replaces dialogue with multi; multi accelerates one divergence step inside dialogue.
+**Dialogue posture.** Unlike Spark/Echo[demand], Riff is **interactive**. `multi` is positioned as a **single "parallel brainstorm round"** dropped into an ongoing dialogue — the 9 / 12 outputs become **seed ideas for the next dialogue turn**, not a final deliverable. Riff never replaces dialogue with multi; multi accelerates one divergence step inside dialogue.
 
 ---
 
@@ -223,6 +223,6 @@ Loose-prompt rule applies — do NOT pass the SCAMPER lens taxonomy, Crazy-8 axi
 - `_common/MULTI_ENGINE_RECIPE.md` — base protocol (read first)
 - `_common/SUBAGENT.md §MULTI_ENGINE` — engine dispatch mechanics
 - `spark/reference/tri-engine-proposal.md` — canonical Pattern D implementation (mirror this structure)
-- `plea/reference/tri-engine-demand.md` — Pattern D with calibration (Riff does NOT calibrate but the dialogue-integration pattern is similar)
+- `echo/reference/tri-engine-demand.md` — Pattern D with calibration (Riff does NOT calibrate but the dialogue-integration pattern is similar)
 - `riff/reference/patterns.md` — mode definitions and transition signals (referenced when interpreting which mode `multi` should default to)
 - `riff/reference/examples.md` — Riff dialogue tone; multi output cards inherit this voice

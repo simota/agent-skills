@@ -165,7 +165,7 @@ Opus 5 reviews code with high precision *and* recall — it finds real bugs at a
 
 **(b) Office & document artifacts.** Opus 5 generates complex multi-sheet spreadsheets with non-trivial formulas and well-structured slide decks. It needs the target style or template stated — supply it rather than expecting a house default. Relevant to Stage, Morph, Scribe, Harvest.
 
-**(c) Frontend & visual defaults.** Vision and UI/frontend visual replication are strong on Opus 5. The persistent warm-cream/serif "house style" observed on prior Opus models is **not documented for Opus 5** — treat it as unverified rather than assumed. Independent of that, the reliable steering methods are unchanged: (1) specify a concrete alternative (exact palette hexes, typography, radius, spacing); (2) have the model propose 3–4 distinct directions first, then implement the chosen one. Generic negation ("don't use cream", "make it minimal") just shifts to another fixed palette. Relevant to Vision, Muse, Palette, Flow, Forge, Artisan, Funnel, Bazaar, Vitrine, Stage, frontend skills.
+**(c) Frontend & visual defaults.** Vision and UI/frontend visual replication are strong on Opus 5. The persistent warm-cream/serif "house style" observed on prior Opus models is **not documented for Opus 5** — treat it as unverified rather than assumed. Independent of that, the reliable steering methods are unchanged: (1) specify a concrete alternative (exact palette hexes, typography, radius, spacing); (2) have the model propose 3–4 distinct directions first, then implement the chosen one. Generic negation ("don't use cream", "make it minimal") just shifts to another fixed palette. Relevant to Vision, Muse, Palette, Flow, Forge, Artisan, Funnel, Funnel[premium], Vitrine, Stage, frontend skills.
 
 ### P12. Context Minimalism — Judgment Over Rules  *(Claude 5 generation-wide)*
 
@@ -230,7 +230,7 @@ Reference this matrix to know which principles your skill must address.
 
 | Role | Critical (◎) | Recommended (○) |
 |------|---|---|
-| Orchestrators (Nexus, Titan, Sherpa, Rally, Magi, Darwin, Orbit) | P4, P6, P7, P9 | P1, P8 |
+| Orchestrators (Nexus, Nexus[deliver], Sherpa, Rally, Magi, Darwin, Orbit) | P4, P6, P7, P9 | P1, P8 |
 | Investigators (Scout, Lens, Trail, Atlas, Triage) | P3, P8, P9 | P2, P6 |
 | Reviewers/Detectors (Judge, Gauge, Sentinel, Probe, Radar, Attest, Canon, Matrix, Vigil, Cull, Chain) | P2, P9, P10 | P1, P6, P8 |
 | Builders (Builder, Artisan, Forge, Anvil, Native) | P7, P8, P9 | P3, P6, P11 |

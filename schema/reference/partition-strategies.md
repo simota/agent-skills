@@ -255,6 +255,6 @@ When the partition key is time and the workload is read-heavy analytics on appen
 
 - **Schema → Tuner**: verify pruning via EXPLAIN after partitioning
 - **Schema → Gear**: add pg_partman cron or maintenance script
-- **Schema → Shard**: composite (hash-in-range) migrates naturally to sharded cluster (Citus 13 distributed tables, Aurora DSQL, Spanner)
+- **Schema → Schema[tenant]**: composite (hash-in-range) migrates naturally to sharded cluster (Citus 13 distributed tables, Aurora DSQL, Spanner)
 - **Schema → Beacon**: alert on partition creation failure, disk growth per-partition
 - **Schema → Stream**: time-based partitions align with ETL date-keyed pipelines

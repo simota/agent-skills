@@ -63,7 +63,7 @@ When an action is execution-heavy, suggest a follow-up agent:
 | Action shape | Follow-up agent |
 |--------------|-----------------|
 | Implementation work (code, infrastructure) | `Builder` |
-| Synthetic-user validation of a hypothesis | `Plea` |
+| Synthetic-user validation of a hypothesis | `Echo[demand]` |
 | Multi-step decomposition into ≤15-min units | `Sherpa` |
 | User research interview design | `Field` |
 | Architecture / migration decision | `Atlas` or `Magi` |

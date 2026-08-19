@@ -38,7 +38,7 @@ These agents provide value regardless of project type. Nexus should always consi
 
 | Agent | Role | Notes |
 |-------|------|-------|
-| Nexus | Orchestrator | Routes and coordinates all agents |
+| Nexus | Orchestrator + delivery | Routes all agents and owns scope-adaptive product delivery |
 | Builder | Core implementer | Adapts to any stack |
 | Radar | Testing | All languages, all test types |
 | Judge | Code review | Language/framework agnostic |
@@ -47,7 +47,7 @@ These agents provide value regardless of project type. Nexus should always consi
 | Sherpa | Task breakdown | Complex tasks in any domain |
 | Lens | Code investigation | Understands any codebase |
 | Scout | Bug investigation | RCA works everywhere |
-| Gear | DevOps/CI/CD | Every project needs a pipeline |
+| Gear | DevOps/CI/CD + GHA | Every project needs a pipeline; advanced GitHub Actions included |
 | Sweep | Cleanup | Dead code exists everywhere |
 | Ripple | Impact analysis | Change analysis is universal |
 | Magi | Decision making | Multi-perspective judgment |
@@ -55,13 +55,12 @@ These agents provide value regardless of project type. Nexus should always consi
 | Atlas | Architecture | Dependency analysis for any project |
 | Trail | Git archaeology | History investigation + legacy business-rule extraction |
 | Rally | Parallel orchestration | Multi-session for any large task |
-| Grove | Repo structure | Every project needs good structure |
+| Grove | Human/LLM repo structure | Every project needs navigable structure |
 | Canvas | Visualization | Diagrams for any architecture |
 | Architect | Agent design | Meta-level, project-agnostic |
 | Void | YAGNI enforcement | Challenges feature existence everywhere |
 | Darwin | Ecosystem evolution | Monitors and evolves the agent ecosystem |
-| Titan | Product delivery | Build-first delivery for any scope |
-| Sigil | Project skill generation | Project-specific lightweight skills |
+| Sigil | Project operating layer | Project-specific skills, recipes, workflows, and routing maps |
 | Lore | Knowledge synthesis | Cross-agent pattern extraction |
 | Gauge | SKILL.md audit | Format compliance checking |
 | Flux | Perspective shift | Reframing and assumption challenge |
@@ -116,7 +115,6 @@ These agents provide value regardless of project type. Nexus should always consi
 | Scaffold | H | M | M | — | — | H | — | — | H |
 | Stream | M | M | M | — | — | M | — | — | H |
 | Bolt | H | H | H | — | — | H | M | — | M |
-| Shard | H | — | M | — | — | H | — | — | — |
 | Seek | H | H | M | — | — | H | — | — | H |
 | Trawl | — | M | — | — | — | M | — | — | H |
 | Relay | H | M | — | — | — | H | H | — | — |
@@ -165,7 +163,6 @@ These agents provide value regardless of project type. Nexus should always consi
 
 | Agent | SaaS | E-com | Dash | CLI | Lib | API | Mobile | Static | Data |
 |-------|------|-------|------|-----|-----|-----|--------|--------|------|
-| Pipe | H | M | M | M | H | H | — | — | M |
 | Latch | H | M | M | M | M | H | — | — | — |
 | Hearth | M | — | M | H | H | M | — | — | M |
 | Hone | M | — | M | H | H | M | — | — | — |

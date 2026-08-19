@@ -34,7 +34,7 @@ Read this file before executing the `marquee` Recipe.
 
 | Not this | Route to | Why |
 |----------|----------|-----|
-| A normal-quality or premium LP (single direction, standard bar) | `bazaar` skill direct | Bazaar's six-craft-axis studio pipeline covers standard-to-premium without tournament/ceiling cost |
+| A normal-quality or premium LP (single direction, standard bar) | `funnel[premium]` skill direct | Funnel[premium]'s six-craft-axis studio pipeline covers standard-to-premium without tournament/ceiling cost |
 | One LP section or a simple page | `funnel` skill direct | Minimum viable chain |
 | Improving an *existing* LP against a metric or design brief | `kaizen` / `restyle` | Improve family owns existing surfaces |
 | In-product flagship UI surface (core screen, onboarding — not an acquisition device) | `runway` | Runway is the design tournament for product UI; conversion is not its first-class dimension |
@@ -42,7 +42,7 @@ Read this file before executing the `marquee` Recipe.
 | The single most important ask of *any* deliverable type | `wish` | Deliverable-agnostic wrapper with the Scarcity Gate |
 | Post-ship market/brand verification | `growth-acceptance` | Marquee's ship feeds it (A/B handoff recorded in the Dossier) |
 
-**Overloaded anchor:** bare "landing page" with no ceiling framing → REDIRECT per `reference/intent-clarification.md` (normal quality → `bazaar`/`funnel`; ceiling one-shot → `marquee`).
+**Overloaded anchor:** bare "landing page" with no ceiling framing → REDIRECT per `reference/intent-clarification.md` (normal quality → `funnel[premium]`/`funnel`; ceiling one-shot → `marquee`).
 
 **Scale: 26-55 agents × ≤4 cycles (3 + ≤1 exit-gate bonus), 10-24× cost.** Per-phase: P0-P1 ≈ 2 · P2 ≈ 4-6 (Ground sweep) · P3 ≈ 9-12 (3 directions × structure+direction+prototype, + judge panel) · P4 ≈ 6-8 (craft-axis production) · P5 ≈ 5-7 Evaluators/cycle + 2-3 skeptics on near-ceiling cycles · P6-P7 ≈ 2. **Confirm-before-launch always** (unconditional — intentional parity with wish/summit).
 
@@ -92,7 +92,7 @@ Phase 3  TOURNAMENT ‖ 3 orthogonal directions: narrative-led / design-led / pr
            scoring vs the frozen Ceiling Rubric
          → winner + salvage list (informal cherry-pick from runners-up, fed to Phase 4)
    ▼
-Phase 4  PRODUCE — bazaar craft axes as the production substrate:
+Phase 4  PRODUCE — funnel[premium] craft axes as the production substrate:
          Prose[copy — Evidence-Ledger-grounded] ‖ Artisan[build] ‖ Flow[motion] ‖
          Ink/Sketch[assets] ‖ Muse[token-first] ‖ Growth[SEO/OGP/JSON-LD]
          (parallel branches per _common/PARALLEL.md; Artisan owns page integration)
@@ -192,7 +192,7 @@ Does an LP already exist and just needs improvement?
   YES → kaizen (metric-driven) / restyle (visual direction)
   NO ↓
 Is ceiling one-shot quality actually required (launch fires once, page defines the product)?
-  NO  → bazaar skill (standard-to-premium studio) / funnel skill (single page or section)
+  NO  → funnel[premium] skill (standard-to-premium studio) / funnel skill (single page or section)
   YES → marquee — crystallize → ground → tournament → produce → gauntlet-converge
         → reception (cold personas) → One-Shot + Comparative gates → ship (+ A/B handoff to growth-acceptance)
 ```

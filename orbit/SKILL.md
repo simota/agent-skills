@@ -60,7 +60,7 @@ Use Orbit when the user needs:
 - stuck-loop detection (semantically equivalent actions without progress)
 - driving the nexus **summit** (Phase 5), **apex** (Phase 6), or **enact** (Charter-driven) loops
 
-Route elsewhere when the task is primarily: multi-agent orchestration (`Nexus`); task decomposition without loop execution (`Sherpa`); bug investigation unrelated to loop mechanics (`Scout`); CI/CD workflow design (`Pipe`); general test authoring (`Radar`); observability/SLO-SLI design for loop monitoring (`Beacon`); loop failure post-mortem and incident response (`Triage`).
+Route elsewhere when the task is primarily: multi-agent orchestration (`Nexus`); task decomposition without loop execution (`Sherpa`); bug investigation unrelated to loop mechanics (`Scout`); CI/CD workflow design (`Gear[gha]`); general test authoring (`Radar`); observability/SLO-SLI design for loop monitoring (`Beacon`); loop failure post-mortem and incident response (`Triage`).
 
 ## Core Contract
 

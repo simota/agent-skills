@@ -8,7 +8,7 @@ Purpose: Detect and remediate bias in persona sets. Cover representation matrix,
 - **cast `archetype` (elsewhere)**: Brand / JTBD archetype tagging.
 - **Cloak (elsewhere)**: Privacy / consent / PII handling.
 - **Canon[regulatory] (elsewhere)**: Regulated context (e.g., insurance non-discrimination).
-- **Plea (elsewhere)**: Synthetic user voice (separate concern, but shares ethics surface).
+- **Echo[demand] (elsewhere)**: Synthetic user voice (separate concern, but shares ethics surface).
 
 ## Why Bias Audits
 

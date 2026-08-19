@@ -105,8 +105,8 @@ Downstream agents feed findings back to Cast to close the persona lifecycle loop
 |-------------|--------|-------------|-------------------|
 | **Echo** | Walkthrough friction findings for a persona | FUSE — adjust persona pain points and emotion triggers | +0.05 if findings align with persona; flag drift if misaligned |
 | **Echo** | Synthetic persona walkthrough result | FUSE — validate or challenge proto-persona attributes | Positive validation: +0.10 toward promotion; Negative: flag for review |
-| **Plea** | Demand calibration report (`[validated]`/`[supported]`/`[hypothesis]`) | FUSE — update persona coverage gaps | `[validated]` demands: +0.05; `[hypothesis]` with no match: flag persona gap |
-| **Plea** | Persona coverage gap (demands from segments not in registry) | CONJURE — consider new persona candidate | New persona at proto tier (0.30) |
+| **Echo[demand]** | Demand calibration report (`[validated]`/`[supported]`/`[hypothesis]`) | FUSE — update persona coverage gaps | `[validated]` demands: +0.05; `[hypothesis]` with no match: flag persona gap |
+| **Echo[demand]** | Persona coverage gap (demands from segments not in registry) | CONJURE — consider new persona candidate | New persona at proto tier (0.30) |
 | **Trace** | Behavioral validation data | EVOLVE — existing path (drift detection) | Per standard drift rules |
 | **Field** | Interview/survey validation | FUSE — promote proto → active | +0.20 (interview) / +0.15 (survey) per validation rules |
 
@@ -116,7 +116,7 @@ Downstream agents include the following in their `_STEP_COMPLETE` or handoff whe
 
 ```yaml
 PERSONA_FEEDBACK:
-  source_agent: "[Echo | Plea | Trace | Field]"
+  source_agent: "[Echo | Echo[demand] | Trace | Field]"
   persona_id: "[registry ID]"
   signal_type: "[validation | drift | gap | calibration]"
   findings: "[summary]"

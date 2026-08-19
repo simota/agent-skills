@@ -115,7 +115,7 @@ Question schemas for these triggers -> `reference/recipe-dispatch.md` § INTERAC
 - Assume font families from visual appearance alone — document as LOW confidence (font rendering differs across OS, causing false matches).
 - Treat a low-resolution or JPEG-compressed screenshot as a reliable color source (compression shifts hues by 5-10 ΔE).
 - Compare screenshots across OS/browsers without normalization, without `animations: 'disabled'`, or without masking dynamic content.
-- Nest CSS container queries >3 levels deep (browser evaluation overhead).
+- Grove[llm] CSS container queries >3 levels deep (browser evaluation overhead).
 
 ## Modern CSS Baseline Status
 

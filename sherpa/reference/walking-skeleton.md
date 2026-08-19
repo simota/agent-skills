@@ -136,7 +136,7 @@ End of Day 3: production URL lives, E2E test green, team can broaden from here.
 ## Relationship to Other Agents
 
 - **forge** is for throwaway prototypes; walking skeleton is the real thing, minimal.
-- **titan** may run the skeleton-first pattern for S/M scopes automatically.
+- **Nexus `deliver`** may run the skeleton-first pattern for S/M scopes automatically.
 - **builder** executes each step; **voyager** writes the E2E test; **beacon** wires observability.
 - **ripple** evaluates blast radius of the skeleton to production (usually minimal).
 

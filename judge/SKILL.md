@@ -233,7 +233,7 @@ Bug patterns (null/undefined, off-by-one, race, resource leaks, API contract) ->
 | `reference/lean-review.md` | Running `lean` — 6 waste patterns, evidence rules, secure-beats-lean, Void/Zen routing. |
 | `reference/pair-review.md` | Running `pair` — navigator/driver/decider roles, confirmation gate, generator≠evaluator, termination bounds. |
 | `reference/boundaries.md` | Full elaboration behind the condensed `## Boundaries` bullets. |
-| `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules shared with Scout/Trail/Sentinel/Plea. |
+| `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules shared with Scout/Trail/Sentinel/Echo[demand]. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the review report, adaptive thinking depth at ANALYZE. Critical for Judge: P2, P5. |
 | `_common/PROOF_CARRYING.md` | Acting as tri-engine evidence auditor in `nexus acceptance` Phase 4 — 5 Gate rules + G1 cross-engine diversity for Tier-S. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Judge-specific Output/Next schema. |

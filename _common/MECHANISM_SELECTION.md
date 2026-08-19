@@ -110,4 +110,4 @@ rules keep the figure meaningful:
 - **hone** — runs the anti-bloat audit ("would Claude do this wrong without it?") and routes failing lines here.
 - **sigil** — decides skill vs rule vs CLAUDE.md when authoring project skills (`cross-tool-rules-landscape.md`).
 - **architect** — decides whether a new capability is a skill vs hook/rule/subagent at design time.
-- **nest** — `.claude/rules/` tiering in monorepos.
+- **Grove `llm`** — `.claude/rules/` tiering in monorepos.

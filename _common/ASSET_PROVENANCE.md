@@ -4,7 +4,7 @@ Cross-skill discipline for **knowing where a produced asset came from, what may 
 
 **Read when:** an asset is generated rather than authored; a reference or stock source feeds a deliverable; an asset moves from exploration toward publication; someone asks "can we actually use this?"; an asset needs to be reproduced or re-derived months later.
 
-**Audience:** `forge`, `pixel`, `muse`, `ink`, `funnel`, `bazaar`, `atelier`, `frame`, `vision`, `sketch`, `cue`, `director`, `stage`, `nexus`.
+**Audience:** `forge`, `pixel`, `muse`, `ink`, `funnel`, `funnel[premium]`, `atelier`, `frame`, `vision`, `sketch`, `cue`, `director`, `stage`, `nexus`.
 
 **Prerequisites:** none.
 **Composes with:** `_common/EVIDENCE_LADDER.md` (a rights claim is evidence and has a level), `_common/CANDIDATE_SELECTION.md` (rights is a **Gate**, never a lens), `_common/TRACEABILITY.md` (ID conventions), `_common/SECURITY.md` (what may be sent to an external service).

@@ -42,7 +42,7 @@ Three motivational families:
 - **Change**: Hero, Outlaw, Magician (mastery + transformation)
 - **Meaning**: Innocent, Sage, Explorer (independence + truth)
 
-> **Change-agent personas (Plea Disposition axis).** Plea's transformation-voicing personas — **Entrepreneur**, **Revolutionary**, **Maverick/Heretic**, **Early-adopter visionary** (`plea/reference/persona-embodiment.md` § Challenger Archetypes) — are the registry home for bold, anti-incremental demand sources. Tag them with the **Change** / **Explorer** family: Entrepreneur → Creator/Magician/Hero · Revolutionary → Outlaw/Magician · Maverick → Outlaw/Explorer · Visionary → Explorer/Magician. They still require ≥3 evidence quotes (or `synthetic: true` + confidence ≤ 0.50 when proto-generated) and a Change/Explorer-compatible JTBD (typically emotional/social) — do not assign Outlaw + Functional-only.
+> **Change-agent personas (Echo[demand] Disposition axis).** Echo[demand]'s transformation-voicing personas — **Entrepreneur**, **Revolutionary**, **Maverick/Heretic**, **Early-adopter visionary** (`echo/reference/demand-persona-embodiment.md` § Challenger Archetypes) — are the registry home for bold, anti-incremental demand sources. Tag them with the **Change** / **Explorer** family: Entrepreneur → Creator/Magician/Hero · Revolutionary → Outlaw/Magician · Maverick → Outlaw/Explorer · Visionary → Explorer/Magician. They still require ≥3 evidence quotes (or `synthetic: true` + confidence ≤ 0.50 when proto-generated) and a Change/Explorer-compatible JTBD (typically emotional/social) — do not assign Outlaw + Functional-only.
 
 ## JTBD Archetypes
 

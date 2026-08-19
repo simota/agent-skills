@@ -56,7 +56,7 @@ Use Venture when the request matches **at least 3** of:
 
 Route elsewhere when the task is:
 - A single PRD or spec → `scribe[unified]` / `scribe` direct
-- A single landing page → `funnel` (or `bazaar` for premium LP)
+- A single landing page → `funnel` (or `funnel[premium]` for premium LP)
 - Market/competitor research only → `field` / `compete` direct
 - Brand system only → `vision` / `muse` direct
 - Working feature implementation → `apex` or `feature` recipe
@@ -93,7 +93,7 @@ Phase 0          Phase 1                Phase 2 [BARRIER]      Phase 3 [11 track
 [Framing]        [Research]             [Product Spine]        (feature_id-bound; see Phase        [Overview]       [Integrate+Validate] [Package]
 ┌────────────┐   ┌──────────────────┐   ┌──────────────────┐    Contracts § Phase 3 table below)  ┌───────────┐    ┌────────────────┐   ┌──────────┐
 │ parse idea │──▶│ field+compete    │──▶│ scribe[unified]+spark     │───▶┌────────────────────────────┐───▶│ spark     │───▶│ attest/judge   │──▶│ write    │
-│ +mode/depth│   │ ‖ plea+cast      │   │ +rank+pulse      │    │ 02,04-13 parallel doc tracks│    │ +scribe   │    │ traceability   │   │ tree+zip │
+│ +mode/depth│   │ ‖ echo[demand]+cast      │   │ +rank+pulse      │    │ 02,04-13 parallel doc tracks│    │ +scribe   │    │ traceability   │   │ tree+zip │
 │ +clarify≤3 │   │ (web-grounded or │   │ ═══ F-001… +     │    └────────────────────────────┘    │ +magi     │    │ +manifest+lint │   │ +report  │
 └────────────┘   │  research_todo)  │   │  MoSCoW FIXED ═══│                                      └───────────┘    └────────────────┘   └──────────┘
                  └──────────────────┘   └──────────────────┘
@@ -124,7 +124,7 @@ venture_contract:
 |-------|------|----------|
 | `field` | Market background, trends, JTBD synthesis, interview/survey design; WebSearch-grounded with sources → `references.md` (or `research_todo.md` if ungrounded) | Yes |
 | `compete` | Direct + indirect competitor analysis, differentiation gap, positioning input | Yes (skip at `lite`) |
-| `plea` | Synthetic user demands / pain points / unmet needs across personas | Yes |
+| `echo[demand]` | Synthetic user demands / pain points / unmet needs across personas | Yes |
 | `cast` | Persona generation → `personas.md` | Conditional: depth ≥ mvp |
 
 **Outputs:** `market_research.md`, `user_research_plan.md`, `interview_script.md`, `survey_questions.md`, `personas.md`, `jobs_to_be_done.md`, `competitor_analysis.md`, `trend_analysis.md`, `references.md`, `research_todo.md`.
@@ -152,7 +152,7 @@ Each track receives the framing contract + canonical feature_id table. Tracks wr
 | Brand | 02 | `vision` (direction) → `muse` (`design_tokens.json`) ‖ `prose` (copy/voice) | brand_strategy, naming_candidates (≥20), positioning, brand_voice, messaging_framework, visual_direction, design_tokens.json, copy_examples, brand_checklist |
 | UX/UI | 04 | `palette` (usability/states) ‖ `canvas` (Mermaid wireframes) ‖ `echo` (walkthrough) ‖ `prose` (empty/error/loading copy) | ux_flows, screen_specifications, wireframes_mermaid, component_inventory, state_design, onboarding_flow, accessibility_guidelines, responsive_design_policy |
 | LP | 05 | `funnel` (`index.html` + `styles.css` + lp_copy + conversion) ‖ `prose` (microcopy) | lp_copy, index.html, styles.css, faq, conversion_strategy, seo_metadata, analytics_plan |
-| Marketing | 06 | `funnel`/`bazaar` (GTM/channels) ‖ `pulse` (metrics) ‖ `experiment` (`growth_experiments.md`) | go_to_market_strategy, channel_strategy, pricing_strategy, content_marketing_plan, launch_plan, social_posts (30-day), email_sequences, pr_plan, sales_material_outline, growth_experiments |
+| Marketing | 06 | `funnel`/`funnel[premium]` (GTM/channels) ‖ `pulse` (metrics) ‖ `experiment` (`growth_experiments.md`) | go_to_market_strategy, channel_strategy, pricing_strategy, content_marketing_plan, launch_plan, social_posts (30-day), email_sequences, pr_plan, sales_material_outline, growth_experiments |
 | Tech | 07 | `atlas` (architecture+Mermaid) → `schema` (`database_schema.sql`) ‖ `gateway` (`api_design_openapi.yaml`) ‖ `beacon` (monitoring) ‖ `gear` (CI/CD) ‖ `crypt`? (auth/crypto) | system_architecture, tech_stack, data_model, database_schema.sql, api_design_openapi.yaml, data_pipeline, auth_and_permissions, security_privacy, monitoring_observability, infrastructure_plan, ci_cd_plan, technical_risks |
 | AI Policy | 08 | `oracle` (AI usage, prompts, eval, guardrails, human review, logging) | ai_usage_policy, prompt_design, evaluation_policy, hallucination_risk_controls, human_review_workflow, model_selection, ai_logging_policy, ai_disclaimer_templates |
 | Legal/Risk | 09 | `clause` (ToS/Privacy/Cookie drafts) ‖ `cloak` (privacy/PII) ‖ `canon[regulatory]`? (compliance_checklist) ‖ `omen`+`ripple` (`risk_register.md`) | legal_considerations, data_rights_policy, privacy_policy_draft, terms_of_service_draft, cookie_policy_draft, risk_register, compliance_checklist |
@@ -231,7 +231,7 @@ Nexus AUTORUN venture idea="<X>" depth=<...> mode=<...>
   ── Phase 1 Research ─────────────────────────────────
   → field(market+trend+JTBD, web-grounded|research_todo)
   ‖ compete(direct+indirect+diff)?        # skip at lite
-  ‖ plea(user demands) → cast(personas)?  # cast if depth≥mvp
+  ‖ echo[demand](user demands) → cast(personas)?  # cast if depth≥mvp
   ── Phase 2 Product Spine [BARRIER] ──────────────────
   → scribe[unified](PRD+stories+AC+IA+NFR+release)
   → spark(feature_catalog: F-001… + mvp_or_later)
@@ -242,7 +242,7 @@ Nexus AUTORUN venture idea="<X>" depth=<...> mode=<...>
   → [Brand]  vision → muse(design_tokens.json) ‖ prose
   ‖ [UX]     palette ‖ canvas(mermaid) ‖ echo ‖ prose(states)
   ‖ [LP]     funnel(index.html+styles.css+copy) ‖ prose
-  ‖ [Mktg]   funnel/bazaar ‖ pulse ‖ experiment(growth_experiments)
+  ‖ [Mktg]   funnel/funnel[premium] ‖ pulse ‖ experiment(growth_experiments)
   ‖ [Tech]   atlas(arch+mermaid) → schema(schema.sql) ‖ gateway(openapi.yaml)
                                   ‖ beacon ‖ gear ‖ crypt?
   ‖ [AI]     oracle(policy+prompts+eval+guardrails+human_review)

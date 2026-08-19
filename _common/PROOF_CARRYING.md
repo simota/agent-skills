@@ -22,7 +22,7 @@ The protocol stack now organizes into three tiers, each adoptable independently:
 |------|-------|-----------|--------|----------|
 | **Tier A — Foundation** | LLM output integrity, evidence completeness, repair-loop safety | G1 / G2 / G3 | judge, attest, beacon, mend, sentinel | Required for any Proof-Carrying regime |
 | **Tier B — Production Pipeline** | Code merge-time + Design merge-time gates (this file's main body) | G4-G10 + Dual-Impl + Matrix + Contract | radar, voyager, vigil, atelier, frame, muse, palette, canon, vitrine, prose, echo, vision, weave, flow, matrix, rally | Solo OK with subset; SMB+ full |
-| **Tier C — Market-Brand Acceptance** | Pre-design + ship-time + post-launch lifecycle gates (M / R / B axes) | G11* / G12 / G13 / G14* / G15* | field, voice, trace, plea, pulse, experiment, funnel, bazaar, compete, crest, clause, canon[regulatory], ledger (FinOps), harvest, tome | Enterprise only; SMB optionally adopts Step 1 Measurement Loop |
+| **Tier C — Market-Brand Acceptance** | Pre-design + ship-time + post-launch lifecycle gates (M / R / B axes) | G11* / G12 / G13 / G14* / G15* | field, voice, trace, echo[demand], pulse, experiment, funnel, funnel[premium], compete, crest, clause, canon[regulatory], ledger (FinOps), harvest, tome | Enterprise only; SMB optionally adopts Step 1 Measurement Loop |
 
 \* Cross-cutting guardrails (G11 / G14 / G15) apply to Tier A and Tier B knowledge bases as well, not only Layer C. They are documented in this file below.
 

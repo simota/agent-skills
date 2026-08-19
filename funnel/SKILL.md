@@ -1,6 +1,6 @@
 ---
 name: funnel
-description: "Constructing landing pages end-to-end via structure design, conversion strategy, CTA optimization, and responsive design. Use when creating or improving landing pages."
+description: "Constructing landing pages from a focused section to a premium multi-stage studio pipeline: structure, copy, conversion, responsive build, craft gates, and launch handoffs. Use when building or optimizing an LP, CTA, conversion flow, or premium launch surface."
 ---
 
 <!--
@@ -23,6 +23,10 @@ CAPABILITIES_SUMMARY:
 - passkey_form_integration: Passkey/WebAuthn Conditional UI signup flow (30% CV lift vs passwords)
 - ai_personalization_cro: AI-driven CTA/headline personalization within EU AI Act Article 5 boundaries
 - loaf_inp_attribution: Long Animation Frames attribution for INP optimization (web-vitals v4+)
+- premium_lp_pipeline: Run Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch for high-stakes LPs
+- six_axis_craft: Enforce Design, Animation, Branding, Marketing, SEO/GEO, and IA rubrics with measurable stage gates
+- lp_chain_orchestration: Select and coordinate the minimum LP specialist chain with conflict-aware parallel fan-out and structured handoffs
+- premium_quality_gates: Block progression on conversion, CWV, WCAG, brand, trust, or evidence failures while preserving rollback and escalation
 
 COLLABORATION_PATTERNS:
 - Pattern A: Vision → Funnel: design direction and brand guidelines
@@ -35,9 +39,11 @@ COLLABORATION_PATTERNS:
 - Pattern H: Muse → Funnel: design tokens
 - Pattern I: Pixel → Funnel: mockup reproduction base
 - Pattern J: Funnel → Flow: animation specs
+- Pattern K: Nexus → Funnel[premium]: Standard-to-premium LP studio delegation below `marquee` ceiling cost
+- Pattern L: Funnel[premium] → Field/Compete/Pulse/Vision/Atelier/Artisan/Growth/Experiment/Launch: gated stage handoffs
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Vision (design direction), Prose (copy drafts), Cast (persona data), Muse (design tokens), Pixel (mockup reproduction), Forge (prototype base)
+- INPUT: Nexus (premium LP delegation), Vision (design direction), Prose (copy drafts), Cast (persona data), Muse (design tokens), Pixel (mockup reproduction), Forge (prototype base)
 - OUTPUT: Artisan (production implementation), Growth (SEO/CRO optimization), Echo (persona validation), Experiment (A/B variants), Flow (animation specs), Builder (backend integration)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Marketing(H) Static(H) Mobile(M) Dashboard(L)
@@ -61,6 +67,7 @@ You are the LP (Landing Page) structure designer and conversion strategist. You 
 - Structuring LP copy direction (headline, benefits, objection handling).
 - Planning A/B test variant structure for landing pages.
 - Building LP-specific form design with progressive disclosure.
+- Running a standard-to-premium LP studio pipeline for SaaS, lead-gen, e-commerce, event, or lead-magnet acquisition surfaces.
 
 ### Route elsewhere
 
@@ -255,6 +262,7 @@ Detailed performance optimization → delegate to Growth / Bolt. LP-specific pri
 | Form Optimization | `form` | | Field minimization, progressive disclosure, autofill cooperation, validation, submit friction | Form spec — field-count cost model, single vs multi-step, `autocomplete`/`inputmode` contract, blur-time validation, submit state machine. Delegates: Artisan (impl), Prose (labels/errors), Growth (A/B), Muse (tokens) | `reference/form-lp-optimization.md` |
 | Copy Authoring | `copy` | | Headline formulas, hero body, value-prop clarity, microcopy shells, readability, tone | LP copy — PAS/BAB/4U formulas, hero anatomy, clarity tests, benefit-vs-feature, microcopy shells, readability targets. Delegates: Prose (exact microcopy + voice), Growth (ads/nurture), Muse (type tokens), Vision (positioning) | `reference/copy-lp-authoring.md` |
 | Trust Signal Placement | `trust` | | Testimonials, logo bars, case studies, badges, review aggregation, urgency vs dark patterns | Placement map — testimonial shape/quantity, logo bar treatment, metric- vs story-forward cases, certifications, review aggregation, honest-urgency red lines. Delegates: Prose (wording), Growth (review APIs + schema), Muse (tokens), Clause (FTC substantiation) | `reference/trust-signal-placement.md` |
+| Premium LP Studio | `premium` | | Standard-to-premium full LP pipeline; select `premium|lead-gen|saas|ecom|event|magnet` mode | Nine gated stages + six-axis craft rubric + specialist handoff bundle | `reference/premium-chain-recipes.md`, `reference/premium-quality-gates.md` |
 
 ### Signal Keywords → Recipe
 
@@ -269,6 +277,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `form`, `lead`, `signup form`, `progressive disclosure` | `form` |
 | `copy`, `headline`, `microcopy`, `value prop` | `copy` |
 | `trust`, `social proof`, `testimonial`, `logo bar` | `trust` |
+| `premium LP`, `lead-gen LP`, `SaaS signup LP`, `product LP`, `campaign LP`, `lead magnet` | `premium` |
 | `A/B`, `variant`, `test` | `build` + delegate variant execution to Experiment |
 | unclear LP request | `build` (default) |
 
@@ -277,7 +286,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 Parse the first token of user input:
 - If it matches a Recipe Subcommand in the Recipes table → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → match against **Signal Keywords → Recipe**; if still no match, activate `build` (default).
-- All Recipes run the `BRIEF → STRUCTURE → COPY → BUILD → OPTIMIZE → DELIVER` workflow — Recipe selection shapes Output / Behavior and downstream delegation, not phase sequence.
+- All standard Recipes run `BRIEF → STRUCTURE → COPY → BUILD → OPTIMIZE → DELIVER`. `premium` expands this to `DISCOVER → AUDIENCE → STRATEGY → STRUCTURE → DESIGN → BUILD → OPTIMIZE → VERIFY → LAUNCH`; mode-specific skip rules live in `premium-chain-recipes.md`, and every stage must pass `premium-quality-gates.md`.
 
 ### A/B Testing Platform Landscape
 
@@ -298,7 +307,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Collaboration
 
-**Receives:** Vision (design direction) · Cast (persona data) · Prose (copy drafts) · Muse (design tokens) · Pixel (mockup base) · Forge (prototype base)
+**Receives:** Nexus (premium LP delegation) · Vision (design direction) · Cast (persona data) · Prose (copy drafts) · Muse (design tokens) · Pixel (mockup base) · Forge (prototype base)
 
 **Sends:** Artisan (LP structure + copy + responsive specs) · Growth (SEO/CRO optimization requests) · Echo (persona validation) · Experiment (A/B variant specs) · Flow (animation specs) · Builder (backend integration)
 
@@ -310,6 +319,7 @@ Handoff formats → `reference/handoffs.md`
 - **vs Prose**: Funnel = copy direction and constraints; Prose = detailed copywriting and voice/tone.
 - **vs Experiment**: Funnel = variant design; Experiment = statistical test design and execution.
 - **vs Palette**: Funnel = conversion-focused layout; Palette = usability and a11y implementation details.
+- **`build` vs `premium` vs Nexus `marquee`**: `build` owns one routine LP or section; `premium` owns a repeatable standard-to-premium studio pipeline; `marquee` remains the ceiling-quality tournament for a flagship acquisition LP.
 
 ## Reference Map
 
@@ -321,6 +331,12 @@ Handoff formats → `reference/handoffs.md`
 | `reference/form-lp-optimization.md` | Field-count sizing, single vs multi-step, autofill contract, blur-time validation, submit friction. |
 | `reference/copy-lp-authoring.md` | Headline formulas, hero copy anatomy, value-prop clarity tests, microcopy shells, tone calibration. |
 | `reference/trust-signal-placement.md` | Placement map, testimonial shape/quantity, logo bars, case-study length, review aggregation, dark-pattern line. |
+| `reference/premium-chain-recipes.md` | Selecting premium, lead-gen, SaaS, e-commerce, event, or lead-magnet stage coverage. |
+| `reference/premium-quality-gates.md` | Enforcing per-stage craft, conversion, CWV, WCAG, trust, and launch exit criteria. |
+| `reference/premium-agent-roster.md` | Selecting the minimum specialist set and avoiding redundant delegates. |
+| `reference/premium-handoff-protocols.md` | Emitting and consuming stage bundles, stage reports, escalation, and resume state. |
+| `reference/premium-craft-standards.md` | Scoring the six craft axes and preserving brand/motion/IA coherence. |
+| `reference/premium-ia-blueprint.md` | Integrating IA, technical SEO, content SEO, and GEO as one structural axis. |
 | `_common/ASSET_PROVENANCE.md` | Hero image or generated illustration enters BUILD — rights, source, and state discipline before shipping. |
 | `_common/CANDIDATE_SELECTION.md` | Narrowing 5+ headline options or multiple hero layout patterns to one — stage funnel and Gate/Trade-off/Preference classification for the selection. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the LP spec, thinking depth at section/CTA design, front-loading type/audience/goal at FRAME. Critical: P3, P5. |

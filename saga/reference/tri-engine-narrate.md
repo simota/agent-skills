@@ -109,7 +109,7 @@ Two narratives belong to the same cluster when **all three** hold:
 - **same `arc_type`** (Hero's Journey ≠ JTBD ≠ BAB; each archetype is its own cluster axis)
 - **same emotional payoff class** (`Relief` and `Pride` are different payoffs; clustering across payoffs would erase the divergence signal)
 
-**Critical Saga rule** (different from Spark/Plea): **Different `arc_type`s for the same protagonist are NOT clustered together — they are preserved as separate clusters.** Saga's whole value proposition is that three engines may apply three different archetypes (e.g., Codex → JTBD, Antigravity → Hero's Journey, Claude → Promised Land) to the same customer-feature pair. Collapsing across archetypes would destroy the Portfolio output.
+**Critical Saga rule** (different from Spark/Echo[demand]): **Different `arc_type`s for the same protagonist are NOT clustered together — they are preserved as separate clusters.** Saga's whole value proposition is that three engines may apply three different archetypes (e.g., Codex → JTBD, Antigravity → Hero's Journey, Claude → Promised Land) to the same customer-feature pair. Collapsing across archetypes would destroy the Portfolio output.
 
 Record the set of engines that produced each cluster.
 
@@ -243,14 +243,14 @@ Per `_common/MULTI_ENGINE_RECIPE.md §Degraded Modes`. Saga-specific notes:
 - `saga/reference/templates.md` — per-channel narrative templates used when normalizing length
 - `saga/reference/examples.md` — example narratives for AP-1~AP-9 calibration during GROUND
 - `spark/reference/tri-engine-proposal.md` — sibling Pattern D implementation (Portfolio/Compete merge precedent)
-- `plea/reference/tri-engine-demand.md` — sibling Pattern D with persona-channel diversity (closest analog to Saga's archetype diversity)
+- `echo/reference/tri-engine-demand.md` — sibling Pattern D with persona-channel diversity (closest analog to Saga's archetype diversity)
 
 
 ---
 
 ## Multi-Engine Mode (SKILL.md long form)
 
-Activated by the `multi` Recipe (or any explicit user request for parallel narrative generation, cross-engine arcs, archetype portfolio, or A/B/C narrative testing). Multi-engine narrative generation mirrors Spark/Plea's Pattern D — Divergence-Primary — and is optimized for *narrative-archetype diversity* across the same customer-feature pair.
+Activated by the `multi` Recipe (or any explicit user request for parallel narrative generation, cross-engine arcs, archetype portfolio, or A/B/C narrative testing). Multi-engine narrative generation mirrors Spark/Echo[demand]'s Pattern D — Divergence-Primary — and is optimized for *narrative-archetype diversity* across the same customer-feature pair.
 
 > **Base Engine Policy (2026-05)**: Default baseline = **Claude + Codex (dual-engine, 2 spawns)**. agy adds a third axis (tri-engine, 3 spawns) when AVAILABLE at PREFLIGHT. For Saga the dual-engine baseline (Claude's emotionally-calibrated Promised Land narratives + Codex's JTBD/technical case study patterns) covers two distinct narrative archetypes; agy adds Hero's Journey / BAB archetype coverage when reachable. See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy + §Engine Availability Modes`.
 

@@ -54,7 +54,7 @@ User request
   │   └─ Competitive research → Compete
   │
   ├─ DevOps / infrastructure
-  │   ├─ CI / CD → Pipe
+  │   ├─ CI / CD → Gear[gha]
   │   ├─ IaC → Scaffold
   │   ├─ Dependency management → Gear
   │   └─ Monitoring design → Beacon
@@ -122,7 +122,7 @@ User request
 
 | Situation | Recommendation | Reason |
 |-----------|----------------|--------|
-| CI / CD | Pipe | GitHub Actions specialist |
+| CI / CD | Gear[gha] | GitHub Actions specialist |
 | Infrastructure | Scaffold | IaC design |
 | Monitoring / alerting | Beacon | SLO / SLI design |
 | Incident response | Triage → Mend | Investigate, then auto-remediate |
@@ -183,7 +183,7 @@ Lens / Atlas (web survey) → Port (blueprint) → Native (iOS / Android impl) �
 
 ### Founder Advisory Chain
 ```
-Sage (bottleneck + action) → Sherpa (decompose) / Builder (implement) / Plea (validate)
+Sage (bottleneck + action) → Sherpa (decompose) / Builder (implement) / Echo[demand] (validate)
 ```
 
 ### Product Image Acquisition Chain

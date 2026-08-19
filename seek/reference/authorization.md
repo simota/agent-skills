@@ -9,7 +9,7 @@ per-region, or any customer data. Skip only when every document in the index is 
 the search, and say so explicitly rather than leaving it unstated.
 
 **Scope boundary.** This file covers authorization *inside the retrieval path* — index layout, filtering,
-chunk and cache boundaries, revocation lag. Tenant architecture, RLS, and provisioning stay with `Shard`.
+chunk and cache boundaries, revocation lag. Tenant architecture, RLS, and provisioning stay with `Schema[tenant]`.
 PII classification, consent, and retention stay with `Cloak`. Regulatory control mapping stays with `Canon[regulatory]`.
 Static code flaws stay with `Sentinel`. Route there for depth; the design decisions below still belong in
 the retrieval spec.
@@ -273,6 +273,6 @@ Add to the deliverable in `seek`'s Output Requirements whenever the corpus is no
 8. The disclosure-surface test matrix (positive / negative / race), including cross-tenant fixtures.
 9. The `Unknown`-ACL policy.
 
-**Handoffs:** tenant architecture and RLS → `Shard`. PII classification, consent, retention, deletion
+**Handoffs:** tenant architecture and RLS → `Schema[tenant]`. PII classification, consent, retention, deletion
 obligations → `Cloak`. Control mapping and audit evidence → `Canon[regulatory]`. Adversarial validation of the
 boundary → `Breach` / `Probe`. Permission-propagation SLI instrumentation → `Beacon`.

@@ -123,7 +123,7 @@ Add the following official quality signals as supplementary inputs to the existi
 | Official Category | Ecosystem Agents | Coverage |
 |------------------|-----------------|----------|
 | **Document & Asset Creation** | Scribe, Quill, Morph, Sketch | Document/asset generation |
-| **Workflow Automation** | Nexus, Titan, Sherpa, Sigil, Pipe, Launch | Workflow automation |
+| **Workflow Automation** | Nexus, Nexus[deliver], Sherpa, Sigil, Gear[gha], Launch | Workflow automation |
 | **MCP Enhancement** | Frame, Relay, Vector, Hone | MCP integration enhancement |
 
 ### Coverage Gap Detection

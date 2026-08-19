@@ -19,9 +19,8 @@ Decomposes, coordinates, and parallelizes tasks.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Nexus** | Team orchestrator | Complex tasks requiring multi-agent coordination | No |
+| **Nexus** | Team orchestrator + product delivery | Multi-agent coordination and scope-adaptive product/MVP delivery (`deliver`) | No |
 | **Sherpa** | Task decomposition guide | Break work into atomic steps under 15 minutes | No |
-| **Titan** | Product delivery | Ship code fastest, prefer build over plan | No |
 | **Rally** | Parallel orchestrator | Multi-session parallel execution | No |
 | **Atelier** | Design → implementation pipeline | Integrates Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas | No |
 
@@ -60,11 +59,10 @@ Test authoring and verification.
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Radar** | Unit tests | Edge-case additions, flaky-test repair, coverage improvement | Yes |
-| **Voyager** | E2E tests | Playwright/Cypress configuration, Page Object design | Yes |
+| **Voyager** | Cross-platform + iOS E2E | Playwright/Cypress/Appium/Detox/Maestro and XCUITest/snapshots (`ios`) | Yes |
 | **Siege** | Load and resilience testing | Load tests, contract tests, chaos engineering | Yes |
 | **Matrix** | Manual QA test-case authoring | Systematic QA procedures (BVA, equivalence class, decision table) for TestRail/Zephyr/Xray/Qase — `qa-scenario` recipe (absorbed from drill) | No |
 | **Canvas** | Test intelligence visualization | Coverage heatmaps, test-shape views, mutation overlays from junit/lcov/allure/playwright artifacts (absorbed from vista; live dashboards → Pulse) | Mixed |
-| **Snap** | iOS UI automation | XCUITest authoring, fastlane App Store screenshot pipelines | Yes |
 
 ## Security (6)
 
@@ -121,11 +119,9 @@ System design and structure.
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Atlas** | Architecture analysis | Dependency analysis, ADR / RFC authoring | Mixed |
-| **Schema** | DB design | Normalization, indexing strategy, ER diagrams | Mixed |
+| **Schema** | DB and tenant architecture | Normalization, migrations, ER diagrams, tenant isolation/RLS/routing (`tenant`) | Mixed |
 | **Gateway** | API design | OpenAPI generation, versioning | Mixed |
-| **Grove** | Repository structure | Directory design, docs/ layout | Mixed |
-| **Nest** | LLM-optimized folder structure | Agent-friendly directory optimization | Mixed |
-| **Shard** | Multi-tenant design | Tenant isolation, RLS, scale design | Mixed |
+| **Grove** | Human/LLM repository structure | Directory/docs layout plus LLM navigation and prompt-cache topology (`llm`) | Mixed |
 | **Grok** | Grammar / parser / DSL design | Regex, PEG / ANTLR, ReDoS-safe grammar design | Mixed |
 
 ## UX/Design (11)
@@ -136,14 +132,14 @@ UI/UX design and improvement.
 |-------|------|---------|------|
 | **Vision** | Creative direction | UI/UX direction decisions | No |
 | **Palette** | Usability improvement | Cognitive-load reduction, a11y compliance | Mixed |
-| **Echo** | Persona cognitive walkthrough | Usability evaluation, confusion-point discovery | No |
+| **Echo** | Persona walkthrough + synthetic demand | Usability, feature requests, JTBD, 5 Whys, opportunity trees (`demand`) | No |
 | **Flow** | Animation implementation | CSS / JS animation, transitions | Yes |
 | **Muse** | Design tokens | Token architecture, dark mode | Mixed |
 | **Vitrine** | Storybook | Story authoring, Visual Regression | Mixed |
 | **Field** | User research | Interview design, persona creation | No |
 | **Trace** | Session-replay analysis | Behavioral pattern extraction, UX issue discovery | No |
 | **Cast** | Persona casting | Persona generation, management, sync | No |
-| **Funnel** | Landing-page construction | LP design and optimization | Mixed |
+| **Funnel** | Landing-page construction | LP conversion and premium nine-stage production (`premium`) | Mixed |
 | **Voice** | User-feedback analysis | NPS design, review analysis, sentiment analysis | No |
 
 ## DevOps (7)
@@ -152,9 +148,8 @@ Infrastructure, CI/CD, and operations.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Gear** | Dependency management / CI/CD | Build errors, dev-environment issues | Yes |
+| **Gear** | Dependency management / CI/CD / GHA | Build errors, pipelines, advanced GitHub Actions (`gha`) | Yes |
 | **Scaffold** | Infrastructure provisioning | Terraform / Docker Compose design | Yes |
-| **Pipe** | GitHub Actions | Workflow design, security hardening | Yes |
 | **Beacon** | Observability and reliability | SLO / SLI design, alert strategy | Mixed |
 | **Launch** | Release management | Versioning, CHANGELOG, rollback | Mixed |
 | **Ledger** | FinOps | Cloud cost optimization, RI / SP recommendations | No |
@@ -251,13 +246,12 @@ Manages and evolves the ecosystem itself.
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Architect** | Skill design | New agent design, gap analysis | No |
-| **Sigil** | Project-specific skill generation | Codebase analysis → tailored skill generation | No |
+| **Sigil** | Project operating-layer design | Tailored skills plus recipe/workflow/routing-map blueprints (`blueprint`) | No |
 | **Lore** | Knowledge curation | Pattern extraction, knowledge-decay detection | No |
 | **Darwin** | Ecosystem evolution | Lifecycle detection, fitness evaluation | No |
 | **Hone** | AI CLI configuration optimization | Claude Code / Antigravity CLI configuration audit | No |
 | **Compass** | Skill navigator | Skill guidance, onboarding | No |
 | **Latch** | Claude Code Hooks design | PreToolUse / PostToolUse / Stop and other lifecycle hooks | Mixed |
-| **Loom** | Project operating-layer design | Project-local skill / recipe / workflow suite design, task-topology mapping | No |
 | **Prune** | Skill ecosystem cleanup | Overlap audit, merge-candidate detection, sunset proposals | No |
 
 ## Creative / Media (2)
@@ -286,7 +280,6 @@ Specialized skills that don't fit the categories above.
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Riff** | Brainstorming | Iterative idea deepening through dialogue | No |
-| **Plea** | Synthetic-user advocate | Generates feature requests as a fictional user | No |
 | **Polyglot** | i18n / l10n | Multilingual support, RTL handling | Mixed |
 | **Weave** | Workflow design | State machines, Saga patterns | Mixed |
 | **Omen** | Pre-mortem analysis | Failure-scenario enumeration, RPN scoring | No |
@@ -304,4 +297,3 @@ Specialized skills that don't fit the categories above.
 | **Hearth** | Dotfile management | zsh / tmux / neovim / ghostty configuration | Mixed |
 | **Mint** | Test-data generation | Factories, boundary values, seed management | Mixed |
 | **Tempo** | Schedule design | cron, timezone / DST, retry / backoff, business calendars | Mixed |
-| **Bazaar** | Premium LP studio orchestrator | Full 9-stage LP pipeline (Discover→Audience→Strategy→Structure→Design→Build→Optimize→Verify→Launch) across existing agents | Mixed |

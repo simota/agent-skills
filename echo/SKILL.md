@@ -1,6 +1,6 @@
 ---
 name: echo
-description: "Simulating users (beginners, seniors, mobile users) via persona-based cognitive walkthroughs to evaluate UI flows, report confusion points, and score emotional friction. Use for usability validation."
+description: "Simulating users to evaluate existing flows and generate synthetic demand: cognitive walkthroughs, feature requests, unmet needs, JTBD, and opportunity trees. Not real-user research."
 ---
 
 <!--
@@ -20,6 +20,11 @@ CAPABILITIES_SUMMARY:
 - [Advanced] ai_generated_ui_evaluation: AI-generated UI cognitive walkthrough — pattern detection for AI output deficits
 - [Advanced] adaptive_ui_walkthrough: Adaptive UI persona branching — complexity-level-specific walkthrough, personalization bias detection
 - tri_engine_walkthrough: `multi` Recipe — parallel cognitive walkthrough across Codex + Antigravity + Claude subagents over the same persona × step matrix; Pattern H Hybrid scoring (confidence axis CONFIRMED/LIKELY/CANDIDATE + perspective axis CONVERGENT/DIVERGENT) plus cross-persona universality axis; preserves single-engine divergent-voice insights and surfaces cross-persona-universal friction as the strongest synthetic UX signal; mitigates AI-persona WEIRD/hallucination/mode-collapse bias through engine triangulation
+- synthetic_demand: Generate first-person feature requests and latent unmet needs from calibrated personas with explicit `synthetic: true` evidence tags
+- jtbd_switch_analysis: Produce synthetic Switch interviews, four-forces analysis, and Job Maps as hypotheses for Field validation
+- demand_root_cause: Apply demand-focused 5 Whys and assumption challenges without conflating them with bug RCA
+- opportunity_tree: Map outcome → opportunity → solution → experiment and hand selected branches to Spark/Experiment
+- tri_engine_demand: Preserve convergent and divergent synthetic user voices across engines with calibration ceilings
 
 COLLABORATION_PATTERNS:
 - Pattern A: Echo ↔ Palette — Validation Loop: friction discovery → fix → re-validation
@@ -29,12 +34,13 @@ COLLABORATION_PATTERNS:
 - Pattern E: Echo → Scout — Root Cause Analysis: UX bug → technical investigation
 - Pattern F: Echo → Spark — Feature Proposal: latent needs → new feature spec
 - Pattern G: Echo ↔ Cast — Synthetic Persona: Cast generates personas → Echo runs walkthrough → Cast evolves persona
-- Pattern H: Echo ↔ Plea — Demand-Validation Loop: Plea generates demands → Echo validates in existing flows → Plea refines. See _common/PERSONA_CLUSTER_GUIDE.md
+- Pattern H: Echo[walkthrough] ↔ Echo[demand] — Demand-Validation Loop: demand hypotheses are checked against existing flows and refined without becoming real evidence
 - Pattern I: Echo → Canon — WCAG 3.0 Silver/Gold: cognitive walkthrough output → standards compliance evidence
+- Pattern J: Cast/Field/Voice → Echo[demand] → Spark/Rank — Synthetic Demand Pipeline
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Field (persona data), Voice (real feedback), Pulse (quantitative metrics), Cast (synthetic personas)
-- OUTPUT: Palette (interaction fixes), Experiment (A/B hypotheses), Growth (CRO), Canvas (visualization), Spark (feature ideas), Scout (bug investigation), Muse (design tokens), Cast (persona evolution data), Canon (WCAG 3.0 Silver/Gold evidence)
+- OUTPUT: Palette (interaction fixes), Experiment (A/B hypotheses), Growth (CRO), Canvas (visualization), Spark (feature ideas), Rank (priority input), Scribe (requirements), Field (validation), Scout (bug investigation), Muse (design tokens), Cast (persona evolution data), Canon (WCAG 3.0 Silver/Gold evidence)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) Mobile(H) CLI(M)
 -->
@@ -62,9 +68,10 @@ Use Echo when the user needs:
 - regulatory compliance check for deceptive design patterns (FTC/EU DSA/CPRA/EU DFA)
 - synthetic persona rapid validation of new concepts or flows
 - learnability evaluation for onboarding or complex workflows
+- synthetic feature requests, unmet-needs hypotheses, JTBD Switch analysis, demand-focused 5 Whys, or an Opportunity Solution Tree before real-user validation
 
 Route elsewhere when the task is primarily:
-- user demand discovery or assumption challenge: `Plea` (see `_common/PERSONA_CLUSTER_GUIDE.md`)
+- user demand discovery or assumption challenge: `Echo[demand]` (see `_common/PERSONA_CLUSTER_GUIDE.md`)
 - UX design fixes or interaction improvements: `Palette`
 - visual or motion direction: `Vision` or `Flow`
 - real user feedback collection: `Voice`
@@ -153,6 +160,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Think-Aloud | `aloud` | | Concurrent / retrospective think-aloud session moderation, prompt discipline, transcript coding, and finding extraction | `reference/think-aloud-protocol.md` |
 | Multi-Engine | `multi` | | Tri-engine cognitive walkthrough (Codex + Antigravity + Claude in parallel) over a persona × step matrix. Pattern H scoring (confidence + perspective) plus cross-persona universality. Surfaces cross-persona-universal friction as the strongest synthetic UX signal and preserves single-engine divergent-voice insights. | `reference/tri-engine-walkthrough.md`, `_common/SUBAGENT.md`, `_common/MULTI_ENGINE_RECIPE.md` |
 | Council | `council` | | **Persona Council mode (v4 fold-in)**: parallel multi-persona evaluation against a machine-readable Persona Contract (situation/goal/fear/comprehension/success/disqualification). Strict "no subjective opinion" output discipline — behavior trace + disqualification trigger + correction proposal only. Persona weights: Primary (must-pass) / Secondary (must-not-degrade) / Non-target (don't optimize) / Risk (block on damage). Required for `nexus growth-acceptance` Phase 0 persona evaluation. Cost-capped per Org Tier (Solo: skip, SMB: max 3 personas, Enterprise: max 9). | (inline below) + `reference/cognitive-persona-model.md` |
+| Synthetic Demand | `demand` | | Feature request, unmet need, challenge, roleplay, JTBD, 5 Whys, Opportunity Tree, or multi-engine demand; select `request|need|challenge|roleplay|jtbd|5whys|opportunity|multi` mode | `reference/demand-subcommand-behavior.md`, matching `reference/demand-*.md` |
 
 ## Subcommand Dispatch
 
@@ -161,6 +169,8 @@ Parse the first token of user input.
 - Otherwise → default Recipe (`walkthrough` = Walkthrough). Apply normal PRE-SCAN → MASK ON → WALK → SPEAK → ANALYZE → PRESENT workflow.
 
 Per-Recipe behavior notes and each Recipe's `VERIFY` gate -> `reference/process-workflows.md` § Per-Recipe Behavior. Read it once a subcommand matches. Every gate applies **in addition to** Echo's universal output discipline: persona-grounded (never dev-eval), emotion-scored per touchpoint, calibration-tagged (`[hypothesis]` until real-user confirmation), dark-pattern flagged.
+
+`demand` uses `FRAME → EMBODY → GENERATE → CHALLENGE → CALIBRATE → HANDOFF`. Every claim remains `synthetic: true`; `request|need|challenge|roleplay` read `demand-mode-playbooks.md`, `jtbd` reads `demand-jtbd-switch-interview.md`, `5whys` reads `demand-5whys-root-cause.md`, `opportunity` reads `demand-opportunity-solution-tree.md`, and `multi` reads `tri-engine-demand.md`. Field/Voice validation is the evidence gate.
 
 Load-bearing caps that must hold regardless of Recipe: ≤1-4 tasks per session, `aloud` n≥5, `council` Org-Tier persona cap (Solo skip / SMB ≤3 / Enterprise ≤9), `heuristic` 3-5 evaluators × two independent passes, `sus` mean + 90% CI (never a bare average), `multi` dual-engine baseline with dark-pattern auto-promotion at ≥2-engine concurrence.
 
@@ -178,6 +188,7 @@ Load-bearing caps that must hold regardless of Recipe: ≤1-4 tasks per session,
 | `predictive`, `pre-launch` | Predictive friction detection | Risk signal report | `reference/ux-frameworks.md` |
 | `multi-engine`, `tri-engine walkthrough`, `parallel persona walkthrough`, `cross-engine UX`, `multi`, `persona × engine matrix` | Tri-engine cognitive walkthrough | Persona × engine × step matrix report with cross-persona-universal findings | `reference/tri-engine-walkthrough.md` |
 | `council`, `persona council`, `persona contract`, `multi-persona evaluation`, `disqualification check`, `persona weight matrix` | Persona Council evaluation (machine-readable Contract + no-opinion + behavior trace + disqualification triggers) | Council evaluation report per persona with PASS/FAIL + behavior trace + correction proposals | (inline in Subcommand Dispatch) + `reference/cognitive-persona-model.md` |
+| `feature request`, `unmet need`, `synthetic demand`, `switch interview`, `JTBD`, `5 whys`, `opportunity solution tree` | Synthetic demand generation | Tagged demand report + validation handoff | `reference/demand-subcommand-behavior.md` |
 
 ## Output Requirements
 
@@ -202,7 +213,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 - **vs Palette**: Palette = UX design fixes; Echo = friction discovery and emotion scoring.
 - **vs Voice**: Voice = real user feedback; Echo = simulated persona walkthroughs.
 - **vs Pulse**: Pulse = quantitative metrics; Echo = qualitative persona-based analysis.
-- **vs Plea**: Plea = unmet demand discovery ("what's missing?"); Echo = existing flow evaluation ("how does this feel?"). See `_common/PERSONA_CLUSTER_GUIDE.md`.
+- **`walkthrough` vs `demand`**: `walkthrough` evaluates an existing flow ("how does this feel?"); `demand` generates tagged hypotheses about what is missing. Neither substitutes for real-user evidence from Field/Voice.
 
 ## Multi-Engine Mode
 
@@ -242,6 +253,13 @@ Full algorithm, JSON schema, CLUSTER identity rules, GROUND checks, prompt skele
 | `reference/think-aloud-protocol.md` | Moderating/coding a think-aloud session: prompt discipline, intervention rules, transcript categories. |
 | `reference/tri-engine-walkthrough.md` | `multi` Recipe — fan-out, Pattern H scoring, JSON schema, subagent prompt skeleton, matrix synthesis, degraded mode. |
 | `reference/council-mode.md` | `council` Recipe — Persona Contract schema, output schema, Org-Tier cost cap, engine diversity for Tier-S/A, confidence discipline, always/never recap. |
+| `reference/demand-subcommand-behavior.md` | Selecting and calibrating `demand` modes and their distinct completion gates. |
+| `reference/demand-patterns.md` | Generating feature requests, latent needs, assumption challenges, and synthetic persona demand patterns. |
+| `reference/demand-jtbd-switch-interview.md` | Producing synthetic Switch interviews, four forces, and Job Maps for later Field validation. |
+| `reference/demand-5whys-root-cause.md` | Tracing one solution-shaped request to a root unmet need without bug-RCA confusion. |
+| `reference/demand-opportunity-solution-tree.md` | Building outcome-to-experiment trees and handing chosen branches to Spark/Experiment. |
+| `reference/demand-handoffs.md` | Sending calibrated demand hypotheses to Spark, Rank, Scribe, Field, Voice, or Experiment. |
+| `reference/tri-engine-demand.md` | Running multi-engine demand generation with concurrence/divergence preservation. |
 | `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — engine dispatch, loose prompts, fan-out mechanics, fallbacks. Read before authoring `multi` subagent prompts. |
 | `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill protocol — Pattern D/C/H selection, SCOPE/PREFLIGHT/FAN-OUT/NORMALIZE/CLUSTER, attribution tags. Echo applies Pattern H. |
 | `_common/UX_TRENDS_2026.md` | 2025-2026 evidence — NN/g IA studies, WCAG 2.2 motion a11y, agentic UX failure modes, dark-mode/hamburger anti-patterns. Read §2, §1. |

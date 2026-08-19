@@ -11,7 +11,7 @@ Purpose: Design and audit `scripts/` directory layout — language selection (sh
 - **Gear (elsewhere)**: CI/CD pipeline config and `npm run`/`make` task graph. Grove `scripts` decides directory; Gear decides when CI calls them.
 - **Scaffold (elsewhere)**: cloud IaC. `infra/` provisioning scripts (Terraform, Pulumi) belong to Scaffold, not Grove `scripts`.
 - **Hearth (elsewhere)**: personal dotfiles and shell config. Grove `scripts` is repo-shared; Hearth is per-developer.
-- **Nest (elsewhere)**: LLM-context ordering of `scripts/`. Grove ships layout; Nest tunes retrieval.
+- **Grove[llm] (elsewhere)**: LLM-context ordering of `scripts/`. Grove ships layout; Grove[llm] tunes retrieval.
 
 ## Workflow
 
@@ -124,6 +124,6 @@ Set executable bit: `chmod +x scripts/**/*.sh scripts/**/*.ts`. Commit it: `git 
 - **To Gear**: package.json scripts that CI calls (`build`, `test`, `lint`) become Gear's pipeline inputs; CI YAML references `scripts/ci/*` after Grove locks paths.
 - **To Scaffold**: anything in `scripts/` that provisions cloud resources moves to `infra/` and becomes Scaffold's responsibility.
 - **To Hearth**: per-developer environment helpers (shell aliases, prompt configs) go to dotfiles, not repo `scripts/`.
-- **To Nest**: once layout is stable, Nest reorders for LLM-context retrieval (README front-loading, category headers).
+- **To Grove[llm]**: once layout is stable, Grove[llm] reorders for LLM-context retrieval (README front-loading, category headers).
 - **To Sigil**: Grove publishes the scripts layout; Sigil generates project-tuned skills referencing exact script paths.
 - **To Guardian**: when reorganizing scripts in an existing repo, Guardian slices PRs (≤ 50 files, CI-green per commit) and updates CI references in lockstep.

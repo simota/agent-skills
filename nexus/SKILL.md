@@ -1,6 +1,6 @@
 ---
 name: nexus
-description: "Orchestrating multi-specialist task chains: classifies intent, selects and executes the minimum viable chain, aggregates results, and verifies acceptance criteria. For multi-domain tasks."
+description: "Orchestrating multi-specialist task chains and scope-adaptive product delivery: classifies intent, selects and executes the minimum viable chain, aggregates results, and verifies acceptance criteria. For multi-domain tasks, build-first delivery, and product lifecycle execution."
 ---
 
 <!--
@@ -12,13 +12,15 @@ CAPABILITIES_SUMMARY:
 - error_recovery: Multi-level guardrails (L1-L4), retry, rollback, escalation
 - proactive_mode: Scan project state and recommend next work when invoked without a task
 - routing_learning: Evidence-based adaptation with CES scoring and safety rules
+- build_first_delivery: Deliver new products through scope-adaptive, minimum-chain execution
+- anti_stall_delivery: Preserve momentum through bounded recovery, checkpoints, and explicit exit criteria
 
 COLLABORATION_PATTERNS:
-- Inbound: task requests (User), epic-chain delegation (Titan), decomposed steps (Sherpa), parallel session coordination (Rally), new-agent/routing updates (Architect), validated routing knowledge (Lore), quality feedback (Judge), evolution signals (Darwin)
+- Inbound: task requests (User), decomposed steps (Sherpa), parallel session coordination (Rally), new-agent/routing updates (Architect), validated routing knowledge (Lore), quality feedback (Judge), evolution signals (Darwin)
 - Outbound: delegation via `_AGENT_CONTEXT`, step completion via `_STEP_COMPLETE`, delivery via `NEXUS_COMPLETE`
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Titan, Sherpa, Rally, Architect, Lore, Judge, Darwin, User
+- INPUT: Sherpa, Rally, Architect, Lore, Judge, Darwin, User
 - OUTPUT: all specialist agents (delegation), User (NEXUS_COMPLETE)
 
 PROJECT_AFFINITY: Game(H) SaaS(H) E-commerce(H) Dashboard(H) Marketing(H)
@@ -30,9 +32,9 @@ Coordinate specialist agents, design the minimum viable chain, execute safely. `
 
 ## Trigger Guidance
 
-**Use Nexus for:** a single task that crosses specialist boundaries and needs chain classification, selection, execution, aggregation, and verification; proactive project scan (`/Nexus` no-args); hub-spoke execution across independent tracks.
+**Use Nexus for:** a single task that crosses specialist boundaries and needs chain classification, selection, execution, aggregation, and verification; scope-adaptive product delivery (`deliver`); proactive project scan (`/Nexus` no-args); hub-spoke execution across independent tracks.
 
-**Direct-route instead of wrapping in Nexus:** clear single-owner work → that specialist; decomposition only → `Sherpa`; parallel-session management → `Rally`; full product lifecycle → `Titan`; ecosystem evolution → `Darwin`. Nexus may invoke these skills as chain steps, but does not absorb their responsibilities.
+**Direct-route instead of wrapping in Nexus:** clear single-owner work → that specialist; decomposition only → `Sherpa`; parallel-session management → `Rally`; ecosystem evolution → `Darwin`. Use `deliver` when the request is a product/MVP build whose chain must adapt to scope; use `feature` for one bounded feature and `apex` for a high-investment discovery-to-ship run.
 
 ## Core Contract
 
@@ -127,7 +129,7 @@ Families disambiguate siblings by one axis; ambiguous anchors (`improve`/`polish
 **Full table** → **`reference/recipes-index.md`** (read on subcommand match, or when scanning). The list below is the dispatch allowlist only — a token not on it is not a subcommand.
 
 ```
-bug · feature · security · refactor · optimize · kaizen · anneal · restyle · converge · apex
+bug · feature · deliver · security · refactor · optimize · kaizen · anneal · restyle · converge · apex
 charter · enact · layer · goal · gedanken · delve · cartograph · chronicle · verity · abide · spec · essential · killer · trim
 acceptance · summit · podium · newsroom · wish · eureka · runway · hallmark · rebrand · crucible · silhouette
 lattice · chorus · assay · migrate · transmute · clone · fuse · graft · package · pack · quell · burnish · whet
@@ -209,7 +211,7 @@ Verification results are evidence-bound; unexercised paths are labeled `UNVERIFI
 
 ## Collaboration
 
-Handoff directions: agent → Nexus `NEXUS_ROUTING` · Nexus → agent `_AGENT_CONTEXT` · agent → Nexus `_STEP_COMPLETE` · Nexus → user `NEXUS_COMPLETE` · Architect → Nexus `ARCHITECT_TO_NEXUS_HANDOFF` · Nexus → Lore `NEXUS_TO_LORE_HANDOFF` · Judge → Nexus `QUALITY_FEEDBACK` · Nexus → Nexus `ROUTING_ADAPTATION_LOG`. Titan and Darwin also feed back. Schemas → `reference/output-formats.md`.
+Handoff directions: agent → Nexus `NEXUS_ROUTING` · Nexus → agent `_AGENT_CONTEXT` · agent → Nexus `_STEP_COMPLETE` · Nexus → user `NEXUS_COMPLETE` · Architect → Nexus `ARCHITECT_TO_NEXUS_HANDOFF` · Nexus → Lore `NEXUS_TO_LORE_HANDOFF` · Judge → Nexus `QUALITY_FEEDBACK` · Nexus → Nexus `ROUTING_ADAPTATION_LOG`. Darwin also feeds back. Schemas → `reference/output-formats.md`.
 
 ## Reference Map
 
@@ -219,6 +221,7 @@ Read only files matching the current decision point. Anything indexed by the Wor
 |------|-----------|
 | **`reference/reference-index.md`** | Full Read-When index for references not listed below |
 | `reference/recipes-index.md` | Complete Recipe table; matched subcommand chain template + `Read` reference |
+| `reference/deliver-recipe.md` | Scope-adaptive product/MVP delivery, chain sizing, anti-stall recovery, and Delivery Report |
 | `reference/recipe-contract.md` | Recipe ownership, admission gate, authoring contract, and cross-index wiring |
 | `reference/<recipe>-recipe.md` | Per-Recipe phase contracts, chain templates, cost profiles; filename = its `Read` column in `recipes-index.md` |
 | `reference/recipes-detail.md` · `reference/inline-recipes.md` | Recipe Families axis prose · contracts for `kaizen`/`essential`/`killer`/`trim` |

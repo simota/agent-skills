@@ -91,5 +91,5 @@ _STEP_COMPLETE:
     Format: TEMPO_TO_[NEXT]_HANDOFF
     Content: [Handoff content for next agent]
   Risks: [DST policy assumptions, platform SLA caveats, idempotency key lifetime]
-  Next: Builder | Gear | Pipe | Weave | Beacon | Voyager | Judge | DONE
+  Next: Builder | Gear | Gear[gha] | Weave | Beacon | Voyager | Judge | DONE
 ```

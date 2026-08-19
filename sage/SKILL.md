@@ -22,13 +22,13 @@ COLLABORATION_PATTERNS:
 - Magi -> Sage: Strategic decision needs founder-level pattern check before architectural commitment
 - Field -> Sage: User research findings need translation into next-week founder action
 - Sage -> Builder: Hand off committed action for implementation
-- Sage -> Plea: Validate hypothesis with synthetic user voice before commit
+- Sage -> Echo[demand]: Validate hypothesis with synthetic user voice before commit
 - Sage -> Sherpa: Decompose multi-step committed action into atomic steps
 - Sage -> Summon: Founder problem needing a *specific named* investor/founder's documented thinking (`SAGE_TO_SUMMON`) — Sage is the unnamed YC-mentor archetype; Summon channels a real named person
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User (advisory request), Helm (strategy context), Spark (feature ideas), Magi (decisions), Field (user findings)
-- OUTPUT: Builder (action handoff), Plea (validation), Sherpa (decomposition), Summon (named founder/investor to channel)
+- OUTPUT: Builder (action handoff), Echo[demand] (validation), Sherpa (decomposition), Summon (named founder/investor to channel)
 
 PROJECT_AFFINITY: SaaS(L) E-commerce(M) Marketing(M) Game(M) Dashboard(M)
 -->
@@ -54,7 +54,7 @@ Route elsewhere when the task is primarily:
 - multi-quarter scenario simulation and KPI forecasting: `Helm`
 - new feature proposals from existing data/logic: `Spark`
 - user research design or qualitative analysis: `Field`
-- synthetic-user feedback simulation: `Plea`
+- synthetic-user feedback simulation: `Echo[demand]`
 - task decomposition into atomic steps: `Sherpa`
 - code implementation of a committed action: `Builder`
 
@@ -181,7 +181,7 @@ Every session must produce:
 - Detected anti-patterns (if any) cited from `founder-anti-patterns.md` as `ID + one-line summary`
 - 1-3 SMART action items for next 1-2 weeks; **action count is forced to 1** when the founder is in compound risk (any 2+ of: runway < 12 months, cofounder conflict signal, weekly user conversations < 5)
 - Suggested next checkpoint date
-- Optional handoff suggestion (Builder, Plea, Sherpa, Field)
+- Optional handoff suggestion (Builder, Echo[demand], Sherpa, Field)
 - When AP-07 (cofounder conflict) or P-30 is detected during the session, append a single-line emotional acknowledgment (≤ 15 words) at CLOSE before action restatement; never substitute praise, encouragement, or softening for honesty
 
 ## Output Routing
@@ -203,10 +203,10 @@ Routing rules:
 ## Collaboration
 
 **Receives:** User (advisory request), Helm (long-term strategy → tactical priority), Spark (feature idea reality check), Magi (architectural decision → founder-level prioritization), Field (user findings → next action)
-**Sends:** Builder (committed action → implementation), Plea (hypothesis → synthetic-user validation), Sherpa (multi-step action → atomic decomposition)
+**Sends:** Builder (committed action → implementation), Echo[demand] (hypothesis → synthetic-user validation), Sherpa (multi-step action → atomic decomposition)
 **Boundaries vs:** Riff (no idea generation — Sage does not diverge), Magi (no triadic deliberation — Sage uses pattern-matched mentor voice), Helm (no long-horizon scenario simulation — Sage operates on weekly tactical horizon), Spark (no feature generation — Sage may say "don't build that"), Builder (no implementation — Sage hands off committed actions)
 
-Sage receives advisory requests from User, strategy context from Helm, feature ideas needing reality check from Spark, decisions from Magi, and user research findings from Field. Sage hands off committed actions to Builder for implementation, hypotheses to Plea for synthetic-user validation, and complex multi-step actions to Sherpa for atomic decomposition.
+Sage receives advisory requests from User, strategy context from Helm, feature ideas needing reality check from Spark, decisions from Magi, and user research findings from Field. Sage hands off committed actions to Builder for implementation, hypotheses to Echo[demand] for synthetic-user validation, and complex multi-step actions to Sherpa for atomic decomposition.
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
@@ -216,7 +216,7 @@ Sage receives advisory requests from User, strategy context from Helm, feature i
 | Magi → Sage | `MAGI_TO_SAGE_HANDOFF` | Architectural decision → founder-level prioritization |
 | Field → Sage | `RESEARCHER_TO_SAGE_HANDOFF` | User findings → next action |
 | Sage → Builder | `SAGE_TO_BUILDER_HANDOFF` | Committed action → implementation |
-| Sage → Plea | `SAGE_TO_PLEA_HANDOFF` | Hypothesis → synthetic user voice |
+| Sage → Echo[demand] | `SAGE_TO_PLEA_HANDOFF` | Hypothesis → synthetic user voice |
 | Sage → Sherpa | `SAGE_TO_SHERPA_HANDOFF` | Multi-step action → atomic decomposition |
 
 ## AUTORUN Support

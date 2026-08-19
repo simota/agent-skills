@@ -122,7 +122,7 @@ Engine routing follows summit principles: **Codex owns code-gen** (Artisan / Flo
 - **vs `marquee`** — marquee is the acquisition-side sibling: a **conversion-driven landing page** with CRO/SEO/Trust as first-class rubric dims and machine oracles (Lighthouse/CWV). Runway = **in-product flagship surface** where conversion is not the organizing dimension. LP ask → marquee.
 - **vs `wish`** — wish is deliverable-agnostic with a Scarcity Gate; runway is design-specialized with **no Scarcity Gate** (flagship-surface maximization is a repeatable, legitimate need — intentional difference, stated to prevent drift). A wish whose deliverable is a flagship UI surface may route its generator through runway's tournament.
 - **vs `kaizen`** — kaizen improves one feature against a quantified metric target; runway maximizes design quality against a ceiling rubric.
-- **vs `vision` / `atelier` / `bazaar` skills** — vision direct = direction only, no execution; atelier = full design-to-impl pipeline (prototypes/assets/persistent design system) without tournament or ceiling semantics; bazaar = the LP studio pipeline (marquee's substrate, not runway's).
+- **vs `vision` / `atelier` / `funnel[premium]` skills** — vision direct = direction only, no execution; atelier = full design-to-impl pipeline (prototypes/assets/persistent design system) without tournament or ceiling semantics; bazaar = the LP studio pipeline (marquee's substrate, not runway's).
 
 ### Decision Tree
 

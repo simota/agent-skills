@@ -243,7 +243,7 @@ The three subagents return JSON; Flux main context handles NORMALIZE through PRE
 - `_common/MULTI_ENGINE_RECIPE.md` — Pattern D (Divergence-Primary) base protocol
 - `_common/SUBAGENT.md §MULTI_ENGINE` — base protocol for engine dispatch and loose prompts
 - `spark/reference/tri-engine-proposal.md` — canonical Pattern D implementation (proposals); CLUSTER/SCORE/SYNTHESIZE differences noted above
-- `plea/reference/tri-engine-demand.md` — Pattern D with calibration tags (Flux does not calibrate against ground-truth; we calibrate against ASN test)
+- `echo/reference/tri-engine-demand.md` — Pattern D with calibration tags (Flux does not calibrate against ground-truth; we calibrate against ASN test)
 - `flux/reference/thinking-frameworks.md` — frameworks applied during SYNTHESIZE (not at FAN-OUT)
 - `flux/reference/anti-patterns.md` — synonym-substitution, framework name-dropping, assumption-padding guards used at GROUND
 - `flux/reference/output-formats.md` — Portfolio document template (Assumption Map, Insight Matrix, Blind Spot Report)

@@ -337,7 +337,7 @@ _STEP_COMPLETE:
 | Judge → Nexus | `QUALITY_FEEDBACK` | Chain quality assessment |
 | Nexus → Nexus | `ROUTING_ADAPTATION_LOG` | Self-improvement log |
 
-External feedback sources: Titan (epic-chain results), Judge (quality), Architect (new agents), Lore (validated routing knowledge), Darwin (ecosystem evolution signals).
+External feedback sources: Nexus[deliver] (epic-chain results), Judge (quality), Architect (new agents), Lore (validated routing knowledge), Darwin (ecosystem evolution signals).
 
 
 

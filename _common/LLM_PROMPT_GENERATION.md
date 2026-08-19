@@ -33,7 +33,7 @@ Without this pattern, the user manually copies file paths, evidence, and constra
 
 | Agent | Prompt scope | Default verb family |
 |-------|--------------|---------------------|
-| `plea` | User demand → next agent | `PROPOSE`, `DESIGN`, `DRAFT-SPEC`, `PROTOTYPE`, `REFINE`, `ANALYZE` |
+| `echo[demand]` | User demand → next agent | `PROPOSE`, `DESIGN`, `DRAFT-SPEC`, `PROTOTYPE`, `REFINE`, `ANALYZE` |
 | `scout` | Bug fix | `FIX`, `FIX-WITH-TEST`, `MITIGATE`, `INVESTIGATE-FURTHER`, `REFACTOR-FIX` |
 | `trail` | Regression remediation | `FIX-REGRESSION`, `REVERT`, `REVERT-WITH-FORWARD-FIX`, `INVESTIGATE-FURTHER`, `REFACTOR-FIX` |
 | `sentinel` | Security remediation (when handed off, not when shipped inline) | `SECURE-FIX`, `HARDEN`, `MITIGATE`, `BREAKING-FIX`, `AUTH-FIX`, `REVOKE-AND-ROTATE`, `INVESTIGATE-FURTHER` |
@@ -61,7 +61,7 @@ These apply to every agent's prompt block. Domain-specific elaboration belongs i
 6. **State confidence at the top** so the receiving LLM calibrates trust. Use the unified scale from `_common/INVESTIGATION_ESCALATION.md` when the agent participates in the investigation cluster (HIGH ≥0.8, MEDIUM 0.5–0.79, LOW <0.5).
 7. **Wrap the prompt in a fenced code block** (```` ```text ````) so the user can copy it cleanly without markdown rendering artifacts.
 8. **Self-contained** — the prompt must work without the rest of the agent's report. Assume the receiving LLM sees only the prompt.
-9. **One verb, one finding** — do not bundle multiple findings into one prompt. Multi-finding handoffs require multiple prompts (or an orchestration prompt at the report level, plea-style).
+9. **One verb, one finding** — do not bundle multiple findings into one prompt. Multi-finding handoffs require multiple prompts (or an orchestration prompt at the report level, demand-simulation-style).
 10. **Declare the action verb at the top of `# Your task`** — exactly one verb per prompt. The verb tells the receiving LLM what shape of output to produce.
 
 ---

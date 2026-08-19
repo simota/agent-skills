@@ -164,7 +164,7 @@ If a slice is XL, it must be broken down further.
 
 ## Interaction with Other Agents
 
-- **titan** may execute slice-first pattern for S/M scopes.
+- **Nexus `deliver`** may execute slice-first pattern for S/M scopes.
 - **atomic** breaks each slice into ≤15-min steps.
 - **walking-skeleton** is the first slice of a greenfield system.
 - **launch** gates slice deployment.

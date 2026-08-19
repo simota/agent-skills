@@ -76,7 +76,7 @@ atelier receives direction from Vision and briefs from the user. atelier sends e
 |-------|--------------|----------|
 | Vision | Pipeline execution of a decided direction | Direction decision, aesthetic choice |
 | Nexus | Design-axis pipeline with persisted design system | Generic multi-domain orchestration beyond design |
-| Titan | Design-to-implementation bundle delivery | Non-design product lifecycle build-first delivery |
+| Nexus[deliver] | Design-to-implementation bundle delivery | Non-design product lifecycle build-first delivery |
 | Frame | Orchestration of when and why to extract | Figma MCP extraction mechanics |
 | Muse | When to normalize tokens and into what bundle | Token lifecycle, DTCG compliance |
 | Forge | When a prototype belongs in the bundle | Prototype build mechanics |

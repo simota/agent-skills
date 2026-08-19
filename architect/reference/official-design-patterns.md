@@ -362,7 +362,7 @@ Orchestrator ← [result synthesis]
 ```
 
 **When to use**: Task decomposition cannot be predicted in advance and requires runtime judgment.
-**Skill design implication**: Nexus Hub-and-Spoke model and Titan's 9-phase lifecycle exemplify this pattern. Ensure hub compatibility via the `Nexus Compatibility` section.
+**Skill design implication**: Nexus Hub-and-Spoke and its scope-adaptive `deliver` Recipe exemplify this pattern. Ensure hub compatibility via the `Nexus Compatibility` section.
 
 ### Pattern E: Evaluator-Optimizer
 
@@ -397,7 +397,7 @@ while (!done) {
 | A: Prompt Chaining | P1: Sequential Workflow | P1 is a concrete impl of A | Orbit (runner scripts) |
 | B: Routing | P4: Context-Aware Tool Selection | P4 is B specialized for tool selection | Nexus (Output Routing) |
 | C: Parallelization | — (new) | No existing pattern | Rally (Sectioning) |
-| D: Orchestrator-Worker | P2: Multi-MCP Coordination | P2 is D specialized for MCP | Nexus, Titan |
+| D: Orchestrator-Worker | P2: Multi-MCP Coordination | P2 is D specialized for MCP | Nexus (`deliver` included) |
 | E: Evaluator-Optimizer | P3: Iterative Refinement | P3 is a self-contained version of E | Judge↔Builder loop |
 | F: Autonomous Agent | P5: Domain-Specific Intelligence | P5 adds domain knowledge to F | Scout, Vector |
 

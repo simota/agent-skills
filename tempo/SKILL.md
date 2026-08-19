@@ -25,11 +25,11 @@ COLLABORATION_PATTERNS:
 - Pattern C: Timezone-Audit (User -> Tempo[audit] -> Judge -> Builder)
 - Pattern D: Backfill-Recovery (Triage -> Tempo[replay plan] -> Builder -> Beacon)
 - Pattern E: Schedule-Observability (Tempo -> Beacon[SLO/alert spec] -> Builder)
-- Pattern F: CI-Cron-Optimization (Tempo -> Gear[GHA cron] -> Pipe)
+- Pattern F: CI-Cron-Optimization (Tempo -> Gear[GHA cron] -> Gear[gha])
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User, Scribe, Triage, Scout, Nexus
-- OUTPUT: Builder, Gear, Weave, Beacon, Voyager, Judge, Pipe
+- OUTPUT: Builder, Gear, Weave, Beacon, Voyager, Judge, Gear[gha]
 
 PROJECT_AFFINITY: SaaS(H) Batch(H) Data(H) E-commerce(M) IoT(M) FinTech(H) Gaming(M) Static(L)
 -->
@@ -46,7 +46,7 @@ Scheduling and time-aware logic architect — designs cron schedules, timezone/D
 
 Use Tempo when the task needs: a cron expression designed, reviewed, or migrated across platforms; DST/timezone correctness review of a scheduling path; retry/backoff policy design (exponential + jitter, budget, circuit breaker, DLQ); an idempotency key strategy for at-least-once workloads; a backfill / catchup / replay plan; business-calendar logic (JP holidays, banking days, fiscal year, business hours); rate-limiting policy selection; next-fire prediction, overlap detection, or misfire policy; platform-specific scheduler configuration; schedule observability targets handed to Beacon; or temporal test scenario enumeration handed to Voyager.
 
-Route elsewhere when the task is primarily: generic state machines or workflow orchestration without temporal focus (`Weave`); release or feature-flag rollout timing (`Launch`); SLO/dashboard construction itself (`Beacon`); CI/CD pipeline implementation beyond the schedule trigger (`Gear` maintenance, `Pipe` new GHA design); general feature implementation (`Builder`); incident triage for a missed schedule (`Triage` first, then Tempo for replay); decomposition of a large temporal project (`Sherpa` first); or autonomous agent loop scheduling (`Orbit`).
+Route elsewhere when the task is primarily: generic state machines or workflow orchestration without temporal focus (`Weave`); release or feature-flag rollout timing (`Launch`); SLO/dashboard construction itself (`Beacon`); CI/CD pipeline implementation beyond the schedule trigger (`Gear` maintenance, `Gear[gha]` new GHA design); general feature implementation (`Builder`); incident triage for a missed schedule (`Triage` first, then Tempo for replay); decomposition of a large temporal project (`Sherpa` first); or autonomous agent loop scheduling (`Orbit`).
 
 ## Core Contract
 
@@ -193,7 +193,7 @@ Receives/Sends are enumerated in CAPABILITIES_SUMMARY (`BIDIRECTIONAL_PARTNERS`)
 
 ### Collaboration Patterns
 
-**A** Schedule-Design-to-Impl (Tempo -> Builder -> Gear) · **B** Retry-Hardening (Tempo -> Weave -> Builder) · **C** Timezone-Audit (Tempo[audit] -> Judge -> Builder) · **D** Backfill-Recovery (Triage -> Tempo[replay] -> Builder -> Beacon) · **E** Schedule-Observability (Tempo -> Beacon -> Builder) · **F** CI-Cron-Optimization (Tempo -> Gear/Pipe). Flows and purposes -> `reference/handoffs.md`.
+**A** Schedule-Design-to-Impl (Tempo -> Builder -> Gear) · **B** Retry-Hardening (Tempo -> Weave -> Builder) · **C** Timezone-Audit (Tempo[audit] -> Judge -> Builder) · **D** Backfill-Recovery (Triage -> Tempo[replay] -> Builder -> Beacon) · **E** Schedule-Observability (Tempo -> Beacon -> Builder) · **F** CI-Cron-Optimization (Tempo -> Gear/Gear[gha]). Flows and purposes -> `reference/handoffs.md`.
 
 ### Handoff Shape (one-liners)
 
@@ -212,7 +212,7 @@ Receives/Sends are enumerated in CAPABILITIES_SUMMARY (`BIDIRECTIONAL_PARTNERS`)
 | `reference/retry-strategies.md` | Designing retry/backoff, circuit breaker, DLQ, idempotency key, rate limiting |
 | `reference/async-boundaries.md` | Deadline propagation (budget-chain math, partial-progress) and time-window semantics (watermark, allowed-lateness, joins) |
 | `reference/idempotent-keys.md` | Key design, dedup window (request vs storage TTL), effectively-once semantics |
-| `reference/handoffs.md` | Packaging deliverables for Builder, Gear, Weave, Beacon, Voyager, Judge, or Pipe |
+| `reference/handoffs.md` | Packaging deliverables for Builder, Gear, Weave, Beacon, Voyager, Judge, or Gear[gha] |
 | `reference/interaction-schemas.md` | INTERACTION_TRIGGERS question schemas + AUTORUN `_STEP_COMPLETE.Output` schema |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the spec, eager reads at ANALYZE, thinking depth at VERIFY. Critical: P3, P5 |
 | `_common/BOUNDARIES.md` | Disambiguating Tempo vs Weave / Launch / Beacon / Gear / Builder |

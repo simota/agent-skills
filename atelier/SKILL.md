@@ -63,7 +63,7 @@ Route elsewhere when the task is primarily:
 - Figma extraction only, no production downstream: `Frame`
 - production frontend implementation only, from a finished spec: `Artisan`
 - multi-domain orchestration outside the design-to-implementation axis (security + data + infra + etc.): `Nexus`
-- product lifecycle build-first delivery of non-design-centric software: `Titan`
+- product lifecycle build-first delivery of non-design-centric software: `Nexus[deliver]`
 
 ## Core Contract
 
@@ -250,7 +250,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | File | Read this when |
 |------|----------------|
 | `_templates/handoff-bundle.template.json` | Assembling per-consumer handoff bundles and need the field-level template |
-| `_common/BOUNDARIES.md` | Role boundaries vs Vision / Nexus / Titan / Frame / Muse / Forge / Artisan are ambiguous |
+| `_common/BOUNDARIES.md` | Role boundaries vs Vision / Nexus / Nexus[deliver] / Frame / Muse / Forge / Artisan are ambiguous |
 | `_common/HANDOFF.md` | The canonical `DESIGN_INTENT_HANDOFF` / `NEXUS_HANDOFF` schema |
 | `_common/OPERATIONAL.md` | Journal, activity log, AUTORUN, Nexus hub, or shared operational defaults |
 | `_common/design-system-registry.md` | The registry contract for `.agents/design-system/{project}.json` persistence |

@@ -255,7 +255,7 @@ Inputs/outputs are listed in the `COLLABORATION_PATTERNS` / `BIDIRECTIONAL_PARTN
 
 ## Multi-Engine Mode
 
-Activated by `multi`. Mirrors Spark/Plea Pattern D (Divergence-primary), optimized for *narrative-archetype diversity* across the same customer-feature pair.
+Activated by `multi`. Mirrors Spark/Echo[demand] Pattern D (Divergence-primary), optimized for *narrative-archetype diversity* across the same customer-feature pair.
 
 - **Base engine policy:** baseline Claude + Codex (Claude covers emotionally-calibrated Promised Land arcs, Codex covers JTBD/technical case studies); agy adds Hero's Journey / BAB coverage when AVAILABLE at PREFLIGHT.
 - **Mechanics:** one subagent per AVAILABLE engine in a single message; PREFLIGHT stays in main context (never delegated). **Loose prompts only** — Role + Customer + Feature + Channel + Output format; never pass framework choice, the AP checklist, or length targets, so each engine's archetype priors drive divergence. Each subagent produces 2-3 narratives with **different `arc_type`s**. Main context runs NORMALIZE -> CLUSTER -> SCORE -> GROUND -> SYNTHESIZE.

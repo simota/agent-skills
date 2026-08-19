@@ -161,7 +161,7 @@ Phase 0   FRAMING GATE ★Confirm-before-launch (always — declaration only, no
           → known solution to a known problem → recommend feature / spark / graft (override journaled)
    ▼
 Phase 1   CONTRADICTION CRYSTALLIZATION ★contract-level dialogue (plan-tier)
-          Plea[who suffers, and what they do today] ‖ Flux[what is assumed to be fixed]
+          Echo[demand: who suffers, and what they do today] ‖ Flux[what is assumed to be fixed]
           → name the CONTRADICTION explicitly: "<better X> requires <worse Y>" — the trade-off the
             domain accepts as a law. No contradiction nameable → this is a task, not an invention;
             say so and route out.
@@ -190,7 +190,7 @@ Phase 2   IDEATION DIVERGENCE ‖ six STRUCTURALLY-DIFFERENT generators, cross-e
                                        / economics / user job upward
           ⑤ scaling-law extrapolation— what is newly possible at 10× cheaper/faster/more abundant
                                        that was uneconomic when the incumbents were designed?
-          ⑥ latent-need inversion    — Plea: the workaround users built themselves IS the spec
+          ⑥ latent-need inversion    — Echo[demand]: the workaround users built themselves IS the spec
           → candidate mechanisms (typically 8-15 raw, deduplicated to 4-8 distinct mechanisms)
           ‖ BLIND ORDINARY-MOVE PANEL (3 agents) — launched here, consumed at Phase 3. Given the
             contradiction + the frozen ledger ONLY; never the candidates, never each other.
@@ -236,7 +236,7 @@ Phase 3   NOVELTY GATE — TWO tests against the frozen Prior-Art Ledger (plan-t
 Phase 4   TETRAD GATE ‖ four independent axes (survive all four, or die named)
           NOVELTY        Attest/Judge — re-verify the Phase 3 delta AND its OBVIOUS verdict
                          adversarially, not on trust
-          VALUE          Plea ‖ Compete ‖ Rank — does dissolving THIS contradiction matter, to whom,
+          VALUE          Echo[demand] ‖ Compete ‖ Rank — does dissolving THIS contradiction matter, to whom,
                          and enough to change behavior? (the failure archaeology's "nobody adopted
                          it" reasons are re-run as tests here)
           FEASIBILITY    Atlas ‖ Forge — reduction-to-practice SKETCH: buildable with available
@@ -438,7 +438,7 @@ Machine-consumable, mirroring the Spec Handoff Packet's shape so Phase 9 consume
 | Field | Content | Consumed by |
 |-------|---------|-------------|
 | `mechanism` | the Disclosure Package's mechanism statement | Phase 9 problem statement + direction — **pre-settled, not re-elicited** |
-| `contradiction` + `binds_whom` | the Phase 1 Invention Contract | Phase 9 FRAME validation (replaces the Plea/Socratic pass) |
+| `contradiction` + `binds_whom` | the Phase 1 Invention Contract | Phase 9 FRAME validation (replaces the Echo[demand]/Socratic pass) |
 | `novelty_delta` + `nearest_prior_art` (cited) | the load-bearing difference and what it differs *from* | Phase 9 **must-have AC**; Phase 10 Novelty Invariant; Phase 11 regression oracle |
 | `falsification_criterion` + `spike_result` | what would have killed the mechanism, and that it did not | Phase 9 AC verbatim; Phase 10 verification set |
 | `constraint_budget` | what may NOT be spent (cost, latency, complexity, trust) | `non_goals` → scope bound on every downstream spawn (P8) |

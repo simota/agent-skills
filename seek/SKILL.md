@@ -32,13 +32,13 @@ COLLABORATION_PATTERNS:
 - Seek -> Schema: Vector column and index recommendations for pgvector
 - Seek -> Beacon: Search SLO/SLI definitions, latency monitoring requirements
 - Seek -> Radar: Search quality test suites (relevance regression, recall benchmarks)
-- Shard <-> Seek: Tenant isolation model in; index partition strategy and cross-tenant test matrix out
+- Schema[tenant] <-> Seek: Tenant isolation model in; index partition strategy and cross-tenant test matrix out
 - Cloak -> Seek: Data classification and retention obligations bounding what may be indexed
 - Seek -> Breach: Disclosure-surface test matrix for adversarial validation
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Oracle (RAG specs), Schema (data models), Stream (ingestion), Builder (requirements), Tuner (DB perf context), Shard (tenant model), Cloak (data classification)
-- OUTPUT: Builder (search API specs), Oracle (retrieval metrics), Stream (index ingestion), Schema (vector schema), Beacon (SLO), Radar (search tests), Shard (partition strategy), Breach (disclosure-surface tests)
+- INPUT: Oracle (RAG specs), Schema (data models), Stream (ingestion), Builder (requirements), Tuner (DB perf context), Schema[tenant] (tenant model), Cloak (data classification)
+- OUTPUT: Builder (search API specs), Oracle (retrieval metrics), Stream (index ingestion), Schema (vector schema), Beacon (SLO), Radar (search tests), Schema[tenant] (partition strategy), Breach (disclosure-surface tests)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(M) Game(M) Marketing(M)
 -->
@@ -266,7 +266,7 @@ Seek receives search and RAG requirements from upstream agents and sends retriev
 - **vs Oracle**: Oracle = RAG overall architecture, prompt design, LLM evaluation; Seek = retrieval layer design, embedding selection, reranking pipeline.
 - **vs Tuner**: Tuner = RDBMS query optimization, EXPLAIN ANALYZE; Seek = search engine and vector DB index design.
 - **vs Schema**: Schema = table/schema design, migrations; Seek = vector column recommendations and index strategy within existing schema.
-- **vs Shard**: Shard = tenant architecture, RLS, provisioning; Seek = how that boundary is enforced inside the retrieval path.
+- **vs Schema[tenant]**: Schema[tenant] = tenant architecture, RLS, provisioning; Seek = how that boundary is enforced inside the retrieval path.
 - **vs Cloak**: Cloak = what the data is (classification, consent, retention); Seek = whether the retrieval path can honor it at query time.
 
 ---
@@ -280,7 +280,7 @@ Seek receives search and RAG requirements from upstream agents and sends retriev
 | `reference/handoffs.md` | Inbound/outbound handoff YAML templates |
 | `reference/embedding-models.md` | Embedding model comparison, selection tree, benchmarks |
 | `reference/evaluation-methods.md` | Canonical search-quality evaluation: offline metrics (nDCG/MRR/MAP/P@k/R@k), golden-query curation, click models (Cascade/PBM/DBN/UBM), A/B design (interleaving/split/switchback/shadow), reranker evaluation hooks, regression gates, diagnostics |
-| `reference/scaling-guide.md` | Shard sizing, vector DB scaling, caching strategies |
+| `reference/scaling-guide.md` | Schema[tenant] sizing, vector DB scaling, caching strategies |
 | `reference/engine-comparison.md` | Search engine and vector DB feature/cost comparison |
 | `reference/rerank-design.md` | You are running the `rerank` recipe and need cross-encoder vs LTR selection, two-stage latency budgets, or click-feedback loop design. |
 | `reference/rag-retrieval.md` | You are running the `rag` recipe and need chunking-aware retrieval anti-patterns, the `RAG_RETRIEVAL_SPEC` template, or the multi-stage retrieval pipeline. |

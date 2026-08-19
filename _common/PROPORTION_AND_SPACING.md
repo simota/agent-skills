@@ -12,7 +12,7 @@ composition) · `palette` (touch targets, measure, proximity grouping) · `nexus
 criteria** for condition cells — reflow, target size) · `nexus chorus` (Idiom-Gate citations
 against Apple HIG / Material 3) · `nexus lattice` (defensible values when a system `gap` is
 filled) · `nexus silhouette` (§1 tiers bound what may justify a distinctive move — Tier 4
-folklore may not) · `funnel` / `bazaar` (LP layout) · `native`
+folklore may not) · `funnel` / `funnel[premium]` (LP layout) · `native`
 (platform margin conventions) · `forge` / `artisan` / `pixel` (implementation defaults) ·
 `canvas` (diagram element counts — §6 "Cognitive-capacity numbers").
 

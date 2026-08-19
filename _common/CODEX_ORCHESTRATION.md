@@ -124,7 +124,7 @@ The most common Codex underperformance is **premature stopping** — it analyzes
 
 | Role | Critical (◎) | Recommended (○) |
 |------|---|---|
-| Orchestrators (Nexus, Orbit, Rally, Magi, Titan, Sherpa) | C1, C2, C6, C9 | C3, C7 |
+| Orchestrators (Nexus, Orbit, Rally, Magi, Nexus[deliver], Sherpa) | C1, C2, C6, C9 | C3, C7 |
 | Builders / executors (Builder, Artisan, Forge, Native) spawned by a Codex hub | C4, C5, C9 | C3, C7 |
 | Investigators / reviewers spawned by a Codex hub | C4 | C6, C9 |
 | Knowledge/Meta (Lore, Compass, Architect) authoring for Codex hubs | C3, C8 | C1, C9 |

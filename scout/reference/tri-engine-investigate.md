@@ -94,7 +94,7 @@ Two hypotheses belong to **different clusters** when **any** of these hold:
 
 ### 5. GROUND — code reading + reproduction attempt (Scout main context, never delegated)
 
-Grounding for RCA is **stricter than for Spark or Plea** because Scout's output drives downstream code changes. Two grounding actions are mandatory for every cluster that may ship (primary OR alternative).
+Grounding for RCA is **stricter than for Spark or Echo[demand]** because Scout's output drives downstream code changes. Two grounding actions are mandatory for every cluster that may ship (primary OR alternative).
 
 **5a. Code reading (mandatory for every shipping cluster).** For each cluster, read the cited `affected_areas` files and the `causal_chain` step locations with the Read tool. Answer explicitly:
 

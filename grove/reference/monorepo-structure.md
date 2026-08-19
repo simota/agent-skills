@@ -7,7 +7,7 @@ Purpose: Design and audit monorepo directory layouts across Nx, Turborepo, pnpm 
 - **grove `monorepo`**: workspace tool selection, top-level layout (apps/ vs packages/ vs libs/), CODEOWNERS map, build-cache strategy, polyrepo→monorepo migration. Filesystem-level decisions only.
 - **grove `audit` / `design` / `migrate` (default + siblings)**: single-repo structural audit, generic directory design, level-based migration. Use these when the project is not a workspace-managed monorepo.
 - **grove `tests` / `scripts` (siblings)**: tests/ and scripts/ layout — invoked per-package within a monorepo, but layout decisions are scoped to those concerns.
-- **Nest (elsewhere)**: LLM-context folder structure for prompt-cache efficiency. Grove `monorepo` cares about build graphs; Nest cares about retrieval ordering.
+- **Grove[llm] (elsewhere)**: LLM-context folder structure for prompt-cache efficiency. Grove `monorepo` cares about build graphs; Grove[llm] cares about retrieval ordering.
 - **Atlas (elsewhere)**: code-level dependency analysis (cycles, God modules). Grove `monorepo` defines package boundaries; Atlas reports violations within the chosen boundaries.
 - **Sigil (elsewhere)**: dynamic skill generation per project. Grove ships repo structure; Sigil ships skill files describing it.
 
@@ -109,7 +109,7 @@ Default to `workspace:*` for internal libs to avoid version-bump churn. Publish 
 
 ## Handoff
 
-- **To Nest**: once monorepo layout is stable, ask Nest to optimize folder ordering for LLM context (e.g., `libs/` README front-loading, package-manifest progressive disclosure).
+- **To Grove[llm]**: once monorepo layout is stable, ask Grove[llm] to optimize folder ordering for LLM context (e.g., `libs/` README front-loading, package-manifest progressive disclosure).
 - **To Atlas**: package boundaries defined by Grove become the input set for Atlas dependency analysis (cycles, God modules within `libs/`).
 - **To Sigil**: Grove publishes the monorepo layout; Sigil generates per-package skills tuned to detected conventions (test runner, language, framework).
 - **To Anvil**: when monorepo needs a custom CLI for repo-internal tooling (e.g., `repo gen lib`, `repo affected`), Anvil designs the TUI on top of `tools/`.

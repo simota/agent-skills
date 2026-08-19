@@ -154,7 +154,7 @@ When a chain **executes a fix or improvement** for a problem identified from a s
 - **RE-CAPTURE** — after the fix, capture the same screen/state the reported screenshot shows, matching route, viewport, theme, and data state as closely as reproducible (note any unavoidable deltas). Capture executor by platform:
   - Web (local app) — `run` skill to launch + screenshot, or `vector` (Playwright capture), or Claude-in-Chrome tools.
   - Web (component-level) — `vitrine` (Storybook/VRT) when the surface is catalogued.
-  - iOS — `snap` (XCUITest screenshot); native mobile screen iteration → `native` `visualloop` (`native/reference/agent-visual-loop.md`).
+  - iOS — `voyager[ios]` (XCUITest screenshot); native mobile screen iteration → `native` `visualloop` (`native/reference/agent-visual-loop.md`).
 - **COMPARE** — walk the **Problem points list from the five-section analysis** item by item against the after-capture. Verdict per item: `resolved` / `unresolved` / `regressed` / `not-capturable`. Never issue a single global "looks fixed".
 - **VERDICT** — deliverable carries before/after evidence (or paths to both captures) and the per-item verdict table. If no capture path is available (no runnable app, auth-walled screen, device-only state), mark the visual claim `UNVERIFIED` explicitly — a visual fix without an after-capture is asserted, not verified.
 - **Incidental items** — improvements the user did not bundle into scope are not fixed, but the COMPARE step still checks the fix did not *regress* them.

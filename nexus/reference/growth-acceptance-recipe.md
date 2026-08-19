@@ -51,7 +51,7 @@ Do **not** invoke when:
 - Contract Tier 1+ requires `insight_refs` field with valid Ledger IDs
 - AI cannot write to Insight Ledger (read-only); proposed-edit queue must clear before design begins
 
-**Engine routing**: Field / Voice / Trace on Codex for data extraction; Insight Lead synthesis on Claude (judgment); Plea on Claude for customer empathy.
+**Engine routing**: Field / Voice / Trace on Codex for data extraction; Insight Lead synthesis on Claude (judgment); Echo[demand] on Claude for customer empathy.
 
 **Output**: Approved Contract + Insight Ledger citation set + Constitution Operational-layer rule citations.
 
@@ -76,7 +76,7 @@ Do **not** invoke when:
 1. **`pulse` + `experiment`** — Market Proof: declare `incrementality_proof` measurement method per Decision Tree (Conversion Lift / GeoLift / MMM / Synth); compute statistical power
 2. **`ledger` (FinOps)** — CAC / LTV thresholds; budget allocation
 3. **`compete`** — cannibalization estimation
-4. **`funnel` + `bazaar`** — channel-fit rationale and LP coherence
+4. **`funnel` + `funnel[premium]`** — channel-fit rationale and LP coherence
 5. **`vision` + `prose`** — Brand Compiler **B.tone advisory** layer (LLM-as-judge, non-blocking)
 6. **`clause` + `canon[regulatory]` + `cloak` + `vigil`** — G14 Regulatory Envelope Pre-Flight: verify `regulatory_jurisdiction` toggles, brand-safety placement exclusions
 
@@ -156,7 +156,7 @@ Phase 2 (Ship-Time, parallel):
   ‖ pulse + experiment[Market Proof setup + Incrementality Decision Tree]
   ‖ ledger[CAC/LTV thresholds]
   ‖ compete[cannibalization estimation]
-  ‖ funnel + bazaar[channel-fit + LP coherence]
+  ‖ funnel + funnel[premium: channel-fit + LP coherence]
   ‖ vision + prose[B.tone advisory, non-blocking]
   ‖ clause + canon[regulatory] + cloak + vigil[G14 Regulatory Pre-Flight]
   ‖ experiment[pre-register + control-validity/SRM check, per § Pre-Registration sub-gate]

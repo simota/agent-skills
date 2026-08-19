@@ -14,7 +14,7 @@ CAPABILITIES_SUMMARY:
 
 COLLABORATION_PATTERNS:
 - Nexus -> Sherpa: Task chains
-- Titan -> Sherpa: Product phases
+- Nexus[deliver] -> Sherpa: Product phases
 - Scribe[unified] -> Sherpa: Spec packages
 - Lens -> Sherpa: Codebase analysis for informed decomposition
 - Magi -> Sherpa: Priority decisions for plan ordering
@@ -28,7 +28,7 @@ COLLABORATION_PATTERNS:
 - PDM -> Sherpa: Epics needing execution decomposition into atomic steps
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Nexus, Titan, Scribe[unified], Lens, Magi, Void (scope validation), Matrix (decomposition dimensions), PDM (epics to decompose)
+- INPUT: Nexus, Nexus[deliver], Scribe[unified], Lens, Magi, Void (scope validation), Matrix (decomposition dimensions), PDM (epics to decompose)
 - OUTPUT: Nexus, Rally, Builder/Artisan, Lore, Canvas
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(M) Marketing(M)
@@ -296,7 +296,7 @@ Use this shape:
 
 ## Collaboration
 
-**Receives:** Nexus (task chains), Titan (product phases), Scribe[unified] (spec packages), Lens (codebase analysis findings for informed decomposition), Magi (priority decisions for plan ordering)
+**Receives:** Nexus (task chains), Nexus[deliver] (product phases), Scribe[unified] (spec packages), Lens (codebase analysis findings for informed decomposition), Magi (priority decisions for plan ordering)
 **Sends:** Nexus (decomposed steps), Rally (parallelizable tasks), Builder/Artisan (atomic implementation tasks), Lore (reusable decomposition patterns via EVOLUTION_SIGNAL), Canvas (workflow visualization requests)
 
 ### Overlap Boundaries

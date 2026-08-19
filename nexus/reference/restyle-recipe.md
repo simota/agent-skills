@@ -81,7 +81,7 @@ Engine routing follows summit principles: **Codex owns code-gen** (Artisan / Flo
 - **vs `palette`/`flow`/`muse` direct** — a single named fix (one a11y issue, one transition, one token) → the specialist direct; restyle is warranted when the surface needs audit → direction → multi-agent execution.
 - **vs `burnish`** — restyle **decides** the direction and scores the result with *internal* evaluators against its own Design Brief; burnish takes a **settled** direction and drives the rendered surface to zero open findings from an *external* multimodal review engine (split oracle: hard findings to zero, soft axes to `≥ 2`). `restyle` → `burnish` is the pair: direction first, then review-to-zero. An ask that names no direction and no reviewer stays on restyle.
 - **vs `atelier` skill** — atelier orchestrates the full design-to-implementation *pipeline* (extraction, prototypes, visual assets, slides, persistent project design system). When a restyle's scope expands to a product-wide design-system rebuild or asset production, hand off to atelier.
-- **vs `bazaar`** (LP studio) — domain-specialized sibling; an LP surface routes there.
+- **vs `funnel[premium]`** (LP studio) — domain-specialized sibling; an LP surface routes there.
 
 ### Decision Tree
 
@@ -91,7 +91,7 @@ Engine routing follows summit principles: **Codex owns code-gen** (Artisan / Flo
 ├─ UI / visual / look-and-feel / interaction
 │  ├─ direction decision only, no build → vision direct
 │  ├─ one named fix (a11y issue, one animation, one token) → palette/flow/muse direct
-│  ├─ landing page → bazaar
+│  ├─ landing page → funnel[premium]
 │  ├─ product-wide pipeline w/ prototypes+assets+design system → atelier skill
 │  ├─ direction already settled; loop it to zero external-review findings → burnish
 │  └─ audit → direction → implement → verify on an existing surface → restyle ✓

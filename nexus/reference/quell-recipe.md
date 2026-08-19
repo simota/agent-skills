@@ -103,7 +103,7 @@ A profile specializes **three** things — the green gate, the fixer roster, and
 | | `profile=general` (default) | `profile=refactor` |
 |---|---|---|
 | Green gate | Green Gate — tests + build + typecheck pass | **Equivalence Gate** — the *same* suite passes *identically* (no changed expectations), build/lint green, public surface unchanged |
-| Fixer roster | Builder · Sentinel · Zen · Radar | **Zen** (primary) · +Atlas (module boundaries) · +Grove/+Nest (structure) · +Sweep (dead code). Builder/Sentinel are **not** in the roster |
+| Fixer roster | Builder · Sentinel · Zen · Radar | **Zen** (primary) · +Atlas (module boundaries) · +Grove/+Grove[llm] (structure) · +Sweep (dead code). Builder/Sentinel are **not** in the roster |
 | Out of bounds → `DEFERRED` | outside the frozen file set | outside the frozen file set **or** the fix changes external behavior |
 | Extra blocking class | — | **behavior-drift findings** (see below) |
 

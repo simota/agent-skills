@@ -31,7 +31,7 @@ REGION/AZ  →  single-AZ / multi-AZ / multi-region
            →  mark blast floor (minimum recoverable scope)
 
 TENANT     →  multi-tenant fan-out factor
-           →  RLS/isolation verification (defers to shard)
+           →  RLS/isolation verification (defers to Schema `tenant`)
 
 DATA CLASS →  PII / PHI / financial / IP / internal
            →  activate compliance blast overlay (GDPR/HIPAA/PCI)

@@ -1,6 +1,6 @@
 ---
 name: gear
-description: "Managing dependencies, CI/CD optimization, Docker configuration, and operational observability (logging/alerting/health checks). Use for build errors or dev environment issues."
+description: "Managing dependencies, CI/CD, advanced GitHub Actions workflows, containers, secrets, and operational config. Use for build, workflow, or environment work."
 ---
 
 <!--
@@ -19,6 +19,9 @@ CAPABILITIES_SUMMARY:
 - secrets_management: HashiCorp Vault (KV v2, dynamic secrets, AppRole / Kubernetes auth), AWS Secrets Manager, Doppler, .env separation strategy per environment, rotation policies and lease TTL, CI-secret leak prevention (git-secrets, trufflehog, detect-secrets pre-commit), Kubernetes sealed-secrets (Bitnami) and external-secrets operator
 - environment_drift: Advisory detection of declared-env-spec vs live-env divergence at config-file granularity (env vars / Secret references / feature flag defaults / region / account). Output flows to `mend` for runbook auto-creation; never blocks merge (incident-response reality requires emergency hands-on, per omen v6 FM-9 RPN 432). Bridges the gap between `gear`'s CI/CD scope and `mend`'s runtime mutation scope. v6 fold-in.
 - kubernetes_config: Deployment / StatefulSet / Service / Ingress manifests, Helm chart structure (Chart.yaml, values.yaml, templates), Kustomize overlays (base + per-env), resource requests / limits tuning (guaranteed vs burstable QoS), HPA / VPA, PodDisruptionBudget, NetworkPolicy, probes (liveness / readiness / startup)
+- gha_workflow_architecture: Design new, reusable, composite, matrix, and PR-automation workflows with precise trigger semantics
+- gha_security_hardening: Apply least-privilege permissions, OIDC, fork-PR isolation, SHA pinning, artifact attestations, and egress controls
+- gha_performance_engineering: Design cache keys, concurrency, sparse matrices, job decomposition, and cost-aware runner selection
 
 COLLABORATION_PATTERNS:
 - Pattern A: Provision-to-Optimize (Scaffold -> Gear)
@@ -30,10 +33,11 @@ COLLABORATION_PATTERNS:
 - Pattern G: Release Pipeline (Gear -> Launch)
 - Pattern H: Supply Chain Defense (Gear -> Sentinel -> Probe)
 - Pattern I: Observability Pipeline (Gear -> Beacon)
+- Pattern J: PR Automation and Release Workflow (Guardian -> Gear -> Launch)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Scaffold (provisioned environments), Shift (migration plans), Bolt (performance recommendations), Beacon (observability gaps)
-- OUTPUT: Shift (outdated deps escalation via `detect` recipe), Canvas (pipeline diagrams), Radar (CI/CD tests), Bolt (build perf), Sentinel (security findings), Launch (release readiness), Beacon (OTel instrumentation status)
+- INPUT: Scaffold (provisioned environments), Shift (migration plans), Bolt (performance recommendations), Beacon (observability gaps), Guardian (PR governance), Builder (build requirements)
+- OUTPUT: Shift (outdated deps escalation via `detect` recipe), Canvas (pipeline diagrams), Radar (CI/CD tests), Bolt (build perf), Sentinel (security findings), Launch (release readiness), Beacon (OTel instrumentation status), Guardian (PR automation)
 
 PROJECT_AFFINITY: universal
 -->
@@ -51,6 +55,7 @@ DevOps mechanic — fixes ONE build error, cleans ONE config, performs ONE safe 
 Use Gear when the user needs:
 - dependency audit, update, or lockfile conflict resolution
 - CI/CD workflow creation or optimization (GitHub Actions)
+- advanced GitHub Actions design: reusable/composite workflows, matrix strategy, PR automation, OIDC, attestations, and cache architecture
 - Dockerfile or docker-compose configuration
 - linter, formatter, or git hook setup (ESLint, Prettier, Husky)
 - environment variable or secrets management
@@ -67,7 +72,6 @@ Route elsewhere when the task is primarily:
 - security vulnerability audit beyond deps: `Sentinel`
 - application performance optimization: `Bolt`
 - release planning or versioning strategy: `Launch`
-- GitHub Actions workflow advanced design: `Pipe`
 - SLO/SLI design or alert strategy: `Beacon`
 - DAST or penetration testing: `Probe`
 
@@ -138,6 +142,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Alert Configuration | `alert` | | Alertmanager rules, PagerDuty / Opsgenie routing, severity taxonomy, alert-fatigue mitigation | `reference/alert-configuration.md` |
 | Secrets Management | `secret` | | Vault / AWS Secrets Manager / Doppler, .env separation, rotation, leak prevention, Kubernetes sealed/external-secrets | `reference/secrets-management.md` |
 | Kubernetes Config | `k8s` | | Deployment / Service / Ingress, Helm, Kustomize, HPA/VPA, PDB, NetworkPolicy, requests/limits tuning | `reference/kubernetes-config.md` |
+| GitHub Actions Architecture | `gha` | | New or advanced GHA workflows; select `workflow|reusable|security|pr-automation|matrix|cache|secret` mode | `reference/gha-triggers-and-events.md`, matching `reference/gha-*.md` |
 
 ## Subcommand Dispatch
 
@@ -147,7 +152,8 @@ Parse the first token of user input.
 
 Behavior notes per Recipe:
 - `deps`: npm / pnpm / yarn / bun audit + safe update. Respect SemVer (patch/minor default). Keep lockfile in sync. Enforce supply-chain guards (pnpm allowBuilds, min-release-age, trustPolicy, SHA-pinned actions).
-- `ci`: GitHub Actions workflow / composite / reusable. Pin actions by SHA, cache by hash key, use OIDC, target cache hit ≥ 80% and CI ≤ 5 min. Hand off advanced workflow architecture to `Pipe`.
+- `ci`: Maintain or optimize an existing provider-agnostic CI/CD pipeline. Pin actions by SHA, cache by hash key, use OIDC, target cache hit ≥ 80% and CI ≤ 5 min.
+- `gha`: Create or deeply redesign GitHub Actions. Select the narrow mode from the request: `workflow`, `reusable`, `security`, `pr-automation`, `matrix`, `cache`, or `secret`; read only the matching `gha-*` references. Keep application secret backends in `secret`; `gha --mode=secret` owns only Actions credential delivery and fork isolation.
 - `docker`: Dockerfile multi-stage + BuildKit, digest-pinned distroless/Chainguard/DHI base, non-root USER, `--cap-drop=ALL`, read-only rootfs, SBOM + provenance + Cosign v3 keyless signing.
 - `logs`: Structured logging (Pino / Winston / zap / structlog) + OTel log-trace correlation. Use OTel Collector batch + memory limiter. Do not design SLO / alert thresholds — hand to `Beacon`.
 - `health`: Liveness / readiness / startup probe design, shallow vs deep checks, dependency-status endpoints. Do not design availability SLO — hand to `Beacon`.
@@ -161,6 +167,7 @@ Behavior notes per Recipe:
 |--------|----------|----------------|-----------|
 | `dependency`, `npm`, `pnpm`, `yarn`, `audit`, `update` | Dependency management | Updated lockfile + audit report | `reference/dependency-management.md` |
 | `CI`, `GitHub Actions`, `workflow`, `pipeline` | CI/CD optimization | Workflow file + verification | `reference/github-actions.md` |
+| `reusable workflow`, `composite action`, `matrix`, `pull_request_target`, `artifact attestation`, `GHA OIDC` | GitHub Actions architecture | Hardened workflow architecture + verification | `reference/gha-triggers-and-events.md` |
 | `Docker`, `container`, `BuildKit`, `compose` | Container configuration | Dockerfile/compose + scan results | `reference/docker-patterns.md` |
 | `ESLint`, `Prettier`, `Husky`, `lint`, `format` | Linter config | Config files + hook setup | `reference/troubleshooting.md` |
 | `env`, `secrets`, `OIDC`, `environment` | Environment management | Template + secrets config | `reference/github-actions.md` |
@@ -182,14 +189,14 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Collaboration
 
-**Receives:** Scaffold (provisioned environments), Shift (migration plans), Bolt (performance recommendations), Beacon (observability gaps), Nexus (task context)
+**Receives:** Scaffold (provisioned environments), Shift (migration plans), Bolt (performance recommendations), Beacon (observability gaps), Guardian (PR governance), Builder (build requirements), Nexus (task context)
 **Sends:** Shift (outdated deps via `detect` recipe), Canvas (pipeline diagrams), Radar (CI/CD tests), Bolt (build perf), Sentinel (security findings), Launch (release readiness), Beacon (OTel instrumentation status)
 
 **Overlap boundaries:**
 - **vs Scaffold**: Scaffold = initial provisioning; Gear = ongoing maintenance and optimization.
 - **vs Shift**: Shift = major-version migration, EOL replacement, native-API modernization, and tech radar; Gear = safe patch/minor updates within the same major version. Gear escalates to Shift `detect` when patch/minor reveals deeper modernization need.
 - **vs Bolt**: Bolt = application performance; Gear = build and CI performance.
-- **vs Pipe**: Pipe = advanced GHA workflow design; Gear = general CI/CD maintenance.
+- **`ci` vs `gha`**: `ci` maintains an existing provider-agnostic pipeline; `gha` creates or deeply redesigns GitHub Actions-specific architecture.
 - **vs Beacon**: Beacon = SLO/SLI design and alert strategy; Gear = OTel instrumentation setup and log/metric plumbing.
 - **vs Sentinel**: Sentinel = static security analysis; Gear = dependency supply chain defense and container hardening.
 
@@ -199,6 +206,12 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 |-----------|----------------|
 | `reference/dependency-management.md` | You need npm/pnpm/yarn/bun, lockfiles, audit, updates, Renovate, or multi-language. |
 | `reference/github-actions.md` | You need GitHub Actions workflows, Composite/Reusable Workflows, OIDC, caching, or secrets. |
+| `reference/gha-triggers-and-events.md` | You are running `gha` and need trigger, event, concurrency, or workflow-call architecture. |
+| `reference/gha-reusable-and-composite.md` | You need reusable workflows, composite actions, typed inputs, or nesting limits. |
+| `reference/gha-security-hardening.md` | You need GHA permissions, OIDC, SHA pinning, fork isolation, attestations, or egress controls. |
+| `reference/gha-matrix-strategy.md` | You need sparse/dynamic matrices, include/exclude, fail-fast, or max-parallel design. |
+| `reference/gha-cache-strategy.md` | You need key/restore-key design, monorepo caches, Docker `type=gha`, or eviction controls. |
+| `reference/gha-automation-recipes.md` | You need PR labels, assignment, release automation, or workflow-driven governance. |
 | `reference/docker-patterns.md` | You need Dockerfile multi-stage builds, BuildKit, docker-compose, or security scanning. |
 | `reference/observability.md` | You need Pino/Winston logging, Prometheus metrics, Sentry, OpenTelemetry, or health checks. |
 | `reference/monorepo-guide.md` | You need pnpm workspaces, Turborepo pipeline optimization, or Changesets. |
@@ -224,4 +237,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

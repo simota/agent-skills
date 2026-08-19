@@ -7,6 +7,7 @@ When product versions, model names, CLI flags, or availability differ between a 
 | Decision point | Read |
 |----------------|------|
 | Recipe matched | `reference/recipes-index.md` → the row's exact `Read` files; family distinctions → `reference/recipes-detail.md`; inline contracts → `reference/inline-recipes.md`; authoring contract → `reference/recipe-contract.md` |
+| Product/MVP delivery | `reference/deliver-recipe.md`; scope evidence → `reference/delivery-decision-matrix.md`; recovery → `reference/delivery-anti-stall-engine.md`; exit validation → `reference/delivery-exit-criteria-validation.md` |
 | Intent/routing | `reference/signal-keywords.md`, `reference/intent-clarification.md`, `reference/confidence-scoring.md`, `reference/routing-matrix.md`, `reference/task-battery.md` |
 | Proactive/profile invocation | `reference/proactive-mode.md`, `reference/pack-subcommand.md`, `_common/SKILL_PACKS.md` |
 | Hub authoring/runtime | `reference/hub-authoring.md`, `reference/execution-layers.md`, `reference/adaptive-prompt-policy.md`, `reference/context-strategy.md`, `_common/CLI_COMPATIBILITY.md` |

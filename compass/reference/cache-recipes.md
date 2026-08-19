@@ -72,7 +72,7 @@ Probe these in order. Stop early if a manifest fully describes the stack.
 | `Gemfile` | Ruby gems | parse |
 | `composer.json` | PHP packages | parse JSON |
 | `pubspec.yaml` | Flutter / Dart packages | parse YAML |
-| `.github/workflows/*.yml` | GHA presence → `pipe` | dir exists |
+| `.github/workflows/*.yml` | GHA presence → `gear[gha]` | dir exists |
 | `docker-compose.yml` / `Dockerfile` | container dev → `gear` | exists |
 | `terraform/` / `*.tf` | IaC → `scaffold` | dir exists |
 | `prisma/schema.prisma` | DB schema → `schema`, `tuner` | exists |
@@ -150,7 +150,7 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 
 | Trigger | Skills (H) | Skills (M) |
 |---------|------------|------------|
-| `.github/workflows/` | pipe | latch |
+| `.github/workflows/` | gear[gha] | latch |
 | Dockerfile / docker-compose | gear, scaffold | beacon |
 | terraform / pulumi / cdk | scaffold | ledger |
 | k8s manifests / helm | scaffold | beacon |
@@ -181,7 +181,7 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 | i18n (next-intl, i18next, react-intl) | polyglot | prose |
 | Mobile (iOS Swift / SwiftUI, Android Kotlin / Compose) | native | flow, port |
 | Web → Native porting (React / Vue / Svelte / Angular SPA → iOS + Android) | port | native, scaffold |
-| Founder office hours / startup advisory / "what should I focus on" | sage | sherpa, plea |
+| Founder office hours / startup advisory / "what should I focus on" | sage | sherpa, echo[demand] |
 | Game (Phaser, Three.js, Unity, Godot) | forge | sketch |
 | CMS / Headless CMS | builder | scribe |
 | Payment (Stripe, Square) | crypt, ledger | clause |
@@ -193,7 +193,7 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 | "design system" | muse, palette, vitrine, vision |
 | "ML / AI agent" | oracle, claude-api |
 | "data pipeline" | stream, schema |
-| "monorepo" | nest, grove |
+| "monorepo" | grove[llm], grove |
 
 ---
 

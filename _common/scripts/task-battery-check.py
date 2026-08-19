@@ -3,9 +3,9 @@
 Task Battery Check — mechanical checker for the Nexus routing regression
 battery (`nexus/reference/task-battery.md`).
 
-The battery has 35 items across two verification tiers:
+The battery has 64 items across two verification tiers (IDs 1-65, with no #14):
 
-  Items 1-28 (byte-identifiable): each item's "Expected routing" column
+  Mechanical items: each item's "Expected routing" column
   claims a specific Recipe/task-type/entry-mode mapping backed by literal text in
   `nexus/reference/routing-matrix.md`, `nexus/reference/signal-keywords.md`,
   or the Recipe registry/default dispatch in `nexus/SKILL.md`. This script asserts that literal
@@ -14,12 +14,12 @@ The battery has 35 items across two verification tiers:
   It does NOT simulate classify's live semantic mapping of the item's
   example sentence to a Recipe — that step still requires an LLM.
 
-  Items 29-35 (judgment items): out-of-coverage LADDER walks (29, 30, 33,
+  Judgment items 29-35: out-of-coverage LADDER walks (29, 30, 33,
   34, 35) and ambiguous GATE/REDIRECT stress tests (31, 32) can only be
   proven by actually running classify (compass Gap-mode, architect
   proposal, confidence scoring) — no static text search substitutes for
   that. These are reported as `SKIPPED (judgment item)` so the battery's
-  35-item coverage stays fully accounted for (no silent caps).
+  coverage stays fully accounted for (no silent caps).
 
 Also runs a lightweight STALE guard: flags any task-battery.md item that
 still names a retired agent (Dawn / Hex / Sonar / Realm / Haul — sunset
@@ -152,6 +152,8 @@ MECHANICAL_ITEMS = [
      "CHAIN_SELECT → SPECIFY? → EXECUTE"),
     (64, "SPECIFY runs only after Ask First resolves", "SKILL.md",
      "runs only after every applicable `Ask First` gate has resolved"),
+    (65, "product/MVP build routes to deliver", "recipes-index.md",
+     "| Deliver | `deliver` |"),
     (28, "switch profile keyword -> pack", "signal-keywords.md",
      "`pack`, `skill pack`, `skill profile`, `enable skills`, `switch profile`, `skill preset` | `pack`"),
 ]

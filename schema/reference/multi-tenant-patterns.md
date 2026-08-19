@@ -2,7 +2,7 @@
 
 Reference for designing multi-tenant database schemas. Snapshot: 2026-05.
 
-> **Scope vs other skills:** Shard owns horizontal-distribution topology (Aurora DSQL / Spanner / Citus / Vitess cluster shape and routing). This file focuses on **schema-side decisions**: tenant_id placement, RLS policies, schema-per-tenant DDL, composite-FK enforcement, and partitioning by `tenant_id`.
+> **Scope vs other skills:** Schema[tenant] owns horizontal-distribution topology (Aurora DSQL / Spanner / Citus / Vitess cluster shape and routing). This file focuses on **schema-side decisions**: tenant_id placement, RLS policies, schema-per-tenant DDL, composite-FK enforcement, and partitioning by `tenant_id`.
 
 ## Architecture Pattern Comparison
 

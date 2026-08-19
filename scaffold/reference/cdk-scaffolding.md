@@ -8,7 +8,7 @@ Purpose: Scaffold an AWS CDK app (TypeScript or Python) with construct selection
 - **Scaffold `terraform`**: provider-agnostic / multi-cloud IaC. Pick `terraform` when the team standardizes on HCL or when non-AWS providers are in play.
 - **Scaffold `cloudformation`**: raw CFN YAML / JSON or SAM. Pick when the team does not want a compiler step, or when existing CFN templates dominate.
 - **Scaffold `pulumi`**: code-first IaC *across* clouds. Pick when AWS + GCP / Azure must share one codebase.
-- **Pipe (elsewhere)**: CI/CD — `cdk diff`, `cdk deploy --require-approval`, approval gates. `cdk` scaffolds the app; `Pipe` wires the pipeline.
+- **Gear[gha] (elsewhere)**: CI/CD — `cdk diff`, `cdk deploy --require-approval`, approval gates. `cdk` scaffolds the app; `Gear[gha]` wires the pipeline.
 - **Sentinel (elsewhere)**: security audit of the synthesized template. `cdk` integrates Nag; `Sentinel` reviews findings and exceptions.
 
 If the request is "AWS only, prefer real code over HCL" → `cdk`. If "multi-cloud code-first" → `pulumi`. If "HCL shop" → `terraform`.
@@ -156,7 +156,7 @@ test('bucket is encrypted and blocks public access', () => {
 
 When the CDK app is ready:
 
-- **To Pipe**: the pipeline contract — `cdk synth`, `cdk diff` (posted on PR), `cdk deploy --require-approval broadening` for prod, rollback procedure. Share the bootstrap version and the context keys (`stage`, `pr`).
+- **To Gear[gha]**: the pipeline contract — `cdk synth`, `cdk diff` (posted on PR), `cdk deploy --require-approval broadening` for prod, rollback procedure. Share the bootstrap version and the context keys (`stage`, `pr`).
 - **To Sentinel**: Nag findings with justified suppressions, IAM policy inventory, KMS key boundary, SG rules, and the secret hydration path.
 - **To Beacon**: alarm + dashboard stack outputs, metrics emitted, and SLO defaults baked into the observability stack.
 - **To Ledger** (if used): cost-tag taxonomy applied via `cdk.Tags.of(app).add(...)`, high-cost resources flagged (NAT GW, Aurora, Global Tables).

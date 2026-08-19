@@ -286,7 +286,7 @@ Follow `_common/GIT_GUIDELINES.md`. Conventional Commits, no agent names, <50 ch
 | `reference/delta-debugging.md` | Ddmin pseudocode, granularity selection, flaky-test minimization tuning, or `git bisect run` integration for the `delta` subcommand. |
 | `reference/revert-strategies.md` | The revert vs reset decision matrix, merge-commit `-m` parent selection, partial revert techniques, post-revert verification checklist, or comms template for the `revert` subcommand. |
 | `reference/fix-prompt-generation.md` | Authoring the `## LLM Fix Prompt` block, choosing a Trail-specific action verb (FIX-REGRESSION / REVERT / REVERT-WITH-FORWARD-FIX / INVESTIGATE-FURTHER / REFACTOR-FIX), or deciding whether to suppress the prompt for a Sentinel/Atlas handoff or archaeology-only scope. |
-| `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Sentinel/Plea. |
+| `_common/LLM_PROMPT_GENERATION.md` | Universal authoring rules, prompt structure, or the cross-agent verb/suppression principles shared with Scout/Sentinel/Echo[demand]. |
 | `_common/INVESTIGATION_ESCALATION.md` | Cross-cluster escalation, unified confidence scale, or stall protocol is needed. |
 | `_common/OPUS_5_AUTHORING.md` | Scoping bisect iteration budget, deciding tool-use eagerness in LOCATE, or sizing CHANGE_STORY/REPORT outputs. Critical for Trail: P3, P5. |
 

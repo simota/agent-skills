@@ -39,6 +39,6 @@ _STEP_COMPLETE:
     - "[bias checklist applied]"
     - "[evidence strength documented]"
     - "[limitations and segment scope stated]"
-  Next: Cast | Echo | Spark | Vision | Palette | Canvas | Plea | DONE
+  Next: Cast | Echo | Spark | Vision | Palette | Canvas | Echo[demand] | DONE
   Reason: [Why this next step]
 ```

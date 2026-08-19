@@ -7,7 +7,7 @@ Purpose: Produce a defensible estimate of an opportunity's size and confidence b
 - **Spark `opportunity`**: sizing the opportunity upstream of scoring — TAM/SAM/SOM, reach estimates, willingness-to-pay signals, opportunity tree mapping.
 - **vs `Rank`**: Rank orders items with ICE/RICE/WSJF once the numerators exist; `opportunity` supplies the numerators Rank consumes.
 - **vs `Void`**: Void prunes scope once sizing exposes that the reachable slice does not justify build cost.
-- **vs `Plea`**: Plea role-plays synthetic users to surface unmet needs; `opportunity` quantifies the market those needs live in.
+- **vs `Echo[demand]`**: Echo[demand] role-plays synthetic users to surface unmet needs; `opportunity` quantifies the market those needs live in.
 - **vs `Experiment`**: Experiment validates the hypothesis after a proposal ships as test; `opportunity` estimates the upper bound on what validation can possibly earn.
 
 If the question is "how big is this bet?" → `opportunity`. If it is "which of these sized bets do we pick?" → `Rank`.
@@ -145,6 +145,6 @@ Blockers to higher confidence: [named evidence gaps]
 - If SOM is ambiguous but WTP signal is weak → hand to `Experiment` for a fake-door or Van Westendorp before scoring.
 - If SOM is small but strategic (wedge into larger market) → hand to `Magi` for Go/No-Go with explicit strategic rationale.
 - If opportunity tree shows the parent outcome is not moved by any reachable solution → hand to `Void` to prune and re-frame.
-- If willingness-to-pay requires synthetic user probing before survey design → hand to `Plea`.
+- If willingness-to-pay requires synthetic user probing before survey design → hand to `Echo[demand]`.
 
 Record the sized opportunity in `.agents/spark.md` under phantom/underused features so future proposals inherit the sizing work.

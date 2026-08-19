@@ -2,7 +2,7 @@
 
 Cross-skill protocol for the `multi` Recipe — spawning subagents in parallel across engines for tasks where multi-engine perspectives improve quality. Adapted from `judge/reference/tri-engine-review.md` for non-review skills.
 
-**Audience**: Skills implementing a `multi` Recipe (Spark, Plea, Omen, Magi, Compete, Sentinel, Riff, Flux, Field, Vision, Saga, Atlas, Echo, Scout, and future additions).
+**Audience**: Skills implementing a `multi` Recipe (Spark, Echo[demand], Omen, Magi, Compete, Sentinel, Riff, Flux, Field, Vision, Saga, Atlas, Echo, Scout, and future additions).
 
 **Prerequisites**: `_common/SUBAGENT.md §MULTI_ENGINE` (base engine dispatch mechanics), `judge/reference/tri-engine-review.md` (canonical PREFLIGHT/FAN-OUT logic).
 
@@ -49,7 +49,7 @@ Each skill's `multi` Recipe falls into one of three patterns. Choose the one tha
 
 **Use when**: Output value comes from *breadth of ideas / perspectives*. Disagreement is informative; single-engine insights are often the breakthrough.
 
-**Examples**: Spark (proposals), Plea (synthetic demand), Omen (failure modes), Compete (competitive coverage), Riff (brainstorming), Flux (reframing), Field (research design), Vision (UX direction), Saga (narratives).
+**Examples**: Spark (proposals), Echo[demand] (synthetic demand), Omen (failure modes), Compete (competitive coverage), Riff (brainstorming), Flux (reframing), Field (research design), Vision (UX direction), Saga (narratives).
 
 **Scoring**:
 - `UNIVERSAL` (3/3) = broadly recognized; safe but possibly obvious
@@ -216,7 +216,7 @@ Spawn **three Agent calls in a single message** for genuine parallel execution. 
 | `{verb}-agy` | Antigravity CLI | `agy -p "<prompt>" --dangerously-skip-permissions --log-file <path>` (use `@<path>` to inject files; **output captured via file-handoff, NOT stdout** — prompt must mandate an absolute-path artifact + sentinel per `_common/CLI_COMPATIBILITY.md §9.2`; request JSON inside the artifact, not via the unreliable `--output-format json` flag; silent-failure detection mandatory — see §Engine Runtime Failure Detection below; **Pre-flight Notification required** before first spawn — see `_common/CLI_COMPATIBILITY.md §9.1`) |
 | `{verb}-claude` | Claude Code CLI (subagent) | Agent tool with `subagent_type: general-purpose` |
 
-`{verb}` is skill-specific: `propose` (Spark), `demand` (Plea), `failure` (Omen), `deliberate` (Magi), etc.
+`{verb}` is skill-specific: `propose` (Spark), `demand` (Echo[demand]), `failure` (Omen), `deliberate` (Magi), etc.
 
 **Loose prompt rule** (per `_common/SUBAGENT.md` MULTI_ENGINE): pass only Role + Target + Output format. Do NOT pass skill-specific frameworks, taxonomies, or templates — those are applied at SYNTHESIZE. The point is to let each engine's training-data priors drive independent output.
 
@@ -308,7 +308,7 @@ Apply the scoring rubric for your pattern type (D / C / H). See per-pattern tabl
 
 **For Pattern C (Concurrence)**: GROUND `CANDIDATE` findings by reading the actual code/system. Mark `VERIFIED` / `REJECTED` / `NEEDS-INFO`.
 
-**For Pattern D (Divergence)**: GROUND `VERIFIED-DIVERGENT` candidates against the artifact base — does the cited evidence/persona/system actually exist? CALIBRATE against real data when available (e.g., Plea against Voice/Trace).
+**For Pattern D (Divergence)**: GROUND `VERIFIED-DIVERGENT` candidates against the artifact base — does the cited evidence/persona/system actually exist? CALIBRATE against real data when available (e.g., Echo[demand] against Voice/Trace).
 
 **For Pattern H (Hybrid)**: Both. Ground confidence; preserve dissenting perspectives that are well-reasoned even if not converged.
 
@@ -436,7 +436,7 @@ Every output shipped from a `multi` Recipe carries an engine-attribution tag. Th
 | 1 / 2 grounded | `[codex-verified]`, `[claude-verified]` | Single-engine, passed grounding |
 | 1 / 2 rejected | (not shipped) | — |
 
-For Pattern D skills with calibration (Plea): append a second tag `[validated]` / `[supported]` / `[hypothesis]` / `[synthetic-only]` per the skill's calibration rules.
+For Pattern D skills with calibration (Echo[demand]): append a second tag `[validated]` / `[supported]` / `[hypothesis]` / `[synthetic-only]` per the skill's calibration rules.
 
 For Pattern H skills (Magi/Atlas/Scout/Echo): append a perspective tag `[CONVERGENT]` or `[DIVERGENT-N]` (N = number of dissenting positions).
 
@@ -452,7 +452,7 @@ tri_engine_{verb}: `multi` Recipe — {one-line description of what fan-out prod
 
 Examples (already shipped):
 - Spark: `tri_engine_proposal: ... Compete-merge or Portfolio-merge ... preserves divergent breakthrough proposals`
-- Plea: `tri_engine_demand: ... cross-persona-universal signals AND single-engine divergent-voice insights ... calibration tags`
+- Echo[demand]: `tri_engine_demand: ... cross-persona-universal signals AND single-engine divergent-voice insights ... calibration tags`
 
 ---
 
@@ -464,7 +464,7 @@ When adding `multi` Recipe to a new skill:
 - [ ] Add `tri_engine_{verb}` line to CAPABILITIES_SUMMARY
 - [ ] Add `Multi-Engine` row to the Recipes table with `multi` subcommand
 - [ ] Add `multi` behavior note in Subcommand Dispatch
-- [ ] Add `Multi-Engine Mode` section to SKILL.md (use Spark or Plea as template)
+- [ ] Add `Multi-Engine Mode` section to SKILL.md (use Spark or Echo[demand] as template)
 - [ ] Add `multi-engine` row to Output Routing
 - [ ] Create `reference/tri-engine-{verb}.md` with skill-specific:
   - JSON output schema
@@ -484,5 +484,5 @@ When adding `multi` Recipe to a new skill:
 - `_common/SUBAGENT.md §MULTI_ENGINE` — base protocol (engine dispatch, loose prompts, fallback rules)
 - `judge/reference/tri-engine-review.md` — canonical Pattern C implementation
 - `spark/reference/tri-engine-proposal.md` — canonical Pattern D implementation (with Portfolio/Compete merge)
-- `plea/reference/tri-engine-demand.md` — canonical Pattern D with calibration + cross-axis (persona × engine)
+- `echo/reference/tri-engine-demand.md` — canonical Pattern D with calibration + cross-axis (persona × engine)
 - `_common/OPUS_5_AUTHORING.md` — spawn prompt sizing, thinking-depth nudges, parallel-fan-out triggers

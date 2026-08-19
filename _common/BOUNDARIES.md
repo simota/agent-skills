@@ -10,20 +10,19 @@ For disambiguation of commonly confused agent pairs, see `nexus/reference/agent-
 
 | Agent | Primary Role | Scope | Writes Code |
 |-------|-------------|-------|-------------|
-| **Nexus** | Task chain orchestration & execution | Single task chain | Never |
-| **Titan** | Product lifecycle delivery (9 phases) | Full product (multi-phase) | Never |
+| **Nexus** | Task-chain orchestration and scope-adaptive product delivery | Single chains through full product/MVP delivery | Never |
 | **Sherpa** | Task decomposition & workflow guidance | Single epic/story → atomic steps | Never |
 | **Rally** | Parallel multi-session execution | Concurrent independent tasks | Never |
 | **Darwin** | Ecosystem self-evolution | Cross-agent, systemic | Never |
-| **Sigil** | Project-specific skill generation | Per-project lightweight skills | SKILL.md only |
+| **Sigil** | Project operating-layer design and artifact authoring | Project skills, recipes, workflows, routing maps | SKILL.md/specs only |
 | **Architect** | Ecosystem agent design | Permanent agent creation | SKILL.md only |
 | **Lore** | Cross-agent knowledge synthesis | Ecosystem-wide pattern extraction & propagation | Never |
 | **Gauge** | SKILL.md normalization audit & self-evolution | Per-skill format compliance | Never |
 
 **Key distinctions:**
-- Titan issues chains → Nexus executes them → Rally parallelizes when needed
+- Nexus `deliver` sizes and executes product-lifecycle chains; Rally parallelizes independent workstreams when needed
 - Sherpa decomposes → Nexus/Rally executes the decomposed steps
-- Architect creates permanent ecosystem agents; Sigil creates project-specific skills
+- Architect creates permanent ecosystem agents; Sigil designs and authors project-specific operating layers
 - Darwin evaluates ecosystem fitness; Lore curates cross-agent knowledge patterns
 - Gauge audits existing SKILL.md format compliance; Architect creates/improves agent packages
 
@@ -77,7 +76,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Builder** | Production backend/logic implementation | Business logic, API, data models | Yes |
 | **Artisan** | Production frontend implementation | React/Vue/Svelte, hooks, state | Yes |
 | **Forge** | Rapid prototyping (full-stack) | Speed over quality, PoC | Yes |
-| **Schema** | Database schema design & migration | Data modeling, normalization | Yes |
+| **Schema** | Database and multi-tenant architecture | Data modeling, migrations, tenant isolation/RLS/routing | Yes |
 | **Anvil** | CLI/TUI development | Terminal interfaces, dev tools | Yes |
 | **Pixel** | Mockup-to-code faithful reproduction | Image→HTML/CSS with visual verification | Yes |
 
@@ -92,7 +91,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 |-------|-------------|-------|-------------|
 | **Mint** | Test data & fixture generation | Factory patterns, seed data, PII masking | Yes |
 | **Radar** | Unit/integration tests, edge cases, coverage | Test code | Yes |
-| **Voyager** | E2E test specialist (Playwright/Cypress) | E2E test infrastructure | Yes |
+| **Voyager** | Cross-platform and iOS E2E specialist | Playwright/Cypress/Appium/Detox/Maestro/XCUITest/snapshots | Yes |
 | **Siege** | Load testing, chaos engineering, resilience | Non-functional testing | Yes |
 | **Judge** | Code review & bug detection | PR review, quality check | Never |
 | **Zen** | Refactoring & code smell remediation | Readability improvement | Yes (refactor only) |
@@ -137,13 +136,12 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Atlas** | Architecture analysis & decisions | Dependencies, God Class, ADR/RFC | Never |
 | **Gateway** | API design & review | OpenAPI, versioning, breaking changes | Yes (specs) |
 | **Scaffold** | Infrastructure provisioning | Terraform, Docker, IaC | Yes |
-| **Grove** | Repository structure design | Directory layout, conventions | Never |
-| **Nest** | LLM-optimized folder structure | Context efficiency, cache topology, progressive disclosure | Never |
+| **Grove** | Human- and LLM-optimized repository structure | Directory layout, conventions, context efficiency, cache topology | Never |
 | **Shift** | Migration, upgrade & modernization orchestration | Codemod generation, framework/DB/API migration, deprecated library detection, native API replacement, technology radar (absorbed from horizon) | Yes |
 | **Trawl** | Crawl system architecture design | URL frontier, distributed crawl, politeness policy, compliance | Never |
 
 **Key distinctions:**
-- General repo structure → Grove. LLM-optimized folder structure → Nest. Grove designs for developers; Nest optimizes for LLM navigation
+- General repo structure → Grove default modes. LLM navigation/cache topology → Grove `llm`
 - Crawl system architecture → Trawl. Single-session scraping execution → Vector
 - Crawl output pipeline → Stream. Crawl infrastructure provisioning → Scaffold
 
@@ -155,18 +153,18 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Muse** | Design token management | Color, spacing, typography tokens | Yes |
 | **Palette** | Usability improvement | Cognitive load, a11y, interaction quality | Yes |
 | **Flow** | Animation & motion | CSS/JS transitions, micro-interactions | Yes |
-| **Echo** | Persona-based UI testing | Walk through as user type | Never |
+| **Echo** | Persona simulation and synthetic demand | UI walkthroughs, feature requests, JTBD, unmet needs | Never |
 | **Prose** | UX writing | Microcopy, error messages, voice & tone | Yes (text) |
 | **Vitrine** | Storybook catalog management | Component documentation, visual regression | Yes |
 | **Trace** | Session replay analysis | Behavioral patterns from logs | Never |
 | **Director** | Demo video production | Playwright-based recordings | Yes |
 | **Frame** | Figma MCP design context extraction | Figma→code bridge, Code Connect | Never |
 | **Ink** | SVG icon & illustration generation | Grid systems, sprite symbols, a11y | Yes (SVG) |
-| **Funnel** | Landing page structure & conversion | AIDA/PAS, CTA, form optimization | Yes |
+| **Funnel** | Landing-page conversion and premium production | AIDA/PAS, CTA/forms, multi-stage craft and quality gates | Yes |
 
 **Key distinctions:**
 - Design direction → Vision. Tokens → Muse. Usability → Palette. Animation → Flow
-- Write text → Prose. Test as persona → Echo. Research → Field
+- Write text → Prose. Test as persona or synthesize demand → Echo. Research → Field
 - Figma data extraction → Frame. Token definition → Muse. Frame extracts, Muse defines
 - Code Connect mapping → Frame + Vitrine. Frame manages Figma side, Vitrine manages code side
 - SVG icons/illustrations → Ink. AI images → Sketch
@@ -178,11 +176,11 @@ Tokens and secrets must never be reachable from the execution environment where 
 |-------|-------------|-------|-------------|
 | **Field** | Research methodology design | Interviews, usability tests, journey maps | Never |
 | **Cast** | Persona lifecycle management | Create, store, evolve, sync personas | Never |
-| **Echo** | Persona-based UI simulation | Walk through UI as specific persona | Never |
+| **Echo** | Persona-based UI and demand simulation | Walkthroughs, synthetic requests, JTBD/switch analysis | Never |
 | **Voice** | Feedback collection & analysis | NPS, reviews, sentiment analysis | Yes (integrations) |
 
 **Key distinctions:**
-- Manage personas → Cast. Simulate on UI → Echo. Design research → Field. Analyze feedback → Voice
+- Manage personas → Cast. Simulate UI or user demand → Echo. Design research → Field. Analyze feedback → Voice
 
 ## Strategy & Business
 
@@ -220,8 +218,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 
 | Agent | Primary Role | Focus | Writes Code |
 |-------|-------------|-------|-------------|
-| **Gear** | Existing CI/CD maintenance | Dependencies, Docker, build optimization | Yes |
-| **Pipe** | New GHA workflow design | Advanced GHA, reusable workflows | Yes |
+| **Gear** | CI/CD maintenance and GitHub Actions design | Dependencies, Docker, build optimization, advanced GHA | Yes |
 | **Guardian** | Git/PR governance | Commit strategy, PR quality | Never |
 | **Launch** | Release management | Versioning, CHANGELOG, rollback | Yes |
 | **Harvest** | PR reporting | Weekly/monthly reports from git data | Never |
@@ -231,7 +228,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Mend** | Known-pattern auto-remediation | Runtime fix, runbook execution, staged verification | Yes |
 
 **Key distinctions:**
-- Existing CI maintenance → Gear. New GHA design → Pipe
+- Existing provider-agnostic CI maintenance → Gear `ci`. New GHA design → Gear `gha`
 - PR strategy → Guardian. Release execution → Launch. PR reports → Harvest
 - Operational config → Gear. Runtime remediation → Mend
 - AI CLI config audit (Codex, Antigravity (`agy`), Claude Code) → Hone. Claude Code hooks design → Latch. Personal dev env (dotfiles) → Hearth
@@ -263,7 +260,6 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Sketch** | AI image generation | Gemini API image creation | Yes |
 | **Omen** | Pre-mortem analysis & failure mode enumeration | FMEA, fault tree, Swiss Cheese, Murphy audit | Never |
 | **Seek** | Search & vector DB architecture | Full-text/vector/hybrid search, RAG retrieval | Partial (mappings) |
-| **Shard** | Multi-tenant architecture design | Tenant isolation, RLS, routing, noisy-neighbor | Partial (specs) |
 | **Weave** | Workflow & state machine design | FSM/Statechart, Saga patterns, approval flows | Partial (YAML/specs) |
 | **Native** | Mobile development | React Native/Flutter/SwiftUI/Jetpack Compose | Yes |
 | **Rank** | Priority quantification | ICE/RICE/WSJF/MoSCoW/Kano scoring | Never |
@@ -272,7 +268,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 - Mobile app development → Native. Mobile-responsive frontend → Artisan
 - Priority scoring → Rank. Multi-perspective decisions → Magi
 - Pre-mortem / failure analysis → Omen. Change impact → Ripple. Incident response → Triage
-- Browser/web automation → Vector. macOS native-app automation (Apple Events) → Hearth `automate`. iOS app UI automation → Snap
+- Browser/web automation → Vector. macOS native-app automation (Apple Events) → Hearth `automate`. iOS app UI automation → Voyager `ios`
 - Runtime macOS app scripting + dotfiles/shell/editor config → Hearth. AI CLI config → Hone
 - A supplied prompt's vague wording → Chisel. The prompt *system* around it (few-shot, schema, versioning, eval, cost) → Oracle. A spec document for people → Scribe. Verifying an artifact against existing criteria → Attest
 - Chisel has two callers: **user-invoked** (a supplied prompt is the object) and **hub-invoked** (Nexus `SPECIFY` — the instruction about to be delegated is the object). It never takes the *user's own live request* as the object; that is Nexus `GATE`

@@ -83,10 +83,10 @@ Agents that coordinate other agents or decompose complex tasks.
 - **Output**: Atomic steps (15 min each)
 - **Trigger**: Tasks that need breakdown
 
-### Titan
-- **Role**: Product lifecycle meta-orchestrator
+### Nexus — `deliver` mode
+- **Role**: Scope-adaptive product/MVP delivery Recipe
 - **Input**: Product goals (ambiguous or clear)
-- **Output**: Complete products via 9-phase lifecycle
+- **Output**: Complete products through a minimum chain sized as small/medium/epic
 - **Trigger**: "Build a product", "full product lifecycle"
 
 ### Rally
@@ -425,7 +425,7 @@ Agents that design system architecture and repository structure.
 - **Output**: Directory designs, docs/ structure, migration plans
 - **Trigger**: "repo structure", "directory layout", "monorepo design"
 
-### Nest
+### Grove — `llm` mode
 - **Role**: LLM-optimized folder structure designer
 - **Input**: Repository, LLM navigation pain points
 - **Output**: Folder hierarchy designs, context-efficient layouts, token optimization reports
@@ -537,7 +537,7 @@ Agents that handle infrastructure, tooling, observability, and developer environ
 - **Output**: Versioning, CHANGELOG, release notes
 - **Trigger**: "release", "version", "CHANGELOG"
 
-### Pipe
+### Gear — `gha` mode
 - **Role**: GitHub Actions workflow architect
 - **Input**: Workflow requirements, existing CI/CD
 - **Output**: GHA workflows, Composite Actions, Reusable Workflows, security configs
@@ -793,10 +793,10 @@ Agents that generate project-specific tooling, audit ecosystem health, curate kn
 - **Output**: Claude Code skills (.claude/skills/*.md)
 - **Trigger**: "Generate skills for this project", "Create skill for", "Analyze project and suggest skills"
 
-### Loom
-- **Role**: Project operating-layer designer (project-scoped analogue of Architect; designs, delegates authoring to Sigil)
+### Sigil — `blueprint` mode
+- **Role**: Project operating-layer designer (project-scoped analogue of Architect)
 - **Input**: Repository (stack, conventions, recurring tasks, existing .claude/ layer)
-- **Output**: Operating-layer blueprint (project skill suite + repo-tailored recipes + skill-and-agent workflows + routing map) + delegation specs to Sigil/Nexus/Orbit/Latch/Grove
+- **Output**: Operating-layer blueprint plus separate artifact tasks for Sigil/Nexus/Orbit/Latch/Grove
 - **Trigger**: "design the project's agents/recipes/workflows", "operating layer for this repo", "project skill suite", "repo task playbooks", "project routing map"
 
 ### Darwin

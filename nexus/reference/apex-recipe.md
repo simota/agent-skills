@@ -151,11 +151,11 @@ Phase 0 failure modes (no candidates, all-ICE-below-threshold, split tie-break, 
 
 | Agent | Role | Required |
 |-------|------|----------|
-| `plea` | Synthetic user demands across 3+ personas, paired with LLM prompts | Yes |
+| `echo[demand]` | Synthetic user demands across 3+ personas, paired with LLM prompts | Yes |
 | `field` | BEST-framework validation or real research synthesis | Yes |
 | `echo` | Friction analysis on current flow (Emotion VAD + dark pattern audit) | Existing-product improvement only |
 
-**Exit gate:** Top-3 demands carry both persona rationale (plea) and evidence anchor (field). If product exists, echo confirms current friction baseline.
+**Exit gate:** Top-3 demands carry both persona rationale (echo[demand]) and evidence anchor (field). If product exists, echo confirms current friction baseline.
 
 ### Phase 2: Ideate
 
@@ -218,7 +218,7 @@ UX Track internal pipeline: `vision → muse → [palette ‖ prose ‖ flow] �
 | `ripple` | Vertical + horizontal impact + blast radius | Go or Conditional-Go (No-Go blocks); on Conditional-Go, omen Mitigations must address the conditions before forwarding to orbit |
 | `echo` | UX friction signals fed into gate | Emotion Valence ≥ median, dark pattern = 0, WCAG 3.0 Bronze ≥ 3.5, cognitive load within target range |
 
-Plea ↔ Echo loop closure: if echo's actual walkthrough reaction diverges fatally from plea's predicted demand, send back to Phase 4 (scribe[unified]) for spec refinement — do not proceed even if all three axes nominally pass.
+Echo[demand] ↔ Echo loop closure: if echo's actual walkthrough reaction diverges fatally from echo[demand]'s predicted demand, send back to Phase 4 (scribe[unified]) for spec refinement — do not proceed even if all three axes nominally pass.
 
 **Exit gate:** `go = ripple.verdict ∈ {Go, Conditional-Go} ∧ omen.high_rpn_count == 0 ∧ echo.gate_pass`. On No-Go, escalate to the originating phase.
 
@@ -311,7 +311,7 @@ On any non-ship exit (budget ceiling, Risk-Gate No-Go, attest fail past re-entry
 
 | Sub-hub | Engine | Specialists | Cap |
 |---------|--------|-------------|-----|
-| Nexus (top) | Claude Code (Agent tool) | plea, field, riff, magi, scribe[unified], atlas, vision, orbit, attest, guardian, launch | ≤11 (acceptable; phases serialise most — attest/guardian/launch run sequentially at the tail) |
+| Nexus (top) | Claude Code (Agent tool) | echo[demand], field, riff, magi, scribe[unified], atlas, vision, orbit, attest, guardian, launch | ≤11 (acceptable; phases serialise most — attest/guardian/launch run sequentially at the tail) |
 | Vision (UX sub) | Claude Code (Agent tool) | muse, palette, prose, flow, frame, forge, echo, polyglot, pixel | ≤9 (parallelisable inside) |
 | **Orbit (loop sub)** | **Codex CLI (`spawn_agent`)** — fixed | builder, artisan, vitrine, judge, radar, voyager | ≤6 (loop iterations) |
 
@@ -360,7 +360,7 @@ The run skeleton. Per-phase rosters, conditional agents, and Exit-gate criteria 
 ```
 # ── Goal-supplied mode ───────────────────────────────
 Nexus AUTORUN apex goal="<feature description>"
-  → Phase 1 Discovery        [parallel] plea ‖ field ‖ echo?
+  → Phase 1 Discovery        [parallel] echo[demand] ‖ field ‖ echo?
   → Phase 2 Ideate           riff(max_turns=4)
   → Phase 3 Verdict          magi → verdict + ac_seed   [gate: split → human_review]
   → Phase 4 Spec             scribe[unified](scope=auto) → void? / scribe?
@@ -407,14 +407,14 @@ Consolidated view of what apex's gates and phases guard against, merging the ope
 | Phase 0 all ICE < threshold | rank (autonomous mode); no clearly worthwhile work | Present top 3 to user for manual selection |
 | Phase 0 split tie-break | magi (autonomous mode) | Escalate top 2 to user with magi rationale |
 | Phase 0 boundary rejected | user (autonomous mode) | Apex aborts; user input within 60s window cancels |
-| Build the wrong thing | No evidence anchor for the feature | Phase 0 discovery (spark + rank + sage) + Phase 1 (plea + field evidence anchor) + boundary Confirm-before-launch |
+| Build the wrong thing | No evidence anchor for the feature | Phase 0 discovery (spark + rank + sage) + Phase 1 (echo[demand] + field evidence anchor) + boundary Confirm-before-launch |
 | Phase 3 split decision | magi | Pause for human verdict; prevents an arbitrarily-resolved deadlock |
 | Weak / unmeasurable spec | "Done" is subjective; scope creeps | Phase 4 scribe[unified] traceability threshold + L3 measurable, orbit-consumable ACs |
 | Phase 4 traceability < threshold | scribe[unified] | Re-run scribe[unified] with scope downgrade or refine inputs |
 | Hidden architecture / blast-radius risk | A migration or contract change breaks neighbors post-merge | Phase 5 Risk Gate: omen FMEA (High-RPN residuals = 0) + ripple blast-radius (No-Go blocks) |
 | Risk Gate No-Go | omen / ripple / echo | Return to originating phase |
-| UX friction / dark patterns shipped | Brand-visible flow frustrates users, a11y regressions | Phase 5 echo gate (Emotion Valence ≥ median, 0 dark patterns, WCAG3 Bronze ≥ 3.5, cognitive load in range) + Plea-Echo divergence check |
-| Plea-Echo divergence | echo | Return to Phase 4 (scribe[unified] re-spec) |
+| UX friction / dark patterns shipped | Brand-visible flow frustrates users, a11y regressions | Phase 5 echo gate (Emotion Valence ≥ median, 0 dark patterns, WCAG3 Bronze ≥ 3.5, cognitive load in range) + Echo[demand]-Echo divergence check |
+| Echo[demand]-Echo divergence | echo | Return to Phase 4 (scribe[unified] re-spec) |
 | Convergence mistaken for correctness | Loop passes its own tests but doesn't satisfy the spec | Acceptance Verification gate: independent attest conformance ≥ threshold ∧ 0 unmet must-haves (Claude-side, no shared context with builder) |
 | Orbit stuck loop | orbit (convergence_detection) | Triage handoff |
 | Orbit budget exceeded | orbit (cost-per-task) | User confirmation before continuation |

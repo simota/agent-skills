@@ -215,7 +215,7 @@ For cross-platform portability (macOS BSD ↔ Linux GNU), use the approved helpe
 | `readlink -f` | unsupported pre-12.3 | supported | Use `python3 -c "import os; print(os.path.realpath('$f'))"` |
 | `stat -c` | `stat -f` | `stat -c` | Branch on `uname` or use `gstat` |
 | `mktemp` | requires template arg variant | tolerant | Always pass an explicit template |
-| `xargs -r` | unsupported | supported | Pipe through `[ -s ] && xargs` instead |
+| `xargs -r` | unsupported | supported | Gear[gha] through `[ -s ] && xargs` instead |
 | `tar --xattrs` | different defaults | GNU defaults | Specify flags explicitly |
 
 **When generating shell commands for the user:**

@@ -20,7 +20,7 @@ This ecosystem includes 100+ specialist skills, organized into five broad areas:
 2. Fix: Scout (investigation), Zen (refactoring), Bolt (speedups)
 3. Defend: Sentinel (security), Radar (testing), Judge (review)
 4. Design: Atlas (architecture), Schema (DB), Gateway (API)
-5. Operate: Pipe (CI/CD), Scaffold (infrastructure), Beacon (monitoring)
+5. Operate: Gear[gha] (CI/CD), Scaffold (infrastructure), Beacon (monitoring)
 
 Tell me what you want to do, and I'll suggest the best skill.
 ```

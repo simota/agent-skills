@@ -90,4 +90,4 @@ A `silent` element routes back to one targeted question (D1–D3) or an explicit
 - **`delve`** — GROUND's Socratic clarification runs D1–D8 (D5 history probe is the reason-for-existence tool); the three knowledge-juncture checkpoints follow D10–D12; the Evolution Map's insights and directions pass D16 (an insight the user never validated is `silent`).
 - **`gedanken` (INTERACTIVE)** / **`clone` Stack Dialogue** / **verdict-card closing question** — D1–D4 + D10–D11 apply to the single or per-phase dialogue moments; the Ledger is optional (short dialogues rarely need one).
 
-This protocol governs the **hub's own conversation with the user** — it is not a spawn-prompt directive. Spawned agents (Riff, Plea, Magi, …) produce material; Nexus alone runs the dialogue that presents it.
+This protocol governs the **hub's own conversation with the user** — it is not a spawn-prompt directive. Spawned agents (Riff, Echo[demand], Magi, …) produce material; Nexus alone runs the dialogue that presents it.

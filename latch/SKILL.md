@@ -77,7 +77,7 @@ Use Latch when the user needs:
 - conditional hook filtering with the `if` field
 
 Route elsewhere when the task is primarily:
-- CI/CD pipeline or GitHub Actions: `Gear` or `Pipe`
+- CI/CD pipeline or GitHub Actions: `Gear` or `Gear[gha]`
 - shell/editor/terminal configuration: `Hearth`
 - code quality review: `Judge`
 - test automation: `Radar` or `Voyager`

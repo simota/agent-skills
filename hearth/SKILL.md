@@ -69,7 +69,7 @@ Use Hearth when the user needs:
 
 Route elsewhere when the task is primarily:
 - web/browser automation (Playwright/DevTools): `Vector`
-- iOS app UI automation (XCUITest): `Snap`
+- iOS app UI automation (XCUITest): `Voyager[ios]`
 - macOS native app *development* (SwiftUI/AppKit): `Native` (`macos` recipe)
 - scheduling/cron/launchd timing design (no app scripting): `Tempo`
 - CI/CD pipeline or Docker configuration: `Gear`

@@ -142,7 +142,7 @@ Critical rules:
 |-----------|-------|---------|
 | Per-PR | Changed files and stale imports | `Guardian -> Sweep` |
 | Sprint-end | Full scan and trend comparison | Manual, `Judge`, or review cadence |
-| Quarterly | Deep scan and dependency audit | Manual, `Titan`, or scheduled maintenance |
+| Quarterly | Deep scan and dependency audit | Manual, `Nexus[deliver]`, or scheduled maintenance |
 
 Rules: record `SCAN_BASELINE` YAML in `.agents/sweep.md`. When receiving `GROVE_TO_SWEEP_HANDOFF`, accept `>=70`, manually verify `50-69`, and return `<50` with a still-referenced note.
 

@@ -169,11 +169,11 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | YAGNI | full | Void → Magi → Sweep → Zen → Pulse → Radar |
 | REMEDIATE | standard | Mend → Radar → Beacon |
 | REMEDIATE | full | Triage → Mend → Radar → Beacon → Vigil |
-| GHA_WORKFLOW | new | Pipe → Gear → Radar |
-| GHA_WORKFLOW | security | Pipe → Sentinel → Vigil → Gear |
-| GHA_WORKFLOW | release | Pipe → Guardian → Launch → Harvest |
-| PROJECT | init | Titan → Grove → Scaffold → Pipe → Gear |
-| PROJECT | full | Titan → Sherpa → Builder → Radar → Guardian → Launch |
+| GHA_WORKFLOW | new | Gear[gha] → Radar |
+| GHA_WORKFLOW | security | Gear[gha] → Sentinel → Vigil |
+| GHA_WORKFLOW | release | Gear[gha] → Guardian → Launch → Harvest |
+| PROJECT | init | Nexus[deliver] → Grove → Scaffold → Gear[gha] |
+| PROJECT | full | Nexus[deliver] → Sherpa → Builder → Radar → Guardian → Launch |
 | PROJECT | onboarding | Lens → Canvas → Scribe |
 | ECOSYSTEM | skill-audit | Gauge → Architect → Darwin |
 | DESIGN | figma-to-code | Frame → Muse → Artisan → Radar |
@@ -214,7 +214,7 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | MOBILE_NATIVE | rollout | Native[rollout] → Launch |
 | MOBILE_NATIVE | full | Port[blueprint] → Native[swiftui] + Native[compose] → Radar → Voyager → Cloak → Launch |
 | ADVISORY | advise-then-build | Sage → Sherpa → Builder |
-| ADVISORY | advise-then-validate | Sage → Plea |
+| ADVISORY | advise-then-validate | Sage → Echo[demand] |
 | ADVISORY | strategy-handoff | Helm → Sage → Sherpa |
 | ADVISORY | feature-reality-check | Spark → Sage |
 | ADVISORY | research-to-action | Field → Sage → Sherpa → Builder |
@@ -300,7 +300,7 @@ Builder then applies:
 - Customer acquisition cost rising / paid channels saturated → Use MARKETING/acquisition (KPI-first; Pulse defines target CAC/LTV before channel tuning)
 - Churn or LTV decline detected → Use MARKETING/retention (includes Trace for session-level churn cause analysis)
 - Strategy needs human advisor pressure-testing → Add Sage after Magi (advise-then-validate pattern)
-- Synthetic user voice needed when no real customers exist yet → Add Plea before Saga (early-stage persona need generation)
+- Synthetic user voice needed when no real customers exist yet → Add Echo[demand] before Saga (early-stage persona need generation)
 - MARKETING vs STRATEGY routing: STRATEGY/{seo,compete,retention,metrics,ab-test} are single-tactic chains (one specialist + Builder + Radar) for engineering-side implementation. MARKETING/* are consulting chains (multi-specialist, narrative-led, often without code output). Use MARKETING when the deliverable is strategy/messaging/plan; use STRATEGY when the deliverable is code/instrumentation.
 - MARKETING/content vs CREATIVE/marketing-asset: MARKETING/content includes Saga (narrative)+Pulse (measurement) for content-strategy; CREATIVE/marketing-asset is image+copy asset production only (Growth→Sketch→Prose→Artisan). Use the former for content marketing plans, the latter for one-off creative deliverables.
 - MARKETING/seo-geo vs STRATEGY/seo: MARKETING/seo-geo adds Prose (copy)+Radar (quality gate) for full content+technical SEO; STRATEGY/seo is the narrow 3-step engineering implementation. Default to MARKETING/seo-geo unless the task is purely meta-tag/JSON-LD code.

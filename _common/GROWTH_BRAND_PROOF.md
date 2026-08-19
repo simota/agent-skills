@@ -8,9 +8,9 @@ Companion protocol to `_common/PROOF_CARRYING.md` (Tier A Foundation + Tier B Pr
 - `_common/HANDOFF.md` (handoff schema)
 
 **Audience**: Skills participating in pre-design / ship-time / post-launch lifecycle gates.
-- **Research axis (R)**: `field`, `voice`, `trace`, `plea`, `tome`
+- **Research axis (R)**: `field`, `voice`, `trace`, `echo[demand]`, `tome`
 - **Brand axis (B)**: `vision`, `crest`, `prose`, `clause`, `canon[regulatory]`, `muse` (token discipline carry-over from Tier B)
-- **Market axis (M)**: `pulse`, `experiment`, `funnel`, `bazaar`, `compete`, `ledger` (FinOps), `harvest`, `cloak`, `vigil` (brand safety)
+- **Market axis (M)**: `pulse`, `experiment`, `funnel`, `funnel premium`, `compete`, `ledger` (FinOps), `harvest`, `cloak`, `vigil` (brand safety)
 - **Orchestration**: `nexus[growth-acceptance]`
 
 **Inspired by**: AAOS (v1) → Code+Design Proof (v2) → Growth+Brand Acceptance OS (v3 source). All three round verdicts (Magi GO-WITH-CONDITIONS at confidence 65 / 67.8 / 54.7 respectively) inform this document.
@@ -69,7 +69,7 @@ Three structural reasons:
 
 **Cross-cutting**: **G11 mandatory** — AI is read-only on the Insight Ledger; only Research Lead can merge proposed edits; confidence is deterministic-computed, never hand-set.
 
-**Skills**: `field`, `voice`, `trace`, `plea`, `tome`, + new skill `insight` (proposed, Architect responsibility).
+**Skills**: `field`, `voice`, `trace`, `echo[demand]`, `tome`, + new skill `insight` (proposed, Architect responsibility).
 
 **Blocking?**: Yes — content without Insight Ledger citation is rejected at pre-design Phase.
 
@@ -83,7 +83,7 @@ Three structural reasons:
 
 **Cross-cutting**: **G13 mandatory** — every Contract names a Stop_Accountable (1 person); 24h no-response → auto-halt. **G14 mandatory** for regulated industries — auto-scale OFF by default.
 
-**Skills**: `pulse`, `experiment`, `funnel`, `bazaar`, `compete`, `ledger` (FinOps), `scribe[unified]`, `spark`, `scribe`.
+**Skills**: `pulse`, `experiment`, `funnel`, `funnel premium`, `compete`, `ledger` (FinOps), `scribe[unified]`, `spark`, `scribe`.
 
 **Blocking?**: Yes — campaigns without Contract are non-shippable; Incrementality Gate auto-halts losers.
 
@@ -113,7 +113,7 @@ When any AI-generated content cites customer insight, market trend, or user beha
 |-------|------|-------------|
 | `source_proof` | Which data source(s) generated the claim | `field` / `trace` / `voice` |
 | `sample_proof` | Who was surveyed; N; segmentation; recruitment method | `field` |
-| `bias_proof` | Known sampling biases + selection effects explicitly stated | `field` / `plea` |
+| `bias_proof` | Known sampling biases + selection effects explicitly stated | `field` / `echo[demand]` |
 | `contradiction_proof` | Counter-evidence considered and either reconciled or noted | `magi` / `flux` |
 | `triangulation_proof` | At least 2 independent sources support the claim | `field` + at least 1 other |
 | `recency_proof` | Source data age; expiration trigger | `tome` |

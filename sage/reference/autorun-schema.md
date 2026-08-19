@@ -23,7 +23,7 @@ _STEP_COMPLETE:
         task: <observable outcome>
         due: <YYYY-MM-DD>
     Next_Checkpoint: <YYYY-MM-DD>
-    Handoff_Target: <Builder | Plea | Sherpa | none>
-  Next: <Builder | Plea | Sherpa | DONE>
+    Handoff_Target: <Builder | Echo[demand] | Sherpa | none>
+  Next: <Builder | Echo[demand] | Sherpa | DONE>
   Reason: <why this outcome>
 ```

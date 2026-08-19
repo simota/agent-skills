@@ -8,7 +8,7 @@ Default flow for `/echo multi`. Run subagents in parallel — one per AVAILABLE 
 
 **Why multiple engines for cognitive walkthrough (different from Judge / Spark):** Judge optimizes for *agreement on a single defect* — concurrence is the quality signal. Spark optimizes for *breadth of ideation*. Echo lives in between: a friction confirmed by all AVAILABLE engines × N personas is one of the strongest synthetic UX signals available, but the *novel* friction noticed by only one engine inside one persona's voice is often the breakthrough finding the team had unconsciously normalized. Each engine has different priors about how a "beginner," "senior," or "mobile user" actually moves through a UI; multi-engine flow surfaces both convergent confidence and divergent angle in a single matrix.
 
-**Adapted from `_common/MULTI_ENGINE_RECIPE.md` (Pattern H) and `plea/reference/tri-engine-demand.md`.** Re-uses PREFLIGHT and FAN-OUT mechanics; only the parts that differ for the walkthrough domain are documented below.
+**Adapted from `_common/MULTI_ENGINE_RECIPE.md` (Pattern H) and `echo/reference/tri-engine-demand.md`.** Re-uses PREFLIGHT and FAN-OUT mechanics; only the parts that differ for the walkthrough domain are documented below.
 
 ---
 
@@ -18,7 +18,7 @@ Default flow for `/echo multi`. Run subagents in parallel — one per AVAILABLE 
 SCOPE → CAST → PREFLIGHT → FAN-OUT (parallel subagents) → NORMALIZE → CLUSTER → SCORE (per-persona + cross-persona + per-engine) → GROUND → SYNTHESIZE → DELIVER
 ```
 
-The flow mirrors Plea's tri-engine demand generation but the unit of work is a **step-level walkthrough trace**, not a feature demand.
+The flow mirrors Echo[demand]'s tri-engine demand generation but the unit of work is a **step-level walkthrough trace**, not a feature demand.
 
 ### 1. SCOPE
 
@@ -36,7 +36,7 @@ Select **at least 3 personas** spanning at least 2 axes of the Persona Diversity
 
 - Prefer Cast registry at `.agents/personas/registry.yaml` if available.
 - When Cast is absent, generate proto-personas internally under AI persona guardrails (`_common/AI_PERSONA_RISKS.md`) and cap their confidence at 0.50.
-- For each persona include in the FAN-OUT prompt: `persona_id`, archetype, environmental context (device, connectivity, attention level, time pressure), known mental model gaps, prior tool exposure, and last frustration. This is the same `PERSONA_CHANNEL` block Plea uses.
+- For each persona include in the FAN-OUT prompt: `persona_id`, archetype, environmental context (device, connectivity, attention level, time pressure), known mental model gaps, prior tool exposure, and last frustration. This is the same `PERSONA_CHANNEL` block Echo[demand] uses.
 
 ### 3. PREFLIGHT — engine availability detection (Echo main context, never delegated)
 
@@ -280,7 +280,7 @@ The three subagents return JSON; Echo main context handles NORMALIZE through DEL
 
 ---
 
-## Why This Works for Cognitive Walkthrough (different from Judge, Plea)
+## Why This Works for Cognitive Walkthrough (different from Judge, Echo[demand])
 
 - **Persona-channeling priors differ across engines.** Codex (GitHub/code-heavy), Antigravity (Google product-heavy), and Claude (Anthropic-curated) each have different training-data exposure to how "beginners," "seniors," "mobile users," or "accessibility-dependent users" actually move through a UI. Three independent channelings surface more authentic persona voice diversity than a single engine.
 - **Per-persona concurrence raises confidence on each cell.** When all three engines channel beginner-persona to the same friction at the same step, that friction almost certainly reflects a real UX problem (synthetic-vs-validated calibration still applies).
@@ -296,7 +296,7 @@ The three subagents return JSON; Echo main context handles NORMALIZE through DEL
 - `_common/MULTI_ENGINE_RECIPE.md` — Pattern H protocol (this skill's pattern type); shared SCOPE/PREFLIGHT/FAN-OUT/NORMALIZE/CLUSTER mechanics
 - `_common/SUBAGENT.md §MULTI_ENGINE` — base engine dispatch and loose-prompt rules
 - `_common/AI_PERSONA_RISKS.md` — persona-bias guardrails (still apply in multi mode, per engine)
-- `plea/reference/tri-engine-demand.md` — sibling persona × engine matrix flow (demand-generation domain); cross-persona signal logic mirrored here
+- `echo/reference/tri-engine-demand.md` — sibling persona × engine matrix flow (demand-generation domain); cross-persona signal logic mirrored here
 - `judge/reference/tri-engine-review.md` — canonical Pattern C tri-engine flow; PREFLIGHT/FAN-OUT shared
 - `echo/reference/ux-frameworks.md` — emotion model, cognitive load index, Peak-End rule applied at SYNTHESIZE
 - `echo/reference/output-templates.md` — base walkthrough report template extended by multi-engine additions

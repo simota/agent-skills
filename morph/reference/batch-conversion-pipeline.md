@@ -7,7 +7,7 @@ Purpose: Build reproducible, parallel document conversion pipelines for many fil
 - **morph `batch`**: Multi-file / multi-format pipelines (this document).
 - **morph `md` / `pdf` / `docx` / `epub` / `latex` (elsewhere)**: Single-format depth.
 - **Stream (elsewhere)**: ETL data pipelines (different domain).
-- **Pipe (elsewhere)**: GitHub Actions internals (this doc covers the conversion-specific layer).
+- **Gear[gha] (elsewhere)**: GitHub Actions internals (this doc covers the conversion-specific layer).
 - **Builder (elsewhere)**: Custom CLI tooling beyond this scope.
 
 ## Pipeline Anatomy
@@ -347,7 +347,7 @@ CACHE        →  cache TeX Live / fonts in CI
 DELIVER      →  artifacts (CI) or release ZIP
              →  manifest committed alongside
 
-HANDOFF      →  Pipe: deeper CI / reusable workflows
+HANDOFF      →  Gear[gha]: deeper CI / reusable workflows
              →  Builder: filter authoring tooling
              →  Cloak: PII filter design
              →  Stream: if the conversion is part of a data pipeline
@@ -393,7 +393,7 @@ HANDOFF      →  Pipe: deeper CI / reusable workflows
 - Artifact retention: [days]
 
 ### Handoffs
-- Pipe: reusable workflows
+- Gear[gha]: reusable workflows
 - Builder: filter authoring helpers
 - Cloak: PII filter design
 - Stream: if part of data pipeline
@@ -429,7 +429,7 @@ When `batch` completes, emit:
 - **Validation gates** (EPUBCheck, link check, PDF/A).
 - **Integrity manifest** (JSON with SHAs + tool versions).
 - **CI** workflow with matrix + caching.
-- **Handoffs**: Pipe, Builder, Cloak, Stream.
+- **Handoffs**: Gear[gha], Builder, Cloak, Stream.
 
 ## References
 

@@ -18,18 +18,18 @@ CAPABILITIES_SUMMARY:
 
 COLLABORATION_PATTERNS:
 - Nexus -> Rally: Parallel execution chains with NEXUS_TO_RALLY_CONTEXT handoff
-- Titan -> Rally: Product delivery parallelization for S/M scope builds
+- Nexus[deliver] -> Rally: Product delivery parallelization for S/M scope builds
 - Sherpa -> Rally: Decomposed parallel_group tasks via SHERPA_TO_RALLY_HANDOFF
 - Rally -> Nexus: Aggregated results with reconciliation report via RALLY_TO_NEXUS_HANDOFF
-- Rally -> Titan: Parallel phase results for integration
+- Rally -> Nexus[deliver]: Parallel phase results for integration
 - Rally -> Builder/Artisan: Parallel implementations as spawned teammates
 - Rally -> Guardian: Merged output for PR preparation via RALLY_TO_GUARDIAN_HANDOFF
 - Rally -> Lore: TES trends and learned parallel patterns via RALLY_TO_LORE_HANDOFF
 - Judge -> Rally: Post-synthesis quality feedback via QUALITY_FEEDBACK
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Nexus, Titan, Sherpa
-- OUTPUT: Nexus, Titan, Builder/Artisan
+- INPUT: Nexus, Nexus[deliver], Sherpa
+- OUTPUT: Nexus, Nexus[deliver], Builder/Artisan
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(M) Marketing(L)
 -->

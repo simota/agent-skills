@@ -11,7 +11,7 @@ alone, and gives the variables that decide the allocation.
 justification, redesign trade-offs) · `muse` (the `decision-priority.md` unit of a delivered
 design-system package — see `reference/design-system-context.md` §4) · `magi` (escalation target
 when the allocation is contested) · `echo` (explaining *why* a walkthrough friction point is
-intentional) · `bazaar` / `funnel` (conversion vs. trust) · `atelier` / `forge` / `artisan`
+intentional) · `funnel[premium]` / `funnel` (conversion vs. trust) · `atelier` / `forge` / `artisan`
 (implementation-time trade-offs).
 
 **Evidence tier:** practitioner synthesis. These pairings are a working taxonomy, not a standard

@@ -7,7 +7,7 @@ Purpose: Scaffold raw Kubernetes manifests (Deployment, Service, Ingress, Config
 - **Scaffold `k8s`**: raw manifest authoring and kustomize overlay layout (Deployment/Service/Ingress/ConfigMap/Secret, labels, namespace, requests/limits, probes).
 - **Scaffold `helm`**: reusable, versioned chart packaging. If the workload must ship to 3+ environments or multiple tenants, escalate from `k8s` to `helm`.
 - **Scaffold `terraform`**: cluster-level provisioning (EKS / GKE / AKS control plane, node groups, IRSA). Manifests live in `k8s`; the cluster that runs them lives in `terraform`.
-- **Pipe (elsewhere)**: CI/CD wiring — `kubectl apply -k`, `kustomize build`, ArgoCD / Flux sync. `k8s` produces the manifests; `Pipe` wires the rollout.
+- **Gear[gha] (elsewhere)**: CI/CD wiring — `kubectl apply -k`, `kustomize build`, ArgoCD / Flux sync. `k8s` produces the manifests; `Gear[gha]` wires the rollout.
 - **Gateway (elsewhere)**: public API contract, versioning, breaking-change review. Ingress *routing* lives in `k8s`; API *rules* (auth, rate limit, schema) live in `Gateway`.
 - **Native (elsewhere)**: mobile build/release concerns are out of scope for `k8s` — route those to `Native`.
 
@@ -169,7 +169,7 @@ Never commit a `Secret` with real data, even in `dev/`. Commit a placeholder and
 
 When the `k8s` manifests are ready:
 
-- **To Pipe**: the `kustomize build overlays/<env>` command, the image tag convention, and the promotion flow (dev → staging → prod). Pipe wires `kubectl apply` / ArgoCD sync / Flux Kustomization.
+- **To Gear[gha]**: the `kustomize build overlays/<env>` command, the image tag convention, and the promotion flow (dev → staging → prod). Gear[gha] wires `kubectl apply` / ArgoCD sync / Flux Kustomization.
 - **To Sentinel**: RBAC assumptions, `ServiceAccount` scope, `NetworkPolicy` posture (default-deny or not), and secret-handling path (ESO / CSI / Sealed Secrets).
 - **To Beacon**: probe endpoints, Prometheus scrape annotations (`prometheus.io/scrape`, `prometheus.io/port`), and the metrics/log labels Beacon will key dashboards on.
 - **To Canvas**: topology — namespaces, services, ingress routes — so Canvas can render the cluster view.

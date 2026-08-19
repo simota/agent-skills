@@ -7,7 +7,7 @@ Purpose: Author kill criteria *before* commit and run sunset decisions *after* l
 - **Spark `kill`**: authoring kill-criteria thresholds at proposal time and running sunset decisions for launched features (feature-deprecation checklist, migration-off plan, sunset communication).
 - **vs `Void`**: Void runs systematic YAGNI scope-cutting across a codebase or backlog; `kill` is narrowly about the shutdown decision for a specific proposed or launched feature.
 - **vs `Rank`**: Rank is the priority-scoring framework (what to do next); `kill` is the sunset framework (what to stop doing).
-- **vs `Plea`**: Plea surfaces user advocacy that may justify keeping a feature; `kill` consumes that signal but enforces the pre-committed threshold.
+- **vs `Echo[demand]`**: Echo[demand] surfaces user advocacy that may justify keeping a feature; `kill` consumes that signal but enforces the pre-committed threshold.
 - **vs `Experiment`**: Experiment validates a hypothesis with a pre-committed MDE and guardrail; `kill` extends that discipline to post-launch feature lifecycle beyond a single test window.
 
 If the question is "should this one feature stop?" → `kill`. If it is "should this whole scope get pruned?" → `Void`.

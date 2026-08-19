@@ -528,7 +528,7 @@ Alert:    (none — no score drop >5)
 | Score drop >5 | Immediate investigation |
 | New Critical AP | Alert + create improvement plan |
 | Score plateau (3+ checks) | Review if deeper audit needed |
-| Grade change (e.g. B→C) | Escalate to Titan for milestone review |
+| Grade change (e.g. B→C) | Escalate to Nexus[deliver] for milestone review |
 
 ---
 

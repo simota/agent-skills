@@ -43,7 +43,7 @@ Scale: 9–27 agents (capture-heavy; desktop/robustness branches add capture age
 | **incremental-clone** (screen-by-screen) | Large product, live system | Reproduce one screen/flow at a time, each independently parity-gated | Low — each increment verifiable & shippable |
 | **big-bang full clone** | Small/self-contained product | Whole reproduction, single cutover | High — **requires user confirmation** |
 
-Capture-source bindings by `target_type`: **live web** = Vector/Voyager (crawl, screenshot, network observe) + Frame/Pixel (design extraction); **desktop** = Hearth `automate` (macOS app automation via AppleScript/JXA — drive menus/windows/dialogs, capture per-window screenshots, script non-scriptable apps via System Events) + Pixel (visual diff of captured windows); **has Figma** = Frame (design context); **has source** = Lens (structure map); **mobile** = Snap/Voyager (native UI capture); **API-backed** = Schema (infer data model from observed responses).
+Capture-source bindings by `target_type`: **live web** = Vector/Voyager (crawl, screenshot, network observe) + Frame/Pixel (design extraction); **desktop** = Hearth `automate` (macOS app automation via AppleScript/JXA — drive menus/windows/dialogs, capture per-window screenshots, script non-scriptable apps via System Events) + Pixel (visual diff of captured windows); **has Figma** = Frame (design context); **has source** = Lens (structure map); **mobile** = Voyager[ios]/Voyager (native UI capture); **API-backed** = Schema (infer data model from observed responses).
 
 > **Desktop capture coverage.** Hearth `automate` covers **macOS** GUI automation/screenshot natively. **Windows/Linux** desktop GUI automation has no first-class skill in this roster, so those targets are captured through an **external capture adapter** — the contract below makes that path first-class rather than a caveat. Visual/behavioral parity downstream (Pixel/Voyager/Radar/Attest/judge) is platform-independent and unchanged.
 
@@ -241,7 +241,7 @@ The core knowledge of this recipe. Magi confirms the relevant dimensions in Phas
 
 ## 6. Add-ons
 
-- `+Snap` — native iOS UI capture/verification when the target is a mobile app.
+- `+Voyager[ios]` — native iOS UI capture/verification when the target is a mobile app.
 - `+Hearth[automate]` — macOS desktop-app capture/automation when `target_type = desktop`.
 - `+Ink` — recreate brand assets (icons/illustrations) when the original's assets cannot be licensed for reuse.
 - `+Flow` — when motion/animation fidelity is part of "complete copy".

@@ -15,18 +15,18 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 
 ## High Priority — Frequently Confused Pairs
 
-### Gear vs Pipe (DevOps / CI/CD)
+### Gear modes (DevOps / CI/CD)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
 | "Fix CI", "speed up build", "update dependencies" | **Gear** | Maintenance of existing pipelines |
-| "Design new workflow", "reusable workflow", "security hardening for GHA" | **Pipe** | New GHA architecture or advanced patterns |
+| "Design new workflow", "reusable workflow", "security hardening for GHA" | **Gear `gha`** | New GHA architecture or advanced patterns |
 | "Add caching to CI" | **Gear** | Optimization of existing pipeline |
-| "Matrix strategy", "composite action design", "OIDC setup" | **Pipe** | Advanced GHA-specific features |
+| "Matrix strategy", "composite action design", "OIDC setup" | **Gear `gha`** | Advanced GHA-specific features |
 | Docker optimization, local dev setup | **Gear** | Not GHA-specific |
 | Observability/alerting setup | **Gear** + Beacon | Infrastructure concern |
 
-**Rule of thumb**: Existing pipeline maintenance → Gear. New GHA workflow design or advanced GHA features → Pipe.
+**Rule of thumb**: Existing provider-agnostic pipeline maintenance → Gear `ci`. New GitHub Actions workflow design or advanced GHA features → Gear `gha`.
 
 ---
 
@@ -64,7 +64,7 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 
 ---
 
-### Sigil vs Architect vs Loom (Skill / Agent / Layer Creation)
+### Sigil vs Architect (Skill / Agent / Layer Creation)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
@@ -74,11 +74,11 @@ When multiple agents appear to fit a task, use these decision rules for correct 
 | "Analyze this project and create shortcuts" | **Sigil** | Project context → lightweight skills |
 | "Ecosystem gap analysis" | **Architect** | Ecosystem-level concern |
 | "Improve this agent's SKILL.md" | **Architect** | Agent enhancement |
-| "Design this repo's agents, recipes, AND workflows together" | **Loom** | Project **operating layer** as one system — blueprints the suite, delegates skill bodies to Sigil |
+| "Design this repo's agents, recipes, AND workflows together" | **Sigil `blueprint`** | Project **operating layer** as one system before artifact authoring |
 | "Author one project skill body" | **Sigil** | Single skill, not a coordinated suite |
-| "What agent owns which repo task?" (project routing map) | **Loom** | Project-local routing-map design (consumed by Nexus) |
+| "What agent owns which repo task?" (project routing map) | **Sigil `blueprint`** | Project-local routing-map design (consumed by Nexus) |
 
-**Rule of thumb**: Ecosystem-wide permanent agent → Architect. One project-specific skill → Sigil. A coordinated *set* of project agents/recipes/workflows designed together → Loom (designs, then delegates authoring to Sigil and runtime to Nexus).
+**Rule of thumb**: Ecosystem-wide permanent agent → Architect. One project-specific artifact → Sigil authoring mode. A coordinated *set* of project agents/recipes/workflows → Sigil `blueprint`, with runtime registered in Nexus.
 
 ---
 
@@ -241,13 +241,13 @@ Prompt text inside a `SKILL.md` splits the same way: the file's structure and no
 
 ---
 
-### Grove vs Nest (Repository Structure / LLM-Optimized Folders)
+### Grove modes (Repository Structure / LLM-Optimized Folders)
 
-**Rule of thumb**: Human developer experience → Grove ("directory layout", "monorepo design", "team conventions", CI/CD paths). LLM/AI tool navigation efficiency → Nest ("context cost", "CLAUDE.md hierarchy", "agents can't find files", "token budget too high").
+**Rule of thumb**: Human developer experience → Grove default modes ("directory layout", "monorepo design", "team conventions", CI/CD paths). LLM/AI tool navigation efficiency → Grove `llm` ("context cost", "CLAUDE.md hierarchy", "agents can't find files", "token budget too high").
 
 ---
 
-### Helm vs Spark vs Plea (JTBD — Jobs-To-Be-Done)
+### Helm vs Spark vs Echo[demand] (JTBD — Jobs-To-Be-Done)
 
 Three skills hold full JTBD content, each applying it through a different lens — this is
 intentional multi-lens coverage, not duplication. Route by *what the JTBD output feeds*.
@@ -255,7 +255,7 @@ intentional multi-lens coverage, not duplication. Route by *what the JTBD output
 **Rule of thumb**: strategy/competitive-set ("market/category strategy via JTBD", "disruption") →
 Helm (`jobs-to-be-done.md`); feature targeting ("feature brief", "proposal hypothesis") → Spark
 (`persona-jtbd.md`); demand/switch interview ("forces of progress for demand", "why users would
-switch") → Plea (`jtbd-switch-interview.md`). Value Proposition Canvas (jobs/pains/gains zoom-in)
+switch") → Echo `demand` (`demand-jtbd-switch-interview.md`). Value Proposition Canvas (jobs/pains/gains zoom-in)
 lives in **Spark** (`value-proposition-canvas.md`) and pulls its jobs block from `persona-jtbd.md`.
 
 ---
@@ -278,9 +278,9 @@ upside ("how much can this feature earn", "opportunity upper bound") → Spark (
 
 ---
 
-### Snap vs Voyager (Mobile / Cross-Platform UI Testing)
+### Voyager modes (Mobile / Cross-Platform UI Testing)
 
-**Rule of thumb**: Pure-iOS XCUITest/screenshot pipeline → Snap ("accessibility-identifier query", "fastlane snapshot", "App Store screenshot pipeline"). Cross-platform E2E (Appium/Detox/Maestro/Playwright) → Voyager.
+**Rule of thumb**: Pure-iOS XCUITest/screenshot pipeline → Voyager `ios` ("accessibility-identifier query", "fastlane snapshot", "App Store screenshot pipeline"). Cross-platform E2E (Appium/Detox/Maestro/Playwright) → Voyager's platform modes.
 
 ---
 
@@ -336,9 +336,9 @@ upside ("how much can this feature earn", "opportunity upper bound") → Spark (
 
 **Rule**: Business strategy simulation → Helm. Competitive intelligence gathering → Compete. Compete output feeds into Helm input.
 
-### Titan vs Nexus
+### Nexus build recipes
 
-**Rule**: "Build a product from scratch" → Titan. "Execute this task chain" → Nexus. Titan issues chains TO Nexus.
+**Rule**: One bounded capability → Nexus `feature`. A product/MVP build whose chain must adapt to scope → Nexus `deliver`. A high-investment discovery-to-ship run → Nexus `apex`.
 
 ---
 
@@ -382,16 +382,16 @@ upside ("how much can this feature earn", "opportunity upper bound") → Spark (
 
 ---
 
-### Shard vs Schema (Multi-tenant / DB Design)
+### Schema modes (Multi-tenant / DB Design)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
-| "Tenant isolation strategy" | **Shard** | Multi-tenant architecture |
+| "Tenant isolation strategy" | **Schema `tenant`** | Multi-tenant architecture |
 | "Database normalization", "ER diagram" | **Schema** | Schema design |
-| "RLS policies for tenants" | **Shard** | Tenant-specific policies |
+| "RLS policies for tenants" | **Schema `tenant`** | Tenant-specific policies |
 | "Add a new table/column" | **Schema** | Regular schema change |
 
-**Rule of thumb**: Multi-tenant concerns → Shard. General DB design → Schema.
+**Rule of thumb**: Multi-tenant concerns → Schema `tenant`. General DB design → Schema's schema/migration modes.
 
 ---
 
@@ -449,7 +449,7 @@ upside ("how much can this feature earn", "opportunity upper bound") → Spark (
 | "Release scheduling, feature flag rollout" | **Launch** | One-time release events |
 | "Autonomous AI loop runner (nexus-autoloop)" | **Orbit** | Script-driven AI loops |
 | "Business calendar (JP holidays, fiscal year, banking days)" | **Tempo** | Calendar-as-code |
-| "GitHub Actions cron tuning" | **Tempo** (design) + Gear/Pipe (impl) | Tempo picks pattern, Gear/Pipe configures |
+| "GitHub Actions cron tuning" | **Tempo** (design) + Gear/Gear[gha] (impl) | Tempo picks pattern, Gear/Gear[gha] configures |
 | "Backfill missed runs after incident" | **Triage** → **Tempo** (replay plan) → Builder | Tempo designs idempotent replay |
 
 **Rule of thumb**: Recurring time logic → Tempo. State machine → Weave. Release event → Launch. AI agent loop → Orbit.
@@ -527,7 +527,7 @@ For S/M scope projects, skip agents that add overhead without proportional value
 | Vision | Palette/Muse directly | No full UX redesign needed |
 | Forge | Artisan directly | Requirements are clear |
 | Cast | Echo standalone | Simple persona needs |
-| Pipe | Gear | Basic CI/CD only |
+| Gear[gha] | Gear | Basic CI/CD only |
 | Compete | Skip entirely | Internal tools, no competitors |
 | Scribe | Skip entirely | S scope, no formal specs needed |
 | Field | Echo directly | No formal research methodology needed |

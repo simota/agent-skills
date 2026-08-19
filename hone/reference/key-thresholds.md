@@ -122,7 +122,7 @@ For every CLAUDE.md / AGENTS.md line, ask Anthropic's question: **"would Claude 
 > and nothing else — startup context is unchanged. Only mechanisms whose body loads on demand
 > (skill bodies, `paths:`-scoped rules, subagents) or not at all (hooks, permissions) actually cut
 > the recurring cost. Audit the **sum after splitting**, never the per-file line counts
-> (`nest/reference/sharding-strategy.md` § pitfalls). Treating an import split as a size fix is the
+> (`grove/reference/llm-sharding-strategy.md` § pitfalls). Treating an import split as a size fix is the
 > most common way a bloat finding gets closed without being fixed.
 
 ---

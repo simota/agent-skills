@@ -145,7 +145,7 @@ universal_skills: [scout, judge, zen, builder, scribe, sherpa, void, magi, riff,
 | sentinel  | H | scan     | secrets, sqli, headers | next-auth + auth/ folder |
 | crypt     | H | design   | tls, kms, e2ee | next-auth session token storage |
 | gateway   | M | review   | auth, rate-limit, deprecation | Next.js API routes / route handlers |
-| pipe      | M | design   | reusable, security, performance | .github/workflows/ci.yml present |
+| gear      | M | gha      | reusable, security, performance | .github/workflows/ci.yml present |
 | muse      | M | tokens   | spacing, color, typography | Tailwind config with custom theme |
 | palette   | M | improve  | error, empty, loading | Frontend SaaS context |
 | vitrine   | M | story    | a11y, chromatic, coverage | Storybook config detected |
@@ -166,7 +166,7 @@ universal_skills: [scout, judge, zen, builder, scribe, sherpa, void, magi, riff,
 
 - **Cache in repo root** (`./compass-cache.md`): pollutes user's workspace. Always `.claude/compass-cache.md`.
 - **Top-N > 50**: defeats the slim cache purpose. Use full catalog instead.
-- **Caching all 122 skills**: same as above — just read `catalog.md`.
+- **Caching all 114 skills**: same as above — just read `catalog.md`.
 - **Skipping universal inclusions**: breaks recommendations for common tasks (debug, review, plan).
 - **Hand-editing the cache**: re-run `/compass refresh` instead. Hand edits drift from the catalog and the scanner.
 - **Refreshing on every `recommend`**: defeats the cost saving. Only refresh on user request or invalidation trigger.

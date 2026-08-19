@@ -7,7 +7,7 @@ Purpose: Scaffold a Helm chart that is safe to `helm install` across multiple en
 - **Scaffold `helm`**: authoring and packaging a chart for reuse (Chart.yaml, values, templates, subcharts, `values.schema.json`, `helm test`, chart-releaser workflow).
 - **Scaffold `k8s`**: single-workload, single-cluster raw manifests. If the workload will never be re-deployed elsewhere, stay on `k8s`.
 - **Scaffold `terraform`**: cluster provisioning. The chart runs *on* the cluster Terraform builds.
-- **Pipe (elsewhere)**: CI that runs `helm upgrade --install` / `helm diff` / chart-releaser. `helm` scaffolds the chart; `Pipe` ships it.
+- **Gear[gha] (elsewhere)**: CI that runs `helm upgrade --install` / `helm diff` / chart-releaser. `helm` scaffolds the chart; `Gear[gha]` ships it.
 - **Gateway (elsewhere)**: API rules / auth / rate limit for any Ingress the chart exposes.
 
 Escalate `k8s` → `helm` when any of: (1) same workload, 3+ envs; (2) multi-tenant parameterization; (3) external consumers; (4) the values matrix outgrows kustomize overlays.
@@ -168,7 +168,7 @@ Treat rendered output as a review artifact. Run in CI:
 
 When the chart is ready:
 
-- **To Pipe**: the CI contract — `helm lint`, `helm template | kubeconform`, `helm-unittest`, `helm upgrade --install --atomic`, `helm test`, and chart-releaser / OCI push steps.
+- **To Gear[gha]**: the CI contract — `helm lint`, `helm template | kubeconform`, `helm-unittest`, `helm upgrade --install --atomic`, `helm test`, and chart-releaser / OCI push steps.
 - **To Sentinel**: values-driven RBAC scope, `ServiceAccount` and `NetworkPolicy` behavior under default values, and the secret hydration path (ESO / CSI / sealed).
 - **To Beacon**: metrics, scrape labels, and default alert thresholds encoded in the chart (or intentionally deferred to consumer).
 - **To Gateway**: Ingress behavior the chart installs — host rules, TLS, auth annotations — so Gateway can enforce API contract.

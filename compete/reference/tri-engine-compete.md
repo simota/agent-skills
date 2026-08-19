@@ -250,7 +250,7 @@ The three subagents return JSON; Compete main context handles NORMALIZE through 
 - `_common/MULTI_ENGINE_RECIPE.md` — base protocol (Pattern D scoring, PREFLIGHT, FAN-OUT, attribution conventions)
 - `_common/SUBAGENT.md §MULTI_ENGINE` — engine dispatch, loose prompts, fallback rules
 - `spark/reference/tri-engine-proposal.md` — canonical Pattern D sibling (ideation domain)
-- `plea/reference/tri-engine-demand.md` — canonical Pattern D with calibration tags (synthetic demand domain)
+- `echo/reference/tri-engine-demand.md` — canonical Pattern D with calibration tags (synthetic demand domain)
 - `compete/reference/intelligence-gathering.md` — WebSearch / WebFetch sources used during GROUND
 - `compete/reference/battle-card.md` — Battle Card output format that absorbs engine_concurrence tags
 - `compete/reference/analysis-templates.md` — Feature Matrix / SWOT output formats

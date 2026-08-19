@@ -187,7 +187,7 @@ Each gate below states its own failure mode in full (§3a Fusion Map, §3b Selec
 - `+Muse` / `+Vision` — heavy design-token reconciliation when A's and B's visual languages diverge sharply (Muse owns the unified token system; Vision directs the reconciled look).
 - `+Flow` — when motion/interaction vocabularies must be reconciled, not just pasted.
 - `+Polyglot` — when sources ship different locale sets that must be unified.
-- `+Hearth[automate]` / `+Snap` — desktop / native-mobile source capture (mixed-platform fusion).
+- `+Hearth[automate]` / `+Voyager[ios]` — desktop / native-mobile source capture (mixed-platform fusion).
 - `+Sherpa` — decompose a large fusion into atomic per-element build steps.
 - `+Siege` — when the fused product must meet a performance envelope drawn from either source.
 - `+Sentinel` / `+Clause` — when the multi-source IP/trade-dress posture (§3d) needs a security/legal-surface pass before sign-off.

@@ -287,7 +287,7 @@ CREATE TABLE orders (
 - **normalize**: Assess NF level and propose de-normalization trade-offs; load `normalization-guide.md`.
 - **index**: Analyze query patterns and propose covering/partial indexes; load `index-strategies.md` + `index-performance-anti-patterns.md`.
 - **rollback**: Provide reverse migration DDL, dual-write windows, backfill scripts, and safe alternatives for destructive changes (DROP COLUMN / data conversion). Ask First: destructive change without rollback path.
-- **tenant**: Compare the 4 strategies (shared-DB / schema-per-tenant / DB-per-tenant / shard-based) against tenant count, isolation requirements, and cost constraints. Includes RLS / connection routing / per-tenant backup strategies. Coordinates with the Shard agent.
+- **tenant**: Compare the 4 strategies (shared-DB / schema-per-tenant / DB-per-tenant / shard-based) against tenant count, isolation requirements, and cost constraints. Includes RLS / connection routing / per-tenant backup strategies. Coordinates with the Schema[tenant] agent.
 - **index**: Query patterns → covering / partial / expression index design. Existing `index-strategies.md`.
 - **partition**: Select range / list / hash / time-based. Present pruning impact, partition maintenance (auto-creation, old-partition deletion), and staged migration from existing tables.
 - **audit-log**: Load `audit-log-schema.md`. Append-only audit table design — actor / action / target / before-image / after-image / timestamp / correlation-id. Choose Postgres temporal tables vs trigger-based vs CDC (Debezium). Define retention + WORM compliance + tamper-evidence (HMAC chain). Never UPDATE / DELETE on audit rows.

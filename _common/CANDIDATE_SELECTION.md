@@ -4,7 +4,7 @@ Cross-skill discipline for **narrowing many generated candidates down to one def
 
 **Read when:** you are about to generate more than one candidate; you have a pile of variants and no stated basis for choosing; a review is drifting into preference voting; a skill's output is "here are 12 options" with no narrowing.
 
-**Audience:** `vision`, `forge`, `pixel`, `bazaar`, `funnel`, `atelier`, `muse`, `ink`, `spark`, `riff`, `magi`, `rank`, `nexus`.
+**Audience:** `vision`, `forge`, `pixel`, `funnel[premium]`, `funnel`, `atelier`, `muse`, `ink`, `spark`, `riff`, `magi`, `rank`, `nexus`.
 
 **Prerequisites:** none.
 **Composes with:** `_common/parametric-output.md` (**orthogonal** — parametric output presents a *range along one axis* for a human to tune; this file *reduces a set of whole candidates* to one), `_common/EVIDENCE_LADDER.md` (how much evidence a Gate check must carry), `_common/ADVERSARIAL_REFUTATION.md` (stress-testing the surviving candidate), `_common/FINDING_LEDGER.md` (identity/disposition vocabulary when candidates persist across cycles).

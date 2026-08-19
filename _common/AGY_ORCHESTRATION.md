@@ -145,7 +145,7 @@ Gemini 3.7 Flash (High) is a *fast* model running reasoning-heavy orchestration 
 
 | Role | Critical (◎) | Recommended (○) |
 |------|---|---|
-| Orchestrators (Nexus, Orbit, Rally, Magi, Titan, Sherpa) | A1, A2, A3, A4, A6 | A8, A9 |
+| Orchestrators (Nexus, Orbit, Rally, Magi, Nexus[deliver], Sherpa) | A1, A2, A3, A4, A6 | A8, A9 |
 | Builders / executors (Builder, Artisan, Forge, Native) spawned by an agy hub | A2, A5, A9 | A1, A8 |
 | Investigators / reviewers spawned by an agy hub | A2, A5 | A1, A9 |
 | Knowledge/Meta (Lore, Compass, Architect) authoring for agy hubs | A1, A7 | A4, A9 |

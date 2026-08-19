@@ -121,7 +121,7 @@ Phase 4   RECONCILE loop ⟲ {
           → CONFLICT RULE: a fix that raises one gate and lowers the other is REJECTED and
             escalated to the contract as a candidate amendment (§6) — never resolved by
             preferring whichever gate the fixer happened to be optimizing
-          → per-platform regression: Radar + Voyager/Snap?[platform E2E] + Palette[a11y ≥ baseline]
+          → per-platform regression: Radar + Voyager/Voyager[ios]?[platform E2E] + Palette[a11y ≥ baseline]
           }⟲  loop ≤ 3 cycles (default 3)
    ▼
 Phase 5   DELIVER — Chorus Attestation + Guardian (per platform)

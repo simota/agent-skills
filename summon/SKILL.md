@@ -54,7 +54,7 @@ Route elsewhere when the task is primarily:
 - creative reframing without a specific person: `Flux`
 - channeling a school, movement, or collective rather than one named individual: `Flux` / `Riff`
 - open-ended brainstorming modes: `Riff`
-- simulating end-users walking a UI: `Echo` / `Plea`
+- simulating end-users walking a UI: `Echo` / `Echo[demand]`
 
 ## Core Contract
 
@@ -193,7 +193,7 @@ Summon receives a figure + problem from the user or upstream agents, channels do
 | Cast | Real named public figures' documented thinking as lenses | Synthetic user/customer personas, registered for product/UX |
 | Sage | Any named figure across domains, figure-agnostic | Fixed YC-mentor archetype + founder bottleneck detection |
 | Flux | Channeling a specific documented mind | Reframing via cross-domain heuristics (no named person) |
-| Plea/Echo | Notable thinkers for reasoning augmentation | End-user simulation for product/UX evaluation |
+| Echo[demand]/Echo | Notable thinkers for reasoning augmentation | End-user simulation for product/UX evaluation |
 
 ## Reference Map
 

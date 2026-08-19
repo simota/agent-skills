@@ -9,7 +9,7 @@ Purpose: Design event-store schemas where events are the system of record. Cover
 - **weave `compensation` (elsewhere)**: Saga / compensation patterns for distributed transactions.
 - **stream (elsewhere)**: Streaming pipelines that consume / project events.
 - **gateway (elsewhere)**: API surface; events are not REST resources.
-- **shard (elsewhere)**: Multi-tenant partitioning of event streams.
+- **Schema `tenant` (elsewhere)**: Multi-tenant partitioning of event streams.
 
 ## Event Sourcing Recap
 
@@ -199,7 +199,7 @@ OPS           →  compaction NEVER (events are immutable)
 HANDOFF       →  weave: saga / compensation patterns
               →  stream: projection pipelines via Kafka
               →  gateway: command APIs (NOT event REST)
-              →  shard: tenant partitioning
+              →  Schema `tenant`: tenant partitioning
               →  builder: aggregate implementation
 ```
 
@@ -246,7 +246,7 @@ HANDOFF       →  weave: saga / compensation patterns
 - weave: saga design (cross-aggregate)
 - stream: projection pipelines
 - gateway: command API design
-- shard: tenant strategy
+- Schema `tenant`: tenant strategy
 - builder: aggregate impl
 ```
 
@@ -279,7 +279,7 @@ When `event-sourcing` completes, emit:
 - **Outbox** pattern (or CDC choice).
 - **Schema evolution** plan (event_version + upcasters).
 - **Operational** rules (privileges, archive, backup).
-- **Handoffs**: weave, stream, gateway, shard, builder.
+- **Handoffs**: Weave, Stream, Gateway, Schema `tenant`, Builder.
 
 ## Dedicated Event Stores (2026-05 landscape)
 
