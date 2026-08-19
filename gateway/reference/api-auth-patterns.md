@@ -170,7 +170,7 @@ HANDOFF      →  Builder: middleware
              →  Sentinel: static analysis
              →  Probe: runtime tests
              →  Vigil: detection (token theft, anomalous auth)
-             →  Oath: regulated context (PCI / HIPAA implications)
+             →  Canon[regulatory]: regulated context (PCI / HIPAA implications)
 ```
 
 ## Output Template
@@ -231,7 +231,7 @@ HANDOFF      →  Builder: middleware
 - Sentinel: static analysis
 - Probe: runtime tests
 - Vigil: detection rules
-- Oath: regulated mapping
+- Canon[regulatory]: regulated mapping
 ```
 
 ## Anti-Patterns
@@ -264,7 +264,7 @@ When `auth` completes, emit:
 - **IdP choice** + provisioning + federation.
 - **Error semantics** (401 vs 403, WWW-Authenticate).
 - **Client patterns** per caller type.
-- **Handoffs**: Builder, Crypt, Sentinel, Probe, Vigil, Oath.
+- **Handoffs**: Builder, Crypt, Sentinel, Probe, Vigil, Canon[regulatory].
 
 ## References
 

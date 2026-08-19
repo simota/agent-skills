@@ -87,7 +87,7 @@ Code review and quality checks.
 |-------|------|---------|------|
 | **Judge** | Automated code review | PR review automation, bug detection | Mixed |
 | **Zen** | Refactoring | Variable renaming, function extraction, dead-code removal | Mixed |
-| **Canon** | Standards-compliance check | OWASP / WCAG / OpenAPI conformance evaluation | No |
+| **Canon** | Standards and regulatory compliance | OWASP/WCAG/OpenAPI plus SOC2/PCI-DSS/HIPAA/ISO 27001 audit recipes | Mixed |
 | **Gauge** | SKILL.md audit | 19-item checklist conformance | No |
 | **Attest** | Spec-compliance verification | Acceptance-criteria extraction, BDD scenario generation | No |
 | **Cloak** | Privacy engineering | PII detection, GDPR / CCPA compliance | Mixed |
@@ -107,7 +107,7 @@ Documentation authoring, visualization, and article writing.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Scribe** | Technical specifications | PRD / SRS / HLD / LLD authoring | No |
+| **Scribe** | Technical and cross-team specifications | PRD/SRS/HLD/LLD plus `cross-team` L0-L3 packages | No |
 | **Quill** | Code documentation | JSDoc additions, README updates, fixing `any` types | Mixed |
 | **Prose** | UX writing | Microcopy, error messages, voice and tone | No |
 | **Tome** | Learning material | Diff → tutorial conversion, design-decision records | No |
@@ -157,7 +157,6 @@ Infrastructure, CI/CD, and operations.
 | **Pipe** | GitHub Actions | Workflow design, security hardening | Yes |
 | **Beacon** | Observability and reliability | SLO / SLI design, alert strategy | Mixed |
 | **Launch** | Release management | Versioning, CHANGELOG, rollback | Mixed |
-| **Oath** | Compliance | SOC2 / PCI-DSS / HIPAA conformance checks | Mixed |
 | **Ledger** | FinOps | Cloud cost optimization, RI / SP recommendations | No |
 
 ## Modernization (2)
@@ -236,14 +235,14 @@ Incident response.
 | **Triage** | Incident first response | Impact identification, recovery procedure, postmortem | No |
 | **Mend** | Automated remediation | Runbook execution, staged verification, rollback | Mixed |
 
-## Communication (2)
+## Communication (1 agent + Scribe recipe)
 
 Coordination and communication.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Relay** | Messaging integration | Bot development, webhooks, WebSocket | Mixed |
-| **Accord** | Spec alignment | Cross-team Business / Dev / Design specifications | No |
+| **Scribe** (`cross-team`) | Spec alignment | Cross-team Business / Dev / Design specifications | No |
 
 ## Meta / Tooling (9)
 

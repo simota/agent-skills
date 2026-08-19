@@ -55,12 +55,12 @@ RIFF_TO_SPARK_HANDOFF:
 
 ---
 
-## Riff → Accord (Requirement Seed Handoff)
+## Riff → Scribe[unified] (Requirement Seed Handoff)
 
-Pass a concept to Accord as a seed for requirements definition.
+Pass a concept to Scribe[unified] as a seed for requirements definition.
 
 ```yaml
-RIFF_TO_ACCORD_HANDOFF:
+RIFF_TO_SCRIBE_HANDOFF:
   concept:
     title: [concept title]
     summary: [2-3 sentence summary]

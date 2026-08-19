@@ -386,5 +386,5 @@ SKILL.md keeps only the Native and Shift rows inline (the two most-confused agen
 | Frame | — | Figma → mobile design context extraction (input to Port) |
 | Gateway | Mobile API redesign **specification** within porting | API design and OpenAPI spec authoring |
 | Scribe | — | Generic technical documentation — Port produces a domain-specific blueprint |
-| Accord | — | Cross-team spec packaging — Port output feeds it when an L0-L3 doc set is needed |
+| Scribe[unified] | — | Cross-team spec packaging — Port output feeds it when an L0-L3 doc set is needed |
 

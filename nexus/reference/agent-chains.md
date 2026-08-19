@@ -77,7 +77,7 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | BROWSER | evidence | Vector → Lens → Canvas |
 | BROWSER | performance | Vector → Bolt |
 | DECISION | architecture | Magi → Builder/Zen (based on verdict) |
-| DECISION | strategy | Accord → Magi → Spark |
+| DECISION | strategy | Scribe[unified] → Magi → Spark |
 | DECISION | intent | Forge/Builder |
 | DECISION | deadlock | Magi → Flux → Magi → Builder |
 | ANALYSIS | standards | Canon → Builder → Radar |
@@ -102,7 +102,7 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | STRATEGY | retention | Bond → Spark → Builder → Radar |
 | STRATEGY | ab-test | Experiment → Builder → Radar |
 | STRATEGY | data-pipeline | Stream → Schema → Builder → Radar |
-| STRATEGY | reframe | Accord → Flux → Helm → Scribe |
+| STRATEGY | reframe | Scribe[unified] → Flux → Helm → Scribe |
 | STRATEGY | simulation | Helm → Canvas → Scribe |
 | STRATEGY | simulation-full | Compete → Helm → Magi → Scribe → Canvas |
 | MARKETING | quick | Compete → Growth → Funnel |
@@ -131,9 +131,9 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | AI_FEATURE | llm-pipeline | Oracle → Stream → Builder → Radar → Sentinel |
 | PRERELEASE | quick | Guardian |
 | PRERELEASE | full | Sentinel → Radar → Guardian → Launch → Harvest |
-| REQUIREMENTS | quick | Accord → Scribe |
-| REQUIREMENTS | complex | Accord → Magi → Scribe → Sherpa → Canvas |
-| REQUIREMENTS | narrative | Cast → Saga → Accord → Scribe |
+| REQUIREMENTS | quick | Scribe[unified] → Scribe |
+| REQUIREMENTS | complex | Scribe[unified] → Magi → Scribe → Sherpa → Canvas |
+| REQUIREMENTS | narrative | Cast → Saga → Scribe[unified] → Scribe |
 | DESIGN_SYSTEM | tokens | Vision → Muse → Artisan → Radar |
 | DESIGN_SYSTEM | full | Vision → Muse → Vitrine → Artisan → Quill → Radar |
 | DESIGN_SYSTEM | figma-driven | Frame → Vision → Muse → Vitrine → Quill |

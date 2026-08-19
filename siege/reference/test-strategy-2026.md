@@ -195,7 +195,7 @@ Source: checklyhq.com; usenix.org/publications/loginonline — Synthetic Monitor
 | E2E + Visual + a11y | `voyager` | `radar` (component-level testing) |
 | Load + chaos + replay | `siege` | `triage` / `mend` (incident replay) |
 | Test data + fixtures | `mint` | `siege` (load profile generation) |
-| Spec compliance | `attest` | `accord` / `scribe` (spec authoring) |
+| Spec compliance | `attest` | `scribe[unified]` / `scribe` (spec authoring) |
 
 Use this table when classifying an incoming test request — the primary skill owns the design, the secondary skill is the typical downstream handoff.
 

@@ -7,7 +7,7 @@ Purpose: Detect and remediate bias in persona sets. Cover representation matrix,
 - **cast `bias-audit`**: Persona representation + ethical audit (this document).
 - **cast `archetype` (elsewhere)**: Brand / JTBD archetype tagging.
 - **Cloak (elsewhere)**: Privacy / consent / PII handling.
-- **Oath (elsewhere)**: Regulated context (e.g., insurance non-discrimination).
+- **Canon[regulatory] (elsewhere)**: Regulated context (e.g., insurance non-discrimination).
 - **Plea (elsewhere)**: Synthetic user voice (separate concern, but shares ethics surface).
 
 ## Why Bias Audits
@@ -175,7 +175,7 @@ REPORT      →  bias audit report with severity tiers
 
 HANDOFF     →  back to cast `generate` for missing personas
             →  Cloak: privacy review of new attributes
-            →  Oath: regulated-context check
+            →  Canon[regulatory]: regulated-context check
             →  Voice / Echo / Spark: re-run downstream with debiased set
 ```
 
@@ -242,7 +242,7 @@ HANDOFF     →  back to cast `generate` for missing personas
 ### Handoffs
 - cast `generate`: produce additions
 - Cloak: privacy review
-- Oath: regulated check (if applicable)
+- Canon[regulatory]: regulated check (if applicable)
 - Echo / Spark / Voice: re-run downstream after fix
 ```
 
@@ -278,7 +278,7 @@ When `bias-audit` completes, emit:
 - **Stress-case coverage** check.
 - **Severity-tiered findings** (BLOCK / WARN / INFO).
 - **Remediation list** (additions + rewrites).
-- **Handoffs**: cast generate, Cloak, Oath, downstream re-run.
+- **Handoffs**: cast generate, Cloak, Canon[regulatory], downstream re-run.
 
 ## Regulatory & Standards Context (as of 2026-05)
 

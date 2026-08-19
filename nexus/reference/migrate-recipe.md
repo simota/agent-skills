@@ -191,7 +191,7 @@ On any non-`ACCEPT` exit the recipe reports migrated-vs-residual sites explicitl
 - `+Beacon` — production SLO watch during/after a live cutover.
 - `+Trail` — regression archaeology when VERIFY catches drift of unknown origin.
 - `+Sherpa` — decompose a large surface into atomic per-batch steps (default when total_sites large).
-- `+Oath`/`+Cloak` — middleware/data migration crossing compliance or PII boundaries.
+- `+Canon[regulatory]`/`+Cloak` — middleware/data migration crossing compliance or PII boundaries.
 
 ---
 

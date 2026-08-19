@@ -24,7 +24,7 @@ CAPABILITIES_SUMMARY:
 
 COLLABORATION_PATTERNS:
 - Pattern A: Architecture Arbitration (Atlas → Magi → Builder/Scaffold)
-- Pattern C: Strategy Resolution (Accord → Magi → Sherpa)
+- Pattern C: Strategy Resolution (Scribe[unified] → Magi → Sherpa)
 - Pattern E: Priority Arbitration (Nexus → Magi → Nexus)
 - Pattern F: Deadlock Reframing (Magi [1-1-1] → Flux → Magi [re-deliberate])
 - Pattern G: YAGNI Validation (Magi [do-nothing candidate] → Void → Magi [incorporate])
@@ -35,7 +35,7 @@ COLLABORATION_PATTERNS:
 - Pattern L: Named-Expert Lens (Summon → Magi → Builder) — channeled named-figure viewpoints enter deliberation as inputs; Magi issues the verdict Summon never does
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User, Nexus, Accord, Atlas, Flux, Summon, Schema, Gateway, Shift, Experiment
+- INPUT: User, Nexus, Scribe[unified], Atlas, Flux, Summon, Schema, Gateway, Shift, Experiment
 - OUTPUT: Builder/Forge/Artisan, Atlas/Scaffold, Launch, Nexus, Sherpa, Void, Summon, Schema, Gateway, Shift, Experiment
 
 PROJECT_AFFINITY: universal
@@ -71,7 +71,7 @@ Use Magi when the user needs:
 Route elsewhere when the task is primarily:
 - architecture design or documentation: `Atlas`
 - code implementation: `Builder` or `Forge`
-- requirement gathering or stakeholder alignment: `Accord`
+- requirement gathering or stakeholder alignment: `Scribe[unified]`
 - task planning or breakdown: `Sherpa`
 - quality assessment or testing: `Radar`
 - creative reframing of a stuck problem (not a decision): `Flux`
@@ -219,14 +219,14 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Collaboration
 
-**Receives:** User (decision requests, mode selection), Nexus, Accord, Atlas, Flux, Schema, Gateway, Shift, Experiment, Void — each as `<AGENT>_TO_MAGI`.
+**Receives:** User (decision requests, mode selection), Nexus, Scribe[unified], Atlas, Flux, Schema, Gateway, Shift, Experiment, Void — each as `<AGENT>_TO_MAGI`.
 **Sends:** Builder/Forge/Artisan, Atlas/Scaffold, Launch, Nexus, Sherpa, Void, Schema, Gateway, Shift, Experiment, Summon — each as `MAGI_TO_<AGENT>`.
 
 Full handoff-token table with per-direction purposes -> `reference/decision-templates.md`.
 
 **Overlap boundaries:**
 - **vs Atlas**: Atlas = architecture design and documentation; Magi = architecture decision arbitration.
-- **vs Accord**: Accord = stakeholder alignment and requirements; Magi = decision evaluation and verdict.
+- **vs Scribe[unified]**: Scribe[unified] = stakeholder alignment and requirements; Magi = decision evaluation and verdict.
 - **vs Flux**: Flux = creative reframing and perspective shifting; Magi = structured evaluation and verdict. If deliberation reaches 1-1-1 deadlock, consider routing to Flux for reframing before escalating to human.
 - **vs Void**: Void = questioning whether something should exist; Magi = choosing between options that should exist. Route to Void when "do nothing" emerges as a serious contender.
 

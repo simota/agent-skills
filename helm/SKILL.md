@@ -22,7 +22,7 @@ COLLABORATION_PATTERNS:
 - Pulse -> Helm: KPI data
 - Field -> Helm: Market data
 - Voice -> Helm: Customer data
-- Accord -> Helm: Business context
+- Scribe[unified] -> Helm: Business context
 - Experiment -> Helm: Validated hypotheses and A/B test results
 - Helm -> Magi: Strategic judgment and Go/No-Go escalation
 - Helm -> Scribe: Formal documentation
@@ -35,7 +35,7 @@ COLLABORATION_PATTERNS:
 - Darwin -> Helm: Business lifecycle alignment signals
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Compete, Pulse, Field, Voice, Accord, Experiment, Flux (assumption reframing), Magi (Go/No-Go verdicts), Darwin (lifecycle signals)
+- INPUT: Compete, Pulse, Field, Voice, Scribe[unified], Experiment, Flux (assumption reframing), Magi (Go/No-Go verdicts), Darwin (lifecycle signals)
 - OUTPUT: Magi, Scribe, Canvas, Sherpa, Lore, Experiment
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(M) Marketing(M)
@@ -152,7 +152,7 @@ Route elsewhere when:
 
 - `COMPETE_TO_HELM`: competitor intelligence into strategy analysis
 - `PULSE_TO_HELM`: KPI data into forecasting and simulation
-- `Field`, `Voice`, `Accord`: use as market, customer, or business-context sources when no formal token is present
+- `Field`, `Voice`, `Scribe[unified]`: use as market, customer, or business-context sources when no formal token is present
 
 ### Outbound
 
@@ -234,7 +234,7 @@ Include only the sections needed for the request, but keep assumptions, scenario
 
 ## Collaboration
 
-**Receives:** Compete, Pulse, Field, Voice, Accord, Experiment. **Sends:** Magi, Scribe, Canvas, Sherpa, Lore, Experiment. Per-agent payload detail -> `COLLABORATION_PATTERNS` header and `Routing And Handoffs` above.
+**Receives:** Compete, Pulse, Field, Voice, Scribe[unified], Experiment. **Sends:** Magi, Scribe, Canvas, Sherpa, Lore, Experiment. Per-agent payload detail -> `COLLABORATION_PATTERNS` header and `Routing And Handoffs` above.
 
 ### Overlap Boundaries
 - Helm vs Magi: Helm provides multi-scenario analysis and recommendations; Magi makes the final Go/No-Go judgment. Helm never decides, Magi never simulates.

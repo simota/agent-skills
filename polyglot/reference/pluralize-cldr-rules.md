@@ -7,7 +7,7 @@ Purpose: Use this file to implement locale-correct plural handling in Polyglot's
 - **Polyglot `pluralize`**: CLDR plural-rule implementation, ICU `plural` / `selectordinal` branch authoring, per-locale category coverage, plural-branch test design.
 - **Prose (elsewhere)**: UX copy authoring in the source language, including singular/plural phrasing in English copy. Prose owns the source strings; `pluralize` owns how they vary across locales.
 - **Artisan (elsewhere)**: framework-specific plural hooks (`useTranslation().t` call sites, `<Plural>` JSX components, vue-i18n `$tc`). `pluralize` defines the ICU payload; Artisan wires the call site.
-- **Accord (elsewhere)**: spec-level L10n requirements ("must support Arabic 6 forms"). `pluralize` implements against those specs — it does not author them.
+- **Scribe[unified] (elsewhere)**: spec-level L10n requirements ("must support Arabic 6 forms"). `pluralize` implements against those specs — it does not author them.
 
 If the ask is "write an ICU plural branch / cover all CLDR categories for locale X" → `pluralize`. If it is "choose the right English wording for 1 item vs 0 items" → Prose. If it is "wire `t()` into a React hook" → Artisan.
 

@@ -253,7 +253,7 @@ SEEK_TO_SPIDER_HANDOFF:
     location: "<S3 path / Kafka topic>"
 ```
 
-### Oath → Trawl (Regulatory Scope)
+### Canon[regulatory] → Trawl (Regulatory Scope)
 
 ```yaml
 COMPLY_TO_SPIDER_HANDOFF:

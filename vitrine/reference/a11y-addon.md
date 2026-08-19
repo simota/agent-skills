@@ -7,7 +7,7 @@ Storybook's `@storybook/addon-a11y` runs axe-core on every story, surfacing WCAG
 ## Scope Boundary
 
 - IN scope: addon-a11y configuration, per-story rules, CI failure thresholds, role-aware keyboard testing in stories, axe-core rule selection.
-- OUT of scope: full WCAG 2.2 audit (delegate to `palette` `a11y` subcommand or `canon`), production-runtime a11y (`palette`), screen-reader testing (manual), color-token contrast design (`muse`), legal compliance (`oath` / `clause`), focus animation (`flow`).
+- OUT of scope: full WCAG 2.2 audit (delegate to `palette` `a11y` subcommand or `canon`), production-runtime a11y (`palette`), screen-reader testing (manual), color-token contrast design (`muse`), legal compliance (`canon[regulatory]` / `clause`), focus animation (`flow`).
 
 ## Core Concepts
 

@@ -153,7 +153,7 @@ Parse the first token of user input.
 Behavior notes per Recipe:
 - `docstring`: Add JSDoc/TSDoc to public APIs, functions, and interfaces. Follow tag order (@param→@returns→@throws→@example).
 - `readme`: Create, update, and audit README. Flesh out install, usage, config, and contributing sections.
-- `types`: Replace `any` types with interfaces, generics, and type guards. Oath with TS 6.0+ strict mode.
+- `types`: Replace `any` types with interfaces, generics, and type guards. Canon[regulatory] with TS 6.0+ strict mode.
 - `comments`: Add WHY comments to magic numbers, complex regex, and business rules. Required for complexity >10.
 - `adr`: Architecture Decision Record authoring (Nygard / MADR). Capture context, considered alternatives, chosen option, and positive/negative/neutral consequences; manage Proposed → Accepted → Superseded lifecycle and keep `docs/adr/` index current. For upstream architecture analysis and RFC drafting use Atlas; for PRD / SRS / HLD / LLD spec documents use Scribe; for external-audience retrospective articles use Zine.
 - `migrate`: Migration / upgrade guide authoring. Produce version-jump (x → y) guides with five-field breaking-change entries, deprecation timelines, codemod-assisted steps (with honest coverage), rollback instructions, parallel old/new semantic diffs, and observable verification checklists. For migration orchestration and codemod generation use Shift; for the ADR that justifies the breaking change use Atlas; for external narrative "what changed in v4" articles use Zine.

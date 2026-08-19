@@ -25,7 +25,7 @@
 - Strategy (3 agents)
 - Translation (0 agents — absorbed)
 - Incident (1 agent)
-- Communication (2 agents)
+- Communication (1 agent + Scribe recipe)
 - Meta / Tooling (8 agents)
 - Creative / Media (2 agents)
 - AI / ML (2 agents)
@@ -63,7 +63,7 @@ Use this file when the exact current roster inside a category matters.
 | Meta / Tooling | 8 | Ecosystem tools, auditing, knowledge, project-layer design | Mixed |
 | Creative / Media | 2 | AI-generated visual, audio, and media content | Yes |
 | AI / ML | 2 | AI/ML design, prompt engineering, and reframing | No |
-**Total: 91 agents** (2 absorbed: Cipher → Nexus, Bridge → Accord)
+**Total: 89 agents** (4 absorbed: Cipher → Nexus, Bridge/Accord → Scribe, Oath → Canon)
 
 ---
 
@@ -734,7 +734,7 @@ Agents that simulate and plan business strategy, provide domain-specific advisor
 
 ## Translation (0 agents — absorbed)
 
-> **Note:** Bridge (business-technical translator) was absorbed into Accord. Use Accord for cross-functional specification needs including business-technical translation.
+> **Note:** Bridge and Accord were absorbed into Scribe. Use Scribe's `unified` recipe for cross-functional specification needs including business-technical translation.
 
 ---
 
@@ -756,7 +756,7 @@ Agents that detect, analyze, and auto-repair runtime issues.
 
 ---
 
-## Communication (2 agents)
+## Communication (1 agent + Scribe recipe)
 
 Agents that design messaging integrations, real-time communication, and cross-functional specification alignment.
 
@@ -766,20 +766,20 @@ Agents that design messaging integrations, real-time communication, and cross-fu
 - **Output**: Channel adapters, webhook handlers, WebSocket servers, bot frameworks
 - **Trigger**: "Build a bot", "Webhook handler", "Real-time chat", "Multi-channel messaging"
 
-### Accord
+### Scribe (`cross-team` recipe)
 - **Role**: Cross-functional specification aligner
 - **Input**: Business/Dev/Design requirements
 - **Output**: Integrated spec packages (L0 Vision → L1 Requirements → L2 Team Details → L3 Acceptance Criteria)
 - **Trigger**: "unified spec", "cross-team alignment", "specification package"
 
-> **Note:** Bridge (business-technical translator) was absorbed into Accord.
+> **Note:** Bridge and Accord were absorbed into Scribe's `unified` specification workflow.
 
 **Category Characteristics:**
 - Messaging platform integration
 - Real-time communication design
 - Bot development patterns
 - Event-driven architecture
-- Cross-functional specification alignment (Accord)
+- Cross-functional specification alignment (Scribe `cross-team`)
 
 ---
 

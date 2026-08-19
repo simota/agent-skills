@@ -7,7 +7,7 @@ Purpose: Use this file to design the translation pipeline Polyglot's `translate`
 - **Polyglot `translate`**: TMS integration, translation-memory strategy, source-string diff detection, translator briefing, placeholder/HTML QA, release workflow.
 - **Prose (elsewhere)**: source-language copy authoring — the English string that enters the TMS. `translate` moves strings through the pipeline; Prose writes them.
 - **Artisan (elsewhere)**: framework-specific extraction output format (ICU JSON, PO, XLIFF, ARB) from the codebase. `translate` consumes the extracted payload; Artisan configures the extractor.
-- **Accord (elsewhere)**: spec-level L10n requirements (SLAs, target-locale list, quality tier). `translate` operationalizes the spec.
+- **Scribe[unified] (elsewhere)**: spec-level L10n requirements (SLAs, target-locale list, quality tier). `translate` operationalizes the spec.
 
 If the ask is "wire Lokalise webhook / set translator brief / add placeholder QA gate" → `translate`. If it is "write the English copy" → Prose. If it is "configure i18next extractor" → Artisan.
 
@@ -174,7 +174,7 @@ Rules:
 **To `locale` subcommand:**
 - Target-locale list must match the app's locale negotiation — `translate` pushes to TMS only locales `locale` actually resolves.
 
-**To Accord:**
+**To Scribe[unified]:**
 - Locale coverage SLA escalations when a release target cannot be met.
 
 **To Radar:**

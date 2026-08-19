@@ -41,7 +41,7 @@ Apex is the downstream of several discovery recipes. When it is entered from one
 
 | Upstream | Packet | Effect on apex |
 |----------|--------|----------------|
-| `spec` | **Spec Handoff Packet** (`reference/spec-recipe.md` § Handoff contract) | **Phases 1-4 collapse to validation.** `acceptance_criteria` becomes the Phase 4 AC set directly (accord *validates* traceability rather than authoring it); `non_goals` becomes the scope bound on every spawn; `assumption_ledger` + `refutation_flags` are Phase 5 Risk-Gate inputs (omen starts from the known assumptions, not a blank pre-mortem); `reuse_findings` seeds Phase 1 so Lens does not re-scan. Phase 3 verdict is **skipped** — the direction was already picked and refuted upstream. |
+| `spec` | **Spec Handoff Packet** (`reference/spec-recipe.md` § Handoff contract) | **Phases 1-4 collapse to validation.** `acceptance_criteria` becomes the Phase 4 AC set directly (scribe[unified] *validates* traceability rather than authoring it); `non_goals` becomes the scope bound on every spawn; `assumption_ledger` + `refutation_flags` are Phase 5 Risk-Gate inputs (omen starts from the known assumptions, not a blank pre-mortem); `reuse_findings` seeds Phase 1 so Lens does not re-scan. Phase 3 verdict is **skipped** — the direction was already picked and refuted upstream. |
 | `clone` | **Clone Handoff Packet** (`reference/clone-recipe.md` §7a) | `sdr` **constrains Phase 5 design** — the stack is locked, not re-decided; `parity_ceilings` are declared constraints, so a ceiling-bound behavior is never filed as a defect; `parity_harness` joins the Phase 6 verification set, so a new feature that breaks the clone's parity fails the loop; `coverage_gaps` are candidate goals in autonomous mode. |
 | `charter` | Charter roster | Prefer `enact` — apex ships **one** feature; a multi-package Charter is enact's shape. Apex consumes a Charter only when the user scopes it to a single package. |
 
@@ -177,11 +177,11 @@ Phase 0 failure modes (no candidates, all-ICE-below-threshold, split tie-break, 
 
 | Agent | Role | Required |
 |-------|------|----------|
-| `accord` | L0 Vision → L1 Requirements → L2 Team Detail → L3 Acceptance Criteria + traceability | Yes |
-| `void` | YAGNI scope cutting | Conditional: accord scope = Full |
+| `scribe[unified]` | L0 Vision → L1 Requirements → L2 Team Detail → L3 Acceptance Criteria + traceability | Yes |
+| `void` | YAGNI scope cutting | Conditional: scribe[unified] scope = Full |
 | `scribe` | Formal PRD/SRS/HLD/LLD or AI-agent-consumable spec | Conditional: M+ size or external review |
 
-**Exit gate:** accord traceability completeness meets scope-mode threshold (Full ≥95% / Standard ≥85% / Lite ≥70%). L3 ACs are measurable and orbit-consumable.
+**Exit gate:** scribe[unified] traceability completeness meets scope-mode threshold (Full ≥95% / Standard ≥85% / Lite ≥70%). L3 ACs are measurable and orbit-consumable.
 
 ### Phase 5: Design + Risk Gate (parallel)
 
@@ -218,13 +218,13 @@ UX Track internal pipeline: `vision → muse → [palette ‖ prose ‖ flow] �
 | `ripple` | Vertical + horizontal impact + blast radius | Go or Conditional-Go (No-Go blocks); on Conditional-Go, omen Mitigations must address the conditions before forwarding to orbit |
 | `echo` | UX friction signals fed into gate | Emotion Valence ≥ median, dark pattern = 0, WCAG 3.0 Bronze ≥ 3.5, cognitive load within target range |
 
-Plea ↔ Echo loop closure: if echo's actual walkthrough reaction diverges fatally from plea's predicted demand, send back to Phase 4 (accord) for spec refinement — do not proceed even if all three axes nominally pass.
+Plea ↔ Echo loop closure: if echo's actual walkthrough reaction diverges fatally from plea's predicted demand, send back to Phase 4 (scribe[unified]) for spec refinement — do not proceed even if all three axes nominally pass.
 
 **Exit gate:** `go = ripple.verdict ∈ {Go, Conditional-Go} ∧ omen.high_rpn_count == 0 ∧ echo.gate_pass`. On No-Go, escalate to the originating phase.
 
 ### Phase 6: Implementation Loop
 
-Driven by Orbit. Orbit consumes accord L3 ACs + omen Mitigations + echo friction signals to author the loop contract, generates the nexus-autoloop script set, and audits convergence.
+Driven by Orbit. Orbit consumes scribe[unified] L3 ACs + omen Mitigations + echo friction signals to author the loop contract, generates the nexus-autoloop script set, and audits convergence.
 
 **Runner Engine: Codex CLI (fixed for Apex).** Apex pins Orbit's execution layer to **Codex CLI subagents** rather than Claude Code's Agent tool. All in-loop specialists (Builder / Artisan / Vitrine / Judge / Radar / Voyager) are spawned via `spawn_agent` and awaited via `wait_agent`. Phase 0-5 still run on Claude Code (Nexus orchestration); only the implementation loop crosses the engine boundary.
 
@@ -256,11 +256,11 @@ Hard-failing the handoff wastes five completed phases over a runner problem. So 
 
 ### Acceptance Verification (Phase 6 → Ship gate)
 
-Orbit detects **loop convergence** (the iteration stopped producing changes), but convergence is not correctness — a loop can converge on an implementation that passes its own tests yet does not satisfy the spec. Apex therefore gates Ship on an independent **acceptance verification** against accord's Phase 4 L3 ACs, closing the traceability loop that Phase 4 opened.
+Orbit detects **loop convergence** (the iteration stopped producing changes), but convergence is not correctness — a loop can converge on an implementation that passes its own tests yet does not satisfy the spec. Apex therefore gates Ship on an independent **acceptance verification** against scribe[unified]'s Phase 4 L3 ACs, closing the traceability loop that Phase 4 opened.
 
 | Agent | Role | Pass Criterion |
 |-------|------|----------------|
-| `attest` | Extract the L3 ACs from the accord spec, adversarially check the delivered implementation for conformance, emit a traceability matrix (AC → evidence → verdict) | AC-conformance ≥ scope-mode threshold (Full ≥95% / Standard ≥85% / Lite ≥70%), zero unaddressed **must-have** ACs |
+| `attest` | Extract the L3 ACs from the scribe[unified] spec, adversarially check the delivered implementation for conformance, emit a traceability matrix (AC → evidence → verdict) | AC-conformance ≥ scope-mode threshold (Full ≥95% / Standard ≥85% / Lite ≥70%), zero unaddressed **must-have** ACs |
 | `attest` (**negative pass**) | Check the inverse: did the loop build anything the spec **forbade**? Walk `non_goals` / out-of-scope and the Phase 3 scope boundary against the actual diff — new surfaces, new dependencies, new config, new persisted state, and behavior outside the declared boundary | zero non-goal violations; every out-of-boundary change is either reverted or **explicitly ratified by the user**, never silently kept |
 
 Conformance alone is a one-sided test: an implementation can satisfy every AC **and** have grown a feature nobody asked for, a dependency nobody approved, or a table nobody specified. An autonomous loop is exactly the setting where that happens, because "add a little more" always looks like progress from inside the loop. The negative pass is what makes the spec's scope boundary load-bearing rather than decorative.
@@ -296,7 +296,7 @@ Apex emits `NEXUS_COMPLETE` with the base `## Nexus Execution Report` (`referenc
 | Section | Content | Sourced from |
 |---------|---------|--------------|
 | Discovery summary | Top-3 demands (+ personas + evidence anchors); for autonomous mode, the auto-selected goal + rejected alternatives | Phase 0-1 |
-| Spec & AC | accord traceability % + the L3 acceptance-criteria set (must-haves flagged) | Phase 4 |
+| Spec & AC | scribe[unified] traceability % + the L3 acceptance-criteria set (must-haves flagged) | Phase 4 |
 | Design decisions | atlas ADR(s) + API/schema deltas (gateway/schema); Vision direction + token/interaction summary | Phase 5 |
 | Risk-Gate verdict | tri-axis result (omen RPN / ripple blast / echo emotion+a11y) and any Conditional-Go conditions | Phase 5 Gate |
 | Loop iterations | **`runner: codex \| claude-fallback \| agy-fallback`** + the envelope it was scored against, Orbit iteration count, per-task cost, convergence reason, circuit-breaker status | Phase 6 |
@@ -311,7 +311,7 @@ On any non-ship exit (budget ceiling, Risk-Gate No-Go, attest fail past re-entry
 
 | Sub-hub | Engine | Specialists | Cap |
 |---------|--------|-------------|-----|
-| Nexus (top) | Claude Code (Agent tool) | plea, field, riff, magi, accord, atlas, vision, orbit, attest, guardian, launch | ≤11 (acceptable; phases serialise most — attest/guardian/launch run sequentially at the tail) |
+| Nexus (top) | Claude Code (Agent tool) | plea, field, riff, magi, scribe[unified], atlas, vision, orbit, attest, guardian, launch | ≤11 (acceptable; phases serialise most — attest/guardian/launch run sequentially at the tail) |
 | Vision (UX sub) | Claude Code (Agent tool) | muse, palette, prose, flow, frame, forge, echo, polyglot, pixel | ≤9 (parallelisable inside) |
 | **Orbit (loop sub)** | **Codex CLI (`spawn_agent`)** — fixed | builder, artisan, vitrine, judge, radar, voyager | ≤6 (loop iterations) |
 
@@ -363,7 +363,7 @@ Nexus AUTORUN apex goal="<feature description>"
   → Phase 1 Discovery        [parallel] plea ‖ field ‖ echo?
   → Phase 2 Ideate           riff(max_turns=4)
   → Phase 3 Verdict          magi → verdict + ac_seed   [gate: split → human_review]
-  → Phase 4 Spec             accord(scope=auto) → void? / scribe?
+  → Phase 4 Spec             scribe[unified](scope=auto) → void? / scribe?
   → Phase 5 Design           [parallel:Tech] atlas + gateway? + schema?
                            ‖ [parallel:UX]   vision → muse → [palette ‖ prose ‖ flow?]
                                                     → frame? → forge → echo
@@ -371,7 +371,7 @@ Nexus AUTORUN apex goal="<feature description>"
   ── Phase 6 Implementation Loop (engine = Codex CLI) ─
   → [engine_check] codex.available ∧ agents.max_depth≥2 ∧ subagent_tools_permitted
        └─ NG → Engine Degradation Protocol (confirmed choice; never a silent fallback)
-  → orbit(contract = accord.L3 + omen.mitigations + echo.friction, engine=codex)
+  → orbit(contract = scribe[unified].L3 + omen.mitigations + echo.friction, engine=codex)
        └─ nexus-autoloop emits Codex spawn scripts:
              codex.spawn_agent(builder, prompt=<BE contract>)        ‖
              codex.spawn_agent(artisan, prompt=<FE contract>)?
@@ -409,12 +409,12 @@ Consolidated view of what apex's gates and phases guard against, merging the ope
 | Phase 0 boundary rejected | user (autonomous mode) | Apex aborts; user input within 60s window cancels |
 | Build the wrong thing | No evidence anchor for the feature | Phase 0 discovery (spark + rank + sage) + Phase 1 (plea + field evidence anchor) + boundary Confirm-before-launch |
 | Phase 3 split decision | magi | Pause for human verdict; prevents an arbitrarily-resolved deadlock |
-| Weak / unmeasurable spec | "Done" is subjective; scope creeps | Phase 4 accord traceability threshold + L3 measurable, orbit-consumable ACs |
-| Phase 4 traceability < threshold | accord | Re-run accord with scope downgrade or refine inputs |
+| Weak / unmeasurable spec | "Done" is subjective; scope creeps | Phase 4 scribe[unified] traceability threshold + L3 measurable, orbit-consumable ACs |
+| Phase 4 traceability < threshold | scribe[unified] | Re-run scribe[unified] with scope downgrade or refine inputs |
 | Hidden architecture / blast-radius risk | A migration or contract change breaks neighbors post-merge | Phase 5 Risk Gate: omen FMEA (High-RPN residuals = 0) + ripple blast-radius (No-Go blocks) |
 | Risk Gate No-Go | omen / ripple / echo | Return to originating phase |
 | UX friction / dark patterns shipped | Brand-visible flow frustrates users, a11y regressions | Phase 5 echo gate (Emotion Valence ≥ median, 0 dark patterns, WCAG3 Bronze ≥ 3.5, cognitive load in range) + Plea-Echo divergence check |
-| Plea-Echo divergence | echo | Return to Phase 4 (accord re-spec) |
+| Plea-Echo divergence | echo | Return to Phase 4 (scribe[unified] re-spec) |
 | Convergence mistaken for correctness | Loop passes its own tests but doesn't satisfy the spec | Acceptance Verification gate: independent attest conformance ≥ threshold ∧ 0 unmet must-haves (Claude-side, no shared context with builder) |
 | Orbit stuck loop | orbit (convergence_detection) | Triage handoff |
 | Orbit budget exceeded | orbit (cost-per-task) | User confirmation before continuation |
@@ -434,9 +434,9 @@ Consolidated view of what apex's gates and phases guard against, merging the ope
 
 | Profile | Phases active | Approx agent count | Approx cost |
 |---------|---------------|--------------------|-------------|
-| Lite (no UI, accord=Lite) | 1, 2, 3, 4, 5-Tech, 5-Gate, 6 | 8-10 | Low |
-| Standard (UI, accord=Standard) | All | 14-18 | Medium |
-| Full (greenfield, accord=Full) | All + void + scribe + frame + polyglot | 20-25 | High |
+| Lite (no UI, scribe[unified]=Lite) | 1, 2, 3, 4, 5-Tech, 5-Gate, 6 | 8-10 | Low |
+| Standard (UI, scribe[unified]=Standard) | All | 14-18 | Medium |
+| Full (greenfield, scribe[unified]=Full) | All + void + scribe + frame + polyglot | 20-25 | High |
 | Autonomous bootstrap (Phase 0 added) | + 4-8 agents (project_scan + spark + rank + voice/pulse/compete/sage/magi as available) | +4-8 over base | + 10-20% over base |
 
 Apex is not free. Budget guardrails (orbit cost-per-task, Nexus chain confirmation for 5+ agent chains, L4 confirmation gates) are enforced. Autonomous mode adds Phase 0 (~10-15 minutes, 4-8 agents) and one boundary-confirm checkpoint, but downstream cost is identical to goal-supplied mode. For repeated similar requests, propose a Sigil-generated project skill to amortise the chain design cost.

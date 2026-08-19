@@ -1,12 +1,12 @@
 # Skill Packs
 
-Skill membership matrix for selective enablement across the 123-skill ecosystem.
+Skill membership matrix for selective enablement across the 122-skill ecosystem.
 
 ## Why this exists
 
-Anthropic guidance is **8-12 skills** before "context tax" (token overhead per turn) starts to dominate; routing degradation begins in the **dozens**, and a **15,000-character cap** on the available skills list is a hard ceiling. This repository's 123 skills exceed all three thresholds.
+Anthropic guidance is **8-12 skills** before "context tax" (token overhead per turn) starts to dominate; routing degradation begins in the **dozens**, and a **15,000-character cap** on the available skills list is a hard ceiling. This repository's 122 skills exceed all three thresholds.
 
-This file defines **10 Packs** (overlapping subsets of the ecosystem) so that any single workstream can enable ~20-30 skills instead of the full 123. Selective enablement is driven by the Claude Code `skills` filter in `~/.claude/settings.json` (`"all"` / `[list]` / `[]`); Codex CLI and agy use equivalent allowlist mechanisms when available.
+This file defines **10 Packs** (overlapping subsets of the ecosystem) so that any single workstream can enable ~20-30 skills instead of the full 122. Selective enablement is driven by the Claude Code `skills` filter in `~/.claude/settings.json` (`"all"` / `[list]` / `[]`); Codex CLI and agy use equivalent allowlist mechanisms when available.
 
 **Sources:**
 - claude.com/blog/lessons-from-building-claude-code-how-we-use-skills (8-12 sweet spot, context tax)
@@ -35,7 +35,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 | `infra-ops` | `core + infra` | ~40 |
 | `research` | `core + research` | ~35 |
 | `package-author` | `core + package-gen + design + research` | ~75 |
-| `all` | `"all"` (no filter) | 123 (debugging / discovery only) |
+| `all` | `"all"` (no filter) | 122 (debugging / discovery only) |
 
 ---
 
@@ -75,7 +75,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 **Purpose:** static + dynamic security analysis, threat modeling, crypto, privacy, compliance, supply-chain.
 
-**Members:** `sentinel`, `probe`, `attest`, `crypt`, `cloak`, `vigil`, `breach`, `cull`, `chain`, `canon`, `oath`, `clause`
+**Members:** `sentinel`, `probe`, `attest`, `crypt`, `cloak`, `vigil`, `breach`, `cull`, `chain`, `canon`, `clause`
 
 **Triggers:** `security`, `cve`, `owasp`, `sast`, `dast`, `pentest`, `threat model`, `red team`, `purple team`, `mitre`, `sigma`, `yara`, `cryptography`, `tls`, `kms`, `pii`, `gdpr`, `ccpa`, `soc2`, `pci-dss`, `hipaa`, `iso 27001`, `supply chain`, `npm worm`, `malware`
 
@@ -125,7 +125,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 **Purpose:** discovery-side work — user research, brainstorming, strategic decisions, named-expert advisory lenses, prose authoring.
 
-**Members:** `field`, `plea`, `lens`, `cast`, `voice`, `echo`, `trace`, `compete`, `spark`, `riff`, `flux`, `omen`, `magi`, `summon`, `rank`, `crest`, `sage`, `helm`, `harvest`, `tome`, `scribe`, `accord`, `void`, `quill`, `zine`, `saga`, `pdm`
+**Members:** `field`, `plea`, `lens`, `cast`, `voice`, `echo`, `trace`, `compete`, `spark`, `riff`, `flux`, `omen`, `magi`, `summon`, `rank`, `crest`, `sage`, `helm`, `harvest`, `tome`, `scribe`, `void`, `quill`, `zine`, `saga`, `pdm`
 
 **Triggers:** `user research`, `interview`, `usability test`, `persona`, `journey map`, `jtbd`, `brainstorm`, `ideate`, `reframe`, `assumption challenge`, `pre-mortem`, `deliberation`, `prioritization`, `channel a thinker`, `what would <figure> do`, `expert panel`, `conclave`, `mental models`, `side project idea`, `office hours`, `advisory`, `strategy simulation`, `yagni`, `scope cut`, `documentation`, `jsdoc`, `tsdoc`, `tech blog`, `note`, `zenn`, `qiita`, `tome`
 
@@ -135,7 +135,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 **Purpose:** end-to-end document package production via the `package` Recipe (12 domain presets — startup / career / learning / hiring / local-gov / etc.). Heavy union with `research`, `design`, and `core`.
 
-**Members:** `accord`, `scribe`, `tome`, `quill`, `rank`, `spark`, `magi`, `void`, `morph`, `canon`, `prose`, `saga`, `pulse`, `cast`, `field`, `plea`, `echo`, `voice`, `compete`, `attest`, `judge`, `clause`, `oath`, `cloak`, `vigil`, `trawl`, `stage`, `cue`, `vitrine`, `pixel`, `artisan`, `frame`, `muse`, `palette`, `vision`
+**Members:** `scribe`, `tome`, `quill`, `rank`, `spark`, `magi`, `void`, `morph`, `canon`, `prose`, `saga`, `pulse`, `cast`, `field`, `plea`, `echo`, `voice`, `compete`, `attest`, `judge`, `clause`, `cloak`, `vigil`, `trawl`, `stage`, `cue`, `vitrine`, `pixel`, `artisan`, `frame`, `muse`, `palette`, `vision`
 
 **Triggers:** `business plan`, `venture`, `mvp dossier`, `pitch package`, `documentation package`, `package`, `startup dossier`, `domain preset`, `traceability matrix`, `feature_id`, `f-001`
 

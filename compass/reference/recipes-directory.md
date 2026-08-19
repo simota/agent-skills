@@ -10,7 +10,6 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 
 ---
 
-- **accord**: vision★ / requirements / detail / ac / story-map / stakeholder / raci
 - **anvil**: cli★ / tui / wrap / devtool / completion / config / pkg
 - **architect**: create★ / improve / compress / audit-verbosity / evolve
 - **artisan**: component★ / state / form / fetch / rsc / a11y / i18n / perf
@@ -23,7 +22,7 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **bond**: reengagement★ / churn / gamification / habit / loyalty / winback / lifecycle-email / power-user
 - **breach**: scenario★ / threat-model / purple / ai-red / phishing / supply / social
 - **builder**: fix★ / crud / api / ddd / harden / port / integrate / patch / pair
-- **canon**: owasp★ / wcag / openapi / iso / gap / nist / pci / gdpr
+- **canon**: owasp★ / wcag / openapi / iso / gap / nist / pci / gdpr / regulatory / soc2 / hipaa / iso27001 / policy / audit / vendor
 - **canvas**: flow★ / sequence / er / journey / class / c4 / architecture / gantt
 - **cast**: generate★ / registry / evolve / fuse / distribute / speak / retire / archetype / segment / bias-audit
 - **chain**: intake★ / audit / mcp / scan / recover
@@ -73,7 +72,6 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **muse**: tokens★ / apply / theme / typography / spacing / motion / elevation / radius
 - **native**: swiftui★ / compose / liquidglass / expressive / offline / push / deeplink / bg / passkey / privacy / rollout / store / cli / visualloop / macos / macdist
 - **nest**: audit★ / restructure / progressive / cache / naming / sharding / monorepo
-- **oath**: soc2★ / pci / hipaa / iso / policy / gdpr / audit / vendor
 - **omen**: premortem★ / rpn / ap / mode / faulttree / bowtie / hazop / multi
 - **oracle**: prompt★ / rag / safety / mlops / agent / cost / embed / review / tooling
 - **orbit**: plan / generate★ / contract / audit / recover / ralph
@@ -100,7 +98,7 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **scaffold**: terraform★ / cloudformation / pulumi / compose / env / k8s / helm / cdk
 - **schema**: design★ / migration / er / normalize / index / rollback / tenant / partition / audit-log / event-sourcing / soft-delete
 - **scout**: bug★ / regression / prod / multi / cascade / perf / memory / flake / 5whys / fishbone / timeline / video
-- **scribe**: prd★ / srs / hld / lld / testspec / adr / runbook / api-doc
+- **scribe**: prd★ / srs / hld / lld / testspec / adr / runbook / api-doc / unified
 - **seek**: fulltext★ / vector / hybrid / index / rag / rerank / suggest / authz / eval / fulltext / hybrid / eval / suggest
 - **sentinel**: scan★ / secrets / injection / deps / headers / authn / authz / aisec / mobile / multi
 - **shard**: isolation★ / rls / routing / scale / migration / provisioning / quota
@@ -136,7 +134,7 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 
 ---
 
-**Total**: 123 skills with Recipes.
+**Total**: 121 skills with Recipes.
 
 Auto-generated from SKILL.md `## Recipes` tables by `_common/scripts/generate-recipes-directory.py`. Do not edit by hand.
 

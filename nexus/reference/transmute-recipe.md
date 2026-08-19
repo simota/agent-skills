@@ -49,7 +49,7 @@ Phase 1 ARCHAEOLOGY ∥  Trail[extract implicit business rules + invariants]
                        Atlas?[architecture + module/dependency boundaries]   (if subsystem/whole)
                        Trail?[git history → why-decisions behind non-obvious code]  (optional)
                        → output: behavior contract draft, source-language-independent
-Phase 2 CONTRACT       Accord[author language-NEUTRAL behavior spec + acceptance criteria]
+Phase 2 CONTRACT       Scribe[unified: author language-NEUTRAL behavior spec + acceptance criteria]
                        → Mint[generate golden I/O fixtures from the SOURCE impl = differential oracle]
                        → ORACLE GATE: adequacy (covers source branches/error-paths/boundaries) + determinism contract (below)
 Phase 3 STRATEGY       Magi[arbitrate big-bang|strangler-fig|FFI + RISK GATE]
@@ -64,7 +64,7 @@ Phase 4 TRANSMUTE      Builder/Artisan[idiomatic target-language implementation]
                        Parity failure traced to a mapping rule → amend the Transmutation Map and
                        regenerate the module; do not hand-patch the emitted code (§4)
 Phase 5 PARITY VERIFY ∥ Radar[differential + property tests against Phase 2 oracle; multi-lang incl. Rust]
-                       Attest[conformance vs Accord contract]
+                       Attest[conformance vs Scribe[unified] contract]
                        judge[IDIOM review: idiomatic target-lang vs transliterated?]
                        Voyager?[E2E parity]  (if app-level)
 Phase 6 SHIP           Guardian[PR with Before/After parity report + strangler increment scoping]

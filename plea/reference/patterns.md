@@ -24,7 +24,7 @@ PERSONA_SPECTRUM:
 
 ### Default calibration for `request` (uncalibrated EXPLORE)
 
-The `request` Recipe usually runs without real Voice/Trace/Field data. Tag every emitted demand even so — downstream agents (Spark, Rank, Accord) and the `growth-acceptance` Insight Ledger need the confidence signal, and `[hypothesis]`/`[synthetic-only]` demands are **not** Ledger-citable evidence (`_common/GROWTH_BRAND_PROOF.md` G11).
+The `request` Recipe usually runs without real Voice/Trace/Field data. Tag every emitted demand even so — downstream agents (Spark, Rank, Scribe[unified]) and the `growth-acceptance` Insight Ledger need the confidence signal, and `[hypothesis]`/`[synthetic-only]` demands are **not** Ledger-citable evidence (`_common/GROWTH_BRAND_PROOF.md` G11).
 
 ```yaml
 REQUEST_DEFAULT_CALIBRATION:
@@ -183,7 +183,7 @@ FRUSTRATION_ESCALATION:
 
 ### Calibration posture (stricter than `request`)
 
-Latent needs are unvoiced, so they cannot be `[validated]`/`[supported]` from user *speech* — only from **behavioral evidence**. Ceiling at `[hypothesis]` until Trace (observed workaround/drop-off) or Field (contextual inquiry) confirms the proxy exists. Never tag a latent need `[validated]` without behavioral data. Default handoff is **Field/Trace for validation first**, then Spark/Accord.
+Latent needs are unvoiced, so they cannot be `[validated]`/`[supported]` from user *speech* — only from **behavioral evidence**. Ceiling at `[hypothesis]` until Trace (observed workaround/drop-off) or Field (contextual inquiry) confirms the proxy exists. Never tag a latent need `[validated]` without behavioral data. Default handoff is **Field/Trace for validation first**, then Spark/Scribe[unified].
 
 ### Disambiguation vs sibling DEEP Recipes
 

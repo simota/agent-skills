@@ -22,7 +22,7 @@ COLLABORATION_PATTERNS:
 - Lens -> PDM: Implemented-feature evidence with file:line
 - Atlas -> PDM: Architecture context for area mapping
 - Scribe -> PDM: Spec/PRD source for planned scope
-- Accord -> PDM: Unified spec package as scope source
+- Scribe[unified] -> PDM: Unified spec package as scope source
 - Attest -> PDM: AC conformance results for status refinement
 - Trail -> PDM: History of when features landed
 - PDM -> Rank: Roadmap items needing priority scoring
@@ -34,7 +34,7 @@ COLLABORATION_PATTERNS:
 - PDM -> Nexus: Status rollup for orchestration
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User (questions), Nexus (routing), Lens (code evidence), Atlas (architecture context), Scribe/Accord (spec source), Attest (conformance results), Trail (feature history)
+- INPUT: User (questions), Nexus (routing), Lens (code evidence), Atlas (architecture context), Scribe/Scribe[unified] (spec source), Attest (conformance results), Trail (feature history)
 - OUTPUT: Rank (items to prioritize), Sherpa (epics to decompose), Orbit (loop-sized work packages as goal-contract seeds), Scribe (spec gaps), Spark (gap ideation), Canvas (visualization), Nexus (status rollup)
 
 PROJECT_AFFINITY: SaaS(L) Dashboard(M) Game(M) E-commerce(M) Marketing(M)
@@ -70,7 +70,7 @@ Use PDM when the user needs:
 Route elsewhere when the task is primarily:
 - code comprehension — "how does X work?", flow/structure: `Lens`
 - priority scoring or ordering (ICE/RICE/WSJF): `Rank`
-- authoring specs / PRD / requirements: `Scribe` or `Accord`
+- authoring specs / PRD / requirements: `Scribe` or `Scribe[unified]`
 - adversarial spec-to-code AC conformance + compliance: `Attest`
 - live task decomposition into <15-min execution steps: `Sherpa`
 - proposing brand-new features: `Spark`
@@ -202,13 +202,13 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Collaboration
 
-**Receives:** User (questions), Nexus (routing), Lens (code evidence), Atlas (architecture context), Scribe/Accord (spec source), Attest (conformance results), Trail (feature history)
+**Receives:** User (questions), Nexus (routing), Lens (code evidence), Atlas (architecture context), Scribe/Scribe[unified] (spec source), Attest (conformance results), Trail (feature history)
 **Sends:** Rank (items to prioritize), Sherpa (epics to decompose), Orbit (loop-sized work packages as goal-contract seeds), Scribe (spec gaps), Spark (gap ideation), Canvas (visualization), Nexus (status rollup)
 
 ```
         INPUT PROVIDERS
   Lens ─ code feature evidence (file:line)
-  Scribe/Accord ─ planned scope (specs/PRD)
+  Scribe/Scribe[unified] ─ planned scope (specs/PRD)
   Attest ─ AC conformance results
   Trail ─ when features landed
               │
@@ -251,7 +251,7 @@ Templates in `reference/handoffs.md`.
 - **vs Sherpa**: Sherpa = live execution decomposition into <15-min atomic steps with drift prevention; PDM = static WBS *view* of project scope. PDM hands execution decomposition to Sherpa. (~22%)
 - **vs Rank**: Rank = priority scoring (ICE/RICE/WSJF); PDM = roadmap assembly/inventory and defers scoring to Rank. (~12%)
 - **vs Spark**: Spark = ideates new features; PDM = inventories existing planned/built features. (~10%)
-- **vs Scribe/Accord**: They author specs; PDM reads them as scope sources. (~10%)
+- **vs Scribe/Scribe[unified]**: They author specs; PDM reads them as scope sources. (~10%)
 - **vs Pulse**: Pulse = KPI/metric dashboards; PDM = scope/feature delivery status. (~10%)
 
 ## Reference Map

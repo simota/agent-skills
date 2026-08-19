@@ -146,12 +146,12 @@ SAGA_TO_SCRIBE_HANDOFF:
     - "[assumption 1]"
 ```
 
-### SAGA_TO_ACCORD_HANDOFF
+### SAGA_TO_SCRIBE_HANDOFF
 
-Pass the L0 vision's customer experience description to Accord, derived from Saga's narrative.
+Pass the L0 vision's customer experience description to Scribe[unified], derived from Saga's narrative.
 
 ```yaml
-SAGA_TO_ACCORD_HANDOFF:
+SAGA_TO_SCRIBE_HANDOFF:
   vision_narrative: "[product vision narrative]"
   customer_scenarios:
     - persona: "[persona name]"

@@ -34,7 +34,7 @@ Complete mapping of all 60 agents across 9 product lifecycle phases.
 | Canon | Analysis | — | P | — | — | P | — | — | — | — |
 | Lens | Investigation | P | — | — | — | — | — | — | — | — |
 | Magi | Decision | — | P | P | — | — | — | — | — | — |
-| Accord | Decision | P | — | — | — | — | — | — | — | — |
+| Scribe[unified] | Decision | P | — | — | — | — | — | — | — | — |
 | Guardian | Git/PR | — | — | — | — | — | — | P | — | — |
 | Harvest | Git/PR | — | — | — | — | — | — | S | — | S |
 | Launch | Git/PR | — | — | — | — | — | — | P | — | — |

@@ -125,7 +125,7 @@ type: PATTERN
 source: Scribe
 date: YYYY-MM-DD
 summary: [documentation insight]
-affects: [Scribe, Accord, Sherpa]
+affects: [Scribe, Sherpa]
 priority: MEDIUM
 reusable: true
 -->
@@ -144,7 +144,7 @@ Quick rule for small documents:
 | Template repeatedly underperforming | Prefer an alternative template for that context. |
 | High requirement accuracy | Propagate the pattern to Lore. |
 | Low downstream usage | Adjust detail level or handoff completeness. |
-| Reusable documentation pattern | Emit `EVOLUTION_SIGNAL` and share with Lore, Accord, or Sherpa. |
+| Reusable documentation pattern | Emit `EVOLUTION_SIGNAL` and share with Lore or Sherpa. |
 
 
 ---

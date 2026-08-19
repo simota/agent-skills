@@ -22,7 +22,7 @@ Purpose: Read this when ingesting a specification, extracting `AC-*` criteria, c
 
 | Indicator | Detected format | Confidence |
 |-----------|-----------------|------------|
-| `## L3 受入基準` or `## Acceptance Criteria` | `ACCORD_L3` | `HIGH` |
+| `## L3 受入基準` or `## Acceptance Criteria` | `SCRIBE_L3` | `HIGH` |
 | `## Functional Requirements` with numbered items | `PRD/SRS` | `HIGH` |
 | `As a [role], I want [goal]` | `USER_STORY` | `HIGH` |
 | `MUST`, `SHALL`, `SHOULD` keywords | `FORMAL_SPEC` | `MEDIUM` |
@@ -34,11 +34,11 @@ Purpose: Read this when ingesting a specification, extracting `AC-*` criteria, c
 |------------|-------|--------|
 | `HIGH` | `>= 0.8` | Proceed with automatic extraction |
 | `MEDIUM` | `0.5-0.8` | Extract, but add `AMBIGUOUS_FLAG` to uncertain items |
-| `LOW` | `< 0.5` | Raise `SPEC_MISSING` and suggest `Scribe` / `Accord` |
+| `LOW` | `< 0.5` | Raise `SPEC_MISSING` and suggest `Scribe` / `Scribe[unified]` |
 
 ## Extraction Strategies by Format
 
-### Accord L3
+### Scribe[unified] L3
 
 ```text
 Source: ## L3 受入基準 / ## Acceptance Criteria
@@ -170,7 +170,7 @@ Every match below should trigger `AMBIGUOUS_FLAG`.
 ```text
 GOOD: Ambiguity < 10%, Testability > 80%, Completeness > 90%
 FAIR: Ambiguity < 20%, Testability > 60%, Completeness > 70%
-POOR: Below FAIR -> route to Scribe / Accord for improvement
+POOR: Below FAIR -> route to Scribe / Scribe[unified] for improvement
 ```
 
 ## AMBIGUOUS_FLAG Protocol
@@ -222,7 +222,7 @@ Examples:
 ```yaml
 EXTRACTED_CRITERIA:
   spec_source: "docs/login-spec.md"
-  spec_format: ACCORD_L3 | PRD | USER_STORY | FREE_FORM
+  spec_format: SCRIBE_L3 | PRD | USER_STORY | FREE_FORM
   extraction_confidence: 0.95
   spec_quality: GOOD | FAIR | POOR
   total_criteria: 12
@@ -276,7 +276,7 @@ questions:
   - question: "No specification found. How would you like to proceed?"
     header: "Spec Source"
     options:
-      - label: "Delegate spec creation to Scribe/Accord"
+      - label: "Delegate spec creation to Scribe/Scribe[unified]"
         description: "Create the specification first, then run verification"
       - label: "Reverse-extract spec from code (EXTRACT)"
         description: "Infer implicit specifications from existing implementation and report"
@@ -330,4 +330,3 @@ For natural-language input without a subcommand; a subcommand match wins. Mode a
 | `V&V Method` | `INSPECTION` / `ANALYSIS` / `DEMONSTRATION` / `TEST` (per IEEE 1012) |
 
 Set `AMBIGUOUS_FLAG` whenever the spec is subjective, incomplete, contradictory, or unmeasurable.
-

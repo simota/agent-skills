@@ -48,7 +48,7 @@ The bare evaluator-loop can run forever or devolve into "Agent Tennis" (Generato
 ## 3. Phase Contract (AUTORUN chain template)
 
 ```
-CONTRACT ── Scribe/Accord[author the Sprint Contract (acceptance spec) + Rubric (0-3 dims)]
+CONTRACT ── Scribe[unified: author the Sprint Contract (acceptance spec) + Rubric (0-3 dims)]
             (skip authoring if caller supplies both; else generate before the loop)
    ▼
 ┌─ LOOP (until ACCEPT | bound hit per §2) ───────────────────────────────────┐

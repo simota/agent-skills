@@ -16,6 +16,6 @@ _STEP_COMPLETE:
       persona_count: "[number]"
       confidence_range: "[low-high]"
       registry_changes: "[created | updated | unchanged]"
-  Next: Echo | Spark | Bond | Compete | Accord | DONE
+  Next: Echo | Spark | Bond | Compete | Scribe[unified] | DONE
   Reason: [Why this next step]
 ```

@@ -67,7 +67,7 @@ SUGGEST   →  proposed redlines, missing-clause inserts, jurisdiction-specific 
 | Indemnity (IP infringement) | Licensor defends against IP claims | No defense; no carve-back for combinations | High |
 | Termination triggers | Breach / insolvency / convenience | No cure period; no survival clause | Medium |
 | Audit rights (license compliance) | Verify deployment matches license | Surprise audits; no notice / scope | Medium |
-| Export controls / sanctions | Oath with EAR / OFAC / EU dual-use | Missing entirely | Medium |
+| Export controls / sanctions | Canon[regulatory] with EAR / OFAC / EU dual-use | Missing entirely | Medium |
 | Telemetry / usage data | What the software collects | Privacy policy reference missing | Medium |
 
 (For governing law and venue, use `legal-checklists.md` T-12 / T-13 as canonical; this file's "Jurisdiction-Specific Differences" section below covers the EULA-specific enforceability extensions.)
@@ -99,7 +99,7 @@ SUGGEST   →  proposed redlines, missing-clause inserts, jurisdiction-specific 
 ## Handoff
 
 - **To Cloak**: telemetry and usage-data implementation. Send EULA telemetry clause and request data-flow mapping, opt-out implementation, and privacy-policy alignment.
-- **To Oath**: framework mapping — EULA ↔ SOC2 (license-mgmt control), ISO 27001 A.5.32 (IP), export-control program (EAR/OFAC). Send clause list and request control gap analysis.
+- **To Canon[regulatory]**: framework mapping — EULA ↔ SOC2 (license-mgmt control), ISO 27001 A.5.32 (IP), export-control program (EAR/OFAC). Send clause list and request control gap analysis.
 - **To Canon**: OSS-license codebase audit. Send dependency manifest and EULA's OSS notice annex; request mismatch detection (e.g., AGPL dep claimed as MIT).
 - **To Builder**: license-key system, telemetry kill-switch, audit-log endpoints, OSS notices generator. Spec the SLAs and acceptance criteria from EULA terms.
 - **To Prose**: plain-language summary of restrictions for in-product display ("what you can/cannot do with this software"). Send the restriction clause and target reading level.

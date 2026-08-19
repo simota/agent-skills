@@ -22,14 +22,14 @@ COLLABORATION_PATTERNS:
 - Spark → Saga: Reinforce feature proposals with "why it matters" narratives
 - Saga → Prose: Provide narrative direction for UX microcopy
 - Saga → Scribe: Provide use case sections for PRDs
-- Saga → Accord: Provide customer experience descriptions for L0 vision
+- Saga → Scribe[unified]: Provide customer experience descriptions for L0 vision
 - Saga → Director: Provide demo video scenarios from narratives
 - Compete → Saga: Express competitive differentiators as narratives (including wargame results)
 - Trace → Saga: Narrativize high-impact UX session analysis stories
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Cast (persona definitions), Field (journey maps, research findings), Voice (customer feedback, insights), Spark (feature proposals), Compete (competitive differentiators, wargame results), Trace (high-impact UX session stories)
-- OUTPUT: Prose (UX copy direction), Scribe (PRD use case sections), Accord (L0 vision descriptions), Director (demo scenarios)
+- OUTPUT: Prose (UX copy direction), Scribe (PRD use case sections), Scribe[unified] (L0 vision descriptions), Director (demo scenarios)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Game(H) Marketing(H) Dashboard(M) API(L)
 -->
@@ -57,7 +57,7 @@ Route elsewhere when the task is primarily:
 - UI text or microcopy: `Prose`
 - formal technical documents or PRDs: `Scribe`
 - feature proposals or specs: `Spark`
-- cross-team integrated specs: `Accord`
+- cross-team integrated specs: `Scribe[unified]`
 - persona definition or management: `Cast`
 - user research or interview design: `Field`
 - feedback collection or analysis: `Voice`
@@ -234,7 +234,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 - Framework citation (which framework was selected and why).
 - Before→After transformation arc with observable/measurable change.
 - Recommended success metrics for narrative validation (e.g., message recall rate, engagement rate, conversion lift, time-on-page for content narratives, NPS/sentiment shift for brand narratives).
-- Recommended next agent for handoff (Prose/Scribe/Accord/Director).
+- Recommended next agent for handoff (Prose/Scribe/Scribe[unified]/Director).
 - Handoff-ready content formatted for the receiving agent.
 
 ---
@@ -249,7 +249,7 @@ Inputs/outputs are listed in the `COLLABORATION_PATTERNS` / `BIDIRECTIONAL_PARTN
 | Trace → Saga | `TRACE_TO_SAGA` | Narrativize UX session analysis |
 | Compete → Saga | `COMPETE_TO_SAGA` | Convert competitive differentiators / wargame results into stories |
 
-**Overlap boundaries** — Saga supplies narrative direction and story structure; the partner owns its own layer. **Prose** crafts the final UX microcopy (Saga says what, Prose says how). **Scribe** owns formal PRD/SRS documents; Saga writes the narrative use-case sections inside them. **Spark** owns the feature proposal and specs; Saga wraps the why-it-matters. **Accord** owns cross-team integrated specs; Saga supplies the L0 vision customer-experience layer. **Compete** owns competitive analysis; Saga expresses differentiators as customer-centric stories.
+**Overlap boundaries** — Saga supplies narrative direction and story structure; the partner owns its own layer. **Prose** crafts the final UX microcopy (Saga says what, Prose says how). **Scribe** owns formal PRD/SRS documents; Saga writes the narrative use-case sections inside them. **Spark** owns the feature proposal and specs; Saga wraps the why-it-matters. **Scribe[unified]** owns cross-team integrated specs; Saga supplies the L0 vision customer-experience layer. **Compete** owns competitive analysis; Saga expresses differentiators as customer-centric stories.
 
 ---
 
@@ -277,7 +277,7 @@ Full algorithm, JSON schema, AP-grounding rules, and prompt skeletons -> `refere
 | `reference/templates.md` | Output templates per narrative type — use case, product, pitch, success, onboarding, scenario. |
 | `reference/anti-patterns.md` | Validating in REFINE, running `audit`, or grounding `multi` CANDIDATEs — canonical AP-1~AP-9 checklist, output format, rejection codes. |
 | `reference/examples.md` | Example narratives for comparison during REFINE. |
-| `reference/handoffs.md` | Handoff templates for Prose, Scribe, Accord, Director. |
+| `reference/handoffs.md` | Handoff templates for Prose, Scribe, Scribe[unified], Director. |
 | `reference/hero-journey.md` | `hero-journey` — 12-stage monomyth with stage-by-stage transformation scripting. |
 | `reference/before-after-bridge.md` | `bab` — BAB structure with LP/email/ad templates and CTA-friction mapping. |
 | `reference/minto-pyramid.md` | `pyramid` — answer-first, MECE arguments, evidence layering for executive delivery. |

@@ -21,7 +21,7 @@ CAPABILITIES_SUMMARY:
 - escalation_design: Escalation matrix authoring — tiered on-call rotation, paging policy, auto-escalation thresholds, handoff scripts, after-hours engagement, PagerDuty / Opsgenie / VictorOps integration design
 - incident_comms_authoring: Stakeholder comms — internal engineering / leadership / sales / support, external status page, customer notices, social updates, SEV-based update cadence (Atlassian Incident Handbook)
 - pre_staged_templates_audit: Advisory pre-incident audit of comms / PR-statement / legal-disclosure template inventory per SEV × top-N category (breach / outage / payment failure / billing error / API deprecation / pricing change) — readiness report, not a pre-merge gate
-- regulated_breach_notification_routing: Routes a `data_breach`-classified incident to `clause` for jurisdiction-aware disclosure (GDPR 72h notification, HIPAA Breach Notification Rule, 個人情報保護法, CCPA, EU NIS2). Pattern G: `triage` detects → `clause` drafts disclosure copy → `oath` validates per G14 → back to `triage` for IC sign-off.
+- regulated_breach_notification_routing: Routes a `data_breach`-classified incident to `clause` for jurisdiction-aware disclosure (GDPR 72h notification, HIPAA Breach Notification Rule, 個人情報保護法, CCPA, EU NIS2). Pattern G: `triage` detects → `clause` drafts disclosure copy → `canon[regulatory]` validates per G14 → back to `triage` for IC sign-off.
 
 COLLABORATION_PATTERNS:
 - Pattern A: Standard Incident Flow (Triage → Scout → Builder → Radar → Triage)

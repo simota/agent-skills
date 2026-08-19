@@ -67,7 +67,7 @@ Phase 2 GRAFT MAP   →  Flux[generate novelty moves] → Magi[arbitrate which c
    + SPEC               Build the GRAFT MAP (§3a): per donor concept → graft decision {adapt | hybridize | invert | reject}
                         + host ATTACHMENT POINT + the adaptation + per-graft INNOVATION THESIS + HOST INVARIANTS it must
                         respect + ORACLE assignment {concept-fidelity ∧ host-integrity ∧ innovation}.
-                        Accord/Scribe[concept-fidelity spec + L3 ACs per graft]; Ripple[host blast radius per attachment].
+                        Scribe[unified]/Scribe[concept-fidelity spec + L3 ACs per graft]; Ripple[host blast radius per attachment].
                         → GRAFT MAP GATE (§3a) + TRIPLE-ORACLE GATE (§3b) + HOST-INVARIANT CONTRACT (§3c)
                         + ORIGINALITY POSTURE (§3d) + INNOVATION THESIS registered (§3e)
 Phase 3 ARCHITECT      Magi[graft strategy + risk gate] → Atlas[integrate graft into host arch without breaking seams]

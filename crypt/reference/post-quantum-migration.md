@@ -7,7 +7,7 @@ Purpose: Plan the migration from classical public-key cryptography (RSA, ECDSA, 
 - **Crypt `pqc`**: the migration plan itself — inventory, timeline, hybrid-scheme selection, rollout sequencing, rollback.
 - **Crypt `algo`** (default): selects the current-best algorithm for a new use case; will flag quantum-vulnerability but does not own the migration program.
 - **Crypt `tls`**: TLS/mTLS configuration. TLS 1.3 hybrid key exchange (X25519MLKEM768) is a `pqc` topic that `tls` applies — the migration decision lives here, the cipher-suite wiring lives there.
-- **Oath**: maps regulatory mandates (CNSA 2.0, BSI TR-02102, ANSSI, MAS) that drive the timeline — `pqc` consumes those requirements.
+- **Canon[regulatory]**: maps regulatory mandates (CNSA 2.0, BSI TR-02102, ANSSI, MAS) that drive the timeline — `pqc` consumes those requirements.
 
 If the question is "pick an algorithm today" → `algo`. If it is "how do we transition off RSA-2048 over 3 years?" → `pqc`.
 
@@ -114,7 +114,7 @@ SUNSET     →  remove classical fallback once mandated deadline or risk posture
 - Forgetting firmware / HSM / smartcard paths — these have 5–10 year refresh cycles and dominate the real migration cost.
 - Migrating signatures before KEX — HNDL risk is in the KEX (data confidentiality), not the signature (authentication integrity today).
 
-## Handoff to Builder / Scaffold / Oath
+## Handoff to Builder / Scaffold / Canon[regulatory]
 
 Deliver:
 - Inventory table (system, algorithm, key size, HNDL sensitivity, deadline).
@@ -125,4 +125,4 @@ Deliver:
 - Library selection: OpenSSL 3.4+ (ML-KEM/ML-DSA native), liboqs (provider), BoringSSL, AWS-LC.
 - Rollback plan per phase.
 
-Oath maps deadlines to business regulatory obligations; Scaffold provisions upgraded KMS/HSM firmware; Builder implements the refactor; Sentinel audits that no quantum-vulnerable algorithm remains after sunset.
+Canon[regulatory] maps deadlines to business regulatory obligations; Scaffold provisions upgraded KMS/HSM firmware; Builder implements the refactor; Sentinel audits that no quantum-vulnerable algorithm remains after sunset.

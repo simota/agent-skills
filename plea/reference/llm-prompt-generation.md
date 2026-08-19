@@ -20,7 +20,7 @@ One verb per prompt, declared at the top of `# Your task`.
 | `ANALYZE` | Understand scope, root cause, market fit | Field, Compete |
 | `PROPOSE` | Generate feature options with hypothesis and KPIs | Spark |
 | `DESIGN` | Translate demand into UX flow or interaction model | Vision, Palette, Echo |
-| `DRAFT-SPEC` | PRD, user story, or staged spec package | Scribe, Accord |
+| `DRAFT-SPEC` | PRD, user story, or staged spec package | Scribe, Scribe[unified] |
 | `PROTOTYPE` | Working code, mock UI, or runnable demo | Forge, Builder |
 | `REFINE` | Iterate on existing demand — add detail, narrow scope, resolve contradictions | Plea (self), Field |
 
@@ -30,7 +30,7 @@ One verb per prompt, declared at the top of `# Your task`.
 |-----------------|--------------|-----|
 | Spark | `PROPOSE` | Spark structures feature proposals |
 | Scribe | `DRAFT-SPEC` | Scribe writes PRDs and user stories |
-| Accord | `DRAFT-SPEC` | Accord builds L0-L3 spec packages |
+| Scribe[unified] | `DRAFT-SPEC` | Scribe[unified] builds L0-L3 spec packages |
 | Builder / Forge | `PROTOTYPE` | Builder ships code; Forge ships rapid prototypes |
 | Rank | `ANALYZE` | Rank quantifies priority — needs analysis input |
 | Field | `REFINE` or `ANALYZE` | Field validates synthetic hypotheses |
@@ -120,7 +120,7 @@ You are receiving a User Demand Report from Plea covering [scope].
 # Your task
 Choose the action that matches your role:
 - Spark: structure these demands into feature proposals with hypothesis and KPIs.
-- Accord: integrate user-voice requirements into spec packages (L0-L3).
+- Scribe[unified]: integrate user-voice requirements into spec packages (L0-L3).
 - Scribe: convert user voices into PRD user stories with INVEST criteria.
 - Builder / Forge: select highest-urgency demand and prototype.
 - Rank: score demands by urgency × frequency × persona breadth.

@@ -283,7 +283,7 @@ Phase 6   GAUNTLET-CONVERGE loop ≤ 3 cycles (evaluator-loop-protocol.md; ceili
           → exit ACCEPT / diminishing-returns / cap-reached / budget-reached per §2
    ▼
 Phase 7   DISCLOSURE — state the invention so someone else can build it
-          Scribe/Accord[Disclosure Package]: mechanism · claims (what is being asserted as new) ·
+          Scribe[unified: Disclosure Package]: mechanism · claims (what is being asserted as new) ·
           enabling detail · prior-art delta with citations · reduction-to-practice evidence ·
           known limitations. ENABLEMENT is a scored rubric dimension precisely because
           an invention only its inventor can build is not yet transferable.
@@ -311,7 +311,7 @@ Phase 8.5 SHIP GATE ★Confirm-before-launch (unconditional; blocks in AUTORUN/A
 Phase 9   SPECIFY — spec, entered with the packet: FRAME ‖ EXPAND ‖ CHALLENGE COLLAPSE TO
           VALIDATION (the direction was chosen at Phase 3 and adversarially refuted at Phases 4
           and 6 — re-running Riff/Flux/Magi/Void over a ratified mechanism is drift, not diligence)
-          Accord/Scribe[L3 ACs, plan-tier]:
+          Scribe[unified]/Scribe[L3 ACs, plan-tier]:
             · the Phase 5 FALSIFICATION CRITERION becomes an AC verbatim
             · the NOVELTY DELTA is written in as a MUST-HAVE AC — a *testable requirement*, never
               a description in a preamble. This is what makes it defensible at Phase 11.

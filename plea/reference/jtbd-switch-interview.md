@@ -33,7 +33,7 @@ MAP        →  produce Job Map across 8 stages (Define → Locate → Prepare �
 COMPETE    →  list competing jobs (alternatives the user could "hire" — including non-obvious ones)
            →  surface unexpected substitutes (doing nothing, asking a friend, a spreadsheet)
 
-DELIVER    →  hand off to Field for validation, Spark for solution, Accord for spec
+DELIVER    →  hand off to Field for validation, Spark for solution, Scribe[unified] for spec
 ```
 
 ## The Four Forces
@@ -71,7 +71,7 @@ Rules:
 
 ## From Job Map to Tagged Demands
 
-`jtbd` must not stop at an abstract job map — bridge it to Plea's standard tagged-demand output so Spark/Accord receive actionable artifacts. Each Job-Map stage friction becomes a demand:
+`jtbd` must not stop at an abstract job map — bridge it to Plea's standard tagged-demand output so Spark/Scribe[unified] receive actionable artifacts. Each Job-Map stage friction becomes a demand:
 
 - For every stage with a real friction surface, emit a demand: *"To make progress on [job] at the [stage] stage, I need [capability]."*
 - Carry the calibration tag (`[hypothesis]` by default; `[supported]`/`[validated]` only if a force or friction matches real Voice/Trace data).
@@ -133,12 +133,12 @@ For each, score: cost, switching effort, social signal, expected progress. The o
 - **Skipping the competing-job step**: if you don't list "doing nothing," you'll over-estimate switch likelihood.
 - **Treating synthetic JTBD as evidence**: this is a hypothesis. Always tag outputs `synthetic: true`, ceiling the switch verdict at `[hypothesis]`, and route to Field for real-user confirmation.
 - **Verdict without a test**: emitting `SWITCHES`/`STAYS` with no `falsifiable_test` — synthetic optimism dressed as forecast. Every verdict names the real-data observation that would refute it.
-- **Job map with no demands**: stopping at the abstract Job Map without bridging per-stage frictions into tagged demands — leaves Spark/Accord nothing actionable.
+- **Job map with no demands**: stopping at the abstract Job Map without bridging per-stage frictions into tagged demands — leaves Spark/Scribe[unified] nothing actionable.
 
 ## Handoff
 
 - **To Field**: synthetic JTBD as hypothesis seed for real Switch interviews. Field recruits real switchers and validates the four-forces ranking. Required: the `SWITCH_PREDICTION.riskiest_force` and its `falsifiable_test` — Field validates the verdict-flipping force first.
 - **To Spark**: validated job statement → solution exploration. Spark designs against the dominant unmet stage on the Job Map.
-- **To Accord**: job statement + acceptance criteria phrased as "user achieves [outcome] when [condition]" → spec-package input.
+- **To Scribe[unified]**: job statement + acceptance criteria phrased as "user achieves [outcome] when [condition]" → spec-package input.
 - **To Cast**: PERSONA_FEEDBACK on which job-archetype combinations produced unexpected coverage gaps.
 - **To Voice**: cross-check synthetic forces against real review/support sentiment — overlap raises confidence; divergence flags hypothesis weakness.

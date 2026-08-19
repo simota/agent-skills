@@ -88,7 +88,7 @@ Frequency cap: no more than 1 marketing touch / 3 days in winback.
 - **Winback fatigue suppression**: user who's been through 2 full winback cycles without returning → 180-day cooldown.
 - **Regulatory**: CAN-SPAM (unsubscribe ≤ 10 business days), GDPR (legitimate interest balancing test), CASL Canada (consent required), Japan APPI.
 
-Route compliance checks to Cloak/Oath for regulated regions.
+Route compliance checks to Cloak/Canon[regulatory] for regulated regions.
 
 ## Reactivation Metric
 
@@ -153,7 +153,7 @@ Before shipping a winback offer, verify:
 - relay: email / push / SMS delivery
 - Pulse: reactivation event + funnel
 - Experiment: A/B test offer strength and copy
-- Cloak / Oath: regulatory review
+- Cloak / Canon[regulatory]: regulatory review
 - Growth: ensure no overlap with active promos
 ```
 
@@ -179,7 +179,7 @@ When `winback` completes, emit:
 - **Compliance checklist** (suppression, regulation, unsubscribe).
 - **Metrics plan** (reactivation rate, 90-day retention, LTV, guardrails).
 - **Cannibalization check**.
-- **Handoffs**: Prose, relay, Pulse, Experiment, Cloak/Oath, Growth.
+- **Handoffs**: Prose, relay, Pulse, Experiment, Cloak/Canon[regulatory], Growth.
 
 ## References
 

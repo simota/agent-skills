@@ -114,7 +114,7 @@ Turn analysis (+ objective) into a prioritized, decomposed, acceptance-bounded p
 | `spark` | Propose candidate bodies of work from the Intelligence Report | Autonomous mode only |
 | `rank` | Score candidates (ICE/RICE/WSJF) and select the chartered scope | Autonomous mode only |
 | `sherpa` | Decompose chartered scope into atomic steps / work packages (<15 min each), with dependencies + sequencing | Yes |
-| `accord` | Requirements (L0→L3) + measurable acceptance criteria + traceability per work package | Yes (reduced to Lite threshold at `scope=lite`) |
+| `scribe[unified]` | Requirements (L0→L3) + measurable acceptance criteria + traceability per work package | Yes (reduced to Lite threshold at `scope=lite`) |
 | `magi` | Arbitrate scope/approach when candidates or decompositions conflict | Conditional: ambiguity / tie |
 | `omen` + `ripple` | Pre-mortem (FMEA/RPN) + blast-radius for the planned work → embedded as Charter risk gates | Conditional: full scope or high reversibility cost |
 
@@ -122,7 +122,7 @@ Turn analysis (+ objective) into a prioritized, decomposed, acceptance-bounded p
 
 ## Phase 3: Charter Authoring
 
-Synthesize Phases 1-2 into the **Charter document** — the self-contained operating manual, including the team-construction design. Authored by `scribe` with `accord` supplying traceability; `void` optionally trims scope (full mode).
+Synthesize Phases 1-2 into the **Charter document** — the self-contained operating manual, including the team-construction design. Authored by `scribe` with `scribe[unified]` supplying traceability; `void` optionally trims scope (full mode).
 
 The Charter MUST be **self-driving**: a reader (human, `enact`, or a fresh Nexus session) can construct the team and execute every work package from the document alone, without re-running analysis. This self-containment check is the reader-path test of `reference/doc-quality-protocol.md` (W12, reader = `enact`/the executing team); the Charter also follows its grounding (W4-W5 — Phase 1's `UNKNOWN`-over-guessing rule), coherence (W8-W9, terms follow the repo's vocabulary), and freshness (W3: as-of + review trigger) rules. Write it to `out` (default `docs/CHARTER.md`) and a machine-readable companion (`docs/CHARTER.roster.yaml`) holding the roster + orchestration plan for `enact` re-entry.
 
@@ -233,10 +233,10 @@ Nexus AUTORUN charter
   → reconverge → Repository Intelligence Report
   ── Phase 2 Objective & WBS ──────────────────────────
   → spark(propose) → rank(ICE/RICE select)        # autonomous only
-  → sherpa(atomic step WBS) → accord(AC + trace)
+  → sherpa(atomic step WBS) → scribe[unified](AC + trace)
   → magi(arbitrate)? → omen+ripple(risk gate)?
   ── Phase 3 Charter Authoring (incl. team design) ────
-  → scribe(+accord trace, void? full)
+  → scribe(+scribe[unified] trace, void? full)
        → finalize §5 roster + §6 orchestration plan
        → assign engine per package: Claude Code (plan/design/review)
          ‖ Codex CLI model=gpt-5.6-terra (build loops + high-volume parallel
@@ -264,7 +264,7 @@ Because charter **stops at the document and runs no execution** (`reference/reci
 | Phase 2 no worthwhile work (autonomous) | rank | Present top candidates or abort, suggest explicit objective — prevents chartering low-value work |
 | Phase 2 scope/approach tie | magi | Pause for human verdict — prevents a scope/approach deadlock stalling authoring |
 | Risk gate No-Go | omen/ripple | Return to Phase 2 (re-scope) |
-| Phase 3 self-containment check fails | scribe/accord | Re-author missing sections before DELIVER — prevents a Charter that can't self-drive (a reader, or `enact`, would have to re-run analysis to act) |
+| Phase 3 self-containment check fails | scribe/scribe[unified] | Re-author missing sections before DELIVER — prevents a Charter that can't self-drive (a reader, or `enact`, would have to re-run analysis to act) |
 | Phase 3 a work package has no constructable owner skill | scribe | Re-scope or flag the gap in §5 — prevents `enact` Phase 1 hitting an unresolvable roster at run time |
 | Engine assumptions fail silently at run | N/A (design-time gate) | §6 records per-engine prereqs + a `fallback_engine` per Codex/agy package so `enact` degrades gracefully instead of hard-failing |
 | Untrackable execution downstream | N/A (design-time gate) | §10 checklists (pre-flight, per-package DoD, progress tracker, final delivery), generated from §3+§4+§7, give `enact` testable gates instead of prose judgment |

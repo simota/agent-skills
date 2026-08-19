@@ -20,7 +20,7 @@ CAPABILITIES_SUMMARY:
 
 COLLABORATION_PATTERNS:
 - Sentinel -> Crypt: Vulnerability reports trigger crypto design review (incl. Sentinel `mobile` MASVS-CRYPTO + MASVS-AUTH findings handed off for design fix)
-- Oath -> Crypt: Regulatory requirements inform algorithm selection
+- Canon[regulatory] -> Crypt: Regulatory requirements inform algorithm selection
 - Gateway -> Crypt: API auth design feeds signature/token scheme
 - Native -> Crypt: Mobile keystore / Passkey / JWT lifetime / certificate-pinning design request
 - Crypt -> Builder: Crypto implementation specifications
@@ -30,7 +30,7 @@ COLLABORATION_PATTERNS:
 - Crypt -> Scaffold: KMS and TLS infrastructure configuration
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Sentinel (vulnerabilities), Oath (regulations), Gateway (API auth), Native (mobile keystore / Passkey / JWT / pinning design request), User (requirements)
+- INPUT: Sentinel (vulnerabilities), Canon[regulatory] (regulations), Gateway (API auth), Native (mobile keystore / Passkey / JWT / pinning design request), User (requirements)
 - OUTPUT: Builder (implementation), Sentinel (verification), Cloak (privacy), Native (mobile keystore + Passkey + JWT + pinning design spec), Scaffold (infra)
 
 PROJECT_AFFINITY: Game(L) SaaS(H) E-commerce(H) Mobile(H) Dashboard(M) Marketing(L)
@@ -63,7 +63,7 @@ Route elsewhere when the task is primarily:
 - dynamic security testing: `Probe`
 - privacy engineering or PII handling: `Cloak`
 - attack scenario modeling: `Breach`
-- regulatory compliance mapping: `Oath`
+- regulatory compliance mapping: `Canon[regulatory]`
 - API endpoint design: `Gateway`
 - infrastructure provisioning: `Scaffold`
 - mobile feature implementation (Swift / SwiftUI Keychain calls, Kotlin / Compose Keystore calls): `Native`
@@ -265,13 +265,13 @@ Per-Recipe behavior — full parameters, provider notes, and cross-links -> `ref
 
 ## Collaboration
 
-**Receives:** Sentinel (vulnerabilities), Oath (regulations), Gateway (API auth), User (requirements)
+**Receives:** Sentinel (vulnerabilities), Canon[regulatory] (regulations), Gateway (API auth), User (requirements)
 **Sends:** Builder (implementation), Sentinel (verification), Cloak (privacy integration), Scaffold (infra config)
 
 | Direction | Handoff | Purpose |
 |-----------|---------|---------|
 | Sentinel → Crypt | `SENTINEL_TO_CRYPT_HANDOFF` | Crypto vulnerability for design fix |
-| Oath → Crypt | `COMPLY_TO_CRYPT_HANDOFF` | Regulatory algorithm requirements |
+| Canon[regulatory] → Crypt | `COMPLY_TO_CRYPT_HANDOFF` | Regulatory algorithm requirements |
 | Crypt → Builder | `CRYPT_TO_BUILDER_HANDOFF` | Crypto implementation spec |
 | Crypt → Sentinel | `CRYPT_TO_SENTINEL_HANDOFF` | Design for security verification |
 

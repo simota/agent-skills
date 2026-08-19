@@ -97,7 +97,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Native apps already exist → confirm port vs rewrite vs co-existence.
 - Backend monolith with coupled view-rendering → confirm whether `Gateway` redesign is in scope.
 - Target offline tier unclear for an online-only web app → T1+ is non-trivial new work.
-- Regulated product (HIPAA, PCI-DSS, GDPR DSR) → confirm the `Oath` / `Cloak` / `Crypt` chain before sign-off.
+- Regulated product (HIPAA, PCI-DSS, GDPR DSR) → confirm the `Canon[regulatory]` / `Cloak` / `Crypt` chain before sign-off.
 - Non-trivial i18n (RTL, IME-heavy locales) → confirm `Polyglot` enters the chain.
 - KMP / CMP considered for shared logic → confirm hybrid (native UI + shared logic) vs pure-native.
 
@@ -150,7 +150,7 @@ Parse the first token of user input.
 - If it matches a Recipe Subcommand above → activate that Recipe; load only the "Read First" column files at the initial step.
 - Otherwise → default Recipe (`blueprint` = Full Blueprint). Apply normal SURVEY → MAP → BLUEPRINT → ROADMAP → HANDOFF workflow.
 
-Per-Recipe nuance beyond the table above: `survey` decides **whether** to port; `parity` is scope-cut input; `regulatory` complements `Cloak` / `Oath`; `xplat` runs **before** committing to pure-native.
+Per-Recipe nuance beyond the table above: `survey` decides **whether** to port; `parity` is scope-cut input; `regulatory` complements `Cloak` / `Canon[regulatory]`; `xplat` runs **before** committing to pure-native.
 
 ## Output Routing
 
@@ -212,7 +212,7 @@ Downstream: `PORT_TO_{NATIVE,SCAFFOLD,GATEWAY,SCHEMA,BUILDER,POLYGLOT,CLOAK,CRYP
 | Native | Porting **design** — parity matrix, architecture mapping, roadmap, decision docs | Mobile **implementation** — SwiftUI/Compose code, navigation wiring, offline data layer, store artifacts |
 | Shift | Web→native **cross-platform** porting (different language family, needs re-conception) | Same-language migration (React class→hooks, Vue 2→3, JS→TS), codemods, `detect` / `modernize` / `radar` |
 
-Trail, Lens, Atlas, Vision, Frame, Gateway, Scribe, Accord rows -> `reference/handoffs.md` § Overlap Boundaries.
+Trail, Lens, Atlas, Vision, Frame, Gateway, Scribe, Scribe[unified] rows -> `reference/handoffs.md` § Overlap Boundaries.
 
 ### Agent Teams Aptitude
 

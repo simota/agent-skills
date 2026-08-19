@@ -203,7 +203,7 @@ Missing deeplink = tap drops user in home screen = low CTR.
 - Polyglot (i18n)
 - Pulse (open / CTR measurement)
 - Bond (campaign strategy)
-- Cloak / Oath (regulated channels)
+- Cloak / Canon[regulatory] (regulated channels)
 ```
 
 ## Anti-Patterns
@@ -231,7 +231,7 @@ When `notification` completes, emit:
 - **Tone alignment** with voice framework.
 - **Telemetry plan** (Pulse events).
 - **Compliance checklist** (opt-in / opt-out / quiet hours / regional law).
-- **Handoffs**: relay, Polyglot, Pulse, Bond, Cloak/Oath.
+- **Handoffs**: relay, Polyglot, Pulse, Bond, Cloak/Canon[regulatory].
 
 ## References
 

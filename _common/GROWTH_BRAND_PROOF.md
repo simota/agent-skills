@@ -9,7 +9,7 @@ Companion protocol to `_common/PROOF_CARRYING.md` (Tier A Foundation + Tier B Pr
 
 **Audience**: Skills participating in pre-design / ship-time / post-launch lifecycle gates.
 - **Research axis (R)**: `field`, `voice`, `trace`, `plea`, `tome`
-- **Brand axis (B)**: `vision`, `crest`, `prose`, `clause`, `oath`, `muse` (token discipline carry-over from Tier B)
+- **Brand axis (B)**: `vision`, `crest`, `prose`, `clause`, `canon[regulatory]`, `muse` (token discipline carry-over from Tier B)
 - **Market axis (M)**: `pulse`, `experiment`, `funnel`, `bazaar`, `compete`, `ledger` (FinOps), `harvest`, `cloak`, `vigil` (brand safety)
 - **Orchestration**: `nexus[growth-acceptance]`
 
@@ -83,7 +83,7 @@ Three structural reasons:
 
 **Cross-cutting**: **G13 mandatory** — every Contract names a Stop_Accountable (1 person); 24h no-response → auto-halt. **G14 mandatory** for regulated industries — auto-scale OFF by default.
 
-**Skills**: `pulse`, `experiment`, `funnel`, `bazaar`, `compete`, `ledger` (FinOps), `accord`, `spark`, `scribe`.
+**Skills**: `pulse`, `experiment`, `funnel`, `bazaar`, `compete`, `ledger` (FinOps), `scribe[unified]`, `spark`, `scribe`.
 
 **Blocking?**: Yes — campaigns without Contract are non-shippable; Incrementality Gate auto-halts losers.
 
@@ -97,7 +97,7 @@ Three structural reasons:
 
 **Cross-cutting**: **G15 mandatory** — Brand Constitution split into Core (10y) / Strategic (3-5y) / Operational (12-18mo). **G12 (Diversity Floor) mandatory** — Compiler rejects "minimum viable safe copy" (homogenization counter-pressure).
 
-**Skills**: `vision` (Compiler orchestration), `crest` (brand strategy), `prose` (voice), `muse` (design tokens crossover from Tier B), `clause` (legal), `oath` (regulatory).
+**Skills**: `vision` (Compiler orchestration), `crest` (brand strategy), `prose` (voice), `muse` (design tokens crossover from Tier B), `clause` (legal), `canon[regulatory]` (regulatory).
 
 **Blocking?**: B.hard (taboo / legal) + B.pattern (tokens / Code Connect) are blocking. B.tone (LLM-as-judge advisory) is non-blocking + weekly sampling audit.
 
@@ -117,7 +117,7 @@ When any AI-generated content cites customer insight, market trend, or user beha
 | `contradiction_proof` | Counter-evidence considered and either reconciled or noted | `magi` / `flux` |
 | `triangulation_proof` | At least 2 independent sources support the claim | `field` + at least 1 other |
 | `recency_proof` | Source data age; expiration trigger | `tome` |
-| `decision_proof` | Which specific decision this claim supports (not unanchored) | `accord` |
+| `decision_proof` | Which specific decision this claim supports (not unanchored) | `scribe[unified]` |
 | `confidence_score` | Deterministic-computed (N × variance × age decay × counter-evidence weight); never hand-set per G11 | `insight` (proposed skill) |
 | `reproducibility_proof` | Methodology document enabling independent replay | `tome` / `field` |
 
@@ -136,7 +136,7 @@ When any brand-touching content (LP / ad / UI copy / email / SNS / sales / press
 | `distinctiveness_proof` | Embedding distance from competitor recent creatives + own past 90d > G12 threshold | `compete` | B.hard (G12 blocking) |
 | `asset_proof` | Distinctive assets (logo, color, type, shape) used per Constitution | `muse` / `vision` | B.pattern (blocking) |
 | `memory_proof` | Cognitive associations match intended Category Entry Points | `vision` / `crest` | B.tone (advisory) |
-| `trust_proof` | No exaggeration / no false claims / no banned coercive language (per `clause` + `oath`) | `clause` / `oath` | B.hard (blocking) |
+| `trust_proof` | No exaggeration / no false claims / no banned coercive language (per `clause` + `canon[regulatory]`) | `clause` / `canon[regulatory]` | B.hard (blocking) |
 | `consistency_proof` | Does not contradict prior brand statements (G15 lifecycle check) | `vision` / `tome` | B.tone (advisory) |
 | `brand_lift_proof` | Post-launch awareness / recall / favorability / intent unchanged-or-improved | `pulse` / `experiment` | Post-launch measurement (G13 auto-halt if degraded) |
 
@@ -148,7 +148,7 @@ When any campaign / ad / channel-allocation decision is made, the following 9 ev
 
 | Field | What | Owner Skill | Blocking Layer |
 |-------|------|-------------|----------------|
-| `target_proof` | Audience segment defined and addressable in chosen channel | `accord` / `spark` | Ship-time (blocking) |
+| `target_proof` | Audience segment defined and addressable in chosen channel | `scribe[unified]` / `spark` | Ship-time (blocking) |
 | `offer_proof` | Value proposition tested or evidenced by Insight Ledger | `spark` / `insight` | Ship-time (blocking) |
 | `channel_proof` | Channel-fit rationale based on user behavior data | `funnel` / `compete` | Ship-time (blocking) |
 | `funnel_proof` | Funnel stage targeted (awareness / consideration / conversion / retention) named explicitly | `funnel` / `pulse` | Ship-time (blocking) |
@@ -365,7 +365,7 @@ Rule-based, deterministic, blocking. No LLM judgment.
 | Rule Type | Example | Tooling |
 |-----------|---------|---------|
 | Taboo words | "革命的" / 過剰使用、競合商標誤用 | Banned-word list (per `prose`) |
-| Legal compliance | 薬機法 / 景表法 / 金商法 / 公職選挙法 / GDPR / DMA violations | `clause` + `oath` validators |
+| Legal compliance | 薬機法 / 景表法 / 金商法 / 公職選挙法 / GDPR / DMA violations | `clause` + `canon[regulatory]` validators |
 | Distinctive asset misuse | Competitor logo / unauthorized celebrity / wrong brand color | `muse` + `vision` AST check |
 | Diversity Floor (G12) | Cosine sim > 0.85 to past 90d own creatives OR top-10 competitor recent creatives | Embedding model + threshold |
 

@@ -10,7 +10,7 @@ Purpose: Subcommand-scoped methodology for evaluating cloud commitment products 
 - **ledger `anomaly` (elsewhere)**: detects unused-commitment drops and coverage cliffs as anomalies; `ri-sp` owns the design of corrective re-purchase or exchange.
 - **scaffold (elsewhere)**: applies SP-aligned IaC changes (instance family pinning for EC2 SP). `ri-sp` recommends; Scaffold provisions.
 - **beacon (elsewhere)**: SLO-aware capacity context. Steady-state baseline must respect SLO headroom — `ri-sp` consumes Beacon's capacity floor, not raw averages.
-- **oath (elsewhere)**: financial-control audit (procurement approval, segregation of duties for >$10K commitments). `ri-sp` produces the artifact; Oath audits the trail.
+- **canon[regulatory] (elsewhere)**: financial-control audit (procurement approval, segregation of duties for >$10K commitments). `ri-sp` produces the artifact; Canon[regulatory] audits the trail.
 
 ## Workflow
 
@@ -92,4 +92,4 @@ HANDOFF    →  Scaffold: IaC pinning for EC2 SP; Beacon: utilization SLO for co
 - **To Beacon**: commitment-utilization SLO (target >= 80%, alert at < 70% for 7 days) + cost-anomaly rule for sudden coverage drop.
 - **To Atlas**: org-level commitment portfolio map — which accounts hold which commitments, expiration calendar, blended effective rate by BU.
 - **To Ledger `anomaly`**: feed expiration calendar so coverage-cliff events surface as predictable anomalies, not surprises.
-- **To Oath**: procurement-approval evidence for >$10K/mo or 3-year commitments; segregation-of-duties audit trail.
+- **To Canon[regulatory]**: procurement-approval evidence for >$10K/mo or 3-year commitments; segregation-of-duties audit trail.

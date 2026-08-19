@@ -1,6 +1,6 @@
 # Attest LLM Fix Prompt Generation
 
-**Purpose:** Attest-specific action verbs, suppression cases, template fields, and worked example for the `## LLM Fix Prompt` block when Attest confirms an AC gap and hands remediation to Builder (or Scribe/Accord for spec rewrites).
+**Purpose:** Attest-specific action verbs, suppression cases, template fields, and worked example for the `## LLM Fix Prompt` block when Attest confirms an AC gap and hands remediation to Builder (or Scribe/Scribe[unified] for spec rewrites).
 **Read when:** Attest has issued a per-criterion verdict of `FAIL` or `PARTIAL` and remediation must be paired with a paste-ready prompt for the receiving agent.
 
 > Universal authoring rules and prompt structure: `_common/LLM_PROMPT_GENERATION.md`.
@@ -24,11 +24,11 @@ Attest never modifies code. Every confirmed AC gap with sufficient evidence pair
 | Situation | Action |
 |-----------|--------|
 | Per-criterion verdict is `FAIL` or `PARTIAL` and the implementation must change | Emit `CLOSE-GAP` (or `BREAKING-CLOSE` if scope is wider) — Builder |
-| Implementation behavior is correct but the spec is wrong/outdated/missing the criterion | Emit `RECONCILE-SPEC` — Scribe / Accord |
+| Implementation behavior is correct but the spec is wrong/outdated/missing the criterion | Emit `RECONCILE-SPEC` — Scribe / Scribe[unified] |
 | AC interpretation is ambiguous and a code change without clarification would miss intent | Emit `INVESTIGATE-FURTHER` — spec author or Attest re-entry |
 | AC is not applicable in the current context (deprecated, out-of-scope feature flag) | Emit `WAIVE` — Builder + Scribe (waiver doc) |
 | Verification-only mode requested (compliance verdict only, no remediation scope) | **Suppress prompt.** Note "Fix prompt withheld per scope: verification only." |
-| Multiple ACs require coordinated spec rewrite | **Suppress per-finding prompts.** Hand the whole bundle to Scribe/Accord. |
+| Multiple ACs require coordinated spec rewrite | **Suppress per-finding prompts.** Hand the whole bundle to Scribe/Scribe[unified]. |
 | Implementation passes all ACs (no gaps) | **Suppress prompt.** Note "Fix prompt N/A — full conformance verified." |
 | Verdict is `NOT_TESTED` (runtime-only) and no static gap is established | **Suppress prompt.** Hand off to Voyager/Radar with runtime plan instead. |
 
@@ -43,7 +43,7 @@ Each fix prompt declares one verb at the top of `# Your task`.
 | Verb | When to use | Receiving agent |
 |------|-------------|----------------|
 | `CLOSE-GAP` | Implementation is missing an AC; scoped fix to satisfy the AC | Builder |
-| `RECONCILE-SPEC` | Implementation behavior is correct but the spec is wrong/outdated; update spec instead of code | Scribe / Accord |
+| `RECONCILE-SPEC` | Implementation behavior is correct but the spec is wrong/outdated; update spec instead of code | Scribe / Scribe[unified] |
 | `BREAKING-CLOSE` | Closing the gap requires a breaking change (API contract, behavior change visible to clients) | Builder + Guardian + Launch |
 | `INVESTIGATE-FURTHER` | AC interpretation ambiguous; need to clarify with spec author / stakeholder before changing code | Spec author OR Attest re-entry with clarified spec |
 | `WAIVE` | AC not applicable in the current context; document waiver with rationale | Builder + Scribe (waiver doc) |
@@ -82,7 +82,7 @@ Universal cases live in `_common/LLM_PROMPT_GENERATION.md`. Attest adds:
 | Case | Reason | Note in report |
 |------|--------|----------------|
 | Verification-only mode (no fix scope; report compliance verdict only) | Out of scope for this engagement | "Fix prompt withheld per scope: verification only." |
-| Attest hands off to Scribe/Accord for spec rewrite (multiple ACs need restructuring) | A per-finding prompt would fragment a coordinated rewrite | "Fix prompt suppressed — Scribe/Accord owns spec rewrite prompt." |
+| Attest hands off to Scribe/Scribe[unified] for spec rewrite (multiple ACs need restructuring) | A per-finding prompt would fragment a coordinated rewrite | "Fix prompt suppressed — Scribe/Scribe[unified] owns spec rewrite prompt." |
 | AC interpretation requires stakeholder decision (not a code/spec problem) | Acting before the decision risks rework | "Fix prompt withheld — pending stakeholder decision on [AC ID]." |
 | Implementation passes all ACs (no gaps found) | Nothing to remediate | "Fix prompt N/A — full conformance verified." |
 | Verdict is `NOT_TESTED` (runtime-only) with no static gap established | Runtime owner (Voyager/Radar) is the correct recipient, not Builder | "Fix prompt suppressed — runtime verification routed to [Voyager/Radar]." |
@@ -300,7 +300,7 @@ This prompt is self-contained: Builder can act on it without seeing the rest of 
 | Verb | Use when | Receiving agent |
 |------|----------|----------------|
 | `CLOSE-GAP` | Implementation missing an AC | Builder |
-| `RECONCILE-SPEC` | Implementation correct, spec wrong/outdated | Scribe / Accord |
+| `RECONCILE-SPEC` | Implementation correct, spec wrong/outdated | Scribe / Scribe[unified] |
 | `BREAKING-CLOSE` | Fix requires a breaking change | Builder + Guardian + Launch |
 | `INVESTIGATE-FURTHER` | AC interpretation ambiguous | Spec author / Attest re-entry |
 | `WAIVE` | AC not applicable; document waiver | Builder + Scribe |

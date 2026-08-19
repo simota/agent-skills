@@ -8,7 +8,7 @@ Purpose: Model supply chain attack paths against the build and distribution pipe
 - **Sentinel (elsewhere)**: static scanning of manifests, lockfiles, secrets, and known-CVE matches in dependencies. Sentinel finds "what is vulnerable" — Breach models "how an adversary reaches it."
 - **Probe (elsewhere)**: DAST / runtime vulnerability scans on deployed services that consume the compromised artifacts.
 - **Vigil (elsewhere)**: authoring detection rules for anomalous install-time network egress, postinstall script patterns, and registry-resolution anomalies.
-- **Oath (elsewhere)**: regulatory alignment (SLSA level attestations, SSDF, EU CRA, Executive Order 14028 SBOM mandate).
+- **Canon[regulatory] (elsewhere)**: regulatory alignment (SLSA level attestations, SSDF, EU CRA, Executive Order 14028 SBOM mandate).
 - **Shift (elsewhere)**: migration away from compromised or abandoned packages once scenarios land.
 
 If the question is "could an attacker get code into our build?" → `supply`. If it is "does what's in our build have known CVEs?" → Sentinel.
@@ -141,7 +141,7 @@ Verification must happen at the **consumer** side (admission controller, CI gate
 - To **Sentinel**: list of dependencies flagged by the scenario model for targeted CVE + secret scanning prioritization.
 - To **Probe**: deployed surface receiving the suspect artifacts — for runtime vulnerability confirmation.
 - To **Vigil**: indicators of compromise (install-time egress patterns, rapid-publish dist-tags, maintainer-email anomalies) for Sigma / OSQuery / EDR rule authoring.
-- To **Oath**: SLSA-level gap report mapped to SSDF / EO 14028 / EU CRA obligations and SBOM-delivery requirements.
+- To **Canon[regulatory]**: SLSA-level gap report mapped to SSDF / EO 14028 / EU CRA obligations and SBOM-delivery requirements.
 - To **Shift**: migration plan off abandoned, single-maintainer, or compromised packages; Strangler Fig decommission path for wide-blast-radius deps.
 - To **Scribe**: final supply chain assessment with scenario set, SBOM diff, SLSA uplift plan.
 - Journal novel supply chain IoCs and provenance-forgery attempts in `.agents/breach.md`.

@@ -18,7 +18,7 @@ CAPABILITIES_SUMMARY:
 
 COLLABORATION_PATTERNS:
 - User -> Clause: Legal document review request
-- Oath -> Clause: Reflect regulatory requirements into legal documents
+- Canon[regulatory] -> Clause: Reflect regulatory requirements into legal documents
 - Cloak -> Clause: Align privacy implementation with policy documents (incl. 5.1.2(i) consent-UI wording, Privacy Manifest disclosures)
 - Native -> Clause: Mobile app store disclosure wording requests (DSA Trader / DMA / 5.1.2(i) consent screen / Tokushoho for in-app purchase)
 - Clause -> Builder: Consent-flow and similar implementation instructions
@@ -26,7 +26,7 @@ COLLABORATION_PATTERNS:
 - Clause -> Prose: Plain-language rewrite of user-facing legal text
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User (review requests), Oath (regulatory requirements), Cloak (privacy requirements), Native (mobile disclosure wording requests), Scribe (legal requirements extracted from specs)
+- INPUT: User (review requests), Canon[regulatory] (regulatory requirements), Cloak (privacy requirements), Native (mobile disclosure wording requests), Scribe (legal requirements extracted from specs)
 - OUTPUT: Builder (implementation instructions), Native (approved in-app disclosure wording), Prose (text rewrites), Scribe (legal spec documentation)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Mobile-App(H) Marketing(M) Game(L)
@@ -54,7 +54,7 @@ Use Clause when:
 
 Route elsewhere when:
 - Legal advice or a legal judgment is needed → consult a lawyer
-- Technical regulatory-compliance audit → `Oath`
+- Technical regulatory-compliance audit → `Canon[regulatory]`
 - Privacy implementation (PII detection, consent code) → `Cloak`
 - Code-standards compliance check → `Canon`
 - Contract negotiation or drafting → consult a lawyer
@@ -278,10 +278,10 @@ Full per-recipe behavior detail -> `reference/legal-checklists.md`.
 | Privacy Policy | `privacy` | | Privacy Policy GDPR/APPI alignment check (including statute-specific deep-dives when the request names GDPR or APPI directly). | `reference/legal-checklists.md` |
 | Tokushoho | `tokushoho` | | Tokushoho (Specified Commercial Transactions Act) required-field check (Japan e-commerce / paid services). | `reference/legal-checklists.md` |
 | Gap Analysis | `gap` | | Multi-document consistency check, missing-clause detection, cross-document review (pre-launch comprehensive sweep). | `reference/patterns.md` |
-| DPA Review | `dpa` | | Data Processing Agreement review — identify role pairing and transfer geography first, then Art. 28(3) clauses, SCC module, Transfer Impact Assessment, audit rights. Implementation gaps -> Cloak; framework mapping -> Oath; codebase verification -> Canon. | `reference/dpa-review.md` |
+| DPA Review | `dpa` | | Data Processing Agreement review — identify role pairing and transfer geography first, then Art. 28(3) clauses, SCC module, Transfer Impact Assessment, audit rights. Implementation gaps -> Cloak; framework mapping -> Canon[regulatory]; codebase verification -> Canon. | `reference/dpa-review.md` |
 | EULA Review | `eula` | | End User License Agreement — identify license type and governing law first, then grant scope, restrictions (incl. AI-training clauses), IP ownership, warranty/indemnity, OSS notices, jurisdiction-specific enforceability. Telemetry -> Cloak; OSS audit -> Canon; license endpoints -> Builder. | `reference/eula-review.md` |
 | Cookie Consent | `cookie` | | Banner and policy review — identify jurisdictions and CMP/TCF participation first, then banner UX (equal Reject-All prominence, no pre-ticked, no cookie wall, withdraw path), per-cookie categorization, policy-vs-scanner diff, per-jurisdiction logic (EU opt-in, US-state opt-out + GPC, JP APPI). CMP integration -> Cloak; runtime verification -> Canon; copy -> Prose. | `reference/cookie-consent.md` |
-| App Store Disclosures | `appstore` | | Store disclosure review — DSA Trader status, DMA anti-steering and CTF wording, 5.1.2(i) provider-named third-party-AI consent (on-device inference exempt), Sign in with Apple, Play AI-content labeling, EAA accessibility statement. Consent UI -> Native via Cloak; copy -> Prose; codebase verification -> Oath/Canon. | `reference/legal-checklists.md` |
+| App Store Disclosures | `appstore` | | Store disclosure review — DSA Trader status, DMA anti-steering and CTF wording, 5.1.2(i) provider-named third-party-AI consent (on-device inference exempt), Sign in with Apple, Play AI-content labeling, EAA accessibility statement. Consent UI -> Native via Cloak; copy -> Prose; codebase verification -> Canon[regulatory]/Canon. | `reference/legal-checklists.md` |
 
 ### Signal Keywords → Recipe
 
@@ -324,7 +324,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 **Receives:**
 - User: legal-document review requests
-- Oath: reflect regulatory requirements into legal documents
+- Canon[regulatory]: reflect regulatory requirements into legal documents
 - Cloak: consistency check with privacy-implementation requirements
 - Scribe: extract legal requirements from specifications
 
@@ -337,7 +337,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 | Pattern | Name | Flow | Purpose |
 |---------|------|------|---------|
-| **A** | Compliance-to-Legal | Oath → Clause | Reflect regulatory requirements into legal documents |
+| **A** | Compliance-to-Legal | Canon[regulatory] → Clause | Reflect regulatory requirements into legal documents |
 | **B** | Legal-to-Implementation | Clause → Builder | Implement review outcomes into consent flows, etc. |
 | **C** | Privacy-Policy-Sync | Cloak ↔ Clause | Align privacy implementation with policy text |
 | **D** | Legal-Readability | Clause → Prose | Plain-language rewrites of legal text |

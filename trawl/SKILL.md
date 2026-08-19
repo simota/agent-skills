@@ -18,13 +18,13 @@ CAPABILITIES_SUMMARY:
 COLLABORATION_PATTERNS:
 - Pattern A: RAG Corpus Building (Oracle → Trawl → Stream → Seek)
 - Pattern B: Large-Scale Data Collection (Trawl → Builder + Scaffold)
-- Pattern C: Compliance-First Crawl (Oath + Cloak → Trawl → Stream)
+- Pattern C: Compliance-First Crawl (Canon[regulatory] + Cloak → Trawl → Stream)
 - Pattern D: Vector Escalation (Trawl → Vector — small-scale hand-off)
 - Pattern E: Search Index Population (Seek → Trawl → Stream → Seek)
 - Pattern F: Crawl Observability (Trawl → Beacon — SLO/SLI definitions)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Nexus (routing), Oracle (RAG requirements), Seek (index requirements), Stream (pipeline constraints), Scaffold (infra topology), Cloak (PII classification), Oath (regulatory scope)
+- INPUT: Nexus (routing), Oracle (RAG requirements), Seek (index requirements), Stream (pipeline constraints), Scaffold (infra topology), Cloak (PII classification), Canon[regulatory] (regulatory scope)
 - OUTPUT: Vector (small-scale execution spec), Stream (data ingestion spec), Builder (implementation spec), Scaffold (infra requirements), Seek (index ingestion requirements), Beacon (SLO/SLI definitions), Cloak (PII surface area report), Canvas (architecture diagrams)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(M) Marketing(M) Game(L)
@@ -68,7 +68,7 @@ Route elsewhere when the task is primarily:
 - crawler code implementation from approved spec: `Builder`
 - cloud infrastructure provisioning for crawler fleet: `Scaffold`
 - privacy engineering audit of collected data: `Cloak`
-- regulatory compliance assessment: `Oath`
+- regulatory compliance assessment: `Canon[regulatory]`
 
 ## Core Contract
 
@@ -197,7 +197,7 @@ Single source of truth for Recipe definitions; full detail lives in each `Read F
 | Distributed Topology | `topology` | ✓ | End-to-end distributed crawler topology design (Coordinator/Worker/Frontier) | Scale-tier classification → Coordinator/Worker split → fault tolerance → checkpoint design. | System spec + ADR → Builder, Scaffold | `reference/distributed-architecture.md` |
 | URL Frontier | `frontier` | | URL frontier design (deduplication, priority queue, re-crawl scheduling) | Bloom/Cuckoo/Redis/RocksDB selection → priority-queue design → URL normalization → persistence design. | Frontier spec → Builder | `reference/frontier-design.md` |
 | Politeness Control | `politeness` | | Politeness (rate limit) control, Crawl-Delay, adaptive backoff | Token-bucket design → robots.txt cache → 429/5xx adaptive backoff → fleet-wide concurrent-connection caps. | Politeness policy doc → Builder | `reference/compliance-architecture.md` |
-| Compliance | `compliance` | | robots.txt / legal compliance, AI Act conformance, jurisdictional risk | Verify every opt-out signal (robots.txt / ai.txt / TDM / meta / HTTP headers) → per-jurisdiction risk table → GDPR DPIA necessity. | Compliance spec → Oath, Cloak | `reference/compliance-architecture.md` |
+| Compliance | `compliance` | | robots.txt / legal compliance, AI Act conformance, jurisdictional risk | Verify every opt-out signal (robots.txt / ai.txt / TDM / meta / HTTP headers) → per-jurisdiction risk table → GDPR DPIA necessity. | Compliance spec → Canon[regulatory], Cloak | `reference/compliance-architecture.md` |
 | Extraction Pipeline | `extraction` | | Rendering choice, parser strategy, structured extraction, near-dup | Render layer (static / Playwright / Splash) → parser (lxml / BS4 / Scrapy selector / LLM) → structured data (JSON-LD / microdata / OpenGraph) → near-dup (SimHash / MinHash + LSH) → output schema (WARC / JSONL / Parquet). | Pipeline spec → Stream | `reference/extraction-pipeline-deep.md` |
 | Deduplication Strategy | `dedup` | | URL canonicalization, Bloom/Cuckoo/HLL, content-hash and near-dup | Canonicalization rules → exact-URL dedup (Bloom/Cuckoo) → content-hash dedup (SHA-256 + Merkle) → near-dup clustering (SimHash / MinHash / SSDEEP) → cross-session persistence. | Dedup spec → Builder | `reference/dedup-strategies.md` |
 | Crawl Monitoring | `monitoring` | | Observability — fetch rate, frontier depth, error taxonomy, cost-per-URL, shutdown/resume | RED signals per worker, frontier depth/breadth, fetch-error taxonomy (DNS/TLS/HTTP), cost-per-URL dashboard, graceful shutdown + resume checkpoints. | SLO/SLI definitions → Beacon | `reference/crawl-monitoring.md` |
@@ -230,7 +230,7 @@ Cross-cutting routing rules (apply regardless of recipe):
 - Nano tier → route to Vector with a targeted scraping spec — do not design.
 - PII collection involved → consult Cloak before finalizing extraction pipeline design.
 - Request mentions `RAG` or `corpus` → include Oracle in the chain (Pattern A).
-- Compliance stance ambiguous → route to Oath before architecture design.
+- Compliance stance ambiguous → route to Canon[regulatory] before architecture design.
 
 ## Output Requirements
 
@@ -248,7 +248,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 
 **Receives:**
-Nexus (routing context) · Oracle (RAG corpus scope, content types, quality) · Seek (index fields, update frequency, freshness) · Stream (downstream format, volume, velocity) · Scaffold (existing topology and constraints) · Cloak (PII classification, data governance) · Oath (jurisdictions, data categories, retention)
+Nexus (routing context) · Oracle (RAG corpus scope, content types, quality) · Seek (index fields, update frequency, freshness) · Stream (downstream format, volume, velocity) · Scaffold (existing topology and constraints) · Cloak (PII classification, data governance) · Canon[regulatory] (jurisdictions, data categories, retention)
 
 **Sends:**
 Vector (Nano-tier execution spec) · Stream (ingestion schema, volume, format, freshness SLO) · Builder (implementation spec — components, interfaces, stack) · Scaffold (compute, egress, storage, queue) · Seek (corpus characteristics and delivery) · Beacon (crawl SLO/SLI — throughput, freshness, error budget) · Cloak (PII surface-area report) · Canvas (topology and data-flow diagrams)
@@ -257,7 +257,7 @@ Vector (Nano-tier execution spec) · Stream (ingestion schema, volume, format, f
 - **vs Vector:** Trawl designs fleet-scale systems (1K+ URLs/day); Vector executes single sessions. "Scrape this page" → Vector.
 - **vs Stream:** Trawl designs collection, Stream designs downstream ETL/ELT — the boundary is the output sink.
 - **vs Builder:** Trawl produces architecture specs, Builder implements them; Trawl never writes execution code.
-- **vs Oath:** Trawl embeds compliance structurally; Oath audits regulatory stance and gives jurisdiction guidance.
+- **vs Canon[regulatory]:** Trawl embeds compliance structurally; Canon[regulatory] audits regulatory stance and gives jurisdiction guidance.
 
 **Teams aptitude (Large+ tiers only):** within DESIGN, the frontier, politeness/scheduler, topology, extraction, anti-detection, and observability sub-specs are independent with disjoint file ownership. At Large (1M-50M URL/day) and Web-scale, spawn a Pattern D specialist team (2-5 subagents), one reference deliverable each in parallel, then integrate into the DELIVER packet. Not for Small/Medium — sequential single-agent design is faster there.
 

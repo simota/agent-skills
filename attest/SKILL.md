@@ -14,11 +14,11 @@ CAPABILITIES_SUMMARY:
 - ambiguity_detection: Specification quality assessment and ambiguity flagging
 - remediation_routing: Handoff to Builder/Radar/Scribe for fixes
 - supply_chain_provenance: Optional evidence fields (`sbom_ref` / `signature_ref` / `provenance_attestation`) for SLSA-style conformance — advisory without Sigstore/Fulcio/Rekor/SBOM infra, blocking only under Tier policy
-- fix_prompt_generation: Paste-ready LLM Fix Prompt per confirmed AC gap (AC ID, AC verbatim, BDD scenario, verdict, evidence, recommended action, acceptance criteria, ruled-out alternatives, "what NOT to do") so Builder or Scribe/Accord can act without reformulation; suppressed for verification-only, escalated rewrites, pending stakeholder decisions, or full conformance
+- fix_prompt_generation: Paste-ready LLM Fix Prompt per confirmed AC gap (AC ID, AC verbatim, BDD scenario, verdict, evidence, recommended action, acceptance criteria, ruled-out alternatives, "what NOT to do") so Builder or Scribe/Scribe[unified] can act without reformulation; suppressed for verification-only, escalated rewrites, pending stakeholder decisions, or full conformance
 
 COLLABORATION_PATTERNS:
 - Scribe -> Attest: Specification documents for verification
-- Accord -> Attest: Integrated spec packages for compliance checking
+- Scribe[unified] -> Attest: Integrated spec packages for compliance checking
 - Builder -> Attest: Implementation code for spec verification
 - Radar -> Attest: Test coverage data for gap analysis
 - Attest -> Builder: Remediation handoffs for failed criteria
@@ -30,7 +30,7 @@ COLLABORATION_PATTERNS:
 - Attest -> PDM: Conformance verdicts to refine delivery status (Done vs In-Progress)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Scribe (specifications), Accord (spec packages), Builder (implementations), Radar (test coverage), PDM (features to verify)
+- INPUT: Scribe (specifications), Scribe[unified] (spec packages), Builder (implementations), Radar (test coverage), PDM (features to verify)
 - OUTPUT: Builder (fixes), Radar (test input), Voyager (acceptance scenarios), Scribe (spec gaps), Canvas (visualization), PDM (conformance verdicts for status)
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Dashboard(H) API(H) CLI(M) Library(M)
@@ -52,7 +52,7 @@ Use Attest when the user needs:
 - spec quality assessment and ambiguity detection
 
 Route elsewhere when the task is primarily:
-- writing or updating specifications: `Scribe` or `Accord`
+- writing or updating specifications: `Scribe` or `Scribe[unified]`
 - code review for style/quality (not spec compliance): `Judge`
 - writing tests: `Radar` or `Voyager`
 - bug investigation: `Scout`
@@ -126,7 +126,7 @@ Source citations for BDD anti-patterns: `reference/modern-tooling.md`.
 | `AMBIGUITY_CRITICAL` | `ON_RISK` | Ambiguities affect `>30%` of criteria |
 | `REJECT_CRITICAL` | `ON_DECISION` | About to issue `REJECTED` on a critical-path feature |
 
-Full `AskUserQuestion` YAML -> `reference/criteria-extraction.md` § INTERACTION_TRIGGERS. Defaults: missing spec offers delegate-to-Scribe/Accord, reverse-extract (`EXTRACT`), or a manual path; 20+ criteria verifies all unless narrowed to CRITICAL/HIGH or diff-related.
+Full `AskUserQuestion` YAML -> `reference/criteria-extraction.md` § INTERACTION_TRIGGERS. Defaults: missing spec offers delegate-to-Scribe/Scribe[unified], reverse-extract (`EXTRACT`), or a manual path; 20+ criteria verifies all unless narrowed to CRITICAL/HIGH or diff-related.
 
 ## Workflow
 
@@ -153,7 +153,7 @@ Default `FULL`; auto-detect: spec-only -> `EXTRACT`, spec+tests -> `AUDIT`, expl
 
 ## Acceptance Criteria Extraction
 
-Ingest confidence gates extraction: `>= 0.8` proceeds automatically, `0.5-0.8` extracts with `AMBIGUOUS_FLAG` on uncertain items, `< 0.5` raises `SPEC_MISSING` and suggests `Scribe` / `Accord`.
+Ingest confidence gates extraction: `>= 0.8` proceeds automatically, `0.5-0.8` extracts with `AMBIGUOUS_FLAG` on uncertain items, `< 0.5` raises `SPEC_MISSING` and suggests `Scribe` / `Scribe[unified]`.
 
 ### Required Criterion Fields
 
@@ -265,9 +265,9 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## LLM Fix Prompt Generation
 
-Every confirmed AC gap (`FAIL` or `PARTIAL`) ends with a paste-ready `## LLM Fix Prompt` block for Builder (code gaps) or Scribe/Accord (spec gaps).
+Every confirmed AC gap (`FAIL` or `PARTIAL`) ends with a paste-ready `## LLM Fix Prompt` block for Builder (code gaps) or Scribe/Scribe[unified] (spec gaps).
 
-Verbs: `CLOSE-GAP` (implementation missing an AC → Builder) · `RECONCILE-SPEC` (implementation correct, spec wrong → Scribe/Accord) · `BREAKING-CLOSE` (fix needs a breaking change → Builder + Guardian + Launch) · `INVESTIGATE-FURTHER` (AC interpretation ambiguous → spec author or Attest re-entry) · `WAIVE` (AC not applicable, document the waiver → Builder + Scribe).
+Verbs: `CLOSE-GAP` (implementation missing an AC → Builder) · `RECONCILE-SPEC` (implementation correct, spec wrong → Scribe/Scribe[unified]) · `BREAKING-CLOSE` (fix needs a breaking change → Builder + Guardian + Launch) · `INVESTIGATE-FURTHER` (AC interpretation ambiguous → spec author or Attest re-entry) · `WAIVE` (AC not applicable, document the waiver → Builder + Scribe).
 
 Universal authoring rules → `_common/LLM_PROMPT_GENERATION.md`; Attest-specific rules, suppression cases, and a worked example → `reference/fix-prompt-generation.md`. Suppression notes: see Output Requirements above.
 
@@ -296,7 +296,7 @@ Receives/Sends -> `BIDIRECTIONAL_PARTNERS` in the CAPABILITIES_SUMMARY comment a
 | Chain | Flow | Purpose |
 |-------|------|---------|
 | `Post-Impl Gate` | `Builder -> Attest -> Builder` | Verify implementation, route fixes |
-| `Pre-Impl Prep` | `Accord -> Attest(EXTRACT) -> Radar` | Extract criteria, produce testable scenarios |
+| `Pre-Impl Prep` | `Scribe[unified] -> Attest(EXTRACT) -> Radar` | Extract criteria, produce testable scenarios |
 | `Audit Trail` | `Attest(AUDIT) -> Canvas` | Traceability visualization |
 
 ## Reference Map

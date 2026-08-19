@@ -44,7 +44,7 @@ What is your goal?
 |   -> Echo (friction -> hypothesis)
 |
 +-- "Write user-voice section for PRD/spec"
-|   -> Plea -> Accord/Scribe
+|   -> Plea -> Scribe[unified]/Scribe
 |
 +-- "Both / Unclear"
 |   -> Plea (explore demands) -> Echo (validate in existing flow)

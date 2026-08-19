@@ -40,7 +40,7 @@ Find both sides before reconciling. Confirm with the user if a planning side is 
 ```yaml
 SCOPE_SOURCES:
   plan_side:
-    specs: ["docs/**/*.md", "PRD", "SRS", "spec/"]      # via Scribe/Accord if available
+    specs: ["docs/**/*.md", "PRD", "SRS", "spec/"]      # via Scribe/Scribe[unified] if available
     issues: ["gh issue list", "labels", "milestones", "projects"]
     roadmap: ["ROADMAP.md", "roadmap/", "milestone descriptions"]
     changelog: ["CHANGELOG.md", "releases"]

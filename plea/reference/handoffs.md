@@ -116,10 +116,10 @@ PLEA_TO_RANK_HANDOFF:
     Quantify priority factoring in user-felt urgency.
 ```
 
-### To Accord (PLEA_TO_ACCORD_HANDOFF)
+### To Scribe[unified] (PLEA_TO_SCRIBE_HANDOFF)
 
 ```yaml
-PLEA_TO_ACCORD_HANDOFF:
+PLEA_TO_SCRIBE_HANDOFF:
   source: Plea
   user_requirements:
     - requirement: "[Requirement]"
@@ -169,7 +169,7 @@ PLEA_TO_SAGA_HANDOFF:
 ## Collaboration Patterns and Overlap Boundaries (SKILL.md excerpt)
 
 **Receives:** Cast (persona definitions), Voice (real feedback for calibration), Field (research findings), Echo (flow evaluation results), Compete (competitive intelligence)
-**Sends:** Spark (feature request seeds), Rank (user urgency for prioritization), Accord (user voice requirements), Scribe (PRD user stories), Saga (narrative material), Cast (PERSONA_FEEDBACK for calibration results and coverage gaps)
+**Sends:** Spark (feature request seeds), Rank (user urgency for prioritization), Scribe[unified] (user voice requirements), Scribe (PRD user stories), Saga (narrative material), Cast (PERSONA_FEEDBACK for calibration results and coverage gaps)
 
 ### Collaboration Patterns
 
@@ -179,7 +179,7 @@ PLEA_TO_SAGA_HANDOFF:
 | **B** | Priority Advocacy | Plea → Rank | Feed user-felt urgency into priority scoring |
 | **C** | Demand-Validation | Plea ↔ Echo | Demand generation ↔ existing flow verification |
 | **D** | Reality Calibration | Voice → Plea | Calibrate synthetic demands with real feedback |
-| **E** | Requirement Enrichment | Plea → Accord | Integrate demands into spec packages |
+| **E** | Requirement Enrichment | Plea → Scribe[unified] | Integrate demands into spec packages |
 | **F** | Research Grounding | Field → Plea | Generate demands grounded in real research findings |
 
 ### Overlap Boundaries

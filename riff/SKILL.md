@@ -23,7 +23,7 @@ COLLABORATION_PATTERNS:
 - Compete -> Riff: Competitive insights for brainstorming
 - Riff -> Magi: Decision candidates from brainstorming
 - Riff -> Spark: Feature seeds from idea exploration
-- Riff -> Accord: Requirement seeds from concept structuring
+- Riff -> Scribe[unified]: Requirement seeds from concept structuring
 - Riff -> Void: Pruning candidates from over-expanded sessions
 - Riff -> Helm: Strategic options from brainstorming
 - Riff -> Scribe: Concept documentation from synthesized ideas
@@ -31,7 +31,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User (ideas, themes, questions), Nexus (brainstorming routing), Flux (reframed problems), Summon (named-expert mental models as ideation seeds), Field (research findings), Compete (competitive insights)
-- OUTPUT: Magi (decision candidates), Summon (ideation needing named-expert lenses), Spark (feature seeds), Accord (requirement seeds), Void (pruning candidates), Helm (strategic options), Scribe (concept documentation)
+- OUTPUT: Magi (decision candidates), Summon (ideation needing named-expert lenses), Spark (feature seeds), Scribe[unified] (requirement seeds), Void (pruning candidates), Helm (strategic options), Scribe (concept documentation)
 
 PROJECT_AFFINITY: Game(H) SaaS(H) E-commerce(M) Dashboard(M) Marketing(H)
 -->
@@ -218,7 +218,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 ## Collaboration
 
 **Receives:** User (ideas, themes, questions), Nexus (brainstorming routing), Flux (reframed problems), Field (research findings), Compete (competitive insights)
-**Sends:** Magi (decision candidates), Spark (feature seeds), Accord (requirement seeds), Void (pruning candidates), Helm (strategic options), Scribe (concept documentation)
+**Sends:** Magi (decision candidates), Spark (feature seeds), Scribe[unified] (requirement seeds), Void (pruning candidates), Helm (strategic options), Scribe (concept documentation)
 
 **Overlap boundaries:**
 - **vs Flux**: Flux = single-shot perspective transformation on the thinking process. Riff = iterative multi-turn dialogue that deepens ideas through back-and-forth.

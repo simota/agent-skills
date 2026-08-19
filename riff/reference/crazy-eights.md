@@ -178,7 +178,7 @@ The goal isn't 8 variations. It's a sharper choice across them. After the user p
 - Riff `steelman` (stress-test one pick)
 - Riff `propose` (deepen one pick into a concrete proposal)
 - Riff `crazy8` again on a different axis (if 3+ picks)
-- Spark / Accord (if a pick is ready to spec)
+- Spark / Scribe[unified] (if a pick is ready to spec)
 - Magi (if the user wants formal verdict between picks)
 ```
 

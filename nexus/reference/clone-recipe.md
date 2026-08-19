@@ -109,7 +109,7 @@ Phase 1 CAPTURE     ∥  Vector/Voyager[live-web: crawl UI, per-screen screensho
                        Ink/Pixel?[extract or recreate brand assets — fonts, icons, images — record license posture]
                        → output: capture corpus (screenshots + flow recordings + API shapes + feature list + asset set),
                          each artifact tagged with the provenance stamp
-Phase 2 SPEC+BASELINE  Scribe/Accord[author reconstruction spec from the capture corpus + acceptance criteria]
+Phase 2 SPEC+BASELINE  Scribe[unified: author reconstruction spec from the capture corpus + acceptance criteria]
                        → establish the PARITY BASELINE = golden reference set (reference screenshots per screen/state,
                          recorded behavior fixtures, API contract, feature checklist, asset manifest) = the fidelity oracle,
                          stamped with its capture provenance (§3b)

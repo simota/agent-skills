@@ -55,15 +55,15 @@ For disambiguation of commonly confused agent pairs, see `nexus/reference/agent-
 | **Breach** | Red team engineering & threat modeling | STRIDE/PASTA/MITRE ATT&CK, attack simulation | Never |
 | **Vigil** | Detection engineering | Sigma/YARA rules, threat hunting, MITRE coverage | Never |
 | **Cloak** | Privacy engineering | PII detection, GDPR/CCPA, consent, DPIA | Yes (privacy patterns) |
-| **Oath** | Regulatory compliance audit | SOC2/PCI-DSS/HIPAA/ISO 27001, policy-as-code | Yes (OPA policies) |
+| **Canon** (`regulatory`) | Regulatory compliance audit | SOC2/PCI-DSS/HIPAA/ISO 27001, policy-as-code | Yes (OPA policies) |
 | **Crypt** | Cryptographic architecture | Algorithm selection, key management, E2EE, post-quantum | Never |
 | **Clause** | Legal document review | ToS, privacy policy, tokushoho, clause gap detection | Never |
 
 **Key distinctions:**
 - Static code scan → Sentinel. Running app test → Probe
 - Attack simulation → Breach. Detection rules → Vigil. Purple team → Breach → Vigil
-- PII/privacy → Cloak. Regulatory frameworks → Oath. Crypto design → Crypt
-- Legal document review → Clause. Privacy implementation → Cloak. Regulatory audit → Oath
+- PII/privacy → Cloak. Regulatory frameworks → Canon `regulatory`. Crypto design → Crypt
+- Legal document review → Clause. Privacy implementation → Cloak. Regulatory audit → Canon `regulatory`
 
 **Credential Isolation Principle** (Source: Anthropic Managed Agents):
 Tokens and secrets must never be reachable from the execution environment where agent-generated code runs. Two patterns:
@@ -118,8 +118,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 | Agent | Primary Role | Output Type | Writes Code |
 |-------|-------------|------------|-------------|
 | **Quill** | Code documentation | JSDoc/TSDoc, README, type definitions | Yes (docs/types) |
-| **Scribe** | Specification documents | PRD, SRS, HLD, test specs | Never |
-| **Accord** | Cross-team integrated spec packages | L0-L3 progressive refinement | Never |
+| **Scribe** | Specification documents and cross-team packages | PRD/SRS/HLD/test specs; `cross-team` L0-L3 refinement | Never |
 | **Canvas** | Visualization | Mermaid diagrams, ASCII art, draw.io | Yes (diagrams) |
 | **Morph** | Format conversion | Markdown ↔ Word/Excel/PDF/HTML | Yes (scripts) |
 | **Saga** | Narrative design & product storytelling | SB7/Pixar/Hero's Journey/JTBD frameworks | Never |
@@ -128,7 +127,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Stage** | Presentation slide generation | Marp/reveal.js/Slidev, speaker notes | Yes (slide markdown) |
 
 **Key distinctions:**
-- Code docs (JSDoc, README) → Quill. Spec docs (PRD, SRS) → Scribe. Cross-team specs → Accord. Diagrams → Canvas
+- Code docs (JSDoc, README) → Quill. Spec docs (PRD, SRS) → Scribe. Cross-team specs → Scribe `cross-team`. Diagrams → Canvas
 - Product narratives/stories → Saga. Video scripts → Cue. Learning docs from code → Tome. Slides → Stage
 
 ## Architecture & Structure
@@ -258,7 +257,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Chisel** | Prompt → executable specification | Ambiguity detection, criterion translation, role decomposition; hub-invoked at Nexus `SPECIFY` to harden an intent contract into a Specified Brief before a chain spawns | Never |
 | **Vector** | Browser automation | Playwright task execution | Yes |
 | **Orbit** | Autonomous loop execution | Loop contracts, script generation | Yes |
-| **Canon** | Standards compliance | OWASP, WCAG, OpenAPI, ISO 25010 | Never |
+| **Canon** | Standards and regulatory compliance | OWASP/WCAG/OpenAPI/ISO 25010 plus `regulatory` audit recipes | Policy code only |
 | **Matrix** | Combinatorial analysis | Multi-dimensional coverage optimization | Never |
 | **Void** | YAGNI verification | Scope cutting, complexity reduction | Never |
 | **Sketch** | AI image generation | Gemini API image creation | Yes |

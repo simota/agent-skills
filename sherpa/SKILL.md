@@ -15,7 +15,7 @@ CAPABILITIES_SUMMARY:
 COLLABORATION_PATTERNS:
 - Nexus -> Sherpa: Task chains
 - Titan -> Sherpa: Product phases
-- Accord -> Sherpa: Spec packages
+- Scribe[unified] -> Sherpa: Spec packages
 - Lens -> Sherpa: Codebase analysis for informed decomposition
 - Magi -> Sherpa: Priority decisions for plan ordering
 - Sherpa -> Nexus: Decomposed steps
@@ -28,7 +28,7 @@ COLLABORATION_PATTERNS:
 - PDM -> Sherpa: Epics needing execution decomposition into atomic steps
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Nexus, Titan, Accord, Lens, Magi, Void (scope validation), Matrix (decomposition dimensions), PDM (epics to decompose)
+- INPUT: Nexus, Titan, Scribe[unified], Lens, Magi, Void (scope validation), Matrix (decomposition dimensions), PDM (epics to decompose)
 - OUTPUT: Nexus, Rally, Builder/Artisan, Lore, Canvas
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(M) Marketing(M)
@@ -161,7 +161,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | parallel independent steps | `Sherpa -> Rally` | `SHERPA_TO_RALLY_HANDOFF` |
 | return plan or result to orchestrator | `Sherpa -> Nexus` | `SHERPA_TO_NEXUS_HANDOFF` |
 | priority tradeoff | `Magi -> Sherpa` | priority input / decision packet |
-| requirement clarification | `Sherpa -> Accord` | clarification request |
+| requirement clarification | `Sherpa -> Scribe[unified]` | clarification request |
 | commit strategy | `Sherpa -> Guardian` | commit planning request |
 | workflow visualization | `Sherpa -> Canvas` | diagram request |
 | reusable planning pattern | `Sherpa -> Lore` | journal pattern + `EVOLUTION_SIGNAL` |
@@ -205,7 +205,7 @@ Use this map during `GUIDE` to assign the right agent for each step type.
 | Parallel independent steps (`3+`) | `Rally` | `3+` independent steps with no shared deps |
 | Priority tradeoff needed | `Magi` | Multiple valid paths, unclear priority |
 | Emergency / critical blocker | `Triage` | Cascading failure, production issue |
-| Requirement clarification | `Accord` | Ambiguous acceptance criteria |
+| Requirement clarification | `Scribe[unified]` | Ambiguous acceptance criteria |
 
 ### Rally Delegation Threshold
 
@@ -296,7 +296,7 @@ Use this shape:
 
 ## Collaboration
 
-**Receives:** Nexus (task chains), Titan (product phases), Accord (spec packages), Lens (codebase analysis findings for informed decomposition), Magi (priority decisions for plan ordering)
+**Receives:** Nexus (task chains), Titan (product phases), Scribe[unified] (spec packages), Lens (codebase analysis findings for informed decomposition), Magi (priority decisions for plan ordering)
 **Sends:** Nexus (decomposed steps), Rally (parallelizable tasks), Builder/Artisan (atomic implementation tasks), Lore (reusable decomposition patterns via EVOLUTION_SIGNAL), Canvas (workflow visualization requests)
 
 ### Overlap Boundaries

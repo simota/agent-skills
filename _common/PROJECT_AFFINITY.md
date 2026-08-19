@@ -136,11 +136,10 @@ These agents provide value regardless of project type. Nexus should always consi
 |-------|------|-------|------|-----|-----|-----|--------|--------|------|
 | Sentinel | H | H | M | — | M | H | M | — | — |
 | Probe | H | H | M | — | — | H | — | — | — |
-| Canon | H | M | M | — | H | H | — | — | — |
+| Canon | H | H | M | — | H | H | — | — | H |
 | Breach | H | H | M | — | — | H | M | — | — |
 | Vigil | H | M | M | — | — | H | — | — | — |
 | Cloak | H | H | M | — | — | H | M | — | H |
-| Oath | H | H | M | — | — | H | — | — | H |
 | Crypt | H | H | M | — | M | H | M | — | — |
 
 ### Documentation / Content Agents
@@ -149,7 +148,6 @@ These agents provide value regardless of project type. Nexus should always consi
 |-------|------|-------|------|-----|-----|-----|--------|--------|------|
 | Quill | M | — | M | M | H | H | — | — | — |
 | Scribe | H | M | M | M | H | H | — | — | — |
-| Accord | H | M | M | — | H | H | — | — | — |
 | Morph | M | — | M | — | M | — | — | M | — |
 | Harvest | M | — | — | — | M | M | — | — | — |
 | Launch | H | M | — | M | H | H | — | — | — |

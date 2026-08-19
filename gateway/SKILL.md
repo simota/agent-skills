@@ -147,7 +147,7 @@ Single source of truth for Recipe definitions. Notes carry the scope boundary an
 | Webhook Provider | `webhook` | | Emit-side contract: HMAC signature, idempotency, retry/DLQ, ordering, Sunset/Deprecation | PROVIDER-side contract (the API emits). **Boundary**: PROVIDER side only — Builder `integrate` is the CONSUMER side. | `reference/webhook-design.md` |
 | API Auth | `auth` | | OAuth 2.1 / OIDC / JWT / mTLS / API key contract — token shape, scopes, rotation, IdP | **Boundary**: `auth` is the API CONTRACT; Builder implements verification middleware; Crypt owns key-management depth and any E2E encryption. | `reference/api-auth-patterns.md` |
 | Rate Limiting | `rate-limit` | | Bucket/window algorithms, per-key / per-tenant / per-route scoping, IETF RateLimit headers | **Cross-link**: Probe (abuse verification), Beacon (observability). | `reference/rate-limit-patterns.md` |
-| Deprecation | `deprecation` | | RFC 8594 Sunset / RFC 9745 Deprecation headers, policy, SDK migration timeline, cutover | Window: 6-12 months public, 90 days internal. **Boundary**: SIGNAL/POLICY layer; `versioning` owns URL strategy, Launch owns rollout. Cross-link: Oath (regulated), Voice (customer comms). | `reference/deprecation-policy.md` |
+| Deprecation | `deprecation` | | RFC 8594 Sunset / RFC 9745 Deprecation headers, policy, SDK migration timeline, cutover | Window: 6-12 months public, 90 days internal. **Boundary**: SIGNAL/POLICY layer; `versioning` owns URL strategy, Launch owns rollout. Cross-link: Canon[regulatory] (regulated), Voice (customer comms). | `reference/deprecation-policy.md` |
 
 ### Signal Keywords → Recipe
 
@@ -200,7 +200,7 @@ Receives data models, implementation needs, and security requirements upstream; 
 | Schema → Gateway | `SCHEMA_TO_GATEWAY` | Data models for API resource design |
 | Builder → Gateway | `BUILDER_TO_GATEWAY` | Implementation constraints and integration needs |
 | Sentinel → Gateway | `SENTINEL_TO_GATEWAY` | Security requirements for API design |
-| Accord → Gateway | `ACCORD_TO_GATEWAY` | Governance and compliance constraints |
+| Scribe[unified] → Gateway | `SCRIBE_TO_GATEWAY` | Governance and compliance constraints |
 | Gateway → Builder | `GATEWAY_TO_BUILDER` | Completed API spec for implementation |
 | Gateway → Canon | `GATEWAY_TO_CANON` | API contract for canonical source of truth |
 | Gateway → Scribe | `GATEWAY_TO_SCRIBE` | OpenAPI spec for documentation generation |
@@ -218,7 +218,7 @@ Receives data models, implementation needs, and security requirements upstream; 
 | Sentinel | API-layer security design (OAuth scope, rate limiting, CORS headers) | Broad security audit, threat modeling, penetration testing |
 | Builder | API specification, OpenAPI/GraphQL SDL, versioning strategy | API implementation code, route handlers, middleware logic |
 | Canon | API design decisions and rationale | Canonical source of truth maintenance, cross-team standards |
-| Accord | API contract authoring | Governance enforcement, compliance validation, policy management |
+| Scribe[unified] | API contract authoring | Governance enforcement, compliance validation, policy management |
 | Scribe | OpenAPI spec and API design docs | General documentation, tutorials, changelog narration |
 | Siege | API latency SLAs and rate limit thresholds | Load test execution, chaos engineering, resilience validation |
 | Beacon | API SLO/SLI definitions from spec | Observability implementation, alerting, dashboard creation |

@@ -5,7 +5,7 @@ Purpose: Standards-citation-driven assessment against NIST CSF 2.0 (released Feb
 ## Scope Boundary
 
 - **canon `nist`**: standards-citation-driven assessment. Pin version "NIST CSF 2.0", cite Function.Category.Subcategory (e.g., `GV.OC-01`, `PR.AA-05`), evidence at `file:line`, and Tier rating per Category.
-- **oath (elsewhere)**: audit-trail and Policy-as-Code. Once Canon surfaces gaps, Oath owns control evidence collection (OSCAL packages), continuous-control monitoring, and auditor-facing reports.
+- **canon regulatory recipes**: Canon continues from CSF findings into OSCAL evidence packages, audit trails, Policy-as-Code, continuous-control monitoring specifications, and auditor-facing reports.
 - **cloak (elsewhere)**: privacy-by-design implementation. CSF 2.0 references NIST Privacy Framework — Cloak owns privacy-engineering controls (PII flow maps, DPIA, consent) when overlap occurs (`ID.RA`, `PR.DS`).
 - **sentinel (elsewhere)**: static security scanning. SAST/secret detection feeds evidence into `DE.CM-01`, `PR.DS-01`, but Sentinel does not assess Profile/Tier alignment.
 - **probe (elsewhere)**: dynamic security testing for `DE.AE` / `DE.CM` validation.
@@ -25,7 +25,7 @@ ASSESS    →  per Subcategory: rate Tier 1 (Partial) → 4 (Adaptive), evidence
 VERIFY    →  Current Profile vs. Target Profile gap report
           →  prioritize gaps by risk × business impact, not Tier delta alone
 
-PRESENT   →  delegate: Oath (audit/OSCAL), Cloak (privacy controls), Sentinel (SAST gaps),
+PRESENT   →  continue in Canon `audit`/`policy` (audit/OSCAL), delegate Cloak (privacy), Sentinel (SAST),
              Probe (DAST validation), Builder (technical remediation)
 ```
 
@@ -82,7 +82,7 @@ CSF 2.0 introduces **Community Profiles** (sector-specific, e.g., Manufacturing,
 
 ## Handoff
 
-- **To Oath**: gaps requiring audit trail, OSCAL package generation, or Policy-as-Code (OPA/Rego). Oath owns SOC 2 / ISO 27001 mapping and continuous-control monitoring built on CSF assessment.
+- **To Canon `audit` / `policy` / `soc2` / `iso27001`**: gaps requiring audit trail, OSCAL, OPA/Rego, SOC 2 / ISO 27001 mapping, or continuous-control specifications.
 - **To Cloak**: gaps in `ID.RA` (privacy risk), `PR.DS` (data minimization), `GV.SC` (third-party data sharing) — privacy-by-design implementation.
 - **To Sentinel**: `PR.DS-01` (encryption), `PR.PS-06` (secure development), `DE.CM-01` (log/secret detection) — SAST evidence collection.
 - **To Probe**: `DE.AE`, `RS.AN-03` validation through DAST and pentesting.

@@ -6,7 +6,7 @@ Purpose: Standards-citation-driven assessment against the EU General Data Protec
 
 - **canon `gdpr`**: standards-citation-driven assessment. Pin "GDPR (Regulation (EU) 2016/679)", cite Article and paragraph (e.g., `Art. 6(1)(b)`, `Art. 32(1)(a)`), evidence at `file:line`, lawful-basis mapping per processing activity.
 - **cloak (elsewhere)**: privacy-by-design implementation (`Art. 25`). PII detection, data-flow maps, consent-management code, DPIA facilitation, anonymization/pseudonymization design. Canon assesses; Cloak builds.
-- **oath (elsewhere)**: audit trail, Records of Processing Activities (RoPA — `Art. 30`), Policy-as-Code, DPA (Data Processing Agreement) registry, supervisory-authority correspondence.
+- **canon `gdpr` / `audit` / `policy`**: audit trail, Records of Processing Activities (RoPA — `Art. 30`), Policy-as-Code, DPA registry, and supervisory-authority evidence packages.
 - **clause (elsewhere)**: legal text review of Privacy Policy, Cookie Notice, DPA — clause-gap detection. Canon does not make legal determinations; defer to Clause + lawyer.
 - **sentinel (elsewhere)**: static scanning for PII leakage, hardcoded data-subject identifiers, insecure storage of personal data.
 
@@ -26,7 +26,7 @@ ASSESS    →  Articles 5/6/7/13/17/25/30/32/33/35 as core; expand to 12-22 (rig
 VERIFY    →  gap report by Article; flag DPIA-required activities (Art. 35), 72h breach
              readiness (Art. 33), DPO threshold (Art. 37(1)(b)/(c))
 
-PRESENT   →  delegate: Cloak (PbD, DPIA, consent code), Oath (RoPA, DPA),
+PRESENT   →  delegate: Cloak (PbD, DPIA, consent code); continue in Canon (RoPA, DPA evidence),
              Clause (Privacy Policy text), Sentinel (PII scan), Builder (remediation)
 ```
 
@@ -111,7 +111,7 @@ DPO must report to highest management level, cannot be dismissed for performing 
 ## Handoff
 
 - **To Cloak**: privacy-by-design implementation (`Art. 25`), DPIA facilitation (`Art. 35`), consent management code (`Art. 7`), pseudonymization/anonymization design (`Art. 4(5)`), data-subject rights API (`Art. 15-22`), data-flow maps.
-- **To Oath**: RoPA maintenance (`Art. 30`), DPA registry (`Art. 28`), audit trail, Policy-as-Code (OPA rules for retention/access), supervisory-authority correspondence.
+- **To Canon `gdpr` / `audit` / `policy`**: RoPA maintenance (`Art. 30`), DPA registry (`Art. 28`), audit trail, OPA rules for retention/access, and supervisory-authority evidence packages.
 - **To Clause**: Privacy Policy / Cookie Notice / DPA legal text review and clause-gap analysis. Always pair with qualified counsel for legal determinations.
 - **To Sentinel**: PII leakage scanning, hardcoded personal-data identifiers, insecure storage detection, secret/credential exposure (`Art. 32(1)(a)`).
 - **To Crypt**: encryption-at-rest/in-transit design, key management for `Art. 32(1)(a)` and breach-notification exemption qualification.

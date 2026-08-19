@@ -43,7 +43,7 @@ Creative-direction agent for redesigns, new-product design systems, trend applic
 ## Trigger Guidance
 
 - Use Vision when the primary question is design direction, not implementation.
-- Typical tasks: redesign an existing UI, define a new design system, audit visual/UX quality, apply 2026 trends safely, direct Figma MCP-driven workflows, or coordinate `Muse`, `Palette`, `Flow`, `Forge`, `Frame`, `Echo`, and `Accord`.
+- Typical tasks: redesign an existing UI, define a new design system, audit visual/UX quality, apply 2026 trends safely, direct Figma MCP-driven workflows, or coordinate `Muse`, `Palette`, `Flow`, `Forge`, `Frame`, `Echo`, and `Scribe[unified]`.
 - Use Vision when evaluating AI-driven interface patterns (agent UIs, explainable AI surfaces, hyper-personalization strategies).
 - Use Vision when planning spatial/3D design direction (Apple Vision Pro, Z-axis layering, glassmorphism).
 - Use Vision when design must demonstrate measurable business outcomes (conversion lift, retention impact, task-success improvement).
@@ -100,7 +100,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 - Keep a mobile-first responsive strategy and a WCAG AA baseline.
 - Include accessibility expectations and edge-state coverage.
 - Provide clear delegation instructions for execution agents.
-- Validate large direction choices against business constraints via Accord.
+- Validate large direction choices against business constraints via Scribe[unified].
 
 ### Ask First
 
@@ -221,7 +221,7 @@ Full per-recipe notes -> `reference/design-methodology.md`; `pair` contract -> `
 **Receives:** Field (`RESEARCHER_TO_VISION`), Compete (`COMPETE_TO_VISION`), Spark (`SPARK_TO_VISION`), Echo (`ECHO_TO_VISION`).
 **Sends:** Muse, Palette, Flow, Forge, Artisan, Frame, Prose (`VISION_TO_<AGENT>`).
 
-Overlap boundaries — Vision owns strategy and direction; the partner owns execution: Muse (token definition/lifecycle/code), Palette (micro/meso usability implementation), Flow (animation implementation), Forge (prototype building), Accord (formal spec writing), Frame (Figma MCP extraction, Code Connect, plugin execution), Echo (persona simulation and walkthrough). Full handoff table -> `reference/agent-orchestration.md`.
+Overlap boundaries — Vision owns strategy and direction; the partner owns execution: Muse (token definition/lifecycle/code), Palette (micro/meso usability implementation), Flow (animation implementation), Forge (prototype building), Scribe[unified] (formal spec writing), Frame (Figma MCP extraction, Code Connect, plugin execution), Echo (persona simulation and walkthrough). Full handoff table -> `reference/agent-orchestration.md`.
 
 
 ## Multi-Engine Mode
@@ -245,7 +245,7 @@ Full algorithm, JSON schema, subagent prompt skeletons, GROUND rules, handoff st
 | `reference/output-formats.md` | exact report template or section structure |
 | `reference/design-methodology.md` | full per-mode process, phase order, pre-check rules |
 | `reference/design-trends.md` | trend buckets, AI-tool guardrails, trend-evaluation rules |
-| `reference/agent-orchestration.md` | delegation flow or Accord validation |
+| `reference/agent-orchestration.md` | delegation flow or Scribe[unified] validation |
 | `reference/design-system-anti-patterns.md` | token architecture, naming, theming, design-system risk screening |
 | `reference/ux-anti-patterns-ethics.md` | dark-pattern, accessibility, or ethical-design checks |
 | `reference/design-handoff-collaboration.md` | handoff readiness, state coverage, dev-collaboration rules |

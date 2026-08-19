@@ -121,7 +121,7 @@ Per-track and per-branch engine/agent assignment is the § Engine × Team Matrix
 | | Claude (hub — narrative, judgment, audience) | Codex (sandbox — code samples, rendering, compilation) | Antigravity / agy (long-context, multimodal, AI imagery) |
 |---|---|---|---|
 | **Research** | Lens (codebase mapping for technical docs), Harvest (PR-derived material) | Quill (extract from JSDoc / existing API docs) | Field (audience persona + Search-grounded external sources), Tome (1M-context git-diff → learning material), Frame (multimodal extract from existing decks/screenshots) |
-| **Narrative** | Accord (L0-L1 staged elaboration), Zine (story arc for articles), Scribe (spec structure), Stage (slide narrative arc), Cue (storyboard for presentation-heavy work), Magi (depth vs breadth arbitration), Void (scope cut) | — | — |
+| **Narrative** | Scribe[unified] (L0-L1 staged elaboration), Zine (story arc for articles), Scribe (spec structure), Stage (slide narrative arc), Cue (storyboard for presentation-heavy work), Magi (depth vs breadth arbitration), Void (scope cut) | — | — |
 | **Production: Content** | Scribe (PRD/SRS/HLD/LLD body), Zine (article body + hook), Prose (microcopy, headings, CTAs), Saga (product narrative) | Quill (code samples with proper JSDoc/TSDoc), Vitrine (component usage examples) | Tome (long-ctx learning-doc body), Scribe[long-ctx] (large spec bodies > 200K tokens) |
 | **Production: Visual** | Vision (visual direction), Muse (brand tokens application) | Canvas (Mermaid / draw.io diagram code), Vitrine (Storybook-style examples) | Sketch (Gemini-native hero / cover / illustration imagery), Ink (SVG icon system), Frame (multimodal context extraction from existing visual references) |
 | **Production: Layout** | — | Stage (Marp / reveal.js / Slidev compilation), Morph (intermediate MD ↔ DOCX/PPTX/PDF/HTML conversion) | `figma:figma-use-slides` (Figma Slides — when target is Figma) |
@@ -156,7 +156,7 @@ Phase 6 PUBLISH includes an "Engine Distribution Audit" in the execution report 
 
 **Agents:**
 1. Nexus[classify] — output format detection (doc / slide / both), depth, brand context
-2. Accord[L0 vision] — staged elaboration of goal and audience (skip if user gave explicit charter)
+2. Scribe[unified: L0 vision] — staged elaboration of goal and audience (skip if user gave explicit charter)
 
 **Output:** `content_charter.yaml`
 
@@ -256,8 +256,8 @@ gaps_to_address: [...]     # facts requested but not findable — Phase 2 must d
 
 | output_format | Primary agent | Secondary agents |
 |---------------|--------------|-----------------|
-| `doc` (article/blog) | Zine[story arc] | Prose[hook], Accord[L1 outline], Magi[depth-vs-breadth] |
-| `doc` (technical spec) | Scribe[structure] | Accord[L1 outline], Void[scope cut], Magi |
+| `doc` (article/blog) | Zine[story arc] | Prose[hook], Scribe[unified: L1 outline], Magi[depth-vs-breadth] |
+| `doc` (technical spec) | Scribe[structure] | Scribe[unified: L1 outline], Void[scope cut], Magi |
 | `doc` (learning material) | Tome[narrative] | Scribe[structure], Zine[hook], Magi |
 | `slide` | Stage[narrative arc] | Cue[storyboard], Prose[slide titles], Magi |
 | `both` | Stage[arc] ‖ Zine/Scribe/Tome[arc] | Cue, Prose, Magi[arbitrate cross-format alignment] |

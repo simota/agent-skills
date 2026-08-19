@@ -27,12 +27,12 @@ COLLABORATION_PATTERNS:
 - Void -> Shift: Deprecated library removal justification (Shift `detect` recipe — absorbed from horizon)
 - Void -> Gateway: Unnecessary API endpoint pruning proposals
 - Void -> Schema: Over-designed table/column pruning proposals
-- Void -> Accord: Specification scope cutting proposals
+- Void -> Scribe[unified]: Specification scope cutting proposals
 - Void -> Spark: Feature YAGNI pre-check
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Atlas, Judge, Sherpa, Zen, Bolt
-- OUTPUT: Builder, Zen, Sweep, Atlas, Magi, Shift, Gateway, Schema, Accord, Spark
+- OUTPUT: Builder, Zen, Sweep, Atlas, Magi, Shift, Gateway, Schema, Scribe[unified], Spark
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(M) Marketing(M)
 -->

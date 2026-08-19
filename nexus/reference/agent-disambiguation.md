@@ -356,16 +356,16 @@ upside ("how much can this feature earn", "opportunity upper bound") → Spark (
 
 ---
 
-### Cloak vs Oath vs Crypt (Privacy / Compliance / Crypto)
+### Cloak vs Canon[regulatory] vs Crypt (Privacy / Compliance / Crypto)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
 | "Find PII exposure", "GDPR audit" | **Cloak** | Privacy-focused |
-| "SOC2 readiness", "HIPAA controls" | **Oath** | Framework compliance |
+| "SOC2 readiness", "HIPAA controls" | **Canon[regulatory]** | Framework compliance |
 | "Encryption design", "key management" | **Crypt** | Cryptographic architecture |
 | "Security audit" (broad) | **Sentinel** first | Start with static analysis |
 
-**Rule of thumb**: PII/consent/privacy → Cloak. Regulatory frameworks → Oath. Crypto algorithms/keys → Crypt.
+**Rule of thumb**: PII/consent/privacy → Cloak. Regulatory frameworks → Canon[regulatory]. Crypto algorithms/keys → Crypt.
 
 ---
 

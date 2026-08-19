@@ -33,7 +33,7 @@ RESTATE   →  rewrite the original request as the root-level unmet need
           →  e.g. "Add dark mode" → root: "I work at night and feel the product
           →  ignores my context"
 
-DELIVER   →  hand restated need + cause-tree to Spark or Accord
+DELIVER   →  hand restated need + cause-tree to Spark or Scribe[unified]
 ```
 
 ## When to Stop (Vertical vs Lateral Why)
@@ -137,6 +137,6 @@ WHY_CHAIN:
 - **To Field**: synthetic root-need as hypothesis for real-user follow-up interviews. Field tests whether real users articulate the same root — validate the `weakest_link` first (it invalidates everything below it) using the `root_falsifiable_test`.
 - **To Voice**: cross-check root against existing review/support text — search for keywords from the root statement; convergence raises confidence.
 - **To Spark**: hand off the *restated root unmet need*, not the original surface request. Spark designs against the root, which usually surfaces more diverse solution candidates.
-- **To Accord**: root-need becomes a top-level requirement; surface symptoms become acceptance criteria sub-bullets.
+- **To Scribe[unified]**: root-need becomes a top-level requirement; surface symptoms become acceptance criteria sub-bullets.
 - **To Scout**: when the root reveals a likely *implementation* defect rather than missing functionality, route to Scout for code-level root-cause analysis.
 - **To Cast**: if certain personas consistently bottom out at the same root, that's a persona-archetype signal worth feeding back.

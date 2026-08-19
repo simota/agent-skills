@@ -32,7 +32,7 @@
 - **Phase 5 DELIVER verdict via AskUserQuestion** — verdict card + Yes/No/Modify branches per `reference/verdict-gate.md` (the card is contract-level, stops even under AUTORUN). Recipe-specific card fields: `Recommended must-have: <single feature>`, `Source of conviction: Plea→Spark→Magi→Rank summary` (no flag/KPI — essential ships table-stakes, not a bet).
 - **Phase 6 Conditional Implementation (the Yes branch's build)**: Sherpa[claude atomic-decomposition] → Builder[codex] → Radar[codex] → Guardian[claude] → DELIVER working feature + tests + PR, **inheriting the single-feature scope constraint** (verdict-gate.md §2) — Codex owns code-gen, Claude owns judgment (§ Contract elements).
 - **Failure mode prevented** (additional to § Failure Modes Prevented below, which owns the unbounded-build mitigation shared with `killer`): over-engineering (Phase 1-5) + **timid-convergence** (the Ambition check stops the funnel from defaulting to a commodity must-have when a bolder one is genuinely more essential).
-- **Add-ons**: +Void for aggressive scope cut, +Accord for atomic-unit specs in Phase 1-4, +Flux to reframe the must-have boldly before Magi's necessity-arbitration.
+- **Add-ons**: +Void for aggressive scope cut, +Scribe[unified] for atomic-unit specs in Phase 1-4, +Flux to reframe the must-have boldly before Magi's necessity-arbitration.
 
 ---
 

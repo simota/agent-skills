@@ -21,7 +21,7 @@ Update every banner review against this snapshot before walking the checklist be
 - **clause `gap` (sibling)**: cross-document consistency. Use `gap` to verify cookie list ↔ privacy policy ↔ DPA sub-processor list ↔ vendor list match.
 - **Cloak (elsewhere)**: privacy implementation. Clause `cookie` reviews the banner copy and policy text; Cloak implements the CMP (consent management platform), cookie scanning, and conditional-loading logic. Hand banner spec to Cloak for implementation.
 - **Canon `gdpr` (elsewhere)**: codebase compliance. Canon checks the runtime — does the site actually block analytics until consent is granted? Clause checks the contract and copy.
-- **Oath (elsewhere)**: SOC2 / ISO 27001 mapping. Cookie consent typically maps to privacy and consent control families.
+- **Canon[regulatory] (elsewhere)**: SOC2 / ISO 27001 mapping. Cookie consent typically maps to privacy and consent control families.
 
 ## Workflow
 
@@ -148,7 +148,7 @@ UX rules: equal-weight buttons (color, size, position); no "Reject All" requirin
 ## Handoff
 
 - **To Cloak**: implementation — CMP integration, conditional script loading, consent record store, GPC signal honoring, server-side gating. Send banner spec, cookie categorization, and per-jurisdiction logic.
-- **To Oath**: framework mapping — cookie controls ↔ ISO 27701 / NIST Privacy Framework / SOC2 P-series. Send cookie policy and request control gap analysis.
+- **To Canon[regulatory]**: framework mapping — cookie controls ↔ ISO 27701 / NIST Privacy Framework / SOC2 P-series. Send cookie policy and request control gap analysis.
 - **To Canon `gdpr`**: codebase audit. Send banner spec and request runtime verification — does no analytics fire before consent? Are cookies in code matched to policy?
 - **To Builder**: implementation tasks (banner component, settings center, withdraw flow, geo-routing, TCF API integration). Spec acceptance criteria from policy.
 - **To Prose**: banner copy and policy plain-language rewrite. Microcopy must be unambiguous, jargon-free, and consistent across languages. Send draft text and target reading level.

@@ -17,11 +17,11 @@ SENTINEL_TO_CRYPT_HANDOFF:
   request: "Design crypto fix for identified vulnerabilities"
 ```
 
-### From Oath (Regulatory Requirements)
+### From Canon[regulatory] (Regulatory Requirements)
 
 ```yaml
 COMPLY_TO_CRYPT_HANDOFF:
-  source: Oath
+  source: Canon[regulatory]
   content:
     regulation: "[FIPS 140-2 | PCI-DSS | HIPAA | GDPR]"
     crypto_requirements:

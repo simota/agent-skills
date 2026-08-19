@@ -138,7 +138,7 @@ outcome_record:             the resolution and its audit entry
 because it was easiest is a privacy decision made by omission. State what does not travel — raw
 attachments, inferred sensitive attributes, other tenants' data, prior unrelated conversations —
 and make the exclusion visible to the receiving person so they know to ask rather than assume the
-record is complete. This mirrors the log discipline in `oath/reference/audit-trail-design.md`
+record is complete. This mirrors the log discipline in `canon[regulatory]/reference/audit-trail-design.md`
 (resource IDs, never values), applied to the transfer instead of the log.
 
 Three more failure modes worth naming:

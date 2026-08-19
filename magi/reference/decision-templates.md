@@ -399,7 +399,7 @@ Referenced from `SKILL.md` -> Collaboration.
 |-----------|---------------|---------|
 | User → Magi | — | Decision requests, mode selection |
 | Nexus → Magi | `NEXUS_TO_MAGI` | Complex decisions requiring arbitration |
-| Accord → Magi | `ACCORD_TO_MAGI` | Stakeholder alignment for strategy resolution |
+| Scribe[unified] → Magi | `SCRIBE_TO_MAGI` | Stakeholder alignment for strategy resolution |
 | Atlas → Magi | `ATLAS_TO_MAGI` | Architecture options for arbitration |
 | Flux → Magi | `FLUX_TO_MAGI` | Reframed perspectives for re-deliberation |
 | Schema → Magi | `SCHEMA_TO_MAGI` | DB design options for normalization verdicts |

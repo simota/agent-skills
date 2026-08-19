@@ -159,6 +159,6 @@ The tree is a living artifact. A static OST is a roadmap by another name and def
 - **To Spark**: chosen solution branch → feature spec. Plea hands the solution + winning experiment results; Spark elaborates scope.
 - **To Experiment**: experiment hypothesis + riskiest assumption + decision rule → test execution. Experiment owns instrumentation and analysis.
 - **To Rank**: opportunities + impact × evidence × strategic-fit scores → prioritization output.
-- **To Accord**: outcome-level statement + retained opportunity branches → spec-package "why" section.
+- **To Scribe[unified]**: outcome-level statement + retained opportunity branches → spec-package "why" section.
 - **To Voice**: cross-check synthetic opportunity nodes against real review/support text — convergence raises confidence; divergence flags hypothesis weakness or coverage gap.
 - **To Cast**: PERSONA_FEEDBACK on which personas surfaced which opportunity branches — coverage signal for the persona registry.

@@ -155,7 +155,7 @@ universal_skills: [scout, judge, zen, builder, scribe, sherpa, void, magi, riff,
 | pulse     | M | design   | northstar, retention, activation | SaaS domain |
 | growth    | M | seo      | keyword, audit, vitals | Marketing pages in app/ |
 | pixel     | L | reproduce | responsive, dark, animation | Possible mockup-to-code work |
-| accord    | L | requirements | story-map, stakeholder, raci | Multi-stakeholder SaaS |
+| scribe    | L | cross-team | requirements, story-map, stakeholder, raci | Multi-stakeholder SaaS |
 | beacon    | L | observability | slo, dashboard, alert | No explicit telemetry detected; speculative |
 | ...
 ```
@@ -166,7 +166,7 @@ universal_skills: [scout, judge, zen, builder, scribe, sherpa, void, magi, riff,
 
 - **Cache in repo root** (`./compass-cache.md`): pollutes user's workspace. Always `.claude/compass-cache.md`.
 - **Top-N > 50**: defeats the slim cache purpose. Use full catalog instead.
-- **Caching all 123 skills**: same as above — just read `catalog.md`.
+- **Caching all 122 skills**: same as above — just read `catalog.md`.
 - **Skipping universal inclusions**: breaks recommendations for common tasks (debug, review, plan).
 - **Hand-editing the cache**: re-run `/compass refresh` instead. Hand edits drift from the catalog and the scanner.
 - **Refreshing on every `recommend`**: defeats the cost saving. Only refresh on user request or invalidation trigger.

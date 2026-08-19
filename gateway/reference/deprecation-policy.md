@@ -11,7 +11,7 @@ Purpose: Design the contract for sunsetting parts of an API. Cover RFC 8594 (`Su
 - **gateway `breaking` (elsewhere)**: Breaking-change detection.
 - **Launch (elsewhere)**: Actual rollout / cutover execution.
 - **Voice (elsewhere)**: Customer-facing announcements.
-- **Oath (elsewhere)**: Regulated APIs may have SLA-bound deprecation rules.
+- **Canon[regulatory] (elsewhere)**: Regulated APIs may have SLA-bound deprecation rules.
 
 ## Deprecation Lifecycle
 
@@ -100,7 +100,7 @@ Brownouts (intentional, brief outages of the deprecated endpoint near sunset) fo
 | New, better version exists | Standard versioned deprecation |
 | Security flaw in old shape | Faster timeline + clear comms |
 | Cost / scale issue | Coordinate with Ledger; usually slower |
-| Regulatory change | Oath; per-jurisdiction timing |
+| Regulatory change | Canon[regulatory]; per-jurisdiction timing |
 | Acquired/sunset feature | Customer outreach + custom support |
 
 ## Versioning Strategy Interplay
@@ -153,7 +153,7 @@ POST         →  remove 410 stub after grace period
 HANDOFF      →  versioning: strategy alignment
              →  Launch: cutover scheduling
              →  Voice: customer-facing copy
-             →  Oath: regulated context check
+             →  Canon[regulatory]: regulated context check
              →  Beacon: 410 / 503 traffic monitoring
              →  Builder: SDK updates
 ```
@@ -223,7 +223,7 @@ Content-Type: application/problem+json
 - versioning: ensures URL strategy aligned
 - Launch: cutover scheduling + flag
 - Voice: customer-facing copy + email templates
-- Oath: regulated context check
+- Canon[regulatory]: regulated context check
 - Beacon: 410 / 503 dashboards
 - Builder: SDK + compatibility shim
 ```
@@ -257,7 +257,7 @@ When `deprecation` completes, emit:
 - **Brownout plan**.
 - **SDK migration plan**.
 - **Monitoring plan**.
-- **Handoffs**: versioning, Launch, Voice, Oath, Beacon, Builder.
+- **Handoffs**: versioning, Launch, Voice, Canon[regulatory], Beacon, Builder.
 
 ## References
 

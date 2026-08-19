@@ -60,11 +60,11 @@ _AGENT_CONTEXT:
   Expected_Output: "Reframed problem statements + Insight Matrix"
 ```
 
-### From Accord (Stakeholder Conflict)
+### From Scribe[unified] (Stakeholder Conflict)
 
 ```yaml
-ACCORD_TO_FLUX_HANDOFF:
-  source: Accord
+SCRIBE_TO_FLUX_HANDOFF:
+  source: Scribe[unified]
   trigger: "Stakeholders framing problem from incompatible perspectives"
   stakeholder_frames:
     - stakeholder: "[Role/Name]"
@@ -232,11 +232,11 @@ Field → Flux → Spark
 ### Pattern C: Strategic Reframe
 
 ```
-Accord → Flux → Helm
+Scribe[unified] → Flux → Helm
 ```
 
 **Flow:**
-1. Accord identifies stakeholder frame conflicts.
+1. Scribe[unified] identifies stakeholder frame conflicts.
 2. Flux reframes the strategic question to encompass multiple stakeholder perspectives.
 3. Helm simulates scenarios under the reframed strategic frames.
 

@@ -22,16 +22,16 @@ CAPABILITIES_SUMMARY:
 COLLABORATION_PATTERNS:
 - Pattern A Thinking Breakthrough (User/Magi -> Flux -> Magi): break deadlocked decisions
 - Pattern B Innovation Pipeline (Field -> Flux -> Spark): research to feature proposal
-- Pattern C Strategic Reframe (Accord -> Flux -> Helm): stakeholder conflict to scenarios
+- Pattern C Strategic Reframe (Scribe[unified] -> Flux -> Helm): stakeholder conflict to scenarios
 - Pattern D Architecture Rethink (Atlas -> Flux -> Atlas): stuck design to new options
 - Pattern E Bias-Aware Reframing (Flux -> Oracle -> Flux): output validated against bias detection
 - Pattern F Market Reframe (Flux -> Compete): market assumptions to differentiation axes
-- Flux -> Field / Breach / Shift / Accord: research design, attacker perspective, migration approach, requirement assumption challenges
+- Flux -> Field / Breach / Shift / Scribe[unified]: research design, attacker perspective, migration approach, requirement assumption challenges
 - Flux -> Summon: reframed problem handed to a thinker known for that frame (`FLUX_TO_SUMMON`)
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User, Nexus, Magi, Accord, Oracle
-- OUTPUT: Magi, Spark, Helm, Atlas, Lore, Oracle, Compete, Field, Summon, Breach, Shift, Accord
+- INPUT: User, Nexus, Magi, Scribe[unified], Oracle
+- OUTPUT: Magi, Spark, Helm, Atlas, Lore, Oracle, Compete, Field, Summon, Breach, Shift, Scribe[unified]
 
 PROJECT_AFFINITY: universal
 -->
@@ -253,7 +253,7 @@ Activated by `multi`. Pattern D (Divergence-primary) per `_common/MULTI_ENGINE_R
 
 ## Collaboration
 
-**Receives:** User, Nexus, Magi (deadlocked deliberations), Accord (stakeholder conflicts)
+**Receives:** User, Nexus, Magi (deadlocked deliberations), Scribe[unified] (stakeholder conflicts)
 **Sends:** Magi (reframes + insight maps), Spark (idea candidates), Helm (strategic reframes), Atlas (architecture reconceptions), Lore (reusable patterns)
 
 **Overlap boundaries** — Flux transforms *how the problem is seen*; the partner acts on the result. **Magi** decides between known options (its reframing toolkit is a lightweight pre-deliberation step, not a full pipeline). **Spark** proposes features from existing data/patterns. **Echo** simulates personas against UI. **Helm** simulates business scenarios from a given strategy. **Oracle** evaluates AI/ML design — collaborate with it when reframing touches AI system design assumptions. **Ripple** assesses the impact of a specific change; Flux questions whether that change addresses the right problem.

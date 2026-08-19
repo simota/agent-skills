@@ -35,7 +35,7 @@ confidence < 0.60 → Lens codebase analysis first, then re-evaluate
 
 | Scope | DISCOVER | DEFINE | ARCHITECT | BUILD | HARDEN | VALIDATE | LAUNCH | GROW | EVOLVE |
 |-------|----------|--------|-----------|-------|--------|----------|--------|------|--------|
-| **L** | Nexus→Lens→Accord | Spark→Scribe | Magi→Atlas→Schema→Grove | Sherpa→Rally→Radar | Full | Full | Full | SKIP | SKIP |
+| **L** | Nexus→Lens→Scribe[unified] | Spark→Scribe | Magi→Atlas→Schema→Grove | Sherpa→Rally→Radar | Full | Full | Full | SKIP | SKIP |
 | **XL** | Full 8-agent | Full 6-agent | Full 7-agent | Full Rally | Full | Full | Full | Full | Full |
 
 ---
@@ -44,7 +44,7 @@ confidence < 0.60 → Lens codebase analysis first, then re-evaluate
 
 ### DISCOVER (L)
 ```
-Chain: Nexus → Lens → Accord
+Chain: Nexus → Lens → Scribe[unified]
 Acceptance: Product definition with features, constraints, integration points
 Artifacts: `docs/product-definition.md`
 ```
@@ -98,7 +98,7 @@ XL scope includes all L phases plus GROW and EVOLVE, and expands each phase with
 ### DISCOVER (XL additions)
 Add: Field (personas), Compete (SWOT), Voice (feedback), Scout (issues), Triage (incidents)
 ```
-Chain: Nexus → Accord → Field → Compete → Voice → Lens
+Chain: Nexus → Scribe[unified] → Field → Compete → Voice → Lens
 ```
 
 ### DEFINE (XL additions)

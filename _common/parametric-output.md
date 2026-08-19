@@ -127,7 +127,7 @@ Downstream agents that don't understand parametric syntax MUST pick the `base` o
 ## Anti-patterns
 
 1. **Unbounded numeric options** — "pick any spacing" is not parametric; it's abdicating decision-making.
-2. **Parametrizing decisions that should be made upstream** — brand voice, target audience, platform choice are Vision/accord concerns, not sliders.
+2. **Parametrizing decisions that should be made upstream** — brand voice, target audience, platform choice are Vision/scribe[unified] concerns, not sliders.
 3. **Emitting parametric output without a default** — always apply `base` to the deliverable; don't stall waiting for selection.
 4. **Inventing labels mid-stream** — establish the spectrum upfront; don't introduce `nuclear=64px` without warning.
 5. **Overloading single slider** — one parameter per block. Compound effects (density + accent) require multi-parameter blocks, not mashed-up sliders.

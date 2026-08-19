@@ -55,7 +55,7 @@ Use Venture when the request matches **at least 3** of:
 - Investor / decision-maker summary material is part of the ask.
 
 Route elsewhere when the task is:
-- A single PRD or spec → `accord` / `scribe` direct
+- A single PRD or spec → `scribe[unified]` / `scribe` direct
 - A single landing page → `funnel` (or `bazaar` for premium LP)
 - Market/competitor research only → `field` / `compete` direct
 - Brand system only → `vision` / `muse` direct
@@ -72,7 +72,7 @@ Route elsewhere when the task is:
 | `lite` (lightweight prototype) | 00, 01(lite), 03, 04(lite), 05 | 6-8 | Fast concept validation, hackathon, idea triage |
 | `mvp` (default — MVP build + business prep) | 00-13, lean | 14-18 | The standard full package |
 | `raise` (fundraising) | 00-13, research/overview/marketing/KPI deepened | 16-20 | Fundraising-grade |
-| `full` (full commercialization) | 00-13, all tracks deep + void/oath/crypt | 24-28 | Production business build — **confirm before launch** |
+| `full` (full commercialization) | 00-13, all tracks deep + void/canon[regulatory]/crypt | 24-28 | Production business build — **confirm before launch** |
 
 Venture is not free. Budget guardrails (Nexus chain confirmation for 5+ agent chains, full-depth confirmation, no-secrets package scrub) are enforced. For repeated ventures with a stable house style, propose a Sigil-generated project skill to amortize the chain design cost.
 
@@ -82,7 +82,7 @@ Venture is not free. Budget guardrails (Nexus chain confirmation for 5+ agent ch
 |---------|-----------------|
 | `mvp-dev` (default) | 03 product, 04 ux, 05 lp, 07 tech, 10 testing |
 | `fundraising` | 00 overview, 01 research, 06 marketing (GTM/pricing), 03 KPI tree, one_page_pitch |
-| `b2b-saas` | 07 security/auth, 09 legal/oath, 11 PM (SLA/sales), admin-panel screens in 04 |
+| `b2b-saas` | 07 security/auth, 09 legal/canon[regulatory], 11 PM (SLA/sales), admin-panel screens in 04 |
 | `b2c-growth` | 02 brand, 05 lp, 06 SEO/social/onboarding/retention, 04 onboarding_flow |
 | `ai-product` | 08 ai_policy (full), 07 AI/LLM stack, 10 ai_evaluation_cases, human-review workflow |
 
@@ -92,7 +92,7 @@ Venture is not free. Budget guardrails (Nexus chain confirmation for 5+ agent ch
 Phase 0          Phase 1                Phase 2 [BARRIER]      Phase 3 [11 tracks, waves]         Phase 4          Phase 5              Phase 6
 [Framing]        [Research]             [Product Spine]        (feature_id-bound; see Phase        [Overview]       [Integrate+Validate] [Package]
 ┌────────────┐   ┌──────────────────┐   ┌──────────────────┐    Contracts § Phase 3 table below)  ┌───────────┐    ┌────────────────┐   ┌──────────┐
-│ parse idea │──▶│ field+compete    │──▶│ accord+spark     │───▶┌────────────────────────────┐───▶│ spark     │───▶│ attest/judge   │──▶│ write    │
+│ parse idea │──▶│ field+compete    │──▶│ scribe[unified]+spark     │───▶┌────────────────────────────┐───▶│ spark     │───▶│ attest/judge   │──▶│ write    │
 │ +mode/depth│   │ ‖ plea+cast      │   │ +rank+pulse      │    │ 02,04-13 parallel doc tracks│    │ +scribe   │    │ traceability   │   │ tree+zip │
 │ +clarify≤3 │   │ (web-grounded or │   │ ═══ F-001… +     │    └────────────────────────────┘    │ +magi     │    │ +manifest+lint │   │ +report  │
 └────────────┘   │  research_todo)  │   │  MoSCoW FIXED ═══│                                      └───────────┘    └────────────────┘   └──────────┘
@@ -134,7 +134,7 @@ venture_contract:
 
 | Agent | Role | Required |
 |-------|------|----------|
-| `accord` | PRD (L0→L3), user stories, acceptance criteria, IA, non-functional requirements, release plan | Yes |
+| `scribe[unified]` | PRD (L0→L3), user stories, acceptance criteria, IA, non-functional requirements, release plan | Yes |
 | `spark` | Feature catalog with `feature_id` (F-001…), `name`, `description`, `user_value`, `mvp_or_later`, related KPI/test/backlog stubs | Yes |
 | `rank` | MoSCoW classification (Must / Should / Could / Won't for MVP) | Yes |
 | `pulse` | KPI tree + product metrics, each KPI linked to feature_id(s) | Yes (skip at `lite`) |
@@ -155,7 +155,7 @@ Each track receives the framing contract + canonical feature_id table. Tracks wr
 | Marketing | 06 | `funnel`/`bazaar` (GTM/channels) ‖ `pulse` (metrics) ‖ `experiment` (`growth_experiments.md`) | go_to_market_strategy, channel_strategy, pricing_strategy, content_marketing_plan, launch_plan, social_posts (30-day), email_sequences, pr_plan, sales_material_outline, growth_experiments |
 | Tech | 07 | `atlas` (architecture+Mermaid) → `schema` (`database_schema.sql`) ‖ `gateway` (`api_design_openapi.yaml`) ‖ `beacon` (monitoring) ‖ `gear` (CI/CD) ‖ `crypt`? (auth/crypto) | system_architecture, tech_stack, data_model, database_schema.sql, api_design_openapi.yaml, data_pipeline, auth_and_permissions, security_privacy, monitoring_observability, infrastructure_plan, ci_cd_plan, technical_risks |
 | AI Policy | 08 | `oracle` (AI usage, prompts, eval, guardrails, human review, logging) | ai_usage_policy, prompt_design, evaluation_policy, hallucination_risk_controls, human_review_workflow, model_selection, ai_logging_policy, ai_disclaimer_templates |
-| Legal/Risk | 09 | `clause` (ToS/Privacy/Cookie drafts) ‖ `cloak` (privacy/PII) ‖ `oath`? (compliance_checklist) ‖ `omen`+`ripple` (`risk_register.md`) | legal_considerations, data_rights_policy, privacy_policy_draft, terms_of_service_draft, cookie_policy_draft, risk_register, compliance_checklist |
+| Legal/Risk | 09 | `clause` (ToS/Privacy/Cookie drafts) ‖ `cloak` (privacy/PII) ‖ `canon[regulatory]`? (compliance_checklist) ‖ `omen`+`ripple` (`risk_register.md`) | legal_considerations, data_rights_policy, privacy_policy_draft, terms_of_service_draft, cookie_policy_draft, risk_register, compliance_checklist |
 | Testing | 10 | `matrix` qa-scenario (`test_cases.csv` TC-001…, mapped to feature_id) ‖ `radar`? (strategy) ‖ `mint` (`ai_evaluation_cases.csv`) | test_strategy, test_cases.csv, qa_checklist, ai_evaluation_cases.csv, performance_test_plan, security_test_plan, accessibility_test_plan, release_checklist |
 | PM | 11 | `sherpa` (`backlog.csv` BL-001…, mapped to feature_id) ‖ `rank` (priority) ‖ `scribe` (RACI/milestones) | backlog.csv, milestones, team_structure, budget_estimate, raci_matrix, decision_log, meeting_cadence, outsourcing_plan |
 | Mock Data | 12 | `mint` (fictional sample data only) | sample_users.json, sample_events.json, sample_content.csv, sample_notifications.json, sample_settings.json, sample_logs.json |
@@ -213,7 +213,7 @@ As the engine's Generalized Traceability Anchor (`reference/package-recipe.md` �
 |-----------|-----|------|
 | depth = lite | — | 02, 06, 07-deep, 08, 09, 10, 11, 12, 13 (keep 00/01-lite/03/04-lite/05) |
 | mode includes ai-product | full 08 + ai_evaluation_cases + human_review | — (08 never skipped in this mode) |
-| business_model = B2B / b2b-saas | oath, security_privacy deepened, sales_material, SLA in 11 | — |
+| business_model = B2B / b2b-saas | canon[regulatory], security_privacy deepened, sales_material, SLA in 11 | — |
 | business_model = B2C / b2c-growth | 02 brand deep, 05 LP, SEO/social/onboarding in 06 | — |
 | UI surface absent (API/infra product) | — | 04 UX, 05 LP (replace with API docs emphasis in 07) |
 | Figma in workflow | frame (extract tokens) | — |
@@ -233,7 +233,7 @@ Nexus AUTORUN venture idea="<X>" depth=<...> mode=<...>
   ‖ compete(direct+indirect+diff)?        # skip at lite
   ‖ plea(user demands) → cast(personas)?  # cast if depth≥mvp
   ── Phase 2 Product Spine [BARRIER] ──────────────────
-  → accord(PRD+stories+AC+IA+NFR+release)
+  → scribe[unified](PRD+stories+AC+IA+NFR+release)
   → spark(feature_catalog: F-001… + mvp_or_later)
   → rank(MoSCoW)  → pulse(KPI tree ↔ feature_id)?
   → void(YAGNI)?                          # depth=full or bloat
@@ -246,7 +246,7 @@ Nexus AUTORUN venture idea="<X>" depth=<...> mode=<...>
   ‖ [Tech]   atlas(arch+mermaid) → schema(schema.sql) ‖ gateway(openapi.yaml)
                                   ‖ beacon ‖ gear ‖ crypt?
   ‖ [AI]     oracle(policy+prompts+eval+guardrails+human_review)
-  ‖ [Legal]  clause(ToS/Privacy/Cookie) ‖ cloak ‖ oath? ‖ omen+ripple(risk_register)
+  ‖ [Legal]  clause(ToS/Privacy/Cookie) ‖ cloak ‖ canon[regulatory]? ‖ omen+ripple(risk_register)
   ‖ [Test]   matrix qa-scenario(test_cases.csv TC-001 ↔ F-id) ‖ radar? ‖ mint(ai_eval_cases.csv)
   ‖ [PM]     sherpa(backlog.csv BL-001 ↔ F-id) ‖ rank ‖ scribe(raci/milestones)
   ‖ [Mock]   mint(sample_*.json/csv — fictional only)

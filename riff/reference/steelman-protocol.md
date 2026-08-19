@@ -182,7 +182,7 @@ Steelman session summaries should include:
 
 ### Suggested next
 - Magi (formal Go/No-Go) if the user wants a decision
-- Spark / Accord if FOR wins and needs spec
+- Spark / Scribe[unified] if FOR wins and needs spec
 - Void / Subtract if AGAINST wins and the idea is being scoped out
 ```
 
@@ -193,6 +193,6 @@ Steelman session summaries should include:
 | Outcome | Next agent | Why |
 |---------|-----------|-----|
 | User wants formal verdict | **Magi** | Multi-perspective deliberation produces a Go/No-Go |
-| FOR wins, needs spec | **Spark** / **Accord** | Convert idea to feature seed or requirement |
+| FOR wins, needs spec | **Spark** / **Scribe[unified]** | Convert idea to feature seed or requirement |
 | AGAINST wins, scope cut | **Void** | Systematic YAGNI / removal |
 | Idea is on hold pending experiment | (None) | Schedule the test, return to Riff after results |

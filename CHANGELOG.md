@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed — skill consolidation and profile repair (2026-08-19)
+
+- Absorbed `accord` into `scribe` as the cross-team `unified` L0-L4 recipe while preserving BDD, traceability, stakeholder, RACI, and staged-elaboration references.
+- Absorbed `oath` into `canon` as regulatory compliance recipes while preserving SOC 2, PCI-DSS, HIPAA, ISO 27001, GDPR/EU AI Act, audit-readiness, vendor-risk, and Policy as Code references.
+- Archived both merged-in skill packages under `.archive/` with 90-day reactivation instructions; roster 124 → 122.
+- Repaired all filtered profiles after the 2026-06-06 rename set, removed the retired `mentor` entry, and added `chisel`, `loom`, and `pdm` to their declared packs.
+
 ### Added — `chisel` skill: prompt → executable specification (2026-08-18)
 
 Closes a gap no existing skill held: taking a **supplied prompt** as the object and converting its vague wording into rules that can be executed and scored. Roster 123 → 124.

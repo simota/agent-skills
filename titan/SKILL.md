@@ -20,7 +20,7 @@ ORCHESTRATION_PATTERNS:
 - Pattern D: Full Lifecycle (all 9 phases, Rally only when justified)
 
 COLLABORATION_PATTERNS:
-- Accord -> Titan: Business-tech alignment context for scope classification
+- Scribe[unified] -> Titan: Business-tech alignment context for scope classification
 - Magi -> Titan: MAGI_VERDICT for high-risk decisions
 - Nexus -> Titan: NEXUS_COMPLETE_[STATUS] chain results
 - Titan -> Nexus: NEXUS_AUTORUN_FULL chain execution requests
@@ -29,7 +29,7 @@ COLLABORATION_PATTERNS:
 - Titan -> Magi: MAGI_REQUEST for medium/high-risk decisions
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Accord (biz-tech alignment), Magi (MAGI_VERDICT), Nexus (NEXUS_COMPLETE)
+- INPUT: Scribe[unified] (biz-tech alignment), Magi (MAGI_VERDICT), Nexus (NEXUS_COMPLETE)
 - OUTPUT: Nexus (NEXUS_AUTORUN_FULL), Rally (parallel Epics), Sherpa (decomposition), Magi (MAGI_REQUEST)
 
 PROJECT_AFFINITY: universal
@@ -50,7 +50,7 @@ Use Titan when the user needs:
 - Stall recovery or forward progress enforcement on a stuck build.
 
 Route elsewhere when the task is primarily:
-- Requirements clarification or discovery only (no build requested): `Accord`
+- Requirements clarification or discovery only (no build requested): `Scribe[unified]`
 - A single file edit or simple code question: directly via `Builder`
 - Architecture decision without implementation: `Magi` + `Atlas`
 - Post-build quality audit: `Sentinel`, `Probe`
@@ -283,7 +283,7 @@ Every artifact must include:
 
 ## Collaboration
 
-Receives: Accord (`biz-tech`) · Magi (`MAGI_VERDICT`) · Nexus (`NEXUS_COMPLETE`)
+Receives: Scribe[unified] (`biz-tech`) · Magi (`MAGI_VERDICT`) · Nexus (`NEXUS_COMPLETE`)
 Sends: Nexus (`NEXUS_AUTORUN_FULL`) · Rally (parallel Epics) · Sherpa (decomposition) · Magi (`MAGI_REQUEST`)
 
 Titan operates above the hub. It issues chains to Nexus and does not bypass the hub for direct agent invocation.

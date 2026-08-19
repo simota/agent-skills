@@ -39,7 +39,7 @@ This keeps Nexus to **one recipe** instead of a dozen near-identical ones (Core 
 | `kaizen` | **Executes** improvement of a shipped feature. The `growth` preset produces a **measurement/experiment plan package** — planning, not execution. Route to kaizen to actually change code. |
 | `growth-acceptance` | A **merge lifecycle gate**. The `growth` preset is a planning package, not a gate. |
 | `deep-research` | A cited research **report**. The `research` preset produces a full research **operations package** (design + literature + data + analysis + validation), and may invoke `deep-research` inside Phase 1. |
-| `accord` / `scribe` / `funnel` / `clause` direct | Single-artifact requests. `package` is for multi-role, multi-file handoff packages. |
+| `scribe[unified]` / `scribe` / `funnel` / `clause` direct | Single-artifact requests. `package` is for multi-role, multi-file handoff packages. |
 
 ## Invocation
 
@@ -119,13 +119,13 @@ This gate is the origin of — and is generalized to all doc-producing runs by �
 
 | Preset | Subcommand | Directories | Spine skills (Phase 2) | Track skills (Phase 3) | Risk gate |
 |--------|-----------|-------------|------------------------|------------------------|-----------|
-| **startup** | `package domain=startup` / `venture` | 00_overview … 13_assets (14) | accord+spark+rank+pulse | vision/muse/prose ‖ palette/canvas/echo ‖ funnel ‖ pulse/experiment ‖ atlas/schema/gateway/beacon/gear/crypt ‖ oracle ‖ clause/cloak/oath/omen/ripple ‖ matrix/radar/mint ‖ sherpa/scribe ‖ sketch/canvas | standard |
-| **generic** | `package domain=generic` | 00_overview,01_research,02_strategy,03_design,04_execution,05_assets,06_evaluation,07_operations | accord+spark+rank | field ‖ accord/canvas ‖ sherpa/scribe ‖ mint ‖ matrix ‖ omen+ripple | standard |
-| **research** | `package domain=research` | 00_research_design,01_literature,02_data,03_analysis,04_outputs,05_validation | accord(question/hypothesis/methodology)+rank | field (+`deep-research` skill via Skill tool, not a spawned track agent) ‖ schema/mint(data) ‖ magi(analysis) ‖ scribe(outputs) ‖ canon+cloak(rigor/ethics) | ethics/bias; medical/policy → expert |
-| **ai-adoption** | `package domain=ai-adoption` | 00_overview,01_use_cases,02_data,03_prompt,04_system,05_policy,06_training,07_evaluation,08_rollout | accord(use_cases)+spark+rank | oracle(prompts/RAG/eval) ‖ cloak+sentinel(data/security) ‖ schema(data) ‖ scribe(policy/training) ‖ gear(rollout) ‖ matrix+mint(eval+hallucination cases) ‖ oath(governance) | hallucination + data-sensitivity + human-in-loop mandatory |
-| **legal** | `package domain=legal` | 00_overview,01_policy,02_contracts,03_risk,04_operations,05_security_privacy | clause(policy/clause map)+omen | clause(ToS/Privacy/AI/cookie/moderation) ‖ cloak(PII/consent/data-rights) ‖ oath(checklist) ‖ crypt(incident/breach) ‖ oracle(ai_usage_policy) ‖ omen+ripple(legal_risk_register) | **HIGH — mandatory expert-review gate** |
-| **saas** | `package domain=saas` | 00_vision,01_product,02_ai_system,03_integrations,04_technology,05_gtm,06_operations,07_testing | accord+spark+rank+pulse | oracle(ai_system) ‖ atlas/schema/gateway(tech) ‖ scribe(product/ops) ‖ funnel/bazaar+pulse(gtm) ‖ gear(integrations/CI) ‖ matrix+mint(testing) | standard (defaults to b2b-saas + ai-product modes) |
-| **media** | `package domain=media` | 00_strategy,01_content,02_brand,03_distribution,04_monetization,05_operations,06_assets | accord(content pillars)+spark+rank | cue(scripts/episodes) ‖ prose(articles/tone) ‖ vision/muse(brand/visual) ‖ field(SEO) ‖ funnel(monetization/sponsorship) ‖ pulse(analytics) | copyright/attribution/ad-compliance (clause-light) |
+| **startup** | `package domain=startup` / `venture` | 00_overview … 13_assets (14) | scribe[unified]+spark+rank+pulse | vision/muse/prose ‖ palette/canvas/echo ‖ funnel ‖ pulse/experiment ‖ atlas/schema/gateway/beacon/gear/crypt ‖ oracle ‖ clause/cloak/canon[regulatory]/omen/ripple ‖ matrix/radar/mint ‖ sherpa/scribe ‖ sketch/canvas | standard |
+| **generic** | `package domain=generic` | 00_overview,01_research,02_strategy,03_design,04_execution,05_assets,06_evaluation,07_operations | scribe[unified]+spark+rank | field ‖ scribe[unified]/canvas ‖ sherpa/scribe ‖ mint ‖ matrix ‖ omen+ripple | standard |
+| **research** | `package domain=research` | 00_research_design,01_literature,02_data,03_analysis,04_outputs,05_validation | scribe[unified](question/hypothesis/methodology)+rank | field (+`deep-research` skill via Skill tool, not a spawned track agent) ‖ schema/mint(data) ‖ magi(analysis) ‖ scribe(outputs) ‖ canon+cloak(rigor/ethics) | ethics/bias; medical/policy → expert |
+| **ai-adoption** | `package domain=ai-adoption` | 00_overview,01_use_cases,02_data,03_prompt,04_system,05_policy,06_training,07_evaluation,08_rollout | scribe[unified](use_cases)+spark+rank | oracle(prompts/RAG/eval) ‖ cloak+sentinel(data/security) ‖ schema(data) ‖ scribe(policy/training) ‖ gear(rollout) ‖ matrix+mint(eval+hallucination cases) ‖ canon[regulatory](governance) | hallucination + data-sensitivity + human-in-loop mandatory |
+| **legal** | `package domain=legal` | 00_overview,01_policy,02_contracts,03_risk,04_operations,05_security_privacy | clause(policy/clause map)+omen | clause(ToS/Privacy/AI/cookie/moderation) ‖ cloak(PII/consent/data-rights) ‖ canon[regulatory](checklist) ‖ crypt(incident/breach) ‖ oracle(ai_usage_policy) ‖ omen+ripple(legal_risk_register) | **HIGH — mandatory expert-review gate** |
+| **saas** | `package domain=saas` | 00_vision,01_product,02_ai_system,03_integrations,04_technology,05_gtm,06_operations,07_testing | scribe[unified]+spark+rank+pulse | oracle(ai_system) ‖ atlas/schema/gateway(tech) ‖ scribe(product/ops) ‖ funnel/bazaar+pulse(gtm) ‖ gear(integrations/CI) ‖ matrix+mint(testing) | standard (defaults to b2b-saas + ai-product modes) |
+| **media** | `package domain=media` | 00_strategy,01_content,02_brand,03_distribution,04_monetization,05_operations,06_assets | scribe[unified](content pillars)+spark+rank | cue(scripts/episodes) ‖ prose(articles/tone) ‖ vision/muse(brand/visual) ‖ field(SEO) ‖ funnel(monetization/sponsorship) ‖ pulse(analytics) | copyright/attribution/ad-compliance (clause-light) |
 | **growth** | `package domain=growth` | 00_current_state,01_hypotheses,02_experiments,03_design,04_measurement,05_execution | pulse(funnel/baseline)+experiment(hypotheses)+rank(RICE) | experiment(ab_test/backlog) ‖ funnel(friction/flows) ‖ palette/prose(ui_variants/copy_tests) ‖ pulse(event_tracking/dashboard) ‖ magi(opportunity) | standard — **planning only; route to kaizen for execution** |
 
 ## Preset Auto-Detection
@@ -213,7 +213,7 @@ Distinctive: `funnel_analysis.md`, `friction_points.md`, `opportunity_matrix.md`
 | Condition | Add | Skip |
 |-----------|-----|------|
 | depth = lite | — | deep tracks; keep overview + research-lite + spine + one primary track |
-| depth = full | void (scope cut), oath, crypt, deeper scribe | — |
+| depth = full | void (scope cut), canon[regulatory], crypt, deeper scribe | — |
 | web_grounding = unavailable | `research_todo.md` (enumerate lookups, mark hypotheses) | live `references.md` sourcing |
 | preset = legal/ai-adoption | risk gate (mandatory) | — |
 | preset = media | clause-light (ad/sponsorship) | heavy tech tracks |

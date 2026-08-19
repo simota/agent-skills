@@ -92,7 +92,7 @@ Chains longer than 3 deep on the same topic are a signal to write a `topic overv
 
 - From `Atlas`: Atlas completes tradeoff analysis and hands off a decision package; Scribe `adr` formats it as a publishable ADR if Atlas did not author directly.
 - From `Magi`: deliberation concluded, Scribe records the chosen path.
-- From `Accord`: cross-team alignment reached, Scribe captures the agreement as an ADR.
+- From Scribe's `unified` recipe: cross-team alignment reached, Scribe captures the agreement as an ADR.
 - To `Scribe` HLD/LLD: HLDs reference relevant ADRs by number rather than restating the decision.
 - To `Sherpa`: if the ADR triggers implementation work, decompose downstream tasks.
 

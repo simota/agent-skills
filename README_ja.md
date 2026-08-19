@@ -1,7 +1,7 @@
 # AI Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Agents](https://img.shields.io/badge/Agents-124-blue.svg)]()
+[![Agents](https://img.shields.io/badge/Agents-122-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 🤖 124種類の専門AIエージェントチームによる協調開発を実現するスキルコレクション
@@ -39,7 +39,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 ## エージェント一覧
 
-> 全 124 エージェントのカテゴリ別カタログ。
+> 全 122 エージェントのカテゴリ別カタログ。
 
 ### オーケストレーション
 
@@ -57,7 +57,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Lore** | _"Forgotten lessons are lessons repeated. Institutional memory is the compound interest of experience."_ - エコシステム横断の知識統合・パターン抽出・伝播を担うメモリキュレーター。エージェントjournalから共通パターンを発見し、カタログ化して関連エージェントへ配信。知識の腐敗検出・ベストプラクティス伝播により制度的記憶を維持 | METAPATTERNS.md、知識インサイト |
 | **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - デザインから実装までを閉ループで繋ぐパイプラインオーケストレーター。Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas を統括し、デザイン抽出・プロトタイプ・ビジュアルアセット・スライド・本番実装をプロジェクトデザインシステムを永続化しながら一気通貫で提供 | デザインシステムパッケージ、統合成果物 |
 | **Bazaar** | _"A landing page is one promise, one path, one decision. bazaar runs the studio that delivers all three."_ - 超高品質LP制作スタジオチェーン・オーケストレーター。Field → Cast → Pulse → Funnel → Vision → Saga → Compete → Muse → Flow → Artisan → Growth → Bolt → Judge → Launch を、LP種別レシピと9段階の品質ゲート（Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch）で束ね、6つのクラフト軸（デザイン／アニメーション／ブランディング／マーケティング／SEO／IA）すべてにルーブリックと納品閾値を課したLPを納品 | 6軸ルーブリック通過済みLPパッケージ、CVR最適化された本番コード、ブランド整合性のあるビジュアル、トークン化されたモーション、スキーマ妥当性のあるSEO、AI検索引用対応GEO、計測稼働 |
-| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 124."_ - スキルエコシステムのナビゲーター・オンボーディングガイド。エージェントを一覧化し、タスクに最適な担当を推薦し、初心者が適切なスペシャリストを発見できるよう支援 | レコメンド、エージェントマップ |
+| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 122."_ - スキルエコシステムのナビゲーター・オンボーディングガイド。エージェントを一覧化し、タスクに最適な担当を推薦し、初心者が適切なスペシャリストを発見できるよう支援 | レコメンド、エージェントマップ |
 | **Loom** | _"Many threads, one fabric — design the operating layer as a system."_ - プロジェクトの運用レイヤー設計エージェント。リポジトリに必要なプロジェクト固有スキル・リポジトリ最適化レシピ（タスクプレイブック）・スキル/エージェントオーケストレーションワークフローを一つの整合したシステムとして設計。リポジトリを分析してレイヤーを設計し、スキル本体の記述はSigilへ、ランタイムのルーティングはNexusへ委譲 | 運用レイヤー設計、ルーティングマップ |
 | **Prune** | _"A garden grows by what you cut, not what you plant."_ - スキルエコシステム整理監査エージェント。エージェント編成の重複・冗長・不活性を監査し、統合候補とサンセット計画を根拠・アーカイブ手順付きで提案（提案のみ・実行はしない） | 整理監査レポート、統合/サンセット提案 |
 
@@ -73,14 +73,13 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Plea** | _"I am your user. I feel every day what you overlook."_ - 合成ユーザー代弁者。多様なエンドユーザーペルソナになりきり、本物のような機能要望を生成し、未充足ニーズを発掘し、チームの思い込みに挑戦する | 機能要望レポート |
 | **Field** | _"Good research asks the right questions. Great research changes what you thought was the question."_ - ユーザーリサーチ設計・インタビューガイド作成・定性分析・ペルソナ/ジャーニーマップ作成 | リサーチレポート |
 | **Trace** | _"Every click tells a story. I read between the actions."_ - セッションリプレイ分析・ペルソナ別行動パターン抽出・UX問題の物語化。Field/Echoと連携 | 行動分析レポート |
-| **Canon** | _"Standards are the accumulated wisdom of the industry. Apply them, don't reinvent them."_ - 世界標準・業界標準で物事を解決する調査・分析エージェント。OWASP/WCAG/OpenAPI/ISO 25010等の標準への準拠度評価、標準違反検出、改善提案 | 準拠度レポート |
+| **Canon** | _"Standards are the accumulated wisdom of the industry. Apply them, don't reinvent them."_ - 世界標準・業界標準で物事を解決する調査・分析エージェント。OWASP/WCAG/OpenAPI/ISO 25010の標準準拠に加え、SOC2/PCI-DSS/HIPAA/ISO 27001の規制監査・証拠付き改善提案 | 準拠度レポート |
 | **Lens** | _"See the code, not just search it."_ - コードベース理解・調査スペシャリスト。「〇〇機能はあるか」「〇〇のフローはどうか」「このモジュールの責務は何か」をコード構造把握・機能探索・データフロー追跡で体系的に調査 | 調査レポート |
 | **Magi** | _"Three minds, one verdict. Consensus through diversity."_ - 3視点（論理・共感・実利）による多角的意思決定。アーキテクチャ選定、トレードオフ判断、Go/No-Go判定 | 意思決定レポート |
 | **Flux** | _"Bend the light. See what was always there."_ - 思考屈折エンジン。前提を疑い、異分野知識を組み合わせ、視点をずらして問題を再構成。Cynefinベースのフレームワーク選択、Serendipity Injection、10+思考フレームワーク。コードは書かない | リフレーミングパッケージ、Insight Matrix、Blind Spot Report |
 | **Riff** | _"The best ideas don't arrive. They evolve — one riff at a time."_ - 4つの思考モード（拡散/提案/評価/引き算）による反復対話でアイデアを深めるインタラクティブなブレインストーミングパートナー。コードは書かない | ブレインストーミングセッション出力 |
 | **Cast** | _"Personas are not invented. They are discovered, born, and evolved."_ - ペルソナキャスティングエージェント。多種多様な入力からペルソナを迅速生成・永続化・ライフサイクル管理し、下流エージェントに統一フォーマットで配信 | ペルソナレジストリ |
 | **Helm** | _"A ship without a destination has no favorable wind. A ship without a helm has no direction at all."_ - 財務・市場・競合データから短期/中期/長期の経営シミュレーションを実施する経営戦略特化エージェント。SWOT/PESTLE/Porter分析、シナリオプランニング、KPI予測、戦略ロードマップ生成。コードは書かない | 戦略シミュレーションレポート |
-| **Accord** | _"Three teams, one truth."_ - 3チーム横断（ビジネス・開発・デザイン）の統合仕様パッケージを作成する仕様アーキテクト。段階的詳細化テンプレート（L0ビジョン→L1要件→L2チーム別詳細→L3受入基準）で共通認識を形成。コードは書かない | 統合仕様パッケージ、トレーサビリティマトリクス |
 | **Matrix** | _"Infinite combinations, finite resources. Matrix finds the minimum that covers the maximum."_ - 任意の多次元軸×値を入力とし、組み合わせ爆発を制御するユニバーサル分析エージェント。最小カバレッジセット選定・実行計画・優先順位付け。テスト・デプロイ・UX検証・リスク評価・互換性など全ドメイン対応。コードは書かない | マトリクス分析、カバレッジ最適化計画 |
 | **Saga** | _"Facts are remembered 5-10% of the time. Stories raise that to 65-70%. The customer is the hero. The product is the guide."_ - プロダクト・機能のユースケースをストーリーテリングで語るナラティブデザインエージェント。顧客体験の物語化、シナリオストーリー、プロダクトナラティブ。コードは書かない | ナラティブドキュメント |
 | **Omen** | _"Plan for the worst. Build for the best."_ - プリモーテム分析・障害モード列挙。計画・設計・機能のリスクシナリオをRPN/APスコアリングで体系的に特定。コードは書かない | プリモーテムレポート |
@@ -127,7 +126,6 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 | **Vigil** | _"An undetected attack is an undefended system. Vigil ensures nothing passes unseen."_ - Detection Engineeringエージェント。Sigma/YARAルール設計、検出カバレッジマッピング、脅威ハンティング仮説設計、Detection-as-Code CI/CD統合 | 検出ルール、カバレッジマップ |
 | **Cull** | _"The worm leaves a husk. Find it before it sheds again — but never pull the husk while the worm is still inside."_ - サプライチェーンマルウェア感染スキャナ。npm/PyPI ワーム型攻撃（Mini Shai-Hulud、S1ngularity、lottie-player）を IoC ベースでローカル環境スキャン。OS 永続化（LaunchAgent/systemd）、IDE フック実装、lockfile pin、既知 C2/exfil トレースを検出。`rm -rf ~/` リテリエーションを発動させないよう永続化先停止、ローテーションは除染検証後に gate | 感染レポート、除染ランブック |
 | **Mint** | _"Good tests deserve great data."_ - テストデータ＆フィクスチャ生成エージェント。ファクトリパターン設計、境界値データ生成、合成データ生成、シードデータ管理 | コード |
-| **Oath** | _"Trust is earned through evidence, not intention."_ - 規制コンプライアンス＆監査エージェント。SOC2/PCI-DSS/HIPAA/ISO 27001のコントロールマッピング、監査証跡設計、Policy as Code | レポート、チェックリスト |
 | **Breach** | _"Think like an attacker. Defend like an engineer."_ - レッドチームエンジニアリング。攻撃シナリオ設計、脅威モデリング、MITRE ATT&CK/OWASPフレームワーク、Purple Team演習、AI/LLMレッドチーミング | セキュリティ評価 |
 | **Cloak** | _"Privacy is not a feature. It's a right."_ - プライバシーエンジニアリング・データガバナンス。PII検出、データフローマッピング、同意管理、GDPR/CCPA準拠コード実装 | プライバシー評価 |
 | **Chain** | _"Treat every third-party skill like an npm install. Audit before invoking."_ - スキル/プラグイン/MCPサプライチェーン監査エージェント。SKILL.md・同梱スクリプト・MCPサーバー定義・フック・`.claude/`設定をサードパーティソフトウェアとして扱い、sha256マニフェスト生成、Unicode Tagインジェクションスキャン、curl-pipe＋認証情報窃取パターン検出、サードパーティ受け入れチェックリスト適用、MCPツール記述のrug-pull防止ピン留めを実施 | サプライチェーン監査レポート、sha256マニフェスト |
@@ -188,7 +186,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 | エージェント | 説明 | 出力 |
 |------------|------|------|
-| **Scribe** | _"A specification is a contract between vision and reality."_ - PRD/SRS/HLD/LLD・実装チェックリスト・テスト仕様書を作成するドキュメントライター | 仕様書・設計書 |
+| **Scribe** | _"A specification is a contract between vision and reality."_ - PRD/SRS/HLD/LLDと部門横断L0-L3仕様、実装チェックリスト、テスト仕様書を作成する仕様エージェント | 仕様書・設計書 |
 | **Quill** | _"Code tells computers what to do. Documentation tells humans why."_ - JSDoc/TSDoc追加・README更新・any型の型定義化 | ドキュメント |
 | **Morph** | _"A document is timeless. Its format is temporary."_ - ドキュメントフォーマット変換（Markdown↔Word/Excel/PDF/HTML）。Scribeの仕様書やHarvestのレポートを各種フォーマットに変換 | 変換済みドキュメント |
 | **Tome** | _"Changes are forgotten. Knowledge endures."_ - リポジトリの変更内容を詳細な学習ドキュメントに変換。用語・フロー・設計判断・アンチパターンを教育的に解説 | 学習ドキュメント |
@@ -708,7 +706,6 @@ skills/
 ├── scaffold/SKILL.md   # インフラ
 ├── schema/SKILL.md     # DBスキーマ設計
 ├── scribe/SKILL.md     # プロジェクトドキュメント（PRD/SRS/設計書）
-├── accord/SKILL.md     # 3チーム横断統合仕様パッケージ
 ├── scout/SKILL.md      # バグ調査
 ├── sentinel/SKILL.md   # セキュリティ静的分析（SAST）
 ├── sherpa/SKILL.md     # タスク分解

@@ -7,7 +7,7 @@ Purpose: Design logical deletion strategies that preserve data while hiding it f
 - **schema `soft-delete`**: Logical deletion patterns (this document).
 - **schema `audit-log` (elsewhere)**: Records the deletion event; complements soft delete.
 - **Cloak (elsewhere)**: GDPR / privacy rules; right-to-erasure pathway must coordinate.
-- **Oath (elsewhere)**: Regulatory retention rules.
+- **Canon[regulatory] (elsewhere)**: Regulatory retention rules.
 - **Builder (elsewhere)**: ORM-level default-scope implementation.
 
 ## Why Soft Delete (and Why Not)
@@ -179,7 +179,7 @@ VERIFY       →  unique-collision test
              →  GDPR walkthrough
 
 HANDOFF      →  Cloak: PII rules
-             →  Oath: retention compliance
+             →  Canon[regulatory]: retention compliance
              →  Builder: ORM scope wiring
              →  Audit-log: deletion event capture
 ```
@@ -225,7 +225,7 @@ HANDOFF      →  Cloak: PII rules
 
 ### Handoffs
 - Cloak: PII tagging
-- Oath: retention compliance
+- Canon[regulatory]: retention compliance
 - Builder: ORM wiring
 - audit-log: deletion event capture
 - migration-rollback: reverse pathway if soft-delete column added/removed
@@ -258,7 +258,7 @@ When `soft-delete` completes, emit:
 - **GDPR pathway** (soft → scrub → hard + audit).
 - **Cleanup job** schedule.
 - **Test plan** including re-create, RLS, ORM, GDPR walkthrough.
-- **Handoffs**: Cloak, Oath, Builder, audit-log, migration-rollback.
+- **Handoffs**: Cloak, Canon[regulatory], Builder, audit-log, migration-rollback.
 
 ## References
 

@@ -18,7 +18,7 @@ CAPABILITIES_SUMMARY:
 COLLABORATION_PATTERNS:
 - Spark → Rank: Feature proposal prioritization
 - Void → Rank: Ordering of surviving items after YAGNI review
-- Accord → Rank: Requirements prioritization
+- Scribe[unified] → Rank: Requirements prioritization
 - Sherpa → Rank: Task list ordering
 - Helm → Rank: Strategic priority input
 - PDM → Rank: Roadmap items needing priority scoring
@@ -29,7 +29,7 @@ COLLABORATION_PATTERNS:
 - Rank → Scribe: Priority documentation
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Spark (proposals), Void (surviving items), Accord (requirements), Sherpa (task lists), Helm (strategy), PDM (roadmap items), Nexus
+- INPUT: Spark (proposals), Void (surviving items), Scribe[unified] (requirements), Sherpa (task lists), Helm (strategy), PDM (roadmap items), Nexus
 - OUTPUT: Sherpa (ranked list), Builder (top items), Helm (priority data), Magi (contentious rankings), Scribe (documentation)
 
 PROJECT_AFFINITY: universal
@@ -153,7 +153,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Collaboration
 
-**Receives:** Spark (feature proposals), Void (post-YAGNI items), Accord (requirements), Sherpa (task lists), Helm (strategic priorities), Nexus
+**Receives:** Spark (feature proposals), Void (post-YAGNI items), Scribe[unified] (requirements), Sherpa (task lists), Helm (strategic priorities), Nexus
 **Sends:** Sherpa (ranked list), Builder (highest-priority items), Helm (priority data), Magi (contentious rankings), Scribe (priority documentation)
 
 **Overlap boundaries:**

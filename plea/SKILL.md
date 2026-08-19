@@ -24,12 +24,12 @@ COLLABORATION_PATTERNS:
 - Pattern B Priority Input: Plea -> Rank
 - Pattern C Demand-Validation Loop: Plea <-> Echo
 - Pattern D Reality Calibration: Voice -> Plea (extend to underrepresented segments)
-- Pattern E Requirement Enrichment: Plea -> Accord
+- Pattern E Requirement Enrichment: Plea -> Scribe[unified]
 - Pattern F Research Grounding: Field -> Plea
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Cast, Voice, Field, Echo, Compete
-- OUTPUT: Spark, Rank, Accord, Scribe, Saga
+- OUTPUT: Spark, Rank, Scribe[unified], Scribe, Saga
 
 PROJECT_AFFINITY: SaaS(H) E-commerce(H) Game(H) Dashboard(M) Marketing(M) API(L)
 -->
@@ -147,8 +147,8 @@ Every demand ships a paste-ready LLM instruction prompt so downstream agents act
 | Recipe | Subcommand | Default? | Mode | When to Use | Next Agent | Read First |
 |--------|-----------|---------|------|-------------|-----------|------------|
 | Feature Request | `request` | ✓ | EXPLORE | First-person demand from diverse personas | Spark, Rank | `reference/patterns.md` |
-| Unmet Needs | `need` | | DEEP | **Latent** needs from friction proxies; blind-spot discovery | Field/Trace, then Spark, Accord | `reference/patterns.md` |
-| Challenge Assumptions | `challenge` | | CHALLENGE | Counter team assumptions, validate the roadmap | Accord, Rank | `reference/mode-playbooks.md` |
+| Unmet Needs | `need` | | DEEP | **Latent** needs from friction proxies; blind-spot discovery | Field/Trace, then Spark, Scribe[unified] | `reference/patterns.md` |
+| Challenge Assumptions | `challenge` | | CHALLENGE | Counter team assumptions, validate the roadmap | Scribe[unified], Rank | `reference/mode-playbooks.md` |
 | User Roleplay | `roleplay` | | DEEP | End-user role-play and deep-dive on a persona | Scribe, Saga | `reference/persona-embodiment.md` |
 | Jobs-to-be-Done | `jtbd` | | DEEP | Switch interview, four forces, Job Map — the progress users hire the product for | Field, Spark | `reference/jtbd-switch-interview.md` |
 | 5 Whys Root Cause | `5whys` | | DEEP | Why-chain from a surface request to the root unmet need | Field, Spark | `reference/5whys-root-cause.md` |
@@ -162,7 +162,7 @@ Modifiers overlay any Recipe to bias persona selection and demand framing; they 
 | Modifier | Signal | Persona/Framing bias | Primary output | Next Agent |
 |----------|--------|----------------------|----------------|-----------|
 | `COMPETE` | `competitor`, `compare`, `vs <competitor>` | Voice frustration anchored to competitor experiences ("App X already does this") | Competitor-anchored demand report | Compete, Spark |
-| `EDGE` | `edge case`, `accessibility`, `minority`, `regulatory` | Minority and extreme use cases — accessibility, regulated industries, fringe personas | Edge-voice report | Accord, Field |
+| `EDGE` | `edge case`, `accessibility`, `minority`, `regulatory` | Minority and extreme use cases — accessibility, regulated industries, fringe personas | Edge-voice report | Scribe[unified], Field |
 | `ASPIRE` | `dream`, `magic wand`, `delight`, `what would make you switch` | **Aspirational / ideal-world** demands beyond friction relief — the Best Day the product could create, the want that triggers evangelism. Bias bold and latent; resist regressing to safe fixes. | Aspirational demand report | Spark (`H2`/`H3` framing), Riff |
 
 ## Subcommand Dispatch
@@ -174,7 +174,7 @@ Per-Recipe behavior — full calibration ceilings, disambiguation lanes, handoff
 | Subcommand | Behavior | Calibration ceiling |
 |-----------|----------|---------------------|
 | `request` | EXPLORE, 3-7 personas (beginner + power user + edge case required), first-person voice, **>=1 aspirational "magic wand" demand**; overlay `ASPIRE` for a bold slate | per-demand |
-| `need` | DEEP on **latent** needs via proxy-based elicitation; breadth-first, escalate one need to `5whys`/`jtbd`/`opportunity`; Field/Trace validate before Spark/Accord | `[hypothesis]` |
+| `need` | DEEP on **latent** needs via proxy-based elicitation; breadth-first, escalate one need to `5whys`/`jtbd`/`opportunity`; Field/Trace validate before Spark/Scribe[unified] | `[hypothesis]` |
 | `challenge` | CHALLENGE — steelman -> counter -> falsifiable test -> verdict; lane is user-voice objection, not `magi`/`omen`/`void` | `[hypothesis]` |
 | `roleplay` | DEEP single-persona `ROLEPLAY_ARC`, `>=3` tactics, zero PM-voice leakage; highest projection-bias risk — recommend breadth/Field before generalizing | `[hypothesis]` |
 | `jtbd` | Synthetic Switch interview — 4 forces x 8-stage Job Map x functional/emotional/social + `SWITCH_PREDICTION` (verdict, riskiest force, `falsifiable_test`); bridge to tagged demands, run the `request` self-rejection gate | `[hypothesis]` |
@@ -226,7 +226,7 @@ The **Demand Report** carries: Summary, Requests by Persona, Cross-Persona Analy
 ## Collaboration
 
 **Receives:** Cast (personas), Voice (real feedback for calibration), Field (research findings), Echo (flow evaluation), Compete (competitive intel).
-**Sends:** Spark (request seeds), Rank (user urgency), Accord (user-voice requirements), Scribe (PRD user stories), Saga (narrative material), Cast (`PERSONA_FEEDBACK` — calibration results, coverage gaps).
+**Sends:** Spark (request seeds), Rank (user urgency), Scribe[unified] (user-voice requirements), Scribe (PRD user stories), Saga (narrative material), Cast (`PERSONA_FEEDBACK` — calibration results, coverage gaps).
 
 **Overlap boundaries** — **Voice** owns real customer feedback; Plea generates synthetic demand when real data is absent or biased. **Echo** walks existing UI (what users feel); Plea verbalizes the demand friction implies (what is missing). **Field** designs and validates real-user research; Plea seeds `synthetic: true` hypotheses for Field to validate. **Spark** structures proposals with hypothesis/KPIs/RICE; Plea stops at first-person demand verbalization. Patterns A-F and full tables -> `reference/handoffs.md`.
 
@@ -295,7 +295,7 @@ Risks:
   - Synthetic demands diverging from real user voice
   - Persona representativeness limited when fewer than 3 personas were available
   - WEIRD / mode-collapse bias if Cast registry absent (proto-personas only)
-Next: <Spark | Rank | Accord | Field | Voice | DONE>
+Next: <Spark | Rank | Scribe[unified] | Field | Voice | DONE>
 ```
 
 ---

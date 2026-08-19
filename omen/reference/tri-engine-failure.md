@@ -30,7 +30,7 @@ Define the pre-mortem target once. All three subagents share the same scope:
 - Analysis boundary (component / pipeline / release / org process)
 - Stakeholder set and time horizon (24h / 30d / quarter)
 - Work mode (`DEEP` / `RAPID` / `LENS-{domain}`)
-- Upstream context if any (Accord spec, Spark RFC, Helm plan, Scribe design doc)
+- Upstream context if any (Scribe[unified] spec, Spark RFC, Helm plan, Scribe design doc)
 - Existing controls inventory — Omen must score **actual** current controls (S/O/D baseline must reflect reality, not aspiration)
 
 ---
@@ -265,7 +265,7 @@ Enumerate {N=5-8 in DEEP / 3-5 in RAPID} failure modes for the target below usin
 - Analysis boundary: {component / pipeline / release / org process}
 - Stakeholders and time horizon: {who is affected within {24h | 30d | quarter}}
 - Work mode: {DEEP | RAPID | LENS-{domain}}
-- Upstream context: {Accord spec / Spark RFC / Helm plan / Scribe design doc if any}
+- Upstream context: {Scribe[unified] spec / Spark RFC / Helm plan / Scribe design doc if any}
 - Existing controls inventory: {what defenses currently exist — score against ACTUAL, not aspirational}
 
 # Output format

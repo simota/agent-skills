@@ -43,7 +43,7 @@ Do **not** invoke when:
 1. **Nexus[classify]** — internal: detect `org_tier`, `step_adoption_level`, `change_category` (content / campaign / brand-touch), `regulatory_jurisdiction`, `tier` (S/A/B/C), `ui_dimension` (none / partial / full)
 2. **`insight` (proposed skill) or `field`** — query Insight Ledger for relevant evidence; if no evidence available for the proposed segment, REJECT (block design)
 3. **`field`** — if Step 2+ and evidence is stale or missing, queue fresh research
-4. **`accord` + `spark`** — draft Growth-Brand Contract (Tier 0 / 1 / 2 per scope)
+4. **`scribe[unified]` + `spark`** — draft Growth-Brand Contract (Tier 0 / 1 / 2 per scope)
 5. **`magi` (optional)** — high-stakes content: arbitrate Strategic-level Constitution alignment
 
 **Gate (G11 mandatory)**:
@@ -78,7 +78,7 @@ Do **not** invoke when:
 3. **`compete`** — cannibalization estimation
 4. **`funnel` + `bazaar`** — channel-fit rationale and LP coherence
 5. **`vision` + `prose`** — Brand Compiler **B.tone advisory** layer (LLM-as-judge, non-blocking)
-6. **`clause` + `oath` + `cloak` + `vigil`** — G14 Regulatory Envelope Pre-Flight: verify `regulatory_jurisdiction` toggles, brand-safety placement exclusions
+6. **`clause` + `canon[regulatory]` + `cloak` + `vigil`** — G14 Regulatory Envelope Pre-Flight: verify `regulatory_jurisdiction` toggles, brand-safety placement exclusions
 
 **Gate (G14 mandatory)**:
 - Regulatory jurisdiction declared; per-jurisdiction toggle (auto-scale / auto-generate / holdout test) verified
@@ -146,7 +146,7 @@ Phase 0 (Pre-Design, sequential):
   → if org_tier=SMB AND step_adoption < 2: abort with `acceptance` + Step 1 Measurement Loop recommendation
   → insight[query Ledger for evidence] (read-only per G11)
   → if evidence stale/missing AND Step ≥ 2: field[queue fresh research, block design]
-  → accord + spark[draft Growth-Brand Contract Tier 0/1/2]
+  → scribe[unified] + spark[draft Growth-Brand Contract Tier 0/1/2]
   → if change_category=brand_critical: magi[Constitution alignment]
 
 Phase 1 (Merge-Time, delegates to acceptance recipe):
@@ -158,7 +158,7 @@ Phase 2 (Ship-Time, parallel):
   ‖ compete[cannibalization estimation]
   ‖ funnel + bazaar[channel-fit + LP coherence]
   ‖ vision + prose[B.tone advisory, non-blocking]
-  ‖ clause + oath + cloak + vigil[G14 Regulatory Pre-Flight]
+  ‖ clause + canon[regulatory] + cloak + vigil[G14 Regulatory Pre-Flight]
   ‖ experiment[pre-register + control-validity/SRM check, per § Pre-Registration sub-gate]
   → Gate: regulatory toggle verified + statistical power adequate + analysis plan frozen + control valid
   → if FAIL: block ship; route to remediation

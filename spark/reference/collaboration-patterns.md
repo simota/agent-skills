@@ -310,7 +310,7 @@ Spark receives product signals and insights from upstream agents, generates feat
 | Spark → Scribe | Spec handoff | Validated proposal needs formal specification |
 | Spark → Builder | Implementation handoff | Proposal ready for implementation |
 | Spark → Artisan | UI handoff | Proposal needs UI implementation |
-| Spark → Accord | Integration handoff | Proposal needs integrated specification package |
+| Spark → Scribe[unified] | Integration handoff | Proposal needs integrated specification package |
 | Spark → Forge | Prototype handoff | Proposal needs prototype before build |
 | Spark → Experiment | Validation handoff | Proposal needs A/B test or experiment design |
 | Spark → Canvas | Visualization handoff | Roadmap or feature matrix visualization needed |

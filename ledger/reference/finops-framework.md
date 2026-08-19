@@ -8,7 +8,7 @@ Purpose: Apply the FinOps Foundation's Framework (2024 edition) — the industry
 - **ledger `estimate` / `rightsizing` / `anomaly` / `ri-sp` / `gpu-cost` / `tagging` (elsewhere)**: Individual capability execution.
 - **ledger `unit-economics` (elsewhere)**: Per-unit cost attribution — a capability within Quantifying Business Value.
 - **ledger `greenops` (elsewhere)**: Sustainability overlay to FinOps.
-- **Oath (elsewhere)**: Compliance-focused cost audit.
+- **Canon[regulatory] (elsewhere)**: Compliance-focused cost audit.
 - **Harvest (elsewhere)**: PR work reporting.
 
 ## Framework Structure
@@ -132,7 +132,7 @@ ROADMAP     →  1-3 capabilities to advance per quarter
 HANDOFF     →  Scaffold: policy-as-code enforcement
             →  Beacon: FinOps dashboards
             →  Launch: integrate pre-change estimate
-            →  Oath: chargeback governance
+            →  Canon[regulatory]: chargeback governance
 ```
 
 ## Output Template
@@ -176,7 +176,7 @@ HANDOFF     →  Scaffold: policy-as-code enforcement
 - Scaffold: policy-as-code for next capability
 - Beacon: FinOps dashboard design
 - Launch: integrate estimate into release plan
-- Oath: chargeback governance
+- Canon[regulatory]: chargeback governance
 - Architect: if org needs new FinOps role
 ```
 
@@ -203,7 +203,7 @@ When `finops-framework` completes, emit:
 - **Persona map** with owners assigned.
 - **2-quarter roadmap** with 1-3 capability advances.
 - **Principles scorecard**.
-- **Handoffs**: Scaffold, Beacon, Launch, Oath, Architect.
+- **Handoffs**: Scaffold, Beacon, Launch, Canon[regulatory], Architect.
 
 ## References
 

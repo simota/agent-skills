@@ -11,7 +11,7 @@ Purpose: Design trigger-based, behavior-branched email drip covering the full us
 - **relay (elsewhere)**: Email delivery infrastructure.
 - **Pulse (elsewhere)**: Funnel / open / click metrics.
 - **Growth (elsewhere)**: Acquisition and top-of-funnel nurture.
-- **Cloak / Oath (elsewhere)**: GDPR / CAN-SPAM / CASL / APPI compliance.
+- **Cloak / Canon[regulatory] (elsewhere)**: GDPR / CAN-SPAM / CASL / APPI compliance.
 
 ## Lifecycle Stages
 
@@ -136,7 +136,7 @@ Required infrastructure:
 | California (CCPA/CPRA) | Do Not Sell / Share, GPC honor |
 | Brazil (LGPD) | Consent required, DPO contact |
 
-Coordinate with Cloak (privacy engineering) and Oath (regulatory audit) for regulated regions.
+Coordinate with Cloak (privacy engineering) and Canon[regulatory] (regulatory audit) for regulated regions.
 
 ## Metrics per Drip
 
@@ -201,7 +201,7 @@ Reserve a 5-10% holdout group (no lifecycle emails) to measure incrementality.
 - relay: delivery, tracking, bounce handling
 - Pulse: drip-level funnel + primary metric
 - Experiment: A/B test copy, subject lines, timing
-- Cloak / Oath: regulatory review for launched regions
+- Cloak / Canon[regulatory]: regulatory review for launched regions
 - Scaffold: domain + DNS setup
 ```
 
@@ -230,7 +230,7 @@ When `lifecycle-email` completes, emit:
 - **Frequency caps** and quiet-hours rule.
 - **Holdout plan** for incrementality measurement.
 - **Metrics per drip** with targets.
-- **Handoffs**: Prose, relay, Pulse, Experiment, Cloak/Oath, Scaffold.
+- **Handoffs**: Prose, relay, Pulse, Experiment, Cloak/Canon[regulatory], Scaffold.
 
 ## References
 

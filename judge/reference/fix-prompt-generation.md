@@ -26,7 +26,7 @@ Judge is review-only — it does not ship code. The Fix Prompt is the bridge bet
 | Finding is CONFIRMED (3/3) or LIKELY (2/3) and warrants a fix in the same PR | Emit Fix Prompt with `APPLY-FIX` (or appropriate scoped verb) → Builder |
 | Finding is grounded CANDIDATE (1/3 verified by Judge main context read) | Emit Fix Prompt with `APPLY-FIX` if HIGH-confidence after grounding; otherwise `INVESTIGATE-FURTHER` |
 | Finding requires significant rework (design or approach is wrong) | Emit Fix Prompt with `REWRITE` → Builder + Atlas |
-| PR is fundamentally wrong; restart from spec rather than patch | Emit Fix Prompt with `REVERT-AND-RESTART` → Builder + Scribe/Accord |
+| PR is fundamentally wrong; restart from spec rather than patch | Emit Fix Prompt with `REVERT-AND-RESTART` → Builder + Scribe/Scribe[unified] |
 | Review identifies need for API or contract change | Emit Fix Prompt with `BREAKING-FIX` → Builder + Guardian + Launch |
 | Review confidence MEDIUM; need to verify finding before changing code | Emit Fix Prompt with `INVESTIGATE-FURTHER` → Builder (investigation mode) or Judge re-entry with more engines |
 | Finding flagged but not blocking; advisory only | Emit Fix Prompt with `DOWNGRADE` → Builder (advisory, no enforcement) |
@@ -47,7 +47,7 @@ Each fix prompt declares one verb at the top of `# Your task`.
 |------|-------------|----------------|
 | `APPLY-FIX` | Confirmed bug/issue in PR, scoped fix in same PR (HIGH confidence, multi-engine consensus) | Builder (PR author) |
 | `REWRITE` | Implementation needs significant rework — design or approach is wrong | Builder + Atlas |
-| `REVERT-AND-RESTART` | PR is fundamentally wrong; restart from spec rather than patch | Builder + Scribe/Accord |
+| `REVERT-AND-RESTART` | PR is fundamentally wrong; restart from spec rather than patch | Builder + Scribe/Scribe[unified] |
 | `BREAKING-FIX` | Review identifies need for API or contract change | Builder + Guardian + Launch |
 | `INVESTIGATE-FURTHER` | Review confidence MEDIUM; need to verify finding before changing code | Builder (in investigation mode) or Judge re-entry with more engines |
 | `DOWNGRADE` | Finding flagged but not blocking; author should consider but may defer | Builder (advisory only — no enforcement) |
@@ -76,7 +76,7 @@ Severity ─┬─ bug-blocking ────────────────
 Tiebreakers:
 - 3/3 CONFIRMED + bug-blocking → always `APPLY-FIX`. Multi-engine consensus on a blocking bug is the highest-confidence Judge signal; no investigation needed.
 - `BREAKING-FIX` always cross-links to Guardian + Launch — breaking changes need release coordination and PR-classification re-review.
-- `REVERT-AND-RESTART` is reserved for cases where the PR's premise is wrong (wrong spec interpretation, wrong feature scope, wrong architectural decision). Cross-link to Scribe (spec rewrite) or Accord (specification alignment) so the restart has a corrected baseline.
+- `REVERT-AND-RESTART` is reserved for cases where the PR's premise is wrong (wrong spec interpretation, wrong feature scope, wrong architectural decision). Cross-link to Scribe (spec rewrite) or Scribe[unified] (specification alignment) so the restart has a corrected baseline.
 - `INVESTIGATE-FURTHER` for 1/3 findings: only emit if the grounding read surfaced corroborating evidence; otherwise suppress (single-engine without consensus is below shipping bar).
 
 ---
@@ -159,7 +159,7 @@ Constraints:
 # [REVERT-AND-RESTART only — Spec gap]
 - Spec/requirement misinterpreted: [reference to spec section]
 - Corrected interpretation: [what the spec actually requires]
-- Restart baseline: [Scribe/Accord deliverable to consume before re-implementing]
+- Restart baseline: [Scribe/Scribe[unified] deliverable to consume before re-implementing]
 
 # [BREAKING-FIX only — User-facing impact]
 - API shape change: [yes/no — describe]

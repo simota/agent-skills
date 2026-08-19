@@ -8,7 +8,7 @@ Purpose: Model human-vector attack scenarios (vishing, smishing, tailgating, pre
 - **Breach `phishing` (sibling recipe)**: specifically email / landing-page / consent-phishing campaigns. `social` covers the broader human-layer surface.
 - **Vigil (elsewhere)**: authoring detection rules for anomalous wire-transfer requests, voice-auth bypass attempts, badge-tailgating indicators, and impossible-travel sign-ins.
 - **Cloak (elsewhere)**: PII handling, consent, and data-minimization controls that reduce OSINT surface. Cloak designs the controls; Breach tests whether they close the pretext.
-- **Oath (elsewhere)**: SOC 2 CC1.4 / HIPAA 164.308(a)(5) / PCI 12.6 awareness-training and insider-threat programs.
+- **Canon[regulatory] (elsewhere)**: SOC 2 CC1.4 / HIPAA 164.308(a)(5) / PCI 12.6 awareness-training and insider-threat programs.
 - **Triage (elsewhere)**: post-incident response when a real social engineering attempt lands.
 - **Clause (elsewhere)**: contractual and policy clauses that govern insider access and exit procedures.
 
@@ -60,7 +60,7 @@ EXECUTE        → time-boxed window; safety-officer on standby to abort
 DEBRIEF        → same-day private debrief with participants — framed as
                  program outcome, never as personal failure
                → aggregate anonymized results to steering committee
-               → handoff detection gaps → Vigil; policy gaps → Oath;
+               → handoff detection gaps → Vigil; policy gaps → Canon[regulatory];
                  OSINT gaps → Cloak; awareness-curriculum gaps → HR
 ```
 
@@ -109,7 +109,7 @@ Every OSINT hit is a supply-side finding as much as a demand-side training oppor
 
 - To **Vigil**: detection-rule inputs — wire-transfer request anomalies, off-hour password-reset requests, impossible-travel sign-ins, badge-tailgating indicators, MFA-reset-followed-by-login patterns.
 - To **Cloak**: OSINT-exposure findings — what public data fueled the pretext, what minimization or consent-scope changes close it.
-- To **Oath**: evidence package for SOC 2 CC1.4 (control environment / ethics), CC2.2 (communication), HIPAA 164.308(a)(5) (awareness training), PCI 12.6 (security awareness), and insider-threat program obligations.
+- To **Canon[regulatory]**: evidence package for SOC 2 CC1.4 (control environment / ethics), CC2.2 (communication), HIPAA 164.308(a)(5) (awareness training), PCI 12.6 (security awareness), and insider-threat program obligations.
 - To **Triage**: playbook updates for real BEC, SIM-swap, vishing, and deepfake incident-response with the scenario's indicators.
 - To **Scribe**: final exercise report with anonymized metrics, trend vs prior waves, and policy-change recommendations.
 - To HR / awareness program: role-based curriculum updates (finance, exec, IT help-desk, engineering, front-desk).

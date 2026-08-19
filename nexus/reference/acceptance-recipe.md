@@ -89,7 +89,7 @@ See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy` (dual-engine fallback 
 
 ### Phase 1 — Spec Diff (sequential)
 
-**Agent**: `attest` (spec compliance) + `accord` (if requirements need to be re-expressed as spec nodes) + `scribe` (only if spec graph needs human-readable annotation)
+**Agent**: `attest` (spec compliance) + `scribe[unified]` (if requirements need to be re-expressed as spec nodes) + `scribe` (only if spec graph needs human-readable annotation)
 
 **Goal**: Produce `spec_diff` — the delta of spec graph nodes touched by this change. If the change is a spec-amendment (not just an implementation), the spec diff is itself subject to multi-view cross-check (see `PROOF_CARRYING.md` Spec Self-Bug section).
 
@@ -267,7 +267,7 @@ Phase 0: Nexus[classify-tier + detect-ui-dimension + check-design-proof-mode + c
          → if no spec graph: abort, redirect to apex (author spec first)
          → outputs: {tier, ui_dimension, design_proof_mode, spec_graph_present}
 
-Phase 1: attest[spec-diff] (+ accord[spec-amend] if spec changes; + scribe if human-readable spec needed)
+Phase 1: attest[spec-diff] (+ scribe[unified: spec-amend] if spec changes; + scribe if human-readable spec needed)
 
 Phase 2A (Layer A — Code Oracles, parallel, engine=agy for Tier-S when AVAILABLE; else Codex with spec-as-ground-truth framing):
   ‖ radar[property+regression]

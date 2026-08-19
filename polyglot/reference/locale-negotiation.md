@@ -7,7 +7,7 @@ Purpose: Use this file to design locale resolution in Polyglot's `locale` subcom
 - **Polyglot `locale`**: BCP 47 parsing, `Accept-Language` negotiation, fallback chain design, user-override persistence strategy, URL-routing patterns for locale (`/en`, `?lang=en`, `Accept-Language` header).
 - **Prose (elsewhere)**: source-language copy. `locale` decides which translation file serves; Prose authors the copy inside the file.
 - **Artisan (elsewhere)**: framework-specific locale hooks (Next.js middleware, vue-i18n `composer.locale`, React Server Component request locale). `locale` designs the resolution algorithm; Artisan wires it into the framework.
-- **Accord (elsewhere)**: spec-level L10n requirements ("support 12 locales with fallback to English"). `locale` implements against those specs.
+- **Scribe[unified] (elsewhere)**: spec-level L10n requirements ("support 12 locales with fallback to English"). `locale` implements against those specs.
 
 If the ask is "how do we detect or persist the user's locale?" → `locale`. If it is "what does the English copy say?" → Prose. If it is "where does Next.js middleware go?" → Artisan.
 
@@ -167,7 +167,7 @@ Always expose a visible locale picker so the inference is correctable. Never use
 **To Prose:**
 - Locale-specific copy variations when region matters (e.g., `pt-BR` vs `pt-PT` "Fill in" vs "Fill out").
 
-**To Accord:**
+**To Scribe[unified]:**
 - Spec clarifications on supported locale list, fallback defaults, and whether distinct regional variants are required.
 
 **To `translate` subcommand:**

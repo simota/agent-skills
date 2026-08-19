@@ -9,7 +9,7 @@ Purpose: Overlay carbon-awareness onto FinOps. Design architectures that account
 - **ledger `ri-sp` / `rightsizing` (elsewhere)**: Individual optimizations that overlap with GreenOps.
 - **Scaffold (elsewhere)**: IaC execution of region choices.
 - **Beacon (elsewhere)**: SCI dashboards and SLO-equivalents.
-- **Oath (elsewhere)**: CSRD / SEC climate-disclosure reporting.
+- **Canon[regulatory] (elsewhere)**: CSRD / SEC climate-disclosure reporting.
 
 ## Why GreenOps Now
 
@@ -139,11 +139,11 @@ TRADEOFF    →  for each proposed change, score FinOps Δ + GreenOps Δ
             →  flag conflicts for Magi
 
 REPORT      →  SCI trend, emissions by team/service/region
-            →  CSRD / SEC compliance data (Oath handoff)
+            →  CSRD / SEC compliance data (Canon[regulatory] handoff)
 
 HANDOFF     →  Scaffold: region migration, carbon-aware scheduling
             →  Beacon: SCI dashboard
-            →  Oath: regulatory disclosure
+            →  Canon[regulatory]: regulatory disclosure
             →  Magi: FinOps×GreenOps conflict arbitration
             →  Launch: integrate carbon in release plan
 ```
@@ -197,7 +197,7 @@ HANDOFF     →  Scaffold: region migration, carbon-aware scheduling
 ### Handoffs
 - Scaffold: region migration IaC, carbon-aware scheduler wiring
 - Beacon: SCI dashboard
-- Oath: CSRD / SEC filing data
+- Canon[regulatory]: CSRD / SEC filing data
 - Magi: FinOps × GreenOps conflict arbitration
 - Launch: carbon in release plan
 - Scribe: sustainability report for leadership / investor relations
@@ -228,7 +228,7 @@ When `greenops` completes, emit:
 - **Trade-off flags** (FinOps × GreenOps conflicts).
 - **Targets** aligned to SBTi / internal.
 - **Compliance readiness** (CSRD / SEC).
-- **Handoffs**: Scaffold, Beacon, Oath, Magi, Launch, Scribe.
+- **Handoffs**: Scaffold, Beacon, Canon[regulatory], Magi, Launch, Scribe.
 
 ## References
 

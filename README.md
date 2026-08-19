@@ -1,14 +1,14 @@
 # AI Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Agents](https://img.shields.io/badge/Agents-124-blue.svg)]()
+[![Agents](https://img.shields.io/badge/Agents-122-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 A skill collection that enables collaborative development with a team of specialized AI agents.
 
 ## Features
 
-- **124 Specialized Agents** - Covering bug investigation, testing, security, UI/UX, AI/ML, observability, and more
+- **122 Specialized Agents** - Covering bug investigation, testing, security, UI/UX, AI/ML, observability, and more
 - **Nexus Orchestrator** - Analyzes tasks and automatically designs optimal agent chains
 - **Platform Agnostic** - Works with Claude Code, Codex CLI, Antigravity CLI, and others
 
@@ -35,11 +35,11 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 ## Overview
 
-This repository contains 124 specialized AI agents covering various aspects of software development. Each agent specializes in a specific domain and is coordinated by the **Nexus** orchestrator.
+This repository contains 122 specialized AI agents covering various aspects of software development. Each agent specializes in a specific domain and is coordinated by the **Nexus** orchestrator.
 
 ## Agent Catalog
 
-> Category-by-category catalog for all 124 agents.
+> Category-by-category catalog for all 122 agents.
 
 ### Orchestration
 
@@ -57,7 +57,7 @@ This repository contains 124 specialized AI agents covering various aspects of s
 | **Gauge** | _"What gets measured gets managed. What gets audited gets normalized."_ - SKILL.md normalization auditor and self-evolving compliance agent. Scans all skills against the 19-item checklist, classifies violations with P0-P3 priority, generates concrete fix snippets, and evolves detection patterns via web research. No code written | Compliance reports, fix plans, dashboards |
 | **Atelier** | _"Design decided upstream. Assets produced downstream. atelier is the studio floor in between."_ - Design-to-implementation pipeline orchestrator for the code-to-visual-to-code closed loop. Coordinates Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas to deliver design extraction, prototypes, visual assets, slides, and production together while persisting a project design system across downstream agents | Design system package, integrated deliverables |
 | **Bazaar** | _"A landing page is one promise, one path, one decision. bazaar runs the studio that delivers all three."_ - Super-premium LP studio chain orchestrator. Composes Field → Cast → Pulse → Funnel → Vision → Saga → Compete → Muse → Flow → Artisan → Growth → Bolt → Judge → Launch into a recipe-selected, stage-gated pipeline (Discover → Audience → Strategy → Structure → Design → Build → Optimize → Verify → Launch) enforcing 6 craft axes — Design, Animation, Branding, Marketing, SEO, IA — each with explicit rubric and ship threshold | 6-axis-rubric-passed LP package, CVR-tuned production code, brand-coherent visuals, motion on tokens, schema-valid SEO, GEO citation-ready, analytics live |
-| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 124."_ - Skill ecosystem navigator and onboarding guide. Lists agents, recommends best fit for tasks, and helps newcomers discover the right specialist | Recommendations, agent maps |
+| **Compass** | _"When in doubt, ask Compass. It finds the right skill for you among 122."_ - Skill ecosystem navigator and onboarding guide. Lists agents, recommends best fit for tasks, and helps newcomers discover the right specialist | Recommendations, agent maps |
 | **Loom** | _"Many threads, one fabric — design the operating layer as a system."_ - Project operating-layer designer. Blueprints the coherent set of project-local skills, repo-tailored recipes, and skill-plus-agent workflows a repository needs together as one system, then delegates body authoring to Sigil and runtime routing to Nexus | Operating-layer blueprint, routing map, recipe/workflow specs |
 | **Prune** | _"A garden grows by what you cut, not what you plant."_ - Ecosystem cleanup auditor. Audits the agent roster for overlap, redundancy, and inactivity, then proposes merge candidates and sunset plans with evidence and archive instructions. Propose-only, no execution | Merge/sunset proposals, archive instructions |
 
@@ -73,14 +73,13 @@ This repository contains 124 specialized AI agents covering various aspects of s
 | **Plea** | _"I am your user. I feel every day what you overlook."_ - Synthetic user advocate. Role-plays as diverse end-user personas to generate authentic feature requests, surface unmet needs, and challenge team assumptions | Feature request report |
 | **Field** | _"Good research asks the right questions. Great research changes what you thought was the question."_ - User research design, interview guides, qualitative analysis, persona/journey map creation | Research report |
 | **Trace** | _"Every click tells a story. I read between the actions."_ - Session replay analysis, per-persona behavioral pattern extraction, UX problem storytelling. Works with Field/Echo | Behavioral analysis report |
-| **Canon** | _"Standards are the accumulated wisdom of the industry. Apply them, don't reinvent them."_ - Investigates and analyzes using global/industry standards. Evaluates compliance with OWASP/WCAG/OpenAPI/ISO 25010, detects violations, and suggests improvements | Compliance report |
+| **Canon** | _"Standards are the accumulated wisdom of the industry. Apply them, don't reinvent them."_ - Investigates and analyzes using global/industry standards. Evaluates OWASP/WCAG/OpenAPI/ISO 25010 standards and SOC2/PCI-DSS/HIPAA/ISO 27001 regulatory controls, with evidence-backed remediation | Compliance report |
 | **Lens** | _"See the code, not just search it."_ - Codebase comprehension specialist. Systematically investigates code structure, feature exploration, and data flow tracing for questions like "Does feature X exist?", "How does flow Y work?", "What is this module's responsibility?" | Investigation report |
 | **Magi** | _"Three minds, one verdict. Consensus through diversity."_ - Multi-perspective decision making from three viewpoints (Logic, Empathy, Pragmatism). Architecture selection, tradeoff analysis, Go/No-Go decisions | Decision report |
 | **Flux** | _"Bend the light. See what was always there."_ - Thinking refraction engine. Challenges assumptions, combines cross-domain knowledge, and shifts perspectives to produce reframed problem statements. Cynefin-based framework selection, Serendipity Injection, 10+ thinking frameworks. No code written | Reframing package, Insight Matrix, Blind Spot Report |
 | **Riff** | _"The best ideas don't arrive. They evolve — one riff at a time."_ - Interactive brainstorming partner that deepens ideas through iterative dialogue using four thinking modes (Expand/Propose/Evaluate/Subtract). No code written | Brainstorming session output |
 | **Cast** | _"Personas are not invented. They are discovered, born, and evolved."_ - Persona casting agent. Rapid generation, registry management, lifecycle tracking, and cross-agent distribution of personas from diverse inputs | Persona registry |
 | **Helm** | _"A ship without a destination has no favorable wind. A ship without a helm has no direction at all."_ - Business strategy simulation agent. Integrates financial/market/competitive data for short/mid/long-term simulations. SWOT/PESTLE/Porter analysis, scenario planning, KPI forecasting, strategy roadmap generation. No code written | Strategy simulation report |
-| **Accord** | _"Three teams, one truth."_ - Cross-team specification architect. Creates integrated spec packages across Business, Development, and Design teams using progressive refinement templates (L0 Vision > L1 Requirements > L2 Team-specific details > L3 Acceptance criteria). No code written | Integrated spec package, traceability matrix |
 | **Matrix** | _"Infinite combinations, finite resources. Matrix finds the minimum that covers the maximum."_ - Universal multi-dimensional analysis agent. Controls combinatorial explosion from arbitrary axis×value inputs. Minimum coverage set selection, execution planning, and prioritization across all domains (testing, deployment, UX validation, risk assessment, compatibility). No code written | Matrix analysis, coverage optimization plan |
 | **Saga** | _"Facts are remembered 5-10% of the time. Stories raise that to 65-70%. The customer is the hero. The product is the guide."_ - Narrative design agent. Structures product and feature use cases as customer-centric stories. StoryBrand SB7, Pixar Story Spine, Hero's Journey, JTBD frameworks, pitch narratives, onboarding stories, transformation arcs. No code written | Narrative document |
 | **Omen** | _"Plan for the worst. Build for the best."_ - Pre-mortem analysis and failure mode enumeration. Systematically identifies failure scenarios, scores with RPN/AP. No code written | Pre-mortem report |
@@ -128,7 +127,6 @@ This repository contains 124 specialized AI agents covering various aspects of s
 | **Siege** | _"Break it before users do. Fix it before they notice."_ - Advanced testing specialist. Load testing (k6/Locust/Artillery), contract testing (Pact CDC), chaos engineering, mutation testing, resilience pattern verification | Test results, resilience reports |
 | **Void** | _"The best code is the code that was never written."_ - YAGNI enforcement, scope cutting, complexity reduction proposals. Challenges existence of every feature/abstraction with 5 questions and Cost-of-Keeping Score | Subtraction proposals |
 | **Mint** | _"Good tests deserve great data."_ - Test data and fixture generation specialist. Factory patterns, boundary value generation, synthetic data, seed management | Test data, fixtures |
-| **Oath** | _"Trust is earned through evidence, not intention."_ - Regulatory compliance and audit agent. SOC2/PCI-DSS/HIPAA/ISO 27001 control mapping, audit trail design, Policy as Code | Reports, checklists |
 | **Breach** | _"Think like an attacker. Defend like an engineer."_ - Red team engineering. Attack scenario design, threat modeling, MITRE ATT&CK/OWASP frameworks, Purple Team exercises, AI/LLM red teaming | Security assessment |
 | **Cloak** | _"Privacy is not a feature. It's a right."_ - Privacy engineering and data governance. PII detection, data flow mapping, consent management, GDPR/CCPA-compliant code implementation | Privacy assessment |
 | **Chain** | _"Treat every third-party skill like an npm install. Audit before invoking."_ - Skill/plugin/MCP supply-chain auditor. Treats SKILL.md, bundled scripts, MCP server defs, hooks, and `.claude/` config as third-party software. Generates sha256 manifests, scans for Unicode Tag injection, detects curl-pipe + credential-exfil patterns, and pins MCP tool descriptions against rug-pulls | Supply-chain audit, sha256 manifest |
@@ -189,7 +187,7 @@ This repository contains 124 specialized AI agents covering various aspects of s
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Scribe** | _"A specification is a contract between vision and reality."_ - Document writer for PRD/SRS/HLD/LLD, implementation checklists, and test specifications | Specs, design docs |
+| **Scribe** | _"A specification is a contract between vision and reality."_ - Specification author for PRD/SRS/HLD/LLD and cross-team L0-L3 packages, including implementation checklists and test specifications | Specs, design docs |
 | **Quill** | _"Code tells computers what to do. Documentation tells humans why."_ - JSDoc/TSDoc additions, README updates, typing `any` to proper type definitions | Documentation |
 | **Morph** | _"A document is timeless. Its format is temporary."_ - Document format conversion (Markdown <> Word/Excel/PDF/HTML). Converts Scribe specs and Harvest reports to various formats | Converted documents |
 | **Tome** | _"Changes are forgotten. Knowledge endures."_ - Transforms repository changes into detailed learning documentation. Explains terminology, flows, design decisions, and anti-patterns | Learning docs |
@@ -726,7 +724,6 @@ skills/
 ├── schema/SKILL.md     # DB schema design
 ├── siege/SKILL.md      # Advanced testing (load/contract/chaos/mutation)
 ├── scribe/SKILL.md     # Project documentation (PRD/SRS/design docs)
-├── accord/SKILL.md     # Cross-team integrated spec packages
 ├── scout/SKILL.md      # Bug investigation
 ├── sentinel/SKILL.md   # Static security analysis (SAST)
 ├── sherpa/SKILL.md     # Task decomposition
@@ -752,7 +749,7 @@ skills/
 
 ### Single Agent Usage
 
-> Category-by-category examples for all 124 agents.
+> Category-by-category examples for all 122 agents.
 
 #### Orchestration
 

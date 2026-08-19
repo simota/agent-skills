@@ -13,9 +13,15 @@ _STEP_COMPLETE:
     parameters:
       task_type: "[task type]"
       scope: "[scope]"
+      artifact_type: "[PRD | SRS | HLD | LLD | Checklist | Test Spec | Agent Spec | Full | Standard | Lite Unified Specification Package]"
+      teams: ["[audience/team]"]
+      requirement_count: "[number or N/A]"
+      traceability_completeness: "[percentage or N/A]"
+      bdd_scenario_count: "[number or N/A]"
   Validations:
     completeness: "[complete | partial | blocked]"
     quality_check: "[passed | flagged | skipped]"
-  Next: [recommended next agent or DONE]
+  Handoff: "[target agent or N/A]"
+  Next: Sherpa | Builder | Artisan | Radar | Voyager | Judge | Canvas | Morph | Lore | PDM | DONE
   Reason: [Why this next step]
 ```

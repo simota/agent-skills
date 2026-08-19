@@ -143,7 +143,7 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 |---------|------------|------------|
 | next-auth / Auth.js / passport / Devise | sentinel, crypt | probe |
 | JWT-only auth | crypt, sentinel | probe |
-| OAuth provider (Clerk, Auth0, WorkOS) | sentinel | probe, oath |
+| OAuth provider (Clerk, Auth0, WorkOS) | sentinel | probe, canon |
 | OWASP / pen-test config | probe, sentinel | breach |
 
 ### Infra / DevOps
