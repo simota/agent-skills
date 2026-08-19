@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Absorbed 11 narrowly scoped skills into broader owners while preserving their recipes and reference material: `cull` → `chain`, `director` → `cue`, `harvest` → `launch`, `zine` → `tome`, `sage` + `summon` → `magi`, `sketch` → `builder`, `crest` → `compete`, `clause` → `canon`, `latch` → `hone`, and `hearth` → `anvil`.
 - Archived the 11 source packages under `.archive/` with owner mappings, a retain-through date of 2026-11-17, and explicit restoration steps.
 - Updated routing, skill packs, profiles, catalogs, public documentation, and the generated Recipes directory for the 100-global + 3-project-local roster.
+- Clarified the active-roster counting convention and corrected stale 111/123/124-skill labels in the public catalog and contributor documentation.
 
 ### Changed — Builder reference grounding (2026-08-19)
 

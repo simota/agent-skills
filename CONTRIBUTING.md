@@ -29,7 +29,7 @@ cd agent-skills
 ### 新しいエージェントの追加
 
 1. `[AgentName]/SKILL.md` を作成
-2. `description` は英語で1行（全123エージェントが英語で統一）。frontmatter とセクション構成は `_templates/SKILL_TEMPLATE.md` を正とする — 以下は骨格の抜粋:
+2. `description` は英語で1行（グローバルとproject-localの全スキルで統一）。frontmatter とセクション構成は `_templates/SKILL_TEMPLATE.md` を正とする — 以下は骨格の抜粋:
 
 ```markdown
 ---

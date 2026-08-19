@@ -37,6 +37,15 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 This repository contains 100 globally reusable AI agents and 3 repository-local operating extensions. Each skill specializes in a specific domain and is coordinated by the **Nexus** orchestrator when available in the active profile.
 
+### Roster Counting
+
+- **100 global skills** are the active, reusable roster under `<skill-name>/SKILL.md`.
+- **3 project-local extensions** (`orbit`, `lore`, and `darwin`) are repository operating skills and are not included in the global count or global profiles.
+- `.claude/skills/` is the canonical project-local location; `.agents/skills/` is a cross-tool mirror, not an additional set of skills.
+- `.archive/` contains inactive rollback packages and is excluded from every active-roster count.
+
+The active repository surface is therefore **100 global + 3 project-local = 103 distinct skills**.
+
 ## Agent Catalog
 
 > Category-by-category catalog for 100 global agents plus the 3 project-local extensions marked below.
