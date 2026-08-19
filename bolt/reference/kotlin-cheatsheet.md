@@ -1,12 +1,10 @@
 # Kotlin Performance Cheatsheet (Bolt)
 
-Agent-specific slice for **Bolt** (frontend + backend performance optimization). Baseline assumes Kotlin 2.3+ / K2 compiler (as of 2026-05).
+Agent-specific slice for **Bolt** (frontend + backend performance optimization). Snapshot context (not authority): Kotlin 2.3+ / K2 compiler (as of 2026-05). Detect the repository toolchain before applying version-specific guidance.
 
 This file does **not** duplicate the source of truth. Read it alongside:
 
-- [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md) — full Kotlin Style Guide, coroutines, Flow patterns, JVM interop
-- [`builder/reference/kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md) — full anti-pattern catalogue (boxing, leaks, blocking IO, GlobalScope)
-- [`builder/reference/kotlin-language-spec.md`](../../builder/reference/kotlin-language-spec.md) — Kotlin 2.x semantics, K2 compiler, KMP, JVM target, K/Native
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 The role of this cheatsheet: **interpret JVM profiling signals (JFR, async-profiler, JMH) for Kotlin code, distinguish Kotlin-language perf from JVM-runtime perf, and pick the right benchmark harness before changing code**.
 
@@ -109,8 +107,6 @@ class MyBench {
 
 Without these, a microbench can be off by 100x or measure the JIT decision rather than the code.
 
-See [best-practices §6](../../builder/reference/kotlin-best-practices.md) for full performance section.
-
 ---
 
 ## 3. Sequence vs List — the 2025–2026 reality
@@ -131,8 +127,6 @@ Folklore: "Sequence is lazy, therefore faster". Reality (measured on Kotlin 2.x 
 - Sequence wins on early termination over huge N, or 5+ chained ops on millions.
 
 This is a JVM/JIT artifact — on Kotlin/Native the picture differs.
-
-See [`kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md) for the "lazy is free" anti-pattern.
 
 ---
 
@@ -162,7 +156,7 @@ inline fun <T> measure(block: () -> T): T {
 - Function takes a `Function*` you store somewhere (no point — must materialize).
 - Function is rarely called.
 
-`crossinline` and `noinline` modifiers control which lambdas participate in inlining. See [best-practices §3](../../builder/reference/kotlin-best-practices.md).
+`crossinline` and `noinline` modifiers control which lambdas participate in inlining.
 
 The JIT *may* inline non-`inline` functions if they're sufficiently hot, but `inline fun` is a **bytecode-level** guarantee — no warm-up needed.
 
@@ -211,8 +205,6 @@ fun byId(id: UserId): User { /* compiles to: byId-XXXX(long) */ }
 - Cross-language (Java code calling it): name-mangled, but still boxed on Java side.
 
 For 90% of typed-ID use cases, value classes are free. The remaining 10% (generic collection of value classes, nullable in hot path) need profiling.
-
-See [best-practices §4](../../builder/reference/kotlin-best-practices.md).
 
 ---
 
@@ -289,7 +281,7 @@ java -XX:SharedArchiveFile=app.jsa -jar app.jar
 
 CDS reduces startup time 20–50% by sharing pre-parsed class metadata across JVM boots. Critical for CLI tools that run once per invocation (e.g., Gradle worker JVMs).
 
-AppCDS extends this — see [best-practices §8](../../builder/reference/kotlin-best-practices.md).
+AppCDS extends this — see [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding).
 
 ---
 
@@ -317,7 +309,7 @@ suspend fun work() = withContext(loomDispatcher) {
 }
 ```
 
-For new server code with heavy JDBC / file IO, this is the modern path. See [best-practices §5](../../builder/reference/kotlin-best-practices.md).
+For new server code with heavy JDBC / file IO, this is the modern path.
 
 ---
 
@@ -332,7 +324,7 @@ For new server code with heavy JDBC / file IO, this is the modern path. See [bes
 | `withContext(Dispatchers.Default)` (dispatcher hop) | 500ns–1µs |
 | Channel `send` / `receive` (uncontended) | ~100–200 ns |
 
-**Implication**: `launch` per item in a hot loop is expensive. Batch with `flow`, `chunked`, or `parMap`. See [anti-patterns](../../builder/reference/kotlin-anti-patterns.md).
+**Implication**: `launch` per item in a hot loop is expensive. Batch with `flow`, `chunked`, or `parMap`.
 
 Structured concurrency overhead (the parent `CoroutineScope` cancellation propagation) is essentially free; the cost is in the dispatch and continuation suspension.
 
@@ -388,7 +380,7 @@ For Compose-specific guidance, route to native (`native/reference/compose-perf.m
 | **K2 compiler** | 2x faster Kotlin compilation vs K1 | Default in 2.0+; verify `kotlin.experimental.tryK2=true` if older |
 | **Single-file rebuild** | Avoids full module recompile | Ensure no `internal` cross-file leaks |
 
-`kapt` is **deprecated** for new projects — migrate to KSP2 (different annotation processor model). See [best-practices §9](../../builder/reference/kotlin-best-practices.md).
+`kapt` is **deprecated** for new projects — migrate to KSP2 (different annotation processor model).
 
 ---
 
@@ -401,13 +393,11 @@ When code targets K/Native (iOS, embedded, server-side Linux without JVM):
 - No `inline fun` warm-up advantage — already compiled.
 - Sequence vs List benchmarks differ — measure on the actual target.
 
-K/Native perf is more comparable to Swift/Rust than to JVM Kotlin. Defer detailed K/Native tuning to [language-spec §7 — K/Native runtime](../../builder/reference/kotlin-language-spec.md).
+K/Native perf is more comparable to Swift/Rust than to JVM Kotlin. Defer detailed K/Native tuning to [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding).
 
 ---
 
 ## 16. Anti-pattern table (top signals during review)
-
-See [`kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md) for the full catalogue.
 
 | Anti-pattern | Fix |
 |--------------|-----|
@@ -436,7 +426,7 @@ When Bolt is reviewing a Kotlin performance complaint, in order:
 4. **Loom > new threads** for blocking-IO services on JDK 21+. Use virtual-thread executor as `CoroutineDispatcher`.
 5. **GC choice is a knob, not a panacea.** ZGC for tail latency, G1 for default. Don't switch without JFR pause histogram.
 6. **Compose UI perf** = defer to native skill.
-7. **K/Native perf** = different rule set; defer to language-spec §7.
+7. **K/Native perf** = different rule set; verify the configured target and runtime through the [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding).
 8. **No fix without a measurement.** Every recommendation includes the expected delta and the JMH/profile artifact that will confirm it.
 
 ---
@@ -452,4 +442,4 @@ When Bolt is reviewing a Kotlin performance complaint, in order:
 - JDK Mission Control — https://www.oracle.com/java/technologies/jdk-mission-control.html
 - Kotlin K2 compiler announcement — https://kotlinlang.org/docs/k2-compiler-migration-guide.html
 - Kotlin Symbol Processing (KSP) — https://kotlinlang.org/docs/ksp-overview.html
-- Source of truth: [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md), [`kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md), [`kotlin-language-spec.md`](../../builder/reference/kotlin-language-spec.md)
+- General semantics and version-sensitive claims: [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)

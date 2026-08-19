@@ -2,13 +2,10 @@
 
 Purpose: Atlas-flavored slice of the Swift knowledge base — SwiftPM target architecture patterns, protocol-based DI, visibility hygiene, circular-dep detection, public-API surface management, and ADR triggers specific to Swift.
 
-Baseline: **Swift 6.2+, Xcode 26, SwiftPM with `package` access level**.
+Snapshot context (not authority): **Swift 6.2+, Xcode 26, SwiftPM with `package` access level**. Detect the repository toolchain before applying version-specific guidance.
 
 Source of truth (do not duplicate here):
-- Project structure & SwiftPM → [`builder/reference/swift-best-practices.md`](../../builder/reference/swift-best-practices.md)
-- Protocol design pitfalls → [`builder/reference/swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md) §4
-- API design pitfalls → [`builder/reference/swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md) §7
-- Module system, access control, ABI → [`builder/reference/swift-language-spec.md`](../../builder/reference/swift-language-spec.md) §11
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 ---
 
@@ -153,7 +150,7 @@ public struct CreateOrderUseCase {
 | Protocol has `static func make() -> Self` | `any` is impossible — must be generic |
 | Cross-module, library exposes the protocol | Provide both via free function or use `any` for ergonomics |
 
-For full guidance, see best-practices §6 (Architecture) and anti-patterns §4 (Protocol design).
+Verify platform and toolchain assumptions through the [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding) before applying this split.
 
 ---
 
@@ -475,15 +472,4 @@ ADR format → use Scribe's `adr` recipe (Nygard or MADR). Atlas owns the archit
 | **Hilt-style "everything is `Arc<Mutex<T>>`" via `final class` + `@MainActor`** | Hides ownership design; UI thread contention | Actors, structured concurrency, value types where possible |
 | **Mixing Combine + Swift Concurrency + closures in the same layer** | Three concurrency models per file means three sets of bugs | Pick one per layer; bridge at the boundary only |
 
-For full anti-pattern catalog: [`builder/reference/swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md) §4 (Protocols) and §7 (API Design).
-
----
-
-## Where to dig deeper
-
-- Project structure & SwiftPM: [`builder/reference/swift-best-practices.md`](../../builder/reference/swift-best-practices.md) §3, §4
-- Domain architecture patterns: [`builder/reference/swift-best-practices.md`](../../builder/reference/swift-best-practices.md) §6
-- Protocol design pitfalls: [`builder/reference/swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md) §4
-- API design pitfalls: [`builder/reference/swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md) §7
-- Module system & access control: [`builder/reference/swift-language-spec.md`](../../builder/reference/swift-language-spec.md) §11
-- Approachable Concurrency (6.2): [`builder/reference/swift-language-spec.md`](../../builder/reference/swift-language-spec.md) §3.11
+Verify version-sensitive architecture claims through the [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding).

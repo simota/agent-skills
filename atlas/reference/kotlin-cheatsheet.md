@@ -2,13 +2,10 @@
 
 Purpose: Atlas-flavored slice of the Kotlin knowledge base — Gradle multi-module architecture patterns, interface-based DI, visibility hygiene, circular-dep detection, public-API surface management, and ADR triggers specific to Kotlin.
 
-Baseline: **Kotlin 2.3+, K2 compiler, KSP2 default, Gradle 8.x with version catalogs**.
+Snapshot context (not authority): **Kotlin 2.3+, K2 compiler, KSP2 default, Gradle 8.x with version catalogs**. Detect the repository toolchain before applying version-specific guidance.
 
 Source of truth (do not duplicate here):
-- Project structure & Gradle → [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md) §5
-- Architecture patterns (Clean / MVI / repository) → [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md) §11
-- API design pitfalls → [`builder/reference/kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md) §17
-- Class hierarchy pitfalls → [`builder/reference/kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md) §4
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 ---
 
@@ -132,7 +129,7 @@ Three production DI choices. Pick deliberately.
 | Server-side Kotlin (Ktor/Spring) | Spring DI (Spring) / Koin (Ktor) |
 | Library exposes DI integration | Provide neither — accept constructor params |
 
-See best-practices §11 (Architecture patterns) for the full DI comparison.
+Preserve the repository's existing DI convention unless a measured constraint requires a change.
 
 ---
 
@@ -423,7 +420,7 @@ Steps:
 Document the decision when one of these arises:
 
 - **Async runtime / framework choice.** Coroutines is the default; record an ADR if you mix with RxJava, Project Reactor, or Java `CompletableFuture` across the same module.
-- **Server-side framework.** Ktor (Kotlin-native, suspend-first) vs Spring Boot (mature, Java-rooted) vs Micronaut. Affects every controller, every DI integration. See best-practices §6 (Server-side Kotlin).
+- **Server-side framework.** Ktor, Spring Boot, and Micronaut impose different controller and DI boundaries. Preserve the repository framework unless migration is explicitly in scope.
 - **Gradle DSL.** Kotlin DSL (`build.gradle.kts`) vs Groovy DSL — Kotlin DSL is the default for new projects since 2024 but slower to configure; document if you mix.
 - **kapt vs KSP2.** KSP2 is the default since Kotlin 2.0; document explicitly if any processor remains on kapt.
 - **DI framework.** Hilt vs Koin vs kotlin-inject vs Spring DI (see [Interface-Based DI](#interface-based-di-hilt--koin--kotlin-inject)). Once chosen, switching cost is high.
@@ -454,15 +451,4 @@ ADR format → use Scribe's `adr` recipe (Nygard or MADR). Atlas owns the archit
 | **Channel as state holder** | `Channel` is for hand-off; `StateFlow` is for state. Misuse causes mysterious lost-update bugs | `StateFlow` for last-value state; `SharedFlow` for events; `Channel` only when send-suspension semantics are needed |
 | **`runBlocking { }` at the app entry** as the "main" suspend bridge | Blocks the calling thread; loses structured concurrency benefits | `suspend fun main()` (Kotlin 1.4+) — first-class supported |
 
-For full anti-pattern catalog: [`builder/reference/kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md) §4 (Class hierarchy), §13 (Gradle/KSP), §17 (API Design).
-
----
-
-## Where to dig deeper
-
-- Project structure & Gradle: [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md) §5
-- Architecture patterns: [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md) §11
-- Multiplatform best practices: [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md) §4
-- Class hierarchy pitfalls: [`builder/reference/kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md) §4
-- API design pitfalls: [`builder/reference/kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md) §17
-- KMP & K2 specifics: [`builder/reference/kotlin-language-spec.md`](../../builder/reference/kotlin-language-spec.md) §5, §13
+Verify version-sensitive architecture claims through the [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding).

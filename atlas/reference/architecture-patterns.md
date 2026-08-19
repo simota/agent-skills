@@ -11,7 +11,7 @@
 
 ---
 
-> See also: `builder/reference/architecture-patterns.md` for the dependency-rule primer applied to a Go-based Hexagonal implementation, plus SOLID/CUPID, API design, error-handling, and DI guidance aimed at new implementation. This file's Clean/Hexagonal sections focus on TypeScript folder structure and code for analyzing an existing codebase.
+> See also: `builder/reference/implementation-policy.md` for repository-first architecture selection and implementation-boundary guidance. This file's Clean/Hexagonal sections focus on TypeScript folder structure and code for analyzing an existing codebase.
 
 ## Clean Architecture
 

@@ -1,12 +1,10 @@
 # Rust Performance Cheatsheet (Bolt)
 
-Agent-specific slice for **Bolt** (frontend + backend performance optimization). Baseline assumes Rust 1.85+ / Edition 2024 (as of 2026-05).
+Agent-specific slice for **Bolt** (frontend + backend performance optimization). Snapshot context (not authority): Rust 1.85+ / Edition 2024 (as of 2026-05). Detect the repository toolchain before applying version-specific guidance.
 
 This file does **not** duplicate the source of truth. Read it alongside:
 
-- [`builder/reference/rust-best-practices.md §6 Performance practices`](../../builder/reference/rust-best-practices.md) — full toolchain matrix, allocator details, PGO/BOLT recipes, zero-copy primitives, compile-time perf
-- [`builder/reference/rust-anti-patterns.md §6 Performance Pitfalls`](../../builder/reference/rust-anti-patterns.md) — 22 hot-path anti-patterns with clippy IDs
-- [`builder/reference/rust-best-practices.md §8 Async ecosystem`](../../builder/reference/rust-best-practices.md) — Tokio runtime, backpressure, cancellation safety
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 The role of this cheatsheet: **decide what to measure, with which tool, and how to interpret the result before reaching for an optimization**.
 
@@ -17,8 +15,8 @@ The role of this cheatsheet: **decide what to measure, with which tool, and how 
 ```
 What slowed down?
 ├── Wall-clock CPU on a hot path
-│   ├── Linux production       → perf + cargo flamegraph         (best-practices §6.1)
-│   ├── Cross-platform / 2026  → samply  (recommended default)   (best-practices §6.1)
+│   ├── Linux production       → perf + cargo flamegraph
+│   ├── Cross-platform / 2026  → samply  (recommended default)
 │   ├── macOS dev box          → cargo flamegraph (dtrace)
 │   └── Long-running server    → pprof-rs (HTTP endpoint, always-on)
 ├── RSS climbing / OOM
@@ -37,8 +35,6 @@ What slowed down?
 
 **Rule**: profile first, hypothesize second, change code third. Almost every "I'm sure it's X" intuition about hot paths is wrong by ≥30%.
 
-See [best-practices §6.1](../../builder/reference/rust-best-practices.md#61-when-to-profile-and-with-what) for the full tool matrix.
-
 ---
 
 ## 2. Allocator selection table
@@ -54,7 +50,6 @@ The default glibc allocator is famously slow under multi-threaded contention. Be
 
 **Measurement protocol**: switch one allocator, re-run the same `criterion` / `divan` bench, compare. Don't switch based on internet folklore — workloads differ.
 
-Full allocator details: [best-practices §6.2](../../builder/reference/rust-best-practices.md#62-allocator-choice).
 
 ---
 
@@ -74,7 +69,6 @@ Auto-vectorization hints:
 - Bound the iteration count visibly to LLVM (`for i in 0..N` where `N` is a const, or `chunks_exact(4)`).
 - Avoid floating-point reductions unless `-ffast-math` is acceptable (it usually isn't — silent precision loss).
 
-Full SIMD status: [best-practices §6.3](../../builder/reference/rust-best-practices.md#63-simd--stdsimd-status).
 
 ---
 
@@ -90,7 +84,6 @@ Full SIMD status: [best-practices §6.3](../../builder/reference/rust-best-pract
 
 **Interaction with LTO**: with `lto = "fat"`, `#[inline]` matters much less — the linker has the whole program. With `lto = "thin"` or `false`, cross-crate inlining still benefits from explicit hints.
 
-Full policy: [best-practices §6.4](../../builder/reference/rust-best-practices.md#64-inline-policy).
 
 ---
 
@@ -140,7 +133,6 @@ panic     = "abort"
 
 `opt-level = "z"` can be **slower** than `"s"` — measure. Don't blindly pick `"z"`.
 
-Full profile reference: [best-practices §6.6](../../builder/reference/rust-best-practices.md#66-release-profile-tuning).
 
 ---
 
@@ -156,7 +148,6 @@ Full profile reference: [best-practices §6.6](../../builder/reference/rust-best
 
 Automation: `cargo pgo` covers instrument → run → merge → rebuild. BOLT requires `llvm-bolt` (Linux ELF only) — used internally by the Rust project to optimize rustc itself.
 
-Full recipe: [best-practices §6.5](../../builder/reference/rust-best-practices.md#65-pgo-and-bolt).
 
 ---
 
@@ -171,13 +162,12 @@ Full recipe: [best-practices §6.5](../../builder/reference/rust-best-practices.
 | In-memory layout as wire format | `rkyv` | Nano-second reads; loses serde ergonomics + needs schema discipline |
 | Read-only buffer shared across tasks | `Arc<[u8]>` | One alloc, many views |
 
-Full table: [best-practices §6.7](../../builder/reference/rust-best-practices.md#67-zero-copy-patterns).
 
 ---
 
 ## 8. Hot-path anti-pattern table (top signals during review)
 
-Numbered by anti-pattern file. See [`rust-anti-patterns.md §6`](../../builder/reference/rust-anti-patterns.md#6-performance-pitfalls) for full table (22 entries) including the clippy lints.
+Numbered by anti-pattern file.
 
 | Anti-pattern | Fix | Clippy |
 |--------------|-----|--------|
@@ -231,9 +221,9 @@ Numbered by anti-pattern file. See [`rust-anti-patterns.md §6`](../../builder/r
 | Latency spikes correlated with GC pauses | (Rust has no GC) → check allocator | Try mimalloc / jemalloc |
 | Task starvation | `tokio-metrics::TaskMonitor` | Look for `poll_count_histogram` outliers — long polls |
 
-**Cancellation safety** is a perf concern too: a future cancelled mid-state-change may force a retry, doubling the cost of every cancellation. See [anti-patterns §4.B](../../builder/reference/rust-anti-patterns.md#4b-select-cancel-safety-footgun).
+**Cancellation safety** is a perf concern too: a future cancelled mid-state-change may force a retry, doubling the cost of every cancellation.
 
-Tokio runtime depth: [best-practices §8](../../builder/reference/rust-best-practices.md#8-async-ecosystem--structured-concurrency).
+Tokio runtime depth: [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding).
 
 ---
 
@@ -255,7 +245,7 @@ Tokio runtime depth: [best-practices §8](../../builder/reference/rust-best-prac
 
 **Decision rule**: if a micro-bench shows a 20% win, the end-to-end service better show ≥ 5% — otherwise the hot path is elsewhere.
 
-Benchmark crate detail: [best-practices §5.8](../../builder/reference/rust-best-practices.md#58-benchmarks--criterion-vs-divan).
+Benchmark crate detail: [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding).
 
 ---
 
@@ -273,7 +263,6 @@ Benchmark crate detail: [best-practices §5.8](../../builder/reference/rust-best
 
 `cargo bloat --release --crates` to find which dependency is 30% of your binary.
 
-Full compile-time advice: [best-practices §6.8](../../builder/reference/rust-best-practices.md#68-compile-time-performance).
 
 ---
 
@@ -304,4 +293,4 @@ When Bolt is reviewing a Rust performance complaint, in order:
 - mold linker — https://github.com/rui314/mold
 - cargo-bloat — https://github.com/RazrFalcon/cargo-bloat
 - Rust API Guidelines — https://rust-lang.github.io/api-guidelines/checklist.html
-- Source of truth for the underlying knowledge: [`builder/reference/rust-best-practices.md`](../../builder/reference/rust-best-practices.md), [`rust-anti-patterns.md`](../../builder/reference/rust-anti-patterns.md), [`rust-language-spec.md`](../../builder/reference/rust-language-spec.md)
+- General semantics and version-sensitive claims: [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)

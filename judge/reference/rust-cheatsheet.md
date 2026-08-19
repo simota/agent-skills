@@ -1,13 +1,10 @@
 # Rust Code-Review Cheatsheet (Judge)
 
-Agent-specific slice for **Judge** (multi-engine code review — bugs / security / logic / intent). Baseline assumes Rust 1.85+ / Edition 2024 (as of 2026-05).
+Agent-specific slice for **Judge** (multi-engine code review — bugs / security / logic / intent). Snapshot context (not authority): Rust 1.85+ / Edition 2024 (as of 2026-05). Detect the repository toolchain before applying version-specific guidance.
 
 This file does **not** duplicate the source of truth. Read it alongside:
 
-- [`builder/reference/rust-best-practices.md §1 Rust API Guidelines`](../../builder/reference/rust-best-practices.md) — full C-* checklist (the canonical review oracle)
-- [`builder/reference/rust-best-practices.md §2 Error handling`](../../builder/reference/rust-best-practices.md) — thiserror / anyhow / snafu decision tree
-- [`builder/reference/rust-anti-patterns.md`](../../builder/reference/rust-anti-patterns.md) — 120+ anti-patterns with clippy IDs, especially §4 async and §9 unsafe
-- [`builder/reference/rust-language-spec.md`](../../builder/reference/rust-language-spec.md) — Edition 2024 changes, dyn compatibility, unsafe rules
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 The role of this cheatsheet: **a priority-ordered checklist + engine-routing rules + clippy policy + false-positive guide so review effort focuses on findings worth fixing**.
 
@@ -22,7 +19,6 @@ Numbered roughly by signal-to-noise ratio. The top items catch real bugs; the bo
 1. **`unsafe` blocks: SAFETY comment present?**
    - Every `unsafe { ... }` MUST carry a `// SAFETY: <invariants proven here>` comment. Without it the reviewer cannot verify, and "unsafe rot" sets in.
    - Tool: `clippy::undocumented_unsafe_blocks` (deny in CI).
-   - See [anti-patterns §9.13](../../builder/reference/rust-anti-patterns.md#9-unsafe-pitfalls-high-stakes) + [language-spec §6.5](../../builder/reference/rust-language-spec.md#65-safety-comment-template).
 
 2. **`.unwrap()` / `.expect()` in non-test code: justified?**
    - In libraries: replace with `?` or a typed error.
@@ -32,24 +28,20 @@ Numbered roughly by signal-to-noise ratio. The top items catch real bugs; the bo
 3. **`std::sync::MutexGuard` (or `parking_lot::MutexGuard`) held across `.await`**
    - Future becomes `!Send`; either won't compile under `tokio::spawn` *or* causes deadlocks under contention.
    - Tool: `clippy::await_holding_lock` (deny).
-   - See [anti-patterns §4.A](../../builder/reference/rust-anti-patterns.md#4a-mutexguard-across-await--minimal-reproduction).
 
 4. **`tokio::spawn` orphan tasks (handle dropped)**
    - Panics in orphaned tasks are silently swallowed → bugs fester.
    - Fix: `JoinSet` or `TaskTracker` retains handles; on join error check `is_panic()`.
-   - See [anti-patterns §4.C](../../builder/reference/rust-anti-patterns.md#4c-orphan-task--panic-vanishes).
 
 5. **Mutable global state (`static mut` or unprotected `static`)**
    - `static mut` is deprecated in Edition 2024 — multiple mutable references trivially obtainable, instant UB.
    - Fix: `LazyLock<Mutex<T>>` or `OnceLock<T>` (stable since 1.70).
-   - See [anti-patterns §9.17](../../builder/reference/rust-anti-patterns.md#9-unsafe-pitfalls-high-stakes).
 
 ### Tier 2 — Public API correctness (block merge for library crates)
 
 6. **`Box<dyn Error>` in library public API**
    - Public errors should be a concrete `thiserror`-derived enum so callers can match.
    - `anyhow::Error` / `Box<dyn Error>` is for binary code, not crate boundaries.
-   - See [best-practices §2 Error handling](../../builder/reference/rust-best-practices.md#2-error-handling-patterns--deep).
 
 7. **`#[non_exhaustive]` missing on enums/structs likely to grow**
    - Adding a variant to a public enum is a breaking change without `#[non_exhaustive]`.
@@ -61,31 +53,27 @@ Numbered roughly by signal-to-noise ratio. The top items catch real bugs; the bo
 
 9. **Feature flag mutual exclusion**
    - Cargo features must be *additive*. If `--features a,b` doesn't compile, `--all-features` breaks (CI failure waiting to happen).
-   - See [best-practices §3.4](../../builder/reference/rust-best-practices.md#34-feature-flags--additive-only).
 
 10. **Public struct with public fields**
     - Locks in representation; no future invariants. `pub struct User { pub email: String }` can never validate `email` without a breaking change.
-    - C-STRUCT-PRIVATE violation in [best-practices §1.10](../../builder/reference/rust-best-practices.md#110-future-proofing).
+    - This violates the C-STRUCT-PRIVATE API-guideline rule.
 
 ### Tier 3 — Design smells (review comment, not block)
 
 11. **Clone-to-escape-borrow-checker**
     - `let s = self.field.clone();` to call `&mut self.method(...)` — borrows could be redesigned.
-    - Often signals struct should be split (`SplitBorrow` pattern, see [anti-patterns §1.B](../../builder/reference/rust-anti-patterns.md#1b-split-borrows-escape-hatch)).
+    - Often signals that the struct should be split so borrows follow distinct responsibilities.
 
 12. **Manual lifetime annotation the compiler would elide**
     - `fn foo<'a>(x: &'a str) -> &'a str` is just noise; elision rules already produce that.
-    - See [language-spec §2.3](../../builder/reference/rust-language-spec.md#23-lifetime-elision-rules).
 
 13. **`async fn` in public trait without considering RPITIT / async-trait split**
     - Static-dispatch (RPITIT) is allocation-free but not object-safe.
     - `#[async_trait]` allocates per call but allows `dyn Trait`.
     - The choice matters; reviewer flags missing intent.
-    - See [best-practices §8.7](../../builder/reference/rust-best-practices.md#87-async-fn-in-traits--the-static-vs-dynamic-split).
 
 14. **`Drop` impl that may panic or call fallible I/O**
     - Panic in `Drop` during unwinding = process abort. Use `if thread::panicking() { return; }` guard, or expose `close() -> Result<...>`.
-    - See [anti-patterns §7.9 + §7.B](../../builder/reference/rust-anti-patterns.md#7-trait-design-pitfalls).
 
 15. **`Default` / `Clone` impl that does I/O or takes a lock**
     - Both are expected to be cheap and infallible. Use a `Builder` or `try_clone() -> Result<...>` instead.
@@ -105,7 +93,7 @@ Judge's distinctive capability is catching when the code does something *other t
 | `pub` on a fn the docs say is internal | `pub(crate)` was intended; public exposure widens the API surface accidentally |
 | `Vec<T>` returned where docs say "stream of T" | Should be `impl Iterator<Item = T>` or `impl Stream<Item = T>` |
 | Function uses `tokio::spawn` but the doc says "blocking" | Task escapes function scope, lifetime confusion likely |
-| `impl Display` body uses `format!(...)` then writes the string | Should use `write!(f, ...)` directly — avoids the intermediate alloc; see [anti-patterns §7.8](../../builder/reference/rust-anti-patterns.md#7-trait-design-pitfalls) |
+| `impl Display` body uses `format!(...)` then writes the string | Should use `write!(f, ...)` directly — avoids the intermediate allocation |
 
 ---
 
@@ -158,7 +146,7 @@ print_stdout              = "deny"        # in libraries; use tracing
 
 ## 4. API Guidelines audit (C-* checklist highlights)
 
-The full C-* checklist (37 items) lives in [`rust-best-practices.md §1`](../../builder/reference/rust-best-practices.md#1-rust-api-guidelines--full-c--checklist). For a PR review, prioritize these:
+After applying the [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding), prioritize these API-guideline checks:
 
 | ID | Highest-signal violation | Why it matters in review |
 |----|--------------------------|--------------------------|
@@ -185,13 +173,13 @@ If the codebase is on Edition 2024 (default since 1.85), watch for legacy patter
 
 | Smell | Edition 2024 form | Source |
 |-------|------------------|--------|
-| `#[no_mangle]` | `#[unsafe(no_mangle)]` | [language-spec §1.2](../../builder/reference/rust-language-spec.md#12-edition-2024--full-list-of-breaking-ish-changes) |
+| `#[no_mangle]` | `#[unsafe(no_mangle)]` | [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding) |
 | `#[export_name = "..."]` | `#[unsafe(export_name = "...")]` | Same |
 | `#[link_section = "..."]` | `#[unsafe(link_section = "...")]` | Same |
 | `extern "C" { ... }` | `unsafe extern "C" { ... }` with `safe fn` / `unsafe fn` per item | Same |
 | `unsafe fn body { unsafe op }` (whole body) | Each unsafe op in its own `unsafe { ... }` block | `unsafe_op_in_unsafe_fn` lint |
 | `&MY_STATIC` on `static mut` | `&raw const MY_STATIC` or migrate to `Mutex` / `OnceLock` | Hard error in 2024 |
-| "object safe" in docs / comments | "dyn compatibility" — terminology renamed | [language-spec §3.5](../../builder/reference/rust-language-spec.md#35-trait-object-safety--renamed-to-dyn-compatibility-2024) |
+| "object safe" in docs / comments | "dyn compatibility" — terminology renamed | [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding) |
 | `fn returns_impl<'a>(x: &'a Foo) -> impl Trait` | Add `+ use<'a>` to constrain capture explicitly | RFC 3498 |
 | `std::env::set_var` without `unsafe` | Now requires `unsafe { ... }` | Edition 2024 |
 | `if let PAT = expr.lock() { ... } else { ... }` | Temporary scope changed — re-verify locks aren't held in the else | RFC 3535 |
@@ -255,7 +243,4 @@ Judge orchestrates multiple engines. Rust files have specific routing affinity:
 - The Rust Reference — https://doc.rust-lang.org/reference/
 - Rust Edition 2024 guide — https://doc.rust-lang.org/edition-guide/rust-2024/
 - Tokio "Async: What You Need to Know" — https://tokio.rs/tokio/topics/async
-- Source of truth for all underlying knowledge:
-  - [`builder/reference/rust-best-practices.md`](../../builder/reference/rust-best-practices.md) (API guidelines, error handling, async, async-trait split)
-  - [`builder/reference/rust-anti-patterns.md`](../../builder/reference/rust-anti-patterns.md) (120+ anti-patterns with clippy mapping)
-  - [`builder/reference/rust-language-spec.md`](../../builder/reference/rust-language-spec.md) (Edition 2024, dyn compatibility, unsafe rules)
+- Apply the [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding) to version-sensitive findings.

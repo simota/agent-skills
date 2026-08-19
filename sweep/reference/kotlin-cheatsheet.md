@@ -2,12 +2,10 @@
 
 Purpose: Sweep-flavored slice of the Kotlin knowledge base — what dead-code / unused-import / orphan-dep tools each catch, what is safe to remove, and what looks dead but isn't (reflection, Spring DI, Parcelize, KSP-generated code, JVM interop).
 
-Baseline: **Kotlin 2.3+, K2 compiler, KSP2 default, Gradle 8.x**.
+Snapshot context (not authority): **Kotlin 2.3+, K2 compiler, KSP2 default, Gradle 8.x**. Detect the repository toolchain before applying version-specific guidance.
 
 Source of truth (do not duplicate here):
-- Bad-pattern catalog → [`builder/reference/kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md)
-- Gradle / build toolchain → [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md) §5
-- Visibility, K2 specifics → [`builder/reference/kotlin-language-spec.md`](../../builder/reference/kotlin-language-spec.md) §13
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 Companion: [`language-patterns.md`](./language-patterns.md) holds the cross-language tooling matrix. Read this file for Kotlin-specific landmines and Gradle-scale cleanup.
 
@@ -376,7 +374,7 @@ Be careful:
 - Migrate one processor at a time; verify generated code matches.
 - KSP2's incremental cache is in `build/kspCaches/...` — delete on first migration build.
 
-See anti-patterns §13 and §14 for the full kapt/KSP pitfall list.
+Verify processor and compiler-plugin compatibility through the [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding) before removing kapt/KSP artifacts.
 
 ---
 
@@ -398,8 +396,7 @@ Recommended ordering for a Kotlin cleanup pass:
 
 ## Where to dig deeper
 
-- Bad-pattern catalog: [`builder/reference/kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md)
+- Bad-pattern catalog: [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
   - §7 Java Interop, §13 Gradle/KSP, §14 K2 Migration
-- Gradle / build toolchain: [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md) §5
-- K2 specifics & visibility: [`builder/reference/kotlin-language-spec.md`](../../builder/reference/kotlin-language-spec.md) §13, §14
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 - Cross-language tooling matrix: [`language-patterns.md`](./language-patterns.md)

@@ -113,9 +113,7 @@ The table above is the language-patterns quick lookup. For Rust-specific cleanup
 
 Upstream sources of truth (do not duplicate):
 
-- Cargo / dependency pitfalls: [`builder/reference/rust-anti-patterns.md`](../../builder/reference/rust-anti-patterns.md) §10
-- Cargo & toolchain 2026 stack: [`builder/reference/rust-best-practices.md`](../../builder/reference/rust-best-practices.md) §4
-- Edition 2024 cleanup nuances: [`builder/reference/rust-language-spec.md`](../../builder/reference/rust-language-spec.md)
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 ## Swift
 
@@ -149,9 +147,7 @@ The table above is the language-patterns quick lookup. For Swift-specific cleanu
 
 Upstream sources of truth (do not duplicate):
 
-- Bad-pattern catalog: [`builder/reference/swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md)
-- Toolchain & libraries: [`builder/reference/swift-best-practices.md`](../../builder/reference/swift-best-practices.md)
-- Module system & access control: [`builder/reference/swift-language-spec.md`](../../builder/reference/swift-language-spec.md) §11
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 ## Kotlin
 
@@ -191,9 +187,7 @@ The table above is the language-patterns quick lookup. For Kotlin-specific clean
 
 Upstream sources of truth (do not duplicate):
 
-- Bad-pattern catalog: [`builder/reference/kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md)
-- Gradle / build toolchain: [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md) §5
-- K2 specifics: [`builder/reference/kotlin-language-spec.md`](../../builder/reference/kotlin-language-spec.md) §13
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 ## Language-Agnostic Risk Patterns
 

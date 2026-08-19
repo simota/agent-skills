@@ -2,13 +2,10 @@
 
 Purpose: Atlas-flavored slice of the Rust knowledge base — workspace architecture patterns, trait-based DI, visibility hygiene, circular-dep detection, public-API surface management, and ADR triggers specific to Rust.
 
-Baseline: **Rust 1.85+, Edition 2024, resolver = "3"**.
+Snapshot context (not authority): **Rust 1.85+, Edition 2024, resolver = "3"**. Detect the repository toolchain before applying version-specific guidance.
 
 Source of truth (do not duplicate here):
-- Project structure & cargo workspaces → [`builder/reference/rust-best-practices.md`](../../builder/reference/rust-best-practices.md) §3
-- Domain architecture patterns → [`builder/reference/rust-best-practices.md`](../../builder/reference/rust-best-practices.md) §10
-- Trait design pitfalls → [`builder/reference/rust-anti-patterns.md`](../../builder/reference/rust-anti-patterns.md) §7
-- API design pitfalls → [`builder/reference/rust-anti-patterns.md`](../../builder/reference/rust-anti-patterns.md) §13
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 ---
 
@@ -142,7 +139,7 @@ impl CreateOrderUseCase {
 | Trait has `fn foo<T>(&self, x: T)` | `dyn` is impossible — must be generic |
 | Cross-crate, library exposes the trait | Provide both; consumer chooses |
 
-For full guidance, see best-practices §10 (Domain architecture) and anti-patterns §7 (Trait Design).
+Verify edition, feature, and toolchain assumptions through the [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding) before applying this split.
 
 ---
 
@@ -311,7 +308,7 @@ expect_used = "warn"
 
 Edition 2024 default. Improves feature unification — prefers feature-isolation between dev-deps and normal deps. Set explicitly even on Edition 2021 workspaces that have been audited to be compatible.
 
-For full toolchain detail → best-practices §4.
+Verify the repository toolchain through the [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding).
 
 ---
 
@@ -472,15 +469,4 @@ ADR format → use Scribe's `adr` recipe (Nygard or MADR). Atlas owns the archit
 | **Implicit version drift across members** | Each member pins a different version of `serde`/`tokio`; `cargo tree --duplicates` lights up | `[workspace.dependencies]` |
 | **`pub` types in private modules leaking through inference** | Downstream depends on items they can't name; refactors break inscrutably | Audit with `cargo public-api list`; tighten visibility |
 
-For full anti-pattern catalog: [`builder/reference/rust-anti-patterns.md`](../../builder/reference/rust-anti-patterns.md) §7 (Trait Design) and §13 (API Design).
-
----
-
-## Where to dig deeper
-
-- Project structure & workspaces: [`builder/reference/rust-best-practices.md`](../../builder/reference/rust-best-practices.md) §3
-- Cargo & toolchain (2026 stack): [`builder/reference/rust-best-practices.md`](../../builder/reference/rust-best-practices.md) §4
-- Domain architecture patterns: [`builder/reference/rust-best-practices.md`](../../builder/reference/rust-best-practices.md) §10
-- Trait design pitfalls: [`builder/reference/rust-anti-patterns.md`](../../builder/reference/rust-anti-patterns.md) §7
-- API design pitfalls: [`builder/reference/rust-anti-patterns.md`](../../builder/reference/rust-anti-patterns.md) §13
-- Edition 2024 language surface: [`builder/reference/rust-language-spec.md`](../../builder/reference/rust-language-spec.md)
+Verify version-sensitive architecture claims through the [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding).

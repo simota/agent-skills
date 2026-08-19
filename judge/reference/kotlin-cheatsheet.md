@@ -1,12 +1,10 @@
 # Kotlin Code-Review Cheatsheet (Judge)
 
-Agent-specific slice for **Judge** (multi-engine code review — bugs / security / logic / intent). Baseline assumes Kotlin 2.3+ / K2 compiler / JDK 21+ (as of 2026-05).
+Agent-specific slice for **Judge** (multi-engine code review — bugs / security / logic / intent). Snapshot context (not authority): Kotlin 2.3+ / K2 compiler / JDK 21+ (as of 2026-05). Detect the repository toolchain before applying version-specific guidance.
 
 This file does **not** duplicate the source of truth. Read it alongside:
 
-- [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md) — Kotlin Style Guide, coroutines, Flow patterns, JVM interop
-- [`builder/reference/kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md) — `!!`, `runBlocking`, GlobalScope, leaks, dispatcher misuse
-- [`builder/reference/kotlin-language-spec.md`](../../builder/reference/kotlin-language-spec.md) — Kotlin 2.x semantics, K2 compiler, KMP, K/Native
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 The role of this cheatsheet: **a priority-ordered checklist + engine-routing rules + detekt policy + false-positive guide so review effort focuses on findings worth fixing**.
 
@@ -22,19 +20,16 @@ Numbered roughly by signal-to-noise ratio. The top items catch real crashes / le
    - In libraries: replace with `?:` Elvis throw or typed null handling.
    - In app code: acceptable only with an `// INVARIANT: ...` comment proving non-null (e.g., view binding post-`onViewCreated`).
    - Detekt: `UnsafeCallOnNullableType`, `RethrowCaughtException`.
-   - See [anti-patterns §1](../../builder/reference/kotlin-anti-patterns.md).
 
 2. **`runBlocking { }` outside `main` / tests**
    - `runBlocking` in an HTTP handler / Android UI lifecycle = DoS surface. Blocks the calling thread (event loop, UI thread) until the body completes.
    - Fix: propagate `suspend` up the stack, or use a dedicated `CoroutineScope.launch { }`.
    - Detekt: `RunBlockingPlugin` (custom; not default).
-   - See [anti-patterns §3](../../builder/reference/kotlin-anti-patterns.md).
 
 3. **`GlobalScope.launch { }` — leak**
    - `GlobalScope` is parent-less; the coroutine outlives the calling context. No cancellation propagation.
    - Fix: a scoped `CoroutineScope` (lifecycle-bound on Android, `coroutineScope { }` block in pure code).
    - Detekt: `GlobalCoroutineUsage`.
-   - See [anti-patterns §3](../../builder/reference/kotlin-anti-patterns.md).
 
 4. **`StateFlow.value = value.copy()` — race condition**
    - `value =` is atomic; `value.copy()` reads then writes — interleaved updates lose data.
@@ -44,7 +39,6 @@ Numbered roughly by signal-to-noise ratio. The top items catch real crashes / le
 5. **`async { ... }.await()` with exception swallow**
    - `async` without `.await()` retains the failure; if the surrounding scope's `Job` is not awaited, the exception goes nowhere.
    - Patterns to flag: `val d = async { fail() }` with no `.await()` later, or `try { d.await() } catch (e) { /* swallow */ }`.
-   - See [best-practices §5](../../builder/reference/kotlin-best-practices.md).
 
 6. **`lateinit var` in long-lived class without enforced init**
    - Access before init throws `UninitializedPropertyAccessException`. Acceptable when the framework guarantees init order (Android Fragment); suspicious otherwise.
@@ -54,7 +48,6 @@ Numbered roughly by signal-to-noise ratio. The top items catch real crashes / le
 7. **`runCatching { }` over typed Result without rethrow**
    - `runCatching` catches all `Throwable`s including `CancellationException` (cancels coroutine — must rethrow!).
    - Fix: explicit try/catch on the specific exception types you handle; or `runCatching { ... }.onFailure { if (it is CancellationException) throw it }`.
-   - See [anti-patterns §5](../../builder/reference/kotlin-anti-patterns.md).
 
 8. **Public mutable `MutableList`/`MutableMap` where `List`/`Map` would do**
    - Exposing the mutable interface lets callers mutate internal state behind your back.
@@ -230,7 +223,7 @@ coroutines:
 
 ## 4. Kotlin Style Guide audit
 
-The full Kotlin Style Guide reference is in [`kotlin-best-practices.md §1`](../../builder/reference/kotlin-best-practices.md). For PR review, prioritize:
+After applying [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding), prioritize:
 
 | Principle | High-signal violation | Why it matters |
 |-----------|----------------------|----------------|
@@ -342,7 +335,4 @@ For Compose-specific structural review, route to native. For coroutine / data-ra
 - KSP — https://kotlinlang.org/docs/ksp-overview.html
 - Kotlin 2.0 / K2 migration — https://kotlinlang.org/docs/k2-compiler-migration-guide.html
 - Compose compiler stability — https://developer.android.com/jetpack/compose/performance/stability
-- Source of truth for all underlying knowledge:
-  - [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md) (Style Guide, coroutines, Flow, JVM interop)
-  - [`builder/reference/kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md) (`!!`, runBlocking, GlobalScope, leaks)
-  - [`builder/reference/kotlin-language-spec.md`](../../builder/reference/kotlin-language-spec.md) (Kotlin 2.x, K2, KMP, K/Native)
+- Apply the [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding) to version-sensitive findings.

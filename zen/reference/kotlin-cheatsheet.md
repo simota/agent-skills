@@ -2,12 +2,10 @@
 
 Purpose: Zen-flavored slice of the Kotlin knowledge base — code-smell-to-idiom transformations, naming hygiene, scope-function discipline, and refactor anti-patterns. Behavior-preserving only.
 
-Baseline: **Kotlin 2.3+, K2 compiler, KSP2 default**.
+Snapshot context (not authority): **Kotlin 2.3+, K2 compiler, KSP2 default**. Detect the repository toolchain before applying version-specific guidance.
 
 Source of truth (do not duplicate here):
-- Bad-pattern catalog → [`builder/reference/kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md)
-- Target idioms / Style Guide / Effective Kotlin → [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md)
-- Language surface (K2, context parameters preview, sealed/value classes) → [`builder/reference/kotlin-language-spec.md`](../../builder/reference/kotlin-language-spec.md)
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 Companion: [`language-patterns.md`](./language-patterns.md) holds the cross-language Kotlin quick-pattern set. Read this file for refactor-specific transformations.
 
@@ -34,7 +32,7 @@ Companion: [`language-patterns.md`](./language-patterns.md) holds the cross-lang
 | `if/else` ladder dispatching on value | `when` expression | `when` is exhaustive on sealed types; the compiler catches missing branches |
 | Java-style getters/setters | Kotlin property | `fun getName() = name` → `val name: String`; custom getter only when value is computed |
 | `var` reflex when `val` works | `val` + functional transform | Prefer immutability; `var` is allowed but should be local and short-lived |
-| `try { ... } catch (e: Exception) { }` swallowed | Typed catch (`catch (e: IOException)`) or `runCatching { ... }.getOrElse` | Never catch `Exception`/`Throwable` blindly — that includes `CancellationException` (anti-patterns §2) |
+| `try { ... } catch (e: Exception) { }` swallowed | Typed catch (`catch (e: IOException)`) or `runCatching { ... }.getOrElse` | Never catch `Exception`/`Throwable` blindly — that includes `CancellationException` |
 | `Channel<T>` for last-value state | `StateFlow<T>` | `StateFlow` is conflated, has `value`, and is hot |
 | `Channel<T>` for fire-and-forget events | `SharedFlow<T>` (or `Channel` only when you need send-suspension semantics) | `SharedFlow` allows replay buffer; `Channel` is for hand-off |
 | `LiveData<T>` on Android | `StateFlow<T>` + `collectAsStateWithLifecycle` (Compose) | LiveData is legacy; Flow integrates with coroutines |
@@ -45,7 +43,7 @@ Companion: [`language-patterns.md`](./language-patterns.md) holds the cross-lang
 | `companion object { fun util() = ... }` for pure utility | Top-level function | Companion is for static-like access from Java only; pure functions belong at top level |
 | Java `Optional<T>` | Nullable `T?` | Don't import `java.util.Optional` into Kotlin code; nullable is the idiom |
 | `lateinit var` reflex for DI | Constructor injection where possible | `lateinit` is for framework-init (Spring `@Autowired`, Android `Inject`); not a general-purpose nullable workaround |
-| kapt annotation processor | KSP2 | KSP2 is the default since Kotlin 2.0; kapt is legacy. Migration is per-processor (anti-patterns §13, §14) |
+| kapt annotation processor | The processor configured by the repository | Migrate only after verifying plugin and generated-code compatibility |
 | `runBlocking { ... }` in app code | `viewModelScope`/`lifecycleScope`/`coroutineScope { }` | `runBlocking` is for `main()` and tests only; in app code it blocks the calling thread |
 | Context receivers (experimental, deprecated 2.0+) | Context parameters preview (2.3) or extension functions | Context receivers were never stabilized; rewrite to extension fns or context parameters |
 | `if (list.isEmpty()) return; list.forEach { ... }` | `list.takeIf { it.isNotEmpty() }?.forEach { ... }` OR keep the guard — depends on readability | Don't reach for `takeIf` if `if` reads better |
@@ -196,7 +194,7 @@ Counter-signals (do NOT extract):
 
 ## Naming Hygiene (Kotlin Style Guide)
 
-Follow the official Kotlin Coding Conventions [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md) §1.
+Follow the repository's detected Kotlin conventions and apply the [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding) before relying on version-sensitive guidance.
 
 | Item Kind | Convention | Example |
 |-----------|-----------|---------|
@@ -219,7 +217,7 @@ Follow the official Kotlin Coding Conventions [`builder/reference/kotlin-best-pr
 ### Interface naming
 
 - Capability: noun or `-able` — `Closeable`, `Iterable`, `Comparable`.
-- Avoid `IFoo` / `FooInterface` Java-isms — anti-patterns §17.
+- Avoid `IFoo` / `FooInterface` Java-isms when the repository follows Kotlin naming conventions.
 
 ### Property naming
 
@@ -255,7 +253,7 @@ user?.let { it.also { logger.info("got user $it") } }
 user?.also { logger.info("got user $it") }
 ```
 
-See anti-patterns §11 for the full catalog of scope-function pitfalls.
+Prefer the least-surprising scope function and preserve the repository convention.
 
 ---
 
@@ -337,7 +335,7 @@ class Sync(private val scope: CoroutineScope) {
 }
 ```
 
-See anti-patterns §2 (Coroutines) for the full catalog.
+Verify coroutine and cancellation behavior with focused tests before completing the refactor.
 
 ---
 
@@ -376,14 +374,3 @@ Run before declaring a Kotlin refactor done:
 10. **KMP `expect`/`actual` still align** if you touched `commonMain` — `./gradlew kotlinNativeBinaries iosX64Test` (or your KMP target set).
 
 If any of these change unexpectedly, the refactor altered behavior — back out and reframe.
-
----
-
-## Where to dig deeper
-
-- Bad-pattern catalog: [`builder/reference/kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md)
-  - §1 Null safety, §2 Coroutines, §3 Type/Generics, §11 Scope functions, §17 API Design
-- Target idioms: [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md)
-  - §1 Style Guide, §2 Effective Kotlin picks, §3 Coroutines, §8 Performance
-- Language surface: [`builder/reference/kotlin-language-spec.md`](../../builder/reference/kotlin-language-spec.md)
-  - §1 K2 timeline, §2 Type system, §4 Coroutines, §10 Context parameters, §13 K2 specifics

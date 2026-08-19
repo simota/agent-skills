@@ -2,12 +2,10 @@
 
 Purpose: Sweep-flavored slice of the Rust knowledge base — what dead-code / unused-dep / orphan-file tools each catch, what is safe to remove, and what looks dead but isn't (FFI, `cfg`, derive-fed, proc-macro-emitted).
 
-Baseline: **Rust 1.85+, Edition 2024, resolver = "3"**.
+Snapshot context (not authority): **Rust 1.85+, Edition 2024, resolver = "3"**. Detect the repository toolchain before applying version-specific guidance.
 
 Source of truth (do not duplicate here):
-- Cargo / dependency pitfalls → [`builder/reference/rust-anti-patterns.md`](../../builder/reference/rust-anti-patterns.md) §10
-- Cargo toolchain / 2026 stack → [`builder/reference/rust-best-practices.md`](../../builder/reference/rust-best-practices.md) §4
-- Edition 2024 cleanup behavior → [`builder/reference/rust-language-spec.md`](../../builder/reference/rust-language-spec.md)
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 Companion: [`language-patterns.md`](./language-patterns.md) holds the cross-language tooling matrix (knip / vulture / staticcheck / cargo-udeps). Read this file for Rust-specific landmines and workspace-scale cleanup.
 
@@ -313,7 +311,5 @@ Recommended ordering for a Rust cleanup pass:
 
 ## Where to dig deeper
 
-- Cargo / dependency pitfalls: [`builder/reference/rust-anti-patterns.md`](../../builder/reference/rust-anti-patterns.md) §10
-- Cargo & toolchain 2026 stack: [`builder/reference/rust-best-practices.md`](../../builder/reference/rust-best-practices.md) §4
-- Edition 2024 cleanup nuances (prelude growth, `unsafe extern`, `gen` keyword): [`builder/reference/rust-language-spec.md`](../../builder/reference/rust-language-spec.md)
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 - Cross-language tooling matrix: [`language-patterns.md`](./language-patterns.md)

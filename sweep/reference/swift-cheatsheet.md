@@ -2,12 +2,10 @@
 
 Purpose: Sweep-flavored slice of the Swift knowledge base — what dead-code / unused-import / orphan-symbol tools each catch, what is safe to remove, and what looks dead but isn't (Objective-C runtime, KVO, Interface Builder, Codable synthesis, macros).
 
-Baseline: **Swift 6.2+, Xcode 26, SwiftPM with traits**.
+Snapshot context (not authority): **Swift 6.2+, Xcode 26, SwiftPM with traits**. Detect the repository toolchain before applying version-specific guidance.
 
 Source of truth (do not duplicate here):
-- Bad-pattern catalog → [`builder/reference/swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md)
-- Toolchain / library matrix → [`builder/reference/swift-best-practices.md`](../../builder/reference/swift-best-practices.md)
-- Module system, access control, ABI → [`builder/reference/swift-language-spec.md`](../../builder/reference/swift-language-spec.md) §11
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 Companion: [`language-patterns.md`](./language-patterns.md) holds the cross-language tooling matrix. Read this file for Swift-specific landmines and project-scale cleanup.
 
@@ -377,7 +375,5 @@ Recommended ordering for a Swift cleanup pass:
 
 ## Where to dig deeper
 
-- Bad-pattern catalog: [`builder/reference/swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md)
-- Toolchain & libraries (2026 stack): [`builder/reference/swift-best-practices.md`](../../builder/reference/swift-best-practices.md)
-- Module system & access control: [`builder/reference/swift-language-spec.md`](../../builder/reference/swift-language-spec.md) §11
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 - Cross-language tooling matrix: [`language-patterns.md`](./language-patterns.md)

@@ -2,7 +2,7 @@
 
 Agent-specific slice for **Native** — measurement and optimization for Android Kotlin + Jetpack Compose apps. Baseline assumes Kotlin 2.4+ (K2 compiler) / Compose 1.11 / Material 3 Expressive (BOM 2026.05), as of 2026-07.
 
-This file does **not** duplicate `bolt/reference/kotlin-cheatsheet.md` §13 (JVM/Kotlin-language-level Compose bytecode notes, Flow perf, build performance) or `builder/reference/kotlin-best-practices.md` (general Kotlin idioms). Read it alongside:
+This file does **not** duplicate `bolt/reference/kotlin-cheatsheet.md` §13 (JVM/Kotlin-language-level Compose bytecode notes, Flow perf, build performance). Apply `builder/reference/implementation-policy.md` when Kotlin or Compose behavior depends on the detected toolchain. Read it alongside:
 
 - [`bolt/reference/kotlin-cheatsheet.md`](../../bolt/reference/kotlin-cheatsheet.md) §13 — Bolt's high-level watch list; this file is where Bolt defers to for actual Compose runtime mechanics
 - [`reference/modern-stack.md`](modern-stack.md) § Stable Types & Strong Skipping Mode — the 2026 stability/Strong-Skipping policy this file assumes as baseline

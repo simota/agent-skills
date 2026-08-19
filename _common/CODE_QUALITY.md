@@ -41,7 +41,7 @@ export const toUserDto = (u: User): UserDto => ({ /* ... */ })
 interface UserRepository { findById(id: UserId): Promise<User | null> }  // real IO boundary
 ```
 
-Sources: [Dan North — CUPID: for joyful coding](https://dannorth.net/cupid-for-joyful-coding/) · [Google eng-practices — What to look for in a code review § Complexity / over-engineering](https://google.github.io/eng-practices/review/reviewer/looking-for.html) · `builder/reference/architecture-patterns.md` § 2 (SOLID 2025 interpretation + CUPID table).
+Sources: [Dan North — CUPID: for joyful coding](https://dannorth.net/cupid-for-joyful-coding/) · [Google eng-practices — What to look for in a code review § Complexity / over-engineering](https://google.github.io/eng-practices/review/reviewer/looking-for.html).
 
 ---
 
@@ -190,7 +190,7 @@ Sources: [AWS Well-Architected — Reliability pillar design principles (scale h
 | Smell taxonomy, IDs, severity hints | `_common/CODE_SMELL_CATALOG.md` |
 | Consistency axes + severity rubric | `_common/CONSISTENCY_FRAMEWORK.md` |
 | Skill/plugin supply-chain trust | `_common/SECURITY.md` (**not** application security) |
-| SOLID 2025 interpretation + CUPID table | `builder/reference/architecture-patterns.md` § 2 |
+| Architecture and domain-pattern selection | `builder/reference/implementation-policy.md` |
 | Application-security review depth | `sentinel` · runtime validation `probe` |
 | Test depth, flake repair, coverage | `radar` · resilience/load `siege` |
 | Query plans / indexes | `tuner` · runtime profiling `bolt` |

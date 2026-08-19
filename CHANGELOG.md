@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed — Builder reference grounding (2026-08-19)
+
+- Replaced 15 general language, architecture, domain, frontend, implementation, and AI-coding primers with `builder/reference/implementation-policy.md`, a repository-first decision and toolchain-grounding policy.
+- Rewired Builder recipes and Kotlin/Rust/Swift specialist references to preserve role-specific checklists while requiring local toolchain evidence for version-sensitive claims.
+- Removed frozen chapter links and dependency defaults that could override repository conventions or drift from current primary documentation.
+
 ### Changed — skill consolidation and profile repair (2026-08-19)
 
 - Absorbed `accord` into `scribe` as the cross-team `unified` L0-L4 recipe while preserving BDD, traceability, stakeholder, RACI, and staged-elaboration references.

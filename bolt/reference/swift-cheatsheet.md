@@ -1,12 +1,10 @@
 # Swift Performance Cheatsheet (Bolt)
 
-Agent-specific slice for **Bolt** (frontend + backend performance optimization). Baseline assumes Swift 6.2+ / Xcode 26 (as of 2026-05).
+Agent-specific slice for **Bolt** (frontend + backend performance optimization). Snapshot context (not authority): Swift 6.2+ / Xcode 26 (as of 2026-05). Detect the repository toolchain before applying version-specific guidance.
 
 This file does **not** duplicate the source of truth. Read it alongside:
 
-- [`builder/reference/swift-best-practices.md`](../../builder/reference/swift-best-practices.md) — full API guidelines, concurrency, value-type discipline, frameworks
-- [`builder/reference/swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md) — full anti-pattern catalogue (force unwrap, retain cycles, ARC mistakes, perf footguns)
-- [`builder/reference/swift-language-spec.md`](../../builder/reference/swift-language-spec.md) — Swift 6.2 strict concurrency, isolation regions, Embedded Swift constraints
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 The role of this cheatsheet: **decide what to measure with Instruments, when an optimization is worth the trade, and how to interpret Swift-specific signals (ARC, COW, generic specialization, autoreleasepool) before reaching for code changes**.
 
@@ -99,8 +97,6 @@ internal func helper(_ x: Int) -> Int { x + 7 }
 - Adds compile time for callers.
 
 **When to use**: small (< 10 LOC) cross-module hot functions, mostly in standard-library-style internal frameworks. Not for app code (which is one module).
-
-See [best-practices §5 — Generics + protocol-oriented design](../../builder/reference/swift-best-practices.md) for the generic specialization pipeline.
 
 ---
 
@@ -350,8 +346,6 @@ Embedded Swift (Swift 6+ feature for microcontrollers / kernel / no_stdlib targe
 
 **Bolt's role for embedded**: confirm the stdlib subset cost is understood. A `print(...)` call drags in `String` machinery; replace with `swift_log_println_static` or platform-specific output.
 
-See [language-spec §10 — Embedded Swift](../../builder/reference/swift-language-spec.md) for the constraint list.
-
 ---
 
 ## 13. Linker size: strip, dead-code stripping, framework cost
@@ -382,13 +376,9 @@ For server-side workloads, defer to:
 
 PGO: server-side Swift on Linux can experiment with `-profile-generate` / `-profile-use` since the Xcode toolchain isn't involved. Still rougher than Rust.
 
-See [best-practices §8](../../builder/reference/swift-best-practices.md) for the server-side crate matrix.
-
 ---
 
 ## 15. Anti-pattern table (top signals during review)
-
-See [`swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md) for the full catalogue.
 
 | Anti-pattern | Fix |
 |--------------|-----|
@@ -403,7 +393,7 @@ See [`swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md) f
 | `DateFormatter` constructed per format | Static `ISO8601DateFormatter` |
 | `NSRegularExpression` constructed per match | Static `let pattern = try! NSRegularExpression(...)` |
 | `@Published` for large structs | `@Observable` macro (Swift 5.9+) |
-| Excessive `@MainActor` annotations | Confines work to main; opposite of perf intent — see [anti-patterns §3](../../builder/reference/swift-anti-patterns.md) |
+| Excessive `@MainActor` annotations | Confines work to main; opposite of perf intent — see [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding) |
 
 ---
 
@@ -416,7 +406,7 @@ When Bolt is reviewing a Swift performance complaint, in order:
 3. **ARC traffic before unsafe.** A `final class` + `unowned` + autoreleasepool placement covers 70% of Swift perf complaints.
 4. **JSON / Date / Regex / Formatter reuse is free perf.** Cheapest possible 5-minute win.
 5. **SwiftUI perf** = defer to native skill.
-6. **Embedded Swift** = different rule set; defer to language-spec §10.
+6. **Embedded Swift** = different rule set; verify its configured constraints through the [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding).
 7. **No fix without a measurement.** Every recommendation Bolt sends to Builder should include the expected delta and the Instruments template that will confirm it.
 
 ---
@@ -430,4 +420,4 @@ When Bolt is reviewing a Swift performance complaint, in order:
 - `ContinuousClock` — https://developer.apple.com/documentation/swift/continuousclock
 - Embedded Swift roadmap — https://github.com/apple/swift/blob/main/docs/EmbeddedSwift/EmbeddedSwiftStatus.md
 - SE-0388 — Convenience Async[Throwing]Stream.makeStream
-- Source of truth: [`builder/reference/swift-best-practices.md`](../../builder/reference/swift-best-practices.md), [`swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md), [`swift-language-spec.md`](../../builder/reference/swift-language-spec.md)
+- General semantics and version-sensitive claims: [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)

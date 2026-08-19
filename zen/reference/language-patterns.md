@@ -342,9 +342,7 @@ The patterns above are the cross-language quick reference. For refactor-specific
 
 Upstream sources of truth (do not duplicate):
 
-- Bad-pattern catalog: [`builder/reference/rust-anti-patterns.md`](../../builder/reference/rust-anti-patterns.md)
-- Target idioms / API Guidelines: [`builder/reference/rust-best-practices.md`](../../builder/reference/rust-best-practices.md)
-- Edition 2024 language surface: [`builder/reference/rust-language-spec.md`](../../builder/reference/rust-language-spec.md)
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 ---
 
@@ -428,9 +426,7 @@ Cross-language Swift refactors (`Optional` chain → `?`, `class` → `struct`, 
 
 Upstream sources of truth (do not duplicate):
 
-- Bad-pattern catalog: [`builder/reference/swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md)
-- Target idioms / API Design Guidelines: [`builder/reference/swift-best-practices.md`](../../builder/reference/swift-best-practices.md)
-- Swift 6.2 language surface: [`builder/reference/swift-language-spec.md`](../../builder/reference/swift-language-spec.md)
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 ---
 
@@ -455,9 +451,7 @@ Cross-language Kotlin refactors (null-check chains → `?.let`, `if/else` ladder
 
 Upstream sources of truth (do not duplicate):
 
-- Bad-pattern catalog: [`builder/reference/kotlin-anti-patterns.md`](../../builder/reference/kotlin-anti-patterns.md)
-- Target idioms / Style Guide / Effective Kotlin: [`builder/reference/kotlin-best-practices.md`](../../builder/reference/kotlin-best-practices.md)
-- K2 language surface: [`builder/reference/kotlin-language-spec.md`](../../builder/reference/kotlin-language-spec.md)
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 ---
 

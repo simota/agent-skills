@@ -2,12 +2,10 @@
 
 Purpose: Zen-flavored slice of the Rust knowledge base — code-smell-to-idiom transformations, renaming hygiene, magic-number cleanup, macro hygiene, and refactor anti-patterns. Behavior-preserving only.
 
-Baseline: **Rust 1.85+, Edition 2024, resolver = "3"**.
+Snapshot context (not authority): **Rust 1.85+, Edition 2024, resolver = "3"**. Detect the repository toolchain before applying version-specific guidance.
 
 Source of truth (do not duplicate here):
-- Bad-pattern catalog → [`builder/reference/rust-anti-patterns.md`](../../builder/reference/rust-anti-patterns.md)
-- Target idioms / API Guidelines → [`builder/reference/rust-best-practices.md`](../../builder/reference/rust-best-practices.md)
-- Language surface (Edition 2024, AFIT, GATs, let-else, LazyLock, `use<…>`) → [`builder/reference/rust-language-spec.md`](../../builder/reference/rust-language-spec.md)
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 Companion: [`language-patterns.md`](./language-patterns.md) holds the cross-language Rust quick-pattern set. Read this file for refactor-specific transformations.
 
@@ -33,18 +31,18 @@ Companion: [`language-patterns.md`](./language-patterns.md) holds the cross-lang
 | `match` with one arm of interest, `_` fallthrough | `if let` / `let-else` | `let-else` (1.65+) avoids rightward drift on early-return paths |
 | `match x { Some(v) => v, None => return default }` | `x.unwrap_or(default)` / `x.unwrap_or_else(\|\| ...)` | `unwrap_or_default()` when `T: Default` |
 | Manual `Result` propagation via `match` | `?` operator + `anyhow::Context::context()` / `eyre` | Reserve `match` for branching on the error variant |
-| `String` concat with `+` in a loop | `String::with_capacity(n)` + `push_str` / `write!` | See best-practices §6 (Performance) |
+| `String` concat with `+` in a loop | `String::with_capacity(n)` + `push_str` / `write!` | Verify with a benchmark when the path is performance-sensitive |
 | Repeated `.clone()` to silence borrowck | Borrow refactor / `Cow<'_, T>` / move semantics | Anti-pattern §1; `clone()` hides a design problem |
 | `&Vec<T>` / `&String` / `&PathBuf` in function signatures | `&[T]` / `&str` / `&Path` | API Guidelines C-COMMON-CONVERSIONS; accept the broader view type |
 | Boolean parameter on a public API | Enum or typestate (`enum Mode { Strict, Lenient }`) | Boolean-blindness anti-pattern §13 |
 | Primitive obsession on IDs (`String` user_id) | Newtype: `struct UserId(Uuid);` with `Display` / `From` | API Guidelines C-NEWTYPE |
 | `Vec<bool>` / repeated tagged tuples | Enum + struct refactor (one tag, struct fields) | Tighten invariants — "make illegal states unrepresentable" |
-| Hand-rolled builder with 6+ optional fields | `#[bon::builder]` (or `derive_builder`) | Best-practices §9 |
+| Hand-rolled builder with 6+ optional fields | Reuse the repository's builder pattern; add a crate only when the dependency is justified | Preserve the existing dependency policy |
 | `lazy_static!` / `once_cell::sync::Lazy` | `std::sync::LazyLock` (1.80+) | Std-native, no extra dep |
 | Long `impl Trait` chain whose hidden captures bite users | Add `use<...>` bound for explicit capture (1.82+) | `fn foo<'a>() -> impl Trait + use<'a>` |
 | `#[async_trait]` shim everywhere | Native AFIT (`async fn` in trait, 1.75+) | Keep `async-trait` only when `dyn Trait` is required |
 | Excess `'a` lifetime annotations | Rely on lifetime elision | Compiler infers in 95% of cases; explicit only at ambiguity |
-| `Box<dyn Error>` in library code | `thiserror`-derived typed enum | Best-practices §2 |
+| `Box<dyn Error>` in library code | Preserve the repository's typed public-error model | Do not add an error crate solely for this refactor |
 | Deep `if/else` ladders dispatching on enum | `match` exhaustively + extract per-variant helper | Compiler enforces exhaustiveness on enum changes |
 | `.unwrap()` / `.expect()` in non-test paths | `?` + typed error | Anti-pattern §5 |
 | `for i in 0..xs.len() { xs[i] ... }` | `for x in &xs` / `xs.iter().enumerate()` | Removes bounds checks; clearer intent |
@@ -172,7 +170,7 @@ Extract a helper when you see:
 2. **Repeated `?`-chains all wrapping the same `.context("loading X")`** — extract a typed helper that returns a domain-specific error; the call site loses the noise.
 3. **`match` arms with shared post-processing** — extract the post-processing as a free function or closure; arms reduce to value computation.
 4. **Long iterator chain with named intermediates** — break at the named binding; each becomes a self-documenting helper (`fn active_orders(&self) -> impl Iterator<Item = &Order>`).
-5. **`unsafe` block doing 3+ unrelated things** — extract each into its own `unsafe fn` (or safe wrapper around a single `unsafe`) with a documented `# Safety` contract. See anti-patterns §9.
+5. **`unsafe` block doing 3+ unrelated things** — extract each into its own `unsafe fn` (or safe wrapper around a single `unsafe`) with a documented `# Safety` contract.
 6. **Closures capturing 4+ variables** — promote to a named struct + `impl Fn` or a free function with explicit parameters.
 
 Counter-signals (do NOT extract):
@@ -285,7 +283,7 @@ Always allow `$(,)?` at the end of repetition groups. Users will expect it.
 
 When a macro must use the caller's identifier, take it as a parameter (`$name:ident`) rather than naming it literally inside the macro.
 
-For broader macro pitfalls (token-tree fragility, ambiguous fragment specifiers, recursion-limit failures), see anti-patterns §8.
+Treat token-tree fragility, ambiguous fragment specifiers, and recursion-limit failures as separate behavior risks during macro refactors.
 
 ---
 
@@ -320,18 +318,7 @@ Run before declaring a Rust refactor done:
 6. **Public API surface unchanged** (or intentionally changed): `cargo public-api diff` against the previous tag.
 7. **Bench did not regress** for hot paths: `cargo bench --bench <name>` if benchmarks exist.
 8. **Edition / MSRV** unchanged unless this PR explicitly bumps them. Confirm `rust-version` in `Cargo.toml`.
-9. **No new `unsafe` block without a `// SAFETY:` comment** (anti-patterns §9).
-10. **No new `.unwrap()` / `.expect()` outside tests and `main`** (anti-patterns §5).
+9. **No new `unsafe` block without a `// SAFETY:` comment**.
+10. **No new `.unwrap()` / `.expect()` outside tests and `main`**.
 
 If any of these change unexpectedly, the refactor altered behavior — back out and reframe.
-
----
-
-## Where to dig deeper
-
-- Bad-pattern catalog: [`builder/reference/rust-anti-patterns.md`](../../builder/reference/rust-anti-patterns.md)
-  - §1 Ownership & Borrowing, §3 Type System, §5 Error Handling, §7 Trait Design, §8 Macros, §13 API Design
-- Target idioms: [`builder/reference/rust-best-practices.md`](../../builder/reference/rust-best-practices.md)
-  - §1 API Guidelines C-* checklist, §2 Error handling, §6 Performance, §11 Documentation
-- Language surface: [`builder/reference/rust-language-spec.md`](../../builder/reference/rust-language-spec.md)
-  - Edition 2024 rules, AFIT, GATs, let-else, LazyLock, `use<…>` precise capture

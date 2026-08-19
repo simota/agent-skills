@@ -1,12 +1,10 @@
 # Swift Code-Review Cheatsheet (Judge)
 
-Agent-specific slice for **Judge** (multi-engine code review — bugs / security / logic / intent). Baseline assumes Swift 6.2+ / Xcode 26 (as of 2026-05).
+Agent-specific slice for **Judge** (multi-engine code review — bugs / security / logic / intent). Snapshot context (not authority): Swift 6.2+ / Xcode 26 (as of 2026-05). Detect the repository toolchain before applying version-specific guidance.
 
 This file does **not** duplicate the source of truth. Read it alongside:
 
-- [`builder/reference/swift-best-practices.md`](../../builder/reference/swift-best-practices.md) — Swift API Design Guidelines, error handling, concurrency, value-type discipline
-- [`builder/reference/swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md) — force-unwrap, retain cycle, ARC, concurrency pitfalls
-- [`builder/reference/swift-language-spec.md`](../../builder/reference/swift-language-spec.md) — Swift 6 strict concurrency, isolation regions, `Sendable`, ownership
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 The role of this cheatsheet: **a priority-ordered checklist + engine-routing rules + SwiftLint policy + false-positive guide so review effort focuses on findings worth fixing**.
 
@@ -22,12 +20,10 @@ Numbered roughly by signal-to-noise ratio. The top items catch real crashes / da
    - In libraries: replace with `guard let` / `try?` / typed throw.
    - In app code: only acceptable with an `// INVARIANT: ...` comment proving infallibility (e.g., `Bundle.main.url(forResource:)` for a known static asset shipped in the bundle).
    - SwiftLint rules: `force_try`, `force_cast`, `force_unwrap`, `implicitly_unwrapped_optional`.
-   - See [anti-patterns §1](../../builder/reference/swift-anti-patterns.md).
 
 2. **`@unchecked Sendable`: lock held? immutable witness?**
    - `@unchecked Sendable` opts out of the Sendable checker. Every use MUST carry a comment explaining the synchronization (lock, actor, immutable storage).
    - Without justification, the type can be raced from multiple isolation domains → undefined behavior under Swift 6 strict concurrency.
-   - See [best-practices §7](../../builder/reference/swift-best-practices.md) and [language-spec §4 — Sendable](../../builder/reference/swift-language-spec.md).
 
 3. **`nonisolated(unsafe)`: justified or escape hatch?**
    - `nonisolated(unsafe) let / var` opts a property out of actor isolation. Acceptable for immutable letters; suspicious on `var`.
@@ -38,7 +34,6 @@ Numbered roughly by signal-to-noise ratio. The top items catch real crashes / da
    - `withCheckedContinuation` / `withUnsafeContinuation` MUST resume exactly once. Resuming zero times = leak; resuming twice = trap.
    - `withCheckedContinuation` traps in debug; `withUnsafeContinuation` is silent UB. Audit for every code path → exactly one resume.
    - Common bug: callback API that calls back on multiple events; wrap with `CheckedContinuation` + guard via `Atomic<Bool>`.
-   - See [anti-patterns §4](../../builder/reference/swift-anti-patterns.md).
 
 5. **`Task { }` without `[weak self]` retain**
    - `Task { await self.work() }` strong-captures `self` for the task's lifetime. If the task is long-running and stored on `self`, retain cycle.
@@ -48,7 +43,6 @@ Numbered roughly by signal-to-noise ratio. The top items catch real crashes / da
 6. **Actor reentrancy: state read-after-`await` assumes no change**
    - Inside an actor, after `await`, the actor's state may have changed (reentrancy). Code that reads `self.x`, awaits something, then uses the *original* `self.x` is buggy.
    - Audit pattern: any `await` followed by a read of a previously-cached property.
-   - See [language-spec §4.3 — actor reentrancy](../../builder/reference/swift-language-spec.md).
 
 7. **`@MainActor` everywhere as escape hatch**
    - Marking everything `@MainActor` silences the concurrency checker without fixing the underlying isolation problem. Cost: every call from background → main-thread hop.
@@ -63,7 +57,6 @@ Numbered roughly by signal-to-noise ratio. The top items catch real crashes / da
    - Closures stored as properties (delegates, completion handlers held in dictionaries) need explicit capture lists.
    - Heuristic: any closure that escapes the function (`@escaping`) accessing `self` needs a capture list.
    - SwiftLint: `escaping_self`, `unowned_variable_capture`.
-   - See [anti-patterns §2](../../builder/reference/swift-anti-patterns.md).
 
 10. **`URLSession` certificate validation customization**
     - Custom `URLSessionDelegate.urlSession(_:didReceive:completionHandler:)` overriding `URLAuthenticationChallenge` is a security-critical surface. Hardcoded pinning may be intentional; turning off validation entirely (`URLCredential(trust: protectionSpace.serverTrust!)` blindly) is a finding.
@@ -186,7 +179,7 @@ error_thresholds:
 
 ## 4. Swift API Guidelines audit
 
-The full Swift API Design Guidelines reference is in [`swift-best-practices.md §1`](../../builder/reference/swift-best-practices.md). For a PR review, prioritize:
+After applying [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding), prioritize:
 
 | Principle | High-signal violation | Why it matters |
 |-----------|----------------------|----------------|
@@ -295,7 +288,4 @@ Liquid Glass specifically (Apple's 2026 material): adoption correctness (proper 
 - Swift Concurrency Migration Guide — https://www.swift.org/migration/documentation/swift-6-concurrency-migration-guide/
 - Swift Testing — https://developer.apple.com/xcode/swift-testing/
 - WWDC — "Migrate your app to Swift 6", "Discover concurrency in SwiftUI"
-- Source of truth for all underlying knowledge:
-  - [`builder/reference/swift-best-practices.md`](../../builder/reference/swift-best-practices.md) (API guidelines, error handling, concurrency, frameworks)
-  - [`builder/reference/swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md) (force-unwrap, retain cycles, ARC, concurrency pitfalls)
-  - [`builder/reference/swift-language-spec.md`](../../builder/reference/swift-language-spec.md) (Swift 6 strict concurrency, Sendable, isolation, ownership)
+- Apply the [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding) to version-sensitive findings.

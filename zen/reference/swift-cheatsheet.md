@@ -2,12 +2,10 @@
 
 Purpose: Zen-flavored slice of the Swift knowledge base — code-smell-to-idiom transformations, naming hygiene, magic-number cleanup, and refactor anti-patterns. Behavior-preserving only.
 
-Baseline: **Swift 6.2+, Xcode 26, Approachable Concurrency**.
+Snapshot context (not authority): **Swift 6.2+, Xcode 26, Approachable Concurrency**. Detect the repository toolchain before applying version-specific guidance.
 
 Source of truth (do not duplicate here):
-- Bad-pattern catalog → [`builder/reference/swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md)
-- Target idioms / API Design Guidelines → [`builder/reference/swift-best-practices.md`](../../builder/reference/swift-best-practices.md)
-- Language surface (typed throws, `@Observable`, region isolation, `~Copyable`, macros) → [`builder/reference/swift-language-spec.md`](../../builder/reference/swift-language-spec.md)
+- General semantics and version-sensitive claims → [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding)
 
 Companion: [`language-patterns.md`](./language-patterns.md) holds the cross-language Swift quick-pattern set. Read this file for refactor-specific transformations.
 
@@ -222,7 +220,7 @@ Counter-signals (do NOT extract):
 
 ## Naming Hygiene (Swift API Design Guidelines)
 
-Follow Apple's Swift API Design Guidelines [`builder/reference/swift-best-practices.md`](../../builder/reference/swift-best-practices.md) §1 exactly. Rename targets that violate any of these:
+Follow the repository's detected Swift conventions and apply the [grounding gate](../../builder/reference/implementation-policy.md#language-and-toolchain-grounding) before relying on version-sensitive guidance:
 
 | Item Kind | Convention | Example |
 |-----------|-----------|---------|
@@ -243,7 +241,7 @@ Follow Apple's Swift API Design Guidelines [`builder/reference/swift-best-practi
 
 - **Capability**: `-able` / `-ible` / `-ing` suffix — `Equatable`, `Hashable`, `Codable`, `AsyncSequence`.
 - **What-it-is**: noun — `Collection`, `Sequence`, `Numeric`.
-- **Avoid `IFoo`/`FooProtocol`** Java-isms — anti-patterns §4.
+- **Avoid `IFoo`/`FooProtocol`** Java-isms when the repository follows Swift API naming conventions.
 
 ### Boolean property names
 
@@ -364,13 +362,3 @@ Run before declaring a Swift refactor done:
 10. **No `@unchecked Sendable` introduced** without an accompanying SAFETY comment.
 
 If any of these change unexpectedly, the refactor altered behavior — back out and reframe.
-
----
-
-## Where to dig deeper
-
-- Bad-pattern catalog: [`builder/reference/swift-anti-patterns.md`](../../builder/reference/swift-anti-patterns.md)
-- Target idioms: [`builder/reference/swift-best-practices.md`](../../builder/reference/swift-best-practices.md)
-  - §1 API Design Guidelines, §2 Concurrency, §7 Testing, §8 Performance
-- Language surface: [`builder/reference/swift-language-spec.md`](../../builder/reference/swift-language-spec.md)
-  - Typed throws (§6.2), `@Observable` (§8.2), Approachable Concurrency (§3.11), `~Copyable` (§2.2), macros (§5)

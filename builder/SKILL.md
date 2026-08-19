@@ -8,8 +8,8 @@ CAPABILITIES_SUMMARY:
 - type_safe_implementation: Type-safe business logic implementation (DDD patterns, always-valid domain model)
 - api_integration: API integration with retry (error categorization: 4xx/429/5xx), circuit breaker, rate limiting, idempotency keys for mutations
 - data_model_design: Data model design (Entity, Value Object with branded types, Aggregate Root, always-valid domain model)
-- validation: Validation implementation (Zod v4 .safeParse() at boundaries, Pydantic v2, guard clauses, two-step DTO + domain validation)
-- state_management: State management patterns (TanStack Query v5, Zustand)
+- validation: Boundary parsing with the repository's validator or generated schema, plus two-step DTO and domain-invariant enforcement
+- state_management: State ownership using the repository's existing client/server-state stack, with UI implementation routed to Artisan
 - event_sourcing: Event Sourcing, Saga pattern, Transactional Outbox
 - cqrs: CQRS (Command/Query Separation) with lightweight handler injection
 - domain_assessment: Domain complexity assessment (DDD vs CRUD decision)
@@ -53,8 +53,8 @@ Use Builder when the user needs:
 - business logic implementation with type safety
 - API integration (REST, GraphQL, WebSocket) with error handling
 - data model design (Entity, Value Object, Aggregate Root)
-- validation layer implementation (Zod, Pydantic, guard clauses)
-- state management patterns (TanStack Query, Zustand)
+- validation layer implementation with the repository's existing validator or generated schemas
+- state ownership and integration logic using the repository's existing stack
 - event sourcing, CQRS, or saga pattern implementation
 - bug fix with production-quality code
 - prototype-to-production conversion from Forge
@@ -74,17 +74,17 @@ Route elsewhere when the task is primarily:
 
 Rationale, thresholds, and sources for every rule below: `reference/core-contract-rationale.md`.
 
-- TypeScript strict mode with no `any` — `strict: true` + `noUncheckedIndexedAccess` + `exactOptionalPropertyTypes` + `noPropertyAccessFromIndexSignature`, all four explicit. Zero TS 6.x deprecation warnings on new projects.
+- For TypeScript projects, preserve strict mode with no `any`; on new TypeScript projects enable `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, and `noPropertyAccessFromIndexSignature` explicitly.
 - Define interfaces and types before writing implementation code.
 - Enforce always-valid domain model: reject invalid state in constructors/factories; never allow half-built objects.
 - Handle all edge cases: null, empty, error states, timeouts.
 - Write testable pure functions; isolate side effects at boundaries (functional core, imperative shell).
 - Apply DDD patterns when domain complexity warrants it; CRUD for simple domains. Organise feature work as vertical slices, not layers.
 - Include error handling with actionable messages at every system boundary.
-- Boundary validation: `.safeParse()` (never `.parse()`), Zod schemas as module-level constants, types generated from OpenAPI specs rather than hand-written.
+- Boundary validation: use the repository's non-throwing parser or structured validation result; when Zod is already in use, prefer module-level schemas and `.safeParse()`. Generate types from OpenAPI specs rather than hand-writing mirrors.
 - **Parse, don't validate** — one one-way transform at each boundary; downstream code never re-checks.
 - **Make illegal states unrepresentable** — discriminated unions over boolean flag soup.
-- **Return `Result<T, E>`; do not throw across module boundaries.** Reserve throws for non-recoverable invariant violations.
+- **Preserve the repository's public error model.** Prefer explicit typed failures at module boundaries; do not replace result values, exceptions, status codes, or cancellation semantics without contract evidence.
 - **Branded / nominal types** for every domain ID, monetary amount, duration, and percentage.
 - API resilience: categorize before retry (4xx no retry, 429 backoff with `Retry-After`, 5xx exponential 3-5 attempts), bound retry count, never retry non-idempotent mutations without an idempotency key.
 - Circuit breaker per endpoint (not per host): open after 5 failures in 60s (payment <= 3, search <= 10), half-open after 30s-2min, close on success.
@@ -104,7 +104,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 ### Always
 - All Core Contract rules apply unconditionally
 - Log activity to `.agents/PROJECT.md`
-- Two-step validation: field-level on DTOs (Zod `.safeParse()`) + domain-level inside entities (invariant enforcement in constructors)
+- Two-step validation: field-level parsing on DTOs with the configured validator, plus domain-level invariant enforcement inside entities or factories
 - Run the 5-axis Impact Scope Check at VERIFY (callers, tests, types, configs, docs) and report each axis verdict — never declare "done" without all 5 axes verified or explicitly N/A
 
 ### Ask First
@@ -118,10 +118,10 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Hard-code credentials or secrets
 - Write untestable code with side effects throughout
 - Use `any` type, `as Type` assertions at system boundaries, or other TypeScript safety bypasses — `as` silences the compiler but allows malformed external data through
-- Hand-write API response types that duplicate backend schemas — types drift silently; generate from OpenAPI specs or validate at boundary with Zod
+- Hand-write API response types that duplicate backend schemas — types drift silently; generate from OpenAPI specs or parse at the boundary with the configured validator (Zod only when already present)
 - Retry non-idempotent mutations (POST/PATCH/DELETE) without idempotency key — silent data duplication or corruption
 - Retry without a bounded attempt count — unbounded retries exhaust queue/thread capacity and cascade into full outage
-- Use `.parse()` at HTTP boundaries — uncaught ZodError crashes the process; use `.safeParse()` and return structured errors
+- Use a throwing parser at HTTP boundaries when the configured library provides a non-throwing alternative; with Zod, use `.safeParse()` and return structured errors
 - Allow domain entities to exist in invalid state — enforce invariants in constructors, not in callers
 - Apply tactical DDD patterns (Aggregate, Repository, Event Sourcing) without strategic design (Bounded Context, Context Mapping) — leads to a single tangled model with conflicting term definitions across teams
 - Implement UI/frontend components (→ Artisan)
@@ -168,15 +168,9 @@ Builder's post-BUILD handoffs to Radar, Sentinel, and Tuner are independent veri
 
 Spawn only when the deliverable touches 4+ files and post-BUILD verification would otherwise block. For single-file fixes, sequential handoff is sufficient.
 
-## Pattern Catalog
+## Decision Policy
 
-| Domain | Key Patterns | Reference |
-|--------|-------------|-----------|
-| **Domain Modeling** | Entity · Value Object · Aggregate · Repository · CQRS · Event Sourcing · Saga · Outbox | `reference/domain-modeling.md` |
-| **Implementation** | Result/Railway · Zod v4 Validation · API Integration (REST/GraphQL/WS) · Performance | `reference/implementation-patterns.md` |
-| **Frontend** | RSC · TanStack Query v5 + Zustand · State Selection Matrix · RHF + Zod · Optimistic | `reference/frontend-patterns.md` |
-| **Architecture** | Clean/Hexagonal · SOLID/CUPID · Domain Complexity Assessment · DDD vs CRUD | `reference/architecture-patterns.md` |
-| **Language Idioms** | TypeScript 6.0+ / tsgo · Go 1.26+ · Python 3.14+ · Rust Edition 2024 / 1.95+ · Per-language testing | `reference/language-idioms.md` |
+Use `reference/implementation-policy.md` for repository-first architecture selection, language/toolchain grounding, implementation boundaries, and frontend state ownership. General language syntax and design-pattern tutorials are intentionally not stored in this skill.
 
 ## Workflow
 
@@ -184,9 +178,9 @@ Spawn only when the deliverable touches 4+ files and post-BUILD verification wou
 
 | Phase | Focus | Key Actions | Read |
 |-------|-------|-------------|------|
-| SURVEY | Requirements and dependency analysis | Interface/Type definitions, I/O identification, failure mode enumeration, DDD pattern selection | `reference/architecture-patterns.md` |
-| PLAN | Design and implementation planning | Dependency mapping, pattern selection, test strategy, risk assessment | `reference/domain-modeling.md` |
-| BUILD | Implementation | Business rule implementation, validation (guard clauses), API/DB connections, state management | `reference/implementation-patterns.md` |
+| SURVEY | Requirements and dependency analysis | Interface/Type definitions, I/O identification, failure mode enumeration, DDD-vs-CRUD assessment | `reference/implementation-policy.md` |
+| PLAN | Design and implementation planning | Dependency mapping, smallest-pattern selection, test strategy, risk assessment | `reference/implementation-policy.md` |
+| BUILD | Implementation | Business rule implementation, boundary validation, API/DB connections, state ownership | `reference/implementation-policy.md` |
 | VERIFY | Quality verification | Error handling, edge case verification, memory leak prevention, retry logic, **5-axis Impact Scope Check (callers / tests / types / configs / docs)** | `reference/process-and-examples.md` |
 | PRESENT | Deliverable presentation | PR creation (architecture, safeguards, type info), self-review | `reference/process-and-examples.md` |
 
@@ -195,10 +189,10 @@ Spawn only when the deliverable touches 4+ files and post-BUILD verification wou
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
 | Bug Fix | `fix` | ✓ | Scoped fix after Scout handoff, target <50 lines | `reference/process-and-examples.md` |
-| CRUD | `crud` | | Single-aggregate CRUD, no invariants, 30-60 lines | `reference/architecture-patterns.md` |
-| API Integration | `api` | | REST/GraphQL/WS client/server, idempotency critical | `reference/implementation-patterns.md` |
-| Domain Model | `ddd` | | Aggregate root, invariants, domain events, multi-file | `reference/domain-modeling.md` |
-| Prototype Harden | `harden` | | Productionize Forge output, raise quality L0-L3 | `reference/process-and-examples.md`, `reference/architecture-patterns.md` |
+| CRUD | `crud` | | Single-aggregate CRUD, no invariants, 30-60 lines | `reference/implementation-policy.md` |
+| API Integration | `api` | | REST/GraphQL/WS client/server, idempotency critical | `reference/implementation-policy.md` |
+| Domain Model | `ddd` | | Aggregate root, invariants, domain events, multi-file | `reference/implementation-policy.md` |
+| Prototype Harden | `harden` | | Productionize Forge output, raise quality L0-L3 | `reference/process-and-examples.md`, `reference/implementation-policy.md` |
 | Cross-Language Port | `port` | | Port between languages / frameworks (semantic equivalence tests, Parallel Run) | `reference/cross-language-port.md` |
 | External API Integrate | `integrate` | | External service integration (auth, webhook, sandbox verification, vendor-specific retry) | `reference/external-integration.md` |
 | Targeted Patch | `patch` | | Scoped fix under 30 lines / 3 files (smaller than fix, lighter than harden) | `reference/targeted-patch.md` |
@@ -228,22 +222,19 @@ Each Recipe carries its own acceptance gate **in addition to** the universal 5-a
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `business logic`, `domain model`, `entity` | DDD tactical patterns | Domain model + service layer | `reference/domain-modeling.md` |
-| `api`, `rest`, `graphql`, `websocket` | API integration pattern | API client/server code | `reference/implementation-patterns.md` |
-| `validation`, `zod`, `schema` | Validation layer | Zod schemas + guard clauses | `reference/implementation-patterns.md` |
-| `state`, `tanstack`, `zustand` | State management | Store + hooks | `reference/frontend-patterns.md` |
-| `event sourcing`, `cqrs`, `saga` | Event-driven pattern | Event handlers + projections | `reference/domain-modeling.md` |
+| `business logic`, `domain model`, `entity` | Complexity-based domain modeling | Domain model + service layer | `reference/implementation-policy.md` |
+| `api`, `rest`, `graphql`, `websocket` | Repository-first integration | API client/server code | `reference/implementation-policy.md` |
+| `validation`, `zod`, `pydantic`, `schema` | Boundary parsing with the existing stack | Validated DTO + domain types | `reference/implementation-policy.md` |
+| `state`, `tanstack`, `zustand` | Existing-stack state ownership | Integration logic or Artisan handoff | `reference/implementation-policy.md` |
+| `event sourcing`, `cqrs`, `saga` | Evidence-gated event architecture | Events, projections, or rejection rationale | `reference/implementation-policy.md` |
 | `bug fix`, `fix` | Investigation-to-fix | Targeted fix + regression test skeleton | `reference/process-and-examples.md` |
 | `prototype conversion`, `forge handoff` | Forge-to-production | Production-grade rewrite | `reference/process-and-examples.md` |
-| `architecture`, `clean`, `hexagonal` | Architecture pattern | Layered structure | `reference/architecture-patterns.md` |
-| unclear implementation request | Domain assessment | DDD vs CRUD decision + implementation | `reference/architecture-patterns.md` |
+| `architecture`, `clean`, `hexagonal` | Smallest sufficient architecture | Repository-consistent structure | `reference/implementation-policy.md` |
+| unclear implementation request | Domain assessment | DDD-vs-CRUD decision + implementation | `reference/implementation-policy.md` |
 
 Routing rules:
 
-- If the request involves domain complexity, read `reference/domain-modeling.md`.
-- If the request involves API calls or external services, read `reference/implementation-patterns.md`.
-- If the request involves frontend state, read `reference/frontend-patterns.md`.
-- If the request involves Go, Python, or Rust, read `reference/language-idioms.md`.
+- If the request involves domain complexity, API calls, frontend state, or version-sensitive language behavior, read `reference/implementation-policy.md`.
 - Always generate test skeletons for Radar handoff.
 
 ## Output Requirements
@@ -274,7 +265,7 @@ ImpactScopeReport:
 
 ## Daily Process
 
-**Detail + examples**: See `reference/process-and-examples.md` | **Tools:** TypeScript (Strict) · Zod v4 · TanStack Query v5 · Custom Hooks · XState
+**Detail + examples**: See `reference/process-and-examples.md` | **Tools:** use the repository's configured compiler, validator, state layer, formatter, linter, and test runner
 
 ## Reference Map
 
@@ -283,18 +274,13 @@ Read only the files required for the current decision.
 | Reference | Read this when |
 |-----------|----------------|
 | `reference/core-contract-rationale.md` | A Core Contract rule needs its reasoning, tuning number, or source. |
-| `reference/domain-modeling.md` | DDD tactical patterns, CQRS, Event Sourcing, Saga, Outbox, domain vs integration events. |
-| `reference/implementation-patterns.md` | Result/Railway (neverthrow), Zod v4 validation, REST/GraphQL/WS integration, performance patterns. |
-| `reference/frontend-patterns.md` | RSC, TanStack Query v5, Zustand, state management selection, RHF + Zod. |
-| `reference/architecture-patterns.md` | Clean/Hexagonal, SOLID/CUPID, domain complexity assessment, DDD vs CRUD decision. |
-| `reference/language-idioms.md` | Working in Go 1.26+, Python 3.14+, or Rust Edition 2024 / 1.95+ (TypeScript is default). |
+| `reference/implementation-policy.md` | Repository-first architecture selection, language/toolchain grounding, implementation boundaries, and frontend state ownership. |
 | `reference/process-and-examples.md` | Forge conversion flow, TDD examples, Seven Deadly Sins, question templates. |
 | `reference/cross-language-port.md` | `port` recipe — parallel-run black-box comparison, semantic equivalence tests. |
 | `reference/external-integration.md` | `integrate` recipe — sandbox-first, secret handling, vendor retry, webhook signatures. |
 | `reference/targeted-patch.md` | `patch` recipe — scoped patch with regression coupling and clear rollback. |
 | `reference/pair-programming.md` | `pair` recipe — driver/navigator roles, SETUP -> LOOP -> CLOSE, gates, termination bounds. |
 | `reference/recipe-verify-gates.md` | The per-recipe acceptance gate for the active subcommand. |
-| `reference/ai-coding-patterns.md` | The consolidated 2026 AI-era pattern set; reviewing or planning AI-assisted work. |
 | `reference/autorun-nexus.md` | Exact AUTORUN or Nexus Hub mode compatibility details. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Builder-specific Output/Next schema. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the report, effort-level for codegen, front-loading constraints at PLAN. Critical: P3, P6. |
@@ -315,4 +301,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-
