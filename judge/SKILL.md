@@ -10,7 +10,7 @@ CAPABILITIES_SUMMARY:
 - concurrence_scoring: CONFIRMED (3/3) · LIKELY (2/3) · CANDIDATE (1/3, must ground)
 - grounding_verification: Verify CANDIDATEs against actual code -> VERIFIED / REJECTED / NEEDS-INFO
 - code_review: Codex / Gemini / Claude Code CLIs in PR, pre-commit, commit, `--from-pr` modes
-- bug_detection: CRITICAL/HIGH/MEDIUM/LOW/INFO severity
+- bug_detection: CRITICAL/HIGH/MEDIUM/LOW/INFO severity, plus a separate per-finding blocking/non-blocking axis
 - security_screening: Surface-level vulnerability identification
 - logic_verification: Logic error and edge case detection
 - intent_alignment: Verify changes match the PR description and commit message
@@ -73,6 +73,7 @@ Code review specialist delivering verdicts on three quality axes — **secure ·
 
 - **Multi-engine parallel review is the default `/judge` flow**: one Agent subagent per AVAILABLE engine spawned in a single message. **Baseline Claude + Codex**, tri-engine when agy is AVAILABLE. Integrate, ground, return **only findings worth fixing**. Algorithm -> `reference/tri-engine-review.md`. Single-engine only when the user names one, `<=1` of Claude/Codex is available, or scope is trivial (`<50` LOC, low risk).
 - Classify findings by severity (CRITICAL/HIGH/MEDIUM/LOW/INFO) with line references; verify intent alignment vs the PR/commit description.
+- **Severity is magnitude; `blocking` is a separate axis.** Every shipped finding carries `blocking: yes | no` plus the reason — severity ranks findings against each other, it does not tell the author which ones stop the merge, and an author facing an unlabelled list either fixes everything or guesses. A `HIGH` on a path the change does not enable may be non-blocking; a `MEDIUM` that breaks a published contract blocks. Blocking findings state the **resolution level required**, not the implementation — fix the mechanism, do not dictate the patch. Non-blocking findings that must not be lost carry an owner and a tracking route, never a bare "consider…". This is `_common/FINDING_LEDGER.md`'s rule that the floor need not be a scalar severity, applied to review output.
 - **Emit a structured `intent_alignment` verdict** (`PASS` | `FAIL` | `NOT_CHECKED`) — Guardian's `ship` gate signal. `FAIL` on scope creep or contradiction; absent intent is never `PASS`.
 - Provide remediation plus the owning agent per shipped finding (Builder / Sentinel / Zen / Radar / Atlas); run consistency detection and per-file test-quality scoring (5-dimension model).
 - Filter false positives via layered SAST+LLM (target precision `>=70%`); recalibrate SNR if `>30%` of findings are dismissed as noise.
@@ -182,7 +183,7 @@ Default is tri-engine fan-out per `reference/tri-engine-review.md`. Map the user
 
 ## Output Requirements
 
-A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`: **verified findings only** (every shipped finding VERIFIED or CONFIRMED — rejected ones never appear in the main list); a summary table (files reviewed, counts by severity, concurrence stats, verdict); review context (base, target, PR title, mode, engines used); findings by severity with ID, `file:line`, issue, impact, evidence, fix, **engine concurrence tag**, and remediation agent; an **`intent_alignment` verdict** (`PASS`|`FAIL`|`NOT_CHECKED`, Guardian `ship` signal) plus code-vs-intent deltas and consistency/test-quality scores where applicable; a condensed **rejection ledger** (counts per category); an **SNR indicator** (shipped/engine-total, flagged below 40%); and a **`## LLM Fix Prompt`** on every consensus-level finding, with a suppression note when omitted (`reference/fix-prompt-generation.md`).
+A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`: **verified findings only** (every shipped finding VERIFIED or CONFIRMED — rejected ones never appear in the main list); a summary table (files reviewed, counts by severity, concurrence stats, verdict); review context (base, target, PR title, mode, engines used); findings by severity with ID, `file:line`, issue, impact, evidence, fix, **`blocking` flag with its reason**, **engine concurrence tag**, and remediation agent; an **`intent_alignment` verdict** (`PASS`|`FAIL`|`NOT_CHECKED`, Guardian `ship` signal) plus code-vs-intent deltas and consistency/test-quality scores where applicable; a condensed **rejection ledger** (counts per category); an **SNR indicator** (shipped/engine-total, flagged below 40%); and a **`## LLM Fix Prompt`** on every consensus-level finding, with a suppression note when omitted (`reference/fix-prompt-generation.md`).
 
 ## LLM Fix Prompt Generation
 
