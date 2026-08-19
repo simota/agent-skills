@@ -228,6 +228,49 @@ The ledger is keyed by **task type** (not chain) so trust transfers across chain
 | `T2` | Autonomous + spot-check | Auto-run; verifier on a sampled subset; full report at DELIVER | CES ≥ B over ≥ 5 runs, 0 user corrections, 0 rollbacks |
 | `T3` | Fully autonomous | Auto-run end-to-end; report only | CES ≥ A over ≥ 10 runs **and** an explicit human grant (Ask First — never auto-promote into T3) |
 
+### The tier sets confirmation depth; the controls set the effect ceiling
+
+The table above answers *how much checking* a task type needs, from its track record. It does not answer *what
+effect the chain may cause*, and those are independent questions: a task type with a spotless record still may
+not commit an irreversible action if nothing can undo it. **Autonomy is an effect level, not a capability
+level** (`oracle/reference/agent-design.md` § Authority Envelope) — so a ledger keyed only on track record
+grants the wrong thing well.
+
+Each entry therefore carries a second, independent value: the **effect ceiling** — the highest rung of the
+existing **Action Tier Ladder** (`guardrails.md` § Action Tier Ladder, `T0 answer` → `T4`) this task type may
+reach. The ceiling is set by which controls actually exist. It is not earned by good runs and not raised by a
+better model. This adds no new ladder: it states the entry price for each rung of the one already defined.
+
+| Action Tier | Available only once these exist |
+|-------------|----------------------------------|
+| `T0 answer` / `T1 propose` | a record of what was produced, and a human or a deterministic step that decides |
+| `T2 prepare` | a stated boundary on what may be read and where output may go |
+| `T3 execute-reversibly` | idempotent operations, a *tested* reversal, and a human on-loop |
+| `T4 execute-consequentially` | complete trace, a bound approval, a named recovery owner, and a kill path with a **measured** reach time |
+
+**The permitted action is the lower of the two.** Autonomy `T3` under an Action-Tier ceiling of `T1` is fully
+autonomous *proposing*, not autonomous committing. Autonomy `T0` with a `T4` ceiling is a well-controlled task
+type nobody has run enough yet. Report both and name which is binding — a single number hides what would have
+to change to move.
+
+> **Two ladders, both numbered `T`.** Autonomy Tier (this file) grades *track record → how much confirmation*.
+> Action Tier (`guardrails.md`) grades *effect → how much change is allowed*. Always qualify which one you
+> mean; an unqualified "T3" is ambiguous.
+
+**A missing control lowers the ceiling immediately** — no counter, no consecutive-clean requirement. If the
+trace stops being complete, `T4` is unavailable *now*, because the evidence that makes an effect auditable is
+gone. Concretely: correctness regression → stop promoting; a safety breach → ceiling to `T1` (propose only);
+budget overrun → stop the expensive route; **trace incomplete → `T3` maximum**, because an effect nobody can
+reconstruct cannot be reviewed after the fact.
+
+**Falling back to read-only is a normal operating state, not an incident.** A chain running at `T1 propose`
+while a control is repaired is working as designed. Treat a ceiling drop as a mode change to report, not a failure to
+escalate — the failure is running at a ceiling the controls no longer support.
+
+**Raise the ceiling by adding the control, or by removing the need for it.** The cheaper move is often the
+second: a chain that proposes and lets a deterministic step or a human commit sits at `T1` and needs almost
+none of this. Prefer that to building `T4` machinery around a chain that never needed commit authority.
+
 **Rules:**
 - **Promotion is gated, demotion is automatic.** Any rollback, user override (LT-03), or verifier fail drops the task type **one tier** and resets its consecutive-clean counter. A T3→T2 demotion additionally voids the human grant (re-granted only by a human).
 - **Tier never overrides a safety gate.** L4 security, destructive actions, external-system changes, and 10+ file edits remain Ask First at every tier (per SKILL.md **Ask First**/**Never**). The ledger only governs *routine* confirmation, not red lines.
@@ -236,9 +279,10 @@ The ledger is keyed by **task type** (not chain) so trust transfers across chain
 
 ```markdown
 ## Autonomy Ledger — [TASK_TYPE]
-**Tier:** [T0/T1/T2/T3] | **CES:** [grade] over [N] runs | **Consecutive clean:** [N]
+**Autonomy Tier:** [T0/T1/T2/T3] | **CES:** [grade] over [N] runs | **Consecutive clean:** [N]
+**Action-Tier ceiling:** [T0-T4] | **Binding side:** [autonomy/ceiling] | **Missing control:** [what would raise it / none]
 **Verifier:** [Judge/Radar/Attest/none] | **Human grant (T3):** [yes/no/n-a]
-**Last change:** [promoted/demoted/held] on [DATE] — [trigger: LT-XX / rollback / verifier-fail]
+**Last change:** [promoted/demoted/held] on [DATE] — [trigger: LT-XX / rollback / verifier-fail / control-lost]
 ```
 
 ## Integration Points
