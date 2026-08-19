@@ -1,6 +1,6 @@
-# Signal Keywords → Recipe (full table)
+# Signal Keywords → Routing Destination (full table)
 
-**Purpose:** Natural-language keyword → Recipe mapping for CLASSIFY when no explicit subcommand is provided. SKILL.md keeps only the most-used recipes inline; this file is the canonical full table.
+**Purpose:** Natural-language keyword → routing destination mapping for CLASSIFY when no explicit subcommand is provided. Most destinations are Recipes; internal phases and invocation modes are labeled explicitly.
 
 **Read when:** Classifying ambiguous user input that did not match a known subcommand and may need keyword-based routing.
 
@@ -12,7 +12,7 @@
 
 ## Core Recipe Anchors
 
-| Keywords | Recipe |
+| Keywords | Destination |
 |----------|--------|
 | `bug`, `error`, `broken` | `bug` |
 | screenshot/image attached + `this screen is broken`, `fix what's in this screenshot`, `see attached screenshot`, `looks wrong` (web) | `bug` — **image branch** (routing-matrix § BUG Phase Contract → IMAGE BRANCH): five-section analysis at CLASSIFY, Visual Fix Loop at VERIFY. Native mobile screen vs reference image → `MOBILE_NATIVE` `visualloop` row. **Screenshot + `improve`/`make this better` is overloaded → REDIRECT**: visual/look-and-feel → `restyle`; feature behavior → `kaizen`; usability findings only (no code) → `echo` direct |
@@ -56,7 +56,7 @@
 | `silhouette`, `looks generic`, `looks templated`, `looks like every other SaaS`, `looks AI-generated`, `indistinguishable from competitors`, `would anyone know it's ours`, `nothing distinctive about it`, `blends in with the category`, `logo-off test`, `visual differentiation`, `stop looking like everyone else`, `stop looking templated` | `silhouette` (distinction proof for a product surface. **Disambiguation:** no settled brand to derive from → `hallmark` first; craft quality maximization → `runway`; standard-bar improvement → `restyle`; positioning research with no design change → `compete` skill; novel *mechanism* rather than a look → `eureka`; operability → `crucible`. Contract → `reference/silhouette-recipe.md`) |
 | `lattice`, `design system drift`, `design system is not being used`, `is the design system actually used`, `token conformance`, `hardcoded colors everywhere`, `magic numbers in the CSS`, `one-off components`, `duplicate tokens`, `inconsistent spacing across screens`, `looks like five teams built it`, `design system audit`, `design consistency sweep` | `lattice` (design-system coherence proof, steady state; precondition: a system of record exists, else `muse`/`vitrine` first. **Disambiguation:** brand *identity change* propagation → `rebrand`; design the tokens → `muse` direct; catalog components → `vitrine` direct; improve how it looks → `restyle`/`runway`; code/architecture design weaknesses → `anneal`; dead-code removal → `sweep` direct; technical change completeness → `migrate`; *between* platforms → `chorus`. Contract → `reference/lattice-recipe.md`) |
 | `chorus`, `cross-platform consistency`, `cross-platform coherence`, `iOS and Android feel different`, `web and app are out of sync`, `the apps drifted apart`, `native but the same product`, `platform parity`, `same product on every platform`, `does it feel native on both` | `chorus` (cross-platform coherence proof; precondition ≥2 shipped/specced platforms. **Disambiguation:** the porting *plan* → `port` skill (`port`→`chorus` is a plan→prove pair); implement one platform → `native` skill / `MOBILE_NATIVE`; drift *within* one platform's system → `lattice` (compose: `lattice` ×N, then `chorus` across); conditions rather than platforms → `crucible`; one flagship screen's ceiling → `runway`. Contract → `reference/chorus-recipe.md`) |
-| `/Nexus` (no arguments) | `proactive` |
+| `/Nexus` (no arguments) | `proactive mode` (non-Recipe) |
 
 ---
 
@@ -68,7 +68,7 @@
 | `Shai-Hulud`, `npm worm`, `PyPI worm`, `lottie-player`, `S1ngularity`, `infected lockfile`, `C2 traffic`, `credential rotation order`, `infected` | `MALWARE_RESPONSE` (Cull → Triage → Crypt) |
 | `auto-tune`, `continuous tuning`, `GC tuning`, `threadpool`, `connection pool`, `worker count`, `cache size auto-adjust` | `AUTO_TUNING` (Bolt) |
 | `summon`, `what would <figure> say/do`, `how would <figure> approach this`, `channel <figure>`, `advice in the style of <name>`, `mental models of <name>`, `think like <name>`, `<name>'s framework applied to`, `expert panel on`, `conclave`, `critique this as <figure>`, `review this the way <name> would` | `FIGURE_CHANNELING` (Summon — advisory reading, never a verdict; every claim ATTESTED/INFERRED/SPECULATIVE). **Requires a real *named individual*** — a school/movement/collective or no person named → `flux`/`riff`; needs an actual decision → `magi` (chain `Summon[conclave] → Magi`); synthetic user persona → `cast`; unnamed founder-mentor archetype → `sage` |
-| `make this prompt explicit`, `specify this prompt`, `this prompt is vague`, `the prompt's instructions are ambiguous`, `turn this prompt into rules`, `prompt to spec`, `executable prompt`, `what's ambiguous in this prompt`, `remove the vague wording from this prompt`, `you are a world-class …` / persona line to dissolve, `role prompt cleanup`, `is this prompt precise enough`, `puromputo wo gutaika`, `aimai na puronputo wo meikaku ni` | `PROMPT_SPEC` (Chisel — subcommands `spec` / `scan` / `role` / `audit`). **Every anchor is prompt-scoped by construction: the object must be supplied prompt text.** A bare `the instructions are ambiguous` with no prompt attached is *not* this row — split by what the instructions live in: a repo/team operating document → `charter`; a spec or requirements doc → `scribe`/`attest`; a `SKILL.md` → `gauge`/`sigil`; the user's own live request → `classify` GATE (or the overloaded-anchor one-question REDIRECT). Few-shot policy, structured output, versioning, eval gates, cost, RAG/agent architecture → `oracle` direct; a bad *output* rather than vague wording → `oracle` five-layer triage first; building a reusable prompt collection → `package domain=ai-adoption` |
+| `make this prompt explicit`, `specify this prompt`, `this prompt is vague`, `the prompt's instructions are ambiguous`, `turn this prompt into rules`, `prompt to spec`, `executable prompt`, `what's ambiguous in this prompt`, `remove the vague wording from this prompt`, `you are a world-class …` / persona line to dissolve, `role prompt cleanup`, `is this prompt precise enough`, `puromputo wo gutaika`, `aimai na puronputo wo meikaku ni` | `PROMPT_SPEC` (Chisel — subcommands `spec` / `scan` / `role` / `audit`). **Every anchor is prompt-scoped by construction: the object must be supplied prompt text.** A bare `the instructions are ambiguous` with no prompt attached is *not* this row — split by what the instructions live in: a repo/team operating document → `charter`; a spec or requirements doc → `scribe`/`attest`; a `SKILL.md` → `gauge`/`sigil`; the user's own live request → CLASSIFY GATE (or the overloaded-anchor one-question REDIRECT). Few-shot policy, structured output, versioning, eval gates, cost, RAG/agent architecture → `oracle` direct; a bad *output* rather than vague wording → `oracle` five-layer triage first; building a reusable prompt collection → `package domain=ai-adoption` |
 | `ToS`, `Terms of Service`, `Privacy Policy`, `Tokushoho`, `Specified Commercial Transactions Act`, `terms review`, `policy gap` | `LEGAL_REVIEW` (Clause → Scribe) |
 | `ICE`, `RICE`, `WSJF`, `MoSCoW`, `Kano`, `Cost of Delay`, `priority`, `prioritize`, `ranking` | `PRIORITIZE` (Rank → Magi) |
 | `attribution`, `multi-touch attribution`, `MTA`, `Shapley value`, `Markov attribution`, `data-driven attribution`, `DDA`, `touchpoint credit` | `ATTRIBUTION_MODELING` (Pulse). Don't confuse with MMM / incrementality (Experiment) |
@@ -89,7 +89,7 @@
 
 ## Native App Anchors (mobile + macOS desktop)
 
-| Keywords | Recipe |
+| Keywords | Destination |
 |----------|--------|
 | `iOS`, `iOS implementation`, `iPhone`, `iPad`, `Swift`, `SwiftUI`, `Swift 6.2`, `Liquid Glass`, `iOS 26`, `@Observable`, `SwiftData`, `Xcode`, `App Store`, `TestFlight`, `xcrun`, `simctl`, `devicectl`, `xctrace`, `WidgetKit`, `Live Activities`, `App Intents`, `ASAuthorizationController`, `Apple Intelligence`, `Foundation Models` | `MOBILE_NATIVE` (Native) — iOS path |
 | `Android`, `Android implementation`, `Kotlin`, `Jetpack Compose`, `Material 3 Expressive`, `M3 Expressive`, `Compose Multiplatform`, `Strong Skipping`, `Type-safe Navigation`, `Gradle`, `KSP`, `Android Gradle Plugin`, `AGP`, `Play Store`, `Play Console`, `adb`, `logcat`, `dumpsys`, `WorkManager`, `Credential Manager`, `Jetpack Glance`, `Gemini Nano`, `AICore` | `MOBILE_NATIVE` (Native) — Android path |
@@ -106,7 +106,7 @@
 
 Loop-control, change-completeness, cross-language, product-reproduction/synthesis, and origination recipes (previously misfiled under Mobile Native).
 
-| Keywords | Recipe |
+| Keywords | Destination |
 |----------|--------|
 | `loop`, `loop engineering`, `loop-engineer this`, `make a loop`, `make this a loop`, `automate with an agent loop`, `agent loop`, `run until done`, `keep iterating until <X>`, `autonomous loop`, `set up a loop`, `ralph loop`, `loop this` | **Shape-resolve, then gate** per `_common/LOOP_PRECONDITIONS.md`: native single-session goal → `goal` · in-session rubric loop → `converge` · external-reviewer-to-zero loop → `quell` (code diff) / `burnish` (rendered UI surface) / `whet` (surviving mutants) / `newsroom` (an article's factual claims) · unattended runner (scripts/contracts/recovery) → `orbit` skill · discovery→ship one-shot → `apex`. Five-point precondition gate (completion oracle · hard-stop bound · maker≠checker · persistent memory · drift awareness) runs at the resolved owner before launch — never ungated. Unverifiable goal or unbounded launch is refused, never downgraded |
 | `quell`, `codex review until clean`, `loop until zero findings`, `until the review is clean`, `fix all review comments`, `review-fix loop`, `keep fixing until the reviewer is happy`, `drive findings to zero`, `until zero review comments`, `keep fixing until the review passes`, `refactor until the review is clean`, `review-driven refactoring`, `refactor-review loop` | `quell` (review-to-zero fix loop; **`profile=refactor`** when the diff must preserve behavior — Equivalence Gate + frozen tests + behavior-changing fixes deferred; external review engine is the oracle, Finding Ledger + dispositions make zero reachable, oscillation → FROZEN/BLOCK. **Disambiguation:** rubric bar → `converge`; merge decision with proof obligations → `acceptance`; one review, no fixing → `judge` direct; conversational per-finding fixing → `judge pair`; must survive session end → `orbit` skill. Contract → `reference/quell-recipe.md`) |
@@ -124,7 +124,7 @@ Loop-control, change-completeness, cross-language, product-reproduction/synthesi
 
 ## Package / Domain Anchors
 
-| Keywords | Recipe |
+| Keywords | Destination |
 |----------|--------|
 | `venture`, `business plan`, `business documentation package`, `MVP dossier`, `startup dossier`, `pitch package`, `business-prep package`, `investor material bundle`, `business idea to docs`, `comprehensive product docs` | `venture` (= `package domain=startup`) |
 | `package`, `document package`, `documentation package`, `generate a full package`, `project package`, `generic project docs` | `package` (auto-detect preset) |
@@ -140,6 +140,6 @@ Loop-control, change-completeness, cross-language, product-reproduction/synthesi
 
 ## Fallback
 
-| Keywords | Recipe |
+| Keywords | Destination |
 |----------|--------|
-| unclear or multi-domain request | `classify` → `reference/intent-clarification.md` |
+| unclear or multi-domain request | internal `CLASSIFY` phase → `reference/intent-clarification.md` |

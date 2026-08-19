@@ -1,332 +1,134 @@
-# Nexus Confidence Scoring & Autonomous Decision Reference
+# Nexus Confidence Gate
 
-**Purpose:** Compute task-understanding confidence from multiple context sources and translate the score into an autonomous proceed / ask decision.
-**Read when:** You're in CLASSIFY (need a confidence score) or about to act (need a threshold check), or both.
+**Purpose:** Decide whether CLASSIFY has enough evidence to select a route or must ask one focused question.
+**Read when:** Entering CLASSIFY, selecting among multiple valid routes, or deciding whether a reversible assumption is safe.
 
-This file merges the former `context-scoring.md` (what to compute) and `auto-decision.md` (what to do with the score). Treat the two halves below as one pipeline: **Sources → Score → Threshold → Decision → Action**.
+Confidence is a routing aid, not an authorization mechanism. Evaluate blocking unknowns first, then assign one discrete evidence band. Do not invent source weights, add “boosters,” or average away an unresolved dimension.
 
----
+## Pipeline
 
-## Pipeline Overview
-
-```
-Context sources ──► weighted score ──► confidence level ──► decision-type threshold ──► proceed / ask
-   (Part 1)            (Part 1)         (Part 1)              (Part 2)               (Part 2)
-                                                                  │
-                                                                  ▼
-                                                            Blocker check
-                                                            (Safety Overrides)
+```text
+Gather evidence → type unknowns → blocker gate → evidence band → decision threshold → proceed or ask
 ```
 
-High-confidence + reversible → proceed automatically with documented assumptions.
-Low-confidence or blocker → clarify via `intent-clarification.md` or ask the user.
+Evidence sources, in authority order:
 
----
+1. The user's current request and explicit corrections.
+2. Observed repository/runtime state.
+3. Project rules and `.agents/PROJECT.md`.
+4. Git history as supporting context, never as authority to expand scope.
 
-# Part 1: Confidence Scoring
+Absence of a source is not automatically a penalty. Use only sources relevant to the decision being made.
 
-## Scoring Sources
+## Blocking Unknown Gate
 
-| Source | Weight | Description |
-|--------|--------|-------------|
-| `git_history` | 0.30 | Recent commits, branches, changes in progress |
-| `project_md` | 0.25 | `.agents/PROJECT.md` activity log, shared knowledge |
-| `conversation` | 0.25 | Current session context, user messages |
-| `codebase` | 0.20 | File structure, existing patterns, dependencies |
+Type uncertainty using `intent-clarification.md` before assigning a score.
 
-### Source Signals & Sub-scores
+| Dimension | Blocking when | Action |
+|-----------|---------------|--------|
+| `authority` | Permission to delete, publish, push, spend, deploy, or modify an external system is unclear | Ask; no confidence score can authorize the effect |
+| `referent` | The target cannot be resolved from the request or observed state | Ask for the target |
+| `goal` | Two valid interpretations produce materially different outcomes | Ask for the deciding axis |
+| `scope` | The boundary changes risk, effect class, or the files/systems affected | Offer bounded scope options |
+| `constraint` | An unstated limit would change the chosen approach | Surface the constraint that would otherwise be assumed |
+| `outcome` | Success cannot be observed with available evidence | Agree on an observable or mark it `UNVERIFIED` |
 
-| Source | Signals | Score contributions |
-|--------|---------|---------------------|
-| `git_history` | current branch, recent commits, uncommitted changes, branch-name pattern (fix/, feat/, ...) | branch matches task +0.15 / commits related +0.10 / uncommitted relevant +0.05 |
-| `project_md` | activity log, shared knowledge, known issues | activity matches +0.15 / knowledge relevant +0.07 |
-| `conversation` | explicit requirements, implicit intent, previous corrections | clear explicit +0.20 / inferable implicit +0.10 |
-| `codebase` | file patterns, similar implementations, dependency graph | clear pattern +0.15 / partial patterns +0.08 |
+Rules:
 
-## Confidence Thresholds
+- Unresolved `authority` always blocks.
+- Two or more materially valid interpretations always trigger `GATE`, regardless of the numeric band.
+- A minor assumption may remain only when it is explicit, reversible, and cannot change the requested outcome.
+- Batch missing dimensions into the one-question format defined by `intent-clarification.md`; do not ask a sequence of open-ended questions.
 
-| Level | Score Range | Default Action |
-|-------|-------------|----------------|
-| HIGH | ≥ 0.80 | Auto-proceed without confirmation |
-| MEDIUM | 0.60 – 0.79 | Proceed with stated assumptions |
-| LOW | 0.40 – 0.59 | Single clarification question |
-| VERY_LOW | < 0.40 | Multi-step clarification via `intent-clarification.md` |
+## Discrete Evidence Bands
 
-## Scoring Calculation
+Assign the highest band whose complete description is true. The bands are intentionally coarse; pseudo-precision is not evidence.
 
-```
-Final = git_score × 0.30 + project_score × 0.25 + conversation_score × 0.25 + codebase_score × 0.20
-      → confidence (0.00 – 1.00)
-```
+| Score | Evidence state | Default action |
+|------:|----------------|----------------|
+| `1.00` | Goal, target, scope, constraints, outcome, and authority are explicit; one route fits | Auto-route |
+| `0.80` | All load-bearing dimensions are settled; only minor reversible assumptions remain | Route and state assumptions |
+| `0.60` | One non-blocking dimension is partial, but a safe reversible default is established and rollback is clear | Proceed cautiously and record the default |
+| `0.40` | A load-bearing dimension is unresolved or multiple material interpretations remain | Ask one focused question |
+| `0.20` | Goal or target is mostly absent | Clarify before route selection |
+| `0.00` | No task-shaped intent can be recovered | Answer the meta/factual request directly or ask what outcome is wanted |
 
-### Qualitative Scoring Summary
+`context_confidence < 0.60` is the mechanical GATE floor used by `routing-matrix.md`. The independent “2+ valid interpretations” rule still fires at any score.
 
-The weighted formula above is the scoring method of record. This qualitative 3/2/1/0 table is a human-readable summary for audit logs — it runs in parallel with the weighted calculation as a legibility aid, not as a fallback for it. Classify each source qualitatively (3/2/1/0) and sum:
+## Decision Thresholds
 
-| Source | HIGH (3) | MEDIUM (2) | LOW (1) | NONE (0) |
-|--------|----------|------------|---------|----------|
-| `git_history` | Branch + commits match | Some related commits | Repo exists, no match | No git info |
-| `project_md` | Activity directly matches | Related activity found | File exists, no match | No file |
-| `conversation` | Explicit clear request | Inferable intent | Vague request | No context |
-| `codebase` | Clear pattern to follow | Partial patterns exist | Files exist, no pattern | No codebase |
+| Decision | Minimum band | Additional condition |
+|----------|--------------|----------------------|
+| Chain selection | `0.80` | One best-fit Recipe/task type and no blocker |
+| Agent routing | `0.80` | Role boundary is clear |
+| Approach selection | `0.80` | Wrong choice is reversible and does not change scope |
+| Recovery action | `0.80` | Failure class is known and rollback/checkpoint exists |
+| Parallel vs sequential | `0.60` | Branches are independent, have owners, and define a merge gate |
 
-| Total (max 12) | Level | Default Action |
-|----------------|-------|----------------|
-| 10-12 | HIGH | AUTO_PROCEED |
-| 7-9 | MEDIUM | PROCEED_WITH_ASSUMPTIONS |
-| 4-6 | LOW | SINGLE_CLARIFICATION |
-| 0-3 | VERY_LOW | STRUCTURED_CLARIFICATION |
+Below the threshold, use `intent-clarification.md` § Routing Decision Output to present the smallest useful choice. Do not dump the routing matrix or confidence arithmetic.
 
-### Worked Example
+## Reversibility and Safety Overrides
 
-```yaml
-task: "Fix the login issue"
-analysis:
-  git_history:    {branch: "fix/auth-timeout", commits: ["fix: extend session"], score: 0.28}
-  project_md:     {activity: "Scout investigated auth module yesterday", score: 0.18}
-  conversation:   {explicit: "login doesn't work", implicit: "user frustrated", score: 0.12}
-  codebase:       {patterns: "auth/* exists", score: 0.12}
-final_score: 0.70      # = 0.28 + 0.18 + 0.12 + 0.12
-level: MEDIUM
-action: PROCEED_WITH_ASSUMPTIONS
-```
+| Effect | Examples | Auto-proceed |
+|--------|----------|--------------|
+| Read-only | Inspect files, run non-mutating checks | Yes when the route is clear |
+| Reversible workspace edit | Git-tracked code/docs edit with a known rollback | Yes within approved scope |
+| Moderate | Config or migration with a tested rollback | Ask when project rules require it |
+| Difficult/irreversible | Data deletion, external send, production deploy, payment, key rotation | Never infer authority |
 
-## Boosters and Penalties
+The following bypass the confidence band and use Nexus `Ask First`/safety rules:
 
-| Boost | Signal |
-|-------|--------|
-| +0.10 | User confirmed similar task before |
-| +0.10 | Single valid interpretation |
-| +0.05 | Existing tests for target area |
-| +0.05 | Small scope (< 3 files) |
+- credential, auth, permission, or encryption-key changes;
+- destructive or bulk data operations;
+- production deploys and external-system mutations;
+- cost-incurring actions;
+- changes affecting 10+ files, breaking APIs, or architecture when not already approved.
 
-| Penalty | Signal |
-|---------|--------|
-| −0.15 | Multiple valid interpretations |
-| −0.10 | No git history for area |
-| −0.10 | User previously corrected similar |
-| −0.05 | Large scope (> 10 files) |
-| −0.05 | Security-sensitive area |
+AUTORUN modes do not bypass these controls. Explicit approval settles `authority` only for the named effect and scope; it does not raise unrelated confidence dimensions.
 
-## Context Snapshot Format
+## Decision Record
 
 ```yaml
 _CONTEXT_SNAPSHOT:
-  timestamp: <ISO>
-  task: <original request>
-  scores: {git_history: 0.XX, project_md: 0.XX, conversation: 0.XX, codebase: 0.XX, final: 0.XX}
-  confidence_level: HIGH | MEDIUM | LOW | VERY_LOW
-  signals: {git: [...], project: [...], conversation: [...], codebase: [...]}
-  assumptions: [...]
-  recommended_action: AUTO_PROCEED | PROCEED_WITH_ASSUMPTIONS | CLARIFY
+  task: "<original request>"
+  evidence:
+    conversation: ["<decisive user statement>"]
+    repository: ["<observed state>"]
+    project: ["<applicable rule or journal fact>"]
+    git: ["<supporting history, if relevant>"]
+  dimensions:
+    referent: settled | partial | blocking
+    scope: settled | partial | blocking
+    goal: settled | partial | blocking
+    constraint: settled | partial | blocking
+    authority: settled | blocking
+    outcome: settled | partial | blocking
+  context_confidence: 0.00 | 0.20 | 0.40 | 0.60 | 0.80 | 1.00
+  assumptions: ["<explicit reversible assumptions only>"]
+  decision: proceed | ask | direct_answer
 ```
 
----
+Record the evidence that changed the decision, not every file inspected. Re-evaluate when the user corrects the interpretation, observed state contradicts an assumption, or the action's effect class changes.
 
-# Part 2: Autonomous Decision
+## Phase Integration
 
-## Decision-Type Thresholds
+### CLASSIFY
 
-A higher-stakes decision needs a higher confidence floor. The same final score may auto-proceed for one decision type and ask for another.
-
-| Decision Type | Threshold | Min Level (simplified) | Rationale |
-|---------------|-----------|------------------------|-----------|
-| Chain Selection | ≥ 0.85 | HIGH | Wrong chain wastes significant effort |
-| Approach Selection | ≥ 0.80 | MEDIUM+ | Approaches are usually recoverable |
-| Agent Routing | ≥ 0.80 | MEDIUM+ | Misrouting causes delays |
-| Recovery Action | ≥ 0.75 | MEDIUM | Recovery is inherently corrective |
-| Parallel vs Sequential | ≥ 0.70 | MEDIUM | Both are valid, different efficiency only |
-
-`MEDIUM+` = MEDIUM with no blocking open questions. With open questions, downgrade to LOW.
-
-## What the Scalar Does Not Say
-
-The score measures **evidence availability** — how much context the four sources gave you. It does not identify **which part of the request is unresolved**, and the two do not correlate: a 0.85 run blind on who authorized a deletion is more dangerous than a 0.55 run that merely needs a target named.
-
-So the scalar decides *whether* to ask; `intent-clarification.md` § Uncertainty Typing decides *what* to ask. Two consequences bind here:
-
-- **Never present the scalar as a per-dimension verdict.** `confidence: 0.83` is an average over context sources, not a claim that referent, scope, goal, constraints, authority, and outcome are each 83% settled.
-- **Unresolved Authority overrides the table below.** If it is unclear whether an effect may be caused at all (push, delete, publish, spend, external send), no aggregate score authorizes it — confirm (Q23). The `any_blocking` list below is the enumerated form of this; the rule is the general case, and a novel effect not on the list still stops.
-
-## Auto-Proceed Conditions
-
-```yaml
-AUTO_PROCEED_IF:
-  all_required:
-    - confidence >= threshold_for_decision_type
-    - no_l4_security_implications
-    - action_is_reversible
-  any_blocking:
-    - l4_security_trigger          # Always asks
-    - data_destructive_action      # Deletions, migrations
-    - external_system_modification # APIs, deployments
-    - cost_incurring_action        # Cloud, payments
-```
-
-## Per-Decision-Type Rules
-
-### Chain Selection (threshold ≥ 0.85)
-- **Auto when**: single best-fit chain, context indicates task type cleanly, no conflicting signals.
-- **Ask when**: multiple equally valid chains, task type ambiguous, user-preference history unclear.
-
-### Approach Selection (threshold ≥ 0.80)
-- **Auto when**: clear best approach, matches project patterns, low risk if wrong.
-- **Ask when**: trade-offs are significant, user preference unknown, approaches yield different outcomes.
-
-### Recovery Action (threshold ≥ 0.75)
-- **Auto when**: clear recovery path, previous similar recovery succeeded, rollback available.
-- **Ask when**: multiple recovery options, recovery might lose work, previous recovery failed.
-
-### Agent Routing (threshold ≥ 0.80)
-- **Auto when**: clear agent-task match, agent available, no specialist override needed.
-- **Ask when**: multiple specialists could help, capabilities overlap, task spans domains.
-
-## Decision Flow
-
-```
-task / decision needed
-        │
-        ▼
-  Compute confidence (Part 1)
-        │
-        ▼
-  Threshold check (this section)
-   ┌────┴────┐
-   ▼         ▼
- ≥ thr.   < thr.
-   │         │
-   ▼         ▼
- Blocker  Prepare
- check?   question
-   │         │
- ┌─┴─┐       ▼
- ▼   ▼   Ask user
- OK  Blk     │
- │   │       ▼
- ▼   ▼   Integrate
- Auto Ask answer
-       │     │
-       └──┬──┘
-          ▼
-     Execute decision
-```
-
-## Reversibility Assessment
-
-| Category | Examples | Auto-Proceed |
-|----------|----------|--------------|
-| Fully reversible | Code edits (git), test runs, lint fixes | Yes |
-| Easily reversible | Config changes, refactoring | Yes |
-| Moderately reversible | DB migrations with rollback | With caution + confirmation |
-| Difficult to reverse | Data deletion, external API calls | No |
-| Irreversible | Production deploy, payments, key rotation | Never auto |
-
-## Safety Overrides (ALWAYS_ASK)
-
-These bypass the threshold and unconditionally require user confirmation:
-
-```yaml
-ALWAYS_ASK:
-  security:  [credential_changes, auth_modifications, permission_changes, encryption_key_ops]
-  data:      [bulk_deletion, schema_breaking_changes, user_data_export]
-  external:  [production_deploy, external_api_key_usage, payment_ops, third_party_integrations]
-  scope:     [changes_affecting_10plus_files, architectural_changes, breaking_api_changes]
-```
-
-## Confidence Degradation
-
-```yaml
-degradation_triggers:
-  consecutive_errors:        -0.10 per error
-  user_correction:           -0.15 for this session
-  unexpected_state:          -0.10
-  missing_expected_file:     -0.05
-
-recovery:
-  successful_execution:      +0.05
-  user_confirmation:         restore to baseline
-  explicit_approval:         +0.10 for similar decisions
-```
-
-## Mode-Specific Behavior
-
-| Mode | Auto-Decision Behavior |
-|------|------------------------|
-| AUTORUN_FULL | Full auto-decision with guardrails |
-| AUTORUN | Auto for SIMPLE, ask for COMPLEX |
-| GUIDED | Auto with confirmation at decision triggers |
-| INTERACTIVE | No auto-decision, ask everything |
-
-## Auto-Decision Record Format
-
-```yaml
-_AUTO_DECISION:
-  decision_type: chain_selection | approach | recovery | routing
-  confidence: 0.XX
-  threshold: 0.XX
-  decision: <what was decided>
-  assumptions: [...]
-  signals_used: [...]
-  reversibility: fully | easily | moderate
-  rollback_plan: <how to undo if wrong>
-```
-
----
-
-## Usage in Execution Phases
-
-### PLAN / CLASSIFY
-1. Gather context from all sources.
-2. Compute confidence (Part 1).
-3. Match against decision-type threshold (Part 2).
-4. If HIGH/MEDIUM + reversible + no blockers → proceed to CHAIN_SELECT.
-5. Else → clarify first (see Low-Confidence Clarification below).
-
-### CHAIN_SELECT
-- Multiple valid chains + confidence ≥ 0.85 → auto-select highest-fit.
-- Multiple valid chains + confidence < 0.85 → present options (use `routing-explanation.md`).
+1. Gather only decision-relevant evidence.
+2. Type unknowns and apply the blocker gate.
+3. Assign a discrete band.
+4. If the band clears the decision threshold and no blocker exists, select the route.
+5. Otherwise ask one focused question, integrate the answer, and re-evaluate from evidence rather than adding a fixed score bonus.
 
 ### EXECUTE
-- Pass `_CONTEXT_SNAPSHOT` to agents so they share assumptions.
-- New information contradicting assumptions → re-score and potentially pause.
 
-## Low-Confidence Clarification
+- Pass the approved intent contract and explicit assumptions, not the scoring rationale, to specialists.
+- If new evidence invalidates a load-bearing assumption, stop at the nearest reversible boundary and re-enter CLASSIFY/GATE.
 
-When confidence is LOW or VERY_LOW:
+### HANDOFF
 
-1. Read `intent-clarification.md` for the methodology.
-2. Resolve ambiguity, ask one focused question if needed.
-3. Feed clarification back into scoring:
-   - Clarified intent → +0.20 to conversation score.
-   - Resolved assumptions → remove penalties.
-   - User correction → log for future scoring.
+Handoff completion confidence is owned by `handoff-validation.md`. It must not be substituted for context confidence: a specialist can be highly confident in work performed against the wrong intent.
 
-## Integration with Other Systems
+### LEARN
 
-| System | Interaction |
-|--------|-------------|
-| Guardrails (`guardrails.md`) | Auto-decision proceeds → guardrails monitor execution → L3/L4 escalate back to user |
-| Handoff Validation (`handoff-validation.md`) | Agent completes → handoff confidence checked → auto-decision routes to next agent or asks |
-| Routing Learning (`routing-learning.md`) | Auto-decision outcomes feed CES — successes raise thresholds, corrections lower them |
-
-## Metrics and Learning
-
-```yaml
-metrics:
-  auto_decision_count: N
-  accuracy_rate: X%       # Decisions not later corrected
-  by_type:
-    chain_selection:  {count: N, accuracy: X%}
-    approach:         {count: N, accuracy: X%}
-    recovery:         {count: N, accuracy: X%}
-    routing:          {count: N, accuracy: X%}
-
-learning:
-  on_success:
-    - Record signals that led to correct decision
-    - Boost similar patterns in future
-  on_correction:
-    - Record gap between assumption and reality
-    - Adjust threshold (+0.05 conservative) for this pattern
-    - Append to .agents/nexus.md as learned pattern
-```
+Record routing corrections as categorical evidence: which dimension was missed, which route was corrected, and whether the correction changed outcome or only efficiency. Do not tune invented weights; update examples, decision boundaries, or fixtures only after repeated verified cases.

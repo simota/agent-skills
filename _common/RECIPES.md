@@ -10,8 +10,8 @@ A **Recipe** is a named preset within one skill that pre-selects a workflow mode
 
 Key properties:
 - Scope is **strictly one skill**. Recipes do not cross skill boundaries.
-- One skill should define 2-7 Recipes (recommended for dispatch-table scannability). 8-10 is an accepted corpus-norm band (INFO); 11+ triggers a consolidation review (WARNING). Hub skills (e.g. `nexus`) are exempt — recipe breadth is by design. Default is required; others are optional.
-- The `default` Recipe preserves full backward compatibility — any invocation without a matching Subcommand token falls through to it.
+- One skill should define 2-7 Recipes (recommended for dispatch-table scannability). 8-10 is an accepted corpus-norm band (INFO); 11+ triggers a consolidation review (WARNING). Hub skills (e.g. `nexus`) are exempt — recipe breadth is by design.
+- Backward compatibility requires exactly one fallback owner: either one `Default? = ✓` Recipe or an explicit `Default dispatch` phase/workflow outside the Recipe table. Unmatched input falls through to that owner without dropping free text.
 
 ---
 
@@ -55,15 +55,15 @@ Rules:
 
 1. The `## Recipes` section stays in `SKILL.md` — only its table moves. Removing the section entirely trips `R-REC-05`.
 2. The section must name the registry as a backticked path matching `reference/*recipes-index.md`; the validators follow that pointer and validate the table wherever it lives.
-3. The allowlist must list **every** subcommand, marking the default. A token absent from it is not a subcommand — Subcommand Dispatch reads the allowlist, not the registry.
+3. The allowlist must list **every** subcommand. Mark the default Recipe when one exists; otherwise declare the explicit `Default dispatch` in `## Subcommand Dispatch`. A token absent from the allowlist is not a subcommand.
 4. The registry file states its own purpose and read-trigger like any other reference.
 
-Use this only when the size ceiling actually forces it; a table that fits belongs inline, where it is one read away instead of two. Current user: `nexus` (`nexus/reference/recipes-index.md`) — 39 Recipes.
+Use this only when the size ceiling actually forces it; a table that fits belongs inline, where it is one read away instead of two. Current user: `nexus` (`nexus/reference/recipes-index.md`).
 
 **Column definitions:**
 - **Recipe** — human-readable display name (title case, spaces OK)
 - **Subcommand** — the exact token users type (kebab-case, backtick-quoted)
-- **Default?** — exactly one row must have `✓`
+- **Default?** — one row has `✓`, unless `## Subcommand Dispatch` declares exactly one explicit Default dispatch
 - **When to Use** — brief activation condition (one clause)
 - **Read First** — comma-separated list of files to load at Recipe activation
 
@@ -81,15 +81,23 @@ Parse the first token of user input.
 - Otherwise → default Recipe + automatic triage.
 ```
 
+When fallback is owned by an internal phase/workflow rather than a Recipe, replace the final line with one declaration and route unmatched input to it:
+
+```markdown
+**Default dispatch:** `phase:CLASSIFY`
+```
+
+The value must be exactly `phase:[NAME]` or `workflow:[NAME]`. It names routing control, not a hidden Recipe, and therefore MUST NOT appear in the Recipe table or subcommand allowlist.
+
 ---
 
 ## Subcommand Dispatch Rules
 
 1. **Token matching** — Extract the first whitespace-delimited token from user input. Compare against all Subcommand values using exact string match (case-sensitive).
 2. **Match found** → activate that Recipe immediately; load only its "Read First" files.
-3. **No match** → activate the `default` Recipe; pass the full input as free-text; apply the skill's normal triage logic.
-4. **Exactly one default** — every skill with a `## Recipes` table must declare exactly one `✓` in the Default? column.
-5. **Free-text passthrough** — unrecognized first tokens are never silently dropped; the full original input is passed to the default Recipe.
+3. **No match** → pass the full input as free text to the declared fallback owner: the default Recipe or explicit Default dispatch phase/workflow.
+4. **Exactly one fallback owner** — every skill with `## Recipes` declares either exactly one `Default? = ✓` Recipe or exactly one explicit Default dispatch, never both or neither.
+5. **Free-text passthrough** — unrecognized first tokens are never silently dropped.
 
 ---
 
@@ -137,7 +145,7 @@ The following rules are evaluated by **Gauge** during normalization audits.
 
 | Rule ID | Condition | Severity |
 |---------|-----------|---------|
-| R-REC-01 | A skill with `## Recipes` must declare exactly one `Default? = ✓` | ERROR |
+| R-REC-01 | A skill with `## Recipes` must declare exactly one fallback owner: one `Default? = ✓` Recipe or one explicit `Default dispatch` phase/workflow | ERROR |
 | R-REC-02 | All Subcommand values must match `^[a-z0-9][a-z0-9-]{1,19}$` (kebab-case, 2-20 chars; leading digit allowed for domain terms like `5whys`) | ERROR |
 | R-REC-03 | Subcommand values must not be reserved words: `default`, `auto`, `help`, `list` | ERROR |
 | R-REC-04 | Recipe count, tiered (calibrated 2026-07-03 against the 132-skill corpus, where 54% exceeded the old flat max-7): ≤7 recommended; 8-10 = INFO (corpus norm band, ≤10 = P95); 11+ = WARNING (consolidation review candidate); hub skills (`HUB_SKILLS` in validator, currently `nexus`) always INFO — recipe breadth by design | INFO / WARNING (tiered) |

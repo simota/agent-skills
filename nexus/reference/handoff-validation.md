@@ -23,6 +23,22 @@ Validation rules and confidence requirements for agent handoffs.
 
 Handoff validation ensures consistent, high-quality communication between agents. All agents must use NEXUS_HANDOFF_V2 format with mandatory confidence scoring.
 
+## Communication Invariants
+
+These rules own the actionable safeguards formerly split into a separate communication anti-pattern catalog:
+
+| Invariant | Validation |
+|-----------|------------|
+| Typed envelope | Reject unknown message types, missing required fields, and schema drift; free-form prose may supplement but never replace the envelope |
+| Explicit state | Carry current status, completed work, changed resources, evidence, and unresolved items; never assume execution order or hidden shared state |
+| Intent integrity | Preserve the original request or its approved intent contract, acceptance criteria, constraints, and prohibited outcomes |
+| Selective context | Pass state deltas and required evidence, not the full conversation history |
+| Single ownership | Name one owner for each mutable file/resource and one merge owner for parallel work; non-owners default to read-only |
+| Closed next action | `next` must be a declared action or agent with success criteria; ambiguous “handle appropriately” handoffs are invalid |
+| Recovery-ready | Persist artifact references and the last verified checkpoint so failure does not make the receiving agent the only copy of state |
+
+Confidence never repairs a missing invariant. A high score with an unresolved Authority, absent success criteria, or conflicting ownership is rejected before routing.
+
 ---
 
 ## NEXUS_HANDOFF_V2 Required Fields

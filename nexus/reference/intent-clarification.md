@@ -2,7 +2,7 @@
 
 **Purpose:** Interpretation method for ambiguous user requests.
 **Read when:** The request is vague and routing depends on resolving intent first.
-**See also:** After resolving intent, see `routing-explanation.md` for how to present the chosen chain (and alternatives) back to the user.
+**See also:** After resolving intent, use § Routing Decision Output below to present the chosen chain and material alternatives.
 
 Methodology for decoding ambiguous user intent before agent routing. Previously a standalone agent (Cipher), now integrated as a Nexus capability.
 
@@ -59,7 +59,7 @@ The following rules apply as an internal Nexus capability (previously the Cipher
 - Trigger: context_confidence < 0.60, multiple valid interpretations, or missing critical context
 - Auto-clarification: Nexus attempts to resolve using gathered context
 - Single question: If still ambiguous, ask ONE focused question with options
-- Confidence boost: +0.20 on successful clarification
+- Re-evaluate: integrate the answer, re-type the dimensions, and assign a new evidence band; never add a fixed score bonus
 
 When the blocker is **missing context** (not just ambiguous wording), run the Context Sufficiency
 Gate (`_common/CONTEXT_SUFFICIENCY.md`): inventory which context dimensions the outcome needs
@@ -73,7 +73,7 @@ allowed question *comprehensive and targeted* ("give me X, Y, Z") rather than a 
 
 ## Uncertainty Typing — deciding *which* question the one question is
 
-The confidence scalar (`confidence-scoring.md`) answers **how much context I have**. It does not answer **what is still unresolved** — and those are different questions with different remedies. Two requests can both score 0.55 and need opposite treatment: one needs a target named, the other needs a priority chosen. Since Law 2 allows only one question, typing the uncertainty first is what makes that question land.
+The confidence band (`confidence-scoring.md`) answers **whether the available evidence clears a routing threshold**. It does not answer **what is still unresolved** — and those are different questions with different remedies. Two requests can both fall below the gate and need opposite treatment: one needs a target named, the other needs a priority chosen. Since Law 2 allows only one question, typing the uncertainty first is what makes that question land.
 
 Type the gap on these six dimensions before asking. Each maps to a distinct remedy, and each has a characteristic way of being asked badly:
 
@@ -88,8 +88,8 @@ Type the gap on these six dimensions before asking. Each maps to a distinct reme
 
 **Rules.**
 
-1. **Do not average the six into one number.** A run that is certain about five dimensions and blind on one is not "83% certain" — it is blocked on one dimension, and the aggregate hides which. The scalar gates *whether* to ask; the type decides *what* to ask.
-2. **Authority is not a scored dimension.** Unresolved Authority never auto-proceeds regardless of aggregate confidence, and never resolves by inference from a broad request. It is the one type where the answer must come from the user (Q23, and the SKILL.md **Ask First** triggers it feeds).
+1. **Do not average the six into one number.** A run that is certain about five dimensions and blind on one is blocked on that dimension. The evidence band gates *whether* to ask; the type decides *what* to ask.
+2. **Authority is not averaged.** Unresolved Authority never auto-proceeds regardless of the evidence band, and never resolves by inference from a broad request. It is the one type where the answer must come from the user (Q23, and the SKILL.md **Ask First** triggers it feeds).
 3. **A forming Goal is not a defect.** When the user is still deciding, an early binary question freezes the intent prematurely — offer the axis and let them explore. This is the one case where "proceed with a reversible draft" (Q24 tier degradation) usually beats asking at all.
 4. **Type before batching.** The Context Sufficiency Gate batches up to 4 missing dimensions into one question; typing tells you which 4 are worth the user's attention.
 
@@ -113,6 +113,23 @@ Some English anchors map cleanly to one recipe; these do **not** — the same wo
 | `define what we build` / `nail down` | `spec` · `essential` · `charter` | "Refine one feature into a locked spec via dialogue (`spec`) / decide which ONE feature (`essential`) / whole-repo team plan (`charter`)?" |
 
 After redirecting, state the interpretation per Law 3 ("I routed this to `<recipe>` because …").
+
+---
+
+## Routing Decision Output
+
+Keep the explanation proportional to the ambiguity resolved:
+
+```yaml
+routing_decision:
+  intent: "<resolved goal>"
+  route: "<recipe, task type, or direct specialist>"
+  why: "<one discriminating reason>"
+  assumptions: ["<only assumptions that affect the result>"]
+  alternatives: ["<only materially valid alternatives and why they lost>"]
+```
+
+Omit empty `assumptions` and `alternatives`. Do not repeat the routing matrix, emit confidence arithmetic, or invent rejected options merely to make the explanation look complete.
 
 ---
 

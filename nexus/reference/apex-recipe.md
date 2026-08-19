@@ -10,7 +10,8 @@
 - Phase 0: Bootstrap (no-args / autonomous goal discovery)
 - Phase Contracts (1 → 6 + Ship)
 - Sub-Orchestration: Vision (UX) and Orbit (Loop)
-- Workflow Accuracy Rationale
+- Topology Overview
+- Workflow Shape Rationale
 - AUTORUN Chain Template
 - Failure Escalation
 - Cost and Latency Profile
@@ -19,7 +20,7 @@
 
 ## Overview
 
-Apex is Nexus's heaviest Recipe. It bundles **Phase 0 (autonomous goal discovery, no-args mode only) + 6 sequential phases** with two parallel sub-tracks (Tech / UX) inside Phase 5, gated by a tri-axis Risk Gate (Omen + Ripple + Echo), and executed through Orbit's autonomous loop. Apex deliberately keeps the implementation phase count at **6 (not 7+)** by parallelising design work, since `85% × 7 ≈ 32%` end-to-end success would otherwise dominate.
+Apex is Nexus's heaviest Recipe. It bundles **Phase 0 (autonomous goal discovery, no-args mode only) + 6 sequential phases** with two parallel sub-tracks (Tech / UX) inside Phase 5, gated by a tri-axis Risk Gate (Omen + Ripple + Echo), and executed through Orbit's autonomous loop. Apex keeps design work parallel and reconverges it at one Risk Gate so ownership, handoff count, and verification remain explicit.
 
 Apex is **not** a default recipe. It is opt-in for high-stakes new features where every upstream gap (missed user need, weak spec, hidden architecture risk, UX friction) is materially costly to discover post-implementation.
 
@@ -318,15 +319,39 @@ Direct agent-to-agent handoff is forbidden across hubs. Within a sub-hub, the su
 
 Conditional agent inclusion (which agents Add/Skip under which condition) is owned by each phase's **Required** column in § Phase Contracts and by the Phase 0 trigger conditions above — not restated here as a second index.
 
-## Workflow Accuracy Rationale
+## Topology Overview
 
-Nexus core rule: chains with 6+ agents require hierarchical decomposition. Apex satisfies this via two-tier sub-orchestration (Vision, Orbit). Sequential phase count is held at 6 because:
+```mermaid
+flowchart TD
+    INPUT{Goal supplied?}
+    INPUT -->|No| P0[Phase 0: Bootstrap]
+    P0 --> CONFIRM{Boundary confirm}
+    CONFIRM -->|Reject| STOP[Stop or reframe]
+    CONFIRM -->|Approve| P1
+    INPUT -->|Yes| P1[Phase 1: Discovery]
+    P1 --> P2[Phase 2: Ideate]
+    P2 --> P3{Phase 3: Verdict}
+    P3 -->|Split| REVIEW[Human verdict]
+    REVIEW --> P3
+    P3 -->|Go| P4[Phase 4: Spec]
+    P4 --> P5[Phase 5: Tech and UX design in parallel]
+    P5 --> RISK{Risk Gate}
+    RISK -->|No-Go| P4
+    RISK -->|Go| P6[Phase 6: Orbit implementation loop]
+    P6 -->|Stuck or budget hit| TRIAGE[Triage or checkpoint]
+    P6 -->|ACs met| SHIP[Guardian then Launch]
+```
 
-- Architect threshold: `85% per-step accuracy ^ 6 ≈ 38%` end-to-end. Acceptable only with verification gates between phases.
-- Adding a 7th sequential phase drops projected success to ~32% — UX cannot become its own phase.
-- Parallelisation does not multiply error rates because branches reconverge at the Risk Gate, not via shared mutable state.
+The diagram is explanatory only. Phase contracts, gates, rosters, budgets, and failure behavior in this file remain canonical.
 
-That accuracy budget is what makes the inter-phase verification gates mandatory rather than optional: every phase boundary carries one, and each is specified as that phase's **Exit gate** in § Phase Contracts (plus Orbit's in-loop convergence/cost/circuit-breaker audit inside Phase 6).
+## Workflow Shape Rationale
+
+Nexus core rule requires hierarchical decomposition when a large roster has real context or authority boundaries. Apex uses Vision and Orbit as sub-orchestrators because each owns a distinct merge surface; it does not create role-name-only supervisors.
+
+- Tech and UX work can run independently, but both reconverge at one Risk Gate before implementation.
+- Every sequential phase emits a typed artifact consumed by the next phase and has an explicit exit gate.
+- Orbit owns the bounded implementation loop; Nexus owns cross-phase checkpoints and final aggregation.
+- Adding another phase or hub requires a distinct owner, artifact boundary, and verification benefit—not an assumed reliability percentage.
 
 ## AUTORUN Chain Template
 

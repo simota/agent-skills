@@ -3,7 +3,8 @@
 Recipes / Subcommand Dispatch validator.
 
 Validates every SKILL.md against the rules defined in `_common/RECIPES.md`:
-  R-REC-01: Exactly one Default Recipe (✓) per skill with a Recipes section (ERROR)
+  R-REC-01: Exactly one fallback owner per skill with Recipes: one Default Recipe
+            (✓) or one explicit Default dispatch phase/workflow (ERROR)
   R-REC-02: Subcommand names are kebab-case, 2-16 chars (ERROR)
   R-REC-03: Reserved words (default/auto/help/list) unused (ERROR)
   R-REC-04: Recipe count, tiered (calibrated 2026-07-03 against 132-skill corpus):
@@ -129,6 +130,18 @@ def heading_issues(content: str) -> list[str]:
     return issues
 
 
+def default_dispatches(content: str) -> list[str]:
+    """Return valid explicit Default dispatch declarations from Subcommand Dispatch."""
+    section = re.search(r"^## Subcommand Dispatch\s*$\n(.*?)(?=^## |\Z)", content,
+                        re.MULTILINE | re.DOTALL)
+    if section is None:
+        return []
+    return re.findall(
+        r"^\*\*Default dispatch:\*\*\s*`((?:phase|workflow):[A-Za-z][A-Za-z0-9_-]*)`",
+        section.group(1), re.MULTILINE,
+    )
+
+
 def validate(skill: str, path: Path) -> tuple[list[str], list[str], list[str]]:
     content = path.read_text(encoding="utf-8")
     errors: list[str] = []
@@ -147,9 +160,15 @@ def validate(skill: str, path: Path) -> tuple[list[str], list[str], list[str]]:
         errors.append("R-REC-01: `## Recipes` table has no rows")
         return errors, warnings, infos
 
-    defaults = sum(1 for _, _, default in rows if "✓" in default)
-    if defaults != 1:
-        errors.append(f"R-REC-01: exactly one default (✓) required, found {defaults}")
+    recipe_defaults = sum(1 for _, _, default in rows if "✓" in default)
+    dispatch_defaults = len(default_dispatches(content))
+    fallback_owners = recipe_defaults + dispatch_defaults
+    if fallback_owners != 1:
+        errors.append(
+            "R-REC-01: exactly one fallback owner required "
+            f"(Default Recipe ✓ or explicit Default dispatch), found {fallback_owners} "
+            f"({recipe_defaults} Recipe, {dispatch_defaults} dispatch)"
+        )
 
     for _, subcmd, _ in rows:
         if subcmd in RESERVED:

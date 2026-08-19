@@ -2,7 +2,7 @@
 """
 Routing Oracle — mechanical reliability checks for Nexus's routing machinery.
 
-Six checks, all fail-open (S4: a script crash prints a warning and exits 0,
+Eight checks, all fail-open (S4: a script crash prints a warning and exits 0,
 it never blocks a merge on its own bug):
 
   RO-1 Dead-reference check
@@ -10,8 +10,8 @@ it never blocks a merge on its own bug):
        and nexus/reference/*.md must exist on disk. Catches a renamed/deleted
        file left dangling in prose (e.g. the routing-quick-start.md retirement).
 
-  RO-2 Ladder token-order assertion
-       nexus/SKILL.md's Auto Classify Chain Template cell must contain
+  RO-2 Default-dispatch token-order assertion
+       nexus/SKILL.md's explicit `phase:CLASSIFY` Default dispatch must contain
        REDIRECT before SELECT before LADDER (in that relative order), and
        nexus/reference/routing-matrix.md's LADDER clause must mention
        `compass` before `architect` (the ladder is compass-first,
@@ -51,6 +51,17 @@ it never blocks a merge on its own bug):
        as exempt from the exception. Found live: `optimize` is both a
        registered subcommand and a battery fixture requiring a GATE.
 
+  RO-7 Retired-reference residue
+       Reference files removed during Nexus scope consolidation must stay
+       absent, and no Nexus document may cite their retired filenames. The
+       owning contracts are routing-matrix, handoff-validation,
+       intent-clarification, orchestration-patterns, and apex-recipe.
+
+  RO-8 Confidence-gate shape
+       confidence-scoring.md must retain typed blocking unknowns and discrete
+       evidence bands, and must not reintroduce the retired source-weight
+       arithmetic or fixed clarification bonuses.
+
 Usage:
   python3 _common/scripts/routing-oracle.py [--severity warning|error|strict]
 
@@ -81,6 +92,18 @@ NEXUS_DIR = REPO_ROOT / "nexus"
 NEXUS_SKILL = NEXUS_DIR / "SKILL.md"
 ROUTING_MATRIX = NEXUS_DIR / "reference" / "routing-matrix.md"
 OUTPUT_FORMATS = NEXUS_DIR / "reference" / "output-formats.md"
+CONFIDENCE_SCORING = NEXUS_DIR / "reference" / "confidence-scoring.md"
+
+RETIRED_NEXUS_REFERENCES = (
+    "agent-communication-anti-patterns.md",
+    "apex-walkthrough.md",
+    "managed-agents-mapping.md",
+    "official-skill-categories.md",
+    "orchestration-anti-patterns.md",
+    "production-reliability-anti-patterns.md",
+    "routing-explanation.md",
+    "task-routing-anti-patterns.md",
+)
 
 # Matches backticked or plain relative paths under reference/ or _common/ ending .md,
 # with an optional leading `<skill-name>/` segment (e.g. `port/reference/x.md`).
@@ -161,19 +184,18 @@ def check_dead_references(findings: list[Finding]):
 
 
 def check_ladder_token_order(findings: list[Finding]):
-    """RO-2: REDIRECT before SELECT before LADDER in the classify chain template;
+    """RO-2: REDIRECT before SELECT before LADDER in the CLASSIFY Default dispatch;
     compass before architect in the LADDER clause."""
     skill_content = NEXUS_SKILL.read_text(encoding="utf-8")
-    haystack = skill_content
-    if "Auto Classify" not in haystack:
-        # The Recipes table may live in the externalized registry
-        # (`_common/RECIPES.md` "Externalized registry"); follow the pointer.
-        idx = NEXUS_DIR / "reference" / "recipes-index.md"
-        if idx.is_file():
-            haystack = idx.read_text(encoding="utf-8")
-    m = re.search(r"\|\s*Auto Classify\s*\|.*?\|\s*(`[^`]+`)\s*\|", haystack)
+    m = re.search(
+        r"\*\*Default dispatch:\*\*\s*`phase:CLASSIFY`\s+with flow\s+(`[^`]+`)",
+        skill_content,
+    )
     if not m:
-        findings.append(Finding("RO-2", "WARNING", "Auto Classify row not found in nexus SKILL.md or reference/recipes-index.md — token-order check skipped"))
+        findings.append(Finding(
+            "RO-2", "ERROR",
+            "explicit `phase:CLASSIFY` Default dispatch with a flow was not found in nexus/SKILL.md",
+        ))
         return
     chain_template = m.group(1)
     tokens = ["REDIRECT", "SELECT", "LADDER"]
@@ -181,7 +203,7 @@ def check_ladder_token_order(findings: list[Finding]):
     for t in tokens:
         idx = chain_template.find(t)
         if idx == -1:
-            findings.append(Finding("RO-2", "ERROR", f"token `{t}` missing from Auto Classify Chain Template: {chain_template}"))
+            findings.append(Finding("RO-2", "ERROR", f"token `{t}` missing from CLASSIFY Default dispatch flow: {chain_template}"))
             return
         positions.append(idx)
     if positions != sorted(positions):
@@ -389,6 +411,50 @@ def check_bare_subcommand_dispatch(findings: list[Finding]):
             ))
 
 
+def check_retired_reference_residue(findings: list[Finding]):
+    """RO-7: consolidated Nexus references must not be recreated or cited."""
+    reference_dir = NEXUS_DIR / "reference"
+    files_to_scan = [NEXUS_SKILL] + sorted(reference_dir.glob("*.md"))
+    residue: list[str] = []
+
+    for name in RETIRED_NEXUS_REFERENCES:
+        if (reference_dir / name).exists():
+            residue.append(f"retired file exists: nexus/reference/{name}")
+        for path in files_to_scan:
+            if path.name == name:
+                continue
+            if name in path.read_text(encoding="utf-8"):
+                residue.append(f"{path.relative_to(REPO_ROOT)} cites retired `{name}`")
+
+    if residue:
+        findings.append(Finding("RO-7", "ERROR", "; ".join(residue)))
+
+
+def check_confidence_gate_shape(findings: list[Finding]):
+    """RO-8: confidence stays typed/discrete instead of pseudo-precise."""
+    if not CONFIDENCE_SCORING.is_file():
+        findings.append(Finding("RO-8", "ERROR", "nexus/reference/confidence-scoring.md is missing"))
+        return
+
+    text = CONFIDENCE_SCORING.read_text(encoding="utf-8")
+    required = ("## Blocking Unknown Gate", "## Discrete Evidence Bands", "`authority`")
+    missing = [token for token in required if token not in text]
+    retired_patterns = {
+        "source-weight formula": r"git_score\s*[×*]\s*0\.30",
+        "fixed clarification bonus": r"(?:boost|bonus)[^\n]*\+0\.20",
+        "weighted source table": r"\|\s*Source\s*\|\s*Weight\s*\|",
+    }
+    returned = [label for label, pattern in retired_patterns.items() if re.search(pattern, text, re.IGNORECASE)]
+
+    if missing or returned:
+        parts = []
+        if missing:
+            parts.append("missing " + ", ".join(missing))
+        if returned:
+            parts.append("retired construct returned: " + ", ".join(returned))
+        findings.append(Finding("RO-8", "ERROR", "; ".join(parts)))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--severity", choices=("warning", "error", "strict"), default="warning")
@@ -401,6 +467,8 @@ def main() -> int:
     safe_check(check_fallback_field, findings)
     safe_check(check_roster_completeness, findings)
     safe_check(check_bare_subcommand_dispatch, findings)
+    safe_check(check_retired_reference_residue, findings)
+    safe_check(check_confidence_gate_shape, findings)
 
     errors = [f for f in findings if f.level == "ERROR"]
     warnings = [f for f in findings if f.level == "WARNING"]

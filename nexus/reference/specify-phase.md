@@ -55,7 +55,7 @@ Two existing layers sit next to this one and do not overlap it:
 - Single-spawn or trivial run — use the intent contract directly.
 - The user supplied **explicit measurable acceptance criteria** already; there is nothing to translate.
 - The request is a factual lookup or a meta-question (the LADDER carve-out shapes).
-- The chain is `pack`, `proactive`, or another inline no-spawn Recipe.
+- The route is the `pack` Recipe, proactive no-args mode, or another inline no-spawn Recipe.
 
 Record the outcome either way: `Specify: applied (trigger: <which>)` or `Specify: skipped (reason: <which>)`. A silent skip is indistinguishable from a bug.
 

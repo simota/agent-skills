@@ -1,8 +1,8 @@
-# Loop-Engineering Primitives — Claude Code, Codex & agy (2026-06)
+# Loop-Engineering Primitives — Claude Code, Codex & agy
 
 How the **loop engineering** pattern maps onto concrete orchestration primitives in each hub engine. Nexus stays the routing/recipe layer; this file is the reference for *which primitive implements which loop part* when designing a `/goal`-style or apex/summit loop. For the concept, lineage, and applicability limits see `orbit/reference/loop-engineering.md`.
 
-> Snapshot date: 2026-06-29 (refreshed; previously 2026-06-15). Versions move within weeks — verify against primary docs (`code.claude.com/docs`, `developers.openai.com/codex`) before quoting a version number.
+> Capability mapping, not a version registry. `_common/CLI_COMPATIBILITY.md` owns current versions, flags, model IDs, and availability. Verify current primary docs before executing a version-sensitive branch; parenthetical versions below are historical provenance only.
 
 ## The pattern → primitive map
 

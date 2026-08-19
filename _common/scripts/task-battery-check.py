@@ -6,9 +6,9 @@ battery (`nexus/reference/task-battery.md`).
 The battery has 35 items across two verification tiers:
 
   Items 1-28 (byte-identifiable): each item's "Expected routing" column
-  claims a specific Recipe/task-type mapping backed by literal text in
+  claims a specific Recipe/task-type/entry-mode mapping backed by literal text in
   `nexus/reference/routing-matrix.md`, `nexus/reference/signal-keywords.md`,
-  or the Recipes table in `nexus/SKILL.md`. This script asserts that literal
+  or the Recipe registry/default dispatch in `nexus/SKILL.md`. This script asserts that literal
   evidence is still present (verbatim substring match) — it proves the
   routing *artifact* hasn't drifted out from under the battery's claim.
   It does NOT simulate classify's live semantic mapping of the item's
@@ -114,7 +114,7 @@ MECHANICAL_ITEMS = [
     (25, "best possible design keyword -> runway", "signal-keywords.md", "`best possible design`"),
     (26, "generate a full package keyword -> package", "signal-keywords.md",
      "`generate a full package`"),
-    (27, "bare /Nexus -> proactive", "signal-keywords.md", "`/Nexus` (no arguments) | `proactive`"),
+    (27, "bare /Nexus -> proactive mode", "signal-keywords.md", "`/Nexus` (no arguments) | `proactive mode` (non-Recipe)"),
     (45, "review-to-zero keyword -> quell", "signal-keywords.md",
      "`loop until zero findings`"),
     (46, "behavior-preserving review loop -> quell profile=refactor", "signal-keywords.md",
@@ -156,7 +156,7 @@ MECHANICAL_ITEMS = [
      "`pack`, `skill pack`, `skill profile`, `enable skills`, `switch profile`, `skill preset` | `pack`"),
 ]
 
-# Items 29-35: judgment items. Each requires actually walking classify
+# Items 29-35: judgment items. Each requires actually walking CLASSIFY
 # (LADDER's live compass/architect spawn, or GATE's live confidence score) —
 # no static substring search can stand in for that.
 JUDGMENT_ITEMS = [

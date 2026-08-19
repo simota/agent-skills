@@ -1,8 +1,21 @@
 # Recipe Contract — canonical structure & vocabulary for nexus recipes
 
-**Purpose:** The authoring standard every nexus **recipe reference** (`reference/*-recipe.md`, plus the inline contracts in `reference/inline-recipes.md`) is held to. nexus recipes are heavyweight multi-agent orchestrations — distinct from the lightweight cross-skill Recipe/Subcommand protocol in `_common/RECIPES.md`, which governs the SKILL.md `## Recipes` table and naming. This file is the **measuring stick** for consistency audits and the source of the canonical phrasings that prevent drift.
+**Purpose:** The authoring standard every nexus **recipe reference** (`reference/*-recipe.md`, plus inline contracts in `reference/inline-recipes.md`) is held to. A Recipe is a reusable orchestration preset over existing specialist boundaries, not a new Nexus domain capability: it owns chain selection/order, handoffs, termination, and verification, while specialists own methodology and work products. This differs from the lightweight cross-skill Recipe/Subcommand protocol in `_common/RECIPES.md`.
 
 **Read when:** authoring a new recipe, leveling up a thin one, or normalizing phrasing across recipes.
+
+---
+
+## Recipe Admission Gate
+
+This gate applies to every **new** Recipe proposal; existing Recipe contracts are not re-admitted by this gate. Admit only when **all** conditions pass:
+
+1. **Cross-boundary:** the workflow requires at least two distinct specialist boundaries from `_common/BOUNDARIES.md`; multiple agents inside one specialist responsibility do not qualify.
+2. **Reusable orchestration value:** cite at least three independent occurrences (completed runs, repeated user requests, or named recurring project workflows) and show that the preset reduces routing, handoff, termination, or verification ambiguity enough to outperform an ad-hoc chain. A one-off or merely plausible future chain is not a Recipe.
+3. **No ownership overlap:** no existing specialist, Recipe, or subcommand already owns the request shape. A clearer alias or domain-specific restatement is overlap, not novelty.
+4. **Closed execution contract:** name the Recipe owner, each phase's specialist owner, termination bound or explicit non-loop completion condition, independent verification oracle, and residual route. The producer cannot be its sole verifier.
+
+Record the evidence and `PASS`/`FAIL` result for all four conditions before cross-index wiring. If any condition fails, reject registry admission and direct-route to the owning specialist or use an ad-hoc minimum viable chain. Nexus MUST NOT register a Recipe that a single specialist can complete end to end, and MUST NOT import that specialist's domain methodology into Nexus to manufacture cross-boundary scope.
 
 ---
 

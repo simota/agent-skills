@@ -20,7 +20,7 @@ Extended descriptions for verbose Recipe rows, and the canonical home for the fa
 | **Quality-Max** (expensive, confirm) | `acceptance` · `growth-acceptance` · `summit` · `podium` · `wish` · `runway` · `crucible` · `silhouette` · `lattice` · `chorus` · `assay` · `hallmark` · `rebrand` · `marquee` | **axis = what is being maximized, and each member owns exactly one question with one oracle.** Merge/lifecycle: `acceptance` (proof-carrying merge) → `growth-acceptance` (post-launch). Artifact: `summit` (strategic *code*, engine triangulation) · `podium` (content/slides) · `wish` (the single most important ask, no second delivery — vs `converge` in **Loop**, which iterates to a *standard* bar with revisions expected). **Design/brand wing — one question each:** *best?* → `runway` · *works at all?* → `crucible` (the **floor**; orthogonal to `runway` and commonly sequential — ceiling first, floor proven after) · *recognizably ours?* → `silhouette` · *one system?* → `lattice` · *one product across platforms?* → `chorus` · *what is the brand?* → `hallmark` · *landed everywhere?* → `rebrand` · acquisition LP → `marquee`. **Code-design wing:** *are the design claims true?* → `assay`; `assay`(prove) → `anneal`(fix) is a **measure→fix pair** spanning this family and **Improve**, with `anneal` the cheaper default for "find what's wrong". Per-recipe oracles, cost, confirm tier and sibling axes → the §§ below. |
 | **Grounded content** | `newsroom` | output = an article whose every factual claim is provenance-proven. **newsroom** = claim-grounding maximization for a single written artifact: Evidence Ledger (per `reference/research-grounding.md`, primary-source-authoritative) built *before* writing (compose) or against an existing draft (audit) → producer≠verifier claim audit with **citation-support re-open** → adversarial refutation of load-bearing claims (≥2 independent T1–T3 sources) + staleness check → remediation ≤2 cycles → named **Provenance Report**; unresolvable claims marked `[UNVERIFIED]`, never silently kept or deleted. Axis vs neighbors: `podium` = package *polish* across formats (grounding is one Phase 4 branch there — newsroom inverts the weighting: grounding IS the deliverable); `zine` direct = authoring with no grounding requirement; `attest` = impl-vs-*spec* (newsroom is prose-vs-*world*); `canon` = named-standards compliance. |
 | **Document package** | `package` (incl. `venture`) | 12-domain preset registry |
-| **Meta / control** | `classify` · `proactive` · `pack` | routing · project scan · skill-profile |
+| **Meta / control** | `pack` | skill-profile switch; CLASSIFY is an internal phase and proactive is a no-args invocation mode, not Recipes |
 
 ---
 
@@ -316,41 +316,3 @@ Read: `reference/eureka-recipe.md`, `reference/research-grounding.md`.
 **Generalized document-package generator** — **12-domain preset registry**: `startup` (the legacy `venture` blueprint) / generic / research / ai-adoption / legal* / saas / media / growth / career / learning / hiring* / local-gov*. Per-domain swap: directories, role→skill map, traceability anchor (F-/H-/UC-/R-/P-/E-/T-/LO-/I-), risk gates (*=mandatory). Single Phase 0-6 engine. Depth 5-28 agents (`startup` tiers: lite 6-8, mvp(default) 14-18, raise 16-20, full 24-28). **Confirm full depth.**
 
 Read: `reference/package-recipe.md`. Startup-preset deep blueprint: `reference/venture-recipe.md`.
-
-
-## Recipe Families — Axis Table (SKILL.md excerpt)
-
-| Family | Recipes | Axis (one-line; full → `reference/recipes-detail.md` § Recipe Families) |
-|--------|---------|-----------------|
-| **Fix** | `bug` · `security` | defect vs vulnerability |
-| **Improve** (existing code) | `refactor` · `optimize` · `kaizen` · `anneal` · `restyle` | known restructure / perf number / polish one feature / discover design weaknesses / UI-visual. `improve`/`polish`/`enhance` overloaded → REDIRECT (UI→`restyle`, feature→`kaizen`, code design→`anneal`); prove (`assay`) vs fix (`anneal`) |
-| **Loop** (autonomous / iterative) | `goal` · `converge` · `quell` | **what the completion oracle is** — `/goal` setup only, in-session rubric score, or an external reviewer's finding count hitting zero. Unattended→`orbit`, discovery→ship→`apex`. Every loop passes `_common/LOOP_PRECONDITIONS.md` first |
-| **Build** (new) | `feature` · `apex` | single guided build / discovery→ship one-shot (8-25 agents) |
-| **Discover → build pairs** | `spec`→`feature`/`apex` · `charter`→`enact` · `layer`→`sigil` | feature spec / repo team+work plan / repo operating layer — each stops at a design, the pair runs it |
-| **Reason** (no code) | `gedanken` · `delve` | abstract thought-experiment on a claim / grounded deep-dive of a shipped feature. `evolve a feature` overloaded → REDIRECT |
-| **Comprehend** (no code) | `cartograph` · `chronicle` · `verity` · `abide` | **space vs time vs standing coherence vs change conformance**: multi-repo structure today · commit history/how it got here · where the record and the reality disagree (contradiction/stale/unexplained, report-only) · whether a *change set* held to the standing decision record (violates/silently-supersedes/obsolete-compliance/ungoverned, report-only). `verity` vs `abide` = no change anchor vs change-anchored |
-| **Verdict** (which feature) | `essential` · `killer` · `trim` | must-have / differentiator / remove dead-weight (inverse). Shared gate: `reference/verdict-gate.md` |
-| **Reproduce, Synthesize & Invent** | `clone` · `fuse` · `graft` · `transmute` · `migrate` · `eureka` | source count — 1 faithful / ≥2 synthesized / host+donor / own-source cross-language / own-system completeness; `eureka` has zero by construction. Shared: `_common/DIFFERENTIAL_PARITY.md` (all but `eureka`) |
-| **Quality-Max** (expensive, confirm) | `acceptance` (+`layer=c`) · `summit` · `podium` · `wish` (+`domain=lp`) · `runway` · `crucible` · `silhouette` · `lattice` · `chorus` · `assay` · `hallmark` · `rebrand` | one question each — best?→`runway` · works at all?→`crucible` · recognizably ours?→`silhouette` · one system?→`lattice` · one product?→`chorus` · brand?→`hallmark` · landed?→`rebrand` · claims true?→`assay` |
-| **Grounded content** | `newsroom` | claim-grounding for one article — Evidence Ledger → claim audit → refutation → **Provenance Report** (zero ungrounded facts) |
-| **Document package** | `package` (incl. `venture`) | 12-domain preset registry |
-| **Meta / control** | `classify` · `proactive` · `pack` | routing · project scan · skill-profile |
-
-
-
-## Recipe Families — Inline Axis Summary (SKILL.md excerpt)
-
-**Fix** `bug`·`security` (defect vs vulnerability) · **Improve** `refactor`·`optimize`·`kaizen`·`anneal`·`restyle` (known restructure / perf number / polish one feature / discover design weaknesses / UI-visual; `improve`/`polish`/`enhance` → REDIRECT) · **Loop** `goal`·`converge`·`quell` (axis = *what the completion oracle is*; unattended→`orbit`, discovery→ship→`apex`; every loop passes `_common/LOOP_PRECONDITIONS.md` first) · **Build** `feature`·`apex` (single guided build vs discovery→ship one-shot, 8-25 agents) · **Discover→build pairs** `spec`→`feature`/`apex`, `charter`→`enact`, `layer`→`sigil` (each stops at a design; the pair runs it) · **Reason** `gedanken`·`delve` (abstract claim vs grounded deep-dive; `evolve a feature` → REDIRECT) · **Comprehend** `cartograph`·`chronicle`·`verity`·`abide` (space vs time vs standing coherence vs change conformance — the last two are report-only defect registers; `verity` has no change anchor, `abide` judges a change set against the standing record incl. records it never touched) · **Verdict** `essential`·`killer`·`trim` (must-have / differentiator / remove dead-weight; shared gate `reference/verdict-gate.md`) · **Reproduce, Synthesize & Invent** `clone`·`fuse`·`graft`·`transmute`·`migrate`·`eureka` (axis = source count, `eureka` zero by construction; shared `_common/DIFFERENTIAL_PARITY.md`) · **Quality-Max** (expensive, confirm) `acceptance`(+`layer=c`)·`summit`·`podium`·`wish`(+`domain=lp`)·`runway`·`crucible`·`silhouette`·`lattice`·`chorus`·`assay`·`hallmark`·`rebrand` — one question each: best?→`runway` · works at all?→`crucible` · recognizably ours?→`silhouette` · one system?→`lattice` · one product?→`chorus` · brand?→`hallmark` · landed?→`rebrand` · claims true?→`assay` · **Grounded content** `newsroom` (claim-grounding for one article → Provenance Report) · **Document package** `package` incl. `venture` (12-domain preset registry) · **Meta/control** `classify`·`proactive`·`pack`.
-
-
-
-## Confusable-Family Axes (SKILL.md excerpt)
-
-The four families where siblings are genuinely confusable, with the axis that separates them:
-- **Improve** `refactor`·`optimize`·`kaizen`·`anneal`·`restyle` — known restructure / perf number / polish one feature / discover design weaknesses / UI-visual. `improve`/`polish`/`enhance` is overloaded → REDIRECT.
-- **Loop** `goal`·`converge`·`quell` — the axis is *what the completion oracle is*. Unattended→`orbit`, discovery→ship→`apex`. Every loop passes `_common/LOOP_PRECONDITIONS.md` first.
-- **Reproduce, Synthesize & Invent** `clone`·`fuse`·`graft`·`transmute`·`migrate`·`eureka` — the axis is source count; `eureka` has zero by construction. Shared: `_common/DIFFERENTIAL_PARITY.md`.
-- **Quality-Max** (expensive, confirm) — one question each: best?→`runway` · works at all?→`crucible` · recognizably ours?→`silhouette` · one system?→`lattice` · one product?→`chorus` · brand?→`hallmark` · landed?→`rebrand` · claims true?→`assay` · conformance?→`acceptance` (+`layer=c`) · `summit` · `podium` · `wish` (+`domain=lp`).
-
-Remaining families (Fix, Build, Discover→build pairs, Reason, Comprehend, Verdict, Grounded content, Document package, Meta/control) and full axis prose → `reference/recipes-detail.md` § Recipe Families.
-

@@ -10,9 +10,10 @@
 
 ## Recipes
 
+Fallback is owned by the internal `phase:CLASSIFY` Default dispatch in `SKILL.md`; no Recipe row is marked default.
+
 | Recipe | Subcommand | Default? | When to Use | Chain Template | Read |
 |--------|-----------|---------|-------------|----------------|------|
-| Auto Classify | `classify` | ✓ | No Recipe specified — auto-classification. **Redirects to a curated Recipe when the resolved intent matches one; ad-hoc chain only for no-Recipe task types.** | `RESOLVE → GATE → MULTI? → REDIRECT? → SELECT → LADDER? → CHAIN_SELECT` | `reference/routing-matrix.md` (Classify Flow contract) |
 | Bug Fix | `bug` | | Bug reports and fix requests | `Scout[RCA] → Sherpa? → Radar[failing repro] → Builder[root-cause] → Radar[verify] → Guardian`| `reference/routing-matrix.md` |
 | Feature | `feature` | | New web/backend/generic feature. **iOS/Android native → `MOBILE_NATIVE` (Native) instead.** | `Lens?[reuse] → Sherpa[spec+AC] → Forge? → Builder → Radar[+verify gate] → Guardian`| `reference/routing-matrix.md` |
 | Security | `security` | | Security response. **`mode=to-zero`** wraps it in a scanner-finding sweep driven to zero at a CVSS floor (`_common/FINDING_LEDGER.md` member; `RISK-ACCEPTED` needs an owner + expiry and re-opens when it lapses). | `Sentinel[triage] → Probe?[confirm-exploit] → Builder[root-cause] → Probe/Radar[verify-closed] → Vigil? → Guardian`| `reference/routing-matrix.md` |
@@ -25,8 +26,7 @@
 | Quell | `quell` |  | **Review-to-zero fix loop** — fix → external review engine (Codex default) → repeat until zero open findings at/above the severity floor; disposition ledger + oscillation detection make zero reachable and honest. `profile=general\|refactor` (refactor = Equivalence Gate + frozen tests + behavior-changing fixes deferred). | See `reference/quell-recipe.md` | `reference/quell-recipe.md`, `judge/reference/codex-review-usage.md` |
 | Whet | `whet` |  | **Mutation-survivor loop** — run a mutation engine over the frozen scope, kill survivors, re-run, until every declared partition meets its **threshold contract**. `EQUIVALENT` needs a failed distinguishing-test attempt (it shrinks the score's denominator), implementation-mirroring tests raise `TAUTOLOGICAL-KILL`, and code deletion closes as `CLOSED-BY-REMOVAL` rather than as a kill. | See `reference/whet-recipe.md` | `reference/whet-recipe.md`, `siege/reference/mutation-testing-advanced.md` |
 | Burnish | `burnish` |  | **Design review-to-zero loop** — capture the rendered surface → external multimodal review engine → fix → re-capture, until zero open hard findings at/above the floor **and** every declared soft axis ≥ 2 (split oracle). Frozen Finding Charter + coordinate-free fingerprints + Appearance Gate keep it convergent. `profile=general\|faithful` (faithful = reference conformance + `REFERENCE-DRIFT` blocks at any severity). | See `reference/burnish-recipe.md` | `reference/burnish-recipe.md`, `reference/quell-recipe.md` |
-| Proactive | `proactive` | | `/Nexus` with no arguments — project state scan | `Scan project → recommend` | `reference/proactive-mode.md` |
-| Apex | `apex` |  | Full-cycle auto-implementation: discovery → spec → parallel design → risk gate → loop → ship. | See `reference/apex-recipe.md` | `reference/apex-recipe.md`, `reference/apex-walkthrough.md` |
+| Apex | `apex` |  | Full-cycle auto-implementation: discovery → spec → parallel design → risk gate → loop → ship. | See `reference/apex-recipe.md` | `reference/apex-recipe.md` |
 | Charter | `charter` |  | Repo-wide analysis → self-driving Charter, team design included — stops at the document. | See `reference/charter-recipe.md` | `reference/charter-recipe.md` |
 | Enact | `enact` |  | Execute a Charter end-to-end. | See `reference/enact-recipe.md` | `reference/enact-recipe.md` |
 | Operating Layer | `layer` |  | Design + stand up a repo's operating layer — Loom designs, Sigil authors, Nexus registers. | See `reference/layer-recipe.md` | `reference/layer-recipe.md` |
@@ -63,7 +63,7 @@
 | Package | `package` |  | Generalized document-package generator. | See `reference/package-recipe.md` | `reference/package-recipe.md`, `reference/venture-recipe.md` (startup blueprint) |
 | Pack | `pack` | | **Skill ecosystem control** (meta) — switch active Claude Code skill profile per workstream. Forms: `list` / `current` / `<name>` / `reset`. **Confirms diff before writing `settings.json`.** | Inline edit (no spawn) | `reference/pack-subcommand.md`, `_common/SKILL_PACKS.md` |
 
-### Signal Keywords → Recipe
+### Signal Keywords → Routing Destination
 
 For natural-language input without an explicit subcommand. **Subcommand match always wins.**
 

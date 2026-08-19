@@ -234,7 +234,7 @@ All four make requirements explicit; they differ by **what the object is** and *
 **Rule of thumb**: Chisel changes the words of an instruction so a machine can execute and a third party can score it. Oracle decides what the instruction should be part of. Scribe writes for humans. Attest checks afterwards.
 
 **Two traps:**
-- **The user's own request being ambiguous is not a Chisel task.** That is `classify` GATE (`intent-clarification.md`). Chisel needs *supplied prompt text as an object*.
+- **The user's own request being ambiguous is not a Chisel task.** That is the internal CLASSIFY GATE (`intent-clarification.md`). Chisel needs *supplied prompt text as an object*.
 - **A bad output is not evidence of a vague prompt.** Run Oracle's five-layer triage (Instruction / Context / Capability / Tool / Evaluation) before routing to Chisel — retrieval and evaluator failures are routinely misdiagnosed as prompt failures.
 
 Prompt text inside a `SKILL.md` splits the same way: the file's structure and normalization → `Gauge` / `Sigil` / `Architect`; the vague wording inside its instructions → Chisel.

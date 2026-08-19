@@ -297,7 +297,7 @@ re-spawning one-shots or resuming with `-c`/`--conversation <id>`.
 
 ## Dynamic Workflows Pattern Vocabulary (official ↔ Nexus)
 
-Claude Code's Dynamic Workflows feature names six canonical orchestration shapes. When a request describes one of these, use the official name (per the shared-vocabulary rule in `managed-agents-mapping.md §3`) and reuse the matching Nexus pattern below — they are the same shapes under different labels. On Claude Code, a large fan-out of any of these may delegate execution to a native dynamic workflow (`managed-agents-mapping.md §5`); off Claude Code, implement with the Nexus pattern directly.
+Claude Code's Dynamic Workflows feature names six canonical orchestration shapes. When a request describes one of these, reuse the matching Nexus pattern below. On Claude Code, a large fan-out may delegate execution to a native dynamic workflow; off Claude Code, implement with the Nexus pattern directly. Availability and runtime limits are volatile and belong in `_common/CLI_COMPATIBILITY.md`, not in this pattern contract.
 
 | Dynamic Workflows pattern | Nexus equivalent |
 |---------------------------|------------------|
@@ -308,7 +308,7 @@ Claude Code's Dynamic Workflows feature names six canonical orchestration shapes
 | **Tournament** | Pattern B fan-out + pairwise judge (see `essential`/`killer` convergence) |
 | **Loop-until-done** | Pattern D: Recovery Loop / loop-until-dry |
 
-What each official pattern does, and the single-context failure modes the six combat (agentic laziness, self-preferential bias, goal drift), are described in `managed-agents-mapping.md §5`. [Source: claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code]
+Current product availability must be verified at execution time against Anthropic's official announcement: [Introducing Dynamic Workflows](https://claude.com/blog/introducing-dynamic-workflows-in-claude-code). Nexus owns only the stable pattern mapping above.
 
 ---
 

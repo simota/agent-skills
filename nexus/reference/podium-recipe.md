@@ -807,7 +807,7 @@ Is the goal a UI design + code pipeline?
 
 Does the content artifact need polished prose AND polished visuals AND
   (cross-format OR audience walkthrough OR claim grounding)?
-  └─ NO  → single skill (or chain manually via Nexus classify)
+  └─ NO  → single skill (or chain manually via the Nexus CLASSIFY phase)
   └─ YES ↓
 
 Is the work a strategic code decision (architecture / release-critical)?

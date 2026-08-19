@@ -2,6 +2,8 @@
 
 Per-engine authoring protocols that apply once the hub orchestrator is detected (see § Orchestrator Detection below). **Canonical home** for the Agent Spawn Template and the Orchestrator Detection table — SKILL.md carries only the dispatch-critical minimum and a pointer here.
 
+**Volatile runtime facts:** `_common/CLI_COMPATIBILITY.md` is authoritative for current model IDs, CLI versions, flags, availability, and limits. Dates and product names below explain an authoring branch but never override that compatibility matrix or current official documentation.
+
 ## Orchestrator Detection
 
 Before the first spawn, detect which CLI drives **this hub session** (implicit in the available tooling — detect once, reuse), then bind the spawn API, authoring protocol, and model map:
@@ -140,8 +142,8 @@ Codex hub: the hub runs **`gpt-5.6-sol`**; every spawned subagent runs the role-
 
 
 ## Operational Notes for Spawns
-- **Scoring:** use the weighted formula in `confidence-scoring.md`; its 3/2/1/0 table is a summary, usable as the sole score only to cap compute under heavy fan-out.
-- **References:** load only files in the current Workflow phase row; skip anti-pattern refs unless the chain has 4+ agents.
+- **Scoring:** use the discrete evidence bands and typed blocking-unknown gate in `confidence-scoring.md`; do not invent source weights or average away an unresolved Authority/Scope/Goal.
+- **References:** load only files in the current Workflow phase row; structural rejection rules live with their owner (`routing-matrix.md`, `handoff-validation.md`, `guardrails.md`).
 - **Output:** `_STEP_COMPLETE`/`NEXUS_HANDOFF` minimum is Summary + Status + Next; add Recommended/Optional fields by complexity per `_common/HANDOFF.md`.
 - **State:** track Phase + Step at minimum; keep full `_NEXUS_STATE` for 4+ step chains.
 - **Agent roles:** focus on the concrete task and output format, not personality adoption.
