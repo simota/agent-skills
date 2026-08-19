@@ -40,11 +40,26 @@ total_quality_score:
   risk_inverse: 0.15
 ```
 
+## Axis Override (applies before the grade is read)
+
+The weighted sum ranks PRs against each other; it does not clear any one of them. A composite is an average, and an average is exactly the operation that lets one maxed axis be paid for by four comfortable ones — a 20-line auth-response change scores `Size: excellent`, `Focus: high`, `Tests: present` and lands at `A+`, while leaking account existence.
+
+So the grade is read **after** these overrides, never instead of them:
+
+| Condition | Override |
+|-----------|----------|
+| `security_classification` is `CRITICAL` or `SENSITIVE` | grade caps at `B`; Sentinel review required whatever the score |
+| Any Change Risk Envelope axis at `high` (see `risk-assessment.md` § Axis-Max Triggers) | grade caps at `B+`; that axis's specialist is required |
+| Size component is `excellent` **only because** the diff is small, while a contract, auth path, or persisted state changed | ignore the size credit; score size as `acceptable` at best |
+| Size component is poor **only because** the diff is mechanical or generated | exclude those lines and rescore (`pr-split-strategy.md` § Visual Size Exception) |
+
+`A+ = merge immediately` is therefore never reachable for a change touching auth, money, privacy, persisted state, or a published contract. Those merge on evidence and specialist judgment, not on a score.
+
 ## Grade Mapping
 
 | Grade | Score | Meaning |
 |-------|-------|---------|
-| `A+` | `95-100` | merge immediately |
+| `A+` | `95-100` | merge immediately — **only if no Axis Override applies** |
 | `A` | `85-94` | quick review |
 | `B+` | `75-84` | standard review |
 | `B` | `65-74` | careful review |

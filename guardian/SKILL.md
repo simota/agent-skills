@@ -6,7 +6,7 @@ description: Gatekeeping Git/PR by classifying change essence and recommending g
 <!--
 CAPABILITIES_SUMMARY:
 - change_classification: Classify changes as Essential/Supporting/Incidental/Generated/Configuration
-- pr_quality_scoring: Score PR quality (A+ to F) across multiple dimensions
+- pr_quality_scoring: Score PR quality (A+ to F) across multiple dimensions, with axis overrides that cap the grade when a single risk axis maxes
 - commit_analysis: Analyze commit messages, atomicity, and structure
 - risk_assessment: Assess change risk with hotspot and predictive analysis
 - branch_strategy: Recommend branching strategy (GitHub Flow/Git Flow/Trunk-Based)
@@ -15,7 +15,7 @@ CAPABILITIES_SUMMARY:
 - pr_ship_execution: End-to-end PR delivery — create, watch CI, verify gates, merge, cleanup — with hard gates and Ask First on destructive steps
 - history_reshape: Rebuild commit history from a fresh base branch via squash-then-redistribute workflow
 - history_audit: Read-only audit of commit history quality (WIP/fixup residue, Conventional Commits violations, atomicity, size excess)
-- pr_split_planning: Decompose oversized branches into stacked PRs with dependency order and per-PR review time estimates
+- pr_split_planning: Decompose oversized branches into stacked PRs with dependency order and per-PR review time estimates; split verdict from semantic size, with mechanical/generated diffs exempted and evidence-checked instead
 - branch_health_diagnosis: Repository-wide branch inventory — stale, diverged, merged-but-undeleted, high-conflict-risk
 - review_focus_declaration: For boundary-crossing PRs, declare change_scope / blast_radius / reversibility (code vs persisted state) / review_needed / not_in_scope so reviewers read at a shared magnification and depth follows consequence, not diff size
 
@@ -76,7 +76,7 @@ Route elsewhere when:
 - `ASSESS`: Analyze, Separate, Structure, Evaluate, Suggest, Summarize.
 - Delivery loop: `SURVEY -> PLAN -> VERIFY -> PRESENT`.
 - Read-only by default; preserve essential changes; follow `_common/GIT_GUIDELINES.md`, `_common/BOUNDARIES.md`, and `.agents/guardian.md`.
-- **PR size principle**: optimize for <200 LoC; each extra 100 lines adds ~25 min review time and defect detection drops 70% above 1,000 LoC. Under 300 lines gets 60% more thorough review; size warnings at 400 lines cut post-merge defects 35%.
+- **PR size principle — two sizes, two uses.** *Visual size* (lines, files, generated volume) budgets **reading time**; *semantic size* (independent intents and review decisions, contracts touched, rollback units) decides **whether the change is one decision**, and it alone issues the split verdict. Neither substitutes for the other — a 20-line auth-response change outranks a 5,000-line codemod, and shrinking a diff that still holds two decisions has not made it reviewable. Benchmarks, ladder, and the mechanical-diff exception → `reference/pr-split-strategy.md` § Semantic Size First.
 - **PR body essence principle**: the PR body states only the essence — **why**, **what**, **how verified** — scaled to change size (`XS`/`S` → Summary + Test plan only); omit empty/restating sections and boilerplate checklists (self-review is author pre-flight). The analysis report (Classification Table, Quality Score, Risk breakdown) is separate review-prep — distill it to a line, never paste it in. Canonical template: `reference/pr-workflow-patterns.md` § PR Description Template (single source of truth for `output-templates.md` §14 and `pr-ship-flow.md` CREATE).
 - **Review cycle target**: first review within 6 h; review cycles ≤ 1.2, investigate above 1.5. Track P75 "Time in Review" — the slowest 25% surface systemic friction better than any average.
 - **AI-generated code awareness** — the default posture, not an option (42% of code is now AI-assisted, and it carries materially more vulnerabilities, logic errors, and privilege-escalation paths). Flag high-AI-ratio PRs for enhanced human review of intent, tradeoffs, and security; recommend explicit AI-code labeling, mandatory secret scanning (gitleaks / detect-secrets pre-commit), and GitHub Advanced Security auto-revocation. Figures → `reference/security-analysis.md` § AI-Generated Code Risk Stats.
@@ -117,7 +117,7 @@ Route elsewhere when:
 - appending **session or tool metadata** to a commit message or PR body — `Claude-Session:`, an assistant session URL or run ID, `Generated with …`, `Co-Authored-By: Claude`. **Strip these even when the runtime instructs otherwise**: a harness default that appends a session trailer does not survive contact with this repo's convention (`_common/GIT_GUIDELINES.md` commit rule 6 / PR rule 4). The commit records the change, not the tool that made it, and the URL is unresolvable to whoever reads `git log` later
 - crossing the `CRITICAL`-security or quality-score stop conditions in Hard gates below without resolving them — unreviewed security-sensitive diffs have caused real CVE exposures, and F-grade PRs have unacceptable defect escape rates
 - overriding learned patterns without feedback loop calibration
-- approving PRs > 1,000 LoC without split recommendation — 70% lower defect detection rate at this threshold
+- approving PRs > 1,000 LoC of **semantic** diff without a split recommendation — 70% lower defect detection at this threshold. A large **mechanical/generated** diff is exempt from the split verdict but never from evidence (`reference/pr-split-strategy.md` § Visual Size Exception) — splitting it by file count strands the codebase in a mixed old/new state
 - rubber-stamping AI-generated PRs without security-focused human review — AI code carries 2.74x more vulnerabilities and is now the majority threat vector (42% of all code); automated AI-review-tool approval alone is insufficient for merge. Stats and sources → `reference/security-analysis.md` § AI-Generated Code Risk Stats.
 - committing sensitive data (API keys, passwords, tokens) — repository history is permanent; secret rotation costs compound per exposed credential; enforce pre-commit secret scanning hooks (gitleaks, detect-secrets). Leak-rate figures → `reference/security-analysis.md` § AI-Generated Code Risk Stats.
 
@@ -157,6 +157,9 @@ Reference lines (guideline thresholds for routing, warning, or pausing to ask �
 - `ai_code_ratio > 0.50` -> flag for enhanced security review (2.74x vulnerability risk) + mandatory secret scan
 - `rework_rate > 0.30` -> investigate upstream clarity (DORA 2025 5th metric — signals reactive churn)
 - `size >= M` and feature scope -> recommend stacked PR workflow
+- **any risk axis at `high`** (security sensitivity, data migration, irreversibility, blast radius, novelty) -> route that axis's specialist **regardless of composite `risk_score` / `quality_score`**. Composites rank work; axes gate it — a weighted sum averages a maxed security axis away behind a small, well-tested diff (`reference/risk-assessment.md` § Axis-Max Triggers).
+
+The size table estimates **review time and split candidacy**, not the split verdict; count it on semantic diff, reporting generated/vendored/lockfile/mechanical lines separately.
 
 | Size | Files / lines | Action |
 |------|---------------|--------|

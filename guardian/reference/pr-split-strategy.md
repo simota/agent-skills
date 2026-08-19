@@ -4,6 +4,8 @@ Purpose: Decompose an M+ sized branch (200+ LoC, 11+ files) into a **stacked PR*
 
 ## Contents
 
+- Semantic Size First
+- Visual Size Exception
 - When to split
 - Partition strategies
 - Stacked PR tooling
@@ -11,19 +13,85 @@ Purpose: Decompose an M+ sized branch (200+ LoC, 11+ files) into a **stacked PR*
 - Command recipes
 - Output template
 
+## Semantic Size First
+
+The thresholds in *When to Split* are **candidacy signals** — they say a branch is worth examining, never that it must be cut. The verdict comes from four questions, in order. Stop at the first one that resolves.
+
+1. **How many independent intents?** More than one → split. One → continue.
+2. **How many independent review decisions?** (Decisions a different person, with different evidence, would make separately.) More than one → split here, or hoist the decision to a design review *before* implementation. One → continue.
+3. **Can each piece be verified, integrated, and reverted on its own?** No → do not split; see *Do not split when* below.
+4. **Can the intermediate states be made safe?** Yes, via a compatibility layer / flag / Expand–Contract → stage it. No → keep it whole and strengthen review instead (reading order, specialist routing, evidence, staged rollout).
+
+Semantic size worksheet — count these, not lines:
+
+| Dimension | Count |
+|-----------|-------|
+| Primary intents | |
+| Independent review decisions | |
+| Behavioral changes | |
+| Contracts changed (API, schema, event, config) | |
+| Failure modes introduced | |
+| Services / consumers affected | |
+| Risk specialists needed | |
+| Temporary states created | |
+| Rollback units | |
+
+### Do not split when
+
+Splitting moves risk rather than reducing it whenever:
+
+- an individual PR cannot build or test on its own;
+- an intermediate state breaks a security or consistency invariant;
+- one side of a contract change alone causes a production failure;
+- no single PR carries a decision — the reviewer must read the whole stack to judge anything;
+- the temporary compatibility layer is more complex than the change it enables;
+- the same design argument would be re-litigated in every PR of the stack.
+
+In these cases keep one PR and pay for it in review design: declared reading order, `## Review focus` with `not_in_scope`, specialist routing per decision point, and a staged rollout.
+
+## Visual Size Exception
+
+A large **mechanical or generated** diff (codemod, formatter application, rename, regenerated client, lockfile) has large visual size and near-zero semantic size. It is **exempt from the split verdict** — partitioning it by file leaves the codebase in a mixed old/new state across many PRs, multiplies CI runs and conflicts, and makes "is the transformation complete?" unanswerable.
+
+Exempt from splitting, never from evidence. Require all six:
+
+```
+Transformation rule      — the exact codemod/tool, version, and script path
+Reproducibility          — clean checkout, re-run, `git diff --exit-code` produces nothing
+Exclusions               — what the rule deliberately did not touch, and why
+Public-contract diff     — serialized names, DB columns, event/API fields, log and metric labels: unchanged, or listed
+Representative samples   — a handful of before/after hunks standing in for the whole
+Completeness check       — automated search proving no old symbol survives
+```
+
+Never write "regeneration matches" without having run the command. If the generator itself is being upgraded, separate the generator bump from the input change — otherwise a diff has two causes and neither can be isolated.
+
+Review target for these PRs is the **rule and the exclusions**, not the output lines. Say so in the PR body so reviewers do not perform, or fake, a line-by-line read.
+
 ## When to Split
 
-Trigger split planning when any of the following hold:
+Trigger split *planning* — then run the Semantic Size ladder above — when any of the following hold:
 
 | Signal | Threshold |
 |--------|-----------|
-| Total lines | ≥ 500 (L), must-split ≥ 1000 (XL), mandatory ≥ 3000 (XXL) |
-| File count | ≥ 20 |
+| Total lines (semantic diff only) | ≥ 500 (L), ≥ 1000 (XL), ≥ 3000 (XXL) |
+| File count (semantic diff only) | ≥ 20 |
 | Affected modules | ≥ 3 top-level |
 | Commits | ≥ 10 and concerns are mixable |
 | Review ETA | single review would exceed ~30 min |
 
-Google benchmark: defect detection drops 70% above 1000 LoC; PRs < 300 LoC get 60% more thorough review.
+Exclude generated output, vendored code, lockfiles, and pure-mechanical transforms from the line and file counts; report them on their own row and route them through *Visual Size Exception*.
+
+Visual-size benchmarks (single source of truth — `SKILL.md` § PR size principle cites this section rather than restating them): optimize for `<200` LoC; each extra 100 lines adds ~25 min of review time; defect detection drops 70% above 1,000 LoC; PRs under 300 LoC get 60% more thorough review; size warnings at 400 lines cut post-merge defects 35%. Every one of these measures **reading capacity**, which is why they bound review time rather than decide atomicity.
+
+Independent of every threshold above, these signals mean the PR holds more than one decision and should split regardless of how small it is:
+
+- the title needs "and", or the description keeps saying "while we're here";
+- parts of the diff would be reverted separately;
+- reviewers would each read a disjoint region;
+- a test failure could originate in more than one of the changes;
+- some parts are mechanical and some change behavior;
+- the pieces need different deployment ordering.
 
 ## Partition Strategies
 

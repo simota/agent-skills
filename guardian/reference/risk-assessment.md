@@ -45,6 +45,25 @@ Incoming handoff:
 **Confidence**: ...
 ```
 
+## Axis-Max Triggers
+
+The weighted score above is a **ranking** instrument. It must not be the only gate, because summing unlike axes lets them cancel: file sensitivity carries 25%, so an auth change with low complexity, no hotspot overlap, good coverage, and a familiar author lands well under the `85` pause threshold. Nothing about the auth exposure got smaller.
+
+Each axis therefore fires on its own, regardless of `risk_score`:
+
+| Axis at `high` | Fires |
+|----------------|-------|
+| Security sensitivity — auth, authz, secrets, PII, supply chain, crypto | Sentinel review; threat assumptions and negative tests recorded |
+| Data migration — backfill, destructive or narrowing conversion, new constraint | data owner review; dry-run, invariants, row counts; Expand–Contract staging |
+| Irreversibility — data written, notifications sent, payments taken, contract published | owner + recovery rehearsal; manual gate before rollout |
+| Blast radius — shared library, many consumers, all users, irreversible loss | integrator/SRE review; staged rollout with stop conditions |
+| Observability — success and failure indistinguishable in production | instrumentation lands **before** the change |
+| Novelty — technology, scale, or domain new to the team | experienced peer review; spike or benchmark; scope limited |
+
+Report the axes as a profile, not a single number. Two changes both scoring `60` are not comparable when one is `60` from broad-but-reversible surface area and the other is `60` from an irreversible data conversion.
+
+Never average an axis away, and never round a maxed axis down because "the overall score is fine" — that is the mechanism, not an edge case.
+
 ## Risk Bands
 
 | Band | Score | Default action |
@@ -99,3 +118,4 @@ Elevate regression risk when:
 Pause when:
 - `risk_score > 85`
 - risk is high and required evidence is missing
+- **any** Axis-Max Trigger fires and its required review or evidence is absent — independent of `risk_score`
