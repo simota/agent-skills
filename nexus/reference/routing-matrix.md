@@ -26,6 +26,52 @@ Complete task type → agent chain mapping. The SKILL.md Routing Quick Start con
 
 ---
 
+## Orchestration Gate — the rung below "one agent"
+
+Core Rule #1 picks the smallest chain. This gate asks the question underneath it: **should this be orchestrated
+at all?** The rule minimizes among chains and therefore always yields one; a request that wants a fixed
+sequence, or a single tool call, or an answer, gets a chain anyway — and pays coordination cost for structure
+it never needed.
+
+**Climb from the bottom, and record why each rung failed.** Evaluate in order — *direct answer · single tool
+call · fixed sequence · one agent · a chain* — and take the first that suffices. When you skip a rung, name
+the specific thing it could not do. "It might get more complex later" is not that reason: the future is
+discounted, the coordination cost is paid today.
+
+**Do not orchestrate when any of these holds:**
+
+- **The steps are fixed and the exceptions are enumerable.** A known sequence with deterministic checks is a
+  procedure, and a procedure executed by a chain is slower, costlier, and harder to audit than the same
+  procedure written down.
+- **One agent already has the context and the authority.** Splitting it produces context transfer and merge
+  work, not parallelism.
+- **The split is by role name only.** Planner/Researcher/Critic over one model, one context, and one set of
+  permissions adds call count and failure points, not capability. If ownership, authority, knowledge, failure
+  containment, and independent evolution are the same on both sides, it is one agent with stages.
+- **Nobody owns the outcome if it fails.** If you cannot name, in advance, who is accountable when the chain
+  produces a wrong result, the chain has no owner — it has participants. Fix that before adding steps.
+- **Nothing verifies the result.** With no independent check, more steps produce more confident output, not
+  more correct output.
+- **The effect is irreversible and the controls for it do not exist.** See the Action-Tier ceiling in
+  `routing-learning.md` — a `T4` effect under a `T1` ceiling is not a chain-design problem; it is a decision
+  to make the effect reversible or to keep a human on the commit.
+
+**Prefer proposal-then-commit over an agent that commits.** A chain that produces a proposal and lets a
+deterministic step or a human commit needs almost none of the machinery above. Embedding the final
+irreversible effect inside the agent loop is the most expensive available option, and it is rarely the one the
+request required.
+
+**Record the rejection, and make it re-openable.** When the answer is "do not orchestrate", say so with the
+rung that sufficed and the reason the next rung was unnecessary — and name what would change the answer (a
+second owner appears, the exception set stops being enumerable, an independent release cadence is needed).
+A rejection with a stated re-open condition is a decision; a rejection without one gets silently re-litigated
+on the next similar request.
+
+**This gate cannot be satisfied by adding agents.** If it fires, the remedy is a smaller shape, never a
+better-supervised larger one.
+
+---
+
 | Task Type | Primary Chain | Recipe Hints | Additions |
 |-----------|---------------|-------------|-----------|
 | BUG | Scout → **Sherpa?** → Radar → Builder → Radar → Guardian | Scout[RCA+defect-confirm], Sherpa[epic], Radar[failing repro test], Builder[root-cause fix], Radar[verify+regression], Guardian[pr] | +Sentinel (security), +Trail (regression from a past commit), +Ripple (blast radius). Skip Sherpa only when single-file atomic fix. **Reproduce-before-fix**; phase contract → § Sherpa Skip & Chain Adjustment below |
