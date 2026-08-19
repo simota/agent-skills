@@ -145,32 +145,19 @@ Each subagent needs its own `max_turns`, eval, and termination signal. Measure p
 
 Autonomy is not a capability level — it is an **effect** level. The same model reading documents and the same model merging code, sending mail, and issuing refunds are different systems at identical reasoning quality. Design the envelope before the model, and review it before the model: `Authority Envelope → worst single action → worst hour → worst tenant`, then pick a model.
 
-A per-tool allow/deny list is too coarse, because the same tool at different arguments carries different effect (`send_email` to an internal draft vs an external recipient with attachments). Grant on seven axes; an axis you do not name is denied, not unlimited.
+**The grant axes are defined once, in `nexus/reference/autonomy-quality-protocol.md` §8** — the seven axes
+(`resource · action · quantity · time · destination · approval · reversibility`), the denial default (an axis
+you do not name is denied, not unlimited), the tiered budget, the shrink-the-tool rule, the secret-handling
+path, the agent-identity-is-not-user-identity rule, and why read-only is not safe by construction. Grant
+against that list; do not restate it here — a second copy of a permission vocabulary drifts into a *narrower*
+one, and the axis it loses is the one nobody notices was missing.
 
-| Axis | Grants |
-|------|--------|
-| `resource` | tenant, repository, project, folder, record |
-| `action` | read · draft · create · update · delete · send · execute |
-| `quantity` | item count, amount, tokens, API calls, changed lines |
-| `time` | validity window, maintenance window, execution deadline |
-| `destination` | recipient domain, channel, internal vs external |
-| `approval` | before-effect · above-threshold · exception-only · post-audit |
-| `reversibility` | undo · version · backup · compensation · manual recovery only |
+What this file adds is the sequence above, not the vocabulary. Why the axes rather than a tool list:
+`send_email` to an internal draft and `send_email` to an external recipient with attachments are the same
+tool at different effect, so a per-tool allow/deny list cannot express the envelope and the axes can.
 
-**Budget is a security control.** Caps on tokens, tool calls, wall-clock, and spend bound runaway loops, tool abuse, prompt-injection blast radius, and cascading failure — not just the bill. Tier them: per step · per job · per user/tenant · per tool · per day/month · emergency global cap. On exhaustion return partial results, the unfinished steps, and the resume condition — never a bare failure.
-
-**Agent identity is not user identity.** Running an agent on the end user's credential inherits the user's full permission set, which is always wider than the task. Use a dedicated identity, delegated short-lived tokens, audience restriction, and resource scoping; carry `actor_user · actor_agent · purpose · session · policy` in the token claims or policy context so the audit trail separates the three parties (user, agent, platform).
-
-**Shrink the tool, not just the grant.** `execute_sql(query)` and `http_request(url, method, body)` push authorization, input range, audit, rate, and idempotency into the prompt — where they are requests, not controls. `get_open_invoices(customer_id, limit)` and `create_refund_draft(payment_id, amount, reason)` enforce them at the tool boundary.
-
-**A secret is a credential the task needs, not knowledge the model should see.** The failing path is
-`secret value → prompt → model → tool argument → log`, and every hop after the first is permanent: traces,
-summaries, and downstream calls all retain it. The tool resolves the credential internally and the model only
-ever holds an opaque reference — `charge_card(payment_method_id)`, never `charge_card(card_number, cvv)`.
-Secrets already leaked into code, issues, CI logs, or chat must be caught at ingestion, before composition;
-and a redaction placeholder must not be reversible to the original value.
-
-**Read-only is not safe by construction.** Cross-source reads aggregate individually-permitted facts into sensitive relationships, and anything pulled into context lives in the trace, the summary, and every downstream call. Read grants carry purpose, field, row, tenant, retention, and output destination like any other.
+Secrets already leaked into code, issues, CI logs, or chat must be caught at ingestion, before composition —
+the one intake concern the general rule does not cover, because it is upstream of any grant.
 
 ## Termination Conditions
 

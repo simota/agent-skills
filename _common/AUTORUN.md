@@ -222,16 +222,16 @@ Guardrail definitions and configuration for autonomous execution. Used by AUTORU
 
 ### Guardrail Levels
 
-| Level | Name | Behavior | Use Case |
-|-------|------|----------|----------|
-| L1 | MONITORING | Log only, no pause | Lint warnings, minor deprecations, small coverage drop (~<5% guideline) |
-| L2 | CHECKPOINT | Auto-verify, attempt auto-fix | Minor test failures (goal still reachable; ~<20% guideline), type errors, low/medium CVEs |
-| L3 | PAUSE | Pause branch; auto-recover or escalate | Major test failures (goal not locally fixable; ~>50% guideline), breaking changes, build failures, merge conflicts |
-| L4 | ABORT | Immediate stop and rollback | Critical security, data integrity risk, user abort |
+**Defined in `nexus/reference/guardrails.md` § Guardrail Levels** — L1 MONITORING · L2 CHECKPOINT · L3 PAUSE ·
+L4 ABORT, together with the goal-impact classification rule that decides minor vs major. Read the levels
+there; this file supplies only the trigger→action catalog below. Do not restate the level semantics here —
+the two copies contradicted each other for as long as both existed.
 
 ### Triggers by Level
 
-Classify by **goal impact**, not by a uniform cross-domain number: a **minor failure** (the step's goal is still reachable) → attempt auto-fix and continue; a **major failure** (the goal is no longer reachable by a local fix) → stop and reconsider (rollback / re-decompose / escalate). The percentages below are **rough guidelines**, not fixed thresholds — each task type (and domain) may draw the minor/major line differently.
+Per the classification rule in `guardrails.md`: **minor** = the step's goal is still reachable by a local fix
+→ attempt the fix and continue; **major** = it is not → stop and reconsider. The percentages below are rough
+guidelines, not fixed thresholds.
 
 **L1 — MONITORING**
 

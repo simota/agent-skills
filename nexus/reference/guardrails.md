@@ -25,12 +25,21 @@ Guardrails, context management, and state tracking for AUTORUN_FULL.
 
 ## Guardrail Levels
 
+**This table is the single definition of the guardrail levels.** `_common/AUTORUN.md` § Guardrail Protocol cites
+it and adds the per-level trigger→action catalog; it does not restate the levels.
+
+**Classify by goal impact, not by a cross-domain number.** A **minor** failure — the step's goal is still
+reachable by a local fix — attempts the fix and continues. A **major** failure — the goal is no longer
+reachable by a local fix — stops and reconsiders (rollback / re-decompose / escalate). The percentages below
+are **rough guidelines**, not fixed thresholds; each task type and domain may draw the minor/major line
+differently. A failure between the guidelines is classified by that question, never left undefined.
+
 | Level | Name | Trigger | Action |
 |-------|------|---------|--------|
-| L1 | MONITORING | minor_warning, lint_warning | Log only, continue execution |
-| L2 | CHECKPOINT | test_failure<20%, security_warning | Auto-verify, conditional continue |
-| L3 | PAUSE | test_failure>50%, breaking_change | Pause, attempt auto-recovery |
-| L4 | ABORT | critical_security, data_integrity_risk | Immediate stop, rollback |
+| L1 | MONITORING | lint_warning, minor_deprecation, minor coverage drop (~<5%) | Log only, continue execution |
+| L2 | CHECKPOINT | **minor** test_failure (goal reachable; ~<20%), security_warning, type_error | Auto-verify, attempt auto-fix, conditional continue |
+| L3 | PAUSE | **major** test_failure (goal not locally fixable; ~>50%), breaking_change, build_failure, merge_conflict | Pause, attempt auto-recovery |
+| L4 | ABORT | critical_security, data_integrity_risk, user abort | Immediate stop, rollback |
 
 ---
 
