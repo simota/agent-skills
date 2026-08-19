@@ -2,7 +2,7 @@
 
 **Purpose:** The shared discipline for maximizing deliverable quality when Nexus executes **without a human in the loop** — the autonomous counterpart of `reference/dialogue-protocol.md`. Dialogue recipes elicit intent from the user; autonomous runs must **derive** intent from artifacts, **track** every decision made in the user's absence, **prove** the deliverable against the derived contract with evidence, and **finish** it — every criterion the contract claims is carried to done or accounted for as a typed residual. Quality here is not a final check — it is contracted before execution, guarded during it, and independently verified at the end.
 
-**Read when:** any `AUTORUN`/`AUTORUN_FULL` chain at CLASSIFY (Q1–Q3), AGGREGATE (Q7–Q8), and VERIFY/DELIVER (Q9–Q19); §0 and Q20–Q22 apply throughout; §8 (Q23–Q24) before every spawn and every side-effecting step. Applies to all non-dialogue recipes (`apex`, `enact`, `converge`, `kaizen`, `feature`, `bug`, reproduction family, quality-max family, …) and to the autonomous phases of dialogue recipes (`spec`'s spawned agents, `delve`'s EXCAVATE). Cites — never re-derives — `reference/evaluator-loop-protocol.md`, `reference/handoff-validation.md`, `reference/guardrails.md`, `reference/quality-iteration.md`, `reference/recipe-contract.md` §2.
+**Read when:** any `AUTORUN`/`AUTORUN_FULL` chain at CLASSIFY (Q1–Q3), AGGREGATE (Q7–Q8), and VERIFY/DELIVER (Q9–Q19); §0 and Q20–Q22 apply throughout; §8 (Q23–Q26) before every spawn and every side-effecting step. Applies to all non-dialogue recipes (`apex`, `enact`, `converge`, `kaizen`, `feature`, `bug`, reproduction family, quality-max family, …) and to the autonomous phases of dialogue recipes (`spec`'s spawned agents, `delve`'s EXCAVATE). Cites — never re-derives — `reference/evaluator-loop-protocol.md`, `reference/handoff-validation.md`, `reference/guardrails.md`, `reference/quality-iteration.md`, `reference/recipe-contract.md` §2.
 
 ---
 
@@ -137,14 +137,47 @@ Q16–Q19 catch work that was left *visibly* undone. Q20–Q22 catch the quieter
 | Q21 | **`BLOCKED` is earned, not declared** | Before a step returns `BLOCKED` — or a residual is classed `blocked-external` (Q17) — at least one *materially different* approach must have been attempted and **named in the report** ("tried X, failed because Y"). "This is difficult", "the API is unclear", "no obvious way" are not blockers; they are the point where the work starts. Bounded by §0: the alternative must be genuinely different, and after two identical failures the step diagnoses instead of retrying. A `BLOCKED` with no named attempt is a defect, and the hub routes it back rather than aggregating it. |
 | Q22 | **Hard core before easy polish** | Order the work so the load-bearing, uncertain, or unpleasant part is done **first**, and the cosmetic pass last. Two payoffs: a `budget-exhausted` exit then leaves a working core rather than a polished shell around a hole, and difficulty is discovered while there is still budget to route around it. Where a plan defers the hardest step to the end without a stated reason (a genuine dependency), that ordering is itself the compromise — fix the order, not the report. |
 
-## 8. Authority & effect discipline (Q23–Q24) — what a step may *do* is granted, not derived
+## 8. Authority & effect discipline (Q23–Q26) — what a step may *do* is granted, not derived
 
-Q1–Q22 govern what the run produces. Q23–Q24 govern what it is allowed to *cause*. The distinction matters because a chain widens its effect surface far more quietly than it widens its scope: the platform hands every spawned agent the hub's own tool permissions, so a step that only needed to read three files runs with the authority to write, delete, publish, and spawn.
+Q1–Q22 govern what the run produces. Q23–Q26 govern what it is allowed to *cause*. The distinction matters because a chain widens its effect surface far more quietly than it widens its scope: the platform hands every spawned agent the hub's own tool permissions, so a step that only needed to read three files runs with the authority to write, delete, publish, and spawn.
 
 | # | Rule | Discipline |
 |---|------|-----------|
 | Q23 | **Authority is granted, never inferred** | *Capability* is what the tools can do; *authority* is what this step may do with them. A step's authority comes from the hub's explicit grant — never from the breadth of its task description, never from "it would be helpful", never from what the platform happens to permit. Three corollaries: (a) the grant is the **narrowest effect set the step's acceptance criteria need**, stated in the spawn prompt's `Authority` field (`reference/hub-authoring.md`); (b) **delegation cannot widen** — a spawned agent may not exceed the grant it received, and may not re-delegate unless re-delegation was granted, so authority is traceable back to the hub at every hop; (c) a step that finds it needs a wider effect set **requests it and returns** — it does not take it. An **Ask First** trigger is unchanged by any grant: authority narrows what a step may do, it never pre-authorizes what the user must confirm. |
 | Q24 | **Under unresolved uncertainty, lower the action tier — don't auto-promote** | Effects are tiered (`reference/guardrails.md` § Action Tier Ladder: answer → propose → prepare → execute-reversibly → execute-consequentially). An ambiguous or under-evidenced request is executed at a **lower** tier — deliver the candidate list, the diff, the draft, the dry-run — rather than being either blocked outright or resolved by guessing at the top tier. Promotion to a higher tier requires the uncertainty that blocked it to be *resolved* (evidence found, or the user answered), never merely re-read. This is the graceful middle the binary ask/proceed gate lacks: a run that cannot safely commit can almost always still deliver something reversible. |
+| Q25 | **Agreement is not authorization** | Agents concurring is *evidence*, never permission to cause the effect. Three specialists agreeing that a refund is owed does not make the refund authorized — the amount may exceed a limit, the input may be stale, an exception may apply, the effect may already have happened. Separate the two: the chain's aggregated output is a **proposal** (what to do, to what, on what evidence, expected effect, and when the proposal goes stale); causing the effect is a distinct step that runs only when *all* of current state, an explicit policy, a bound approval, an idempotent path, and a stated recovery route are present. Any one missing caps the run at `T2 prepare` and returns the proposal. Unanimity substitutes for none of them — and same-model, same-prompt, same-context reviewers agreeing is correlated error, not independent confirmation. |
+| Q26 | **Approval binds to a payload, a scope, and a clock** | An approval is not the word "yes". It attaches to *what was approved*: the proposal it covers, who approved it, what they were shown, and when it expires. Three consequences: (a) **approval does not cascade** — approving a goal does not authorize the specific irreversible actions later derived from it; the effect needs its own approval at its own tier; (b) **an approval goes stale** — if the plan changed after approval, or the world changed under it, the approval no longer describes what is about to happen and is re-obtained, not re-used; (c) **the producer never approves its own effect** for anything irreversible or outside the run's stated scope — approval and production are separate roles, and an agent's own claim that it "confirmed" something is not an approval record. |
+
+**What the approver is shown.** An approval request that states only the action buys a click, not a decision.
+Show, in this order: the **diff or concrete effect**; the **target** and what else it touches; the **evidence**
+it rests on *and what is still unresolved*; the **cost, deadline, and reversibility**; the **alternatives,
+including doing nothing**; and the **scope and expiry** of the approval being given. The two most often
+omitted — the unresolved part and the do-nothing option — are the two that make an approval a judgment rather
+than a formality.
+
+**Approval fatigue is a failure mode, not a user problem.** A gate that fires on every low-risk action trains
+the approver to clear it unread, which removes the control while leaving its appearance. When a gate fires
+often and is approved nearly always, that is evidence the gate is mis-placed: batch the routine cases under a
+stated policy and escalate only the deviations. Volume of approvals is not a safety metric; **approvals that
+changed an outcome** is.
+
+**Certainty is the second axis of the gate.** `Ask First` triggers on the *kind* of action. Confidence in the
+classification is independent of it, and the two combine:
+
+| | Reversible, low impact | Compensable, medium impact | Irreversible, high impact |
+|---|---|---|---|
+| **High certainty** | proceed; sample afterwards | proceed on-loop with a stated threshold | approval bound before the effect |
+| **Medium certainty** | proceed with a full trace | return a proposal for approval | two approvers, one of them not the producer |
+| **Low certainty** | ask one focused question | hand the decision to the user | **do not run the action** — resolve the uncertainty first |
+
+The bottom-right cell is a prohibition, not a stricter gate: an unresolved classification plus an irreversible
+effect is not something an approval makes safe, because the approver is being asked to ratify a guess.
+
+**Separation of duties, where it binds.** For an irreversible effect, an effect outside the run's stated
+scope, or a change to a control itself, the approver is someone other than the producer — and **an owner does
+not unilaterally approve an exception to a control they own**. Self-approval of one's own exception is the
+shortest path around every rule above it. Where no second party is available, the run stops at `T2 prepare`
+and says so; that is a `PARTIAL` with a named blocker, not a failure.
 
 **Grant dimensions.** "Narrowest grant" (Q23a) is unenforceable until the grant has axes; a per-tool allow/deny list is too coarse, because the *same* tool at different arguments carries different effect. State a grant on the seven axes below, naming only the ones the step's criteria actually need — an unnamed axis is denied, not unlimited.
 
@@ -187,6 +220,11 @@ forty tool calls, or interrupt the user six times.
 
 | Failure | Mitigation |
 |---------|------------|
+| **Concurring agents treated as permission to cause the effect** | Q25 agreement is evidence, not authorization — the aggregate is a proposal; commit needs state + policy + bound approval + idempotency + recovery |
+| **An upstream goal approval reused to authorize a downstream irreversible action** | Q26(a) approval does not cascade — the effect needs its own approval at its own tier |
+| **An approval reused after the plan or the world changed under it** | Q26(b) approval binds to the payload and expires; re-obtain rather than re-use |
+| **A gate that fires so often it is cleared unread** | Q26 approval fatigue — batch the routine under a stated policy, escalate deviations; count approvals that changed an outcome, not approvals issued |
+| **An owner approving an exception to the control they own** | Q26 separation of duties — for irreversible or out-of-scope effects the approver is not the producer; no second party ⇒ stop at `T2 prepare` |
 | Flawless execution of the wrong goal | Q1 intent contract before EXECUTE, one clarifying question when underivable |
 | "While I'm here" scope creep diluting the chain | Q2 explicit non-goals, Q8 re-grounding |
 | Verifying against "looks done" instead of the contract | Q3 single termination oracle |
