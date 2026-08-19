@@ -35,6 +35,8 @@ Standard format for `## NEXUS_HANDOFF` output. Designed for flexibility: include
 | **Suggested alternatives** | Alternative approaches considered |
 | **Do not repeat** | Approaches already **tried and ruled out**, each with the evidence that ruled it out. Distinct from *Suggested alternatives* (untried options worth considering) — this field exists to stop the next agent from re-running a dead end. Required whenever a handoff follows a failed attempt or a resumed long-running task. |
 | **Guardrail Events** | Safety events triggered during execution |
+| **Context labels** | For content the handoff *passes forward* rather than merely cites: its label per `_common/CONTEXT_SUFFICIENCY.md` §3b — at minimum `source` and `trust`. **Required whenever anything non-`operator` is forwarded** (a fetched page, a tool result, another agent's output, a summary this step produced). A receiving agent cannot recover the origin of text it is handed, so an unlabeled forward silently promotes external content to the same standing as the user's own words. Content the step produced by summarizing or merging inherits the strictest label of its inputs. |
+| **Omitted** | What was deliberately left out and why — identifiers and reasons, never the content. Distinguishes "considered and set aside" from "never seen", which have opposite fixes. |
 
 ---
 
