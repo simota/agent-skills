@@ -118,7 +118,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `DEFINE` | Clarify research questions, constraints, and decision to influence | Research questions first | `reference/interview-guide.md` |
+| `DEFINE` | Clarify research questions, constraints, and decision to influence | Research questions first | — |
 | `DESIGN` | Choose methods, create guides, build screeners, define consent | Methods serve the question | `reference/participant-screening.md` |
 | `ANALYZE` | Code data, identify patterns, check bias, compare signals | Separate observation from interpretation | `reference/analysis-and-synthesis.md` |
 | `SYNTHESIZE` | Create insights, personas, journey maps, recommendations; if underrepresented segments found → consider delegating to Echo[demand] | Evidence strength required | `reference/analysis-and-synthesis.md` |
@@ -149,7 +149,7 @@ Secondary thresholds (benchmark-precision sample sizes, focus-group size, NPS, U
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Interview Design | `interview` | ✓ | Interview guide and protocol design | `reference/interview-guide.md`, `reference/participant-screening.md` |
+| Interview Design | `interview` | ✓ | Interview guide and protocol design | `reference/participant-screening.md` |
 | Usability Test | `usability` | | Usability test planning and task design | `reference/analysis-and-synthesis.md`, `reference/participant-screening.md` |
 | Analysis | `analysis` | | Qualitative analysis, affinity mapping, insight synthesis | `reference/analysis-and-synthesis.md`, `reference/bias-checklist.md` |
 | Persona | `persona` | | Persona creation and journey map generation | `reference/analysis-and-synthesis.md` |
@@ -171,7 +171,7 @@ Per-Recipe behavior notes -> `reference/research-calibration.md` § Per-Recipe B
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `interview`, `guide`, `protocol` | Interview design | Interview guide + session checklist | `reference/interview-guide.md` |
+| `interview`, `guide`, `protocol` | Interview design | Interview guide + session checklist | — |
 | `usability`, `test plan`, `task scenarios` | Usability study design | Test plan + task list | `reference/analysis-and-synthesis.md` |
 | `screener`, `recruit` | Participant screening | Screener + qualification criteria | `reference/participant-screening.md` |
 | `analyze`, `thematic`, `affinity` | Qualitative analysis | Insight cards + thematic report | `reference/analysis-and-synthesis.md` |
@@ -184,7 +184,7 @@ Per-Recipe behavior notes -> `reference/research-calibration.md` § Per-Recipe B
 | `democratize`, `research ops` | Research democratization | Governance framework + templates | `reference/research-ops-democratization.md` |
 | `inclusive`, `diversity`, `accessibility research` | Inclusive research design | Recruitment plan + bias mitigation | `reference/bias-checklist.md` |
 | `multi-engine`, `triangulation design` | Multi-engine design generation | Combined Plan (default) or Portfolio | `reference/tri-engine-research.md` |
-| unclear research request | Study scoping | Research plan proposal | `reference/interview-guide.md` |
+| unclear research request | Study scoping | Research plan proposal | — |
 
 Route out instead when the ask is feedback collection (`Voice`), persona lifecycle management (`Cast`), or UI validation with existing personas (`Echo`). Always check `reference/bias-checklist.md` during ANALYZE.
 
@@ -250,7 +250,6 @@ Activated by the `multi` Recipe or explicit requests for parallel research desig
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/interview-guide.md` | Interview guides, question hierarchies, session checklists. |
 | `reference/participant-screening.md` | Screeners, consent forms, qualification logic, sample-size guidance. |
 | `reference/bias-checklist.md` | Bias checks or report-language validation. |
 | `reference/analysis-and-synthesis.md` | Thematic analysis, insight cards, personas, journey maps, usability plans, report templates. |

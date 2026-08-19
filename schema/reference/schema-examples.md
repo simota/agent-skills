@@ -284,7 +284,7 @@ CREATE TABLE orders (
 - **design** (default): SURVEY → MODEL → VALIDATE → PRESENT; load `schema-examples.md` + `schema-design-anti-patterns.md`.
 - **migration**: Draft step-by-step migration DDL with rollback; load `migration-patterns.md`; flag zero-downtime risks.
 - **er**: Generate Mermaid ER diagram from schema description or codebase; load `schema-examples.md`.
-- **normalize**: Assess NF level and propose de-normalization trade-offs; load `normalization-guide.md`.
+- **normalize**: Assess NF level and propose denormalization trade-offs; apply the gates in `data-modeling-anti-patterns.md`.
 - **index**: Analyze query patterns and propose covering/partial indexes; load `index-strategies.md` + `index-performance-anti-patterns.md`.
 - **rollback**: Provide reverse migration DDL, dual-write windows, backfill scripts, and safe alternatives for destructive changes (DROP COLUMN / data conversion). Ask First: destructive change without rollback path.
 - **tenant**: Compare the 4 strategies (shared-DB / schema-per-tenant / DB-per-tenant / shard-based) against tenant count, isolation requirements, and cost constraints. Includes RLS / connection routing / per-tenant backup strategies. Coordinates with the Schema[tenant] agent.
@@ -293,4 +293,3 @@ CREATE TABLE orders (
 - **audit-log**: Load `audit-log-schema.md`. Append-only audit table design — actor / action / target / before-image / after-image / timestamp / correlation-id. Choose Postgres temporal tables vs trigger-based vs CDC (Debezium). Define retention + WORM compliance + tamper-evidence (HMAC chain). Never UPDATE / DELETE on audit rows.
 - **event-sourcing**: Load `event-sourcing-schema.md`. Event store table (event_id / aggregate_id / aggregate_version / event_type / payload / metadata) with optimistic concurrency, projections (read models), snapshots, outbox pattern for transactional event publishing. Map aggregate boundaries; CQRS-friendly.
 - **soft-delete**: Load `soft-delete-patterns.md`. Compare deleted_at timestamp vs status enum vs tombstone row. Design partial unique indexes. Address FK cascade behavior, query default-filter risk (visible vs deleted set), GDPR right-to-erasure pathway (soft → hard delete + audit-log).
-

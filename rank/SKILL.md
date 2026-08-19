@@ -166,11 +166,11 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| ICE Score | `ice` | ✓ | ICE scoring (Impact × Confidence × Ease) | `reference/scoring-frameworks.md` |
-| RICE Score | `rice` | | RICE scoring (Reach × Impact × Confidence / Effort) | `reference/scoring-frameworks.md` |
-| WSJF | `wsjf` | | WSJF (Weighted Shortest Job First) | `reference/scoring-frameworks.md` |
-| MoSCoW | `moscow` | | MoSCoW method (Must/Should/Could/Won't) | `reference/scoring-frameworks.md` |
-| Kano Model | `kano` | | Kano model (customer satisfaction classification) | `reference/scoring-frameworks.md` |
+| ICE Score | `ice` | ✓ | ICE scoring (Impact × Confidence × Ease) | — |
+| RICE Score | `rice` |  | RICE scoring (Reach × Impact × Confidence / Effort) | — |
+| WSJF | `wsjf` |  | WSJF (Weighted Shortest Job First) | — |
+| MoSCoW | `moscow` |  | MoSCoW method (Must/Should/Could/Won't) | — |
+| Kano Model | `kano` |  | Kano model (customer satisfaction classification) | — |
 | Cost of Delay (CD3) | `cod` | | Deep CoD economic decomposition and CD3 sequencing (revenue/deadline-bound work) | `reference/cost-of-delay.md` |
 | Value vs Effort | `value-effort` | | 2x2 quadrant workshop (Quick Win/Major/Fill-In/Thankless) for visual consensus | `reference/value-effort-matrix.md` |
 | Priority Poker | `pokerplan` | | Anonymous Fibonacci voting (Wideband Delphi) to mitigate group bias | `reference/priority-poker.md` |
@@ -195,7 +195,6 @@ Behavior notes per Recipe:
 
 | File | Content |
 |------|---------|
-| `reference/scoring-frameworks.md` | Detailed procedures for ICE/RICE/WSJF/MoSCoW/CoD/Kano |
 | `reference/calibration-techniques.md` | Pairwise comparison, bias correction, sensitivity analysis |
 | `reference/output-templates.md` | Ranking report, score matrix, comparison table templates |
 | `reference/cost-of-delay.md` | CD3 = CoD / Duration, four-component CoD, CoD curve patterns, CD3-vs-WSJF distinction (`cod` recipe) |

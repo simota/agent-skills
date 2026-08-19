@@ -112,7 +112,7 @@ Channel selection rules:
 | Re-engagement | Inviting, low-pressure ("Come back to see what's new") |
 | Marketing | Respectful of the opt-in ("A 20% code, because you're a member") |
 
-Follow `reference/voice-tone-framework.md` for brand-level voice.
+Follow the project's established brand voice; if none exists, run Prose's `tone` recipe first.
 
 ## Deeplink Contract
 

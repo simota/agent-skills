@@ -250,7 +250,6 @@ The three subagents return JSON; Field main context handles NORMALIZE through PR
 - `_common/MULTI_ENGINE_RECIPE.md` — base protocol, PREFLIGHT, degraded modes, attribution tags
 - `_common/SUBAGENT.md §MULTI_ENGINE` — engine dispatch, loose prompts, fallback rules
 - `spark/reference/tri-engine-proposal.md` — canonical Pattern D implementation
-- `field/reference/interview-guide.md` — applied at SYNTHESIZE for interview-method clusters
 - `field/reference/participant-screening.md` — applied at GROUND for recruitment/inclusion checks
 - `field/reference/bias-checklist.md` — applied at GROUND for bias-floor checks
 - `field/reference/ai-assisted-research.md` — applied at GROUND for AI-moderation / synthetic-user disclosure
@@ -272,4 +271,3 @@ The three subagents return JSON; Field main context handles NORMALIZE through PR
 - Merge: `Combined Plan` (default; triangulation graph dense — clusters cover ≥2 matrix cells with shared question) → `docs/research/PLAN-[topic]-[date].md` sequencing generative → evaluative → confirmatory. `Portfolio` (when stances/questions diverge) → `docs/research/PORTFOLIO-[topic]-[date].md` ordered UNIVERSAL → LIKELY → VERIFIED-DIVERGENT with "run first" recommendation.
 - Mandatory engine-attribution tag on every shipped design: `[codex+agy+claude]` / `[codex+claude]` etc. Append `[NEEDS-IRB]` or `[NEEDS-INFO:<dim>]` when grounding passes with caveats.
 - Degraded modes: 1 engine down → continue with 2; 2 down → single-engine + stricter grounding; all down → standard Recipe fallback.
-

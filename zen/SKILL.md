@@ -133,7 +133,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Phase | Action | Key rule | Read |
 |-------|--------|----------|------|
 | `SURVEY` | Inspect the target, detect smells, measure complexity, confirm tests/coverage | Capture a behavior baseline before changing — if coverage < 80% on the target, route to Radar for characterization tests first | `reference/code-smells-metrics.md` |
-| `PLAN` | Pick one recipe or review depth, confirm scope tier, decide whether to hand off first | One meaningful change per pass | `reference/refactoring-recipes.md` |
+| `PLAN` | Pick one recipe or review depth, confirm scope tier, decide whether to hand off first | One meaningful change per pass | — |
 | `APPLY` | Do one meaningful behavior-preserving change | Preserve behavior; stay in scope tier | Language-specific reference |
 | `VERIFY` | Re-run tests, compare metrics/baselines, confirm behavior is unchanged | Identical pass/fail signature and coverage >= previous; any behavior delta → revert and route to Judge | `reference/refactoring-anti-patterns.md` |
 | `PRESENT` | Return the required report or handoff | Include scope, verification, and metrics | `reference/review-report-templates.md` |
@@ -144,10 +144,10 @@ Single source of truth for Recipe definitions. Use `Read First` column files at 
 
 | Recipe | Subcommand | Default? | Scope | When to Use | Behavior | Read First |
 |--------|-----------|---------|-------|-------------|----------|------------|
-| General Refactor | `refactor` | ✓ | Focused → Module | General refactoring (composite improvements, code smell fixes) | Target composite code smells. After SURVEY identifies hotspots, narrow to the single highest-priority item and apply. **VERIFY**: behavior preserved (identical test pass/fail signature, coverage ≥ baseline); one meaningful change per pass; scope tier honored; hotspot chosen by change-frequency × defect. | `reference/refactoring-recipes.md` |
-| Naming Improvement | `naming` | | Focused | Variable and function name improvements only | Naming only, scope fixed at Focused. Public-API rename is Ask First. **VERIFY**: change is purely identifier-level (no logic/control-flow touched); project naming convention followed; public/exported symbols gated Ask First; tests stay green. | `reference/refactoring-recipes.md` |
-| Extract Function | `extract` | | Focused | Split and extract long functions | Extract one function from a long method; prioritize cognitive complexity > 15. **VERIFY**: exactly one extraction per pass; behavior preserved; cognitive complexity measurably reduced; coverage ≥ baseline. | `reference/refactoring-recipes.md` |
-| Magic Constants | `constants` | | Focused → Module | Replace magic numbers with named constants | Find magic numbers and replace with named constants; add type annotations. **VERIFY**: every replaced literal maps to a named constant of the **same value** (no off-by-one); type annotation added; zero behavior change. | `reference/refactoring-recipes.md` |
+| General Refactor | `refactor` | ✓ | Focused → Module | General refactoring (composite improvements, code smell fixes) | Target composite code smells. After SURVEY identifies hotspots, narrow to the single highest-priority item and apply. **VERIFY**: behavior preserved (identical test pass/fail signature, coverage ≥ baseline); one meaningful change per pass; scope tier honored; hotspot chosen by change-frequency × defect. | — |
+| Naming Improvement | `naming` |  | Focused | Variable and function name improvements only | Naming only, scope fixed at Focused. Public-API rename is Ask First. **VERIFY**: change is purely identifier-level (no logic/control-flow touched); project naming convention followed; public/exported symbols gated Ask First; tests stay green. | — |
+| Extract Function | `extract` |  | Focused | Split and extract long functions | Extract one function from a long method; prioritize cognitive complexity > 15. **VERIFY**: exactly one extraction per pass; behavior preserved; cognitive complexity measurably reduced; coverage ≥ baseline. | — |
+| Magic Constants | `constants` |  | Focused → Module | Replace magic numbers with named constants | Find magic numbers and replace with named constants; add type annotations. **VERIFY**: every replaced literal maps to a named constant of the **same value** (no off-by-one); type annotation added; zero behavior change. | — |
 | Dead Code Removal | `dead` | | Focused → Module | Unused code removal | Start from local/private; verify exports and dynamic use before removing. Boundary with Sweep: file-level deletion → Sweep. TypeScript/JS: prefer `knip` (ts-prune archived 2025-09). **VERIFY**: local/private dead code removed without ceremony; exports / public-API / dynamic / reflective use confirmed-unused (tool evidence) before removal; file-level deletion routed to Sweep; tests green. | `reference/dead-code-detection.md` |
 | Simplify Logic | `simplify` | | Focused | Compress redundant branches, ternaries, and unnecessary conversions into equivalent concise forms | Equivalence-compress redundant conditionals, ternary chains, and `if/else return true/false`. Behavior-preserving transforms only. **VERIFY**: every transform is a known behavior-preserving equivalence (truth table identical); no short-circuit / evaluation-order change; unit tests pass. | `reference/logic-simplification.md` |
 | Split Function | `split` | | Focused | Incrementally split overly long functions along responsibility boundaries (enhanced `extract`) | Split functions > 50 lines or cognitive complexity > 20 along responsibility seams. More structural than `extract` (seam design → staged execution → verify). **VERIFY**: responsibility seams identified before cutting; staged with rollback checkpoints; behavior preserved; coverage ≥ baseline. | `reference/function-splitting.md` |
@@ -260,7 +260,6 @@ Read `_common/SUBAGENT.md` section `MULTI_ENGINE` when this mode is requested.
 | Reference | Read this when |
 |-----------|----------------|
 | `reference/code-smells-metrics.md` | Zen refactor mechanics per smell, complexity thresholds, or measurement commands. Pairs with `_common/CODE_SMELL_CATALOG.md` (shared smell taxonomy / definitions / severity hints). |
-| `reference/refactoring-recipes.md` | A specific refactoring recipe. |
 | `reference/dead-code-detection.md` | You plan to remove code. |
 | `reference/defensive-excess.md` | You suspect fallback-heavy code is hiding bugs or noise. |
 | `reference/consistency-audit.md` | Cross-file standardization or migration planning. Pairs with `_common/CONSISTENCY_FRAMEWORK.md` (shared taxonomy / severity rubric). |
@@ -290,4 +289,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

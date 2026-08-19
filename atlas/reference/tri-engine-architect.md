@@ -296,7 +296,6 @@ Inherits the base table from `_common/MULTI_ENGINE_RECIPE.md §Degraded Modes`. 
 - `atlas/reference/adr-rfc-templates.md` — MADR 4.0 base template that the Consensus + Dissenting Options structure extends
 - `atlas/reference/architecture-decision-anti-patterns.md` — Fairy Tale / Sprint / Mega / Tunnel-Vision ADR checks applied at GROUND
 - `atlas/reference/architecture-health-metrics.md` — thresholds used to calibrate smell severity during grounding
-- `atlas/reference/architecture-patterns.md` — style catalog (Layered / Hexagonal / DDD / Event-Driven / Modular-Monolith / Vertical-Slice / etc.) referenced when classifying option styles
 
 
 ## Scoring, Synthesis, and Attribution (SKILL.md excerpt)
@@ -317,4 +316,3 @@ Inherits the base table from `_common/MULTI_ENGINE_RECIPE.md §Degraded Modes`. 
 - Options: `[codex+agy+claude] [CONVERGENT]` / `[codex+claude] [CONVERGENT-PARTIAL]` etc. / `[agy-verified] [DIVERGENT-{style}]`.
 
 **Degraded modes:** 1 engine down → continue with 2; reduced architectural-style diversity flagged in ADR front matter. 2 down → single Option section ADR with explicit degradation note. All down → degrade to standard `adr` Recipe.
-

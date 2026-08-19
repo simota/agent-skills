@@ -138,7 +138,7 @@ PATH       →  state the simplest action that bridges the two
 DRAFT      →  write Before / After / Bridge to length budget
            →  one sentence each for short channels; one paragraph for LP
 
-REFINE     →  AP-1~AP-9 anti-pattern check via reference/anti-patterns.md
+REFINE     →  AP-1~AP-9 anti-pattern check from `saga/SKILL.md`
            →  especially AP-3 missing tension, AP-9 ad copy disguise, AP-7 jargon wall
            →  read aloud to test rhythm
 
@@ -177,7 +177,7 @@ DELIVER    →  output BAB + alternatives (2-3 variants) for A/B testing
 - **Reason**: [tone fit, audience match, CTA strength]
 
 ### Anti-Pattern Check
-Run the full AP-1~AP-9 checklist from `reference/anti-patterns.md` and report results in the standard format. BAB emphasizes AP-3 (Missing Tension — Before must be concrete), AP-7 (Jargon Wall — short copy can't carry it), and AP-9 (Ad Copy Disguise — the largest risk for conversion copy). AP-8 (Happy Path Only) is typically marked N/A for short-form BAB.
+Run the AP-1~AP-9 checklist from `saga/SKILL.md` and report results in the standard format. BAB emphasizes AP-3 (Missing Tension — Before must be concrete), AP-7 (Jargon Wall — short copy can't carry it), and AP-9 (Ad Copy Disguise — the largest risk for conversion copy). AP-8 (Happy Path Only) is typically marked N/A for short-form BAB.
 
 ### Test Plan
 - **Hypothesis**: variant X drives more conversion than control
@@ -232,7 +232,7 @@ When `bab` completes, emit:
 - **Audience + channel + length budget** stated.
 - **Three variants (A/B/C)** of full BAB.
 - **Recommended variant** with reason.
-- **Anti-pattern check** (AP-1~AP-9 per `reference/anti-patterns.md`).
+- **Anti-pattern check** (AP-1~AP-9 per `saga/SKILL.md`).
 - **Test plan** (hypothesis, metric, sample size, holdout).
 - **Handoffs**: Funnel, Growth, Prose, Experiment, Director.
 

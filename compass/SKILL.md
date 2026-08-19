@@ -94,7 +94,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | `CACHE` | Slim-source selection | Probe `.claude/compass-cache.md` → if valid, set as MATCH source; if missing, auto-prompt for `init`; if stale, warn and proceed | `.claude/compass-cache.md`, `reference/cache-format.md` |
 | `MATCH` | Select skill candidates | Cache-driven matching when available; otherwise full-catalog search, category filter, CAPABILITIES_SUMMARY cross-reference, Recipe lookup, similar-skill comparison | `.claude/compass-cache.md` (preferred) OR `reference/catalog.md`, `reference/recipes-directory.md`, target `SKILL.md` |
 | `RECOMMEND` | Compose recommendation | Narrow to 1-3, attach rationale, usage examples, and default Recipe + key Subcommands | `reference/patterns.md`, `reference/recipes-directory.md` (full-catalog path only) |
-| `ORIENT` | Onboarding | Next steps, chain suggestions, Nexus handoff | `reference/examples.md` |
+| `ORIENT` | Onboarding | Next steps, chain suggestions, Nexus handoff | — |
 
 ## Recipes
 
@@ -102,7 +102,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 |--------|-----------|---------|-------------|------------|
 | Recommend Skill | `recommend` | ✓ | Recommend best-fit skill for the task (cache-first; falls back to full catalog) | `.claude/compass-cache.md` (if present) OR `reference/catalog.md`, `reference/patterns.md`, `reference/recipes-directory.md` |
 | Catalog Listing | `catalog` | | Full catalog of all skills (cache bypassed) | `reference/catalog.md`, `reference/recipes-directory.md` |
-| Onboarding Guide | `onboard` | | Orientation for new users | `reference/examples.md`, `reference/recipes-directory.md` |
+| Onboarding Guide | `onboard` | | Orientation for new users | `reference/recipes-directory.md` |
 | Recipe Directory | `recipes` | | Per-skill Recipe (Subcommand) listing. `/compass recipes <skill>` lists all Recipes for a specific skill; without arguments, shows 111 global skills plus available project-local extensions | `reference/recipes-directory.md` |
 | Init Cache | `init` | | Generate `.claude/compass-cache.md` for the current repository — scan signals (manifests, file mix, conventions), score skills, write Top-N slim cache. Reduces recommend-time context ~95%. | `reference/cache-recipes.md`, `reference/cache-format.md`, `reference/catalog.md` |
 | Refresh Cache | `refresh` | | Force-regenerate `.claude/compass-cache.md` with before/after diff (added / removed / affinity-changed skills). Use after catalog upgrades, framework changes, or TTL expiry. | `reference/cache-recipes.md`, `reference/cache-format.md`, `reference/catalog.md` |
@@ -116,7 +116,6 @@ Parse the first token of user input.
 Behavior notes per Recipe:
 - `recommend`: In the CACHE phase, read `.claude/compass-cache.md`. If valid, MATCH using only the cached Top-N plus `universal_skills` as source — do **not** read `catalog.md`. If missing, auto-prompt **once per session**: "Generate cache? (Y/n) — reduces context ~95% on subsequent runs" → on `Y` run `init` inline, then continue with the recommendation; on `n` use the full catalog for this invocation only. If stale (`catalog_version` mismatch or TTL expired), prepend a one-line warning and proceed with the cached data. Auto-refresh is forbidden — refresh is always user-initiated.
 - `catalog`: Cache fully bypassed. Always read `reference/catalog.md` + `reference/recipes-directory.md` and emit the full listing.
-- `onboard`: Cache not used. Standard flow centered on `reference/examples.md`.
 - `recipes`: Cache not used. Read `reference/recipes-directory.md` directly; filter by argument (skill name) when supplied.
 - `init`: Read `reference/cache-recipes.md` first. SCAN (signals from `package.json` / `Cargo.toml` / `pyproject.toml` / `go.mod` / file-extension distribution / `CLAUDE.md`) → SIZE (file count → small / medium / large / xlarge → `top_n` 15-50) → SCORE (signal-to-skill mapping; direct dep match = H, convention match = M, speculative = L) → PICK (`top_n` + 11 universal skills) → WRITE (generate `.claude/compass-cache.md` in the format from `cache-format.md` § 2) → REPORT (5-line summary). If a cache already exists, ask before overwriting. Always exclude `node_modules` / `dist` / `.git` / `vendor` / `target` / `.venv` from the file count.
 - `refresh`: Read `reference/cache-recipes.md` first. Same flow as `init` but skip the existence check and force overwrite. Display a before/after diff (added / removed / affinity-changed skills) at the top of REPORT. Use after a catalog upgrade, when a new framework is introduced, or when a TTL warning has appeared. Auto-refresh is forbidden — always user-initiated.
@@ -128,7 +127,7 @@ Behavior notes per Recipe:
 | `一覧`, `リスト`, `全部見せて` | Catalog mode (cache bypass) | Category-grouped skill list | `reference/catalog.md` |
 | `どれを使えば`, `おすすめ`, `こういう時` | Matching mode (cache-first) | 1-3 recommendations + rationale | `.claude/compass-cache.md` OR `reference/patterns.md` |
 | `違いは`, `比較`, `AとBどっち` | Comparison mode | Diff table + usage guide | `reference/catalog.md` |
-| `初めて`, `オンボーディング`, `使い方` | Onboarding mode | Step-by-step guide | `reference/examples.md` |
+| `初めて`, `オンボーディング`, `使い方` | Onboarding mode | Step-by-step guide | — |
 | `組み合わせ`, `チェーン`, `ワークフロー` | Chain mode | Agent chain proposal | `reference/patterns.md` |
 | `cache 作って`, `init`, `高速化` | Cache init mode | Cache file + 5-line report | `reference/cache-recipes.md` |
 | `cache 更新`, `refresh`, `再生成` | Cache refresh mode | Cache file + before/after diff | `reference/cache-recipes.md` |
@@ -189,7 +188,6 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | `reference/recipes-directory.md` | You need each skill's Subcommands (Recipes) — required for `catalog` / `recipes` / cache-miss `recommend`. Auto-generated from SKILL.md `## Recipes` tables |
 | `reference/patterns.md` | You need task-to-skill mapping patterns |
 | `reference/gap-report.md` | You are running Gap mode (no matching skill) and need the Gap Report structure to hand off to Architect via `COMPASS_TO_ARCHITECT` |
-| `reference/examples.md` | You need onboarding scenarios or concrete examples |
 | `reference/cache-format.md` | You are running `init` / `refresh`, validating a cache file, or interpreting cache invalidation rules / affinity scale / universal inclusions |
 | `reference/cache-recipes.md` | You are executing `init` or `refresh` and need the SCAN→SIZE→SCORE→PICK→WRITE→REPORT procedure, signal extraction sources, signal→skill mapping table, or top-N sizing formula |
 | `_common/BOUNDARIES.md` | Role boundaries are ambiguous |

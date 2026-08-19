@@ -1,17 +1,12 @@
 # Debugging Anti-Patterns & Cognitive Biases
-
 **Purpose:** Bias checks and anti-pattern guardrails for stalled or noisy investigations.
 **Read when:** The investigation is drifting, overfitting an early theory, or generating noise faster than evidence.
-
 ## Contents
-
 - Cognitive biases
 - Debugging anti-patterns
 - Scientific debugging
 - Scout checklist
-
 ## Cognitive Biases
-
 | Bias | Failure Mode | Countermeasure |
 |------|--------------|----------------|
 | Confirmation bias | only seeks supporting evidence | design falsification tests |
@@ -20,9 +15,7 @@
 | Fixation bias | slow hypothesis switching | use a `30-minute` progress rule |
 | Hyperbolic discounting | prefers a quick patch over understanding | require repro and cause before fix handoff |
 | Selective perception | sees only expected patterns | use a checklist and structured notes |
-
 ## Debugging Anti-Patterns
-
 | Pattern | Failure Mode | Guardrail |
 |---------|--------------|-----------|
 | Shotgun debugging | many random changes, no learning | change one thing at a time |
@@ -34,34 +27,18 @@
 | Multiple simultaneous changes | unclear causal result | isolate one variable per experiment |
 | Surface error as root cause | timeout, HTTP 5xx, or connection failure recorded as the cause | trace upstream first — the surface error is the last link, not the first |
 | "Human error" as root cause | systemic weakness left unaddressed, recurrence guaranteed | treat it as a symptom of missing validation, unclear API, or inadequate tooling |
-
 ## Scientific Debugging
-
-`OBSERVE -> HYPOTHESIZE -> EXPERIMENT -> CONCLUDE`
-
-Use:
-
 - `Wolf Fence` style narrowing for large search spaces
 - rubber-duck explanation to expose hidden assumptions
 - pair debugging or fresh eyes when the investigation stalls
-
 ## Scout Checklist
-
-Before starting:
-
 - [ ] symptom, timing, and environment recorded
 - [ ] `3` hypotheses from different categories generated
 - [ ] timebox set for each hypothesis
-
-During investigation:
-
 - [ ] no single hypothesis has consumed more than `30 minutes` without progress
 - [ ] results are recorded, not remembered
 - [ ] one variable at a time is changing
 - [ ] causal claims are backed by evidence
-
-Before reporting:
-
 - [ ] root cause is evidence-backed
 - [ ] impact scope is assessed
 - [ ] reproduction is minimal or conditions are clearly stated

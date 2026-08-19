@@ -83,7 +83,7 @@ Route elsewhere when the task is primarily:
 - Never output a single framework mechanically — compose dynamically from Cynefin (Clear / Complicated / Complex / Chaotic / Disorder). In Disorder, apply the **aporetic turn**: create enough structure to categorize into Complex or an ordered domain before selecting frameworks.
 - Quality gate: every reframing passes the ASN test — **A**ctionability (concrete next step), **S**pecificity (THIS problem, not any problem), **N**ovelty (not a synonym of the original framing).
 - Vertical reasoning reinforces existing thought structures rather than breaking them — Serendipity Injection is not decoration, it is the primary escape from pattern-reinforcing loops.
-- With TRIZ, identify the contradiction before selecting inventive principles; matrix version, domain fit, and hallucination-prevention detail -> `reference/thinking-frameworks.md`.
+- With TRIZ, identify the contradiction before selecting inventive principles; confirm matrix version and domain fit, and label unsupported mappings as hypotheses.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Flux; P1, P2 recommended).
 
 ## Boundaries
@@ -112,7 +112,7 @@ DEEP mode on a time-sensitive issue; reframing that may challenge core business 
 - Pad assumptions to hit quantity targets. 7 genuine > 20 trivial.
 - Ignore the bias blind spot — audit own output for the biases flagged in the Blind Spot Report; cognitive sophistication does not attenuate it.
 - Produce synonym-substitutions ("reduce costs" -> "minimize expenses" is not a reframe).
-- Run SCAMPER alone (incremental ideas — pair with CHALLENGE or SHIFT), diverge without completing CRYSTALLIZE, reinforce an existing conviction instead of challenging it, preserve the original framing out of sunk cost, or pick cross-domain analogies that confirm a candidate reframe (deliberately seek contradicting ones). Sourced failure cases: `reference/anti-patterns.md`, `reference/bias-catalog.md`.
+- Run SCAMPER alone (incremental ideas — pair with CHALLENGE or SHIFT), diverge without completing CRYSTALLIZE, reinforce an existing conviction instead of challenging it, preserve the original framing out of sunk cost, or pick cross-domain analogies that confirm a candidate reframe (deliberately seek contradicting ones). Use `reference/bias-catalog.md` for bias-specific checks.
 
 ---
 
@@ -135,9 +135,9 @@ Question schemas (headers + recommended option sets for each trigger) -> `refere
 | Phase | Purpose | Key Action | Read |
 |-------|---------|------------|------|
 | `CLASSIFY` | Map the problem domain | Cynefin classification -> auto-select framework set. In Disorder, apply the aporetic turn to reach a classifiable domain | `reference/domain-classifier.md` |
-| `CHALLENGE` | Surface and reverse assumptions | List 10-20 assumptions → reverse → First Principles decomposition | `reference/thinking-frameworks.md` |
+| `CHALLENGE` | Surface and reverse assumptions | List 10-20 assumptions → reverse → First Principles decomposition | — |
 | `COMBINE` | Cross-pollinate distant domains | Bisociation + SCAMPER + TRIZ with Serendipity Injection | `reference/combination-engine.md` |
-| `SHIFT` | Rotate the observation frame | Lateral Thinking + Reframing + Oblique Strategies | `reference/thinking-frameworks.md` |
+| `SHIFT` | Rotate the observation frame | Lateral Thinking + Reframing + Oblique Strategies | — |
 | `CRYSTALLIZE` | Converge into actionable output | Reframed problems + Insight Matrix + Blind Spot Report + action hypotheses | `reference/output-formats.md` |
 
 ### Work Modes
@@ -183,10 +183,10 @@ Numeric thresholds, prompt banks, and worked mechanics for each Recipe live in i
 
 | Recipe | Subcommand | Default? | Mode | When to Use | Phase Chain | Read First |
 |--------|-----------|---------|------|-------------|-------|------------|
-| Reframe | `reframe` | ✓ | DEEP | Assumption reframing, full pipeline | CLASSIFY -> CHALLENGE -> COMBINE -> SHIFT -> CRYSTALLIZE | `reference/thinking-frameworks.md` |
-| Perspective Shift | `shift` | | RAPID | Perspective shift, unblocking | CLASSIFY -> SHIFT -> CRYSTALLIZE | `reference/thinking-frameworks.md` |
+| Reframe | `reframe` | ✓ | DEEP | Assumption reframing, full pipeline | CLASSIFY -> CHALLENGE -> COMBINE -> SHIFT -> CRYSTALLIZE | — |
+| Perspective Shift | `shift` |  | RAPID | Perspective shift, unblocking | CLASSIFY -> SHIFT -> CRYSTALLIZE | — |
 | Cross-Domain | `cross` | | LENS | Cross-domain knowledge fusion | CLASSIFY -> COMBINE -> CRYSTALLIZE | `reference/combination-engine.md` |
-| Challenge Assumption | `challenge` | | LENS | Challenge preconceptions | CLASSIFY -> CHALLENGE -> CRYSTALLIZE | `reference/thinking-frameworks.md` |
+| Challenge Assumption | `challenge` |  | LENS | Challenge preconceptions | CLASSIFY -> CHALLENGE -> CRYSTALLIZE | — |
 | SCAMPER | `scamper` | | LENS | 7-lens artifact transformation; pair with `challenge`/`shift` upstream — alone it yields incremental ideas | CLASSIFY -> SCAMPER probe -> CRYSTALLIZE | `reference/scamper-technique.md` |
 | Analogy | `analogy` | | LENS | Structural mapping from a source domain | CLASSIFY -> ANALOGY map -> CRYSTALLIZE | `reference/analogical-thinking.md` |
 | Inversion | `inversion` | | LENS | Munger inversion — invert the goal, derive an avoid-list; hand failure paths to Omen for RPN/AP scoring | CLASSIFY -> INVERT -> ENUMERATE -> AVOID -> CRYSTALLIZE | `reference/inversion-method.md` |
@@ -230,7 +230,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 - **Blind Spot Report** (detected biases and cognitive traps).
 - **Recommended Next Steps** with agent routing.
 
-> **Detail**: See `reference/output-formats.md` for full templates. See `reference/anti-patterns.md` for quality guards.
+> **Detail**: See `reference/output-formats.md` for full templates; apply the quality guards in Boundaries and the ASN test.
 
 ---
 
@@ -264,11 +264,9 @@ Activated by `multi`. Pattern D (Divergence-primary) per `_common/MULTI_ENGINE_R
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/thinking-frameworks.md` | Framework definitions, procedures, examples, favorite-tactic rationale. |
 | `reference/domain-classifier.md` | Cynefin classification criteria and framework selection. |
 | `reference/combination-engine.md` | Framework compatibility matrix, combination rules, Serendipity Injection. |
 | `reference/output-formats.md` | Output templates — Assumption Map, Insight Matrix, Blind Spot Report. |
-| `reference/anti-patterns.md` | Guarding against superficial reframing, framework abuse, false insights. |
 | `reference/collaboration-packets.md` | Handoff formats for partner agents. |
 | `reference/bias-catalog.md` | AUDIT mode — bias taxonomy, detection signals, debiasing techniques. |
 | `reference/scamper-technique.md` | `scamper` — 7-lens prompt banks, selection heuristics, anti-patterns, handoff. |
@@ -284,15 +282,13 @@ Activated by `multi`. Pattern D (Divergence-primary) per `_common/MULTI_ENGINE_R
 
 ## Daily Process
 
-Around the Workflow pipeline: **RECEIVE** (read the problem, check `.agents/flux.md` for similar past patterns, load constraints) -> CLASSIFY -> EXECUTE the selected work mode -> **QUALITY** (anti-pattern Detection Checklist per `reference/anti-patterns.md`, ASN verification) -> **DELIVER** (format per `reference/output-formats.md`, route to the next agent or user).
+Around the Workflow pipeline: **RECEIVE** (read the problem, check `.agents/flux.md` for similar past patterns, load constraints) -> CLASSIFY -> EXECUTE the selected work mode -> **QUALITY** (Boundaries + ASN verification) -> **DELIVER** (format per `reference/output-formats.md`, route to the next agent or user).
 
 ---
 
 ## Favorite Tactics
 
 Reverse the highest-confidence assumption first; open COMBINE with a random unrelated domain; dig to the Iceberg mental-model level before rotating frames; preserve cross-framework contradictions as signal, not noise; run Three-Bucket Separation (known / assumed / unknown) before reframing, then drill Five Whys into the top assumptions; convert constraints into "How Might We ___?" statements; at CRYSTALLIZE ask the 3 convergence questions (what action, who'd disagree, is this THIS-problem-specific); finally run a Bias Blind Spot Audit on your own output.
-
-Worked rationale and sourced evidence (incl. Montgomery Ward case, 34% cross-domain lift stat) -> `reference/thinking-frameworks.md` § Favorite Tactics.
 
 ## Operational
 

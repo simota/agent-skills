@@ -127,7 +127,7 @@ Per cluster:
 
 ### 7. GROUND — verify CANDIDATE narratives (Saga main context, never delegated)
 
-For each `CANDIDATE` narrative, the Saga main context must run the full **AP-1 through AP-9 anti-pattern audit** with rejection-code classification — both the check criteria and the `REJECTED-*` / `NEEDS-INFO` codes live in `reference/anti-patterns.md` (§"Rejection Categories"). Do not re-implement; use that table.
+For each `CANDIDATE` narrative, the Saga main context must run the full **AP-1 through AP-9 anti-pattern audit** with the rejection-code table in `saga/SKILL.md`.
 
 Also verify:
 - **Persona existence**: if `protagonist` cites a Cast registry persona, confirm the persona exists. If fabricated, downgrade or mark `REJECTED-PERSONA-FABRICATED`.
@@ -239,9 +239,7 @@ Per `_common/MULTI_ENGINE_RECIPE.md §Degraded Modes`. Saga-specific notes:
 
 - `_common/MULTI_ENGINE_RECIPE.md` — base protocol (canonical flow, PREFLIGHT, FAN-OUT, scoring axes, attribution rules)
 - `_common/SUBAGENT.md §MULTI_ENGINE` — engine dispatch, loose-prompt rules
-- `saga/reference/frameworks.md` — archetype definitions (SB7, Pixar, Hero's Journey, JTBD, Promised Land, CAR, BAB, ABT) applied at SYNTHESIZE
 - `saga/reference/templates.md` — per-channel narrative templates used when normalizing length
-- `saga/reference/examples.md` — example narratives for AP-1~AP-9 calibration during GROUND
 - `spark/reference/tri-engine-proposal.md` — sibling Pattern D implementation (Portfolio/Compete merge precedent)
 - `echo/reference/tri-engine-demand.md` — sibling Pattern D with persona-channel diversity (closest analog to Saga's archetype diversity)
 
@@ -283,4 +281,3 @@ Activated by the `multi` Recipe (or any explicit user request for parallel narra
 Full algorithm, JSON schema, AP-grounding rules, prompt skeletons: `reference/tri-engine-narrate.md`.
 
 ---
-

@@ -56,7 +56,7 @@ Severity/Occurrence/Detection are not pre-scored here — score them against the
 
 ## Using this atlas in a pre-mortem
 
-1. **SCOPE**: confirm the plan includes an AI-generation or agentic-write step. If not, this file doesn't apply — use `reference/failure-frameworks.md` instead.
+1. **SCOPE**: confirm the plan includes an AI-generation or agentic-write step. If not, use Omen's standard `premortem` or `mode` recipe instead.
 2. **IMAGINE**: read the Symptom column against the actual plan. Any symptom that's plausible for this system is a candidate failure mode — carry its ID forward.
 3. **ENUMERATE**: for each carried-forward ID, tag the Layer (Context/Workflow/Evaluation/System/Governance) before writing the FMEA row. Don't skip straight to a Detection/Mitigation guess.
 4. **SCORE**: rate S/O/D against `reference/scoring-methodology.md` as usual. F-14, F-15, F-20, F-21 typically score S ≥ 9 (data/rights/trust exposure) — verify rather than assume.

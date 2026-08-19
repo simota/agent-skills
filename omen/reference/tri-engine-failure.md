@@ -312,7 +312,6 @@ Universal table in `_common/MULTI_ENGINE_RECIPE.md §Degraded Modes`. Omen-speci
 - `_common/SUBAGENT.md §MULTI_ENGINE` — base engine dispatch table
 - `spark/reference/tri-engine-proposal.md` — sibling Pattern D implementation; CLUSTER and SYNTHESIZE logic mirrored here
 - `judge/reference/tri-engine-review.md` — canonical PREFLIGHT and FAN-OUT mechanics
-- `omen/reference/failure-frameworks.md` — FMEA procedures and pre-mortem framing applied at SYNTHESIZE
 - `omen/reference/scoring-methodology.md` — RPN scales and AP table used at GROUND calibration re-score
 - `omen/reference/output-templates.md` — pre-mortem report template extended at PRESENT
 - `omen/reference/fix-prompt-generation.md` — LLM Fix Prompt rules; extended in multi mode with `engine_concurrence` header line
@@ -359,4 +358,3 @@ The severity-9 gate **dominates concurrence**. Catastrophic outcomes do not need
 **Degraded modes:** 1 engine down → continue with 2; note the lost engine's failure-class blindspot may now be uncovered (recommend manual audit of that domain). 2 engines down → single-engine fallback, every mode treated as CANDIDATE, all grounded before reporting. All 3 down → degrade to standard `premortem` Recipe. Severity-9 disagreement across engines → default to the higher severity (one-way door).
 
 Full algorithm, JSON schema, prompt skeletons, CLUSTER identity rules, GROUND checks, and Risk Matrix rendering: `reference/tri-engine-failure.md`.
-

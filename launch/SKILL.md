@@ -251,7 +251,6 @@ Mobile-specific Go/No-Go items beyond the standard scored checklist: App Review 
 |------|----------------|
 | `reference/strategies.md` | Versioning, CHANGELOG, release notes, rollback options, hotfix flow, release windows, or command references. |
 | `reference/patterns.md` | Multi-agent release orchestration or handoff payload expectations. |
-| `reference/examples.md` | Compact worked examples for minor release, hotfix, rollout, or Go/No-Go decisions. |
 | `reference/release-anti-patterns.md` | Deployment anti-patterns, canary/blue-green cautions, or release cadence guardrails. |
 | `reference/feature-flag-pitfalls.md` | Feature flag lifecycle rules, debt controls, or cleanup thresholds. |
 | `reference/versioning-pitfalls.md` | SemVer pitfalls, breaking-change detection rules, or CalVer decision support. |

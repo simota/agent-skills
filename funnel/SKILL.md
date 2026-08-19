@@ -234,7 +234,7 @@ Detailed performance optimization → delegate to Growth / Bolt. LP-specific pri
 - Fonts: max 2 families, `font-display: swap`, preload critical weights only.
 - Critical CSS: inline above-fold styles; defer non-critical.
 - Third-party scripts: defer or load after `onload`; `preconnect` for external origins.
-- INP: debounce event handlers, lazy-load third-party widgets. Attribute slow frames to specific scripts via the Long Animation Frames (LoAF) API → `reference/examples.md`.
+- INP: debounce event handlers, lazy-load third-party widgets, and attribute slow frames to specific scripts via the Long Animation Frames (LoAF) API.
 - Targets: LCP ≤ 2.5s, INP < 200ms, CLS < 0.1, TTFB < 800ms. Top-quartile aspirations: LCP ≤ 1.5s, INP < 100ms, CLS < 0.05, TTFB < 300ms.
 - Each 1-second delay beyond 2.5s LCP reduces conversions by ~7%.
 
@@ -247,7 +247,7 @@ Detailed performance optimization → delegate to Growth / Bolt. LP-specific pri
 | `BRIEF` | Requirements | CV goal, target, USP, competitor LP analysis | — |
 | `STRUCTURE` | Structure design | Framework selection, section map, wireframe — present the section map as an ASCII wireframe per `_common/ASCII_PREVIEW.md` before BUILD | `reference/patterns.md`, `_common/ASCII_PREVIEW.md` |
 | `COPY` | Copy creation | Headline, benefits, CTA, FAQ | — |
-| `BUILD` | Implementation | HTML/CSS/JS, responsive, image optimization | `reference/examples.md` |
+| `BUILD` | Implementation | HTML/CSS/JS, responsive, image optimization | — |
 | `OPTIMIZE` | Optimization | Performance, accessibility, variant design | — |
 | `DELIVER` | Delivery | Handoff to Artisan/Growth, improvement proposals | `reference/handoffs.md` |
 
@@ -258,7 +258,7 @@ Detailed performance optimization → delegate to Growth / Bolt. LP-specific pri
 | Build LP | `build` | ✓ | Full LP design (starting from AIDA/PAS/BAB/4Ps framework selection) | Section map + copy direction + CTA placement (≥3) + responsive specs + CWV targets | `reference/patterns.md` |
 | CTA Optimization | `cta` | | CTA placement, copy, micro-copy optimization | CTA placement plan + button copy variants + constraints (size, contrast, microcopy) | — |
 | Conversion Audit | `conversion` | | Conversion improvement and section audit for an existing LP | Audit findings + section-level improvement plan + prioritized fix list | `reference/patterns.md` |
-| Responsive Design | `responsive` | | Mobile-first implementation, tap targets, viewport optimization | Responsive section spec + breakpoint plan + tap-target / viewport rules | `reference/examples.md` |
+| Responsive Design | `responsive` |  | Mobile-first implementation, tap targets, viewport optimization | Responsive section spec + breakpoint plan + tap-target / viewport rules | — |
 | Form Optimization | `form` | | Field minimization, progressive disclosure, autofill cooperation, validation, submit friction | Form spec — field-count cost model, single vs multi-step, `autocomplete`/`inputmode` contract, blur-time validation, submit state machine. Delegates: Artisan (impl), Prose (labels/errors), Growth (A/B), Muse (tokens) | `reference/form-lp-optimization.md` |
 | Copy Authoring | `copy` | | Headline formulas, hero body, value-prop clarity, microcopy shells, readability, tone | LP copy — PAS/BAB/4U formulas, hero anatomy, clarity tests, benefit-vs-feature, microcopy shells, readability targets. Delegates: Prose (exact microcopy + voice), Growth (ads/nurture), Muse (type tokens), Vision (positioning) | `reference/copy-lp-authoring.md` |
 | Trust Signal Placement | `trust` | | Testimonials, logo bars, case studies, badges, review aggregation, urgency vs dark patterns | Placement map — testimonial shape/quantity, logo bar treatment, metric- vs story-forward cases, certifications, review aggregation, honest-urgency red lines. Delegates: Prose (wording), Growth (review APIs + schema), Muse (tokens), Clause (FTC substantiation) | `reference/trust-signal-placement.md` |
@@ -326,7 +326,6 @@ Handoff formats → `reference/handoffs.md`
 | File | Read when |
 |------|-----------|
 | `reference/patterns.md` | LP type pattern, section-level design, standard section map, A/B platform landscape |
-| `reference/examples.md` | Need LP section structure reference during build phase |
 | `reference/handoffs.md` | Sending to or receiving from another agent |
 | `reference/form-lp-optimization.md` | Field-count sizing, single vs multi-step, autofill contract, blur-time validation, submit friction. |
 | `reference/copy-lp-authoring.md` | Headline formulas, hero copy anatomy, value-prop clarity tests, microcopy shells, tone calibration. |

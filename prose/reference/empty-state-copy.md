@@ -102,7 +102,7 @@ Filter or search returned zero. Goal: acknowledge query, preserve trust, offer r
 | Marketplace | Solution-oriented, trust-preserving |
 | Gaming / social | Celebratory, animated |
 
-Follow the voice defined in `reference/voice-tone-framework.md`.
+Follow the project's established brand voice; if none exists, run Prose's `tone` recipe first.
 
 ## Accessibility Notes
 

@@ -181,18 +181,18 @@ Use `reference/implementation-policy.md` for repository-first architecture selec
 | SURVEY | Requirements and dependency analysis | Interface/Type definitions, I/O identification, failure mode enumeration, DDD-vs-CRUD assessment | `reference/implementation-policy.md` |
 | PLAN | Design and implementation planning | Dependency mapping, smallest-pattern selection, test strategy, risk assessment | `reference/implementation-policy.md` |
 | BUILD | Implementation | Business rule implementation, boundary validation, API/DB connections, state ownership | `reference/implementation-policy.md` |
-| VERIFY | Quality verification | Error handling, edge case verification, memory leak prevention, retry logic, **5-axis Impact Scope Check (callers / tests / types / configs / docs)** | `reference/process-and-examples.md` |
-| PRESENT | Deliverable presentation | PR creation (architecture, safeguards, type info), self-review | `reference/process-and-examples.md` |
+| VERIFY | Quality verification | Error handling, edge case verification, memory leak prevention, retry logic, **5-axis Impact Scope Check (callers / tests / types / configs / docs)** | — |
+| PRESENT | Deliverable presentation | PR creation (architecture, safeguards, type info), self-review | — |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Bug Fix | `fix` | ✓ | Scoped fix after Scout handoff, target <50 lines | `reference/process-and-examples.md` |
+| Bug Fix | `fix` | ✓ | Scoped fix after Scout handoff, target <50 lines | — |
 | CRUD | `crud` | | Single-aggregate CRUD, no invariants, 30-60 lines | `reference/implementation-policy.md` |
 | API Integration | `api` | | REST/GraphQL/WS client/server, idempotency critical | `reference/implementation-policy.md` |
 | Domain Model | `ddd` | | Aggregate root, invariants, domain events, multi-file | `reference/implementation-policy.md` |
-| Prototype Harden | `harden` | | Productionize Forge output, raise quality L0-L3 | `reference/process-and-examples.md`, `reference/implementation-policy.md` |
+| Prototype Harden | `harden` | | Productionize Forge output, raise quality L0-L3 | `reference/implementation-policy.md` |
 | Cross-Language Port | `port` | | Port between languages / frameworks (semantic equivalence tests, Parallel Run) | `reference/cross-language-port.md` |
 | External API Integrate | `integrate` | | External service integration (auth, webhook, sandbox verification, vendor-specific retry) | `reference/external-integration.md` |
 | Targeted Patch | `patch` | | Scoped fix under 30 lines / 3 files (smaller than fix, lighter than harden) | `reference/targeted-patch.md` |
@@ -227,8 +227,8 @@ Each Recipe carries its own acceptance gate **in addition to** the universal 5-a
 | `validation`, `zod`, `pydantic`, `schema` | Boundary parsing with the existing stack | Validated DTO + domain types | `reference/implementation-policy.md` |
 | `state`, `tanstack`, `zustand` | Existing-stack state ownership | Integration logic or Artisan handoff | `reference/implementation-policy.md` |
 | `event sourcing`, `cqrs`, `saga` | Evidence-gated event architecture | Events, projections, or rejection rationale | `reference/implementation-policy.md` |
-| `bug fix`, `fix` | Investigation-to-fix | Targeted fix + regression test skeleton | `reference/process-and-examples.md` |
-| `prototype conversion`, `forge handoff` | Forge-to-production | Production-grade rewrite | `reference/process-and-examples.md` |
+| `bug fix`, `fix` | Investigation-to-fix | Targeted fix + regression test skeleton | — |
+| `prototype conversion`, `forge handoff` | Forge-to-production | Production-grade rewrite | — |
 | `architecture`, `clean`, `hexagonal` | Smallest sufficient architecture | Repository-consistent structure | `reference/implementation-policy.md` |
 | unclear implementation request | Domain assessment | DDD-vs-CRUD decision + implementation | `reference/implementation-policy.md` |
 
@@ -265,7 +265,7 @@ ImpactScopeReport:
 
 ## Daily Process
 
-**Detail + examples**: See `reference/process-and-examples.md` | **Tools:** use the repository's configured compiler, validator, state layer, formatter, linter, and test runner
+**Tools:** use the repository's configured compiler, validator, state layer, formatter, linter, and test runner.
 
 ## Reference Map
 
@@ -275,7 +275,6 @@ Read only the files required for the current decision.
 |-----------|----------------|
 | `reference/core-contract-rationale.md` | A Core Contract rule needs its reasoning, tuning number, or source. |
 | `reference/implementation-policy.md` | Repository-first architecture selection, language/toolchain grounding, implementation boundaries, and frontend state ownership. |
-| `reference/process-and-examples.md` | Forge conversion flow, TDD examples, Seven Deadly Sins, question templates. |
 | `reference/cross-language-port.md` | `port` recipe — parallel-run black-box comparison, semantic equivalence tests. |
 | `reference/external-integration.md` | `integrate` recipe — sandbox-first, secret handling, vendor retry, webhook signatures. |
 | `reference/targeted-patch.md` | `patch` recipe — scoped patch with regression coupling and clear rollback. |

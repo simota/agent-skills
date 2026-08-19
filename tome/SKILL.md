@@ -326,7 +326,6 @@ All handoff templates → `reference/handoffs.md`
 |------|-----------|
 | `reference/output-templates.md` | You need detailed templates for output formats |
 | `reference/patterns.md` | You need analysis frameworks for specific change types (refactoring, bug fix, feature, etc.) |
-| `reference/examples.md` | You need concrete sample outputs for reference |
 | `reference/handoffs.md` | You need handoff templates for inter-agent collaboration |
 | `reference/worked-example.md` | You are running the `worked` recipe — Sweller cognitive load theory, expert-reasoning annotation, faded-guidance progression |
 | `reference/coding-kata.md` | You are running the `kata` recipe — constraint design, difficulty tiers (Bronze/Silver/Gold), pair vs solo facilitation, common katas |

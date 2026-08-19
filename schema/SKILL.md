@@ -118,7 +118,7 @@ Route elsewhere when the task is primarily:
 
 | Phase | Focus | Required checks | Read |
 |-------|-------|-----------------|------|
-| `Model` | Entities, relationships, data types, constraints | Tables, PK/FK, normalization rationale, common-pattern choice | `reference/normalization-guide.md` |
+| `Model` | Entities, relationships, data types, constraints | Tables, PK/FK, normalization rationale, common-pattern choice | — |
 | `Migrate` | Safe schema change plan | Ordered migration steps, rollback note, lock-risk notes | `reference/migration-patterns.md` |
 | `Validate` | Query patterns, indexes, framework fit, growth | Index plan, risks, DB/framework notes, ER diagram when useful | `reference/index-strategies.md` |
 
@@ -134,7 +134,7 @@ Route elsewhere when the task is primarily:
 
 ## Critical Decision Rules
 
-- Use `3NF` by default. Read [normalization-guide.md](reference/normalization-guide.md) when deciding whether to denormalize.
+- Use `3NF` by default. Denormalize only with query evidence and a documented source of truth, synchronization method, and integrity checks.
 - Use these default index mappings:
 
 | Query pattern | Default index | Notes |
@@ -168,7 +168,7 @@ Route elsewhere when the task is primarily:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| new table / relationship design | Model → Migrate → Validate | DDL, ER diagram, migration plan | `reference/normalization-guide.md` |
+| new table / relationship design | Model → Migrate → Validate | DDL, ER diagram, migration plan | — |
 | migration for existing schema | Expand-contract safety analysis | ordered migration steps, rollback path, lock-risk notes | `reference/migration-patterns.md` |
 | index design / slow query schema | Access-pattern-driven index selection | index plan with type rationale | `reference/index-strategies.md` |
 | multi-tenant schema | Isolation strategy evaluation | RLS policies, partitioning plan, tenant_id design | `reference/multi-tenant-patterns.md` |
@@ -181,7 +181,7 @@ Route elsewhere when the task is primarily:
 Routing rules:
 
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
-- If the request involves normalization or denormalization decisions, read `reference/normalization-guide.md`.
+- For normalization or denormalization decisions, apply the model's relational-design knowledge and document the source of truth, synchronization method, and integrity checks.
 - If the request involves index design or query optimization, read `reference/index-strategies.md`.
 - If the request involves migration sequencing or zero-downtime changes, read `reference/migration-patterns.md`.
 - If the request involves anti-pattern review, read `reference/data-modeling-anti-patterns.md` or `reference/schema-design-anti-patterns.md`.
@@ -197,7 +197,7 @@ Routing rules:
 | Schema Design | `design` | ✓ | New table or entity design | `reference/schema-examples.md` |
 | Migration Plan | `migration` | | Schema change and migration design | `reference/migration-patterns.md` |
 | ER Diagram | `er` | | ER diagram generation and review | `reference/schema-examples.md` |
-| Normalization | `normalize` | | Normalization vs denormalization decisions | `reference/normalization-guide.md` |
+| Normalization | `normalize` |  | Normalization vs denormalization decisions | — |
 | Index Strategy | `index` | | Index design and optimization | `reference/index-strategies.md` |
 | Migration Rollback | `rollback` | | Reverse-operation design for destructive migrations (reverse DDL / dual-write / backfill / alternatives to destructive changes) | `reference/migration-rollback.md` |
 | Multi-Tenant Design | `tenant` | | Tenant isolation, RLS, routing, migration, provisioning, quota, or cross-tenant security; select `isolation|rls|routing|scale|migration|provisioning|quota` mode from the request | `reference/multi-tenant-patterns.md`, matching `reference/tenant-*.md` |
@@ -270,7 +270,6 @@ Schema receives data requirements and architectural context from upstream agents
 
 | File | Read this when... |
 |------|-------------------|
-| `reference/normalization-guide.md` | The 1NF/2NF/3NF checklist or denormalization decision rules. |
 | `reference/index-strategies.md` | Choosing index type, column order, partial indexes, or monitoring queries. |
 | `reference/migration-patterns.md` | Safe migration sequencing, expand-contract, or framework migration commands. |
 | `reference/schema-examples.md` | Concrete schema, migration, ORM, or ER diagram examples. |

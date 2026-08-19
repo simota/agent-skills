@@ -88,7 +88,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 - Target 60fps. Use Long Animation Frames API (LoAF) in Chrome DevTools to identify frames exceeding the 50ms threshold.
 - Use standard transitions in the `150-300ms` range unless a pattern clearly requires otherwise.
-- Use canonical easing curves from `reference/easing-guide.md`.
+- Use canonical easing curves .
 - Define a reduced-motion path. The European Accessibility Act (EAA), enforced since June 2025, requires WCAG 2.1 AA compliance (including motion control) for digital products serving EU users.
 - Measure or reason about performance impact before shipping.
 - Set a hard cap of 30 seconds on any animation duration. Add an independent safety timer for state-driven animations (e.g., skeleton loaders) to prevent infinite loops when app logic breaks.
@@ -119,7 +119,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
 | `SURVEY` | Confirm trigger, framework, constraints, reduced-motion path | Establish motion scope and applicable pattern | `reference/animation-catalog.md` |
-| `PLAN` | Choose duration, easing, properties, fallback | Implementation plan and risk notes | `reference/easing-guide.md` |
+| `PLAN` | Choose duration, easing, properties, fallback | Implementation plan and risk notes | — |
 | `VERIFY` | Check accessibility, performance, browser support | Reduced-motion and perf validation | `reference/motion-accessibility-anti-patterns.md` |
 | `PRESENT` | Deliver code, notes, and next checks | Final implementation guidance | `reference/framework-patterns.md` |
 
@@ -127,11 +127,11 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Hover Effects | `hover` | ✓ | Hover effect implementation | `reference/animation-catalog.md`, `reference/easing-guide.md` |
+| Hover Effects | `hover` | ✓ | Hover effect implementation | `reference/animation-catalog.md` |
 | Loading States | `loading` | | Loading state animations | `reference/animation-catalog.md` |
 | Modal Transitions | `transition` | | Modal transition animations | `reference/animation-catalog.md`, `reference/modern-css-animations.md` |
 | Gesture Interaction | `gesture` | | Gesture interactions | `reference/animation-catalog.md`, `reference/framework-patterns.md` |
-| Spring Physics | `spring` | | Physics-based motion (stiffness/damping/mass tuning, drag-release, natural settle) | `reference/spring-physics.md`, `reference/easing-guide.md` |
+| Spring Physics | `spring` |  | Physics-based motion (stiffness/damping/mass tuning, drag-release, natural settle) | `reference/spring-physics.md` |
 | Scroll-Triggered | `scroll` | | Scroll-triggered reveals (IntersectionObserver, animation-trigger, view() ranges) | `reference/scroll-triggered.md`, `reference/modern-css-animations.md` |
 | Parallax Effects | `parallax` | | Depth-illusion via differential layer translation (multi-layer, perf-budgeted) | `reference/parallax-effects.md`, `reference/animation-performance-anti-patterns.md` |
 
@@ -221,7 +221,6 @@ Flow receives UX friction reports and design direction from upstream agents. Flo
 | Reference | Read this when |
 |-----------|----------------|
 | `reference/animation-catalog.md` | You need concrete motion patterns, durations, gestures, or page transitions. |
-| `reference/easing-guide.md` | You need to choose easing curves or spring presets. |
 | `reference/framework-patterns.md` | You need framework-specific implementation defaults. |
 | `reference/modern-css-animations.md` | You need modern CSS APIs or browser-support-aware progressive enhancement. |
 | `reference/motion-tokens.md` | You need token definitions, semantic aliases, or Muse alignment. |
@@ -253,4 +252,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

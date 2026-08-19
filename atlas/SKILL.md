@@ -118,7 +118,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `SURVEY` | Map dependency analysis, structural integrity, scalability risks | Map territory before proposing changes | `reference/dependency-analysis-patterns.md` |
+| `SURVEY` | Map dependency analysis, structural integrity, scalability risks | Map territory before proposing changes | — |
 | `PLAN` | Draft RFC/ADR, current vs desired state, migration strategy | Draw blueprint with rollback plan | `reference/adr-rfc-templates.md` |
 | `VERIFY` | YAGNI check, Least Surprise test, team maintainability review, fitness function feasibility | Stress test the proposal; recommend CI-integrated fitness functions for key thresholds | `reference/architecture-health-metrics.md` |
 | `PRESENT` | PR with proposal + motivation + plan + trade-offs | Roll out the map | `reference/canvas-integration.md` |
@@ -131,8 +131,8 @@ Single source of truth for Recipe definitions. Full phase contracts live in the 
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Architecture Analysis | `analyze` | ✓ | Full analysis — dependency graph + coupling metrics + module boundaries + health score; focus on SURVEY | `reference/dependency-analysis-patterns.md` |
-| Dependency Audit | `deps` | | Dependency graph + circular reference and high-frequency bidirectional detection; fix candidates (merge/extract/tolerate) | `reference/dependency-analysis-patterns.md` |
+| Architecture Analysis | `analyze` | ✓ | Full analysis — dependency graph + coupling metrics + module boundaries + health score; focus on SURVEY | — |
+| Dependency Audit | `deps` |  | Dependency graph + circular reference and high-frequency bidirectional detection; fix candidates (merge/extract/tolerate) | — |
 | God Class Detection | `godclass` | | God Class / bloated module / SRP-violating module detection; generate ZEN_HANDOFF draft for Zen | `reference/zen-integration.md` |
 | ADR Authoring | `adr` | | Author Architecture Decision Record using MADR 4.0 template; always include Considered Options + pros/cons | `reference/adr-rfc-templates.md` |
 | RFC Drafting | `rfc` | | RFC draft for large-scale architectural changes; include migration strategy and rollback plan | `reference/adr-rfc-templates.md` |
@@ -212,8 +212,6 @@ Synthesis produces one Consensus + Dissenting Options ADR (extended MADR 4.0, `t
 | Reference | Read this when |
 |-----------|----------------|
 | `reference/adr-rfc-templates.md` | ADR (Full/Lightweight) + RFC templates or status management. |
-| `reference/architecture-patterns.md` | Clean / Hexagonal / Feature-Based / Modular Monolith patterns. |
-| `reference/dependency-analysis-patterns.md` | God Class, circular deps, coupling metrics, or layer violations. |
 | `reference/technical-debt-scoring.md` | Severity matrix, categories, inventory/repayment/ROI templates. |
 | `reference/architecture-health-metrics.md` | Coupling/complexity metrics, health score card, or CI integration. |
 | `reference/canvas-integration.md` | CANVAS_REQUEST templates (4 diagram types) + Mermaid examples. |

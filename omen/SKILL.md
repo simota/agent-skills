@@ -140,10 +140,10 @@ Use AP when stakeholders follow AIAG-VDA methodology; use RPN when numeric ranki
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Pre-Mortem | `premortem` | ✓ | Failure scenario enumeration (all-phase DEEP) | `reference/failure-frameworks.md` |
+| Pre-Mortem | `premortem` | ✓ | Failure scenario enumeration (all-phase DEEP) | — |
 | RPN Scoring | `rpn` | | Risk Priority Number scoring | `reference/scoring-methodology.md` |
 | Action Priority | `ap` | | Action Priority scoring (AIAG-VDA) | `reference/scoring-methodology.md` |
-| Failure Mode ID | `mode` | | Failure mode identification (FMEA) | `reference/failure-frameworks.md` |
+| Failure Mode ID | `mode` |  | Failure mode identification (FMEA) | — |
 | Fault Tree Analysis | `faulttree` | | Top-down deductive analysis from one undesired top event, cut-set computation, optional probability roll-up | `reference/fault-tree-analysis.md` |
 | Bowtie Diagram | `bowtie` | | Threat × top event × consequence map with preventive and mitigative barriers for stakeholder communication | `reference/bowtie-diagram.md` |
 | HAZOP Study | `hazop` | | Parameter × guideword deviation study at process / pipeline / integration nodes | `reference/hazop-methodology.md` |
@@ -246,7 +246,6 @@ Full mechanics, scoring, JSON schema, prompt skeletons, and degraded modes -> `r
 
 | Reference | Read this when |
 |-----------|---------------|
-| `reference/failure-frameworks.md` | FMEA procedures, pre-mortem techniques, fault tree, Swiss Cheese |
 | `reference/scoring-methodology.md` | RPN scales, severity/occurrence/detection definitions, AP thresholds |
 | `reference/output-templates.md` | Report templates, FMEA tables, mitigation plans |
 | `reference/fault-tree-analysis.md` | Top-down FTA for a single undesired top event, gate semantics, Minimal Cut Sets, probability roll-up |

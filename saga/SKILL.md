@@ -68,8 +68,6 @@ Route elsewhere when the task is primarily:
 
 ## Core Contract
 
-Rationale, sources, and worked cautions for every rule -> `reference/frameworks.md` § Core Contract.
-
 - Position the customer as the hero and the product as the guide in every narrative.
 - Explicitly apply a named framework (SB7 / Pixar / Hero's Journey / JTBD / CAR / Story Mapping / Promised Land / ABT) and state which was chosen and why.
 - Focus on **one core problem per narrative** — multiple problems confuse the audience and dilute the call to action.
@@ -133,7 +131,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | `FRAMEWORK_CHOICE` | ON_DECISION | Multiple frameworks fit and would produce significantly different narratives |
 | `VOICE_ALIGNMENT` | ON_DECISION | Project has an existing brand voice/tone guide and alignment is uncertain |
 
-Question schemas (audience / framework / voice option sets) -> `reference/frameworks.md` § INTERACTION_TRIGGERS Question Schemas.
+When a trigger fires, ask one focused question with 2-3 concrete options and recommend the safest default.
 
 ---
 
@@ -143,14 +141,14 @@ Question schemas (audience / framework / voice option sets) -> `reference/framew
 
 | Framework | Best For | Structure | Detail |
 |-----------|----------|-----------|--------|
-| **StoryBrand SB7** | Product messaging, LPs, pitches | Controlling Idea→Hero→Problem→Guide→Plan→CTA→Failure→Success | `reference/frameworks.md` |
-| **Pixar Story Spine** | Short scenarios, internal sharing, elevator pitches | Once upon a time→Every day→Until one day→Because of that→Until finally | `reference/frameworks.md` |
-| **Hero's Journey** | Large transformation stories, case studies | Ordinary World→Call→Threshold→Trials→Transformation→Return | `reference/frameworks.md` |
-| **JTBD Job Story** | Feature-level use cases, dev team audience | When [situation], I want to [motivation], so I can [outcome] | `reference/frameworks.md` |
-| **Story Mapping** | Full product narrative flow | Backbone(JTBD)→Walking Skeleton→Slices | `reference/frameworks.md` |
-| **CAR** | Results-focused case studies | Context→Action→Results | `reference/frameworks.md` |
-| **Promised Land** | Strategic positioning, fundraising pitches, org alignment | Change→Stakes→Promised Land→Magic Gifts→Evidence | `reference/frameworks.md` |
-| **ABT** | Quick narrative structure, social posts, internal comms | And [context], But [tension], Therefore [resolution] | `reference/frameworks.md` |
+| **StoryBrand SB7** | Product messaging, LPs, pitches | Controlling Idea→Hero→Problem→Guide→Plan→CTA→Failure→Success | — |
+| **Pixar Story Spine** | Short scenarios, internal sharing, elevator pitches | Once upon a time→Every day→Until one day→Because of that→Until finally | — |
+| **Hero's Journey** | Large transformation stories, case studies | Ordinary World→Call→Threshold→Trials→Transformation→Return | — |
+| **JTBD Job Story** | Feature-level use cases, dev team audience | When [situation], I want to [motivation], so I can [outcome] | — |
+| **Story Mapping** | Full product narrative flow | Backbone(JTBD)→Walking Skeleton→Slices | — |
+| **CAR** | Results-focused case studies | Context→Action→Results | — |
+| **Promised Land** | Strategic positioning, fundraising pitches, org alignment | Change→Stakes→Promised Land→Magic Gifts→Evidence | — |
+| **ABT** | Quick narrative structure, social posts, internal comms | And [context], But [tension], Therefore [resolution] | — |
 
 ### Framework Auto-Selection
 
@@ -164,15 +162,23 @@ Product-level positioning -> **StoryBrand SB7** (define the Controlling Idea fir
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `DISCOVER` | Gather narrative materials from input sources (Cast personas, Field journey maps, Voice feedback, Spark features, Compete differentiators, or user request) | Establish target audience before framing; list assumptions when data is missing | `reference/frameworks.md` |
-| `FRAME` | Select framework via auto-selection tree; design story skeleton with Hero, Desire, Problem (3 levels), Guide, Plan, Stakes, Transformation | Focus on one core problem per narrative; connect external/internal/philosophical levels | `reference/frameworks.md` |
+| `DISCOVER` | Gather narrative materials from input sources (Cast personas, Field journey maps, Voice feedback, Spark features, Compete differentiators, or user request) | Establish target audience before framing; list assumptions when data is missing | — |
+| `FRAME` | Select framework via auto-selection tree; design story skeleton with Hero, Desire, Problem (3 levels), Guide, Plan, Stakes, Transformation | Focus on one core problem per narrative; connect external/internal/philosophical levels | — |
 | `CRAFT` | Write the narrative following selected framework; open with concrete scene, include sensory details, embed tension | Never skip the conflict; plant "this is about me" anchors | `reference/templates.md` |
-| `REFINE` | Validate against AP-1 through AP-9 anti-pattern checklist; fix all failures before delivery | All 9 checks must pass | `reference/anti-patterns.md` |
+| `REFINE` | Validate against AP-1 through AP-9 anti-pattern checklist; fix all failures before delivery | All 9 checks must pass | — |
 | `DELIVER` | Format output with metadata, anti-pattern results, assumptions, handoff info | Include framework name and recommended next agent | `reference/handoffs.md` |
 
 ### Anti-Pattern Checklist (REFINE Phase)
 
-The canonical AP-1 through AP-9 checklist — Feature Dump / Hero Product / Missing Tension / No Transformation / Generic Persona / Narrative Bias / Jargon Wall / Happy Path Only / Ad Copy Disguise — lives in `reference/anti-patterns.md`. Every narrative must pass all 9 checks (AP-8 may be N/A for short-form copy). See that file for the full check/fix table, output format, rejection codes, and per-recipe emphasis.
+The canonical AP-1 through AP-9 checklist is: Feature Dump / Hero Product / Missing Tension / No Transformation / Generic Persona / Narrative Bias / Jargon Wall / Happy Path Only / Ad Copy Disguise. Report each as `PASS`, `FAIL`, or justified `N/A`; all applicable checks must pass before delivery.
+
+| Failure | Rejection code |
+|---------|----------------|
+| AP-1 / AP-2 / AP-3 | `REJECTED-NO-ARC` / `REJECTED-HERO-PRODUCT` / `REJECTED-NO-TENSION` |
+| AP-4 / AP-5 | `REJECTED-NO-TRANSFORMATION` / `REJECTED-GENERIC-PERSONA` |
+| AP-6 | `NEEDS-INFO` |
+| AP-7 / AP-8 / AP-9 | `REJECTED-JARGON` / `REJECTED-NO-STAKES` / `REJECTED-AD-COPY` |
+| Fabricated persona / evidence | `REJECTED-PERSONA-FABRICATED` / `REJECTED-FABRICATED-EVIDENCE` |
 
 ---
 
@@ -182,13 +188,13 @@ The canonical AP-1 through AP-9 checklist — Feature Dump / Hero Product / Miss
 |--------|-----------|---------|-------------|------------|
 | Customer Story | `story` | ✓ | Feature-level customer-centric story (use cases, transformation arc). Apply JTBD or StoryBrand SB7; customer is the hero, product is the guide. AP-1~AP-9 required. **Use Case Story 300-800 chars.** | `reference/templates.md` |
 | Scenario Story | `scenario` | | Persona-based scenario stories. Load Cast persona registry first. **Scenario Narrative 400-1000 chars/persona.** | `reference/templates.md` |
-| Product Narrative | `narrative` | | Product-level positioning / brand narrative. Define Controlling Idea first; choose Promised Land or StoryBrand SB7. For pitches and LPs. **Product Narrative 500-1500 chars, Pitch Story 200-500 chars, Promised Land 500-1500 chars.** Default when narrative request is unclear. | `reference/frameworks.md` |
+| Product Narrative | `narrative` |  | Product-level positioning / brand narrative. Define Controlling Idea first; choose Promised Land or StoryBrand SB7. For pitches and LPs. **Product Narrative 500-1500 chars, Pitch Story 200-500 chars, Promised Land 500-1500 chars.** Default when narrative request is unclear. | — |
 | Customer Journey | `customer` | | Customer experience narrative centered on observable/measurable Before→After transformation arc. Consider Hero's Journey. **Customer Success Story 800-2000 chars.** | `reference/templates.md` |
 | Hero's Journey | `hero-journey` | | Campbell 12-stage monomyth. For major case studies, high stakes, profound transformation. | `reference/hero-journey.md` |
 | Before-After-Bridge | `bab` | | BAB copywriting structure: Before (current pain), After (ideal state), Bridge (product as connector). LPs, email, CTA-driven narratives. **Length 200-500 chars.** | `reference/before-after-bridge.md` |
 | Minto Pyramid | `pyramid` | | Answer-first executive delivery: Answer -> MECE arguments -> Evidence. Board meetings, investor memos; combine with SB7 or Promised Land for warmth. | `reference/minto-pyramid.md` |
 | Onboarding Flow | `onboarding` | | First-time user experience (FTUE) story flow. Coordinate with Field journey maps. **150 chars/step.** | `reference/templates.md` |
-| Narrative Audit | `audit` | | Anti-pattern audit of existing narrative. Output: Audit Report with AP-1~AP-9 results + fixes. | `reference/frameworks.md` |
+| Narrative Audit | `audit` |  | Anti-pattern audit of existing narrative. Output: Audit Report with AP-1~AP-9 results + fixes. | — |
 | Micro-Narrative | `micro` | | Platform-tailored micro-narrative series for social media, episodic content. **150-300 chars each.** | `reference/templates.md` |
 | Multi-Engine | `multi` | | Parallel narrative generation with archetype concurrence-divergence scoring. Portfolio merge default (3 complementary arcs for A/B/C channel testing); `multi --compete` for one re-mixed narrative. Mechanics -> **Multi-Engine Mode**. | `reference/tri-engine-narrate.md` |
 
@@ -273,10 +279,7 @@ Full algorithm, JSON schema, AP-grounding rules, and prompt skeletons -> `refere
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/frameworks.md` | Framework details (SB7, Pixar, Hero's Journey, JTBD, Story Mapping, CAR) and trigger question schemas. |
 | `reference/templates.md` | Output templates per narrative type — use case, product, pitch, success, onboarding, scenario. |
-| `reference/anti-patterns.md` | Validating in REFINE, running `audit`, or grounding `multi` CANDIDATEs — canonical AP-1~AP-9 checklist, output format, rejection codes. |
-| `reference/examples.md` | Example narratives for comparison during REFINE. |
 | `reference/handoffs.md` | Handoff templates for Prose, Scribe, Scribe[unified], Director. |
 | `reference/hero-journey.md` | `hero-journey` — 12-stage monomyth with stage-by-stage transformation scripting. |
 | `reference/before-after-bridge.md` | `bab` — BAB structure with LP/email/ad templates and CTA-friction mapping. |

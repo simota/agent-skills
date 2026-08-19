@@ -116,7 +116,7 @@ Strangler Fig の 5 段階実装:
 ```
 Atlas での活用:
   1. SURVEY フェーズで AM-01〜07 のスクリーニング
-  2. architecture-patterns.md と連携した移行先パターン選定
+  2. リポジトリの制約と既存構造から移行先パターンを選定
   3. PLAN フェーズで Strangler Fig 実装計画策定
   4. VERIFY フェーズで移行進捗とリスク検証
 

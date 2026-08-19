@@ -228,7 +228,7 @@ Slide 8: Risks & alternatives
 - [ ] If not: restructure before delivery
 
 ### Anti-Pattern Check
-Run the full AP-1~AP-9 checklist from `reference/anti-patterns.md` and report results in the standard format. Pyramid emphasizes AP-1 (Feature Dump — arguments must be MECE, not feature lists), AP-6 (Narrative Bias — exec memos need stated assumptions), AP-7 (Jargon Wall — must be accessible to non-technical execs), and AP-9 (Ad Copy Disguise — pyramid is analytic, not promotional).
+Run the AP-1~AP-9 checklist from `saga/SKILL.md` and report results in the standard format. Pyramid emphasizes AP-1 (Feature Dump — arguments must be MECE, not feature lists), AP-6 (Narrative Bias — exec memos need stated assumptions), AP-7 (Jargon Wall — must be accessible to non-technical execs), and AP-9 (Ad Copy Disguise — pyramid is analytic, not promotional).
 
 ### Decision Ask
 - **Decision needed**: [...]
@@ -270,7 +270,7 @@ When `pyramid` completes, emit:
 - **Evidence** under each argument.
 - **MECE check** (overlap / coverage / parallelism / grouping pattern).
 - **Top-sentence-only test** result.
-- **Anti-pattern check** (AP-1~AP-9 per `reference/anti-patterns.md` + Pyramid-specific table below).
+- **Anti-pattern check** (AP-1~AP-9 per `saga/SKILL.md` + Pyramid-specific table below).
 - **Decision ask** (what / when / consequence).
 - **Handoffs**: Stage, Scribe, Magi, Prose.
 

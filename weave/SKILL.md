@@ -410,7 +410,6 @@ WEAVE_TO_BUILDER_HANDOFF:
 | `reference/approval-flow-patterns.md` | Approval-flow archetypes, delegation / recall / audit-trail templates |
 | `reference/engine-selection.md` | Selection guide across Temporal / Step Functions / Inngest / XState; non-functional checklist |
 | `reference/event-driven-workflows.md` | Event Sourcing / CQRS / Process Manager / Outbox / DLQ / idempotency patterns |
-| `reference/examples.md` | Output examples for order flow, travel-booking Saga, expense approval, subscription, and more |
 | `reference/handoffs.md` | All handoff templates (Inbound: User / Scribe / Atlas / Nexus; Outbound: Builder / Canvas / Radar / Scribe / Judge) |
 | `reference/retry-state-machine.md` | Retry state-machine design — exponential backoff, jitter (full / equal / decorrelated), max-attempt cap, DLQ as terminal state, retriable-vs-non-retriable error classification, idempotency-key contract |
 | `reference/timeout-ttl-design.md` | TTL / deadline / expiry state design — per-state timeout from business SLA, deadline propagation, grace-period transitions, soft-vs-hard timeout, stuck-state recovery |

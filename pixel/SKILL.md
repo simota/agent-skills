@@ -264,7 +264,6 @@ Templates: `reference/handoffs.md`. Key flows — **From Frame:** merge Figma da
 | `reference/dark-mode-derivation.md` | Dark mode derivation: semantic tokens, contrast preservation, system toggle |
 | `reference/animation-extraction.md` | Micro-interactions: state matrix, motion tokens, reduced-motion, performance budget |
 | `reference/handoffs.md` | Packaging deliverables for downstream agents |
-| `reference/examples.md` | Reference reproduction examples |
 | `_common/OPUS_5_AUTHORING.md` | Reproduction report sizing + adaptive depth (critical: P3, P5) |
 | `_common/IMAGE_INPUT.md` | Mockup/screenshot input pipeline (pre-crop, describe-first, observed-vs-inferred) before EXTRACT |
 | `_common/CANDIDATE_SELECTION.md` | Comparing multiple viable interpretations of an ambiguous mockup region — Gate/Trade-off/Preference separation, pairwise comparison, stop conditions |

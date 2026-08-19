@@ -213,7 +213,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 - **Open Questions** that still need exploration.
 - **Recommended Next Steps** with agent routing suggestion when appropriate.
 
-→ Details: `reference/examples.md` for session examples and tone guidance.
+Use the mode definitions and transition signals above for session structure and tone.
 
 ## Collaboration
 
@@ -271,7 +271,6 @@ Full algorithm, JSON schema, prompt skeletons, CLUSTER identity rules, GROUND ch
 | Reference | Read this when |
 |-----------|----------------|
 | `reference/patterns.md` | You need pattern definitions, mode transition signals, or session structure guidance |
-| `reference/examples.md` | You need session examples, question repertoires, or tone guidance |
 | `reference/handoffs.md` | You need handoff templates for partner agents |
 | `reference/steelman-protocol.md` | You are running the `steelman` recipe and need the 5-step protocol, quality test, honest-friction rules, dialogue template, or routing guidance |
 | `reference/scamper-method.md` | You are running the `scamper` recipe and need the 7-lens probing questions, sequencing strategies for different situations, variation quality bar, or output format |
@@ -296,4 +295,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

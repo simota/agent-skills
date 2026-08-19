@@ -447,7 +447,7 @@ Checklist before emitting the report:
 
 ## Example Report
 
-See the template above. A real example accompanies the `examples.md` file under section "Gap Analysis Report — E-commerce Pricing Page".
+Use the template above; populate it directly from the current reproduction evidence.
 
 ---
 

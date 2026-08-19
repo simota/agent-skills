@@ -101,7 +101,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
 | Single Icon | `icon` | ✓ | Single icon generation | `reference/patterns.md` |
-| Illustration | `illustration` | | SVG illustration | `reference/patterns.md`, `reference/examples.md` |
+| Illustration | `illustration` |  | SVG illustration | `reference/patterns.md` |
 | Icon System | `system` | | Icon system design | `reference/patterns.md` |
 | Sprite Symbols | `sprite` | | Build SVG sprite symbols | `reference/patterns.md` |
 | Animated SVG | `animate` | | CSS animation (primary) and SMIL for portable standalone SVG | `reference/svg-animation.md` |
@@ -190,7 +190,6 @@ Behavior notes per Recipe:
 | Reference | Read this when |
 |-----------|----------------|
 | `reference/patterns.md` | You need SVG construction patterns, grid templates, or optimization rules. |
-| `reference/examples.md` | You need complete icon or illustration examples. |
 | `reference/handoffs.md` | You need handoff templates for collaboration with other agents. |
 | `reference/svg-animation.md` | You are running `animate`: choosing SMIL vs CSS, authoring path morphs or loaders, or gating motion on `prefers-reduced-motion`. |
 | `reference/theme-tokens.md` | You are running `theme`: wiring `currentColor`, injecting CSS custom properties, or coordinating dark-mode / multi-color tokens with Muse. |
@@ -216,4 +215,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

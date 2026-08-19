@@ -234,7 +234,6 @@ Deliver:
 | `reference/dbt-modeling.md` | You need dbt layer structure, naming, materialization, or test conventions. |
 | `reference/data-reliability.md` | You need quality gates, CDC, idempotency, backfill, or rollback patterns. |
 | `reference/patterns.md` | You need partner-agent routing or common orchestration patterns. |
-| `reference/examples.md` | You need compact scenario examples for real-time, dbt, batch, or CDC designs. |
 | `reference/pipeline-design-anti-patterns.md` | You need pipeline architecture anti-pattern IDs `PD-01..07` and test/orchestration guardrails. |
 | `reference/event-streaming-anti-patterns.md` | You need event-streaming anti-pattern IDs `ES-01..07`, Kafka ops guardrails, or outbox rules. |
 | `reference/dbt-warehouse-anti-patterns.md` | You need warehouse anti-pattern IDs `DW-01..07`, layer rules, or semantic-layer thresholds. |

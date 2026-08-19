@@ -1,17 +1,12 @@
 # Release & Deployment Anti-Patterns
-
 Purpose: Use this file when you need release-process failure modes, canary and blue-green cautions, or cadence and timing guardrails.
-
 ## Contents
-
 1. Deployment anti-patterns
 2. Communication and decision anti-patterns
 3. Canary and blue-green pitfalls
 4. Release cadence pitfalls
 5. Launch enforcement points
-
 ## 1. Deployment Anti-Patterns
-
 | ID | Anti-pattern | What goes wrong | Guardrail |
 |----|--------------|-----------------|-----------|
 | `RL-01` | Big bang deploy | Too much change ships at once; root cause isolation becomes slow | Prefer small, frequent releases and staged exposure |
@@ -22,48 +17,34 @@ Purpose: Use this file when you need release-process failure modes, canary and b
 | `RL-06` | Monolithic pipeline | One failed path blocks the whole delivery train | Split by service or component where possible |
 | `RL-07` | Friday release | Recovery coverage is usually weaker | Prefer Tuesday to Thursday |
 | `RL-08` | Procedure-only deployment | Human-run playbooks drift | Keep deployment logic in code or pipelines |
-
 **RL-04 evidence:** ~70% of production downtime is caused by changes to live systems. Knight Capital lost $440M in 45 minutes from a deployment without rollback capability (2012). CrowdStrike's non-incremental update (2024) disrupted 8.5M systems, causing ~$10B in damages — incremental rollout would have contained the blast radius.
-
 ## 2. Communication And Decision Anti-Patterns
-
 | ID | Anti-pattern | What goes wrong | Guardrail |
 |----|--------------|-----------------|-----------|
 | `RL-09` | Silent release | Stakeholders cannot detect regressions quickly | Notify release stakeholders |
 | `RL-10` | Skipping Go/No-Go | Blockers stay hidden | Require explicit Go/No-Go review |
 | `RL-11` | Writing CHANGELOG after release | Missing or inaccurate notes | Generate CHANGELOG before release |
 | `RL-12` | Skipping postmortem | The same failure repeats | Run postmortem within `48 hours` after a significant failure |
-
 ## 3. Canary And Blue-Green Pitfalls
-
 ### Canary pitfalls
-
 - Canary traffic below `1%` is usually too small to detect meaningful issues.
 - Use at least `5%` traffic for signal.
 - Keep the canary live for at least `24 hours`.
 - Define success metrics before rollout.
 - Avoid bundling incompatible DB changes with canary traffic shifts.
-
 ### Blue-Green pitfalls
-
 - Shared state can break rollback assumptions.
 - Both environments can double cost if not managed.
 - Warm-up gaps can create false negatives or latency spikes.
 - Switch only after health checks pass.
-
 ## 4. Release Cadence Pitfalls
-
 | Pitfall | What goes wrong | Guardrail |
 |---------|-----------------|-----------|
 | Releasing too rarely | Change batches become too large and risky | Release at least weekly where feasible |
 | Releasing too often without gates | Quality drops | Keep quality gates intact |
 | Treating schedule as absolute | Unready work ships | Schedule is a target, quality is the gate |
 | Always releasing at the same hot spot | Load and coordination risk concentrate | Use flexible release windows |
-
 ## 5. Launch Enforcement Points
-
-Apply these during `Review` and `Evaluate`:
-
 - Block if rollback plan is missing (`RL-04`).
 - Block if staging verification is skipped (`RL-02`).
 - Warn on Friday afternoon release windows (`RL-07`).

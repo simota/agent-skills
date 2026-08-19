@@ -166,7 +166,7 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | `TRANSLATE` | Convert requirements into a four-layer English prompt (Subject + Style + Composition + Technical); select thinking level | `reference/prompt-patterns.md` |
 | `CONFIGURE` | Choose model (Nano Banana 2 / Pro), aspect ratio, output paths, batch size, seed, and Batch API eligibility | `reference/api-integration.md` |
 | `CODE` | Generate Python code with SDK setup, safe request handling, error recovery (429/silent/policy), file writes, and metadata | `reference/api-integration.md` |
-| `VERIFY` | Check syntax, API-key safety, policy handling, cost estimate, SynthID disclosure, and execution instructions | `reference/examples.md` |
+| `VERIFY` | Check syntax, API-key safety, policy handling, cost estimate, SynthID disclosure, and execution instructions | — |
 
 ## Routing
 
@@ -251,7 +251,6 @@ Overlap boundaries:
 | --- | --- |
 | `reference/prompt-patterns.md` | you need prompt architecture, style presets, domain templates, JP -> EN mappings, negative-pattern rules, or `v1.50+` prompt-control guidance |
 | `reference/api-integration.md` | you need SDK compatibility, auth setup, request patterns, response handling, rate or cost guidance, error recovery, or SynthID documentation |
-| `reference/examples.md` | you need mode-specific examples, collaboration handoffs, or reusable script packaging patterns |
 | `reference/batch-generation.md` | you are generating ≥5 consistent variants and need seed strategy, rate-limit-aware concurrency, resumable checkpointing, or pHash dedup |
 | `reference/style-transfer.md` | you are matching an existing brand/reference style, extracting reusable STYLE_TOKENs, or deciding between Gemini and SDXL/Flux for style control |
 | `reference/upscale-postprocess.md` | you are upscaling for print/retina, authoring inpaint masks, outpainting canvas extensions, or picking final export format |

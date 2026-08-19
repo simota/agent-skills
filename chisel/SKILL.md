@@ -112,7 +112,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | `CLASSIFY` | Assign exactly one disposition per detection | `KEEP` carries a reason; `QUANTIFY` carries the source licence for its number | `reference/ambiguity-budget.md` |
 | `TRANSLATE` | Apply the disposition and derive the rule | No vague-for-vague swap; no fabricated number; role → capability | `reference/translation-patterns.md`, `reference/role-decomposition.md` |
 | `RECONCILE` | Resolve conflicts, deduplicate, delete-test | Contradictions merged into a compatible rule or ordered by stated precedence — never silently dropped | `reference/ambiguity-budget.md` |
-| `EMIT` | Four-section deliverable in fixed order | Ledger rows = detections; rewritten prompt lines all trace to source or ledger | `reference/worked-examples.md` |
+| `EMIT` | Four-section deliverable in fixed order | Ledger rows = detections; rewritten prompt lines all trace to source or ledger | — |
 
 ## Dispositions
 
@@ -153,14 +153,14 @@ Eight items, scored pass/fail with the offending line cited, run before every `E
 | `what's ambiguous here`, `find the vague parts` | Detection only | Ambiguity ledger, no rewrite | `reference/ambiguity-lexicon.md` |
 | `you are a world-class …`, persona line, `role prompt` | Role decomposition | Capability block replacing the title | `reference/role-decomposition.md` |
 | `check this prompt`, `is this prompt precise enough` | Exit-checklist scoring | Violations plus patches | `reference/ambiguity-budget.md` |
-| unclear request | Full transformation | Four-section deliverable | `reference/worked-examples.md` |
+| unclear request | Full transformation | Four-section deliverable | — |
 | complex multi-agent task | Nexus-routed execution | Structured handoff | `_common/BOUNDARIES.md` |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Specify | `spec` | ✓ | Convert a supplied prompt into an executable specification | `reference/translation-patterns.md`, `reference/worked-examples.md` |
+| Specify | `spec` | ✓ | Convert a supplied prompt into an executable specification | `reference/translation-patterns.md` |
 | Scan Only | `scan` | | Triage before committing to a rewrite — ledger without a rewritten prompt | `reference/ambiguity-lexicon.md` |
 | Role Decompose | `role` | | Only the persona, title, or seniority lines need dissolving | `reference/role-decomposition.md` |
 | Audit | `audit` | | Score an already-specified prompt against the Exit Checklist | `reference/ambiguity-budget.md` |
@@ -249,7 +249,6 @@ Chisel receives prompt text from the user and from agents that author instructio
 | `reference/translation-patterns.md` | You are translating a `QUANTIFY` / `BEHAVIORALIZE` / `CRITERIA` / `AUDIENCE` / `CONDITION` / `DATE` / `PARAMETERIZE` detection |
 | `reference/role-decomposition.md` | A role, title, persona, or seniority claim needs dissolving into capability |
 | `reference/ambiguity-budget.md` | Deciding what to leave open, running the delete test, or scoring the Exit Checklist |
-| `reference/worked-examples.md` | You need a full end-to-end transformation to pattern-match against |
 | `reference/autorun-schema.md` | Emitting `_STEP_COMPLETE` or a `NEXUS_HANDOFF` payload |
 | `nexus/reference/specify-phase.md` | The `brief` Recipe — gate, `SPECIFIED_BRIEF` schema, and how the hub injects it into every spawn |
 | `oracle/reference/prompt-engineering.md` | Classifying a requirement's enforcing layer, or triaging whether the prompt is the problem at all |

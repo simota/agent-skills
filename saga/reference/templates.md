@@ -3,13 +3,13 @@
 **Purpose:** A practical collection of templates for each of Saga's output types.
 **Read when:** You need a reference for format and structure while writing a narrative.
 
-> For the framework bodies themselves (SB7 / Pixar Story Spine / Hero's Journey / JTBD / Story Mapping / CAR / Promised Land / ABT) — their structural definitions, filled examples, and combination patterns — see `reference/frameworks.md`. This file provides only the **application templates** for each output type.
+> Framework selection and structural definitions live in `saga/SKILL.md`. This file provides only the **application templates** for each output type.
 
 ---
 
 ## 1. Use Case Story Template
 
-Turning a feature or scenario into a narrative. A structure combining JTBD + Pixar Story Spine (framework details: `reference/frameworks.md` §1, §2, §4).
+Turning a feature or scenario into a narrative by combining JTBD with the Pixar Story Spine defined in `saga/SKILL.md`.
 
 ```markdown
 ## Use Case Story: [feature/scenario name]
@@ -59,13 +59,13 @@ Now [persona name] is [the transformed self].
 
 ## 2. Product Narrative Template
 
-A positioning narrative for the product as a whole. The structure for running StoryBrand SB7 (framework body: `reference/frameworks.md` §1 — includes the 7 elements Hero / Problem (external/internal/philosophical) / Guide / Plan / CTA / Failure / Success, plus the BrandScript Template) as a Product Narrative.
+A positioning narrative for the product as a whole, using the StoryBrand SB7 structure defined in `saga/SKILL.md`.
 
 ```markdown
 ## Product Narrative: [product name]
 
 ### BrandScript
-Fill in `reference/frameworks.md §1 BrandScript Template` as-is. For a Product Narrative, pay particular attention to:
+Apply the SB7 structure and pay particular attention to:
 - Write the Hero's "fundamental desire" as **the state they want to achieve**, not a feature
 - Fill in all 3 layers of Problem (external, internal, philosophical)
 - Keep Plan to 3 steps or fewer (reduce cognitive load)
@@ -77,14 +77,14 @@ Fill in `reference/frameworks.md §1 BrandScript Template` as-is. For a Product 
 > "If [target] is struggling with [problem], get [outcome] with [product]."
 
 ### Elevator Pitch (30-second version)
-Summarize using the 6-line structure from `reference/frameworks.md §2 Pixar Story Spine`.
+Summarize using the six-line Pixar Story Spine structure in `saga/SKILL.md`.
 ```
 
 ---
 
 ## 3. Pitch Story Template
 
-For investors and stakeholders. A structure combining Pixar Story Spine (`reference/frameworks.md` §2) with numbers.
+For investors and stakeholders, combine the Pixar Story Spine with quantitative evidence.
 
 ```markdown
 ## Pitch Story: [product name]
@@ -124,7 +124,7 @@ For investors and stakeholders. A structure combining Pixar Story Spine (`refere
 
 ## 4. Customer Success Story Template
 
-A case study / transformation arc. Combines Hero's Journey (`reference/frameworks.md` §3, long form in `reference/hero-journey.md`) + CAR (`reference/frameworks.md` §6).
+A case study / transformation arc combining Hero's Journey (`reference/hero-journey.md`) with CAR.
 
 ```markdown
 ## Customer Success Story: [customer name]
@@ -179,7 +179,7 @@ A case study / transformation arc. Combines Hero's Journey (`reference/framework
 
 ## 5. Onboarding Narrative Template
 
-The story flow of a first-time experience. Uses Story Mapping (`reference/frameworks.md` §5).
+The story flow of a first-time experience using Story Mapping.
 
 ```markdown
 ## Onboarding Narrative: [product name]
@@ -221,7 +221,7 @@ Welcome  →  First Value  →  Aha Moment  →  Habit Loop  →  Advocacy
 
 ## 6. Scenario Narrative Template
 
-A persona-specific scenario. A structure combining JTBD (`reference/frameworks.md` §4) + context depiction.
+A persona-specific scenario combining JTBD with concrete context depiction.
 
 ```markdown
 ## Scenario Narrative: [scenario name]

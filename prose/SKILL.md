@@ -122,10 +122,10 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `AUDIT` | Analyze existing copy, voice framework, terminology, and context; identify mode (CRAFT/AUDIT/VOICE/ONBOARD/A11Y) | Understand existing patterns before writing | `reference/voice-tone-framework.md` |
-| `DRAFT` | Write copy following voice framework, error structure, and accessibility rules | Clarity over cleverness; every word earns its place | `reference/microcopy-patterns.md`, `reference/error-message-guide.md` |
+| `AUDIT` | Analyze existing copy, voice framework, terminology, and context; identify mode (CRAFT/AUDIT/VOICE/ONBOARD/A11Y) | Understand existing patterns before writing | — |
+| `DRAFT` | Write copy following voice framework, error structure, and accessibility rules | Clarity over cleverness; every word earns its place | — |
 | `REVIEW` | Check against voice guidelines, accessibility requirements, translation readiness, and context | Test in context, not isolation | `reference/accessibility-text-guide.md` |
-| `DELIVER` | Present copy with context, rationale, and implementation notes | Include effectiveness metrics where applicable | `reference/onboarding-copy-patterns.md` |
+| `DELIVER` | Present copy with context, rationale, and implementation notes | Include effectiveness metrics where applicable | — |
 
 ## Operating Modes
 
@@ -143,11 +143,11 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| Microcopy | `microcopy` | ✓ | Button labels, tooltips, placeholders, and empty-state text | `reference/microcopy-patterns.md` |
-| Error Messages | `errors` | | Error message design with What/Why/Next structure | `reference/error-message-guide.md` |
-| Onboarding Copy | `onboarding` | | First-run experience, progressive disclosure, and feature intro text | `reference/onboarding-copy-patterns.md` |
+| Microcopy | `microcopy` | ✓ | Button labels, tooltips, placeholders, and empty-state text | — |
+| Error Messages | `errors` |  | Error message design with What/Why/Next structure | — |
+| Onboarding Copy | `onboarding` |  | First-run experience, progressive disclosure, and feature intro text | — |
 | Accessibility Text | `a11y` | | ARIA labels, screen reader text, and WCAG 2.2 compliance | `reference/accessibility-text-guide.md` |
-| Voice & Tone | `tone` | | Voice/tone framework definition and style guide creation | `reference/voice-tone-framework.md` |
+| Voice & Tone | `tone` |  | Voice/tone framework definition and style guide creation | — |
 | Empty State Copy | `empty-state` | | Zero-data UI copy with educational + promotional CTA, 3-type classification (first-use / user-cleared / search-no-results) | `reference/empty-state-copy.md` |
 | Notification Copy | `notification` | | Push / email / in-app / SMS notification copy with channel-specific length, tone, and CTA rules | `reference/notification-copy.md` |
 | Status & Progress | `status` | | Saving / saved / syncing / offline / reconnecting status messages, connection-state microcopy, long-task progress copy | `reference/status-progress-copy.md` |
@@ -184,16 +184,16 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `button label`, `tooltip`, `placeholder`, `empty state`, `microcopy` | Microcopy design | UI text with context | `reference/microcopy-patterns.md` |
-| `error message`, `error text`, `recovery guidance` | Error message design (What/Why/Next) | Error message set | `reference/error-message-guide.md` |
-| `voice`, `tone`, `style guide`, `brand voice` | Voice and tone framework | Voice framework doc | `reference/voice-tone-framework.md` |
-| `onboarding`, `first-run`, `welcome`, `progressive disclosure` | Onboarding copy | Journey-mapped copy set | `reference/onboarding-copy-patterns.md` |
+| `button label`, `tooltip`, `placeholder`, `empty state`, `microcopy` | Microcopy design | UI text with context | — |
+| `error message`, `error text`, `recovery guidance` | Error message design (What/Why/Next) | Error message set | — |
+| `voice`, `tone`, `style guide`, `brand voice` | Voice and tone framework | Voice framework doc | — |
+| `onboarding`, `first-run`, `welcome`, `progressive disclosure` | Onboarding copy | Journey-mapped copy set | — |
 | `accessibility`, `alt text`, `ARIA`, `screen reader` | Accessibility text | ARIA labels + alt text | `reference/accessibility-text-guide.md` |
-| `AI copy`, `confidence indicator`, `AI state` | AI context copy | AI-aware UI text | `reference/microcopy-patterns.md` |
-| `AI disclosure`, `made with AI`, `AI label`, `transparency` | AI disclosure labeling | Dual-layer disclosure: visible labels + C2PA/IPTC metadata directives | `reference/microcopy-patterns.md` |
-| `audit`, `consistency`, `terminology` | Content audit | Audit report with readability scores | `reference/voice-tone-framework.md` |
+| `AI copy`, `confidence indicator`, `AI state` | AI context copy | AI-aware UI text | — |
+| `AI disclosure`, `made with AI`, `AI label`, `transparency` | AI disclosure labeling | Dual-layer disclosure: visible labels + C2PA/IPTC metadata directives | — |
+| `audit`, `consistency`, `terminology` | Content audit | Audit report with readability scores | — |
 | `content system`, `content framework`, `string architecture`, `terminology governance` | Content system design | Principles doc + decision framework | `reference/content-strategy-design.md` |
-| unclear copy request | Microcopy design (default) | UI text with context | `reference/microcopy-patterns.md` |
+| unclear copy request | Microcopy design (default) | UI text with context | — |
 
 Routing rules:
 
@@ -219,10 +219,10 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 | Area | Scope | Reference |
 |------|-------|-----------|
-| **Microcopy Patterns** | Button labels, tooltips, empty states, AI-context copy | `reference/microcopy-patterns.md` |
-| **Error Messages** | What/Why/Next structure, severity templates, recovery guidance | `reference/error-message-guide.md` |
-| **Voice & Tone** | Voice attributes, tone spectrum, word choice, conversational UI | `reference/voice-tone-framework.md` |
-| **Onboarding Copy** | Progressive disclosure, first-run, feature introduction | `reference/onboarding-copy-patterns.md` |
+| **Microcopy Patterns** | Button labels, tooltips, empty states, AI-context copy | — |
+| **Error Messages** | What/Why/Next structure, severity templates, recovery guidance | — |
+| **Voice & Tone** | Voice attributes, tone spectrum, word choice, conversational UI | — |
+| **Onboarding Copy** | Progressive disclosure, first-run, feature introduction | — |
 | **Accessibility Text** | Alt text, ARIA labels, screen reader text, WCAG 2.2 | `reference/accessibility-text-guide.md` |
 
 ## Priorities
@@ -262,10 +262,6 @@ Prose receives copy direction and context from upstream agents. Prose sends vali
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/microcopy-patterns.md` | You need button labels, tooltips, empty states, or AI-context copy patterns. |
-| `reference/error-message-guide.md` | You need What/Why/Next structure, severity templates, or recovery guidance. |
-| `reference/voice-tone-framework.md` | You need voice attributes, tone spectrum, conversational UI tone, or style guide structure. |
-| `reference/onboarding-copy-patterns.md` | You need progressive disclosure, first-run experience, or feature introduction patterns. |
 | `reference/accessibility-text-guide.md` | You need alt text rules, ARIA label patterns, screen reader text, or WCAG 2.2 criteria. |
 | `reference/content-strategy-design.md` | You need product language principles, 30% cut rule, copy-first design process, hero copy contract, or content-composition alignment. |
 | `reference/empty-state-copy.md` | You need zero-data UI copy with 3-type classification (first-use / user-cleared / search-no-results), educational + promotional CTA design. |
@@ -291,4 +287,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

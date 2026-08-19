@@ -88,7 +88,7 @@ Route elsewhere when the task is primarily:
 - Pair every confirmed regression with a paste-ready `## LLM Fix Prompt` embedding the breaking commit (SHA + diff hunk), bisect evidence, rollback safety, recommended action, acceptance criteria, ruled-out alternatives, and what NOT to do. Suppress only when escalating to Sentinel/Atlas, on archaeology-only tasks, or when bisect lands on a merge commit whose parents are not yet isolated.
 - **Escalate to time-travel debugging when bisect bottoms out on a non-deterministic regression** — record-and-replay tooling covers what `git bisect` cannot: races, time-dependent bugs, mid-commit unbuildable states, heisenbugs. Hand off the recording or trace artifact rather than re-running the failure.
 - **Strictly enforce `git bisect run` exit-code semantics**: `0` good, `1`-`124` bad, `125` skip (unbuildable commit). Any other code aborts the run — `125` is the escape hatch for broken intermediate commits.
-- **Pair `git bisect run` with an agent-facing `AGENTS.md`** documenting the script path, good/bad signal, per-commit timeout, and skip criteria, so a downstream agent can drive it without a human prompt. Detail -> `reference/git-commands.md`.
+- **Pair `git bisect run` with an agent-facing `AGENTS.md`** documenting the script path, good/bad signal, per-commit timeout, and skip criteria, so a downstream agent can drive it without a human prompt.
 
 ## Boundaries
 
@@ -174,7 +174,7 @@ Routing rules:
 |--------|-----------|---------|-------------|------------|
 | Regression Investigation | `regression` | ✓ | Identify regression cause (investigate git-originated breaking commits) | `reference/framework-templates.md` |
 | Git Bisect | `bisect` | | Identify regression commit via binary search | `reference/framework-templates.md` |
-| Blame Walk | `blame` | | Trace change history for specific lines | `reference/git-commands.md` |
+| Blame Walk | `blame` |  | Trace change history for specific lines | — |
 | History Mining | `history` | | Timeline analysis and archive archaeology | `reference/patterns.md` |
 | Flamegraph Regression | `flame` | | Diagnose CPU/memory regressions via differential flamegraph + bisect narrowing | `reference/flamegraph-regression.md` |
 | Delta Debugging | `delta` | | Minimize failing input/state via ddmin (flaky tests, large reproducers, config) | `reference/delta-debugging.md` |
@@ -222,8 +222,6 @@ Authoring rules: one verb and one regression per prompt; quote the breaking comm
 ## Git Safety
 
 **Safe (always):** log, show, diff, blame, grep, rev-parse, describe, merge-base, bisect log, bisect replay · **Confirm first:** bisect start, bisect run, checkout, stash · **Never:** reset --hard, clean -f, checkout ., rebase, push --force
-
-Full command reference → `reference/git-commands.md`
 
 ## Output Formats
 
@@ -278,9 +276,7 @@ Follow `_common/GIT_GUIDELINES.md`. Conventional Commits, no agent names, <50 ch
 | `reference/framework-templates.md` | SCOPE/LOCATE/TRACE/REPORT/RECOMMEND templates, bisect script, or edge case handling. |
 | `reference/output-formats.md` | Timeline visualization or investigation summary templates. |
 | `reference/patterns.md` | Investigation pattern workflows, commands, or gotchas. |
-| `reference/git-commands.md` | The full git command reference with safety classification. |
 | `reference/best-practices.md` | Investigation best practices or anti-pattern avoidance. |
-| `reference/examples.md` | Complete investigation examples for pattern matching. |
 | `reference/non-functional-regression.md` | Performance, memory, bundle size, or startup time regression bisect is needed. |
 | `reference/flamegraph-regression.md` | Flamegraph tool selection, differential flamegraph workflow, hotspot thresholds, or bisect-with-frame-share script for the `flame` subcommand. |
 | `reference/delta-debugging.md` | Ddmin pseudocode, granularity selection, flaky-test minimization tuning, or `git bisect run` integration for the `delta` subcommand. |

@@ -116,17 +116,17 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 | Phase | Required action | Key rule | Read |
 |-------|-----------------|----------|------|
-| `BLUEPRINT` | Design the command contract: signature, flags, help, exit codes, human/JSON output, CI/CD expectations | Lock the interface before building | `reference/cli-design-patterns.md` |
-| `CAST` | Build the CLI skeleton: parser, subcommands, completion hooks, config loading, doctor checks | Keep scope to one command surface | `reference/cli-design-patterns.md`, `reference/tui-components.md` |
+| `BLUEPRINT` | Design the command contract: signature, flags, help, exit codes, human/JSON output, CI/CD expectations | Lock the interface before building | — |
+| `CAST` | Build the CLI skeleton: parser, subcommands, completion hooks, config loading, doctor checks | Keep scope to one command surface | `reference/tui-components.md` |
 | `TEMPER` | Polish terminal UX: prompts, progress indicators, colors, `--no-color`, `--yes`, non-TTY fallback | TTY-awareness is non-negotiable | `reference/tui-components.md` |
 | `HARDEN` | Validate failure paths: input errors, exit codes, `CTRL+C`, platform quirks, non-interactive environments | Test every non-happy path | `reference/cross-platform.md`, `reference/cli-design-anti-patterns.md` |
-| `PRESENT` | Deliver the interface, usage examples, integration notes, and the next operational handoff | Mandatory before expanding scope | `reference/cli-design-patterns.md` |
+| `PRESENT` | Deliver the interface, usage examples, integration notes, and the next operational handoff | Mandatory before expanding scope | — |
 
 ## Recipes
 
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
-| CLI Build | `cli` | ✓ | CLI design/implementation (command design, flags, help, exit codes) | `reference/cli-design-patterns.md` |
+| CLI Build | `cli` | ✓ | CLI design/implementation (command design, flags, help, exit codes) | — |
 | TUI Build | `tui` | | TUI (Terminal UI) design (spinners, tables, interactive prompts) | `reference/tui-components.md` |
 | Tool Wrap | `wrap` | | Wrapping existing CLI tools (linter/formatter/test-runner integration) | `reference/tool-integration.md` |
 | Dev Tool Integration | `devtool` | | linter/test-runner/build-tool integration, doctor command | `reference/tool-integration.md`, `reference/cross-platform.md` |
@@ -153,23 +153,23 @@ Behavior notes per Recipe:
 
 | Signal | Approach | Primary output | Read next |
 |--------|----------|----------------|-----------|
-| `cli`, `command`, `subcommand`, `flags`, `args` | CLI command design | Command skeleton + help text | `reference/cli-design-patterns.md` |
+| `cli`, `command`, `subcommand`, `flags`, `args` | CLI command design | Command skeleton + help text | — |
 | `tui`, `interactive`, `prompt`, `menu`, `selection` | TUI component build | Interactive terminal UI | `reference/tui-components.md` |
 | `spinner`, `progress`, `table`, `color` | Terminal UX polish | Styled output components | `reference/tui-components.md` |
 | `linter`, `formatter`, `test runner`, `build tool` | Tool integration wiring | Config + runner setup | `reference/tool-integration.md` |
 | `doctor`, `healthcheck`, `environment check` | Doctor command pattern | Diagnostic command | `reference/tool-integration.md` |
-| `completion`, `bash completion`, `zsh completion` | Shell completion generation | Completion scripts | `reference/cli-design-patterns.md` |
-| `scaffold`, `init`, `project init`, `template` | Project scaffolding | Interactive init flow | `reference/cli-design-patterns.md` |
+| `completion`, `bash completion`, `zsh completion` | Shell completion generation | Completion scripts | — |
+| `scaffold`, `init`, `project init`, `template` | Project scaffolding | Interactive init flow | — |
 | `cross-platform`, `xdg`, `config path`, `signal` | Platform compatibility | Cross-platform handling | `reference/cross-platform.md` |
 | `ci`, `non-tty`, `json output`, `exit code` | CI/CD-ready CLI behavior | Machine-readable output | `reference/cross-platform.md` |
 | `package`, `binary`, `distribute`, `release` | Distribution packaging | Build + packaging config | `reference/distribution-packaging-anti-patterns.md` |
-| `agent`, `no-prompt`, `mcp`, `automation`, `ai consumer` | Agent-compatible CLI design | Agent-ready CLI contract | `reference/cli-design-patterns.md` |
+| `agent`, `no-prompt`, `mcp`, `automation`, `ai consumer` | Agent-compatible CLI design | Agent-ready CLI contract | — |
 | `review`, `audit`, `anti-pattern` | CLI/TUI anti-pattern audit | Audit report | `reference/cli-design-anti-patterns.md` |
-| unclear CLI/TUI request | CLI command design | Command skeleton + help text | `reference/cli-design-patterns.md` |
+| unclear CLI/TUI request | CLI command design | Command skeleton + help text | — |
 
 Routing rules:
 
-- If the request involves command structure, flags, or help text, read `reference/cli-design-patterns.md`.
+- Command structure, flags, help text, output modes, and exit codes use established CLI conventions; no extra reference is required.
 - If the request involves interactive prompts, menus, or progress displays, read `reference/tui-components.md`.
 - If the request involves linters, formatters, test runners, or build tools, read `reference/tool-integration.md`.
 - If the request involves platform compatibility, config paths, or CI behavior, read `reference/cross-platform.md`.
@@ -214,7 +214,6 @@ Anvil receives CLI/TUI requests from upstream agents, builds terminal interfaces
 
 | Reference | Read this when |
 |-----------|----------------|
-| `reference/cli-design-patterns.md` | You need command structure, flag conventions, help text design, output formatting, exit codes, shell completion, or init/scaffold flows. |
 | `reference/tool-integration.md` | You need to wire linters, formatters, test runners, build tools, doctor commands, or modern toolchains (Bun, Deno, mise, oxlint). |
 | `reference/tui-components.md` | You need spinners, progress bars, tables, selection menus, interactive prompts, or full-screen terminal UI patterns. |
 | `reference/cross-platform.md` | You need XDG path handling, config precedence, platform/shell detection, signal handling, or CI/non-TTY behavior. |
@@ -243,4 +242,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

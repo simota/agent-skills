@@ -73,7 +73,7 @@ WRITE      →  open with concrete scene in the Ordinary World
            →  one paragraph per stage for flagship; one sentence per stage for compressed
            →  end with the Elixir: what the hero now gives back
 
-REFINE     →  AP-1~AP-9 anti-pattern check (see reference/anti-patterns.md)
+REFINE     →  AP-1~AP-9 anti-pattern check from `saga/SKILL.md`
            →  specifically: AP-4 (no transformation), AP-8 (no failure), AP-2 (product as hero)
 
 DELIVER    →  include: framework stage map, named characters, measurable before/after,
@@ -142,7 +142,7 @@ A case study with only external ("they switched to our tool and shipped faster")
 12. **Return with the Elixir**: [advocacy, case study, community leadership]
 
 ### Anti-Pattern Check
-Run the full AP-1~AP-9 checklist from `reference/anti-patterns.md` and report results in the standard format. Hero's Journey emphasizes AP-2 (Hero Product), AP-4 (No Transformation), AP-8 (Happy Path Only) — these are the failure modes most common to long-form transformation arcs.
+Run the AP-1~AP-9 checklist from `saga/SKILL.md` and report results in the standard format. Hero's Journey emphasizes AP-2 (Hero Product), AP-4 (No Transformation), AP-8 (Happy Path Only) — these are the failure modes most common to long-form transformation arcs.
 
 ### Assumptions
 - [list unverified premises]
@@ -173,7 +173,7 @@ When `hero-journey` completes, emit:
 - **External + internal arc** with measurable change.
 - **12 or 8 stages** written out with concrete scenes.
 - **Three critical beats** (Call, Ordeal, Elixir) emphasized.
-- **Anti-pattern check** (AP-1~AP-9 per `reference/anti-patterns.md`).
+- **Anti-pattern check** (AP-1~AP-9 per `saga/SKILL.md`).
 - **Assumptions** section.
 - **Handoffs**: Director, Prose, Growth.
 

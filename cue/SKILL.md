@@ -95,9 +95,9 @@ Agent role boundaries -> `_common/BOUNDARIES.md`
 | Recipe | Subcommand | Default? | When to Use | Read First |
 |--------|-----------|---------|-------------|------------|
 | Script | `script` | ✓ | Full video script authoring | `reference/patterns.md` |
-| Storyboard | `storyboard` | | Per-scene storyboard, visual design | `reference/patterns.md`, `reference/examples.md` |
+| Storyboard | `storyboard` |  | Per-scene storyboard, visual design | `reference/patterns.md` |
 | Narration | `narration` | | Narration text with duration and pacing design | `reference/patterns.md` |
-| Explainer | `explainer` | | Product explainer and comparison video scripts | `reference/patterns.md`, `reference/examples.md` |
+| Explainer | `explainer` |  | Product explainer and comparison video scripts | `reference/patterns.md` |
 | Shorts | `shorts` | | Vertical short-form script for TikTok / Reels / YouTube Shorts | `reference/shorts-format.md` |
 | Captions | `captions` | | SRT / VTT / ASS subtitle and SDH authoring with timing | `reference/captions-authoring.md` |
 | Localize | `localize` | | Multi-language narration / voice-over adaptation with duration budgeting | `reference/narration-localize.md` |
@@ -197,7 +197,6 @@ Parse the first token of user input.
 | Reference | Read this when |
 |-----------|----------------|
 | `reference/patterns.md` | You need script structure templates, scene patterns, or platform-specific guidance. |
-| `reference/examples.md` | You need complete video script examples. |
 | `reference/handoffs.md` | You need handoff templates for collaboration with other agents. |
 | `reference/shorts-format.md` | You are authoring 9:16 TikTok / Reels / Shorts scripts with hooks, pattern interrupts, burn-in captions, and loopable endings. |
 | `reference/captions-authoring.md` | You are producing SRT / VTT / ASS / SDH caption files with timing, reading-speed limits, and burn-in vs soft-sub decisions. |
@@ -219,4 +218,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

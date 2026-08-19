@@ -225,4 +225,3 @@ Loose-prompt rule applies — do NOT pass the SCAMPER lens taxonomy, Crazy-8 axi
 - `spark/reference/tri-engine-proposal.md` — canonical Pattern D implementation (mirror this structure)
 - `echo/reference/tri-engine-demand.md` — Pattern D with calibration (Riff does NOT calibrate but the dialogue-integration pattern is similar)
 - `riff/reference/patterns.md` — mode definitions and transition signals (referenced when interpreting which mode `multi` should default to)
-- `riff/reference/examples.md` — Riff dialogue tone; multi output cards inherit this voice

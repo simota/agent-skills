@@ -267,7 +267,6 @@ Additional sections as needed — canonical headings, skeletons, and full field 
 | `reference/history-reshape.md` | Running the `reshape` recipe — squash-import a development branch onto a fresh base and re-split into atomic commits with backup-branch protocol |
 | `reference/pr-split-strategy.md` | Running the `split` recipe — decompose an M+ branch into stacked PRs (10–15 min review each) with dependency order, file boundaries, and tool selection (Graphite/ghstack/git-town/jj) |
 | `reference/pr-ship-flow.md` | Running the `ship` recipe — end-to-end PR delivery (create, watch CI, verify gates, merge, cleanup) with hard gates and Ask First on every MERGE execution |
-| `reference/code-review-guide.md` | Assigning reviewers or checking review turnaround and CODEOWNERS fit |
 | `reference/git-automation.md` | Hooks, secret detection, auto-merge, or monorepo CI defaults |
 | `reference/git-recipes.md` | Concrete Git or `gh` command recipes |
 | `reference/squash-optimization.md` | Grouping, scoring, or synthesizing squash plans |
