@@ -20,8 +20,12 @@ For disambiguation of commonly confused agent pairs, see `nexus/reference/agent-
 | **Architect** | Ecosystem agent design | Permanent agent creation | SKILL.md only |
 | **Lore** *(project-local)* | Cross-agent knowledge synthesis | This repository's journal and pattern lifecycle | Never |
 | **Gauge** | SKILL.md normalization audit & self-evolution | Per-skill format compliance | Never |
+| **Compass** | Ecosystem navigation & onboarding | Which existing skill fits a request | Never |
 
 **Key distinctions:**
+- Compass answers *which skill*; Nexus answers *in what order and runs it*. Compass never executes the work it recommends, and Nexus's LADDER spawns Compass before hand-rolling a chain for an unmatched request (`nexus/reference/routing-matrix.md` § LADDER)
+- Compass recommends from the **global** roster as it stands; Sigil designs a **project-local** operating layer that does not exist yet. "Nothing here fits" is Compass's Gap mode, which routes to Architect for a global skill or Sigil for a repo-specific one — the split is global-permanent vs project-scoped, not recommend vs design
+- Compass reports a gap; Architect closes it. A request Compass cannot match is not Compass's to solve
 - Nexus `deliver` sizes and executes product-lifecycle chains; Rally parallelizes independent workstreams when needed
 - Sherpa decomposes → Nexus/Rally executes the decomposed steps
 - Architect creates permanent ecosystem agents; Sigil designs and authors project-specific operating layers
@@ -39,9 +43,12 @@ For disambiguation of commonly confused agent pairs, see `nexus/reference/agent-
 | **Ripple** | Pre-change impact analysis | "What happens if we change X?" | Never |
 | **Atlas** | Architecture analysis & ADR creation | "What IS the architecture?" | Never |
 | **Sweep** | Dead code & unused file detection | "What can we remove?" | Never |
+| **PDM** | Delivery status reconciliation | "What is built vs what was planned?" | Never |
 
 **Key distinctions:**
 - Broken behavior → Scout. Understanding behavior → Lens. Git history → Trail
+- Delivery status → PDM. It reconciles two sources — documented intent (specs, roadmap, issues) against implemented code — and reports the gap; Lens explains *how* the code works and reads only one side. "Is feature X shipped?" → PDM; "how does feature X work?" → Lens
+- PDM reports status and never acts on it: priority scoring → Rank, conformance to a written spec's acceptance criteria → Attest, release notes and delivery metrics from PR history → Launch. PDM composes these specialists rather than duplicating them
 - Current architecture → Atlas. Change impact → Ripple
 - Incident diagnosis → Triage. Known-pattern auto-fix → Mend. Unknown fix → Builder
 - Bug root cause → Scout. Incident severity → Triage
@@ -160,9 +167,11 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Frame** | Figma MCP design context extraction | Figma→code bridge, Code Connect | Never |
 | **Ink** | SVG icon & illustration generation | Grid systems, sprite symbols, a11y | Yes (SVG) |
 | **Funnel** | Landing-page conversion and premium production | AIDA/PAS, CTA/forms, multi-stage craft and quality gates | Yes |
+| **Atelier** | Design-to-implementation pipeline orchestration | Code→visual→code loop, project design system persisted across agents | Never (delegates) |
 
 **Key distinctions:**
 - Design direction → Vision. Tokens → Muse. Usability → Palette. Animation → Flow
+- Atelier orchestrates the `DESIGN_WORKFLOW` chain (Vision → Muse/Frame → Forge → Artisan → Vitrine → Canvas) and owns the design system that persists between its stages; Vision produces direction and stops there, Forge builds one prototype. Reach for Atelier only when the loop must close — a single prototype or a direction document does not need an orchestrator
 - Write text → Prose. Test as persona or synthesize demand → Echo. Research → Field
 - Figma data extraction → Frame. Token definition → Muse. Frame extracts, Muse defines
 - Code Connect mapping → Frame + Vitrine. Frame manages Figma side, Vitrine manages code side
