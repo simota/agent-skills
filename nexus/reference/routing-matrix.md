@@ -88,7 +88,7 @@ better-supervised larger one.
 | API | Gateway → Builder → Radar | Gateway[design], Builder[api], Radar[edge] | +Quill[docstring], +Schema[design] |
 | DEPLOY | Guardian → Launch | Guardian[pr], Launch[plan] | +Launch[weekly] (reporting) |
 | MODERNIZE | Shift → Builder → Radar | Shift[detect+modernize], Builder[crud], Radar[coverage] | +Polyglot (i18n), +Grove (structure), +Flux (first-principles), +Matrix (migration paths) |
-| DOCS | Quill | Quill[docstring] | +Canvas[flow], +Scribe[convert] (convert), +Scribe (specs) |
+| DOCS | Quill | Quill[docstring] | +Canvas[flow], +Scribe[convert] (format export), +Scribe (specs) |
 | STRATEGY | Spark → Builder → Radar | Spark[propose], Builder[ddd], Radar[edge], Growth[seo], Pulse[kpi], Experiment[ab], Compete[matrix], Compete[swot], Growth[retention], Voice[nps] | +Growth/Compete/Voice/Pulse/Experiment, +Magi[simulate] (scenario sim) |
 | STRATEGY_SIM | Magi | Magi[simulate], Compete[matrix], Compete[swot], Compete[battle-card] | +Compete (intel), +Pulse (KPI), +Magi[decide] (verdict), +Scribe (docs), +Canvas (viz), +Sherpa (execution) |
 | MARKETING | Cast → Compete → Pulse → Saga → Growth → Funnel → Experiment | Cast[generate] (persona), Compete[matrix]/[swot] (competition), Pulse[kpi] (metrics first), Saga[story] (narrative), Growth[seo]/[cro]/[geo] (channels), Funnel[landing] (LP), Experiment[ab] (validation), Voice[nps] (VoC), Echo (message-reception check), Magi (positioning verdict) | +Sherpa (full chain, mandatory for ≥7 steps), +Field (qualitative persona derivation), +Magi (scenario sim), +Vision (product brand), +Compete[brand] (personal brand only), +Prose (copy), +Muse (brand tokens), +Trace (churn/session analysis), +Growth (churn ops), +Launch (GTM execution and reporting), +Echo[demand] (synthetic user voice when no real customers), +Magi[advisor] (advisor pressure-test), +Flux (reframe), +Matrix (multi-segment). **Boundary vs STRATEGY**: MARKETING/* delivers strategy/messaging/plan; STRATEGY/{seo,compete,retention,metrics,ab-test} delivers code/instrumentation for a single tactic. |
@@ -96,9 +96,7 @@ better-supervised larger one.
 | GHA_WORKFLOW | Gear[gha] | Gear[gha], Sentinel[scan] | +Launch (release), +Sentinel (security) |
 | PARALLEL | Rally | Rally[parallel], Sherpa[epic] | +Sherpa (decomposition), see Rally escalation |
 | PROJECT | Nexus[deliver] | Nexus[deliver] | Scope-adaptive product/MVP delivery through the minimum viable specialist chain |
-| MESSAGING | Gateway → Builder → Radar | Gateway[webhook], Builder[api], Radar[edge] | +Sentinel (security), +Scaffold (infra) |
-| BOT | Gateway → Builder → Radar | Gateway[messaging], Builder[api], Radar[edge] | +Sentinel (security) |
-| REALTIME | Gateway → Scaffold → Builder | Gateway[messaging], Builder[api] | +Radar (tests) |
+| MESSAGING | Gateway → Builder → Radar | Gateway[messaging], Builder[api], Radar[edge] | +Sentinel (security), +Scaffold (infra — required when connections are persistent and must scale horizontally). Covers chat-platform adapters, bot command frameworks, and realtime transports (WebSocket / SSE) as one integration surface — the `relay` merge of 2026-08-20 left them a single owner and a single Recipe, so `BOT` and `REALTIME` are no longer separate task types. Trigger: "Slack/Discord/LINE integration", "chat bot", "slash command", "WebSocket", "SSE", "realtime presence", "channel adapter". Inbound/outbound webhook *contracts* (HMAC, idempotency, DLQ) are `WEBHOOK` |
 | WEBHOOK | Gateway → Builder | Gateway[webhook], Builder[api] | +Radar (tests), +Sentinel (security) |
 | HOOKS | Hone | Hone[hook] | +Gear (Git hooks), +Sentinel (security) |
 | SKILL_GEN | Sigil | Sigil[generate], Architect[create] | +Lens (codebase analysis), +Grove (structure), +Sigil[blueprint] (when the request is a whole project agent/recipe/workflow suite, not one skill) |
@@ -123,7 +121,7 @@ better-supervised larger one.
 | LOAD_TEST | Siege → Bolt → Builder | Siege[load], Siege[contract], Siege[chaos], Siege[mutation], Bolt[frontend], Builder[fix], Radar[edge] | +Beacon[slo] (SLO), +Triage (resilience), +Matrix (scenario combos) |
 | DEMO | Cue → Quill | Cue[demo], Cue[record] | +Cue[scenario] (scenario), +Cue[onboard] (onboarding), +Vitrine (catalog), +Growth (marketing) |
 | SPRINT_RETRO | Launch → Canvas | Launch[weekly], Canvas[flow] | +Quill[docstring] (publish), +Triage (incident link) |
-| KNOWLEDGE | Scribe | Scribe[prd] | +Quill (polish), +Scribe (format convert) |
+| KNOWLEDGE | Scribe | Scribe[prd] | +Quill (polish), +Scribe[convert] (format export) |
 | REVIEW | Judge → Builder | Judge[pr], Builder[fix] | +Zen (refactor), +Sentinel (security), +Matrix (impact dimensions), +Flux (blind-spot) |
 | YAGNI | Void → Sweep/Zen | Void[prune] | +Magi (approval), +Pulse (usage data) |
 | REMEDIATE | Mend → Radar | Mend[runbook], Radar[regression] | +Beacon[slo] (SLO check), +Gear (infra config), +Triage (escalation) |
@@ -148,10 +146,10 @@ better-supervised larger one.
 | SEARCH | Seek → Builder → Radar | Seek[fulltext], Seek[vector], Seek[hybrid], Seek[index], Seek[rag], Builder[api], Radar[edge] | +Oracle[rag] (RAG/embeddings), +Schema (indexes), +Tuner[explain] (query perf), +Vector[crawl] (crawl source) |
 | MULTI_TENANT | Schema[tenant] → Builder | Schema[tenant], Builder[ddd], Radar[edge] | +Sentinel (security), +Scaffold (infra), +Radar (isolation tests) |
 | MIGRATION | Shift → Builder → Radar | Shift[plan], Builder[harden], Radar[regression] | +Trail (static-rules legacy analysis + history), +Shift[modernize] (native API replacement) |
-| PRESENTATION | Stage → Canvas | Stage[marp], Stage[conference], Stage[timing] | +Stage[reveal] (reveal.js), +Stage[slidev] (Slidev/Vue), +Cue[script] (narrative), +Quill (content), +Scribe (export) |
+| PRESENTATION | Stage → Canvas | Stage[marp], Stage[conference], Stage[timing] | +Stage[reveal] (reveal.js), +Stage[slidev] (Slidev/Vue), +Cue[script] (narrative), +Quill (content), +Scribe[convert] (export) |
 | LEARNING | Tome → Quill | Tome[learn] | +Canvas (diagrams), +Trail (change context) |
 | WORKFLOW | Weave → Builder → Radar | Weave[design], Builder[api], Radar[edge] | +Canvas (diagram), +Schema (persistence), +Attest (spec verify) |
-| ARTICLE | Tome → Growth | Tome[note], Tome[zenn], Tome[qiita], Tome[devto], Tome[article-series] | +Prose (microcopy polish), +Stage (slide version), +Saga (narrative reshape), +Canvas (article diagrams), +Scribe (PDF/Word export). Trigger: "tech blog", "note/Zenn/Qiita/dev.to", "article series", "article" |
+| ARTICLE | Tome → Growth | Tome[note], Tome[zenn], Tome[qiita], Tome[devto], Tome[article-series] | +Prose (microcopy polish), +Stage (slide version), +Saga (narrative reshape), +Canvas (article diagrams), +Scribe[convert] (PDF/Word export). Trigger: "tech blog", "note/Zenn/Qiita/dev.to", "article series", "article" |
 | SCHEDULE | Weave → Builder → Gear | Weave[schedule], Builder[api], Radar[edge] | +Weave[retry] (retry state machine), +Beacon[alerts] (schedule SLO/alerts), +Gear[gha] (GHA cron), +Voyager[playwright] (temporal test scenarios), +Judge (correctness review), +Triage (incident → replay plan). Trigger: "cron", "timezone", "DST", "retry/backoff", "backfill", "business calendar" |
 | GRAMMAR | Builder → Radar | Builder[grammar], Builder[crud], Sentinel[injection], Radar[edge] | +Sentinel (regex security audit), +Canon (grammar → standards compliance), +Atlas (parser module boundary), +Shift (codemod migration), +Judge (grammar review). Trigger: "regex", "parser", "grammar", "DSL design", "AST transform", "ReDoS" |
 | PORTING | Lens/Atlas → Port → Native → Voyager → Launch | Port[blueprint], Port[parity], Port[map], Port[roadmap], Native[swiftui], Native[compose], Voyager[playwright], Launch[plan] | +Trail (web business-rule extraction), +Field (mobile user research), +Vision (mobile design direction), +Frame (Figma mobile handoff), +Scaffold (project skeleton), +Gateway (mobile-friendly BFF), +Schema (local DB), +Polyglot (i18n), +Cloak (Privacy Manifest), +Crypt (Passkey/Keychain). UI component-name lookup (Web ↔ HIG ↔ Material 3) → `port/reference/ui-terminology-matrix.md` |
