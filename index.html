@@ -1251,18 +1251,32 @@ a:focus-visible, .btn:focus-visible, .filter-btn:focus-visible, .lang-btn:focus-
     <div class="section-header fade-in">
       <div class="section-label">Quick Start</div>
       <h2 class="section-title" data-i18n="install.title">今すぐ始める</h2>
-      <p class="section-desc" data-i18n="install.desc">1コマンドでインストール完了</p>
+      <p class="section-desc" data-i18n="install.desc">導入方法は2つ — 全CLIで共有するか、直接クローンするか</p>
     </div>
 
     <div class="install-block fade-in">
       <div class="install-header">
-        <span>Terminal</span>
-        <button class="copy-btn" id="copyBtn" data-copy="git clone https://github.com/simota/agent-skills.git ~/.claude/skills">Copy</button>
+        <span data-i18n="install.way1">推奨 — 1つの作業ツリーを全CLIで共有</span>
+        <button class="copy-btn" id="copyBtn" data-copy="git clone https://github.com/simota/agent-skills.git ~/repos/agent-skills &amp;&amp; cd ~/repos/agent-skills &amp;&amp; make link">Copy</button>
       </div>
       <div class="install-code" id="installCode">
-        <span class="comment" data-i18n="install.comment1"># Claude Code の場合</span><br>
+        <span class="cmd">git clone https://github.com/simota/agent-skills.git ~/repos/agent-skills</span><br>
+        <span class="cmd">cd ~/repos/agent-skills</span><br>
+        <span class="cmd">make link</span><br><br>
+        <span class="comment" data-i18n="install.comment1"># 各スキルを Claude Code / Codex CLI / Antigravity CLI へ symlink</span><br>
+        <span class="comment" data-i18n="install.comment2"># 既存スキルは上書きせず維持（同名は skip）· make status / make unlink</span>
+      </div>
+    </div>
+
+    <div class="install-block fade-in">
+      <div class="install-header">
+        <span data-i18n="install.way2">シンプル — CLI ディレクトリへ直接クローン</span>
+        <button class="copy-btn" data-copy="git clone https://github.com/simota/agent-skills.git ~/.claude/skills">Copy</button>
+      </div>
+      <div class="install-code">
+        <span class="comment" data-i18n="install.comment3"># Claude Code の場合</span><br>
         <span class="cmd">git clone https://github.com/simota/agent-skills.git ~/.claude/skills</span><br><br>
-        <span class="comment" data-i18n="install.comment2"># その他のプラットフォーム</span><br>
+        <span class="comment" data-i18n="install.comment4"># その他のプラットフォーム</span><br>
         <span class="cmd">git clone https://github.com/simota/agent-skills.git /path/to/your/skills</span>
       </div>
     </div>
@@ -1667,9 +1681,13 @@ const TRANSLATIONS = {
     'platforms.gemini.desc': 'Integrate by setting skill paths in GEMINI.md. Use Builder image recipes to leverage Gemini API image generation.',
     'platforms.note': 'All skills are written in standard Markdown (SKILL.md) and work with any AI CLI tool',
     'install.title': 'Get Started Now',
-    'install.desc': 'Install with a single command',
-    'install.comment1': '# For Claude Code',
-    'install.comment2': '# For other platforms',
+    'install.desc': 'Two ways in — share one tree across every CLI, or clone straight in',
+    'install.way1': 'Recommended — one working tree, shared by every CLI',
+    'install.comment1': '# Symlink each skill into Claude Code / Codex CLI / Antigravity CLI',
+    'install.comment2': '# Existing skills are kept, never overwritten (same name = skipped) \u00b7 make status / make unlink',
+    'install.way2': 'Simple — clone straight into a CLI directory',
+    'install.comment3': '# For Claude Code',
+    'install.comment4': '# For other platforms',
     'install.ex1.cmd': '/Nexus I want to implement a login feature',
     'install.ex1.desc': 'Nexus analyzes the task and auto-designs the optimal agent chain',
     'install.ex2.cmd': '/Scout Investigate the cause of this bug',
@@ -2070,15 +2088,17 @@ if (currentLang !== 'ja') setLanguage(currentLang);
 /* ==========================================
    Copy Button
    ========================================== */
-document.getElementById('copyBtn').addEventListener('click', function() {
-  const text = this.dataset.copy;
-  navigator.clipboard.writeText(text).then(() => {
-    this.textContent = 'Copied!';
-    this.classList.add('copied');
-    setTimeout(() => {
-      this.textContent = 'Copy';
-      this.classList.remove('copied');
-    }, 2000);
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const text = this.dataset.copy;
+    navigator.clipboard.writeText(text).then(() => {
+      this.textContent = 'Copied!';
+      this.classList.add('copied');
+      setTimeout(() => {
+        this.textContent = 'Copy';
+        this.classList.remove('copied');
+      }, 2000);
+    });
   });
 });
 

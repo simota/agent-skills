@@ -16,6 +16,28 @@ A skill collection that enables collaborative development with a team of special
 
 ### Installation
 
+**Recommended — one working tree, symlinked into every CLI**
+
+```bash
+git clone https://github.com/simota/agent-skills.git ~/repos/agent-skills
+cd ~/repos/agent-skills
+make link
+```
+
+`make link` symlinks each skill directory into `~/.claude/skills`, `~/.codex/skills`, and
+`~/.gemini/skills` individually, so every CLI reads the same working tree and a single `git pull`
+updates all of them. Skills already present in those directories are preserved: a name that already
+exists is reported and skipped, never overwritten. A CLI that is not installed (no `~/.codex`, for
+example) is skipped too, so the same command works on a single-CLI machine.
+
+| Command | Effect |
+|---------|--------|
+| `make link` | Link into all three CLI directories — `link-claude` / `link-codex` / `link-agy` for just one |
+| `make status` | Show the link count per CLI (`linked / linkable`) and how many entries each directory holds |
+| `make unlink` | Remove only the links into this repository; other skills stay in place |
+
+**Alternative — clone straight into a CLI directory**
+
 ```bash
 # For Claude Code
 git clone https://github.com/simota/agent-skills.git ~/.claude/skills
@@ -23,6 +45,8 @@ git clone https://github.com/simota/agent-skills.git ~/.claude/skills
 # For other platforms
 git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 ```
+
+The shortest path when the target directory does not exist yet and only one CLI needs the skills.
 
 ### Usage
 

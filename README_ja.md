@@ -16,6 +16,28 @@
 
 ### インストール
 
+**推奨 — 1つの作業ツリーを全 CLI で共有**
+
+```bash
+git clone https://github.com/simota/agent-skills.git ~/repos/agent-skills
+cd ~/repos/agent-skills
+make link
+```
+
+`make link` は各スキルディレクトリを `~/.claude/skills`・`~/.codex/skills`・`~/.gemini/skills` へ
+個別に symlink します。全 CLI が同一の作業ツリーを読むため、`git pull` 1回で全 CLI が最新になります。
+それらのディレクトリに既にあるスキルは維持されます — 同名エントリは報告のうえ skip され、上書きされる
+ことはありません。未インストールの CLI（`~/.codex` が無い等）も skip されるため、CLI が1つだけの環境
+でも同じコマンドが使えます。
+
+| コマンド | 効果 |
+|---------|------|
+| `make link` | 3つの CLI ディレクトリへ一括リンク — 個別は `link-claude` / `link-codex` / `link-agy` |
+| `make status` | CLI ごとのリンク数（`リンク済み / リンク対象`）と総エントリ数を表示 |
+| `make unlink` | このリポジトリへのリンクのみ削除。他のスキルはそのまま残る |
+
+**シンプル — CLI ディレクトリへ直接クローン**
+
 ```bash
 # Claude Code の場合
 git clone https://github.com/simota/agent-skills.git ~/.claude/skills
@@ -23,6 +45,8 @@ git clone https://github.com/simota/agent-skills.git ~/.claude/skills
 # その他のプラットフォーム
 git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 ```
+
+対象ディレクトリがまだ存在せず、1つの CLI でしか使わない場合はこちらが最短です。
 
 ### 使用方法
 
