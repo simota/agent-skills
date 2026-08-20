@@ -118,6 +118,12 @@ Rules:
   this tier) rather than stars.
 - **`IN` is read as a column, not per row.** A chain where `IN` degrades from ★★★★☆ at the head
   to ★★☆☆☆ three spokes down is a handoff defect, and it is invisible in any single spoke's gate.
+- **Rework is never invisible.** A spoke that was sent back under `_common/HANDOFF.md` § Handoff
+  Admission Gate is marked `↺` beside its name, with the refusing skill and the named missing item
+  on a line below the table. Nexus is the arbiter of the one-bounce-per-edge rule; a chain that
+  silently reran a step reports a smaller cost than it paid.
+- **A second failure on the same condition is a blocker, not a third attempt** — it surfaces at
+  the top of the envelope as a typed residual plus the question for the user.
 
 ---
 

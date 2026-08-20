@@ -5,6 +5,8 @@
 
 **Boundary vs `guardrails.md`:** This file owns the **error-severity axis** (L1 AUTO_RETRY / L2 AUTO_ADJUST / L3 ROLLBACK / L4 ESCALATE / L5 ABORT). `guardrails.md` owns the **execution-state axis** (L1 MONITORING / L2 CHECKPOINT / L3 PAUSE / L4 ABORT) and defines the Recovery Chains (A/B/C) that L3 here invokes. Both files use L1-L4 numbering along different axes — do not conflate them.
 
+**Boundary vs the Handoff Admission Gate:** this file owns **a step that failed**. `_common/HANDOFF.md` § Handoff Admission Gate owns **a step that succeeded and delivered something the receiver cannot work from**. The two never share a path: a refusal is not an `L1` retry, it consumes the edge's single bounce rather than an attempt budget, and it returns work to the *sender* rather than re-running it in place.
+
 ## Contents
 - Error Levels (incl. Tool Error Classes — the orthogonal *what kind* axis)
 - Context Failure Classes (what was wrong *before* the call) + the Context Diff

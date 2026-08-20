@@ -50,6 +50,11 @@ Rated against the dimension inventory in `_common/CONTEXT_SUFFICIENCY.md` §1. T
 the **request and the context received**, not about the agent's performance — a ★1 `IN` with a
 ★4 `OUT` is a good run on a bad brief, and that is worth seeing.
 
+`IN` is also the **only star a gate may act on**, and only when the rater is the receiver: at ★★☆☆☆
+or below, with a named item the sender held and did not pass, it refuses the handoff
+(`_common/HANDOFF.md` § Handoff Admission Gate). The sender's own stars never trigger anything —
+self-certification wired into a gate is what `TOKEN_ECONOMY.md` §6 forbids.
+
 | Band | Complete description |
 |------|----------------------|
 | ★★★★★ | Goal, scope, constraints, target, and success condition all explicit; every source needed was reachable and current |

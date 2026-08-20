@@ -188,6 +188,75 @@ and never ships on its own.
 
 ---
 
+## Handoff Admission Gate
+
+A handoff is **admitted or sent back** by the *receiver*, at intake, before it does any work. This
+is the only point where rework is cheap — once the receiver has built on a bad input, the cost of
+unwinding exceeds the cost of the original redo.
+
+`_common/REVERSE_FEEDBACK.md` owns the message format. This section owns **when refusal is
+mandatory, when it is forbidden, and how it terminates.**
+
+### Refuse on these, and only these
+
+Every condition is checkable by the receiver against something outside the sender's own account
+of its work.
+
+| # | Condition | What makes it checkable |
+|---|-----------|-------------------------|
+| 1 | `RSK: risk` is present and unresolved | Binary, and already blocking under `OPERATIONAL.md` § Completion Contract |
+| 2 | A required handoff field is absent, or a locator in it does not resolve | The receiver opens the path, runs the command, follows the reference |
+| 3 | The sender's `OUT` rung is below the floor its change class requires | `_common/EVIDENCE_LADDER.md` § Choosing the required floor and the `R01`–`R21` table are external rules, not the sender's opinion |
+| 4 | A `Completed` item is presented as `Verified` | Definitional — § Completed vs Verified above |
+| 5 | The receiver's own `IN` lands ★★☆☆☆ or below **and** the cause is a specific item the sender held and did not pass | The receiver rates `IN` independently; the named item is the evidence |
+
+### Never refuse on these
+
+- **The sender's own star ratings on `FIT`, `EVD`, `CLR`, or `CST`.** Those axes are self-assigned
+  testimony with no external check (`_common/WORK_GATE.md` § Complexity Budget states this
+  plainly). Wiring a self-certified figure into a gate is what `_common/TOKEN_ECONOMY.md` §6
+  forbids: *a formula with no data source is never presented with a grade band or wired into a
+  gate.* A low self-rating is information for the reader, never an automatic rejection.
+- **A stylistic preference, or work the receiver would have done differently.** Refusal is for a
+  missing input, not a different taste.
+- **Anything at `Skip` tier.** A one-line answer does not carry an admission gate.
+
+Condition 5 is deliberately the only star-driven refusal, and the star is the **receiver's**, not
+the sender's — an independent read of what actually arrived. It still requires naming the missing
+item, because "`IN` felt low" is not an actionable rejection.
+
+### Termination — one bounce, then escalate
+
+- **One send-back per handoff edge.** The same edge never bounces twice. This is a property of the
+  edge, not of the run: `Builder → Radar` gets one rework, and a later `Builder → Radar` in the
+  same chain gets none.
+- **The send-back names the artifact to add**, not a quality level to reach. "Improve the
+  evidence" is not a valid refusal; "the `p95` figure has no measurement — attach the command and
+  its output, or label it `UNVERIFIED`" is.
+- **A second failure on the same condition escalates.** It becomes a typed residual
+  (`OPERATIONAL.md` § Completion Contract) plus a question to the user. There is no third attempt,
+  because two failures on a named, actionable item mean the item cannot be produced.
+- **When the sender cannot satisfy it because the information does not exist**, the refusal
+  converts to a residual (`blocked-external` / `out-of-contract`) and the receiver **proceeds with
+  the gap recorded**. A chain never stalls on an unobtainable input.
+
+### The receiver is accountable for refusing
+
+Refusal costs the sender a full rerun, so it is not free to issue.
+
+- A refusal the sender answers with content **already present in the original handoff** is
+  recorded as a receiver-side defect — over-refusal, not a sender defect.
+- The receiver states its `IN` rating and the named missing item in the same message. A refusal
+  without both is not admitted either.
+
+### Who arbitrates
+
+- **Inside a Nexus chain:** Nexus. It sees both gates, applies the one-bounce rule across the
+  whole chain, and reports rework in the envelope so a redone step is never invisible.
+- **Direct skill-to-skill:** the receiver, on its own authority, under the same conditions.
+
+---
+
 ## Pre-Handoff Journaling
 
 When a handoff carries durable state, a reusable insight, or a notable decision, precede it with:

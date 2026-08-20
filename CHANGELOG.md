@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added — Handoff Admission Gate: quality-based send-back between agents (2026-08-20)
+
+- `_common/HANDOFF.md` § Handoff Admission Gate lets a **receiver refuse a handoff at intake** and return it unworked. Intake is the only point where rework is cheap; once the receiver has built on a bad input, unwinding costs more than the original redo would have.
+- **Five refusal conditions, all checkable against something outside the sender's account of its own work**: unresolved `RSK: risk`; a missing field or a locator that does not resolve; an `OUT` rung below the floor the change class requires (`_common/EVIDENCE_LADDER.md` `R01`–`R21`); a `Completed` item presented as `Verified`; or the receiver's own `IN` at ★★☆☆☆ or below with a named item the sender held and did not pass.
+- **The sender's own stars never trigger a refusal.** `FIT`, `EVD`, `CLR`, and `CST` are self-assigned testimony with no external check, and `_common/TOKEN_ECONOMY.md` §6 forbids wiring a self-certified figure into a gate. The one star-driven condition uses the **receiver's** `IN` — an independent read of what actually arrived — and still requires naming the missing artifact.
+- **One bounce per handoff edge, then escalate.** A second failure on the same condition becomes a typed residual plus a user question; there is no third attempt. When the sender cannot satisfy the refusal because the information does not exist, it converts to a `blocked-external` / `out-of-contract` residual and the receiver proceeds with the gap recorded — a chain never stalls on an unobtainable input.
+- **The receiver is accountable for refusing.** A refusal answered with content already present in the original handoff is recorded as a receiver-side defect, because refusal costs the sender a full rerun. Refusal is unavailable at `Skip` tier.
+- `_common/REVERSE_FEEDBACK.md` gains the `rework_required` feedback type as the message form of the gate, and its tier line now states the exception: the file is `authoring` for its advisory types, but `rework_required` binds during user work.
+- `nexus/reference/output-formats.md` marks a reworked spoke `↺` in the Work Gate Matrix with the refusing skill and the missing item; Nexus arbitrates the one-bounce rule so a silently rerun step cannot report a smaller cost than it paid.
+- `nexus/reference/error-handling.md` states the boundary: `L1`–`L5` owns **a step that failed**, the admission gate owns **a step that succeeded and delivered something unusable**. A refusal is not a retry — it consumes the edge's single bounce, not an attempt budget, and returns work to the sender rather than re-running it in place.
+
 ### Added — `WORK_GATE`: a per-deliverable verdict every skill emits (2026-08-20)
 
 - `_common/WORK_GATE.md` defines six `★1–5` axes — `IN` (input quality: what the work had to go on) · `FIT` (scope match) · `EVD` (claims tied to checkable evidence) · `OUT` (output quality: the `EVIDENCE_LADDER` rung actually reached) · `CLR` (usable by the named consumer) · `CST` (effort proportional to the deliverable) — plus `RSK` (irreversible / security / privacy / unauthorized spend), which is `pass | risk` and **never starred**: a floor is not a gradient, and `★★★☆☆ safe` invites trading exposure against a well-written report. `RSK: risk` blocks completion.
