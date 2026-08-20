@@ -44,7 +44,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User (change specification), Trail (git investigation), Launch (PR info), Lens (code investigation), Scout (bug investigation)
-- OUTPUT: Quill (inline docs), Scribe (spec promotion), Canvas (visualization), Lore (knowledge catalog), Cue (demo scripts), Growth (publication packaging), Stage (slides), Scribe (format export)
+- OUTPUT: Quill (inline docs), Canvas (visualization), Lore (knowledge catalog), Cue (demo scripts), Growth (publication packaging), Stage (slides), Scribe (spec promotion + format export)
 
 PROJECT_AFFINITY: SaaS(H) Dashboard(H) Game(H) E-commerce(H) Marketing(M)
 -->

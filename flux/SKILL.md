@@ -33,7 +33,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User, Nexus, Magi, Scribe[unified], Oracle
-- OUTPUT: Magi, Spark, Magi, Atlas, Lore, Oracle, Compete, Field, Breach, Shift, Scribe[unified]
+- OUTPUT: Magi, Spark, Atlas, Lore, Oracle, Compete, Field, Breach, Shift, Scribe[unified]
 
 PROJECT_AFFINITY: universal
 -->
@@ -257,7 +257,7 @@ Activated by `multi`. Pattern D (Divergence-primary) per `_common/MULTI_ENGINE_R
 ## Collaboration
 
 **Receives:** User, Nexus, Magi (deadlocked deliberations), Scribe[unified] (stakeholder conflicts)
-**Sends:** Magi (reframes + insight maps), Spark (idea candidates), Magi (strategic reframes), Atlas (architecture reconceptions), Lore (reusable patterns)
+**Sends:** Magi (reframes, insight maps, and strategic reframes), Spark (idea candidates), Atlas (architecture reconceptions), Lore (reusable patterns)
 
 **Overlap boundaries** — Flux transforms *how the problem is seen*; the partner acts on the result. **Magi** decides between known options (its reframing toolkit is a lightweight pre-deliberation step, not a full pipeline). **Spark** proposes features from existing data/patterns. **Echo** simulates personas against UI. **Magi** simulates business scenarios from a given strategy. **Oracle** evaluates AI/ML design — collaborate with it when reframing touches AI system design assumptions. **Ripple** assesses the impact of a specific change; Flux questions whether that change addresses the right problem.
 

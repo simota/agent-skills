@@ -44,7 +44,7 @@ COLLABORATION_PATTERNS:
 - Pattern M: Founder Office Hours (Magi/Spark/Field → Magi[office-hours] → Builder/Echo[demand]/Sherpa) — current-state evidence becomes one bottleneck and a short commitment set
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User, Nexus, Scribe[unified], Atlas, Flux, Magi, Spark, Field, Schema, Gateway, Shift, Experiment
+- INPUT: User, Nexus, Scribe[unified], Atlas, Flux, Spark, Field, Schema, Gateway, Shift, Experiment
 - OUTPUT: Builder/Forge/Artisan, Atlas/Scaffold, Launch, Nexus, Sherpa, Echo[demand], Void, Flux, Scribe/Quill, Schema, Gateway, Shift, Experiment
 
 PROJECT_AFFINITY: universal
@@ -260,7 +260,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Collaboration
 
-**Receives:** User (decision, founder-advisory, or named-expert requests), Nexus, Scribe[unified], Atlas, Flux, Magi, Spark, Field, Schema, Gateway, Shift, Experiment, Void — each as `<AGENT>_TO_MAGI`.
+**Receives:** User (decision, founder-advisory, or named-expert requests), Nexus, Scribe[unified], Atlas, Flux, Spark, Field, Schema, Gateway, Shift, Experiment, Void — each as `<AGENT>_TO_MAGI`.
 **Sends:** Builder/Forge/Artisan, Atlas/Scaffold, Launch, Nexus, Sherpa, Echo[demand], Void, Flux, Scribe/Quill, Schema, Gateway, Shift, Experiment — each as `MAGI_TO_<AGENT>`.
 
 Full handoff-token table with per-direction purposes -> `reference/decision-templates.md`.

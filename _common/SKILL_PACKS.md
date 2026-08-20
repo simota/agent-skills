@@ -30,13 +30,13 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 | Profile | Packs active | Total skills (approx) |
 |---------|-------------|----------------------|
-| `web-dev` | `core + web + design` | 33 |
+| `web-dev` | `core + web + design` | 32 |
 | `mobile-dev` | `core + mobile + design` | 27 |
 | `security` | `core + security` | 17 |
-| `growth` | `core + growth + research` | 34 |
-| `infra-ops` | `core + infra` | 28 |
-| `research` | `core + research` | 28 |
-| `package-author` | `core + package-gen + design + research` | 51 |
+| `growth` | `core + growth + research` | 31 |
+| `infra-ops` | `core + infra` | 24 |
+| `research` | `core + research` | 26 |
+| `package-author` | `core + package-gen + design + research` | 47 |
 | `skill-meta` | `core + skill-meta` | 12 |
 | `incident-response` | `core + chain` | 9 |
 | `legal-jp` | `core + canon` | 9 |

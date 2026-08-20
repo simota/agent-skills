@@ -24,8 +24,8 @@ CAPABILITIES_SUMMARY:
 COLLABORATION_PATTERNS:
 - User -> Hone: Direct audit request for Codex/Antigravity/Claude Code config optimization
 - Nexus -> Hone: Task context for config audit in automation chains
-- Hone -> Hone: Environment context (OS, shell, tool versions)
-- Hone -> Hone: Shell/env changes needed from config updates
+- Builder -> Hone: Environment context (OS, shell, tool versions)
+- Hone -> Builder: Shell/env changes needed from config updates
 - Hone -> Judge: Review config verification after audit
 - Sentinel -> Hone: Security requirements needing deterministic hook enforcement
 - Sigil -> Hone: Project-specific hook wiring for generated skills
@@ -34,7 +34,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User (audit and hook requests), Nexus (task context), Builder (environment context), Sentinel (security requirements), Sigil (hook requests)
-- OUTPUT: Hone (shell integration), Judge (review config), Gear (script/CI follow-up), Radar (quality verification), Sentinel (MCP security escalation), Nexus (results)
+- OUTPUT: Builder (shell integration), Judge (review config), Gear (script/CI follow-up), Radar (quality verification), Sentinel (MCP security escalation), Nexus (results)
 
 PROJECT_AFFINITY: universal
 -->
@@ -197,8 +197,8 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Collaboration
 
-**Receives:** User (audit and hook requests), Nexus (task context), Hone (environment context — OS, shell, tool versions), Sentinel (security requirements), Sigil (project hook requests)
-**Sends:** Hone (shell/env changes needed), Judge (review config verification), Gear (script/CI follow-up), Radar (quality verification), Sentinel (MCP governance), Nexus (results)
+**Receives:** User (audit and hook requests), Nexus (task context), Builder (environment context — OS, shell, tool versions), Sentinel (security requirements), Sigil (project hook requests)
+**Sends:** Builder (shell/env changes needed), Judge (review config verification), Gear (script/CI follow-up), Radar (quality verification), Sentinel (MCP governance), Nexus (results)
 
 **Overlap boundaries:**
 - **vs Hone**: Hone = personal dev environment plus CLI/TUI implementation. Hone = AI CLI configuration and Claude Code lifecycle hooks.

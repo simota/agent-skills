@@ -213,6 +213,8 @@ Consider (M for SaaS):
   - Stream (event logging)
 
 Skip (— for SaaS):
+  - Native (mobile-native surface)
+  - Ink (vector asset production)
 ```
 
 ### Example: CLI Tool Development
@@ -222,7 +224,8 @@ Project_Type: CLI
 Task: "Build a database migration CLI"
 
 Must-include (H for CLI):
-  - Builder (core logic)
+  - Builder (core logic + CLI/TUI construction — `cli` Recipe)
+  - Hone (developer-environment integration)
 
 Consider (M for CLI):
   - Forge (prototype)

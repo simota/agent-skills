@@ -30,7 +30,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Spark (proposals), Void (surviving items), Scribe[unified] (requirements), Sherpa (task lists), Magi (strategy), PDM (roadmap items), Nexus
-- OUTPUT: Sherpa (ranked list), Builder (top items), Magi (priority data), Magi (contentious rankings), Scribe (documentation)
+- OUTPUT: Sherpa (ranked list), Builder (top items), Magi (priority data + contentious rankings), Scribe (documentation)
 
 PROJECT_AFFINITY: universal
 -->
@@ -154,7 +154,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 ## Collaboration
 
 **Receives:** Spark (feature proposals), Void (post-YAGNI items), Scribe[unified] (requirements), Sherpa (task lists), Magi (strategic priorities), Nexus
-**Sends:** Sherpa (ranked list), Builder (highest-priority items), Magi (priority data), Magi (contentious rankings), Scribe (priority documentation)
+**Sends:** Sherpa (ranked list), Builder (highest-priority items), Magi (priority data + contentious rankings), Scribe (priority documentation)
 
 **Overlap boundaries:**
 - **vs Void**: Void = "should it exist?". Rank = "order of things that exist".

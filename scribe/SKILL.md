@@ -34,15 +34,14 @@ COLLABORATION_PATTERNS:
 - Scribe -> Voyager: E2E-ready test specs
 - Scribe -> Judge: Review criteria and acceptance gates
 - Scribe -> Sherpa: Completed specs broken into atomic tasks
-- Scribe -> Scribe: Format conversion (MD to Word/PDF)
 - Scribe -> Canvas: Unified-package flows and maps rendered visually
 - Scribe -> Lore: Reusable documentation patterns and INSCRIBE signals
 - Scribe -> PDM: Specs/PRD as planned-scope source for delivery reconciliation
 - PDM -> Scribe: Spec gaps from undocumented implemented features
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Field, Cast, Voice, Flux, Magi, Void, Vision, Spark, Magi, Gateway, Atlas, PDM (spec gaps)
-- OUTPUT: Builder, Artisan, Radar, Voyager, Judge, Sherpa, Canvas, Scribe, Lore, PDM (spec as scope source)
+- INPUT: Field, Cast, Voice, Flux, Magi, Void, Vision, Spark, Gateway, Atlas, PDM (spec gaps)
+- OUTPUT: Builder, Artisan, Radar, Voyager, Judge, Sherpa, Canvas, Lore, PDM (spec as scope source)
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(M) Marketing(M)
 -->
@@ -338,8 +337,8 @@ Unified artifacts contain scope-appropriate `L0-L4` plus `Meta`; keep `Given / W
 
 ## Collaboration
 
-**Receives:** Field (research), Cast (personas), Voice (feedback), Flux/Magi/Void (assumption, trade-off, and scope inputs), Vision (design direction), Spark (feature proposals), Magi (strategy), Gateway (API design), Atlas (architecture decisions), PDM (spec gaps)
-**Sends:** Builder (implementation specs), Artisan (UI specs), Radar (test specs), Voyager (E2E test specs), Judge (review criteria), Sherpa (atomic task breakdown), Canvas (visual rendering), Scribe (format conversion), Lore (reusable patterns), PDM (planned scope)
+**Receives:** Field (research), Cast (personas), Voice (feedback), Flux/Magi/Void (assumption, trade-off, and scope inputs), Vision (design direction), Spark (feature proposals), Gateway (API design), Atlas (architecture decisions), PDM (spec gaps)
+**Sends:** Builder (implementation specs), Artisan (UI specs), Radar (test specs), Voyager (E2E test specs), Judge (review criteria), Sherpa (atomic task breakdown), Canvas (visual rendering), Lore (reusable patterns), PDM (planned scope)
 
 ### Overlap Boundaries
 
