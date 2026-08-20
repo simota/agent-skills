@@ -184,5 +184,5 @@ On `NEXUS_COMPLETE`: SUCCESS → next Epic · PARTIAL → L1 retry · BLOCKED �
 | VALIDATE | Trace, Experiment | Session analysis/A/B are XL |
 | LAUNCH | Scribe, Vitrine, Cue | Multiple demo formats are XL |
 
-Full agent × phase deployment map → `reference/agent-deployment-matrix.md`
-Phase exit checklists → `reference/exit-criteria-validation.md`
+Full agent × phase deployment map → `reference/delivery-agent-deployment-matrix.md`
+Phase exit checklists → `reference/delivery-exit-criteria-validation.md`

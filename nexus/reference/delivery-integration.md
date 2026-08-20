@@ -71,7 +71,7 @@ NEXUS_COMPLETE_[STATUS] received
 
 ## Phase-Specific Required Artifacts
 
-Single source of truth for phase-specific artifact requirements and exit criteria: `reference/exit-criteria-validation.md`.
+Single source of truth for phase-specific artifact requirements and exit criteria: `reference/delivery-exit-criteria-validation.md`.
 
 When validating `NEXUS_COMPLETE` results, check artifacts against the phase-specific validation checklists defined there. Key validation rules:
 

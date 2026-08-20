@@ -85,7 +85,7 @@ Complete mapping of all 57 deployment roles across 9 product lifecycle phases.
 
 All agents have at least one phase with Primary (P) or Supporting (S) deployment.
 
-Per-phase process details → `reference/product-lifecycle.md`
+Per-phase process details → `reference/delivery-product-lifecycle.md`
 
 ## Common Skip Heuristics
 

@@ -175,7 +175,14 @@ def check_dead_references(findings: list[Finding]):
             # dead link, check whether exactly one same-named file exists
             # anywhere else in the repo under a reference/ dir.
             basename = Path(raw_path).name
-            elsewhere = [p for p in REPO_ROOT.rglob(f"reference/{basename}") if p.is_file()]
+            # Archived and gitignored trees do not count as "resolvable elsewhere".
+            # A retired skill under `.archive/` is not installed and not loadable, so
+            # a reference that resolves only there is dead in every way that matters
+            # -- and resolving it made two genuinely broken links read as live.
+            elsewhere = [
+                p for p in REPO_ROOT.rglob(f"reference/{basename}")
+                if p.is_file() and not _corpus.is_excluded_path(p, REPO_ROOT)
+            ]
             if len(elsewhere) == 1:
                 continue  # shorthand cross-skill reference, resolvable elsewhere — not dead
             findings.append(Finding(

@@ -67,3 +67,18 @@ def external_skill_dirs(root: pathlib.Path) -> list[pathlib.Path]:
         for entry in sorted(root.iterdir())
         if entry.is_dir() and is_external(entry) and (entry / "SKILL.md").is_file()
     ]
+
+
+def is_excluded_path(entry: pathlib.Path, root: pathlib.Path) -> bool:
+    """True when `entry` sits under a directory that never holds live corpus content.
+
+    `INFRA_DIRS` answers "is this a skill directory"; this answers "does anything
+    here count as reachable at runtime". `.archive/` is the case that motivated it:
+    a retired skill is on disk, is not installed, and resolving a live reference
+    against it turns a dead link into a passing check.
+    """
+    try:
+        parts = entry.resolve().relative_to(root.resolve()).parts
+    except (ValueError, OSError):
+        return False
+    return any(part in {".git", ".agents", ".archive", "node_modules"} for part in parts)

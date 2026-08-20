@@ -159,7 +159,7 @@ Persisted state format (written to `.agents/nexus-delivery-state.md`).
 
 ## Decision Log
 
-Decision Log format → `reference/decision-matrix.md`
+Decision Log format → `reference/delivery-decision-matrix.md`
 
 ---
 
