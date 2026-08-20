@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added — contract-delivery checking, and every SKILL.md body under the size advisory (2026-08-20)
+
+- **`_common/scripts/lint-contracts.py` asks whether a contract can reach a running agent.** Nothing under `_common/` loads automatically; it arrives only because a file already open names it, and a reference resolves from the skill's own directory. Neither condition was checked anywhere. CD-1 compares the spine roster in `OPERATIONAL.md` against the files declaring `Tier: spine`; CD-2 measures per-skill reachability depth; CD-3 finds contracts no skill can reach; CD-4/CD-5 catch a named path that resolves for a reader browsing the repo and to nothing for the agent; CD-6 catches a missing tier line. `--report` prints the depth table. Wired into `skill-lint.yml`, `CONTRIBUTING.md`, and the 30-day evaluation cycle.
+- **Two findings it produced are fixed.** `WORK_GATE.md` declared `Tier: spine` while Contract Precedence never listed it, and `architect/` named `_templates/SKILL_TEMPLATE.md` without the symlink to reach it.
+- **Every spine contract now reaches all 90 skills directly.** `OUTPUT_STYLE.md` was named by 20 skills and `WORK_GATE.md` by none; both arrived only through an intermediate document, which makes "in effect on every run" a claim the corpus did not support. Each `## Operational` section now opens with the same spine line, and the 110 pure-pointer lines it supersedes are gone. With the baseline clean, CD-2 blocks on indirect delivery.
+
+### Changed — SKILL.md bodies moved below the 7000-token advisory (2026-08-20)
+
+- **Corpus body total 615,994 -> 590,524 tokens, and `lint-frontmatter` reports no findings across all 90 skills.** Every reduction is a move or a verified duplicate; no section was summarised away.
+- **Eighteen skills now use the Recipes escape hatch** in `_common/RECIPES.md` that only `nexus` had used: the table moves to `reference/recipes-index.md` and the SKILL.md keeps a dispatch allowlist. SKILL.md keeps what is needed to *choose*; the registry holds what is needed to *execute*.
+- **Twelve Reference Maps split the way nexus splits its own** — shared-contract rows and a pointer stay, per-file read-triggers move to `reference/reference-index.md`. Rows naming a spine contract moved too, since the spine line now names those files directly.
+- **Removed as duplicates:** builder's per-subcommand gate table (`recipe-verify-gates.md` carries all thirteen in fuller form), magi's per-Recipe VERIFY table (`decision-templates.md` likewise), scribe's `## Logging`, nexus's Core Rule 10 and five Reference Map rows repeating a file already named at its decision point, and the `## Git Guidelines` / `## Output Language` restatements in six skills.
+
+### Fixed — absorption residue from the 2026-08-20 consolidation (2026-08-20)
+
+- **`magi` kept two marks of absorbing `helm`.** The Strategy Simulation row sat in the two-column Signal Keywords table instead of the five-column Recipes table, so it rendered broken and `simulate` was never registered as a Recipe. The `**vs Helm**` overlap boundary had been renamed to `**vs Magi**`, comparing Magi with Magi. `hone` carried the same defect from absorbing `anvil`.
+- **One capability claim had no content behind it.** `magi` claims SWOT and Blue Ocean lenses, but `blue-ocean-strategy.md` and `strategic-calibration.md` were left behind when `helm` was absorbed — four of the six claimed lenses (PESTLE, Porter, Ansoff, BCG) had backing and those two did not. Both files are now in place.
+
 ### Removed — over-migration and a cost axis that could not work (2026-08-20)
 
 - **Removed 34 migrated reference files that nothing referenced.** The consolidation carried 88 files into the active tree; 34 were named by no SKILL.md, no Recipe "Read First", and no other reference — a 38% orphan rate against a 7.5% corpus baseline (measured across `scout`, `judge`, `oracle`, `atlas`). The complete pre-merge sets remain in `.archive/` with restore instructions, so nothing left the repository. Two further files orphaned by the removal itself were taken in the same pass; the tree is now stable at 53 with zero dangling pointers. One file with no archive copy (`environment-autorun-schema.md`) was moved into `.archive/anvil/` rather than deleted.
