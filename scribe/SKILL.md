@@ -307,9 +307,9 @@ Behavior notes per Recipe:
 - `hld`: Describe system composition, deployment, and scaling strategy. Link to Atlas ADRs for reference.
 - `lld`: Module design, data structures, and sequence diagrams. Detail granularity for immediate implementation.
 - `testspec`: Given/When/Then format. Must include test scope, data, and traceability matrix.
-- `adr`: Author Architecture Decision Records in Nygard format (Title / Status / Context / Decision / Consequences) or MADR template. Assign sequential ADR numbers (`ADR-0001`) and store under `docs/adr/`. Treat accepted ADRs as immutable — supersede via a new ADR and maintain a bidirectional supersede chain (`Supersedes ADR-0003` / `Superseded-by ADR-0012`). Use RFC 2119 keywords (MUST / SHOULD / MAY) when stating the decision. This is the GENERAL ADR-writing recipe for any agent or human; for application/module-level architecture decisions (dependency direction, layer boundary, pattern choice), hand off to `Atlas` which owns the tradeoff analysis and authors those ADRs directly.
-- `runbook`: Author the runbook document artifact itself — symptom → triage → recover → verify → root-cause link. Required sections: pre-condition, authorization (who MAY execute), idempotency note, escalation path, rollback, verification query. Runbooks authored here are CONSUMED by `Mend` during automated remediation and by `Triage` during first-response. Scribe does not diagnose (`Triage`) or execute (`Mend`) — it AUTHORS. Cross-link the upstream postmortem or incident ticket.
-- `api-doc`: Transform a Gateway-authored OpenAPI 3.1 spec into human-facing reference docs (Redoc / Stoplight Elements / Mintlify). Required sections: authentication flow, versioning policy, per-endpoint code samples in ≥2 languages (curl + one SDK language), error catalog mapped to HTTP status + domain error code, rate-limit note, changelog. Gateway `openapi` owns the spec (YAML contract); Scribe `api-doc` owns the human-facing documentation surface. Handoff direction: Gateway → Scribe.
+- `adr`: The GENERAL ADR-writing recipe, for any agent or human. An accepted ADR is immutable — superseded, never edited. Application/module-level architecture decisions (dependency direction, layer boundary, pattern choice) go to `Atlas`, which owns the tradeoff analysis and authors those ADRs itself. Format, numbering, and supersede chain -> `reference/adr-writing.md`.
+- `runbook`: Authors the runbook artifact, which `Triage` consumes at first response and `Mend` executes during remediation. Scribe neither diagnoses nor executes. Cross-link the upstream postmortem or incident ticket. Required sections and authoring flow -> `reference/runbook-writing.md`.
+- `api-doc`: Turns a Gateway-authored OpenAPI 3.1 spec into the human-facing reference. Gateway `openapi` owns the spec (the YAML contract); Scribe owns the documentation surface — handoff direction is Gateway -> Scribe. Publishing targets and required surfaces -> `reference/api-documentation.md`.
 - `unified`: Run the full unified workflow or one normalized mode. `vision` produces one-page `L0`; `requirements` creates testable `L1`; `detail` translates audience-specific `L2`; `ac` runs Three Amigos / Example Mapping for `L3`; `story-map` builds a walking skeleton and release slices; `stakeholder` maps Power × Interest and engagement; `raci` assigns exactly one accountable owner per row using RACI/DACI/RAPID.
 
 ## Output Requirements
@@ -412,6 +412,3 @@ When input contains `## NEXUS_ROUTING`, do not call other agents directly. Retur
 - Suggested next agent: [AgentName] (reason)
 - Next action: CONTINUE
 ```
-## Git Guidelines
-
-Follow `_common/GIT_GUIDELINES.md`. Do not include agent names in commit messages or PR metadata.

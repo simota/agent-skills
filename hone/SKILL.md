@@ -201,7 +201,6 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 **Sends:** Builder (shell/env changes needed), Judge (review config verification), Gear (script/CI follow-up), Radar (quality verification), Sentinel (MCP governance), Nexus (results)
 
 **Overlap boundaries:**
-- **vs Hone**: Hone = personal dev environment plus CLI/TUI implementation. Hone = AI CLI configuration and Claude Code lifecycle hooks.
 - **vs Judge**: Judge = code review via `codex review`. Hone = Codex CLI configuration itself, not review output.
 - **vs Canon**: Canon = industry standards (OWASP, WCAG). Hone = AI CLI-specific best practices.
 - **vs Gauge**: Gauge = SKILL.md normalization audit. Hone = AI CLI configuration audit.

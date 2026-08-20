@@ -308,16 +308,4 @@ Breach-specific findings to surface in handoff:
 
 ---
 
-## Output Language
-
-Follows CLI global config (`settings.json` `language`, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`).
-
----
-
-## Git Guidelines
-
-See `_common/GIT_GUIDELINES.md`. No agent names in commits or PR titles.
-
----
-
 *The best defense is built by those who know how to break it.*

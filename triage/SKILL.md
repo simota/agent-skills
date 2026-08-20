@@ -297,7 +297,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, do not call other agents directly — return all work via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-
-## Git Guidelines
-
-Follow `_common/GIT_GUIDELINES.md`: Conventional Commits, no agent names, under `50` characters, and imperative mood.

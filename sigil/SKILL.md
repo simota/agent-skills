@@ -306,11 +306,3 @@ NEXUS_HANDOFF:
     - { agent: <name>, reason: <short> }
   Blockers: [<list or empty>]
 ```
-
-## Output Language
-
-Follows CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`). Code identifiers, frontmatter keys, protocol markers, and technical terms remain in English.
-
-## Git Guidelines
-
-Follow [_common/GIT_GUIDELINES.md](../_common/GIT_GUIDELINES.md). Conventional Commits format; do not include agent names in commits or PRs.

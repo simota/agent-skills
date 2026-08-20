@@ -179,6 +179,7 @@ Expert Mode uses `SELECT -> GROUND -> CHANNEL -> ATTEST -> DELIVER`. It independ
 | Delphi Method | `delphi` | | Anonymous multi-round (2-4) expert convergence for forecasts/uncertain estimates. Bimodal kept as stable disagreement, not flattened | `reference/delphi-method.md` |
 | Advisory | `advisor` | | Founder family (`office-hours`, `triage`, `pitch`) or named-expert family (`expert`, `conclave`, `critique`, `roster`) | `reference/office-hours-format.md`, `reference/ethics-and-safety.md` |
 | Multi-Engine | `multi` | | Multi-engine deliberation — 6-cell dual baseline, 9-cell tri when agy AVAILABLE. Pattern-based verdict preserving cross-viewpoint trade-offs; engine influence capped at 50%; all-cells-unanimous triggers mandatory DA | `reference/tri-engine-deliberate.md`, `_common/MULTI_ENGINE_RECIPE.md` |
+| Strategy Simulation | `simulate` |  | Run baseline / optimistic / pessimistic business scenarios | `reference/strategy-simulation/simulation-patterns.md`, `reference/strategy-simulation/scenario-planning-pitfalls.md`, `reference/strategy-simulation/financial-modeling-pitfalls.md` |
 
 ### Signal Keywords → Recipe / Approach
 
@@ -200,7 +201,6 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `how would <name> think`, `named expert`, `channel <name>`, `expert lens` | `advisor expert` variant |
 | `panel of thinkers`, `expert conclave`, `compare <name> and <name>` | `advisor conclave` variant |
 | unclear decision request | `decide` (default) |
-| Strategy Simulation | `simulate` |  | Run baseline / optimistic / pessimistic business scenarios | `reference/strategy-simulation/simulation-patterns.md`, `reference/strategy-simulation/scenario-planning-pitfalls.md`, `reference/strategy-simulation/financial-modeling-pitfalls.md` |
 
 ## Subcommand Dispatch
 
@@ -213,19 +213,6 @@ Parse the first token of user input:
 - Collaborative Calibration: when multiple agents contribute assessments, use iterative confidence adjustment (ensemble-with-critique). Findings needing implementation route to Builder/Forge/Artisan.
 
 Each decision Recipe carries its own VERIFY gate in addition to Magi's verdict discipline (3 independent perspectives, hidden scores until voting completes, calibrated confidence, dissent, risk register, and `1-1-1` human escalation). `advisor` uses its mode-specific gate instead. Full decision-recipe notes -> `reference/decision-templates.md`.
-
-| Subcommand | VERIFY gate (headline) |
-|-----------|------------------------|
-| `decide` | KNOWLEDGE protocol — factual evidence shared at FRAME **before** independent voting; verdict GO / NO-GO / CONDITIONAL against established criteria; reversibility classified; `3-0` triggers a devil's-advocate challenge |
-| `tradeoff` | Both options explicit before any vote; strict independent voting; each perspective scores **both** sides; Pathos names who bears the cost; weighted aggregation, never a raw average |
-| `arbitrate` | Engine Mode auto-detected at low-reversibility + high-impact; `>=2` options explicit; Pre-Decision Framing Check mandatory (problem level + `>=1` alternative framing + named implicit assumption) |
-| `strategic` | Strict independent voting; Sophia weights long-term ROI / time-to-market; framing check mandatory; reversibility surfaced (typically LOW — flag the undo horizon); risk register spans the time horizon |
-| `sixhat` | All six hats run; **Black always paired with equal-time Yellow**; Blue frames the open and close; each hat captured before synthesis |
-| `devil` | DA perspective rotated and the dissenting source anonymized; 3-7 ranked objections, each scored addressed / partial / unaddressed; backfire watched; mandatory on any `3-0` |
-| `delphi` | Panelist anonymity every round; 2-4 rounds stopping on a convergence indicator (IQR / Kendall's W), never a fixed count; genuine bimodal disagreement preserved, never flattened to a mean |
-| `advisor` | Variant gate: `office-hours` = CHECK-IN, one bottleneck, pattern citations, 1-3 SMART actions, close by exchange 12; `triage` = one root cause/action in <=5 exchanges; `pitch` = confirmed granularity, no invented traction, line-level replacements; `expert`/`conclave`/`critique` = ethics gate, sourced attestation, no fabricated quote, emulation notice, independently preserved disagreement; `roster` = sourced/date-scoped profile under `.agents/magi/expert-roster/` |
-| `multi` | Dual-engine baseline actually spawned; the deliberation matrix is the primary artifact (**never collapsed to one averaged verdict**); per-cell concurrence + consistency + attribution; pattern-based final verdict; single-engine influence capped at 50%; debate `<=2` rounds; all-cells-unanimous triggers a DA attacking the matrix pattern |
-
 
 ## Output Requirements
 
@@ -271,7 +258,6 @@ Full handoff-token table with per-direction purposes -> `reference/decision-temp
 - **vs Flux**: Flux = creative reframing and perspective shifting; Magi = structured evaluation and verdict. If deliberation reaches 1-1-1 deadlock, consider routing to Flux for reframing before escalating to human.
 - **vs Void**: Void = questioning whether something should exist; Magi = choosing between options that should exist. Route to Void when "do nothing" emerges as a serious contender.
 - **vs Flux/Spark**: Flux and Spark generate ideas; Magi Founder Mode diagnoses the current bottleneck and may explicitly recommend not building.
-- **vs Magi**: Magi simulates multi-quarter scenarios; Magi Founder Mode works on current state and the next 1-2 weeks.
 - **vs Cast/Echo**: Cast and Echo simulate synthetic people; Magi Expert Mode reconstructs documented reasoning of real named public figures under attestation and ethics constraints.
 
 ## Multi-Engine Mode
