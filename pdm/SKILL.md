@@ -74,7 +74,7 @@ Route elsewhere when the task is primarily:
 - adversarial spec-to-code AC conformance + compliance: `Attest`
 - live task decomposition into <15-min execution steps: `Sherpa`
 - proposing brand-new features: `Spark`
-- strategic business roadmap from market/financial data: `Helm`
+- strategic business roadmap from market/financial data: `Magi`
 - KPI / metric dashboards: `Pulse`
 - visualizing the roadmap/status as a diagram: `Canvas`
 

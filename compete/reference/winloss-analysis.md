@@ -136,7 +136,7 @@ Integration rule: findings that do not flow back into CRM and battle cards are r
 
 - **To Voice**: pull post-purchase satisfaction quotes from existing customers as supporting evidence for "why we win" themes.
 - **To Field**: hand off interview script design, persona validation, and qualitative coding methodology refinement.
-- **To Helm**: when win/loss reveals a structural shift (segment moving, category re-defining), escalate for strategic simulation.
+- **To Magi**: when win/loss reveals a structural shift (segment moving, category re-defining), escalate for strategic simulation.
 - **To Spark**: feature gaps that appear in `3+` loss interviews route as feature ideas with competitive and buyer evidence attached.
 - **To Growth**: positioning, brand-authority, or first-touch trust gaps route to Growth for messaging and SEO/GEO response.
 - **To battle (compete)**: every quarter's themes feed the "why we win / why we lose / objections" sections of battle cards.

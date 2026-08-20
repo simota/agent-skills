@@ -101,7 +101,7 @@ See `_common/MULTI_ENGINE_RECIPE.md §Base Engine Policy` (dual-engine fallback 
 
 **Agents** (parallel branches):
 - `radar` — property-based + edge-case + regression tests
-- `mint` — fixture and data generation (boundary, equivalence-class)
+- `radar` — fixture and data generation (boundary, equivalence-class)
 - `matrix qa-scenario` — manual-equivalent E2E scenarios converted to executable form
 - `voyager` — Playwright / CUA flows for UI surfaces (when `ui_dimension != none`, shared with Layer B)
 - `sentinel` — SAST + security regression oracles
@@ -271,7 +271,7 @@ Phase 1: attest[spec-diff] (+ scribe[unified: spec-amend] if spec changes; + scr
 
 Phase 2A (Layer A — Code Oracles, parallel, engine=agy for Tier-S when AVAILABLE; else Codex with spec-as-ground-truth framing):
   ‖ radar[property+regression]
-  ‖ mint[fixtures]
+  ‖ radar[fixtures]
   ‖ matrix[qa-scenario E2E scenarios]
   ‖ sentinel[SAST + security regression]
   ‖ attest[contract tests]

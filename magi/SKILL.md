@@ -28,6 +28,8 @@ CAPABILITIES_SUMMARY:
 - expert_conclave: Independently reconstruct 2-5 named thinkers and preserve their tensions before optional decision arbitration
 - attested_expert_profiles: Maintain date-scoped, sourced reasoning profiles with ATTESTED / INFERRED / SPECULATIVE labels and ethics gates
 
+- strategic_scenario_simulation: Baseline/optimistic/pessimistic business scenarios, SWOT/PESTLE/Porter/BCG/Ansoff/Blue Ocean lenses, KPI forecasting across horizons, TAM/SAM/SOM sizing, disruption and wargaming analysis — absorbed from `helm` 2026-08-20
+
 COLLABORATION_PATTERNS:
 - Pattern A: Architecture Arbitration (Atlas → Magi → Builder/Scaffold)
 - Pattern C: Strategy Resolution (Scribe[unified] → Magi → Sherpa)
@@ -38,12 +40,12 @@ COLLABORATION_PATTERNS:
 - Pattern I: API Design Arbitration (Gateway → Magi → Gateway) — versioning and design trade-offs
 - Pattern J: Migration Strategy Verdict (Shift → Magi → Shift) — migration approach selection
 - Pattern K: Experiment Interpretation (Experiment → Magi → Experiment) — A/B result Go/No-Go
-- Pattern L: Named-Expert Lens (User/Flux/Riff → Magi[expert] → Magi[decide]/Builder) — attested named-figure viewpoints remain advisory until explicitly arbitrated
-- Pattern M: Founder Office Hours (Helm/Spark/Field → Magi[office-hours] → Builder/Echo[demand]/Sherpa) — current-state evidence becomes one bottleneck and a short commitment set
+- Pattern L: Named-Expert Lens (User/Flux/Flux → Magi[expert] → Magi[decide]/Builder) — attested named-figure viewpoints remain advisory until explicitly arbitrated
+- Pattern M: Founder Office Hours (Magi/Spark/Field → Magi[office-hours] → Builder/Echo[demand]/Sherpa) — current-state evidence becomes one bottleneck and a short commitment set
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User, Nexus, Scribe[unified], Atlas, Flux, Riff, Helm, Spark, Field, Schema, Gateway, Shift, Experiment
-- OUTPUT: Builder/Forge/Artisan, Atlas/Scaffold, Launch, Nexus, Sherpa, Echo[demand], Void, Riff, Scribe/Quill, Schema, Gateway, Shift, Experiment
+- INPUT: User, Nexus, Scribe[unified], Atlas, Flux, Magi, Spark, Field, Schema, Gateway, Shift, Experiment
+- OUTPUT: Builder/Forge/Artisan, Atlas/Scaffold, Launch, Nexus, Sherpa, Echo[demand], Void, Flux, Scribe/Quill, Schema, Gateway, Shift, Experiment
 
 PROJECT_AFFINITY: universal
 -->
@@ -87,8 +89,8 @@ Route elsewhere when the task is primarily:
 - quality assessment or testing: `Radar`
 - creative reframing of a stuck problem (not a decision): `Flux`
 - questioning whether the decision is necessary at all (YAGNI): `Void`
-- open-ended startup brainstorming or feature ideation: `Riff` or `Spark`
-- long-horizon founder scenarios and forecasts: `Helm`
+- open-ended startup brainstorming or feature ideation: `Flux` or `Spark`
+- long-horizon founder scenarios and forecasts: `Magi`
 - synthetic customer personas or end-user simulation: `Cast` or `Echo[demand]`
 
 ## Core Contract
@@ -198,6 +200,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `how would <name> think`, `named expert`, `channel <name>`, `expert lens` | `advisor expert` variant |
 | `panel of thinkers`, `expert conclave`, `compare <name> and <name>` | `advisor conclave` variant |
 | unclear decision request | `decide` (default) |
+| Strategy Simulation | `simulate` |  | Run baseline / optimistic / pessimistic business scenarios | `reference/strategy-simulation/simulation-patterns.md`, `reference/strategy-simulation/scenario-planning-pitfalls.md`, `reference/strategy-simulation/financial-modeling-pitfalls.md` |
 
 ## Subcommand Dispatch
 
@@ -257,8 +260,8 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Collaboration
 
-**Receives:** User (decision, founder-advisory, or named-expert requests), Nexus, Scribe[unified], Atlas, Flux, Riff, Helm, Spark, Field, Schema, Gateway, Shift, Experiment, Void — each as `<AGENT>_TO_MAGI`.
-**Sends:** Builder/Forge/Artisan, Atlas/Scaffold, Launch, Nexus, Sherpa, Echo[demand], Void, Riff, Scribe/Quill, Schema, Gateway, Shift, Experiment — each as `MAGI_TO_<AGENT>`.
+**Receives:** User (decision, founder-advisory, or named-expert requests), Nexus, Scribe[unified], Atlas, Flux, Magi, Spark, Field, Schema, Gateway, Shift, Experiment, Void — each as `<AGENT>_TO_MAGI`.
+**Sends:** Builder/Forge/Artisan, Atlas/Scaffold, Launch, Nexus, Sherpa, Echo[demand], Void, Flux, Scribe/Quill, Schema, Gateway, Shift, Experiment — each as `MAGI_TO_<AGENT>`.
 
 Full handoff-token table with per-direction purposes -> `reference/decision-templates.md`.
 
@@ -267,8 +270,8 @@ Full handoff-token table with per-direction purposes -> `reference/decision-temp
 - **vs Scribe[unified]**: Scribe[unified] = stakeholder alignment and requirements; Magi = decision evaluation and verdict.
 - **vs Flux**: Flux = creative reframing and perspective shifting; Magi = structured evaluation and verdict. If deliberation reaches 1-1-1 deadlock, consider routing to Flux for reframing before escalating to human.
 - **vs Void**: Void = questioning whether something should exist; Magi = choosing between options that should exist. Route to Void when "do nothing" emerges as a serious contender.
-- **vs Riff/Spark**: Riff and Spark generate ideas; Magi Founder Mode diagnoses the current bottleneck and may explicitly recommend not building.
-- **vs Helm**: Helm simulates multi-quarter scenarios; Magi Founder Mode works on current state and the next 1-2 weeks.
+- **vs Flux/Spark**: Flux and Spark generate ideas; Magi Founder Mode diagnoses the current bottleneck and may explicitly recommend not building.
+- **vs Magi**: Magi simulates multi-quarter scenarios; Magi Founder Mode works on current state and the next 1-2 weeks.
 - **vs Cast/Echo**: Cast and Echo simulate synthetic people; Magi Expert Mode reconstructs documented reasoning of real named public figures under attestation and ethics constraints.
 
 ## Multi-Engine Mode
@@ -308,6 +311,7 @@ Mechanics, two-pass clustering states, verdict catalog, engine-attribution tags,
 | `_common/SUBAGENT.md` | Base MULTI_ENGINE protocol — engine dispatch, loose-prompt rules, fan-out mechanics, fallbacks. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the deliberation report, thinking depth at independent evaluation, front-loading at FRAME. Critical: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Magi-specific Output/Next schema. |
+| `reference/strategy-simulation/` | Running business scenario simulation and strategic framework lenses (absorbed from `helm`) |
 
 ---
 

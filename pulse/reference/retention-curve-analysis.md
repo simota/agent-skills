@@ -7,7 +7,7 @@ Purpose: Deep-dive retention curve shape classification, Power User Curve, Quick
 - **pulse `retention`**: Retention curve shape (L / smile / flat), power-user band, Quick Ratio, DAU/MAU (this document).
 - **pulse `cohort` (elsewhere)**: General cohort design and churn measurement. Default entry.
 - **pulse `activation` (elsewhere)**: Activation rate and aha-moment. Activation precedes retention in the funnel.
-- **Bond (elsewhere)**: Retention *strategy* (win-back, habit formation). `retention` owns measurement; Bond owns intervention design.
+- **Growth (elsewhere)**: Retention *strategy* (win-back, habit formation). `retention` owns measurement; Growth owns intervention design.
 
 ## Workflow
 
@@ -30,7 +30,7 @@ DIAGNOSE  →  map shape to pathology (see table below)
           →  prioritize remediation: activation vs engagement vs resurrection
 
 ALERT     →  define drift thresholds for cohort-over-cohort comparison
-          →  handoff to Bond for intervention design
+          →  handoff to Growth for intervention design
 ```
 
 ## Curve Shape Classification
@@ -210,7 +210,7 @@ ORDER BY 1;
 | DAU/MAU drops ≥0.05 over 30 days | Trigger | MEDIUM |
 | Quick Ratio < 1 for 2 consecutive months | Trigger | CRITICAL |
 
-Route CRITICAL alerts to Scout for investigation and Bond for intervention. Route HIGH/MEDIUM to product owner with cohort drill-down.
+Route CRITICAL alerts to Scout for investigation and Growth for intervention. Route HIGH/MEDIUM to product owner with cohort drill-down.
 
 ## Deliverable Contract
 
@@ -223,7 +223,7 @@ When `retention` completes, emit:
 - **DAU/MAU stickiness** ratio.
 - **Cohort drift alerts** with thresholds and severity.
 - **Diagnosis**: activation gap vs engagement gap vs resurrection opportunity.
-- **Handoff targets**: `activation` (activation gap), Bond (re-engagement intervention), Experiment (uplift validation), Scout (anomalous drop).
+- **Handoff targets**: `activation` (activation gap), Growth (re-engagement intervention), Experiment (uplift validation), Scout (anomalous drop).
 
 ## References
 

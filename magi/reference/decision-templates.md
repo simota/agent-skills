@@ -346,7 +346,7 @@ Same structure as the Compact Report Template above, with title `## MAGI Engine 
 
 **Claude (Confidence: 75):** APPROVE GraphQL. Over-fetching is a real performance issue for mobile clients. Schema-first development improves frontend-backend contracts. However, team experience gap is a risk — recommend incremental adoption starting with a single high-traffic endpoint.
 
-**Codex (Confidence: 72):** APPROVE GraphQL. Type safety and introspection reduce integration bugs. Dataloader pattern solves N+1. Tooling ecosystem (Apollo, Relay) is mature. Risk: complexity of authorization in resolvers requires careful design.
+**Codex (Confidence: 72):** APPROVE GraphQL. Type safety and introspection reduce integration bugs. Dataloader pattern solves N+1. Tooling ecosystem (Apollo, Gateway) is mature. Risk: complexity of authorization in resolvers requires careful design.
 
 **agy (Confidence: 68):** REJECT GraphQL. Migration cost for 50+ consumers is significant. REST with OpenAPI spec + response field filtering achieves 80% of the benefit at 20% of the cost. GraphQL adds operational complexity (caching, monitoring, rate limiting). Recommend REST optimization first.
 

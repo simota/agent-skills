@@ -447,8 +447,8 @@ docs/
 | `src/` | Builder, Artisan | Source code | Yes |
 | `tests/` | Radar, Voyager | Test files | Yes |
 | `docs/` | Scribe, Quill, Atlas, Gateway, Canvas | Documentation | Yes |
-| `scripts/` | Anvil, Builder | Helper scripts | Recommended |
-| `tools/` | Anvil | Internal CLI/TUI | Optional |
+| `scripts/` | Builder | Helper scripts | Recommended |
+| `tools/` | Builder | Internal CLI/TUI | Optional |
 | `config/` | Gear | Environment config | Recommended |
 | `infra/` | Scaffold | IaC | Optional |
 | `.github/` | Gear, Guardian | CI/CD | Recommended |

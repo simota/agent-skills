@@ -214,8 +214,8 @@ A completed or mature series is prime material for downstream artifacts. Plan th
 
 | Downstream artifact | How series feeds it | Handoff agent |
 |---------------------|---------------------|---------------|
-| **PDF zine / ebook** | Concatenate + polish + add cover + TOC | Morph (format conversion) |
-| **Zenn Book (paid)** | Restructure as chapters, polish continuity | Self (reformat) + Morph |
+| **PDF zine / ebook** | Concatenate + polish + add cover + TOC | Scribe (format conversion) |
+| **Zenn Book (paid)** | Restructure as chapters, polish continuity | Self (reformat) + Scribe |
 | **Conference talk deck** | Extract thesis + 3-5 strongest episode arcs | Stage (slides) |
 | **Marketing narrative / customer story** | Reshape as product story, not tech retrospective | Saga |
 | **Internal onboarding doc** | Reverse-flow: public series → internal training | Tome |

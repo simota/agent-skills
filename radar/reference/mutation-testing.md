@@ -107,5 +107,5 @@ Operational guidance:
 
 - Program-level strategy, operator tuning at scale, tiered CI design → `Siege`.
 - Survivors that require production-code refactor to be killable → `Zen`.
-- New assertions that require test-data factories → `Mint`.
+- New assertions that require test-data factories → `Radar`.
 - Threshold policy / PR-gate governance → `Guardian`.

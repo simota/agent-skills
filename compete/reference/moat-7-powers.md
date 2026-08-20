@@ -13,7 +13,7 @@ Purpose: Evaluate durable competitive advantage using Hamilton Helmer's 7 Powers
 - **voice (elsewhere)**: customer feedback. Voice surfaces preference; moats explain why preference persists under competitive pressure.
 - **field (elsewhere)**: empirical user research. Field validates customer behavior; moat work analyzes industry structure.
 - **echo `demand`**: synthetic-user assumption challenge. Echo[demand] stress-tests moat claims that lack market evidence.
-- **helm (elsewhere)**: strategic simulation. Helm consumes the moat assessment as input to multi-year scenario planning.
+- **magi (elsewhere)**: strategic simulation. Magi consumes the moat assessment as input to multi-year scenario planning.
 
 ## Workflow
 
@@ -34,7 +34,7 @@ ANTI-MOAT →  flag negative-Power conditions (regulatory, dependence, debt)
           →  estimate erosion rate vs investment needed to defend
 
 REPORT    →  Powers held, Powers absent, anti-moats present, durability score
-          →  hand strategic implications to Helm; tactical implications to battle
+          →  hand strategic implications to Magi; tactical implications to battle
 ```
 
 ## The 7 Powers (Helmer 2016)
@@ -124,7 +124,7 @@ Anti-moat rule: a single anti-moat can neutralize a Power. Score the net moat as
 
 ## Handoff
 
-- **To Helm**: moat assessment is core input to strategic simulation, scenario planning, and multi-year capital allocation. Pass Powers held, gaps, and anti-moats with confidence levels.
+- **To Magi**: moat assessment is core input to strategic simulation, scenario planning, and multi-year capital allocation. Pass Powers held, gaps, and anti-moats with confidence levels.
 - **To Voice**: validate Branding-as-Power claims with willingness-to-pay studies and customer language about trust.
 - **To Field**: design empirical studies to validate Switching Costs (real switching attempts) or Network Economies (utility-vs-userbase curves).
 - **To Spark**: when a Power could be acquired in Origination/Take-Off phase, route the Power-building feature concept as a strategic bet, not a roadmap item.

@@ -431,7 +431,7 @@ Agents that design system architecture and repository structure.
 - **Output**: Folder hierarchy designs, context-efficient layouts, token optimization reports
 - **Trigger**: "LLM folder structure", "optimize for AI tools", "context efficiency", "CLAUDE.md hierarchy"
 
-### Trawl
+### Vector
 - **Role**: Crawl system architect
 - **Input**: Data collection requirements, scale parameters
 - **Output**: Crawl architecture specs, frontier design, compliance subsystem design
@@ -519,7 +519,7 @@ Agents that handle user experience, interface design, persona management, and na
 
 Agents that handle infrastructure, tooling, observability, and developer environment.
 
-### Anvil
+### Builder
 - **Role**: CLI/TUI and developer-environment builder
 - **Input**: CLI requirements, dotfile goals, shell/editor preferences
 - **Output**: CLI tools, terminal UI, zsh/tmux/neovim/ghostty configuration, macOS automation
@@ -592,7 +592,7 @@ Agents that implement growth features.
 - **Output**: SEO improvements, meta tags
 - **Trigger**: "SEO", "OGP", "conversion"
 
-### Bond
+### Growth
 - **Role**: Retention strategist
 - **Input**: Churn data
 - **Output**: Retention features
@@ -683,7 +683,7 @@ Agents that handle data pipelines and transformations.
 - **Output**: Pipeline designs, Kafka/Airflow/dbt configs
 - **Trigger**: "ETL", "data pipeline", "data flow"
 
-### Morph
+### Scribe
 - **Role**: Document converter
 - **Input**: Documents in various formats
 - **Output**: Converted documents (Markdown ↔ Word/Excel/PDF/HTML)
@@ -701,7 +701,7 @@ Agents that handle data pipelines and transformations.
 
 Agents that simulate and plan business strategy, provide domain-specific advisory, or support multi-perspective decision making.
 
-### Helm
+### Magi
 - **Role**: Business strategy simulator
 - **Input**: Financial data, market data, competitor intel, KPIs
 - **Output**: Strategy roadmap, KPI forecast, scenario analysis, risk matrix
@@ -742,7 +742,7 @@ Agents that detect, analyze, and auto-repair runtime issues.
 
 Agents that design messaging integrations, real-time communication, and cross-functional specification alignment.
 
-### Relay
+### Gateway
 - **Role**: Messaging integration & real-time communication specialist
 - **Input**: Messaging platform requirements, channel specifications, bot requirements
 - **Output**: Channel adapters, webhook handlers, WebSocket servers, bot frameworks

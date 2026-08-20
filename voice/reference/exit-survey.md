@@ -22,4 +22,4 @@ Apply the product's privacy, retention, and access controls. Avoid storing unnec
 
 ## Required Output
 
-Report response rate, reason distribution with sample sizes, segment/tenure differences, verbatim themes, save-offer outcomes, missingness, confidence limits, and the distinction between stated and observed causes. Route product themes to Spark, retention mechanisms to Bond, instrumentation gaps to Pulse, and qualitative follow-up to Field.
+Report response rate, reason distribution with sample sizes, segment/tenure differences, verbatim themes, save-offer outcomes, missingness, confidence limits, and the distinction between stated and observed causes. Route product themes to Spark, retention mechanisms to Growth, instrumentation gaps to Pulse, and qualitative follow-up to Field.

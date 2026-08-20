@@ -64,7 +64,7 @@ atelier receives direction from Vision and briefs from the user. atelier sends e
 | atelier → Ink / Builder | `DESIGN_INTENT_HANDOFF` | Visual asset generation |
 | atelier → Stage | `DESIGN_INTENT_HANDOFF` | Slide deck |
 | atelier → Canvas | `DESIGN_INTENT_HANDOFF` | Diagram |
-| atelier → Morph | `DESIGN_INTENT_HANDOFF` | Multi-format export |
+| atelier → Scribe | `DESIGN_INTENT_HANDOFF` | Multi-format export |
 | atelier → Artisan | `DESIGN_INTENT_HANDOFF` | Production implementation |
 | atelier → Vitrine | `DESIGN_INTENT_HANDOFF` | Storybook catalog |
 | atelier → Nexus | `NEXUS_ROUTING` | Escalation for out-of-scope multi-domain work |

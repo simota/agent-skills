@@ -237,7 +237,7 @@ Complete output structure for DEEP mode execution:
 ## 6. 推奨ネクストステップ
 - **意思決定が必要**: → Magi ([specific question])
 - **機能提案に発展**: → Spark ([specific idea])
-- **戦略シミュレーション**: → Helm ([specific scenario])
+- **戦略シミュレーション**: → Magi ([specific scenario])
 - **アーキテクチャ検討**: → Atlas ([specific reconception])
 - **パターン蓄積**: → Lore ([reusable thinking pattern])
 ```

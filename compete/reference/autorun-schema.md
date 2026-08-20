@@ -27,6 +27,6 @@ _STEP_COMPLETE:
       uncommon_competitors: [count of VERIFIED-DIVERGENT competitors surfaced in callout]
       rejected: [count + top categories — hallucination / defunct / category-mismatch / out-of-scope / alias-fold]
   Handoff: "[target agent or N/A]"
-  Next: Spark | Growth | Canvas | Helm | Lore | Field | DONE
+  Next: Spark | Growth | Canvas | Magi | Lore | Field | DONE
   Reason: [Why this next step]
 ```

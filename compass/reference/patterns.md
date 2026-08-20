@@ -14,7 +14,7 @@ User request
   │   ├─ New feature implementation → Builder
   │   ├─ Prototype → Forge
   │   ├─ Frontend → Artisan
-  │   ├─ CLI / TUI → Anvil
+  │   ├─ CLI / TUI → Builder
   │   └─ Mobile (iOS / Android pure-native) → Native
   │
   ├─ Fix code
@@ -75,7 +75,7 @@ User request
       ├─ Browser automation / product image acquisition → Vector
       ├─ i18n → Polyglot
       ├─ SVG icons → Ink
-      └─ Idea generation → Riff
+      └─ Idea generation → Flux
 ```
 
 ---
@@ -211,9 +211,9 @@ A reverse lookup to prevent common mistakes.
 | Technical specifications | Quill | Scribe | Quill is for in-code docs |
 | Production implementation | Forge | Builder | Forge produces prototypes |
 | Web → mobile porting | Native | Port | Native implements; Port produces blueprint and parity matrix |
-| Idea ideation (divergent) | Magi | Riff | Magi advises or decides; Riff is divergent brainstorming |
+| Idea ideation (divergent) | Magi | Flux | Magi advises or decides; Flux is divergent brainstorming |
 | Strategic decision | Magi[advisor] | Magi[decide] | Advisory pressure-testing and a binding verdict are separate Magi Recipes |
-| Long-term scenarios | Magi | Helm | Magi handles a bounded decision; Helm handles quarterly+ scenarios |
+| Long-term scenarios | Magi | Magi | Magi handles a bounded decision; Magi handles quarterly+ scenarios |
 
 When in doubt, ask "Does this skill change code?":
 - Changes code: Builder, Zen, Artisan, Bolt

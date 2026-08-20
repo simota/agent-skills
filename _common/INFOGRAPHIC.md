@@ -154,7 +154,7 @@ Use for chains where Nexus auto-renders visuals downstream.
 | Beacon | `dashboard` | `data-viz-bold` | SLO / error budget / latency |
 | Ledger | `card-grid` | `corporate-clean` | Top-N service costs |
 | Compete | `matrix` | `editorial-magazine` | Competitor × feature matrix |
-| Helm | `timeline` | `corporate-clean` | Strategic roadmap |
+| Magi | `timeline` | `corporate-clean` | Strategic roadmap |
 | Launch | `dashboard` | `corporate-clean` | PR throughput, review time |
 | Schema | `matrix` | `minimalist-iso` | Entity-relationship overview |
 | Voyager | `dashboard` | `data-viz-bold` | E2E run summary |

@@ -161,7 +161,7 @@ Phase 0 failure modes (no candidates, all-ICE-below-threshold, split tie-break, 
 
 | Agent | Role | Required |
 |-------|------|----------|
-| `riff` | Diamond thinking (Expand → Propose → Evaluate → Subtract), max 4 turns | Yes |
+| `flux` | Diamond thinking (Expand → Propose → Evaluate → Subtract), max 4 turns | Yes |
 
 **Exit gate:** ≥2 comparable decision candidates ready for magi.
 
@@ -311,7 +311,7 @@ On any non-ship exit (budget ceiling, Risk-Gate No-Go, attest fail past re-entry
 
 | Sub-hub | Engine | Specialists | Cap |
 |---------|--------|-------------|-----|
-| Nexus (top) | Claude Code (Agent tool) | echo[demand], field, riff, magi, scribe[unified], atlas, vision, orbit, attest, guardian, launch | ≤11 (acceptable; phases serialise most — attest/guardian/launch run sequentially at the tail) |
+| Nexus (top) | Claude Code (Agent tool) | echo[demand], field, flux, magi, scribe[unified], atlas, vision, orbit, attest, guardian, launch | ≤11 (acceptable; phases serialise most — attest/guardian/launch run sequentially at the tail) |
 | Vision (UX sub) | Claude Code (Agent tool) | muse, palette, prose, flow, frame, forge, echo, polyglot, pixel | ≤9 (parallelisable inside) |
 | **Orbit (loop sub)** | **Codex CLI (`spawn_agent`)** — fixed | builder, artisan, vitrine, judge, radar, voyager | ≤6 (loop iterations) |
 
@@ -361,7 +361,7 @@ The run skeleton. Per-phase rosters, conditional agents, and Exit-gate criteria 
 # ── Goal-supplied mode ───────────────────────────────
 Nexus AUTORUN apex goal="<feature description>"
   → Phase 1 Discovery        [parallel] echo[demand] ‖ field ‖ echo?
-  → Phase 2 Ideate           riff(max_turns=4)
+  → Phase 2 Ideate           flux(max_turns=4)
   → Phase 3 Verdict          magi → verdict + ac_seed   [gate: split → human_review]
   → Phase 4 Spec             scribe[unified](scope=auto) → void? / scribe?
   → Phase 5 Design           [parallel:Tech] atlas + gateway? + schema?

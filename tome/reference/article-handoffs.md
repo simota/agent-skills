@@ -1,6 +1,6 @@
 # Handoffs
 
-**Purpose:** Structured handoff templates for incoming sources (User / Tome / Saga / Launch) and outgoing destinations (Growth / Prose / Stage / Canvas / Saga / Morph / Nexus).
+**Purpose:** Structured handoff templates for incoming sources (User / Tome / Saga / Launch) and outgoing destinations (Growth / Prose / Stage / Canvas / Saga / Scribe / Nexus).
 **Read when:** Receiving a handoff at FRAME, or preparing a deliverable handoff at PUBLISH.
 
 ---
@@ -269,14 +269,14 @@ TOME_TO_SAGA_HANDOFF:
 
 ---
 
-### Tome → Morph
+### Tome → Scribe
 
-Morph converts formats (Markdown → PDF / Word / EPUB / HTML). When a series is mature enough to anthologize, Tome hands off to Morph.
+Scribe converts formats (Markdown → PDF / Word / EPUB / HTML). When a series is mature enough to anthologize, Tome hands off to Scribe.
 
-**Handoff format (Tome → Morph):**
+**Handoff format (Tome → Scribe):**
 
 ```yaml
-TOME_TO_MORPH_HANDOFF:
+TOME_TO_SCRIBE_HANDOFF:
   source_articles:
     - [article 1 path]
     - [article 2 path]
@@ -290,7 +290,7 @@ TOME_TO_MORPH_HANDOFF:
   back_matter: [index / bibliography / about-the-author / etc.]
 ```
 
-**Typical case:** Series reaches 15+ episodes; user wants PDF zine for download / paid sale. Tome confirms episode ordering, provides front/back matter text, hands off to Morph for PDF generation.
+**Typical case:** Series reaches 15+ episodes; user wants PDF zine for download / paid sale. Tome confirms episode ordering, provides front/back matter text, hands off to Scribe for PDF generation.
 
 ---
 
@@ -371,7 +371,7 @@ Article deliverable ready
 ├── Has customer-story angle for marketing?
 │   └── → Saga
 ├── Series mature → anthology?
-│   └── → Morph
+│   └── → Scribe
 └── None of the above → publish directly, notify user
 ```
 
@@ -408,6 +408,6 @@ Referenced from `SKILL.md` -> Collaboration.
 │  Stage   → slide deck conversion from long-form             │
 │  Canvas  → diagram/figure requests for article illustrations│
 │  Saga    → narrative reshape to product customer story      │
-│  Morph   → export canonical Markdown to PDF/Word/EPUB zine  │
+│  Scribe   → export canonical Markdown to PDF/Word/EPUB zine  │
 └─────────────────────────────────────────────────────────────┘
 ```

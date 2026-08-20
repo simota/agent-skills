@@ -77,7 +77,7 @@ Probe these in order. Stop early if a manifest fully describes the stack.
 | `terraform/` / `*.tf` | IaC → `scaffold` | dir exists |
 | `prisma/schema.prisma` | DB schema → `schema`, `tuner` | exists |
 | `migrations/` / `db/migrate/` | migrations → `schema`, `shift` | exists |
-| `__tests__/` / `tests/` / `spec/` / `test/` | tests → `radar`, `mint` | exists |
+| `__tests__/` / `tests/` / `spec/` / `test/` | tests → `radar` | exists |
 | `*.stories.*` / `.storybook/` | Storybook → `vitrine` | exists |
 | `playwright.config.*` / `cypress.config.*` | E2E → `voyager` | exists |
 | `.eslintrc*` / `eslint.config.*` | lint config → noted but no skill push | exists |
@@ -109,8 +109,8 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 
 | Trigger | Skills (H) | Skills (M) |
 |---------|------------|------------|
-| Rust | builder, anvil | crypt, siege |
-| Go | builder, anvil | beacon, gateway |
+| Rust | builder, builder | crypt, siege |
+| Go | builder, builder | beacon, gateway |
 | Node + TypeScript backend (Hono, Express, Fastify) | builder, gateway | bolt |
 | Python + Django/Flask/FastAPI | builder, gateway, schema | bolt |
 | Ruby on Rails | builder, gateway, schema | radar |
@@ -122,8 +122,8 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 | Trigger | Skills (H) | Skills (M) |
 |---------|------------|------------|
 | Prisma / Drizzle / TypeORM / SQLAlchemy / ActiveRecord | schema, tuner | shift |
-| Redis / BullMQ / Sidekiq | stream, tempo | beacon |
-| Kafka / RabbitMQ | stream | tempo |
+| Redis / BullMQ / Sidekiq | stream, weave | beacon |
+| Kafka / RabbitMQ | stream | weave |
 | DuckDB / ClickHouse | tuner | seek |
 | Elasticsearch / Meilisearch / Typesense | seek | tuner |
 | pgvector / Pinecone / Weaviate | seek, oracle | claude-api |
@@ -135,7 +135,7 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 | `@anthropic-ai/sdk` / `anthropic` | claude-api, oracle | sentinel |
 | `openai` (no anthropic) | oracle | claude-api |
 | LangChain / LlamaIndex | oracle | claude-api, seek |
-| torch / sklearn / transformers | oracle | mint |
+| torch / sklearn / transformers | oracle | radar |
 
 ### Auth / Security
 
@@ -162,13 +162,13 @@ Apply the following rules. A skill may be triggered by multiple signals; combine
 |---------|------------|------------|
 | OpenAPI / Swagger | gateway, attest | canon |
 | GraphQL (Apollo, urql, codegen) | gateway | bolt |
-| gRPC | gateway | grok |
+| gRPC | gateway | builder |
 
 ### Testing
 
 | Trigger | Skills (H) | Skills (M) |
 |---------|------------|------------|
-| Jest / Vitest / pytest / RSpec | radar | mint |
+| Jest / Vitest / pytest / RSpec | radar | radar |
 | Playwright / Cypress / WebdriverIO | voyager | radar |
 | Storybook | vitrine | radar |
 | k6 / Artillery / Gatling | siege | beacon |
@@ -247,7 +247,7 @@ find . -type f \
 
 Always recorded in the `universal_skills` array regardless of signals:
 
-`scout`, `judge`, `zen`, `builder`, `scribe`, `sherpa`, `void`, `magi`, `riff`, `architect`, `nexus`
+`scout`, `judge`, `zen`, `builder`, `scribe`, `sherpa`, `void`, `magi`, `flux`, `architect`, `nexus`
 
 These cover universal tasks (debug, review, refactor, build, doc, planning, removal, decision, brainstorm, ideation, meta-design, orchestration). They do not consume `top_n` slots.
 

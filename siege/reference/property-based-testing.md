@@ -6,7 +6,7 @@ Purpose: Use this file to design property-based tests that validate invariants a
 
 - **Siege `property`**: invariant design, generator authoring, shrinking tuning, stateful / model-based properties. Produces properties that run in the normal unit-test suite or a dedicated nightly job.
 - **Radar (elsewhere)**: example-based unit tests, edge-case tests discovered by hand, coverage improvement on normal tests. If the ask is "add tests that exercise line X," route to Radar.
-- **Mint (elsewhere)**: realistic factory data for integration tests, seed datasets, fixtures. Property-based generators and Mint factories can share shapes but serve different purposes (generators explore; factories represent).
+- **Radar (elsewhere)**: realistic factory data for integration tests, seed datasets, fixtures. Property-based generators and Radar factories can share shapes but serve different purposes (generators explore; factories represent).
 - **Siege `fuzz` (sibling)**: byte-level coverage-guided fuzzing of parsers and native code. Property testing is structured, generator-driven, and fast; fuzzing is bytes-driven and long-running.
 - **Attest (elsewhere)**: spec conformance verification. A property-based test states "for all inputs X, output satisfies P"; a conformance test states "for this AC, this scenario passes." They complement but do not replace each other.
 
@@ -153,8 +153,8 @@ Rules:
 **To Builder:**
 - Bugs the properties found — minimized reproducer plus the violated invariant statement.
 
-**To Mint:**
-- Generators that describe valid domain objects; Mint may reuse the shape for realistic factory output.
+**To Radar:**
+- Generators that describe valid domain objects; Radar may reuse the shape for realistic factory output.
 
 **To Siege `fuzz` (sibling):**
 - If properties time out on structured inputs, fuzz the underlying parser directly for deeper coverage.

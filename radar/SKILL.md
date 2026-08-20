@@ -16,6 +16,8 @@ CAPABILITIES_SUMMARY:
 - integration_test_design: Design integration test architecture with Testcontainers (DB/Redis/Kafka), WireMock/MSW HTTP stubbing, contract-at-boundary, and DB fixture strategy (transaction rollback vs truncate vs per-test DB)
 - mutation_test_recipe: Run Stryker (JS/TS), PIT (Java), mutmut (Python), cargo-mutants (Rust) to measure test-suite effectiveness, triage equivalent mutants, and wire mutation-score thresholds into CI
 
+- test_data_and_fixtures: Factories (factory_bot / Fishery / faker), boundary and property-based generators, FK-consistent fixtures, idempotent seeds, snapshots — absorbed from `mint` 2026-08-20
+
 COLLABORATION_PATTERNS:
 - Scout -> Radar: Bug reports needing regression tests
 - Builder -> Radar: Implementation needing test coverage
@@ -148,6 +150,7 @@ Load only the "Read First" files at the initial step. Full behavior detail -> `r
 | Unit Test Design | `unit` | | Design unit-test architecture from scratch across the major runners | Enforce AAA, pick the right test double (**fake > stub > mock > spy** in that order), isolate at the unit boundary, keep tests deterministic (no clock, network, or filesystem without injection). Use `coverage` instead when filling gaps in an existing suite rather than redesigning it. | `reference/unit-testing.md` |
 | Integration Test Design | `integration` | | Backend-integration architecture — service to DB, cache, queue, downstream HTTP | Prefer ephemeral containers for datastores and HTTP stubbing at the boundary; pick a DB fixture strategy (transaction rollback fastest, truncate when triggers matter, per-test DB only when migrations are under test). Browser-level E2E routes to Voyager. | `reference/integration-testing.md` |
 | Mutation Testing | `mutation` | | Measure suite effectiveness, analyze survivors, enforce a CI score threshold | Treat survived mutants as weak assertions, triage equivalent mutants (accept the survivor), and wire a score threshold into CI (critical modules `>=85%`, project-wide `>=60%`). Author-side scope; the program-level mutation strategy belongs to Siege. | `reference/mutation-testing.md` |
+| Test Data & Fixtures | `fixtures` |  | Design factories, boundary data, and seed sets for a suite | Type-safe factories matching the project schema, FK-consistent relations, idempotent seeds. Boundary values reuse the `edge` analysis; mask production data before reuse. | `reference/test-data/factory-patterns.md`, `reference/test-data/boundary-values.md`, `reference/test-data/seed-management.md` |
 
 ## Subcommand Dispatch
 
@@ -285,6 +288,7 @@ Mode-specific additions:
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Radar-specific Output/Next schema. |
 | `_common/CODE_QUALITY.md` | About to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
 | `_common/EVIDENCE_LADDER.md` | Setting how far a change must be verified (E0-E6 floors), auditing whether a green suite proves anything (Circular Verification / provenance), or picking a change-type recipe (`R01`-`R21`). |
+| `reference/test-data/` | Designing factories, boundary data, and seed sets (absorbed from `mint`) |
 
 ## Operational
 

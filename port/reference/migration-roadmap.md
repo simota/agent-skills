@@ -89,7 +89,7 @@ Exit criteria:
 - Store rating ≥ 4.0 (or unchanged from web baseline).
 - Customer support ticket rate not elevated vs web baseline.
 
-Owner agents: `Native`, `Voyager`, `Launch`, `Voice` (feedback), `Bond` (engagement triage).
+Owner agents: `Native`, `Voyager`, `Launch`, `Voice` (feedback), `Growth` (engagement triage).
 
 ---
 

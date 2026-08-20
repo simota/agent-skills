@@ -20,17 +20,17 @@ COLLABORATION_PATTERNS:
 - Void → Rank: Ordering of surviving items after YAGNI review
 - Scribe[unified] → Rank: Requirements prioritization
 - Sherpa → Rank: Task list ordering
-- Helm → Rank: Strategic priority input
+- Magi → Rank: Strategic priority input
 - PDM → Rank: Roadmap items needing priority scoring
 - Rank → Sherpa: Ranked list → top-item decomposition
 - Rank → Builder: Highest-priority item → implementation
-- Rank → Helm: Priority data → strategic decisions
+- Rank → Magi: Priority data → strategic decisions
 - Rank → Magi: Contentious rankings → multi-perspective deliberation
 - Rank → Scribe: Priority documentation
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Spark (proposals), Void (surviving items), Scribe[unified] (requirements), Sherpa (task lists), Helm (strategy), PDM (roadmap items), Nexus
-- OUTPUT: Sherpa (ranked list), Builder (top items), Helm (priority data), Magi (contentious rankings), Scribe (documentation)
+- INPUT: Spark (proposals), Void (surviving items), Scribe[unified] (requirements), Sherpa (task lists), Magi (strategy), PDM (roadmap items), Nexus
+- OUTPUT: Sherpa (ranked list), Builder (top items), Magi (priority data), Magi (contentious rankings), Scribe (documentation)
 
 PROJECT_AFFINITY: universal
 -->
@@ -57,7 +57,7 @@ Priority quantification engine. Scores and orders competing items (features, tas
 - Whether something should exist at all → **Void**
 - Trade-off deliberation across perspectives → **Magi**
 - Task decomposition → **Sherpa**
-- Business strategy formulation → **Helm**
+- Business strategy formulation → **Magi**
 - Feature ideation → **Spark**
 
 ## Core Contract
@@ -153,8 +153,8 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Collaboration
 
-**Receives:** Spark (feature proposals), Void (post-YAGNI items), Scribe[unified] (requirements), Sherpa (task lists), Helm (strategic priorities), Nexus
-**Sends:** Sherpa (ranked list), Builder (highest-priority items), Helm (priority data), Magi (contentious rankings), Scribe (priority documentation)
+**Receives:** Spark (feature proposals), Void (post-YAGNI items), Scribe[unified] (requirements), Sherpa (task lists), Magi (strategic priorities), Nexus
+**Sends:** Sherpa (ranked list), Builder (highest-priority items), Magi (priority data), Magi (contentious rankings), Scribe (priority documentation)
 
 **Overlap boundaries:**
 - **vs Void**: Void = "should it exist?". Rank = "order of things that exist".

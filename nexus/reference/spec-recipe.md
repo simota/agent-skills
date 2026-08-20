@@ -40,7 +40,7 @@ Establish the shared problem statement **before** any option generation. Echo[de
 - **Draft init:** on problem-statement confirmation, write the initial `docs/specs/<slug>.draft.md` (status `draft`, L0 Vision + reuse/constraint findings filled). See **Draft persistence & resume**.
 
 ### Phase 1 — EXPAND (diverge)
-Generate the option space. Riff[claude Expand/Propose modes — iterative dialogue] ‖ Flux[claude challenge-assumptions / cross-domain reframes]. Produce **3-5 candidate directions**, each with a one-line rationale and rough shape. +Compete[claude+WebSearch] when market/differentiation framing matters.
+Generate the option space. Flux[claude Expand/Propose modes — iterative dialogue] ‖ Flux[claude challenge-assumptions / cross-domain reframes]. Produce **3-5 candidate directions**, each with a one-line rationale and rough shape. +Compete[claude+WebSearch] when market/differentiation framing matters.
 - **Checkpoint:** present the candidates; the user reacts, eliminates, combines, or adds. Expect **multiple turns** here — this is the divergent heart of the dialogue. Do not converge prematurely. On checkpoint pass, append the surviving candidates to the draft.
 
 ### Phase 2 — CHALLENGE (stress-test + converge)
@@ -146,7 +146,7 @@ The L1↔L3 traceability (every requirement has an AC; every AC maps to a requir
 - **vs `feature` / `apex` / `orbit`** — those *build code*. `spec` stops at the spec and, at the LOCK build-path checkpoint, hands off to one of them. (`apex` does its own lightweight discovery→spec inline and ships in one bounded run; `orbit` turns the locked spec's L3 ACs into a `nexus-autoloop` completion contract for unattended/resumable building; choose `spec` when the user wants to **deliberate the spec in conversation** and stop there, then `orbit` for a self-driving loop or `apex` for a single present run.)
 - **vs `charter`** — `charter` reads a *whole repository* and produces a team-design document; `spec` takes *one feature idea* and produces *one feature spec* through dialogue.
 - **vs `converge`** — `converge` is an *automated* generator-evaluator grading loop (machine rubric); `spec` is *human* dialogue with no automated grader.
-- **vs `riff` (agent)** — `riff` is a single-agent brainstorm with no finalized artifact; `spec` orchestrates Riff + Flux + Magi + Void + Spark + Scribe[unified] into a signed-off spec, with the user steering throughout.
+- **vs `flux` (agent)** — `flux` is a single-agent brainstorm with no finalized artifact; `spec` orchestrates Flux + Flux + Magi + Void + Spark + Scribe[unified] into a signed-off spec, with the user steering throughout.
 - **vs `scribe[unified]` / `scribe` (agents)** — those *author* spec documents; `spec` drives the upstream discovery dialogue that decides *what* to specify, then uses them in Phase 4.
 
 ## Scale
@@ -184,7 +184,7 @@ The L1↔L3 traceability (every requirement has an AC; every AC maps to a requir
 +Lens (reuse-scan + constraint grounding in FRAME on an existing codebase; skip greenfield), +Field (real user-research grounding in FRAME), +Compete (market/differentiation framing in EXPAND), +Cast (persona grounding when the audience is unclear), +Rank (MoSCoW ordering of sub-features in SHAPE), +Omen (pre-mortem before LOCK on high-stakes specs), +Echo (usability sanity-pass when there is a UI surface), +Gateway/Schema (API/data-model detail in SPECIFY), +Judge (spec-as-artifact adversarial review in the Spec Quality Gate).
 
 ## Chain template
-`FRAME (Echo[demand] +Field?/Cast? +Lens?[reuse-scan/constraints] + ✓depth-mode + Socratic dialogue) → ✓confirm-problem + draft-init → EXPAND (Riff ‖ Flux +Compete?) → ✓steer + draft → CHALLENGE (Magi + Void + Ripple +Omen?) → ✓pick + convergence-check + draft → SHAPE (Spark +Rank?) → ✓edit + draft → SPECIFY (Scribe[unified] +Scribe?/Gateway?/Schema? +Attest? +Echo?) → ✓iterate + draft → LOCK (✓quality-gate: Judge +Attest +Magi? → ✓refutation-panel: 2-3 skeptics [skipped at depth=light] → ✓sign-off → promote draft to docs/specs/<slug>.md → ✓build-path: orbit loop (✓engine: claude|codex|agy) ‖ apex (fallbacks: feature|acceptance|essential|killer) → emit Spec Handoff Packet) [NO CODE]`
+`FRAME (Echo[demand] +Field?/Cast? +Lens?[reuse-scan/constraints] + ✓depth-mode + Socratic dialogue) → ✓confirm-problem + draft-init → EXPAND (Flux ‖ Flux +Compete?) → ✓steer + draft → CHALLENGE (Magi + Void + Ripple +Omen?) → ✓pick + convergence-check + draft → SHAPE (Spark +Rank?) → ✓edit + draft → SPECIFY (Scribe[unified] +Scribe?/Gateway?/Schema? +Attest? +Echo?) → ✓iterate + draft → LOCK (✓quality-gate: Judge +Attest +Magi? → ✓refutation-panel: 2-3 skeptics [skipped at depth=light] → ✓sign-off → promote draft to docs/specs/<slug>.md → ✓build-path: orbit loop (✓engine: claude|codex|agy) ‖ apex (fallbacks: feature|acceptance|essential|killer) → emit Spec Handoff Packet) [NO CODE]`
 
 Gate content is not restated here — the six Quality-Gate dimensions live in § Spec Quality Gate, the panel's polarity + four load-bearing claims in § Pre-lock refutation panel, and the mandatory traceable L3 ACs in Phase 4 SPECIFY.
 

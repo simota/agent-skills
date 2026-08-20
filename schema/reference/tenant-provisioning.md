@@ -9,7 +9,7 @@ Purpose: Tenant onboarding, lifecycle management, and deprovisioning. Treats pro
 - **Schema `tenant mode=migration` (elsewhere)**: moving an *existing* tenant between shards. Provisioning creates new tenants; migration relocates them.
 - **schema (elsewhere)**: DB schema and migration DDL. Provisioning runs schema migrations as a step but does not author them.
 - **scaffold (elsewhere)**: cloud IaC for shared infra (VPC, clusters). Provisioning generates *per-tenant* IaC (DB, schema, KMS key) on top.
-- **tempo (elsewhere)**: scheduled retention sweeps and grace-period timers. Provisioning specifies the retention contract; Tempo schedules its enforcement.
+- **weave (elsewhere)**: scheduled retention sweeps and grace-period timers. Provisioning specifies the retention contract; Weave schedules its enforcement.
 - **canon[regulatory] / cloak (elsewhere)**: GDPR/CCPA legal contract for data retention. Provisioning implements the technical erasure; Canon[regulatory]/Cloak owns the policy.
 
 ## Workflow
@@ -151,7 +151,7 @@ per-tenant state: terraform-state/tenants/<tenant_id>.tfstate
 
 - **To Schema**: DDL for tenant-specific objects (per-tenant schema, indexes, RLS policy attach) — Schema authors and runs.
 - **To Scaffold**: shared infra IaC (cluster, VPC, baseline KMS) that per-tenant IaC builds on.
-- **To Tempo**: scheduled jobs for grace-period expiry, retention sweeps, archived-to-erased transitions.
+- **To Weave**: scheduled jobs for grace-period expiry, retention sweeps, archived-to-erased transitions.
 - **To Beacon**: provisioning SLO (success rate, P95 latency, time-to-active), per-tenant activation funnel.
 - **To Ledger**: tenant unit-cost line items, plan-tier mapping, metering start/stop events.
 - **To Canon[regulatory] / Cloak**: retention contract, erasure proof artifact format, GDPR Article 17 compliance evidence.

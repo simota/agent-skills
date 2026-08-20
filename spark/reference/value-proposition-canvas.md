@@ -25,4 +25,4 @@ Also include the source JTBD, unmatched top needs, unsupported offering elements
 - Missing customer evidence -> Field or Voice.
 - Unmatched offering scope -> Void.
 - Adoption validation -> Experiment.
-- Business-model economics -> Helm.
+- Business-model economics -> Magi.

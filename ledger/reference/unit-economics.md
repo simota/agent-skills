@@ -8,7 +8,7 @@ Purpose: Attribute cloud cost per unit — per customer, per tenant, per transac
 - **ledger `tagging` (elsewhere)**: Tag taxonomy that enables unit economics.
 - **ledger `estimate` (elsewhere)**: Pre-change cost diff.
 - **ledger `finops-framework` (elsewhere)**: Parent capability domain.
-- **Helm (elsewhere)**: Business-level forecasting.
+- **Magi (elsewhere)**: Business-level forecasting.
 - **Pulse (elsewhere)**: KPI definitions that unit economics ties to.
 
 ## Why Unit Economics
@@ -168,7 +168,7 @@ RECOMMEND   →  pricing adjustments
             →  optimization targets (where to reduce COGS)
             →  kill-candidates (features / tiers below contribution margin)
 
-HANDOFF     →  Helm: business-level forecast
+HANDOFF     →  Magi: business-level forecast
             →  Pulse: usage metrics required
             →  Launch: pricing changes
             →  Tagging: missing tags for better attribution
@@ -226,7 +226,7 @@ HANDOFF     →  Helm: business-level forecast
 - Needed tags: [list → handoff to `tagging`]
 
 ### Handoffs
-- Helm: business forecast update
+- Magi: business forecast update
 - Pulse: usage metrics required
 - Launch: pricing change rollout
 - Tagging: coverage gaps
@@ -259,7 +259,7 @@ When `unit-economics` completes, emit:
 - **Outlier identification** (whales, unprofitable segments, features).
 - **Recommendations** (pricing, reduction targets, kill-candidates).
 - **Attribution gaps** report.
-- **Handoffs**: Helm, Pulse, Launch, Tagging, Scribe.
+- **Handoffs**: Magi, Pulse, Launch, Tagging, Scribe.
 
 ## References
 

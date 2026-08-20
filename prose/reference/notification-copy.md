@@ -7,8 +7,8 @@ Purpose: Design push, email, in-app, and SMS notification copy with channel-spec
 - **prose `notification`**: Channel-specific notification copy (this document).
 - **prose `microcopy` (elsewhere)**: Static UI copy. Notifications are transactional/triggered.
 - **prose `errors` (elsewhere)**: Failure messages inside the UI. Notifications can be error-adjacent (e.g., "payment failed") but use the notification format.
-- **relay (elsewhere)**: Messaging integration and delivery infrastructure. Prose owns copy; relay owns transport.
-- **Bond (elsewhere)**: Re-engagement campaign *strategy*. Prose writes the copy; Bond decides who/when/what.
+- **gateway (elsewhere)**: Messaging integration and delivery infrastructure. Prose owns copy; gateway owns transport.
+- **Growth (elsewhere)**: Re-engagement campaign *strategy*. Prose writes the copy; Growth decides who/when/what.
 
 ## Channel Length Budgets
 
@@ -199,10 +199,10 @@ Missing deeplink = tap drops user in home screen = low CTR.
 - [ ] Regional compliance (TCPA, CAN-SPAM, GDPR, CASL)
 
 ### Handoffs
-- relay (delivery infrastructure)
+- gateway (delivery infrastructure)
 - Polyglot (i18n)
 - Pulse (open / CTR measurement)
-- Bond (campaign strategy)
+- Growth (campaign strategy)
 - Cloak / Canon[regulatory] (regulated channels)
 ```
 
@@ -231,7 +231,7 @@ When `notification` completes, emit:
 - **Tone alignment** with voice framework.
 - **Telemetry plan** (Pulse events).
 - **Compliance checklist** (opt-in / opt-out / quiet hours / regional law).
-- **Handoffs**: relay, Polyglot, Pulse, Bond, Cloak/Canon[regulatory].
+- **Handoffs**: gateway, Polyglot, Pulse, Growth, Cloak/Canon[regulatory].
 
 ## References
 

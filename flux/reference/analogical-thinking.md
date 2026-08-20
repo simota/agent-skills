@@ -10,7 +10,7 @@ Purpose: Disciplined cross-domain analogy generation grounded in Dedre Gentner's
 - **flux `scamper`**: intra-artifact modification. Lens A (Adapt) is shallow analogy; `analogy` is the deep version.
 - **flux `challenge`**: assumption reversal. Use first if the source domain itself encodes hidden assumptions.
 - **flux `inversion`**: invert-the-goal. Inversion asks "what guarantees failure"; analogy asks "what shape solved it elsewhere".
-- **riff (elsewhere)**: iterative dialogue. Analogy is a single mapping pass; Riff can develop one analogy across turns.
+- **flux (elsewhere)**: iterative dialogue. Analogy is a single mapping pass; Flux can develop one analogy across turns.
 - **field (elsewhere)**: empirical validation. Analogies predict; research confirms transferability.
 
 ## Workflow
@@ -95,7 +95,7 @@ Innovation research (Gentner; cross-industry studies of financial-services later
 - **To Spark**: high-transferability mappings as feature concept candidates.
 - **To Atlas**: structural patterns that map to architecture decisions (hub-and-spoke, succession, mycorrhiza).
 - **To Magi**: when multiple analogies suggest competing actions — decision needed.
-- **To Riff**: when one analogy looks promising but the mapping is incomplete — iterate.
+- **To Flux**: when one analogy looks promising but the mapping is incomplete — iterate.
 - **To Omen**: breakdown points as failure-mode candidates for pre-mortem.
 - **To `inversion`**: when the analogy suggests a path, run inversion on that path to surface failure modes.
 - **To Field**: high-novelty far analogies needing empirical validation before commitment.

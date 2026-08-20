@@ -308,7 +308,7 @@ HANDOFF     →  Builder: step body implementation
 - After: [teardown + screenshot on failure]
 
 ### Data Strategy
-- Fixtures from: [Mint / factory / fixtures.json]
+- Fixtures from: [Radar / factory / fixtures.json]
 - Cleanup: [transaction rollback / explicit teardown]
 
 ### CI Integration

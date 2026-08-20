@@ -7,7 +7,7 @@ Purpose: Design and audit `tests/` (and co-located test) layouts across unit, in
 - **grove `tests`**: filesystem layout for tests — directory split, mirror vs centralized, fixtures/factories/helpers placement, file naming. Layout-only.
 - **grove `audit` / `design` / `docs` / `migrate` (default + siblings)**: structural audit, generic directory design, docs/, level-based migration. Use these when the focus is not specifically the test tree.
 - **grove `monorepo` / `scripts` (siblings)**: workspace-level layout and scripts/ layout — Grove `tests` is invoked per-package within those.
-- **Mint (elsewhere)**: factory and fixture content authoring (boundary-value data, synthetic data). Grove `tests` decides where they live; Mint decides what they generate.
+- **Radar (elsewhere)**: factory and fixture content authoring (boundary-value data, synthetic data). Grove `tests` decides where they live; Radar decides what they generate.
 - **Radar (elsewhere)**: test additions for coverage gaps and edge cases. Grove `tests` decides directory; Radar fills it with cases.
 - **Voyager (elsewhere)**: E2E test implementation (Playwright/Cypress page objects). Grove `tests` decides `e2e/` location; Voyager owns the test code.
 - **Grove[llm] (elsewhere)**: LLM-context retrieval ordering of the test tree. Grove `tests` ships the layout; Grove[llm] tunes it for context windows.
@@ -30,7 +30,7 @@ VERIFY  →  test runner discovers all files, no orphan helpers, fixtures resolv
         →  CI tier-split (unit-fast / integration-medium / e2e-slow) maps to directories
 
 PRESENT →  layout diagram, naming rules, migration steps for legacy tests
-        →  hand off content to Mint / Radar / Voyager
+        →  hand off content to Radar / Radar / Voyager
 ```
 
 ## Test Taxonomy
@@ -67,7 +67,7 @@ tests/
   fixtures/                # static JSON/YAML/SQL seed data
     users.json
     orders.sql
-  factories/               # programmatic builders (Mint owns content)
+  factories/               # programmatic builders (Radar owns content)
     user.factory.ts
     order.factory.ts
   helpers/                 # shared test utilities (db setup, http client, time freeze)
@@ -119,7 +119,7 @@ Layout must make this trivial: `vitest tests/unit` vs `vitest tests/integration`
 
 ## Handoff
 
-- **To Mint**: factory file paths defined by Grove become Mint targets — Mint authors `user.factory.ts` content (boundary values, synthetic data).
+- **To Radar**: factory file paths defined by Grove become Radar targets — Radar authors `user.factory.ts` content (boundary values, synthetic data).
 - **To Radar**: directory and naming rules become Radar's placement template when adding edge-case tests or fixing flakies.
 - **To Voyager**: `tests/e2e/` location becomes the Voyager working tree for Playwright/Cypress page objects and journey tests.
 - **To Grove[llm]**: once layout is stable, Grove[llm] can reorder helpers/fixtures for context-cache efficiency (e.g., README ordering, manifest hoisting).

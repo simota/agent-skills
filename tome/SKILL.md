@@ -40,11 +40,11 @@ COLLABORATION_PATTERNS:
 - Tome -> Cue: Demo narration scripts derived from change analysis
 - Tome -> Growth: Publishable article plus SEO/SMO/OGP seed metadata
 - Tome -> Stage: Article narrative beats for slide conversion
-- Tome -> Morph: Mature article series for PDF, Word, or EPUB export
+- Tome -> Scribe: Mature article series for PDF, Word, or EPUB export
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User (change specification), Trail (git investigation), Launch (PR info), Lens (code investigation), Scout (bug investigation)
-- OUTPUT: Quill (inline docs), Scribe (spec promotion), Canvas (visualization), Lore (knowledge catalog), Cue (demo scripts), Growth (publication packaging), Stage (slides), Morph (format export)
+- OUTPUT: Quill (inline docs), Scribe (spec promotion), Canvas (visualization), Lore (knowledge catalog), Cue (demo scripts), Growth (publication packaging), Stage (slides), Scribe (format export)
 
 PROJECT_AFFINITY: SaaS(H) Dashboard(H) Game(H) E-commerce(H) Marketing(M)
 -->
@@ -366,7 +366,7 @@ Concept, draft, transcript, or learning document → publishable external articl
 
 **Receives from:** User (change specification), Trail (git investigation), Launch (PR info), Lens (code investigation), Scout (bug investigation).
 
-**Sends to:** Quill (inline docs), Scribe (spec promotion), Canvas (visualization + knowledge graph), Lore (knowledge patterns), Cue (demo narration scripts), Growth (SEO/SMO/OGP), Stage (slide conversion), Morph (format export).
+**Sends to:** Quill (inline docs), Scribe (spec promotion), Canvas (visualization + knowledge graph), Lore (knowledge patterns), Cue (demo narration scripts), Growth (SEO/SMO/OGP), Stage (slide conversion), Scribe (format export).
 
 ### Collaboration Patterns
 
@@ -382,7 +382,7 @@ Concept, draft, transcript, or learning document → publishable external articl
 | **Learning-to-Article** | Tome learning mode → Tome publication mode | Reshape verified technical knowledge for an external audience without changing claims |
 | **Article-to-Growth** | Tome → Growth | Hand off canonical article, title candidates, meta description, and H-tag outline |
 | **Article-to-Slides** | Tome → Stage | Convert the article arc into one narrative beat per slide |
-| **Series-to-Artifact** | Tome → Morph | Export a mature series to PDF, Word, or EPUB |
+| **Series-to-Artifact** | Tome → Scribe | Export a mature series to PDF, Word, or EPUB |
 
 All handoff templates → `reference/handoffs.md`
 
@@ -405,7 +405,7 @@ All handoff templates → `reference/handoffs.md`
 | `reference/article-series-management.md` | You are designing or updating an article series, index, cross-links, cadence, or series bible. |
 | `reference/article-content-repurposing.md` | You are adapting a canonical article into platform variants or atomic assets. |
 | `reference/article-interview-format.md` | You are reshaping a transcript, podcast, talk, or AMA into a Q&A article. |
-| `reference/article-handoffs.md` | You need publication handoffs to Growth, Prose, Stage, Canvas, Saga, or Morph. |
+| `reference/article-handoffs.md` | You need publication handoffs to Growth, Prose, Stage, Canvas, Saga, or Scribe. |
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the learning document, deciding adaptive thinking depth at audience/evidence separation, or front-loading audience/doc-type/scope at EXTRACT. Critical for Tome: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Tome-specific Output/Next schema. |
 

@@ -321,7 +321,7 @@ Key cost levers (most to least effective):
 Results benchmark (CNCF case study):
   - 72% cost reduction vs previous vendor
   - 100% APM trace coverage (was 5% sampling)
-  - Enabled by: OTel Collector + open-source backends (Loki, Tempo, Mimir)
+  - Enabled by: OTel Collector + open-source backends (Loki, Weave, Mimir)
 
 Observability budget framework:
   - Set per-team telemetry budget (GB/day or cost/month)
@@ -615,6 +615,6 @@ Scrape interval optimization:
 
 - Evaluate OTel Profiles (continuous profiling) as the 4th observability pillar during the DESIGN phase. Profiles entered public Alpha in March 2026 with eBPF-based whole-system profiling (donated by Elastic); include profiling assessment for latency-sensitive services but mark as experimental in implementation specs until the signal reaches stable status.
 
-- **Standardise continuous profiling on Pyroscope 2.0 / Parca for production-scale.** Pyroscope 2.0 ingests 19.5 PB/year at Grafana with 95% symbol-storage reduction via write-once symbols; Parca offers the same continuous-profiling primitives under a CNCF-incubating posture. Add continuous profiling as the third pillar alongside metrics (Prometheus / Mimir) and traces (Tempo / Jaeger) — flame graphs over time make the "slow in production only" class of bugs observable. Coordinate with `siege` (concurrency recipe) for memory-leak handoffs (temporal flame graphs) and with `bolt` for CPU hotspot remediation. [Source: grafana.com/blog/pyroscope-2-0-release/; parca.dev]
+- **Standardise continuous profiling on Pyroscope 2.0 / Parca for production-scale.** Pyroscope 2.0 ingests 19.5 PB/year at Grafana with 95% symbol-storage reduction via write-once symbols; Parca offers the same continuous-profiling primitives under a CNCF-incubating posture. Add continuous profiling as the third pillar alongside metrics (Prometheus / Mimir) and traces (Weave / Jaeger) — flame graphs over time make the "slow in production only" class of bugs observable. Coordinate with `siege` (concurrency recipe) for memory-leak handoffs (temporal flame graphs) and with `bolt` for CPU hotspot remediation. [Source: grafana.com/blog/pyroscope-2-0-release/; parca.dev]
 
 - **Wire flame-graph temporal-window analysis** into the leak-detection runbook. `memray` (Python) emits temporal flame graphs that isolate "allocations made inside a window that remain unfreed at the window's end" — the canonical leak signature, not "high allocation rate". Same primitive in `jemalloc heap profiling`, Pyroscope 2.0, and Parca. Surface continuous-profiling burn-rate alerts (allocation rate × retention rate) alongside latency / error burn rates. [Source: bloomberg.github.io/memray/temporal-flame-graphs.html]

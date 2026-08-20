@@ -110,7 +110,7 @@ Sources: [YouTube Shorts 3-min limit (support.google.com)](https://support.googl
 | Zoom in | Focusing on detail | Emphasis |
 | Zoom out | Revealing context | Discovery |
 | Slide left/right | Sequential steps | Progress |
-| Morph | Before/after comparison | Transformation |
+| Scribe | Before/after comparison | Transformation |
 | Fade to black | Section break | Pause |
 
 ## CTA Patterns

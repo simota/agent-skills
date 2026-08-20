@@ -202,7 +202,7 @@ PERSONA PIN     →  one persona per segment cluster
 HANDOFF         →  Field: validate via interviews
                 →  Echo: walkthrough with segment-consistent reactions
                 →  Spark: feature priority by behavioral segment
-                →  Bond: lifecycle by RFM
+                →  Growth: lifecycle by RFM
                 →  Pulse: track segment KPIs
 ```
 
@@ -264,7 +264,7 @@ P-001:
 - Field: validate top-3 segments via interviews (n=5 each)
 - Echo: walkthrough scripts per segment
 - Spark: feature priorities by behavioral cluster
-- Bond: lifecycle messaging by RFM tier
+- Growth: lifecycle messaging by RFM tier
 - Pulse: segment-conditioned KPI dashboards
 ```
 
@@ -297,7 +297,7 @@ When `segment` completes, emit:
 - **Psychographic profiles** (if survey).
 - **Per-persona segment tag** with multi-lens fields.
 - **Sample size + reliability** validation.
-- **Handoffs**: Field, Echo, Spark, Bond, Pulse.
+- **Handoffs**: Field, Echo, Spark, Growth, Pulse.
 
 ## Framework Notes (as of 2026-05)
 

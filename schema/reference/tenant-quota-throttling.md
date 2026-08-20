@@ -9,7 +9,7 @@ Purpose: Per-tenant rate limits, fair-share scheduling, and noisy-neighbor mitig
 - **Schema `tenant mode=provisioning` (elsewhere)**: setting plan-tier limits at tenant creation. Quota enforces those limits at runtime.
 - **Schema `tenant mode=migration` (elsewhere)**: relocating tenants. Migration may be triggered when quota signals chronic noisy-neighbor pressure.
 - **beacon (elsewhere)**: SLO definition and burn-rate alerting. Quota produces per-tenant metrics; Beacon owns the SLO contract.
-- **tempo (elsewhere)**: scheduled batch / business-calendar logic. Quota throttles real-time traffic; Tempo schedules deferred work.
+- **weave (elsewhere)**: scheduled batch / business-calendar logic. Quota throttles real-time traffic; Weave schedules deferred work.
 - **gateway (elsewhere)**: HTTP layer rate-limit headers (`X-RateLimit-*`, `Retry-After`). Quota defines the policy; Gateway emits the headers.
 - **ledger (elsewhere)**: overage billing and unit economics. Quota emits overage events; Ledger reconciles to invoices.
 
@@ -137,7 +137,7 @@ Overage events should be billable-grade durable (write-ahead-log or transactiona
 
 - **To Beacon**: per-tenant SLI (latency, error rate, throttle rate); SLO burn-rate alerts segmented by tenant.
 - **To Gateway**: HTTP rate-limit response policy (`429`, `Retry-After`, `X-RateLimit-Remaining` headers).
-- **To Tempo**: scheduled overage rollup, daily/monthly counter reset, billing-cycle alignment.
+- **To Weave**: scheduled overage rollup, daily/monthly counter reset, billing-cycle alignment.
 - **To Ledger**: overage events for billing; plan-tier unit-cost reconciliation.
 - **To Schema `tenant mode=migration`**: chronic noisy-neighbor signal → trigger isolation-level upgrade (pool → schema → dedicated DB).
 - **To Schema `tenant mode=provisioning`**: plan-tier quota config consumed at tenant creation; quota enforced at runtime from same config.

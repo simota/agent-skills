@@ -85,7 +85,7 @@ Every Tier-S/A PR must attach:
 | `intent` | Change purpose in 1-3 sentences | author / `scribe` |
 | `scope` | Affected files, modules, user journeys | `ripple` |
 | `spec_diff` | Diff of spec graph nodes touched | `attest` / `scribe[unified]` |
-| `generated_tests` | Auto-generated contract / property / fuzz / E2E / a11y / VRT | `radar` / `voyager` / `mint` / `matrix` (qa-scenario) |
+| `generated_tests` | Auto-generated contract / property / fuzz / E2E / a11y / VRT | `radar` / `voyager` / `radar` / `matrix` (qa-scenario) |
 | `execution_log` | Full test run output (pass / fail / coverage) | CI |
 | `ui_trace` | Playwright / CUA trace for UI changes | `voyager` / `vector` |
 | `screenshot_diff` | Before/after with diff% | `voyager` (visual comparison) |
@@ -538,7 +538,7 @@ This protocol defines the **shared concepts and vocabulary**. Skill-specific imp
 
 **Code axis (Layer A)**:
 - `attest/SKILL.md` — spec compliance verification (Layer 1 + Layer 4 Gate)
-- `radar/` `voyager/` `matrix/` (qa-scenario) `mint/` — oracle generation (Layer 2)
+- `radar/` `voyager/` `matrix/` (qa-scenario) `radar/` — oracle generation (Layer 2)
 - `vigil/` `sentinel/` `voyager/` — adversarial exploration (Layer 3)
 - `judge/` — Acceptance Gate adjudication (Layer 4)
 - `guardian/` — PR preparation with evidence package (Layer 4 delivery)

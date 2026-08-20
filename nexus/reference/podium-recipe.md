@@ -27,7 +27,7 @@ Podium is a **content-quality maximization recipe** for documentation and high-q
 
 Where `summit` triangulates strategic code decisions, podium triangulates **prose, narrative arc, visual asset, and format rendering** quality. The recipe is intentionally lighter than summit (16-53 agents vs summit's 20-50) because content artifacts are lower-stakes than production code merges, and most polish iterations are cheap.
 
-**Default baseline: Claude + Codex (dual-engine).** Claude owns prose, narrative judgment, story arc, audience walkthrough, and tone arbitration (irreducibly judgment-heavy). Codex owns code samples, diagram-as-code rendering, slide framework compilation (Marp/reveal.js/Slidev), and format conversion (Morph). agy is added as an optional third axis when AVAILABLE — it contributes long-context source synthesis (1M window for whole-codebase learning docs), multimodal asset reading (existing decks, screenshots, mockups), and AI image generation (Builder/Ink hero imagery and illustrations).
+**Default baseline: Claude + Codex (dual-engine).** Claude owns prose, narrative judgment, story arc, audience walkthrough, and tone arbitration (irreducibly judgment-heavy). Codex owns code samples, diagram-as-code rendering, slide framework compilation (Marp/reveal.js/Slidev), and format conversion (Scribe). agy is added as an optional third axis when AVAILABLE — it contributes long-context source synthesis (1M window for whole-codebase learning docs), multimodal asset reading (existing decks, screenshots, mockups), and AI image generation (Builder/Ink hero imagery and illustrations).
 
 **Key design decisions:**
 - **Doc and Slide are produced in parallel from the same outline** — Phase 2 narrative locks the story arc, Phase 3 forks into Content / Visual / Layout tracks, and the slide deck cross-references the document.
@@ -85,7 +85,7 @@ Where `summit` triangulates strategic code decisions, podium triangulates **pros
 - Code-adjacent docs (JSDoc, README) → `quill` directly
 - UX microcopy / error messages → `prose` directly
 - Diagrams in isolation → `canvas` directly
-- Format conversion of an existing finished document → `morph` directly
+- Format conversion of an existing finished document → `scribe` directly
 - Strategic code decisions → `summit`
 - UI design pipeline → `atelier`
 
@@ -108,7 +108,7 @@ Nexus (Claude, hub)
   → Phase 4 VERIFICATION (parallel ‖: claim-grounding, canon, echo, palette, voyager, judge)
                                                        → CONFIRMED/LIKELY findings
   → Phase 5 IMPROVEMENT LOOP (max 2×, magi-arbitrated)
-  → Phase 6 PUBLISH (Morph + Guardian? + Launch?)
+  → Phase 6 PUBLISH (Scribe + Guardian? + Launch?)
   → NEXUS_COMPLETE
 ```
 
@@ -124,9 +124,9 @@ Per-track and per-branch engine/agent assignment is the § Engine × Team Matrix
 | **Narrative** | Scribe[unified] (L0-L1 staged elaboration), Tome (story arc for articles), Scribe (spec structure), Stage (slide narrative arc), Cue (storyboard for presentation-heavy work), Magi (depth vs breadth arbitration), Void (scope cut) | — | — |
 | **Production: Content** | Scribe (PRD/SRS/HLD/LLD body), Tome (article body + hook), Prose (microcopy, headings, CTAs), Saga (product narrative) | Quill (code samples with proper JSDoc/TSDoc), Vitrine (component usage examples) | Tome (long-ctx learning-doc body), Scribe[long-ctx] (large spec bodies > 200K tokens) |
 | **Production: Visual** | Vision (visual direction), Muse (brand tokens application) | Canvas (Mermaid / draw.io diagram code), Vitrine (Storybook-style examples) | Builder (Gemini-native hero / cover / illustration imagery), Ink (SVG icon system), Frame (multimodal context extraction from existing visual references) |
-| **Production: Layout** | — | Stage (Marp / reveal.js / Slidev compilation), Morph (intermediate MD ↔ DOCX/PPTX/PDF/HTML conversion) | `figma:figma-use-slides` (Figma Slides — when target is Figma) |
+| **Production: Layout** | — | Stage (Marp / reveal.js / Slidev compilation), Scribe (intermediate MD ↔ DOCX/PPTX/PDF/HTML conversion) | `figma:figma-use-slides` (Figma Slides — when target is Figma) |
 | **Verification** | Echo (persona walkthrough on finished artifact), Vision (design direction review), Magi (verdict arbitration), Nexus[claim-grounding scan] (token-level cross-reference between artifact claims and research_brief.source_facts — kept inside Nexus rather than spawned, see Phase 4) | Voyager (slide render-and-screenshot check), Radar?[testable assertions in technical docs] | Canon (style / brand / WCAG-AA / ISO 25010 compliance), Palette (visual a11y from screenshots), Attest (only when the artifact is itself a spec being verified against a separate normative document — otherwise claim-grounding stays in Nexus) |
-| **Improvement** | Prose (microcopy polish), Tome (prose tightening), Scribe (spec body refinement), Vision (design direction refinement), Magi (improvement-selection arbitration) | Canvas (diagram fixes), Stage (slide layout adjustment), Morph (re-render), Quill (code sample cleanup) | Builder (re-generate imagery if rejected), Tome (re-extract from updated diff) |
+| **Improvement** | Prose (microcopy polish), Tome (prose tightening), Scribe (spec body refinement), Vision (design direction refinement), Magi (improvement-selection arbitration) | Canvas (diagram fixes), Stage (slide layout adjustment), Scribe (re-render), Quill (code sample cleanup) | Builder (re-generate imagery if rejected), Tome (re-extract from updated diff) |
 
 **Cross-engine routing rules:**
 - If a task **generates prose, narrative, or judgment** → Claude (irreducibly judgment-heavy)
@@ -295,7 +295,7 @@ cross_references:
 
 ### Phase 3: Production Team (3 parallel tracks, 6-18 agents)
 
-When `output_format == both`, three tracks run concurrently and converge via cross-reference resolution. When `doc` only, Track C runs only Morph (no Stage). When `slide` only, Track A focuses on slide-body content (no long-form doc body).
+When `output_format == both`, three tracks run concurrently and converge via cross-reference resolution. When `doc` only, Track C runs only Scribe (no Stage). When `slide` only, Track A focuses on slide-body content (no long-form doc body).
 
 ---
 
@@ -376,7 +376,7 @@ layout_track:
       output: slides/ (runnable slide project)
 
     - if: output_format includes doc AND target_format in {DOCX, PPTX, PDF, HTML}
-      use: [morph]
+      use: [scribe]
       engine: codex
       mission: cross-format conversion (intermediate MD → target)
       output: dist/
@@ -502,7 +502,7 @@ loop_iteration:
 
     - branch: layout_adjustment
       engine: codex
-      agents: [stage, morph]
+      agents: [stage, scribe]
       mission: slide layout adjustments (over-budget cuts, framework re-themes); format-conversion fixes
       output: layout_diffs.json
 
@@ -542,7 +542,7 @@ loop_iteration:
 
 **Agents:**
 1. **Image materialization (conditional)** — if `--materialize-images` flag AND `image_generation_code/` exists from Track B Visual: run the Builder-authored scripts under the user's `GEMINI_API_KEY` to produce final `assets/<anchor>.png`. Owned by Nexus (Bash execution), not a separate spawned agent. If the flag is omitted, the code is kept as-is and a `#TODO(user): execute image_generation_code/*` note is added to the execution report.
-2. Morph[finalize] — produce all target formats (MD/DOCX/PPTX/PDF/HTML) and bundle. Runs AFTER image materialization so that final imagery is embedded in PPTX/PDF (otherwise placeholders ship).
+2. Scribe[convert] — produce all target formats (MD/DOCX/PPTX/PDF/HTML) and bundle. Runs AFTER image materialization so that final imagery is embedded in PPTX/PDF (otherwise placeholders ship).
 3. Guardian[PR-prep] — when artifact is committed to repo: classify changes, commit strategy
 4. Launch[release-plan] — when artifact is a release announcement: versioning, CHANGELOG section, embargo handling
 
@@ -611,9 +611,9 @@ Mode: AUTORUN_FULL
 
 | `--format` flag | output_format | Track A | Track B | Track C |
 |----------------|---------------|---------|---------|---------|
-| `doc` (or detected article/blog/spec) | doc only | body_doc.md only | full | Morph (no Stage) |
+| `doc` (or detected article/blog/spec) | doc only | body_doc.md only | full | Scribe (no Stage) |
 | `slide` (or detected deck/keynote) | slide only | slide_content.yaml only | full | Stage only |
-| `both` (default) | both | body_doc.md + slide_content.yaml | full | Stage + Morph |
+| `both` (default) | both | body_doc.md + slide_content.yaml | full | Stage + Scribe |
 | `figma-slides` | slide via Figma | slide_content.yaml | full | `figma:figma-use-slides` + Stage (fallback) |
 
 **Primary artifact rule:**
@@ -726,7 +726,7 @@ Phase-triggered failures — release-critical shipped without human sign-off, a 
 | narrative_lock not signed off after 2 attempts | Phase 2 | Escalate to user — usually means goal is too broad | Immediate |
 | Doc ↔ slide divergence (number/claim mismatch, broken cross-ref, dropped beat) | Phase 4 | Force Phase 5 loop to reconcile both artifacts; never ship a self-contradicting package | Always (output_format == both) |
 | Ungrounded claim introduced during `mode: refresh` | Phase 4 | Treat as a new greenfield claim — ground it or mark `[UNVERIFIED]`; do not exempt it because the run is a "refresh" | Always |
-| render fails | Phase 4 | Force Phase 5 loop with stage + morph re-run | Always |
+| render fails | Phase 4 | Force Phase 5 loop with stage + scribe re-run | Always |
 | Brand `forbidden_phrases` match in external-facing | Phase 4 | Force Phase 5 loop with prose rewrite | Always |
 | Persona reports tune-out in first 3 slides | Phase 4 | Force Phase 5 loop with stage + prose rewrite | Always |
 | WCAG-AA contrast fail | Phase 4 | Force Phase 5 with muse + palette + vision | Always |
@@ -798,7 +798,7 @@ Phase-triggered failures — release-critical shipped without human sign-off, a 
 
 ```
 Is the goal a single narrow content task with no cross-format need?
-  └─ YES → single skill (tome / stage / scribe / quill / morph)
+  └─ YES → single skill (tome / stage / scribe / quill / scribe)
   └─ NO ↓
 
 Is the goal a UI design + code pipeline?

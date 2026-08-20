@@ -64,4 +64,4 @@ Model PQA as a roll-up of PQL signals plus account-only signals (domain, seats, 
 - Re-tune quarterly; PQL definitions decay as the product and ICP evolve.
 - Handoffs: aha-moment / activation definition → `activation-design.md`; event contracts →
   `event-schema.md`; PQL-cohort conversion lift → `experiment`; retention of the PQL cohort →
-  `bond`; PQL→revenue dashboards → `dashboard-spec.md` / `revenue-analytics.md`.
+  `growth`; PQL→revenue dashboards → `dashboard-spec.md` / `revenue-analytics.md`.

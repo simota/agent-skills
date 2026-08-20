@@ -26,6 +26,9 @@ CAPABILITIES_SUMMARY:
 - image_style_postprocess: Reference style anchoring, native-resolution regeneration, upscale, inpaint, outpaint, and export-format guidance
 - image_provenance_safety: SynthID/C2PA/EXIF disclosure, content-policy gates, likeness/brand safeguards, and regional compliance guidance
 
+- grammar_and_parser_implementation: ReDoS-safe regex authoring, parser-generator selection (ANTLR4 / PEG.js / tree-sitter / chevrotain / hand-written RD), AST design with visitor and error recovery, internal DSL architecture — absorbed from `grok` 2026-08-20
+- cli_tui_implementation: CLI command/argument/help design, TUI components (Ink / Ratatui / BubbleTea / Textual), shell completion generation, XDG config loading, non-TTY and exit-code discipline — absorbed from `anvil` 2026-08-20
+
 COLLABORATION_PATTERNS:
 - Forge -> Builder: Prototype conversion to production code
 - Plan -> Builder: Execute planned implementation
@@ -143,7 +146,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - Retry without a bounded attempt count — unbounded retries exhaust queue/thread capacity and cascade into full outage
 - Use a throwing parser at HTTP boundaries when the configured library provides a non-throwing alternative; with Zod, use `.safeParse()` and return structured errors
 - Allow domain entities to exist in invalid state — enforce invariants in constructors, not in callers
-- Apply tactical DDD patterns (Aggregate, Repository, Event Sourcing) without strategic design (Bounded Context, Context Mapping) — leads to a single tangled model with conflicting term definitions across teams
+- Apply tactical DDD patterns (Aggregate, Repository, Event Sourcing) without strategic design (Bounded Context Mapping) — leads to a single tangled model with conflicting term definitions across teams
 - Implement UI/frontend components (→ Artisan)
 - Design API specs (→ Gateway)
 - In `pair` mode, implement the whole feature in one shot then ask for a single approval — increments must be proposed and confirmed one at a time
@@ -233,6 +236,8 @@ Use `reference/implementation-policy.md` for repository-first architecture selec
 | Image Cinematic | `image-cinematic` | | Camera, lens, lighting, film-stock, and composition prompt design | `reference/image-generation-cinematic-prompts.md` |
 | Image Provenance | `image-provenance` | | C2PA, SynthID, EXIF/XMP disclosure, and takedown flow | `reference/image-generation-provenance.md` |
 | Image Policy | `image-policy` | | Content-policy, likeness, brand-safety, and regional compliance gates | `reference/image-generation-content-safety.md` |
+| Grammar & Parser | `grammar` |  | Author a regex, parser, or DSL and its AST | `reference/grammar/regex-safety.md`, `reference/grammar/parser-generators.md`, `reference/grammar/dsl-design.md` |
+| CLI & TUI | `cli` |  | Implement a command-line or terminal-UI tool | `reference/cli-tui/tui-components.md`, `reference/cli-tui/cli-design-anti-patterns.md`, `reference/cli-tui/cross-platform.md` |
 
 ## Subcommand Dispatch
 
@@ -337,6 +342,8 @@ Read only the files required for the current decision.
 | `reference/image-generation-codex.md` | Codex built-in image-generation guidance when subscription-based operation is preferred over API billing. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the report, effort-level for codegen, front-loading constraints at PLAN. Critical: P3, P6. |
 | `_common/CODE_QUALITY.md` | About to write or modify code — 7-axis bar (SLD/SEC/RDB/MNT/TST/PRF/SCL) + `CODE_QUALITY_GATE`. |
+| `reference/grammar/` | Authoring a regex, parser, DSL, or AST transform (absorbed from `grok`) |
+| `reference/cli-tui/` | Implementing a CLI or terminal UI (absorbed from `anvil`) |
 
 ## Operational
 

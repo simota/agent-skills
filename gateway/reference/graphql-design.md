@@ -80,9 +80,9 @@ Complexity is superior to depth alone — depth does not penalize a wide query l
 
 Federation lets each subgraph own its types and extend others' types. The gateway composes a single supergraph. Boundary clarity at the `@key` directive. Federation 2.10 (2025-02) is the floor for new graphs in 2026 — every subgraph SDL must declare `@link(url: "https://specs.apollo.dev/federation/v2.x", ...)`. Federation 2.10 is also the prerequisite for the `@connect` / `@source` Connectors spec (REST/AI-tool wrapping inside the graph).
 
-## Relay Spec — Connections, Cursors, Nodes
+## Gateway Spec — Connections, Cursors, Nodes
 
-Relay standardizes list pagination and object identity:
+Gateway standardizes list pagination and object identity:
 
 ```graphql
 type ArticleConnection {
@@ -101,7 +101,7 @@ type PageInfo {
 
 - Cursor-based, not offset-based (same reasoning as REST `rest` recipe).
 - Global `Node` interface with opaque `id: ID!` enables `node(id: $id)` refetch pattern.
-- Adopt Relay for any list field with > 100 expected items, even if the client is not Relay.
+- Adopt Gateway for any list field with > 100 expected items, even if the client is not Gateway.
 
 ## Subscriptions
 

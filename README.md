@@ -1,14 +1,14 @@
 # AI Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Global Agents](https://img.shields.io/badge/Global_Agents-100-blue.svg)]()
+[![Global Agents](https://img.shields.io/badge/Global_Agents-90-blue.svg)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 A skill collection that enables collaborative development with a team of specialized AI agents.
 
 ## Features
 
-- **100 Global Agents + 3 Project-local Extensions** - Broad reusable coverage without exposing repository-specific operating skills everywhere
+- **90 Global Agents + 3 Project-local Extensions** - Broad reusable coverage without exposing repository-specific operating skills everywhere
 - **Nexus Orchestrator** - Analyzes tasks and automatically designs optimal agent chains
 - **Platform Agnostic** - Works with Claude Code, Codex CLI, Antigravity CLI, and others
 
@@ -35,20 +35,20 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 ## Overview
 
-This repository contains 100 globally reusable AI agents and 3 repository-local operating extensions. Each skill specializes in a specific domain and is coordinated by the **Nexus** orchestrator when available in the active profile.
+This repository contains 90 globally reusable AI agents and 3 repository-local operating extensions. Each skill specializes in a specific domain and is coordinated by the **Nexus** orchestrator when available in the active profile.
 
 ### Roster Counting
 
-- **100 global skills** are the active, reusable roster under `<skill-name>/SKILL.md`.
+- **90 global skills** are the active, reusable roster under `<skill-name>/SKILL.md`.
 - **3 project-local extensions** (`orbit`, `lore`, and `darwin`) are repository operating skills and are not included in the global count or global profiles.
 - `.claude/skills/` is the canonical project-local location; `.agents/skills/` is a cross-tool mirror, not an additional set of skills.
 - `.archive/` contains inactive rollback packages and is excluded from every active-roster count.
 
-The active repository surface is therefore **100 global + 3 project-local = 103 distinct skills**.
+The active repository surface is therefore **90 global + 3 project-local = 93 distinct skills**.
 
 ## Agent Catalog
 
-> Category-by-category catalog for 100 global agents plus the 3 project-local extensions marked below.
+> Category-by-category catalog for 90 global agents plus the 3 project-local extensions marked below.
 
 ### Orchestration
 
@@ -82,9 +82,7 @@ The active repository surface is therefore **100 global + 3 project-local = 103 
 | **Lens** | _"See the code, not just search it."_ - Codebase comprehension specialist. Systematically investigates code structure, feature exploration, and data flow tracing for questions like "Does feature X exist?", "How does flow Y work?", "What is this module's responsibility?" | Investigation report |
 | **Magi** | _"Three minds, one verdict. Consensus through diversity."_ - Multi-perspective decisions, founder office hours, bottleneck triage, pitch critique, and advisory lenses grounded in documented notable-figure thinking | Decision and advisory report |
 | **Flux** | _"Bend the light. See what was always there."_ - Thinking refraction engine. Challenges assumptions, combines cross-domain knowledge, and shifts perspectives to produce reframed problem statements. Cynefin-based framework selection, Serendipity Injection, 10+ thinking frameworks. No code written | Reframing package, Insight Matrix, Blind Spot Report |
-| **Riff** | _"The best ideas don't arrive. They evolve — one riff at a time."_ - Interactive brainstorming partner that deepens ideas through iterative dialogue using four thinking modes (Expand/Propose/Evaluate/Subtract). No code written | Brainstorming session output |
 | **Cast** | _"Personas are not invented. They are discovered, born, and evolved."_ - Persona casting agent. Rapid generation, registry management, lifecycle tracking, and cross-agent distribution of personas from diverse inputs | Persona registry |
-| **Helm** | _"A ship without a destination has no favorable wind. A ship without a helm has no direction at all."_ - Business strategy simulation agent. Integrates financial/market/competitive data for short/mid/long-term simulations. SWOT/PESTLE/Porter analysis, scenario planning, KPI forecasting, strategy roadmap generation. No code written | Strategy simulation report |
 | **Matrix** | _"Infinite combinations, finite resources. Matrix finds the minimum that covers the maximum."_ - Universal multi-dimensional analysis agent. Controls combinatorial explosion from arbitrary axis×value inputs. Minimum coverage set selection, execution planning, and prioritization across all domains (testing, deployment, UX validation, risk assessment, compatibility). No code written | Matrix analysis, coverage optimization plan |
 | **Saga** | _"Facts are remembered 5-10% of the time. Stories raise that to 65-70%. The customer is the hero. The product is the guide."_ - Narrative design agent. Structures product and feature use cases as customer-centric stories. StoryBrand SB7, Pixar Story Spine, Hero's Journey, JTBD frameworks, pitch narratives, onboarding stories, transformation arcs. No code written | Narrative document |
 | **Omen** | _"Plan for the worst. Build for the best."_ - Pre-mortem analysis and failure mode enumeration. Systematically identifies failure scenarios, scores with RPN/AP. No code written | Pre-mortem report |
@@ -127,7 +125,6 @@ The active repository surface is therefore **100 global + 3 project-local = 103 
 | **Attest** | _"Specs are truth. Code is evidence. Attest finds the gaps."_ - Specification compliance verifier. Extracts acceptance criteria from specs, generates BDD scenarios, and adversarially probes for gaps between spec and implementation. Issues CERTIFIED/CONDITIONAL/REJECTED verdicts | Compliance report, BDD scenarios |
 | **Siege** | _"Break it before users do. Fix it before they notice."_ - Advanced testing specialist. Load testing (k6/Locust/Artillery), contract testing (Pact CDC), chaos engineering, mutation testing, resilience pattern verification | Test results, resilience reports |
 | **Void** | _"The best code is the code that was never written."_ - YAGNI enforcement, scope cutting, complexity reduction proposals. Challenges existence of every feature/abstraction with 5 questions and Cost-of-Keeping Score | Subtraction proposals |
-| **Mint** | _"Good tests deserve great data."_ - Test data and fixture generation specialist. Factory patterns, boundary value generation, synthetic data, seed management | Test data, fixtures |
 | **Breach** | _"Think like an attacker. Defend like an engineer."_ - Red team engineering. Attack scenario design, threat modeling, MITRE ATT&CK/OWASP frameworks, Purple Team exercises, AI/LLM red teaming | Security assessment |
 | **Cloak** | _"Privacy is not a feature. It's a right."_ - Privacy engineering and data governance. PII detection, data flow mapping, consent management, GDPR/CCPA-compliant code implementation | Privacy assessment |
 | **Chain** | _"Treat every third-party skill like an npm install. Audit before invoking."_ - Skill/plugin/MCP intake audit plus live npm/PyPI malware investigation. Generates sha256 manifests, scans Unicode and exfiltration patterns, matches campaign IoCs, and produces persistence-first eradication and credential-rotation runbooks | Supply-chain audit, infection report and recovery runbook |
@@ -189,13 +186,12 @@ The active repository surface is therefore **100 global + 3 project-local = 103 
 |-------|-------------|--------|
 | **Scribe** | _"A specification is a contract between vision and reality."_ - Specification author for PRD/SRS/HLD/LLD and cross-team L0-L3 packages, including implementation checklists and test specifications | Specs, design docs |
 | **Quill** | _"Code tells computers what to do. Documentation tells humans why."_ - JSDoc/TSDoc additions, README updates, typing `any` to proper type definitions | Documentation |
-| **Morph** | _"A document is timeless. Its format is temporary."_ - Document format conversion (Markdown <> Word/Excel/PDF/HTML). Converts Scribe specs and Launch reports to various formats | Converted documents |
 | **Tome** | _"Changes are forgotten. Knowledge endures."_ - Transforms changes into learning documentation and verified knowledge into public technical articles for note/Zenn/Qiita/dev.to, including article series and repurposing | Learning docs and technical articles |
 
-**Scribe vs Quill vs Morph vs Tome responsibilities**:
+**Scribe vs Quill vs Tome responsibilities**:
 - **Scribe**: Project documentation (PRD, SRS, design docs, checklists, test specifications)
 - **Quill**: Code documentation (JSDoc/TSDoc, README, type definitions)
-- **Morph**: Format conversion (Markdown > PDF/Word/HTML, etc.)
+- **Scribe**: Format conversion (Markdown > PDF/Word/HTML, etc.)
 - **Tome**: Change-based learning materials and external-facing articles for note/Zenn/Qiita/dev.to, including series management
 
 ### Visualization
@@ -218,18 +214,14 @@ The active repository surface is therefore **100 global + 3 project-local = 103 
 | **Weave** | _"Every state tells a story. Every transition is a contract."_ - Workflow and state machine design specialist. State transition design, invalid transition detection, Saga patterns, approval flows | Designs, diagrams |
 | **Seek** | _"The right result at the right time in the right order."_ - Search engine and vector DB design specialist. Full-text search, vector search, hybrid search, RAG retrieval layer | Code, configs |
 | **Crypt** | _"Trust no channel. Verify every key."_ - Cryptographic architecture design: algorithm selection, key management, E2E encryption, KMS integration, TLS configuration | Crypto design specs |
-| **Trawl** | _"Design the web that catches the web."_ - Crawl system architecture design. Distributed crawler design, URL frontier management, politeness policies, legal compliance | Architecture specs |
-| **Tempo** | _"Time is not a scalar — it's a minefield of conventions."_ - Scheduling and time-aware logic architect. Cron expression design, timezone/DST handling, retry/backoff policies, idempotency keys, backfill strategies, and business-calendar design (JP holidays, fiscal year, banking days) | Schedule specs, cron configs, retry policies |
-| **Grok** | _"Understand the shape before writing the parser."_ - Pattern, regex, parser, and DSL design specialist. Grammar authoring (EBNF/PEG), ReDoS-safe regex, parser-generator selection (ANTLR4/tree-sitter/Chevrotain), internal DSL architecture, AST transformation | Grammar specs, parser designs, DSL specs |
 
 ### Communication
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Relay** | _"Every message finds its way. Every channel speaks the same language."_ - Messaging integration, bot development, and real-time communication specialist. Channel adapters, webhook handlers, WebSocket servers, event-driven architecture | Channel adapters, message handlers, bot framework |
 
-**Relay > Builder > Radar chain**: Relay (messaging design) > Builder (implementation) > Radar (tests)
-**Gateway > Relay chain**: Gateway (webhook API spec) > Relay (handler design)
+**Gateway > Builder > Radar chain**: Gateway (messaging design) > Builder (implementation) > Radar (tests)
+**Gateway > Gateway chain**: Gateway (webhook API spec) > Gateway (handler design)
 
 ### Data
 
@@ -244,15 +236,14 @@ The active repository surface is therefore **100 global + 3 project-local = 103 
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Anvil** | _"The terminal is the first interface. Make it unforgettable."_ - CLI/TUI and dev-tool implementation plus personal shell/editor/terminal/dotfile setup and safe macOS automation with AppleScript/JXA | CLI/TUI code and environment configuration |
 | **Gear** | _"The best CI/CD is the one nobody thinks about."_ - Dependency management, CI/CD and Docker optimization, plus advanced GitHub Actions workflow design | Configuration files |
 | **Scaffold** | _"Infrastructure is the silent foundation of every dream."_ - Cloud infrastructure (Terraform/CloudFormation/Pulumi), local dev environments (Docker Compose), IaC design | Infrastructure config |
 | **Hone** | _"A sharp blade cuts clean. A sharp config cuts friction."_ - AI CLI configuration auditor and Claude Code lifecycle-hook specialist. Audits Codex/Antigravity/Claude configuration and designs, configures, or debugs scoped hooks with verification | Audit reports, proposals and hook configurations |
 | **Ledger** | _"Every dollar has a story. Make it a short one."_ - FinOps and cloud cost optimization. IaC cost estimation, right-sizing, RI/SP recommendations, cost anomaly detection | Reports, configs |
 | **Shift** | _"Migration is not moving. It's transforming."_ - Migration and upgrade orchestrator. Framework, library, API, database, and infrastructure migrations end-to-end with codemod generation and incremental strategies | Migration plans |
 
-**Anvil vs Hone vs Gear vs Scaffold responsibilities**:
-- **Anvil**: Personal environment (dotfiles, shell, editor, terminal)
+**Builder vs Hone vs Gear vs Scaffold responsibilities**:
+- **Hone**: Personal environment (dotfiles, shell, editor, terminal)
 - **Hone**: AI CLI configuration audit and Claude Code event-hook design/configuration/debugging
 - **Gear**: Project-level DevOps (CI/CD, Docker, monitoring, Git hooks); `gha` mode owns advanced GitHub Actions
 - **Scaffold**: Infrastructure provisioning (cloud, Docker Compose, IaC)
@@ -268,7 +259,6 @@ The active repository surface is therefore **100 global + 3 project-local = 103 
 | Agent | Description | Output |
 |-------|-------------|--------|
 | **Growth** | _"Traffic without conversion is just expensive vanity."_ - SEO (meta/OGP/JSON-LD), SMO (social share display), CRO (CTA improvement) | Growth initiatives |
-| **Bond** | _"Acquisition is expensive. Retention is profitable."_ - Retention strategies, re-engagement, churn prevention. Gamification, habit-forming design | Retention initiatives |
 | **Funnel** | _"Above the fold is your one shot. Make every pixel convert."_ - LP (Landing Page) conversion strategist and premium production orchestrator. Framework-based structure design (AIDA/PAS/BAB/4Ps), hero section craft, CTA placement strategy, social proof hierarchy, mobile-first responsive implementation | LP structure, copy, specs |
 
 ### Analytics
@@ -501,8 +491,8 @@ See `_common/INTERACTION.md` for details.
 | DOCS/code | Code documentation | Quill |
 | DOCS/component | Component documentation | Vitrine > Quill |
 | DOCS/architecture | Architecture diagrams | Canvas |
-| DOCS/convert | Format conversion | Morph |
-| DOCS/report | PR report | Launch > Morph |
+| DOCS/convert | Format conversion | Scribe |
+| DOCS/report | PR report | Launch > Scribe |
 | DOCS/learning | Change-based learning doc | Tome |
 | DOCS/onboarding | Onboarding material from changes | Trail > Tome |
 
@@ -518,7 +508,7 @@ See `_common/INTERACTION.md` for details.
 |------|-------------|-------|
 | INFRA/ci | CI/CD setup | Gear > Radar |
 | INFRA/cloud | Cloud setup | Scaffold > Gear |
-| INFRA/cli | CLI development | Anvil > Radar |
+| INFRA/cli | CLI development | Builder > Radar |
 
 #### Deploy & Release
 
@@ -543,7 +533,7 @@ See `_common/INTERACTION.md` for details.
 | STRATEGY/compete | Competitive analysis to implementation | Compete > Spark > Builder > Radar |
 | STRATEGY/feedback | Feedback integration | Voice > Spark > Builder > Radar |
 | STRATEGY/metrics | Metrics infrastructure | Pulse > Builder > Radar |
-| STRATEGY/retention | Retention initiatives | Bond > Spark > Builder > Radar |
+| STRATEGY/retention | Retention initiatives | Growth > Spark > Builder > Radar |
 | STRATEGY/ab-test | A/B test design | Experiment > Builder > Radar |
 | STRATEGY/data | Data pipeline | Stream > Schema > Builder > Radar |
 
@@ -593,10 +583,10 @@ For large-scale tasks where parallel execution is beneficial, Nexus escalates to
 
 | Task | Description | Chain |
 |------|-------------|-------|
-| MESSAGING/bot | Bot development | Relay > Builder > Radar |
-| MESSAGING/webhook | Webhook handler | Gateway > Relay > Builder > Radar |
-| MESSAGING/realtime | Real-time communication | Relay > Scaffold > Builder > Radar |
-| MESSAGING/multi-channel | Multi-channel integration | Relay > Builder > Radar |
+| MESSAGING/bot | Bot development | Gateway > Builder > Radar |
+| MESSAGING/webhook | Webhook handler | Gateway > Gateway > Builder > Radar |
+| MESSAGING/realtime | Real-time communication | Gateway > Scaffold > Builder > Radar |
+| MESSAGING/multi-channel | Multi-channel integration | Gateway > Builder > Radar |
 
 ## Shared Knowledge
 
@@ -645,7 +635,6 @@ skills/
 ├── _templates/
 │   └── PROJECT.md      # Project knowledge template
 ├── architect/SKILL.md  # Agent design meta-designer
-├── anvil/SKILL.md      # CLI/TUI construction
 ├── artisan/SKILL.md    # Frontend implementation
 ├── atelier/SKILL.md    # Design-to-implementation pipeline orchestrator
 ├── atlas/SKILL.md      # Architecture
@@ -671,7 +660,6 @@ skills/
 ├── grove/SKILL.md      # Repository structure design
 ├── growth/SKILL.md     # SEO/CRO
 ├── guardian/SKILL.md   # Git/PR management
-├── helm/SKILL.md       # Business strategy simulation
 ├── hone/SKILL.md       # Codex CLI config audit & optimization
 ├── judge/SKILL.md      # Code review (codex review)
 ├── launch/SKILL.md     # Release management
@@ -680,7 +668,6 @@ skills/
 ├── magi/SKILL.md       # Multi-perspective decision making
 ├── matrix/SKILL.md     # Universal multi-dimensional analysis
 ├── mend/SKILL.md       # Known failure auto-repair
-├── morph/SKILL.md      # Document format conversion
 ├── muse/SKILL.md       # Design
 ├── vector/SKILL.md  # Browser automation
 ├── nexus/SKILL.md      # Orchestrator
@@ -694,12 +681,9 @@ skills/
 ├── quill/SKILL.md      # Documentation
 ├── radar/SKILL.md      # Testing
 ├── rally/SKILL.md      # Multi-session parallel orchestrator
-├── relay/SKILL.md      # Messaging integration & real-time communication
 ├── field/SKILL.md # User research
 ├── ripple/SKILL.md     # Pre-change impact analysis
-├── bond/SKILL.md     # Retention
 ├── trail/SKILL.md     # Git history investigation
-├── riff/SKILL.md       # Interactive brainstorming partner
 ├── scaffold/SKILL.md   # Infrastructure
 ├── schema/SKILL.md     # DB schema design
 ├── siege/SKILL.md      # Advanced testing (load/contract/chaos/mutation)
@@ -727,7 +711,7 @@ skills/
 
 ### Single Agent Usage
 
-> Category-by-category examples for 100 global agents and 3 project-local extensions.
+> Category-by-category examples for 90 global agents and 3 project-local extensions.
 
 #### Orchestration
 
@@ -1432,10 +1416,10 @@ Create a migration to add a profile image URL to the users table.
 
 #### DevOps
 
-##### CLI/TUI Construction (Anvil)
+##### CLI/TUI Construction (Builder)
 
 ```
-/Anvil
+/Builder
 Create a command-line tool. Include help display, progress bars, etc.
 ```
 
@@ -1482,10 +1466,10 @@ Audit my Claude Code permissions and MCP server configuration for security best 
 
 ---
 
-##### Personal Dev Environment Setup (Anvil)
+##### Personal Dev Environment Setup (Hone)
 
 ```
-/Anvil
+/Builder
 Optimize my zsh configuration. It's slow to start up and I want better completions.
 ```
 
@@ -1493,17 +1477,17 @@ Optimize my zsh configuration. It's slow to start up and I want better completio
 
 ---
 
-##### Dotfile Management (Anvil)
+##### Dotfile Management (Hone)
 
 ```
-/Anvil
+/Builder
 Set up my neovim configuration with LSP support and lazy.nvim plugin management.
 ```
 
 **Output**: init.lua structure, lazy.nvim setup, LSP configuration, keybindings
 
-**Anvil vs Hone vs Gear vs Scaffold responsibilities**:
-- **Anvil**: Personal environment (dotfiles, shell, editor, terminal)
+**Builder vs Hone vs Gear vs Scaffold responsibilities**:
+- **Hone**: Personal environment (dotfiles, shell, editor, terminal)
 - **Hone**: AI CLI configuration audit and Claude Code event-hook design/configuration/debugging
 - **Gear**: Project-level DevOps (CI/CD, Docker, monitoring, Git hooks)
 - **Scaffold**: Infrastructure provisioning (cloud, Docker Compose, IaC)
@@ -1568,10 +1552,10 @@ Set up a Docker Compose environment so new developers can start immediately.
 
 #### Communication
 
-##### Slack Bot Development (Relay)
+##### Slack Bot Development (Gateway)
 
 ```
-/Relay
+/Gateway
 Build a Slack bot that responds to /remind commands and sends scheduled reminders.
 Support thread replies and slash commands.
 ```
@@ -1580,10 +1564,10 @@ Support thread replies and slash commands.
 
 ---
 
-##### Multi-Channel Notification (Relay)
+##### Multi-Channel Notification (Gateway)
 
 ```
-/Relay
+/Gateway
 Design a notification system that sends alerts to both Slack and Discord.
 Each platform should display messages in its native format.
 ```
@@ -1592,8 +1576,8 @@ Each platform should display messages in its native format.
 
 ---
 
-**Relay vs Gateway vs Stream responsibilities**:
-- **Relay**: Messaging platform integration (channel adapters, webhooks, WebSocket, bots)
+**Gateway vs Stream responsibilities**:
+- **Gateway**: Messaging platform integration (channel adapters, webhooks, WebSocket, bots)
 - **Gateway**: REST/GraphQL API design (OpenAPI specs, versioning, endpoints)
 - **Stream**: Data pipelines (ETL/ELT, Kafka, Airflow, batch processing)
 
@@ -1625,10 +1609,10 @@ Improve the preview display when sharing on social media.
 
 ---
 
-##### Retention Initiatives (Bond)
+##### Retention Initiatives (Growth)
 
 ```
-/Bond
+/Growth
 User retention rates are declining. Suggest retention improvement strategies.
 ```
 

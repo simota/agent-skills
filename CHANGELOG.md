@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed — consolidate global roster to 90 skills (2026-08-20)
+
+- Retired 10 low-reachability skills into broader owners, preserving their capabilities, recipes, and reference material: `trawl` → `vector`, `grok` + `anvil` (CLI/TUI) → `builder`, `anvil` (personal environment) → `hone`, `bond` → `growth`, `morph` → `scribe`, `mint` → `radar`, `relay` → `gateway`, `riff` → `flux`, `helm` → `magi`, and `tempo` → `weave`.
+- Selection evidence was inbound COLLABORATION_PATTERNS partners, `nexus/reference/` routing reachability, and peer SKILL.md mentions — not description similarity. Pack membership was excluded as a retention signal after the audit found semantically broken Tier-3 assignments (`trawl` filed under `package-gen`, `mint` under `ai-eval`).
+- Added 12 recipes so every absorbed capability has a reachable owner: `vector crawl`, `builder grammar`/`cli`, `growth retention`, `scribe convert`, `radar fixtures`, `gateway messaging`, `flux ideate`, `magi simulate`, `weave schedule`, `hone env`/`automate`.
+- Migrated 69 reference files into namespaced subdirectories under each owner (`vector/reference/crawl/`, `magi/reference/strategy-simulation/`, …); the full pre-merge reference sets remain in `.archive/`.
+- Archived the 10 source packages under `.archive/` with owner mappings, a review deadline of 2026-11-18, and explicit restoration steps.
+- Updated routing, disambiguation, boundaries, project affinity, skill packs, profiles, catalogs, public documentation, and the generated Recipes directory for the 90-global + 3-project-local roster.
+- Extended the task-battery stale-agent guard from 5 to 15 retired names so a reintroduced reference fails the check.
+
 ### Changed — consolidate global roster to 100 skills (2026-08-19)
 
 - Absorbed 11 narrowly scoped skills into broader owners while preserving their recipes and reference material: `cull` → `chain`, `director` → `cue`, `harvest` → `launch`, `zine` → `tome`, `sage` + `summon` → `magi`, `sketch` → `builder`, `crest` → `compete`, `clause` → `canon`, `latch` → `hone`, and `hearth` → `anvil`.

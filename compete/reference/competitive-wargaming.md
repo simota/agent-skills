@@ -246,5 +246,5 @@ Our Move 1: [Action]
 Wargaming fits into the `DIFFERENTIATE` phase:
 - Use after `MAP` and `ANALYZE` provide sufficient competitive intelligence
 - Feed wargame findings into battle cards and response plans
-- Hand off strategic scenario results to Helm (`COMPETE_TO_HELM`) for financial simulation
+- Hand off strategic scenario results to Magi (`COMPETE_TO_MAGI`) for financial simulation
 - Hand off contingency plans to Sherpa via Nexus for execution decomposition

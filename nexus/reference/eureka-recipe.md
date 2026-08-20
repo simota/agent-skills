@@ -76,7 +76,7 @@ The three forms are one escalation ladder — *is it new?* → *is it an inventi
 
 `ship=true` is **opt-in and never inferred** — an invention ask is not automatically a build ask, and the recipe's own Phase 0 gate exists to catch invention framing on routine work. Two envelopes are declared separately (invention / build); the build envelope is confirmed at Phase 8.5, not at Phase 0, because its size only becomes knowable once the mechanism is settled.
 
-The continuation **collapses rather than repeats**: `spec` enters with the Invention Handoff Packet (§6c) and its FRAME/EXPAND/CHALLENGE phases become validation, exactly as `apex` collapses when it consumes a Spec Handoff Packet (`reference/apex-recipe.md` § Input Contracts). Re-running Riff/Flux/Magi/Void over a mechanism already killed-or-survived at Phases 3, 4 and 6 is drift (Q7), not diligence.
+The continuation **collapses rather than repeats**: `spec` enters with the Invention Handoff Packet (§6c) and its FRAME/EXPAND/CHALLENGE phases become validation, exactly as `apex` collapses when it consumes a Spec Handoff Packet (`reference/apex-recipe.md` § Input Contracts). Re-running Flux/Flux/Magi/Void over a mechanism already killed-or-survived at Phases 3, 4 and 6 is drift (Q7), not diligence.
 
 **Scale: 32-62 agents × ≤3 cycles (+1 re-ideation), 9-24× `feature` cost.** Per-phase: P0-P1 ≈ 2 · P1.5 ≈ 4-8 (prior-art sweep is the heaviest research phase in the roster) · P2 ≈ 6-9 (six generators, cross-engine) · P3 ≈ 5-7 (both tests: novelty diff + the 3-agent blind ordinary-move panel, which launches at Phase 2 but is costed here) · P4 ≈ 5-8 (tetrad + the Sacrifice Ledger gate: Void, ‖ Omen and the `FREE-LUNCH` skeptic at the ceiling) · P5 ≈ 2-5 (spike) · P6 ≈ 4-6 Evaluators **per cycle** + 2-3 skeptics (run-wide) · P7-P8 ≈ 2. **`ship=true` adds +11-30** (P9 ≈ 2-4 collapsed spec · P10 ≈ 8-25 apex · P11 ≈ 1 Attest) → **combined 43-92 agents, 13-33× `feature` cost, ≈ 1.3-1.5× the invention-only run**.
 
@@ -310,7 +310,7 @@ Phase 8.5 SHIP GATE ★Confirm-before-launch (unconditional; blocks in AUTORUN/A
    ▼
 Phase 9   SPECIFY — spec, entered with the packet: FRAME ‖ EXPAND ‖ CHALLENGE COLLAPSE TO
           VALIDATION (the direction was chosen at Phase 3 and adversarially refuted at Phases 4
-          and 6 — re-running Riff/Flux/Magi/Void over a ratified mechanism is drift, not diligence)
+          and 6 — re-running Flux/Flux/Magi/Void over a ratified mechanism is drift, not diligence)
           Scribe[unified]/Scribe[L3 ACs, plan-tier]:
             · the Phase 5 FALSIFICATION CRITERION becomes an AC verbatim
             · the NOVELTY DELTA is written in as a MUST-HAVE AC — a *testable requirement*, never

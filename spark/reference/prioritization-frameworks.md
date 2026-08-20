@@ -20,4 +20,4 @@ Tag proposals `H1` incremental, `H2` adjacent, or `H3` transformative. Rank with
 
 ## Required Output
 
-For each proposal provide inputs, units, evidence, calculation, sensitivity range, horizon, limitations, and the decision that the score informs. Scores support judgment; they do not replace it. Route strategic portfolio tradeoffs to Magi/Helm and tech-debt architecture to Atlas.
+For each proposal provide inputs, units, evidence, calculation, sensitivity range, horizon, limitations, and the decision that the score informs. Scores support judgment; they do not replace it. Route strategic portfolio tradeoffs to Magi/Magi and tech-debt architecture to Atlas.

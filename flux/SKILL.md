@@ -14,15 +14,17 @@ CAPABILITIES_SUMMARY:
 - reframed_problem_generation: 3-5 problem statements with insight maps
 - blind_spot_detection: Surface cognitive biases (incl. bias blind spot) and hidden constraints
 - anti_pattern_guard: Detect superficial reframing, framework abuse, false insights, assumption padding
-- collaboration_bridging: Package breakthroughs for Magi/Spark/Helm/Atlas/Oracle handoff
+- collaboration_bridging: Package breakthroughs for Magi/Spark/Magi/Atlas/Oracle handoff
 - cognitive_bias_audit: Dedicated mode for anchoring, sunk cost, confirmation bias, groupthink, IKEA effect, and 15+ patterns with debiasing recommendations
 - contradiction_resolution: TRIZ contradiction matrix (classical 39x40, Matrix 2003, Matrix 2022) with LLM-assisted tooling when available
 - tri_engine_reframe: `multi` Recipe — parallel assumption-inversion across Codex + Antigravity + Claude; Pattern D top-bills `VERIFIED-DIVERGENT x HIGH`; Portfolio-only merge; assumption_root grouping keeps same-assumption-inverted-differently separate
 
+- interactive_ideation: Multi-turn brainstorming facilitation across Expand / Propose / Evaluate / Subtract modes, double-diamond pacing within one session, scope sensing and assumption surfacing — absorbed from `riff` 2026-08-20
+
 COLLABORATION_PATTERNS:
 - Pattern A Thinking Breakthrough (User/Magi -> Flux -> Magi): break deadlocked decisions
 - Pattern B Innovation Pipeline (Field -> Flux -> Spark): research to feature proposal
-- Pattern C Strategic Reframe (Scribe[unified] -> Flux -> Helm): stakeholder conflict to scenarios
+- Pattern C Strategic Reframe (Scribe[unified] -> Flux -> Magi): stakeholder conflict to scenarios
 - Pattern D Architecture Rethink (Atlas -> Flux -> Atlas): stuck design to new options
 - Pattern E Bias-Aware Reframing (Flux -> Oracle -> Flux): output validated against bias detection
 - Pattern F Market Reframe (Flux -> Compete): market assumptions to differentiation axes
@@ -31,7 +33,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: User, Nexus, Magi, Scribe[unified], Oracle
-- OUTPUT: Magi, Spark, Helm, Atlas, Lore, Oracle, Compete, Field, Breach, Shift, Scribe[unified]
+- OUTPUT: Magi, Spark, Magi, Atlas, Lore, Oracle, Compete, Field, Breach, Shift, Scribe[unified]
 
 PROJECT_AFFINITY: universal
 -->
@@ -68,7 +70,7 @@ Route elsewhere when the task is primarily:
 - a decision between known options: `Magi`
 - persona-based UI walkthrough: `Echo`
 - competitive intelligence gathering: `Compete`
-- business strategy simulation: `Helm`
+- business strategy simulation: `Magi`
 - feature ideation from existing data: `Spark`
 - AI/ML evaluation or prompt engineering: `Oracle`
 - risk assessment of a specific code change: `Ripple`
@@ -191,6 +193,7 @@ Numeric thresholds, prompt banks, and worked mechanics for each Recipe live in i
 | Analogy | `analogy` | | LENS | Structural mapping from a source domain | CLASSIFY -> ANALOGY map -> CRYSTALLIZE | `reference/analogical-thinking.md` |
 | Inversion | `inversion` | | LENS | Munger inversion — invert the goal, derive an avoid-list; hand failure paths to Omen for RPN/AP scoring | CLASSIFY -> INVERT -> ENUMERATE -> AVOID -> CRYSTALLIZE | `reference/inversion-method.md` |
 | Multi-Engine | `multi` | | DEEP (multi) | Tri-engine reframe generation with Pattern D Divergence-primary scoring — use when stuck thinking may share one training-data prior | SCOPE -> PREFLIGHT -> FAN-OUT -> NORMALIZE -> CLUSTER -> SCORE -> GROUND -> SYNTHESIZE | `reference/tri-engine-reframe.md`, `_common/MULTI_ENGINE_RECIPE.md` |
+| Interactive Ideation | `ideate` |  |  | Develop an idea across turns rather than reframing it once |  | `reference/ideation/patterns.md`, `reference/ideation/steelman-protocol.md` |
 
 ## Subcommand Dispatch
 
@@ -210,7 +213,7 @@ Routes on user-signal keywords (natural language); a subcommand match wins if bo
 | `what if`, `different angle`, `another way` | RAPID | Perspective-shift report | User |
 | `assumptions`, `taking for granted`, `first principles` | LENS (CHALLENGE) | Assumption Map | Magi/User |
 | `combine`, `cross-domain`, `analogy` | LENS (COMBINE) | Cross-domain insight report | Spark or User |
-| `reframe`, `rethink the problem` | DEEP | Full reframing package | Magi or Helm |
+| `reframe`, `rethink the problem` | DEEP | Full reframing package | Magi or Magi |
 | `contradiction`, `trade-off`, `improving X breaks Y` | LENS (TRIZ) | Contradiction resolution + inventive principles | Builder/User |
 | `pre-mortem`, `what could go wrong`, `blind spots` | RAPID | Assumption vulnerability + Blind Spot Report | Magi/User |
 | `complexity paralysis`, `too many options` | DEEP | Cynefin classification + prioritized reframing set | Sherpa or User |
@@ -254,9 +257,9 @@ Activated by `multi`. Pattern D (Divergence-primary) per `_common/MULTI_ENGINE_R
 ## Collaboration
 
 **Receives:** User, Nexus, Magi (deadlocked deliberations), Scribe[unified] (stakeholder conflicts)
-**Sends:** Magi (reframes + insight maps), Spark (idea candidates), Helm (strategic reframes), Atlas (architecture reconceptions), Lore (reusable patterns)
+**Sends:** Magi (reframes + insight maps), Spark (idea candidates), Magi (strategic reframes), Atlas (architecture reconceptions), Lore (reusable patterns)
 
-**Overlap boundaries** — Flux transforms *how the problem is seen*; the partner acts on the result. **Magi** decides between known options (its reframing toolkit is a lightweight pre-deliberation step, not a full pipeline). **Spark** proposes features from existing data/patterns. **Echo** simulates personas against UI. **Helm** simulates business scenarios from a given strategy. **Oracle** evaluates AI/ML design — collaborate with it when reframing touches AI system design assumptions. **Ripple** assesses the impact of a specific change; Flux questions whether that change addresses the right problem.
+**Overlap boundaries** — Flux transforms *how the problem is seen*; the partner acts on the result. **Magi** decides between known options (its reframing toolkit is a lightweight pre-deliberation step, not a full pipeline). **Spark** proposes features from existing data/patterns. **Echo** simulates personas against UI. **Magi** simulates business scenarios from a given strategy. **Oracle** evaluates AI/ML design — collaborate with it when reframing touches AI system design assumptions. **Ripple** assesses the impact of a specific change; Flux questions whether that change addresses the right problem.
 
 > **Detail**: See `reference/collaboration-packets.md` for handoff formats.
 
@@ -277,6 +280,7 @@ Activated by `multi`. Pattern D (Divergence-primary) per `_common/MULTI_ENGINE_R
 | `_common/MULTI_ENGINE_RECIPE.md` | Cross-skill `multi` protocol — Pattern D/C/H selection, flow, attribution, degraded-mode matrix. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing output, thinking depth at contradiction/ASN gating, front-loading at ENTER. Critical: P3, P5. |
 | `reference/autorun-schema.md` | Emitting AUTORUN `_STEP_COMPLETE` — Flux-specific Output/Next schema. |
+| `reference/ideation/` | Running multi-turn ideation across Expand / Propose / Evaluate / Subtract (absorbed from `riff`) |
 
 ---
 

@@ -135,7 +135,7 @@ LLMs accelerate phase 2 (initial coding) but degrade phase 3-5 (theme constructi
 - **To Field**: ambiguous themes or persona divergence → escalate for moderated interviews to disambiguate.
 - **To Spark**: themes describing unmet jobs or workarounds → feature proposals.
 - **To Echo**: themes pointing to persona-specific friction → cognitive walkthrough validation.
-- **To Bond**: themes correlating with churn cohort feedback → retention-program inputs.
-- **To Helm**: cross-segment recurring themes → strategic narrative inputs.
+- **To Growth**: themes correlating with churn cohort feedback → retention-program inputs.
+- **To Magi**: cross-segment recurring themes → strategic narrative inputs.
 
 References: Braun & Clarke (2006), "Using thematic analysis in psychology"; Braun & Clarke (2019), "Reflexive thematic analysis"; Guest, Bunce & Johnson (2006) on saturation thresholds.

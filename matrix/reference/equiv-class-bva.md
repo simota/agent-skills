@@ -7,7 +7,7 @@ Purpose: Reduce input-domain test cases via Myers equivalence partitioning, then
 - **matrix `equiv-class`**: Input-domain equivalence partitioning + BVA for axes that are ranges/continuous/string-typed (this document).
 - **matrix `pairwise` (elsewhere)**: Combinatorial 2-way pair coverage for enumerated axes.
 - **matrix `cover` (elsewhere)**: Generic n-wise selection.
-- **mint (elsewhere)**: Test data / fixture generation. `equiv-class` emits the *rules*; mint generates the *data*.
+- **radar (elsewhere)**: Test data / fixture generation. `equiv-class` emits the *rules*; radar generates the *data*.
 - **Radar / Builder / Probe (elsewhere)**: Execution. Radar=unit, Builder=validator, Probe=negative security.
 
 ## Workflow

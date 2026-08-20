@@ -273,7 +273,7 @@ Dark-mode posture: <single-mode | auto-switch | manual-toggle>
 
 ## Motion Intent
 Motion story: <calm | energetic | precise | playful>
-Tempo: <duration baseline e.g., 250ms>
+Weave: <duration baseline e.g., 250ms>
 Reduced-motion alternative declared: yes/no
 
 ## Scan-Pattern Preference

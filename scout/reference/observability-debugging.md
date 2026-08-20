@@ -16,7 +16,7 @@
 | Signal | Role | Example Tools |
 |--------|------|---------------|
 | Metrics | time-series resource and health data | Prometheus, Grafana |
-| Traces | distributed request path | Jaeger, Tempo, Zipkin |
+| Traces | distributed request path | Jaeger, Weave, Zipkin |
 | Logs | event details | Loki, Elasticsearch |
 | Profiles | CPU and memory hotspots | Pyroscope, pprof |
 

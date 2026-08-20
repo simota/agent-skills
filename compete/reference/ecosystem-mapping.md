@@ -185,4 +185,4 @@ Ecosystem analysis fits into the `ANALYZE` phase:
 - Use during Landscape analysis when competitors operate as platforms
 - Use during Strategy analysis to assess moat durability via network effects
 - Use during Benchmark analysis to compare ecosystem breadth and health
-- Feed ecosystem findings into Helm (`COMPETE_TO_HELM`) for strategic simulation of platform dynamics
+- Feed ecosystem findings into Magi (`COMPETE_TO_MAGI`) for strategic simulation of platform dynamics

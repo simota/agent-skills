@@ -23,15 +23,15 @@ COLLABORATION_PATTERNS:
 - Trace -> Voice: Session behavior data for targeted survey design (frustration detection → feedback collection)
 - Voice -> Field: Feedback insights
 - Voice -> Spark: Feature ideas
-- Voice -> Bond: Engagement insights
+- Voice -> Growth: Engagement insights
 - Voice -> Compete: Competitive feedback
-- Voice -> Helm: Customer voice
+- Voice -> Magi: Customer voice
 - Voice -> Echo: Persona-specific complaints
 - Voice -> Scout: Bug-heavy feedback
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Pulse, Field, Growth, Beacon, Trace
-- OUTPUT: Field, Spark, Bond, Compete, Helm, Echo, Scout
+- OUTPUT: Field, Spark, Growth, Compete, Magi, Echo, Scout
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(M) Marketing(H)
 -->
@@ -59,7 +59,7 @@ Route elsewhere when the task is primarily:
 
 - Instrumentation, KPI dashboards, or trend pipelines → `Pulse`
 - Exploratory survey design (research-purpose interviews, usability testing, sampling rigor) → `Field` — Voice handles operational feedback surveys (NPS/CSAT/CES, continuous sentiment monitoring)
-- Churn-prevention plays, save offers, or win-back execution → `Bond`
+- Churn-prevention plays, save offers, or win-back execution → `Growth`
 - Turning validated feature requests into scoped product proposals → `Spark`
 - A task better handled by another agent per `_common/BOUNDARIES.md`
 
@@ -88,7 +88,7 @@ Route elsewhere when the task is primarily:
 - Response rate benchmarks by channel: email 15-25% (embedded; linked surveys drop to 6-15%), SMS 45-60%, in-app web 25-30% / mobile 35-40%, in-person 85-95%. Choose the channel that balances reach with response quality; SMS outperforms email by 3-4× but may feel intrusive for relationship surveys. For event-triggered surveys via SMS, send within 2 hours of the event — delayed sends lose up to 32% of completions. Track both participation rate (started) and completion rate (finished) — a gap reveals survey design issues.
 - Avoid surveying the same customer with NPS + CSAT + CES simultaneously — survey fatigue degrades response quality and inflates abandonment. Stagger: CES/CSAT transactionally after interactions, NPS quarterly for relationship health. Apply a 30-day suppression window as the baseline — if a customer received any survey (NPS, CSAT, product feedback, exit) in the last 30 days, suppress them from the next send and adjust the window based on send volume and customer complaints.
 - When analyzing feedback data at scale, scan for synthetic feedback contamination before classification or sentiment analysis. Detection signals include: (1) abnormal lexical uniformity across responses (cosine similarity clustering), (2) timestamp clustering (many responses within seconds), (3) professional survey taker patterns (completion time < 30% of median, straight-lining on Likert scales), (4) AI-generated text markers (low perplexity scores, formulaic sentence structure, absence of typos/colloquialisms in contexts where they'd be natural). Flag contaminated segments for human review rather than silently excluding them — silent exclusion introduces its own bias.
-- For LLM-powered feedback pipelines, implement a contamination gate before downstream routing: if ≥5% of a feedback batch is flagged as synthetic, halt automated classification and alert the responsible owner. This prevents contaminated data from propagating to Compete (via VOICE_TO_COMPETE), Spark, or Bond.
+- For LLM-powered feedback pipelines, implement a contamination gate before downstream routing: if ≥5% of a feedback batch is flagged as synthetic, halt automated classification and alert the responsible owner. This prevents contaminated data from propagating to Compete (via VOICE_TO_COMPETE), Spark, or Growth.
 - For PLG (Product-Led Growth) contexts, design in-product micro-surveys that intercept users at activation milestones rather than arbitrary touchpoints. Trigger micro-surveys (1-2 questions max) when: (1) users complete a key activation step (first value delivery), (2) users reach a usage threshold indicating engagement, (3) users hit a friction point detected by Trace (via TRACE_TO_VOICE). Keep micro-surveys contextual and non-blocking — modal surveys during critical flows cause 15-25% task abandonment. Prefer inline or slide-in formats.
 - Close the loop on negative feedback within 24 hours — detractor follow-up speed is the strongest predictor of recovery and score improvement. Automate alerting for NPS 0-6 and CSAT bottom-box responses to route immediately to the responsible owner.
 - NPS benchmarks, the VoC platform landscape, EU AI Act / GDPR obligations, and micro-survey tooling -> `reference/multi-channel-synthesis.md` § Market and Regulatory Context.
@@ -179,7 +179,7 @@ Routing rules:
 - If the request spans multiple channels, read `reference/multi-channel-synthesis.md`.
 - If the request matches another agent's primary role, route per `_common/BOUNDARIES.md`.
 - Need dashboards or metric governance → `Pulse`
-- Churn intervention or win-back execution → `Bond`
+- Churn intervention or win-back execution → `Growth`
 - Feature requests need product framing → `Spark`
 - Persona-specific complaints need journey validation → `Echo`
 - Bug-heavy feedback needs investigation → `Scout`
@@ -207,9 +207,9 @@ Routing rules:
 | Growth → Voice | `GROWTH_TO_VOICE` | Conversion data for feedback context |
 | Voice → Field | `VOICE_TO_RESEARCHER` | Feedback insights for research validation |
 | Voice → Spark | `VOICE_TO_SPARK` | Feature ideas from user feedback |
-| Voice → Bond | `VOICE_TO_RETAIN` | Engagement insights for retention |
+| Voice → Growth | `VOICE_TO_RETAIN` | Engagement insights for retention |
 | Voice → Compete | `VOICE_TO_COMPETE` | Competitive feedback for market analysis |
-| Voice → Helm | `VOICE_TO_HELM` | Customer voice for strategic decisions |
+| Voice → Magi | `VOICE_TO_MAGI` | Customer voice for strategic decisions |
 | Voice → Echo | `VOICE_TO_ECHO` | Persona-specific complaints for journey validation |
 | Voice → Scout | `VOICE_TO_SCOUT` | Bug-heavy feedback for root cause investigation |
 | Beacon → Voice | `BEACON_TO_VOICE` | Customer-facing SLO breach signals for feedback correlation |
@@ -219,7 +219,7 @@ Overlap boundaries:
 
 - **vs Pulse**: Pulse = quantitative metrics and KPI dashboards; Voice = qualitative feedback collection and synthesis.
 - **vs Field**: Field = exploratory research design and methodology (interviews, usability tests, sampling); Voice = operational feedback collection and sentiment analysis (NPS/CSAT/CES, continuous monitoring). When users say "survey", route exploratory/research-purpose surveys to Field, operational feedback surveys to Voice.
-- **vs Bond**: Bond = retention strategy and execution; Voice = churn signal detection and feedback synthesis.
+- **vs Growth**: Growth = retention strategy and execution; Voice = churn signal detection and feedback synthesis.
 - **vs Trace**: Trace = session replay behavior analysis; Voice = explicit user feedback and survey responses.
 
 ## Reference Map

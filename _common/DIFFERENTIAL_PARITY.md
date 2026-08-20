@@ -2,7 +2,7 @@
 
 > **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
 
-Cross-skill discipline for **proving behavioral / observable equivalence by diffing two implementations against a shared oracle**, rather than asserting equivalence by faith. The shared kernel behind `nexus[transmute]` (cross-language rewrite), `nexus[clone]` (faithful product reproduction), `nexus[fuse]` (multi-source synthesis, selective parity), and `nexus[graft]` (concept-fidelity, the fidelity-inverse). Verification skills that compute the diff — `radar`, `attest`, `voyager`, `mint`, `pixel`, `frame` — also import this protocol.
+Cross-skill discipline for **proving behavioral / observable equivalence by diffing two implementations against a shared oracle**, rather than asserting equivalence by faith. The shared kernel behind `nexus[transmute]` (cross-language rewrite), `nexus[clone]` (faithful product reproduction), `nexus[fuse]` (multi-source synthesis, selective parity), and `nexus[graft]` (concept-fidelity, the fidelity-inverse). Verification skills that compute the diff — `radar`, `attest`, `voyager`, `radar`, `pixel`, `frame` — also import this protocol.
 
 **Read when:** authoring or executing any recipe that claims "verified by differential parity" / "parity-verified" / "differential oracle"; or designing the comparator/harness that computes it.
 
@@ -25,7 +25,7 @@ Differential parity is one discipline with one mechanism; recipes differ only in
 
 | Recipe | Oracle origin | Oracle count |
 |--------|---------------|--------------|
-| `transmute` | **Extracted from your own source** (Mint golden I/O fixtures generated from the source impl) | one |
+| `transmute` | **Extracted from your own source** (Radar golden I/O fixtures generated from the source impl) | one |
 | `clone` | **Captured by observing an external product** (screenshots / network / flow recordings — black-box) | one (a stamped baseline) |
 | `fuse` | **Captured per source**, then assigned per element | **two/selective** — adopted→parity-vs-*that-source*; merged/net-new→spec-AC |
 | `graft` | Donor **concept** distilled from observation; host behavior from own source | **triple** — concept-fidelity ∧ host-integrity ∧ Innovation Gate (parity is the *inverse* bar: high donor-surface resemblance is a *smell*) |

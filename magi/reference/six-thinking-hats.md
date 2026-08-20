@@ -9,7 +9,7 @@ Purpose: Edward de Bono's parallel-thinking protocol that separates a single del
 - **magi `devil` (elsewhere)**: formal opposition. Black Hat is one mode of six; Devil's Advocate is an entire structured red-team protocol with rotated dissenter, not a single-mode pass.
 - **magi `delphi` (elsewhere)**: anonymous multi-round expert convergence. Six Hats is single-room, named, parallel — not anonymous, not iterative across days.
 - **flux (elsewhere)**: reframes the problem (axes, lenses, paradigm shifts). Six Hats keeps the problem fixed and rotates evaluation modes.
-- **riff (elsewhere)**: iterative dialogue idea-deepening. Six Hats is single-pass per hat with strict mode discipline.
+- **flux (elsewhere)**: iterative dialogue idea-deepening. Six Hats is single-pass per hat with strict mode discipline.
 - **omen (elsewhere)**: enumerates failure modes via FMEA/RPN. Black Hat overlaps but is qualitative, time-boxed, and embedded in a six-mode rotation.
 
 ## Workflow
@@ -106,5 +106,5 @@ Total typical session: 20-35 min for evaluation, 30-50 min for problem-solving.
 - **To Magi VOTE**: hat-column outputs become structured evidence for Logos (White, Black-risks), Pathos (Red, Black-team-impact), Sophia (Yellow, Green).
 - **To Flux**: if Green Hat outputs reveal the original frame is wrong, halt and route to Flux for reframing before resuming.
 - **To Omen**: Black Hat outputs that warrant quantitative scoring (RPN/AP) escalate to Omen for FMEA-grade enumeration.
-- **To Riff**: if Green Hat surfaces an idea worth deepening rather than deciding, route to Riff for iterative expansion before returning to Magi.
+- **To Flux**: if Green Hat surfaces an idea worth deepening rather than deciding, route to Flux for iterative expansion before returning to Magi.
 - **To human**: if Blue closing reveals no consensus and Red gut-checks diverge sharply from Black/Yellow analysis, escalate as a values disagreement, not a fact dispute.

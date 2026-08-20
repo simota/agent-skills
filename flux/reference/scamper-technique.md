@@ -9,7 +9,7 @@ Purpose: Structured idea-modification checklist developed by Bob Eberle (1971), 
 - **flux `cross`**: cross-domain Bisociation only. SCAMPER is intra-artifact modification; `cross` is inter-domain knowledge transfer.
 - **flux `challenge`**: First Principles and Assumption Reversal. Use when the question is "should this exist at all?" not "how do we modify it?".
 - **flux `analogy`**: structural mapping from a source domain. SCAMPER lens A (Adapt) is analogy-adjacent but shallower — `analogy` goes deeper into structural alignment.
-- **riff (elsewhere)**: iterative dialogue brainstorming. SCAMPER is a single-pass checklist; Riff is multi-turn co-creation.
+- **flux (elsewhere)**: iterative dialogue brainstorming. SCAMPER is a single-pass checklist; Flux is multi-turn co-creation.
 - **spark (elsewhere)**: feature proposal from data. SCAMPER feeds Spark with raw idea candidates.
 
 ## Workflow
@@ -69,6 +69,6 @@ DELIVER  →  hand to Spark (feature proposals) or Magi (decision among
 
 - **To Spark**: surviving ideas with lens citations as feature proposal candidates.
 - **To Magi**: when 3+ modified variants compete and a decision is needed.
-- **To Riff**: when one cell looks promising but underdeveloped — open iterative dialogue on that cell.
+- **To Flux**: when one cell looks promising but underdeveloped — open iterative dialogue on that cell.
 - **To Omen**: Eliminate and Reverse cells that may carry hidden failure modes — pre-mortem before committing.
 - **To `analogy`**: Adapt-lens hits that deserve deeper structural mapping, not just surface borrowing.

@@ -124,7 +124,7 @@ Model names are hub-engine-specific. The role → tier mapping is stable; the co
 | Investigation / read-only (Scout, Lens, Trail) | balanced | **Sonnet 5** (`claude-sonnet-5`) ¶ | `gpt-5.6-terra` † | Cost-efficient |
 | Standard implementation (Builder, Artisan, Radar) | balanced | **Sonnet 5** (`claude-sonnet-5`) ¶ | `gpt-5.6-terra` † | Balanced |
 | High-complexity design (Sentinel, Atlas) | high-reasoning | opus / **fable-5** | `gpt-5.6-sol` † | Precision-critical |
-| Lightweight tasks (Quill, Morph) | fast | haiku | `gpt-5.6-luna` † | Minimal cost |
+| Lightweight tasks (Quill, Scribe) | fast | haiku | `gpt-5.6-luna` † | Minimal cost |
 
 > **† Codex latest-generation mandate + variant tiering (user policy, `CODEX_ORCHESTRATION.md` C3.0):** the Codex column is always the **latest generation — currently the `gpt-5.6` family**; never a previous generation. Within the family, the variant follows the role (hub/plan/design = sol, standard implementation = terra, rote/high-volume = luna, per official guidance). Differentiate further via `model_reasoning_effort`. (Claude Code tiering is unaffected.)
 >

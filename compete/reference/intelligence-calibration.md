@@ -31,7 +31,7 @@ Key_Predictions:
     confidence: [High/Medium/Low]
     timeframe: [validation window]
 Actionability: [immediately_actionable | needs_further_research | monitoring_only]
-Downstream_Handoff: [Spark | Growth | Helm | None]
+Downstream_Handoff: [Spark | Growth | Magi | None]
 ```
 
 Track at minimum:
@@ -130,7 +130,7 @@ type: PATTERN
 source: Compete
 date: YYYY-MM-DD
 summary: [intelligence insight]
-affects: [Compete, Helm, Growth]
+affects: [Compete, Magi, Growth]
 priority: MEDIUM
 reusable: true
 -->

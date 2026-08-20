@@ -9,7 +9,7 @@ Purpose: Use this file to design smoke / sanity suites that serve as the minimum
 - **Voyager (elsewhere)**: full E2E user journeys with Playwright/Cypress/WebdriverIO. Smoke is a tiny subset of E2E shaped for deploy gates, not a substitute for E2E coverage.
 - **Attest (elsewhere)**: spec and AC compliance verification. Smoke checks only that deployment signal is green, not that every AC passes.
 - **Beacon (elsewhere)**: SLO/SLI definitions, long-term observability, synthetic monitoring strategy. Smoke tests consume Beacon's SLOs and health signals but do not own them.
-- **Mint (elsewhere)**: test-data factories. Smoke tests should use pre-baked, deterministic data — never generate data at smoke time.
+- **Radar (elsewhere)**: test-data factories. Smoke tests should use pre-baked, deterministic data — never generate data at smoke time.
 
 If the ask is "deploy gate / post-deploy verification in <3 min" → `smoke`. If it is "validate the full checkout journey" → Voyager. If it is "ensure SLOs hold over a week" → Beacon.
 

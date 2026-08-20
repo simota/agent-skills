@@ -1,6 +1,6 @@
 # Skill Agent Catalog
 
-**Purpose:** Complete catalog of 100 global skills and 3 repository-local extensions with descriptions and triggers.
+**Purpose:** Complete catalog of 90 global skills and 3 repository-local extensions with descriptions and triggers.
 **Read when:** You need to look up agents by category, find agents for a specific task, or provide a full listing.
 
 ---
@@ -39,7 +39,7 @@ Investigation, analysis, and root-cause identification. Does not write code.
 | **Void** | YAGNI verification | Scope cuts, complexity reduction proposals | No |
 | **PDM** | Delivery-status navigator | Planned-vs-implemented reconciliation, feature inventory, roadmap rollup | No |
 
-## Implementation (6)
+## Implementation (5)
 
 Code implementation.
 
@@ -48,11 +48,10 @@ Code implementation.
 | **Builder** | Business-logic and external-API implementation | Robust API integrations, data models, image-generation APIs | Yes |
 | **Artisan** | Frontend implementation | Production React/Vue/Svelte | Yes |
 | **Forge** | Prototyping | Fast prototypes for both frontend and backend | Yes |
-| **Anvil** | CLI/TUI and developer-environment tooling | Terminal UIs, CLI tools, dotfiles, shell/editor configuration, macOS automation | Yes |
 | **Native** | Pure-native mobile implementation | iOS Swift 6.3 + SwiftUI / Android Kotlin 2.4+ + Jetpack Compose (RN/Flutter/KMP/CMP out of scope) | Yes |
 | **Pixel** | Mockup → code | Pixel-accurate HTML/CSS from images | Yes |
 
-## Testing (6)
+## Testing (5)
 
 Test authoring and verification.
 
@@ -110,7 +109,7 @@ Documentation authoring, visualization, and article writing.
 | **Tome** | Learning material and technical publications | Diff → tutorial conversion, design-decision records, articles for note / Zenn / Qiita / dev.to | No |
 | **Canvas** | Diagramming and visualization | Mermaid / ASCII / draw.io for flow, sequence, ER diagrams | Mixed |
 
-## Architecture (7)
+## Architecture (4)
 
 System design and structure.
 
@@ -120,7 +119,6 @@ System design and structure.
 | **Schema** | DB and tenant architecture | Normalization, migrations, ER diagrams, tenant isolation/RLS/routing (`tenant`) | Mixed |
 | **Gateway** | API design | OpenAPI generation, versioning | Mixed |
 | **Grove** | Human/LLM repository structure | Directory/docs layout plus LLM navigation and prompt-cache topology (`llm`) | Mixed |
-| **Grok** | Grammar / parser / DSL design | Regex, PEG / ANTLR, ReDoS-safe grammar design | Mixed |
 
 ## UX/Design (11)
 
@@ -140,7 +138,7 @@ UI/UX design and improvement.
 | **Funnel** | Landing-page construction | LP conversion and premium nine-stage production (`premium`) | Mixed |
 | **Voice** | User-feedback analysis | NPS design, review analysis, sentiment analysis | No |
 
-## DevOps (7)
+## DevOps (5)
 
 Infrastructure, CI/CD, and operations.
 
@@ -161,14 +159,13 @@ Migration and modernization.
 | **Shift** | Migration, upgrade & modernization orchestrator | Framework / library / DB migration; deprecated-library detection (`detect`); native-API replacement (`modernize`); technology radar (`radar`) — absorbed from horizon | Mixed |
 | **Port** | Web → Native porting design | Blueprint from Web SPA / SSR / PWA to iOS Swift/SwiftUI + Android Kotlin/Compose pure-native (parity matrix, phased roadmap) | No |
 
-## Growth (2)
+## Growth (1)
 
 Growth tactics and branding.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Growth** | SEO / CRO / GEO | Meta / OGP / JSON-LD, CTA optimization | Mixed |
-| **Bond** | Retention | Re-engagement, churn prevention | Mixed |
 
 ## Analytics (3)
 
@@ -188,31 +185,28 @@ Version-control workflow.
 |-------|------|---------|------|
 | **Guardian** | PR management | Change classification, granularity recommendations, strategy | No |
 
-## Browser (2)
+## Browser (1)
 
 Browser automation and asset acquisition.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Vector** | Browser automation | Task completion via Playwright / DevTools | Yes |
-| **Trawl** | Crawl architecture | Distributed crawler, politeness design | No |
 
-## Data (2)
+## Data (1)
 
 Data pipelines and conversion.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Stream** | ETL / ELT pipelines | Kafka / Airflow / dbt design | Mixed |
-| **Morph** | Document conversion | Markdown / Word / Excel / PDF / HTML conversion | Mixed |
 
-## Strategy (3)
+## Strategy (2)
 
 Business strategy and decision-making. Does not write code.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Helm** | Business strategy | SWOT / PESTLE / Porter analysis | No |
 | **Compete** | Competitive research and personal branding | Feature matrices, product positioning, GitHub / LinkedIn / blog / conference positioning | No |
 | **Rank** | Prioritization | ICE / RICE / WSJF / MoSCoW scoring | No |
 
@@ -231,7 +225,6 @@ Coordination and communication.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Relay** | Messaging integration | Bot development, webhooks, WebSocket | Mixed |
 | **Scribe** (`cross-team`) | Spec alignment | Cross-team Business / Dev / Design specifications | No |
 
 ## Meta / Tooling (5 global)
@@ -254,7 +247,7 @@ Media and creative generation.
 |-------|------|---------|------|
 | **Ink** | SVG icons | Icon systems, sprite construction | Yes |
 
-## AI / ML (2)
+## AI / ML (3)
 
 AI design and thinking support.
 
@@ -270,7 +263,6 @@ Specialized skills that don't fit the categories above.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Riff** | Brainstorming | Iterative idea deepening through dialogue | No |
 | **Polyglot** | i18n / l10n | Multilingual support, RTL handling | Mixed |
 | **Weave** | Workflow design | State machines, Saga patterns | Mixed |
 | **Omen** | Pre-mortem analysis | Failure-scenario enumeration, RPN scoring | No |
@@ -281,8 +273,6 @@ Specialized skills that don't fit the categories above.
 | **Cue** | Video script and demo production | Product videos, storyboards, Playwright-generated demos | Mixed |
 | **Stage** | Slide generation | Marp / reveal.js / Slidev | Mixed |
 | **Frame** | Figma → code bridge | Design context extraction | No |
-| **Mint** | Test-data generation | Factories, boundary values, seed management | Mixed |
-| **Tempo** | Schedule design | cron, timezone / DST, retry / backoff, business calendars | Mixed |
 
 ## Project-local extensions (3)
 

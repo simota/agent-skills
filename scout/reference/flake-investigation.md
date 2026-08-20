@@ -46,7 +46,7 @@ Always record **which configuration** (commit, OS, concurrency level, seed, load
 |----------|--------|------------|
 | **Timing / race** | passes in isolation, fails in parallel | concurrency specialist (handoff) |
 | **Shared mutable state** | order of tests matters, one test pollutes another | Radar |
-| **Time-of-day dependency** | `Date.now()`, midnight, DST, timezone | Tempo |
+| **Time-of-day dependency** | `Date.now()`, midnight, DST, timezone | Weave |
 | **Clock / timer** | `setTimeout` tuning, polling intervals | concurrency specialist |
 | **External dependency** | network / DNS / 3rd-party API | Scaffold (mocking) |
 | **Resource exhaustion** | passes fresh, fails under load | Siege |
@@ -174,7 +174,7 @@ done
 | Condition | Target | Reason |
 |-----------|--------|--------|
 | Test-code flake (sleep waits, shared tempdir) | **Radar** | test-infra fix |
-| Timezone / clock / cron | **Tempo** | time-aware design |
+| Timezone / clock / cron | **Weave** | time-aware design |
 | CI-only (env drift) | **Scaffold** | env reproducibility |
 | Load-correlated | **Siege** | stress validation |
 | Can't classify after N=50 | `consensus` Recipe | multi-engine hypothesis |

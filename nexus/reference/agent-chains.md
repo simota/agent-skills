@@ -32,7 +32,7 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | FEATURE | UI | Spark → Forge → Muse → Builder → Lens → Radar |
 | FEATURE | UX | Field → Echo → Spark → Builder → Radar |
 | FEATURE | frontend | Forge → Artisan → Radar |
-| FEATURE | cli | Anvil → Radar |
+| FEATURE | cli | Builder → Radar |
 | FEATURE | innovation | Field → Flux → Spark → Builder → Radar |
 | FEATURE | story-driven | Saga → Spark → Forge → Builder → Radar |
 | REFACTOR | small | Zen → Radar |
@@ -54,8 +54,8 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | INVESTIGATE | pre-impl | Lens → Builder → Radar |
 | INVESTIGATE | regression | Trail → Scout → Builder → Radar |
 | INVESTIGATE | architecture | Lens → Atlas → Canvas |
-| DOCS | convert | Morph |
-| DOCS | report | Launch[weekly] → Morph |
+| DOCS | convert | Scribe |
+| DOCS | report | Launch[weekly] → Scribe |
 | INFRA | local | Scaffold → Radar |
 | QA | - | Lens → Echo → Radar |
 | QA | e2e | Voyager → Lens → Radar |
@@ -99,18 +99,18 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | STRATEGY | compete | Compete → Spark → Builder → Radar |
 | STRATEGY | feedback | Voice → Spark → Builder → Radar |
 | STRATEGY | metrics | Pulse → Builder → Radar |
-| STRATEGY | retention | Bond → Spark → Builder → Radar |
+| STRATEGY | retention | Growth → Spark → Builder → Radar |
 | STRATEGY | ab-test | Experiment → Builder → Radar |
 | STRATEGY | data-pipeline | Stream → Schema → Builder → Radar |
-| STRATEGY | reframe | Scribe[unified] → Flux → Helm → Scribe |
-| STRATEGY | simulation | Helm → Canvas → Scribe |
-| STRATEGY | simulation-full | Compete → Helm → Magi → Scribe → Canvas |
+| STRATEGY | reframe | Scribe[unified] → Flux → Magi → Scribe |
+| STRATEGY | simulation | Magi → Canvas → Scribe |
+| STRATEGY | simulation-full | Compete → Magi → Scribe → Canvas |
 | MARKETING | quick | Compete → Growth → Funnel |
 | MARKETING | full | Sherpa → Field → Cast → Compete → Pulse → Saga → Growth → Funnel → Experiment → Scribe |
 | MARKETING | positioning | Compete → Cast → Magi → Saga → Echo → Scribe |
 | MARKETING | gtm | Compete → Cast → Pulse → Saga → Growth → Funnel → Experiment → Launch |
 | MARKETING | acquisition | Pulse → Compete → Growth → Funnel → Experiment |
-| MARKETING | retention | Pulse → Trace → Bond → Voice → Spark → Experiment |
+| MARKETING | retention | Pulse → Trace → Growth → Voice → Spark → Experiment |
 | MARKETING | content | Saga → Prose → Growth → Artisan → Radar → Pulse |
 | MARKETING | brand | Vision → Compete → Cast → Saga → Prose → Muse → Growth |
 | MARKETING | personal-brand | Compete[brand] → Prose → Growth |
@@ -142,11 +142,11 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | DESIGN_SYSTEM_DOCS | full | Vision → Muse → Vitrine + Canvas → Artisan → Quill |
 | CONTENT | onboarding | Prose → Echo → Artisan → Radar |
 | CONTENT | i18n | Prose → Polyglot → Artisan → Radar |
-| DEV_EXPERIENCE | dotfiles | Anvil[env] → Gear |
-| DEV_EXPERIENCE | full-env | Anvil[env] → Gear → Hone[hook] |
-| DEV_EXPERIENCE | audit | Anvil[env] → Sentinel → Gear |
-| DEV_EXPERIENCE | cli-audit | Hone → Anvil[env] → Gear |
-| DEV_EXPERIENCE | cli-full | Hone → Anvil[env] → Gear → Sentinel |
+| DEV_EXPERIENCE | dotfiles | Hone[env] → Gear |
+| DEV_EXPERIENCE | full-env | Hone[env] → Gear → Hone[hook] |
+| DEV_EXPERIENCE | audit | Hone[env] → Sentinel → Gear |
+| DEV_EXPERIENCE | cli-audit | Hone → Hone[env] → Gear |
+| DEV_EXPERIENCE | cli-full | Hone → Hone[env] → Gear → Sentinel |
 | LOAD_TEST | quick | Siege → Bolt |
 | LOAD_TEST | standard | Siege → Bolt → Builder → Radar |
 | LOAD_TEST | chaos | Siege → Bolt → Triage → Builder → Beacon |
@@ -154,7 +154,7 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | DEMO | full | Cue[demo] → Vitrine → Quill |
 | SPRINT_RETRO | quick | Launch[weekly] |
 | SPRINT_RETRO | full | Launch[weekly] → Canvas → Quill |
-| KNOWLEDGE | full | Scribe → Quill → Morph |
+| KNOWLEDGE | full | Scribe → Quill → Scribe |
 | KNOWLEDGE | research | Field → Scribe |
 | SPEC_VERIFY | quick | Attest → Scribe |
 | SPEC_VERIFY | standard/full | Attest → Scribe → Radar → Builder |
@@ -196,7 +196,7 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | FIGURE_CHANNELING | critique | Magi[advisor] → User/Builder |
 | FIGURE_CHANNELING | decide | Magi[advisor] → Magi[decide] → Builder |
 | FIGURE_CHANNELING | reframe-first | Flux → Magi[advisor] → Magi[decide] |
-| FIGURE_CHANNELING | ideation-seed | Magi[advisor] → Riff → Spark |
+| FIGURE_CHANNELING | ideation-seed | Magi[advisor] → Flux → Spark |
 | FIGURE_CHANNELING | founder | Magi[advisor] → Magi[advisor] |
 | FIGURE_CHANNELING | write-up | Magi[advisor] → Scribe |
 | PORTING | survey-only | Lens → Atlas → Port[survey] |
@@ -215,7 +215,7 @@ Each row is a **deviation** from the `routing-matrix.md` default for that task t
 | MOBILE_NATIVE | full | Port[blueprint] → Native[swiftui] + Native[compose] → Radar → Voyager → Cloak → Launch |
 | ADVISORY | advise-then-build | Magi[advisor] → Sherpa → Builder |
 | ADVISORY | advise-then-validate | Magi[advisor] → Echo[demand] |
-| ADVISORY | strategy-handoff | Helm → Magi[advisor] → Sherpa |
+| ADVISORY | strategy-handoff | Magi → Magi[advisor] → Sherpa |
 | ADVISORY | feature-reality-check | Spark → Magi[advisor] |
 | ADVISORY | research-to-action | Field → Magi[advisor] → Sherpa → Builder |
 
@@ -261,7 +261,7 @@ Builder then applies:
 - Problem framing stuck → Add Flux for perspective shift
 - User names a real notable figure ("what would <figure> do here?", "critique this as <figure>") → Use Magi[channel/critique] for the advisory reading; invoke Magi[decide] only when a verdict is requested
 - A decision panel keeps producing the same in-house viewpoints → Add Magi[advisor] before Magi[decide] to inject named-expert mental models
-- Ideation has gone flat with generic ideas → Add Magi[advisor] before Riff so expert frameworks seed the brainstorm
+- Ideation has gone flat with generic ideas → Add Magi[advisor] before Flux so expert frameworks seed the brainstorm
 - Figma design available → Add Frame before Artisan
 - Mockup/screenshot to code → Add Pixel (faithful reproduction from image)
 - Detailed design-to-code gap analysis / fidelity audit / design review requested → Add Pixel[gap-report]; chain to Canon for WCAG mapping when a11y is in scope, Judge for report quality review, Artisan for remediation
@@ -323,7 +323,7 @@ Builder then applies:
 
 - Investigation-only chains (Lens, Scout, Trail) → No Rally
 - Advisory-only chains (Magi 1on1/triage/retro/pitch) → No Rally; the advisory Recipe is single-session by contract
-- Single-agent chains (Quill, Morph) → No Rally
+- Single-agent chains (Quill, Scribe) → No Rally
 - Changes under 10 lines total → No Rally
 - High-risk security changes → Prefer sequential with checkpoints
 - Each branch needs < 50 lines of code → Nexus _PARALLEL_BRANCHES sufficient

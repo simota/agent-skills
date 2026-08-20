@@ -7,10 +7,10 @@ Purpose: Design and audit `scripts/` directory layout — language selection (sh
 - **grove `scripts`**: filesystem layout for repo scripts — directory split, language-pick rubric, naming, shebangs, executable bits, package.json delegation. Layout-only, not script content.
 - **grove `audit` / `design` / `docs` / `migrate` (default + siblings)**: structural audit, generic directory design, docs/, level-based migration. Use these when scope is broader than scripts/.
 - **grove `monorepo` / `tests` (siblings)**: workspace-level layout and tests/ — Grove `scripts` is invoked alongside or per-package.
-- **Anvil (elsewhere)**: CLI/TUI implementation. Grove `scripts` decides where a script lives; Anvil owns the CLI command surface and dev-tool wiring once it grows beyond a thin script.
+- **Builder (elsewhere)**: CLI/TUI implementation. Grove `scripts` decides where a script lives; Builder owns the CLI command surface and dev-tool wiring once it grows beyond a thin script.
 - **Gear (elsewhere)**: CI/CD pipeline config and `npm run`/`make` task graph. Grove `scripts` decides directory; Gear decides when CI calls them.
 - **Scaffold (elsewhere)**: cloud IaC. `infra/` provisioning scripts (Terraform, Pulumi) belong to Scaffold, not Grove `scripts`.
-- **Anvil (elsewhere)**: personal dotfiles and shell config. Grove `scripts` is repo-shared; Anvil is per-developer.
+- **Hone (elsewhere)**: personal dotfiles and shell config. Grove `scripts` is repo-shared; Hone is per-developer.
 - **Grove[llm] (elsewhere)**: LLM-context ordering of `scripts/`. Grove ships layout; Grove[llm] tunes retrieval.
 
 ## Workflow
@@ -32,7 +32,7 @@ VERIFY    → every script runs from repo root; no hardcoded paths; portable (ma
           → README.md or `scripts/README.md` lists all entrypoints with one-line purpose
 
 PRESENT   → layout diagram, language-rubric findings, naming/shebang fixes
-          → hand CLI growth to Anvil; CI wiring to Gear; IaC to Scaffold
+          → hand CLI growth to Builder; CI wiring to Gear; IaC to Scaffold
 ```
 
 ## Language Selection Rubric
@@ -43,7 +43,7 @@ PRESENT   → layout diagram, language-rubric findings, naming/shebang fixes
 | 30–200 lines, JSON/network/cross-platform | Node (`#!/usr/bin/env node`) or Deno | Bash (quoting hell), pure Python (extra runtime in JS repos) | Already on PATH in JS repos; portable |
 | > 200 lines or heavy data/parsing | Python (with `uv` or virtualenv) | Bash, ad-hoc Node | Standard library, tested ecosystem |
 | Distributed binary (cross-platform, no runtime) | Go or Rust | Shell (no Windows), Python (runtime install) | Single static binary, fast |
-| > 500 lines or growing CLI surface | promote to a real CLI tool | growing the script | Hand off to Anvil |
+| > 500 lines or growing CLI surface | promote to a real CLI tool | growing the script | Hand off to Builder |
 
 If a script crosses 200 lines in bash, treat it as a code smell — port to Node/Python or split.
 
@@ -120,10 +120,10 @@ Set executable bit: `chmod +x scripts/**/*.sh scripts/**/*.ts`. Commit it: `git 
 
 ## Handoff
 
-- **To Anvil**: when a script grows past 500 lines or spawns subcommands (`scripts/dev/cli.ts <cmd>`), Anvil designs a real CLI on top.
+- **To Builder**: when a script grows past 500 lines or spawns subcommands (`scripts/dev/cli.ts <cmd>`), Builder designs a real CLI on top.
 - **To Gear**: package.json scripts that CI calls (`build`, `test`, `lint`) become Gear's pipeline inputs; CI YAML references `scripts/ci/*` after Grove locks paths.
 - **To Scaffold**: anything in `scripts/` that provisions cloud resources moves to `infra/` and becomes Scaffold's responsibility.
-- **To Anvil**: per-developer environment helpers (shell aliases, prompt configs) go to dotfiles, not repo `scripts/`.
+- **To Hone**: per-developer environment helpers (shell aliases, prompt configs) go to dotfiles, not repo `scripts/`.
 - **To Grove[llm]**: once layout is stable, Grove[llm] reorders for LLM-context retrieval (README front-loading, category headers).
 - **To Sigil**: Grove publishes the scripts layout; Sigil generates project-tuned skills referencing exact script paths.
 - **To Guardian**: when reorganizing scripts in an existing repo, Guardian slices PRs (≤ 50 files, CI-green per commit) and updates CI references in lockstep.

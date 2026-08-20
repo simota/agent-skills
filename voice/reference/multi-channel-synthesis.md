@@ -119,13 +119,13 @@ Use the score to rank issues after normalization, not before.
 |-------|--------|-----------|-------------|---------|
 | Onboarding | [N] | [+/-X] | [Issue] | -> Echo |
 | Active | [N] | [+/-X] | [Issue] | -> Roadmap |
-| At-Risk | [N] | [+/-X] | [Issue] | -> Bond |
+| At-Risk | [N] | [+/-X] | [Issue] | -> Growth |
 | Churned | [N] | [+/-X] | [Issue] | -> Compete |
 ```
 
 ## Handoff Heuristics
 
-- Route repeated churn-risk themes to `Bond`.
+- Route repeated churn-risk themes to `Growth`.
 - Route repeated feature demand with evidence to `Spark`.
 - Route competitor mentions or switching reasons to `Compete`.
 - Route bug clusters to `Scout`.

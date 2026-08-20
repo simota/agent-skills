@@ -76,7 +76,7 @@ ClaudeLanguageModel(name: .opus5, auth: auth, fixedEffort: .xhigh)
 | Mode | Use | Notes |
 |------|-----|-------|
 | `.apiKey("…")` | **Development only** | A key bundled in the app binary is extractable and bills your account — never ship it. |
-| `.proxied(headers:)` + `baseURL:` | **Production** | Relay at `baseURL` adds the `x-api-key` server-side; app ships no key. `headers` sent on every request so the proxy authorizes the caller (`[:]` if none). |
+| `.proxied(headers:)` + `baseURL:` | **Production** | Gateway at `baseURL` adds the `x-api-key` server-side; app ships no key. `headers` sent on every request so the proxy authorizes the caller (`[:]` if none). |
 
 The proxy receives standard Messages API requests, attaches `x-api-key`, forwards to `https://api.anthropic.com`.
 

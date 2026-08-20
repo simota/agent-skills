@@ -41,6 +41,6 @@ _STEP_COMPLETE:
     - [Blind Spot Report]
   Risks:
     - [Risk 1]
-  Next: Magi | Spark | Helm | Atlas | Lore | DONE
+  Next: Magi | Spark | Magi | Atlas | Lore | DONE
   Reason: [Why this next step]
 ```

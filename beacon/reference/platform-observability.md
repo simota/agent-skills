@@ -20,7 +20,7 @@ Layer 3: PLATFORM PORTAL (Backstage / custom IDP UI)
 Layer 2: OBSERVABILITY PLATFORM
   ├── OTel Collector fleet (standardized pipelines)
   ├── Prometheus + Thanos / Grafana Mimir (metrics)
-  ├── Grafana Tempo / Jaeger (traces)
+  ├── Grafana Weave / Jaeger (traces)
   ├── Loki / OpenSearch (logs)
   └── Alertmanager → PagerDuty / Opsgenie
 

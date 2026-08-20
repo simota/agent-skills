@@ -46,7 +46,7 @@ Every **load-bearing decision made without the user** — library/API/design pic
 ```
 | ID | Decision | Alternatives rejected | Why | Reversibility | Class |
 |----|----------|----------------------|-----|---------------|-------|
-| DEC-1 | retry via exponential backoff | fixed-interval | matches repo's tempo patterns | low-cost | design |
+| DEC-1 | retry via exponential backoff | fixed-interval | matches repo's retry conventions | low-cost | design |
 | DEC-2 | "notifications" read as in-app only | +email | request silent; email needs infra | medium | interpretation |
 ```
 

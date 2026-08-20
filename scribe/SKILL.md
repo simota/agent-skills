@@ -16,6 +16,8 @@ CAPABILITIES_SUMMARY:
 - operational_and_api_docs: Author ADRs, runbooks, and human-readable API documentation
 - specification_calibration: Calibrate standalone and unified document patterns through INSCRIBE and UNIFY
 
+- format_conversion: Markdown/Word/Excel/PDF/HTML conversion via Pandoc and LibreOffice, template design, batch conversion with style preservation, reusable conversion scripts — absorbed from `morph` 2026-08-20
+
 COLLABORATION_PATTERNS:
 - Field -> Scribe: User research, insights, and journeys shape L0/L1
 - Cast -> Scribe: Personas shape target users and acceptance scenarios
@@ -23,7 +25,7 @@ COLLABORATION_PATTERNS:
 - Flux/Magi/Void -> Scribe: Assumptions, trade-offs, and scope cuts refine unified specs
 - Vision -> Scribe: Design direction for UI specs
 - Spark -> Scribe: Feature proposals to PRD/checklist
-- Helm -> Scribe: Strategy docs to executable documentation
+- Magi -> Scribe: Strategy docs to executable documentation
 - Gateway -> Scribe: API design merged into SRS
 - Atlas -> Scribe: Architecture decisions into HLD/LLD
 - Scribe -> Builder: Implementation-ready specs
@@ -32,15 +34,15 @@ COLLABORATION_PATTERNS:
 - Scribe -> Voyager: E2E-ready test specs
 - Scribe -> Judge: Review criteria and acceptance gates
 - Scribe -> Sherpa: Completed specs broken into atomic tasks
-- Scribe -> Morph: Format conversion (MD to Word/PDF)
+- Scribe -> Scribe: Format conversion (MD to Word/PDF)
 - Scribe -> Canvas: Unified-package flows and maps rendered visually
 - Scribe -> Lore: Reusable documentation patterns and INSCRIBE signals
 - Scribe -> PDM: Specs/PRD as planned-scope source for delivery reconciliation
 - PDM -> Scribe: Spec gaps from undocumented implemented features
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Field, Cast, Voice, Flux, Magi, Void, Vision, Spark, Helm, Gateway, Atlas, PDM (spec gaps)
-- OUTPUT: Builder, Artisan, Radar, Voyager, Judge, Sherpa, Canvas, Morph, Lore, PDM (spec as scope source)
+- INPUT: Field, Cast, Voice, Flux, Magi, Void, Vision, Spark, Magi, Gateway, Atlas, PDM (spec gaps)
+- OUTPUT: Builder, Artisan, Radar, Voyager, Judge, Sherpa, Canvas, Scribe, Lore, PDM (spec as scope source)
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(M) Marketing(M)
 -->
@@ -244,7 +246,7 @@ Use this reference when the draft is weak: `reference/anti-patterns.md`
 | Cast -> Scribe    | `CAST_TO_SCRIBE`    | Personas shape target users and acceptance scenarios.                 |
 | Voice -> Scribe   | `VOICE_TO_SCRIBE`   | Stakeholder or user feedback adjusts priority and scope.              |
 | Gateway -> Scribe | `GATEWAY_TO_SCRIBE` | Merge API design into SRS.                                            |
-| Helm -> Scribe    | `HELM_TO_SCRIBE`    | Turn roadmap or strategy into executable documentation.               |
+| Magi -> Scribe    | `MAGI_TO_SCRIBE`    | Turn roadmap or strategy into executable documentation.               |
 | Scribe -> Sherpa  | `SCRIBE_TO_SHERPA`  | Break a completed spec into atomic tasks.                             |
 | Scribe -> Builder | `SCRIBE_TO_BUILDER` | Hand implementation-ready spec to coding agents.                      |
 | Scribe -> Radar   | `SCRIBE_TO_RADAR`   | Convert test strategy into automated test work.                       |
@@ -291,6 +293,7 @@ Routing rules:
 | Runbook | `runbook` | | Operational runbook (symptom → triage → recover → verify, escalation, idempotency) | `reference/runbook-writing.md` |
 | API Doc | `api-doc` | | Human-readable API reference from OpenAPI (code samples, error catalog, auth flow, versioning) | `reference/api-documentation.md` |
 | Unified Spec | `unified` | | Full/Standard/Lite cross-team package with staged L0-L4 elaboration | `reference/unified-spec/unified-template.md` |
+| Format Conversion | `convert` |  | Convert a document between Markdown, Word, Excel, PDF, and HTML | `reference/format-conversion/conversion-matrix.md`, `reference/format-conversion/pandoc-recipes.md`, `reference/format-conversion/format-conversion-anti-patterns.md` |
 
 ## Subcommand Dispatch
 
@@ -335,8 +338,8 @@ Unified artifacts contain scope-appropriate `L0-L4` plus `Meta`; keep `Given / W
 
 ## Collaboration
 
-**Receives:** Field (research), Cast (personas), Voice (feedback), Flux/Magi/Void (assumption, trade-off, and scope inputs), Vision (design direction), Spark (feature proposals), Helm (strategy), Gateway (API design), Atlas (architecture decisions), PDM (spec gaps)
-**Sends:** Builder (implementation specs), Artisan (UI specs), Radar (test specs), Voyager (E2E test specs), Judge (review criteria), Sherpa (atomic task breakdown), Canvas (visual rendering), Morph (format conversion), Lore (reusable patterns), PDM (planned scope)
+**Receives:** Field (research), Cast (personas), Voice (feedback), Flux/Magi/Void (assumption, trade-off, and scope inputs), Vision (design direction), Spark (feature proposals), Magi (strategy), Gateway (API design), Atlas (architecture decisions), PDM (spec gaps)
+**Sends:** Builder (implementation specs), Artisan (UI specs), Radar (test specs), Voyager (E2E test specs), Judge (review criteria), Sherpa (atomic task breakdown), Canvas (visual rendering), Scribe (format conversion), Lore (reusable patterns), PDM (planned scope)
 
 ### Overlap Boundaries
 
@@ -380,7 +383,7 @@ Unified artifacts contain scope-appropriate `L0-L4` plus `Meta`; keep `Given / W
 | `_common/TRACEABILITY.md` | Assigning requirement/AC/test IDs or emitting a `.traceability.yaml` ledger. |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the spec, thinking depth at PLAN, front-loading doc type/audience at SCAN. Critical: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Scribe-specific Output/Next schema. |
-
+| `reference/format-conversion/` | Converting between Markdown, Word, Excel, PDF, HTML (absorbed from `morph`) |
 
 ## Operational
 

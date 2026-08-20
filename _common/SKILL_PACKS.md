@@ -2,13 +2,13 @@
 
 > **Tier:** `authoring` — activates when creating or auditing skills, not during user work. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
 
-Skill membership matrix for selective enablement across the 100-skill global ecosystem. This repository also carries three project-local extensions (`orbit`, `lore`, `darwin`) registered in `_common/PROJECT_LOCAL_SKILLS.md`.
+Skill membership matrix for selective enablement across the 90-skill global ecosystem. This repository also carries three project-local extensions (`orbit`, `lore`, `darwin`) registered in `_common/PROJECT_LOCAL_SKILLS.md`.
 
 ## Why this exists
 
-Anthropic guidance is **8-12 skills** before "context tax" (token overhead per turn) starts to dominate; routing degradation begins in the **dozens**, and a **15,000-character cap** on the available skills list is a hard ceiling. This repository's 103 packages (100 global + 3 project-local) exceed all three thresholds when loaded together.
+Anthropic guidance is **8-12 skills** before "context tax" (token overhead per turn) starts to dominate; routing degradation begins in the **dozens**, and a **15,000-character cap** on the available skills list is a hard ceiling. This repository's 93 packages (90 global + 3 project-local) exceed all three thresholds when loaded together.
 
-This file defines **11 Packs** (overlapping subsets of the ecosystem) so that any single workstream can enable ~20-30 skills instead of the full 100 global skills. Selective enablement is driven by the Claude Code `skills` filter in `~/.claude/settings.json` (`"all"` / `[list]` / `[]`); Codex CLI and agy use equivalent allowlist mechanisms when available.
+This file defines **11 Packs** (overlapping subsets of the ecosystem) so that any single workstream can enable ~20-30 skills instead of the full 90 global skills. Selective enablement is driven by the Claude Code `skills` filter in `~/.claude/settings.json` (`"all"` / `[list]` / `[]`); Codex CLI and agy use equivalent allowlist mechanisms when available.
 
 **Sources:**
 - claude.com/blog/lessons-from-building-claude-code-how-we-use-skills (8-12 sweet spot, context tax)
@@ -40,9 +40,9 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 | `skill-meta` | `core + skill-meta` | 12 |
 | `incident-response` | `core + chain` | 9 |
 | `legal-jp` | `core + canon` | 9 |
-| `personal-env` | `core + anvil` | 9 |
+| `personal-env` | `core + hone` | 9 |
 | `ai-cli-admin` | `core + hone` | 9 |
-| `all` | `"all"` (no filter) | 100 global; this repository additionally discovers 3 project-local skills |
+| `all` | `"all"` (no filter) | 90 global; this repository additionally discovers 3 project-local skills |
 
 ---
 
@@ -66,11 +66,11 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `web` (web frontend + backend, 22 skills)
+### `web` (web frontend + backend, 21 skills)
 
 **Purpose:** browser-tier feature work — React/Vue/Svelte/Next.js, API design, perf, E2E.
 
-**Members:** `voyager`, `pixel`, `palette`, `frame`, `forge`, `artisan`, `atelier`, `flow`, `bolt`, `atlas`, `gateway`, `prose`, `funnel`, `growth`, `ink`, `vector`, `canvas`, `muse`, `vision`, `vitrine`, `polyglot`, `relay`
+**Members:** `voyager`, `pixel`, `palette`, `frame`, `forge`, `artisan`, `atelier`, `flow`, `bolt`, `atlas`, `gateway`, `prose`, `funnel`, `growth`, `ink`, `vector`, `canvas`, `muse`, `vision`, `vitrine`, `polyglot`
 
 **Triggers:** `react`, `vue`, `svelte`, `next.js`, `frontend`, `web`, `landing page`, `e2e`, `playwright`, `cypress`, `webdriver`, `css`, `html`, `tailwind`, `api design`, `openapi`, `rest`, `graphql`, `i18n`, `l10n`, `internationalization`, `localization`, `intl api`, `translation key`, `bot framework`
 
@@ -96,31 +96,31 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `ai-eval` (LLM eval + observability + multi-engine review, 13 skills)
+### `ai-eval` (LLM eval + observability + multi-engine review, 12 skills)
 
 **Purpose:** LLM/agent evaluation, multi-engine review, observability, reliability eng, failure mode analysis.
 
-**Members:** `judge`, `magi`, `attest`, `oracle`, `chisel`, `beacon`, `mend`, `siege`, `omen`, `ripple`, `void`, `matrix`, `mint`
+**Members:** `judge`, `magi`, `attest`, `oracle`, `chisel`, `beacon`, `mend`, `siege`, `omen`, `ripple`, `void`, `matrix`
 
 **Triggers:** `llm`, `rag`, `prompt engineering`, `prompt specification`, `vague prompt`, `ai safety`, `evaluation`, `eval`, `slo`, `sli`, `observability`, `tracing`, `incident`, `chaos`, `mutation testing`, `load test`, `pre-mortem`, `race condition`, `memory leak`, `deadlock`, `multi-engine review`, `manual qa`, `testrail`, `zephyr`, `xray`, `qase`, `bva`, `equivalence class`, `combinatorial`, `coverage matrix`, `test data`, `fixture`, `factory pattern`
 
 ---
 
-### `growth` (product growth + analytics + LP, 16 skills)
+### `growth` (product growth + analytics + LP, 14 skills)
 
 **Purpose:** funnel/LP optimization, A/B testing, retention, KPI design, persona-driven UX validation.
 
-**Members:** `pulse`, `experiment`, `funnel`, `ledger`, `compete`, `voice`, `echo`, `cast`, `field`, `trace`, `bond`, `saga`, `spark`, `rank`, `helm`, `growth`
+**Members:** `pulse`, `experiment`, `funnel`, `ledger`, `compete`, `voice`, `echo`, `cast`, `field`, `trace`, `saga`, `spark`, `rank`, `growth`
 
 **Triggers:** `kpi`, `a/b test`, `experiment`, `funnel`, `landing page`, `cro`, `seo`, `geo`, `retention`, `churn`, `nps`, `cohort`, `session replay`, `persona`, `cognitive walkthrough`, `user feedback`, `cost optimization`, `finops`, `competitive analysis`, `prioritization`, `ice`, `rice`, `wsjf`, `moscow`
 
 ---
 
-### `infra` (DevOps + DB + scheduling + repo ops, 20 skills)
+### `infra` (DevOps + DB + scheduling + repo ops, 16 skills)
 
 **Purpose:** infrastructure provisioning, CI/CD, observability, DB design, scheduling, repo health.
 
-**Members:** `beacon`, `mend`, `gear`, `scaffold`, `triage`, `trail`, `launch`, `tempo`, `schema`, `tuner`, `seek`, `stream`, `weave`, `shift`, `grok`, `grove`, `sweep`, `rally`, `anvil`, `relay`
+**Members:** `beacon`, `mend`, `gear`, `scaffold`, `triage`, `trail`, `launch`, `schema`, `tuner`, `seek`, `stream`, `weave`, `shift`, `grove`, `sweep`, `rally`
 
 **Triggers:** `terraform`, `cloudformation`, `pulumi`, `docker`, `kubernetes`, `gha`, `github actions`, `ci/cd`, `pipeline`, `cron`, `timezone`, `dst`, `retry`, `backoff`, `db schema`, `migration`, `index`, `slow query`, `etl`, `kafka`, `airflow`, `dbt`, `multi-tenant`, `search engine`, `vector db`, `state machine`, `saga`, `regex`, `dsl`, `parser`, `repo structure`, `dead code`, `cli dev`, `tui`, `linter`, `test runner`, `build tool`, `slack bot`, `discord bot`, `webhook`, `websocket`, `c4 model`, `structurizr`
 
@@ -136,21 +136,21 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ---
 
-### `research` (user research + discovery + brainstorming + advisory, 20 skills)
+### `research` (user research + discovery + brainstorming + advisory, 18 skills)
 
 **Purpose:** discovery-side work — user research, brainstorming, strategic decisions, and prose authoring.
 
-**Members:** `field`, `lens`, `cast`, `voice`, `echo`, `trace`, `compete`, `spark`, `riff`, `flux`, `omen`, `magi`, `rank`, `helm`, `tome`, `scribe`, `void`, `quill`, `saga`, `pdm`
+**Members:** `field`, `lens`, `cast`, `voice`, `echo`, `trace`, `compete`, `spark`, `flux`, `omen`, `magi`, `rank`, `tome`, `scribe`, `void`, `quill`, `saga`, `pdm`
 
 **Triggers:** `user research`, `interview`, `usability test`, `persona`, `journey map`, `jtbd`, `brainstorm`, `ideate`, `reframe`, `assumption challenge`, `pre-mortem`, `deliberation`, `prioritization`, `mental models`, `strategy simulation`, `yagni`, `scope cut`, `documentation`, `jsdoc`, `tsdoc`, `tome`
 
 ---
 
-### `package-gen` (document-package generation, 31 skills)
+### `package-gen` (document-package generation, 29 skills)
 
 **Purpose:** end-to-end document package production via the `package` Recipe (12 domain presets — startup / career / learning / hiring / local-gov / etc.). Heavy union with `research`, `design`, and `core`.
 
-**Members:** `scribe`, `tome`, `quill`, `rank`, `spark`, `magi`, `void`, `morph`, `canon`, `prose`, `saga`, `pulse`, `cast`, `field`, `echo`, `voice`, `compete`, `attest`, `judge`, `cloak`, `vigil`, `trawl`, `stage`, `cue`, `vitrine`, `pixel`, `artisan`, `frame`, `muse`, `palette`, `vision`
+**Members:** `scribe`, `tome`, `quill`, `rank`, `spark`, `magi`, `void`, `canon`, `prose`, `saga`, `pulse`, `cast`, `field`, `echo`, `voice`, `compete`, `attest`, `judge`, `cloak`, `vigil`, `stage`, `cue`, `vitrine`, `pixel`, `artisan`, `frame`, `muse`, `palette`, `vision`
 
 **Triggers:** `business plan`, `venture`, `mvp dossier`, `pitch package`, `documentation package`, `package`, `startup dossier`, `domain preset`, `traceability matrix`, `feature_id`, `f-001`
 
@@ -162,7 +162,7 @@ The following skills remain globally installed but are excluded from broad domai
 |---------|--------|-----------------|---------------------|
 | `incident-response` | `chain` | `npm worm`, `Shai-Hulud`, `S1ngularity`, `malware eradication`, `IoC campaign` | Named supply-chain campaign or confirmed malware-response work |
 | `legal-jp` | `canon` | `Tokushoho`, `特商法`, `APPI legal review`, `Japanese ToS` | Japanese ToS, Privacy Policy, APPI, or Tokushoho review |
-| `personal-env` | `anvil` | `dotfiles`, `zsh`, `tmux`, `neovim`, `AppleScript`, `JXA` | Personal dotfiles or macOS Apple Events automation |
+| `personal-env` | `hone` | `dotfiles`, `zsh`, `tmux`, `neovim`, `AppleScript`, `JXA` | Personal dotfiles or macOS Apple Events automation |
 | `ai-cli-admin` | `hone` | `Codex config`, `Claude Code hooks`, `agy config`, `AI CLI audit` | AI CLI configuration audit or Claude Code hook administration |
 
 ## Project-local extensions

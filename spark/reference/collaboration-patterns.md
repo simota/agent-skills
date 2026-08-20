@@ -305,7 +305,7 @@ Spark receives product signals and insights from upstream agents, generates feat
 | Pulse → Spark | Metrics handoff | Usage metrics and funnel data for opportunity analysis |
 | Voice → Spark | Feedback handoff | User feedback and NPS signals for feature needs |
 | Compete → Spark | Gap handoff | Competitive gaps for feature opportunities |
-| Bond → Spark | Engagement handoff | Engagement and churn data for retention features |
+| Growth → Spark | Engagement handoff | Engagement and churn data for retention features |
 | Cast → Spark | Persona handoff | Feature-focused personas for targeted proposals |
 | Spark → Scribe | Spec handoff | Validated proposal needs formal specification |
 | Spark → Builder | Implementation handoff | Proposal ready for implementation |

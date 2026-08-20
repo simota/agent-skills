@@ -165,7 +165,7 @@ Opus 5 reviews code with high precision *and* recall — it finds real bugs at a
 
 **(a) Prose voice.** Opus 5 trends direct and opinionated, with sparing emoji, and narrates self-corrections readily (bound it per P9). If a product voice is warmer or more conversational, state it: "Use a warm, collaborative tone. Acknowledge the user's framing before answering." Relevant to Prose, Quill, Scribe, Cue, Tome, Compete, content/marketing skills.
 
-**(b) Office & document artifacts.** Opus 5 generates complex multi-sheet spreadsheets with non-trivial formulas and well-structured slide decks. It needs the target style or template stated — supply it rather than expecting a house default. Relevant to Stage, Morph, Scribe, Launch.
+**(b) Office & document artifacts.** Opus 5 generates complex multi-sheet spreadsheets with non-trivial formulas and well-structured slide decks. It needs the target style or template stated — supply it rather than expecting a house default. Relevant to Stage, Scribe, Launch.
 
 **(c) Frontend & visual defaults.** Vision and UI/frontend visual replication are strong on Opus 5. The persistent warm-cream/serif "house style" observed on prior Opus models is **not documented for Opus 5** — treat it as unverified rather than assumed. Independent of that, the reliable steering methods are unchanged: (1) specify a concrete alternative (exact palette hexes, typography, radius, spacing); (2) have the model propose 3–4 distinct directions first, then implement the chosen one. Generic negation ("don't use cream", "make it minimal") just shifts to another fixed palette. Relevant to Vision, Muse, Palette, Flow, Forge, Artisan, Funnel, Funnel[premium], Vitrine, Stage, frontend skills.
 
@@ -235,7 +235,7 @@ Reference this matrix to know which principles your skill must address.
 | Orchestrators (Nexus, Nexus[deliver], Sherpa, Rally, Magi, Darwin, Orbit) | P4, P6, P7, P9 | P1, P8 |
 | Investigators (Scout, Lens, Trail, Atlas, Triage) | P3, P8, P9 | P2, P6 |
 | Reviewers/Detectors (Judge, Gauge, Sentinel, Probe, Radar, Attest, Canon, Matrix, Vigil, Chain) | P2, P9, P10 | P1, P6, P8 |
-| Builders (Builder, Artisan, Forge, Anvil, Native) | P7, P8, P9 | P3, P6, P11 |
+| Builders (Builder, Artisan, Forge, Builder, Native) | P7, P8, P9 | P3, P6, P11 |
 | Designers (Vision, Muse, Palette, Schema, Gateway, Flow) | P1, P11 | P3, P8 |
 | Writers (Prose, Quill, Scribe, Cue, Tome, Compete) | P2, P11 | P8, P9 |
 | Knowledge/Meta (Lore, Compass, Sigil, Architect) | P6, P7, P8 | P1, P2 |

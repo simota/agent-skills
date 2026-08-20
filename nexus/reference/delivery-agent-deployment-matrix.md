@@ -55,7 +55,7 @@ Complete mapping of all 57 deployment roles across 9 product lifecycle phases.
 | Quill | Documentation | — | — | — | — | — | — | P | — | — |
 | Scribe | Documentation | — | P | — | — | — | — | — | — | — |
 | Canvas | Visualization | — | — | P | — | — | — | P | — | — |
-| Morph | Documentation | — | — | — | — | — | — | P | — | — |
+| Scribe | Documentation | — | — | — | — | — | — | P | — | — |
 | Atlas | Architecture | — | — | P | — | — | — | — | — | — |
 | Gateway | Architecture | — | — | P | — | — | — | — | — | — |
 | Grove | Architecture | — | — | P | — | — | — | — | — | — |
@@ -66,12 +66,12 @@ Complete mapping of all 57 deployment roles across 9 product lifecycle phases.
 | Flow | UX/Design | — | — | — | S | — | — | — | — | — |
 | Echo | UX/Design | — | — | — | — | — | P | — | — | — |
 | Vitrine | UX/Design | — | — | — | — | — | — | P | — | — |
-| Anvil | DevOps | — | — | — | S | — | — | — | — | — |
+| Builder | DevOps | — | — | — | S | — | — | — | — | — |
 | Gear | DevOps | — | — | — | — | — | — | P | — | P |
 | Triage | Investigation | S | — | — | — | — | — | — | — | — |
 | Polyglot | Internationalization | — | — | — | — | — | — | — | P | — |
 | Growth | Growth | — | — | — | — | — | — | — | P | — |
-| Bond | Growth | — | — | — | — | — | — | — | P | — |
+| Growth | Growth | — | — | — | — | — | — | — | P | — |
 | Pulse | Analytics | — | P | — | — | — | — | — | P | — |
 | Experiment | Analytics | — | — | — | — | — | P | — | S | — |
 | Vector | Browser | — | — | — | — | — | S | — | — | — |

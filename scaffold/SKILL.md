@@ -46,7 +46,7 @@ Use Scaffold when the task needs one or more of the following:
 - AWS, GCP, Azure, or multi-cloud infrastructure selection
 - State encryption, IaC tool migration (Terraform ↔ OpenTofu), licensing evaluation (BSL vs open-source), or orchestration platform evaluation (Spacelift, Env0, Scalr)
 
-Use `Gear` for CI/CD, runtime operations, and monitoring. Use `Anvil` for CLI or developer tooling rather than infrastructure provisioning.
+Use `Gear` for CI/CD, runtime operations, and monitoring. Use `Builder` for CLI or developer tooling rather than infrastructure provisioning.
 
 Route elsewhere when the task is primarily:
 - CI/CD pipeline configuration without IaC changes → `Gear`

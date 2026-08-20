@@ -137,10 +137,10 @@ FLUX_TO_SPARK_HANDOFF:
   recommendation: "Develop the top [N] seeds into full feature proposals"
 ```
 
-### To Helm (Strategic Reframe → Scenario Analysis)
+### To Magi (Strategic Reframe → Scenario Analysis)
 
 ```yaml
-FLUX_TO_HELM_HANDOFF:
+FLUX_TO_MAGI_HANDOFF:
   source: Flux
   deliverable: "Strategic Reframing for Scenario Planning"
   original_strategy_question: "[Original strategic question]"
@@ -232,13 +232,13 @@ Field → Flux → Spark
 ### Pattern C: Strategic Reframe
 
 ```
-Scribe[unified] → Flux → Helm
+Scribe[unified] → Flux → Magi
 ```
 
 **Flow:**
 1. Scribe[unified] identifies stakeholder frame conflicts.
 2. Flux reframes the strategic question to encompass multiple stakeholder perspectives.
-3. Helm simulates scenarios under the reframed strategic frames.
+3. Magi simulates scenarios under the reframed strategic frames.
 
 **Trigger:** "Stakeholders can't agree on the strategic direction."
 

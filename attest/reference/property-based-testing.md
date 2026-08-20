@@ -7,7 +7,7 @@ Purpose: Generalize spec ACs into properties (universally-quantified invariants)
 - **attest `property`**: Property derivation + framework-specific authoring (this document).
 - **attest `bdd` (elsewhere)**: Example-based BDD scenarios.
 - **Radar (elsewhere)**: Edge-case test addition (complementary, not property-based).
-- **Mint (elsewhere)**: Static fixture / factory generation.
+- **Radar (elsewhere)**: Static fixture / factory generation.
 - **Siege `mutation` (elsewhere)**: Mutation testing of test quality (orthogonal).
 
 ## Property vs Example
@@ -267,7 +267,7 @@ HANDOFF      →  Builder: implement fix
 |----|----------|---------|-----------|---------------|
 | P1 | sort produces sorted output | invariant | List<int> | @given(st.lists(st.integers())) |
 | P2 | encode/decode round-trips | round-trip | str | @given(st.text()) |
-| P3 | merge is commutative | commutativity | (Map, Map) | @given(maps, maps) |
+| P3 | merge is commutative | commutativity | (Map) | @given(maps, maps) |
 | P4 | LRU cache size ≤ capacity | stateful | command sequence | RuleBasedStateMachine |
 
 ### Code

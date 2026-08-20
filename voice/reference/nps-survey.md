@@ -24,4 +24,4 @@ Store score, derived category, pseudonymous respondent/account key, survey/touch
 - Treat open text as qualitative evidence, not a numeric explanation of NPS.
 - Fetch current external benchmarks from dated primary or clearly identified benchmark sources; never reuse an undated “good/excellent/world-class” scale.
 
-Route themes to Spark/Bond, coding to `thematic-coding.md`, and instrumentation gaps to Pulse.
+Route themes to Spark/Growth, coding to `thematic-coding.md`, and instrumentation gaps to Pulse.

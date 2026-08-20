@@ -9,7 +9,7 @@ Purpose: Design the contract for an API that EMITS webhooks to subscribers. The 
 - **Gateway `webhook`**: the PROVIDER side. Designs the emit contract — what the provider promises subscribers.
 - **Builder `integrate`**: the CONSUMER side. Receives a webhook from a third party, verifies signature, idempotently processes, and acks. Gateway hands off the provider contract; Builder implements the consumer.
 - **Builder `api`**: the IMPLEMENTATION of the provider. Writes the emit queue, signer, retry worker, DLQ. Receives the webhook contract from Gateway via `GATEWAY_TO_BUILDER`.
-- **Relay**: messaging integration and bot/adapter patterns. If the webhook target is a chat platform (Slack/Discord), Relay owns the adapter; `webhook` still owns the generic emit contract upstream of the adapter.
+- **Gateway**: messaging integration and bot/adapter patterns. If the webhook target is a chat platform (Slack/Discord), Gateway owns the adapter; `webhook` still owns the generic emit contract upstream of the adapter.
 
 If the question is "what do I promise subscribers about delivery?" → `webhook`. If it is "how do I receive a Stripe/GitHub webhook safely?" → Builder `integrate`. If it is "how do I build the queue and signer?" → Builder `api`.
 
@@ -122,5 +122,5 @@ The provider contract also covers:
 
 - **→ Builder `api`**: contract doc, signing algorithm + header names, retry schedule, DLQ policy, subscription CRUD schema, observability signals. Builder implements the emit queue, signer, retry worker.
 - **→ Builder `integrate`**: NOT a handoff from `webhook` — they are opposite sides of the same contract. Cross-link so a consumer building against this provider can see the verification rules, idempotency TTL, and retry window without re-deriving them.
-- **→ Relay**: if the primary consumer is a chat platform, Relay builds the adapter that translates the webhook event into a platform-native message. Gateway `webhook` still owns the upstream emit contract.
+- **→ Gateway**: if the primary consumer is a chat platform, Gateway builds the adapter that translates the webhook event into a platform-native message. Gateway `webhook` still owns the upstream emit contract.
 - **→ Sentinel**: security review of the signing/rotation flow before the contract goes public.

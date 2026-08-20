@@ -31,5 +31,5 @@ Also include the ordered queue, assumptions, dependency notes, executive overrid
 
 - Highest-ranked item -> Sherpa with duration and dependencies.
 - Contested value lens or curve -> Magi.
-- Strategic market-window input -> Helm.
+- Strategic market-window input -> Magi.
 - Audit trail -> Scribe with assumptions and sources.

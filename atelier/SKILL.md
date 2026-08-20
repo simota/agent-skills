@@ -25,7 +25,7 @@ COLLABORATION_PATTERNS:
 - atelier -> Ink / Builder: vector / AI image asset generation
 - atelier -> Stage: slide deck authoring
 - atelier -> Canvas: diagram authoring
-- atelier -> Morph: multi-format export (MD/Word/Excel/PDF/HTML)
+- atelier -> Scribe: multi-format export (MD/Word/Excel/PDF/HTML)
 - atelier -> Artisan: production frontend implementation
 - atelier -> Vitrine: Storybook catalog and visual regression
 - atelier -> Nexus: escalation when the request exceeds design-pipeline scope
@@ -33,7 +33,7 @@ COLLABORATION_PATTERNS:
 
 BIDIRECTIONAL_PARTNERS:
 - INPUT: Vision (direction), User (request), Judge (quality feedback)
-- OUTPUT: Frame, Muse, Forge, Pixel, Ink, Builder, Stage, Canvas, Morph, Artisan, Vitrine, Nexus
+- OUTPUT: Frame, Muse, Forge, Pixel, Ink, Builder, Stage, Canvas, Scribe, Artisan, Vitrine, Nexus
 
 PROJECT_AFFINITY: SaaS(H) Marketing(H) Dashboard(H) E-commerce(H) Mobile(M) Game(M)
 -->
@@ -177,7 +177,7 @@ Route by artifact shape; include a delegate only when its output is in the reque
 | AI raster image | `Builder` | — | Gemini API backend |
 | Slide deck | `Stage` | `Ink`, `Muse` | Marp / reveal.js / Slidev |
 | Diagram | `Canvas` | — | Mermaid / draw.io |
-| Multi-format export | `Morph` | — | MD/Word/Excel/PDF/HTML |
+| Multi-format export | `Scribe` | — | MD/Word/Excel/PDF/HTML |
 | Landing page (composite) | `Funnel` | `Muse`, `Artisan`, `Vitrine` | When the landing agent fits better than Artisan |
 
 Default bundles by trigger -> Output Routing table below.
@@ -216,7 +216,7 @@ Behavior notes per Recipe:
 | `landing page`, `LP`, `one page site` | LP pipeline (Frame/Muse → Forge → Artisan → Vitrine) | Production LP code + stories + tokens | — |
 | `extract tokens`, `codebase design system` | ONBOARDING + Muse normalization | Persisted design system + token report | — |
 | `codebase tokens`, `new screen prototype` | Muse (extract) → Forge (prototype) → Vitrine (story) | Prototype + story + token report | — |
-| `pitch deck + assets + 1-pager` | Parallel Stage/Ink/Morph, anchored by Muse token reference | Deck + assets + 1-pager export | — |
+| `pitch deck + assets + 1-pager` | Parallel Stage/Ink/Scribe, anchored by Muse token reference | Deck + assets + 1-pager export | — |
 | `Figma to code`, `design to implementation` | Frame → Muse → Artisan → Vitrine | Production code + catalog | — |
 | `prototype from design` | Forge-anchored chain | Runnable prototype + story | — |
 | `refresh design system`, `tokens changed` | Re-run ONBOARDING with `--refresh-design-system` | Updated cache + drift report | — |
@@ -231,7 +231,7 @@ Routing rules:
 ## Collaboration
 
 **Receives:** Vision (`VISION_TO_ATELIER`, carrying `DESIGN_INTENT_HANDOFF`) for direction and constraints, the user for an ad-hoc brief, and Judge (`QUALITY_FEEDBACK`) for output review.
-**Sends:** every delegate receives a `DESIGN_INTENT_HANDOFF` — Frame (Figma extraction, Code Connect), Muse (tokens, DTCG alignment), Forge (prototype), Pixel (mockup reproduction), Ink / Builder (visual assets), Stage (deck), Canvas (diagram), Morph (multi-format export), Artisan (production implementation), Vitrine (Storybook catalog). Out-of-scope multi-domain work escalates to Nexus via `NEXUS_ROUTING`. Full table -> `reference/autorun-schema.md`.
+**Sends:** every delegate receives a `DESIGN_INTENT_HANDOFF` — Frame (Figma extraction, Code Connect), Muse (tokens, DTCG alignment), Forge (prototype), Pixel (mockup reproduction), Ink / Builder (visual assets), Stage (deck), Canvas (diagram), Scribe (multi-format export), Artisan (production implementation), Vitrine (Storybook catalog). Out-of-scope multi-domain work escalates to Nexus via `NEXUS_ROUTING`. Full table -> `reference/autorun-schema.md`.
 
 
 ## Output Requirements

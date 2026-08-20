@@ -8,7 +8,7 @@ Purpose: Cross-shard tenant rebalancing, isolation-level upgrades (row-level →
 - **Schema `tenant mode=isolation` / `rls` / `routing` / `scale` (elsewhere)**: greenfield isolation strategy, RLS policy authoring, tenant resolution, and noisy-neighbor controls. Migration consumes those designs but does not redesign them.
 - **schema (elsewhere)**: physical schema/DDL migrations and column-level changes. Tenant migration calls Schema for DDL but owns the tenant-row movement plan itself.
 - **beacon (elsewhere)**: SLO budget burn during cutover. Migration emits cutover-window targets; Beacon owns the live SLO observation.
-- **tempo (elsewhere)**: cron/business-calendar scheduling for cutover windows. Migration specifies the constraints; Tempo schedules the actual run.
+- **weave (elsewhere)**: cron/business-calendar scheduling for cutover windows. Migration specifies the constraints; Weave schedules the actual run.
 - **ledger (elsewhere)**: cost delta of moving a tenant to a dedicated DB. Migration produces the unit-cost line items; Ledger reconciles to FinOps.
 
 ## Workflow
@@ -107,7 +107,7 @@ Define the abort-decision threshold *before* cutover: e.g. "if verify queries fa
 - **Inconsistent FK chain** — moving `orders` for a tenant but leaving `order_items` behind because they had no `tenant_id` column. Always inventory the full FK closure.
 - **Cache not invalidated under tenant key** — old shard's cached query results survive cutover; users see stale data even after routing flip.
 - **Queue/CDC subscriptions not rebuilt** — Kafka consumer groups still pointing at source partitions; downstream services see writes disappear.
-- **Cutover during peak** — running zero-downtime migration during business hours doubles blast radius. Schedule via Tempo for low-traffic windows.
+- **Cutover during peak** — running zero-downtime migration during business hours doubles blast radius. Schedule via Weave for low-traffic windows.
 - **No abort threshold defined** — teams keep "trying to make it work" past the safe rollback boundary. Define and commit to the abort criteria before cutover.
 - **Cross-tenant FK pretending to be tenant-scoped** — a `users.referrer_id → users.id` self-FK that points across tenants blocks dedicated-DB migration silently.
 - **Skipping content hash, trusting only row counts** — counts can match while content drifts (replication lag, swallowed write). Hash or sample-compare.
@@ -115,7 +115,7 @@ Define the abort-decision threshold *before* cutover: e.g. "if verify queries fa
 ## Handoff
 
 - **Within Schema**: the DDL stage authors target-shard schema, indexes, and RLS policy SQL before the tenant cutover stage proceeds.
-- **To Tempo**: cutover window constraints (off-peak, business calendar, region timezone) — Tempo schedules the run.
+- **To Weave**: cutover window constraints (off-peak, business calendar, region timezone) — Weave schedules the run.
 - **To Beacon**: SLO budget for the cutover window, alert thresholds, and tenant-scoped dashboards to watch live.
 - **To Ledger**: per-tenant unit-cost delta when moving to dedicated infra — feeds FinOps and pricing-tier handoff.
 - **To Sentinel**: post-migration RLS policy validation on the new shard; cross-tenant leakage scan.

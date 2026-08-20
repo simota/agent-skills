@@ -43,9 +43,9 @@ Scale: 9–27 agents (capture-heavy; desktop/robustness branches add capture age
 | **incremental-clone** (screen-by-screen) | Large product, live system | Reproduce one screen/flow at a time, each independently parity-gated | Low — each increment verifiable & shippable |
 | **big-bang full clone** | Small/self-contained product | Whole reproduction, single cutover | High — **requires user confirmation** |
 
-Capture-source bindings by `target_type`: **live web** = Vector/Voyager (crawl, screenshot, network observe) + Frame/Pixel (design extraction); **desktop** = Anvil `automate` (macOS app automation via AppleScript/JXA — drive menus/windows/dialogs, capture per-window screenshots, script non-scriptable apps via System Events) + Pixel (visual diff of captured windows); **has Figma** = Frame (design context); **has source** = Lens (structure map); **mobile** = Voyager[ios]/Voyager (native UI capture); **API-backed** = Schema (infer data model from observed responses).
+Capture-source bindings by `target_type`: **live web** = Vector/Voyager (crawl, screenshot, network observe) + Frame/Pixel (design extraction); **desktop** = Hone `automate` (macOS app automation via AppleScript/JXA — drive menus/windows/dialogs, capture per-window screenshots, script non-scriptable apps via System Events) + Pixel (visual diff of captured windows); **has Figma** = Frame (design context); **has source** = Lens (structure map); **mobile** = Voyager[ios]/Voyager (native UI capture); **API-backed** = Schema (infer data model from observed responses).
 
-> **Desktop capture coverage.** Anvil `automate` covers **macOS** GUI automation/screenshot natively. **Windows/Linux** desktop GUI automation has no first-class skill in this roster, so those targets are captured through an **external capture adapter** — the contract below makes that path first-class rather than a caveat. Visual/behavioral parity downstream (Pixel/Voyager/Radar/Attest/judge) is platform-independent and unchanged.
+> **Desktop capture coverage.** Hone `automate` covers **macOS** GUI automation/screenshot natively. **Windows/Linux** desktop GUI automation has no first-class skill in this roster, so those targets are captured through an **external capture adapter** — the contract below makes that path first-class rather than a caveat. Visual/behavioral parity downstream (Pixel/Voyager/Radar/Attest/judge) is platform-independent and unchanged.
 
 #### Capture-adapter contract (any surface with no first-class capture skill)
 
@@ -100,7 +100,7 @@ Phase 0.5 RESEARCH  →  deep-research[+Compete?][thorough web EVIDENCE SWEEP: T
                        → Version & drift signals sharpen the provenance stamp (§3b)
                        (research-first, capture-authoritative: a web claim is a lead to CONFIRM by capture, never the oracle)
 Phase 1 CAPTURE     ∥  Vector/Voyager[live-web: crawl UI, per-screen screenshots, observe network/API traffic]
-                       Anvil[automate — desktop: drive menus/windows/dialogs, per-window screenshots, script non-scriptable apps]
+                       Builder[automate — desktop: drive menus/windows/dialogs, per-window screenshots, script non-scriptable apps]
                        Frame/Pixel[extract design system: tokens, layout, components from screenshots/Figma]
                        Lens?[map current structure + public surface]            (if source available)
                        Schema?[infer data model + API contract from observed responses]  (if API-backed)
@@ -209,12 +209,12 @@ The core knowledge of this recipe. Magi confirms the relevant dimensions in Phas
 
 | Dimension | What "faithful" means | Captured by (Phase 1) | Comparator (Phase 5) | Pass condition (default) |
 |-----------|----------------------|------------------------|------------------------|---------------------------|
-| **Visual** | Layout, spacing, color, typography, component look, responsive breakpoints / window states match per screen/state | Vector/Voyager screenshots (web); Anvil `automate` per-window screenshots (desktop); Frame/Pixel design tokens | Per-screen/state image diff: align → mask declared dynamic regions → normalize fonts/AA → compute SSIM + per-pixel delta against the reference artifact (Pixel/Voyager) | SSIM ≥ declared threshold ∧ pixel-delta ≤ threshold, on the *significant* (unmasked) regions |
-| **Behavioral** | Interactions, navigation, state transitions, validation, edge-case responses behave identically | Echo/Trace flow recordings; Voyager (web) / Anvil `automate` (desktop) interaction traces | Replay each recorded flow against the clone; assert the canonicalized observable result (DOM/UI state, navigation target, validation message) equals the fixture (Radar/Voyager) | 100% of recorded flows green after canonicalization |
+| **Visual** | Layout, spacing, color, typography, component look, responsive breakpoints / window states match per screen/state | Vector/Voyager screenshots (web); Builder `automate` per-window screenshots (desktop); Frame/Pixel design tokens | Per-screen/state image diff: align → mask declared dynamic regions → normalize fonts/AA → compute SSIM + per-pixel delta against the reference artifact (Pixel/Voyager) | SSIM ≥ declared threshold ∧ pixel-delta ≤ threshold, on the *significant* (unmasked) regions |
+| **Behavioral** | Interactions, navigation, state transitions, validation, edge-case responses behave identically | Echo/Trace flow recordings; Voyager (web) / Builder `automate` (desktop) interaction traces | Replay each recorded flow against the clone; assert the canonicalized observable result (DOM/UI state, navigation target, validation message) equals the fixture (Radar/Voyager) | 100% of recorded flows green after canonicalization |
 | **Feature** | Every feature in the inventory is present and reachable | PDM/Lens feature inventory | Attest coverage matrix: each inventory feature → present ∧ reachable ∧ exercised in the clone | 100% covered or explicitly deferred (named) |
 | **Data / API** | Data model shape, API contract, and field semantics match the observed surface | Schema inference from observed responses | Structural diff of clone responses vs observed-contract shapes (field set, types, nesting); semantics spot-checked on sampled records (gateway/schema) | shape-equivalent; sampled semantics match |
 | **Asset** | Fonts, icons, images, and other brand assets match — reused where licensed, faithfully recreated otherwise | Ink/Pixel asset extraction → asset manifest (with license posture) | Per-asset diff vs the asset manifest: fonts (family/metrics), icons/images (perceptual hash within tolerance, or confirmed faithful recreation) (Pixel/Frame) | each asset matches within tolerance, or is a declared faithful recreation |
-| **Performance** *(declared per run)* | The copy feels like the original: interaction latency, load/startup, and perceived responsiveness stay within a declared envelope of the captured baseline | Vector/Voyager timing capture during Phase 1 (per-screen load, interaction latency); Anvil window/app launch timings (desktop) | Replay the perf-significant flows against the clone on a like-for-like environment and compare the timing distribution (median + p95) to the Phase 1 captured baseline — never a single run, never across dissimilar hardware/network (Bolt/Siege) | within the declared factor (default p95 ≤ 1.5× original); a flow outside it is a named parity gap, not a rounding difference |
+| **Performance** *(declared per run)* | The copy feels like the original: interaction latency, load/startup, and perceived responsiveness stay within a declared envelope of the captured baseline | Vector/Voyager timing capture during Phase 1 (per-screen load, interaction latency); Builder window/app launch timings (desktop) | Replay the perf-significant flows against the clone on a like-for-like environment and compare the timing distribution (median + p95) to the Phase 1 captured baseline — never a single run, never across dissimilar hardware/network (Bolt/Siege) | within the declared factor (default p95 ≤ 1.5× original); a flow outside it is a named parity gap, not a rounding difference |
 
 > Reproduce *idiomatically on the target stack* — a faithful copy is faithful in **observable result**, not in internal implementation. Re-expressing the original's UI in the target framework's idioms is correct; transliterating its internal code (when source exists) is not the goal — `judge` Phase 5 distinguishes faithful-result from cargo-cult-internals.
 
@@ -242,7 +242,7 @@ The core knowledge of this recipe. Magi confirms the relevant dimensions in Phas
 ## 6. Add-ons
 
 - `+Voyager[ios]` — native iOS UI capture/verification when the target is a mobile app.
-- `+Anvil[automate]` — macOS desktop-app capture/automation when `target_type = desktop`.
+- `+Hone[automate]` — macOS desktop-app capture/automation when `target_type = desktop`.
 - `+Ink` — recreate brand assets (icons/illustrations) when the original's assets cannot be licensed for reuse.
 - `+Flow` — when motion/animation fidelity is part of "complete copy".
 - `+Schema` / `+Tuner` — when the data layer and query behavior must be reproduced, not just the UI.
@@ -260,7 +260,7 @@ Reproducing an EXISTING product faithfully (parity-verified)?
   YES → target is mobile-native from a Web app? → PORTING (Port→Native)
         single Figma source, no full rebuild? → frame
         otherwise (whole product, fidelity-verified — web | desktop | mobile | api) → clone
-              target_type = desktop? → Anvil `automate` capture (macOS) / external UI-automation harness (Win/Linux), same Parity Map
+              target_type = desktop? → Hone `automate` capture (macOS) / external UI-automation harness (Win/Linux), same Parity Map
 ```
 
 ## 7a. Handoff contract (what downstream receives)

@@ -19,7 +19,7 @@ COLLABORATION_PATTERNS:
 - Pulse -> Spark: Usage metrics for opportunity analysis
 - Voice -> Spark: User feedback for feature needs
 - Compete -> Spark: Competitive gaps for feature opportunities
-- Bond -> Spark: Engagement needs for retention features
+- Growth -> Spark: Engagement needs for retention features
 - Cast -> Spark: Feature-focused personas for targeted proposals
 - Lens -> Spark: Codebase insight for reuse opportunities
 - Spark -> Scribe: Formal specification writing
@@ -33,7 +33,7 @@ COLLABORATION_PATTERNS:
 - Magi -> Spark: Feature priority arbitration
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Pulse (usage metrics), Voice (user feedback), Compete (competitive gaps), Bond (engagement needs), Cast (feature-focused personas), Lens (codebase insight), Flux (idea reframing), Void (YAGNI pre-check), Magi (priority arbitration)
+- INPUT: Pulse (usage metrics), Voice (user feedback), Compete (competitive gaps), Growth (engagement needs), Cast (feature-focused personas), Lens (codebase insight), Flux (idea reframing), Void (YAGNI pre-check), Magi (priority arbitration)
 - OUTPUT: Scribe (formal specs), Builder (implementation specs), Artisan (UI specs), Scribe[unified] (integrated packages), Forge (prototypes), Magi (strategic decisions)
 
 PROJECT_AFFINITY: Game(M) SaaS(H) E-commerce(H) Dashboard(M) Marketing(H)
@@ -227,7 +227,7 @@ Every proposal must include:
 
 ## Collaboration
 
-**Receives:** Pulse (usage/funnel data), Voice (feedback, NPS), Compete (competitive gaps), Bond (engagement/churn), Cast (personas), Lens (existing data/logic for reuse).
+**Receives:** Pulse (usage/funnel data), Voice (feedback, NPS), Compete (competitive gaps), Growth (engagement/churn), Cast (personas), Lens (existing data/logic for reuse).
 **Sends:** Scribe (formal spec), Builder (implementation), Artisan (UI), Scribe[unified] (integrated package), Forge (prototype first), Experiment (A/B design), Canvas (roadmap/matrix visualization), Magi (strategic Go/No-Go).
 
 Full handoff table with per-direction purposes -> `reference/collaboration-patterns.md`.

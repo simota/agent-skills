@@ -27,7 +27,7 @@ COLLABORATION_PATTERNS:
 - Pattern A: Health Check (Darwin → Canvas for EFS dashboard)
 - Pattern B: Improvement Chain (Darwin → Architect → Judge)
 - Pattern C: Sunset Pipeline (Darwin → Void → Architect)
-- Pattern D: Strategy Sync (Helm → Darwin → Nexus)
+- Pattern D: Strategy Sync (Magi → Darwin → Nexus)
 - Pattern E: Culture Guard (Grove → Darwin → Architect)
 - Pattern F: Knowledge Synthesis (Lore → Darwin for cross-agent patterns, Darwin → Lore for evolution insights)
 - Darwin -> Gauge: Ecosystem health signals for compliance context
@@ -35,7 +35,7 @@ COLLABORATION_PATTERNS:
 - Darwin -> Launch: Release timing lifecycle alignment
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Architect (Health Score), Judge (quality feedback), Helm (strategy drift), Grove (culture DNA), Lore (cross-agent patterns, knowledge decay signals)
+- INPUT: Architect (Health Score), Judge (quality feedback), Magi (strategy drift), Grove (culture DNA), Lore (cross-agent patterns, knowledge decay signals)
 - OUTPUT: Architect (improvement proposals), Nexus (affinity overrides), Void (sunset candidates), Canvas (EFS dashboard), Lore (evolution insights, fitness trend data), Gauge (ecosystem health signals), Shift (lifecycle phase detection — Shift `radar`/`detect`), Launch (release timing alignment)
 
 PROJECT_AFFINITY: universal
@@ -64,7 +64,7 @@ Use Darwin when the user needs:
 Route elsewhere when the task is primarily:
 - agent architecture or catalog management: `Architect`
 - quality scoring or feedback: `Judge`
-- business strategy alignment: `Helm`
+- business strategy alignment: `Magi`
 - culture DNA profiling: `Grove`
 - runtime agent routing: `Nexus`
 
@@ -170,7 +170,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Collaboration
 
-**Receives:** Architect (Health Score, agent catalog), Judge (quality feedback), Helm (strategy drift), Grove (culture DNA), Lore (cross-agent patterns, knowledge decay signals)
+**Receives:** Architect (Health Score, agent catalog), Judge (quality feedback), Magi (strategy drift), Grove (culture DNA), Lore (cross-agent patterns, knowledge decay signals)
 **Sends:** Architect (improvement proposals, sunset candidates), Nexus (Dynamic AFFINITY overrides), Void (sunset YAGNI verification), Canvas (EFS dashboard), Hone (SessionStart hook config), Lore (evolution insights, fitness trend data)
 
 **Agent Teams aptitude — SENSE phase parallelization (Pattern D: Specialist Team, 2–3 workers):**
@@ -183,7 +183,7 @@ Ownership: all workers are read-only (`Explore` subagent_type); Darwin aggregate
 **Overlap boundaries:**
 - **vs Architect**: Architect = agent catalog and structure; Darwin = ecosystem fitness and evolution proposals.
 - **vs Judge**: Judge = quality scoring and feedback; Darwin = integrates Judge scores into ecosystem assessment.
-- **vs Helm**: Helm = business strategy; Darwin = ecosystem-level strategy alignment signals.
+- **vs Magi**: Magi = business strategy; Darwin = ecosystem-level strategy alignment signals.
 - **vs Grove**: Grove = culture DNA profiling; Darwin = integrates Grove DNA into ecosystem coherence.
 - **vs Lore**: Lore = cross-agent knowledge curation and pattern cataloging; Darwin = consumes Lore patterns as evolution signals and feeds back fitness trends for knowledge health assessment.
 

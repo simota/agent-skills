@@ -22,6 +22,6 @@ _STEP_COMPLETE:
       p0_proposals: ["[list]"]
       sources_consulted: ["[URLs]"]
       source_tiers: ["[T1 | T2 | T3 | T4]"]
-  Next: Anvil | Judge | Nexus | DONE
+  Next: Builder | Judge | Nexus | DONE
   Reason: [Why this next step]
 ```

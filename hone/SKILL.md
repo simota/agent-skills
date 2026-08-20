@@ -19,11 +19,13 @@ CAPABILITIES_SUMMARY:
 - rules_and_budget_audit: Path-scoped rule validation (glob frontmatter syntax and specificity) and instruction-budget waste detection — duplicated lint/formatter rules are wasted context
 - prompt_cache_hierarchy_audit: Verify session layout keeps static above dynamic per `_common/PROMPT_CACHE_HIERARCHY.md`; flag breakpoints on timestamps or per-request data; verify `_common/` load-order stability; detect inlined excerpts that should be pointers
 
+- personal_environment_setup: Dotfile management and security, shell/editor/terminal configuration, personal Git config, macOS AppleScript and JXA automation — absorbed from `anvil` 2026-08-20
+
 COLLABORATION_PATTERNS:
 - User -> Hone: Direct audit request for Codex/Antigravity/Claude Code config optimization
 - Nexus -> Hone: Task context for config audit in automation chains
-- Anvil -> Hone: Environment context (OS, shell, tool versions)
-- Hone -> Anvil: Shell/env changes needed from config updates
+- Hone -> Hone: Environment context (OS, shell, tool versions)
+- Hone -> Hone: Shell/env changes needed from config updates
 - Hone -> Judge: Review config verification after audit
 - Sentinel -> Hone: Security requirements needing deterministic hook enforcement
 - Sigil -> Hone: Project-specific hook wiring for generated skills
@@ -31,8 +33,8 @@ COLLABORATION_PATTERNS:
 - Hone -> Nexus: Audit results and proposal summary
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: User (audit and hook requests), Nexus (task context), Anvil (environment context), Sentinel (security requirements), Sigil (hook requests)
-- OUTPUT: Anvil (shell integration), Judge (review config), Gear (script/CI follow-up), Radar (quality verification), Sentinel (MCP security escalation), Nexus (results)
+- INPUT: User (audit and hook requests), Nexus (task context), Builder (environment context), Sentinel (security requirements), Sigil (hook requests)
+- OUTPUT: Hone (shell integration), Judge (review config), Gear (script/CI follow-up), Radar (quality verification), Sentinel (MCP security escalation), Nexus (results)
 
 PROJECT_AFFINITY: universal
 -->
@@ -58,7 +60,7 @@ Use Hone when the user needs:
 - lifecycle automation, quality/security gates, MCP governance, input modification, plugin hooks, or hook performance tuning
 
 Route elsewhere when the task is primarily:
-- personal dev environment config (shell, editor, terminal): `Anvil` (`env` recipe)
+- personal dev environment config (shell, editor, terminal): `Hone` (`env` recipe)
 - code review via codex review: `Judge`
 - industry standard compliance (OWASP, WCAG): `Canon`
 - SKILL.md normalization audit: `Gauge`
@@ -159,6 +161,8 @@ FETCH collects CLI version/model/config-pattern/deprecation signal; AUDIT evalua
 | Config Diff | `diff` | | Before/After diff analysis of two config snapshots | `reference/proposal-templates.md` |
 | Configure Hook | `hook` | | Design or configure a Claude Code hook | `reference/hooks/hook-system.md`, `reference/hooks/hook-recipes.md` |
 | Debug Hook | `hook-debug` | | Diagnose hook failure, latency, or misfire | `reference/hooks/debugging-guide.md` |
+| Personal Environment | `env` |  | Set up dotfiles, shell, editor, and terminal configuration | `reference/personal-environment/dotfile-management.md`, `reference/personal-environment/editor-configs.md` |
+| macOS Automation | `automate` |  | Automate an existing macOS app via AppleScript or JXA | `reference/personal-environment/applescript-patterns.md`, `reference/personal-environment/jxa-guide.md` |
 
 ## Subcommand Dispatch
 
@@ -193,11 +197,11 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Collaboration
 
-**Receives:** User (audit and hook requests), Nexus (task context), Anvil (environment context — OS, shell, tool versions), Sentinel (security requirements), Sigil (project hook requests)
-**Sends:** Anvil (shell/env changes needed), Judge (review config verification), Gear (script/CI follow-up), Radar (quality verification), Sentinel (MCP governance), Nexus (results)
+**Receives:** User (audit and hook requests), Nexus (task context), Hone (environment context — OS, shell, tool versions), Sentinel (security requirements), Sigil (project hook requests)
+**Sends:** Hone (shell/env changes needed), Judge (review config verification), Gear (script/CI follow-up), Radar (quality verification), Sentinel (MCP governance), Nexus (results)
 
 **Overlap boundaries:**
-- **vs Anvil**: Anvil = personal dev environment plus CLI/TUI implementation. Hone = AI CLI configuration and Claude Code lifecycle hooks.
+- **vs Hone**: Hone = personal dev environment plus CLI/TUI implementation. Hone = AI CLI configuration and Claude Code lifecycle hooks.
 - **vs Judge**: Judge = code review via `codex review`. Hone = Codex CLI configuration itself, not review output.
 - **vs Canon**: Canon = industry standards (OWASP, WCAG). Hone = AI CLI-specific best practices.
 - **vs Gauge**: Gauge = SKILL.md normalization audit. Hone = AI CLI configuration audit.
@@ -214,7 +218,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | `reference/key-thresholds.md` | The full rationale, source citations, and detailed semantics for any Key Threshold listed in the SKILL.md summary table. Required when audit reports must include source attribution. |
 | `reference/web-sources.md` | Source tier classification, search queries, or freshness rules. |
 | `reference/proposal-templates.md` | Before/After diff templates for proposals. |
-| `reference/handoffs.md` | Handoff templates for Anvil/Judge/Nexus collaboration. |
+| `reference/handoffs.md` | Handoff templates for Builder/Judge/Nexus collaboration. |
 | `reference/boundaries-rationale.md` | The full rationale and sources behind the `Never` list. |
 | `reference/phase-details.md` | Full FETCH/AUDIT/PROPOSE phase detail and the complete, current audit item-code list per category. |
 | `reference/hooks/hook-system.md` | Hook event semantics, schemas, matcher behavior, handler types, fields, environment variables, and lifecycle constraints. |
@@ -232,6 +236,7 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 | `_common/OPUS_5_AUTHORING.md` | Sizing the Before/After proposal, deciding adaptive thinking depth at source-tier/severity classification, or front-loading target CLI/scope/decision at AUDIT. Critical for Hone: P3, P5. |
 | `_common/PROMPT_CACHE_HIERARCHY.md` | Auditing prompt cache hit rate, the session context layout (tools → system → messages), `_common/` load order stability, or breakpoint placement on T-static vs T-dynamic content. Required for the `cache-order` and `cache-hierarchy` audit triggers. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Hone-specific Output/Next schema. |
+| `reference/personal-environment/` | Setting up dotfiles, shell/editor config, and macOS AppleScript/JXA automation (absorbed from `anvil`) |
 
 ## Operational
 

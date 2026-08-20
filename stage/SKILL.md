@@ -47,7 +47,7 @@ Use Stage when the user needs:
 Route elsewhere when the task is primarily:
 - diagrams or charts without slide context: `Canvas`
 - specification or design documents: `Scribe`
-- document format conversion: `Morph`
+- document format conversion: `Scribe`
 - UX writing or microcopy: `Prose`
 - video scripts or storyboards: `Cue`
 - learning document creation: `Tome`

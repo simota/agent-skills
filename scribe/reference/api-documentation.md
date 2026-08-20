@@ -134,7 +134,7 @@ Pulled from Speakeasy / FastMCP best practice (2026):
 - From `Scribe` SRS: SRS API sections reference the published doc by URL rather than restating endpoints.
 - To `Prose`: error message copy and onboarding text handed off for UX writing review.
 - To `Growth`: developer-portal landing page and SEO for public API docs.
-- To `Morph`: if a PDF API reference is required for partner contracts.
+- To `Scribe`: if a PDF API reference is required for partner contracts.
 
 ## Citations
 

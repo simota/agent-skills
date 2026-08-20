@@ -31,7 +31,7 @@ project_signals:
   frameworks: [<string>, ...]
   domains: [<string>, ...]
   detected_from: [<path or glob>, ...]
-universal_skills: [scout, judge, zen, builder, scribe, sherpa, void, magi, riff, architect, nexus]
+universal_skills: [scout, judge, zen, builder, scribe, sherpa, void, magi, flux, architect, nexus]
 ---
 
 # Compass Repo Cache
@@ -83,7 +83,7 @@ Bias toward H and M. Reserve L for filler when `top_n` is large and signal cover
 
 These 11 skills are always considered candidates regardless of repo signals:
 
-`scout`, `judge`, `zen`, `builder`, `scribe`, `sherpa`, `void`, `magi`, `riff`, `architect`, `nexus`
+`scout`, `judge`, `zen`, `builder`, `scribe`, `sherpa`, `void`, `magi`, `flux`, `architect`, `nexus`
 
 They cover universal tasks (debugging, review, refactor, build, doc, planning, removal, decision, brainstorm, ideation, meta-design, orchestration). They are listed in the `universal_skills` frontmatter array, not in the per-skill table, to keep the table focused.
 
@@ -131,7 +131,7 @@ project_signals:
   frameworks: [Next.js, Tailwind, Prisma, next-auth]
   domains: [Frontend, Auth, DB, SaaS]
   detected_from: [package.json, prisma/schema.prisma, src/app/**/*.tsx, .github/workflows/ci.yml]
-universal_skills: [scout, judge, zen, builder, scribe, sherpa, void, magi, riff, architect, nexus]
+universal_skills: [scout, judge, zen, builder, scribe, sherpa, void, magi, flux, architect, nexus]
 ---
 
 # Compass Repo Cache
@@ -166,7 +166,7 @@ universal_skills: [scout, judge, zen, builder, scribe, sherpa, void, magi, riff,
 
 - **Cache in repo root** (`./compass-cache.md`): pollutes user's workspace. Always `.claude/compass-cache.md`.
 - **Top-N > 50**: defeats the slim cache purpose. Use full catalog instead.
-- **Caching the full catalog**: same as above — just read `catalog.md`; include 100 global skills and only project-local extensions available in the active workspace.
+- **Caching the full catalog**: same as above — just read `catalog.md`; include 90 global skills and only project-local extensions available in the active workspace.
 - **Skipping universal inclusions**: breaks recommendations for common tasks (debug, review, plan).
 - **Hand-editing the cache**: re-run `/compass refresh` instead. Hand edits drift from the catalog and the scanner.
 - **Refreshing on every `recommend`**: defeats the cost saving. Only refresh on user request or invalidation trigger.

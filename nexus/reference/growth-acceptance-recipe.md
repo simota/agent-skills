@@ -27,7 +27,7 @@ Do **not** invoke when:
 - Org Tier is Solo / SMB → use `acceptance` (Tier B) only; Step 1 Measurement Loop optional opt-in
 - Pure backend / infrastructure / data pipeline change → use `acceptance` Tier B
 - Regulated industry where Layer C autonomy is legally restricted → use `acceptance` Tier B + manual Layer C review per G14
-- User wants exploration / brainstorming, not lifecycle gating → use `riff` / `magi` / `omen`
+- User wants exploration / brainstorming, not lifecycle gating → use `flux` / `magi` / `omen`
 - Layer C Step adoption is below Step 3 → use `acceptance` Tier B + manual Market / Brand review
 
 ---

@@ -134,7 +134,7 @@ These agents may be invoked at any stage based on signal, not stage:
 | **canon** | If the LP carries Terms / Privacy / Tokushoho text, route to canon before Launch |
 | **cloak** | If the LP collects PII (forms, cookies, tracking) — privacy review |
 | **canvas** | Journey-map visualization for stakeholder review, ERD-like flow diagrams |
-| **morph** | Format conversion if a 1-pager / PDF / Word artifact is part of the brief |
+| **scribe** | Format conversion if a 1-pager / PDF / Word artifact is part of the brief |
 | **scribe** | Spec doc for the LP if the team requires PRD / LLD before Build |
 | **omen** | Pre-mortem for high-stakes launches — what could fail in production |
 | **siege** | Load test if the LP is expected to absorb a campaign spike |

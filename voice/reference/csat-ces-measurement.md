@@ -155,11 +155,11 @@ Do not run relationship-level CSAT — it conflates touchpoints and dilutes sign
 - **To `voice thematic`**: verbatim "why" responses → 6-phase coding for theme extraction.
 - **To `voice nps`**: CSAT/CES results into the relationship NPS context for triangulation reporting.
 - **To Pulse**: stable instrument → dashboard governance and KPI tracking.
-- **To Bond**: bottom-box (CSAT 1-2 / CES 1-3) cohorts → 24h recovery follow-up and churn-risk flag.
+- **To Growth**: bottom-box (CSAT 1-2 / CES 1-3) cohorts → 24h recovery follow-up and churn-risk flag.
 - **To Spark**: persistent low-CSAT touchpoints → feature redesign briefs.
 - **To Echo**: low-CES tasks → cognitive walkthrough to identify the specific friction step.
 - **To Beacon**: CSAT/CES drops correlated with SLO breaches → joint reliability + experience root-cause.
-- **To Helm**: cross-cohort CSAT × CES × NPS divergence → strategic positioning input.
+- **To Magi**: cross-cohort CSAT × CES × NPS divergence → strategic positioning input.
 
 References:
 - Dixon, Freeman & Toman (2010), "Stop Trying to Delight Your Customers" (HBR / CEB CES origin)

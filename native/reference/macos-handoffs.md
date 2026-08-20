@@ -153,10 +153,10 @@ NATIVE_MACOS_TO_GEAR_HANDOFF:
     - "release_direct: build + notarize + staple + publish DMG + update appcast (Developer ID channel)"
 ```
 
-### NATIVE_MACOS_TO_ANVIL_HANDOFF
+### NATIVE_MACOS_TO_HONE_HANDOFF
 
 ```yaml
-NATIVE_MACOS_TO_ANVIL_HANDOFF:
+NATIVE_MACOS_TO_HONE_HANDOFF:
   app_bundle_id: "com.example.myapp"
   automation_surface:
     apple_events: "AppleScript dictionary exported via .sdef"
@@ -168,7 +168,7 @@ NATIVE_MACOS_TO_ANVIL_HANDOFF:
     services_provided:
       - "Add Selection to MyApp"
   sdef_path: "MyApp/MyApp.sdef"
-  notes: "Dictionary covers document CRUD and selection; Anvil `automate` owns end-user automation scripts against this surface"
+  notes: "Dictionary covers document CRUD and selection; Builder `automate` owns end-user automation scripts against this surface"
 ```
 
 ### NATIVE_MACOS_TO_CLOAK_HANDOFF

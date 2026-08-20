@@ -47,7 +47,7 @@ Map audience intent to lifecycle stage; match content + KPI + channel to each.
 | `Care` | existing customers (≥2 purchases) | onboarding, support, loyalty | retention, LTV, NPS |
 
 Anti-pattern it prevents: pushing `Do`-stage "buy now" messaging at a `See`-stage audience
-(wasted spend). Pair the `Care` stage with `bond` (retention) and `pulse` (LTV/NPS).
+(wasted spend). Pair the `Care` stage with `growth` (retention) and `pulse` (LTV/NPS).
 
 ## RACE Planning (Smart Insights)
 
@@ -72,5 +72,5 @@ RACE is the *operating cadence*; See-Think-Do-Care is the *intent map*; they ali
 
 Handoffs: on-page execution for chosen channels → `seo-audit.md` / `cro-patterns.md` /
 `geo-optimization.md`; content structure → `content-architecture.md`; lifecycle retention
-(`Care`/`Engage`) → `bond`; KPI instrumentation → `pulse`; channel CAC/ROI causality →
+(`Care`/`Engage`) → `growth`; KPI instrumentation → `pulse`; channel CAC/ROI causality →
 `experiment` (incrementality) + `pulse` (`attribution-modeling.md`).

@@ -57,7 +57,7 @@ Use this checklist to audit a web codebase before producing any native architect
 | Look for | Notes |
 |----------|-------|
 | HTTP clients: `axios`, `ky`, native `fetch`, generated SDK clients | Base URL, interceptors, retry logic, auth header injection |
-| GraphQL: `@apollo/client`, `urql`, `relay`, `graphql-request`, generated hooks | Schema location, persisted queries, normalized cache |
+| GraphQL: `@apollo/client`, `urql`, `gateway`, `graphql-request`, generated hooks | Schema location, persisted queries, normalized cache |
 | WebSocket / SSE: `socket.io-client`, native `EventSource`, custom WS | Connection lifecycle, reconnection strategy |
 | File upload | Multipart, presigned URL, chunked, resumable |
 | Pagination patterns | Cursor, offset, infinite scroll, polling |

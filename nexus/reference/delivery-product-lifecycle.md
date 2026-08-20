@@ -114,9 +114,9 @@ Chain: Magi → Atlas → Gateway → Schema → Grove → Scaffold → Canvas
 ```
 
 ### BUILD (XL additions)
-Add: Forge (prototypes), Stream (data), Anvil (CLI)
+Add: Forge (prototypes), Stream (data), Builder (CLI)
 ```
-Rally teams by domain: Frontend(Artisan) | Backend(Builder) | Data(Stream) | CLI(Anvil)
+Rally teams by domain: Frontend(Artisan) | Backend(Builder) | Data(Stream) | CLI(Builder)
 ```
 
 ### HARDEN (XL additions)
@@ -132,14 +132,14 @@ Chain: Rally{Voyager+Radar} → Echo → Trace → Experiment → Vector
 ```
 
 ### LAUNCH (XL additions)
-Add: Canvas (diagrams), Morph (conversion), Rally{Vitrine+Cue} (demos)
+Add: Canvas (diagrams), Scribe (conversion), Rally{Vitrine+Cue} (demos)
 ```
 Chain: Quill → Canvas → Guardian → Launch → Rally{Vitrine+Cue} → Gear
 ```
 
 ### GROW (XL only)
 ```
-Chain: Growth → Bond → Pulse → Stream → Experiment
+Chain: Growth → Pulse → Stream → Experiment
 Purpose: SEO/CRO, retention, i18n, analytics, growth experiments
 ```
 
@@ -182,7 +182,7 @@ On `NEXUS_COMPLETE`: SUCCESS → next Epic · PARTIAL → L1 retry · BLOCKED �
 | DEFINE | Pulse, Canon | KPIs and standards optional at L |
 | ARCHITECT | Scaffold, Canvas | Infra and diagrams are XL concerns |
 | VALIDATE | Trace, Experiment | Session analysis/A/B are XL |
-| LAUNCH | Morph, Vitrine, Cue | Multiple demo formats are XL |
+| LAUNCH | Scribe, Vitrine, Cue | Multiple demo formats are XL |
 
 Full agent × phase deployment map → `reference/agent-deployment-matrix.md`
 Phase exit checklists → `reference/exit-criteria-validation.md`

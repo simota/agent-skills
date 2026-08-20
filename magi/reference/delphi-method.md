@@ -9,7 +9,7 @@ Purpose: Structured anonymous expert convergence developed at RAND Corporation (
 - **magi `sixhat` (elsewhere)**: single-room parallel-thinking. Delphi is multi-round and anonymous across rounds; Six Hats is co-located and named.
 - **magi `devil` (elsewhere)**: structured opposition. Delphi seeks convergence; DA seeks to break consensus.
 - **flux (elsewhere)**: reframes the problem. Delphi holds the question fixed and converges on its answer.
-- **riff (elsewhere)**: collaborative iterative deepening, named and dialogue-based. Delphi is anonymous and questionnaire-based.
+- **flux (elsewhere)**: collaborative iterative deepening, named and dialogue-based. Delphi is anonymous and questionnaire-based.
 - **omen (elsewhere)**: enumerates failure modes. Delphi can quantify failure-mode probabilities, but its scope is broader (any uncertain quantity).
 
 ## Workflow
@@ -35,7 +35,7 @@ REPORT   →  final median + IQR + dissent rationales; Kendall's W for ranking c
 
 | Aspect | Classic Delphi | Real-Time Delphi |
 |--------|---------------|------------------|
-| Tempo | Days-to-weeks per round | Minutes-to-hours; live dashboard |
+| Weave | Days-to-weeks per round | Minutes-to-hours; live dashboard |
 | Format | Async questionnaire | Live anonymous platform |
 | Anonymity | Strong (between rounds) | Strong (live) |
 | Feedback timing | Between rounds, batched | Continuous, on-demand |

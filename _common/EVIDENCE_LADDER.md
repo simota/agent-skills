@@ -6,7 +6,7 @@ Cross-skill discipline for deciding **how much independent evidence a change mus
 
 **Read when:** planning what to verify before implementing; selecting the evidence set for a change; auditing whether a green test suite actually proves anything; deciding whether an AI-written test is admissible evidence for AI-written code.
 
-**Audience:** `radar`, `voyager`, `siege`, `attest`, `mint`, `judge`, `guardian`, `sentinel`, `beacon`, `mend`, `nexus[acceptance]`, `nexus[apex]`, `rally`.
+**Audience:** `radar`, `voyager`, `siege`, `attest`, `radar`, `judge`, `guardian`, `sentinel`, `beacon`, `mend`, `nexus[acceptance]`, `nexus[apex]`, `rally`.
 
 **Prerequisites:** none. **Composes with:** `_common/PROOF_CARRYING.md` (which criticality tier of PR gets a full evidence package — *orthogonal*: PROOF_CARRYING answers *which PRs are gated and by whom*, this file answers *how far up the evidence stack one change must climb*), `_common/DIFFERENTIAL_PARITY.md` (E4's differential mechanism), `_common/TRACEABILITY.md` (AC IDs).
 

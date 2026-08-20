@@ -76,7 +76,7 @@ Read from other agents' outputs (never recalculated by Darwin).
 | Health Score | Architect | `.agents/architect.md` or last review output |
 | UQS History | Judge | `.agents/judge.md` or last cycle output |
 | DNA Score | Grove | `.agents/grove.md` or last profile output |
-| Strategy Drift | Helm | `.agents/helm.md` or last monitoring output |
+| Strategy Drift | Magi | `.agents/magi.md` or last monitoring output |
 | Reverse Feedback | Judge | `_common/REVERSE_FEEDBACK.md` or judge outputs |
 
 ---

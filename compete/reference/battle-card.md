@@ -111,7 +111,7 @@ Healthy program targets: +5 to +10 percentage points within 2-3 quarters; battle
 
 - **To Voice**: pull customer quotes for proof points and testimonial validation. Voice owns the source-of-truth quote library.
 - **To Field**: when objections lack empirical backing, hand off for moderated user/customer interviews to validate the reframe.
-- **To Helm**: if win/loss patterns reveal a structural strategic gap (e.g., losing the entire enterprise tier), escalate to Helm for strategic simulation.
+- **To Magi**: if win/loss patterns reveal a structural strategic gap (e.g., losing the entire enterprise tier), escalate to Magi for strategic simulation.
 - **To Spark**: when "why we lose" patterns repeatedly cite a missing capability, route as a feature idea with competitive evidence attached.
 - **To Growth**: when objections center on brand authority or category framing, route positioning fixes to Growth.
 - **To Lore**: validated objection-handling patterns that work across multiple competitors become reusable institutional knowledge.

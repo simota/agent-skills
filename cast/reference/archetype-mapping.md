@@ -1,6 +1,6 @@
 # Archetype Mapping Reference
 
-Purpose: Tag personas with brand and behavioral archetypes so downstream agents (Echo, Spark, Voice, Bond) inherit consistent narrative DNA. Cover Jung 12 brand archetypes, Jobs-To-Be-Done archetype model, persona-archetype mapping, and brand consistency validation.
+Purpose: Tag personas with brand and behavioral archetypes so downstream agents (Echo, Spark, Voice, Growth) inherit consistent narrative DNA. Cover Jung 12 brand archetypes, Jobs-To-Be-Done archetype model, persona-archetype mapping, and brand consistency validation.
 
 ## Scope Boundary
 
@@ -142,7 +142,7 @@ HANDOFF      →  Saga: narrative voice
              →  Spark: feature priority via JTBD
              →  Voice: tone-of-voice copy
              →  Echo: archetype-aligned cognitive walkthrough
-             →  Bond: emotional retention triggers
+             →  Growth: emotional retention triggers
 ```
 
 ## Output Template
@@ -187,7 +187,7 @@ HANDOFF      →  Saga: narrative voice
 - Spark: feature priority by JTBD dimension
 - Voice: per-archetype copy guide
 - Echo: walkthrough with archetype-consistent reactions
-- Bond: emotional retention triggers per archetype
+- Growth: emotional retention triggers per archetype
 ```
 
 ## Anti-Patterns
@@ -217,7 +217,7 @@ When `archetype` completes, emit:
 - **Brand-level coherence check**.
 - **Tone-of-voice hints** per archetype.
 - **JTBD-driven feature priority** hint.
-- **Handoffs**: Saga, Spark, Voice, Echo, Bond.
+- **Handoffs**: Saga, Spark, Voice, Echo, Growth.
 
 ## References
 

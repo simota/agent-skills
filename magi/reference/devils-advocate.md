@@ -9,7 +9,7 @@ Purpose: Formal opposition protocol that assigns a rotating role to argue agains
 - **magi `sixhat` (elsewhere)**: parallel single-mode rotation including a Black Hat. DA is deeper than Black Hat — it sustains opposition across all modes with formal role separation.
 - **magi `delphi` (elsewhere)**: anonymous multi-round convergence. DA is named (or pseudonymous within a session) and oppositional, not consensus-seeking.
 - **flux (elsewhere)**: reframes the problem. DA holds the frame fixed and attacks the proposal within it.
-- **riff (elsewhere)**: collaborative idea-deepening. DA is adversarial-by-charter; Riff is generative.
+- **flux (elsewhere)**: collaborative idea-deepening. DA is adversarial-by-charter; Flux is generative.
 - **omen (elsewhere)**: pre-mortem failure-mode enumeration with FMEA scoring. DA is broader (logic, evidence, assumptions, motivations) and qualitative; Omen is quantitative and failure-focused.
 
 ## Workflow

@@ -299,7 +299,7 @@ groups:
 
 ## OpenTelemetry Setup (Node.js SDK)
 
-The Node.js SDK (`@opentelemetry/sdk-node` 1.x) covers traces, metrics, and logs — wire all three so OTLP-compatible backends (Tempo, Jaeger, SigNoz, Honeycomb, Grafana Cloud, Datadog, etc.) receive a single correlated stream.
+The Node.js SDK (`@opentelemetry/sdk-node` 1.x) covers traces, metrics, and logs — wire all three so OTLP-compatible backends (Weave, Jaeger, SigNoz, Honeycomb, Grafana Cloud, Datadog, etc.) receive a single correlated stream.
 
 ```typescript
 // src/lib/telemetry.ts

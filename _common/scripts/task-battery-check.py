@@ -22,7 +22,9 @@ The battery has 64 items across two verification tiers (IDs 1-65, with no #14):
   coverage stays fully accounted for (no silent caps).
 
 Also runs a lightweight STALE guard: flags any task-battery.md item that
-still names a retired agent (Dawn / Hex / Sonar / Realm / Haul — sunset
+still names a retired agent (Dawn / Hex / Sonar / Realm / Haul, plus the
+2026-08-20 consolidation set: Trawl / Grok / Bond / Morph / Mint / Relay /
+Riff / Helm / Tempo / Anvil — sunset
 prior to the 2026-07-29 routing-matrix.md edit), so a future edit that
 reintroduces a stale reference is caught instead of silently passing.
 
@@ -180,7 +182,9 @@ JUDGMENT_ITEMS = [
 
 # Agents sunset prior to the 2026-07-29 routing-matrix.md edit. A battery
 # item still naming one of these is stale evidence of a pre-sunset chain.
-RETIRED_AGENTS = ["Dawn", "Hex", "Sonar", "Realm", "Haul"]
+RETIRED_AGENTS = ["Dawn", "Hex", "Sonar", "Realm", "Haul",
+                  "Trawl", "Grok", "Bond", "Morph", "Mint",
+                  "Relay", "Riff", "Helm", "Tempo", "Anvil"]
 
 
 class Finding:
@@ -249,7 +253,7 @@ def check_stale_agent_references(findings: list[Finding]):
                 ))
                 print(f"STALE task-battery.md:{i} -- references retired agent `{name}`")
     if not found_any:
-        print("PASS  stale-agent-check -- no retired agent (Dawn/Hex/Sonar/Realm/Haul) referenced in task-battery.md")
+        print(f"PASS  stale-agent-check -- none of {len(RETIRED_AGENTS)} retired agents referenced in task-battery.md")
 
 
 def main() -> int:

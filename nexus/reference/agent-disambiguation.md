@@ -138,30 +138,30 @@ Both are project-local extensions. Apply `_common/PROJECT_LOCAL_SKILLS.md` befor
 
 ---
 
-### Flux vs Riff vs Magi (Thinking Support)
+### Flux vs Magi (Thinking Support)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
-| "Reframe this", "shift perspective", single-shot analysis | **Flux** | One-time perspective shift |
-| "Bounce ideas", "brainstorm with me", "rubber-duck session", iterative dialogue | **Riff** | Multi-turn interactive exploration |
+| "Reframe this", "shift perspective", single-shot analysis | **Flux[reframe]** | One-time perspective shift |
+| "Bounce ideas", "brainstorm with me", "rubber-duck session", iterative dialogue | **Flux[ideate]** | Multi-turn interactive exploration |
 | "Which should we pick?", "Go/No-Go", verdict needed | **Magi** | Structured decision with vote |
 | **A real person is named** — "what would Feynman do here?", "critique this as Christensen would", "panel of Buffett + Munger on this" | **Magi[channel/conclave]** | Named-figure documented thinking as an advisory lens |
-| User wants to explore before knowing what to decide | **Riff** | Open-ended exploration first |
-| User is stuck and needs a new frame, not a conversation | **Flux** | Break the frame, then move on |
+| User wants to explore before knowing what to decide | **Flux[ideate]** | Open-ended exploration first |
+| User is stuck and needs a new frame, not a conversation | **Flux[reframe]** | Break the frame, then move on |
 | User has options and needs a verdict, not more ideas | **Magi** | Converge and decide |
 | User wants *a specific documented thinker's* frame, not any new frame | **Magi[advisor]** | Flux invents a frame; Magi applies a documented person's |
 
-**Rule of thumb**: "Help me think about this" → Riff. "Help me see this differently" → Flux. "Help me decide" → Magi[decide]. **"Help me see this as _<named person>_" → Magi[advisor].**
+**Rule of thumb**: "Help me think about this" → Flux[ideate]. "Help me see this differently" → Flux[reframe]. "Help me decide" → Magi[decide]. **"Help me see this as _<named person>_" → Magi[advisor].**
 
-**The named-figure Recipe boundary is a documented individual.** A real, *named* person → Magi[channel/conclave/critique]. A school/movement/collective, or no person at all → Flux or Riff. A synthetic user persona → Cast. A fixed founder-mentor archetype (no name) → Magi[advisor]. Named-figure Recipes produce a **reading, not a verdict** — every claim is tagged `ATTESTED` / `INFERRED` / `SPECULATIVE`; a requested decision continues to Magi[decide].
+**The named-figure Recipe boundary is a documented individual.** A real, *named* person → Magi[channel/conclave/critique]. A school/movement/collective, or no person at all → Flux. A synthetic user persona → Cast. A fixed founder-mentor archetype (no name) → Magi[advisor]. Named-figure Recipes produce a **reading, not a verdict** — every claim is tagged `ATTESTED` / `INFERRED` / `SPECULATIVE`; a requested decision continues to Magi[decide].
 
 **Chain patterns**:
-- Flux (reframe) → Riff (explore the new frame) → Magi (decide) → Builder (implement)
-- Riff (brainstorm) → Spark (formalize as spec) → Builder (implement)
-- Riff (brainstorm) → Void (cut scope) → Builder (implement)
+- Flux[reframe] (new frame) → Flux[ideate] (explore it) → Magi (decide) → Builder (implement)
+- Flux[ideate] (brainstorm) → Spark (formalize as spec) → Builder (implement)
+- Flux[ideate] (brainstorm) → Void (cut scope) → Builder (implement)
 - **Magi[advisor] → Magi[decide] → Builder** — the canonical "expert lens for a decision" path
-- **Flux → Magi[advisor]** — reframe first, then borrow the mind that fits it
-- **Magi[advisor] → Riff** — expert mental models as ideation seeds
+- **Flux[reframe] → Magi[advisor]** — reframe first, then borrow the mind that fits it
+- **Magi[advisor] → Flux[ideate]** — expert mental models as ideation seeds
 
 ---
 
@@ -249,26 +249,26 @@ Prompt text inside a `SKILL.md` splits the same way: the file's structure and no
 
 ---
 
-### Helm vs Spark vs Echo[demand] (JTBD — Jobs-To-Be-Done)
+### Magi vs Spark vs Echo[demand] (JTBD — Jobs-To-Be-Done)
 
 Three skills hold full JTBD content, each applying it through a different lens — this is
 intentional multi-lens coverage, not duplication. Route by *what the JTBD output feeds*.
 
 **Rule of thumb**: strategy/competitive-set ("market/category strategy via JTBD", "disruption") →
-Helm (`jobs-to-be-done.md`); feature targeting ("feature brief", "proposal hypothesis") → Spark
+Magi (`jobs-to-be-done.md`); feature targeting ("feature brief", "proposal hypothesis") → Spark
 (`persona-jtbd.md`); demand/switch interview ("forces of progress for demand", "why users would
 switch") → Echo `demand` (`demand-jtbd-switch-interview.md`). Value Proposition Canvas (jobs/pains/gains zoom-in)
 lives in **Spark** (`value-proposition-canvas.md`) and pulls its jobs block from `persona-jtbd.md`.
 
 ---
 
-### Helm vs Compete vs Spark (Market Sizing — TAM/SAM/SOM)
+### Magi vs Compete vs Spark (Market Sizing — TAM/SAM/SOM)
 
 Three skills size markets, each for a different decision. Route by *the decision the number
 informs*, not the acronym.
 
 **Rule of thumb**: whole-business/entry strategy ("strategic market headroom", "entry scoring",
-"portfolio sizing") → Helm (`market-sizing-strategy.md`); competitor-relative ("market size vs
+"portfolio sizing") → Magi (`market-sizing-strategy.md`); competitor-relative ("market size vs
 competitors", "competitive TAM", "share capture") → Compete (`market-sizing.md`); per-feature
 upside ("how much can this feature earn", "opportunity upper bound") → Spark (`opportunity-sizing.md`).
 
@@ -334,9 +334,9 @@ upside ("how much can this feature earn", "opportunity upper bound") → Spark (
 
 **Rule**: Code documentation (JSDoc, README) → Quill. Specification documents (PRD, SRS) → Scribe.
 
-### Helm vs Compete
+### Magi vs Compete
 
-**Rule**: Business strategy simulation → Helm. Competitive intelligence gathering → Compete. Compete output feeds into Helm input.
+**Rule**: Business strategy simulation → Magi. Competitive intelligence gathering → Compete. Compete output feeds into Magi input.
 
 ### Nexus build recipes
 
@@ -441,41 +441,41 @@ upside ("how much can this feature earn", "opportunity upper bound") → Spark (
 
 ---
 
-### Tempo vs Weave vs Launch vs Orbit (Scheduling / Time / Flow)
+### Weave vs Launch vs Orbit (Scheduling / Time / Flow)
 
 Orbit is project-local. Apply `_common/PROJECT_LOCAL_SKILLS.md`; when unavailable, use `Nexus[goal/apex]` for bounded execution or `Sherpa` for decomposition.
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
-| "Design cron expression", "timezone/DST handling" | **Tempo** | Temporal logic design |
-| "Retry/backoff policy", "idempotency key design" | **Tempo** | Time-related resilience |
-| "State machine with retries" | **Tempo** (policy) + Weave (FSM) | Split: Tempo owns timing, Weave owns states |
+| "Design cron expression", "timezone/DST handling" | **Weave[schedule]** | Temporal logic design |
+| "Retry/backoff policy", "idempotency key design" | **Weave[retry]** | Time-related resilience |
+| "State machine with retries" | **Weave[retry]** + **Weave[design]** | One owner: `retry` sets the backoff policy, `design` sets the states |
 | "Release scheduling, feature flag rollout" | **Launch** | One-time release events |
 | "Autonomous AI loop runner (nexus-autoloop)" | **Orbit** | Script-driven AI loops |
-| "Business calendar (JP holidays, fiscal year, banking days)" | **Tempo** | Calendar-as-code |
-| "GitHub Actions cron tuning" | **Tempo** (design) + Gear/Gear[gha] (impl) | Tempo picks pattern, Gear/Gear[gha] configures |
-| "Backfill missed runs after incident" | **Triage** → **Tempo** (replay plan) → Builder | Tempo designs idempotent replay |
+| "Business calendar (JP holidays, fiscal year, banking days)" | **Weave[schedule]** | Calendar-as-code |
+| "GitHub Actions cron tuning" | **Weave[schedule]** + Gear[gha] (impl) | Weave picks the pattern, Gear configures the runner |
+| "Backfill missed runs after incident" | **Triage** → **Weave[schedule]** (replay plan) → Builder | Weave designs idempotent replay |
 
-**Rule of thumb**: Recurring time logic → Tempo. State machine → Weave. Release event → Launch. AI agent loop → Orbit.
+**Rule of thumb**: Recurring time logic → Weave[schedule]. State machine → Weave[design]. Release event → Launch. AI agent loop → Orbit.
 
 ---
 
-### Grok vs Builder vs Gateway vs Schema (Grammar / API / Data Design)
+### Builder vs Gateway vs Schema (Grammar / API / Data Design)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
-| "Design grammar (EBNF/ABNF/PEG)", "parser-generator choice" | **Grok** | Grammar / parser layer |
-| "ReDoS-safe regex", "catastrophic backtracking audit" | **Grok** | Regex security design |
-| "Internal DSL (fluent API, template literal, YAML-embedded)" | **Grok** | DSL architecture |
-| "AST transformation, Babel plugin, jscodeshift, codemod" | **Grok** | AST design / transform |
+| "Design grammar (EBNF/ABNF/PEG)", "parser-generator choice" | **Builder[grammar]** | Grammar / parser layer |
+| "ReDoS-safe regex", "catastrophic backtracking audit" | **Builder[grammar]** (design) + **Sentinel** (audit) | Builder writes the pattern, Sentinel audits the shipped one |
+| "Internal DSL (fluent API, template literal, YAML-embedded)" | **Builder[grammar]** | DSL architecture |
+| "AST transformation, Babel plugin, jscodeshift, codemod" | **Builder[grammar]** (design) + **Shift** (migration) | Builder shapes the transform, Shift orchestrates the rollout |
 | "REST/GraphQL API design, OpenAPI spec" | **Gateway** | HTTP API contract |
 | "Database schema, migration, ER diagram" | **Schema** | Persistence schema |
 | "General business logic implementation" | **Builder** | General implementation |
-| "Log parsing with grok patterns (Logstash)" | **Grok** | Pattern engine migration/design |
+| "Log parsing with builder patterns (Logstash)" | **Builder** | Pattern engine migration/design |
 | "Static security scan of shipped regex" | **Sentinel** | Post-ship audit, not design |
 | "Fuzz testing against a parser" | **Radar** | Test execution, not grammar design |
 
-**Rule of thumb**: Textual grammar/pattern/DSL → Grok. HTTP API → Gateway. DB schema → Schema. General impl → Builder. Grok designs; Sentinel audits; Radar tests.
+**Rule of thumb**: Textual grammar/pattern/DSL → Builder. HTTP API → Gateway. DB schema → Schema. General impl → Builder. Builder designs; Sentinel audits; Radar tests.
 
 ---
 
@@ -503,7 +503,7 @@ Orbit is project-local. Apply `_common/PROJECT_LOCAL_SKILLS.md`; when unavailabl
 
 ---
 
-### Magi vs Riff vs Helm vs Spark vs Flux (Founder Decisions & Ideation)
+### Magi vs Flux vs Spark (Founder Decisions & Ideation)
 
 | Signal | Route to | Rationale |
 |--------|----------|-----------|
@@ -512,13 +512,13 @@ Orbit is project-local. Apply `_common/PROJECT_LOCAL_SKILLS.md`; when unavailabl
 | "review my pitch" / "Demo Day deck" / "investor Q&A practice" | **Magi** (pitch recipe) | STRUCTURE → CLARITY → TENSION → RESONANCE → REVISE |
 | "we just shipped X / hired Y / pivoted Z, postmortem" | **Magi** (retro recipe) | Retrospective on recent decisions and outcomes |
 | "we're stuck right now, need to unblock" | **Magi** (triage recipe) | Emergency unblock within 5 turns |
-| "I want to generate ideas, diverge" | **Riff** | Iterative divergent ideation (4 modes) |
+| "I want to generate ideas, diverge" | **Flux[ideate]** | Iterative divergent ideation (4 modes) |
 | "Propose a new feature as a Markdown spec" | **Spark** | Feature proposals from existing data/logic |
 | "GO / NO-GO decision, pick among multiple options" | **Magi** | Three-perspective deliberation (Logos/Pathos/Sophia) |
-| "Quarterly / annual scenario simulation, KPI forecast" | **Helm** | Long-term strategy simulation |
-| "Question assumptions, shift perspective" | **Flux** | Single-shot reframing |
+| "Quarterly / annual scenario simulation, KPI forecast" | **Magi[simulate]** | Long-term strategy simulation |
+| "Question assumptions, shift perspective" | **Flux[reframe]** | Single-shot reframing |
 
-**Rule of thumb**: One actionable move to make this week → Magi. Diverge → Riff. Three-perspective deliberation → Magi. Long-term scenario → Helm. Feature spec → Spark. Flip assumptions → Flux. Magi does **not** generate ideas — it surfaces what the founder is avoiding.
+**Rule of thumb**: One actionable move to make this week → Magi[advisor]. Diverge → Flux[ideate]. Three-perspective deliberation → Magi[decide]. Long-term scenario → Magi[simulate]. Feature spec → Spark. Flip assumptions → Flux[reframe]. Magi does **not** generate ideas — it surfaces what the founder is avoiding.
 
 ---
 

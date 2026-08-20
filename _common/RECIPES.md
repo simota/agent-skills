@@ -174,9 +174,9 @@ The following rules are evaluated by **Gauge** during normalization audits.
 |------|--------------|----------------|
 | **Tier 1 — Recommended** | Skills that appear in the Nexus routing-matrix Primary Chain (e.g., Scout, Builder, Sentinel) | Adopt Recipes; add Recipe Hints to routing-matrix |
 | **Tier 2 — Optional** | Skills invoked frequently in standalone usage (e.g., Lens, Zen, Radar) | Adopt if 3+ distinct modes exist |
-| **Tier 3 — Defer** | Specialist skills invoked rarely or always through Nexus chains (e.g., Canvas, Morph, Quill) | Omit `## Recipes`; revisit in Phase 2+ |
+| **Tier 3 — Defer** | Specialist skills invoked rarely or always through Nexus chains (e.g., Canvas, Scribe, Quill) | Omit `## Recipes`; revisit in Phase 2+ |
 
-Phase 1 scope: Scout only. Builder, Sentinel, and other Tier 1 skills adopt Recipes in Phase 2+. As of Phase 2J, all 100 global skills and 3 project-local extensions have adopted Recipes.
+Phase 1 scope: Scout only. Builder, Sentinel, and other Tier 1 skills adopt Recipes in Phase 2+. As of Phase 2J, all 90 global skills and 3 project-local extensions have adopted Recipes.
 
 ---
 

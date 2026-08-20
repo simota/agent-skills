@@ -146,7 +146,7 @@ The `outcome` field is backfilled lazily: at the NEXT wish's Phase 0, ask one li
 |-------------------|--------------------------------|-------------------------------|
 | Code / feature | correctness→Radar · code quality→Judge · UX→Echo/Palette · spec conformance→Attest · E2E→Voyager | the maintainer inheriting it · the on-call engineer · the end user |
 | Document | Doc Quality Gate W12 (`doc-quality-protocol.md`) as a dimension · grounding→Attest · standards→Canon | the decision-maker who acts on it · the skeptic in the room · the reader with no context |
-| Plan / strategy | trade-off soundness→Magi · market/competitive fit→Helm/Compete · internal consistency→Attest | the person who must execute it · the person funding it · the competitor reading it |
+| Plan / strategy | trade-off soundness→Magi · market/competitive fit→Magi/Compete · internal consistency→Attest | the person who must execute it · the person funding it · the competitor reading it |
 | Design / visual | craft→Vision · usability→Palette/Echo · a11y→Canon · motion→Flow | the first-time visitor · the returning user · the brand owner |
 
 ## 7. Calibration & Rubric Amendment

@@ -40,7 +40,7 @@ Build the idealized scenario: the setup, the **controlled variable(s)**, and the
 | **veil-of-ignorance** | reason without knowing your position | Rawls' fairness |
 
 ### Phase 3 — REASON ∥ (independent multi-perspective derivation)
-Independent reasoners work the scenario from **distinct lenses** (hub-spoke, no shared mutable state — independence is the point). `Magi` Logos (logic) / Pathos (lived effect) / Sophia (wisdom/values) ‖ `Flux`[cross-domain analogy] ‖ a domain specialist when the question is technical (`Atlas` architecture · `Helm` business/economics · `Oracle` AI/ML · `Ripple` systemic impact). Each derives the implications the scenario *forces* under its lens.
+Independent reasoners work the scenario from **distinct lenses** (hub-spoke, no shared mutable state — independence is the point). `Magi` Logos (logic) / Pathos (lived effect) / Sophia (wisdom/values) ‖ `Flux`[cross-domain analogy] ‖ a domain specialist when the question is technical (`Atlas` architecture · `Magi` business/economics · `Oracle` AI/ML · `Ripple` systemic impact). Each derives the implications the scenario *forces* under its lens.
 - Output: per-lens implication sets, with agreements and divergences marked.
 
 ### Phase 4 — PERTURB (controlled variation — the heart)
@@ -86,18 +86,18 @@ Checkpoint-resume: 6 phases → persist the FRAME assumption ledger, the CONSTRU
 ## Boundaries / vs neighbors
 
 - **vs `magi`** — `magi` delivers a *decision* (Go/No-Go, trade-off arbitration); `gedanken` *explores* a hypothetical's implications and is often `magi`'s upstream. A request that wants "decide X" → `magi`; "reason through what X would imply" → `gedanken`.
-- **vs `riff`** — `riff` diverges (generates ideas); `gedanken` converges rigorously toward a conclusion under controlled variation. Brainstorm → `riff`; pressure-test → `gedanken`.
+- **vs `flux`** — `flux` diverges (generates ideas); `gedanken` converges rigorously toward a conclusion under controlled variation. Brainstorm → `flux`; pressure-test → `gedanken`.
 - **vs `omen`** — `omen` enumerates *failure modes* (a risk-focused thought experiment); `gedanken` is general (any hypothesis/scenario) and uses `omen` inside PERTURB when the question is risk-shaped.
 - **vs `flux`** — `flux` is a single reframing/assumption-challenge move; `gedanken` *orchestrates* `flux` + `magi` + `omen` + `matrix` into a full protocol with an output contract. A one-off "reframe this" → `flux` direct.
-- **vs `helm`** — `helm` simulates *business* scenarios with financial/market models; `gedanken` is domain-agnostic abstract reasoning.
+- **vs `magi`** — `magi` simulates *business* scenarios with financial/market models; `gedanken` is domain-agnostic abstract reasoning.
 - **vs `spec` / `charter`** — those produce *buildable* artifacts (a spec, a team charter); `gedanken` produces an *insight* artifact and writes no build plan (though it can hand off to `spec` if it resolved *what* to build).
 - **vs `converge`** — `converge` is an automated quality grading loop over a generator; `gedanken` is open-ended exploratory reasoning, not a graded loop.
 
 **Decision tree:**
 ```
 Want a rigorous answer about a hypothetical / claim (no code)?
-  NO  → decide between options? → magi · generate ideas? → riff · enumerate risks? → omen
-        one-off reframe? → flux · simulate a business case? → helm
+  NO  → decide between options? → magi · generate ideas? → flux · enumerate risks? → omen
+        one-off reframe? → flux · simulate a business case? → magi
   YES → trivial single "what if"? → flux / magi direct (minimum viable chain)
         otherwise (construct → reason → perturb → refute → conclude) → gedanken
               resolved WHAT to build and want a spec? → gedanken → spec
@@ -111,9 +111,9 @@ Want a rigorous answer about a hypothetical / claim (no code)?
 ## Shared protocols & Add-ons
 
 - **Shared:** REFUTE → `_common/ADVERSARIAL_REFUTATION.md` (skeptic panel, evidence-vs-novelty, polarity). Downstream handoff → `nexus/reference/verdict-gate.md` / `magi` / `spec`.
-- **Add-ons:** +`Lens`/`Compete` (ground the hypothetical in a real system/market in FRAME), +`Cast` (persona-anchored scenario), +`Matrix` (systematic multi-axis variation in PERTURB), +`Omen` (failure-mode variation), +`Atlas`/`Helm`/`Oracle`/`Ripple` (domain-specialist lens in REASON), +`Scribe` (author the Gedanken Report).
+- **Add-ons:** +`Lens`/`Compete` (ground the hypothetical in a real system/market in FRAME), +`Cast` (persona-anchored scenario), +`Matrix` (systematic multi-axis variation in PERTURB), +`Omen` (failure-mode variation), +`Atlas`/`Magi`/`Oracle`/`Ripple` (domain-specialist lens in REASON), +`Scribe` (author the Gedanken Report).
 
 ## Chain template
-`FRAME (Magi[frame + stated/implicit assumption ledger] +Flux?[challenge framing] +Lens?/Compete?[ground in real system]) → CONSTRUCT (Flux[build hypothetical + pick archetype: limiting-case|counterfactual|reductio|isolation|analogy|inversion|veil] +Cast?/Matrix?) → REASON ∥ (Magi Logos/Pathos/Sophia ‖ Flux cross-domain ‖ domain-specialist?[Atlas|Helm|Oracle|Ripple]) → PERTURB (Matrix[axis variation] + Flux[limit/invert] +Omen?; variation rounds ≤ 3 cycles (default 3), stop on robustness-established | diminishing-insight | cap-reached → mark robust vs frame-dependent) → REFUTE (refute×2-3 per _common/ADVERSARIAL_REFUTATION.md — smuggled-premise|false-analogy|equivocation|frame-dependence) → CONCLUDE (Magi synthesize: conclusion + confidence + load-bearing assumptions + falsifier + transfer + epistemic status; Scribe?[Gedanken Report]) [NO CODE]`
+`FRAME (Magi[frame + stated/implicit assumption ledger] +Flux?[challenge framing] +Lens?/Compete?[ground in real system]) → CONSTRUCT (Flux[build hypothetical + pick archetype: limiting-case|counterfactual|reductio|isolation|analogy|inversion|veil] +Cast?/Matrix?) → REASON ∥ (Magi Logos/Pathos/Sophia ‖ Flux cross-domain ‖ domain-specialist?[Atlas|Magi|Oracle|Ripple]) → PERTURB (Matrix[axis variation] + Flux[limit/invert] +Omen?; variation rounds ≤ 3 cycles (default 3), stop on robustness-established | diminishing-insight | cap-reached → mark robust vs frame-dependent) → REFUTE (refute×2-3 per _common/ADVERSARIAL_REFUTATION.md — smuggled-premise|false-analogy|equivocation|frame-dependence) → CONCLUDE (Magi synthesize: conclusion + confidence + load-bearing assumptions + falsifier + transfer + epistemic status; Scribe?[Gedanken Report]) [NO CODE]`
 
 Resumable: checkpoint per phase. Optional handoff to `magi` / `spec` / verdict recipes at CONCLUDE.

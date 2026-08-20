@@ -8,7 +8,7 @@ Purpose: NSM selection rubric, classification, input-metric decomposition, count
 - **pulse `kpi` (elsewhere)**: Metric tree construction from an already-chosen NSM. Default entry point.
 - **pulse `retention` / `activation` (elsewhere)**: Curve-shape diagnostics and aha-moment discovery. NSM decomposition often references these outputs.
 - **Experiment (elsewhere)**: Hypothesis validation. NSM is the primary metric a hypothesis should move, not the experiment surface itself.
-- **Helm (elsewhere)**: Business strategy and forecast. NSM is a measurement commitment, not a strategic forecast.
+- **Magi (elsewhere)**: Business strategy and forecast. NSM is a measurement commitment, not a strategic forecast.
 
 ## Workflow
 

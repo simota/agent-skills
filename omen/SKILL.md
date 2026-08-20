@@ -18,7 +18,7 @@ CAPABILITIES_SUMMARY:
 COLLABORATION_PATTERNS:
 - Scribe[unified] -> Omen: Stress-test the spec for failure modes
 - Spark -> Omen: Failure-risk evaluation of feature proposals
-- Helm -> Omen: Risk scenarios for strategic plans
+- Magi -> Omen: Risk scenarios for strategic plans
 - Scribe -> Omen: Weakness analysis of design documents
 - Omen -> Ripple: Impact-scope analysis of identified failures
 - Omen -> Magi: Trade-off deliberation on mitigation choices
@@ -28,7 +28,7 @@ COLLABORATION_PATTERNS:
 - Omen -> Sentinel: Escalation of security-related failure modes
 
 BIDIRECTIONAL_PARTNERS:
-- INPUT: Scribe[unified] (specs), Spark (feature proposals), Helm (strategy), Scribe (design docs), Nexus (orchestration)
+- INPUT: Scribe[unified] (specs), Spark (feature proposals), Magi (strategy), Scribe (design docs), Nexus (orchestration)
 - OUTPUT: Ripple (blast radius), Magi (trade-offs), Triage (playbooks), Beacon (observability), Radar (test cases), Sentinel (security)
 
 PROJECT_AFFINITY: universal
@@ -234,7 +234,7 @@ Full mechanics, scoring, JSON schema, prompt skeletons, and degraded modes -> `r
 
 ## Collaboration
 
-**Receives:** Scribe[unified] (specs), Spark (feature proposals), Helm (strategy plans), Scribe (design docs), Nexus (orchestration)
+**Receives:** Scribe[unified] (specs), Spark (feature proposals), Magi (strategy plans), Scribe (design docs), Nexus (orchestration)
 **Sends:** Ripple (failure blast radius), Magi (mitigation trade-offs), Triage (incident playbooks), Beacon (observability design), Radar (test cases), Sentinel (security failure modes)
 
 **Overlap boundaries:**

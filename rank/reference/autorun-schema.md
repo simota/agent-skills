@@ -16,6 +16,6 @@ _STEP_COMPLETE:
       items_ranked: "[count]"
       rank_correlation: "[Spearman rho between frameworks]"
       confidence: "[HIGH | MEDIUM | LOW]"
-  Next: [Sherpa | Builder | Helm | Magi | DONE]
+  Next: [Sherpa | Builder | Magi | Magi | DONE]
   Reason: [Why this next step]
 ```

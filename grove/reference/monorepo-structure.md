@@ -112,6 +112,6 @@ Default to `workspace:*` for internal libs to avoid version-bump churn. Publish 
 - **To Grove[llm]**: once monorepo layout is stable, ask Grove[llm] to optimize folder ordering for LLM context (e.g., `libs/` README front-loading, package-manifest progressive disclosure).
 - **To Atlas**: package boundaries defined by Grove become the input set for Atlas dependency analysis (cycles, God modules within `libs/`).
 - **To Sigil**: Grove publishes the monorepo layout; Sigil generates per-package skills tuned to detected conventions (test runner, language, framework).
-- **To Anvil**: when monorepo needs a custom CLI for repo-internal tooling (e.g., `repo gen lib`, `repo affected`), Anvil designs the TUI on top of `tools/`.
+- **To Builder**: when monorepo needs a custom CLI for repo-internal tooling (e.g., `repo gen lib`, `repo affected`), Builder designs the TUI on top of `tools/`.
 - **To Gear**: CI matrix wiring (affected-only build, remote cache auth) once layout and tool choice are locked.
 - **To Guardian**: PR-slicing strategy for the migration (≤ 50 files per PR, CI-green per commit).

@@ -33,7 +33,7 @@ If the central estimates differ by more than `3x`, do not average them. Isolate 
 | Confidence | high / medium / low per estimate |
 | Adjacencies | customer, workflow, technology, data, or bundle connection |
 
-For adjacent markets, name the shared buyer or workflow, expansion enabler, barrier, and plausible time horizon. Hand strategic simulation to Helm with sources and unresolved assumptions intact.
+For adjacent markets, name the shared buyer or workflow, expansion enabler, barrier, and plausible time horizon. Hand strategic simulation to Magi with sources and unresolved assumptions intact.
 
 ## Reject
 

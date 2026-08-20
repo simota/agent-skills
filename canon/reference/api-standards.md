@@ -411,7 +411,7 @@ type User {
 | Input types | PascalCase + Input suffix | `CreateUserInput` |
 | Payload types | PascalCase + Payload suffix | `CreateUserPayload` |
 
-### Relay Pagination (Connections)
+### Gateway Pagination (Connections)
 
 ```graphql
 type UserConnection {

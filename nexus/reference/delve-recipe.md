@@ -48,7 +48,7 @@ From each validated insight, generate evolution directions along **three axes** 
 | **broaden** | extend the feature to an adjacent job the insight revealed |
 | **reframe** | reconceive what the feature fundamentally *is* |
 
-`Riff`[generate directions iteratively] ‖ `Spark`[directions grounded in the existing data/logic — what is reachable] ‖ `Flux`[reframe / cross-domain transplant]. Each direction is tagged with its **axis** + the **insight it springs from** + a rough shape. Diverge deliberately; do not pre-filter for safety here (the gate, not the generator, decides survival).
+`Flux`[generate directions iteratively] ‖ `Spark`[directions grounded in the existing data/logic — what is reachable] ‖ `Flux`[reframe / cross-domain transplant]. Each direction is tagged with its **axis** + the **insight it springs from** + a rough shape. Diverge deliberately; do not pre-filter for safety here (the gate, not the generator, decides survival).
 - Output: a candidate direction set, axis-tagged and insight-linked.
 
 ### Phase 5 — REFUTE (pressure-test insights AND directions)
@@ -107,7 +107,7 @@ Axis per neighbor; the routing itself lives in the Decision tree below.
 | `spec` | a **new** (often vague) idea converged to a locked, buildable spec ↔ an **existing shipped** feature excavated for evolution directions |
 | `gedanken` | reasons about an **abstract** question/hypothesis inside a *constructed* hypothetical ↔ excavates a **concrete existing feature** grounded in its real code and usage (both Reason-family, no code, orchestrating `magi`/`flux`/`omen`) |
 | `essential` / `killer` / `trim` | a *verdict* on which ONE feature to build or remove (single closing AskUserQuestion) ↔ a *map of directions* for ONE existing feature |
-| `spark` / `riff` / `flux` (agents) | a single-agent proposal, a divergence pass, or one reframing move — each is one *phase* of `delve` ↔ the grounded excavation→insight→direction dialogue with a refutation gate that wraps them |
+| `spark` / `flux` / `flux` (agents) | a single-agent proposal, a divergence pass, or one reframing move — each is one *phase* of `delve` ↔ the grounded excavation→insight→direction dialogue with a refutation gate that wraps them |
 | `converge` | an *automated* generator-evaluator loop graded against a machine rubric ↔ EXCAVATE↔SURFACE is an exploratory "dig deeper if insight-thin" heuristic with no rubric and no automated grader (its independent quality check is REFUTE, not the loop) |
 
 **Decision tree:**
@@ -117,7 +117,7 @@ Have an EXISTING shipped feature and want a deep-dive → new insight + evolutio
         abstract hypothesis to reason through? → gedanken
         improve against a known target? → kaizen
         which ONE feature to build / remove? → essential / killer / trim
-  YES → trivial one-off "what could we do with X?" → riff / spark direct (minimum viable chain)
+  YES → trivial one-off "what could we do with X?" → flux / spark direct (minimum viable chain)
         otherwise (ground → excavate → surface → diverge → refute → chart) → delve
               a chosen direction needs a full spec?            → delve → spec
               a chosen direction is incremental polish to a metric? → delve → kaizen
@@ -135,6 +135,6 @@ Have an EXISTING shipped feature and want a deep-dive → new insight + evolutio
 - **Add-ons:** +`Pulse`/`Trace`/`Voice` (usage/sentiment grounding in GROUND when data exists), +`Field` (real user-research grounding in EXCAVATE), +`Compete` (adjacent-value / how-others-solve-the-job in EXCAVATE), +`Cast` (persona-anchored excavation when the audience is unclear), +`Omen` (pre-mortem on a bold reframe in REFUTE), +`Atlas` (structural read when a direction touches module boundaries), +`Scribe` (author the Evolution Map).
 
 ## Chain template
-`GROUND (Lens[map current impl] +Pulse?/Trace?/Voice?[usage] +Echo[demand]?[job-to-be-done lens]) → ✓confirm-feature-as-is + draft-init → EXCAVATE (Echo[demand: latent needs] ‖ Flux[challenge baked-in assumptions] ‖ Echo[friction/workarounds] +Field?/Compete?/Trace?) → SURFACE (Magi[synthesize insights] +Spark[name vs existing logic]; ⟲ deepening loop EXCAVATE↔SURFACE) → ✓validate-insights + draft → DIVERGE (Riff ‖ Spark[grounded directions] ‖ Flux[reframe]; tag axis deepen/broaden/reframe + insight-link) → REFUTE (insight: refute×2-3 → confirmed vs hypothesis; direction: Ripple[blast-radius] + Magi[value×feasibility] +Omen?) → CHART (Magi/Spark Evolution Map: ranked directions + axis + recommended next-recipe; ✓provenance D16; Scribe?) → ✓pick-direction → recommend handoff (spec | kaizen | feature | apex | killer | essential) [NO CODE]`
+`GROUND (Lens[map current impl] +Pulse?/Trace?/Voice?[usage] +Echo[demand]?[job-to-be-done lens]) → ✓confirm-feature-as-is + draft-init → EXCAVATE (Echo[demand: latent needs] ‖ Flux[challenge baked-in assumptions] ‖ Echo[friction/workarounds] +Field?/Compete?/Trace?) → SURFACE (Magi[synthesize insights] +Spark[name vs existing logic]; ⟲ deepening loop EXCAVATE↔SURFACE) → ✓validate-insights + draft → DIVERGE (Flux ‖ Spark[grounded directions] ‖ Flux[reframe]; tag axis deepen/broaden/reframe + insight-link) → REFUTE (insight: refute×2-3 → confirmed vs hypothesis; direction: Ripple[blast-radius] + Magi[value×feasibility] +Omen?) → CHART (Magi/Spark Evolution Map: ranked directions + axis + recommended next-recipe; ✓provenance D16; Scribe?) → ✓pick-direction → recommend handoff (spec | kaizen | feature | apex | killer | essential) [NO CODE]`
 
 Checkpoint content, loop bound, and exit vocabulary are not restated here — see each Phase contract above. Resumable via `delve resume [<slug>]` from the draft's current-phase marker; optional handoff to `spec` / `kaizen` / `feature` / `apex` / verdict recipes at CHART.

@@ -100,7 +100,7 @@ Names that suggest a tool or instrument:
 |------|------|-------|
 | Radar | Detection device | Test coverage |
 | Canvas | Artist's surface | Visualization |
-| Anvil | Blacksmith's tool | CLI builder |
+| Builder | Blacksmith's tool | CLI builder |
 | Probe | Investigation tool | Dynamic security |
 
 **Pattern**: `[Tool/instrument name]`
@@ -188,9 +188,9 @@ Select the highest-scoring name without conflicts.
 ### Two Syllables (31)
 - Nexus, Sherpa, Builder, Artisan, Radar, Voyager
 - Sentinel, Guardian, Palette, Muse, Echo
-- Canvas, Atlas, Gateway, Scaffold, Anvil, Gear
-- Polyglot, Growth, Bond, Pulse
-- Ripple, Trail, Morph, Scribe, Helm
+- Canvas, Atlas, Gateway, Scaffold, Builder, Gear
+- Polyglot, Growth, Pulse
+- Ripple, Trail, Scribe, Magi
 - Stream, Launch, Grove
 
 ### Three Syllables (13)
@@ -293,7 +293,7 @@ Example validation:
 ### Positive Associations
 - Greek/Roman mythology (Atlas, Nexus)
 - Nature (Flow, Grove)
-- Crafts (Forge, Anvil, Canvas)
+- Crafts (Forge, Builder, Canvas)
 - Exploration (Scout, Voyager, Vector)
 
 ### Neutral Associations

@@ -107,7 +107,7 @@ Phase 3   TRIAL loop ⟲ {
                              non-native reader]
             environment    → Voyager[throttled network / offline mid-action / small + large
                              viewport / dark mode]
-            content reality→ Mint[fixture generation: empty · overflow · missing asset ·
+            content reality→ Radar[fixture generation: empty · overflow · missing asset ·
                              max-length label · RTL · long localized string]
                              → Voyager/Pixel[render + complete the task against each fixture]
           → FAILURE LEDGER (cell, task, condition, where it broke, repro)
@@ -163,7 +163,7 @@ Emitted inside `NEXUS_COMPLETE` on top of the base `## Nexus Execution Report`:
 | Remediation trades one condition for another | Phase 4 re-runs the **whole** matrix; regressions are reported as loudly as open cells |
 | Producer grades its own fix | Phase 4 uses fresh executors with no Phase 3 history (Q9) |
 | Combinatorial explosion of task × condition | Phase 1.5 pairwise reduction via `matrix`, with the dropped set stated |
-| Happy-path content hiding real-world breakage | Content reality is an axis with generated fixtures (`mint`), not an afterthought |
+| Happy-path content hiding real-world breakage | Content reality is an axis with generated fixtures (`radar`), not an afterthought |
 | A percentage standing in for a result | §2 and §7 both forbid a pass rate without the failing-cell list |
 | Persona *opinion* substituted for completion evidence | Echo is an executor here, not a judge; its output is a completion verdict + repro |
 | Spend on a surface that is not yet good | Phase 0 recommends `restyle`/`runway` first when the ask is really a quality ask |

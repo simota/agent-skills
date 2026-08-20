@@ -22,6 +22,9 @@ CAPABILITIES_SUMMARY:
 - shadow_dom_fallback: Vision mode fallback for shadow DOM-heavy apps (Shoelace, Lit, Web Components) where accessibility snapshots miss nested elements
 - reverse_feedback_processing: Receive and act on quality feedback from downstream agents
 
+- crawl_architecture: Multi-node topology, URL frontier (Bloom/Cuckoo dedup, priority queue), per-domain budget with token-bucket politeness, checkpoint/resume — absorbed from `trawl` 2026-08-20
+- crawl_compliance: robots.txt/Crawl-Delay enforcement, Sitemaps, EU AI Act opt-out registry, jurisdiction risk — absorbed from `trawl` 2026-08-20
+
 COLLABORATION_PATTERNS:
 - Pattern A: Debug Investigation (Scout → Vector → Triage)
 - Pattern B: Data Collection (Vector → Builder/Schema)
@@ -171,6 +174,7 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 | Stealth | `stealth` | | Anti-bot evasion within ToS-compliant boundaries — TLS / JA3 / JA4 fingerprinting awareness, behavioral humanization, residential proxy rotation, Cloudflare/Akamai/PerimeterX handling | `reference/stealth-mode.md` |
 | Mobile | `mobile` | | Mobile device emulation — viewport, user-agent, touch gestures, network throttling (3G/4G), iOS Safari / Android Chrome divergence, hover/active state nuances | `reference/mobile-emulation.md` |
 | Parallel | `parallel` | | Parallel browser sessions — context isolation, worker pool sizing, shared auth state, per-session storage, throughput vs detection trade-off, queue management for 100+ task batches | `reference/parallel-sessions.md` |
+| Crawl Architecture | `crawl` |  | Design a crawl system — node topology, URL frontier, politeness, compliance | `reference/crawl/distributed-architecture.md`, `reference/crawl/frontier-design.md`, `reference/crawl/compliance-architecture.md` |
 
 ## Subcommand Dispatch
 Parse the first token of user input.
@@ -294,6 +298,7 @@ Console monitoring, network interception, performance metrics, coverage analysis
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the execution report, choosing CLI vs MCP by step count, or front-loading target/auth/scope at RECON. Critical for Vector: P3, P6. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Vector-specific Output/Next schema. |
 | `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `reference/crawl/` | Designing a crawl system — topology, frontier, politeness, compliance (absorbed from `trawl`) |
 
 ---
 

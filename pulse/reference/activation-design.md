@@ -8,7 +8,7 @@ Purpose: Aha-moment discovery, Magic Number identification, time-to-value (TTV) 
 - **pulse `retention` (elsewhere)**: Retention curves and Power User analysis. Activation feeds retention; they are measured as a linked pair.
 - **pulse `funnel` (elsewhere)**: Generic conversion funnel. Activation is one specific conversion step inside that funnel.
 - **Onboarding copy (Prose `onboarding`)**: UX writing for the activation flow. Activation measurement owned by Pulse; activation copy owned by Prose.
-- **Bond (elsewhere)**: Post-activation habit formation and re-engagement. Activation is pre-Day-7; Bond is Day-7 onwards.
+- **Growth (elsewhere)**: Post-activation habit formation and re-engagement. Activation is pre-Day-7; Growth is Day-7 onwards.
 
 ## Workflow
 
@@ -208,7 +208,7 @@ When `activation` completes, emit:
 - **Segment cuts** (channel, plan, device).
 - **Drift alerts** with thresholds and severity.
 - **Activation Registry entry** (template above).
-- **Handoff targets**: Prose for onboarding copy, Experiment for uplift testing, Bond for post-activation engagement, Field for qualitative validation.
+- **Handoff targets**: Prose for onboarding copy, Experiment for uplift testing, Growth for post-activation engagement, Field for qualitative validation.
 
 ## References
 

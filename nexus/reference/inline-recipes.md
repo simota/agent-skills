@@ -49,7 +49,7 @@
 - **Phase 5 Conditional Implementation (the Yes branch's build)**: Sherpa[claude decomposition] → if `ui_dimension != none`: Forge[codex prototype-validation] → Artisan[codex frontend-production] → Builder[codex backend/logic] → Radar[codex edge cases for differentiator] → judge[claude multi-engine review — killer features are high-stakes] → Guardian[claude] **with feature-flag recommendation** for controlled rollout (differentiation risk) → DELIVER working feature + tests + PR + flag config + rollout plan. The flag carries the flag+KPI+kill structure of `reference/verdict-gate.md` §3, where killer's **differentiation KPI** is the measurable form of the Phase 3 killer hypothesis (the adoption / retention / switching signal that proves the edge is real). Hand off to `growth-acceptance` when the +14/+30/+90d measurement loop is warranted.
 - **If No**: per verdict-gate.md (auditable "decided-not-to-ship" record) — killer's record includes the moat verdict + surviving/failed refutations.
 - **If Modify**: per verdict-gate.md (bounded loop-back, **2-Modify cap then escalate**, carry refuted items forward as exclusions) — killer loops back to Phase 1 with the modification as an added constraint (e.g. "reframe around X constraint" → Flux re-runs with updated directive).
-- **Add-ons**: +Riff for iterative deep-dive on Spark output in Phase 2, +Field for additional market trend grounding in Phase 1, +Omen for a pre-mortem on the differentiation bet before Phase 5 commits.
+- **Add-ons**: +Flux for iterative deep-dive on Spark output in Phase 2, +Field for additional market trend grounding in Phase 1, +Omen for a pre-mortem on the differentiation bet before Phase 5 commits.
 
 ---
 

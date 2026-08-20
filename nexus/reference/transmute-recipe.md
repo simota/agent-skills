@@ -50,7 +50,7 @@ Phase 1 ARCHAEOLOGY ∥  Trail[extract implicit business rules + invariants]
                        Trail?[git history → why-decisions behind non-obvious code]  (optional)
                        → output: behavior contract draft, source-language-independent
 Phase 2 CONTRACT       Scribe[unified: author language-NEUTRAL behavior spec + acceptance criteria]
-                       → Mint[generate golden I/O fixtures from the SOURCE impl = differential oracle]
+                       → Radar[generate golden I/O fixtures from the SOURCE impl = differential oracle]
                        → ORACLE GATE: adequacy (covers source branches/error-paths/boundaries) + determinism contract (below)
 Phase 3 STRATEGY       Magi[arbitrate big-bang|strangler-fig|FFI + RISK GATE]
                        → confirm Transmutation Map (type / error / concurrency / memory) for the pair
@@ -59,7 +59,7 @@ Phase 3.5 PILOT        Transmute ONE small representative module end-to-end (Pha
                        not just the piloted files.
                        GATE: pilot module reaches parity with no un-mapped idiom → scale out.
 Phase 4 TRANSMUTE      Builder/Artisan[idiomatic target-language implementation]
-                       +grok?[parser/DSL-heavy modules]  +gateway?/schema?[API/DB boundaries]
+                       +builder?[parser/DSL-heavy modules]  +gateway?/schema?[API/DB boundaries]
                        rally[engine-paradigm COMPETE] for high-risk modules → 2-3 idiomatic variants, pick best
                        Parity failure traced to a mapping rule → amend the Transmutation Map and
                        regenerate the module; do not hand-patch the emitted code (§4)
@@ -78,7 +78,7 @@ Phase 6 SHIP           Guardian[PR with Before/After parity report + strangler i
 
 The shared kernel — parity-over-faith, the oracle-adequacy and non-determinism-canonicalization gates, the comparator/harness discipline, and the "spuriously fails / masks real divergence" failure pair — is owned by `_common/DIFFERENTIAL_PARITY.md` (§1–§4). transmute's specialization is the **extracted oracle** (golden I/O fixtures generated from the source impl). Phase 2 must clear two gates before Phase 5 may trust the oracle:
 
-- **Adequacy gate** — the golden corpus must exercise the **source's branches, error paths, and boundary classes**, not just the happy path. Capture the source's code coverage while generating fixtures (run the source under coverage as Mint produces inputs); require the differential corpus to hit the same branches + every `throw`/`error`/`panic` path + each boundary/equivalence class. If coverage falls short, **expand the corpus before Phase 5**. Record the achieved source-coverage % in the Parity Report.
+- **Adequacy gate** — the golden corpus must exercise the **source's branches, error paths, and boundary classes**, not just the happy path. Capture the source's code coverage while generating fixtures (run the source under coverage as Radar produces inputs); require the differential corpus to hit the same branches + every `throw`/`error`/`panic` path + each boundary/equivalence class. If coverage falls short, **expand the corpus before Phase 5**. Record the achieved source-coverage % in the Parity Report.
 - **Determinism contract** — for the extracted oracle, the source's **incidental non-determinism** (hash/map iteration order — Go map randomized, Rust `HashMap` randomized, Python dict insertion-ordered — timestamps, float ULP differences, locale, RNG, concurrency interleaving) must be canonicalized per the common gate. For each output, declare which aspects are **semantically significant vs incidental**; **canonicalize the incidental aspects on both sides** before comparing (sort order-incidental collections, pin seeds, round floats to a declared tolerance, freeze clock/locale). Phase 5 Radar compares against the canonicalized form.
 
 **Gate:** Phase 5 differential verification runs against an oracle that has passed both gates. An oracle that is happy-path-only OR compares raw non-deterministic output is rejected — fix it in Phase 2, do not proceed to trust it.
@@ -154,7 +154,7 @@ The core knowledge of this recipe — and its rulebook. Magi confirms the releva
 | Failure | Mitigation |
 |---------|-----------|
 | Transliteration ("Go-in-Rust") | `judge` idiom review (Phase 5) blocks; `rally engine-paradigm` COMPETE surfaces idiomatic alternatives |
-| Behavior regression | Mint golden oracle (Phase 2) + Radar differential/property tests (Phase 5) |
+| Behavior regression | Radar golden oracle (Phase 2) + Radar differential/property tests (Phase 5) |
 | **Thin oracle → false parity** (target diverges on an untested branch yet passes) | Phase 2 adequacy gate: corpus must cover source branches / error paths / boundaries; expand if source-coverage short before Phase 5 trusts it |
 | **Spurious parity failure on incidental non-determinism** (map order, timestamps, float ULP, locale, RNG) | Phase 2 determinism contract: declare significant-vs-incidental per output, canonicalize incidental aspects on both sides before comparing, pin seeds/clock |
 | **Mapping error found only at full scale** — every module carries the same bad idiom translation | Phase 3.5 PILOT: one module through Phase 4+5 in full before scale-out; failures amend the Transmutation Map |

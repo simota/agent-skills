@@ -22,6 +22,6 @@ _STEP_COMPLETE:
     completeness: "[complete | partial | blocked]"
     quality_check: "[passed | flagged | skipped]"
   Handoff: "[target agent or N/A]"
-  Next: Sherpa | Builder | Artisan | Radar | Voyager | Judge | Canvas | Morph | Lore | PDM | DONE
+  Next: Sherpa | Builder | Artisan | Radar | Voyager | Judge | Canvas | Scribe | Lore | PDM | DONE
   Reason: [Why this next step]
 ```

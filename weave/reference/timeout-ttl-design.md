@@ -7,7 +7,7 @@ Purpose: Design TTL, deadline, expiry, and grace-period state transitions. Propa
 - **weave `timeout`**: TTL / deadline / expiry state design (this document).
 - **weave `retry` (elsewhere)**: Retry inside a timeout. Timeout sets the envelope; retry consumes it.
 - **weave `compensation` (elsewhere)**: Compensation triggered when timeout expires with unclear state.
-- **tempo (elsewhere)**: Scheduler for expiry detection (cron, periodic sweep).
+- **weave (elsewhere)**: Scheduler for expiry detection (cron, periodic sweep).
 - **Beacon (elsewhere)**: Stuck-state alerts.
 - **Scout (elsewhere)**: Investigation of stuck records post-alert.
 
@@ -30,7 +30,7 @@ ESCAPE     →  stuck-state detection: state age > expected + N × std_dev
            →  auto-transition: stuck → recovery / manual_review
 
 CLEAN UP   →  TTL-based cleanup: expired records archived / purged
-           →  scheduled sweep via tempo
+           →  scheduled sweep via weave
 ```
 
 ## Timeout Categories
@@ -97,7 +97,7 @@ Per state, record:
 - `expected_exit_by`: computed at entry.
 - `stuck_after`: timestamp after which "stuck" alert fires.
 
-Scheduled sweep (via tempo):
+Scheduled sweep (via weave):
 ```
 SELECT * FROM entity
 WHERE current_state IN ('processing', 'awaiting_external', 'pending')
@@ -133,7 +133,7 @@ Normal → at_risk (first failure) → grace (soft warnings) → suspended (hard
 | suspended | 7-30 days | Limited access | Cannot use premium features |
 | cancelled | terminal | Yes | Archive, notify |
 
-Hand off to Prose for grace-period copy, Bond for win-back strategy.
+Hand off to Prose for grace-period copy, Growth for win-back strategy.
 
 ## Deadline vs Duration
 
@@ -199,7 +199,7 @@ Caveat: clock skew between services must be bounded (NTP sync). Otherwise, add s
 - **Compliance check**: [PII retention rules — defer to Cloak/Canon[regulatory]]
 
 ### Handoffs
-- tempo (sweep schedule, expiry events)
+- weave (sweep schedule, expiry events)
 - Beacon (stuck-state alerts)
 - Scout (investigation of stuck records)
 - Cloak / Canon[regulatory] (retention rules)
@@ -229,7 +229,7 @@ When `timeout` completes, emit:
 - **Deadline propagation contract** (header/context key, safety margin).
 - **Stuck-state sweep plan** (schedule, query, alert, escape).
 - **TTL/cleanup policy** (mechanism, archive, retention).
-- **Handoffs**: tempo, Beacon, Scout, Cloak/Canon[regulatory], Prose.
+- **Handoffs**: weave, Beacon, Scout, Cloak/Canon[regulatory], Prose.
 
 ## References
 

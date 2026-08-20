@@ -92,7 +92,6 @@ These agents provide value regardless of project type. Nexus should always consi
 | Agent | SaaS | E-com | Dash | CLI | Lib | API | Mobile | Static | Data |
 |-------|------|-------|------|-----|-----|-----|--------|--------|------|
 | Growth | H | H | M | — | — | — | M | H | — |
-| Bond | H | H | M | — | — | — | H | — | — |
 | Voice | H | H | M | — | — | — | H | — | — |
 | Pulse | H | H | M | — | — | — | H | — | M |
 | Experiment | H | H | M | — | — | — | M | — | — |
@@ -102,7 +101,6 @@ These agents provide value regardless of project type. Nexus should always consi
 | Trace | H | H | M | — | — | — | H | — | — |
 | Cast | H | H | M | — | — | — | H | — | — |
 | Saga | H | H | M | — | — | — | M | — | — |
-| Helm | H | M | — | — | — | — | M | — | — |
 
 ### Backend / Infrastructure Agents
 
@@ -115,15 +113,12 @@ These agents provide value regardless of project type. Nexus should always consi
 | Stream | M | M | M | — | — | M | — | — | H |
 | Bolt | H | H | H | — | — | H | M | — | M |
 | Seek | H | H | M | — | — | H | — | — | H |
-| Trawl | — | M | — | — | — | M | — | — | H |
-| Relay | H | M | — | — | — | H | H | — | — |
 
 ### Testing / Quality Agents
 
 | Agent | SaaS | E-com | Dash | CLI | Lib | API | Mobile | Static | Data |
 |-------|------|-------|------|-----|-----|-----|--------|--------|------|
 | Voyager | H | H | H | — | — | — | M | — | — |
-| Mint | H | H | H | — | M | H | — | — | H |
 | Siege | H | H | M | — | — | H | — | — | M |
 | Attest | H | H | M | — | H | H | — | — | — |
 
@@ -145,7 +140,6 @@ These agents provide value regardless of project type. Nexus should always consi
 |-------|------|-------|------|-----|-----|-----|--------|--------|------|
 | Quill | M | — | M | M | H | H | — | — | — |
 | Scribe | H | M | M | M | H | H | — | — | — |
-| Morph | M | — | M | — | M | — | — | M | — |
 | Launch | H | M | — | M | H | H | — | — | — |
 | Tome | H | M | M | — | H | H | — | H | — |
 | Stage | H | M | M | — | M | — | — | M | — |
@@ -155,7 +149,6 @@ These agents provide value regardless of project type. Nexus should always consi
 
 | Agent | SaaS | E-com | Dash | CLI | Lib | API | Mobile | Static | Data |
 |-------|------|-------|------|-----|-----|-----|--------|--------|------|
-| Anvil | — | — | — | H | H | M | — | — | — |
 
 ### DevOps / Release Agents
 
@@ -220,7 +213,6 @@ Consider (M for SaaS):
   - Stream (event logging)
 
 Skip (— for SaaS):
-  - Anvil (CLI tools)
 ```
 
 ### Example: CLI Tool Development
@@ -230,7 +222,6 @@ Project_Type: CLI
 Task: "Build a database migration CLI"
 
 Must-include (H for CLI):
-  - Anvil (CLI/TUI)
   - Builder (core logic)
 
 Consider (M for CLI):
@@ -242,7 +233,6 @@ Consider (M for CLI):
 Skip (— for CLI):
   - Artisan (frontend)
   - Growth (SEO/CRO)
-  - Bond (engagement)
 ```
 
 ---

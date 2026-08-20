@@ -1,6 +1,6 @@
 # Test Strategy 2026
 
-Purpose: load this when designing a test strategy from scratch, evaluating a team's current test mix, or recommending which complementary tools to add. Consolidates the 2026 picture across unit / integration / E2E / load / chaos / contract / mutation / property / metamorphic / trace-based testing — and shows how `radar`, `voyager`, `siege`, `attest`, and `mint` slot together.
+Purpose: load this when designing a test strategy from scratch, evaluating a team's current test mix, or recommending which complementary tools to add. Consolidates the 2026 picture across unit / integration / E2E / load / chaos / contract / mutation / property / metamorphic / trace-based testing — and shows how `radar`, `voyager`, `siege`, `attest`, and `radar` slot together.
 
 ## Contents
 
@@ -121,7 +121,7 @@ Use for any service whose load shape is hard to model:
 - Search / recommendation (long-tail query distributions)
 - Webhook receivers (bursty, unpredictable shape)
 
-Replay also serves dual duty as a **fixture source** (`mint` strength): record once, replay across staging or test seeds.
+Replay also serves dual duty as a **fixture source** (`radar` strength): record once, replay across staging or test seeds.
 
 Source: goreplay.org/shadow-testing; speedscale.com/blog/definitive-guide-to-traffic-replay.
 
@@ -194,7 +194,7 @@ Source: checklyhq.com; usenix.org/publications/loginonline — Synthetic Monitor
 | Trace-based | `siege` + `attest` | `beacon` (deploys the tracing) |
 | E2E + Visual + a11y | `voyager` | `radar` (component-level testing) |
 | Load + chaos + replay | `siege` | `triage` / `mend` (incident replay) |
-| Test data + fixtures | `mint` | `siege` (load profile generation) |
+| Test data + fixtures | `radar` | `siege` (load profile generation) |
 | Spec compliance | `attest` | `scribe[unified]` / `scribe` (spec authoring) |
 
 Use this table when classifying an incoming test request — the primary skill owns the design, the secondary skill is the typical downstream handoff.
@@ -225,8 +225,8 @@ Use this table when classifying an incoming test request — the primary skill o
 - `contract`: Select CONTRACT mode. Verify consumer/provider contracts with Pact v4+ or Specmatic. Integrate into the CI gate.
 - `chaos`: Select CHAOS mode. Define steady state first, minimize blast radius, then inject faults. Always prepare a kill switch.
 - `mutation`: Select MUTATE mode. Generate mutants → classify survivors → evaluate coverage thresholds (60% project-wide / 75%+ recommended).
-- `fuzz`: Coverage-guided fuzzing of parsers, decoders, and security-sensitive surfaces with AFL++/libFuzzer/go-fuzz/cargo-fuzz/Jazzer. Always pair with a sanitizer (ASan+UBSan default), seed from a real corpus, and minimize+dedupe crashes before reporting. For unit-test coverage gaps use Radar; for test-data factory shapes use Mint; for deeper DAST on security-critical crashes hand off to Probe/Sentinel.
-- `property`: Property-based testing of invariants (round-trip, idempotent, monotonic, model-based) with fast-check/Hypothesis/jqwik/PropEr/proptest. Compose generators from primitives (no filter-heavy strategies), cap 100-1000 runs at PR tier, commit shrunk counter-examples as regression tests. For example-based unit tests use Radar; for realistic factory data use Mint; for AC-level conformance use Attest; for byte-level parser crashes use `fuzz`.
+- `fuzz`: Coverage-guided fuzzing of parsers, decoders, and security-sensitive surfaces with AFL++/libFuzzer/go-fuzz/cargo-fuzz/Jazzer. Always pair with a sanitizer (ASan+UBSan default), seed from a real corpus, and minimize+dedupe crashes before reporting. For unit-test coverage gaps use Radar; for test-data factory shapes use Radar; for deeper DAST on security-critical crashes hand off to Probe/Sentinel.
+- `property`: Property-based testing of invariants (round-trip, idempotent, monotonic, model-based) with fast-check/Hypothesis/jqwik/PropEr/proptest. Compose generators from primitives (no filter-heavy strategies), cap 100-1000 runs at PR tier, commit shrunk counter-examples as regression tests. For example-based unit tests use Radar; for realistic factory data use Radar; for AC-level conformance use Attest; for byte-level parser crashes use `fuzz`.
 - `concurrency`: Hunt invisible defects — race conditions (TSan/Helgrind), memory leaks (ASan/Valgrind/MSan/heap-diff), resource leaks (file/connection/goroutine), deadlocks (lock-order analysis), atomic-ordering bugs (Rust `loom` exhaustive interleavings, Java jcstress, C++ atomics). Pair with `chaos` to induce exhaustion conditions and `property` for ordering invariants. Output: defect class + reproduction trace + minimal repro + fix recommendation to Builder. Use when symptoms are flaky-only-under-load, "works on my machine", or sporadic CI failures.
 - `smoke`: Minimum viable post-deploy gate, 8-15 checks, ≤3 min budget, serial by default, synthetic-check-capable. Emits PROMOTE/HOLD/ROLLBACK verdict tied to deploy SHA. For full user-journey E2E use Voyager; for unit coverage use Radar; for AC compliance use Attest; for SLO ownership and long-term synthetic monitoring topology use Beacon.
 

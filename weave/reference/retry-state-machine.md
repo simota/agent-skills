@@ -1,13 +1,13 @@
 # Retry State Machine Reference
 
-Purpose: Design retry state machines with exponential backoff, jitter, max-attempt cap, DLQ as terminal state, and idempotency contract. Separates retriable vs non-retriable failure modes and emits a contract that tempo (schedule) and Beacon (alerts) can consume.
+Purpose: Design retry state machines with exponential backoff, jitter, max-attempt cap, DLQ as terminal state, and idempotency contract. Separates retriable vs non-retriable failure modes and emits a contract that weave (schedule) and Beacon (alerts) can consume.
 
 ## Scope Boundary
 
 - **weave `retry`**: Retry state machine design (states, transitions, backoff, jitter, DLQ) — this document.
 - **weave `timeout` (elsewhere)**: TTL / deadline design. Retry and timeout are often paired; design timeout first, then retry inside the timeout envelope.
 - **weave `compensation` (elsewhere)**: Saga compensation. Retry handles transient failure; compensation handles logical undo.
-- **tempo (elsewhere)**: Schedule / cron / backoff curve details. Retry state machine consumes tempo's backoff rules.
+- **weave (elsewhere)**: Schedule / cron / backoff curve details. Retry state machine consumes weave's backoff rules.
 - **Beacon (elsewhere)**: SLO / retry-exhaustion alerts.
 - **siege concurrency (elsewhere)**: Race/deadlock analysis on retry implementations.
 
@@ -197,7 +197,7 @@ The DLQ terminal state must:
 - **DLQ growing > M/min** → CRITICAL
 
 ### Handoffs
-- tempo (backoff curve details)
+- weave (backoff curve details)
 - Beacon (alerts)
 - Builder (implementation)
 - Triage (DLQ review runbook)
@@ -226,7 +226,7 @@ When `retry` completes, emit:
 - **Idempotency contract** (key generation, server dedup TTL, conflict handling).
 - **DLQ design** (storage, retention, replay).
 - **Alert thresholds** for Beacon.
-- **Handoffs**: tempo, Beacon, Builder, Triage.
+- **Handoffs**: weave, Beacon, Builder, Triage.
 
 ## References
 

@@ -6,7 +6,7 @@ Purpose: Use this file for coverage-guided fuzzing setup, corpus management, san
 
 - **Siege `fuzz`**: coverage-guided fuzzing of parsers, decoders, protocol handlers, native code paths, and security-sensitive surfaces. Corpus + sanitizer + crash triage + CI loop.
 - **Radar (elsewhere)**: standard unit-test coverage gaps, edge-case tests, flaky-test repair. If "coverage is low" means line/branch coverage on normal tests, route to Radar.
-- **Mint (elsewhere)**: structured test-data factory, fixture generation, deterministic seed datasets. If the need is "generate valid realistic records for tests," route to Mint. Fuzz corpora should be seeded from Mint fixtures when a valid-input grammar exists.
+- **Radar (elsewhere)**: structured test-data factory, fixture generation, deterministic seed datasets. If the need is "generate valid realistic records for tests," route to Radar. Fuzz corpora should be seeded from Radar fixtures when a valid-input grammar exists.
 - **Attest (elsewhere)**: spec compliance and AC verification. Fuzzing is a bug-hunting tool, not a conformance tool.
 - **Voyager (elsewhere)**: E2E user journey testing. Fuzzing never clicks through a UI flow.
 
@@ -36,7 +36,7 @@ DEFINE   →  pick target function (parser / deserializer / protocol handler / a
          →  set time budget (PR: <5min, nightly: 1-4h, continuous: 24h+)
 
 PREPARE  →  write harness: one function, deterministic, <1ms/exec preferred
-         →  seed corpus from real inputs, unit test fixtures, or Mint factory output
+         →  seed corpus from real inputs, unit test fixtures, or Radar factory output
          →  add dictionary (magic bytes, keywords, tokens) for structured formats
          →  instrument build with coverage + sanitizer
 
@@ -67,7 +67,7 @@ The harness is the contract between corpus input and target code. A bad harness 
 
 | Corpus type | Source | Role |
 |-------------|--------|------|
-| Seed corpus | real samples, unit-test fixtures, Mint output | Starting coverage — never empty-start a campaign |
+| Seed corpus | real samples, unit-test fixtures, Radar output | Starting coverage — never empty-start a campaign |
 | Minimized corpus | `afl-cmin` / `cargo fuzz cmin` output | Smallest set preserving same coverage — commit this to repo |
 | Crash corpus | minimized crashing inputs | Regression corpus — add to CI fuzz-smoke stage |
 | Dictionary | format tokens, magic bytes, keywords | Boosts structure-aware mutation for JSON, HTTP, SQL, protobufs |
@@ -149,7 +149,7 @@ For long-lived open-source projects, prefer **OSS-Fuzz onboarding** over self-ho
 - Crash inputs that should become unit-test cases (once fixed).
 - Coverage gaps fuzzing exposed that normal tests miss.
 
-**To Mint:**
+**To Radar:**
 - Valid-input shapes discovered during harness work — may update factory grammar.
 
 **To Sentinel / Probe:**

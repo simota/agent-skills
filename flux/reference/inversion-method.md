@@ -10,7 +10,7 @@ Purpose: Solve forward problems by working backward from failure. Charlie Munger
 - **flux `shift`**: perspective rotation across stakeholders/timeframes. Shift rotates viewpoint; inversion negates the objective.
 - **flux `analogy`**: source-domain mapping. Analogy borrows shape; inversion subtracts.
 - **omen (elsewhere)**: pre-mortem with RPN/AP scoring of failure modes. Inversion *generates* failure scenarios; Omen *quantifies and ranks* them. Inversion is upstream — feed Omen.
-- **riff (Subtract mode, elsewhere)**: iterative subtraction dialogue. Inversion is a single-pass goal-flip; Riff Subtract is multi-turn pruning.
+- **flux (Subtract mode, elsewhere)**: iterative subtraction dialogue. Inversion is a single-pass goal-flip; Flux Subtract is multi-turn pruning.
 - **void (elsewhere)**: YAGNI scope cutting. Void removes work-not-yet-done; inversion surfaces failure-paths to avoid.
 
 ## Workflow
@@ -88,7 +88,7 @@ Forward planning is positive-action biased: teams list what to do, not what to s
 
 - **To Omen**: failure-path list as candidates for RPN/AP scoring and pre-mortem ranking. Inversion is the *generation* engine; Omen is the *prioritization* engine.
 - **To Magi**: when avoidance commitments conflict with proposed actions — decision needed.
-- **To Riff (Subtract mode)**: via negativa candidates — iterate on what to stop doing.
+- **To Flux (Subtract mode)**: via negativa candidates — iterate on what to stop doing.
 - **To Spark**: failure-paths sometimes invert into feature ideas (the avoidance becomes the differentiator).
 - **To Void**: avoidance commitments that imply scope cuts.
 - **To `analogy`**: failure-paths that resemble known patterns from other domains — borrow their countermeasures.
