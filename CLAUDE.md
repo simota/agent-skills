@@ -9,6 +9,7 @@
 - 共通プロトコル: `_common/` (BOUNDARIES.md, HANDOFF.md 等)
 - テンプレート: `_templates/SKILL_TEMPLATE.md`
 - エージェントジャーナル: `.agents/` (gitignore対象)
+- 外部スキル群: `rig-*` は別リポジトリ (`github.com/simota/rig-agent-skills`) への symlink で `.gitignore` 対象。独自の `core/`・`registry/`・`rig-route` を持つ**完結した別設計**であり、本リポの `_common/` 契約・routing-matrix・Recipe 規約はいずれも適用されない。検査系は symlink を境界として自動除外する（`_common/scripts/_corpus.py`）ため、`rig-*` に対する指摘は出ない。両系統の統合可否は未決。
 - 監査成果物: `docs/audit/` (gitignore対象) — 本 repo は監査/レビューの成果物をコミットしない。`verity` / `abide` など report-only レシピの書き込み先はここに限り、結果はコミットメッセージと会話で伝える。
 
 ## ルーティング（単一入口）

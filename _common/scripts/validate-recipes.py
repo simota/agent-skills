@@ -38,6 +38,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import _corpus
+
 SKILLS_ROOT = Path(__file__).resolve().parents[2]
 PROJECT_LOCAL_ROOT = SKILLS_ROOT / ".claude" / "skills"
 SKIP_DIRS = {"_common", "_templates"}
@@ -72,7 +74,7 @@ def iter_skills(only: set[str] | None = None):
     entries = []
     for root in roots:
         for entry in root.iterdir():
-            if not entry.is_dir() or entry.name in SKIP_DIRS or entry.name.startswith("."):
+            if entry.name in SKIP_DIRS or not _corpus.is_skill_dir(entry):
                 continue
             if only is not None and entry.name not in only:
                 continue

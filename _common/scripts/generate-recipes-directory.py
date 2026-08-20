@@ -14,6 +14,8 @@ import re
 import sys
 from pathlib import Path
 
+import _corpus
+
 SKILLS_ROOT = Path(__file__).resolve().parents[2]
 PROJECT_LOCAL_ROOT = SKILLS_ROOT / ".claude" / "skills"
 OUTPUT = SKILLS_ROOT / "compass" / "reference" / "recipes-directory.md"
@@ -69,10 +71,9 @@ def extract_recipes(content: str, skill_dir: Path | None = None) -> list[tuple[s
 def iter_skill_dirs() -> list[tuple[Path, bool]]:
     entries: list[tuple[Path, bool]] = []
     for entry in SKILLS_ROOT.iterdir():
-        if not entry.is_dir() or entry.name in SKIP_DIRS or entry.name.startswith("."):
+        if entry.name in SKIP_DIRS or not _corpus.is_skill_dir(entry):
             continue
-        if (entry / "SKILL.md").is_file():
-            entries.append((entry, False))
+        entries.append((entry, False))
     if PROJECT_LOCAL_ROOT.is_dir():
         entries.extend(
             (entry, True)

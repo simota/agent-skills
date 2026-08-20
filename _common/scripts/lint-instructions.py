@@ -32,6 +32,8 @@ import re
 import sys
 from pathlib import Path
 
+import _corpus
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
 INSTRUCTION_FILES = ["AGENTS.md", "CLAUDE.md"]
@@ -54,7 +56,7 @@ def actual_skill_count() -> int:
     return sum(
         1
         for p in REPO_ROOT.iterdir()
-        if p.is_dir() and not p.name.startswith((".", "_")) and (p / "SKILL.md").is_file()
+        if _corpus.is_skill_dir(p)
     )
 
 

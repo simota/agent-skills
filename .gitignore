@@ -8,3 +8,6 @@ _prompts/
 .DS_Store
 docs/audit/
 /rig-*
+
+# Python bytecode from _common/scripts
+__pycache__/

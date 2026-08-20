@@ -57,6 +57,8 @@ from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from typing import Iterable
 
+import _corpus
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
 FRONTMATTER_KEY_ALLOWLIST = {"name", "description", "model", "tools"}
@@ -169,10 +171,10 @@ def iter_skill_dirs(roots: Iterable[Path]) -> list[Path]:
             continue
         # Otherwise treat root as a parent directory and scan one level down.
         for entry in sorted(root.iterdir()):
-            if entry.is_dir() and entry.name not in SKIP_DIRS and not entry.name.startswith("."):
-                skill_md = entry / "SKILL.md"
-                if skill_md.exists():
-                    skills.append(entry)
+            if entry.name in SKIP_DIRS:
+                continue
+            if _corpus.is_skill_dir(entry):
+                skills.append(entry)
     return skills
 
 

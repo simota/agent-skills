@@ -87,6 +87,8 @@ import sys
 import traceback
 from pathlib import Path
 
+import _corpus
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 NEXUS_DIR = REPO_ROOT / "nexus"
 NEXUS_SKILL = NEXUS_DIR / "SKILL.md"
@@ -336,9 +338,7 @@ def check_roster_completeness(findings: list[Finding]):
     combined_text = ROUTING_MATRIX.read_text(encoding="utf-8") + "\n" + signal_keywords.read_text(encoding="utf-8")
 
     skill_dirs = sorted(
-        p.parent.name
-        for p in REPO_ROOT.glob("*/SKILL.md")
-        if not p.parent.name.startswith("_") and not p.parent.name.startswith(".")
+        d.name for d in _corpus.iter_skill_dirs(REPO_ROOT)
     )
     if not skill_dirs:
         findings.append(Finding("RO-5", "WARNING", "no skill directories with SKILL.md found — roster completeness check may be stale vs repo layout"))
