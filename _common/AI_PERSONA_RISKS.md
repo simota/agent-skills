@@ -1,5 +1,7 @@
 # AI and LLM Persona Generation Risks
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Purpose: Define AI-specific bias, ethics, validation, confidence guardrails, and cross-agent governance rules for persona generation. Referenced by **Cast** (generation), **Echo** (UI walkthrough), **Echo[demand]** (synthetic demand), and **Field** (validation).
 
 ## Contents

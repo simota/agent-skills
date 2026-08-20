@@ -1,5 +1,7 @@
 # Code Quality Contract (Master Reference)
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Centralized quality bar for every skill that **writes or modifies code**. Seven axes, each with checkable rules, one canonical anti-pattern, and a citable source. Individual SKILL.md files reference this document instead of restating quality principles.
 
 Consumers: all agents whose `Writes Code` value in `_common/BOUNDARIES.md` is `Yes`, `Fixes only`, `Partial`, or scoped-`Yes`.

@@ -1,5 +1,7 @@
 # Agent Boundaries (Master Reference)
 
+> **Tier:** `spine` — in effect on every run. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Centralized responsibility boundaries for the entire agent ecosystem. Individual SKILL.md files reference this document instead of maintaining their own Agent Boundaries tables.
 
 For disambiguation of commonly confused agent pairs, see `nexus/reference/agent-disambiguation.md`.

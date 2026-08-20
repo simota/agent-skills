@@ -1,5 +1,7 @@
 # Image Input Protocol
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Canonical protocol for **any image supplied as input** to any agent — screenshot, Figma frame, photograph, diagram, chart, UI mockup, log capture, whiteboard sketch, or generated asset — when that image informs a decision, design, implementation, or response.
 
 This is a cross-cutting protocol: it is not owned by one specialist. Whichever skill receives the image runs this pipeline, then either acts or hands off the **structured reading** (never the raw pixels) to the owner skill identified in Stage 1.

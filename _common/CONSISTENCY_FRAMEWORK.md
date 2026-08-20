@@ -1,5 +1,7 @@
 # Consistency Framework (Shared Taxonomy)
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Shared taxonomy of cross-file pattern consistency categories, examples, and severity scoring. Used by:
 
 - **Judge** — detection stage (find violations during review). See `judge/reference/consistency-patterns.md` for detection heuristics.

@@ -1,5 +1,7 @@
 # Self-Evolution Protocol (Inward-Facing)
 
+> **Tier:** `authoring` — activates when creating or auditing skills, not during user work. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 How individual agents learn from their own experience. Complements `EVOLUTION.md` (outward-facing: ecosystem signal emission).
 
 | Aspect | EVOLUTION.md | SELF_EVOLUTION.md (this) |

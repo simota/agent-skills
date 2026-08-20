@@ -1,5 +1,7 @@
 # Investigation Escalation Protocol
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Escalation standard across the investigation skill cluster (Scout, Lens, Trail).
 
 ## Escalation Flow

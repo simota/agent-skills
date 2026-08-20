@@ -1,5 +1,7 @@
 # UX Trends 2025-2026 — Design / IA / Frontend
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 > Cross-domain best practices, anti-patterns, and case studies collected from primary web sources (2025-2026).
 > Reference this file when applying current standards across design, information architecture, or frontend implementation.
 > All URLs verified by source research; cite them when recommending a pattern so reviewers can trace the claim.

@@ -1,5 +1,7 @@
 # Evidence Ladder Protocol
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Cross-skill discipline for deciding **how much independent evidence a change must carry before it ships**, and for detecting the failure where implementation and its verifier share the same mistake. Verification is not raising the model's confidence — it is **adding independent observations capable of finding the error**.
 
 **Read when:** planning what to verify before implementing; selecting the evidence set for a change; auditing whether a green test suite actually proves anything; deciding whether an AI-written test is admissible evidence for AI-written code.

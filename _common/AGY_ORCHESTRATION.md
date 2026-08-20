@@ -1,5 +1,7 @@
 # agy (Antigravity CLI) Orchestration Authoring Protocol
 
+> **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 > Counterpart to `_common/OPUS_5_AUTHORING.md` (Claude Code hub, P1–P12) and `_common/CODEX_ORCHESTRATION.md` (Codex CLI hub, C1–C9). **This file governs authoring when Antigravity CLI (`agy`) drives the Nexus hub.**
 > Owner: Architect (canonical doc); referenced by orchestrators (Nexus, Orbit, Rally, Magi) and any SKILL.md whose spawn path can run on agy.
 > Scope: agy as the **orchestrator engine** (the CLI running the top-level hub session). agy as a *worker / spawn target* of a Claude or Codex hub is covered by `_common/SUBAGENT.md` (MULTI_ENGINE) + `_common/MULTI_ENGINE_RECIPE.md`.

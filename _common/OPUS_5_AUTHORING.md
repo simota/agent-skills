@@ -1,5 +1,7 @@
 # Opus 5 Authoring Protocol
 
+> **Tier:** `spine` — in effect on every run. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 > Source: Anthropic *Prompting Claude Opus 5* + *Migrating to Claude Opus 5* + *Effort* + *Models overview* (platform.claude.com, verified 2026-07-25) + *The new rules of context engineering for Claude 5 generation models* (claude.com/blog, 2026-07-24 → P12)
 > Owner: Architect (canonical doc); referenced by orchestrators, reviewers, investigators
 

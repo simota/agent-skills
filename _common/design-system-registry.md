@@ -1,5 +1,7 @@
 # Design System Registry (Common Protocol)
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 **Purpose**: Persist per-project design systems (colors, typography, components, brand rules) so design-related skills can resume context across chains and sessions. Inspired by Claude Design by Anthropic Labs (2026-04-17): "During onboarding, Claude builds a design system for your team by reading your codebase and design files."
 
 **Scope**: This protocol is used by `atelier`, `muse`, `frame`, `ink`, `palette`, and `artisan`. Other skills may read but should not write.

@@ -1,5 +1,7 @@
 # Asset Provenance & Rights Protocol
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Cross-skill discipline for **knowing where a produced asset came from, what may legally be done with it, and who decided to ship it**. Applies to any generated artifact that leaves the workspace: images, illustrations, icons, logos, copy, video, audio, and generated code bundled as a deliverable.
 
 **Read when:** an asset is generated rather than authored; a reference or stock source feeds a deliverable; an asset moves from exploration toward publication; someone asks "can we actually use this?"; an asset needs to be reproduced or re-derived months later.

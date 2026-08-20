@@ -1,5 +1,7 @@
 # ASCII UI Preview Protocol
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Canonical protocol for confirming a proposed UI change **before writing code**. When a change alters visible layout or structure, render an ASCII wireframe of the proposed result — a Before/After pair when modifying existing UI — so the user or hub can confirm intent at near-zero cost. A rejected wireframe costs seconds to redraw; a rejected implementation costs a rebuild.
 
 This is a cross-cutting protocol: it is not owned by one specialist. Whichever skill is about to implement a structural UI change runs this gate, then proceeds to code only after confirmation (or after emitting the wireframe as non-blocking evidence, per mode — see below).

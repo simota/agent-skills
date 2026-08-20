@@ -1,5 +1,7 @@
 # Traceability — Canonical ID Scheme & `.traceability.yaml`
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Shared source of truth for requirement/acceptance/test identifiers, the machine-readable
 traceability ledger, the relation vocabulary links are typed with (§3), and the classes a
 broken trace is diagnosed into (§4). Spec-authoring (`scribe[unified]`, `scribe`) and spec-verification (`attest`) skills,

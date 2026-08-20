@@ -1,5 +1,7 @@
 # UX Principle Conflicts — Arbitration Reference
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Shared cross-skill reference. UX principles are not a ranked list; most of them are **pairs that
 trade against each other**. A review that cites one principle and stops has not made a decision —
 it has picked a side and hidden the cost.

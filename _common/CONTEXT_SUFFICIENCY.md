@@ -1,5 +1,7 @@
 # Context Sufficiency Gate (Common Definition)
 
+> **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 A Context-Engineering-grounded protocol for deciding, **before acting**, whether the agent holds
 enough context — and when it does not, asking a *systematic, targeted* question instead of a vague
 "can you clarify?". Context Engineering means filling the working context with *just the right*

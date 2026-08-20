@@ -1,5 +1,7 @@
 # Differential Parity Protocol
 
+> **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Cross-skill discipline for **proving behavioral / observable equivalence by diffing two implementations against a shared oracle**, rather than asserting equivalence by faith. The shared kernel behind `nexus[transmute]` (cross-language rewrite), `nexus[clone]` (faithful product reproduction), `nexus[fuse]` (multi-source synthesis, selective parity), and `nexus[graft]` (concept-fidelity, the fidelity-inverse). Verification skills that compute the diff — `radar`, `attest`, `voyager`, `mint`, `pixel`, `frame` — also import this protocol.
 
 **Read when:** authoring or executing any recipe that claims "verified by differential parity" / "parity-verified" / "differential oracle"; or designing the comparator/harness that computes it.

@@ -1,5 +1,7 @@
 # Skill Packs
 
+> **Tier:** `authoring` — activates when creating or auditing skills, not during user work. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Skill membership matrix for selective enablement across the 100-skill global ecosystem. This repository also carries three project-local extensions (`orbit`, `lore`, `darwin`) registered in `_common/PROJECT_LOCAL_SKILLS.md`.
 
 ## Why this exists

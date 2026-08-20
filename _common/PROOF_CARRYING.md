@@ -1,5 +1,7 @@
 # Proof-Carrying PR Protocol
 
+> **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Cross-skill protocol for shipping changes with **machine-verifiable evidence packages** that an Acceptance Gate can adjudicate without human visual confirmation. Inspired by the AAOS (Autonomous Acceptance OS) framing: encode product correctness as executable specifications, then refuse to merge any PR whose evidence package does not match the spec graph.
 
 **Audience**: Skills participating in change-shipping pipelines.

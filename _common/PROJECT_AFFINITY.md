@@ -1,5 +1,7 @@
 # Project Affinity Matrix
 
+> **Tier:** `authoring` — activates when creating or auditing skills, not during user work. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Maps each agent to the project types where it provides the most value. Used by Nexus for intelligent routing and team assembly.
 
 ---

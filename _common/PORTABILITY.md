@@ -1,5 +1,7 @@
 # Portability Guidelines (BSD/GNU Cross-Platform)
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 All scripts and code examples in skill references must run on both **macOS (BSD coreutils)** and **Linux (GNU coreutils)**. CI pipelines typically run on Linux; developers often use macOS. A command that silently differs or fails on one platform is a latent bug.
 
 **Decision Rule:** Write POSIX-portable if possible. When POSIX is insufficient, provide a BSD/GNU dual-path fallback. Never write GNU-only or BSD-only code in shared examples without a fallback.

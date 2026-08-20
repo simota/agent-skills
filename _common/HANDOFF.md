@@ -1,5 +1,7 @@
 # Handoff Protocol (Common Definition)
 
+> **Tier:** `spine` — in effect on every run. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Standard format for `## NEXUS_HANDOFF` output. Designed for flexibility: include what's relevant, skip what's not.
 
 ---

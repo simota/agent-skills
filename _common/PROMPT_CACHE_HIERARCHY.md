@@ -1,5 +1,7 @@
 # Prompt Cache Hierarchy — Repository Standard
 
+> **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 **Purpose:** Repository-wide convention for keeping the Anthropic prompt-cache hit rate high across skill loads, `_common/` shared context, and per-task variable input.
 
 **Read when:** Designing a new skill, restructuring `_common/`, authoring an orchestration recipe, or auditing prompt-cache miss rate via `hone`.

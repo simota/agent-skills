@@ -1,5 +1,7 @@
 # Growth & Brand Acceptance Protocol (Layer C)
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Companion protocol to `_common/PROOF_CARRYING.md` (Tier A Foundation + Tier B Production Pipeline). This file specifies **Tier C — Market-Brand Acceptance**: the lifecycle gates that constrain AI-generated marketing campaigns, customer research outputs, and brand-touching content.
 
 **Prerequisites**:

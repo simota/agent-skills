@@ -1,5 +1,7 @@
 # Harness Debt — the decay axis of an agent ecosystem
 
+> **Tier:** `authoring` — activates when creating or auditing skills, not during user work. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 **Purpose:** Track and pay down the *degradation* of the control system agents work through — instructions, references, routing, verification — as distinct from duplication (`prune`) and inactivity (`darwin` Activity). A skill can be unique, actively used, and still be debt: if its Architecture Map is stale, every invocation pays interest in retries and human corrections.
 
 **Read when:** running a `darwin` ecosystem review, a `prune` roster audit, a `gauge` compliance sweep, whenever a skill fails the same way twice and the cause is not the model, or when a restated fact (a count, a list, a summary) disagrees with the source it came from (§2b).

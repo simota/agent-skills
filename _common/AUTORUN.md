@@ -1,5 +1,7 @@
 # AUTORUN Protocol
 
+> **Tier:** `spine` — in effect on every run. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 This document defines the platform-agnostic automatic execution protocol for Nexus orchestration.
 
 ---

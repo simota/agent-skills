@@ -1,5 +1,7 @@
 # Persona Cluster Guide
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Five persona agents form a lifecycle. This guide helps route to the right agent and navigate the cluster.
 
 ## Persona Lifecycle

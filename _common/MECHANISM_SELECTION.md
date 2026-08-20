@@ -1,5 +1,7 @@
 # Steering-Mechanism Selection — Repository Standard
 
+> **Tier:** `authoring` — activates when creating or auditing skills, not during user work. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 **Purpose:** Canonical decision guide for placing an instruction at the right Claude Code architectural level — CLAUDE.md, rules, skills, subagents, hooks, output styles, or `append-system-prompt`. Fills the cross-skill gap where mechanism choice was previously fragmented (hone ↔ sigil) and "rule vs hook" was undocumented.
 
 **Read when:** A user asks to "always/never do X", to enforce a convention, to add a runbook/checklist, or when `hone` runs the anti-bloat audit or triages instruction-vs-hook, `sigil` authors project rules, or `architect` decides skill-vs-other.

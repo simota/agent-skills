@@ -1,5 +1,7 @@
 # Multi-Engine Recipe Protocol
 
+> **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Cross-skill protocol for the `multi` Recipe — spawning subagents in parallel across engines for tasks where multi-engine perspectives improve quality. Adapted from `judge/reference/tri-engine-review.md` for non-review skills.
 
 **Audience**: Skills implementing a `multi` Recipe (Spark, Echo[demand], Omen, Magi, Compete, Sentinel, Riff, Flux, Field, Vision, Saga, Atlas, Echo, Scout, and future additions).

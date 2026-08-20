@@ -1,5 +1,7 @@
 # Parallel Execution Protocol
 
+> **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 This document defines the protocol for parallel task execution in AUTORUN_FULL mode.
 
 ---

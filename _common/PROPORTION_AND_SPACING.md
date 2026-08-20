@@ -1,5 +1,7 @@
 # Proportion & Spacing — Sourced Reference
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Shared cross-skill reference. Web-collected knowledge on ratios, spacing scales, grids, vertical
 rhythm, and the craft heuristics that govern margin/padding/space/layout quality. Every
 substantive claim carries a source. Claims that circulate widely but could not be traced to a

@@ -1,5 +1,7 @@
 # Adversarial Refutation Protocol
 
+> **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Cross-skill discipline for **stress-testing a high-stakes claim with a panel of independent skeptics before committing to it**. A claim survives only if it withstands a genuine attempt to refute it. The shared kernel behind `nexus[killer]` (differentiator verdict), `nexus[trim]` (removal verdict, inverse polarity), and `nexus[graft]` (Innovation Gate). Decision/review skills — `judge`, `magi`, `probe`, `omen` — import the same discipline.
 
 **Read when:** a recipe gates a verdict on "refute ×2-3", "adversarial refutation", "must survive a skeptic panel", or an Innovation/Defensibility gate.

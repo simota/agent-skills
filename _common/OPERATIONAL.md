@@ -1,5 +1,7 @@
 # Operational Protocols (Common Definition)
 
+> **Tier:** `spine` — in effect on every run. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Standard operational protocols shared by all agents. Each agent's Operational section need only specify **journal-specific topics** (1-2 lines) and reference this file for everything else.
 
 Project-local extensions (`orbit`, `lore`, `darwin`) are governed by `_common/PROJECT_LOCAL_SKILLS.md`. A handoff to one of them MUST pass its workspace availability gate; otherwise route to the registered global fallback.
@@ -177,6 +179,25 @@ Every skill inherits the Output Density Protocol — **`_common/OUTPUT_STYLE.md`
 - **Answer first, then stop.** No preamble, no request restatement, no closing summary of what the diff already shows (§ Banned Patterns).
 
 `_STEP_COMPLETE` / `NEXUS_HANDOFF` envelopes are exempt from tier limits but not from the padding ban.
+
+---
+
+## Contract Precedence
+
+`_common/` holds many protocols and they are not peers. When two disagree, resolve in this order rather than averaging them:
+
+1. **The user's own words in this session** — nothing in this directory outranks them.
+2. **The repository's instruction files** (`CLAUDE.md` / `AGENTS.md`) — they describe *this* repo; a shared protocol describes every repo.
+3. **The invoked SKILL.md** — its Core Contract and Boundaries bind for work inside its domain.
+4. **The spine** — `OPERATIONAL.md` · `BOUNDARIES.md` · `HANDOFF.md` · `AUTORUN.md` · `GIT_GUIDELINES.md` · `OUTPUT_STYLE.md` · `OPUS_5_AUTHORING.md`. In effect for every run.
+5. **On-demand contracts** — everything else here, in effect only once its activation condition is met.
+
+**Two rules on top of the order.**
+
+- **Specific beats general at the same rank.** A protocol scoped to the situation at hand outranks one scoped to all situations. A safety floor is the exception in the other direction: `SECURITY.md`, `WEB_FETCH_SAFETY.md`, and any **Ask First** gate are never narrowed by a more specific contract, only widened.
+- **An unresolvable conflict is surfaced, not split.** Two contracts that genuinely cannot both hold is a defect in the corpus — name both sources and ask, rather than inventing a midpoint that neither file endorses. File it as `HD-DOC` (`HARNESS_DEBT.md`) so the next run does not re-derive it.
+
+Each file states its own tier on the line under its title. `spine` = rank 4 above. `domain` activates on subject matter, `orchestration` on the hub/recipe/engine layer, `authoring` when creating or auditing skills rather than doing user work.
 
 ---
 

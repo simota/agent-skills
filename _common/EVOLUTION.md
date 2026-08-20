@@ -1,5 +1,7 @@
 # Evolution Shared Protocol
 
+> **Tier:** `authoring` — activates when creating or auditing skills, not during user work. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Shared specification for ecosystem self-evolution. All agents may reference this protocol when contributing to or consuming evolution data.
 
 ---
@@ -96,24 +98,10 @@ When routing a task:
 
 ## Journal Recording Recommendations
 
-When recording journal entries, agents are encouraged to:
+Journal entry format and write rules → `_common/OPERATIONAL.md` § Journal. Two additions apply when an entry is meant to leave the agent that wrote it:
 
-### Tag Reusable Insights
-
-Add `reusable: true` or `reusable: false` to journal entries:
-
-```markdown
-## 2026-02-19 - Cache Strategy Insight
-
-**Chain:** Scout → Builder → Radar
-**Insight:** Redis caching for session data reduced response time by 60%.
-**Apply when:** Session-heavy SaaS applications with >1000 concurrent users.
-**reusable:** true
-```
-
-### Include EVOLUTION_SIGNAL When Appropriate
-
-Embed signals in journal entries for Darwin to collect:
+- **`reusable: true | false`** — the field Darwin's Journal Synthesizer (ET-04) selects on. Tagging is recommended, not mandatory; an untagged entry is treated as `false`.
+- **An embedded `EVOLUTION_SIGNAL`** (§ above) when the insight affects agents other than the author. The signal carries the propagation; the entry body carries the detail.
 
 ```markdown
 ## 2026-02-19 - Auth Pattern Discovery
@@ -133,10 +121,3 @@ priority: HIGH
 reusable: true
 -->
 ```
-
-### Benefits
-
-- Agents that tag reusable insights contribute to ecosystem knowledge
-- Darwin's Journal Synthesizer (ET-04) processes these tags efficiently
-- Cross-agent discoveries improve over time as more agents participate
-- No agent is required to participate — tagging is recommended, not mandatory

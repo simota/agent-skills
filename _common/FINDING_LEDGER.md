@@ -1,5 +1,7 @@
 # Finding Ledger — the shared machinery for external-reviewer-to-zero loops
 
+> **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 **Purpose:** The load-bearing machinery every "fix until an external reviewer returns nothing" loop needs, stated once. A raw reviewer is stochastic and adversarial: it re-words findings, surfaces new ones after every fix, and never runs out of nits. Without a ledger, "until zero" is an infinite loop by construction — and without disposition integrity, it is a loop that terminates in one cycle by declaring everything a false positive. This file owns both fixes.
 
 **Read when:** authoring, executing, or extending a recipe whose completion oracle is an **external evaluator's finding set** (`nexus quell`, `nexus burnish`, and any future member). Run `_common/LOOP_PRECONDITIONS.md` first — this protocol assumes that gate passed.

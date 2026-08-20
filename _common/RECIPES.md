@@ -1,5 +1,7 @@
 # Recipes / Subcommands Protocol
 
+> **Tier:** `authoring` — activates when creating or auditing skills, not during user work. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Common protocol for defining Recipes (internal presets) and exposing them as Subcommands (external aliases) within a single skill. All agents may adopt this protocol; see **Adoption Tiers** below.
 
 ---

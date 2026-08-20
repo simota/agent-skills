@@ -1,5 +1,7 @@
 # Harness Evolution Protocol
 
+> **Tier:** `authoring` — activates when creating or auditing skills, not during user work. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Systematic re-evaluation of orchestration scaffolding as model capabilities improve. Scaffolding that was necessary for earlier models may become overhead for stronger models.
 
 ---
@@ -52,10 +54,10 @@ Orchestrators (Nexus, Rally) should be stateless and replaceable. Session state 
 | Metric | Full Name | Formula | Purpose |
 |--------|-----------|---------|---------|
 | **CES** | Chain Effectiveness Score | `Success_Rate(0.35) + Recovery_Efficiency(0.20) + Step_Economy(0.20) + User_Satisfaction(0.25)` | Overall chain quality (defined in Nexus SKILL.md) |
-| **TES** | Token Efficiency Score | `output_information_tokens / total_tokens_consumed` | Cost efficiency — detects context bloat and unnecessary verbosity |
+| **TES** | Token Efficiency Score | `output_information_tokens / total_tokens_consumed` — **specified, not implemented** | Cost efficiency — detects context bloat and unnecessary verbosity. **Do not cite TES as a measured value or use it as a gate.** No code computes `output_information_tokens`, and this repository's transcripts neither expose nor derive it (`_common/TOKEN_ECONOMY.md` §6). The formula is retained as a specification for a future evaluator pipeline; until one persists the numerator, use the turn-index rule of `TOKEN_ECONOMY.md` §2, which `token-economy.py` can actually check. |
 | **UQS** | Unified Quality Score | `Σ (normalized_agent_score × weight)` → 0-100. Canonical definition and weights: `nexus/reference/quality-iteration.md` § Unified Quality Score | Evaluator-derived deliverable quality. **Not** a human satisfaction rating — user satisfaction enters the ecosystem through the `User_Satisfaction` term of CES, and the two must never be substituted for one another |
 
-**Grading (CES and TES — 0-1 scale):** A (>= 0.85), B (>= 0.70), C (>= 0.55), D (< 0.55). UQS is on a 0-100 scale and uses its own bands (90-100 Excellent · 80-89 Good · 70-79 Acceptable · 60-69 Fair · <60 Poor); do not read it against this table.
+**Grading (CES — 0-1 scale):** A (>= 0.85), B (>= 0.70), C (>= 0.55), D (< 0.55). TES takes no grade while it is unimplemented; a band applied to a quantity nothing computes reads as a measurement and is how an unmeasured number becomes a gate. UQS is on a 0-100 scale and uses its own bands (90-100 Excellent · 80-89 Good · 70-79 Acceptable · 60-69 Fair · <60 Poor); do not read it against this table.
 
 ---
 
@@ -99,12 +101,12 @@ This is additive scheduling only (no new script, no new loop, no new agent) — 
 3. For each component meeting its condition:
      a. Propose simplification (documented in EVOLUTION_SIGNAL)
      b. Run A/B comparison (3 tasks minimum)
-     c. Measure CES/TES/UQS impact
+     c. Measure CES/UQS impact (TES is unimplemented — see Metrics Definitions)
      ↓
 4. Apply or reject simplification
-     ├─ CES/TES drop <= 0.05 → Apply (safe simplification)
-     ├─ CES/TES drop 0.05-0.10 → Apply with monitoring (1 cycle)
-     └─ CES/TES drop > 0.10 → Reject (rollback immediately)
+     ├─ CES drop <= 0.05 → Apply (safe simplification)
+     ├─ CES drop 0.05-0.10 → Apply with monitoring (1 cycle)
+     └─ CES drop > 0.10 → Reject (rollback immediately)
 ```
 
 ---
@@ -144,7 +146,7 @@ Governance:
 
 - **Security scaffolding is exempt.** Never simplify Sentinel checks, L4 guardrails, or security-related recovery chains regardless of metrics.
 - **Minimum data requirement.** At least 3 data points before any simplification decision.
-- **Immediate rollback trigger.** If CES or TES drops more than 0.10 after simplification, rollback immediately without waiting for the full evaluation cycle.
+- **Immediate rollback trigger.** If CES drops more than 0.10 after simplification, rollback immediately without waiting for the full evaluation cycle. (TES is excluded until implemented — a trigger that cannot fire is worse than no trigger, because the guard reads as covered.)
 - **One component at a time.** Never simplify multiple components simultaneously — isolate the impact of each change.
 
 ### Rollback Protocol
@@ -154,7 +156,7 @@ Simplification applied
   ↓
 Monitor for 1 evaluation cycle (or until 5 tasks executed)
   ↓
-CES/TES regression detected?
+CES regression detected?
   ├─ > 0.10 drop → Immediate rollback, log as failed simplification
   ├─ 0.05-0.10 drop → Extend monitoring for 1 more cycle
   │    └─ Still regressed → Rollback
@@ -166,7 +168,7 @@ CES/TES regression detected?
 
 ## Evolution Signal Format
 
-When a simplification is proposed or applied, emit an `EVOLUTION_SIGNAL`:
+Schema and signal types → `_common/EVOLUTION.md` § EVOLUTION_SIGNAL Format. Harness simplifications add no fields; they are emitted as `type: DRIFT` with the HE component id leading the `summary`:
 
 ```markdown
 <!-- EVOLUTION_SIGNAL
@@ -219,7 +221,7 @@ Record harness evolution decisions in `.agents/nexus.md` journal:
 - Component: HE-[ID]
 - Action: [simplified | retained | rolled-back]
 - Data points: [N]
-- CES/TES impact: [delta]
+- CES impact: [delta]
 - Decision: [rationale]
 ```
 

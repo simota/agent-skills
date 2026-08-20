@@ -1,5 +1,7 @@
 # Common Infographic Output Spec
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 > Shared payload spec for any agent to emit a visual-summary handoff. No new agent. No middle layer.
 
 ## Purpose

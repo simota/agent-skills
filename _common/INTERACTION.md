@@ -1,5 +1,7 @@
 # Interaction Rules (Common Definition)
 
+> **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 This file defines the common interaction control rules that all agents reference.
 
 ---

@@ -1,5 +1,7 @@
 # Loop Preconditions — the five-point gate every agent loop passes before it runs
 
+> **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 **Purpose:** The load-bearing rules that separate a reliable agent loop from a runaway one. Any recipe or skill that is about to **build, configure, or launch a loop** runs this gate first. A loop that fails a precondition is a loop that fails *silently and expensively* — the failure surfaces as burned budget, not as an error.
 
 **Read when:** you are about to set up `/goal`, run a `converge` cycle, generate an `orbit` runner, enter an `apex` implementation loop, or wire any other iterate-until-done mechanism.

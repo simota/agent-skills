@@ -1,5 +1,7 @@
 # LLM Instruction Prompt Generation (Common Pattern)
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 **Purpose:** Universal authoring rules and prompt structure shared by every agent that pairs its report with a paste-ready LLM instruction prompt for a downstream coding LLM (Builder, Claude, Codex, Forge, Artisan, Native).
 **Read when:** You are designing or maintaining a per-agent `fix-prompt-generation.md` (or similar) and want the universal rules in one place.
 

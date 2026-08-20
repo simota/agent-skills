@@ -1,5 +1,7 @@
 # Codex Orchestration Authoring Protocol
 
+> **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 > Counterpart to `_common/OPUS_5_AUTHORING.md`. That file governs authoring when **Claude Code** drives the Nexus hub; this file governs authoring when **Codex CLI** drives the hub.
 > Owner: Architect (canonical doc); referenced by orchestrators (Nexus, Orbit, Rally, Magi) and any SKILL.md whose spawn path can run on Codex CLI.
 > Scope: Codex CLI as the **orchestrator engine** (the CLI running the top-level hub session). Codex as a *worker / spawn target* of a Claude hub is covered by `_common/SUBAGENT.md` (MULTI_ENGINE) and `_common/MULTI_ENGINE_RECIPE.md`.

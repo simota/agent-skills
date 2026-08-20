@@ -1,5 +1,7 @@
 # Subagent Parallel Protocol
 
+> **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Common protocol for individual skills to spawn parallel sub-agents via the **Agent tool** (formerly Task tool, renamed in v2.1.63).
 For Nexus internal parallel branches → `_common/PARALLEL.md`. For full team orchestration (4+ workers) → Rally.
 

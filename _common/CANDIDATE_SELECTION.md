@@ -1,5 +1,7 @@
 # Candidate Selection Protocol
 
+> **Tier:** `orchestration` — activates from the hub, a recipe, or on engine detection. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Cross-skill discipline for **narrowing many generated candidates down to one defensible choice**. When generation is cheap, the scarce resource is not ideas — it is the reviewer attention needed to tell candidates apart and the reasoning needed to justify keeping one. This file governs that half of the work.
 
 **Read when:** you are about to generate more than one candidate; you have a pile of variants and no stated basis for choosing; a review is drifting into preference voting; a skill's output is "here are 12 options" with no narrowing.

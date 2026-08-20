@@ -1,5 +1,7 @@
 # Parametric Output Protocol (Common)
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 **Purpose**: Emit design/config values as **parametric options** (3-5 step ranges with labeled extremes) rather than single hard-coded values, so users can pick direction with minimal re-prompting. Inspired by Claude Design by Anthropic Labs (2026-04-17): "custom sliders (made by Claude)".
 
 **Scope**: Used by `muse`, `palette`, `flow`, `atelier`, and any skill producing values where exploration beats single-shot decision.

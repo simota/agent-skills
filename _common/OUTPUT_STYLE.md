@@ -1,5 +1,7 @@
 # Output Density Protocol — OUTPUT_STYLE.md
 
+> **Tier:** `spine` — in effect on every run. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 > Single source of truth for **runtime output style** across all skills.
 > Owner: Architect. Referenced from every SKILL.md `Output Contract` section.
 > Distinct from `architect/reference/context-compression.md` (which targets SKILL.md file size, not response density).

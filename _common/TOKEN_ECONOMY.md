@@ -1,5 +1,7 @@
 # Token Economy — Repository Standard
 
+> **Tier:** `authoring` — activates when creating or auditing skills, not during user work. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 **Purpose:** Governs where this repository spends effort optimizing token cost, and what
 counts as a valid token claim. Companion to [`_common/scripts/token-economy.py`](scripts/token-economy.py),
 the instrument that produces the numbers this document is derived from.
@@ -329,8 +331,13 @@ All three are formulas defined in `_common/HARNESS_EVOLUTION.md` and
   context usage as a percentage; the 1,000-2,000 token handoff target it feeds has never
   been measured against actual handoff sizes.
 
-**Recommendation: retire the 70% trigger and TES; keep UQS's *name* but strip its formula
-until scored.** Specifically:
+**Disposition: applied.** All three items below are now in the corpus — the 70% trigger is gone
+from `nexus/reference/context-strategy.md:200`, and `HARNESS_EVOLUTION.md` marks TES
+`specified, not implemented`, drops it from the grading band, and removes it from the
+`CES/TES` rollback and evaluation-ladder thresholds. What follows is the reasoning, kept
+because the *rule* it establishes outlives the three fixes: **a formula with no data source
+is never presented with a grade band or wired into a gate.** Re-apply it to the next metric,
+do not re-execute the three fixes.
 - Replace the 70% context-usage trigger with the turn-index rule in §2 (hand off at or
   before turn ~50; past 100 is already late), which `token-economy.py` can actually check
   via `TE-LONGTAIL`. A percentage of an unmeasured
@@ -342,10 +349,13 @@ until scored.** Specifically:
   until an evaluator pipeline actually persists `normalized_agent_score` per agent. Mark it
   in `HARNESS_EVOLUTION.md` as "specified, not implemented" until that exists.
 
-**Consequence of not acting on this recommendation:** the next agent that reads
-`HARNESS_EVOLUTION.md` or `context-strategy.md` will treat TES/UQS/the 70% trigger as live
-gates — as this repo's own prior analysis already did once when it misattributed a CLI-driven
-cost step to a `_common/` commit (§4) — and make a decision on a number nothing computes.
+**Why this mattered enough to fix:** between this section being written and being applied, an
+audit found the `HARNESS_EVOLUTION.md` hard constraint *"if CES or TES drops more than 0.10,
+rollback immediately"* still live — a guard that reads as covering two metrics while one of
+them can never fire. That is the failure mode in general form: an unmeasurable term inside a
+gate does not merely fail to help, it makes the gate *look* stronger than it is. A metric that
+nothing computes must be labelled at every site that cites it, not only at the site that
+defines it.
 
 ---
 

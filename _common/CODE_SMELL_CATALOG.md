@@ -1,5 +1,7 @@
 # Code Smell Catalog (Master Reference)
 
+> **Tier:** `domain` — activates when the task's subject matches. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 Centralized taxonomy of structural code smells shared across skills.
 Each entry is a smell **name + definition + recognition pattern + canonical example + severity hint**.
 

@@ -1,5 +1,7 @@
 # Project-Local Skills
 
+> **Tier:** `authoring` — activates when creating or auditing skills, not during user work. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+
 This registry separates reusable global skills from operating extensions that only make sense inside the `claude-skills` repository.
 
 ## Placement Contract
