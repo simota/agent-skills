@@ -195,6 +195,17 @@ Sweeps find debt after it accrues. A Complexity Budget stops the accrual at the 
 
 A control with no `removal` condition is permanent by default, and permanence is how a harness accumulates layers no one can justify or safely remove. The most common miss is `effect`: a control added on intuition, never measured, and then defended by the effort it took to build.
 
+**Where the budget is enforced.** A budget declared in one file and required by none is itself `HD-LOOP`. These are the admission points that MUST collect the four fields before the addition lands; each rejects rather than accepts a blank `removal`:
+
+| Addition | Gate | Enforced in |
+|----------|------|-------------|
+| A new ecosystem skill | Architect's gap-fill proposal, before Nexus pre-registration | `architect/SKILL.md` → `## Complexity Budget Gate` |
+| A new Nexus Recipe | Recipe Admission Gate condition 5 | `nexus/reference/recipe-contract.md` |
+| A new project-local skill / rule / workflow | Sigil's operating-layer authoring | `sigil/SKILL.md` |
+| A new `_common/` protocol, gate, or routing branch | The proposing agent, in the change itself | this section |
+
+The fields live in the artifact they govern (`## Lifecycle` in `_templates/SKILL_TEMPLATE.md`), not in a separate register — a register of removal conditions decays faster than the controls it tracks. Existing controls are **not** retro-fitted on a sweep: an unbudgeted control that has never cost anything is not debt, and cataloguing all of them is the § 5 anti-pattern. It acquires the four fields the next time it is edited for another reason.
+
 **Centralization has the same asymmetry.** Shared control reduces duplication and *widens the failure domain* — a routing rule, a common gate, a `_common/` protocol becomes a single blast radius for every skill downstream. Apply the same discipline to the shared layer that the shared layer imposes: canary it, budget it, own it, and be able to roll it back. Consolidate only when three or more skills hit the same cross-cutting problem and a common owner exists; where consolidation raises coordination cost instead of lowering it, move the boundary back.
 
 ---
@@ -206,6 +217,7 @@ A control with no `removal` condition is permanent by default, and permanence is
 | Documentation Gardening | `gauge` | 30-day review cycle |
 | Skill Gardening | `prune` | 30-day review cycle |
 | Eval Gardening | `darwin` | 30-day review cycle, plus after any harness regression |
+| Near-duplication sweep (`HD-ENTROPY`) | `prune` | 30-day review cycle. Scope is the roster **and one level down** — `_common/` protocols and `*/reference/` files. A near-duplicate reference is roster overlap that never reached the roster, which is why the corpus can pass a Skill Gardening sweep and still accrue `HD-ENTROPY`. Candidates are confirmed by **merging**, not by heading or token similarity: a pair is duplication only if the merged text loses no claim and the net line count falls. Similarity alone has measured a false-positive rate near half. |
 | Derived Register freshness (§2b) | `gauge` | same cycle, plus before any release-shaped change — run every `check` column; a failure names its staleness class |
 | Register triage | `darwin` | same cycle — the register is an input to the ecosystem review, not a separate ritual |
 

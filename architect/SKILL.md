@@ -169,6 +169,15 @@ Non-negotiables regardless of Recipe: `create` runs ENVISION at 20-30% effort an
 | Context utilization | >`60%` utilized before user input | Compress: summarize history → filter retrieval → route tools → compress results |
 | Compression approval | `>20%` reduction is confirmation-worthy | Keep 4-axis equivalence intact |
 
+### Complexity Budget Gate
+
+Every new-skill proposal declares the four Complexity Budget fields of `_common/HARNESS_DEBT.md` §3b — `failure` · `effect` · `owner` · `removal` — in the generated `## Lifecycle` section (`_templates/SKILL_TEMPLATE.md`), **before** the Nexus pre-registration handoff. The gate is failed, not waived, when:
+
+- `removal` is blank, or is a restatement of the review process ("when no longer needed", "on ecosystem review", "if usage drops"). Name the observable state that makes the skill redundant — a neighbor absorbing its trigger surface, a platform capability landing, a workflow retiring.
+- `effect` names no evidence and no exclusion. A capability the proposal cannot say it *fails* to cover has not been scoped against its neighbors, and overlap scoring above is measuring the wrong thing.
+
+Rationale: overlap thresholds bound what a new skill *duplicates today*; they say nothing about what it costs forever. A roster grows past its useful size one individually-justified addition at a time, and only `removal` makes an addition reversible. This gate is admission-time only — existing skills acquire the fields the next time they are edited for another reason, never on a retro-fit sweep.
+
 ### New-Agent Output Contract
 
 - Generated `description:` carries negative triggers ("Don't use when…") alongside positive ones — it is the only field the model sees before firing, and omitting them causes misfires.

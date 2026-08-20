@@ -15,7 +15,9 @@ This gate applies to every **new** Recipe proposal; existing Recipe contracts ar
 3. **No ownership overlap:** no existing specialist, Recipe, or subcommand already owns the request shape. A clearer alias or domain-specific restatement is overlap, not novelty.
 4. **Closed execution contract:** name the Recipe owner, each phase's specialist owner, termination bound or explicit non-loop completion condition, independent verification oracle, and residual route. The producer cannot be its sole verifier.
 
-Record the evidence and `PASS`/`FAIL` result for all four conditions before cross-index wiring. If any condition fails, reject registry admission and direct-route to the owning specialist or use an ad-hoc minimum viable chain. Nexus MUST NOT register a Recipe that a single specialist can complete end to end, and MUST NOT import that specialist's domain methodology into Nexus to manufacture cross-boundary scope.
+5. **Budgeted:** the proposal declares the four Complexity Budget fields of `_common/HARNESS_DEBT.md` §3b — `failure` · `effect` · `owner` · `removal`. A blank or generic `removal` ("when no longer needed", "on ecosystem review") fails this condition: a Recipe with no removal condition is permanent by default, and the registry's cost is paid by every future routing decision that has to step past it.
+
+Record the evidence and `PASS`/`FAIL` result for all five conditions before cross-index wiring. If any condition fails, reject registry admission and direct-route to the owning specialist or use an ad-hoc minimum viable chain. Nexus MUST NOT register a Recipe that a single specialist can complete end to end, and MUST NOT import that specialist's domain methodology into Nexus to manufacture cross-boundary scope.
 
 ---
 

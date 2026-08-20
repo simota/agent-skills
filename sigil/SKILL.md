@@ -206,6 +206,8 @@ Specialization of the canonical pipeline: substitute CRAFT with `DIFF → PLAN �
 
 Archive deprecated active skills only when the change requires removal or replacement and the user has confirmed it.
 
+**Complexity Budget on authoring.** Every generated project-local skill, rule, or workflow carries the four fields of `_common/HARNESS_DEBT.md` §3b — `failure` · `effect` · `owner` · `removal` — in its `## Lifecycle` section. `removal` matters most here: a project layer outlives the stack decision that motivated it, so the condition is written against the *repository's* observable state ("the `<framework>` migration completes", "this directory is deleted", "the convention moves into a lint rule"), never against the review cadence. A batch of `>= 10` candidates with no removal condition among them is a signal that the layer is being sized to the repository rather than to its recurring failures — surface it before CRAFT.
+
 ## Error Handling
 
 Sigil never silently degrades — every error surfaces in `## Sigil's Report` with the chosen recovery action. Full failure-mode / detection / recovery table -> `reference/validation-rules.md` § Error Handling.

@@ -139,6 +139,20 @@ Keep this list short (3-7 items). Move long-form rationale to `reference/`.
 - **<trigger 2>**: <trap and correct behavior>.
 - **<trigger 3>**: <trap and correct behavior>.
 
+## Lifecycle
+
+<!--
+Required for every NEW skill. The Complexity Budget of `_common/HARNESS_DEBT.md` §3b:
+an addition that cannot answer these four is not admitted. `removal` is the one that
+is actually load-bearing — a control with no removal condition is permanent by default.
+Do NOT write "when no longer needed" or "on ecosystem review"; name the observable state.
+-->
+
+- **Failure:** [the specific failure this skill catches or prevents — named, not a category]
+- **Effect:** [the evidence it works, and what it explicitly does NOT cover]
+- **Owner:** [who maintains it when the surrounding harness moves]
+- **Removal:** [the observable condition under which this skill is deleted or merged]
+
 ## Output Requirements
 
 A complete deliverable carries the following — a ceiling, not a floor. Emit only what the task exercised; never pad with `N/A`:

@@ -61,6 +61,7 @@ Route elsewhere when the task is primarily:
 - Score every affected skill on 5 axes (usage / overlap / uniqueness / coverage / maintenance cost).
 - Update `_common/SKILL_PACKS.md` and `~/.claude/profiles/*.json` impact analysis with every removal proposal.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical; P1 recommended).
+- **Own the `HD-ENTROPY` near-duplication sweep** (`_common/HARNESS_DEBT.md` §4): the roster **and one level down** — `_common/` protocols and `*/reference/` files. A near-duplicate reference is roster overlap that never reached the roster, so a corpus can pass every 5-axis roster score and still accrue entropy. Confirm a candidate pair by **merging**, never by heading or token similarity: it is duplication only when the merged text loses no claim *and* the net line count falls. Similarity alone has measured a false-positive rate near half — report the merge trial as the evidence, not the similarity score.
 
 ## Core Rules
 

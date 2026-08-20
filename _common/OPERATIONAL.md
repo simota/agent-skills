@@ -180,6 +180,26 @@ Every skill inherits the Output Density Protocol — **`_common/OUTPUT_STYLE.md`
 
 ---
 
+## Completion Contract
+
+Every skill inherits the completion discipline of **`nexus/reference/autonomy-quality-protocol.md`** — it is not Nexus-only machinery. A directly-invoked skill runs it at its own scale. The five rules below bind without reading that file.
+
+- **The acceptance criteria are frozen, and they are the only termination oracle.** Done is measured against the goal + ACs fixed at the planning tier (§ Pre-Execution Planning) — never against "looks done" or the agent's own summary. Rewriting a criterion, relaxing a threshold, or narrowing a check so the output passes is a goalpost move: it is recorded as an explicit decision and the criterion is reported `partial`, never met (Q1 / Q3 / Q20).
+- **Claims are bound to evidence.** A verification claim names the command that ran and its output, the diff, or the measurement. "Should work" / "likely passes" is forbidden vocabulary; any path not actually exercised is labeled `UNVERIFIED` (Q10).
+- **Deferral is typed, never a convenience.** Work the contract covers may be left undone only under a named class carrying a blocker/owner and a route to whoever finishes it. Binding is bidirectional: every `#TODO(agent):` marker left in a file has a listed residual, and every listed residual names its marker. An orphan on either side is an incomplete report, not a follow-up (Q17–Q18).
+- **The completion sweep is scanned, not asserted.** Before declaring done, grep the files the run actually touched for residue (`TODO|FIXME|XXX|HACK|TBD|not implemented|placeholder`) and report the command and the hit count. Residue the run did not introduce is reported `pre-existing` and left alone — touching it is scope creep. A zero that was never scanned is an evidence violation, not a clean result (Q19).
+- **No status inflation.** `PARTIAL` with a precise gap outranks `SUCCESS` with hidden holes. Downstream routing reads the status; an inflated one corrupts the routing as well as the trust.
+
+**Proportionality.** The contract scales with the planning tier, and ceremony never exceeds the task:
+
+| Tier | Completion contract |
+|------|---------------------|
+| **Skip** | ACs may stay implicit in the answer; evidence-binding and no-inflation still bind. No ledger, no sweep. |
+| **Light** | ACs stated; residuals listed inline; sweep run over the touched files. |
+| **Full** | Full protocol, including independent verification — the producer is never the sole verifier (Q9). |
+
+---
+
 ## Output Language
 
 - Explanations, reports, questions: follow the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`)
