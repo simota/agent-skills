@@ -139,6 +139,10 @@ Governance:
 
 **Rule:** a checklist item that has never once failed is not proof of robustness — it is a candidate for `HD-GAME` (`_common/HARNESS_DEBT.md`). Injection tests are supposed to fail before the fix lands.
 
+**The same rule applied to the checkers themselves.** A check nobody has watched fail is indistinguishable from one that returns zero unconditionally — it passes CI, it passes review, and because it is *reported* as enforcement it also stops anyone looking for the enforcement that is absent. Every check in `_common/scripts/` therefore carries a test in `_common/scripts/test_checkers.py` that breaks the repository one way and asserts the check fails **and names the defect**; a new check without one is not landed. Two shipped without one before that suite existed, and both were silently vacuous for their whole lifetime — recorded, with what now catches them, in **`_common/LESSONS.md`**.
+
+That register is where a fixed failure goes when it has a mechanism, and the gate on entry is that it *has* one: `lint-lessons.py` rejects a mechanism that reads as an intention. A lesson that cannot be mechanised is not written down as a weaker rule — it is left out, and the harness admits nobody is keeping it.
+
 ---
 
 ## Safety Guards

@@ -197,6 +197,17 @@ Sweeps find debt after it accrues. A Complexity Budget stops the accrual at the 
 
 A control with no `removal` condition is permanent by default, and permanence is how a harness accumulates layers no one can justify or safely remove. The most common miss is `effect`: a control added on intuition, never measured, and then defended by the effort it took to build.
 
+**`failure` names one of four classes, plus the specific instance.** A free-text failure field cannot be compared across controls, counted, or checked; a closed vocabulary can. Four ways a harness fails, and every control defends against exactly one:
+
+| Class | The failure | What it looks like in the report |
+|-------|-------------|----------------------------------|
+| `F1` | **Wrong work** — the right method applied to the wrong thing. The brief was never settled, the intent was misread, or the scope moved without anyone deciding | Acceptance criteria met and the result still wrong |
+| `F2` | **False completion** — done was reported over something unverified, unfinished, or untyped | `SUCCESS` with a hole; "should work"; a sweep that was never run |
+| `F3` | **Silent drift** — two things that must agree stop agreeing, and nothing says so | A count that is no longer true; a check that recognises nothing; a copy that diverged from its source |
+| `F4` | **Abandonment** — the harness is correct and gets worked around, because its ceremony exceeds the change it governs | A gate satisfied with boilerplate; the entry point stops being used (`_common/VALUES.md` § 6) |
+
+Write it as the class and the instance: `F3 — a skill-count claim in CLAUDE.md that no check reads`. **A control that defends against none of the four is removed, not tuned** — it is protecting a failure nobody can name, which is how a budget becomes a form.
+
 **Where the budget is enforced.** A budget declared in one file and required by none is itself `HD-LOOP`. These are the admission points that MUST collect the four fields before the addition lands; each rejects rather than accepts a blank `removal`:
 
 | Addition | Gate | Enforced in |

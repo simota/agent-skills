@@ -12,6 +12,8 @@ on:
       - '_common/scripts/lint-instructions.py'
       - '_common/scripts/lint-contracts.py'
       - '_common/scripts/task-battery-check.py'
+      - '_common/scripts/test_checkers.py'
+      - '_common/scripts/lint-lessons.py'
       - '_common/scripts/_corpus.py'
       - 'Makefile'
       - '_common/**.md'
@@ -79,10 +81,18 @@ jobs:
         # and any drop off it is a regression.
         run: python3 _common/scripts/lint-contracts.py --severity error
 
+      - name: Checker tests (each breaks the repo one way)
+        # A checker with no failing test is indistinguishable from one that
+        # always returns zero. Two shipped that way before this suite existed.
+        run: python3 _common/scripts/test_checkers.py
+
       - name: Task battery (routing fixtures)
         # The battery is what `make validate` runs locally; CI running a strict subset of
         # the pre-commit hook would let a hook-less clone push what the hook would refuse.
         run: python3 _common/scripts/task-battery-check.py --severity error
+
+      - name: Lint the lessons register (mechanism required, intentions refused)
+        run: python3 _common/scripts/lint-lessons.py --severity error
 
       - name: Contract delivery matrix
         # Never fails. Prints the depth table so a reachability regression is legible

@@ -30,6 +30,10 @@
 - Git: @_common/GIT_GUIDELINES.md
 
 ## 検査
-- `make validate` — 全チェッカーを blocking severity で実行（CI と同一）
-- `make hooks` — clone ごとに1回。`make validate` を pre-commit に入れる
-- 本リポは main へ直接コミットするため、**hook が実質の強制点**。CI の hard-fail は push でも走るが、hook が先に落とす
+- `make validate` — 全チェッカーを blocking severity で実行
+- `make test` — チェッカーが実際に落ちることを証明する（repoを1箇所ずつ壊す。~20秒）
+- `make check` — 上記2つ。CI が走らせるもの
+- `make hooks` — clone ごとに1回。pre-commit で `validate` を、`_common/scripts/` に触れたコミットでは `check` を走らせる
+- 本リポは main へ直接コミットするため、**hook が実質の強制点**
+- **新しい check には、それが落ちるところを見るテストを `_common/scripts/test_checkers.py` に付ける。** テストのない check は常にゼロを返すものと区別がつかない — 実際に2本そうなっていた（`_common/LESSONS.md` L001/L002）
+- 機構を伴わない教訓は `_common/LESSONS.md` に入らない。`lint-lessons.py` が「remember to」型の記述を拒否する

@@ -22,7 +22,7 @@ AGY_DIR    := $(HOME)/.gemini/skills
 
 .DEFAULT_GOAL := help
 
-.PHONY: help link unlink status validate hooks \
+.PHONY: help link unlink status validate test check hooks \
 	link-claude link-codex link-agy \
 	unlink-claude unlink-codex unlink-agy
 
@@ -34,7 +34,9 @@ help:
 	@echo "make unlink[-*]     remove only the links into this repo; other skills stay"
 	@echo "make status         show the current state of all three"
 	@echo ""
-	@echo "make validate       run every checker at blocking severity (same as CI)"
+	@echo "make validate       run every checker at blocking severity"
+	@echo "make test           prove the checkers catch things (slower)"
+	@echo "make check          validate + test — what CI runs"
 	@echo "make hooks          install the pre-commit hook that runs make validate"
 	@echo ""
 	@echo "repo                $(REPO)"
@@ -139,13 +141,33 @@ validate:
 	@python3 $(SCRIPTS)/routing-oracle.py --severity error
 	@python3 $(SCRIPTS)/lint-instructions.py --severity error
 	@python3 $(SCRIPTS)/lint-contracts.py --severity error
+	@python3 $(SCRIPTS)/lint-lessons.py --severity error
 	@python3 $(SCRIPTS)/task-battery-check.py --severity error
 	@if [ -x "$(REPO)/.git/hooks/pre-commit" ]; then echo "hooks on"; else \
 	  echo "hooks off — run 'make hooks' so these run without being remembered"; fi
 
+# A checker nobody has watched fail is indistinguishable from one that returns
+# zero unconditionally. Slower than `validate` because each case runs the real
+# script against a broken copy of the repository, so the hook runs it only when
+# a checker changed — see `hooks` below.
+test:
+	@python3 $(SCRIPTS)/test_checkers.py
+
+check: validate test
+
 hooks:
 	@mkdir -p "$(REPO)/.git/hooks"
-	@printf '#!/bin/sh\n# installed by `make hooks`\nexec make -C "%s" --no-print-directory validate\n' "$(REPO)" \
+	@printf '%s\n' \
+	  '#!/bin/sh' \
+	  '# installed by `make hooks`' \
+	  '# Checkers always. The checker *tests* only when a checker changed: they' \
+	  '# cost ~20s, and a commit that slow is one people start bypassing.' \
+	  'set -e' \
+	  'repo="$(REPO)"' \
+	  'if git diff --cached --name-only | grep -q "^_common/scripts/"; then' \
+	  '  exec make -C "$$repo" --no-print-directory check' \
+	  'fi' \
+	  'exec make -C "$$repo" --no-print-directory validate' \
 	  > "$(REPO)/.git/hooks/pre-commit"
 	@chmod +x "$(REPO)/.git/hooks/pre-commit"
 	@echo "installed $(REPO)/.git/hooks/pre-commit"
