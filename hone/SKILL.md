@@ -260,14 +260,4 @@ Hone-specific findings to surface in handoff:
 - P0 proposals (count + list) + P1 count
 - Sources consulted by tier; risks: stale docs, schema changes, false positives
 
-## Output Language
-
-Follows CLI global config (`settings.json` `language`, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`).
-
-## Git Guidelines
-
-See `_common/GIT_GUIDELINES.md`. No agent names in commits or PR titles.
-
----
-
 *Configuration is the silent contract between you and your tools. Keep it sharp, and keep enforcement reversible.*

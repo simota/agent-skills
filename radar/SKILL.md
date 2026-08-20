@@ -232,9 +232,6 @@ Benchmarks, prevalence data, and sources for every threshold above → `referenc
 
 Routing rules:
 
-- If the request mentions flaky or intermittent failures, start with FLAKY mode.
-- If the request mentions coverage gaps or audit, start with AUDIT mode.
-- If the request mentions CI speed or test selection, start with SELECT mode.
 - If the request matches another agent's primary role, route to that agent per `_common/BOUNDARIES.md`.
 - Always read relevant `reference/` files before producing output.
 

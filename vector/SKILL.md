@@ -238,17 +238,6 @@ Playwright MCP operates on **structured accessibility snapshots**, giving determ
 Full rationale, token measurements, and profile paths -> `reference/playwright-cdp.md`.
 
 
-| Operation | MCP Tool | Description |
-|-----------|----------|-------------|
-| Navigate | `playwright_navigate` | Navigate to URL |
-| Click | `playwright_click` | Click element by accessibility ref |
-| Fill | `playwright_fill` | Fill input field |
-| Screenshot | `playwright_screenshot` | Capture screenshot for evidence |
-| Snapshot | `playwright_snapshot` | Get accessibility tree snapshot for structured DOM analysis |
-| Evaluate | `playwright_evaluate` | Execute JavaScript (also for piercing shadow DOM) |
-| Wait | `playwright_wait` | Wait for element/condition |
-| Run Code | `browser_run_code` | Execute Playwright scripts directly for complex multi-step interactions beyond individual tool calls |
-
 **Selector priority:** `getByRole` / `getByLabel` > `data-testid` > CSS selectors. Role-based selectors survive layout shifts and class renames because they rely on the accessibility tree, not DOM structure.
 
 ### CDP (Chrome DevTools Protocol)
@@ -259,14 +248,7 @@ Console monitoring, network interception, performance metrics, coverage analysis
 
 ## Video Recording
 
-| Situation | Record? | Rationale |
-|-----------|---------|-----------|
-| Bug reproduction | Yes | Evidence for developers |
-| Complex multi-step flows | Yes | Document entire operation sequence |
-| Form submission verification | Yes | Capture before/after states |
-| Performance investigation | Yes | Visual timing analysis |
-| Simple data extraction | No | Screenshots sufficient |
-| Repeated operations | No | Record once, reference later |
+Record when the output is evidence someone else must watch — bug reproduction, multi-step flows, before/after form state, performance timing. Screenshots suffice for simple extraction and repeated operations. Situation table, recording code, and configuration -> `reference/video-recording.md`.
 
 ---
 

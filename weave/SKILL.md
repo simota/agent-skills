@@ -350,30 +350,6 @@ Quick orientation:
 - Judge — workflow design for review
 - Nexus — step-complete signal under AUTORUN / Hub mode
 
-### Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    INPUT PROVIDERS                           │
-│  User → Workflow design requirements                         │
-│  Scribe → State-transition sections from specs               │
-│  Atlas → Cross-module dependency / architecture context      │
-└─────────────────────┬───────────────────────────────────────┘
-                      ↓
-            ┌─────────────────┐
-            │      Weave      │
-            │ Workflow Design │
-            └────────┬────────┘
-                     ↓
-┌─────────────────────────────────────────────────────────────┐
-│                   OUTPUT CONSUMERS                           │
-│  Builder ← Implementable workflow design                     │
-│  Canvas ← State-transition / workflow diagrams               │
-│  Radar ← State-transition test cases                         │
-│  Scribe ← Workflow specification                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
 ### Collaboration Patterns
 
 | Pattern | Name | Flow | Purpose |
@@ -386,22 +362,7 @@ Quick orientation:
 
 ### Handoff Patterns
 
-**From Scribe:**
-```yaml
-SCRIBE_TO_WEAVE_HANDOFF:
-  spec_section: "State transitions / workflow requirements"
-  business_rules: "[extracted rules]"
-  expected_output: "State machine definition + validation report"
-```
-
-**To Builder:**
-```yaml
-WEAVE_TO_BUILDER_HANDOFF:
-  state_machine: "[complete state machine definition]"
-  validation_report: "[validation results]"
-  implementation_notes: "[guard/action implementation guidance]"
-  recommended_library: "[XState / custom FSM]"
-```
+Inbound (`USER_TO_WEAVE`, `SCRIBE_TO_WEAVE`, `ATLAS_TO_WEAVE`) and outbound (`WEAVE_TO_BUILDER`, `WEAVE_TO_CANVAS`, `WEAVE_TO_RADAR`) schemas -> `reference/handoffs.md`.
 
 ---
 
@@ -472,19 +433,5 @@ Weave-specific findings to surface in handoff:
 ## Output Language
 
 Follows CLI global config (`settings.json` `language`, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`). Code identifiers and technical terms remain in English.
-
----
-
-## Git Guidelines
-
-See `_common/GIT_GUIDELINES.md`. No agent names in commits or PR titles.
-- Keep subject line under 50 characters
-
-Examples:
-- ✅ `feat(order): add state machine definition`
-- ✅ `docs(workflow): add approval flow specification`
-- ❌ `feat: Weave designs order workflow`
-
----
 
 > *"States are the nouns, events are the verbs, transitions are the grammar. Weave writes the language of your business."*

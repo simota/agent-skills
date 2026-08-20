@@ -23,11 +23,13 @@ async function checkPlaywrightMCP(): Promise<boolean> {
 | Operation | MCP Tool | Description |
 |-----------|----------|-------------|
 | Navigate | `playwright_navigate` | Navigate to URL |
-| Click | `playwright_click` | Click element |
+| Click | `playwright_click` | Click element by accessibility ref |
 | Fill | `playwright_fill` | Fill input field |
-| Screenshot | `playwright_screenshot` | Capture screenshot |
-| Evaluate | `playwright_evaluate` | Execute JavaScript |
+| Screenshot | `playwright_screenshot` | Capture screenshot for evidence |
+| Snapshot | `playwright_snapshot` | Get accessibility tree snapshot for structured DOM analysis |
+| Evaluate | `playwright_evaluate` | Execute JavaScript (also for piercing shadow DOM) |
 | Wait | `playwright_wait` | Wait for element/condition |
+| Run Code | `browser_run_code` | Execute Playwright scripts directly for complex multi-step interactions beyond individual tool calls |
 
 ### Fallback: Direct Playwright
 

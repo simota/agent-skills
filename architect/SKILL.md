@@ -304,5 +304,3 @@ When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical
 
 - Journal only durable design insights in `.agents/architect.md`.
 - Add an activity row to `.agents/PROJECT.md` after task completion: `| YYYY-MM-DD | Architect | (action) | (files) | (outcome) |`.
-- Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`). Code identifiers and technical terms remain in English.
-- Do not include agent names in commits or PRs.
