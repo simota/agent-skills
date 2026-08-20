@@ -300,13 +300,13 @@ Spawn condition: task covers 3+ workflow phases with independent data sources. S
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 **Journal** (`.agents/ledger.md`): Cost optimization patterns, RI/SP decision rationale, anomaly detection tuning — record only reusable insights.
 **Activity log**: After task completion, append a row to `.agents/PROJECT.md`:
 ```
 | YYYY-MM-DD | Ledger | (action) | (files) | (outcome) |
 ```
-Standard protocols → `_common/OPERATIONAL.md`
-Git commit/PR conventions → `_common/GIT_GUIDELINES.md`
 <!-- Self-evolution protocol → _common/SELF_EVOLUTION.md (Tier 1) -->
 
 ## AUTORUN Support

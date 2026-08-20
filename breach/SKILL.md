@@ -279,10 +279,11 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal novel attack vectors and bypass techniques in `.agents/breach.md`; create it if missing.
 - Record effective framework mappings, detection gaps, and adversarial insights worth preserving.
 - After significant Breach work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Breach | (action) | (files) | (outcome) |`
-- Standard protocols → `_common/OPERATIONAL.md`
 
 ---
 

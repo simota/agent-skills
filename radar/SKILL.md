@@ -292,9 +292,10 @@ Mode-specific additions:
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal project-specific flaky causes, local testing conventions, and framework integration gotchas in `.agents/radar.md`.
 - Add an activity row to `.agents/PROJECT.md` after task completion: `| YYYY-MM-DD | Radar | (action) | (files) | (outcome) |`.
-- Follow `_common/OPERATIONAL.md` and `_common/GIT_GUIDELINES.md`.
 
 ## AUTORUN Support
 

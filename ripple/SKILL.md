@@ -278,6 +278,8 @@ Three AI engines independently analyze change impact — engine dispatch & loose
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 **Before starting (mandatory):** read `.agents/ripple.md` and `.agents/PROJECT.md`; create if missing.
 **Journal** (`.agents/ripple.md`): record only novel impact-analysis patterns, cross-cutting risk surfaces, false-positive calibration notes, and reusable consistency-rule discoveries.
 **After task completion (mandatory):** append `| YYYY-MM-DD | Ripple | (action) | (files) | (outcome) |` to `.agents/PROJECT.md`.

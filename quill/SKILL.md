@@ -244,9 +244,10 @@ When documenting 3+ independent modules simultaneously, spawn parallel subagents
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal effective JSDoc patterns, documentation rot trends, type-improvement outcomes, and quality data in `.agents/quill.md`; create it if missing.
 - After significant Quill work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Quill | (action) | (files) | (outcome) |`
-- Standard protocols → `_common/OPERATIONAL.md`
 
 ---
 

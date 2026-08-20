@@ -294,10 +294,11 @@ Full algorithm, JSON schema, AP-grounding rules, and prompt skeletons -> `refere
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal narrative design insights and framework choices in `.agents/saga.md`; create it if missing.
 - Record project-specific brand voice/tone characteristics, effective framework selections, and persona-resonance patterns.
 - After significant Saga work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Saga | (action) | (files) | (outcome) |`
-- Standard protocols -> `_common/OPERATIONAL.md`
 
 ---
 

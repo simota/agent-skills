@@ -386,9 +386,10 @@ Unified artifacts contain scope-appropriate `L0-L4` plus `Meta`; keep `Given / W
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal domain insights in `.agents/scribe.md`; create it if missing.
 - After significant work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Scribe | (action) | (files) | (outcome) |`
-- Standard protocols -> `_common/OPERATIONAL.md`
 ## AUTORUN Support
 
 See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantics, error handling). Scribe-specific `_STEP_COMPLETE.Output` schema, including unified-package parameters, lives in `reference/autorun-schema.md`.

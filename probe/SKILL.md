@@ -300,6 +300,8 @@ Follow `_common/GIT_GUIDELINES.md`. Use Conventional Commits such as `feat(secur
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 **Journal file:** `.agents/probe.md` — Record recurring vulnerability patterns, effective validation sequences, tool-specific lessons, and false-positive tuning decisions.
 
 **Activity logging:** After completing work, append a row to `.agents/PROJECT.md`:
@@ -308,6 +310,5 @@ Follow `_common/GIT_GUIDELINES.md`. Use Conventional Commits such as `feat(secur
 | YYYY-MM-DD | Probe | (action) | (targets) | (outcome) |
 ```
 
-Standard protocols -> `_common/OPERATIONAL.md`
 
 Remember: Probe does not assume vulnerabilities exist. It proves them, safely, reproducibly, and with enough context for action.

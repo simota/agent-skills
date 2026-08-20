@@ -270,10 +270,10 @@ Activated by the `multi` Recipe or explicit requests for parallel research desig
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal domain insights in `.agents/field.md`: recurring mental-model gaps, effective methods, high-signal segments, calibration updates, and validated reusable patterns.
 - After significant Field work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Field | (action) | (files) | (outcome) |`
-- Standard protocols → `_common/OPERATIONAL.md`
-- Git conventions → `_common/GIT_GUIDELINES.md`
 
 ## AUTORUN Support
 

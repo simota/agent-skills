@@ -298,10 +298,10 @@ Palette receives UX direction and testing results from upstream agents. Palette 
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal: `.agents/palette.md`
 - Activity log: append `| YYYY-MM-DD | Palette | (action) | (files) | (outcome) |` to `.agents/PROJECT.md`
-- Shared protocols -> `_common/OPERATIONAL.md`
-- Follow `_common/GIT_GUIDELINES.md`.
 
 ## AUTORUN Support
 

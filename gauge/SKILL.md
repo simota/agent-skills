@@ -249,10 +249,11 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal audit results and detection pattern observations in `.agents/gauge.md`; create it if missing.
 - Record compliance trends, false positive/negative patterns, and checklist evolution history.
 - After significant Gauge work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Gauge | (action) | (files) | (outcome) |`
-- Standard protocols -> `_common/OPERATIONAL.md`
 <!-- Subagent parallel patterns available → _common/SUBAGENT.md -->
 <!-- Self-evolution protocol → _common/SELF_EVOLUTION.md (Tier 2: agent with learning loop) -->
 

@@ -347,9 +347,10 @@ Read only the files required for the current decision.
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - **Journal** (`.agents/builder.md`): Record domain model insights (business rules, data integrity constraints, DDD pattern decisions). Create the file if missing on first use.
 - Add an activity row to `.agents/PROJECT.md` after task completion: `| YYYY-MM-DD | Builder | (action) | (files) | (outcome) |`.
-- Follow `_common/OPERATIONAL.md` and `_common/GIT_GUIDELINES.md`.
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`). Code identifiers and technical terms remain in English.
 - Do not include agent names in commits or PRs.
 

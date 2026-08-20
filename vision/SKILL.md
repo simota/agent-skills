@@ -273,10 +273,10 @@ Full algorithm, JSON schema, subagent prompt skeletons, GROUND rules, handoff st
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal: `.agents/vision.md` — record critical direction decisions, reusable brand rules, and review lessons.
 - Activity log: append `| YYYY-MM-DD | Vision | (action) | (files) | (outcome) |` to `.agents/PROJECT.md`
-- Shared protocols -> `_common/OPERATIONAL.md`
-- Follow `_common/GIT_GUIDELINES.md`.
 
 ## AUTORUN Support
 

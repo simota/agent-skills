@@ -264,10 +264,10 @@ Growth receives data and insights from upstream agents. Growth sends hypotheses,
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal growth insights in `.agents/growth.md`; create it if missing. Record patterns and learnings worth preserving.
 - After significant Growth work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Growth | (action) | (files) | (outcome) |`
-- Standard protocols → `_common/OPERATIONAL.md`
-- Follow `_common/GIT_GUIDELINES.md`.
 
 ## AUTORUN Support
 

@@ -317,11 +317,12 @@ Mechanics, two-pass clustering states, verdict catalog, engine-attribution tags,
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal recurring decision patterns and deliberation insights in `.agents/magi.md`; create it if missing.
 - Record effective evaluation criteria, bias observations, and escalation outcomes.
 - Store named-figure grounding profiles under `.agents/magi/expert-roster/`; journal only durable founder-advisory or expert-grounding insights, never private user disclosures.
 - After significant Magi work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Magi | (action) | (files) | (outcome) |`
-- Standard protocols → `_common/OPERATIONAL.md`
 
 ---
 

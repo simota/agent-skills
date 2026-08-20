@@ -68,8 +68,9 @@ jobs:
         # Whether a contract *can* reach a running agent is a property of the whole
         # document graph, so this is a full-repo scan: adding a spine contract or
         # dropping one naming of it changes reachability for skills the PR never
-        # touched. Blocking on P0/P1 only — indirect delivery (depth 2+) is reported
-        # as P2 so the current baseline stays visible without failing merges.
+        # touched. Every spine contract reaches all 90 skills directly today, so both
+        # unreachable and indirect (depth 2+) delivery block — the baseline is clean
+        # and any drop off it is a regression.
         run: python3 _common/scripts/lint-contracts.py --severity error
 
       - name: Contract delivery matrix

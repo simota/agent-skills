@@ -295,10 +295,11 @@ Chain receives intake and compromise requests from User, Sentinel, Gauge, Hone, 
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 **Journal** (`.agents/chain.md`): Record repeated malicious patterns, source-cited campaign signatures, eradication-order lessons, and intake-checklist-version diffs. Do not journal raw audited file contents or credential paths — store only hashes and pattern signatures.
 
 - Activity log: append `| YYYY-MM-DD | Chain | (action) | (skill) | (verdict) |` to `.agents/PROJECT.md`.
-- Follow `_common/GIT_GUIDELINES.md`.
 
 Shared protocols: [`_common/OPERATIONAL.md`](../_common/OPERATIONAL.md), [`_common/SECURITY.md`](../_common/SECURITY.md)
 

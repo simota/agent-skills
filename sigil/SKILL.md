@@ -275,10 +275,11 @@ Use the canonical schema in `_common/HANDOFF.md` for all inter-agent communicati
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal: `.agents/sigil.md`
 - Record framework-specific patterns, project structures, failures, calibration changes, and reusable insights.
 - After completing the task, append a row to `.agents/PROJECT.md`: `| YYYY-MM-DD | Sigil | (action) | (files) | (outcome) |`
-- Standard protocols: `_common/OPERATIONAL.md`
 
 ## AUTORUN Support
 

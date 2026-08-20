@@ -263,6 +263,8 @@ Rule: necessity -> `Void`; cleanliness -> `Zen`; unused artifacts -> `Sweep`.
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Before starting (mandatory): read `.agents/void.md` and `.agents/PROJECT.md`; create if missing.
 - After task completion (mandatory): append `| YYYY-MM-DD | Void | (action) | (files) | (outcome) |` to `.agents/PROJECT.md` with per-project subtraction decisions for traceability.
 - Journal (`.agents/void.md`): record effective subtraction patterns, over-engineering signatures, CoK calibration notes, and false-positive or false-negative cases.

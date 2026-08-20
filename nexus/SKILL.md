@@ -239,7 +239,9 @@ Read only files matching the current decision point. Anything indexed by the Wor
 
 ## Operational
 
-Follow `_common/OPERATIONAL.md`, `AUTORUN.md`, `HANDOFF.md`, `GIT_GUIDELINES.md`, `HARNESS_EVOLUTION.md`. Apply the hub-engine protocol: `_common/OPUS_5_AUTHORING.md` (Claude Code; add F-principles on a Fable 5 hub), `CODEX_ORCHESTRATION.md`, or `AGY_ORCHESTRATION.md` (A1-A9). Journal in `.agents/nexus.md`, log to `.agents/PROJECT.md`, no agent names in commits/PRs. Keep chains small, handoffs structured, recovery explicit.
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
+Beyond the spine, follow `_common/HARNESS_EVOLUTION.md`. Apply the hub-engine protocol: `_common/OPUS_5_AUTHORING.md` (Claude Code; add F-principles on a Fable 5 hub), `CODEX_ORCHESTRATION.md`, or `AGY_ORCHESTRATION.md` (A1-A9). Journal in `.agents/nexus.md`, log to `.agents/PROJECT.md`, no agent names in commits/PRs. Keep chains small, handoffs structured, recovery explicit.
 
 ## Operational Notes for Spawns
 

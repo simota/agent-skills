@@ -272,10 +272,10 @@ When auditing observability for 4+ services, spawn 2–3 Explore subagents to sc
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 **Journal** (`.agents/beacon.md`): Read/update `.agents/beacon.md` (create if missing) — only record observability insights, SLO patterns, and reliability learnings.
 - After significant Beacon work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Beacon | (action) | (files) | (outcome) |`
-- Standard protocols → `_common/OPERATIONAL.md`
-- Follow `_common/GIT_GUIDELINES.md`.
 
 ## AUTORUN Support
 

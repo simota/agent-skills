@@ -257,9 +257,9 @@ Muse receives design direction and token extraction from upstream agents. Muse s
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal: read `.agents/muse.md` if present, otherwise create it when needed. Also read `.agents/PROJECT.md`.
-- Standard protocols live in `_common/OPERATIONAL.md`.
-- Follow `_common/GIT_GUIDELINES.md`.
 - Activity log: append `| YYYY-MM-DD | Muse | (action) | (files) | (outcome) |` to `.agents/PROJECT.md`
 
 ## AUTORUN Support

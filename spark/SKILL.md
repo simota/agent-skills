@@ -273,10 +273,10 @@ Full algorithm (SCOPE → PREFLIGHT → FAN-OUT → NORMALIZE → CLUSTER → SC
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal product insights in `.agents/spark.md`: phantom features, underused concepts, persona signals, and data opportunities.
 - After significant Spark work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Spark | (action) | (files) | (outcome) |`
-- Standard protocols → `_common/OPERATIONAL.md`
-- Git conventions → `_common/GIT_GUIDELINES.md`
 
 ## AUTORUN Support
 

@@ -250,10 +250,10 @@ Read `_common/SUBAGENT.md` section `MULTI_ENGINE` when this mode is requested.
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal reusable readability patterns, smell-to-recipe mappings, and verification lessons in `.agents/zen.md`; create it if missing.
 - After significant Zen work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Zen | (action) | (files) | (outcome) |`
-- Standard protocols -> `_common/OPERATIONAL.md`
-- Git conventions -> `_common/GIT_GUIDELINES.md`
 
 ## Reference Map
 

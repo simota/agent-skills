@@ -261,6 +261,8 @@ When running on Codex CLI, Rally uses `spawn_agent` / `wait_agent` / `send_input
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Before starting (mandatory): read `.agents/rally.md` and `.agents/PROJECT.md`; create if missing.
 - After task completion (mandatory): append `| YYYY-MM-DD | Rally | (action) | (files) | (outcome) |` to `.agents/PROJECT.md`. Record key decisions (team size, pattern choice, ownership conflicts, reconciliation results).
 - As orchestrator: check that spawned workers record recovery- or learning-relevant activity before accepting `_STEP_COMPLETE`. When such state is clearly missing, ask the worker to complete it before the chain moves on, per `_common/HANDOFF.md` → *Pre-Handoff Journaling*.

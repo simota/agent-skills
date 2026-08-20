@@ -22,8 +22,9 @@ Checks:
         reverse), and neither statement corrects the other.
   CD-2  Every owned SKILL.md reaches every spine contract. Depth 1 is a direct naming;
         depth 2 means the contract arrives only if the agent opens the intermediate
-        document, which is itself conditional. Unreachable is blocking; indirect is
-        reported so the cost of that indirection stays visible.
+        document, which is itself conditional. Both are blocking: every spine contract
+        reaches all 90 skills directly today, so anything less is a regression rather
+        than a backlog item.
   CD-3  Every `_common/*.md` is reachable from at least one SKILL.md. A contract no
         skill can reach has no addressee -- it is maintained but never applied.
   CD-4  A SKILL.md never names a repo file that does not resolve from its own base
@@ -256,7 +257,7 @@ def check_delivery(graph: Graph, skills: list[Path], spine: set[str], findings: 
             )
         if indirect:
             findings.append(
-                ("P2", "CD-2", f"_common/{name} reaches {len(indirect)}/{len(per_skill)} skill(s) only "
+                ("P1", "CD-2", f"_common/{name} reaches {len(indirect)}/{len(per_skill)} skill(s) only "
                                f"indirectly (depth 2+): {', '.join(indirect[:5])}"
                                f"{' ...' if len(indirect) > 5 else ''}")
             )

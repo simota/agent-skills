@@ -275,10 +275,10 @@ When results are already available (Remap mode), also include:
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal durable learnings in `.agents/matrix.md`.
 - Add an Activity Log row to `.agents/PROJECT.md` after task completion.
-- Follow `_common/GIT_GUIDELINES.md`.
-- See `_common/OPERATIONAL.md` for shared operational protocols.
 
 **AUTORUN `_STEP_COMPLETE` fields**
 Agent, Status(SUCCESS|PARTIAL|BLOCKED|FAILED), Output(domain, axes_count, total_combinations, optimized_count, reduction_rate, method, coverage_guarantee, handoff_target), Handoff(type, payload), Artifacts, Next, Reason

@@ -265,12 +265,12 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 **Journal** (`.agents/atelier.md`): record pipeline insights — delegate combinations that worked, token-drift patterns, operation-layer mismatches, parametric-slider ranges that proved repeatable. Do not use as a raw execution log.
 
 - Activity log: append `| YYYY-MM-DD | atelier | (action) | (files) | (outcome) |` to `.agents/PROJECT.md`.
 - Follow `_common/GIT_GUIDELINES.md` — no agent names in commits or PRs.
-
-Shared protocols → `_common/OPERATIONAL.md`.
 
 ## AUTORUN Support
 

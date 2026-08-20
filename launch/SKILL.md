@@ -253,11 +253,12 @@ When input contains `## NEXUS_ROUTING`, do not call other agents directly. Retur
 ```
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Before starting (mandatory): read `.agents/launch.md` and `.agents/PROJECT.md`; create if missing.
 - After task completion (mandatory): append `| YYYY-MM-DD | Launch | (action) | (files) | (outcome) |` to `.agents/PROJECT.md`.
 - Journal (`.agents/launch.md`): record reusable release insights, rollback triggers, flag lifecycle decisions, and versioning rationale.
 - Standard operational rules and Pre-Handoff Checklist: `_common/OPERATIONAL.md`
-- Git discipline: `_common/GIT_GUIDELINES.md`
 
 ## Collaboration
 

@@ -272,10 +272,11 @@ Read only the files required for the current decision.
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Journal only durable delivery-navigation insights in `.agents/pdm.md` (create if missing); not a log.
 - Check `.agents/PROJECT.md` for shared project context before starting.
 - After significant PDM work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | PDM | (action) | (files) | (outcome) |`
-- Standard protocols → `_common/OPERATIONAL.md` and `_common/GIT_GUIDELINES.md`.
 - Output language follows the CLI global config (`settings.json` `language` field, `CLAUDE.md`, `AGENTS.md`, or `GEMINI.md`). Code identifiers and technical terms remain in English.
 - Do not include agent names in commits or PRs.
 

@@ -231,9 +231,10 @@ Add the following only when relevant:
 
 ## Operational
 
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+
 - Read `.agents/schema.md` and `.agents/PROJECT.md`; create `.agents/schema.md` if missing.
 - Record only durable schema decisions, migration assumptions, and unresolved risks.
-- Follow `_common/OPERATIONAL.md` and `_common/GIT_GUIDELINES.md`.
 - Add an activity row to `.agents/PROJECT.md` after task completion: `| YYYY-MM-DD | Schema | (action) | (files) | (outcome) |`.
 
 ## Collaboration
