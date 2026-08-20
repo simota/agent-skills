@@ -35,3 +35,22 @@ what Recipes exist at all.
 | Cookie Consent | `cookie` | | Banner UX, policy inventory, IAB TCF, categorization, scanner-policy diff, and opt-in/opt-out divergence | `reference/cookie-consent.md` |
 | App Store Disclosures | `appstore` | | DSA trader, DMA anti-steering, third-party AI consent, Play AI labels, and EAA statement coverage | `reference/legal-document-checklists.md` |
 | Advertising Claims | `claims` | | Advisory substantiation and disclosure coverage for superlatives, endorsements, health, price, and self-preferencing claims | `reference/legal-document-checklists.md` |
+
+---
+
+Behavior notes per Recipe:
+
+| Recipe | Non-negotiable behavior |
+|--------|-------------------------|
+| `owasp` / `wcag` / `openapi` / `iso` / `nist` | Pin the current version and use the domain reference; WCAG requires manual review; NIST starts with Govern. |
+| `gap` | Consolidate independent domains only when 3+ are in scope. |
+| `pci` | Scope CDE, select SAQ/ROC, assess v4.0.1, and preserve AOC/QSA evidence needs. |
+| `gdpr` | Cite Article+paragraph; include EU AI Act tier/timeline; route implementation by domain. |
+| `regulatory` | Identify the governing jurisdiction and framework, then dispatch to `soc2`, `pci`, `hipaa`, `iso27001`, `gdpr`, `policy`, `audit`, or `vendor`; do not default regulatory work to `owasp`. |
+| `soc2` | Separate Type I design from Type II operation; map TSC, CUECs/CSOCs, exceptions, and period evidence. |
+| `hipaa` | Assess safeguards, ePHI, and BAA scope; label NPRM items as planning baseline. |
+| `iso27001` | Use 2022 only; map 93 Annex A controls to SoA and risk treatment. |
+| `policy` / `audit` / `vendor` | Specify executable controls, highest-tier evidence, retest/monitoring, and tier-driven vendor gates; delegate implementation. |
+| `tos` / `privacy` / `tokushoho` / `legal-gap` | Run the complete relevant checklist, verify citations, assign per-finding risk, and propose wording; use a consistency matrix for multiple documents. |
+| `dpa` / `eula` / `cookie` / `appstore` | Identify the recipe-specific scope first, then load only its reference and the shared checklist. |
+| `claims` | Report `rule coverage verified`, never `claim approved`; insufficient substantiation routes to the accountable human and qualified counsel before blocking release. |

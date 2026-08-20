@@ -283,24 +283,15 @@ A complete deliverable carries the following — a ceiling, not a floor. Emit on
 
 ### Format-Specific Requirements
 
-- `decision_record`: Select one of three formats by decision weight — **Y-statement**, **Nygard** (Context → Decision → Consequences), or **MADR 4.0.0** (see Recipes table and `reference/output-templates.md`); declare **Status** (`Proposed` | `Accepted` | `Deprecated` | `Superseded`); one decision per record; on supersession, create a new record and link `Supersedes` / `Superseded-by` (never edit the accepted original). [Source: adr.github.io; github.com/adr/madr/releases; Microsoft Azure Well-Architected Framework — ADR]
-- `tutorial`: Frame around a **guided learning encounter** with a concrete success moment the learner reaches; keep the path linear, not branching. [Source: diataxis.fr — Tutorials]
-- `how_to`: Address a **competent user with a specific goal**; list only the steps needed for the job, not background study. Branching is fine where the task genuinely branches. [Source: diataxis.fr — How-to guides]
-- `learning_doc`: Explanation-oriented (Diataxis "explanation"): serve study of *why*, not action. Separate from reference material. [Source: diataxis.fr — Explanation]
+Per-format rules for `decision_record`, `tutorial`, `how_to`, and `learning_doc`
+-> `reference/output-templates.md`.
 
 ### Quality Scorecard
 
-Attach at the end of every learning-document deliverable. Each axis scores `A` (excellent) / `B` (adequate) / `C` (needs improvement). Publication recipes use the Article package requirements instead.
-
-| Axis | Criteria | A | B | C |
-|------|----------|---|---|---|
-| **Fact/Inference Ratio** | Labeled inferences ÷ total claims | All inferences labeled | Most labeled | Unlabeled inferences present |
-| **Term Coverage** | Defined terms ÷ first-occurrence technical terms | 100% | >= 80% | < 80% |
-| **Before/After Pairs** | Number of code comparison pairs | >= 2 pairs | 1 pair | 0 pairs |
-| **Why Not Depth** | Alternatives section presence and quality | 2+ alternatives with rejection reasons | 1 alternative | Missing or superficial |
-| **Audience Fit** | Vocabulary level matches declared audience | Consistent throughout | Minor mismatches | Significant mismatch |
-
-**Minimum threshold:** Revise before delivery when a `C` reflects a substantive gap (e.g., missing Why-Not section, unlabeled inferences). A minor or borderline `C` may still ship under `SUCCESS` status at the author's judgment — note it in the scorecard.
+Attach at the end of every learning-document deliverable: five axes (Fact/Inference
+Ratio, Term Coverage, Before/After Pairs, Why Not Depth, Audience Fit), each scored
+`A` / `B` / `C`. Revise before delivery when a `C` reflects a substantive gap. Axis
+criteria and grade bands -> `reference/output-templates.md`.
 
 ---
 
@@ -374,24 +365,10 @@ All handoff templates → `reference/handoffs.md`
 
 ## Reference Map
 
+**Full index** → **`reference/reference-index.md`** — every `reference/` file and its read-trigger. The rows below are the shared contracts, which no Recipe registry indexes.
+
 | File | Read When |
 |------|-----------|
-| `reference/output-templates.md` | You need detailed templates for output formats |
-| `reference/patterns.md` | You need analysis frameworks for specific change types (refactoring, bug fix, feature, etc.) |
-| `reference/handoffs.md` | You need handoff templates for inter-agent collaboration |
-| `reference/worked-example.md` | You are running the `worked` recipe — Sweller cognitive load theory, expert-reasoning annotation, faded-guidance progression |
-| `reference/coding-kata.md` | You are running the `kata` recipe — constraint design, difficulty tiers (Bronze/Silver/Gold), pair vs solo facilitation, common katas |
-| `reference/quickstart-guide.md` | You are running the `quickstart` recipe — 15-minute time budget, prerequisite filtering, success anchors, troubleshooting decision tree |
-| `reference/article-patterns.md` | You are choosing a publication structure: PTISC, tutorial, listicle, retrospective, deep-dive, or announcement. |
-| `reference/article-hook-design.md` | You are drafting or testing the opening 100-300 characters. |
-| `reference/article-headline-patterns.md` | You are generating and scoring platform-specific title variants. |
-| `reference/article-platform-optimization.md` | You are packaging note, Zenn, Qiita, or dev.to metadata, length, canonical URL, and CTA. |
-| `reference/article-series-management.md` | You are designing or updating an article series, index, cross-links, cadence, or series bible. |
-| `reference/article-content-repurposing.md` | You are adapting a canonical article into platform variants or atomic assets. |
-| `reference/article-interview-format.md` | You are reshaping a transcript, podcast, talk, or AMA into a Q&A article. |
-| `reference/article-handoffs.md` | You need publication handoffs to Growth, Prose, Stage, Canvas, Saga, or Scribe. |
-| `_common/OPUS_5_AUTHORING.md` | You are sizing the learning document, deciding adaptive thinking depth at audience/evidence separation, or front-loading audience/doc-type/scope at EXTRACT. Critical for Tome: P3, P5. |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Tome-specific Output/Next schema. |
 
 ---
 

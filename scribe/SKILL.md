@@ -195,11 +195,8 @@ Use this path for a shared multi-audience source of truth; standalone documents 
 
 ### Scope Modes And Gates
 
-| Scope | Use When | Required Structure | Traceability |
-|---|---|---|---:|
-| `Full` | `12+` requirements, high complexity, or strong multi-team alignment | `L0`, `L1`, all `L2`, full `L3/L4`, complete ledger | `>=95%` |
-| `Standard` | `4-11` requirements or medium complexity | `L0`, `L1`, involved `L2`, major `L3/L4` | `>=85%` |
-| `Lite` | `1-3` requirements, bug fix, or narrow two-team work | compact `L0/L1`, inline `L2`, key `L3/L4` | `>=70%` |
+Three scope modes — `Full` (`12+` requirements), `Standard` (`4-11`), `Lite` (`1-3`) —
+with required structure and traceability per mode -> `reference/unified-spec/scope-modes.md`.
 
 - Warn on `Must >60%`; require bidirectional `REQ <-> AC` links and measurable CFR/NFR acceptance paths.
 - Promote scope when detail requires it; never make architecture or visual-design decisions inside `L2`.
@@ -207,20 +204,10 @@ Use this path for a shared multi-audience source of truth; standalone documents 
 
 ## Document Type Selection
 
-| Type               | Use When                                          | Output Path                       | Read This                                                                         |
-| ------------------ | ------------------------------------------------- | --------------------------------- | --------------------------------------------------------------------------------- |
-| `PRD`              | Business scope, user needs, goals, non-goals      | `docs/prd/PRD-[name].md`          | `reference/prd-template.md`             |
-| `SRS`              | Technical behavior, interfaces, constraints, NFRs | `docs/specs/SRS-[name].md`        | `reference/srs-template.md`             |
-| `HLD`              | System architecture, components, deployment       | `docs/design/HLD-[name].md`       | `reference/design-template.md`       |
-| `LLD`              | Module design, data structures, sequences, config | `docs/design/LLD-[name].md`       | `reference/design-template.md`       |
-| `Impl Checklist`   | Work sequencing and implementation readiness      | `docs/checklists/IMPL-[name].md`  | `reference/checklist-template.md` |
-| `Review Checklist` | Review criteria and sign-off                      | `docs/checklists/REVIEW-[cat].md` | `reference/checklist-template.md` |
-| `Test Spec`        | Test scope, cases, data, and traceability         | `docs/test-specs/TEST-[name].md`  | `reference/test-spec-template.md` |
-| `Agent Spec`       | AI agent execution context, boundaries, commands (≤ 150 lines) | `AGENTS.md` or `docs/specs/AGENT-[name].md` | `reference/srs-template.md` |
-| `Unified Spec`     | Multiple audiences need one staged source of truth | `docs/specs/UNIFIED-[name].md` | `reference/unified-spec/unified-template.md` |
-| `Story Map`        | A flat backlog needs an end-to-end walking skeleton and release slices | `docs/specs/STORY-MAP-[name].md` | `reference/unified-spec/user-story-mapping.md` |
-| `Stakeholder Map`  | Power/interest, engagement, and information flow need definition | `docs/specs/STAKEHOLDERS-[name].md` | `reference/unified-spec/stakeholder-map.md` |
-| `Responsibility Matrix` | Governance needs one accountable owner per item/decision | `docs/specs/RACI-[name].md` | `reference/unified-spec/raci-matrix.md` |
+Twelve document types, each with its use-when condition and output path ->
+`reference/document-types.md`. PRD / SRS / HLD / LLD / Impl Checklist / Review
+Checklist / Test Spec / Agent Spec / Unified Spec / Story Map / Stakeholder Map /
+Responsibility Matrix.
 
 ## Quality Gates
 
@@ -296,16 +283,7 @@ Parse the first token of user input.
 - Normalize legacy cross-team subcommands into `unified` modes: `vision`, `requirements`, `detail`, `ac`, `story-map`, `stakeholder`, or `raci`.
 - Otherwise → default Recipe (`prd` = PRD). Apply normal UNDERSTAND → STRUCTURE → DRAFT → REVIEW → FINALIZE → INSCRIBE workflow.
 
-Behavior notes per Recipe:
-- `prd`: Establish business context first. State in-scope/out-of-scope, KPIs, and success metrics explicitly. Target 8-12 pages for MVP.
-- `srs`: Apply the IEEE 29148 quality gate. Attach measurable thresholds to NFRs (e.g., P95 ≤ 200ms).
-- `hld`: Describe system composition, deployment, and scaling strategy. Link to Atlas ADRs for reference.
-- `lld`: Module design, data structures, and sequence diagrams. Detail granularity for immediate implementation.
-- `testspec`: Given/When/Then format. Must include test scope, data, and traceability matrix.
-- `adr`: The GENERAL ADR-writing recipe, for any agent or human. An accepted ADR is immutable — superseded, never edited. Application/module-level architecture decisions (dependency direction, layer boundary, pattern choice) go to `Atlas`, which owns the tradeoff analysis and authors those ADRs itself. Format, numbering, and supersede chain -> `reference/adr-writing.md`.
-- `runbook`: Authors the runbook artifact, which `Triage` consumes at first response and `Mend` executes during remediation. Scribe neither diagnoses nor executes. Cross-link the upstream postmortem or incident ticket. Required sections and authoring flow -> `reference/runbook-writing.md`.
-- `api-doc`: Turns a Gateway-authored OpenAPI 3.1 spec into the human-facing reference. Gateway `openapi` owns the spec (the YAML contract); Scribe owns the documentation surface — handoff direction is Gateway -> Scribe. Publishing targets and required surfaces -> `reference/api-documentation.md`.
-- `unified`: Run the full unified workflow or one normalized mode. `vision` produces one-page `L0`; `requirements` creates testable `L1`; `detail` translates audience-specific `L2`; `ac` runs Three Amigos / Example Mapping for `L3`; `story-map` builds a walking skeleton and release slices; `stakeholder` maps Power × Interest and engagement; `raci` assigns exactly one accountable owner per row using RACI/DACI/RAPID.
+Per-Recipe behaviour notes -> `reference/recipes-index.md`.
 
 ## Output Requirements
 
@@ -324,12 +302,6 @@ Response shape:
 
 Unified artifacts contain scope-appropriate `L0-L4` plus `Meta`; keep `Given / When / Then`, IDs, YAML, and technical terms in English.
 
-## Logging
-
-- Journal domain insights in `.agents/scribe.md`.
-- Append one row to `.agents/PROJECT.md` after completion.
-- Follow shared operational rules in `_common/OPERATIONAL.md`.
-
 ## Collaboration
 
 **Receives:** Field (research), Cast (personas), Voice (feedback), Flux/Magi/Void (assumption, trade-off, and scope inputs), Vision (design direction), Spark (feature proposals), Gateway (API design), Atlas (architecture decisions), PDM (spec gaps)
@@ -347,37 +319,13 @@ Unified artifacts contain scope-appropriate `L0-L4` plus `Meta`; keep `Given / W
 
 ## Reference Map
 
+**Full index** → **`reference/reference-index.md`** — every `reference/` file and its read-trigger. The rows below are the shared contracts, which no Recipe registry indexes.
+
 | Reference | Read This When |
 |-----------|----------------|
-| `reference/prd-template.md` | A PRD, quick PRD, or PRD quality checks. |
-| `reference/srs-template.md` | Technical requirements, interfaces, measurable NFRs. |
-| `reference/design-template.md` | HLD, LLD, scaling strategy, config, rollback sections. |
-| `reference/checklist-template.md` | Implementation, review, or quick delivery checklists. |
-| `reference/test-spec-template.md` | Test plans, traceability, Gherkin structure. |
-| `reference/adr-writing.md` | `adr` — Nygard/MADR format, numbering, immutability, supersede chains. |
-| `reference/runbook-writing.md` | `runbook` — symptom/triage/recover/verify structure, idempotency, escalation, rollback. |
-| `reference/api-documentation.md` | `api-doc` — OpenAPI to human-facing reference docs with samples, error catalogs, auth flows. |
-| `reference/anti-patterns.md` | A draft is weak, vague, bloated, untestable, or shows AI-generation artifacts. |
-| `reference/documentation-calibration.md` | INSCRIBE tracking, thresholds, `EVOLUTION_SIGNAL` rules, agent-spec conventions. |
-| `reference/unified-spec/README.md` | Unified-spec recipe index, consolidation note, and legacy token policy. |
-| `reference/unified-spec/template-selection.md` | Choosing or escalating Full/Standard/Lite scope. |
-| `reference/unified-spec/unified-template.md` | Writing canonical `L0/L1/L2/L3/L4/Meta` packages. |
-| `reference/unified-spec/business-tech-translation.md` | Converting business intent into measurable audience-specific requirements. |
-| `reference/unified-spec/bdd-best-practices.md` | Authoring collaborative, declarative, testable `L3` scenarios. |
-| `reference/unified-spec/cross-reference-guide.md` | Building and verifying bidirectional traceability. |
-| `reference/unified-spec/traceability-pitfalls.md` | Fixing orphan links, scope-inappropriate matrices, or non-SMART requirements. |
-| `reference/unified-spec/user-story-smells.md` | Checking story readiness, vertical slicing, and MoSCoW inflation. |
-| `reference/unified-spec/specification-anti-patterns.md` | Validating scope, audience, collaboration, and executable-spec quality. |
-| `reference/unified-spec/specification-calibration.md` | Running UNIFY and calibrating scope heuristics. |
-| `reference/unified-spec/interaction-triggers.md` | Serializing unified-package Ask First decisions. |
-| `reference/unified-spec/handoff-formats.md` | Consuming/emitting structured unified-package handoffs and legacy aliases. |
-| `reference/unified-spec/user-story-mapping.md` | Building story-map backbones, walking skeletons, and release slices. |
-| `reference/unified-spec/stakeholder-map.md` | Mapping Power × Interest and engagement/information flows. |
-| `reference/unified-spec/raci-matrix.md` | Assigning RACI/DACI/RAPID responsibility and decision rights. |
 | `_common/TRACEABILITY.md` | Assigning requirement/AC/test IDs or emitting a `.traceability.yaml` ledger. |
-| `_common/OPUS_5_AUTHORING.md` | Sizing the spec, thinking depth at PLAN, front-loading doc type/audience at SCAN. Critical: P3, P5. |
-| `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Scribe-specific Output/Next schema. |
-| `reference/format-conversion/` | Converting between Markdown, Word, Excel, PDF, HTML (absorbed from `morph`) |
+
+---
 
 ## Operational
 

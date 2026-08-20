@@ -179,27 +179,9 @@ Behavior notes per Recipe:
 
 ## Audit Decision Matrix
 
-| Finding | Severity | Default action | Escalate to |
-|---------|----------|----------------|-------------|
-| Unicode Tag codepoint in any file | `P0` | `REJECT` + `QUARANTINE` | triage |
-| `curl ... | bash`, `wget ... | sh`, `eval $(...)` in bundled script | `P0` | `REJECT` | triage |
-| `~/.ssh`, `~/.aws`, `~/.npmrc`, `~/.netrc` read without declaration | `P0` | `REJECT` | triage |
-| `settings.json` mutation that changes `permissions` | `P0` | `REJECT` + `QUARANTINE` | triage |
-| Project-local `.claude/settings.json` `hooks` parsed or executed **before** the trust prompt is answered | `P0` | `REJECT` | triage |
-| Path containment checked **before** symlinks are resolved (validation sees the link, not its target) | `P0` | `REJECT` | triage |
-| Frontmatter contains custom keys outside `name` / `description` | `P1` | `REJECT` (forward-compat) | maintainer |
-| Bundled binary without provenance attestation | `P1` | `REJECT` until provenance provided | sentinel |
-| Outbound HTTP to non-allowlisted host | `P1` | `REJECT` until network allowlist updated | maintainer |
-| `sha256` mismatch vs pinned manifest | `P1` | `BLOCK` + investigate diff | maintainer |
-| MCP tool description changed since pin | `P1` | `BLOCK` tool until reviewed | maintainer |
-| Capability declared in body but tool calls observed go beyond | `P2` | `FLAG` + require capability update | maintainer |
-| External URL in SKILL.md resolves to executable content | `P2` | `FLAG` + require static replacement | maintainer |
-| Bidi-override codepoint outside allowlisted i18n context | `P2` | `FLAG` | maintainer |
-
-Severity rules:
-- `P0` always rejects and quarantines.
-- `P1` rejects until remediated by maintainer.
-- `P2` flags but may pass with explicit override and journaled rationale.
+Severity and default action for every finding class — `P0` findings `REJECT` and
+usually `QUARANTINE`, `P1` `REJECT` or `BLOCK` pending evidence, `P2` `FLAG`. The
+full matrix, with the escalation target per row -> `reference/audit-decision-matrix.md`.
 
 ## Critical Patterns (Quick Reference)
 
@@ -272,19 +254,13 @@ Chain receives intake and compromise requests from User, Sentinel, Gauge, Hone, 
 
 ## Reference Map
 
+**Full index** → **`reference/reference-index.md`** — every `reference/` file and its read-trigger. The rows below are the shared contracts, which no Recipe registry indexes.
+
 | File | Read this when... |
 |------|-------------------|
-| `reference/intake-checklist.md` | You are running a new-skill intake audit and need the full per-item procedure |
-| `reference/unicode-tag-scan.md` | You need the codepoint ranges, allowlist policy, and scan command for Unicode Tag / bidi / zero-width |
-| `reference/bundled-artifact-review.md` | You are auditing bundled scripts, binaries, or external resources referenced by SKILL.md |
-| `reference/supply-chain-malware-ioc-database.md` | You need dated campaign hashes, paths, package pins, persistence, C2, or propagation IoCs. |
-| `reference/supply-chain-malware-scan-procedures.md` | You are scanning macOS, Linux, Windows/WSL, containers, CI runners, lockfiles, passive logs, or maintainer publishes. |
-| `reference/supply-chain-malware-eradication.md` | You are producing persistence-first quarantine, verify-clean, credential-rotation, or re-onboarding steps. |
-| `reference/supply-chain-malware-handoffs.md` | You need malware-specific handoff payloads for Triage, Sentinel, Gear, Vigil, or Lore. |
 | [`_common/SECURITY.md`](../_common/SECURITY.md) | You need the trust boundary spec, manifest format, or escalation matrix |
-| [`_common/BOUNDARIES.md`](../_common/BOUNDARIES.md) | Role boundaries with Sentinel / Gauge / Hone / Gear are ambiguous |
-| [`_common/OPERATIONAL.md`](../_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
-| `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Chain-specific Output/Next schema. |
+
+---
 
 ## Operational
 

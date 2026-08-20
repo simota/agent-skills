@@ -61,8 +61,6 @@ Coordinate specialist agents, design the minimum viable chain, execute safely. `
 7. **Learn only from evidence.** Routing adaptation requires execution data, verification, and journaled results.
 8. **Prevent circular handoffs.** Enforce max-hop limits (default: 2 round-trips per agent pair) to prevent A→B→A loops.
 9. **Hierarchical decomposition for scale.** At 6+ agents, use feature-leads for 2-3 specialists each only when a lead holds distinct context/authority and owns the merge; otherwise keep a flat fan-out.
-10. **Author for the active orchestrator engine.** Detect which CLI drives the hub (**Execution Model → Orchestrator Detection**) and apply the matching protocol per `reference/hub-authoring.md` — Claude Code P-principles (plus F on a Fable 5 hub), Codex C-principles, agy A-principles with the Gemini 3.7 Flash (High) mandate.
-
 ## Boundaries
 
 Agent boundaries → `_common/BOUNDARIES.md` · disambiguation → `reference/agent-disambiguation.md`
@@ -219,18 +217,13 @@ Handoff directions: agent → Nexus `NEXUS_ROUTING` · Nexus → agent `_AGENT_C
 
 ## Reference Map
 
-Read only files matching the current decision point. Anything indexed by the Workflow table's Read-When column is not repeated here — that row is its index.
+Read only files matching the current decision point. A file already named where it is decided — the Workflow table's Read-When column, `## Recipes`, `## Execution Model` — is not repeated here; that naming is its index.
 
 | File | Read When |
 |------|-----------|
 | **`reference/reference-index.md`** | Full Read-When index for references not listed below |
-| `reference/recipes-index.md` | Complete Recipe table; matched subcommand chain template + `Read` reference |
 | `reference/deliver-recipe.md` | Scope-adaptive product/MVP delivery, chain sizing, anti-stall recovery, and Delivery Report |
-| `reference/recipe-contract.md` | Recipe ownership, admission gate, authoring contract, and cross-index wiring |
 | `reference/<recipe>-recipe.md` | Per-Recipe phase contracts, chain templates, cost profiles; filename = its `Read` column in `recipes-index.md` |
-| `reference/recipes-detail.md` · `reference/inline-recipes.md` | Recipe Families axis prose · contracts for `kaizen`/`essential`/`killer`/`trim` |
-| `reference/specify-phase.md` | `SPECIFY` gates, brief schema, verbatim injection, `delegated` list |
-| `reference/hub-authoring.md` · `reference/execution-layers.md` | Per-engine authoring/detection/models · per-CLI spawn prerequisites/runtime |
 | `_common/LOOP_PRECONDITIONS.md` | Before **any** agent loop — five-point gate (completion oracle · hard-stop bound · maker ≠ checker · persistent memory · drift awareness) |
 | `_common/PROJECT_LOCAL_SKILLS.md` | Before selecting `orbit`, `lore`, or `darwin`; workspace availability check and global fallback |
 | `_common/FINDING_LEDGER.md` | Before **any external-reviewer-to-zero loop** (`quell`, `burnish`, `whet`, `newsroom`) — the shared ledger machinery: five declaration slots, identity across cycles, disposition vocabulary + integrity, split-oracle rule, and when **not** to build one |

@@ -394,3 +394,28 @@ Attach at the end of every deliverable:
 - Omit term definitions for standard industry vocabulary
 - Focus on trade-off analysis, architecture impact, and alternative approaches
 - Use concise technical prose without step-by-step elaboration
+
+---
+
+### Quality Scorecard
+
+Attach at the end of every learning-document deliverable. Each axis scores `A` (excellent) / `B` (adequate) / `C` (needs improvement). Publication recipes use the Article package requirements instead.
+
+| Axis | Criteria | A | B | C |
+|------|----------|---|---|---|
+| **Fact/Inference Ratio** | Labeled inferences ÷ total claims | All inferences labeled | Most labeled | Unlabeled inferences present |
+| **Term Coverage** | Defined terms ÷ first-occurrence technical terms | 100% | >= 80% | < 80% |
+| **Before/After Pairs** | Number of code comparison pairs | >= 2 pairs | 1 pair | 0 pairs |
+| **Why Not Depth** | Alternatives section presence and quality | 2+ alternatives with rejection reasons | 1 alternative | Missing or superficial |
+| **Audience Fit** | Vocabulary level matches declared audience | Consistent throughout | Minor mismatches | Significant mismatch |
+
+**Minimum threshold:** Revise before delivery when a `C` reflects a substantive gap (e.g., missing Why-Not section, unlabeled inferences). A minor or borderline `C` may still ship under `SUCCESS` status at the author's judgment — note it in the scorecard.
+
+---
+
+### Format-Specific Requirements
+
+- `decision_record`: Select one of three formats by decision weight — **Y-statement**, **Nygard** (Context → Decision → Consequences), or **MADR 4.0.0** (see Recipes table and `reference/output-templates.md`); declare **Status** (`Proposed` | `Accepted` | `Deprecated` | `Superseded`); one decision per record; on supersession, create a new record and link `Supersedes` / `Superseded-by` (never edit the accepted original). [Source: adr.github.io; github.com/adr/madr/releases; Microsoft Azure Well-Architected Framework — ADR]
+- `tutorial`: Frame around a **guided learning encounter** with a concrete success moment the learner reaches; keep the path linear, not branching. [Source: diataxis.fr — Tutorials]
+- `how_to`: Address a **competent user with a specific goal**; list only the steps needed for the job, not background study. Branching is fine where the task genuinely branches. [Source: diataxis.fr — How-to guides]
+- `learning_doc`: Explanation-oriented (Diataxis "explanation"): serve study of *why*, not action. Separate from reference material. [Source: diataxis.fr — Explanation]

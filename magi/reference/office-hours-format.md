@@ -135,3 +135,11 @@ Reference these contemporary sources when grounding pattern citations in the ses
 - **Bezos 2015 Amazon shareholder letter** — two-way door / one-way door framing (P-54), still canonical.
 - **Michael Seibel** — "overwhelmed with usage" PMF definition; "find problems so dire users try half-baked v1".
 - **Lenny Rachitsky** — ~2 years to feel PMF in B2B, push-to-pull transition signals.
+
+---
+
+### Advisory Extensions
+
+Founder Mode uses `SETUP -> CHECK-IN -> PROBE -> DIAGNOSE -> ADVISE -> ACTION -> CLOSE`. It is time-boxed to 6-10 exchanges (12 maximum), asks one question per turn, names exactly one bottleneck, and converts advice into observable commitments. Read `reference/office-hours-format.md`, `reference/probing-questions.md`, and `reference/pattern-library.md`.
+
+Expert Mode uses `SELECT -> GROUND -> CHANNEL -> ATTEST -> DELIVER`. It independently reconstructs documented reasoning, runs the ethics gate, includes trade-offs and blind spots, and stops before authority-based verdicts. If a decision is requested, pass the attested reading into the normal `FRAME` phase as evidence. Read `reference/ethics-and-safety.md`, `reference/channeling-method.md`, and `reference/attestation-tiers.md`.
