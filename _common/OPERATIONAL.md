@@ -202,7 +202,7 @@ A question is an interrupt: the person rebuilds context, weighs options, and dec
 1. **The user's own words in this session** — nothing in this directory outranks them.
 2. **The repository's instruction files** (`CLAUDE.md` / `AGENTS.md`) — they describe *this* repo; a shared protocol describes every repo.
 3. **The invoked SKILL.md** — its Core Contract and Boundaries bind for work inside its domain.
-4. **The spine** — `OPERATIONAL.md` · `BOUNDARIES.md` · `HANDOFF.md` · `AUTORUN.md` · `GIT_GUIDELINES.md` · `OUTPUT_STYLE.md` · `OPUS_5_AUTHORING.md`. In effect for every run.
+4. **The spine** — `OPERATIONAL.md` · `BOUNDARIES.md` · `HANDOFF.md` · `AUTORUN.md` · `GIT_GUIDELINES.md` · `OUTPUT_STYLE.md` · `OPUS_5_AUTHORING.md` · `WORK_GATE.md`. In effect for every run.
 5. **On-demand contracts** — everything else here, in effect only once its activation condition is met.
 
 **Two rules on top of the order.**

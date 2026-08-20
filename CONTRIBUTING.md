@@ -104,6 +104,7 @@ Route elsewhere when the task is primarily:
    - `AGENTS.md` / `CLAUDE.md` のスキル数
 5. 使用例セクションにサンプルを追加
 6. lint を通す: `python3 _common/scripts/lint-frontmatter.py --severity error --changed-only` と `python3 _common/scripts/lint-instructions.py --severity error`
+7. 契約の配送を確認する: `python3 _common/scripts/lint-contracts.py --severity error`。新規スキルは `_common/*.md` を名指ししても、ディレクトリに `_common` symlink が無ければ実行時に解決しない（CD-4）。`--report` で spine 契約の到達深度を確認できる
 
 ### コーディング規約
 
@@ -141,6 +142,7 @@ Examples:
 - [ ] README.md / README_ja.md を更新した
 - [ ] ロスター系レジストリ（`index.html`, `compass/reference/catalog.md`, `_common/SKILL_PACKS.md`, `AGENTS.md`, `CLAUDE.md`）を更新した
 - [ ] `lint-frontmatter.py` と `lint-instructions.py` が通る
+- [ ] `lint-contracts.py` が通る（`_common` symlink が張られ、名指しした契約が実行時に解決する）
 - [ ] 使用例を追加した
 
 ## 📝 ドキュメント改善

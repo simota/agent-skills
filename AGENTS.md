@@ -46,9 +46,10 @@ Cross-tool agent instructions for this repository. Read by **Antigravity CLI (`a
 2. **Description quality**: `description:` should include 3-5 trigger keywords and the primary use case in ≤2 sentences. Vague descriptions cause tool bloat (40-50K token overhead in multi-skill loadouts).
 3. **CAPABILITIES_SUMMARY comment block**: Preserve the existing `<!-- CAPABILITIES_SUMMARY: ... -->` HTML comment format when editing existing skills. New skills follow `_templates/SKILL_TEMPLATE.md`.
 4. **References**: Heavy content (checklists, schemas, anti-patterns) goes in `reference/<topic>.md` and is loaded on demand. Keep `SKILL.md` under 500 lines (Anthropic guidance); `_common/scripts/lint-frontmatter.py` flags >500 as P3, >700 as P2, >1000 as P1.
-5. **Cross-CLI compatibility**: Skills meant to run on multiple CLIs MUST include a `## Compatibility` section and consult `_common/CLI_COMPATIBILITY.md` instead of hard-coding `Agent(...)` syntax.
-6. **Boundaries**: Link to `_common/BOUNDARIES.md` rather than maintaining per-skill role-boundary tables.
-7. **Code quality**: Any skill whose `Writes Code` value in `_common/BOUNDARIES.md` is not `Never` links to `_common/CODE_QUALITY.md` rather than restating quality principles. Domain-specific mechanics still live in the skill's own `reference/`.
+5. **Contract delivery**: Nothing in `_common/` loads automatically — it arrives only because a file already open names it, and a reference resolves from the skill's *own* directory. A skill that names a shared contract therefore needs the `_common` symlink beside its `SKILL.md`, and naming it two documents deep means it arrives only if the agent opens the intermediate one. `_common/scripts/lint-contracts.py` checks both (`--report` prints the depth table).
+6. **Cross-CLI compatibility**: Skills meant to run on multiple CLIs MUST include a `## Compatibility` section and consult `_common/CLI_COMPATIBILITY.md` instead of hard-coding `Agent(...)` syntax.
+7. **Boundaries**: Link to `_common/BOUNDARIES.md` rather than maintaining per-skill role-boundary tables.
+8. **Code quality**: Any skill whose `Writes Code` value in `_common/BOUNDARIES.md` is not `Never` links to `_common/CODE_QUALITY.md` rather than restating quality principles. Domain-specific mechanics still live in the skill's own `reference/`.
 
 ---
 

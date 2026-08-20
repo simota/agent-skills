@@ -83,6 +83,7 @@ Orchestrators (Nexus, Rally) should be stateless and replaceable. Session state 
 2. `python3 _common/scripts/lint-instructions.py --severity warning` — instruction-file drift snapshot (skill-count drift in `AGENTS.md`/`CLAUDE.md`, dead path references, rule duplication).
 3. `python3 _common/scripts/routing-oracle.py --severity warning` and `python3 _common/scripts/task-battery-check.py --severity warning` — routing-machinery snapshot (dead-refs, ladder order, producer/verifier, roster completeness, task-battery mechanical assertions).
 3b. `python3 _common/scripts/token-economy.py --severity warning` — token-economy snapshot (`_common/TOKEN_ECONOMY.md`). A P0 (`TE-INTEGRITY`) finding means a billed transcript record lost its `requestId`/usage or has conflicting duplicate usage — treat it as a data-integrity bug in the transcript pipeline, not a cost signal, and investigate before trusting any total from this run. A P1 (`TE-CONCENTRATION`) or P2 (`TE-LONGTAIL`) finding means session length is driving cost (`TOKEN_ECONOMY.md` §2) — feed it into the handoff-timing check in step 6. Do not answer it with a SKILL.md body-size change: §1 of that doc requires session length to be fixed first and the corpus re-measured before body size is judged worth touching, because body cost scales with the turns that follow the load.
+3c. `python3 _common/scripts/lint-contracts.py --severity warning --report` — contract-delivery snapshot (`_common/scripts/lint-contracts.py`). This is the only check that asks whether a contract can reach a running agent at all, so it is where a corpus-wide edit shows up first: a spine contract whose direct-naming count fell means skills stopped loading it without any of them changing behaviour visibly. Compare the depth table against the previous cycle's, not against zero — the count that matters is the *delta*.
 4. Invoke `darwin`'s EFS scoring recipe against that snapshot.
 5. If EFS or compliance drift crosses `gauge`'s stability-index thresholds (<10% stable / 10-20% investigate / >20% intervene — `gauge/SKILL.md` CAPABILITIES_SUMMARY), kick a skill-evolve run bounded by explicit `MAX_ITERATIONS`/`CIRCUIT_BREAKER` guards rather than an unbounded new loop.
 6. Journal the outcome to `.agents/PROJECT.md`.
@@ -119,7 +120,7 @@ Coverage:
 
 - [ ] The golden fixture set and the adversarial fixture set are **kept separate** — passing the easy set is not evidence about the hard one.
 - [ ] Engine, harness, corpus, and protocol versions are recorded with the result. A score without a version binding cannot be compared to anything.
-- [ ] Deterministic checks (`lint-frontmatter`, `validate-recipes`, `lint-instructions`, `routing-oracle`, `task-battery-check`) re-run from a clean checkout, not an incrementally-mutated one.
+- [ ] Deterministic checks (`lint-frontmatter`, `validate-recipes`, `lint-instructions`, `routing-oracle`, `task-battery-check`, `lint-contracts`) re-run from a clean checkout, not an incrementally-mutated one.
 - [ ] Trial count and any randomization policy are fixed in advance, not chosen after seeing the spread.
 
 Fault injection — each of these is a *deliberate* test, not something to wait for:
