@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Removed — over-migration and a cost axis that could not work (2026-08-20)
+
+- **Removed 34 migrated reference files that nothing referenced.** The consolidation carried 88 files into the active tree; 34 were named by no SKILL.md, no Recipe "Read First", and no other reference — a 38% orphan rate against a 7.5% corpus baseline (measured across `scout`, `judge`, `oracle`, `atlas`). The complete pre-merge sets remain in `.archive/` with restore instructions, so nothing left the repository. Two further files orphaned by the removal itself were taken in the same pass; the tree is now stable at 53 with zero dangling pointers. One file with no archive copy (`environment-autorun-schema.md`) was moved into `.archive/anvil/` rather than deleted.
+- **Removed the `CST` axis from `WORK_GATE`.** It was self-assigned with no external check and no budget to measure against — `_common/TOKEN_ECONOMY.md` §5 states plainly that no per-skill cost figure is derivable here, and the axis's own definition conceded there is no "over budget" band. An axis that can only ever read ★★★★★ already meets this file's removal condition, so it was met before shipping. `WORK_GATE` is now five starred axes plus `RSK`.
+- **Restored `_common/REVERSE_FEEDBACK.md` to a single tier.** Adding `rework_required` had given one file two tiers — `authoring` for most types, binding during user work for one — which the precedence model in `OPERATIONAL.md` § Contract Precedence does not support (one tier per file, stated on the line under the title). The refusal now lives entirely in `_common/HANDOFF.md` § Handoff Admission Gate, message shape included (`HANDOFF_REFUSED`, carrying the numbered condition, the receiver's `IN`, the named missing artifact, and the bounce count). `REVERSE_FEEDBACK.md` is advisory-only again and states so.
+
 ### Added — Handoff Admission Gate: quality-based send-back between agents (2026-08-20)
 
 - `_common/HANDOFF.md` § Handoff Admission Gate lets a **receiver refuse a handoff at intake** and return it unworked. Intake is the only point where rework is cheap; once the receiver has built on a bad input, unwinding costs more than the original redo would have.

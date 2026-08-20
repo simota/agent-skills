@@ -14,7 +14,12 @@ part of it should I not trust yet.*
 
 ## Shape
 
-Six axes are rated `★1–5`. One axis — `RSK` — is not rated at all.
+Five axes are rated `★1–5`. One axis — `RSK` — is not rated at all.
+
+There is deliberately no cost axis. A self-assigned effort rating has no external check and no
+budget to be measured against (`_common/TOKEN_ECONOMY.md` §5: no per-skill cost figure is
+derivable here), so it could only ever sit at ★★★★★ — which is this file's own removal condition,
+met before it shipped.
 
 **Stars are per-axis and are never added, averaged, or weighted into an overall rating.** A
 composite is precisely what lets a bad axis be offset by good ones, and this repository has
@@ -116,25 +121,6 @@ Surfaces `_common/OUTPUT_STYLE.md` (cognitive load, fixed tail slots).
 | ★★☆☆☆ | Consumer not named; the reader has to infer who this was for |
 | ★☆☆☆☆ | Requires a second pass to be usable at all |
 
-### `CST` — effort proportional to the deliverable
-
-Stated in **counts, never tokens.** `_common/TOKEN_ECONOMY.md` §5 is a standing limit: no
-per-skill cost figure is derivable (`attributionSkill` is null on ~65% of records and
-version-biased), and sub-agent spend must be reported as an **event count, never estimated as
-tokens**. A `CST` line carrying "~12k tokens" would be a fabricated measurement.
-
-Report what the run observed: subagent spawns · files read · files written · tool-call rounds.
-
-| Band | Complete description |
-|------|----------------------|
-| ★★★★★ | Counts are at or below what the deliverable plainly needed |
-| ★★★★☆ | Proportionate; some exploration that did not reach the deliverable |
-| ★★★☆☆ | Noticeable rework — a path was taken and abandoned |
-| ★★☆☆☆ | Visibly out of proportion, e.g. several subagents for a one-line answer |
-| ★☆☆☆☆ | Effort dominated by retries or by re-reading what was already in context |
-
-There is no "over budget" band, because there is no budget this repository can measure.
-
 ---
 
 ## Emit format
@@ -147,7 +133,6 @@ WORK_GATE:
   OUT ★★★☆☆ — <E-rung reached, and by which check>
   RSK pass   — <exposure; `risk` blocks completion — never starred>
   CLR ★★★★★ — <named consumer, and what they get>
-  CST ★★★★☆ — <spawns / files read / files written / rounds>
 ```
 
 Worked example:
@@ -160,7 +145,6 @@ WORK_GATE:
   OUT ★★★☆☆ — E3: pytest 42 passed, suite predates this change
   RSK pass   — no destructive or outward-facing action
   CLR ★★★★★ — for builder: file:line on every change point
-  CST ★★★★☆ — 0 subagents, 6 files read, 2 written, 9 rounds
 ```
 
 ## Proportionality
@@ -169,9 +153,9 @@ Scales with the planning tier of `OPERATIONAL.md` § Completion Contract:
 
 | Tier | Emit |
 |------|------|
-| **Skip** | `RSK` only if it is not `pass`, plus any axis at ★★☆☆☆ or below. All-good emits nothing — a one-line answer does not carry a seven-line certificate. |
-| **Light** | All seven lines. |
-| **Full** | All seven lines, plus the evidence behind each rating where it is not already in the body. |
+| **Skip** | `RSK` only if it is not `pass`, plus any axis at ★★☆☆☆ or below. All-good emits nothing — a one-line answer does not carry a six-line certificate. |
+| **Light** | All six lines. |
+| **Full** | All six lines, plus the evidence behind each rating where it is not already in the body. |
 
 Ceremony never exceeds the task. `RSK: risk` is emitted at every tier without exception.
 
@@ -201,6 +185,6 @@ Per `_common/HARNESS_DEBT.md` §3b:
 | Field | Declaration |
 |-------|-------------|
 | `failure` | A deliverable ships with a silently narrowed scope, an unverified load-bearing claim, or an irreversible action, and nothing in the output says so — and separately, a poor result caused by a poor brief is indistinguishable from a poor result caused by poor work. Today 67 of 90 skills have no fixed place to record either. |
-| `effect` | Puts the Completion-Contract failure modes in a fixed, scannable position; separates input quality from output quality so a bad brief is visible as a bad brief; gives non-code skills an exposure floor they lacked. It does **not** catch a confident, well-evidenced, wrong deliverable, and the star bands are self-assigned — `IN`, `FIT`, `CLR`, and `CST` have no external check, so they are testimony, not measurement. Only `OUT` is anchored to an artifact a reader can inspect. |
+| `effect` | Puts the Completion-Contract failure modes in a fixed, scannable position; separates input quality from output quality so a bad brief is visible as a bad brief; gives non-code skills an exposure floor they lacked. It does **not** catch a confident, well-evidenced, wrong deliverable, and the star bands are self-assigned — `IN`, `FIT`, and `CLR` have no external check, so they are testimony, not measurement. Only `OUT` is anchored to an artifact a reader can inspect. |
 | `owner` | `nexus` — it owns the completion protocol this gate surfaces (`reference/autonomy-quality-protocol.md`) and the chain matrix. **Not `gauge`:** gauge audits SKILL.md files statically, and `WORK_GATE` is a runtime emit that appears in no SKILL.md, so there is nothing for gauge to scan. `darwin` runs the removal test below as part of its evaluation cycle. |
-| `removal` | Delete when either holds: (1) `attributionSkill` and `isSidechain` become reliable (`TOKEN_ECONOMY.md` §5), so `CST` and `OUT` can be computed rather than asserted and a mechanical signal replaces the self-report; or (2) two consecutive `darwin` evaluation cycles find star ratings uncorrelated with the defects those cycles actually surfaced — a self-assigned rating that does not predict real defects is decoration, and decoration is removed. Partial removal counts: an axis that never leaves ★★★★★ across a cycle is dropped on its own, without waiting for the whole gate. |
+| `removal` | Delete when either holds: (1) `attributionSkill` and `isSidechain` become reliable (`TOKEN_ECONOMY.md` §5), so `OUT` can be computed rather than asserted and a mechanical signal replaces the self-report; or (2) two consecutive `darwin` evaluation cycles find star ratings uncorrelated with the defects those cycles actually surfaced — a self-assigned rating that does not predict real defects is decoration, and decoration is removed. Partial removal counts: an axis that never leaves ★★★★★ across a cycle is dropped on its own, without waiting for the whole gate. |

@@ -1,9 +1,6 @@
 # Reverse Feedback Protocol
 
-> **Tier:** `authoring` for the advisory types below — activates when creating or auditing skills.
-> **Exception:** `rework_required` binds during user work, because it is the message form of the
-> Handoff Admission Gate (`_common/HANDOFF.md` § Handoff Admission Gate, `spine`).
-> Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
+> **Tier:** `authoring` — activates when creating or auditing skills, not during user work. Precedence: `_common/OPERATIONAL.md` § Contract Precedence.
 
 Standard protocol for downstream-to-upstream feedback between agents. This enables a self-correcting ecosystem where quality issues flow back to the agent best positioned to fix them.
 
@@ -30,7 +27,7 @@ Reverse flow:    Builder ←──untestable code──← Radar
 | Upstream pattern is inconsistent | Judge finds naming violations in SKILL.md | medium |
 | Upstream approach could be improved | Zen suggests better patterns for Builder | low |
 
-**`rework_required` is different in kind from every row above.** The others are advisory: the receiver proceeds and the sender improves next time. `rework_required` **refuses the handoff** and returns it unworked, and it is admissible only under the five conditions in `_common/HANDOFF.md` § Handoff Admission Gate — never on the sender's own star ratings. It carries the receiver's `IN` rating and the specific missing artifact, gets **one bounce per edge**, and escalates to a typed residual plus a user question rather than bouncing twice.
+**Refusing a handoff is not one of these types.** Every row above is advisory: the receiver proceeds and the sender improves next time. Returning work *unworked* is a different act with a different tier, and it lives entirely in `_common/HANDOFF.md` § Handoff Admission Gate (`spine`, so it binds during user work) — including its message shape. This file stays advisory-only.
 
 ---
 
@@ -42,7 +39,7 @@ All reverse feedback between agents must use this template:
 REVERSE_FEEDBACK:
   Source_Agent: "[Agent reporting the issue]"
   Target_Agent: "[Agent whose output has the issue]"
-  Feedback_Type: rework_required | quality_issue | incorrect_output | incomplete_deliverable | pattern_inconsistency | improvement_suggestion
+  Feedback_Type: quality_issue | incorrect_output | incomplete_deliverable | pattern_inconsistency | improvement_suggestion
   Priority: high | medium | low
   Context:
     original_task: "[What the source agent was working on]"

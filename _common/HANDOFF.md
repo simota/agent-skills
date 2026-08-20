@@ -194,8 +194,24 @@ A handoff is **admitted or sent back** by the *receiver*, at intake, before it d
 is the only point where rework is cheap — once the receiver has built on a bad input, the cost of
 unwinding exceeds the cost of the original redo.
 
-`_common/REVERSE_FEEDBACK.md` owns the message format. This section owns **when refusal is
-mandatory, when it is forbidden, and how it terminates.**
+`_common/REVERSE_FEEDBACK.md` is advisory-only and `authoring` tier — it never refuses anything.
+This section owns the refusal end to end: when it is mandatory, when it is forbidden, how it
+terminates, and what the message carries.
+
+### Refusal message
+
+```yaml
+HANDOFF_REFUSED:
+  From: "[receiver refusing]"
+  To: "[sender being asked to redo]"
+  Condition: 1 | 2 | 3 | 4 | 5      # the numbered condition below — never free text
+  IN: ★★☆☆☆                          # the receiver's own rating of what arrived
+  Missing: "[the specific artifact or field to add]"
+  Bounce: 1 of 1                     # the edge's only bounce; a second failure escalates
+```
+
+`Missing` names an artifact, never a quality level. `Condition` is one of the five below; a
+refusal that cannot name one is not admissible.
 
 ### Refuse on these, and only these
 

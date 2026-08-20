@@ -94,15 +94,14 @@ The reader's question is *which skill, which axis*, and any aggregate erases exa
 ```
 ### Work Gate
 
-| Skill   | IN    | FIT   | EVD   | OUT   | RSK  | CLR   | CST   |
-|---------|-------|-------|-------|-------|------|-------|-------|
-| scout   | ★★☆☆☆ | ★★★★★ | ★★★★☆ | ★★★☆☆ | pass | ★★★★★ | ★★★★☆ |
-| builder | ★★★★☆ | ★★★★★ | ★★★☆☆ | ★★★☆☆ | pass | ★★★★☆ | ★★★★★ |
-| radar   | ★★★★☆ | ★★★★★ | ★★★★★ | ★★★★☆ | pass | ★★★★☆ | ★★☆☆☆ |
+| Skill   | IN    | FIT   | EVD   | OUT   | RSK  | CLR   |
+|---------|-------|-------|-------|-------|------|-------|
+| scout   | ★★☆☆☆ | ★★★★★ | ★★★★☆ | ★★★☆☆ | pass | ★★★★★ |
+| builder | ★★★★☆ | ★★★★★ | ★★★☆☆ | ★★★☆☆ | pass | ★★★★☆ |
+| radar   | ★★★★☆ | ★★★★★ | ★★★★★ | ★★★★☆ | pass | ★★★★☆ |
 
 - scout / IN ★★ — repro steps absent from the report; reproduced from the stack trace alone
 - builder / EVD ★★★ — the latency claim is labelled UNVERIFIED
-- radar / CST ★★ — 4 subagents for one added test file
 ```
 
 Rules:
