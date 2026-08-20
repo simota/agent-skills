@@ -87,36 +87,37 @@ The **Residual Ledger** replaces free-text "Recommended follow-ups": every lefto
 
 ## Work Gate Matrix
 
-Every spoke emits `WORK_GATE` (`_common/WORK_GATE.md`). Nexus renders them as a matrix —
-skills down, axes across — and **never as a rollup**. There is no chain score, no average, no
-"5 of 6 green" summary line. The reader's question is *which skill, which axis*, and any total
-erases exactly that.
+Every spoke emits `WORK_GATE` (`_common/WORK_GATE.md`). Nexus renders them as a matrix — skills
+down, axes across — and **never as a rollup**. No row total, no column average, no "overall ★".
+The reader's question is *which skill, which axis*, and any aggregate erases exactly that.
 
 ```
 ### Work Gate
 
-| Skill   | FIT  | EVD  | VER  | RSK  | CLR  | CST  |
-|---------|------|------|------|------|------|------|
-| scout   | pass | pass | pass | pass | pass | pass |
-| builder | pass | risk | pass | pass | pass | pass |
-| radar   | pass | pass | risk | pass | pass | risk |
+| Skill   | IN    | FIT   | EVD   | OUT   | RSK  | CLR   | CST   |
+|---------|-------|-------|-------|-------|------|-------|-------|
+| scout   | ★★☆☆☆ | ★★★★★ | ★★★★☆ | ★★★☆☆ | pass | ★★★★★ | ★★★★☆ |
+| builder | ★★★★☆ | ★★★★★ | ★★★☆☆ | ★★★☆☆ | pass | ★★★★☆ | ★★★★★ |
+| radar   | ★★★★☆ | ★★★★★ | ★★★★★ | ★★★★☆ | pass | ★★★★☆ | ★★☆☆☆ |
 
-- builder / EVD — the latency claim is an estimate, not a measurement
-- radar / VER — suite ran, but the author wrote both the fix and its test
-- radar / CST — 4 subagents for one added test file
+- scout / IN ★★ — repro steps absent from the report; reproduced from the stack trace alone
+- builder / EVD ★★★ — the latency claim is labelled UNVERIFIED
+- radar / CST ★★ — 4 subagents for one added test file
 ```
 
 Rules:
 
-- Every non-`pass` cell gets one line below the table naming the reason. A cell with no line is
-  an incomplete report.
-- `n/a` cells are rendered `n/a`, never blank and never merged into `pass`.
-- **Any `RSK: risk` in the matrix blocks `NEXUS_COMPLETE`** — it is reported as a blocker at the
-  top of the envelope, not as a row the reader has to find.
-- A spoke that emitted no gate is rendered as a `—` row with "no gate emitted". Silence is a
-  finding about the spoke, not an empty cell.
-- Skip-tier spokes contribute only their non-`pass` axes; their remaining cells render `·`
-  (not asserted at this tier) rather than `pass`.
+- Every cell at ★★★☆☆ or below gets one line under the table naming the reason. A low cell with
+  no line is an incomplete report.
+- `n/a` cells render `n/a`, never blank, never as ★1, never merged into ★5.
+- **Any `RSK: risk` blocks `NEXUS_COMPLETE`** and is reported at the top of the envelope, not as
+  a cell the reader has to find. `RSK` is never starred.
+- A spoke that emitted no gate renders as a `—` row with "no gate emitted". Silence is a finding
+  about the spoke, not an empty cell.
+- Skip-tier spokes contribute only the axes they emitted; the rest render `·` (not asserted at
+  this tier) rather than stars.
+- **`IN` is read as a column, not per row.** A chain where `IN` degrades from ★★★★☆ at the head
+  to ★★☆☆☆ three spokes down is a handoff defect, and it is invisible in any single spoke's gate.
 
 ---
 
