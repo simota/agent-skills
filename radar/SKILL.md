@@ -81,10 +81,10 @@ Route elsewhere when:
 - Isolate every test: each test performs its own setup and cleanup — no shared mutable state, no order dependency, no reliance on previous test results.
 - **Verification-first is the dominant practice.** Lock the verifier (test, snapshot, expected stdout, schema) *before* implementation lands; never accept code whose verifier was written by the same model that wrote the code.
 - **Audit expected-value provenance.** Name each assertion's source: spec / domain example / published test vector / production record / domain owner = independent; read off the implementation or written in the same session as the code = **not** — a green run then proves only internal consistency. Security, money, data-integrity, and novel-pattern changes carry ≥1 independent-provenance assertion. A second model is not a second mechanism. → `_common/EVIDENCE_LADDER.md` §2.
-- **Reject Tautological Tests and Coverage Hacking.** Canonical patterns: (1) field-exists-only, (2) call-happened-only, (3) no-throw-only, (4) mirrors implementation's exact arithmetic, (5) length/count-only, (6) snapshot-as-sole-oracle. Require ≥1 behavioural assertion per public path.
+- **Reject Tautological Tests and Coverage Hacking.** Require ≥1 behavioural assertion per public path; the six canonical tautology patterns → `reference/testing-anti-patterns.md`.
 - **Use Mutation Score as the ceiling, not Coverage.** Coverage is a Goodhart-vulnerable floor metric. Mutation score (Stryker / mutmut / Pitest) measures whether tests actually *catch* defects. Thresholds: `break: 50`, `low: 60`, `high: 80`. Scope mutation gates to changed files to keep CI under 5 minutes.
-- **FlakyGuard-class discipline for flaky tests.** Never auto-fix in a CI loop — propose a diff to a human-reviewable branch. Root-cause taxonomy: (a) test-order dependency, (b) async/timer race, (c) network/clock non-determinism, (d) DB state leak, (e) random seed leak, (f) parallelisation contention.
-- **Metamorphic Relations solve the Oracle Problem.** When output is hard to compute directly but a transformation relationship is known, encode it as a metamorphic relation: `sort(reverse(xs)) ≡ sort(xs)`, `f(x + 0) ≡ f(x)`, `serialize(deserialize(s)) ≡ s`. Metamorphic relations supply the oracle that property-based testing lacks.
+- **FlakyGuard-class discipline for flaky tests.** Never auto-fix in a CI loop — propose a diff to a human-reviewable branch. Six-class root-cause taxonomy → `reference/flaky-test-guide.md`.
+- **Metamorphic Relations solve the Oracle Problem.** When output is hard to compute directly but a transformation relationship is known, encode that relation as the oracle property-based testing lacks → `reference/advanced-techniques.md`.
 - Full rationale, examples, and sources for the five bullets above → `reference/testing-research-rationale.md`.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P2, P5 critical for Radar; P1 recommended).
 - Apply `_common/CODE_QUALITY.md` to every code change — the seven axes (SLD solid / SEC secure / RDB readable / MNT maintainable / TST testable / PRF performant / SCL scalable), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
@@ -159,7 +159,7 @@ Parse the first token of user input:
 - Otherwise → default Recipe (`edge` = Edge Cases).
 - Apply SCAN → LOCK → PING → VERIFY → DELIVER workflow regardless of Recipe.
 
-Each Recipe's `**VERIFY**:` gate applies **in addition to** Radar's universal discipline (zero tautological / assertion-free tests, ≥1 behavioral assertion per public path, behavior-not-implementation, project-native style, test isolation). Full per-recipe VERIFY gate detail → `reference/recipe-verify-gates.md`.
+Each Recipe's `**VERIFY**:` gate applies **in addition to** Radar's universal discipline in § Core Contract. Full per-recipe VERIFY gate detail → `reference/recipe-verify-gates.md`.
 
 ## Workflow
 
@@ -193,13 +193,13 @@ Each Recipe's `**VERIFY**:` gate applies **in addition to** Radar's universal di
 
 Additional layers:
 
-- Property-based testing for invariants and edge discovery. Use `fast-check` 4.x (JS/TS), `hypothesis` (Python), `proptest` (Rust).
+- Property-based testing for invariants and edge discovery.
 - Contract testing for service boundaries.
-- Mutation testing to verify test strength — StrykerJS 7.0+ (Vitest/Node Tap), watch for equivalent mutants and CI timeouts.
+- Mutation testing to verify test strength.
 - Snapshot testing only for stable, intentional output shapes.
-- AI-assisted test generation for accelerating edge-case discovery — augments capacity, does not replace human judgment on test intent and assertion quality.
+- AI-assisted test generation for edge-case discovery.
 
-Tool version detail, benchmark data, and sources for the layers above → `reference/testing-research-rationale.md`.
+Tooling, version detail, benchmark data, and sources for the layers above → `reference/testing-research-rationale.md`.
 
 ## Critical Constraints
 

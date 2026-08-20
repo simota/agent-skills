@@ -176,3 +176,16 @@ When the underlying test was AI-generated (Claude Code / Cursor / Copilot agents
 - Verify the test fails when the relevant production code is mutated (`mutation-testing.md`).
 - Verify the test asserts on **business outcome**, not on mock-call sequence or string contents of a synthesised log line.
 - If neither passes, the test is not flaky — it is structurally insufficient; rewrite rather than stabilise.
+
+## Root-Cause Taxonomy (FlakyGuard classes)
+
+Moved from `SKILL.md` § Core Contract 2026-08-20. Classify before fixing; never auto-fix inside a CI loop — propose a diff to a human-reviewable branch.
+
+| Class | Cause |
+|-------|-------|
+| (a) | test-order dependency |
+| (b) | async / timer race |
+| (c) | network / clock non-determinism |
+| (d) | DB state leak |
+| (e) | random seed leak |
+| (f) | parallelisation contention |

@@ -181,8 +181,8 @@ Single source of truth for Recipe definitions. Behavior depth lives in the "Beha
 | Saga Pattern | `saga` | | Saga pattern distributed transactions | Top-level Saga shape (orchestration vs choreography, participants, boundary). For per-step compensation depth, switch to `compensation`. | `reference/saga-patterns.md` |
 | Approval Flow | `approval` | | Approval flow design | Approval flow with BPMN 2.0 boundary timer + escalation (never error events). Includes SLA, delegation, and audit trail. | `reference/approval-flow-patterns.md` |
 | Invalid Transition Detection | `detect` | | Invalid transition detection | Scan existing transition tables / code for invalid or missing transitions. | `reference/state-machine-patterns.md` |
-| Retry State Machine | `retry` | | Exponential backoff, jitter, max-attempt cap, DLQ terminal state, idempotency contract | Exponential backoff (base × 2^n), jitter (full/equal/decorrelated), max-attempt cap, DLQ as terminal state, retriable-vs-non-retriable classification, idempotency key. Pair with `weave` for schedules, Beacon for retry-exhaustion alerts. | `reference/retry-state-machine.md` |
-| Timeout / TTL / Deadline | `timeout` | | TTL state design, deadline propagation, grace-period transitions, stuck-state recovery | Per-state timeout from business SLA, deadline propagation (context.deadline), grace-period transitions, stuck-state escape, soft-timeout (warn) vs hard-timeout (abort). Hand off to `weave` for cron integration. | `reference/timeout-ttl-design.md` |
+| Retry State Machine | `retry` | | Exponential backoff, jitter, max-attempt cap, DLQ terminal state, idempotency contract | Exponential backoff (base × 2^n), jitter (full/equal/decorrelated), max-attempt cap, DLQ as terminal state, retriable-vs-non-retriable classification, idempotency key. Pair with the `schedule` Recipe for cron timing, Beacon for retry-exhaustion alerts. | `reference/retry-state-machine.md` |
+| Timeout / TTL / Deadline | `timeout` | | TTL state design, deadline propagation, grace-period transitions, stuck-state recovery | Per-state timeout from business SLA, deadline propagation (context.deadline), grace-period transitions, stuck-state escape, soft-timeout (warn) vs hard-timeout (abort). Switch to the `schedule` Recipe for cron integration. | `reference/timeout-ttl-design.md` |
 | Compensation Transactions | `compensation` | | Saga compensation per forward step, idempotency keys, compensation-of-compensation, ordering | Per-forward-step compensation; each idempotent, LIFO-ordered by default, handles compensation-of-compensation. Emit compensation table with idempotency keys, ordering, and failure-of-compensation escalation (hand off to Triage). | `reference/compensation-transactions.md` |
 
 ### Signal Keywords → Recipe
@@ -415,11 +415,11 @@ WEAVE_TO_BUILDER_HANDOFF:
 | `reference/engine-selection.md` | Selection guide across Temporal / Step Functions / Inngest / XState; non-functional checklist |
 | `reference/event-driven-workflows.md` | Event Sourcing / CQRS / Process Manager / Outbox / DLQ / idempotency patterns |
 | `reference/handoffs.md` | All handoff templates (Inbound: User / Scribe / Atlas / Nexus; Outbound: Builder / Canvas / Radar / Scribe / Judge) |
-| `reference/retry-state-machine.md` | Retry state-machine design — exponential backoff, jitter (full / equal / decorrelated), max-attempt cap, DLQ as terminal state, retriable-vs-non-retriable error classification, idempotency-key contract |
-| `reference/timeout-ttl-design.md` | TTL / deadline / expiry state design — per-state timeout from business SLA, deadline propagation, grace-period transitions, soft-vs-hard timeout, stuck-state recovery |
-| `reference/compensation-transactions.md` | Saga per-forward-step compensation — idempotency keys, LIFO ordering, compensation-of-compensation, failure-of-compensation escalation |
+| `reference/retry-state-machine.md` | Running the `retry` Recipe |
+| `reference/timeout-ttl-design.md` | Running the `timeout` Recipe |
+| `reference/compensation-transactions.md` | Running the `compensation` Recipe |
 | `_common/OPUS_5_AUTHORING.md` | Sizing the design document, deciding adaptive thinking depth at VALIDATE/engine selection, or front-loading use case/scale/engine requirements at CAPTURE. Critical for Weave: P3, P5. |
-| `_common/PROOF_CARRYING.md` | You emit state machine specs (XState / DSL) for interactive UI components in `nexus acceptance` Phase 2B as layer 3 of the Design-Code Contract (default → hover → focus → active → disabled → loading → error transitions). Used by `palette` for `state_proof` coverage gating. Also used in Layer A backend state machines for `rally engine-paradigm` Dual-Implementation Oracle in-scope (state-machine domain). |
+| `_common/PROOF_CARRYING.md` | You emit state machine specs (XState / DSL) for interactive UI components in `nexus acceptance` Phase 2B as layer 4 of the Design-Code Contract, and back Layer A backend state machines for the `rally engine-paradigm` Dual-Implementation Oracle (state-machine domain). |
 | `reference/scheduling/` | Cron, timezone/DST, business-calendar, backfill, retry/rate policy (absorbed from `tempo`) |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Weave-specific Output/Next schema. |
 

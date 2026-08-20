@@ -36,3 +36,14 @@ When the expected output is hard to compute but a transformation-of-input → tr
 - Property-based testing pairing with mutation testing boosts kill scores from 70% to 92% on async code (Source: johal.in 2026). Use `fast-check` 4.x (JS/TS; `@fast-check/vitest` for Vitest integration), `hypothesis` (Python), `proptest` (Rust). See [fast-check.dev](https://fast-check.dev/) for current API.
 - Mutation testing: StrykerJS 7.0+ supports Vitest and Node Tap runners natively (Source: [stryker-mutator.io/blog/announcing-stryker-js-7](https://stryker-mutator.io/blog/announcing-stryker-js-7/)). Watch for equivalent mutants (false survivors) and tool-specific timeouts in distributed CI (>200ms latency causes Stryker .NET failures; apply exponential backoff, Source: johal.in 2026). Stryker .NET now uses ML to prune equivalent mutants, reducing noise by 30% (Source: johal.in 2026). Agentic mutation tools (mewt for Rust/Solidity) enable LLM-guided mutant generation targeting high-risk code paths (Source: Trail of Bits 2026).
 - AI-assisted test generation: LLM-powered mutation testing (e.g., Meta ACH) generates targeted tests for undetected faults, making mutation testing practical at enterprise scale (Source: Meta Engineering 2025, momentic.ai 2026). AI-assisted flaky repair (FlakyGuard) achieves 47.6% automated repair rate with 51.8% developer acceptance on reproducible flaky tests (Source: ASE 2025).
+
+## Additional-Layer Tooling
+
+Moved from `SKILL.md` § Test Mix 2026-08-20.
+
+| Layer | Tooling | Watch for |
+|-------|---------|-----------|
+| Property-based | `fast-check` 4.x (JS/TS), `hypothesis` (Python), `proptest` (Rust) | Shrinking quality; seed reproducibility |
+| Mutation | StrykerJS 7.0+ (Vitest / Node Tap), PIT (Java), mutmut (Python), cargo-mutants (Rust) | Equivalent mutants; CI timeouts |
+| Snapshot | Framework-native | Only for stable, intentional output shapes |
+| AI-assisted generation | Any | Augments capacity; never replaces human judgment on test intent and assertion quality |

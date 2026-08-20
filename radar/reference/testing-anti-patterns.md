@@ -59,3 +59,16 @@ Purpose: Detect weak tests before they create false confidence. Read this when a
 - behavior is asserted instead of internals
 - data setup is concise and intention-revealing
 - the test can fail for the right reason
+
+## Canonical Tautology Patterns
+
+Moved from `SKILL.md` § Core Contract 2026-08-20. A test matching any of these asserts nothing about behavior:
+
+1. **field-exists-only** — asserts a key is present, never its value
+2. **call-happened-only** — asserts a collaborator was invoked, never with what or to what effect
+3. **no-throw-only** — asserts the call did not raise, never what it produced
+4. **mirrors implementation's exact arithmetic** — recomputes the expression under test in the assertion
+5. **length/count-only** — asserts collection size, never element identity
+6. **snapshot-as-sole-oracle** — a snapshot is the only assertion, so any change is "expected"
+
+The rule these serve: **≥1 behavioural assertion per public path.**

@@ -182,3 +182,13 @@ Avoid when:
 - Reach for contract tests when two deployable units must agree.
 - Reach for mutation testing only after the normal suite is already credible.
 - Reach for Testcontainers when a fake would hide the real failure mode.
+
+## Metamorphic Relations
+
+Moved from `SKILL.md` § Core Contract 2026-08-20. When the output is hard to compute directly but a transformation relationship is known, the relation *is* the oracle — this is what property-based testing otherwise lacks.
+
+```
+sort(reverse(xs))        ≡ sort(xs)
+f(x + 0)                 ≡ f(x)
+serialize(deserialize(s)) ≡ s
+```
