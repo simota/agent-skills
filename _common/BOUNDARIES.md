@@ -8,6 +8,32 @@ For disambiguation of commonly confused agent pairs, see `nexus/reference/agent-
 
 ---
 
+## A boundary is a property of the pair
+
+The `description:` line of a SKILL.md is not documentation — it is the routing signal, and it is most of
+what the router has to work with. Its negative clause ("Not for X (Sibling)") is therefore load-bearing:
+it is the sentence that stops the nearest neighbour absorbing the request.
+
+**A boundary lives between two files, so sharpening it means editing both.** Narrowing `A` without
+widening `B` opens a gap that neither description claims; widening `A` without narrowing `B` creates an
+overlap both claim, and the router picks by accident. Either way the change reads as correct in the diff,
+because the diff shows one file.
+
+Two consequences:
+
+- **Edit descriptions in pairs.** When a `description:` gains, loses, or moves a negative clause, open the
+  named sibling in the same change and state where the line now falls from its side. A one-sided edit is
+  reported as incomplete, not as a smaller edit.
+- **A routing miss between siblings is a description defect, not a router defect.** When `task-battery.md`'s
+  over-capture probes route a request to the wrong one of two neighbours, the fix belongs in the two
+  descriptions that failed to separate them — retuning the router around them leaves the ambiguity in place
+  and moves the failure somewhere the battery is not looking.
+
+The corollary for new skills: a proposed skill whose boundary cannot be stated from *both* sides is not
+yet distinct from its neighbour, and `architect`'s overlap check is the place that decides it.
+
+---
+
 ## Meta-Orchestration
 
 | Agent | Primary Role | Scope | Writes Code |

@@ -73,6 +73,7 @@ SPECIFIED_BRIEF:
     - "<AC-2>"
   non_goals:                    # the scope boundary. MAY NOT BE EMPTY — see below
     - "<what this run will not do, though a reader might expect it>"
+  falsifier: "<the observation that would prove the delivered result wrong>"
   prohibited_outcomes:          # Q2/Q23 axis — kept separate from ACs on purpose
     - "<what must not happen>"
   constraints:
@@ -90,7 +91,7 @@ SPECIFIED_BRIEF:
 
 Every reading Chisel chose where the source admitted more than one becomes a **`DEC-n` interpretation entry** in the existing Decision Ledger (`output-formats.md`). No new ledger is introduced.
 
-### Two fields that gate execution
+### Three fields that gate execution
 
 **`non_goals` may not be empty.** An empty boundary is not a wide scope — it is an unstated one, and it is
 the single most common route by which a chain widens mid-run: nothing was excluded, so nothing was crossed.
@@ -98,6 +99,18 @@ Writing down what will *not* be done fixes the edge before the first spawn, and 
 is measured against at `AGGREGATE`. `non_goals` is distinct from `prohibited_outcomes` and neither
 substitutes for the other: a non-goal is work deliberately left undone, a prohibited outcome is a state the
 work must not produce. Both travel verbatim.
+
+**`falsifier` is what separates a brief from a wish list.** The acceptance criteria say what success
+looks like; a falsifier says what would *defeat* the claim of success, and it must name an observation
+somebody could actually make. "It would be wrong if the user disliked it" is not one — nothing about it
+can be checked, and it will therefore never fire. "It would be wrong if the existing `/orders` response
+changed shape for any current client" is one: it names a thing to look at.
+
+The failure it catches is the one ACs cannot: **every criterion met and the result still wrong**, because
+the criteria measured the work rather than the outcome. A falsifier is checked at `VERIFY` alongside the
+ACs, and an unchecked one is reported `UNVERIFIED` like any other unexercised path. Where the honest answer
+is that no observation would falsify the result, that is a finding about the brief — the goal is not yet
+stated in terms anyone can be wrong about, and it goes back to the dialogue rather than forward to a spawn.
 
 **`unresolved_parameters` is not a place to park an open question.** Each entry carries the assumption
 being proceeded on, which is what makes it safe to start: the run has an answer and is recording that it
@@ -111,7 +124,7 @@ the shared entrance to both rework and scope creep.
 
 The brief is **chain-level, written once, inherited by all**:
 
-- `goal`, `acceptance_criteria`, `non_goals`, `prohibited_outcomes`, `constraints` are copied verbatim into every `_AGENT_CONTEXT` in the chain. Verbatim matters — paraphrasing per spawn re-introduces exactly the divergence this phase removes.
+- `goal`, `acceptance_criteria`, `non_goals`, `falsifier`, `prohibited_outcomes`, `constraints` are copied verbatim into every `_AGENT_CONTEXT` in the chain. Verbatim matters — paraphrasing per spawn re-introduces exactly the divergence this phase removes.
 - `delegated` is filtered per recipient: each agent sees the decisions **it** owns, so it knows what it is expected to decide rather than ask about.
 - `unresolved_parameters` go to every spawn, with the stated assumption. A specialist that discovers the assumption is wrong reports it rather than silently working around it.
 - Per-spawn directive fields (envelope, effort, references) are still assembled by `adaptive-prompt-policy.md` afterwards. Brief first, directives second; they never overwrite each other because they occupy different fields.

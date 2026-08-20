@@ -166,6 +166,30 @@ rather than filing it as debt.
 
 ---
 
+## 1c. Finding nothing is a claim
+
+An audit that reports "no issues found" is making an assertion about the world, and it is the assertion
+most likely to be wrong, because nothing about it looks like a claim. A defect report carries its own
+evidence — here is the line, here is the failure. A clean report carries none, and reads identically
+whether the search was exhaustive, narrow, or never run.
+
+**A negative result names the search and its scope, or it is `E0`.** Three parts, none optional:
+
+| Part | Why | Example |
+|------|-----|---------|
+| What was searched | Scope is the whole claim. "No hardcoded secrets" over one directory is a different statement than over the repo | `rg -n 'api[_-]?key' src/ tests/` |
+| What a hit would have looked like | If you cannot say, you cannot know the search could have found one | "a string literal assigned to a name matching /key|token|secret/" |
+| What was *not* covered | The part the search structurally could not reach | "not covered: values assembled at runtime from `process.env`" |
+
+Written out: *"No hardcoded credentials under `src/` and `tests/` (`rg -n '(api[_-]?key|secret|token)\s*[:=]' src tests` → 0 hits). A hit would be a literal assigned to such a name. Runtime-assembled values are outside what this search can reach."*
+
+This is the same discipline as the completion sweep (`_common/OPERATIONAL.md` § Completion Contract), generalised past residue to every negative finding — and it is load-bearing here specifically, because a large share of this corpus's recipes are audit-shaped (`verity`, `abide`, `gauge`, `prune`, `sweep`, `sentinel`) and their most common honest output *is* a negative.
+
+**A clean result that names no search is not a weaker finding; it is not a finding.** Report it as `E0` /
+`UNVERIFIED` and say what would have to run.
+
+---
+
 ## 2. Circular Verification — the failure this protocol exists to prevent
 
 **Symptom:** the same agent generates the implementation, the tests, and the explanation. Every test passes. The behavior is wrong.
@@ -285,3 +309,7 @@ Generation is instant; understanding, testing, integration, and production obser
 | Piling on evidence at the same level | five E3 suites detect one class of failure; one E4 detects another |
 | Evidence that arrives after the decision | unread proof is not proof |
 | Static analysis nobody trusts | stale rules, high false positives, easy suppression — signal degrades to noise; fix trust before adding tools |
+| **Laundering** — deriving from an assumed premise and reporting the result at the derived rung | derived-from-assumed *is* assumed; the grade must carry the weakest premise forward, not the strongest inference |
+| **Test-shaped assertion** — "added tests covering X" where the tests were never run | written is not passing. This is `E0` in the shape of `E3`, and it is the single cheapest way to look verified |
+| **A check nobody has watched fail** — a linter, gate, or assertion with no case proving it fires | indistinguishable from one that returns zero unconditionally, and worse than absent: being *reported* as enforcement stops anyone looking for the enforcement that is missing (`_common/LESSONS.md` L001-L004) |
+| **A clean report with no search** — "no issues found", scope unstated | §1c. Silence and absence read identically unless the report separates them |
