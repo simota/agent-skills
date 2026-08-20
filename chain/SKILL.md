@@ -154,20 +154,13 @@ Skill supply-chain trust boundary → `_common/SECURITY.md`
 
 ## Recipes
 
-| Recipe | Subcommand | Default? | When to Use | Read First |
-|--------|-----------|---------|-------------|------------|
-| Skill Intake Audit | `intake` | ✓ | New third-party skill or plugin requires intake gate | `reference/intake-checklist.md` |
-| Drift Detection | `audit` | | Verify pinned `sha256` against current files; detect silent updates | `_common/SECURITY.md` |
-| MCP Server Pinning | `mcp` | | First install or session-start re-verification of MCP tool descriptions | `_common/SECURITY.md` |
-| Unicode Scan | `scan` | | Standalone scan for Unicode Tag, bidi, or zero-width injection | `reference/unicode-tag-scan.md` |
-| Recovery / Quarantine | `recover` | | Confirmed-compromised skill must be quarantined and remediation diff produced | `reference/intake-checklist.md` |
-| Live Malware Scan | `malware-scan` | | Full campaign IoC sweep across live environment surfaces | `reference/supply-chain-malware-scan-procedures.md`, `reference/supply-chain-malware-ioc-database.md` |
-| Campaign Scan | `campaign-scan` | | Narrow scan for a named npm/PyPI campaign | `reference/supply-chain-malware-ioc-database.md` |
-| Lockfile Pin Check | `lockfile` | | Fast, read-only pre-merge check for known-bad versions and resolved URLs | `reference/supply-chain-malware-ioc-database.md` |
-| Eradication Runbook | `eradicate` | | Persistence-first removal for a recent `CONFIRMED` finding | `reference/supply-chain-malware-eradication.md` |
-| Rotation Runbook | `rotate` | | Dependency-ordered credential rotation after verify-clean | `reference/supply-chain-malware-eradication.md` |
-| Supply-Chain Hardening | `harden` | | Lifecycle-script, cooldown, provenance, registry, and Actions controls | `reference/supply-chain-malware-scan-procedures.md` |
-| Propagation Audit | `propagation` | | Unauthorized maintainer publishes, OIDC exchange, and provenance review from a clean session | `reference/supply-chain-malware-scan-procedures.md` |
+**Full table** → **`reference/recipes-index.md`** (read on subcommand match, or when scanning). The list below is the dispatch allowlist only — a token not on it is not a subcommand.
+
+```
+intake · audit · mcp · scan · recover · malware-scan · campaign-scan · lockfile · eradicate · rotate · harden · propagation
+```
+
+Default Recipe: `intake`.
 
 ## Subcommand Dispatch
 

@@ -60,7 +60,7 @@ Rules:
 3. The allowlist must list **every** subcommand. Mark the default Recipe when one exists; otherwise declare the explicit `Default dispatch` in `## Subcommand Dispatch`. A token absent from the allowlist is not a subcommand.
 4. The registry file states its own purpose and read-trigger like any other reference.
 
-Use this only when the size ceiling actually forces it; a table that fits belongs inline, where it is one read away instead of two. Current user: `nexus` (`nexus/reference/recipes-index.md`).
+Use this only when the size ceiling actually forces it; a table that fits belongs inline, where it is one read away instead of two. A skill using it is identifiable without a roster here: its `## Recipes` section carries the pointer instead of a table.
 
 **Column definitions:**
 - **Recipe** — human-readable display name (title case, spaces OK)

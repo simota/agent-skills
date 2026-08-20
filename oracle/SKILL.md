@@ -112,17 +112,13 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 
 ## Recipes
 
-| Recipe | Subcommand | Default? | When to Use | Read First |
-|--------|-----------|---------|-------------|------------|
-| Prompt Engineering | `prompt` | ✓ | Prompt design and optimization | `reference/prompt-engineering.md` |
-| RAG Design | `rag` | | RAG design (retrieval + generation) | `reference/rag-design-anti-patterns.md` |
-| AI Safety | `safety` | | Guardrails, red-teaming | `reference/ai-safety-guardrails.md` |
-| MLOps Pipeline | `mlops` | | MLOps pipeline design | `reference/llm-application-patterns.md` |
-| Agent System Design | `agent` | | Application-level LLM agent design (tool-use loops, tool schemas, memory, subagent delegation, termination) | `reference/agent-design.md` |
-| LLM Cost Optimization | `cost` | | LLM-API cost tuning (token budget, prompt caching, model tier routing, batch vs streaming, context compression) | `reference/cost-optimization.md` |
-| Embedding Strategy | `embed` | | RAG embedding pipeline deep dive (chunking, embedding model, vector index, re-ranking, hybrid BM25+vector) | `reference/embedding-strategy.md` |
-| AI Architecture Review | `review` | | Reviewing a design that embeds AI before build or before raising its authority: 12 lenses, risk tiers R0–R3, conditional approval, re-review triggers | `reference/architecture-review.md` |
-| Advanced Tool Use | `tooling` | | Scaling an Anthropic-API tool catalog: tool search + `defer_loading`, programmatic tool calling, advisor tool (server-side Plan-and-Execute), per-tool/per-version model support | `reference/advanced-tool-use.md` |
+**Full table** → **`reference/recipes-index.md`** (read on subcommand match, or when scanning). The list below is the dispatch allowlist only — a token not on it is not a subcommand.
+
+```
+prompt · rag · safety · mlops · agent · cost · embed · review · tooling
+```
+
+Default Recipe: `prompt`.
 
 ## Subcommand Dispatch
 

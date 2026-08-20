@@ -192,22 +192,15 @@ Routing rules:
 
 ## Recipes
 
-| Recipe | Subcommand | Default? | When to Use | Read First |
-|--------|-----------|---------|-------------|------------|
-| Schema Design | `design` | ✓ | New table or entity design | `reference/schema-examples.md` |
-| Migration Plan | `migration` | | Schema change and migration design | `reference/migration-patterns.md` |
-| ER Diagram | `er` | | ER diagram generation and review | `reference/schema-examples.md` |
-| Normalization | `normalize` |  | Normalization vs denormalization decisions | — |
-| Index Strategy | `index` | | Index design and optimization | `reference/index-strategies.md` |
-| Migration Rollback | `rollback` | | Reverse-operation design for destructive migrations (reverse DDL / dual-write / backfill / alternatives to destructive changes) | `reference/migration-rollback.md` |
-| Multi-Tenant Design | `tenant` | | Tenant isolation, RLS, routing, migration, provisioning, quota, or cross-tenant security; select `isolation|rls|routing|scale|migration|provisioning|quota` mode from the request | `reference/multi-tenant-patterns.md`, matching `reference/tenant-*.md` |
-| Partitioning | `partition` | | range / list / hash / time-based partition design (pruning / maintenance / migration) | `reference/partition-strategies.md` |
-| Audit Log | `audit-log` | | Append-only audit-log schema — temporal tables, logical replication, before/after image, retention | `reference/audit-log-schema.md` |
-| Event Sourcing | `event-sourcing` | | Event store schema — events / projections / snapshots / outbox, aggregate boundaries | `reference/event-sourcing-schema.md` |
-| Soft Delete | `soft-delete` | | Logical deletion patterns (deleted_at / status / tombstone) with GDPR right-to-erasure interaction | `reference/soft-delete-patterns.md` |
+**Full table** → **`reference/recipes-index.md`** (read on subcommand match, or when scanning). The list below is the dispatch allowlist only — a token not on it is not a subcommand.
+
+```
+design · migration · er · normalize · index · rollback · tenant · partition · audit-log · event-sourcing · soft-delete
+```
+
+Default Recipe: `design`.
 
 Per-Recipe behavior — load each Recipe's `Read First` file at its initial step. Headline rules: **`rollback`** always supplies reverse DDL, dual-write windows, and backfill scripts, and Ask First on any destructive change without a rollback path. **`tenant`** compares all four isolation strategies against tenant count, isolation requirements, and cost; then selects the narrow mode: `isolation|rls|routing|scale` → `tenant-architecture-patterns.md`, `migration` → `tenant-migration.md`, `provisioning` → `tenant-provisioning.md`, `quota` → `tenant-quota-throttling.md`. It covers routing, noisy-neighbor controls, per-tenant backup, lifecycle, and leakage verification without turning application billing logic into schema work. **`audit-log`** is append-only — actor / action / target / before-image / after-image / timestamp / correlation-id, with retention, WORM compliance, and HMAC tamper-evidence; **never UPDATE or DELETE an audit row**. **`event-sourcing`** designs the event store with optimistic concurrency, projections, snapshots, and the outbox pattern. **`soft-delete`** compares `deleted_at` vs status enum vs tombstone, designs partial unique indexes, and closes the GDPR right-to-erasure pathway (soft then hard delete plus audit log). Full notes -> `reference/schema-examples.md`.
-
 
 ## Subcommand Dispatch
 
