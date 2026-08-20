@@ -19,6 +19,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Twelve Reference Maps split the way nexus splits its own** — shared-contract rows and a pointer stay, per-file read-triggers move to `reference/reference-index.md`. Rows naming a spine contract moved too, since the spine line now names those files directly.
 - **Removed as duplicates:** builder's per-subcommand gate table (`recipe-verify-gates.md` carries all thirteen in fuller form), magi's per-Recipe VERIFY table (`decision-templates.md` likewise), scribe's `## Logging`, nexus's Core Rule 10 and five Reference Map rows repeating a file already named at its decision point, and the `## Git Guidelines` / `## Output Language` restatements in six skills.
 
+### Changed — the recipe-count warning now records its review (2026-08-20)
+
+- **`tome`'s four platform recipes folded back into `article`.** `note` / `zenn` / `qiita` / `devto` shared one reference and one activation condition, and `article` already selects the platform at FRAME — they were parameters, not recipes. All four still dispatch, as documented aliases for `article <platform>`. 16 recipes -> 12.
+- **`REC04_REVIEWED` records a completed consolidation review instead of leaving a warning nobody can act on.** The 2026-08-20 review measured, per skill, how many recipes collapse onto one `Read First` set: a recipe with its own method reference is breadth, recipes sharing one reference *and* one activation condition are duplication. Only `tome` had the latter. The other nine entries carry the count reviewed and what the review found, and the exception is bounded by that count — a skill that grows past it warns again.
+- **`_common/RECIPES.md` documents the exception** and the test that separates duplication from breadth, so an entry cannot be added to quiet a warning without doing the review.
+- **`routing-oracle`'s two RO-3 warnings are left as warnings.** That checker's own note says a reviewed exception downgrades the message and not the severity, because RO-3 guards a correctness property — producer is not verifier — where a stale exception would hide a real defect. Both entries were re-checked against the current chains and still hold.
+
 ### Fixed — absorption residue from the 2026-08-20 consolidation (2026-08-20)
 
 - **`magi` kept two marks of absorbing `helm`.** The Strategy Simulation row sat in the two-column Signal Keywords table instead of the five-column Recipes table, so it rendered broken and `simulate` was never registered as a Recipe. The `**vs Helm**` overlap boundary had been renamed to `**vs Magi**`, comparing Magi with Magi. `hone` carried the same defect from absorbing `anvil`.

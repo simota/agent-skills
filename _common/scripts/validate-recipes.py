@@ -11,6 +11,8 @@ Validates every SKILL.md against the rules defined in `_common/RECIPES.md`:
             8-10 recipes → INFO (corpus norm band, ≤10 = P95);
             11+ recipes → WARNING (consolidation review candidate);
             hub skills (HUB_SKILLS) → always INFO (recipe breadth by design)
+            reviewed skills (REC04_REVIEWED) → INFO while at or below the reviewed
+            count; warns again if the count grows past it
   R-REC-05: Recipes section is RECOMMENDED for Tier 1-2 skills (INFO)
 
 Plus heading integrity:
@@ -48,6 +50,42 @@ KEBAB = re.compile(r"^[a-z0-9][a-z0-9-]{1,19}$")
 MAX_RECIPES = 7  # recommended ceiling (scannability)
 WARN_RECIPES = 10  # corpus P95 as of 2026-07-03 (125/132 skills ≤ 10); >10 warns
 HUB_SKILLS = {"nexus"}  # ecosystem hub: routes 130+ agents, recipe breadth by design
+
+# R-REC-04 reviewed exceptions. Each entry records a completed consolidation review:
+# the recipe count at review time, and what the review found. The number is a
+# ceiling, not a licence — a skill that grows past its reviewed count warns again,
+# so the exception can never quietly cover recipes nobody looked at.
+#
+# What the 2026-08-20 review measured, per skill: how many recipes share an identical
+# `Read First` set. A recipe with its own method reference is breadth (distinct
+# activation conditions, each loading only what its task needs); recipes that collapse
+# onto one reference and one activation condition are duplication. Only `tome` had the
+# latter — four platform variants of `article`, folded back into it. In the rest, a
+# shared reference covers a family of distinct triggers, which is the direction
+# progressive disclosure wants.
+#
+# Complexity Budget (`_common/HARNESS_DEBT.md` 3b):
+#   failure  — a standing warning nobody can act on trains readers to ignore R-REC-04,
+#              and the review that cleared it lives in a commit message instead of the
+#              checker
+#   effect   — the review is recorded where the check runs, and is bounded by the count
+#              it was performed against. Does NOT judge whether the recipes are the
+#              right ones — only that the count is not duplication
+#   owner    — gauge (it owns the checker suite)
+#   removal  — delete an entry when its skill drops to WARN_RECIPES or below; delete the
+#              table when no entry remains
+REC04_REVIEWED = {
+    "builder":  (20, "17 distinct Read First sets; 9 image recipes each carry their own pipeline reference"),
+    "canon":    (24, "17 distinct Read First sets; one recipe per standard or legal-document type"),
+    "chain":    (12, "7 references covering 12 distinct audit triggers, not 12 names for one audit"),
+    "cue":      (17, "14 distinct Read First sets across script, capture, and delivery stages"),
+    "launch":   (15, "14 distinct Read First sets; release, rollout, and reporting are separate triggers"),
+    "native":   (16, "13 distinct Read First sets across two platforms and their store pipelines"),
+    "saga":     (11, "6 references covering 11 narrative frameworks with distinct selection criteria"),
+    "schema":   (11, "10 distinct Read First sets; design, migration, and tenancy do not share a method"),
+    "scout":    (12, "12 distinct Read First sets — one reference per investigation technique"),
+    "tome":     (12, "10 distinct Read First sets after folding note/zenn/qiita/devto into `article`"),
+}
 
 
 def changed_skill_names() -> set[str]:
@@ -187,8 +225,11 @@ def validate(skill: str, path: Path) -> tuple[list[str], list[str], list[str]]:
 
     if len(rows) > MAX_RECIPES:
         msg = f"R-REC-04: {len(rows)} recipes exceeds recommended {MAX_RECIPES}"
+        reviewed = REC04_REVIEWED.get(skill)
         if skill in HUB_SKILLS:
             infos.append(f"{msg} (hub skill — recipe breadth by design)")
+        elif reviewed and len(rows) <= reviewed[0]:
+            infos.append(f"{msg} (reviewed {reviewed[0]} — {reviewed[1]}, see REC04_REVIEWED)")
         elif len(rows) > WARN_RECIPES:
             warnings.append(f"{msg} and warn threshold {WARN_RECIPES} — consolidation review candidate")
         else:

@@ -229,10 +229,12 @@ Behavior depth (framework, depth calibration, structural rules) lives in the reg
 **Full table** → **`reference/recipes-index.md`** (read on subcommand match, or when scanning). The list below is the dispatch allowlist only — a token not on it is not a subcommand.
 
 ```
-learn · diff · onboard · record · worked · kata · quickstart · article · note · zenn · qiita · devto · article-series · headline · repurpose · interview
+learn · diff · onboard · record · worked · kata · quickstart · article · article-series · headline · repurpose · interview
 ```
 
 Default Recipe: `learn`.
+
+`article` takes the platform as its second token — `note` · `zenn` · `qiita` · `devto`. Those four are also accepted as first-token aliases for `article <platform>`.
 
 ### Signal Keywords → Recipe
 

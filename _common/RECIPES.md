@@ -12,7 +12,7 @@ A **Recipe** is a named preset within one skill that pre-selects a workflow mode
 
 Key properties:
 - Scope is **strictly one skill**. Recipes do not cross skill boundaries.
-- One skill should define 2-7 Recipes (recommended for dispatch-table scannability). 8-10 is an accepted corpus-norm band (INFO); 11+ triggers a consolidation review (WARNING). Hub skills (e.g. `nexus`) are exempt — recipe breadth is by design.
+- One skill should define 2-7 Recipes (recommended for dispatch-table scannability). 8-10 is an accepted corpus-norm band (INFO); 11+ triggers a consolidation review (WARNING). Hub skills (e.g. `nexus`) are exempt — recipe breadth is by design — and so is a skill whose review is on record and whose count has not grown since (see **Reviewed recipe count**).
 - Backward compatibility requires exactly one fallback owner: either one `Default? = ✓` Recipe or an explicit `Default dispatch` phase/workflow outside the Recipe table. Unmatched input falls through to that owner without dropping free text.
 
 ---
@@ -48,6 +48,23 @@ Include this table when the skill defines 3 or more distinct modes.
 | [Display Name] | `[token]` | ✓ | [activation condition] | `reference/[file].md` |
 | [Display Name] | `[token]` | | [activation condition] | `reference/[file].md` |
 ```
+
+### Reviewed recipe count (R-REC-04 exception)
+
+A count above the warn threshold asks for a **consolidation review**, not a smaller number.
+When that review has happened, record it in `REC04_REVIEWED` in the validator: the count at
+review time and what the review found. The check then reports INFO instead of WARNING —
+until the skill grows past that count, at which point it warns again, because the recipes
+added since were not the ones anyone looked at.
+
+What the review has to distinguish is duplication from breadth. The test that separates them
+is the `Read First` column: recipes that collapse onto one reference **and** one activation
+condition are one recipe with a parameter, and belong merged; recipes sharing a reference
+that covers a family of distinct triggers are breadth, and merging them would make every
+task in the family load more than it needs.
+
+Do not add an entry without doing the review, and do not add one to quiet a warning — an
+exception that records no finding is worse than the warning it replaces.
 
 ### Externalized registry (size-ceiling escape hatch)
 
@@ -150,7 +167,7 @@ The following rules are evaluated by **Gauge** during normalization audits.
 | R-REC-01 | A skill with `## Recipes` must declare exactly one fallback owner: one `Default? = ✓` Recipe or one explicit `Default dispatch` phase/workflow | ERROR |
 | R-REC-02 | All Subcommand values must match `^[a-z0-9][a-z0-9-]{1,19}$` (kebab-case, 2-20 chars; leading digit allowed for domain terms like `5whys`) | ERROR |
 | R-REC-03 | Subcommand values must not be reserved words: `default`, `auto`, `help`, `list` | ERROR |
-| R-REC-04 | Recipe count, tiered (calibrated 2026-07-03 against the 132-skill corpus, where 54% exceeded the old flat max-7): ≤7 recommended; 8-10 = INFO (corpus norm band, ≤10 = P95); 11+ = WARNING (consolidation review candidate); hub skills (`HUB_SKILLS` in validator, currently `nexus`) always INFO — recipe breadth by design | INFO / WARNING (tiered) |
+| R-REC-04 | Recipe count, tiered (calibrated 2026-07-03 against the 132-skill corpus, where 54% exceeded the old flat max-7): ≤7 recommended; 8-10 = INFO (corpus norm band, ≤10 = P95); 11+ = WARNING (consolidation review candidate); hub skills (`HUB_SKILLS` in validator, currently `nexus`) always INFO — recipe breadth by design; a skill whose count was reviewed and found to be breadth rather than duplication is INFO while it stays at or below its reviewed count (`REC04_REVIEWED`, see below) | INFO / WARNING (tiered) |
 | R-REC-05 | Presence of `## Recipes` section is RECOMMENDED for skills in Adoption Tiers 1-2, but not required | INFO |
 
 ---
