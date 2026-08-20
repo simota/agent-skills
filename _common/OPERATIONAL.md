@@ -223,14 +223,15 @@ Every skill inherits the completion discipline of **`nexus/reference/autonomy-qu
 - **Deferral is typed, never a convenience.** Work the contract covers may be left undone only under a named class carrying a blocker/owner and a route to whoever finishes it. Binding is bidirectional: every `#TODO(agent):` marker left in a file has a listed residual, and every listed residual names its marker. An orphan on either side is an incomplete report, not a follow-up (Q17–Q18).
 - **The completion sweep is scanned, not asserted.** Before declaring done, grep the files the run actually touched for residue (`TODO|FIXME|XXX|HACK|TBD|not implemented|placeholder`) and report the command and the hit count. Residue the run did not introduce is reported `pre-existing` and left alone — touching it is scope creep. A zero that was never scanned is an evidence violation, not a clean result (Q19).
 - **No status inflation.** `PARTIAL` with a precise gap outranks `SUCCESS` with hidden holes. Downstream routing reads the status; an inflated one corrupts the routing as well as the trust.
+- **The verdict is emitted, not implied.** Before declaring done, emit `WORK_GATE` — six typed axes (`FIT` scope · `EVD` evidence · `VER` independent check · `RSK` exposure · `CLR` consumer fit · `CST` observed counts), `pass | risk | n/a` with the reason on the line. `RSK: risk` blocks completion. Axes are never summed into a score. Format, proportionality, and the `n/a` rule → `_common/WORK_GATE.md`.
 
 **Proportionality.** The contract scales with the planning tier, and ceremony never exceeds the task:
 
 | Tier | Completion contract |
 |------|---------------------|
-| **Skip** | ACs may stay implicit in the answer; evidence-binding and no-inflation still bind. No ledger, no sweep. |
-| **Light** | ACs stated; residuals listed inline; sweep run over the touched files. |
-| **Full** | Full protocol, including independent verification — the producer is never the sole verifier (Q9). |
+| **Skip** | ACs may stay implicit in the answer; evidence-binding and no-inflation still bind. No ledger, no sweep. `WORK_GATE` emits only the axes that are not `pass`. |
+| **Light** | ACs stated; residuals listed inline; sweep run over the touched files. Full `WORK_GATE`. |
+| **Full** | Full protocol, including independent verification — the producer is never the sole verifier (Q9). Full `WORK_GATE`, with the evidence behind each `pass`. |
 
 ---
 

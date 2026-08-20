@@ -6,6 +6,7 @@
 ## Contents
 - Envelope Sizing (read first)
 - NEXUS_COMPLETE (AUTORUN)
+- Work Gate Matrix
 - Compact Form (SIMPLE runs)
 - NEXUS_COMPLETE_FULL (AUTORUN_FULL)
 - NEXUS_HANDOFF_V2 (Standard - Required)
@@ -80,6 +81,42 @@ Completion sweep: [command run] — [N hits: each mapped to a RES-n, or `pre-exi
 Acceptance Provenance covers **every** intent-contract criterion (none silent) **and every prohibited outcome on its own axis** — a prohibition is `held` only with evidence that the forbidden result did not occur; `unverified` is honest, `held` by assumption is not, and `violated` caps the run at `FAILED`. Decision Ledger and evidence rules per `reference/autonomy-quality-protocol.md` (Q2, Q4–Q6, Q10, Q15).
 
 The **Residual Ledger** replaces free-text "Recommended follow-ups": every leftover carries a Q17 class, and an untyped residual is a defect that caps status at `PARTIAL` (Q16–Q19). Rows and in-artifact `#TODO(agent):` markers bind bidirectionally — no orphan markers, no orphan rows. Omit the table only when the sweep is clean, and keep the sweep line either way.
+
+
+---
+
+## Work Gate Matrix
+
+Every spoke emits `WORK_GATE` (`_common/WORK_GATE.md`). Nexus renders them as a matrix —
+skills down, axes across — and **never as a rollup**. There is no chain score, no average, no
+"5 of 6 green" summary line. The reader's question is *which skill, which axis*, and any total
+erases exactly that.
+
+```
+### Work Gate
+
+| Skill   | FIT  | EVD  | VER  | RSK  | CLR  | CST  |
+|---------|------|------|------|------|------|------|
+| scout   | pass | pass | pass | pass | pass | pass |
+| builder | pass | risk | pass | pass | pass | pass |
+| radar   | pass | pass | risk | pass | pass | risk |
+
+- builder / EVD — the latency claim is an estimate, not a measurement
+- radar / VER — suite ran, but the author wrote both the fix and its test
+- radar / CST — 4 subagents for one added test file
+```
+
+Rules:
+
+- Every non-`pass` cell gets one line below the table naming the reason. A cell with no line is
+  an incomplete report.
+- `n/a` cells are rendered `n/a`, never blank and never merged into `pass`.
+- **Any `RSK: risk` in the matrix blocks `NEXUS_COMPLETE`** — it is reported as a blocker at the
+  top of the envelope, not as a row the reader has to find.
+- A spoke that emitted no gate is rendered as a `—` row with "no gate emitted". Silence is a
+  finding about the spoke, not an empty cell.
+- Skip-tier spokes contribute only their non-`pass` axes; their remaining cells render `·`
+  (not asserted at this tier) rather than `pass`.
 
 ---
 

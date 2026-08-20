@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added — `WORK_GATE`: a per-deliverable verdict every skill emits (2026-08-20)
+
+- `_common/WORK_GATE.md` defines six typed axes — `FIT` (scope match) · `EVD` (claims tied to checkable evidence) · `VER` (checked by something independent of the author) · `RSK` (irreversible / security / privacy / unauthorized spend) · `CLR` (usable by the named consumer) · `CST` (effort proportional to the deliverable). Verdicts are `pass | risk | n/a` with the reason on the line. `RSK: risk` blocks completion.
+- **Axes are never summed.** No score, no weights, no rollup — a composite is what lets a blocking axis be offset by green ones. `nexus/reference/quality-iteration.md` § UQS is the existing weighted composite and is explicitly not the precedent followed.
+- **`n/a` is a claim, not a blank**: it carries a reason and is never counted as `pass`. Four or more `n/a` axes require a one-line statement of why the gate barely applies.
+- **`CST` is stated in observed counts — subagent spawns, files read/written, tool-call rounds — never in tokens.** `_common/TOKEN_ECONOMY.md` §5 is a standing limit: no per-skill token figure is derivable from this repo's data, so a token estimate on the line would be a fabricated measurement.
+- Wired into `_common/OPERATIONAL.md` § Completion Contract, which is `spine` tier and already reaches all 90 skills — no per-skill SKILL.md edit, and no per-skill token cost. Emission scales with the planning tier: Skip emits only non-`pass` axes, Light and Full emit all six.
+- `nexus/reference/output-formats.md` § Work Gate Matrix renders spoke gates as skills × axes with no chain total; any `RSK: risk` surfaces as a blocker at the top of the envelope rather than a row to find.
+- Closes a real gap: only 23 of 90 skills wrote code and therefore reached `CODE_QUALITY_GATE`'s `SEC` floor. The other 67 emitted no quality signal at all.
+
 ### Changed — consolidate global roster to 90 skills (2026-08-20)
 
 - Retired 10 low-reachability skills into broader owners, preserving their capabilities, recipes, and reference material: `trawl` → `vector`, `grok` + `anvil` (CLI/TUI) → `builder`, `anvil` (personal environment) → `hone`, `bond` → `growth`, `morph` → `scribe`, `mint` → `radar`, `relay` → `gateway`, `riff` → `flux`, `helm` → `magi`, and `tempo` → `weave`.
