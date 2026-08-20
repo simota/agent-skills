@@ -173,6 +173,22 @@ def resolve(ref: str, origin: Path) -> Path | None:
     return None
 
 
+#: Directories whose files are read but never traversed *through*. A journal or an
+#: archived skill may name a contract, and following that edge makes the contract look
+#: delivered when nothing in the shipped corpus reaches it. `.agents/` is gitignored, so
+#: a graph that walks it reports OK locally and fails in CI on the same commit -- which
+#: is how this rule was found. Reachability is a property of what is committed.
+UNTRAVERSED_DIRS = frozenset({".git", ".agents", ".archive", "node_modules"})
+
+
+def is_untraversed(node: Path) -> bool:
+    try:
+        parts = node.resolve().relative_to(REPO_ROOT).parts
+    except (ValueError, OSError):
+        return False
+    return any(part in UNTRAVERSED_DIRS for part in parts)
+
+
 class Graph:
     """Documents as nodes, "this file names that file" as edges."""
 
@@ -180,6 +196,8 @@ class Graph:
         self._edges: dict[Path, set[Path]] = {}
 
     def edges(self, node: Path) -> set[Path]:
+        if is_untraversed(node):
+            return set()
         if node not in self._edges:
             self._edges[node] = {
                 target
