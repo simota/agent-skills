@@ -21,11 +21,13 @@ For disambiguation of commonly confused agent pairs, see `nexus/reference/agent-
 | **Lore** *(project-local)* | Cross-agent knowledge synthesis | This repository's journal and pattern lifecycle | Never |
 | **Gauge** | SKILL.md normalization audit & self-evolution | Per-skill format compliance | Never |
 | **Compass** | Ecosystem navigation & onboarding | Which existing skill fits a request | Never |
+| **Prune** | Roster cleanup proposals | Overlap and inactivity audit, merge and sunset plans — propose-only | Never |
 
 **Key distinctions:**
 - Compass answers *which skill*; Nexus answers *in what order and runs it*. Compass never executes the work it recommends, and Nexus's LADDER spawns Compass before hand-rolling a chain for an unmatched request (`nexus/reference/routing-matrix.md` § LADDER)
 - Compass recommends from the **global** roster as it stands; Sigil designs a **project-local** operating layer that does not exist yet. "Nothing here fits" is Compass's Gap mode, which routes to Architect for a global skill or Sigil for a repo-specific one — the split is global-permanent vs project-scoped, not recommend vs design
 - Compass reports a gap; Architect closes it. A request Compass cannot match is not Compass's to solve
+- Prune proposes removals and never performs them: a merge is executed by Architect, a sunset needs user approval, and target skills are read-only during the audit. Prune measures the roster as it is (overlap, activity, retention score); project-local Darwin judges where the ecosystem should go; Void cuts scope inside product code, not skills. Prune also owns the `HD-ENTROPY` near-duplication sweep one level below the roster — `_common/` protocols and `*/reference/` files (`_common/HARNESS_DEBT.md` §4)
 - Nexus `deliver` sizes and executes product-lifecycle chains; Rally parallelizes independent workstreams when needed
 - Sherpa decomposes → Nexus/Rally executes the decomposed steps
 - Architect creates permanent ecosystem agents; Sigil designs and authors project-specific operating layers
@@ -65,11 +67,13 @@ For disambiguation of commonly confused agent pairs, see `nexus/reference/agent-
 | **Cloak** | Privacy engineering | PII detection, GDPR/CCPA, consent, DPIA | Yes (privacy patterns) |
 | **Canon** | Standards, regulatory, and legal-document compliance | OWASP/WCAG/OpenAPI, SOC2/PCI-DSS/HIPAA/ISO 27001, ToS/privacy/Tokushoho review, policy-as-code | Yes (OPA policies) |
 | **Crypt** | Cryptographic architecture | Algorithm selection, key management, E2EE, post-quantum | Never |
+| **Chain** | Agent supply-chain audit & compromise response | Skill/plugin/MCP manifests, hidden injection, IoC scan, persistence-first eradication | Never |
 
 **Key distinctions:**
 - Static code scan → Sentinel. Running app test → Probe
 - Attack simulation → Breach. Detection rules → Vigil. Purple team → Breach → Vigil
 - PII/privacy implementation → Cloak. Regulatory frameworks and legal-document review → Canon. Crypto design → Crypt
+- Chain's object is the **agent's own supply chain** — the skills, plugins, MCP servers, and hooks this environment loads — not the application under development. A vulnerable npm dependency in the product is Sentinel; a skill that exfiltrates on load is Chain. Eradication precedes rotation: rotating credentials while persistence remains re-arms the attacker with fresh secrets
 
 **Credential Isolation Principle** (Source: Anthropic Managed Agents):
 Tokens and secrets must never be reachable from the execution environment where agent-generated code runs. Two patterns:
@@ -146,9 +150,11 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Grove** | Human- and LLM-optimized repository structure | Directory layout, conventions, context efficiency, cache topology | Never |
 | **Shift** | Migration, upgrade & modernization orchestration | Codemod generation, framework/DB/API migration, deprecated library detection, native API replacement, technology radar (absorbed from horizon) | Yes |
 | **Trawl** | Crawl system architecture design | URL frontier, distributed crawl, politeness policy, compliance | Never |
+| **Port** | Web→native porting strategy | Feature parity matrices, native architecture maps, phased Strangler-Fig roadmaps | Never |
 
 **Key distinctions:**
 - General repo structure → Grove default modes. LLM navigation/cache topology → Grove `llm`
+- Port plans a move **across platforms** — a web product to iOS/Android, where the target language and UI paradigm both change and parity must be decided feature by feature. Shift moves within one platform (framework, library, API, database versions). Port produces the roadmap; Native builds against it. A port whose parity matrix is unwritten is where the schedule fails, not the implementation
 - Crawl system architecture → Trawl. Single-session scraping execution → Vector
 - Crawl output pipeline → Stream. Crawl infrastructure provisioning → Scaffold
 
@@ -215,9 +221,11 @@ Tokens and secrets must never be reachable from the execution environment where 
 |-------|-------------|-------|-------------|
 | **Magi** | Multi-perspective decision making and advisory | Logic/Empathy/Pragmatism triad, founder bottleneck coaching, documented named-figure lenses | Never |
 | **Flux** | Thinking refraction & perspective shift | Cynefin, TRIZ, lateral thinking, assumption surfacing | Never |
+| **Riff** | Interactive idea development | Expand / Propose / Evaluate / Subtract, multi-turn | Never |
 
 **Key distinctions:**
 - "Which option?", founder pressure-testing, or "How would {named figure} think about this?" → Magi. "Are we asking the right question?" → Flux. Flux reframes; Magi advises or decides according to the selected Recipe
+- Riff is the only one of the three that is a **conversation**: it widens and narrows an idea across turns and returns no verdict. Flux is one-shot reframing, Magi returns a decision. When the output should be a written feature proposal rather than a developed idea, the object belongs to Spark
 - Synthetic user personas → Cast. Named-figure mental-model lenses and founder-mentor advisory → Magi
 
 ## DevOps & Release
@@ -265,9 +273,13 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Weave** | Workflow & state machine design | FSM/Statechart, Saga patterns, approval flows | Partial (YAML/specs) |
 | **Native** | Mobile development | React Native/Flutter/SwiftUI/Jetpack Compose | Yes |
 | **Rank** | Priority quantification | ICE/RICE/WSJF/MoSCoW/Kano scoring | Never |
+| **Grok** | Grammar & pattern-language design | Regex, parsers, DSLs, ReDoS safety | Yes (patterns/grammars) |
+| **Tempo** | Scheduling & time-aware logic design | Cron, timezone/DST, retry/backoff, business calendars | Partial (schedules/config) |
 
 **Key distinctions:**
 - Mobile app development → Native. Mobile-responsive frontend → Artisan
+- Grok designs the grammar a machine parses — regex, a parser, a DSL. A contract between services is Gateway, a contract with a database is Schema. The ReDoS axis is Grok's alone: a pattern that is correct and catastrophically backtracking passes every other review
+- Tempo owns *when* work runs and how time is reasoned about — cron expressions, DST and timezone arithmetic, business-calendar rules, and the backoff curve of a retry. It does not own *what* happens on failure: the retry policy of a chain step is Nexus error handling, and a workflow's state transitions are Weave. Scheduling infrastructure itself (runners, queues) is Gear or Scaffold
 - Priority scoring → Rank. Multi-perspective decisions → Magi
 - Pre-mortem / failure analysis → Omen. Change impact → Ripple. Incident response → Triage
 - Browser/web automation → Vector. macOS native-app automation (Apple Events) → Anvil `automate`. iOS app UI automation → Voyager `ios`
