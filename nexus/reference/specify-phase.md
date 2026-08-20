@@ -71,6 +71,8 @@ SPECIFIED_BRIEF:
   acceptance_criteria:          # each a bound, an observable behavior, or a scorable criterion
     - "<AC-1>"
     - "<AC-2>"
+  non_goals:                    # the scope boundary. MAY NOT BE EMPTY — see below
+    - "<what this run will not do, though a reader might expect it>"
   prohibited_outcomes:          # Q2/Q23 axis — kept separate from ACs on purpose
     - "<what must not happen>"
   constraints:
@@ -88,13 +90,28 @@ SPECIFIED_BRIEF:
 
 Every reading Chisel chose where the source admitted more than one becomes a **`DEC-n` interpretation entry** in the existing Decision Ledger (`output-formats.md`). No new ledger is introduced.
 
+### Two fields that gate execution
+
+**`non_goals` may not be empty.** An empty boundary is not a wide scope — it is an unstated one, and it is
+the single most common route by which a chain widens mid-run: nothing was excluded, so nothing was crossed.
+Writing down what will *not* be done fixes the edge before the first spawn, and it is what `frozen-scope`
+is measured against at `AGGREGATE`. `non_goals` is distinct from `prohibited_outcomes` and neither
+substitutes for the other: a non-goal is work deliberately left undone, a prohibited outcome is a state the
+work must not produce. Both travel verbatim.
+
+**`unresolved_parameters` is not a place to park an open question.** Each entry carries the assumption
+being proceeded on, which is what makes it safe to start: the run has an answer and is recording that it
+chose it. A parameter with no assumption is an open question, and an open question is settled before
+execution or asked as the `Ask First` gate it is — never deferred to "decide while implementing", which is
+the shared entrance to both rework and scope creep.
+
 ---
 
 ## Injection Rule
 
 The brief is **chain-level, written once, inherited by all**:
 
-- `goal`, `acceptance_criteria`, `prohibited_outcomes`, `constraints` are copied verbatim into every `_AGENT_CONTEXT` in the chain. Verbatim matters — paraphrasing per spawn re-introduces exactly the divergence this phase removes.
+- `goal`, `acceptance_criteria`, `non_goals`, `prohibited_outcomes`, `constraints` are copied verbatim into every `_AGENT_CONTEXT` in the chain. Verbatim matters — paraphrasing per spawn re-introduces exactly the divergence this phase removes.
 - `delegated` is filtered per recipient: each agent sees the decisions **it** owns, so it knows what it is expected to decide rather than ask about.
 - `unresolved_parameters` go to every spawn, with the stated assumption. A specialist that discovers the assumption is wrong reports it rather than silently working around it.
 - Per-spawn directive fields (envelope, effort, references) are still assembled by `adaptive-prompt-policy.md` afterwards. Brief first, directives second; they never overwrite each other because they occupy different fields.

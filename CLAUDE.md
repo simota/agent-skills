@@ -24,5 +24,12 @@
 - Conventional Commits: `feat(skill-name): description`
 - SKILL.md 編集時は既存の CAPABILITIES_SUMMARY コメントブロック形式を維持
 - 新規スキル／レシピ／`_common/` プロトコル／ゲートの追加は Complexity Budget（`_common/HARNESS_DEBT.md` §3b）の4項目 `failure` / `effect` / `owner` / `removal` を宣言する。`removal` 空欄は却下 — 既存資産への遡及適用はしない（次に別件で編集する際に付与）
+- 実測値（スキル本数等）を散文に直書きしない — 検査が再導出できる形にする（`_common/OPERATIONAL.md` § Derived Numbers）。閾値の定義値はルールなので対象外
 - `_common/` は全スキルに影響するため慎重に変更
+- 価値が衝突したとき（丁寧さ vs 出荷、安全 vs 使いやすさ）の優先順は `_common/VALUES.md`。文書同士の衝突は § Contract Precedence が別に決める
 - Git: @_common/GIT_GUIDELINES.md
+
+## 検査
+- `make validate` — 全チェッカーを blocking severity で実行（CI と同一）
+- `make hooks` — clone ごとに1回。`make validate` を pre-commit に入れる
+- 本リポは main へ直接コミットするため、**hook が実質の強制点**。CI の hard-fail は push でも走るが、hook が先に落とす

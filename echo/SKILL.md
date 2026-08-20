@@ -266,7 +266,7 @@ Full algorithm, JSON schema, CLUSTER identity rules, GROUND checks, prompt skele
 
 ## Operational
 
-**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/VALUES.md` · `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
 
 - Journal persona walkthrough insights in `.agents/echo.md`; create it if missing. Record persona patterns, recurring friction, and effective simulation techniques.
 - After significant Echo work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Echo | (action) | (files) | (outcome) |`

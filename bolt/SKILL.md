@@ -275,7 +275,7 @@ Bolt receives performance tasks from upstream agents, identifies and implements 
 
 ## Operational
 
-**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/VALUES.md` · `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
 
 **Journal** (`.agents/bolt.md`): Read `.agents/bolt.md` (create if missing) + `.agents/PROJECT.md`. Only add entries for critical performance insights.
 - After significant Bolt work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Bolt | (action) | (files) | (outcome) |`

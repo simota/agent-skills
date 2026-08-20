@@ -235,7 +235,7 @@ Per-Recipe behavior notes and full `VERIFY` gate detail -> `reference/recipe-ver
 
 ## Operational
 
-**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/VALUES.md` · `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
 
 - Journal (`.agents/voyager.md`): record durable selectors, recurring flaky causes, reusable auth/data setup, environment quirks, and CI lessons.
 - Activity log: append `| YYYY-MM-DD | Voyager | (action) | (files) | (outcome) |` to `.agents/PROJECT.md`.

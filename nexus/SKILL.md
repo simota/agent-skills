@@ -193,7 +193,7 @@ Seven triggers (`LT-01` → `LT-07`, incl. near misses) and the Chain Effectiven
 
 ## Routing Quick Start
 
-**Chain source of truth:** `routing-matrix.md` maps 95 task types to default chains and CLASSIFY/LADDER rules; `agent-chains.md` owns chain adjustment. The Registry exposes common types; the rest enter through the CLASSIFY phase. Family axes live in `recipes-detail.md`; phase contracts live in each `<recipe>-recipe.md`.
+**Chain source of truth:** `routing-matrix.md` maps task types to default chains and CLASSIFY/LADDER rules; `agent-chains.md` owns chain adjustment. The Registry exposes common types; the rest enter through CLASSIFY. Family axes live in `recipes-detail.md`; phase contracts live in each `<recipe>-recipe.md`.
 
 If context is unclear, inspect git state and `.agents/PROJECT.md`; if confidence stays low, ask one focused question.
 
@@ -232,7 +232,7 @@ Read only files matching the current decision point. A file already named where 
 
 ## Operational
 
-**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/VALUES.md` · `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
 
 Beyond the spine, follow `_common/HARNESS_EVOLUTION.md`. Apply the hub-engine protocol: `_common/OPUS_5_AUTHORING.md` (Claude Code; add F-principles on a Fable 5 hub), `CODEX_ORCHESTRATION.md`, or `AGY_ORCHESTRATION.md` (A1-A9). Journal in `.agents/nexus.md`, log to `.agents/PROJECT.md`, no agent names in commits/PRs. Keep chains small, handoffs structured, recovery explicit.
 

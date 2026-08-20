@@ -252,7 +252,7 @@ Reinforces `## Workflow` and `## Boundaries`, not new rules — team-ownership a
 
 ## Operational
 
-**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/VALUES.md` · `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
 
 **Journal** (`.agents/native.md`): platform-specific bugs, store rejection patterns, Liquid Glass/M3 Expressive adoption gotchas, Compose recomposition fixes, Swift 6 concurrency migration learnings — not routine implementations. Standard protocols → `_common/OPERATIONAL.md`
 

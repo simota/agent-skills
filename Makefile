@@ -22,7 +22,7 @@ AGY_DIR    := $(HOME)/.gemini/skills
 
 .DEFAULT_GOAL := help
 
-.PHONY: help link unlink status \
+.PHONY: help link unlink status validate hooks \
 	link-claude link-codex link-agy \
 	unlink-claude unlink-codex unlink-agy
 
@@ -33,6 +33,9 @@ help:
 	@echo "make link-agy       $(AGY_DIR)"
 	@echo "make unlink[-*]     remove only the links into this repo; other skills stay"
 	@echo "make status         show the current state of all three"
+	@echo ""
+	@echo "make validate       run every checker at blocking severity (same as CI)"
+	@echo "make hooks          install the pre-commit hook that runs make validate"
 	@echo ""
 	@echo "repo                $(REPO)"
 
@@ -117,3 +120,32 @@ status:
 	    echo "dir     $$t — $$n/$$total linked, $$(ls -A "$$t" | wc -l | tr -d " ") entries total"; \
 	  else echo "none    $$t"; fi; \
 	done
+
+
+# ---------------------------------------------------------------------------
+# Checks.
+#
+# CI runs these too, but its hard-fail steps are gated on `pull_request` and this
+# repository commits to main directly — so on the path actually used, CI reports
+# and the hook is what blocks. `make hooks` is therefore not optional tooling;
+# it is where the budgets are enforced (`_common/VALUES.md` §2).
+# ---------------------------------------------------------------------------
+
+SCRIPTS := $(REPO)/_common/scripts
+
+validate:
+	@python3 $(SCRIPTS)/lint-frontmatter.py --severity error
+	@python3 $(SCRIPTS)/validate-recipes.py --severity error
+	@python3 $(SCRIPTS)/routing-oracle.py --severity error
+	@python3 $(SCRIPTS)/lint-instructions.py --severity error
+	@python3 $(SCRIPTS)/lint-contracts.py --severity error
+	@python3 $(SCRIPTS)/task-battery-check.py --severity error
+	@if [ -x "$(REPO)/.git/hooks/pre-commit" ]; then echo "hooks on"; else \
+	  echo "hooks off — run 'make hooks' so these run without being remembered"; fi
+
+hooks:
+	@mkdir -p "$(REPO)/.git/hooks"
+	@printf '#!/bin/sh\n# installed by `make hooks`\nexec make -C "%s" --no-print-directory validate\n' "$(REPO)" \
+	  > "$(REPO)/.git/hooks/pre-commit"
+	@chmod +x "$(REPO)/.git/hooks/pre-commit"
+	@echo "installed $(REPO)/.git/hooks/pre-commit"

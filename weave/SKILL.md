@@ -388,7 +388,7 @@ Inbound (`USER_TO_WEAVE`, `SCRIBE_TO_WEAVE`, `ATLAS_TO_WEAVE`) and outbound (`WE
 
 ## Operational
 
-**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/VALUES.md` · `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
 
 **Journal** (`.agents/weave.md`): Record only workflow-design domain insights — effective applications of a new pattern, domain-specific anti-patterns, updates to engine-selection criteria. Do not record individual tasks or routine work.
 

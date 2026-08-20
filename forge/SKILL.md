@@ -210,7 +210,7 @@ Forge receives concepts and direction from upstream agents, builds rapid prototy
 
 ## Operational
 
-**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/VALUES.md` · `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
 
 - Journal `BUILDER FRICTION` in `.agents/forge.md`; create it if missing. Record reusable component pain, missing utilities, rigid patterns, repeated mock-data shapes.
 - After significant Forge work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Forge | (action) | (files) | (outcome) |`

@@ -10,6 +10,11 @@ Checks:
 
   I1  Skill-count claims in instruction files match the actual corpus.
       Drift here is the canonical HD-DRIFT instance (declared structure vs real corpus).
+      The matcher is deliberately broad across phrasings and languages: a claim it does not
+      recognise is not a smaller failure than a wrong one -- it is the same failure with
+      nothing reporting it. Claims are split by scope, because the repo asserts two counts
+      (global skills at the repo root, project-local skills under `.claude/skills`), and a
+      check that accepted either would pass a global count written as the local one.
   I2  Referenced repo-relative paths exist. A pointer to a moved or deleted file
       routes agents to a dead end.
   I3  AGENTS.md and CLAUDE.md do not restate the same rule. AGENTS.md declares
@@ -38,9 +43,28 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 
 INSTRUCTION_FILES = ["AGENTS.md", "CLAUDE.md"]
 
-# Sentences that assert how many skills exist, e.g. "123 specialist skill agents"
-# or "123のスキルエージェント".
-COUNT_PATTERN = re.compile(r"(\d{2,4})\s*(?:specialist\s+skill\s+agents?|のスキルエージェント)")
+# Sentences that assert how many skills exist. Broad on purpose -- I1's failure mode is a
+# claim the regex never sees (the previous form matched "N specialist skill agents" and
+# "Nのスキルエージェント" only, and so matched nothing at all in either instruction file
+# while both carried a count). A number is a claim when a skill noun follows it, with at
+# most a scope qualifier in between.
+#
+# The qualifier is captured rather than skipped: it decides which count the claim is
+# measured against. Numbered list markers ("1) 担当スキル") do not match, because ") 担当"
+# is not in the qualifier set.
+COUNT_PATTERN = re.compile(
+    r"(\d{1,4})\s*(?:の)?\s*"
+    r"((?:(?:global|specialist|project-local|グローバル|プロジェクトローカル|専用の?)\s*)*)"
+    r"(?:skill\s+agents?|skills?|スキルエージェント|スキル)",
+    re.I,
+)
+
+# Words that, in the 24 characters before the number or inside the qualifier, mark the
+# claim as counting project-local skills rather than global ones.
+LOCAL_MARKERS = ("project-local", "プロジェクトローカル", "専用", ".claude/skills", ".agents/skills")
+
+# Project-local skills live here; `_common/PROJECT_LOCAL_SKILLS.md` is their contract.
+LOCAL_SKILLS_DIR = ".claude/skills"
 
 # Backtick-quoted repo-relative file references, e.g. `_common/HANDOFF.md`.
 #
@@ -60,20 +84,40 @@ def actual_skill_count() -> int:
     )
 
 
+def actual_local_skill_count() -> int:
+    """Project-local skills (`.claude/skills`), which the instruction files count separately."""
+    local = REPO_ROOT / LOCAL_SKILLS_DIR
+    if not local.is_dir():
+        return 0
+    return sum(1 for p in local.iterdir() if _corpus.is_skill_dir(p))
+
+
 def check_counts(path: Path, text: str, actual: int) -> list[tuple[str, str, str]]:
     findings = []
+    local_actual = actual_local_skill_count()
     for m in COUNT_PATTERN.finditer(text):
         claimed = int(m.group(1))
-        if claimed != actual:
+        before = text[max(0, m.start() - 24) : m.start()]
+        scope = (m.group(2) or "") + before
+        is_local = any(mark in scope.lower() for mark in LOCAL_MARKERS)
+        expected = local_actual if is_local else actual
+        if claimed != expected:
             line = text[: m.start()].count("\n") + 1
+            kind = "project-local skills" if is_local else "skills"
             findings.append(
                 (
                     "P1",
                     "I1",
-                    f"{path.name}:{line} claims {claimed} skills, corpus has {actual}",
+                    f"{path.name}:{line} claims {claimed} {kind}, corpus has {expected}"
+                    f" -- {_common_fix_hint(is_local)}",
                 )
             )
     return findings
+
+
+def _common_fix_hint(is_local: bool) -> str:
+    where = LOCAL_SKILLS_DIR if is_local else "the repo root"
+    return f"update the sentence or count {where} again (`_common/OPERATIONAL.md` s Derived Numbers)"
 
 
 def check_paths(path: Path, text: str) -> list[tuple[str, str, str]]:

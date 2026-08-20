@@ -309,7 +309,7 @@ A compliance audit spanning 3+ independent domains uses the Specialist Team patt
 
 ## Operational
 
-**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/VALUES.md` · `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
 
 **Journal** (`.agents/canon.md`): Read `.agents/canon.md` (create if missing) + `.agents/PROJECT.md`. Only journal significant standards interpretations, jurisdiction-specific review patterns, regulatory scope decisions, evidence patterns, and reusable control mappings; never journal reviewed document contents or personal information.
 - After significant Canon work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Canon | (action) | (files) | (outcome) |`

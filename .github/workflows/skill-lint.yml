@@ -4,11 +4,16 @@ on:
   pull_request:
     paths:
       - '**/SKILL.md'
+      - '*/reference/**.md'
+      - '_templates/**.md'
       - '_common/scripts/lint-frontmatter.py'
       - '_common/scripts/validate-recipes.py'
       - '_common/scripts/routing-oracle.py'
       - '_common/scripts/lint-instructions.py'
       - '_common/scripts/lint-contracts.py'
+      - '_common/scripts/task-battery-check.py'
+      - '_common/scripts/_corpus.py'
+      - 'Makefile'
       - '_common/**.md'
       - 'AGENTS.md'
       - 'CLAUDE.md'
@@ -39,16 +44,17 @@ jobs:
         run: python3 _common/scripts/lint-frontmatter.py --severity warning
 
       - name: Lint changed SKILL.md (hard fail on P0/P1)
-        # Block merges that introduce or worsen P0/P1 findings in changed files.
-        # PR-only: pushes to main already passed this gate.
-        if: github.event_name == 'pull_request'
+        # Block changes that introduce or worsen P0/P1 findings in changed files.
+        # Runs on push to main as well as on PRs: this repository commits to main
+        # directly, so a PR-only gate is a gate that never fires on the path actually
+        # used -- an enforcement that exists in the config and not in the history.
         run: python3 _common/scripts/lint-frontmatter.py --severity error --changed-only
 
       - name: Validate Recipes/Subcommand Dispatch (warning baseline)
         run: python3 _common/scripts/validate-recipes.py --severity warning
 
       - name: Validate Recipes/Subcommand Dispatch (changed-only hard fail)
-        if: github.event_name == 'pull_request'
+        # Same reasoning as the step above: not PR-gated.
         run: python3 _common/scripts/validate-recipes.py --severity error --changed-only
 
       - name: Routing Oracle (dead-refs, ladder order, producer!=verifier)
@@ -72,6 +78,11 @@ jobs:
         # unreachable and indirect (depth 2+) delivery block — the baseline is clean
         # and any drop off it is a regression.
         run: python3 _common/scripts/lint-contracts.py --severity error
+
+      - name: Task battery (routing fixtures)
+        # The battery is what `make validate` runs locally; CI running a strict subset of
+        # the pre-commit hook would let a hook-less clone push what the hook would refuse.
+        run: python3 _common/scripts/task-battery-check.py --severity error
 
       - name: Contract delivery matrix
         # Never fails. Prints the depth table so a reachability regression is legible

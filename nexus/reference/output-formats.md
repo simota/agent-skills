@@ -34,7 +34,7 @@ Collapse rules, binding on every form:
 - **Acceptance Provenance stays a table** whenever there is ≥1 criterion — this is the one ledger that must not collapse, because a criterion silently absent is the defect it exists to catch. With a single criterion, one row is the whole table.
 - **`### Changes` lists files, not narration.** One line per file; no restatement of what the diff shows.
 - **Never emit `N/A`, "none identified", or placeholder rows** to satisfy a template.
-- **The completion sweep line is never dropped**, in any form, including Compact.
+- **The completion sweep line is never dropped**, in any form, including Compact. It carries two counts: residue found, and files written / files evidenced. While the second pair differs the status is not `SUCCESS` — a file in neither the evidence nor the Residual Ledger is an unverified change with nothing declaring it so (`_common/OPERATIONAL.md` § Completion Contract).
 
 ---
 
@@ -75,7 +75,7 @@ Fallback: [fallback_taken: compass-invoked | architect-invoked | neither — rea
 |----|----------|-------|-----------------|-----------------|-------|
 | RES-n | [what is not done] | blocked-external \| gate-pending \| out-of-contract \| budget-exhausted \| user-declined | [named blocker] | [file:line `#TODO(agent):`, or `none`] | [recipe/agent that finishes it] |
 
-Completion sweep: [command run] — [N hits: each mapped to a RES-n, or `pre-existing`] (`scanned, 0 hits` when clean)
+Completion sweep: [command run] — [N hits: each mapped to a RES-n, or `pre-existing`]; [X] changed / [Y] evidenced (`scanned, 0 hits; 7 changed / 7 evidenced` when clean)
 ```
 
 Acceptance Provenance covers **every** intent-contract criterion (none silent) **and every prohibited outcome on its own axis** — a prohibition is `held` only with evidence that the forbidden result did not occur; `unverified` is honest, `held` by assumption is not, and `violated` caps the run at `FAILED`. Decision Ledger and evidence rules per `reference/autonomy-quality-protocol.md` (Q2, Q4–Q6, Q10, Q15).
@@ -144,7 +144,7 @@ Task: [Task name] · Type: [TYPE] · Chain: [Agent]
 | [AC] | verified \| partial \| missed | [evidence] |
 
 Decisions: none | Residuals: none
-Completion sweep: [command] — scanned, 0 hits
+Completion sweep: [command] — scanned, 0 hits; 1 changed / 1 evidenced
 ```
 
 Escalate out of Compact the moment any of these is true: a `DEC-n` was taken, a residual exists, a guardrail fired, a criterion is `partial`/`missed`, or a prohibited outcome is `unverified`. Those are the cases the long form exists for — everything else is scaffolding.
@@ -209,7 +209,7 @@ Parallel (if any):
 |----|----------|-------|-----------------|-----------------|-------|
 | RES-n | [what is not done] | blocked-external \| gate-pending \| out-of-contract \| budget-exhausted \| user-declined | [named blocker] | [file:line `#TODO(agent):`, or `none`] | [recipe/agent that finishes it] |
 
-Completion sweep: [command run] — [N hits: each mapped to a RES-n, or `pre-existing`] (`scanned, 0 hits` when clean)
+Completion sweep: [command run] — [N hits: each mapped to a RES-n, or `pre-existing`]; [X] changed / [Y] evidenced (`scanned, 0 hits; 7 changed / 7 evidenced` when clean)
 
 ### Rollback (if needed)
 - Rollback available: [Yes/No]
@@ -395,5 +395,5 @@ External feedback sources: Nexus[deliver] (epic-chain results), Judge (quality),
 - **Decision Ledger** — `DEC-n` judgment calls made without the user, interpretation entries first; omit only when empty (Q4-Q6)
 - `## Prompt Tuning` trace when any spawn's directives were adapted (`field, old→new, trigger, reward_basis`), delta-only — omit entirely when no spawn was tuned
 - Summary with overall status
-- **Residual Ledger** — each leftover as `RES-n` (class, blocker/owner, marker location, route), bound bidirectionally to any `#TODO(agent):` left behind, plus the completion-sweep line (`scanned, 0 hits` when clean — never omitted)
+- **Residual Ledger** — each leftover as `RES-n` (class, blocker/owner, marker location, route), bound bidirectionally to any `#TODO(agent):` left behind, plus the completion-sweep line, which carries **two** counts — residue and coverage (`scanned, 0 hits; 7 changed / 7 evidenced`), never omitted
 

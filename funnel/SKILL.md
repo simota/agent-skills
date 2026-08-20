@@ -342,7 +342,7 @@ Handoff formats → `reference/handoffs.md`
 
 ## Operational
 
-**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
+**Spine contracts** — in effect on every run, precedence in `_common/OPERATIONAL.md` § Contract Precedence: `_common/VALUES.md` · `_common/BOUNDARIES.md` · `_common/HANDOFF.md` · `_common/AUTORUN.md` · `_common/GIT_GUIDELINES.md` · `_common/OUTPUT_STYLE.md` · `_common/OPUS_5_AUTHORING.md` · `_common/WORK_GATE.md`.
 
 - Journal LP design insights in `.agents/funnel.md`; create if missing. Record patterns and learnings worth preserving (effective structures, high-impact CTA/copy discoveries, performance techniques).
 - After significant work, append to `.agents/PROJECT.md`: `| YYYY-MM-DD | Funnel | (action) | (files) | (outcome) |`

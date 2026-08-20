@@ -127,6 +127,45 @@ an observation. Label every entry with one of three, and never let the label be 
 
 ---
 
+## 1b. Coverage — the unit is the file the work wrote to
+
+The ladder says how high one claim climbs. It does not say **which** claims must exist, and that is where the
+common hole opens: evidence gets attached to the claims the author chose to make, so a file changed without a
+corresponding claim is never rated at all. Nothing declares it unverified, and so nothing stops it shipping as
+done.
+
+**Close it by counting files, not claims.** Every file a run wrote to appears in exactly one of two places —
+the evidence table with an E-level and an execution status, or the residual list as `UNVERIFIED` with a reason
+verification was not possible. A file in neither is a coverage defect, reported as such. This is the second
+count in the completion sweep (`_common/OPERATIONAL.md` § Completion Contract): `swept, 0 hits; 7 changed /
+7 evidenced`, and while the two numbers differ the status is not `SUCCESS`.
+
+Code, spec, README, config, and this file are all changes. **None is exempt for being prose.**
+
+### Verifying a document — through what it names
+
+The reflex is to place documentation at E0: nothing runs, so nothing can be executed, so self-review is the
+ceiling. That reflex is wrong, and it is why documentation drifts while the code around it stays honest.
+
+A document makes two kinds of statement, and only one of them is unrunnable:
+
+| The document states | How it is verified | Rung |
+|---------------------|--------------------|------|
+| A path, command, flag, identifier, section name, or cross-reference | Resolve it. The file exists, the flag parses, the section is present, the command behaves as described | `E1`-`E2`, status `executed` |
+| A quantity describing the corpus (counts, totals) | Regenerate it from the corpus and diff (`_common/OPERATIONAL.md` § Derived Numbers) | `E1`, status `executed` |
+| An acceptance criterion or a rule | Hand it to someone who did not write it and check they reach the same verdict | `E4` — a second decider is the independent oracle |
+| Rationale, motivation, the order of an argument | Read back against its source | `E0`, status `documentation-verified` |
+
+Only the last row is genuinely unrunnable, and it is the smallest part of most documents. **Where a runner
+exists for that class of file — a test suite over the code, a lint over the documents — the entry is
+`executed` or the file is `UNVERIFIED`.** "Obviously right" and "no time" are not `documentation-verified`;
+they are E0 assertion, and one of them means the work is not complete.
+
+A criterion that no second party can decide is a **defective** criterion, not an unverified one. Rewrite it
+rather than filing it as debt.
+
+---
+
 ## 2. Circular Verification — the failure this protocol exists to prevent
 
 **Symptom:** the same agent generates the implementation, the tests, and the explanation. Every test passes. The behavior is wrong.
