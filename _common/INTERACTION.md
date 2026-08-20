@@ -45,6 +45,42 @@ questions: # Array of 1-4 questions (required)
 | description shows impact | Explain outcome of selection | "Safely proceed with mock data" |
 | multiSelect cautiously | Only true when not mutually exclusive | Feature selection etc. |
 
+### Answer Cost — what the rules above do not cover
+
+The table shapes the question. This shapes what it **costs to answer**, which is where the real
+expense sits: a question is an interrupt, and the person must rebuild the context, weigh the
+options, and decide. Three properties cut that cost, and all three are required.
+
+- **State the default.** Name what happens if they say nothing — the option you will take and why.
+  This turns an open question into a veto, which is a different order of effort. A question with
+  no stated default is asking someone to author the answer rather than approve one.
+- **Say whether it is reversible.** People spend deliberation proportional to consequence, and can
+  only do that when consequence is visible. Mark the reversible choice as reversible and let them
+  answer fast; reserve their attention for what cannot be undone.
+- **Ask only what they already know.** A question the person must investigate to answer is not a
+  question — it is the work handed back. Do the investigation, then ask the decision that remains.
+  When the investigation is itself the thing in doubt, say so and ask whether to run it.
+
+**The one-question rule is unchanged** (`nexus/reference/intent-clarification.md`): when one focused
+question resolves the ambiguity, ask one. Answer Cost governs the shape of whichever questions are
+asked, never their number upward.
+
+### Interrupt Budget
+
+Decisions batch the way work does. Asking one decision per turn makes the number of interruptions
+track the *count* of open decisions; asking every decision whose prerequisites are already settled
+makes it track the *depth* of their dependencies, which is far smaller. Group them, order the group
+so the answer to one does not change another, and put the group in a single exchange.
+
+**Count approvals that changed an outcome, not approvals issued.** A gate whose issued count keeps
+rising while its changed-outcome count stays flat is being cleared unread, and an unread gate is a
+liability wearing the costume of a control (`nexus/reference/autonomy-quality-protocol.md` § Failure
+Modes, Q26 approval fatigue). Where the two diverge, the fix is a stated policy covering the routine
+case with escalation for deviations — not a better-worded prompt.
+
+None of this relaxes an **Ask First** trigger. Batching changes how many times the person is
+interrupted; it never changes what requires their consent.
+
 ---
 
 ## COMPLEXITY_ASSESSMENT (Complexity Evaluation)

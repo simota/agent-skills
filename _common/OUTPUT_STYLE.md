@@ -166,6 +166,36 @@ cost, and they bind at every tier: a 3-line answer can still make its reader wor
 list when items are independent. Splitting content across files or sections to satisfy a size
 number *raises* load — navigation costs more than a few extra visible rows (§ Density rules).
 
+### Fixed tail slots
+
+The last block of a response carries the same three things in the same order, every time:
+
+```
+changed:     what is different now
+decide:      what needs the reader's judgment
+unverified:  what was not exercised
+```
+
+Empty slots collapse to one word (`unverified: none`) and are never dropped — an absent slot and an
+empty one look identical to a reader who has to search for it. Labels may be reworded to fit the
+response's language and register; **the order is fixed**, because the value here is positional. A
+reader learns one location once and stops scanning for it in every reply afterwards. Rotating the
+position of "what's next" between responses spends that saving on nothing.
+
+`S` tier omits the block — a 1–3 line answer *is* the tail. Envelope formats (`_STEP_COMPLETE`,
+`NEXUS_HANDOFF`, `NEXUS_COMPLETE`) carry their own field order and are exempt.
+
+### Name the one check worth running
+
+Evidence-binding (`nexus/reference/autonomy-quality-protocol.md` Q10) requires claims to cite what
+was observed. It does not rank them, so ten cited pieces of evidence present the reader with a
+choice between auditing everything and auditing nothing — and nothing usually wins.
+
+When a response makes a claim the reader may want to confirm, name **the single cheapest check that
+would catch the most likely error**: one command, one `path:line`. Not the audit trail — the door
+into it. Choose it by where this particular result would most plausibly be wrong, not by what is
+easiest to quote.
+
 ---
 
 ## Format Priority
