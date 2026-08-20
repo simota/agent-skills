@@ -118,6 +118,56 @@ This rule is inherited by every skill. A SKILL.md may carry the one-line marker 
 
 ---
 
+## Sufficiency Floor — the failure this protocol creates
+
+Every rule above cuts. Cutting has its own failure mode, and it is the harder one to see: an
+answer that is too short *looks* like a good short answer, while an answer that is too long
+announces itself. Brevity is not the goal — **the goal is that nothing the reader needs is
+missing and nothing else is present.**
+
+Five things survive compression at every tier. Cutting one is a defect, not a style choice:
+
+- **The direct answer to what was asked.** A related answer, a partial answer, or the answer to
+  the question the response found easier is not it.
+- **Anything the reader must decide.** A choice made silently on their behalf is the most
+  expensive omission, because they cannot know it happened.
+- **What was not verified.** Unexercised paths, assumptions, and skipped checks. A short answer
+  that quietly drops its own caveats is worse than a long one that keeps them.
+- **The number or fact that would change the conclusion** if the reader knew it.
+- **Where to look.** The `path:line`, command, or identifier the reader needs to act or check.
+
+**Never trade the floor for the tier.** When a task's honest answer exceeds its declared tier,
+the tier gives way — it is a cap on padding, never a licence to omit. Say the whole thing.
+
+---
+
+## Cognitive Load — the reader is a person, reading once
+
+Density makes output *small*. It does not make it *cheap to read*. These rules target the second
+cost, and they bind at every tier: a 3-line answer can still make its reader work twice.
+
+- **First line answers.** Result, decision, or state change — before method, before context,
+  before caveats. A reader who stops after one line should still have the answer, not the setup.
+- **Forward-only.** No term used before it is defined, no "as explained below", no conclusion
+  resting on a paragraph further down. Backtracking costs the reader more than the words saved.
+- **One name per thing.** The same file, error, or concept keeps one label throughout. Synonym
+  variation reads as a distinction and forces the reader to check whether one exists.
+- **No arithmetic left to the reader.** Give the delta, not two numbers to subtract; the share
+  *and* its base ("3 of 55"), not one of them. If a comparison matters, compute it.
+- **The discriminator goes first.** In a list or table row, lead with the word that lets a reader
+  skip it. Rows that must be read to the end to be dismissed are read in full, every one.
+- **Uncertainty is a block, not a seasoning.** Hedges spread across sentences make every sentence
+  need re-reading. State confidence once, in one place, and let the rest read as assertion.
+- **Emphasis is a budget.** More than one bolded phrase per block spends it to zero.
+- **Order by the reader's need, not by the work's sequence.** The order steps were performed is
+  almost never the order they matter in. Rewrite the sequence into the priority.
+
+**Structure serves scanning, not symmetry.** A table earns its shape when rows are compared; a
+list when items are independent. Splitting content across files or sections to satisfy a size
+number *raises* load — navigation costs more than a few extra visible rows (§ Density rules).
+
+---
+
 ## Format Priority
 
 When data is structured, **don't prose it**. Order of preference:
@@ -138,7 +188,7 @@ table  >  bulleted list  >  numbered list  >  prose
 
 - **1 bullet = 1 claim.** No ", and also" inside a bullet.
 - **Paragraphs ≤ 3 sentences.** More → list.
-- **Tables ≤ 7 rows visible.** More → reference file.
+- **Tables stay whole.** Split one only when rows stop being comparable, never to hit a row count — a reader scanning a visible table pays less than one who must open a second file. Past roughly 15 rows, add a sort order or group the rows rather than moving them.
 - **No nested bullets past depth 2.** Flatten or section.
 - **Inline code over fenced** for single tokens (`auth.ts` not a code block).
 
@@ -174,13 +224,19 @@ table  >  bulleted list  >  numbered list  >  prose
 
 ## Self-Audit Before Sending
 
-Three-question check the model runs internally before emitting:
+Five-question check the model runs internally before emitting. The first three cut; the last two
+are the ones cutting breaks, so they are asked **after**, on the cut version:
 
 1. **Filler?** Is there a sentence that, if deleted, the user loses no information?
 2. **Structure?** Is any 3+ line prose block actually a table or list in disguise?
 3. **Tier?** Could one tier smaller still answer the question?
+4. **Complete?** Are all five items of § Sufficiency Floor still present — the direct answer, every
+   decision the reader must make, what went unverified, the fact that would change the conclusion,
+   and where to look?
+5. **One pass?** Does the first line answer, and can the rest be read straight through without
+   backtracking to resolve a term, a reference, or a number?
 
-If yes to any → cut.
+Yes to 1–3 → cut. No to 4 or 5 → restore or reorder, even if it costs the tier.
 
 ---
 
