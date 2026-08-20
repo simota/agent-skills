@@ -45,7 +45,7 @@ Code implementation.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Builder** | Business-logic and external-API implementation | Robust API integrations, data models, image-generation APIs | Yes |
+| **Builder** | Business-logic, CLI/TUI, and grammar implementation | API integrations, data models, image-generation APIs, CLI/TUI tools (`cli`), regex / parser / DSL (`grammar`) | Yes |
 | **Artisan** | Frontend implementation | Production React/Vue/Svelte | Yes |
 | **Forge** | Prototyping | Fast prototypes for both frontend and backend | Yes |
 | **Native** | Pure-native mobile implementation | iOS Swift 6.3 + SwiftUI / Android Kotlin 2.4+ + Jetpack Compose (RN/Flutter/KMP/CMP out of scope) | Yes |
@@ -57,7 +57,7 @@ Test authoring and verification.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Radar** | Unit tests | Edge-case additions, flaky-test repair, coverage improvement | Yes |
+| **Radar** | Unit tests and test data | Edge cases, flaky-test repair, coverage, factories / fixtures / seeds (`fixtures`) | Yes |
 | **Voyager** | Cross-platform + iOS E2E | Playwright/Cypress/Appium/Detox/Maestro and XCUITest/snapshots (`ios`) | Yes |
 | **Siege** | Load and resilience testing | Load tests, contract tests, chaos engineering | Yes |
 | **Matrix** | Manual QA test-case authoring | Systematic QA procedures (BVA, equivalence class, decision table) for TestRail/Zephyr/Xray/Qase — `qa-scenario` recipe (absorbed from drill) | No |
@@ -103,7 +103,7 @@ Documentation authoring, visualization, and article writing.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Scribe** | Technical and cross-team specifications | PRD/SRS/HLD/LLD plus `cross-team` L0-L3 packages | No |
+| **Scribe** | Technical and cross-team specifications | PRD/SRS/HLD/LLD, `cross-team` L0-L3 packages, document format conversion (`convert`) | No |
 | **Quill** | Code documentation | JSDoc additions, README updates, fixing `any` types | Mixed |
 | **Prose** | UX writing | Microcopy, error messages, voice and tone | No |
 | **Tome** | Learning material and technical publications | Diff → tutorial conversion, design-decision records, articles for note / Zenn / Qiita / dev.to | No |
@@ -117,7 +117,7 @@ System design and structure.
 |-------|------|---------|------|
 | **Atlas** | Architecture analysis | Dependency analysis, ADR / RFC authoring | Mixed |
 | **Schema** | DB and tenant architecture | Normalization, migrations, ER diagrams, tenant isolation/RLS/routing (`tenant`) | Mixed |
-| **Gateway** | API design | OpenAPI generation, versioning | Mixed |
+| **Gateway** | API design and messaging integration | OpenAPI generation, versioning, chat adapters / webhooks / WebSocket (`messaging`) | Mixed |
 | **Grove** | Human/LLM repository structure | Directory/docs layout plus LLM navigation and prompt-cache topology (`llm`) | Mixed |
 
 ## UX/Design (11)
@@ -165,7 +165,7 @@ Growth tactics and branding.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Growth** | SEO / CRO / GEO | Meta / OGP / JSON-LD, CTA optimization | Mixed |
+| **Growth** | SEO / CRO / GEO and retention | Meta / OGP / JSON-LD, CTA optimization, re-engagement and loyalty design (`retention`) | Mixed |
 
 ## Analytics (3)
 
@@ -191,7 +191,7 @@ Browser automation and asset acquisition.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Vector** | Browser automation | Task completion via Playwright / DevTools | Yes |
+| **Vector** | Browser automation and crawl architecture | Task completion via Playwright / DevTools, crawler topology and frontier design (`crawl`) | Yes |
 
 ## Data (1)
 
@@ -235,7 +235,7 @@ Manages and evolves the ecosystem itself.
 |-------|------|---------|------|
 | **Architect** *(`skill-meta`)* | Skill design | New agent design, gap analysis | No |
 | **Sigil** *(`skill-meta`)* | Project operating-layer design | Tailored skills plus recipe/workflow/routing-map blueprints (`blueprint`) | No |
-| **Hone** *(optional: `ai-cli-admin`)* | AI CLI configuration and hooks | Claude Code / Codex / Antigravity CLI audits plus PreToolUse / PostToolUse / Stop lifecycle hooks | Mixed |
+| **Hone** *(optional: `ai-cli-admin`)* | AI CLI configuration, hooks, and personal environment | CLI audits, PreToolUse / PostToolUse / Stop hooks, dotfiles and shell/editor config (`env`), macOS AppleScript / JXA automation (`automate`) | Mixed |
 | **Compass** | Skill navigator | Skill guidance, onboarding | No |
 | **Prune** *(`skill-meta`)* | Skill ecosystem cleanup | Overlap audit, merge-candidate detection, sunset proposals | No |
 
@@ -255,7 +255,7 @@ AI design and thinking support.
 |-------|------|---------|------|
 | **Oracle** | AI / ML design | Prompt engineering, RAG design, evaluation | No |
 | **Chisel** | Prompt → executable spec | Ambiguity detection, criterion translation, role decomposition; Nexus `SPECIFY` briefs | No |
-| **Flux** | Thinking refraction | Assumption challenges, perspective shifts | No |
+| **Flux** | Thinking refraction and ideation | Assumption challenges, perspective shifts, multi-turn Expand / Propose / Evaluate / Subtract dialogue (`ideate`) | No |
 
 ## Other Specialists
 
@@ -264,11 +264,11 @@ Specialized skills that don't fit the categories above.
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
 | **Polyglot** | i18n / l10n | Multilingual support, RTL handling | Mixed |
-| **Weave** | Workflow design | State machines, Saga patterns | Mixed |
+| **Weave** | Workflow and schedule design | State machines, Saga patterns, cron / timezone / business calendar / backfill (`schedule`) | Mixed |
 | **Omen** | Pre-mortem analysis | Failure-scenario enumeration, RPN scoring | No |
 | **Seek** | Search-engine design | Full-text search, vector search, RAG | Mixed |
 | **Vigil** | Detection engineering | Sigma / YARA rule design | Mixed |
-| **Magi** | Multi-perspective deliberation and advisory | Architecture arbitration, Go / No-Go, founder bottleneck coaching, named-figure mental-model lenses | No |
+| **Magi** | Multi-perspective deliberation, advisory, and strategy simulation | Architecture arbitration, Go / No-Go, founder coaching, named-figure lenses, business scenario simulation (`simulate`) | No |
 | **Saga** | Narrative design | Customer-experience storytelling | No |
 | **Cue** | Video script and demo production | Product videos, storyboards, Playwright-generated demos | Mixed |
 | **Stage** | Slide generation | Marp / reveal.js / Slidev | Mixed |

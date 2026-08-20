@@ -80,8 +80,8 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 | **Trace** | _"Every click tells a story. I read between the actions."_ - Session replay analysis, per-persona behavioral pattern extraction, UX problem storytelling. Works with Field/Echo | Behavioral analysis report |
 | **Canon** | _"Standards are the accumulated wisdom of the industry. Apply them, don't reinvent them."_ - Standards, regulatory-control, and legal-document review. Evaluates OWASP/WCAG/OpenAPI/ISO 25010, SOC2/PCI-DSS/HIPAA/ISO 27001, ToS, privacy policies, DPA/EULA, cookie consent, and advertising claims | Compliance and legal-review report |
 | **Lens** | _"See the code, not just search it."_ - Codebase comprehension specialist. Systematically investigates code structure, feature exploration, and data flow tracing for questions like "Does feature X exist?", "How does flow Y work?", "What is this module's responsibility?" | Investigation report |
-| **Magi** | _"Three minds, one verdict. Consensus through diversity."_ - Multi-perspective decisions, founder office hours, bottleneck triage, pitch critique, and advisory lenses grounded in documented notable-figure thinking | Decision and advisory report |
-| **Flux** | _"Bend the light. See what was always there."_ - Thinking refraction engine. Challenges assumptions, combines cross-domain knowledge, and shifts perspectives to produce reframed problem statements. Cynefin-based framework selection, Serendipity Injection, 10+ thinking frameworks. No code written | Reframing package, Insight Matrix, Blind Spot Report |
+| **Magi** | _"Three minds, one verdict. Consensus through diversity."_ - Multi-perspective decisions, founder office hours, bottleneck triage, pitch critique, advisory lenses grounded in documented notable-figure thinking, and business scenario simulation (`simulate` Recipe) | Decision and advisory report |
+| **Flux** | _"Bend the light. See what was always there."_ - Thinking refraction engine. Challenges assumptions, combines cross-domain knowledge, and shifts perspectives to produce reframed problem statements. Cynefin-based framework selection, Serendipity Injection, 10+ thinking frameworks, and multi-turn ideation across Expand/Propose/Evaluate/Subtract (`ideate` Recipe). No code written | Reframing package, Insight Matrix, Blind Spot Report |
 | **Cast** | _"Personas are not invented. They are discovered, born, and evolved."_ - Persona casting agent. Rapid generation, registry management, lifecycle tracking, and cross-agent distribution of personas from diverse inputs | Persona registry |
 | **Matrix** | _"Infinite combinations, finite resources. Matrix finds the minimum that covers the maximum."_ - Universal multi-dimensional analysis agent. Controls combinatorial explosion from arbitrary axis×value inputs. Minimum coverage set selection, execution planning, and prioritization across all domains (testing, deployment, UX validation, risk assessment, compatibility). No code written | Matrix analysis, coverage optimization plan |
 | **Saga** | _"Facts are remembered 5-10% of the time. Stories raise that to 65-70%. The customer is the hero. The product is the guide."_ - Narrative design agent. Structures product and feature use cases as customer-centric stories. StoryBrand SB7, Pixar Story Spine, Hero's Journey, JTBD frameworks, pitch narratives, onboarding stories, transformation arcs. No code written | Narrative document |
@@ -114,7 +114,7 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Radar** | _"Untested code is unfinished code."_ - Unit/integration test addition, flaky test fixing, coverage improvement | Test code |
+| **Radar** | _"Untested code is unfinished code."_ - Unit/integration test addition, flaky test fixing, coverage improvement, and test-data factories/fixtures (`fixtures` Recipe) | Test code |
 | **Voyager** | _"E2E tests are the user's advocate in CI/CD."_ - Cross-platform and iOS E2E specialist. Playwright/Cypress/Appium/Detox/Maestro plus XCUITest and App Store snapshots | E2E test code |
 | **Sentinel** | _"Security is not a feature. It's a responsibility."_ - Static security analysis (SAST), vulnerability pattern detection, input validation | Security fixes |
 | **Probe** | _"A system is only as secure as its weakest endpoint."_ - Dynamic security testing (DAST), OWASP ZAP/Nuclei integration, penetration testing | Vulnerability report |
@@ -133,7 +133,7 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Builder** | _"Types are contracts. Code is a promise."_ - Type-safe production implementation plus Gemini image-generation/editing code, prompt design, batch generation, style transfer, post-processing, provenance, and content-policy gates | Production and image-generation code |
+| **Builder** | _"Types are contracts. Code is a promise."_ - Type-safe production implementation plus Gemini image-generation/editing code, prompt design, batch generation, style transfer, post-processing, provenance, and content-policy gates, plus CLI/TUI construction (`cli`) and regex/parser/DSL authoring (`grammar`) | Production and image-generation code |
 | **Artisan** | _"Prototypes promise. Production delivers."_ - Production frontend implementation craftsman. React/Vue/Svelte, Hooks design, state management, Server Components, form handling, data fetching | Frontend code |
 | **Forge** | _"Done is better than perfect. Ship it, learn, iterate."_ - Prototyping. Prioritizes working software over perfection. Outputs types.ts, errors.ts, forge-insights.md for Builder handoff | MVP/PoC |
 | **Native** | _"Every pixel ships. Every platform matters."_ - Pure-native mobile implementation specialist for iOS (Swift 6.3 + SwiftUI + Liquid Glass) and Android (Kotlin 2.4+ + Jetpack Compose + Material 3 Expressive). Production-quality features with @Observable / Swift Concurrency, Compose Strong Skipping + Type-safe Navigation, SwiftData / Room, Credential Manager + Passkeys, Privacy Manifest, edge-to-edge, predictive back, Live Activities, App Intents, Foundation Models / Gemini Nano, store compliance, and per-store staged rollout. React Native / Flutter / KMP / CMP are out of scope | Code |
@@ -184,14 +184,13 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Scribe** | _"A specification is a contract between vision and reality."_ - Specification author for PRD/SRS/HLD/LLD and cross-team L0-L3 packages, including implementation checklists and test specifications | Specs, design docs |
+| **Scribe** | _"A specification is a contract between vision and reality."_ - Specification author for PRD/SRS/HLD/LLD and cross-team L0-L3 packages, including implementation checklists, test specifications, and document format conversion (`convert` Recipe) | Specs, design docs |
 | **Quill** | _"Code tells computers what to do. Documentation tells humans why."_ - JSDoc/TSDoc additions, README updates, typing `any` to proper type definitions | Documentation |
 | **Tome** | _"Changes are forgotten. Knowledge endures."_ - Transforms changes into learning documentation and verified knowledge into public technical articles for note/Zenn/Qiita/dev.to, including article series and repurposing | Learning docs and technical articles |
 
 **Scribe vs Quill vs Tome responsibilities**:
-- **Scribe**: Project documentation (PRD, SRS, design docs, checklists, test specifications)
+- **Scribe**: Project documentation (PRD, SRS, design docs, checklists, test specifications) and format conversion (Markdown > PDF/Word/HTML, `convert` Recipe)
 - **Quill**: Code documentation (JSDoc/TSDoc, README, type definitions)
-- **Scribe**: Format conversion (Markdown > PDF/Word/HTML, etc.)
 - **Tome**: Change-based learning materials and external-facing articles for note/Zenn/Qiita/dev.to, including series management
 
 ### Visualization
@@ -209,9 +208,9 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 |-------|-------------|--------|
 | **Atlas** | _"Dependencies are destiny. Map them before they map you."_ - Dependency analysis, circular reference detection, ADR/RFC creation | Design documents |
 | **Port** | _"From web to native. Translate the experience, not just the code."_ - Web-to-native porting design specialist (2026 spec — Liquid Glass / Material 3 Expressive / Swift 6.3 / targetSdk 36 / Privacy Manifest / 5.1.2(i) AI disclosure aware). Designs porting blueprints from Web (React/Vue/Svelte/Angular) to iOS Swift / Android Kotlin pure-native. Produces feature parity matrices, native architecture maps, regulatory-compliance plans, and Strangler-Fig phased roadmaps. Optionally proposes a hybrid path (Pure-Native UI + KMP shared logic) | Porting blueprint, parity matrix, roadmap |
-| **Gateway** | _"APIs are promises to the future. Design them like contracts."_ - API design, review, OpenAPI spec generation, versioning strategy, breaking change detection | API specifications |
+| **Gateway** | _"APIs are promises to the future. Design them like contracts."_ - API design, review, OpenAPI spec generation, versioning strategy, breaking change detection, and messaging-platform integration (`messaging` Recipe) | API specifications |
 | **Grove** | _"A well-structured repository is a well-structured mind."_ - Human- and LLM-optimized repository structure design, including context efficiency, prompt-cache topology, and sharding | Structure design, audit reports |
-| **Weave** | _"Every state tells a story. Every transition is a contract."_ - Workflow and state machine design specialist. State transition design, invalid transition detection, Saga patterns, approval flows | Designs, diagrams |
+| **Weave** | _"Every state tells a story. Every transition is a contract."_ - Workflow and state machine design specialist. State transition design, invalid transition detection, Saga patterns, approval flows, and cron/timezone/business-calendar scheduling (`schedule` Recipe) | Designs, diagrams |
 | **Seek** | _"The right result at the right time in the right order."_ - Search engine and vector DB design specialist. Full-text search, vector search, hybrid search, RAG retrieval layer | Code, configs |
 | **Crypt** | _"Trust no channel. Verify every key."_ - Cryptographic architecture design: algorithm selection, key management, E2E encryption, KMS integration, TLS configuration | Crypto design specs |
 
@@ -238,13 +237,13 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 |-------|-------------|--------|
 | **Gear** | _"The best CI/CD is the one nobody thinks about."_ - Dependency management, CI/CD and Docker optimization, plus advanced GitHub Actions workflow design | Configuration files |
 | **Scaffold** | _"Infrastructure is the silent foundation of every dream."_ - Cloud infrastructure (Terraform/CloudFormation/Pulumi), local dev environments (Docker Compose), IaC design | Infrastructure config |
-| **Hone** | _"A sharp blade cuts clean. A sharp config cuts friction."_ - AI CLI configuration auditor and Claude Code lifecycle-hook specialist. Audits Codex/Antigravity/Claude configuration and designs, configures, or debugs scoped hooks with verification | Audit reports, proposals and hook configurations |
+| **Hone** | _"A sharp blade cuts clean. A sharp config cuts friction."_ - AI CLI configuration auditor and Claude Code lifecycle-hook specialist. Audits Codex/Antigravity/Claude configuration and designs, configures, or debugs scoped hooks with verification. Also owns the personal environment — dotfiles, shell/editor config, and macOS automation (`env` / `automate` Recipes) | Audit reports, proposals and hook configurations |
 | **Ledger** | _"Every dollar has a story. Make it a short one."_ - FinOps and cloud cost optimization. IaC cost estimation, right-sizing, RI/SP recommendations, cost anomaly detection | Reports, configs |
 | **Shift** | _"Migration is not moving. It's transforming."_ - Migration and upgrade orchestrator. Framework, library, API, database, and infrastructure migrations end-to-end with codemod generation and incremental strategies | Migration plans |
 
 **Builder vs Hone vs Gear vs Scaffold responsibilities**:
-- **Hone**: Personal environment (dotfiles, shell, editor, terminal)
-- **Hone**: AI CLI configuration audit and Claude Code event-hook design/configuration/debugging
+- **Builder**: CLI and TUI construction (`cli` Recipe) — the tool itself
+- **Hone**: Personal environment (dotfiles, shell, editor, terminal, macOS automation) plus AI CLI configuration audit and Claude Code event-hook design/configuration/debugging
 - **Gear**: Project-level DevOps (CI/CD, Docker, monitoring, Git hooks); `gha` mode owns advanced GitHub Actions
 - **Scaffold**: Infrastructure provisioning (cloud, Docker Compose, IaC)
 
@@ -258,7 +257,7 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Growth** | _"Traffic without conversion is just expensive vanity."_ - SEO (meta/OGP/JSON-LD), SMO (social share display), CRO (CTA improvement) | Growth initiatives |
+| **Growth** | _"Traffic without conversion is just expensive vanity."_ - SEO (meta/OGP/JSON-LD), SMO (social share display), CRO (CTA improvement), and retention/re-engagement design (`retention` Recipe) | Growth initiatives |
 | **Funnel** | _"Above the fold is your one shot. Make every pixel convert."_ - LP (Landing Page) conversion strategist and premium production orchestrator. Framework-based structure design (AIDA/PAS/BAB/4Ps), hero section craft, CTA placement strategy, social proof hierarchy, mobile-first responsive implementation | LP structure, copy, specs |
 
 ### Analytics
@@ -281,10 +280,11 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Vector** | _"The browser is a stage. Every click is a scene."_ - Browser automation via Playwright/Chrome DevTools. Data collection, form interaction, screenshots, network monitoring | Automation scripts |
+| **Vector** | _"The browser is a stage. Every click is a scene."_ - Browser automation via Playwright/Chrome DevTools. Data collection, form interaction, screenshots, network monitoring, and crawl-system architecture (`crawl` Recipe) | Automation scripts |
 
 **Cue vs Vitrine responsibilities**:
 - **Cue**: Browser (Web UI) demo videos (Playwright, .webm output)
+- **Vitrine**: Component catalogs and Storybook stories with visual-regression wiring
 
 ## Workflows
 
@@ -1487,8 +1487,8 @@ Set up my neovim configuration with LSP support and lazy.nvim plugin management.
 **Output**: init.lua structure, lazy.nvim setup, LSP configuration, keybindings
 
 **Builder vs Hone vs Gear vs Scaffold responsibilities**:
-- **Hone**: Personal environment (dotfiles, shell, editor, terminal)
-- **Hone**: AI CLI configuration audit and Claude Code event-hook design/configuration/debugging
+- **Builder**: CLI and TUI construction (`cli` Recipe) — the tool itself
+- **Hone**: Personal environment (dotfiles, shell, editor, terminal, macOS automation) plus AI CLI configuration audit and Claude Code event-hook design/configuration/debugging
 - **Gear**: Project-level DevOps (CI/CD, Docker, monitoring, Git hooks)
 - **Scaffold**: Infrastructure provisioning (cloud, Docker Compose, IaC)
 - **Gear[gha]**: GitHub Actions workflow design (triggers, security, performance, PR automation)
@@ -1577,8 +1577,7 @@ Each platform should display messages in its native format.
 ---
 
 **Gateway vs Stream responsibilities**:
-- **Gateway**: Messaging platform integration (channel adapters, webhooks, WebSocket, bots)
-- **Gateway**: REST/GraphQL API design (OpenAPI specs, versioning, endpoints)
+- **Gateway**: REST/GraphQL API design (OpenAPI specs, versioning, endpoints) and messaging platform integration (channel adapters, webhooks, WebSocket, bots — `messaging` Recipe)
 - **Stream**: Data pipelines (ETL/ELT, Kafka, Airflow, batch processing)
 
 ---
