@@ -8,6 +8,8 @@
 
 Skills inherit these rules so each agent does not re-invent its own output style. Combine with the per-skill `Output Contract` section in SKILL.md.
 
+**What binds where.** Tiers and § Tier-Specific Rules govern the response. § Sufficiency Floor, § Ambiguity Floor and § Cognitive Load govern *any* prose a skill authors — the response, and equally a deliverable written to a file, where a second reading survives longer and is re-read by more people.
+
 ---
 
 ## Why This Exists
@@ -141,6 +143,50 @@ the tier gives way — it is a cap on padding, never a licence to omit. Say the 
 
 ---
 
+## Ambiguity Floor — the other failure this protocol creates
+
+§ Sufficiency Floor covers one failure of cutting: the reader needed something and it is gone. This
+is the other, and the more expensive one: everything needed is present, and a sentence admits a
+reading the writer did not mean. The reader does not stop — they act on the wrong reading and find
+out later.
+
+**A text is finished when no sentence has a second reading a fair reader could act on.** Not when
+it is short. Compress against that bar, never through it. Like the sufficiency floor, it does not
+yield to the tier.
+
+### Precision vs. redundancy — the test that separates them
+
+Both add words, so length cannot tell them apart. One question does: **does this word remove a
+reading, or repeat one already excluded?**
+
+- Removes a reading → precision. Keep it, though the sentence grew.
+- Repeats an excluded reading → redundancy. Cut it, though it is short.
+
+`50ms` earns its place over `fast`; `the caller validates` over `input is validated`; the sentence
+restating what the previous one already fixed does not. Saying a rule twice in different words is
+not reinforcement — it starts a search for the distinction between the two phrasings.
+
+### Defects that leave a second reading
+
+| # | Defect | Looks like | Fix |
+|---|--------|-----------|-----|
+| A1 | Unbound referent | `it` · `this` · `the above` · `likewise` with more than one candidate antecedent | Name the thing again — repeating a *name* is not redundancy |
+| A2 | Unquantified qualifier | `appropriately` · `sufficient` · `large` · `soon` · `as needed` | A number, a threshold, or the name of who decides |
+| A3 | Unowned action | `must be validated` · `is to be checked` | Subject and moment: who does it, at which point |
+| A4 | Undeclared exception | `as a rule` · `generally` · `basically`, exception unnamed | Name the exception, or delete the hedge — one of the two is true |
+| A5 | Two things, one name | one term covering two concepts (the inverse of § Cognitive Load's *one name per thing*) | Split the term; a distinction with no word of its own is not read |
+| A6 | Unfalsifiable rule | a requirement whose violation nobody could point at | Write the observable failure. If there is none, it is a preference, not a rule |
+
+The examples are English; the defects are not. Each has an equivalent in whatever language the output is written in (`OPERATIONAL.md` § Output Language), and the row is matched by the defect, not by the word.
+
+### Intent is carried once
+
+State the rule **and the failure it prevents** — the rule alone gets applied literally where it does
+not fit. State that pair in one place. The same rationale echoed at three sites is the redundancy
+this section otherwise bans, and the three copies drift (`HARNESS_DEBT.md` `HD-DRIFT`).
+
+---
+
 ## Cognitive Load — the reader is a person, reading once
 
 Density makes output *small*. It does not make it *cheap to read*. These rules target the second
@@ -254,8 +300,8 @@ table  >  bulleted list  >  numbered list  >  prose
 
 ## Self-Audit Before Sending
 
-Five-question check the model runs internally before emitting. The first three cut; the last two
-are the ones cutting breaks, so they are asked **after**, on the cut version:
+Six-question check the model runs internally before emitting. The first three cut; the last three
+are what cutting breaks, so they are asked **after**, on the cut version:
 
 1. **Filler?** Is there a sentence that, if deleted, the user loses no information?
 2. **Structure?** Is any 3+ line prose block actually a table or list in disguise?
@@ -265,8 +311,12 @@ are the ones cutting breaks, so they are asked **after**, on the cut version:
    and where to look?
 5. **One pass?** Does the first line answer, and can the rest be read straight through without
    backtracking to resolve a term, a reference, or a number?
+6. **Two readings?** Read as an outsider who wants a different answer: does any sentence let them
+   act on one — an unbound `it`, an unquantified `appropriately`, an ownerless obligation (§ Ambiguity
+   Floor A1–A6)? Cutting is what creates these, which is why this is asked last.
 
-Yes to 1–3 → cut. No to 4 or 5 → restore or reorder, even if it costs the tier.
+Yes to 1–3 → cut. No to 4 or 5, or yes to 6 → restore, reorder, or constrain, even if it costs the
+tier. A word that removes a reading is never cut to make a tier.
 
 ---
 
@@ -346,3 +396,16 @@ Skills validating against ODP must pass:
 - **R8.4** Task overrides table present when the skill has ≥2 distinct task types **and** they differ in tier.
 
 See `architect/reference/validation-checklist.md` Section 8.
+
+---
+
+## Complexity Budget — § Ambiguity Floor
+
+Per `_common/HARNESS_DEBT.md` §3b. Scoped to this section; the rest of the file predates the budget and acquires its fields when next edited for another reason.
+
+| Field | Declaration |
+|-------|-------------|
+| `failure` | `F1 — wrong work`: a contract or deliverable is written densely, read the way it was not meant, and acted on. The corpus had a floor against cutting too much (§ Sufficiency Floor) and none against cutting into precision, so an unquantified `appropriately`, an unexplained `as a rule`, and an ownerless `must be validated` all read as compliant density. |
+| `effect` | Turns the vaguest failures into six named defects with fixes (A1–A6), gives the cut/keep decision one test that word count cannot answer, and adds one self-audit question run after cutting. It does **not** catch prose that is unambiguous and wrong, and it has **no script**: A2 and A4 are lintable as word lists, A1/A3/A5/A6 are not, and a half-corpus linter would report the checkable third as the whole. Enforcement is the self-audit and review. |
+| `owner` | `architect` — owns this file and the SKILL.md authoring rules that inherit it. `gauge` reads it as review criteria in compliance sweeps. |
+| `removal` | Delete when either holds: (1) a lint lands that covers A1–A6, at which point this section becomes the checker's documentation and shrinks to the table; or (2) two consecutive `darwin` evaluation cycles find no defect in the corpus or in shipped deliverables attributable to A1–A6 — a floor nothing ever hits is describing a failure that does not occur here. Partial removal counts: a row that never fires across a cycle is dropped on its own. |

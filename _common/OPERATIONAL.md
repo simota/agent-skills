@@ -172,13 +172,14 @@ All agents operate in hub-and-spoke mode through Nexus.
 
 ## Output Density
 
-Every skill inherits the Output Density Protocol — **`_common/OUTPUT_STYLE.md`**. The six rules that bind without reading it:
+Every skill inherits the Output Density Protocol — **`_common/OUTPUT_STYLE.md`**. Tiers govern the response; the floors below govern any prose a skill authors, a file deliverable included. The rules that bind without reading it:
 
 - **Default tier is `M`** (5–15 lines) unless the SKILL.md declares an `## Output Contract` that says otherwise. There is no undeclared tier.
 - **`## Output Requirements` is a ceiling, not a floor.** Emit only the items the task exercised; never pad with `N/A`, "none identified", or empty table shells (§ Conditional Requirements).
 - **Answer first, then stop.** No preamble, no request restatement, no closing summary of what the diff already shows (§ Banned Patterns).
 - **Short is not the goal — *nothing missing, nothing else* is.** Five things survive compression at every tier: the direct answer, anything the reader must decide, what went unverified, the fact that would change the conclusion, and where to look. When the honest answer exceeds the tier, the tier gives way; a tier caps padding and never licenses omission (§ Sufficiency Floor).
 - **Written to be read once, by a person.** First line carries the result; no term used before it is defined and no backward reference to resolve; one name per thing; deltas and bases computed rather than left as arithmetic; confidence stated once in one place instead of hedged across sentences (§ Cognitive Load).
+- **No second reading.** Density's other failure is a sentence that reads two ways and is acted on the wrong one. A word that removes a reading is precision and stays even though the sentence grew; a word repeating a reading already excluded is padding and goes even though it is short. Name the referent, quantify the qualifier, own the obligation, state the exception (§ Ambiguity Floor A1–A6).
 - **The tail block is positional.** Every response above `S` tier ends with the same three slots in the same order — what changed · what needs the reader's decision · what went unverified — with empty ones collapsed to a word rather than dropped. Where a claim invites checking, name the single cheapest check that would catch the most likely error (§ Fixed tail slots, § Name the one check worth running).
 
 ---
