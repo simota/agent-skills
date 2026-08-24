@@ -106,6 +106,7 @@ class CheckerCase(unittest.TestCase):
     def write_new(self, rel: str, text: str) -> None:
         path = self.repo / rel
         self.assertFalse(path.exists(), f"{rel} already exists; pick another fixture path")
+        path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(text, encoding="utf-8")
         self.addCleanup(path.unlink)
 
@@ -248,9 +249,14 @@ class TestContractDelivery(CheckerCase):
             "_common/ORPHAN_FIXTURE.md",
             "# Orphan Fixture\n\n> **Tier:** `domain` — fixture for the checker suite.\n",
         )
-        journal = self.repo / ".agents" / "PROJECT.md"
-        self.assertTrue(journal.exists(), ".agents/PROJECT.md is the fixture; it must exist")
-        self.append(".agents/PROJECT.md", "\n\nSee `_common/ORPHAN_FIXTURE.md` for the rule.\n")
+        # The journal is written here rather than borrowed from the working
+        # copy. `.agents/` is gitignored, so a checkout has none: a test resting
+        # on the developer's own journal passes locally and errors in CI, which
+        # is the very asymmetry it exists to catch.
+        self.write_new(
+            ".agents/JOURNAL_FIXTURE.md",
+            "# Journal Fixture\n\nSee `_common/ORPHAN_FIXTURE.md` for the rule.\n",
+        )
         self.expect_caught("lint-contracts.py", "ORPHAN_FIXTURE.md", "--severity", "error")
 
 
