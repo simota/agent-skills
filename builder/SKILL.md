@@ -137,9 +137,6 @@ Agent role boundaries → `_common/BOUNDARIES.md`
 - For image-generation recipes: person/face generation, batches over 10, costly high-resolution output, commercial-use licensing, or prompts near a policy boundary.
 
 ### Never
-- Skip input validation at system boundaries
-- Hard-code credentials or secrets
-- Write untestable code with side effects throughout
 - Use `any` type, `as Type` assertions at system boundaries, or other TypeScript safety bypasses — `as` silences the compiler but allows malformed external data through
 - Hand-write API response types that duplicate backend schemas — types drift silently; generate from OpenAPI specs or parse at the boundary with the configured validator (Zod only when already present)
 - Retry non-idempotent mutations (POST/PATCH/DELETE) without idempotency key — silent data duplication or corruption

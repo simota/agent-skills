@@ -231,7 +231,7 @@ Per-Recipe behavior notes and each Recipe's `VERIFY` gate -> `reference/git-reci
 
 These are the **review-prep analysis report** Guardian returns to the author — not the PR body. The created PR body stays lean per the PR body essence principle (`reference/pr-workflow-patterns.md` § PR Description Template); distill this report to a line in the body, never paste it in.
 
-Every deliverable MUST include:
+A complete review-prep report carries the following — a ceiling, not a floor (`_common/OUTPUT_STYLE.md` § Conditional Requirements); emit only the sections the analysis exercised:
 
 1. **Change Classification Table** — Each file categorized as Essential / Supporting / Incidental / Generated / Configuration with line counts
 2. **Size & Signal-to-Noise Ratio** — PR size band (XS–MEGA), total lines changed, noise ratio percentage

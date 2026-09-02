@@ -7,7 +7,7 @@
 
 Shared protocol that aligns generated and existing skills with Opus 5 default behaviors. Reference this file from any SKILL.md that needs Opus 5 alignment instead of duplicating the rules.
 
-**Principle IDs `P1`–`P12` are stable and cited across the ecosystem.** Several principles inverted relative to prior Opus models — the ID is preserved, the content is not. Re-read a principle before applying it from memory. `P1`–`P11` are Opus 5-specific; **`P12` is Claude 5 generation-wide** (Opus 5 / Fable 5 / Sonnet 5).
+**Principle IDs `P1`–`P12` are stable and cited across the ecosystem.** Re-read a principle before applying it from memory — the ID is stable, the content is what the current model needs. `P1`–`P11` are Opus 5-specific; **`P12` is Claude 5 generation-wide** (Opus 5 / Fable 5 / Sonnet 5).
 
 ---
 
@@ -46,7 +46,7 @@ State intent, constraints, acceptance criteria, and file locations on the first 
 
 ### P2. Explicit Length Control
 
-**Opus 5's default output runs longer than prior Opus models', in two independent channels.** Effort controls how much the model *thinks*, not how much it *says* — lowering effort does not reliably shorten the visible response. Length must be prompted.
+**Opus 5's default output runs long, in two independent channels.** Effort controls how much the model *thinks*, not how much it *says* — lowering effort does not reliably shorten the visible response. Length must be prompted.
 
 **Apply by:**
 - Reference `_common/OUTPUT_STYLE.md` from the SKILL.md `Output Contract` section — single source of truth for tiers (`S`/`M`/`L`/`XL`), banned filler, format priority.
@@ -74,9 +74,9 @@ Effort — not prompt wording alone — governs tool-call volume: lower effort c
 - **Web tooling on Opus 5 is asymmetric — but only at the API layer.** The **API server tools**: `web_search` **is** supported on Opus 5 (`web_search_20260318` / `_20260209` / `_20250305`; `$10` per 1,000 searches; citations always on). `web_fetch` is **not** — the tool is GA and un-renamed (`web_fetch_20260318` / `_20260309` / `_20260209` / `_20250910`), Opus 5 is simply absent from its supported-model list. This constrains skills that **generate Messages API code or harnesses**: get the substance from `web_search` results + citations, or route only the fetch step to a supporting model (Sonnet 5 / Fable 5) — on a Nexus chain that is a per-step `model:` override, not a redesign.
 - **Do not confuse this with the CLI's own tools.** Claude Code's `WebFetch` / `WebSearch` are **harness tools executed by the CLI**, not the API server tools, so they work on an Opus 5 session regardless of the above (verified empirically 2026-07-25 on an Opus 5 session). Skills that fetch pages *through the harness* need no change.
 
-### P4. Subagent Delegation Caps  *(inverted)*
+### P4. Subagent Delegation Caps
 
-**Opus 5 delegates to subagents more readily than prior models.** Delegation pays off on genuinely independent, sizeable tracks; it multiplies cost and time on small tasks. The authoring job is to *bound* fan-out, not to encourage it.
+**Opus 5 delegates to subagents readily.** Delegation pays off on genuinely independent, sizeable tracks; it multiplies cost and time on small tasks. The authoring job is to *bound* fan-out, not to encourage it.
 
 **Apply by:**
 - State delegation criteria and a cap explicitly: "Delegate to a subagent only for large tasks that are genuinely independent and parallelizable, such as a wide multi-file investigation. Do not delegate work you can finish yourself in a handful of tool calls, and do not use subagents to verify or double-check your own work. If one subagent can complete the task, use one rather than several, and keep spawn counts low."
@@ -84,7 +84,7 @@ Effort — not prompt wording alone — governs tool-call volume: lower effort c
 - **Multi-agent coordination is a strength** — writer-verifier patterns work well and agents rarely overwrite each other's work. Independent-verifier architectures (a *different* agent checks the output) remain valid; what must go is instructing an agent to spawn helpers to check *its own* work (see P9).
 - Reference `_common/SUBAGENT.md` for the parallelism-layer choice (skill-internal subagents vs Agent Teams).
 
-### P5. Thinking Is On By Default  *(inverted)*
+### P5. Thinking Is On By Default
 
 Thinking runs **on by default** in adaptive mode; the model decides depth per step. `thinking: {type: "disabled"}` is accepted only at effort `high` or below — combining it with `xhigh`/`max` returns a **400 error**. `max_tokens` is a hard limit on thinking + response text combined.
 
@@ -103,7 +103,7 @@ Thinking runs **on by default** in adaptive mode; the model decides depth per st
 
 | Effort | When skills should expect this |
 |--------|-------------------------------|
-| `low` | Most efficient; short, scoped, latency-sensitive tasks, and subagents. Stronger on Opus 5 than on earlier Opus models |
+| `low` | Most efficient; short, scoped, latency-sensitive tasks, and subagents. Genuinely strong — a first-class tier, not a degraded one |
 | `medium` | Cost-saving step-down; genuinely viable for agentic work — use liberally wherever evals show quality holds |
 | `high` (default) | Complex reasoning, difficult coding, agentic tasks. Equivalent to omitting the parameter |
 | `xhigh` | **Recommended starting point for coding and agentic work**, and long-horizon runs (30 min+) |
@@ -124,7 +124,7 @@ Treat the model as a capable engineer being delegated to, not a line-by-line pai
 - Provide enough context inside the skill (or via references) that the model does not need to ask clarifying questions for documented decisions.
 - Avoid micro-step instructions that prevent the model from exercising judgment; prefer phase-level contracts with verification gates.
 
-### P8. Scope Discipline — Both Directions  *(reframed)*
+### P8. Scope Discipline — Both Directions
 
 Two distinct behaviors, opposite in sign:
 
@@ -140,7 +140,7 @@ Two distinct behaviors, opposite in sign:
 - For structured-extraction / pipeline skills, pin exact output schemas and field-level expectations.
 - Audit SKILL.md files for restrictive phrasing that will be taken literally and cost coverage.
 
-### P9. Delete Redundant Verification & Narration Scaffolding  *(inverted — highest-impact change)*
+### P9. Delete Redundant Verification & Narration Scaffolding  *(highest-impact principle)*
 
 **Opus 5 verifies its own work and catches its own mistakes without being told to.** Explicit verification instructions — "include a final verification step for any non-trivial task", "use a subagent to verify", "double-check your answer", "re-verify before responding" — compound with the model's own behavior, causing **over-verification: wasted tokens with no quality gain.** The same applies to legacy harness scaffolding that bolts on separate self-check steps.
 
@@ -148,7 +148,7 @@ Two distinct behaviors, opposite in sign:
 - Remove self-check / re-verification instructions from SKILL.md prompts and spawn templates.
 - **Distinguish self-verification from independent verification.** A *different* agent verifying a producer's output (`producer ≠ verifier`, Radar-after-Builder, Judge-after-implementation) is an architectural control and stays. What to delete is an agent being told to check, re-check, or spawn helpers to check *its own* work.
 - Remove forced interim-status scaffolding ("summarize progress every 3 tool calls"). If cadence matters, describe the shape you want with an example: "Before your first tool call, say in one sentence what you're about to do. While working, give a brief update only when you find something important or change direction. When you finish, lead with the outcome."
-- Bound correction narration, which Opus 5 does more than prior models: "Only correct an earlier statement when the error would change the user's code, conclusions, or decisions. State corrections plainly and briefly, then continue. For slips that change nothing for the user, make the fix and move on without noting it."
+- Bound correction narration, which Opus 5 does readily: "Only correct an earlier statement when the error would change the user's code, conclusions, or decisions. State corrections plainly and briefly, then continue. For slips that change nothing for the user, make the fix and move on without noting it."
 
 ### P10. Coverage-vs-Filter for Review & Detection Skills
 

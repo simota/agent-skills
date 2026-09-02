@@ -53,55 +53,19 @@ Declare an explicit contract only to state something the inherited default does 
 
 ## Banned Patterns
 
-These never carry signal. Remove on sight.
+The response opens with the answer or the first action and closes with the § Fixed tail slots —
+nothing before the answer, nothing after the tail (§ Cognitive Load "First line answers"). Uncertainty
+is stated once, in one place. Two format defects remain worth naming:
 
-### 1. Preamble fillers
-
-```
-✗ "Let me analyze this for you."
-✗ "I'll now proceed to..."
-✗ "まず、ご依頼の内容を確認します。"
-✓ (skip — start with the answer or first action)
-```
-
-### 2. Request restatement
-
-```
-✗ "You asked me to refactor the auth module. I'll refactor the auth module."
-✓ (skip — the user knows what they asked)
-```
-
-### 3. Tautological closers
-
-```
-✗ "I have completed the refactoring as requested."
-✗ "以上で対応は完了です。"
-✓ End with what's *next*, what's *unverified*, or simply stop.
-```
-
-### 4. Hedging stacks
-
-```
-✗ "It seems that perhaps possibly the issue might be in the parser."
-✓ "原因は parser。"  ← state it; if uncertain, say so once.
-```
-
-### 5. Header echo
+### 1. Header echo
 
 If the SKILL.md has sections `Analysis / Proposal / Risks`, do NOT auto-emit those three headers in every response. Headers are for L/XL tier only.
 
-### 6. Same-meaning repetition
+### 2. Same-meaning repetition
 
 ```
 ✗ "簡潔かつ明瞭に" / "fast and quick" / "robust and resilient"
 ✓ Pick one word.
-```
-
-### 7. Capability advertising
-
-```
-✗ "As an AI agent specialized in X, I can help with Y..."
-✓ Just do Y.
 ```
 
 ---
@@ -111,7 +75,7 @@ If the SKILL.md has sections `Analysis / Proposal / Risks`, do NOT auto-emit tho
 A SKILL.md `## Output Requirements` list describes what a **complete deliverable** carries. It is a ceiling for the largest form of the task, not a floor every turn must reach.
 
 - **Emit only the items the task actually exercised.** A refactor that touched no configs has no config row; a lookup that produced no fix has no fix section.
-- **Never pad to satisfy the list.** `N/A`, "none identified", "not applicable in this case", and empty table shells are filler — deleting them loses no information (Banned Pattern §1 applies).
+- **Never pad to satisfy the list.** `N/A`, "none identified", "not applicable in this case", and empty table shells are filler — deleting them loses no information (§ Banned Patterns applies).
 - **Collapse empty envelope sections to one line, or drop them.** An empty ledger is `Residuals: none`, never a header plus a header-only table.
 - **Required-in-substance ≠ required-in-shape.** When a protocol says a ledger is non-optional, that binds the *content* when content exists; the scaffolding is not the obligation.
 - **Scale the envelope to the task, not to the schema.** A SIMPLE task reports in the schema's short form; the full form is for the work that filled it.
@@ -382,7 +346,7 @@ In a SKILL.md `Output Contract` section:
 - Domain bans: <skill-specific banned phrases, if any>
 ```
 
-Cite by tier and rule ID (e.g., "Banned Pattern §3"); don't duplicate the rule text inside individual SKILL.md files.
+Cite by tier and rule ID (e.g., "§ Fixed tail slots", "Banned Pattern §1"); don't duplicate the rule text inside individual SKILL.md files.
 
 ---
 

@@ -128,7 +128,7 @@ Plan **proportional to task complexity** — not maximally. Over-planning a triv
 
 ## Engine-Conditional Authoring
 
-Skills run under whichever engine invokes them (Claude Code Opus 5 / Sonnet 5 / Fable 5, Codex CLI, agy). Model-specific authoring principles bind only when the matching engine executes: `_common/OPUS_5_AUTHORING.md` P1–P11 are Opus 5-specific; P12 is Claude 5 generation-wide. Detect the active engine per `nexus/reference/hub-authoring.md` § Orchestrator Detection — never hardcode a single model's quirks as unconditional SKILL.md directives.
+Skills run under whichever engine invokes them (Claude Code Opus 5 / Sonnet 5 / Fable 5 / Fable 5.1, Codex CLI, agy). Model-specific authoring principles bind only when the matching engine executes: `_common/OPUS_5_AUTHORING.md` P1–P11 are Opus 5-specific; P12 is Claude 5 generation-wide. Detect the active engine per `nexus/reference/hub-authoring.md` § Orchestrator Detection — never hardcode a single model's quirks as unconditional SKILL.md directives.
 
 ---
 

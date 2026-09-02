@@ -101,7 +101,7 @@ Direct model names are CLI-specific. Authoring tip: write SKILL.md with role nam
 | Role | Claude Code | Codex CLI | agy |
 |------|-------------|-----------|-----|
 | Default / balanced | **`claude-sonnet-5`** (Sonnet 5) ¶ | `gpt-5.6-terra` † | **Gemini 3.7 Flash (High)** ‡ |
-| High-reasoning / precision | `opus` (claude-opus-5) / `fable-5` (Fable 5 hub — see ¶) | `gpt-5.6-sol` † (flagship; released 2026-07-09) | **Gemini 3.7 Flash (High)** ‡ |
+| High-reasoning / precision | `opus` (claude-opus-5) / `fable-5` (claude-fable-5) / `fable-5-1` (claude-fable-5-1, current top tier — see ¶) | `gpt-5.6-sol` † (flagship; released 2026-07-09) | **Gemini 3.7 Flash (High)** ‡ |
 | Fast / cheap | `haiku` (claude-haiku-4-5) | `gpt-5.6-luna` † | **Gemini 3.7 Flash (High)** ‡ |
 
 **Loop-wide token budgets are not a CLI-hub lever.** The API's `task_budget` (beta `task-budgets-2026-03-13`) is explicitly unsupported on **Claude Code** and Cowork, and has no Codex or agy equivalent. A hub bounds loop cost with per-spawn model/effort selection, output-length envelopes, and turn ceilings; the countdown mechanism is available only to steps implemented as direct Messages API calls (Opus 5 / Fable 5 / Mythos 5 / Opus 4.8 / Opus 4.7 — not Sonnet 5). Contract → `nexus/reference/loop-engineering-primitives.md`.

@@ -196,7 +196,7 @@ These match `_common/OPUS_5_AUTHORING.md` principles P2 / P3 / P9 / P8 / P10 / P
 
 | Old pattern | Replacement |
 |-------------|-------------|
-| force JSON via assistant prefill | Structured Outputs API or tool choice |
+| force JSON via assistant prefill | Structured Outputs (`output_config.format`); when a tool schema is the target, `strict: true` under `tool_choice: auto` — forced `tool_choice` (`any` / `tool`) returns 400 on Claude Fable 5.1 / Mythos 5.1 |
 | skip preamble | direct system instruction |
 | continue partial answer | explicit continuation instruction |
 

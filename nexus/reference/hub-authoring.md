@@ -28,6 +28,9 @@ Opus 5 **delegates readily and verifies its own work**, so the hub's job is to *
 
 Fable 5 is a Mythos-class model: 1M context, adaptive-thinking-only (raw CoT never returned), safety classifiers that can return `stop_reason:"refusal"`. The orchestration-relevant behavior shifts are the F-principles below — each states the Fable 5 action directly, so the Opus 5 baseline is not re-tabled.
 
+> **Fable 5.1 (`claude-fable-5-1`):** same tier and price as Fable 5; three hub-relevant changes — forced `tool_choice` (`any` / `tool`) returns 400 (use `auto` + a prompt instruction, `strict: true` for schema-valid arguments); thinking blocks are bound to the producing model; editing earlier turns invalidates thinking blocks, so hub harnesses that replay history must be append-only.
+> #TODO(agent): re-verify F1–F8 against Anthropic "Prompting Claude Fable 5.1" before treating the F-principles as binding on a Fable 5.1 hub.
+
 **F-principles (apply on top of P4/P6/P7/P9 for a Fable 5 hub):**
 
 - **F1 — No reasoning reproduction.** Audit every spawn prompt and the spawned skill's SKILL.md for "show your reasoning / explain step by step in the response / transcribe your thinking" wording. Strip it. For reasoning visibility use summarized thinking + a send-to-user tool, not response-text echo. *(Highest priority — silent fallback-rate inflater.)*
