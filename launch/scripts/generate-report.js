@@ -6,11 +6,11 @@
  *   node generate-report.js [options]
  *
  * Options:
- *   --days <n>        過去n日間のPRを取得 (default: 7)
+ *   --days <n>        今日を含むUTC暦日n日間のPRを取得 (default: 7)
  *   --author <name>   特定の著者でフィルタ
  *   --repo <owner/repo>  リポジトリを指定
  *   --output <file>   出力ファイル名 (default: client-report-YYYY-MM-DD.html)
- *   --template <file> テンプレートファイル (default: templates/client-report.html)
+ *   --template <file> 作業ディレクトリ基準のテンプレート (default: bundled client-report.html)
  *   --json            JSONデータのみ出力
  *
  * 例:
@@ -18,7 +18,7 @@
  *   node generate-report.js --repo owner/repo --output report.html
  */
 
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
@@ -55,14 +55,22 @@ function parseArgs() {
     author: null,
     repo: null,
     output: null,
-    template: 'templates/client-report.html',
+    template: path.join(__dirname, '../templates/client-report.html'),
     json: false,
   };
 
   for (let i = 0; i < args.length; i++) {
-    switch (args[i]) {
+    const flag = args[i];
+    if (['--days', '--author', '--repo', '--output', '--template'].includes(flag)
+        && (!args[i + 1] || args[i + 1].startsWith('--'))) {
+      throw new Error(`Missing value for ${flag}`);
+    }
+    switch (flag) {
       case '--days':
-        options.days = parseInt(args[++i], 10);
+        if (!/^[1-9]\d*$/.test(args[++i]) || Number(args[i]) > 36600) {
+          throw new Error('--days must be an integer between 1 and 36600');
+        }
+        options.days = Number(args[i]);
         break;
       case '--author':
         options.author = args[++i];
@@ -74,7 +82,7 @@ function parseArgs() {
         options.output = args[++i];
         break;
       case '--template':
-        options.template = args[++i];
+        options.template = path.resolve(args[++i]);
         break;
       case '--json':
         options.json = true;
@@ -84,7 +92,7 @@ function parseArgs() {
 Usage: node generate-report.js [options]
 
 Options:
-  --days <n>          Past n days (default: 7)
+  --days <n>          UTC calendar days including today (1-36600, default: 7)
   --author <name>     Filter by author
   --repo <owner/repo> Specify repository
   --output <file>     Output file name
@@ -93,9 +101,17 @@ Options:
   --help              Show this help
 `);
         process.exit(0);
+      default:
+        throw new Error(`Unknown option: ${flag}`);
     }
   }
 
+  if (options.repo && !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(options.repo)) {
+    throw new Error('--repo must be owner/repo');
+  }
+  if (!options.json && !fs.statSync(options.template).isFile()) {
+    throw new Error(`Template is not a file: ${options.template}`);
+  }
   return options;
 }
 
@@ -103,22 +119,22 @@ Options:
 // Date Utilities (Cross-platform)
 // ============================================
 
-function getStartDate(daysAgo) {
+function getStartDate(days) {
   const date = new Date();
-  date.setDate(date.getDate() - daysAgo);
+  date.setUTCDate(date.getUTCDate() - days + 1);
   return date.toISOString().split('T')[0];
 }
 
 function formatDate(isoString) {
   if (!isoString) return '-';
   const date = new Date(isoString);
-  return `${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
+  return `${String(date.getUTCMonth() + 1).padStart(2, '0')}/${String(date.getUTCDate()).padStart(2, '0')}`;
 }
 
 function formatDateFull(isoString) {
   if (!isoString) return '-';
   const date = new Date(isoString);
-  return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+  return `${date.getUTCFullYear()}年${date.getUTCMonth() + 1}月${date.getUTCDate()}日`;
 }
 
 // ============================================
@@ -128,33 +144,28 @@ function formatDateFull(isoString) {
 function fetchPRs(options) {
   const startDate = getStartDate(options.days);
 
-  let cmd = 'gh pr list --state merged --limit 500';
-  cmd += ' --json number,title,author,createdAt,mergedAt,additions,deletions,changedFiles,labels,url';
+  const args = ['pr', 'list', '--state', 'merged', '--limit', '501',
+    '--search', `merged:>=${startDate}`,
+    '--json', 'number,title,author,createdAt,mergedAt,additions,deletions,changedFiles,labels,url'];
+  if (options.repo) args.push('--repo', options.repo);
+  if (options.author) args.push('--author', options.author);
 
-  if (options.repo) {
-    cmd += ` -R ${options.repo}`;
+  const result = execFileSync('gh', args, { encoding: 'utf-8', maxBuffer: 10 * 1024 * 1024 });
+  const prs = JSON.parse(result);
+  if (!Array.isArray(prs)) throw new Error('GitHub returned an invalid PR list');
+  if (prs.length > 500) {
+    throw new Error('More than 500 PRs match; narrow --days or --author to avoid a partial report');
   }
-  if (options.author) {
-    cmd += ` --author ${options.author}`;
-  }
-
-  try {
-    const result = execSync(cmd, { encoding: 'utf-8', maxBuffer: 10 * 1024 * 1024 });
-    const prs = JSON.parse(result);
-
-    // Filter by date
-    return prs.filter(pr => pr.mergedAt >= startDate);
-  } catch (error) {
-    console.error('Error fetching PRs:', error.message);
-    process.exit(1);
-  }
+  const endDate = new Date().toISOString().split('T')[0];
+  return prs.filter(pr => pr.mergedAt && pr.mergedAt.slice(0, 10) >= startDate
+    && pr.mergedAt.slice(0, 10) <= endDate);
 }
 
 function getRepoName(options) {
   if (options.repo) return options.repo;
 
   try {
-    const result = execSync('gh repo view --json nameWithOwner -q ".nameWithOwner"', {
+    const result = execFileSync('gh', ['repo', 'view', '--json', 'nameWithOwner', '-q', '.nameWithOwner'], {
       encoding: 'utf-8'
     });
     return result.trim();
@@ -188,15 +199,12 @@ function detectCategory(pr) {
   const title = pr.title.toLowerCase();
   const labels = (pr.labels || []).map(l => l.name.toLowerCase());
 
-  // Check title prefix
-  if (title.startsWith('feat:') || title.startsWith('feature:')) return 'feat';
-  if (title.startsWith('fix:') || title.startsWith('bugfix:')) return 'fix';
-  if (title.startsWith('refactor:')) return 'refactor';
-  if (title.startsWith('docs:') || title.startsWith('doc:')) return 'docs';
-  if (title.startsWith('test:') || title.startsWith('tests:')) return 'test';
-  if (title.startsWith('chore:')) return 'chore';
-  if (title.startsWith('perf:')) return 'perf';
-  if (title.startsWith('style:')) return 'style';
+  // Conventional Commit scopes and breaking-change markers are optional.
+  const prefix = title.match(/^(feat|feature|fix|bugfix|refactor|docs|doc|test|tests|chore|perf|style)(?:\([^)]*\))?!?:/);
+  if (prefix) {
+    const aliases = { feature: 'feat', bugfix: 'fix', doc: 'docs', tests: 'test' };
+    return aliases[prefix[1]] || prefix[1];
+  }
 
   // Check labels
   if (labels.includes('enhancement') || labels.includes('feature')) return 'feat';
@@ -277,7 +285,7 @@ function aggregateData(prs, options) {
       totalAdditions: `+${totalAdditions.toLocaleString()}`,
       totalDeletions: `-${totalDeletions.toLocaleString()}`,
       netChange: totalAdditions - totalDeletions,
-      completionRate: '100%',
+      completionRate: processedPRs.length ? '100%' : '0%',
     },
     prs: processedPRs,
     byCategory,
@@ -294,11 +302,11 @@ function generateDailyChartData(byDate, startDate, days) {
   const data = [];
   const start = new Date(startDate);
 
-  for (let i = 0; i < Math.min(days, 14); i++) {
+  for (let i = 0; i < days; i++) {
     const date = new Date(start);
-    date.setDate(start.getDate() + i);
+    date.setUTCDate(start.getUTCDate() + i);
     const dateStr = date.toISOString().split('T')[0];
-    const label = `${date.getMonth() + 1}/${date.getDate()}`;
+    const label = `${date.getUTCMonth() + 1}/${date.getUTCDate()}`;
 
     labels.push(label);
     data.push(byDate[dateStr]?.hours || 0);
@@ -338,268 +346,42 @@ function generateCategoryChartData(byCategory) {
 // ============================================
 
 function generateHTML(data, templatePath) {
-  const scriptDir = path.dirname(__filename);
-  const launchDir = path.dirname(scriptDir);
-  const fullTemplatePath = path.isAbsolute(templatePath)
-    ? templatePath
-    : path.join(launchDir, templatePath);
-
-  if (!fs.existsSync(fullTemplatePath)) {
-    console.error(`Template not found: ${fullTemplatePath}`);
-    console.log('Generating standalone HTML...');
-    return generateStandaloneHTML(data);
-  }
-
-  let html = fs.readFileSync(fullTemplatePath, 'utf-8');
-
-  // Replace meta placeholders
-  html = html.replace(/\{\{PROJECT_NAME\}\}/g, data.meta.projectName);
-  html = html.replace(/\{\{AUTHOR\}\}/g, data.meta.author);
-  html = html.replace(/\{\{START_DATE\}\}/g, data.meta.startDateFormatted);
-  html = html.replace(/\{\{END_DATE\}\}/g, data.meta.endDateFormatted);
-  html = html.replace(/\{\{GENERATED_DATE\}\}/g, data.meta.generatedAtFormatted);
-
-  // Replace summary placeholders
-  html = html.replace(/\{\{TOTAL_TASKS\}\}/g, data.summary.totalTasks);
-  html = html.replace(/\{\{TOTAL_HOURS\}\}/g, data.summary.totalHours);
-  html = html.replace(/\{\{TOTAL_ADDITIONS\}\}/g, data.summary.totalAdditions);
-  html = html.replace(/\{\{COMPLETION_RATE\}\}/g, data.summary.completionRate);
-
-  // Replace chart data
-  const dailyLabels = JSON.stringify(data.charts.daily.labels);
-  const dailyData = JSON.stringify(data.charts.daily.data);
-  const categoryLabels = JSON.stringify(data.charts.category.labels);
-  const categoryData = JSON.stringify(data.charts.category.data);
-
-  // Update Chart.js configurations
-  html = html.replace(
-    /labels:\s*\[['"][^[\]]*['"]\]/g,
-    (match, offset) => {
-      // Determine which chart based on context
-      const before = html.substring(Math.max(0, offset - 200), offset);
-      if (before.includes('dailyChart') || before.includes('Daily')) {
-        return `labels: ${dailyLabels}`;
-      } else if (before.includes('categoryChart') || before.includes('Category')) {
-        return `labels: ${categoryLabels}`;
-      }
-      return match;
-    }
-  );
-
-  html = html.replace(
-    /data:\s*\[\d+(?:\.?\d*)?(?:,\s*\d+(?:\.?\d*)?)*\]/g,
-    (match, offset) => {
-      const before = html.substring(Math.max(0, offset - 300), offset);
-      if (before.includes('dailyChart') || before.includes('Daily')) {
-        return `data: ${dailyData}`;
-      } else if (before.includes('categoryChart') || before.includes('Category')) {
-        return `data: ${categoryData}`;
-      }
-      return match;
-    }
-  );
-
-  return html;
+  const html = fs.readFileSync(templatePath, 'utf-8');
+  const textValues = {
+    PROJECT_NAME: data.meta.projectName,
+    AUTHOR: data.meta.author,
+    START_DATE: data.meta.startDateFormatted,
+    END_DATE: data.meta.endDateFormatted,
+    GENERATED_DATE: data.meta.generatedAtFormatted,
+    TOTAL_TASKS: data.summary.totalTasks,
+    TOTAL_HOURS: data.summary.totalHours,
+    TOTAL_ADDITIONS: data.summary.totalAdditions,
+    COMPLETION_RATE: data.summary.completionRate,
+  };
+  const values = Object.fromEntries(Object.entries(textValues)
+    .map(([key, value]) => [key, escapeHtml(value)]));
+  Object.assign(values, {
+    TABLE_ROWS: generateTableRows(data.prs),
+    DAILY_LABELS: JSON.stringify(data.charts.daily.labels),
+    DAILY_DATA: JSON.stringify(data.charts.daily.data),
+    CATEGORY_LABELS: JSON.stringify(data.charts.category.labels),
+    CATEGORY_DATA: JSON.stringify(data.charts.category.data),
+  });
+  // A single callback pass avoids interpreting $& or template-looking user text.
+  return html.replace(/\{\{([A-Z_]+)\}\}/g, (match, key) =>
+    Object.hasOwn(values, key) ? values[key] : match);
 }
 
-function generateStandaloneHTML(data) {
-  const categoryColors = {
-    feat: { bg: '#d4edda', color: '#155724' },
-    fix: { bg: '#f8d7da', color: '#721c24' },
-    refactor: { bg: '#e2d5f1', color: '#4a2c7a' },
-    docs: { bg: '#fff3cd', color: '#856404' },
-    test: { bg: '#cce5ff', color: '#004085' },
-    other: { bg: '#e9ecef', color: '#495057' },
-  };
-
-  const tableRows = data.prs.map(pr => {
-    const catStyle = categoryColors[pr.category] || categoryColors.other;
-    return `
+function generateTableRows(prs) {
+  return prs.map(pr => `
         <tr>
           <td class="text-center">${pr.no}</td>
           <td>${escapeHtml(pr.title)}</td>
-          <td class="text-center"><span class="category-badge" style="background:${catStyle.bg};color:${catStyle.color}">${pr.category.toUpperCase()}</span></td>
-          <td class="text-right mono">${pr.hours.toFixed(1)}h</td>
+          <td class="text-center"><span class="category-tag category-${pr.category}">${pr.category.toUpperCase()}</span></td>
+          <td class="text-right font-mono">${pr.hours.toFixed(1)}h</td>
           <td class="text-center">${pr.mergedDate}</td>
-          <td class="text-center"><span class="status-badge status-complete">完了</span></td>
-        </tr>`;
-  }).join('\n');
-
-  return `<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>作業報告書 - ${escapeHtml(data.meta.projectName)}</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    @page { size: A4; margin: 15mm 12mm; }
-    @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; font-size: 10pt; line-height: 1.65; color: #1a1a2e; background: #fff; width: 210mm; margin: 0 auto; padding: 15mm 12mm; }
-    h1 { font-size: 24pt; text-align: center; margin-bottom: 6px; color: #16213e; }
-    h2 { font-size: 11pt; border-left: 4px solid #16213e; padding-left: 12px; margin: 28px 0 16px; color: #16213e; }
-    .subtitle { text-align: center; font-size: 10pt; color: #5a6a7a; margin-bottom: 8px; }
-    .report-header { text-align: center; padding-bottom: 20px; margin-bottom: 24px; border-bottom: 2px solid #16213e; }
-    .report-meta { display: flex; justify-content: center; gap: 40px; margin-top: 16px; }
-    .meta-item { text-align: center; }
-    .meta-label { font-size: 8pt; color: #8a9aaa; text-transform: uppercase; }
-    .meta-value { font-size: 10pt; font-weight: 600; color: #16213e; }
-    .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 24px 0; }
-    .summary-card { background: #f8f9fb; border: 1px solid #e4e8ed; border-radius: 8px; padding: 20px 16px; text-align: center; }
-    .summary-card.primary { border-top: 3px solid #16213e; }
-    .summary-value { font-size: 28pt; font-weight: 700; color: #16213e; }
-    .summary-unit { font-size: 12pt; color: #5a6a7a; }
-    .summary-label { font-size: 8pt; color: #7a8a9a; text-transform: uppercase; margin-top: 8px; }
-    .chart-row { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; margin: 24px 0; }
-    .chart-box { background: #fafbfc; border: 1px solid #e4e8ed; border-radius: 8px; padding: 20px; }
-    .chart-title { font-size: 9pt; font-weight: 600; color: #3a4a5a; text-align: center; margin-bottom: 16px; text-transform: uppercase; }
-    .chart-wrapper { height: 200px; position: relative; }
-    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 9pt; }
-    thead tr { background: linear-gradient(180deg, #16213e, #1a2a3e); }
-    th { color: #fff; font-weight: 600; padding: 12px 10px; text-align: left; font-size: 8pt; text-transform: uppercase; }
-    td { padding: 11px 10px; border-bottom: 1px solid #e8ebee; }
-    tbody tr:nth-child(even) { background: #fafbfc; }
-    tfoot tr { background: #f0f2f5; }
-    tfoot td { font-weight: 600; border-top: 2px solid #16213e; }
-    .text-right { text-align: right; }
-    .text-center { text-align: center; }
-    .mono { font-family: "SF Mono", Monaco, monospace; }
-    .status-badge { display: inline-block; font-size: 7pt; font-weight: 600; padding: 3px 10px; border-radius: 12px; }
-    .status-complete { background: #d4edda; color: #155724; }
-    .category-badge { display: inline-block; font-size: 7pt; font-weight: 600; padding: 3px 8px; border-radius: 3px; }
-    .report-footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #e4e8ed; display: flex; justify-content: space-between; font-size: 8pt; color: #9aa; }
-  </style>
-</head>
-<body>
-  <header class="report-header">
-    <h1>作業報告書</h1>
-    <p class="subtitle">${escapeHtml(data.meta.projectName)}</p>
-    <div class="report-meta">
-      <div class="meta-item">
-        <div class="meta-label">報告期間</div>
-        <div class="meta-value">${data.meta.startDateFormatted} — ${data.meta.endDateFormatted}</div>
-      </div>
-      <div class="meta-item">
-        <div class="meta-label">担当者</div>
-        <div class="meta-value">${escapeHtml(data.meta.author)}</div>
-      </div>
-    </div>
-  </header>
-
-  <section>
-    <h2>Executive Summary</h2>
-    <div class="summary-grid">
-      <div class="summary-card primary">
-        <div class="summary-value">${data.summary.totalTasks}</div>
-        <div class="summary-label">完了タスク</div>
-      </div>
-      <div class="summary-card">
-        <div class="summary-value">${data.summary.totalHours}<span class="summary-unit">h</span></div>
-        <div class="summary-label">総工数</div>
-      </div>
-      <div class="summary-card">
-        <div class="summary-value">${data.summary.totalAdditions}</div>
-        <div class="summary-label">追加行数</div>
-      </div>
-      <div class="summary-card">
-        <div class="summary-value">100<span class="summary-unit">%</span></div>
-        <div class="summary-label">完了率</div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Activity Analysis</h2>
-    <div class="chart-row">
-      <div class="chart-box">
-        <div class="chart-title">Daily Work Hours</div>
-        <div class="chart-wrapper"><canvas id="dailyChart"></canvas></div>
-      </div>
-      <div class="chart-box">
-        <div class="chart-title">Category Distribution</div>
-        <div class="chart-wrapper"><canvas id="categoryChart"></canvas></div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Work Details</h2>
-    <table>
-      <thead>
-        <tr>
-          <th style="width:36px" class="text-center">No</th>
-          <th>タスク名</th>
-          <th style="width:72px" class="text-center">カテゴリ</th>
-          <th style="width:56px" class="text-right">工数</th>
-          <th style="width:64px" class="text-center">完了日</th>
-          <th style="width:64px" class="text-center">状態</th>
-        </tr>
-      </thead>
-      <tbody>
-${tableRows}
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="3" class="text-right">Total</td>
-          <td class="text-right mono">${data.summary.totalHours}h</td>
-          <td colspan="2"></td>
-        </tr>
-      </tfoot>
-    </table>
-  </section>
-
-  <footer class="report-footer">
-    <div>Generated automatically</div>
-    <div>${data.meta.generatedAtFormatted} 作成</div>
-  </footer>
-
-  <script>
-    Chart.defaults.font.family = "'Hiragino Kaku Gothic ProN', sans-serif";
-
-    new Chart(document.getElementById('dailyChart'), {
-      type: 'bar',
-      data: {
-        labels: ${JSON.stringify(data.charts.daily.labels)},
-        datasets: [{
-          data: ${JSON.stringify(data.charts.daily.data)},
-          backgroundColor: '#16213e',
-          borderRadius: 4
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-          y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.04)' } },
-          x: { grid: { display: false } }
-        }
-      }
-    });
-
-    new Chart(document.getElementById('categoryChart'), {
-      type: 'doughnut',
-      data: {
-        labels: ${JSON.stringify(data.charts.category.labels)},
-        datasets: [{
-          data: ${JSON.stringify(data.charts.category.data)},
-          backgroundColor: ['#1e6f5c', '#c49000', '#b33939', '#6c5ce7', '#0984e3', '#636e72'],
-          borderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        cutout: '60%',
-        plugins: {
-          legend: { position: 'bottom', labels: { font: { size: 9 }, padding: 12 } }
-        }
-      }
-    });
-  </script>
-</body>
-</html>`;
+          <td class="text-center"><span class="status-complete">完了</span></td>
+        </tr>`).join('\n');
 }
 
 function escapeHtml(str) {
@@ -617,16 +399,15 @@ function escapeHtml(str) {
 function main() {
   const options = parseArgs();
 
-  console.log('Fetching PRs...');
+  console.error('Fetching PRs...');
   const prs = fetchPRs(options);
-  console.log(`Found ${prs.length} PRs`);
+  console.error(`Found ${prs.length} PRs`);
 
   if (prs.length === 0) {
-    console.log('No PRs found in the specified period.');
-    process.exit(0);
+    console.error('No PRs found in the specified period.');
   }
 
-  console.log('Aggregating data...');
+  console.error('Aggregating data...');
   const data = aggregateData(prs, options);
 
   if (options.json) {
@@ -642,4 +423,9 @@ function main() {
   console.log(`Report generated: ${outputFile}`);
 }
 
-main();
+try {
+  main();
+} catch (error) {
+  console.error('Error:', error.message);
+  process.exitCode = 1;
+}

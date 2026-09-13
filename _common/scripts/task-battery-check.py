@@ -52,6 +52,7 @@ import argparse
 import re
 import sys
 import traceback
+from collections import Counter
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -108,6 +109,20 @@ MECHANICAL_ITEMS = [
      "`how would <figure> approach this`"),
     (37, "Magi conclave hands the verdict to Magi decide", "agent-chains.md",
      "| FIGURE_CHANNELING | decide | Magi[advisor] \u2192 Magi[decide] \u2192 Builder |"),
+    (38, "invention alone does not imply build intent", "signal-keywords.md",
+     "`ship=true` = opt-in end-to-end continuation, **never inferred** from an invention ask alone"),
+    (39, "explicit invention-and-build intent -> eureka ship=true", "signal-keywords.md",
+     "`invent and build it`, `invent and ship it`, `hatsumei shite jissou made`, `ikkitsuukan de tsukutte` → `eureka ship=true`"),
+    (40, "crucible proves the operability floor", "signal-keywords.md",
+     "`crucible` (operability floor proof, binary per-cell oracle"),
+    (41, "silhouette requires a settled brand", "signal-keywords.md",
+     "`silhouette` (distinction proof for a product surface. **Disambiguation:** no settled brand to derive from → `hallmark` first"),
+    (42, "lattice requires a system of record", "signal-keywords.md",
+     "`lattice` (design-system coherence proof, steady state; precondition: a system of record exists, else `muse`/`vitrine` first"),
+    (43, "chorus requires multiple platforms", "signal-keywords.md",
+     "`chorus` (cross-platform coherence proof; precondition ≥2 shipped/specced platforms"),
+    (44, "assay never infers permission to apply changes", "signal-keywords.md",
+     "`assay` (experimental proof of code/architecture design claims; `apply=true` is **opt-in and never inferred**"),
     (21, "must-have keyword -> essential", "signal-keywords.md", "`essential`, `must-have`"),
     (22, "dead weight keyword -> trim", "signal-keywords.md", "`dead weight`"),
     (23, "copy this product keyword -> clone", "signal-keywords.md",
@@ -199,7 +214,7 @@ class Finding:
 
 def safe_check(fn, findings: list[Finding]):
     try:
-        fn(findings)
+        return fn(findings)
     except Exception as e:  # noqa: BLE001 - intentional catch-all, fail-open contract
         findings.append(Finding(
             fn.__name__, "WARNING",
@@ -209,6 +224,7 @@ def safe_check(fn, findings: list[Finding]):
 
 
 def check_mechanical_items(findings: list[Finding]):
+    passed = 0
     for num, desc, file_key, needle in MECHANICAL_ITEMS:
         path = FILES[file_key]
         label = f"item {num} ({desc})"
@@ -218,6 +234,7 @@ def check_mechanical_items(findings: list[Finding]):
             continue
         content = path.read_text(encoding="utf-8")
         if needle in content:
+            passed += 1
             print(f"PASS  {label}")
         else:
             findings.append(Finding(
@@ -225,6 +242,33 @@ def check_mechanical_items(findings: list[Finding]):
                 f"expected substring not found in {file_key}: {needle!r}",
             ))
             print(f"FAIL  {label} -- substring not found in {file_key}: {needle!r}")
+    return passed
+
+
+def check_battery_coverage(findings: list[Finding]):
+    """Every documented item must have exactly one mechanical or judgment check."""
+    if not TASK_BATTERY.is_file():
+        findings.append(Finding("battery-coverage", "ERROR", "task-battery.md not found"))
+        return
+    documented = Counter(int(value) for value in re.findall(
+        r"^\|\s*(\d+)\s*\|", TASK_BATTERY.read_text(encoding="utf-8"), re.MULTILINE,
+    ))
+    registered = Counter(item[0] for item in MECHANICAL_ITEMS + JUDGMENT_ITEMS)
+    problems = []
+    for label, counts in (("documented", documented), ("registered", registered)):
+        duplicates = sorted(num for num, count in counts.items() if count > 1)
+        if duplicates:
+            problems.append(f"duplicate {label} item IDs: {duplicates}")
+    if not documented:
+        problems.append("no numbered battery rows found")
+    missing = sorted(documented.keys() - registered.keys())
+    obsolete = sorted(registered.keys() - documented.keys())
+    if missing:
+        problems.append(f"items without a check: {missing}")
+    if obsolete:
+        problems.append(f"checks without a battery item: {obsolete}")
+    if problems:
+        findings.append(Finding("battery-coverage", "ERROR", "; ".join(problems)))
 
 
 def check_judgment_items(findings: list[Finding]):
@@ -262,14 +306,16 @@ def main() -> int:
     args = parser.parse_args()
 
     findings: list[Finding] = []
-    safe_check(check_mechanical_items, findings)
+    safe_check(check_battery_coverage, findings)
+    passed = safe_check(check_mechanical_items, findings) or 0
     safe_check(check_judgment_items, findings)
     safe_check(check_stale_agent_references, findings)
 
     errors = [f for f in findings if f.level == "ERROR"]
     warnings = [f for f in findings if f.level == "WARNING"]
     skipped = [f for f in findings if f.level == "INFO"]
-    passed = len(MECHANICAL_ITEMS) - len([f for f in errors if f.item.startswith("item")])
+    for finding in errors + warnings:
+        print(finding)
 
     print()
     print(

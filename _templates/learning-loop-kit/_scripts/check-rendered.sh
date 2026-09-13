@@ -1,35 +1,41 @@
 #!/usr/bin/env bash
-# check-rendered.sh — verify a rendered Learning-Loop Kit has no leftover template residue.
+# Verify a rendered Learning-Loop Kit has no leftover template residue.
 # Usage: check-rendered.sh <kit-dir>
-# Exit 0 = clean; exit 1 = residue found (prints offending file:line).
-#
-# Run this after rendering base/ into a new <slug>-kit and substituting tokens.
-# It is the render gate: a kit must pass before it is committed or installed.
+# Exit 0 = clean; 1 = residue; 2 = invalid input or scan failure.
 set -euo pipefail
 
-DIR="${1:?usage: check-rendered.sh <kit-dir>}"
+if [ "$#" -ne 1 ]; then
+  echo 'usage: check-rendered.sh <kit-dir>' >&2
+  exit 2
+fi
+DIR="$1"
 [ -d "$DIR" ] || { echo "not a directory: $DIR" >&2; exit 2; }
-
 fail=0
 
-# 1. Unrendered {{TOKEN}} placeholders.
-if grep -rnE '\{\{[A-Z_]+\}\}' "$DIR"; then
-  echo "✗ unrendered {{TOKEN}} placeholders above — substitute them." >&2
-  fail=1
-fi
+scan() {
+  local message="$1" status
+  shift
+  if grep "$@" -- "$DIR"; then
+    echo "✗ $message" >&2
+    fail=1
+  else
+    status=$?
+    if [ "$status" -ne 1 ]; then
+      echo "Unable to scan: $DIR" >&2
+      exit 2
+    fi
+  fi
+}
 
-# 2. Leftover date placeholders in seeded entries (skeleton not replaced).
-#    _templates/ is exempt — entry templates legitimately keep date/slug placeholders.
-if grep -rn --exclude-dir='_templates' 'YYYY-MM-DD\|YYYYMMDD-<slug>' "$DIR"; then
-  echo "✗ leftover date placeholders above — replace with real dates/IDs in seeded entries." >&2
-  fail=1
-fi
+# All uppercase tokens must be rendered, including entry templates.
+scan 'unrendered {{TOKEN}} placeholders above — substitute them.' \
+  -rnE '\{\{[A-Z_][A-Z0-9_]*\}\}'
 
-# 3. Leftover angle-bracket skeleton markers in non-template files.
-if grep -rn --include='*.md' --exclude-dir='_templates' '<slug>\|<LAYER>\|<kit-slug>' "$DIR"; then
-  echo "✗ leftover skeleton markers above (outside _templates/) — fill in concrete values." >&2
-  fail=1
-fi
+# Entry templates legitimately retain date and slug placeholders.
+scan 'leftover date placeholders above — replace seeded dates/IDs.' \
+  -rnE --exclude-dir='_templates' 'YYYY-MM-DD|YYYYMMDD-<slug>'
+scan 'leftover skeleton markers above — fill in concrete values.' \
+  -rnE --include='*.md' --exclude-dir='_templates' '<slug>|<LAYER>|<kit-slug>'
 
 if [ "$fail" -eq 0 ]; then
   echo "✓ $DIR is clean — no template residue."

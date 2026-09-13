@@ -81,7 +81,7 @@ These are runtime-detected contract gaps surfaced by the audit pipeline; they sh
 
 | Signal | First response | Recovery |
 |--------|----------------|----------|
-| `dirty-start-paths.txt` missing while `AUTOCOMMIT=true` | classify `P1`, regenerate baseline | resnapshot dirty baseline |
+| `dirty-start-paths.nul` missing while `AUTOCOMMIT=true` | classify `P1`, regenerate baseline | resnapshot dirty baseline |
 | staged files include baseline paths | classify `P0`, unstage baseline paths | `git reset HEAD -- <baseline_paths>` |
 | single-loop candidate scope exceeds goal | classify `P1`, restrict staging | verify each candidate path |
 | cross-loop path overlap | classify `P1`, suspend affected loop | delegate via `ORBIT_TO_GUARDIAN_HANDOFF` |
@@ -220,7 +220,7 @@ Run before launching a loop:
 - [ ] ACs were written for this loop, not copied from another
 - [ ] `state.env` has not been edited manually
 - [ ] `state.env` and `progress.md` are consistent
-- [ ] `dirty-start-paths.txt` exists when `AUTOCOMMIT=true`
+- [ ] `dirty-start-paths.nul` exists when `AUTOCOMMIT=true`
 - [ ] the `DONE` gate requires `done.md` and verify `PASS`/`SKIP`
 - [ ] no manual `git checkout` will happen during active `BRANCH_ISOLATION`
 - [ ] `verify.sh` includes a placeholder-detection step (TODO / `pass` / `NotImplementedError`)

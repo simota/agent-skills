@@ -159,6 +159,6 @@ Choose the action that matches your role:
 
 ### Confidence & Calibration
 - **synthetic:** true
-- **calibration:** `[validated]` / `[supported]` / `[hypothesis]` / `[synthetic-only]` — default `[hypothesis]` (plausible, no real data); `[synthetic-only]` if it may be an AI artifact; promote only with a cited real-data match per `reference/calibration.md`. **Every request carries a tag — not just `multi`.**
+- **calibration:** `[validated]` / `[supported]` / `[hypothesis]` / `[synthetic-only]` — default `[hypothesis]` (plausible, no real data); `[synthetic-only]` if it may be an AI artifact; promote only with a cited real-data match per `reference/demand-calibration.md`. **Every request carries a tag — not just `multi`.**
 - **Don't-build check:** [Is this need already met elsewhere, better solved without a feature, or a YAGNI risk? The honest user voice sometimes says "don't build this."]
 

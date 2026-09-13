@@ -24,16 +24,19 @@ AI Agent Skills へのコントリビューションを歓迎します！
 # フォーク後
 git clone https://github.com/YOUR_USERNAME/agent-skills.git
 cd agent-skills
+python3 -m pip install -r requirements-checks.txt
 ```
+
+検証には Python 3 と Node.js が必要です。`make check` でスキル検証と回帰テストを実行します。
 
 ### 新しいエージェントの追加
 
-1. `[AgentName]/SKILL.md` を作成
+1. 小文字のディレクトリ名で `<skill-name>/SKILL.md` を作成（例: `scout/SKILL.md`）
 2. `description` は英語で1行（グローバルとproject-localの全スキルで統一）。frontmatter とセクション構成は `_templates/SKILL_TEMPLATE.md` を正とする — 以下は骨格の抜粋:
 
 ```markdown
 ---
-name: AgentName
+name: agent-name
 description: "One-line description. What this agent does and when to use it. Don't use for X (Agent), Y (Agent)."
 ---
 
@@ -98,7 +101,7 @@ Route elsewhere when the task is primarily:
 3. 完全なセクション一覧・順序・記法は `_templates/SKILL_TEMPLATE.md` を参照し、それに沿って作成する
 4. **ロスターを更新する（手作業のレジストリは自動同期されない）**:
    - `README.md` / `README_ja.md` のエージェント一覧とエージェント数
-   - `index.html`（`const AGENTS` 配列・カテゴリ件数・件数を記載した全テキスト）
+   - `index.html`（`const AGENTS` 配列・`SUBCOMMANDS`・英訳・カテゴリ件数・件数を記載した全テキスト）
    - `compass/reference/catalog.md`（カテゴリ節とその件数）
    - `_common/SKILL_PACKS.md`（最低1つのPack、またはoptional／explicit-only／project-local配置に登録する）
    - `AGENTS.md` / `CLAUDE.md` のスキル数
@@ -110,8 +113,9 @@ Route elsewhere when the task is primarily:
 
 | 項目 | 規約 |
 |------|------|
-| エージェント名 | PascalCase（例: Scout, Builder, Artisan） |
-| ファイル名 | `[AgentName]/SKILL.md` |
+| 表示名 | PascalCase（例: Scout, Builder, Artisan） |
+| frontmatter の `name`・ディレクトリ名 | 小文字 kebab-case（例: `scout`, `builder`, `artisan`） |
+| ファイル名 | `<skill-name>/SKILL.md` |
 | 出力言語 | 日本語 |
 | コード・コミット | 英語 |
 | コミット形式 | Conventional Commits |

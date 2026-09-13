@@ -65,7 +65,7 @@ SWITCH_PREDICTION:
 ```
 
 Rules:
-- Every force carries a calibration tag; the whole prediction ceilings at `[hypothesis]` until Field validates with real switchers (per `reference/calibration.md`).
+- Every force carries a calibration tag; the whole prediction ceilings at `[hypothesis]` until Field validates with real switchers (per `reference/demand-calibration.md`).
 - Name the **riskiest force** explicitly — it is what the Field handoff validates first (replaces the vague "state which forces are highest-uncertainty").
 - A verdict with no `falsifiable_test` is over-confident synthetic optimism; do not emit it.
 
@@ -76,7 +76,7 @@ Rules:
 - For every stage with a real friction surface, emit a demand: *"To make progress on [job] at the [stage] stage, I need [capability]."*
 - Carry the calibration tag (`[hypothesis]` by default; `[supported]`/`[validated]` only if a force or friction matches real Voice/Trace data).
 - Prioritize demands at the **dominant unmet stage** (the stage carrying the strongest push) — that is where Spark designs first.
-- Apply the `request`-recipe self-rejection gate (`reference/patterns.md`): drop feasibility-filtered or voice-mismatched demands.
+- Apply the `request`-recipe self-rejection gate (`reference/demand-patterns.md`): drop feasibility-filtered or voice-mismatched demands.
 
 ## The Job Map (Universal 8 Stages)
 

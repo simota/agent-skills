@@ -182,7 +182,7 @@ def check_dead_references(findings: list[Finding]):
             elsewhere = [
                 p for p in REPO_ROOT.rglob(f"reference/{basename}")
                 if p.is_file() and not _corpus.is_excluded_path(p, REPO_ROOT)
-            ]
+            ] if raw_path.startswith("reference/") else []
             if len(elsewhere) == 1:
                 continue  # shorthand cross-skill reference, resolvable elsewhere — not dead
             findings.append(Finding(
@@ -321,11 +321,12 @@ def check_fallback_field(findings: list[Finding]):
         findings.append(Finding("RO-4", "WARNING", "NEXUS_COMPLETE template block not found — fallback-field check skipped"))
         return
     template = m.group(1)
-    if "fallback_taken" not in template or "Fallback:" not in template:
+    fallback = re.search(r"^\s*Fallback:[^\n]*", template, re.MULTILINE)
+    if fallback is None or "fallback_taken" not in fallback.group(0):
         findings.append(Finding("RO-4", "ERROR", "NEXUS_COMPLETE template is missing the `Fallback:` / `fallback_taken` field"))
         return
     required_values = ("compass-invoked", "architect-invoked", "neither")
-    missing = [v for v in required_values if v not in template]
+    missing = [v for v in required_values if v not in fallback.group(0)]
     if missing:
         findings.append(Finding(
             "RO-4", "ERROR",

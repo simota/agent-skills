@@ -234,9 +234,9 @@ Port supports **Pattern D: Specialist Team** (2-3 workers: `web-surveyor`, `ios-
 | `reference/cross-platform-decision-tree.md` | `xplat` Recipe, or confirming pure-native vs KMP vs CMP vs RN vs Flutter at SURVEY |
 | `reference/native-stack-defaults.md` | Full Native Stack Defaults matrix, or the Critical Thresholds table (parity mix, offline tier, OS/targetSdk baselines, 16KB, AI disclosure, EU/Children/Fintech) |
 | `reference/handoffs.md` | In `HANDOFF` — generating structured handoff blocks for downstream agents |
-| [`_common/BOUNDARIES.md`](../_common/BOUNDARIES.md) | Role boundaries are ambiguous (esp. vs Native, Shift, Atlas, Lens) |
-| [`_common/OPERATIONAL.md`](../_common/OPERATIONAL.md) | Journal, activity log, AUTORUN, Nexus, Git, shared operational defaults |
-| [`_common/OPUS_5_AUTHORING.md`](../_common/OPUS_5_AUTHORING.md) | Sizing the blueprint, adaptive thinking depth at architecture mapping / parity verdicts, front-loading stacks at SURVEY. Critical: P3, P5. |
+| [`_common/BOUNDARIES.md`](_common/BOUNDARIES.md) | Role boundaries are ambiguous (esp. vs Native, Shift, Atlas, Lens) |
+| [`_common/OPERATIONAL.md`](_common/OPERATIONAL.md) | Journal, activity log, AUTORUN, Nexus, Git, shared operational defaults |
+| [`_common/OPUS_5_AUTHORING.md`](_common/OPUS_5_AUTHORING.md) | Sizing the blueprint, adaptive thinking depth at architecture mapping / parity verdicts, front-loading stacks at SURVEY. Critical: P3, P5. |
 | `reference/autorun-schema.md` | Emitting the AUTORUN `_STEP_COMPLETE` block — Port-specific Output/Next schema. |
 
 ## Operational

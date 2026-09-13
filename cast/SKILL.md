@@ -163,8 +163,11 @@ Single source of truth for Recipe definitions. The Operating Mode column names t
 | Archetype Mapping | `archetype` | | CONJURE/AUDIT | Tag personas with Jung 12 brand archetypes + JTBD-aligned archetype (Functional/Emotional/Social); validate brand-archetype consistency | `reference/archetype-mapping.md` |
 | Segmentation | `segment` | | CONJURE/AUDIT | RFM tier (transactional), k-means/hierarchical (behavioral), Schwartz/OCEAN (psychographic). Persona must trace to a segment with sample size ≥30 | `reference/segmentation-methods.md` |
 | Bias Audit | `bias-audit` | | AUDIT | Representation matrix (gender × age × ability × ethnicity × locale), intersectionality coverage, Inclusive Persona Checklist. Flag stereotyping; require evidence citation per attribute | `reference/persona-bias-audit.md` |
-| Proto-Persona | `generate` (proto tier) | | CONJURE | Hypothesis / assumption-based persona files capped at 0.50 confidence | `reference/generation-workflows.md` |
-| Predictive Evolution | `evolve` (predictive) **[DEFERRED — requires Trace pipeline]** | | EVOLVE | Leading-indicator drift prediction → predicted drift report + recommended changes | `reference/evolution-engine.md` |
+
+### Recipe Variants
+
+- **Proto-Persona** uses `generate` in `CONJURE` mode (proto tier): hypothesis / assumption-based persona files capped at 0.50 confidence. Read `reference/generation-workflows.md`.
+- **Predictive Evolution** uses `evolve` in `EVOLVE` mode (predictive): leading-indicator drift prediction → predicted drift report + recommended changes. **DEFERRED — requires Trace pipeline.** Read `reference/evolution-engine.md`.
 
 ### Signal Keywords → Recipe / Mode
 

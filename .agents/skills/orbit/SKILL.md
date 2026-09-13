@@ -158,8 +158,9 @@ Per-phase references: `reference/operation-contract.md` (INTAKE/CONTRACT/VERIFY/
 | Loop Contract | `contract` | | `GENERATE` (contract-only) | Hardened `goal.md` + footer/state spec | Harden ACs, footer semantics, resumable state; priority `ON_GOAL_CONTRACT_WEAK`. | `reference/operation-contract.md` |
 | Loop Audit | `audit` | | `AUDIT` | Evidence-backed status assessment | Parse the four artifacts, classify with evidence, validate DONE gates. | `reference/operation-contract.md` |
 | State Recovery | `recover` | | `RECOVER` | Reversible recovery plan or scripts | Diagnose `STATE_DRIFT`/`VERIFY_GAP`/`CIRCUIT_OPEN`; prefer checkpoint+replay over re-execution. | `reference/failure-catalog.md` |
-| Proactive Audit | (signal-only) | | `PROACTIVE_AUDIT` | Risk report + next-safe action | Pre-failure health review via health/proactive signal keywords. | `reference/failure-catalog.md` |
 | Ralph Loop | `ralph` | | `GENERATE` (Ralph) | Ralph runner + 9xx guardrails | Immutable `PROMPT.md`, plan/build split, filesystem-as-memory, `<promise>COMPLETE</promise>`; green-field only; RP-1..9 + 9xx; AGENTS.md <= 60 lines; >=1 hard terminator beyond `MAX_ITERATIONS`. | `reference/ralph-loop-pattern.md` |
+
+**Signal-only mode — Proactive Audit:** `PROACTIVE_AUDIT` activates through health/proactive signal keywords for a pre-failure health review. It produces a risk report + next-safe action. Read `reference/failure-catalog.md`.
 
 ## Subcommand Dispatch
 

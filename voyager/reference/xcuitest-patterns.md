@@ -201,9 +201,9 @@ Reserve `coordinate(withNormalizedOffset:)` for drawing canvases, maps, and syst
 
 ## Cross-References
 
-- `reference/identifier-strategy.md` — designing the identifier taxonomy these queries depend on.
-- `reference/screenshot-strategies.md` — attaching evidence when a Screen Object assertion fails.
-- `reference/ci-integration.md` — running the resulting suite under `xcodebuild test` with sharding and parallelism.
+- `reference/ios-identifier-strategy.md` — designing the identifier taxonomy these queries depend on.
+- `reference/ios-screenshot-strategies.md` — attaching evidence when a Screen Object assertion fails.
+- `reference/ios-ci-integration.md` — running the resulting suite under `xcodebuild test` with sharding and parallelism.
 
 
 ---

@@ -18,7 +18,8 @@ Primary output of Orbit. Drives autonomous loop execution from goal to `DONE`.
 set -euo pipefail
 
 #--- Configuration (customize per goal) ---
-LOOP_DIR="${LOOP_DIR:-.nexus-loop}"
+LOOP_DIR="${LOOP_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)}"
+LOOP_DIR="$(cd -- "${LOOP_DIR}" && pwd)"
 MAX_ITERATIONS="${MAX_ITERATIONS:-20}"
 RETRY_LIMIT="${RETRY_LIMIT:-3}"
 RETRY_BACKOFF_BASE="${RETRY_BACKOFF_BASE:-2}"
@@ -62,20 +63,26 @@ GOAL_IMMUTABLE="${GOAL_IMMUTABLE:-true}"
 portable_timeout() {
   local secs="$1"; shift
   if command -v timeout >/dev/null 2>&1; then
-    timeout "${secs}" "$@"
+    timeout --signal=KILL "${secs}" "$@"
   elif command -v gtimeout >/dev/null 2>&1; then
-    gtimeout "${secs}" "$@"
+    gtimeout --signal=KILL "${secs}" "$@"
   else
     perl -e '
       use POSIX ":sys_wait_h";
       my $timeout = shift @ARGV;
       my $pid = fork // die "fork: $!";
-      if ($pid == 0) { exec @ARGV; die "exec: $!" }
-      local $SIG{ALRM} = sub { kill "TERM", $pid; waitpid($pid, 0); exit 124 };
+      if ($pid == 0) {
+        setpgrp(0, 0) or die "setpgrp: $!";
+        exec { $ARGV[0] } @ARGV or die "exec: $!";
+      }
+      local $SIG{ALRM} = sub {
+        kill 9, -$pid; kill 9, $pid;
+        waitpid($pid, 0); exit 124;
+      };
       alarm $timeout;
       waitpid($pid, 0);
-      alarm 0;
-      exit($? >> 8);
+      my $status = $?;
+      exit(($status & 127) ? 128 + ($status & 127) : $status >> 8);
     ' "${secs}" "$@"
   fi
 }
@@ -130,8 +137,12 @@ if ! preflight_check; then
   exit 1
 fi
 
-# Acquire lock
-echo $$ > "${LOOP_DIR}/.run-loop.lock"
+# Acquire the lock atomically; always release it, including unexpected errors.
+if ! (set -o noclobber; echo $$ > "${LOOP_DIR}/.run-loop.lock") 2>/dev/null; then
+  echo "[ABORT] Another runner acquired the loop lock"
+  exit 1
+fi
+trap 'rm -f "${LOOP_DIR}/.run-loop.lock"' EXIT
 
 #--- Log rotation ---
 rotate_log() {
@@ -147,18 +158,37 @@ rotate_log() {
 rotate_log
 
 #--- Structured logging (JSON Lines) ---
+json_escape() {
+  local value="$1" char code escaped result="" i
+  local LC_ALL=C
+  for ((i=0; i<${#value}; i++)); do
+    char="${value:i:1}"
+    case "${char}" in
+      '"') result+='\"' ;;
+      '\') result+='\\' ;;
+      *)
+        printf -v code '%d' "'${char}"
+        if ((code < 32)); then
+          printf -v escaped '\\u%04x' "${code}"
+          result+="${escaped}"
+        else
+          result+="${char}"
+        fi ;;
+    esac
+  done
+  printf '%s' "${result}"
+}
 emit_log() {
   if [[ "${STRUCTURED_LOG}" != "true" ]]; then return; fi
   local level="$1" event="$2"; shift 2
   local ts
   ts=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-  local json="{\"timestamp\":\"${ts}\",\"level\":\"${level}\",\"event\":\"${event}\",\"iteration\":${ITER:-0}"
-  while [[ $# -gt 0 ]]; do
-    json="${json},\"$1\":\"$2\""
+  local json="{\"timestamp\":\"${ts}\",\"level\":\"$(json_escape "${level}")\",\"event\":\"$(json_escape "${event}")\",\"iteration\":${ITER:-0}"
+  while [[ $# -ge 2 ]]; do
+    json="${json},\"$(json_escape "$1")\":\"$(json_escape "$2")\""
     shift 2
   done
-  json="${json}}"
-  echo "${json}" >> "${LOOP_DIR}/runner.jsonl"
+  printf '%s}\n' "${json}" >> "${LOOP_DIR}/runner.jsonl"
 }
 
 #--- Circuit breaker ---
@@ -169,9 +199,17 @@ CB_LAST_SIGNATURE=""
 CB_LAST_UPDATED=0
 
 load_circuit_state() {
-  if [[ -f "${CIRCUIT_FILE}" ]]; then
-    source "${CIRCUIT_FILE}"
-  fi
+  local key value
+  [[ -f "${CIRCUIT_FILE}" ]] || return 0
+  while IFS='=' read -r key value || [[ -n "${key}" ]]; do
+    case "${key}" in
+      CB_STATE) [[ "${value}" =~ ^(OPEN|HALF_OPEN|CLOSED)$ ]] || continue ;;
+      CB_FAIL_COUNT|CB_LAST_UPDATED) [[ "${value}" =~ ^[0-9]+$ ]] || continue ;;
+      CB_LAST_SIGNATURE) [[ "${value}" =~ ^[A-Za-z0-9_]*$ ]] || continue ;;
+      *) continue ;;
+    esac
+    printf -v "${key}" '%s' "${value}"
+  done < "${CIRCUIT_FILE}"
 }
 
 save_circuit_state() {
@@ -260,29 +298,37 @@ budget_exceeded() {
   return 1
 }
 
-# Loop change base: all loop work is visible as ORIGIN_BRANCH..HEAD (autocommit) plus the
-# working tree (uncommitted). Using a base ref keeps gates correct when AUTOCOMMIT commits
-# each iteration (working-tree diff would otherwise be empty).
+# Pin the start commit even without branch isolation: autocommit must not hide
+# changed files from completion checks. Emit NUL-delimited literal paths.
 loop_changed_files() {
-  local base="${ORIGIN_BRANCH:-}"
-  {
-    if [[ -n "${base}" ]] && git rev-parse --verify "${base}" >/dev/null 2>&1; then
-      git diff --name-only "${base}...HEAD" 2>/dev/null || true
-    fi
-    git diff --name-only HEAD 2>/dev/null || true
-    git ls-files --others --exclude-standard 2>/dev/null || true
-  } | sort -u
+  local base="${LOOP_BASE:-}"
+  if [[ -n "${base}" ]] && git rev-parse --verify "${base}" >/dev/null 2>&1; then
+    git diff --name-only -z "${base}...HEAD" -- 2>/dev/null || true
+  fi
+  git diff --name-only -z HEAD -- 2>/dev/null || true
+  git ls-files --others --exclude-standard -z 2>/dev/null || true
 }
 
 #--- Placeholder gate: verify PASS alone is not DONE evidence (AP-12) ---
 placeholder_clean() {
   [[ "${PLACEHOLDER_GREP}" == "true" ]] || return 0
-  local changed
-  changed=$(loop_changed_files | grep -E '\.(js|ts|tsx|jsx|py|go|rb|rs|java|kt|swift|php|c|cc|cpp|h)$' || true)
-  [[ -z "${changed}" ]] && return 0
-  if echo "${changed}" | xargs grep -nE 'TODO|FIXME|NotImplementedError|raise NotImplemented|^[[:space:]]*pass[[:space:]]*$|return None[[:space:]]*#|throw new Error\("not implemented"\)' 2>/dev/null; then
-    return 1
-  fi
+  local changed path result
+  changed=$(mktemp "${LOOP_DIR}/placeholder-paths.XXXXXX")
+  loop_changed_files > "${changed}"
+  while IFS= read -r -d '' path; do
+    case "${path}" in
+      *.js|*.ts|*.tsx|*.jsx|*.py|*.go|*.rb|*.rs|*.java|*.kt|*.swift|*.php|*.c|*.cc|*.cpp|*.h) ;;
+      *) continue ;;
+    esac
+    [[ -f "${path}" ]] || continue # deleted source needs no scan
+    result=0
+    grep -nE 'TODO|FIXME|NotImplementedError|raise NotImplemented|^[[:space:]]*pass[[:space:]]*$|return None[[:space:]]*#|throw new Error\("not implemented"\)' -- "${path}" || result=$?
+    if [[ "${result}" -ne 1 ]]; then
+      rm -f "${changed}"
+      return 1 # a match or an unreadable source cannot satisfy the gate
+    fi
+  done < "${changed}"
+  rm -f "${changed}"
   return 0
 }
 
@@ -307,6 +353,50 @@ convergence_stalled() {
   [[ "$(echo "${lines}" | sort -u | wc -l | tr -d ' ')" -eq 1 ]]
 }
 
+# Parse checkpoint data without evaluating shell code or assigning environment keys.
+load_state() {
+  local key value
+  [[ -f "${LOOP_DIR}/state.env" ]] || return 0
+  while IFS='=' read -r key value || [[ -n "${key}" ]]; do
+    case "${key}" in
+      NEXT_ITERATION)
+        [[ "${value}" =~ ^[1-9][0-9]*$ ]] || continue ;;
+      LAST_STATUS)
+        [[ "${value}" =~ ^(READY|CONTINUE|DONE|BLOCKED)$ ]] || continue ;;
+      TOTAL_TOKENS|TOTAL_API_CALLS|ITER_TOKENS|ITER_API_CALLS)
+        [[ "${value}" =~ ^[0-9]+$ ]] || continue ;;
+      ESTIMATED_COST_USD)
+        [[ "${value}" =~ ^[0-9]+([.][0-9]+)?$ ]] || continue ;;
+      CONTRACT_VERSION)
+        [[ "${value}" =~ ^[0-9]+[.][0-9]+[.][0-9]+$ ]] || continue ;;
+      LAST_UPDATED_AT|ORIGIN_BRANCH|ITER_BRANCH|RECOVERED_FROM|LOOP_BASE) ;;
+      *) continue ;;
+    esac
+    printf -v "${key}" '%s' "${value}"
+  done < "${LOOP_DIR}/state.env"
+}
+
+write_state() {
+  local next="$1" status="$2" tmp key
+  tmp=$(mktemp "${LOOP_DIR}/state.env.XXXXXX")
+  cat > "${tmp}" <<STATE_EOF
+NEXT_ITERATION=${next}
+LAST_STATUS=${status}
+LAST_UPDATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+ORIGIN_BRANCH=${ORIGIN_BRANCH:-}
+ITER_BRANCH=${ITER_BRANCH:-}
+LOOP_BASE=${LOOP_BASE:-}
+CONTRACT_VERSION=${CONTRACT_VERSION:-1.2.0}
+STATE_EOF
+  for key in TOTAL_TOKENS TOTAL_API_CALLS ESTIMATED_COST_USD; do
+    if [[ -n "${!key:-}" ]]; then
+      printf '%s=%s\n' "${key}" "${!key}" >> "${tmp}"
+    fi
+  done
+  mv "${tmp}" "${LOOP_DIR}/state.env"
+  shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}' > "${LOOP_DIR}/state.env.sha256"
+}
+
 #--- Graceful shutdown (SIGINT/SIGTERM) ---
 SHUTDOWN=0
 cleanup() {
@@ -314,17 +404,7 @@ cleanup() {
   SHUTDOWN=1
 
   # Step 1: State snapshot
-  local tmp
-  tmp=$(mktemp "${LOOP_DIR}/state.env.XXXXXX")
-  cat > "${tmp}" <<STATE_EOF
-NEXT_ITERATION=${ITER}
-LAST_STATUS=CONTINUE
-LAST_UPDATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-ORIGIN_BRANCH=${ORIGIN_BRANCH:-}
-ITER_BRANCH=${ITER_BRANCH:-}
-STATE_EOF
-  mv "${tmp}" "${LOOP_DIR}/state.env"
-  shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}' > "${LOOP_DIR}/state.env.sha256"
+  write_state "${ITER:-1}" CONTINUE
 
   # Step 2: Partial results summary
   {
@@ -346,37 +426,29 @@ STATE_EOF
 }
 trap cleanup SIGINT SIGTERM
 
-#--- Load state.env with validation ---
+#--- Validate checksum before consuming checkpoint values ---
 ITER=1
 STATUS="READY"
-if [[ -f "${LOOP_DIR}/state.env" ]]; then
-  if grep -qvE '^[A-Z_]+=[A-Za-z0-9_:./ -]*$' "${LOOP_DIR}/state.env"; then
-    echo "[WARN] state.env contains invalid lines — using defaults"
-  else
-    # shellcheck disable=SC1091
-    source "${LOOP_DIR}/state.env"
-    ITER="${NEXT_ITERATION:-1}"
-    STATUS="${LAST_STATUS:-READY}"
-  fi
-fi
-
-# State checksum validation
 if [[ -f "${LOOP_DIR}/state.env.sha256" ]]; then
   EXPECTED_SHA=$(cat "${LOOP_DIR}/state.env.sha256")
-  ACTUAL_SHA=$(shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}')
+  ACTUAL_SHA=""
+  if [[ -f "${LOOP_DIR}/state.env" ]]; then
+    ACTUAL_SHA=$(shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}')
+  fi
   if [[ "${EXPECTED_SHA}" != "${ACTUAL_SHA}" ]]; then
-    echo "[WARN] state.env checksum mismatch — possible corruption"
-    echo "[RECOVERY] Running recover.sh to rebuild state"
+    echo "[WARN] state.env checksum mismatch — recovering before loading state"
     if [[ -f "${LOOP_DIR}/recover.sh" ]]; then
-      bash "${LOOP_DIR}/recover.sh"
-      source "${LOOP_DIR}/state.env"
-      ITER="${NEXT_ITERATION:-1}"
-      STATUS="${LAST_STATUS:-READY}"
+      bash "${LOOP_DIR}/recover.sh" "${LOOP_DIR}"
     else
-      echo "[WARN] No recover.sh available — proceeding with current state"
+      echo "[ABORT] Run recover.sh to rebuild the corrupted checkpoint"
+      exit 1
     fi
   fi
 fi
+load_state
+ITER="${NEXT_ITERATION:-1}"
+STATUS="${LAST_STATUS:-READY}"
+LOOP_BASE="${LOOP_BASE:-$(git rev-parse --verify "${ORIGIN_BRANCH:-HEAD}" 2>/dev/null || true)}"
 
 #--- Branch isolation (pre-loop) ---
 if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]]; then
@@ -405,18 +477,18 @@ if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]]; the
     fi
 
     if [[ "${STASHED_FOR_BRANCH}" == "true" ]]; then
-      git stash pop || echo "[BRANCH:WARN] Stash pop conflict — manual resolution needed"
+      git stash pop --index || { echo "[ABORT] Stash restore conflict — resolve before resuming"; exit 1; }
     fi
   fi
 fi
 
-#--- Dirty baseline snapshot ---
+#--- Dirty baseline snapshot (NUL preserves spaces, quotes, and newlines) ---
 if [[ "${AUTOCOMMIT}" == "true" ]]; then
   {
-    git diff --name-only 2>/dev/null || true
-    git diff --cached --name-only 2>/dev/null || true
-    git ls-files --others --exclude-standard 2>/dev/null || true
-  } | sort -u > "${LOOP_DIR}/dirty-start-paths.txt"
+    git diff --name-only -z -- 2>/dev/null || true
+    git diff --cached --name-only -z -- 2>/dev/null || true
+    git ls-files --others --exclude-standard -z 2>/dev/null || true
+  } > "${LOOP_DIR}/dirty-start-paths.nul"
 fi
 
 #--- Adaptive timeout ---
@@ -460,18 +532,30 @@ LOOP_START_TS=$(date +%s)
 LOOP_DEADLINE=0
 [[ "${LOOP_TIMEOUT}" -gt 0 ]] && LOOP_DEADLINE=$((LOOP_START_TS + LOOP_TIMEOUT))
 
+# Executor attempts, retry delays, and verification share this one deadline.
+# A zero command limit means no local limit; the remaining loop budget still applies.
+run_with_budget() {
+  local limit="$1" remaining; shift
+  if [[ "${LOOP_DEADLINE}" -gt 0 ]]; then
+    remaining=$((LOOP_DEADLINE - $(date +%s)))
+    [[ "${remaining}" -gt 0 ]] || return 124
+    if [[ "${limit}" -eq 0 || "${remaining}" -lt "${limit}" ]]; then
+      limit="${remaining}"
+    fi
+  fi
+  if [[ "${limit}" -gt 0 ]]; then
+    portable_timeout "${limit}" "$@"
+  else
+    "$@"
+  fi
+}
+
+loop_timeout_reached() {
+  [[ "${LOOP_DEADLINE}" -gt 0 ]] && [[ "$(date +%s)" -ge "${LOOP_DEADLINE}" ]]
+}
+
 write_terminal_state() {
-  local status="$1"
-  local tmp; tmp=$(mktemp "${LOOP_DIR}/state.env.XXXXXX")
-  cat > "${tmp}" <<STATE_EOF
-NEXT_ITERATION=${ITER}
-LAST_STATUS=${status}
-LAST_UPDATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-ORIGIN_BRANCH=${ORIGIN_BRANCH:-}
-ITER_BRANCH=${ITER_BRANCH:-}
-STATE_EOF
-  mv "${tmp}" "${LOOP_DIR}/state.env"
-  shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}' > "${LOOP_DIR}/state.env.sha256"
+  write_state "${ITER}" "$1"
 }
 
 #--- Main loop ---
@@ -507,16 +591,7 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   if ! check_circuit; then
     echo "[CIRCUIT:OPEN] Execution blocked — waiting for cooldown or manual reset" | tee -a "${LOOP_DIR}/runner.log"
     STATUS="BLOCKED"
-    state_tmp=$(mktemp "${LOOP_DIR}/state.env.XXXXXX")
-    cat > "${state_tmp}" <<STATE_EOF
-NEXT_ITERATION=${ITER}
-LAST_STATUS=BLOCKED
-LAST_UPDATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-ORIGIN_BRANCH=${ORIGIN_BRANCH:-}
-ITER_BRANCH=${ITER_BRANCH:-}
-STATE_EOF
-    mv "${state_tmp}" "${LOOP_DIR}/state.env"
-    shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}' > "${LOOP_DIR}/state.env.sha256"
+    write_state "${ITER}" "BLOCKED"
     emit_log "ERROR" "circuit_breaker_block" "state" "OPEN"
     break
   fi
@@ -532,32 +607,14 @@ STATE_EOF
   if [[ "${HEALTH_AVAIL}" -lt 51200 ]]; then
     echo "[HEALTH:BLOCKED] Disk space low: ${HEALTH_AVAIL}KB (< 50MB)" | tee -a "${LOOP_DIR}/runner.log"
     STATUS="BLOCKED"
-    state_tmp=$(mktemp "${LOOP_DIR}/state.env.XXXXXX")
-    cat > "${state_tmp}" <<STATE_EOF
-NEXT_ITERATION=${ITER}
-LAST_STATUS=BLOCKED
-LAST_UPDATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-ORIGIN_BRANCH=${ORIGIN_BRANCH:-}
-ITER_BRANCH=${ITER_BRANCH:-}
-STATE_EOF
-    mv "${state_tmp}" "${LOOP_DIR}/state.env"
-    shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}' > "${LOOP_DIR}/state.env.sha256"
+    write_state "${ITER}" "BLOCKED"
     break
   fi
   if [[ "${AUTOCOMMIT}" == "true" ]]; then
     if [[ -d .git/rebase-merge ]] || [[ -d .git/rebase-apply ]]; then
       echo "[HEALTH:BLOCKED] Git rebase in progress" | tee -a "${LOOP_DIR}/runner.log"
       STATUS="BLOCKED"
-      state_tmp=$(mktemp "${LOOP_DIR}/state.env.XXXXXX")
-      cat > "${state_tmp}" <<STATE_EOF
-NEXT_ITERATION=${ITER}
-LAST_STATUS=BLOCKED
-LAST_UPDATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-ORIGIN_BRANCH=${ORIGIN_BRANCH:-}
-ITER_BRANCH=${ITER_BRANCH:-}
-STATE_EOF
-      mv "${state_tmp}" "${LOOP_DIR}/state.env"
-      shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}' > "${LOOP_DIR}/state.env.sha256"
+      write_state "${ITER}" "BLOCKED"
       break
     fi
   fi
@@ -569,7 +626,11 @@ STATE_EOF
   LAST_EXIT_CODE=0
   while [[ "${RETRY_COUNT}" -lt "${RETRY_LIMIT}" ]]; do
     LAST_EXIT_CODE=0
-    portable_timeout "${EFFECTIVE_TIMEOUT}" ${EXEC_CMD} 2>&1 | tee -a "${LOOP_DIR}/runner.log" || LAST_EXIT_CODE=$?
+    run_with_budget "${EFFECTIVE_TIMEOUT}" ${EXEC_CMD} 2>&1 | tee -a "${LOOP_DIR}/runner.log" || LAST_EXIT_CODE=$?
+    if loop_timeout_reached; then
+      echo "[TIMEOUT] LOOP_TIMEOUT=${LOOP_TIMEOUT}s exceeded during executor" | tee -a "${LOOP_DIR}/runner.log"
+      STATUS="BLOCKED"; write_terminal_state BLOCKED; break 2
+    fi
 
     if [[ "${LAST_EXIT_CODE}" -eq 0 ]]; then
       EXEC_SUCCESS=true
@@ -596,7 +657,12 @@ STATE_EOF
       JITTER=$((RANDOM % (RETRY_BACKOFF_BASE ** RETRY_COUNT / 2 + 1)))
       BACKOFF=$((RETRY_BACKOFF_BASE ** RETRY_COUNT + JITTER))
       echo "[RETRY] Attempt ${RETRY_COUNT}/${RETRY_LIMIT} failed (exit=${LAST_EXIT_CODE}) — waiting ${BACKOFF}s"
-      sleep "${BACKOFF}"
+      BACKOFF_EXIT=0
+      run_with_budget 0 sleep "${BACKOFF}" || BACKOFF_EXIT=$?
+      if [[ "${BACKOFF_EXIT}" -ne 0 ]] || loop_timeout_reached; then
+        echo "[TIMEOUT] LOOP_TIMEOUT=${LOOP_TIMEOUT}s exhausted during retry delay" | tee -a "${LOOP_DIR}/runner.log"
+        STATUS="BLOCKED"; write_terminal_state BLOCKED; break 2
+      fi
     fi
   done
 
@@ -610,49 +676,63 @@ STATE_EOF
     } >> "${LOOP_DIR}/progress.md"
     STATUS="BLOCKED"
     # Atomic state write before break (keep same iteration for retry)
-    state_tmp=$(mktemp "${LOOP_DIR}/state.env.XXXXXX")
-    cat > "${state_tmp}" <<STATE_EOF
-NEXT_ITERATION=${ITER}
-LAST_STATUS=BLOCKED
-LAST_UPDATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-ORIGIN_BRANCH=${ORIGIN_BRANCH:-}
-ITER_BRANCH=${ITER_BRANCH:-}
-STATE_EOF
-    mv "${state_tmp}" "${LOOP_DIR}/state.env"
-    shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}' > "${LOOP_DIR}/state.env.sha256"
+    write_state "${ITER}" "BLOCKED"
     break
   fi
 
   #--- Verification gate ---
   VERIFY_RESULT="SKIP"
   if [[ -f "${LOOP_DIR}/verify.sh" ]]; then
-    if bash "${LOOP_DIR}/verify.sh"; then
+    if run_with_budget 0 bash "${LOOP_DIR}/verify.sh"; then
       VERIFY_RESULT="PASS"
     else
       VERIFY_RESULT="FAIL"
     fi
   fi
 
+  # Recheck after executor/verification, including the final iteration: neither
+  # goal mutation nor newly emitted cost may bypass a gate by creating done.md.
+  if ! check_goal_immutable; then
+    echo "[ABORT] goal.md changed mid-run (GOAL_DRIFT / AP-16)" | tee -a "${LOOP_DIR}/runner.log"
+    STATUS="BLOCKED"; write_terminal_state BLOCKED; break
+  fi
+  if BUDGET_MSG=$(budget_exceeded); then
+    echo "[ABORT] ${BUDGET_MSG}" | tee -a "${LOOP_DIR}/runner.log"
+    STATUS="BLOCKED"; write_terminal_state BLOCKED; break
+  fi
+  if [[ "${LOOP_DEADLINE}" -gt 0 ]] && [[ "$(date +%s)" -ge "${LOOP_DEADLINE}" ]]; then
+    echo "[TIMEOUT] LOOP_TIMEOUT=${LOOP_TIMEOUT}s exceeded" | tee -a "${LOOP_DIR}/runner.log"
+    STATUS="BLOCKED"; write_terminal_state BLOCKED; break
+  fi
+
   #--- Scoped auto-commit ---
   if [[ "${AUTOCOMMIT}" == "true" ]]; then
-    if [[ -f "${LOOP_DIR}/dirty-start-paths.txt" ]] && [[ -s "${LOOP_DIR}/dirty-start-paths.txt" ]]; then
-      # Exclude dirty baseline — stage only loop artifacts
-      {
-        git diff --name-only 2>/dev/null || true
-        git diff --cached --name-only 2>/dev/null || true
-        git ls-files --others --exclude-standard 2>/dev/null || true
-      } | sort -u > "${LOOP_DIR}/current-changes.txt"
-      CANDIDATES=$(comm -23 "${LOOP_DIR}/current-changes.txt" "${LOOP_DIR}/dirty-start-paths.txt")
-      if [[ -n "${CANDIDATES}" ]]; then
-        echo "${CANDIDATES}" | xargs git add --
+    {
+      git diff --name-only -z -- 2>/dev/null || true
+      git diff --cached --name-only -z -- 2>/dev/null || true
+      git ls-files --others --exclude-standard -z 2>/dev/null || true
+    } > "${LOOP_DIR}/current-changes.nul"
+    CANDIDATES=()
+    REPO_ROOT=$(git rev-parse --show-toplevel)
+    while IFS= read -r -d '' path; do
+      # Runtime files must never enter a source commit, even without .gitignore.
+      [[ "${REPO_ROOT}/${path}" == "${LOOP_DIR}/"* ]] && continue
+      BASELINE_PATH=false
+      while IFS= read -r -d '' baseline; do
+        if [[ "${path}" == "${baseline}" ]]; then BASELINE_PATH=true; break; fi
+      done < "${LOOP_DIR}/dirty-start-paths.nul"
+      if [[ "${BASELINE_PATH}" != "true" ]]; then
+        CANDIDATES+=("${path}")
       fi
-      rm -f "${LOOP_DIR}/current-changes.txt"
-    else
-      git add -A
-    fi
-    if ! git diff --cached --quiet 2>/dev/null; then
-      git commit -m "${COMMIT_MSG_PREFIX}(iter-${ITER}): auto-commit [verify=${VERIFY_RESULT}]"
-      COMMIT_HASH=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
+    done < "${LOOP_DIR}/current-changes.nul"
+    rm -f "${LOOP_DIR}/current-changes.nul"
+    if [[ "${#CANDIDATES[@]}" -gt 0 ]]; then
+      git --literal-pathspecs add --all -- "${CANDIDATES[@]}"
+      if ! git --literal-pathspecs diff --cached --quiet -- "${CANDIDATES[@]}"; then
+        # --only leaves pre-existing staged work in the index, outside this commit.
+        git --literal-pathspecs commit --only -m "${COMMIT_MSG_PREFIX}(iter-${ITER}): auto-commit [verify=${VERIFY_RESULT}]" -- "${CANDIDATES[@]}"
+        COMMIT_HASH=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
+      fi
     fi
   fi
 
@@ -679,16 +759,7 @@ STATE_EOF
 
   #--- Atomic state write ---
   NEXT_ITER=$((ITER + 1))
-  state_tmp=$(mktemp "${LOOP_DIR}/state.env.XXXXXX")
-  cat > "${state_tmp}" <<STATE_EOF
-NEXT_ITERATION=${NEXT_ITER}
-LAST_STATUS=${STATUS}
-LAST_UPDATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-ORIGIN_BRANCH=${ORIGIN_BRANCH:-}
-ITER_BRANCH=${ITER_BRANCH:-}
-STATE_EOF
-  mv "${state_tmp}" "${LOOP_DIR}/state.env"
-  shasum -a 256 "${LOOP_DIR}/state.env" | awk '{print $1}' > "${LOOP_DIR}/state.env.sha256"
+  write_state "${NEXT_ITER}" "${STATUS}"
 
   #--- Iteration notification (|| true — never fatal) ---
   ITER_END=$(date +%s)
@@ -715,10 +786,12 @@ if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]] \
   ITER_COMMIT_COUNT=$(git rev-list --count "${ORIGIN_BRANCH}..${ITER_BRANCH}" 2>/dev/null || echo "0")
   echo "[BRANCH] Loop DONE — squashing ${ITER_COMMIT_COUNT} iteration commits"
 
+  # Preserve prior summaries: a repeated loop name must not delete user commits.
+  if git show-ref --verify --quiet "refs/heads/${SUMMARY_BRANCH}"; then
+    echo "[ABORT] Summary branch ${SUMMARY_BRANCH} already exists — choose another loop name"
+    exit 1
+  fi
   git checkout "${ORIGIN_BRANCH}"
-
-  # Recreate summary branch from current ORIGIN_BRANCH HEAD
-  git rev-parse --verify "${SUMMARY_BRANCH}" >/dev/null 2>&1 && git branch -D "${SUMMARY_BRANCH}"
   git checkout -b "${SUMMARY_BRANCH}"
 
   # Squash merge with conflict handling

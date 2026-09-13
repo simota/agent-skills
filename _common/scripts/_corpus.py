@@ -65,7 +65,7 @@ def external_skill_dirs(root: pathlib.Path) -> list[pathlib.Path]:
     return [
         entry
         for entry in sorted(root.iterdir())
-        if entry.is_dir() and is_external(entry) and (entry / "SKILL.md").is_file()
+        if is_external(entry) and is_skill_dir(entry, include_external=True)
     ]
 
 
@@ -77,8 +77,19 @@ def is_excluded_path(entry: pathlib.Path, root: pathlib.Path) -> bool:
     a retired skill is on disk, is not installed, and resolving a live reference
     against it turns a dead link into a passing check.
     """
+    excluded = {".git", ".agents", ".archive", "node_modules"}
+    # A link under an excluded directory stays excluded even if its target is
+    # live. Conversely a live-looking alias cannot make an archived target live.
+    candidates = [(entry.absolute(), root.absolute())]
     try:
-        parts = entry.resolve().relative_to(root.resolve()).parts
-    except (ValueError, OSError):
-        return False
-    return any(part in {".git", ".agents", ".archive", "node_modules"} for part in parts)
+        candidates.append((entry.resolve(), root.resolve()))
+    except (OSError, RuntimeError):
+        pass
+    for candidate, base in candidates:
+        try:
+            parts = candidate.relative_to(base).parts
+        except ValueError:
+            continue
+        if any(part in excluded for part in parts):
+            return True
+    return False

@@ -37,7 +37,13 @@ Usage: `sha256_hash file.txt | awk '{print $1}'`
 ```bash
 # Portable file mtime in epoch seconds (BSD stat -f / GNU stat -c)
 file_mtime() {
-  stat -f %m "$1" 2>/dev/null || stat -c %Y "$1" 2>/dev/null || echo 0
+  local value
+  if value=$(stat -f %m "$1" 2>/dev/null) ||
+     value=$(stat -c %Y "$1" 2>/dev/null); then
+    printf '%s\n' "$value"
+  else
+    printf '0\n'
+  fi
 }
 ```
 
@@ -62,11 +68,18 @@ run_with_timeout() {
       my $timeout = shift @ARGV;
       my $pid = fork();
       if (!defined $pid) { die "fork: $!" }
-      if ($pid == 0) { exec { $ARGV[0] } @ARGV or die "exec: $!" }
-      local $SIG{ALRM} = sub { kill 9, $pid; waitpid($pid, 0); exit 124 };
+      if ($pid == 0) {
+        setpgrp(0, 0) or die "setpgrp: $!";
+        exec { $ARGV[0] } @ARGV or die "exec: $!";
+      }
+      local $SIG{ALRM} = sub {
+        kill 9, -$pid; kill 9, $pid;
+        waitpid($pid, 0); exit 124;
+      };
       alarm $timeout;
       waitpid($pid, 0);
-      exit($? >> 8);
+      my $status = $?;
+      exit(($status & 127) ? 128 + ($status & 127) : $status >> 8);
     ' "${sec}" "$@"
   fi
 }
@@ -81,35 +94,60 @@ run_with_timeout() {
 # Lists unique parent directories containing <filename>, NUL-separated.
 find_dirs_with_file() {
   local root="$1" filename="$2"
-  find "${root}" -name "${filename}" -type f \
-    | while IFS= read -r f; do dirname "$f"; done \
-    | sort -u
+  find "${root}" -name "${filename}" -type f -exec sh -c '
+    for file do printf "%s\000" "${file%/*}"; done
+  ' sh {} + | perl -0ne 'print unless $seen{$_}++'
 }
 ```
 
-Note: The GNU-only `find -printf '%h\0'` has no POSIX equivalent. Use the `dirname` loop above.
+The helper uses POSIX `find -exec` and Perl's NUL-delimited input mode. It preserves spaces and newlines in directory names and emits each directory once.
 
 ---
 
 ### `pcre_search()` — Portable PCRE grep fallback
 
 ```bash
-# Portable PCRE search: grep -P → perl → python3
+# Portable PCRE search: grep -P → Perl with recursive directory traversal
 # Prints matching file paths (like grep -rl).
 pcre_search() {
   local pattern="$1"; shift  # remaining args are paths
-  if grep -P "" /dev/null >/dev/null 2>&1; then
+  if printf '\n' | grep -P "" >/dev/null 2>&1; then
     # grep supports -P (GNU grep or macOS grep with PCRE)
-    grep -rPl "${pattern}" "$@"
+    grep -rPl -- "${pattern}" "$@"
   else
     # Fall back to perl
-    perl -le '
-      my $pat = shift;
-      for my $f (@ARGV) {
-        open my $fh, "<", $f or next;
-        while (<$fh>) { if (/$pat/) { print $f; last } }
+    perl -e '
+      use strict; use warnings;
+      my $pattern = shift;
+      my $regex = eval { qr/$pattern/ };
+      if ($@) { print STDERR $@; exit 2 }
+      my ($matched, $failed) = (0, 0);
+      sub check_file {
+        my ($file) = @_;
+        if (!open(my $fh, "<", $file)) {
+          warn "$file: $!\n"; $failed = 1; return;
+        } else {
+          while (<$fh>) {
+            if (/$regex/) { print "$file\n"; $matched = 1; last }
+          }
+          close $fh;
+        }
       }
-    ' "${pattern}" "$@"
+      my @pending = @ARGV;
+      while (@pending) {
+        my $path = shift @pending;
+        if (-d $path) {
+          if (!opendir(my $dir, $path)) {
+            warn "$path: $!\n"; $failed = 1;
+          } else {
+            push @pending, map { "$path/$_" }
+              grep { $_ ne "." && $_ ne ".." && !-l "$path/$_" } readdir $dir;
+            closedir $dir;
+          }
+        } else { check_file($path) }
+      }
+      exit($failed ? 2 : $matched ? 0 : 1);
+    ' -- "${pattern}" "$@"
   fi
 }
 ```
@@ -128,7 +166,7 @@ pcre_search() {
 | `shasum -a 256 file` | `shasum -a 256 file` | Available on most distros, not guaranteed | `sha256_hash file` (helper above) |
 | `find . -printf '%h\0'` | Not supported | `find . -printf '%h\0'` | `find_dirs_with_file` (helper above) |
 | `date -d '1 day ago'` | Not supported | `date -d '1 day ago'` | `date -v-1d` (BSD) / branch on `uname` |
-| `readlink -f file` | Not available pre-12.3 | `readlink -f file` | `python3 -c "import os; print(os.path.realpath('$f'))"` |
+| `readlink -f file` | Not available pre-12.3 | `readlink -f file` | `python3 -c 'import os, sys; print(os.path.realpath(sys.argv[1]))' "$f"` |
 | `xargs -r` | Not supported (`-r` = no-op on empty) | `xargs -r` (skip if stdin empty) | `[ -s file ] && xargs ...` |
 | `base64 -w0` | Not supported (default is no wrapping) | `base64 -w0` (no wrap) | `base64` (BSD wraps at 76; pipe through `tr -d '\n'` if needed) |
 | `grep -P 'pcre'` | Not available (BSD grep has no PCRE) | `grep -P 'pcre'` | `pcre_search` (helper above) or `perl -ne` |

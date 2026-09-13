@@ -186,4 +186,4 @@ zip -r MyAppUITests.zip \
 ## Cross-References
 
 - `reference/fastlane-snapshot.md` — the separate, non-PR-blocking scheme this file's CI patterns must isolate from the regression-test invocation.
-- `reference/screenshot-strategies.md` — the `XCTAttachment` content that `xcresulttool` extracts from the result bundle.
+- `reference/ios-screenshot-strategies.md` — the `XCTAttachment` content that `xcresulttool` extracts from the result bundle.

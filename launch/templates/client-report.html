@@ -411,7 +411,7 @@
       </div>
       <div class="summary-card">
         <div class="summary-value">{{TOTAL_HOURS}}</div>
-        <div class="summary-label">総工数（時間）</div>
+        <div class="summary-label">推定工数（時間）</div>
       </div>
       <div class="summary-card">
         <div class="summary-value">{{TOTAL_ADDITIONS}}</div>
@@ -427,6 +427,7 @@
   <!-- Charts -->
   <section>
     <h2>Activity Analysis</h2>
+    <p class="text-muted">工数は変更行数・ファイル数に基づく参考推定です。実作業時間や請求時間を示すものではありません。</p>
     <div class="chart-container">
       <div class="chart-box">
         <div class="chart-title">日別作業工数</div>
@@ -443,56 +444,6 @@
     </div>
   </section>
 
-  <!-- Timeline -->
-  <section>
-    <h2>Work Timeline</h2>
-    <div class="timeline-container">
-      <div class="timeline-header">
-        <div class="timeline-header-cell" style="text-align: left;">タスク</div>
-        <div class="timeline-header-cell">01/21</div>
-        <div class="timeline-header-cell">01/22</div>
-        <div class="timeline-header-cell">01/23</div>
-        <div class="timeline-header-cell">01/24</div>
-        <div class="timeline-header-cell">01/25</div>
-        <div class="timeline-header-cell">01/26</div>
-        <div class="timeline-header-cell">01/27</div>
-      </div>
-      <!-- Timeline rows will be generated -->
-      <div class="timeline-row">
-        <div class="timeline-task">Sweep 安全性改善</div>
-        <div class="timeline-bar-container">
-          <div class="timeline-bar docs" style="grid-column: 1;"></div>
-        </div>
-      </div>
-      <div class="timeline-row">
-        <div class="timeline-task">Guardian 新規作成</div>
-        <div class="timeline-bar-container">
-          <div class="timeline-bar feat" style="grid-column: 1;"></div>
-        </div>
-      </div>
-      <div class="timeline-row">
-        <div class="timeline-task">エージェント連携強化 (8件)</div>
-        <div class="timeline-bar-container">
-          <div class="timeline-bar feat" style="grid-column: 1;"></div>
-        </div>
-      </div>
-      <div class="timeline-row">
-        <div class="timeline-task">Arena 並列実装</div>
-        <div class="timeline-bar-container">
-          <div class="timeline-bar feat" style="grid-column: 4;"></div>
-        </div>
-      </div>
-      <div class="timeline-row">
-        <div class="timeline-task">Guardian セキュリティ強化</div>
-        <div class="timeline-bar-container">
-          <div class="timeline-bar feat" style="grid-column: 7;"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="page-break"></div>
-
   <!-- Work Details -->
   <section>
     <h2>Work Details</h2>
@@ -508,163 +459,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td class="text-center">1</td>
-          <td>Sweep スキル安全性・使いやすさ改善</td>
-          <td class="text-center"><span class="category-tag category-docs">DOCS</span></td>
-          <td class="text-right font-mono">15.0h</td>
-          <td class="text-center">01/21</td>
-          <td class="text-center"><span class="status-complete">完了</span></td>
-        </tr>
-        <tr>
-          <td class="text-center">2</td>
-          <td>Guardian Git/PR管理エージェント新規作成</td>
-          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
-          <td class="text-right font-mono">8.0h</td>
-          <td class="text-center">01/21</td>
-          <td class="text-center"><span class="status-complete">完了</span></td>
-        </tr>
-        <tr>
-          <td class="text-center">3</td>
-          <td>Echo 高度な連携パターン追加</td>
-          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
-          <td class="text-right font-mono">10.0h</td>
-          <td class="text-center">01/21</td>
-          <td class="text-center"><span class="status-complete">完了</span></td>
-        </tr>
-        <tr>
-          <td class="text-center">4</td>
-          <td>Compete 高度な連携パターン追加</td>
-          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
-          <td class="text-right font-mono">5.0h</td>
-          <td class="text-center">01/21</td>
-          <td class="text-center"><span class="status-complete">完了</span></td>
-        </tr>
-        <tr>
-          <td class="text-center">5</td>
-          <td>Scout 高度な連携パターン追加</td>
-          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
-          <td class="text-right font-mono">5.0h</td>
-          <td class="text-center">01/21</td>
-          <td class="text-center"><span class="status-complete">完了</span></td>
-        </tr>
-        <tr>
-          <td class="text-center">6</td>
-          <td>Builder 高度な連携パターン追加</td>
-          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
-          <td class="text-right font-mono">6.5h</td>
-          <td class="text-center">01/21</td>
-          <td class="text-center"><span class="status-complete">完了</span></td>
-        </tr>
-        <tr>
-          <td class="text-center">7</td>
-          <td>Judge 高度な連携パターン追加</td>
-          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
-          <td class="text-right font-mono">5.5h</td>
-          <td class="text-center">01/21</td>
-          <td class="text-center"><span class="status-complete">完了</span></td>
-        </tr>
-        <tr>
-          <td class="text-center">8</td>
-          <td>Zen 高度な連携パターン追加</td>
-          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
-          <td class="text-right font-mono">5.0h</td>
-          <td class="text-center">01/21</td>
-          <td class="text-center"><span class="status-complete">完了</span></td>
-        </tr>
-        <tr>
-          <td class="text-center">9</td>
-          <td>Nexus 高度な連携アーキテクチャ追加</td>
-          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
-          <td class="text-right font-mono">3.0h</td>
-          <td class="text-center">01/21</td>
-          <td class="text-center"><span class="status-complete">完了</span></td>
-        </tr>
-        <tr>
-          <td class="text-center">10</td>
-          <td>Triage 高度な連携パターン追加</td>
-          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
-          <td class="text-right font-mono">6.5h</td>
-          <td class="text-center">01/21</td>
-          <td class="text-center"><span class="status-complete">完了</span></td>
-        </tr>
-        <tr>
-          <td class="text-center">11</td>
-          <td>Arena マルチエンジン並列実装エージェント</td>
-          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
-          <td class="text-right font-mono">7.0h</td>
-          <td class="text-center">01/24</td>
-          <td class="text-center"><span class="status-complete">完了</span></td>
-        </tr>
-        <tr>
-          <td class="text-center">12</td>
-          <td>Guardian セキュリティ分析・大規模PR対応</td>
-          <td class="text-center"><span class="category-tag category-feat">FEAT</span></td>
-          <td class="text-right font-mono">3.0h</td>
-          <td class="text-center">01/27</td>
-          <td class="text-center"><span class="status-complete">完了</span></td>
-        </tr>
+{{TABLE_ROWS}}
       </tbody>
       <tfoot>
         <tr style="background: #f8f9fc; font-weight: 600;">
           <td colspan="3" class="text-right">合計</td>
-          <td class="text-right font-mono">79.5h</td>
+          <td class="text-right font-mono">{{TOTAL_HOURS}}h</td>
           <td colspan="2"></td>
         </tr>
       </tfoot>
-    </table>
-  </section>
-
-  <!-- Progress Summary -->
-  <section>
-    <h2>Progress Summary</h2>
-    <div class="progress-section">
-      <div class="progress-item">
-        <div class="progress-header">
-          <span class="progress-label">機能開発 (Feature)</span>
-          <span class="progress-value">11 / 11 件完了</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: 100%;"></div>
-        </div>
-      </div>
-      <div class="progress-item">
-        <div class="progress-header">
-          <span class="progress-label">ドキュメント (Documentation)</span>
-          <span class="progress-value">1 / 1 件完了</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: 100%;"></div>
-        </div>
-      </div>
-    </div>
-
-    <h3>Key Achievements</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>成果</th>
-          <th style="width: 150px;">詳細</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>新規エージェント作成</td>
-          <td>Guardian, Arena の2エージェント</td>
-        </tr>
-        <tr>
-          <td>既存エージェント強化</td>
-          <td>10エージェントに連携パターン追加</td>
-        </tr>
-        <tr>
-          <td>アーキテクチャ改善</td>
-          <td>NEXUS_HANDOFF形式の標準化</td>
-        </tr>
-        <tr>
-          <td>コード品質</td>
-          <td>+8,141行 / -748行 の純増</td>
-        </tr>
-      </tbody>
     </table>
   </section>
 
@@ -680,10 +483,10 @@
     new Chart(dailyCtx, {
       type: 'bar',
       data: {
-        labels: ['01/21', '01/22', '01/23', '01/24', '01/25', '01/26', '01/27'],
+        labels: {{DAILY_LABELS}},
         datasets: [{
           label: '工数（時間）',
-          data: [69.5, 0, 0, 7, 0, 0, 3],
+          data: {{DAILY_DATA}},
           backgroundColor: 'rgba(44, 62, 80, 0.85)',
           borderColor: 'rgba(44, 62, 80, 1)',
           borderWidth: 1,
@@ -715,9 +518,9 @@
     new Chart(categoryCtx, {
       type: 'doughnut',
       data: {
-        labels: ['Feature', 'Documentation'],
+        labels: {{CATEGORY_LABELS}},
         datasets: [{
-          data: [64.5, 15],
+          data: {{CATEGORY_DATA}},
           backgroundColor: [
             'rgba(39, 174, 96, 0.85)',
             'rgba(243, 156, 18, 0.85)'

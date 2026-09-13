@@ -99,7 +99,7 @@ OPPORTUNITY_NODE:
   text: "[User-voice unmet need]"
   evidence: { real: [refs], synthetic: [refs] }
   calibration: "[hypothesis]"   # [synthetic-only] if it reads as an AI artifact; [supported]/[validated]
-                                # only with a cited real/Voice/Field match (reference/calibration.md).
+                                # only with a cited real/Voice/Field match (reference/demand-calibration.md).
                                 # Only [validated]/[supported] nodes are growth-acceptance Insight-Ledger-citable.
   parent_outcome: "[Outcome ID]"
   solutions:

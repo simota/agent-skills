@@ -15,7 +15,7 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **architect**: create★ / improve / compress / audit-verbosity / evolve
 - **artisan**: component★ / state / form / fetch / rsc / a11y / i18n / perf
 - **atelier**: pipeline★ / extract / persist / assets
-- **atlas**: analyze★ / deps / godclass / adr / rfc / cycle / coupling / boundary / multi / c4-model / deps / adr / boundary / c4-model / coupling / multi
+- **atlas**: analyze★ / deps / godclass / adr / rfc / cycle / coupling / boundary / multi / c4-model
 - **attest**: verify★ / bdd / trace / report / gherkin / property / oracle
 - **beacon**: slo★ / tracing / alerts / dashboard / capacity / log / golden / toil
 - **bolt**: frontend★ / backend / render / async / cache / bundle / network / memory
@@ -39,11 +39,11 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **flux**: reframe★ / shift / cross / challenge / scamper / analogy / inversion / multi / ideate
 - **forge**: ui★ / api / fullstack / landing / mobile / dashboard / ai
 - **frame**: extract★ / code-connect / rules / inspect / variants / tokens / breakpoint
-- **funnel**: build★ / cta / conversion / responsive / form / copy / trust / premium / build / conversion / form / trust
-- **gateway**: design★ / openapi / versioning / breaking / rest / graphql / webhook / auth / rate-limit / deprecation / rest / graphql / breaking / auth / webhook
+- **funnel**: build★ / cta / conversion / responsive / form / copy / trust / premium
+- **gateway**: design★ / openapi / versioning / breaking / rest / graphql / webhook / auth / rate-limit / deprecation
 - **gauge**: audit★ / fix / research / checklist / staleness
 - **gear**: deps★ / ci / docker / logs / health / alert / secret / k8s / gha
-- **grove**: audit★ / design / docs / migrate / monorepo / tests / scripts / llm / audit / docs / monorepo
+- **grove**: audit★ / design / docs / migrate / monorepo / tests / scripts / llm
 - **growth**: seo★ / smo / cro / geo / keyword / audit / vitals / retention
 - **guardian**: pr★ / commit / naming / strategy / reshape / audit / split / health / ship
 - **hone**: audit★ / codex / agy / claude / diff / hook / hook-debug / env / automate
@@ -62,7 +62,7 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **omen**: premortem★ / rpn / ap / mode / faulttree / bowtie / hazop / multi
 - **oracle**: prompt★ / rag / safety / mlops / agent / cost / embed / review / tooling
 - **orbit**: plan / generate★ / contract / audit / recover / ralph
-- **palette**: usability★ / cognitive / feedback / a11y / keyboard / mobile / forms / error / empty / loading / usability / forms / error / mobile / cognitive / usability
+- **palette**: usability★ / cognitive / feedback / a11y / keyboard / mobile / forms / error / empty / loading
 - **pdm**: status★ / features / gaps / roadmap / wbs / ask
 - **pixel**: reproduce★ / verify / gap / audit / responsive / dark / animation
 - **polyglot**: extract★ / intl / keys / rtl / pluralize / locale / translate / mobile
@@ -76,35 +76,35 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **rally**: parallel★ / teams / codex-subagents / coordinate / engine-paradigm
 - **rank**: ice★ / rice / wsjf / moscow / kano / cod / value-effort / pokerplan
 - **ripple**: impact★ / vertical / horizontal / naming / blast-radius / rollback-plan / canary-scope
-- **saga**: story★ / scenario / narrative / customer / hero-journey / bab / pyramid / onboarding / audit / micro / multi / story / narrative / hero-journey / pyramid / audit / multi
+- **saga**: story★ / scenario / narrative / customer / hero-journey / bab / pyramid / onboarding / audit / micro / multi
 - **scaffold**: terraform★ / cloudformation / pulumi / compose / env / k8s / helm / cdk
 - **schema**: design★ / migration / er / normalize / index / rollback / tenant / partition / audit-log / event-sourcing / soft-delete
 - **scout**: bug★ / regression / prod / multi / cascade / perf / memory / flake / 5whys / fishbone / timeline / video
 - **scribe**: prd★ / srs / hld / lld / testspec / adr / runbook / api-doc / unified / convert
-- **seek**: fulltext★ / vector / hybrid / index / rag / rerank / suggest / authz / eval / fulltext / hybrid / eval / suggest
+- **seek**: fulltext★ / vector / hybrid / index / rag / rerank / suggest / authz / eval
 - **sentinel**: scan★ / secrets / injection / deps / headers / authn / authz / aisec / mobile / multi
 - **sherpa**: epic★ / story / replan / review / atomic / walking-skeleton / vertical-slice
 - **shift**: plan★ / codemod / strangler / verify / framework / lang / deprecate / detect / modernize / radar
 - **siege**: load★ / contract / chaos / mutation / fuzz / property / smoke / concurrency
-- **sigil**: generate★ / analyze / convention / migrate / blueprint / blueprint
+- **sigil**: generate★ / analyze / convention / migrate / blueprint
 - **spark**: propose★ / plan / brainstorm / refine / opportunity / kill / retro / multi
 - **stage**: marp★ / reveal / slidev / conference / timing / narrative / visual / rehearsal
 - **stream**: etl★ / elt / stream / dbt / cdc / reverse / quality
-- **sweep**: dead★ / orphan / unused / tidy / imports / comments / types / dead / tidy / comments
-- **tome**: learn★ / diff / onboard / record / worked / kata / quickstart / article / note / zenn / qiita / devto / article-series / headline / repurpose / interview
+- **sweep**: dead★ / orphan / unused / tidy / imports / comments / types
+- **tome**: learn★ / diff / onboard / record / worked / kata / quickstart / article / article-series / headline / repurpose / interview
 - **trace**: replay★ / persona / story / archaeology / rageclick / funnel / heatmap
 - **trail**: regression★ / bisect / blame / history / flame / delta / revert / static-rules
 - **triage**: respond★ / impact / recover / postmortem / first-response / escalation / comms
-- **tuner**: explain★ / slow / index / plan / cache / connection / vacuum / explain / index / connection
+- **tuner**: explain★ / slow / index / plan / cache / connection / vacuum
 - **vector**: collect★ / form / screenshot / network / stealth / mobile / parallel / crawl
-- **vigil**: sigma★ / yara / coverage / hunt / snort / playbook / ioc / sigma / coverage / snort / ioc
+- **vigil**: sigma★ / yara / coverage / hunt / snort / playbook / ioc
 - **vision**: direction★ / redesign / trend / system / brand / moodboard / audit / multi / pair
 - **vitrine**: story★ / catalog / vrt / csf3 / interaction / mdx / cosmos / a11y / chromatic / coverage
 - **voice**: nps★ / review / sentiment / classify / insight / kano / thematic / csat
 - **void**: prune★ / cut / question / simplify
 - **voyager**: playwright★ / page-object / auth / a11y / visual / api / mobile / component / ios
-- **weave**: design★ / saga / approval / detect / retry / timeout / compensation / design / approval / retry / compensation / schedule
-- **zen**: refactor★ / naming / extract / constants / dead / simplify / split / guard / naming / constants / simplify
+- **weave**: design★ / saga / approval / detect / retry / timeout / compensation
+- **zen**: refactor★ / naming / extract / constants / dead / simplify / split / guard
 
 ---
 

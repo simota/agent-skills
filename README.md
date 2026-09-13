@@ -25,7 +25,7 @@ make link
 ```
 
 `make link` symlinks each skill directory into `~/.claude/skills`, `~/.codex/skills`, and
-`~/.gemini/skills` individually, so every CLI reads the same working tree and a single `git pull`
+`~/.gemini/antigravity-cli/skills` individually, so every CLI reads the same working tree and a single `git pull`
 updates all of them. Skills already present in those directories are preserved: a name that already
 exists is reported and skipped, never overwritten. A CLI that is not installed (no `~/.codex`, for
 example) is skipped too, so the same command works on a single-CLI machine.

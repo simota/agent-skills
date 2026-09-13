@@ -14,7 +14,7 @@ Purpose: load this when debugging loop behavior or explaining how the generated 
 
 | Stage | Main actions | Key guardrails |
 |-------|--------------|----------------|
-| Bootstrap | create loop directory, `goal.md`, `progress.md`, `state.env`, optional `verify.sh`, always `run-loop.sh` and `notify.sh` | do not overwrite existing `goal.md` or `progress.md` |
+| Bootstrap | create loop directory, `goal.md`, `progress.md`, `state.env`, optional `verify.sh`, always `run-loop.sh` and `notify.sh` | do not overwrite existing `goal.md`, `progress.md`, or `state.env` |
 | Pre-flight | disk `>= 100MB`, lock liveness, git health, log rotation, checksum validation | abort on `[PREFLIGHT:FAIL]` unless an explicit bypass exists |
 | Branch setup | record `ORIGIN_BRANCH`, prepare `ITER_BRANCH`, stash and restore dirt when needed | only when `BRANCH_ISOLATION=true` and `AUTOCOMMIT=true` |
 | Main loop | external-terminator gates (wall-clock / budget / goal-drift / convergence), health check, executor run, verification, scoped auto-commit, `DONE` gate, signature record, state write, notify | bounded retry, **triple** `DONE` gate (done.md + verify + placeholder-clean), atomic `state.env` writes, external termination by `LOOP_TIMEOUT` / `USD_*_CAP` |
@@ -43,7 +43,7 @@ Class → flag mapping: `CIRCUIT_OPEN` → `--reset-circuit`; `CONVERGENCE_STALL
 1. initialize `PASS=0`, `FAIL=0`
 2. run each acceptance check through `run_check`
 3. print pass/fail lines
-4. exit `1` if any check fails, else exit `0`
+4. exit `1` if no checks ran or any check fails, else exit `0`
 
 Effect on `DONE`:
 - `PASS` allows `done.md` to promote the loop to `DONE`
@@ -68,8 +68,8 @@ Effect on `DONE`:
 - semantic-stall guard: identical change-signature over `CONVERGENCE_WINDOW` iterations → `CONVERGENCE_STALL` and stop
 - `goal.md` is sha256-pinned at loop start; mid-run change ABORTs (`GOAL_IMMUTABLE`, AP-16)
 - retry is bounded by `RETRY_LIMIT`
-- timeouts are enforced by `portable_timeout`
-- dirty baseline is captured and excluded from scoped auto-commit
+- executor attempts, retry delays, and verification share the remaining `LOOP_TIMEOUT` budget through `run_with_budget`; `portable_timeout` terminates the process group at the limit
+- dirty baseline uses NUL-delimited paths; scoped commits preserve pre-existing staged work and exclude loop runtime files
 - `state.env` is written atomically and protected by checksum
 - the runner traps shutdown signals and writes resumable state
 - only `READY`, `CONTINUE`, and `DONE` are valid footer statuses

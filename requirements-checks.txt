@@ -1,0 +1,2 @@
+# Parse SKILL.md frontmatter using the YAML specification.
+PyYAML==6.0.3

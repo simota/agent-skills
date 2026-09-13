@@ -71,7 +71,7 @@ A synthetic why-chain fabricates each link by inference, and **confidence decays
 - **Speculation cliff**: mark the level where the chain leaves grounded territory (the first `low`-confidence link). Everything below the cliff is conjecture — label it.
 - **Weakest link**: name the single link most likely to be wrong. Because it invalidates all descendants, it is what Field validates **first** (the `5whys` analog of jtbd's `riskiest_force`).
 - **Root falsifiable test**: name the real-user observation that would confirm or refute the root (e.g. "≥ 1/3 of churn interviews cite the root need in their own words", "the root keyword appears in > 15% of support tickets"). A root with no test is an unfalsifiable story.
-- **Root calibration ceiling**: `[hypothesis]` until Field/Voice confirms with real-user language; never `[validated]`/`[supported]` from the synthetic chain alone (`reference/calibration.md`).
+- **Root calibration ceiling**: `[hypothesis]` until Field/Voice confirms with real-user language; never `[validated]`/`[supported]` from the synthetic chain alone (`reference/demand-calibration.md`).
 
 ## Fishbone Integration (Ishikawa Diagram)
 

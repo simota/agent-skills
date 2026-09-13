@@ -7,7 +7,7 @@ Checks (all derived from official Anthropic Agent Skills spec + repository conve
   F1  name: kebab-case, <=64 chars, no reserved prefixes (anthropic/claude), no XML tags
   F2  description: non-empty, <=1024 chars, no XML tags, no Japanese chars,
                    contains WHAT (capability) AND WHEN (trigger) phrasing
-  F3  No frontmatter keys outside the allowlist (name, description, optional: model, tools)
+  F3  Valid YAML mapping with exactly the repository keys (name, description)
   N1  Skill folder name == frontmatter name field (kebab-case match)
   N2  Skill folder name is kebab-case (no spaces, no underscores, no capitals)
   C1  Filename is exactly "SKILL.md" (case-sensitive, official spec)
@@ -58,10 +58,11 @@ from pathlib import Path
 from typing import Iterable
 
 import _corpus
+import yaml
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
-FRONTMATTER_KEY_ALLOWLIST = {"name", "description", "model", "tools"}
+FRONTMATTER_KEY_ALLOWLIST = {"name", "description"}
 RESERVED_PREFIXES = {"anthropic", "claude"}
 NAME_PATTERN = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 JAPANESE_PATTERN = re.compile(r"[぀-ゟ゠-ヿ一-鿿]")
@@ -98,8 +99,6 @@ WHAT_HINTS = (
     "tool",
     "framework",
 )
-SKIP_DIRS = {".git", "node_modules", ".agents", "_loops", "_prompts", "_templates"}
-
 SEVERITY_RANK = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
 
 CAPABILITIES_SUMMARY_PATTERN = re.compile(r"<!--[^>]*CAPABILITIES_SUMMARY:", re.DOTALL)
@@ -155,45 +154,59 @@ class Report:
 
 def iter_skill_dirs(roots: Iterable[Path]) -> list[Path]:
     skills: list[Path] = []
+
+    def has_skill_file(path: Path) -> bool:
+        return any(p.is_file() and p.name.lower() == "skill.md" for p in path.iterdir())
+
     for root in roots:
         # Resolve relative paths against REPO_ROOT so `--paths gauge` works
         # regardless of the caller's CWD.
         if not root.is_absolute():
-            root = (REPO_ROOT / root).resolve()
-        if root.is_file() and root.name == "SKILL.md":
+            root = REPO_ROOT / root
+        if root.name.lower() == "skill.md" and root.parent.is_dir():
             skills.append(root.parent)
             continue
         if not root.is_dir():
             continue
         # If the dir itself contains a SKILL.md, treat it as a skill (direct target).
-        if (root / "SKILL.md").exists():
+        if has_skill_file(root):
             skills.append(root)
             continue
         # Otherwise treat root as a parent directory and scan one level down.
         for entry in sorted(root.iterdir()):
-            if entry.name in SKIP_DIRS:
+            if (entry.name.startswith(".") or entry.name in _corpus.INFRA_DIRS
+                    or not entry.is_dir() or _corpus.is_external(entry)):
                 continue
-            if _corpus.is_skill_dir(entry):
+            if has_skill_file(entry):
                 skills.append(entry)
-    return skills
+    return list(dict.fromkeys(skills))
 
 
-def parse_frontmatter(text: str) -> tuple[dict[str, str], int, list[str]]:
-    """Return (key/value, body_start_line_idx_1based, raw_lines)."""
+def parse_frontmatter(text: str) -> tuple[dict[str, str | None], int, list[str]]:
+    """Return decoded scalar values, the zero-based body start, and raw lines.
+
+    Compose safe YAML nodes instead of constructing arbitrary values: this preserves
+    YAML quoting/block semantics, exposes duplicate keys, and leaves non-string
+    fields for F1/F2 to reject without coercing them into apparently valid strings.
+    """
     lines = text.splitlines()
     if not lines or lines[0].strip() != "---":
-        return {}, 1, lines
-    fm: dict[str, str] = {}
-    end_idx = None
-    for i in range(1, len(lines)):
-        if lines[i].strip() == "---":
-            end_idx = i
-            break
-        m = re.match(r"^([A-Za-z_][A-Za-z0-9_-]*)\s*:\s*(.*)$", lines[i])
-        if m:
-            fm[m.group(1)] = m.group(2).strip()
-    body_start = (end_idx + 1) if end_idx is not None else 1
-    return fm, body_start, lines
+        return {}, 0, lines
+    end_idx = next((i for i in range(1, len(lines)) if lines[i].rstrip() == "---"), None)
+    if end_idx is None:
+        raise ValueError("frontmatter closing '---' is missing")
+    node = yaml.compose("\n".join(lines[1:end_idx]), Loader=yaml.SafeLoader)
+    if not isinstance(node, yaml.MappingNode):
+        raise ValueError("frontmatter must be a YAML mapping")
+    fm: dict[str, str | None] = {}
+    for key, value in node.value:
+        if not isinstance(key, yaml.ScalarNode) or key.tag != "tag:yaml.org,2002:str":
+            raise ValueError("frontmatter keys must be strings")
+        if key.value in fm:
+            raise ValueError(f"duplicate frontmatter key: {key.value}")
+        fm[key.value] = (value.value if isinstance(value, yaml.ScalarNode)
+                         and value.tag == "tag:yaml.org,2002:str" else None)
+    return fm, end_idx + 1, lines
 
 
 def approx_token_count(text: str) -> int:
@@ -218,7 +231,7 @@ def has_what_phrase(desc: str) -> bool:
 def lint_skill(skill_dir: Path, report: Report) -> None:
     name = skill_dir.name
     skill_md = skill_dir / "SKILL.md"
-    rel = str(skill_md.relative_to(REPO_ROOT))
+    rel = os.path.relpath(skill_md, REPO_ROOT)
 
     # C1: filename case sensitivity
     siblings = {p.name for p in skill_dir.iterdir() if p.is_file()}
@@ -238,17 +251,21 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
         report.add(Finding(name, "N2", "P1",
                            f"skill folder '{name}' is not kebab-case", rel))
 
-    if not skill_md.exists():
+    if not skill_md.is_file():
         report.add(Finding(name, "C1", "P0", "SKILL.md missing", rel))
         return
 
     text = skill_md.read_text(encoding="utf-8")
-    fm, body_start, lines = parse_frontmatter(text)
+    try:
+        fm, body_start, lines = parse_frontmatter(text)
+    except (ValueError, yaml.YAMLError) as error:
+        report.add(Finding(name, "F3", "P0", f"invalid frontmatter: {error}", rel, 1))
+        return
 
     # F1: name
-    fm_name = fm.get("name", "").strip()
+    fm_name = (fm.get("name") or "").strip()
     if not fm_name:
-        report.add(Finding(name, "F1", "P0", "frontmatter 'name:' missing or empty", rel, 1))
+        report.add(Finding(name, "F1", "P0", "frontmatter 'name:' must be a non-empty string", rel, 1))
     else:
         if len(fm_name) > 64:
             report.add(Finding(name, "F1", "P0",
@@ -268,10 +285,10 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
                                f"frontmatter name '{fm_name}' != folder '{name}'", rel, 1))
 
     # F2: description
-    desc = fm.get("description", "").strip()
+    desc = (fm.get("description") or "").strip()
     if not desc:
         report.add(Finding(name, "F2", "P0",
-                           "frontmatter 'description:' missing or empty", rel, 1))
+                           "frontmatter 'description:' must be a non-empty string", rel, 1))
     else:
         if len(desc) > 1024:
             report.add(Finding(name, "F2", "P0",
@@ -380,17 +397,14 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
 
 
 def changed_paths() -> list[Path]:
-    try:
-        out = subprocess.run(
-            ["git", "diff", "--name-only", "HEAD"],
-            cwd=str(REPO_ROOT), check=True, capture_output=True, text=True,
-        ).stdout.strip().splitlines()
-    except subprocess.CalledProcessError:
-        return []
+    out = subprocess.run(
+        ["git", "diff", "--name-only", "-z", "HEAD"],
+        cwd=str(REPO_ROOT), check=True, capture_output=True, text=True,
+    ).stdout.split("\0")
     paths = []
     for p in out:
         path = REPO_ROOT / p
-        if path.name == "SKILL.md":
+        if path.name.lower() == "skill.md":
             paths.append(path)
     return paths
 
@@ -414,7 +428,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--severity", choices=("warning", "error", "strict"),
                         default="warning")
-    parser.add_argument("--paths", nargs="*", default=None,
+    parser.add_argument("--paths", nargs="+", default=None,
                         help="explicit skill folders or SKILL.md paths to lint")
     parser.add_argument("--changed-only", action="store_true",
                         help="lint only SKILL.md files modified vs HEAD")
@@ -422,24 +436,30 @@ def main() -> int:
                         help="emit JSON instead of text")
     args = parser.parse_args()
 
-    if args.changed_only:
-        targets = changed_paths()
-        if not targets:
-            print("no changed SKILL.md vs HEAD")
-            return 0
-        skills = iter_skill_dirs(targets)
-    elif args.paths:
-        skills = iter_skill_dirs(Path(p) for p in args.paths)
-    else:
-        skills = iter_skill_dirs([REPO_ROOT])
+    try:
+        if args.changed_only:
+            skills = iter_skill_dirs(changed_paths())
+        elif args.paths:
+            targets = [Path(p) if Path(p).is_absolute() else REPO_ROOT / p for p in args.paths]
+            missing = [str(path) for path in targets if not path.exists()]
+            if missing:
+                raise ValueError(f"requested path(s) do not exist: {', '.join(missing)}")
+            skills = iter_skill_dirs(targets)
+            if not skills:
+                raise ValueError("requested paths contain no skill files")
+        else:
+            skills = iter_skill_dirs([REPO_ROOT])
+    except (OSError, ValueError, subprocess.CalledProcessError) as error:
+        print(f"lint-frontmatter: unable to select skills: {error}", file=sys.stderr)
+        return 2
 
     report = Report(skill_count=len(skills))
     for s in skills:
         try:
             lint_skill(s, report)
-        except Exception as e:  # never crash the linter on one bad skill
+        except (OSError, UnicodeError) as e:
             report.add(Finding(s.name, "INTERNAL", "P1",
-                               f"linter exception: {e}", str(s.relative_to(REPO_ROOT))))
+                               f"linter exception: {e}", os.path.relpath(s, REPO_ROOT)))
 
     if args.json:
         print(json.dumps({
@@ -449,6 +469,8 @@ def main() -> int:
     else:
         sys.stdout.write(render_text(report))
 
+    if any(f.item == "INTERNAL" for f in report.findings):
+        return 2
     if args.severity == "warning":
         return 0
     if args.severity == "error":

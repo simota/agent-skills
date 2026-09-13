@@ -24,7 +24,7 @@ cd ~/repos/agent-skills
 make link
 ```
 
-`make link` は各スキルディレクトリを `~/.claude/skills`・`~/.codex/skills`・`~/.gemini/skills` へ
+`make link` は各スキルディレクトリを `~/.claude/skills`・`~/.codex/skills`・`~/.gemini/antigravity-cli/skills` へ
 個別に symlink します。全 CLI が同一の作業ツリーを読むため、`git pull` 1回で全 CLI が最新になります。
 それらのディレクトリに既にあるスキルは維持されます — 同名エントリは報告のうえ skip され、上書きされる
 ことはありません。未インストールの CLI（`~/.codex` が無い等）も skip されるため、CLI が1つだけの環境

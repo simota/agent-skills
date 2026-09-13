@@ -72,7 +72,8 @@ LOCAL_SKILLS_DIR = ".claude/skills"
 # Bare filenames (`SKILL.md`, `GEMINI.md`) and directory conventions (`reference/`)
 # are naming patterns, not claims that a specific file exists -- flagging them trains
 # readers to ignore this lint, which costs more than the coverage it would buy.
-PATH_PATTERN = re.compile(r"`([A-Za-z0-9_][A-Za-z0-9_.-]*(?:/[A-Za-z0-9_.-]+)+\.md)`")
+PATH_PATTERN = re.compile(r"`([A-Za-z0-9_.][A-Za-z0-9_.-]*(?:/[A-Za-z0-9_.-]+)+\.md)(?:#[^`\s]*)?`")
+LINK_PATTERN = re.compile(r"\]\(([A-Za-z0-9_.][A-Za-z0-9_.-]*(?:/[A-Za-z0-9_.-]+)+\.md)(?:#[^)\s]*)?\)")
 
 
 def actual_skill_count() -> int:
@@ -98,8 +99,15 @@ def check_counts(path: Path, text: str, actual: int) -> list[tuple[str, str, str
     for m in COUNT_PATTERN.finditer(text):
         claimed = int(m.group(1))
         before = text[max(0, m.start() - 24) : m.start()]
-        scope = (m.group(2) or "") + before
-        is_local = any(mark in scope.lower() for mark in LOCAL_MARKERS)
+        qualifier = (m.group(2) or "").lower()
+        # An explicit qualifier belongs to this claim; nearby text can describe
+        # a different count ("3 project-local skills, 90 global skills").
+        if any(mark in qualifier for mark in LOCAL_MARKERS):
+            is_local = True
+        elif "global" in qualifier or "グローバル" in qualifier:
+            is_local = False
+        else:
+            is_local = any(mark in before.lower() for mark in LOCAL_MARKERS)
         expected = local_actual if is_local else actual
         if claimed != expected:
             line = text[: m.start()].count("\n") + 1
@@ -123,7 +131,7 @@ def _common_fix_hint(is_local: bool) -> str:
 def check_paths(path: Path, text: str) -> list[tuple[str, str, str]]:
     findings = []
     seen: set[str] = set()
-    for m in PATH_PATTERN.finditer(text):
+    for m in sorted([*PATH_PATTERN.finditer(text), *LINK_PATTERN.finditer(text)], key=lambda match: match.start()):
         ref = m.group(1)
         if ref in seen or "*" in ref or ref.startswith("<"):
             continue

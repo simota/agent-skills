@@ -21,7 +21,8 @@ Data model (verified against the live transcript corpus, do not re-derive):
      + input_tokens + output_tokens.
   5. `isSidechain` is false on every record even though `Agent` tool_use calls
      occur -- sub-agent internal cost is not recoverable from this transcript.
-     Agent spawns are counted as an independent event counter, never as tokens.
+     Agent spawns are counted as distinct tool-use events across duplicate
+     transcript records, never as tokens.
   6. `attributionSkill` is null on a majority of records and its null-rate
      varies by CLI `version`. It indicates which skill was active, not what a
      SKILL.md cost -- never presented as a per-skill cost here.
@@ -170,6 +171,7 @@ def load_turns(project_dir: Path, report: Report) -> tuple[list[Turn], int, int,
         sys.exit(2)
 
     seen: dict[str, tuple] = {}  # requestId -> (usage_key, turn)
+    seen_spawns: set[tuple] = set()
     turns: list[Turn] = []
     missing = 0
     agent_spawns = 0
@@ -189,12 +191,14 @@ def load_turns(project_dir: Path, report: Report) -> tuple[list[Turn], int, int,
                     continue
 
                 message = rec.get("message") or {}
-                for block in message.get("content") or []:
+                reqid = rec.get("requestId")
+                for index, block in enumerate(message.get("content") or []):
                     if isinstance(block, dict) and block.get("type") == "tool_use" \
                             and block.get("name") == "Agent":
-                        agent_spawns += 1
-
-                reqid = rec.get("requestId")
+                        spawn_key = (reqid, block.get("id") or (message.get("id"), index))
+                        if spawn_key not in seen_spawns:
+                            seen_spawns.add(spawn_key)
+                            agent_spawns += 1
 
                 # Classify BEFORE the integrity check: a synthetic interruption
                 # placeholder was never a billed API call, so it cannot be
@@ -320,7 +324,9 @@ def compute(turns: list[Turn]) -> dict:
             # estimated steady-state prefix, or 0 if the session never warmed.
             nonzero_reads = [t.cache_read for t in lst if t.cache_read > 0]
             session_prefix = min(nonzero_reads) if nonzero_reads else 0
-        always_on_cache_read += session_prefix * len(lst)
+        # This partitions cache reads: a cold/cache-miss turn pays no read,
+        # and compaction can make a later cache read smaller than the prefix.
+        always_on_cache_read += sum(min(session_prefix, t.cache_read) for t in lst)
     on_demand_cache_read = totals["cache_read"] - always_on_cache_read
 
     return {
@@ -593,13 +599,14 @@ def render_text(stats_d: dict, sle_d: dict, agent_spawns: int, missing: int, ski
     on_demand = stats_d["on_demand_cache_read"]
     cache_read_total = stats_d["total_cache_read"] or 1
     out.append("  ALWAYS-ON = per-session prefix (turn-0 cache_read if warm, else the "
-               "smallest non-zero cache_read later in the session) x that session's "
-               "turn count, summed; ON-DEMAND = cache_read - ALWAYS-ON. Both are "
+               "smallest non-zero cache_read later in the session), capped at each "
+               "turn's actual cache_read and summed; ON-DEMAND = cache_read - ALWAYS-ON. Both are "
                "shares of cache_read (what they partition), not of TOTAL.")
     out.append(f"  ALWAYS-ON   {always_on:>14,}  ({always_on / cache_read_total * 100:5.1f}% of cache_read)")
     out.append(f"  ON-DEMAND   {on_demand:>14,}  ({on_demand / cache_read_total * 100:5.1f}% of cache_read)")
     out.append("  ESTIMATE, not measured: assumes each session's prefix stays constant "
-               "across every turn of that session. If the cached prefix actually grows "
+               "where the turn reads enough cache; cold starts and cache shrinkage "
+               "cannot contribute more than their actual cache_read. If the cached prefix grows "
                "turn over turn (plausible, since context accumulates), this UNDERSTATES "
                "true ALWAYS-ON cost and OVERSTATES ON-DEMAND's share.")
     out.append("")
@@ -684,11 +691,12 @@ def render_json(stats_d: dict, sle_d: dict, agent_spawns: int, missing: int, ski
         },
         "always_on_vs_on_demand": {
             "note": "ALWAYS-ON = per-session prefix (turn-0 cache_read if warm, else "
-                    "the smallest non-zero cache_read later in the session) x that "
-                    "session's turn count, summed; ON-DEMAND = cache_read - "
+                    "the smallest non-zero cache_read later in the session), capped "
+                    "at each turn's actual cache_read and summed; ON-DEMAND = cache_read - "
                     "ALWAYS-ON. Both are shares of cache_read, not of grand_total. "
                     "ESTIMATE, not measured: assumes each session's prefix stays "
-                    "constant across every turn. If the cached prefix actually grows "
+                    "constant where the turn reads enough cache. Cold starts and "
+                    "cache shrinkage are bounded by actual cache_read. If the cached prefix grows "
                     "turn over turn, this UNDERSTATES ALWAYS-ON and OVERSTATES "
                     "ON-DEMAND's share.",
             "always_on_cache_read": stats_d["always_on_cache_read"],

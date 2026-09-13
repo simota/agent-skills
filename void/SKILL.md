@@ -258,7 +258,7 @@ Rule: necessity -> `Void`; cleanliness -> `Zen`; unused artifacts -> `Sweep`.
 | [complexity-metrics.md](reference/complexity-metrics.md)                         | You need cognitive-complexity thresholds or technical-debt metrics                            |
 | [feature-creep-pitfalls.md](reference/feature-creep-pitfalls.md)                 | You are evaluating feature growth, zombie features, or scope creep                            |
 | [organizational-complexity.md](reference/organizational-complexity.md)           | You are pruning process, meetings, reporting, approvals, or document sprawl                   |
-| [\_common/OPUS_5_AUTHORING.md](../_common/OPUS_5_AUTHORING.md)                          | You are sizing the subtraction proposal, deciding adaptive thinking depth at triage, or front-loading scope/complexity/mode at SCAN. Critical for Void: P3, P5. |
+| [\_common/OPUS_5_AUTHORING.md](_common/OPUS_5_AUTHORING.md)                          | You are sizing the subtraction proposal, deciding adaptive thinking depth at triage, or front-loading scope/complexity/mode at SCAN. Critical for Void: P3, P5. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Void-specific Output/Next schema. |
 
 ## Operational

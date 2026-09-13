@@ -58,22 +58,14 @@ Use when `state.env` and the progress timeline disagree.
 
 Use when multiple active loops may touch overlapping paths.
 
-```bash
-# 1. Enumerate active loops (collect loop dirs with LAST_STATUS=CONTINUE)
-active_loops=$(find . -name "state.env" -exec grep -l "LAST_STATUS=CONTINUE" {} \; | xargs dirname)
+For each explicitly configured loop directory:
 
-# 2. Extract candidate paths per loop (changes excluding baseline delta)
-for loop_dir in $active_loops; do
-  git diff --name-only | sort | comm -23 - "${loop_dir}/dirty-start-paths.txt" \
-    > "${loop_dir}/.candidate-paths.tmp"
-done
+1. Parse `state.env` as data and select loops whose `LAST_STATUS` is `CONTINUE`; never source checkpoint files.
+2. Read the runner's NUL-delimited `dirty-start-paths.nul`, and collect current tracked/staged/untracked paths with Git's `-z` option.
+3. Subtract that loop's baseline and exclude its runtime directory, using literal path comparisons (including whitespace/newlines).
+4. Compare candidate sets across loops. Any path owned by more than one loop yields `CROSS_LOOP_CONFLICT` with the path and loop owners.
 
-# 3. Detect overlapping paths -> report CROSS_LOOP_CONFLICT
-cat */.candidate-paths.tmp | sort | uniq -d > .conflict-paths.tmp
-if [[ -s .conflict-paths.tmp ]]; then
-  echo "CROSS_LOOP_CONFLICT: $(cat .conflict-paths.tmp)"
-fi
-```
+Reuse the scoped candidate collection in `reference/script-template-runner.md`; do not pipe path lists through whitespace-splitting `xargs` or shell word splitting.
 
 On `CROSS_LOOP_CONFLICT`:
 1. Suspend the affected loop and keep `LAST_STATUS=CONTINUE`.
