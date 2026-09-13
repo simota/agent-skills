@@ -160,14 +160,16 @@ class LoopTemplateTests(unittest.TestCase):
         self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
 
     def assert_wall_clock_blocked(self, environment: dict[str, str]) -> None:
+        # date +%s rounds down: two seconds leave at least one second to enter
+        # the operation under test, while uncapped four-second work still fails.
         start = time.monotonic()
         result = self.run_script("run-loop.sh", env={**environment,
-                                "LOOP_TIMEOUT": "1", "EXEC_TIMEOUT": "30"})
+                                "LOOP_TIMEOUT": "2", "EXEC_TIMEOUT": "30"})
         elapsed = time.monotonic() - start
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(self.state()["LAST_STATUS"], "BLOCKED")
         self.assertFalse((self.loop / ".run-loop.lock").exists())
-        self.assertLess(elapsed, 3.5, f"1-second budget took {elapsed:.2f}s")
+        self.assertLess(elapsed, 3.5, f"2-second budget took {elapsed:.2f}s")
 
     def test_wall_clock_caps_executor_even_when_term_is_ignored(self) -> None:
         self.assert_wall_clock_blocked(self.executor(
