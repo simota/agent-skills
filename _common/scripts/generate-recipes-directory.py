@@ -15,6 +15,7 @@ import sys
 from pathlib import Path
 
 import _corpus
+from _recipes import recipe_cells, recipe_section, registry_pointer
 
 SKILLS_ROOT = Path(__file__).resolve().parents[2]
 PROJECT_LOCAL_ROOT = SKILLS_ROOT / ".claude" / "skills"
@@ -49,18 +50,7 @@ Auto-generated from SKILL.md `## Recipes` tables by `_common/scripts/generate-re
 def parse_recipe_table(block: str) -> list[tuple[str, bool]]:
     """Read only Recipe/Subcommand tables, excluding keyword-routing tables."""
     rows: list[tuple[str, bool]] = []
-    in_table = False
-    for line in block.splitlines():
-        if not line.lstrip().startswith("|"):
-            in_table = False
-            continue
-        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
-        if not in_table:
-            in_table = len(cells) >= 2 and "recipe" in cells[0].lower() \
-                and "subcommand" in cells[1].lower()
-            continue
-        if re.fullmatch(r":?-+:?", cells[0]):
-            continue
+    for cells in recipe_cells(block):
         raw_subcmd = cells[1] if len(cells) >= 2 else ""
         match = re.fullmatch(r"`([^`]+)`", raw_subcmd)
         if match is None or not KEBAB.fullmatch(match.group(1)):
@@ -70,21 +60,22 @@ def parse_recipe_table(block: str) -> list[tuple[str, bool]]:
 
 
 def extract_recipes(content: str, skill_dir: Path | None = None) -> list[tuple[str, bool]]:
-    m = re.search(r"^## Recipes\s*\n(.*?)(?=^## |\Z)", content, re.MULTILINE | re.DOTALL)
-    if not m:
+    block = recipe_section(content)
+    if block is None:
         return []
-    block = m.group(1)
     rows = parse_recipe_table(block)
-    if rows or skill_dir is None:
+    if rows:
         return rows
-    pointer = re.search(r"`(reference/[a-z0-9-]*recipes?-index\.md)`", block)
-    if pointer:
-        target = skill_dir / pointer.group(1)
+    pointer = registry_pointer(block)
+    if pointer and skill_dir is not None:
+        target = skill_dir / pointer
         if not target.is_file():
-            raise ValueError(f"Recipe registry not found: {pointer.group(1)}")
+            raise ValueError(f"Recipe registry not found: {pointer}")
         rows = parse_recipe_table(target.read_text(encoding="utf-8"))
         if not rows:
-            raise ValueError(f"Recipe registry has no rows: {pointer.group(1)}")
+            raise ValueError(f"Recipe registry has no rows: {pointer}")
+    elif skill_dir is not None:
+        raise ValueError("Recipes section has no Recipe table rows or registry")
     return rows
 
 

@@ -40,7 +40,7 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **forge**: ui★ / api / fullstack / landing / mobile / dashboard / ai
 - **frame**: extract★ / code-connect / rules / inspect / variants / tokens / breakpoint
 - **funnel**: build★ / cta / conversion / responsive / form / copy / trust / premium
-- **gateway**: design★ / openapi / versioning / breaking / rest / graphql / webhook / auth / rate-limit / deprecation
+- **gateway**: design★ / openapi / versioning / breaking / rest / graphql / webhook / auth / rate-limit / deprecation / messaging
 - **gauge**: audit★ / fix / research / checklist / staleness
 - **gear**: deps★ / ci / docker / logs / health / alert / secret / k8s / gha
 - **grove**: audit★ / design / docs / migrate / monorepo / tests / scripts / llm
@@ -103,7 +103,7 @@ Regenerate with: `python3 _common/scripts/generate-recipes-directory.py`
 - **voice**: nps★ / review / sentiment / classify / insight / kano / thematic / csat
 - **void**: prune★ / cut / question / simplify
 - **voyager**: playwright★ / page-object / auth / a11y / visual / api / mobile / component / ios
-- **weave**: design★ / saga / approval / detect / retry / timeout / compensation
+- **weave**: design★ / saga / approval / detect / retry / timeout / compensation / schedule
 - **zen**: refactor★ / naming / extract / constants / dead / simplify / split / guard
 
 ---

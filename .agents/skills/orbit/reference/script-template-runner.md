@@ -20,6 +20,7 @@ set -euo pipefail
 #--- Configuration (customize per goal) ---
 LOOP_DIR="${LOOP_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)}"
 LOOP_DIR="$(cd -- "${LOOP_DIR}" && pwd)"
+REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || true)
 MAX_ITERATIONS="${MAX_ITERATIONS:-20}"
 RETRY_LIMIT="${RETRY_LIMIT:-3}"
 RETRY_BACKOFF_BASE="${RETRY_BACKOFF_BASE:-2}"
@@ -121,7 +122,7 @@ preflight_check() {
       echo "[PREFLIGHT:FAIL] Not inside a git repository (AUTOCOMMIT=true requires git)"
       return 1
     fi
-    if [[ -d .git/rebase-merge ]] || [[ -d .git/rebase-apply ]]; then
+    if [[ -d "$(git rev-parse --git-path rebase-merge)" ]] || [[ -d "$(git rev-parse --git-path rebase-apply)" ]]; then
       echo "[PREFLIGHT:FAIL] Git rebase in progress — resolve before running loop"
       return 1
     fi
@@ -302,11 +303,12 @@ budget_exceeded() {
 # changed files from completion checks. Emit NUL-delimited literal paths.
 loop_changed_files() {
   local base="${LOOP_BASE:-}"
+  [[ -n "${REPO_ROOT}" ]] || return 0
   if [[ -n "${base}" ]] && git rev-parse --verify "${base}" >/dev/null 2>&1; then
-    git diff --name-only -z "${base}...HEAD" -- 2>/dev/null || true
+    git -C "${REPO_ROOT}" diff --name-only -z "${base}...HEAD" -- 2>/dev/null || true
   fi
-  git diff --name-only -z HEAD -- 2>/dev/null || true
-  git ls-files --others --exclude-standard -z 2>/dev/null || true
+  git -C "${REPO_ROOT}" diff --name-only -z HEAD -- 2>/dev/null || true
+  git -C "${REPO_ROOT}" ls-files --others --exclude-standard -z 2>/dev/null || true
 }
 
 #--- Placeholder gate: verify PASS alone is not DONE evidence (AP-12) ---
@@ -320,6 +322,7 @@ placeholder_clean() {
       *.js|*.ts|*.tsx|*.jsx|*.py|*.go|*.rb|*.rs|*.java|*.kt|*.swift|*.php|*.c|*.cc|*.cpp|*.h) ;;
       *) continue ;;
     esac
+    path="${REPO_ROOT}/${path}"
     [[ -f "${path}" ]] || continue # deleted source needs no scan
     result=0
     grep -nE 'TODO|FIXME|NotImplementedError|raise NotImplemented|^[[:space:]]*pass[[:space:]]*$|return None[[:space:]]*#|throw new Error\("not implemented"\)' -- "${path}" || result=$?
@@ -477,7 +480,8 @@ if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]]; the
   fi
 
   CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-  if [[ "${CURRENT_BRANCH}" != "${ITER_BRANCH}" ]]; then
+  # DONE can be resumed after squash has already removed the iteration branch.
+  if [[ "${STATUS}" != "DONE" ]] && [[ "${CURRENT_BRANCH}" != "${ITER_BRANCH}" ]]; then
     # Stash dirty worktree before branch switch
     STASHED_FOR_BRANCH=false
     if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null; then
@@ -500,9 +504,9 @@ fi
 #--- Dirty baseline snapshot (NUL preserves spaces, quotes, and newlines) ---
 if [[ "${AUTOCOMMIT}" == "true" ]]; then
   {
-    git diff --name-only -z -- 2>/dev/null || true
-    git diff --cached --name-only -z -- 2>/dev/null || true
-    git ls-files --others --exclude-standard -z 2>/dev/null || true
+    git -C "${REPO_ROOT}" diff --name-only -z -- 2>/dev/null || true
+    git -C "${REPO_ROOT}" diff --cached --name-only -z -- 2>/dev/null || true
+    git -C "${REPO_ROOT}" ls-files --others --exclude-standard -z 2>/dev/null || true
   } > "${LOOP_DIR}/dirty-start-paths.nul"
 fi
 
@@ -626,7 +630,7 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
     break
   fi
   if [[ "${AUTOCOMMIT}" == "true" ]]; then
-    if [[ -d .git/rebase-merge ]] || [[ -d .git/rebase-apply ]]; then
+    if [[ -d "$(git rev-parse --git-path rebase-merge)" ]] || [[ -d "$(git rev-parse --git-path rebase-apply)" ]]; then
       echo "[HEALTH:BLOCKED] Git rebase in progress" | tee -a "${LOOP_DIR}/runner.log"
       STATUS="BLOCKED"
       write_state "${ITER}" "BLOCKED"
@@ -668,6 +672,11 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
     RETRY_COUNT=$((RETRY_COUNT + 1))
     record_circuit_failure "${ERROR_SIG}"
     emit_log "WARN" "exec_retry" "attempt" "${RETRY_COUNT}" "exit_code" "${LAST_EXIT_CODE}" "category" "TRANSIENT"
+    # Opening the circuit also stops this retry loop, including a failed probe.
+    if [[ "${CIRCUIT_BREAKER}" == "true" && "${CB_STATE}" == "OPEN" ]]; then
+      echo "[CIRCUIT:OPEN] Execution blocked until cooldown or manual reset"
+      break
+    fi
 
     if [[ "${RETRY_COUNT}" -lt "${RETRY_LIMIT}" ]]; then
       JITTER=$((RANDOM % (RETRY_BACKOFF_BASE ** RETRY_COUNT / 2 + 1)))
@@ -724,12 +733,11 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   #--- Scoped auto-commit ---
   if [[ "${AUTOCOMMIT}" == "true" ]]; then
     {
-      git diff --name-only -z -- 2>/dev/null || true
-      git diff --cached --name-only -z -- 2>/dev/null || true
-      git ls-files --others --exclude-standard -z 2>/dev/null || true
+      git -C "${REPO_ROOT}" diff --name-only -z -- 2>/dev/null || true
+      git -C "${REPO_ROOT}" diff --cached --name-only -z -- 2>/dev/null || true
+      git -C "${REPO_ROOT}" ls-files --others --exclude-standard -z 2>/dev/null || true
     } > "${LOOP_DIR}/current-changes.nul"
     CANDIDATES=()
-    REPO_ROOT=$(git rev-parse --show-toplevel)
     while IFS= read -r -d '' path; do
       # Runtime files must never enter a source commit, even without .gitignore.
       [[ "${REPO_ROOT}/${path}" == "${LOOP_DIR}/"* ]] && continue
@@ -743,10 +751,10 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
     done < "${LOOP_DIR}/current-changes.nul"
     rm -f "${LOOP_DIR}/current-changes.nul"
     if [[ "${#CANDIDATES[@]}" -gt 0 ]]; then
-      git --literal-pathspecs add --all -- "${CANDIDATES[@]}"
-      if ! git --literal-pathspecs diff --cached --quiet -- "${CANDIDATES[@]}"; then
+      git -C "${REPO_ROOT}" --literal-pathspecs add --all -- "${CANDIDATES[@]}"
+      if ! git -C "${REPO_ROOT}" --literal-pathspecs diff --cached --quiet -- "${CANDIDATES[@]}"; then
         # --only leaves pre-existing staged work in the index, outside this commit.
-        git --literal-pathspecs commit --only -m "${COMMIT_MSG_PREFIX}(iter-${ITER}): auto-commit [verify=${VERIFY_RESULT}]" -- "${CANDIDATES[@]}"
+        git -C "${REPO_ROOT}" --literal-pathspecs commit --only -m "${COMMIT_MSG_PREFIX}(iter-${ITER}): auto-commit [verify=${VERIFY_RESULT}]" -- "${CANDIDATES[@]}"
         COMMIT_HASH=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
       fi
     fi
@@ -795,23 +803,36 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
 done
 
 #--- Branch isolation (post-loop squash) ---
-if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]] \
-   && [[ -n "${ORIGIN_BRANCH:-}" ]] && [[ "${STATUS}" == "DONE" ]] \
-   && [[ "${SQUASH_ON_DONE}" == "true" ]]; then
-
-  ITER_COMMIT_COUNT=$(git rev-list --count "${ORIGIN_BRANCH}..${ITER_BRANCH}" 2>/dev/null || echo "0")
-  echo "[BRANCH] Loop DONE — squashing ${ITER_COMMIT_COUNT} iteration commits"
+squash_iteration_branch() {
+  # Empty loops and changes reverted during the loop have nothing to summarize.
+  if git diff --quiet "${ORIGIN_BRANCH}" "${ITER_BRANCH}" --; then
+    git checkout "${ORIGIN_BRANCH}"
+    git branch -D "${ITER_BRANCH}"
+    echo "[BRANCH] No source changes to squash — returned to ${ORIGIN_BRANCH}"
+    return 0
+  fi
 
   # Preserve prior summaries: a repeated loop name must not delete user commits.
   if git show-ref --verify --quiet "refs/heads/${SUMMARY_BRANCH}"; then
     echo "[ABORT] Summary branch ${SUMMARY_BRANCH} already exists — choose another loop name"
-    exit 1
+    return 1
   fi
+
+  # Scoped iteration commits leave prior staged work untouched. Keep that work
+  # out of the squash index too, then restore its original staged/unstaged state.
+  local stashed=false
+  if ! git diff --quiet || ! git diff --cached --quiet; then
+    git stash push -m "orbit-pre-squash"
+    stashed=true
+  fi
+
+  ITER_COMMIT_COUNT=$(git rev-list --count "${ORIGIN_BRANCH}..${ITER_BRANCH}")
+  echo "[BRANCH] Loop DONE — squashing ${ITER_COMMIT_COUNT} iteration commits"
   git checkout "${ORIGIN_BRANCH}"
   git checkout -b "${SUMMARY_BRANCH}"
 
   # Squash merge with conflict handling
-  if git merge --squash "${ITER_BRANCH}" 2>/dev/null; then
+  if git merge --squash "${ITER_BRANCH}"; then
 
     #--- LLM-generated commit message (notify.sh pattern) ---
     LOOP_NAME=$(basename "${LOOP_DIR}" | sed 's/^\.//')
@@ -874,6 +895,10 @@ Iterations: $((ITER - 1)), Verify: ${VERIFY_RESULT}"
 
     git commit -m "${SQUASH_MSG}"
 
+    if [[ "${stashed}" == "true" ]]; then
+      git stash pop --index || { echo "[ABORT] Stash restore conflict — resolve before resuming"; return 1; }
+    fi
+
     # Delete iteration branch
     git branch -D "${ITER_BRANCH}" 2>/dev/null || true
     echo "[BRANCH] Squash complete on ${SUMMARY_BRANCH}"
@@ -886,8 +911,19 @@ Iterations: $((ITER - 1)), Verify: ${VERIFY_RESULT}"
   else
     echo "[BRANCH:CONFLICT] Squash failed — ORIGIN_BRANCH may have diverged"
     echo "[BRANCH:CONFLICT] Resolve: git checkout ${SUMMARY_BRANCH} && fix conflicts && git commit"
-    echo "[BRANCH:CONFLICT] Or abort: git merge --abort && git checkout ${ITER_BRANCH}"
+    echo "[BRANCH:CONFLICT] Or abort: git reset --merge && git checkout ${ITER_BRANCH}"
+    if [[ "${stashed}" == "true" ]]; then
+      echo "[BRANCH:CONFLICT] After resolving or aborting, restore prior work: git stash pop --index"
+    fi
+    return 1
   fi
+}
+
+if [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${AUTOCOMMIT}" == "true" ]] \
+   && [[ -n "${ORIGIN_BRANCH:-}" ]] && [[ "${STATUS}" == "DONE" ]] \
+   && [[ "${SQUASH_ON_DONE}" == "true" ]] \
+   && git show-ref --verify --quiet "refs/heads/${ITER_BRANCH}"; then
+  squash_iteration_branch
 elif [[ "${BRANCH_ISOLATION}" == "true" ]] && [[ "${STATUS}" != "DONE" ]] && [[ -n "${ITER_BRANCH:-}" ]]; then
   echo "[BRANCH] STATUS=${STATUS} — staying on ${ITER_BRANCH} for resume"
 fi

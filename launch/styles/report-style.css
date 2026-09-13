@@ -178,28 +178,28 @@ pre:not([class]) {
    ============================================ */
 
 /* 完了 */
-td:contains("✅"), td:contains("完了") {
+.status-complete {
   color: #16a34a;
   font-weight: 600;
 }
 
 /* 進行中 */
-td:contains("🔄"), td:contains("進行中") {
+.status-progress {
   color: #2563eb;
 }
 
 /* レビュー中 */
-td:contains("👀") {
+.status-review {
   color: #d97706;
 }
 
 /* カテゴリアイコン */
-td:contains("🚀") { color: #2563eb; }
-td:contains("🐛") { color: #dc2626; }
-td:contains("🔧") { color: #7c3aed; }
-td:contains("📝") { color: #059669; }
-td:contains("🧪") { color: #0891b2; }
-td:contains("⚡") { color: #d97706; }
+.category-feat { color: #2563eb; }
+.category-fix { color: #dc2626; }
+.category-refactor { color: #7c3aed; }
+.category-docs { color: #059669; }
+.category-test { color: #0891b2; }
+.category-perf { color: #d97706; }
 
 /* ============================================
    Lists
@@ -285,7 +285,7 @@ a:hover {
    Section Dividers (━━━)
    ============================================ */
 
-p:has(text-content("━━━")) {
+p.report-divider {
   text-align: center;
   color: #94a3b8;
   letter-spacing: 2px;

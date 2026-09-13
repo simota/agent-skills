@@ -8,53 +8,12 @@ body:
       value: |
         バグ報告ありがとうございます。以下の情報を記載してください。
 
-  - type: dropdown
+  - type: input
     id: agent
     attributes:
       label: 対象エージェント
-      description: 問題が発生したエージェントを選択
-      options:
-        - Nexus
-        - Sherpa
-        - Scout
-        - Spark
-        - Compete
-        - Voice
-        - Researcher
-        - Radar
-        - Voyager
-        - Sentinel
-        - Probe
-        - Judge
-        - Rabbit
-        - Zen
-        - Builder
-        - Artisan
-        - Forge
-        - Bolt
-        - Tuner
-        - Vision
-        - Palette
-        - Muse
-        - Flow
-        - Echo
-        - Showcase
-        - Quill
-        - Canvas
-        - Atlas
-        - Horizon
-        - Gateway
-        - Schema
-        - Anvil
-        - Gear
-        - Scaffold
-        - Polyglot
-        - Growth
-        - Retain
-        - Pulse
-        - Experiment
-        - Triage
-        - Other / 全体
+      description: 問題が発生したスキル名を入力してください。複数指定やプロジェクト内スキルも記載できます。共通の問題は「全体」と入力してください。
+      placeholder: 例：nexus, scout / orbit / 全体
     validations:
       required: true
 

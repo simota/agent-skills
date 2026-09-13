@@ -96,9 +96,13 @@ def actual_local_skill_count() -> int:
 def check_counts(path: Path, text: str, actual: int) -> list[tuple[str, str, str]]:
     findings = []
     local_actual = actual_local_skill_count()
+    previous_claim_end = 0
     for m in COUNT_PATTERN.finditer(text):
         claimed = int(m.group(1))
-        before = text[max(0, m.start() - 24) : m.start()]
+        # The preceding claim's qualifier cannot scope this one: in
+        # "3 project-local skills and 90 skills", only the first count is local.
+        before = text[max(previous_claim_end, m.start() - 24) : m.start()]
+        previous_claim_end = m.end()
         qualifier = (m.group(2) or "").lower()
         # An explicit qualifier belongs to this claim; nearby text can describe
         # a different count ("3 project-local skills, 90 global skills").

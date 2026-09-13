@@ -2,8 +2,9 @@
 """
 Routing Oracle — mechanical reliability checks for Nexus's routing machinery.
 
-Eight checks, all fail-open (S4: a script crash prints a warning and exits 0,
-it never blocks a merge on its own bug):
+Eight checks, with fail-open execution (S4: a script crash prints a warning
+and the remaining checks still run). Warning/error modes do not block on an
+internal crash; strict mode blocks on every warning, including incomplete checks:
 
   RO-1 Dead-reference check
        Every `reference/*.md` / `_common/*.md` path cited inside nexus/SKILL.md
@@ -71,11 +72,11 @@ Severity tiers (mirrors lint-frontmatter.py / validate-recipes.py):
   --severity strict   exit 1 if any finding (ERROR or WARNING) is reported
 
 Fail-open contract: any unhandled exception during a check is caught, printed
-as a single WARNING line, and the check is skipped — this script must never
-be the reason a routing-machinery PR is blocked by its own bug.
+as a single WARNING line, and the check is skipped. The warning blocks only
+under --severity strict, so incomplete verification cannot appear clean there.
 
 Exit codes:
-  0  no blocking findings under the chosen severity (including "script broke")
+  0  no blocking findings under the chosen severity
   1  blocking findings present
 """
 
@@ -88,7 +89,8 @@ import traceback
 from pathlib import Path
 
 import _corpus
-from _markdown import without_fenced_examples, without_inline_code
+from _markdown import fenced_blocks, markdown_section as read_markdown_section
+from _recipes import active_text, dispatch_allowlist
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 NEXUS_DIR = REPO_ROOT / "nexus"
@@ -112,7 +114,7 @@ RETIRED_NEXUS_REFERENCES = (
 # ending .md. Skill references may use either the global `<skill-name>/` form
 # or the canonical project-local `.claude/skills/<skill-name>/` form.
 REF_PATH_RE = re.compile(
-    r"`?((?:(?:\.claude/skills/)?[a-z][a-z0-9_-]*/)?"
+    r"`?((?:(?:\.(?:claude|agents)/skills/)?[a-z][a-z0-9_-]*/)?"
     r"(?:reference|_common)/[A-Za-z0-9_\-{}/.,]+?\.md)`?"
 )
 
@@ -200,7 +202,7 @@ def check_dead_references(findings: list[Finding]):
 def check_ladder_token_order(findings: list[Finding]):
     """RO-2: REDIRECT before SELECT before LADDER in the CLASSIFY Default dispatch;
     compass before architect in the LADDER clause."""
-    skill_content = NEXUS_SKILL.read_text(encoding="utf-8")
+    skill_content = active_text(NEXUS_SKILL.read_text(encoding="utf-8"))
     m = re.search(
         r"\*\*Default dispatch:\*\*\s*`phase:CLASSIFY`\s+with flow\s+(`[^`]+`)",
         skill_content,
@@ -226,7 +228,7 @@ def check_ladder_token_order(findings: list[Finding]):
     if not ROUTING_MATRIX.is_file():
         findings.append(Finding("RO-2", "WARNING", "routing-matrix.md not found — compass/architect order check skipped"))
         return
-    matrix_content = ROUTING_MATRIX.read_text(encoding="utf-8")
+    matrix_content = active_text(ROUTING_MATRIX.read_text(encoding="utf-8"))
     ladder_match = re.search(r"\*\*LADDER \(no task-type match.*?\*\*\s*—\s*(.*?)(?:\n- \*\*Multi-domain|\n\n)", matrix_content, re.DOTALL)
     if not ladder_match:
         findings.append(Finding("RO-2", "WARNING", "LADDER clause not found in routing-matrix.md — compass/architect order check skipped"))
@@ -264,7 +266,7 @@ def check_producer_verifier(findings: list[Finding]):
     if not ROUTING_MATRIX.is_file():
         findings.append(Finding("RO-3", "WARNING", "routing-matrix.md not found — producer/verifier check skipped"))
         return
-    content = ROUTING_MATRIX.read_text(encoding="utf-8")
+    content = active_text(ROUTING_MATRIX.read_text(encoding="utf-8"))
     rows_checked = 0
     for line in content.splitlines():
         if not line.startswith("|") or line.strip().startswith("|---") or "Recipe Hints" in line:
@@ -310,23 +312,7 @@ def check_producer_verifier(findings: list[Finding]):
 
 def markdown_section(content: str, title: str) -> str | None:
     """Read one level-two section without treating examples or comments as headings."""
-    lines = []
-    found = False
-    visible_text = without_inline_code(without_fenced_examples(content))
-    visible_text = re.sub(r"<!--.*?(?:-->|\Z)",
-                          lambda match: re.sub(r"[^\n]", " ", match.group()),
-                          visible_text, flags=re.DOTALL)
-    visible_lines = visible_text.split("\n")
-    for line, visible in zip(content.splitlines(), visible_lines):
-        if visible.startswith("## "):
-            if found:
-                break
-            if re.match(r"^## " + re.escape(title) + r"(?:\s|$)", visible):
-                found = True
-            continue
-        if found:
-            lines.append(line)
-    return "\n".join(lines) if found else None
+    return read_markdown_section(content, title, allow_suffix=True)
 
 
 def check_fallback_field(findings: list[Finding]):
@@ -339,11 +325,10 @@ def check_fallback_field(findings: list[Finding]):
         return
     content = OUTPUT_FORMATS.read_text(encoding="utf-8")
     section = markdown_section(content, "NEXUS_COMPLETE")
-    m = re.search(r"```(.*?)```", section, re.DOTALL) if section is not None else None
-    if not m:
+    template = next(fenced_blocks(section), None) if section is not None else None
+    if template is None:
         findings.append(Finding("RO-4", "WARNING", "NEXUS_COMPLETE template block not found — fallback-field check skipped"))
         return
-    template = m.group(1)
     fallback = re.search(r"^\s*Fallback:[^\n]*", template, re.MULTILINE)
     if fallback is None or "fallback_taken" not in fallback.group(0):
         findings.append(Finding("RO-4", "ERROR", "NEXUS_COMPLETE template is missing the `Fallback:` / `fallback_taken` field"))
@@ -366,7 +351,8 @@ def check_roster_completeness(findings: list[Finding]):
     if not ROUTING_MATRIX.is_file() or not signal_keywords.is_file():
         findings.append(Finding("RO-5", "WARNING", "routing-matrix.md or signal-keywords.md not found — roster completeness check skipped"))
         return
-    combined_text = ROUTING_MATRIX.read_text(encoding="utf-8") + "\n" + signal_keywords.read_text(encoding="utf-8")
+    combined_text = active_text(ROUTING_MATRIX.read_text(encoding="utf-8")) + "\n" \
+        + active_text(signal_keywords.read_text(encoding="utf-8"))
 
     skill_dirs = sorted(
         d.name for d in _corpus.iter_skill_dirs(REPO_ROOT)
@@ -401,14 +387,16 @@ def check_bare_subcommand_dispatch(findings: list[Finding]):
     skill_text = NEXUS_SKILL.read_text(encoding="utf-8")
 
     # The dispatch allowlist is the fenced block inside the Recipe Registry section.
-    registry = re.search(r"dispatch allowlist only.*?```\n(.*?)```", skill_text, re.S)
-    if not registry:
+    recipes = read_markdown_section(skill_text, "Recipes")
+    registry = dispatch_allowlist(recipes) if recipes is not None else None
+    if registry is None:
         findings.append(Finding("RO-6", "WARNING", "Recipe Registry allowlist block not found in nexus/SKILL.md — bare-subcommand check skipped"))
         return
-    subcommands = {t.rstrip("*") for t in registry.group(1).split()}
+    subcommands = set(registry)
 
     # Fixtures written as: bare "optimize" / bare "landing page"
-    fixtures = {m.lower() for m in re.findall(r'bare\s+"([^"]+)"', battery.read_text(encoding="utf-8"))}
+    fixtures = {m.lower() for m in re.findall(r'bare\s+"([^"]+)"',
+                                             active_text(battery.read_text(encoding="utf-8")))}
     contested = sorted(f for f in fixtures if f in subcommands)
     if not contested:
         return  # no fixture asserts a bare subcommand must not dispatch — nothing to enforce
@@ -417,6 +405,7 @@ def check_bare_subcommand_dispatch(findings: list[Finding]):
     if section is None:
         findings.append(Finding("RO-6", "WARNING", "`## Subcommand Dispatch` section not found in nexus/SKILL.md — bare-subcommand check skipped"))
         return
+    section = active_text(section)
     # Require the exception's DEFINITION (a bolded bullet lead-in), not merely a
     # cross-reference to it — a surviving "see the bare-subcommand exception below"
     # must not satisfy the check after the defining bullet has been deleted.
@@ -470,7 +459,7 @@ def check_confidence_gate_shape(findings: list[Finding]):
         findings.append(Finding("RO-8", "ERROR", "nexus/reference/confidence-scoring.md is missing"))
         return
 
-    text = CONFIDENCE_SCORING.read_text(encoding="utf-8")
+    text = active_text(CONFIDENCE_SCORING.read_text(encoding="utf-8"))
     required = ("## Blocking Unknown Gate", "## Discrete Evidence Bands", "`authority`")
     missing = [token for token in required if token not in text]
     retired_patterns = {

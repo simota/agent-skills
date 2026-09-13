@@ -14,12 +14,6 @@
       margin: 15mm 12mm;
     }
 
-    @media print {
-      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .page-break { page-break-before: always; }
-      .no-print { display: none; }
-    }
-
     * {
       margin: 0;
       padding: 0;
@@ -377,6 +371,21 @@
 
     .font-mono {
       font-family: "SF Mono", "Monaco", "Menlo", monospace;
+    }
+
+    /* Let @page own print margins; screen dimensions would overflow its
+       content box and add the same margins a second time. */
+    @media print {
+      body {
+        width: auto;
+        min-height: 0;
+        margin: 0;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .page-break { page-break-before: always; }
+      .no-print { display: none; }
     }
   </style>
 </head>

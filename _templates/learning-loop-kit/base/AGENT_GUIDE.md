@@ -17,9 +17,9 @@ Spawn {{ANALYZE_SKILLS}} (parallel where independent), then synthesize.
 - **Conflict resolution** — if a draft contradicts an accepted {{RULE_NOUN}}: (a) **supersede** (deprecate old → Archive, set `Superseded by:`), (b) **scope-narrow** (restrict one to a layer/context), or (c) **reject**. Never leave two accepted {{RULE_NOUN_PLURAL}} in direct conflict. {{PROMOTE_SKILLS}} may pre-flag conflicts/dupes.
 
 ### Step 4 — PROMOTE
-- Append the accepted entry to the right `rules/*.md` with a slug ID (`{{RULE_PREFIX}}-<LAYER>-<slug>`) — check existing IDs and recheck concurrent additions before merging. Reuse an ID only for an approved edit to the same {{RULE_NOUN}}; give distinct {{RULE_NOUN_PLURAL}} distinct slugs.
+- Append the accepted entry to the right `rules/*.md` with a slug ID combining `{{RULE_PREFIX}}`, the uppercase layer, and a mnemonic (example: `{{RULE_PREFIX}}-CORE-validate-input`). Check existing IDs and recheck concurrent additions before merging. Reuse an ID only for an approved edit to the same {{RULE_NOUN}}; give distinct {{RULE_NOUN_PLURAL}} distinct slugs.
 - Add its row to `rules/INDEX.md` (by-tag + by-layer).
-- Mark source {{SIGNAL_NOUN}} `promoted` + `Promoted to: {{RULE_PREFIX}}-<LAYER>-<slug>`.
+- Mark source {{SIGNAL_NOUN}} `promoted` and set `Promoted to:` to the accepted {{RULE_NOUN}}'s actual ID.
 - If the {{RULE_NOUN}} has a machine-checkable part, encode it via **{{MACHINE_ENCODING}}** and record the reference in the entry's `Check:` field.
 - Add a reference {{ARTIFACT_NOUN}} to `{{ARTIFACT_DIR}}/` (Do, + Before/After) when applicable.
 

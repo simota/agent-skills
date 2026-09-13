@@ -199,8 +199,8 @@ When the same failure signature (class + sub_class + error message hash) occurs 
 | State | Condition | Behavior |
 |-------|-----------|----------|
 | `CLOSED` | `< CIRCUIT_THRESHOLD` consecutive same-signature failures | normal retry policy applies |
-| `HALF_OPEN` | exactly `CIRCUIT_THRESHOLD` consecutive same-signature failures | allow one probe execution; if it fails, transition to `OPEN` |
-| `OPEN` | `> CIRCUIT_THRESHOLD` consecutive same-signature failures or probe failed | stop execution, emit `BLOCKED` status, require manual reset or cooldown |
+| `HALF_OPEN` | `OPEN` cooldown elapsed | allow one probe execution; success transitions to `CLOSED`, failure to `OPEN` |
+| `OPEN` | same-signature failures reach `CIRCUIT_THRESHOLD`, or a probe fails | stop execution, including remaining retries, emit `BLOCKED` status, require manual reset or cooldown |
 
 Cooldown: `OPEN` state auto-transitions to `HALF_OPEN` after `CIRCUIT_COOLDOWN` seconds (default: `300`).
 

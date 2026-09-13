@@ -62,23 +62,30 @@ Rendering is **part scriptable, part human judgment**. Scalar tokens substitute 
    ```
 2. **Copy the base:**
    ```bash
-   cp -R _templates/learning-loop-kit/base _templates/<kit-slug>-kit
+   cp -RP _templates/learning-loop-kit/base _templates/<kit-slug>-kit
+   ln -sfn ../../_common _templates/<kit-slug>-kit/_common
    ```
+   The copied kit is one directory level shallower than `base/`, so its relative `_common` link must be recreated. Preserve symlinks during copying; `_common` contains backlinks to other skills.
 3. **Substitute tokens:**
-   - **Scalar tokens** (`KIT_NAME`, `DOMAIN_DIR`, `RULE_NOUN(_PLURAL)`, `RULE_PREFIX`, `SIGNAL_NOUN(_PLURAL)`, `SIGNAL_PREFIX`, `SIGNAL_LOG`, `ARTIFACT_NOUN`, `ARTIFACT_DIR`, `MACHINE_ENCODING`, `PROMOTION_THRESHOLD`, `REVIEW_CADENCE`) — safe to `sed -i 's/{{KIT_NAME}}/.../g'` across the kit.
+   - **Scalar tokens** (`KIT_NAME`, `KIT_SLUG`, `DOMAIN_DIR`, `RULE_NOUN(_PLURAL)`, `RULE_PREFIX`, `SIGNAL_NOUN(_PLURAL)`, `SIGNAL_PREFIX`, `SIGNAL_LOG`, `ARTIFACT_NOUN`, `ARTIFACT_DIR`, `MACHINE_ENCODING`, `PROMOTION_THRESHOLD`, `REVIEW_CADENCE`) — substitute literally across the kit. If using `sed`, escape replacement values containing `&`, backslashes, or the chosen delimiter, and use the platform's supported in-place syntax.
    - **List tokens** (`LAYERS`, `SIGNAL_SOURCES`, `ANALYZE_SKILLS`, `PROMOTE_SKILLS`, `ENFORCE_SKILLS`, `GATE_SKILLS`) — **substitute by hand.** They render differently per context (prose "one of …", table rows, comma lists), so blind `sed` produces wrong output. Read each occurrence and expand it appropriately.
 4. **Structure fixups:**
    - `mv base.../signals-log.md → <SIGNAL_LOG>` (the filename from your config).
    - `mv artifacts/ → <ARTIFACT_DIR>/`, or delete it entirely if `ARTIFACT_NOUN: none`.
    - For **each delta layer** in `LAYERS` beyond `core`, copy `rules/core.md` → `rules/<layer>.md`, change its title/prefix to that layer, and clear the core seed entries. Add a by-layer row in `rules/INDEX.md`.
-   - Replace the `core.md` seed skeleton with 1-3 real baseline rules (or delete it to start empty).
+   - Replace the `core.md` seed skeleton with 1-3 real baseline rules (or remove the seed entry to start empty). Update or remove its example rows in `rules/INDEX.md` to match.
 5. **Verify (render gate):**
    ```bash
    _templates/learning-loop-kit/_scripts/check-rendered.sh _templates/<kit-slug>-kit
    ```
    Must print `✓ … clean`. It fails on leftover `{{TOKEN}}`, `YYYY-MM-DD`, or `<slug>`/`<LAYER>` markers outside `_templates/`.
 6. **Register** in `INSTANCES.md`.
-7. **Install** into a project: `cp -R _templates/<kit-slug>-kit <project>/<DOMAIN_DIR>` and paste its `CLAUDE.snippet.md` into the project's `CLAUDE.md`.
+7. **Install** into a project, running from this repository's root:
+   ```bash
+   cp -RP _templates/<kit-slug>-kit <project>/<DOMAIN_DIR>
+   ln -sfn "$(pwd -P)/_common" <project>/<DOMAIN_DIR>/_common
+   ```
+   Use a new destination directory so `cp` does not nest the kit inside an existing one. The installed kit retains a link to this source repository's shared contracts; recreate it if the source repository moves. Paste its `CLAUDE.snippet.md` into the project's `CLAUDE.md`.
 
 > `design-feedback-kit` is a worked example of the *rendered shape* — but it is a **predecessor / non-strict render** (uses `Scope:`/`Token:` where the base uses `Layer:`/`Check:`). See `instances/design-feedback.config.md`.
 

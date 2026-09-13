@@ -15,7 +15,7 @@ CAPABILITIES_SUMMARY:
 - pseudo_localization: Pseudo-locale generation, CI integration, layout clipping detection
 - coverage_tracking: Translation coverage metrics, unused key detection, CI quality gates
 - continuous_localization: TMS integration via MCP, OTA edge delivery, edge localization (CDN-level locale routing), AI-powered translation pipeline design
-- mobile_string_resources: iOS String Catalogs (`.xcstrings`, Xcode 15+, default for new iOS 17+ projects) and Android `strings.xml` + `plurals.xml` + `arrays.xml` + `LocaleConfig` (per-app language preferences, Android 13+) — extraction, ICU pluralization mapping, and translator-context (`comment` / `<!-- translator comment -->`) wiring
+- mobile_string_resources: iOS String Catalogs (`.xcstrings`, Xcode 15+, default for new iOS 17+ projects) and Android `strings.xml` + `plurals.xml` + `arrays.xml` + `LocaleConfig` (per-app language preferences, Android 13+) — extraction, ICU pluralization mapping, and translator-context (`comment` / `&lt;!-- translator comment --&gt;`) wiring
 
 COLLABORATION_PATTERNS:
 - Pattern A: Feature i18n (Builder → Polyglot → Radar)

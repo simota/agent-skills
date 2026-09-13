@@ -29,9 +29,9 @@ prior to the 2026-07-29 routing-matrix.md edit), so a future edit that
 reintroduces a stale reference is caught instead of silently passing.
 
 Fail-open contract (mirrors routing-oracle.py): any unhandled exception
-during a check is caught, printed as a WARNING, and the check is skipped —
-this script must never be the reason a routing-machinery PR is blocked by
-its own bug.
+during a check is caught, printed as a WARNING, and the remaining checks run.
+Warning/error modes do not block on that internal crash; strict mode blocks on
+every warning so incomplete verification cannot appear clean there.
 
 Usage:
   python3 _common/scripts/task-battery-check.py [--severity warning|error|strict]
@@ -42,7 +42,7 @@ Severity tiers:
   --severity strict   exit 1 if any FAIL or STALE (ERROR or WARNING) finding
 
 Exit codes:
-  0  no blocking findings under the chosen severity (including "script broke")
+  0  no blocking findings under the chosen severity
   1  blocking findings present
 """
 
@@ -54,6 +54,8 @@ import sys
 import traceback
 from collections import Counter
 from pathlib import Path
+
+from _recipes import active_text
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 NEXUS_DIR = REPO_ROOT / "nexus"
@@ -232,7 +234,7 @@ def check_mechanical_items(findings: list[Finding]):
             findings.append(Finding(label, "ERROR", f"{file_key} not found on disk"))
             print(f"FAIL  {label} -- {file_key} not found")
             continue
-        content = path.read_text(encoding="utf-8")
+        content = active_text(path.read_text(encoding="utf-8"))
         if needle in content:
             passed += 1
             print(f"PASS  {label}")
@@ -251,7 +253,7 @@ def check_battery_coverage(findings: list[Finding]):
         findings.append(Finding("battery-coverage", "ERROR", "task-battery.md not found"))
         return
     documented = Counter(int(value) for value in re.findall(
-        r"^\|\s*(\d+)\s*\|", TASK_BATTERY.read_text(encoding="utf-8"), re.MULTILINE,
+        r"^ {0,3}\|\s*(\d+)\s*\|", active_text(TASK_BATTERY.read_text(encoding="utf-8")), re.MULTILINE,
     ))
     registered = Counter(item[0] for item in MECHANICAL_ITEMS + JUDGMENT_ITEMS)
     problems = []
@@ -283,7 +285,7 @@ def check_stale_agent_references(findings: list[Finding]):
     if not TASK_BATTERY.is_file():
         findings.append(Finding("stale-agent-check", "WARNING", "task-battery.md not found"))
         return
-    content = TASK_BATTERY.read_text(encoding="utf-8")
+    content = active_text(TASK_BATTERY.read_text(encoding="utf-8"))
     lines = content.splitlines()
     found_any = False
     for name in RETIRED_AGENTS:

@@ -140,12 +140,20 @@ def is_synthetic_record(message: dict, reqid: str | None) -> bool:
         return True
     usage = message.get("usage")
     if isinstance(usage, dict):
-        all_zero = (
-            usage.get("input_tokens", 0) == 0
-            and usage.get("cache_creation_input_tokens", 0) == 0
-            and usage.get("cache_read_input_tokens", 0) == 0
-            and usage.get("output_tokens", 0) == 0
-        )
+        details = usage.get("output_tokens_details")
+        if details is None:
+            details = {}
+        if not isinstance(details, dict):
+            return False
+        counts = [usage.get(field, 0) for field in (
+            "input_tokens", "cache_creation_input_tokens",
+            "cache_read_input_tokens", "output_tokens",
+        )]
+        counts.append(details.get("thinking_tokens", 0))
+        # Only valid zero counts establish an interruption placeholder. Python
+        # also considers False and 0.0 equal to zero, but billing validation
+        # rejects both; synthetic classification must not bypass that check.
+        all_zero = all(type(value) is int and value == 0 for value in counts)
         if all_zero and message.get("stop_reason") == "stop_sequence" and reqid is None:
             return True
     return False
@@ -198,7 +206,7 @@ def load_turns(project_dir: Path, report: Report) -> tuple[list[Turn], int, int,
                 if rec.get("type") != "assistant":
                     continue
 
-                message = rec.get("message") or {}
+                message = rec.get("message")
                 reqid = rec.get("requestId")
                 if not isinstance(message, dict):
                     report.add("TE-INTEGRITY", "P0", f"{location}: message must be an object")

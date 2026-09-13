@@ -59,8 +59,10 @@ design/
 
 1. Copy this directory into the target repo as `design/`:
    ```bash
-   cp -R _templates/design-feedback-kit <project>/design
+   cp -RP _templates/design-feedback-kit <project>/design
+   ln -sfn "$(pwd -P)/_common" <project>/design/_common
    ```
+   Run from this repository's root and use a new destination directory. Preserve symlinks while copying, then point `_common` to the source repository's absolute path so the guide's shared contracts still resolve. Keep that source repository available and recreate the link if it moves.
 2. Paste `design/CLAUDE.snippet.md` into the project's `CLAUDE.md` (or `AGENTS.md`) so every agent loads the principles before UI work.
 3. Seed `principles/core.md` with any existing conventions (or leave the examples and let the loop populate it).
 4. Run the loop whenever feedback arrives — see `AGENT_GUIDE.md`.
