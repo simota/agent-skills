@@ -113,8 +113,8 @@ Single principle: **detect a stall or circular pattern, then stop** — applied 
 | State | Condition | Behavior |
 |-------|-----------|----------|
 | `CLOSED` | `< CIRCUIT_THRESHOLD` consecutive same failures | normal retry policy |
-| `HALF_OPEN` | exactly `CIRCUIT_THRESHOLD` same failures | allow one probe; fail → `OPEN` |
-| `OPEN` | probe failed or threshold exceeded | block execution, emit `BLOCKED` |
+| `HALF_OPEN` | `OPEN` cooldown elapsed | allow one probe; success → `CLOSED`, failure → `OPEN` |
+| `OPEN` | same-signature failures reach `CIRCUIT_THRESHOLD`, or a probe fails | block until `CIRCUIT_COOLDOWN` elapses, emit `BLOCKED` |
 
 State file `${LOOP_DIR}/.circuit-state`; reset via `recover.sh --reset-circuit` or deletion; `OPEN` → `HALF_OPEN` after `CIRCUIT_COOLDOWN` seconds. Detail → `reference/failure-catalog.md`.
 

@@ -74,7 +74,7 @@ Route elsewhere when the task is primarily:
 - Treat SLO definitions as code (e.g., OpenSLO YAML specs versioned in Git) — enables automated deployment gating, burn-rate alert generation, and cross-service SLO standardization without manual configuration per service.
 - Define SLOs at system boundaries, not individual components — boundary-level SLIs are more actionable for engineers, customers, and business decision-makers than per-component metrics.
 - Author for the executing engine (P1–P11 bind only on Opus 5; P12 generation-wide). See `_common/OPUS_5_AUTHORING.md` (P3, P5 critical for Beacon; P2, P1 recommended).
-- Apply `_common/CODE_QUALITY.md` to every code change — seven axes (SLD/SEC/RDB/MNT/TST/PRF/SCL), proportional to the change surface — and emit `CODE_QUALITY_GATE` before declaring done. `SEC: risk` blocks completion.
+- Include the relevant `_common/CODE_QUALITY.md` requirements in implementation handoffs; the receiving code-writing agent owns verification and `CODE_QUALITY_GATE` for its changes.
 ## Boundaries
 
 Agent role boundaries → `_common/BOUNDARIES.md`
@@ -268,7 +268,7 @@ When auditing observability for 4+ services, spawn 2–3 Explore subagents to sc
 | `_common/OPUS_5_AUTHORING.md` | You are sizing the SLO/alert spec, deciding adaptive thinking depth at boundary/burn-rate selection, or front-loading service criticality and reliability target at SURVEY. Critical for Beacon: P3, P5. |
 | `_common/PROOF_CARRYING.md` | You register `rollback_condition` as a live SLO oracle in `nexus acceptance` Phase 5 (Layer 5 — runtime self-verify). Runtime oracle is the last safety net before G3 repair-loop circuit breaker activates. Defines the canary-window shadow-mode requirement before runtime oracle promotion. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Beacon-specific Output/Next schema. |
-| `_common/CODE_QUALITY.md` | You are about to write or modify code — the 7-axis quality bar (SLD/SEC/RDB/MNT/TST/PRF/SCL), its sourced anti-patterns, and the `CODE_QUALITY_GATE` emitted before done. |
+| `_common/CODE_QUALITY.md` | You are preparing implementation requirements or reviewing returned implementation evidence; the receiving code-writing agent emits `CODE_QUALITY_GATE`. |
 
 ## Operational
 
@@ -284,4 +284,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

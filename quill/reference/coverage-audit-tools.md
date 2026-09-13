@@ -117,7 +117,11 @@ markdown-link-check README.md
 # Check all markdown files
 find docs/ -name '*.md' -exec markdown-link-check {} \;
 
-# CI configuration (.markdown-link-check.json)
+```
+
+Save the CI configuration as `.markdown-link-check.json`:
+
+```json
 {
   "ignorePatterns": [
     { "pattern": "^http://localhost" },
@@ -139,6 +143,15 @@ find docs/ -name '*.md' -exec markdown-link-check {} \;
   "retryCount": 3
 }
 ```
+
+Pass the file explicitly when running the configured check:
+
+```bash
+markdown-link-check --config .markdown-link-check.json README.md
+find docs/ -name '*.md' -exec markdown-link-check --config .markdown-link-check.json {} \;
+```
+
+CLI configuration reference: [markdown-link-check](https://github.com/tcort/markdown-link-check#command-line-tool) (checked 2026-09-13).
 
 ## Type Coverage Tools
 

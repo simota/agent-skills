@@ -30,17 +30,9 @@
 | **L3: Rally Delegation** | `spawn_agent` with Rally prompt | 4+ workers, complex ownership | `spawn_agent(prompt="You are Rally...")` |
 
 **Subagent Tools:** `spawn_agent`, `send_input`, `wait_agent`, `resume_agent`, `close_agent`
-**Config:** `agents.max_depth` (default: 1) controls nesting. Omitted fields inherit from parent session.
+**Prereqs:** apply `_common/CODEX_ORCHESTRATION.md` C1 against the active runtime. Confirm advertised spawn capability, effective concurrent-agent capacity, and any nesting limit before dispatch. Current local builds use `agents.enabled` and `agents.max_concurrent_threads_per_session`; hosted sessions may expose these constraints directly.
 
-**Prereqs (must hold or internal-fall-back):**
-1. `codex features list | grep multi_agent` → `stable / true` (default true since v0.115+; verify in older builds).
-2. `~/.codex/config.toml` has `[agents] max_depth >= 2`. Default `1` only allows the main session to spawn — a nested orchestrator (e.g. Nexus spawned from a slash command) may already be at depth 1 and unable to recurse.
-3. If the model claims `spawn_agent` is missing from its tool inventory while both above are satisfied, attempt the call anyway — Codex exposes the tool lazily ("tool not visible" ≠ "tool not callable").
-
-```toml
-[agents]
-max_depth = 3
-```
+On builds that enforce `agents.max_depth`, require `current_depth + 1 <= max_depth`, not an unconditional `max_depth >= 2`. Root depth `0` can spawn with the legacy default `1`; only an already nested hub needs a higher limit. If a tool is omitted from the short inventory, discover the advertised interface per C5 before declaring it unavailable. Record the concrete runtime blocker for any internal fallback.
 
 ---
 
@@ -78,7 +70,7 @@ Canonical spawn block, verification chain, transcript/log fallbacks, and the typ
 
 ## Per-CLI Spawn API + Key Rules (SKILL.md excerpt)
 
-Per-CLI spawn API at a glance — Claude Code `Agent` (L1 fg / L2 background / L3 Rally); Codex `spawn_agent`→`wait_agent` (prereq `multi_agent=true` + `max_depth>=2`); agy `/agent` TUI or `agy -p --dangerously-skip-permissions` headless (prereq TUI main session or OS-level isolation). Full per-CLI prereqs, runtime notes, silent-failure mitigations, and the verified headless template → `reference/execution-layers.md`. Cross-CLI mapping → `_common/CLI_COMPATIBILITY.md`.
+Per-CLI spawn API at a glance — Claude Code `Agent` (L1 fg / L2 background / L3 Rally); Codex `spawn_agent`→`wait_agent` (prereqs: active runtime capability/capacity per C1); agy `/agent` TUI or `agy -p --dangerously-skip-permissions` headless (prereq TUI main session or OS-level isolation). Full per-CLI prereqs, runtime notes, silent-failure mitigations, and the verified headless template → `reference/execution-layers.md`. Cross-CLI mapping → `_common/CLI_COMPATIBILITY.md`.
 
 **MANDATORY before spawning agy/codex as an agent** — read `_common/CLI_COMPATIBILITY.md §9.2` (agy headless MUST allocate a real pty (`python3 pty.spawn`) — bare `agy -p` and `script -q /dev/null` fail silently; artifact/sentinel capture, never stdout) and §9.3 (codex `-o <abs path>` artifact is authoritative). Silent-output regressions, not edge cases.
 

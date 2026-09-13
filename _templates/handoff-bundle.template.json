@@ -6,7 +6,7 @@
   "$template_example": {
     "schema_version": "1.0.0",
     "bundle_id": "bundle-dashboard-2026-04-18-a1b2c3",
-    "created_by": "atelier",
+    "created_by": "Atelier",
     "created_at": "2026-04-18T14:30:00Z",
     "target": {
       "agent": "Artisan",
@@ -110,7 +110,7 @@
       "copy_words": ["delightful", "magical", "powerful", "amazing"],
       "patterns": ["hero illustrations", "testimonial carousels", "animated splash"]
     },
-    "handoff_notes": "Artisan: prioritize a11y tests before visual polish. If Timeline performance degrades past 500 events, escalate to atelier for re-scoping.",
+    "handoff_notes": "Artisan: prioritize a11y tests before visual polish. If Timeline performance degrades past 500 events, escalate to Atelier for re-scoping.",
     "traceability": {
       "Vision_Ref": ".agents/vision/direction-2026-04.md",
       "upstream_chain": ["Vision", "Atelier", "Muse", "Frame", "Forge"],
@@ -142,7 +142,7 @@
   },
   "$usage": {
     "producers": ["Atelier", "Vision (via Atelier)", "Forge", "Frame"],
-    "consumers": ["Artisan", "Builder", "Pixel", "Showcase", "Claude Code"],
+    "consumers": ["Artisan", "Builder", "Pixel", "Vitrine", "Claude Code"],
     "storage": ".agents/atelier/bundle-{slug}-{date}.json",
     "indexing": "Append entry to .agents/atelier/INDEX.md when bundle is created"
   },

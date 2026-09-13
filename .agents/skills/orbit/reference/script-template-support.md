@@ -324,7 +324,7 @@ fi
 
 ## Notification Template (`notify.sh`)
 
-Iteration-completion notification with agy commit analysis and Cast `SPEAK` TTS. Each iteration's auto-commit diff is summarized with `git show --stat`, then converted into a short narration.
+Iteration-completion notification with deterministic status narration and Cast `SPEAK` TTS. Notification delivery must not depend on an optional model session finishing.
 
 Arguments: `$1=ITER $2=STATUS $3=VERIFY_RESULT $4=ITER_DURATION $5=LOOP_DIR $6=COMMIT_HASH`
 
@@ -344,25 +344,13 @@ NOTIFY_ENGINE="${NOTIFY_ENGINE:-auto}"
 NOTIFY_LANG="${NOTIFY_LANG:-ja}"
 NOTIFY_PERSONA_FILE="${NOTIFY_PERSONA_FILE:-}"
 
-#--- Generate notification text (agy -> fallback) ---
-NOTIFY_TEXT=""
-if command -v agy >/dev/null 2>&1 && [[ "${COMMIT_HASH}" != "no-commit" ]]; then
-  DIFF_SUMMARY=$(git show --stat "${COMMIT_HASH}" 2>/dev/null | head -20)
-  if [[ "${NOTIFY_LANG}" == "ja" ]]; then
-    PROMPT="以下のコミット差分を1〜2文の自然な日本語で要約してください。技術用語はそのまま使ってOKです:\n${DIFF_SUMMARY}"
-  else
-    PROMPT="Summarize this commit diff in 1-2 natural sentences:\n${DIFF_SUMMARY}"
-  fi
-  NOTIFY_TEXT=$(printf '%b\n' "${PROMPT}" | agy 2>/dev/null || true)
-fi
-
-# Fallback text when agy is unavailable or fails
-if [[ -z "${NOTIFY_TEXT}" ]]; then
-  if [[ "${NOTIFY_LANG}" == "ja" ]]; then
-    NOTIFY_TEXT="イテレーション${ITER}完了。ステータス: ${STATUS}、検証: ${VERIFY_RESULT}、所要時間: ${ITER_DURATION}秒"
-  else
-    NOTIFY_TEXT="Iteration ${ITER} complete. Status: ${STATUS}, Verify: ${VERIFY_RESULT}, Duration: ${ITER_DURATION}s"
-  fi
+#--- Generate bounded, deterministic notification text ---
+# agy requires a real pty and artifact/sentinel capture (_common/CLI_COMPATIBILITY.md
+# §9.2); piping a prompt into an interactive session can block loop completion.
+if [[ "${NOTIFY_LANG}" == "ja" ]]; then
+  NOTIFY_TEXT="イテレーション${ITER}完了。ステータス: ${STATUS}、検証: ${VERIFY_RESULT}、所要時間: ${ITER_DURATION}秒"
+else
+  NOTIFY_TEXT="Iteration ${ITER} complete. Status: ${STATUS}, Verify: ${VERIFY_RESULT}, Duration: ${ITER_DURATION}s"
 fi
 
 #--- Persona override (Cast integration) ---
@@ -384,10 +372,11 @@ if [[ "${NOTIFY_ENGINE}" == "auto" || "${NOTIFY_ENGINE}" == "edge-tts" ]]; then
     if edge-tts --voice "${VOICE}" --text "${NOTIFY_TEXT}" --write-media "${AUDIO_FILE}" 2>/dev/null; then
       if command -v afplay >/dev/null 2>&1; then
         afplay "${AUDIO_FILE}" 2>/dev/null &
+        TTS_PLAYED=true
       elif command -v mpv >/dev/null 2>&1; then
         mpv --no-video "${AUDIO_FILE}" 2>/dev/null &
+        TTS_PLAYED=true
       fi
-      TTS_PLAYED=true
     fi
   fi
 fi

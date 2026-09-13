@@ -34,6 +34,15 @@ async function htmlToPdf(inputPath, outputPath) {
     // current Puppeteer, which no longer exposes page.waitForTimeout().
     await page.evaluate(async () => {
       await document.fonts.ready;
+      const requiredCharts = document.querySelectorAll('canvas[data-chartjs]');
+      if (requiredCharts.length && typeof Chart === 'undefined') {
+        throw new Error('Chart.js failed to load; required report charts are missing');
+      }
+      requiredCharts.forEach(canvas => {
+        if (!Chart.getChart(canvas)) {
+          throw new Error(`Required chart was not initialized: ${canvas.id}`);
+        }
+      });
       if (typeof Chart !== 'undefined') {
         Object.values(Chart.instances).forEach(chart => {
           chart.stop();

@@ -58,6 +58,7 @@ from pathlib import Path
 from typing import Iterable
 
 import _corpus
+from _markdown import without_fenced_examples, without_inline_code
 import yaml
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -247,7 +248,7 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
                            rel))
 
     # N1/N2: folder name kebab-case
-    if not NAME_PATTERN.match(name):
+    if not NAME_PATTERN.fullmatch(name):
         report.add(Finding(name, "N2", "P1",
                            f"skill folder '{name}' is not kebab-case", rel))
 
@@ -263,14 +264,14 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
         return
 
     # F1: name
-    fm_name = (fm.get("name") or "").strip()
-    if not fm_name:
+    fm_name = fm.get("name") or ""
+    if not fm_name.strip():
         report.add(Finding(name, "F1", "P0", "frontmatter 'name:' must be a non-empty string", rel, 1))
     else:
         if len(fm_name) > 64:
             report.add(Finding(name, "F1", "P0",
                                f"name length {len(fm_name)} > 64 chars", rel, 1))
-        if not NAME_PATTERN.match(fm_name):
+        if not NAME_PATTERN.fullmatch(fm_name):
             report.add(Finding(name, "F1", "P0",
                                f"name '{fm_name}' not kebab-case", rel, 1))
         if any(fm_name == p or fm_name.startswith(p + "-") for p in RESERVED_PREFIXES):
@@ -356,20 +357,20 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
 
     # H1/H2/H3: CAPABILITIES_SUMMARY block + its COLLABORATION_PATTERNS/PROJECT_AFFINITY
     # markers. Presence only — marker *content* quality is Gauge's H1-H3 checklist job.
-    cap_match = CAPABILITIES_SUMMARY_PATTERN.search(text)
+    structural_text = without_fenced_examples(body_text)
+    structural_markup = without_inline_code(structural_text)
+    cap_match = CAPABILITIES_SUMMARY_PATTERN.search(structural_markup)
     if not cap_match:
         report.add(Finding(name, "H1", "P2",
                            "CAPABILITIES_SUMMARY HTML comment block not found", rel, 1))
     else:
-        # The block's true closing tag is "-->" on its own line. A naive
-        # text.find("-->", ...) can match an embedded "-->" inside an
-        # inline-code example within a bullet (e.g. a literal
-        # "`<!-- translator comment -->`" snippet), truncating the scan
-        # window before later markers like COLLABORATION_PATTERNS /
-        # PROJECT_AFFINITY are reached. Anchor on a standalone closing line.
-        closing_match = re.search(r"^\s*-->\s*$", text[cap_match.start():], re.MULTILINE)
-        comment_end = (cap_match.start() + closing_match.start()) if closing_match else -1
-        block = text[cap_match.start():comment_end if comment_end != -1 else len(text)]
+        # Literal comment examples inside code spans are part of the capability
+        # description. Mask them before looking for the actual closing tag.
+        comment_end = structural_markup.find("-->", cap_match.end())
+        if comment_end == -1:
+            report.add(Finding(name, "H1", "P2",
+                               "CAPABILITIES_SUMMARY HTML comment block is not closed", rel, 1))
+        block = structural_text[cap_match.start():comment_end if comment_end != -1 else len(structural_text)]
         if "COLLABORATION_PATTERNS:" not in block:
             report.add(Finding(name, "H2", "P2",
                                "COLLABORATION_PATTERNS marker missing inside "
@@ -384,7 +385,8 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
                                "CAPABILITIES_SUMMARY block", rel, 1))
 
     # ST1: required section headings (>=90% corpus frequency, see REQUIRED_HEADINGS)
-    present_headings = {h.strip() for h in HEADING_PATTERN.findall(body_text)}
+    visible_text = re.sub(r"<!--.*?(?:-->|\Z)", "", structural_markup, flags=re.DOTALL)
+    present_headings = {h.strip() for h in HEADING_PATTERN.findall(visible_text)}
     missing_headings = [
         h for h in REQUIRED_HEADINGS
         if h not in present_headings

@@ -1,865 +1,255 @@
 # Agent Categories
 
-**Purpose:** Full roster of ecosystem agents grouped by category.
+**Purpose:** Full roster of ecosystem agents grouped by their primary responsibility.
 **Read when:** You already narrowed the category and need exact members, neighboring agents, or trigger summaries.
 
-## Contents
-- Category Overview
-- Orchestration (4 agents)
-- Investigation (9 agents)
-- Implementation (6 agents)
-- Testing (3 agents)
-- Security (4 agents)
-- Review (6 agents)
-- Performance (2 agents)
-- Documentation (4 agents)
-- Architecture (7 agents)
-- UX/Design (10 agents)
-- DevOps (7 agents)
-- Modernization (2 agents)
-- Growth (2 agents)
-- Analytics (3 agents)
-- Git/PR (2 agents)
-- Browser (2 agents)
-- Data (2 agents)
-- Strategy (3 agents)
-- Translation (0 agents — absorbed)
-- Incident (1 agent)
-- Communication (1 agent + Scribe recipe)
-- Meta / Tooling (8 agents)
-- Creative / Media (2 agents)
-- AI / ML (2 agents)
-- Category Selection Guide
+For first-pass category selection, read `reference/agent-category-guide.md` first. Role boundaries remain authoritative in `_common/BOUNDARIES.md`.
 
----
+Each global skill appears exactly once below. Secondary capabilities and Recipes belong to their owner; they do not increase the agent count. Project-local extensions have a separate availability gate and are listed after the global roster.
 
-For first-pass category selection, read `reference/agent-category-guide.md` first.
-Use this file when the exact current roster inside a category matters.
+The Agent column gives the installed skill directory name. To open its definition, resolve `<skill-name>/SKILL.md` from the active CLI's global skill root; do not resolve it from Architect's directory or this reference file. Resolve project-local extensions through `_common/PROJECT_LOCAL_SKILLS.md`.
 
 ## Category Overview
 
-| Category | Count | Purpose | Code Generation |
-|----------|-------|---------|-----------------|
-| Orchestration | 4 | Task coordination and decomposition | No |
-| Investigation | 9 | Research and analysis | No |
-| Implementation | 6 | Code creation | Yes |
-| Testing | 3 | Test creation and resilience verification | Yes |
-| Security | 4 | Security analysis and testing | Mixed |
-| Review | 6 | Code review, quality, and compliance | Mixed |
-| Performance | 2 | Performance optimization | Yes |
-| Documentation | 4 | Documentation and UX writing | No (text) |
-| Architecture | 7 | System design and structure | Mixed |
-| UX/Design | 10 | User experience, interface, and persona | Mixed |
-| DevOps | 7 | Infrastructure, CI/CD, and environment | Yes |
-| Modernization | 2 | Technology migration | Mixed |
-| Growth | 2 | SEO/CRO and retention | Mixed |
-| Analytics | 3 | Metrics, experiments, and combinatorial analysis | Mixed |
-| Git/PR | 2 | Version control workflows | No |
-| Browser | 2 | Browser automation | Yes |
-| Data | 2 | Data pipelines and conversion | Mixed |
-| Strategy | 3 | Business strategy, game design, and domain advisory | No |
-| Incident | 1 | Runtime issue detection and auto-repair | Mixed |
-| Communication | 2 | Messaging, specification alignment | Mixed |
-| Meta / Tooling | 8 | Ecosystem tools, auditing, knowledge, project-layer design | Mixed |
-| Creative / Media | 2 | AI-generated visual, audio, and media content | Yes |
-| AI / ML | 2 | AI/ML design, prompt engineering, and reframing | No |
-**Total: 89 agents** (4 absorbed: Cipher → Nexus, Bridge/Accord → Scribe, Oath → Canon)
-
----
-
-## Orchestration (4 agents)
-
-Agents that coordinate other agents or decompose complex tasks.
-
-### Nexus
-- **Role**: Team orchestrator
-- **Input**: User requests
-- **Output**: Agent chain, coordination
-- **Trigger**: Complex multi-agent tasks
-
-### Sherpa
-- **Role**: Task decomposition guide
-- **Input**: Complex tasks
-- **Output**: Atomic steps (15 min each)
-- **Trigger**: Tasks that need breakdown
-
-### Nexus — `deliver` mode
-- **Role**: Scope-adaptive product/MVP delivery Recipe
-- **Input**: Product goals (ambiguous or clear)
-- **Output**: Complete products through a minimum chain sized as small/medium/epic
-- **Trigger**: "Build a product", "full product lifecycle"
-
-### Rally
-- **Role**: Multi-session parallel orchestrator
-- **Input**: Parallelizable task sets
-- **Output**: Claude Code Agent Teams API sessions, merged results
-- **Trigger**: "parallel execution", "multi-session", "concurrent tasks"
-
-**Category Characteristics:**
-- Never write code directly
-- Coordinate other agents or external sessions
-- Manage workflows and product lifecycle
-- Track progress
-
----
-
-## Investigation (9 agents)
-
-Agents that research, analyze, and propose without writing code.
-
-> **Note:** Cipher (intent decoder) was absorbed into Nexus.
-
-### Scout
-- **Role**: Bug investigator
-- **Input**: Bug reports
-- **Output**: Root cause analysis, fix locations
-- **Trigger**: "investigate", "find cause", "bug"
-
-### Spark
-- **Role**: Feature proposer
-- **Input**: Feature ideas
-- **Output**: Feature specifications (Markdown)
-- **Trigger**: "propose", "idea", "new feature"
-
-### Compete
-- **Role**: Competitive and personal-brand positioning analyst
-- **Input**: Competitor names or an engineer's public portfolio
-- **Output**: SWOT analysis, feature matrix, GitHub/blog/LinkedIn/talk positioning
-- **Trigger**: "competitor", "differentiation", "compare", "personal brand", "portfolio"
-
-### Voice
-- **Role**: Feedback analyst
-- **Input**: User feedback data
-- **Output**: Sentiment analysis, insights
-- **Trigger**: "feedback", "NPS", "review analysis"
-
-### Field
-- **Role**: User researcher
-- **Input**: Research objectives
-- **Output**: Interview guides, personas, journey maps
-- **Trigger**: "interview", "persona", "research"
-
-### Triage
-- **Role**: Incident responder
-- **Input**: Incident reports
-- **Output**: Impact assessment, recovery steps
-- **Trigger**: "incident", "outage", "recovery"
-
-### Trail
-- **Role**: Git history investigator
-- **Input**: Regression reports
-- **Output**: Root cause from commit history
-- **Trigger**: "git history", "regression", "when did this break"
-
-### Lens
-- **Role**: Codebase understanding specialist
-- **Input**: Codebase, exploration questions
-- **Output**: Structure analysis, data flow traces, module responsibility maps
-- **Trigger**: "how does this work", "codebase understanding", "trace the flow"
-
-### Trace
-- **Role**: Session replay behavioral analyst
-- **Input**: User session logs, replay data
-- **Output**: Behavioral pattern reports, UX problem narratives
-- **Trigger**: "session replay", "user behavior", "behavioral analysis"
-
-**Category Characteristics:**
-- Read and analyze code, don't write it
-- Produce reports and recommendations
-- Gather context for other agents
-- Identify problems, not solutions
-
----
-
-## Implementation (6 agents)
-
-Agents that write production-quality code.
-
-### Builder
-- **Role**: Production code and external-API craftsman
-- **Input**: Specifications, prototypes, vendor API requirements
-- **Output**: Type-safe production code, including image-generation API integrations
-- **Trigger**: "implement", "production", "type-safe", "image API"
-
-### Forge
-- **Role**: Rapid prototyper
-- **Input**: Feature ideas, UI mockups
-- **Output**: Working prototypes, MVP
-- **Trigger**: "prototype", "quickly", "PoC"
-
-### Artisan
-- **Role**: Frontend specialist
-- **Input**: UI requirements
-- **Output**: React/Vue/Svelte components
-- **Trigger**: "frontend", "component", "React"
-
-### Schema
-- **Role**: Database designer
-- **Input**: Data requirements
-- **Output**: Migrations, DDL, ER diagrams
-- **Trigger**: "schema", "migration", "DB design"
-
-
-### Architect
-- **Role**: Agent meta-designer
-- **Input**: Ecosystem gaps
-- **Output**: SKILL.md, reference/*.md
-- **Trigger**: "new agent", "design agent"
-
-**Category Characteristics:**
-- Write production code
-- Focus on quality and type safety
-- Follow project conventions
-- Generate testable code
-
----
-
-## Testing (3 agents)
-
-Agents that create and manage tests.
-
-### Radar
-- **Role**: Unit/integration test specialist
-- **Input**: Code to test
-- **Output**: Test files, coverage reports
-- **Trigger**: "add tests", "coverage", "edge cases"
-
-### Voyager
-- **Role**: E2E test specialist
-- **Input**: User flows
-- **Output**: Playwright/Cypress tests
-- **Trigger**: "E2E", "end-to-end", "user flow"
-
-### Siege
-- **Role**: Load/chaos/mutation test specialist
-- **Input**: System endpoints, service topology
-- **Output**: Load test scripts, contract tests, chaos experiments, mutation reports
-- **Trigger**: "load test", "chaos engineering", "mutation test", "resilience"
-
-**Category Characteristics:**
-- Write test code
-- Focus on coverage, edge cases, and system resilience
-- CI/CD integration
-- Regression prevention and non-functional verification
-
----
-
-## Security (4 agents)
-
-Agents that handle security analysis and testing.
-
-### Sentinel
-- **Role**: Static security analyst (SAST)
-- **Input**: Source code
-- **Output**: Vulnerability fixes, security patches
-- **Trigger**: "security", "vulnerability", "audit"
-
-### Probe
-- **Role**: Dynamic security tester (DAST)
-- **Input**: Running application
-- **Output**: Penetration test results
-- **Trigger**: "penetration", "dynamic test", "OWASP"
-
-### Breach
-- **Role**: Red team engineer
-- **Input**: Target system, threat model scope
-- **Output**: Attack scenarios, MITRE ATT&CK mappings, Purple Team exercises
-- **Trigger**: "red team", "threat modeling", "attack scenario", "adversarial"
-
-### Vigil
-- **Role**: Detection engineer
-- **Input**: Threat intelligence, log sources
-- **Output**: Sigma/YARA rules, detection coverage maps, hunting hypotheses
-- **Trigger**: "detection rules", "threat hunting", "Sigma", "YARA"
-
-**Category Characteristics:**
-- Security-focused analysis (defensive and offensive)
-- Vulnerability detection and threat modeling
-- Compliance checking
-- Risk mitigation and detection engineering
-
----
-
-## Review (6 agents)
-
-Agents that review and improve code quality, enforce standards, and reduce complexity.
-
-### Judge
-- **Role**: Code reviewer
-- **Input**: PRs, code changes
-- **Output**: Review comments, issue lists
-- **Trigger**: "review", "PR check", "code check"
-
-### Zen
-- **Role**: Refactoring specialist
-- **Input**: Code to improve
-- **Output**: Refactored code (same behavior)
-- **Trigger**: "refactor", "readable", "clean up"
-
-### Sweep
-- **Role**: Dead code remover
-- **Input**: Codebase
-- **Output**: Unused file detection, safe deletions
-- **Trigger**: "unused", "dead code", "cleanup"
-
-### Attest
-- **Role**: Specification compliance verifier
-- **Input**: Specifications + implementation code
-- **Output**: Compliance report, BDD scenarios, traceability matrix
-- **Trigger**: "verify against spec", "acceptance criteria", "spec compliance", "BDD scenarios"
-
-### Canon
-- **Role**: Standards, regulatory, and legal-document compliance analyst
-- **Input**: Codebase, target standards, ToS/privacy policy, jurisdiction
-- **Output**: Compliance scores, legal-document gap reports, remediation proposals
-- **Trigger**: "standards compliance", "WCAG audit", "OWASP check", "ToS review", "Tokushoho"
-
-### Void
-- **Role**: YAGNI verifier and complexity reducer
-- **Input**: Code, features, specs, dependencies
-- **Output**: Pruning proposals, scope cut recommendations
-- **Trigger**: "YAGNI", "scope cut", "simplify", "do we need this"
-
-**Category Characteristics:**
-- Quality improvement and complexity reduction
-- Code review automation
-- Best practices and standards enforcement
-- Specification compliance verification (Attest)
-- Standards compliance evaluation (Canon)
-- No feature changes
-
----
-
-## Performance (2 agents)
-
-Agents that optimize application performance.
-
-### Bolt
-- **Role**: Application optimizer
-- **Input**: Slow code/pages
-- **Output**: Optimized code
-- **Trigger**: "slow", "performance", "optimize"
-
-### Tuner
-- **Role**: Database optimizer
-- **Input**: Slow queries
-- **Output**: Query rewrites, indexes
-- **Trigger**: "query", "EXPLAIN", "index"
-
-**Category Characteristics:**
-- Performance measurement
-- Bottleneck identification
-- Optimization implementation
-- Before/after comparison
-
----
-
-## Documentation (4 agents)
-
-Agents that create and maintain documentation and user-facing text.
-
-### Quill
-- **Role**: Documentation writer
-- **Input**: Code, APIs
-- **Output**: JSDoc, TSDoc, README
-- **Trigger**: "document", "add comments", "type definitions"
-
-### Scribe
-- **Role**: Specification writer
-- **Input**: Requirements
-- **Output**: PRD, SRS, HLD, LLD documents
-- **Trigger**: "specification", "design doc", "PRD"
-
-### Canvas
-- **Role**: Diagram creator
-- **Input**: Code, concepts, specs
-- **Output**: Mermaid diagrams, ASCII art, draw.io
-- **Trigger**: "diagram", "visualize", "flowchart"
-
-### Prose
-- **Role**: UX writer
-- **Input**: UI flows, brand voice guidelines
-- **Output**: Microcopy, error messages, onboarding copy, voice & tone guides
-- **Trigger**: "microcopy", "error message", "UX writing", "voice and tone"
-
-**Category Characteristics:**
-- Text generation (not code)
-- API documentation
-- Usage examples
-- Visual representations
-- User-facing copy and content strategy (Prose)
-
----
-
-## Architecture (7 agents)
-
-Agents that design system architecture and repository structure.
-
-### Atlas
-- **Role**: Dependency analyst
-- **Input**: Codebase
-- **Output**: ADR/RFC, dependency maps
-- **Trigger**: "dependency", "architecture", "design"
-
-### Gateway
-- **Role**: API designer
-- **Input**: API requirements
-- **Output**: OpenAPI specs, versioning
-- **Trigger**: "API design", "OpenAPI", "endpoint"
-
-### Scaffold
-- **Role**: Infrastructure designer
-- **Input**: Infrastructure requirements
-- **Output**: Terraform, Docker Compose
-- **Trigger**: "infrastructure", "Terraform", "environment setup"
-
-### Ripple
-- **Role**: Change impact analyzer
-- **Input**: Proposed changes
-- **Output**: Impact assessment, risk evaluation
-- **Trigger**: "impact analysis", "what will break", "change assessment"
-
-### Grove
-- **Role**: Repository structure designer
-- **Input**: Repository, organizational requirements
-- **Output**: Directory designs, docs/ structure, migration plans
-- **Trigger**: "repo structure", "directory layout", "monorepo design"
-
-### Grove — `llm` mode
-- **Role**: LLM-optimized folder structure designer
-- **Input**: Repository, LLM navigation pain points
-- **Output**: Folder hierarchy designs, context-efficient layouts, token optimization reports
-- **Trigger**: "LLM folder structure", "optimize for AI tools", "context efficiency", "CLAUDE.md hierarchy"
-
-### Vector
-- **Role**: Crawl system architect
-- **Input**: Data collection requirements, scale parameters
-- **Output**: Crawl architecture specs, frontier design, compliance subsystem design
-- **Trigger**: "crawl architecture", "distributed crawler", "URL frontier", "web scraping infrastructure"
-
-**Category Characteristics:**
-- System-level design
-- Long-term planning
-- Documentation focus
-- Trade-off analysis
-- Repository structure optimization (Grove)
-
----
-
-## UX/Design (10 agents)
-
-Agents that handle user experience, interface design, persona management, and narrative design.
-
-### Vision
-- **Role**: Creative director
-- **Input**: Design objectives
-- **Output**: Design direction, style guides
-- **Trigger**: "design direction", "redesign", "vision"
-
-### Palette
-- **Role**: UX improver
-- **Input**: UI with usability issues
-- **Output**: Usability improvements
-- **Trigger**: "usability", "cognitive load", "a11y"
-
-
-### Muse
-- **Role**: Design system manager
-- **Input**: Inconsistent UI
-- **Output**: Token application, visual unity
-- **Trigger**: "token", "design system", "dark mode"
-
-### Flow
-- **Role**: Animation specialist
-- **Input**: UI interactions
-- **Output**: CSS/JS animations
-- **Trigger**: "animation", "transition", "hover"
-
-### Echo
-- **Role**: Persona validator
-- **Input**: UI flows
-- **Output**: UX confusion reports
-- **Trigger**: "persona", "validate", "confusion points"
-
-### Vitrine
-- **Role**: Storybook manager
-- **Input**: Components
-- **Output**: CSF 3.0 stories
-- **Trigger**: "Storybook", "story", "catalog"
-
-### Frame
-- **Role**: Figma MCP design bridge
-- **Input**: Figma files via MCP Server
-- **Output**: Structured design context, Code Connect mappings, design system rules
-- **Trigger**: "Figma to code", "design context", "Code Connect"
-
-### Cast
-- **Role**: Persona casting and lifecycle manager
-- **Input**: Diverse data sources (surveys, analytics, interviews)
-- **Output**: Persona registry, persona cards, cross-agent sync formats
-- **Trigger**: "create persona", "persona registry", "persona lifecycle"
-
-### Saga
-- **Role**: Narrative design and use case storyteller
-- **Input**: Product features, user scenarios
-- **Output**: Use case stories, customer journey narratives, product narratives
-- **Trigger**: "use case story", "narrative design", "product narrative"
-
-**Category Characteristics:**
-- User-focused design
-- Visual consistency
-- Accessibility
-- Component documentation
-- Persona management and lifecycle (Cast)
-- Narrative-driven use case design (Saga)
-
----
-
-## DevOps (6 agents)
-
-Agents that handle infrastructure, tooling, observability, and developer environment.
-
-### Builder
-- **Role**: CLI/TUI and developer-environment builder
-- **Input**: CLI requirements, dotfile goals, shell/editor preferences
-- **Output**: CLI tools, terminal UI, zsh/tmux/neovim/ghostty configuration, macOS automation
-- **Trigger**: "CLI", "terminal", "command line", "dotfiles", "AppleScript"
-
-### Gear
-- **Role**: CI/CD optimizer
-- **Input**: Build configs
-- **Output**: Optimized CI/CD, Docker
-- **Trigger**: "CI", "build time", "Docker"
-
-### Launch
-- **Role**: Release manager and PR reporter
-- **Input**: Release requirements or PR history
-- **Output**: Versioning, CHANGELOG, release notes, weekly/monthly engineering reports
-- **Trigger**: "release", "version", "CHANGELOG", "weekly report", "PR metrics"
-
-### Gear — `gha` mode
-- **Role**: GitHub Actions workflow architect
-- **Input**: Workflow requirements, existing CI/CD
-- **Output**: GHA workflows, Composite Actions, Reusable Workflows, security configs
-- **Trigger**: "GHA workflow", "workflow design", "CI security", "pipeline"
-
-### Orbit
-- **Role**: Loop automation script generator and operations specialist
-- **Input**: Loop goals, contract artifacts, state files
-- **Output**: Runner/bootstrap/verify/recover scripts, contract diagnoses, failure classifications
-- **Trigger**: "loop automation", "nexus-autoloop", "loop ops", "runner generation"
-
-### Beacon
-- **Role**: Observability and reliability engineer
-- **Input**: Service topology, SLO requirements
-- **Output**: SLO/SLI designs, tracing configs, alert strategies, dashboards, capacity plans
-- **Trigger**: "SLO", "observability", "distributed tracing", "alert strategy"
-
-**Category Characteristics:**
-- Infrastructure code
-- Automation
-- Developer experience and environment
-- Build optimization
-- Observability and reliability (Beacon)
-
----
-
-## Modernization (1 agent)
-
-Agents that update and modernize codebases. (Modernization scope absorbed into Shift's `detect`/`modernize`/`radar` recipes — see Migration category.)
-
-### Polyglot
-- **Role**: Internationalization specialist
-- **Input**: Hardcoded strings
-- **Output**: i18n implementation
-- **Trigger**: "internationalization", "i18n", "translation"
-
-**Category Characteristics:**
-- Code transformation
-- Compatibility maintenance
-- Gradual migration
-- Risk mitigation
-
----
-
-## Growth (2 agents)
-
-Agents that implement growth features.
-
-### Growth
-- **Role**: SEO/SMO/CRO specialist
-- **Input**: Pages/components
-- **Output**: SEO improvements, meta tags
-- **Trigger**: "SEO", "OGP", "conversion"
-
-### Growth
-- **Role**: Retention strategist
-- **Input**: Churn data
-- **Output**: Retention features
-- **Trigger**: "retention", "engagement", "churn"
-
-**Category Characteristics:**
-- Business metrics focus
-- User engagement
-- Data-driven decisions
-- A/B testing ready
-
----
-
-## Analytics (3 agents)
-
-Agents that handle metrics, experiments, and combinatorial analysis.
-
-### Pulse
-- **Role**: Metrics designer
-- **Input**: KPI requirements
-- **Output**: Tracking events, dashboards
-- **Trigger**: "KPI", "tracking", "dashboard"
-
-### Experiment
-- **Role**: A/B test designer
-- **Input**: Hypotheses
-- **Output**: Experiment designs
-- **Trigger**: "A/B test", "hypothesis", "feature flag"
-
-### Matrix
-- **Role**: Universal combinatorial analyzer
-- **Input**: Multi-dimensional axes and values
-- **Output**: Minimum coverage sets, execution plans, priority rankings
-- **Trigger**: "combination matrix", "coverage analysis", "combinatorial explosion"
-
-**Category Characteristics:**
-- Measurement focus
-- Statistical rigor
-- Hypothesis validation
-- Data pipeline integration
-- Combinatorial analysis across domains (Matrix)
-
----
-
-## Git/PR (1 agent)
-
-Agents that manage version control workflows.
-
-### Guardian
-- **Role**: PR strategist
-- **Input**: Code changes
-- **Output**: Commit structure, branch strategy
-- **Trigger**: "commit", "branch", "PR preparation"
-
-**Category Characteristics:**
-- Git workflow management
-- No code changes
-- Reporting and analysis
-- PR optimization
-
----
-
-## Browser (1 agent)
-
-Agents that automate browser interactions.
-
-### Vector
-- **Role**: Browser automation specialist
-- **Input**: Browser tasks
-- **Output**: Automated actions, screenshots
-- **Trigger**: "browser automation", "scraping", "automate"
-
-**Category Characteristics:**
-- Playwright integration
-- Visual verification
-- Data extraction
-- Task automation
-
----
-
-## Data (2 agents)
-
-Agents that handle data pipelines and transformations.
-
-### Stream
-- **Role**: ETL/ELT designer
-- **Input**: Data requirements
-- **Output**: Pipeline designs, Kafka/Airflow/dbt configs
-- **Trigger**: "ETL", "data pipeline", "data flow"
-
-### Scribe
-- **Role**: Document converter
-- **Input**: Documents in various formats
-- **Output**: Converted documents (Markdown ↔ Word/Excel/PDF/HTML)
-- **Trigger**: "convert", "document format", "export"
-
-**Category Characteristics:**
-- Data transformation
-- Format conversion
-- Pipeline design
-- Quality assurance
-
----
-
-## Strategy (3 agents)
-
-Agents that simulate and plan business strategy, provide domain-specific advisory, or support multi-perspective decision making.
-
-### Magi
-- **Role**: Business strategy simulator
-- **Input**: Financial data, market data, competitor intel, KPIs
-- **Output**: Strategy roadmap, KPI forecast, scenario analysis, risk matrix
-- **Trigger**: "business strategy", "business plan", "SWOT", "simulation", "M&A", "mid-term plan"
-
-### Magi
-- **Role**: Multi-perspective decision and strategy advisor
-- **Input**: Decision context, founder bottleneck, or named figure whose documented thinking should be applied
-- **Output**: Logic/Empathy/Pragmatism analysis, recommendation, pressure test, or attested named-figure lens
-- **Trigger**: "decision", "tradeoff", "Go/No-Go", "what should I focus on", "what would <figure> do"
-
-
-## Translation (0 agents — absorbed)
-
-> **Note:** Bridge and Accord were absorbed into Scribe. Use Scribe's `unified` recipe for cross-functional specification needs including business-technical translation.
-
----
-
-## Incident (1 agent)
-
-Agents that detect, analyze, and auto-repair runtime issues.
-
-### Mend
-- **Role**: Auto-repair agent
-- **Input**: Triage diagnoses, Beacon alerts, known failure patterns
-- **Output**: Runbook execution, staged verification, rollback plans
-- **Trigger**: "auto-repair", "known failure", "runbook execution"
-
-**Category Characteristics:**
-- Runtime issue detection
-- Concurrency analysis
-- Resource management
-- Automated repair with safety tiers (Mend)
-
----
-
-## Communication (1 agent + Scribe recipe)
-
-Agents that design messaging integrations, real-time communication, and cross-functional specification alignment.
-
-### Gateway
-- **Role**: Messaging integration & real-time communication specialist
-- **Input**: Messaging platform requirements, channel specifications, bot requirements
-- **Output**: Channel adapters, webhook handlers, WebSocket servers, bot frameworks
-- **Trigger**: "Build a bot", "Webhook handler", "Real-time chat", "Multi-channel messaging"
-
-### Scribe (`cross-team` recipe)
-- **Role**: Cross-functional specification aligner
-- **Input**: Business/Dev/Design requirements
-- **Output**: Integrated spec packages (L0 Vision → L1 Requirements → L2 Team Details → L3 Acceptance Criteria)
-- **Trigger**: "unified spec", "cross-team alignment", "specification package"
-
-> **Note:** Bridge and Accord were absorbed into Scribe's `unified` specification workflow.
-
-**Category Characteristics:**
-- Messaging platform integration
-- Real-time communication design
-- Bot development patterns
-- Event-driven architecture
-- Cross-functional specification alignment (Scribe `cross-team`)
-
----
-
-## Meta / Tooling (7 agents)
-
-Agents that generate project-specific tooling, audit ecosystem health, curate knowledge, and provide meta-visualization.
-
-### Sigil
-- **Role**: Dynamic project-specific skill generator
-- **Input**: Project codebase, tech stack, conventions
-- **Output**: Claude Code skills (.claude/skills/*.md)
-- **Trigger**: "Generate skills for this project", "Create skill for", "Analyze project and suggest skills"
-
-### Sigil — `blueprint` mode
-- **Role**: Project operating-layer designer (project-scoped analogue of Architect)
-- **Input**: Repository (stack, conventions, recurring tasks, existing .claude/ layer)
-- **Output**: Operating-layer blueprint plus separate artifact tasks for Sigil/Nexus/Orbit/Hone/Grove
-- **Trigger**: "design the project's agents/recipes/workflows", "operating layer for this repo", "project skill suite", "repo task playbooks", "project routing map"
-
-### Darwin
-- **Role**: Ecosystem self-evolution orchestrator
-- **Input**: Git metrics, agent journals, activity logs, Health Scores, UQS
-- **Output**: Ecosystem state report, evolution actions, dynamic affinity overrides
-- **Trigger**: "evolution check", "ecosystem health", "agent fitness"
-
-### Gauge
-- **Role**: SKILL.md normalization auditor
-- **Input**: SKILL.md files
-- **Output**: 16-item compliance scans, fix proposals, best practice reports
-- **Trigger**: "skill audit", "normalize SKILL.md", "compliance scan"
-
-### Hone
-- **Role**: AI CLI configuration and hooks optimizer
-- **Input**: AI CLI configs (~/.codex/, ~/.gemini/, ~/.claude/)
-- **Output**: Before/After config proposals, hook proposals (PreToolUse/PostToolUse/Stop), debug reports
-- **Trigger**: "optimize CLI config", "audit claude settings", "codex config", "hooks", "PreToolUse"
-
-### Lore
-- **Role**: Ecosystem knowledge curator
-- **Input**: Agent journals, activity logs, cross-agent patterns
-- **Output**: Pattern catalogs, best practice propagation, knowledge decay reports
-- **Trigger**: "cross-agent patterns", "knowledge sync", "institutional memory"
-
-**Category Characteristics:**
-- Analyzes project context before generating
-- Generates Micro (10-80 lines) and Full (100-400 lines) skills
-- Does not modify ecosystem agents
-- Complements Architect (ecosystem) with project-specific skills
-- Orchestrates ecosystem-wide evolution (Darwin)
-- Audits and normalizes skill specifications (Gauge)
-- Curates cross-agent institutional knowledge (Lore)
-
----
-
-## Creative / Media (1 agent)
-
-Agents that generate AI-powered visual, audio, and media content.
-
-
-**Category Characteristics:**
-- Generate code that produces creative assets (not assets directly)
-- AI API integration (Gemini, Suno, ElevenLabs, Meshy, etc.)
-- Media pipeline and format optimization
-- Game and content production support
-
----
-
-## AI / ML (3 agents)
-
-Agents that specialize in AI/ML design, prompt engineering, and cognitive reframing.
-
-### Chisel
-- **Role**: Prompt-to-executable-specification translator
-- **Input**: A supplied prompt containing vague wording, persona lines, or contradictory instructions; or (hub-invoked) a Nexus intent contract at the `SPECIFY` phase
-- **Output**: Ambiguity ledger, derived rules, rewritten prompt, unresolved parameters; or a Specified Brief for a chain
-- **Trigger**: "this prompt is vague", "make this prompt explicit", "you are a world-class …", "prompt audit"; `NEXUS_TO_CHISEL_SPECIFY`
-
-### Oracle
-- **Role**: AI/ML design and evaluation specialist
-- **Input**: AI/ML requirements, evaluation needs
-- **Output**: Prompt designs, RAG architectures, evaluation frameworks, MLOps plans
-- **Trigger**: "prompt engineering", "RAG design", "LLM evaluation", "MLOps"
-
-### Flux
-- **Role**: Thinking refraction agent
-- **Input**: Stuck problems, assumptions to challenge
-- **Output**: Reframed problem statements, cross-domain analogies, perspective shifts
-- **Trigger**: "stuck", "reframe", "different angle", "lateral thinking"
-
-**Category Characteristics:**
-- AI/ML domain expertise
-- Prompt engineering and evaluation (system design → Oracle; a supplied prompt's wording → Chisel)
-- Cognitive reframing and problem restructuring (Flux)
-- No code generation (analysis and design focus)
-
----
+| Category | Global skills |
+|----------|---------------|
+| Orchestration | 3 |
+| Investigation | 11 |
+| Implementation | 6 |
+| Testing | 3 |
+| Security | 7 |
+| Review | 6 |
+| Performance | 2 |
+| Documentation | 8 |
+| Architecture | 7 |
+| UX/Design | 9 |
+| DevOps | 4 |
+| Modernization | 3 |
+| Growth | 2 |
+| Analytics | 3 |
+| Git/PR | 1 |
+| Browser | 1 |
+| Data | 1 |
+| Strategy | 2 |
+| Incident | 1 |
+| Meta / Tooling | 6 |
+| Creative / Media | 1 |
+| AI / ML | 3 |
+
+**Total: 90 global skills + 3 project-local extensions.**
+
+Nexus `deliver`, Grove `llm`, Gear `gha`, and Sigil `blueprint` are modes or Recipes of existing skills. Messaging and real-time communication belong to Gateway (Architecture); cross-team specification alignment belongs to Scribe (Documentation); translation belongs to Polyglot (Modernization). These capabilities are not separate agents.
+
+## Orchestration (3 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `nexus` | Orchestrating multi-specialist task chains and scope-adaptive product delivery: classifies intent, selects and executes the minimum viable chain, aggregates results, and verifies acceptance criteria. For multi-domain tasks, build-first delivery, and product lifecycle execution. |
+| `sherpa` | Guiding workflows by decomposing complex tasks (Epics) into Atomic Steps under 15 minutes each, with progress tracking and drift prevention. Use when complex decomposition is needed. |
+| `rally` | Orchestrating multi-session parallel execution via Claude Code Agent Teams API and Codex CLI Subagents — launch, manage, coordinate concurrent tasks. Use when parallel work is needed. |
+
+## Investigation (11 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `scout` | Investigating bugs via root cause analysis, reproduction steps, and impact assessment. Investigation-only — finds why bugs occur and where to fix them, no code. Use when a bug needs RCA before a fix. |
+| `spark` | Proposing new features leveraging existing data/logic as Markdown specifications. Use when brainstorming new features, product planning, or feature proposals are needed. Does not write code. |
+| `compete` | Triggers when researching competitive or professional positioning: market intelligence, engineer brands, profiles, and content strategy. Research and strategy only — not code. |
+| `voice` | Collecting user feedback via NPS surveys, review analysis, sentiment analysis, feedback classification, and insight extraction reports. Use when establishing feedback loops. |
+| `field` | Conducting user research: interview guides, usability test plans, qualitative analysis, persona creation, journey mapping. Use when research design or analysis is needed; complements Echo. |
+| `triage` | Responding to incidents: identifies impact scope, formulates recovery procedures, creates postmortems. Use when incident response or disaster recovery is needed. Delegates fixes to Builder. |
+| `trail` | Investigating git history, analyzing regression root causes, and performing code archaeology. Time-travels through commits to uncover truth. Use for git history investigation. |
+| `lens` | Comprehending and investigating codebases: structure mapping, feature discovery, data flow tracing for 'does X exist?' or 'how does Y work?'. Includes a conversational ask mode. Does not write code. |
+| `trace` | Analyzing session replays, extracting persona-based behavioral patterns, and storytelling UX issues. Reads the 'why' from real user operation logs. Works with Field/Echo for persona validation. |
+| `pdm` | Navigating delivery status read-only: reconciles planned scope (specs/roadmap/PRD) against implemented code for what's built vs left. Not for priority scoring (Rank) or AC conformance (Attest). |
+| `omen` | Enumerating failure modes via pre-mortem analysis. Systematically identifies failure scenarios for plans, designs, and features, scoring them with RPN/AP. Does not write code. |
+
+## Implementation (6 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `builder` | Implementing robust business logic, API integrations, data models, and reproducible AI image-generation code with type safety. Use for production implementation, Gemini image API pipelines, or interactive pair programming. |
+| `forge` | Building rapid prototypes for frontend (UI components/pages) and backend (API mocks, simple servers). Use to validate new features or turn ideas into working demos. Working software over perfection. |
+| `artisan` | Implementing production frontend code for React/Vue/Svelte: hooks design, state management, Server Components, form handling, data fetching. Converts Forge prototypes to production quality. |
+| `schema` | Designing database schemas, migrations, and multi-tenant architecture: RLS, tenant routing, provisioning, quotas, and isolation. Not for query-plan tuning (Tuner). |
+| `pixel` | Generating pixel-accurate HTML/CSS code from image mockups (PNG/JPG/screenshots) and performing visual verification for faithful reproduction. Use when mockup-to-code generation is needed. |
+| `native` | Implementing production iOS/Android/macOS native features (SwiftUI, Compose) and iterating a screen against a reference design. Not for cross-platform RN/Flutter (Port) or web (Artisan). |
+
+## Testing (3 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `radar` | Adding edge-case tests, repairing flaky tests, and improving coverage. Use when test gaps need filling or regressions need guarding. Supports JS/TS, Python, Go, Rust, and Java. |
+| `voyager` | Authoring web and native E2E tests, including Playwright, Appium, XCUITest, device farms, visual regression, and App Store screenshot pipelines. Not for unit/load tests. |
+| `siege` | Verifying system resilience via load testing, contract testing, chaos engineering, and mutation testing. Use for limit verification, non-functional testing, or reliability validation. |
+
+## Security (7 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `sentinel` | Analyzing code statically for security flaws: hardcoded secrets, SQL injection, input validation, security headers, dependency CVEs. Not for runtime exploit checks (Probe) or code review (Judge). |
+| `probe` | Integrating OWASP ZAP/Burp Suite/Nuclei, planning penetration tests, executing DAST, and scanning for vulnerabilities. For runtime vulnerability validation. Complements Sentinel static analysis. |
+| `breach` | Designing red team attack scenarios, threat models, MITRE ATT&CK/OWASP application, Purple Team exercises, and AI/LLM red teaming. Use when adversarial security validation is needed. |
+| `vigil` | Engineering detection rules (Sigma/YARA), detection coverage mapping, threat hunting hypotheses, Purple Team Blue side, Detection-as-Code CI/CD. Use when defensive verification is needed. |
+| `cloak` | Engineering privacy and data governance: PII detection, data flow mapping, consent patterns, GDPR/CCPA-compliant implementation, DPIA. Use when privacy-by-design is needed. |
+| `crypt` | Designing cryptographic architecture: algorithm selection, key management, E2EE, KMS integration, signature verification, TLS. Use when designing crypto protocols or key rotation flows. |
+| `chain` | Auditing skill/plugin/MCP supply chains and live package compromise: manifests, hidden injection, IoC scans, persistence-first eradication, and gated credential rotation. Not for app SAST (Sentinel). |
+
+## Review (6 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `judge` | Reviewing code via multi-engine orchestration (Claude + Codex) on three axes — secure, correct, and lean — shipping only findings worth fixing. Use for PR review or pre-commit. Complements Zen. |
+| `zen` | Refactoring code: variable naming, function extraction, magic number constants, dead code removal. Does not change behavior. Not for bugs/security (Judge), tests (Radar), or features (Builder). |
+| `sweep` | Detecting unnecessary files, unused code, and orphaned files, and proposing safe deletion. Not for removal execution (Builder), repo structure (Grove), or scope cutting (Void). |
+| `attest` | Verifying spec compliance: extracts ACs from specs, adversarially checks conformance, generates BDD scenarios and traceability matrices. Use when impl must be proven to match a PRD/SRS/AC. |
+| `canon` | Assessing standards, regulatory controls, and legal-document coverage with cited evidence and proposed wording. Use for OWASP/WCAG/SOC2/PCI/HIPAA or ToS/privacy/DPA reviews; not legal advice or code fixes. |
+| `void` | Verifying YAGNI, cutting scope, and proposing complexity reductions. A 'subtraction' agent questioning the justification for every feature, dependency, doc, and config. Does not write code. |
+
+## Performance (2 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `bolt` | Optimizing frontend (re-render, memoization, lazy loading) and backend (N+1, indexing, caching, async) performance, plus continuous auto-tuning loops for GC/threadpool/cache/worker settings. |
+| `tuner` | Tuning database queries via EXPLAIN ANALYZE, query plan optimization, index recommendations, and slow query detection. Not for schema/migrations (Schema) or non-DB performance (Bolt). |
+
+## Documentation (8 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `quill` | Adding JSDoc/TSDoc, updating READMEs, replacing any types with proper definitions, and adding high-value comments to complex logic. Use for documentation gaps or type safety. |
+| `scribe` | Authoring standalone and cross-team specifications: PRD/SRS/HLD/LLD, staged L0-L4 unified packages, BDD acceptance criteria, and traceability. Use for technical or multi-audience documentation; not implementation or architecture decisions. |
+| `canvas` | Visualizing code, specs, or context as Mermaid, ASCII, or draw.io diagrams: flowcharts, sequence/state/class/ER, Journey Maps, personas, coverage heatmaps. Use to reverse-document systems visually. |
+| `prose` | Writing user-facing UX text including microcopy, error messages, voice and tone design, onboarding copy, and accessibility text. Use when UX writing or content strategy is needed. |
+| `cue` | Writing and producing product videos: scripts, storyboards, narration, and reproducible Playwright demo recordings. Use for explainers, onboarding, feature walkthroughs, multi-aspect exports, captions, and video quality checks. |
+| `tome` | Converting technical knowledge into durable learning documents and publishable articles. Use for diff-based teaching, decision records, onboarding, note/Zenn/Qiita/dev.to posts, article series, retrospectives, and cross-platform repurposing. |
+| `stage` | Generating slides via Marp, reveal.js, or Slidev, designing narrative arcs, and optimizing conference talks with WPM-calibrated timing. Use when creating or pacing presentations. |
+| `saga` | Designing narratives that tell product and feature use cases as customer-centric stories. Use when customer experience storytelling, scenario stories, or product narratives are needed. |
+
+## Architecture (7 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `atlas` | Analyzing dependencies, circular references, and God Classes; authoring ADRs/RFCs. Use for architecture improvement, module decomposition, and technical debt assessment. |
+| `gateway` | Designing and reviewing APIs: OpenAPI spec generation, versioning strategy, breaking change detection, REST/GraphQL best practices. Use for API design or OpenAPI specs. |
+| `scaffold` | Provisioning infrastructure via cloud IaC (Terraform/OpenTofu/CloudFormation/Pulumi) and local dev environments (Docker Compose, env vars). Use for IaC design or multi-cloud provisioning. |
+| `ripple` | Analyzing pre-change impact across vertical (dependency chains, files) and horizontal (pattern consistency, naming) dimensions. Use to estimate blast radius before a refactor. No code. |
+| `grove` | Designing and auditing repository structure for humans and LLM agents: layouts, monorepos, docs/tests/scripts, progressive disclosure, prompt-cache topology, and safe migrations. |
+| `weave` | Designing workflows and state machines. Use when state transition design, invalid transition detection, Saga patterns, or approval flow design is needed. |
+| `seek` | Designing search engines and vector DBs for full-text, vector, and hybrid retrieval, including permission-aware retrieval for multi-tenant or per-role corpora. Use for search design, index optimization, the RAG retrieval layer, or deciding where ACL filtering belongs in the query path. |
+
+## UX/Design (9 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `vision` | Directing UI/UX creative work — redesigns, new designs, trend application, Design System construction, Muse/Palette/Flow/Forge orchestration. Use for design direction. Offers a co-design pair mode. |
+| `palette` | Improving usability, interaction quality, cognitive load reduction, feedback design, and a11y compliance. Use when improving UX usability or interaction feel. |
+| `muse` | Defining and managing design tokens, applying token systems to existing codebases, building design system foundations. Use for spacing, color, typography, dark mode, cross-platform output. |
+| `flow` | Implementing CSS/JS animations for hover effects, loading states, modal transitions, and gesture interactions. Use for meaningful motion, interaction feedback, or performance-safe animation. |
+| `echo` | Simulating users to evaluate existing flows and generate synthetic demand: cognitive walkthroughs, feature requests, unmet needs, JTBD, and opportunity trees. Not real-user research. |
+| `vitrine` | Authoring Storybook stories, component catalogs, and Visual Regression integration (CSF 3.0/Factories, Storybook 10 ESM-only, React Cosmos). Use when building a component catalog. |
+| `frame` | Extracting and structuring design context from Figma via MCP Server for downstream implementation agents. Use for Figma-to-code bridging or Code Connect management. |
+| `cast` | Casting personas: rapid generation from diverse inputs, registry-based persistence and lifecycle, data-driven evolution, inter-agent sync. Not for UI walkthroughs (Echo) or user research (Field). |
+| `atelier` | Orchestrating design-to-implementation pipelines (code to visual to code closed loop), persisting a project design system across agents. Not for a single prototype (Forge) or direction only (Vision). |
+
+## DevOps (4 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `gear` | Managing dependencies, CI/CD, advanced GitHub Actions workflows, containers, secrets, and operational config. Use for build, workflow, or environment work. |
+| `launch` | Planning releases and reporting delivery work from GitHub PR history. Use when versioning, CHANGELOGs, rollout or rollback plans, engineering metrics, retrospectives, or stakeholder reports are needed. |
+| `beacon` | Engineering observability and reliability: SLO/SLI design, distributed tracing, alerting, dashboards, capacity planning, toil automation, reliability review. Use for instrumentation or SLO definition. |
+| `ledger` | Optimizing FinOps and cloud cost: IaC-based estimation, right-sizing, RI/SP recommendations, anomaly detection, budget alerts, AI/GPU workload economics. Use to forecast or cut cloud spend. |
+
+## Modernization (3 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `polyglot` | Implementing i18n and l10n: extracts hardcoded strings to t() functions, integrates Intl API for date/currency/number formatting, manages translation keys, and adds RTL layout support. |
+| `shift` | Orchestrating migrations, upgrades, and modernization across frameworks, libraries, APIs, databases, and dependencies. Generates codemods, applies Strangler Fig, verifies equivalence, plans rollback. |
+| `port` | Designing web-to-iOS/Android porting strategy: feature parity matrices, native architecture maps, phased Strangler-Fig roadmaps. Not for same-language migration (Shift) or native impl (Native). |
+
+## Growth (2 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `growth` | Optimizing SEO (meta/OGP/JSON-LD/headings), SMO (social sharing), CRO (CTA/form/exit-intent), and GEO (AI citation optimization). Use for search ranking, conversion, or AI visibility. |
+| `funnel` | Constructing landing pages from a focused section to a premium multi-stage studio pipeline: structure, copy, conversion, responsive build, craft gates, and launch handoffs. Use when building or optimizing an LP, CTA, conversion flow, or premium launch surface. |
+
+## Analytics (3 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `pulse` | Defining KPIs, tracking events, and dashboards: North Star Metric, funnel and cohort analysis, test-intelligence views. GA4/Amplitude/Mixpanel/PostHog. Use when metrics design is needed. |
+| `experiment` | Designing A/B tests: hypothesis docs, sample size, feature flags, significance analysis, CUPED, SRM detection, switchback experiments. Use when hypothesis validation is needed. |
+| `matrix` | Controlling combinatorial explosion across multi-dimensional axes: minimum coverage sets, execution plans, test/deploy/UX/risk prioritization. Use when scoping multi-axis combinations. |
+
+## Git/PR (1 global skill)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `guardian` | Gatekeeping Git/PR by classifying change essence and recommending granularity, naming, and strategy. Use when PR preparation or commit strategy is needed. |
+
+## Browser (1 global skill)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `vector` | Automating browsers via Playwright and Chrome DevTools for data collection, form interaction, screenshot capture, and network monitoring. Task completion focus (vs Voyager for E2E testing). |
+
+## Data (1 global skill)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `stream` | Designing ETL/ELT pipelines, visualizing data flows, selecting batch/streaming approaches, and architecting Kafka/Airflow/dbt systems. Use when building data pipelines or managing data quality. |
+
+## Strategy (2 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `magi` | Deliberating decisions and founder priorities through multi-perspective, named-expert, and YC-style advisory lenses. Use for verdicts, office hours, or expert critique; not implementation. |
+| `rank` | Quantifying priority by scoring competing items with ICE/RICE/WSJF/MoSCoW/Cost of Delay/Kano. No code. Use to prioritize features/bugs/initiatives or arbitrate Must vs Should at MVP scoping. |
+
+## Incident (1 global skill)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `mend` | Remediating known failure patterns automatically from Triage diagnoses and Beacon alerts: runbooks with safety-tier classification, staged verification, rollback. Use for automated remediation. |
+
+## Meta / Tooling (6 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `sigil` | Designing a repository's project-local operating layer and generating its skills, recipes, workflows, and routing map. Not for global ecosystem agents (Architect) or runtime execution (Nexus). |
+| `architect` | Designing new skill agents via gap analysis, overlap detection, SKILL.md + reference generation, and Nexus integration. Not for task orchestration (Nexus) or format-only audits (Gauge). |
+| `gauge` | Auditing SKILL.md normalization and compliance: scans the 21-item checklist, classifies violations, produces fix snippets. Use when auditing SKILL.md compliance or ecosystem health. |
+| `hone` | Auditing AI CLI configs and designing, configuring, or debugging Claude Code hooks. Use for Codex/agy/Claude Code config reviews, hook lifecycle automation, quality gates, or MCP governance. |
+| `compass` | Navigating the skill ecosystem and guiding onboarding. Lists agents, recommends best fit for tasks. Don't use for task execution (Nexus), agent design (Architect). |
+| `prune` | Cleaning up the skill ecosystem: auditing the agent roster for overlap and inactivity, proposing merges and sunset plans. Propose-only. Not for ecosystem strategy (Darwin) or code YAGNI (Void). |
+
+## Creative / Media (1 global skill)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `ink` | Generating SVG icons/illustrations, designing icon systems, and constructing sprite symbols. Use when vector assets are needed. |
+
+## AI / ML (3 global skills)
+
+| Agent | Primary responsibility and triggers |
+|-------|-------------------------------------|
+| `chisel` | Converting a supplied prompt into an executable specification: detects vague quality/quantity/explanation/style/design/technical/judgment wording, role and persona theater, and self-contradiction, then replaces each with a numeric bound, an observable behavior, or a scorable criterion — with a per-term ledger of what changed and what stayed open. Don't use for AI system design, RAG, or eval harnesses (Oracle), PRD/SRS authoring (Scribe), spec conformance verification (Attest), or SKILL.md normalization (Gauge). |
+| `oracle` | Designing and evaluating AI/ML systems: prompt engineering, RAG design, LLM application patterns, AI safety, evaluation frameworks, MLOps, cost optimization. Use for AI pipelines or eval harnesses. |
+| `flux` | Refracting thinking by challenging assumptions, combining cross-domain knowledge, and shifting perspectives to reframe problems. Use for stuck situations or paradigm shifts. Does not write code. |
+
+## Project-Local Extensions (3)
+
+These extensions are available only when installed in the current project. Check `_common/PROJECT_LOCAL_SKILLS.md` before routing to them; its availability and fallback rules apply. They are not part of the global 90-skill roster.
+
+| Extension | Primary responsibility and triggers |
+|-----------|-------------------------------------|
+| `darwin` | Orchestrating ecosystem self-evolution: lifecycle-phase detection, agent relevance, cross-agent knowledge synthesis, evolution proposals. Use when auditing skill-ecosystem health or fitness. |
+| `lore` | Curating cross-agent knowledge and institutional memory: extracts patterns from agent journals into METAPATTERNS.md, detects knowledge decay, propagates best practices. Use for memory curation. |
+| `orbit` | Running autonomous loops for nexus-autoloop. Generates script sets from goals, designs operation contracts, audits live loops, and recovers state — runners that complete reliably. |
 
 ## Category Selection Guide
 
-For first-pass category choice, use `reference/agent-category-guide.md`.
-Return to this file only when the exact roster inside the chosen category matters.
+For first-pass category choice, use `reference/agent-category-guide.md`. Return to this file when the exact roster inside the chosen category matters. Read the named skill before choosing its workflow or interpreting a secondary capability.

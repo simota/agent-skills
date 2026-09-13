@@ -6,8 +6,11 @@
 ```bash
 # Install
 npm install --save-dev webpack-bundle-analyzer
+```
 
-# Add to webpack config
+Add the plugin to the existing webpack configuration:
+
+```javascript
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
@@ -15,8 +18,12 @@ module.exports = {
     new BundleAnalyzerPlugin()
   ]
 };
+```
 
-# Or run standalone
+Or generate webpack statistics and run the standalone analyzer:
+
+```bash
+npx webpack --profile --json > stats.json
 npx webpack-bundle-analyzer stats.json
 ```
 

@@ -68,6 +68,7 @@ import sys
 from pathlib import Path
 
 import _corpus
+from _markdown import without_fenced_examples
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 COMMON = REPO_ROOT / "_common"
@@ -81,10 +82,10 @@ MAX_HOPS = 3
 DIRECT_DEPTH = 1
 
 #: Backtick-quoted references to markdown documents, e.g. `_common/HANDOFF.md`.
-TICKED_MD = re.compile(r"`([A-Za-z0-9_~.][A-Za-z0-9_./~-]*\.md)`")
+TICKED_MD = re.compile(r"`([A-Za-z0-9_~.][A-Za-z0-9_./~-]*\.md)(?:#[^`\s]*)?`")
 
 #: Backtick-quoted references to any file this repository could own.
-TICKED_ANY = re.compile(r"`([A-Za-z0-9_~.][A-Za-z0-9_./~-]*\.(?:md|py|ya?ml|json))`")
+TICKED_ANY = re.compile(r"`([A-Za-z0-9_~.][A-Za-z0-9_./~-]*\.(?:md|py|ya?ml|json))(?:#[^`\s]*)?`")
 
 #: Markdown link targets, e.g. [`token-economy.py`](scripts/token-economy.py).
 MD_LINK = re.compile(r"\]\(([A-Za-z0-9_.][A-Za-z0-9_./-]*\.(?:md|py|ya?ml|json))(?:#[^)\s]*)?\)")
@@ -113,14 +114,16 @@ def read(path: Path) -> str:
 
 
 def exists(path: Path) -> bool:
-    """Whether `path` is there. An unverifiable path counts as present.
+    """Whether `path` is a live file. An unverifiable path counts as present.
 
     The agent sandbox denies `stat` on credential-shaped names, so `gear/reference/
     secrets-management.md` raises rather than answering. Reporting an unreadable path
     as missing would make this checker fail on exactly the files it cannot see.
     """
+    if _corpus.is_excluded_path(path, REPO_ROOT):
+        return False
     try:
-        return path.exists()
+        return path.is_file()
     except OSError:
         return True
 
@@ -133,17 +136,7 @@ def is_placeholder(ref: str) -> bool:
 def named_refs(text: str) -> list[tuple[int, str]]:
     """(line number, reference) for every path this document names outside code fences."""
     out: list[tuple[int, str]] = []
-    fence = ""
-    for lineno, line in enumerate(text.splitlines(), 1):
-        marker = re.match(r"^\s*(`{3,}|~{3,})(.*)$", line)
-        if fence:
-            if (marker and marker.group(1)[0] == fence[0]
-                    and len(marker.group(1)) >= len(fence) and not marker.group(2).strip()):
-                fence = ""
-            continue
-        if marker:
-            fence = marker.group(1)
-            continue
+    for lineno, line in enumerate(without_fenced_examples(text).splitlines(), 1):
         for pattern in (TICKED_ANY, MD_LINK):
             for ref in pattern.findall(line):
                 if not is_placeholder(ref):

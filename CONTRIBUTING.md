@@ -24,10 +24,13 @@ AI Agent Skills へのコントリビューションを歓迎します！
 # フォーク後
 git clone https://github.com/YOUR_USERNAME/agent-skills.git
 cd agent-skills
+python3 -m venv .venv
+source .venv/bin/activate
 python3 -m pip install -r requirements-checks.txt
+make check
 ```
 
-検証には Python 3 と Node.js が必要です。`make check` でスキル検証と回帰テストを実行します。
+検証には Python 3 と Node.js が必要です（CI は Python 3.12 / Node.js 22）。`make check` でスキル検証と回帰テストを実行します。`make hooks` でコミット前の自動検証を有効にできます。
 
 ### 新しいエージェントの追加
 

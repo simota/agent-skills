@@ -17,8 +17,8 @@ name it, or when scanning what this skill can consult at all.
 | `reference/data-modeling-anti-patterns.md` | Evaluating EAV, polymorphic relations, denormalization, or temporal design. |
 | `reference/migration-deployment-anti-patterns.md` | Planning a risky migration, zero-downtime rollout, or rollback strategy. |
 | `reference/index-performance-anti-patterns.md` | Reviewing composite indexes, bloat, FK indexes, or index health. |
-| `reference/postgresql18-features.md` | On PostgreSQL 18 (GA 2025-09-25) and need UUIDv7, virtual generated columns (default), temporal `WITHOUT OVERLAPS` / `PERIOD`, `RETURNING OLD.*`/`NEW.*`, B-tree skip scan, async I/O, OAuth, or DDL replication. |
-| `reference/postgresql17-features.md` | On PostgreSQL 17 and need SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, `JSON_QUERY`, `JSON_EXISTS`), `SPLIT`/`MERGE PARTITION`, logical-replication failover, or `pg_createsubscriber`. Legacy reference — see `postgresql18-features.md` for current release. |
+| `reference/postgresql18-features.md` | On PostgreSQL 18 (GA 2025-09-25) and need UUIDv7, virtual generated columns (default), temporal `WITHOUT OVERLAPS` / `PERIOD`, `RETURNING OLD.*`/`NEW.*`, B-tree skip scan, async I/O, OAuth, or logical-replication schema maintenance. |
+| `reference/postgresql17-features.md` | On PostgreSQL 17 and need SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, `JSON_QUERY`, `JSON_EXISTS`), partition maintenance, logical-replication failover, or `pg_createsubscriber`. Legacy reference — see `postgresql18-features.md` for current release. |
 | `reference/multi-tenant-patterns.md` | Designing a multi-tenant schema (database/schema/shared-schema with RLS). |
 | `reference/tenant-architecture-patterns.md` | Selecting isolation, RLS, routing, or noisy-neighbor controls for `tenant` mode. |
 | `reference/tenant-migration.md` | Rebalancing tenants or upgrading isolation level with zero-downtime cutover and rollback. |

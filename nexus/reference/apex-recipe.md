@@ -240,7 +240,7 @@ Apply `_common/PROJECT_LOCAL_SKILLS.md` before selecting the loop driver. When p
 
 Orbit audits via Codex subagent return values: `convergence_detection`, `deduplication_guard`, `cost-per-completed-task`, `circuit_breaker`. Stuck-loop or budget-exceeded triggers `close_agent` on the running spawn and escalates to user.
 
-**Engine availability check (Phase 5 → 6 handoff prerequisite):** Orbit verifies Codex CLI is reachable, `agents.max_depth ≥ 2`, and required subagent tools (`spawn_agent`, `wait_agent`, `send_input`, `resume_agent`, `close_agent`) are permitted before consuming the contract. If unavailable, Orbit **never silently falls back** — Apex's cost and convergence model assumes Codex execution, and a silent swap invalidates the budget envelope the run was authorized against. It enters the degradation protocol instead.
+**Engine availability check (Phase 5 → 6 handoff prerequisite):** Orbit verifies Codex CLI is reachable, spawn capacity/nesting is sufficient under `_common/CODEX_ORCHESTRATION.md` C1, and the required advertised subagent tools are permitted before consuming the contract. If unavailable, Orbit **never silently falls back** — Apex's cost and convergence model assumes Codex execution, and a silent swap invalidates the budget envelope the run was authorized against. It enters the degradation protocol instead.
 
 #### Engine Degradation Protocol (Codex unavailable)
 
@@ -369,7 +369,7 @@ Nexus AUTORUN apex goal="<feature description>"
                                                     → frame? → forge → echo
      [Risk Gate]             omen ‖ ripple ‖ echo   └─ No-Go → originating phase (4 or 5-track)
   ── Phase 6 Implementation Loop (engine = Codex CLI) ─
-  → [engine_check] codex.available ∧ agents.max_depth≥2 ∧ subagent_tools_permitted
+  → [engine_check] codex.available ∧ codex.spawn_capacity_available ∧ subagent_tools_permitted
        └─ NG → Engine Degradation Protocol (confirmed choice; never a silent fallback)
   → orbit(contract = scribe[unified].L3 + omen.mitigations + echo.friction, engine=codex)
        └─ nexus-autoloop emits Codex spawn scripts:

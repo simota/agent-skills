@@ -275,7 +275,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 
 | Agent | Primary Role | Focus | Writes Code |
 |-------|-------------|-------|-------------|
-| **Beacon** | SRE & observability | SLO/SLI, tracing, alerting, dashboards | Yes |
+| **Beacon** | SRE & observability | SLO/SLI, tracing, alerting, dashboards | Never |
 
 ## Specialized
 

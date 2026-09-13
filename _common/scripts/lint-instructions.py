@@ -136,9 +136,15 @@ def check_paths(path: Path, text: str) -> list[tuple[str, str, str]]:
         if ref in seen or "*" in ref or ref.startswith("<"):
             continue
         seen.add(ref)
-        if not (REPO_ROOT / ref).exists():
+        candidate = REPO_ROOT / ref
+        try:
+            within_repo = candidate.resolve().is_relative_to(REPO_ROOT.resolve())
+        except (OSError, RuntimeError):
+            within_repo = False
+        if not within_repo or not candidate.is_file():
             line = text[: m.start()].count("\n") + 1
-            findings.append(("P1", "I2", f"{path.name}:{line} references missing path `{ref}`"))
+            findings.append(("P1", "I2", f"{path.name}:{line} references missing path `{ref}`"
+                             " (must resolve to a file within this repository)"))
     return findings
 
 

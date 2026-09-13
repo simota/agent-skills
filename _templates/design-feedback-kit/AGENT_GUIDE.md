@@ -14,7 +14,7 @@ CAPTURE → ANALYZE (voice ‖ echo ‖ palette) → REVIEW (human, AskUserQuest
 
 ### Step 2 — ANALYZE (the only heavy step)
 Spawn in parallel, then synthesize:
-- **`voice`** — cluster raw feedback into themes; sentiment + frequency. Input: all `feedback-log.md` entries with `status: new`.
+- **`voice`** — cluster raw feedback into themes; sentiment + frequency. Input: all `feedback-log.md` entries with `status: new`, plus unresolved `status: analyzed` entries left below the promotion threshold. Count independent evidence across runs; exclude `promoted` and `rejected` entries from pending promotion candidates.
 - **`echo`** — cognitive walkthrough of the affected flow; emotional-friction score; pinpoint the confusion moment.
 - **`palette`** (optional) — usability/a11y lens on the specific surface.
 
@@ -46,7 +46,7 @@ Scope: <core|frontend|ios|android>
 **Conflict resolution** — if a draft contradicts an existing `accepted` principle (beyond the core-vs-platform delta rule), the human decides at REVIEW: (a) **supersede** — deprecate the old (move to its file's `## Archive`, set `Superseded by:`) and accept the new; (b) **scope-narrow** — keep both, restricting one to a platform/context; or (c) **reject** the draft. Never leave two accepted principles in direct conflict.
 
 ### Step 4 — PROMOTE
-- Append the accepted entry to the correct `principles/*.md` using a kebab-case slug ID (`P-<scope>-<slug>`) — no shared counter, so concurrent promotions never collide.
+- Append the accepted entry to the correct `principles/*.md` using a kebab-case slug ID (`P-<scope>-<slug>`) — check existing IDs and recheck concurrent additions before merging. Reuse an ID only for an approved edit to the same principle; give distinct principles distinct slugs.
 - Add the principle's row to `principles/INDEX.md` (by-tag + by-scope).
 - Mark source feedback `status: promoted` + `Promoted to: P-<scope>-<slug>`.
 - If the principle has a **quantitative** part (spacing, color, type scale, durations), encode it as a design token via `muse` so it's machine-enforceable, and record the token name in the entry's `Token:` field.

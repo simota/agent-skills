@@ -58,7 +58,7 @@ CAPTURE → ANALYZE → REVIEW → PROMOTE → ENFORCE
 ## Kit invariants
 
 - **One {{RULE_NOUN}} = one entry** with a slug ID, testable statement, rationale, tags, source, Do/Don't.
-- **Slug IDs** (`{{RULE_PREFIX}}-CORE-<slug>`, `{{SIGNAL_PREFIX}}-YYYYMMDD-<slug>`) — no shared counter, no collisions.
+- **Slug IDs** (`{{RULE_PREFIX}}-CORE-<slug>`, `{{SIGNAL_PREFIX}}-YYYYMMDD-<slug>`) — check uniqueness before adding and again when merging concurrent work. Add a stable source/context suffix for distinct entries that would share an ID.
 - **Core holds only universals;** context-specific rules are deltas. No two accepted {{RULE_NOUN_PLURAL}} may directly conflict.
 - **Human approval mandatory** in every mode; respect the promotion threshold.
 - **Every {{RULE_NOUN}} traces to evidence** (a `{{SIGNAL_LOG}}` ID; `baseline` only for seeds).

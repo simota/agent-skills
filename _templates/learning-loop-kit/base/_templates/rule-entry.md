@@ -2,11 +2,11 @@
 
 Copy this block into the right layer file during the PROMOTE step.
 
-## ID scheme (collision-free + discoverable)
+## ID scheme (unique + discoverable)
 Use a **kebab-case slug**, not a running number: `{{RULE_PREFIX}}-<LAYER>-<slug>`.
 - e.g. `{{RULE_PREFIX}}-CORE-<slug>`.
-- Slugs never collide on concurrent appends (no shared counter) and read as their own index.
-- If a slug is already taken, the {{RULE_NOUN}} already exists — update it instead of duplicating.
+- Slugs read as their own index; check existing IDs and recheck concurrent additions before merging.
+- If a slug is already taken, compare the statements. Propose an edit when it is the same {{RULE_NOUN}}; use a distinct context suffix for a different one. An ID match alone does not establish semantic equivalence.
 
 ```markdown
 ### {{RULE_PREFIX}}-<LAYER>-<slug> — <one-line imperative title>

@@ -18,10 +18,10 @@ Purpose: load this when selecting or changing `EXEC_CMD`. It defines the non-int
 Orbit runs `EXEC_CMD` through `portable_timeout`:
 
 ```bash
-portable_timeout "${EFFECTIVE_TIMEOUT}" ${EXEC_CMD} 2>&1 | tee -a "${LOOP_DIR}/runner.log"
+portable_timeout "${EFFECTIVE_TIMEOUT}" bash -c "${EXEC_CMD}" 2>&1 | tee -a "${LOOP_DIR}/runner.log"
 ```
 
-Because `EXEC_CMD` is shell-expanded without quoting, the whole command string must already include the binary, flags, and prompt.
+The whole `EXEC_CMD` string is parsed by Bash once, preserving quoted executable paths and multiword prompts. It is trusted operator-authored shell configuration and must never be populated from untrusted task text or model output. Prefer a wrapper script when constructing complex invocations; pass external text as quoted arguments within that wrapper.
 
 Any executor must provide:
 

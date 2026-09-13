@@ -39,10 +39,11 @@ below is a session-local index: assistant records within one session, deduped
 by requestId, ordered by `timestamp`, 0-based.
 
 Findings (each paired with an action via the exit code):
-  P0 TE-INTEGRITY     a genuine anomaly on a BILLED record only (synthetic
-                       interruption placeholders are excluded first, see data
-                       model point 7): a requestId with conflicting usage
-                       across copies, or a billed record with no requestId.
+  P0 TE-INTEGRITY     unreliable accounting data: malformed transcript records,
+                       a billed requestId with conflicting usage across copies,
+                       a billed record with no requestId, or invalid token counts.
+                       Valid synthetic interruption placeholders are excluded
+                       before billing checks (see data model point 7).
   P1 TE-CONCENTRATION any single session > 15% of the window's total cache_read.
   P2 TE-LONGTAIL       turns beyond index 100 (session-local) > 40% of the
                        window's total cache_read.
@@ -138,7 +139,7 @@ def is_synthetic_record(message: dict, reqid: str | None) -> bool:
     if not msgid.startswith("msg_"):
         return True
     usage = message.get("usage")
-    if usage is not None:
+    if isinstance(usage, dict):
         all_zero = (
             usage.get("input_tokens", 0) == 0
             and usage.get("cache_creation_input_tokens", 0) == 0
@@ -177,24 +178,48 @@ def load_turns(project_dir: Path, report: Report) -> tuple[list[Turn], int, int,
     agent_spawns = 0
     skipped_synthetic = 0
 
-    for fp in files:
+    for file_index, fp in enumerate(files, start=1):
         with fp.open(encoding="utf-8") as f:
-            for line in f:
+            for line_number, line in enumerate(f, start=1):
                 line = line.strip()
                 if not line:
                     continue
+                # Ordinal locations diagnose corruption without exposing prompt
+                # text or session filenames in --redact-sessions output.
+                location = f"transcript {file_index}, line {line_number}"
                 try:
                     rec = json.loads(line)
                 except json.JSONDecodeError:
+                    report.add("TE-INTEGRITY", "P0", f"{location}: invalid JSON record")
+                    continue
+                if not isinstance(rec, dict):
+                    report.add("TE-INTEGRITY", "P0", f"{location}: record must be an object")
                     continue
                 if rec.get("type") != "assistant":
                     continue
 
                 message = rec.get("message") or {}
                 reqid = rec.get("requestId")
-                for index, block in enumerate(message.get("content") or []):
+                if not isinstance(message, dict):
+                    report.add("TE-INTEGRITY", "P0", f"{location}: message must be an object")
+                    continue
+                if any(value is not None and not isinstance(value, str)
+                       for value in (reqid, message.get("id"), rec.get("sessionId"),
+                                     rec.get("timestamp"), rec.get("version"))):
+                    report.add("TE-INTEGRITY", "P0", f"{location}: invalid identifier or metadata type")
+                    continue
+                content = message.get("content")
+                if content is None:
+                    content = []
+                if not isinstance(content, (list, str)):
+                    report.add("TE-INTEGRITY", "P0", f"{location}: invalid message content type")
+                    continue
+                for index, block in enumerate(content):
                     if isinstance(block, dict) and block.get("type") == "tool_use" \
                             and block.get("name") == "Agent":
+                        if block.get("id") is not None and not isinstance(block["id"], str):
+                            report.add("TE-INTEGRITY", "P0", f"{location}: invalid Agent tool-use identifier")
+                            continue
                         spawn_key = (reqid, block.get("id") or (message.get("id"), index))
                         if spawn_key not in seen_spawns:
                             seen_spawns.add(spawn_key)
@@ -209,8 +234,17 @@ def load_turns(project_dir: Path, report: Report) -> tuple[list[Turn], int, int,
                     continue
 
                 usage = message.get("usage")
-                if usage is None or reqid is None:
+                if usage is None or not reqid:
                     missing += 1
+                    continue
+                if not isinstance(usage, dict):
+                    report.add("TE-INTEGRITY", "P0", f"{location}: usage must be an object")
+                    continue
+                otd = usage.get("output_tokens_details")
+                if otd is None:
+                    otd = {}
+                if not isinstance(otd, dict):
+                    report.add("TE-INTEGRITY", "P0", f"{location}: output_tokens_details must be an object")
                     continue
 
                 usage_key = (
@@ -218,7 +252,14 @@ def load_turns(project_dir: Path, report: Report) -> tuple[list[Turn], int, int,
                     usage.get("cache_creation_input_tokens", 0),
                     usage.get("cache_read_input_tokens", 0),
                     usage.get("output_tokens", 0),
+                    otd.get("thinking_tokens", 0),
                 )
+                if any(type(value) is not int or value < 0 for value in usage_key):
+                    report.add("TE-INTEGRITY", "P0", f"{location}: token counts must be nonnegative integers")
+                    continue
+                if usage_key[4] > usage_key[3]:
+                    report.add("TE-INTEGRITY", "P0", f"{location}: thinking_tokens exceeds output_tokens")
+                    continue
 
                 if reqid in seen:
                     if seen[reqid][0] != usage_key:
@@ -227,7 +268,6 @@ def load_turns(project_dir: Path, report: Report) -> tuple[list[Turn], int, int,
                                    f"copies: {seen[reqid][0]} vs {usage_key}")
                     continue
 
-                otd = usage.get("output_tokens_details") or {}
                 turn = Turn(
                     session=rec.get("sessionId") or fp.stem,
                     timestamp=rec.get("timestamp") or "",
@@ -746,7 +786,11 @@ def main() -> int:
         return 2
 
     report = Report()
-    turns, missing, agent_spawns, skipped_synthetic = load_turns(project_dir, report)
+    try:
+        turns, missing, agent_spawns, skipped_synthetic = load_turns(project_dir, report)
+    except (OSError, UnicodeError) as error:
+        print(f"error: cannot read transcripts: {error}", file=sys.stderr)
+        return 2
     stats_d = compute(turns)
     sle_d = compute_session_length_economics(turns)
     redact_map = (build_session_redaction({t.session for t in turns})

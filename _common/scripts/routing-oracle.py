@@ -88,6 +88,7 @@ import traceback
 from pathlib import Path
 
 import _corpus
+from _markdown import without_fenced_examples, without_inline_code
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 NEXUS_DIR = REPO_ROOT / "nexus"
@@ -307,6 +308,27 @@ def check_producer_verifier(findings: list[Finding]):
         findings.append(Finding("RO-3", "WARNING", "no bracket-annotated Recipe Hints rows found — producer/verifier check may be stale vs table format"))
 
 
+def markdown_section(content: str, title: str) -> str | None:
+    """Read one level-two section without treating examples or comments as headings."""
+    lines = []
+    found = False
+    visible_text = without_inline_code(without_fenced_examples(content))
+    visible_text = re.sub(r"<!--.*?(?:-->|\Z)",
+                          lambda match: re.sub(r"[^\n]", " ", match.group()),
+                          visible_text, flags=re.DOTALL)
+    visible_lines = visible_text.split("\n")
+    for line, visible in zip(content.splitlines(), visible_lines):
+        if visible.startswith("## "):
+            if found:
+                break
+            if re.match(r"^## " + re.escape(title) + r"(?:\s|$)", visible):
+                found = True
+            continue
+        if found:
+            lines.append(line)
+    return "\n".join(lines) if found else None
+
+
 def check_fallback_field(findings: list[Finding]):
     """RO-4: the NEXUS_COMPLETE template in output-formats.md must carry a
     `Fallback:` line naming the `fallback_taken` field with all three enum
@@ -316,7 +338,8 @@ def check_fallback_field(findings: list[Finding]):
         findings.append(Finding("RO-4", "WARNING", "output-formats.md not found — fallback-field check skipped"))
         return
     content = OUTPUT_FORMATS.read_text(encoding="utf-8")
-    m = re.search(r"## NEXUS_COMPLETE\b.*?```(.*?)```", content, re.DOTALL)
+    section = markdown_section(content, "NEXUS_COMPLETE")
+    m = re.search(r"```(.*?)```", section, re.DOTALL) if section is not None else None
     if not m:
         findings.append(Finding("RO-4", "WARNING", "NEXUS_COMPLETE template block not found — fallback-field check skipped"))
         return
@@ -390,12 +413,10 @@ def check_bare_subcommand_dispatch(findings: list[Finding]):
     if not contested:
         return  # no fixture asserts a bare subcommand must not dispatch — nothing to enforce
 
-    dispatch = re.search(r"^## Subcommand Dispatch$(.*?)^## ", skill_text, re.S | re.M)
-    if not dispatch:
+    section = markdown_section(skill_text, "Subcommand Dispatch")
+    if section is None:
         findings.append(Finding("RO-6", "WARNING", "`## Subcommand Dispatch` section not found in nexus/SKILL.md — bare-subcommand check skipped"))
         return
-    section = dispatch.group(1)
-
     # Require the exception's DEFINITION (a bolded bullet lead-in), not merely a
     # cross-reference to it — a surviving "see the bare-subcommand exception below"
     # must not satisfy the check after the defining bullet has been deleted.
@@ -411,7 +432,8 @@ def check_bare_subcommand_dispatch(findings: list[Finding]):
         return
 
     # The exception's own exempt list must not re-admit a contested token.
-    exempt_clause = re.search(r"\*\*Exempt\*\*[^.]*?:\s*(.+?)(?:\.|$)", section, re.S)
+    exempt_clause = re.search(r"\*\*Exempt(?::\*\*|\*\*[^.\n]*?:)\s*(.+?)(?:\.|$)",
+                              section, re.S)
     if exempt_clause:
         exempt = {t.lower() for t in re.findall(r"`([a-z][a-z0-9-]*)`", exempt_clause.group(1))}
         clashes = sorted(exempt & set(contested))
