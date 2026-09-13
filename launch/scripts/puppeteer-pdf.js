@@ -20,49 +20,62 @@ async function htmlToPdf(inputPath, outputPath) {
     }
   }
   const puppeteer = require('puppeteer');
-  console.log('Launching browser...');
-  const browser = await puppeteer.launch({ headless: true });
+  const destination = path.resolve(outputPath);
+  const workDir = fs.mkdtempSync(path.join(path.dirname(destination), '.puppeteer-pdf.'));
+  const stagedPath = path.join(workDir, 'report.pdf');
   try {
-    const page = await browser.newPage();
-    console.log(`Loading: ${absolutePath}`);
-    await page.goto(pathToFileURL(absolutePath).href, {
-      waitUntil: 'networkidle0',
-      timeout: 30000
-    });
-
-    // Finish fonts and Chart.js animations before printing. This works with
-    // current Puppeteer, which no longer exposes page.waitForTimeout().
-    await page.evaluate(async () => {
-      await document.fonts.ready;
-      const requiredCharts = document.querySelectorAll('canvas[data-chartjs]');
-      if (requiredCharts.length && typeof Chart === 'undefined') {
-        throw new Error('Chart.js failed to load; required report charts are missing');
-      }
-      requiredCharts.forEach(canvas => {
-        if (!Chart.getChart(canvas)) {
-          throw new Error(`Required chart was not initialized: ${canvas.id}`);
-        }
-      });
-      if (typeof Chart !== 'undefined') {
-        Object.values(Chart.instances).forEach(chart => {
-          chart.stop();
-          chart.update('none');
-        });
-      }
-    });
-
-    console.log('Generating PDF...');
-    await page.pdf({
-      path: outputPath,
-      format: 'A4',
-      printBackground: true,
-      margin: { top: '0', bottom: '0', left: '0', right: '0' },
-      preferCSSPageSize: true
-    });
+    console.log('Launching browser...');
+    const browser = await puppeteer.launch({ headless: true });
+    try {
+      await renderPdf(browser, absolutePath, stagedPath);
+    } finally {
+      await browser.close();
+    }
+    // Keep the previous report intact if printing or browser cleanup fails.
+    fs.renameSync(stagedPath, destination);
     console.log(`Done: ${outputPath}`);
   } finally {
-    await browser.close();
+    fs.rmSync(workDir, { recursive: true, force: true });
   }
+}
+
+async function renderPdf(browser, absolutePath, outputPath) {
+  const page = await browser.newPage();
+  console.log(`Loading: ${absolutePath}`);
+  await page.goto(pathToFileURL(absolutePath).href, {
+    waitUntil: 'networkidle0',
+    timeout: 30000
+  });
+
+  // Finish fonts and Chart.js animations before printing. This works with
+  // current Puppeteer, which no longer exposes page.waitForTimeout().
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    const requiredCharts = document.querySelectorAll('canvas[data-chartjs]');
+    if (requiredCharts.length && typeof Chart === 'undefined') {
+      throw new Error('Chart.js failed to load; required report charts are missing');
+    }
+    requiredCharts.forEach(canvas => {
+      if (!Chart.getChart(canvas)) {
+        throw new Error(`Required chart was not initialized: ${canvas.id}`);
+      }
+    });
+    if (typeof Chart !== 'undefined') {
+      Object.values(Chart.instances).forEach(chart => {
+        chart.stop();
+        chart.update('none');
+      });
+    }
+  });
+
+  console.log('Generating PDF...');
+  await page.pdf({
+    path: outputPath,
+    format: 'A4',
+    printBackground: true,
+    margin: { top: '0', bottom: '0', left: '0', right: '0' },
+    preferCSSPageSize: true
+  });
 }
 
 const args = process.argv.slice(2);

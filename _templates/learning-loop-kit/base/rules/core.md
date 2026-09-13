@@ -1,6 +1,6 @@
 # Core {{RULE_NOUN_PLURAL}} (universal)
 
-Binding across all of `{{LAYERS}}`. Delta layers may add context-specific {{RULE_NOUN_PLURAL}} but must not contradict these. Each entry follows `_templates/rule-entry.md`. IDs are slugs (`{{RULE_PREFIX}}-CORE-<slug>`) — see `INDEX.md`.
+Binding across all of `{{LAYERS}}`. Delta layers may add context-specific {{RULE_NOUN_PLURAL}} but must not contradict these. Each entry follows `_templates/rule-entry.md`. IDs use the prefix `{{RULE_PREFIX}}-CORE-` followed by a unique mnemonic — see `INDEX.md`.
 
 > Status legend: `proposed` (awaiting human review — NOT binding) · `accepted` (binding) · `deprecated` (moved to Archive below).
 
@@ -19,7 +19,7 @@ Binding across all of `{{LAYERS}}`. Delta layers may add context-specific {{RULE
 
 ---
 
-<!-- PROMOTE appends new accepted {{RULE_NOUN_PLURAL}} above this line. For each delta layer in {{LAYERS}}, create a sibling file (e.g. frontend.md) with prefix {{RULE_PREFIX}}-<LAYER>-<slug>. -->
+<!-- PROMOTE appends new accepted {{RULE_NOUN_PLURAL}} above this line. For each delta layer in {{LAYERS}}, create a sibling file (e.g. frontend.md), and use {{RULE_PREFIX}}, that uppercase layer, and a unique mnemonic as its ID. -->
 
 ## Archive (deprecated)
 

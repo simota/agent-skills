@@ -151,13 +151,22 @@ class InstallRegressionTests(unittest.TestCase):
         self.assert_ok(self.run_make("hooks"))
         worktree = self.root / "linked worktree"
         self.git("worktree", "add", "--quiet", "--detach", str(worktree))
-        self.stub_command("make", 'printf "%s\\n" "$@" > "$INSTALL_TEST_LOG"')
+        (worktree / "marker.txt").write_text("staged in linked worktree\n")
+        self.git("add", "marker.txt", repo=worktree)
+        self.stub_command(
+            "make", 'printf "%s\\n" "$@" > "$INSTALL_TEST_LOG"\n'
+            'cat "$2/marker.txt" >> "$INSTALL_TEST_LOG"',
+        )
         log = self.root / "hook.log"
         self.env["INSTALL_TEST_LOG"] = str(log)
         hook = self.repo / ".git" / "hooks" / "pre-commit"
         result = subprocess.run([str(hook)], cwd=worktree, env=self.env, capture_output=True, text=True)
         self.assert_ok(result)
-        self.assertEqual(log.read_text().splitlines(), ["-C", str(worktree), "--no-print-directory", "validate"])
+        args = log.read_text().splitlines()
+        self.assertEqual(args[0], "-C")
+        self.assertEqual(args[2:], ["--no-print-directory", "validate", "staged in linked worktree"])
+        self.assertNotEqual(args[1], str(worktree))
+        self.assertFalse(Path(args[1]).exists(), "the index snapshot must be removed")
 
     def test_hooks_respect_core_hooks_path(self):
         self.initialize_git()

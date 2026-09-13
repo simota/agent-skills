@@ -39,7 +39,7 @@ import re
 import sys
 from pathlib import Path
 
-from _markdown import without_fenced_examples
+from _markdown import without_fenced_examples, without_inline_code
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 REGISTER = REPO_ROOT / "_common" / "LESSONS.md"
@@ -64,7 +64,7 @@ INTENTION_PHRASES = (
 
 
 def strip_code(text: str) -> str:
-    return re.sub(r"`[^`]*`", " ", text)
+    return without_inline_code(text)
 
 
 def parse_rows(text: str) -> list[tuple[int, list[str]]]:

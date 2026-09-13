@@ -156,7 +156,7 @@ Each profile sets the Claude Code `skills` field. Use one at a time per workspac
 
 ## Optional global add-ons
 
-The following skills remain globally installed but are excluded from broad domain Packs. Load their dedicated profile only when the named environment or risk surface is active.
+The following dedicated profiles keep specialist work narrowly scoped. `chain` and `canon` also belong to the `security` Pack, and `canon` belongs to `package-gen`; `hone` has no global Pack membership. Load a dedicated profile when the named environment or risk surface is active.
 
 | Profile | Skills | Trigger anchors | Activation boundary |
 |---------|--------|-----------------|---------------------|

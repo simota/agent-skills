@@ -8,7 +8,7 @@ A per-project mechanism that turns **{{SIGNAL_NOUN_PLURAL}}** into durable **{{R
 
 > The {{RULE_NOUN}} files are the contract. {{ARTIFACT_NOUN}}s are evidence. `{{SIGNAL_LOG}}` is the audit trail of *why* each {{RULE_NOUN}} exists.
 
-Generated from `_templates/learning-loop-kit` (base). Config: `<kit-slug>.config.md`.
+Generated from `_templates/learning-loop-kit` (base). Config: `{{KIT_SLUG}}.config.md`.
 
 ---
 
@@ -50,7 +50,7 @@ CAPTURE → ANALYZE → REVIEW → PROMOTE → ENFORCE
 
 ## Install into a project
 
-1. `cp -R <this kit> <project>/{{DOMAIN_DIR}}`
+1. Copy this kit with `cp -RP` into a new `<project>/{{DOMAIN_DIR}}` directory. Before copying, resolve the source kit's `_common` directory to its absolute path (`cd` into it, then `pwd -P`). Recreate the copied `_common` symlink with `ln -sfn`, using that absolute path as its target; relative links break when the kit moves to another directory depth. Preserve the source repository, and update the link if it moves.
 2. Paste `{{DOMAIN_DIR}}/CLAUDE.snippet.md` into the project's `CLAUDE.md` / `AGENTS.md`.
 3. Seed `rules/core.md` with existing conventions, or let the loop populate it.
 4. Run the loop whenever a {{SIGNAL_NOUN}} arrives — see `AGENT_GUIDE.md`.
@@ -58,7 +58,7 @@ CAPTURE → ANALYZE → REVIEW → PROMOTE → ENFORCE
 ## Kit invariants
 
 - **One {{RULE_NOUN}} = one entry** with a slug ID, testable statement, rationale, tags, source, Do/Don't.
-- **Slug IDs** (`{{RULE_PREFIX}}-CORE-<slug>`, `{{SIGNAL_PREFIX}}-YYYYMMDD-<slug>`) — check uniqueness before adding and again when merging concurrent work. Add a stable source/context suffix for distinct entries that would share an ID.
+- **Slug IDs** combine the configured prefix, uppercase layer (rules) or capture date (signals), and a short mnemonic; examples: `{{RULE_PREFIX}}-CORE-validate-input`, `{{SIGNAL_PREFIX}}-20260115-input-validation`. Check uniqueness before adding and again when merging concurrent work. Add a stable source/context suffix for distinct entries that would share an ID.
 - **Core holds only universals;** context-specific rules are deltas. No two accepted {{RULE_NOUN_PLURAL}} may directly conflict.
 - **Human approval mandatory** in every mode; respect the promotion threshold.
 - **Every {{RULE_NOUN}} traces to evidence** (a `{{SIGNAL_LOG}}` ID; `baseline` only for seeds).

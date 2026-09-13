@@ -57,8 +57,8 @@ if [ -L "$$t" ]; then \
   else echo "ERROR   $$t is a symlink to $$l — remove it, then re-run"; exit 1; fi; \
 elif [ -e "$$t" ] && [ ! -d "$$t" ]; then echo "ERROR   $$t exists and is not a directory"; exit 1; fi; \
 mkdir -p "$$t"; \
-if [ "$$(cd "$$t" && pwd -P)" = "$$r" ]; then \
-  echo "ERROR   $$t is this repo itself — move the repo to an external path first"; exit 1; fi; \
+case "$$(cd "$$t" && pwd -P)" in "$$r"|"$$r"/*) \
+  echo "ERROR   $$t is inside this repo — move the repo to an external path first"; exit 1;; esac; \
 nl=0; nk=0; ns=0; np=0; \
 for s in "$$r"/*/; do \
   name=$$(basename "$$s"); d="$$t/$$name"; \
@@ -178,11 +178,20 @@ hooks:
 	  '# its templates, or the check infrastructure changes.' \
 	  'set -e' \
 	  'repo=$$(git rev-parse --show-toplevel)' \
-	  'changed=$$(git diff --cached --name-only -- _common/scripts/ launch/scripts/ launch/templates/ _templates/learning-loop-kit/_scripts/ .github/workflows/ index.html Makefile requirements-checks.txt)' \
+	  'changed=$$(git -C "$$repo" diff --cached --name-only -- _common/scripts/ launch/scripts/ launch/templates/ _templates/learning-loop-kit/_scripts/ .github/workflows/ index.html Makefile requirements-checks.txt)' \
+	  '# Check exactly what will be committed, preserving unstaged and untracked work.' \
+	  'snapshot=$$(python3 -c '\''import tempfile; print(tempfile.mkdtemp(prefix="agent-skills-index."))'\'')' \
+	  'trap '\''rm -rf "$$snapshot"'\'' EXIT' \
+	  'trap '\''exit 129'\'' HUP' \
+	  'trap '\''exit 130'\'' INT' \
+	  'trap '\''exit 143'\'' TERM' \
+	  'git -C "$$repo" checkout-index --all --prefix="$$snapshot/"' \
+	  'unset $$(git -C "$$repo" rev-parse --local-env-vars)' \
 	  'if [ -n "$$changed" ]; then' \
-	  '  exec make -C "$$repo" --no-print-directory check' \
+	  '  make -C "$$snapshot" --no-print-directory check' \
+	  'else' \
+	  '  make -C "$$snapshot" --no-print-directory validate' \
 	  'fi' \
-	  'exec make -C "$$repo" --no-print-directory validate' \
 	  > "$$hook"; \
 	chmod +x "$$hook"; \
 	echo "installed $$hook"

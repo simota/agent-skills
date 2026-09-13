@@ -49,7 +49,7 @@ Pandoc 3.x notes (`pandoc.org/releases.html`):
 Notes:
 - Default timeout is `60s`.
 - Supported methods: `chrome`, `wkhtmltopdf`, `puppeteer`.
-- The script validates file existence, minimum size, and PDF magic number.
+- The script checks the PDF header and end-of-file marker, then publishes the result atomically. Small valid PDFs are allowed; these envelope checks do not replace a full PDF parser.
 
 ### Direct Markdown -> PDF
 
@@ -83,6 +83,6 @@ ASCII fallback is the safest default for client-facing PDF reports.
 |--------|--------|
 | Japanese text is garbled | Use system Japanese fonts and the repo stylesheet |
 | Mermaid does not render | Pre-render diagrams or switch to ASCII |
-| Output file is too small | Treat as failed export and retry with another method |
+| PDF header or end-of-file marker is missing | Treat as failed export and retry with another method |
 | Output is not a valid PDF | Fail the export; do not claim success |
 | CSS layout breaks across pages | Prefer HTML template + stylesheet + Chrome/Puppeteer path |

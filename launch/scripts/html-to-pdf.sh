@@ -109,13 +109,13 @@ run_converter() {
 
 verify_output() {
   [ -f "$PDF_FILE" ] || return 1
-  local size
-  size=$(wc -c < "$PDF_FILE")
-  if [ "$size" -lt 1000 ]; then
-    error "Output file too small ($size bytes)"; return 1
-  fi
   if [ "$(head -c 5 "$PDF_FILE")" != '%PDF-' ]; then
     error "Output is not a PDF file"; return 1
+  fi
+  # A valid short document can be smaller than 1 KB. Check the terminating
+  # marker instead of accepting a large but truncated converter output.
+  if ! tail -c 1024 "$PDF_FILE" | LC_ALL=C grep -Eq '^[[:space:]]*%%EOF[[:space:]]*$'; then
+    error "Output has no PDF end-of-file marker"; return 1
   fi
 }
 

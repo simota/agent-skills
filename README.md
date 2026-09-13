@@ -208,7 +208,7 @@ The active repository surface is therefore **90 global + 3 project-local = 93 di
 
 | Agent | Description | Output |
 |-------|-------------|--------|
-| **Scribe** | _"A specification is a contract between vision and reality."_ - Specification author for PRD/SRS/HLD/LLD and cross-team L0-L3 packages, including implementation checklists, test specifications, and document format conversion (`convert` Recipe) | Specs, design docs |
+| **Scribe** | _"A specification is a contract between vision and reality."_ - Specification author for PRD/SRS/HLD/LLD and cross-team L0-L4 packages (`unified` Recipe), including implementation checklists, test specifications, and document format conversion (`convert` Recipe) | Specs, design docs |
 | **Quill** | _"Code tells computers what to do. Documentation tells humans why."_ - JSDoc/TSDoc additions, README updates, typing `any` to proper type definitions | Documentation |
 | **Tome** | _"Changes are forgotten. Knowledge endures."_ - Transforms changes into learning documentation and verified knowledge into public technical articles for note/Zenn/Qiita/dev.to, including article series and repurposing | Learning docs and technical articles |
 

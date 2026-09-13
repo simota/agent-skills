@@ -15,7 +15,7 @@ Purpose: Use these templates when Launch must generate client-facing Markdown, H
 
 Client reports may use:
 - the implemented baseline estimation from `scripts/generate-report.js`
-- optional refinement layers from `work-hours.md`
+- optional refinement layers from `reference/effort-estimation.md`
 
 Always label the result as an estimate.
 
@@ -68,30 +68,38 @@ Canonical table:
 ```markdown
 | No. | Task | Category | Hours | Period | Status |
 |:---:|------|:--------:|------:|--------|:------:|
-| 1 | OAuth2 support | 🚀 feat | 16.0h | 01/21-01/22 | ✅ Completed |
+| 1 | OAuth2 support | <span class="category-feat">🚀 feat</span> | 16.0h | 01/21-01/22 | <span class="status-complete">✅ Completed</span> |
 ```
+
+For HTML/PDF export with `styles/report-style.css`, preserve these inline HTML spans so the stylesheet can apply category and status colors. CSS does not select cells by their text or emoji. For plain Markdown renderers that remove HTML, use the icon and label alone; the labels remain readable without color.
 
 ### Category icons
 
-| Category | Icon |
-|----------|------|
-| `feat` | `🚀` |
-| `fix` | `🐛` |
-| `refactor` | `🔧` |
-| `docs` | `📝` |
-| `test` | `🧪` |
-| `perf` | `⚡` |
-| `chore` | `📦` |
+| Category | Icon | CSS class |
+|----------|------|-----------|
+| `feat` | `🚀` | `category-feat` |
+| `fix` | `🐛` | `category-fix` |
+| `refactor` | `🔧` | `category-refactor` |
+| `docs` | `📝` | `category-docs` |
+| `test` | `🧪` | `category-test` |
+| `perf` | `⚡` | `category-perf` |
+| `chore` | `📦` | None (default text color) |
 
 ### Status icons
 
-| Status | Icon |
-|--------|------|
-| Completed | `✅` |
-| In progress | `🔄` |
-| Under review | `👀` |
-| Paused | `⏸️` |
-| Not started | `⬜` |
+| Status | Icon | CSS class |
+|--------|------|-----------|
+| Completed | `✅` | `status-complete` |
+| In progress | `🔄` | `status-progress` |
+| Under review | `👀` | `status-review` |
+| Paused | `⏸️` | None (default text color) |
+| Not started | `⬜` | None (default text color) |
+
+For a decorative text divider, use explicit markup so its alignment and color are applied:
+
+```html
+<p class="report-divider" aria-hidden="true">━━━</p>
+```
 
 ## HTML/PDF Packaging
 

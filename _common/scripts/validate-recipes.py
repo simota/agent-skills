@@ -21,7 +21,7 @@ Plus heading integrity:
 
 Usage:
   python3 _common/scripts/validate-recipes.py [--severity warning|error|strict]
-                                              [--changed-only]  # only skills whose SKILL.md changed vs HEAD
+                                              [--changed-only]  # skills with changed or new files
 
 Severity tiers (mirrors lint-frontmatter.py):
   --severity warning  (default)  print findings, exit 0
@@ -41,6 +41,8 @@ import sys
 from pathlib import Path
 
 import _corpus
+from _markdown import markdown_section
+from _recipes import active_text, dispatch_allowlist, recipe_cells, recipe_section, registry_pointer
 
 SKILLS_ROOT = Path(__file__).resolve().parents[2]
 PROJECT_LOCAL_ROOT = SKILLS_ROOT / ".claude" / "skills"
@@ -88,20 +90,28 @@ REC04_REVIEWED = {
 }
 
 
-def changed_skill_names() -> set[str]:
-    """Skill folder names whose SKILL.md changed vs HEAD. Empty set on any git error (fail-open)."""
+def changed_skill_names() -> set[str] | None:
+    """Include changed registries and new skills; a git failure selects the full corpus."""
     try:
-        out = subprocess.run(
-            ["git", "diff", "--name-only", "HEAD"],
+        changed = subprocess.run(
+            ["git", "diff", "--name-only", "-z", "HEAD"],
             cwd=str(SKILLS_ROOT), check=True, capture_output=True, text=True,
-        ).stdout.strip().splitlines()
-    except Exception:
-        return set()
+        ).stdout.split("\0")
+        untracked = subprocess.run(
+            ["git", "ls-files", "--others", "--exclude-standard", "-z"],
+            cwd=str(SKILLS_ROOT), check=True, capture_output=True, text=True,
+        ).stdout.split("\0")
+    except (OSError, subprocess.CalledProcessError) as error:
+        print(f"warning: cannot determine changed skills; validating all skills: {error}",
+              file=sys.stderr)
+        return None
     names = set()
-    for p in out:
-        path = Path(p)
-        if path.name == "SKILL.md" and len(path.parts) >= 2:
-            names.add(path.parts[-2])
+    for value in changed + untracked:
+        parts = Path(value).parts
+        if len(parts) >= 4 and parts[:2] in ((".claude", "skills"), (".agents", "skills")):
+            names.add(parts[2])
+        elif len(parts) >= 2 and not parts[0].startswith(("_", ".")):
+            names.add(parts[0])
     return names
 
 
@@ -123,18 +133,17 @@ def iter_skills(only: set[str] | None = None):
 
 
 def extract_recipes_block(content: str, skill_dir=None) -> str | None:
-    m = re.search(r"^## Recipes\s*\n(.*?)(?=^## |\Z)", content, re.MULTILINE | re.DOTALL)
-    if m is None:
+    block = recipe_section(content)
+    if block is None:
         return None
-    block = m.group(1)
     # A skill whose Recipes table has outgrown the SKILL.md size ceiling may keep
     # the table in a sibling registry file and carry only a dispatch allowlist
     # here (`_common/RECIPES.md` "Externalized registry"). Follow the pointer so
     # the table is validated wherever it lives.
-    if skill_dir is not None and not re.search(r"^\|\s*Recipe\s*\|", block, re.MULTILINE):
-        ptr = re.search(r"`(reference/[a-z0-9-]*recipes?-index\.md)`", block)
+    if skill_dir is not None and not list(recipe_cells(block)):
+        ptr = registry_pointer(block)
         if ptr:
-            target = skill_dir / ptr.group(1)
+            target = skill_dir / ptr
             if target.is_file():
                 return target.read_text(encoding="utf-8")
     return block
@@ -145,20 +154,8 @@ def parse_rows(block: str, errors: list[str] | None = None):
     # columns). The Recipes section may also hold keyword-routing tables whose
     # second cell is a backtick-wrapped subcommand; parsing those produced
     # false-positive R-REC-02 duplicates and inflated R-REC-04 counts.
-    lines = block.splitlines()
     rows = []
-    in_table = False
-    for line in lines:
-        if not line.lstrip().startswith("|"):
-            in_table = False
-            continue
-        cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        if not in_table:
-            if len(cells) >= 2 and "recipe" in cells[0].lower() and "subcommand" in cells[1].lower():
-                in_table = True
-            continue
-        if re.fullmatch(r":?-+:?", cells[0]):
-            continue
+    for cells in recipe_cells(block):
         raw_subcmd = cells[1] if len(cells) >= 2 else ""
         m = re.fullmatch(r"`([^`]+)`", raw_subcmd)
         if m is None and errors is not None:
@@ -172,9 +169,11 @@ def parse_rows(block: str, errors: list[str] | None = None):
 
 def heading_issues(content: str) -> list[str]:
     issues = []
-    has_recipes = re.search(r"^## Recipes\s*$", content, re.MULTILINE) is not None
-    has_dispatch = re.search(r"^## Subcommand Dispatch\s*$", content, re.MULTILINE) is not None
-    decorated = re.findall(r"^## Subcommand Dispatch[^\S\n]+\S.*$", content, re.MULTILINE)
+    content = active_text(content)
+    has_recipes = recipe_section(content) is not None
+    has_dispatch = markdown_section(content, "Subcommand Dispatch") is not None
+    decorated = re.findall(r"^ {0,3}## Subcommand Dispatch[^\S\n]+(?!#+[ \t]*$)\S.*$",
+                           content, re.MULTILINE)
     if has_recipes and not has_dispatch:
         issues.append("H-REC-01: `## Recipes` present but `## Subcommand Dispatch` missing")
     if decorated:
@@ -184,13 +183,12 @@ def heading_issues(content: str) -> list[str]:
 
 def default_dispatches(content: str) -> list[str]:
     """Return valid explicit Default dispatch declarations from Subcommand Dispatch."""
-    section = re.search(r"^## Subcommand Dispatch\s*$\n(.*?)(?=^## |\Z)", content,
-                        re.MULTILINE | re.DOTALL)
+    section = markdown_section(content, "Subcommand Dispatch")
     if section is None:
         return []
     return re.findall(
         r"^\*\*Default dispatch:\*\*\s*`((?:phase|workflow):[A-Za-z][A-Za-z0-9_-]*)`",
-        section.group(1), re.MULTILINE,
+        active_text(section), re.MULTILINE,
     )
 
 
@@ -211,6 +209,25 @@ def validate(skill: str, path: Path) -> tuple[list[str], list[str], list[str]]:
     if not rows:
         errors.append("R-REC-01: `## Recipes` table has no rows")
         return errors, warnings, infos
+
+    source_block = recipe_section(content)
+    if source_block is not None and registry_pointer(source_block) and not list(recipe_cells(source_block)):
+        allowlist = dispatch_allowlist(source_block)
+        expected = {subcmd for _, subcmd, _ in rows}
+        if allowlist is None:
+            errors.append("R-REC-02: external Recipe registry requires a dispatch allowlist")
+        else:
+            actual = set(allowlist)
+            if actual != expected:
+                errors.append("R-REC-02: dispatch allowlist differs from Recipe registry "
+                              f"(missing: {sorted(expected - actual)}, unknown: {sorted(actual - expected)})")
+            if len(allowlist) != len(actual):
+                errors.append("R-REC-02: duplicate subcommands in dispatch allowlist")
+        declared = re.findall(r"Default Recipe:\s*`([^`]+)`", active_text(source_block))
+        defaults = [subcmd for _, subcmd, default in rows if "✓" in default]
+        if declared and declared != defaults:
+            errors.append("R-REC-01: external registry Default Recipe declaration differs "
+                          f"from its table (declared: {declared}, table: {defaults})")
 
     recipe_defaults = sum(1 for _, _, default in rows if "✓" in default)
     dispatch_defaults = len(default_dispatches(content))
@@ -253,14 +270,14 @@ def main() -> int:
     parser.add_argument("--severity", choices=("warning", "error", "strict"),
                         default="warning")
     parser.add_argument("--changed-only", action="store_true",
-                        help="validate only skills whose SKILL.md changed vs HEAD")
+                        help="validate skills with changed or new files, including Recipe registries")
     args = parser.parse_args()
 
     only = None
     if args.changed_only:
         only = changed_skill_names()
-        if not only:
-            print("no changed SKILL.md vs HEAD")
+        if only == set():
+            print("no changed skill files vs HEAD")
             return 0
 
     total = 0

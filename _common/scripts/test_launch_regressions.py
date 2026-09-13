@@ -180,7 +180,7 @@ from pathlib import Path
 args = sys.argv[1:]
 if os.environ.get('CHROME_NO_OUTPUT') != '1':
     output = next(a.split('=', 1)[1] for a in args if a.startswith('--print-to-pdf='))
-    Path(output).write_bytes(b'%PDF-1.7\\n' + b'x' * 1100)
+    Path(output).write_bytes(b'%PDF-1.7\\n' + b'x' * 1100 + b'\\n%%EOF\\n')
 if os.environ.get('CHROME_ARGS'):
     Path(os.environ['CHROME_ARGS']).write_text(json.dumps(args))
 """)
@@ -238,7 +238,7 @@ time.sleep(30)
         self.env["CHROME_NO_OUTPUT"] = "1"
         self.executable("wkhtmltopdf", """import sys
 from pathlib import Path
-Path(sys.argv[-1]).write_bytes(b'%PDF-1.7\\n' + b'x' * 1100)
+Path(sys.argv[-1]).write_bytes(b'%PDF-1.7\\n' + b'x' * 1100 + b'\\n%%EOF\\n')
 """)
         result = self.pdf(self.input, self.output)
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -269,7 +269,7 @@ module.exports.launch = async options => {
     async newPage() { return {
       async goto(url) { log({url}); if (process.env.PDF_FAIL) throw Error('navigation failed'); },
       async evaluate() {},
-      async pdf(options) { log({pdf: options}); }
+      async pdf(options) { log({pdf: options}); fs.writeFileSync(options.path, '%PDF-1.7\\nfixture\\n%%EOF\\n'); }
     }; },
     async close() { log({closed: true}); }
   };

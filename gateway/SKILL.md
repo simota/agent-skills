@@ -150,6 +150,7 @@ Single source of truth for Recipe definitions. Notes carry the scope boundary an
 | API Auth | `auth` | | OAuth 2.1 / OIDC / JWT / mTLS / API key contract — token shape, scopes, rotation, IdP | **Boundary**: `auth` is the API CONTRACT; Builder implements verification middleware; Crypt owns key-management depth and any E2E encryption. | `reference/api-auth-patterns.md` |
 | Rate Limiting | `rate-limit` | | Bucket/window algorithms, per-key / per-tenant / per-route scoping, IETF RateLimit headers | **Cross-link**: Probe (abuse verification), Beacon (observability). | `reference/rate-limit-patterns.md` |
 | Deprecation | `deprecation` | | RFC 8594 Sunset / RFC 9745 Deprecation headers, policy, SDK migration timeline, cutover | Window: 6-12 months public, 90 days internal. **Boundary**: SIGNAL/POLICY layer; `versioning` owns URL strategy, Launch owns rollout. Cross-link: Canon[regulatory] (regulated), Voice (customer comms). | `reference/deprecation-policy.md` |
+| Messaging Integration | `messaging` |  | Design chat-platform adapters, bots, and realtime transports |  | `reference/messaging/channel-adapters.md`, `reference/messaging/webhook-patterns.md`, `reference/messaging/realtime-architecture.md` |
 
 ### Signal Keywords → Recipe
 
@@ -171,7 +172,7 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `idempotency`, `retry`, `duplicate` | `design` (idempotency-key spec) |
 | `gateway`, `API gateway`, `governance` | `design` (gateway architecture) |
 | `webhook`, `HMAC signature`, `event emit`, `DLQ` | `webhook` |
-| Messaging Integration | `messaging` |  | Design chat-platform adapters, bots, and realtime transports |  | `reference/messaging/channel-adapters.md`, `reference/messaging/webhook-patterns.md`, `reference/messaging/realtime-architecture.md` |
+| `messaging`, `chat adapter`, `bot`, `Slack`, `Discord`, `Telegram`, `LINE`, `WebSocket` | `messaging` |
 
 ## Subcommand Dispatch
 
@@ -270,4 +271,3 @@ See `_common/AUTORUN.md` for the protocol (`_AGENT_CONTEXT` input, mode semantic
 ## Nexus Hub Mode
 
 When input contains `## NEXUS_ROUTING`, return via `## NEXUS_HANDOFF` (canonical schema in `_common/HANDOFF.md`).
-

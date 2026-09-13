@@ -128,7 +128,7 @@ REQUIRED_HEADINGS = (
 HEADING_EQUIVALENTS = {
     "Reference Map": ("References",),
 }
-HEADING_PATTERN = re.compile(r"^##\s+(.+)$", re.MULTILINE)
+HEADING_PATTERN = re.compile(r"^ {0,3}##[ \t]+(.+)$", re.MULTILINE)
 
 
 @dataclass
@@ -386,7 +386,14 @@ def lint_skill(skill_dir: Path, report: Report) -> None:
 
     # ST1: required section headings (>=90% corpus frequency, see REQUIRED_HEADINGS)
     visible_text = re.sub(r"<!--.*?(?:-->|\Z)", "", structural_markup, flags=re.DOTALL)
-    present_headings = {h.strip() for h in HEADING_PATTERN.findall(visible_text)}
+    # ATX headings permit up to three spaces of indentation and an optional
+    # whitespace-separated closing hash sequence. Newlines are not whitespace
+    # after the opening marker: a bare `##` cannot turn the next paragraph into
+    # the required section.
+    present_headings = {
+        re.sub(r"[ \t]+#+[ \t]*$", "", heading).strip()
+        for heading in HEADING_PATTERN.findall(visible_text)
+    }
     missing_headings = [
         h for h in REQUIRED_HEADINGS
         if h not in present_headings

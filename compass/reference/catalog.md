@@ -103,7 +103,7 @@ Documentation authoring, visualization, and article writing.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Scribe** | Technical and cross-team specifications | PRD/SRS/HLD/LLD, `cross-team` L0-L3 packages, document format conversion (`convert`) | No |
+| **Scribe** | Technical and cross-team specifications | PRD/SRS/HLD/LLD, `unified` L0-L4 packages, document format conversion (`convert`) | No |
 | **Quill** | Code documentation | JSDoc additions, README updates, fixing `any` types | Mixed |
 | **Prose** | UX writing | Microcopy, error messages, voice and tone | No |
 | **Tome** | Learning material and technical publications | Diff → tutorial conversion, design-decision records, articles for note / Zenn / Qiita / dev.to | No |
@@ -225,7 +225,7 @@ Coordination and communication.
 
 | Agent | Role | Trigger | Code |
 |-------|------|---------|------|
-| **Scribe** (`cross-team`) | Spec alignment | Cross-team Business / Dev / Design specifications | No |
+| **Scribe** (`unified`) | Spec alignment | Cross-team Business / Dev / Design specifications | No |
 
 ## Meta / Tooling (5 global)
 

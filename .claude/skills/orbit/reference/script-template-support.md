@@ -73,7 +73,10 @@ echo "[OK] Created ${LOOP_DIR}/state.env"
 fi
 
 #--- verify.sh (conditional: only when VERIFY_CMD is specified) ---
-VERIFY_CMD="{{VERIFY_CMD}}"
+VERIFY_CMD=$(cat <<'VERIFY_COMMAND'
+{{VERIFY_CMD}}
+VERIFY_COMMAND
+)
 if [[ -n "${VERIFY_CMD}" ]]; then
   cat > "${LOOP_DIR}/verify.sh" <<'VERIFY'
 #!/bin/bash

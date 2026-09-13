@@ -152,7 +152,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 | Agent | Primary Role | Output Type | Writes Code |
 |-------|-------------|------------|-------------|
 | **Quill** | Code documentation | JSDoc/TSDoc, README, type definitions | Yes (docs/types) |
-| **Scribe** | Specification documents and cross-team packages | PRD/SRS/HLD/test specs; `cross-team` L0-L3 refinement | Never |
+| **Scribe** | Specification documents and cross-team packages | PRD/SRS/HLD/test specs; `unified` L0-L4 refinement | Never |
 | **Canvas** | Visualization | Mermaid diagrams, ASCII art, draw.io | Yes (diagrams) |
 | **Saga** | Narrative design & product storytelling | SB7/Pixar/Hero's Journey/JTBD frameworks | Never |
 | **Cue** | Video script, storyboard, and demo production | Demo/explainer/tutorial scripts, narration, Playwright-based recordings | Yes |
@@ -160,7 +160,7 @@ Tokens and secrets must never be reachable from the execution environment where 
 | **Stage** | Presentation slide generation | Marp/reveal.js/Slidev, speaker notes | Yes (slide markdown) |
 
 **Key distinctions:**
-- Code docs (JSDoc, README) → Quill. Spec docs (PRD, SRS) → Scribe. Cross-team specs → Scribe `cross-team`. Diagrams → Canvas
+- Code docs (JSDoc, README) → Quill. Spec docs (PRD, SRS) → Scribe. Cross-team specs → Scribe `unified`. Diagrams → Canvas
 - Product narratives/stories → Saga. Video scripts → Cue. Learning docs from code → Tome. Slides → Stage
 
 ## Architecture & Structure

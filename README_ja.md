@@ -207,7 +207,7 @@ git clone https://github.com/simota/agent-skills.git /path/to/your/skills
 
 | エージェント | 説明 | 出力 |
 |------------|------|------|
-| **Scribe** | _"A specification is a contract between vision and reality."_ - PRD/SRS/HLD/LLDと部門横断L0-L3仕様、実装チェックリスト、テスト仕様書を作成し、ドキュメントフォーマット変換（`convert` Recipe）も担う仕様エージェント | 仕様書・設計書 |
+| **Scribe** | _"A specification is a contract between vision and reality."_ - PRD/SRS/HLD/LLDと部門横断L0-L4仕様（`unified` Recipe）、実装チェックリスト、テスト仕様書を作成し、ドキュメントフォーマット変換（`convert` Recipe）も担う仕様エージェント | 仕様書・設計書 |
 | **Quill** | _"Code tells computers what to do. Documentation tells humans why."_ - JSDoc/TSDoc追加・README更新・any型の型定義化 | ドキュメント |
 | **Tome** | _"Changes are forgotten. Knowledge endures."_ - 変更を学習ドキュメントへ、検証済み知識をnote/Zenn/Qiita/dev.to向け技術記事へ変換。連載管理とcross-platform再利用にも対応 | 学習ドキュメント、技術記事 |
 

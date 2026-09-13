@@ -184,6 +184,7 @@ Single source of truth for Recipe definitions. Behavior depth lives in the "Beha
 | Retry State Machine | `retry` | | Exponential backoff, jitter, max-attempt cap, DLQ terminal state, idempotency contract | Exponential backoff (base × 2^n), jitter (full/equal/decorrelated), max-attempt cap, DLQ as terminal state, retriable-vs-non-retriable classification, idempotency key. Pair with the `schedule` Recipe for cron timing, Beacon for retry-exhaustion alerts. | `reference/retry-state-machine.md` |
 | Timeout / TTL / Deadline | `timeout` | | TTL state design, deadline propagation, grace-period transitions, stuck-state recovery | Per-state timeout from business SLA, deadline propagation (context.deadline), grace-period transitions, stuck-state escape, soft-timeout (warn) vs hard-timeout (abort). Switch to the `schedule` Recipe for cron integration. | `reference/timeout-ttl-design.md` |
 | Compensation Transactions | `compensation` | | Saga compensation per forward step, idempotency keys, compensation-of-compensation, ordering | Per-forward-step compensation; each idempotent, LIFO-ordered by default, handles compensation-of-compensation. Emit compensation table with idempotency keys, ordering, and failure-of-compensation escalation (hand off to Triage). | `reference/compensation-transactions.md` |
+| Schedule Design | `schedule` |  | Design cron, timezone, business-calendar, and backfill behavior | UTC at the boundary, IANA identifiers in storage, a stated policy for DST-ambiguous times, catchup vs skip-forward with an explicit watermark. Runner/queue infra routes to Gear or Scaffold. | `reference/scheduling/cron-patterns.md`, `reference/scheduling/timezone-safety.md`, `reference/scheduling/business-calendar.md` |
 
 ### Signal Keywords → Recipe
 
@@ -201,12 +202,13 @@ For natural-language input without an explicit subcommand. Subcommand match wins
 | `long-running transaction`, `durable workflow`, `engine selection` | `saga` (engine recommendation included) |
 | `AI agent workflow`, `LLM state transitions`, `human-in-the-loop` | `design` (graph-based — LangGraph / Temporal / DBOS) |
 | unclear workflow design request | `design` (default) |
-| Schedule Design | `schedule` |  | Design cron, timezone, business-calendar, and backfill behavior | UTC at the boundary, IANA identifiers in storage, a stated policy for DST-ambiguous times, catchup vs skip-forward with an explicit watermark. Runner/queue infra routes to Gear or Scaffold. | `reference/scheduling/cron-patterns.md`, `reference/scheduling/timezone-safety.md`, `reference/scheduling/business-calendar.md` |
+| `schedule`, `cron`, `timezone`, `business calendar`, `backfill`, `DST` | `schedule` |
 
 ## Subcommand Dispatch
 
 Parse the first token of user input:
 - If it matches a Recipe Subcommand in the Recipes table → activate that Recipe; load only the "Read First" file at the initial step.
+- Otherwise, match against **Signal Keywords → Recipe** above; if a row matches, activate that Recipe.
 - Otherwise → default Recipe (`design` = State Design). Apply normal `CAPTURE → MODEL → VALIDATE → REFINE → HANDOFF` workflow.
 
 Routing rules:
