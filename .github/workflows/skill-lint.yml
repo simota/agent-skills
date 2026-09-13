@@ -1,25 +1,9 @@
 name: skill-lint
 
+# The checks cover references, symlinks, JSON fixtures, and catalog assets as well
+# as Markdown. An extension-specific path filter can silently miss regressions.
 on:
   pull_request:
-    paths:
-      - '**/SKILL.md'
-      - '*/reference/**.md'
-      - '_templates/**.md'
-      - '_common/scripts/lint-frontmatter.py'
-      - '_common/scripts/validate-recipes.py'
-      - '_common/scripts/routing-oracle.py'
-      - '_common/scripts/lint-instructions.py'
-      - '_common/scripts/lint-contracts.py'
-      - '_common/scripts/task-battery-check.py'
-      - '_common/scripts/test_checkers.py'
-      - '_common/scripts/lint-lessons.py'
-      - '_common/scripts/_corpus.py'
-      - 'Makefile'
-      - '_common/**.md'
-      - 'AGENTS.md'
-      - 'CLAUDE.md'
-      - '.github/workflows/skill-lint.yml'
   push:
     branches: [main]
 
@@ -28,73 +12,27 @@ permissions:
 
 jobs:
   lint-frontmatter:
-    name: Frontmatter / structure / size lint
+    name: Corpus validation and regression tests
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2  # need HEAD~1 for --changed-only on PRs
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.12'
 
-      - name: Lint all SKILL.md (warning baseline)
-        # Always run a full scan for visibility. Severity: warning => exit 0.
-        # This surfaces the ecosystem-wide state without blocking merges on legacy issues.
-        run: python3 _common/scripts/lint-frontmatter.py --severity warning
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
 
-      - name: Lint changed SKILL.md (hard fail on P0/P1)
-        # Block changes that introduce or worsen P0/P1 findings in changed files.
-        # Runs on push to main as well as on PRs: this repository commits to main
-        # directly, so a PR-only gate is a gate that never fires on the path actually
-        # used -- an enforcement that exists in the config and not in the history.
-        run: python3 _common/scripts/lint-frontmatter.py --severity error --changed-only
+      - name: Install checker dependencies
+        run: python3 -m pip install -r requirements-checks.txt
 
-      - name: Validate Recipes/Subcommand Dispatch (warning baseline)
-        run: python3 _common/scripts/validate-recipes.py --severity warning
-
-      - name: Validate Recipes/Subcommand Dispatch (changed-only hard fail)
-        # Same reasoning as the step above: not PR-gated.
-        run: python3 _common/scripts/validate-recipes.py --severity error --changed-only
-
-      - name: Routing Oracle (dead-refs, ladder order, producer!=verifier)
-        # Fail-open by design (routing-oracle.py catches its own exceptions and
-        # exits 0 with a warning) — a bug in this checker must never block an
-        # unrelated PR. Full-repo scan every run: routing structural invariants
-        # are global (nexus/ classify flow + chain tables), not per-changed-file.
-        run: python3 _common/scripts/routing-oracle.py --severity error
-
-      - name: Lint instruction files (skill-count drift, dead paths, rule duplication)
-        # AGENTS.md / CLAUDE.md drift is invisible to the SKILL.md-scoped checks above:
-        # a roster change updates skills but leaves the instruction files asserting the
-        # old count. Full-repo scan every run — the roster is a global invariant.
-        run: python3 _common/scripts/lint-instructions.py --severity error
-
-      - name: Lint contract delivery (spine reachability, symlink wiring, orphan contracts)
-        # Whether a contract *can* reach a running agent is a property of the whole
-        # document graph, so this is a full-repo scan: adding a spine contract or
-        # dropping one naming of it changes reachability for skills the PR never
-        # touched. Every spine contract reaches all 90 skills directly today, so both
-        # unreachable and indirect (depth 2+) delivery block — the baseline is clean
-        # and any drop off it is a regression.
-        run: python3 _common/scripts/lint-contracts.py --severity error
-
-      - name: Checker tests (each breaks the repo one way)
-        # A checker with no failing test is indistinguishable from one that
-        # always returns zero. Two shipped that way before this suite existed.
-        run: python3 _common/scripts/test_checkers.py
-
-      - name: Task battery (routing fixtures)
-        # The battery is what `make validate` runs locally; CI running a strict subset of
-        # the pre-commit hook would let a hook-less clone push what the hook would refuse.
-        run: python3 _common/scripts/task-battery-check.py --severity error
-
-      - name: Lint the lessons register (mechanism required, intentions refused)
-        run: python3 _common/scripts/lint-lessons.py --severity error
+      - name: Run all blocking checks and regression tests
+        # A clean CI checkout has no working-tree diff. Full validation catches
+        # committed changes and keeps CI identical to the local check target.
+        run: make check
 
       - name: Contract delivery matrix
-        # Never fails. Prints the depth table so a reachability regression is legible
-        # in the log even when it stays under the blocking threshold.
         run: python3 _common/scripts/lint-contracts.py --report

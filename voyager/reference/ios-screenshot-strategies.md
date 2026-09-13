@@ -115,7 +115,7 @@ func attachDiagnosticBundle(for element: XCUIElement, testCase: XCTestCase) {
 }
 ```
 
-Both attachments land in the same `.xcresult` under the same test — `xcresulttool` extracts them independently by attachment reference (see `reference/ci-integration.md`).
+Both attachments land in the same `.xcresult` under the same test — `xcresulttool` extracts them independently by attachment reference (see `reference/ios-ci-integration.md`).
 
 ## `swift-snapshot-testing` Distinction
 
@@ -153,5 +153,5 @@ Full loop contract, tool-layer selection, and documented failure modes → `nati
 ## Cross-References
 
 - `reference/fastlane-snapshot.md` — the App Store screenshot pipeline that reuses this file's capture APIs inside dedicated `snapshot()` calls.
-- `reference/ci-integration.md` — extracting attached screenshots from `.xcresult` via `xcresulttool` in CI.
+- `reference/ios-ci-integration.md` — extracting attached screenshots from `.xcresult` via `xcresulttool` in CI.
 - `native/reference/agent-visual-loop.md` — agent-in-the-loop screen implementation and visual debugging; consumes this skill's identifier taxonomy as its structural observation channel.

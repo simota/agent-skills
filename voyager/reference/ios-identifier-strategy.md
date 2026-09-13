@@ -146,4 +146,4 @@ Output of the `identifier` recipe. One row per screen; file gaps to Native befor
 ## Cross-References
 
 - `reference/xcuitest-patterns.md` — how Screen Objects consume the identifiers this file designs.
-- `reference/screenshot-strategies.md` — screenshots taken against screens with an incomplete identifier taxonomy still work, but flaky queries upstream of the capture will fail first.
+- `reference/ios-screenshot-strategies.md` — screenshots taken against screens with an incomplete identifier taxonomy still work, but flaky queries upstream of the capture will fail first.

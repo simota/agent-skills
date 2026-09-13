@@ -65,6 +65,7 @@ Rules:
 - `LAST_UPDATED_AT`
 - `ORIGIN_BRANCH` when `BRANCH_ISOLATION` is enabled
 - `ITER_BRANCH` when `BRANCH_ISOLATION` is enabled
+- `LOOP_BASE` (the pinned starting commit used by completion checks, including without branch isolation)
 - any session resume flags
 - `CONTRACT_VERSION` (current: `1.2.0`)
 - `TOTAL_TOKENS` (cumulative token usage across iterations)

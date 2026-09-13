@@ -39,13 +39,14 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPTS = Path("_common/scripts")
 
 #: Excluded from the working copy: `.git` is large and no checker reads it, and
-#: `__pycache__` would shadow edited sources. Nothing else is excluded, and that
-#: is deliberate -- the first draft dropped `.archive/` on the reasoning that
+#: `__pycache__` would shadow edited sources. Interrupted `checker-tests-*`
+#: fixtures are generated copies, not corpus content. No corpus directory is
+#: excluded -- the first draft dropped `.archive/` on the reasoning that
 #: `_corpus.INFRA_DIRS` skips it, and the baseline immediately failed: RO-1
 #: resolves a reference by searching the whole tree, archive included. An
 #: exclusion that changes what a checker sees makes the suite test a repository
 #: nobody has.
-IGNORE = shutil.ignore_patterns(".git", "__pycache__", "*.pyc")
+IGNORE = shutil.ignore_patterns(".git", "__pycache__", "*.pyc", "checker-tests-*")
 
 #: One shared copy for the whole suite. Each test edits and restores; copying
 #: 24MB per test would make the suite slow enough that nobody runs it, which is
@@ -54,11 +55,28 @@ _WORKSPACE: Path | None = None
 _TMP: Path | None = None
 
 
+def copy_repository(source: Path, destination: Path, temporary_root: Path) -> None:
+    """Copy a fixture even when tempfile falls back to a directory in the repo."""
+    excluded_parent = temporary_root.parent.resolve()
+
+    def ignore(directory: str, names: list[str]) -> set[str]:
+        excluded = set(IGNORE(directory, names))
+        if Path(directory).resolve() == excluded_parent:
+            excluded.add(temporary_root.name)
+        return excluded
+
+    shutil.copytree(source, destination, ignore=ignore, symlinks=True)
+
+
 def setUpModule() -> None:
     global _WORKSPACE, _TMP
     _TMP = Path(tempfile.mkdtemp(prefix="checker-tests-"))
     _WORKSPACE = _TMP / "repo"
-    shutil.copytree(REPO_ROOT, _WORKSPACE, ignore=IGNORE, symlinks=True)
+    try:
+        copy_repository(REPO_ROOT, _WORKSPACE, _TMP)
+    except BaseException:
+        shutil.rmtree(_TMP, ignore_errors=True)
+        raise
 
 
 def tearDownModule() -> None:

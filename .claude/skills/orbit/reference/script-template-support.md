@@ -59,7 +59,8 @@ PROGRESS
   echo "[OK] Created ${LOOP_DIR}/progress.md"
 fi
 
-#--- state.env ---
+#--- state.env (preserve an existing checkpoint on bootstrap reruns) ---
+if [[ ! -f "${LOOP_DIR}/state.env" ]]; then
 cat > "${LOOP_DIR}/state.env" <<EOF
 NEXT_ITERATION=1
 LAST_STATUS=READY
@@ -69,6 +70,7 @@ ITER_BRANCH=
 CONTRACT_VERSION=1.2.0
 EOF
 echo "[OK] Created ${LOOP_DIR}/state.env"
+fi
 
 #--- verify.sh (conditional: only when VERIFY_CMD is specified) ---
 VERIFY_CMD="{{VERIFY_CMD}}"
@@ -99,7 +101,7 @@ run_check() {
 echo ""
 TOTAL=$((PASS + FAIL))
 echo "=== Verification: ${PASS}/${TOTAL} passed, ${FAIL} failed ==="
-if [[ "${FAIL}" -gt 0 ]]; then
+if [[ "${TOTAL}" -eq 0 || "${FAIL}" -gt 0 ]]; then
   exit 1
 else
   exit 0
@@ -150,7 +152,7 @@ Usage: `recover.sh [--reset-circuit] [--repin-goal] [--clear-stall] [--migrate] 
 set -euo pipefail
 
 #--- Argument parsing: flags in any order + optional LOOP_DIR positional ---
-LOOP_DIR=".nexus-loop"
+LOOP_DIR="${LOOP_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)}"
 DO_RESET_CIRCUIT=false
 DO_REPIN_GOAL=false
 DO_CLEAR_STALL=false
@@ -173,10 +175,29 @@ CURRENT_CONTRACT_VERSION="1.2.0"
 #--- Preserve resumable fields from existing state.env (branch isolation, version, cost) ---
 ORIGIN_BRANCH=""; ITER_BRANCH=""; CONTRACT_VERSION="${CURRENT_CONTRACT_VERSION}"
 TOTAL_TOKENS=""; TOTAL_API_CALLS=""; ESTIMATED_COST_USD=""
-if [[ -f "${LOOP_DIR}/state.env" ]] && ! grep -qvE '^[A-Z_]+=[A-Za-z0-9_:./ -]*$' "${LOOP_DIR}/state.env"; then
-  # shellcheck disable=SC1091
-  source "${LOOP_DIR}/state.env"
-fi
+# Parse checkpoint data without evaluating shell code or assigning environment keys.
+load_state() {
+  local key value
+  [[ -f "${LOOP_DIR}/state.env" ]] || return 0
+  while IFS='=' read -r key value || [[ -n "${key}" ]]; do
+    case "${key}" in
+      NEXT_ITERATION)
+        [[ "${value}" =~ ^[1-9][0-9]*$ ]] || continue ;;
+      LAST_STATUS)
+        [[ "${value}" =~ ^(READY|CONTINUE|DONE|BLOCKED)$ ]] || continue ;;
+      TOTAL_TOKENS|TOTAL_API_CALLS|ITER_TOKENS|ITER_API_CALLS)
+        [[ "${value}" =~ ^[0-9]+$ ]] || continue ;;
+      ESTIMATED_COST_USD)
+        [[ "${value}" =~ ^[0-9]+([.][0-9]+)?$ ]] || continue ;;
+      CONTRACT_VERSION)
+        [[ "${value}" =~ ^[0-9]+[.][0-9]+[.][0-9]+$ ]] || continue ;;
+      LAST_UPDATED_AT|ORIGIN_BRANCH|ITER_BRANCH|RECOVERED_FROM|LOOP_BASE) ;;
+      *) continue ;;
+    esac
+    printf -v "${key}" '%s' "${value}"
+  done < "${LOOP_DIR}/state.env"
+}
+load_state
 [[ "${DO_MIGRATE}" == "true" ]] && CONTRACT_VERSION="${CURRENT_CONTRACT_VERSION}"
 
 #--- Targeted recovery flags ---
@@ -193,24 +214,30 @@ if [[ "${DO_REPIN_GOAL}" == "true" ]] && [[ -f "${LOOP_DIR}/goal.md" ]]; then
   echo "[OK] goal.md re-pinned — confirm it is the intended baseline (GOAL_DRIFT recovery)"
 fi
 
-#--- Parse latest iteration from progress.md (POSIX Extended Regex — macOS compatible) ---
-LATEST_ITER=$(grep -oE 'Iteration [0-9]+' "${LOOP_DIR}/progress.md" | grep -oE '[0-9]+' | tail -1)
-if [[ -z "${LATEST_ITER}" ]]; then
-  echo "[WARN] No iteration found in progress.md — resetting to 1"
-  LATEST_ITER=0
+# Read only the last iteration section. Free text such as "not completed" is not
+# completion evidence, and earlier DONE sections cannot finish a later iteration.
+LATEST_ITER=0
+RECOVERED_STATUS="CONTINUE"
+if [[ -f "${LOOP_DIR}/progress.md" ]]; then
+  RECOVERED_EVIDENCE=$(awk '
+    /^## Iteration [0-9]+/ {
+      iter=$3; status="CONTINUE"; in_iteration=1
+      if ($NF ~ /^(READY|CONTINUE|DONE|BLOCKED|INTERRUPTED)$/) status=$NF
+      next
+    }
+    /^## / { in_iteration=0; next }
+    in_iteration && /^- (Status|Decision): (READY|CONTINUE|DONE|BLOCKED)$/ { status=$3 }
+    END { print iter+0, (status == "" ? "CONTINUE" : status) }
+  ' "${LOOP_DIR}/progress.md")
+  read -r LATEST_ITER RECOVERED_STATUS <<< "${RECOVERED_EVIDENCE}"
 fi
 
-#--- Determine STATUS from last 20 lines of progress.md ---
-TAIL_CONTENT=$(tail -20 "${LOOP_DIR}/progress.md")
-if echo "${TAIL_CONTENT}" | grep -qiE '(DONE|completed|finished)'; then
-  RECOVERED_STATUS="DONE"
-elif echo "${TAIL_CONTENT}" | grep -qiE '(BLOCKED|FAIL|TOOL_FAILURE)'; then
-  RECOVERED_STATUS="BLOCKED"
+if [[ "${RECOVERED_STATUS}" == "BLOCKED" || "${RECOVERED_STATUS}" == "INTERRUPTED" ]]; then
+  NEXT_ITER=$((LATEST_ITER > 0 ? LATEST_ITER : 1))
+  [[ "${RECOVERED_STATUS}" == "INTERRUPTED" ]] && RECOVERED_STATUS="CONTINUE"
 else
-  RECOVERED_STATUS="CONTINUE"
+  NEXT_ITER=$((LATEST_ITER + 1))
 fi
-
-NEXT_ITER=$((LATEST_ITER + 1))
 echo "[INFO] Latest iteration: ${LATEST_ITER}"
 echo "[INFO] Recovered status: ${RECOVERED_STATUS}"
 echo "[INFO] Next iteration will be: ${NEXT_ITER}"
@@ -223,6 +250,7 @@ LAST_STATUS=${RECOVERED_STATUS}
 LAST_UPDATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 ORIGIN_BRANCH=${ORIGIN_BRANCH:-}
 ITER_BRANCH=${ITER_BRANCH:-}
+LOOP_BASE=${LOOP_BASE:-}
 CONTRACT_VERSION=${CONTRACT_VERSION:-${CURRENT_CONTRACT_VERSION}}
 RECOVERED_FROM=progress_evidence
 EOF
@@ -287,7 +315,7 @@ run_check() {
 echo ""
 TOTAL=$((PASS + FAIL))
 echo "=== Verification: ${PASS}/${TOTAL} passed, ${FAIL} failed ==="
-if [[ "${FAIL}" -gt 0 ]]; then
+if [[ "${TOTAL}" -eq 0 || "${FAIL}" -gt 0 ]]; then
   exit 1
 else
   exit 0

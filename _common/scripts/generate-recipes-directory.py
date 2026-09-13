@@ -20,6 +20,7 @@ SKILLS_ROOT = Path(__file__).resolve().parents[2]
 PROJECT_LOCAL_ROOT = SKILLS_ROOT / ".claude" / "skills"
 OUTPUT = SKILLS_ROOT / "compass" / "reference" / "recipes-directory.md"
 SKIP_DIRS = {"_common", "_templates"}
+KEBAB = re.compile(r"^(?=.{2,20}$)[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 HEADER = """# Recipes Directory
 
@@ -45,26 +46,42 @@ Auto-generated from SKILL.md `## Recipes` tables by `_common/scripts/generate-re
 """
 
 
+def parse_recipe_table(block: str) -> list[tuple[str, bool]]:
+    """Read only Recipe/Subcommand tables, excluding keyword-routing tables."""
+    rows: list[tuple[str, bool]] = []
+    in_table = False
+    for line in block.splitlines():
+        if not line.lstrip().startswith("|"):
+            in_table = False
+            continue
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if not in_table:
+            in_table = len(cells) >= 2 and "recipe" in cells[0].lower() \
+                and "subcommand" in cells[1].lower()
+            continue
+        if re.fullmatch(r":?-+:?", cells[0]):
+            continue
+        raw_subcmd = cells[1] if len(cells) >= 2 else ""
+        match = re.fullmatch(r"`([^`]+)`", raw_subcmd)
+        if match is None or not KEBAB.fullmatch(match.group(1)):
+            raise ValueError(f"invalid Recipe subcommand cell: {raw_subcmd!r}")
+        rows.append((match.group(1), "✓" in cells[2] if len(cells) >= 3 else False))
+    return rows
+
+
 def extract_recipes(content: str, skill_dir: Path | None = None) -> list[tuple[str, bool]]:
     m = re.search(r"^## Recipes\s*\n(.*?)(?=^## |\Z)", content, re.MULTILINE | re.DOTALL)
     if not m:
         return []
     block = m.group(1)
-    rows: list[tuple[str, bool]] = []
-    for row in re.finditer(r"^\|\s*([^|]+?)\s*\|\s*`([^`]+)`\s*\|\s*([^|]*)\s*\|", block, re.MULTILINE):
-        name = row.group(1).strip()
-        if name.lower() in ("recipe", "---") or name.startswith("-"):
-            continue
-        subcmd = row.group(2).strip()
-        is_default = "✓" in row.group(3)
-        rows.append((subcmd, is_default))
+    rows = parse_recipe_table(block)
     if rows or skill_dir is None:
         return rows
     pointer = re.search(r"`(reference/[a-z0-9-]*recipes?-index\.md)`", block)
     if pointer:
         target = skill_dir / pointer.group(1)
         if target.is_file():
-            return extract_recipes(target.read_text(encoding="utf-8"), target.parent)
+            return parse_recipe_table(target.read_text(encoding="utf-8"))
     return rows
 
 
@@ -90,7 +107,11 @@ def main() -> int:
     local_count = 0
     for entry, is_local in iter_skill_dirs():
         skill_md = entry / "SKILL.md"
-        recipes = extract_recipes(skill_md.read_text(encoding="utf-8"), entry)
+        try:
+            recipes = extract_recipes(skill_md.read_text(encoding="utf-8"), entry)
+        except ValueError as error:
+            print(f"error: {skill_md.relative_to(SKILLS_ROOT)}: {error}", file=sys.stderr)
+            return 1
         if not recipes:
             continue
         parts = [f"{sub}★" if is_def else sub for sub, is_def in recipes]

@@ -197,7 +197,7 @@ See `_common/PERSONA_CLUSTER_GUIDE.md` for the Cast / Echo[demand] / Voice / Ech
 
 ### Handoff Patterns
 
-See `reference/handoffs.md` for full handoff templates.
+See `reference/demand-handoffs.md` for full handoff templates.
 
 ---
 

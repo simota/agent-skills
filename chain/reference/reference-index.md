@@ -18,5 +18,5 @@ name it, or when scanning what this skill can consult at all.
 | `reference/supply-chain-malware-eradication.md` | You are producing persistence-first quarantine, verify-clean, credential-rotation, or re-onboarding steps. |
 | `reference/supply-chain-malware-handoffs.md` | You need malware-specific handoff payloads for Triage, Sentinel, Gear, Vigil, or Lore. |
 | `reference/autorun-schema.md` | You are emitting the AUTORUN `_STEP_COMPLETE` block — Chain-specific Output/Next schema. |
-| [`_common/BOUNDARIES.md`](../_common/BOUNDARIES.md) | Role boundaries with Sentinel / Gauge / Hone / Gear are ambiguous |
-| [`_common/OPERATIONAL.md`](../_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |
+| [`_common/BOUNDARIES.md`](_common/BOUNDARIES.md) | Role boundaries with Sentinel / Gauge / Hone / Gear are ambiguous |
+| [`_common/OPERATIONAL.md`](_common/OPERATIONAL.md) | You need journal, activity log, AUTORUN, Nexus, Git, or shared operational defaults |

@@ -25,7 +25,7 @@ SCOPE → CAST → PREFLIGHT → FAN-OUT (parallel subagents) → NORMALIZE → 
 Define the demand-generation target once. All three subagents share the same scope:
 
 - Product / feature surface
-- Generation mode (EXPLORE / DEEP / CHALLENGE / COMPETE / EDGE) per `reference/mode-playbooks.md`
+- Generation mode (EXPLORE / DEEP / CHALLENGE / COMPETE / EDGE) per `reference/demand-mode-playbooks.md`
 - Existing roadmap or assumptions to challenge (if any)
 - Discovery evidence (Voice findings, Trace observations, Field data — if present, for calibration)
 
@@ -35,7 +35,7 @@ Select **at least 3 personas** spanning at least 2 axes of the Persona Diversity
 
 - Prefer Cast registry at `.agents/personas/registry.yaml` if available.
 - When Cast is absent, generate proto-personas internally under AI persona guardrails (`_common/AI_PERSONA_RISKS.md`) and cap their confidence at 0.50.
-- Fill the `PERSONA_CHANNEL` template for each before FAN-OUT (per `reference/persona-embodiment.md`).
+- Fill the `PERSONA_CHANNEL` template for each before FAN-OUT (per `reference/demand-persona-embodiment.md`).
 
 ### 3. PREFLIGHT — engine availability detection (Echo[demand] main context, never delegated)
 
@@ -133,12 +133,12 @@ For every `CANDIDATE-DEMAND / DIVERGENT-VOICE` cluster, the Echo[demand] main co
 1. **Persona-voice authenticity check** — does the `user_voice_verbatim` actually sound like the named persona? Or does it slip into developer/PM language? If inauthentic, mark `REJECTED-VOICE-MISMATCH`.
 2. **Acceptance-criteria specificity check** — are the criteria in user perspective (not implementation perspective)? Vague criteria ("works well") fail; specific behaviors pass.
 3. **Curse-of-knowledge check** — does this demand challenge a likely team assumption? If yes, flag for `Questions for the Team` section.
-4. **Real-data calibration** — if Voice / Trace / Field data is available in the project (e.g., `.agents/voice.md`), cross-check whether the synthetic demand aligns with real signals. Apply the confidence tags from `reference/calibration.md`:
+4. **Real-data calibration** — if Voice / Trace / Field data is available in the project (e.g., `.agents/voice.md`), cross-check whether the synthetic demand aligns with real signals. Apply the confidence tags from `reference/demand-calibration.md`:
    - `[validated]` — synthetic demand matches real Voice/Trace/Field evidence
    - `[supported]` — partial evidence (one source agrees, others silent)
    - `[hypothesis]` — no real-data conflict, no real-data support
    - `[synthetic-only]` — no real-data sources available
-5. **Feasibility-filter check** — confirm no demand was dropped because it "seemed hard to build." Users don't price implementation; feasibility-filtering is forbidden (count must be 0 in the rejection ledger). Aligns with the single-engine self-rejection gate (`reference/patterns.md`).
+5. **Feasibility-filter check** — confirm no demand was dropped because it "seemed hard to build." Users don't price implementation; feasibility-filtering is forbidden (count must be 0 in the rejection ledger). Aligns with the single-engine self-rejection gate (`reference/demand-patterns.md`).
 6. **Mark each as** `VERIFIED-DIVERGENT` (keep with confidence tag), `REJECTED-{reason}` (drop), or `NEEDS-INFO` (escalate — ask the user).
 
 For `UNIVERSAL-DEMAND` and `LIKELY-DEMAND` clusters, apply only the persona-voice authenticity check and the real-data calibration tag. Three engines rarely channel the same persona inauthentically in the same way.
@@ -196,7 +196,7 @@ For each persona below, generate {N=2-4} feature demands in first-person voice. 
 
 # Target
 - Product / feature surface: {scope}
-- Mode bias: {EXPLORE | DEEP | CHALLENGE | COMPETE | EDGE — per `reference/mode-playbooks.md`}
+- Mode bias: {EXPLORE | DEEP | CHALLENGE | COMPETE | EDGE — per `reference/demand-mode-playbooks.md`}
 - Roadmap / assumptions to challenge: {if CHALLENGE mode}
 - Competitor anchor: {if COMPETE mode}
 
@@ -227,7 +227,7 @@ The three subagents return JSON; Echo[demand] main context handles NORMALIZE thr
 | 2 engines fail | Single-engine output; treat every demand as `CANDIDATE-DEMAND`; calibrate all before reporting; flag reduced confidence; loud `synthetic-only` tag |
 | All 3 fail | Abort tri-engine flow; degrade to standard `request` Recipe with the Echo[demand] main context |
 | User explicitly requests single engine | Skip fan-out; use standard `request` Recipe |
-| Fewer than 3 personas available | Multi mode still runs but with the same persona pool — flag persona-representativeness as a risk per `reference/calibration.md` |
+| Fewer than 3 personas available | Multi mode still runs but with the same persona pool — flag persona-representativeness as a risk per `reference/demand-calibration.md` |
 
 ---
 

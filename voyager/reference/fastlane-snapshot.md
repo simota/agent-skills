@@ -27,7 +27,7 @@ MyApp.xcworkspace
 └── Screenshots.xcscheme            ← snapshot scheme (runs ScreenshotTests only)
 ```
 
-- Reuse Page Objects and identifiers from `reference/xcuitest-patterns.md` and `reference/identifier-strategy.md` inside `ScreenshotTests.swift` — do not duplicate query logic.
+- Reuse Page Objects and identifiers from `reference/xcuitest-patterns.md` and `reference/ios-identifier-strategy.md` inside `ScreenshotTests.swift` — do not duplicate query logic.
 - The `Screenshots` scheme's test plan/target membership includes only the screenshot test class(es); the PR-gating scheme excludes them via `-skip-testing:MyAppUITests/ScreenshotTests`.
 
 ## `Voyager[ios]file` Configuration
@@ -105,7 +105,7 @@ func testAppStoreScreenshots() throws {
 ```
 
 - Number-prefix snapshot names (`01`, `02`, ...) so App Store Connect Media Manager and local review both sort them in narrative order.
-- Every `snapshot()` call implicitly captures `XCUIScreen.main.screenshot()` — no additional `XCTAttachment` wiring needed for App Store output; that pattern (`reference/screenshot-strategies.md`) is for regression evidence, a separate concern.
+- Every `snapshot()` call implicitly captures `XCUIScreen.main.screenshot()` — no additional `XCTAttachment` wiring needed for App Store output; that pattern (`reference/ios-screenshot-strategies.md`) is for regression evidence, a separate concern.
 - Drive the app to each state through the same Screen Object methods used elsewhere in the suite — a screenshot test is a thin script on top of the existing Page Object layer, not a new query surface.
 
 ## Status-Bar Override Before Capture
@@ -181,11 +181,11 @@ end
 ## Output Handling And CI Notes
 
 - Raw screenshots (`fastlane/screenshots/`) and `frameit` output are **artifacts, not commits** — upload to an artifact store (CI build artifacts, S3, or a dedicated screenshot branch) and hand the bundle to Launch for App Store Connect submission. Never commit to `main`.
-- Run the `Screenshots` scheme in a separate, non-PR-blocking CI job (nightly, manual dispatch, or pre-release job) — see `reference/ci-integration.md` for the workflow shape and simulator pool considerations.
+- Run the `Screenshots` scheme in a separate, non-PR-blocking CI job (nightly, manual dispatch, or pre-release job) — see `reference/ios-ci-integration.md` for the workflow shape and simulator pool considerations.
 - Pin the fastlane and Xcode versions used to generate a submission's screenshots in the release notes/journal; a later Xcode upgrade can shift status-bar rendering or simulator chrome subtly enough to require a re-capture.
 
 ## Cross-References
 
-- `reference/screenshot-strategies.md` — the underlying `XCTAttachment` / capture API concepts this pipeline builds on.
+- `reference/ios-screenshot-strategies.md` — the underlying `XCTAttachment` / capture API concepts this pipeline builds on.
 - `reference/xcuitest-patterns.md` — Screen Objects and identifiers reused inside `ScreenshotTests.swift`.
-- `reference/ci-integration.md` — wiring the `Screenshots` scheme into a non-blocking CI job.
+- `reference/ios-ci-integration.md` — wiring the `Screenshots` scheme into a non-blocking CI job.

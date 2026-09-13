@@ -60,9 +60,6 @@ INTENTION_PHRASES = (
     "aim to", "strive to", "be mindful", "pay attention", "bear in mind",
 )
 
-#: The register's own table. A row is six pipe-separated cells.
-ROW = re.compile(r"^\|\s*(L\d{3}|L[^|]*?)\s*\|(.+)\|\s*$")
-
 
 def strip_code(text: str) -> str:
     return re.sub(r"`[^`]*`", " ", text)
@@ -71,11 +68,21 @@ def strip_code(text: str) -> str:
 def parse_rows(text: str) -> list[tuple[int, list[str]]]:
     """(line number, cells) for every register row, ignoring the header and rules table."""
     rows = []
+    in_register = False
     for lineno, line in enumerate(text.splitlines(), 1):
+        line = line.strip()
         if not line.startswith("|"):
+            in_register = False
             continue
-        cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        if cells and ID_PATTERN.match(cells[0] or ""):
+        # Remove the boundary pipes individually so an empty first/last cell
+        # stays visible. Escaped pipes belong to their Markdown table cell.
+        cells = [c.strip() for c in re.split(r"(?<!\\)\|", line[1:-1] if line.endswith("|") else line[1:])]
+        if cells == ["ID", "What happened", "F", "Mechanism", "Where", "Added"]:
+            in_register = True
+            continue
+        if all(re.fullmatch(r":?-+:?", cell) for cell in cells):
+            continue
+        if in_register or (cells and ID_PATTERN.fullmatch(cells[0])):
             rows.append((lineno, cells))
     return rows
 
@@ -95,6 +102,9 @@ def check(text: str) -> list[tuple[str, str, str]]:
             findings.append(("P1", "LS-5", f"L{lineno}: row has {len(cells)} cells, expected 6"))
             continue
         ident, what, failure, mechanism, where, added = cells
+
+        if not ID_PATTERN.fullmatch(ident):
+            findings.append(("P1", "LS-5", f"line {lineno}: id {ident!r} must match L###"))
 
         if ident in seen:
             findings.append(("P0", "LS-5", f"line {lineno}: id {ident} reused (first seen line {seen[ident]})"))
@@ -131,10 +141,15 @@ def check(text: str) -> list[tuple[str, str, str]]:
             findings.append(("P1", "LS-3", f"{ident}: no `Where` -- name the file that carries the mechanism"))
         else:
             target = where.strip("`")
-            if not (REPO_ROOT / target).exists():
+            candidate = REPO_ROOT / target
+            try:
+                within_repo = candidate.resolve().is_relative_to(REPO_ROOT.resolve())
+            except (OSError, RuntimeError):
+                within_repo = False
+            if Path(target).is_absolute() or not within_repo or not candidate.is_file():
                 findings.append((
                     "P0", "LS-3",
-                    f"{ident}: mechanism lives at `{target}`, which does not exist -- "
+                    f"{ident}: mechanism lives at `{target}`, which is not a file within this repository -- "
                     f"the mechanism was deleted or moved and the lesson is no longer kept",
                 ))
 

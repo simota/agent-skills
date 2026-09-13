@@ -22,7 +22,7 @@ Key properties:
 | Rule | Detail |
 |------|--------|
 | Length | 2-20 characters (favor brevity — aim for ≤ 12; extend only for unavoidable compound words, e.g. `growth-acceptance`) |
-| Format | kebab-case (lowercase, hyphens only; a leading digit is allowed for established domain terms, e.g. `5whys`, `1on1`) |
+| Format | kebab-case (lowercase alphanumeric segments separated by single hyphens; no leading/trailing or repeated hyphens; a leading digit is allowed for established domain terms, e.g. `5whys`, `1on1`) |
 | Reserved words | `default`, `auto`, `help`, `list` — forbidden as Recipe names |
 | Abstraction | Must be more specific than the skill name, less specific than a single use case |
 | Uniqueness | Unique within the skill; duplication across skills is OK |
@@ -165,7 +165,7 @@ The following rules are evaluated by **Gauge** during normalization audits.
 | Rule ID | Condition | Severity |
 |---------|-----------|---------|
 | R-REC-01 | A skill with `## Recipes` must declare exactly one fallback owner: one `Default? = ✓` Recipe or one explicit `Default dispatch` phase/workflow | ERROR |
-| R-REC-02 | All Subcommand values must match `^[a-z0-9][a-z0-9-]{1,19}$` (kebab-case, 2-20 chars; leading digit allowed for domain terms like `5whys`) | ERROR |
+| R-REC-02 | All Subcommand values must match `^(?=.{2,20}$)[a-z0-9]+(?:-[a-z0-9]+)*$` (kebab-case, 2-20 chars; leading digit allowed for domain terms like `5whys`) and be backtick-quoted in the Recipe table | ERROR |
 | R-REC-03 | Subcommand values must not be reserved words: `default`, `auto`, `help`, `list` | ERROR |
 | R-REC-04 | Recipe count, tiered (calibrated 2026-07-03 against the 132-skill corpus, where 54% exceeded the old flat max-7): ≤7 recommended; 8-10 = INFO (corpus norm band, ≤10 = P95); 11+ = WARNING (consolidation review candidate); hub skills (`HUB_SKILLS` in validator, currently `nexus`) always INFO — recipe breadth by design; a skill whose count was reviewed and found to be breadth rather than duplication is INFO while it stays at or below its reviewed count (`REC04_REVIEWED`, see below) | INFO / WARNING (tiered) |
 | R-REC-05 | Presence of `## Recipes` section is RECOMMENDED for skills in Adoption Tiers 1-2, but not required | INFO |

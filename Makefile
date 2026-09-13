@@ -19,6 +19,7 @@ REPO       := $(CURDIR)
 CLAUDE_DIR := $(HOME)/.claude/skills
 CODEX_DIR  := $(HOME)/.codex/skills
 AGY_DIR    := $(HOME)/.gemini/antigravity-cli/skills
+export REPO CLAUDE_DIR CODEX_DIR AGY_DIR
 
 .DEFAULT_GOAL := help
 
@@ -28,25 +29,28 @@ AGY_DIR    := $(HOME)/.gemini/antigravity-cli/skills
 
 help:
 	@echo "make link           symlink this repo's skills into claude / codex / agy"
-	@echo "make link-claude    $(CLAUDE_DIR)"
-	@echo "make link-codex     $(CODEX_DIR)"
-	@echo "make link-agy       $(AGY_DIR)"
+	@echo "make link-claude    $$CLAUDE_DIR"
+	@echo "make link-codex     $$CODEX_DIR"
+	@echo "make link-agy       $$AGY_DIR"
 	@echo "make unlink[-*]     remove only the links into this repo; other skills stay"
 	@echo "make status         show the current state of all three"
 	@echo ""
 	@echo "make validate       run every checker at blocking severity"
-	@echo "make test           prove the checkers catch things (slower)"
+	@echo "make test           run all repository regression tests"
 	@echo "make check          validate + test — what CI runs"
 	@echo "make hooks          install the pre-commit hook that runs make validate"
 	@echo ""
-	@echo "repo                $(REPO)"
+	@echo "repo                $$REPO"
 
-# $(1) = CLI skills directory. Creates it if absent, then links each top-level
+# $(1) = exported CLI directory variable. Creates it if absent, then links each top-level
 # repo directory into it. Never deletes or overwrites anything it did not create:
 # the only removals are links into this repo whose target the repo has dropped.
 define do_link
-r=$$(cd "$(REPO)" && pwd -P); t="$(1)"; p=$$(dirname "$$t"); \
+set -e; r=$$(cd "$$REPO" && pwd -P); t="$${$(1)}"; p=$$(dirname "$$t"); \
 if [ ! -d "$$p" ]; then echo "skip    $$t — $$p does not exist"; exit 0; fi; \
+p=$$(cd "$$p" && pwd -P); \
+case "$$p/$$(basename "$$t")" in "$$r"|"$$r"/*) \
+  echo "ERROR   $$t is inside this repo — move the repo to an external path first"; exit 1;; esac; \
 if [ -L "$$t" ]; then \
   l=$$(readlink "$$t"); \
   if [ "$$l" = "$$r" ]; then rm "$$t"; echo "note    $$t was a whole-repo symlink — replacing it with a directory"; \
@@ -62,7 +66,7 @@ for s in "$$r"/*/; do \
     if [ "$$(readlink "$$d")" = "$$r/$$name" ]; then nk=$$((nk + 1)); \
     else echo "  skip    $$name — symlink to $$(readlink "$$d")"; ns=$$((ns + 1)); fi; \
   elif [ -e "$$d" ]; then echo "  skip    $$name — real path already there"; ns=$$((ns + 1)); \
-  else ln -sfn "$$r/$$name" "$$d"; nl=$$((nl + 1)); fi; \
+  else ln -s "$$r/$$name" "$$d"; nl=$$((nl + 1)); fi; \
 done; \
 for d in "$$t"/*; do \
   [ -L "$$d" ] || continue; \
@@ -76,7 +80,7 @@ endef
 # Removes only symlinks that point into this repo. Anything else in the CLI
 # directory — real skills, links elsewhere — is counted and left alone.
 define do_unlink
-r=$$(cd "$(REPO)" && pwd -P); t="$(1)"; \
+set -e; r=$$(cd "$$REPO" && pwd -P); t="$${$(1)}"; \
 if [ -L "$$t" ]; then \
   l=$$(readlink "$$t"); \
   if [ "$$l" = "$$r" ]; then rm "$$t" && echo "unlink  $$t (whole-repo symlink)"; \
@@ -95,23 +99,23 @@ link: link-claude link-codex link-agy
 unlink: unlink-claude unlink-codex unlink-agy
 
 link-claude:
-	@$(call do_link,$(CLAUDE_DIR))
+	@$(call do_link,CLAUDE_DIR)
 link-codex:
-	@$(call do_link,$(CODEX_DIR))
+	@$(call do_link,CODEX_DIR)
 link-agy:
-	@$(call do_link,$(AGY_DIR))
+	@$(call do_link,AGY_DIR)
 
 unlink-claude:
-	@$(call do_unlink,$(CLAUDE_DIR))
+	@$(call do_unlink,CLAUDE_DIR)
 unlink-codex:
-	@$(call do_unlink,$(CODEX_DIR))
+	@$(call do_unlink,CODEX_DIR)
 unlink-agy:
-	@$(call do_unlink,$(AGY_DIR))
+	@$(call do_unlink,AGY_DIR)
 
 status:
-	@r=$$(cd "$(REPO)" && pwd -P); total=$$(ls -d "$$r"/*/ | wc -l | tr -d " "); \
+	@set -e; r=$$(cd "$$REPO" && pwd -P); total=$$(ls -d "$$r"/*/ | wc -l | tr -d " "); \
 	echo "repo    $$r ($$total linkable directories)"; \
-	for t in "$(CLAUDE_DIR)" "$(CODEX_DIR)" "$(AGY_DIR)"; do \
+	for t in "$$CLAUDE_DIR" "$$CODEX_DIR" "$$AGY_DIR"; do \
 	  if [ -L "$$t" ]; then echo "symlink $$t -> $$(readlink "$$t")"; \
 	  elif [ -d "$$t" ]; then \
 	    n=0; \
@@ -127,47 +131,50 @@ status:
 # ---------------------------------------------------------------------------
 # Checks.
 #
-# CI runs these too, but its hard-fail steps are gated on `pull_request` and this
-# repository commits to main directly — so on the path actually used, CI reports
-# and the hook is what blocks. `make hooks` is therefore not optional tooling;
-# it is where the budgets are enforced (`_common/VALUES.md` §2).
+# CI runs these on pull requests and pushes to main. The optional local hook
+# runs the same checks before a commit, so failures can be caught before push.
 # ---------------------------------------------------------------------------
 
 SCRIPTS := $(REPO)/_common/scripts
+export SCRIPTS
 
 validate:
-	@python3 $(SCRIPTS)/lint-frontmatter.py --severity error
-	@python3 $(SCRIPTS)/validate-recipes.py --severity error
-	@python3 $(SCRIPTS)/routing-oracle.py --severity error
-	@python3 $(SCRIPTS)/lint-instructions.py --severity error
-	@python3 $(SCRIPTS)/lint-contracts.py --severity error
-	@python3 $(SCRIPTS)/lint-lessons.py --severity error
-	@python3 $(SCRIPTS)/task-battery-check.py --severity error
-	@if [ -x "$(REPO)/.git/hooks/pre-commit" ]; then echo "hooks on"; else \
+	@python3 "$$SCRIPTS/lint-frontmatter.py" --severity error
+	@python3 "$$SCRIPTS/validate-recipes.py" --severity error
+	@python3 "$$SCRIPTS/routing-oracle.py" --severity error
+	@python3 "$$SCRIPTS/lint-instructions.py" --severity error
+	@python3 "$$SCRIPTS/lint-contracts.py" --severity error
+	@python3 "$$SCRIPTS/lint-lessons.py" --severity error
+	@python3 "$$SCRIPTS/task-battery-check.py" --severity error
+	@if hook=$$(git rev-parse --git-path hooks/pre-commit 2>/dev/null) && [ -x "$$hook" ]; then echo "hooks on"; else \
 	  echo "hooks off — run 'make hooks' so these run without being remembered"; fi
 
 # A checker nobody has watched fail is indistinguishable from one that returns
-# zero unconditionally. Slower than `validate` because each case runs the real
-# script against a broken copy of the repository, so the hook runs it only when
-# a checker changed — see `hooks` below.
+# zero unconditionally. Slower than `validate` because cases exercise broken
+# repositories and command-line tools, so the hook runs it when executable
+# code, its templates, or the check infrastructure changes — see `hooks` below.
 test:
-	@python3 $(SCRIPTS)/test_checkers.py
+	@python3 -m unittest discover -s "$$SCRIPTS" -p 'test_*.py'
 
 check: validate test
 
 hooks:
-	@mkdir -p "$(REPO)/.git/hooks"
-	@printf '%s\n' \
+	@set -e; hook=$$(git rev-parse --git-path hooks/pre-commit); \
+	if [ -L "$$hook" ] || { [ -e "$$hook" ] && ! grep -Fqx '# installed by `make hooks`' "$$hook"; }; then \
+	  echo "ERROR   $$hook already exists — preserve or integrate your custom hook before installing"; exit 1; fi; \
+	mkdir -p "$$(dirname "$$hook")"; \
+	printf '%s\n' \
 	  '#!/bin/sh' \
 	  '# installed by `make hooks`' \
-	  '# Checkers always. The checker *tests* only when a checker changed: they' \
-	  '# cost ~20s, and a commit that slow is one people start bypassing.' \
+	  '# Validate the corpus always; run regression tests when executable code,' \
+	  '# its templates, or the check infrastructure changes.' \
 	  'set -e' \
-	  'repo="$(REPO)"' \
-	  'if git diff --cached --name-only | grep -q "^_common/scripts/"; then' \
+	  'repo=$$(git rev-parse --show-toplevel)' \
+	  'changed=$$(git diff --cached --name-only)' \
+	  'if printf "%s\n" "$$changed" | grep -Eq "^(_common/scripts/|launch/scripts/|launch/templates/|_templates/learning-loop-kit/_scripts/|index\.html$$|Makefile$$|requirements-checks\.txt$$)"; then' \
 	  '  exec make -C "$$repo" --no-print-directory check' \
 	  'fi' \
 	  'exec make -C "$$repo" --no-print-directory validate' \
-	  > "$(REPO)/.git/hooks/pre-commit"
-	@chmod +x "$(REPO)/.git/hooks/pre-commit"
-	@echo "installed $(REPO)/.git/hooks/pre-commit"
+	  > "$$hook"; \
+	chmod +x "$$hook"; \
+	echo "installed $$hook"

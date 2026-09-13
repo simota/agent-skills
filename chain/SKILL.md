@@ -258,7 +258,7 @@ Chain receives intake and compromise requests from User, Sentinel, Gauge, Hone, 
 
 | File | Read this when... |
 |------|-------------------|
-| [`_common/SECURITY.md`](../_common/SECURITY.md) | You need the trust boundary spec, manifest format, or escalation matrix |
+| [`_common/SECURITY.md`](_common/SECURITY.md) | You need the trust boundary spec, manifest format, or escalation matrix |
 
 ---
 
@@ -270,7 +270,7 @@ Chain receives intake and compromise requests from User, Sentinel, Gauge, Hone, 
 
 - Activity log: append `| YYYY-MM-DD | Chain | (action) | (skill) | (verdict) |` to `.agents/PROJECT.md`.
 
-Shared protocols: [`_common/OPERATIONAL.md`](../_common/OPERATIONAL.md), [`_common/SECURITY.md`](../_common/SECURITY.md)
+Shared protocols: [`_common/OPERATIONAL.md`](_common/OPERATIONAL.md), [`_common/SECURITY.md`](_common/SECURITY.md)
 
 ## AUTORUN Support
 

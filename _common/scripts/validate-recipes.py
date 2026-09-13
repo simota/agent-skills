@@ -5,7 +5,7 @@ Recipes / Subcommand Dispatch validator.
 Validates every SKILL.md against the rules defined in `_common/RECIPES.md`:
   R-REC-01: Exactly one fallback owner per skill with Recipes: one Default Recipe
             (✓) or one explicit Default dispatch phase/workflow (ERROR)
-  R-REC-02: Subcommand names are kebab-case, 2-16 chars (ERROR)
+  R-REC-02: Subcommand names are kebab-case, 2-20 chars (ERROR)
   R-REC-03: Reserved words (default/auto/help/list) unused (ERROR)
   R-REC-04: Recipe count, tiered (calibrated 2026-07-03 against 132-skill corpus):
             8-10 recipes → INFO (corpus norm band, ≤10 = P95);
@@ -46,7 +46,7 @@ SKILLS_ROOT = Path(__file__).resolve().parents[2]
 PROJECT_LOCAL_ROOT = SKILLS_ROOT / ".claude" / "skills"
 SKIP_DIRS = {"_common", "_templates"}
 RESERVED = {"default", "auto", "help", "list"}
-KEBAB = re.compile(r"^[a-z0-9][a-z0-9-]{1,19}$")
+KEBAB = re.compile(r"^(?=.{2,20}$)[a-z0-9]+(?:-[a-z0-9]+)*$")
 MAX_RECIPES = 7  # recommended ceiling (scannability)
 WARN_RECIPES = 10  # corpus P95 as of 2026-07-03 (125/132 skills ≤ 10); >10 warns
 HUB_SKILLS = {"nexus"}  # ecosystem hub: routes 130+ agents, recipe breadth by design
@@ -123,7 +123,7 @@ def iter_skills(only: set[str] | None = None):
 
 
 def extract_recipes_block(content: str, skill_dir=None) -> str | None:
-    m = re.search(r"^## Recipes\s*\n(.*?)(?=^## )", content, re.MULTILINE | re.DOTALL)
+    m = re.search(r"^## Recipes\s*\n(.*?)(?=^## |\Z)", content, re.MULTILINE | re.DOTALL)
     if m is None:
         return None
     block = m.group(1)
@@ -140,7 +140,7 @@ def extract_recipes_block(content: str, skill_dir=None) -> str | None:
     return block
 
 
-def parse_rows(block: str):
+def parse_rows(block: str, errors: list[str] | None = None):
     # Parse only the recipes table itself (header contains Recipe + Subcommand
     # columns). The Recipes section may also hold keyword-routing tables whose
     # second cell is a backtick-wrapped subcommand; parsing those produced
@@ -157,11 +157,16 @@ def parse_rows(block: str):
             if len(cells) >= 2 and "recipe" in cells[0].lower() and "subcommand" in cells[1].lower():
                 in_table = True
             continue
-        if cells[0].startswith("-") or set(cells[0]) <= {"-", ":", " "}:
+        if re.fullmatch(r":?-+:?", cells[0]):
             continue
-        m = re.match(r"^`([^`]+)`$", cells[1]) if len(cells) >= 2 else None
-        if m:
-            rows.append((cells[0], m.group(1).strip(), cells[2] if len(cells) >= 3 else ""))
+        raw_subcmd = cells[1] if len(cells) >= 2 else ""
+        m = re.fullmatch(r"`([^`]+)`", raw_subcmd)
+        if m is None and errors is not None:
+            errors.append(
+                f"R-REC-02: Recipe {cells[0]!r} requires a nonempty, backtick-quoted subcommand"
+            )
+        subcmd = m.group(1) if m else raw_subcmd
+        rows.append((cells[0], subcmd, cells[2] if len(cells) >= 3 else ""))
     return rows
 
 
@@ -202,7 +207,7 @@ def validate(skill: str, path: Path) -> tuple[list[str], list[str], list[str]]:
         infos.append("R-REC-05: no `## Recipes` section (RECOMMENDED for Tier 1-2)")
         return errors, warnings, infos
 
-    rows = parse_rows(block)
+    rows = parse_rows(block, errors)
     if not rows:
         errors.append("R-REC-01: `## Recipes` table has no rows")
         return errors, warnings, infos
@@ -220,7 +225,7 @@ def validate(skill: str, path: Path) -> tuple[list[str], list[str], list[str]]:
     for _, subcmd, _ in rows:
         if subcmd in RESERVED:
             errors.append(f"R-REC-03: reserved word used as subcommand: `{subcmd}`")
-        if not KEBAB.match(subcmd):
+        if not KEBAB.fullmatch(subcmd):
             errors.append(f"R-REC-02: subcommand `{subcmd}` is not kebab-case / 2-20 chars")
 
     if len(rows) > MAX_RECIPES:

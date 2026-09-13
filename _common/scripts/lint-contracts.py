@@ -87,7 +87,7 @@ TICKED_MD = re.compile(r"`([A-Za-z0-9_~.][A-Za-z0-9_./~-]*\.md)`")
 TICKED_ANY = re.compile(r"`([A-Za-z0-9_~.][A-Za-z0-9_./~-]*\.(?:md|py|ya?ml|json))`")
 
 #: Markdown link targets, e.g. [`token-economy.py`](scripts/token-economy.py).
-MD_LINK = re.compile(r"\]\(([A-Za-z0-9_.][A-Za-z0-9_./-]*\.(?:md|py|ya?ml|json))\)")
+MD_LINK = re.compile(r"\]\(([A-Za-z0-9_.][A-Za-z0-9_./-]*\.(?:md|py|ya?ml|json))(?:#[^)\s]*)?\)")
 
 #: Namespaces that exist only inside this repository (CD-5 scope).
 REPO_NAMESPACES = ("_common/", "_templates/", "reference/", "_prompts/", "_loops/")
@@ -133,12 +133,16 @@ def is_placeholder(ref: str) -> bool:
 def named_refs(text: str) -> list[tuple[int, str]]:
     """(line number, reference) for every path this document names outside code fences."""
     out: list[tuple[int, str]] = []
-    in_fence = False
+    fence = ""
     for lineno, line in enumerate(text.splitlines(), 1):
-        if line.lstrip().startswith("```"):
-            in_fence = not in_fence
+        marker = re.match(r"^\s*(`{3,}|~{3,})(.*)$", line)
+        if fence:
+            if (marker and marker.group(1)[0] == fence[0]
+                    and len(marker.group(1)) >= len(fence) and not marker.group(2).strip()):
+                fence = ""
             continue
-        if in_fence:
+        if marker:
+            fence = marker.group(1)
             continue
         for pattern in (TICKED_ANY, MD_LINK):
             for ref in pattern.findall(line):
@@ -164,7 +168,16 @@ def base_dir(path: Path) -> Path:
 
 def resolve(ref: str, origin: Path) -> Path | None:
     """The file `ref` names when read from `origin`, or None when it resolves nowhere."""
-    for candidate in (base_dir(origin) / ref, REPO_ROOT / ref, COMMON / ref):
+    base = base_dir(origin)
+    # Shared documents use both bare sibling names and repo-relative names.
+    # Skill documents must resolve through their own installed directory: a
+    # repo-root fallback would turn a missing symlink into successful delivery.
+    candidates = [base / ref]
+    if base == COMMON:
+        candidates.append(REPO_ROOT / ref)
+    for candidate in candidates:
+        if _corpus.is_excluded_path(candidate, REPO_ROOT):
+            continue
         if exists(candidate):
             try:
                 return candidate.resolve()
@@ -178,15 +191,8 @@ def resolve(ref: str, origin: Path) -> Path | None:
 #: delivered when nothing in the shipped corpus reaches it. `.agents/` is gitignored, so
 #: a graph that walks it reports OK locally and fails in CI on the same commit -- which
 #: is how this rule was found. Reachability is a property of what is committed.
-UNTRAVERSED_DIRS = frozenset({".git", ".agents", ".archive", "node_modules"})
-
-
 def is_untraversed(node: Path) -> bool:
-    try:
-        parts = node.resolve().relative_to(REPO_ROOT).parts
-    except (ValueError, OSError):
-        return False
-    return any(part in UNTRAVERSED_DIRS for part in parts)
+    return _corpus.is_excluded_path(node, REPO_ROOT)
 
 
 class Graph:
@@ -306,8 +312,9 @@ def check_resolution(skills: list[Path], findings: list) -> None:
     own_names = {skill.name for skill in skills}
 
     def repo_internal(ref: str) -> bool:
-        head = ref.split("/", 1)[0]
-        return ref.startswith(REPO_NAMESPACES) or (head in own_names and "/" in ref)
+        parts = tuple(part for part in Path(ref).parts if part not in (".", ".."))
+        head = parts[0] if parts else ""
+        return head + "/" in REPO_NAMESPACES or (head in own_names and len(parts) > 1)
 
     for skill in skills:
         skill_md = skill / "SKILL.md"
