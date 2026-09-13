@@ -25,12 +25,10 @@ Use Shift first for anything > 1 module. Use `port` for a single module / functi
 Before touching the port, capture source behavior:
 
 ```python
-# source.py — authoritative
-def parse_phone(raw: str) -> str | None:
-    # ... existing logic ...
-
 # test_golden.py
 import json
+from source import parse_phone  # existing source implementation; str | None in/out
+
 def test_capture_goldens():
     cases = [
         '+1 (555) 123-4567',
@@ -40,7 +38,7 @@ def test_capture_goldens():
         None,
         'not-a-phone',
     ]
-    goldens = [(c, parse_phone(c)) for c in cases]
+    goldens = [{"input": c, "expected": parse_phone(c)} for c in cases]
     with open('goldens.json', 'w') as f:
         json.dump(goldens, f)
 ```
@@ -49,14 +47,37 @@ Then run against the port:
 
 ```go
 // port_test.go
+package port
+
+import (
+    "encoding/json"
+    "os"
+    "testing"
+)
+
+type Case struct {
+    Input    *string `json:"input"`
+    Expected *string `json:"expected"`
+}
+
+// ParsePhone accepts and returns *string to preserve Python's None values.
 func TestPortMatchesGoldens(t *testing.T) {
-    data, _ := os.ReadFile("goldens.json")
+    data, err := os.ReadFile("goldens.json")
+    if err != nil {
+        t.Fatal(err)
+    }
     var goldens []Case
-    json.Unmarshal(data, &goldens)
+    if err := json.Unmarshal(data, &goldens); err != nil {
+        t.Fatal(err)
+    }
+    if len(goldens) == 0 {
+        t.Fatal("golden cases must not be empty")
+    }
     for _, c := range goldens {
         got := ParsePhone(c.Input)
-        if got != c.Expected {
-            t.Errorf("input=%q got=%v want=%v", c.Input, got, c.Expected)
+        if (got == nil) != (c.Expected == nil) ||
+            (got != nil && c.Expected != nil && *got != *c.Expected) {
+            t.Errorf("input=%v got=%v want=%v", c.Input, got, c.Expected)
         }
     }
 }
@@ -79,13 +100,17 @@ Document each divergence in the port report.
 ## Parallel-Run Harness
 
 ```bash
+set -euo pipefail
+
 # Generate random inputs
 python gen_inputs.py > inputs.jsonl
 
-# Run both, diff outputs
+# Run both, normalize JSON, and preserve failures from either program or jq.
 python -m source < inputs.jsonl > source_out.jsonl
 ./target < inputs.jsonl > target_out.jsonl
-diff <(jq -c . source_out.jsonl) <(jq -c . target_out.jsonl) | head -20
+jq -cS . source_out.jsonl > source_normalized.jsonl
+jq -cS . target_out.jsonl > target_normalized.jsonl
+diff -u source_normalized.jsonl target_normalized.jsonl
 ```
 
 Property-based testing is ideal (hypothesis, fast-check, QuickCheck).

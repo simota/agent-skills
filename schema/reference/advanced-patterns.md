@@ -17,7 +17,7 @@ Full event-store schema (events table, snapshots, projections, optimistic concur
 ### Document Embeddings Table
 
 ```sql
--- Requires: CREATE EXTENSION vector;
+CREATE EXTENSION IF NOT EXISTS vector;
 -- On PostgreSQL 18 prefer uuidv7() for the row id when downstream consumers
 -- want time-ordered insertion.
 CREATE TABLE document_embeddings (
@@ -35,13 +35,13 @@ CREATE TABLE document_embeddings (
 -- IVFFlat index (faster build, good for static datasets)
 CREATE INDEX idx_embeddings_ivfflat
   ON document_embeddings
-  USING ivfflat (embedding vector_cosine_ops)
+  USING ivfflat (embedding halfvec_cosine_ops)
   WITH (lists = 100);
 
 -- HNSW index (slower build, better recall, good for dynamic datasets)
 -- CREATE INDEX idx_embeddings_hnsw
 --   ON document_embeddings
---   USING hnsw (embedding vector_cosine_ops)
+--   USING hnsw (embedding halfvec_cosine_ops)
 --   WITH (m = 16, ef_construction = 64);
 ```
 
@@ -55,12 +55,12 @@ SELECT
   d.id,
   d.source_id,
   d.content,
-  1 - (d.embedding <=> $1::vector) AS similarity
+  1 - (d.embedding <=> $1::halfvec(1536)) AS similarity
 FROM document_embeddings d
 WHERE
   d.source_type = 'article'
   AND d.metadata @> '{"language": "en"}'::jsonb
-ORDER BY d.embedding <=> $1::vector
+ORDER BY d.embedding <=> $1::halfvec(1536)
 LIMIT 20;
 ```
 
@@ -68,10 +68,10 @@ LIMIT 20;
 
 1. Store the `embedding_model` (provider + name + version) so embeddings can be invalidated and regenerated when the model changes — a model swap requires re-embedding all rows.
 2. Use `chunk_index` to track position within a document when chunking long text; consider `document_id + chunk_index` UNIQUE for idempotent re-ingest.
-3. Choose `vector_cosine_ops` for normalized embeddings (OpenAI text-embedding-3-*, Cohere, most sentence-transformers); use `vector_l2_ops` for unnormalized embeddings; `vector_ip_ops` (inner product) for some specialised models.
+3. Match the operator class and query parameter type to the indexed column: `halfvec_cosine_ops` and `::halfvec(1536)` for this `halfvec` example; `vector_cosine_ops` and `::vector` for `vector` columns. Choose cosine, L2, or inner-product distance according to the embedding model's retrieval metric. Source: [pgvector operator-class definitions](https://github.com/pgvector/pgvector/blob/master/sql/vector.sql), verified 2026-09-13.
 4. Add a GIN index on `metadata` if filtering by metadata fields is frequent.
 5. **pgvector 0.8.0 iterative scans** (released Oct 2024): set `hnsw.iterative_scan = relaxed_order` (or `strict_order` when exact distance ordering matters) at the session/role level for WHERE-filtered KNN queries. Bound the work with `hnsw.max_scan_tuples` and tune `hnsw.scan_mem_multiplier` for highly-selective prefilters. Before 0.8, post-filter under-fetch was the #1 RAG quality bug.
-6. **halfvec** halves storage (float16) with negligible recall loss for most workloads and lifts the HNSW 2 000-dimension ceiling for `vector` — required for embeddings > 2 000 dims (e.g., Cohere embed-v3 4 096).
+6. **halfvec** reduces value storage to float16; measure recall for the workload. Its HNSW index supports up to 4 000 dimensions versus 2 000 for `vector`, so a 4 096-dimensional embedding still needs dimensionality reduction or another supported indexing strategy. Source: [pgvector supported types](https://github.com/pgvector/pgvector#supported-types), verified 2026-09-13.
 7. Combine with structured prefilters (`tenant_id`, `language`, `source_type`) for order-of-magnitude latency gains over pure KNN; pgvector 0.8's improved planner statistics now make `WHERE tenant_id = $1 ORDER BY embedding <=> $2 LIMIT 20` plan correctly without query hints in most cases.
 
 ---
@@ -82,11 +82,12 @@ Bitemporal tables track two time axes independently:
 - **Valid time** (`valid_from` / `valid_to`): when the fact was true in the real world.
 - **Transaction time** (`recorded_at` / `invalidated_at`): when the database recorded the fact.
 
-### Employee Contracts (Bitemporal) — PostgreSQL 18 idiom
+### Employee Contracts (Bitemporal) — PostgreSQL 18
 
 ```sql
--- PostgreSQL 18 ships SQL:2011 temporal PKs (WITHOUT OVERLAPS) and FKs (PERIOD).
--- The valid-time uniqueness no longer needs a hand-rolled GiST exclusion constraint.
+CREATE EXTENSION IF NOT EXISTS btree_gist;
+
+-- Keep invalidated history; only current assertions must not overlap.
 CREATE TABLE employee_contracts (
   id                UUID         PRIMARY KEY DEFAULT uuidv7(),
   employee_id       UUID         NOT NULL,
@@ -98,8 +99,10 @@ CREATE TABLE employee_contracts (
   recorded_at       TIMESTAMPTZ  NOT NULL DEFAULT now(),
   invalidated_at    TIMESTAMPTZ  NOT NULL DEFAULT 'infinity',
   recorded_by       UUID         NOT NULL,
-  -- PG 18: temporal PK rejects overlapping valid-time ranges per employee.
-  UNIQUE (employee_id, valid_period WITHOUT OVERLAPS)
+  CONSTRAINT no_current_valid_overlap EXCLUDE USING gist (
+    employee_id WITH =,
+    valid_period WITH &&
+  ) WHERE (invalidated_at = 'infinity')
 );
 
 CREATE INDEX idx_contracts_employee_valid
@@ -109,15 +112,9 @@ CREATE INDEX idx_contracts_employee_valid
 
 ### Pre-PG-18 (PostgreSQL ≤ 17) fallback
 
-If your cluster is still on PG 17 or earlier, keep the `EXCLUDE USING gist` form below — it remains the only in-database way to enforce non-overlap.
+Use the same partial exclusion constraint on PostgreSQL 17; replace `uuidv7()` with `gen_random_uuid()`. A `WITHOUT OVERLAPS` key covers every row and cannot be restricted with a `WHERE` predicate, so it would reject a corrected row while the invalidated original remains. Use temporal keys for tables without retained overlapping versions; keep partial exclusion for this current-assertion pattern. Source: [PostgreSQL 18 CREATE TABLE](https://www.postgresql.org/docs/18/sql-createtable.html), verified 2026-09-13.
 
-```sql
-ALTER TABLE employee_contracts
-  ADD CONSTRAINT no_valid_overlap EXCLUDE USING gist (
-    employee_id WITH =,
-    daterange(valid_from, valid_to, '[)') WITH &&
-  ) WHERE (invalidated_at = 'infinity');
-```
+For a correction, use one transaction to invalidate the current row and insert its replacement. Require the invalidation to affect exactly one current row before inserting; serialize corrections for the employee or retry exclusion conflicts.
 
 ### Bitemporal vs SCD Type 2
 
@@ -139,8 +136,8 @@ Apply bitemporal design when any of the following are true:
 
 ---
 
-## pgvector Tuning and DDL Replication (SKILL.md excerpt)
+## pgvector Tuning and Replicated-Schema Maintenance
 
 - For vector/AI workloads, prefer pgvector within PostgreSQL for ACID compliance and hybrid search (benchmarked at 50 M+ vectors with pgvectorscale). Use HNSW index (`m=16`, `ef_construction=64`; raise `ef_construction` to 256 for recall-critical workloads) for recall-performance balance; use IVFFlat only when index build time is the bottleneck. Use `halfvec` (float16) to halve memory with near-identical accuracy. Combine vector KNN with structured prefilters (e.g., `tenant_id`, `language`) for order-of-magnitude speedups over vector-only scans. On pgvector 0.8+, enable `SET hnsw.iterative_scan = relaxed_order` for filtered queries to prevent under-fetching when prefilters are selective — this iteratively widens the search until enough post-filter results are found. Tune `hnsw.scan_mem_multiplier` (multiple of `work_mem`) to improve recall on high-selectivity filtered queries by allowing larger in-memory candidate sets. Monitor P99 search latency; alert on > 2× baseline.
 
-- On PostgreSQL 18, leverage DDL replication in logical replication to automatically propagate schema changes (`CREATE`/`ALTER`/`DROP TABLE`) to subscribers — eliminates manual schema sync across environments and reduces drift between staging and production.
+- PostgreSQL 18 logical replication does not propagate DDL. Coordinate schema migrations on every subscriber and the publisher; apply compatible additive changes to subscribers first. Details and official source: `reference/postgresql18-features.md`.

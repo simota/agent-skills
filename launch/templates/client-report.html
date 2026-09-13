@@ -428,17 +428,18 @@
   <section>
     <h2>Activity Analysis</h2>
     <p class="text-muted">工数は変更行数・ファイル数に基づく参考推定です。実作業時間や請求時間を示すものではありません。</p>
+    <p id="chartStatus" class="text-muted" role="status">グラフの読み込みが完了していません。ネットワーク接続を確認してください。工数の内訳は下の表で確認できます。</p>
     <div class="chart-container">
       <div class="chart-box">
         <div class="chart-title">日別作業工数</div>
         <div class="chart-wrapper">
-          <canvas id="dailyChart"></canvas>
+          <canvas id="dailyChart" data-chartjs></canvas>
         </div>
       </div>
       <div class="chart-box">
         <div class="chart-title">カテゴリ別工数配分</div>
         <div class="chart-wrapper">
-          <canvas id="categoryChart"></canvas>
+          <canvas id="categoryChart" data-chartjs></canvas>
         </div>
       </div>
     </div>
@@ -547,6 +548,7 @@
         cutout: '55%'
       }
     });
+    document.getElementById('chartStatus').remove();
   </script>
 
 </body>

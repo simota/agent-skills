@@ -34,7 +34,7 @@ make link
 |---------|------|
 | `make link` | 3つの CLI ディレクトリへ一括リンク — 個別は `link-claude` / `link-codex` / `link-agy` |
 | `make status` | CLI ごとのリンク数（`リンク済み / リンク対象`）と総エントリ数を表示 |
-| `make unlink` | このリポジトリへのリンクのみ削除。他のスキルはそのまま残る |
+| `make unlink` | `make link` が作成したリンクのみ削除。他のスキルや独自の別名リンクはそのまま残る |
 
 **シンプル — CLI ディレクトリへ直接クローン**
 
@@ -1878,19 +1878,19 @@ CartItem, CartSummary インターフェースを定義してください。
 
 ### 新しいエージェントの追加
 
-1. `skills/[AgentName]/SKILL.md` を作成
+1. リポジトリ直下に `<skill-name>/SKILL.md` を作成（小文字 kebab-case）
 2. frontmatter に `name` と `description` を定義
 3. 境界（Always do / Ask first / Never do）を明記
 4. AUTORUN SupportとNexus Hub Modeのセクションを追加
 
 ### エージェントの修正
 
-各 `SKILL.md` を直接編集します。フォーマット：
+[_templates/SKILL_TEMPLATE.md](_templates/SKILL_TEMPLATE.md) に従って各 `SKILL.md` を直接編集します。frontmatter の例：
 
 ```markdown
 ---
-name: AgentName
-description: 日本語での説明
+name: skill-name
+description: One-line English description of the skill and its primary use case.
 ---
 
 [エージェントの詳細な指示]

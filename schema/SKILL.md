@@ -185,7 +185,7 @@ Routing rules:
 - If the request involves index design or query optimization, read `reference/index-strategies.md`.
 - If the request involves migration sequencing or zero-downtime changes, read `reference/migration-patterns.md`.
 - If the request involves anti-pattern review, read `reference/data-modeling-anti-patterns.md` or `reference/schema-design-anti-patterns.md`.
-- If the request involves PostgreSQL 18 features (UUIDv7, virtual generated columns, temporal constraints, skip scan, async I/O, OAuth, DDL replication), read `reference/postgresql18-features.md`. For PG 17-only clusters or SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, `SPLIT`/`MERGE PARTITION`), read `reference/postgresql17-features.md`.
+- If the request involves PostgreSQL 18 features (UUIDv7, virtual generated columns, temporal constraints, skip scan, async I/O, OAuth, logical-replication schema maintenance), read `reference/postgresql18-features.md`. For PG 17-only clusters or SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, partition maintenance), read `reference/postgresql17-features.md`.
 - If the request involves multi-tenant architecture, read `reference/multi-tenant-patterns.md` plus the matching `reference/tenant-*.md` specialization.
 - If the request involves event sourcing, CQRS, pgvector, or bitemporal design, read `reference/advanced-patterns.md`.
 - Always read relevant `reference/` files before producing output.

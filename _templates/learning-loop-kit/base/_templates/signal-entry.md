@@ -2,9 +2,9 @@
 
 Append this block to `{{SIGNAL_LOG}}` during CAPTURE (fill `status: new`; leave Analysis/Proposed blank until ANALYZE).
 
-## ID scheme (collision-free)
+## ID scheme (unique per signal)
 `{{SIGNAL_PREFIX}}-<YYYYMMDD>-<slug>` — capture date + short kebab mnemonic.
-- Date + slug avoids the shared-counter collision that plain `-NNN` causes on same-day concurrent logging.
+- Check the full ID against existing entries and concurrent additions before merging. Distinct signals on the same day can share a theme: add a stable source/session suffix to distinguish them. Never merge independent signals solely because their IDs match.
 
 ```markdown
 ### {{SIGNAL_PREFIX}}-YYYYMMDD-<slug>

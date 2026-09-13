@@ -48,7 +48,7 @@ Append-only, one line per event, written immediately, atomic (temp-then-rename).
 
 ## Engine
 
-Build-loop packages run on the engine §5 assigns — **Codex CLI model `gpt-5.6-terra`** (role-matched variant of the latest generation — build loops=terra, plan/design=sol, rote=luna; never a previous generation — latest-generation mandate `_common/CODEX_ORCHESTRATION.md` C3.0; tune depth within the variant via `model_reasoning_effort`). Run the Codex engine-availability check (`agents.max_depth >= 2`, `spawn_agent`/`wait_agent`/`send_input`/`resume_agent`/`close_agent` permitted) before consuming the contract, exactly as apex Phase 6. If unreachable, apply the package `fallback_engine` and log the substitution as `PKG_RECOVER` (no silent fallback).
+Build-loop packages run on the engine §5 assigns — **Codex CLI model `gpt-5.6-terra`** (role-matched variant of the latest generation — build loops=terra, plan/design=sol, rote=luna; never a previous generation — latest-generation mandate `_common/CODEX_ORCHESTRATION.md` C3.0; tune depth within the variant via `model_reasoning_effort`). Run the Codex engine-availability check (spawn capacity/nesting under `_common/CODEX_ORCHESTRATION.md` C1 and the required advertised subagent tools permitted) before consuming the contract, exactly as apex Phase 6. If unreachable, apply the package `fallback_engine` and log the substitution as `PKG_RECOVER` (no silent fallback).
 
 ## Boundaries (hub-spoke preserved)
 

@@ -32,7 +32,7 @@ help:
 	@echo "make link-claude    $$CLAUDE_DIR"
 	@echo "make link-codex     $$CODEX_DIR"
 	@echo "make link-agy       $$AGY_DIR"
-	@echo "make unlink[-*]     remove only the links into this repo; other skills stay"
+	@echo "make unlink[-*]     remove only this installer's links; other skills stay"
 	@echo "make status         show the current state of all three"
 	@echo ""
 	@echo "make validate       run every checker at blocking severity"
@@ -70,27 +70,35 @@ for s in "$$r"/*/; do \
 done; \
 for d in "$$t"/*; do \
   [ -L "$$d" ] || continue; \
-  case "$$(readlink "$$d")" in "$$r"/*) \
-    [ -e "$$d" ] || { rm "$$d"; echo "  prune   $$(basename "$$d") — no longer in the repo"; np=$$((np + 1)); };; \
-  esac; \
+  if [ "$$(readlink "$$d")" = "$$r/$$(basename "$$d")" ]; then \
+    [ -e "$$d" ] || { rm "$$d"; echo "  prune   $$(basename "$$d") — no longer in the repo"; np=$$((np + 1)); }; \
+  fi; \
 done; \
 echo "linked  $$t — $$nl new, $$nk already linked, $$ns skipped, $$np pruned"
 endef
 
-# Removes only symlinks that point into this repo. Anything else in the CLI
-# directory — real skills, links elsewhere — is counted and left alone.
+# Removes only the canonical per-entry symlinks created by do_link. A textual
+# repo prefix alone also matches aliases and paths escaping through `..`.
 define do_unlink
 set -e; r=$$(cd "$$REPO" && pwd -P); t="$${$(1)}"; \
+p=$$(dirname "$$t"); \
+if [ -d "$$p" ]; then \
+  p=$$(cd "$$p" && pwd -P); \
+  case "$$p/$$(basename "$$t")" in "$$r"|"$$r"/*) \
+    echo "ERROR   $$t is inside this repo — refusing to unlink source files"; exit 1;; esac; \
+fi; \
 if [ -L "$$t" ]; then \
   l=$$(readlink "$$t"); \
   if [ "$$l" = "$$r" ]; then rm "$$t" && echo "unlink  $$t (whole-repo symlink)"; \
   else echo "skip    $$t — symlink to $$l"; fi; \
 elif [ ! -d "$$t" ]; then echo "skip    $$t — missing"; \
 else \
+  case "$$(cd "$$t" && pwd -P)" in "$$r"|"$$r"/*) \
+    echo "ERROR   $$t is inside this repo — refusing to unlink source files"; exit 1;; esac; \
   n=0; \
   for d in "$$t"/*; do \
     [ -L "$$d" ] || continue; \
-    case "$$(readlink "$$d")" in "$$r"/*) rm "$$d"; n=$$((n + 1));; esac; \
+    if [ "$$(readlink "$$d")" = "$$r/$$(basename "$$d")" ]; then rm "$$d"; n=$$((n + 1)); fi; \
   done; \
   echo "unlink  $$t — $$n removed, $$(ls -A "$$t" | wc -l | tr -d " ") entries left"; fi
 endef
@@ -121,7 +129,7 @@ status:
 	    n=0; \
 	    for d in "$$t"/*; do \
 	      [ -L "$$d" ] || continue; \
-	      case "$$(readlink "$$d")" in "$$r"/*) n=$$((n + 1));; esac; \
+	      if [ -d "$$d" ] && [ "$$(readlink "$$d")" = "$$r/$$(basename "$$d")" ]; then n=$$((n + 1)); fi; \
 	    done; \
 	    echo "dir     $$t — $$n/$$total linked, $$(ls -A "$$t" | wc -l | tr -d " ") entries total"; \
 	  else echo "none    $$t"; fi; \
@@ -170,8 +178,8 @@ hooks:
 	  '# its templates, or the check infrastructure changes.' \
 	  'set -e' \
 	  'repo=$$(git rev-parse --show-toplevel)' \
-	  'changed=$$(git diff --cached --name-only)' \
-	  'if printf "%s\n" "$$changed" | grep -Eq "^(_common/scripts/|launch/scripts/|launch/templates/|_templates/learning-loop-kit/_scripts/|index\.html$$|Makefile$$|requirements-checks\.txt$$)"; then' \
+	  'changed=$$(git diff --cached --name-only -- _common/scripts/ launch/scripts/ launch/templates/ _templates/learning-loop-kit/_scripts/ .github/workflows/ index.html Makefile requirements-checks.txt)' \
+	  'if [ -n "$$changed" ]; then' \
 	  '  exec make -C "$$repo" --no-print-directory check' \
 	  'fi' \
 	  'exec make -C "$$repo" --no-print-directory validate' \

@@ -2,10 +2,10 @@
 
 Append this block to `feedback-log.md` during the CAPTURE step (fill `status: new`, leave Analysis/Proposed blank until ANALYZE).
 
-## ID scheme (collision-free)
+## ID scheme (unique per feedback item)
 `FB-<YYYYMMDD>-<slug>` — date of capture + a short kebab-case mnemonic of the feedback.
 - `FB-20260115-double-save`, `FB-20260203-tiny-tap-target`.
-- Date + slug avoids the shared-counter collision that plain `FB-NNN` causes when several people log feedback the same day.
+- Check the full ID against existing entries and concurrent additions before merging. Distinct feedback on the same day can share a theme: add a stable source/session suffix to distinguish them. Never merge independent feedback solely because their IDs match.
 
 ```markdown
 ### FB-YYYYMMDD-<slug>

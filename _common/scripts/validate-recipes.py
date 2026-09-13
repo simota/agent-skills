@@ -174,7 +174,7 @@ def heading_issues(content: str) -> list[str]:
     issues = []
     has_recipes = re.search(r"^## Recipes\s*$", content, re.MULTILINE) is not None
     has_dispatch = re.search(r"^## Subcommand Dispatch\s*$", content, re.MULTILINE) is not None
-    decorated = re.findall(r"^## Subcommand Dispatch .+$", content, re.MULTILINE)
+    decorated = re.findall(r"^## Subcommand Dispatch[^\S\n]+\S.*$", content, re.MULTILINE)
     if has_recipes and not has_dispatch:
         issues.append("H-REC-01: `## Recipes` present but `## Subcommand Dispatch` missing")
     if decorated:

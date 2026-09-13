@@ -80,8 +80,11 @@ def extract_recipes(content: str, skill_dir: Path | None = None) -> list[tuple[s
     pointer = re.search(r"`(reference/[a-z0-9-]*recipes?-index\.md)`", block)
     if pointer:
         target = skill_dir / pointer.group(1)
-        if target.is_file():
-            return parse_recipe_table(target.read_text(encoding="utf-8"))
+        if not target.is_file():
+            raise ValueError(f"Recipe registry not found: {pointer.group(1)}")
+        rows = parse_recipe_table(target.read_text(encoding="utf-8"))
+        if not rows:
+            raise ValueError(f"Recipe registry has no rows: {pointer.group(1)}")
     return rows
 
 
@@ -95,7 +98,7 @@ def iter_skill_dirs() -> list[tuple[Path, bool]]:
         entries.extend(
             (entry, True)
             for entry in PROJECT_LOCAL_ROOT.iterdir()
-            if entry.is_dir() and (entry / "SKILL.md").is_file()
+            if _corpus.is_skill_dir(entry)
         )
     return sorted(entries, key=lambda item: item[0].name)
 

@@ -55,7 +55,7 @@ Summit is a **quality-maximization recipe** that mobilizes multiple execution en
 | `codex` binary | reachable via `which codex` or fallback paths (`~/.bun/bin/`, `~/.local/bin/`, `/usr/local/bin/`, `/opt/homebrew/bin/`, `~/.npm-global/bin/`) | abort with "Codex CLI required for summit; install or use apex/feature instead" |
 | `agy` binary | reachable via `which agy` or fallback paths (same list) | **OPTIONAL** — record the verdict (AVAILABLE / UNAVAILABLE / RUNTIME-BROKEN) and surface the resulting mode in the confirmation prompt; never an abort (§ Overview) |
 | `rally` skill available | check `~/.claude/skills/rally/SKILL.md` exists | abort with "rally skill required for engine bridging" |
-| `rally.max_depth >= 2` (Codex config) | inspect `~/.codex/config.toml` | warn and continue; sub-spawning may fail |
+| Codex spawn capability/capacity | apply `_common/CODEX_ORCHESTRATION.md` C1 against the active runtime | warn and continue; sub-spawning may fail |
 | User cost acknowledgment | mandatory confirmation prompt | abort if declined |
 | Mission charter producible | Phase 0 must produce valid `mission_charter.yaml` | abort if FRAMING fails |
 

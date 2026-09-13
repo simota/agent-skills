@@ -2,7 +2,7 @@
 
 Reference for PostgreSQL 18 (GA 2025-09-25) schema-design–relevant features. Snapshot: 2026-05.
 
-> Migrating from PostgreSQL 17? Most 17 features still apply — see `postgresql17-features.md` for SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, `JSON_QUERY`, `JSON_EXISTS`), `SPLIT`/`MERGE PARTITION`, logical replication failover, and `pg_createsubscriber`. PostgreSQL 18 keeps all of them and adds the items below.
+> Migrating from PostgreSQL 17? Most 17 features still apply — see `postgresql17-features.md` for SQL/JSON (`JSON_TABLE`, `JSON_VALUE`, `JSON_QUERY`, `JSON_EXISTS`), partition maintenance, logical replication failover, and `pg_createsubscriber`. PostgreSQL 18 keeps those capabilities and adds the items below.
 
 ## Release Timeline
 
@@ -16,7 +16,7 @@ Source: postgresql.org news/release-18.html.
 
 ## UUIDv7 Native Generator
 
-PostgreSQL 18 adds the built-in `uuidv7()` SQL function — the first community release to ship RFC 9562 (published 2024-05) UUID variants 6/7/8.
+PostgreSQL 18 adds the built-in `uuidv7()` SQL function for time-ordered UUIDv7 identifiers defined by RFC 9562 (published 2024-05).
 
 ```sql
 CREATE TABLE orders (
@@ -39,7 +39,7 @@ SELECT uuid_extract_timestamp(id) FROM orders LIMIT 5;
 Generated columns now default to `VIRTUAL` (computed on read, not stored). PostgreSQL 12 introduced `STORED` only and required a full table rewrite to add one; PostgreSQL 18 makes adding a virtual generated column an O(1) metadata change.
 
 ```sql
--- O(1) metadata change — no table rewrite, no AccessExclusiveLock duration
+-- No table rewrite; ALTER TABLE still acquires ACCESS EXCLUSIVE until commit.
 ALTER TABLE products
   ADD COLUMN display_price TEXT
   GENERATED ALWAYS AS (currency || ' ' || amount::text) VIRTUAL;
@@ -55,6 +55,8 @@ ALTER TABLE products
 PostgreSQL 18 brings SQL:2011 temporal primary keys and foreign keys directly into the engine — no more handcrafted `EXCLUDE USING gist` workarounds for the common case.
 
 ```sql
+CREATE EXTENSION IF NOT EXISTS btree_gist; -- GiST equality support for UUID
+
 CREATE TABLE room_bookings (
   room_id   UUID NOT NULL,
   period    tsrange NOT NULL,
@@ -100,16 +102,16 @@ PostgreSQL 18 introduces an async I/O subsystem. The official release notes cite
 host all all 0.0.0.0/0 oauth issuer="https://idp.example.com" scope="postgres"
 ```
 
-**Schema design implication:** Service-to-DB credentials can be replaced with short-lived OAuth tokens (validated via `oauth_validator_libraries`). Combine with RLS `current_setting('app.tenant_id')` to pull tenant context from the verified token claim instead of an application-set GUC — this hardens multi-tenant isolation against application-layer bypass.
+**Schema design implication:** Service-to-DB credentials can be replaced with short-lived OAuth tokens using a configured validator from `oauth_validator_libraries`. OAuth authenticates/maps a database role; it does not automatically populate `app.tenant_id`. A custom session GUC is application-controlled unless an explicit trusted mechanism enforces it, so do not treat `current_setting('app.tenant_id')` alone as proof of a verified tenant claim. Design the RLS identity mapping and pool reset behavior separately. Source: [PostgreSQL 18 OAuth authentication](https://www.postgresql.org/docs/18/auth-oauth.html), verified 2026-09-13.
 
-## DDL Replication in Logical Replication
+## Schema Changes with Logical Replication
 
-PostgreSQL 18 propagates `CREATE TABLE`, `ALTER TABLE`, `DROP TABLE` from publisher to subscribers — eliminates the manual `psql -f schema.sql` step on every replica during migrations.
+PostgreSQL 18 does **not** replicate schema definitions or DDL commands. There is no `ddl` publication option. Schema migrations must be coordinated on the publisher and each subscriber. Source: [PostgreSQL 18 logical replication restrictions](https://www.postgresql.org/docs/18/logical-replication-restrictions.html), verified 2026-09-13.
 
 **Schema design rules:**
-- Add `WITH (ddl = 'all')` to the publication to enable.
-- Verify subscriber catches up before reading off it — DDL apply is serial with DML, so a long `ALTER TABLE` blocks the replication slot.
-- Continue to use expand-contract for breaking changes; DDL replication does not change application compatibility requirements.
+- Copy the initial schema separately, for example with `pg_dump --schema-only`, before starting data replication.
+- For compatible additive changes, update subscribers before the publisher so incoming rows fit their destination schema.
+- Use expand-contract for breaking changes and verify schema compatibility and replication lag before cutover.
 
 ## `NOT VALID` Constraint Validation (still relevant in PG 18)
 
@@ -121,7 +123,7 @@ ALTER TABLE t VALIDATE CONSTRAINT chk_age;
 -- SHARE UPDATE EXCLUSIVE; concurrent reads and writes continue
 ```
 
-Available since PG 9.x for CHECK/FK and PG 12 for `NOT NULL`; called out here because it remains the single most useful primitive for zero-downtime schema migrations and pairs naturally with PG 18's virtual generated columns.
+`NOT VALID` has long been available for CHECK/FK constraints; PostgreSQL 18 also supports named `NOT NULL` constraints added with `NOT VALID`. PostgreSQL 12–17 instead require a validated `CHECK (column IS NOT NULL)` before `SET NOT NULL` can skip its table scan. Source: [PostgreSQL 18 ALTER TABLE](https://www.postgresql.org/docs/18/sql-altertable.html), verified 2026-09-13.
 
 ## B-tree Skip Scan
 
@@ -141,6 +143,7 @@ PG 18 retains and refines the building blocks:
 ## References
 
 - PostgreSQL 18 release notes — https://www.postgresql.org/docs/18/release-18.html
+- PostgreSQL 18 temporal keys and GiST requirements — https://www.postgresql.org/docs/18/sql-createtable.html (verified 2026-09-13)
 - PostgreSQL 18 announcement (2025-09-25) — https://www.postgresql.org/about/news/postgresql-18-released-3142/
 - Aiven blog — temporal constraints walkthrough
 - Crunchy Data — Get Excited About Postgres 18

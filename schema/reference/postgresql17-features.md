@@ -1,6 +1,6 @@
 # PostgreSQL 17 Features Guide (Legacy)
 
-> **2026-05 status:** PostgreSQL 18 went GA on 2025-09-25 — see `postgresql18-features.md` for current-release features (UUIDv7, virtual generated columns by default, temporal `WITHOUT OVERLAPS`, OAuth, async I/O, DDL replication). PostgreSQL 17 (GA 2024-09-26) remains community-supported through 2029-11; the features below still apply on both versions. Keep this file as the upgrade reference for clusters still on PG 17.
+> **2026-05 status:** PostgreSQL 18 went GA on 2025-09-25 — see `postgresql18-features.md` for current-release features (UUIDv7, virtual generated columns by default, temporal `WITHOUT OVERLAPS`, OAuth, async I/O, and logical-replication schema maintenance). PostgreSQL 17 (GA 2024-09-26) remains community-supported through 2029-11; the features below still apply on both versions. Keep this file as the upgrade reference for clusters still on PG 17.
 
 Reference for PostgreSQL 17 features relevant to schema design. Most features remain in PG 18 unchanged.
 
@@ -56,39 +56,17 @@ FROM events;
 
 ---
 
-## Partitioning Improvements
+## Partition Maintenance
 
-### SPLIT PARTITION
+PostgreSQL 17 and 18 do not provide `ALTER TABLE ... SPLIT PARTITION` or `MERGE PARTITIONS` commands. Use supported `ATTACH PARTITION` / `DETACH PARTITION` operations with an explicit data-movement and cutover plan. Sources: [PostgreSQL 17 ALTER TABLE](https://www.postgresql.org/docs/17/sql-altertable.html), [PostgreSQL 18 ALTER TABLE](https://www.postgresql.org/docs/18/sql-altertable.html), verified 2026-09-13.
 
-PostgreSQL 17 supports `ALTER TABLE ... SPLIT PARTITION` to divide an existing partition into two without full table recreation.
+For a split or consolidation:
+1. Create replacement tables with the required schema, indexes, and non-overlapping range bounds.
+2. Plan how writes are paused or captured during the copy; detaching a partition alone does not move its rows.
+3. Copy and validate row counts, keys, and boundary values before cutover.
+4. Detach the old partitions and attach the replacements under a reviewed lock/cutover plan. Keep the originals until verification and rollback requirements are met.
 
-```sql
--- Original: orders_2024 covers 2024-01-01 to 2024-12-31
-ALTER TABLE orders
-  SPLIT PARTITION orders_2024
-  INTO (
-    PARTITION orders_2024_h1 FOR VALUES FROM ('2024-01-01') TO ('2024-07-01'),
-    PARTITION orders_2024_h2 FOR VALUES FROM ('2024-07-01') TO ('2025-01-01')
-  );
-```
-
-**When to use:** Existing partitions have grown beyond target size (typically > 10GB) or query patterns have changed to favour smaller date ranges.
-
-### MERGE PARTITION
-
-```sql
--- Merge two under-utilized partitions into one
-ALTER TABLE orders
-  MERGE PARTITIONS (orders_2020, orders_2021)
-  INTO PARTITION orders_2020_2021
-    FOR VALUES FROM ('2020-01-01') TO ('2022-01-01');
-```
-
-**Design rules:**
-- Target partition size: 1–10 GB for optimal parallel scan performance.
-- Use SPLIT for rapidly-growing partitions before they exceed the target.
-- Use MERGE for archive partitions with low query frequency.
-- Both operations are online (no full table lock) in PostgreSQL 17.
+`ATTACH PARTITION` takes a `SHARE UPDATE EXCLUSIVE` lock on the parent and stronger locks on the attached/default partitions. `DETACH PARTITION CONCURRENTLY` reduces parent locking, but cannot run inside a transaction block or when a default partition exists. Do not describe the whole restructuring operation as lock-free or automatically online.
 
 ---
 
@@ -134,4 +112,4 @@ New utility `pg_createsubscriber` creates a logical replication subscriber from 
 
 ## PostgreSQL 18 (Released 2025-09-25)
 
-See `postgresql18-features.md` for full coverage of UUIDv7, virtual generated columns, temporal `WITHOUT OVERLAPS` / `PERIOD`, `RETURNING OLD.*` / `NEW.*`, B-tree skip scan, async I/O, OAuth `pg_hba.conf` method, and DDL replication in logical publications.
+See `postgresql18-features.md` for full coverage of UUIDv7, virtual generated columns, temporal `WITHOUT OVERLAPS` / `PERIOD`, `RETURNING OLD.*` / `NEW.*`, B-tree skip scan, async I/O, OAuth `pg_hba.conf` method, and logical-replication schema maintenance.

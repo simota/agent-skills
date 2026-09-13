@@ -1965,6 +1965,8 @@ const INITIAL_DISPLAY_COUNT = 12;
 
 function renderFilterBar() {
   const bar = document.getElementById('filterBar');
+  const focusedCategory = bar.contains(document.activeElement)
+    ? document.activeElement.dataset.cat : null;
   bar.innerHTML = CATEGORIES.map(cat => {
     const color = cat.color;
     const isAll = cat.id === 'all';
@@ -1983,6 +1985,9 @@ function renderFilterBar() {
       renderCatalog();
     });
   });
+  if (focusedCategory) {
+    bar.querySelector(`[data-cat="${focusedCategory}"]`).focus();
+  }
 }
 
 function renderCatalog() {

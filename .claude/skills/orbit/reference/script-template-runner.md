@@ -25,7 +25,7 @@ RETRY_LIMIT="${RETRY_LIMIT:-3}"
 RETRY_BACKOFF_BASE="${RETRY_BACKOFF_BASE:-2}"
 # Executor command — see reference/executor-engines.md for engine-specific configuration
 EXEC_CMD="${EXEC_CMD:-codex}"
-EXEC_TIMEOUT="${EXEC_TIMEOUT:-600}"
+EXEC_TIMEOUT="${ITER_TIMEOUT:-${EXEC_TIMEOUT:-600}}"
 AUTOCOMMIT="${AUTOCOMMIT:-true}"
 COMMIT_MSG_PREFIX="${COMMIT_MSG_PREFIX:-loop}"
 NOTIFY_ENABLED="${NOTIFY_ENABLED:-false}"
@@ -338,10 +338,25 @@ placeholder_clean() {
 # Tree hash advances on every real commit, so healthy autocommit loops never false-trip.
 SIG_LOG="${LOOP_DIR}/.action-sig.log"
 record_signature() {
-  local verify="$1" tree wt sig
+  local verify="$1" tree wt sig path repo_root
+  repo_root=$(git rev-parse --show-toplevel 2>/dev/null || true)
   tree=$(git rev-parse 'HEAD^{tree}' 2>/dev/null || echo "no-tree")
-  wt=$( { git diff HEAD 2>/dev/null || true; git ls-files --others --exclude-standard 2>/dev/null || true; } \
-    | shasum -a 256 | awk '{print $1}')
+  wt=$( {
+    git diff HEAD 2>/dev/null || true
+    if [[ -n "${repo_root}" ]]; then
+      git -C "${repo_root}" ls-files --others --exclude-standard -z |
+      while IFS= read -r -d '' path; do
+        # Runtime logs/checkpoints change each turn but are not goal progress.
+        [[ "${repo_root}/${path}" == "${LOOP_DIR}/"* ]] && continue
+        printf '%s\0' "${path}"
+        if [[ -L "${repo_root}/${path}" ]]; then
+          readlink "${repo_root}/${path}"
+        elif [[ -f "${repo_root}/${path}" ]]; then
+          shasum -a 256 < "${repo_root}/${path}"
+        fi
+      done
+    fi
+  } | shasum -a 256 | awk '{print $1}')
   sig=$(printf '%s:%s:%s' "${tree}" "${wt}" "${verify}" | shasum -a 256 | awk '{print $1}')
   echo "${sig}" >> "${SIG_LOG}"
 }
@@ -626,7 +641,8 @@ while [[ "${STATUS}" != "DONE" ]] && [[ "${ITER}" -le "${MAX_ITERATIONS}" ]]; do
   LAST_EXIT_CODE=0
   while [[ "${RETRY_COUNT}" -lt "${RETRY_LIMIT}" ]]; do
     LAST_EXIT_CODE=0
-    run_with_budget "${EFFECTIVE_TIMEOUT}" ${EXEC_CMD} 2>&1 | tee -a "${LOOP_DIR}/runner.log" || LAST_EXIT_CODE=$?
+    # EXEC_CMD is trusted operator-authored shell configuration, never model output.
+    run_with_budget "${EFFECTIVE_TIMEOUT}" bash -c "${EXEC_CMD}" 2>&1 | tee -a "${LOOP_DIR}/runner.log" || LAST_EXIT_CODE=$?
     if loop_timeout_reached; then
       echo "[TIMEOUT] LOOP_TIMEOUT=${LOOP_TIMEOUT}s exceeded during executor" | tee -a "${LOOP_DIR}/runner.log"
       STATUS="BLOCKED"; write_terminal_state BLOCKED; break 2
@@ -822,22 +838,29 @@ ${DIFF_STAT}
 
     SQUASH_MSG=""
 
-    # Engine fallback: agy -> claude -> codex -> heuristic
-    if [[ "${SQUASH_MSG_ENGINE}" == "auto" || "${SQUASH_MSG_ENGINE}" == "agy" ]]; then
-      if command -v agy >/dev/null 2>&1; then
-        SQUASH_MSG=$(echo "${SQUASH_PROMPT}" | agy 2>/dev/null || true)
-      fi
+    # Optional text generation is bounded and uses supported capture channels.
+    # agy needs real pty + artifact/sentinel capture; do not launch its interactive
+    # pipe mode merely to generate a commit message (_common/CLI_COMPATIBILITY.md §9.2).
+    if [[ "${SQUASH_MSG_ENGINE}" == "agy" ]]; then
+      echo "[BRANCH] agy text capture requires a dedicated wrapper — using heuristic"
     fi
-    if [[ -z "${SQUASH_MSG}" ]] && [[ "${SQUASH_MSG_ENGINE}" == "auto" || "${SQUASH_MSG_ENGINE}" == "claude" ]]; then
+    SQUASH_MSG_FILE=$(mktemp "${LOOP_DIR}/squash-message.XXXXXX")
+    if [[ "${SQUASH_MSG_ENGINE}" == "auto" || "${SQUASH_MSG_ENGINE}" == "claude" ]]; then
       if command -v claude >/dev/null 2>&1; then
-        SQUASH_MSG=$(claude -p "${SQUASH_PROMPT}" --max-turns 1 2>/dev/null || true)
+        if run_with_budget "${TOOL_TIMEOUT}" claude -p "${SQUASH_PROMPT}" --max-turns 1 > "${SQUASH_MSG_FILE}" 2>/dev/null; then
+          SQUASH_MSG=$(cat "${SQUASH_MSG_FILE}")
+        fi
       fi
     fi
     if [[ -z "${SQUASH_MSG}" ]] && [[ "${SQUASH_MSG_ENGINE}" == "auto" || "${SQUASH_MSG_ENGINE}" == "codex" ]]; then
       if command -v codex >/dev/null 2>&1; then
-        SQUASH_MSG=$(codex exec --full-auto "${SQUASH_PROMPT}" 2>/dev/null || true)
+        : > "${SQUASH_MSG_FILE}"
+        if run_with_budget "${TOOL_TIMEOUT}" codex exec --full-auto -o "${SQUASH_MSG_FILE}" "${SQUASH_PROMPT}" >/dev/null 2>&1; then
+          [[ ! -s "${SQUASH_MSG_FILE}" ]] || SQUASH_MSG=$(cat "${SQUASH_MSG_FILE}")
+        fi
       fi
     fi
+    rm -f "${SQUASH_MSG_FILE}"
 
     # Heuristic fallback when no LLM available
     if [[ -z "${SQUASH_MSG}" ]]; then

@@ -11,3 +11,4 @@ docs/audit/
 
 # Python bytecode from _common/scripts
 __pycache__/
+.venv/

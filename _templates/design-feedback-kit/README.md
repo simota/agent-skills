@@ -70,7 +70,7 @@ design/
 ## Design rules for the kit itself
 
 - **One principle = one file entry**, never a vague paragraph. Each carries a slug ID, a testable statement, rationale, tags, source feedback, and Do/Don't examples.
-- **IDs are kebab-case slugs** (`P-CORE-control-feedback`, `FB-20260115-double-save`), not running numbers — so concurrent appends by different people never collide, and the ID reads as its own index entry.
+- **IDs are kebab-case slugs** (`P-CORE-control-feedback`, `FB-20260115-double-save`), not running numbers. Check uniqueness before adding and again when merging concurrent work; add a stable source/context suffix for distinct entries that would share an ID. The ID reads as its own index entry.
 - **Core holds only what is true on every platform.** If a rule needs `if iOS` / `if web`, it belongs in a platform layer as a delta — do not duplicate.
 - **Human approval is mandatory** before a draft becomes `accepted`, in every execution mode. A single complaint is a signal, not a law — respect the promotion threshold.
 - **No two accepted principles may directly conflict.** At REVIEW, a conflicting draft is resolved by supersede, scope-narrow, or reject (see `AGENT_GUIDE.md`).

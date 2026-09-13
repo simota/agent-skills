@@ -57,6 +57,7 @@ function parseArgs() {
     output: null,
     template: path.join(__dirname, '../templates/client-report.html'),
     json: false,
+    asOf: new Date().toISOString(),
   };
 
   for (let i = 0; i < args.length; i++) {
@@ -119,8 +120,8 @@ Options:
 // Date Utilities (Cross-platform)
 // ============================================
 
-function getStartDate(days) {
-  const date = new Date();
+function getStartDate(days, asOf) {
+  const date = new Date(asOf);
   date.setUTCDate(date.getUTCDate() - days + 1);
   return date.toISOString().split('T')[0];
 }
@@ -142,7 +143,7 @@ function formatDateFull(isoString) {
 // ============================================
 
 function fetchPRs(options) {
-  const startDate = getStartDate(options.days);
+  const startDate = getStartDate(options.days, options.asOf);
 
   const args = ['pr', 'list', '--state', 'merged', '--limit', '501',
     '--search', `merged:>=${startDate}`,
@@ -156,7 +157,7 @@ function fetchPRs(options) {
   if (prs.length > 500) {
     throw new Error('More than 500 PRs match; narrow --days or --author to avoid a partial report');
   }
-  const endDate = new Date().toISOString().split('T')[0];
+  const endDate = options.asOf.split('T')[0];
   return prs.filter(pr => pr.mergedAt && pr.mergedAt.slice(0, 10) >= startDate
     && pr.mergedAt.slice(0, 10) <= endDate);
 }
@@ -220,8 +221,8 @@ function detectCategory(pr) {
 // ============================================
 
 function aggregateData(prs, options) {
-  const startDate = getStartDate(options.days);
-  const endDate = new Date().toISOString().split('T')[0];
+  const startDate = getStartDate(options.days, options.asOf);
+  const endDate = options.asOf.split('T')[0];
 
   // Process each PR
   const processedPRs = prs.map((pr, index) => ({
@@ -276,8 +277,8 @@ function aggregateData(prs, options) {
       endDate,
       startDateFormatted: formatDateFull(startDate),
       endDateFormatted: formatDateFull(endDate),
-      generatedAt: new Date().toISOString(),
-      generatedAtFormatted: formatDateFull(new Date().toISOString()),
+      generatedAt: options.asOf,
+      generatedAtFormatted: formatDateFull(options.asOf),
     },
     summary: {
       totalTasks: processedPRs.length,
@@ -418,7 +419,7 @@ function main() {
   console.log('Generating HTML...');
   const html = generateHTML(data, options.template);
 
-  const outputFile = options.output || `client-report-${new Date().toISOString().split('T')[0]}.html`;
+  const outputFile = options.output || `client-report-${options.asOf.split('T')[0]}.html`;
   fs.writeFileSync(outputFile, html);
   console.log(`Report generated: ${outputFile}`);
 }

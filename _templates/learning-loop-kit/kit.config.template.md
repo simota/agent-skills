@@ -39,7 +39,7 @@ REVIEW_CADENCE:      "quarterly"                 # re-validate rules whose Last 
 ```
 
 ## Notes per knob
-- **RULE_PREFIX / SIGNAL_PREFIX** must be unique within the kit and short. Slugs (not numbers) keep IDs collision-free under concurrent appends.
+- **RULE_PREFIX / SIGNAL_PREFIX** must be unique within the kit and short. Check slug IDs for uniqueness, including concurrent additions at merge time; distinguish independent entries with stable source/context suffixes.
 - **LAYERS** — choose `["core"]` (flat) unless the domain genuinely has a universal layer + context-specific deltas. Common axes: platform, service, language, audience.
 - **MACHINE_ENCODING** decides how much of ENFORCE is mechanical vs reviewer-judgment. If `none`, the PR gate is human-judgment only — state that honestly in the rendered `AGENT_GUIDE.md`.
 - **ARTIFACT_NOUN: none** drops the artifacts directory entirely (some domains have no visual/asset evidence).

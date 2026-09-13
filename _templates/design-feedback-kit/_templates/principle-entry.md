@@ -2,11 +2,11 @@
 
 Copy this block into the right layer file (`core` / `frontend` / `ios` / `android`) during the PROMOTE step.
 
-## ID scheme (collision-free + discoverable)
+## ID scheme (unique + discoverable)
 Use a **kebab-case slug**, not a running number: `P-<SCOPE>-<slug>`.
 - `P-CORE-control-feedback`, `P-FE-keyboard-focus`, `P-IOS-safe-area`, `P-AND-predictive-back`.
-- Slugs never collide on concurrent appends (no shared counter) and read as their own index.
-- If a slug is already taken, the principle already exists — update it instead of adding a duplicate.
+- Slugs read as their own index; check existing IDs and recheck concurrent additions before merging.
+- If a slug is already taken, compare the statements. Propose an edit when it is the same principle; use a distinct context suffix for a different principle. An ID match alone does not establish semantic equivalence.
 
 ```markdown
 ### P-<SCOPE>-<slug> — <one-line imperative title>

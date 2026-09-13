@@ -1,356 +1,192 @@
 #!/bin/bash
-# html-to-pdf.sh - HTMLレポートをA4 PDFに変換
-#
-# 使用方法:
-#   ./html-to-pdf.sh report.html
-#   ./html-to-pdf.sh report.html output.pdf
-#   ./html-to-pdf.sh --method chrome input.html output.pdf
-#
-# オプション:
-#   --method <chrome|wkhtmltopdf|puppeteer>  変換方法を指定
-#   --timeout <seconds>                       タイムアウト秒数 (default: 60)
-#   --verbose                                 詳細出力
-#
-# 必要条件:
-#   - Chrome/Chromium (headless PDF生成) - 推奨
-#   - wkhtmltopdf (フォールバック)
-#   - Puppeteer (Node.js環境)
-
-set -e
-
-# ============================================
-# Configuration
-# ============================================
+# html-to-pdf.sh - Convert an HTML report to A4 PDF.
+# Usage: html-to-pdf.sh [--method chrome|wkhtmltopdf|puppeteer]
+#                       [--timeout seconds] [--verbose] input.html [output.pdf]
+set -euo pipefail
 
 TIMEOUT=${TIMEOUT:-60}
 VERBOSE=${VERBOSE:-false}
 METHOD=""
+INPUT_FILE=""
+OUTPUT_FILE=""
+WORK_DIR=""
 
-# ============================================
-# Argument Parsing
-# ============================================
+error() { echo "Error: $1" >&2; }
+log() { if [ "$VERBOSE" = true ]; then echo "$1" >&2; fi; }
+usage() {
+  echo "Usage: $0 [options] <input.html> [output.pdf]"
+  echo "  --method <method>   chrome, wkhtmltopdf, or puppeteer"
+  echo "  --timeout <sec>     Positive integer seconds (default: 60)"
+  echo "  --verbose, -v       Show converter diagnostics"
+  echo "  --help, -h          Show this help"
+}
 
+POSITIONAL=()
 while [[ $# -gt 0 ]]; do
-  case $1 in
-    --method)
-      METHOD="$2"
-      shift 2
-      ;;
-    --timeout)
-      TIMEOUT="$2"
-      shift 2
-      ;;
-    --verbose|-v)
-      VERBOSE=true
-      shift
-      ;;
-    --help|-h)
-      echo "Usage: $0 [options] <input.html> [output.pdf]"
-      echo ""
-      echo "Options:"
-      echo "  --method <method>   Conversion method: chrome, wkhtmltopdf, puppeteer"
-      echo "  --timeout <sec>     Timeout in seconds (default: 60)"
-      echo "  --verbose, -v       Verbose output"
-      echo "  --help, -h          Show this help"
-      exit 0
-      ;;
-    *)
-      if [ -z "$INPUT_FILE" ]; then
-        INPUT_FILE="$1"
-      else
-        OUTPUT_FILE="$1"
+  case "$1" in
+    --method|--timeout)
+      if [ $# -lt 2 ] || [[ "$2" == --* ]] || [ -z "$2" ]; then
+        error "Missing value for $1"; exit 1
       fi
-      shift
+      if [ "$1" = --method ]; then METHOD="$2"; else TIMEOUT="$2"; fi
+      shift 2
       ;;
+    --verbose|-v) VERBOSE=true; shift ;;
+    --help|-h) usage; exit 0 ;;
+    --) shift; POSITIONAL+=("$@"); break ;;
+    -*) error "Unknown option: $1"; exit 1 ;;
+    *) POSITIONAL+=("$1"); shift ;;
   esac
 done
 
-# ============================================
-# Validation
-# ============================================
+if [ ${#POSITIONAL[@]} -lt 1 ] || [ ${#POSITIONAL[@]} -gt 2 ]; then
+  usage >&2; exit 1
+fi
+if ! [[ "$TIMEOUT" =~ ^[1-9][0-9]*$ ]]; then
+  error "Timeout must be a positive integer"; exit 1
+fi
+case "$METHOD" in
+  ""|chrome|wkhtmltopdf|puppeteer) ;;
+  *) error "Unknown method: $METHOD"; exit 1 ;;
+esac
 
-if [ -z "$INPUT_FILE" ]; then
-  echo "Error: Input file required"
-  echo "Usage: $0 <input.html> [output.pdf]"
-  exit 1
+INPUT_FILE="${POSITIONAL[0]}"
+[ -f "$INPUT_FILE" ] || { error "File not found: $INPUT_FILE"; exit 1; }
+[[ "$INPUT_FILE" == /* ]] || INPUT_FILE="$PWD/$INPUT_FILE"
+OUTPUT_FILE="${POSITIONAL[1]:-${INPUT_FILE%.[hH][tT][mM][lL]}.pdf}"
+[[ "$OUTPUT_FILE" == /* ]] || OUTPUT_FILE="$PWD/$OUTPUT_FILE"
+if [ "$INPUT_FILE" -ef "$OUTPUT_FILE" ]; then
+  error "Input and output must be different files"; exit 1
+fi
+if [ -d "$OUTPUT_FILE" ]; then
+  error "Output is a directory: $OUTPUT_FILE"; exit 1
 fi
 
-if [ ! -f "$INPUT_FILE" ]; then
-  echo "Error: File not found: $INPUT_FILE"
-  exit 1
-fi
+# Use a fresh file per attempt and publish only a verified result. A previous PDF
+# must never make a failed converter appear successful or be destroyed on failure.
+WORK_DIR=$(mktemp -d "$(dirname "$OUTPUT_FILE")/.html-to-pdf.XXXXXX")
+trap 'rm -rf -- "$WORK_DIR"' EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+PDF_FILE="$WORK_DIR/report.pdf"
 
-# Ensure absolute path
-if [[ "$INPUT_FILE" != /* ]]; then
-  INPUT_FILE="$(pwd)/$INPUT_FILE"
-fi
-
-OUTPUT_FILE="${OUTPUT_FILE:-${INPUT_FILE%.html}.pdf}"
-
-# ============================================
-# Logging
-# ============================================
-
-log() {
-  if [ "$VERBOSE" = true ]; then
-    echo "[$(date '+%H:%M:%S')] $1"
-  fi
-}
-
-error() {
-  echo "Error: $1" >&2
-}
-
-# ============================================
-# Timeout Wrapper
-# ============================================
-
-run_with_timeout() {
-  local cmd="$1"
-  local timeout_sec="${2:-$TIMEOUT}"
-
-  if command -v timeout &> /dev/null; then
-    # GNU timeout (Linux)
-    timeout "$timeout_sec" bash -c "$cmd"
-  elif command -v gtimeout &> /dev/null; then
-    # GNU timeout via Homebrew (macOS)
-    gtimeout "$timeout_sec" bash -c "$cmd"
+run_with_timeout() (
+  if command -v timeout >/dev/null 2>&1; then
+    timeout --kill-after=1 "$TIMEOUT" "$@"
+  elif command -v gtimeout >/dev/null 2>&1; then
+    gtimeout --kill-after=1 "$TIMEOUT" "$@"
   else
-    # Fallback: background process with kill
-    bash -c "$cmd" &
+    # Bash job control gives the converter a process group, including browser
+    # children. Kill the whole group, and reap both converter and watchdog.
+    set -m
+    "$@" &
     local pid=$!
-    local count=0
-    while kill -0 $pid 2>/dev/null; do
+    (
+      sleep "$TIMEOUT"
+      kill -TERM -- "-$pid" 2>/dev/null || exit 0
       sleep 1
-      ((count++))
-      if [ $count -ge $timeout_sec ]; then
-        kill -9 $pid 2>/dev/null
-        error "Timeout after ${timeout_sec}s"
-        return 124
-      fi
-    done
-    wait $pid
+      kill -KILL -- "-$pid" 2>/dev/null || true
+    ) &
+    local watchdog=$!
+    local status=0
+    wait "$pid" || status=$?
+    kill -TERM -- "-$watchdog" 2>/dev/null || true
+    wait "$watchdog" 2>/dev/null || true
+    # Terminate descendants that outlived their converter parent.
+    kill -KILL -- "-$pid" 2>/dev/null || true
+    return "$status"
+  fi
+)
+
+run_converter() {
+  rm -f -- "$PDF_FILE"
+  if [ "$VERBOSE" = true ]; then
+    run_with_timeout "$@"
+  else
+    run_with_timeout "$@" >"$WORK_DIR/converter.log" 2>&1
   fi
 }
-
-# ============================================
-# Verify Output
-# ============================================
 
 verify_output() {
-  local file="$1"
-  local min_size="${2:-1000}"
-
-  if [ ! -f "$file" ]; then
-    return 1
+  [ -f "$PDF_FILE" ] || return 1
+  local size
+  size=$(wc -c < "$PDF_FILE")
+  if [ "$size" -lt 1000 ]; then
+    error "Output file too small ($size bytes)"; return 1
   fi
-
-  local size=$(wc -c < "$file" 2>/dev/null | tr -d ' ')
-  if [ "$size" -lt "$min_size" ]; then
-    error "Output file too small (${size} bytes). PDF generation may have failed."
-    return 1
+  if [ "$(head -c 5 "$PDF_FILE")" != '%PDF-' ]; then
+    error "Output is not a PDF file"; return 1
   fi
-
-  # Check PDF magic number
-  if ! head -c 4 "$file" 2>/dev/null | grep -q '%PDF'; then
-    error "Output is not a valid PDF file"
-    return 1
-  fi
-
-  return 0
 }
 
-# ============================================
-# Chrome/Chromium
-# ============================================
+file_url() {
+  # Percent-encode bytes, including #, %, spaces, and UTF-8, without eval.
+  local LC_ALL=C
+  local value="$1" encoded="" char hex i
+  for ((i=0; i<${#value}; i++)); do
+    char="${value:i:1}"
+    case "$char" in
+      [a-zA-Z0-9/._~-]) encoded+="$char" ;;
+      *) printf -v hex '%%%02X' "'$char"; encoded+="$hex" ;;
+    esac
+  done
+  printf 'file://%s' "$encoded"
+}
 
 find_chrome() {
-  local candidates=(
-    "google-chrome"
-    "chromium"
-    "chromium-browser"
-    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-    "/Applications/Chromium.app/Contents/MacOS/Chromium"
-    "/usr/bin/google-chrome"
-    "/usr/bin/chromium"
-  )
-
-  for cmd in "${candidates[@]}"; do
-    if command -v "$cmd" &> /dev/null || [ -x "$cmd" ]; then
-      echo "$cmd"
-      return 0
+  local candidate
+  for candidate in google-chrome chromium chromium-browser \
+      "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+      "/Applications/Chromium.app/Contents/MacOS/Chromium"; do
+    if command -v "$candidate" >/dev/null 2>&1; then
+      command -v "$candidate"; return 0
     fi
   done
-
   return 1
 }
 
 convert_with_chrome() {
   local chrome_cmd
   chrome_cmd=$(find_chrome) || return 1
-
   log "Using Chrome: $chrome_cmd"
-
-  local temp_dir=$(mktemp -d)
-  trap "rm -rf $temp_dir" EXIT
-
-  local cmd="\"$chrome_cmd\" \
-    --headless \
-    --disable-gpu \
-    --no-sandbox \
-    --disable-software-rasterizer \
-    --disable-dev-shm-usage \
-    --print-to-pdf=\"$OUTPUT_FILE\" \
-    --print-to-pdf-no-header \
-    --no-margins \
-    --run-all-compositor-stages-before-draw \
-    --virtual-time-budget=5000 \
-    \"file://$INPUT_FILE\" 2>/dev/null"
-
-  if run_with_timeout "$cmd" "$TIMEOUT"; then
-    if verify_output "$OUTPUT_FILE"; then
-      return 0
-    fi
-  fi
-
-  return 1
+  run_converter "$chrome_cmd" --headless --disable-gpu \
+    --disable-software-rasterizer --disable-dev-shm-usage \
+    "--user-data-dir=$WORK_DIR/chrome-profile" "--print-to-pdf=$PDF_FILE" \
+    --no-pdf-header-footer --no-margins --run-all-compositor-stages-before-draw \
+    --virtual-time-budget=5000 "$(file_url "$INPUT_FILE")" || return 1
+  verify_output
 }
-
-# ============================================
-# wkhtmltopdf
-# ============================================
 
 convert_with_wkhtmltopdf() {
-  if ! command -v wkhtmltopdf &> /dev/null; then
-    return 1
-  fi
-
+  command -v wkhtmltopdf >/dev/null 2>&1 || return 1
   log "Using wkhtmltopdf"
-
-  local cmd="wkhtmltopdf \
-    --page-size A4 \
-    --margin-top 15mm \
-    --margin-bottom 15mm \
-    --margin-left 12mm \
-    --margin-right 12mm \
-    --enable-local-file-access \
-    --javascript-delay 2000 \
-    --no-stop-slow-scripts \
-    --debug-javascript \
-    \"$INPUT_FILE\" \
-    \"$OUTPUT_FILE\" 2>/dev/null"
-
-  if run_with_timeout "$cmd" "$TIMEOUT"; then
-    if verify_output "$OUTPUT_FILE"; then
-      return 0
-    fi
-  fi
-
-  return 1
+  run_converter wkhtmltopdf --page-size A4 --margin-top 15mm \
+    --margin-bottom 15mm --margin-left 12mm --margin-right 12mm \
+    --enable-local-file-access --javascript-delay 2000 --no-stop-slow-scripts \
+    "$INPUT_FILE" "$PDF_FILE" || return 1
+  verify_output
 }
-
-# ============================================
-# Puppeteer
-# ============================================
 
 convert_with_puppeteer() {
-  if ! command -v node &> /dev/null; then
-    return 1
-  fi
-
-  local script_dir="$(dirname "$0")"
-  local puppeteer_script="$script_dir/puppeteer-pdf.js"
-
-  if [ ! -f "$puppeteer_script" ]; then
-    return 1
-  fi
-
+  command -v node >/dev/null 2>&1 || return 1
+  local script_dir
+  script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
   log "Using Puppeteer"
-
-  local cmd="node \"$puppeteer_script\" \"$INPUT_FILE\" \"$OUTPUT_FILE\" 2>/dev/null"
-
-  if run_with_timeout "$cmd" "$TIMEOUT"; then
-    if verify_output "$OUTPUT_FILE"; then
-      return 0
-    fi
-  fi
-
-  return 1
+  run_converter node "$script_dir/puppeteer-pdf.js" "$INPUT_FILE" "$PDF_FILE" || return 1
+  verify_output
 }
-
-# ============================================
-# Main
-# ============================================
 
 echo "Converting: $INPUT_FILE"
 echo "Output: $OUTPUT_FILE"
-
-# If method specified, use only that method
-if [ -n "$METHOD" ]; then
-  case "$METHOD" in
-    chrome)
-      if convert_with_chrome; then
-        echo "Done: $OUTPUT_FILE"
-        exit 0
-      fi
-      error "Chrome conversion failed"
-      exit 1
-      ;;
-    wkhtmltopdf)
-      if convert_with_wkhtmltopdf; then
-        echo "Done: $OUTPUT_FILE"
-        exit 0
-      fi
-      error "wkhtmltopdf conversion failed"
-      exit 1
-      ;;
-    puppeteer)
-      if convert_with_puppeteer; then
-        echo "Done: $OUTPUT_FILE"
-        exit 0
-      fi
-      error "Puppeteer conversion failed"
-      exit 1
-      ;;
-    *)
-      error "Unknown method: $METHOD"
-      exit 1
-      ;;
-  esac
-fi
-
-# Auto-detect: try each method with fallback
-echo "Detecting conversion method..."
-
-# Method 1: Chrome/Chromium (recommended)
-if convert_with_chrome; then
-  echo "Done (Chrome): $OUTPUT_FILE"
-  exit 0
-fi
-log "Chrome not available or failed, trying next method..."
-
-# Method 2: wkhtmltopdf
-if convert_with_wkhtmltopdf; then
-  echo "Done (wkhtmltopdf): $OUTPUT_FILE"
-  exit 0
-fi
-log "wkhtmltopdf not available or failed, trying next method..."
-
-# Method 3: Puppeteer
-if convert_with_puppeteer; then
-  echo "Done (Puppeteer): $OUTPUT_FILE"
-  exit 0
-fi
-log "Puppeteer not available or failed"
-
-# All methods failed
-echo ""
-error "All PDF conversion methods failed."
-echo ""
-echo "Install one of the following:"
-echo "  - Google Chrome or Chromium (recommended)"
-echo "  - wkhtmltopdf: brew install wkhtmltopdf"
-echo "  - Puppeteer: npm install puppeteer"
-echo ""
-echo "Or open the HTML file in a browser and print to PDF."
+METHODS=(chrome wkhtmltopdf puppeteer)
+if [ -n "$METHOD" ]; then METHODS=("$METHOD"); fi
+for candidate in "${METHODS[@]}"; do
+  if "convert_with_$candidate"; then
+    mv -f -- "$PDF_FILE" "$OUTPUT_FILE"
+    echo "Done ($candidate): $OUTPUT_FILE"
+    exit 0
+  fi
+  log "$candidate unavailable or failed"
+done
+error "PDF conversion failed. Install Chrome, wkhtmltopdf, or Puppeteer; use --verbose for diagnostics."
 exit 1

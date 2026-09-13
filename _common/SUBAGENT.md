@@ -110,10 +110,10 @@ This document assumes the **Claude Code** `Agent` tool. When the **Codex CLI** d
 | Concept | Claude Code (this doc) | Codex CLI hub |
 |---------|------------------------|---------------|
 | Spawn | `Agent(prompt, ...)` | `spawn_agent(prompt)` → `wait_agent(id)` |
-| Parallel | N `Agent(... run_in_background: true)` (non-blocking) | N `spawn_agent` in one turn → `wait_agent` on **all** (hard join; no background primitive — C2) |
-| Max fan-out | soft cap **3** (else Rally) | governed by `agents.max_depth` / budget (C1), not the soft 3 |
+| Parallel | N `Agent(... run_in_background: true)` (non-blocking) | N `spawn_agent`; independent hub work may continue; join required results before aggregation (C2) |
+| Max fan-out | soft cap **3** (else Rally) | governed by effective runtime capacity / nesting / budget (C1), not the soft 3 |
 | Continue / resume | new `Agent` per step | `send_input` / `resume_agent` / `close_agent` for 4+ step chains (C6) |
-| Prereq | `Agent` tool present | `[features] multi_agent = true` + `[agents] max_depth >= 2`; tool may be lazily hidden (C5) |
+| Prereq | `Agent` tool present | advertised spawn capability + available capacity; legacy depth limits apply to planned child depth (C1/C5) |
 
 The patterns below (RESEARCH_FAN_OUT, MULTI_ENGINE, etc.) and their merge strategies are engine-agnostic — only the spawn/join syntax changes.
 

@@ -39,6 +39,8 @@ import re
 import sys
 from pathlib import Path
 
+from _markdown import without_fenced_examples
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 REGISTER = REPO_ROOT / "_common" / "LESSONS.md"
 
@@ -66,10 +68,10 @@ def strip_code(text: str) -> str:
 
 
 def parse_rows(text: str) -> list[tuple[int, list[str]]]:
-    """(line number, cells) for every register row, ignoring the header and rules table."""
+    """Register rows with source lines, excluding headers, rules, and fenced examples."""
     rows = []
     in_register = False
-    for lineno, line in enumerate(text.splitlines(), 1):
+    for lineno, line in enumerate(without_fenced_examples(text).splitlines(), 1):
         line = line.strip()
         if not line.startswith("|"):
             in_register = False

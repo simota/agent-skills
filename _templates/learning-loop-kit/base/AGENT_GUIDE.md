@@ -6,6 +6,7 @@ Two responsibilities: (A) **run the learning loop** when a {{SIGNAL_NOUN}} arriv
 
 ### Step 2 — ANALYZE
 Spawn {{ANALYZE_SKILLS}} (parallel where independent), then synthesize.
+- Read new entries from `{{SIGNAL_LOG}}` together with unresolved `analyzed` entries left below the promotion threshold. Count independent evidence across runs; exclude `promoted` and `rejected` entries from pending promotion candidates.
 - **Promotion threshold** — only draft a {{RULE_NOUN}} when: {{PROMOTION_THRESHOLD}}. Below threshold → mark the {{SIGNAL_NOUN}} `analyzed` and leave to accumulate.
 - For themes that clear it, write a draft using `_templates/rule-entry.md` (`status: proposed`). Decide layer: universal across `{{LAYERS}}` → `core`; else the matching delta layer (must not duplicate/contradict a core rule).
 - Scan `rules/INDEX.md` by tag first — if a matching {{RULE_NOUN}} exists, propose an **edit** instead of a new entry. Mark the source {{SIGNAL_NOUN}} `analyzed` and link the draft.
@@ -16,7 +17,7 @@ Spawn {{ANALYZE_SKILLS}} (parallel where independent), then synthesize.
 - **Conflict resolution** — if a draft contradicts an accepted {{RULE_NOUN}}: (a) **supersede** (deprecate old → Archive, set `Superseded by:`), (b) **scope-narrow** (restrict one to a layer/context), or (c) **reject**. Never leave two accepted {{RULE_NOUN_PLURAL}} in direct conflict. {{PROMOTE_SKILLS}} may pre-flag conflicts/dupes.
 
 ### Step 4 — PROMOTE
-- Append the accepted entry to the right `rules/*.md` with a slug ID (`{{RULE_PREFIX}}-<LAYER>-<slug>`) — no shared counter, no collisions.
+- Append the accepted entry to the right `rules/*.md` with a slug ID (`{{RULE_PREFIX}}-<LAYER>-<slug>`) — check existing IDs and recheck concurrent additions before merging. Reuse an ID only for an approved edit to the same {{RULE_NOUN}}; give distinct {{RULE_NOUN_PLURAL}} distinct slugs.
 - Add its row to `rules/INDEX.md` (by-tag + by-layer).
 - Mark source {{SIGNAL_NOUN}} `promoted` + `Promoted to: {{RULE_PREFIX}}-<LAYER>-<slug>`.
 - If the {{RULE_NOUN}} has a machine-checkable part, encode it via **{{MACHINE_ENCODING}}** and record the reference in the entry's `Check:` field.

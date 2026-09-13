@@ -114,8 +114,8 @@ When a goal explicitly invokes Ralph Loop shapes (`PROMPT.md`, `<promise>COMPLET
 When driving apex Phase 6, Orbit's engine is **fixed to Codex CLI** (`spawn_agent` / `wait_agent` / `send_input` / `resume_agent` / `close_agent`). Before consuming the loop contract, verify:
 
 1. Codex CLI is reachable.
-2. `agents.max_depth >= 2`.
-3. All five subagent tools are permitted.
+2. Spawn capacity/nesting is sufficient under `_common/CODEX_ORCHESTRATION.md` C1.
+3. The active runtime's required advertised subagent tools are permitted.
 
 If the check fails, emit a runner-handoff error — do NOT silently fall back to Claude Code Agent. apex's cost and convergence model assumes Codex execution. [Source: `nexus/reference/apex-recipe.md` §Engine availability check; developers.openai.com/codex/subagents]
 

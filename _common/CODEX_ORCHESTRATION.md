@@ -18,7 +18,7 @@ Engine-selection rule for orchestrators:
 
 ## Why This Exists
 
-The Nexus stack historically assumed Claude Code is the hub: the canonical spawn template is `Agent(...)`, model selection is `sonnet/opus/haiku`, parallelism is `run_in_background`, and the authoring protocol is Opus-5-specific (effort levels, P4 parallel triggers). None of those map cleanly to a Codex CLI hub, which spawns via `spawn_agent`/`wait_agent`, runs the latest gpt-5.6 generation throughout with role-based variants (sol/terra/luna, see C3.0), has **no background-spawn primitive**, and gates fan-out via `agents.max_depth` rather than a soft "max 3" convention.
+The Nexus stack historically assumed Claude Code is the hub: the canonical spawn template is `Agent(...)`, model selection is `sonnet/opus/haiku`, parallelism is `run_in_background`, and the authoring protocol is Opus-5-specific (effort levels, P4 parallel triggers). None of those map cleanly to a Codex CLI hub, which spawns via `spawn_agent`/`wait_agent`, runs the latest gpt-5.6 generation throughout with role-based variants (sol/terra/luna, see C3.0), runs spawned agents concurrently, and uses runtime spawn limits rather than a soft "max 3" convention.
 
 When Codex drives the hub, apply the nine principles below instead of the Opus principles. They are grounded in verified repository facts (`_common/CLI_COMPATIBILITY.md`, `nexus/SKILL.md` Execution Layers) and, for the config/prompting levers (C3, C7, C9), in the official Codex docs at `developers.openai.com/codex/*` and the OpenAI Codex prompting guide (verified 2026-06); items with no confirmed source are marked **未確認** and must not be speculatively completed.
 
@@ -26,25 +26,25 @@ When Codex drives the hub, apply the nine principles below instead of the Opus p
 
 ## The Nine Principles
 
-### C1. Spawn-Depth Budget
+### C1. Spawn Capacity and Depth Budget
 
-Codex gates nested spawning with `agents.max_depth` (default `1` — root is depth 0, so the default allows one child layer and blocks deeper nesting) and caps concurrently-open agents with `agents.max_threads` (default `6`). A hub that itself was spawned (e.g. Nexus launched from a slash command) may already sit at depth 1 and be unable to recurse. Fan-out plans wider than 6 branches queue against `max_threads` — size parallel phases accordingly or raise the key. [Verified 2026-06 against developers.openai.com/codex/config-reference; CLI 0.137.0 "Multi-agent v2" adds per-thread runtime choice but changes neither default.]
-
-**Apply by:**
-- Before the first `spawn_agent` of a chain, verify both prereqs hold: `codex features list | grep multi_agent` → `true` (default since v0.115+), and `~/.codex/config.toml` has `[agents] max_depth >= 2`.
-- If `max_depth` is insufficient, fall back to internal execution and log the reason concretely (`Execution: internal (reason: agents.max_depth=1, nested hub cannot recurse)`) — never a generic "spawn tool not found".
-- Treat depth as the real fan-out governor; the `_common/SUBAGENT.md` "max 3 parallel" convention is a Claude soft-cap, not the Codex limit.
-- Tune the fan-out envelope with `[agents] max_threads` (concurrent workers, default `6`), `max_depth` (nesting), and `job_max_runtime_seconds`. For large homogeneous sweeps prefer the built-in **`spawn_agents_on_csv`** batch tool (`csv_path` + `{column}`-templated `instruction` + `output_schema` + `max_concurrency`; each worker reports once via `report_agent_job_result`) over hand-rolled per-item spawns. Built-in roles: `default`, `worker` (execution), `explorer` (read-heavy). [Verified 2026-06 — developers.openai.com/codex/subagents, /config-advanced.]
-- **Version caveat:** the subagents docs now state subagents are enabled by default (no flag), while older `config-advanced`/KB sources describe `[features] multi_agent` as an off-by-default experimental flag. This changed recently — confirm on the installed build via `/experimental` rather than assuming either state.
-
-### C2. Synchronous Fan-Out / Join
-
-Codex has **no background-spawn primitive**. Parallelism = issue N `spawn_agent` calls in one turn, then `wait_agent` on **all** of them. This is a hard barrier, unlike Claude's non-blocking `run_in_background`.
+Use the active runtime's advertised spawn tools and limits. A missing legacy config key is not evidence that spawning is unavailable. Current local Codex uses `[agents] enabled` (default `true`) and `max_concurrent_threads_per_session`; `max_threads` remains a legacy alias. Hosted sessions may supply their limits directly without a local `config.toml`. [Verified 2026-09-13 — [official Subagents documentation](https://learn.chatgpt.com/docs/agent-configuration/subagents).]
 
 **Apply by:**
-- For 2-3 independent branches: emit all `spawn_agent` calls together, then join with `wait_agent` per id before aggregating.
-- Do not design recipes that assume a branch can keep running while the hub does other work — Codex joins at `wait_agent`.
-- Hub-spoke ownership still holds: no shared mutable state between concurrent branches; aggregate only after the join.
+- Before the first spawn, inspect the advertised tool contract and available capacity. Respect an explicit disabled setting or runtime denial; do not require a local CLI/config probe when the host already exposes the capability.
+- On older builds that enforce `agents.max_depth`, compare the **planned child depth** with the configured limit: `current_depth + 1 <= max_depth`. Root depth `0` with `max_depth=1` permits direct children; a depth-1 hub needs `max_depth>=2`. A slash-command invocation alone does not prove that the hub is nested.
+- Distinguish concurrency from nesting: queue work against the effective concurrent-agent cap, and check nesting only when a child must spawn another child. Do not change configuration just to satisfy a hard-coded threshold.
+- Fall back to internal execution only after a concrete blocker is established, and log it (`Execution: internal (reason: current_depth=1, agents.max_depth=1)`). Never use a generic "spawn tool not found".
+- For large homogeneous sweeps, use `spawn_agents_on_csv` only if the active runtime advertises it; otherwise use bounded fan-out. Tool names and config schemas vary by release, so follow the installed interface rather than inventing missing APIs.
+
+### C2. Concurrent Fan-Out / Join
+
+Spawn independent branches, keep doing independent hub work while they run, and wait before consuming their results. Codex does not need Claude's `run_in_background` flag to run child threads concurrently. The join is a dependency boundary, not a ban on useful hub work. [Verified 2026-09-13 — [official Subagents documentation](https://learn.chatgpt.com/docs/agent-configuration/subagents).]
+
+**Apply by:**
+- Start independent branches within the C1 capacity budget; collect every required result before aggregating or starting dependent steps.
+- Use the active runtime's advertised wait/message tools. A timeout or mailbox notification alone is not a completed result.
+- Keep hub-spoke ownership: independent writes need disjoint file ownership; shared mutations wait for the relevant branches to finish.
 
 ### C3. Reasoning-Effort Routing
 
@@ -76,7 +76,7 @@ Codex subagents perform best with minimal, unbiased framing — **Role / Target 
 Codex does not always list `spawn_agent` in the model's visible tool inventory. "Not visible" ≠ "not callable".
 
 **Apply by:**
-- If both C1 prereqs hold but `spawn_agent` appears absent, attempt the call anyway rather than falling back to internal.
+- If C1 confirms capability but the short inventory omits the tool, discover the advertised spawn interface and attempt it; do not invent an unlisted API.
 - Only log an internal fall-back after an actual call failure, with the concrete error.
 
 ### C6. Checkpoint-Resume via Session Tools
@@ -142,7 +142,7 @@ C8 (AGENTS.md authority) applies to **every** role authored for a Codex hub.
 When validating a skill's Codex-orchestrator path, use the nine checks below (Architect validation):
 
 - R-C1 Spawn-depth prereqs verified before fan-out; concrete internal fall-back reason
-- R-C2 Parallel branches use N `spawn_agent` → `wait_agent` join (no assumed background execution)
+- R-C2 Independent branches run concurrently; every required result is collected before dependent work or aggregation
 - R-C3 All Codex steps and spawned subagents run on the latest gpt-5.6 generation with the role-matched variant (hub/plan/design=sol, standard implementation=terra, rote subagents=luna, C3.0); no fallback to a previous generation; depth tuned via `model_reasoning_effort` (`minimal|low|medium|high|xhigh`), no invented level names beyond these.
 - R-C4 Loose-prompt spawn (Role/Target/Output); no methodology padding
 - R-C5 Lazy-visibility handling (attempt call when prereqs hold)

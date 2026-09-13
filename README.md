@@ -34,7 +34,7 @@ example) is skipped too, so the same command works on a single-CLI machine.
 |---------|--------|
 | `make link` | Link into all three CLI directories — `link-claude` / `link-codex` / `link-agy` for just one |
 | `make status` | Show the link count per CLI (`linked / linkable`) and how many entries each directory holds |
-| `make unlink` | Remove only the links into this repository; other skills stay in place |
+| `make unlink` | Remove only links created by `make link`; other skills and custom aliases stay in place |
 
 **Alternative — clone straight into a CLI directory**
 
@@ -1899,18 +1899,18 @@ Define CartItem and CartSummary interfaces.
 
 ### Adding New Agents
 
-1. Create `skills/[AgentName]/SKILL.md`
+1. Create `<skill-name>/SKILL.md` at the repository root (lowercase kebab-case)
 2. Define `name` and `description` in frontmatter
 3. Specify boundaries (Always do / Ask first / Never do)
 4. Add AUTORUN Support and Nexus Hub Mode sections
 
 ### Modifying Agents
 
-Edit each `SKILL.md` directly. Format:
+Edit each `SKILL.md` directly, following [_templates/SKILL_TEMPLATE.md](_templates/SKILL_TEMPLATE.md). Frontmatter example:
 
 ```markdown
 ---
-name: AgentName
+name: skill-name
 description: Agent description
 ---
 
