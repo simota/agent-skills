@@ -2,6 +2,8 @@
 
 AI Agent Skills へのコントリビューションを歓迎します！
 
+リポジトリ構造・正本・検証の全体像は [`docs/REPOSITORY_GUIDE.md`](docs/REPOSITORY_GUIDE.md) も参照してください。
+
 ## 🐛 バグ報告
 
 1. [Issues](../../issues) で既存の報告がないか確認
@@ -30,9 +32,20 @@ python3 -m pip install -r requirements-checks.txt
 make check
 ```
 
-検証には Python 3 と Node.js が必要です（CI は Python 3.12 / Node.js 22）。`make check` でスキル検証と回帰テストを実行します。`make hooks` でコミット前の自動検証を有効にできます。
+検証には Python 3 と Node.js が必要です（CI は Python 3.12 / Node.js 22）。
 
-### 新しいエージェントの追加
+検証コマンドは `Makefile` を正とします:
+
+| コマンド | 用途 |
+|---|---|
+| `make validate` | スキル構造、project-local 配線、Recipes、routing、instructions、contract delivery、lessons、task battery を検証 |
+| `make test` | 検証スクリプトと周辺ツールの回帰テストを実行 |
+| `make check` | `make validate` + `make test`。PR 前の標準コマンド |
+| `make hooks` | リポジトリ管理の pre-commit hook を有効化 |
+
+個別 lint コマンドの羅列をドキュメント側で正本化せず、通常は `make check` を実行してください。検証スクリプトが増減した場合は `Makefile`・CI・hook/installer fixture を同時に更新します。
+
+### 新しいグローバルエージェントの追加
 
 1. 小文字のディレクトリ名で `<skill-name>/SKILL.md` を作成（例: `scout/SKILL.md`）
 2. `description` は英語で1行（グローバルとproject-localの全スキルで統一）。frontmatter とセクション構成は `_templates/SKILL_TEMPLATE.md` を正とする — 以下は骨格の抜粋:
@@ -97,20 +110,48 @@ Route elsewhere when the task is primarily:
 [Hub mode handoff format]
 ```
 
-上の見出しは `_common/scripts/lint-frontmatter.py` の `ST1`（必須見出し）が実際に検査する集合。省略すると lint が指摘する。
+上の見出しは `_common/scripts/lint-frontmatter.py` の `ST1`（必須見出し）が実際に検査する集合です。省略すると lint が指摘します。
 
-`## INTERACTION_TRIGGERS`（ユーザー確認が必要な決定ポイントの定義）は、それが必要なエージェントでは今も使用される（現状12スキル）。省略可能なセクションであり、必須ではない。
+`## INTERACTION_TRIGGERS`（ユーザー確認が必要な決定ポイントの定義）は、必要なエージェントで使用する任意セクションです。
 
 3. 完全なセクション一覧・順序・記法は `_templates/SKILL_TEMPLATE.md` を参照し、それに沿って作成する
 4. **ロスターを更新する（手作業のレジストリは自動同期されない）**:
    - `README.md` / `README_ja.md` のエージェント一覧とエージェント数
    - `index.html`（`const AGENTS` 配列・`SUBCOMMANDS`・英訳・カテゴリ件数・件数を記載した全テキスト）
    - `compass/reference/catalog.md`（カテゴリ節とその件数）
-   - `_common/SKILL_PACKS.md`（最低1つのPack、またはoptional／explicit-only／project-local配置に登録する）
+   - `_common/SKILL_PACKS.md`（最低1つのPack、またはoptional／explicit-only配置に登録する）
    - `AGENTS.md` / `CLAUDE.md` のスキル数
-5. 使用例セクションにサンプルを追加
-6. lint を通す: `python3 _common/scripts/lint-frontmatter.py --severity error --changed-only` と `python3 _common/scripts/lint-instructions.py --severity error`
-7. 契約の配送を確認する: `python3 _common/scripts/lint-contracts.py --severity error`。新規スキルは `_common/*.md` を名指ししても、ディレクトリに `_common` symlink が無ければ実行時に解決しない（CD-4）。`--report` で spine 契約の到達深度を確認できる
+5. Recipes や routing を追加・変更した場合は、それぞれの参照ファイル・生成物・ルーティング面も同期する
+6. 使用例セクションにサンプルを追加
+7. `make check` を通す
+8. warning が残る場合は、その warning の仕様に従ってレビュー済み例外として根拠を残す。単に検証を迂回しない
+
+### project-local スキルの変更
+
+project-local スキルはグローバルロスターとは別の運用拡張です。現在の正本は `.claude/skills/`、クロスツール用ミラーは `.agents/skills/` です。
+
+変更時は以下を守ってください:
+
+1. `.claude/skills/<skill-name>/` を正本として意味的な変更を行う
+2. `.agents/skills/<skill-name>/` に同じ内容を再帰的に反映する
+3. `_common/` または `_templates/` を参照する場合、**正本とミラーの両方**で共有ルートへ解決する symlink を維持する
+4. ロスター・fallback・project-local 契約を変える場合は `_common/PROJECT_LOCAL_SKILLS.md` を更新する
+5. `make check` を実行する
+
+`_common/scripts/lint-project-local.py` が次の blocking invariant を検証します:
+
+- `PL-1`: registry、canonical roster、mirror roster が一致する
+- `PL-2`: canonical / mirror が symlink target を含め再帰的に一致する
+- `PL-3`: `_common/` / `_templates/` の参照が共有ルートへ解決し、具体的な参照ファイルが存在する
+
+手動の `diff -rq` は診断には使えますが、PR 可否の正本は `make check` / `lint-project-local.py` です。
+
+### 共有契約・検証ツールの変更
+
+- `_common/*.md` を追加・変更した場合は contract tier / precedence / reachability を確認する
+- 新規スキルが共有契約を名指ししても、実行時に解決する `_common` symlink が無ければ contract delivery は成立しない
+- checker の変更には、壊れた状態を再現する回帰テストと修復後の成功ケースを追加する
+- checker roster を変えた場合は `Makefile`、CI、hook fixture、installer fixture の同期を確認する
 
 ### コーディング規約
 
@@ -125,7 +166,7 @@ Route elsewhere when the task is primarily:
 
 ### コミットメッセージ
 
-```
+```text
 type(scope): description
 
 Examples:
@@ -143,14 +184,16 @@ Examples:
 
 ### PR チェックリスト
 
-- [ ] SKILL.md が規定フォーマットに従っている
+- [ ] `SKILL.md` が `_templates/SKILL_TEMPLATE.md` と現在の lint 契約に従っている
 - [ ] Boundaries（Always/Ask/Never）が明確
-- [ ] AUTORUN Support セクションがある
-- [ ] README.md / README_ja.md を更新した
-- [ ] ロスター系レジストリ（`index.html`, `compass/reference/catalog.md`, `_common/SKILL_PACKS.md`, `AGENTS.md`, `CLAUDE.md`）を更新した
-- [ ] `lint-frontmatter.py` と `lint-instructions.py` が通る
-- [ ] `lint-contracts.py` が通る（`_common` symlink が張られ、名指しした契約が実行時に解決する）
-- [ ] 使用例を追加した
+- [ ] AUTORUN Support / Nexus Hub Mode が必要な契約どおりに記述されている
+- [ ] グローバルロスター変更時、`README.md` / `README_ja.md` と関連レジストリを同期した
+- [ ] `index.html`, `compass/reference/catalog.md`, `_common/SKILL_PACKS.md`, `AGENTS.md`, `CLAUDE.md` のうち影響範囲を更新した
+- [ ] project-local 変更時、`.claude/skills/*` と `.agents/skills/*` が一致し、共有 symlink が解決する
+- [ ] Recipes / routing / shared contract の変更面を同期した
+- [ ] `make check` が通る
+- [ ] warning / reviewed exception を増やした場合、根拠と境界を記録した
+- [ ] 必要な使用例・説明・変更履歴を更新した
 
 ## 📝 ドキュメント改善
 
@@ -159,6 +202,9 @@ Examples:
 - 説明の明確化
 - 使用例の追加
 - 翻訳の改善
+- 実装済み invariant とドキュメントの差分解消
+
+ドキュメントの重複を増やすより、可能な限り executable check を正本にし、人向け文書からそこへ誘導してください。
 
 ## 🤝 コードオブコンダクト
 
