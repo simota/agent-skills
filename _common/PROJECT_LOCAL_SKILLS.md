@@ -9,6 +9,7 @@ This registry separates reusable global skills from operating extensions that on
 - Global skills live at `<skill-name>/SKILL.md` and may be enabled through global profiles.
 - Project-local skills use `.claude/skills/<skill-name>/` as the canonical copy.
 - `.agents/skills/<skill-name>/` is the cross-tool mirror and MUST remain byte-identical to the canonical copy.
+- A project-local skill that references `_common/` or `_templates/` MUST carry the corresponding resolving symlink beside `SKILL.md` in both canonical and mirror copies. From the current layout the target is `../../../_common` or `../../../_templates`.
 - Global profiles MUST NOT list project-local skills.
 - A global skill may name a project-local handoff only after verifying that `.claude/skills/<skill-name>/SKILL.md` or `.agents/skills/<skill-name>/SKILL.md` exists in the active workspace.
 - When the local skill is unavailable, use the fallback in this registry instead of silently routing to a missing skill.
@@ -32,12 +33,18 @@ Before emitting a handoff to `Orbit`, `Lore`, or `Darwin`:
 
 ## Verification
 
-Run the following from the repository root after changing a project-local skill:
+Run the repository validator after changing a project-local skill:
+
+```bash
+make validate
+```
+
+`lint-project-local.py` enforces registry/roster agreement, recursive canonical/mirror identity (including symlink targets), and delivery of referenced shared namespaces. `lint-frontmatter.py` is also run explicitly against the canonical project-local root.
+
+For manual diagnosis, the direct mirror checks remain useful:
 
 ```bash
 diff -rq .claude/skills/orbit .agents/skills/orbit
 diff -rq .claude/skills/lore .agents/skills/lore
 diff -rq .claude/skills/darwin .agents/skills/darwin
 ```
-
-No output means the mirrors are synchronized.
