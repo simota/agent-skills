@@ -148,6 +148,8 @@ export SCRIPTS
 
 validate:
 	@python3 "$$SCRIPTS/lint-frontmatter.py" --severity error
+	@python3 "$$SCRIPTS/lint-frontmatter.py" --severity error --paths "$(REPO)/.claude/skills"
+	@python3 "$$SCRIPTS/lint-project-local.py" --severity error
 	@python3 "$$SCRIPTS/validate-recipes.py" --severity error
 	@python3 "$$SCRIPTS/routing-oracle.py" --severity error
 	@python3 "$$SCRIPTS/lint-instructions.py" --severity error
