@@ -14,7 +14,7 @@ import unittest
 REPO_ROOT = Path(__file__).resolve().parents[2]
 MAKE = shutil.which("make")
 CHECKERS = (
-    "lint-frontmatter", "validate-recipes", "routing-oracle",
+    "lint-frontmatter", "lint-project-local", "validate-recipes", "routing-oracle",
     "lint-instructions", "lint-contracts", "lint-lessons", "task-battery-check",
 )
 
