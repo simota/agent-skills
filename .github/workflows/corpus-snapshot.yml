@@ -1,0 +1,27 @@
+name: corpus-snapshot
+
+on:
+  push:
+    branches: [refactor/runtime-optimization]
+    paths: [.github/workflows/corpus-snapshot.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: 40137fa8086e8a53c2bad5f68b72c97ffb3a1316
+          persist-credentials: false
+      - name: Archive only tracked baseline files
+        run: git archive --format=tar HEAD > "$RUNNER_TEMP/corpus.tar"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: baseline-corpus
+          path: ${{ runner.temp }}/corpus.tar
+          retention-days: 1
+          if-no-files-found: error
