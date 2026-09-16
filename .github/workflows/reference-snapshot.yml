@@ -1,0 +1,37 @@
+name: reference-snapshot
+on:
+  push:
+    branches: [refactor/reference-density]
+    paths: [.github/workflows/reference-snapshot.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    if: github.repository == 'simota/agent-skills' && github.ref == 'refs/heads/refactor/reference-density'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Export only tracked baseline files and history metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          baseline=35ffd55887b6a9e53d2e2b5d3c9266aa4bf5de99
+          test "$(git rev-parse "$baseline^{tree}")" = 2d2a7d49d0532c9013be0f9cbccaf54283468640
+          git archive --format=tar "$baseline" | gzip -n > "$RUNNER_TEMP/reference-baseline.tar.gz"
+          git cat-file commit "$baseline" > "$RUNNER_TEMP/reference-baseline.commit"
+          git log "$baseline" --format='COMMIT %H %aI' --name-only > "$RUNNER_TEMP/reference-history.txt"
+          git ls-tree -r "$baseline" > "$RUNNER_TEMP/reference-baseline-tree.txt"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: reference-baseline
+          path: |
+            ${{ runner.temp }}/reference-baseline.tar.gz
+            ${{ runner.temp }}/reference-baseline.commit
+            ${{ runner.temp }}/reference-history.txt
+            ${{ runner.temp }}/reference-baseline-tree.txt
+          retention-days: 7
+          if-no-files-found: error
